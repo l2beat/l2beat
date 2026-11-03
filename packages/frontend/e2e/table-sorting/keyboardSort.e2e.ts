@@ -45,5 +45,25 @@ test('a table header sorts from the keyboard', async ({ browser }) => {
     firstDirection === 'ascending' ? 'descending' : 'ascending',
   )
 
+  // The change companion sorts from the value column's header cell, and is
+  // named after that column: every change column reads "7D%".
+  await page.getByRole('button', { name: /^total value secured$/i }).focus()
+  await page.keyboard.press('Tab')
+  await expect(
+    page.getByRole('button', { name: 'Total value secured 7D%' }),
+  ).toBeFocused()
+  await page.keyboard.press('Enter')
+  await expect(proofSystemHeader).toHaveAttribute('aria-sort', 'none')
+  await expect(valueSecuredHeader).toHaveAttribute('aria-sort', 'descending')
+
+  // Shift-click adds a secondary sort, which ARIA has no way to announce.
+  const stageButton = page.getByRole('button', { name: /^stage$/i })
+  await stageButton.click({ modifiers: ['Shift'] })
+  await expect(stageButton.locator('path.fill-primary')).toHaveCount(1)
+  await expect(
+    page.getByRole('columnheader', { name: 'Stage' }),
+  ).toHaveAttribute('aria-sort', 'none')
+  await expect(valueSecuredHeader).toHaveAttribute('aria-sort', 'descending')
+
   await context.close()
 })

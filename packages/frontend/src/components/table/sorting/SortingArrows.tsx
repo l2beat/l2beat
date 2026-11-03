@@ -8,6 +8,8 @@ interface Props {
   direction: false | SortDirection
   nextDirection: false | SortDirection
   children: React.ReactNode
+  /** Overrides the name the header text gives the button. */
+  'aria-label'?: string
 }
 
 /**
@@ -21,6 +23,7 @@ export function SortingArrows({
   direction,
   nextDirection,
   onClick,
+  'aria-label': ariaLabel,
 }: Props) {
   return (
     <label className="group/sorting-arrows flex w-max cursor-pointer select-none items-end gap-1 rounded-sm has-focus-visible:ring-2 has-focus-visible:ring-brand has-focus-visible:ring-offset-1 has-focus-visible:ring-offset-transparent">
@@ -28,6 +31,7 @@ export function SortingArrows({
         type="button"
         className="flex focus-visible:outline-none"
         onClick={onClick}
+        aria-label={ariaLabel}
       >
         <svg
           width="12"
