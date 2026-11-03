@@ -81,9 +81,9 @@ function Hero() {
 }
 
 /**
- * Where our attention goes, before and after, as two maps of flat blocks.
- * Each area keeps its colour in both, so the eye follows it across: the grey
- * L2 block that filled L2BEAT's map is one block among several in ETHBEAT's.
+ * The shift, with no weights on the areas: L2BEAT's map is one block, layer
+ * 2s; ETHBEAT's is a grid of equal tiles in which layer 2s are one among
+ * many, and the last tile is left open for what comes next.
  */
 function FocusShift() {
   return (
@@ -98,34 +98,22 @@ function FocusShift() {
         <FocusMap
           name="L2BEAT"
           caption="Built around layer 2s"
-          className="grid-cols-[3fr_1fr] grid-rows-3"
-          areas={[
-            { ...AREAS.l2s, className: 'row-span-3', large: true },
-            AREAS.bridges,
-            AREAS.da,
-            AREAS.zk,
-          ]}
+          className="grid-cols-1"
+          areas={[{ ...LAYER_2S, large: true }]}
         />
         <FocusMap
           name="ETHBEAT"
           caption="The whole of Ethereum"
-          className="grid-cols-6 grid-rows-3"
+          className="grid-cols-3 grid-rows-3"
           areas={[
-            {
-              ...AREAS.privacy,
-              className: 'col-span-3 row-span-2',
-              large: true,
-            },
-            { ...AREAS.zk, className: 'col-span-3' },
-            { ...AREAS.ethereum, className: 'col-span-3' },
-            { ...AREAS.l2s, className: 'col-span-3' },
-            { ...AREAS.interop, className: 'col-span-2' },
-            AREAS.blobs,
+            LAYER_2S,
+            ...ETHEREUM_AREAS.map((label) => ({ label, colors: AREA })),
+            { label: 'And more', colors: OPEN_AREA },
           ]}
         />
       </div>
       <p className="mt-6 text-[14px] text-secondary leading-5">
-        Roughly where our attention goes. An illustration, not a measurement.
+        We keep covering layer 2s. They are now one part of what we look at.
       </p>
     </section>
   )
@@ -133,31 +121,27 @@ function FocusShift() {
 
 interface FocusArea {
   label: string
-  /** Ground and text together, so every block keeps 4.5:1. */
+  /** Ground and text together, so every tile keeps 4.5:1. */
   colors: string
-  className?: string
   large?: boolean
 }
 
-// Bridges grew into interop and DA into blobs, so each pair shares a colour.
-const AREAS = {
-  l2s: {
-    label: 'Layer 2s',
-    colors:
-      'bg-[#e6e3dd] text-brand-ink dark:bg-[#3d4358] dark:text-pure-white',
-  },
-  privacy: { label: 'Privacy', colors: 'bg-brand-pink text-brand-ink' },
-  zk: {
-    label: 'ZK proving',
-    colors:
-      'bg-brand-ink text-pure-white dark:bg-pure-white dark:text-brand-ink',
-  },
-  ethereum: { label: 'Ethereum', colors: 'bg-[#c2104a] text-pure-white' },
-  interop: { label: 'Interop & tokens', colors: 'bg-[#ff8fb0] text-brand-ink' },
-  bridges: { label: 'Bridges', colors: 'bg-[#ff8fb0] text-brand-ink' },
-  blobs: { label: 'Blobs', colors: 'bg-[#ffd9e4] text-brand-ink' },
-  da: { label: 'DA', colors: 'bg-[#ffd9e4] text-brand-ink' },
-} satisfies Record<string, FocusArea>
+const LAYER_2S: FocusArea = {
+  label: 'Layer 2s',
+  colors: 'bg-[#e6e3dd] text-brand-ink dark:bg-[#3d4358] dark:text-pure-white',
+}
+// One colour for all of them: none of them outweighs the others.
+const AREA = 'bg-brand-pink text-brand-ink'
+const OPEN_AREA = 'bg-[#ffd9e4] text-brand-ink'
+const ETHEREUM_AREAS = [
+  'Ethereum L1',
+  'Privacy',
+  'ZK proving',
+  'Interop',
+  'Liquid staking',
+  'DeFi',
+  'Tokens',
+]
 
 function FocusMap({
   name,
@@ -185,18 +169,14 @@ function FocusMap({
         {areas.map((area) => (
           <li
             key={area.label}
-            className={cn(
-              'flex min-w-0 rounded-md p-2.5 md:p-3',
-              area.colors,
-              area.className,
-            )}
+            className={cn('flex min-w-0 rounded-md p-2.5 md:p-3', area.colors)}
           >
             <span
               className={cn(
                 'font-inter font-semibold leading-tight',
                 area.large
                   ? 'text-[20px] tracking-[-0.02em] md:text-[24px]'
-                  : 'text-[13px] md:text-[14px]',
+                  : 'text-[13px] md:text-[15px]',
               )}
             >
               {area.label}
