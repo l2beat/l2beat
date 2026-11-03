@@ -1047,7 +1047,7 @@
   "static/pepe-unchained.png": "42d225c0a04b045c658aa21e776dc172",
   "static/meta-images/layer2s/projects/pepe-unchained/opengraph-image.png": "e93a29b720624b19f74dd9f606aae76e",
   "static/icons/pepe-unchained.png": "b643992aa970e33e4a7c87d5f04c8627",
-  "static/icons/l2beat.png": "e972481e6b1d1a56555fa01a6392ca67",
+  "static/icons/l2beat.png": "bd7cbb0af44de79e824c8f6682fcb35a",
   "static/meta-images/layer2s/projects/palm/opengraph-image.png": "2ef6d310f4c550993dc064fd8eea9288",
   "static/icons/pepeunchained2.png": "622b3bd36ee83475dc2fe02b7f2b0a23",
   "static/icons/boojum.png": "90d1646e3d1b4ff3fb0cb5591fa5ee99",
@@ -1407,7 +1407,7 @@
   "static/meta-images/publications/interop-interactive-summary-banner.png": "dc351380f99f6a5ee3afb68e2eebb677",
   "static/meta-images/layer2s/projects/hyperliquid/opengraph-image.png": "008cde1ac901d63161d8508e9106e54c",
   "static/meta-images/interop/projects/unichain/opengraph-image.png": "ebab543ca368312a66fe541d3370f279",
-  "static/images/avatars/l2beat_research.png": "3b0e2e932257c159dd3544d1bebe5347",
+  "static/images/avatars/l2beat_research.png": "2d8f17a0e7c76b7f121ff605976dcede",
   "static/images/publications/canton-vs-prividium-how-canton-works.png": "38a3e359f6972d0cb24326a374161dc6",
   "static/images/publications/canton-vs-prividium-how-prividium-works.png": "0dee7a921268b81aee6b4db7983d9f4a",
   "static/images/publications/canton-vs-prividium-usdcx.png": "d7c37c3ecc7ffa83c6bb96ee12b57d33",
@@ -1611,5 +1611,6 @@
   "static/meta-images/layer2s/projects/whitechain/opengraph-image.png": "9be5e6fb08a9f3039732befb9b35cbd0",
   "static/meta-images/l2beat-is-now-ethbeat/opengraph-image.png": "07be32bb13054ece017e8ebf141515da",
   "static/meta-images/mandate/opengraph-image.png": "94aa608e4808a76f65e4ff5c4778fc43",
-  "static/meta-images/publications/l2beat-is-now-ethbeat.png": "07be32bb13054ece017e8ebf141515da"
+  "static/meta-images/publications/l2beat-is-now-ethbeat.png": "07be32bb13054ece017e8ebf141515da",
+  "static/meta-images/publications/l2beat-is-now-ethbeat-banner.png": "b3494300eb5105fc7c1c12bccf263e72"
 }
