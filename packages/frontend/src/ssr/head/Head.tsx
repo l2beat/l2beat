@@ -84,7 +84,7 @@ export function Head({ manifest, metadata }: HeadProps) {
               __html: `window.op=window.op||function(){var n=[];return new Proxy(function(){arguments.length&&n.push([].slice.call(arguments))},{get:function(t,r){return"q"===r?n:function(){n.push([r].concat([].slice.call(arguments)))}} ,has:function(t,r){return"q"===r}}) }();
                   window.op('init', {
                     clientId: '${env.CLIENT_SIDE_OPENPANEL_CLIENT_ID}',
-                    apiUrl: 'https://opapi.l2beat.com',
+                    apiUrl: 'https://opapi.ethbeat.org',
                     trackScreenViews: true,
                     trackOutgoingLinks: true,
                     trackAttributes: true,
