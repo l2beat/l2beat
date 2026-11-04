@@ -169,7 +169,7 @@
 }
 
 .mdc-chat strong {
-  @apply font-semibold text-white;
+  @apply font-semibold text-coffee-50;
 }
 
 .mdc-chat code {
@@ -187,7 +187,7 @@
 .mdc-chat h1,
 .mdc-chat h2,
 .mdc-chat h3 {
-  @apply mt-3 mb-1.5 font-bold text-[13px] text-white;
+  @apply mt-3 mb-1.5 font-bold text-[13px] text-coffee-50;
 }
 
 /* The panel is narrow: a wide table scrolls instead of being cut off. */

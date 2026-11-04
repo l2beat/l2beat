@@ -165,7 +165,7 @@ function SettingChoices(props: { option: ConfigOption }) {
             choice.value === option.value && 'bg-coffee-800',
           )}
         >
-          <span className="w-3 shrink-0 text-[#d68ae0]">
+          <span className="w-3 shrink-0 text-agent">
             {choice.value === option.value ? '✓' : ''}
           </span>
           <span className="flex min-w-0 flex-col">
@@ -211,7 +211,7 @@ function EmptyState() {
             className="group flex items-center justify-between gap-2 rounded-md border border-coffee-700 px-3 py-2 text-left text-[13px] text-coffee-200 transition-colors hover:border-coffee-600 hover:bg-coffee-800"
           >
             {suggestion}
-            <span className="text-coffee-600 transition-colors group-hover:text-[#d68ae0]">
+            <span className="text-coffee-600 transition-colors group-hover:text-agent">
               →
             </span>
           </button>
@@ -333,7 +333,7 @@ function Composer() {
               type="button"
               onClick={() => stopTurn().catch(reportError)}
               title="Stop (Esc)"
-              className="flex size-6 items-center justify-center rounded-md bg-coffee-200 text-black hover:brightness-110"
+              className="flex size-6 items-center justify-center rounded-md bg-coffee-200 text-coffee-900 hover:brightness-110"
             >
               <IconStop className="size-3" />
             </button>

@@ -164,7 +164,7 @@ const Activity = memo(function Activity(props: {
           {summarize(props.steps.length - tools.length, tools.length)}
         </span>
         {inDiscoUi.length > 0 && (
-          <span className="flex items-center gap-1 rounded-sm bg-aux-purple/15 px-1.5 text-[#d68ae0] text-[11px]">
+          <span className="flex items-center gap-1 rounded-sm bg-aux-purple/15 px-1.5 text-[11px] text-agent">
             <IconSparkle className="size-2.5" />
             {inDiscoUi.length} in DiscoUI
           </span>
@@ -238,7 +238,7 @@ function StepMark(props: { status: string; inDiscoUi: boolean }) {
     return <span className="w-3 shrink-0 text-center text-aux-red">✕</span>
   }
   if (props.inDiscoUi) {
-    return <IconSparkle className="size-3 shrink-0 text-[#d68ae0]" />
+    return <IconSparkle className="size-3 shrink-0 text-agent" />
   }
   return <span className="w-3 shrink-0 text-center text-coffee-600">●</span>
 }
@@ -305,7 +305,7 @@ function PlanMark(props: { status: string }) {
       className={cn(
         'mt-0.5 flex size-3 shrink-0 items-center justify-center rounded-full border text-[8px]',
         props.status === 'completed' &&
-          'border-aux-green bg-aux-green text-black',
+          'border-aux-green bg-aux-green text-coffee-900',
         props.status === 'in_progress' && 'animate-pulse border-coffee-200',
         props.status === 'pending' && 'border-coffee-600',
       )}
@@ -354,7 +354,7 @@ function PermissionChoices(props: {
           className={cn(
             'max-w-full truncate rounded-sm px-2.5 py-1 transition-colors',
             choice.kind === 'allow_once' &&
-              'bg-aux-yellow font-bold text-black hover:brightness-110',
+              'bg-aux-yellow font-bold text-coffee-900 hover:brightness-110',
             choice.kind === 'allow_always' &&
               'border border-aux-yellow/40 text-coffee-200 hover:border-aux-yellow',
             choice.kind.startsWith('reject') &&
@@ -440,7 +440,7 @@ function TurnProgress() {
           <span
             key={delay}
             style={{ animationDelay: `${delay}ms` }}
-            className="size-1 animate-bounce rounded-full bg-[#d68ae0]"
+            className="size-1 animate-bounce rounded-full bg-agent"
           />
         ))}
       </span>
