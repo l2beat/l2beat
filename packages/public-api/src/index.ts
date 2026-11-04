@@ -103,7 +103,7 @@ function main() {
             apiUrl: 'https://opapi.l2beat.com',
           });
           var s = document.createElement('script');
-          s.src = 'https://analytics.l2beat.com/op1.js';
+          s.src = 'https://analytics.ethbeat.org/op1.js';
           s.defer = true;
           s.async = true;
           document.head.appendChild(s);

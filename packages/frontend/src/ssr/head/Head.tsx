@@ -91,7 +91,7 @@ export function Head({ manifest, metadata }: HeadProps) {
                   });`,
             }}
           />
-          <script src="https://analytics.l2beat.com/op1.js" defer async />
+          <script src="https://analytics.ethbeat.org/op1.js" defer async />
         </>
       )}
     </>
