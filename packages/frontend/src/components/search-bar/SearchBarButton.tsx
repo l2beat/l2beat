@@ -74,9 +74,9 @@ function ExampleHint() {
       // The old hint leaves upwards and the next one rises in behind it, so
       // they read as one ticker; the blur hides the moment both are faint.
       const exit = element.animate(
-        { opacity: 0, transform: 'translateY(-4px)', filter: 'blur(2px)' },
+        { opacity: 0, transform: 'translateY(-6px)', filter: 'blur(3px)' },
         // Held until the next hint takes over, or the old one flashes back.
-        { duration: 120, easing: EASE_OUT_QUINT, fill: 'forwards' },
+        { duration: 220, easing: 'ease-in', fill: 'forwards' },
       )
       exit.onfinish = () => {
         const [full, short] = element.children
@@ -87,10 +87,10 @@ function ExampleHint() {
         }
         element.animate(
           [
-            { opacity: 0, transform: 'translateY(4px)', filter: 'blur(2px)' },
+            { opacity: 0, transform: 'translateY(6px)', filter: 'blur(3px)' },
             { opacity: 1, transform: 'none', filter: 'none' },
           ],
-          { duration: 200, easing: EASE_OUT_QUINT },
+          { duration: 450, easing: EASE_OUT_QUINT },
         )
         exit.cancel()
       }
