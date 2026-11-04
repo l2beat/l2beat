@@ -88,13 +88,13 @@ describe(renderInteropProtocolMarkdown.name, () => {
         header: {
           ...PAGE.projectEntry.header,
           links: [{ name: 'Website', links: ['https://across.to'] }],
-          discoUiHref: 'https://disco.l2beat.com/ui/p/across',
+          discoUiHref: 'https://disco.ethbeat.org/ui/p/across',
         },
       },
     })
 
     expect(markdown).toInclude(
-      '### Links\n\n- Website: https://across.to\n- Contracts explorer (Disco): https://disco.l2beat.com/ui/p/across',
+      '### Links\n\n- Website: https://across.to\n- Contracts explorer (Disco): https://disco.ethbeat.org/ui/p/across',
     )
   })
 

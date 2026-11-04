@@ -599,7 +599,7 @@ const ENTRY: ProjectPrivacyEntry = {
   badges: [],
   projectLinks: [],
   discoUi: {
-    href: 'https://disco.l2beat.com/ui/p/tornado-cash',
+    href: 'https://disco.ethbeat.org/ui/p/tornado-cash',
     images: { desktop: '/desktop.png', mobile: '/mobile.png' },
   },
   bucketCount: 2,

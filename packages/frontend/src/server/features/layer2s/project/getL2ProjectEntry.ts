@@ -344,7 +344,7 @@ export async function getL2ProjectEntry(
         : project.scalingStage,
     walkAway: getWalkAwayVerdict(project),
     discoUiHref: project.discoveryInfo?.hasDiscoUi
-      ? `https://disco.l2beat.com/ui/p/${project.id}`
+      ? `https://disco.ethbeat.org/ui/p/${project.id}`
       : undefined,
   }
 

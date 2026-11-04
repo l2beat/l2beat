@@ -54,7 +54,7 @@ export function Layout() {
               <li>
                 <Link
                   className="font-mono underline"
-                  to="https://disco.l2beat.com/ui"
+                  to="https://disco.ethbeat.org/ui"
                 >
                   /disco-ui
                 </Link>
@@ -62,7 +62,7 @@ export function Layout() {
               <li>
                 <Link
                   className="font-mono underline"
-                  to="https://disco.l2beat.com/diff"
+                  to="https://disco.ethbeat.org/diff"
                 >
                   /diffovery
                 </Link>
