@@ -29,10 +29,13 @@ export function AgentPathView(props: { focus: AgentFocus }) {
   const isAnswerLink = useMemo(() => {
     const looseIds = new Set(loose)
     const shown = props.focus.nodes
-    // Contracts shown on their own have no path, so every link between shown
-    // contracts is part of the answer.
+    // Contracts shown on their own have no path, so every link between one
+    // and another shown contract, either way, is part of the answer.
+    const touchesLoose = (from: string, to: string) =>
+      (looseIds.has(from) && shown.has(to)) ||
+      (looseIds.has(to) && shown.has(from))
     return (from: string, to: string) =>
-      edges.has(edgeKey(from, to)) || (looseIds.has(from) && shown.has(to))
+      edges.has(edgeKey(from, to)) || touchesLoose(from, to)
   }, [props.focus, loose, edges])
   const layout = useMemo(() => {
     const lanes = loose.length > 0 ? [...paths, loose] : paths
