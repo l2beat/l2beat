@@ -28,9 +28,12 @@ let pending:
 
 export async function flushAgentContext() {
   const report = pending
-  if (report === undefined) return
-  clearTimeout(report.timeout)
-  await report.send()
+  if (report !== undefined) {
+    clearTimeout(report.timeout)
+    await report.send()
+  }
+  // A report already on its way must land before the message too.
+  await reportsSent
 }
 
 // Reports what the researcher looks at, so an agent asked "what is this?" can
