@@ -301,6 +301,12 @@ export const railgun: BaseProject = {
       ],
     },
     trackedOn: ['ethereum'],
+    // Chains RailOxide v0.2.0-beta.10 serves (railgun-rust crates/core/src/deployment.rs).
+    runsOn: [
+      ProjectId('arbitrum'),
+      ProjectId('base'),
+      ProjectId('polygon-pos'),
+    ],
     tokens: privacyTokens,
     relayerTracking: {
       type: 'railgunWaku',
