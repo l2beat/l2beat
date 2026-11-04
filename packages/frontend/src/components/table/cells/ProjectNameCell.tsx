@@ -109,7 +109,7 @@ function DesktopStatusIcons({
         <UnderReviewIcon className="size-4" />
       )}
       {project.statuses?.yellowWarning && (
-        <ShieldIcon className="size-4 fill-yellow-700 dark:fill-yellow-300" />
+        <ShieldIcon className="size-4 fill-yellow-200" />
       )}
       {project.statuses?.syncWarning && <ClockIcon className="size-4" />}
       {project.statuses?.ongoingAnomaly && <LiveIndicator />}
@@ -227,9 +227,7 @@ export function ProjectNameMobileStatusIcons({
       {project.statuses?.yellowWarning && (
         <MobileProjectIconTooltip
           label="Warning"
-          icon={
-            <ShieldIcon className="size-4 fill-yellow-700 dark:fill-yellow-300" />
-          }
+          icon={<ShieldIcon className="size-4 fill-yellow-200" />}
         >
           <Markdown inline ignoreGlossary>
             {project.statuses.yellowWarning}
@@ -481,9 +479,7 @@ function getTooltipSections(project: ProjectCellProject) {
       id: 'yellow-warning',
       text: project.statuses.yellowWarning,
       variant: 'warning',
-      icon: (
-        <ShieldIcon className="size-4 fill-yellow-700 dark:fill-yellow-300" />
-      ),
+      icon: <ShieldIcon className="size-4 fill-yellow-200" />,
     })
   }
 
