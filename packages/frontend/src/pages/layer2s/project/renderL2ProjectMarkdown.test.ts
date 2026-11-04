@@ -290,13 +290,13 @@ describe(renderL2ProjectMarkdown.name, () => {
             },
           ],
         },
-        discoUiHref: 'https://disco.l2beat.com/ui/p/arbitrum',
+        discoUiHref: 'https://disco.ethbeat.org/ui/p/arbitrum',
       }),
       'Summary',
     )
 
     expect(summary).toInclude(
-      '### Links\n\n- Website: https://arbitrum.io\n- Contracts explorer (Disco): https://disco.l2beat.com/ui/p/arbitrum',
+      '### Links\n\n- Website: https://arbitrum.io\n- Contracts explorer (Disco): https://disco.ethbeat.org/ui/p/arbitrum',
       '### Badges\n\n- Built on Arbitrum Orbit: The project is built on Arbitrum Orbit.',
     )
   })

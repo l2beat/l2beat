@@ -1668,12 +1668,13 @@
       "config": {
         "type": "ethereum",
         "daLayer": "ethereum",
+        "sinceBlock": 25482106,
+        "untilBlock": 26097469,
         "inbox": "0x2e5110cF18678Ec99818bFAa849B8C881744b776",
         "sequencers": [
           "0xef854E09fa6e281268e1051D4d5465d8c92862ee",
           "0x7b55c1D9b75Fa35793157aD674b0a1aEF7b8DdE0"
-        ],
-        "sinceBlock": 25482106
+        ]
       }
     },
     {

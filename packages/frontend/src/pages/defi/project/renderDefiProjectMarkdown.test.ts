@@ -47,7 +47,7 @@ describe(renderDefiProjectMarkdown.name, () => {
     )
 
     expect(summary).toInclude(
-      '### Links\n\n- Website: https://lido.fi\n- Contracts explorer (Disco): https://disco.l2beat.com/ui/p/lido',
+      '### Links\n\n- Website: https://lido.fi\n- Contracts explorer (Disco): https://disco.ethbeat.org/ui/p/lido',
       '### Badges\n\n- Ethereum: Ethereum badge.\n- Chainlink: Chainlink badge.',
     )
   })
@@ -220,7 +220,7 @@ function externalDependencies(
 }
 
 const DISCO_UI = {
-  href: 'https://disco.l2beat.com/ui/p/lido',
+  href: 'https://disco.ethbeat.org/ui/p/lido',
   images: { desktop: '/desktop.png', mobile: '/mobile.png' },
 }
 

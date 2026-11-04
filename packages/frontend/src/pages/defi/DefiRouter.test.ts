@@ -115,7 +115,7 @@ const ENTRY: ProjectDefiEntry = {
   badges: [],
   projectLinks: [],
   discoUi: {
-    href: 'https://disco.l2beat.com/ui/p/lido',
+    href: 'https://disco.ethbeat.org/ui/p/lido',
     images: { desktop: '/desktop.png', mobile: '/mobile.png' },
   },
   isUnderReview: false,

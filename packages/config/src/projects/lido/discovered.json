@@ -3835,7 +3835,7 @@
       "template": "lido/CSModule",
       "sourceHashes": [
         "0x1362e1dfe97b4d5851973b364f529a1a32f940a2bedd60f8030dfcd6f6ebd048",
-        "0x19666aa54a37d52558d2c5a2354e67ce7f975afd7cfa437feb6ef96489092bb8"
+        "0xe09d0ff1c11c177fb63cc357b2eefdd574d723b9be22f0a7502b947d08f9aee3"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Lido's permissionless Community Staking Module. It manages node operators and validator keys, accepts router deposits and top-ups, processes validator exits, and applies bond-backed penalties.",
@@ -8092,7 +8092,7 @@
       "template": "lido/CuratedModule",
       "sourceHashes": [
         "0x1362e1dfe97b4d5851973b364f529a1a32f940a2bedd60f8030dfcd6f6ebd048",
-        "0x11df3957a67843e530316489a83ca4adda4d9953f0e25c17d0ea7f24edd89c20"
+        "0x0ceb6b13fce2d21622791203fc60e34a4b7c935d47af0d436c7dc2b3134302e6"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The permissioned Curated Staking Module. It manages approved node operators and validator keys, accepts deposits and top-ups from the StakingRouter, and processes validator lifecycle reports and penalties.",
@@ -8378,7 +8378,7 @@
       "template": "lido/CSModule",
       "sourceHashes": [
         "0x0e9e628d137fa4b53b03ce51b1b0e0122d524ca323f45751894d2e62c91c2651",
-        "0x19666aa54a37d52558d2c5a2354e67ce7f975afd7cfa437feb6ef96489092bb8"
+        "0xe09d0ff1c11c177fb63cc357b2eefdd574d723b9be22f0a7502b947d08f9aee3"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Lido's permissionless Community Staking Module. It manages node operators and validator keys, accepts router deposits and top-ups, processes validator exits, and applies bond-backed penalties.",

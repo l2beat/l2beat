@@ -57,14 +57,14 @@ describe(withProjectMeta.name, () => {
       '<meta name="twitter:title" content="arbitrum | Disco" />',
     )
     expect(html).toInclude(
-      '<meta property="og:url" content="https://disco.l2beat.com/ui/p/arbitrum" />',
+      '<meta property="og:url" content="https://disco.ethbeat.org/ui/p/arbitrum" />',
     )
     expect(html).toInclude(
       '<meta property="og:description" content="Contracts and permissions of arbitrum, discovered onchain" />',
     )
     expect(html).toInclude('<meta property="og:site_name" content="Disco" />')
     expect(html).not.toInclude('content="A dashboard to explore')
-    expect(html).not.toInclude('content="https://disco.l2beat.com/"')
+    expect(html).not.toInclude('content="https://disco.ethbeat.org/"')
   })
 
   it('leaves the rest of the page untouched', () => {
@@ -82,7 +82,7 @@ describe(withProjectMeta.name, () => {
       '<title>&quot;&gt;&lt;script&gt;alert(&#39;x&#39;)&lt;/script&gt; | Disco</title>',
     )
     expect(html).toInclude(
-      'content="https://disco.l2beat.com/ui/p/%22%3E%3Cscript%3Ealert(&#39;x&#39;)%3C%2Fscript%3E"',
+      'content="https://disco.ethbeat.org/ui/p/%22%3E%3Cscript%3Ealert(&#39;x&#39;)%3C%2Fscript%3E"',
     )
   })
 

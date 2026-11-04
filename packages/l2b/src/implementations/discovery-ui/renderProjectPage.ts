@@ -2,7 +2,7 @@ import type { ConfigReader } from '@l2beat/discovery'
 import { assert } from '@l2beat/shared-pure'
 import { projectParamsSchema } from './main'
 
-const SITE_URL = 'https://disco.l2beat.com'
+const SITE_URL = 'https://disco.ethbeat.org'
 const SITE_TITLE = 'Disco'
 const SITE_DESCRIPTION = 'A dashboard to explore all onchain connections'
 
