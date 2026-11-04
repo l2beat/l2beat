@@ -99,7 +99,7 @@
   --brand-light: #ff8fb0;
   --selection-brand-share: 30%;
   /* The nav's current page. */
-  --nav-active: var(--brand-deep);
+  --nav-active: var(--brand);
   --background: #e6e7ec;
   --surface-primary: #fafafa;
   --surface-primary-hover: #e6ecef;
