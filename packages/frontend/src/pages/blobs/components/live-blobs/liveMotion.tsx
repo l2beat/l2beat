@@ -140,7 +140,7 @@ export function Pop({
       ref={ref}
       aria-hidden
       className={cn(
-        'pointer-events-none font-bold text-brand tabular-nums opacity-0',
+        'pointer-events-none font-bold text-brand-deep tabular-nums opacity-0',
         className,
       )}
     >

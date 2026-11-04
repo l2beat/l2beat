@@ -29,19 +29,26 @@ import {
 } from '../../core/Sidebar'
 import { DarkThemeToggle } from '../../DarkThemeToggle'
 import { Logo } from '../../Logo'
+import { NavPinnedProjects } from '../../pinned-projects/NavPinnedProjects'
 import { SocialLinks } from '../../SocialLinks'
 import { NavWhatsNew } from '../../whats-new/NavWhatsNew'
-import { NavYourProjects } from '../../your-projects/NavYourProjects'
 import { MobileNavTriggerClose } from '../mobile/MobileNavTrigger'
 import type { NavGroup } from '../types'
 
 interface Props {
   groups: NavGroup[]
   logoLink: string
+  /** Off where the page has a garden banner of its own (home). */
+  showGardenBanner: boolean
   className?: string
 }
 
-export function NavSidebar({ groups, logoLink, className }: Props) {
+export function NavSidebar({
+  groups,
+  logoLink,
+  showGardenBanner,
+  className,
+}: Props) {
   const pathname = usePathname()
   const { setOpenMobile } = useSidebar()
   const closeMobileSidebar = () => setOpenMobile(false)
@@ -53,7 +60,11 @@ export function NavSidebar({ groups, logoLink, className }: Props) {
           fixed bar at the top; the full-screen sheet alone keeps the navbar's. */}
       <SidebarHeader className="max-lg:sticky max-lg:top-0 max-lg:h-16 max-lg:bg-background max-lg:px-3.5 max-lg:pt-0 max-lg:pb-px">
         <div className="flex h-[38px] flex-row items-center justify-between max-lg:h-full">
-          <a href={logoLink} onClick={closeMobileSidebar}>
+          <a
+            href={logoLink}
+            onClick={closeMobileSidebar}
+            aria-label="Go to home"
+          >
             <Logo className="block h-8 w-auto" />
           </a>
           <div className="flex flex-row items-center gap-4 max-lg:gap-2 md:max-lg:gap-3">
@@ -65,7 +76,7 @@ export function NavSidebar({ groups, logoLink, className }: Props) {
         </div>
       </SidebarHeader>
       <SidebarContent>
-        {env.CLIENT_SIDE_GARDEN_ENABLED && (
+        {env.CLIENT_SIDE_GARDEN_ENABLED && showGardenBanner && (
           <SidebarGroup className="mb-2">
             <CropsMiniBanner
               isActive={pathname.startsWith(GARDEN_PATH)}
@@ -98,7 +109,7 @@ export function NavSidebar({ groups, logoLink, className }: Props) {
               />
             ))}
         </div>
-        <NavYourProjects onNavigate={closeMobileSidebar} />
+        <NavPinnedProjects onNavigate={closeMobileSidebar} />
         {/* In the mobile menu, the end of the list. */}
         <NavWhatsNew onNavigate={closeMobileSidebar} className="lg:hidden" />
       </SidebarContent>

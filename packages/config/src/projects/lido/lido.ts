@@ -7,9 +7,9 @@ import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('lido')
 
-// The four consensus instances share one committee; read from the
+// The consensus instances share one committee; read from the
 // AccountingOracle's HashConsensus (referenced by address since the name is
-// not unique across the four instances).
+// not unique across the instances).
 const ACCOUNTING_HASH_CONSENSUS =
   'eth:0xD624B08C83bAECF0807Dd2c6880C3154a5F0B288'
 const STETH = 'eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84'
@@ -27,6 +27,14 @@ const dsmGuardianAddresses = discovery.getContractValue<string[]>(
   'getGuardians',
 )
 const dsmGuardians = dsmGuardianAddresses.length
+const stakingModules = discovery.getContractValue<number[]>(
+  'StakingRouter',
+  'getStakingModuleIds',
+).length
+assert(
+  stakingModules === 5,
+  'Lido staking module count changed, update the module list in detailedDescription.md',
+)
 const dsmQuorum = discovery.getContractValue<number>(
   'DepositSecurityModule',
   'getGuardianQuorum',
@@ -109,14 +117,14 @@ const maxPositiveRebasePercent =
     'OracleReportSanityChecker',
     'getMaxPositiveTokenRebase',
   ) / 1e7
-const stakingModules = discovery.getContractValue<
+const stakingModuleDigests = discovery.getContractValue<
   {
     nodeOperatorsCount: number
     state: { name: string; stakeShareLimit: number }
   }[]
 >('StakingRouter', 'getAllStakingModuleDigests')
 const stakingModule = (name: string) => {
-  const module = stakingModules.find((m) => m.state.name === name)
+  const module = stakingModuleDigests.find((m) => m.state.name === name)
   if (!module) throw new Error(`lido: staking module ${name} not found`)
   return {
     operators: module.nodeOperatorsCount,
@@ -159,6 +167,7 @@ export const lido: BaseProject = {
       oracleMembers,
       oracleQuorum,
       dsmGuardians,
+      stakingModules,
       dsmQuorum,
       delegationCooldownDays,
       vaultShareCap,

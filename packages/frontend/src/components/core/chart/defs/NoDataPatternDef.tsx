@@ -1,7 +1,7 @@
-export function NoDataPatternDef() {
+export function NoDataPatternDef({ id }: { id: string }) {
   return (
     <pattern
-      id="noDataFill"
+      id={id}
       patternUnits="userSpaceOnUse"
       width="20"
       height="20"

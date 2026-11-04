@@ -1,22 +1,18 @@
 import { useMemo } from 'react'
-import { Area, ComposedChart, Line, YAxis, type YAxisProps } from 'recharts'
-import type {
-  ChartMeta,
-  CustomChartTooltipProps,
-} from '~/components/core/chart/Chart'
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipWrapper,
-  useChart,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
-import {
-  ChartDataIndicator,
-  type ChartDataIndicatorType,
-} from '~/components/core/chart/ChartDataIndicator'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
+import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
+import {
+  ChartTooltipRow,
+  ChartTooltipValue,
+  ChartTooltipWrapper,
+  getTooltipEntries,
+} from '~/components/core/chart/ChartTooltip'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import {
+  type ChartSeries,
+  TimeSeriesChart,
+} from '~/components/core/chart/TimeSeriesChart'
 import type { DefiLiquidStakingChartProject } from '~/server/features/defi/liquidStakingCharts/getDefiLiquidStakingCharts'
 import type { LiquidStakingChartPoint } from '~/server/features/defi/liquidStakingCharts/liquidStakingMetrics'
 import { formatTimestamp } from '~/utils/dates'
@@ -36,9 +32,9 @@ interface Props {
   projects: DefiLiquidStakingChartProject[]
   colors: Record<string, string>
   data: LiquidStakingChartPoint[]
+  ariaLabel: string
   formatYAxisLabel: (value: number) => string
   formatTooltipValue: (value: number) => string
-  yAxis?: Pick<YAxisProps, 'scale' | 'domain' | 'allowDataOverflow' | 'ticks'>
   background?: LiquidStakingChartBackground
 }
 
@@ -50,9 +46,9 @@ export function LiquidStakingLineChart({
   projects,
   colors,
   data,
+  ariaLabel,
   formatYAxisLabel,
   formatTooltipValue,
-  yAxis,
   background,
 }: Props) {
   const points = useMemo(
@@ -61,7 +57,6 @@ export function LiquidStakingLineChart({
         ? data.map((point, index) => ({
             ...point,
             [background.key]: background.values[index] ?? null,
-            [`${background.key}Daily`]: background.values[index] ?? null,
           }))
         : data,
     [data, background],
@@ -99,183 +94,132 @@ export function LiquidStakingLineChart({
     return meta
   }, [projects, colors, background])
 
+  // The stake axis spans whole 5M steps around the data, with one step of
+  // room below so the area does not sit on the lines' axis.
+  const backgroundDomain = useMemo(() => {
+    const values = background?.values.filter(
+      (value): value is number => value !== null,
+    )
+    if (!values || values.length === 0) return undefined
+    return [
+      Math.floor(Math.min(...values) / 5) * 5 - 5,
+      Math.ceil(Math.max(...values) / 5) * 5,
+    ] as const
+  }, [background])
+
   const { dataKeys, toggleDataKey, toggleAllDataKeys, showAllSelected } =
     useChartDataKeys(chartMeta)
-  const stakeShown = !!background && dataKeys.includes(background.key)
+
+  const series: ChartSeries<string, LiquidStakingChartPoint>[] = [
+    ...(background
+      ? [
+          {
+            key: background.key,
+            fill: background.color,
+            fillOpacity: 0.15,
+            axis: 'right' as const,
+            activeDot: false,
+          },
+        ]
+      : []),
+    ...projects.map((project) => ({
+      key: project.id,
+      stroke: chartMeta[project.id]?.color,
+      strokeDasharray: project.benchmark ? '5 5' : undefined,
+    })),
+  ]
 
   return (
     <ChartContainer
       data={points}
       meta={chartMeta}
       isLoading={false}
+      isPlaceholderData={false}
       interactiveLegend={{
         dataKeys,
         onItemClick: toggleDataKey,
         disableOnboarding: true,
       }}
-    >
-      {/* Without right:1 the chart last point is not hoverable for some reason */}
-      <ComposedChart responsive data={points} margin={{ top: 20, right: 1 }}>
+      legend
+      legendLeading={
         <ChartLegendToggleAll
           showAllSelected={showAllSelected}
           onToggleAll={toggleAllDataKeys}
         />
-        {background && (
-          <>
-            <Area
-              yAxisId="right"
-              dataKey={background.key}
-              hide={!dataKeys.includes(background.key)}
-              stroke="none"
-              fill={background.color}
-              fillOpacity={0.15}
-              isAnimationActive={false}
-            />
-            <YAxis
-              yAxisId="right"
-              orientation="right"
-              domain={[
-                (min: number) => Math.floor(min / 5) * 5 - 5,
-                (max: number) => Math.ceil(max / 5) * 5,
-              ]}
-              tickFormatter={(value: number) =>
-                background.formatAxisLabel(value)
+      }
+    >
+      <TimeSeriesChart
+        data={points}
+        series={series}
+        ariaLabel={ariaLabel}
+        yAxis={{ tickCount: 4, format: formatYAxisLabel }}
+        rightAxis={
+          background && backgroundDomain
+            ? {
+                domain: backgroundDomain,
+                tickCount: 3,
+                format: background.formatAxisLabel,
               }
-              tickLine={false}
-              axisLine={false}
-              mirror
-              tickCount={3}
-              dy={-10}
-              tick={{ width: 100 }}
-            />
-          </>
-        )}
-        {projects.map((project) => (
-          <Line
-            key={project.id}
-            yAxisId="left"
-            dataKey={project.id}
-            hide={!dataKeys.includes(project.id)}
-            stroke={chartMeta[project.id]?.color}
-            strokeDasharray={project.benchmark ? '5 5' : undefined}
-            dot={false}
-            isAnimationActive={false}
+            : undefined
+        }
+        renderTooltip={(row, keys) => (
+          <CustomTooltip
+            row={row}
+            keys={keys}
+            formatValue={formatTooltipValue}
+            background={background}
           />
-        ))}
-        <ChartCommonComponents
-          data={points}
-          isLoading={false}
-          yAxis={{
-            yAxisId: 'left',
-            tickCount: 4,
-            tickFormatter: (value) => formatYAxisLabel(Number(value)),
-            ...yAxis,
-          }}
-          syncedUntil={undefined}
-        />
-        <ChartTooltip
-          content={
-            <CustomTooltip
-              formatValue={formatTooltipValue}
-              background={stakeShown ? background : undefined}
-            />
-          }
-        />
-      </ComposedChart>
+        )}
+      />
     </ChartContainer>
   )
 }
 
 function CustomTooltip({
-  payload,
-  label,
+  row,
+  keys,
   formatValue,
   background,
-}: CustomChartTooltipProps & {
+}: {
+  row: LiquidStakingChartPoint
+  keys: string[]
   formatValue: (value: number) => string
   background?: LiquidStakingChartBackground
 }) {
-  const { meta } = useChart()
-  if (!payload || typeof label !== 'number') return null
-
-  const visible = payload.filter(
-    (entry) =>
-      entry.type !== 'none' &&
-      !entry.hide &&
-      entry.value !== null &&
-      entry.value !== undefined,
-  )
-  const lines = visible.filter((entry) => entry.name !== background?.key)
-  const daily = background
-    ? (payload[0]?.payload?.[`${background.key}Daily`] as
-        | number
-        | null
-        | undefined)
-    : null
-  if (lines.length === 0 && (daily === null || daily === undefined)) {
-    return null
-  }
+  const entries = getTooltipEntries(row, keys, { skipNull: true })
+  const lines = entries
+    .filter((entry) => entry.name !== background?.key)
+    .sort((a, b) => (b.value ?? 0) - (a.value ?? 0))
+  const stake = entries.find((entry) => entry.name === background?.key)
+  if (lines.length === 0 && !stake) return null
 
   return (
     <ChartTooltipWrapper>
       <div className="flex w-[200px] flex-col [@media(min-width:600px)]:w-60">
         <div className="font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(label)}
+          {formatTimestamp(row.timestamp)}
         </div>
         <div className="mt-2 flex flex-col gap-2">
-          {[...lines]
-            .sort((a, b) => (b.value ?? 0) - (a.value ?? 0))
-            .map((entry) => {
-              const config = entry.name ? meta[entry.name] : undefined
-              if (!config) return null
-              return (
-                <TooltipRow
-                  key={entry.name}
-                  color={config.color}
-                  indicator={config.indicatorType}
-                  label={config.label}
-                  value={
-                    entry.value !== null && entry.value !== undefined
-                      ? formatValue(entry.value)
-                      : 'No data'
-                  }
-                />
-              )
-            })}
-          {background && daily !== null && daily !== undefined && (
-            <TooltipRow
-              color={background.color}
-              indicator={{ shape: 'square' }}
-              label={background.label}
-              value={background.formatTooltipValue(daily)}
-            />
-          )}
+          {[...lines, ...(stake ? [stake] : [])].map((entry) => (
+            <ChartTooltipRow
+              key={entry.name}
+              name={entry.name}
+              gap="gap-x-3"
+              wrapLabel={false}
+            >
+              <ChartTooltipValue
+                value={entry.value}
+                format={
+                  entry.name === background?.key
+                    ? background.formatTooltipValue
+                    : formatValue
+                }
+                className="text-primary tabular-nums"
+              />
+            </ChartTooltipRow>
+          ))}
         </div>
       </div>
     </ChartTooltipWrapper>
-  )
-}
-
-function TooltipRow({
-  color,
-  indicator,
-  label,
-  value,
-}: {
-  color: string | undefined
-  indicator: ChartDataIndicatorType
-  label: React.ReactNode
-  value: string
-}) {
-  return (
-    <div className="flex items-center justify-between gap-x-3">
-      <div className="flex items-center gap-1">
-        <ChartDataIndicator backgroundColor={color} type={indicator} />
-        <span className="font-medium text-label-value-14">{label}</span>
-      </div>
-      <span className="whitespace-nowrap font-medium text-label-value-15 text-primary tabular-nums">
-        {value}
-      </span>
-    </div>
   )
 }

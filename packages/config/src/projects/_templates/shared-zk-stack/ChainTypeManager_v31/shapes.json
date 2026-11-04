@@ -1,0 +1,14 @@
+{
+  "EraChainTypeManager.sol": {
+    "hash": "0x1d92720bdf1d51f5fc897423a6e0c1a6ca645d21cd0d41c0679bd4dacc9688a2",
+    "address": "eth:0x1bD52FDBcd714FFc48C7cE9E8437572102174734",
+    "chain": "ethereum",
+    "blockNumber": 26334746
+  },
+  "ZKsyncOSChainTypeManager.sol": {
+    "hash": "0x90809e9e49eb5131d3ab64466d2f5fcbf7a679358fe6990554015cbda3c0fd49",
+    "address": "eth:0x7a309e4e852B01fB1448D8A46365D69B03a88bd1",
+    "chain": "ethereum",
+    "blockNumber": 26334746
+  }
+}

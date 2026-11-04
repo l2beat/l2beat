@@ -38,7 +38,7 @@ export async function getGovernanceData(
       metadata: getMetadata(manifest, {
         name: 'Governance',
         description:
-          'Discover everything about the L2BEAT Governance Team, including the latest insights, analyses, and updates',
+          'Discover everything about the ETHBEAT Governance Team, including the latest insights, analyses, and updates',
         url,
         openGraph: {
           image: '/meta-images/governance/opengraph-image.png',

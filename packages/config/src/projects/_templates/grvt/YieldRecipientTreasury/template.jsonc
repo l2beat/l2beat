@@ -1,0 +1,41 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Receives the yield harvested from the strategies of the GRVTL1TreasuryVault and reimburses the vault for strategy entry and exit fees. The owner and authorized withdrawers can send its balance to the withdrawalRecipient.",
+  "fields": {
+    "authorizedVaults": {
+      "description": "Vaults that can pull fee reimbursements from the treasury.",
+      "handler": {
+        "type": "event",
+        "select": "vault",
+        "add": {
+          "event": "AuthorizedVaultUpdated",
+          "where": ["=", "#allowed", true]
+        },
+        "remove": {
+          "event": "AuthorizedVaultUpdated",
+          "where": ["!=", "#allowed", true]
+        }
+      }
+    },
+    "authorizedWithdrawers": {
+      "handler": {
+        "type": "event",
+        "select": "account",
+        "add": {
+          "event": "AuthorizedWithdrawerUpdated",
+          "where": ["=", "#allowed", true]
+        },
+        "remove": {
+          "event": "AuthorizedWithdrawerUpdated",
+          "where": ["!=", "#allowed", true]
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "send the balance of the YieldRecipientTreasury to its withdrawalRecipient."
+        }
+      ]
+    }
+  }
+}

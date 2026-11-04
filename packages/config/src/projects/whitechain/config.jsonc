@@ -1,0 +1,44 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "whitechain",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "eth:0x1D761826ad3098D10f6dDfbd143957Aaf2b6e50C",
+    "eth:0x0665f74e013b7FCcfDa6dAF8951bAf3C982a3864",
+    "eth:0x1De4f415Dc5bF6e458Cf32d13452c24A35Ec90e3"
+  ],
+  "names": {
+    "eth:0x568440132075d4E1c3E42111EF561636f4956eAd": "Whitechain Multisig 1",
+    "eth:0x8da4Ce0f49E472fb6F892c779b3E63C7a55B23aF": "Whitechain Multisig 2",
+    "eth:0x5918870d5391e0610d7624837cABEd9d4AbEeeE0": "Whitechain Multisig 3"
+  },
+  "overrides": {
+    "eth:0x7b806b8A81Ba1D4d2Df62180147e40F32f1eeb49": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    },
+    // OPContractsManagerV2 8.0.1, a separate deployment used to create this
+    // chain (SystemConfig.lastUsedOPCM). Ignored so discovery doesn't follow it
+    // into bare implementations; authority is the ProxyAdmin owner.
+    "eth:0xC19CBD026d1Bf9724fEF6A2DbF5e82eEae1b1277": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x1De4f415Dc5bF6e458Cf32d13452c24A35Ec90e3": {
+      "fields": {
+        // The respected super permissioned game (type 5) only checks this
+        // proposer (tx.origin) and resolves without a challenge.
+        "game5Proposer": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Allowed to post new state roots of the current layer to the host chain."
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -73,6 +73,7 @@ export function DefiLiquidStakingCharts({
         timeRange={timeRange}
       >
         <LiquidStakingLineChart
+          ariaLabel="Rate-implied yield"
           projects={aprCharted.projects}
           colors={colors}
           data={aprCharted.data}
@@ -92,6 +93,7 @@ export function DefiLiquidStakingCharts({
         timeRange={getChartTimeRangeFromData(exitCost.data)}
       >
         <LiquidStakingLineChart
+          ariaLabel="Cost of exit"
           projects={exitCost.projects}
           colors={colors}
           data={exitCost.data}
@@ -129,7 +131,7 @@ function ChartBlock({
             <TooltipContent>{info}</TooltipContent>
           </Tooltip>
         </div>
-        <ChartTimeRange timeRange={timeRange} />
+        <ChartTimeRange timeRange={timeRange} isPlaceholderData={false} />
       </div>
       <div>{children}</div>
     </div>

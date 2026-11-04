@@ -5,6 +5,7 @@ import { getL2RiskStateValidationEntries } from '~/server/features/layer2s/risks
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
+import { getBadgeLookup } from '~/utils/project/getBadgeWithParams'
 
 export async function getL2RiskStateValidationData(
   req: Request,
@@ -28,9 +29,9 @@ export async function getL2RiskStateValidationData(
       manifest,
       metadata: getMetadata(manifest, {
         name: 'State Validation',
-        title: 'Risk Analysis - L2BEAT',
+        title: 'Risk Analysis - ETHBEAT',
         description:
-          'Understand the risks of Ethereum scaling solutions using L2BEAT’s assessments.',
+          'Understand the risks of Ethereum scaling solutions using ETHBEAT’s assessments.',
         url: req.originalUrl,
         openGraph: {
           image:
@@ -43,6 +44,7 @@ export async function getL2RiskStateValidationData(
       props: {
         ...appLayoutProps,
         ...entries,
+        badgeLookup: getBadgeLookup(entries),
       },
     },
   }

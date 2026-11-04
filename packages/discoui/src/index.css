@@ -1,7 +1,43 @@
 @import "./markdown.css" layer(base);
 @import "tailwindcss";
 
-@config "../tailwind.config.js";
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme static {
+  --color-*: initial;
+  --color-transparent: transparent;
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  --color-coffee-50: #ffffff;
+  --color-coffee-100: #f8ebdd;
+  --color-coffee-200: #f0d8bd;
+  --color-coffee-300: #cdb090;
+  --color-coffee-400: #a98763;
+  --color-coffee-500: #816a53;
+  --color-coffee-600: #594c43;
+  --color-coffee-700: #3c332d;
+  --color-coffee-800: #282422;
+  --color-coffee-900: #1d1816;
+
+  --color-autumn-200: #d4f417;
+  --color-autumn-300: #bad80a;
+  --color-autumn-600: #4c9e2e;
+
+  --color-aux-blue: #8b8be8;
+  --color-aux-orange: #fe8019;
+  --color-aux-red: #fb4a35;
+  --color-aux-green: #9dde6c;
+  --color-aux-teal: #83a599;
+  --color-aux-yellow: #fabd30;
+  --color-aux-amber: #ffc107;
+  --color-aux-cyan: #1c92a8;
+  --color-aux-pink: #e27991;
+  --color-aux-purple: #a73db5;
+  --color-aux-brown: #7f3d0c;
+
+  --color-scrim: #000000;
+}
 
 @theme {
   --font-*: initial;
@@ -42,6 +78,22 @@
 }
 
 @layer base {
+  :root {
+    color-scheme: dark;
+    --editor-active-line: rgba(255, 255, 255, 0.05);
+    --editor-active-line-number: #c6c6c6;
+    --editor-selection-match: rgba(173, 214, 255, 0.15);
+    --editor-bracket-match: rgba(0, 100, 0, 0.3);
+    --editor-search-match: rgba(234, 92, 0, 0.33);
+    --editor-search-match-selected: rgba(81, 92, 106, 1);
+    --editor-goto-target: rgba(255, 255, 255, 0.1);
+    --editor-shadow: rgba(0, 0, 0, 0.6);
+    --diff-removed: rgba(255, 0, 0, 0.2);
+    --diff-inserted-line: rgba(155, 185, 85, 0.2);
+    --diff-inserted-text: rgba(156, 204, 44, 0.2);
+    --diff-diagonal: rgba(204, 204, 204, 0.2);
+  }
+
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
@@ -69,7 +121,7 @@
 @layer utilities {
   * {
     scrollbar-width: thin;
-    scrollbar-color: #a98763 transparent;
+    scrollbar-color: var(--color-coffee-400) transparent;
   }
 
   :focus-visible {
@@ -79,4 +131,61 @@
   ::selection {
     @apply bg-coffee-700;
   }
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+
+  --color-coffee-50: #1d1610;
+  --color-coffee-100: #2e241a;
+  --color-coffee-200: #412e18;
+  --color-coffee-300: #60472a;
+  --color-coffee-400: #856441;
+  --color-coffee-500: #9d856e;
+  --color-coffee-600: #baafa2;
+  --color-coffee-700: #ded6cc;
+  --color-coffee-800: #f5eee5;
+  --color-coffee-900: #fefbf7;
+
+  --color-autumn-200: #697903;
+  --color-autumn-300: #5f6f00;
+  --color-autumn-600: #2b7800;
+
+  --color-aux-blue: #5e5ab2;
+  --color-aux-orange: #973f00;
+  --color-aux-red: #d01601;
+  --color-aux-green: #417501;
+  --color-aux-teal: #446359;
+  --color-aux-yellow: #876201;
+  --color-aux-amber: #997204;
+  --color-aux-cyan: #037386;
+  --color-aux-pink: #a13f5a;
+  --color-aux-purple: #a439b1;
+
+  --color-scrim: #1d1610;
+
+  --editor-active-line: rgba(60, 40, 20, 0.05);
+  --editor-active-line-number: #2e241a;
+  --editor-selection-match: rgba(60, 120, 200, 0.15);
+  --editor-bracket-match: rgba(0, 120, 0, 0.18);
+  --editor-search-match: rgba(234, 92, 0, 0.25);
+  --editor-search-match-selected: rgba(170, 190, 215, 1);
+  --editor-goto-target: rgba(60, 40, 20, 0.08);
+  --editor-shadow: rgba(60, 40, 20, 0.18);
+  --diff-removed: rgba(255, 0, 0, 0.15);
+  --diff-inserted-line: rgba(155, 185, 85, 0.25);
+  --diff-inserted-text: rgba(120, 170, 20, 0.3);
+  --diff-diagonal: rgba(60, 40, 20, 0.1);
+}
+
+/* Lime stays the fill color, as black text reads well on it; on paper, lime
+   text and lines do not, so everything else takes the darker olive. */
+[data-theme="light"]
+  :is(.bg-autumn-300, .hover\:bg-autumn-200, .hover\:bg-autumn-300) {
+  --color-autumn-200: #d4f417;
+  --color-autumn-300: #bad80a;
+}
+
+[data-theme="light"] img[src$="logo.svg"] {
+  filter: brightness(0.25);
 }

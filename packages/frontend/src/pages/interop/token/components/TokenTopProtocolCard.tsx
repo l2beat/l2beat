@@ -254,7 +254,10 @@ function ProtocolStat({
 function InfoTooltip({ children }: { children: ReactNode }) {
   return (
     <Tooltip>
-      <TooltipTrigger className="mb-px ml-1 inline-flex align-middle">
+      <TooltipTrigger
+        className="mb-px ml-1 inline-flex align-middle"
+        aria-label="More info"
+      >
         <InfoIcon className="size-3 fill-current" />
       </TooltipTrigger>
       <TooltipContent>{children}</TooltipContent>

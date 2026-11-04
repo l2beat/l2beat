@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { RENAME_ANNOUNCEMENT_PATH } from '~/consts/siteName'
 import { getCollection } from '~/content/getCollection'
 import { env } from '~/env'
 import {
@@ -48,6 +49,7 @@ export const STATIC_PAGE_PATHS = [
   '/native-rollups',
   '/faq',
   '/about-us',
+  RENAME_ANNOUNCEMENT_PATH,
   '/brand-kit',
   '/changelog',
   '/donate',
@@ -72,9 +74,7 @@ export async function getPages(): Promise<Page[]> {
   if (env.CLIENT_SIDE_OSSIFICATION_ENABLED) {
     paths.push('/ossification')
   }
-  if (env.CLIENT_SIDE_MANDATE_PAGE) {
-    paths.push('/mandate')
-  }
+  paths.push('/mandate')
   if (env.CLIENT_SIDE_GARDEN_ENABLED) {
     paths.push(GARDEN_PATH, SUBMIT_PROTOCOL_PATH, INTEGRATE_CROPS_PATH)
   }
@@ -85,7 +85,6 @@ async function getDynamicPages(): Promise<Page[]> {
   const [
     l2Projects,
     zkCatalogProjects,
-    ecosystemProjects,
     privacyProjects,
     defiProjects,
     interopProtocols,
@@ -97,7 +96,6 @@ async function getDynamicPages(): Promise<Page[]> {
       optional: ['tvsConfig'],
     }),
     ps.getProjects({ select: ['zkCatalogInfo'] }),
-    ps.getProjects({ where: ['ecosystemConfig'] }),
     ps.getProjects({ where: ['privacyInfo'], whereNot: ['archivedAt'] }),
     env.CLIENT_SIDE_DEFI_ENABLED
       ? ps.getProjects({ where: ['defiInfo'] })
@@ -113,7 +111,6 @@ async function getDynamicPages(): Promise<Page[]> {
       .filter((project) => project.tvsConfig)
       .map(projectPage('/layer2s/projects', '/tvs-breakdown')),
     ...zkCatalogProjects.map(projectPage('/zk-catalog')),
-    ...ecosystemProjects.map(projectPage('/ecosystems')),
     ...privacyProjects.map(projectPage('/privacy/projects')),
     ...defiProjects.map(projectPage('/defi/projects')),
     ...interopProtocols.map(projectPage('/interop/protocols')),

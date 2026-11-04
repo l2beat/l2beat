@@ -101,7 +101,7 @@ async function loadDefiProjectPage(manifest: Manifest, slug: string) {
       manifest,
       metadata: getMetadata(manifest, {
         name: entry.name,
-        title: `${entry.name} - DeFi - L2BEAT`,
+        title: `${entry.name} - DeFi - ETHBEAT`,
         description: getProjectMetadataDescription(entry),
         // Derived from the slug, not the request URL: the cache entry is
         // shared by every request for the project, including the .md one.

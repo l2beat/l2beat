@@ -404,7 +404,7 @@ function BackingPath({
           </div>
         </div>
       ))}
-      <p className="ml-1.5 border-brand border-l-2 pl-3 font-medium text-brand">
+      <p className="ml-1.5 border-brand border-l-2 pl-3 font-medium text-brand-deep">
         This deployment
       </p>
       {!path.complete && (

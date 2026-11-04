@@ -8,6 +8,7 @@ import { TokenDbHistoryRepository } from './repositories/TokenDbHistoryRepositor
 import { TokenDbSettingRepository } from './repositories/TokenDbSettingRepository'
 import { TokenIngestionQueueRepository } from './repositories/TokenIngestionQueueRepository'
 import { TokenRelationRepository } from './repositories/TokenRelationRepository'
+import { TvsCoverageDismissalRepository } from './repositories/TvsCoverageDismissalRepository'
 import { getDatabaseStats } from './utils/getDatabaseStats'
 
 export type TokenDatabase = ReturnType<typeof createTokenDatabase>
@@ -25,6 +26,7 @@ export function createTokenDatabase(config?: PoolConfig & { log?: LogConfig }) {
     tokenDbHistory: new TokenDbHistoryRepository(db),
     tokenDbSettings: new TokenDbSettingRepository(db),
     tokenIngestionQueue: new TokenIngestionQueueRepository(db),
+    tvsCoverageDismissal: new TvsCoverageDismissalRepository(db),
 
     stats: () => getDatabaseStats(db),
   }

@@ -49,10 +49,9 @@ assert(
   'Governance votes no longer request the smallest allowed committee: update the committee texts.',
 )
 
-const ballotVerifier = discovery.getContract('CrispOnchainBallotVerifier')
 assert(
-  ballotVerifier.unverified,
-  'The CRISP ballot verifier is verified now: update the reproducibility and future adversary texts.',
+  discovery.getContracts().every((contract) => !contract.unverified),
+  'An Interfold contract is unverified: update the reproducibility text.',
 )
 
 // IPP stages: [bodies, maxAdvance, minAdvance, voteDuration, ...]. Stage 0 is
@@ -76,14 +75,7 @@ assert(
   'The Interfold multisigs no longer share their signers: update the governance text.',
 )
 
-const veMultisigMembers = discovery.getContractValue<string[]>(
-  'VotingEscrowMultisig',
-  '$members',
-).length
-const veMultisigThreshold = discovery.getContractValue<number>(
-  'VotingEscrowMultisig',
-  '$threshold',
-)
+const veMultisigStats = discovery.getMultisigStats('VotingEscrowMultisig')
 
 export const interfold: BaseProject = {
   id: ProjectId('interfold'),
@@ -94,7 +86,7 @@ export const interfold: BaseProject = {
   discoveryInfo: getDiscoveryInfo([discovery]),
   statuses: {
     yellowWarning:
-      'Early mainnet: Interfold runs with an initial set of ciphernode operators, and only a few votes have taken place. L2BEAT does not measure the anonymity set of past votes. The rating reflects the protocol design only.',
+      'Early mainnet: Interfold runs with an initial set of ciphernode operators, and only a few votes have taken place. ETHBEAT does not measure the anonymity set of past votes. The rating reflects the protocol design only.',
     redWarning: undefined,
     emergencyWarning: undefined,
     reviewStatus: undefined,
@@ -199,7 +191,7 @@ export const interfold: BaseProject = {
       value: 'None',
       sentiment: 'bad',
       orderHint: 0,
-      description: `A ${veMultisigThreshold}-of-${veMultisigMembers} multisig plugin can upgrade the escrow that holds locked FOLD instantly, and the Interfold multisigs can upgrade the bonding registry instantly.`,
+      description: `The VotingEscrowMultisig (${veMultisigStats}) and the Interfold multisigs can instantly upgrade VotingEscrow, which holds locked FOLD. The Interfold multisigs can also instantly upgrade BondingRegistry, which holds bonded FOLD.`,
       walkawayTest: {
         passed: false,
         reason:
@@ -210,7 +202,7 @@ export const interfold: BaseProject = {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'The contracts, ciphernode software, circuits, CRISP server and app are open source. The two contracts that verify ballot proofs are unverified.',
+        "The contracts, ciphernode software, circuits, CRISP server and app are open source, and every deployed contract is verified. A rebuild of the OpenVM program that sums the ballots misses its onchain commitment, since the binary embeds unpublished file paths from the builder's machine.",
     },
     attributes: [PRIVACY_ATTRIBUTES.fhe, PRIVACY_ATTRIBUTES.zk],
     // Ballot proofs are Noir/UltraHonk, verified with Barretenberg's Aztec Ignition setup.
@@ -231,8 +223,7 @@ export const interfold: BaseProject = {
         safeBStats: discovery.getMultisigStats('InterfoldSafeB'),
         voteDuration: formatSeconds(ippStages[0][3], { fullUnit: true }),
         approvalWindow: formatSeconds(ippStages[1][1], { fullUnit: true }),
-        veMultisigMembers,
-        veMultisigThreshold,
+        veMultisigStats,
       }),
     },
   },

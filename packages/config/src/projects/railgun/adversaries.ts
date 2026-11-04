@@ -46,7 +46,7 @@ export function railgunAdversaries(upgradeDelay: string) {
           'The candidates for an unshield are the shields of the same token.',
         exposureContinued:
           'In-pool transfers break a one-to-one match, while timing and exact amounts narrow it.',
-        advice: `${S.commonAmounts} ${S.freshExit}`,
+        advice: `${S.largeAnonymitySet} ${S.commonAmounts} ${S.freshExit}`,
         interior: INTERIOR,
         sources: [
           {
@@ -121,9 +121,10 @@ export function railgunAdversaries(upgradeDelay: string) {
       },
       futureAdversary: {
         sentiment: 'warning',
-        exposureShort: 'Notes are encrypted with elliptic-curve key exchange.',
+        exposureShort:
+          'Whoever breaks elliptic-curve cryptography decrypts every note sent to a 0zk address they know.',
         exposureContinued:
-          'Whoever breaks elliptic-curve cryptography decrypts every note sent to a 0zk address they know. A user who gives theirs to payers depends on each of them keeping it private.',
+          'A user who gives theirs to payers depends on each of them keeping it private.',
         advice:
           "Share the user's 0zk address privately, with a fresh one per counterparty where possible.",
         interior: {

@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "shared",
+  "description": "Service contract that registers one ZK stack chain on another for interop by sending an L1->L2 service transaction through the Bridgehub. Only chains settling on the same settlement layer can be registered with each other.",
+  "ignoreMethods": ["chainRegisteredOnChain"]
+}

@@ -10,7 +10,7 @@ export interface Contributor {
 export const CONTRIBUTORS = [
   {
     name: 'Luca Donno',
-    org: 'L2BEAT',
+    org: 'ETHBEAT',
     href: 'https://x.com/donnoh_eth',
     imagePath: '/images/native-rollups/luca-donno.jpg',
   },

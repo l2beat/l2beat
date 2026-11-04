@@ -16,7 +16,7 @@ Each vote is one E3 (encrypted execution environment), a computation over encryp
 
 ### Voting
 
-A CRISP vote sets who may vote in one of three ways. It reads voting power from a token at a snapshot, as Interfold governance votes do, or uses an address list built from token holders or supplied by the requester. Interfold's governance must post each list's Merkle root, so it controls these lists. Each voter counts with their token weight or with the same weight as everyone else. With equal weights, the totals leave nothing to match against.
+A CRISP vote sets who may vote in one of three ways. It reads voting power from a token at a snapshot, as Interfold governance votes do. Otherwise it uses an address list, built from token holders or supplied by the requester. Interfold's governance must post each list's Merkle root, so it controls these lists. Each voter counts with their token weight or with the same weight as everyone else. With equal weights, the totals leave nothing to match against.
 
 ### App
 
@@ -24,4 +24,4 @@ The ratings cover Interfold governance votes. Interfold hosts the app, built fro
 
 ### Ciphernodes
 
-Operators register by bonding {{bond}} FOLD and buying tickets with sUSDS. The lottery gives each bond-owner address at most one seat per committee, the only limit on one party filling a committee. Interfold does not name the operators and calls the current set an [initial one](https://blog.theinterfold.com/network-alpha-mainnet/).
+Operators register by bonding {{bond}} FOLD and buying tickets with sUSDS. The lottery gives each bond-owner address at most one seat per committee. Interfold calls the current set an [initial one](https://blog.theinterfold.com/network-alpha-mainnet/).

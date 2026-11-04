@@ -1,9 +1,13 @@
 import express from 'express'
+import { SITE_NAME_WITH_FORMER } from '~/consts/siteName'
 import {
   PRIVACY_SUMMARY_DESCRIPTION,
   ZK_CATALOG_DESCRIPTION,
 } from '~/consts/summaryPageDescriptions'
-import { DEFI_SUMMARY_PAGE_DESCRIPTION } from '~/server/features/defi/defiSummaryVisibility'
+import {
+  DEFI_SUMMARY_CATEGORIES,
+  DEFI_SUMMARY_PAGE_DESCRIPTION,
+} from '~/server/features/defi/defiSummaryVisibility'
 import { getDefiListSections } from '~/server/markdown/list-pages/getDefiListSections'
 import { getInteropListSections } from '~/server/markdown/list-pages/getInteropListSections'
 import { getOssificationListSections } from '~/server/markdown/list-pages/getOssificationListSections'
@@ -73,13 +77,13 @@ const LIST_PAGE_DOCUMENTS: Record<
   Omit<MarkdownAlternate, 'path'>
 > = {
   '/layer2s/summary': {
-    title: 'L2BEAT scaling projects',
+    title: `Scaling projects on ${SITE_NAME_WITH_FORMER}`,
     summary:
-      'Every layer 2 and layer 3 tracked by L2BEAT, with category, stage, stack and host chain. Each link is the project page; its last path segment is the {slug} for the public API.',
+      'Every layer 2 and layer 3 tracked by ETHBEAT, with category, stage, stack and host chain. Each link is the project page; its last path segment is the {slug} for the public API.',
     getSections: getScalingListSections,
   },
   '/zk-catalog': {
-    title: 'L2BEAT ZK catalog',
+    title: `ZK catalog on ${SITE_NAME_WITH_FORMER}`,
     summary:
       'Zero-knowledge proving systems used by tracked projects, with their creators, trusted setups and onchain verifiers.',
     notes: [
@@ -90,28 +94,34 @@ const LIST_PAGE_DOCUMENTS: Record<
     getSections: getZkListSections,
   },
   '/privacy/summary': {
-    title: 'L2BEAT privacy protocols',
+    title: `Privacy protocols on ${SITE_NAME_WITH_FORMER}`,
     summary:
-      'Privacy protocols on Ethereum and its layer 2s tracked by L2BEAT, with their category and exit window.',
+      'Privacy protocols on Ethereum and its layer 2s tracked by ETHBEAT, with their category and exit window.',
     notes: PRIVACY_SUMMARY_DESCRIPTION,
     getSections: getPrivacyListSections,
   },
   '/interop/summary': {
-    title: 'L2BEAT interoperability protocols',
+    title: `Interoperability protocols on ${SITE_NAME_WITH_FORMER}`,
     summary:
-      'Cross-chain protocols tracked by L2BEAT, with their type and the bridge types they use.',
+      'Cross-chain protocols tracked by ETHBEAT, with their type and the bridge types they use.',
     notes:
       'Token pages live at /tokens/{id}/{issuer}/{symbol}, where {id} is case-sensitive and alone identifies the token. Token ids come from the database, so they are not listed here: take them from the token links on the protocol pages.',
     getSections: getInteropListSections,
   },
   '/defi/summary': {
-    title: 'L2BEAT DeFi protocols',
-    summary: 'DeFi protocols tracked by L2BEAT, with their category.',
+    title:
+      DEFI_SUMMARY_CATEGORIES === undefined
+        ? `DeFi protocols on ${SITE_NAME_WITH_FORMER}`
+        : `Liquid staking protocols on ${SITE_NAME_WITH_FORMER}`,
+    summary:
+      DEFI_SUMMARY_CATEGORIES === undefined
+        ? 'DeFi protocols tracked by ETHBEAT, with their category.'
+        : 'Liquid staking protocols tracked by ETHBEAT, with their risk comparison.',
     notes: DEFI_SUMMARY_PAGE_DESCRIPTION,
     getSections: getDefiListSections,
   },
   '/ossification': {
-    title: 'L2BEAT ossification',
+    title: `Ossification on ${SITE_NAME_WITH_FORMER}`,
     summary:
       'How long the critical contracts of each tracked project have gone unchanged, and how much value they secured meanwhile, with the exit window where the project has one.',
     notes: [

@@ -11,13 +11,12 @@ import type {
 } from '@l2beat/config'
 import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
+import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
-import {
-  WALK_AWAY_NOT_PASSED_PROJECTS,
-  WALK_AWAY_PASSED_PROJECTS,
-} from '~/consts/walkAwayProjects'
+import type { WalkAwayVerdict } from '~/consts/walkAwayProjects'
+import { getWalkAwayVerdict } from '~/consts/walkAwayProjects'
 import { env } from '~/env'
 import type { CompareMetricId } from '~/pages/layer2s/compare/utils/compareChartState'
 import { getCompareEntryUrl } from '~/pages/layer2s/compare/utils/getCompareEntryUrl'
@@ -60,6 +59,7 @@ import {
   getUnderReviewStatus,
   type UnderReviewStatus,
 } from '~/utils/project/underReview'
+import { getPrivacyProjectsRunningOn } from '../../privacy/utils/getPrivacyScalingLinks'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { getProjectVerification } from '../../utils/getIsProjectVerified'
 import { getActivityProjectStats } from '../activity/getActivityProjectStats'
@@ -137,6 +137,7 @@ export interface ProjectL2Entry {
       uopsWeeklyChangePeriod: PercentageChangePeriod
     }
     gasTokens?: string[]
+    privacyProjects: ProjectIconListItem[]
     interop?: ProjectInteropData['summary']
   }
   rosette: L2Rosette
@@ -144,6 +145,7 @@ export interface ProjectL2Entry {
   reasonsForBeingOther?: ReasonForBeingInOther[]
   hostChainName: string
   stageConfig: ProjectScalingStage
+  walkAway: WalkAwayVerdict | undefined
   discoUiHref: string | undefined
 }
 
@@ -287,6 +289,7 @@ export async function getL2ProjectEntry(
       .map((badge) => getBadgeWithParamsAndLink(badge, project))
       .filter((b) => !!b),
     gasTokens: project.chainConfig?.gasTokens,
+    privacyProjects: getPrivacyProjectsRunningOn(project.id, allProjects),
     interop: interopData?.summary,
   }
 
@@ -339,8 +342,9 @@ export async function getL2ProjectEntry(
       project.scalingInfo.type === 'Other'
         ? { stage: 'NotApplicable' as const }
         : project.scalingStage,
+    walkAway: getWalkAwayVerdict(project),
     discoUiHref: project.discoveryInfo?.hasDiscoUi
-      ? `https://disco.l2beat.com/ui/p/${project.id}`
+      ? `https://disco.ethbeat.org/ui/p/${project.id}`
       : undefined,
   }
 
@@ -625,11 +629,7 @@ export async function getL2ProjectEntry(
             : undefined,
         scopeOfAssessment: project.scalingInfo.scopeOfAssessment,
         emergencyWarning: project.statuses.emergencyWarning,
-        walkAway: WALK_AWAY_PASSED_PROJECTS.includes(project.id)
-          ? 'passed'
-          : WALK_AWAY_NOT_PASSED_PROJECTS.includes(project.id)
-            ? 'not-passed'
-            : undefined,
+        walkAway: common.walkAway,
       },
     })
   }

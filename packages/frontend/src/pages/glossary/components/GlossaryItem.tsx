@@ -1,4 +1,5 @@
 import { CopyButton } from '~/components/CopyButton'
+import { toProductionUrl } from '~/consts/productionOrigin'
 import type { CollectionEntry } from '~/content/getCollection'
 import { ChiliIcon } from '~/icons/Chili'
 
@@ -23,8 +24,9 @@ export function GlossaryItem(props: Props) {
           )}
         </a>
         <CopyButton
-          toCopy={`https://l2beat.com/glossary#${props.entry.id}`}
-          className="md:group-hover:fade-in-0 md:hidden md:group-hover:block md:group-hover:animate-in"
+          toCopy={toProductionUrl(`/glossary#${props.entry.id}`)}
+          // With a mouse it shows on hover or focus; on touch, always.
+          className="can-hover:group-hover:fade-in-0 can-hover:hidden can-hover:group-focus-within:block can-hover:group-hover:block can-hover:group-hover:animate-in"
           iconClassName="size-5"
         />
       </div>

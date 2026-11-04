@@ -136,7 +136,9 @@ function LetterChip({
         isDashed ? 'border-crop-neutral border-dashed' : CROP_BORDER[sentiment],
         className,
       )}
-      style={{ animation: `garden-pop .3s ${EASE_OUT_BACK} ${delay}s both` }}
+      style={{
+        animation: `garden-pop .3s ${EASE_OUT_BACK} ${delay}s backwards`,
+      }}
     >
       <span
         aria-hidden

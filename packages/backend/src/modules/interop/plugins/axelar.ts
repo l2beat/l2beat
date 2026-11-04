@@ -55,25 +55,32 @@ const AXELAR_APP_BY_SENDER: Record<string, string> = {
 
 // https://docs.axelar.dev/resources/contract-addresses/mainnet/
 // chainconfeeg
-export const AXELAR_NETWORKS = defineNetworks('axelar', [
-  { axelarChainName: 'Ethereum', chain: 'ethereum' },
+const AXELAR_NETWORKS = defineNetworks('axelar', [
+  { axelarChainName: 'ethereum', chain: 'ethereum' },
   { axelarChainName: 'arbitrum', chain: 'arbitrum' },
-  { axelarChainName: 'Arbitrum', chain: 'arbitrum' }, // yeah
-  { axelarChainName: 'Avalanche', chain: 'avalanche' },
+  { axelarChainName: 'avalanche', chain: 'avalanche' },
   { axelarChainName: 'base', chain: 'base' },
-  { axelarChainName: 'Base', chain: 'base' },
   { axelarChainName: 'mantle', chain: 'mantle' },
   { axelarChainName: 'binance', chain: 'bsc' },
   { axelarChainName: 'linea', chain: 'linea' },
   { axelarChainName: 'optimism', chain: 'optimism' },
-  { axelarChainName: 'Polygon', chain: 'polygonpos' },
+  { axelarChainName: 'polygon', chain: 'polygonpos' },
   { axelarChainName: 'celo', chain: 'celo' },
-  { axelarChainName: 'Avalanche', chain: 'avalanche' },
   { axelarChainName: 'hyperliquid', chain: 'hyperevm' },
   { axelarChainName: 'monad', chain: 'monad' },
   { axelarChainName: 'solana', chain: 'solana' },
   // tempo unsupported
 ])
+
+// Axelar chain names are case-insensitive and senders use both
+// 'Optimism' and 'optimism'
+export function findAxelarChain(axelarChainName: string): string {
+  return findChain(
+    AXELAR_NETWORKS,
+    (x) => x.axelarChainName,
+    axelarChainName.toLowerCase(),
+  )
+}
 
 export const ContractCall = createInteropEventType<{
   sender: EthereumAddress
@@ -129,11 +136,7 @@ export class AxelarPlugin implements InteropPlugin {
   capture(input: LogToCapture) {
     const contractCall = parseContractCall(input.log, null)
     if (contractCall) {
-      const dstChain = findChain(
-        AXELAR_NETWORKS,
-        (x) => x.axelarChainName,
-        contractCall.destinationChain,
-      )
+      const dstChain = findAxelarChain(contractCall.destinationChain)
       return [
         ContractCall.create(input, {
           sender: EthereumAddress(contractCall.sender),
@@ -154,11 +157,7 @@ export class AxelarPlugin implements InteropPlugin {
         (log) => parseTransfer(log, null),
       )
 
-      const dstChain = findChain(
-        AXELAR_NETWORKS,
-        (x) => x.axelarChainName,
-        contractCallWithToken.destinationChain,
-      )
+      const dstChain = findAxelarChain(contractCallWithToken.destinationChain)
 
       return [
         ContractCallWithToken.create(input, {
@@ -179,11 +178,7 @@ export class AxelarPlugin implements InteropPlugin {
 
     const contractCallApproved = parseContractCallApproved(input.log, null)
     if (contractCallApproved) {
-      const srcChain = findChain(
-        AXELAR_NETWORKS,
-        (x) => x.axelarChainName,
-        contractCallApproved.sourceChain,
-      )
+      const srcChain = findAxelarChain(contractCallApproved.sourceChain)
 
       return [
         ContractCallApproved.create(input, {
@@ -204,11 +199,7 @@ export class AxelarPlugin implements InteropPlugin {
       null,
     )
     if (contractCallApprovedWithMint) {
-      const srcChain = findChain(
-        AXELAR_NETWORKS,
-        (x) => x.axelarChainName,
-        contractCallApprovedWithMint.sourceChain,
-      )
+      const srcChain = findAxelarChain(contractCallApprovedWithMint.sourceChain)
 
       return [
         ContractCallApprovedWithMint.create(input, {

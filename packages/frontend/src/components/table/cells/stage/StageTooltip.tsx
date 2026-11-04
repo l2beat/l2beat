@@ -106,7 +106,7 @@ export function StageTooltip({
         <p>
           Projects under review might present uncompleted information & data.
           <br />
-          L2BEAT Team is working to research & validate content before
+          ETHBEAT Team is working to research & validate content before
           publishing.
         </p>
       )}
@@ -192,7 +192,7 @@ function getStageName(stage: Stage | 'UnderReview') {
 function getColorClassName(stage: Stage) {
   switch (stage) {
     case 'Stage 1':
-      return 'text-warning'
+      return 'text-warning-text'
     case 'Stage 2':
       return 'text-positive'
     default:

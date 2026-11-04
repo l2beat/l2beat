@@ -1,3 +1,93 @@
+Generated with discovered.json: 0xf741482a4fb51bc962d2901cdcd7166b2f1dc039
+
+# Diff at Tue, 03 Nov 2026 15:44:54 GMT:
+
+- id: fd02ce2a
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@5dabdf7cb402311ede1c313c1891f2094a550030 block: 1792059502
+- current timestamp: 1792059502
+
+## Description
+
+Discovery rerun on the same block number: only the description of `getDAValidatorPair` in the shared Diamond template changed (its second return value becomes an L2 DA commitment scheme from v31). No onchain change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792059502 (main branch discovery), not current.
+
+```diff
+    contract Diamond (eth:0x0583Ef2B6416cb7B287406438B940E4d99680C5B) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
++++ description: 1 once the chain admin permanently allowed Priority Mode (ZKsync OS permanent rollups only). Then anyone can activate it as soon as the first unprocessed priority transaction is older than 4 days, after which only the shared PermissionlessValidator can settle batches (anyone can submit through it) and only the ChainTypeManager owner can deactivate it.
++++ severity: HIGH
+      values.priorityModeCanBeActivated:
++        0
++++ description: Raw Priority Mode storage: last byte canBeActivated, byte before it activated, then the PermissionlessValidator address.
++++ severity: HIGH
+      values.priorityModeInfo:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
++++ description: TransactionFilterer that replaces the chain's own filterer once Priority Mode is allowed. Set by the ChainTypeManager owner, zero means no filtering.
++++ severity: HIGH
+      values.priorityModeTransactionFilterer:
++        "eth:0x0000000000000000000000000000000000000000"
+      fieldMeta.getDAValidatorPair.description:
+-        "l1da, l2da"
++        "l1da, l2da (before v31) or l1da, L2 DA commitment scheme (from v31)."
+      fieldMeta.priorityModeCanBeActivated:
++        {"severity":"HIGH","description":"1 once the chain admin permanently allowed Priority Mode (ZKsync OS permanent rollups only). Then anyone can activate it as soon as the first unprocessed priority transaction is older than 4 days, after which only the shared PermissionlessValidator can settle batches (anyone can submit through it) and only the ChainTypeManager owner can deactivate it."}
+      fieldMeta.priorityModeInfo:
++        {"severity":"HIGH","description":"Raw Priority Mode storage: last byte canBeActivated, byte before it activated, then the PermissionlessValidator address."}
+      fieldMeta.priorityModeTransactionFilterer:
++        {"severity":"HIGH","description":"TransactionFilterer that replaces the chain's own filterer once Priority Mode is allowed. Set by the ChainTypeManager owner, zero means no filtering."}
+    }
+```
+
+```diff
+    contract L1NativeTokenVault (eth:0x0A0F8912162Ff83A036883dbaDA42efF647a3065) [shared-zk-stack/L1NativeTokenVault] {
+    +++ description: Canonical central asset escrow for all ZK stack chains.
+      sourceHashes.1:
+-        "0xeac1b0724c69c33183ce8e24a8f3ac28eb5adb9925dff647396c8d165f0ecae9"
++        "0xcacbab74b3abde440d2b92fb0b9499baa58dcaf51bc91222f687508934da689b"
+    }
+```
+
+Generated with discovered.json: 0xa3247d504f5f670988b3b9101accdffdf2b272d4
+
+# Diff at Mon, 02 Nov 2026 13:39:34 GMT:
+
+- id: 9015e4db
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@7de2489d6143463905a64a13eea216e581898f3f block: 1792059502
+- current timestamp: 1792059502
+
+## Description
+
+The ADI ChainTypeManager runs the same ZKsyncOSChainTypeManager code as the ZKsync OS ChainTypeManager of the shared ecosystem, so its shape moved from adi/ChainTypeManager to the shared-zk-stack/ChainTypeManager template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792059502 (main branch discovery), not current.
+
+```diff
+    contract ZKsyncOSChainTypeManager (eth:0x08A1D2962fC29AA46e869A1E7561112cc1026EfA) [shared-zk-stack/ChainTypeManager] {
+    +++ description: Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,30,2.
+      template:
+-        "adi/ChainTypeManager"
++        "shared-zk-stack/ChainTypeManager"
+      description:
+-        "[FORK] This contract is not the standard hub contract from the Elastic network but a local fork for ADI chain. Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,30,2."
++        "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,30,2."
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"},"admin":{"severity":"MEDIUM"},"validatorTimelock":{"severity":"HIGH"},"validatorTimelockPostV29":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0xfaf445db4ab492020cd0784e1da6201decdabd1e
 
 # Diff at Sat, 24 Oct 2026 16:41:03 GMT:

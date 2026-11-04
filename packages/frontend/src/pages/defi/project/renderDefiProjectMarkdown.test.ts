@@ -14,7 +14,7 @@ describe(renderDefiProjectMarkdown.name, () => {
     const markdown = renderDefiProjectMarkdown(ENTRY, TOTAL_VALUE_LOCKED_USD)
 
     expect(markdown).toMatchRegex(
-      /^# Lido\n\nMarkdown version of https:\/\/l2beat\.com\/defi\/projects\/lido\n\n/,
+      /^# Lido\n\nMarkdown version of https:\/\/ethbeat\.org\/defi\/projects\/lido\n\n/,
     )
   })
 
@@ -47,7 +47,7 @@ describe(renderDefiProjectMarkdown.name, () => {
     )
 
     expect(summary).toInclude(
-      '### Links\n\n- Website: https://lido.fi\n- Contracts explorer (Disco): https://disco.l2beat.com/ui/p/lido',
+      '### Links\n\n- Website: https://lido.fi\n- Contracts explorer (Disco): https://disco.ethbeat.org/ui/p/lido',
       '### Badges\n\n- Ethereum: Ethereum badge.\n- Chainlink: Chainlink badge.',
     )
   })
@@ -113,7 +113,7 @@ describe(renderDefiProjectMarkdown.name, () => {
         renderDefiProjectMarkdown(ENTRY, TOTAL_VALUE_LOCKED_USD),
         'Value Locked',
       ),
-    ).toInclude('https://l2beat.com/defi/projects/lido#tvs')
+    ).toInclude('https://ethbeat.org/defi/projects/lido#tvs')
   })
 
   it('lists external dependencies with absolute links and review status', () => {
@@ -124,7 +124,7 @@ describe(renderDefiProjectMarkdown.name, () => {
 
     expect(dependencies).toInclude(
       [
-        '- [Chainlink](https://l2beat.com/defi/projects/chainlink): Provides the ETH/USD price.',
+        '- [Chainlink](https://ethbeat.org/defi/projects/chainlink): Provides the ETH/USD price.',
         '- Obol (not reviewed): Runs distributed validators.',
       ].join('\n'),
     )
@@ -220,7 +220,7 @@ function externalDependencies(
 }
 
 const DISCO_UI = {
-  href: 'https://disco.l2beat.com/ui/p/lido',
+  href: 'https://disco.ethbeat.org/ui/p/lido',
   images: { desktop: '/desktop.png', mobile: '/mobile.png' },
 }
 

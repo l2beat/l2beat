@@ -63,8 +63,12 @@ export function CostsTotalCell({ data, warning }: CellProps) {
 function Warning({ warning }: { warning: WarningWithSentiment }) {
   return (
     <Tooltip>
-      <TooltipTrigger>
-        <RoundedWarningIcon className="size-4" sentiment={warning.sentiment} />
+      <TooltipTrigger aria-label="Costs warning">
+        <RoundedWarningIcon
+          className="size-4"
+          sentiment={warning.sentiment}
+          aria-hidden
+        />
       </TooltipTrigger>
       <TooltipContent>
         <Callout

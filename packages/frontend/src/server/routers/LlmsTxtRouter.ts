@@ -1,5 +1,10 @@
 import express from 'express'
 import { externalLinks } from '~/consts/externalLinks'
+import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
+import {
+  RENAME_ANNOUNCEMENT_PATH,
+  SITE_NAME_WITH_FORMER,
+} from '~/consts/siteName'
 import { env } from '~/env'
 import {
   type LinkListSection,
@@ -47,25 +52,25 @@ export function createLlmsTxtRouter() {
 }
 
 const LLMS_TXT = {
-  title: 'L2BEAT',
+  title: SITE_NAME_WITH_FORMER,
   summary:
-    'L2BEAT is an independent analytics and research website about Ethereum scaling and privacy. It tracks layer 2s and layer 3s, data availability layers, interoperability protocols and zero-knowledge proving systems, assessing their risks, maturity stages, value secured, activity, liveness and costs. It also reviews privacy protocols on Ethereum and its layer 2s: what each one hides and from whom, anonymity sets, trusted setups and exit windows. Risk assessments are backed by on-chain contract discovery and all project data is open source.',
+    'ETHBEAT is an independent analytics and research website about Ethereum scaling and privacy. It tracks layer 2s and layer 3s, data availability layers, interoperability protocols and zero-knowledge proving systems, assessing their risks, maturity stages, value secured, activity, liveness and costs. It also reviews privacy protocols on Ethereum and its layer 2s: what each one hides and from whom, anonymity sets, trusted setups and exit windows. Risk assessments are backed by on-chain contract discovery and all project data is open source.',
   notes: [
     'Important notes:',
     '',
     '- Links ending in .md are markdown: summary pages list every tracked project with its page URL, and the Markdown pages section covers single projects. The other links are HTML pages.',
     '- Prefer the .md URLs: page URLs also answer Accept: text/markdown, but an edge cache may serve them as HTML.',
     '- Slugs and interop token ids are case-sensitive: use them exactly as listed.',
-    '- {slug} in API paths is the last segment of a project page URL, e.g. arbitrum for https://l2beat.com/layer2s/projects/arbitrum.',
+    `- {slug} in API paths is the last segment of a project page URL, e.g. arbitrum for ${PRODUCTION_ORIGIN}/layer2s/projects/arbitrum.`,
     '- All API endpoints except the scaling summary wrap their result as { success, data }.',
     '- "Stage" is the rollup maturity level (Stage 0, 1 or 2) defined by the stages framework linked below.',
     '',
-    'When to use L2BEAT:',
+    'When to use ETHBEAT:',
     '',
     '- To answer which layer 2s exist, how mature they are (stage), what their risks are and how they compare.',
     '- To get current or historical total value secured, activity, liveness or cost figures for a layer 2, via the pages or the JSON API.',
     '- To check where a layer 2 posts its data and how secure that data availability layer and its bridge are.',
-    '- To look up which proving system, stack or ecosystem a project uses, or the definitions behind L2BEAT terms.',
+    '- To look up which proving system, stack or ecosystem a project uses, or the definitions behind ETHBEAT terms.',
     '- To review or compare privacy protocols on Ethereum (privacy pools, shielded pools and ledgers, stealth addresses, confidential tokens): what each one hides and from which adversary, anonymity set sizes, trusted setups and exit windows. Start from /privacy/summary.md, then /privacy/projects/{slug}.md for one protocol.',
     '- Not for token prices, exchange data, wallet balances or anything outside Ethereum scaling, privacy and their infrastructure.',
   ].join('\n'),
@@ -276,7 +281,7 @@ const PAGE_SECTIONS: LinkListSection[] = [
         name: 'Governance',
         path: staticPagePath('/governance'),
         description:
-          'L2BEAT governance research, delegate activity and the projects L2BEAT holds delegated voting power in.',
+          'ETHBEAT governance research, delegate activity and the projects ETHBEAT holds delegated voting power in.',
       },
       {
         name: 'Multisig report',
@@ -292,19 +297,19 @@ const PAGE_SECTIONS: LinkListSection[] = [
       {
         name: 'Glossary',
         path: staticPagePath('/glossary'),
-        description: 'Definitions of the terms used across L2BEAT.',
+        description: 'Definitions of the terms used across ETHBEAT.',
       },
       {
         name: 'FAQ',
         path: staticPagePath('/faq'),
         description:
-          'How L2BEAT works, what it tracks, how TVS and risks are computed and how to get a project listed.',
+          'How ETHBEAT works, what it tracks, how TVS and risks are computed and how to get a project listed.',
       },
       {
         name: 'Publications',
         path: staticPagePath('/publications'),
         description:
-          'Research, explainers, monthly ecosystem updates and governance reviews published by L2BEAT.',
+          'Research, explainers, monthly ecosystem updates and governance reviews published by ETHBEAT.',
       },
       {
         name: 'Changelog',
@@ -315,7 +320,13 @@ const PAGE_SECTIONS: LinkListSection[] = [
       {
         name: 'About us',
         path: staticPagePath('/about-us'),
-        description: 'The mission, team and funding of L2BEAT.',
+        description: 'The mission, team and funding of ETHBEAT.',
+      },
+      {
+        name: 'L2BEAT is now ETHBEAT',
+        path: staticPagePath(RENAME_ANNOUNCEMENT_PATH),
+        description:
+          'The rename from L2BEAT: what changed, what did not, and the old and new URLs.',
       },
     ],
   },
@@ -419,12 +430,12 @@ const OPTIONAL_SECTION: LinkListSection = {
       name: 'Source code and project configs',
       url: externalLinks.github,
       description:
-        'The L2BEAT monorepo: frontend, backend, and every project config with risks, contracts, permissions and discovery history.',
+        'The ETHBEAT monorepo: frontend, backend, and every project config with risks, contracts, permissions and discovery history.',
     },
     {
       name: 'Governance forum',
       url: externalLinks.forum,
-      description: 'Discussion of L2BEAT governance research and delegation.',
+      description: 'Discussion of ETHBEAT governance research and delegation.',
     },
     {
       name: 'Medium',
@@ -439,7 +450,7 @@ const OPTIONAL_SECTION: LinkListSection = {
     {
       name: 'Donate',
       path: staticPagePath('/donate'),
-      description: 'How to support L2BEAT as a public good.',
+      description: 'How to support ETHBEAT as a public good.',
     },
     {
       name: 'Terms of service',

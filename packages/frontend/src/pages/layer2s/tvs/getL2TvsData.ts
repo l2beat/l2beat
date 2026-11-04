@@ -7,6 +7,7 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
+import { getBadgeLookup } from '~/utils/project/getBadgeWithParams'
 import { optionToRange } from '~/utils/range/range'
 
 export async function getL2TvsData(
@@ -50,6 +51,7 @@ export async function getL2TvsData(
         ...appLayoutProps,
         ...data,
         milestones: HOMEPAGE_MILESTONES,
+        badgeLookup: getBadgeLookup(data.entries),
       },
     },
   }

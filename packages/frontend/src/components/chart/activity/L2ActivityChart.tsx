@@ -1,9 +1,9 @@
 import type { Milestone } from '@l2beat/config'
-import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
@@ -46,15 +46,16 @@ export function L2ActivityChart({ milestones, entries }: Props) {
     RECATEGORISED_ACTIVITY_CHART_META,
   )
 
-  const { data, isLoading } = useQuery(
-    trpc.activity.recategorisedChart.queryOptions({
+  const { data, isLoading, isPlaceholderData } = useChartQuery(
+    trpc.activity.recategorisedChart,
+    {
       range,
       filter: {
         type: 'projects',
         projectIds: entries.map((entry) => entry.id),
       },
       hourly: true,
-    }),
+    },
   )
 
   const ratioData = useMemo(() => getRatioChartData(data), [data])
@@ -72,10 +73,14 @@ export function L2ActivityChart({ milestones, entries }: Props) {
       <ActivityChartHeader resolution={data?.resolution ?? 'day'} />
       <L2RecategorizedActivityStats entries={entries} />
       <div className="mt-1 mb-2 flex items-center gap-2">
-        <ChartTimeRange timeRange={timeRange} />
+        <ChartTimeRange
+          isPlaceholderData={isPlaceholderData}
+          timeRange={timeRange}
+        />
         {data && <IncompleteHoursHint data={data} />}
       </div>
       <L2RecategorizedActivityChart
+        isPlaceholderData={isPlaceholderData}
         data={data}
         isLoading={isLoading}
         milestones={milestones}
@@ -88,6 +93,7 @@ export function L2ActivityChart({ milestones, entries }: Props) {
       />
       <div className="mb-2">
         <ActivityRatioChart
+          isPlaceholderData={isPlaceholderData}
           data={ratioData}
           isLoading={isLoading}
           syncedUntil={data?.syncedUntil}

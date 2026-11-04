@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import type { ChartMeta } from '~/components/core/chart/Chart'
+import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import type {
@@ -87,7 +87,7 @@ function EntityMarkersLegend({
 }) {
   if (entries.length === 0) {
     return (
-      <div className="w-fit rounded bg-warning/15 px-2 py-1 font-medium text-label-value-13 text-warning md:mt-3">
+      <div className="w-fit rounded bg-warning/15 px-2 py-1 font-medium text-label-value-13 text-warning-text md:mt-3">
         No data about stake distribution among entities available
       </div>
     )

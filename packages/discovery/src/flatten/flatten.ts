@@ -8,6 +8,7 @@ import {
   type FileContent,
   type ParsedFile,
   ParsedFilesManager,
+  type TopLevelDeclaration,
 } from './ParsedFilesManager'
 import { renameIdentifiers } from './renameIdentifier'
 import type { FlattenOptions } from './types'
@@ -65,7 +66,7 @@ export function flattenStartingFrom(
       shouldBeInterface,
     )
   }
-  const order = [...collectPragmas(current), ...current]
+  const order = [...collectPragmas(current, rootContract.file), ...current]
 
   const typeMap = buildTypeMap(order)
   const renameMap = buildRenameMap(order)
@@ -76,6 +77,8 @@ export function flattenStartingFrom(
       ? generateInterfaceSourceFromContract(
           declaration,
           typeMap,
+          (namePath) =>
+            resolveStruct(parsedFileManager, { declaration, file }, namePath),
           usedMembers.get(declaration.id),
         )
       : declaration.content
@@ -373,13 +376,82 @@ function buildTypeMap(
   return map
 }
 
+// Resolves a struct type name the way solc does from inside a contract: its
+// own and inherited nested types first, then the file scope
+function resolveStruct(
+  parsedFileManager: ParsedFilesManager,
+  owner: DeclarationFilePair,
+  namePath: string,
+): AST.StructDefinition | undefined {
+  const [head, member] = namePath.split('.') as [string, string | undefined]
+  if (member !== undefined) {
+    const container = parsedFileManager.tryFindDeclaration(head, owner.file)
+    const nested = container && findNestedType(container.declaration, member)
+    return nested?.type === 'StructDefinition' ? nested : undefined
+  }
+
+  const visited = new Set<string>()
+  const stack: DeclarationFilePair[] = [owner]
+  while (stack.length > 0) {
+    const pair = stack.pop() as DeclarationFilePair
+    if (visited.has(pair.declaration.id)) continue
+    visited.add(pair.declaration.id)
+    const nested = findNestedType(pair.declaration, head)
+    if (nested !== undefined) {
+      return nested.type === 'StructDefinition' ? nested : undefined
+    }
+    const ast = pair.declaration.ast as AST.ContractDefinition
+    for (const base of ast.baseContracts) {
+      const resolved = parsedFileManager.tryFindDeclaration(
+        base.baseName.namePath,
+        pair.file,
+      )
+      if (resolved !== undefined) stack.push(resolved)
+    }
+  }
+
+  const topLevel = parsedFileManager.tryFindDeclaration(head, owner.file)
+  return topLevel?.declaration.type === 'struct'
+    ? (topLevel.declaration.ast as AST.StructDefinition)
+    : undefined
+}
+
+function findNestedType(
+  declaration: TopLevelDeclaration,
+  name: string,
+): AST.StructDefinition | AST.EnumDefinition | AST.TypeDefinition | undefined {
+  if (declaration.ast.type !== 'ContractDefinition') return undefined
+  for (const sub of (declaration.ast as AST.ContractDefinition).subNodes) {
+    const node = sub as AST.ASTNode
+    if (
+      (node.type === 'StructDefinition' ||
+        node.type === 'EnumDefinition' ||
+        node.type === 'TypeDefinition') &&
+      node.name === name
+    ) {
+      return node
+    }
+  }
+  return undefined
+}
+
 // NOTE(radomski): We want to have all pragrams without the ones that configure
 // the Solidity version. Also the pragrams should be deduplicated.
-function collectPragmas(order: DeclarationFilePair[]): DeclarationFilePair[] {
+//
+// Before 0.8 the ABI coder is chosen per file and defaults to v1, so a v2
+// pragma from a dependency would claim v2 for a root that was compiled with v1.
+function collectPragmas(
+  order: DeclarationFilePair[],
+  rootFile: ParsedFile,
+): DeclarationFilePair[] {
+  const keepDependencyCoders = !isBeforeSolidity08(rootFile)
   const byContent = new Map<string, DeclarationFilePair>()
   for (const { file } of order) {
     for (const n of file.rootASTNode.children) {
       if (n.type !== 'PragmaDirective' || n.name === 'solidity') continue
+      if (file !== rootFile && !keepDependencyCoders && isAbiCoderPragma(n)) {
+        continue
+      }
       const content = `pragma ${n.name} ${n.value};`
       byContent.set(content, {
         file,
@@ -396,6 +468,20 @@ function collectPragmas(order: DeclarationFilePair[]): DeclarationFilePair[] {
     }
   }
   return [...byContent.values()]
+}
+
+function isAbiCoderPragma(pragma: AST.PragmaDirective): boolean {
+  if (pragma.name === 'abicoder') return true
+  return pragma.name === 'experimental' && pragma.value === 'ABIEncoderV2'
+}
+
+function isBeforeSolidity08(file: ParsedFile): boolean {
+  const pragma = file.rootASTNode.children.find(
+    (n): n is AST.PragmaDirective =>
+      n.type === 'PragmaDirective' && n.name === 'solidity',
+  )
+  if (pragma === undefined) return false
+  return ['0.4.', '0.5.', '0.6.', '0.7.'].some((v) => pragma.value.includes(v))
 }
 
 function buildRenameMap(order: DeclarationFilePair[]): Map<string, string> {

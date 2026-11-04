@@ -27,19 +27,19 @@ export const strk20Adversaries = definePrivacyAdversaries({
       sentiment: 'warning',
       exposureShort:
         "Transfers inside the pool are encrypted, but the first payment to each new contact writes the recipient's address in cleartext.",
-      exposureContinued: `${S.entryExitPublic()} The fee payment names the token the user pays it in. DeFi actions name their target contract, and a shadow account shows its funding, calls and positions. A new account must be funded publicly before it can receive privately.`,
+      exposureContinued: `${S.entryExitPublic()} DeFi actions name their target contract, and a shadow account shows its funding, calls and positions.`,
       advice:
-        'Submit every pool action through a paymaster. Treat the first payment to a new contact, and any DeFi action, as public.',
+        'Submit every private action through a paymaster. Treat the first payment to a new contact, and any DeFi action, as public.',
       interior: {
         sender: 'private',
         recipient: {
           verdict: 'exposed',
-          note: 'Opening a channel writes the recipient address in cleartext; later transfers do not.',
+          note: 'Only at the first payment to each new contact.',
         },
         amount: 'private',
         asset: {
           verdict: 'atRisk',
-          note: 'Bramble pays the relay fee in the token sent when it can price it, so the fee names that token. DeFi actions name the target contract.',
+          note: 'The relay fee names the token sent whenever the app can price it.',
         },
         linkage: 'private',
       },
@@ -59,9 +59,9 @@ export const strk20Adversaries = definePrivacyAdversaries({
     chainAnalyst: {
       sentiment: 'warning',
       exposureShort:
-        'The set of active users is small and split further by token and by fee token.',
+        'Every token except STRK has fewer than 1,000 depositors to hide among.',
       exposureContinued: `A channel opened in the same transaction as a deposit ties the two together, and most withdrawal addresses have also deposited. ${S.walletFingerprint('paymaster')}`,
-      advice: `Open channels in a transaction without a deposit, and withdraw uneven amounts that match no deposit. ${S.freshExit}`,
+      advice: `Hold STRK or USDC, open channels in a transaction without a deposit, and withdraw amounts that match no deposit. ${S.freshExit}`,
       interior: {
         sender: {
           verdict: 'atRisk',
@@ -90,13 +90,10 @@ export const strk20Adversaries = definePrivacyAdversaries({
         "Every pool request goes through Starknet Holdings' gateway, so AVNU and StarkWare's discovery service see only the gateway.",
       exposureContinued:
         'The gateway answers over Tor, and Bramble runs only in Chromium, not in Tor Browser.',
-      advice: 'Run Bramble with all traffic through Tor or NymVPN.',
+      advice: 'Run Bramble with all traffic through an IP-hiding route.',
       interior: {
         sender: 'private',
-        recipient: {
-          verdict: 'exposed',
-          note: 'Opening a channel writes the recipient address in cleartext; later transfers do not.',
-        },
+        recipient: 'exposed',
         amount: 'private',
         asset: {
           verdict: 'atRisk',
@@ -104,10 +101,11 @@ export const strk20Adversaries = definePrivacyAdversaries({
         },
         linkage: {
           verdict: 'atRisk',
-          note: "Private only over Tor or NymVPN and for common tokens, since CoinGecko's requests single out holders of rare ones.",
+          note: "Private only over an IP-hiding route and for common tokens, since CoinGecko's requests single out holders of rare ones.",
         },
       },
       sources: [
+        S.ipHidingRoutes,
         {
           title: "Default routes go through the operator's gateway",
           url: BRAMBLE + 'packages/features/privacy/src/config.ts#L17-L19',
@@ -136,11 +134,11 @@ export const strk20Adversaries = definePrivacyAdversaries({
       sources: [
         {
           title: 'Viewing key escrowed to the auditor key onchain',
-          url: SNP + 'packages/privacy/src/events.cairo#L5-L13',
+          url: SNP + 'packages/privacy/src/objects.cairo#L43-L53',
         },
         {
           title: "Default routes go through the operator's gateway",
-          url: BRAMBLE + 'packages/features/privacy/src/config.ts#L96-L104',
+          url: BRAMBLE + 'packages/features/privacy/src/config.ts#L96-L109',
         },
         {
           title: 'Proving request carries the viewing key',
@@ -159,8 +157,8 @@ export const strk20Adversaries = definePrivacyAdversaries({
     futureAdversary: {
       sentiment: 'bad',
       exposureShort:
-        'The proofs rest only on hashes, the encryption on elliptic curves.',
-      exposureContinued: `Channel keys, note contents and the auditor escrow all use this encryption. Whoever breaks elliptic-curve cryptography recovers the auditor key from its onchain public key, and with it every escrowed viewing key and the whole history. ${S.walletSignatureAccounts()}`,
+        'Whoever breaks elliptic-curve cryptography recovers the auditor key from its onchain public key, and with it every escrowed viewing key and the whole history.',
+      exposureContinued: `Channel keys and note contents use the same elliptic-curve encryption. ${S.walletSignatureAccounts()}`,
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -175,7 +173,7 @@ export const strk20Adversaries = definePrivacyAdversaries({
         },
         {
           title: 'Viewing key escrowed under the onchain auditor public key',
-          url: SNP + 'packages/privacy/src/events.cairo#L5-L13',
+          url: SNP + 'packages/privacy/src/objects.cairo#L43-L53',
         },
         { title: 'Auditor public key in pool storage', url: POOL },
       ],
