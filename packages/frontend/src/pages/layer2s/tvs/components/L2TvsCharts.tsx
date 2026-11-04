@@ -1,5 +1,4 @@
 import type { Milestone } from '@l2beat/config'
-import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { L2AssetCategoryTvsChart } from '~/components/chart/tvs/stacked/L2AssetCategoryTvsChart'
 import { L2BridgeTypeTvsChart } from '~/components/chart/tvs/stacked/L2BridgeTypeTvsChart'
@@ -8,6 +7,7 @@ import { TvsChartRangeControls } from '~/components/chart/tvs/TvsChartRangeContr
 import { TvsChartUnitControls } from '~/components/chart/tvs/TvsChartUnitControls'
 import type { ChartUnit } from '~/components/chart/types'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { useTvsDisplayControlsContext } from '~/components/table/display/contexts/TvsDisplayControlsContext'
 import { CompareProjectsLink } from '~/pages/layer2s/compare/components/CompareProjectsLink'
@@ -36,13 +36,14 @@ export function L2TvsCharts({ entries, milestones }: Props) {
     }
   }, [entries])
 
-  const { data } = useQuery(
-    trpc.tvs.detailedChart.queryOptions({
+  const { data, isPlaceholderData, shownInput } = useChartQuery(
+    trpc.tvs.detailedChart,
+    {
       range,
       filter,
       excludeAssociatedTokens: display.excludeAssociatedTokens,
       excludeRwaRestrictedTokens: display.excludeRwaRestrictedTokens,
-    }),
+    },
   )
 
   const timeRange = getChartTimeRangeFromData(
@@ -77,10 +78,11 @@ export function L2TvsCharts({ entries, milestones }: Props) {
   return (
     <div>
       <TvsChartHeader
+        isPlaceholderData={isPlaceholderData}
         unit={unit}
         value={stats?.total}
         change={stats?.change}
-        range={range}
+        range={shownInput.range}
         timeRange={timeRange}
       />
       <div className="mt-4 mb-3 grid grid-cols-2 gap-x-6 max-lg:hidden">

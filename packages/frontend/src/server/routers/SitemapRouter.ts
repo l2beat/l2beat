@@ -2,9 +2,15 @@ import { UnixTime } from '@l2beat/shared-pure'
 import express from 'express'
 import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import { getPages, type Page } from '~/server/pagePaths'
+import { getMarkdownAlternatePath } from '~/utils/getMarkdownAlternatePath'
 
 interface SitemapSources {
   getPages: () => Promise<Page[]>
+}
+
+interface SitemapEntry {
+  path: string
+  lastModified?: UnixTime
 }
 
 export function createSitemapRouter(sources: SitemapSources = { getPages }) {
@@ -12,7 +18,12 @@ export function createSitemapRouter(sources: SitemapSources = { getPages }) {
 
   router.get('/sitemap.xml', async (_req, res) => {
     const pages = await sources.getPages()
-    const urls = pages.map(renderUrl).join('\n')
+    const urls = [
+      { path: '/llms.txt' },
+      ...pages.flatMap(withMarkdownAlternate),
+    ]
+      .map(renderUrl)
+      .join('\n')
 
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -25,7 +36,13 @@ ${urls}
   return router
 }
 
-function renderUrl(page: Page) {
+/** The page followed by its `.md` version, if the registry has one. */
+function withMarkdownAlternate(page: Page): SitemapEntry[] {
+  const markdownPath = getMarkdownAlternatePath(page.path)
+  return markdownPath ? [page, { ...page, path: markdownPath }] : [page]
+}
+
+function renderUrl(page: SitemapEntry) {
   const lines = [`    <loc>${escapeXml(PRODUCTION_ORIGIN + page.path)}</loc>`]
   if (page.lastModified !== undefined) {
     lines.push(

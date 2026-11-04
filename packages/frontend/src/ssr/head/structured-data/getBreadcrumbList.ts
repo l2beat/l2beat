@@ -1,5 +1,6 @@
 import compact from 'lodash/compact'
 import { toProductionUrl } from '~/consts/productionOrigin'
+import { env } from '~/env'
 import type { StructuredData } from './StructuredData'
 
 export function getBreadcrumbList(
@@ -30,16 +31,12 @@ const HOME: Breadcrumb = { name: 'Home', path: '/' }
 
 // Keyed by the first path segment. Only sections with a landing page are
 // listed, so every crumb links to a page that renders. The nav groups differ:
-// they lack Publications and Governance, and Ecosystems has no landing page.
+// they lack Publications and Governance.
 const SECTIONS: Record<string, Breadcrumb> = {
   layer2s: { name: 'Layer 2s', path: '/layer2s/summary' },
   interop: { name: 'Interop', path: '/interop/summary' },
   privacy: { name: 'Privacy', path: '/privacy/summary' },
   defi: { name: 'DeFi', path: '/defi/summary' },
-  'data-availability': {
-    name: 'Data Availability',
-    path: '/data-availability/summary',
-  },
   blobs: { name: 'Blobs', path: '/blobs' },
   'zk-catalog': { name: 'ZK Catalog', path: '/zk-catalog' },
   publications: { name: 'Publications', path: '/publications' },
@@ -53,10 +50,17 @@ function getTrail(
 ): Breadcrumb[] | undefined {
   if (path === HOME.path) return undefined
 
-  const section = SECTIONS[path.split('/')[1] ?? '']
+  const section = getSection(path)
   if (section?.path === path) return [HOME, section]
   // Without a name the last crumb could not say which page it is.
   if (!name) return undefined
 
   return compact([HOME, section, ...parents, { name, path }])
+}
+
+function getSection(path: string): Breadcrumb | undefined {
+  const segment = path.split('/')[1] ?? ''
+  // Ossification-tracked DeFi project pages outlive the disabled summary.
+  if (segment === 'defi' && !env.CLIENT_SIDE_DEFI_ENABLED) return undefined
+  return SECTIONS[segment]
 }

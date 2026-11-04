@@ -270,6 +270,26 @@ describe(TokenIngestionLoop.name, () => {
       expect(set).toHaveBeenCalledTimes(0)
     })
 
+    it('does not read transfer routes when nothing is pending', async () => {
+      const getTokenRoutes = mockFn().resolvesTo([])
+      const loop = createLoop({
+        db: mockObject<Database>({
+          interopTransfer: mockObject<Database['interopTransfer']>({
+            getTokenAddressesAfterSerialId: mockFn().resolvesTo({
+              latestSerialId: undefined,
+              transferCount: 0,
+              tokenAddresses: [],
+            }),
+            getTokenRoutes,
+          }),
+        }),
+      })
+
+      await loop.runOnce()
+
+      expect(getTokenRoutes).not.toHaveBeenCalled()
+    })
+
     it('stops draining when the processing limit is reached', async () => {
       const address = token('ethereum', '0xaaa')
       const transferIndex = { findInvolving: mockFn().returns([]) }

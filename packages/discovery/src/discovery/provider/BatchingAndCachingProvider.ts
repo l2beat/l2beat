@@ -22,6 +22,16 @@ import type { MulticallClient } from './multicall/MulticallClient'
 import type { ReorgAwareCache } from './ReorgAwareCache'
 import { ProviderMeasurement, ProviderStats } from './Stats'
 
+export const REUSABLE_CACHE_INVOCATIONS = {
+  getSource: 'getSource-v3',
+  getDeployment: 'getDeployment',
+  getTransaction: 'getTransaction',
+  getBlock: 'getBlock',
+  getBlobs: 'getBlobs',
+  getDebugTrace: 'getDebugTrace',
+  getBlockNumberAtOrBefore: 'getBlockNumberAtOrBefore',
+} as const
+
 interface ScheduledCall {
   resolve: (value: Bytes) => void
   reject: (reason: unknown) => void
@@ -530,7 +540,11 @@ export class BatchingAndCachingProvider {
 
   async getBlock(blockNumber: number): Promise<providers.Block | undefined> {
     let duration = -performance.now()
-    const entry = await this.cache.entry('getBlock', [blockNumber], undefined)
+    const entry = await this.cache.entry(
+      REUSABLE_CACHE_INVOCATIONS.getBlock,
+      [blockNumber],
+      undefined,
+    )
     const cached = entry.read()
     if (cached !== undefined) {
       // This recovers BigNumber instances from the cache
@@ -555,7 +569,7 @@ export class BatchingAndCachingProvider {
   async getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<number> {
     let duration = -performance.now()
     const entry = await this.cache.entry(
-      'getBlockNumberAtOrBefore',
+      REUSABLE_CACHE_INVOCATIONS.getBlockNumberAtOrBefore,
       [timestamp],
       undefined,
     )
@@ -594,7 +608,7 @@ export class BatchingAndCachingProvider {
   ): Promise<providers.TransactionResponse | undefined> {
     let duration = -performance.now()
     const entry = await this.cache.entry(
-      'getTransaction',
+      REUSABLE_CACHE_INVOCATIONS.getTransaction,
       [transactionHash],
       undefined,
     )
@@ -623,7 +637,7 @@ export class BatchingAndCachingProvider {
   ): Promise<DebugTransactionCallResponse> {
     let duration = -performance.now()
     const entry = await this.cache.entry(
-      'getDebugTrace',
+      REUSABLE_CACHE_INVOCATIONS.getDebugTrace,
       [transactionHash],
       undefined,
     )
@@ -663,7 +677,11 @@ export class BatchingAndCachingProvider {
 
   async getSource(address: EthereumAddress): Promise<ContractSource> {
     let duration = -performance.now()
-    const entry = await this.cache.entry('getSource-v3', [address], undefined)
+    const entry = await this.cache.entry(
+      REUSABLE_CACHE_INVOCATIONS.getSource,
+      [address],
+      undefined,
+    )
     const cached = entry.read()
     if (cached !== undefined) {
       duration += performance.now()
@@ -681,7 +699,11 @@ export class BatchingAndCachingProvider {
     address: EthereumAddress,
   ): Promise<RawContractDeployment | undefined> {
     let duration = -performance.now()
-    const entry = await this.cache.entry('getDeployment', [address], undefined)
+    const entry = await this.cache.entry(
+      REUSABLE_CACHE_INVOCATIONS.getDeployment,
+      [address],
+      undefined,
+    )
     const cached = entry.read()
     if (cached !== undefined) {
       duration += performance.now()
@@ -702,7 +724,11 @@ export class BatchingAndCachingProvider {
   }
 
   async getBlobs(txHash: string): Promise<BlobsInBlock> {
-    const entry = await this.cache.entry('getBlobs', [txHash], undefined)
+    const entry = await this.cache.entry(
+      REUSABLE_CACHE_INVOCATIONS.getBlobs,
+      [txHash],
+      undefined,
+    )
     const cached = entry.read()
     if (cached !== undefined) {
       return parseCacheEntry(cached)
@@ -797,10 +823,7 @@ async function getAllLogs(
   try {
     return await provider.getLogs(address, topics, fromBlock, toBlock)
   } catch (e) {
-    if (
-      e instanceof Error &&
-      e.message.includes('Log response size exceeded')
-    ) {
+    if (e instanceof Error && isRangeTooLarge(e)) {
       const midPoint = fromBlock + Math.floor((toBlock - fromBlock) / 2)
       const [a, b] = await Promise.all([
         getAllLogs(provider, address, topics, fromBlock, midPoint),
@@ -810,4 +833,14 @@ async function getAllLogs(
     }
     throw e
   }
+}
+
+// Alchemy answers a range that is too slow to scan, rather than too big to
+// return, with a timeout that asks for a smaller range; splitting helps
+// with both.
+function isRangeTooLarge(error: Error): boolean {
+  return (
+    error.message.includes('Log response size exceeded') ||
+    error.message.includes('Consider reducing your block range')
+  )
 }

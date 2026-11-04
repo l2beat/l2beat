@@ -1,7 +1,7 @@
 import type { ChainApi } from '@l2beat/token-backend'
 import { useQuery } from '@tanstack/react-query'
 import { LinkIcon } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { Badge } from '~/components/core/Badge'
 import { Button } from '~/components/core/Button'
 import {

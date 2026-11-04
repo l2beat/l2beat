@@ -1,3 +1,1656 @@
+Generated with discovered.json: 0x0593d09b29f0fd6daa486c7301ddfe287b9b1aa2
+
+# Diff at Wed, 28 Oct 2026 13:54:39 GMT:
+
+- id: cf2226a4
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cc7e9e73c101d0a260af6bfe078851f3ff1d60cb block: 1792860914
+- current timestamp: 1793195421
+
+## Description
+
+The RISC Zero EOA 0xF616…d412 executed the scheduled `addVerifier(0x8b38038c, 0x9660…)` through the timelock. Taiko's RISC0 proofs can now route through the estop 0x9660… to RiscZeroGroth16Verifier v3.1.0. Its code equals v3.0.0. Only the constants differ: the Groth16 verifying key, control root and BN254 control ID. None of them appear in a public RISC Zero release or published trusted setup. The deployer left the contract unverified. L2BEAT verified the reconstructed source on etherscan and sourcify with an exact bytecode match. Current Taiko RISC0 proofs still use selector 0x73c457ba (v3.0.0).
+https://disco.l2beat.com/diff/eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D/eth:0x953814e6dfC46d007557B511Dc4F2954dAaf2c9e
+
+The Safe 0xF28C…, a member of the Taiko Foundation Treasury Multisig, moved to the canonical Safe 1.5.0 singleton.
+https://disco.l2beat.com/diff/eth:0x41675C099F32341bf84BFc5382aF534df5C7461a/eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b
+
+## Watched changes
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+      values.callsExecuted.21:
++        {"id":"0x682e79774f6b8e0fc1dbddd69bfca4374e9827b815d8fb2a73d602d541714c82","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af308b38038c000000000000000000000000000000000000000000000000000000000000000000000000000000009660bd6dcdf455dcfb30c07c642ab22e7cb89f50"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter] {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
++++ severity: MEDIUM
+      values.verifier_8b38038c:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x9660bD6dCDf455DCFb30c07c642Ab22E7Cb89F50"
+    }
+```
+
+```diff
+    contract Safe (eth:0xF28C8D6b44361255FA7C116d09ccD5F914398C10) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
++        "0xb66849da6643e8cd188f73efe4edb32704a1540eda5b1aef77a2217ad2d81f78"
+      values.$implementation:
+-        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b"
+      values.getChainId:
+-        1
+      values.VERSION:
+-        "1.4.1"
++        "1.5.0"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b:
++        "Safe"
+    }
+```
+
+```diff
+    EOA (eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412) {
+    +++ description: None
+      receivedPermissions.9:
++        {"permission":"interact","from":"eth:0x9660bD6dCDf455DCFb30c07c642Ab22E7Cb89F50","description":"pause the verifier.","role":".owner"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0x953814e6dfC46d007557B511Dc4F2954dAaf2c9e) [taiko/RiscZeroGroth16Verifier]
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 3.1.0).
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x9660bD6dCDf455DCFb30c07c642Ab22E7Cb89F50) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0x953814e6dfC46d007557B511Dc4F2954dAaf2c9e that allows pausing (emergency stop) the verifier by its owner.
+```
+
+## Source code changes
+
+```diff
+...:0x953814e6dfC46d007557B511Dc4F2954dAaf2c9e.sol | 1780 ++++++++++++++++++++
+ ...:0x9660bD6dCDf455DCFb30c07c642Ab22E7Cb89F50.sol |  366 ++++
+ .../{.flat@1792860914 => .flat}/Safe/Safe.sol      | 1537 +++++++++++------
+ 3 files changed, 3205 insertions(+), 478 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792860914 (main branch discovery), not current.
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter] {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
++++ severity: MEDIUM
+      values.verifier_8b38038c:
++        "eth:0x0000000000000000000000000000000000000000"
+      fieldMeta.verifier_8b38038c:
++        {"severity":"MEDIUM"}
+    }
+```
+
+Generated with discovered.json: 0x4091a503962f2c5fee518057b590fe73957dc689
+
+# Diff at Sat, 24 Oct 2026 16:57:44 GMT:
+
+- id: 977668bc
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@466c0ed155939c67d1118322a0272a7923e178e7 block: 1791966804
+- current timestamp: 1792860914
+
+## Description
+
+DAO proposal 0024 (2026-10-19) upgraded the MainnetInbox: the whole basefee now goes to the block's coinbase, and the reentrancy lock moved to transient storage. The same proposal rotated the trusted RISC Zero images, SP1 programs and SGX enclave measurements.
+
+The RISC Zero timelock regranted proposer, executor and canceller to the EOA 0xF616…d412 (2026-10-20). The 2/5 Safe renounced its roles (2026-10-22), so one signer now governs the RiscZeroVerifierRouter behind a 3-day delay. The EOA scheduled `addVerifier(0x8b38038c, 0x9660bd6d…)`, executable from 2026-10-26. The estops moved to the same EOA.
+
+Discovery now watches the timelock's scheduled and executed calls, as bob does: the router emits no event on verifier changes.
+
+## Watched changes
+
+```diff
+    contract TaikoRisc0Verifier (eth:0x059dAF31F571da48Ab4e74Ae12F64f907681Cd8b) [taiko/Risc0Verifier] {
+    +++ description: Gating router contract to verify batches using RISC Zero.
++++ description: Taiko specific Image IDs (i.e. program digest) of Risc0 programs (block proving and aggregation program separately) trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains image ID data within them.
++++ severity: HIGH
+      values.trustedImages.0:
+-        "0xd6ab71c22201c23ef512b706f2e2d720f6da1b559fb76834aa9d4e35276f6e10"
++        "0x88712dad7dc78126ee7bb592282d3102569c706f1b9db80580a582e5ffd1dfb0"
++++ description: Taiko specific Image IDs (i.e. program digest) of Risc0 programs (block proving and aggregation program separately) trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains image ID data within them.
++++ severity: HIGH
+      values.trustedImages.1:
+-        "0xdd9b8abff96c409ae2418edfb51d893ea2bd10f4873a0226f17a6998c1afc1b7"
++        "0x04480b22e244d60165f3d0898bc61ea084d9c76221464a8a3c3343c74889040a"
+    }
+```
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+      values.accessControl.PROPOSER_ROLE.members.0:
+-        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
++        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
+      values.accessControl.CANCELLER_ROLE.members.0:
+-        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
++        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
++        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
+      values.callsExecuted.18:
++        {"id":"0xb88d38cc5995760c99a754e1fef6919fc7ee643d4de92b098d916b906b359910","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15db09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412"}
+      values.callsExecuted.19:
++        {"id":"0xb88d38cc5995760c99a754e1fef6919fc7ee643d4de92b098d916b906b359910","index":1,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15dd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412"}
+      values.callsExecuted.20:
++        {"id":"0xb88d38cc5995760c99a754e1fef6919fc7ee643d4de92b098d916b906b359910","index":2,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15dfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412"}
+      values.callsScheduled.24:
++        {"id":"0x682e79774f6b8e0fc1dbddd69bfca4374e9827b815d8fb2a73d602d541714c82","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af308b38038c000000000000000000000000000000000000000000000000000000000000000000000000000000009660bd6dcdf455dcfb30c07c642ab22e7cb89f50","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200}
++++ severity: MEDIUM
+      values.Canceller.0:
+-        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
++        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
++++ description: Executing proposals is only open to all addresses if this resolves to the 0x0 address
++++ severity: MEDIUM
+      values.Executor.0:
+-        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
++        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
++++ severity: MEDIUM
+      values.Proposer.0:
+-        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
++        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261) [taiko/AutomataDcapV3Attestation] {
+    +++ description: Contract managing SGX DCAP attestation policy, trusted measurements, and certificate revocation data.
++++ description: Trusted SGX enclave measurements accepted by attestation verification.
++++ severity: HIGH
+      values.mrEnclaves.0:
+-        "0x5f7da556f3b75dcc71465030e1b7274e82df9e9120c0b3eaf5bb76246a514005"
++        "0x8c23c79045b9b6bb827eab208e0fe58d7446a57a55f3dfc825c90e904953105b"
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x1efDd13f831ceeEa14940806705A53D3211CD698) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.
++++ severity: MEDIUM
+      values.owner:
+-        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
++        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
+      values.pendingOwner:
+-        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97 that allows pausing (emergency stop) the verifier by its owner.
++++ severity: MEDIUM
+      values.owner:
+-        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
++        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
+      values.pendingOwner:
+-        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract MainnetInbox (eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f) [taiko/MainnetInbox] {
+    +++ description: The core Layer 1 entrypoint for the Taiko rollup where L2 block batches are proposed and their corresponding state transitions are proven. Users can enqueue forced inclusions by publishing an L1 blob. Once an inclusion is due, subsequent proposals must process it, but proposing remains restricted by the configured proposer checker. If the configured prover whitelist is non-empty, proofs from non-whitelisted provers revert.
+      sourceHashes.1:
+-        "0xa0a8e3ebc196ae2703fc2c0dc5bc16012644bbcd103c34bf6241389ccadc0fd0"
++        "0x2dcf603b82b38ffd0745a55af8329dd811aff4e0b4e754f1fc240cc39e6b474e"
+      values.$implementation:
+-        "eth:0x5253D4C91e80b880DdB54B78E74082Abe066F6b9"
++        "eth:0xA18431d42C8dF9778905fBEa912aCF1881b49D2e"
+      values.$pastUpgrades.4:
++        ["2026-10-19T01:27:59.000Z","0x3f8f55e6651184d5794e4362661ebe709ae3a33df2424f664dc2bf235465859f",["eth:0xA18431d42C8dF9778905fBEa912aCF1881b49D2e"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.getConfig.basefeeSharingPctg:
+-        75
++        100
+      values.impl:
+-        "eth:0x5253D4C91e80b880DdB54B78E74082Abe066F6b9"
++        "eth:0xA18431d42C8dF9778905fBEa912aCF1881b49D2e"
+      implementationNames.eth:0x5253D4C91e80b880DdB54B78E74082Abe066F6b9:
+-        "MainnetInbox"
+      implementationNames.eth:0xA18431d42C8dF9778905fBEa912aCF1881b49D2e:
++        "MainnetInbox"
+    }
+```
+
+```diff
+    contract TaikoSP1Verifier (eth:0x73A0Db393ef87ce781ac7957bE10D6628432100F) [taiko/SP1Verifier] {
+    +++ description: Gating router contract to verify batches using SP1.
++++ description: Taiko-specific SP1 program verification keys trusted by this verifier gateway. Only proofs for these programs can be successfully verified.
++++ severity: HIGH
+      values.trustedPrograms.0:
+-        "0x0025425c22e827507428a3d9c7b0f89635be5462f34bb6780563e3d6086be7c7"
++        "0x0012b97234e59f2319d44202c7b093fed9c9a51b2068e38d26625c139d668c97"
++++ description: Taiko-specific SP1 program verification keys trusted by this verifier gateway. Only proofs for these programs can be successfully verified.
++++ severity: HIGH
+      values.trustedPrograms.1:
+-        "0x12a12e113a09d41d05147b387b0f89632df2a3174d2ed9e00ac7c7ac086be7c7"
++        "0x095cb91a3967c8c63a8840587b093fed4e4d28d901a38e344cc4b8271d668c97"
++++ description: Taiko-specific SP1 program verification keys trusted by this verifier gateway. Only proofs for these programs can be successfully verified.
++++ severity: HIGH
+      values.trustedPrograms.2:
+-        "0x0051ac1d9e8cfd4196e37f9cfefd08e9b0f7ce653bad4634cd1ee84b71ca3be6"
++        "0x0017912dfd72308e2e2cd4211b05ed73a97eb7f576816adec2606a37507de51e"
++++ description: Taiko-specific SP1 program verification keys trusted by this verifier gateway. Only proofs for these programs can be successfully verified.
++++ severity: HIGH
+      values.trustedPrograms.3:
+-        "0x28d60ecf233f50655c6ff39f6fd08e9b07be73296eb518d31a3dd09671ca3be6"
++        "0x0bc896fe5c8c238b459a8423305ed73a4bf5bfab5a05ab7b04c0d46e507de51e"
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.
++++ severity: MEDIUM
+      values.owner:
+-        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
++        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
+      values.pendingOwner:
+-        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3) [taiko/AutomataDcapV3Attestation] {
+    +++ description: Contract managing SGX DCAP attestation policy, trusted measurements, and certificate revocation data.
++++ description: Trusted SGX enclave measurements accepted by attestation verification.
++++ severity: HIGH
+      values.mrEnclaves.0:
+-        "0x3564b6a30089fcb3e2f69c19b22d23f84ce148387cd7a15f5c1df165b2ae5847"
++        "0xfeabd725eb5bb621b5c6a5071d1702bcbe06a643b42a0db8f381d5bc07dd81bf"
++++ description: Trusted SGX enclave measurements accepted by attestation verification.
++++ severity: HIGH
+      values.mrEnclaves.1:
+-        "0xae2c7b92b2a71238226cb624ecd1171b66bf943cc372314affca0e6748ccecdf"
++        "0x6f3c8c55ec62fe48b83e57463e8717aa9f8594418203c9520f0f80e6f4fc4d87"
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
++++ severity: MEDIUM
+      values.owner:
+-        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
++        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
+      values.pendingOwner:
+-        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF that allows pausing (emergency stop) the verifier by its owner.
++++ severity: MEDIUM
+      values.owner:
+-        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
++        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
+      values.pendingOwner:
+-        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    EOA (eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","description":"cancel queued transactions.","role":".Canceller"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","description":"execute transactions that are ready.","role":".Executor"}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","description":"manage all access control roles.","role":".defaultAdminAC","via":[{"address":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","delay":259200}]}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","description":"propose transactions.","role":".Proposer"}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0x1efDd13f831ceeEa14940806705A53D3211CD698","description":"pause the verifier.","role":".owner"}
+      receivedPermissions.6:
++        {"permission":"interact","from":"eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3","description":"pause the verifier.","role":".owner"}
+      receivedPermissions.7:
++        {"permission":"interact","from":"eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782","description":"pause the verifier.","role":".owner"}
+      receivedPermissions.8:
++        {"permission":"interact","from":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","description":"add/remove verifiers and the selectors they are mapped to.","role":".owner","via":[{"address":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","delay":259200}]}
+      receivedPermissions.9:
++        {"permission":"interact","from":"eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696","description":"pause the verifier.","role":".owner"}
+      receivedPermissions.10:
++        {"permission":"interact","from":"eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1","description":"pause the verifier.","role":".owner"}
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","delay":259200,"role":".Executor"}]
+    }
+```
+
+## Source code changes
+
+```diff
+.../MainnetInbox/MainnetInbox.sol                  |   69 +-
+ .../Safe}/Safe.sol                                 |    0
+ .../Safe}/SafeProxy.p.sol                          |    0
+ .../Safe.sol => /dev/null                          | 1216 --------------------
+ .../SafeProxy.p.sol => /dev/null                   |   42 -
+ 5 files changed, 23 insertions(+), 1304 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791966804 (main branch discovery), not current.
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+      values.callsExecuted:
++        [{"id":"0x7a84c572dc62f88115a1ee5163b983a332e1214113fb2d000d9d1bcaef2e9c10","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af30310fe5980000000000000000000000000000000000000000000000000000000000000000000000000000000044c220f0598345195ce99ad6a57adffcb9ea33e7"},{"id":"0xadb3b737a6a6bdcb4c8dccde80cd44ac4e4d3db3a89374a7b4acdd4b64f72dda","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x64d623530000000000000000000000000000000000000000000000000000000000093a80"},{"id":"0x3f19aefd1b1ceef8c24d069d4199d2fa93837840c710fe02fa8caa57257b29f1","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af3050bd17690000000000000000000000000000000000000000000000000000000000000000000000000000000008aed6c108e500540a9544bef7a8b8a05e056e87"},{"id":"0x8c69e0a7787b08054748643b2f24e534391080bd0c61e3a0267ce6b152664d0d","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af30c101b42b0000000000000000000000000000000000000000000000000000000000000000000000000000000003b66cedab014ca7e970bfb83c1951d10dd2a805"},{"id":"0x960674420bb13639f49c3e4680c859d460652b079912a2e19d48070e1839717e","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af309f39696c0000000000000000000000000000000000000000000000000000000000000000000000000000000068dc2cb4e61774873971c499d9b239ec5ac540e3"},{"id":"0x3d85619c066effeda2dfdaa6533cf4ab13dc517fa095d3ff1ed03ba753e04d43","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af30f536085a00000000000000000000000000000000000000000000000000000000000000000000000000000000da8f3de6fbbdb261ac771b813a578a7abda6b2b1"},{"id":"0xd0791ae7ead2e43dd04e036894376e9f800038dcd77ca25aee9c25b10c2152c7","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x64d62353000000000000000000000000000000000000000000000000000000000003f480"},{"id":"0xfb7623c10d952a912314a537418c1ea4f95ceeee7628d8564f7e1c814d09da5b","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af30bb001d44000000000000000000000000000000000000000000000000000000000000000000000000000000001efdd13f831ceeea14940806705a53d3211cd698"},{"id":"0x8f9bc667a318296f0c9a7a2773fd371cfedc904128c7ff5af6c246d383cb46db","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af3073c457ba000000000000000000000000000000000000000000000000000000000000000000000000000000009f9994eb4cb5200198fefb470f8b50301662e696"},{"id":"0xaee8ce52716542c6fedc0f10553f1b763702d9bef05dcdcdf8c5cb2ed8d6cabb","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af30242f9d5b00000000000000000000000000000000000000000000000000000000000000000000000000000000844d5f01161e3559d36f23d0aa9e9620949af782"},{"id":"0xcb59c64b787c143323784e652a53a3df139307efbcefa80b438a461680142a2b","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0x93d237f650bd176900000000000000000000000000000000000000000000000000000000"},{"id":"0x02c881bb278f937c1b8b577c6a44e474f471442762ddaf1e416b5ae793acf8cc","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0x93d237f6c101b42b00000000000000000000000000000000000000000000000000000000"},{"id":"0x5fb8d6ab7b9ad6614a645faf85120306acf72c02bc66de00b027c8ec57eff377","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15db09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc10000000000000000000000002e5bcc9959db5f5016f830e47943b07242cb2609"},{"id":"0x336fa76c82918a2642423bcae028021a204288e86965316b58737fb6e6a2d985","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15dd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e630000000000000000000000002e5bcc9959db5f5016f830e47943b07242cb2609"},{"id":"0x0c0f9e544f5acb8eafdf44bbd4a1f21cde030970ad1f76c01504ff1c291f0e9d","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15dfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f7830000000000000000000000002e5bcc9959db5f5016f830e47943b07242cb2609"},{"id":"0x89a458a6781bd045d785361e429a3df71167dff9e14996fa5f98ca7c5eb9d4c3","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0xd547741fb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412"},{"id":"0x4acc61e26f03e0270258c3fe8aec76d8ce5c80e8e100972e3091fc77c8882819","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0xd547741fd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412"},{"id":"0xf239631e46b22677b2b8b3b35d3780a1de298d9234c6906ce98aa3168d52cc97","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0xd547741ffd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412"}]
+      values.callsScheduled:
++        [{"id":"0x7a84c572dc62f88115a1ee5163b983a332e1214113fb2d000d9d1bcaef2e9c10","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af30310fe5980000000000000000000000000000000000000000000000000000000000000000000000000000000044c220f0598345195ce99ad6a57adffcb9ea33e7","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":1},{"id":"0xadb3b737a6a6bdcb4c8dccde80cd44ac4e4d3db3a89374a7b4acdd4b64f72dda","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x64d623530000000000000000000000000000000000000000000000000000000000093a80","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":1},{"id":"0xca7c32c7743c15b77a35c4f9067ba7b6a70ba735d9223900eda94ce2c9b30b84","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af304c630d8700000000000000000000000000000000000000000000000000000000000000000000000000000000b839ea7bba8e6bb2893ca5252f3f3c13323d74f7","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":604800},{"id":"0x3f19aefd1b1ceef8c24d069d4199d2fa93837840c710fe02fa8caa57257b29f1","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af3050bd17690000000000000000000000000000000000000000000000000000000000000000000000000000000008aed6c108e500540a9544bef7a8b8a05e056e87","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":604800},{"id":"0x8c69e0a7787b08054748643b2f24e534391080bd0c61e3a0267ce6b152664d0d","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af30c101b42b0000000000000000000000000000000000000000000000000000000000000000000000000000000003b66cedab014ca7e970bfb83c1951d10dd2a805","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":604800},{"id":"0x7bd40c500f2b3900d572471750afc6fb8ff842feac61ce3b28457400df977bdd","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af30922fe23d000000000000000000000000000000000000000000000000000000000000000000000000000000001e785018a65d9a9c8ee52955da0dd9644353a22f","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":604800},{"id":"0xffe2b1acdec15653f2ec46c307b748d6ada029fe63e7308d24b980d503ab7ea3","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af3014da014b00000000000000000000000000000000000000000000000000000000000000000000000000000000268436d69f9434018657b278d838546e7dbc2d7f","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":604800},{"id":"0x960674420bb13639f49c3e4680c859d460652b079912a2e19d48070e1839717e","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af309f39696c0000000000000000000000000000000000000000000000000000000000000000000000000000000068dc2cb4e61774873971c499d9b239ec5ac540e3","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":604800},{"id":"0x3d85619c066effeda2dfdaa6533cf4ab13dc517fa095d3ff1ed03ba753e04d43","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af30f536085a00000000000000000000000000000000000000000000000000000000000000000000000000000000da8f3de6fbbdb261ac771b813a578a7abda6b2b1","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":604800},{"id":"0xd0791ae7ead2e43dd04e036894376e9f800038dcd77ca25aee9c25b10c2152c7","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x64d62353000000000000000000000000000000000000000000000000000000000003f480","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":604800},{"id":"0xfb7623c10d952a912314a537418c1ea4f95ceeee7628d8564f7e1c814d09da5b","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af30bb001d44000000000000000000000000000000000000000000000000000000000000000000000000000000001efdd13f831ceeea14940806705a53d3211cd698","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200},{"id":"0x8f9bc667a318296f0c9a7a2773fd371cfedc904128c7ff5af6c246d383cb46db","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af3073c457ba000000000000000000000000000000000000000000000000000000000000000000000000000000009f9994eb4cb5200198fefb470f8b50301662e696","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200},{"id":"0xaee8ce52716542c6fedc0f10553f1b763702d9bef05dcdcdf8c5cb2ed8d6cabb","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af30242f9d5b00000000000000000000000000000000000000000000000000000000000000000000000000000000844d5f01161e3559d36f23d0aa9e9620949af782","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200},{"id":"0xcb59c64b787c143323784e652a53a3df139307efbcefa80b438a461680142a2b","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0x93d237f650bd176900000000000000000000000000000000000000000000000000000000","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200},{"id":"0x02c881bb278f937c1b8b577c6a44e474f471442762ddaf1e416b5ae793acf8cc","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0x93d237f6c101b42b00000000000000000000000000000000000000000000000000000000","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200},{"id":"0x5fb8d6ab7b9ad6614a645faf85120306acf72c02bc66de00b027c8ec57eff377","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15db09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc10000000000000000000000002e5bcc9959db5f5016f830e47943b07242cb2609","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200},{"id":"0x336fa76c82918a2642423bcae028021a204288e86965316b58737fb6e6a2d985","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15dd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e630000000000000000000000002e5bcc9959db5f5016f830e47943b07242cb2609","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200},{"id":"0x0c0f9e544f5acb8eafdf44bbd4a1f21cde030970ad1f76c01504ff1c291f0e9d","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15dfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f7830000000000000000000000002e5bcc9959db5f5016f830e47943b07242cb2609","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200},{"id":"0x89a458a6781bd045d785361e429a3df71167dff9e14996fa5f98ca7c5eb9d4c3","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0xd547741fb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200},{"id":"0x4acc61e26f03e0270258c3fe8aec76d8ce5c80e8e100972e3091fc77c8882819","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0xd547741fd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200},{"id":"0xf239631e46b22677b2b8b3b35d3780a1de298d9234c6906ce98aa3168d52cc97","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0xd547741ffd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200},{"id":"0xb88d38cc5995760c99a754e1fef6919fc7ee643d4de92b098d916b906b359910","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15db09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200},{"id":"0xb88d38cc5995760c99a754e1fef6919fc7ee643d4de92b098d916b906b359910","index":1,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15dd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200},{"id":"0xb88d38cc5995760c99a754e1fef6919fc7ee643d4de92b098d916b906b359910","index":2,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15dfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200}]
+    }
+```
+
+Generated with discovered.json: 0x688fe98927c82c5361bc0ced4f1339b66a8e11c6
+
+# Diff at Fri, 16 Oct 2026 08:16:59 GMT:
+
+- id: 98b4c436
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cdf6aa42d34edc5afafa19572228e1938e1bdc06 block: 1791966804
+- current timestamp: 1791966804
+
+## Description
+
+Ossification review: RISC Zero router selectors MEDIUM, template severities (role holders MEDIUM).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791966804 (main branch discovery), not current.
+
+```diff
+    contract TaikoRisc0Verifier (eth:0x059dAF31F571da48Ab4e74Ae12F64f907681Cd8b) [taiko/Risc0Verifier] {
+    +++ description: Gating router contract to verify batches using RISC Zero.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+      fieldMeta.Executor.severity:
++        "MEDIUM"
+      fieldMeta.defaultAdminAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.accessControl:
++        {"severity":"MEDIUM"}
+      fieldMeta.Proposer:
++        {"severity":"MEDIUM"}
+      fieldMeta.Canceller:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ERC721Vault (eth:0x0b470dd3A0e1C41228856Fb319649E7c08f419Aa) [taiko/ERC721Vault] {
+    +++ description: Escrows canonical ERC721 tokens and mints or burns their bridged representations. An immutable resolver selects the local bridge, counterpart vaults and default bridged token implementation. Releases authenticate the bridge and source vault.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract SignerList (Security Council) (eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2) [taiko/SignerList] {
+    +++ description: A signer list for storing multisig members and their agents, stores the addresses of the Multisigs that use this signer list. Each signer delegates their permissions to their agent address that they can configure here.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261) [taiko/AutomataDcapV3Attestation] {
+    +++ description: Contract managing SGX DCAP attestation policy, trusted measurements, and certificate revocation data.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract Taiko Token (eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800) [taiko/TaikoToken] {
+    +++ description: ERC20 contract implementing the TAIKO token. It defines a list of addresses designated as non-voting.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract EmergencyMultisig (eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd) [taiko/EmergencyMultisig] {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing encrypted proposals (e.g. for Security Council emergency proposals).
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract SecureSgxVerifier (eth:0x41e79EB4F03aBB5DF8716B759528dc5d8f6a84Ee) [taiko/SgxVerifier] {
+    +++ description: Verifier contract for SGX proven blocks. Registered SGX instances can sign accepted proofs until their instance expiry.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract MainnetInbox (eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f) [taiko/MainnetInbox] {
+    +++ description: The core Layer 1 entrypoint for the Taiko rollup where L2 block batches are proposed and their corresponding state transitions are proven. Users can enqueue forced inclusions by publishing an L1 blob. Once an inclusion is due, subsequent proposals must process it, but proposing remains restricted by the configured proposer checker. If the configured prover whitelist is non-empty, proofs from non-whitelisted provers revert.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract TaikoSP1Verifier (eth:0x73A0Db393ef87ce781ac7957bE10D6628432100F) [taiko/SP1Verifier] {
+    +++ description: Gating router contract to verify batches using SP1.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract TaikoDAOController (eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a) [taiko/TaikoDAOController] {
+    +++ description: Middleware contract that maintains ownership of DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3) [taiko/AutomataDcapV3Attestation] {
+    +++ description: Contract managing SGX DCAP attestation policy, trusted measurements, and certificate revocation data.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter] {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
+      fieldMeta.verifier_310fe598.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.verifier_9f39696c.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.verifier_f536085a.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.verifier_bb001d44.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.verifier_73c457ba.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.verifier_242f9d5b.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract DefaultResolver (eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e) [taiko/DefaultResolver] {
+    +++ description: Maps chainId-name pairs to contract addresses. Bridge and vault contracts resolve their counterparties through this registry, so changes in this mapping effectively act as contract upgrades. The pause function is intentionally disabled in this implementation.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract OptimisticTokenVotingPlugin (eth:0x989E348275b659d36f8751ea1c10D146211650BE) [taiko/OptimisticTokenVotingPlugin] {
+    +++ description: An optimistic governance module. Standard proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d. Emergency proposals can be executed without delay.
+      fieldMeta.minVetoRatio.severity:
++        "HIGH"
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+      fieldMeta.minVetoPercent:
++        {"severity":"HIGH"}
+      fieldMeta.governanceSettings_timelockPeriod_fmt:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ERC20Vault (eth:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab) [taiko/ERC20Vault] {
+    +++ description: Vault for canonical ERC20 tokens and their bridged representations. Deposits support standing approvals, ERC-2612 permits and Permit2 signatures. Successful deliveries consume token quota when a quota manager is configured. The bridge controls access to the refund callback.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract DAO (eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261) [taiko/DAO] {
+    +++ description: The main contract and entrypoint of the Aragon-based DAO governance framework. Fine-grained DAO permissions, proposals, voting and thresholds are configured here.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract SecureSgxVerifier (eth:0x9D3C595BFf6Ff7D2b2CbdEcF94aD917eB2fCFFd8) [taiko/SgxVerifier] {
+    +++ description: Verifier contract for SGX proven blocks. Registered SGX instances can sign accepted proofs until their instance expiry.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract SignalService (eth:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C) [taiko/SignalService] {
+    +++ description: Facilitates secure cross-chain message passing by storing signals and state-root checkpoints. Bridge escrows and other applications use it to prove that a specific L1<->L2 signal or checkpointed state transition occurred via Merkle proofs. Pausing disables signal proof verification.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ERC1155Vault (eth:0xaf145913EA4a56BE22E120ED9C24589659881702) [taiko/ERC1155Vault] {
+    +++ description: Escrows canonical ERC1155 tokens and mints or burns their bridged representations. An immutable resolver selects the local bridge, counterpart vaults and default bridged token implementation. Releases authenticate the bridge and source vault.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract QuotaManager (eth:0xBaCb003f0B13CeAF09Eb9Baf5915A640BD4Bc6cC) [taiko/QuotaManager] {
+    +++ description: Defines withdrawal quotas for ETH and ERC20 releases from the shared bridge. A token quota of zero means unlimited withdrawals for that token.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract Bridge (eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC) [taiko/Bridge] {
+    +++ description: Bridge escrow for ETH and cross-chain messages. Pausing stops all message flows. The immutable recallEnabled setting controls failed-message refunds. Successful ETH releases use the configured quota manager.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) [taiko/Multisig] {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ProverWhitelist (eth:0xEa798547d97e345395dA071a0D7ED8144CD612Ae) [taiko/ProverWhitelist] {
+    +++ description: Defines the prover whitelist queried by the inbox before accepting proofs. If the inbox is configured with this contract and the whitelist is non-empty, only whitelisted provers can prove proposals.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract TaikoDAOController (eth:0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3) [taiko/TaikoDAOController] {
+    +++ description: Middleware contract that maintains ownership of DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) [taiko/PreconfWhitelist] {
+    +++ description: Contains the whitelist of addresses eligible to propose batches on L1 and issue preconfirmations. It dynamically selects a single active operator for each epoch using a delayed Ethereum beacon block root as randomness. There is no fallback proposer path in this contract: non-selected operators cannot propose for the current epoch.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract Bridge (taiko:0x1670000000000000000000000000000000000001) [taiko/Bridge] {
+    +++ description: Bridge escrow holding preminted ETH on Taiko. Failed messages remain retryable, but message failure and source-chain refunds are disabled.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ERC20Vault (taiko:0x1670000000000000000000000000000000000002) [taiko/ERC20Vault] {
+    +++ description: Vault for canonical ERC20 tokens and their bridged representations. Deposits support standing approvals, ERC-2612 permits and Permit2 signatures. Successful deliveries consume token quota when a quota manager is configured. The bridge controls access to the refund callback.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ERC721Vault (taiko:0x1670000000000000000000000000000000000003) [taiko/ERC721Vault] {
+    +++ description: Escrows canonical ERC721 tokens and mints or burns their bridged representations. An immutable resolver selects the local bridge, counterpart vaults and default bridged token implementation. Releases authenticate the bridge and source vault.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ERC1155Vault (taiko:0x1670000000000000000000000000000000000004) [taiko/ERC1155Vault] {
+    +++ description: Escrows canonical ERC1155 tokens and mints or burns their bridged representations. An immutable resolver selects the local bridge, counterpart vaults and default bridged token implementation. Releases authenticate the bridge and source vault.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract SignalService (taiko:0x1670000000000000000000000000000000000005) [taiko/SignalService] {
+    +++ description: Facilitates secure cross-chain message passing by storing signals and state-root checkpoints. Bridge escrows and other applications use it to prove that a specific L1<->L2 signal or checkpointed state transition occurred via Merkle proofs. Pausing disables signal proof verification.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract Anchor (taiko:0x1670000000000000000000000000000000010001) [taiko/Anchor] {
+    +++ description: Stores L1 block details on L2 as a cross-layer oracle and manages EIP-1559 gas pricing for L2 operations.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract DefaultResolver (taiko:0x2ea05A9CD06984Cf533a1829d8b0BE6289a43984) [taiko/DefaultResolver] {
+    +++ description: Maps chainId-name pairs to contract addresses. Bridge and vault contracts resolve their counterparties through this registry, so changes in this mapping effectively act as contract upgrades. The pause function is intentionally disabled in this implementation.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract DelegateController (taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C) [taiko/DelegateController] {
+    +++ description: Middleware contract that can maintain ownership of DAO-controlled assets and contracts. It can only be invoked by the TaikoDAOController on L1 through the L2 bridge.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+Generated with discovered.json: 0xeb3c0ae3066ad3647e5ab0e004eef5eef0efecc4
+
+# Diff at Wed, 14 Oct 2026 08:34:44 GMT:
+
+- id: c25f83dd
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@54e2fac6e37e04c70f7a26682917ed70a7c5e994 block: 1791789361
+- current timestamp: 1791966804
+
+## Description
+
+RISC Zero verifier owner Safe: ownership transfer of the five RiscZeroVerifierEmergencyStops to an EOA started (`pendingOwner`).
+
+## Watched changes
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x1efDd13f831ceeEa14940806705A53D3211CD698) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.
+      values.pendingOwner:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97 that allows pausing (emergency stop) the verifier by its owner.
+      values.pendingOwner:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.
+      values.pendingOwner:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
+      values.pendingOwner:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF that allows pausing (emergency stop) the verifier by its owner.
+      values.pendingOwner:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
+    }
+```
+
+Generated with discovered.json: 0x29e02fba8a4bb4f86cf2666c7de691e2eef3024f
+
+# Diff at Mon, 12 Oct 2026 08:28:43 GMT:
+
+- id: 659e0548
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@04aa433dc68709f003e06fd592edac8330126cec block: 1790850875
+- current timestamp: 1791789361
+
+## Description
+
+[L2 bridges and vaults upgrade](https://gist.github.com/sekuba/415516336b2e9b6e4cdea5a21662d2bd). Recalls are disabled, so failed deliveries can strand funds until they succeed (recall proves a message failed on the destination and refunds funds on the source chain). ERC20 deposits add signed permits, and ETH sends receive more gas. The separate RISC0 governance Safe lowers its threshold from 3/5 to 2/5.
+
+- [L1 Bridge, first upgrade](https://disco.l2beat.com/diff/eth:0x1c94D798CFA08F396E5BA9F81697289c53273381/eth:0xA15dca0A72da684f20e0FC708DECFb230a715462)
+- [L1 Bridge, second upgrade](https://disco.l2beat.com/diff/eth:0xA15dca0A72da684f20e0FC708DECFb230a715462/eth:0xe6BF63dCc936063caD2300f32DaA67d9eE5c57b6)
+- [L1 ERC20Vault, first upgrade](https://disco.l2beat.com/diff/eth:0x024253C6FDC27d3161aFd43fb0241411A28dDc3c/eth:0x32E47c04E8c329E8c10062731448e7658aDEEB8e)
+- [L1 ERC20Vault, second upgrade](https://disco.l2beat.com/diff/eth:0x32E47c04E8c329E8c10062731448e7658aDEEB8e/eth:0xd429A698d19b5789ce6Eb72d8B3ae9fad3b28A92)
+- [L2 Bridge, first upgrade](https://disco.l2beat.com/diff/taiko:0x95ae2918dcbc6aFF8B4c1F1BCC1bf819b6e08B83/taiko:0xa200c2268d77737a8Fd2CA1698dA6eeab2a85CEb)
+- [L2 Bridge, second upgrade](https://disco.l2beat.com/diff/taiko:0xa200c2268d77737a8Fd2CA1698dA6eeab2a85CEb/taiko:0xF372Db3F06AcaB3347697866d2047a54D1BA8eB3)
+- [L2 ERC20Vault, first upgrade](https://disco.l2beat.com/diff/taiko:0xb96AbB41b01E3ad519D00E80355a1c3801910F62/taiko:0xa01d464ca3982DAa97B19fa7F8a232eB11A9DDb3)
+- [L2 ERC20Vault, second upgrade](https://disco.l2beat.com/diff/taiko:0xa01d464ca3982DAa97B19fa7F8a232eB11A9DDb3/taiko:0x25D8465fD0C8D89bfdE910E47c41f4E465672B5c)
+- [L1 ERC721Vault](https://disco.l2beat.com/diff/eth:0xA4C5c20aB33C96B1c281Dca37D03E23609274C49/eth:0x611f3Dc278A14b6ED14410Cd9d56E1721cf33802)
+- [L1 ERC1155Vault](https://disco.l2beat.com/diff/eth:0x838ed469db456b67EB3b0B74D759Be4DA999b9c8/eth:0xca775D0Bb8CEFe388E344f75De91Aebd0E73c58E)
+- [L2 ERC721Vault](https://disco.l2beat.com/diff/taiko:0xd532f20a4751156C566Da7745db95E7f80145B36/taiko:0x4cAb75DBE321084fD15c7AA9f7398e073A7EaBd0)
+- [L2 ERC1155Vault](https://disco.l2beat.com/diff/taiko:0xBBBC4ad39488b990E095042fa6c59A90d3817846/taiko:0xe148CceFFcd5494301c20e047634995C60611e57)
+- [L2 resolver replacement](https://disco.l2beat.com/diff/taiko:0x0167000000000000000000000000000000000006/taiko:0x8Af4669E3068Bae96b92cD73603f5D86beD07a9a)
+- [L1 NFT resolver replacement](https://disco.l2beat.com/diff/eth:0xEC1a9aa1C648F047752fe4eeDb2C21ceab0c6449/eth:0xFca4F0Ab7B95EEf2e3A60EF2Bc0c42DdAA62E66D)
+- [L1 default ERC20](https://disco.l2beat.com/diff/eth:0x65666141a541423606365123Ed280AB16a09A2e1/eth:0x9ccB9eBa4335096c5B64f050C3c734632D497c3b)
+- [L1 default ERC721](https://disco.l2beat.com/diff/eth:0xC3310905E2BC9Cfb198695B75EF3e5B69C6A1Bf7/eth:0xD9c9dB7519011437C54BCD32495c0347A410bc4D)
+- [L1 default ERC1155](https://disco.l2beat.com/diff/eth:0x3c90963cFBa436400B0F9C46Aa9224cB379c2c40/eth:0x35001aB6f53CF9fE583653Ca3F56cae75E8C385e)
+- [L2 default ERC20](https://disco.l2beat.com/diff/taiko:0x98161D67f762A9E589E502348579FA38B1Ac47A8/taiko:0xD6601cdea5857338EbdEE4CF38298aff43f01431)
+- [L2 default ERC721](https://disco.l2beat.com/diff/taiko:0x0167000000000000000000000000000000010097/taiko:0x71c2f41AEDe913AAEf2c62596E03702E348D6Cd0)
+- [L2 default ERC1155](https://disco.l2beat.com/diff/taiko:0x0167000000000000000000000000000000010098/taiko:0x7dF8bfBf0f09e94200b6a158b421e2CCaCc4830F)
+
+## Watched changes
+
+```diff
+    contract ERC721Vault (eth:0x0b470dd3A0e1C41228856Fb319649E7c08f419Aa) [taiko/ERC721Vault] {
+    +++ description: Escrows canonical ERC721 tokens and mints or burns their bridged representations. An immutable resolver selects the local bridge, counterpart vaults and default bridged token implementation. Releases authenticate the bridge and source vault.
+      name:
+-        "MainnetERC721Vault"
++        "ERC721Vault"
+      sourceHashes.1:
+-        "0x18fe27b80aff596fa58d3499fbe1ac44e8bd72cdc9ce0942afb53c5d9caa4b6e"
++        "0x783ac50fedc4522f4b68132d77dbab84b7738869e0c79eccc12ecca89e33be01"
+      values.$implementation:
+-        "eth:0xA4C5c20aB33C96B1c281Dca37D03E23609274C49"
++        "eth:0x611f3Dc278A14b6ED14410Cd9d56E1721cf33802"
+      values.$pastUpgrades.6:
++        ["2026-10-12T01:04:35.000Z","0x935e4a93cf26e7bef2ac3c445815e253496d82d51e4205e7073a3d511a9111f4",["eth:0x611f3Dc278A14b6ED14410Cd9d56E1721cf33802"]]
+      values.$upgradeCount:
+-        6
++        7
+      values.addressManager:
+-        "eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
+      values.impl:
+-        "eth:0xA4C5c20aB33C96B1c281Dca37D03E23609274C49"
++        "eth:0x611f3Dc278A14b6ED14410Cd9d56E1721cf33802"
+      values.lastUnpausedAt:
+-        0
++++ description: Immutable resolver selecting trusted bridge and vault counterparties and default token implementations.
+      values.resolver:
++        "eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
+      errors:
+-        {"proxiableUUID":"Processing error occurred."}
+      implementationNames.eth:0xA4C5c20aB33C96B1c281Dca37D03E23609274C49:
+-        "MainnetERC721Vault"
+      implementationNames.eth:0x611f3Dc278A14b6ED14410Cd9d56E1721cf33802:
++        "ERC721Vault"
+      template:
++        "taiko/ERC721Vault"
+      description:
++        "Escrows canonical ERC721 tokens and mints or burns their bridged representations. An immutable resolver selects the local bridge, counterpart vaults and default bridged token implementation. Releases authenticate the bridge and source vault."
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"},"pendingOwner":{"severity":"MEDIUM"},"paused":{"severity":"MEDIUM"},"resolver":{"description":"Immutable resolver selecting trusted bridge and vault counterparties and default token implementations."}}
+    }
+```
+
+```diff
+    contract SignerList (Security Council) (eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2) [taiko/SignerList] {
+    +++ description: A signer list for storing multisig members and their agents, stores the addresses of the Multisigs that use this signer list. Each signer delegates their permissions to their agent address that they can configure here.
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x0b470dd3A0e1C41228856Fb319649E7c08f419Aa","description":"pause and unpause NFT deposits, releases and refunds.","role":".owner","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
+      receivedPermissions.9:
+-        {"permission":"interact","from":"eth:0x91f67118DD47d502B1f0C354D0611997B022f29E","description":"update token withdrawal quotas and the quota refill period.","role":".owner","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
+      receivedPermissions.11.description:
+-        "pause and unpause token bridge flows and change the bridged token implementation for a canonical token after the migration delay."
++        "pause and unpause token flows and change a canonical token's bridged representation after the migration delay."
+      receivedPermissions.15:
++        {"permission":"interact","from":"eth:0xaf145913EA4a56BE22E120ED9C24589659881702","description":"pause and unpause NFT deposits, releases and refunds.","role":".owner","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
+      receivedPermissions.15.description:
+-        "pause and unpause bridge message flows and execute one-time bridge recovery initializers."
++        "pause and unpause bridge flows and run one-time message recovery initializers."
+      receivedPermissions.18:
+-        {"permission":"interact","from":"eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa","description":"can update the contract address for a given name","role":".owner","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
+      receivedPermissions.20:
++        {"permission":"interact","from":"taiko:0x1670000000000000000000000000000000000001","description":"pause and unpause bridge flows and run one-time message recovery initializers.","role":".owner","via":[{"address":"taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C"},{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
+      receivedPermissions.21:
++        {"permission":"interact","from":"taiko:0x1670000000000000000000000000000000000002","description":"pause and unpause token flows and change a canonical token's bridged representation after the migration delay.","role":".owner","via":[{"address":"taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C"},{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
+      receivedPermissions.22:
++        {"permission":"interact","from":"taiko:0x1670000000000000000000000000000000000003","description":"pause and unpause NFT deposits, releases and refunds.","role":".owner","via":[{"address":"taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C"},{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
+      receivedPermissions.23:
++        {"permission":"interact","from":"taiko:0x1670000000000000000000000000000000000004","description":"pause and unpause NFT deposits, releases and refunds.","role":".owner","via":[{"address":"taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C"},{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
+      receivedPermissions.21.description:
+-        "can update the contract address for a given name"
++        "update the contract address registered for any chainId-name pair."
+      receivedPermissions.21.from:
+-        "taiko:0x1670000000000000000000000000000000000006"
++        "taiko:0x2ea05A9CD06984Cf533a1829d8b0BE6289a43984"
+      receivedPermissions.29:
+-        {"permission":"upgrade","from":"eth:0x91f67118DD47d502B1f0C354D0611997B022f29E","role":"admin","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
+      receivedPermissions.36:
+-        {"permission":"upgrade","from":"eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa","role":"admin","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
+      receivedPermissions.44:
+-        {"permission":"upgrade","from":"taiko:0x1670000000000000000000000000000000000006","role":"admin","via":[{"address":"taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C"},{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
+      receivedPermissions.47:
++        {"permission":"upgrade","from":"taiko:0x2ea05A9CD06984Cf533a1829d8b0BE6289a43984","role":"admin","via":[{"address":"taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C"},{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
+    }
+```
+
+```diff
+    contract Safe (eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609) [GnosisSafe] {
+    +++ description: None
+      values.$members.3:
+-        "eth:0xd5D43445d0227a47cA2eACCb9392352746eD9926"
++        "eth:0x9a017883e4A6BB2a6261D92D70f71107F2C39D12"
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "2 of 5 (40%)"
+    }
+```
+
+```diff
+    contract TaikoDAOController (eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a) [taiko/TaikoDAOController] {
+    +++ description: Middleware contract that maintains ownership of DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+      directlyReceivedPermissions.2:
++        {"permission":"interact","from":"eth:0x0b470dd3A0e1C41228856Fb319649E7c08f419Aa","description":"pause and unpause NFT deposits, releases and refunds.","role":".owner"}
+      directlyReceivedPermissions.8:
+-        {"permission":"interact","from":"eth:0x91f67118DD47d502B1f0C354D0611997B022f29E","description":"update token withdrawal quotas and the quota refill period.","role":".owner"}
+      directlyReceivedPermissions.9.description:
+-        "pause and unpause token bridge flows and change the bridged token implementation for a canonical token after the migration delay."
++        "pause and unpause token flows and change a canonical token's bridged representation after the migration delay."
+      directlyReceivedPermissions.12:
++        {"permission":"interact","from":"eth:0xaf145913EA4a56BE22E120ED9C24589659881702","description":"pause and unpause NFT deposits, releases and refunds.","role":".owner"}
+      directlyReceivedPermissions.12.description:
+-        "pause and unpause bridge message flows and execute one-time bridge recovery initializers."
++        "pause and unpause bridge flows and run one-time message recovery initializers."
+      directlyReceivedPermissions.14:
+-        {"permission":"interact","from":"eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa","description":"can update the contract address for a given name","role":".owner"}
+      directlyReceivedPermissions.22:
+-        {"permission":"upgrade","from":"eth:0x91f67118DD47d502B1f0C354D0611997B022f29E","role":"admin"}
+      directlyReceivedPermissions.28:
+-        {"permission":"upgrade","from":"eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa","role":"admin"}
+    }
+```
+
+```diff
+    contract DefaultResolver (eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e) [taiko/DefaultResolver] {
+    +++ description: Maps chainId-name pairs to contract addresses. Bridge and vault contracts resolve their counterparties through this registry, so changes in this mapping effectively act as contract upgrades. The pause function is intentionally disabled in this implementation.
+      values.namedAddresses.10.address:
+-        "eth:0x65666141a541423606365123Ed280AB16a09A2e1"
++        "eth:0x9ccB9eBa4335096c5B64f050C3c734632D497c3b"
+      values.namedAddresses.11.address:
+-        "eth:0xC3310905E2BC9Cfb198695B75EF3e5B69C6A1Bf7"
++        "eth:0xD9c9dB7519011437C54BCD32495c0347A410bc4D"
+      values.namedAddresses.12.address:
+-        "eth:0x3c90963cFBa436400B0F9C46Aa9224cB379c2c40"
++        "eth:0x35001aB6f53CF9fE583653Ca3F56cae75E8C385e"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract QuotaManager (eth:0x91f67118DD47d502B1f0C354D0611997B022f29E) [taiko/QuotaManager]
+    +++ description: Defines withdrawal quotas for ETH and ERC20 releases from the shared bridge. A token quota of zero means unlimited withdrawals for that token.
+```
+
+```diff
+    contract ERC20Vault (eth:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab) [taiko/ERC20Vault] {
+    +++ description: Vault for canonical ERC20 tokens and their bridged representations. Deposits support standing approvals, ERC-2612 permits and Permit2 signatures. Successful deliveries consume token quota when a quota manager is configured. The bridge controls access to the refund callback.
+      name:
+-        "MainnetERC20Vault"
++        "ERC20Vault"
+      template:
+-        "taiko/SharedERC20Vault"
++        "taiko/ERC20Vault"
+      sourceHashes.1:
+-        "0x9b624be34d3f91047fd5ee6a056fd5d81ed43c3ba757e53661aeb4e4dabfe4aa"
++        "0x3a8df12e5f7ee6611bebe6784bc06bdd7ff8cc3c63d230e0260ca7ef9c97ead8"
+      description:
+-        "Shared vault for Taiko chains for bridged ERC20 tokens. Pausing stops token sends, message-triggered releases, and recalls. Released or minted tokens are subject to the configured quota manager."
++        "Vault for canonical ERC20 tokens and their bridged representations. Deposits support standing approvals, ERC-2612 permits and Permit2 signatures. Successful deliveries consume token quota when a quota manager is configured. The bridge controls access to the refund callback."
+      values.$implementation:
+-        "eth:0x024253C6FDC27d3161aFd43fb0241411A28dDc3c"
++        "eth:0xd429A698d19b5789ce6Eb72d8B3ae9fad3b28A92"
+      values.$pastUpgrades.9:
++        ["2026-10-08T07:28:47.000Z","0x17c27b257bb1445a512d4426c962de5c5f4b282f459c7e851c413702ad11d10c",["eth:0x32E47c04E8c329E8c10062731448e7658aDEEB8e"]]
+      values.$pastUpgrades.10:
++        ["2026-10-12T01:04:35.000Z","0x935e4a93cf26e7bef2ac3c445815e253496d82d51e4205e7073a3d511a9111f4",["eth:0xd429A698d19b5789ce6Eb72d8B3ae9fad3b28A92"]]
+      values.$upgradeCount:
+-        9
++        11
+      values.impl:
+-        "eth:0x024253C6FDC27d3161aFd43fb0241411A28dDc3c"
++        "eth:0xd429A698d19b5789ce6Eb72d8B3ae9fad3b28A92"
+      values.proxiableUUID:
+-        "EXPECT_REVERT"
+      values.PERMIT2:
++        "eth:0x000000000022D473030F116dDEE9F6B43aC78BA3"
+      fieldMeta.quotaManager.description:
+-        "Quota manager that rate-limits ERC20 tokens released or minted by this vault."
++        "Immutable quota manager limiting successful token deliveries. Refunds consume no quota. The zero address disables quotas."
+      fieldMeta.btokenDenylist.description:
+-        "Bridged tokens denied by migration logic. Denied tokens cannot be sent through the vault."
++        "Bridged tokens excluded from sends by token migration logic."
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.pendingOwner:
++        {"severity":"MEDIUM"}
+      fieldMeta.resolver:
++        {"description":"Immutable registry resolving the bridge, counterpart vaults and default bridged token implementation."}
+      implementationNames.eth:0x024253C6FDC27d3161aFd43fb0241411A28dDc3c:
+-        "MainnetERC20Vault"
+      implementationNames.eth:0xd429A698d19b5789ce6Eb72d8B3ae9fad3b28A92:
++        "ERC20Vault"
+    }
+```
+
+```diff
+    contract Taiko Multisig (eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.4.description:
+-        "pause and unpause bridge message flows and fund the bridge through direct ETH transfers."
++        "pause and unpause bridge flows and fund the bridge through direct ETH transfers."
+    }
+```
+
+```diff
+    contract ERC1155Vault (eth:0xaf145913EA4a56BE22E120ED9C24589659881702) [taiko/ERC1155Vault] {
+    +++ description: Escrows canonical ERC1155 tokens and mints or burns their bridged representations. An immutable resolver selects the local bridge, counterpart vaults and default bridged token implementation. Releases authenticate the bridge and source vault.
+      name:
+-        "MainnetERC1155Vault"
++        "ERC1155Vault"
+      sourceHashes.1:
+-        "0x4493f2ac281fab06a2ac9a899815cfeb485eb5f3c813020f91d6091bb85f101b"
++        "0xf2cbbe079d267fc8e34c5014c14f0dd4269da004cf9c1dc223ac4cb9ec351163"
+      values.$implementation:
+-        "eth:0x838ed469db456b67EB3b0B74D759Be4DA999b9c8"
++        "eth:0xca775D0Bb8CEFe388E344f75De91Aebd0E73c58E"
+      values.$pastUpgrades.6:
++        ["2026-10-12T01:04:35.000Z","0x935e4a93cf26e7bef2ac3c445815e253496d82d51e4205e7073a3d511a9111f4",["eth:0xca775D0Bb8CEFe388E344f75De91Aebd0E73c58E"]]
+      values.$upgradeCount:
+-        6
++        7
+      values.addressManager:
+-        "eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
+      values.impl:
+-        "eth:0x838ed469db456b67EB3b0B74D759Be4DA999b9c8"
++        "eth:0xca775D0Bb8CEFe388E344f75De91Aebd0E73c58E"
+      values.lastUnpausedAt:
+-        0
++++ description: Immutable resolver selecting trusted bridge and vault counterparties and default token implementations.
+      values.resolver:
++        "eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
+      errors:
+-        {"proxiableUUID":"Processing error occurred."}
+      implementationNames.eth:0x838ed469db456b67EB3b0B74D759Be4DA999b9c8:
+-        "MainnetERC1155Vault"
+      implementationNames.eth:0xca775D0Bb8CEFe388E344f75De91Aebd0E73c58E:
++        "ERC1155Vault"
+      template:
++        "taiko/ERC1155Vault"
+      description:
++        "Escrows canonical ERC1155 tokens and mints or burns their bridged representations. An immutable resolver selects the local bridge, counterpart vaults and default bridged token implementation. Releases authenticate the bridge and source vault."
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"},"pendingOwner":{"severity":"MEDIUM"},"paused":{"severity":"MEDIUM"},"resolver":{"description":"Immutable resolver selecting trusted bridge and vault counterparties and default token implementations."}}
+    }
+```
+
+```diff
+    contract Bridge (eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC) [taiko/Bridge] {
+    +++ description: Bridge escrow for ETH and cross-chain messages. Pausing stops all message flows. The immutable recallEnabled setting controls failed-message refunds. Successful ETH releases use the configured quota manager.
+      name:
+-        "MainnetBridge"
++        "Bridge"
+      template:
+-        "taiko/TaikoBridge"
++        "taiko/Bridge"
+      sourceHashes.1:
+-        "0x61b87867a3f041292eb5da7940c9fc5d33aee32c063a7cf1696beb6eafac4a2b"
++        "0x765f8d75f0a63f536ea3c68dd988c86a2d844ec6fb08baeabbe309578bb04a01"
+      description:
+-        "Shared bridge escrow for Taiko chains for bridged ETH and arbitrary bridge messages. Pausing stops sending, processing, recalling, retrying, and failing messages. ETH released from the bridge is subject to the configured quota manager."
++        "Bridge escrow for ETH and cross-chain messages. Pausing stops all message flows. The immutable recallEnabled setting controls failed-message refunds. Successful ETH releases use the configured quota manager."
+      values.$implementation:
+-        "eth:0x1c94D798CFA08F396E5BA9F81697289c53273381"
++        "eth:0xe6BF63dCc936063caD2300f32DaA67d9eE5c57b6"
+      values.$pastUpgrades.13:
++        ["2026-10-08T07:28:47.000Z","0x17c27b257bb1445a512d4426c962de5c5f4b282f459c7e851c413702ad11d10c",["eth:0xA15dca0A72da684f20e0FC708DECFb230a715462"]]
+      values.$pastUpgrades.14:
++        ["2026-10-12T01:04:35.000Z","0x935e4a93cf26e7bef2ac3c445815e253496d82d51e4205e7073a3d511a9111f4",["eth:0xe6BF63dCc936063caD2300f32DaA67d9eE5c57b6"]]
+      values.$upgradeCount:
+-        13
++        15
+      values.impl:
+-        "eth:0x1c94D798CFA08F396E5BA9F81697289c53273381"
++        "eth:0xe6BF63dCc936063caD2300f32DaA67d9eE5c57b6"
+      values.proxiableUUID:
+-        "EXPECT_REVERT"
++++ description: Immutable switch controlling failMessage, recallMessage and the failed branch of retryMessage. When false, failed deliveries must succeed on retry to release their funds.
+      values.recallEnabled:
++        false
+      fieldMeta.quotaManager.description:
+-        "Quota manager that rate-limits ETH released by processed or recalled bridge messages."
++        "Immutable quota manager limiting successful ETH releases. The zero address disables quotas."
+      fieldMeta.signalService.description:
+-        "Signal service used to prove cross-chain message delivery and failure signals."
++        "Immutable signal service proving cross-chain message delivery and failure signals."
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.pendingOwner:
++        {"severity":"MEDIUM"}
+      fieldMeta.recallEnabled:
++        {"description":"Immutable switch controlling failMessage, recallMessage and the failed branch of retryMessage. When false, failed deliveries must succeed on retry to release their funds."}
+      fieldMeta.resolver:
++        {"description":"Immutable registry resolving the trusted counterpart bridge on each chain."}
+      implementationNames.eth:0x1c94D798CFA08F396E5BA9F81697289c53273381:
+-        "MainnetBridge"
+      implementationNames.eth:0xe6BF63dCc936063caD2300f32DaA67d9eE5c57b6:
++        "Bridge"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L1SharedAddressManager (eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa) [taiko/L1SharedAddressManager]
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+```
+
+```diff
+    EOA (taiko:0x0000000000000000000000000000000000000000) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"taiko:0x1670000000000000000000000000000000000001","description":"pause and unpause bridge flows and fund the bridge through direct ETH transfers.","role":".pauser"}]
+    }
+```
+
+```diff
+    contract Bridge (taiko:0x1670000000000000000000000000000000000001) [taiko/Bridge] {
+    +++ description: Bridge escrow holding preminted ETH on Taiko. Failed messages remain retryable, but message failure and source-chain refunds are disabled.
+      template:
+-        "taiko/L2Bridge"
++        "taiko/Bridge"
+      sourceHashes.1:
+-        "0xfada2b71cfef6dfc63b33a9681baa712699f12de05eaf91f635ed3387a304791"
++        "0x765f8d75f0a63f536ea3c68dd988c86a2d844ec6fb08baeabbe309578bb04a01"
+      values.$implementation:
+-        "taiko:0x95ae2918dcbc6aFF8B4c1F1BCC1bf819b6e08B83"
++        "taiko:0xF372Db3F06AcaB3347697866d2047a54D1BA8eB3"
+      values.$pastUpgrades.8:
++        ["2026-10-08T07:30:21.000Z","0xc61c925bbc9b815715c6bc009cfcb50c16e93904dc07e799c913953a2b6be095",["taiko:0xa200c2268d77737a8Fd2CA1698dA6eeab2a85CEb"]]
+      values.$pastUpgrades.9:
++        ["2026-10-12T01:07:17.000Z","0xe8c9d02693ed235dce16a36685a7d07f2929b6927054e07be41293cec00d194d",["taiko:0xF372Db3F06AcaB3347697866d2047a54D1BA8eB3"]]
+      values.$upgradeCount:
+-        8
++        10
+      values.addressManager:
+-        "taiko:0x1670000000000000000000000000000000000006"
+      values.bridgeWatchdog:
+-        "taiko:0x0000000000000000000000000000000000000000"
+      values.chainWatchdog:
+-        "taiko:0x0000000000000000000000000000000000000000"
+      values.impl:
+-        "taiko:0x95ae2918dcbc6aFF8B4c1F1BCC1bf819b6e08B83"
++        "taiko:0xF372Db3F06AcaB3347697866d2047a54D1BA8eB3"
+      values.lastUnpausedAt:
+-        0
++++ severity: MEDIUM
+      values.pauser:
++        "taiko:0x0000000000000000000000000000000000000000"
++++ description: Immutable switch controlling failMessage, recallMessage and the failed branch of retryMessage. When false, failed deliveries must succeed on retry to release their funds.
+      values.recallEnabled:
++        false
++++ description: Immutable registry resolving the trusted counterpart bridge on each chain.
+      values.resolver:
++        "taiko:0x2ea05A9CD06984Cf533a1829d8b0BE6289a43984"
+      fieldMeta.addressManager:
+-        {"severity":"HIGH"}
+      fieldMeta.signalService.severity:
+-        "HIGH"
+      fieldMeta.signalService.description:
++        "Immutable signal service proving cross-chain message delivery and failure signals."
+      fieldMeta.quotaManager.severity:
+-        "HIGH"
+      fieldMeta.quotaManager.description:
+-        "only relevant if not zero address"
++        "Immutable quota manager limiting successful ETH releases. The zero address disables quotas."
+      fieldMeta.chainWatchdog:
+-        {"severity":"MEDIUM","description":"only relevant if not zero address"}
+      fieldMeta.bridgeWatchdog:
+-        {"severity":"MEDIUM","description":"only relevant if not zero address"}
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.pauser:
++        {"severity":"MEDIUM"}
+      fieldMeta.recallEnabled:
++        {"description":"Immutable switch controlling failMessage, recallMessage and the failed branch of retryMessage. When false, failed deliveries must succeed on retry to release their funds."}
+      fieldMeta.resolver:
++        {"description":"Immutable registry resolving the trusted counterpart bridge on each chain."}
+      implementationNames.taiko:0x95ae2918dcbc6aFF8B4c1F1BCC1bf819b6e08B83:
+-        "Bridge"
+      implementationNames.taiko:0xF372Db3F06AcaB3347697866d2047a54D1BA8eB3:
++        "Bridge"
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract ERC20Vault (taiko:0x1670000000000000000000000000000000000002) [taiko/ERC20Vault] {
+    +++ description: Vault for canonical ERC20 tokens and their bridged representations. Deposits support standing approvals, ERC-2612 permits and Permit2 signatures. Successful deliveries consume token quota when a quota manager is configured. The bridge controls access to the refund callback.
+      template:
+-        "taiko/L2ERC20Vault"
++        "taiko/ERC20Vault"
+      sourceHashes.1:
+-        "0x9cc2e724dd00141e1e07621839efbb2f8c96ed9f67d6fbe50664ea8b6531c118"
++        "0x3a8df12e5f7ee6611bebe6784bc06bdd7ff8cc3c63d230e0260ca7ef9c97ead8"
+      description:
+-        "Escrow for L2-native tokens sent to L1 via the canonical bridge."
++        "Vault for canonical ERC20 tokens and their bridged representations. Deposits support standing approvals, ERC-2612 permits and Permit2 signatures. Successful deliveries consume token quota when a quota manager is configured. The bridge controls access to the refund callback."
+      values.$implementation:
+-        "taiko:0xb96AbB41b01E3ad519D00E80355a1c3801910F62"
++        "taiko:0x25D8465fD0C8D89bfdE910E47c41f4E465672B5c"
+      values.$pastUpgrades.4:
++        ["2026-10-08T07:30:21.000Z","0xc61c925bbc9b815715c6bc009cfcb50c16e93904dc07e799c913953a2b6be095",["taiko:0xa01d464ca3982DAa97B19fa7F8a232eB11A9DDb3"]]
+      values.$pastUpgrades.5:
++        ["2026-10-12T01:07:17.000Z","0xe8c9d02693ed235dce16a36685a7d07f2929b6927054e07be41293cec00d194d",["taiko:0x25D8465fD0C8D89bfdE910E47c41f4E465672B5c"]]
+      values.$upgradeCount:
+-        4
++        6
+      values.addressManager:
+-        "taiko:0x1670000000000000000000000000000000000006"
+      values.impl:
+-        "taiko:0xb96AbB41b01E3ad519D00E80355a1c3801910F62"
++        "taiko:0x25D8465fD0C8D89bfdE910E47c41f4E465672B5c"
+      values.lastUnpausedAt:
+-        1716811943
+      values.PERMIT2:
++        "taiko:0x000000000022D473030F116dDEE9F6B43aC78BA3"
++++ description: Immutable quota manager limiting successful token deliveries. Refunds consume no quota. The zero address disables quotas.
+      values.quotaManager:
++        "taiko:0x0000000000000000000000000000000000000000"
++++ description: Immutable registry resolving the bridge, counterpart vaults and default bridged token implementation.
+      values.resolver:
++        "taiko:0x2ea05A9CD06984Cf533a1829d8b0BE6289a43984"
+      fieldMeta.addressManager:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.resolver:
++        {"description":"Immutable registry resolving the bridge, counterpart vaults and default bridged token implementation."}
+      fieldMeta.quotaManager:
++        {"description":"Immutable quota manager limiting successful token deliveries. Refunds consume no quota. The zero address disables quotas."}
+      fieldMeta.btokenDenylist:
++        {"description":"Bridged tokens excluded from sends by token migration logic."}
+      implementationNames.taiko:0xb96AbB41b01E3ad519D00E80355a1c3801910F62:
+-        "ERC20Vault"
+      implementationNames.taiko:0x25D8465fD0C8D89bfdE910E47c41f4E465672B5c:
++        "ERC20Vault"
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract ERC721Vault (taiko:0x1670000000000000000000000000000000000003) [taiko/ERC721Vault] {
+    +++ description: Escrows canonical ERC721 tokens and mints or burns their bridged representations. An immutable resolver selects the local bridge, counterpart vaults and default bridged token implementation. Releases authenticate the bridge and source vault.
+      sourceHashes.1:
+-        "0xdb576f6eacda08057701d15f09fa5c2b615ae34b565d935a56dc43245eb46703"
++        "0x783ac50fedc4522f4b68132d77dbab84b7738869e0c79eccc12ecca89e33be01"
+      values.$implementation:
+-        "taiko:0xd532f20a4751156C566Da7745db95E7f80145B36"
++        "taiko:0x4cAb75DBE321084fD15c7AA9f7398e073A7EaBd0"
+      values.$pastUpgrades.3:
++        ["2026-10-12T01:07:17.000Z","0xe8c9d02693ed235dce16a36685a7d07f2929b6927054e07be41293cec00d194d",["taiko:0x4cAb75DBE321084fD15c7AA9f7398e073A7EaBd0"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.addressManager:
+-        "taiko:0x1670000000000000000000000000000000000006"
+      values.impl:
+-        "taiko:0xd532f20a4751156C566Da7745db95E7f80145B36"
++        "taiko:0x4cAb75DBE321084fD15c7AA9f7398e073A7EaBd0"
+      values.lastUnpausedAt:
+-        0
++++ description: Immutable resolver selecting trusted bridge and vault counterparties and default token implementations.
+      values.resolver:
++        "taiko:0x2ea05A9CD06984Cf533a1829d8b0BE6289a43984"
+      errors:
+-        {"proxiableUUID":"Processing error occurred."}
+      implementationNames.taiko:0xd532f20a4751156C566Da7745db95E7f80145B36:
+-        "ERC721Vault"
+      implementationNames.taiko:0x4cAb75DBE321084fD15c7AA9f7398e073A7EaBd0:
++        "ERC721Vault"
+      template:
++        "taiko/ERC721Vault"
+      description:
++        "Escrows canonical ERC721 tokens and mints or burns their bridged representations. An immutable resolver selects the local bridge, counterpart vaults and default bridged token implementation. Releases authenticate the bridge and source vault."
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"},"pendingOwner":{"severity":"MEDIUM"},"paused":{"severity":"MEDIUM"},"resolver":{"description":"Immutable resolver selecting trusted bridge and vault counterparties and default token implementations."}}
+    }
+```
+
+```diff
+    contract ERC1155Vault (taiko:0x1670000000000000000000000000000000000004) [taiko/ERC1155Vault] {
+    +++ description: Escrows canonical ERC1155 tokens and mints or burns their bridged representations. An immutable resolver selects the local bridge, counterpart vaults and default bridged token implementation. Releases authenticate the bridge and source vault.
+      sourceHashes.1:
+-        "0x7325669dd281de5a8bb65da63dfffe0a322aca151892bffa8464934fbfafaa31"
++        "0xf2cbbe079d267fc8e34c5014c14f0dd4269da004cf9c1dc223ac4cb9ec351163"
+      values.$implementation:
+-        "taiko:0xBBBC4ad39488b990E095042fa6c59A90d3817846"
++        "taiko:0xe148CceFFcd5494301c20e047634995C60611e57"
+      values.$pastUpgrades.3:
++        ["2026-10-12T01:07:17.000Z","0xe8c9d02693ed235dce16a36685a7d07f2929b6927054e07be41293cec00d194d",["taiko:0xe148CceFFcd5494301c20e047634995C60611e57"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.addressManager:
+-        "taiko:0x1670000000000000000000000000000000000006"
+      values.impl:
+-        "taiko:0xBBBC4ad39488b990E095042fa6c59A90d3817846"
++        "taiko:0xe148CceFFcd5494301c20e047634995C60611e57"
+      values.lastUnpausedAt:
+-        0
++++ description: Immutable resolver selecting trusted bridge and vault counterparties and default token implementations.
+      values.resolver:
++        "taiko:0x2ea05A9CD06984Cf533a1829d8b0BE6289a43984"
+      errors:
+-        {"proxiableUUID":"Processing error occurred."}
+      implementationNames.taiko:0xBBBC4ad39488b990E095042fa6c59A90d3817846:
+-        "ERC1155Vault"
+      implementationNames.taiko:0xe148CceFFcd5494301c20e047634995C60611e57:
++        "ERC1155Vault"
+      template:
++        "taiko/ERC1155Vault"
+      description:
++        "Escrows canonical ERC1155 tokens and mints or burns their bridged representations. An immutable resolver selects the local bridge, counterpart vaults and default bridged token implementation. Releases authenticate the bridge and source vault."
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"},"pendingOwner":{"severity":"MEDIUM"},"paused":{"severity":"MEDIUM"},"resolver":{"description":"Immutable resolver selecting trusted bridge and vault counterparties and default token implementations."}}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L2AddressManager (taiko:0x1670000000000000000000000000000000000006) [taiko/L2AddressManager]
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+```
+
+```diff
+    contract DelegateController (taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C) [taiko/DelegateController] {
+    +++ description: Middleware contract that can maintain ownership of DAO-controlled assets and contracts. It can only be invoked by the TaikoDAOController on L1 through the L2 bridge.
+      directlyReceivedPermissions.0:
++        {"permission":"interact","from":"taiko:0x1670000000000000000000000000000000000001","description":"pause and unpause bridge flows and run one-time message recovery initializers.","role":".owner"}
+      directlyReceivedPermissions.1:
++        {"permission":"interact","from":"taiko:0x1670000000000000000000000000000000000002","description":"pause and unpause token flows and change a canonical token's bridged representation after the migration delay.","role":".owner"}
+      directlyReceivedPermissions.2:
++        {"permission":"interact","from":"taiko:0x1670000000000000000000000000000000000003","description":"pause and unpause NFT deposits, releases and refunds.","role":".owner"}
+      directlyReceivedPermissions.3:
++        {"permission":"interact","from":"taiko:0x1670000000000000000000000000000000000004","description":"pause and unpause NFT deposits, releases and refunds.","role":".owner"}
+      directlyReceivedPermissions.1.description:
+-        "can update the contract address for a given name"
++        "update the contract address registered for any chainId-name pair."
+      directlyReceivedPermissions.1.from:
+-        "taiko:0x1670000000000000000000000000000000000006"
++        "taiko:0x2ea05A9CD06984Cf533a1829d8b0BE6289a43984"
+      directlyReceivedPermissions.7:
+-        {"permission":"upgrade","from":"taiko:0x1670000000000000000000000000000000000006","role":"admin"}
+      directlyReceivedPermissions.12:
++        {"permission":"upgrade","from":"taiko:0x2ea05A9CD06984Cf533a1829d8b0BE6289a43984","role":"admin"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DefaultResolver (taiko:0x2ea05A9CD06984Cf533a1829d8b0BE6289a43984) [taiko/DefaultResolver]
+    +++ description: Maps chainId-name pairs to contract addresses. Bridge and vault contracts resolve their counterparties through this registry, so changes in this mapping effectively act as contract upgrades. The pause function is intentionally disabled in this implementation.
+```
+
+## Source code changes
+
+```diff
+.../Bridge/Bridge.sol => /dev/null                 | 5822 --------------------
+ .../Bridge.sol}                                    |  232 +-
+ .../ERC1967Proxy.p.sol                             |    0
+ .../Bridge.sol                                     | 2920 ++++++++++
+ .../ERC1967Proxy.p.sol                             |    0
+ .../DefaultResolver.sol                            |    0
+ .../ERC1967Proxy.p.sol                             |    0
+ .../DefaultResolver.sol}                           |  518 +-
+ .../ERC1967Proxy.p.sol                             |    2 +-
+ .../ERC1155Vault.sol                               |  676 ++-
+ .../ERC1967Proxy.p.sol                             |    0
+ .../ERC1155Vault.sol}                              |  883 ++-
+ .../ERC1967Proxy.p.sol                             |    0
+ .../ERC1967Proxy.p.sol                             |    0
+ .../ERC20Vault.sol}                                |  323 +-
+ .../ERC1967Proxy.p.sol                             |    0
+ .../ERC20Vault.sol                                 |  906 ++-
+ .../ERC1967Proxy.p.sol                             |    0
+ .../ERC721Vault.sol                                |  680 ++-
+ .../ERC1967Proxy.p.sol                             |    0
+ .../ERC721Vault.sol}                               |  887 ++-
+ .../MainnetSharedAddressManager.sol => /dev/null   | 1852 -------
+ .../ERC1967Proxy.p.sol => /dev/null                |  679 ---
+ .../ERC1967Proxy.p.sol => /dev/null                |  679 ---
+ .../QuotaManager.sol => /dev/null                  | 1787 ------
+ .../QuotaManager.sol}                              |    0
+ 26 files changed, 5683 insertions(+), 13163 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790850875 (main branch discovery), not current.
+
+```diff
+    contract SignerList (Security Council) (eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2) [taiko/SignerList] {
+    +++ description: A signer list for storing multisig members and their agents, stores the addresses of the Multisigs that use this signer list. Each signer delegates their permissions to their agent address that they can configure here.
+      receivedPermissions.9:
++        {"permission":"interact","from":"eth:0x91f67118DD47d502B1f0C354D0611997B022f29E","description":"update token withdrawal quotas and the quota refill period.","role":".owner","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
+      receivedPermissions.18:
++        {"permission":"interact","from":"eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa","description":"can update the contract address for a given name","role":".owner","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
+      receivedPermissions.22:
++        {"permission":"upgrade","from":"eth:0x0b470dd3A0e1C41228856Fb319649E7c08f419Aa","role":"admin","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
+      receivedPermissions.29:
++        {"permission":"upgrade","from":"eth:0x91f67118DD47d502B1f0C354D0611997B022f29E","role":"admin","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
+      receivedPermissions.33:
++        {"permission":"upgrade","from":"eth:0xaf145913EA4a56BE22E120ED9C24589659881702","role":"admin","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
+      receivedPermissions.36:
++        {"permission":"upgrade","from":"eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa","role":"admin","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
+      receivedPermissions.41:
++        {"permission":"upgrade","from":"taiko:0x1670000000000000000000000000000000000003","role":"admin","via":[{"address":"taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C"},{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
+      receivedPermissions.42:
++        {"permission":"upgrade","from":"taiko:0x1670000000000000000000000000000000000004","role":"admin","via":[{"address":"taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C"},{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
+    }
+```
+
+```diff
+    contract TaikoDAOController (eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a) [taiko/TaikoDAOController] {
+    +++ description: Middleware contract that maintains ownership of DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+      directlyReceivedPermissions.8:
++        {"permission":"interact","from":"eth:0x91f67118DD47d502B1f0C354D0611997B022f29E","description":"update token withdrawal quotas and the quota refill period.","role":".owner"}
+      directlyReceivedPermissions.14:
++        {"permission":"interact","from":"eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa","description":"can update the contract address for a given name","role":".owner"}
+      directlyReceivedPermissions.16:
++        {"permission":"upgrade","from":"eth:0x0b470dd3A0e1C41228856Fb319649E7c08f419Aa","role":"admin"}
+      directlyReceivedPermissions.22:
++        {"permission":"upgrade","from":"eth:0x91f67118DD47d502B1f0C354D0611997B022f29E","role":"admin"}
+      directlyReceivedPermissions.25:
++        {"permission":"upgrade","from":"eth:0xaf145913EA4a56BE22E120ED9C24589659881702","role":"admin"}
+      directlyReceivedPermissions.28:
++        {"permission":"upgrade","from":"eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa","role":"admin"}
+    }
+```
+
+```diff
+    contract DefaultResolver (eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e) [taiko/DefaultResolver] {
+    +++ description: Maps chainId-name pairs to contract addresses. Bridge and vault contracts resolve their counterparties through this registry, so changes in this mapping effectively act as contract upgrades. The pause function is intentionally disabled in this implementation.
++++ description: Current contract registrations, keyed by both chain ID and name. Counterparties and default bridged token implementations are security-critical.
++++ severity: HIGH
+      values.namedAddresses.0:
++        {"chainId":1,"name":"taiko_token","address":"eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"}
++++ description: Current contract registrations, keyed by both chain ID and name. Counterparties and default bridged token implementations are security-critical.
++++ severity: HIGH
+      values.namedAddresses.1:
++        {"chainId":1,"name":"bond_token","address":"eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"}
++++ description: Current contract registrations, keyed by both chain ID and name. Counterparties and default bridged token implementations are security-critical.
++++ severity: HIGH
+      values.namedAddresses.2:
++        {"chainId":1,"name":"bridge","address":"eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"}
++++ description: Current contract registrations, keyed by both chain ID and name. Counterparties and default bridged token implementations are security-critical.
++++ severity: HIGH
+      values.namedAddresses.3:
++        {"chainId":167000,"name":"bridge","address":"taiko:0x1670000000000000000000000000000000000001"}
++++ description: Current contract registrations, keyed by both chain ID and name. Counterparties and default bridged token implementations are security-critical.
++++ severity: HIGH
+      values.namedAddresses.4:
++        {"chainId":1,"name":"signal_service","address":"eth:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"}
+      values.namedAddresses.0.chainId:
++        167000
+      values.namedAddresses.0.address:
+-        "eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "taiko:0x1670000000000000000000000000000000000005"
+      values.namedAddresses.0.name:
+-        "taiko_token"
++        "signal_service"
+      values.namedAddresses.1.chainId:
++        1
+      values.namedAddresses.1.address:
+-        "eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "eth:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
+      values.namedAddresses.1.name:
+-        "bond_token"
++        "erc20_vault"
+      values.namedAddresses.2.chainId:
++        1
+      values.namedAddresses.2.address:
+-        "eth:0x1670000000000000000000000000000000000001"
++        "eth:0x0b470dd3A0e1C41228856Fb319649E7c08f419Aa"
+      values.namedAddresses.2.name:
+-        "bridge"
++        "erc721_vault"
+      values.namedAddresses.3.chainId:
++        1
+      values.namedAddresses.3.address:
+-        "eth:0x1670000000000000000000000000000000000005"
++        "eth:0xaf145913EA4a56BE22E120ED9C24589659881702"
+      values.namedAddresses.3.name:
+-        "signal_service"
++        "erc1155_vault"
+      values.namedAddresses.4.chainId:
++        1
+      values.namedAddresses.4.address:
+-        "eth:0x1670000000000000000000000000000000000002"
++        "eth:0x00000291AB79c55dC4Fcd97dFbA4880DF4b93624"
+      values.namedAddresses.4.name:
+-        "erc20_vault"
++        "bridge_watchdog"
+      values.namedAddresses.5.chainId:
++        1
+      values.namedAddresses.5.address:
+-        "eth:0x1670000000000000000000000000000000000003"
++        "eth:0x65666141a541423606365123Ed280AB16a09A2e1"
+      values.namedAddresses.5.name:
+-        "erc721_vault"
++        "bridged_erc20"
+      values.namedAddresses.6.chainId:
++        1
+      values.namedAddresses.6.address:
+-        "eth:0x1670000000000000000000000000000000000004"
++        "eth:0xC3310905E2BC9Cfb198695B75EF3e5B69C6A1Bf7"
+      values.namedAddresses.6.name:
+-        "erc1155_vault"
++        "bridged_erc721"
+      values.namedAddresses.7.chainId:
++        1
+      values.namedAddresses.7.address:
+-        "eth:0x00000291AB79c55dC4Fcd97dFbA4880DF4b93624"
++        "eth:0x3c90963cFBa436400B0F9C46Aa9224cB379c2c40"
+      values.namedAddresses.7.name:
+-        "bridge_watchdog"
++        "bridged_erc1155"
+      values.namedAddresses.8.chainId:
++        167000
+      values.namedAddresses.8.address:
+-        "eth:0x65666141a541423606365123Ed280AB16a09A2e1"
++        "taiko:0x1670000000000000000000000000000000000002"
+      values.namedAddresses.8.name:
+-        "bridged_erc20"
++        "erc20_vault"
+      values.namedAddresses.9.chainId:
++        167000
+      values.namedAddresses.9.address:
+-        "eth:0xC3310905E2BC9Cfb198695B75EF3e5B69C6A1Bf7"
++        "taiko:0x1670000000000000000000000000000000000003"
+      values.namedAddresses.9.name:
+-        "bridged_erc721"
++        "erc721_vault"
+      values.namedAddresses.10.chainId:
++        167000
+      values.namedAddresses.10.address:
+-        "eth:0x3c90963cFBa436400B0F9C46Aa9224cB379c2c40"
++        "taiko:0x1670000000000000000000000000000000000004"
+      values.namedAddresses.10.name:
+-        "bridged_erc1155"
++        "erc1155_vault"
+      fieldMeta.namedAddresses.description:
++        "Current contract registrations, keyed by both chain ID and name. Counterparties and default bridged token implementations are security-critical."
+      usedTypes.1:
++        {"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}
+      usedTypes.2:
++        {"typeCaster":"ChainPrefix","arg":{"prefix":"taiko"}}
+    }
+```
+
+```diff
+    contract Bridge (taiko:0x1670000000000000000000000000000000000001) [taiko/L2Bridge] {
+    +++ description: Bridge escrow holding preminted ETH on Taiko. Failed messages remain retryable, but message failure and source-chain refunds are disabled.
+      description:
+-        "Bridge escrow holding preminted ETH on Taiko."
++        "Bridge escrow holding preminted ETH on Taiko. Failed messages remain retryable, but message failure and source-chain refunds are disabled."
+    }
+```
+
+```diff
+    contract L2AddressManager (taiko:0x1670000000000000000000000000000000000006) [taiko/L2AddressManager] {
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+      critical:
+-        true
++        {"untilTimestamp":1791767237}
+    }
+```
+
+```diff
+    contract DelegateController (taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C) [taiko/DelegateController] {
+    +++ description: Middleware contract that can maintain ownership of DAO-controlled assets and contracts. It can only be invoked by the TaikoDAOController on L1 through the L2 bridge.
+      directlyReceivedPermissions.4:
++        {"permission":"upgrade","from":"taiko:0x1670000000000000000000000000000000000003","role":"admin"}
+      directlyReceivedPermissions.5:
++        {"permission":"upgrade","from":"taiko:0x1670000000000000000000000000000000000004","role":"admin"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract MainnetERC721Vault (eth:0x0b470dd3A0e1C41228856Fb319649E7c08f419Aa) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract QuotaManager (eth:0x91f67118DD47d502B1f0C354D0611997B022f29E) [taiko/QuotaManager]
+    +++ description: Defines withdrawal quotas for ETH and ERC20 releases from the shared bridge. A token quota of zero means unlimited withdrawals for that token.
+```
+
+```diff
++   Status: CREATED
+    contract MainnetERC1155Vault (eth:0xaf145913EA4a56BE22E120ED9C24589659881702) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1SharedAddressManager (eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa) [taiko/L1SharedAddressManager]
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+```
+
+```diff
++   Status: CREATED
+    contract ERC721Vault (taiko:0x1670000000000000000000000000000000000003) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ERC1155Vault (taiko:0x1670000000000000000000000000000000000004) [N/A]
+    +++ description: None
+```
+
 Generated with discovered.json: 0x60fd6a305048865307d52ddb386ddc6ceca6f6ba
 
 # Diff at Sun, 04 Oct 2026 05:55:37 GMT:

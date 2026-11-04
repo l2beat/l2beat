@@ -1,3 +1,4 @@
+import { assert } from '@l2beat/shared-pure'
 import type * as AST from '@mradomski/fast-solidity-parser'
 import { parse } from '@mradomski/fast-solidity-parser'
 import { getASTIdentifiers } from './getASTIdentifiers'
@@ -74,6 +75,17 @@ export function renameIdentifiers(source: string, pairs: RenamePair[]): string {
           replacements.push({ start: idStart, end: idEnd, newName: to })
         }
       }
+    } else if (node.type === 'FileLevelConstant') {
+      const constant = node as AST.FileLevelConstant
+      const to = pairMap.get(constant.name)
+      if (to !== undefined) {
+        const nameStart = findConstantNameStart(source, constant)
+        replacements.push({
+          start: nameStart,
+          end: nameStart + constant.name.length,
+          newName: to,
+        })
+      }
     } else if (node.type === 'FunctionCall') {
       const call = node as AST.FunctionCall
       for (const ident of call.identifiers) {
@@ -134,6 +146,18 @@ function findDeclNameRange(
   const start = source.indexOf(name, rangeStart)
   if (start !== -1) return { start, end: start + name.length }
   return undefined
+}
+
+function findConstantNameStart(
+  source: string,
+  constant: AST.FileLevelConstant,
+): number {
+  assert(constant.typeName.range !== undefined, 'Constant type has no range')
+  const keyword = source.indexOf('constant', constant.typeName.range[1] + 1)
+  assert(keyword !== -1, 'Constant keyword not found')
+  const nameStart = source.indexOf(constant.name, keyword + 'constant'.length)
+  assert(nameStart !== -1, 'Constant name not found')
+  return nameStart
 }
 
 function findUsingLibraryNameStart(source: string, rangeStart: number): number {

@@ -6,17 +6,23 @@ import type { PrivacyCategory } from '../types'
  * keeps the category and gets red adversary cells.
  */
 export const PRIVACY_CATEGORIES = {
+  anonymousAccess: {
+    id: 'anonymousAccess',
+    label: 'Anonymous access',
+    description:
+      'Proves eligibility to use a service without revealing which account or deposit grants access.',
+  },
   pool: {
     id: 'pool',
     label: 'Pool',
     description:
-      'Funds enter a shared pool and leave it later, with no actions inside. Hides which deposit funds which withdrawal.',
+      'Funds enter a shared pool and leave it later, with no actions inside. Hides which deposit became which withdrawal.',
   },
   shieldedLedger: {
     id: 'shieldedLedger',
     label: 'Shielded ledger',
     description:
-      'A pool with transfers or DeFi inside. Hides who pays whom and which deposit funds which withdrawal.',
+      'A pool with transfers or DeFi inside. Hides who pays whom and which deposit became which withdrawal.',
   },
   stealthAddress: {
     id: 'stealthAddress',
@@ -29,5 +35,11 @@ export const PRIVACY_CATEGORIES = {
     label: 'Confidential amounts',
     description:
       'Accounts and counterparties are public, balances and transfer amounts are encrypted.',
+  },
+  secretBallot: {
+    id: 'secretBallot',
+    label: 'Secret ballot',
+    description:
+      'Voters and their voting power are public, ballots are encrypted and only the tally is decrypted. Hides which option each voter chose.',
   },
 } as const satisfies Record<string, PrivacyCategory>

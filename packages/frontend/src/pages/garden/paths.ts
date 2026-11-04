@@ -1,6 +1,6 @@
-export const GARDEN_PATH = '/garden'
-export const SUBMIT_PROTOCOL_PATH = '/garden/submit'
-export const INTEGRATE_CROPS_PATH = '/garden/integrate'
+export const GARDEN_PATH = '/crops'
+export const SUBMIT_PROTOCOL_PATH = '/crops/submit'
+export const INTEGRATE_CROPS_PATH = '/crops/integrate'
 
-/** Served from `static/files`. */
-export const SUBMISSION_QUESTIONS_PATH = '/files/garden-submission-questions.md'
+export const SUBMISSION_FORUM_POST_URL =
+  'https://forum.l2beat.com/t/the-crops-guide-review-requests/461'

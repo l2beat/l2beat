@@ -22,17 +22,21 @@
   "fields": {
     // Solidity constant: only changes with an implementation upgrade.
     "ROTATION_CUT_OFF_BLOCKS": {},
+    // MEDIUM: the election schedule (with votingDelay and votingPeriod) times
+    // who fills the seats, not what the council can do.
     "firstNominationStartDate": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "cadenceInMonths": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "nomineeVettingDuration": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
-    // Role-holder identity (the vetting address), not a rule change.
-    "nomineeVetter": {},
+    // Role holder (the vetting address), not a rule change.
+    "nomineeVetter": {
+      "severity": "MEDIUM"
+    },
     "securityCouncilMemberElectionGovernor": {
       "severity": "HIGH"
     },
@@ -46,10 +50,10 @@
       "severity": "HIGH"
     },
     "votingPeriod": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "votingDelay": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "proposalThreshold": {
       "severity": "HIGH"
@@ -58,10 +62,10 @@
       "severity": "HIGH"
     },
     "owner": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "$admin": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     }
   }
 }

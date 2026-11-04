@@ -1,5 +1,5 @@
 import type { ProjectId } from '@l2beat/shared-pure'
-import type { ChartProject } from '~/components/core/chart/Chart'
+import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { manifest } from '~/utils/Manifest'
 
 // Chart sections only display the project's identity. Passing the whole

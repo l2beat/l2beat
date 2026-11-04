@@ -8,6 +8,7 @@ import type {
 } from '@l2beat/database'
 import type { DiscordClient } from '@l2beat/shared'
 import { type Block, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { type InstalledClock, install } from '@sinonjs/fake-timers'
 import { expect, mockFn, mockObject } from 'earl'
 import type { TrackedTxProject, TrackedTxsConfig } from '../../config/Config'
 import { mockDatabase } from '../../test/database'
@@ -83,6 +84,48 @@ describe(AnomalyNotifier.name, () => {
           timestamp: block.timestamp,
         },
       ])
+    })
+
+    it('does not ask to approve an anomaly that is already approved', async () => {
+      const notifier = new AnomalyNotifier(
+        Logger.SILENT,
+        mockObject<Clock>(),
+        mockObject<DiscordClient>(),
+        mockDatabase({
+          notifications: mockObject<Database['notifications']>({
+            insertMany: mockFn().resolvesTo(undefined),
+          }),
+          updateDiff: mockObject<Database['updateDiff']>({
+            getAll: mockFn().resolvesTo([]),
+          }),
+        }),
+        0,
+        mockTrackedTxsConfig([]),
+      )
+      const mockSendDiscordNotification = mockFn().resolvesTo('1234567890')
+      notifier.sendDiscordNotification = mockSendDiscordNotification
+
+      await notifier.anomalyDetected(
+        {
+          start: 5678,
+          projectId: 'project-1',
+          subtype: 'batchSubmissions',
+          status: 'ongoing',
+          isApproved: true,
+        },
+        60,
+        15,
+        mockObject<Block>({ number: 123456, timestamp: 1234 }),
+        mockObject<RealTimeLivenessRecord>({
+          txHash: '0x1234567890abcdef',
+          timestamp: 5678,
+        }),
+        mockObject<AnomalyStatsRecord>({ mean: 60, stdDev: 15 }),
+      )
+
+      const [message] = mockSendDiscordNotification.calls[0]!.args
+      expect(message).not.toInclude('--approve')
+      expect(message).toInclude('Already approved')
     })
 
     it('does not notify if duration less than configured', async () => {
@@ -814,6 +857,17 @@ describe(AnomalyNotifier.name, () => {
   })
 
   describe(AnomalyNotifier.prototype.dailyReport.name, () => {
+    const NOW = UnixTime.fromDate(new Date('2026-07-14T11:44:00Z'))
+    let time: InstalledClock
+
+    beforeEach(() => {
+      time = install({ now: NOW * 1000, toFake: ['Date'] })
+    })
+
+    afterEach(() => {
+      time.uninstall()
+    })
+
     it('sends daily report', async () => {
       const realTimeAnomaliesRepository = mockObject<
         Database['realTimeAnomalies']
@@ -824,7 +878,7 @@ describe(AnomalyNotifier.name, () => {
             subtype: 'batchSubmissions',
             status: 'ongoing',
             isApproved: false,
-            start: UnixTime.now(),
+            start: NOW,
           },
         ] as RealTimeAnomalyRecord[]),
       })
@@ -852,7 +906,7 @@ describe(AnomalyNotifier.name, () => {
       expect(realTimeAnomaliesRepository.getOngoingAnomalies).toHaveBeenCalled()
 
       expect(mockSendDiscordNotification).toHaveBeenCalledWith(
-        `# Daily report @ ${UnixTime.toYYYYMMDD(UnixTime.now())}\n` +
+        '# Daily report @ 2026-07-14\n' +
           '### Ongoing anomalies:\n' +
           '```|  Duration | ProjectId |          Subtype |     Approval | Implementation Change |\n' +
           '|-----------|-----------|------------------|--------------|-----------------------|\n' +
@@ -871,7 +925,7 @@ describe(AnomalyNotifier.name, () => {
             subtype: 'batchSubmissions',
             status: 'ongoing',
             isApproved: false,
-            start: UnixTime.now(),
+            start: NOW,
           },
         ] as RealTimeAnomalyRecord[]),
       })
@@ -914,7 +968,7 @@ describe(AnomalyNotifier.name, () => {
       expect(realTimeAnomaliesRepository.getOngoingAnomalies).toHaveBeenCalled()
 
       expect(mockSendDiscordNotification).toHaveBeenCalledWith(
-        `# Daily report @ ${UnixTime.toYYYYMMDD(UnixTime.now())}\n` +
+        '# Daily report @ 2026-07-14\n' +
           '### Ongoing anomalies:\n' +
           '```|  Duration | ProjectId |          Subtype |     Approval | Implementation Change |\n' +
           '|-----------|-----------|------------------|--------------|-----------------------|\n' +

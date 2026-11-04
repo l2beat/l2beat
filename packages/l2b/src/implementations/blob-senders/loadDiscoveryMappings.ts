@@ -1,7 +1,7 @@
 import { attachPermissions } from '@l2beat/discovery'
 import { readdirSync, readFileSync, statSync } from 'fs'
 import { join } from 'path'
-import { receiverMapping as STATIC_RECEIVER_MAPPING } from '../find-l2/BlobsFetcher'
+import { receiverMapping as STATIC_RECEIVER_MAPPING } from './receiverMapping'
 
 interface SequencerInfo {
   project: string

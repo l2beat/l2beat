@@ -9,6 +9,7 @@ import { discoveryDiffToMarkdown } from './diffToMarkdown'
 import {
   type DiffHistoryBlock,
   parseDiffHistoryBlocks,
+  parseDiffHistoryStatuses,
 } from './parseDiffHistoryBlocks'
 
 const ADDRESS_A = ChainSpecificAddress(
@@ -189,5 +190,56 @@ describe(parseDiffHistoryBlocks.name, () => {
     }
     expect(blocks).toEqual(blockStarts)
     expect(blocks).toBeGreaterThan(0)
+  })
+})
+
+describe(parseDiffHistoryStatuses.name, () => {
+  it('reads only the header of blocks with a status', () => {
+    const body = [
+      '```diff',
+      '-   Status: DELETED',
+      `    contract A (${ADDRESS_A}) [x/A]`,
+      '    +++ description: None',
+      '```',
+      '',
+      '```diff',
+      `    contract B (${ADDRESS_B}) {`,
+      '      values.owner:',
+      '-        "0xa"',
+      '+        "0xb"',
+      '    }',
+      '```',
+    ].join('\n')
+    expect(parseDiffHistoryStatuses(body)).toEqual([
+      {
+        addressType: 'Contract',
+        name: 'A',
+        address: ADDRESS_A,
+        template: 'x/A',
+        type: 'deleted',
+      },
+    ])
+  })
+
+  it('agrees with parseDiffHistoryBlocks on every block of every project', function () {
+    this.timeout(60_000)
+    const root = getDiscoveryPaths().discovery
+    const parser = new DiffHistoryParser()
+    let statuses = 0
+    for (const project of readdirSync(root)) {
+      const file = join(root, project, 'diffHistory.md')
+      if (!existsSync(file)) continue
+      for (const entry of parser.parse(readFileSync(file, 'utf-8'))) {
+        for (const { kind, body } of entry.sections) {
+          if (kind === 'source-code-changes') continue
+          const expected = parseDiffHistoryBlocks(body)
+            .filter((block) => block.type !== undefined)
+            .map(({ diff, description, ...block }) => block)
+          expect(parseDiffHistoryStatuses(body)).toEqual(expected)
+          statuses += expected.length
+        }
+      }
+    }
+    expect(statuses).toBeGreaterThan(0)
   })
 })

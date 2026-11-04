@@ -5,6 +5,7 @@
   "category": "gov",
   "fields": {
     "owner": {
+      "severity": "MEDIUM",
       "permissions": [{ "type": "act", "delay": "{{executionDelay}}" }]
     },
     "executionDelayFmt": {

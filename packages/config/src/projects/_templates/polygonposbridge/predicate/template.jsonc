@@ -1,5 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Escrow (predicate) for one token type. The RootChainManager locks deposits here and releases them on proven exits.",
+  "category": "core",
   "fields": {
     "accessControl": { "handler": { "type": "accessControl" } },
     "managersAC": {

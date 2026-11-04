@@ -1,5 +1,5 @@
 import { cn } from '~/utils/cn'
-import type { ChartProject } from './Chart'
+import type { ChartProject } from './ChartContext'
 
 export function ChartProjectLogo({
   project,

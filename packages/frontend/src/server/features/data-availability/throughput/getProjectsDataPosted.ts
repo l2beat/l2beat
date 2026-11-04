@@ -13,7 +13,7 @@ import {
 import {
   groupByTimestampAndDaLayerId,
   sumGroupedDataPosted,
-} from './getDaThroughputChart'
+} from './utils/groupByTimestampAndDaLayerId'
 
 export interface ProjectDataPosted {
   pastDay: number

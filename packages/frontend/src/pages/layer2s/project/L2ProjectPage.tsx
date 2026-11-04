@@ -19,16 +19,22 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProjectL2Entry } from '~/server/features/layer2s/project/getL2ProjectEntry'
+import type { ProjectSectionLink } from '~/server/features/projects/getProjectSectionLinks'
+import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 import { ProjectL2Summary } from './components/L2ProjectSummary'
 
 interface Props extends AppLayoutProps {
   projectEntry: ProjectL2Entry
+  sectionLinks: ProjectSectionLink[]
+  versionLinks?: ProjectVersionLinks
   queryState: DehydratedState
   selectedUpdateId?: string
 }
 
 export function L2ProjectPage({
   projectEntry,
+  sectionLinks,
+  versionLinks,
   queryState,
   selectedUpdateId,
   ...props
@@ -64,10 +70,16 @@ export function L2ProjectPage({
               !!projectEntry.colors?.project || !!projectEntry.colors?.ecosystem
             }
           >
-            <div className="-z-1 -translate-y-2/5 fixed h-[1440px] w-[900px] translate-x-1/5 rotate-[30deg] bg-radial-[ellipse_closest-side_at_center] from-branding-primary via-25% via-branding-secondary to-transparent max-md:hidden" />
+            <div className="-z-1 -translate-y-2/5 pointer-events-none fixed h-[1440px] w-[900px] translate-x-1/5 rotate-[30deg] bg-radial-[ellipse_closest-side_at_center] from-branding-primary via-25% via-branding-secondary to-transparent max-md:hidden" />
 
             {!isNavigationEmpty && (
-              <StickyMobileSectionNavigation sections={navigationSections} />
+              <StickyMobileSectionNavigation
+                sections={navigationSections}
+                project={{
+                  name: projectEntry.shortName ?? projectEntry.name,
+                  icon: projectEntry.icon,
+                }}
+              />
             )}
             <div className="relative z-0 max-md:bg-surface-primary">
               <div className="-z-1 absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-branding-primary/75 to-surface-primary md:hidden" />
@@ -76,10 +88,16 @@ export function L2ProjectPage({
                 <div className="pt-6 max-md:px-4 lg:pt-4">
                   <ProjectHeader
                     project={projectEntry}
+                    section="layer2s"
+                    sectionLinks={sectionLinks}
+                    versions={versionLinks}
                     ongoingAnomaly={projectEntry.header.ongoingAnomaly}
                     recentUpdatesCount={projectEntry.header.recentUpdatesCount}
                   />
-                  <ProjectSummaryBars project={projectEntry} />
+                  <ProjectSummaryBars
+                    project={projectEntry}
+                    versions={versionLinks}
+                  />
                   {projectEntry.header.badges && (
                     <BadgesSection
                       badges={projectEntry.header.badges}

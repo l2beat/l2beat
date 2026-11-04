@@ -2,7 +2,7 @@ import { assert } from '@l2beat/shared-pure'
 import { toFunctionSelector } from 'viem'
 import { decodeAddress } from '../../../config/address'
 import type { Address, Chain, DiscoveredConfig } from '../../../config/types'
-import type { AlchemyClient } from '../../../third-party/AlchemyClient'
+import type { ChainRpcClient } from '../../../third-party/ChainRpcClient'
 import type {
   ContractInfo,
   EtherscanClient,
@@ -35,7 +35,7 @@ export interface IAddressService {
 
 export class AddressService implements IAddressService {
   constructor(
-    private alchemyClient: AlchemyClient,
+    private chainRpcClient: ChainRpcClient,
     private etherscanClient: EtherscanClient,
     private discovered: DiscoveredConfig,
     private tokens: Record<Address, { name: string; decimals: number }>,
@@ -50,7 +50,7 @@ export class AddressService implements IAddressService {
     assert(chain, `No chain found for ${shortChainName}`)
 
     const [isEoa, contractInfo] = await Promise.all([
-      this.alchemyClient.hasNoCode(noprefix, chain),
+      this.chainRpcClient.hasNoCode(noprefix, chain),
       chain.etherscanApi
         ? this.etherscanClient.getContractInfo(chain.chainId, noprefix)
         : undefined,

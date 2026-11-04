@@ -1,6 +1,6 @@
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { lazy, Suspense } from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router'
 import { SidebarProvider } from './components/core/Sidebar'
 import { Toaster } from './components/core/Sonner'
 import { LoadingState } from './components/LoadingState'
@@ -17,6 +17,7 @@ import { TokenHistoryPage } from './pages/tokens/TokenHistoryPage'
 import { TokenIngestionQueuePage } from './pages/tokens/TokenIngestionQueuePage'
 import { TokenSuggestionsPage } from './pages/tokens/TokenSuggestionsPage'
 import { TokensSummaryPage } from './pages/tokens/TokensSummaryPage'
+import { TvsCoveragePage } from './pages/tokens/tvs-coverage/TvsCoveragePage'
 import { TRPCReactProvider } from './react-query/trpc'
 
 const TokenRelationsGraphPage = lazy(() =>
@@ -59,6 +60,7 @@ export function App() {
                 </Suspense>
               }
             />
+            <Route path="/tokens/tvs-coverage" element={<TvsCoveragePage />} />
             <Route path="/search/:search" element={<SearchPage />} />
             <Route path="/tokens/new" element={<AddTokensPage />} />
             <Route path="/tokens/:id" element={<AbstractTokenPage />} />

@@ -90,7 +90,6 @@ const columns = [
       <OssificationTimelineChart
         timeline={ctx.row.original.timeline}
         valueSource={ctx.row.original.valueSource}
-        className="ml-auto"
       />
     ),
     meta: {

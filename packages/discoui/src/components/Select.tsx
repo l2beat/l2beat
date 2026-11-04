@@ -1,0 +1,132 @@
+import * as RadixSelect from '@radix-ui/react-select'
+import { IconChecked } from '../icons/IconChcked'
+import { IconChevronDown } from '../icons/IconChevronDown'
+import { cn } from '../utils/cn'
+import { Button } from './Button'
+
+export const Select = {
+  Root: SelectRoot,
+  Trigger: SelectTrigger,
+  Content: SelectContent,
+  Group: SelectGroup,
+  Label: SelectLabel,
+  Item: SelectItem,
+}
+
+function SelectRoot({ children, ...props }: RadixSelect.SelectProps) {
+  return <RadixSelect.Root {...props}>{children}</RadixSelect.Root>
+}
+
+function SelectTrigger({
+  children,
+  className,
+  placeholder,
+  ...props
+}: RadixSelect.SelectTriggerProps & { placeholder?: string }) {
+  return (
+    <RadixSelect.Trigger
+      className={cn(
+        'inline-flex w-full leading-none outline-hidden focus:outline-hidden active:outline-hidden',
+        className,
+      )}
+      {...props}
+      asChild
+    >
+      <Button
+        size="small"
+        className="flex items-center justify-between data-[state=open]:border-b-0"
+      >
+        <RadixSelect.Value placeholder={placeholder ?? 'Select'} />
+        <RadixSelect.Icon>
+          <IconChevronDown />
+        </RadixSelect.Icon>
+      </Button>
+    </RadixSelect.Trigger>
+  )
+}
+
+function SelectContent({
+  children,
+  className,
+  ...props
+}: RadixSelect.SelectContentProps) {
+  return (
+    <RadixSelect.Portal>
+      <RadixSelect.Content
+        className={cn(
+          'z-1000 max-h-[50vh] border border-coffee-400 bg-coffee-600',
+          className,
+        )}
+        position="popper"
+        style={{ width: 'var(--radix-select-trigger-width)' }}
+        {...props}
+      >
+        <RadixSelect.ScrollUpButton className="flex cursor-pointer items-center justify-center py-1">
+          <div className="absolute top-0 left-0 mt-3 flex h-0 w-full items-center justify-center">
+            <div className="-mt-1.5 absolute h-5 w-[calc(100%-2px)] bg-linear-to-t from-transparent to-coffee-400" />
+            <IconChevronDown className="rotate-180" />
+          </div>
+        </RadixSelect.ScrollUpButton>
+
+        <RadixSelect.Viewport className="max-h-[400px] p-1">
+          {children}
+        </RadixSelect.Viewport>
+
+        <RadixSelect.ScrollDownButton className="flex h-0 cursor-pointer items-center justify-center py-1">
+          <div className="absolute bottom-0 left-0 mb-2 flex h-0 w-full items-center justify-center">
+            <div className="absolute h-5 w-[calc(100%-2px)] bg-linear-to-b from-transparent to-coffee-400" />
+            <IconChevronDown />
+          </div>
+        </RadixSelect.ScrollDownButton>
+      </RadixSelect.Content>
+    </RadixSelect.Portal>
+  )
+}
+
+function SelectGroup({
+  children,
+  className,
+  ...props
+}: RadixSelect.SelectGroupProps) {
+  return (
+    <RadixSelect.Group className={className} {...props}>
+      {children}
+    </RadixSelect.Group>
+  )
+}
+
+function SelectLabel({
+  children,
+  className,
+  ...props
+}: RadixSelect.SelectLabelProps) {
+  return (
+    <RadixSelect.Label
+      className={cn('px-2 text-coffee-400 text-xs', className)}
+      {...props}
+    >
+      {children}
+    </RadixSelect.Label>
+  )
+}
+
+function SelectItem({
+  children,
+  className,
+  ...props
+}: RadixSelect.SelectItemProps) {
+  return (
+    <RadixSelect.Item
+      className={cn(
+        'group relative flex max-w-fit cursor-pointer select-none items-center border-coffee-400 py-1 pr-8 pl-6 text-xs leading-none hover:underline hover:outline-hidden focus:outline-hidden active:outline-hidden',
+        className,
+      )}
+      {...props}
+    >
+      <RadixSelect.ItemText>{children}</RadixSelect.ItemText>
+      <RadixSelect.ItemIndicator className="absolute left-0 inline-flex w-[25px] items-center justify-center">
+        <IconChecked />
+      </RadixSelect.ItemIndicator>
+    </RadixSelect.Item>
+  )
+}

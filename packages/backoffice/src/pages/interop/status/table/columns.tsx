@@ -98,9 +98,9 @@ export const pluginStatusColumns: TableOptions<PluginStatusRow>['columns'] = [
           : 'n/a',
     },
   }),
-  columnHelper.accessor((row) => (row.blocksAggregation ? 'yes' : 'no'), {
-    id: 'blocksAggregation',
-    header: 'Blocks aggregation',
+  columnHelper.accessor((row) => (row.isLagging ? 'yes' : 'no'), {
+    id: 'isLagging',
+    header: 'Lagging',
     enableGlobalFilter: false,
     cell: ({ getValue }) => {
       const value = getValue()
@@ -112,7 +112,7 @@ export const pluginStatusColumns: TableOptions<PluginStatusRow>['columns'] = [
       )
     },
     meta: {
-      csvHeader: 'Blocks aggregation',
+      csvHeader: 'Lagging',
       filter: { kind: 'select' },
     },
   }),

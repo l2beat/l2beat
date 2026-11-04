@@ -1,10 +1,13 @@
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
-import { Resvg } from '@resvg/resvg-js'
-import satori from 'satori'
+import {
+  loadOpengraphKit,
+  type OpengraphKit,
+  renderOpengraphPng,
+} from '~/components/opengraph-image/heartbeat/render'
 import { TokenOpengraphImage } from '~/components/opengraph-image/Token'
 import {
-  getActiveInteropAbstractTokens,
+  findInteropAbstractToken,
   type InteropAbstractToken,
 } from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
@@ -13,7 +16,6 @@ import {
   type SupportedMimeType,
 } from './detectImageMimeType'
 
-const OG_IMAGE_SIZE = { width: 1200, height: 630 }
 const ICON_FETCH_TIMEOUT_MS = 5_000
 
 const ogImageCache = new FrontendInMemoryCache('getInteropTokenOgImage')
@@ -34,8 +36,7 @@ export function getInteropTokenOgImage(
 async function renderInteropTokenOgImage(
   slug: string,
 ): Promise<Buffer | undefined> {
-  const tokens = await getActiveInteropAbstractTokens()
-  const token = tokens.find((token) => token.id === slug)
+  const token = await findInteropAbstractToken(slug)
   if (!token) return undefined
 
   const assets = await getStaticAssets()
@@ -44,50 +45,29 @@ async function renderInteropTokenOgImage(
     assets.placeholderIconSrc,
   )
 
-  const svg = await renderTokenSvg(assets, token, iconSrc).catch((error) => {
+  return renderTokenPng(assets, token, iconSrc).catch((error) => {
     if (iconSrc === assets.placeholderIconSrc) throw error
-    return renderTokenSvg(assets, token, assets.placeholderIconSrc)
+    return renderTokenPng(assets, token, assets.placeholderIconSrc)
   })
-  return new Resvg(svg).render().asPng()
 }
 
-function renderTokenSvg(
+function renderTokenPng(
   assets: StaticAssets,
   token: InteropAbstractToken,
   iconSrc: string,
-): Promise<string> {
-  return satori(
+): Promise<Buffer> {
+  return renderOpengraphPng(
     TokenOpengraphImage({
-      backgroundSrc: assets.backgroundSrc,
+      measure: assets.kit.measure,
       iconSrc,
       symbol: token.symbol,
-      caption: token.issuer?.toUpperCase(),
-      size: OG_IMAGE_SIZE,
     }),
-    {
-      ...OG_IMAGE_SIZE,
-      fonts: [
-        {
-          name: 'roboto',
-          data: assets.robotoMedium,
-          style: 'normal',
-          weight: 500,
-        },
-        {
-          name: 'roboto',
-          data: assets.robotoBold,
-          style: 'normal',
-          weight: 700,
-        },
-      ],
-    },
+    assets.kit,
   )
 }
 
 interface StaticAssets {
-  robotoMedium: Buffer
-  robotoBold: Buffer
-  backgroundSrc: string
+  kit: OpengraphKit
   placeholderIconSrc: string
 }
 
@@ -103,17 +83,12 @@ function getStaticAssets(): Promise<StaticAssets> {
 
 async function loadStaticAssets(): Promise<StaticAssets> {
   const staticDir = path.join(process.cwd(), 'static')
-  const [robotoMedium, robotoBold, background, placeholderIcon] =
-    await Promise.all([
-      readFile(path.join(staticDir, 'fonts/roboto/roboto-latin-500.ttf')),
-      readFile(path.join(staticDir, 'fonts/roboto/roboto-latin-700.ttf')),
-      readFile(path.join(staticDir, 'meta-images/project-background.png')),
-      readFile(path.join(staticDir, 'images/token-placeholder.png')),
-    ])
+  const [kit, placeholderIcon] = await Promise.all([
+    loadOpengraphKit(staticDir),
+    readFile(path.join(staticDir, 'images/token-placeholder.png')),
+  ])
   return {
-    robotoMedium,
-    robotoBold,
-    backgroundSrc: toDataUri('image/png', background),
+    kit,
     placeholderIconSrc: toDataUri('image/png', placeholderIcon),
   }
 }

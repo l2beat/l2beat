@@ -39,6 +39,7 @@
       "severity": "LOW"
     },
     "owner": {
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",

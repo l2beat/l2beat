@@ -18,5 +18,11 @@
     "hash": "0x593c116cad4320c6760a18580f3103b6f65b31d84ff30b96e64db9cf940c3104",
     "address": "eth:0x47eec6F57c7E84391Ba6C9Ac976537d0DB0bb257",
     "blockNumber": 24038982
+  },
+  "L1AssetRouter_v31.sol": {
+    "hash": "0x7b0babeec80ad067b98a6b7221389320e973acace9e8a0990ec432fac20fcb8a",
+    "address": "eth:0x9a6a547a16d12743b0647896352D98De708471Ac",
+    "chain": "ethereum",
+    "blockNumber": 26334746
   }
 }

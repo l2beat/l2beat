@@ -1,0 +1,42 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
+  "category": "shared",
+  "description": "A router contract for verifiers of ZKsync OS chains. Routes verification requests to the PLONK verifier of the version selected in the proof, currently {{plonkVerifier0}} (version 0). The owner can add and remove verifier versions without a chain upgrade.",
+  "ignoreMethods": ["fflonkVerifiers", "plonkVerifiers"],
+  "fields": {
+    "owner": {
+      "severity": "MEDIUM",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add and remove the FFLONK/PLONK verifier pairs that proofs of ZKsync OS chains can select by version."
+        }
+      ]
+    },
+    "fflonkVerifier0": {
+      "description": "FFLONK verifier of version 0.",
+      "severity": "HIGH",
+      "handler": { "type": "call", "method": "fflonkVerifiers", "args": [0] }
+    },
+    "plonkVerifier0": {
+      "description": "PLONK verifier of version 0.",
+      "severity": "HIGH",
+      "handler": { "type": "call", "method": "plonkVerifiers", "args": [0] }
+    },
+    "fflonkVerifier1": {
+      "description": "FFLONK verifier of version 1. Must be the zero address: a non-zero value means a new verifier version was added and this template needs a version 2 field.",
+      "severity": "HIGH",
+      "handler": { "type": "call", "method": "fflonkVerifiers", "args": [1] }
+    },
+    "plonkVerifier1": {
+      "description": "PLONK verifier of version 1. Must be the zero address: a non-zero value means a new verifier version was added and this template needs a version 2 field.",
+      "severity": "HIGH",
+      "handler": { "type": "call", "method": "plonkVerifiers", "args": [1] }
+    },
+    "verificationKeyHash": {
+      "severity": "HIGH",
+      "description": "Verification key hash of the version 0 PLONK verifier (backwards compatibility)."
+    }
+  }
+}

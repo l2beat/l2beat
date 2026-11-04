@@ -141,7 +141,6 @@ export function EIGENDA_DA_PROVIDER(
             value: 'DACert Verifier',
             sentiment: 'warning' as const,
             description: `EigenDA ${eigenDACertVersion.toUpperCase()} certificates are verified by the proof system through the DACert Verifier contract, which validates certificates against operator signatures and stake thresholds.`,
-            projectId: ProjectId('eigenda'),
           }
         : DA_BRIDGES.NONE
 
@@ -284,10 +283,7 @@ interface OpStackConfigCommon {
   daAttestedByIndependentParty?: boolean
   daVerifierSecureOnL1?: boolean
   daVerifier7DayExitWindow?: boolean
-  daVerifier30DayExitWindow?: boolean
   daCommitteeDecentralized?: boolean
-  /** Override for the static economic-security check derived from the DA layer. */
-  daMechanismEconomicSecurity?: boolean
   daVerifierLink?: string
   proverSourceLink?: string
   securityCouncilReference?: string
@@ -1799,16 +1795,6 @@ function computedStage(templateVars: OpStackConfigCommon): ProjectScalingStage {
         verifierContractsReproducible:
           templateVars.zkVerifierContractsReproducible ?? null,
         programHashesReproducible: programHashesReproducible(templateVars),
-      },
-      stage2: {
-        fraudProofSystemIsPermissionless: fraudProofMapping[fraudProofType],
-        delayWith30DExitWindow: false,
-        proofSystemOverriddenOnlyInCaseOfABug:
-          fraudProofType === 'None' ? null : false,
-        daVerifier30DayExitWindow:
-          templateVars.daVerifier30DayExitWindow ?? null,
-        daMechanismEconomicSecurity:
-          templateVars.daMechanismEconomicSecurity ?? null,
       },
     },
     {

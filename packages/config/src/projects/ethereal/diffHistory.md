@@ -1,3 +1,343 @@
+Generated with discovered.json: 0x560bd696eb4f43cbfd1a5f643a0c4015f2b56b04
+
+# Diff at Thu, 22 Oct 2026 09:33:55 GMT:
+
+- id: e3f9aede
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@bec160b11359d152c893eb245856d63bc5076062 block: 1783426843
+- current timestamp: 1792661561
+
+## Description
+
+ExchangeGateway upgraded on 2026-08-25: the owner can now mark a perp product for delisting, after which an operator action settles its open positions. The registry points to new ActionHandler, ExchangeConfig, Liquidation, PerpEngine and Deleverage contracts; Liquidation and Deleverage are unverified.
+Conduit Multisig 2: 1 member added, threshold 4/10 → 4/11.
+https://disco.l2beat.com/diff/ethereal:0xd03959377f5DF4CB08A6bB1aec93ddE2141fC3A0/ethereal:0x4cd414a3C1d17d8D9ecea6B7628Da790Dc733966
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 2 (arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "arb1:0x9402c42dB162d5a0927c032136f40Cc9C71853F2"
+      values.multisigThreshold:
+-        "4 of 10 (40%)"
++        "4 of 11 (36%)"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PerpEngine (ethereal:0x5e26faca3898F6fF88A6ae0Be08a290Ad9f3C3c8) [ethereal/ExchangeGatewayRegistryContracts]
+    +++ description: Auxiliary contract of the ExchangeGateway.
+```
+
+```diff
+-   Status: DELETED
+    contract Liquidation (ethereal:0x636DE0449C4175C8AA66989ab34fab5373e044f1) [ethereal/ExchangeGatewayRegistryContracts]
+    +++ description: Auxiliary contract of the ExchangeGateway.
+```
+
+```diff
+-   Status: DELETED
+    contract ActionHandler (ethereal:0x70702e58005f3b91f9c8dFBe3A170051Ee61cf96) [ethereal/ExchangeGatewayRegistryContracts]
+    +++ description: Auxiliary contract of the ExchangeGateway.
+```
+
+```diff
+    contract ExchangeGateway (ethereal:0xB3cDC82035C495c484C9fF11eD5f3Ff6d342e3cc) [ethereal/ExchangeGateway] {
+    +++ description: Main contract of the Ethereal DEX. Entrypoint for users to deposit and withdraw funds and for operators submit user actions.
+      sourceHashes.1:
+-        "0xb5045a4ff694fdc0973c7f5b6a61bc6178a601b89c90fc21faff429e9867bbfd"
++        "0x257d096bf5ac9fdaf12878201a59495ffd6d23ef22ef189af700f8ce0e6606d0"
+      values.$implementation:
+-        "ethereal:0xd03959377f5DF4CB08A6bB1aec93ddE2141fC3A0"
++        "ethereal:0x4cd414a3C1d17d8D9ecea6B7628Da790Dc733966"
+      values.$pastUpgrades.3:
++        ["2026-08-25T07:32:37.000Z","0x2d1b8baf01d457411e490189171293c21d1db20eb690cb9182496091306512e0",["ethereal:0x4cd414a3C1d17d8D9ecea6B7628Da790Dc733966"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.registry.0x414354494f4e5f48414e444c4552000000000000000000000000000000000000:
+-        "ethereal:0x70702e58005f3b91f9c8dFBe3A170051Ee61cf96"
++        "ethereal:0xfC25F9d15cbfEe81d8238Eb2fD7D3f16a6b2f469"
+      values.registry.0x45584348414e47455f434f4e4649470000000000000000000000000000000000:
+-        "ethereal:0xC199cC890F61B847bec9cec4212C35b759A9fD38"
++        "ethereal:0x0f17d8468c49d6C80E4ee10Cc87a767085A4B9A8"
+      values.registry.0x4c49515549444154494f4e000000000000000000000000000000000000000000:
+-        "ethereal:0x636DE0449C4175C8AA66989ab34fab5373e044f1"
++        "ethereal:0xEB9a61e37A28828E84D97e1487D66b444800a280"
+      values.registry.0x504552505f454e47494e45000000000000000000000000000000000000000000:
+-        "ethereal:0x5e26faca3898F6fF88A6ae0Be08a290Ad9f3C3c8"
++        "ethereal:0xD540F47F214dC7D6D244E62A6aE7e06B586Ef44A"
+      values.registry.0x44454c4556455241474500000000000000000000000000000000000000000000:
+-        "ethereal:0xF0597CF73cBdB97484c439533bdDBF733BfDf84B"
++        "ethereal:0x719256070f9Ec31DFa8df58791FDB80602e431A4"
+      implementationNames.ethereal:0xd03959377f5DF4CB08A6bB1aec93ddE2141fC3A0:
+-        "ExchangeGateway"
+      implementationNames.ethereal:0x4cd414a3C1d17d8D9ecea6B7628Da790Dc733966:
++        "ExchangeGateway"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ExchangeConfig (ethereal:0xC199cC890F61B847bec9cec4212C35b759A9fD38) [ethereal/ExchangeGatewayRegistryContracts]
+    +++ description: Auxiliary contract of the ExchangeGateway.
+```
+
+```diff
+-   Status: DELETED
+    contract Deleverage (ethereal:0xF0597CF73cBdB97484c439533bdDBF733BfDf84B) [ethereal/ExchangeGatewayRegistryContracts]
+    +++ description: Auxiliary contract of the ExchangeGateway.
+```
+
+```diff
++   Status: CREATED
+    contract ExchangeConfig (ethereal:0x0f17d8468c49d6C80E4ee10Cc87a767085A4B9A8) [ethereal/ExchangeGatewayRegistryContracts]
+    +++ description: Auxiliary contract of the ExchangeGateway.
+```
+
+```diff
++   Status: CREATED
+    contract Deleverage (ethereal:0x719256070f9Ec31DFa8df58791FDB80602e431A4) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PerpEngine (ethereal:0xD540F47F214dC7D6D244E62A6aE7e06B586Ef44A) [ethereal/ExchangeGatewayRegistryContracts]
+    +++ description: Auxiliary contract of the ExchangeGateway.
+```
+
+```diff
++   Status: CREATED
+    contract Liquidation (ethereal:0xEB9a61e37A28828E84D97e1487D66b444800a280) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ActionHandler (ethereal:0xfC25F9d15cbfEe81d8238Eb2fD7D3f16a6b2f469) [ethereal/ExchangeGatewayRegistryContracts]
+    +++ description: Auxiliary contract of the ExchangeGateway.
+```
+
+## Source code changes
+
+```diff
+.../{.flat@1783426843 => .flat}/ActionHandler.sol  |  477 ++-
+ .../.flat@1783426843/Deleverage.sol => /dev/null   | 4447 -------------------
+ .../{.flat@1783426843 => .flat}/ExchangeConfig.sol |  113 +-
+ .../ExchangeGateway/ExchangeGateway.sol            |   99 +-
+ .../.flat@1783426843/Liquidation.sol => /dev/null  | 4514 --------------------
+ .../{.flat@1783426843 => .flat}/PerpEngine.sol     |  680 ++-
+ 6 files changed, 1277 insertions(+), 9053 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1783426843 (main branch discovery), not current.
+
+```diff
+    contract SafeL2 (ethereal:0x3F93bCc6201558aE2d7528a85575cF07679Bb50e) [GnosisSafe] {
+    +++ description: None
+      deployerAddress:
++        "ethereal:0xb93C042c688F1Cf038bab03C4F832F2630Bb7d8F"
+      sinceTimestamp:
++        1760472215
+      sinceBlock:
++        17902
+    }
+```
+
+```diff
+    contract PythLazer (ethereal:0xACeA761c27A909d4D3895128EBe6370FDE2dF481) [ethereal/PythLazer] {
+    +++ description: Used to verify offchain signed oracle data.
+      deployerAddress:
++        "ethereal:0x78357316239040e19fC823372cC179ca75e64b81"
+      sinceTimestamp:
++        1758743720
+      sinceBlock:
++        64
+    }
+```
+
+```diff
+    contract ExchangeGateway (ethereal:0xB3cDC82035C495c484C9fF11eD5f3Ff6d342e3cc) [ethereal/ExchangeGateway] {
+    +++ description: Main contract of the Ethereal DEX. Entrypoint for users to deposit and withdraw funds and for operators submit user actions.
+      sourceHashes.0:
+-        "0x824c9fa3c6d16c698f949d86f6b383cee854f6ab6073b6356acadc9f7e88d705"
++        "0xa3a188e65fc0885e5fb907ee0794b5ca81470d468b3876a16374f366c9abd1c7"
+      implementationNames.ethereal:0xB3cDC82035C495c484C9fF11eD5f3Ff6d342e3cc:
+-        "EtherealProxy"
++        "ERC1967Proxy"
+    }
+```
+
+Generated with discovered.json: 0x18a6c89c628254e7b03b37f7957a9855fbc36b0a
+
+# Diff at Fri, 16 Oct 2026 09:37:46 GMT:
+
+- id: 92af6c93
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1783426843
+- current timestamp: 1783426843
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1783426843 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (arb1:0x0E2480384E3703FDf84c7A0448658E8C7543b3a8) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Inbox (arb1:0x574b121c469583c3a46cd88bBCC9Ac5c8C907d06) [orbitstack/Inbox] {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract RollupEventInbox (arb1:0x5D6bec85F093Eb49bD6913aCe7e9A081c41aed8F) [orbitstack/RollupEventInbox] {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract RollupProxy (arb1:0x75c070fe237817Bd027d402327069e9cd07De078) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.challengeManager:
++        {"severity":"HIGH"}
+      fieldMeta.validatorWhitelistDisabled:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract Outbox (arb1:0xA2A5DCA414e3AaBD48B9CA97426f7e3Fba967492) [orbitstack/Outbox] {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.rollup:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract EdgeChallengeManager (arb1:0xA4444d9536595d35967206b86067a90aD053e1EF) [orbitstack/EdgeChallengeManager] {
+    +++ description: Contract that implements the main challenge protocol logic of the fraud proof system.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ProxyAdmin (arb1:0xc1136ea5F91f82cb468Fc7650579A95605D9f5C2) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract Bridge (arb1:0xd86f5ad3fa5becbB07e565DbD4b70DBd817A43A8) [orbitstack/Bridge] {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.allowedOutboxList.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.allowedDelayedInboxList.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.rollup:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (arb1:0xDde7f92D0f2225f5951564D387e158b9b57f95F3) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.executors.severity:
+-        "LOW"
++        "MEDIUM"
+      fieldMeta.accessControl:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract SafeL2 (ethereal:0x3F93bCc6201558aE2d7528a85575cF07679Bb50e) [GnosisSafe] {
+    +++ description: None
+      deployerAddress:
+-        "ethereal:0xb93C042c688F1Cf038bab03C4F832F2630Bb7d8F"
+      sinceTimestamp:
+-        1760472215
+      sinceBlock:
+-        17902
+    }
+```
+
+```diff
+    contract CollateralManager (ethereal:0x638D6DaC0550f30f37aC5784260309Ac89302faA) [ethereal/ExchangeGatewayRegistryContracts] {
+    +++ description: Auxiliary contract of the ExchangeGateway.
+      sourceHashes.0:
+-        "0x7e9156bdbe2b0f1e2fca8925f034693bdf5abaae1b868270c2a4f44956e1ea6a"
++        "0x78583307d6ee104deeacfc05854f42b8e5262cbd2faffb3e165c1078e44ac4ce"
+    }
+```
+
+```diff
+    contract OrbitNativeOFTAdapter (ethereal:0x80F981abC18A48CfdbDe5556F9B72e6a726F0FF3) [layerzero/OrbitNativeOFTAdapter] {
+    +++ description: An OApp in the LayerZero protocol. It allows to mint the native token using the arbNativeTokenManager precompile on ArbOs. This means that the native token inherits all trust assumptions of the LayerZero security stack configured for this OApp and its crosschein peers, including minting and burning.
+      sourceHashes.0:
+-        "0xdc7fa9200a150735467f7b832663c27d5df9487fe7a30b8b8abc3d3e833081ff"
++        "0x7a71d39ddb79529955d66cf5907e1b5f505eed9105f5fc34e2fe0f5ccb6cdbf9"
+    }
+```
+
+```diff
+    contract PythLazer (ethereal:0xACeA761c27A909d4D3895128EBe6370FDE2dF481) [ethereal/PythLazer] {
+    +++ description: Used to verify offchain signed oracle data.
+      deployerAddress:
+-        "ethereal:0x78357316239040e19fC823372cC179ca75e64b81"
+      sinceTimestamp:
+-        1758743720
+      sinceBlock:
+-        64
+    }
+```
+
 Generated with discovered.json: 0x9ca10e35f96940fccb4c22f77477041a1fdea0da
 
 # Diff at Sun, 04 Oct 2026 05:55:32 GMT:

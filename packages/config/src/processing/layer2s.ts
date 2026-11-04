@@ -15,6 +15,7 @@ import { automata } from '../projects/automata/automata'
 import { aztec } from '../projects/aztec/aztec'
 import { aztecconnect } from '../projects/aztecconnect/aztecconnect'
 import { aztecnetwork } from '../projects/aztecnetwork/aztecnetwork'
+import { aztecnetworkv6 } from '../projects/aztecnetworkv6/aztecnetworkv6'
 import { base } from '../projects/base/base'
 import { blast } from '../projects/blast/blast'
 import { bob } from '../projects/bob/bob'
@@ -148,6 +149,7 @@ import { ternoa } from '../projects/ternoa/ternoa'
 import { thebinaryholdings } from '../projects/thebinaryholdings/thebinaryholdings'
 import { treasure } from '../projects/treasure/treasure'
 import { unichain } from '../projects/unichain/unichain'
+import { whitechain } from '../projects/whitechain/whitechain'
 import { wirex } from '../projects/wirex/wirex'
 import { witness } from '../projects/witness/witness'
 import { wonder } from '../projects/wonder/wonder'
@@ -182,6 +184,7 @@ export const layer2s: ScalingProject[] = [
   aztecconnect,
   aztec,
   aztecnetwork,
+  aztecnetworkv6,
   base,
   blast,
   bob,
@@ -315,6 +318,7 @@ export const layer2s: ScalingProject[] = [
   thebinaryholdings,
   treasure,
   unichain,
+  whitechain,
   wirex,
   witness,
   wonder,

@@ -1,5 +1,4 @@
 import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
@@ -60,14 +59,14 @@ export const lighterprover: BaseProject = {
     ],
     verifierHashes: [
       {
-        hash: '0x83147f4163d7731f85f475fb56f316f1f46443d3601cb3494465d27790533fec',
+        hash: '0x0b4835549c725db37f158fde0f2522a1d1278d0640768f1ee637af9828a5879e',
         name: 'Lighter verifier',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
             address: ChainSpecificAddress.fromLong(
               'ethereum',
-              '0xc4c2067ece6e33e50a30087ec14096715e56aE11',
+              '0x329d7d7f7B3F2879991B83E1A53BCe6D7ce63E6f',
             ),
           },
         ],
@@ -77,38 +76,51 @@ export const lighterprover: BaseProject = {
         description:
           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },
-      // {
-      //   hash: '0x22144b137118fca5e4cb93568ffcbda4da15553546261fcfe4795783aa00aa53',
-      //   name: 'Lighter verifier',
-      //   sourceLink:
-      //     'https://github.com/elliottech/lighter-prover/tree/28ae613d9c264192e7a36b42f15dda5df3f7103f/circuit/src',
-      //   proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
-      //   knownDeployments: [
-      //     {
-      //       address: ChainSpecificAddress.fromLong(
-      //         'ethereum',
-      //         '0xd3E043d6E17Cb28d73BAa469Aa632411e1dE8046',
-      //       ),
-      //     },
-      //   ],
-      //   verificationStatus: 'successful',
-      //   attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-      //   verificationSteps: readProjectMarkdown(
-      //     'lighterprover',
-      //     'verificationSteps-0x22144b13',
-      //   ),
-      //   description:
-      //     'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
-      // },
       {
-        hash: '0x0b3f7515b28812264c235ac2bba289e19a42cecfbceb2eef9856bd6f591a2308',
+        // DesertVerifier
+        hash: '0x156f444f62404c056e3126b7bccad049dd99ec0812d5d0ef1abdbbfc0dfec500',
+        name: 'Lighter Desert verifier',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0x975210588389526a3A1DeF1628e7A4d7aBdFD121',
+            ),
+          },
+        ],
+        verificationStatus: 'notVerified',
+        description:
+          'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
+      },
+      {
+        // ZkLighterStateRootUpgradeVerifier
+        hash: '0xdb6ffbd7513b7d6ff32acc9006f35d6a929ca0670dcd6d40f3d960b47ef56cca',
+        name: 'Lighter state root upgrade verifier',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0xcb7131edbe3f54fc3101da943b969fb0cd04ca95',
+            ),
+          },
+        ],
+        verificationStatus: 'notVerified',
+        verificationSteps:
+          'The sources for the state root upgrade circuits are not published and thus the verifier cannot be independently regenerated.',
+        description:
+          'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined. One-time verifier that lets a validator replace the state root outside of regular batch proving, see the proof system description.',
+      },
+      {
+        hash: '0xa29ec4d3bd2bd13606a2504774017527b16f8e107649e09389e817da1ad205a2',
         name: 'Lighter on Robinhood verifier',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
             address: ChainSpecificAddress.fromLong(
               'robinhood',
-              '0xCBF92533F5816c6Ee0e4250F4E138b3f49962EF2',
+              '0x7817a34136c56A6097C7042B3cAAe24b9eEd9fb4',
             ),
           },
         ],
@@ -118,31 +130,18 @@ export const lighterprover: BaseProject = {
       },
       {
         // DesertVerifier
-        hash: '0xc8ffb171b6ebf0bba84df27eaa1021550c5242b146739c704221b456203630a9',
-        name: 'Lighter Desert verifier',
-        sourceLink:
-          'https://github.com/elliottech/lighter-prover/tree/23d1596b832db24f1007e20220ba1556d23b0c68/desertexit/circuits',
+        hash: '0xe519ae1119a83c6ad569daf26ae1d61e9bbdac185aec5fae55c1e0a7c0aa4969',
+        name: 'Lighter on Robinhood Desert verifier',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
             address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0x866418061d4C1168e1c8E8f6facE79675395E008',
-            ),
-          },
-          {
-            address: ChainSpecificAddress.fromLong(
               'robinhood',
-              '0x56aeED6920DBB9E198C2C0072147A45684A06E10',
+              '0x93c83bdA3A45241729Ce150C1e3677bA7389c0D0',
             ),
           },
         ],
-        verificationStatus: 'successful',
-        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: readProjectMarkdown(
-          'lighterprover',
-          'verificationSteps-0xc8ffb171',
-        ),
+        verificationStatus: 'notVerified',
         description:
           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },

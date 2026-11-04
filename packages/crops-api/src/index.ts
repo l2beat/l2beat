@@ -28,7 +28,7 @@ async function main() {
   for (const file of files) {
     writeJson(file.path, file.body)
   }
-  writeJson('v1/openapi.json', buildOpenApiDocument(input.ledger))
+  writeJson('v1/openapi.json', buildOpenApiDocument(input.attestations))
   cpSync(STATIC_DIR, OUT_DIR, { recursive: true })
   copySwaggerUi()
 

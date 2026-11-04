@@ -1,0 +1,23 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OpenVmReceiptVerifier",
+  "category": "core",
+  "description": "Immutable OpenVM receipt verifier. It checks a Halo2 proof whose only public value is the journal digest, bound to one OpenVM executable and VM commitment.",
+  "fields": {
+    "verifier": {
+      "description": "Immutable generated OpenVM Halo2 verifier that checks the proof."
+    },
+    "appExeCommit": {
+      "description": "Immutable commitment to the OpenVM guest executable whose execution the proof attests.",
+      "type": "CODE_CHANGE"
+    },
+    "appVmCommit": {
+      "description": "Immutable commitment to the OpenVM VM configuration the guest runs on.",
+      "type": "CODE_CHANGE"
+    },
+    "imageId": {
+      "description": "Hash of the Halo2 verifier address and both commitments. The ciphertext verifier pins it.",
+      "type": "CODE_CHANGE"
+    }
+  }
+}

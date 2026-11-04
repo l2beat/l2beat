@@ -1,34 +1,25 @@
 import type {
-  OsiLicense,
-  ProjectCropSentiment,
+  CropSentiment,
   ProjectCropStatus,
   ProjectCrops,
+  ResolvedCropEvaluation,
+  ResolvedCrops,
 } from '@l2beat/config'
 
-// The site's vocabulary for a crop. Config declares a crop with optional
-// fields; resolveCrops.ts on the server fills them in to the shapes below.
+// The site's vocabulary for a crop. The types are config's, which resolves
+// a crop on the server.
 // Values live here rather than in @l2beat/config because client components
 // import this file and the browser cannot load a value from the CommonJS
 // config build (it broke hydration once, see the history of this file).
 
+export type {
+  CropSentiment,
+  GardenListing,
+  ResolvedCropEvaluation,
+  ResolvedCrops,
+} from '@l2beat/config'
+
 export type CropKey = keyof ProjectCrops
-
-/** `neutral` is never declared in config: it is what an ungraded crop resolves to. */
-export type CropSentiment = ProjectCropSentiment | 'neutral'
-
-/** An evaluation with every optional field resolved to a concrete value. */
-export interface ResolvedCropEvaluation {
-  sentiment: CropSentiment
-  status: ProjectCropStatus
-  /** Only on the open source crop, once the license is confirmed. */
-  license?: OsiLicense
-  points: string[]
-  missing: string[]
-  additionalConsiderations: string[]
-  notReviewed: string[]
-}
-
-export type ResolvedCrops = Record<CropKey, ResolvedCropEvaluation>
 
 export interface CropDefinition {
   key: CropKey
@@ -97,11 +88,17 @@ export function getCropStatusText(
 export interface CropEntry {
   definition: CropDefinition
   evaluation: ResolvedCropEvaluation
+  /** The measured ossification, under Security, which it caps. Empty elsewhere. */
+  ossification: string[]
 }
 
-export function toCropEntries(crops: ResolvedCrops): CropEntry[] {
+export function toCropEntries(
+  crops: ResolvedCrops,
+  ossification: string[],
+): CropEntry[] {
   return CROP_COLUMNS.map((definition) => ({
     definition,
     evaluation: crops[definition.key],
+    ossification: definition.key === 'security' ? ossification : [],
   }))
 }

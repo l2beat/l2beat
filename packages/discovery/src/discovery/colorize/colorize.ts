@@ -1,3 +1,4 @@
+import { assert } from '@l2beat/shared-pure'
 import { resolveCategory } from '../analysis/category'
 import type { TemplateService } from '../analysis/TemplateService'
 import type {
@@ -12,6 +13,7 @@ import type {
   StructureEntry,
   StructureOutput,
 } from '../output/types'
+import { getLegacyDerivedName } from '../source/getDerivedName'
 import { get$Implementations } from '../utils/extractors'
 import { interpolateString } from '../utils/interpolateString'
 
@@ -30,7 +32,7 @@ export function colorize(
     )
 
     result.entries.push({
-      name: entryConfig.name ?? entryConfig.displayName ?? e.name,
+      name: entryConfig.name ?? entryConfig.displayName ?? getDiscoveredName(e),
       description: interpolateString(entryConfig.description, e),
       critical: entryConfig.critical,
       references: getReferences(entryConfig, e),
@@ -40,6 +42,21 @@ export function colorize(
   }
 
   return result
+}
+
+function getDiscoveredName(entry: StructureEntry): string | undefined {
+  if (entry.type === 'Reference') {
+    return entry.name
+  }
+  if (entry.type === 'EOA') {
+    return undefined
+  }
+  assert(
+    entry.implementationNames !== undefined,
+    'Contract entry has no implementationNames',
+    { address: entry.address },
+  )
+  return getLegacyDerivedName(Object.values(entry.implementationNames))
 }
 
 function getReferences(

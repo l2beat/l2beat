@@ -17,12 +17,14 @@ export function SingleChainStats({
   chainId,
   selectedChains,
   tokenId,
+  snapshotTimestamp,
   linkTopProtocols,
   hideTopProtocols,
 }: {
   chainId: string
   selectedChains: string[]
   tokenId?: string
+  snapshotTimestamp?: number
   linkTopProtocols?: boolean
   hideTopProtocols?: boolean
 }) {
@@ -33,6 +35,7 @@ export function SingleChainStats({
       chains: selectedChains,
       protocolIds: selectedProtocols,
       tokenId,
+      snapshotTimestamp,
     }),
   )
 

@@ -1,0 +1,248 @@
+import { formatCurrency } from '@l2beat/shared-pure'
+import { useQuery } from '@tanstack/react-query'
+import { useMemo, useState } from 'react'
+import { tvsRangeToReadable } from '~/components/chart/tvs/tvsRangeToReadable'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
+import type { ChartMeta } from '~/components/core/chart/ChartContext'
+import {
+  ChartTooltipRow,
+  ChartTooltipValue,
+  ChartTooltipWrapper,
+  getTooltipEntries,
+  sumEntries,
+} from '~/components/core/chart/ChartTooltip'
+import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
+import { tinted } from '~/components/core/chart/tint'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { Skeleton } from '~/components/core/Skeleton'
+import { PercentChange } from '~/components/PercentChange'
+import { ChevronIcon } from '~/icons/Chevron'
+import type { DaTvsProjectIds } from '~/server/features/data-availability/summary/getDaTvsProjectIds'
+import { useTRPC } from '~/trpc/React'
+import { formatSnapshotTimestamp } from '~/utils/dates'
+import {
+  type ChartRange,
+  type ChartResolution,
+  optionToRange,
+  rangeToResolution,
+} from '~/utils/range/range'
+import { getTvsSeriesStats, type TvsSeriesStats } from './getTvsSeriesStats'
+import { mergeTvsSeries, type TvsSeriesPoint } from './mergeTvsSeries'
+
+const chartMeta = {
+  fullData: {
+    label: 'Full data',
+    color: 'var(--chart-ethereum)',
+    indicatorType: {
+      shape: 'line',
+    },
+  },
+  settlementOnly: {
+    label: 'Settlement only',
+    color: 'var(--chart-yellow)',
+    indicatorType: {
+      shape: 'line',
+    },
+  },
+} satisfies ChartMeta
+
+export function BlobsTvsChart({ projectIds }: { projectIds: DaTvsProjectIds }) {
+  const trpc = useTRPC()
+  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
+  // Kept for the life of the page, a new range every render would refetch
+  const [range] = useState(() => optionToRange('1y'))
+
+  const options = {
+    range,
+    excludeAssociatedTokens: false,
+    excludeRwaRestrictedTokens: true,
+  }
+  const fullData = useQuery(
+    trpc.tvs.chart.queryOptions({
+      ...options,
+      filter: { type: 'projects', projectIds: projectIds.fullData },
+    }),
+  )
+  const settlementOnly = useQuery(
+    trpc.tvs.chart.queryOptions({
+      ...options,
+      filter: { type: 'projects', projectIds: projectIds.settlementOnly },
+    }),
+  )
+  const isLoading = fullData.isLoading || settlementOnly.isLoading
+
+  const chartData = useMemo(
+    () =>
+      fullData.data && settlementOnly.data
+        ? mergeTvsSeries(fullData.data.chart, settlementOnly.data.chart)
+        : undefined,
+    [fullData.data, settlementOnly.data],
+  )
+  const stats = getTvsSeriesStats(chartData, dataKeys)
+  // the series sync apart, and the chart is only synced as far as both are
+  const syncedUntil =
+    fullData.data && settlementOnly.data
+      ? Math.min(fullData.data.syncedUntil, settlementOnly.data.syncedUntil)
+      : undefined
+
+  return (
+    <div className="flex flex-col gap-4 lg:contents">
+      <Header stats={stats} isLoading={isLoading} range={range} />
+      <ChartContainer
+        isPlaceholderData={false}
+        meta={chartMeta}
+        data={chartData}
+        isLoading={isLoading}
+        interactiveLegend={{
+          dataKeys,
+          onItemClick: toggleDataKey,
+          disableOnboarding: true,
+        }}
+        legend
+      >
+        <TimeSeriesChart
+          data={chartData}
+          ariaLabel="L2s Value Secured"
+          series={[
+            {
+              key: 'fullData',
+              ...tinted(chartMeta.fullData.color),
+            },
+            {
+              key: 'settlementOnly',
+              ...tinted(chartMeta.settlementOnly.color),
+            },
+          ]}
+          yAxis={{
+            domain: 'autoIfSingle',
+            format: (value) => formatCurrency(value, 'usd'),
+          }}
+          syncedUntil={syncedUntil}
+          renderTooltip={(row, keys) => (
+            <CustomTooltip
+              row={row}
+              keys={keys}
+              resolution={rangeToResolution(range)}
+            />
+          )}
+        />
+      </ChartContainer>
+    </div>
+  )
+}
+
+type SeriesKey = keyof typeof chartMeta
+
+function CustomTooltip({
+  row,
+  keys,
+  resolution,
+}: {
+  row: TvsSeriesPoint
+  keys: SeriesKey[]
+  resolution: ChartResolution
+}) {
+  const label = row.timestamp
+  const validPayload = getTooltipEntries(row, keys)
+  const total = sumEntries(validPayload)
+
+  return (
+    <ChartTooltipWrapper>
+      <div className="flex w-[180px]! flex-col [@media(min-width:600px)]:w-60!">
+        <div className="font-medium text-label-value-14 text-secondary">
+          {formatSnapshotTimestamp(label, resolution)}
+        </div>
+        {validPayload.length > 1 && (
+          <>
+            <div className="mt-3 mb-1.5 flex w-full items-center justify-between gap-2 text-heading-16">
+              <span className="[@media(min-width:600px)]:hidden">Total</span>
+              <span className="hidden [@media(min-width:600px)]:inline">
+                Total value secured
+              </span>
+              <span className="text-primary">
+                {total !== null ? formatCurrency(total, 'usd') : 'No data'}
+              </span>
+            </div>
+            <HorizontalSeparator />
+          </>
+        )}
+        <div className="mt-2 flex flex-col gap-2">
+          {validPayload.map((entry) => {
+            return (
+              <ChartTooltipRow
+                key={entry.name}
+                name={entry.name}
+                gap="gap-x-1"
+                wrapLabel={false}
+              >
+                <ChartTooltipValue
+                  value={entry.value}
+                  format={(value) => formatCurrency(value, 'usd')}
+                />
+              </ChartTooltipRow>
+            )
+          })}
+        </div>
+      </div>
+    </ChartTooltipWrapper>
+  )
+}
+
+function Header({
+  stats,
+  isLoading,
+  range,
+}: {
+  stats: TvsSeriesStats | undefined
+  isLoading: boolean
+  range: ChartRange
+}) {
+  return (
+    <div className="flex items-start justify-between gap-2">
+      <a
+        href="/layer2s/tvs"
+        className="group flex items-center gap-1.5 whitespace-nowrap font-bold text-xl"
+      >
+        <span className="underline-offset-4 group-hover:underline">
+          L2s Value Secured
+        </span>
+        <ChevronIcon
+          aria-hidden
+          className="-rotate-90 size-3 fill-current transition-transform group-hover:translate-x-0.5"
+        />
+      </a>
+      <div className="flex flex-col items-end">
+        {isLoading ? (
+          // the total and its change, as tall as their lines, 30 and 14 px,
+          // and wrapping where they would, so the header keeps its height
+          // when the numbers come
+          <div className="flex flex-wrap items-baseline justify-end gap-x-1.5">
+            <Skeleton className="my-[5px] h-5 w-20" />
+            <Skeleton className="my-px h-3 w-24" />
+          </div>
+        ) : stats === undefined ? (
+          <span className="whitespace-nowrap font-bold text-xl">No data</span>
+        ) : (
+          // the change drops under the total where there is no room beside it,
+          // set tight there so the header grows no taller than its title
+          <div className="flex flex-wrap items-baseline justify-end gap-x-1.5">
+            <span className="whitespace-nowrap font-bold text-xl">
+              {formatCurrency(stats.total, 'usd')}
+            </span>
+            <span className="whitespace-nowrap text-xs leading-none">
+              <PercentChange
+                value={stats.change}
+                textClassName="leading-none"
+              />
+              <span className="text-secondary">
+                {' '}
+                / {tvsRangeToReadable(range)}
+              </span>
+            </span>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}

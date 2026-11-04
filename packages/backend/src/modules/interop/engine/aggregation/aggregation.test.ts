@@ -2,6 +2,7 @@ import type { InteropTransferRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import {
+  getAggregatedDeployedTokens,
   getAggregatedTokens,
   getAggregatedTokensPairs,
   getAggregatedTransfer,
@@ -1159,6 +1160,62 @@ describe('aggregation', () => {
     })
   })
 
+  describe(getAggregatedDeployedTokens.name, () => {
+    it('gives each side of a transfer its own USD value', () => {
+      const transfers: InteropTransferRecord[] = [
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcTokenAddress: '0xsrc',
+          dstTokenAddress: '0xdst',
+          duration: 5000,
+          srcValueUsd: 2000,
+          dstValueUsd: 1500,
+        }),
+      ]
+
+      const result = getAggregatedDeployedTokens(transfers)
+
+      expect(result).toEqual([
+        {
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          tokenChain: 'ethereum',
+          tokenAddress: '0xsrc',
+          transferTypeStats: {
+            deposit: { transferCount: 1, totalDurationSum: 5000 },
+          },
+          transferCount: 1,
+          transfersWithDurationCount: 1,
+          totalDurationSum: 5000,
+          volume: 2000,
+          minTransferValueUsd: 2000,
+          maxTransferValueUsd: 2000,
+          mintedValueUsd: undefined,
+          burnedValueUsd: undefined,
+        },
+        {
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          tokenChain: 'arbitrum',
+          tokenAddress: '0xdst',
+          transferTypeStats: {
+            deposit: { transferCount: 1, totalDurationSum: 5000 },
+          },
+          transferCount: 1,
+          transfersWithDurationCount: 1,
+          totalDurationSum: 5000,
+          volume: 1500,
+          minTransferValueUsd: 1500,
+          maxTransferValueUsd: 1500,
+          mintedValueUsd: undefined,
+          burnedValueUsd: undefined,
+        },
+      ])
+    })
+  })
+
   describe(getAggregatedTokensPairs.name, () => {
     it('aggregates two transfers with same pair', () => {
       const transfers: InteropTransferRecord[] = [
@@ -1368,6 +1425,8 @@ function createTransfer(overrides: {
   dstChain: string
   srcAbstractTokenId?: string
   dstAbstractTokenId?: string
+  srcTokenAddress?: string
+  dstTokenAddress?: string
   duration?: number
   srcValueUsd?: number
   dstValueUsd?: number
@@ -1387,7 +1446,7 @@ function createTransfer(overrides: {
     srcLogIndex: 0,
     srcEventId:
       'srcEventId' in overrides ? overrides.srcEventId : 'random-event-id',
-    srcTokenAddress: undefined,
+    srcTokenAddress: overrides.srcTokenAddress,
     srcRawAmount: undefined,
     srcWasBurned: overrides.srcWasBurned ?? undefined,
     srcSymbol: undefined,
@@ -1401,7 +1460,7 @@ function createTransfer(overrides: {
     dstLogIndex: 0,
     dstEventId:
       'dstEventId' in overrides ? overrides.dstEventId : 'random-event-id',
-    dstTokenAddress: undefined,
+    dstTokenAddress: overrides.dstTokenAddress,
     dstRawAmount: undefined,
     dstWasMinted: overrides.dstWasMinted ?? undefined,
     dstSymbol: undefined,

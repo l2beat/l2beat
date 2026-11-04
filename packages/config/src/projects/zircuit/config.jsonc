@@ -45,7 +45,12 @@
             "method": "function owner() view returns (address)",
             "args": []
           },
-          "permissions": [{ "type": "act" }]
+          "permissions": [{ "type": "act" }],
+          "edit": [
+            "if",
+            ["=", "zircuit:0x5b5A62275DF8c60A80D3a25FAeC5aA7De116b857"],
+            ["format", "UndoL2Alias"]
+          ]
         },
         "isUpgrading": {
           "handler": {

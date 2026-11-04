@@ -25,6 +25,10 @@ export const NODE_COLORS = {
   missing: '#f97316',
 } as const
 
+/** Halo of a token whose ingestion queue entry is in conflict. Distinct from
+ * the red of assignment anomalies, which can be highlighted at the same time. */
+export const CONFLICT_COLOR = '#a855f7'
+
 /** Zoomed out to this scale or further, cluster labels are gone entirely. */
 const CLUSTER_LABEL_FADE_OUT_SCALE = 0.15
 /**
@@ -233,6 +237,22 @@ export function filterTokensWithoutRelations(
     ...graph,
     nodes: graph.nodes.filter((node) => !outsideIds.has(node.id)),
   }
+}
+
+/**
+ * The graph nodes of queue entries in conflict, in a stable order for
+ * stepping through them. Entries without a node on this graph (an address
+ * no displayed relation touches) are left out.
+ */
+export function getConflictNodeIds(
+  graph: RelationGraph,
+  conflicts: { chain: string; address: string }[],
+): string[] {
+  const nodeIds = new Set(graph.nodes.map((node) => node.id))
+  return conflicts
+    .map((conflict) => tokenId(conflict.chain, conflict.address))
+    .filter((id) => nodeIds.has(id))
+    .sort()
 }
 
 function mostCommon(values: string[]) {

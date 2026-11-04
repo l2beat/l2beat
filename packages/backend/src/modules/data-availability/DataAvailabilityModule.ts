@@ -1,8 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { DiscordClient } from '@l2beat/shared'
-import { assert, UnixTime } from '@l2beat/shared-pure'
-import partition from 'lodash/partition'
+import { assert } from '@l2beat/shared-pure'
 import uniqBy from 'lodash/uniqBy'
 import type {
   BlockDaIndexedConfig,
@@ -19,8 +18,6 @@ import { BlobIndexer } from './indexers/BlobIndexer'
 import { BlockTargetIndexer } from './indexers/BlockTargetIndexer'
 import { DaIndexer } from './indexers/DaIndexer'
 import { EthereumBlobNotifierIndexer } from './indexers/EthereumBlobNotifierIndexer'
-import { EigenDaLayerIndexer } from './indexers/eigen-da/EigenDaLayerIndexer'
-import { EigenDaProjectsIndexer } from './indexers/eigen-da/EigenDaProjectsIndexer'
 import { LiveBlobsIndexer } from './indexers/live/LiveBlobsIndexer'
 import { LiveBlobsTargetIndexer } from './indexers/live/LiveBlobsTargetIndexer'
 import { BlobService } from './services/BlobService'
@@ -44,20 +41,15 @@ export function initDataAvailabilityModule({
     module: 'data-availability',
   })
 
-  const {
-    targetIndexers,
-    daIndexers,
-    eigenIndexers,
-    notificationIndexers,
-    liveIndexers,
-  } = createIndexers(
-    config.da,
-    config.notifications,
-    clock,
-    db,
-    logger,
-    providers,
-  )
+  const { targetIndexers, daIndexers, notificationIndexers, liveIndexers } =
+    createIndexers(
+      config.da,
+      config.notifications,
+      clock,
+      db,
+      logger,
+      providers,
+    )
   const trpcRouter = createDataAvailabilityTrpcRouter({ config: config.da })
 
   return {
@@ -87,17 +79,6 @@ export function initDataAvailabilityModule({
         }),
       )
       logger.info('DA indexers started')
-
-      if (eigenIndexers.length > 0) {
-        logger.info('Starting EigenDA indexer')
-        await Promise.all(
-          eigenIndexers.map(async (indexer) => {
-            logger.info(`Starting ${indexer.constructor.name} for eigenda`)
-            await indexer.start()
-          }),
-        )
-        logger.info('EigenDA indexer started')
-      }
 
       if (notificationIndexers.length > 0) {
         logger.info('Starting notification indexers')
@@ -133,11 +114,6 @@ function createIndexers(
 
   const targetIndexers: BlockTargetIndexer[] = []
   const daIndexers: (DaIndexer | BlobIndexer)[] = []
-  const eigenIndexers: (
-    | EigenDaLayerIndexer
-    | EigenDaProjectsIndexer
-    | HourlyIndexer
-  )[] = []
   const notificationIndexers: (HourlyIndexer | EthereumBlobNotifierIndexer)[] =
     []
   const liveIndexers: (LiveBlobsTargetIndexer | LiveBlobsIndexer)[] = []
@@ -167,57 +143,52 @@ function createIndexers(
     )
     targetIndexers.push(targetIndexer)
 
-    let blobService: BlobService | undefined = undefined
-    let blobIndexer: BlobIndexer | undefined = undefined
+    const blobService = new BlobService(database)
+    const blobIndexer = new BlobIndexer(
+      {
+        daLayer: daLayer.name,
+        batchSize: daLayer.batchSize,
+        daProvider: providers.da,
+        blobService,
+        indexerService,
+        minHeight: daLayer.startingBlock,
+        parents: [targetIndexer],
+      },
+      logger,
+    )
+    daIndexers.push(blobIndexer)
 
-    if (daLayer.type === 'ethereum') {
-      blobService = new BlobService(database)
-      blobIndexer = new BlobIndexer(
+    if (notifications && notifications.ethereumBlobs) {
+      const hourlyIndexer = new HourlyIndexer(logger, clock)
+      notificationIndexers.push(hourlyIndexer)
+
+      const notifierIndexer = new EthereumBlobNotifierIndexer(
         {
-          daLayer: daLayer.name,
-          batchSize: daLayer.batchSize,
-          daProvider: providers.da,
-          blobService,
+          db: database,
+          configurations: configurations.filter((c) => c.type === 'ethereum'),
+          discordClient: new DiscordClient(
+            notifications.ethereumBlobs.discordWebhookUrl,
+          ),
           indexerService,
-          minHeight: daLayer.startingBlock,
-          parents: [targetIndexer],
+          minHeight: 0,
+          parents: [hourlyIndexer],
         },
         logger,
       )
-      daIndexers.push(blobIndexer)
+      notificationIndexers.push(notifierIndexer)
+    }
 
-      if (notifications && notifications.ethereumBlobs) {
-        const hourlyIndexer = new HourlyIndexer(logger, clock)
-        notificationIndexers.push(hourlyIndexer)
-
-        const notifierIndexer = new EthereumBlobNotifierIndexer(
-          {
-            db: database,
-            configurations: configurations.filter((c) => c.type === 'ethereum'),
-            discordClient: new DiscordClient(
-              notifications.ethereumBlobs.discordWebhookUrl,
-            ),
-            indexerService,
-            minHeight: 0,
-            parents: [hourlyIndexer],
-          },
+    if (config.liveBlobs) {
+      liveIndexers.push(
+        ...createLiveBlobsIndexers(
+          config.liveBlobs,
+          configurations,
+          database,
           logger,
-        )
-        notificationIndexers.push(notifierIndexer)
-      }
-
-      if (config.liveBlobs) {
-        liveIndexers.push(
-          ...createLiveBlobsIndexers(
-            config.liveBlobs,
-            configurations,
-            database,
-            logger,
-            providers,
-            indexerService,
-          ),
-        )
-      }
+          providers,
+          indexerService,
+        ),
+      )
     }
 
     const indexer = new DaIndexer(
@@ -232,7 +203,7 @@ function createIndexers(
         daService: daService,
         daLayer: daLayer.name,
         batchSize: daLayer.batchSize,
-        parents: [blobIndexer ?? targetIndexer],
+        parents: [blobIndexer],
         indexerService,
         db: database,
         blobService,
@@ -243,85 +214,9 @@ function createIndexers(
     daIndexers.push(indexer)
   }
 
-  for (const daLayer of config.timestampLayers) {
-    if (daLayer.type !== 'eigen-da') {
-      continue
-    }
-
-    const configurations = config.timestampProjects.filter(
-      (c) => c.daLayer === daLayer.name,
-    )
-    const [daLayerConfigurations, projectConfigurations] = partition(
-      configurations,
-      (c) => c.projectId === 'eigenda',
-    )
-
-    const hourlyIndexer = new HourlyIndexer(logger, clock, {
-      onTick: async (targetTimestamp) => {
-        await database.syncMetadata.upsertMany([
-          ...uniqBy(daLayerConfigurations, (e) => e.projectId).map((c) => ({
-            feature: 'dataAvailability' as const,
-            id: c.projectId,
-            target: targetTimestamp,
-          })),
-          // We only sync projects data at 02:00:00
-          ...(UnixTime.toStartOf(targetTimestamp, 'day') + 2 * UnixTime.HOUR ===
-          targetTimestamp
-            ? uniqBy(projectConfigurations, (e) => e.projectId).map((c) => ({
-                feature: 'dataAvailability' as const,
-                id: c.projectId,
-                target: targetTimestamp,
-              }))
-            : []),
-        ])
-      },
-    })
-    eigenIndexers.push(hourlyIndexer)
-
-    const eigenClient = providers.clients.eigen
-    assert(eigenClient, 'Eigen client is required')
-
-    const layerIndexer = new EigenDaLayerIndexer(
-      {
-        configurations: daLayerConfigurations.map((c) => ({
-          id: c.configurationId,
-          minHeight: c.sinceTimestamp,
-          maxHeight: c.untilTimestamp ?? null,
-          properties: c,
-        })),
-        eigenClient,
-        daLayer: daLayer.name,
-        parents: [hourlyIndexer],
-        indexerService,
-        db: database,
-      },
-      logger,
-    )
-    eigenIndexers.push(layerIndexer)
-
-    const projectsIndexer = new EigenDaProjectsIndexer(
-      {
-        configurations: projectConfigurations.map((c) => ({
-          id: c.configurationId,
-          minHeight: c.sinceTimestamp,
-          maxHeight: c.untilTimestamp ?? null,
-          properties: c,
-        })),
-        eigenClient,
-        daLayer: daLayer.name,
-        parents: [hourlyIndexer],
-        indexerService,
-        db: database,
-      },
-      logger,
-    )
-    eigenIndexers.push(projectsIndexer)
-  }
-
   return {
     targetIndexers,
     daIndexers,
-    eigenIndexers,
     notificationIndexers,
     liveIndexers,
   }

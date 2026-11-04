@@ -10,6 +10,7 @@ import type {
 import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
 import { createTransferBridgeResolver } from './utils/createTransferBridgeResolver'
 import { getAbstractTokenIds } from './utils/getAbstractTokenIds'
+import { getCarriedFrom } from './utils/getCarriedFrom'
 import { getFilteredInteropTransfersPage } from './utils/getFilteredInteropTransfersPage'
 import { getMockInteropTransfers } from './utils/getMockInteropTransfers'
 import { INTEROP_CHAIN_DETAILS } from './utils/interopChainDetails'
@@ -38,6 +39,16 @@ export async function getInteropTokenTransfers({
   )
   if (plugins.length === 0) {
     return { items: [], nextCursor: undefined }
+  }
+
+  const carriedFrom = await getCarriedFrom({
+    snapshotTimestamp,
+    from,
+    to,
+    tokenId,
+  })
+  if (carriedFrom !== undefined) {
+    return { items: [], nextCursor: undefined, carriedFrom }
   }
 
   const classifier = new InteropTransferClassifier()

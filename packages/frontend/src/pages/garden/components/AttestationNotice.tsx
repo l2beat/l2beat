@@ -2,7 +2,7 @@ import type { CropsAttestationsMeta } from '~/server/features/garden/getAttestat
 import { formatTimestamp } from '~/utils/dates'
 import { SproutIcon } from './SproutIcon'
 
-/** Counts the reviewed set, not the garden: a project with a red crop is attested but not planted. */
+/** Counts the reviewed set, not the garden: a project with a red crop or no ossification score is attested but not listed. */
 export function AttestationNotice({
   attestation,
 }: {
@@ -12,7 +12,7 @@ export function AttestationNotice({
     return null
   }
   return (
-    <div className="mt-4 flex flex-col gap-2 rounded-xl border border-garden-border bg-surface-primary/70 p-4 max-md:mx-4 md:mt-6 md:flex-row md:items-center md:justify-between md:px-6 md:py-4">
+    <div className="mt-4 flex flex-col gap-2 rounded-xl border border-garden-border bg-surface-primary p-4 max-md:mx-4 md:mt-6 md:flex-row md:items-center md:justify-between md:px-8 md:py-4">
       <div className="flex items-start gap-3 md:items-center">
         <SproutIcon className="mt-0.5 size-4 shrink-0 text-garden-accent md:mt-0" />
         <p className="text-paragraph-14 md:text-paragraph-15">
@@ -28,7 +28,7 @@ export function AttestationNotice({
         href={attestation.explorerUrl}
         target="_blank"
         rel="noreferrer"
-        className="shrink-0 font-semibold text-paragraph-14 underline underline-offset-2 hover:no-underline"
+        className="shrink-0 font-semibold text-paragraph-14 underline underline-offset-2 hover:no-underline max-md:pl-7 md:text-paragraph-15"
       >
         View the attestation
       </a>

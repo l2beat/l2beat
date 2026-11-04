@@ -1,5 +1,5 @@
 import { createColumnHelper, type TableOptions } from '@tanstack/react-table'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { Badge } from '~/components/core/Badge'
 import type { ChainsSummaryRow } from '../types'
 

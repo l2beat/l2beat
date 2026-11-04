@@ -1,16 +1,22 @@
 ## Funds can be stolen if
-1. a malicious upgrade compromises the confidential token contracts or FHEVM contracts with their escrowed underlying tokens.
-2. the threshold of the current or any non-destroyed historical Ethereum KMS context attests an inflated unwrap amount, allowing pooled underlying deposited before or after that context existed to be released. Governance can also install a malicious context or lower the threshold of any live context in place; {{kmsThreshold}}/{{kmsSignerCount}} describes only the current context.
-3. the {{coprocessorThreshold}}/{{coprocessorSignerCount}} coprocessor input verification path accepts invalid encrypted inputs that bypass confidential balance checks.
+1. a governance multisig deploys a malicious [upgrade](#upgrades-and-governance), which takes effect instantly.
+2. a KMS signer set, which either multisig can create instantly, attests an inflated unwrap amount.
+3. {{coprocessorThreshold}} of {{coprocessorSignerCount}} coprocessors accept invalid encrypted inputs that bypass balance checks.
 <br>
 ## Funds can be lost if
-1. an underlying token admin blacklists a confidential token address or otherwise prevents transfers from the contract.
-2. a user is blocked by the confidential token owner or by a configured underlying-token denylist before finalization/withdrawal.
-3. a confidential token is paused by an owner-appointed pauser and not unpaused by the owner, halting confidential transfers, unwrap requests, and unwrap finalization (no pauser is currently set on any confidential token).
-4. offchain ciphertext data required by the coprocessor or KMS for encrypted handles becomes unavailable and cannot be reconstructed.
+1. the coprocessors lose ciphertext data, so balances can no longer be decrypted.
+<br>
+## Funds can be frozen if
+1. an underlying token issuer blacklists a confidential token's address.
+2. the token owner or an underlying denylist blocks a user before they unwrap.
+3. an ACL, Gateway or token pauser halts tokens and the owner keeps them paused.
+4. the KMS or the coprocessors stop, which halts every unwrap.
 <br>
 ## Privacy can be lost if
-1. enough KMS operators with usable key shares collude or are compromised and decrypt private ciphertext handles. {{kmsThreshold}}/{{kmsSignerCount}} describes only the current verifier context, while retained contexts can have different memberships and thresholds.
-2. the confidential token owner appoints an observer: observers receive a wildcard, non-expiring user-decryption delegation over all of that token's encrypted handles and can decrypt its balances and transfer amounts (no observers are currently configured on any confidential token).
-3. the offchain coprocessor, wallet, relayer, frontend, or RPC path records enough metadata to link a user to encrypted inputs or transactions.
-4. deposits and withdrawals are linked by clear boundary amounts, recipient graph, timing, or address reuse.
+1. {{kmsKeyThreshold}} of {{kmsSignerCount}} KMS operators combine their key shares (see privileged insider).
+2. the token owner appoints an observer or upgrades the token (see privileged insider).
+3. a user swaps: Zama and the swap's compliance address see the amount, which can reach LI.FI (see privileged insider and network observer).
+4. a user keeps the vault form's default of sharing their balance with Merkl (see privileged insider).
+5. Zama changes its closed-source app to leak amounts to itself or to third parties (see privileged insider).
+6. public wraps, unwraps and vault batch totals bound a user's balance (see public observer and chain analyst).
+7. elliptic-curve cryptography is broken, which lets anyone impersonate a user to the KMS and decrypt that user's history (see future adversary).

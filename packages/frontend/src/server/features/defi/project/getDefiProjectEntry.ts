@@ -4,6 +4,7 @@ import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { env } from '~/env'
+import { getGardenCropsSection } from '~/server/features/garden/getGardenCropsSection'
 import { getUpdatesSection } from '~/server/features/projects/discovery-updates/getUpdatesSection'
 import { getProjectOssification } from '~/server/features/projects/ossification/getProjectOssification'
 import { ps } from '~/server/projects'
@@ -22,6 +23,7 @@ import {
   getDefiDependencyProjectsById,
   resolveDefiDependencies,
 } from '../resolveDefiDependencies'
+import { hasDefiProjectPage } from './hasDefiProjectPage'
 
 export interface ProjectDefiEntry {
   id: ProjectId
@@ -64,10 +66,11 @@ export async function getDefiProjectEntry(
       'externalDependencies',
       'discoveryUpdates',
       'ossificationHistory',
+      'garden',
     ],
   })
 
-  if (!project) {
+  if (!project || !hasDefiProjectPage(project)) {
     return undefined
   }
 
@@ -117,7 +120,7 @@ export async function getDefiProjectEntry(
   )
 
   const discoUi = {
-    href: `https://disco.l2beat.com/ui/p/${project.id}`,
+    href: `https://disco.ethbeat.org/ui/p/${project.id}`,
     images: {
       desktop: manifest.getUrl('/images/disco-ui-desktop.png'),
       mobile: manifest.getUrl('/images/disco-ui-mobile.png'),
@@ -125,6 +128,11 @@ export async function getDefiProjectEntry(
   }
 
   const sections: ProjectDetailsSection[] = []
+
+  const gardenCropsSection = await getGardenCropsSection(project, ossification)
+  if (gardenCropsSection) {
+    sections.push(gardenCropsSection)
+  }
 
   if (
     project.display.detailedDescription ||

@@ -1,5 +1,5 @@
 {
   "term": "Natively minted token",
-  "definition": "Asset that are natively minted on an L2, using either this L2 as their original ledger or using a “multi-ledger” approach with a burn-mint bridge.",
+  "definition": "Asset minted on an L2 that uses this L2 as its original ledger, like the L2's own token.",
   "isSpicy": false
 }

@@ -7,6 +7,7 @@
     "getChildChainAndStateSender"
   ],
   "ignoreInWatchMode": ["tokensMapped"],
+  "category": "core",
   "fields": {
     "tokensMapped": {
       "handler": {

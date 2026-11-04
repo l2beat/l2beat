@@ -1,3 +1,263 @@
+Generated with discovered.json: 0xf808f925e888f67a4d4794ef745abe31baa5a261
+
+# Diff at Mon, 26 Oct 2026 08:55:10 GMT:
+
+- id: 09a49de8
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1492cd63d867e9138efeb5e6a04dedf3b7590b2e block: 1791898285
+- current timestamp: 1791898285
+
+## Description
+
+Governance and ZkLighterVerifier use the UpgradeGatekeeper proxy type, and Lighter gets `$pastUpgrades`: all come from the UpgradeGatekeeper's `UpgradeComplete` events, the only record of zkLighter upgrades.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791898285 (main branch discovery), not current.
+
+```diff
+    contract Lighter (robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d) [lighter/ZkLighterWithSpotQuoteAsset] {
+    +++ description: The main rollup contract. It processes L2 batches, manages token deposits and withdrawals, allows users to submit priority requests and controls desert mode (escape hatch). This variant uses a configurable quote asset and commits state differences through host-chain calldata instead of EIP-4844 blob hashes. Logic is split between two contracts because of code-size limits, with many operations delegated to AdditionalZkLighter.
+      values.$pastUpgrades:
++        [["2026-06-26T12:42:27.000Z","0x56119cbe72da40648b646b402e71c66a174a4e0e62a10d3a90f9c3b0d8ecdad3",["robinhood:0x6C23703ba62a845893758ea35E5eD854639ef8BA"]],["2026-07-17T05:23:48.000Z","0x5181eb1330f92fc9eac8a8c732c081403c2343a503a36f9861a320c7a69c0280",["robinhood:0xE470e41Cacc197EA07f879577765A8c81234ED7B"]],["2026-08-21T14:54:41.000Z","0x9c6057cc94adc86e19803d3a40f879531829b2d921cb65f6e232d18bb85d1b0d",["robinhood:0x82DE5B1161C93afDFE21bA0D5343f01Cd7401d90"]],["2026-10-08T10:58:45.000Z","0xfb3043dfd28378f1bfabd4c0b60ff2f9a54a2a4f393f27e3b25ad518139601c2",["robinhood:0xEaDfD60eb47C472e4021F3917C7c3a9a48cf36e1"]],["2026-10-08T14:19:06.000Z","0x8ad402ee186907414bea85e0a3218e425e5ecf9d45c7c9bbfa86ff450d751de9",["robinhood:0x998ecf039Eb110b72F5F6C1Ea31C2fA41a458FAA"]]]
+      values.$upgradeCount:
++        5
+    }
+```
+
+```diff
+    contract ZkLighterVerifier (robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31) [lighter/ZkLighterVerifier] {
+    +++ description: The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.
+      proxyType:
+-        "EIP1967 proxy"
++        "UpgradeGatekeeper proxy"
+      values.$pastUpgrades.0:
++        ["2026-06-26T12:42:27.000Z","0x56119cbe72da40648b646b402e71c66a174a4e0e62a10d3a90f9c3b0d8ecdad3",["robinhood:0x807973D47e4DA8eF312060c01eF24Ee3E4aFc1E1"]]
+      values.$pastUpgrades.1:
++        ["2026-06-28T19:17:37.000Z","0x091b043b446536db90f58cf5e81f5baabf6f61f2c39da72192c2dca4004e1738",["robinhood:0x335dE9265A1F54296252acbAc2D05dd6E8CeD9cE"]]
+      values.$pastUpgrades.2:
++        ["2026-06-30T16:55:12.000Z","0x1125517c448cb5f720bf12cfc61489ab74bd7391253318cec5fb7e439b558678",["robinhood:0xecC8482041F2a4969C8Cf570969d4016B8db36cD"]]
+      values.$pastUpgrades.3:
++        ["2026-07-12T19:12:00.000Z","0x31e788341529a053186923dfdeefa3495042a5536f8f770e6df969d06dcf79ea",["robinhood:0xA3c70B197AcE329D9e09C753DA7874B78F1D00f4"]]
+      values.$pastUpgrades.4:
++        ["2026-08-21T14:54:41.000Z","0x9c6057cc94adc86e19803d3a40f879531829b2d921cb65f6e232d18bb85d1b0d",["robinhood:0x61CA82e45F5a57d00E66b522Be72D8bA41e634Aa"]]
+      values.$pastUpgrades.5:
++        ["2026-09-01T17:40:17.000Z","0xdb46f86078aeede8cf03c5e226424ea8a0e9251cc5a291ad12dbbf9b13e6f793",["robinhood:0xCBF92533F5816c6Ee0e4250F4E138b3f49962EF2"]]
+      values.$pastUpgrades.6:
++        ["2026-10-08T14:19:06.000Z","0x8ad402ee186907414bea85e0a3218e425e5ecf9d45c7c9bbfa86ff450d751de9",["robinhood:0x7817a34136c56A6097C7042B3cAAe24b9eEd9fb4"]]
+      values.$upgradeCount:
+-        0
++        7
+    }
+```
+
+```diff
+    contract Governance (robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7) [lighter/Governance] {
+    +++ description: Manages the list of validators and the network governor.
+      proxyType:
+-        "EIP1967 proxy"
++        "UpgradeGatekeeper proxy"
+      values.$pastUpgrades.0:
++        ["2026-06-26T12:42:27.000Z","0x56119cbe72da40648b646b402e71c66a174a4e0e62a10d3a90f9c3b0d8ecdad3",["robinhood:0x3468Dcab5a2D81Af207B3e301DFA889321989a61"]]
+      values.$upgradeCount:
+-        0
++        1
+    }
+```
+
+Generated with discovered.json: 0xc9eb22a4cae1c70c82f72f3b296ba62827ab1cae
+
+# Diff at Fri, 16 Oct 2026 05:36:51 GMT:
+
+- id: b2223e17
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1791898285
+- current timestamp: 1791898285
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791898285 (main branch discovery), not current.
+
+```diff
+    contract UpgradeGatekeeper (robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716) [lighter/UpgradeGatekeeper] {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by robinhood:0x4972E0CaCb2AC45644BA054838e96fF4f6f7eFDb. In practice every upgrade so far has been fast-tracked: the security council zeroes the notice period right before each upgrade is finished.
+      fieldMeta.securityCouncilAddress:
++        {"severity":"MEDIUM"}
+      fieldMeta.getMaster:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract Governance (robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7) [lighter/Governance] {
+    +++ description: Manages the list of validators and the network governor.
+      fieldMeta:
++        {"networkGovernor":{"severity":"MEDIUM"}}
+    }
+```
+
+Generated with discovered.json: 0x6a020c4556af82c75085a078e0c0bdd53af500d3
+
+# Diff at Tue, 13 Oct 2026 13:47:36 GMT:
+
+- id: b94370c0
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@f86fa8ee6214e9cba302685affb910adddc04f2d block: 1790671691
+- current timestamp: 1791898285
+
+## Description
+
+Lighter upgrade with a new ZkLighterVerifier and a new DesertVerifier (no sources published yet). Main contract changes:
+- L1 `createOrder` now takes a public market index instead of a perps market index.
+- `changePubKey` accepts `NIL_ACCOUNT_INDEX` to target the caller's own master account.
+- Minor validation changes.
+
+## Watched changes
+
+```diff
+    contract UpgradeGatekeeper (robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716) [lighter/UpgradeGatekeeper] {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by robinhood:0x4972E0CaCb2AC45644BA054838e96fF4f6f7eFDb. In practice every upgrade so far has been fast-tracked: the security council zeroes the notice period right before each upgrade is finished.
+      values.versionId:
+-        6
++        8
+    }
+```
+
+```diff
+    contract Lighter (robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d) [lighter/ZkLighterWithSpotQuoteAsset] {
+    +++ description: The main rollup contract. It processes L2 batches, manages token deposits and withdrawals, allows users to submit priority requests and controls desert mode (escape hatch). This variant uses a configurable quote asset and commits state differences through host-chain calldata instead of EIP-4844 blob hashes. Logic is split between two contracts because of code-size limits, with many operations delegated to AdditionalZkLighter.
+      sourceHashes.1:
+-        "0x3a35ceb50e1870902c0afbda8de806932d6a7168c2e27af00ca755fc5db60b93"
++        "0xa487039dbc3c481c5afc59f1bb3d5a3fb364cd58cc965f573d2a4d7bae0e4e88"
+      values.$implementation.0:
+-        "robinhood:0x82DE5B1161C93afDFE21bA0D5343f01Cd7401d90"
++        "robinhood:0x998ecf039Eb110b72F5F6C1Ea31C2fA41a458FAA"
+      values.$implementation.1:
+-        "robinhood:0xDa2B59fFB41485a6f21E14e479AE7B7AB29a997c"
++        "robinhood:0x8E1aF081a30C5d632999b8ECA8438B911a4670EB"
+      values.getTarget:
+-        "robinhood:0x82DE5B1161C93afDFE21bA0D5343f01Cd7401d90"
++        "robinhood:0x998ecf039Eb110b72F5F6C1Ea31C2fA41a458FAA"
+      values.additionalZkLighter:
++        "robinhood:0x8E1aF081a30C5d632999b8ECA8438B911a4670EB"
+      values.assetConfigNative:
++        {"tokenAddress":"robinhood:0x0000000000000000000000000000000000000000","withdrawalsEnabled":1,"extensionMultiplier":100,"tickSize":10000000000,"depositCapTicks":"1152921504606846975","minDepositTicks":100000}
+      values.assetConfigQuote:
++        {"tokenAddress":"robinhood:0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168","withdrawalsEnabled":1,"extensionMultiplier":1000000,"tickSize":1,"depositCapTicks":"1152921504606846975","minDepositTicks":1000000}
++++ severity: HIGH
+      values.desertVerifier:
++        "robinhood:0x93c83bdA3A45241729Ce150C1e3677bA7389c0D0"
+      values.governance:
++        "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7"
+      values.MAX_PUBLIC_MARKET_INDEX:
++        281474976710655
+      values.NIL_PUBLIC_MARKET_INDEX:
++        255
+      values.registeredAssets:
++        [{"assetIndex":1,"tokenAddress":"robinhood:0x0000000000000000000000000000000000000000"},{"assetIndex":3,"tokenAddress":"robinhood:0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168"},{"assetIndex":4,"tokenAddress":"robinhood:0xaF3D76f1834A1d425780943C99Ea8A608f8a93f9"},{"assetIndex":5,"tokenAddress":"robinhood:0x12f190a9F9d7D37a250758b26824B97CE941bF54"},{"assetIndex":6,"tokenAddress":"robinhood:0x2e0847E8910a9732eB3fb1bb4b70a580ADAD4FE3"},{"assetIndex":7,"tokenAddress":"robinhood:0xc0D6457C16Cc70d6790Dd43521C899C87ce02f35"},{"assetIndex":8,"tokenAddress":"robinhood:0xe93237C50D904957Cf27E7B1133b510C669c2e74"},{"assetIndex":9,"tokenAddress":"robinhood:0xd0601CE157Db5bdC3162BbaC2a2C8aF5320D9EEC"},{"assetIndex":10,"tokenAddress":"robinhood:0x322F0929c4625eD5bAd873c95208D54E1c003b2d"},{"assetIndex":11,"tokenAddress":"robinhood:0xb0992820E760d836549ba69BC7598b4af75dEE03"},{"assetIndex":12,"tokenAddress":"robinhood:0x4a0E65A3EcceC6dBe60AE065F2e7bb85Fae35eEa"},{"assetIndex":13,"tokenAddress":"robinhood:0xad25Ac6C84D497db898fa1E8387bf6Af3532a1c4"},{"assetIndex":14,"tokenAddress":"robinhood:0x822CC93fFD030293E9842c30BBD678F530701867"},{"assetIndex":15,"tokenAddress":"robinhood:0xd917B029C761D264c6A312BBbcDA868658eF86a6"},{"assetIndex":16,"tokenAddress":"robinhood:0xa30FA36Db767ad9eD3f7a60fC79526fB4d56D344"},{"assetIndex":17,"tokenAddress":"robinhood:0x6330D8C3178a418788dF01a47479c0ce7CCF450b"},{"assetIndex":18,"tokenAddress":"robinhood:0xdF0992E440dD0be65BD8439b609d6D4366bf1CB5"},{"assetIndex":19,"tokenAddress":"robinhood:0xD5f3879160bc7c32ebb4dC785F8a4F505888de68"},{"assetIndex":20,"tokenAddress":"robinhood:0x117cc2133c37B721F49dE2A7a74833232B3B4C0C"},{"assetIndex":21,"tokenAddress":"robinhood:0x92FD66527192E3e61d4DDd13322Aa222DE86F9B5"},{"assetIndex":22,"tokenAddress":"robinhood:0x411eFb0E7f985935DAec3D4C3ebaEa0d0AD7D89f"},{"assetIndex":23,"tokenAddress":"robinhood:0x86923f96303D656E4aa86D9d42D1e57ad2023fdC"},{"assetIndex":24,"tokenAddress":"robinhood:0xc72b96e0E48ecd4DC75E1e45396e26300BC39681"},{"assetIndex":25,"tokenAddress":"robinhood:0xfF080c8ce2E5feadaCa0Da81314Ae59D232d4afD"},{"assetIndex":26,"tokenAddress":"robinhood:0xB90A19fF0Af67f7779afF50A882A9CfF42446400"},{"assetIndex":27,"tokenAddress":"robinhood:0x5f10A1C971B69e47e059e1dC91901B59b3fB49C3"},{"assetIndex":28,"tokenAddress":"robinhood:0x894E1EC2D74FFE5AEF8Dc8A9e84686acCB964F2A"},{"assetIndex":29,"tokenAddress":"robinhood:0x39dBED3a2bd333467115dE45665cC57F813C4571"}]
++++ severity: HIGH
+      values.verifier:
++        "robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31"
+      implementationNames.robinhood:0x82DE5B1161C93afDFE21bA0D5343f01Cd7401d90:
+-        "ZkLighter"
+      implementationNames.robinhood:0xDa2B59fFB41485a6f21E14e479AE7B7AB29a997c:
+-        "AdditionalZkLighter"
+      implementationNames.robinhood:0x998ecf039Eb110b72F5F6C1Ea31C2fA41a458FAA:
++        "ZkLighter"
+      implementationNames.robinhood:0x8E1aF081a30C5d632999b8ECA8438B911a4670EB:
++        "AdditionalZkLighter"
+      template:
++        "lighter/ZkLighterWithSpotQuoteAsset"
+      description:
++        "The main rollup contract. It processes L2 batches, manages token deposits and withdrawals, allows users to submit priority requests and controls desert mode (escape hatch). This variant uses a configurable quote asset and commits state differences through host-chain calldata instead of EIP-4844 blob hashes. Logic is split between two contracts because of code-size limits, with many operations delegated to AdditionalZkLighter."
+    }
+```
+
+```diff
+    contract ZkLighterVerifier (robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31) [lighter/ZkLighterVerifier] {
+    +++ description: The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.
+      sourceHashes.1:
+-        "0xa54f86e01624213bae74fb0e5155537807b948cb043a804c3b2acb905aa631d1"
++        "0x020d69201a7fde88b16a01da83de6719640fb7ad4524c577b001f4f446f1dcb2"
+      values.$implementation:
+-        "robinhood:0xCBF92533F5816c6Ee0e4250F4E138b3f49962EF2"
++        "robinhood:0x7817a34136c56A6097C7042B3cAAe24b9eEd9fb4"
+      values.getTarget:
+-        "robinhood:0xCBF92533F5816c6Ee0e4250F4E138b3f49962EF2"
++        "robinhood:0x7817a34136c56A6097C7042B3cAAe24b9eEd9fb4"
+      implementationNames.robinhood:0xCBF92533F5816c6Ee0e4250F4E138b3f49962EF2:
+-        "ZkLighterVerifier"
+      implementationNames.robinhood:0x7817a34136c56A6097C7042B3cAAe24b9eEd9fb4:
++        "ZkLighterVerifier"
+      template:
++        "lighter/ZkLighterVerifier"
+      description:
++        "The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation."
+      critical:
++        true
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DesertVerifier (robinhood:0x93c83bdA3A45241729Ce150C1e3677bA7389c0D0) [N/A]
+    +++ description: Verifies the zk proofs that let users exit their funds directly on L1 while the system is in desert mode (escape hatch).
+```
+
+## Source code changes
+
+```diff
+.../lighter-robinhood/.flat/DesertVerifier.sol     | 1297 ++++++++++++++++++++
+ .../Lighter/AdditionalZkLighter.2.sol              |   93 +-
+ .../Lighter/ZkLighter.1.sol                        |  112 +-
+ .../ZkLighterVerifier/ZkLighterVerifier.sol        |   46 +-
+ 4 files changed, 1450 insertions(+), 98 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790671691 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract DesertVerifier (robinhood:0x56aeED6920DBB9E198C2C0072147A45684A06E10) [N/A]
+    +++ description: Verifies the zk proofs that let users exit their funds directly on L1 while the system is in desert mode (escape hatch).
+```
+
+```diff
+    contract Lighter (robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d) [N/A] {
+    +++ description: None
+      values.additionalZkLighter:
+-        "robinhood:0xDa2B59fFB41485a6f21E14e479AE7B7AB29a997c"
++++ severity: HIGH
+      values.desertVerifier:
+-        "robinhood:0x56aeED6920DBB9E198C2C0072147A45684A06E10"
+      values.governance:
+-        "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7"
++++ severity: HIGH
+      values.verifier:
+-        "robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31"
+    }
+```
+
+```diff
+    contract ZkLighterVerifier (robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31) [N/A] {
+    +++ description: None
+      critical:
+-        true
+    }
+```
+
 Generated with discovered.json: 0x74db8f3862124920db08fd872fb9b86f97e3fd3b
 
 # Diff at Sun, 04 Oct 2026 05:55:33 GMT:

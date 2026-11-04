@@ -1,6 +1,6 @@
 import { expect, mockObject } from 'earl'
 import type { Chain, DiscoveredConfig } from '../../../config/types'
-import type { AlchemyClient } from '../../../third-party/AlchemyClient'
+import type { ChainRpcClient } from '../../../third-party/ChainRpcClient'
 import type { EtherscanClient } from '../../../third-party/EtherscanClient'
 import { AddressService } from './AddressService'
 import { findAddressAlias } from './addressAlias'
@@ -21,7 +21,7 @@ describe('findAddressAlias', () => {
       explorerUrl: 'https://optimistic.etherscan.io',
     })
     const service = new AddressService(
-      mockObject<AlchemyClient>({
+      mockObject<ChainRpcClient>({
         hasNoCode: async (address) => {
           lookups.push(`rpc:${address}`)
           return true

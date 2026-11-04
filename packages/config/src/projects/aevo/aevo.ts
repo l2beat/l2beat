@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -70,22 +70,7 @@ export const aevo: ScalingProject = opStackL2({
     startBlock: 1,
     adjustCount: { type: 'SubtractOne' },
   },
-  daTracking: [
-    getOpStackDaTracking(discovery, { sinceBlock: 16858818 }),
-    {
-      type: 'celestia',
-      daLayer: ProjectId('celestia'),
-      namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAADBuw7+PjGs8=',
-      sinceBlock: 0,
-      untilBlock: 3538077,
-    },
-    {
-      type: 'eigen-da',
-      customerId: '0x2dc71dbd1cf713e70f939346317bf93a2e62cfee',
-      daLayer: ProjectId('eigenda'),
-      sinceTimestamp: UnixTime(1753437600),
-    },
-  ],
+  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 16858818 })],
   genesisTimestamp: UnixTime(1679202395),
   isNodeAvailable: false,
   milestones: [

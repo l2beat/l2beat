@@ -173,23 +173,5 @@ export const soon: ScalingProject = opStackL2({
       inbox: batchInbox,
       sequencers: [oldBatcher, batcher],
     },
-    {
-      type: 'eigen-da',
-      customerId: '0x52ebeea8a7dcaaa17ee398b9f9b01dfa64db63ae',
-      daLayer: ProjectId('eigenda'),
-      sinceTimestamp: UnixTime(1735822800),
-    },
-    {
-      type: 'eigen-da',
-      daLayer: ProjectId('eigenda'),
-      sinceTimestamp: UnixTime(1753412400),
-      customerId: '0x420ad2641f22bf6f180c52d0b0566e7ec701c45a',
-    },
-    {
-      type: 'eigen-da',
-      daLayer: ProjectId('eigenda'),
-      sinceTimestamp: UnixTime(1786951919),
-      customerId: '0xcb3a6380c666ff97f474e11fd41519c320b7a276',
-    },
   ],
 })

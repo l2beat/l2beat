@@ -40,7 +40,7 @@ export function FlowsCanonicalBridgeButton({
       className={cn(
         'flex h-9.5 shrink-0 items-center gap-2 rounded-lg border py-2 pr-4 pl-2 font-bold text-sm leading-none transition-colors max-md:w-full max-md:justify-center',
         onlyCanonicalSelected
-          ? 'border-brand text-brand'
+          ? 'border-brand text-brand-deep'
           : 'border-divider bg-surface-primary! hover:bg-surface-secondary',
       )}
     >

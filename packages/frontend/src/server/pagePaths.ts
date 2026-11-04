@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { RENAME_ANNOUNCEMENT_PATH } from '~/consts/siteName'
 import { getCollection } from '~/content/getCollection'
 import { env } from '~/env'
 import {
@@ -6,7 +7,7 @@ import {
   INTEGRATE_CROPS_PATH,
   SUBMIT_PROTOCOL_PATH,
 } from '~/pages/garden/paths'
-import { shouldHaveNoBridgePage } from './features/data-availability/utils/shouldHaveNoBridgePage'
+import { getChainProjects } from './features/chains/getChainProjects'
 import { ps } from './projects'
 
 type PagePath = `/${string}`
@@ -31,7 +32,6 @@ export const STATIC_PAGE_PATHS = [
   '/layer2s/risk/data-availability',
   '/layer2s/risk/sequencing',
   '/layer2s/tvs',
-  '/layer2s/tvs/breakdown',
   '/layer2s/liveness',
   '/layer2s/costs',
   '/layer2s/archived',
@@ -41,23 +41,19 @@ export const STATIC_PAGE_PATHS = [
   '/interop/burn-and-mint',
   '/interop/token-frameworks',
   '/interop/intent-bridges',
-  '/data-availability/summary',
-  '/data-availability/risk',
-  '/data-availability/throughput',
-  '/data-availability/liveness',
-  '/data-availability/archived',
   '/privacy/summary',
+  '/projects/ethereum',
   '/zk-catalog',
   '/governance',
   '/governance/ethereum-connect',
   '/native-rollups',
   '/faq',
   '/about-us',
+  RENAME_ANNOUNCEMENT_PATH,
   '/brand-kit',
   '/changelog',
   '/donate',
   '/glossary',
-  '/da-risk-framework',
   '/multisig-report',
   '/terms-of-service',
   '/stages',
@@ -78,6 +74,7 @@ export async function getPages(): Promise<Page[]> {
   if (env.CLIENT_SIDE_OSSIFICATION_ENABLED) {
     paths.push('/ossification')
   }
+  paths.push('/mandate')
   if (env.CLIENT_SIDE_GARDEN_ENABLED) {
     paths.push(GARDEN_PATH, SUBMIT_PROTOCOL_PATH, INTEGRATE_CROPS_PATH)
   }
@@ -88,11 +85,10 @@ async function getDynamicPages(): Promise<Page[]> {
   const [
     l2Projects,
     zkCatalogProjects,
-    ecosystemProjects,
-    daLayers,
-    daBridges,
     privacyProjects,
     defiProjects,
+    interopProtocols,
+    chainProjects,
   ] = await Promise.all([
     ps.getProjects({
       where: ['scalingInfo'],
@@ -100,13 +96,13 @@ async function getDynamicPages(): Promise<Page[]> {
       optional: ['tvsConfig'],
     }),
     ps.getProjects({ select: ['zkCatalogInfo'] }),
-    ps.getProjects({ where: ['ecosystemConfig'] }),
-    ps.getProjects({ select: ['daLayer'], whereNot: ['archivedAt'] }),
-    ps.getProjects({ select: ['daBridge'] }),
-    ps.getProjects({ where: ['privacyInfo'] }),
+    ps.getProjects({ where: ['privacyInfo'], whereNot: ['archivedAt'] }),
     env.CLIENT_SIDE_DEFI_ENABLED
       ? ps.getProjects({ where: ['defiInfo'] })
       : Promise.resolve([]),
+    // Protocols that are also scaling projects redirect to the scaling page.
+    ps.getProjects({ where: ['interopConfig'], whereNot: ['scalingInfo'] }),
+    getChainProjects(),
   ])
 
   const pages: Page[] = [
@@ -115,26 +111,11 @@ async function getDynamicPages(): Promise<Page[]> {
       .filter((project) => project.tvsConfig)
       .map(projectPage('/layer2s/projects', '/tvs-breakdown')),
     ...zkCatalogProjects.map(projectPage('/zk-catalog')),
-    ...ecosystemProjects.map(projectPage('/ecosystems')),
     ...privacyProjects.map(projectPage('/privacy/projects')),
     ...defiProjects.map(projectPage('/defi/projects')),
+    ...interopProtocols.map(projectPage('/interop/protocols')),
+    ...chainProjects.map(projectPage('/projects')),
   ]
-
-  for (const layer of daLayers) {
-    const layerBridges = daBridges.filter(
-      (b) => b.daBridge.daLayer === layer.id,
-    )
-    for (const bridge of layerBridges) {
-      pages.push({
-        path: `/data-availability/projects/${layer.slug}/${bridge.slug}`,
-      })
-    }
-    if (shouldHaveNoBridgePage(layer.daLayer, layerBridges.length)) {
-      pages.push({
-        path: `/data-availability/projects/${layer.slug}/no-bridge`,
-      })
-    }
-  }
 
   const publications = [
     ...getCollection('governance-publications'),

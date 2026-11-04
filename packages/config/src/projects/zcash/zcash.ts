@@ -47,25 +47,31 @@ export const zcash: BaseProject = {
     {
       title: 'NU5 activates the Orchard shielded pool',
       url: 'https://zips.z.cash/zip-0252',
-      date: '2022-05-31T17:50:05Z',
+      date: '2022-05-31T00:00:00Z',
       description:
-        'Mainnet block 1687104 activates NU5, adding the Orchard shielded protocol with Halo 2 proofs alongside the Groth16-based Sapling pool.',
+        'Block 1687104 activates NU5: the Halo 2 based Orchard pool joins the Groth16-based Sapling pool.',
       type: 'general',
     },
     {
-      title: '[Disclosed vulnerability] Orchard Action circuit soundness bug',
+      // A missing copy constraint in the halo2_gadgets variable-base scalar
+      // multiplication left the Orchard Action circuit under-constrained. Orchard
+      // was disabled by an emergency soft fork at block 3363426 (2026-06-02) and
+      // re-enabled with a fixed circuit at NU6.2, block 3364600.
+      title: 'Orchard Action circuit soundness bug',
       url: 'https://github.com/zcash/zcash/security/advisories/GHSA-ghc3-g8w4-whf9',
-      date: '2026-06-03T04:03:00Z',
+      date: '2026-06-03T00:00:00Z',
       description:
-        'A missing copy constraint in the halo2_gadgets variable-base scalar multiplication left the Orchard Action circuit under-constrained, allowing counterfeiting inside the pool. Orchard was disabled by an emergency soft fork at block 3363426 (2026-06-02) and re-enabled with a fixed circuit at NU6.2, block 3364600.',
+        'An under-constrained Orchard Action circuit allowed counterfeiting inside the pool. Fixed in NU6.2.',
       type: 'incident',
     },
     {
+      // The legacy Orchard pool is restricted to same-address transfers. Both
+      // pools use the Orchard Action circuit.
       title: 'NU6.3 creates the Ironwood pool',
       url: 'https://zips.z.cash/zip-0258',
-      date: '2026-07-28T14:07:23Z',
+      date: '2026-07-28T00:00:00Z',
       description:
-        'Mainnet block 3428143 activates NU6.3, which opens the Ironwood pool with quantum-recoverable notes (ZIP 2005) and restricts the legacy Orchard pool to same-address transfers. Both pools use the Orchard Action circuit.',
+        'Block 3428143 activates NU6.3, opening the Ironwood pool with quantum-recoverable notes (ZIP 2005).',
       type: 'general',
     },
   ],

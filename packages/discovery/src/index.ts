@@ -101,6 +101,7 @@ export {
   type Upgrade,
 } from './discovery/output/upgradeHistory'
 export { AllProviders } from './discovery/provider/AllProviders'
+export { REUSABLE_CACHE_INVOCATIONS } from './discovery/provider/BatchingAndCachingProvider'
 export type {
   DebugTransactionCall,
   DebugTransactionCallResponse,
@@ -140,6 +141,12 @@ export {
   type DiscoveryConfigSchema,
   type FieldConfigSchema,
 } from './schemas/schemas'
+export {
+  diffSolidity,
+  type SolidityDiff,
+} from './solidityDiff/diffSolidity'
+export { type LineChange } from './solidityDiff/render'
+export { ALL_RULES, type Rule } from './solidityDiff/rules'
 export {
   type ContractSource,
   type ExplorerConfig,

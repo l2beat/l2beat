@@ -18,11 +18,11 @@
       "ignoreDiscovery": true
     },
     "eth:0x87DAFf495b5F6c4f79CEeAAF85f1Ef3df3B30d21": {
-      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
-    },
-    "eth:0x35844639E3e674C484180C650EfD2170433Df71c": {
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
+      // PermissionedDisputeGame is clones-with-immutable-args: the implementation returns 0x0 for
+      // proposer()/challenger(), so the permissioned actors are read from the factory's gameArgs.
       "fields": {
-        "proposer": {
+        "proposerFromDGF": {
           "permissions": [
             {
               "type": "interact",
@@ -30,7 +30,7 @@
             }
           ]
         },
-        "challenger": {
+        "challengerFromDGF": {
           "permissions": [
             {
               "type": "interact",

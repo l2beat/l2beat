@@ -23,15 +23,24 @@ import { getUnconnectedIds, isCluster } from './graphSelectors'
 import { RelationsDetails } from './RelationsDetails'
 import { RelationsDiagram } from './RelationsDiagram'
 
+/** The desktop details panel's width (340px) plus its gap to the diagram's edge (`right-3`). */
+const DETAILS_PANEL_COVER = 340 + 12
+
 export function TokenRelationsGraphView({
   graph,
   diagramClassName = 'h-[380px] md:h-[520px]',
   embedded = false,
+  className,
 }: {
   graph: InteropTokenRelationsGraph
   diagramClassName?: string
-  /** Inside a dialog already: no expand button, details inline instead of a drawer. */
+  /**
+   * Fills a dialog already: no expand button, and it behaves like the
+   * expanded view: the wheel and one finger move the diagram, and on mobile
+   * the details sit below it instead of in a drawer.
+   */
   embedded?: boolean
+  className?: string
 }) {
   const [selectedNodeId, setSelectedNodeId] = useState<string>()
   const [hideUnconnected, setHideUnconnected] = useState(true)
@@ -59,6 +68,16 @@ export function TokenRelationsGraphView({
   }
 
   const closeDetails = () => setSelectedNodeId(undefined)
+  // On mobile a full-screen view shows the details below the diagram.
+  const detailsBelow = isMobile && selectedNode && (
+    <RelationsDetails
+      graph={graph}
+      node={selectedNode}
+      onSelectNode={selectNode}
+      onClose={closeDetails}
+      className="mt-3 h-auto max-h-[50%] shrink-0 rounded-lg border border-divider"
+    />
+  )
   const paneProps = {
     graph,
     visibleGraph,
@@ -70,7 +89,7 @@ export function TokenRelationsGraphView({
   }
 
   return (
-    <div>
+    <div className={className}>
       <div className="mb-3 flex min-h-8 flex-wrap items-center justify-between gap-2">
         <Legend
           hasClusters={graph.nodes.some(isCluster)}
@@ -91,23 +110,15 @@ export function TokenRelationsGraphView({
         <DiagramPane
           {...paneProps}
           className={diagramClassName}
-          onExpand={
-            isMobile || embedded ? undefined : () => setIsExpanded(true)
-          }
+          fillsView={embedded}
+          centersSelection={isMobile && embedded}
+          onExpand={embedded ? undefined : () => setIsExpanded(true)}
         />
       )}
 
-      {isMobile && embedded && selectedNode && (
-        <RelationsDetails
-          graph={graph}
-          node={selectedNode}
-          onSelectNode={selectNode}
-          onClose={closeDetails}
-          className="mt-3 rounded-lg border border-divider"
-        />
-      )}
+      {embedded && detailsBelow}
 
-      {isMobile && !embedded && (
+      {isMobile && !embedded && !isExpanded && (
         <Drawer
           open={selectedNode !== undefined}
           onOpenChange={(open) => !open && closeDetails()}
@@ -134,18 +145,29 @@ export function TokenRelationsGraphView({
       )}
 
       <Dialog open={isExpanded} onOpenChange={setIsExpanded}>
-        <DialogContent className="inset-0 flex h-dvh w-screen max-w-none translate-x-0 translate-y-0 flex-col gap-3 rounded-none border-0 bg-surface-primary p-4 md:rounded-none">
-          <DialogTitle className="pr-8">Onchain deployments</DialogTitle>
+        <DialogContent
+          className="flex flex-col gap-3 bg-surface-primary p-4 max-md:pt-0"
+          fullScreen
+        >
+          {/* The title row is a sticky bar at the very top because iOS Safari only
+              re-tints its status bar from a sticky or fixed bar at the top. */}
+          <DialogTitle className="pr-8 max-md:sticky max-md:top-0 max-md:bg-surface-primary max-md:pt-4">
+            Onchain deployments
+          </DialogTitle>
           <DialogDescription className="sr-only">
             A full-screen view of which deployments of this token back which
             others.
           </DialogDescription>
           <DialogClose />
-          <DiagramPane
-            {...paneProps}
-            className="h-full"
-            wrapperClassName="min-h-0 flex-1"
-          />
+          <div className="flex min-h-0 flex-1 flex-col">
+            <DiagramPane
+              {...paneProps}
+              className="h-full"
+              fillsView
+              centersSelection={isMobile}
+            />
+            {detailsBelow}
+          </div>
         </DialogContent>
       </Dialog>
     </div>
@@ -161,8 +183,9 @@ function DiagramPane({
   onSelectNode,
   onCloseDetails,
   onExpand,
+  fillsView,
+  centersSelection,
   className,
-  wrapperClassName,
 }: {
   graph: InteropTokenRelationsGraph
   visibleGraph: InteropTokenRelationsGraph
@@ -172,17 +195,22 @@ function DiagramPane({
   onSelectNode: (id: string | undefined) => void
   onCloseDetails: () => void
   onExpand?: () => void
+  fillsView?: boolean
+  centersSelection?: boolean
   className: string
-  wrapperClassName?: string
 }) {
+  // Fills a flex-column parent; a no-op in block flow.
   return (
-    <div className={cn('relative', wrapperClassName)}>
+    <div className="relative min-h-0 flex-1">
       <RelationsDiagram
         graph={visibleGraph}
         unconnectedIds={unconnectedIds}
         selectedNodeId={selectedNodeId}
         onSelectNode={onSelectNode}
         onExpand={onExpand}
+        fillsView={fillsView}
+        centersSelection={centersSelection}
+        coveredRight={detailsNode ? DETAILS_PANEL_COVER : undefined}
         className={className}
       />
       {detailsNode && (

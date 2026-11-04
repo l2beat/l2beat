@@ -6,10 +6,10 @@ import {
   type HashedFileContent,
 } from '@l2beat/discovery'
 import { formatAsAsciiTable } from '@l2beat/shared-pure'
+import chalk from 'chalk'
 import { readFileSync } from 'fs'
 import path from 'path'
-import { listFilesRecursively } from './compare-flat-sources/common'
-import { colorMap } from './compare-flat-sources/output'
+import { listFilesRecursively } from './common/listFilesRecursively'
 
 interface ComparisonResult {
   leftPath: string
@@ -86,4 +86,31 @@ function present(
 
   const table = formatAsAsciiTable(headers, rows)
   logger.info(table)
+}
+
+function colorMap(value: number, multiplier = 1): string {
+  const valueString = value.toFixed(2)
+
+  if (value < 0.125 * multiplier) {
+    return chalk.grey(valueString)
+  }
+  if (value < 0.25 * multiplier) {
+    return chalk.red(valueString)
+  }
+  if (value < 0.375 * multiplier) {
+    return chalk.redBright(valueString)
+  }
+  if (value < 0.5 * multiplier) {
+    return chalk.magenta(valueString)
+  }
+  if (value < 0.625 * multiplier) {
+    return chalk.magentaBright(valueString)
+  }
+  if (value < 0.75 * multiplier) {
+    return chalk.yellow(valueString)
+  }
+  if (value < 0.875 * multiplier) {
+    return chalk.yellowBright(valueString)
+  }
+  return chalk.greenBright(valueString)
 }

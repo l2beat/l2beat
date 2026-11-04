@@ -1,5 +1,6 @@
 import type { Project } from '@l2beat/config'
-import type { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId } from '@l2beat/shared-pure'
+import { ETHEREUM_PROJECT_PATH } from '~/pages/ethereum/paths'
 
 /**
  * The fields that decide which kind of page a project has. Queries spread this
@@ -20,19 +21,18 @@ export type ProjectWithPageMetadata = Project<never, PageMetadataField>
 
 export type ProjectPageMetadata = Pick<
   ProjectWithPageMetadata,
-  'slug' | PageMetadataField
+  'id' | 'slug' | PageMetadataField
 >
 
 export function getProjectUrl(
   project: ProjectPageMetadata,
-  daLayers: { id: ProjectId; slug: string }[],
-): string {
-  if (project.daBridge) {
-    const layer = daLayers.find((x) => x.id === project.daBridge?.daLayer)
-    return `/data-availability/projects/${layer?.slug}/${project.slug}`
+): string | undefined {
+  if (project.id === ProjectId.ETHEREUM) {
+    return ETHEREUM_PROJECT_PATH
   }
-  if (project.daLayer) {
-    return `/data-availability/projects/${project.slug}/no-bridge`
+  // Other DA layers and bridges have no pages of their own.
+  if (project.daBridge || project.daLayer) {
+    return undefined
   }
   if (project.privacyInfo) {
     return `/privacy/projects/${project.slug}`

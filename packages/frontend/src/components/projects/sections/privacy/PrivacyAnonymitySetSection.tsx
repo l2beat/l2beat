@@ -1,44 +1,44 @@
 import type { Milestone } from '@l2beat/config'
-import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
-import type { ChartProject } from '~/components/core/chart/Chart'
+import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { PrivacyAnonymitySetChart } from '~/pages/privacy/project/components/PrivacyAnonymitySetChart'
 import { PrivacyAnonymitySetChartRangeControls } from '~/pages/privacy/project/components/PrivacyAnonymitySetChartRangeControls'
 import { ANONYMITY_SET_WINDOW_DAYS } from '~/server/features/privacy/anonymity-set/calculateAnonymitySets'
+import type { PrivacyAnonymitySetType } from '~/server/features/privacy/anonymity-set/getPrivacyAnonymitySetSeries'
 import { useTRPC } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
 import type { ChartRange } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
-import {
-  ANONYMITY_SET_LOOKS_BACKWARDS_NOTE,
-  anonymitySetByHoldingDurationDescription,
-  anonymitySetCoverageNote,
-  anonymitySetHistoricDescription,
-} from '../sectionCopy'
+import { anonymitySetCopy, anonymitySetCoverageNote } from '../sectionCopy'
 import type { ProjectSectionProps } from '../types'
 
 export interface PrivacyAnonymitySetSectionProps extends ProjectSectionProps {
   defaultRange: ChartRange
   project: ChartProject
   milestones: Milestone[]
+  anonymitySetType: PrivacyAnonymitySetType
 }
 
 export function PrivacyAnonymitySetSection({
   defaultRange,
   project,
   milestones,
+  anonymitySetType,
   ...projectSectionProps
 }: PrivacyAnonymitySetSectionProps) {
+  const copy = anonymitySetCopy(anonymitySetType, ANONYMITY_SET_WINDOW_DAYS)
   const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
-  const { data, isLoading } = useQuery(
-    trpc.privacy.anonymitySetChart.queryOptions({
+  const { data, isLoading, isPlaceholderData } = useChartQuery(
+    trpc.privacy.anonymitySetChart,
+    {
       projectId: project.id,
       range,
-    }),
+    },
   )
   const timeRange = useMemo(
     () =>
@@ -58,8 +58,7 @@ export function PrivacyAnonymitySetSection({
     <ProjectSection {...projectSectionProps}>
       {data !== undefined && !hasSyncedSeries ? (
         <div className="rounded bg-surface-secondary px-4 py-3 text-paragraph-15 text-secondary">
-          Historical anonymity-set data is still being indexed. Charts will
-          appear once at least one configured token has complete history.
+          {copy.indexingNote}
         </div>
       ) : (
         <>
@@ -67,7 +66,7 @@ export function PrivacyAnonymitySetSection({
             {ANONYMITY_SET_WINDOW_DAYS} day historic anonymity set
           </h3>
           <p className="mb-4 text-paragraph-15 text-secondary">
-            {anonymitySetHistoricDescription(ANONYMITY_SET_WINDOW_DAYS)}
+            {copy.historicDescription}
             {coverageNote !== undefined && <> {coverageNote}</>}
           </p>
           {data !== undefined && data.syncingLabels.length > 0 && (
@@ -81,13 +80,17 @@ export function PrivacyAnonymitySetSection({
             </div>
           )}
           <ChartControlsWrapper className="mb-4">
-            <ProjectChartTimeRange timeRange={timeRange} />
+            <ProjectChartTimeRange
+              isPlaceholderData={isPlaceholderData}
+              timeRange={timeRange}
+            />
             <PrivacyAnonymitySetChartRangeControls
               range={range}
               setRange={setRange}
             />
           </ChartControlsWrapper>
           <PrivacyAnonymitySetChart
+            isPlaceholderData={isPlaceholderData}
             data={data?.history}
             series={data?.series}
             syncedUntil={data?.syncedUntil}
@@ -97,30 +100,26 @@ export function PrivacyAnonymitySetSection({
             type="history"
           />
           <p className="mt-4 text-paragraph-14 text-secondary">
-            {ANONYMITY_SET_LOOKS_BACKWARDS_NOTE}
+            {copy.looksBackwardsNote}
           </p>
 
           <h3 className="mt-4 mb-2 font-bold text-heading-20">
-            Estimated anonymity set by holding duration
+            {copy.durationTitle}
           </h3>
           <p className="mb-4 text-paragraph-15 text-secondary">
-            {anonymitySetByHoldingDurationDescription(
-              ANONYMITY_SET_WINDOW_DAYS,
-            )}
+            {copy.durationDescription}
             {data?.syncedUntil !== undefined && (
-              <>
-                {' '}
-                Counted over deposits up to{' '}
-                {formatTimestamp(data.syncedUntil, { longMonthName: true })}.
-              </>
+              <> {copy.countedUntil(formatTimestamp(data.syncedUntil))}</>
             )}
           </p>
           <PrivacyAnonymitySetChart
+            isPlaceholderData={isPlaceholderData}
             data={data?.holdingDuration}
             series={data?.series}
             isLoading={isLoading}
             project={project}
             type="holding-duration"
+            durationLabel={copy.durationLabel}
           />
         </>
       )}

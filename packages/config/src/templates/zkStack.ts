@@ -124,10 +124,7 @@ export interface ZkStackConfigCommon {
   daAttestedByIndependentParty?: boolean
   daVerifierSecureOnL1?: boolean
   daVerifier7DayExitWindow?: boolean
-  daVerifier30DayExitWindow?: boolean
   daCommitteeDecentralized?: boolean
-  /** Override for the static economic-security check derived from the DA layer. */
-  daMechanismEconomicSecurity?: boolean
   daVerifierLink?: string
   proverSourceLink?: string
   securityCouncilReference?: string
@@ -189,15 +186,23 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
     `Diamond address ${chainIdToDiamondAddress[templateVars.chainId]} does not match for the given chainId ${templateVars.chainId} in project ${templateVars.discovery.projectName}`,
   )
 
-  const settlesOnGateway =
-    templateVars.discovery.getContractValue<string>(
-      diamondContract.name ?? 'ZKsync',
+  // zero while the chain settles on Ethereum, otherwise the L1 diamond of its settlement layer
+  const settlementLayer =
+    templateVars.discovery.getContractValue<ChainSpecificAddress>(
+      diamondContract.address,
       'getSettlementLayer',
-    ) === 'eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9'
-  let executionDelayS = templateVars.discovery.getContractValue<number>(
-    'ValidatorTimelock',
-    'executionDelay',
+    )
+  const settlesOnGateway =
+    ChainSpecificAddress.address(settlementLayer) !== EthereumAddress.ZERO
+  const priorityMode = getPriorityMode(
+    templateVars.discovery,
+    diamondContract,
+    !settlesOnGateway,
   )
+  // in Priority Mode the PermissionlessValidator settles batches directly, bypassing the ValidatorTimelock
+  let executionDelayS = priorityMode.active
+    ? 0
+    : getEffectiveExecutionDelay(templateVars.discovery)
   if (settlesOnGateway) {
     // add gateway VTL delay (usually 0)
     executionDelayS += Number(
@@ -292,6 +297,13 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
     diamondContract.address,
     'getL2BootloaderBytecodeHash',
   )
+  // ZKsync OS chains (getZKsyncOS, since v31) run the airbender proof system and have no EraVM bootloader
+  const isZKsyncOS =
+    templateVars.discovery.getContractValueOrUndefined<boolean>(
+      diamondContract.address,
+      'getZKsyncOS',
+    ) ?? false
+  const hasBootloader = l2BootloaderHash !== ZERO_BYTES32
 
   const baseBadges = [
     BADGES.Stack.ZKStack,
@@ -338,7 +350,10 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
       templateVars.nonTemplateProofSystem ??
       (hasNoProofs
         ? undefined
-        : { type: 'Validity', zkCatalogIds: [ProjectId('boojum')] }),
+        : {
+            type: 'Validity',
+            zkCatalogIds: [ProjectId(isZKsyncOS ? 'airbender' : 'boojum')],
+          }),
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: [
@@ -390,10 +405,14 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
         RISK_VIEW.EXIT_WINDOW_ZKSTACK(upgradeDelayWithScApprovalS),
       sequencerFailure:
         templateVars.nonTemplateRiskView?.sequencerFailure ??
-        RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
+        (priorityMode.allowed
+          ? RISK_VIEW.SEQUENCER_PRIORITY_MODE_ZK(PRIORITY_EXPIRATION_S)
+          : RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1')),
       proposerFailure:
         templateVars.nonTemplateRiskView?.proposerFailure ??
-        RISK_VIEW.PROPOSER_WHITELIST_GOVERNANCE,
+        (priorityMode.allowed
+          ? RISK_VIEW.PROPOSER_PRIORITY_MODE_ZK(PRIORITY_EXPIRATION_S)
+          : RISK_VIEW.PROPOSER_WHITELIST_GOVERNANCE),
     },
     stage:
       templateVars.stage ??
@@ -411,7 +430,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
               },
               stage1: {
                 principle: templateVars.stage1Principle ?? false,
-                usersCanExitWithoutCooperation: false,
+                usersCanExitWithoutCooperation: priorityMode.allowed,
                 usersHave7DaysToExit: false,
                 securityCouncilProperlySetUp:
                   templateVars.hasProperSecurityCouncil ?? false,
@@ -426,15 +445,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
                   templateVars.zkVerifierContractsReproducible ?? null,
                 programHashesReproducible:
                   programHashesReproducible(l2BootloaderHash),
-              },
-              stage2: {
-                fraudProofSystemIsPermissionless: null,
-                delayWith30DExitWindow: false,
-                proofSystemOverriddenOnlyInCaseOfABug: null,
-                daVerifier30DayExitWindow:
-                  templateVars.daVerifier30DayExitWindow ?? null,
-                daMechanismEconomicSecurity:
-                  templateVars.daMechanismEconomicSecurity ?? null,
               },
             },
             {
@@ -459,7 +469,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
               stage1: {
                 principle: false,
                 usersHave7DaysToExit: false,
-                usersCanExitWithoutCooperation: false,
+                usersCanExitWithoutCooperation: priorityMode.allowed,
                 securityCouncilProperlySetUp: true,
                 noRedTrustedSetups: true,
                 programHashesReproducible:
@@ -485,26 +495,10 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
       dataAvailability:
         templateVars.nonTemplateTechnology?.dataAvailability ??
         technologyDA(daProvider),
-      operator: getTechnologyOperator(templateVars),
-      forceTransactions: templateVars.nonTemplateTechnology
-        ?.forceTransactions ?? {
-        name: 'Users can force any transaction via L1',
-        description:
-          'If a user is censored by the L2 Sequencer, they can try to force their transaction via an L1 queue. Right now there is no mechanism that forces L2 Sequencer to include transactions from the queue in an L2 block. The operator can implement a TransactionFilterer that censors forced transactions.',
-        risks: [
-          ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM.risks,
-          {
-            category: 'Users can be censored if',
-            text: 'the operator implements a TransactionFilterer, which is possible without delay.',
-          },
-        ],
-        references: [
-          {
-            title: "L1 - L2 interoperability - Developer's documentation",
-            url: 'https://docs.zksync.io/zksync-protocol/era-vm/contracts/handling-l1-l2-ops',
-          },
-        ],
-      },
+      operator: getTechnologyOperator(templateVars, priorityMode),
+      forceTransactions:
+        templateVars.nonTemplateTechnology?.forceTransactions ??
+        getTechnologyForceTransactions(priorityMode),
       exitMechanisms: templateVars.nonTemplateTechnology?.exitMechanisms ?? [
         {
           ...EXITS.REGULAR_MESSAGING('zk'),
@@ -588,7 +582,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
           'EmergencyUpgradeBoard',
         ),
       ],
-      programHashes: [PROGRAM_HASHES(l2BootloaderHash)],
+      programHashes: hasBootloader ? [PROGRAM_HASHES(l2BootloaderHash)] : [],
       zkVerifiers: getZKStackVerifiers(
         templateVars.discovery,
         templateVars.archivedAt !== undefined,
@@ -641,15 +635,136 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
   }
 }
 
+/**
+ * The v31 ValidatorTimelock enforces max(executionDelay, chainExecutionDelay)
+ * per chain. Each project reads it with `getExecutionDelay(diamond)` into an
+ * `executionDelay<Chain>` field, named per chain so its history is kept.
+ */
+function getEffectiveExecutionDelay(discovery: ProjectDiscovery): number {
+  const timelock = discovery.getContract('ValidatorTimelock')
+  const chainFields = Object.keys(timelock.values ?? {}).filter((key) =>
+    /^executionDelay[A-Z][A-Za-z0-9]*$/.test(key),
+  )
+  assert(
+    chainFields.length <= 1,
+    `Expected at most one chain-specific execution delay field in ${discovery.projectName}`,
+  )
+  if (timelock.template?.endsWith('ValidatorTimelock_v31')) {
+    assert(
+      chainFields.length === 1,
+      `Add an executionDelay<Chain> field calling getExecutionDelay(diamond) to the ValidatorTimelock override of ${discovery.projectName}`,
+    )
+  }
+  const field = chainFields[0] ?? 'executionDelay'
+  return discovery.getContractValue<number>('ValidatorTimelock', field)
+}
+
+/** PRIORITY_EXPIRATION of the v31 contracts: how long a queued L1 transaction may stay unprocessed before Priority Mode can be activated. */
+const PRIORITY_EXPIRATION_S = 4 * 24 * 60 * 60
+const ZERO_BYTES32 = `0x${'0'.repeat(64)}`
+
+interface PriorityMode {
+  /** the chain admin called permanentlyAllowPriorityMode() (irreversible) and activation is possible: the chain is a permanent rollup settling on L1 */
+  allowed: boolean
+  /** anyone activated it after a queued transaction expired; only the ChainTypeManager owner can deactivate it */
+  active: boolean
+}
+
+/**
+ * Priority Mode is the v31 escape hatch: once the chain admin has permanently allowed it (ZKsync OS permanent
+ * rollups only), anyone can activate it as soon as the first unprocessed priority transaction is older than
+ * PRIORITY_EXPIRATION, and from then on only the shared PermissionlessValidator can settle batches, through which
+ * anyone can commit, prove and execute batches with validity proofs. Its state is packed in slot 63 of
+ * ZKChainStorage (canBeActivated, activated, permissionlessValidator), which the Diamond template reads raw as
+ * `priorityModeInfo`. The slot is zero on chains that have not upgraded to v31.
+ */
+function getPriorityMode(
+  discovery: ProjectDiscovery,
+  diamond: EntryParameters,
+  settlesOnL1: boolean,
+): PriorityMode {
+  const raw = discovery.getContractValueOrUndefined<string>(
+    diamond.address,
+    'priorityModeInfo',
+  )
+  if (raw === undefined) {
+    return { allowed: false, active: false }
+  }
+  const word = raw.replace(/^0x/, '').padStart(64, '0')
+  // activatePriorityMode() is onlyL1 and reverts unless the chain is a permanent rollup
+  const isPermanentRollup =
+    discovery.getContractValueOrUndefined<number>(
+      diamond.address,
+      'isPermanentRollup',
+    ) === 1
+  return {
+    allowed: word.slice(62) !== '00' && isPermanentRollup && settlesOnL1,
+    active: word.slice(60, 62) !== '00',
+  }
+}
+
+function getTechnologyForceTransactions(
+  priorityMode: PriorityMode,
+): ProjectTechnologyChoice {
+  const references = [
+    {
+      title: "L1 - L2 interoperability - Developer's documentation",
+      url: 'https://docs.zksync.io/zksync-protocol/era-vm/contracts/handling-l1-l2-ops',
+    },
+  ]
+  if (!priorityMode.allowed) {
+    return {
+      name: 'Users can force any transaction via L1',
+      description:
+        'If a user is censored by the L2 Sequencer, they can try to force their transaction via an L1 queue. Right now there is no mechanism that forces L2 Sequencer to include transactions from the queue in an L2 block. The operator can implement a TransactionFilterer that censors forced transactions.',
+      risks: [
+        ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM.risks,
+        {
+          category: 'Users can be censored if',
+          text: 'the operator implements a TransactionFilterer, which is possible without delay.',
+        },
+      ],
+      references,
+    }
+  }
+  return {
+    name: 'Users can force any transaction via L1',
+    description: `If a user is censored by the L2 Sequencer, they can force their transaction via an L1 queue. The chain admin has permanently allowed Priority Mode: if the first queued transaction is not processed for ${formatSeconds(
+      PRIORITY_EXPIRATION_S,
+    )}, anyone can activate it. In Priority Mode only the shared PermissionlessValidator can settle batches, and each batch can contain only queued L1 transactions. Anyone can commit, prove and execute such batches through it in one transaction, bypassing the ValidatorTimelock delay. Only the ZKsync governance (owner of the ChainTypeManager) can deactivate it.${
+      priorityMode.active ? ' Priority Mode is currently active.' : ''
+    }`,
+    risks: [
+      {
+        category: 'Users can be censored if',
+        text: 'the ZKsync governance deactivates Priority Mode or sets a TransactionFilterer for it.',
+      },
+    ],
+    references,
+  }
+}
+
 function getTechnologyOperator(
   templateVars: ZkStackConfigCommon,
+  priorityMode: PriorityMode,
 ): ProjectTechnologyChoice {
   if (templateVars.nonTemplateTechnology?.operator !== undefined) {
     return templateVars.nonTemplateTechnology.operator
   }
 
+  const priorityModeNote = priorityMode.allowed
+    ? `\n\nPriority Mode is permanently allowed: once the first queued L1 transaction stays unprocessed for ${formatSeconds(
+        PRIORITY_EXPIRATION_S,
+      )}, anyone can activate it. Then anyone can settle batches of queued L1 transactions with validity proofs through the shared PermissionlessValidator.${
+        priorityMode.active ? ' It is currently active.' : ''
+      }`
+    : ''
+
   if (!templateVars.discovery.hasContract('EraMultisigValidator')) {
-    return OPERATOR.CENTRALIZED_OPERATOR
+    return {
+      ...OPERATOR.CENTRALIZED_OPERATOR,
+      description: OPERATOR.CENTRALIZED_OPERATOR.description + priorityModeNote,
+    }
   }
 
   const eraMultisigValidator = templateVars.discovery.getContract(
@@ -661,7 +776,8 @@ function getTechnologyOperator(
     description:
       OPERATOR.CENTRALIZED_OPERATOR.description +
       '\n\n' +
-      'Batch execution is initiated by permissioned executor EOAs, but each batch also requires approval from the sufficient number of EraMultisigValidator members before it can be executed on L1.',
+      'Batch execution is initiated by permissioned executor EOAs, but each batch also requires approval from the sufficient number of EraMultisigValidator members before it can be executed on L1.' +
+      priorityModeNote,
     references: [
       {
         title: `${eraMultisigValidator.name} - Etherscan proxy contract`,
@@ -716,78 +832,75 @@ export function getZkStackDaTracking(
 }
 
 function programHashesReproducible(l2BootloaderHash: string): boolean | null {
+  if (l2BootloaderHash === ZERO_BYTES32) return null
   const vStatus = PROGRAM_HASHES(l2BootloaderHash).verificationStatus
   if (vStatus === 'unsuccessful') return false
   if (vStatus === 'successful') return true
   return null
 }
 
-// get all verifiers that can prove STF of an L2
-// export because adi is not currently set up as a template but should get verifiers by this logic
+/**
+ * All verifiers that can prove the STF of the chain, starting from the diamond's `getVerifier`. Before v31 that is
+ * a verifier discovered by the project itself; from v31 it is the verifier the ChainTypeManager registered for the
+ * protocol version, which lives in the shared-zk-stack module (versioned names like EraDualVerifier_v33), so the
+ * lookup goes by address and template rather than by name.
+ * Exported for adi, which is not set up as a template and still reads its verifier by name.
+ */
 export function getZKStackVerifiers(
   discovery: ProjectDiscovery,
   isArchived: boolean,
+  diamondName = 'Diamond',
 ): ChainSpecificAddress[] {
   const result: ChainSpecificAddress[] = []
   if (isArchived) {
     // don't want to bother setting up archived projects
     return result
   }
-  // since v30.1 the dual verifier of era-based chains is called EraDualVerifier
-  const dualVerifierName = ['DualVerifier', 'EraDualVerifier'].find((name) =>
-    discovery.hasContract(name),
+  const verifierAddress = discovery.getContractValue<ChainSpecificAddress>(
+    diamondName,
+    'getVerifier',
   )
-  if (dualVerifierName !== undefined) {
+  const verifier = discovery.getContract(verifierAddress)
+  const template = verifier.template ?? ''
+  if (template.endsWith('/DualVerifier')) {
+    // routes to FFLONK or PLONK by proof type; immutable
     result.push(
       discovery.getContractValue<ChainSpecificAddress>(
-        dualVerifierName,
+        verifier.address,
         'FFLONK_VERIFIER',
       ),
-    )
-    result.push(
       discovery.getContractValue<ChainSpecificAddress>(
-        dualVerifierName,
+        verifier.address,
         'PLONK_VERIFIER',
       ),
     )
-  } else if (discovery.hasContract('Verifier')) {
-    // currently only Treasury has this setup
-    result.push(discovery.getContract('Verifier').address)
-  } else if (discovery.hasContract('ZKsyncOSDualVerifier')) {
-    // probably all aibender-based chains will fall under this case
-    const fflonk0 = discovery.getContractValue<ChainSpecificAddress>(
-      'ZKsyncOSDualVerifier',
-      'fflonkVerifier0',
-    )
-    if (ChainSpecificAddress.address(fflonk0) !== EthereumAddress.ZERO) {
-      result.push(fflonk0)
+  } else if (template.includes('ZKsyncOSDualVerifier')) {
+    // routes to the FFLONK/PLONK pair of the version selected in the proof; the owner can add versions
+    for (const field of ['fflonkVerifier0', 'plonkVerifier0']) {
+      const address = discovery.getContractValue<ChainSpecificAddress>(
+        verifier.address,
+        field,
+      )
+      if (ChainSpecificAddress.address(address) !== EthereumAddress.ZERO) {
+        result.push(address)
+      }
     }
-    const plonk0 = discovery.getContractValue<ChainSpecificAddress>(
-      'ZKsyncOSDualVerifier',
-      'plonkVerifier0',
-    )
-    if (ChainSpecificAddress.address(plonk0) !== EthereumAddress.ZERO) {
-      result.push(plonk0)
-    }
-    const fflonk1 = discovery.getContractValue<ChainSpecificAddress>(
-      'ZKsyncOSDualVerifier',
-      'fflonkVerifier1',
-    )
-    const plonk1 = discovery.getContractValue<ChainSpecificAddress>(
-      'ZKsyncOSDualVerifier',
-      'plonkVerifier1',
-    )
-    if (
-      ChainSpecificAddress.address(fflonk1) !== EthereumAddress.ZERO ||
-      ChainSpecificAddress.address(plonk1) !== EthereumAddress.ZERO
-    ) {
-      throw new Error(
-        `Verifier discovery for ${discovery.projectName} is misconfigured: both plonk1 and fflonk1 are expected to be zero addresses. Manually review and setup verifiers for zk catalog.`,
+    for (const field of ['fflonkVerifier1', 'plonkVerifier1']) {
+      const address = discovery.getContractValue<ChainSpecificAddress>(
+        verifier.address,
+        field,
+      )
+      assert(
+        ChainSpecificAddress.address(address) === EthereumAddress.ZERO,
+        `Verifier discovery for ${discovery.projectName} is misconfigured: ${field} is expected to be the zero address. Add the version 1 verifiers to the ZKsyncOSDualVerifier template and to the zk catalog.`,
       )
     }
+  } else if (template.endsWith('/old/Verifier')) {
+    // a single PLONK verifier (currently only Treasure)
+    result.push(verifier.address)
   } else {
     throw new Error(
-      `Cannot configure ZK Stack project verifiers (${discovery.projectName}), edit template file`,
+      `Cannot configure ZK Stack project verifiers (${discovery.projectName}): unknown verifier template ${template} of ${verifier.address}`,
     )
   }
   if (discovery.hasContract('SP1VerifierGateway')) {

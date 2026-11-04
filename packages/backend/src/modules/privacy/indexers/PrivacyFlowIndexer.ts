@@ -3,11 +3,13 @@ import type { Database, PrivacyFlowEventRecord } from '@l2beat/database'
 import {
   type BlockProvider,
   createPrivacyConfigurationId,
+  type IRpcClient,
   type LogsProvider,
   stringifyPrivacyConfigurationParams,
 } from '@l2beat/shared'
 import { assert, type Log, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
+import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -18,9 +20,10 @@ import type {
 } from '../../../tools/uif/multi/types'
 import type { PrivacyFlowIndexerConfig } from '../types'
 import { extractPrivacyFlow } from '../utils/extractPrivacyFlow'
+import { adjustPrivacyPoolsV2Flow } from '../utils/extractPrivacyPoolsV2Event'
 import {
+  extractPrivacyLogMatches,
   fetchPrivacyLogMatches,
-  type PrivacyLogMatch,
 } from '../utils/privacyLogIndexerUtils'
 
 interface PrivacyFlowIndexerDeps
@@ -31,6 +34,7 @@ interface PrivacyFlowIndexerDeps
   chain: string
   blockProvider: BlockProvider
   logsProvider: LogsProvider
+  rpcClient: IRpcClient
   db: Database
 }
 
@@ -65,10 +69,10 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
       configurations: configurations.length,
     })
 
-    const records = await this.fetchRecordsForGroup(
-      configurations,
-      from,
-      adjustedTo,
+    const records = await withCoreFeatureRpcMetricsContext(
+      'privacy.flow',
+      { chain: this.$.chain },
+      () => this.fetchRecordsForGroup(configurations, from, adjustedTo),
     )
 
     this.logger.info('Fetched privacy flow logs', {
@@ -142,36 +146,26 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
       blockProvider: this.$.blockProvider,
       logger: this.logger,
     })
-    const rawRecords = this.extractRawRecords(matches)
+    const rawRecords = await extractPrivacyLogMatches(
+      matches,
+      this.$.rpcClient,
+      async ({ log, timestamp, configuration }, context) => {
+        const extracted = extractPrivacyFlow(configuration.properties, log)
+        if (!extracted || (extracted.count === 0 && extracted.amount === 0n)) {
+          return undefined
+        }
+        const result = await adjustPrivacyPoolsV2Flow(log, extracted, context)
+        if (!result) {
+          return undefined
+        }
+        return { configuration, log, timestamp, ...result }
+      },
+    )
 
     if (rawRecords.length === 0) return []
 
     const priceLookup = await this.buildPriceLookup(rawRecords)
     return this.buildRecords(rawRecords, priceLookup)
-  }
-
-  private extractRawRecords(
-    matches: PrivacyLogMatch<PrivacyFlowIndexerConfig>[],
-  ): RawRecord[] {
-    const rawRecords: RawRecord[] = []
-
-    for (const { log, timestamp, configuration } of matches) {
-      const result = extractPrivacyFlow(configuration.properties, log)
-
-      if (!result || (result.count === 0 && result.amount === 0n)) {
-        continue
-      }
-
-      rawRecords.push({
-        configuration,
-        log,
-        count: result.count,
-        amount: result.amount,
-        timestamp,
-      })
-    }
-
-    return rawRecords
   }
 
   private buildRecords(

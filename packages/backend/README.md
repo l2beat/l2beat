@@ -144,6 +144,7 @@ FEATURES=*,!interop.relay
 - `<CHAIN>_RPC_CALLS_PER_MINUTE` - Optional. Rate limits the number of calls to the RPC. Defaults to
   60
 - `<CHAIN>_RPC_GETLOGS_MAX_RANGE` - Optional. Limits the range of getLogs calls
+- `<CHAIN>_RPC_MAX_BATCH_SIZE` - Optional. The RPC's limit of calls per batch request, bigger batches are split. A batch it still rejects throws. Unset, batches of 50 shrink for 5 minutes when the RPC rejects them.
 
 You can also append the feature name to the environment variables if you'd like a specific feature
 to use a different endpoint. For example:
@@ -205,6 +206,7 @@ to projects, for the live blobs view. Needs the Ethereum layer of `da` (`ETHEREU
   indexers. Defaults to `ETHEREUM_RPC_URL`, then to the public RPC of Ethereum's chain config
 - `ETHEREUM_LIVE_BLOBS_RPC_CALLS_PER_MINUTE` - Optional. Defaults to 600: the head is asked for every
   quarter second until a slot's block comes
+- `ETHEREUM_LIVE_BLOBS_RPC_MAX_BATCH_SIZE` - Optional. The RPC's limit of receipts per batch request, as `<CHAIN>_RPC_MAX_BATCH_SIZE`
 
 **Feature flags:**
 

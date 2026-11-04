@@ -1,5 +1,6 @@
 import compact from 'lodash/compact'
 import { PRODUCTION_ORIGIN, toProductionUrl } from '~/consts/productionOrigin'
+import { SITE_NAME } from '~/consts/siteName'
 import { env } from '~/env'
 import { getMarkdownAlternatePath } from '~/utils/getMarkdownAlternatePath'
 import type { Manifest } from '~/utils/Manifest'
@@ -13,9 +14,9 @@ import type {
   StructuredDataPage,
 } from './structured-data/StructuredData'
 
-export const SITE_TITLE = 'L2BEAT - The state of the layer two ecosystem'
+export const SITE_TITLE = 'ETHBEAT - The heartbeat of the Ethereum ecosystem'
 const SITE_DESCRIPTION =
-  'L2BEAT is an analytics and research website about Ethereum layer 2 scaling. Here you will find in depth comparison of major protocols live on Ethereum today.'
+  'ETHBEAT is an independent research and analytics site for Ethereum. We check what Layer 2s, interop, privacy and ZK systems really inherit from it.'
 
 type OpenGraph = {
   type: 'article' | 'website'
@@ -36,7 +37,7 @@ export interface Metadata {
 type PartialMetadata = {
   /** What the page is called: its last breadcrumb and, by default, its title. */
   name?: string
-  /** For titles that say more than "<name> - L2BEAT". */
+  /** For titles that say more than "<name> - <SITE_NAME>". */
   title?: string
   description?: string
   url: string
@@ -76,7 +77,7 @@ export function getMetadata(
   // Production, whatever host rendered the page
   const canonicalUrl = toProductionUrl(strippedPath)
   return {
-    title: title ?? (name ? `${name} - L2BEAT` : SITE_TITLE),
+    title: title ?? (name ? `${name} - ${SITE_NAME}` : SITE_TITLE),
     description,
     url: baseUrl + strippedPath,
     openGraph: {

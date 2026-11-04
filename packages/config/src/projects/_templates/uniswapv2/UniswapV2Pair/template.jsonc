@@ -1,0 +1,22 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "UniswapV2Pair",
+  "critical": true,
+  "description": "A constant-product AMM pool for one token pair, deployed by the factory and fully immutable: no owner, no pause, no upgrade path. Swaps pay a 0.3% fee to liquidity providers. If the factory has a protocol fee recipient set, the pair mints it 1/6 of those fees as LP tokens. Also a cumulative-price oracle anyone can read.",
+  // Large uint accumulators can be misread as addresses by the relative
+  // detector; the two tokens are external ERC20s.
+  "ignoreRelatives": [
+    "token0",
+    "token1",
+    "price0CumulativeLast",
+    "price1CumulativeLast",
+    "kLast"
+  ],
+  "ignoreInWatchMode": [
+    "getReserves",
+    "price0CumulativeLast",
+    "price1CumulativeLast",
+    "kLast",
+    "totalSupply"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Logic that the StakeManager delegatecalls to update checkpoint reward parameters and commission rates and to migrate validator data. Its own storage is unused.",
+  "category": "core",
+  "ignoreMethods": [
+    "latestSignerUpdateEpoch",
+    "validatorAuction",
+    "validators",
+    "validatorStateChanges",
+    "signers"
+  ]
+}

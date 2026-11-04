@@ -124,6 +124,79 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
     })
   })
 
+  describe(SyncMetadataRepository.prototype.markEnded.name, () => {
+    const end = roundedHour - 30 * UnixTime.DAY
+
+    function tvs(
+      id: string,
+      target: UnixTime,
+      syncedUntil: UnixTime | null,
+    ): SyncMetadataRecord {
+      return {
+        feature: 'tvs',
+        id,
+        target,
+        syncedUntil,
+        blockTarget: null,
+        blockSyncedUntil: null,
+      }
+    }
+
+    it('moves target to the end and caps syncedUntil there', async () => {
+      await repository.upsertMany([
+        // Values past the end were deleted, syncedUntil stayed
+        tvs('trimmed-ETH', end + 10 * UnixTime.DAY, end + 10 * UnixTime.DAY),
+        tvs('stopped-at-end-ETH', end + UnixTime.DAY, end),
+        tvs('stopped-early-ETH', end + UnixTime.DAY, end - UnixTime.HOUR),
+        tvs('never-synced-ETH', end + UnixTime.DAY, null),
+      ])
+
+      const updated = await repository.markEnded('tvs', [
+        { id: 'trimmed-ETH', end },
+        { id: 'stopped-at-end-ETH', end },
+        { id: 'stopped-early-ETH', end },
+        { id: 'never-synced-ETH', end },
+      ])
+
+      expect(updated).toEqual(4)
+      expect(await repository.getAll()).toEqualUnsorted([
+        tvs('trimmed-ETH', end, end),
+        tvs('stopped-at-end-ETH', end, end),
+        tvs('stopped-early-ETH', end, end - UnixTime.HOUR),
+        tvs('never-synced-ETH', end, null),
+      ])
+    })
+
+    it('skips rows that already match', async () => {
+      await repository.upsertMany([tvs('trimmed-ETH', end, end)])
+
+      const updated = await repository.markEnded('tvs', [
+        { id: 'trimmed-ETH', end },
+      ])
+
+      expect(updated).toEqual(0)
+    })
+
+    it('does not insert rows or touch other features', async () => {
+      const activity: SyncMetadataRecord = {
+        ...tvs('trimmed-ETH', roundedHour, roundedHour),
+        feature: 'activity',
+      }
+      await repository.upsertMany([activity])
+
+      const updated = await repository.markEnded('tvs', [
+        { id: 'trimmed-ETH', end },
+      ])
+
+      expect(updated).toEqual(0)
+      expect(await repository.getAll()).toEqual([activity])
+    })
+
+    it('empty array not to be rejected', async () => {
+      await expect(repository.markEnded('tvs', [])).not.toBeRejected()
+    })
+  })
+
   describe(SyncMetadataRepository.prototype.getByFeature.name, () => {
     it('returns all records for the feature and excludes other features', async () => {
       const records: SyncMetadataRecord[] = [
@@ -343,10 +416,11 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
       expect(maxTarget).toEqual(roundedHour + 2 * UnixTime.HOUR)
     })
 
-    it('should throw error for non-existing feature', async () => {
-      await expect(
-        repository.getMaxTargetForFeature('nonexistent' as any),
-      ).toBeRejectedWith('Max target for feature not found')
+    it('should return undefined for non-existing feature', async () => {
+      const maxTarget = await repository.getMaxTargetForFeature(
+        'nonexistent' as any,
+      )
+      expect(maxTarget).toEqual(undefined)
     })
   })
 

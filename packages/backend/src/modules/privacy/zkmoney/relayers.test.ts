@@ -4,6 +4,7 @@ import { extractZkMoneyWithdrawalRelayer } from './relayers'
 import {
   ALICE,
   BOB,
+  FEE_BENEFICIARY,
   mockZkMoneyRpc,
   OPERATION_EXECUTOR,
   PORTAL,
@@ -30,6 +31,33 @@ describe(extractZkMoneyWithdrawalRelayer.name, () => {
     expect(await extract(portalEvent, rpc)).toEqual({
       relayerAddress: BOB,
     })
+  })
+
+  it('skips the fee an executor pays before the principal', async () => {
+    const rpc = mockZkMoneyRpc({
+      receipt: [
+        transfer(WITHDRAWAL_EXECUTOR, FEE_BENEFICIARY, 1n, { logIndex: 0 }),
+        transfer(WITHDRAWAL_EXECUTOR, ALICE, 89n, { logIndex: 1 }),
+        transfer(WITHDRAWAL_EXECUTOR, BOB, 10n, { logIndex: 2 }),
+        portalEvent,
+      ],
+    })
+
+    expect(await extract(portalEvent, rpc, FEE_PARAMS)).toEqual({
+      relayerAddress: BOB,
+    })
+  })
+
+  it('rejects a fee-charging payout whose first transfer misses the fee beneficiary', async () => {
+    const rpc = mockZkMoneyRpc({
+      receipt: [
+        transfer(WITHDRAWAL_EXECUTOR, ALICE, 90n, { logIndex: 1 }),
+        transfer(WITHDRAWAL_EXECUTOR, BOB, 10n, { logIndex: 2 }),
+        portalEvent,
+      ],
+    })
+
+    expect(await extract(portalEvent, rpc, FEE_PARAMS)).toEqual(undefined)
   })
 
   it('excludes a recipient collecting its own tip even when someone else submits', async () => {
@@ -212,11 +240,17 @@ describe(extractZkMoneyWithdrawalRelayer.name, () => {
   })
 })
 
+const FEE_PARAMS = {
+  ...WITHDRAWAL_RELAYER_PARAMS,
+  feeBeneficiary: FEE_BENEFICIARY,
+}
+
 function extract(
   event: ReturnType<typeof withdrawal>,
   rpc: ReturnType<typeof mockZkMoneyRpc>,
+  params = WITHDRAWAL_RELAYER_PARAMS,
 ) {
-  return extractZkMoneyWithdrawalRelayer(event, WITHDRAWAL_RELAYER_PARAMS, {
+  return extractZkMoneyWithdrawalRelayer(event, params, {
     rpc,
     receipts: new ReceiptLogCache(rpc),
   })

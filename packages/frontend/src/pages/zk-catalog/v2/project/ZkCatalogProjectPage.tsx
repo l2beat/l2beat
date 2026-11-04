@@ -14,16 +14,22 @@ import { StickyMobileSectionNavigation } from '~/components/section-navigation/S
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type { ProjectSectionLink } from '~/server/features/projects/getProjectSectionLinks'
+import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 import type { ProjectZkCatalogEntry } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
 import { ProjectZkCatalogSummary } from './components/header/ZkCatalogProjectSummary'
 
 interface Props extends AppLayoutProps {
   projectEntry: ProjectZkCatalogEntry
+  sectionLinks: ProjectSectionLink[]
+  versionLinks?: ProjectVersionLinks
   queryState: DehydratedState
 }
 
 export function ZkCatalogProjectPage({
   projectEntry,
+  sectionLinks,
+  versionLinks,
   queryState,
   ...props
 }: Props) {
@@ -40,16 +46,28 @@ export function ZkCatalogProjectPage({
             data-project-page
           >
             {!isNavigationEmpty && (
-              <StickyMobileSectionNavigation sections={navigationSections} />
+              <StickyMobileSectionNavigation
+                sections={navigationSections}
+                project={{
+                  name: projectEntry.shortName ?? projectEntry.name,
+                  icon: projectEntry.icon,
+                }}
+              />
             )}
             <div className="z-0 max-md:bg-surface-primary">
               <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">
                 <div className="pt-6 max-md:px-4 lg:pt-4">
                   <ProjectHeader
                     project={projectEntry}
+                    section="zkCatalog"
+                    sectionLinks={sectionLinks}
+                    versions={versionLinks}
                     secondLine={projectEntry.creator}
                   />
-                  <ProjectSummaryBars project={projectEntry} />
+                  <ProjectSummaryBars
+                    project={projectEntry}
+                    versions={versionLinks}
+                  />
                   {projectEntry.header.description && (
                     <AboutSection
                       description={projectEntry.header.description}

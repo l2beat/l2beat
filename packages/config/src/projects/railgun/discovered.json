@@ -1,8 +1,62 @@
 {
   "name": "railgun",
-  "timestamp": 1789711666,
-  "configHash": "0x9aa2e6b830ed740ecf560e280386743dca9c7dd3c0e8b74eaa9b620041630b5e",
+  "timestamp": 1792756093,
+  "configHash": "0x0c3e2877cc5b1aa4ebc5f6e5230b6f5144d679fb900c5e4cb51a9c220462f2d1",
   "entries": [
+    {
+      "name": "RelayAdapt7702_05ae",
+      "address": "eth:0x05ae73c5925d843864ae6F261f3175De2ebCd963",
+      "type": "Contract",
+      "template": "railgun/RelayAdapt7702",
+      "sourceHashes": [
+        "0x3a7054177e9d80290cb64fa9155d1580fa13d58a1d568a0b44b210ab79ef993b"
+      ],
+      "proxyType": "immutable",
+      "description": "Implementation that accounts delegate to with EIP-7702 to run Railgun DeFi actions. A delegated account unshields through Railgun, runs calls and shields or sends the resulting tokens. Each action needs a signature from the account's own key, so anyone, such as a broadcaster, can submit it.",
+      "deployerAddress": "eth:0x43b89E9f43b2ded5392D4eB9B21543bAFCE38e1B",
+      "sinceTimestamp": 1781278415,
+      "sinceBlock": 25302306,
+      "values": {
+        "$immutable": true,
+        "adaptImplementation": "eth:0x05ae73c5925d843864ae6F261f3175De2ebCd963",
+        "DOMAIN_SEPARATOR": "0x077e144cc74113895f9af8ef1f7e238e017df7a8d6077e7ca21ea2c0eee1bed2",
+        "EXECUTE_TYPEHASH": "0xf24df5a0a7b800b8aa018f2ee7814e1f20511e66c80cc9b50ad5e68d95c85ff0",
+        "MULTICALL_TYPEHASH": "0x8bc0c0cf848c4ed87fd79dd13bc882697157c33ae51240463630f848bc06cd18",
+        "nonce": 0,
+        "railgun": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+        "wBase": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      },
+      "implementationNames": {
+        "eth:0x05ae73c5925d843864ae6F261f3175De2ebCd963": "RelayAdapt7702"
+      }
+    },
+    {
+      "name": "RelayAdapt7702_1F74",
+      "address": "eth:0x1F74b4339990Db761bC0168F20D294A3a141497e",
+      "type": "Contract",
+      "template": "railgun/RelayAdapt7702",
+      "sourceHashes": [
+        "0xe677c8fcceecb91897609845535917eb2012931220853e62705536acc690e42b"
+      ],
+      "proxyType": "immutable",
+      "description": "Implementation that accounts delegate to with EIP-7702 to run Railgun DeFi actions. A delegated account unshields through Railgun, runs calls and shields or sends the resulting tokens. Each action needs a signature from the account's own key, so anyone, such as a broadcaster, can submit it.",
+      "deployerAddress": "eth:0x43b89E9f43b2ded5392D4eB9B21543bAFCE38e1B",
+      "sinceTimestamp": 1790628623,
+      "sinceBlock": 26078451,
+      "values": {
+        "$immutable": true,
+        "adaptImplementation": "eth:0x1F74b4339990Db761bC0168F20D294A3a141497e",
+        "DOMAIN_SEPARATOR": "0x62615f60e6de8a1f4686082f9507bcd1b989a17bf7aad577657d344991d12c56",
+        "EXECUTE_TYPEHASH": "0xf24df5a0a7b800b8aa018f2ee7814e1f20511e66c80cc9b50ad5e68d95c85ff0",
+        "MULTICALL_TYPEHASH": "0x8bc0c0cf848c4ed87fd79dd13bc882697157c33ae51240463630f848bc06cd18",
+        "nonce": 0,
+        "railgun": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+        "wBase": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      },
+      "implementationNames": {
+        "eth:0x1F74b4339990Db761bC0168F20D294A3a141497e": "RelayAdapt7702"
+      }
+    },
     {
       "name": "IntervalPayouts",
       "address": "eth:0x29905A43aA3865D0D7F2743dDE63754B4aa9CA11",
@@ -85,7 +139,7 @@
       },
       "fieldMeta": {
         "owner": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Controller that can operate any Railgun proxy administered by this ProxyAdmin.",
           "type": "PERMISSION"
         }
@@ -130,6 +184,7 @@
       },
       "fieldMeta": {
         "owner": {
+          "severity": "MEDIUM",
           "description": "Current operator that can stage verification keys, move the helper into WAITING, and return it to SETTING after governance has opened the COMMITTING phase.",
           "type": "PERMISSION"
         },
@@ -141,7 +196,7 @@
           "description": "Railgun smart wallet verifier contract whose verification keys this helper can update through the Delegator."
         },
         "state": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Current workflow phase: SETTING (0), WAITING (1) or COMMITTING (2). COMMITTING is entered only through governance (the Delegator) and lets the owner push the staged keys, including empty keys that delete a circuit, to the smart wallet without further governance until the owner returns the helper to SETTING."
         }
       },
@@ -302,6 +357,7 @@
       },
       "fieldMeta": {
         "owner": {
+          "severity": "MEDIUM",
           "description": "Current operator that can stage verification keys, move the helper into WAITING, and return it to SETTING after governance has opened the COMMITTING phase.",
           "type": "PERMISSION"
         },
@@ -313,7 +369,7 @@
           "description": "Railgun smart wallet verifier contract whose verification keys this helper can update through the Delegator."
         },
         "state": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Current workflow phase: SETTING (0), WAITING (1) or COMMITTING (2). COMMITTING is entered only through governance (the Delegator) and lets the owner push the staged keys, including empty keys that delete a circuit, to the smart wallet without further governance until the owner returns the helper to SETTING."
         }
       },
@@ -665,7 +721,7 @@
       },
       "fieldMeta": {
         "owner": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Current controller of the Delegator. The owner bypasses the permission bitmap and can call any target through this contract.",
           "type": "PERMISSION"
         },
@@ -875,7 +931,7 @@
       },
       "fieldMeta": {
         "owner": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Current governance-controlled minter of the RAIL token.",
           "type": "PERMISSION"
         },
@@ -942,7 +998,7 @@
         "defaultAdminRoleMembers": [
           "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B"
         ],
-        "RAILBalance": "2,304,906.690395929691937489",
+        "RAILBalance": "2,026,604.203074334105502209",
         "TRANSFER_ROLE": "0x8502233096d909befbda0999bb8ea2f3a6be3c138b9fbf003752a4c8bce86f6c",
         "transferRoleMembers": [
           "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
@@ -1016,7 +1072,7 @@
         "$immutable": true,
         "DEPLOY_TIME": 1625670240,
         "intervalAtTime": [],
-        "RAILStaked": "41,613,048.173433359453394507",
+        "RAILStaked": "42,527,262.006558543126287672",
         "SNAPSHOT_INTERVAL": 86400,
         "SNAPSHOT_INTERVAL_fmt": "1d",
         "STAKE_LOCKTIME": 2592000,
@@ -1173,7 +1229,7 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Proxy admin that can pause, unpause, transfer proxy ownership, or upgrade the Railgun smart wallet proxy.",
           "type": "PERMISSION"
         },
@@ -1182,7 +1238,7 @@
           "type": "CODE_CHANGE"
         },
         "owner": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Governance-controlled owner of the smart wallet logic.",
           "type": "PERMISSION"
         },
@@ -1258,6 +1314,50 @@
     }
   ],
   "abis": {
+    "eth:0x05ae73c5925d843864ae6F261f3175De2ebCd963": [
+      "constructor(address _railgun, address _wBase)",
+      "error CallFailed(uint256 callIndex, bytes revertReason)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error SafeERC20FailedOperation(address token)",
+      "event CallError(uint256 callIndex, bytes revertReason)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function EXECUTE_TYPEHASH() view returns (bytes32)",
+      "function MULTICALL_TYPEHASH() view returns (bytes32)",
+      "function adaptImplementation() view returns (address)",
+      "function execute(tuple(tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) proof, bytes32 merkleRoot, bytes32[] nullifiers, bytes32[] commitments, tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) boundParams, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) unshieldPreimage)[] _transactions, tuple(bool requireSuccess, uint256 minGasLimit, tuple(address to, bytes data, uint256 value)[] calls) _actionData, uint256 _nonce, bytes _signature) payable",
+      "function getExecutePayloadHash(tuple(tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) proof, bytes32 merkleRoot, bytes32[] nullifiers, bytes32[] commitments, tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) boundParams, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) unshieldPreimage)[] _transactions, tuple(bool requireSuccess, uint256 minGasLimit, tuple(address to, bytes data, uint256 value)[] calls) _actionData, uint256 _nonce) pure returns (bytes32)",
+      "function getMulticallPayloadHash(bool _requireSuccess, tuple(address to, bytes data, uint256 value)[] _calls, uint256 _nonce) pure returns (bytes32)",
+      "function multicall(bool _requireSuccess, tuple(address to, bytes data, uint256 value)[] _calls, uint256 _nonce, bytes _signature) payable",
+      "function nonce() view returns (uint256)",
+      "function railgun() view returns (address)",
+      "function shield(tuple(tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) preimage, tuple(bytes32[3] encryptedBundle, bytes32 shieldKey) ciphertext)[] _shieldRequests)",
+      "function transfer(tuple(tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, address to, uint256 value)[] _transfers)",
+      "function unwrapBase(uint256 _amount)",
+      "function wBase() view returns (address)",
+      "function wrapBase(uint256 _amount)"
+    ],
+    "eth:0x1F74b4339990Db761bC0168F20D294A3a141497e": [
+      "constructor(address _railgun, address _wBase)",
+      "error CallFailed(uint256 callIndex, bytes revertReason)",
+      "event CallError(uint256 callIndex, bytes revertReason)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function EXECUTE_TYPEHASH() view returns (bytes32)",
+      "function MULTICALL_TYPEHASH() view returns (bytes32)",
+      "function adaptImplementation() view returns (address)",
+      "function execute(tuple(tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) proof, bytes32 merkleRoot, bytes32[] nullifiers, bytes32[] commitments, tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) boundParams, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) unshieldPreimage)[] _transactions, tuple(bool requireSuccess, uint256 minGasLimit, tuple(address to, bytes data, uint256 value)[] calls) _actionData, uint256 _nonce, bytes _signature) payable",
+      "function getExecutePayloadHash(tuple(tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) proof, bytes32 merkleRoot, bytes32[] nullifiers, bytes32[] commitments, tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) boundParams, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) unshieldPreimage)[] _transactions, tuple(bool requireSuccess, uint256 minGasLimit, tuple(address to, bytes data, uint256 value)[] calls) _actionData, uint256 _nonce) pure returns (bytes32)",
+      "function getMulticallPayloadHash(bool _requireSuccess, tuple(address to, bytes data, uint256 value)[] _calls, uint256 _nonce) pure returns (bytes32)",
+      "function multicall(bool _requireSuccess, tuple(address to, bytes data, uint256 value)[] _calls, uint256 _nonce, bytes _signature) payable",
+      "function nonce() view returns (uint256)",
+      "function railgun() view returns (address)",
+      "function shield(tuple(tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) preimage, tuple(bytes32[3] encryptedBundle, bytes32 shieldKey) ciphertext)[] _shieldRequests)",
+      "function transfer(tuple(tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, address to, uint256 value)[] _transfers)",
+      "function unwrapBase(uint256 _amount)",
+      "function wBase() view returns (address)",
+      "function wrapBase(uint256 _amount)"
+    ],
     "eth:0x29905A43aA3865D0D7F2743dDE63754B4aa9CA11": [
       "constructor(address _treasury, address _beneficiary, address _token, uint256 _amount, uint256 _intervalLength, uint256 _totalPayouts, uint256 _startTime)",
       "function amount() view returns (uint256)",
@@ -1689,14 +1789,15 @@
     "railgun/RailgunSmartWallet": "0x37b1d894b0d4d01f78663b7d5d6121dc4653de757fc91d28f9dc1d4d47a7c236",
     "railgun/RailToken": "0x804530e37ec6008f7e038487ae7914ce758ee7b27c21a98172234dc96f3fe682",
     "railgun/RelayAdapt": "0xe64239195c9b233532c77144e0b1161bdf296080b3fbe1d7857a20920c72f5df",
+    "railgun/RelayAdapt7702": "0xe64239195c9b233532c77144e0b1161bdf296080b3fbe1d7857a20920c72f5df",
     "railgun/Staking": "0x7be0011fe230d0df425b604fe047026ba396620550299ad956bef1743a90dd8e",
     "railgun/SweeperLegacy": "0x2eb417aa4538dd13c156beb75374c4ab97c3a0e34a2e1616eaf4d440bed50af7",
     "railgun/Treasury": "0x4221ed0e8307ee2ffd52d7bd83b3f6805d2cd431814543ed36f5dc42b7d77988",
     "railgun/VKeySetter": "0x91335987d90d44c42826772e13ce649fe7f74f91f53eb69227ef49ff63fe5d89",
     "railgun/Voting": "0x67493aa4e015e72df54398b5228d0608b52403af2ad52e9d3e93adb52249abc7"
   },
-  "usedBlockNumbers": { "ethereum": 26002488 },
-  "permissionsConfigHash": "0x5b8628ca0bf8e5068434b7a903b1eb050788a932b10c6231fafec76390e09b2f",
+  "usedBlockNumbers": { "ethereum": 26255125 },
+  "permissionsConfigHash": "0x0ad4b020142c6516aa3fd10a1e068768851caebfa05399eafcf07058109f09cc",
   "permissions": {
     "eth:0x29905A43aA3865D0D7F2743dDE63754B4aa9CA11": {
       "directlyReceivedPermissions": [

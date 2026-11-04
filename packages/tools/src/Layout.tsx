@@ -23,7 +23,7 @@ export function Layout() {
       <div className="w-full p-4 md:max-w-[200px]">
         <ul>
           <li className="mb-4 flex items-center justify-between">
-            <p className="font-bold">tools.l2beat.com</p>
+            <p className="font-bold">tools.ethbeat.org</p>
 
             <button onClick={() => setIsOpen(!isOpen)} className="md:hidden">
               {isOpen ? <ArrowIcon className="rotate-180" /> : <ArrowIcon />}
@@ -31,16 +31,6 @@ export function Layout() {
           </li>
           {isOpen && (
             <>
-              <li>
-                <NavLink
-                  className={({ isActive }) =>
-                    clsx('font-mono underline', isActive && 'text-orange-500')
-                  }
-                  to="/decoder-3"
-                >
-                  /decoder-3
-                </NavLink>
-              </li>
               <li>
                 <NavLink
                   className={({ isActive }) =>
@@ -56,16 +46,6 @@ export function Layout() {
                   className={({ isActive }) =>
                     clsx('font-mono underline', isActive && 'text-orange-500')
                   }
-                  to="/decoder-new"
-                >
-                  /decoder-new
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  className={({ isActive }) =>
-                    clsx('font-mono underline', isActive && 'text-orange-500')
-                  }
                   to="/simulator"
                 >
                   /simulator
@@ -74,7 +54,7 @@ export function Layout() {
               <li>
                 <Link
                   className="font-mono underline"
-                  to="https://disco.l2beat.com/ui"
+                  to="https://disco.ethbeat.org/ui"
                 >
                   /disco-ui
                 </Link>
@@ -82,18 +62,20 @@ export function Layout() {
               <li>
                 <Link
                   className="font-mono underline"
-                  to="https://disco.l2beat.com/diff"
+                  to="https://disco.ethbeat.org/diff"
                 >
                   /diffovery
                 </Link>
               </li>
               <li>
-                <Link
-                  className="font-mono underline"
-                  to="https://uops.l2beat.com/"
+                <NavLink
+                  className={({ isActive }) =>
+                    clsx('font-mono underline', isActive && 'text-orange-500')
+                  }
+                  to="/uops"
                 >
-                  /uops-analyzer
-                </Link>
+                  /uops
+                </NavLink>
               </li>
               <li>
                 <NavLink

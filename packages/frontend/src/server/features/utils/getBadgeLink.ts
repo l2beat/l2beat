@@ -8,11 +8,7 @@ export function getBadgeLink(
 ): string | undefined {
   if (!badge.action) return undefined
   if (badge.action.type === 'scalingFilter') {
-    return `/layer2s/summary?filters=${getFilterSearchParams({
-      [badge.action.id]: {
-        values: [badge.action.value],
-      },
-    })}`
+    return getSharedBadgeLink(badge)
   }
 
   if (badge.action.type === 'selfScalingFilter') {
@@ -23,11 +19,17 @@ export function getBadgeLink(
     })}`
   }
 
-  if (badge.action.type === 'publicDaHighlight') {
-    return `/data-availability/summary?highlight=${badge.action.slug}`
-  }
-
   if (badge.action.type === 'selfDaHighlight') {
     return `/layer2s/risk/data-availability?tab=${getL2Tab(project)}&highlight=${project.slug}`
   }
+}
+
+/** The link that is the same for every project wearing the badge, if any. */
+export function getSharedBadgeLink(badge: Badge): string | undefined {
+  if (badge.action?.type !== 'scalingFilter') return undefined
+  return `/layer2s/summary?filters=${getFilterSearchParams({
+    [badge.action.id]: {
+      values: [badge.action.value],
+    },
+  })}`
 }

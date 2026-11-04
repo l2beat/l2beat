@@ -17,20 +17,14 @@ import {
   get$Implementations,
   getChainConfigs,
   getDiscoveryPaths,
-  type IProvider,
   SQLiteCache,
 } from '@l2beat/discovery'
 import { HttpClient } from '@l2beat/shared'
-import {
-  Bytes,
-  ChainSpecificAddress,
-  UnixTime,
-  unique,
-} from '@l2beat/shared-pure'
+import { Bytes, ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import chalk from 'chalk'
+import { execFile } from 'child_process'
 import { command, number, option, restPositionals } from 'cmd-ts'
 import { createHash } from 'crypto'
-import intersection from 'lodash/intersection'
 import { dirname, join } from 'path'
 import {
   type CliLogger,
@@ -74,14 +68,13 @@ export const FlattenerValidator = command({
     const configReader = new ConfigReader(paths.discovery)
     const { allProviders, cache } = getProviders(paths, cli.toLogger('INFO'))
 
-    const now = UnixTime(1778573466)
-    const addresses = selectAddresses(configReader, filterAddresses)
-    if (addresses.length === 0) {
+    const targets = selectTargets(configReader, filterAddresses)
+    if (targets.length === 0) {
       cli.log('No contracts to verify')
       return
     }
 
-    const total = addresses.length
+    const total = targets.length
     const maxLength = Math.floor(Math.log10(total)) + 1
     const totalText = total.toString().padStart(maxLength)
     const runStartedAtMs = Date.now()
@@ -98,12 +91,10 @@ export const FlattenerValidator = command({
       `avg=${formatDuration(verificationTimeMsTotal / completed)} ` +
       `elapsed=${formatDuration(Date.now() - runStartedAtMs)}`
 
-    await mapWithConcurrency(addresses, concurrency, async (address) => {
-      const chain = ChainSpecificAddress.longChain(address)
-      const provider = await allProviders.get(chain, now)
-
+    await mapWithConcurrency(targets, concurrency, async (target) => {
+      const { address } = target
       const startedAtMs = Date.now()
-      const status = await verifyAddress(provider, address, paths, cache)
+      const status = await verifyTarget(allProviders, target, paths, cache)
       const verificationTimeMs = Date.now() - startedAtMs
 
       completed++
@@ -158,25 +149,31 @@ function printFailures(
   }
 }
 
-async function verifyAddress(
-  provider: IProvider,
-  address: ChainSpecificAddress,
+async function verifyTarget(
+  allProviders: AllProviders,
+  { address, timestamp }: Target,
   paths: DiscoveryPaths,
   cache: DiscoveryCache,
 ): Promise<VerificationResult> {
   try {
+    const chain = ChainSpecificAddress.longChain(address)
+    const provider = await allProviders.get(chain, timestamp)
     const [bytecode, source] = await Promise.all([
       provider.getBytecode(address),
       provider.getSource(address),
     ])
 
     if (!source.isVerified) return { type: 'skip' }
+    if (source.solidityVersion.startsWith('vyper')) return { type: 'skip' }
 
     const flat = flattenSource(source)
 
     return await verifyBytecode(source, flat, bytecode, paths, cache)
-  } catch {
-    return { type: 'failure', message: 'Top level thrown an error' }
+  } catch (error) {
+    return {
+      type: 'failure',
+      message: `Top level thrown an error\n${formatError(error)}`,
+    }
   }
 }
 
@@ -219,13 +216,39 @@ function formatDuration(durationMs: number): string {
   return `${(durationMs / 1000).toFixed(1)}s`
 }
 
+const flats = new Map<string, { flat: string } | { error: unknown }>()
+
 function flattenSource(source: ContractSource): string {
+  const key = sha256(
+    JSON.stringify([
+      source.name,
+      source.rootFile,
+      source.files,
+      source.remappings,
+    ]),
+  )
+  let result = flats.get(key)
+  if (result === undefined) {
+    try {
+      result = { flat: flattenSourceUncached(source) }
+    } catch (error) {
+      result = { error }
+    }
+    flats.set(key, result)
+  }
+  if ('error' in result) {
+    throw result.error
+  }
+  return result.flat
+}
+
+function flattenSourceUncached(source: ContractSource): string {
   const input = Object.entries(source.files)
     .map(([fileName, content]) => ({
       path: fileName,
       content,
     }))
-    .filter((e) => e.path.endsWith('.sol'))
+    .filter((e) => e.path.endsWith('.sol') || e.path === source.rootFile)
   const flat = flattenStartingFrom(
     source.name,
     source.rootFile,
@@ -265,21 +288,25 @@ function getCompilersLogger(cli: CliLogger): ICompilersLogger {
   return logger
 }
 
-function selectAddresses(
-  configReader: ConfigReader,
-  filterAddresses: ChainSpecificAddress[],
-): ChainSpecificAddress[] {
-  const addresses = getAllContractAddresses(configReader)
-  if (filterAddresses.length === 0) {
-    return addresses
-  }
-  return intersection(addresses, filterAddresses)
+interface Target {
+  address: ChainSpecificAddress
+  timestamp: UnixTime
 }
 
-function getAllContractAddresses(
+function selectTargets(
   configReader: ConfigReader,
-): ChainSpecificAddress[] {
-  const result: ChainSpecificAddress[] = []
+  filterAddresses: ChainSpecificAddress[],
+): Target[] {
+  const targets = getAllContractTargets(configReader)
+  if (filterAddresses.length === 0) {
+    return targets
+  }
+  const filter = new Set(filterAddresses)
+  return targets.filter((t) => filter.has(t.address))
+}
+
+function getAllContractTargets(configReader: ConfigReader): Target[] {
+  const timestamps = new Map<ChainSpecificAddress, UnixTime>()
   const projects = configReader.readAllDiscoveredProjects()
   for (const project of projects) {
     const discovery = configReader.readDiscovery(project)
@@ -304,13 +331,19 @@ function getAllContractAddresses(
         return result
       })
 
-    result.push(...contractAddresses)
+    for (const address of contractAddresses) {
+      const timestamp = timestamps.get(address) ?? 0
+      timestamps.set(
+        address,
+        UnixTime(Math.max(timestamp, discovery.timestamp)),
+      )
+    }
   }
 
   const ignoredChains = new Set(['kinto', 'zksync2', 'gateway'])
-  return unique(result).filter(
-    (a) => !ignoredChains.has(ChainSpecificAddress.longChain(a)),
-  )
+  return [...timestamps]
+    .filter(([a]) => !ignoredChains.has(ChainSpecificAddress.longChain(a)))
+    .map(([address, timestamp]) => ({ address, timestamp }))
 }
 
 type VerificationResult =
@@ -329,29 +362,60 @@ async function verifyBytecode(
 ): Promise<VerificationResult> {
   try {
     const output = await compile(source, flat, paths, cache)
+    const errors = output.errors?.filter((e) => e.severity === 'error') ?? []
+    if (errors.length > 0) {
+      return {
+        type: 'failure',
+        message: `Compilation failed\n${errors.map((e) => e.formattedMessage ?? e.message).join('\n')}`,
+      }
+    }
     const contract = output.contracts[FLAT_SOURCE_PATH]?.[source.name]
     if (contract === undefined) {
       return { type: 'failure', message: 'Root contract not found' }
     }
 
     return matchesRuntimeBytecode(contract, bytecode)
-  } catch {
-    return { type: 'failure', message: 'An errow was thrown' }
+  } catch (error) {
+    return {
+      type: 'failure',
+      message: `Compilation thrown an error\n${formatError(error)}`,
+    }
   }
+}
+
+function formatError(error: unknown): string {
+  return error instanceof Error ? error.message : String(error)
 }
 
 function sha256(input: string): string {
   return createHash('sha256').update(input).digest('hex')
 }
 
-async function compile(
+const compilations = new Map<string, Promise<SolidityOutput>>()
+
+function compile(
   source: ContractSource,
   flat: string,
   paths: DiscoveryPaths,
   cache: DiscoveryCache,
-) {
+): Promise<SolidityOutput> {
   const input = createCompilerInput(source, flat)
-  const cacheKey = `solidity-compilation-${sha256(JSON.stringify([input, source.solidityVersion]))}`
+  const cacheKey = `solidity-compilation-${sha256(JSON.stringify([input, source.solidityVersion, source.name]))}`
+  let compilation = compilations.get(cacheKey)
+  if (compilation === undefined) {
+    compilation = compileUncached(source, input, cacheKey, paths, cache)
+    compilations.set(cacheKey, compilation)
+  }
+  return compilation
+}
+
+async function compileUncached(
+  source: ContractSource,
+  input: SolidityJsonInput,
+  cacheKey: string,
+  paths: DiscoveryPaths,
+  cache: DiscoveryCache,
+): Promise<SolidityOutput> {
   const entry = await cache.get(cacheKey)
   if (entry !== undefined) {
     try {
@@ -359,18 +423,117 @@ async function compile(
     } catch {}
   }
 
+  const output = await runSolc(paths, source.solidityVersion, input)
+  const root = output.contracts?.[FLAT_SOURCE_PATH]?.[source.name]
+  const trimmed: SolidityOutput = {
+    contracts: root ? { [FLAT_SOURCE_PATH]: { [source.name]: root } } : {},
+    sources: {},
+    errors: output.errors,
+  }
+  await cache.set(cacheKey, JSON.stringify(trimmed))
+  return trimmed
+}
+
+async function runSolc(
+  paths: DiscoveryPaths,
+  version: string,
+  input: SolidityJsonInput,
+): Promise<SolidityOutput> {
+  const solcRepoPath = join(dirname(paths.cache), 'solc')
+  if (process.platform === 'darwin' && process.arch === 'arm64') {
+    const solcPath = await getMacSolcPath(solcRepoPath, version)
+    if (solcPath !== undefined) {
+      return runSolcBinary(solcPath, input)
+    }
+  }
+
   const { useSolidityCompiler } = await import('@ethereum-sourcify/compilers')
-  const output = await useSolidityCompiler(
-    join(dirname(paths.cache), 'solc'),
-    join(dirname(paths.cache), 'soljson'),
-    source.solidityVersion,
-    input,
-    false,
-  )
+  try {
+    return await useSolidityCompiler(
+      solcRepoPath,
+      join(dirname(paths.cache), 'soljson'),
+      version,
+      input,
+      false,
+    )
+  } catch (error) {
+    const errors = (error as { errors?: SolidityOutput['errors'] }).errors
+    if (errors === undefined) {
+      throw error
+    }
+    return { contracts: {}, sources: {}, errors }
+  }
+}
 
-  await cache.set(cacheKey, JSON.stringify(output))
+const macSolcPaths = new Map<string, Promise<string | undefined>>()
 
-  return output
+function getMacSolcPath(solcRepoPath: string, version: string) {
+  const cached = macSolcPaths.get(version)
+  if (cached !== undefined) {
+    return cached
+  }
+  const solcPath = (async () => {
+    const { getSolcExecutable } = await import('@ethereum-sourcify/compilers')
+    try {
+      const path = await getSolcExecutable(
+        solcRepoPath,
+        'macosx-amd64',
+        version.startsWith('v') ? version.slice(1) : version,
+      )
+      return path ?? undefined
+    } catch {
+      return undefined
+    }
+  })()
+  macSolcPaths.set(version, solcPath)
+  return solcPath
+}
+
+const SOLC_TIMEOUT_MS = 60_000
+
+function runSolcBinary(
+  solcPath: string,
+  input: SolidityJsonInput,
+): Promise<SolidityOutput> {
+  return new Promise((resolve, reject) => {
+    const child = execFile(
+      solcPath,
+      ['--standard-json'],
+      {
+        maxBuffer: 1024 * 1024 * 1024,
+        timeout: SOLC_TIMEOUT_MS,
+        killSignal: 'SIGKILL',
+      },
+      (error, stdout) => {
+        if (error?.killed) {
+          resolve({
+            contracts: {},
+            sources: {},
+            errors: [
+              {
+                type: 'Exception',
+                component: 'general',
+                severity: 'error',
+                message: 'Compilation timed out',
+              },
+            ],
+          })
+          return
+        }
+        if (error) {
+          reject(error)
+          return
+        }
+        try {
+          resolve(JSON.parse(stdout) as SolidityOutput)
+        } catch (parseError) {
+          reject(parseError)
+        }
+      },
+    )
+    child.stdin?.on('error', () => {})
+    child.stdin?.end(JSON.stringify(input))
+  })
 }
 
 type SolidityJsonSettings = SolidityJsonInput['settings']
@@ -386,7 +549,15 @@ function createCompilerInput(
       ...getCompilerSettings(source),
       remappings: source.remappings,
       libraries: getLibraries(source),
-      outputSelection: { '*': { '*': ['evm.deployedBytecode'] } },
+      outputSelection: {
+        '*': {
+          '*': [
+            'evm.deployedBytecode.object',
+            'evm.deployedBytecode.immutableReferences',
+            'evm.deployedBytecode.linkReferences',
+          ],
+        },
+      },
     },
   }
 }
@@ -427,7 +598,7 @@ function matchesRuntimeBytecode(
   const mismatch = getBytecodeMismatch(
     contract,
     deployedBytecode,
-    Bytes.fromHex(`0x${compiledBytecode}`),
+    Bytes.fromHex(`0x${zeroLinkPlaceholders(contract, compiledBytecode)}`),
   )
 
   if (mismatch) {
@@ -452,6 +623,7 @@ function getBytecodeMismatch(
     maskCallProtection,
     stripAuxdata,
     maskImmutableReferences,
+    maskLinkReferences,
     maskSolidityAuxdata,
   ]
 
@@ -481,13 +653,14 @@ function stripAuxdata(_: SolidityOutputContract, bytecode: Bytes): Bytes {
   return Bytes.fromHex(stripped)
 }
 
-// CBOR metadata prefixes per hash scheme: map(2) + key + bytes(N). The section
+// CBOR metadata prefixes per hash scheme: map(N) + key + bytes(N). The section
 // ends with a 2-byte big-endian length equal to its own size — used as a
 // checksum to confirm the match and determine how much to mask.
 const CBOR_MARKERS: Buffer[] = [
   Buffer.from([0xa2, 0x64, 0x69, 0x70, 0x66, 0x73, 0x58, 0x22]), //       "ipfs"  + bytes(34)
   Buffer.from([0xa2, 0x65, 0x62, 0x7a, 0x7a, 0x72, 0x31, 0x58, 0x20]), // "bzzr1" + bytes(32)
   Buffer.from([0xa2, 0x65, 0x62, 0x7a, 0x7a, 0x72, 0x30, 0x58, 0x20]), // "bzzr0" + bytes(32)
+  Buffer.from([0xa1, 0x65, 0x62, 0x7a, 0x7a, 0x72, 0x30, 0x58, 0x20]), // "bzzr0" + bytes(32), solc <0.5.9
 ]
 
 function maskSolidityAuxdata(
@@ -510,10 +683,41 @@ function maskSolidityAuxdata(
 }
 
 function findCborTotalBytes(buf: Buffer, start: number): number | undefined {
-  for (let len = 50; len <= 80; len++) {
+  for (let len = 41; len <= 80; len++) {
     if (start + len + 2 > buf.length) return
     if (buf.readUInt16BE(start + len) === len) return len + 2
   }
+}
+
+function getLinkReferences(
+  contract: SolidityOutputContract,
+): { start: number; length: number }[] {
+  const references = contract.evm.deployedBytecode.linkReferences ?? {}
+  return Object.values(references).flatMap((libraries) =>
+    Object.values(libraries).flat(),
+  )
+}
+
+function zeroLinkPlaceholders(
+  contract: SolidityOutputContract,
+  hex: string,
+): string {
+  let result = hex
+  for (const { start, length } of getLinkReferences(contract)) {
+    result =
+      result.slice(0, start * 2) +
+      '00'.repeat(length) +
+      result.slice((start + length) * 2)
+  }
+  return result
+}
+
+function maskLinkReferences(
+  contract: SolidityOutputContract,
+  bytecode: Bytes,
+): Bytes {
+  const hex = bytecode.toString().slice(2)
+  return Bytes.fromHex(`0x${zeroLinkPlaceholders(contract, hex)}`)
 }
 
 function maskImmutableReferences(

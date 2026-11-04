@@ -29,8 +29,8 @@
     "@ethereum-sourcify/compilers-types": "^1.2.0",
     "@l2beat/backend-tools": "workspace:*",
     "@l2beat/config": "workspace:*",
+    "@l2beat/discoui": "workspace:*",
     "@l2beat/discovery": "workspace:*",
-    "@l2beat/protocolbeat": "workspace:*",
     "@l2beat/shared": "workspace:*",
     "@l2beat/shared-pure": "workspace:*",
     "@l2beat/validate": "workspace:*",
@@ -39,12 +39,11 @@
     "cmd-ts": "^0.13.0",
     "dotenv": "^16.4.5",
     "ethers": "^5.7.2",
-    "express": "^4.21.1",
+    "express": "^5.0.0",
     "fflate": "^0.7.4",
     "lodash": "^4.17.21",
     "readline-sync": "^1.4.10",
-    "redis": "^4.7.0",
-    "rimraf": "^5.0.0"
+    "redis": "^4.7.0"
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",

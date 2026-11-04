@@ -3,8 +3,13 @@ import type {
   ProjectContracts,
   ProjectPermissions,
 } from '@l2beat/config'
-import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  type EthereumAddress,
+  ProjectId,
+} from '@l2beat/shared-pure'
 import { env } from '~/env'
+import { ETHEREUM_PROJECT_PATH } from '~/pages/ethereum/paths'
 import { manifest } from '~/utils/Manifest'
 import type { SearchBarProjectEntry } from '../types'
 
@@ -33,10 +38,7 @@ export function getSearchBarProjectEntries<
   T extends Project<
     never,
     | 'scalingInfo'
-    | 'daLayer'
-    | 'daBridge'
     | 'interopConfig'
-    | 'ecosystemConfig'
     | 'zkCatalogInfo'
     | 'privacyInfo'
     | 'defiInfo'
@@ -44,13 +46,12 @@ export function getSearchBarProjectEntries<
     | 'permissions'
     | 'aliases'
   >,
->(project: T, allProjects: T[]): SearchBarProjectEntry[] {
+>(project: T): SearchBarProjectEntry[] {
   const results: SearchBarProjectEntry[] = []
+  const isEthereum = project.id === ProjectId.ETHEREUM
   if (
+    !isEthereum &&
     !project.scalingInfo &&
-    !project.daLayer &&
-    !project.daBridge &&
-    !project.ecosystemConfig &&
     !project.interopConfig &&
     !project.zkCatalogInfo &&
     !project.privacyInfo &&
@@ -78,6 +79,15 @@ export function getSearchBarProjectEntries<
     tags: commonTags,
   } satisfies Partial<SearchBarProjectEntry>
 
+  if (isEthereum) {
+    results.push({
+      ...common,
+      href: ETHEREUM_PROJECT_PATH,
+      category: 'other',
+      kind: 'ethereum',
+    })
+  }
+
   if (project.scalingInfo) {
     results.push({
       ...common,
@@ -92,44 +102,6 @@ export function getSearchBarProjectEntries<
             project.interopConfig.shortName,
           ])
         : commonTags,
-    })
-  }
-
-  if (project.daLayer) {
-    if (project.daLayer.usedWithoutBridgeIn.length > 0) {
-      results.push({
-        ...common,
-        id: `${project.id}-no-bridge`,
-        name: `${project.name} without a DA bridge`,
-        href: `/data-availability/projects/${project.slug}/no-bridge`,
-        category: 'da',
-        kind: 'da',
-        tags: dedupeTags([...commonTags, 'no-bridge']),
-      })
-    }
-  }
-
-  if (project.daBridge) {
-    const layer = allProjects.find((x) => x.id === project.daBridge?.daLayer)
-    if (layer) {
-      results.push({
-        ...common,
-        id: `${layer.id}-${project.id}`,
-        name: `${layer.name} with ${project.daBridge.name}`,
-        href: `/data-availability/projects/${layer.slug}/${project.slug}`,
-        category: 'da',
-        kind: 'da',
-        tags: dedupeTags([layer.slug, layer.name, ...commonTags]),
-      })
-    }
-  }
-
-  if (project.ecosystemConfig) {
-    results.push({
-      ...common,
-      href: `/ecosystems/${project.slug}`,
-      category: 'ecosystems',
-      kind: 'ecosystem',
     })
   }
 

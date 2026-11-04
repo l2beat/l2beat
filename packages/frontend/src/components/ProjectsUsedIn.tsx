@@ -1,38 +1,23 @@
 import type { UsedInProject } from '@l2beat/config'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '~/components/core/tooltip/Tooltip'
+import { cn } from '~/utils/cn'
 import { ProjectIconList } from './ProjectIconList'
 
 export interface UsedInProjectWithIcon extends UsedInProject {
   icon: string
-  url: string
+  url: string | undefined
 }
 interface Props {
   usedIn: UsedInProjectWithIcon[]
   className?: string
-  noL2ClassName?: string
-  maxProjects?: number
-  noLink?: boolean
+  emptyClassName?: string
 }
 
-export function ProjectsUsedIn({
-  usedIn,
-  className,
-  noL2ClassName,
-  maxProjects = 5,
-  noLink,
-}: Props) {
+export function ProjectsUsedIn({ usedIn, className, emptyClassName }: Props) {
   if (usedIn.length === 0) {
     return (
-      <Tooltip>
-        <TooltipTrigger className={noL2ClassName}>No L2 😔</TooltipTrigger>
-        <TooltipContent>
-          There are no scaling projects listed on L2BEAT that use this solution.
-        </TooltipContent>
-      </Tooltip>
+      <span className={cn('text-secondary', emptyClassName)}>
+        Not used by any listed project
+      </span>
     )
   }
 
@@ -42,16 +27,10 @@ export function ProjectsUsedIn({
         id: project.id,
         name: project.name,
         iconUrl: project.icon,
-        href: noLink ? undefined : project.url,
+        href: project.url,
       }))}
-      dialog={{
-        title: 'Projects used in',
-        description: 'Search for projects used in',
-        searchPlaceholder: 'Start typing to find project...',
-        emptyText: 'No projects found.',
-      }}
+      title="Used by"
       className={className}
-      maxVisibleProjects={maxProjects}
     />
   )
 }

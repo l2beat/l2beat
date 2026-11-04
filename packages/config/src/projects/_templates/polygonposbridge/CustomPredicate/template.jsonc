@@ -1,0 +1,30 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Predicate that forwards proven exit data to the root contract instead of moving tokens. It holds no tokens.",
+  "category": "non-critical",
+  "fields": {
+    "accessControl": { "handler": { "type": "accessControl" } },
+    "managersAC": {
+      "severity": "MEDIUM",
+      "copy": "accessControl",
+      "edit": ["get", "MANAGER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "forward exit data to root contracts."
+        }
+      ]
+    },
+    "defaultAdminAC": {
+      "severity": "MEDIUM",
+      "copy": "accessControl",
+      "edit": ["get", "DEFAULT_ADMIN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage the roles of the predicate."
+        }
+      ]
+    }
+  }
+}

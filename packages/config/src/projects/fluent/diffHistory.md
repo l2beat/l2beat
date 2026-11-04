@@ -1,3 +1,91 @@
+Generated with discovered.json: 0x60f27aeff17f530bbf1321fc44deaa4c7cb2606a
+
+# Diff at Tue, 03 Nov 2026 11:22:18 GMT:
+
+- id: 59fd0e45
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@fc159c853c5f8d531c99eea56f0d0e8595b6625f block: 1792751506
+- current timestamp: 1792751506
+
+## Description
+
+Flattener now keeps contracts whose bytecode is read with type(C).creationCode instead of turning them into interfaces. Only source hashes and flat files change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792751506 (main branch discovery), not current.
+
+```diff
+    contract ERC20TokenFactory (eth:0xF6d49E874Cb64b8ee56D6F99BD340134B30AB225) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x45b490e7750475c1972ebf94ceb72dc1ba853862cfeb57ccdca8c329c87e29d2"
++        "0xe08e520a09a3a6d0f45f328d1a6fce54e9bc3f4714c501fd4b8dd3877e144142"
+    }
+```
+
+```diff
+    contract ERC20Gateway (eth:0xFD4C62647A34FF6d6802092F5fbe176099223B61) [fluent/ERC20Gateway] {
+    +++ description: L1 entry point for ERC-20 deposits into Fluent. Custodies ERC-20 tokens directly on L1 and emits the corresponding bridge message; on the L2 side the canonical pegged token is minted via the ERC20TokenFactory. UUPS-upgradeable; upgrades are gated by the contract owner.
+      sourceHashes.1:
+-        "0x75765e6ca5a359f6ea9c2c65faa01bb0fd2d6e5c3c171b1b016161b01542ea27"
++        "0xcdfc5e39c72221b6c82946c620b4231785b6fa983765ebdbb6c79a3cfe277da7"
+    }
+```
+
+Generated with discovered.json: 0xd112149cf6472fafbea92d8d540fc481f0c52172
+
+# Diff at Fri, 23 Oct 2026 10:32:48 GMT:
+
+- id: 628e5140
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@e5da6875dac4af99f827db5faa99b87f99ca760f block: 1790592672
+- current timestamp: 1792751506
+
+## Description
+
+Upgraded TEE verification SP1 program to v1.0.9, program hash reproduced.
+
+## Watched changes
+
+```diff
+    contract NitroVerifier (eth:0xFdB04b67ecD8352bA3885F66fFfddf1f5f25292F) [fluent/NitroVerifier] {
+    +++ description: Verifies AWS Nitro Enclave attestations onchain. The enclave's signing key is admitted only after an SP1 proof confirms its attestation matches the expected PCR0 measurement, binding preconfirmation authority to audited enclave code.
+      values.getProgramVKey:
+-        "0x00f291835495d0af627923c963f18395bb9a7e6783b694497460f757866ea34b"
++        "0x0031cd16db870b6b18b417b17a976071016ad8b7c134a914f24d300f618ce157"
+    }
+```
+
+Generated with discovered.json: 0xcdccbd5450a05a828d2b1785987090c04b1db3e0
+
+# Diff at Fri, 16 Oct 2026 05:36:49 GMT:
+
+- id: d52293ce
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1790592672
+- current timestamp: 1790592672
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790592672 (main branch discovery), not current.
+
+```diff
+    contract UpgradeableBeacon (eth:0xdD283a04cc711aB9c08d79e665835821BEef710B) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0x056fD0A3eD85c6ae1Ec1c398B33581951Ed4b090. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
 Generated with discovered.json: 0x2d2894cc642b320eee2b15e6bb6f51cf502aba07
 
 # Diff at Mon, 28 Sep 2026 13:34:25 GMT:

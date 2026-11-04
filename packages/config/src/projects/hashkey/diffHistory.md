@@ -1,3 +1,97 @@
+Generated with discovered.json: 0x63f695cd6570eb244c360d844f8c706165568b46
+
+# Diff at Fri, 16 Oct 2026 09:37:47 GMT:
+
+- id: 68028cd4
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1791965742
+- current timestamp: 1791965742
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791965742 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x04Ec030f362CE5A0b5Fe2d4B4219f287C2EBDE50) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x43F8DeFe3E9286D152E91BB16a248808E7247198) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP).
++++ severity: HIGH
+      values.enabledFeatures:
++        []
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.enabledFeatures:
++        {"severity":"HIGH","description":"Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."}
+      fieldMeta.isCustomGasToken:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x679A65aD62972Ea3561F40A12e93CcA6f79F35E6) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x7986eD289935A0F47FC434C00cDE309fE2c51f1C) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+Generated with discovered.json: 0x40ac7d8ec60a4453d8068bfb718f10f3b2401d4a
+
+# Diff at Wed, 14 Oct 2026 08:17:12 GMT:
+
+- id: b2b0f43d
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@54e2fac6e37e04c70f7a26682917ed70a7c5e994 block: 1788816891
+- current timestamp: 1791965742
+
+## Description
+
+OptimismPortal2: implementation replaced by a custom `OptimismPortalDeposit` build and restored 6 min later. In between, the ProxyAdmin owner emitted one deposit with an arbitrary `from`, moving 142,818.28 USDT on L2 out of a third-party EOA.
+https://disco.l2beat.com/diff/eth:0x18A7868ECe35A45aC9138108E5b6e021aD1038d1/eth:0xcF9bEC9f2769Ecc09107C58fA5eB0199D989A606
+https://etherscan.io/tx/0xcd999b6859407b249203a3ef665702cb1d2137521a068e534974d779ad035d90
+https://hashkey.blockscout.com/tx/0x1704ca93fa79b4256a4d6ba9f5ea9eb72e1dab96cbb6032c65abbd5d5e2b37e7
+
+## Watched changes
+
+```diff
+    contract OptimismPortal2 (eth:0xe7Aa79B59CAc06F9706D896a047fEb9d3BDA8bD3) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      values.$pastUpgrades.1:
++        ["2026-10-13T16:34:11.000Z","0x4951a71ae7f0a5dfe038b4b32ffd0ee7344fdc7ae9c5c22665817c1593615919",["eth:0xcF9bEC9f2769Ecc09107C58fA5eB0199D989A606"]]
+      values.$pastUpgrades.2:
++        ["2026-10-13T16:40:23.000Z","0x03fe54707b57aa5852cd9facce2f313553582bfe09b60654a23de34ce6798caa",["eth:0x18A7868ECe35A45aC9138108E5b6e021aD1038d1"]]
+      values.$upgradeCount:
+-        1
++        3
+    }
+```
+
 Generated with discovered.json: 0xbe9b77e736704ef03756ca0a5e9f7bcca9109615
 
 # Diff at Wed, 30 Sep 2026 22:47:32 GMT:

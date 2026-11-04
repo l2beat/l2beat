@@ -3,13 +3,13 @@ import { assert } from '@l2beat/shared-pure'
 import type { GroupSectionProps } from '~/components/projects/sections/GroupSection'
 import type { TechnologyChoicesSectionProps } from '~/components/projects/sections/TechnologyChoicesSection'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
-import {
-  mapBridgeRisksToRosetteValues,
-  mapLayerRisksToRosetteValues,
-} from '~/pages/data-availability/utils/MapRisksToRosetteValues'
 import { getDaLayerRisks } from '~/server/features/data-availability/utils/getDaLayerRisks'
 import type { DaSolution } from '~/server/features/layer2s/project/getL2DaSolutions'
 import { manifest } from '~/utils/Manifest'
+import {
+  mapBridgeRisksToRosetteValues,
+  mapLayerRisksToRosetteValues,
+} from '~/utils/project/mapDaRisksToRosetteValues'
 import { getDiagramParams } from '../getDiagramParams'
 import { toTechnologyRisk } from '../risk-summary/toTechnologyRisk'
 import { getTechnologyChoicesSectionProps } from './getTechnologyChoicesSectionProps'
@@ -118,7 +118,7 @@ function getPublicDaSection(
     project,
     dataAvailability.map((da, index) =>
       makeTechnologyChoice('data-availability', da, {
-        relatedProjectBanner: daSolutions?.[index]
+        relatedProjectBanner: daSolutions?.[index]?.layerHref
           ? {
               text: 'Learn more about the DA layer here:',
               project: {

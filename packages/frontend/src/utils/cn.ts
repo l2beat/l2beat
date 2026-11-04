@@ -35,6 +35,9 @@ const fontSize = [
 
 const customTwMerge = extendTailwindMerge({
   extend: {
+    theme: {
+      ease: ['out-quint'],
+    },
     classGroups: {
       'font-size': fontSize.map((key) => `text-${key}`),
     },

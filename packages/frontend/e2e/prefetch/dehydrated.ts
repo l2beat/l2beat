@@ -43,7 +43,7 @@ function inputOf(queryKey: unknown): unknown {
 
 /**
  * Layer 1: discovers and verifies every query the server prefetched for a page.
- * Fetches the page HTML, parses window.__SSR_DATA__, and checks that each
+ * Fetches the page HTML, parses its SSR data script, and checks that each
  * dehydrated query has status 'success' with non-null data.
  */
 export async function checkDehydrated(
@@ -104,7 +104,7 @@ export async function checkDehydrated(
         queries,
         missingExpected,
         error:
-          'missing expected tRPC queries in dehydrated state (a throwing prefetch is silently dropped from __SSR_DATA__)',
+          'missing expected tRPC queries in dehydrated state (a throwing prefetch is silently dropped from the SSR data)',
       }
     }
 

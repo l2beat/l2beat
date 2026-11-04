@@ -9,19 +9,28 @@ import { InteropNoDataBadge } from '../../components/InteropNoDataBadge'
 import { InteropTopPathValue } from '../../components/InteropTopPathValue'
 import { TopProtocolsCell } from '../../components/protocols/TopProtocolsCell'
 import { AvgDurationCell } from '../../components/table/AvgDurationCell'
+import { UNRELIABLE_PRICE_NOTICE } from '../getInteropTokenNotices'
 
 export function InteropTokenSummary({
   data,
   isLoading,
   tokenCategory,
+  isPriceUnreliable,
   deploymentsCount,
+  unavailableReason,
 }: {
   data: InteropTokenDashboardData | undefined
   isLoading: boolean
   tokenCategory: string | null
+  isPriceUnreliable: boolean
   deploymentsCount: number
+  /** Replaces every interop stat, when the token has no data at all. */
+  unavailableReason?: string
 }) {
   const token = data?.token
+  const usdUnavailableReason =
+    unavailableReason ??
+    (isPriceUnreliable ? UNRELIABLE_PRICE_NOTICE : undefined)
 
   return (
     <section
@@ -38,6 +47,7 @@ export function InteropTokenSummary({
         <StatsItem
           title="Last 24h volume"
           isLoading={isLoading}
+          unavailableReason={usdUnavailableReason}
           value={
             token?.volume !== null && token?.volume !== undefined
               ? formatCurrency(token.volume, 'usd')
@@ -47,6 +57,7 @@ export function InteropTokenSummary({
         <StatsItem
           title="Last 24h transfer count"
           isLoading={isLoading}
+          unavailableReason={unavailableReason}
           value={token ? formatInteger(token.transferCount) : EM_DASH}
         />
       </div>
@@ -55,6 +66,7 @@ export function InteropTokenSummary({
         <StatsItem
           title="Last 24h avg. transfer time"
           isLoading={isLoading}
+          unavailableReason={unavailableReason}
           value={
             token?.avgDuration ? (
               <AvgDurationCell
@@ -72,6 +84,7 @@ export function InteropTokenSummary({
         <StatsItem
           title="Last 24h avg. transfer value"
           isLoading={isLoading}
+          unavailableReason={usdUnavailableReason}
           value={
             token?.avgValue !== null && token?.avgValue !== undefined
               ? formatCurrency(token.avgValue, 'usd')
@@ -81,6 +94,8 @@ export function InteropTokenSummary({
         <StatsItem
           title="Last 24h top path"
           isLoading={isLoading}
+          // The top path is picked by volume, so it needs a reliable price too.
+          unavailableReason={usdUnavailableReason}
           value={
             data?.topPath ? (
               <InteropTopPathValue path={data.topPath} />
@@ -96,6 +111,7 @@ export function InteropTokenSummary({
           title="Protocols used"
           href="#interop-protocols"
           isLoading={isLoading}
+          unavailableReason={unavailableReason}
           value={
             data?.entries?.length ? (
               <TopProtocolsCell protocols={data.entries} />
@@ -107,12 +123,10 @@ export function InteropTokenSummary({
         {deploymentsCount > 0 && (
           <StatsItem
             title="Deployments"
+            // Without data the page has no sections to link to.
+            href={unavailableReason ? undefined : '#onchain-deployments'}
             isLoading={isLoading}
-            value={
-              <a href="#onchain-deployments" className="hover:underline">
-                {formatInteger(deploymentsCount)}
-              </a>
-            }
+            value={formatInteger(deploymentsCount)}
           />
         )}
       </div>
@@ -125,27 +139,37 @@ function StatsItem({
   value,
   isLoading,
   href,
+  unavailableReason,
 }: {
   title: string
   value: ReactNode
   isLoading: boolean
   href?: string
+  /** Shown as a no-data badge instead of the value, which also drops the link. */
+  unavailableReason?: string
 }) {
+  const link = unavailableReason ? undefined : href
   const content = (
     <>
       <span className="shrink-0 font-medium text-paragraph-12 text-secondary">
         {title}
       </span>
       <div className="min-w-0 text-right font-bold text-label-value-16 leading-none group-hover:underline md:text-left">
-        {isLoading ? <Skeleton className="h-5 w-24" /> : value}
+        {isLoading ? (
+          <Skeleton className="h-5 w-24" />
+        ) : unavailableReason ? (
+          <InteropNoDataBadge size="extraSmall" tooltip={unavailableReason} />
+        ) : (
+          value
+        )}
       </div>
     </>
   )
   const className =
     'flex gap-3 max-md:items-start max-md:justify-between md:flex-col md:gap-1.5'
 
-  return href ? (
-    <a href={href} className={`group ${className}`}>
+  return link ? (
+    <a href={link} className={`group ${className}`}>
       {content}
     </a>
   ) : (

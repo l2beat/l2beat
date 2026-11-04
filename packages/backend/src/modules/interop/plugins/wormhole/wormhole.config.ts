@@ -1,10 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type {
-  CallParameters,
-  HttpClient,
-  IRpcClient,
-  MulticallV3Response,
-} from '@l2beat/shared'
+import type { CallParameters, HttpClient, IRpcClient } from '@l2beat/shared'
 import {
   Bytes,
   ChainSpecificAddress,
@@ -24,6 +19,7 @@ import {
   type InteropConfigStore,
 } from '../../engine/config/InteropConfigStore'
 import { reconcileNetworks } from '../../engine/config/reconcileNetworks'
+import { callWithOptionalMulticall } from '../callWithOptionalMulticall'
 
 export interface WormholeNetwork {
   chain: string
@@ -32,6 +28,8 @@ export interface WormholeNetwork {
   coreContract?: EthereumAddress
   relayer?: EthereumAddress
   tokenBridge?: EthereumAddress
+  // The token the bridge unwraps to native for completeTransferAndUnwrapETH
+  weth?: EthereumAddress
 }
 
 export const WormholeConfig = defineConfig<WormholeNetwork[]>('wormhole')
@@ -79,6 +77,7 @@ const WORMHOLE_RELAYER = EthereumAddress(
 // Map normalized upstream chain names (docs labels, SDK constant names) to ours
 const UPSTREAM_CHAIN_NAME_TO_CHAIN: Record<string, string> = {
   bnbsmartchain: 'bsc',
+  hypercore: 'hyperliquid',
   polygon: 'polygonpos',
   robinhoodchain: 'robinhood',
 }
@@ -249,6 +248,8 @@ export class WormholeConfigPlugin
       input: Bytes.fromHex(data),
     }))
 
+    const previousNetworks = this.store.get(WormholeConfig) ?? []
+
     const networkPromises = this.chains.map(async (chain) => {
       const rpc = this.rpcs.get(chain.name)
       if (!rpc) return undefined
@@ -298,13 +299,23 @@ export class WormholeConfigPlugin
         const selected = validNonZero[0]
         if (!selected) return undefined
 
+        const tokenBridge = tokenBridgeByChain.get(chain.name)
+        // A failed lookup keeps the WETH last resolved for the same bridge
+        const weth = tokenBridge
+          ? ((await getTokenBridgeWeth(rpc, tokenBridge, block.number)) ??
+            previousNetworks.find(
+              (n) => n.chain === chain.name && n.tokenBridge === tokenBridge,
+            )?.weth)
+          : undefined
+
         return {
           chain: chain.name,
           chainId: chain.id,
           wormholeChainId: selected.wormholeChainId,
           coreContract: selected.coreContract,
           relayer: WORMHOLE_RELAYER,
-          tokenBridge: tokenBridgeByChain.get(chain.name),
+          tokenBridge,
+          ...(weth ? { weth } : {}),
         }
       } catch (error) {
         this.logger.debug('Failed to resolve Wormhole core for chain', {
@@ -322,35 +333,37 @@ export class WormholeConfigPlugin
   }
 }
 
-export async function callWithOptionalMulticall(
-  rpc: Pick<IRpcClient, 'call' | 'isMulticallDeployed' | 'multicall'>,
-  calls: CallParameters[],
+const wethAbi = parseAbi(['function WETH() view returns (address)'])
+
+async function getTokenBridgeWeth(
+  rpc: IRpcClient,
+  tokenBridge: EthereumAddress,
   blockNumber: number,
-): Promise<MulticallV3Response[]> {
-  if (rpc.isMulticallDeployed(blockNumber)) {
-    return await rpc.multicall(calls, blockNumber)
+): Promise<EthereumAddress | undefined> {
+  // Optional: a failure here must not drop the chain's core and token bridge
+  try {
+    const [result] = await callWithOptionalMulticall(
+      rpc,
+      [
+        {
+          to: tokenBridge,
+          input: Bytes.fromHex(
+            encodeFunctionData({ abi: wethAbi, functionName: 'WETH' }),
+          ),
+        },
+      ],
+      blockNumber,
+    )
+    if (!result?.success || result.data.toString() === '0x') return
+    const weth = decodeFunctionResult({
+      abi: wethAbi,
+      functionName: 'WETH',
+      data: result.data.toString() as Hex,
+    })
+    return weth === '0x0000000000000000000000000000000000000000'
+      ? undefined
+      : EthereumAddress(weth)
+  } catch {
+    return
   }
-
-  const results: MulticallV3Response[] = []
-  for (const call of calls) {
-    try {
-      const data = await rpc.call(call, blockNumber)
-      results.push({ success: true, data })
-    } catch (error) {
-      if (!isCallRevertedError(error)) {
-        throw error
-      }
-      results.push({ success: false, data: Bytes.EMPTY })
-    }
-  }
-  return results
-}
-
-function isCallRevertedError(error: unknown): boolean {
-  if (!(error instanceof Error)) {
-    return false
-  }
-
-  const message = error.message.toLowerCase()
-  return message.includes('revert') || message.includes('call_exception')
 }

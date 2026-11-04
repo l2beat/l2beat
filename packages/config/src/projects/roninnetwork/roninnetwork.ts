@@ -107,13 +107,6 @@ const roninTemplate = opStackL2({
         verifierContractsReproducible: null,
         programHashesReproducible: null,
       },
-      stage2: {
-        fraudProofSystemIsPermissionless: false,
-        delayWith30DExitWindow: false,
-        proofSystemOverriddenOnlyInCaseOfABug: false,
-        daVerifier30DayExitWindow: false,
-        daMechanismEconomicSecurity: false,
-      },
     },
     {
       nodeSourceLink:

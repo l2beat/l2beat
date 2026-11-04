@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "FeeTreasury",
+  "description": "Holds fees collected by deBridge intent contracts. Authorized collectors can withdraw native tokens and ERC20 tokens to any recipient.",
+  "fields": {
+    "accessControl": { "handler": { "type": "accessControl" } },
+    "feeCollectorAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "FEE_COLLECTOR_ROLE",
+        "includeEmptyRoles": true
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "withdraw held fees to any recipient."
+        }
+      ]
+    },
+    "defaultAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant and revoke fee withdrawal permissions."
+        }
+      ]
+    }
+  }
+}

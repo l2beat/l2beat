@@ -12,15 +12,14 @@ const ARBITRUM = ProjectId('arbitrum')
 const BASE = ProjectId('base')
 
 describe(getDataPostedChartData.name, () => {
-  it('sums hourly records across DA layers into one daily series per project', async () => {
+  it('sums hourly records into one daily series per project', async () => {
     const repository = repositoryMock(
       [
         record(ARBITRUM, 'ethereum', T, 100n),
-        record(ARBITRUM, 'ethereum', T + 2 * HOUR, 50n),
-        record(ARBITRUM, 'eigenda', T + 3 * HOUR, 25n),
+        record(ARBITRUM, 'ethereum', T + 2 * HOUR, 75n),
         record(ARBITRUM, 'ethereum', T + DAY, 200n),
-        record(BASE, 'celestia', T, 10n),
-        record(BASE, 'celestia', T + DAY, 20n),
+        record(BASE, 'ethereum', T, 10n),
+        record(BASE, 'ethereum', T + DAY, 20n),
       ],
       { [ARBITRUM]: T, [BASE]: T },
     )
@@ -49,8 +48,8 @@ describe(getDataPostedChartData.name, () => {
       [
         record(ARBITRUM, 'ethereum', T, 100n),
         record(ARBITRUM, 'ethereum', T + 2 * DAY, 300n),
-        record(BASE, 'celestia', T + DAY, 10n),
-        record(BASE, 'celestia', T + 2 * DAY, 20n),
+        record(BASE, 'ethereum', T + DAY, 10n),
+        record(BASE, 'ethereum', T + 2 * DAY, 20n),
       ],
       { [ARBITRUM]: T, [BASE]: T + DAY },
     )
@@ -93,8 +92,8 @@ describe(getDataPostedChartData.name, () => {
       [
         record(ARBITRUM, 'ethereum', T, 100n),
         record(ARBITRUM, 'ethereum', T + DAY, 200n),
-        record(BASE, 'celestia', T, 10n),
-        record(BASE, 'celestia', T + 2 * DAY, 20n),
+        record(BASE, 'ethereum', T, 10n),
+        record(BASE, 'ethereum', T + 2 * DAY, 20n),
       ],
       { [ARBITRUM]: T, [BASE]: T },
     )

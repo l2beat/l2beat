@@ -9,6 +9,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 
@@ -62,6 +63,7 @@ export const relay: BaseProject = {
   shortName: undefined,
   aliases: ['Reservoir'],
   addedAt: UnixTime(1769070497),
+  discoveryInfo: getDiscoveryInfo([discovery]),
   interopConfig: {
     description:
       'Intent-based centralized bridge optimised for speed, multichain and multiasset support. A centralized API quotes orders and Relay-operated solvers fill them from their own liquidity; the onchain footprint is minimal and settlement depends on a single allocator key per chain.',

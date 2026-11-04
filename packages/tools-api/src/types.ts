@@ -9,3 +9,12 @@ export type {
   TransactionResult,
 } from './modules/decoder-module/domain/ApiController'
 export type * from './modules/decoder-module/domain/DecodedResult'
+export type {
+  BlockRatio,
+  CountedBlock,
+  CountedOperation,
+  CountedTransaction,
+  SmartAccountUsage,
+  Stats,
+  UopsChainInfo,
+} from './modules/uops-module/types'

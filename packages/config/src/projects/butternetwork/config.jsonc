@@ -7,6 +7,20 @@
     "base:0xfeE31a1FD7FcA0E05428ff751242e46F6D5769a6"
   ],
   "overrides": {
+    // EIP-7702 EOA delegating to a SmartWallet (0xe40ccB2D…), a Safe member.
+    // getExpiration/getHook/isAdmin/isSettingsExpired are pure decoders of a
+    // `settings` word that never revert, so they overflow as arrays;
+    // getImmutableFactory/proxiableUUID revert when called on the EOA.
+    "base:0x386ce1a187eC7329CFb8E467EB02FB07c698256A": {
+      "ignoreMethods": [
+        "getExpiration",
+        "getHook",
+        "isAdmin",
+        "isSettingsExpired",
+        "getImmutableFactory",
+        "proxiableUUID"
+      ]
+    },
     "base:0x0000317Bec33Af037b5fAb2028f52d14658F6A56": {
       "description": "Butter's Base bridge endpoint. Outbound transfers lock or burn assets and emit messages for the MAP relay chain; inbound transfers execute only after a LightNode-validated receipt proof for the configured MAP relay contract. The bridge can mint configured mintable tokens, release escrowed assets, and invoke receiver callbacks, so compromise of validation, relay configuration, or management authority can lead to loss of bridged funds.",
       "ignoreMethods": ["getServiceContract", "proxiableUUID"],

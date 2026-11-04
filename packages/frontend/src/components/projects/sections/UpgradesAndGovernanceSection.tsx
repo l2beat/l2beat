@@ -1,4 +1,4 @@
-import type { ProjectGovernanceInfo } from '@l2beat/config'
+import type { ProjectGovernanceInfo, ProjectUpgradePath } from '@l2beat/config'
 import { DiagramImage } from '~/components/DiagramImage'
 import { cn } from '~/utils/cn'
 import type { DiagramParams } from '~/utils/project/getDiagramParams'
@@ -46,9 +46,7 @@ export function UpgradesAndGovernanceSection({
           {content}
         </Markdown>
       )}
-      {governanceInfo && (
-        <GovernanceInfoTable governanceInfo={governanceInfo} />
-      )}
+      {governanceInfo && <GovernanceInfo governanceInfo={governanceInfo} />}
       {pastUpgrades && (
         <div className="mt-8">
           <h3 className="font-bold text-heading-20">Past upgrades</h3>
@@ -66,68 +64,139 @@ export function UpgradesAndGovernanceSection({
   )
 }
 
-function GovernanceInfoTable({
+function GovernanceInfo({
   governanceInfo,
 }: {
   governanceInfo: ProjectGovernanceInfo
 }) {
-  const sections = GOVERNANCE_INFO_SECTIONS.map((section) => ({
-    ...section,
-    entries: Object.entries(governanceInfo[section.key] ?? {}),
-  })).filter((section) => section.entries.length > 0)
+  const sections = GOVERNANCE_INFO_SECTIONS.filter(
+    (section) => Object.keys(governanceInfo[section.key] ?? {}).length > 0,
+  )
 
-  if (sections.length === 0) {
-    return null
-  }
+  return sections.map((section) => (
+    <div key={section.key} className="mt-6 md:mt-8">
+      <h3 className="mb-3 text-heading-18">{section.title}</h3>
+      {section.key === 'upgrades' ? (
+        <UpgradesInfo upgrades={governanceInfo.upgrades ?? {}} />
+      ) : (
+        <GovernanceInfoList
+          entries={Object.entries(governanceInfo[section.key] ?? {})}
+        />
+      )}
+    </div>
+  ))
+}
 
+function GovernanceInfoList({ entries }: { entries: [string, string][] }) {
   return (
-    <div className="mt-8 space-y-6">
-      <GovernanceInfoHeading>Governance profile</GovernanceInfoHeading>
-      {sections.map((section) => (
-        <div key={section.key} className="space-y-3">
-          <GovernanceInfoHeading small>{section.title}</GovernanceInfoHeading>
-          <div className="overflow-x-auto rounded-lg border border-divider">
-            <table className="w-full min-w-[560px] border-collapse text-left">
-              <tbody>
-                {section.entries.map(([name, description]) => (
-                  <tr
-                    key={name}
-                    className="border-divider border-t first:border-t-0"
-                  >
-                    <th className="w-1/3 bg-surface-secondary px-4 py-3 font-medium text-label-value-14 text-primary">
-                      {name}
-                    </th>
-                    <td className="px-4 py-3 align-top">
-                      <Markdown className="text-paragraph-14 md:text-paragraph-15">
-                        {description}
-                      </Markdown>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+    <dl className="border-divider border-t">
+      {entries.map(([name, description]) => (
+        <div
+          key={name}
+          className="grid gap-1 border-divider border-b py-3 md:grid-cols-[180px_1fr] md:gap-4"
+        >
+          <dt className="font-medium text-label-value-14 text-secondary md:pt-1">
+            {name}
+          </dt>
+          <dd>
+            <Markdown className="text-paragraph-14 md:text-paragraph-15">
+              {description}
+            </Markdown>
+          </dd>
         </div>
       ))}
+    </dl>
+  )
+}
+
+function UpgradesInfo({
+  upgrades,
+}: {
+  upgrades: NonNullable<ProjectGovernanceInfo['upgrades']>
+}) {
+  return (
+    <div className="space-y-4">
+      {Object.entries(upgrades).map(([name, value]) =>
+        typeof value === 'string' ? (
+          <UpgradeCallout key={name} name={name} description={value} />
+        ) : (
+          <UpgradePathTimeline key={name} name={name} path={value} />
+        ),
+      )}
     </div>
   )
 }
 
-function GovernanceInfoHeading({
-  children,
-  small = false,
+function UpgradePathTimeline({
+  name,
+  path,
 }: {
-  children: string
-  small?: boolean
+  name: string
+  path: ProjectUpgradePath
 }) {
   return (
-    <div className="flex items-baseline gap-3">
-      {small ? (
-        <h4 className="whitespace-pre text-heading-18">{children}</h4>
-      ) : (
-        <h3 className="whitespace-pre text-heading-20">{children}</h3>
+    <div>
+      <p className="mb-2.5 font-medium text-label-value-14 text-secondary">
+        {name}
+      </p>
+      <ol>
+        {path.steps.map((step, i) => (
+          <li
+            key={i}
+            className="relative flex gap-2 pb-3.5 text-paragraph-14 last:pb-0 md:text-paragraph-15"
+          >
+            {/* Runs from this dot's center to the next one's, behind both dots, so it never leaves a gap. */}
+            {i < path.steps.length - 1 && (
+              <span className="-bottom-[0.5lh] absolute top-[0.5lh] left-[9px] w-0.5 bg-divider" />
+            )}
+            {/* One line tall, so the dot sits on the first line's center at any font size. */}
+            <span className="relative flex h-[1lh] w-5 shrink-0 items-center justify-center">
+              <span
+                className={cn(
+                  'size-2.5 rounded-full',
+                  step.isWait
+                    ? 'border-2 border-secondary bg-surface-primary'
+                    : 'bg-brand',
+                )}
+              />
+            </span>
+            <Markdown inline className={cn(step.isWait && 'text-secondary')}>
+              {step.description}
+            </Markdown>
+          </li>
+        ))}
+      </ol>
+      {path.note && (
+        <Markdown className="mt-1 pl-7 text-paragraph-14 text-secondary">
+          {path.note}
+        </Markdown>
       )}
-      <div className="w-full border-divider border-b-2" />
+    </div>
+  )
+}
+
+function UpgradeCallout({
+  name,
+  description,
+}: {
+  name: string
+  description: string
+}) {
+  // Emergency paths skip the exit window, so they get the risk color.
+  const isEmergency = /emergency/i.test(name)
+  return (
+    <div
+      className={cn(
+        'border-l-[3px] py-1 pl-3.5',
+        isEmergency ? 'border-negative' : 'border-brand',
+      )}
+    >
+      <p className="mb-0.5 font-medium text-label-value-14 text-secondary">
+        {name}
+      </p>
+      <Markdown className="text-paragraph-14 md:text-paragraph-15">
+        {description}
+      </Markdown>
     </div>
   )
 }

@@ -53,6 +53,7 @@ export const ManualProxyType = v.enum([
   'call implementation proxy',
   'zkSync Lite proxy',
   'zkLighter proxy',
+  'UpgradeGatekeeper proxy',
   'ZkLink proxy',
   'zkSpace proxy',
   'Eternal Storage proxy',
@@ -87,6 +88,11 @@ export type StructureContract = ReturnType<typeof resolveStructureContract>
 export const StructureContract = StructureContractLayer.transform(
   resolveStructureContract,
 )
+
+export const TemplateStructureContract = StructureContractLayer.check(
+  (layer) => layer.ignoreDiscovery === undefined,
+  'ignoreDiscovery cannot be set in a template',
+).transform(resolveStructureContract)
 
 export function resolveStructureContract(layer: StructureContractLayer) {
   return resolveContract(_StructureContract, _StructureContractField, layer, {

@@ -1,3 +1,110 @@
+Generated with discovered.json: 0x0b2afcc9493de5a584b31f95e82855a9620c76cb
+
+# Diff at Tue, 20 Oct 2026 12:40:09 GMT:
+
+- id: dc17d4ad
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@be85c00e808a33e3ed3c0a5da0c480a9a9a5bd26 block: 1791217049
+- current timestamp: 1791217049
+
+## Description
+
+Undo the L2 alias of L1 addresses
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791217049 (main branch discovery), not current.
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.15:
++        {"permission":"upgrade","from":"zircuit:0x4200000000000000000000000000000000000015","role":"admin","via":[{"address":"zircuit:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.16:
++        {"permission":"upgrade","from":"zircuit:0x4200000000000000000000000000000000000018","role":"admin","via":[{"address":"zircuit:0x4200000000000000000000000000000000000018"}]}
+      directlyReceivedPermissions.2:
++        {"permission":"act","from":"zircuit:0x4200000000000000000000000000000000000018","role":".owner"}
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (zircuit:0x4200000000000000000000000000000000000018) [N/A] {
+    +++ description: Administration contract for the L2 predeploy proxies. Adds upgradePredeploys(address), which can only be called by the system depositor account and delegatecalls an L2ContractsManager to upgrade every predeploy in a single network upgrade transaction.
+      values.owner:
+-        "zircuit:0x5b5A62275DF8c60A80D3a25FAeC5aA7De116b857"
++        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+    }
+```
+
+Generated with discovered.json: 0xd6a3068968cbd331d8a38a5a41b4584e88a0011c
+
+# Diff at Fri, 16 Oct 2026 09:37:52 GMT:
+
+- id: ba116053
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1791217049
+- current timestamp: 1791217049
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791217049 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (eth:0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP).
++++ severity: HIGH
+      values.enabledFeatures:
++        []
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.enabledFeatures:
++        {"severity":"HIGH","description":"Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."}
+      fieldMeta.isCustomGasToken:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x3A317fCEE068868BE7628eFb233170df2DD5B71d) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x6b9e81504e961a9CDf81A06e916720fb4c273e90) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x9D3acbf448541738cB45661905AE26233FBe65e5) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
 Generated with discovered.json: 0x9c0aa0bbaa6c90cba04da03adf6237e12a3dfefb
 
 # Diff at Wed, 07 Oct 2026 14:48:40 GMT:

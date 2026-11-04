@@ -5,6 +5,7 @@ import { BADGES, badgesCompareFn } from '../common/badges'
 import type { Bridge, ScalingProject } from '../internalTypes'
 import { mergeBadges } from '../templates/utils'
 import type { BaseProject, ChainConfig } from '../types'
+import { getEoaUpgradeRedWarning } from './getEoaRedWarning'
 import { adjustDiscoveryInfo } from './getProjects'
 import { getProjectUnverifiedContracts } from './getUnverifiedContracts'
 import { layer2s } from './layer2s'
@@ -77,6 +78,34 @@ function adjustRefactored(project: BaseProject, chains: ChainConfig[]) {
     }
   }
   adjustContracts(project, chains)
+  adjustDiscoveryVerdicts(project)
+}
+
+function adjustDiscoveryVerdicts(project: BaseProject) {
+  if (project.discoveryInfo === undefined) {
+    return
+  }
+  project.discoveryInfo = adjustDiscoveryInfo({
+    discoveryInfo: project.discoveryInfo,
+    contracts: project.contracts ?? project.interopConfig?.contracts,
+    permissions: project.permissions ?? project.interopConfig?.permissions,
+  })
+
+  const redWarning = getEoaUpgradeRedWarning(
+    project.id,
+    project.statuses?.redWarning,
+  )
+  if (redWarning === undefined) {
+    return
+  }
+  project.statuses ??= {
+    yellowWarning: undefined,
+    redWarning: undefined,
+    emergencyWarning: undefined,
+    reviewStatus: undefined,
+    unverifiedContracts: [],
+  }
+  project.statuses.redWarning = redWarning
 }
 
 function adjustContracts(

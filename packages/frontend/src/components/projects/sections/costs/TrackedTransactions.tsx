@@ -12,10 +12,10 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { UtcDateTime } from '~/components/core/UtcDateTime'
 import { EtherscanLink } from '~/components/EtherscanLink'
 import { ChevronIcon } from '~/icons/Chevron'
 import { InfoIcon } from '~/icons/Info'
-import { formatTimestamp } from '~/utils/dates'
 import type {
   TrackedTransaction,
   TrackedTransactionsByType,
@@ -152,7 +152,10 @@ function TransactionDetails({
             </p>
             {transaction.params.formula === 'sharedBridge' && (
               <Tooltip>
-                <TooltipTrigger className="inline size-4">
+                <TooltipTrigger
+                  className="inline size-4"
+                  aria-label="About shared bridge tracking"
+                >
                   <InfoIcon />
                 </TooltipTrigger>
                 <TooltipContent>
@@ -175,17 +178,12 @@ function TransactionDetails({
           ) : null}
         </div>
         <p className="text-2xs text-secondary max-md:mt-0.5 md:text-xs">
-          {formatTimestamp(transaction.sinceTimestamp, {
-            mode: 'datetime',
-            longMonthName: false,
-          })}{' '}
-          -{' '}
-          {transaction.untilTimestamp
-            ? formatTimestamp(transaction.untilTimestamp, {
-                mode: 'datetime',
-                longMonthName: false,
-              })
-            : 'Now'}
+          <UtcDateTime timestamp={transaction.sinceTimestamp} /> -{' '}
+          {transaction.untilTimestamp ? (
+            <UtcDateTime timestamp={transaction.untilTimestamp} />
+          ) : (
+            'Now'
+          )}
         </p>
       </div>
 
@@ -266,7 +264,7 @@ function TransactionDetails({
               <span>{transaction.costMultiplier}</span>
             </div>
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger aria-label="About the multiplier">
                 <InfoIcon className="size-3" />
               </TooltipTrigger>
               <TooltipContent>

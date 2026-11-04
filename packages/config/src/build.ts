@@ -2,13 +2,10 @@ import { ProjectDatabase } from './ProjectDatabase'
 import { getProjects } from './processing/getProjects'
 import { getTokenList } from './tokens/tokens'
 
-main().catch((error: unknown) => {
-  console.error(error)
-  process.exitCode = 1
-})
-async function main() {
+main()
+function main() {
   const db = new ProjectDatabase('build/db.sqlite')
-  await db.init()
+  db.init()
 
   const projects = getProjects()
   const chains = projects
@@ -16,13 +13,13 @@ async function main() {
     .filter((c) => c !== undefined)
 
   const tokenList = getTokenList(chains)
-  await db.transaction(async () => {
+  db.transaction(() => {
     for (const project of projects) {
-      await db.saveProject(project)
+      db.saveProject(project)
     }
 
     for (const token of tokenList) {
-      await db.saveToken(token)
+      db.saveToken(token)
     }
   })
 }

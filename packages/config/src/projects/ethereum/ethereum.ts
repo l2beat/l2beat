@@ -65,10 +65,7 @@ export const ethereum: BaseProject = {
         'https://eth.blockscout.com/',
         'https://beaconcha.in/',
       ],
-      socialMedia: [
-        'https://x.com/ethereum',
-        'https://discord.com/invite/ethereum-org',
-      ],
+      socialMedia: ['https://x.com/ethereum', 'https://discord.gg/MWpjbnsfNE'],
     },
     badges: [],
   },
@@ -261,6 +258,14 @@ export const ethereum: BaseProject = {
             ],
             sinceBlock: 23869474,
           },
+          {
+            // Committer rotated on 2026-07-07 (same chain, 30715)
+            type: 'ethereum',
+            inbox: '0x18cc381705761aa2d2e8ea62888a4029a0fad3ab',
+            sequencers: ['0xbb2de57b06752f86a0921eb4bf56c50865abbfca'],
+            sinceBlock: 25481035,
+            untilBlock: 25952904,
+          },
         ],
       },
       {
@@ -272,6 +277,446 @@ export const ethereum: BaseProject = {
             inbox: '0x8c0Bfc04AdA21fd496c55B8C50331f904306F564',
             sequencers: ['0x1c841ed065149e32e4c43e3b10ecd71f1fed1db7'],
             sinceBlock: 21712806,
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('tajir'),
+        name: 'Tajir Chain',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x009afe3a07dc5eb0e3d6dcffbcec2c3c90ea20e3',
+            sequencers: ['0xec7cd2030e0510763b2c2c87fc7e7ccc2f8c7463'],
+            sinceBlock: 25780874,
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('gensyn'),
+        name: 'Gensyn',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x00b7cda0fa738014f2bf3b812ea08ec652452215',
+            sequencers: ['0xc4f94828b1f1c43a35783975b1c0c8703c834b15'],
+            sinceBlock: 23433987,
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('alphachain'),
+        name: 'Alpha Chain',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x00c2bdb995acf5a2b3db3b9340861b4d564c3c72',
+            sequencers: ['0x03e78a186ebde2c14ad9220d2605fa0a22d7bbf5'],
+            sinceBlock: 23945310,
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('ethiq'),
+        name: 'Ethiq',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x0065929a5da79a699cf4631480ad2739de13cad9',
+            sequencers: ['0x7d80f5908cbe1c05925e8274195b59a246e82a03'],
+            sinceBlock: 24060440,
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('wannachain'),
+        name: 'WANNA Chain',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x00775ef4e086ced39cfd7d62543ea95fd78ad429',
+            sequencers: ['0xbd45bdb70e45654b8a94a0f88bc00e3312a7c2cb'],
+            sinceBlock: 26067519,
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('tea'),
+        name: 'Tea',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x00e8008e38598eb5b33e0b67f72be074122fafcd',
+            sequencers: ['0xd24b47d373f97590a3c9b15f16f1b560ad5a617a'],
+            sinceBlock: 25181715,
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('symbiosis'),
+        name: 'Symbiosis',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0xa150ff19a31e1054f950098869834affe9bc6fdc',
+            sequencers: ['0xbe7f4edb6257b4d2c77293c380f19ce96a4fa41e'],
+            sinceBlock: 22824353,
+          },
+        ],
+      },
+      {
+        // OP Stack, chainId 9134 (SystemConfig.l2ChainId)
+        projectId: ProjectId('giwa'),
+        name: 'GIWA',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x00b4148589a62ec7ca2c46722940e4dd79306c8d',
+            sequencers: ['0x0f3498258819bece3f47661b3e331bd36c1cf857'],
+            sinceBlock: 26063366,
+          },
+        ],
+      },
+      {
+        // Ethereum Economic Zone rollup (EEZ / EEZPostBatcher contracts)
+        projectId: ProjectId('eez'),
+        name: 'EEZ',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x4b2760f84b83d6b3829e30a7573b0172b6d6402c',
+            sequencers: ['0x4261d69f840cc550945def48e5f477737118d546'],
+            sinceBlock: 26125484,
+            untilBlock: 26135244,
+          },
+          {
+            type: 'ethereum',
+            inbox: '0x07f9e14feb43a6262141bfb598c09b678fd00163',
+            sequencers: ['0x4261d69f840cc550945def48e5f477737118d546'],
+            sinceBlock: 26135813,
+            untilBlock: 26293833, // superseded by the inbox-only entry below
+          },
+          {
+            // EEZPostBatcher takes batches from anyone with a valid proof, and
+            // EEZ runs more than one batcher, so the inbox alone identifies them
+            type: 'ethereum',
+            inbox: '0x07f9e14feb43a6262141bfb598c09b678fd00163',
+            sinceBlock: 26293834,
+          },
+        ],
+      },
+      {
+        // OP Stack; the vanity inbox is shared, so the batcher filter matters
+        projectId: ProjectId('pegglecoin'),
+        name: 'Pegglecoin',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0xff00000000000000000000000000000000042069',
+            sequencers: ['0x705623d3985cf88e5a69fc99ca7d089063449902'],
+            sinceBlock: 21937906,
+          },
+        ],
+      },
+      {
+        // Post-quantum OP Stack fork, chainId 42069000. bb84.com lists the OptimismPortalHash
+        // 0x83226921d6afb31f706b7840bca12655396f136c, whose deployer funded this batcher.
+        projectId: ProjectId('bb84'),
+        name: 'BB84',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0xff00000000000000000000000000000042069000',
+            sequencers: ['0x3e8252e3390e6d5c1bdc3c006ac0fb07b34c590d'],
+            sinceBlock: 26092211,
+          },
+        ],
+      },
+      {
+        // Arbitrum Nitro, chainId 6292 (SequencerInbox -> Bridge -> Rollup)
+        projectId: ProjectId('mayachain'),
+        name: 'MAYA CHAIN',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x3263a42bd298e801c21aa58d00000b4deabbfbc8',
+            sequencers: ['0x97fb2a92ae74f8a754bed2ef70c0f5b5c387edd3'],
+            sinceBlock: 26198135,
+          },
+        ],
+      },
+      {
+        // Aggregated proofs, published as blobs. AlignedProofAggregationService only takes
+        // them from its alignedAggregatorAddress.
+        projectId: ProjectId('aligned'),
+        name: 'Aligned',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0xd0696d3eeebffcab2d1b358805efaa005a9a8bc0',
+            sequencers: ['0x57628fe929016c30463473349dcdd592ea27c8b3'],
+            sinceBlock: 24242603,
+          },
+        ],
+      },
+      {
+        // Operator unidentified; chainId from SystemConfig.l2ChainId
+        projectId: ProjectId('opstack-8686'),
+        name: 'OP Stack chain 8686',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x004793cde50c3cff1f4bbe5c6ec2821ae9121df8',
+            sequencers: ['0x23920c97f74b2e41edd58d3be9964ed75883d2d8'],
+            sinceBlock: 26091305,
+          },
+        ],
+      },
+      {
+        // Operator unidentified; chainId from SystemConfig.l2ChainId
+        projectId: ProjectId('opstack-6921'),
+        name: 'OP Stack chain 6921',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x0027b099f5cb5968e008c8f602900a1b62c71f9f',
+            sequencers: ['0xa5c10e93172bff1dd28af7304b461d8a494fb8e8'],
+            sinceBlock: 25731748,
+          },
+        ],
+      },
+      {
+        // Operator unidentified; chainId from SystemConfig.l2ChainId
+        projectId: ProjectId('opstack-55531'),
+        name: 'OP Stack chain 55531',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x00bafeac59dd7fd22e6077ffbdcb49ce3a556e7a',
+            sequencers: ['0x90ca054bb40f0f2c2c62694c55acc61bcd101357'],
+            sinceBlock: 25897365,
+          },
+        ],
+      },
+      {
+        // Operator unidentified; chainId from SystemConfig.l2ChainId
+        projectId: ProjectId('opstack-61111001'),
+        name: 'OP Stack chain 61111001',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x00adab684e5a2732c1e2f1ca2cfb44f1b41b6e1d',
+            sequencers: ['0x1df5bc985bc174f193880e11cc691e7f598c0dd2'],
+            sinceBlock: 24454960,
+          },
+        ],
+      },
+      {
+        // Operator unidentified; chainId from SystemConfig.l2ChainId
+        projectId: ProjectId('opstack-56778039791'),
+        name: 'OP Stack chain 56778039791',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x0069e993d403330ea18e77f110243e231d8880cb',
+            sequencers: ['0xc1987cdb1fcda40abd2a7fbace3adf36841d3332'],
+            sinceBlock: 23051817,
+          },
+        ],
+      },
+      {
+        // Operator unidentified. SystemConfig 0x263cbd3d8dd527b0d19853b03f924f22eb505ab9 predates
+        // l2ChainId; the chainId is the one its batches' transaction signatures recover under.
+        // The vanity inbox is shared, so the batcher filter matters.
+        projectId: ProjectId('opstack-1679'),
+        name: 'OP Stack chain 1679',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0xff00000000000000000000000000000000042069',
+            sequencers: ['0x5df930bfa5daa2919d8f2a954a4f346a3b2cf8c2'],
+            sinceBlock: 23445405,
+          },
+        ],
+      },
+      {
+        // Operator unidentified; chainId from SequencerInbox -> Bridge -> Rollup
+        projectId: ProjectId('orbit-5816'),
+        name: 'Orbit chain 5816',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0xd65a35d19910d9f4e4aeb3cb4a87c3153bfb0fc6',
+            sequencers: ['0x77b25ace2eb0bdc7b4dbb064a79ced4d9b6ef62c'],
+            sinceBlock: 26060523,
+          },
+        ],
+      },
+      {
+        // Operator unidentified. Its committer committed Creator (chain
+        // 30715) until 2026-09-11 and switched to this chain the same day -
+        // possibly Creator's migration, possibly a shared operator.
+        projectId: ProjectId('zksyncos-51703'),
+        name: 'ZKsync OS chain 51703',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0xa7980e38722dbe6238f221da65e1143d22161a71',
+            sequencers: ['0xbb2de57b06752f86a0921eb4bf56c50865abbfca'],
+            sinceBlock: 25953681,
+          },
+        ],
+      },
+      {
+        // Operator unidentified; MultisigCommitter is shared, so the committer filter matters
+        projectId: ProjectId('zksyncos-61703'),
+        name: 'ZKsync OS chain 61703',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0xa7980e38722dbe6238f221da65e1143d22161a71',
+            sequencers: ['0xa5ee2f9e0cd1862f245d13fa9428a707fb942cf6'],
+            sinceBlock: 25962259,
+          },
+        ],
+      },
+      {
+        // Operator unidentified; MultisigCommitter is shared, so the committer filter matters
+        projectId: ProjectId('zksyncos-5790'),
+        name: 'ZKsync OS chain 5790',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0xa7980e38722dbe6238f221da65e1143d22161a71',
+            sequencers: ['0x16f3d92c45c2a663bc05e926322edd2281f9d7bf'],
+            sinceBlock: 26054185,
+          },
+        ],
+      },
+      {
+        // Operator unidentified; MultisigCommitter is shared, so the committer filter matters
+        projectId: ProjectId('zksyncos-886229927'),
+        name: 'ZKsync OS chain 886229927',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0xa7980e38722dbe6238f221da65e1143d22161a71',
+            sequencers: ['0x31ae186902650fecde18497bf7b1cd2e096bc88f'],
+            sinceBlock: 26177122,
+          },
+        ],
+      },
+      {
+        // Operator unidentified; chainId from commitBatchesSharedBridge on shared ValidatorTimelocks
+        projectId: ProjectId('zkstack-1345'),
+        name: 'ZK Stack chain 1345',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x8c0bfc04ada21fd496c55b8c50331f904306f564',
+            sequencers: ['0xf916d39fc2658665953428cb895353e69e27e8f8'],
+            sinceBlock: 24826121,
+            untilBlock: 25462352,
+          },
+          {
+            type: 'ethereum',
+            inbox: '0x2e5110cf18678ec99818bfaa849b8c881744b776',
+            sequencers: ['0xf916d39fc2658665953428cb895353e69e27e8f8'],
+            sinceBlock: 25464904,
+          },
+        ],
+      },
+      {
+        // Blogposts on .gwei names (gwei.limo), published as blobs. Anyone may publish one, so the
+        // inbox alone identifies them: GnsPosts only takes blobs through publish().
+        projectId: ProjectId('gwei-blogposts'),
+        name: '.gwei blogposts',
+        daTrackingConfig: [
+          {
+            // An earlier GnsPosts from the same deployer, used once before the redeployment
+            type: 'ethereum',
+            inbox: '0xb29ae0ba5baff7ec36ebcf1682c99810956e3075',
+            sinceBlock: 26264016,
+          },
+          {
+            type: 'ethereum',
+            inbox: '0x73849f6f2785ba7fd2f41b5b4573b75554417981',
+            sinceBlock: 26268082,
+          },
+        ],
+      },
+      {
+        // Seals from remi.gg/ee, kept in blobs for free. Its relayer posts them to itself; the relay
+        // index (relay.remi.gg/index.json) names this address as its gas account.
+        projectId: ProjectId('ephemeral-entropy'),
+        name: 'Ephemeral Entropy',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x1c67a27ea8ec8fe25d45e0b15719a2b7a8a64e2a',
+            sequencers: ['0x1c67a27ea8ec8fe25d45e0b15719a2b7a8a64e2a'],
+            sinceBlock: 25906368,
+          },
+        ],
+      },
+      {
+        // Votes recorded as blobs. A VoteRegistry only takes them from the sequencers of a round,
+        // which change per round, so the inbox alone identifies them. The first registry is an
+        // earlier version; the later three share the verified one's interface.
+        projectId: ProjectId('octant'),
+        name: 'Octant',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0xc664a5a1fe0f73d43fc24561118e0b1c92874ad1',
+            sinceBlock: 25236963,
+          },
+          {
+            type: 'ethereum',
+            inbox: '0x5c6dda7e609e2db55cf84ca4f49280f927d79f6e',
+            sinceBlock: 25296201,
+          },
+          {
+            type: 'ethereum',
+            inbox: '0x6e04b3430309802092e43e4079f1e50e704fa6e5',
+            sinceBlock: 25337862,
+          },
+          {
+            type: 'ethereum',
+            inbox: '0x917682e054687226e24d4fcd7861fc81109f4ab4',
+            sinceBlock: 26149744,
+          },
+        ],
+      },
+      {
+        // Paid blob storage. The proxies BlobKitEscrow authorizes post the blobs to the zero address.
+        projectId: ProjectId('blobkit'),
+        name: 'BlobKit',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x0000000000000000000000000000000000000000',
+            sequencers: [
+              '0x2edecb91091324e0138ebbbaed48ce1b2a050428',
+              '0x3884fc14e604548f8ed962d566de48e7519eab78',
+              '0xf3cb1f974362483838de05ff868cf04d4cc16de8',
+            ],
+            sinceBlock: 23134693,
+          },
+        ],
+      },
+      {
+        // Daily archives of a personal website, split over blobs sent to the zero address. The
+        // author links this sender as the publisher in the archived post "I publish daily archives
+        // of my website to ethereum blobdata"; tarball-blobs is the script's name.
+        projectId: ProjectId('tarball-blobs'),
+        name: 'tarball-blobs',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x0000000000000000000000000000000000000000',
+            sequencers: ['0x6defc1def6abb1c39cbc722024985291ff6f9fb7'],
+            sinceBlock: 26086572,
           },
         ],
       },
@@ -338,7 +783,7 @@ export const ethereum: BaseProject = {
       url: 'https://blog.ethereum.org/2025/11/06/fusaka-mainnet-announcement',
       date: '2025-12-09T00:00:00Z',
       description:
-        'First Blob Parameter Only fork after Fusaka increases blob limits: target from 6 to 10 blobs and max from 9 to 15 blobs.',
+        'First Blob Parameter Only fork after Fusaka: blob target from 6 to 10, max from 9 to 15.',
       type: 'general',
     },
     {
@@ -346,7 +791,7 @@ export const ethereum: BaseProject = {
       url: 'https://github.com/ethereum/pm/issues/1772',
       date: '2026-01-07T00:00:00Z',
       description:
-        'Second Blob Parameter Only fork increases blob limits: target from 10 to 14 blobs and max from 15 to 21 blobs.',
+        'Second Blob Parameter Only fork: blob target from 10 to 14, max from 15 to 21.',
       type: 'general',
     },
   ],

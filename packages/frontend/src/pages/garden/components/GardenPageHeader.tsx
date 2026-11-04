@@ -10,7 +10,9 @@ export function GardenPageHeader({
 }) {
   return (
     <>
-      <h1 className="pt-5 font-bold text-2xl max-md:px-4 lg:hidden">{title}</h1>
+      <h1 className="pt-5 font-bold text-2xl max-md:px-4 md:pb-3 md:text-[26px] lg:hidden">
+        {title}
+      </h1>
       <MainPageHeader description={description}>{title}</MainPageHeader>
     </>
   )

@@ -33,6 +33,31 @@ export const stickyTableHeaderClassNames = {
   pinnedLayer: 'sticky-table-header-pinned-layer',
 }
 
+/**
+ * Brings the column cut at the right edge to the front, just past the pinned
+ * columns, so it shows whole. No move goes further than 80% of the view, as
+ * with the overflowing tab bars' arrows, and a cut column that already starts
+ * near the front, being wider than the view, gets that full move.
+ */
+export function scrollToNextColumns(root: HTMLElement, scroller: HTMLElement) {
+  const view = scroller.getBoundingClientRect()
+  const front = view.left + readPinnedWidth(root)
+  const page = (view.right - front) * 0.8
+  const thead = scroller.querySelector('thead')
+  const cutColumn =
+    thead &&
+    getColumnCells(thead).find(
+      (cell) => cell.getBoundingClientRect().right > view.right + 1,
+    )
+  const toCutColumn = cutColumn
+    ? cutColumn.getBoundingClientRect().left - front
+    : 0
+  scroller.scrollBy({
+    left: toCutColumn > page / 4 ? Math.min(toCutColumn, page) : page,
+    behavior: 'smooth',
+  })
+}
+
 /** The elements the caller renders and attaches these refs to. */
 export interface StickyTableRefs {
   /** Wraps the copy and the scroller; carries the layout variables. */
@@ -257,6 +282,13 @@ function publishPinnedColumns(root: HTMLElement, columns: Columns) {
     const left = sum(columns.widths.slice(0, i))
     setVariable(root, variable, left - STICKY_OVERLAP_PX)
   })
+}
+
+/** 0 until the header has measured the pinned columns. */
+function readPinnedWidth(root: HTMLElement) {
+  return (
+    Number.parseFloat(root.style.getPropertyValue(PINNED_WIDTH_VARIABLE)) || 0
+  )
 }
 
 function getPinnedWidth({ widths, pinnedCount }: Columns) {

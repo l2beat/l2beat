@@ -1,3 +1,332 @@
+Generated with discovered.json: 0x01f181f47126a43806e0df5ab3daf638fb98cb1b
+
+# Diff at Tue, 20 Oct 2026 11:00:16 GMT:
+
+- id: 14e0bcba
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@bea09ad019b915aab11cbc66c4845cbfca1ee6fd block: 1753687799
+- current timestamp: 1753687799
+
+## Description
+
+Format cross-chain counterpart addresses with the chain they live on
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753687799 (main branch discovery), not current.
+
+```diff
+    contract ArbitrumL2Gateway (arb1:0x7bd79DEd935B542fb22c74305a4d2A293C18483a) [zklinknova/secondaryGateway] {
+    +++ description: None
+      values.getRemoteGateway:
+-        "arb1:0x273D59aed2d793167c162E64b9162154B07583C0"
++        "eth:0x273D59aed2d793167c162E64b9162154B07583C0"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract BaseL2Gateway (base:0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011) [zklinknova/secondaryGateway] {
+    +++ description: None
+      values.getRemoteGateway:
+-        "base:0x4eEA93966AA5cd658225E0D43b665A5a491d2b7E"
++        "eth:0x4eEA93966AA5cd658225E0D43b665A5a491d2b7E"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract BlastL2Gateway (blastmainnet:0x3f64e2e09732969813904a8473074CFADeE66AF1) [zklinknova/secondaryGateway] {
+    +++ description: None
+      values.getRemoteGateway:
+-        "blastmainnet:0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158"
++        "eth:0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract ArbitrumL1Gateway (eth:0x273D59aed2d793167c162E64b9162154B07583C0) [zklinknova/secondaryGateway] {
+    +++ description: None
+      values.getRemoteGateway:
+-        "eth:0x7bd79DEd935B542fb22c74305a4d2A293C18483a"
++        "arb1:0x7bd79DEd935B542fb22c74305a4d2A293C18483a"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"arb1"}}]
+    }
+```
+
+```diff
+    contract BlastL1Gateway (eth:0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158) [zklinknova/secondaryGateway] {
+    +++ description: None
+      values.getRemoteGateway:
+-        "eth:0x3f64e2e09732969813904a8473074CFADeE66AF1"
++        "blastmainnet:0x3f64e2e09732969813904a8473074CFADeE66AF1"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"blastmainnet"}}]
+    }
+```
+
+```diff
+    contract BaseL1Gateway (eth:0x4eEA93966AA5cd658225E0D43b665A5a491d2b7E) [zklinknova/secondaryGateway] {
+    +++ description: None
+      values.getRemoteGateway:
+-        "eth:0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011"
++        "base:0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"base"}}]
+    }
+```
+
+```diff
+    contract MantaL1Gateway (eth:0x649Dfa2c4d09D877419fA1eDC4005BfbEF7CD82D) [zklinknova/secondaryGateway] {
+    +++ description: None
+      values.getRemoteGateway:
+-        "eth:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"
++        "manta:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"manta"}}]
+    }
+```
+
+```diff
+    contract OptimismL1Gateway (eth:0x668e8F67adB8219e1816C2E5bBEa055A78AF3026) [zklinknova/secondaryGateway] {
+    +++ description: None
+      values.getRemoteGateway:
+-        "eth:0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c"
++        "oeth:0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"oeth"}}]
+    }
+```
+
+```diff
+    contract LineaL1Gateway (eth:0x803460416C2682Ac54FccF03eF77b10A12f2809b) [zklinknova/secondaryGateway] {
+    +++ description: None
+      values.getRemoteGateway:
+-        "eth:0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB"
++        "linea:0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"linea"}}]
+    }
+```
+
+```diff
+    contract EthereumL1Gateway (eth:0x83Bc7394738A7A084081aF22EEC0051908c0055c) [zklinknova/secondaryGateway] {
+    +++ description: None
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract ScrollL1Gateway (eth:0x986c905087a663db3C81ad319b94c1E9dd388e92) [zklinknova/secondaryGateway] {
+    +++ description: None
+      values.getRemoteGateway:
+-        "eth:0xd8428A59B60Df2d81514D429D57DF23293f1bCe7"
++        "scr:0xd8428A59B60Df2d81514D429D57DF23293f1bCe7"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"scr"}}]
+    }
+```
+
+```diff
+    contract MantleL1Gateway (eth:0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269) [zklinknova/secondaryGateway] {
+    +++ description: None
+      values.getRemoteGateway:
+-        "eth:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"
++        "mantle:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"mantle"}}]
+    }
+```
+
+```diff
+    contract EraL1Gateway (eth:0xeCD189e0f390826E137496a4e4a23ACf76c942Ab) [zklinknova/secondaryGateway] {
+    +++ description: None
+      values.getRemoteGateway:
+-        "eth:0xC203a2DF4DDFF9eDE2200F1F02054fD721182535"
++        "zksync:0xC203a2DF4DDFF9eDE2200F1F02054fD721182535"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"zksync"}}]
+    }
+```
+
+```diff
+    contract LineazkLink (linea:0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05) [N/A] {
+    +++ description: None
+      unverified:
+-        true
+      implementationNames.linea:0xFF6e83e6A5cc362b8B40d819fBE7840aD13A3488:
+-        ""
++        "ExecutorFacet"
+      sourceHashes:
++        ["0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f","0xfc65b0963e8af57358265f3b7746471ab4fdb1e0fc721734f734e445e47b427a"]
+    }
+```
+
+```diff
+    contract LineaL2Gateway (linea:0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB) [zklinknova/secondaryGateway] {
+    +++ description: None
+      values.getRemoteGateway:
+-        "linea:0x803460416C2682Ac54FccF03eF77b10A12f2809b"
++        "eth:0x803460416C2682Ac54FccF03eF77b10A12f2809b"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract MantaL2Gateway (manta:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0) [zklinknova/secondaryGateway] {
+    +++ description: None
+      values.getRemoteGateway:
+-        "manta:0x649Dfa2c4d09D877419fA1eDC4005BfbEF7CD82D"
++        "eth:0x649Dfa2c4d09D877419fA1eDC4005BfbEF7CD82D"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract MantleL2Gateway (mantle:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0) [zklinknova/secondaryGateway] {
+    +++ description: None
+      values.getRemoteGateway:
+-        "mantle:0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269"
++        "eth:0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract OptimismL2Gateway (oeth:0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c) [zklinknova/secondaryGateway] {
+    +++ description: None
+      values.getRemoteGateway:
+-        "oeth:0x668e8F67adB8219e1816C2E5bBEa055A78AF3026"
++        "eth:0x668e8F67adB8219e1816C2E5bBEa055A78AF3026"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract ScrollL2Gateway (scr:0xd8428A59B60Df2d81514D429D57DF23293f1bCe7) [zklinknova/secondaryGateway] {
+    +++ description: None
+      values.getRemoteGateway:
+-        "scr:0x986c905087a663db3C81ad319b94c1E9dd388e92"
++        "eth:0x986c905087a663db3C81ad319b94c1E9dd388e92"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract EraL2Gateway (zksync:0xC203a2DF4DDFF9eDE2200F1F02054fD721182535) [zklinknova/secondaryGateway] {
+    +++ description: None
+      values.getRemoteGateway:
+-        "zksync:0xeCD189e0f390826E137496a4e4a23ACf76c942Ab"
++        "eth:0xeCD189e0f390826E137496a4e4a23ACf76c942Ab"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+Generated with discovered.json: 0xb3f61103b218411c2be95d1e14cd981cf1af5e88
+
+# Diff at Fri, 16 Oct 2026 05:36:55 GMT:
+
+- id: bfd718f5
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1753687799
+- current timestamp: 1753687799
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753687799 (main branch discovery), not current.
+
+```diff
+    contract ArbitrumProxyAdmin (arb1:0x48698A17D193bFc882395AC06a1DEdbb222F2917) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract BaseProxyAdmin (base:0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract BlastProxyAdmin (blastmainnet:0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract EthereumProxyAdmin (eth:0x315255c1bA35A1DdAc48CF054bc4e3a0929160b2) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract MantaProxyAdmin (manta:0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract MantleProxyAdmin (mantle:0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract OptimismProxyAdmin (oeth:0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ScrollProxyAdmin (scr:0xC4673dAbfAf04D2A430e244B63F040D27199102f) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract EraProxyAdmin (zksync:0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
 Generated with discovered.json: 0xaad4a401c8706e3af2bc1c3596bf792a0f2b1392
 
 # Diff at Wed, 23 Sep 2026 05:50:44 GMT:

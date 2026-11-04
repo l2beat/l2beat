@@ -2,14 +2,10 @@ import type { ComponentProps } from 'react'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { cn } from '~/utils/cn'
 
+/** A section of the home page: a card like on every other page. */
 export function HomeCard({
   className,
   ...props
 }: ComponentProps<typeof PrimaryCard>) {
-  return (
-    <PrimaryCard
-      className={cn('p-4 md:rounded-lg md:px-6 md:py-4', className)}
-      {...props}
-    />
-  )
+  return <PrimaryCard className={cn('min-w-0 md:py-6', className)} {...props} />
 }

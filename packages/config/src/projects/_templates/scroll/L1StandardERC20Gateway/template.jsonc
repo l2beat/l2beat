@@ -4,6 +4,8 @@
   "critical": true,
   "category": "bridge-canonical",
   "fields": {
+    "owner": { "severity": "MEDIUM" },
+    "$admin": { "severity": "MEDIUM" },
     "l2TokenFactory": {
       "edit": ["format", "ScrollAddress"]
     },

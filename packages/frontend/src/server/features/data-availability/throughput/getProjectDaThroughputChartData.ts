@@ -78,7 +78,7 @@ function getMockProjectDaThroughputChartData({
   const to = UnixTime.toStartOf(UnixTime.now(), 'day')
   const from = range[0] ?? to - days * UnixTime.DAY
 
-  if (!['ethereum', 'celestia', 'avail', 'eigenda'].includes(projectId)) {
+  if (projectId !== 'ethereum') {
     return {
       chart: [],
       stats: {

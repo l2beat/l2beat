@@ -3,6 +3,7 @@ import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getPrivacyProjects } from '~/server/features/privacy/getPrivacyProjects'
 import { getPrivacySummaryEntries } from '~/server/features/privacy/getPrivacySummaryEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
+import { getItemListStructuredData } from '~/ssr/head/structured-data/getItemListStructuredData'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
@@ -34,12 +35,24 @@ export async function getPrivacySummaryData(
       manifest,
       metadata: getMetadata(manifest, {
         name: 'Privacy',
+        title: 'Ethereum Privacy Protocols: Reviews & Comparison - ETHBEAT',
         description:
-          'Track live balances and daily privacy flows across tracked privacy protocols.',
+          'Reviews of Ethereum privacy protocols: privacy pools, shielded ledgers, stealth addresses, confidential tokens and anonymous access, compared by what they hide from each adversary, alongside value locked, anonymity sets and trusted setups.',
         url,
         openGraph: {
           image: '/meta-images/privacy/summary/opengraph-image.png',
         },
+        structuredData: (page) => [
+          getItemListStructuredData(page, {
+            name: 'Privacy protocol reviews',
+            items: groups.flatMap((group) =>
+              group.entries.map((entry) => ({
+                name: entry.name,
+                path: entry.href,
+              })),
+            ),
+          }),
+        ],
       }),
     },
     ssr: {

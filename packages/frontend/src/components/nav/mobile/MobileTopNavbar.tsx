@@ -21,12 +21,17 @@ export function MobileTopNavbar({
   sideLinks: NavLink[]
 }) {
   return (
-    <div className={cn('z-10 lg:hidden', className)}>
+    <div className={cn('z-10 bg-header-primary lg:hidden', className)}>
       {/*
         iOS Safari tints its status bar like the sticky element at the top and
         keeps that tint until another one arrives. Sticky inside a wrapper of
         its own height, the navbar never moves, but takes the tint back when
         the page returns to the top.
+
+        Safari draws the sticky navbar as a layer of its own and, scrolling
+        back up fast, paints it a few frames late. The wrapper's background is
+        painted with the page, so meanwhile its slot shows the navbar's colour
+        instead of the grey backdrop behind it.
       */}
       <div className="sticky top-0">
         <div className="relative flex h-16 flex-row items-stretch justify-between gap-8 border-divider border-b bg-header-primary px-3.5">

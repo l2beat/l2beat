@@ -116,8 +116,8 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
       { name: 'Across', href: '/interop/protocols/across' },
     )
 
-    expect(result.srcTokenHref).toEqual('/interop/tokens/eth/circle/usdc')
-    expect(result.dstTokenHref).toEqual('/interop/tokens/eth/circle/usdc')
+    expect(result.srcTokenHref).toEqual('/tokens/eth/circle/usdc')
+    expect(result.dstTokenHref).toEqual('/tokens/eth/circle/usdc')
   })
 
   it('does not link tokens we have no abstract token record for', () => {

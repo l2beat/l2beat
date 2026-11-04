@@ -3,6 +3,7 @@ import compact from 'lodash/compact'
 import type { RosetteValue } from '~/components/rosette/types'
 import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
+import type { PrivacyReferenceApp } from '~/server/features/privacy/utils/getPrivacyReferenceApp'
 import { getPrivacyAdversariesSummary } from '~/server/features/privacy/utils/toPrivacyAdversariesSummary'
 import {
   formatChange,
@@ -17,6 +18,11 @@ import {
 } from '~/server/markdown/renderProjectMarkdown'
 import { PRIVACY_ASSESSMENT } from '../privacyAssessment'
 import { PRIVACY_WALKAWAY_TEST_TOOLTIPS } from '../privacyWalkawayTest'
+import {
+  getReferenceAppLabel,
+  getReferenceAppNotes,
+  REFERENCE_APP,
+} from '../referenceAppUi'
 import {
   PRIVACY_PROJECT_STATS_COPY as COPY,
   RELAYER_STAT_COPY,
@@ -97,11 +103,26 @@ function getFacts(entry: ProjectPrivacyEntry) {
       label: 'Tracked on',
       value: entry.trackedOn.map((chain) => chain.name).join(', '),
     },
+    entry.scalingProjects.length > 0 && {
+      label: 'Runs on',
+      value: entry.scalingProjects.map((project) => project.name).join(', '),
+    },
     entry.attributes.length > 0 && {
       label: 'Attributes',
       value: entry.attributes.map((attribute) => attribute.label).join(', '),
     },
+    entry.referenceApp && {
+      label: REFERENCE_APP.title,
+      value: formatReferenceApp(entry.referenceApp),
+    },
   ])
+}
+
+/** The app's name and release, then the notes the HTML shows under them. */
+function formatReferenceApp(app: PrivacyReferenceApp) {
+  const notes = getReferenceAppNotes(app)
+  const label = getReferenceAppLabel(app)
+  return notes.length > 0 ? `${label} (${notes.join(', ')})` : label
 }
 
 /** The text of the badges the HTML shows in place of the value. */

@@ -1,29 +1,19 @@
-import type { Project } from '@l2beat/config'
-import { ProjectId } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ResolvedCrops } from '~/components/garden/crops'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { getAttestationsMeta } from '~/server/features/garden/getAttestationsMeta'
-import { getGardenProjectPath } from '~/server/features/garden/getGardenProjectPath'
+import { getTotalValueLockedByProject } from '~/server/features/defi/getDefiSummaryEntries'
+import { describeOssification } from '~/server/features/garden/describeOssification'
 import {
-  qualifiesForGarden,
-  resolveProjectCrops,
-} from '~/server/features/garden/resolveCrops'
+  type GardenProject,
+  getListedGardenProjects,
+} from '~/server/features/garden/getListedGardenProjects'
 import type { SevenDayTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
 import { get7dTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
-import { ps } from '~/server/projects'
+import { getProjectOssification } from '~/server/features/projects/ossification/getProjectOssification'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
-
-/** Editorial order of the garden table. Reviewed projects not named here follow alphabetically. */
-const GARDEN_ORDER: ProjectId[] = [
-  ProjectId('tornado-cash'),
-  ProjectId('aztecnetwork'),
-  ProjectId('umbra'),
-  ProjectId('uniswapv3'),
-]
 
 export interface GardenMetric {
   kind: 'usd' | 'count'
@@ -41,26 +31,20 @@ export interface GardenEntry {
   subtitle: string
   iconUrl: string
   crops: ResolvedCrops
+  /** The measured ossification, listed under Security. */
+  ossification: string[]
   /** Undefined when we track nothing for the project. */
   metric: GardenMetric | undefined
 }
-
-type GardenProject = Project<
-  'crops',
-  'scalingInfo' | 'privacyInfo' | 'defiInfo' | 'daLayer'
->
 
 export async function getGardenData(
   manifest: Manifest,
   url: string,
 ): Promise<RenderData> {
-  const projects = await ps.getProjects({
-    where: ['crops'],
-    select: ['crops'],
-    optional: ['scalingInfo', 'privacyInfo', 'defiInfo', 'daLayer'],
-  })
+  const { listed, attestation } = await getListedGardenProjects()
+  const projects = listed.map(({ project }) => project)
 
-  const [tvsBreakdown, depositCounts] = await Promise.all([
+  const [tvsBreakdown, depositCounts, defiTvl] = await Promise.all([
     get7dTvsBreakdown({
       type: 'projects',
       projectIds: projects.map((p) => p.id),
@@ -68,31 +52,38 @@ export async function getGardenData(
     getTotalDepositCounts(
       projects.filter((p) => p.privacyInfo).map((p) => p.id),
     ),
+    getTotalValueLockedByProject(
+      projects.flatMap((p) =>
+        p.defiInfo ? [{ id: p.id, defiInfo: p.defiInfo }] : [],
+      ),
+    ),
   ])
 
-  const entries: GardenEntry[] = projects
-    .sort(compareByCuratedOrder)
-    .map((project) => ({
+  const entries: GardenEntry[] = await Promise.all(
+    listed.map(async ({ project, verdict }) => ({
       name: project.name,
       slug: project.slug,
-      href: getGardenProjectPath(project),
+      href: project.garden.path,
       subtitle: getSubtitle(project),
       iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-      crops: resolveProjectCrops(project.crops),
-      metric: getMetric(project, tvsBreakdown, depositCounts),
-    }))
-    .filter((entry) => qualifiesForGarden(entry.crops))
+      crops: verdict.crops,
+      // One value-series read per listed project, as on the ossification
+      // page. The garden lists a handful, so it is not worth a batched query.
+      ossification: describeOssification(await getProjectOssification(project)),
+      metric: getMetric(project, tvsBreakdown, depositCounts, defiTvl),
+    })),
+  )
 
   return {
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        name: 'The Infinite Garden',
+        name: 'The CROPS guide',
         description:
-          'A garden view of how projects grow across the CROPS framework: censorship resistance, open source, privacy, and security.',
+          'A curated list of distinguished projects that follow the CROPS values: censorship resistance, open source, privacy and security.',
         url,
         openGraph: {
-          image: '/meta-images/the-infinite-garden/opengraph-image.png',
+          image: '/meta-images/the-crops-guide/opengraph-image.png',
         },
       }),
     },
@@ -101,24 +92,10 @@ export async function getGardenData(
       props: {
         ...(await getAppLayoutProps()),
         entries,
-        attestation: getAttestationsMeta().current,
+        attestation,
       },
     },
   }
-}
-
-function compareByCuratedOrder(
-  a: { id: ProjectId; name: string },
-  b: { id: ProjectId; name: string },
-): number {
-  const aIndex = GARDEN_ORDER.indexOf(a.id)
-  const bIndex = GARDEN_ORDER.indexOf(b.id)
-  if (aIndex !== -1 && bIndex !== -1) {
-    return aIndex - bIndex
-  }
-  if (aIndex !== -1) return -1
-  if (bIndex !== -1) return 1
-  return a.name.localeCompare(b.name)
 }
 
 /** All-time deposit count per privacy project. Only projects with recorded flows come back. */
@@ -140,12 +117,14 @@ async function getTotalDepositCounts(
   return counts
 }
 
-// Value secured where tracked; otherwise the deposit count, for a privacy
-// protocol whose payments are forwarded rather than escrowed.
+// Value secured where tracked, by L2BEAT or, for DeFi, the TVL source the
+// DeFi pages use; otherwise the deposit count, for a privacy protocol whose
+// payments are forwarded rather than escrowed.
 function getMetric(
   project: GardenProject,
   tvsBreakdown: SevenDayTvsBreakdown,
   depositCounts: Record<string, number>,
+  defiTvl: ReadonlyMap<string, number>,
 ): GardenMetric | undefined {
   const tvs = tvsBreakdown.projects[project.id]
   if (tvs) {
@@ -155,6 +134,10 @@ function getMetric(
       value: tvs.breakdown.total,
       change: tvs.change.total,
     }
+  }
+  const tvl = defiTvl.get(project.id)
+  if (tvl !== undefined) {
+    return { kind: 'usd', label: 'TVL', value: tvl }
   }
   const deposits = depositCounts[project.id]
   if (deposits !== undefined) {

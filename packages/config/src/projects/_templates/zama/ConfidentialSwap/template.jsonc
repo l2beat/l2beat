@@ -1,0 +1,82 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ConfidentialSwap",
+  "category": "core",
+  "description": "Request-for-quote protocol for swaps between confidential tokens. A maker escrows an encrypted intent that hides the real order among candidate orders, whitelisted market makers quote every candidate in a sealed-bid auction, and the revealed winner settles within the settlement window or the maker reclaims the escrow.",
+  "ignoreMethods": ["getActivePairIdAt", "getIntent", "proxiableUUID"],
+  "ignoreInWatchMode": ["numberOfIntents"],
+  "ignoreRelatives": ["getEscrowFactory", "marketMakerDecryptionAccess"],
+  "fields": {
+    "complianceAddress": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "decrypt the real order, amounts and minimum output of every swap intent, every quote and every settled amount."
+        }
+      ]
+    },
+    "makerGateway": {
+      "description": "Contract that approves who may create intents, or zero when anyone can."
+    },
+    "marketMakerDecryptionAccess": {
+      "description": "Delegation context through which every current market maker decrypts the candidate amounts of new intents. Replaced whenever the market maker set changes."
+    },
+    "accessControl": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x75e5bf8b7de9fd9f24c97951733c6410a040b7a07b543096cb36c6dda365aa8b": "MARKET_MAKER_ROLE",
+          "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a": "PAUSER_ROLE"
+        }
+      }
+    },
+    "defaultAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "upgrade the implementation."
+        },
+        {
+          "type": "interact",
+          "description": "grant and revoke market makers and pausers, curate asset pairs and fees, set the maker gateway, reveal per-asset swap volume and unpause."
+        }
+      ]
+    },
+    "marketMakerAC": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x75e5bf8b7de9fd9f24c97951733c6410a040b7a07b543096cb36c6dda365aa8b": "MARKET_MAKER_ROLE"
+        },
+        "pickRoleMembers": "MARKET_MAKER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "decrypt the candidate amounts of every new intent, quote on them and settle the intents it wins."
+        }
+      ]
+    },
+    "pauserAC": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a": "PAUSER_ROLE"
+        },
+        "pickRoleMembers": "PAUSER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause intent creation, quoting, settlement and reclaims."
+        }
+      ]
+    }
+  }
+}

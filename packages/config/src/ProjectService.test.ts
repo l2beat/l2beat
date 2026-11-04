@@ -28,15 +28,15 @@ describe(ProjectService.name, () => {
 
   let db: ProjectDatabase
   const TEMP_PATH = '/tmp/projectdb.sqlite'
-  before(async () => {
+  before(() => {
     try {
       unlinkSync(TEMP_PATH)
     } catch {}
 
     db = new ProjectDatabase(TEMP_PATH)
-    await db.init()
+    db.init()
     for (const project of projects) {
-      await db.saveProject(project)
+      db.saveProject(project)
     }
   })
   after(() => {
@@ -63,6 +63,13 @@ describe(ProjectService.name, () => {
       id: ProjectId('baz'),
     })
     expect(result).toEqual(undefined)
+  })
+
+  it('rejects instead of throwing for an invalid query', async () => {
+    const ps = new ProjectService(TEMP_PATH)
+    await expect(ps.getProject({})).toBeRejectedWith(
+      'Please provide id or slug',
+    )
   })
 
   it('returns selected items', async () => {

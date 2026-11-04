@@ -11,9 +11,8 @@ import { HttpClient } from '@l2beat/shared'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { command, positional, string } from 'cmd-ts'
-import { mkdirSync, writeFileSync } from 'fs'
+import { mkdirSync, rmSync, writeFileSync } from 'fs'
 import { join } from 'path'
-import { rimraf } from 'rimraf'
 import {
   type CliLogger,
   createCliLogger,
@@ -121,7 +120,7 @@ function createShapeDownloader(
     // 1. Remove and recreate the shapes folder
     // (helps if there are renames or removed shapes)
     const shapesFolder = join(templatePath, 'shapes')
-    rimraf.sync(shapesFolder)
+    rmSync(shapesFolder, { recursive: true, force: true })
     mkdirSync(shapesFolder, { recursive: true })
     let written = 0
     for (const fileName in shapeSchema) {

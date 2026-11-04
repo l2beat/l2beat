@@ -7,6 +7,7 @@ import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('superseed')
 const genesisTimestamp = UnixTime(1726179683)
+const archivedAt = UnixTime(1786752000) // 2026-08-15T00:00:00Z
 
 export const superseed: ScalingProject = opStackL2({
   ecosystemInfo: {
@@ -15,6 +16,7 @@ export const superseed: ScalingProject = opStackL2({
   },
   capability: 'universal',
   addedAt: UnixTime(1743379200), // 2025-03-31T00:00:00Z
+  archivedAt,
   additionalBadges: [BADGES.RaaS.Conduit],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   isPartOfSuperchain: true,
@@ -52,6 +54,7 @@ export const superseed: ScalingProject = opStackL2({
     coingeckoPlatform: 'superseed',
     chainId: 5330,
     sinceTimestamp: genesisTimestamp,
+    untilTimestamp: archivedAt,
     apis: [
       {
         type: 'rpc',

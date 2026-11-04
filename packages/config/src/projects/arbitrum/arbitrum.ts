@@ -378,6 +378,12 @@ export const arbitrum: ScalingProject = orbitStackL2({
       { type: 'blockscoutV2', url: 'https://arbitrum.blockscout.com/api/v2' },
     ],
   },
+  activityConfig: {
+    type: 'block',
+    startBlock: 1,
+    // first Nitro block with the ArbitrumInternalTx; classic blocks have none
+    adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 22207818 },
+  },
   ossificationHistory: discovery.getOssificationHistory(chainStart),
   upgradesAndGovernance: {
     content: getNitroGovernance(
@@ -399,7 +405,25 @@ export const arbitrum: ScalingProject = orbitStackL2({
         'DAO can override SC?': `**No** — although DAO Constitution §3 gives the DAO authority to modify or eliminate the SC, an active ${securityCouncilStats} SC holds Canceller on both L1 and L2 Timelocks and can execute emergency upgrades during the ~${exitWindowDays}d execution window. If the SC is inactive or cooperative, the DAO can replace it through normal governance.`,
       },
       upgrades: {
-        'Normal upgrade path': `Forum temp-check → On-chain vote (${formatSeconds(coreVotingPeriodSeconds)}) → L2 Timelock (${formatSeconds(l2TimelockDelay)}) → L2→L1 outbox (~${outboxDays}d) → L1 Timelock (${formatSeconds(l1TimelockDelay)}) → execute. Total wall-clock ≈ ${constitutionalWallClockDays} days for Constitutional AIPs (≈ ${onchainEnforcedDays}d onchain-enforced), ≈ ${treasuryWallClockDays} days for Treasury AIPs.`,
+        'Normal upgrade path': {
+          steps: [
+            { description: 'Forum temp-check' },
+            {
+              description: `On-chain vote (${formatSeconds(coreVotingPeriodSeconds)})`,
+            },
+            {
+              description: `L2 Timelock (${formatSeconds(l2TimelockDelay)})`,
+              isWait: true,
+            },
+            { description: `L2→L1 outbox (~${outboxDays}d)`, isWait: true },
+            {
+              description: `L1 Timelock (${formatSeconds(l1TimelockDelay)})`,
+              isWait: true,
+            },
+            { description: 'Execute' },
+          ],
+          note: `Total wall-clock ≈ ${constitutionalWallClockDays} days for Constitutional AIPs (≈ ${onchainEnforcedDays}d onchain-enforced), ≈ ${treasuryWallClockDays} days for Treasury AIPs.`,
+        },
         'Emergency upgrade path': `**${securityCouncilStats} SC, instant** — no timelock, no exit window. E.g. KelpDAO freeze (21 Apr 2026), Stylus stack-depth fix (13 Oct 2025).`,
         'Exit window': `**~${exitWindowDays}d** non-emergency · **0** emergency. L2 Timelock + L2→L1 outbox + L1 Timelock provide the non-emergency window; emergency actions skip all three.`,
       },
@@ -689,6 +713,14 @@ export const arbitrum: ScalingProject = orbitStackL2({
     ],
   },
   milestones: [
+    {
+      title: 'Stylus activations paused',
+      url: 'https://arbiscan.io/tx/0x9eb3a4be3ba777f9fc82250eddc10f8356731cc97c09a70801d30ce33322c652',
+      date: '2026-10-02T00:00:00Z',
+      description:
+        'Security Council halts new Stylus program activations; existing programs keep running.',
+      type: 'incident',
+    },
     {
       title: 'Timeboost replaced by Priority Gas Auctions',
       url: 'https://forum.arbitrum.foundation/t/constitutional-aip-transition-arbitrum-one-ordering-policy-to-priority-gas-auctions-pga/30942',

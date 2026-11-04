@@ -8,10 +8,10 @@ describe(buildProjectsDataPosted.name, () => {
   const from = UnixTime(100 * UnixTime.DAY)
   const to = from + UnixTime.DAY
 
-  it('sums all DA layers and compares with the same window 7D ago', () => {
+  it('sums the past day and compares with the same window 7D ago', () => {
     const records = [
       record('project-a', from + UnixTime.HOUR, 100, 'ethereum'),
-      record('project-a', from + 2 * UnixTime.HOUR, 200, 'celestia'),
+      record('project-a', from + 2 * UnixTime.HOUR, 200, 'ethereum'),
       record(
         'project-a',
         from - 7 * UnixTime.DAY + UnixTime.HOUR,

@@ -18,22 +18,22 @@ describe(getMetadata.name, () => {
         openGraph,
       })
 
-      expect(metadata.title).toEqual('FAQ - L2BEAT')
+      expect(metadata.title).toEqual('FAQ - ETHBEAT')
     })
 
     it('can say more than the name, which still names the breadcrumb', () => {
       const metadata = getMetadata(manifest, {
-        name: 'Aave',
-        title: 'Aave - DeFi - L2BEAT',
-        url: '/defi/projects/aave',
+        name: 'Railgun',
+        title: 'Railgun - Privacy - ETHBEAT',
+        url: '/privacy/projects/railgun',
         openGraph,
       })
 
-      expect(metadata.title).toEqual('Aave - DeFi - L2BEAT')
+      expect(metadata.title).toEqual('Railgun - Privacy - ETHBEAT')
       expect(getBreadcrumbItems(metadata)).toEqual([
-        crumb(1, 'Home', 'https://l2beat.com/'),
-        crumb(2, 'DeFi', 'https://l2beat.com/defi/summary'),
-        crumb(3, 'Aave', 'https://l2beat.com/defi/projects/aave'),
+        crumb(1, 'Home', 'https://ethbeat.org/'),
+        crumb(2, 'Privacy', 'https://ethbeat.org/privacy/summary'),
+        crumb(3, 'Railgun', 'https://ethbeat.org/privacy/projects/railgun'),
       ])
     })
   })
@@ -47,12 +47,12 @@ describe(getMetadata.name, () => {
       })
 
       expect(getBreadcrumbItems(metadata)).toEqual([
-        crumb(1, 'Home', 'https://l2beat.com/'),
-        crumb(2, 'Layer 2s', 'https://l2beat.com/layer2s/summary'),
+        crumb(1, 'Home', 'https://ethbeat.org/'),
+        crumb(2, 'Layer 2s', 'https://ethbeat.org/layer2s/summary'),
         crumb(
           3,
           'Arbitrum One',
-          'https://l2beat.com/layer2s/projects/arbitrum',
+          'https://ethbeat.org/layer2s/projects/arbitrum',
         ),
       ])
     })
@@ -65,8 +65,8 @@ describe(getMetadata.name, () => {
       })
 
       expect(getBreadcrumbItems(metadata)).toEqual([
-        crumb(1, 'Home', 'https://l2beat.com/'),
-        crumb(2, 'FAQ', 'https://l2beat.com/faq'),
+        crumb(1, 'Home', 'https://ethbeat.org/'),
+        crumb(2, 'FAQ', 'https://ethbeat.org/faq'),
       ])
     })
 
@@ -77,15 +77,15 @@ describe(getMetadata.name, () => {
       })
 
       expect(getBreadcrumbItems(metadata)).toEqual([
-        crumb(1, 'Home', 'https://l2beat.com/'),
-        crumb(2, 'Layer 2s', 'https://l2beat.com/layer2s/summary'),
+        crumb(1, 'Home', 'https://ethbeat.org/'),
+        crumb(2, 'Layer 2s', 'https://ethbeat.org/layer2s/summary'),
       ])
     })
 
     it('names the page and its parents when the caller provides them', () => {
       const metadata = getMetadata(manifest, {
         name: 'TVS Breakdown',
-        title: 'Arbitrum One | TVS Breakdown - L2BEAT',
+        title: 'Arbitrum One | TVS Breakdown - ETHBEAT',
         url: '/layer2s/projects/arbitrum/tvs-breakdown',
         openGraph,
         breadcrumbParents: [
@@ -94,24 +94,24 @@ describe(getMetadata.name, () => {
       })
 
       expect(getBreadcrumbItems(metadata)).toEqual([
-        crumb(1, 'Home', 'https://l2beat.com/'),
-        crumb(2, 'Layer 2s', 'https://l2beat.com/layer2s/summary'),
+        crumb(1, 'Home', 'https://ethbeat.org/'),
+        crumb(2, 'Layer 2s', 'https://ethbeat.org/layer2s/summary'),
         crumb(
           3,
           'Arbitrum One',
-          'https://l2beat.com/layer2s/projects/arbitrum',
+          'https://ethbeat.org/layer2s/projects/arbitrum',
         ),
         crumb(
           4,
           'TVS Breakdown',
-          'https://l2beat.com/layer2s/projects/arbitrum/tvs-breakdown',
+          'https://ethbeat.org/layer2s/projects/arbitrum/tvs-breakdown',
         ),
       ])
     })
 
     it('is omitted on the home page, which has nothing above it', () => {
       const metadata = getMetadata(manifest, {
-        title: 'L2BEAT',
+        title: 'ETHBEAT',
         url: '/',
         openGraph,
       })
@@ -142,9 +142,9 @@ describe(getMetadata.name, () => {
 
     expect(pages).toEqual([
       {
-        url: 'https://l2beat.com/glossary',
+        url: 'https://ethbeat.org/glossary',
         description: 'Terms explained.',
-        image: 'https://l2beat.com/meta-images/og.png',
+        image: 'https://ethbeat.org/meta-images/og.png',
       },
     ])
   })

@@ -8,6 +8,13 @@
       "reason": "First recorded upgrade of Inbox replaced an already initialized implementation (reviewed: a real code change, not an initialization)."
     },
     {
+      "timestamp": 1624568079,
+      "type": "code",
+      "contract": "arb1:0x096760F208390250649E3e8763348E783AEF5562",
+      "transaction": "0xaaac60311dae18f4986c17b15b0cd82557cf2cf9f13d73b8fc1b9b3654164fbe",
+      "reason": "First recorded upgrade of L2CustomGateway replaced an already initialized implementation (0x1a28362f set in the proxy constructor, counterpartGateway set before this tx): a real code change, not an initialization."
+    },
+    {
       "timestamp": 1624716065,
       "type": "code",
       "contract": "arb1:0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
@@ -57,6 +64,13 @@
       "reason": "First recorded upgrade of L2GatewayRouter replaced an already initialized implementation (reviewed: a real code change, not an initialization)."
     },
     {
+      "timestamp": 1630185464,
+      "type": "code",
+      "contract": "eth:0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A",
+      "transaction": "0x490c1f675679e238ed74064f47cc8294bdcdd16e0db1b8df76a3b5011f595208",
+      "reason": "First recorded upgrade of ClassicRollup replaced the live implementation 0xae71755b set at deployment (324 nodes created before this tx): a real code change, not an initialization."
+    },
+    {
       "timestamp": 1630187713,
       "type": "code",
       "contract": "eth:0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
@@ -104,13 +118,6 @@
       "contract": "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86",
       "transaction": "0xefe80801f13381b5ebc9c5f3aade5bb91ac3ac9ebb4ee2906c094145343619a0",
       "reason": "Transferred the L2 canonical gateway ProxyAdmin from an EOA (0x6c26d7f7) to the L2 multisig 0x98e4db7e: single signer to multisig."
-    },
-    {
-      "timestamp": 1661457944,
-      "type": "code",
-      "contract": "eth:0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
-      "transaction": "0x248787fbf0415ff1da68ba618da0cbdd5dcc7c6029be38709f95ea837211edc5",
-      "reason": "Upgraded the (since retired, pre-BoLD) RollupProxy that settled Arbitrum One state before the BoLD rollup took over."
     },
     {
       "timestamp": 1661490543,
@@ -198,6 +205,14 @@
       "reason": "ArbOS 20 / EIP-4844 governance execution upgraded the SequencerInbox (blob support, batch-poster manager). Replaces both the $pastUpgrades entry of this tx and the interval-dated field changes of the same diff (batchPosterManager, maxTimeVariation, isUsingFeeToken)."
     },
     {
+      "timestamp": 1710423719,
+      "type": "code",
+      "contract": "eth:0xe5896783a2F463446E1f624e64Aa6836BE4C6f58",
+      "transaction": "0x51b492ac498a88565639cfe3df77be8729d61f1c413d00b66530d4022a13c36a",
+      "reason": "ArbOS 20 upgraded the (since retired, pre-BoLD) ChallengeManager in the same transaction as the SequencerInbox (Upgraded event).",
+      "updateId": "5edc278c"
+    },
+    {
       "timestamp": 1719023040,
       "type": "state",
       "contract": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
@@ -205,19 +220,19 @@
       "reason": "Raised the threshold of the non-emergency Security Council Safe L2SecurityCouncilPropose (0xADd68bCb, a PROPOSER on this L2Timelock; the Safe itself is outside the perimeter) from 7/12 to 9/12 without a membership change (AIPIncreaseNonEmergencySCThresholdAction), crossing the 75% Security Council bar."
     },
     {
-      "timestamp": 1720582885,
-      "type": "state",
-      "contract": "arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
-      "transaction": "0xf2929a5ee3c2a073de95293f91f163b4d743fdec38e4dceaa7c4796e090783c3",
-      "updateId": "7ec2eb8d",
-      "reason": "SwitchManagerRolesAction: moved MEMBER_ADDER, MEMBER_REPLACER, MEMBER_ROTATOR and MEMBER_REMOVER roles on the SecurityCouncilManager from the emergency Security Council (0x423552c0) to the non-emergency Security Council (0xADd68bCb)."
-    },
-    {
       "timestamp": 1724809031,
       "type": "state",
       "contract": "eth:0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
       "transaction": "0x1462f79e3920cc7c99a886743cb86aa6b05b16d92babc23fe7349e2543bb7b32",
       "reason": "Changed the pre-BoLD rollup execution wasmModuleRoot to ArbOS 31. (pre-BoLD RollupProxy, since retired)."
+    },
+    {
+      "timestamp": 1724809031,
+      "type": "code",
+      "contract": "eth:0xe5896783a2F463446E1f624e64Aa6836BE4C6f58",
+      "transaction": "0x1462f79e3920cc7c99a886743cb86aa6b05b16d92babc23fe7349e2543bb7b32",
+      "reason": "ArbOS 31 upgraded the (since retired, pre-BoLD) ChallengeManager (Upgraded event).",
+      "updateId": "a1a19b5d"
     },
     {
       "timestamp": 1727230595,
@@ -266,5 +281,9 @@
       "updateId": "b0f8c079",
       "reason": "Changed the current rollup execution wasmModuleRoot to ArbOS 61."
     }
+  ],
+  "ignoredTransactions": [
+    "0x079984c56c5670108f5c6f664904178f9b364340351949a42e4637d1f645f770",
+    "0xc2e247e5869aaf5b57ff1cc5da8b56f6675161ad6f980b547846f209e43e145b"
   ]
 }

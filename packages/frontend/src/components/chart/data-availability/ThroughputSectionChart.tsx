@@ -1,28 +1,21 @@
 import type { DaLayerThroughput, Milestone } from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
-import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
-import type { ChartProject } from '~/components/core/chart/Chart'
+import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { ChartRangeControls } from '~/components/core/chart/ChartRangeControls'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
-import { EIGENLAYER_DATA_SOURCE } from '~/components/projects/sections/sectionCopy'
-import { useIncludeL2Only } from '~/pages/data-availability/throughput/components/DaThroughputContext'
-import type { ProjectDaThroughputChartPoint } from '~/server/features/data-availability/throughput/getProjectDaThroughputChartData'
 import { useTRPC } from '~/trpc/React'
 import {
   type ChartRange,
-  type ChartResolution,
   optionToRange,
   rangeToResolution,
 } from '~/utils/range/range'
-import { ChartDataSourceInfo } from '../ChartDataSourceInfo'
 import { DaThroughputByProjectChart } from './DaThroughputByProjectChart'
 import { EthereumProjectsOnlyCheckbox } from './EthereumProjectsOnlyCheckbox'
-import {
-  type ProjectChartDataWithConfiguredThroughput,
-  ProjectDaAbsoluteThroughputChart,
-} from './ProjectDaAbsoluteThroughputChart'
+import { getDataWithConfiguredThroughputs } from './getDataWithConfiguredThroughputs'
+import { useIncludeL2Only } from './IncludeL2OnlyContext'
+import { ProjectDaAbsoluteThroughputChart } from './ProjectDaAbsoluteThroughputChart'
 import { DaThroughputTimeRangeValues } from './timeRangeValues'
 
 interface Props {
@@ -42,15 +35,15 @@ export function ThroughputSectionChart({
   const { includeL2Only, setIncludeL2Only } = useIncludeL2Only()
   const [range, setRange] = useState<ChartRange>(optionToRange('1y'))
 
-  const { data, isLoading } = useQuery(
-    trpc.da.projectCharts.queryOptions({
-      range,
-      projectId: project.id,
-      includeL2Only,
-    }),
+  const { data, isLoading, isPlaceholderData, shownInput } = useChartQuery(
+    trpc.da.projectCharts,
+    { range, projectId: project.id, includeL2Only },
   )
 
-  const resolution = useMemo(() => rangeToResolution(range), [range])
+  const resolution = useMemo(
+    () => rangeToResolution(shownInput.range),
+    [shownInput.range],
+  )
 
   const dataWithConfiguredThroughputs = getDataWithConfiguredThroughputs(
     data?.totalChart.data,
@@ -69,9 +62,6 @@ export function ThroughputSectionChart({
 
   return (
     <div>
-      {project.id === 'eigenda' && (
-        <ChartDataSourceInfo dataSource={EIGENLAYER_DATA_SOURCE} />
-      )}
       <div className="mt-2 space-y-1">
         <EthereumProjectsOnlyCheckbox
           name="projectThroughputIncludeL2Only"
@@ -79,7 +69,10 @@ export function ThroughputSectionChart({
           onCheckedChange={setIncludeL2Only}
         />
         <div className="flex justify-between gap-x-1">
-          <ProjectChartTimeRange timeRange={timeRange} />
+          <ProjectChartTimeRange
+            isPlaceholderData={isPlaceholderData}
+            timeRange={timeRange}
+          />
           <ChartRangeControls
             name="throughput"
             value={range}
@@ -93,16 +86,17 @@ export function ThroughputSectionChart({
       </div>
       <div className="mb-2">
         <ProjectDaAbsoluteThroughputChart
+          isPlaceholderData={isPlaceholderData}
           project={project}
           dataWithConfiguredThroughputs={dataWithConfiguredThroughputs}
           isLoading={isLoading}
           milestones={milestones}
           syncedUntil={data?.syncedUntil}
           resolution={resolution}
-          dataGap={data?.totalChart.dataGap}
         />
       </div>
       <DaThroughputByProjectChart
+        isPlaceholderData={isPlaceholderData}
         data={data?.byProjectChart.data}
         project={project}
         syncedUntil={data?.syncedUntil}
@@ -113,55 +107,4 @@ export function ThroughputSectionChart({
       />
     </div>
   )
-}
-
-function getDataWithConfiguredThroughputs(
-  data: ProjectDaThroughputChartPoint[] | undefined,
-  configuredThroughputs: DaLayerThroughput[],
-  resolution: ChartResolution,
-): ProjectChartDataWithConfiguredThroughput[] | undefined {
-  const processedConfigs = configuredThroughputs
-    .sort((a, b) => a.sinceTimestamp - b.sinceTimestamp)
-    .map((config, i, arr) => {
-      const batchesPerDay = UnixTime.DAY / config.frequency
-      const nextConfig = arr[i + 1]
-      return {
-        ...config,
-        sinceTimestamp: UnixTime.toStartOf(config.sinceTimestamp, 'day'),
-        untilTimestamp: nextConfig
-          ? UnixTime.toStartOf(nextConfig.sinceTimestamp, 'day')
-          : Number.POSITIVE_INFINITY,
-        maxDaily: config.size === 'NO_CAP' ? null : config.size * batchesPerDay,
-        targetDaily: config.target ? config.target * batchesPerDay : null,
-      }
-    })
-
-  return data?.map(([timestamp, value]) => {
-    const config = processedConfigs.find(
-      (c) => timestamp >= c.sinceTimestamp && timestamp < c.untilTimestamp,
-    )
-
-    return [
-      timestamp,
-      value,
-      adjustThoughputToRange(resolution, config?.targetDaily),
-      adjustThoughputToRange(resolution, config?.maxDaily),
-    ]
-  })
-}
-
-function adjustThoughputToRange(
-  resolution: ChartResolution,
-  throughput: number | null | undefined,
-) {
-  if (!throughput) return null
-
-  switch (resolution) {
-    case 'hour':
-      return throughput / 24
-    case 'six hours':
-      return throughput / 4
-    default:
-      return throughput
-  }
 }

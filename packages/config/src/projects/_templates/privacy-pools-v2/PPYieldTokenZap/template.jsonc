@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PPYieldTokenZap",
+  "category": "core",
+  "description": "Converts between a share token and its underlying in one call, through Aave v3.",
+  "ignoreMethods": ["quoteBuy"],
+  "ignoreRelatives": ["POOL", "UNDERLYING", "A_TOKEN"]
+}

@@ -14,10 +14,8 @@ import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
 import { sendNotFoundPage } from '../not-found/sendNotFoundPage'
-import { getInteropBurnAndMintData } from './burn-and-mint/getInteropBurnAndMintData'
+import { getInteropTransferTypeData } from './getInteropTransferTypeData'
 import { getInteropIntentBridgesData } from './intent-bridges/getInteropIntentBridgesData'
-import { getInteropLockAndMintData } from './lock-and-mint/getInteropLockAndMintData'
-import { getInteropNonMintingData } from './non-minting/getInteropNonMintingData'
 import {
   getInteropProtocolMarkdown,
   getInteropProtocolPageData,
@@ -73,7 +71,12 @@ export function createInteropRouter(
       query: InteropQuery,
     }),
     async (req, res) => {
-      const data = await getInteropNonMintingData(req, manifest, cache)
+      const data = await getInteropTransferTypeData(
+        'nonMinting',
+        req,
+        manifest,
+        cache,
+      )
       const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },
@@ -85,7 +88,12 @@ export function createInteropRouter(
       query: InteropQuery,
     }),
     async (req, res) => {
-      const data = await getInteropLockAndMintData(req, manifest, cache)
+      const data = await getInteropTransferTypeData(
+        'lockAndMint',
+        req,
+        manifest,
+        cache,
+      )
       const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },
@@ -97,7 +105,12 @@ export function createInteropRouter(
       query: InteropQuery,
     }),
     async (req, res) => {
-      const data = await getInteropBurnAndMintData(req, manifest, cache)
+      const data = await getInteropTransferTypeData(
+        'burnAndMint',
+        req,
+        manifest,
+        cache,
+      )
       const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },
@@ -151,7 +164,7 @@ export function createInteropRouter(
   )
 
   router.get(
-    '/interop/tokens/:slug/opengraph-image.png',
+    '/tokens/:slug/opengraph-image.png',
     validateRoute({
       params: v.object({ slug: v.string() }),
     }),
@@ -176,7 +189,7 @@ export function createInteropRouter(
   // `.md` ends whichever segment is last, like the page URL it stands for.
   // Registered first: the page route would take "usdc01.md" as the slug.
   router.get(
-    '/interop/tokens/:slug{/:issuer}{/:symbol}.md',
+    '/tokens/:slug{/:issuer}{/:symbol}.md',
     validateRoute({ params: v.object({ slug: v.string() }) }),
     serveMarkdown(getTokenMarkdown),
   )
@@ -184,7 +197,7 @@ export function createInteropRouter(
   // The optional issuer and symbol segments only make the URL readable - the
   // token is resolved by the slug (its id), so they are validated away here.
   router.get(
-    '/interop/tokens/:slug{/:issuer}{/:symbol}',
+    '/tokens/:slug{/:issuer}{/:symbol}',
     validateRoute({ params: v.object({ slug: v.string() }) }),
     serveMarkdownIfPreferred(getTokenMarkdown),
     async (req, res) => {

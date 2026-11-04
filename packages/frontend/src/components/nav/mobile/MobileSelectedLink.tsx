@@ -1,4 +1,5 @@
 import { usePathname } from '~/hooks/usePathname'
+import { GARDEN_PATH } from '~/pages/garden/paths'
 import { isLinkActive } from '~/utils/isLinkActive'
 import { VerticalSeparator } from '../../core/VerticalSeparator'
 import type { NavGroup, NavLink } from '../types'
@@ -25,14 +26,16 @@ export function MobileSelectedLink({
     pathname.startsWith(link.href),
   )
 
-  if (!selectedGroup && !selectedSideLink) return null
+  // The garden sits above the sections in the sidebar, outside the groups.
+  const title = pathname.startsWith(GARDEN_PATH)
+    ? 'CROPS'
+    : (selectedGroup?.title ?? selectedSideLink?.title)
+  if (!title) return null
 
   return (
     <>
       <VerticalSeparator className="h-10" />
-      <span className="font-bold text-base">
-        {selectedGroup?.title ?? selectedSideLink?.title}
-      </span>
+      <span className="font-bold text-base">{title}</span>
     </>
   )
 }

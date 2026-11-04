@@ -29,7 +29,7 @@ function Event({ event }: { event: GovernanceEventEntry }) {
 
   return (
     <GovernanceCard
-      type={event.highlighted ? 'purple' : isMobile ? 'primary' : 'secondary'}
+      type={event.highlighted ? 'brand' : isMobile ? 'primary' : 'secondary'}
       size="medium"
       className="flex flex-col justify-start gap-4 md:h-[304px]"
     >
@@ -37,7 +37,7 @@ function Event({ event }: { event: GovernanceEventEntry }) {
         {event.title && (
           <p
             className={cn(
-              'text-brand text-subtitle-12 uppercase',
+              'text-brand-deep text-subtitle-12 uppercase',
               event.highlighted && 'text-white',
             )}
           >

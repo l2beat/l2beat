@@ -5,7 +5,10 @@ import {
   type StickyTableRefs,
   stickyTableHeaderClassNames,
 } from './useStickyTableHeader'
-import { STICKY_OVERLAP_PX } from './utils/commonPinningStyles'
+import {
+  NOT_A_FOOTER_PROPS,
+  STICKY_OVERLAP_PX,
+} from './utils/commonPinningStyles'
 
 /**
  * Once the table scrolls, its sticky cells stop 1px left of where they start,
@@ -51,15 +54,18 @@ export function StickyTableHeader({
     <div
       ref={header}
       className={cn(stickyTableHeaderClassNames.header, 'bg-surface-primary')}
+      {...NOT_A_FOOTER_PROPS}
     >
-      <div className={stickyTableHeaderClassNames.track}>
-        {renderCopy(track)}
-      </div>
+      {/* First, so focus meets the pinned columns' controls before the rest,
+          in the order they show. */}
       <div
         className={stickyTableHeaderClassNames.pinnedLayer}
         style={PINNED_LAYER_STYLE}
       >
         {renderCopy(pinned)}
+      </div>
+      <div className={stickyTableHeaderClassNames.track}>
+        {renderCopy(track)}
       </div>
     </div>
   )

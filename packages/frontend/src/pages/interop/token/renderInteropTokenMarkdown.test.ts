@@ -18,7 +18,7 @@ import {
 describe(renderInteropTokenMarkdown.name, () => {
   it('opens with the token symbol and a link to the canonical HTML page', () => {
     expect(renderInteropTokenMarkdown(PAGE)).toMatchRegex(
-      /^# USDC\n\nMarkdown version of https:\/\/l2beat\.com\/interop\/tokens\/usdc01\/circle\/usdc\n\n/,
+      /^# USDC\n\nMarkdown version of https:\/\/ethbeat\.org\/tokens\/usdc01\/circle\/usdc\n\n/,
     )
   })
 
@@ -33,7 +33,7 @@ describe(renderInteropTokenMarkdown.name, () => {
       '- Last 24h avg. transfer time: 1m 30s',
       '- Last 24h avg. transfer value: $2.89 K',
       '- Last 24h top path: Hyperliquid ↔ Polygon PoS ($5.00 M)',
-      '- Top protocol (based on 24h volume): [CCTP](https://l2beat.com/interop/protocols/cctp) (volume $8.00 M, 1.20 K transfers)',
+      '- Top protocol (based on 24h volume): [CCTP](https://ethbeat.org/interop/protocols/cctp) (volume $8.00 M, 1.20 K transfers)',
       '- Protocols used: CCTP, Across',
       '- Deployments: 4',
     )
@@ -58,7 +58,7 @@ describe(renderInteropTokenMarkdown.name, () => {
       getSection(renderInteropTokenMarkdown(PAGE), 'Volume and flows'),
     ).toInclude(
       '### Top routes by volume (last 24h)\n\n- Hyperliquid → Arbitrum One: $3.00 M\n- Polygon PoS → Ethereum: $2.00 M',
-      'https://l2beat.com/interop/tokens/usdc01/circle/usdc#interop-volume',
+      'https://ethbeat.org/tokens/usdc01/circle/usdc#interop-volume',
     )
   })
 
@@ -66,7 +66,7 @@ describe(renderInteropTokenMarkdown.name, () => {
     const markdown = renderInteropTokenMarkdown(PAGE)
 
     expect(getSection(markdown, 'Transfers')).toInclude(
-      'https://l2beat.com/interop/tokens/usdc01/circle/usdc#interop-transfers',
+      'https://ethbeat.org/tokens/usdc01/circle/usdc#interop-transfers',
     )
   })
 
@@ -80,8 +80,8 @@ describe(renderInteropTokenMarkdown.name, () => {
       [
         '| # | Name | Category | Last 24h volume | Last 24h transfer count | Last 24h avg. transfer time | Last 24h avg. transfer value |',
         '| --- | --- | --- | --- | --- | --- | --- |',
-        '| 1 | [CCTP](https://l2beat.com/interop/protocols/cctp) | canonical | $8.00 M | 1200 | 15m | $6.66 K |',
-        '| 2 | [Across](https://l2beat.com/interop/protocols/across) (aggregate, using Across Settlement) | intent | $4.50 M | 3000 | Fast: 10s, Slow: N/A | No data |',
+        '| 1 | [CCTP](https://ethbeat.org/interop/protocols/cctp) | canonical | $8.00 M | 1200 | 15m | $6.66 K |',
+        '| 2 | [Across](https://ethbeat.org/interop/protocols/across) (aggregate, using Across Settlement) | intent | $4.50 M | 3000 | Fast: 10s, Slow: N/A | No data |',
       ].join('\n'),
     )
   })
@@ -109,9 +109,9 @@ describe(renderInteropTokenMarkdown.name, () => {
         '| # | Chain | Address | Symbol | Minters | Last 24h volume | Last 24h transfer count | Last 24h avg. transfer time |',
         '| --- | --- | --- | --- | --- | --- | --- | --- |',
         `| 1 | Ethereum | [${ETHEREUM_USDC}](https://etherscan.io/address/${ETHEREUM_USDC}) | USDC | None known (likely the locked or natively issued side) | $6.00 M | 2000 | 1m |`,
-        `| 2 | Base | [${BASE_USDC}](https://basescan.org/address/${BASE_USDC}) | USDC | [CCTP](https://l2beat.com/interop/protocols/cctp) | $3.00 M | 900 | 20s |`,
-        `| 3 | Arbitrum One | [${ARBITRUM_USDC}](https://arbiscan.io/address/${ARBITRUM_USDC}) | USDC | [CCTP](https://l2beat.com/interop/protocols/cctp) | $1.00 M | 300 | 25s |`,
-        `| 4 | Unichain | ${UNICHAIN_USDC} | USDC.e | [Stargate](https://l2beat.com/interop/protocols/stargate) | No data (chain not fully supported) | No data (chain not fully supported) | No data (chain not fully supported) |`,
+        `| 2 | Base | [${BASE_USDC}](https://basescan.org/address/${BASE_USDC}) | USDC | [CCTP](https://ethbeat.org/interop/protocols/cctp) | $3.00 M | 900 | 20s |`,
+        `| 3 | Arbitrum One | [${ARBITRUM_USDC}](https://arbiscan.io/address/${ARBITRUM_USDC}) | USDC | [CCTP](https://ethbeat.org/interop/protocols/cctp) | $1.00 M | 300 | 25s |`,
+        `| 4 | Unichain | ${UNICHAIN_USDC} | USDC.e | [Stargate](https://ethbeat.org/interop/protocols/stargate) | No data (chain not fully supported) | No data (chain not fully supported) | No data (chain not fully supported) |`,
       ].join('\n'),
     )
   })
@@ -128,12 +128,12 @@ describe(renderInteropTokenMarkdown.name, () => {
         '',
         'Burn-and-mint groups, whose deployments move between chains by burning on one and minting on another:',
         '',
-        '- Group 1: USDC, 2 deployments, burned and minted via [CCTP](https://l2beat.com/interop/protocols/cctp); last 24h volume $4.00 M, 1.20 K transfers; deployments: Base (0x8335...2913), Arbitrum One (0xaf88...5831)',
+        '- Group 1: USDC, 2 deployments, burned and minted via [CCTP](https://ethbeat.org/interop/protocols/cctp); last 24h volume $4.00 M, 1.20 K transfers; deployments: Base (0x8335...2913), Arbitrum One (0xaf88...5831)',
         '',
         'Backing, where a deployment is minted against the one backing it:',
         '',
         '- Group 1 (USDC, 2 deployments) is backed by USDC on Ethereum (0xA0b8...eB48) (bridge not identified)',
-        '- USDC.e on Unichain (0x078D...7AD6) is backed by USDC on Ethereum (0xA0b8...eB48) via [Stargate](https://l2beat.com/interop/protocols/stargate)',
+        '- USDC.e on Unichain (0x078D...7AD6) is backed by USDC on Ethereum (0xA0b8...eB48) via [Stargate](https://ethbeat.org/interop/protocols/stargate)',
       ].join('\n'),
     )
   })
@@ -168,11 +168,11 @@ describe(renderInteropTokenMarkdown.name, () => {
     )
   })
 
-  it('warns instead of giving statistics when the token has no transfers', () => {
+  it('warns instead of giving statistics when the token has no aggregates', () => {
     const markdown = renderInteropTokenMarkdown({ ...PAGE, tokenData: null })
 
     expect(getSection(markdown, 'Summary')).toInclude(
-      '**Warning:** No transfers of this token were found in the past 24 hours',
+      '**Warning:** Data for the token is not synced. Please check again later.',
       '- Issued by: Circle\n- Category: stablecoin\n- Deployments: 4',
     )
     expect(markdown).not.toInclude('## Top protocols')
@@ -386,6 +386,7 @@ const PAGE: InteropTokenPage = {
     issuer: 'circle',
     iconUrl: null,
     category: 'stablecoin',
+    isPriceUnreliable: false,
   },
   tokenEntry: {
     deploymentsCount: 4,
@@ -397,6 +398,8 @@ const PAGE: InteropTokenPage = {
           title: 'Volume and flows',
           tokenId: 'usdc01',
           interopChains: [],
+          isPriceUnreliable: false,
+          snapshotTimestamp: undefined,
         },
       },
       {
@@ -423,4 +426,5 @@ const PAGE: InteropTokenPage = {
     ],
   },
   tokenData: TOKEN_DATA,
+  lastSyncedAt: undefined,
 }

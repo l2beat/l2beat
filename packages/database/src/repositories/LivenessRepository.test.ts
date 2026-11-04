@@ -285,7 +285,41 @@ describeDatabase(LivenessRepository.name, (db) => {
           START - 1 * UnixTime.HOUR,
         )
 
-        expect(results).toEqualUnsorted([DATA[1]!, NEW_DATA[0]!])
+        expect(results).toEqual([DATA[1]!, NEW_DATA[0]!])
+      })
+
+      it('should return one row per timestamp and configuration', async () => {
+        await repository.insertMany([
+          {
+            timestamp: START - 2 * UnixTime.HOUR,
+            blockNumber: 12340,
+            txHash: '0xabcdef1234567892',
+            configurationId: txIdA,
+          },
+          {
+            timestamp: START - 3 * UnixTime.HOUR,
+            blockNumber: 12339,
+            txHash: '0xabcdef1234567893',
+            configurationId: txIdA,
+          },
+          {
+            timestamp: START - 3 * UnixTime.HOUR,
+            blockNumber: 12339,
+            txHash: '0xabcdef1234567894',
+            configurationId: txIdA,
+          },
+        ])
+
+        const results = await repository.getRecordsInRangeWithLatestBefore(
+          [txIdA],
+          START - 2 * UnixTime.HOUR,
+          START - 1 * UnixTime.HOUR,
+        )
+
+        expect(results.map((r) => [r.configurationId, r.timestamp])).toEqual([
+          [txIdA, START - 2 * UnixTime.HOUR],
+          [txIdA, START - 3 * UnixTime.HOUR],
+        ])
       })
 
       it('should return rows within given time range, exclusive to', async () => {
@@ -354,11 +388,7 @@ describeDatabase(LivenessRepository.name, (db) => {
           START - 1 * UnixTime.HOUR,
         )
 
-        expect(results).toEqualUnsorted([
-          NEW_DATA[1]!,
-          NEW_DATA[3]!,
-          NEW_DATA[2]!,
-        ])
+        expect(results).toEqual([NEW_DATA[1]!, NEW_DATA[3]!, NEW_DATA[2]!])
       })
     },
   )

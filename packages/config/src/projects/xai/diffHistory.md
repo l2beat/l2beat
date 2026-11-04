@@ -1,3 +1,146 @@
+Generated with discovered.json: 0xecf1bf0bbff807c5eeb6b49755bb0e375831de31
+
+# Diff at Fri, 16 Oct 2026 09:37:51 GMT:
+
+- id: 585d87e5
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1791533635
+- current timestamp: 1791533635
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791533635 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (arb1:0x041F85dD87c46B941dc9b15c6628B19ee5358485) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (arb1:0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.executors.severity:
+-        "LOW"
++        "MEDIUM"
+      fieldMeta.accessControl:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract Outbox (arb1:0x1E400568AD4840dbE50FB32f306B842e9ddeF726) [orbitstack/Outbox] {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.rollup:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract GatewayRouter (arb1:0x22CCA5Dc96a4Ac1EC32c9c7C5ad4D66254a24C35) [orbitstack/GatewayRouter] {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.defaultGateway:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract RollupEventInbox (arb1:0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8) [orbitstack/RollupEventInbox] {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Bridge (arb1:0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f) [orbitstack/Bridge] {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.allowedOutboxList.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.allowedDelayedInboxList.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.rollup:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract SequencerInbox (arb1:0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Inbox (arb1:0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9) [orbitstack/Inbox] {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ProxyAdmin (arb1:0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+Generated with discovered.json: 0x53fd5c32ea1f636f645ace0a1f573edb44dceb91
+
+# Diff at Fri, 09 Oct 2026 08:15:46 GMT:
+
+- id: cfd22eb8
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@bc9f5581c70968e9dc5db1fc5cc83d8a0b243555 block: 1790891941
+- current timestamp: 1791533635
+
+## Description
+
+XaiSentryMultisig2: member removed, threshold 1/3 → 1/2.
+
+## Watched changes
+
+```diff
+    contract XaiSentryMultisig2 (arb1:0x194654c631686077d3C34a0e7c1856E4BE2E2705) [GnosisSafe] {
+    +++ description: None
+      values.$members.2:
+-        "arb1:0x90D77E3a3B660E54E04cD622937765d2375FB2e3"
+      values.multisigThreshold:
+-        "1 of 3 (33%)"
++        "1 of 2 (50%)"
+    }
+```
+
 Generated with discovered.json: 0x7d8d86ff2a3d62825e8aa69ab3f48501b5c7614c
 
 # Diff at Sun, 04 Oct 2026 05:55:37 GMT:

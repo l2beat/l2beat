@@ -13,9 +13,6 @@ export const pageLoaders = {
   L2RiskPage: async () =>
     (await import('./layer2s/risk/L2RiskPage')).L2RiskPage,
   L2TvsPage: async () => (await import('./layer2s/tvs/L2TvsPage')).L2TvsPage,
-  L2TvsBreakdownPage: async () =>
-    (await import('./layer2s/tvs/breakdown/L2TvsBreakdownPage'))
-      .L2TvsBreakdownPage,
   L2ActivityPage: async () =>
     (await import('./layer2s/activity/L2ActivityPage')).L2ActivityPage,
   L2ComparePage: async () =>
@@ -65,27 +62,10 @@ export const pageLoaders = {
   InteropIntentBridgesPage: async () =>
     (await import('./interop/intent-bridges/InteropIntentBridgesPage'))
       .InteropIntentBridgesPage,
-  DataAvailabilitySummaryPage: async () =>
-    (await import('./data-availability/summary/DataAvailabilitySummaryPage'))
-      .DataAvailabilitySummaryPage,
-  DataAvailabilityRiskPage: async () =>
-    (await import('./data-availability/risk/DataAvailabilityRiskPage'))
-      .DataAvailabilityRiskPage,
-  DataAvailabilityThroughputPage: async () =>
-    (
-      await import(
-        './data-availability/throughput/DataAvailabilityThroughputPage'
-      )
-    ).DataAvailabilityThroughputPage,
-  DataAvailabilityLivenessPage: async () =>
-    (await import('./data-availability/liveness/DataAvailabilityLivenessPage'))
-      .DataAvailabilityLivenessPage,
-  DataAvailabilityProjectPage: async () =>
-    (await import('./data-availability/project/DataAvailabilityProjectPage'))
-      .DataAvailabilityProjectPage,
-  DataAvailabilityArchivedPage: async () =>
-    (await import('./data-availability/archived/DataAvailabilityArchivedPage'))
-      .DataAvailabilityArchivedPage,
+  EthereumProjectPage: async () =>
+    (await import('./ethereum/EthereumProjectPage')).EthereumProjectPage,
+  ChainProjectPage: async () =>
+    (await import('./chain/ChainProjectPage')).ChainProjectPage,
   BlobsPage: async () => (await import('./blobs/BlobsPage')).BlobsPage,
   PrivacySummaryPage: async () =>
     (await import('./privacy/summary/PrivacySummaryPage')).PrivacySummaryPage,
@@ -103,9 +83,6 @@ export const pageLoaders = {
   ZkCatalogProjectPage: async () =>
     (await import('./zk-catalog/v2/project/ZkCatalogProjectPage'))
       .ZkCatalogProjectPage,
-  EcosystemProjectPage: async () =>
-    (await import('./ecosystems/project/EcosystemProjectPage'))
-      .EcosystemProjectPage,
   GovernancePage: async () =>
     (await import('./governance/GovernancePage')).GovernancePage,
   NativeRollupsPage: async () =>
@@ -129,15 +106,17 @@ export const pageLoaders = {
   ChangelogPage: async () =>
     (await import('./changelog/ChangelogPage')).ChangelogPage,
   DonatePage: async () => (await import('./donate/DonatePage')).DonatePage,
-  DaRiskFrameworkPage: async () =>
-    (await import('./da-risk-framework/DaRiskFrameworkPage'))
-      .DaRiskFrameworkPage,
   MultisigReportPage: async () =>
     (await import('./multisig-report/MultisigReportPage')).MultisigReportPage,
+  MandatePage: async () => (await import('./mandate/MandatePage')).MandatePage,
+  NewNamePage: async () => (await import('./new-name/NewNamePage')).NewNamePage,
   TermsOfServicePage: async () =>
     (await import('./terms-of-service/TermsOfServicePage')).TermsOfServicePage,
   NotFoundPage: async () =>
     (await import('./not-found/NotFoundPage')).NotFoundPage,
+  PrivacyMethodologyPage: async () =>
+    (await import('./privacy/methodology/PrivacyMethodologyPage'))
+      .PrivacyMethodologyPage,
   StagesPage: async () => (await import('./stages/StagesPage')).StagesPage,
   MonthlyUpdatePage: async () =>
     (await import('./publications/monthly-updates/MonthlyUpdatePage'))

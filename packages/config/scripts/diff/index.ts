@@ -1,32 +1,37 @@
+import { DatabaseSync } from 'node:sqlite'
 import { readFileSync, writeFileSync } from 'fs'
-import { Database } from 'sqlite3'
 import { diffAll } from './diff'
 import { diffsToHtml } from './html'
 import { diffsToText } from './text'
 import type { Project } from './types'
 
-main().catch((error: unknown) => {
-  console.error(error)
-  process.exitCode = 1
-})
+main()
 
-async function main() {
+function main() {
   const args = process.argv.slice(2)
   if (args.length !== 2) {
     throw new Error('Usage: index.ts <output.html> <output.txt>')
   }
   const [htmlPath, textPath] = args
 
-  const dbBefore = new Database('/tmp/compare/main/db.sqlite')
-  const dbAfter = new Database('/tmp/compare/pr/db.sqlite')
+  const dbBefore = new DatabaseSync('/tmp/compare/main/db.sqlite', {
+    readOnly: true,
+  })
+  const dbAfter = new DatabaseSync('/tmp/compare/pr/db.sqlite', {
+    readOnly: true,
+  })
 
   const commitBefore = readFileSync('/tmp/compare/main/commit', 'utf-8').trim()
   const commitAfter = readFileSync('/tmp/compare/pr/commit', 'utf-8').trim()
 
-  const projectsBefore = (await query(dbBefore, 'SELECT * FROM projects'))
+  const projectsBefore = dbBefore
+    .prepare('SELECT * FROM projects')
+    .all()
     .map(parseProject)
     .sort((a, b) => a.id.localeCompare(b.id))
-  const projectsAfter = (await query(dbAfter, 'SELECT * FROM projects'))
+  const projectsAfter = dbAfter
+    .prepare('SELECT * FROM projects')
+    .all()
     .map(parseProject)
     .sort((a, b) => a.id.localeCompare(b.id))
 
@@ -43,19 +48,6 @@ async function main() {
     textPath,
     diffsToText({ projectsBefore, projectsAfter, commitBefore, commitAfter }),
   )
-}
-
-function query(
-  db: Database,
-  query: string,
-  values?: unknown[],
-): Promise<unknown[]> {
-  return new Promise<unknown[]>((resolve, reject) => {
-    db.all(query, values, (err: Error | null, rows: unknown[]) => {
-      if (err) reject(err)
-      resolve(rows)
-    })
-  })
 }
 
 function parseProject(project: unknown) {

@@ -1,47 +1,43 @@
-Zama Confidential Tokens is an account-based confidential token system on Ethereum, using the Zama FHE protocol. It is based on [ERC-7984](https://eips.ethereum.org/EIPS/eip-7984). Users deposit regular ERC-20 tokens into asset-specific escrows and receive confidential tokens whose balances and internal transfer amounts are represented as encrypted handles.
+Zama Confidential Tokens let users hold and send tokens on Ethereum with hidden balances and transfer amounts. A user wraps a token into its confidential version, such as USDC into cUSDC, swaps, lends, pays others with it and unwraps it back. Who pays whom and every wrap and unwrap amount stay public.
 
-'Confidential' here means `from:` and `to:` addresses and transfer timestamps always remain public. Only balances and transfer amounts are hidden. Each confidential token aggregates encrypted balances for a single underlying asset, so the hidden state is the amount and balance data, not the public address graph.
+Users trust the {{kmsSignerCount}} operators of the key management service (KMS), who share the decryption key. They also trust {{coprocessorSignerCount}} coprocessor operators, Zama for the relayer and app, and Zama's governance multisigs. Any {{kmsKeyThreshold}} KMS operators together can decrypt every amount, and the multisigs can upgrade every contract instantly. Unwraps need {{kmsThreshold}} KMS signatures, so funds leave only while the KMS and the coprocessors run.
 
 ![Zama Confidential Tokens architecture](/images/architecture/zama.png#center)
 
 ### Architecture
 
-The Zama FHE protocol uses fully homomorphic encryption to let smart contracts operate on encrypted values. Balances are stored as encrypted handles instead of plaintext balances, and FHEVM system contracts are called for encrypted arithmetic, comparisons, transfers, minting, or burning, but most of the actual FHE execution happens offchain.
+The tokens follow [ERC-7984](https://eips.ethereum.org/EIPS/eip-7984) and use fully homomorphic encryption (FHE), which lets contracts compute on encrypted amounts. One FHE key pair protects every balance and amount. Wallets encrypt with its public key, and the coprocessors compute on the ciphertexts without decrypting them. The KMS operators hold the secret key in shares and decrypt on request.
 
-The FHE coprocessor is an offchain service that performs FHE-related work the EVM cannot execute directly. Encrypted user inputs are accepted onchain only after the InputVerifier checks signatures from the coprocessor signer set (currently {{coprocessorThreshold}}/{{coprocessorSignerCount}}). When priority coprocessor mode is on, a single coprocessor submits encrypted data (currently {{priorityCoprocessorMode}}). The coprocessor is constrained on what it can commit onchain by the smart contract, but it is not trustless and can affect validity if compromised.
+### Flow
 
-The ACL is the onchain access-control registry for encrypted handles. It records which accounts or contracts are allowed to use a ciphertext handle, which prevents arbitrary users from reusing encrypted values they do not control.
+1. **Wrap.** You deposit a token into its confidential wrapper, such as USDC into cUSDC. Your address and the amount are public.
+2. **Transfer.** Your wallet encrypts the amount, and the coprocessors update both balances without decrypting them. Sender and recipient are public.
+3. **Unwrap.** The wrapper asks the KMS to decrypt the amount, and the tokens are paid out once enough operators sign it. The amount is public.
 
-The (T)KMS is the threshold key-management service used for private and public decryptions. It holds the FHE secret key and functions like a multisig; the current Ethereum verifier context (KMS signer set) has a public-decryption threshold of {{kmsThreshold}}/{{kmsSignerCount}}. KMS signer sets and thresholds are managed onchain in the ProtocolConfig contract, where governance can create and destroy contexts and retune the thresholds of any live context — including the current one — without rotating it. Each context can be different but retains its full permissions until explicitly invalidated onchain. A malicious new Ethereum verifier context, or the threshold of any retained Ethereum verifier context, can attest an inflated amount for an attacker's real unwrap handle and drain pooled backing deposited by other users. The KMS Signers are operated by [Zama, Dfns, Figment, Fireblocks, InfStones, Unit410, LayerZero, Ledger, Omakase, Stake Capital, OpenZeppelin, Etherscan, and Conduit](https://docs.zama.org/protocol/protocol-apps/addresses/mainnet/ethereum#operator-staking).
+### App
 
-The onchain KMS signer addresses are ECDSA credentials used to attest KMS outputs; they are not the FHE key shares. [Zama states](https://docs.zama.org/protocol/protocol/overview/kms) that KMS MPC nodes run inside AWS Nitro Enclaves, and its offchain software maps node signing keys to MPC parties, but the contracts do not verify Nitro attestations or prove that a configured signer runs inside a TEE, holds an FHE key share, or participated in the threshold computation. Changing an onchain KMS context only changes which signatures are accepted; it neither triggers nor verifies redistribution or destruction of FHE key shares.
+Before every write, the app checks the address with Zama's screening service, which refuses fresh addresses. A client built on Zama's open SDK needs a Zama [API key](https://docs.zama.org/protocol/sdk/guides/relayer-api-keys) or a [self-run relayer](https://github.com/zama-ai/fhevm/blob/4bf50a083e65f0a53997292ca5848010faf98b79/relayer/docs/SELF_HOSTING.md). The vault deposit form shares the user's vault balance with Merkl for extra rewards, [on by default, opt-out available](https://www.zama.org/post/confidential-rewards-with-merkl-are-now-available-to-claim).
 
-There are many moving parts and offchain components in the Zama FHE protocol on which Zama Confidential Tokens is built. The Zama Gateway, an L3 on Arbitrum, is currently used for coordination/aggregation and ciphertext-metadata. FHE key- and CRS-generation is orchestrated onchain on Ethereum through the KMSGeneration contract: governance triggers a generation, and KMS node responses are accepted at a signature threshold configured in ProtocolConfig. Ethereum does not trust the Gateway's state directly and independently verifies operator signatures before accepting inputs or withdrawals, but current relayer and operator workflows depend on Gateway availability to produce those proofs.
+### Yield vaults
 
-### Privacy considerations
+Vault deposits are batched. You join the open batch with an encrypted amount. After about {{minBatchAgeHours}} hours the batch total is unwrapped publicly, deposited into the Morpho vault and the shares wrapped back. Each depositor claims an encrypted share. The app also joins other vaults' batches with encrypted zero amounts as decoys to hide which vault the user actually joined.
 
-Deposits and withdrawals are public privacy boundaries. A `wrap` emits the confidential-token recipient and the rounded clear underlying-token amount. The recipient can be different from the depositor, but that relationship is still visible in the deposit event. Withdrawals then reveal the recipient and amount.
+### Swaps
 
-Within a confidential token, holders can make confidential transfers between transparent EVM addresses. These transfers reveal the parties and encrypted ciphertext handles, but not the clear amount or resulting balances. The confidential balances and transfer amounts of users can be decrypted retroactively if enough KMS key shares are combined.
+A swap is a sealed-bid auction on ConfidentialSwap. It locks the user's tokens in the swap contract's escrow until it settles or is reclaimed. Approved market makers quote every order, including decoys. The winner is public, sees the real order and has to settle it within a time window.
 
-The smart contracts do not fully validate FHE offchain work, which makes the KMS and coprocessor each trusted for security, privacy and liveness. Encrypted user inputs are accepted through the InputVerifier, which requires {{coprocessorThreshold}}/{{coprocessorSignerCount}} coprocessor signatures. Public decryptions are accepted through the KMSVerifier, which requires the threshold of any selected non-invalidated context (signer set), not necessarily the displayed current {{kmsThreshold}}/{{kmsSignerCount}} context. Decentralization of the critical offchain services is announced in the docs but not implemented onchain (e.g. coprocessors, fraud proofs, slashing, zk proofs).
+### KMS
 
-Practical privacy also depends on timing, amounts, address reuse, wallet/RPC providers, and any frontend or service used to create encrypted inputs. Users are advised to research [OPSEC best practice](/publications/privacy-best-practices).
+The [KMS operators](https://docs.zama.org/protocol/protocol-apps/addresses/mainnet/ethereum#operator-staking) are Zama, Dfns, Figment, Fireblocks, InfStones, Unit410, LayerZero, Ledger, Omakase, Stake Capital, OpenZeppelin, Etherscan and Conduit. Each holds a share of the FHE secret key and a key that signs results for Ethereum. They decrypt an amount only for accounts that the ACL, an onchain access list, allows. [Zama states](https://github.com/zama-ai/fhevm/blob/e3a7d1e263655f2b0dbd6230c3b00a7693fb8609/docs/protocol/architecture/kms.md#L58) that they run in AWS Nitro enclaves, but Ethereum checks only their signatures. Removing an operator onchain leaves its key share intact.
 
-### Fees
+### Coprocessors
 
-There currently is no protocol fee. Users still pay Ethereum gas for each action, including confidential token transfers, and may pay costs charged by external wallets, relayers, or services used to create or submit transactions.
+[Artifact, Blockscape, Luganodes, P2P and Zama](https://github.com/zama-ai/protocol-registry/blob/944485d168957ae5857e675281eec0329c7fb9ff/mainnet.md#operator-staking) run the coprocessors, which compute on ciphertexts and check every encrypted input. Ethereum accepts an input signed by {{coprocessorThreshold}} of {{coprocessorSignerCount}} of them, so they are trusted for validity. Zama stores all ciphertexts in a [public bucket](https://coprocessor-1.mainnet.zama.org/). The Zama Gateway, an L3 on Arbitrum, relays decryption requests and publishes who reads which balance and when.
 
 ### Compliance
 
-Compliance is enforced in each confidential token contract. The owner can block and unblock local users, and confidential token contracts can be configured to call an underlying-token denylist function (the owner can change or disable this hook at any time). These checks apply to direct deposits, ERC-1363 callback deposits, confidential transfers, unwrap requests, and unwrap finalization.
+Each token's owner, controlled by the multisigs, can block users and check them against the underlying token's denylist, as cUSDC does with USDC's blacklist. It can also appoint a pauser that halts the token, and observers that decrypt all of its balances and amounts. Today no token has a pauser or an observer. ConfidentialSwap has its own compliance address, set at deployment. Issuers of underlying tokens like USDC can freeze a token's whole escrow.
 
-The owner can also appoint a pauser for each confidential token that can halt wrapping, unwrapping, unwrap finalization, and confidential transfers; only the owner can unpause. Furthermore, the owner can appoint observer accounts that receive a wildcard, non-expiring user-decryption delegation over all of the token's encrypted handles — effectively a full view key for its balances and transfer amounts, honored by the KMS based on the onchain ACL state. Currently, no pausers or observers are configured on any confidential token.
+### Fees
 
-Because confidential tokens are backed by underlying tokens held in their contract addresses, issuer or token-admin controls over those underlyings remain a dependency. If an underlying token admin blocks a confidential token address, the escrowed token can become stuck. If a user address is blocked by an underlying token and the confidential token has a transitive denylist hook configured, that address can be prevented from depositing, transferring, or completing withdrawals.
-
-### Anonymity set
-
-Zama Confidential Tokens does not use fixed-denomination notes. For a given finalized withdrawal, the set of prior deposits that could have funded the withdrawing account through the public address graph is its effective anonymity set: deposits credited to the same address, or to addresses that visibly transferred confidential tokens to it before the withdrawal. Amounts are private inside the confidential token, so links within the remaining candidate set can remain ambiguous, but deposits and finalized withdrawals expose each boundary amount and endpoint address. Integration with DeFi and its use from inside the confidential token increases the anonymity set.
-
-As mentioned in 'Privacy Considerations', the mostly centralized offchain services that cannot be circumvented can corrupt practical privacy, independent of the abstract measurable anonymity set.
+Users pay Ethereum gas. The Gateway charges {{inputPrice}} ZAMA per encrypted input and {{decryptionPrice}} ZAMA per decryption, paid by the relayer.

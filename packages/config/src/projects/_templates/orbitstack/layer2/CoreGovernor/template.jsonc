@@ -41,12 +41,13 @@
       "severity": "HIGH"
     },
     "owner": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "$admin": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "l2CoreQuorumPercent": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "quorumNumerator",

@@ -159,6 +159,20 @@ export const fluent: ScalingProject = {
         },
       },
     ],
+    daTracking: [
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: 24913710, // first blob batch, 2026-04-19
+        inbox: ROLLUP,
+        sequencers: discovery
+          .getContractValue<ChainSpecificAddress[]>(
+            'FluentRollup',
+            'sequencerAC',
+          )
+          .map((a) => ChainSpecificAddress.address(a)),
+      },
+    ],
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS,

@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import type { DateRange } from 'react-day-picker'
 import { Calendar } from '~/components/core/Calendar'
 import {
@@ -19,6 +19,7 @@ import { cn } from '~/utils/cn'
 import { type ChartRange, optionToRange } from '~/utils/range/range'
 import { Popover, PopoverContent, PopoverTrigger } from '../Popover'
 import { Skeleton } from '../Skeleton'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { VerticalSeparator } from '../VerticalSeparator'
 import {
   type ChartRangeOptionValue,
@@ -30,6 +31,8 @@ export { rangeToOption, type ChartRangeOptionValue }
 interface ChartRangeOption {
   value: ChartRangeOptionValue
   disabled?: boolean
+  /** Shown in a tooltip in the bar and as text under the options in the drawer */
+  disabledReason?: string
   label: string
 }
 
@@ -89,6 +92,9 @@ export function ChartRangeControls({ name, value, setValue, options }: Props) {
         }}
       >
         <DrawerTrigger
+          aria-label={
+            selectedOption === 'custom' ? 'Custom date range' : undefined
+          }
           className={cn(
             selectTriggerClassnames,
             'z-0 h-8 bg-surface-primary primary-card:bg-surface-secondary',
@@ -109,6 +115,7 @@ export function ChartRangeControls({ name, value, setValue, options }: Props) {
             Predefined
           </p>
           <PredefinedOptions
+            layout="drawer"
             name={name}
             options={options}
             setValue={(range) => {
@@ -135,6 +142,7 @@ export function ChartRangeControls({ name, value, setValue, options }: Props) {
   return (
     <Popover>
       <PredefinedOptions
+        layout="bar"
         name={name}
         options={options}
         setValue={setValue}
@@ -143,6 +151,7 @@ export function ChartRangeControls({ name, value, setValue, options }: Props) {
       >
         <VerticalSeparator />
         <PopoverTrigger
+          aria-label="Custom date range"
           data-state={selectedOption === 'custom' ? 'checked' : 'unchecked'}
           className={cn(
             'flex w-9 items-center justify-center p-0',
@@ -172,7 +181,16 @@ export function ChartRangeControls({ name, value, setValue, options }: Props) {
   )
 }
 
+/**
+ * `bar` sits inline in the chart header, so it stays 32px tall and explains a
+ * disabled option in a tooltip, which the app's Tooltip opens on tap too.
+ * `drawer` is the touch layout: options are 40px tall so they are easy to
+ * hit, and the reasons are written out under them, as nothing hovers there.
+ */
+type PredefinedOptionsLayout = 'bar' | 'drawer'
+
 function PredefinedOptions({
+  layout,
   name,
   options,
   setValue,
@@ -180,6 +198,7 @@ function PredefinedOptions({
   selectedOption,
   children,
 }: {
+  layout: PredefinedOptionsLayout
   name: string
   options: ChartRangeOption[]
   setValue: (range: ChartRange) => void
@@ -188,37 +207,102 @@ function PredefinedOptions({
   children?: React.ReactNode
 }) {
   const { track } = useTracking()
-  return (
+  const idPrefix = useId()
+  const disabledReasons = groupDisabledReasons(options).map((group, i) => ({
+    ...group,
+    id: `${idPrefix}-${i}`,
+  }))
+
+  const group = (
     <div
       className={cn(
-        'group/radio-group inline-flex h-8 w-max items-center gap-1 rounded-lg p-1 font-medium',
+        'group/radio-group items-center gap-1 rounded-lg p-1 font-medium',
+        layout === 'bar' ? 'inline-flex h-8 w-max' : 'flex w-full',
         'bg-surface-primary primary-card:bg-surface-secondary',
       )}
     >
-      {options.map((option) => (
-        <button
-          key={option.value}
-          onClick={() => {
-            const range = optionToRange(option.value)
-            setValue(range)
-            setInternalValue(undefined)
-            track('chartRangeSelected', { name, value: option.value })
-          }}
-          type="button"
-          disabled={option.disabled}
-          data-state={selectedOption === option.value ? 'checked' : 'unchecked'}
-          className={cn(
-            'h-full rounded-md px-2 text-xs disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
-            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1 focus-visible:ring-offset-transparent',
-            'data-[state=checked]:bg-surface-tertiary primary-card:data-[state=checked]:bg-pure-white dark:primary-card:data-[state=checked]:bg-black',
-          )}
-        >
-          {option.label}
-        </button>
-      ))}
+      {options.map((option) => {
+        const disabledReason = option.disabled
+          ? option.disabledReason
+          : undefined
+        // A natively disabled button takes no focus or taps, so a bar option
+        // with a reason stays focusable and only announces itself disabled,
+        // letting its tooltip open on hover, tap and focus
+        const explainsInTooltip = layout === 'bar' && !!disabledReason
+        const button = (
+          <button
+            key={option.value}
+            onClick={() => {
+              if (option.disabled) return
+              const range = optionToRange(option.value)
+              setValue(range)
+              setInternalValue(undefined)
+              track('chartRangeSelected', { name, value: option.value })
+            }}
+            type="button"
+            disabled={option.disabled && !explainsInTooltip}
+            aria-disabled={explainsInTooltip || undefined}
+            aria-describedby={
+              layout === 'drawer'
+                ? disabledReasons.find((r) => r.reason === disabledReason)?.id
+                : undefined
+            }
+            data-state={
+              selectedOption === option.value ? 'checked' : 'unchecked'
+            }
+            className={cn(
+              'rounded-md px-2 text-xs disabled:cursor-not-allowed disabled:opacity-50 aria-disabled:cursor-not-allowed aria-disabled:opacity-50 md:text-sm',
+              layout === 'bar' ? 'h-full' : 'h-10 min-w-0 flex-1 px-1',
+              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1 focus-visible:ring-offset-transparent',
+              'data-[state=checked]:bg-surface-tertiary primary-card:data-[state=checked]:bg-pure-white dark:primary-card:data-[state=checked]:bg-black',
+            )}
+          >
+            {option.label}
+          </button>
+        )
+        if (!explainsInTooltip) {
+          return button
+        }
+        return (
+          <Tooltip key={option.value}>
+            <TooltipTrigger asChild>{button}</TooltipTrigger>
+            <TooltipContent>{disabledReason}</TooltipContent>
+          </Tooltip>
+        )
+      })}
       {children}
     </div>
   )
+
+  if (layout === 'bar') {
+    return group
+  }
+  return (
+    <>
+      {group}
+      {disabledReasons.map(({ reason, labels, id }) => (
+        <p key={id} id={id} className="mt-2 text-label-value-12 text-secondary">
+          <span className="font-medium text-primary">{labels.join(', ')}:</span>{' '}
+          {reason}
+        </p>
+      ))}
+    </>
+  )
+}
+
+/** One line per reason, as options are usually disabled for the same one */
+function groupDisabledReasons(options: ChartRangeOption[]) {
+  const groups: { reason: string; labels: string[] }[] = []
+  for (const option of options) {
+    if (!option.disabled || !option.disabledReason) continue
+    const group = groups.find((g) => g.reason === option.disabledReason)
+    if (group) {
+      group.labels.push(option.label)
+    } else {
+      groups.push({ reason: option.disabledReason, labels: [option.label] })
+    }
+  }
+  return groups
 }
 
 function CalendarComponent({

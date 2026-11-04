@@ -1,3 +1,73 @@
+Generated with discovered.json: 0xe6f4ecb1951f0e45075f1ee05db9d46f8c1c76a7
+
+# Diff at Fri, 16 Oct 2026 05:36:52 GMT:
+
+- id: 001c372f
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1768984689
+- current timestamp: 1768984689
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768984689 (main branch discovery), not current.
+
+```diff
+    contract Outbox (arb1:0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2) [orbitstack/Outbox] {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.rollup:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.executors.severity:
+-        "LOW"
++        "MEDIUM"
+      fieldMeta.accessControl:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract SequencerInbox (arb1:0xa58F38102579dAE7C584850780dDA55744f67DF1) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Inbox (arb1:0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1) [orbitstack/Inbox] {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ProxyAdmin (arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
 Generated with discovered.json: 0x23e2e93a3fcf68dc4ef7d82ccd7c5a6a14ee3a5b
 
 # Diff at Sun, 04 Oct 2026 05:55:35 GMT:

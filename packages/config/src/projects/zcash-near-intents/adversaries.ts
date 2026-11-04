@@ -1,14 +1,23 @@
 import { definePrivacyAdversaries } from '../../common/privacyAdversaries'
+import type { PrivacyFieldExposure } from '../../types'
 
 const INTENTS =
   'https://github.com/near/intents/blob/fa44ede9e874931c39a6c4246de82bc40f4f8d99/'
 const BRIDGE =
-  'https://github.com/Near-One/btc-bridge/blob/4711c2f1d035a208464b9729bb24e45ed9ab7831/contracts/satoshi-bridge/src/'
+  'https://github.com/Near-One/btc-bridge/blob/66d239120981ba58ae92f73dc6860e0369b4ad28/contracts/satoshi-bridge/src/'
 const ZODL =
-  'https://github.com/zodl-inc/zodl-ios/blob/15f1eed4024d2c996b0d38c746d5aed235704a01/secant/Sources/'
-const FRONTEND =
-  'https://github.com/defuse-protocol/defuse-frontend/blob/752a7838d1e73b00e6965a9cb6a08af68b447e41/src/'
+  'https://github.com/zodl-inc/zodl-ios/blob/75b83d7601573e165e2dacdfaffb69750dadd05f/secant/Sources/'
+const ZODL_SDK =
+  'https://github.com/zodl-inc/zodl-swift-wallet-sdk/blob/191d0347186a1c6fcd207eead24a891049444041/Sources/ZcashLightClientKit/'
+// The sync engine Zodl 3.15.0 ships, through SDK 5.0.0 (zodl-slipstream 0.2.0).
+const SLIPSTREAM =
+  'https://github.com/zodl-inc/slipstream/blob/3bd434ce6023a000cc377634d8cd2b184161857a/core/src/'
 const DOCS = 'https://docs.near-intents.org/'
+
+const PAYOUT_RECIPIENT: PrivacyFieldExposure = {
+  verdict: 'atRisk',
+  note: 'Payout notes are decryptable by anyone, so a reused address ties payouts together.',
+}
 
 export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
   promise: {
@@ -19,21 +28,16 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
     publicObserver: {
       sentiment: 'good',
       exposureShort:
-        'Nothing ties the ZEC that enters the shielded pool to the ZEC that leaves it.',
+        "Zcash's shielded pool hides which payout into it funds which later exit.",
       exposureContinued:
-        'Everything up to the pool edge is public: the Ethereum deposit, the NEAR ledger entries that credit, swap and withdraw it, and the Zcash address and amount of every payout, which the bridge encrypts so that anyone can decrypt them.',
-      advice:
-        'Receive the ZEC straight into a fresh shielded address, as Zodl does per swap, and pay the return leg from the pool. The web app pays transparent addresses only, which adds a public shielding step.',
+        'Everything up to the pool edge is public: the Ethereum deposit and the NEAR entries that credit, swap and withdraw it. The bridge encrypts each payout so that anyone can decrypt its Zcash address and amount.',
       interior: {
         sender: 'private',
-        recipient: {
-          verdict: 'atRisk',
-          note: 'Payout notes are decryptable by anyone, so a reused address ties payouts together.',
-        },
+        recipient: PAYOUT_RECIPIENT,
         amount: 'private',
         asset: {
           verdict: 'exposed',
-          note: 'Only ZEC exists inside the pool; the assets swapped from and to are public on NEAR.',
+          note: 'Only ZEC exists inside the pool, and the assets swapped from and to are public on NEAR.',
         },
         linkage: 'private',
       },
@@ -45,35 +49,29 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
         },
         {
           title: 'Withdrawal message names the target Zcash address',
-          url: BRIDGE + 'api/token_receiver.rs#L8-L16',
+          url: BRIDGE + 'api/token_receiver.rs#L12-L18',
         },
         {
           title: 'Payouts are encrypted to an all-zero outgoing viewing key',
-          url: BRIDGE + 'zcash_utils/orchard_policy.rs#L13-L63',
+          url: BRIDGE + 'zcash_utils/orchard_policy.rs#L11-L64',
         },
         {
-          title: 'Zodl requests a fresh shielded address per swap',
-          url: ZODL + 'Features/SwapAndPayForm/SwapAndPayStore.swift#L943',
-        },
-        {
-          title: 'Web app accepts transparent and TEX addresses only',
-          url:
-            FRONTEND +
-            'components/DefuseSDK/utils/validateAddress.ts#L131-L145',
+          title: 'Zodl creates a fresh shielded address for every quote',
+          url: ZODL + 'Features/SwapAndPayForm/SwapAndPayStore.swift#L908-L955',
         },
       ],
     },
     chainAnalyst: {
       sentiment: 'good',
       exposureShort:
-        'The amount paid into the pool and the amount later sent to a bridge deposit address are both public with their timing, so a round trip of similar size within hours pairs them.',
+        'Only the amount and timing of a round trip can pair a payout into the pool with a later deposit to the bridge.',
       exposureContinued:
-        'Deposit addresses are fresh per quote but spent together with the bridge change address, so every exit is attributable to NEAR Intents.',
+        'Deposit addresses are fresh per quote and spent together with the bridge change address, which marks every exit as NEAR Intents.',
       advice:
         'Hold the ZEC in the pool for days, split or merge it with other shielded funds, and swap back amounts that match no payout.',
       interior: {
         sender: 'private',
-        recipient: 'atRisk',
+        recipient: PAYOUT_RECIPIENT,
         amount: 'private',
         asset: 'exposed',
         linkage: {
@@ -89,7 +87,7 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
         },
         {
           title: 'Deposit address derived per quote from the deposit message',
-          url: BRIDGE + 'deposit_msg.rs#L49-L52',
+          url: BRIDGE + 'deposit_msg.rs#L50-L53',
         },
         {
           title: 'Bridge change address and UTXO set',
@@ -98,53 +96,13 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
       ],
     },
     networkObserver: {
-      sentiment: 'warning', // good if Tor was default
+      sentiment: 'warning',
       exposureShort:
-        'Zodl syncs through public lightwalletd servers, which see which transactions the wallet fetches and broadcasts, and so the payout and the later exit of the same wallet.',
+        "Each sync sends the account's transparent addresses to lightwalletd before fetching its transactions, so lightwalletd can tie the payout and the exit to the account.",
       exposureContinued:
-        'Tor covers these calls and the swap requests including session isolation but is opt-in and does not cover block sync.',
-      advice: 'Turn on Tor in Zodl before the first swap.',
-      interior: {
-        sender: 'private',
-        recipient: 'atRisk',
-        amount: 'private',
-        asset: 'exposed',
-        linkage: {
-          verdict: 'atRisk',
-          note: 'The lightwalletd server sees the wallet fetch the payout and later broadcast the exit.',
-        },
-      },
-      sources: [
-        {
-          title: 'Tor is off unless the user enables it',
-          url:
-            ZODL + 'Dependencies/SDKSynchronizer/SDKSynchronizerLive.swift#L28',
-        },
-        {
-          title: 'Default lightwalletd endpoint',
-          url:
-            ZODL +
-            'Dependencies/ZcashSDKEnvironment/ZcashSDKEnvironmentInterface.swift#L21',
-        },
-        {
-          title: 'Zashi 2.1: which calls Tor covers',
-          url: 'https://electriccoin.co/blog/zashi-2-1-enhanced-privacy-with-tor-beta/',
-        },
-        {
-          title:
-            'Hornby, Fixing Privacy Problems in the Zcash Light Wallet Protocol',
-          url: 'https://defuse.ca/downloads/Fixing%20Privacy%20Problems%20in%20the%20Zcash%20Light%20Wallet%20Protocol.pdf',
-        },
-      ],
-    },
-    privilegedInsider: {
-      sentiment: 'bad',
-      exposureShort:
-        'The Operator runs the 1Click bridge API, the Ethereum custody and the screening, so both legs sit in its logs with the IP address and wallet identifiers of each request, plus the fresh Zcash refund address Zodl attaches to every swap out of ZEC.',
-      exposureContinued:
-        'It has no key into the shielded pool, so joining the legs still needs IP or timing. It screens every address with KYT vendors, can lock any account and can hold bridged funds.',
+        "With Tor on, each 1Click request and each sent transaction gets its own circuit, and sync lookups go over Tor while blocks download directly. Tor hides the user's IP from the lookups, not the addresses they name.",
       advice:
-        'Always use the Zodl Tor feature, wait some time in the shielded pool and use amounts that do not match.',
+        'Turn on Tor in Zodl and point it at a lightwalletd server the user runs.',
       interior: {
         sender: 'private',
         recipient: 'private',
@@ -152,21 +110,55 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
         asset: 'exposed',
         linkage: {
           verdict: 'atRisk',
-          note: "IP address, partner key and timing of both legs sit in one operator's logs.",
+          note: "Private only with Tor on and the user's own lightwalletd server.",
         },
       },
       sources: [
         {
-          title: '1Click terms: IP and wallet data, screening, freezes',
+          title: 'Zodl syncs with the Slipstream engine',
+          url: ZODL + 'Models/WalletConfig.swift#L14-L25',
+        },
+        {
+          title:
+            "Each sync opens one connection and looks up the account's transparent addresses first",
+          url: SLIPSTREAM + 'engine.rs#L246-L282',
+        },
+        {
+          title:
+            'Blocks download directly, lookups go over isolated Tor circuits',
+          url: SLIPSTREAM + 'connector.rs#L17-L22',
+        },
+        {
+          title: 'Each sent transaction gets its own Tor circuit',
+          url: ZODL_SDK + 'Transaction/EndpointSubmitter.swift#L26-L41',
+        },
+      ],
+    },
+    privilegedInsider: {
+      sentiment: 'bad',
+      exposureShort:
+        "The operator custodies both legs in transit and can freeze any account or deposit, setting the terms on which the user's funds return.",
+      exposureContinued:
+        'Over Tor, its 1Click API sees each leg only as NEAR publishes it, with a fresh shielded address per swap. It holds no key into the shielded pool.',
+      interior: {
+        sender: 'private',
+        recipient: 'private',
+        amount: 'private',
+        asset: 'exposed',
+        linkage: {
+          verdict: 'atRisk',
+          note: 'The operator can freeze either leg and set the terms of its release.',
+        },
+      },
+      sources: [
+        {
+          title:
+            '1Click terms: IP and wallet data, screening, custody (2026-10-30)',
           url: DOCS + 'security-compliance/terms-of-service',
         },
         {
-          title: 'Screening providers',
-          url: DOCS + 'security-compliance/risk-and-compliance',
-        },
-        {
-          title: 'Any account can be locked by DAO or locker role',
-          url: INTENTS + 'defuse/src/contract/accounts/force.rs#L21-L33',
+          title: 'Any account can be locked by the multisig or a locker',
+          url: INTENTS + 'defuse/src/contract/accounts/force.rs#L19-L33',
         },
         {
           title: 'Owner-only mint of the wrapped Ethereum assets',
@@ -174,21 +166,18 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
         },
         {
           title:
-            'Zodl sends its partner key and refund address with each quote',
+            'Zodl sends its partner key and a fresh refund address with each quote',
           url:
-            ZODL + 'Dependencies/SwapAndPay/sources/Near1Click.swift#L313-L344',
+            ZODL + 'Dependencies/SwapAndPay/sources/Near1Click.swift#L313-L352',
         },
-        { section: 'upgrades-and-governance' },
       ],
     },
     futureAdversary: {
       sentiment: 'bad',
       exposureShort:
-        "All of an account's rotated addresses share one incoming viewing key on the Pallas curve, and every payout address is public on NEAR.",
+        "Whoever breaks elliptic-curve cryptography recovers an account's incoming viewing key from any of its payout addresses, which are public on NEAR.",
       exposureContinued:
-        "Whoever breaks elliptic-curve cryptography recovers that key from any one address and decrypts every note the account ever received. Those include the change notes of its exits, which join both legs of every round trip. Ironwood's quantum-recoverable notes protect funds, not privacy.",
-      advice:
-        'Use a separate Zodl account per round trip, so one recovered key exposes only that trip.',
+        "All of the account's rotated addresses share that key, so it decrypts every note the account ever received. Those include the change notes of its exits, which join both legs of every round trip. ZIP 2005's quantum recoverability protects only funds.",
       interior: {
         sender: {
           verdict: 'atRisk',
@@ -205,12 +194,12 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
           url: 'https://zips.z.cash/protocol/protocol.pdf#concreteorchardkeyagreement',
         },
         {
-          title: 'ZIP 2005: quantum recoverability, not quantum privacy',
+          title: 'ZIP 2005: quantum recoverability of funds',
           url: 'https://zips.z.cash/zip-2005',
         },
         {
           title: 'Payouts are encrypted to an all-zero outgoing viewing key',
-          url: BRIDGE + 'zcash_utils/orchard_policy.rs#L13-L63',
+          url: BRIDGE + 'zcash_utils/orchard_policy.rs#L11-L64',
         },
       ],
     },

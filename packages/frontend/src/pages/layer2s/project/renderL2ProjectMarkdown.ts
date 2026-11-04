@@ -147,6 +147,10 @@ function getFacts({
       label: 'Chain ID',
       value: String(header.chainId),
     },
+    header.privacyProjects.length > 0 && {
+      label: 'Privacy projects',
+      value: header.privacyProjects.map((project) => project.name).join(', '),
+    },
   ])
 }
 

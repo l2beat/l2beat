@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Default fallback handler for Safe accounts: lets them receive ERC-721, ERC-1155 and ERC-777 tokens and answer EIP-1271 signature checks. It has no owner and no state.",
+  // Only meaningful when reached through an account's fallback; reverts when called directly.
+  "ignoreMethods": ["getModules"]
+}

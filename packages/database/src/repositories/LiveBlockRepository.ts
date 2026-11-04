@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Insertable, Selectable } from 'kysely'
+import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { LiveBlock } from '../kysely/generated/types'
 
@@ -17,6 +17,13 @@ export interface LiveSlotRange {
   from: number
   to: number
   blocks: number
+}
+
+/** Blocks and their blobs over the `bucket`-th run of `bucketSlots` slots from genesis */
+export interface LiveBlockBucketRecord {
+  bucket: number
+  blocks: number
+  blobs: number
 }
 
 export function toRecord(row: Selectable<LiveBlock>): LiveBlockRecord {
@@ -90,6 +97,32 @@ export class LiveBlockRepository extends BaseRepository {
       .executeTakeFirstOrThrow()
     if (row.from === null || row.to === null) return undefined
     return { from: row.from, to: row.to, blocks: Number(row.blocks) }
+  }
+
+  async getBucketsSince(
+    fromSlot: number,
+    bucketSlots: number,
+  ): Promise<LiveBlockBucketRecord[]> {
+    // Grouped in an outer query: Postgres cannot tell that the bucket width
+    // bound twice, in SELECT and GROUP BY, is the same value
+    const { rows } = await sql<{
+      bucket: number
+      blocks: string
+      blobs: string
+    }>`
+      SELECT bucket, count(*) AS blocks, sum("blobCount") AS blobs
+      FROM (
+        SELECT slot / ${bucketSlots}::integer AS bucket, "blobCount"
+        FROM "LiveBlock"
+        WHERE slot >= ${fromSlot}
+      ) blocks
+      GROUP BY bucket
+    `.execute(this.db)
+    return rows.map((row) => ({
+      bucket: row.bucket,
+      blocks: Number(row.blocks),
+      blobs: Number(row.blobs),
+    }))
   }
 
   /** Both ends included, oldest first */

@@ -13,7 +13,7 @@ export async function getSubmitProtocolData(
       metadata: getMetadata(manifest, {
         name: 'Submit your protocol',
         description:
-          'How a protocol joins The Infinite Garden: what we look for in censorship resistance, open source, privacy and security, and what happens after you submit the form.',
+          'How to get a protocol reviewed against CROPS: what we look for in censorship resistance, open source, privacy and security, and what happens after you submit the form.',
         url,
         openGraph: {
           image: '/meta-images/submit-your-protocol/opengraph-image.png',

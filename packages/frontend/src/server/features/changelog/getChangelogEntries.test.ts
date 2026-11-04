@@ -3,6 +3,7 @@ import type { ChangelogEntry } from './getChangelogEntries'
 import {
   selectActiveChangelogWhatsNewWidget,
   selectActiveWhatsNewEntry,
+  selectNavWhatsNewEntry,
   sortChangelogEntries,
 } from './getChangelogEntries'
 
@@ -73,6 +74,25 @@ describe('changelog whats new selection', () => {
       'active',
     )
     expect(selectActiveWhatsNewEntry([expired], now)).toEqual(undefined)
+  })
+
+  it('falls back in the nav to the latest published entry, not a future one', () => {
+    const now = new Date('2026-02-19T14:00:00.000Z')
+    const expired = makeEntry('expired', '2026-02-01T00:00:00.000Z', {
+      image: '/expired.png',
+      alt: 'expired',
+      expiresAt: '2026-02-10T00:00:00.000Z',
+    })
+    const future = makeEntry('future', '2026-02-20T00:00:00.000Z', {
+      image: '/future.png',
+      alt: 'future',
+      expiresAt: '2026-03-10T00:00:00.000Z',
+    })
+
+    expect(selectNavWhatsNewEntry([future, expired], now)?.id).toEqual(
+      'expired',
+    )
+    expect(selectNavWhatsNewEntry([future], now)).toEqual(undefined)
   })
 
   it('falls back to changelog anchor link when href is missing', () => {

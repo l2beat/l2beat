@@ -1,9 +1,7 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { ps } from '~/server/projects'
 import type { ChartRange } from '~/utils/range/range'
-import { getTrackedTxsProject } from '../../utils/getTrackedTxsProjects'
 import type { LatestCostsProjectResponse } from './types'
 import { sumCostValues } from './utils/sumCostValues'
 
@@ -15,24 +13,11 @@ export async function getCostsForProject(
     return getMockedCostsForProject()
   }
 
-  const db = getDb()
-
-  const project = await ps.getProject({
-    id: ProjectId(projectId),
-    select: ['trackedTxsConfig'],
-  })
-  if (!project) return undefined
-  const [configurations, records] = await Promise.all([
-    db.indexerConfiguration.getByIndexerId('tracked_txs_indexer'),
-    db.aggregatedL2Cost.getByProjectAndTimeRange(project.id, range),
-  ])
-
-  const trackedTxsProject = getTrackedTxsProject(
-    project,
-    configurations,
-    'l2costs',
+  const records = await getDb().aggregatedL2Cost.getByProjectAndTimeRange(
+    ProjectId(projectId),
+    range,
   )
-  if (!trackedTxsProject || records.length === 0) return undefined
+  if (records.length === 0) return undefined
 
   const timestamps = records.map((r) => r.timestamp)
   const dataRange: [UnixTime, UnixTime] = [
@@ -42,7 +27,6 @@ export async function getCostsForProject(
 
   return {
     ...sumCostValues(records),
-    syncedUntil: trackedTxsProject.syncedUntil,
     range: dataRange,
   }
 }
@@ -67,7 +51,6 @@ function getMockedCostsForProject(): LatestCostsProjectResponse {
       compute: 300,
       blobs: 50,
     },
-    syncedUntil: UnixTime.now(),
     range: [Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY],
   }
 }

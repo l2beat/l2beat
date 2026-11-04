@@ -1,15 +1,15 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { IProvider } from '../../provider/IProvider'
-import { get$Admins, get$Implementations } from '../../utils/extractors'
-import { detectEip1967Proxy } from '../auto/Eip1967Proxy'
+import { get$Implementations } from '../../utils/extractors'
 import type { ProxyDetails } from '../types'
+import { getUpgradeGatekeeperProxy } from './UpgradeGatekeeperProxy'
 
 export async function getZkLighterProxy(
   provider: IProvider,
   address: ChainSpecificAddress,
 ): Promise<ProxyDetails | undefined> {
-  const detection = await detectEip1967Proxy(provider, address)
-  if (!detection || detection.type !== 'EIP1967 proxy') {
+  const managed = await getUpgradeGatekeeperProxy(provider, address)
+  if (managed === undefined) {
     return undefined
   }
   const additional = await provider.getStorageAsAddress(address, 7)
@@ -17,8 +17,8 @@ export async function getZkLighterProxy(
   return {
     type: 'zkLighter proxy',
     values: {
-      $admin: get$Admins(detection.values),
-      $implementation: get$Implementations(detection.values)
+      ...managed.values,
+      $implementation: get$Implementations(managed.values)
         .concat(additional)
         .map((i) => i.toString()),
     },

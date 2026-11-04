@@ -121,6 +121,7 @@ function makeProject(
   }
   return {
     id: ProjectId('project'),
+    name: 'Project',
     privacyInfo: mockObject<ProjectPrivacyInfo>({
       tokens: [token],
       anonymitySet,

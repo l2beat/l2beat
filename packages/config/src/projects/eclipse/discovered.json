@@ -1,6 +1,6 @@
 {
   "name": "eclipse",
-  "timestamp": 1763979972,
+  "timestamp": 1791789506,
   "configHash": "0xc5e02f06ee56be31dd65b208e3679e991c58a67ec74d966e1687034932a287c8",
   "entries": [
     {
@@ -76,12 +76,12 @@
           "eth:0x757210F15AB48f0F8d328984fc321CfA6BB5BFc2",
           "eth:0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA"
         ],
-        "$threshold": 3,
+        "$threshold": 2,
         "domainSeparator": "0x4fc4aca3db1cad217783537dbcbcb1d69e3377e64c4890ff913a3639c94b9386",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 31,
+        "multisigThreshold": "2 of 4 (50%)",
+        "nonce": 32,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -141,7 +141,7 @@
         "CLAIM_AUTHORITY_ROLE": "0x49d85f38d8d200e3ac71b7ada9a2786ccb6d016b3c28e43e8057f6bbae438adc",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"],
-        "depositIndex": 15,
+        "depositIndex": 546,
         "FRAUD_WINDOW_SETTER_ROLE": "0xe68a6574a7e933010135bdcdb85f5b60aed1ee2a05b00c7c3b88734a75706cf0",
         "fraudWindowDuration": 604800,
         "getVersionComponents": { "major": 3, "minor": 0, "patch": 0 },
@@ -823,8 +823,8 @@
     "eclipse/Upgrader0to1": "0x62b4c472e65c2ae7518c7fb7fa8791913f6109336e1376e07f6b5a001a5f2e8b",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23868113 },
-  "permissionsConfigHash": "0x12c6d3be1c2811c8830081e43f0acc692af3ea2b8dfce8ff0298992ca59531a0",
+  "usedBlockNumbers": { "ethereum": 26174845 },
+  "permissionsConfigHash": "0xa76f8be073f865c4cbaf5fafbc7ca48e181d034302e0a5396cd58909348827bd",
   "permissions": {
     "eth:0x1a84163249B2909f746C725F23D5ae2a66D7C4fE": {
       "receivedPermissions": [

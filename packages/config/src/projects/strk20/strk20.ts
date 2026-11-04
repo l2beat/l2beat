@@ -1,4 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS } from '../../common/privacyAnonymitySets'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
@@ -104,7 +105,7 @@ export const strk20: BaseProject = {
   },
   display: {
     description:
-      'A privacy pool on Starknet for arbitrary-amount private transfers and DeFi actions, using Cairo execution proofs and auditor-accessible compliance data.',
+      "A shielded ledger on Starknet for any ERC-20 token, with private transfers and DeFi, where one auditor key can decrypt every user's history.",
     detailedDescription: readProjectMarkdown('strk20', 'detailedDescription'),
     links: {
       documentation: [
@@ -122,8 +123,77 @@ export const strk20: BaseProject = {
     },
     badges: [],
   },
+  milestones: [
+    {
+      title: 'Privacy live on Starknet',
+      url: 'https://www.starknet.io/blog/privacy-live-on-starknet/',
+      date: '2026-06-09T00:00:00Z',
+      description:
+        'StarkWare opens the pool to users through the Ready and Xverse wallets.',
+      type: 'general',
+    },
+    {
+      title: 'Shadow accounts launch',
+      url: 'https://x.com/StarkWareLtd/status/2110007213331026343',
+      date: '2026-10-13T00:00:00Z',
+      description:
+        'StarkWare opens per-app shadow accounts, which let apps act for pool users without naming them.',
+      type: 'general',
+    },
+  ],
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
+    referenceApp: {
+      name: 'Bramble',
+      icon: 'bramble',
+      url: 'https://chromewebstore.google.com/detail/jcfafpefcpcejehepoednnollpeenpop',
+      since: '2026-10-27',
+      version: '0.10.7',
+      source: {
+        repository: 'https://github.com/starknet-innovation/bramble',
+        commit: 'd90222a2653c997a5cf8d8c6433df5ea10c16112',
+      },
+      checkedApps: [
+        {
+          name: 'Ready extension',
+          icon: 'ready',
+          finding:
+            "Sends the account and viewing key to Ready's servers, with no setting for a self-run discovery service.",
+          fix: 'Let users set their own discovery service and prover, as Bramble does.',
+          source:
+            'https://chromewebstore.google.com/detail/dlcobpjiigpikoobohmabehhmhfoodbb',
+          checked: '2026-10-30',
+        },
+        {
+          name: 'Xverse extension',
+          icon: 'xverse',
+          finding:
+            "Its privacy servers refuse Tor, so they get the user's IP along with the account and viewing key.",
+          fix: 'Accept Tor connections on its privacy servers.',
+          source:
+            'https://chromewebstore.google.com/detail/idnnbdplmphpflfnlkomgpfbpcgelopg',
+          checked: '2026-10-30',
+        },
+        {
+          name: 'Haven web app',
+          icon: 'haven',
+          finding:
+            "Reads the account's balances and transfers through Cartridge's public RPC, a third party that refuses most Tor circuits.",
+          fix: "Read the chain through Haven's own servers or a user-set RPC, and accept Tor there.",
+          source: 'https://go.haven.hn',
+          checked: '2026-10-30',
+        },
+        {
+          name: 'OffMarket web app',
+          icon: 'offmarket',
+          finding:
+            'Reports each deposit, trade and settled position to FullStory, a session recorder that is always on, so FullStory can link them.',
+          fix: 'Remove FullStory from the pages that handle private actions.',
+          source: 'https://offmarket.cx',
+          checked: '2026-10-30',
+        },
+      ],
+    },
     trackedOn: ['starknet'],
     tokens: getPrivacyTokens(),
     zkCatalogId: ProjectId('stwo'),
@@ -132,18 +202,18 @@ export const strk20: BaseProject = {
       sentiment: 'bad',
       orderHint: 0,
       description:
-        'The pool implementation is immediately upgradeable, so users have no delay to withdraw before a malicious upgrade can take effect.',
+        'The pool and the anonymizer that owns every shadow account are immediately upgradeable, so users have no delay to withdraw before a malicious upgrade can take effect.',
       walkawayTest: {
         passed: false,
         reason:
-          'Although the full software stack needed to generate proofs and exit is published and self-hostable, STRK-20 heavily relies on the permissioned Starknet sequencer: it alone verifies client proofs and must include pool transactions, so users cannot exit without its cooperation.',
+          "The prover and discovery service are open and self-hostable. StarkWare's permissioned sequencer alone checks client proofs and includes pool transactions, so users cannot exit without it.",
       },
     },
     reproducibility: {
-      value: 'Reproducible',
-      sentiment: 'good',
+      value: 'Partially reproducible',
+      sentiment: 'warning',
       description:
-        'The pool contract, TypeScript SDK, discovery service, and proving stack are publicly available and can be run locally, so users can audit what is actually proven and generate the required ZK proofs without revealing private data to a third-party prover.',
+        "The pool contract, SDK, discovery service and prover are open source. The deployed pool, anonymizer and bridge helpers rebuild from their published source. Source for the AVNU, Endur and escrow helpers is not published. Bramble's store build matches a rebuild of its tag, while its gateway runs closed code.",
     },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,
@@ -160,26 +230,32 @@ export const strk20: BaseProject = {
 }
 
 function getPrivacyTokens(): ProjectPrivacyToken[] {
-  return STRK20_TOKENS.map((token) => ({
-    token,
-    buckets: [
-      {
-        id: `strk20-${token.symbol}`,
-        type: 'pool',
-        label: `${token.symbol} pool`,
-        address: STRK20_POOL,
-        sinceTimestamp: token.sinceTimestamp,
-        deposit: {
-          event: STRK20_DEPOSIT_EVENT,
-          extractor: 'strk20Deposit',
-          params: { tokenAddress: token.address },
+  return STRK20_TOKENS.map((token) => {
+    const minimumAmounts = PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS[token.symbol]
+
+    return {
+      token,
+      buckets: [
+        {
+          id: `strk20-${token.symbol}`,
+          type: 'pool',
+          label: `${token.symbol} pool`,
+          address: STRK20_POOL,
+          sinceTimestamp: token.sinceTimestamp,
+          anonymitySet:
+            minimumAmounts === undefined ? undefined : { minimumAmounts },
+          deposit: {
+            event: STRK20_DEPOSIT_EVENT,
+            extractor: 'strk20Deposit',
+            params: { tokenAddress: token.address },
+          },
+          withdrawal: {
+            event: STRK20_WITHDRAWAL_EVENT,
+            extractor: 'strk20Withdrawal',
+            params: { tokenAddress: token.address },
+          },
         },
-        withdrawal: {
-          event: STRK20_WITHDRAWAL_EVENT,
-          extractor: 'strk20Withdrawal',
-          params: { tokenAddress: token.address },
-        },
-      },
-    ],
-  }))
+      ],
+    }
+  })
 }

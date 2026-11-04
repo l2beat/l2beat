@@ -178,6 +178,7 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
           iconUrl: 'https://example.com/eth.png',
           issuer: 'ethereum',
           category: 'ether',
+          isPriceUnreliable: true,
         }),
       )
       await repository.insert(
@@ -204,6 +205,7 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
           iconUrl: 'https://example.com/eth.png',
           issuer: 'ethereum',
           category: 'ether',
+          isPriceUnreliable: true,
         },
         {
           id: 'TK0003',
@@ -211,6 +213,7 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
           iconUrl: null,
           issuer: null,
           category: null,
+          isPriceUnreliable: false,
         },
       ])
     })

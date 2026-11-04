@@ -9,6 +9,7 @@ import {
 } from '@l2beat/shared-pure'
 import chunk from 'lodash/chunk'
 import { ReceiptLogCache } from '../utils/ReceiptLogCache'
+import { ESCROW_EXECUTED_TOPIC, zkMoneyInterface } from './abi'
 import { attributeFunders, eventKey } from './attributeFunders'
 import { resolveDeposit, type ZkMoneyDeposit } from './deposits'
 import { fetchFundingHistory, readBalances } from './fundingHistory'
@@ -39,7 +40,9 @@ export interface PortalDepositEvent {
 
 /**
  * Finds who funded each portal deposit: the sender itself for direct
- * deposits, the replayed funder of the SIPA otherwise.
+ * deposits, the replayed funder of the SIPA otherwise. A migrated refund names
+ * no funder, so its recipient commitment stands in for one. An internal escrow
+ * moves funds already in the project, so its deposits get no funder.
  *
  * @returns funder per deposit log; deposits without a single traceable funder
  * are absent
@@ -48,7 +51,7 @@ export async function traceZkMoneyFunders(
   deposits: PortalDepositEvent[],
   params: ZkMoneyFundingParams,
   deps: TraceFundersDependencies,
-): Promise<Map<Log, EthereumAddress>> {
+): Promise<Map<Log, string>> {
   const context = { rpc: deps.rpc, receipts: new ReceiptLogCache(deps.rpc) }
   const resolved: ResolvedDeposit[] = []
   for (const batch of chunk(deposits, DEPOSIT_RESOLUTION_BATCH_SIZE)) {
@@ -61,14 +64,19 @@ export async function traceZkMoneyFunders(
     resolved.push(...batchDeposits.filter((deposit) => deposit !== undefined))
   }
 
-  const funders = new Map<Log, EthereumAddress>()
+  const funders = new Map<Log, string>()
   const depositsBySipa = new Map<EthereumAddress, ResolvedDeposit[]>()
   for (const deposit of resolved) {
     switch (deposit.senderKind) {
       case 'invalid':
         break
       case 'direct':
-        if (deposit.sender !== EthereumAddress.ZERO) {
+        if (params.migrationExecutors?.includes(deposit.sender)) {
+          funders.set(deposit.event.log, recipientCommitment(deposit.event.log))
+        } else if (
+          deposit.sender !== EthereumAddress.ZERO &&
+          !(await isInternalEscrow(deposit, params, context.receipts))
+        ) {
           funders.set(deposit.event.log, deposit.sender)
         }
         break
@@ -93,6 +101,28 @@ export async function traceZkMoneyFunders(
 
 interface ResolvedDeposit extends ZkMoneyDeposit {
   event: PortalDepositEvent
+}
+
+function recipientCommitment(portalEvent: Log): string {
+  return String(zkMoneyInterface.parseLog(portalEvent).args.recipientCommitment)
+}
+
+/** An internal escrow factory executes the sender in the deposit's transaction. */
+async function isInternalEscrow(
+  deposit: ResolvedDeposit,
+  params: ZkMoneyFundingParams,
+  receipts: ReceiptLogCache,
+): Promise<boolean> {
+  const factories = params.internalEscrowFactories ?? []
+  if (factories.length === 0) return false
+  const logs = await receipts.get(deposit.event.log.transactionHash)
+  return logs.some(
+    (log) =>
+      log.topics[0] === ESCROW_EXECUTED_TOPIC &&
+      factories.includes(EthereumAddress(log.address)) &&
+      EthereumAddress(zkMoneyInterface.parseLog(log).args.escrow) ===
+        deposit.sender,
+  )
 }
 
 async function traceSipaFunders(

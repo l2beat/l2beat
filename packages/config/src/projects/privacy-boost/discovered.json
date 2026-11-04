@@ -743,6 +743,7 @@
         "owner": "base:0x78DFf7F33E3d5edD68D13D6d1fE23078062866f7",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "base:0x321e0edAb1b628aEF03DBe19CC9C7dAB844f84bc": "ProxyAdmin"
       }
@@ -765,6 +766,7 @@
         "owner": "base:0x78DFf7F33E3d5edD68D13D6d1fE23078062866f7",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "base:0x32b0998c86d33b1b6898F486dC78D80FaA27095f": "ProxyAdmin"
       }
@@ -2247,6 +2249,7 @@
         "owner": "base:0x78DFf7F33E3d5edD68D13D6d1fE23078062866f7",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "base:0xB32ef2884794999e1E260a3f68368A24CEF25b35": "ProxyAdmin"
       }
@@ -2274,6 +2277,7 @@
         "owner": "base:0x78DFf7F33E3d5edD68D13D6d1fE23078062866f7",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "base:0xd4C0599a5d9A2CcA46Ee05a03405B3ad3407b15e": "ProxyAdmin"
       }

@@ -28,6 +28,10 @@ export const OPERATION_EXECUTOR = address(10)
 export const FACTORY = address(11)
 export const DEPOSIT_IMPLEMENTATION = address(12)
 export const REGISTRATION_IMPLEMENTATION = address(13)
+export const MIGRATION_EXECUTOR = address(14)
+export const FEE_BENEFICIARY = address(15)
+export const ESCROW_FACTORY = address(16)
+export const ESCROW = address(17)
 
 export const CREDITED = 100n
 export const FUNDING_CUT = 1n
@@ -107,6 +111,19 @@ export function recovered(
     'Recovered',
     SIPA,
     [token, target, amount],
+    position,
+  )
+}
+
+export function escrowExecuted(
+  escrow: EthereumAddress,
+  position: LogPosition,
+): Log {
+  return encodeLog(
+    zkMoneyInterface,
+    'EscrowExecuted',
+    ESCROW_FACTORY,
+    [escrow, BOB],
     position,
   )
 }

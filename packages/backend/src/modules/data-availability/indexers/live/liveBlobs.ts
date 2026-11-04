@@ -14,11 +14,13 @@ export function liveWindowStart(head: number) {
 
 /**
  * Retries without end, as the hourly indexers do, but never waiting longer
- * than a slot: the view is only worth anything while it keeps up
+ * than a slot: the view is only worth anything while it keeps up. The first
+ * retry comes soon, as most failures at the head are a node behind a load
+ * balancer that has not got the newest block yet, and the next one has
  */
 export function getLiveRetryStrategy() {
   return Retries.exponentialBackOff({
-    initialTimeoutMs: 1000,
+    initialTimeoutMs: 200,
     maxAttempts: Number.POSITIVE_INFINITY,
     maxTimeoutMs: SLOT_SECONDS * 1000,
   })

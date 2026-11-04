@@ -5,6 +5,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 
@@ -31,6 +32,7 @@ export const ccip: BaseProject = {
   name: 'Chainlink CCIP',
   shortName: 'CCIP',
   addedAt: UnixTime(1769526436),
+  discoveryInfo: getDiscoveryInfo([discovery]),
   interopConfig: {
     description:
       "Multichain token framework using the CCIP messaging protocol. Routes are migrating from v1.6's fixed OCR commit and execution networks to v2.0's modular cross-chain verifiers and permissionless execution.",

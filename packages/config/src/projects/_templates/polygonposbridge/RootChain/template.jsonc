@@ -6,7 +6,9 @@
       "handler": { "type": "constructorArgs", "nameArgs": true }
     },
     "owner": {
+      "severity": "MEDIUM",
       "permissions": [
+        { "type": "upgrade" },
         {
           "type": "interact",
           "description": "can delete arbitrary checkpoints."

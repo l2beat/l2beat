@@ -1,10 +1,11 @@
 import { cva } from 'class-variance-authority'
-import { SidebarProvider } from '~/components/core/Sidebar'
+import { SidebarProvider, useSidebar } from '~/components/core/Sidebar'
 import { Footer } from '~/components/Footer'
 import { MobileTopNavbar } from '~/components/nav/mobile/MobileTopNavbar'
 import { NavSidebar } from '~/components/nav/sidebar/NavSidebar'
 import { TopBanner } from '~/components/TopBanner'
 import { useWhatsNewContext } from '~/components/whats-new/WhatsNewContext'
+import type { WhatsNewWidget } from '~/components/whats-new/WhatsNewWidget'
 import { WhatsNewWidgetCloseable } from '~/components/whats-new/WhatsNewWidgetCloseable'
 import { navGroups } from '~/consts/navGroups'
 import { navSecondaryLinks } from '~/consts/navSecondaryLinks'
@@ -45,12 +46,16 @@ const contentWrapperVariants = cva(
   },
 )
 
-const contentAreaVariants = cva('mx-auto flex w-full min-w-0 grow flex-col', {
+/** The content's column. The footer shares it, so their edges line up. */
+const columnVariants = cva('mx-auto w-full min-w-0', {
   variants: {
     variant: {
       default: 'max-w-(--breakpoint-lg) md:px-5 lg:pl-0',
       wide: 'max-w-412 md:px-5 lg:pl-0',
-      home: 'max-w-none px-4 pb-6 max-md:px-0 md:px-6 lg:px-8 xl:px-10 2xl:max-w-[1840px]',
+      // The padding sits outside the home's size container, so it cannot
+      // ask the container's `home-wide` (1560px, home.css): 1880px is the
+      // window that variant starts at.
+      home: 'md:px-6 lg:px-8 xl:px-10 2xl:max-w-[1840px] min-[1880px]:px-6',
     },
   },
 })
@@ -58,19 +63,9 @@ const contentAreaVariants = cva('mx-auto flex w-full min-w-0 grow flex-col', {
 const footerVariants = cva(undefined, {
   variants: {
     variant: {
-      default: 'md:px-12 md:pt-8 lg:pr-9 lg:pl-6',
-      wide: 'md:px-12 md:pt-8 lg:pr-9 lg:pl-6',
-      home: 'md:px-8 md:pt-10 lg:px-16 lg:pt-12 lg:pb-6',
-    },
-  },
-})
-
-const footerInnerVariants = cva(undefined, {
-  variants: {
-    variant: {
-      default: 'max-w-[1142px]',
-      wide: 'max-w-[1142px]',
-      home: 'max-w-none',
+      default: undefined,
+      wide: undefined,
+      home: 'max-md:border-t-0 lg:pt-12',
     },
   },
 })
@@ -93,7 +88,7 @@ export function SideNavLayout({
   const topChildren = <TopBanner className={topBannerVariants({ variant })} />
 
   return (
-    <SidebarProvider>
+    <SidebarProvider data-with-backdrop={backdrop ? '' : undefined}>
       {backdrop}
       <div className="relative flex grow flex-col lg:flex-row">
         <div className="block lg:hidden">{topChildren}</div>
@@ -105,7 +100,7 @@ export function SideNavLayout({
         <NavSidebar
           logoLink="/"
           groups={navGroups}
-          sideLinks={navSecondaryLinks}
+          showGardenBanner={variant !== 'home'}
         />
         <div
           className={cn(
@@ -116,16 +111,40 @@ export function SideNavLayout({
           <div className={bannerWrapperVariants({ variant })}>
             {topChildren}
           </div>
-          <div className={contentAreaVariants({ variant })}>
+          <div
+            className={cn(
+              columnVariants({ variant }),
+              'flex grow flex-col',
+              // Below lg the footer is a bordered band, so cards keep clear of it.
+              // On phones home's last section draws the footer's top rule.
+              variant === 'home' ? 'md:pb-6' : 'md:max-lg:pb-6',
+            )}
+          >
             {children}
-            {whatsNew && <WhatsNewWidgetCloseable whatsNew={whatsNew} />}
+            {whatsNew && <FloatingWhatsNew whatsNew={whatsNew} />}
           </div>
           <Footer
             className={footerVariants({ variant })}
-            innerContainerClassName={footerInnerVariants({ variant })}
+            columnClassName={columnVariants({ variant })}
           />
         </div>
       </div>
     </SidebarProvider>
+  )
+}
+
+/**
+ * The announcement in a corner, below lg; from lg the nav shows it itself.
+ * Not while the mobile menu is open: the menu is a hair see-through (see
+ * Sidebar), and a bright card under it shows.
+ */
+function FloatingWhatsNew({ whatsNew }: { whatsNew: WhatsNewWidget }) {
+  const { openMobile } = useSidebar()
+  // Hidden rather than unmounted, so closing the menu does not replay its
+  // entrance.
+  return (
+    <div className={cn('lg:hidden', openMobile && 'hidden')}>
+      <WhatsNewWidgetCloseable whatsNew={whatsNew} />
+    </div>
   )
 }

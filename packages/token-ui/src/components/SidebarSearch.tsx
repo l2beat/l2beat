@@ -1,6 +1,6 @@
 import { SearchIcon } from 'lucide-react'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import { Label } from './core/Label'
 import { SidebarGroup, SidebarGroupContent, SidebarInput } from './core/Sidebar'
 
@@ -11,7 +11,7 @@ export function SidebarSearch() {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (search === '') return
-    navigate(`/search/${search}`)
+    void navigate(`/search/${search}`)
   }
 
   return (

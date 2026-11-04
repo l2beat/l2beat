@@ -1,5 +1,11 @@
 import express from 'express'
 import { externalLinks } from '~/consts/externalLinks'
+import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
+import {
+  RENAME_ANNOUNCEMENT_PATH,
+  SITE_NAME_WITH_FORMER,
+} from '~/consts/siteName'
+import { env } from '~/env'
 import {
   type LinkListSection,
   type MarkdownLink,
@@ -46,26 +52,27 @@ export function createLlmsTxtRouter() {
 }
 
 const LLMS_TXT = {
-  title: 'L2BEAT',
+  title: SITE_NAME_WITH_FORMER,
   summary:
-    'L2BEAT is an independent analytics and research website about Ethereum scaling. It tracks layer 2s and layer 3s, data availability layers, interoperability protocols, privacy protocols and zero-knowledge proving systems, assessing their risks, maturity stages, value secured, activity, liveness and costs. Risk assessments are backed by on-chain contract discovery and all project data is open source.',
+    'ETHBEAT is an independent analytics and research website about Ethereum scaling and privacy. It tracks layer 2s and layer 3s, data availability layers, interoperability protocols and zero-knowledge proving systems, assessing their risks, maturity stages, value secured, activity, liveness and costs. It also reviews privacy protocols on Ethereum and its layer 2s: what each one hides and from whom, anonymity sets, trusted setups and exit windows. Risk assessments are backed by on-chain contract discovery and all project data is open source.',
   notes: [
     'Important notes:',
     '',
     '- Links ending in .md are markdown: summary pages list every tracked project with its page URL, and the Markdown pages section covers single projects. The other links are HTML pages.',
     '- Prefer the .md URLs: page URLs also answer Accept: text/markdown, but an edge cache may serve them as HTML.',
     '- Slugs and interop token ids are case-sensitive: use them exactly as listed.',
-    '- {slug} in API paths is the last segment of a project page URL, e.g. arbitrum for https://l2beat.com/layer2s/projects/arbitrum.',
+    `- {slug} in API paths is the last segment of a project page URL, e.g. arbitrum for ${PRODUCTION_ORIGIN}/layer2s/projects/arbitrum.`,
     '- All API endpoints except the scaling summary wrap their result as { success, data }.',
     '- "Stage" is the rollup maturity level (Stage 0, 1 or 2) defined by the stages framework linked below.',
     '',
-    'When to use L2BEAT:',
+    'When to use ETHBEAT:',
     '',
     '- To answer which layer 2s exist, how mature they are (stage), what their risks are and how they compare.',
     '- To get current or historical total value secured, activity, liveness or cost figures for a layer 2, via the pages or the JSON API.',
     '- To check where a layer 2 posts its data and how secure that data availability layer and its bridge are.',
-    '- To look up which proving system, stack or ecosystem a project uses, or the definitions behind L2BEAT terms.',
-    '- Not for token prices, exchange data, wallet balances or anything outside Ethereum scaling and its infrastructure.',
+    '- To look up which proving system, stack or ecosystem a project uses, or the definitions behind ETHBEAT terms.',
+    '- To review or compare privacy protocols on Ethereum (privacy pools, shielded pools and ledgers, stealth addresses, confidential tokens): what each one hides and from which adversary, anonymity set sizes, trusted setups and exit windows. Start from /privacy/summary.md, then /privacy/projects/{slug}.md for one protocol.',
+    '- Not for token prices, exchange data, wallet balances or anything outside Ethereum scaling, privacy and their infrastructure.',
   ].join('\n'),
 }
 
@@ -132,12 +139,6 @@ const PAGE_SECTIONS: LinkListSection[] = [
           'Value secured by each layer 2, split into native, canonically bridged and externally bridged tokens, with 7- and 30-day changes.',
       },
       {
-        name: 'TVS breakdown',
-        path: staticPagePath('/layer2s/tvs/breakdown'),
-        description:
-          'Every token counted in TVS across all projects, with amount, USD value, category and bridging source.',
-      },
-      {
         name: 'Activity',
         path: staticPagePath('/layer2s/activity'),
         description:
@@ -172,52 +173,6 @@ const PAGE_SECTIONS: LinkListSection[] = [
         path: staticPagePath('/native-rollups'),
         description:
           "Explainer and tracker for native rollups, which prove their state transitions with Ethereum's own EVM program.",
-      },
-    ],
-  },
-  {
-    heading: 'Data availability',
-    links: [
-      {
-        name: 'All data availability layers',
-        path: markdownAlternate('/data-availability/summary.md'),
-        description:
-          'Markdown list of every tracked data availability layer and bridge, public and custom, with type, risks and page URL.',
-      },
-      {
-        name: 'Summary',
-        path: staticPagePath('/data-availability/summary'),
-        description:
-          'Data availability layers and their bridges to Ethereum, with economic security, throughput and the projects using each.',
-      },
-      {
-        name: 'Risk analysis',
-        path: staticPagePath('/data-availability/risk'),
-        description:
-          'Per-layer and per-bridge risks: economic security, fraud detection, committee security, upgradeability and relayer failure.',
-      },
-      {
-        name: 'Throughput',
-        path: staticPagePath('/data-availability/throughput'),
-        description:
-          'Data posted per day to each layer, its maximum capacity and which projects post the most.',
-      },
-      {
-        name: 'Liveness',
-        path: staticPagePath('/data-availability/liveness'),
-        description:
-          'How regularly data is posted to each layer and whether its bridge keeps up.',
-      },
-      {
-        name: 'Archived layers',
-        path: staticPagePath('/data-availability/archived'),
-        description: 'Data availability layers no longer tracked.',
-      },
-      {
-        name: 'Data availability risk framework',
-        path: staticPagePath('/da-risk-framework'),
-        description:
-          'How L2BEAT evaluates the risks of data availability layers and their bridges.',
       },
     ],
   },
@@ -269,20 +224,25 @@ const PAGE_SECTIONS: LinkListSection[] = [
     ],
   },
   {
-    heading: 'Other trackers',
+    heading: 'Privacy',
     links: [
-      {
-        name: 'Privacy',
-        path: staticPagePath('/privacy/summary'),
-        description:
-          'Privacy protocols on Ethereum and its layer 2s, with what they hide, anonymity set sizes and trust assumptions.',
-      },
       {
         name: 'All privacy protocols',
         path: markdownAlternate('/privacy/summary.md'),
         description:
-          'Markdown list of every tracked privacy protocol with category, exit window and page URL.',
+          'Markdown list of every tracked privacy protocol with category, exit window and page URL, to compare them or pick one to review.',
       },
+      {
+        name: 'Summary',
+        path: staticPagePath('/privacy/summary'),
+        description:
+          'Reviews and comparison of privacy protocols on Ethereum and its layer 2s: what each one hides, anonymity set sizes and trust assumptions.',
+      },
+    ],
+  },
+  {
+    heading: 'Other trackers',
+    links: [
       {
         name: 'ZK catalog',
         path: staticPagePath('/zk-catalog'),
@@ -301,11 +261,27 @@ const PAGE_SECTIONS: LinkListSection[] = [
         description:
           'Markdown list of every tracked DeFi protocol with category and page URL; the HTML page adds value locked.',
       },
+      ...(env.CLIENT_SIDE_OSSIFICATION_ENABLED
+        ? [
+            {
+              name: 'Ossification',
+              path: '/ossification' as const,
+              description:
+                'How battle-tested the critical contracts of each layer 2, layer 3, privacy and DeFi project are: the share of recorded exploits whose code was younger, value secured since the last critical change, critical changes per year and exit window.',
+            },
+          ]
+        : []),
+      {
+        name: 'All ossification projects',
+        path: markdownAlternate('/ossification.md'),
+        description:
+          'Markdown list of every project on the ossification page with its score, clock start, battle-tested exposure, critical changes per year, exit window and page URL.',
+      },
       {
         name: 'Governance',
         path: staticPagePath('/governance'),
         description:
-          'L2BEAT governance research, delegate activity and the projects L2BEAT holds delegated voting power in.',
+          'ETHBEAT governance research, delegate activity and the projects ETHBEAT holds delegated voting power in.',
       },
       {
         name: 'Multisig report',
@@ -321,19 +297,19 @@ const PAGE_SECTIONS: LinkListSection[] = [
       {
         name: 'Glossary',
         path: staticPagePath('/glossary'),
-        description: 'Definitions of the terms used across L2BEAT.',
+        description: 'Definitions of the terms used across ETHBEAT.',
       },
       {
         name: 'FAQ',
         path: staticPagePath('/faq'),
         description:
-          'How L2BEAT works, what it tracks, how TVS and risks are computed and how to get a project listed.',
+          'How ETHBEAT works, what it tracks, how TVS and risks are computed and how to get a project listed.',
       },
       {
         name: 'Publications',
         path: staticPagePath('/publications'),
         description:
-          'Research, explainers, monthly ecosystem updates and governance reviews published by L2BEAT.',
+          'Research, explainers, monthly ecosystem updates and governance reviews published by ETHBEAT.',
       },
       {
         name: 'Changelog',
@@ -344,7 +320,13 @@ const PAGE_SECTIONS: LinkListSection[] = [
       {
         name: 'About us',
         path: staticPagePath('/about-us'),
-        description: 'The mission, team and funding of L2BEAT.',
+        description: 'The mission, team and funding of ETHBEAT.',
+      },
+      {
+        name: 'L2BEAT is now ETHBEAT',
+        path: staticPagePath(RENAME_ANNOUNCEMENT_PATH),
+        description:
+          'The rename from L2BEAT: what changed, what did not, and the old and new URLs.',
       },
     ],
   },
@@ -360,16 +342,16 @@ const MARKDOWN_PAGES_SECTION: LinkListSection = {
         'One layer 2 or layer 3 as markdown: stage and its requirements, risks with sentiments, TVS and activity, technology, permissions and contracts.',
     },
     {
-      name: 'Data availability project',
-      path: '/data-availability/projects/{layer}/{bridge}.md',
+      name: 'Ethereum',
+      path: '/projects/ethereum.md',
       description:
-        'One data availability layer with one of its bridges as markdown: economic security, risks with sentiments, technology, committee, permissions and contracts. The {layer}/{bridge} pairs of active layers are listed in /data-availability/summary.md; archived layers keep their pages but are not listed.',
+        'Ethereum as the data availability layer of the scaling projects: economic security, validators, blob throughput, risks and technology.',
     },
     {
       name: 'Privacy protocol',
       path: '/privacy/projects/{slug}.md',
       description:
-        'One privacy protocol as markdown: what it promises to hide and how that holds against each adversary, trusted setup, exit window, deposits and value locked per asset, governance, permissions and contracts.',
+        'Full review of one privacy protocol as markdown: what it promises to hide and how that holds against each adversary, trusted setup, exit window, deposits and value locked per asset, governance, permissions and contracts.',
     },
     {
       name: 'Interop protocol',
@@ -385,9 +367,9 @@ const MARKDOWN_PAGES_SECTION: LinkListSection = {
     },
     {
       name: 'Interop token',
-      path: '/interop/tokens/{slug}.md',
+      path: '/tokens/{slug}.md',
       description:
-        'One token across bridges as markdown: past-day volume, transfers and top path, the protocols moving it, and its onchain deployments with minting bridges. {slug} is the case-sensitive token id, the segment right after /interop/tokens/ in a token page URL; interop protocol pages link their top token.',
+        'One token across bridges as markdown: past-day volume, transfers and top path, the protocols moving it, and its onchain deployments with minting bridges. {slug} is the case-sensitive token id, the segment right after /tokens/ in a token page URL; interop protocol pages link their top token.',
     },
     {
       name: 'DeFi project',
@@ -448,12 +430,12 @@ const OPTIONAL_SECTION: LinkListSection = {
       name: 'Source code and project configs',
       url: externalLinks.github,
       description:
-        'The L2BEAT monorepo: frontend, backend, and every project config with risks, contracts, permissions and discovery history.',
+        'The ETHBEAT monorepo: frontend, backend, and every project config with risks, contracts, permissions and discovery history.',
     },
     {
       name: 'Governance forum',
       url: externalLinks.forum,
-      description: 'Discussion of L2BEAT governance research and delegation.',
+      description: 'Discussion of ETHBEAT governance research and delegation.',
     },
     {
       name: 'Medium',
@@ -468,7 +450,7 @@ const OPTIONAL_SECTION: LinkListSection = {
     {
       name: 'Donate',
       path: staticPagePath('/donate'),
-      description: 'How to support L2BEAT as a public good.',
+      description: 'How to support ETHBEAT as a public good.',
     },
     {
       name: 'Terms of service',

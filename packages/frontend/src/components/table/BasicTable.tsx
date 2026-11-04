@@ -17,7 +17,10 @@ import {
   getPersistedTableAttributes,
   getPrePaintHideScript,
 } from './persistedColumnVisibility'
-import { ValueAndChangeSortingHeader } from './sorting/ValueAndChangeSortingHeader'
+import {
+  getHeaderAriaSort,
+  ValueAndChangeSortingHeader,
+} from './sorting/ValueAndChangeSortingHeader'
 import {
   Table,
   TableBody,
@@ -37,7 +40,7 @@ import {
   getBasicTableHeaderCellClassName,
 } from './utils/classNames'
 import {
-  getCommonPinningStyles,
+  getPinnedCellProps,
   getPinnedHeaderCellProps,
 } from './utils/commonPinningStyles'
 import { getBasicTableAdditionalRowIndex } from './utils/getBasicTableAdditionalRowIndex'
@@ -243,6 +246,9 @@ function BasicTableActualHeaderRow<T>({
                 })}
                 align={header.column.columnDef.meta?.align}
                 tooltip={header.column.columnDef.meta?.tooltip}
+                aria-sort={
+                  header.isPlaceholder ? undefined : getHeaderAriaSort(header)
+                }
                 {...getPinnedHeaderCellProps(header.column)}
                 {...getPersistedColumnAttributes(header.column)}
               >
@@ -261,7 +267,7 @@ function BasicTableActualHeaderRow<T>({
   )
 }
 
-function BasicTableHeaderDividerRow() {
+export function BasicTableHeaderDividerRow() {
   return (
     <TableHeaderRow>
       <th colSpan={100} className="mx-0.5 h-0.5 rounded-full bg-divider" />
@@ -308,7 +314,7 @@ export function BasicTableRow<T extends BasicTableRow>({
         cellClassName: cellData.meta?.cellClassName,
         compact: props.compact,
       }),
-      style: getCommonPinningStyles(cellData.cell.column),
+      ...getPinnedCellProps(cellData.cell.column),
       ...getPersistedColumnAttributes(cellData.cell.column),
     }
 
@@ -518,7 +524,7 @@ function RowFiller<T, V>(props: { headers: Header<T, V>[] }) {
                 header.column.getIsPinned() &&
                   getRowClassNamesWithoutOpacity(null),
               )}
-              style={getCommonPinningStyles(header.column)}
+              {...getPinnedCellProps(header.column)}
             />
             {!header.isPlaceholder && !isLast && (
               <BasicTableColumnFiller as="td" />

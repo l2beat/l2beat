@@ -13,6 +13,7 @@ export const zcashNearIntents: BaseProject = {
   slug: 'zcash-near-intents',
   name: 'Zcash via NEAR Intents',
   shortName: undefined,
+  aliases: ['Zodl', 'Zashi'],
   addedAt: UnixTime.fromDate(new Date('2026-09-15')),
   statuses: {
     yellowWarning:
@@ -24,7 +25,7 @@ export const zcashNearIntents: BaseProject = {
   },
   display: {
     description:
-      "A round trip from Ethereum into shielded ZEC and back through NEAR Intents, so that Zcash's shielded pool serves as the privacy pool.",
+      'A shielded ledger round trip: Zodl swaps Ethereum funds into shielded ZEC and back through NEAR Intents, which custodies the Ethereum side.',
     detailedDescription: readProjectMarkdown(
       'zcash-near-intents',
       'detailedDescription',
@@ -62,31 +63,93 @@ export const zcashNearIntents: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
+    referenceApp: {
+      name: 'Zodl',
+      url: 'https://zodl.com',
+      since: '2026-09-16',
+      version: '3.15.0',
+      source: {
+        repository: 'https://github.com/zodl-inc/zodl-ios',
+        commit: '75b83d7601573e165e2dacdfaffb69750dadd05f',
+      },
+      checkedApps: [
+        // Next finding once this one is fixed: Mixpanel gets the wallet address,
+        // deposit tx hashes and withdrawal intent hashes, and Sentry tags each
+        // user with the wallet address (defuse-frontend 594085d,
+        // src/hooks/useSignInLogger.ts#L15-L19, src/hooks/useSetSentry.ts#L71-L76,
+        // src/hooks/useMixpanelBus.ts#L9-L20).
+        {
+          name: 'NEAR Intents web app',
+          icon: 'near-intents',
+          finding:
+            'Every swap runs through an account named after the connected wallet, whose one ZEC deposit address links all its round trips publicly.',
+          fix: 'Swap through a fresh 1Click deposit address per quote, as Zodl does.',
+          source:
+            'https://github.com/defuse-protocol/defuse-frontend/blob/594085d3c7e60ce912fb62b768b12f46c4917510/src/components/DefuseSDK/features/deposit/components/DepositUIMachineProvider.tsx#L112-L121',
+        },
+        {
+          name: 'Cake Wallet',
+          icon: 'monero-cake-wallet',
+          finding:
+            "Its built-in Tor skips the Zcash wallet, so the lightwalletd server gets each transaction it sends with the user's IP.",
+          fix: "Route the Zcash wallet's lightwalletd connections through the built-in Tor.",
+          source:
+            'https://github.com/cake-tech/cake_wallet/blob/196f5a15a9f180602767c56968dcb30114d0b15e/cw_zcash/lib/src/zcash_wallet.dart#L155-L179',
+        },
+        {
+          name: 'Brave Wallet',
+          icon: 'brave',
+          finding:
+            "The wallet is disabled in Tor windows and has no Tor setting, so Brave's Zcash and swap servers get the user's IP.",
+          fix: "Offer a Tor setting that covers the wallet's Zcash sync and swap requests.",
+          source:
+            'https://github.com/brave/brave-core/blob/7bfa200812971b7811541ae6e5b72620abebe3a7/browser/brave_wallet/brave_wallet_context_utils.cc#L17-L20',
+        },
+        {
+          name: 'Unstoppable Wallet',
+          icon: 'unstoppable',
+          finding:
+            "Routes every swap through Unstoppable's own server, which records each leg's payout and refund addresses and deposit transaction hash.",
+          fix: 'Request quotes and report deposits to the 1Click API directly.',
+          source:
+            'https://github.com/horizontalsystems/unstoppable-wallet-android/blob/d6661c8d0dc02d259767f58b7cd73cabb877da18/walletkit/src/main/java/io/horizontalsystems/walletkit/modules/multiswap/providers/USwapProvider.kt#L1375-L1399',
+        },
+        {
+          name: 'Zkool',
+          icon: 'zkool',
+          finding:
+            "Pays swaps only to the account's transparent address, which adds a public shielding step.",
+          fix: 'Pay each swap to a fresh shielded address.',
+          source:
+            'https://github.com/hhanh00/zkool2/blob/59a558fb7383c03b3633f015b33ef120cfbc3bdc/lib/services/swap_quote.dart#L37-L41',
+        },
+      ],
+    },
     trackedOn: ['ethereum'],
     tokens: [],
     zkCatalogId: ProjectId('zcash'),
     anonymitySet: {
       type: 'not-applicable',
       description:
-        "The anonymity set is Zcash's Ironwood shielded pool, which lives outside the chains L2BEAT indexes. Payout and deposit amounts are public at the pool edge, so the effective set behind an exit is the pool entries (public on NEAR) that could match it in amount and time.",
+        "The set is Zcash's shielded pool, outside the chains ETHBEAT indexes. Amounts are public at the pool edge, so an exit hides among the pool entries that could match it in amount and time.",
     },
     exitWindow: {
       value: 'None',
       sentiment: 'bad',
       orderHint: 0,
       description:
-        'The Verifier can be upgraded at once by 4/5 NEAR Intents DAO members, the Zcash bridge by 3/5 Rainbow Bridge DAO members with no verified delay, and the Ethereum-side funds sit in an operator-controlled EOA, so there is no window to leave before a change takes effect.',
+        'The NEAR Intents multisig upgrades the Verifier and the Rainbow Bridge multisig the Zcash bridge, both instantly. The Ethereum funds sit in an EOA the operator controls.',
       walkawayTest: {
         passed: false,
         reason:
-          'Ethereum deposits and withdrawals are executed off-chain by the custodial bridge operator, and Zcash withdrawals need a whitelisted relayer to trigger the MPC signature. Without the operators, only Zcash deposits that were never credited can be refunded, after a two-day timelock.',
+          'The custodial bridge operator executes every Ethereum deposit and withdrawal offchain. For the Zcash light client on NEAR, anyone staking 1,000 NEAR can relay after seven days, unless the Rainbow Bridge multisig rejects them.',
       },
     },
     reproducibility: {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'The Verifier, the custodial bridge token, the Zcash bridge and the Zodl wallet are open source, but the bridge back end, the 1Click API and the solver relay are closed services that every Ethereum leg depends on.',
+        "The Verifier, the bridge token, the Zcash bridge and Zodl are open source, but Zodl's App Store builds cannot be rebuilt from that source. The bridge backend, the 1Click API and the solver relay that every Ethereum leg needs are closed.",
     },
     attributes: [
       PRIVACY_ATTRIBUTES.bridged,

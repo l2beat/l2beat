@@ -65,10 +65,14 @@ export class EthereumDaProvider implements DaBlobProvider {
 
   /**
    * As `getBlocksWithBlobBatches`, with the topics from the receipts of the
-   * blob transactions alone: a few small calls per block in place of every
-   * log of the range, so it suits the newest blocks, not long ranges. Some
-   * RPCs answer logs from an index that trails their head; a receipt the
-   * node has not got yet throws instead, and the caller asks again
+   * blob transactions alone: a small batch request per block in place of
+   * every log of the range, so it suits the newest blocks, not long ranges.
+   * Some RPCs answer logs from an index that trails their head; a receipt the
+   * node has not got yet throws instead, and the caller asks again. One batch
+   * rather than a call per transaction: a rate-limited client spaces calls
+   * out, and the last of six receipts would come half a second after the
+   * block. Nor the block's receipts in one call: the node behind a load
+   * balancer often has not got them yet, and they weigh near a megabyte
    */
   async getBlocksWithBlobBatchesFromReceipts(
     from: number,
@@ -84,18 +88,22 @@ export class EthereumDaProvider implements DaBlobProvider {
   }
 
   /** By transaction hash, from receipts of `block` and no other */
-  private async getBlobTxTopics(block: EVMBlockWithTransactions) {
-    const entries = await Promise.all(
-      block.transactions.filter(isBlobTx).map(async (tx) => {
-        const receipt = await this.rpcClient.getTransactionReceipt(tx.hash)
+  private async getBlobTxTopics(
+    block: EVMBlockWithTransactions,
+  ): Promise<Map<string, string[]>> {
+    const hashes = block.transactions.filter(isBlobTx).map((tx) => tx.hash)
+    if (hashes.length === 0) return new Map()
+
+    const receipts = await this.rpcClient.getTransactionReceipts(hashes)
+    return new Map(
+      receipts.map((receipt, i) => {
         assert(
           receipt.blockHash === block.hash,
-          `Receipt of ${tx.hash} is from another chain than block ${block.number}`,
+          `Receipt of ${hashes[i]} is from another chain than block ${block.number}`,
         )
-        return [tx.hash, receipt.logs.flatMap((log) => log.topics)] as const
+        return [hashes[i], receipt.logs.flatMap((log) => log.topics)]
       }),
     )
-    return new Map(entries)
   }
 
   private getBlocks(from: number, to: number) {

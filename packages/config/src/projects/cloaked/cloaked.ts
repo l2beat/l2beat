@@ -26,7 +26,7 @@ export const cloaked: BaseProject = {
   },
   display: {
     description:
-      'A wallet service with a closed-source hosted frontend that keeps spending keys client-side and gives recipients a fresh stealth address for every payment through reusable ENS names.',
+      'A stealth-address wallet that receives every payment on a fresh address, with passkey login and an Incognito balance in Privacy Pools.',
     detailedDescription: readProjectMarkdown('cloaked', 'detailedDescription'),
     links: {
       websites: ['https://app.clkd.xyz'],
@@ -47,7 +47,43 @@ export const cloaked: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.stealthAddress,
+    referenceApp: {
+      name: 'Cloaked web app',
+      url: 'https://app.clkd.xyz',
+      since: '2026-09-16',
+      // Vercel deployment id of the served app (app.clkd.xyz/api/version),
+      // signing vault auth.clkd.xyz/v17.
+      build: 'dpl_Eh8jMZFr7gBpkKE4NDJzg1EyCzo5',
+      checked: '2026-10-30',
+      checkedApps: [
+        {
+          name: 'Cloaked browser extension',
+          icon: 'cloaked',
+          finding:
+            "Tells Cloaked's server each website that asks to connect, with the address it gets, and the server lists each address's websites after its first transaction.",
+          fix: 'Keep the list of connected websites on the device and leave the website out of API calls.',
+          source: 'https://clkd.xyz/docs/api-reference',
+          checked: '2026-10-27',
+        },
+        {
+          name: 'Cloaked agent skill',
+          icon: 'cloaked',
+          finding:
+            "Feeds every API response to the agent's AI provider, which sees each fresh address and transaction under the user's provider account.",
+          fix: 'Fetch addresses and history in a local tool and pass the model only what the user asks for.',
+          source:
+            'https://github.com/cloakedxyz/clkd-agent-skill/blob/6dbdff0fae94852011d5b45ada912d0dafcb2be7/references/receive.md#L5-L23',
+        },
+      ],
+    },
     trackedOn: ['ethereum'],
+    // Chains the app serves (api.clkd.xyz/v1/supported-chains).
+    runsOn: [
+      ProjectId('arbitrum'),
+      ProjectId('base'),
+      ProjectId('optimism'),
+      ProjectId('robinhood'),
+    ],
     // Cloaked balances live in arbitrary one-time EOAs and cannot be
     // attributed using public chain data. Its Privacy Pools integration uses
     // pools that L2BEAT tracks on the separate Privacy Pools project page.
@@ -62,7 +98,7 @@ export const cloaked: BaseProject = {
       sentiment: 'good',
       orderHint: Number.MAX_SAFE_INTEGER,
       description:
-        'Under the documented key model, existing stealth balances are held in user-controlled EOAs and can be recovered with the published client-side recovery tool. The hosted service cannot spend them without obtaining client-side key material.',
+        "Balances sit in addresses the user's keys control, and the open recovery tool exports their keys from the wallet and PIN or from the backup file saved at setup. Cloaked can spend them only with the user's key material.",
       walkawayTest: {
         passed: false,
         reason:
@@ -73,7 +109,7 @@ export const cloaked: BaseProject = {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'The production web wallet is closed source and cannot be self-hosted. The published derivation code and API schema can nevertheless be used to build a local client that creates an account, derives keys, and signs and submits payments through the hosted API. The backend implementations of the API, ENS gateway, indexer, and relay service are not published, so the complete service cannot be reproduced.',
+        'The web app and the browser extension are closed source. The open stealth library and recovery tool derive keys and recover funds without Cloaked. The API, ENS gateway, indexer and relay are closed.',
     },
     attributes: [
       PRIVACY_ATTRIBUTES.stealthAddresses,

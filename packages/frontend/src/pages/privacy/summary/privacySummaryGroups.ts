@@ -1,6 +1,8 @@
 import type { PrivacyField } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
+import { ANONYMITY_SET_TOOLTIPS } from '~/server/features/privacy/anonymity-set/anonymitySetTooltips'
+import type { PrivacyAnonymitySetType } from '~/server/features/privacy/anonymity-set/getPrivacyAnonymitySetSeries'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
 
 /** Ids of the summary table columns that only some groups show. */
@@ -19,9 +21,12 @@ interface PrivacySummaryGroupConfig {
   label: string
   description: string
   hiddenColumns: PrivacySummaryOptionalColumn[]
+  /** Unset where the anonymity set column is hidden. */
+  anonymitySetType?: PrivacyAnonymitySetType
 }
 
 export interface PrivacySummaryGroup extends PrivacySummaryGroupConfig {
+  anonymitySetTooltip: string | undefined
   entries: PrivacySummaryEntry[]
 }
 
@@ -38,21 +43,25 @@ const GROUPS: PrivacySummaryGroupConfig[] = [
     field: 'linkage',
     label: 'Link privacy',
     description:
-      'Breaks the link between deposits and withdrawals; both stay public.',
+      'Hides which deposit became which withdrawal. Both stay public.',
     hiddenColumns: [COLUMNS.volume30d],
+    anonymitySetType: 'deposits',
   },
   {
     field: 'recipient',
     label: 'Recipient privacy',
     description:
-      'Hides who is paid: each transfer lands at a fresh one-time address.',
+      'Hides who is paid. Each payment lands at a fresh one-time address.',
     // Stealth payments lock nothing in a contract and need no ZK proofs.
     hiddenColumns: [COLUMNS.tvl, COLUMNS.trustedSetup],
+    // Stealth payments have no pool to hide in; the crowd is everyone who
+    // registered keys.
+    anonymitySetType: 'key-registrations',
   },
   {
     field: 'amount',
     label: 'Amount privacy',
-    description: 'Hides how much moves: balances and transfers are encrypted.',
+    description: 'Hides how much moves. Balances and transfers are encrypted.',
     // No ZK proofs, and the crowd a deposit hides in says nothing about how
     // well its amount is hidden.
     hiddenColumns: [
@@ -84,6 +93,12 @@ export function getPrivacySummaryGroups(
     if (!groupEntries) {
       return []
     }
-    return { ...group, entries: groupEntries }
+    return {
+      ...group,
+      anonymitySetTooltip:
+        group.anonymitySetType &&
+        ANONYMITY_SET_TOOLTIPS[group.anonymitySetType],
+      entries: groupEntries,
+    }
   })
 }

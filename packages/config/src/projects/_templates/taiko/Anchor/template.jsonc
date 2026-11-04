@@ -8,6 +8,8 @@
   "category": "core",
   "ignoreInWatchMode": ["getBlockState"],
   "fields": {
+    "owner": { "severity": "MEDIUM" },
+    "$admin": { "severity": "MEDIUM" },
     "pendingOwner": {
       "severity": "MEDIUM"
     },

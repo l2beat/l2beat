@@ -153,31 +153,6 @@
       ]
     },
     {
-      "type": "data-availability",
-      "id": "eigenlayer",
-      "daLayerId": "eigenda",
-      "name": "EigenLayer",
-      "news": [
-        {
-          "title": "Collective Memory Uses EigenAI to Verify Reality Onchain",
-          "content": "Collective Memory, a decentralized social network, [enables users](https://blog.eigencloud.xyz/how-collective-memory-uses-eigenai-to-verify-1-6m-war-photos-protests-and-party-pics-onchain/) to upload unfiltered images and videos, ranging from protests and wars to parties and daily life, called “Memories.” These are not just content but verifiable onchain assets. Each Memory can be staked into using ATTN tokens, allowing creators to earn and fans to invest in the truth they value.\n\nThe challenge was processing 1.6 million Memories at scale without relying on centralized AI, which contradicts their core principle of decentralization. To solve this, they integrated EigenAI, a service built on EigenCloud that ensures inference (like time, location, and context detection) is verifiable, tamper-proof, and free from centralized control.\n\nEigenAI orchestrates multiple open-source AI models and provides a transparent infrastructure for inference. It ensures that all prompts, models, and outputs are verifiable, which was essential for Collective Memory’s vision of a decentralized and trustworthy knowledge base.\n\nSince integrating EigenAI, the platform has significantly improved the transparency and trust of its verification process. It laid the foundation for a new internet-native, user-owned knowledge graph, which the founders describe as “the world’s verified reality graph.”"
-        },
-        {
-          "title": "Witness Chain & EigenCloud: Building Trustless Proof of Location",
-          "content": "Witness Chain [introduces](https://blog.eigencloud.xyz/verifying-the-physical-world/) a cryptographically verifiable Proof of Location (PoL) system designed for decentralized physical infrastructure (DePIN). Unlike traditional GPS or Wi-Fi-based systems vulnerable to spoofing, Witness Chain uses network latency between distributed “watchtowers” to verify that a device is physically located where it claims to be. This verification enables onchain enforcement of location-sensitive actions, such as jurisdictional compute, localized energy trading, and geo-fenced storage.\n\nBy integrating with EigenCloud as an Autonomous Verifiable Service (AVS), Witness Chain benefits from Ethereum-grade trust, decentralization, and slashing-based security. EigenLayer stakers act as challengers, verifying location claims through latency checks and earning rewards for honest participation. The result is a scalable, cryptoeconomically secure location layer for smart contracts and DePIN coordination."
-        },
-        {
-          "title": "FereAI & EigenAI: Making AI Trading Agents Deterministic and Verifiable",
-          "content": "FereAI is a crypto assistant platform focused on long-horizon, AI-driven trading and research. It serves thousands of daily users with real-time intelligence by processing onchain activity, market news, and social signals. However, it faced a key limitation in AI: non-deterministic behavior. Identical prompts often yielded different outputs, posing a significant risk when managing real capital and long-term strategies.\n\nTo solve this, FereAI [integrated](https://blog.eigencloud.xyz/how-fereai-uses-eigenai/) with EigenAI, a verifiable inference service by EigenCloud. EigenAI ensures deterministic outputs from large language models (LLMs), meaning the same prompt always yields the same response — even with tool calls. This guarantees auditability and reproducibility and eliminates the need for complex guardrails.\n\nWith EigenAI, FereAI was able to scale faster, ship features more confidently, and provide trustworthy agent actions. Their developers can now focus on innovation instead of debugging unpredictable model outputs. For trading, where consistency is non-negotiable, this deterministic infrastructure turns experimental AI agents into reliable, production-grade financial tools."
-        },
-        {
-          "title": "Protocol Council Approves ELIPs 008, 010, and 011",
-          "content": "The EigenLayer Protocol Council [has officially](https://forum.eigenlayer.xyz/t/protocol-council-evaluation-elip-008-010-011/14723) approved three proposals after rigorous review:\n\n**ELIP-008 (Multi-Chain Verification)** introduces cross-chain capabilities for AVSs. It received unanimous support following a full security audit by Sigma Prime. While some complexity risks were noted around the stake transporter, a decentralization roadmap and controls were deemed adequate.\n\n**ELIP-010 (Mailbox for Hourglass)** standardizes task coordination for task-based AVSs. Reviewers praised its modular design and potential to expand viable AVS types. A minor spam attack vector was flagged but considered manageable. Final approval was conditional on audit completion, which is now public.\n\n**ELIP-011 (Programmatic Incentives v2.0)** updates EIGEN staking parameters to enhance rewards. It was described as simple and low-risk, with only one council member abstaining from the vote.\n\nThese approvals mark significant progress for EigenLayer's cross-chain operability, developer experience, and incentive alignment.",
-          "tags": ["governance"]
-        }
-      ]
-    },
-    {
       "name": "Nethermind",
       "type": "upcoming-project",
       "projectId": "nethermind",

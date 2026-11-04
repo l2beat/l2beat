@@ -1,0 +1,69 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Timelock",
+  "description": "A standard timelock with access control. Proposers can also cancel queued transactions. The current minimum delay is {{minDelayFormatted}}.",
+  "fields": {
+    "getMinDelay": {
+      "severity": "HIGH"
+    },
+    "minDelayFormatted": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "getMinDelay",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "accessControl": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl"
+      }
+    },
+    "timelockAdminAC": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "TIMELOCK_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "delay": "{{getMinDelay}}",
+          "description": "manage all access control roles and change the minimum delay."
+        }
+      ]
+    },
+    "proposerAC": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "PROPOSER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "propose and cancel transactions."
+        }
+      ]
+    },
+    "executorAC": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "EXECUTOR_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "execute transactions that are ready."
+        },
+        {
+          "type": "act",
+          "delay": "{{getMinDelay}}"
+        }
+      ]
+    }
+  }
+}

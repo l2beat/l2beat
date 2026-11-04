@@ -13,10 +13,11 @@ export type PrivacyProject = Project<
   | 'permissions'
   | 'discoveryInfo'
   | 'discoveryUpdates'
-  | 'crops'
+  | 'garden'
   | 'zkCatalogInfo'
   | 'ossificationHistory'
   | 'milestones'
+  | 'archivedAt'
 > & {
   /** Own zkCatalogInfo trusted setups, or those of privacyInfo.zkCatalogId. */
   trustedSetups: ProjectZkCatalogInfo['trustedSetups']

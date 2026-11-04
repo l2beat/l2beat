@@ -23,11 +23,11 @@ export function GardenPage({ entries, attestation, ...props }: Props) {
       <SideNavLayout backdrop={<GardenBackground />}>
         <div className="flex grow flex-col pb-24">
           <GardenPageHeader
-            title="The Infinite Garden"
-            description="Each project is evaluated across the CROPS framework: Censorship Resistance, Open source, Privacy, and Security. Hover a plant for the reasoning behind its evaluation."
+            title="The CROPS guide"
+            description="A curated list of distinguished projects that follow the CROPS values: censorship resistance, open source, privacy and security."
           />
           <main>
-            <div className="mt-4 overflow-hidden rounded-xl bg-surface-primary max-md:mx-4 md:px-6">
+            <div className="mt-4 overflow-hidden rounded-xl bg-surface-primary max-md:mx-4 md:px-5">
               <GardenTable entries={entries} />
             </div>
             <AttestationNotice attestation={attestation} />

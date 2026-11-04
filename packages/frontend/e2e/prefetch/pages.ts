@@ -4,11 +4,6 @@ export interface PageToVerify {
   expectedQueries: string[]
 }
 
-export interface DynamicPageToVerify {
-  name: string
-  resolve: () => Promise<PageToVerify | undefined>
-}
-
 /**
  * Pages to verify. Each page lists the tRPC procedure paths that must be
  * present in the dehydrated queryState. The exact inputs are discovered at
@@ -18,8 +13,8 @@ export interface DynamicPageToVerify {
  * page should have at least one expected query path; pages without SSR
  * prefetches are not useful for this check.
  */
-export const STATIC_PAGES: PageToVerify[] = [
-  page('/', ['interop.dashboard', 'interop.flows']),
+export const PAGES: PageToVerify[] = [
+  page('/', ['interop.flowsOverview']),
   page('/layer2s/summary', [
     'tvs.recategorisedChart',
     'activity.recategorisedChart',
@@ -31,7 +26,6 @@ export const STATIC_PAGES: PageToVerify[] = [
   ]),
   page('/layer2s/costs', ['costs.chart']),
   page('/layer2s/tvs', ['tvs.detailedChart', 'tvs.table', 'tvs.chartStats']),
-  page('/data-availability/throughput', ['da.chart']),
   page('/interop/summary', ['interop.flows']),
   page('/interop/lock-and-mint?from=ethereum&to=arbitrum', [
     'interop.dashboard',
@@ -50,23 +44,6 @@ export const STATIC_PAGES: PageToVerify[] = [
   ]),
   page('/privacy/summary', ['privacy.flowsChart', 'tvs.chartByProjects']),
 ]
-
-export const DYNAMIC_PAGES: DynamicPageToVerify[] = []
-
-/**
- * Resolves the full list of page URLs to verify, adding one representative
- * dynamic page per pattern (slugs resolved the same way SitemapRouter does).
- */
-export async function resolvePages(): Promise<PageToVerify[]> {
-  const pages = [...STATIC_PAGES]
-  for (const dynamicPage of DYNAMIC_PAGES) {
-    const resolved = await dynamicPage.resolve()
-    if (resolved) {
-      pages.push(resolved)
-    }
-  }
-  return pages
-}
 
 function page(url: string, expectedQueries: string[]): PageToVerify {
   return { url, expectedQueries }

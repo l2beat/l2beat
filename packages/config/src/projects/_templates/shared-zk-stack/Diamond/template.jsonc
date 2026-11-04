@@ -65,7 +65,7 @@
       "description": "Settlement layer for this chain: the zero address while batches are committed, proven and executed on Ethereum, otherwise the Gateway diamond that settles this chain. Moving it relocates the complete proof-verification and message path of the chain."
     },
     "getAdmin": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",
@@ -73,7 +73,9 @@
         }
       ]
     },
+    // role holder: the ValidatorTimelock and its delay are judged on their own
     "validators": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "zksynceraValidators"
       },
@@ -123,8 +125,37 @@
       },
       "edit": ["format", "UintPermrollupString"]
     },
+    // Priority Mode (escape hatch, v31): `priorityModeInfo` is slot 63 of ZKChainStorage, packed as
+    // (bool canBeActivated, bool activated, address permissionlessValidator); slot 64 is the filterer used in
+    // Priority Mode. Both slots are unused (zero) before v31. The template parses the raw slot.
+    "priorityModeCanBeActivated": {
+      "description": "1 once the chain admin permanently allowed Priority Mode (ZKsync OS permanent rollups only). Then anyone can activate it as soon as the first unprocessed priority transaction is older than 4 days, after which only the shared PermissionlessValidator can settle batches (anyone can submit through it) and only the ChainTypeManager owner can deactivate it.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "storage",
+        "slot": 63,
+        "returnType": "uint8"
+      }
+    },
+    "priorityModeInfo": {
+      "description": "Raw Priority Mode storage: last byte canBeActivated, byte before it activated, then the PermissionlessValidator address.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "storage",
+        "slot": 63
+      }
+    },
+    "priorityModeTransactionFilterer": {
+      "description": "TransactionFilterer that replaces the chain's own filterer once Priority Mode is allowed. Set by the ChainTypeManager owner, zero means no filtering.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "storage",
+        "slot": 64,
+        "returnType": "address"
+      }
+    },
     "getDAValidatorPair": {
-      "description": "l1da, l2da",
+      "description": "l1da, l2da (before v31) or l1da, L2 DA commitment scheme (from v31).",
       "severity": "HIGH"
     },
     "getPubdataPricingMode": {

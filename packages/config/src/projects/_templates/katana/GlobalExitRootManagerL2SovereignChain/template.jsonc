@@ -11,7 +11,7 @@
       "severity": "MEDIUM"
     },
     "$admin": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     // Role holders (remover: Katana Foundation Engineering Safe, updater: aggoracle
     // operator EOA): identity changes need review, mechanism changes are recorded in

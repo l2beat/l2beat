@@ -1,3 +1,159 @@
+Generated with discovered.json: 0x32da127500d3aad0cb62d90a35edd2bf10bc3adb
+
+# Diff at Fri, 16 Oct 2026 09:37:51 GMT:
+
+- id: 301016e5
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1768984927
+- current timestamp: 1768984927
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768984927 (main branch discovery), not current.
+
+```diff
+    contract Inbox (arb1:0x4FeBaEF286Ca477402dafCEeB17C64de481aFB42) [orbitstack/Inbox] {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ProxyAdmin (arb1:0x802c7B6585d20cb69524EF23fCbF919F671F808a) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract SequencerInbox (arb1:0x8AeDdE55Cb361e73a0B0c0cF2A5bB35E97a20456) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Outbox (arb1:0xBA99217992620b76aae0D574c70bD313B30D3D1d) [orbitstack/Outbox] {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.rollup:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (arb1:0xc5d17f6e0025a23c0AAFf7832Cc531B3034602DA) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.executors.severity:
+-        "LOW"
++        "MEDIUM"
+      fieldMeta.accessControl:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract RollupEventInbox (arb1:0xe966442c0E8F28C48eF4F02BfF7a29876Dcd30CC) [orbitstack/RollupEventInbox] {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Bridge (arb1:0xF3f01622Ac969156760c32190995F9dC5b3eb7FA) [orbitstack/Bridge] {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.allowedOutboxList.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.allowedDelayedInboxList.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.rollup:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0x24a3878868fd84661dbb860df73d278e2decdb9e
+
+# Diff at Tue, 13 Oct 2026 07:14:48 GMT:
+
+- id: 371573e3
+- author: torztomasz (<tomasz.torz@l2beat.com>)
+- comparing to: main@cbcd0741ccee2bf199600c1599188b5fc95b8508 block: 1768984927
+- current timestamp: 1768984927
+
+## Description
+
+Blobstream contracts are now discovered here instead of referenced from the blobstream project, which was removed with the rest of the alt-DA projects.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768984927 (main branch discovery), not current.
+
+```diff
+    contract ArbitrumBlobstream (arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) [succinct/SP1Blobstream] {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      type:
+-        "Reference"
++        "Contract"
+      targetType:
+-        "Contract"
+      targetProject:
+-        "blobstream"
+      template:
++        "succinct/SP1Blobstream"
+      sourceHashes:
++        ["0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858","0x34cb26aa383177d58a2f4f1984ad3fbcd3fdb946a53633f98bdd79a2300de340"]
+      proxyType:
++        "EIP1967 proxy"
+      description:
++        "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here."
+      deployerAddress:
++        "arb1:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e"
+      sinceTimestamp:
++        1710651080
+      sinceBlock:
++        191198934
+      values:
++        {"$admin":["arb1:0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"],"$implementation":"arb1:0x46EbfC399d3913BB9b99E73675722417F9c5d416","$pastUpgrades":[["2024-03-17T04:51:20.000Z","0x58059198a17ae1d8dd73b4d0f0ce7169f4e55d901a8fea59b4ef12d005a41f0a",["arb1:0x7C3A9b466FF5c02582fa32d4aD1b2Cb431fB7c9b"]],["2024-03-18T01:19:36.000Z","0xf45e346ddbedef1ea3f828954c979adcb205b4b1c0ca72e49e7e2ef5b1c43192",["arb1:0xfb19439fBa9f16aA720be6bE0e53465a9733C964"]],["2024-08-26T18:53:22.000Z","0x746e21628ccec4d5b4da96595f852a6398defcc360cb9f13aa2d84ebe4e7403f",["arb1:0x47fd660D5252Bd6F9D2c71507E46aa1d6e957c23"]],["2024-12-02T19:09:05.000Z","0x07dbff15e24a8c124a927a2881cb4d471ace180488a56a56b43b47d1da68a130",["arb1:0x46EbfC399d3913BB9b99E73675722417F9c5d416"]]],"$upgradeCount":4,"accessControl":{"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["arb1:0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"]},"TIMELOCK_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["arb1:0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"]},"GUARDIAN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["arb1:0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"]}},"blobstreamProgramVkey":"0x00de39c136b88dfeacb832629e21a9667935bc0e74aaa21292e4f237d79d0bef","checkRelayer":true,"DATA_COMMITMENT_MAX":10000,"DEFAULT_ADMIN_ROLE":"0x0000000000000000000000000000000000000000000000000000000000000000","frozen":false,"GUARDIAN_ROLE":"0x55435dd261a4b9b3364963f7738a7a662ad9c84396d64be3365284bb7f0a5041","guardians":["arb1:0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"],"headerRangeFunctionId_deprecated":"0x949dc389c82c63394889813be437513ebc5d06f43bbc9c1e2eb4b791faade1a0","isRelayer1Approved":false,"isRelayer2Approved":true,"isRelayer3Approved":true,"latestBlock":9479200,"nextHeaderFunctionId_depcrecated":"0x044611c8d01cf88e09811f3270a654e7faf319e96b38f3dd7f9d218c8bb4d0ef","relayers":["arb1:0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D","arb1:0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC"],"state_proofNonce":16382,"TIMELOCK_ROLE":"0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05","verifier":"arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e","VERSION":"1.1.0"}
+    }
+```
+
+```diff
++   Status: CREATED
+    external contract SP1VerifierGatewayArb (arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BlobstreamMultisig (arb1:0x738a9b55304f9fcF776B3BA285e50c0f9eF77997) [GnosisSafe]
+    +++ description: None
+```
+
 Generated with discovered.json: 0xc7de7fd01a774a67473ca4b111c9ab794f5029e5
 
 # Diff at Sun, 04 Oct 2026 05:55:37 GMT:

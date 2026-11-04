@@ -1,0 +1,49 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "DeBridgeIntentManager",
+  "description": "Fills signed user intents through DLN orders or same-chain swaps. It pulls approved tokens through its configurable allowance holder. Fees, the DLN source and the fee recipient are configurable independently of user signatures.",
+  "fields": {
+    "accessControl": { "handler": { "type": "accessControl" } },
+    "defaultAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the allowance holder, DLN source, fee recipient and intent fees, rescue held funds, and grant or revoke roles."
+        }
+      ]
+    },
+    "govMonitoringAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "GOVMONITORING_ROLE",
+        "includeEmptyRoles": true
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause and unpause intent fills and invalidate intents signed before a chosen timestamp."
+        }
+      ]
+    },
+    "getAllowanceHolder": {
+      "description": "Configurable contract holding user token approvals."
+    },
+    "getFeeTreasury": {
+      "description": "Configurable recipient of fees charged on intent fills."
+    },
+    "getDlnSource": {
+      "description": "Configurable DLN contract used to create orders."
+    },
+    "getDefaultFeeBps": {
+      "description": "Default intent fee in basis points, independently configurable from signed intents."
+    },
+    "paused": { "severity": "MEDIUM" },
+    "getGlobalNullificationTimestamp": {
+      "description": "Intents signed before this timestamp are invalid."
+    }
+  }
+}

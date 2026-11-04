@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import type { ChainRecord } from '@l2beat/token-backend'
 import { useQuery } from '@tanstack/react-query'
 import { CoinsIcon, LinkIcon } from 'lucide-react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router'
 import { Button } from '~/components/core/Button'
 import {
   Card,

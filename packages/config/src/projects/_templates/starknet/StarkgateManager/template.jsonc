@@ -5,7 +5,7 @@
   "fields": {
     "$admin": {
       "description": "Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation).",
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "upgrade",

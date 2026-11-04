@@ -29,7 +29,7 @@ export function StageBadge({
       <div
         className={cn(
           'inline-flex h-[18px] w-[60px] items-center justify-center rounded text-center font-medium text-[13px] uppercase leading-none! md:h-[22px] md:w-[66px] md:text-xs',
-          getClassNames(stage),
+          getStageBadgeClassName(stage),
         )}
       >
         {value ?? 'n/a'}
@@ -50,7 +50,9 @@ export function StageBadge({
   )
 }
 
-function getClassNames(stage: Stage | 'UnderReview' | 'NotApplicable'): string {
+export function getStageBadgeClassName(
+  stage: Stage | 'UnderReview' | 'NotApplicable',
+): string {
   switch (stage) {
     case 'Stage 2':
       return 'bg-green-900 border border-[#179323] text-white'
@@ -59,7 +61,7 @@ function getClassNames(stage: Stage | 'UnderReview' | 'NotApplicable'): string {
     case 'Stage 0':
       return 'bg-orange-600 border border-[#F98A24] dark:bg-[#E03109] dark:border-[#F25430] text-white'
     case 'UnderReview':
-      return 'border border-current text-n-yellow-700 dark:text-yellow-200'
+      return 'border border-current text-warning-text'
     case 'NotApplicable':
       return 'bg-[#B4C7D5] dark:bg-[#3D4361] border border-[#D1E1EC] dark:border-[#343955] text-zinc-800 dark:text-primary'
     default:
@@ -74,11 +76,11 @@ export function getStageTextClassname(
     case 'Stage 2':
       return 'text-positive'
     case 'Stage 1':
-      return 'text-warning'
+      return 'text-warning-text'
     case 'Stage 0':
       return 'text-negative'
     case 'UnderReview':
-      return 'text-n-yellow-700 dark:text-yellow-200'
+      return 'text-warning-text'
     default:
       return 'text-secondary'
   }

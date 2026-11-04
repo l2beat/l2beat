@@ -36,8 +36,7 @@
     "@l2beat/shared-pure": "workspace:*",
     "@l2beat/validate": "workspace:*",
     "ethers": "^5.7.2",
-    "lodash": "^4.17.21",
-    "sqlite3": "5.1.7"
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@l2beat/backend-tools": "workspace:*",

@@ -16,11 +16,9 @@ describe(getMarkdownAlternatePath.name, () => {
     expect(getMarkdownAlternatePath('/layer2s/projects/arbitrum')).toEqual(
       '/layer2s/projects/arbitrum.md',
     )
-    expect(
-      getMarkdownAlternatePath(
-        '/data-availability/projects/celestia/blobstream',
-      ),
-    ).toEqual('/data-availability/projects/celestia/blobstream.md')
+    expect(getMarkdownAlternatePath('/privacy/projects/railgun')).toEqual(
+      '/privacy/projects/railgun.md',
+    )
   })
 
   it('resolves every path Express routes to the page', () => {
@@ -29,19 +27,19 @@ describe(getMarkdownAlternatePath.name, () => {
     )
   })
 
-  // Token ids and project slugs are case-sensitive: /interop/tokens/9hn5pn is
-  // another token than /interop/tokens/9HN5PN, or none at all.
+  // Token ids and project slugs are case-sensitive: /tokens/9hn5pn is
+  // another token than /tokens/9HN5PN, or none at all.
   it('keeps the case of the path it resolves', () => {
-    expect(
-      getMarkdownAlternatePath('/interop/tokens/9HN5PN/circle/usdc'),
-    ).toEqual('/interop/tokens/9HN5PN/circle/usdc.md')
+    expect(getMarkdownAlternatePath('/tokens/9HN5PN/circle/usdc')).toEqual(
+      '/tokens/9HN5PN/circle/usdc.md',
+    )
   })
 
   it('resolves a page in every shape its optional segments allow', () => {
     for (const path of [
-      '/interop/tokens/usdc01',
-      '/interop/tokens/usdc01/usdc',
-      '/interop/tokens/usdc01/circle/usdc',
+      '/tokens/usdc01',
+      '/tokens/usdc01/usdc',
+      '/tokens/usdc01/circle/usdc',
     ]) {
       expect(getMarkdownAlternatePath(path)).toEqual(`${path}.md`)
     }
@@ -52,7 +50,7 @@ describe(getMarkdownAlternatePath.name, () => {
       '/faq',
       '/layer2s/projects',
       '/layer2s/projects/arbitrum/tvs-breakdown',
-      '/interop/tokens/usdc01/circle/usdc/extra',
+      '/tokens/usdc01/circle/usdc/extra',
     ]) {
       expect(getMarkdownAlternatePath(path)).toEqual(undefined)
     }

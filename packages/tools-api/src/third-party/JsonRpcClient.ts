@@ -21,6 +21,7 @@ export class JsonRpcClient {
         method: request.method,
         params: request.params,
       }),
+      signal: AbortSignal.timeout(15_000),
     })
     const json = await res.json()
     const parsed = Response.safeParse(json)

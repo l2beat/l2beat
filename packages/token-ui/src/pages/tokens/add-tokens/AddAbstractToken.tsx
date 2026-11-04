@@ -3,7 +3,7 @@ import type { Plan } from '@l2beat/token-backend'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import { toast } from 'sonner'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import { Card, CardContent } from '~/components/core/Card'
@@ -150,7 +150,7 @@ export function AddAbstractToken({
           onSuccess={() => {
             form.reset()
             if (redirectTo) {
-              navigate(
+              void navigate(
                 buildUrlWithParams('/tokens/new', {
                   tab: redirectTo,
                   abstractTokenId: form.getValues('id'),

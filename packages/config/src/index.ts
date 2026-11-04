@@ -3,10 +3,10 @@
 // +--------------------------+
 
 export {
-  CROP_ATTESTATIONS,
-  type CropAttestation,
-  type CropAttestationLedger,
-  type RevokedCropAttestation,
+  CROP_ATTESTATION_SOURCE,
+  type CropAttestationSource,
+  type CropsAttestationsMeta,
+  getCropsAttestationsMeta,
 } from './crops/attestations'
 export { OSI_LICENSES } from './crops/osiLicenses'
 export { PROJECT_COUNTDOWNS } from './global/countdowns'

@@ -24,8 +24,9 @@
       ]
     },
     // Bond every submitter posts, slashed in full when its batch is successfully challenged.
+    // MEDIUM: an incentive, a successful challenge still stops the batch.
     "minimumStake": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     // Deposit required to challenge a state root. Raising it prices out challengers
     // and lets an invalid batch finalize.
@@ -34,13 +35,13 @@
     },
     // Share of a slashed stake forwarded to the Rollup as challenger reward.
     "rewardPercentage": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "rollupContract": {
       "severity": "HIGH"
     },
     "$admin": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     // role holder: mechanism changes are reviewed events
     "owner": {

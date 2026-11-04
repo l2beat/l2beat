@@ -5,6 +5,8 @@
   "category": "bridge-external",
   "ignoreMethods": ["WETH"],
   "fields": {
+    "owner": { "severity": "MEDIUM" },
+    "$admin": { "severity": "MEDIUM" },
     "counterpart": {
       "edit": ["format", "ScrollAddress"]
     },

@@ -13,6 +13,7 @@
   ],
   "category": "core",
   "fields": {
+    "withdrawalRecipient": { "edit": ["format", "EthereumAddress"] },
     "crossDomainAdmin": {
       "severity": "HIGH",
       "handler": {

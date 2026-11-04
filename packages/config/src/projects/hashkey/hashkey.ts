@@ -136,4 +136,14 @@ export const hashkey = opStackL2({
   genesisTimestamp,
   stateDerivation: DERIVATION.OPSTACK('HASHKEY'),
   isNodeAvailable: true,
+  milestones: [
+    {
+      title: 'Admin forces a transfer out of a user account',
+      url: 'https://etherscan.io/tx/0xcd999b6859407b249203a3ef665702cb1d2137521a068e534974d779ad035d90',
+      date: '2026-10-13T00:00:00Z',
+      description:
+        'Admin swaps the Portal for 6 min to move 142,818 USDT out of a user account via a forced deposit.',
+      type: 'incident',
+    },
+  ],
 })

@@ -1,0 +1,38 @@
+{
+  "DepositVaultBatcherConfidential.sol": {
+    "hash": "0x5c937e3de51f0acacfde580854a5353d12f4cde68bedb1401d89905608533eec",
+    "address": "eth:0xA07c00A3b955B805B3Ea76b086f95a3e793715D5",
+    "chain": "ethereum",
+    "blockNumber": 26249126
+  },
+  "DepositVaultBatcherConfidential_gen1.sol": {
+    "hash": "0x5357ef2f2994a3f7c458e93d8c3006b089192df678bf4fef518379fbad1e6882",
+    "address": "eth:0x324EA89FD3784036673BfE6Ffee2334A088F40Cc",
+    "chain": "ethereum",
+    "blockNumber": 26249126
+  },
+  "DepositVaultBatcherConfidential_gen2.sol": {
+    "hash": "0xa269746016761380a1f3541329daa15bf13b42cd12a1571674d8ec12bc559e78",
+    "address": "eth:0x6e05F3bE50c7890Ba10B30e9492b20683d5cC707",
+    "chain": "ethereum",
+    "blockNumber": 26249126
+  },
+  "RedeemVaultBatcherConfidential.sol": {
+    "hash": "0x621e9ed26b6d28fbfb0751c5b1895c94ac7e58d444d6f3c0814fc4c65209d4c7",
+    "address": "eth:0x3a906d6509EB4171Ee9fC71D083fb1638BaF083D",
+    "chain": "ethereum",
+    "blockNumber": 26249126
+  },
+  "RedeemVaultBatcherConfidential_gen1.sol": {
+    "hash": "0x1ce38009f5990d9a8d0d0e8803e4ec3a83e5da7a703c62092edf77444fbb56f4",
+    "address": "eth:0x96Cd3Faa7483783Ac2Eb715f6333361500F1eec9",
+    "chain": "ethereum",
+    "blockNumber": 26249126
+  },
+  "RedeemVaultBatcherConfidential_gen2.sol": {
+    "hash": "0x67f405847cd3f34e2c5a9bba4fa718af27fbe1a30925e11d03ef182173753257",
+    "address": "eth:0x4Ad6368aD783644F1BB780F0A0F00cD77ca06400",
+    "chain": "ethereum",
+    "blockNumber": 26249126
+  }
+}

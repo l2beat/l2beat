@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -76,14 +76,6 @@ export const rise: ScalingProject = opStackL2({
       description:
         'RISE opens its mainnet (genesis on January 5th 2026) to the public together with the RISEx exchange.',
       type: 'general',
-    },
-  ],
-  daTracking: [
-    {
-      type: 'eigen-da',
-      daLayer: ProjectId('eigenda'),
-      sinceTimestamp: UnixTime(1767607200), // 2026-01-05T10:00:00Z
-      customerId: '0x78d5974216f751eb328018f003067f77e8be2fc4',
     },
   ],
   interopConfig: {
