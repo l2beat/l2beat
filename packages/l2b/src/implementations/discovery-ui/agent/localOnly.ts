@@ -2,6 +2,8 @@ import type { RequestHandler } from 'express'
 
 const LOOPBACK_ADDRESSES = ['127.0.0.1', '::1', '::ffff:127.0.0.1']
 const LOOPBACK_HOSTNAMES = ['localhost', '127.0.0.1', '[::1]']
+// A DiscoUI page, or the researcher typing the address in.
+const ALLOWED_FETCH_SITES = ['same-origin', 'none']
 
 // The server listens on every interface, so routes that act for the
 // researcher refuse other machines, pages that rebind their domain to this
@@ -36,8 +38,10 @@ export function isLocalRequest(
   if (origin !== undefined && !isLocalOrigin(origin)) {
     return false
   }
-  // A frame or link from another site may omit Origin, but not this.
-  if (fetchSite === 'cross-site') {
+  // A link or frame may omit Origin, but browsers say where it came from.
+  // A page on another localhost port is same-site, not same-origin. Agents
+  // and other local tools send no such header.
+  if (fetchSite !== undefined && !ALLOWED_FETCH_SITES.includes(fetchSite)) {
     return false
   }
   return (

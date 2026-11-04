@@ -33,6 +33,17 @@ describe(isLocalRequest.name, () => {
       false,
     )
   })
+
+  it('refuses pages on other localhost ports', () => {
+    expect(isLocal('127.0.0.1', 'localhost', undefined, 'same-site')).toEqual(
+      false,
+    )
+    const origin = 'http://localhost:3000'
+    expect(isLocal('127.0.0.1', 'localhost', origin, 'same-site')).toEqual(
+      false,
+    )
+    expect(isLocal('127.0.0.1', 'localhost', undefined, 'none')).toEqual(true)
+  })
 })
 
 function isLocal(
