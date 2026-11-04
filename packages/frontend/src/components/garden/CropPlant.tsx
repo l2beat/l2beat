@@ -258,7 +258,7 @@ function Wilt({ delay, motion, jitter }: PlantProps) {
 }
 
 /** A dashed sprout that fades in and out: nothing has been looked at yet. */
-function Ghost({ motion }: PlantProps) {
+function Ghost({ motion, jitter }: PlantProps) {
   const dashed = {
     stroke: 'currentColor',
     fill: 'none',
@@ -270,9 +270,11 @@ function Ghost({ motion }: PlantProps) {
       style={{
         transformBox: 'fill-box',
         transformOrigin: '50% 100%',
+        // Nothing grows in first, so the pulse runs from first paint and the
+        // wait becomes a head start; a later start would flash full opacity.
         animation:
           motion === 'sway'
-            ? 'garden-ghost 3.6s ease-in-out infinite'
+            ? `garden-ghost ${3.6 * jitter.rate}s ease-in-out ${-jitter.wait}s infinite`
             : undefined,
       }}
     >
