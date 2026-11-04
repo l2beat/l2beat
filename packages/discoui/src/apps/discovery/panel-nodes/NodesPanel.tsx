@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { useParams } from 'react-router'
 import type {
   Field as ApiField,
@@ -16,6 +16,7 @@ import type { Field, Node } from './store/State'
 import { useStore as useNodeStore, useStore } from './store/store'
 import { NODE_WIDTH } from './store/utils/constants'
 import { getGraphProjection } from './store/utils/graphProjection'
+import { expandedNodes } from './store/utils/renderGraph'
 import { topLevelByDescendant } from './store/utils/subnodes'
 import { Viewport } from './view/Viewport'
 
@@ -165,13 +166,18 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
   }, [project, data, clear, loadNodes])
 }
 
-function eq(a: readonly string[], b: readonly string[]) {
+function sameIds(a: readonly string[], b: readonly string[]) {
   return a.length === b.length && a.every((x, i) => b[i] === x)
 }
 
 function useSynchronizeSelection() {
   const loaded = useStore((state) => state.loaded)
-  const [lastSelection, rememberSelection] = useState<readonly string[]>([])
+  // What each side last heard from the other, so neither takes its own
+  // update for a new choice by the researcher. Every click makes a new
+  // array, so a click on what is already selected still counts.
+  const lastNodes = useRef<readonly string[]>(undefined)
+  const isGraphOurs = useRef(false)
+  const lastGlobal = useRef<readonly string[]>([])
   const selectedGlobal = usePanelStore((state) => state.selected)
   const highlightGlobal = usePanelStore((state) => state.highlight)
   const selectGlobal = usePanelStore((state) => state.select)
@@ -191,30 +197,43 @@ function useSynchronizeSelection() {
   }, [selectedNodes, hiddenNodes, highlightGlobal])
 
   useEffect(() => {
-    const firstGlobal = selectedGlobal[0]
-    const selectedAddresses = selectedLeafIds(nodes, new Set(selectedNodes))
-
-    if (selectedAddresses.length > 0 && !eq(lastSelection, selectedAddresses)) {
-      rememberSelection(selectedAddresses)
-      selectGlobal(selectedAddresses)
-    } else if (
-      firstGlobal !== undefined &&
-      !lastSelection.includes(firstGlobal) &&
-      loaded
-    ) {
-      const containing = topLevelByDescendant(nodes).get(firstGlobal)
-      rememberSelection(selectedGlobal)
-      if (containing) {
-        selectAndFocus(containing.id)
+    if (selectedNodes !== lastNodes.current) {
+      lastNodes.current = selectedNodes
+      const isOurs = isGraphOurs.current
+      isGraphOurs.current = false
+      const graphLeaves = selectedLeafIds(nodes, new Set(selectedNodes))
+      // A rectangle drag makes a new array on every move.
+      const isNew =
+        graphLeaves.length > 0 && !sameIds(graphLeaves, selectedGlobal)
+      if (!isOurs && isNew) {
+        lastGlobal.current = graphLeaves
+        selectGlobal(graphLeaves)
+        return
       }
     }
+    // Another panel chose: every click there is a new array, so clicking a
+    // contract again selects it once it is drawn.
+    const firstGlobal = selectedGlobal[0]
+    if (
+      firstGlobal === undefined ||
+      selectedGlobal === lastGlobal.current ||
+      !loaded
+    ) {
+      return
+    }
+    lastGlobal.current = selectedGlobal
+    // A contract in an open group is drawn on its own, so it is selected
+    // on its own; only a closed group stands in for its members. One not
+    // drawn clears the graph's selection, which would otherwise win back.
+    const containing = topLevelByDescendant(expandedNodes(nodes)).get(
+      firstGlobal,
+    )
+    isGraphOurs.current = true
+    selectAndFocus(containing?.id ?? firstGlobal)
   }, [
-    lastSelection,
-    rememberSelection,
     selectedGlobal,
     selectGlobal,
     selectedNodes,
-    hiddenNodes,
     nodes,
     selectAndFocus,
     loaded,

@@ -1,10 +1,11 @@
 import type { State } from '../State'
+import { expandedNodes } from '../utils/renderGraph'
 
 export function selectAndFocus(state: State, selected: string): Partial<State> {
-  const node = state.nodes.find((x) => x.id === selected)
+  const node = expandedNodes(state.nodes).find((x) => x.id === selected)
 
   if (!node) {
-    return state
+    return { selected: [] }
   }
 
   const minX = node.box.x
