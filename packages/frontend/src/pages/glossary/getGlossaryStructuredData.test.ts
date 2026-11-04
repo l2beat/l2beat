@@ -20,7 +20,7 @@ describe(getGlossaryStructuredData.name, () => {
       expect.subset({
         '@type': 'DefinedTermSet',
         '@id': 'https://l2beat.com/glossary',
-        name: 'L2BEAT Glossary',
+        name: 'ETHBEAT Glossary',
         url: 'https://l2beat.com/glossary',
       }),
     )

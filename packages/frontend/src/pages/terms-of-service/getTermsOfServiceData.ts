@@ -20,7 +20,7 @@ export async function getTermsOfServiceData(
       manifest,
       metadata: getMetadata(manifest, {
         name: 'Terms of Service',
-        description: 'Terms of Service for L2BEAT.',
+        description: 'Terms of Service for ETHBEAT.',
         url,
         openGraph: {
           image: '/meta-images/terms-of-service/opengraph-image.png',

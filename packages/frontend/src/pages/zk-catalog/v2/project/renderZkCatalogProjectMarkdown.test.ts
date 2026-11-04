@@ -40,7 +40,7 @@ describe(renderZkCatalogProjectMarkdown.name, () => {
         '- Trusted setups for Gnark (Groth16):',
         '  - SP1 Groth16 setup, risk red (highest risk) per the [Trusted Setups Risk Framework](https://forum.l2beat.com/t/the-trusted-setups-framework-for-zk-catalog/381): Run among 7 contributors.',
         '  - Used in: [Katana](https://l2beat.com/layer2s/projects/katana)',
-        '  - Verifiers: 2 successful (verified by [L2BEAT](https://l2beat.com)), 1 not verified',
+        '  - Verifiers: 2 successful (verified by [ETHBEAT](https://l2beat.com)), 1 not verified',
       ].join('\n'),
     )
   })
@@ -95,7 +95,7 @@ describe(renderZkCatalogProjectMarkdown.name, () => {
     )
 
     expect(summary).toInclude(
-      '  - Verifiers: 1 not verified (status reported by [L2BEAT](https://l2beat.com)), 1 unsuccessful (checked by [L2BEAT](https://l2beat.com))',
+      '  - Verifiers: 1 not verified (status reported by [ETHBEAT](https://l2beat.com)), 1 unsuccessful (checked by [ETHBEAT](https://l2beat.com))',
     )
   })
 
@@ -198,7 +198,7 @@ describe(renderZkCatalogProjectMarkdown.name, () => {
 
     expect(verifiers).toInclude(
       '### Groth16: Gnark\n\nConsensys implementation of Groth16.',
-      '#### SP1 Groth16 v5\n\nWraps the STARK proof.\n\n- Verifier ID: `0xa4594c59`\n- Source: https://github.com/succinctlabs/sp1\n- Verification: successful (verified by [L2BEAT](https://l2beat.com))\n- Used in: [Katana](https://l2beat.com/layer2s/projects/katana)',
+      '#### SP1 Groth16 v5\n\nWraps the STARK proof.\n\n- Verifier ID: `0xa4594c59`\n- Source: https://github.com/succinctlabs/sp1\n- Verification: successful (verified by [ETHBEAT](https://l2beat.com))\n- Used in: [Katana](https://l2beat.com/layer2s/projects/katana)',
       '**Known deployments**\n\n- [0x1111111111111111111111111111111111111111](https://etherscan.io/address/0x1111111111111111111111111111111111111111#code) on Ethereum, used in: [Katana](https://l2beat.com/layer2s/projects/katana)\n- 0x2222222222222222222222222222222222222222 on Arbitrum One, used in: none',
       '##### Verification steps\n\nRun `make build-circuits`.',
     )
@@ -245,7 +245,7 @@ const KATANA: UsedInProjectWithIcon = {
 
 const L2BEAT_ATTESTER = {
   id: 'l2beat',
-  name: 'L2BEAT',
+  name: 'ETHBEAT',
   link: 'https://l2beat.com',
   icon: '/icons/l2beat.png',
 }

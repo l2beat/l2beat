@@ -21,7 +21,7 @@ export async function getStagesData(
       metadata: getMetadata(manifest, {
         name: 'Stages',
         description:
-          'Discover the latest updates on L2BEAT’s Stages framework - the go-to system for assessing the maturity of rollups on Ethereum.',
+          'Discover the latest updates on ETHBEAT’s Stages framework - the go-to system for assessing the maturity of rollups on Ethereum.',
         url,
         openGraph: {
           image: '/meta-images/stages/opengraph-image.png',

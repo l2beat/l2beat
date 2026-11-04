@@ -18,7 +18,7 @@ export function OfficeHoursSection() {
         </p>
         <OfficeHoursIllustration className="w-full" />
         <p className="text-paragraph-15">
-          During the Office Hours, anyone is able to reach L2BEAT&apos;s
+          During the Office Hours, anyone is able to reach ETHBEAT&apos;s
           governance team, which consists of{' '}
           <span className="underline">Kaereste</span> (Krzysztof Urbanski) and{' '}
           <span className="underline">Manugotsuka</span> (Manuel Gonzalez), to
@@ -32,7 +32,7 @@ export function OfficeHoursSection() {
       </div>
       <Button className="mx-auto mt-6 h-14 w-full md:w-1/2 lg:w-full" asChild>
         <PlainLink href="https://calendar.google.com/calendar/u/0?cid=Y18wNzQ1ODJiMWJkNWE2NTVjOGNkMmQ2YjNhYjliZDQ0NzcxY2U3MDgyYzI2Zjk0MmQ1MzM5ZWUxZDllN2M4YzA0QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20">
-          Add the L2BEAT GOV Calendar
+          Add the ETHBEAT GOV Calendar
         </PlainLink>
       </Button>
     </GovernanceCard>

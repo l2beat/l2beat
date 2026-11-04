@@ -79,16 +79,22 @@
 
 /* The home interop section's body, a size container from lg (see
    HomeInteropSection): stacked like on phones when it is clearly taller than
-   wide or too narrow for the corners, otherwise the figures in the corners. */
+   wide or too narrow for the corners, otherwise the figures in the corners.
+   Neither holds in the page's three columns (`home-wide`), where the figures
+   and the protocols fill a column of their own beside the graph. */
 @custom-variant interop-stacked {
-  @container interop-body (aspect-ratio <= 4 / 5) or (width <= 500px) {
-    @slot;
+  @container home (width < 1560px) {
+    @container interop-body (aspect-ratio <= 4 / 5) or (width <= 500px) {
+      @slot;
+    }
   }
 }
-/* Exactly the opposite, so one of the two always holds. */
+/* Exactly the opposite, so below `home-wide` one of the two always holds. */
 @custom-variant interop-corners {
-  @container interop-body (aspect-ratio > 4 / 5) and (width > 500px) {
-    @slot;
+  @container home (width < 1560px) {
+    @container interop-body (aspect-ratio > 4 / 5) and (width > 500px) {
+      @slot;
+    }
   }
 }
 
@@ -175,7 +181,8 @@
   }
 }
 
-/* The heartbeat that signs the mandate on the home page, drawn once. */
+/* The heartbeat that signs the mandate, on the home page and on the mandate
+   page, drawn once. */
 @keyframes mandate-sign {
   from {
     stroke-dashoffset: 1;

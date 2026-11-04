@@ -1,5 +1,7 @@
+import { CustomLink } from '~/components/link/CustomLink'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { RENAME_ANNOUNCEMENT_PATH } from '~/consts/siteName'
 import { ChevronIcon } from '~/icons/Chevron'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
@@ -12,7 +14,7 @@ export function AboutUsPage(props: AppLayoutProps) {
         <MainPageHeader>About Us</MainPageHeader>
         <PrimaryCard>
           <p className="mb-6 font-bold text-xl">
-            Learn about L2BEAT and its mission
+            Learn about ETHBEAT and its mission
           </p>
           <Details />
           <MoreAboutUs />
@@ -27,11 +29,14 @@ function Details() {
     <div className="grid gap-4 font-normal text-base leading-6 md:grid-cols-2">
       <div className="flex flex-col gap-4">
         <p>
-          We are a public goods company dedicated to providing onchain
-          transparency.
+          We are ETHBEAT (formerly L2BEAT), a public goods company dedicated to
+          providing onchain transparency.{' '}
+          <CustomLink href={RENAME_ANNOUNCEMENT_PATH}>
+            Why the new name?
+          </CustomLink>
         </p>
         <p>
-          What sets L2BEAT apart is our unwavering commitment to delivering
+          What sets ETHBEAT apart is our unwavering commitment to delivering
           accurate and reliable information. We strive to be an impartial and
           independent watchdog that acts in the best interest of users and the
           broader ecosystem while always remaining credibly neutral and faithful
@@ -77,13 +82,13 @@ const MORE_ABOUT_US = [
   {
     title: 'Governance',
     description:
-      'The L2BEAT Governance Team: the latest insights, analyses, and updates.',
+      'The ETHBEAT Governance Team: the latest insights, analyses, and updates.',
     href: '/governance',
   },
   {
     title: 'Donate',
     description:
-      "Support L2BEAT's independent research & development with a donation.",
+      "Support ETHBEAT's independent research & development with a donation.",
     href: '/donate',
   },
 ]

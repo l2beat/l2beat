@@ -7,7 +7,7 @@ describe(getArticleStructuredData.name, () => {
   const page = {
     url: 'https://l2beat.com/publications/governance-review-1',
     description:
-      'L2BEAT provides weekly updates on governance in concise articles.',
+      'ETHBEAT provides weekly updates on governance in concise articles.',
     image:
       'https://l2beat.com/meta-images/publications/governance-review-1.png',
   }
@@ -18,7 +18,7 @@ describe(getArticleStructuredData.name, () => {
   const l2beat = {
     '@type': 'Organization' as const,
     '@id': 'https://l2beat.com/#organization',
-    name: 'L2BEAT',
+    name: 'ETHBEAT',
     url: 'https://l2beat.com',
     logo: 'https://l2beat.com/logo.png',
   }
@@ -40,7 +40,7 @@ describe(getArticleStructuredData.name, () => {
       mainEntityOfPage: 'https://l2beat.com/publications/governance-review-1',
       headline: 'Governance Review #01',
       description:
-        'L2BEAT provides weekly updates on governance in concise articles.',
+        'ETHBEAT provides weekly updates on governance in concise articles.',
       image:
         'https://l2beat.com/meta-images/publications/governance-review-1.png',
       datePublished: '2024-01-19',
@@ -62,7 +62,7 @@ describe(getArticleStructuredData.name, () => {
     expect(article.author).toEqual({ '@type': 'Person', name: 'Ada Lovelace' })
   })
 
-  it('credits L2BEAT for a post without a single author', () => {
+  it('credits ETHBEAT for a post without a single author', () => {
     const article = getArticleStructuredData(page, post)
 
     expect(article.author).toEqual(l2beat)

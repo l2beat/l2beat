@@ -214,7 +214,7 @@ describe(OpenApi.name, () => {
       expect(schema).toEqual({
         openapi: '3.1.0',
         info: {
-          title: 'L2BEAT API',
+          title: 'ETHBEAT API',
           version: '1.0.0',
         },
         servers: [{ url: 'http://localhost:3000' }],
@@ -640,7 +640,7 @@ function getRouteHandler(app: Application) {
 const baseSchema: BaseOpenApiSchema = {
   openapi: '3.1.0' as const,
   info: {
-    title: 'L2BEAT API',
+    title: 'ETHBEAT API',
     version: '1.0.0',
   },
   servers: [{ url: 'http://localhost:3000' }],

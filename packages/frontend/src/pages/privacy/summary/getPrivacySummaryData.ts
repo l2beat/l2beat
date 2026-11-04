@@ -35,7 +35,7 @@ export async function getPrivacySummaryData(
       manifest,
       metadata: getMetadata(manifest, {
         name: 'Privacy',
-        title: 'Ethereum Privacy Protocols: Reviews & Comparison - L2BEAT',
+        title: 'Ethereum Privacy Protocols: Reviews & Comparison - ETHBEAT',
         description:
           'Reviews of Ethereum privacy protocols: privacy pools, shielded ledgers, stealth addresses, confidential tokens and anonymous access, compared by what they hide from each adversary, alongside value locked, anonymity sets and trusted setups.',
         url,

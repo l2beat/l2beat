@@ -376,8 +376,8 @@
   --color-current: currentColor;
   --color-transparent: transparent;
   --color-brand-red: #f9347b;
-  --color-brand-red-dark: #bd114f;
   --color-brand-black: #222222;
+  --color-brand-ink: #0d0c0c;
   --color-pure-white: #ffffff;
   --color-pure-black: #000000;
   --color-white: #fafafa;
@@ -936,6 +936,29 @@
   --garden-moon: #e9e4c8;
   --garden-sky: #0e1830;
   --garden-sprout: #3f6b3a;
+}
+
+/* The mandate page's signature: the line runs in, then the heart beats once. */
+@keyframes mandate-rule {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes mandate-heart {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.08);
+  }
+  55% {
+    transform: scale(1);
+  }
+  75% {
+    transform: scale(1.05);
+  }
 }
 
 /* Referenced from inline styles in CropPlant, CropsBed and the page backdrops.
