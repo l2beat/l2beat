@@ -54,6 +54,32 @@
       "category": "ether",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "doma-USDC.e",
+      "priceId": "usd-coin",
+      "symbol": "USDC.e",
+      "name": "Bridged USDC (Stargate)",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x31EEf89D5215C305304a2fA5376a1f1b6C5dc477",
+        "chain": "doma",
+        "decimals": 6,
+        "sinceTimestamp": 1762276885
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2 (Hydra mode)",
+            "slug": "stargate"
+          }
+        ]
+      }
     }
   ]
 }

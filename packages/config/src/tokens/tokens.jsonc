@@ -10231,5 +10231,26 @@
       },
       "deploymentTimestamp": 1742236935
     }
+  ],
+  "doma": [
+    {
+      // Stargate v2 Hydra: minted on Doma by StargateOFTUSDC against USDC
+      // locked in Stargate pools on other chains.
+      "symbol": "USDC.e",
+      "category": "stablecoin",
+      "address": "0x31EEf89D5215C305304a2fA5376a1f1b6C5dc477",
+      "source": "external",
+      "supply": "totalSupply",
+      "coingeckoId": "usd-coin",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2 (Hydra mode)",
+            "slug": "stargate"
+          }
+        ]
+      },
+      "deploymentTimestamp": 1762276885
+    }
   ]
 }

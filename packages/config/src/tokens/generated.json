@@ -18487,6 +18487,28 @@
     {
       "name": "Bridged USDC (Stargate)",
       "coingeckoId": "usd-coin",
+      "address": "0x31EEf89D5215C305304a2fA5376a1f1b6C5dc477",
+      "symbol": "USDC.e",
+      "decimals": 6,
+      "deploymentTimestamp": 1762276885,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 97477,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2 (Hydra mode)",
+            "slug": "stargate"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Bridged USDC (Stargate)",
+      "coingeckoId": "usd-coin",
       "address": "0x78adD880A697070c1e765Ac44D65323a0DcCE913",
       "symbol": "USDC.e",
       "decimals": 6,
