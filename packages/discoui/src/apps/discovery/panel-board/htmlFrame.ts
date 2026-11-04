@@ -1,4 +1,4 @@
-import colors from '../../../colors.json'
+import type { Theme } from '../../../theme'
 
 // The page runs in a sandbox that loads no resources from the network and
 // cannot reach DiscoUI: it can only ask to select a contract and say how tall
@@ -9,14 +9,45 @@ import colors from '../../../colors.json'
 const CSP =
   "default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:; font-src data:"
 
-// DiscoUI's colors, so a chart can match the panel around it.
-const THEME = {
-  text: colors.coffee['200'],
-  muted: colors.coffee['400'],
-  line: colors.coffee['600'],
-  surface: colors.coffee['700'],
-  background: colors.coffee['800'],
-  ...colors.aux,
+// DiscoUI's colors, so a chart can match the panel around it. The frame
+// cannot read the CSS variables in index.css, so these repeat them.
+const FRAME_COLORS: Record<Theme, Record<string, string>> = {
+  dark: {
+    text: '#f0d8bd',
+    muted: '#a98763',
+    line: '#594c43',
+    surface: '#3c332d',
+    background: '#282422',
+    blue: '#8b8be8',
+    orange: '#fe8019',
+    red: '#fb4a35',
+    green: '#9dde6c',
+    teal: '#83a599',
+    yellow: '#fabd30',
+    amber: '#ffc107',
+    cyan: '#1c92a8',
+    pink: '#e27991',
+    purple: '#a73db5',
+    brown: '#7f3d0c',
+  },
+  light: {
+    text: '#412e18',
+    muted: '#856441',
+    line: '#baafa2',
+    surface: '#ded6cc',
+    background: '#f5eee5',
+    blue: '#5e5ab2',
+    orange: '#973f00',
+    red: '#d01601',
+    green: '#417501',
+    teal: '#446359',
+    yellow: '#876201',
+    amber: '#997204',
+    cyan: '#037386',
+    pink: '#a13f5a',
+    purple: '#a439b1',
+    brown: '#7f3d0c',
+  },
 }
 
 const BRIDGE = `
@@ -37,9 +68,9 @@ addEventListener('DOMContentLoaded', function () {
 
 // The body is a flow root, so the margins of what it holds count in the
 // height it reports; :where keeps the defaults below any style the page sets.
-function frameStyle(variables: string): string {
+function frameStyle(variables: string, theme: Theme): string {
   return [
-    `:root{${variables}color-scheme:dark}`,
+    `:root{${variables}color-scheme:${theme}}`,
     'body{margin:0;display:flow-root;font:12px/1.5 system-ui,sans-serif;color:var(--text);background:transparent}',
     ':where(h1,h2,h3,h4){margin:0 0 8px;font-size:13px;font-weight:700}',
     ':where(p){margin:0 0 8px}',
@@ -50,14 +81,14 @@ function frameStyle(variables: string): string {
 
 // The doctype keeps the page out of quirks mode, where the body does not
 // measure its content.
-export function frameDocument(html: string): string {
-  const variables = Object.entries(THEME)
+export function frameDocument(html: string, theme: Theme): string {
+  const variables = Object.entries(FRAME_COLORS[theme])
     .map(([name, value]) => `--${name}:${value};`)
     .join('')
   return [
     '<!doctype html><html><head><meta charset="utf-8">',
     `<meta http-equiv="Content-Security-Policy" content="${CSP}">`,
-    `<style>${frameStyle(variables)}</style>`,
+    `<style>${frameStyle(variables, theme)}</style>`,
     `<script>${BRIDGE}</script>`,
     '</head><body>',
     html,

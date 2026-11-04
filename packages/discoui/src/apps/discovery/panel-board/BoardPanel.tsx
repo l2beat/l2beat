@@ -279,7 +279,7 @@ function OpenBoardItem(props: {
         onClick={props.onPick}
         className="flex min-w-0 flex-1 items-center gap-2 px-1.5 py-1 text-left"
       >
-        <span className="w-3 shrink-0 text-[#d68ae0]">
+        <span className="w-3 shrink-0 text-agent">
           {props.active ? '✓' : ''}
         </span>
         <span className="truncate text-coffee-200">{board.title}</span>
@@ -355,7 +355,7 @@ function SuggestionButton(props: { onClick: () => void; children: ReactNode }) {
       className="group flex items-center justify-between gap-2 rounded-md border border-coffee-700 px-3 py-2 text-left text-[13px] text-coffee-200 transition-colors hover:border-coffee-600 hover:bg-coffee-800"
     >
       <span className="truncate">{props.children}</span>
-      <span className="text-coffee-600 transition-colors group-hover:text-[#d68ae0]">
+      <span className="text-coffee-600 transition-colors group-hover:text-agent">
         →
       </span>
     </button>
@@ -571,7 +571,7 @@ function SpecEditor(props: { board: ResolvedBoard; onDone: () => void }) {
           type="button"
           onClick={() => void apply(text)}
           title="Apply the JSON to the board (⌘S)"
-          className="shrink-0 rounded-sm bg-coffee-200 px-2 py-0.5 font-bold text-black hover:brightness-110"
+          className="shrink-0 rounded-sm bg-coffee-200 px-2 py-0.5 font-bold text-coffee-900 hover:brightness-110"
         >
           Apply
         </button>

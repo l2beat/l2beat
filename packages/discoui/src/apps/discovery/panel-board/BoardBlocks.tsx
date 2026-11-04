@@ -9,6 +9,7 @@ import {
 } from 'react'
 import { Markdown } from '../../../components/Markdown'
 import { IconNodes } from '../../../icons/IconNodes'
+import { useTheme } from '../../../theme'
 import { cn } from '../../../utils/cn'
 import type { AgentViewSpec } from '../agent/applyView'
 import { receiveView } from '../agent/viewStore'
@@ -48,7 +49,7 @@ export function BoardBlockView(props: { project: string; block: BoardBlock }) {
         >
           <IconNodes className="size-3.5 shrink-0 text-coffee-400" />
           <span className="min-w-0 flex-1">{block.label}</span>
-          <span className="text-coffee-600 transition-colors group-hover:text-[#d68ae0]">
+          <span className="text-coffee-600 transition-colors group-hover:text-agent">
             →
           </span>
         </button>
@@ -384,7 +385,11 @@ const HTML_HEIGHT_MAX_PX = 2000
 function HtmlBlock(props: { html: string; heightPx?: number }) {
   const frame = useRef<HTMLIFrameElement>(null)
   const [contentHeight, setContentHeight] = useState<number>()
-  const document = useMemo(() => frameDocument(props.html), [props.html])
+  const theme = useTheme()
+  const document = useMemo(
+    () => frameDocument(props.html, theme),
+    [props.html, theme],
+  )
 
   useEffect(() => {
     const onMessage = (event: MessageEvent) => {
