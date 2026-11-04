@@ -102,7 +102,7 @@ export const etherfi: BaseProject = {
     unverifiedContracts: [],
   },
   display: {
-    description: `ether.fi is a liquid staking and restaking protocol. Users deposit ETH for ${value('eETH', 'symbol')} (rebasing) or its wrapper ${value('weETH', 'symbol')}, staked through whitelisted operators and restaked in EigenLayer, with an oracle committee setting the exchange rate.`,
+    description: `ether.fi is a liquid staking protocol. Users deposit ETH for ${value('eETH', 'symbol')} (rebasing) or its wrapper ${value('weETH', 'symbol')}, staked through whitelisted operators whose validators withdraw to EigenLayer pods, with an oracle committee setting the exchange rate.`,
     detailedDescription: readProjectMarkdown('etherfi', 'detailedDescription', {
       eethSymbol: value('eETH', 'symbol'),
       weethSymbol: value('weETH', 'symbol'),
@@ -138,7 +138,7 @@ export const etherfi: BaseProject = {
         symbol: value('eETH', 'symbol'),
         name: 'ether.fi ETH',
         description:
-          'Rebasing receipt for pooled and restaked ETH: balances follow the oracle report.',
+          'Rebasing receipt for pooled ETH: balances follow the oracle report.',
       },
       {
         symbol: value('weETH', 'symbol'),
@@ -158,13 +158,13 @@ export const etherfi: BaseProject = {
         value: 'Whitelisted',
         secondLine: 'no bond',
         sentiment: 'warning',
-        description: `Operators are whitelisted by the ${operationsSafe} Safe and post no bond. Holders share slashing losses, up to ${maxNegativeRebaseBps} bps per report. Stake is also restaked in EigenLayer, where extra slashing can cut principal.`,
+        description: `Operators are whitelisted by the ${operationsSafe} Safe and can run validators only once the ${operatingDelayDays}-day timelock registers them as validator spawners, and can be removed at once. They post no bond, so holders share slashing losses, up to ${maxNegativeRebaseBps} bps per report.`,
       },
       backing: {
         value: 'EigenPods, stETH',
         secondLine: 'creds: EigenPod',
         sentiment: 'warning',
-        description: `Validators withdraw to EigenPods, so most ETH sits in EigenLayer, which its own governance can upgrade. ${stethSharePct} of backing is stETH and ${bufferPct} is a liquid buffer.`,
+        description: `Validators withdraw to EigenPods, which EigenLayer governance can upgrade, and withdrawals from them wait in EigenLayer's queue. ${stethSharePct} of backing is stETH and ${bufferPct} is a liquid buffer.`,
       },
       exchangeRate: {
         value: `${oracleQuorum} of ${oracleMembers}`,
