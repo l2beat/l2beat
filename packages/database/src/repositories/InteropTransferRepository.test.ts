@@ -605,6 +605,176 @@ describeDatabase(InteropTransferRepository.name, (db) => {
     })
   })
 
+  describe(
+    InteropTransferRepository.prototype.deleteForPluginsAfter.name,
+    () => {
+      it('deletes transfers with a side newer than its chain cutoff', async () => {
+        const t = (id: string, srcTime: number, duration: number) =>
+          transfer(
+            'plugin1',
+            id,
+            'deposit',
+            UnixTime(srcTime),
+            'ethereum',
+            'arbitrum',
+            duration,
+          )
+        await repository.insertMany([
+          t('atCutoff', 100, 100),
+          t('dstAfter', 100, 101),
+          t('srcAfter', 101, 0),
+          {
+            ...transfer(
+              'plugin1',
+              'noSrcEvent',
+              'deposit',
+              UnixTime(500),
+              'solana',
+              'ethereum',
+            ),
+            srcTime: undefined,
+            srcTxHash: undefined,
+          },
+          transfer(
+            'plugin2',
+            'otherPlugin',
+            'deposit',
+            UnixTime(500),
+            'ethereum',
+            'arbitrum',
+          ),
+        ])
+
+        const deleted = await repository.deleteForPluginsAfter(
+          ['plugin1'],
+          [
+            { chain: 'ethereum', timestamp: UnixTime(100) },
+            { chain: 'arbitrum', timestamp: UnixTime(200) },
+          ],
+        )
+
+        expect(deleted).toEqualUnsorted([
+          {
+            srcChain: 'ethereum',
+            srcTime: UnixTime(100),
+            srcTxHash: '0xdstaftersrc',
+            dstChain: 'arbitrum',
+            dstTime: UnixTime(201),
+            dstTxHash: '0xdstafterdst',
+          },
+          {
+            srcChain: 'ethereum',
+            srcTime: UnixTime(101),
+            srcTxHash: '0xsrcaftersrc',
+            dstChain: 'arbitrum',
+            dstTime: UnixTime(101),
+            dstTxHash: '0xsrcafterdst',
+          },
+          {
+            srcChain: 'solana',
+            srcTime: undefined,
+            srcTxHash: undefined,
+            dstChain: 'ethereum',
+            dstTime: UnixTime(500),
+            dstTxHash: '0xnosrceventdst',
+          },
+        ])
+        const remaining = await repository.getAll()
+        expect(remaining.map((t) => t.transferId)).toEqualUnsorted([
+          'atCutoff',
+          'otherPlugin',
+        ])
+      })
+    },
+  )
+
+  describe(
+    InteropTransferRepository.prototype.deleteForPluginsInTxs.name,
+    () => {
+      it('deletes transfers with a side in one of the txs', async () => {
+        const t = (id: string, srcChain: string, dstChain: string) =>
+          transfer(
+            'plugin1',
+            id,
+            'deposit',
+            UnixTime(100),
+            srcChain,
+            dstChain,
+            50,
+          )
+        await repository.insertMany([
+          t('srcInTx', 'ethereum', 'arbitrum'),
+          t('dstInTx', 'base', 'ethereum'),
+          { ...t('otherChain', 'base', 'arbitrum'), srcTxHash: '0xsrcintxsrc' },
+          t('otherTx', 'ethereum', 'arbitrum'),
+          {
+            ...transfer(
+              'plugin2',
+              'otherPlugin',
+              'deposit',
+              UnixTime(100),
+              'ethereum',
+              'arbitrum',
+            ),
+            srcTxHash: '0xsrcintxsrc',
+          },
+        ])
+
+        const deleted = await repository.deleteForPluginsInTxs(
+          ['plugin1'],
+          [
+            {
+              chain: 'ethereum',
+              txHash: '0xSRCINTXSRC',
+              timestamp: UnixTime(100),
+            },
+            {
+              chain: 'ethereum',
+              txHash: '0xdstintxdst',
+              timestamp: UnixTime(150),
+            },
+          ],
+        )
+
+        expect(deleted).toEqualUnsorted([
+          {
+            srcChain: 'ethereum',
+            srcTime: UnixTime(100),
+            srcTxHash: '0xsrcintxsrc',
+            dstChain: 'arbitrum',
+            dstTime: UnixTime(150),
+            dstTxHash: '0xsrcintxdst',
+          },
+          {
+            srcChain: 'base',
+            srcTime: UnixTime(100),
+            srcTxHash: '0xdstintxsrc',
+            dstChain: 'ethereum',
+            dstTime: UnixTime(150),
+            dstTxHash: '0xdstintxdst',
+          },
+        ])
+        const remaining = await repository.getAll()
+        expect(remaining.map((t) => t.transferId)).toEqualUnsorted([
+          'otherChain',
+          'otherTx',
+          'otherPlugin',
+        ])
+      })
+
+      it('deletes nothing without txs', async () => {
+        await repository.insertMany([
+          transfer('plugin1', 'kept', 'deposit', UnixTime(100)),
+        ])
+
+        expect(await repository.deleteForPluginsInTxs(['plugin1'], [])).toEqual(
+          [],
+        )
+        expect(await repository.getAll()).toHaveLength(1)
+      })
+    },
+  )
+
   describe(InteropTransferRepository.prototype.getUnprocessed.name, () => {
     it('returns only unprocessed transfers', async () => {
       const unprocessedRecord1 = transfer(

@@ -90,12 +90,16 @@ export class InMemoryEventDb implements InteropEventDb {
   }
 
   removeForPlugin(plugin: string) {
+    return this.removeWhere((e) => e.plugin === plugin)
+  }
+
+  removeWhere(predicate: (event: InteropEvent) => boolean) {
     const removed: InteropEvent[] = []
     for (const store of this.stores) {
-      const pluginEvents = store.getAll().filter((e) => e.plugin === plugin)
+      const selected = store.getAll().filter(predicate)
       // Side note: don't interate `store.getAll()` in a loop below because
       // you would be modifying it while iterating.
-      for (const event of pluginEvents) {
+      for (const event of selected) {
         if (store.remove(event)) {
           this.count -= 1
           removed.push(event)

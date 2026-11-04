@@ -81,7 +81,7 @@ export class CatchingUpState implements TimeloopState {
       if (rangeData) {
         this.setStatus('preparing range', rangeData)
         const logQuery = this.syncer.buildLogQuery()
-        const syncResult = await this.syncRange(logQuery, rangeData)
+        const syncResult = await this.syncRange(logQuery, rangeData, resyncFrom)
         if (syncResult === 'retrySmallerRange') {
           this.setStatus('retrying smaller range')
           return this
@@ -109,6 +109,7 @@ export class CatchingUpState implements TimeloopState {
   private async syncRange(
     logQuery: LogQuery,
     rangeData: RangeData,
+    resyncFrom?: UnixTime,
   ): Promise<'synced' | 'retrySmallerRange'> {
     let interopEvents: InteropEvent[] = []
     if (!logQuery.isEmpty()) {
@@ -121,6 +122,13 @@ export class CatchingUpState implements TimeloopState {
         }
         throw error
       }
+    }
+    if (resyncFrom !== undefined) {
+      // A resync starts at the last block at or before resyncFrom, and the
+      // wipe kept every event up to resyncFrom.
+      interopEvents = interopEvents.filter(
+        (event) => event.ctx.timestamp > resyncFrom,
+      )
     }
 
     this.setStatus('saving events', rangeData, `${interopEvents.length} events`)

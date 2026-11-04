@@ -159,6 +159,68 @@ describe(InteropEventStore.name, () => {
     expect(store.derivedTxStore.getCount()).toEqual(0)
   })
 
+  it('deletes events newer than their chain cutoff from the db and memory', async () => {
+    const plugin = makePlugin()
+    const kept = makeEvent(plugin, { chain: 'base', timestamp: 100 })
+    const deleted = makeEvent(plugin, {
+      chain: 'base',
+      timestamp: 101,
+      txHash: '0xdef',
+    })
+    const noCutoff = makeEvent(plugin, { chain: 'arbitrum', timestamp: 101 })
+    const otherPlugin = {
+      ...makeEvent(plugin, { chain: 'base', timestamp: 101 }),
+      plugin: 'wormhole',
+    }
+    const deleteForPluginsAfter = mockFn().resolvesTo(1)
+    const store = makeStore(plugin, {
+      interopEvent: mockObject<Database['interopEvent']>({
+        insertMany: mockFn().resolvesTo(undefined),
+        deleteForPluginsAfter,
+      }),
+    })
+    const cutoffs = [{ chain: 'base', timestamp: UnixTime(100) }]
+
+    await store.saveNewEvents([kept, deleted, noCutoff, otherPlugin])
+    await store.deleteForPluginsAfter([plugin.name], cutoffs)
+
+    expect(deleteForPluginsAfter).toHaveBeenOnlyCalledWith(
+      [plugin.name],
+      cutoffs,
+    )
+    expect(store.getEvents(CreatorEvent.type)).toEqualUnsorted([
+      kept,
+      noCutoff,
+      otherPlugin,
+    ])
+    expect(store.derivedTxStore.get('base', '0xdef')).toEqual([])
+  })
+
+  it('puts events reset in the db back into memory', async () => {
+    const plugin = makePlugin()
+    const event = makeEvent(plugin)
+    const resetMatchedInTxs = mockFn().resolvesTo([toRecord(event)])
+    const store = makeStore(plugin, {
+      interopEvent: mockObject<Database['interopEvent']>({
+        resetMatchedInTxs,
+      }),
+    })
+    const txs = [{ chain: 'base', txHash: '0x123', timestamp: UnixTime(100) }]
+
+    await store.resetMatchedInTxs([plugin.name], txs)
+
+    expect(resetMatchedInTxs).toHaveBeenOnlyCalledWith([plugin.name], txs)
+    expect(store.getEvents(CreatorEvent.type)).toEqual([event])
+    expect(store.derivedTxStore.get('base', '0xabc')).toEqual([
+      {
+        chain: 'base',
+        txHash: '0xabc',
+        creatorEvent: event,
+        checkedInHistory: false,
+      },
+    ])
+  })
+
   it('removes evicted derived tx requests when the in-memory event cap is hit', async () => {
     const plugin = makePlugin()
     const firstEvent = makeEvent(plugin, { txHash: '0xabc', expiresAt: 1 })
@@ -233,16 +295,27 @@ function makePlugin(
 
 function makeEvent(
   plugin: InteropPluginResyncable,
-  overrides: { txHash?: string; expiresAt?: number } = {},
+  overrides: {
+    txHash?: string
+    expiresAt?: number
+    chain?: string
+    timestamp?: number
+  } = {},
 ) {
+  const event = CreatorEvent.mock(
+    {
+      chain: 'base',
+      txHash: overrides.txHash ?? '0xabc',
+    },
+    overrides.expiresAt,
+  )
   return {
-    ...CreatorEvent.mock(
-      {
-        chain: 'base',
-        txHash: overrides.txHash ?? '0xabc',
-      },
-      overrides.expiresAt,
-    ),
+    ...event,
+    ctx: {
+      ...event.ctx,
+      chain: overrides.chain ?? event.ctx.chain,
+      timestamp: UnixTime(overrides.timestamp ?? event.ctx.timestamp),
+    },
     plugin: plugin.name,
   }
 }

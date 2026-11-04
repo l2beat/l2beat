@@ -602,6 +602,151 @@ describeDatabase(InteropEventRepository.name, (db) => {
     })
   })
 
+  describe(InteropEventRepository.prototype.deleteForPluginsAfter.name, () => {
+    it('deletes events of the plugins newer than their chain cutoff', async () => {
+      await repository.insertMany([
+        event('plugin1', 'atCutoff', 'deposit', UnixTime(100), UnixTime(900), {
+          chain: 'ethereum',
+        }),
+        event('plugin1', 'after', 'deposit', UnixTime(101), UnixTime(900), {
+          chain: 'ethereum',
+          matched: true,
+        }),
+        event('plugin2', 'after2', 'deposit', UnixTime(201), UnixTime(900), {
+          chain: 'base',
+        }),
+        event('plugin2', 'before2', 'deposit', UnixTime(200), UnixTime(900), {
+          chain: 'base',
+        }),
+        event('plugin1', 'noCutoff', 'deposit', UnixTime(500), UnixTime(900), {
+          chain: 'arbitrum',
+        }),
+        event(
+          'plugin3',
+          'otherPlugin',
+          'deposit',
+          UnixTime(500),
+          UnixTime(900),
+          {
+            chain: 'ethereum',
+          },
+        ),
+      ])
+
+      const deleted = await repository.deleteForPluginsAfter(
+        ['plugin1', 'plugin2'],
+        [
+          { chain: 'ethereum', timestamp: UnixTime(100) },
+          { chain: 'base', timestamp: UnixTime(200) },
+        ],
+      )
+
+      expect(deleted).toEqual(2)
+      const remaining = await repository.getAll()
+      expect(remaining.map((e) => e.eventId)).toEqualUnsorted([
+        'atCutoff',
+        'before2',
+        'noCutoff',
+        'otherPlugin',
+      ])
+    })
+
+    it('deletes nothing without cutoffs', async () => {
+      await repository.insertMany([
+        event('plugin1', 'event1', 'deposit', UnixTime(100), UnixTime(200)),
+      ])
+
+      const deleted = await repository.deleteForPluginsAfter(['plugin1'], [])
+
+      expect(deleted).toEqual(0)
+      expect(await repository.getAll()).toHaveLength(1)
+    })
+  })
+
+  describe(InteropEventRepository.prototype.resetMatchedInTxs.name, () => {
+    it('resets matched and unsupported events of the txs and returns them', async () => {
+      const ctx = (txHash: string) => ({
+        chain: 'ethereum',
+        txHash,
+        timestamp: UnixTime(100),
+        logIndex: 1,
+      })
+      await repository.insertMany([
+        event('plugin1', 'matched', 'deposit', UnixTime(100), UnixTime(900), {
+          chain: 'ethereum',
+          ctx: ctx('0xAA'),
+          matched: true,
+        }),
+        event(
+          'plugin1',
+          'unsupported',
+          'deposit',
+          UnixTime(100),
+          UnixTime(900),
+          {
+            chain: 'ethereum',
+            ctx: ctx('0xaa'),
+            unsupported: true,
+          },
+        ),
+        event('plugin1', 'unmatched', 'deposit', UnixTime(100), UnixTime(900), {
+          chain: 'ethereum',
+          ctx: ctx('0xaa'),
+        }),
+        event('plugin1', 'otherTx', 'deposit', UnixTime(100), UnixTime(900), {
+          chain: 'ethereum',
+          ctx: ctx('0xbb'),
+          matched: true,
+        }),
+        event(
+          'plugin1',
+          'otherChain',
+          'deposit',
+          UnixTime(100),
+          UnixTime(900),
+          {
+            chain: 'base',
+            ctx: { ...ctx('0xaa'), chain: 'base' },
+            matched: true,
+          },
+        ),
+        event(
+          'plugin2',
+          'otherPlugin',
+          'deposit',
+          UnixTime(100),
+          UnixTime(900),
+          {
+            chain: 'ethereum',
+            ctx: ctx('0xaa'),
+            matched: true,
+          },
+        ),
+      ])
+
+      const reset = await repository.resetMatchedInTxs(
+        ['plugin1'],
+        [{ chain: 'ethereum', txHash: '0xaa', timestamp: UnixTime(100) }],
+      )
+
+      expect(reset.map((e) => e.eventId)).toEqualUnsorted([
+        'matched',
+        'unsupported',
+      ])
+      expect(reset.every((e) => !e.matched && !e.unsupported)).toEqual(true)
+      const unmatched = await repository.getUnmatched()
+      expect(unmatched.map((e) => e.eventId)).toEqualUnsorted([
+        'matched',
+        'unsupported',
+        'unmatched',
+      ])
+    })
+
+    it('returns empty array for empty input', async () => {
+      expect(await repository.resetMatchedInTxs(['plugin1'], [])).toEqual([])
+    })
+  })
+
   describe('bigint handling in insertMany and getAll', () => {
     it('handles simple bigint value field', async () => {
       const record = event(

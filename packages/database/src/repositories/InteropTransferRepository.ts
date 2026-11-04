@@ -20,6 +20,10 @@ import {
 } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { DB, InteropTransfer } from '../kysely/generated/types'
+import type {
+  InteropChainCutoff,
+  InteropEventTx,
+} from './InteropEventRepository'
 
 // Interop bridge types are stored in the database.
 // If they are modified (e.g. renamed/removed), you MUST update
@@ -74,6 +78,33 @@ export interface InteropTransferRecord {
   dstPrice: number | undefined
   dstValueUsd: number | undefined
   isProcessed: boolean
+}
+
+export type InteropTransferSides = Pick<
+  InteropTransferRecord,
+  'srcChain' | 'srcTime' | 'srcTxHash' | 'dstChain' | 'dstTime' | 'dstTxHash'
+>
+
+const SIDE_COLUMNS = [
+  'srcChain',
+  'srcTime',
+  'srcTxHash',
+  'dstChain',
+  'dstTime',
+  'dstTxHash',
+] as const
+
+function toSides(
+  row: Pick<Selectable<InteropTransfer>, (typeof SIDE_COLUMNS)[number]>,
+): InteropTransferSides {
+  return {
+    srcChain: row.srcChain,
+    srcTime: row.srcTime ? UnixTime.fromDate(row.srcTime) : undefined,
+    srcTxHash: row.srcTxHash ?? undefined,
+    dstChain: row.dstChain,
+    dstTime: row.dstTime ? UnixTime.fromDate(row.dstTime) : undefined,
+    dstTxHash: row.dstTxHash ?? undefined,
+  }
 }
 
 export interface InteropTransferUpdate {
@@ -1251,6 +1282,68 @@ export class InteropTransferRepository extends BaseRepository {
       .where('plugin', '=', plugin)
       .executeTakeFirst()
     return Number(result.numDeletedRows)
+  }
+
+  /** Deletes transfers with either side newer than its chain's cutoff. */
+  async deleteForPluginsAfter(
+    plugins: string[],
+    cutoffs: InteropChainCutoff[],
+  ): Promise<InteropTransferSides[]> {
+    if (plugins.length === 0 || cutoffs.length === 0) return []
+    const rows = await this.db
+      .deleteFrom('InteropTransfer')
+      .where('plugin', 'in', plugins)
+      .where((eb) =>
+        eb.or(
+          cutoffs.flatMap((cutoff) => [
+            eb.and([
+              eb('srcChain', '=', cutoff.chain),
+              eb('srcTime', '>', UnixTime.toDate(cutoff.timestamp)),
+            ]),
+            eb.and([
+              eb('dstChain', '=', cutoff.chain),
+              eb('dstTime', '>', UnixTime.toDate(cutoff.timestamp)),
+            ]),
+          ]),
+        ),
+      )
+      .returning(SIDE_COLUMNS)
+      .execute()
+    return rows.map(toSides)
+  }
+
+  /** Deletes transfers with either side in one of the txs. */
+  async deleteForPluginsInTxs(
+    plugins: string[],
+    txs: InteropEventTx[],
+  ): Promise<InteropTransferSides[]> {
+    if (plugins.length === 0 || txs.length === 0) return []
+    const deleted: InteropTransferSides[] = []
+    await this.batch(txs, 1_000, async (batch) => {
+      const rows = await this.db
+        .deleteFrom('InteropTransfer')
+        .where('plugin', 'in', plugins)
+        .where((eb) =>
+          eb.or(
+            batch.flatMap((tx) => [
+              eb.and([
+                eb('srcChain', '=', tx.chain),
+                eb('srcTime', '=', UnixTime.toDate(tx.timestamp)),
+                eb('srcTxHash', '=', tx.txHash.toLowerCase()),
+              ]),
+              eb.and([
+                eb('dstChain', '=', tx.chain),
+                eb('dstTime', '=', UnixTime.toDate(tx.timestamp)),
+                eb('dstTxHash', '=', tx.txHash.toLowerCase()),
+              ]),
+            ]),
+          ),
+        )
+        .returning(SIDE_COLUMNS)
+        .execute()
+      deleted.push(...rows.map(toSides))
+    })
+    return deleted
   }
 
   async deleteAll(): Promise<number> {
