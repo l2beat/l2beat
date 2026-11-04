@@ -13,7 +13,7 @@ and which model is the default and why.
 
 ## Discovery, in short
 
-Discovery is how L2BEAT reads the on-chain state of a project. A project is a
+Discovery is how ETHBEAT reads the on-chain state of a project. A project is a
 folder under `packages/config/src/projects/<project>/<chain>/` whose
 `config.jsonc` names a few initial addresses. `l2b discover <chain> <project>`
 starts from those and loops: for each address it fetches the ABI and the
