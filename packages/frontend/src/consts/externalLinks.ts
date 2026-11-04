@@ -4,7 +4,7 @@ export const externalLinks = {
   linkedin: 'https://www.linkedin.com/company/l2beat/',
   youTube: 'https://www.youtube.com/channel/UCDrl-fNXFjOoykr4lQij9BA/videos',
   medium: 'https://medium.com/l2beat',
-  forum: 'https://forum.l2beat.com/',
+  forum: 'https://forum.ethbeat.org/',
   jobs: 'https://jobs.l2beat.com/',
   tools: 'https://tools.l2beat.com/',
   substackSubscribe: 'https://l2beatgov.substack.com/subscribe',
@@ -15,11 +15,11 @@ export const externalLinks = {
     recategorisation:
       'https://medium.com/l2beat/framework-update-l2-projects-recategorisation-5d43b0d1fe50',
     stageOneRequirementsChange:
-      'https://forum.l2beat.com/t/new-stage-1-requirements-for-l2-proving-systems/413',
+      'https://forum.ethbeat.org/t/new-stage-1-requirements-for-l2-proving-systems/413',
     trustedSetupFramework:
-      'https://forum.l2beat.com/t/the-trusted-setups-framework-for-zk-catalog/381',
+      'https://forum.ethbeat.org/t/the-trusted-setups-framework-for-zk-catalog/381',
     privacyAdversariesFramework:
-      'https://forum.l2beat.com/t/privacy-adversaries-framework/455',
+      'https://forum.ethbeat.org/t/privacy-adversaries-framework/455',
   },
   askForZkCatalogVerification:
     'https://l2beat.notion.site/ZK-Catalog-Verification-94e940aa2bff4287bb15a19f66e3cead?pvs=25',
