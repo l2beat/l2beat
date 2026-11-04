@@ -114,6 +114,12 @@ const ID_SPACES: IdSpace[] = [
     names: {},
   },
   {
+    label: 'Gas.zip id',
+    plugins: ['gaszip'],
+    fromConfigs: [{ key: 'gaszip', field: 'gaszipId' }],
+    names: {},
+  },
+  {
     label: 'chain id',
     plugins: [],
     fromConfigs: [
@@ -180,7 +186,6 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
 }
 
-// Plugins like CCIP and Axelar keep an upstream name after `Unknown_`
 function normalizeChainName(chain: string): string {
   return chain.replace(/^Unknown_/, '').toLowerCase()
 }
@@ -246,17 +251,32 @@ interface ResolvedChain {
   isUnmappedId: boolean
 }
 
+// CCIP and Axelar keep an upstream chain name after `Unknown_`, other plugins
+// an id
+const UPSTREAM_NAME_PLUGINS = ['ccip', 'axelar', 'axelar-its']
+
 export function resolveCounterpartChain(
   plugin: string,
   counterpart: string,
   idNames: IdNames,
 ): ResolvedChain {
-  const id = counterpart.startsWith('Unknown_')
-    ? counterpart.slice('Unknown_'.length)
-    : undefined
-  if (id === undefined || !/^\d+$/.test(id)) {
+  // gaszip writes the prefix in lowercase, relay can leave out the id
+  const placeholder = /^unknown(?:_(.*))?$/i.exec(counterpart)
+  const id = placeholder?.[1] ?? ''
+  const isId = /^\d+$/.test(id)
+  const isUpstreamName =
+    id !== '' && !isId && UPSTREAM_NAME_PLUGINS.includes(plugin)
+  if (!placeholder || isUpstreamName) {
     const name = normalizeChainName(counterpart)
     return { key: name, label: name, isNamed: true, isUnmappedId: false }
+  }
+  if (!isId) {
+    return {
+      key: `unknown:${counterpart}`,
+      label: counterpart,
+      isNamed: false,
+      isUnmappedId: false,
+    }
   }
   const space =
     ID_SPACES.find((s) => s.plugins.includes(plugin)) ?? CHAIN_ID_SPACE

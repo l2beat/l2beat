@@ -239,6 +239,7 @@ describe(resolveCounterpartChain.name, () => {
   const idNames = buildIdNames({
     'layerzero-v2': [{ chain: 'rootstock', eid: 30333, chainId: 30 }],
     relay: [{ chain: 'anubis', chainId: 6714 }],
+    gaszip: [{ chain: 'base', gaszipId: 54, chainId: 8453 }],
     ccip: {
       networks: [
         { chain: 'Unknown_wemix', chainSelector: '5142893604156789321' },
@@ -278,6 +279,38 @@ describe(resolveCounterpartChain.name, () => {
     expect(
       resolveCounterpartChain('across', 'Unknown_30', idNames).key,
     ).toEqual('rootstock')
+  })
+
+  it('reads gaszip ids from its lowercase placeholder', () => {
+    expect(
+      resolveCounterpartChain('gaszip', 'unknown_54', idNames).key,
+    ).toEqual('base')
+    expect(resolveCounterpartChain('gaszip', 'unknown_523', idNames)).toEqual({
+      key: 'Gas.zip id:523',
+      label: 'Unknown Gas.zip id 523',
+      isNamed: false,
+      isUnmappedId: true,
+    })
+  })
+
+  it('keeps upstream names only from plugins that report them', () => {
+    expect(resolveCounterpartChain('ccip', 'Unknown_arc', idNames).key).toEqual(
+      'arc',
+    )
+    expect(
+      resolveCounterpartChain('axelar-its', 'Unknown_hedera', idNames).key,
+    ).toEqual('hedera')
+    expect(
+      resolveCounterpartChain('wormhole', 'Unknown_mayanCircle', idNames),
+    ).toEqual({
+      key: 'unknown:Unknown_mayanCircle',
+      label: 'Unknown_mayanCircle',
+      isNamed: false,
+      isUnmappedId: false,
+    })
+    expect(resolveCounterpartChain('relay', 'Unknown', idNames).key).toEqual(
+      'unknown:Unknown',
+    )
   })
 })
 
