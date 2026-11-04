@@ -53,7 +53,7 @@ function Publication({ publication }: PublicationProps) {
       {...publication.thumbnail}
       href={`/publications/${publication.id}`}
       topAccessory={
-        <p className="text-secondary text-subtitle-11">
+        <p className="text-brand-deep text-subtitle-11">
           {publication.publishedOn}
         </p>
       }
