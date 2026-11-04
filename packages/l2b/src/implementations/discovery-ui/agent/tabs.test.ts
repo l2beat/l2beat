@@ -48,8 +48,36 @@ describe(AgentTabs.name, () => {
     const tabs = new AgentTabs()
     tabs.connect('a', stream())
     tabs.focus('a', 'arbitrum')
-    tabs.setProject('a', 'linea')
+    tabs.recordShow('a', 'linea')
     expect(tabs.active()).toEqual({ id: 'a', project: 'linea' })
+  })
+
+  it('clears the note in the tab that got the show, not the focused one', () => {
+    const tabs = new AgentTabs()
+    const a = stream()
+    const b = stream()
+    tabs.connect('a', a)
+    tabs.connect('b', b)
+    tabs.focus('a', 'linea')
+    tabs.recordShow('a', 'linea')
+    tabs.focus('b', 'arbitrum')
+    expect(tabs.clearShow()).toEqual(true)
+    expect(a.written).toEqual(['data: {"type":"clear"}\n\n'])
+    expect(b.written).toEqual([])
+  })
+
+  it('clears in the active tab once the tab with the note is gone', () => {
+    const tabs = new AgentTabs()
+    const a = stream()
+    const b = stream()
+    tabs.connect('a', a)
+    tabs.connect('b', b)
+    tabs.recordShow('a', 'linea')
+    tabs.disconnect('a', a)
+    tabs.focus('b', 'arbitrum')
+    expect(tabs.clearShow()).toEqual(true)
+    expect(b.written).toEqual(['data: {"type":"clear"}\n\n'])
+    expect(new AgentTabs().clearShow()).toEqual(false)
   })
 
   it('sends an event to one tab only', () => {

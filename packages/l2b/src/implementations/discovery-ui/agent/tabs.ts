@@ -22,6 +22,8 @@ export interface ActiveTab {
 export class AgentTabs {
   private readonly tabs = new Map<string, Tab>()
   private focusCount = 0
+  // The tab that shows the note of the last show, wherever focus went since.
+  private showTab: string | undefined
 
   get size(): number {
     return this.tabs.size
@@ -70,13 +72,30 @@ export class AgentTabs {
 
   // A show moves the tab to its project, even in a window the researcher is
   // not focused on, which then reports nothing.
-  setProject(id: string, project: string) {
+  recordShow(id: string, project: string) {
     const tab = this.tabs.get(id)
     assert(
       tab !== undefined,
-      'Setting the project of a tab that is not connected',
+      'Recording a show for a tab that is not connected',
     )
     tab.project = project
+    this.showTab = id
+  }
+
+  // Clears the note where it is, or in the active tab when its tab is gone.
+  // Returns false when no tab is open.
+  clearShow(): boolean {
+    const showTab = this.showTab
+    this.showTab = undefined
+    const id =
+      showTab !== undefined && this.tabs.has(showTab)
+        ? showTab
+        : this.active()?.id
+    if (id === undefined) {
+      return false
+    }
+    this.send(id, { type: 'clear' })
+    return true
   }
 
   send(id: string, event: object): void {

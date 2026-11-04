@@ -157,7 +157,7 @@ function show(ui: DiscoUi, input: ShowInput): string[] {
   printSteps(lines, steps)
   if (active !== undefined && !isDryRun) {
     ui.tabs.send(active.id, showEvent(project, steps))
-    ui.tabs.setProject(active.id, project)
+    ui.tabs.recordShow(active.id, project)
   }
   return lines
 }
@@ -218,10 +218,8 @@ function printSteps(lines: string[], steps: ResolvedStep[]) {
 }
 
 function clear(ui: DiscoUi): string[] {
-  const active = ui.tabs.active()
-  if (active === undefined) {
+  if (!ui.tabs.clearShow()) {
     return ['DiscoUI has no open tab, nothing to clear']
   }
-  ui.tabs.send(active.id, { type: 'clear' })
   return ['Cleared']
 }
