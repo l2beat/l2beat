@@ -39,7 +39,13 @@ const JSON_TEXT_LENGTH_MAX = 200
 
 const cellInputSchema = z.union([
   z.string(),
-  z.number(),
+  // JSON has already rounded such an integer, so it must come as a string.
+  z
+    .number()
+    .check(
+      (n) => !Number.isInteger(n) || Number.isSafeInteger(n),
+      'Write an integer past 2^53 as a string',
+    ),
   z.boolean(),
   z.array(z.string()),
 ])
@@ -75,7 +81,15 @@ const BLOCK_SCHEMAS = {
     type: z.literal('table'),
     title: z.string().optional(),
     rows: z.array(rowSchema),
-    columns: z.array(columnSchema).optional(),
+    // Rows bring cells by column label.
+    columns: z
+      .array(columnSchema)
+      .check(
+        (columns) =>
+          new Set(columns.map((c) => c.label)).size === columns.length,
+        'Columns take different labels',
+      )
+      .optional(),
   }),
   view: z.object({
     type: z.literal('view'),
@@ -140,7 +154,10 @@ function blockProblem(block: unknown): string | undefined {
   return result.success ? undefined : `${result.path}: ${result.message}`
 }
 
-export type CellPart = { text: string } | { address: string; name: string }
+// A sort key orders text whose order is not its own, like 12h before 1d.
+export type CellPart =
+  | { text: string; sortKey?: string }
+  | { address: string; name: string }
 
 export interface ResolvedRow {
   address: string | undefined
@@ -522,7 +539,7 @@ function fastestUpgrade(
   }
   const delay = Math.min(...routes.map((r) => r.delaySeconds))
   if (property === 'upgradeDelay') {
-    return [{ text: delay === 0 ? 'no delay' : formatDelay(delay) }]
+    return [{ text: formatDelay(delay), sortKey: String(delay) }]
   }
   const holders = new Set(
     routes.filter((r) => r.delaySeconds === delay).map((r) => r.holder),

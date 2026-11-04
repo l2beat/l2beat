@@ -83,7 +83,7 @@ function cellText(row: BoardRow, column: number): string {
 }
 
 function partText(part: CellPart): string {
-  return 'address' in part ? part.name : part.text
+  return 'address' in part ? part.name : (part.sortKey ?? part.text)
 }
 
 // The rows' contracts and the related ones in their columns, without values

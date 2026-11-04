@@ -1,7 +1,10 @@
 import { create } from 'zustand'
 import type { AgentViewSpec } from '../agent/applyView'
 
-export type CellPart = { text: string } | { address: string; name: string }
+// A sort key orders text whose order is not its own, like 12h before 1d.
+export type CellPart =
+  | { text: string; sortKey?: string }
+  | { address: string; name: string }
 
 export interface BoardRow {
   address?: string

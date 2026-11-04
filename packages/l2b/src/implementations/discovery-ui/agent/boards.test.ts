@@ -123,7 +123,7 @@ describe(resolveBoard.name, () => {
       [
         [{ address: BRIDGE, name: 'Bridge' }],
         [{ address: SIGNER, name: 'Owner' }],
-        [{ text: 'no delay' }],
+        [{ text: 'no delay', sortKey: '0' }],
         [
           { address: SIGNER, name: 'Owner' },
           { text: '→' },
@@ -374,6 +374,27 @@ describe('boardSpecSchema', () => {
   it('rejects a column that reads two things or an unknown property', () => {
     expect(parse({ label: 'A', property: 'name', field: 'x' })).toEqual(false)
     expect(parse({ label: 'A', property: 'owner' })).toEqual(false)
+  })
+})
+
+describe('boardSpecSchema tables', () => {
+  function parse(table: object) {
+    return boardSpecSchema.safeParse({
+      title: 'T',
+      blocks: [{ type: 'table', rows: ['all'], ...table }],
+    }).success
+  }
+
+  it('rejects two columns with one label', () => {
+    expect(parse({ columns: [{ label: 'A' }, { label: 'A' }] })).toEqual(false)
+    expect(parse({ columns: [{ label: 'A' }, { label: 'B' }] })).toEqual(true)
+  })
+
+  it('rejects a cell integer JSON has rounded', () => {
+    const rows = (value: number) => [{ cells: { A: value } }]
+    expect(parse({ rows: rows(2 ** 53 + 2) })).toEqual(false)
+    expect(parse({ rows: rows(2 ** 53 - 1) })).toEqual(true)
+    expect(parse({ rows: rows(1.5) })).toEqual(true)
   })
 })
 
