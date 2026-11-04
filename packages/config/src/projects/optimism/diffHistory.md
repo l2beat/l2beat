@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x51ce429c5af57603e1f2467f45990d9f5996f1d9
+
+# Diff at Wed, 04 Nov 2026 12:46:12 GMT:
+
+- id: 1d79844a
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@5c469c670c4ef8d6f95fbe43de6aaa352e9c32f1 block: 1792587967
+- current timestamp: 1792587967
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792587967 (main branch discovery), not current.
+
+```diff
+    contract LivenessGuard (eth:0x24424336F04440b1c28685a38303aC33C9D14a25) [gnosisSafeModules/LivenessGuard] {
+    +++ description: Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.
+      values.timeSinceLastL2beatInteraction:
+-        "25d 22h"
+    }
+```
+
 Generated with discovered.json: 0x796cee8234cd01e14a8d80c24e14e6a1626eb8aa
 
 # Diff at Sat, 24 Oct 2026 16:41:07 GMT:
