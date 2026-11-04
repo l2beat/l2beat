@@ -230,6 +230,13 @@ export const privacyPoolsV2: BaseProject = {
     category: PRIVACY_CATEGORIES.shieldedLedger,
     referenceApp: REFERENCE_APP,
     trackedOn: ['ethereum'],
+    // Chains privacypools.com serves (config/prod-deployments.ts).
+    runsOn: [
+      ProjectId('arbitrum'),
+      ProjectId('base'),
+      ProjectId('optimism'),
+      ProjectId('robinhood'),
+    ],
     tokens: getPrivacyTokens(),
     relayerTracking: {
       type: 'onchainEvents',
