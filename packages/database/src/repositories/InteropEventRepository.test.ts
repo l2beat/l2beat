@@ -355,7 +355,8 @@ describeDatabase(InteropEventRepository.name, (db) => {
               args: { amount: 'BigInt(7000000)', tokenAddress: USDC },
             },
           ),
-          // Captured on the destination, so the destination token is priced
+          // Captured on the destination, so the destination token is priced,
+          // here from the destination side of the transfer to Base
           event(
             'debridge-dln',
             'e7',
@@ -363,7 +364,7 @@ describeDatabase(InteropEventRepository.name, (db) => {
             UnixTime(1060),
             UnixTime(9000),
             {
-              chain: 'ethereum',
+              chain: 'base',
               args: {
                 $srcChain: 'Unknown_7565164',
                 fromToken: OTHER_TOKEN,
@@ -864,7 +865,8 @@ function event(
   }
 }
 
-// 2 USDC on Ethereum valued at $2, so 1 raw unit is $0.000001
+// 2 USDC from Ethereum to Base valued at $2 on each side, so 1 raw unit is
+// $0.000001
 function pricedTransfer(usdc: string): InteropTransferRecord {
   return {
     plugin: 'cctp-v2',
@@ -891,14 +893,14 @@ function pricedTransfer(usdc: string): InteropTransferRecord {
     dstTxHash: '0xdst',
     dstLogIndex: 2,
     dstEventId: 'priced-dst',
-    dstTokenAddress: undefined,
-    dstRawAmount: undefined,
+    dstTokenAddress: usdc,
+    dstRawAmount: 2_000_000n,
     dstWasMinted: true,
-    dstSymbol: undefined,
-    dstAbstractTokenId: undefined,
-    dstAmount: undefined,
-    dstPrice: undefined,
-    dstValueUsd: undefined,
+    dstSymbol: 'USDC',
+    dstAbstractTokenId: 'usdc',
+    dstAmount: 2,
+    dstPrice: 1,
+    dstValueUsd: 2,
     isProcessed: true,
   }
 }
