@@ -225,6 +225,27 @@ describe(resolveBoard.name, () => {
     ])
   })
 
+  it('marks a long object value as cut', () => {
+    const long = { data: 'x'.repeat(300) }
+    const board = resolveBoard(
+      [entry(BRIDGE, 'Bridge', { values: { config: long } })],
+      {
+        title: 'Long',
+        blocks: [
+          {
+            type: 'table',
+            rows: ['Bridge'],
+            columns: [{ label: 'Config', field: 'config' }],
+          },
+        ],
+      },
+    )
+    const table = board.blocks[0]
+    if (table?.type !== 'table') throw new Error('Expected a table')
+    const text = JSON.stringify(long).slice(0, 200)
+    expect(table.rows[0]?.cells[1]).toEqual([{ text: `${text}…` }])
+  })
+
   it('lists a contract two selectors match once', () => {
     const board = resolveBoard(entries, {
       title: 'Twice',

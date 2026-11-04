@@ -542,7 +542,10 @@ function formatValue(
   }
   if (typeof value === 'object') {
     const text = JSON.stringify(value)
-    return [{ text: text.slice(0, JSON_TEXT_LENGTH_MAX) }]
+    if (text.length <= JSON_TEXT_LENGTH_MAX) {
+      return [{ text }]
+    }
+    return [{ text: `${text.slice(0, JSON_TEXT_LENGTH_MAX)}…` }]
   }
   return [{ text: String(value) }]
 }
