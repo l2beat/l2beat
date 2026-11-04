@@ -1,4 +1,4 @@
-Generated with discovered.json: 0xa2052007b5668f0fc43830282a75babef9e3f46a
+Generated with discovered.json: 0x7d9cbdc9c3d723cb0278fabab3ef84284cf84378
 
 # Diff at Tue, 03 Nov 2026 15:45:11 GMT:
 
@@ -744,6 +744,15 @@ discovery. Values are for block 1793623332 (main branch discovery), not current.
       name:
 -        "ZKsyncOSL1GenesisUpgrade"
 +        "L1GenesisUpgrade"
+    }
+```
+
+```diff
+    contract L1NativeTokenVault (eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6) [shared-zk-stack/L1NativeTokenVault_v31] {
+    +++ description: Canonical central asset escrow for all ZK stack chains. Since v31 the per-chain balance accounting that caps what each chain can withdraw is enforced by the L1AssetTracker, which the vault calls on every deposit, withdrawal and failed deposit claim.
+      sourceHashes.1:
+-        "0x29d9b2749a121f8849ae17c017a47b59e45c90585f0ddd80ddf773b50a39e74b"
++        "0x4422fa65a08f9eeac1709e006b5c4cfe022d726d5b47a78ae34a23bffa53cd70"
     }
 ```
 

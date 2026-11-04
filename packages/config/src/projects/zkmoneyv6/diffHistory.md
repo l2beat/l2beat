@@ -1,4 +1,4 @@
-Generated with discovered.json: 0x2379a9a2d17aa65afb2ed32b4a1b6748a99dc659
+Generated with discovered.json: 0x234a4f9c9b8d4cd80ee4846fcb7c50ec8cc1c762
 
 # Diff at Mon, 02 Nov 2026 10:19:25 GMT:
 
@@ -21,6 +21,21 @@ On 2026-10-29 the ForwardingTable owner moved the sweep-fee beneficiary from the
       values._$beneficiary:
 -        "eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601"
 +        "eth:0x88ef976262BF715a3B0D24146fC3bb1B18464e61"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793184565 (main branch discovery), not current.
+
+```diff
+    contract PortalFactory (eth:0xCeae64c7211a2208afFc4F396ADD1D46996Cd2A2) [zkmoney/v6/PortalFactory] {
+    +++ description: Deploys OxidePortals that share its TEE_REGISTRY and refund verifiers. Each portal is a separate escrow for one token and one L2 token contract, and nothing in a deployed portal refers back to the factory.
+      sourceHashes.0:
+-        "0x81a4e194bf469cf8462b79af746e60bc54ff7c8cf8a4f19bb976e92e32055eb8"
++        "0x95565844e25903063164a4ee1506f77c3521161c6e5ebd378600e2e0f879e9c2"
     }
 ```
 

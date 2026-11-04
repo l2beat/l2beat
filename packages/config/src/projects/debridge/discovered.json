@@ -567,7 +567,7 @@
       "template": "debridge/DeBridgeTokenDeployer",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
-        "0xff2a8bb5572e1959e22acdc6818bcb1da107807340ef1416129cae0cf740d02a"
+        "0xa9992178cce17f92c934ff2617b67a393fb5ec068d6219bde6c62fa46ce32540"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Deploys deBridge-wrapped token (deToken) contracts when an asset is bridged to this chain for the first time (callable only by the DeBridgeGate). All deTokens are beacon proxies whose beacon is this contract itself, so its tokenImplementation applies to every deToken on this chain at once.",

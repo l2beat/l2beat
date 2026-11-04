@@ -983,6 +983,84 @@ describe('flatten', () => {
     )
   })
 
+  it('contracts whose code is read with type(C) are not turned into interfaces', () => {
+    const file = sol(
+      'Root.sol',
+      `
+      contract Created {
+          function f() external {}
+      }
+
+      contract Run {
+          function g() external {}
+      }
+
+      contract R1 {
+          function code() public pure returns (bytes memory, bytes memory) {
+              return (type(Created).creationCode, type(Run).runtimeCode);
+          }
+      }
+    `,
+    )
+
+    const flattened = flattenStartingFrom('R1', 'Root.sol', [file], [], {
+      includeAll: true,
+    })
+    expect(flattened).toEqual(
+      dedent(`
+      contract Created {
+          function f() external {}
+      }
+
+      contract Run {
+          function g() external {}
+      }
+
+      contract R1 {
+          function code() public pure returns (bytes memory, bytes memory) {
+              return (type(Created).creationCode, type(Run).runtimeCode);
+          }
+      }
+    `),
+    )
+  })
+
+  it('does not crash on type() of an aliased contract in a dynamic contract', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import "./Deployer.sol";
+      contract R1 {
+          function f(address x) public {
+              Deployer(x).deploy();
+          }
+      }
+    `,
+    )
+    const deployerFile = sol(
+      'Deployer.sol',
+      `
+      import "./Created.sol" as K;
+      contract Deployer {
+          function deploy() public returns (bytes memory) {
+              return type(K.Created).creationCode;
+          }
+      }
+    `,
+    )
+    const createdFile = sol('Created.sol', 'contract Created {}')
+
+    expect(() =>
+      flattenStartingFrom(
+        'R1',
+        'Root.sol',
+        [rootFile, deployerFile, createdFile],
+        [],
+        { includeAll: true },
+      ),
+    ).not.toThrow()
+  })
+
   it('regression - drops used things when turned into an interface', () => {
     const file = sol(
       'Root.sol',
