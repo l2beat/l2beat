@@ -69,7 +69,7 @@ interface GasFeesStat {
 export function getGasFeesSummary({
   range,
 }: GasFeesSummaryParams): GasFeesSummary {
-  // Fake data until fees are tracked: see getMockGasFees
+  // A Dune snapshot until fees are tracked: see getMockGasFees
   const data = getMockGasFees()
   const ethereum = data.get('ethereum') ?? []
   const current = inRange(ethereum, range)

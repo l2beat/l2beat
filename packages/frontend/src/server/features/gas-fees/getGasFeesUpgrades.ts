@@ -127,7 +127,7 @@ const UPGRADES: (Omit<GasFeesUpgrade, 'timestamp' | 'l2Median'> & {
 
 /** Newest first, with the next scheduled upgrade on top */
 export function getGasFeesUpgrades(): GasFeesUpgrade[] {
-  // Fake data until fees are tracked: see getMockGasFees
+  // A Dune snapshot until fees are tracked: see getMockGasFees
   const data = getMockGasFees()
   const l2s = GAS_FEES_CHAINS.filter((c) => c.id !== 'ethereum').map(
     (c) => data.get(c.id) ?? [],

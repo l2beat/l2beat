@@ -18,28 +18,12 @@ export const GAS_FEES_CHAINS = [
   { id: 'linea', type: 'ZK rollup', gasToken: 'ETH', gasUnit: 'gwei' },
   { id: 'scroll', type: 'ZK rollup', gasToken: 'ETH', gasUnit: 'gwei' },
   {
-    id: 'starknet',
-    type: 'ZK rollup',
-    gasToken: 'STRK',
-    // Starknet prices L1 gas, L1 data gas and L2 gas apart: this is L2 gas
-    gasUnit: 'fri',
-  },
-  {
     id: 'unichain',
     type: 'Optimistic rollup',
     gasToken: 'ETH',
     gasUnit: 'gwei',
   },
   { id: 'ink', type: 'Optimistic rollup', gasToken: 'ETH', gasUnit: 'gwei' },
-  {
-    id: 'soneium',
-    type: 'Optimistic rollup',
-    gasToken: 'ETH',
-    gasUnit: 'gwei',
-  },
-  { id: 'zora', type: 'Optimistic rollup', gasToken: 'ETH', gasUnit: 'gwei' },
-  { id: 'mode', type: 'Optimistic rollup', gasToken: 'ETH', gasUnit: 'gwei' },
-  { id: 'blast', type: 'Optimistic rollup', gasToken: 'ETH', gasUnit: 'gwei' },
   { id: 'abstract', type: 'ZK rollup', gasToken: 'ETH', gasUnit: 'gwei' },
   { id: 'taiko', type: 'Based rollup', gasToken: 'ETH', gasUnit: 'gwei' },
   { id: 'mantle', type: 'Optimium', gasToken: 'MNT', gasUnit: 'gwei' },

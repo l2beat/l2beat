@@ -183,8 +183,9 @@ function getRecentColumn(recent: Props['recent'], unit: GasFeesUnit): Column {
       ? `Top row ${span(hours[0], hours[11])}, bottom row ${span(hours[12], hours[23])} UTC`
       : undefined,
     cell: (row) => {
-      const chain = recent.data?.chains.find((c) => c.id === row.id)
-      if (!chain) return <Skeleton className="h-[30px] w-[192px]" />
+      if (!recent.data) return <Skeleton className="h-[30px] w-[192px]" />
+      const chain = recent.data.chains.find((c) => c.id === row.id)
+      if (!chain) return <span className="text-secondary">{EM_DASH}</span>
       return (
         <GasFeesRecentStrip
           chainId={row.id}

@@ -29,7 +29,7 @@ export interface GasFeesRecentSeries {
 }
 
 export function getGasFeesRecent(): GasFeesRecent {
-  // Fake data until fees are tracked: see getMockGasFees
+  // A Dune snapshot until fees are tracked: see getMockGasFees
   const recent = getMockRecentGasFees()
   const daily = getMockGasFees()
   return {

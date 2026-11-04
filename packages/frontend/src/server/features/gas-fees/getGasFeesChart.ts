@@ -26,7 +26,7 @@ export function getGasFeesChart({
   range,
   metric,
 }: GasFeesChartParams): GasFeesChartData {
-  // Fake data until fees are tracked: see getMockGasFees
+  // A Dune snapshot until fees are tracked: see getMockGasFees
   const data = getMockGasFees()
   const ethereum = data.get('ethereum') ?? []
   const days = inRange(ethereum, range).map((r) => r.timestamp)
