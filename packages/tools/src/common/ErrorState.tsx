@@ -1,15 +1,13 @@
-import { logoAsciiArt } from './LoadingState'
+import { logoAsciiArt, logoBarWidth } from './LoadingState'
 
 export function ErrorState() {
-  const loadingBarWidth = 44
-
   return (
     <div className="flex h-screen w-full items-center justify-center font-mono text-red-500">
       <div className="whitespace-pre-wrap">
         <pre className="mb-4">{logoAsciiArt}</pre>
         <div className="mb-2 text-red-500">ERROR: System Malfunction</div>
         <div className="mb-2 text-red-500">
-          [{new Array(loadingBarWidth).fill('X').join('')}]
+          [{new Array(logoBarWidth).fill('X').join('')}]
         </div>
         <div className="wrap-break-word text-red-500 text-xs">
           Report this error to the ETHBEAT team.

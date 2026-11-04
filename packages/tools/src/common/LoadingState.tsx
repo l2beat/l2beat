@@ -9,6 +9,9 @@ export const logoAsciiArt = `
 ╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═════╝ ╚══════╝╚═╝  ╚═╝   ╚═╝
 `
 
+/** With its two brackets, a bar this wide spans the ASCII art. */
+export const logoBarWidth = 56
+
 export function LoadingState() {
   const [frame, setFrame] = useState(0)
   const [progress, setProgress] = useState(0)
@@ -46,8 +49,6 @@ export function LoadingState() {
     return () => clearInterval(intervalId)
   }, [progress, messages.length])
 
-  const loadingBarWidth = 44 // Match the width of the ASCII art
-
   return (
     <div className="flex h-screen w-full items-center justify-center font-mono text-orange-500">
       <div className="whitespace-pre-wrap">
@@ -57,10 +58,10 @@ export function LoadingState() {
         </div>
         <div className="mb-2">
           [
-          {new Array(loadingBarWidth)
+          {new Array(logoBarWidth)
             .fill('')
             .map((_, i) =>
-              i < Math.floor(progress / (100 / loadingBarWidth)) ? '=' : ' ',
+              i < Math.floor(progress / (100 / logoBarWidth)) ? '=' : ' ',
             )
             .join('')}
           ] {progress}%
