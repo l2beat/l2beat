@@ -23,7 +23,7 @@ export function Layout() {
       <div className="w-full p-4 md:max-w-[200px]">
         <ul>
           <li className="mb-4 flex items-center justify-between">
-            <p className="font-bold">tools.l2beat.com</p>
+            <p className="font-bold">tools.ethbeat.org</p>
 
             <button onClick={() => setIsOpen(!isOpen)} className="md:hidden">
               {isOpen ? <ArrowIcon className="rotate-180" /> : <ArrowIcon />}

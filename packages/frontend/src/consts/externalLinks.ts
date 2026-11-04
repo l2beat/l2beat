@@ -6,7 +6,7 @@ export const externalLinks = {
   medium: 'https://medium.com/l2beat',
   forum: 'https://forum.l2beat.com/',
   jobs: 'https://jobs.l2beat.com/',
-  tools: 'https://tools.l2beat.com/',
+  tools: 'https://tools.ethbeat.org/',
   substackSubscribe: 'https://l2beatgov.substack.com/subscribe',
   multisigReport:
     'https://drive.google.com/file/d/182ycEW8C2wk5tGd3X1tG8oQfUy9WmSJk/view',

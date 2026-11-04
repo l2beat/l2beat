@@ -5,7 +5,7 @@ export function UopsExplorerLink() {
   const { track } = useTracking()
   return (
     <a
-      href="https://tools.l2beat.com/uops"
+      href="https://tools.ethbeat.org/uops"
       target="_blank"
       rel="noreferrer"
       className={cn(
