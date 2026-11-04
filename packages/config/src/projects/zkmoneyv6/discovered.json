@@ -509,7 +509,7 @@
       "type": "Contract",
       "template": "zkmoney/v6/TeeRegistry",
       "sourceHashes": [
-        "0xa29b758bc432026497c37814e23e844064c0cc3000403cc0d634d6902d9563fa"
+        "0x0106f719dcaae62a3e4272e72a9f22f2900508e996f036e5822c64649d27415a"
       ],
       "proxyType": "immutable",
       "description": "Registry of the TEE signers that the zk.money portals accept for withdrawals and refunds. Anyone can register a signer with an AWS Nitro attestation of the enclave image PCR0_HASH that is at most TEE_ATTESTATION_MAX_AGE seconds old. Registration also sends an L1->L2 message to L2_RECIPIENT, whose inclusion the zk.money contracts on Aztec prove to accept the signer there. Registrations are permanent, and the approved image cannot change.",

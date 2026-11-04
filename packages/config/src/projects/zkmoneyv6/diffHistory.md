@@ -1,4 +1,4 @@
-Generated with discovered.json: 0x234a4f9c9b8d4cd80ee4846fcb7c50ec8cc1c762
+Generated with discovered.json: 0xed389da8bd2d88bda775d514db154f0c35c83193
 
 # Diff at Mon, 02 Nov 2026 10:19:25 GMT:
 
@@ -36,6 +36,15 @@ discovery. Values are for block 1793184565 (main branch discovery), not current.
       sourceHashes.0:
 -        "0x81a4e194bf469cf8462b79af746e60bc54ff7c8cf8a4f19bb976e92e32055eb8"
 +        "0x95565844e25903063164a4ee1506f77c3521161c6e5ebd378600e2e0f879e9c2"
+    }
+```
+
+```diff
+    contract TeeRegistry (eth:0x8b705C3519169F29850D156574ec377B686bd9CD) [zkmoney/v6/TeeRegistry] {
+    +++ description: Registry of the TEE signers that the zk.money portals accept for withdrawals and refunds. Anyone can register a signer with an AWS Nitro attestation of the enclave image PCR0_HASH that is at most TEE_ATTESTATION_MAX_AGE seconds old. Registration also sends an L1->L2 message to L2_RECIPIENT, whose inclusion the zk.money contracts on Aztec prove to accept the signer there. Registrations are permanent, and the approved image cannot change.
+      sourceHashes.0:
+-        "0xa29b758bc432026497c37814e23e844064c0cc3000403cc0d634d6902d9563fa"
++        "0x0106f719dcaae62a3e4272e72a9f22f2900508e996f036e5822c64649d27415a"
     }
 ```
 
