@@ -1,24 +1,16 @@
 import { Button } from '~/components/core/Button'
 import { cn } from '~/utils/cn'
-import { SproutIcon } from './SproutIcon'
 
 export type CalloutTone = 'garden' | 'brand'
 
-const TONE: Record<
-  CalloutTone,
-  { border: string; tint: string; chip: string; icon: string }
-> = {
+const TONE: Record<CalloutTone, { border: string; tint: string }> = {
   garden: {
     border: 'border-garden-border',
     tint: 'bg-garden-tint',
-    chip: 'bg-garden-accent/15',
-    icon: 'text-garden-accent',
   },
   brand: {
     border: 'border-brand/30',
     tint: 'bg-brand/10 dark:bg-brand/15',
-    chip: 'bg-brand/15',
-    icon: 'text-brand-deep',
   },
 }
 
@@ -57,15 +49,7 @@ export function CalloutCard({
         )}
       >
         <div className="flex grow flex-col">
-          <span
-            className={cn(
-              'flex size-9 items-center justify-center rounded-xl',
-              style.chip,
-            )}
-          >
-            <SproutIcon className={cn('size-[18px]', style.icon)} />
-          </span>
-          <p className="mt-3.5 font-bold text-heading-16 md:text-heading-20">
+          <p className="font-bold text-heading-16 md:text-heading-20">
             {title}
           </p>
           <p
@@ -81,14 +65,11 @@ export function CalloutCard({
           asChild
           variant="fill"
           className={cn(
-            'mt-5 w-full shrink-0 gap-2 md:w-max',
+            'mt-5 w-full shrink-0 md:w-max',
             horizontal && 'md:mt-0',
           )}
         >
-          <a href={href}>
-            <SproutIcon />
-            {cta}
-          </a>
+          <a href={href}>{cta}</a>
         </Button>
       </div>
     </div>
