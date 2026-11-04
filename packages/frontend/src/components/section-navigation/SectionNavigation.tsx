@@ -87,15 +87,10 @@ export function SectionNavigation({
               </span>
             </a>
             {item.subsections && (
-              <div className="flex flex-col">
-                {item.subsections.map((subsection, i) => (
-                  <NavigationSubsectionEntry
-                    key={i}
-                    {...subsection}
-                    selected={visibleIds.includes(subsection.id)}
-                  />
-                ))}
-              </div>
+              <NavigationSubsections
+                subsections={item.subsections}
+                visibleIds={visibleIds}
+              />
             )}
           </Fragment>
         )
@@ -136,38 +131,63 @@ function NavigationListIndex(props: { index: number }) {
   )
 }
 
+/**
+ * Selected neighbours share one unbroken bar, so a run of visible
+ * subsections reads as a single highlighted stretch of the side border.
+ */
+function NavigationSubsections(props: {
+  subsections: Omit<SectionNavigationItem, 'subsections'>[]
+  visibleIds: string[]
+}) {
+  const selected = props.subsections.map((subsection) =>
+    props.visibleIds.includes(subsection.id),
+  )
+
+  return (
+    // Cancels the entries' outer padding, which is there only to make the
+    // bar continuous between them.
+    <div className="-my-[3px] flex flex-col">
+      {props.subsections.map((subsection, i) => (
+        <NavigationSubsectionEntry
+          key={i}
+          {...subsection}
+          selected={!!selected[i]}
+          joinsAbove={!!selected[i] && !!selected[i - 1]}
+          joinsBelow={!!selected[i] && !!selected[i + 1]}
+        />
+      ))}
+    </div>
+  )
+}
+
 function NavigationSubsectionEntry(props: {
   title: string
   id: string
   selected: boolean
+  joinsAbove: boolean
+  joinsBelow: boolean
 }) {
   return (
-    <a
-      key={props.id}
-      href={`#${props.id}`}
-      className="group flex flex-row items-center"
-    >
-      <div className="flex flex-row gap-3">
-        {/* Left side */}
-        <div className="flex w-6 flex-col items-center">
-          <div
-            className={cn(
-              'absolute h-[18px] w-[5px] rounded-full bg-brand group-data-[has-colors=true]/section-wrapper:bg-branding-primary',
-              'transition-[opacity,transform] duration-150 ease-out motion-reduce:transition-none',
-              props.selected ? 'opacity-100' : 'scale-y-75 opacity-0',
-            )}
-          />
-          <div className="h-full border-divider border-l" />
-        </div>
-        {/* Right side */}
+    <a href={`#${props.id}`} className="group flex flex-row gap-3">
+      <div className="relative flex w-6 justify-center">
+        <div className="border-divider border-l" />
         <div
           className={cn(
-            'flex-1 pt-0.5 pb-2 transition-opacity duration-150 hover:opacity-100 group-last:pb-0.5 motion-reduce:transition-none',
-            !props.selected && 'opacity-60',
+            'absolute w-[5px] bg-brand group-data-[has-colors=true]/section-wrapper:bg-branding-primary',
+            'transition-opacity duration-150 ease-out motion-reduce:transition-none',
+            props.joinsAbove ? 'top-0' : 'top-0.5 rounded-t-full',
+            props.joinsBelow ? 'bottom-0' : 'bottom-0.5 rounded-b-full',
+            props.selected ? 'opacity-100' : 'opacity-0',
           )}
-        >
-          {props.title}
-        </div>
+        />
+      </div>
+      <div
+        className={cn(
+          'flex-1 py-[5px] transition-opacity duration-150 hover:opacity-100 motion-reduce:transition-none',
+          !props.selected && 'opacity-60',
+        )}
+      >
+        {props.title}
       </div>
     </a>
   )
