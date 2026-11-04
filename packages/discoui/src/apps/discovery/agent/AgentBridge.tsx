@@ -108,7 +108,13 @@ function useApplyStep() {
   const appliedKey = useRef<string>(undefined)
 
   useEffect(() => {
-    if (show === undefined || show.project !== loadedProject) {
+    if (show === undefined) {
+      return
+    }
+    // A graph that unloads, like when the researcher leaves and comes back,
+    // loads without the step's selection, so the step applies again.
+    if (show.project !== loadedProject) {
+      appliedKey.current = undefined
       return
     }
     const key = `${show.id}:${index}`
