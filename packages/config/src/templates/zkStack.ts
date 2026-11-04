@@ -731,7 +731,7 @@ function getTechnologyForceTransactions(
     name: 'Users can force any transaction via L1',
     description: `If a user is censored by the L2 Sequencer, they can force their transaction via an L1 queue. The chain admin has permanently allowed Priority Mode: if the first queued transaction is not processed for ${formatSeconds(
       PRIORITY_EXPIRATION_S,
-    )}, anyone can activate it. In Priority Mode only the shared PermissionlessValidator can settle batches, and anyone can commit, prove and execute batches with validity proofs through it in one transaction, bypassing the ValidatorTimelock delay. Only the ZKsync governance (owner of the ChainTypeManager) can deactivate it.${
+    )}, anyone can activate it. In Priority Mode only the shared PermissionlessValidator can settle batches, and each batch can contain only queued L1 transactions. Anyone can commit, prove and execute such batches through it in one transaction, bypassing the ValidatorTimelock delay. Only the ZKsync governance (owner of the ChainTypeManager) can deactivate it.${
       priorityMode.active ? ' Priority Mode is currently active.' : ''
     }`,
     risks: [
@@ -753,9 +753,9 @@ function getTechnologyOperator(
   }
 
   const priorityModeNote = priorityMode.allowed
-    ? `\n\nPriority Mode is permanently allowed: once a queued L1 transaction stays unprocessed for ${formatSeconds(
+    ? `\n\nPriority Mode is permanently allowed: once the first queued L1 transaction stays unprocessed for ${formatSeconds(
         PRIORITY_EXPIRATION_S,
-      )}, anyone can activate it and settle batches with validity proofs through the shared PermissionlessValidator.${
+      )}, anyone can activate it. Then anyone can settle batches of queued L1 transactions with validity proofs through the shared PermissionlessValidator.${
         priorityMode.active ? ' It is currently active.' : ''
       }`
     : ''
@@ -844,7 +844,7 @@ function programHashesReproducible(l2BootloaderHash: string): boolean | null {
  * a verifier discovered by the project itself; from v31 it is the verifier the ChainTypeManager registered for the
  * protocol version, which lives in the shared-zk-stack module (versioned names like EraDualVerifier_v33), so the
  * lookup goes by address and template rather than by name.
- * Exported because adi is not set up as a template but gets its verifiers by the same logic.
+ * Exported for adi, which is not set up as a template and still reads its verifier by name.
  */
 export function getZKStackVerifiers(
   discovery: ProjectDiscovery,

@@ -449,7 +449,7 @@ export function SEQUENCER_PRIORITY_MODE_ZK(delay: number): TableReadyValue {
   const delayString = formatSeconds(delay)
   return {
     value: 'Self sequence',
-    description: `Users can force transactions to be included by sending them to an L1 queue. If the first queued transaction stays unprocessed for ${delayString}, anyone can activate Priority Mode, in which anyone can submit batches with validity proofs through a permissionless validator contract. Proposing new blocks requires creating ZK proofs.`,
+    description: `Users can force transactions to be included by sending them to an L1 queue. If the first queued transaction stays unprocessed for ${delayString}, anyone can activate Priority Mode. Then anyone can settle batches of queued L1 transactions with validity proofs through a permissionless validator contract.`,
     sentiment: 'good',
     orderHint: delay,
   }
@@ -459,7 +459,7 @@ export function PROPOSER_PRIORITY_MODE_ZK(delay: number): TableReadyValue {
   const delayString = formatSeconds(delay)
   return {
     value: 'Self propose',
-    description: `If the whitelisted validators do not process a queued L1 transaction for ${delayString}, anyone can activate Priority Mode and from then on submit batches with validity proofs through a permissionless validator contract. Only governance can deactivate it.`,
+    description: `If the whitelisted validators leave the first queued L1 transaction unprocessed for ${delayString}, anyone can activate Priority Mode. Then anyone can settle batches of queued L1 transactions with validity proofs through a permissionless validator contract. Only the ZKsync governance can deactivate it.`,
     sentiment: 'good',
     orderHint: delay,
   }

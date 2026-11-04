@@ -1,4 +1,4 @@
-Generated with discovered.json: 0x0c8d5c9d7876785a20ac3829c9a03421dd1b723b
+Generated with discovered.json: 0xa2052007b5668f0fc43830282a75babef9e3f46a
 
 # Diff at Tue, 03 Nov 2026 15:45:11 GMT:
 
@@ -670,7 +670,7 @@ No chain has applied the staged v31 diamond cut yet.
 ```diff
 +   Status: CREATED
     contract ZKsyncOSPermissionlessValidator (eth:0x8509eA34177B051110826A36621C1C52C9752CAA) [shared-zk-stack/PermissionlessValidator]
-    +++ description: The only address allowed to commit, prove and execute batches of a chain while its Priority Mode (escape hatch) is active. Anyone can call it to settle batches of such a chain in one transaction, bypassing the ValidatorTimelock delay. A chain enters Priority Mode when its admin has permanently allowed it, it is a permanent rollup and a priority transaction has not been processed for 4 days.
+    +++ description: The only address allowed to commit, prove and execute batches of a chain while its Priority Mode (escape hatch) is active. Anyone can call it to settle batches of such a chain in one transaction, bypassing the ValidatorTimelock delay. In Priority Mode each batch can contain only priority (L1 queue) transactions. Anyone can activate Priority Mode once the first unprocessed priority transaction is older than 4 days. This requires a permanent rollup whose admin has permanently allowed Priority Mode.
 ```
 
 ```diff
@@ -694,7 +694,7 @@ No chain has applied the staged v31 diamond cut yet.
 ```diff
 +   Status: CREATED
     contract EraPermissionlessValidator (eth:0xE220059BBA4684BF2Cf0B9E6E5A9DF94D9fb90E9) [shared-zk-stack/PermissionlessValidator]
-    +++ description: The only address allowed to commit, prove and execute batches of a chain while its Priority Mode (escape hatch) is active. Anyone can call it to settle batches of such a chain in one transaction, bypassing the ValidatorTimelock delay. A chain enters Priority Mode when its admin has permanently allowed it, it is a permanent rollup and a priority transaction has not been processed for 4 days.
+    +++ description: The only address allowed to commit, prove and execute batches of a chain while its Priority Mode (escape hatch) is active. Anyone can call it to settle batches of such a chain in one transaction, bypassing the ValidatorTimelock delay. In Priority Mode each batch can contain only priority (L1 queue) transactions. Anyone can activate Priority Mode once the first unprocessed priority transaction is older than 4 days. This requires a permanent rollup whose admin has permanently allowed Priority Mode.
 ```
 
 ## Source code changes

@@ -1663,7 +1663,7 @@
         "0x6adf8782223304e2529e619983fc6c2eb2496ef38eb24645c9417c4e861a2b2f"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The only address allowed to commit, prove and execute batches of a chain while its Priority Mode (escape hatch) is active. Anyone can call it to settle batches of such a chain in one transaction, bypassing the ValidatorTimelock delay. A chain enters Priority Mode when its admin has permanently allowed it, it is a permanent rollup and a priority transaction has not been processed for 4 days.",
+      "description": "The only address allowed to commit, prove and execute batches of a chain while its Priority Mode (escape hatch) is active. Anyone can call it to settle batches of such a chain in one transaction, bypassing the ValidatorTimelock delay. In Priority Mode each batch can contain only priority (L1 queue) transactions. Anyone can activate Priority Mode once the first unprocessed priority transaction is older than 4 days. This requires a permanent rollup whose admin has permanently allowed Priority Mode.",
       "deployerAddress": "eth:0xaB75E283274247b43a1f220885850ebEFa399B88",
       "sinceTimestamp": 1791245963,
       "sinceBlock": 26129709,
@@ -2728,7 +2728,7 @@
         "0x6adf8782223304e2529e619983fc6c2eb2496ef38eb24645c9417c4e861a2b2f"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The only address allowed to commit, prove and execute batches of a chain while its Priority Mode (escape hatch) is active. Anyone can call it to settle batches of such a chain in one transaction, bypassing the ValidatorTimelock delay. A chain enters Priority Mode when its admin has permanently allowed it, it is a permanent rollup and a priority transaction has not been processed for 4 days.",
+      "description": "The only address allowed to commit, prove and execute batches of a chain while its Priority Mode (escape hatch) is active. Anyone can call it to settle batches of such a chain in one transaction, bypassing the ValidatorTimelock delay. In Priority Mode each batch can contain only priority (L1 queue) transactions. Anyone can activate Priority Mode once the first unprocessed priority transaction is older than 4 days. This requires a permanent rollup whose admin has permanently allowed Priority Mode.",
       "deployerAddress": "eth:0xaB75E283274247b43a1f220885850ebEFa399B88",
       "sinceTimestamp": 1791245447,
       "sinceBlock": 26129666,

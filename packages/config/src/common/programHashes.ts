@@ -2365,7 +2365,7 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     ),
   },
   '0x01000945a9e6fdfce3580e953a64ba79e437b579f8cff02cae89fbbf50886a37': {
-    // bootloader of the Era protocol version 0.33.0 (ZIP-18 / v31), staged in the EraChainTypeManager on 2026-11-03; no chain has applied it yet
+    // bootloader of the Era protocol version 0.33.0 (ZIP-18 / v31), registered in the EraChainTypeManager on 2026-11-03
     ...BOOJUM_BOOTLOADER('v0.33.0'),
     programUrl:
       'https://github.com/matter-labs/era-contracts/blob/v0.33.0/system-contracts/bootloader/bootloader.yul',
