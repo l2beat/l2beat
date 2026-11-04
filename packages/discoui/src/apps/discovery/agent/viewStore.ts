@@ -9,6 +9,7 @@ import type { Node } from '../panel-nodes/store/State'
 import { useStore as useNodeStore } from '../panel-nodes/store/store'
 import { getGraphProjection } from '../panel-nodes/store/utils/graphProjection'
 import { buildStoredNodeLayout } from '../panel-nodes/store/utils/storage'
+import { usePanelStore } from '../store/panel-store'
 import {
   type AgentViewSpec,
   type AppliedView,
@@ -18,7 +19,7 @@ import {
   type ViewGroup,
   type ViewReceipt,
 } from './applyView'
-import { fitGraphTo, useAgentStore } from './store'
+import { fitGraphTo, restoreSelection, useAgentStore } from './store'
 
 export interface AgentViewEvent {
   type: 'view'
@@ -36,8 +37,10 @@ export interface PendingView {
   title: string
   note: string | undefined
   changes: number
-  // The graph from before the first view, which discarding brings back.
+  // The graph and selection from before the first view, which discarding
+  // brings back.
   before: readonly Node[]
+  selectionBefore: string[]
   groups: ViewGroup[]
   receipt: ViewReceipt
 }
@@ -135,6 +138,8 @@ function applyAgentView(event: AgentViewEvent) {
       note: event.view.note,
       changes: (pending?.changes ?? 0) + 1,
       before: pending?.before ?? nodeStore.nodes,
+      selectionBefore:
+        pending?.selectionBefore ?? usePanelStore.getState().selected,
       groups: legendOf(applied.nodes, [
         ...(pending?.groups ?? []),
         ...applied.groups,
@@ -161,6 +166,7 @@ export function discardAgentView(eventId?: string) {
     pending.project === useNodeStore.getState().projectId
   ) {
     useNodeStore.getState().setNodes([...pending.before])
+    restoreSelection(pending.selectionBefore)
     fitGraphTo(new Set(visibleContracts(pending.before)))
   }
   // Views still waiting for their graph go too, or they would apply later.

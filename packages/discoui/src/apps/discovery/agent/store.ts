@@ -112,9 +112,9 @@ export const useAgentStore = create<State>((set, get) => ({
     set({ agentSelection: address })
   },
   clear: () => {
-    const { selectionBefore, agentSelection } = get()
-    if (selectionBefore !== undefined && isAgentSelection(agentSelection)) {
-      usePanelStore.getState().select(selectionBefore)
+    const { selectionBefore } = get()
+    if (selectionBefore !== undefined) {
+      restoreSelection(selectionBefore)
     }
     set({
       show: undefined,
@@ -124,6 +124,13 @@ export const useAgentStore = create<State>((set, get) => ({
     })
   },
 }))
+
+// What the researcher picked since the agent selected stays selected.
+export function restoreSelection(selection: string[]) {
+  if (isAgentSelection(useAgentStore.getState().agentSelection)) {
+    usePanelStore.getState().select(selection)
+  }
+}
 
 function isAgentSelection(agentSelection: string | undefined): boolean {
   const selected = usePanelStore.getState().selected
