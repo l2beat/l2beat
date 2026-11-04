@@ -411,7 +411,7 @@ function HtmlBlock(props: { html: string; heightPx?: number }) {
       srcDoc={document}
       // Matching the page's color scheme keeps the frame transparent.
       style={{
-        colorScheme: 'dark',
+        colorScheme: theme,
         height: Math.min(
           Math.max(height, HTML_HEIGHT_MIN_PX),
           HTML_HEIGHT_MAX_PX,
