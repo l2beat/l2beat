@@ -66,6 +66,19 @@ describe(AgentTabs.name, () => {
     expect(b.written).toEqual([])
   })
 
+  it('clears the note of a replaced show in another tab', () => {
+    const tabs = new AgentTabs()
+    const a = stream()
+    const b = stream()
+    tabs.connect('a', a)
+    tabs.connect('b', b)
+    tabs.recordShow('a', 'linea')
+    tabs.recordShow('b', 'linea')
+    tabs.recordShow('b', 'linea')
+    expect(a.written).toEqual(['data: {"type":"clear"}\n\n'])
+    expect(b.written).toEqual([])
+  })
+
   it('clears in the active tab once the tab with the note is gone', () => {
     const tabs = new AgentTabs()
     const a = stream()

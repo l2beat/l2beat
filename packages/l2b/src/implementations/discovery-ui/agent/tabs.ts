@@ -79,6 +79,11 @@ export class AgentTabs {
       'Recording a show for a tab that is not connected',
     )
     tab.project = project
+    // A note left in another tab would describe a show the agent replaced.
+    const previous = this.showTab
+    if (previous !== undefined && previous !== id && this.tabs.has(previous)) {
+      this.send(previous, { type: 'clear' })
+    }
     this.showTab = id
   }
 
