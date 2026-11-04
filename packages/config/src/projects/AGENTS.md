@@ -22,6 +22,15 @@ Run `l2b` from `packages/config`. Its `.env` holds RPC keys: never read or print
 - `<project>/.flat/`: the flattened source of every contract discovery analyzed.
 - `abis` in `discovered.json`: discovery calls only functions without arguments (and probes single `uint256` getters at indices 0 to 4). Functions with other arguments, events, constructor arguments (`constructorArgs`, e.g. a verifier set at deployment) and private variables need a handler.
 
+## Point at it in DiscoUI
+
+`l2b ui` serves an MCP server at `http://localhost:2021/api/agent/mcp`, so a coding agent can walk the researcher through contracts and code in the open DiscoUI tab. Connect once:
+
+- Claude Code: `claude mcp add --transport http discoui http://localhost:2021/api/agent/mcp`
+- Codex: `codex mcp add discoui --url http://localhost:2021/api/agent/mcp`
+
+The tools carry their own instructions. It answers only on this machine, and not with `l2b ui --readonly`.
+
 ## Templates
 
 A template is `_templates/<name>/template.jsonc` with a `shapes.json` of source hashes. It applies to every contract with that source, in every project, so it is where anything about a contract's code goes. `config.jsonc` overrides are for this project's addresses.
