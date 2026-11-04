@@ -2,7 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "OsTokenVaultController",
   "category": "core",
-  "description": "Share accounting behind osETH. Registered vaults on an approved implementation mint, registered vaults burn; total assets grow at the reward rate written by the keeper, {{feePercent}} basis points of each increment are minted to the treasury, and the exchange rate is total assets over total shares. Minting stops at a capacity of {{capacity}} wei.",
+  "description": "Share accounting behind the osToken: registered vaults on an approved implementation mint and registered vaults burn; total assets grow at the reward rate written by the keeper, {{feePercent}} basis points of each increment go to the treasury, and the exchange rate is total assets over total shares, with minting capped at {{capacityFormatted}} units of total assets.",
   "ignoreMethods": ["convertToAssets", "convertToShares"],
   "ignoreInWatchMode": [
     "avgRewardPerSecond",
@@ -25,10 +25,18 @@
     },
     "feePercent": {
       "severity": "HIGH",
-      "description": "Basis points of osETH rewards minted to the treasury."
+      "description": "Basis points of osToken rewards minted to the treasury."
     },
     "capacity": {
       "severity": "MEDIUM"
+    },
+    "capacityFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "function capacity() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "Undecimal18"]
     }
   }
 }

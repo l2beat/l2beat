@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "category": "core",
-  "description": "Staking vault with a deposit whitelist and transferable ERC20 shares ({{symbol}}). Anyone deposits ETH for shares; the key manager registers staking keys whose withdrawal credentials point at the vault, each registration approved by the oracle quorum in the keeper. On every harvest the vault takes its cumulative reward from the keeper's root, mints {{feePercent}} basis points of the gain to the fee recipient, applies losses to all shares and pays the exit queue from its spare ETH; queued exits are claimable after a delay fixed at deployment. Shareholders can mint osETH against their shares up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
+  "description": "Staking vault with a deposit whitelist and transferable ERC20 shares ({{symbol}}). Deposits are open; the key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper; every harvest applies the vault's reward or loss from the keeper's root, mints {{feePercent}} basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment; shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
   "ignoreMethods": [
     "convertToAssets",
     "convertToShares",
@@ -35,7 +35,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "appoint the key manager, fee recipient and access managers, raise the fee by at most a fifth every three days, and upgrade the vault to the next implementation approved by the vault registry, with no delay."
+          "description": "appoint the key manager, deposit data manager, fee recipient and access managers, raise the fee by at most a fifth every three days, and upgrade the vault to the next registry-approved implementation, with no delay."
         }
       ]
     },
@@ -63,7 +63,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "decide which addresses may deposit into and mint osETH from this vault."
+          "description": "decide which addresses may deposit into and mint osToken from this vault."
         }
       ]
     }

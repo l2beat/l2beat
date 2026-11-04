@@ -2,7 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "OsTokenConfig",
   "category": "core",
-  "description": "Collateral parameters for minting osETH against vault shares (loan-to-value, liquidation threshold and bonus, 1e18 = 100%), as a default and per-vault overrides; a threshold of 2^64-1 disables liquidations for that vault. Also names the redeemer allowed to burn osETH positions.",
+  "description": "Collateral parameters for minting osToken against vault shares (loan-to-value, liquidation threshold and bonus, 1e18 = 100%), as a default and per-vault overrides; a threshold of 2^64-1 disables liquidations for that vault. Also names the redeemer allowed to burn osToken positions.",
   "fields": {
     "defaultConfig": {
       "severity": "HIGH",
@@ -44,7 +44,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "burn osETH positions in any vault at the protocol exchange rate and take the matching ETH out of the vault."
+          "description": "burn osToken positions in any vault at the protocol exchange rate and take the matching ETH out of the vault."
         }
       ]
     }

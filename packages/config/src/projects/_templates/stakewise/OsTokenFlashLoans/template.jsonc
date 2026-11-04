@@ -2,5 +2,5 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "OsTokenFlashLoans",
   "category": "core",
-  "description": "Flash loans of osETH: mints up to a fixed amount to the borrower and burns it back within the same transaction, using its minter rights on the token. No admin."
+  "description": "Flash loans of the osToken: mints up to a fixed amount to the borrower and burns it back within the same transaction through its minter right. No admin."
 }

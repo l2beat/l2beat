@@ -2,7 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "OsTokenRedeemer",
   "category": "core",
-  "description": "Exit queue for osETH holders, processed in batches at least {{exitQueueUpdateDelayFormatted}} apart and funded by redeeming osETH positions listed in a Merkle root the owner publishes; anyone can also buy queued osETH with ETH at the protocol rate. Where a redemption fee exists, the vault controller's owner sets it within the deployed ceiling.",
+  "description": "Exit queue for osToken holders, processed in batches at least {{exitQueueUpdateDelayFormatted}} apart and funded by redeeming osToken positions listed in a Merkle root the owner publishes; anyone can also buy queued osToken with the underlying asset at the protocol rate. Where a redemption fee exists, the vault controller's owner sets it within the deployed ceiling.",
   "ignoreMethods": [
     "getExitQueueIndex",
     "getExitQueueMissingAssets",
@@ -38,7 +38,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "publish the Merkle root of osETH positions open to forced redemption and appoint the positions manager, with no delay."
+          "description": "publish the Merkle root of osToken positions open to forced redemption and appoint the positions manager, with no delay."
         }
       ]
     },
@@ -47,7 +47,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "redeem any osETH position listed in the current root at the protocol rate, burning the holder's osETH and moving ETH from the vault into the redemption queue."
+          "description": "redeem any osToken position listed in the current root at the protocol rate, burning the holder's osToken and moving ETH from the vault into the redemption queue."
         }
       ]
     },

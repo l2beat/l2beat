@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "category": "core",
-  "description": "Vault holding shares of other vaults instead of staking itself. Deposits and exits are spread across the sub-vaults by a curator from the curators registry; the admin adds and ejects sub-vaults and picks the curator through the vault's sub-vaults registry. Rewards, losses, the exit queue and osETH minting pass through from the sub-vaults.",
+  "description": "Vault holding shares of other vaults: deposits and exits are spread across the sub-vaults by a curator from the curators registry, the admin manages sub-vaults and curator through the vault's sub-vaults registry, and rewards, losses, exits and osToken minting pass through. Upgrades need the admin and a registry-approved implementation of the next version.",
   "ignoreMethods": [
     "convertToAssets",
     "convertToShares",

@@ -2,7 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "Keeper",
   "category": "gov",
-  "description": "Entry point of the oracle committee. A rewards update stores the Merkle root of per-vault cumulative rewards that vaults harvest and forwards the osETH reward rate to the vault controller; it needs {{rewardsMinOracles}} of {{totalOracles}} oracle signatures, at least {{rewardsDelayFormatted}} since the previous update and a rate at or below a ceiling fixed at deployment. Staking key registrations, exit signatures and consolidations need {{validatorsMinOracles}} oracle signatures over the exact keys and the current beacon deposit root.",
+  "description": "Entry point of the oracle committee: stores the Merkle root of per-vault cumulative rewards that vaults harvest and forwards the osToken reward rate to the vault controller, given {{rewardsMinOracles}} of {{totalOracles}} oracle signatures, at least {{rewardsDelayFormatted}} since the previous update and a rate at or below a ceiling fixed at deployment. Staking key registrations, exit signatures and consolidations need {{validatorsMinOracles}} oracle signatures over the exact keys.",
   "ignoreMethods": ["eip712Domain"],
   "ignoreInWatchMode": [
     "rewardsRoot",
@@ -25,7 +25,7 @@
         "type": "constructorArgs",
         "nameArgs": true
       },
-      "description": "Deployment parameters, including the ceiling on the osETH reward rate (maxAvgRewardPerSecond, 1e18 = 100% of assets per second)."
+      "description": "Deployment parameters, including the ceiling on the osToken reward rate (maxAvgRewardPerSecond, 1e18 = 100% of assets per second)."
     },
     "oracles": {
       "severity": "HIGH",
@@ -43,7 +43,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osETH reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations."
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations."
         }
       ]
     },

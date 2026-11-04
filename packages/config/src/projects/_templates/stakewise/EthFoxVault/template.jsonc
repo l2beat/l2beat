@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "category": "core",
-  "description": "First-generation staking vault with a blocklist and no osETH minting. Anyone not barred deposits ETH for shares; the keys manager publishes the root of staking keys that anyone can register, each registration approved by the oracle quorum in the keeper, with withdrawal credentials pointing at the vault. On every harvest the vault takes its cumulative reward from the keeper's root, mints {{feePercent}} basis points of the gain (fixed at creation) to the fee recipient, applies losses to all shares and pays the exit queue from its spare ETH. Upgrades need the admin and a registry-approved implementation of the next version.",
+  "description": "First-generation vault with a blocklist and no osToken minting: deposits are open to anyone not barred, the keys manager publishes the root of staking keys that anyone can register with oracle approval, withdrawals return to the vault, and every harvest applies the keeper's root, minting {{feePercent}} basis points of gains (fixed at creation) to the fee recipient. Upgrades need the admin and a registry-approved implementation of the next version.",
   "ignoreMethods": [
     "convertToAssets",
     "convertToShares",

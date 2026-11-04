@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "displayName": "osETH",
+  "displayName": "osToken",
   "category": "core",
   "description": "ERC20 liquid staking token ({{symbol}}). Minted and burned by the vault controller and by the registered controllers; ownership is renounced, so that set is frozen, and there is no pause, blacklist or upgrade.",
   "ignoreMethods": ["eip712Domain", "DOMAIN_SEPARATOR", "nonces"],

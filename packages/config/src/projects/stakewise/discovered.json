@@ -1,6 +1,6 @@
 {
   "name": "stakewise",
-  "timestamp": 1793810673,
+  "timestamp": 1793830096,
   "configHash": "0xa4d9110e725ad7f79caf27a554d3a32c9eb36fc6cf22ea1da9e33338fe6825b9",
   "entries": [
     {
@@ -12,7 +12,7 @@
         "0x5b1c7121826072504c934211cc22e537a57af8a71a8e948c58d99d0ad77fbb6b"
       ],
       "proxyType": "immutable",
-      "description": "Holds the osETH position of a staker who enters a vault's exit queue with osETH still minted until the exited ETH is claimed. Escrowed positions can be liquidated above a threshold of 999860000000000000 (1e18 = 100%) with a bonus of 1000068000000000000, or redeemed by the redeemer.",
+      "description": "Holds the osToken position of a staker who leaves a vault's exit queue with osToken still minted, until the exited assets are claimed; escrowed positions can be liquidated above the escrow's own threshold or redeemed by the redeemer.",
       "deployerAddress": "eth:0x229f53eF905545Aa53a721D82DBfE4cEd7AFf65d",
       "sinceTimestamp": 1729761479,
       "sinceBlock": 21034509,
@@ -155,7 +155,7 @@
         "0xc6d6147400ba441e68a4343e386bb360f737390f8f91131b3d16740f69c02055"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Vault holding shares of other vaults instead of staking itself. Deposits and exits are spread across the sub-vaults by a curator from the curators registry; the admin adds and ejects sub-vaults and picks the curator through the vault's sub-vaults registry. Rewards, losses, the exit queue and osETH minting pass through from the sub-vaults.",
+      "description": "Vault holding shares of other vaults: deposits and exits are spread across the sub-vaults by a curator from the curators registry, the admin manages sub-vaults and curator through the vault's sub-vaults registry, and rewards, losses, exits and osToken minting pass through. Upgrades need the admin and a registry-approved implementation of the next version.",
       "ignoreInWatchMode": [
         "totalAssets",
         "totalShares",
@@ -253,7 +253,7 @@
         "0xa3679a992a2e3ac40e5af2a98e7c00274adaf7467f1166cc186347b1a3daaaa7"
       ],
       "proxyType": "immutable",
-      "description": "Permissionless factory: anyone deploys a vault of this type as a proxy on the current implementation and registers it in the vault registry, becoming its admin.",
+      "description": "Open factory: anyone deploys a vault of this type as a proxy on the current implementation, registers it in the vault registry and becomes its admin.",
       "deployerAddress": "eth:0x3da6066FEcF43e94e0Ca78CBAccD5E36FCf69E1d",
       "sinceTimestamp": 1757966987,
       "sinceBlock": 23370770,
@@ -447,7 +447,7 @@
         "0x174cc25e3a537130d0e1bc7cadb0eaf78326296dae1fa996a475116813c44d37"
       ],
       "proxyType": "immutable",
-      "description": "Collateral parameters for minting osETH against vault shares (loan-to-value, liquidation threshold and bonus, 1e18 = 100%), as a default and per-vault overrides; a threshold of 2^64-1 disables liquidations for that vault. Also names the redeemer allowed to burn osETH positions.",
+      "description": "Collateral parameters for minting osToken against vault shares (loan-to-value, liquidation threshold and bonus, 1e18 = 100%), as a default and per-vault overrides; a threshold of 2^64-1 disables liquidations for that vault. Also names the redeemer allowed to burn osToken positions.",
       "deployerAddress": "eth:0x229f53eF905545Aa53a721D82DBfE4cEd7AFf65d",
       "sinceTimestamp": 1720133111,
       "sinceBlock": 20236209,
@@ -591,7 +591,7 @@
         "0xff1daef19dd9c88804e6d951f59590da7faf7494c8233690c421bcaef52b23f5"
       ],
       "proxyType": "immutable",
-      "description": "Share accounting behind osETH. Registered vaults on an approved implementation mint, registered vaults burn; total assets grow at the reward rate written by the keeper, 500 basis points of each increment are minted to the treasury, and the exchange rate is total assets over total shares. Minting stops at a capacity of 20000000000000000000000000 wei.",
+      "description": "Share accounting behind the osToken: registered vaults on an approved implementation mint and registered vaults burn; total assets grow at the reward rate written by the keeper, 500 basis points of each increment go to the treasury, and the exchange rate is total assets over total shares, with minting capped at 20,000,000 units of total assets.",
       "ignoreInWatchMode": [
         "avgRewardPerSecond",
         "totalAssets",
@@ -605,12 +605,13 @@
         "$immutable": true,
         "avgRewardPerSecond": 738457129,
         "capacity": "20000000000000000000000000",
-        "cumulativeFeePerShare": "1004163519256769356",
+        "capacityFormatted": "20,000,000",
+        "cumulativeFeePerShare": "1004164236568329926",
         "feePercent": 500,
         "keeper": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
         "owner": "eth:0x144a98cb1CdBb23610501fE6108858D9B7D24934",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "totalAssets": "160469482862449597768075",
+        "totalAssets": "160471669942211874281098",
         "totalShares": "148264234230021124674486",
         "treasury": "eth:0x144a98cb1CdBb23610501fE6108858D9B7D24934"
       },
@@ -619,13 +620,14 @@
         "keeper": { "severity": "HIGH" },
         "feePercent": {
           "severity": "HIGH",
-          "description": "Basis points of osETH rewards minted to the treasury."
+          "description": "Basis points of osToken rewards minted to the treasury."
         },
         "capacity": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x2A261e60FB14586B474C208b1B7AC6D0f5000306": "OsTokenVaultController"
       },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }],
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -648,7 +650,7 @@
         "0xc6d6147400ba441e68a4343e386bb360f737390f8f91131b3d16740f69c02055"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Vault holding shares of other vaults instead of staking itself. Deposits and exits are spread across the sub-vaults by a curator from the curators registry; the admin adds and ejects sub-vaults and picks the curator through the vault's sub-vaults registry. Rewards, losses, the exit queue and osETH minting pass through from the sub-vaults.",
+      "description": "Vault holding shares of other vaults: deposits and exits are spread across the sub-vaults by a curator from the curators registry, the admin manages sub-vaults and curator through the vault's sub-vaults registry, and rewards, losses, exits and osToken minting pass through. Upgrades need the admin and a registry-approved implementation of the next version.",
       "ignoreInWatchMode": [
         "totalAssets",
         "totalShares",
@@ -717,7 +719,7 @@
         "0xa3679a992a2e3ac40e5af2a98e7c00274adaf7467f1166cc186347b1a3daaaa7"
       ],
       "proxyType": "immutable",
-      "description": "Permissionless factory: anyone deploys a vault of this type as a proxy on the current implementation and registers it in the vault registry, becoming its admin.",
+      "description": "Open factory: anyone deploys a vault of this type as a proxy on the current implementation, registers it in the vault registry and becomes its admin.",
       "deployerAddress": "eth:0x3da6066FEcF43e94e0Ca78CBAccD5E36FCf69E1d",
       "sinceTimestamp": 1757966987,
       "sinceBlock": 23370770,
@@ -744,7 +746,7 @@
         "0x1b9a875ae5895d95c345f56358e7445cfb7f326d19cf1e88e0372de0d007768e"
       ],
       "proxyType": "immutable",
-      "description": "List of vaults, approved vault implementations and factories. Registered factories add the vaults they create; a vault admin can only upgrade to an approved implementation of the next version, and only vaults on an approved implementation can mint osETH.",
+      "description": "List of vaults, approved vault implementations and factories. Registered factories add the vaults they create; a vault admin can only upgrade to an approved implementation of the next version, and only vaults on an approved implementation can mint osToken.",
       "deployerAddress": "eth:0x229f53eF905545Aa53a721D82DBfE4cEd7AFf65d",
       "sinceTimestamp": 1698754931,
       "sinceBlock": 18470079,
@@ -845,7 +847,7 @@
         "0x6b057da682f84df132cf085947d4a58808bd1caf7df71206383313b251975726"
       ],
       "proxyType": "immutable",
-      "description": "Permissionless factory: anyone deploys a vault of this type as a proxy on the current implementation and registers it in the vault registry, becoming its admin.",
+      "description": "Open factory: anyone deploys a vault of this type as a proxy on the current implementation, registers it in the vault registry and becomes its admin.",
       "deployerAddress": "eth:0xFF2B6d2d5c205b99E2e6f607B6aFA3127B9957B6",
       "sinceTimestamp": 1781821343,
       "sinceBlock": 25347405,
@@ -868,7 +870,7 @@
         "0xbaba151d72eba765e9bc1cbbb7d340ac9e39006df19a04c99fb8ae2ad29a6a09"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Staking vault with a deposit whitelist. Anyone deposits ETH for shares; the key manager registers staking keys whose withdrawal credentials point at the vault, each registration approved by the oracle quorum in the keeper. On every harvest the vault takes its cumulative reward from the keeper's root, mints 300 basis points of the gain to the fee recipient, applies losses to all shares and pays the exit queue from its spare ETH; queued exits are claimable after a delay fixed at deployment. Shareholders can mint osETH against their shares up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
+      "description": "Staking vault with a deposit whitelist. Deposits are open; the key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper; every harvest applies the vault's reward or loss from the keeper's root, mints 300 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment; shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
       "ignoreInWatchMode": [
         "totalAssets",
         "totalShares",
@@ -960,7 +962,7 @@
         "0xc5866674597add5381d45fa4099e0d58c8c3bc82c9395468a5fd1f015713e424"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Staking vault. Anyone deposits ETH for shares; the key manager registers staking keys whose withdrawal credentials point at the vault, each registration approved by the oracle quorum in the keeper. On every harvest the vault takes its cumulative reward from the keeper's root, mints 800 basis points of the gain to the fee recipient, applies losses to all shares and pays the exit queue from its spare ETH; queued exits are claimable after a delay fixed at deployment. Shareholders can mint osETH against their shares up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
+      "description": "Staking vault. Deposits are open; the key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper; every harvest applies the vault's reward or loss from the keeper's root, mints 800 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment; shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
       "ignoreInWatchMode": [
         "totalAssets",
         "totalShares",
@@ -1019,7 +1021,7 @@
         "0xa3679a992a2e3ac40e5af2a98e7c00274adaf7467f1166cc186347b1a3daaaa7"
       ],
       "proxyType": "immutable",
-      "description": "Permissionless factory: anyone deploys a vault of this type as a proxy on the current implementation and registers it in the vault registry, becoming its admin.",
+      "description": "Open factory: anyone deploys a vault of this type as a proxy on the current implementation, registers it in the vault registry and becomes its admin.",
       "deployerAddress": "eth:0x3da6066FEcF43e94e0Ca78CBAccD5E36FCf69E1d",
       "sinceTimestamp": 1757966987,
       "sinceBlock": 23370770,
@@ -1048,7 +1050,7 @@
         "0xef8b92adaf13669b8b6120b657f2262ad0ccccf566456a067dbc6c916f94fa26"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "First-generation staking vault with a blocklist and no osETH minting. Anyone not barred deposits ETH for shares; the keys manager publishes the root of staking keys that anyone can register, each registration approved by the oracle quorum in the keeper, with withdrawal credentials pointing at the vault. On every harvest the vault takes its cumulative reward from the keeper's root, mints 1500 basis points of the gain (fixed at creation) to the fee recipient, applies losses to all shares and pays the exit queue from its spare ETH. Upgrades need the admin and a registry-approved implementation of the next version.",
+      "description": "First-generation vault with a blocklist and no osToken minting: deposits are open to anyone not barred, the keys manager publishes the root of staking keys that anyone can register with oracle approval, withdrawals return to the vault, and every harvest applies the keeper's root, minting 1500 basis points of gains (fixed at creation) to the fee recipient. Upgrades need the admin and a registry-approved implementation of the next version.",
       "ignoreInWatchMode": [
         "totalAssets",
         "totalShares",
@@ -1077,9 +1079,9 @@
         "feeRecipient": "eth:0x919F14E6A47890FCdf6A365E04E116C0DEab9178",
         "keysManager": "eth:0x9e83c6Bf5540f4296D8532e79636993e9eAeD338",
         "mevEscrow": "eth:0x2577609ab927EF4a2Cee449e36cFe156c5aA43B8",
-        "queuedShares": "5392041587490237789",
-        "totalAssets": "76300967433908829886387",
-        "totalShares": "71874859677213354273781",
+        "queuedShares": "55094252335069810037",
+        "totalAssets": "76310388265619646092600",
+        "totalShares": "71883734020226685950785",
         "validatorIndex": 0,
         "validatorsRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "version": 1
@@ -1131,7 +1133,7 @@
         "0xa3679a992a2e3ac40e5af2a98e7c00274adaf7467f1166cc186347b1a3daaaa7"
       ],
       "proxyType": "immutable",
-      "description": "Permissionless factory: anyone deploys a vault of this type as a proxy on the current implementation and registers it in the vault registry, becoming its admin.",
+      "description": "Open factory: anyone deploys a vault of this type as a proxy on the current implementation, registers it in the vault registry and becomes its admin.",
       "deployerAddress": "eth:0x3da6066FEcF43e94e0Ca78CBAccD5E36FCf69E1d",
       "sinceTimestamp": 1757966987,
       "sinceBlock": 23370770,
@@ -1175,7 +1177,7 @@
         "0xbaba151d72eba765e9bc1cbbb7d340ac9e39006df19a04c99fb8ae2ad29a6a09"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Staking vault with a deposit whitelist. Anyone deposits ETH for shares; the key manager registers staking keys whose withdrawal credentials point at the vault, each registration approved by the oracle quorum in the keeper. On every harvest the vault takes its cumulative reward from the keeper's root, mints 100 basis points of the gain to the fee recipient, applies losses to all shares and pays the exit queue from its spare ETH; queued exits are claimable after a delay fixed at deployment. Shareholders can mint osETH against their shares up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
+      "description": "Staking vault with a deposit whitelist. Deposits are open; the key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper; every harvest applies the vault's reward or loss from the keeper's root, mints 100 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment; shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
       "ignoreInWatchMode": [
         "totalAssets",
         "totalShares",
@@ -1252,7 +1254,7 @@
         "0xd8424f563710fd218a52ad55ab77088fa5db431751d43087c7a5d15145a85ab9"
       ],
       "proxyType": "immutable",
-      "description": "Entry point of the oracle committee. A rewards update stores the Merkle root of per-vault cumulative rewards that vaults harvest and forwards the osETH reward rate to the vault controller; it needs 6 of 11 oracle signatures, at least 12h since the previous update and a rate at or below a ceiling fixed at deployment. Staking key registrations, exit signatures and consolidations need 6 oracle signatures over the exact keys and the current beacon deposit root.",
+      "description": "Entry point of the oracle committee: stores the Merkle root of per-vault cumulative rewards that vaults harvest and forwards the osToken reward rate to the vault controller, given 6 of 11 oracle signatures, at least 12h since the previous update and a rate at or below a ceiling fixed at deployment. Staking key registrations, exit signatures and consolidations need 6 oracle signatures over the exact keys.",
       "ignoreInWatchMode": [
         "rewardsRoot",
         "prevRewardsRoot",
@@ -1301,7 +1303,7 @@
       },
       "fieldMeta": {
         "constructorArgs": {
-          "description": "Deployment parameters, including the ceiling on the osETH reward rate (maxAvgRewardPerSecond, 1e18 = 100% of assets per second)."
+          "description": "Deployment parameters, including the ceiling on the osToken reward rate (maxAvgRewardPerSecond, 1e18 = 100% of assets per second)."
         },
         "oracles": {
           "severity": "HIGH",
@@ -1361,7 +1363,7 @@
         "0xa3679a992a2e3ac40e5af2a98e7c00274adaf7467f1166cc186347b1a3daaaa7"
       ],
       "proxyType": "immutable",
-      "description": "Permissionless factory: anyone deploys a vault of this type as a proxy on the current implementation and registers it in the vault registry, becoming its admin.",
+      "description": "Open factory: anyone deploys a vault of this type as a proxy on the current implementation, registers it in the vault registry and becomes its admin.",
       "deployerAddress": "eth:0x3da6066FEcF43e94e0Ca78CBAccD5E36FCf69E1d",
       "sinceTimestamp": 1757966987,
       "sinceBlock": 23370770,
@@ -1402,16 +1404,16 @@
         "$immutable": true,
         "decimals": 18,
         "description": "osETH/ETH",
-        "getRate": "1082320923153273241",
-        "latestAnswer": "1082320923153273241",
+        "getRate": "1082335674382884581",
+        "latestAnswer": "1082335674382884581",
         "latestRoundData": {
           "roundId": 0,
-          "answer": "1082320923153273241",
-          "startedAt": 1793810663,
-          "updatedAt": 1793810663,
+          "answer": "1082335674382884581",
+          "startedAt": 1793830091,
+          "updatedAt": 1793830091,
           "answeredInRound": 0
         },
-        "latestTimestamp": 1793810663,
+        "latestTimestamp": 1793830091,
         "osTokenVaultController": "eth:0x2A261e60FB14586B474C208b1B7AC6D0f5000306",
         "version": 0
       },
@@ -1496,7 +1498,7 @@
         "0x6b057da682f84df132cf085947d4a58808bd1caf7df71206383313b251975726"
       ],
       "proxyType": "immutable",
-      "description": "Permissionless factory: anyone deploys a vault of this type as a proxy on the current implementation and registers it in the vault registry, becoming its admin.",
+      "description": "Open factory: anyone deploys a vault of this type as a proxy on the current implementation, registers it in the vault registry and becomes its admin.",
       "deployerAddress": "eth:0xFF2B6d2d5c205b99E2e6f607B6aFA3127B9957B6",
       "sinceTimestamp": 1781821343,
       "sinceBlock": 25347405,
@@ -1568,7 +1570,7 @@
         "0xa3679a992a2e3ac40e5af2a98e7c00274adaf7467f1166cc186347b1a3daaaa7"
       ],
       "proxyType": "immutable",
-      "description": "Permissionless factory: anyone deploys a vault of this type as a proxy on the current implementation and registers it in the vault registry, becoming its admin.",
+      "description": "Open factory: anyone deploys a vault of this type as a proxy on the current implementation, registers it in the vault registry and becomes its admin.",
       "deployerAddress": "eth:0x3da6066FEcF43e94e0Ca78CBAccD5E36FCf69E1d",
       "sinceTimestamp": 1757966987,
       "sinceBlock": 23370770,
@@ -1675,7 +1677,7 @@
         "0xae5afabaeeb6c8132cf54d016257550d536b9d4aedb3defd56874bd98ae47b0b"
       ],
       "proxyType": "immutable",
-      "description": "Exit queue for osETH holders, processed in batches at least 12h apart and funded by redeeming osETH positions listed in a Merkle root the owner publishes; anyone can also buy queued osETH with ETH at the protocol rate. Where a redemption fee exists, the vault controller's owner sets it within the deployed ceiling.",
+      "description": "Exit queue for osToken holders, processed in batches at least 12h apart and funded by redeeming osToken positions listed in a Merkle root the owner publishes; anyone can also buy queued osToken with the underlying asset at the protocol rate. Where a redemption fee exists, the vault controller's owner sets it within the deployed ceiling.",
       "ignoreInWatchMode": [
         "getExitQueueData",
         "getExitQueueCumulativeTickets",
@@ -1781,7 +1783,7 @@
         "0xc5866674597add5381d45fa4099e0d58c8c3bc82c9395468a5fd1f015713e424"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Staking vault. Anyone deposits ETH for shares; the key manager registers staking keys whose withdrawal credentials point at the vault, each registration approved by the oracle quorum in the keeper. On every harvest the vault takes its cumulative reward from the keeper's root, mints 500 basis points of the gain to the fee recipient, applies losses to all shares and pays the exit queue from its spare ETH; queued exits are claimable after a delay fixed at deployment. Shareholders can mint osETH against their shares up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
+      "description": "Staking vault. Deposits are open; the key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper; every harvest applies the vault's reward or loss from the keeper's root, mints 500 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment; shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
       "ignoreInWatchMode": [
         "totalAssets",
         "totalShares",
@@ -1857,7 +1859,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Finoa Consensus Services",
+      "name": "Finoa",
       "address": "eth:0xa9Ccb8ba942C45F6Fa786F936679812591dA012a",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1872,7 +1874,7 @@
         "0xb43f498adba2c5f21ad1203ee178eb326cc91f488ed621a00f65159ec8f094bf"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Staking vault that absorbed the StakeWise V2 pool: V2 reward token holders migrate by burning their tokens for shares, and the V2 pool escrow that still receives the legacy stakes' withdrawals is owned by and counted into this vault. Anyone deposits ETH for shares; the key manager registers staking keys whose withdrawal credentials point at the vault, each registration approved by the oracle quorum in the keeper. On every harvest the vault takes its cumulative reward from the keeper's root, mints 500 basis points of the gain to the fee recipient, applies losses to all shares and pays the exit queue from its spare ETH; queued exits are claimable after a delay fixed at deployment. Shareholders can mint osETH against their shares up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
+      "description": "Staking vault that absorbed the StakeWise V2 pool: V2 reward-token holders migrate by burning their tokens for shares, and the V2 pool escrow that still receives the legacy stakes' withdrawals is owned by and counted into this vault. Deposits are open; the key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper; every harvest applies the vault's reward or loss from the keeper's root, mints 500 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment; shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
       "ignoreInWatchMode": [
         "totalAssets",
         "totalShares",
@@ -1987,7 +1989,7 @@
         "0x5d9a3ec17bc18b3c7fad330a84261b55ee23ed65517e5ef47b9633891eee885f"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Staking vault with a deposit whitelist and transferable ERC20 shares (ccmETH). Anyone deposits ETH for shares; the key manager registers staking keys whose withdrawal credentials point at the vault, each registration approved by the oracle quorum in the keeper. On every harvest the vault takes its cumulative reward from the keeper's root, mints 0 basis points of the gain to the fee recipient, applies losses to all shares and pays the exit queue from its spare ETH; queued exits are claimable after a delay fixed at deployment. Shareholders can mint osETH against their shares up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
+      "description": "Staking vault with a deposit whitelist and transferable ERC20 shares (ccmETH). Deposits are open; the key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper; every harvest applies the vault's reward or loss from the keeper's root, mints 0 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment; shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
       "ignoreInWatchMode": [
         "totalAssets",
         "totalShares",
@@ -2053,7 +2055,7 @@
         "0x331b9b0d766fc4f50ca4776a9a9c1f73634f5a1cd5ebc61fca29ce6666a993bb"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Staking vault with a deposit whitelist. Anyone deposits ETH for shares; the key manager registers staking keys whose withdrawal credentials point at the vault, each registration approved by the oracle quorum in the keeper. On every harvest the vault takes its cumulative reward from the keeper's root, mints 500 basis points of the gain to the fee recipient, applies losses to all shares and pays the exit queue from its spare ETH; queued exits are claimable after a delay fixed at deployment. Shareholders can mint osETH against their shares up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
+      "description": "Staking vault with a deposit whitelist. Deposits are open; the key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper; every harvest applies the vault's reward or loss from the keeper's root, mints 500 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment; shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
       "ignoreInWatchMode": [
         "totalAssets",
         "totalShares",
@@ -2183,7 +2185,7 @@
         "0x4856e1b74e2012827b5d8a5c978f20262eb707c1b6b90c0bdb3e92dd58430844"
       ],
       "proxyType": "immutable",
-      "description": "Exit queue for osETH holders, processed in batches at least 12h apart and funded by redeeming osETH positions listed in a Merkle root the owner publishes; anyone can also buy queued osETH with ETH at the protocol rate. Where a redemption fee exists, the vault controller's owner sets it within the deployed ceiling.",
+      "description": "Exit queue for osToken holders, processed in batches at least 12h apart and funded by redeeming osToken positions listed in a Merkle root the owner publishes; anyone can also buy queued osToken with the underlying asset at the protocol rate. Where a redemption fee exists, the vault controller's owner sets it within the deployed ceiling.",
       "ignoreInWatchMode": [
         "getExitQueueData",
         "getExitQueueCumulativeTickets",
@@ -2264,7 +2266,7 @@
         "0x6b057da682f84df132cf085947d4a58808bd1caf7df71206383313b251975726"
       ],
       "proxyType": "immutable",
-      "description": "Permissionless factory: anyone deploys a vault of this type as a proxy on the current implementation and registers it in the vault registry, becoming its admin.",
+      "description": "Open factory: anyone deploys a vault of this type as a proxy on the current implementation, registers it in the vault registry and becomes its admin.",
       "deployerAddress": "eth:0xFF2B6d2d5c205b99E2e6f607B6aFA3127B9957B6",
       "sinceTimestamp": 1781821343,
       "sinceBlock": 25347405,
@@ -2286,7 +2288,7 @@
         "0x6b057da682f84df132cf085947d4a58808bd1caf7df71206383313b251975726"
       ],
       "proxyType": "immutable",
-      "description": "Permissionless factory: anyone deploys a vault of this type as a proxy on the current implementation and registers it in the vault registry, becoming its admin.",
+      "description": "Open factory: anyone deploys a vault of this type as a proxy on the current implementation, registers it in the vault registry and becomes its admin.",
       "deployerAddress": "eth:0xFF2B6d2d5c205b99E2e6f607B6aFA3127B9957B6",
       "sinceTimestamp": 1781821343,
       "sinceBlock": 25347405,
@@ -2309,7 +2311,7 @@
         "0xc5866674597add5381d45fa4099e0d58c8c3bc82c9395468a5fd1f015713e424"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Staking vault. Anyone deposits ETH for shares; the key manager registers staking keys whose withdrawal credentials point at the vault, each registration approved by the oracle quorum in the keeper. On every harvest the vault takes its cumulative reward from the keeper's root, mints 500 basis points of the gain to the fee recipient, applies losses to all shares and pays the exit queue from its spare ETH; queued exits are claimable after a delay fixed at deployment. Shareholders can mint osETH against their shares up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
+      "description": "Staking vault. Deposits are open; the key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper; every harvest applies the vault's reward or loss from the keeper's root, mints 500 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment; shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
       "ignoreInWatchMode": [
         "totalAssets",
         "totalShares",
@@ -2356,8 +2358,8 @@
         "feePercent": 500,
         "feeRecipient": "eth:0xA54fBd150518B6131E15B1514466d89d08bdd54c",
         "mevEscrow": "eth:0x1d80A09B60f4A65dfb8Dd3035b1812DCa95FFfe4",
-        "totalAssets": "58920776407393710324295",
-        "totalShares": "53877118032186969631049",
+        "totalAssets": "58999717714631304475917",
+        "totalShares": "53949301910047772716446",
         "validatorsManager": "eth:0x624D55aB24b490cE416Ee1F7EE1468527076639f",
         "version": 5
       },
@@ -2388,7 +2390,7 @@
         "0x41e9dcdb2b3ce7bfefef8f508393d4abc475fae1190f98c28d68bf7345ce676d"
       ],
       "proxyType": "immutable",
-      "description": "Flash loans of osETH: mints up to a fixed amount to the borrower and burns it back within the same transaction, using its minter rights on the token. No admin.",
+      "description": "Flash loans of the osToken: mints up to a fixed amount to the borrower and burns it back within the same transaction through its minter right. No admin.",
       "deployerAddress": "eth:0x229f53eF905545Aa53a721D82DBfE4cEd7AFf65d",
       "sinceTimestamp": 1729761503,
       "sinceBlock": 21034511,
@@ -4493,7 +4495,7 @@
     "stakewise/OsTokenConfig": "0xa8cd23b9bcab33006ae71d98b91956a5042e1e5c7ad87981b4b35510460bd43d",
     "stakewise/OsTokenFlashLoans": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "stakewise/OsTokenRedeemer": "0x43891148ae0e677dc6433715a5e761a4aedce9bcd2ab7e4b7f1e194eb7832aac",
-    "stakewise/OsTokenVaultController": "0xf9358f900482d897b6fc91ef9d0750b871c3de63e804df16dd2e8309ad7dd8c7",
+    "stakewise/OsTokenVaultController": "0x7c14d40bcb3ea6ba6375d92a63971aa9ed86d3c2734f1b7392619e0acf9ed36f",
     "stakewise/OsTokenVaultEscrow": "0x6a0fb88612a35ade22b02d19ab5d798cd933b1f7514a79879036e3a4588a1547",
     "stakewise/OwnMevEscrow": "0x0dab5bbbe2a0e5992d2952393046b2a6e7b4c90e6d1b9fe132475805d5f5d2e1",
     "stakewise/PriceFeed": "0xd2fc722cf8dc5fdb0cbe20902745c9c449c61558d7365e401884b07d77f233a3",
@@ -4503,8 +4505,8 @@
     "stakewise/VaultFactory": "0xb57253ef298ddd93d314ff0fd82613b2e012f4bf9e00501a63d73cae35416264",
     "stakewise/VaultsRegistry": "0x0dc5166eb04e9bd6c2575f359c35d5f5c75e4c33510f55c7361d7dc23a75e74a"
   },
-  "usedBlockNumbers": { "ethereum": 26342725 },
-  "permissionsConfigHash": "0x285868ad47c71c5e9b4cfd304a303cfd40855afc6054ef62bae1be71376f5334",
+  "usedBlockNumbers": { "ethereum": 26344339 },
+  "permissionsConfigHash": "0x3ce151bb1d322f46064386869d7ccc33a70a0b57821394c098922b0aacc03259",
   "permissions": {
     "eth:0x0a95D62429399b08841f5dCDC5579Ca8f7794E96": {
       "receivedPermissions": [
@@ -4539,7 +4541,7 @@
         {
           "permission": "interact",
           "from": "eth:0x3a0008a588772446f6e656133C2D5029CC4FC20E",
-          "description": "approve or remove the vault implementations that vault admins may upgrade to, add or remove vault factories, and register vaults directly, with no delay.",
+          "description": "approve or remove the vault implementations that vault admins may upgrade to, add or remove vault factories, register vaults directly, and accept a meta vault as a sub-vault of another meta vault, with no delay.",
           "role": ".owner"
         },
         {
@@ -4567,13 +4569,13 @@
         {
           "permission": "interact",
           "from": "eth:0x663a8C9e88c5cdc565Cc4bF0b2BEC8d862D744a6",
-          "description": "decide which addresses may deposit into and mint osETH from this vault.",
+          "description": "decide which addresses may deposit into and mint osToken from this vault.",
           "role": ".whitelister"
         },
         {
           "permission": "interact",
           "from": "eth:0xB144B3b2D2a7d82e53BC70659Be03Bcd21CD94e8",
-          "description": "decide which addresses may deposit into and mint osETH from this vault.",
+          "description": "decide which addresses may deposit into and mint osToken from this vault.",
           "role": ".whitelister"
         }
       ]
@@ -4583,7 +4585,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osETH reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations.",
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations.",
           "role": ".oracles"
         }
       ]
@@ -4603,7 +4605,7 @@
         {
           "permission": "interact",
           "from": "eth:0xB266274F55e784689e97b7E363B0666d92e6305B",
-          "description": "appoint the key manager, fee recipient and access managers, raise the fee by at most a fifth every three days, and upgrade the vault to the next implementation approved by the vault registry, with no delay.",
+          "description": "appoint the key manager, deposit data manager, fee recipient and access managers, raise the fee by at most a fifth every three days, and upgrade the vault to the next registry-approved implementation, with no delay.",
           "role": ".admin",
           "via": [
             { "address": "eth:0x9CE3027b2144e02ACD61bE66E81D48aE482A5222" }
@@ -4612,7 +4614,7 @@
         {
           "permission": "interact",
           "from": "eth:0xB266274F55e784689e97b7E363B0666d92e6305B",
-          "description": "decide which addresses may deposit into and mint osETH from this vault.",
+          "description": "decide which addresses may deposit into and mint osToken from this vault.",
           "role": ".whitelister",
           "via": [
             { "address": "eth:0x9CE3027b2144e02ACD61bE66E81D48aE482A5222" }
@@ -4625,13 +4627,13 @@
         {
           "permission": "interact",
           "from": "eth:0x663a8C9e88c5cdc565Cc4bF0b2BEC8d862D744a6",
-          "description": "appoint the key manager, fee recipient and access managers, raise the fee by at most a fifth every three days, and upgrade the vault to the next implementation approved by the vault registry, with no delay.",
+          "description": "appoint the key manager, deposit data manager, fee recipient and access managers, raise the fee by at most a fifth every three days, and upgrade the vault to the next registry-approved implementation, with no delay.",
           "role": ".admin"
         },
         {
           "permission": "interact",
           "from": "eth:0xB144B3b2D2a7d82e53BC70659Be03Bcd21CD94e8",
-          "description": "appoint the key manager, fee recipient and access managers, raise the fee by at most a fifth every three days, and upgrade the vault to the next implementation approved by the vault registry, with no delay.",
+          "description": "appoint the key manager, deposit data manager, fee recipient and access managers, raise the fee by at most a fifth every three days, and upgrade the vault to the next registry-approved implementation, with no delay.",
           "role": ".admin"
         }
       ]
@@ -4653,13 +4655,13 @@
         {
           "permission": "interact",
           "from": "eth:0x9Fc8C7F3C1ff6d0DF39EcB5870884d59777Ea2Bb",
-          "description": "publish the Merkle root of osETH positions open to forced redemption and appoint the positions manager, with no delay.",
+          "description": "publish the Merkle root of osToken positions open to forced redemption and appoint the positions manager, with no delay.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "eth:0xc43A7b16A7a167c0318390Cba16787C11e9e1FD0",
-          "description": "publish the Merkle root of osETH positions open to forced redemption and appoint the positions manager, with no delay.",
+          "description": "publish the Merkle root of osToken positions open to forced redemption and appoint the positions manager, with no delay.",
           "role": ".owner"
         }
       ]
@@ -4689,7 +4691,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osETH reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations.",
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations.",
           "role": ".oracles"
         }
       ]
@@ -4709,7 +4711,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osETH reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations.",
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations.",
           "role": ".oracles"
         }
       ]
@@ -4719,7 +4721,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osETH reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations.",
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations.",
           "role": ".oracles"
         }
       ]
@@ -4739,7 +4741,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osETH reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations.",
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations.",
           "role": ".oracles"
         }
       ]
@@ -4749,7 +4751,7 @@
         {
           "permission": "interact",
           "from": "eth:0xB266274F55e784689e97b7E363B0666d92e6305B",
-          "description": "appoint the key manager, fee recipient and access managers, raise the fee by at most a fifth every three days, and upgrade the vault to the next implementation approved by the vault registry, with no delay.",
+          "description": "appoint the key manager, deposit data manager, fee recipient and access managers, raise the fee by at most a fifth every three days, and upgrade the vault to the next registry-approved implementation, with no delay.",
           "role": ".admin",
           "via": [
             { "address": "eth:0x9CE3027b2144e02ACD61bE66E81D48aE482A5222" }
@@ -4758,7 +4760,7 @@
         {
           "permission": "interact",
           "from": "eth:0xB266274F55e784689e97b7E363B0666d92e6305B",
-          "description": "decide which addresses may deposit into and mint osETH from this vault.",
+          "description": "decide which addresses may deposit into and mint osToken from this vault.",
           "role": ".whitelister",
           "via": [
             { "address": "eth:0x9CE3027b2144e02ACD61bE66E81D48aE482A5222" }
@@ -4771,7 +4773,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osETH reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations.",
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations.",
           "role": ".oracles"
         }
       ]
@@ -4781,7 +4783,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osETH reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations.",
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations.",
           "role": ".oracles"
         }
       ]
@@ -4791,7 +4793,7 @@
         {
           "permission": "interact",
           "from": "eth:0x47fd7ac6C6bc73F2D419a18D0692F37Df3f48034",
-          "description": "appoint the key manager, fee recipient and access managers, raise the fee by at most a fifth every three days, and upgrade the vault to the next implementation approved by the vault registry, with no delay.",
+          "description": "appoint the key manager, deposit data manager, fee recipient and access managers, raise the fee by at most a fifth every three days, and upgrade the vault to the next registry-approved implementation, with no delay.",
           "role": ".admin"
         }
       ]
@@ -4801,7 +4803,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osETH reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations.",
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations.",
           "role": ".oracles"
         }
       ]
@@ -4811,7 +4813,7 @@
         {
           "permission": "interact",
           "from": "eth:0x4AafdB911085dd7703e57951279744DD713f744d",
-          "description": "appoint the key manager, fee recipient and access managers, raise the fee by at most a fifth every three days, and upgrade the vault to the next implementation approved by the vault registry, with no delay.",
+          "description": "appoint the key manager, deposit data manager, fee recipient and access managers, raise the fee by at most a fifth every three days, and upgrade the vault to the next registry-approved implementation, with no delay.",
           "role": ".admin"
         }
       ]
@@ -4821,7 +4823,7 @@
         {
           "permission": "interact",
           "from": "eth:0xA8cB2e35F594b308726b242136f0a8995BF19E97",
-          "description": "appoint the key manager, fee recipient and access managers, raise the fee by at most a fifth every three days, and upgrade the vault to the next implementation approved by the vault registry, with no delay.",
+          "description": "appoint the key manager, deposit data manager, fee recipient and access managers, raise the fee by at most a fifth every three days, and upgrade the vault to the next registry-approved implementation, with no delay.",
           "role": ".admin"
         }
       ]
@@ -4831,13 +4833,13 @@
         {
           "permission": "interact",
           "from": "eth:0xB266274F55e784689e97b7E363B0666d92e6305B",
-          "description": "appoint the key manager, fee recipient and access managers, raise the fee by at most a fifth every three days, and upgrade the vault to the next implementation approved by the vault registry, with no delay.",
+          "description": "appoint the key manager, deposit data manager, fee recipient and access managers, raise the fee by at most a fifth every three days, and upgrade the vault to the next registry-approved implementation, with no delay.",
           "role": ".admin"
         },
         {
           "permission": "interact",
           "from": "eth:0xB266274F55e784689e97b7E363B0666d92e6305B",
-          "description": "decide which addresses may deposit into and mint osETH from this vault.",
+          "description": "decide which addresses may deposit into and mint osToken from this vault.",
           "role": ".whitelister"
         }
       ]
@@ -4863,7 +4865,7 @@
         {
           "permission": "interact",
           "from": "eth:0xe6d8d8aC54461b1C5eD15740EEe322043F696C08",
-          "description": "appoint the key manager, fee recipient and access managers, raise the fee by at most a fifth every three days, and upgrade the vault to the next implementation approved by the vault registry, with no delay.",
+          "description": "appoint the key manager, deposit data manager, fee recipient and access managers, raise the fee by at most a fifth every three days, and upgrade the vault to the next registry-approved implementation, with no delay.",
           "role": ".admin"
         }
       ]
@@ -4910,7 +4912,7 @@
         {
           "permission": "interact",
           "from": "eth:0x3a0008a588772446f6e656133C2D5029CC4FC20E",
-          "description": "approve or remove the vault implementations that vault admins may upgrade to, add or remove vault factories, and register vaults directly, with no delay.",
+          "description": "approve or remove the vault implementations that vault admins may upgrade to, add or remove vault factories, register vaults directly, and accept a meta vault as a sub-vault of another meta vault, with no delay.",
           "role": ".owner",
           "via": [
             { "address": "eth:0x144a98cb1CdBb23610501fE6108858D9B7D24934" }
@@ -4967,7 +4969,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osETH reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations.",
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations.",
           "role": ".oracles"
         }
       ]
@@ -4987,7 +4989,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osETH reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations.",
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations.",
           "role": ".oracles"
         }
       ]
@@ -4997,7 +4999,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osETH reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations.",
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations.",
           "role": ".oracles"
         }
       ]
@@ -5007,7 +5009,7 @@
         {
           "permission": "interact",
           "from": "eth:0x287d1e2A8dE183A8bf8f2b09Fa1340fBd766eb59",
-          "description": "burn osETH positions in any vault at the protocol exchange rate and take the matching ETH out of the vault.",
+          "description": "burn osToken positions in any vault at the protocol exchange rate and take the matching ETH out of the vault.",
           "role": ".redeemer"
         }
       ]
@@ -5027,7 +5029,7 @@
         {
           "permission": "interact",
           "from": "eth:0xAC0F906E433d58FA868F936E8A43230473652885",
-          "description": "appoint the key manager, fee recipient and access managers, raise the fee by at most a fifth every three days, and upgrade the vault to the next implementation approved by the vault registry, with no delay.",
+          "description": "appoint the key manager, deposit data manager, fee recipient and access managers, raise the fee by at most a fifth every three days, and upgrade the vault to the next registry-approved implementation, with no delay.",
           "role": ".admin"
         }
       ]
@@ -5037,13 +5039,13 @@
         {
           "permission": "interact",
           "from": "eth:0x9Fc8C7F3C1ff6d0DF39EcB5870884d59777Ea2Bb",
-          "description": "redeem any osETH position listed in the current root at the protocol rate, burning the holder's osETH and moving ETH from the vault into the redemption queue.",
+          "description": "redeem any osToken position listed in the current root at the protocol rate, burning the holder's osToken and moving ETH from the vault into the redemption queue.",
           "role": ".positionsManager"
         },
         {
           "permission": "interact",
           "from": "eth:0xc43A7b16A7a167c0318390Cba16787C11e9e1FD0",
-          "description": "redeem any osETH position listed in the current root at the protocol rate, burning the holder's osETH and moving ETH from the vault into the redemption queue.",
+          "description": "redeem any osToken position listed in the current root at the protocol rate, burning the holder's osToken and moving ETH from the vault into the redemption queue.",
           "role": ".positionsManager"
         }
       ]
