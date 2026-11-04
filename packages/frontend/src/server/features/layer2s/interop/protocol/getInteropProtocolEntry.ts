@@ -69,7 +69,7 @@ export async function getInteropProtocolEntry(
       ? getProjectLinks(project.display.links)
       : undefined,
     discoUiHref: project.discoveryInfo?.hasDiscoUi
-      ? `https://disco.l2beat.com/ui/p/${project.id}`
+      ? `https://disco.ethbeat.org/ui/p/${project.id}`
       : undefined,
   }
   const discoUi = header.discoUiHref

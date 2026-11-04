@@ -65,14 +65,14 @@ describe(renderContractsSection.name, () => {
         {
           contracts: {},
           risks: [],
-          discoUi: { href: 'https://disco.l2beat.com/ui/p/blobstream' },
+          discoUi: { href: 'https://disco.ethbeat.org/ui/p/blobstream' },
         } as unknown as Parameters<typeof renderContractsSection>[0],
         3,
       ),
     )
 
     expect(markdown).toInclude(
-      "Explore these contracts and permissions in Disco, ETHBEAT's contract explorer: https://disco.l2beat.com/ui/p/blobstream",
+      "Explore these contracts and permissions in Disco, ETHBEAT's contract explorer: https://disco.ethbeat.org/ui/p/blobstream",
     )
   })
 
