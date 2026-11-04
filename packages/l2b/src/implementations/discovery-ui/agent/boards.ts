@@ -275,6 +275,7 @@ function resolveTable(table: TableBlock, binding: Binding): ResolvedBlock {
   }
   const rows = expanded.slice(0, ROWS_MAX)
   const columns = columnsOf(table, rows)
+  reportCellsWithoutColumn(rows, columns, label, binding)
   const resolved = rows.map((row) => ({
     address: row.address,
     cells: columns.map((column) => resolveCell(column, row, label, binding)),
@@ -297,6 +298,24 @@ function resolveTable(table: TableBlock, binding: Binding): ResolvedBlock {
       c.selector === undefined ? [] : [i],
     ),
     rows: resolved,
+  }
+}
+
+// A cell shows only under the column of its label, so a misspelled or
+// undeclared label would vanish without a word.
+function reportCellsWithoutColumn(
+  rows: readonly Row[],
+  columns: readonly BoardColumn[],
+  table: string,
+  binding: Binding,
+) {
+  const labels = new Set(columns.map((column) => column.label))
+  for (const row of rows) {
+    for (const cell of Object.keys(row.cells)) {
+      if (!labels.has(cell)) {
+        binding.problems.add(`${table}: no column for cell ${cell}`)
+      }
+    }
   }
 }
 

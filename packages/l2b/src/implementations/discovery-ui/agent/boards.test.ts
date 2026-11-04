@@ -152,6 +152,21 @@ describe(resolveBoard.name, () => {
     ])
   })
 
+  it('reports a row cell no column shows', () => {
+    const board = resolveBoard(entries, {
+      title: 'Computed',
+      blocks: [
+        {
+          type: 'table',
+          title: 'Results',
+          rows: [{ cells: { Result: 'yes', Note: 'checked' } }],
+          columns: [{ label: 'Result' }],
+        },
+      ],
+    })
+    expect(board.problems).toEqual(['Results: no column for cell Note'])
+  })
+
   it('names the contract of each row when no column does', () => {
     const board = resolveBoard(entries, {
       title: 'Thresholds',
