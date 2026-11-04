@@ -1,4 +1,3 @@
-import { INTEROP_ONE_SIDED_CHAINS } from '@l2beat/config'
 import type {
   Database,
   InteropEventCounterpartVolumeRecord,
@@ -240,6 +239,8 @@ export interface InteropCoverageData {
 interface CoverageChainsConfig {
   capturedChains: readonly string[]
   oneSidedChains: readonly string[]
+  // Every chain with a one-sided flag, enabled or not
+  configuredOneSidedChains: readonly string[]
   oneSidedPlugins: readonly string[]
 }
 
@@ -330,7 +331,7 @@ export function buildInteropCoverage(
   const captured = new Set(config.capturedChains)
   const oneSided = new Set(config.oneSidedChains)
   const oneSidedPlugins = new Set(config.oneSidedPlugins)
-  const configuredOneSided = new Set<string>(INTEROP_ONE_SIDED_CHAINS)
+  const configuredOneSided = new Set(config.configuredOneSidedChains)
 
   const chains = new Map<string, InteropCoverageChain>()
   const pluginUncovered = new Map<

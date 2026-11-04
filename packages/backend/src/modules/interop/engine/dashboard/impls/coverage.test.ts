@@ -13,6 +13,7 @@ import {
 const CONFIG = {
   capturedChains: ['ethereum', 'base', 'arbitrum'],
   oneSidedChains: ['solana'],
+  configuredOneSidedChains: ['solana', 'tron'],
   oneSidedPlugins: ['cctp-v2', 'across', 'ccip'],
 }
 const RANGE = { from: UnixTime(0), to: UnixTime(86400) }
