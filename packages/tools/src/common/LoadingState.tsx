@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 
-export const l2beatAsciiArt = `
-██╗     ██████╗ ██████╗ ███████╗ █████╗ ████████╗
-██║     ╚════██╗██╔══██╗██╔════╝██╔══██╗╚══██╔══╝
-██║      █████╔╝██████╔╝█████╗  ███████║   ██║   
-██║     ██╔═══╝ ██╔══██╗██╔══╝  ██╔══██║   ██║   
-███████╗███████╗██████╔╝███████╗██║  ██║   ██║   
-╚══════╝╚══════╝╚═════╝ ╚══════╝╚═╝  ╚═╝   ╚═╝    
+export const logoAsciiArt = `
+███████╗████████╗██╗  ██╗██████╗ ███████╗ █████╗ ████████╗
+██╔════╝╚══██╔══╝██║  ██║██╔══██╗██╔════╝██╔══██╗╚══██╔══╝
+█████╗     ██║   ███████║██████╔╝█████╗  ███████║   ██║
+██╔══╝     ██║   ██╔══██║██╔══██╗██╔══╝  ██╔══██║   ██║
+███████╗   ██║   ██║  ██║██████╔╝███████╗██║  ██║   ██║
+╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═════╝ ╚══════╝╚═╝  ╚═╝   ╚═╝
 `
 
 export function LoadingState() {
@@ -51,7 +51,7 @@ export function LoadingState() {
   return (
     <div className="flex h-screen w-full items-center justify-center font-mono text-orange-500">
       <div className="whitespace-pre-wrap">
-        <pre className="mb-4">{l2beatAsciiArt}</pre>
+        <pre className="mb-4">{logoAsciiArt}</pre>
         <div className="mb-2">
           Loading system components {['|', '/', '-', '\\'][frame]}
         </div>
