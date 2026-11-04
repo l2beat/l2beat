@@ -189,6 +189,7 @@ export function keepAgentView() {
 export async function saveAgentView(name: string) {
   const pending = useAgentViewStore.getState().pending
   const state = useNodeStore.getState()
+  const selection = usePanelStore.getState().selected
   const layout = buildStoredNodeLayout(state, {
     description: pending?.note ?? pending?.title,
   })
@@ -199,12 +200,13 @@ export async function saveAgentView(name: string) {
     return
   }
   // A view that arrived while saving still waits for its own decision, and
-  // discarding it goes back to the graph just saved.
+  // discarding it goes back to the graph and selection just saved.
   if (current !== undefined && current.before === pending?.before) {
     useAgentViewStore.setState({
       pending: {
         ...current,
         before: state.nodes,
+        selectionBefore: selection,
         changes: current.changes - pending.changes,
       },
     })
