@@ -8,9 +8,9 @@ describe(getGlossaryStructuredData.name, () => {
   const entries = getCollection('glossary')
   const termSet = getGlossaryStructuredData(
     {
-      url: 'https://l2beat.com/glossary',
+      url: 'https://ethbeat.org/glossary',
       description: 'Glossary description',
-      image: 'https://l2beat.com/og.png',
+      image: 'https://ethbeat.org/og.png',
     },
     entries,
   )
@@ -19,9 +19,9 @@ describe(getGlossaryStructuredData.name, () => {
     expect(termSet).toEqual(
       expect.subset({
         '@type': 'DefinedTermSet',
-        '@id': 'https://l2beat.com/glossary',
+        '@id': 'https://ethbeat.org/glossary',
         name: 'ETHBEAT Glossary',
-        url: 'https://l2beat.com/glossary',
+        url: 'https://ethbeat.org/glossary',
       }),
     )
     expect(termSet.hasDefinedTerm.length).toEqual(entries.length)
@@ -36,8 +36,8 @@ describe(getGlossaryStructuredData.name, () => {
       alternateName: ['AIR'],
       description:
         'Algebraic intermediate representation (AIR) is a type of arithmetization commonly used in zkVMs. It represents a trace of zkVM state transitions with low degree polynomial constraints that enforce the correct relation between previous and current states of the computation. Several variations of AIR are used in practice, with slight differences among them.',
-      url: 'https://l2beat.com/glossary#air',
-      inDefinedTermSet: 'https://l2beat.com/glossary',
+      url: 'https://ethbeat.org/glossary#air',
+      inDefinedTermSet: 'https://ethbeat.org/glossary',
     })
   })
 })

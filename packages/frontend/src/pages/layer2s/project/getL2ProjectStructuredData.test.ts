@@ -7,10 +7,10 @@ import {
 
 const l2beat = {
   '@type': 'Organization' as const,
-  '@id': 'https://l2beat.com/#organization',
+  '@id': 'https://ethbeat.org/#organization',
   name: 'ETHBEAT',
-  url: 'https://l2beat.com',
-  logo: 'https://l2beat.com/logo.png',
+  url: 'https://ethbeat.org',
+  logo: 'https://ethbeat.org/logo.png',
 }
 
 // Feeds the page getMetadata would resolve plus a hand-written project and
@@ -18,10 +18,10 @@ const l2beat = {
 // input at a time to check what it gates.
 describe(getL2ProjectStructuredData.name, () => {
   const page = {
-    url: 'https://l2beat.com/layer2s/projects/arbitrum',
+    url: 'https://ethbeat.org/layer2s/projects/arbitrum',
     description:
       'Explore Arbitrum One metrics and in-depth research. Arbitrum One is an Optimistic Rollup.',
-    image: 'https://l2beat.com/og.png',
+    image: 'https://ethbeat.org/og.png',
   }
   const arbitrum = {
     name: 'Arbitrum One',
@@ -34,8 +34,8 @@ describe(getL2ProjectStructuredData.name, () => {
   it('describes the project page as a Dataset served by the JSON API', () => {
     expect(getL2ProjectStructuredData(page, arbitrum)).toEqual({
       '@type': 'Dataset',
-      '@id': 'https://l2beat.com/layer2s/projects/arbitrum',
-      url: 'https://l2beat.com/layer2s/projects/arbitrum',
+      '@id': 'https://ethbeat.org/layer2s/projects/arbitrum',
+      url: 'https://ethbeat.org/layer2s/projects/arbitrum',
       name: 'Arbitrum One',
       description:
         'Explore Arbitrum One metrics and in-depth research. Arbitrum One is an Optimistic Rollup.',
@@ -46,13 +46,13 @@ describe(getL2ProjectStructuredData.name, () => {
           '@type': 'DataDownload',
           name: 'Arbitrum One Total Value Secured',
           encodingFormat: 'application/json',
-          contentUrl: 'https://l2beat.com/api/scaling/tvs/arbitrum',
+          contentUrl: 'https://ethbeat.org/api/scaling/tvs/arbitrum',
         },
         {
           '@type': 'DataDownload',
           name: 'Arbitrum One Activity',
           encodingFormat: 'application/json',
-          contentUrl: 'https://l2beat.com/api/scaling/activity/arbitrum',
+          contentUrl: 'https://ethbeat.org/api/scaling/activity/arbitrum',
         },
       ],
     })
@@ -65,7 +65,7 @@ describe(getL2ProjectStructuredData.name, () => {
     })
 
     expect(dataset?.distribution.map((d) => d.contentUrl)).toEqual([
-      'https://l2beat.com/api/scaling/activity/arbitrum',
+      'https://ethbeat.org/api/scaling/activity/arbitrum',
     ])
   })
 
@@ -76,8 +76,8 @@ describe(getL2ProjectStructuredData.name, () => {
     })
 
     expect(dataset?.distribution.map((d) => d.contentUrl)).toEqual([
-      'https://l2beat.com/api/scaling/tvs/arbitrum?range=max',
-      'https://l2beat.com/api/scaling/activity/arbitrum?range=max',
+      'https://ethbeat.org/api/scaling/tvs/arbitrum?range=max',
+      'https://ethbeat.org/api/scaling/activity/arbitrum?range=max',
     ])
   })
 
@@ -99,18 +99,18 @@ describe(getL2ProjectTvsBreakdownStructuredData.name, () => {
   it('describes the breakdown page as a Dataset served by the breakdown API', () => {
     const dataset = getL2ProjectTvsBreakdownStructuredData(
       {
-        url: 'https://l2beat.com/layer2s/projects/arbitrum/tvs-breakdown',
+        url: 'https://ethbeat.org/layer2s/projects/arbitrum/tvs-breakdown',
         description:
           "See a detailed breakdown of Arbitrum One's TVS on ETHBEAT.",
-        image: 'https://l2beat.com/og.png',
+        image: 'https://ethbeat.org/og.png',
       },
       { name: 'Arbitrum One', slug: 'arbitrum', archivedAt: undefined },
     )
 
     expect(dataset).toEqual({
       '@type': 'Dataset',
-      '@id': 'https://l2beat.com/layer2s/projects/arbitrum/tvs-breakdown',
-      url: 'https://l2beat.com/layer2s/projects/arbitrum/tvs-breakdown',
+      '@id': 'https://ethbeat.org/layer2s/projects/arbitrum/tvs-breakdown',
+      url: 'https://ethbeat.org/layer2s/projects/arbitrum/tvs-breakdown',
       name: 'Arbitrum One TVS Breakdown',
       description: "See a detailed breakdown of Arbitrum One's TVS on ETHBEAT.",
       isAccessibleForFree: true,
@@ -120,7 +120,7 @@ describe(getL2ProjectTvsBreakdownStructuredData.name, () => {
           '@type': 'DataDownload',
           name: 'Arbitrum One TVS Breakdown',
           encodingFormat: 'application/json',
-          contentUrl: 'https://l2beat.com/api/scaling/tvs/arbitrum/breakdown',
+          contentUrl: 'https://ethbeat.org/api/scaling/tvs/arbitrum/breakdown',
         },
       ],
     })

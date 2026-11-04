@@ -28,7 +28,7 @@ describe(`${serveMarkdown.name} and ${serveMarkdownIfPreferred.name}`, () => {
     )
 
     expect(response.headers.get('link')).toEqual(
-      '<https://l2beat.com/llms.txt>; rel="describedby"',
+      '<https://ethbeat.org/llms.txt>; rel="describedby"',
     )
     expect(response.headers.get('cache-control')).toEqual(
       'public, max-age=0, s-maxage=60, stale-while-revalidate=300, stale-if-error=3600',
@@ -81,7 +81,7 @@ describe(`${serveMarkdown.name} and ${serveMarkdownIfPreferred.name}`, () => {
     expect(found.headers.get('link') ?? '').toInclude('rel="alternate"')
     expect(missing.status).toEqual(404)
     expect(missing.headers.get('link')).toEqual(
-      '<https://l2beat.com/llms.txt>; rel="describedby"',
+      '<https://ethbeat.org/llms.txt>; rel="describedby"',
     )
   })
 

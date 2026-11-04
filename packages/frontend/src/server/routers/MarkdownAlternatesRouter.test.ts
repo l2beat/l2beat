@@ -49,7 +49,7 @@ describe(createMarkdownAlternatesRouter.name, () => {
       'text/plain; charset=utf-8',
     )
     expect(response.headers.get('link')).toEqual(
-      '<https://l2beat.com/llms.txt>; rel="describedby"',
+      '<https://ethbeat.org/llms.txt>; rel="describedby"',
     )
     expect(await response.text()).toEqual(
       [
@@ -63,7 +63,7 @@ describe(createMarkdownAlternatesRouter.name, () => {
         '',
         'What the section lists.',
         '',
-        '- [Arbitrum One](https://l2beat.com/layer2s/projects/arbitrum): Optimistic Rollup, Stage 1. A general-purpose rollup.',
+        '- [Arbitrum One](https://ethbeat.org/layer2s/projects/arbitrum): Optimistic Rollup, Stage 1. A general-purpose rollup.',
         '',
       ].join('\n'),
     )

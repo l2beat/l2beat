@@ -1,7 +1,6 @@
 import { externalLinks } from '~/consts/externalLinks'
 import { toProductionUrl } from '~/consts/productionOrigin'
 import { SITE_NAME } from '~/consts/siteName'
-import { env } from '~/env'
 
 /** L2BEAT as the author or publisher embedded in other blocks. */
 export const L2BEAT_ORGANIZATION = {
@@ -13,10 +12,9 @@ export const L2BEAT_ORGANIZATION = {
 }
 
 export function getOrganizationStructuredData() {
-  const alternateName = env.ORGANIZATION_ALTERNATE_NAME
   return {
     ...L2BEAT_ORGANIZATION,
-    ...(alternateName ? { alternateName } : {}),
+    alternateName: 'L2BEAT',
     description:
       'ETHBEAT (formerly L2BEAT) is an independent, public goods research organization that analyzes and compares Ethereum layer 2 scaling solutions, data availability layers, bridges, and other ecosystem projects, focusing on their risks, security, and trust assumptions.',
     sameAs: [

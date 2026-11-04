@@ -31,9 +31,9 @@ describe(getMetadata.name, () => {
 
       expect(metadata.title).toEqual('Railgun - Privacy - ETHBEAT')
       expect(getBreadcrumbItems(metadata)).toEqual([
-        crumb(1, 'Home', 'https://l2beat.com/'),
-        crumb(2, 'Privacy', 'https://l2beat.com/privacy/summary'),
-        crumb(3, 'Railgun', 'https://l2beat.com/privacy/projects/railgun'),
+        crumb(1, 'Home', 'https://ethbeat.org/'),
+        crumb(2, 'Privacy', 'https://ethbeat.org/privacy/summary'),
+        crumb(3, 'Railgun', 'https://ethbeat.org/privacy/projects/railgun'),
       ])
     })
   })
@@ -47,12 +47,12 @@ describe(getMetadata.name, () => {
       })
 
       expect(getBreadcrumbItems(metadata)).toEqual([
-        crumb(1, 'Home', 'https://l2beat.com/'),
-        crumb(2, 'Layer 2s', 'https://l2beat.com/layer2s/summary'),
+        crumb(1, 'Home', 'https://ethbeat.org/'),
+        crumb(2, 'Layer 2s', 'https://ethbeat.org/layer2s/summary'),
         crumb(
           3,
           'Arbitrum One',
-          'https://l2beat.com/layer2s/projects/arbitrum',
+          'https://ethbeat.org/layer2s/projects/arbitrum',
         ),
       ])
     })
@@ -65,8 +65,8 @@ describe(getMetadata.name, () => {
       })
 
       expect(getBreadcrumbItems(metadata)).toEqual([
-        crumb(1, 'Home', 'https://l2beat.com/'),
-        crumb(2, 'FAQ', 'https://l2beat.com/faq'),
+        crumb(1, 'Home', 'https://ethbeat.org/'),
+        crumb(2, 'FAQ', 'https://ethbeat.org/faq'),
       ])
     })
 
@@ -77,8 +77,8 @@ describe(getMetadata.name, () => {
       })
 
       expect(getBreadcrumbItems(metadata)).toEqual([
-        crumb(1, 'Home', 'https://l2beat.com/'),
-        crumb(2, 'Layer 2s', 'https://l2beat.com/layer2s/summary'),
+        crumb(1, 'Home', 'https://ethbeat.org/'),
+        crumb(2, 'Layer 2s', 'https://ethbeat.org/layer2s/summary'),
       ])
     })
 
@@ -94,17 +94,17 @@ describe(getMetadata.name, () => {
       })
 
       expect(getBreadcrumbItems(metadata)).toEqual([
-        crumb(1, 'Home', 'https://l2beat.com/'),
-        crumb(2, 'Layer 2s', 'https://l2beat.com/layer2s/summary'),
+        crumb(1, 'Home', 'https://ethbeat.org/'),
+        crumb(2, 'Layer 2s', 'https://ethbeat.org/layer2s/summary'),
         crumb(
           3,
           'Arbitrum One',
-          'https://l2beat.com/layer2s/projects/arbitrum',
+          'https://ethbeat.org/layer2s/projects/arbitrum',
         ),
         crumb(
           4,
           'TVS Breakdown',
-          'https://l2beat.com/layer2s/projects/arbitrum/tvs-breakdown',
+          'https://ethbeat.org/layer2s/projects/arbitrum/tvs-breakdown',
         ),
       ])
     })
@@ -142,9 +142,9 @@ describe(getMetadata.name, () => {
 
     expect(pages).toEqual([
       {
-        url: 'https://l2beat.com/glossary',
+        url: 'https://ethbeat.org/glossary',
         description: 'Terms explained.',
-        image: 'https://l2beat.com/meta-images/og.png',
+        image: 'https://ethbeat.org/meta-images/og.png',
       },
     ])
   })

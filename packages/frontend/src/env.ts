@@ -30,12 +30,6 @@ const CLIENT_CONFIG = {
     .enum(['development', 'test', 'production'])
     .default('development'),
   DEPLOYMENT_ENV: z.enum(['preview', 'staging', 'production']).optional(),
-  // Where production is served from: canonical URLs, sitemap, llms.txt and
-  // JSON-LD point here, whatever host rendered them.
-  PRODUCTION_ORIGIN: z
-    .string()
-    .transform((v) => new URL(v).origin)
-    .default('https://l2beat.com'),
   CLIENT_SIDE_GITCOIN_ROUND_LIVE: coerceBoolean.default(false),
   CLIENT_SIDE_TRACKED_TXS_OUTAGE: coerceBoolean.default(false),
   CLIENT_SIDE_DEFI_ENABLED: featureFlag,
@@ -92,8 +86,6 @@ const SERVER_CONFIG = {
     .optional(),
   INTEROP_CHAINS: stringArray.optional(),
   INTEROP_UPCOMING_CHAINS: stringArray.optional(),
-  // Another name the organization is known by, for the home page JSON-LD.
-  ORGANIZATION_ALTERNATE_NAME: z.string().optional(),
 }
 const ServerEnv = z.object(SERVER_CONFIG)
 
@@ -144,7 +136,6 @@ function getRawEnv(): Record<
     COOLIFY_URL: process.env.COOLIFY_URL,
     COOLIFY_RESOURCE_UUID: process.env.COOLIFY_RESOURCE_UUID,
     DEPLOYMENT_ENV: process.env.DEPLOYMENT_ENV,
-    PRODUCTION_ORIGIN: process.env.PRODUCTION_ORIGIN,
     EXCLUDED_ACTIVITY_PROJECTS: process.env.EXCLUDED_ACTIVITY_PROJECTS,
     EXCLUDED_TVS_PROJECTS: process.env.EXCLUDED_TVS_PROJECTS,
     ES_ENABLED: process.env.ES_ENABLED,
@@ -156,7 +147,6 @@ function getRawEnv(): Record<
     LOG_LEVEL: process.env.LOG_LEVEL,
     INTEROP_CHAINS: process.env.INTEROP_CHAINS,
     INTEROP_UPCOMING_CHAINS: process.env.INTEROP_UPCOMING_CHAINS,
-    ORGANIZATION_ALTERNATE_NAME: process.env.ORGANIZATION_ALTERNATE_NAME,
     // Client
     CLIENT_SIDE_GITCOIN_ROUND_LIVE: process.env.CLIENT_SIDE_GITCOIN_ROUND_LIVE,
     CLIENT_SIDE_TRACKED_TXS_OUTAGE: process.env.CLIENT_SIDE_TRACKED_TXS_OUTAGE,

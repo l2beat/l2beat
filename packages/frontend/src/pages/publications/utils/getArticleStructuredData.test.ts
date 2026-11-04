@@ -5,11 +5,11 @@ import { getArticleStructuredData } from './getArticleStructuredData'
 // compares against the literal Article a crawler should see.
 describe(getArticleStructuredData.name, () => {
   const page = {
-    url: 'https://l2beat.com/publications/governance-review-1',
+    url: 'https://ethbeat.org/publications/governance-review-1',
     description:
       'ETHBEAT provides weekly updates on governance in concise articles.',
     image:
-      'https://l2beat.com/meta-images/publications/governance-review-1.png',
+      'https://ethbeat.org/meta-images/publications/governance-review-1.png',
   }
   const post = {
     headline: 'Governance Review #01',
@@ -17,10 +17,10 @@ describe(getArticleStructuredData.name, () => {
   }
   const l2beat = {
     '@type': 'Organization' as const,
-    '@id': 'https://l2beat.com/#organization',
+    '@id': 'https://ethbeat.org/#organization',
     name: 'ETHBEAT',
-    url: 'https://l2beat.com',
-    logo: 'https://l2beat.com/logo.png',
+    url: 'https://ethbeat.org',
+    logo: 'https://ethbeat.org/logo.png',
   }
 
   it('describes a post as an Article by its author', () => {
@@ -35,14 +35,14 @@ describe(getArticleStructuredData.name, () => {
 
     expect(article).toEqual({
       '@type': 'Article',
-      '@id': 'https://l2beat.com/publications/governance-review-1',
-      url: 'https://l2beat.com/publications/governance-review-1',
-      mainEntityOfPage: 'https://l2beat.com/publications/governance-review-1',
+      '@id': 'https://ethbeat.org/publications/governance-review-1',
+      url: 'https://ethbeat.org/publications/governance-review-1',
+      mainEntityOfPage: 'https://ethbeat.org/publications/governance-review-1',
       headline: 'Governance Review #01',
       description:
         'ETHBEAT provides weekly updates on governance in concise articles.',
       image:
-        'https://l2beat.com/meta-images/publications/governance-review-1.png',
+        'https://ethbeat.org/meta-images/publications/governance-review-1.png',
       datePublished: '2024-01-19',
       author: {
         '@type': 'Person',
