@@ -118,7 +118,7 @@
         "0x0a02cf40e3095fd3fa8301811da5b24c2c4de75548e8294f33faf0e8e6ab063a"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Shutdown claim contract holding ETH and DAI withdrawn from the Blast yield managers. A user, or a redeemer approved for that user, claims once against a Merkle root of final balances set by the authority.",
+      "description": "Merkle claim contract that pays out ETH and DAI. A user, or a redeemer approved for that user, claims once against a root of balances set by the authority.",
       "deployerAddress": "eth:0x32BB93599Eb77eD5d3A357d3898fcF8200f5b2E9",
       "sinceTimestamp": 1793675279,
       "sinceBlock": 26331479,
@@ -763,7 +763,7 @@
         "0x0a02cf40e3095fd3fa8301811da5b24c2c4de75548e8294f33faf0e8e6ab063a"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Shutdown claim contract holding ETH and DAI withdrawn from the Blast yield managers. A user, or a redeemer approved for that user, claims once against a Merkle root of final balances set by the authority.",
+      "description": "Merkle claim contract that pays out ETH and DAI. A user, or a redeemer approved for that user, claims once against a root of balances set by the authority.",
       "deployerAddress": "eth:0x32BB93599Eb77eD5d3A357d3898fcF8200f5b2E9",
       "sinceTimestamp": 1793400635,
       "sinceBlock": 26308673,

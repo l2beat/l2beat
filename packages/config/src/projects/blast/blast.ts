@@ -138,7 +138,7 @@ export const blast: ScalingProject = opStackL2({
       tokens: ['ETH'],
       ...ESCROW.CANONICAL_ADD_TA,
       description:
-        'Shutdown claim contract holding ETH withdrawn from the Interest-bearing ETH Vault, claimable against a Merkle root of final balances.',
+        'Merkle claim contract for the shutdown: users claim their ETH and DAI against a root of balances set by the authority.',
     }),
     discovery.getEscrowDetails({
       address: ChainSpecificAddress(
@@ -148,7 +148,7 @@ export const blast: ScalingProject = opStackL2({
       tokens: ['ETH'],
       ...ESCROW.CANONICAL_ADD_TA,
       description:
-        'Second shutdown claim contract holding ETH withdrawn from the Interest-bearing ETH Vault, claimable against a Merkle root of final balances.',
+        'Second Merkle claim contract for the shutdown: users claim their ETH and DAI against a root of balances set by the authority.',
     }),
   ],
   isNodeAvailable: true,

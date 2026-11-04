@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Shutdown claim contract holding ETH and DAI withdrawn from the Blast yield managers. A user, or a redeemer approved for that user, claims once against a Merkle root of final balances set by the authority.",
+  "description": "Merkle claim contract that pays out ETH and DAI. A user, or a redeemer approved for that user, claims once against a root of balances set by the authority.",
   "ignoreMethods": ["proxiableUUID"],
   "ignoreRelatives": ["DAI"],
   "fields": {

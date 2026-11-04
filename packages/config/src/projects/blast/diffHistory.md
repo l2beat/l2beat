@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x020d3846c2d4c6703b1e84a4c566adf87aad2672
+Generated with discovered.json: 0x28375009a95d4b061ab5a0b3f05010c13f25b1c2
 
-# Diff at Wed, 04 Nov 2026 14:46:53 GMT:
+# Diff at Wed, 04 Nov 2026 15:19:03 GMT:
 
 - id: 8a65e7f7
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
@@ -29,7 +29,7 @@ BlastExit and BlastExit2: added to discovery; shutdown claim contracts holding t
 
 ```diff
     contract BlastExit2 (eth:0x23eA8c6ACEb5673BBd712137cE2Aa33db36CB513) [blast/BlastExit] {
-    +++ description: Shutdown claim contract holding ETH and DAI withdrawn from the Blast yield managers. A user, or a redeemer approved for that user, claims once against a Merkle root of final balances set by the authority.
+    +++ description: Merkle claim contract that pays out ETH and DAI. A user, or a redeemer approved for that user, claims once against a root of balances set by the authority.
       type:
 -        "EOA"
 +        "Contract"
@@ -41,7 +41,7 @@ BlastExit and BlastExit2: added to discovery; shutdown claim contracts holding t
       sourceHashes:
 +        ["0x5d5be4899b381a760f67129f9b207a2a06866a3ce03792b093825eaceb64a3c8","0x0a02cf40e3095fd3fa8301811da5b24c2c4de75548e8294f33faf0e8e6ab063a"]
       description:
-+        "Shutdown claim contract holding ETH and DAI withdrawn from the Blast yield managers. A user, or a redeemer approved for that user, claims once against a Merkle root of final balances set by the authority."
++        "Merkle claim contract that pays out ETH and DAI. A user, or a redeemer approved for that user, claims once against a root of balances set by the authority."
       deployerAddress:
 +        "eth:0x32BB93599Eb77eD5d3A357d3898fcF8200f5b2E9"
       sinceTimestamp:
@@ -111,7 +111,7 @@ BlastExit and BlastExit2: added to discovery; shutdown claim contracts holding t
 
 ```diff
     contract BlastExit (eth:0x9D31771458B421C7EA8A06CB8D12663E91617869) [blast/BlastExit] {
-    +++ description: Shutdown claim contract holding ETH and DAI withdrawn from the Blast yield managers. A user, or a redeemer approved for that user, claims once against a Merkle root of final balances set by the authority.
+    +++ description: Merkle claim contract that pays out ETH and DAI. A user, or a redeemer approved for that user, claims once against a root of balances set by the authority.
       type:
 -        "EOA"
 +        "Contract"
@@ -123,7 +123,7 @@ BlastExit and BlastExit2: added to discovery; shutdown claim contracts holding t
       sourceHashes:
 +        ["0x5d5be4899b381a760f67129f9b207a2a06866a3ce03792b093825eaceb64a3c8","0x0a02cf40e3095fd3fa8301811da5b24c2c4de75548e8294f33faf0e8e6ab063a"]
       description:
-+        "Shutdown claim contract holding ETH and DAI withdrawn from the Blast yield managers. A user, or a redeemer approved for that user, claims once against a Merkle root of final balances set by the authority."
++        "Merkle claim contract that pays out ETH and DAI. A user, or a redeemer approved for that user, claims once against a root of balances set by the authority."
       deployerAddress:
 +        "eth:0x32BB93599Eb77eD5d3A357d3898fcF8200f5b2E9"
       sinceTimestamp:
