@@ -93,7 +93,6 @@ const ID_SPACES: IdSpace[] = [
       'wormhole-ntt',
       'wormhole-token-bridge',
       'wormhole-relayer',
-      'mayan-forwarder',
       'mayan-swift',
       'mayan-swift-settlement',
     ],
@@ -302,6 +301,10 @@ const VALUED_FOR: Record<string, string> = {
   wormhole: 'wormhole-token-bridge',
 }
 
+// The Mayan Forwarder wraps Swift, CCTP and Token Bridge sends that their own
+// plugins report, so its events would count that volume twice
+const WRAPPER_PLUGINS = ['mayan-forwarder']
+
 function attributeToTransferPlugin(
   row: InteropEventCounterpartVolumeRecord,
 ): InteropEventCounterpartVolumeRecord[] {
@@ -345,7 +348,9 @@ export function buildInteropCoverage(
   >()
 
   for (const row of events.flatMap(attributeToTransferPlugin)) {
-    if (row.counterpartChain === '') continue
+    if (row.counterpartChain === '' || WRAPPER_PLUGINS.includes(row.plugin)) {
+      continue
+    }
     const resolved = resolveCounterpartChain(
       row.plugin,
       row.counterpartChain,

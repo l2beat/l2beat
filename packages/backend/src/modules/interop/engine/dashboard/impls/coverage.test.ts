@@ -78,20 +78,25 @@ describe(buildInteropCoverage.name, () => {
     })
   })
 
-  it('leaves out captured chains and events without a counterpart', () => {
+  it('leaves out captured chains, events without a counterpart and wrappers', () => {
     const result = buildInteropCoverage(
-      [row('cctp-v2', 'base', 10), row('cctp-v2', '')],
+      [
+        row('cctp-v2', 'base', 10),
+        row('cctp-v2', ''),
+        row('mayan-forwarder', 'sui', 10),
+      ],
       [],
       CONFIG,
       RANGE,
     )
 
     expect(result.chains).toEqual([])
+    expect(result.plugins).toEqual([])
   })
 
   it('keeps enabled one-sided chains that have uncounted events', () => {
     const result = buildInteropCoverage(
-      [row('mayan-forwarder', 'solana', 7, 2)],
+      [row('mayan-swift', 'solana', 7, 2)],
       [],
       CONFIG,
       RANGE,
@@ -109,7 +114,7 @@ describe(buildInteropCoverage.name, () => {
         key: 'solana',
         status: 'one-sided',
         uncountedValueUsd: 7,
-        plugins: ['mayan-forwarder'],
+        plugins: ['mayan-swift'],
       },
     ])
   })
