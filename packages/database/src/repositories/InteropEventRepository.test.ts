@@ -476,6 +476,100 @@ describeDatabase(InteropEventRepository.name, (db) => {
           },
         ])
       })
+
+      it('leaves out sends that CCTP carries for the plugin', async () => {
+        await db.interopTransfer.insertMany([pricedTransfer(USDC)])
+        await repository.insertMany([
+          event(
+            'ccip',
+            'e1',
+            'ccip.CCIPSendRequested',
+            UnixTime(1010),
+            UnixTime(9000),
+            {
+              chain: 'ethereum',
+              args: {
+                $dstChain: 'Unknown_solana',
+                token: USDC,
+                amount: 'BigInt(5000000)',
+                isCctpBacked: true,
+              },
+            },
+          ),
+          event(
+            'ccip',
+            'e2',
+            'ccip.CCIPSendRequested',
+            UnixTime(1020),
+            UnixTime(9000),
+            {
+              chain: 'ethereum',
+              args: {
+                $dstChain: 'Unknown_solana',
+                token: USDC,
+                amount: 'BigInt(3000000)',
+              },
+            },
+          ),
+          event(
+            'hyperlane-hwr',
+            'e3',
+            'hyperlane-hwr.TransferSent',
+            UnixTime(1030),
+            UnixTime(9000),
+            {
+              chain: 'ethereum',
+              args: {
+                $dstChain: 'Unknown_6714',
+                tokenAddress: USDC,
+                amount: 'BigInt(5000000)',
+                cctp: true,
+              },
+            },
+          ),
+          event(
+            'hyperlane-hwr',
+            'e4',
+            'hyperlane-hwr.TransferSent',
+            UnixTime(1040),
+            UnixTime(9000),
+            {
+              chain: 'ethereum',
+              args: {
+                $dstChain: 'Unknown_6714',
+                tokenAddress: USDC,
+                amount: 'BigInt(2000000)',
+                cctp: false,
+              },
+            },
+          ),
+        ])
+
+        const result = await repository.getUnmatchedCounterpartVolume(
+          UnixTime(1000),
+          UnixTime(0),
+          1_000_000_000,
+        )
+
+        expect(result).toEqualUnsorted([
+          {
+            plugin: 'ccip',
+            counterpartChain: 'Unknown_solana',
+            unmatchedEvents: 1,
+            unmatchedValueUsd: 3,
+            pricedUnmatchedEvents: 1,
+            lastTimestamp: UnixTime(1020),
+          },
+          {
+            plugin: 'hyperlane-hwr',
+            counterpartChain: 'Unknown_6714',
+            unmatchedEvents: 1,
+            unmatchedValueUsd: 2,
+            pricedUnmatchedEvents: 1,
+            lastTimestamp: UnixTime(1040),
+          },
+        ])
+      })
     },
   )
 

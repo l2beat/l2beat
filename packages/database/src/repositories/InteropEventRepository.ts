@@ -137,10 +137,16 @@ const INCOMING_AMOUNT_ARGS = [
   'transferAmount',
 ]
 
+// Flags on sends a plugin leaves unmatched because CCTP carries the tokens, so
+// their volume is counted under the CCTP plugins
+const CCTP_BACKED_ARGS = ['isCctpBacked', 'cctp']
+
+function coalesceArgs(keys: string[]): string {
+  return `coalesce(${keys.map((key) => `args ->> '${key}'`).join(', ')})`
+}
+
 function argsByDirection(outgoing: string[], incoming: string[]): string {
-  const pick = (keys: string[]) =>
-    `coalesce(${keys.map((key) => `args ->> '${key}'`).join(', ')})`
-  return `CASE WHEN args ->> '$dstChain' IS NOT NULL THEN ${pick(outgoing)} ELSE ${pick(incoming)} END`
+  return `CASE WHEN args ->> '$dstChain' IS NOT NULL THEN ${coalesceArgs(outgoing)} ELSE ${coalesceArgs(incoming)} END`
 }
 
 export class InteropEventRepository extends BaseRepository {
@@ -285,6 +291,7 @@ export class InteropEventRepository extends BaseRepository {
     const amount = sql.raw(
       `coalesce(substring(${rawAmount} from '^BigInt\\((\\d+)\\)$'), substring(${rawAmount} from '^(\\d+)$'))::numeric`,
     )
+    const cctpBacked = sql.raw(coalesceArgs(CCTP_BACKED_ARGS))
     const result = await sql<{
       plugin: string
       counterpartChain: string
@@ -317,6 +324,7 @@ export class InteropEventRepository extends BaseRepository {
         WHERE timestamp > ${UnixTime.toDate(from)}
           AND NOT matched
           AND (args ->> '$dstChain' IS NOT NULL OR args ->> '$srcChain' IS NOT NULL)
+          AND ${cctpBacked} IS DISTINCT FROM 'true'
       ),
       valued AS (
         SELECT events.plugin, events.counterpart, events.timestamp,
