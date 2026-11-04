@@ -7,13 +7,19 @@ import { type AgentEvent, agentEventSchema, useAgentStore } from './store'
 
 // The server sends each show to the tab the researcher focused last, so
 // every tab tells it when it comes to the front.
-const TAB_ID = crypto.randomUUID()
+const TAB_ID = createTabId()
+
+// randomUUID exists only on secure pages, and DiscoUI is also opened over
+// plain HTTP from other machines.
+function createTabId(): string {
+  const bytes = crypto.getRandomValues(new Uint8Array(16))
+  return Array.from(bytes, (b) => b.toString(16).padStart(2, '0')).join('')
+}
 
 export function AgentBridge() {
   const navigate = useNavigate()
   const project = useMatch('/ui/p/:project')?.params.project
   const projectRef = useRef(project)
-  projectRef.current = project
   // The server knows a tab only once its stream is open.
   const isConnected = useRef(false)
 
@@ -55,6 +61,7 @@ export function AgentBridge() {
 
   // The server answers show without a project with the one this tab shows.
   useEffect(() => {
+    projectRef.current = project
     if (isConnected.current && document.visibilityState === 'visible') {
       postFocus(project)
     }
