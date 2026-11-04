@@ -66,8 +66,8 @@ export interface MockRecentGasFees {
 }
 
 interface MockRecentChain {
-  /** Average fee per transaction in USD, per hour */
-  avgFee: number[]
+  /** Median fee per transaction in USD, per hour */
+  medianFee: number[]
   /** Per gas in the chain's gas unit, per hour */
   baseFee: number[]
   /** null on chains without priority fees */

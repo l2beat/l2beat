@@ -12,7 +12,7 @@ export interface GasFeesRecentChain {
   id: GasFeesChainId
   gasToken: string
   gasUnit: GasUnit
-  /** Average fee per transaction in USD, per hour */
+  /** Median fee per transaction in USD, per hour */
   usd: GasFeesRecentSeries
   /** Base + priority fee per gas in gasUnit, per hour */
   gas: GasFeesRecentSeries & {
@@ -37,7 +37,7 @@ export function getGasFeesRecent(): GasFeesRecent {
     chains: GAS_FEES_CHAINS.flatMap((chain) => {
       const hourly = recent.chains.get(chain.id)
       const records = (daily.get(chain.id) ?? []).slice(-30)
-      const usualUsd = median(records.map((r) => r.totalFees / r.txCount))
+      const usualUsd = median(records.map((r) => r.medianFee))
       const usualGas = median(records.map((r) => r.gasPrice))
       if (!hourly || usualUsd === undefined || usualGas === undefined) {
         return []
@@ -47,7 +47,7 @@ export function getGasFeesRecent(): GasFeesRecent {
           id: chain.id,
           gasToken: chain.gasToken,
           gasUnit: chain.gasUnit,
-          usd: { values: hourly.avgFee, usual: usualUsd },
+          usd: { values: hourly.medianFee, usual: usualUsd },
           gas: {
             values: hourly.baseFee.map(
               (base, i) => base + (hourly.priorityFee?.[i] ?? 0),

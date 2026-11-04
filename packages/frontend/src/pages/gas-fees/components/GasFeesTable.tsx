@@ -176,12 +176,16 @@ function getRecentColumn(recent: Props['recent'], unit: GasFeesUnit): Column {
     from === undefined || to === undefined
       ? ''
       : `${formatHour(from)}–${formatHour(to + UnixTime.HOUR)}`
+  const baseline =
+    unit === 'usd'
+      ? "Each hour's median fee per transaction vs the chain's usual: the median of its daily median fees over the past 30 days."
+      : "Each hour's gas price (base + priority, averaged over the hour's gas) vs the chain's usual: the median of its daily gas prices over the past 30 days."
   return {
     id: 'recent',
     head: 'Last 24h',
     tooltip: hours
-      ? `Top row ${span(hours[0], hours[11])}, bottom row ${span(hours[12], hours[23])} UTC`
-      : undefined,
+      ? `${baseline} Top row ${span(hours[0], hours[11])}, bottom row ${span(hours[12], hours[23])} UTC.`
+      : baseline,
     cell: (row) => {
       if (!recent.data) return <Skeleton className="h-[30px] w-[192px]" />
       const chain = recent.data.chains.find((c) => c.id === row.id)
