@@ -144,7 +144,7 @@ function show(ui: DiscoUi, input: ShowInput): string[] {
   if (project === undefined) {
     throw new ToolError('No project open in DiscoUI, pass project')
   }
-  if (!ui.configReader.hasDiscovery(project)) {
+  if (!hasDiscovery(ui.configReader, project)) {
     throw new ToolError('No discovered project', { project })
   }
   const resolver = new StepResolver(ui.configReader, project)
@@ -157,8 +157,19 @@ function show(ui: DiscoUi, input: ShowInput): string[] {
   printSteps(lines, steps)
   if (active !== undefined && !isDryRun) {
     ui.tabs.send(active.id, showEvent(project, steps))
+    ui.tabs.setProject(active.id, project)
   }
   return lines
+}
+
+// ConfigReader throws for a project it cannot find, which here is a typo in
+// the agent's call, not a failure.
+function hasDiscovery(configReader: ConfigReader, project: string): boolean {
+  try {
+    return configReader.hasDiscovery(project)
+  } catch {
+    return false
+  }
 }
 
 function showEvent(project: string, steps: ResolvedStep[]) {

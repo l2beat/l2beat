@@ -76,11 +76,16 @@ export function attachMcpRouter(app: Express, ui: DiscoUi) {
   app.use(
     MCP_PATH,
     (error: unknown, _req: Request, res: Response, next: NextFunction) => {
-      if (!isParseFailure(error)) {
-        next(error)
+      const type = bodyErrorType(error)
+      if (type === 'entity.parse.failed') {
+        res.status(400).json(rpcError(null, -32700, 'Parse error'))
         return
       }
-      res.status(400).json(rpcError(null, -32700, 'Parse error'))
+      if (type === 'entity.too.large') {
+        res.status(413).json(rpcError(null, -32600, 'Request too large'))
+        return
+      }
+      next(error)
     },
   )
 
@@ -155,12 +160,10 @@ function parseParams<T>(schema: Validator<T>, params: unknown): T {
   return parsed.data
 }
 
-function isParseFailure(error: unknown): boolean {
-  return (
-    typeof error === 'object' &&
-    error !== null &&
-    (error as { type?: unknown }).type === 'entity.parse.failed'
-  )
+function bodyErrorType(error: unknown): unknown {
+  return typeof error === 'object' && error !== null
+    ? (error as { type?: unknown }).type
+    : undefined
 }
 
 function rpcError(id: Id | null, code: number, message: string) {

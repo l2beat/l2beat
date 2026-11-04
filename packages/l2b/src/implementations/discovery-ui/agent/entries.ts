@@ -1,4 +1,8 @@
-import { type ConfigReader, getReachableEntries } from '@l2beat/discovery'
+import {
+  attachPermissions,
+  type ConfigReader,
+  getReachableEntries,
+} from '@l2beat/discovery'
 import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
 import type { AgentEntry } from './resolveRef'
 
@@ -10,6 +14,8 @@ export function readAgentEntries(
   project: string,
 ): AgentEntry[] {
   const discoveries = configReader.readDiscoveryWithReferences(project)
+  // The permission model makes shared modules reachable too.
+  attachPermissions(discoveries)
   const all = discoveries
     .flatMap((d) => d.entries)
     .filter((e) => e.type !== 'Reference')

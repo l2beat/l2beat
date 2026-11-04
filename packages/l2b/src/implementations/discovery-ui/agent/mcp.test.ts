@@ -16,8 +16,12 @@ describe(attachMcpRouter.name, () => {
   before(async () => {
     const app = express()
     app.use(express.json())
+    // Like ConfigReader, it throws for a project it cannot find.
     const configReader = {
-      hasDiscovery: () => false,
+      hasDiscovery: (project: string) => {
+        if (project === 'missing') throw new Error('Project not found')
+        return false
+      },
     } as unknown as ConfigReader
     attachMcpRouter(app, { configReader, tabs })
     server = app.listen(0, '127.0.0.1')
@@ -104,6 +108,30 @@ describe(attachMcpRouter.name, () => {
       id: null,
       error: { code: -32700, message: 'Parse error' },
     })
+  })
+
+  it('answers a body over the size limit with a JSON-RPC error', async () => {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ padding: 'x'.repeat(200_000) }),
+    })
+    expect(response.status).toEqual(413)
+    expect(await response.json()).toEqual({
+      jsonrpc: '2.0',
+      id: null,
+      error: { code: -32600, message: 'Request too large' },
+    })
+  })
+
+  it('tells the agent a project name is wrong', async () => {
+    const result = await call('tools/call', {
+      name: 'show',
+      arguments: { project: 'missing', dryRun: true, steps: [{ note: 'n' }] },
+    })
+    expect(result.result?.isError).toEqual(true)
+    const content = result.result?.content as { text: string }[]
+    expect(content[0]?.text).toInclude('No discovered project')
   })
 
   it('rejects unknown tools and methods as protocol errors', async () => {
