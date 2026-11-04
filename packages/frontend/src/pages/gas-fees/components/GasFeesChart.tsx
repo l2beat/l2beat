@@ -1,3 +1,4 @@
+import type { Milestone } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { scaleLog } from 'd3-scale'
 import { useMemo } from 'react'
@@ -22,14 +23,20 @@ import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import type { GasFeesChartData } from '~/server/features/gas-fees/getGasFeesChart'
 import type { GasFeesUpgrade } from '~/server/features/gas-fees/getGasFeesUpgrades'
 import {
-  GAS_FEES_METRICS,
+  GAS_FEES_GAS_METRICS,
+  GAS_FEES_USD_METRICS,
   type GasFeesMetric,
+  type GasFeesUnit,
+  isGasMetric,
 } from '~/server/features/gas-fees/types'
 import { formatRange } from '~/utils/dates'
 import type { GasFeesScale } from './GasFeesView'
 import {
   formatFee,
   formatFeeTick,
+  formatGasNumber,
+  formatGasPrice,
+  formatGasPriceTick,
   formatTimes,
   GAS_FEES_METRIC_LABELS,
 } from './metrics'
@@ -58,6 +65,7 @@ interface Props {
   setScale: (scale: GasFeesScale) => void
   highlightedChainId: string | undefined
   highlightedUpgradeId: string | undefined
+  unit: GasFeesUnit
 }
 
 type Point = { timestamp: number } & Record<string, number | null>
@@ -75,7 +83,9 @@ export function GasFeesChart({
   setScale,
   highlightedChainId,
   highlightedUpgradeId,
+  unit,
 }: Props) {
+  const isGas = isGasMetric(shownMetric)
   const meta = useMemo<ChartMeta>(
     () =>
       Object.fromEntries(
@@ -125,13 +135,16 @@ export function GasFeesChart({
     [data, chains],
   )
 
-  const yAxis = getYAxis(points, shownKeys, scale)
+  const yAxis = getYAxis(points, shownKeys, scale, isGas)
+  // Upgrades sit under the chart as milestones; the one hovered in the list
+  // also gets a bar
   const markers = getUpgradeMarkers(
     points,
-    upgrades,
+    upgrades.filter((u) => u.id === highlightedUpgradeId),
     highlightedUpgradeId,
     yAxis.top,
   )
+  const milestones = useMemo(() => toMilestones(upgrades), [upgrades])
   const timeRange = useMemo(() => getChartTimeRangeFromData(points), [points])
 
   return (
@@ -140,6 +153,9 @@ export function GasFeesChart({
         <div>
           <h2 className="font-bold text-xl">
             {GAS_FEES_METRIC_LABELS[shownMetric].title}
+            {isGas && (
+              <span className="font-normal text-secondary"> · gwei</span>
+            )}
           </h2>
           <ChartTimeRange
             isPlaceholderData={isPlaceholderData}
@@ -161,11 +177,13 @@ export function GasFeesChart({
         onValueChange={(value) => setMetric(value as GasFeesMetric)}
         className="max-w-full overflow-x-auto"
       >
-        {GAS_FEES_METRICS.map((m) => (
-          <RadioGroupItem key={m} value={m} className="whitespace-nowrap">
-            {GAS_FEES_METRIC_LABELS[m].short}
-          </RadioGroupItem>
-        ))}
+        {(unit === 'usd' ? GAS_FEES_USD_METRICS : GAS_FEES_GAS_METRICS).map(
+          (m) => (
+            <RadioGroupItem key={m} value={m} className="whitespace-nowrap">
+              {GAS_FEES_METRIC_LABELS[m].short}
+            </RadioGroupItem>
+          ),
+        )}
       </RadioGroup>
       <ChartContainer
         data={points}
@@ -174,6 +192,7 @@ export function GasFeesChart({
         isPlaceholderData={isPlaceholderData}
         interactiveLegend={{ dataKeys: shownKeys, onItemClick: toggleDataKey }}
         noDataSourceMessage="Select at least one chain"
+        milestones={milestones}
         size="large"
         legend
         legendLeading={
@@ -200,6 +219,7 @@ export function GasFeesChart({
               row={row}
               keys={keys}
               smoothed={data?.smoothed ?? false}
+              isGas={isGas}
             />
           )}
         />
@@ -213,9 +233,13 @@ function getYAxis(
   points: Point[] | undefined,
   keys: string[],
   scale: GasFeesScale,
+  isGas: boolean,
 ) {
   if (scale === 'lin') {
-    return { options: { tickCount: 4, format: formatFee }, top: undefined }
+    return {
+      options: { tickCount: 4, format: isGas ? formatGasNumber : formatFee },
+      top: undefined,
+    }
   }
   let min = Number.POSITIVE_INFINITY
   let max = 0
@@ -237,7 +261,7 @@ function getYAxis(
       scale: scaleLog,
       domain: [10 ** lo, 10 ** hi] as const,
       ticks,
-      format: formatFeeTick,
+      format: isGas ? formatGasPriceTick : formatFeeTick,
     },
     top: 10 ** hi,
   }
@@ -295,14 +319,32 @@ function getUpgradeMarkers(
   return { areas, labels }
 }
 
+function toMilestones(upgrades: GasFeesUpgrade[]): Milestone[] {
+  return upgrades.flatMap((upgrade) =>
+    upgrade.timestamp === null || upgrade.kind === 'next'
+      ? []
+      : [
+          {
+            type: 'general',
+            title: upgrade.title,
+            description: upgrade.summary,
+            url: upgrade.url,
+            date: UnixTime.toDate(upgrade.timestamp).toISOString(),
+          },
+        ],
+  )
+}
+
 function GasFeesTooltip({
   row,
   keys,
   smoothed,
+  isGas,
 }: {
   row: Point
   keys: string[]
   smoothed: boolean
+  isGas: boolean
 }) {
   const entries = getTooltipEntries(row, keys, { skipNull: true }).sort(
     (a, b) => b.value - a.value,
@@ -323,8 +365,11 @@ function GasFeesTooltip({
         </div>
         <div className="mt-2 flex flex-col gap-2">
           {entries.map((entry) => {
+            // Gas is priced differently per chain, so only fees compare
             const times =
-              entry.name !== 'ethereum' && typeof ethereum === 'number'
+              !isGas &&
+              entry.name !== 'ethereum' &&
+              typeof ethereum === 'number'
                 ? ethereum / entry.value
                 : undefined
             return (
@@ -341,7 +386,9 @@ function GasFeesTooltip({
                     </span>
                   )}
                   <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                    {formatFee(entry.value)}
+                    {isGas
+                      ? formatGasPrice(entry.value)
+                      : formatFee(entry.value)}
                   </span>
                 </span>
               </ChartTooltipRow>

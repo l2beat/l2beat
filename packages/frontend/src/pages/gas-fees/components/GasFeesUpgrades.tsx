@@ -1,5 +1,5 @@
 import type { GasFeesUpgrade } from '~/server/features/gas-fees/getGasFeesUpgrades'
-import type { GasFeesMetric } from '~/server/features/gas-fees/types'
+import type { GasFeesUsdMetric } from '~/server/features/gas-fees/types'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import type { ChartRange } from '~/utils/range/range'
@@ -7,7 +7,8 @@ import { formatFee, GAS_FEES_METRIC_LABELS } from './metrics'
 
 interface Props {
   upgrades: GasFeesUpgrade[]
-  metric: GasFeesMetric
+  /** undefined when the page shows gas prices, which Dencun didn't move */
+  metric: GasFeesUsdMetric | undefined
   /** The chart's range: upgrades outside it are dimmed */
   range: ChartRange
   highlightedUpgradeId: string | undefined
@@ -83,7 +84,7 @@ export function GasFeesUpgrades({
                     No date set yet
                   </p>
                 )}
-                {upgrade.l2Median && (
+                {upgrade.l2Median && metric && (
                   <Change
                     label={`L2 median ${GAS_FEES_METRIC_LABELS[metric].short.toLowerCase()}, 30 days before → after`}
                     {...upgrade.l2Median[metric]}

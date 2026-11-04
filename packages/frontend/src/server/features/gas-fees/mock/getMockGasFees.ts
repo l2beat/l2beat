@@ -1,5 +1,9 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { GAS_FEES_CHAINS, type GasFeesChainId } from '../chains'
+import {
+  GAS_FEES_CHAINS,
+  GAS_UNIT_DECIMALS,
+  type GasFeesChainId,
+} from '../chains'
 import { GAS_PER_ACTION, type GasFeesRecord } from '../types'
 
 // Fake but plausible fees until a backend tracks them. Deterministic, so
@@ -159,7 +163,138 @@ const L2_PARAMS: Record<Exclude<GasFeesChainId, 'ethereum'>, L2Params> = {
       ['2026-11-02', 2_000_000],
     ],
   },
+  ink: {
+    launch: '2024-12-18',
+    dataFactor: 0.05,
+    blobUsd: 0.0005,
+    execUsd: 0.002,
+    prioShare: 0.4,
+    medianFactor: 0.3,
+    tx: [
+      ['2024-12-18', 100_000],
+      ['2025-06-01', 700_000],
+      ['2026-11-02', 900_000],
+    ],
+  },
+  soneium: {
+    launch: '2025-01-14',
+    dataFactor: 0.05,
+    blobUsd: 0.0006,
+    execUsd: 0.0025,
+    prioShare: 0.35,
+    medianFactor: 0.3,
+    tx: [
+      ['2025-01-14', 100_000],
+      ['2025-03-15', 1_500_000],
+      ['2026-11-02', 800_000],
+    ],
+  },
+  zora: {
+    launch: '2023-06-21',
+    dataFactor: 0.05,
+    blobUsd: 0.0005,
+    execUsd: 0.0015,
+    prioShare: 0.2,
+    medianFactor: 0.4,
+    tx: [
+      ['2023-06-21', 20_000],
+      ['2024-06-01', 300_000],
+      ['2025-06-01', 150_000],
+      ['2026-11-02', 80_000],
+    ],
+  },
+  mode: {
+    launch: '2024-01-31',
+    dataFactor: 0.05,
+    blobUsd: 0.0006,
+    execUsd: 0.002,
+    prioShare: 0.25,
+    medianFactor: 0.4,
+    tx: [
+      ['2024-01-31', 30_000],
+      ['2024-06-01', 250_000],
+      ['2025-06-01', 60_000],
+      ['2026-11-02', 25_000],
+    ],
+  },
+  blast: {
+    launch: '2024-02-29',
+    dataFactor: 0.05,
+    blobUsd: 0.0007,
+    execUsd: 0.004,
+    prioShare: 0.3,
+    medianFactor: 0.35,
+    tx: [
+      ['2024-02-29', 100_000],
+      ['2024-06-01', 1_500_000],
+      ['2025-06-01', 200_000],
+      ['2026-11-02', 60_000],
+    ],
+  },
+  abstract: {
+    launch: '2025-01-27',
+    dataFactor: 0.05,
+    blobUsd: 0.001,
+    execUsd: 0.006,
+    prioShare: null,
+    medianFactor: 0.5,
+    tx: [
+      ['2025-01-27', 100_000],
+      ['2025-03-15', 1_200_000],
+      ['2026-11-02', 500_000],
+    ],
+  },
+  taiko: {
+    launch: '2024-05-27',
+    dataFactor: 0.05,
+    blobUsd: 0.004,
+    execUsd: 0.01,
+    prioShare: 0.5,
+    medianFactor: 0.4,
+    tx: [
+      ['2024-05-27', 50_000],
+      ['2024-09-01', 250_000],
+      ['2025-06-01', 100_000],
+      ['2026-11-02', 80_000],
+    ],
+  },
+  mantle: {
+    launch: '2023-07-17',
+    dataFactor: 0.01,
+    blobUsd: 0.0002,
+    execUsd: 0.006,
+    prioShare: 0.1,
+    medianFactor: 0.5,
+    tx: [
+      ['2023-07-17', 50_000],
+      ['2024-06-01', 100_000],
+      ['2025-06-01', 250_000],
+      ['2026-11-02', 400_000],
+    ],
+  },
 }
+
+/** Gas tokens other than ETH, in USD */
+const TOKEN_USD: Partial<Record<GasFeesChainId, (t: number) => number>> = {
+  starknet: curve([
+    ['2024-02-20', 2],
+    ['2024-06-01', 1],
+    ['2025-01-01', 0.45],
+    ['2025-06-01', 0.15],
+    ['2026-11-02', 0.12],
+  ]),
+  mantle: curve([
+    ['2023-07-17', 0.45],
+    ['2024-04-01', 1.2],
+    ['2024-09-01', 0.6],
+    ['2025-03-01', 0.8],
+    ['2025-10-01', 2],
+    ['2026-11-02', 1.1],
+  ]),
+}
+
+/** An average L2 transaction, for prices per gas */
+const L2_GAS_PER_TX = 120_000
 
 const ethUsd = curve([
   ['2020-01-01', 130],
@@ -327,6 +462,9 @@ function generate(until: number): Map<GasFeesChainId, GasFeesRecord[]> {
       transfer: GAS_PER_ACTION.transfer * perGas,
       erc20: GAS_PER_ACTION.erc20 * perGas,
       swap: GAS_PER_ACTION.swap * perGas,
+      gasPrice,
+      baseFeePerGas: base,
+      priorityFeePerGas: prio,
     }
   })
 
@@ -348,6 +486,7 @@ function generate(until: number): Map<GasFeesChainId, GasFeesRecord[]> {
     const nTxL2 = noise(400 + i, 0.07, 0.75)
     const nData = noise(500 + i, 0.12)
     const nPrioL2 = noise(600 + i, 0.15)
+    const tokenUsd = TOKEN_USD[chain.id]
 
     const records: GasFeesRecord[] = []
     days.forEach((t, di) => {
@@ -377,6 +516,12 @@ function generate(until: number): Map<GasFeesChainId, GasFeesRecord[]> {
       const action = (gas: number) =>
         gas * perGas * (p.prioShare ? 1.15 : 1) +
         dataUsd * (0.55 + gas / 400_000)
+      const usdPerUnit =
+        10 ** -GAS_UNIT_DECIMALS[chain.gasUnit] *
+        (tokenUsd?.(t) ?? ethPrices[di] ?? 3000)
+      const toUnit = (usd: number) => usd / L2_GAS_PER_TX / usdPerUnit
+      const basePerGas = toUnit(execUsd)
+      const prioPerGas = p.prioShare === null ? null : toUnit(prioUsd) * 0.4
 
       records.push({
         timestamp: t,
@@ -389,6 +534,9 @@ function generate(until: number): Map<GasFeesChainId, GasFeesRecord[]> {
         transfer: action(GAS_PER_ACTION.transfer),
         erc20: action(GAS_PER_ACTION.erc20),
         swap: action(GAS_PER_ACTION.swap),
+        gasPrice: basePerGas + (prioPerGas ?? 0),
+        baseFeePerGas: basePerGas,
+        priorityFeePerGas: prioPerGas,
       })
     })
     result.set(chain.id, records)
@@ -467,9 +615,16 @@ function spikes(seed: number, p: number, min: number, max: number) {
 export interface MockRecentGasFees {
   /** Starts of the last 24 full UTC hours, oldest first */
   hours: number[]
-  ethereum: { baseFeeGwei: number[]; priorityFeeGwei: number[] }
+  chains: Map<GasFeesChainId, MockRecentChain>
+}
+
+interface MockRecentChain {
   /** Average fee per transaction in USD, per hour */
-  avgFee: Map<GasFeesChainId, number[]>
+  avgFee: number[]
+  /** Per gas in the chain's gas unit, per hour */
+  baseFee: number[]
+  /** null on chains without priority fees */
+  priorityFee: number[] | null
 }
 
 // A few unusual hours (spikes on Base, Ethereum and Arbitrum, a dip on ZKsync),
@@ -479,6 +634,8 @@ const DEMO_SPIKES: Partial<Record<GasFeesChainId, Record<number, number>>> = {
   base: { 4: 6, 3: 3.5, 2: 1.6 },
   arbitrum: { 12: 1.7, 11: 1.4 },
   zksync2: { 18: 0.55, 17: 0.5, 16: 0.5, 15: 0.55, 14: 0.65 },
+  blast: { 21: 2.6, 20: 2.1 },
+  taiko: { 9: 0.5, 8: 0.45 },
 }
 
 /** Hourly fees for the last day, around each chain's latest daily level */
@@ -505,32 +662,29 @@ export function getMockRecentGasFees(): MockRecentGasFees {
     return diurnal * n * spike
   }
 
-  const avgFee = new Map<GasFeesChainId, number[]>()
+  const chains = new Map<GasFeesChainId, MockRecentChain>()
   GAS_FEES_CHAINS.forEach((chain, chainIndex) => {
-    const records = daily.get(chain.id) ?? []
+    const records = (daily.get(chain.id) ?? []).slice(-30)
     if (records.length === 0) return
     // Around the chain's usual level, the median day of the past 30
-    const pastMonth = records
-      .slice(-30)
-      .map((r) => r.totalFees / r.txCount)
-      .sort((a, b) => a - b)
-    const level = pastMonth[Math.floor(pastMonth.length / 2)] ?? 0
-    avgFee.set(
-      chain.id,
-      hours.map((hour, i) => level * shape(chainIndex, hour, 24 - i)),
+    const level = (values: number[]) =>
+      [...values].sort((a, b) => a - b)[Math.floor(values.length / 2)] ?? 0
+    const fee = level(records.map((r) => r.totalFees / r.txCount))
+    const base = level(records.map((r) => r.baseFeePerGas ?? r.gasPrice))
+    const prio = records.some((r) => r.priorityFeePerGas !== null)
+      ? level(records.map((r) => r.priorityFeePerGas ?? 0))
+      : null
+    const s = hours.map((hour, i) => shape(chainIndex, hour, 24 - i))
+    // Tips follow demand, but less than the base fee does
+    const tipShape = hours.map((hour, i) =>
+      Math.sqrt(shape(chainIndex, hour + 1, 24 - i)),
     )
+    chains.set(chain.id, {
+      avgFee: s.map((m) => fee * m),
+      baseFee: s.map((m) => base * m),
+      priorityFee: prio === null ? null : tipShape.map((m) => prio * m),
+    })
   })
 
-  const prio = ethPriority(end)
-  const base = Math.max(ethGasPrice(end) - prio, prio * 0.5)
-  return {
-    hours,
-    ethereum: {
-      baseFeeGwei: hours.map((hour, i) => base * shape(0, hour, 24 - i)),
-      priorityFeeGwei: hours.map(
-        (hour, i) => prio * Math.sqrt(shape(0, hour + 1, 24 - i)),
-      ),
-    },
-    avgFee,
-  }
+  return { hours, chains }
 }

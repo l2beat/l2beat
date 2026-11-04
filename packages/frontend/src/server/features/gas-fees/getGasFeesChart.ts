@@ -4,7 +4,7 @@ import { ChartRange } from '~/utils/range/range'
 import { GAS_FEES_CHAINS } from './chains'
 import { getMockGasFees } from './mock/getMockGasFees'
 import { inRange } from './summarize'
-import { GasFeesMetric, type GasFeesRecord } from './types'
+import { GasFeesMetric, type GasFeesRecord, isGasMetric } from './types'
 
 export const GasFeesChartParams = v.object({
   range: ChartRange,
@@ -37,7 +37,11 @@ export function getGasFeesChart({
   const smoothed = spanDays > SMOOTHING_THRESHOLD_DAYS
 
   const byChain = GAS_FEES_CHAINS.map((chain) => {
-    const records = data.get(chain.id) ?? []
+    // Gwei of different tokens don't share an axis
+    const records =
+      isGasMetric(metric) && chain.gasToken !== 'ETH'
+        ? []
+        : (data.get(chain.id) ?? [])
     const values = smoothed
       ? trailingAverage(records, metric)
       : records.map((r) => dailyValue(r, metric))
@@ -82,9 +86,12 @@ function trailingAverage(records: GasFeesRecord[], metric: GasFeesMetric) {
       const txs = window.reduce((sum, r) => sum + r.txCount, 0)
       return fees / txs
     }
-    return (
-      window.reduce((sum, r) => sum + dailyValue(r, metric), 0) / window.length
-    )
+    const values = window
+      .map((r) => dailyValue(r, metric))
+      .filter((v) => v !== null)
+    return values.length === 0
+      ? null
+      : values.reduce((sum, v) => sum + v, 0) / values.length
   })
 }
 

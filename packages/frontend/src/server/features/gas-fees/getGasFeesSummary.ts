@@ -1,8 +1,8 @@
 import { v } from '@l2beat/validate'
 import { ChartRange } from '~/utils/range/range'
-import { GAS_FEES_CHAINS, type GasFeesChainId } from './chains'
+import { GAS_FEES_CHAINS, type GasFeesChainId, type GasUnit } from './chains'
 import { getMockGasFees } from './mock/getMockGasFees'
-import { type GasFeesTotals, inRange, median, summarize } from './summarize'
+import { type GasFeesTotals, inRange, summarize } from './summarize'
 import type { GasFeesRecord } from './types'
 
 export const GasFeesSummaryParams = v.object({ range: ChartRange })
@@ -10,6 +10,8 @@ export type GasFeesSummaryParams = v.infer<typeof GasFeesSummaryParams>
 
 export interface GasFeesSummaryRow {
   id: GasFeesChainId
+  gasToken: string
+  gasUnit: GasUnit
   avgFee: number
   /** Avg fee vs the previous period, null when the chain wasn't live for all of it */
   avgFeeChange: number | null
@@ -29,6 +31,14 @@ export interface GasFeesSummaryRow {
   }
   /** Ethereum's avg fee over the same days divided by this chain's, null for Ethereum */
   timesCheaper: number | null
+  /** Per gas in gasUnit */
+  gas: {
+    price: number
+    /** Gas price vs the previous period, null like avgFeeChange */
+    priceChange: number | null
+    base: number | null
+    priority: number | null
+  }
 }
 
 export interface GasFeesSummary {
@@ -43,7 +53,10 @@ export interface GasFeesSummary {
     ethereumPriorityFee: GasFeesStat
     /** True when the range starts before London, so the split covers part of it */
     splitIsPartial: boolean
-    l2sCheaperBy: GasFeesStat
+    /** Gwei per gas */
+    ethereumGasPrice: GasFeesStat
+    ethereumBaseFeePerGas: GasFeesStat
+    ethereumPriorityFeePerGas: GasFeesStat
   }
 }
 
@@ -80,13 +93,13 @@ export function getGasFeesSummary({
       previous !== undefined &&
       previousRange !== undefined &&
       previous.days === inRange(ethereum, previousRange).length
+    const isComparable = previousIsComplete && previous
     rows.push({
       id: chain.id,
+      gasToken: chain.gasToken,
+      gasUnit: chain.gasUnit,
       avgFee: totals.avgFee,
-      avgFeeChange:
-        previousIsComplete && previous
-          ? totals.avgFee / previous.avgFee - 1
-          : null,
+      avgFeeChange: isComparable ? totals.avgFee / previous.avgFee - 1 : null,
       medianFee: totals.medianFee,
       transfer: totals.transfer,
       erc20: totals.erc20,
@@ -103,6 +116,14 @@ export function getGasFeesSummary({
         chain.id === 'ethereum'
           ? null
           : timesCheaper(ethereum, records, range, totals),
+      gas: {
+        price: totals.gasPrice,
+        priceChange: isComparable
+          ? totals.gasPrice / previous.gasPrice - 1
+          : null,
+        base: totals.baseFeePerGas,
+        priority: totals.priorityFeePerGas,
+      },
     })
   }
 
@@ -141,7 +162,9 @@ function getStats(
     ethereumBaseFee: stat('ethereumBaseFee'),
     ethereumPriorityFee: stat('ethereumPriorityFee'),
     splitIsPartial: current.splitIsPartial,
-    l2sCheaperBy: stat('l2sCheaperBy'),
+    ethereumGasPrice: stat('ethereumGasPrice'),
+    ethereumBaseFeePerGas: stat('ethereumBaseFeePerGas'),
+    ethereumPriorityFeePerGas: stat('ethereumPriorityFeePerGas'),
   }
 }
 
@@ -149,17 +172,7 @@ function getPeriodStats(
   data: Map<GasFeesChainId, GasFeesRecord[]>,
   range: ChartRange,
 ) {
-  const ethereumRecords = data.get('ethereum') ?? []
-  const ethereum = summarize(inRange(ethereumRecords, range))
-  const ratios: number[] = []
-  for (const chain of GAS_FEES_CHAINS) {
-    if (chain.id === 'ethereum') continue
-    const records = data.get(chain.id) ?? []
-    const totals = summarize(inRange(records, range))
-    if (!totals) continue
-    const ratio = timesCheaper(ethereumRecords, records, range, totals)
-    if (ratio !== null) ratios.push(ratio)
-  }
+  const ethereum = summarize(inRange(data.get('ethereum') ?? [], range))
   const perSplitTx = (fees: number | null | undefined) =>
     ethereum?.splitTxCount && fees !== null && fees !== undefined
       ? fees / ethereum.splitTxCount
@@ -169,6 +182,8 @@ function getPeriodStats(
     ethereumBaseFee: perSplitTx(ethereum?.baseFees),
     ethereumPriorityFee: perSplitTx(ethereum?.priorityFees),
     splitIsPartial: (ethereum?.unsplitFees ?? 0) > 0,
-    l2sCheaperBy: median(ratios),
+    ethereumGasPrice: ethereum?.gasPrice,
+    ethereumBaseFeePerGas: ethereum?.baseFeePerGas ?? undefined,
+    ethereumPriorityFeePerGas: ethereum?.priorityFeePerGas ?? undefined,
   }
 }

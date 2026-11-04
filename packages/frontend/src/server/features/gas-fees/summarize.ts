@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { ChartRange } from '~/utils/range/range'
-import type { GasFeesMetric, GasFeesRecord } from './types'
+import type { GasFeesRecord, GasFeesUsdMetric } from './types'
 
 export interface GasFeesTotals {
   days: number
@@ -19,6 +19,10 @@ export interface GasFeesTotals {
   transfer: number
   erc20: number
   swap: number
+  /** Gwei per gas, means of the daily values; null without a split */
+  gasPrice: number
+  baseFeePerGas: number | null
+  priorityFeePerGas: number | null
 }
 
 export function inRange(records: GasFeesRecord[], [from, to]: ChartRange) {
@@ -46,7 +50,13 @@ export function summarize(records: GasFeesRecord[]): GasFeesTotals | undefined {
   let transfer = 0
   let erc20 = 0
   let swap = 0
+  let gasPrice = 0
+  const basePerGas: number[] = []
+  const priorityPerGas: number[] = []
   for (const r of records) {
+    gasPrice += r.gasPrice
+    if (r.baseFeePerGas !== null) basePerGas.push(r.baseFeePerGas)
+    if (r.priorityFeePerGas !== null) priorityPerGas.push(r.priorityFeePerGas)
     txCount += r.txCount
     totalFees += r.totalFees
     l1DataFees += r.l1DataFees
@@ -79,10 +89,22 @@ export function summarize(records: GasFeesRecord[]): GasFeesTotals | undefined {
     transfer: transfer / n,
     erc20: erc20 / n,
     swap: swap / n,
+    gasPrice: gasPrice / n,
+    baseFeePerGas: mean(basePerGas),
+    priorityFeePerGas: mean(priorityPerGas),
   }
 }
 
-export function getMetricValue(totals: GasFeesTotals, metric: GasFeesMetric) {
+function mean(values: number[]) {
+  return values.length === 0
+    ? null
+    : values.reduce((sum, v) => sum + v, 0) / values.length
+}
+
+export function getMetricValue(
+  totals: GasFeesTotals,
+  metric: GasFeesUsdMetric,
+) {
   return totals[metric]
 }
 

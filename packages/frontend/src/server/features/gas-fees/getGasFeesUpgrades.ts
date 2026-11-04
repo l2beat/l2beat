@@ -3,9 +3,9 @@ import { GAS_FEES_CHAINS } from './chains'
 import { getMockGasFees } from './mock/getMockGasFees'
 import { getMetricValue, median, summarize } from './summarize'
 import {
-  GAS_FEES_METRICS,
-  type GasFeesMetric,
+  GAS_FEES_USD_METRICS,
   type GasFeesRecord,
+  type GasFeesUsdMetric,
 } from './types'
 
 export interface GasFeesUpgrade {
@@ -24,7 +24,7 @@ export interface GasFeesUpgrade {
   l2Median: BeforeAfter | null
 }
 
-type BeforeAfter = Record<GasFeesMetric, { before: number; after: number }>
+type BeforeAfter = Record<GasFeesUsdMetric, { before: number; after: number }>
 
 const WINDOW_DAYS = 30
 
@@ -170,7 +170,7 @@ function beforeAfter(
   if (before.length === 0 || after.length === 0) return null
 
   const result = {} as BeforeAfter
-  for (const metric of GAS_FEES_METRICS) {
+  for (const metric of GAS_FEES_USD_METRICS) {
     result[metric] = {
       before: median(before.map((t) => getMetricValue(t, metric))) ?? 0,
       after: median(after.map((t) => getMetricValue(t, metric))) ?? 0,

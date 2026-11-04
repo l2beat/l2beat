@@ -1,10 +1,17 @@
 import { formatCurrency } from '@l2beat/shared-pure'
 import { rangeToOption } from '~/components/core/chart/utils/rangeToOption'
-import type { GasFeesMetric } from '~/server/features/gas-fees/types'
+import type { GasUnit } from '~/server/features/gas-fees/chains'
+import type {
+  GasFeesGasMetric,
+  GasFeesMetric,
+  GasFeesUnit,
+  GasFeesUsdMetric,
+} from '~/server/features/gas-fees/types'
 import { getFirstTwoNonZeroPrecision } from '~/utils/getFirstTwoNonZeroPrecision'
 import type { ChartRange } from '~/utils/range/range'
 
-export const DEFAULT_GAS_FEES_METRIC: GasFeesMetric = 'avgFee'
+export const DEFAULT_GAS_FEES_METRIC: GasFeesUsdMetric = 'avgFee'
+export const DEFAULT_GAS_FEES_GAS_METRIC: GasFeesGasMetric = 'gasPrice'
 
 export const GAS_FEES_METRIC_LABELS: Record<
   GasFeesMetric,
@@ -35,6 +42,21 @@ export const GAS_FEES_METRIC_LABELS: Record<
     title: 'Cost of a token swap',
     description: '180,000 gas at the typical fee',
   },
+  gasPrice: {
+    short: 'Gas price',
+    title: 'Average gas price',
+    description: 'Base fee plus priority fee, per gas',
+  },
+  baseFeePerGas: {
+    short: 'Base fee',
+    title: 'Base fee per gas',
+    description: 'Set by the network',
+  },
+  priorityFeePerGas: {
+    short: 'Priority fee',
+    title: 'Priority fee per gas',
+    description: 'Set by the sender',
+  },
 }
 
 /** Two significant digits below a dollar: fees span $100 to a hundredth of a cent */
@@ -49,6 +71,32 @@ export function formatFee(value: number) {
 export function formatFeeTick(value: number) {
   if (value >= 1) return formatCurrency(value, 'usd', { decimals: 0 })
   return `$${Number(value.toPrecision(1))}`
+}
+
+/** Per gas in the chain's unit: "24 gwei", "0.012 gwei", "8.1B fri" */
+export function formatGasPrice(value: number, unit: GasUnit = 'gwei') {
+  return `${formatGasNumber(value)} ${unit}`
+}
+
+export function formatGasNumber(value: number) {
+  if (value >= 10_000) {
+    return Intl.NumberFormat('en-US', {
+      notation: 'compact',
+      maximumSignificantDigits: 3,
+    }).format(value)
+  }
+  if (value >= 100) return value.toFixed(0)
+  if (value >= 10) return value.toFixed(1)
+  if (value >= 1) return value.toFixed(2)
+  return `${Number(value.toPrecision(2))}`
+}
+
+export function formatGasPriceTick(value: number) {
+  return `${Number(value.toPrecision(1))}`
+}
+
+export function formatUnitValue(value: number, unit: GasFeesUnit) {
+  return unit === 'usd' ? formatFee(value) : formatGasPrice(value)
 }
 
 export function formatTimes(value: number) {

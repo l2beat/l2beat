@@ -1,84 +1,121 @@
 import { Skeleton } from '~/components/core/Skeleton'
 import type { GasFeesSummary } from '~/server/features/gas-fees/getGasFeesSummary'
+import type { GasFeesUnit } from '~/server/features/gas-fees/types'
 import { cn } from '~/utils/cn'
 import type { ChartRange } from '~/utils/range/range'
-import { formatFee, formatTimes, getPeriodLabel } from './metrics'
+import { FeeSplitBar } from './FeeSplitBar'
+import { formatUnitValue, getPeriodLabel } from './metrics'
 
 interface Props {
   stats: GasFeesSummary['stats'] | undefined
   range: ChartRange
   isLoading: boolean
+  unit: GasFeesUnit
 }
 
-export function GasFeesStats({ stats, range, isLoading }: Props) {
+type Stat = { value: number | undefined; previous: number | undefined }
+
+export function GasFeesStats({ stats, range, isLoading, unit }: Props) {
   const period = getPeriodLabel(range)
+  const usd = unit === 'usd'
+  const avg = usd ? stats?.ethereumAvgFee : stats?.ethereumGasPrice
+  const base = usd ? stats?.ethereumBaseFee : stats?.ethereumBaseFeePerGas
+  const priority = usd
+    ? stats?.ethereumPriorityFee
+    : stats?.ethereumPriorityFeePerGas
   // Before London there was no split, so over Max these cover less than the avg
   const sinceLondon = stats?.splitIsPartial ? ' since London' : ''
+  const per = usd ? 'per tx' : 'per gas'
+  const format = (value: number) => formatUnitValue(value, unit)
+  const total = (base?.value ?? 0) + (priority?.value ?? 0)
+  const share = (stat: Stat | undefined) =>
+    stat?.value !== undefined && total > 0
+      ? `${Math.round((stat.value / total) * 100)}%`
+      : undefined
+
+  const avgStat = (
+    <StatBlock
+      label={usd ? 'Ethereum avg fee per tx' : 'Ethereum avg gas price'}
+      value={avg?.value}
+      format={format}
+      isLoading={isLoading}
+      footer={<FeeChange stat={avg} period={period} />}
+    />
+  )
+
   return (
-    <div className="grid grid-cols-2 gap-y-4 xl:grid-cols-4 xl:divide-x xl:divide-divider">
-      <Stat
-        label="Ethereum avg fee per tx"
-        value={stats?.ethereumAvgFee.value}
-        format={formatFee}
-        isLoading={isLoading}
-        footer={<FeeChange stat={stats?.ethereumAvgFee} period={period} />}
-      />
-      <Stat
-        label="Base fee per tx"
-        value={stats?.ethereumBaseFee.value}
-        format={formatFee}
-        isLoading={isLoading}
-        footer={
-          <Share
-            part={stats?.ethereumBaseFee.value}
-            stats={stats}
-            note={`burned${sinceLondon}`}
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] sm:gap-0 sm:divide-x sm:divide-divider">
+      <div className="sm:pr-5">{avgStat}</div>
+      <div className="flex flex-col gap-1.5 sm:pl-5">
+        <div className="flex items-start justify-between gap-4">
+          <StatBlock
+            label={`Base fee ${per}`}
+            value={base?.value}
+            format={format}
+            isLoading={isLoading}
           />
-        }
-      />
-      <Stat
-        label="Priority fee per tx"
-        value={stats?.ethereumPriorityFee.value}
-        format={formatFee}
-        isLoading={isLoading}
-        footer={
-          <Share
-            part={stats?.ethereumPriorityFee.value}
-            stats={stats}
-            note={`tips${sinceLondon}`}
+          <StatBlock
+            label={`Priority fee ${per}`}
+            value={priority?.value}
+            format={format}
+            isLoading={isLoading}
+            align="right"
           />
-        }
-      />
-      <Stat
-        label="L2s are cheaper by"
-        value={stats?.l2sCheaperBy.value}
-        format={formatTimes}
-        isLoading={isLoading}
-        footer={
-          stats?.l2sCheaperBy.previous !== undefined
-            ? `${formatTimes(stats.l2sCheaperBy.previous)} in prev. period`
-            : `Median L2, ${period}`
-        }
-      />
+        </div>
+        {isLoading || total === 0 ? (
+          <Skeleton className="h-2 w-full" />
+        ) : (
+          <FeeSplitBar
+            className="h-2"
+            parts={[
+              { key: 'base', value: base?.value ?? 0 },
+              { key: 'priority', value: priority?.value ?? 0 },
+            ]}
+          />
+        )}
+        <div className="flex justify-between gap-4 text-2xs text-secondary leading-none">
+          <span>
+            <span className="font-medium text-primary tabular-nums">
+              {share(base)}
+            </span>{' '}
+            burned{sinceLondon}
+          </span>
+          <span>
+            <span className="font-medium text-primary tabular-nums">
+              {share(priority)}
+            </span>{' '}
+            tips{sinceLondon}
+          </span>
+        </div>
+      </div>
     </div>
   )
 }
 
-function Stat({
+function StatBlock({
   label,
   value,
   format,
   isLoading,
+  bar,
   footer,
+  align = 'left',
 }: {
   label: string
   value: number | undefined
   format: (value: number) => string
   isLoading: boolean
-  footer: React.ReactNode
+  bar?: React.ReactNode
+  footer?: React.ReactNode
+  align?: 'left' | 'right'
 }) {
   return (
-    <div className="flex flex-col gap-1.5 xl:px-5 xl:last:pr-0 xl:first:pl-0">
+    <div
+      className={cn(
+        'flex flex-col gap-1.5',
+        align === 'right' && 'items-end text-right',
+      )}
+    >
       <span className="font-medium text-2xs text-secondary uppercase leading-none">
         {label}
       </span>
@@ -89,33 +126,11 @@ function Stat({
           {format(value)}
         </span>
       )}
-      <span className="text-2xs text-secondary leading-none">{footer}</span>
+      {bar}
+      {footer && (
+        <span className="text-2xs text-secondary leading-none">{footer}</span>
+      )}
     </div>
-  )
-}
-
-/** The part's share of base + priority, which the two stats split */
-function Share({
-  part,
-  stats,
-  note,
-}: {
-  part: number | undefined
-  stats: GasFeesSummary['stats'] | undefined
-  note: string
-}) {
-  const base = stats?.ethereumBaseFee.value
-  const priority = stats?.ethereumPriorityFee.value
-  if (part === undefined || base === undefined || priority === undefined) {
-    return <>{note}</>
-  }
-  return (
-    <>
-      <span className="font-medium text-primary tabular-nums">
-        {Math.round((part / (base + priority)) * 100)}%
-      </span>{' '}
-      {note}
-    </>
   )
 }
 
@@ -124,7 +139,7 @@ function FeeChange({
   stat,
   period,
 }: {
-  stat: { value: number | undefined; previous: number | undefined } | undefined
+  stat: Stat | undefined
   period: string
 }) {
   if (stat?.value === undefined || stat.previous === undefined) {
