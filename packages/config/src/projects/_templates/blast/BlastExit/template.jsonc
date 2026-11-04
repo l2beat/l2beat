@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Shutdown claim contract holding ETH and DAI withdrawn from the Blast yield managers. A user, or a redeemer approved for that user, claims once against a Merkle root of final balances set by the authority.",
+  "ignoreMethods": ["proxiableUUID"],
+  "ignoreRelatives": ["DAI"],
+  "fields": {
+    "authority": {
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "upgrade the contract (UUPS)."
+        },
+        {
+          "type": "interact",
+          "description": "set the Merkle roots of claimable balances, approve redeemers for any user (who then receive that user's claim), pause claims and transfer or give up the authority."
+        }
+      ]
+    }
+  }
+}

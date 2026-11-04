@@ -1,134 +1,191 @@
-Generated with discovered.json: 0x1889e487fd48c347bb2931a0978786ccfc4913a2
+Generated with discovered.json: 0x020d3846c2d4c6703b1e84a4c566adf87aad2672
 
-# Diff at Fri, 30 Oct 2026 11:40:49 GMT:
+# Diff at Wed, 04 Nov 2026 14:46:53 GMT:
 
 - id: 8a65e7f7
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@a32b7746d81261011718b887e668c6740d92df4a block: 1791966825
-- current timestamp: 1793360381
+- comparing to: main@314cc03cc4ab30a27af0a163e966f35b69ed7ff0 block: 1791966825
+- current timestamp: 1793803409
 
 ## Description
 
-L1BlastBridge: upgraded; its ETH and ERC20 deposit functions revert after L1 block 26298276 (2026-10-29), withdrawal finalization unchanged.
-ETHYieldManager and USDYieldManager: upgraded to unverified implementations that add `withdrawFunds(address,address,uint256)` and remove `commitYieldReportAfterInsuranceWithdrawal`.
+OptimismPortal: paused.
+L1BlastBridge: upgraded; its ETH and ERC20 deposit functions revert after L1 block 26298276 (2026-10-29).
+ETHYieldManager and USDYieldManager: upgraded; new `withdrawFunds` lets the owner send any amount of ETH or tokens to any address.
+BlastMultisig 1: threshold 3/5 → 2/5.
+BlastExit and BlastExit2: added to discovery; shutdown claim contracts holding the funds withdrawn from the yield managers, with BlastMultisig 1 as authority.
 
 ## Watched changes
+
+```diff
+    contract OptimismPortal (eth:0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb) [opstack/OptimismPortal] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
++++ severity: MEDIUM
+      values.paused:
+-        false
++        true
+    }
+```
+
+```diff
+    contract BlastExit2 (eth:0x23eA8c6ACEb5673BBd712137cE2Aa33db36CB513) [blast/BlastExit] {
+    +++ description: Shutdown claim contract holding ETH and DAI withdrawn from the Blast yield managers. A user, or a redeemer approved for that user, claims once against a Merkle root of final balances set by the authority.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "EIP1967 proxy"
+      template:
++        "blast/BlastExit"
+      sourceHashes:
++        ["0x5d5be4899b381a760f67129f9b207a2a06866a3ce03792b093825eaceb64a3c8","0x0a02cf40e3095fd3fa8301811da5b24c2c4de75548e8294f33faf0e8e6ab063a"]
+      description:
++        "Shutdown claim contract holding ETH and DAI withdrawn from the Blast yield managers. A user, or a redeemer approved for that user, claims once against a Merkle root of final balances set by the authority."
+      deployerAddress:
++        "eth:0x32BB93599Eb77eD5d3A357d3898fcF8200f5b2E9"
+      sinceTimestamp:
++        1793675279
+      sinceBlock:
++        26331479
+      values:
++        {"$admin":"eth:0x0000000000000000000000000000000000000000","$implementation":"eth:0xBd905D3d62f5D72ab18c4c2D3eDCfE549CBeA46D","$pastUpgrades":[["2026-11-03T03:07:59.000Z","0x448c08150fd23d7ca3e2e7955ca62d4d7d6bb50dbd4ffa5a2cf5bad3979264bc",["eth:0x8b8B4bF2020b29872d374CAf8d078354d3DFC880"]],["2026-11-03T03:08:35.000Z","0xd2c105fc4ad8d6244eeac2150626f751dbf3248ab750612cd45bfa06ec0c8c2d",["eth:0xBd905D3d62f5D72ab18c4c2D3eDCfE549CBeA46D"]]],"$upgradeCount":2,"authority":"eth:0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05","DAI":"eth:0x6B175474E89094C44Da98b954EedeAC495271d0F","paused":false,"UPGRADE_INTERFACE_VERSION":"5.0.0"}
+      implementationNames:
++        {"eth:0x23eA8c6ACEb5673BBd712137cE2Aa33db36CB513":"ERC1967Proxy","eth:0xBd905D3d62f5D72ab18c4c2D3eDCfE549CBeA46D":"BlastExit"}
+    }
+```
 
 ```diff
     contract L1BlastBridge (eth:0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115) [N/A] {
     +++ description: Custom bridge gateway for Blast that allows the Operators to reinvest L1 tokens while they are bridged to the L2.
       sourceHashes.1:
 -        "0x2de77137c7520591ce7be53e8fdff330d246d95d6713af63b93c30d6188df3c1"
-+        "0x9ef3cf4dab20bb175675236c7fa821b10bb2b1d5db9f06262800e2d1427c511a"
++        "0xd60c5c590b884d3f4f0577a2f6666baeefbdfcc317e2aba4749d5d388bd2c279"
       values.$implementation:
 -        "eth:0x7A2075519Dd9598b62075FD397aF0Dd34b14619a"
-+        "eth:0xedec6E12b067dADDBa9fB555bb02b208116Fa392"
++        "eth:0xC245b4994cd229ad6Ab7B464205d71bfe85a96b7"
       values.DEPOSIT_CUTOFF_BLOCK:
 +        26298276
       implementationNames.eth:0x7A2075519Dd9598b62075FD397aF0Dd34b14619a:
 -        "L1BlastBridge"
-      implementationNames.eth:0xedec6E12b067dADDBa9fB555bb02b208116Fa392:
+      implementationNames.eth:0xC245b4994cd229ad6Ab7B464205d71bfe85a96b7:
 +        "L1BlastBridge"
+    }
+```
+
+```diff
+    contract BlastMultisig 1 (eth:0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05) [GnosisSafe] {
+    +++ description: None
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "2 of 5 (40%)"
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x23eA8c6ACEb5673BBd712137cE2Aa33db36CB513","description":"set the Merkle roots of claimable balances, approve redeemers for any user (who then receive that user's claim), pause claims and transfer or give up the authority.","role":".authority"}
+      receivedPermissions.6:
++        {"permission":"interact","from":"eth:0x9D31771458B421C7EA8A06CB8D12663E91617869","description":"set the Merkle roots of claimable balances, approve redeemers for any user (who then receive that user's claim), pause claims and transfer or give up the authority.","role":".authority"}
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"eth:0x23eA8c6ACEb5673BBd712137cE2Aa33db36CB513","description":"upgrade the contract (UUPS).","role":".authority"}
+      receivedPermissions.17:
++        {"permission":"upgrade","from":"eth:0x9D31771458B421C7EA8A06CB8D12663E91617869","description":"upgrade the contract (UUPS).","role":".authority"}
     }
 ```
 
 ```diff
     contract ETHYieldManager (eth:0x98078db053902644191f93988341E31289E1C8FE) [N/A] {
     +++ description: Contract managing Yield Providers for ETH.
-      sourceHashes:
--        ["0x25b3b37613a93de74b5c7b795eb7f1446dfea8b9e763cfebe29c2f2881acfbb3","0xb87f66cb0d382c418fb77d2ac7850660f016f0817764937c3d267c8f4eda3088"]
+      sourceHashes.1:
+-        "0xb87f66cb0d382c418fb77d2ac7850660f016f0817764937c3d267c8f4eda3088"
++        "0x7fc9f40b99aca9703746db2c15109f5208bd6bf266a4249e43d916868091bace"
       values.$implementation:
 -        "eth:0xf2F6148327B3020610FCa26E094D9A5cc4689525"
-+        "eth:0x7d92135dE632F02fa934191b8cdbC6bC09C5A298"
-      values.accumulatedNegativeYields:
--        0
-      values.admin:
--        "eth:0xF0218c491421B5830cbf96804CD9680b56ef70BD"
-      values.blastBridge:
--        "eth:0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115"
-      values.insurance:
--        "eth:0xcFF70D7F37b1EBeE89c08E485f08ACAB5f6ff873"
-+++ description: Insurance fee taken from positive yields
-+++ severity: LOW
-      values.insuranceFeeBips:
--        0
-      values.insuranceWithdrawalBuffer:
--        10
-      values.MAX_INSURANCE_FEE_BIPS:
--        10000
-      values.owner:
--        "eth:0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05"
-      values.pendingOwner:
--        "eth:0x0000000000000000000000000000000000000000"
-      values.portal:
--        "eth:0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb"
-      values.sharePrice:
--        "1000000000000000000000000000"
-      values.TOKEN:
--        "eth:0x0000000000000000000000000000000000000000"
-      values.version:
--        "1.0.0"
++        "eth:0x7B646deC285dA35AD81C6e330435b1f92D8799AB"
       implementationNames.eth:0xf2F6148327B3020610FCa26E094D9A5cc4689525:
 -        "ETHYieldManager"
-      implementationNames.eth:0x7d92135dE632F02fa934191b8cdbC6bC09C5A298:
-+        ""
-      unverified:
-+        true
+      implementationNames.eth:0x7B646deC285dA35AD81C6e330435b1f92D8799AB:
++        "ETHYieldManager"
+    }
+```
+
+```diff
+    contract BlastExit (eth:0x9D31771458B421C7EA8A06CB8D12663E91617869) [blast/BlastExit] {
+    +++ description: Shutdown claim contract holding ETH and DAI withdrawn from the Blast yield managers. A user, or a redeemer approved for that user, claims once against a Merkle root of final balances set by the authority.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "EIP1967 proxy"
+      template:
++        "blast/BlastExit"
+      sourceHashes:
++        ["0x5d5be4899b381a760f67129f9b207a2a06866a3ce03792b093825eaceb64a3c8","0x0a02cf40e3095fd3fa8301811da5b24c2c4de75548e8294f33faf0e8e6ab063a"]
+      description:
++        "Shutdown claim contract holding ETH and DAI withdrawn from the Blast yield managers. A user, or a redeemer approved for that user, claims once against a Merkle root of final balances set by the authority."
+      deployerAddress:
++        "eth:0x32BB93599Eb77eD5d3A357d3898fcF8200f5b2E9"
+      sinceTimestamp:
++        1793400635
+      sinceBlock:
++        26308673
+      values:
++        {"$admin":"eth:0x0000000000000000000000000000000000000000","$implementation":"eth:0xC0ed1264c60540591D3D9fe224c7b957d24F69df","$pastUpgrades":[["2026-10-30T22:50:35.000Z","0x18c8b568f4e82fe43e09c674892cd4310fce2208e6ee2208eb65177a0b92e562",["eth:0x556e323EDA06e37393B019F044457832B7b3786b"]],["2026-10-30T23:02:59.000Z","0xb91392d2b4123fcf5850cff9fb8336b1177f95341b03e35853d32d708823f562",["eth:0xbAAC0CeA4915a61B194124C09B50A2A44b727C54"]],["2026-10-30T23:40:59.000Z","0x6318712b87a1db3ec976c41807a77c1913dcd1fd4c9259645546b70f46151200",["eth:0x27D04309350eD79D03441a746d5A7563BF8f755e"]],["2026-10-31T00:00:35.000Z","0x73ddd4db61f5adff0bff6b488f9696fc7a1597aaa9f0113af119e0e09dd1b5a4",["eth:0xB5983040A5639c92A71fcA0845bF6a9b898386e7"]],["2026-10-31T00:31:35.000Z","0x27d128c0ee4cce17fff4037a60624a1ef223d100bcc4ab072e17d8683dfee9cc",["eth:0xC0ed1264c60540591D3D9fe224c7b957d24F69df"]]],"$upgradeCount":5,"authority":"eth:0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05","DAI":"eth:0x6B175474E89094C44Da98b954EedeAC495271d0F","paused":false,"UPGRADE_INTERFACE_VERSION":"5.0.0"}
+      implementationNames:
++        {"eth:0x9D31771458B421C7EA8A06CB8D12663E91617869":"ERC1967Proxy","eth:0xC0ed1264c60540591D3D9fe224c7b957d24F69df":"BlastExit"}
     }
 ```
 
 ```diff
     contract USDYieldManager (eth:0xa230285d5683C74935aD14c446e137c8c8828438) [N/A] {
     +++ description: Contract escrowing stablecoins and managing Yield Providers for stablecoins (like for example DAI).
-      sourceHashes:
--        ["0x25b3b37613a93de74b5c7b795eb7f1446dfea8b9e763cfebe29c2f2881acfbb3","0x956934682bbb4fe0586d036110d75b514aac8f9dc5c5aa1958fe59d2d023d69f"]
+      sourceHashes.1:
+-        "0x956934682bbb4fe0586d036110d75b514aac8f9dc5c5aa1958fe59d2d023d69f"
++        "0x5301073ef907295441e06a95bb25caecdd13e1b257e854941b63355c05b8443d"
       values.$implementation:
 -        "eth:0xeCDdf748A60E23609c07af6CA3856744B139B911"
-+        "eth:0xF0420dde455814950c79717207Df9e07ce0BF725"
-      values.accumulatedNegativeYields:
--        0
-      values.admin:
--        "eth:0xF0218c491421B5830cbf96804CD9680b56ef70BD"
-      values.blastBridge:
--        "eth:0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115"
-      values.insurance:
--        "eth:0xBbE2cd60BD30Ef2aaceFD74C3199282ee35fBBa6"
-+++ description: Insurance fee taken from positive yields
-+++ severity: LOW
-      values.insuranceFeeBips:
--        0
-      values.insuranceWithdrawalBuffer:
--        0
-      values.MAX_INSURANCE_FEE_BIPS:
--        10000
-      values.owner:
--        "eth:0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05"
-      values.pendingOwner:
--        "eth:0x0000000000000000000000000000000000000000"
-      values.portal:
--        "eth:0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb"
-      values.sharePrice:
--        "1000000000000000000000000000"
-      values.TOKEN:
--        "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F"
-      values.version:
--        "1.0.0"
++        "eth:0x697751527e199b9C2C350D68fBA840558cFfC52a"
       implementationNames.eth:0xeCDdf748A60E23609c07af6CA3856744B139B911:
 -        "USDYieldManager"
-      implementationNames.eth:0xF0420dde455814950c79717207Df9e07ce0BF725:
-+        ""
-      unverified:
-+        true
+      implementationNames.eth:0x697751527e199b9C2C350D68fBA840558cFfC52a:
++        "USDYieldManager"
     }
 ```
 
 ## Source code changes
 
 ```diff
-.../ETHYieldManager.sol => /dev/null               | 7448 -------------------
- .../L1BlastBridge/L1BlastBridge.sol                |  130 +-
- .../USDYieldManager.sol => /dev/null               | 7771 --------------------
- 3 files changed, 121 insertions(+), 15228 deletions(-)
+.../projects/blast/.flat/BlastExit/BlastExit.sol   | 1714 ++++++++++++++++++++
+ .../blast/.flat/BlastExit/ERC1967Proxy.p.sol       |  773 +++++++++
+ .../projects/blast/.flat/BlastExit2/BlastExit.sol  | 1714 ++++++++++++++++++++
+ .../blast/.flat/BlastExit2/ERC1967Proxy.p.sol      |  773 +++++++++
+ .../ETHYieldManager/ETHYieldManager.sol            |   91 +-
+ .../L1BlastBridge/L1BlastBridge.sol                |  132 +-
+ .../USDYieldManager/USDYieldManager.sol            |   68 +-
+ 7 files changed, 5236 insertions(+), 29 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791966825 (main branch discovery), not current.
+
+```diff
+    contract ETHYieldManager (eth:0x98078db053902644191f93988341E31289E1C8FE) [N/A] {
+    +++ description: Contract managing Yield Providers for ETH.
+      values.sharePrice:
+-        "1000000000000000000000000000"
+    }
+```
+
+```diff
+    contract USDYieldManager (eth:0xa230285d5683C74935aD14c446e137c8c8828438) [N/A] {
+    +++ description: Contract escrowing stablecoins and managing Yield Providers for stablecoins (like for example DAI).
+      values.sharePrice:
+-        "1000000000000000000000000000"
+    }
 ```
 
 Generated with discovered.json: 0x8e20e6e55ccdbf85af2353cdec6347e623bc595d
