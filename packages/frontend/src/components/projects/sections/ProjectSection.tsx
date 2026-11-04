@@ -8,6 +8,8 @@ import type { ProjectSectionId } from './types'
 
 export interface ExtendedProjectSectionProps {
   title: string
+  /** A line under the title in smaller type, e.g. the chain the section describes. */
+  subtitle?: string
   headerAccessory?: ReactNode
   /**
    * Link to the compare page seeded with this project and the section's
@@ -59,6 +61,7 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
       <Component>
         <ProjectDetailsSectionHeader
           title={props.title}
+          subtitle={props.subtitle}
           id={props.id}
           sectionOrder={props.sectionOrder}
           nested={props.nested}
@@ -96,6 +99,7 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
 interface ProjectDetailsSectionHeaderProps {
   id: string
   title: string
+  subtitle?: string
   sectionOrder: string | undefined
   nested: boolean | undefined
   className?: string
@@ -132,6 +136,13 @@ function ProjectDetailsSectionHeader(props: ProjectDetailsSectionHeaderProps) {
           )}
         >
           {props.title}
+          {props.subtitle && (
+            // The space keeps the accessible name readable: "Flows on Arbitrum One".
+            <span className="mt-0.5 block font-bold text-label-value-15 text-secondary">
+              {' '}
+              {props.subtitle}
+            </span>
+          )}
         </Heading>
       </a>
       {props.headerAccessory}

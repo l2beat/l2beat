@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TornadoProxyLight",
+  "description": "Immutable, ownerless router of the sidechain pools. It forwards deposits and withdrawals to a pool and emits the encrypted note backup, with no registry, fee or relayer logic.",
+  "category": "core"
+}

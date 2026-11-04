@@ -1,3 +1,178 @@
+Generated with discovered.json: 0xb96100bc0cdc6e4d25b5248209dd7d5e452339f2
+
+# Diff at Mon, 02 Nov 2026 17:46:20 GMT:
+
+- id: 9ee0fd98
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@7de2489d6143463905a64a13eea216e581898f3f block: 1792756093
+- current timestamp: 1793641516
+
+## Description
+
+Add the Arbitrum, BSC and Polygon PoS deployments: the pool proxy and RelayAdapt of each chain from Railgun's shared network config, with the chain's Delegator, ProxyAdmin, Treasury, Voting, Staking and GovernorRewards behind them. BSC and Polygon have their own fixed-supply RAIL tokens and DAOs; Arbitrum is governed from Ethereum through the ArbitrumExecutor. The first GovernorRewards proxies on BSC and Polygon are abandoned (every call reverts) but still hold TRANSFER_ROLE on their Treasury.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792756093 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract Treasury (arb1:0x3B374464a714525498e445ba050B91571937bFc8) [railgun/Treasury]
+    +++ description: Collects Railgun fees. Managed through access control roles.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (arb1:0xb00a75949806158a90A86f70B4d4393619A4D527) [railgun/ProxyAdmin]
+    +++ description: Admin interface for Railgun's pausable upgradeable proxies. It does not hold funds, but its controller can operate every proxy attached to it.
+```
+
+```diff
++   Status: CREATED
+    contract RelayAdapt (arb1:0xB4F2d77bD12c6b548Ae398244d7FAD4ABCE4D89b) [railgun/RelayAdapt]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Delegator (arb1:0xbB7d93eF65F4131eD13aeE0497503d57ff74Ccfa) [railgun/Delegator]
+    +++ description: Permission router proxy owned by Railgun governance.
+```
+
+```diff
++   Status: CREATED
+    contract ArbitrumExecutor (arb1:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) [railgun/ArbitrumExecutor]
+    +++ description: Executes Railgun governance tasks on Arbitrum. The Ethereum Voting contract (SENDER_L1) readies a task through a retryable ticket, after which anyone can execute its calls through the Arbitrum Delegator within 1mo 10d.
+```
+
+```diff
++   Status: CREATED
+    contract RailgunSmartWallet (arb1:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9) [railgun/RailgunSmartWallet]
+    +++ description: Main system contract and escrow that accepts shielded deposits, verifies private transactions and unshields, and maintains the commitment tree.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (bnb:0x3bb38Cd4c801cb0bEd481Bc3fC4b14B06D81C5D2) [railgun/ProxyAdmin]
+    +++ description: Admin interface for Railgun's pausable upgradeable proxies. It does not hold funds, but its controller can operate every proxy attached to it.
+```
+
+```diff
++   Status: CREATED
+    contract RailTokenFixedSupply (bnb:0x3F847b01d4d498a293e3197B186356039eCd737F) [railgun/RailTokenFixedSupply]
+    +++ description: RAIL governance token of this chain's Railgun deployment, minted once to its initial holder with no owner and no further minting. Staking it gives voting power in this chain's DAO.
+```
+
+```diff
++   Status: CREATED
+    contract Delegator (bnb:0x4A7532f58259524251D7df1052762dc23c98Bae7) [railgun/Delegator]
+    +++ description: Permission router proxy owned by Railgun governance.
+```
+
+```diff
++   Status: CREATED
+    contract RailgunSmartWallet (bnb:0x590162bf4b50F6576a459B75309eE21D92178A10) [railgun/RailgunSmartWallet]
+    +++ description: Main system contract and escrow that accepts shielded deposits, verifies private transactions and unshields, and maintains the commitment tree.
+```
+
+```diff
++   Status: CREATED
+    contract Staking (bnb:0x753f0F9BA003DDA95eb9284533Cf5B0F19e441dc) [railgun/Staking]
+    +++ description: RAIL staking contract that tracks delegated voting power, enforces a 1mo unstake delay, and snapshots staking balances for governance every 1d. Its parameters define the governance voting system.
+```
+
+```diff
++   Status: CREATED
+    contract GovernorRewards (bnb:0xa7A9582C2563a1b923dbff6a8A2fa625ee2FB1f8) [railgun/GovernorRewards]
+    +++ description: Reward distributor that pulls assets from the Railgun treasury and allocates them to stakers via token voting.
+```
+
+```diff
++   Status: CREATED
+    contract Voting (bnb:0xc3f2C8F9d5F0705De706b1302B7a039e1e11aC88) [railgun/Voting]
+    +++ description: Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.
+```
+
+```diff
++   Status: CREATED
+    contract GovernorRewards (bnb:0xd0198Dde1187b12aF01a743d9e9f2B4B84e8f59b) [N/A]
+    +++ description: Abandoned first GovernorRewards proxy. Every call to it reverts, but it still holds TRANSFER_ROLE on the BSC Treasury.
+```
+
+```diff
++   Status: CREATED
+    contract Treasury (bnb:0xdca05161eE5b5FA6DF170191c88857E70FFB4094) [railgun/Treasury]
+    +++ description: Collects Railgun fees. Managed through access control roles.
+```
+
+```diff
++   Status: CREATED
+    contract RelayAdapt (bnb:0xF82d00fC51F730F42A00F85E74895a2849ffF2Dd) [railgun/RelayAdapt]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RailgunSmartWallet (matic:0x19B620929f97b7b990801496c3b361CA5dEf8C71) [railgun/RailgunSmartWallet]
+    +++ description: Main system contract and escrow that accepts shielded deposits, verifies private transactions and unshields, and maintains the commitment tree.
+```
+
+```diff
++   Status: CREATED
+    contract GovernorRewards (matic:0x25f795A8eC8aF7904aa403fF2Cc7205ce683BF52) [railgun/GovernorRewards]
+    +++ description: Reward distributor that pulls assets from the Railgun treasury and allocates them to stakers via token voting.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (matic:0x3c53C163C2EcE58470ee219E647f18D133885C3A) [railgun/ProxyAdmin]
+    +++ description: Admin interface for Railgun's pausable upgradeable proxies. It does not hold funds, but its controller can operate every proxy attached to it.
+```
+
+```diff
++   Status: CREATED
+    contract Delegator (matic:0x5f67441090FbDf57F1D9f28dd65a29b0bB3E83a7) [railgun/Delegator]
+    +++ description: Permission router proxy owned by Railgun governance.
+```
+
+```diff
++   Status: CREATED
+    contract RailTokenFixedSupply (matic:0x92A9C92C215092720C731c96D4Ff508c831a714f) [railgun/RailTokenFixedSupply]
+    +++ description: RAIL governance token of this chain's Railgun deployment, minted once to its initial holder with no owner and no further minting. Staking it gives voting power in this chain's DAO.
+```
+
+```diff
++   Status: CREATED
+    contract Staking (matic:0x9AC2bA4bf7FaCB0bbB33447e5fF8f8D63B71dDC1) [railgun/Staking]
+    +++ description: RAIL staking contract that tracks delegated voting power, enforces a 1mo unstake delay, and snapshots staking balances for governance every 1d. Its parameters define the governance voting system.
+```
+
+```diff
++   Status: CREATED
+    contract Voting (matic:0xc3f2C8F9d5F0705De706b1302B7a039e1e11aC88) [railgun/Voting]
+    +++ description: Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.
+```
+
+```diff
++   Status: CREATED
+    contract GovernorRewards (matic:0xd0198Dde1187b12aF01a743d9e9f2B4B84e8f59b) [N/A]
+    +++ description: Abandoned first GovernorRewards proxy. Every call to it reverts, but it still holds TRANSFER_ROLE on the Polygon PoS Treasury.
+```
+
+```diff
++   Status: CREATED
+    contract Treasury (matic:0xdca05161eE5b5FA6DF170191c88857E70FFB4094) [railgun/Treasury]
+    +++ description: Collects Railgun fees. Managed through access control roles.
+```
+
+```diff
++   Status: CREATED
+    contract RelayAdapt (matic:0xF82d00fC51F730F42A00F85E74895a2849ffF2Dd) [railgun/RelayAdapt]
+    +++ description: None
+```
+
 Generated with discovered.json: 0x037d8f0d34e1ca4c2e88637bf5ac5d7dc4053ef0
 
 # Diff at Sat, 24 Oct 2026 16:41:07 GMT:

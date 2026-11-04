@@ -27,6 +27,10 @@ import {
   TokenTvsChartParams,
 } from '~/server/features/layer2s/tvs/tokens/getTokenTvsChart'
 import {
+  getTvsChartByProjectChain,
+  TvsChartByProjectChainParams,
+} from '~/server/features/tvs/getTvsChartByProjectChain'
+import {
   getTvsChartByProjects,
   TvsChartByProjectsParams,
 } from '~/server/features/tvs/getTvsChartByProjects'
@@ -43,6 +47,9 @@ export const tvsRouter = router({
   chartByProjects: procedure
     .input(TvsChartByProjectsParams)
     .query(({ input }) => getTvsChartByProjects(input)),
+  chartByProjectChain: procedure
+    .input(TvsChartByProjectChainParams)
+    .query(({ input }) => getTvsChartByProjectChain(input)),
   detailedChart: procedure
     .input(DetailedTvsChartDataParams)
     .query(({ input }) => getDetailedTvsChart(input)),

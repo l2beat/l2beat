@@ -101,6 +101,7 @@ export class PrivacyFlowEventRepository extends BaseRepository {
     projectIds: string[],
     fromInclusive: UnixTime | null,
     toExclusive: UnixTime,
+    chain?: string,
   ): Promise<PrivacyFlowDailyRecord[]> {
     if (projectIds.length === 0) return []
 
@@ -142,6 +143,9 @@ export class PrivacyFlowEventRepository extends BaseRepository {
       ])
       .where('projectId', 'in', projectIds)
 
+    if (chain !== undefined) {
+      query = query.where('chain', '=', chain)
+    }
     if (fromInclusive !== null) {
       query = query.where('timestamp', '>=', UnixTime.toDate(fromInclusive))
     }
@@ -175,6 +179,7 @@ export class PrivacyFlowEventRepository extends BaseRepository {
     bucketIds: string[],
     fromInclusive: UnixTime,
     toExclusive: UnixTime,
+    chain?: string,
   ): Promise<number> {
     if (bucketIds.length === 0) return 0
 
@@ -187,6 +192,7 @@ export class PrivacyFlowEventRepository extends BaseRepository {
       .where('amount', '>', '0')
       .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
       .where('timestamp', '<', UnixTime.toDate(toExclusive))
+      .$if(chain !== undefined, (qb) => qb.where('chain', '=', chain ?? ''))
       .executeTakeFirstOrThrow()
 
     return Number(row.depositCount ?? 0)
@@ -231,6 +237,7 @@ export class PrivacyFlowEventRepository extends BaseRepository {
 
   async getBucketTotalsByProjectIds(
     projectIds: string[],
+    chain?: string,
   ): Promise<PrivacyFlowBucketTotalRecord[]> {
     if (projectIds.length === 0) return []
 
@@ -269,6 +276,7 @@ export class PrivacyFlowEventRepository extends BaseRepository {
           .as('withdrawalValueUsd'),
       ])
       .where('projectId', 'in', projectIds)
+      .$if(chain !== undefined, (qb) => qb.where('chain', '=', chain ?? ''))
       .groupBy(['projectId', 'bucketId'])
       .execute()
 
@@ -286,6 +294,7 @@ export class PrivacyFlowEventRepository extends BaseRepository {
 
   async getLatestTimestampByProjectIds(
     projectIds: string[],
+    chain?: string,
   ): Promise<UnixTime | undefined> {
     if (projectIds.length === 0) return undefined
 
@@ -293,6 +302,7 @@ export class PrivacyFlowEventRepository extends BaseRepository {
       .selectFrom('PrivacyFlowEvent')
       .select(this.db.fn.max('timestamp').as('maxTimestamp'))
       .where('projectId', 'in', projectIds)
+      .$if(chain !== undefined, (qb) => qb.where('chain', '=', chain ?? ''))
       .executeTakeFirst()
 
     return row?.maxTimestamp ? UnixTime.fromDate(row.maxTimestamp) : undefined
@@ -300,6 +310,7 @@ export class PrivacyFlowEventRepository extends BaseRepository {
 
   async getFirstTimestampByProjectIds(
     projectIds: string[],
+    chain?: string,
   ): Promise<UnixTime | undefined> {
     if (projectIds.length === 0) return undefined
 
@@ -307,6 +318,7 @@ export class PrivacyFlowEventRepository extends BaseRepository {
       .selectFrom('PrivacyFlowEvent')
       .select(this.db.fn.min('timestamp').as('minTimestamp'))
       .where('projectId', 'in', projectIds)
+      .$if(chain !== undefined, (qb) => qb.where('chain', '=', chain ?? ''))
       .executeTakeFirst()
 
     return row?.minTimestamp ? UnixTime.fromDate(row.minTimestamp) : undefined

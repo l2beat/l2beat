@@ -77,6 +77,7 @@ export class PrivacyAnonymitySetEventRepository extends BaseRepository {
     projectIds: string[],
     fromInclusive: UnixTime,
     toExclusive: UnixTime,
+    chain?: string,
   ): Promise<PrivacyAnonymitySetSenderDayRecord[]> {
     if (projectIds.length === 0) return []
 
@@ -93,6 +94,7 @@ export class PrivacyAnonymitySetEventRepository extends BaseRepository {
       .where('projectId', 'in', projectIds)
       .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
       .where('timestamp', '<', UnixTime.toDate(toExclusive))
+      .$if(chain !== undefined, (qb) => qb.where('chain', '=', chain ?? ''))
       .groupBy(['projectId', 'bucketId', 'sender', day])
       .orderBy('timestamp', 'asc')
       .execute()
@@ -111,6 +113,7 @@ export class PrivacyAnonymitySetEventRepository extends BaseRepository {
     bucketIds: string[],
     fromInclusive: UnixTime,
     toExclusive: UnixTime,
+    chain?: string,
   ): Promise<number> {
     if (bucketIds.length === 0) return 0
 
@@ -121,6 +124,7 @@ export class PrivacyAnonymitySetEventRepository extends BaseRepository {
       .where('bucketId', 'in', bucketIds)
       .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
       .where('timestamp', '<', UnixTime.toDate(toExclusive))
+      .$if(chain !== undefined, (qb) => qb.where('chain', '=', chain ?? ''))
       .executeTakeFirstOrThrow()
 
     return Number(row.depositCount)

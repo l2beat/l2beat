@@ -229,6 +229,7 @@ export const privacyPoolsV2: BaseProject = {
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
     referenceApp: REFERENCE_APP,
+    deployedOn: ['ethereum'],
     trackedOn: ['ethereum'],
     tokens: getPrivacyTokens(),
     relayerTracking: {
@@ -323,6 +324,7 @@ function getPrivacyTokens(): ProjectPrivacyToken[] {
     }
     return {
       token: {
+        chain: 'ethereum',
         address: tokenAddress,
         iconUrl: resolved.iconUrl,
         symbol: resolved.symbol,

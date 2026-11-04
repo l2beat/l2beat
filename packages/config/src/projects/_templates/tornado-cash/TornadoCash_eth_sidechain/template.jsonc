@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TornadoCash_eth_sidechain",
+  "critical": true,
+  "category": "core",
+  "description": "Fixed-denomination pool for the chain's native token, deployed on the sidechains with CREATE2. Unlike the Ethereum pools it never had an operator: the verifier is fixed at deployment.",
+  "ignoreMethods": ["filledSubtrees", "roots", "zeros"],
+  "fields": {
+    "denomination": {
+      "description": "Fixed native-token amount accepted by this pool.",
+      "severity": "LOW"
+    },
+    "verifier": {
+      "description": "zkSNARK verifier used to authorize withdrawals from the pool.",
+      "severity": "HIGH"
+    }
+  },
+  "ignoreInWatchMode": ["currentRootIndex", "getLastRoot", "nextIndex"]
+}

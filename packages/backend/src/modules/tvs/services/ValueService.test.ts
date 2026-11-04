@@ -605,6 +605,7 @@ describe(ValueService.name, () => {
       const deployed = escrowBalance(EthereumAddress.random(), 0)
       // Deployed after the timestamp, so it holds nothing yet.
       const notYetDeployed = escrowBalance(EthereumAddress.random(), 2000)
+      // A token's only escrow is valued too, so its pool gets a value.
       const singleEscrow = escrowBalance(EthereumAddress.random(), 0)
 
       const tvsConfig: ProjectTvsConfig = {
@@ -628,9 +629,10 @@ describe(ValueService.name, () => {
       }
 
       const deployedId = createAmountConfig(deployed).id
+      const singleEscrowId = createAmountConfig(singleEscrow).id
       const storage = mockObject<DataStorage>({
         getAmount: mockFn(async (id: string) =>
-          id === deployedId ? 30n : undefined,
+          id === deployedId ? 30n : id === singleEscrowId ? 5n : undefined,
         ),
         getPrice: mockFn(async (id: string) =>
           id === createPriceConfigId(priceId) ? 2 : undefined,
@@ -660,6 +662,15 @@ describe(ValueService.name, () => {
           escrowAddress: notYetDeployed.escrowAddress,
           amount: 0,
           value: 0,
+        },
+        {
+          tokenId: TokenId('single'),
+          projectId: ProjectId('project'),
+          timestamp,
+          chain: 'ethereum',
+          escrowAddress: singleEscrow.escrowAddress,
+          amount: 5,
+          value: 10,
         },
       ])
     })

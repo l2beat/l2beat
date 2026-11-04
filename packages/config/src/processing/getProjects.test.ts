@@ -6,7 +6,7 @@ import {
 } from '@l2beat/shared'
 import {
   assert,
-  type ChainSpecificAddress,
+  ChainSpecificAddress,
   EthereumAddress,
   notUndefined,
   type ProjectId,
@@ -19,7 +19,7 @@ import uniq from 'lodash/uniq'
 import { asArray } from '../templates/utils'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from '../test/constants'
 import { isRiskCorrectlyFormatted } from '../test/helpers'
-import type { BaseProject } from '../types'
+import type { BaseProject, PrivacyBucketAddress } from '../types'
 import { ecosystems } from './ecosystems'
 import { hasEoaWithUpgradePermissions } from './getEoaRedWarning'
 import { getProjects } from './getProjects'
@@ -406,10 +406,21 @@ describe('getProjects', () => {
       p.privacyInfo ? [{ project: p, privacyInfo: p.privacyInfo }] : [],
     )
 
-    it('every project has valid trackedOn chains', () => {
+    it('every project has valid deployedOn and trackedOn chains', () => {
       const problems: string[] = []
       for (const { project, privacyInfo } of privacyProjects) {
-        const trackedOn = privacyInfo.trackedOn
+        const { deployedOn, trackedOn } = privacyInfo
+        if (deployedOn.length === 0) {
+          problems.push(`${project.id}: not deployed on any chain`)
+        }
+        if (new Set(deployedOn).size !== deployedOn.length) {
+          problems.push(`${project.id}: duplicate deployedOn chains`)
+        }
+        for (const chain of deployedOn) {
+          if (!chainNames.has(chain)) {
+            problems.push(`${project.id}: no chainConfig named ${chain}`)
+          }
+        }
         if (trackedOn.length === 0) {
           problems.push(`${project.id}: not tracked on any chain`)
         }
@@ -417,8 +428,89 @@ describe('getProjects', () => {
           problems.push(`${project.id}: duplicate trackedOn chains`)
         }
         for (const chain of trackedOn) {
-          if (!chainNames.has(chain)) {
-            problems.push(`${project.id}: no chainConfig named ${chain}`)
+          if (!deployedOn.includes(chain)) {
+            problems.push(`${project.id}: tracked on ${chain} but not deployed`)
+          }
+        }
+      }
+      expect(problems).toEqual([])
+    })
+
+    it('every tracked source lives on a tracked chain', () => {
+      const problems: string[] = []
+      for (const { project, privacyInfo } of privacyProjects) {
+        const trackedOn = new Set(privacyInfo.trackedOn)
+        for (const token of privacyInfo.tokens) {
+          if (!trackedOn.has(token.token.chain)) {
+            problems.push(
+              `${project.id} ${token.token.symbol}: token on untracked ${token.token.chain}`,
+            )
+          }
+          for (const bucket of token.buckets) {
+            const chain = bucketChain(bucket.address)
+            if (!trackedOn.has(chain)) {
+              problems.push(
+                `${project.id} ${bucket.id}: bucket on untracked ${chain}`,
+              )
+            }
+            if (chain !== token.token.chain) {
+              problems.push(
+                `${project.id} ${bucket.id}: bucket on ${chain}, token on ${token.token.chain}`,
+              )
+            }
+          }
+        }
+        const anonymitySet = privacyInfo.anonymitySet
+        if (anonymitySet?.type === 'key-registrations') {
+          const chain = ChainSpecificAddress.longChain(anonymitySet.registry)
+          if (!trackedOn.has(chain)) {
+            problems.push(`${project.id}: registry on untracked ${chain}`)
+          }
+        }
+        const tracking = privacyInfo.relayerTracking
+        if (tracking?.type === 'onchainEvents') {
+          for (const source of tracking.sources) {
+            const chain = ChainSpecificAddress.longChain(source.address)
+            if (!trackedOn.has(chain)) {
+              problems.push(
+                `${project.id}: relayer source ${source.address} on untracked ${chain}`,
+              )
+            }
+          }
+        }
+      }
+      expect(problems).toEqual([])
+    })
+
+    it('every tracked chain has an anonymity set source', () => {
+      const problems: string[] = []
+      for (const { project, privacyInfo } of privacyProjects) {
+        const anonymitySet = privacyInfo.anonymitySet
+        const type = anonymitySet?.type
+        if (
+          type === 'not-applicable' ||
+          type === 'too-small' ||
+          type === 'partially-attributed'
+        ) {
+          continue
+        }
+        const covered = new Set<string>()
+        for (const token of privacyInfo.tokens) {
+          for (const bucket of token.buckets) {
+            if (bucket.anonymitySet !== undefined) {
+              covered.add(bucketChain(bucket.address))
+            }
+          }
+        }
+        if (anonymitySet?.type === 'key-registrations') {
+          covered.add(ChainSpecificAddress.longChain(anonymitySet.registry))
+        }
+        // A project that tracks no anonymity set at all is not multi-chain
+        // tracking gone wrong, so only projects with a source are checked.
+        if (covered.size === 0) continue
+        for (const chain of privacyInfo.trackedOn) {
+          if (!covered.has(chain)) {
+            problems.push(`${project.id}: no anonymity set source on ${chain}`)
           }
         }
       }
@@ -1215,4 +1307,10 @@ function getUsageMap(projects: BaseProject[]) {
     }
   }
   return usageMap
+}
+
+function bucketChain(address: PrivacyBucketAddress): string {
+  return typeof address === 'string'
+    ? ChainSpecificAddress.longChain(address)
+    : address.chain
 }

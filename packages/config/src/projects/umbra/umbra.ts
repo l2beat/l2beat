@@ -6,7 +6,10 @@ import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
-import { getTokenByAddress } from '../../tokens/getTokenByAddress'
+import {
+  getTokenByAddress,
+  getTokenBySymbol,
+} from '../../tokens/getTokenByAddress'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { umbraAdversaries } from './adversaries'
@@ -22,60 +25,94 @@ const STEALTH_KEY_CHANGED_EVENT =
 
 const ETH_TOKEN_PLACEHOLDER = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
 
-const TRACKED_TOKENS = [
-  '0x6B175474E89094C44Da98b954EedeAC495271d0F', // DAI
-  ETH_TOKEN_PLACEHOLDER,
-  '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', // USDC
-  '0xdAC17F958D2ee523a2206206994597C13D831ec7', // USDT
-  '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599', // WBTC
+/** A tracked token, by symbol, with an address when the symbol is ambiguous on the chain. */
+type UmbraTokenRef = string | { symbol: string; address: string }
+
+interface UmbraDeployment {
+  chain: string
+  chainId: number
+  tokens: UmbraTokenRef[]
+}
+
+// Umbra uses the same addresses on every chain. A chain is tracked when its
+// registry saw at least 500 distinct registrants in the trailing twelve
+// months. Counted with eth_getLogs on 2026-11-02: Ethereum qualifies, Base
+// (295), Polygon PoS (143), Arbitrum (113) and Optimism (28) do not, so those
+// deployments are shown without statistics.
+const DEPLOYMENTS: UmbraDeployment[] = [
+  {
+    chain: 'ethereum',
+    chainId: 1,
+    tokens: ['DAI', 'ETH', 'USDC', 'USDT', 'WBTC'],
+  },
 ]
 
-const umbraCore = discovery.getContract('Umbra')
-const stealthKeyRegistry = discovery.getContract('StealthKeyRegistry')
+const UNTRACKED_DEPLOYMENTS = ['optimism', 'polygonpos', 'base', 'arbitrum']
 
-const privacyTokens: ProjectPrivacyToken[] = TRACKED_TOKENS.map((address) => {
-  const resolved = getTokenByAddress(address)
-  // Prices must cover the whole bucket range, so never start before listing.
-  const sinceTimestamp = Math.max(
-    umbraCore.sinceTimestamp ?? 0,
-    resolved.coingeckoListingTimestamp,
-  )
+const umbraCore = discovery.getContract('Umbra', 'ethereum')
+const stealthKeyRegistry = discovery.getContract(
+  'StealthKeyRegistry',
+  'ethereum',
+)
 
-  return {
-    token: {
-      address: EthereumAddress(address),
-      iconUrl: resolved.iconUrl,
-      symbol: resolved.symbol,
-      decimals: resolved.decimals,
-      priceId: resolved.coingeckoId,
-      sinceTimestamp,
-    },
-    buckets: [
-      {
-        id: `umbra-${resolved.symbol}`,
-        type: 'pool',
-        label: resolved.symbol,
-        address: umbraCore.address,
-        sinceTimestamp,
-        deposit: {
-          event: UMBRA_ANNOUNCEMENT_EVENT,
-          extractor: 'umbraAmount',
-          params: { tokenAddress: EthereumAddress(address) },
+const privacyTokens: ProjectPrivacyToken[] = DEPLOYMENTS.flatMap(
+  (deployment) => {
+    const core = discovery.getContract('Umbra', deployment.chain)
+    return deployment.tokens.map((ref) => {
+      const resolved =
+        typeof ref === 'string'
+          ? getTokenBySymbol(ref, deployment.chainId)
+          : getTokenByAddress(ref.address, deployment.chainId)
+      const address = EthereumAddress(resolved.address ?? ETH_TOKEN_PLACEHOLDER)
+      const isNative = resolved.address === undefined
+      // Prices must cover the whole bucket range, so never start before listing.
+      const sinceTimestamp = Math.max(
+        core.sinceTimestamp ?? 0,
+        resolved.coingeckoListingTimestamp,
+      )
+      const bucketId =
+        deployment.chain === 'ethereum'
+          ? `umbra-${resolved.symbol}`
+          : `umbra-${deployment.chain}-${resolved.symbol}`
+
+      return {
+        token: {
+          chain: deployment.chain,
+          address,
+          iconUrl: resolved.iconUrl,
+          symbol: resolved.symbol,
+          decimals: resolved.decimals,
+          priceId: resolved.coingeckoId,
+          sinceTimestamp,
         },
-        withdrawal: {
-          // ETH is forwarded straight to the stealth address instead of being
-          // escrowed, so its Announcement is a deposit and a withdrawal at once.
-          event:
-            address === ETH_TOKEN_PLACEHOLDER
-              ? UMBRA_ANNOUNCEMENT_EVENT
-              : UMBRA_TOKEN_WITHDRAWAL_EVENT,
-          extractor: 'umbraAmount',
-          params: { tokenAddress: EthereumAddress(address) },
-        },
-      },
-    ],
-  }
-})
+        buckets: [
+          {
+            id: bucketId,
+            type: 'pool',
+            label: resolved.symbol,
+            address: core.address,
+            sinceTimestamp,
+            deposit: {
+              event: UMBRA_ANNOUNCEMENT_EVENT,
+              extractor: 'umbraAmount',
+              params: { tokenAddress: address },
+            },
+            withdrawal: {
+              // ETH is forwarded straight to the stealth address instead of
+              // being escrowed, so its Announcement is a deposit and a
+              // withdrawal at once.
+              event: isNative
+                ? UMBRA_ANNOUNCEMENT_EVENT
+                : UMBRA_TOKEN_WITHDRAWAL_EVENT,
+              extractor: 'umbraAmount',
+              params: { tokenAddress: address },
+            },
+          },
+        ],
+      }
+    })
+  },
+)
 
 export const umbra: BaseProject = {
   id: ProjectId('umbra'),
@@ -93,9 +130,9 @@ export const umbra: BaseProject = {
   },
   display: {
     description:
-      'A stealth-address payment protocol for an existing wallet: the user registers once, and anyone can pay them at a fresh address.',
+      'A stealth-address payment protocol for an existing wallet on Ethereum and several L2s: the user registers once, and anyone can pay them at a fresh address.',
     detailedDescription: readProjectMarkdown('umbra', 'detailedDescription', {
-      toll: `${Number(formatEther(discovery.getContractValue<number>('Umbra', 'toll')))} ETH`,
+      toll: `${Number(formatEther(discovery.getContractValue<number>(umbraCore.address, 'toll')))} ETH`,
     }),
     links: {
       websites: ['https://app.umbra.cash'],
@@ -122,7 +159,11 @@ export const umbra: BaseProject = {
         commit: '947c4f3b9b89f6cf5d69b2d43d3cffec673da655',
       },
     },
-    trackedOn: ['ethereum'],
+    deployedOn: [
+      ...DEPLOYMENTS.map((deployment) => deployment.chain),
+      ...UNTRACKED_DEPLOYMENTS,
+    ],
+    trackedOn: DEPLOYMENTS.map((deployment) => deployment.chain),
     tokens: privacyTokens,
     anonymitySet: {
       type: 'key-registrations',
@@ -151,7 +192,7 @@ export const umbra: BaseProject = {
     ],
     adversaries: umbraAdversaries(
       discovery.getContractValue<number>(
-        'StealthKeyRegistry',
+        stealthKeyRegistry.address,
         'registeredAddresses',
       ),
     ),

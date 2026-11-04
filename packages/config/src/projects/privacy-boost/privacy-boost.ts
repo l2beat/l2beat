@@ -14,41 +14,103 @@ import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
-import { getTokenByAddress } from '../../tokens/getTokenByAddress'
+import { getTokenBySymbol } from '../../tokens/getTokenByAddress'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { privacyBoostAdversaries } from './adversaries'
 
 const discovery = new ProjectDiscovery('privacy-boost')
 
-// PrivacyBoost measures exit delays and auth-root staleness in blocks.
-const BASE_BLOCK_TIME = 2
-const BASE_CHAIN_ID = 8453
+interface PrivacyBoostDeployment {
+  chain: string
+  chainId: number
+  /** Tokens tracked on this chain, by symbol in the token list. */
+  tokens: string[]
+}
 
-const pool = discovery.getContract('PrivacyBoost')
-const adminMultisigStats = discovery.getMultisigStats('AdminMultisig')
-const PRIVACY_BOOST_SINCE_TIMESTAMP = UnixTime(pool.sinceTimestamp ?? 0)
+// The primary chain comes first. Bucket ids on Base predate Optimism and
+// stay as they are, so no Base data resyncs. The registry lists dozens of
+// long-tail tokens and vault shares, most of them unused. Only the tokens
+// below are tracked; others must be added here (and to the token list) to
+// be counted.
+const DEPLOYMENTS: PrivacyBoostDeployment[] = [
+  {
+    chain: 'base',
+    chainId: 8453,
+    tokens: [
+      'WETH',
+      'USDC',
+      'cbBTC',
+      'EURC',
+      'SOL',
+      'USDT',
+      'AERO',
+      'Basecat',
+      'wstETH',
+      'AAPLc',
+      'cbXRP',
+      'TOSHI',
+      'BRETT',
+      'bbqUSDC',
+      'gtusdcf',
+      'gtwethb',
+      'CSUSDC',
+      'edgeUSDC',
+    ],
+  },
+  {
+    chain: 'optimism',
+    chainId: 10,
+    tokens: ['USDC', 'OP'],
+  },
+]
+
+// Deployments with pools too small to track, shown as dimmed icons.
+const UNTRACKED_DEPLOYMENTS = ['soneium', 'ink']
+
+// PrivacyBoost measures exit delays and auth-root staleness in blocks. The
+// parameters in the descriptions come from Base, the primary chain. Contract
+// names repeat across chains, so lookups name the chain.
+const BASE_BLOCK_TIME = 2
+
+const pool = discovery.getContract('PrivacyBoost', 'base')
+const adminMultisigStats = discovery.getMultisigStats(
+  discovery.getContract('AdminMultisig', 'base').address.toString(),
+)
+const PRIVACY_BOOST_SINCE_TIMESTAMP = UnixTime(
+  Math.min(
+    ...DEPLOYMENTS.map(
+      (deployment) =>
+        discovery.getContract('PrivacyBoost', deployment.chain)
+          .sinceTimestamp ?? 0,
+    ),
+  ),
+)
 
 const forcedWithdrawalDelay =
-  discovery.getContractValue<number>('PrivacyBoost', 'forcedWithdrawalDelay') *
+  discovery.getContractValue<number>(pool.address, 'forcedWithdrawalDelay') *
   BASE_BLOCK_TIME
 const epochAuthStaleness =
   discovery.getContractValue<number>(
-    'PrivacyBoost',
+    pool.address,
     'maxEpochAuthStalenessBlocks',
   ) * BASE_BLOCK_TIME
 const maxForcedInputs = discovery.getContractValue<number>(
-  'PrivacyBoost',
+  pool.address,
   'maxForcedInputs',
 )
 const portalSweepFeeBps = discovery.getContractValue<number>(
-  'PrivacyBoost',
+  pool.address,
   'portalSweepFeeBps',
 )
 const withdrawFeeBps = discovery.getContractValue<number>(
-  'PrivacyBoost',
+  pool.address,
   'withdrawFeeBps',
 )
+const auditorCount = discovery.getContractValue<string[]>(
+  discovery.getContract('AuditGateway', 'base').address,
+  'getAllAuditors',
+).length
 
 function formatBasisPoints(value: number): string {
   return `${Number((value / 100).toFixed(4))}%`
@@ -58,93 +120,77 @@ function formatBasisPoints(value: number): string {
 const ERC20_TRANSFER_EVENT =
   '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'
 
-const poolAddress = ChainSpecificAddress.address(pool.address)
-
-// The registry lists dozens of long-tail tokens and vault shares, most of them
-// unused. Only the tokens below are tracked; others must be added here (and to
-// the token list) to be counted.
-const TRACKED_TOKENS = [
-  '0x4200000000000000000000000000000000000006', // WETH
-  '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913', // USDC
-  '0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf', // cbBTC
-  '0x60a3E35Cc302bFA44Cb288Bc5a4F316Fdb1adb42', // EURC
-  '0x311935Cd80B76769bF2ecC9D8Ab7635b2139cf82', // SOL
-  '0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2', // USDT
-  '0x940181a94A35A4569E4529A3CDfB74e38FD98631', // AERO
-  '0xB2000000000000000000004c27f6523082f41D01', // Basecat
-  '0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452', // wstETH
-  '0xb200000000000000000000C2e324d24d7eEcd1fb', // AAPLc
-  '0xcb585250f852C6c6bf90434AB21A00f02833a4af', // cbXRP
-  '0xAC1Bd2486aAf3B5C0fc3Fd868558b082a531B2B4', // TOSHI
-  '0x532f27101965dd16442E59d40670FaF5eBB142E4', // BRETT
-  '0xbeeff7aE5E00Aae3Db302e4B0d8C883810a58100', // bbqUSDC
-  '0x1deEfABEe758AAbdC29a542B24ca3b75aFD56765', // gtusdcf
-  '0xFeFeC33668E22677c4762d0853d56245a800ff08', // gtwethb
-  '0x1D3b1Cd0a0f242d598834b3F2d126dC6bd774657', // CSUSDC
-  '0x5435BC53f2C61298167cdB11Cdf0Db2BFa259ca0', // edgeUSDC
-].map(EthereumAddress)
-
-const registryTokens = new Set(
-  discovery
-    .getContractValue<{ tokenAddress: string }[]>('TokenRegistry', 'tokens')
-    .map((token) =>
-      ChainSpecificAddress.address(token.tokenAddress as ChainSpecificAddress),
-    ),
-)
-
-const registeredTokens = TRACKED_TOKENS.map((address) => {
-  assert(
-    registryTokens.has(address),
-    `Privacy Boost: ${address} is not in the TokenRegistry`,
-  )
-  return {
-    address,
-    tokenInfo: getTokenByAddress(address.toString(), BASE_CHAIN_ID),
-  }
-})
-
 // The pool's own events carry no usable amounts: epoch withdrawals settle in
 // batches without per-withdrawal events, and the deposit event signature
 // changed with the September 2026 upgrade. Flows are therefore tracked as
 // gross ERC-20 transfers across the pool boundary. What that includes is
 // spelled out for users in detailedDescription.md.
-const privacyTokens: ProjectPrivacyToken[] = registeredTokens.map(
-  ({ address, tokenInfo }) => {
-    // Prices must cover the whole bucket range, so never start before listing.
-    const sinceTimestamp = Math.max(
-      PRIVACY_BOOST_SINCE_TIMESTAMP,
-      tokenInfo.coingeckoListingTimestamp,
+const privacyTokens: ProjectPrivacyToken[] = DEPLOYMENTS.flatMap(
+  (deployment) => {
+    const chainPool = discovery.getContract('PrivacyBoost', deployment.chain)
+    const chainPoolAddress = ChainSpecificAddress.address(chainPool.address)
+    const chainSinceTimestamp = UnixTime(chainPool.sinceTimestamp ?? 0)
+    const registryTokens = new Set(
+      discovery
+        .getContractValue<{ tokenAddress: string }[]>(
+          discovery.getContract('TokenRegistry', deployment.chain).address,
+          'tokens',
+        )
+        .map((token) =>
+          ChainSpecificAddress.address(
+            token.tokenAddress as ChainSpecificAddress,
+          ),
+        ),
     )
 
-    return {
-      token: {
-        address: address.toString(),
-        iconUrl: tokenInfo.iconUrl,
-        symbol: tokenInfo.symbol,
-        decimals: tokenInfo.decimals,
-        priceId: tokenInfo.coingeckoId,
-        sinceTimestamp,
-      },
-      buckets: [
-        {
-          id: `privacy-boost-${tokenInfo.symbol}`,
-          type: 'pool',
-          label: tokenInfo.symbol,
-          address: pool.address,
+    return deployment.tokens.map((symbol) => {
+      const tokenInfo = getTokenBySymbol(symbol, deployment.chainId)
+      const address = EthereumAddress(tokenInfo.address ?? '')
+      assert(
+        registryTokens.has(address),
+        `Privacy Boost: ${symbol} is not in the ${deployment.chain} TokenRegistry`,
+      )
+      // Prices must cover the whole bucket range, so never start before listing.
+      const sinceTimestamp = Math.max(
+        chainSinceTimestamp,
+        tokenInfo.coingeckoListingTimestamp,
+      )
+      const bucketId =
+        deployment.chain === 'base'
+          ? `privacy-boost-${tokenInfo.symbol}`
+          : `privacy-boost-${deployment.chain}-${tokenInfo.symbol}`
+
+      return {
+        token: {
+          chain: deployment.chain,
+          address: address.toString(),
+          iconUrl: tokenInfo.iconUrl,
+          symbol: tokenInfo.symbol,
+          decimals: tokenInfo.decimals,
+          priceId: tokenInfo.coingeckoId,
           sinceTimestamp,
-          deposit: {
-            event: ERC20_TRANSFER_EVENT,
-            extractor: 'erc20Transfer',
-            params: { to: poolAddress },
-          },
-          withdrawal: {
-            event: ERC20_TRANSFER_EVENT,
-            extractor: 'erc20Transfer',
-            params: { from: poolAddress },
-          },
         },
-      ],
-    }
+        buckets: [
+          {
+            id: bucketId,
+            type: 'pool',
+            label: tokenInfo.symbol,
+            address: chainPool.address,
+            sinceTimestamp,
+            deposit: {
+              event: ERC20_TRANSFER_EVENT,
+              extractor: 'erc20Transfer',
+              params: { to: chainPoolAddress },
+            },
+            withdrawal: {
+              event: ERC20_TRANSFER_EVENT,
+              extractor: 'erc20Transfer',
+              params: { from: chainPoolAddress },
+            },
+          },
+        ],
+      }
+    })
   },
 )
 
@@ -164,7 +210,7 @@ export const privacyBoost: BaseProject = {
   },
   display: {
     description:
-      "A shielded ledger for ERC-20 tokens on Base, aimed at institutional users, whose privacy rests on the operator's TEE.",
+      "A shielded ledger for ERC-20 tokens on Base and OP Mainnet, aimed at institutional users, whose privacy rests on the operator's TEE.",
     detailedDescription: readProjectMarkdown(
       'privacy-boost',
       'detailedDescription',
@@ -178,10 +224,7 @@ export const privacyBoost: BaseProject = {
         withdrawFee: formatBasisPoints(withdrawFeeBps),
         portalSweepFee: formatBasisPoints(portalSweepFeeBps),
         maxForcedInputs: String(maxForcedInputs),
-        auditorCount: discovery.getContractValue<string[]>(
-          'AuditGateway',
-          'getAllAuditors',
-        ).length,
+        auditorCount,
       },
     ),
     links: {
@@ -214,14 +257,17 @@ export const privacyBoost: BaseProject = {
       type: 'general',
     },
   ],
-  escrows: [
-    {
-      address: poolAddress,
-      chain: ChainSpecificAddress.longChain(pool.address),
-      sinceTimestamp: PRIVACY_BOOST_SINCE_TIMESTAMP,
-      tokens: registeredTokens.map((token) => token.tokenInfo.symbol),
-    },
-  ],
+  escrows: DEPLOYMENTS.map((deployment) => {
+    const chainPool = discovery.getContract('PrivacyBoost', deployment.chain)
+    return {
+      address: ChainSpecificAddress.address(chainPool.address),
+      chain: deployment.chain,
+      sinceTimestamp: chainPool.sinceTimestamp ?? 0,
+      tokens: privacyTokens
+        .filter((token) => token.token.chain === deployment.chain)
+        .map((token) => token.token.symbol),
+    }
+  }),
   tvsInfo: {
     associatedTokens: [],
     warnings: [],
@@ -370,7 +416,11 @@ export const privacyBoost: BaseProject = {
       checked: '2026-10-30',
     },
     tokens: privacyTokens,
-    trackedOn: ['base'],
+    deployedOn: [
+      ...DEPLOYMENTS.map((deployment) => deployment.chain),
+      ...UNTRACKED_DEPLOYMENTS,
+    ],
+    trackedOn: DEPLOYMENTS.map((deployment) => deployment.chain),
     anonymitySet: { type: 'too-small' },
     exitWindow: {
       value: 'None',
@@ -416,23 +466,23 @@ export const privacyBoost: BaseProject = {
 function getPrivacyBoostVerifiers(): ChainSpecificAddress[] {
   return [
     discovery.getContractValue<ChainSpecificAddress>(
-      'PrivacyBoost',
+      pool.address,
       'depositVerifier',
     ),
     discovery.getContractValue<ChainSpecificAddress>(
-      'PrivacyBoost',
+      pool.address,
       'epochVerifier',
     ),
     discovery.getContractValue<ChainSpecificAddress>(
-      'PrivacyBoost',
+      pool.address,
       'forcedVerifier',
     ),
     discovery.getContractValue<ChainSpecificAddress>(
-      'PrivacyBoost',
+      pool.address,
       'portalDepositVerifier',
     ),
     discovery.getContractValue<ChainSpecificAddress>(
-      'PrivacyBoost',
+      pool.address,
       'giftClaimVerifier',
     ),
   ]

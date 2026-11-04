@@ -1,8 +1,478 @@
 {
   "name": "tornado-cash",
-  "timestamp": 1791619122,
-  "configHash": "0x742b7c8f230f1ee2e02867746880fddfb8a5ac3e3f17f3b5dbea142066a852c5",
+  "timestamp": 1793640598,
+  "configHash": "0x778a46a651eb66a88b9abf6ddb991c40028fe6f05c1a40597614eae2dcd166ce",
   "entries": [
+    {
+      "name": "TornadoProxyLight",
+      "address": "arb1:0x0D5550d52428E7e3175bfc9550207e4ad3859b17",
+      "type": "Contract",
+      "template": "tornado-cash/TornadoProxyLight",
+      "sourceHashes": [
+        "0x9a9cd97fb3d224d1d787cff538a7b80c7a928641915493552f14be5028a9bf0d"
+      ],
+      "proxyType": "immutable",
+      "description": "Immutable, ownerless router of the sidechain pools. It forwards deposits and withdrawals to a pool and emits the encrypted note backup, with no registry, fee or relayer logic.",
+      "deployerAddress": "arb1:0xa2b08aF6398647Bafe85a8A85757a94659881b35",
+      "sinceTimestamp": 1638184329,
+      "sinceBlock": 3430649,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "arb1:0x0D5550d52428E7e3175bfc9550207e4ad3859b17": "TornadoProxyLight"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Pool_100_ETH",
+      "address": "arb1:0x1E34A77868E19A6647b1f2F47B51ed72dEDE95DD",
+      "type": "Contract",
+      "template": "tornado-cash/TornadoCash_eth_sidechain",
+      "sourceHashes": [
+        "0xd92131f7b7c3ea75e73638fdc59e7f80f9dc5425b41bfa5aba74bd6ff87c1e25"
+      ],
+      "proxyType": "immutable",
+      "description": "Fixed-denomination Tornado Cash pool for 100 ETH deposits.",
+      "critical": true,
+      "ignoreInWatchMode": ["currentRootIndex", "getLastRoot", "nextIndex"],
+      "deployerAddress": "arb1:0x87616fA850c87a78f307878f32D808dad8f4d401",
+      "sinceTimestamp": 1638186812,
+      "sinceBlock": 3431521,
+      "values": {
+        "$immutable": true,
+        "currentRootIndex": 3,
+        "denomination": "100000000000000000000",
+        "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
+        "getLastRoot": "0x1f64ddcd6a897eab118dc793fef6873bb11454a3122ea8efcce2d4188719aa40",
+        "hasher": "arb1:0xBaffBE0e6C73d4dAd3f813194695FDC5829c962A",
+        "levels": 20,
+        "nextIndex": 183,
+        "ROOT_HISTORY_SIZE": 30,
+        "verifier": "arb1:0xfc9859303c0ac1a7721ECE639f2e249D8FD72ac6",
+        "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "denomination": {
+          "severity": "LOW",
+          "description": "Fixed native-token amount accepted by this pool."
+        },
+        "verifier": {
+          "severity": "HIGH",
+          "description": "zkSNARK verifier used to authorize withdrawals from the pool."
+        }
+      },
+      "implementationNames": {
+        "arb1:0x1E34A77868E19A6647b1f2F47B51ed72dEDE95DD": "ETHTornado"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Pool_10_ETH",
+      "address": "arb1:0x330bdFADE01eE9bF63C209Ee33102DD334618e0a",
+      "type": "Contract",
+      "template": "tornado-cash/TornadoCash_eth_sidechain",
+      "sourceHashes": [
+        "0xd92131f7b7c3ea75e73638fdc59e7f80f9dc5425b41bfa5aba74bd6ff87c1e25"
+      ],
+      "proxyType": "immutable",
+      "description": "Fixed-denomination Tornado Cash pool for 10 ETH deposits.",
+      "critical": true,
+      "ignoreInWatchMode": ["currentRootIndex", "getLastRoot", "nextIndex"],
+      "deployerAddress": "arb1:0x545D9F9ee8571eb6eda3500801b264Ad4F52B138",
+      "sinceTimestamp": 1638186085,
+      "sinceBlock": 3431284,
+      "values": {
+        "$immutable": true,
+        "currentRootIndex": 9,
+        "denomination": "10000000000000000000",
+        "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
+        "getLastRoot": "0x1093f9f3b084181a85556b1f340d054a22d2fe97bc9c559420393a6f413d7ca7",
+        "hasher": "arb1:0xBaffBE0e6C73d4dAd3f813194695FDC5829c962A",
+        "levels": 20,
+        "nextIndex": 729,
+        "ROOT_HISTORY_SIZE": 30,
+        "verifier": "arb1:0xfc9859303c0ac1a7721ECE639f2e249D8FD72ac6",
+        "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "denomination": {
+          "severity": "LOW",
+          "description": "Fixed native-token amount accepted by this pool."
+        },
+        "verifier": {
+          "severity": "HIGH",
+          "description": "zkSNARK verifier used to authorize withdrawals from the pool."
+        }
+      },
+      "implementationNames": {
+        "arb1:0x330bdFADE01eE9bF63C209Ee33102DD334618e0a": "ETHTornado"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Pool_0.1_ETH",
+      "address": "arb1:0x84443CFd09A48AF6eF360C6976C5392aC5023a1F",
+      "type": "Contract",
+      "template": "tornado-cash/TornadoCash_eth_sidechain",
+      "sourceHashes": [
+        "0xd92131f7b7c3ea75e73638fdc59e7f80f9dc5425b41bfa5aba74bd6ff87c1e25"
+      ],
+      "proxyType": "immutable",
+      "description": "Fixed-denomination Tornado Cash pool for 0.1 ETH deposits.",
+      "critical": true,
+      "ignoreInWatchMode": ["currentRootIndex", "getLastRoot", "nextIndex"],
+      "deployerAddress": "arb1:0x87616fA850c87a78f307878f32D808dad8f4d401",
+      "sinceTimestamp": 1638186812,
+      "sinceBlock": 3431511,
+      "values": {
+        "$immutable": true,
+        "currentRootIndex": 9,
+        "denomination": "100000000000000000",
+        "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
+        "getLastRoot": "0x01e1c75539e8d4546607870dd8f293fedc044fed7e8dedc342d37e650d9c66ea",
+        "hasher": "arb1:0xBaffBE0e6C73d4dAd3f813194695FDC5829c962A",
+        "levels": 20,
+        "nextIndex": 3189,
+        "ROOT_HISTORY_SIZE": 30,
+        "verifier": "arb1:0xfc9859303c0ac1a7721ECE639f2e249D8FD72ac6",
+        "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "denomination": {
+          "severity": "LOW",
+          "description": "Fixed native-token amount accepted by this pool."
+        },
+        "verifier": {
+          "severity": "HIGH",
+          "description": "zkSNARK verifier used to authorize withdrawals from the pool."
+        }
+      },
+      "implementationNames": {
+        "arb1:0x84443CFd09A48AF6eF360C6976C5392aC5023a1F": "ETHTornado"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "MiMCHasher",
+      "address": "arb1:0xBaffBE0e6C73d4dAd3f813194695FDC5829c962A",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x96acbaf2288d4cc44cf8e9634da42d922960c005a6982e0b54a84823be2776f2"
+      ],
+      "proxyType": "immutable",
+      "description": "MiMC hasher used by every Tornado pool on Arbitrum for commitment-tree operations, the same bytecode as the Ethereum hasher, manually verified against the pinned Tornado circomlib generator.",
+      "critical": true,
+      "deployerAddress": "arb1:0x9bbDA8387d14A4DAc7565deF56C43f3B081B8b13",
+      "sinceTimestamp": 1638184205,
+      "sinceBlock": 3430601,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "arb1:0xBaffBE0e6C73d4dAd3f813194695FDC5829c962A": ""
+      },
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://github.com/tornadocash/circomlib/blob/c372f14d324d57339c88451834bf2824e73bbdbc/src/mimcsponge_gencontract.js"
+        }
+      ],
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Pool_1_ETH",
+      "address": "arb1:0xd47438C816c9E7f2E2888E060936a499Af9582b3",
+      "type": "Contract",
+      "template": "tornado-cash/TornadoCash_eth_sidechain",
+      "sourceHashes": [
+        "0xd92131f7b7c3ea75e73638fdc59e7f80f9dc5425b41bfa5aba74bd6ff87c1e25"
+      ],
+      "proxyType": "immutable",
+      "description": "Fixed-denomination Tornado Cash pool for 1 ETH deposits.",
+      "critical": true,
+      "ignoreInWatchMode": ["currentRootIndex", "getLastRoot", "nextIndex"],
+      "deployerAddress": "arb1:0x6A928643E35E254fcc6927c689694897712d3827",
+      "sinceTimestamp": 1638185856,
+      "sinceBlock": 3431209,
+      "values": {
+        "$immutable": true,
+        "currentRootIndex": 17,
+        "denomination": "1000000000000000000",
+        "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
+        "getLastRoot": "0x2c3430e82381f3a7f81b70a14889f3d2baedb0853f37b9ae5d76bf7e19e4a8ed",
+        "hasher": "arb1:0xBaffBE0e6C73d4dAd3f813194695FDC5829c962A",
+        "levels": 20,
+        "nextIndex": 2717,
+        "ROOT_HISTORY_SIZE": 30,
+        "verifier": "arb1:0xfc9859303c0ac1a7721ECE639f2e249D8FD72ac6",
+        "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "denomination": {
+          "severity": "LOW",
+          "description": "Fixed native-token amount accepted by this pool."
+        },
+        "verifier": {
+          "severity": "HIGH",
+          "description": "zkSNARK verifier used to authorize withdrawals from the pool."
+        }
+      },
+      "implementationNames": {
+        "arb1:0xd47438C816c9E7f2E2888E060936a499Af9582b3": "ETHTornado"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Verifier",
+      "address": "arb1:0xfc9859303c0ac1a7721ECE639f2e249D8FD72ac6",
+      "type": "Contract",
+      "template": "tornado-cash/Verifier",
+      "sourceHashes": [
+        "0x1dffb25bccfe38aa825fa7a4413a34a8d34b7e1614b2950afbb06a0aed7a215d"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier contract used by Tornado Cash pool withdrawal proofs.",
+      "critical": true,
+      "deployerAddress": "arb1:0x060bbae03EF52F1B47db247215Da0FB87FF4B2EB",
+      "sinceTimestamp": 1638184972,
+      "sinceBlock": 3430872,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "arb1:0xfc9859303c0ac1a7721ECE639f2e249D8FD72ac6": "Verifier"
+      }
+    },
+    {
+      "name": "TornadoProxyLight",
+      "address": "bnb:0x0D5550d52428E7e3175bfc9550207e4ad3859b17",
+      "type": "Contract",
+      "template": "tornado-cash/TornadoProxyLight",
+      "sourceHashes": [
+        "0x9a9cd97fb3d224d1d787cff538a7b80c7a928641915493552f14be5028a9bf0d"
+      ],
+      "proxyType": "immutable",
+      "description": "Immutable, ownerless router of the sidechain pools. It forwards deposits and withdrawals to a pool and emits the encrypted note backup, with no registry, fee or relayer logic.",
+      "deployerAddress": "bnb:0xb6559A21321c2F63FC4db79571619cC881C2587c",
+      "sinceTimestamp": 1623277980,
+      "sinceBlock": 8158799,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "bnb:0x0D5550d52428E7e3175bfc9550207e4ad3859b17": "TornadoProxyLight"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Pool_100_BNB",
+      "address": "bnb:0x1E34A77868E19A6647b1f2F47B51ed72dEDE95DD",
+      "type": "Contract",
+      "template": "tornado-cash/TornadoCash_eth_sidechain",
+      "sourceHashes": [
+        "0xd92131f7b7c3ea75e73638fdc59e7f80f9dc5425b41bfa5aba74bd6ff87c1e25"
+      ],
+      "proxyType": "immutable",
+      "description": "Fixed-denomination Tornado Cash pool for 100 BNB deposits.",
+      "critical": true,
+      "ignoreInWatchMode": ["currentRootIndex", "getLastRoot", "nextIndex"],
+      "deployerAddress": "bnb:0x9aee2220C5c0048665eA0d1dad9faf630A6f796A",
+      "sinceTimestamp": 1623279471,
+      "sinceBlock": 8159296,
+      "values": {
+        "$immutable": true,
+        "currentRootIndex": 24,
+        "denomination": "100000000000000000000",
+        "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
+        "getLastRoot": "0x1da864d5698ff36f88e103ad353c9589fb408a148ffc14f178e69389b39d6046",
+        "hasher": "bnb:0xBaffBE0e6C73d4dAd3f813194695FDC5829c962A",
+        "levels": 20,
+        "nextIndex": 19704,
+        "ROOT_HISTORY_SIZE": 30,
+        "verifier": "bnb:0xfc9859303c0ac1a7721ECE639f2e249D8FD72ac6",
+        "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "denomination": {
+          "severity": "LOW",
+          "description": "Fixed native-token amount accepted by this pool."
+        },
+        "verifier": {
+          "severity": "HIGH",
+          "description": "zkSNARK verifier used to authorize withdrawals from the pool."
+        }
+      },
+      "implementationNames": {
+        "bnb:0x1E34A77868E19A6647b1f2F47B51ed72dEDE95DD": "ETHTornado"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Pool_10_BNB",
+      "address": "bnb:0x330bdFADE01eE9bF63C209Ee33102DD334618e0a",
+      "type": "Contract",
+      "template": "tornado-cash/TornadoCash_eth_sidechain",
+      "sourceHashes": [
+        "0xd92131f7b7c3ea75e73638fdc59e7f80f9dc5425b41bfa5aba74bd6ff87c1e25"
+      ],
+      "proxyType": "immutable",
+      "description": "Fixed-denomination Tornado Cash pool for 10 BNB deposits.",
+      "critical": true,
+      "ignoreInWatchMode": ["currentRootIndex", "getLastRoot", "nextIndex"],
+      "deployerAddress": "bnb:0x9aee2220C5c0048665eA0d1dad9faf630A6f796A",
+      "sinceTimestamp": 1623279453,
+      "sinceBlock": 8159290,
+      "values": {
+        "$immutable": true,
+        "currentRootIndex": 0,
+        "denomination": "10000000000000000000",
+        "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
+        "getLastRoot": "0x206ce16b0febd87aea64e44de0b9d4e3b724344119f5c801a1fbbcbb7da5b9e6",
+        "hasher": "bnb:0xBaffBE0e6C73d4dAd3f813194695FDC5829c962A",
+        "levels": 20,
+        "nextIndex": 68280,
+        "ROOT_HISTORY_SIZE": 30,
+        "verifier": "bnb:0xfc9859303c0ac1a7721ECE639f2e249D8FD72ac6",
+        "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "denomination": {
+          "severity": "LOW",
+          "description": "Fixed native-token amount accepted by this pool."
+        },
+        "verifier": {
+          "severity": "HIGH",
+          "description": "zkSNARK verifier used to authorize withdrawals from the pool."
+        }
+      },
+      "implementationNames": {
+        "bnb:0x330bdFADE01eE9bF63C209Ee33102DD334618e0a": "ETHTornado"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Pool_0.1_BNB",
+      "address": "bnb:0x84443CFd09A48AF6eF360C6976C5392aC5023a1F",
+      "type": "Contract",
+      "template": "tornado-cash/TornadoCash_eth_sidechain",
+      "sourceHashes": [
+        "0xd92131f7b7c3ea75e73638fdc59e7f80f9dc5425b41bfa5aba74bd6ff87c1e25"
+      ],
+      "proxyType": "immutable",
+      "description": "Fixed-denomination Tornado Cash pool for 0.1 BNB deposits.",
+      "critical": true,
+      "ignoreInWatchMode": ["currentRootIndex", "getLastRoot", "nextIndex"],
+      "deployerAddress": "bnb:0x9aee2220C5c0048665eA0d1dad9faf630A6f796A",
+      "sinceTimestamp": 1623279420,
+      "sinceBlock": 8159279,
+      "values": {
+        "$immutable": true,
+        "currentRootIndex": 15,
+        "denomination": "100000000000000000",
+        "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
+        "getLastRoot": "0x299ce87295cd54a706ae1cd7555b44368367433033743a8baf8422b4e004144a",
+        "hasher": "bnb:0xBaffBE0e6C73d4dAd3f813194695FDC5829c962A",
+        "levels": 20,
+        "nextIndex": 88695,
+        "ROOT_HISTORY_SIZE": 30,
+        "verifier": "bnb:0xfc9859303c0ac1a7721ECE639f2e249D8FD72ac6",
+        "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "denomination": {
+          "severity": "LOW",
+          "description": "Fixed native-token amount accepted by this pool."
+        },
+        "verifier": {
+          "severity": "HIGH",
+          "description": "zkSNARK verifier used to authorize withdrawals from the pool."
+        }
+      },
+      "implementationNames": {
+        "bnb:0x84443CFd09A48AF6eF360C6976C5392aC5023a1F": "ETHTornado"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "MiMCHasher",
+      "address": "bnb:0xBaffBE0e6C73d4dAd3f813194695FDC5829c962A",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x96acbaf2288d4cc44cf8e9634da42d922960c005a6982e0b54a84823be2776f2"
+      ],
+      "proxyType": "immutable",
+      "description": "MiMC hasher used by every Tornado pool on BSC for commitment-tree operations, the same bytecode as the Ethereum hasher, manually verified against the pinned Tornado circomlib generator.",
+      "critical": true,
+      "deployerAddress": "bnb:0x7a759A170C3AEA65B3b373299D33BF5221785C48",
+      "sinceTimestamp": 1623272447,
+      "sinceBlock": 8156955,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "bnb:0xBaffBE0e6C73d4dAd3f813194695FDC5829c962A": ""
+      },
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://github.com/tornadocash/circomlib/blob/c372f14d324d57339c88451834bf2824e73bbdbc/src/mimcsponge_gencontract.js"
+        }
+      ],
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Pool_1_BNB",
+      "address": "bnb:0xd47438C816c9E7f2E2888E060936a499Af9582b3",
+      "type": "Contract",
+      "template": "tornado-cash/TornadoCash_eth_sidechain",
+      "sourceHashes": [
+        "0xd92131f7b7c3ea75e73638fdc59e7f80f9dc5425b41bfa5aba74bd6ff87c1e25"
+      ],
+      "proxyType": "immutable",
+      "description": "Fixed-denomination Tornado Cash pool for 1 BNB deposits.",
+      "critical": true,
+      "ignoreInWatchMode": ["currentRootIndex", "getLastRoot", "nextIndex"],
+      "deployerAddress": "bnb:0x9aee2220C5c0048665eA0d1dad9faf630A6f796A",
+      "sinceTimestamp": 1623279441,
+      "sinceBlock": 8159286,
+      "values": {
+        "$immutable": true,
+        "currentRootIndex": 23,
+        "denomination": "1000000000000000000",
+        "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
+        "getLastRoot": "0x1069762b68253d7f1b5265ebe51089229405a0170a8b8d83c0ed414104ab8202",
+        "hasher": "bnb:0xBaffBE0e6C73d4dAd3f813194695FDC5829c962A",
+        "levels": 20,
+        "nextIndex": 105833,
+        "ROOT_HISTORY_SIZE": 30,
+        "verifier": "bnb:0xfc9859303c0ac1a7721ECE639f2e249D8FD72ac6",
+        "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "denomination": {
+          "severity": "LOW",
+          "description": "Fixed native-token amount accepted by this pool."
+        },
+        "verifier": {
+          "severity": "HIGH",
+          "description": "zkSNARK verifier used to authorize withdrawals from the pool."
+        }
+      },
+      "implementationNames": {
+        "bnb:0xd47438C816c9E7f2E2888E060936a499Af9582b3": "ETHTornado"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Verifier",
+      "address": "bnb:0xfc9859303c0ac1a7721ECE639f2e249D8FD72ac6",
+      "type": "Contract",
+      "template": "tornado-cash/Verifier",
+      "sourceHashes": [
+        "0x1dffb25bccfe38aa825fa7a4413a34a8d34b7e1614b2950afbb06a0aed7a215d"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier contract used by Tornado Cash pool withdrawal proofs.",
+      "critical": true,
+      "deployerAddress": "bnb:0x1eA0537a2CE43E2CA26843f04c0d105f09b8bEA6",
+      "sinceTimestamp": 1623277506,
+      "sinceBlock": 8158641,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "bnb:0xfc9859303c0ac1a7721ECE639f2e249D8FD72ac6": "Verifier"
+      }
+    },
     {
       "name": "Pool_50K_cDAI",
       "address": "eth:0x03893a7c7463AE47D46bc7f091665f1893656003",
@@ -77,13 +547,13 @@
       "sinceBlock": 12066007,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 24,
+        "currentRootIndex": 26,
         "denomination": "10000000000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x11c9de51b81aa3009845f4584621f5b4229547330a056a5c50c8a2b301a40603",
+        "getLastRoot": "0x0ffc74187485aa50ac8f6cff0be583ad548f8cf6491996ca11d2411b0fc2e403",
         "hasher": "eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe",
         "levels": 20,
-        "nextIndex": 3444,
+        "nextIndex": 3446,
         "ROOT_HISTORY_SIZE": 30,
         "token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
@@ -126,12 +596,12 @@
       "sinceBlock": 9162012,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 15,
+        "currentRootIndex": 35,
         "denomination": 1000000000,
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x0782d28f8d6db16f9d1ec5a70d843e93f2436f9f0f44cf2156c9936a1877987b",
+        "getLastRoot": "0x07cd377d782223d9502bb4b6e5a7c26630aa2fccb16a03d5f7816e12524f938d",
         "levels": 20,
-        "nextIndex": 2115,
+        "nextIndex": 2135,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "operatorRenounced": true,
         "ROOT_HISTORY_SIZE": 100,
@@ -201,13 +671,13 @@
       "sinceBlock": 9116966,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 24,
+        "currentRootIndex": 5,
         "denomination": "100000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x154ea040ac91b6048c594abffda260a0b28cd6b763f6a889aa45c3442c8df3dc",
+        "getLastRoot": "0x2981532860072d714ff6e9990327a4082371bd599d23e5a06fe6d9593d59e406",
         "isMigrated": true,
         "levels": 20,
-        "nextIndex": 73680,
+        "nextIndex": 75861,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "operatorRenounced": true,
         "ROOT_HISTORY_SIZE": 100,
@@ -258,12 +728,12 @@
       "sinceBlock": 9162005,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 76,
+        "currentRootIndex": 97,
         "denomination": 100000000,
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x0f7ea251d4e72892fe05afe5167ab13a51dce1f475c537739fae6dc7e7c70d19",
+        "getLastRoot": "0x197f55012e018e39ae1b2080b7c311bdf33e1b4b9185fcb99fda3d2c9b262f3a",
         "levels": 20,
-        "nextIndex": 976,
+        "nextIndex": 997,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "operatorRenounced": true,
         "ROOT_HISTORY_SIZE": 100,
@@ -419,13 +889,13 @@
       "sinceBlock": 12066048,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 5,
+        "currentRootIndex": 2,
         "denomination": "100000000000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x2f235e782504c31b4d5664a30a0e62d3f0b15d5d2ad2e9315ff4a10344c8ba80",
+        "getLastRoot": "0x2dbc107a09632ae948dbf88e54779ceae6614e62d73970d1f2495c3cbd4165bc",
         "hasher": "eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe",
         "levels": 20,
-        "nextIndex": 4385,
+        "nextIndex": 4412,
         "ROOT_HISTORY_SIZE": 30,
         "token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
@@ -524,7 +994,7 @@
       "sinceBlock": 13429786,
       "values": {
         "$immutable": true,
-        "TORNStaked": "2576055395417081515376538"
+        "TORNStaked": "2554312446104399027498372"
       },
       "fieldMeta": {
         "TORNStaked": {
@@ -650,12 +1120,12 @@
       "sinceBlock": 9117609,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 8,
+        "currentRootIndex": 37,
         "denomination": "1000000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x09d91c55e62593e0bc338e714a855cb3982b6511116e7a796f9f88dc14ae980b",
+        "getLastRoot": "0x20b353c72477e229cb5a7f95a128545b9fcdb5c13ac01008e3bb61cb43e23f65",
         "levels": 20,
-        "nextIndex": 95108,
+        "nextIndex": 96937,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "operatorRenounced": true,
         "ROOT_HISTORY_SIZE": 100,
@@ -1106,7 +1576,9 @@
           "eth:0x0A5B2bF3cCfB44C1D22F07Eed9553eCba752D4aD",
           "eth:0xEE4C45Cc5eAa535CB8a8ffdc92f2839A601fe226",
           "eth:0x16CB924b5b7ef604139bE95F8762ed817852Db92",
-          "eth:0xb69e1e65142d293035323470d2B3c0c5d4E03F8e"
+          "eth:0xb69e1e65142d293035323470d2B3c0c5d4E03F8e",
+          "eth:0x64d38735695377D98Dfb4205bFEeC07c3466De3C",
+          "eth:0x999099076bE29A81cAd25f3BB63Eb62C0fD99999"
         ],
         "staking": "eth:0x5B3f656C80E8ddb9ec01Dd9018815576E9238c29",
         "torn": "eth:0x77777FeDdddFfC19Ff86DB637967013e6C6A116C",
@@ -1441,15 +1913,15 @@
           },
           {
             "instance": "eth:0x47CE0C6eD5B0Ce3d3A51fdb1C52DC66a7c3c2936",
-            "deviation": -7
+            "deviation": -12
           },
           {
             "instance": "eth:0x910Cbd523D972eb0a6f4cAe4618aD62622b39DbF",
-            "deviation": -1
+            "deviation": -12
           },
           {
             "instance": "eth:0xA160cdAB225685dA1d56aa342Ad8841c3b53f291",
-            "deviation": -1
+            "deviation": -12
           },
           {
             "instance": "eth:0xD4B88Df4D29F5CedD6857912842cff3b20C8Cfa3",
@@ -1461,11 +1933,11 @@
           },
           {
             "instance": "eth:0x07687e702b410Fa43f4cB4Af7FA097918ffD2730",
-            "deviation": -51
+            "deviation": -86
           },
           {
             "instance": "eth:0x23773E65ed146A459791799d01336DB287f25334",
-            "deviation": 10
+            "deviation": 36
           },
           {
             "instance": "eth:0x22aaA7720ddd5388A3c0A3333430953C68f1849b",
@@ -1501,15 +1973,15 @@
           },
           {
             "instance": "eth:0x178169B423a011fff22B9e3F3abeA13414dDD0F1",
-            "deviation": -43
+            "deviation": -37
           },
           {
             "instance": "eth:0x610B717796ad172B316836AC95a2ffad065CeaB4",
-            "deviation": -341
+            "deviation": -337
           },
           {
             "instance": "eth:0xbB93e510BbCD0B7beb5A853875f9eC60275CF498",
-            "deviation": 406
+            "deviation": 415
           }
         ],
         "governance": "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce",
@@ -1904,12 +2376,12 @@
       "sinceBlock": 9117720,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 58,
+        "currentRootIndex": 1,
         "denomination": "10000000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x25649214dc9890906ca674d7f5409552c0db9e08fe5514e0cc1d4678e70f9cc3",
+        "getLastRoot": "0x10683167bd2e3a0c59101ba47e572dcd89f691fcc8f68d6be61b3623d9b9c5f0",
         "levels": 20,
-        "nextIndex": 77558,
+        "nextIndex": 79201,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "operatorRenounced": true,
         "ROOT_HISTORY_SIZE": 100,
@@ -1972,12 +2444,12 @@
       "sinceBlock": 9161895,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 16,
+        "currentRootIndex": 82,
         "denomination": "100000000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x2af6f7e73f80ba6397e091eea5d56542ad7cbd11cb5c009aca950d1e9b73a2af",
+        "getLastRoot": "0x138069ba54ab89ad5f160134b9ad3a0df8e02c41dce37f053ac58f2adf54cd26",
         "levels": 20,
-        "nextIndex": 48616,
+        "nextIndex": 49882,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "operatorRenounced": true,
         "ROOT_HISTORY_SIZE": 100,
@@ -2486,12 +2958,12 @@
       "sinceBlock": 9117612,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 65,
+        "currentRootIndex": 81,
         "denomination": "100000000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x13b4cf11310f83728608f604b7f5243f5aa885511902dc8b6a13533e4420da79",
+        "getLastRoot": "0x1ef3a039e9b23cd520c8a9efbbef9fb11b6e03f6eac697e300e171f83b21859d",
         "levels": 20,
-        "nextIndex": 465,
+        "nextIndex": 481,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "operatorRenounced": true,
         "ROOT_HISTORY_SIZE": 100,
@@ -2596,12 +3068,12 @@
       "sinceBlock": 9161958,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 92,
+        "currentRootIndex": 97,
         "denomination": 100000000,
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x09b89867e60f96a0c95ae9d09100cabc768e70824b7238a90b902d32605c52a0",
+        "getLastRoot": "0x239c572a9d08baad13e14d8365f1c2fd508973ea794714bfa06142d4aea7069c",
         "levels": 20,
-        "nextIndex": 392,
+        "nextIndex": 397,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "operatorRenounced": true,
         "ROOT_HISTORY_SIZE": 100,
@@ -2689,12 +3161,12 @@
       "sinceBlock": 9161917,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 63,
+        "currentRootIndex": 84,
         "denomination": "1000000000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x1107a9ba8a76d882825ea278d7d7860baa77f282185b0443f0e8521c31b6d20c",
+        "getLastRoot": "0x1652089dd350f8b39469f9fe70352acf2cc7e5ea9799d59421a48ca45b236211",
         "levels": 20,
-        "nextIndex": 1363,
+        "nextIndex": 1384,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "operatorRenounced": true,
         "ROOT_HISTORY_SIZE": 100,
@@ -2730,6 +3202,232 @@
     }
   ],
   "abis": {
+    "arb1:0x0D5550d52428E7e3175bfc9550207e4ad3859b17": [
+      "event EncryptedNote(address indexed sender, bytes encryptedNote)",
+      "function backupNotes(bytes[] _encryptedNotes)",
+      "function deposit(address _tornado, bytes32 _commitment, bytes _encryptedNote) payable",
+      "function withdraw(address _tornado, bytes _proof, bytes32 _root, bytes32 _nullifierHash, address _recipient, address _relayer, uint256 _fee, uint256 _refund) payable"
+    ],
+    "arb1:0x1E34A77868E19A6647b1f2F47B51ed72dEDE95DD": [
+      "constructor(address _verifier, address _hasher, uint256 _denomination, uint32 _merkleTreeHeight)",
+      "event Deposit(bytes32 indexed commitment, uint32 leafIndex, uint256 timestamp)",
+      "event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee)",
+      "function FIELD_SIZE() view returns (uint256)",
+      "function ROOT_HISTORY_SIZE() view returns (uint32)",
+      "function ZERO_VALUE() view returns (uint256)",
+      "function commitments(bytes32) view returns (bool)",
+      "function currentRootIndex() view returns (uint32)",
+      "function denomination() view returns (uint256)",
+      "function deposit(bytes32 _commitment) payable",
+      "function filledSubtrees(uint256) view returns (bytes32)",
+      "function getLastRoot() view returns (bytes32)",
+      "function hashLeftRight(address _hasher, bytes32 _left, bytes32 _right) pure returns (bytes32)",
+      "function hasher() view returns (address)",
+      "function isKnownRoot(bytes32 _root) view returns (bool)",
+      "function isSpent(bytes32 _nullifierHash) view returns (bool)",
+      "function isSpentArray(bytes32[] _nullifierHashes) view returns (bool[] spent)",
+      "function levels() view returns (uint32)",
+      "function nextIndex() view returns (uint32)",
+      "function nullifierHashes(bytes32) view returns (bool)",
+      "function roots(uint256) view returns (bytes32)",
+      "function verifier() view returns (address)",
+      "function withdraw(bytes _proof, bytes32 _root, bytes32 _nullifierHash, address _recipient, address _relayer, uint256 _fee, uint256 _refund) payable",
+      "function zeros(uint256) view returns (bytes32)"
+    ],
+    "arb1:0x330bdFADE01eE9bF63C209Ee33102DD334618e0a": [
+      "constructor(address _verifier, address _hasher, uint256 _denomination, uint32 _merkleTreeHeight)",
+      "event Deposit(bytes32 indexed commitment, uint32 leafIndex, uint256 timestamp)",
+      "event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee)",
+      "function FIELD_SIZE() view returns (uint256)",
+      "function ROOT_HISTORY_SIZE() view returns (uint32)",
+      "function ZERO_VALUE() view returns (uint256)",
+      "function commitments(bytes32) view returns (bool)",
+      "function currentRootIndex() view returns (uint32)",
+      "function denomination() view returns (uint256)",
+      "function deposit(bytes32 _commitment) payable",
+      "function filledSubtrees(uint256) view returns (bytes32)",
+      "function getLastRoot() view returns (bytes32)",
+      "function hashLeftRight(address _hasher, bytes32 _left, bytes32 _right) pure returns (bytes32)",
+      "function hasher() view returns (address)",
+      "function isKnownRoot(bytes32 _root) view returns (bool)",
+      "function isSpent(bytes32 _nullifierHash) view returns (bool)",
+      "function isSpentArray(bytes32[] _nullifierHashes) view returns (bool[] spent)",
+      "function levels() view returns (uint32)",
+      "function nextIndex() view returns (uint32)",
+      "function nullifierHashes(bytes32) view returns (bool)",
+      "function roots(uint256) view returns (bytes32)",
+      "function verifier() view returns (address)",
+      "function withdraw(bytes _proof, bytes32 _root, bytes32 _nullifierHash, address _recipient, address _relayer, uint256 _fee, uint256 _refund) payable",
+      "function zeros(uint256) view returns (bytes32)"
+    ],
+    "arb1:0x84443CFd09A48AF6eF360C6976C5392aC5023a1F": [
+      "constructor(address _verifier, address _hasher, uint256 _denomination, uint32 _merkleTreeHeight)",
+      "event Deposit(bytes32 indexed commitment, uint32 leafIndex, uint256 timestamp)",
+      "event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee)",
+      "function FIELD_SIZE() view returns (uint256)",
+      "function ROOT_HISTORY_SIZE() view returns (uint32)",
+      "function ZERO_VALUE() view returns (uint256)",
+      "function commitments(bytes32) view returns (bool)",
+      "function currentRootIndex() view returns (uint32)",
+      "function denomination() view returns (uint256)",
+      "function deposit(bytes32 _commitment) payable",
+      "function filledSubtrees(uint256) view returns (bytes32)",
+      "function getLastRoot() view returns (bytes32)",
+      "function hashLeftRight(address _hasher, bytes32 _left, bytes32 _right) pure returns (bytes32)",
+      "function hasher() view returns (address)",
+      "function isKnownRoot(bytes32 _root) view returns (bool)",
+      "function isSpent(bytes32 _nullifierHash) view returns (bool)",
+      "function isSpentArray(bytes32[] _nullifierHashes) view returns (bool[] spent)",
+      "function levels() view returns (uint32)",
+      "function nextIndex() view returns (uint32)",
+      "function nullifierHashes(bytes32) view returns (bool)",
+      "function roots(uint256) view returns (bytes32)",
+      "function verifier() view returns (address)",
+      "function withdraw(bytes _proof, bytes32 _root, bytes32 _nullifierHash, address _recipient, address _relayer, uint256 _fee, uint256 _refund) payable",
+      "function zeros(uint256) view returns (bytes32)"
+    ],
+    "arb1:0xd47438C816c9E7f2E2888E060936a499Af9582b3": [
+      "constructor(address _verifier, address _hasher, uint256 _denomination, uint32 _merkleTreeHeight)",
+      "event Deposit(bytes32 indexed commitment, uint32 leafIndex, uint256 timestamp)",
+      "event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee)",
+      "function FIELD_SIZE() view returns (uint256)",
+      "function ROOT_HISTORY_SIZE() view returns (uint32)",
+      "function ZERO_VALUE() view returns (uint256)",
+      "function commitments(bytes32) view returns (bool)",
+      "function currentRootIndex() view returns (uint32)",
+      "function denomination() view returns (uint256)",
+      "function deposit(bytes32 _commitment) payable",
+      "function filledSubtrees(uint256) view returns (bytes32)",
+      "function getLastRoot() view returns (bytes32)",
+      "function hashLeftRight(address _hasher, bytes32 _left, bytes32 _right) pure returns (bytes32)",
+      "function hasher() view returns (address)",
+      "function isKnownRoot(bytes32 _root) view returns (bool)",
+      "function isSpent(bytes32 _nullifierHash) view returns (bool)",
+      "function isSpentArray(bytes32[] _nullifierHashes) view returns (bool[] spent)",
+      "function levels() view returns (uint32)",
+      "function nextIndex() view returns (uint32)",
+      "function nullifierHashes(bytes32) view returns (bool)",
+      "function roots(uint256) view returns (bytes32)",
+      "function verifier() view returns (address)",
+      "function withdraw(bytes _proof, bytes32 _root, bytes32 _nullifierHash, address _recipient, address _relayer, uint256 _fee, uint256 _refund) payable",
+      "function zeros(uint256) view returns (bytes32)"
+    ],
+    "arb1:0xfc9859303c0ac1a7721ECE639f2e249D8FD72ac6": [
+      "function verifyProof(bytes proof, uint256[6] input) view returns (bool)"
+    ],
+    "bnb:0x0D5550d52428E7e3175bfc9550207e4ad3859b17": [
+      "event EncryptedNote(address indexed sender, bytes encryptedNote)",
+      "function backupNotes(bytes[] _encryptedNotes)",
+      "function deposit(address _tornado, bytes32 _commitment, bytes _encryptedNote) payable",
+      "function withdraw(address _tornado, bytes _proof, bytes32 _root, bytes32 _nullifierHash, address _recipient, address _relayer, uint256 _fee, uint256 _refund) payable"
+    ],
+    "bnb:0x1E34A77868E19A6647b1f2F47B51ed72dEDE95DD": [
+      "constructor(address _verifier, address _hasher, uint256 _denomination, uint32 _merkleTreeHeight)",
+      "event Deposit(bytes32 indexed commitment, uint32 leafIndex, uint256 timestamp)",
+      "event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee)",
+      "function FIELD_SIZE() view returns (uint256)",
+      "function ROOT_HISTORY_SIZE() view returns (uint32)",
+      "function ZERO_VALUE() view returns (uint256)",
+      "function commitments(bytes32) view returns (bool)",
+      "function currentRootIndex() view returns (uint32)",
+      "function denomination() view returns (uint256)",
+      "function deposit(bytes32 _commitment) payable",
+      "function filledSubtrees(uint256) view returns (bytes32)",
+      "function getLastRoot() view returns (bytes32)",
+      "function hashLeftRight(address _hasher, bytes32 _left, bytes32 _right) pure returns (bytes32)",
+      "function hasher() view returns (address)",
+      "function isKnownRoot(bytes32 _root) view returns (bool)",
+      "function isSpent(bytes32 _nullifierHash) view returns (bool)",
+      "function isSpentArray(bytes32[] _nullifierHashes) view returns (bool[] spent)",
+      "function levels() view returns (uint32)",
+      "function nextIndex() view returns (uint32)",
+      "function nullifierHashes(bytes32) view returns (bool)",
+      "function roots(uint256) view returns (bytes32)",
+      "function verifier() view returns (address)",
+      "function withdraw(bytes _proof, bytes32 _root, bytes32 _nullifierHash, address _recipient, address _relayer, uint256 _fee, uint256 _refund) payable",
+      "function zeros(uint256) view returns (bytes32)"
+    ],
+    "bnb:0x330bdFADE01eE9bF63C209Ee33102DD334618e0a": [
+      "constructor(address _verifier, address _hasher, uint256 _denomination, uint32 _merkleTreeHeight)",
+      "event Deposit(bytes32 indexed commitment, uint32 leafIndex, uint256 timestamp)",
+      "event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee)",
+      "function FIELD_SIZE() view returns (uint256)",
+      "function ROOT_HISTORY_SIZE() view returns (uint32)",
+      "function ZERO_VALUE() view returns (uint256)",
+      "function commitments(bytes32) view returns (bool)",
+      "function currentRootIndex() view returns (uint32)",
+      "function denomination() view returns (uint256)",
+      "function deposit(bytes32 _commitment) payable",
+      "function filledSubtrees(uint256) view returns (bytes32)",
+      "function getLastRoot() view returns (bytes32)",
+      "function hashLeftRight(address _hasher, bytes32 _left, bytes32 _right) pure returns (bytes32)",
+      "function hasher() view returns (address)",
+      "function isKnownRoot(bytes32 _root) view returns (bool)",
+      "function isSpent(bytes32 _nullifierHash) view returns (bool)",
+      "function isSpentArray(bytes32[] _nullifierHashes) view returns (bool[] spent)",
+      "function levels() view returns (uint32)",
+      "function nextIndex() view returns (uint32)",
+      "function nullifierHashes(bytes32) view returns (bool)",
+      "function roots(uint256) view returns (bytes32)",
+      "function verifier() view returns (address)",
+      "function withdraw(bytes _proof, bytes32 _root, bytes32 _nullifierHash, address _recipient, address _relayer, uint256 _fee, uint256 _refund) payable",
+      "function zeros(uint256) view returns (bytes32)"
+    ],
+    "bnb:0x84443CFd09A48AF6eF360C6976C5392aC5023a1F": [
+      "constructor(address _verifier, address _hasher, uint256 _denomination, uint32 _merkleTreeHeight)",
+      "event Deposit(bytes32 indexed commitment, uint32 leafIndex, uint256 timestamp)",
+      "event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee)",
+      "function FIELD_SIZE() view returns (uint256)",
+      "function ROOT_HISTORY_SIZE() view returns (uint32)",
+      "function ZERO_VALUE() view returns (uint256)",
+      "function commitments(bytes32) view returns (bool)",
+      "function currentRootIndex() view returns (uint32)",
+      "function denomination() view returns (uint256)",
+      "function deposit(bytes32 _commitment) payable",
+      "function filledSubtrees(uint256) view returns (bytes32)",
+      "function getLastRoot() view returns (bytes32)",
+      "function hashLeftRight(address _hasher, bytes32 _left, bytes32 _right) pure returns (bytes32)",
+      "function hasher() view returns (address)",
+      "function isKnownRoot(bytes32 _root) view returns (bool)",
+      "function isSpent(bytes32 _nullifierHash) view returns (bool)",
+      "function isSpentArray(bytes32[] _nullifierHashes) view returns (bool[] spent)",
+      "function levels() view returns (uint32)",
+      "function nextIndex() view returns (uint32)",
+      "function nullifierHashes(bytes32) view returns (bool)",
+      "function roots(uint256) view returns (bytes32)",
+      "function verifier() view returns (address)",
+      "function withdraw(bytes _proof, bytes32 _root, bytes32 _nullifierHash, address _recipient, address _relayer, uint256 _fee, uint256 _refund) payable",
+      "function zeros(uint256) view returns (bytes32)"
+    ],
+    "bnb:0xd47438C816c9E7f2E2888E060936a499Af9582b3": [
+      "constructor(address _verifier, address _hasher, uint256 _denomination, uint32 _merkleTreeHeight)",
+      "event Deposit(bytes32 indexed commitment, uint32 leafIndex, uint256 timestamp)",
+      "event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee)",
+      "function FIELD_SIZE() view returns (uint256)",
+      "function ROOT_HISTORY_SIZE() view returns (uint32)",
+      "function ZERO_VALUE() view returns (uint256)",
+      "function commitments(bytes32) view returns (bool)",
+      "function currentRootIndex() view returns (uint32)",
+      "function denomination() view returns (uint256)",
+      "function deposit(bytes32 _commitment) payable",
+      "function filledSubtrees(uint256) view returns (bytes32)",
+      "function getLastRoot() view returns (bytes32)",
+      "function hashLeftRight(address _hasher, bytes32 _left, bytes32 _right) pure returns (bytes32)",
+      "function hasher() view returns (address)",
+      "function isKnownRoot(bytes32 _root) view returns (bool)",
+      "function isSpent(bytes32 _nullifierHash) view returns (bool)",
+      "function isSpentArray(bytes32[] _nullifierHashes) view returns (bool[] spent)",
+      "function levels() view returns (uint32)",
+      "function nextIndex() view returns (uint32)",
+      "function nullifierHashes(bytes32) view returns (bool)",
+      "function roots(uint256) view returns (bytes32)",
+      "function verifier() view returns (address)",
+      "function withdraw(bytes _proof, bytes32 _root, bytes32 _nullifierHash, address _recipient, address _relayer, uint256 _fee, uint256 _refund) payable",
+      "function zeros(uint256) view returns (bytes32)"
+    ],
+    "bnb:0xfc9859303c0ac1a7721ECE639f2e249D8FD72ac6": [
+      "function verifyProof(bytes proof, uint256[6] input) view returns (bool)"
+    ],
     "eth:0x03893a7c7463AE47D46bc7f091665f1893656003": [
       "constructor(address _comp, address _verifier, address _hasher, uint256 _denomination, uint32 _merkleTreeHeight, address _token)",
       "event Deposit(bytes32 indexed commitment, uint32 leafIndex, uint256 timestamp)",
@@ -3838,6 +4536,8 @@
     "tornado-cash/TornadoCash_erc20_v1": "0xaecaeee409dd6bde168bd0eb9fe34c567a9f4fc6ed6609a23c46d70683785a9f",
     "tornado-cash/TornadoCash_eth": "0x6fe672c4255dcd321fc27f39c7d0f3c148dc036c71865814c97ed90c5478966a",
     "tornado-cash/TornadoCash_Eth_01": "0xefb086a10042ad8923886b94e031322c92af81c214b500a5474512b55188cc0a",
+    "tornado-cash/TornadoCash_eth_sidechain": "0x0e85b6439400bd9048224ee31ac7d0e82883d86e016369cb03484b245aa046c4",
+    "tornado-cash/TornadoProxyLight": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "tornado-cash/TornadoProxyV1": "0x0f148b32f12372e1a61b14e5dd4d7bd7acbf68cfa07316c9b7378ec2d77639e4",
     "tornado-cash/TornadoProxyV2": "0x0f148b32f12372e1a61b14e5dd4d7bd7acbf68cfa07316c9b7378ec2d77639e4",
     "tornado-cash/TornadoRouter": "0xbd7ca9f14700f43719f103ce5e04ecf9d73d4310646eca040b347d637aa16006",
@@ -3849,8 +4549,12 @@
     "tornado-cash/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "tornado-cash/WithdrawVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 26160688 },
-  "permissionsConfigHash": "0xa6ec83ce4899bc6f50c195e64efd5142f116dc3606b17f15a010409e98f0bb5a",
+  "usedBlockNumbers": {
+    "arbitrum": 520633163,
+    "bsc": 131281152,
+    "ethereum": 26328596
+  },
+  "permissionsConfigHash": "0xab5016db375426c946a0b9b13af2d297232a88b521e0e2c7de7564a108649172",
   "permissions": {
     "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce": {
       "receivedPermissions": [

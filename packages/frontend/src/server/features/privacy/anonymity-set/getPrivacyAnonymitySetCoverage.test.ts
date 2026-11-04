@@ -34,12 +34,14 @@ describe(getPrivacyAnonymitySetCoverage.name, () => {
       ['tracked'],
       WINDOW_START,
       CURRENT_DAY,
+      undefined,
     )
     expect(getNonZeroDepositCount).toHaveBeenOnlyCalledWith(
       'project',
       ['tracked'],
       WINDOW_START,
       CURRENT_DAY,
+      undefined,
     )
   })
 
@@ -104,6 +106,7 @@ function makeProject(
 ): PrivacyAnonymitySetProject {
   const token: ProjectPrivacyToken = {
     token: {
+      chain: 'ethereum',
       address: EthereumAddress.ZERO,
       iconUrl: undefined,
       symbol: 'DAI',

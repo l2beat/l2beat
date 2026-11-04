@@ -39,13 +39,25 @@ export function createPrivacyRouter(
     res.status(200).send(html)
   })
 
-  const getProjectMarkdown = (req: Request<{ slug: string }>) =>
-    getPrivacyProjectMarkdown(manifest, req.params.slug, cache)
+  // The deployment the page describes. The data loader validates it against
+  // the project's tracked chains and falls back to the primary one.
+  const getProjectMarkdown = (
+    req: Request<{ slug: string }, unknown, unknown, { chain?: string }>,
+  ) =>
+    getPrivacyProjectMarkdown(
+      manifest,
+      req.params.slug,
+      cache,
+      getChainQuery(req.query.chain),
+    )
 
   // Before `:slug`, which would otherwise take "tornado-cash.md" as the slug.
   router.get(
     '/privacy/projects/:slug.md',
-    validateRoute({ params: v.object({ slug: v.string() }) }),
+    validateRoute({
+      params: v.object({ slug: v.string() }),
+      query: v.object({ chain: v.string().optional() }),
+    }),
     serveMarkdown(getProjectMarkdown),
   )
 
@@ -53,7 +65,10 @@ export function createPrivacyRouter(
     '/privacy/projects/:slug',
     validateRoute({
       params: v.object({ slug: v.string() }),
-      query: v.object({ update: v.string().optional() }),
+      query: v.object({
+        update: v.string().optional(),
+        chain: v.string().optional(),
+      }),
     }),
     serveMarkdownIfPreferred(getProjectMarkdown),
     async (req, res) => {
@@ -62,6 +77,7 @@ export function createPrivacyRouter(
         req.params.slug,
         cache,
         req.query.update,
+        getChainQuery(req.query.chain),
       )
 
       if (!data) {
@@ -75,4 +91,9 @@ export function createPrivacyRouter(
   )
 
   return router
+}
+
+/** Express gives a repeated query parameter as an array; only a string is a chain. */
+function getChainQuery(value: unknown): string | undefined {
+  return typeof value === 'string' && value !== '' ? value : undefined
 }

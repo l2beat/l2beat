@@ -38,6 +38,25 @@ describeDatabase(PrivacyRelayerActivityRepository.name, (db) => {
   describe(
     PrivacyRelayerActivityRepository.prototype.getActiveRelayerCount.name,
     () => {
+      it('keeps only the given chain', async () => {
+        const relayerB = EthereumAddress(
+          '0x2222222222222222222222222222222222222222',
+        )
+        await repository.upsertMany([
+          activity(1, START),
+          { ...activity(2, START, relayerB), chain: 'arbitrum' },
+        ])
+
+        expect(
+          await repository.getActiveRelayerCount(
+            'project',
+            START,
+            UnixTime(START + 1),
+            'arbitrum',
+          ),
+        ).toEqual(1)
+      })
+
       it('counts distinct relayers in the requested project and time range', async () => {
         const relayerA = EthereumAddress(
           '0x1111111111111111111111111111111111111111',

@@ -1123,9 +1123,15 @@ export type ProjectExternalDependency =
 
 export interface ProjectPrivacyInfo {
   /**
-   * Chains on which L2BEAT tracks this protocol's deployment, mostly through
-   * project discovery. Each chain needs a project with a matching chainConfig
-   * for its icon.
+   * Every chain with a live deployment of the protocol, limited to chains
+   * with a chainConfig, which the icon needs. Chains outside `trackedOn` are
+   * shown dimmed and nothing else.
+   */
+  deployedOn: string[]
+  /**
+   * Chains on which L2BEAT tracks this protocol's deployment through discovery
+   * and indexing: a subset of `deployedOn`, in dropdown order. The first entry
+   * is the primary chain the project page opens on.
    */
   trackedOn: string[]
   /**
@@ -1258,7 +1264,7 @@ export type ProjectPrivacyRelayerTracking =
       type: 'onchainEvents'
       sources: ProjectPrivacyOnchainRelayerSource[]
     }
-  | ProjectPrivacyRailgunWakuRelayerSource
+  | ProjectPrivacyRailgunWakuRelayerTracking
 
 /** Relayer addresses identified from onchain withdrawals. */
 export type ProjectPrivacyOnchainRelayerSource = {
@@ -1325,8 +1331,13 @@ export type ZkMoneyWithdrawalRelayerParams = {
 }
 
 /** Relayers counted from daily observations of fee advertisements on the Railgun Waku network. */
-export type ProjectPrivacyRailgunWakuRelayerSource = {
+export type ProjectPrivacyRailgunWakuRelayerTracking = {
   type: 'railgunWaku'
+  /** One entry per chain, since every Waku broadcaster serves one chain id. */
+  sources: ProjectPrivacyRailgunWakuRelayerSource[]
+}
+
+export interface ProjectPrivacyRailgunWakuRelayerSource {
   chainId: number
   sinceTimestamp: UnixTime
 }
@@ -1549,6 +1560,8 @@ export interface ProjectPrivacyAdversaries {
 
 export interface ProjectPrivacyToken {
   token: {
+    /** Long chain name of the deployment, so tokens filter without inspecting buckets. */
+    chain: string
     address: string
     iconUrl: string | undefined
     symbol: string

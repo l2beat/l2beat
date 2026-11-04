@@ -31,6 +31,8 @@ import {
 export const PrivacyAnonymitySetChartParams = v.object({
   projectId: v.string(),
   range: ChartRange,
+  /** Sets on one chain only; every chain when left out. */
+  chain: v.string().optional(),
 })
 
 export type PrivacyAnonymitySetChartParams = v.infer<
@@ -58,7 +60,7 @@ export async function getPrivacyAnonymitySetChart(
   })
   if (!project) return emptyResponse()
 
-  const series = getPrivacyAnonymitySetSeries(project)
+  const series = getPrivacyAnonymitySetSeries(project, params.chain)
   if (series.length === 0) return emptyResponse()
 
   const currentDay = UnixTime.toStartOf(UnixTime.now(), 'day')
@@ -69,12 +71,19 @@ export async function getPrivacyAnonymitySetChart(
           key: [
             'privacy-anonymity-set-chart',
             project.id,
+            params.chain ?? '',
             currentDay.toString(),
           ],
           ttl: 10 * UnixTime.MINUTE,
           staleWhileRevalidate: 15 * UnixTime.MINUTE,
         },
-        () => getPrivacyAnonymitySetSnapshot(project, series, currentDay),
+        () =>
+          getPrivacyAnonymitySetSnapshot(
+            project,
+            series,
+            currentDay,
+            params.chain,
+          ),
       )
 
   return selectPrivacyAnonymitySetChartRange(
@@ -87,6 +96,7 @@ async function getPrivacyAnonymitySetSnapshot(
   project: PrivacyAnonymitySetProject,
   series: PrivacyAnonymitySetSeries[],
   currentDay: UnixTime,
+  chain?: string,
 ): Promise<PrivacyAnonymitySetChartResponse> {
   const db = getDb()
   const configurations = await getPrivacyAnonymitySetConfigurations(db, series)
@@ -126,9 +136,10 @@ async function getPrivacyAnonymitySetSnapshot(
         [project.id],
         from,
         to,
+        chain,
       ),
     ),
-    getPrivacyAnonymitySetCoverage(db, project, currentDay),
+    getPrivacyAnonymitySetCoverage(db, project, currentDay, chain),
   ])
 
   return {

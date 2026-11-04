@@ -56,6 +56,31 @@ describeDatabase(PrivacyAnonymitySetEventRepository.name, (db) => {
     ])
   })
 
+  it('keeps only the given chain', async () => {
+    await repository.upsertMany([
+      event('aaaaaaaaaaaa', 1, START, 'alice', 6n),
+      { ...event('aaaaaaaaaaaa', 2, START, 'bob', 9n), chain: 'arbitrum' },
+    ])
+
+    const senderDays = await repository.getSenderDaysByProjectIds(
+      ['project-a'],
+      START,
+      START + UnixTime.DAY,
+      'arbitrum',
+    )
+    expect(senderDays.map((row) => row.sender)).toEqual(['bob'])
+
+    expect(
+      await repository.getDepositCount(
+        'project-a',
+        ['bucket-a'],
+        START,
+        START + UnixTime.DAY,
+        'ethereum',
+      ),
+    ).toEqual(1)
+  })
+
   it('counts deposits into the given project buckets within the half-open window', async () => {
     await repository.upsertMany([
       event('aaaaaaaaaaaa', 1, START - 1, 'alice', 10n),

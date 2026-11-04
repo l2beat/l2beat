@@ -32,6 +32,8 @@ export interface ProjectIconListItem {
   /** A line under the name, e.g. the project's category. */
   description?: string
   stage?: Stage
+  /** Shown faded, e.g. a chain the protocol is deployed on but not tracked. */
+  dimmed?: boolean
 }
 
 interface Props {
@@ -39,6 +41,8 @@ interface Props {
   /** Heads the full list, e.g. "Privacy projects on Arbitrum One". */
   title: string
   className?: string
+  /** Icons only, with no links, tooltips or list: for a cell that is already a link. */
+  variant?: 'default' | 'static'
 }
 
 export const MAX_VISIBLE_PROJECTS = 5
@@ -56,7 +60,12 @@ const NO_ROW = '-'
  * any of them opens the named list instead of guessing. A single icon still
  * links straight to its project.
  */
-export function ProjectIconList({ projects, title, className }: Props) {
+export function ProjectIconList({
+  projects,
+  title,
+  className,
+  variant = 'default',
+}: Props) {
   const isTouch = useCanHover() === false
   if (projects.length === 0) return null
 
@@ -65,6 +74,19 @@ export function ProjectIconList({ projects, title, className }: Props) {
       ? projects.slice(0, MAX_VISIBLE_PROJECTS - 1)
       : projects
   const hiddenCount = projects.length - visible.length
+
+  if (variant === 'static') {
+    return (
+      <span className={cn('flex items-center gap-1', className)}>
+        <IconRow projects={visible} linked={false} />
+        {hiddenCount > 0 && (
+          <span className="text-label-value-12 text-secondary">
+            +{hiddenCount}
+          </span>
+        )}
+      </span>
+    )
+  }
 
   if (isTouch && projects.length > 1) {
     return (
@@ -158,7 +180,11 @@ function IconImage({ project }: { project: ProjectIconListItem }) {
       height={20}
       src={project.iconUrl}
       alt={`${project.name} logo`}
-      className={cn('size-5 min-w-5 rounded-full shadow', iconBackdropClasses)}
+      className={cn(
+        'size-5 min-w-5 rounded-full shadow',
+        iconBackdropClasses,
+        project.dimmed && 'opacity-40 grayscale',
+      )}
     />
   )
 }
@@ -406,6 +432,7 @@ function ProjectList({
                   className={cn(
                     'size-6 min-w-6 rounded-full',
                     iconBackdropClasses,
+                    project.dimmed && 'opacity-40 grayscale',
                   )}
                 />
                 <span className="flex min-w-0 flex-1 flex-col">

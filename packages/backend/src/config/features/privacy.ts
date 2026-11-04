@@ -150,7 +150,9 @@ export async function getPrivacyConfig(
           break
         case 'railgunWaku':
           relayerSampleConfigs.push(
-            toRelayerSampleConfig(project.projectId, tracking, chainNames),
+            ...tracking.sources.map((source) =>
+              toRelayerSampleConfig(project.projectId, source, chainNames),
+            ),
           )
           break
         default:

@@ -11,15 +11,13 @@ export type EscrowBalanceFormula =
 
 /**
  * Escrow balances whose sum is the token's amount, so each escrow's value is
- * its share of the token value. Empty for any other formula, and for a single
- * escrow, whose value is the token value itself.
+ * its share of the token value. A single escrow balance counts as a sum of
+ * one, so a token's only pool gets a value too. Empty for any other formula.
  */
 export function getSummedEscrowBalances(
   token: TvsToken,
 ): EscrowBalanceFormula[] {
-  if (token.amount.type !== 'calculation') return []
-  const balances = getEscrowBalances(token.amount)
-  return balances && balances.length > 1 ? balances : []
+  return getEscrowBalances(token.amount) ?? []
 }
 
 function getEscrowBalances(

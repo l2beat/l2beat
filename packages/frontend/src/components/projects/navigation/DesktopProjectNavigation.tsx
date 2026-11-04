@@ -15,6 +15,8 @@ import type { ProjectNavigationSection } from './types'
 
 interface Project {
   title: string
+  /** A line under the title in smaller type, e.g. the chain the page shows. */
+  subtitle?: string
   isUnderReview?: boolean
   slug: string
   icon: string
@@ -79,8 +81,15 @@ export function DesktopProjectNavigation({
                 alt={`${project.title} logo`}
               />
             )}
-            <span className="font-bold text-label-value-18">
-              {project.title}
+            <span className="flex flex-col">
+              <span className="font-bold text-label-value-18">
+                {project.title}
+              </span>
+              {project.subtitle && (
+                <span className="font-bold text-label-value-13 text-secondary">
+                  {project.subtitle}
+                </span>
+              )}
             </span>
           </div>
           {project.isUnderReview && (

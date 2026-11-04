@@ -201,10 +201,12 @@ export const zkapi: BaseProject = {
         },
       ],
     },
+    deployedOn: ['ethereum'],
     trackedOn: ['ethereum'],
     tokens: [
       {
         token: {
+          chain: 'ethereum',
           address: EthereumAddress(
             '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
           ),

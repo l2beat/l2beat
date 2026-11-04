@@ -58,6 +58,26 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
   describe(
     PrivacyFlowEventRepository.prototype.getDailyByProjectIds.name,
     () => {
+      it('keeps only the given chain', async () => {
+        await repository.upsertMany([
+          flowEvent('proj-a', START, 100, 'deposit', 1, 100n, 100),
+          {
+            ...flowEvent('proj-a', START, 101, 'deposit', 2, 200n, 200),
+            chain: 'arbitrum',
+            bucketId: 'bucket-arbitrum',
+          },
+        ])
+
+        const result = await repository.getDailyByProjectIds(
+          ['proj-a'],
+          START,
+          START + UnixTime.DAY,
+          'arbitrum',
+        )
+
+        expect(result.map((row) => row.bucketId)).toEqual(['bucket-arbitrum'])
+      })
+
       it('aggregates daily deposits and withdrawals', async () => {
         const records = [
           flowEvent('proj-a', START, 100, 'deposit', 1, 100n, 100),
@@ -140,6 +160,26 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
         )
 
         expect(result).toEqual(3)
+      })
+
+      it('keeps only the given chain', async () => {
+        await repository.upsertMany([
+          flowEvent('proj-a', START, 100, 'deposit', 1, 100n),
+          {
+            ...flowEvent('proj-a', START, 101, 'deposit', 2, 100n),
+            chain: 'arbitrum',
+          },
+        ])
+
+        expect(
+          await repository.getNonZeroDepositCount(
+            'proj-a',
+            ['bucket'],
+            START,
+            START + UnixTime.DAY,
+            'arbitrum',
+          ),
+        ).toEqual(2)
       })
 
       it('leaves out zero-amount deposits', async () => {
@@ -226,6 +266,24 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
   describe(
     PrivacyFlowEventRepository.prototype.getBucketTotalsByProjectIds.name,
     () => {
+      it('keeps only the given chain', async () => {
+        await repository.upsertMany([
+          flowEvent('proj-a', START, 100, 'deposit', 1, 100n, 100),
+          {
+            ...flowEvent('proj-a', START, 101, 'deposit', 2, 200n, 200),
+            chain: 'arbitrum',
+            bucketId: 'bucket-arbitrum',
+          },
+        ])
+
+        const result = await repository.getBucketTotalsByProjectIds(
+          ['proj-a'],
+          'arbitrum',
+        )
+
+        expect(result.map((row) => row.bucketId)).toEqual(['bucket-arbitrum'])
+      })
+
       it('aggregates totals by bucket', async () => {
         const records = [
           flowEvent('proj-a', START, 100, 'deposit', 1, 100n, 100),
@@ -284,6 +342,36 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
   describe(
     PrivacyFlowEventRepository.prototype.getLatestTimestampByProjectIds.name,
     () => {
+      it('keeps only the given chain', async () => {
+        await repository.upsertMany([
+          flowEvent('proj-a', START, 100, 'deposit', 1, 100n),
+          {
+            ...flowEvent(
+              'proj-a',
+              UnixTime(START + 1),
+              101,
+              'deposit',
+              1,
+              100n,
+            ),
+            chain: 'arbitrum',
+          },
+        ])
+
+        expect(
+          await repository.getLatestTimestampByProjectIds(
+            ['proj-a'],
+            'ethereum',
+          ),
+        ).toEqual(START)
+        expect(
+          await repository.getFirstTimestampByProjectIds(
+            ['proj-a'],
+            'arbitrum',
+          ),
+        ).toEqual(UnixTime(START + 1))
+      })
+
       it('returns latest timestamp', async () => {
         const records = [
           flowEvent('proj-a', START, 100, 'deposit', 1, 100n),

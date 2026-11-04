@@ -11,6 +11,7 @@ import type {
   ProjectPermissions,
   ProjectPrivacyAdversaries,
   ProjectPrivacyReferenceApp,
+  ProjectPrivacyToken,
   ProjectStatuses,
   ProjectUpgradesAndGovernance,
   ProjectZkCatalogInfo,
@@ -20,6 +21,7 @@ import type {
   PrivacyFlowDailyRecord,
   TokenValueRecord,
 } from '@l2beat/database'
+import { getPrivacyAnonymitySetSources } from '@l2beat/shared'
 import type { OssificationHistory } from '@l2beat/shared/frontend'
 import type { ProjectId } from '@l2beat/shared-pure'
 import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
@@ -35,10 +37,7 @@ import { getLogger } from '~/server/utils/logger'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { PROJECT_PAGE_METADATA_FIELDS } from '~/utils/project/getProjectUrl'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
-import {
-  getPrivacyAnonymitySetType,
-  type PrivacyAnonymitySetType,
-} from './anonymity-set/getPrivacyAnonymitySetSeries'
+import type { PrivacyAnonymitySetType } from './anonymity-set/getPrivacyAnonymitySetSeries'
 import { getPrivacyProject } from './getPrivacyProjects'
 import type {
   PrivacyAsset,
@@ -48,7 +47,12 @@ import type {
 } from './types'
 import { getPrivacyBucketTvls } from './utils/getPrivacyBucketTvls'
 import { getScalingProjectItems } from './utils/getPrivacyScalingLinks'
-import { getPrivacyTrackedChains } from './utils/getPrivacyTrackedChains'
+import {
+  getPrivacyChainLinks,
+  getPrivacyDeployedOnChains,
+  type PrivacyChainLink,
+} from './utils/getPrivacyTrackedChains'
+import { resolvePrivacyChain } from './utils/resolvePrivacyChain'
 
 interface PrivacyProjectFlowData {
   totals: PrivacyFlowBucketTotalRecord[]
@@ -87,7 +91,17 @@ export interface PrivacyProjectDetails {
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
   attributes: PrivacyAttribute[]
   milestones: Milestone[]
-  trackedOn: ProjectIconListItem[]
+  /** The tracked chain the page describes. */
+  chain: string
+  /** Its name, for the "on <Chain>" lines of a project tracked on several chains. */
+  chainName: string
+  /** Whether the project is tracked on more than one chain. */
+  isMultiChain: boolean
+  /** The tracked chains, as links to the page on each, in config order. */
+  chains: PrivacyChainLink[]
+  /** Every chain with a deployment; the untracked ones are dimmed. */
+  deployedOn: ProjectIconListItem[]
+  /** The scaling projects the protocol runs on, for the cross-links. */
   scalingProjects: ProjectIconListItem[]
   assets: PrivacyAsset[]
   summary: {
@@ -104,11 +118,20 @@ export interface PrivacyProjectDetails {
       last30d: number
     }
     relayerStat?: PrivacyRelayerStat
+    /**
+     * The value of the escrows on the selected chain, for projects tracked
+     * on several chains. Single-chain projects use the TVS breakdown.
+     */
+    chainTvl?: {
+      totalValueLockedUsd: number | undefined
+      totalValueLockedChange7d: number | undefined
+    }
   }
 }
 
 export async function getPrivacyProjectDetails(
   slug: string,
+  requestedChain?: string,
 ): Promise<PrivacyProjectDetails | undefined> {
   const project = await getPrivacyProject(slug)
   if (!project) {
@@ -116,6 +139,13 @@ export async function getPrivacyProjectDetails(
   }
 
   const projectId = project.id
+  const trackedOn = project.privacyInfo.trackedOn
+  const chain = resolvePrivacyChain(trackedOn, requestedChain)
+  const isMultiChain = trackedOn.length > 1
+  // Every number and section of the page is for the selected chain.
+  const tokens = project.privacyInfo.tokens.filter(
+    (token) => token.token.chain === chain,
+  )
 
   const now = UnixTime.now()
   const currentDay = UnixTime.toStartOf(now, 'day')
@@ -125,16 +155,27 @@ export async function getPrivacyProjectDetails(
   const [
     { totals, daily30d, tokenValues, bucketTvls },
     relayerStat,
-    trackedOn,
+    chainTvl,
+    chainProjects,
     scalingProjects,
     ossification,
   ] = await Promise.all([
-    getPrivacyProjectFlowData(project, last30dCutoff, currentDay, now),
-    getRelayerStat(project, UnixTime(now - 30 * UnixTime.DAY), now),
-    getTrackedOn(project),
+    getPrivacyProjectFlowData(
+      project,
+      tokens,
+      chain,
+      last30dCutoff,
+      currentDay,
+      now,
+    ),
+    getRelayerStat(project, chain, UnixTime(now - 30 * UnixTime.DAY), now),
+    isMultiChain ? getChainTvl(projectId, chain, now) : undefined,
+    getChainProjects(),
     getScalingProjects(project),
     getProjectOssification(project),
   ])
+  const chains = getPrivacyChainLinks(trackedOn, project.slug, chainProjects)
+  const chainName = chains.find((c) => c.id === chain)?.name ?? chain
 
   const tvlBySymbol = new Map<string, number>()
   for (const tv of tokenValues) {
@@ -188,9 +229,18 @@ export async function getPrivacyProjectDetails(
     }
   }
 
-  const assets = project.privacyInfo.tokens.map((token) => {
+  const assets = tokens.map((token) => {
     const symbol = token.token.symbol
-    const assetTvl = tvlBySymbol.get(symbol) ?? null
+    // Token values carry no chain, so a multi-chain asset is valued from the
+    // escrows of its buckets on the selected chain.
+    const bucketValues = token.buckets.flatMap(
+      (bucket) => bucketTvls.get(bucket.id) ?? [],
+    )
+    const assetTvl = isMultiChain
+      ? bucketValues.length > 0
+        ? bucketValues.reduce((sum, value) => sum + value, 0)
+        : null
+      : (tvlBySymbol.get(symbol) ?? null)
 
     let assetDepositsTotal = 0
     let assetDeposits7d = 0
@@ -294,8 +344,11 @@ export async function getPrivacyProjectDetails(
     shortName: project.shortName,
     archivedAt: project.archivedAt,
     display: project.display,
-    contracts: project.contracts,
-    permissions: project.permissions,
+    contracts: project.contracts && {
+      ...project.contracts,
+      addresses: pickChain(project.contracts.addresses, chain),
+    },
+    permissions: project.permissions && pickChain(project.permissions, chain),
     discoveryUpdates: project.discoveryUpdates,
     ossification,
     statuses: project.statuses,
@@ -308,8 +361,9 @@ export async function getPrivacyProjectDetails(
     adversaries: project.privacyInfo.adversaries,
     referenceApp: project.privacyInfo.referenceApp,
     reproducibility: project.privacyInfo.reproducibility,
-    anonymitySetType: getPrivacyAnonymitySetType(project),
-    hasTvl: project.tvsConfig !== undefined,
+    anonymitySetType: getChainAnonymitySetType(project, chain),
+    hasTvl:
+      project.tvsConfig !== undefined && (!isMultiChain || tokens.length > 0),
     detailedDescription:
       project.privacyInfo.detailedDescription ??
       project.display.detailedDescription,
@@ -319,7 +373,15 @@ export async function getPrivacyProjectDetails(
     milestones: [...(project.milestones ?? [])].sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
     ),
-    trackedOn,
+    chain,
+    chainName,
+    isMultiChain,
+    chains,
+    deployedOn: getPrivacyDeployedOnChains(
+      project.privacyInfo.deployedOn,
+      trackedOn,
+      chainProjects,
+    ),
     scalingProjects,
     assets: orderedAssets,
     summary: {
@@ -345,18 +407,84 @@ export async function getPrivacyProjectDetails(
         last30d: summaryValue30d,
       },
       relayerStat,
+      chainTvl,
     },
   }
 }
 
-async function getTrackedOn(
-  project: PrivacyProject,
-): Promise<ProjectIconListItem[]> {
-  const chainProjects = await ps.getProjects({
+function getChainProjects() {
+  return ps.getProjects({
     select: ['chainConfig'],
     optional: [...PROJECT_PAGE_METADATA_FIELDS],
   })
-  return getPrivacyTrackedChains(project.privacyInfo.trackedOn, chainProjects)
+}
+
+/** The entries of one chain, keyed as the contracts and permissions are. */
+function pickChain<T>(
+  byChain: Record<string, T>,
+  chain: string,
+): Record<string, T> {
+  const entry = byChain[chain]
+  return entry === undefined ? {} : { [chain]: entry }
+}
+
+/** Like getPrivacyAnonymitySetType, from the sources on one chain. */
+function getChainAnonymitySetType(
+  project: PrivacyProject,
+  chain: string,
+): PrivacyAnonymitySetType | undefined {
+  const sources = getPrivacyAnonymitySetSources(project.privacyInfo).filter(
+    (source) => source.chain === chain,
+  )
+  if (sources.some((source) => source.type === 'key-registrations')) {
+    return 'key-registrations'
+  }
+  return sources.length > 0 ? 'deposits' : undefined
+}
+
+/**
+ * The latest escrow value on the chain and its change over seven days, from
+ * the daily escrow values the TVS backend stores.
+ */
+async function getChainTvl(
+  projectId: ProjectId,
+  chain: string,
+  now: UnixTime,
+): Promise<PrivacyProjectDetails['summary']['chainTvl']> {
+  if (env.MOCK) {
+    const value = Math.random() * 10_000_000
+    return { totalValueLockedUsd: value, totalValueLockedChange7d: 0.05 }
+  }
+  const rows = await getDb()
+    .tvsEscrowValue.getDailyValueByProjectAndChain(
+      projectId,
+      chain,
+      UnixTime(now - 8 * UnixTime.DAY),
+      UnixTime(now + 1),
+    )
+    .catch((error) => {
+      getLogger()
+        .for('getPrivacyProjectDetails')
+        .warn('Chain escrow values unavailable', { projectId, chain, error })
+      return []
+    })
+  const latest = rows.at(-1)
+  if (!latest) {
+    return {
+      totalValueLockedUsd: undefined,
+      totalValueLockedChange7d: undefined,
+    }
+  }
+  const weekAgo = rows
+    .filter((row) => row.timestamp <= latest.timestamp - 7 * UnixTime.DAY)
+    .at(-1)
+  return {
+    totalValueLockedUsd: latest.value,
+    totalValueLockedChange7d:
+      weekAgo === undefined
+        ? undefined
+        : calculatePercentageChange(latest.value, weekAgo.value),
+  }
 }
 
 async function getScalingProjects(
@@ -376,6 +504,7 @@ const MIN_OBSERVED_DAYS_FOR_AVERAGE = 7
 
 async function getRelayerStat(
   project: PrivacyProject,
+  chain: string,
   from: UnixTime,
   to: UnixTime,
 ): Promise<PrivacyRelayerStat | undefined> {
@@ -407,6 +536,7 @@ async function getRelayerStat(
         project.id,
         from,
         to,
+        chain,
       )
       return { kind: 'activeRelayers', value: count }
     }
@@ -415,6 +545,7 @@ async function getRelayerStat(
         project.id,
         from,
         to,
+        chain,
       )
       if (
         result === undefined ||
@@ -431,6 +562,8 @@ async function getRelayerStat(
 
 async function getPrivacyProjectFlowData(
   project: PrivacyProject,
+  tokens: ProjectPrivacyToken[],
+  chain: string,
   from: UnixTime,
   to: UnixTime,
   now: UnixTime,
@@ -438,13 +571,13 @@ async function getPrivacyProjectFlowData(
   const projectId = project.id
 
   if (env.MOCK) {
-    return getMockPrivacyProjectFlowData(project, from, to)
+    return getMockPrivacyProjectFlowData(project, tokens, from, to)
   }
 
   const db = getDb()
   const [totals, daily30d, tokenValues] = await Promise.all([
-    db.privacyFlowEvent.getBucketTotalsByProjectIds([projectId]),
-    db.privacyFlowEvent.getDailyByProjectIds([projectId], from, to),
+    db.privacyFlowEvent.getBucketTotalsByProjectIds([projectId], chain),
+    db.privacyFlowEvent.getDailyByProjectIds([projectId], from, to, chain),
     db.tvsTokenValue.getLastNonZeroValue(now, projectId),
   ])
   const escrowValues = await db.tvsEscrowValue
@@ -460,7 +593,7 @@ async function getPrivacyProjectFlowData(
       return []
     })
   const bucketTvls = getPrivacyBucketTvls(
-    project.privacyInfo.tokens,
+    tokens,
     project.tvsConfig ?? [],
     tokenValues,
     escrowValues,
@@ -470,11 +603,12 @@ async function getPrivacyProjectFlowData(
 
 function getMockPrivacyProjectFlowData(
   project: PrivacyProject,
+  tokens: ProjectPrivacyToken[],
   from: UnixTime,
   to: UnixTime,
 ): PrivacyProjectFlowData {
   const projectId = project.id
-  const bucketIds = project.privacyInfo.tokens.flatMap((token) =>
+  const bucketIds = tokens.flatMap((token) =>
     token.buckets.map((bucket) => bucket.id),
   )
   const tokenIds = (project.tvsConfig ?? []).map((token) => token.id)

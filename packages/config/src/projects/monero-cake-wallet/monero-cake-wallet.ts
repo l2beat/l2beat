@@ -107,6 +107,7 @@ export const moneroCakeWallet: BaseProject = {
         },
       ],
     },
+    deployedOn: ['ethereum'],
     trackedOn: ['ethereum'],
     tokens: [],
     anonymitySet: {

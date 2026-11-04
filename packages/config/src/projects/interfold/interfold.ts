@@ -180,6 +180,7 @@ export const interfold: BaseProject = {
         commit: '28b03a8b529dfa7491f01229724391665f06bd95',
       },
     },
+    deployedOn: ['ethereum'],
     trackedOn: ['ethereum'],
     tokens: [],
     anonymitySet: {

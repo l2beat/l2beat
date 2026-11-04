@@ -3,8 +3,35 @@
   "name": "tornado-cash",
   "import": ["../globalConfig.jsonc"],
   "maxAddresses": 80,
-  "initialAddresses": ["eth:0x4B6C07B8940a7602fE4332AFa915b366e56eAce5"],
+  "initialAddresses": [
+    "eth:0x4B6C07B8940a7602fE4332AFa915b366e56eAce5",
+    // Sidechain pools share CREATE2 addresses, have no registry and route
+    // through a shared proxy-light. Addresses from the DAO's classic-ui
+    // networkConfig.js.
+    "bnb:0x84443CFd09A48AF6eF360C6976C5392aC5023a1F",
+    "bnb:0xd47438C816c9E7f2E2888E060936a499Af9582b3",
+    "bnb:0x330bdFADE01eE9bF63C209Ee33102DD334618e0a",
+    "bnb:0x1E34A77868E19A6647b1f2F47B51ed72dEDE95DD",
+    "bnb:0x0D5550d52428E7e3175bfc9550207e4ad3859b17",
+    "arb1:0x84443CFd09A48AF6eF360C6976C5392aC5023a1F",
+    "arb1:0xd47438C816c9E7f2E2888E060936a499Af9582b3",
+    "arb1:0x330bdFADE01eE9bF63C209Ee33102DD334618e0a",
+    "arb1:0x1E34A77868E19A6647b1f2F47B51ed72dEDE95DD",
+    "arb1:0x0D5550d52428E7e3175bfc9550207e4ad3859b17"
+  ],
   "names": {
+    "bnb:0x84443CFd09A48AF6eF360C6976C5392aC5023a1F": "Pool_0.1_BNB",
+    "bnb:0xd47438C816c9E7f2E2888E060936a499Af9582b3": "Pool_1_BNB",
+    "bnb:0x330bdFADE01eE9bF63C209Ee33102DD334618e0a": "Pool_10_BNB",
+    "bnb:0x1E34A77868E19A6647b1f2F47B51ed72dEDE95DD": "Pool_100_BNB",
+    "bnb:0x0D5550d52428E7e3175bfc9550207e4ad3859b17": "TornadoProxyLight",
+    "arb1:0x84443CFd09A48AF6eF360C6976C5392aC5023a1F": "Pool_0.1_ETH",
+    "arb1:0xd47438C816c9E7f2E2888E060936a499Af9582b3": "Pool_1_ETH",
+    "arb1:0x330bdFADE01eE9bF63C209Ee33102DD334618e0a": "Pool_10_ETH",
+    "arb1:0x1E34A77868E19A6647b1f2F47B51ed72dEDE95DD": "Pool_100_ETH",
+    "arb1:0x0D5550d52428E7e3175bfc9550207e4ad3859b17": "TornadoProxyLight",
+    "bnb:0xBaffBE0e6C73d4dAd3f813194695FDC5829c962A": "MiMCHasher",
+    "arb1:0xBaffBE0e6C73d4dAd3f813194695FDC5829c962A": "MiMCHasher",
     "eth:0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e": "ENSRegistry",
     "eth:0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643": "cDAI",
     "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F": "DAI",
@@ -92,6 +119,23 @@
         }
       ]
     },
+    // Same bytecode as the Ethereum MiMCHasher, deployed with CREATE2 on the sidechains.
+    "bnb:0xBaffBE0e6C73d4dAd3f813194695FDC5829c962A": {
+      "description": "MiMC hasher used by every Tornado pool on BSC for commitment-tree operations, the same bytecode as the Ethereum hasher, manually verified against the pinned Tornado circomlib generator.",
+      "critical": true,
+      "category": "core",
+      "manualSourcePaths": {
+        "bnb:0xBaffBE0e6C73d4dAd3f813194695FDC5829c962A": "https://github.com/tornadocash/circomlib/blob/c372f14d324d57339c88451834bf2824e73bbdbc/src/mimcsponge_gencontract.js"
+      }
+    },
+    "arb1:0xBaffBE0e6C73d4dAd3f813194695FDC5829c962A": {
+      "description": "MiMC hasher used by every Tornado pool on Arbitrum for commitment-tree operations, the same bytecode as the Ethereum hasher, manually verified against the pinned Tornado circomlib generator.",
+      "critical": true,
+      "category": "core",
+      "manualSourcePaths": {
+        "arb1:0xBaffBE0e6C73d4dAd3f813194695FDC5829c962A": "https://github.com/tornadocash/circomlib/blob/c372f14d324d57339c88451834bf2824e73bbdbc/src/mimcsponge_gencontract.js"
+      }
+    },
     "eth:0xD82ed8786D7c69DC7e052F7A542AB047971E73d2": {
       "description": "Anonymity Mining - Unverified Poseidon hasher used by TornadoTreesV1 to hash deposit and withdrawal leaves.",
       "category": "bridge-external"
@@ -117,6 +161,30 @@
     },
     "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7": {
       "ignoreDiscovery": true
+    },
+    "bnb:0x84443CFd09A48AF6eF360C6976C5392aC5023a1F": {
+      "description": "Fixed-denomination Tornado Cash pool for 0.1 BNB deposits."
+    },
+    "bnb:0xd47438C816c9E7f2E2888E060936a499Af9582b3": {
+      "description": "Fixed-denomination Tornado Cash pool for 1 BNB deposits."
+    },
+    "bnb:0x330bdFADE01eE9bF63C209Ee33102DD334618e0a": {
+      "description": "Fixed-denomination Tornado Cash pool for 10 BNB deposits."
+    },
+    "bnb:0x1E34A77868E19A6647b1f2F47B51ed72dEDE95DD": {
+      "description": "Fixed-denomination Tornado Cash pool for 100 BNB deposits."
+    },
+    "arb1:0x84443CFd09A48AF6eF360C6976C5392aC5023a1F": {
+      "description": "Fixed-denomination Tornado Cash pool for 0.1 ETH deposits."
+    },
+    "arb1:0xd47438C816c9E7f2E2888E060936a499Af9582b3": {
+      "description": "Fixed-denomination Tornado Cash pool for 1 ETH deposits."
+    },
+    "arb1:0x330bdFADE01eE9bF63C209Ee33102DD334618e0a": {
+      "description": "Fixed-denomination Tornado Cash pool for 10 ETH deposits."
+    },
+    "arb1:0x1E34A77868E19A6647b1f2F47B51ed72dEDE95DD": {
+      "description": "Fixed-denomination Tornado Cash pool for 100 ETH deposits."
     },
     "eth:0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc": {
       "description": "Fixed-denomination Tornado Cash pool for 0.1 ETH deposits."

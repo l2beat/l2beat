@@ -10,6 +10,17 @@ import { fluidkeyAdversaries } from './adversaries'
 
 const discovery = new ProjectDiscovery('fluidkey')
 
+// Fluidkey has no pools, so every deployment is tracked through discovery only.
+const FLUIDKEY_CHAINS = [
+  'ethereum',
+  'base',
+  'arbitrum',
+  'optimism',
+  'polygonpos',
+  'gnosis',
+  'bsc',
+]
+
 export const fluidkey: BaseProject = {
   id: ProjectId('fluidkey'),
   slug: 'fluidkey',
@@ -55,14 +66,8 @@ export const fluidkey: BaseProject = {
       build: 'entrypoint-908cd83cc41461117345e525485f5d71',
       checked: '2026-10-30',
     },
-    trackedOn: [
-      'ethereum',
-      'base',
-      'arbitrum',
-      'optimism',
-      'polygonpos',
-      'gnosis',
-    ],
+    deployedOn: FLUIDKEY_CHAINS,
+    trackedOn: FLUIDKEY_CHAINS,
     // Balances live in individual stealth Safes. Earn-module events identify
     // only a subset of accounts, not a complete set of Fluidkey balances.
     tokens: [],

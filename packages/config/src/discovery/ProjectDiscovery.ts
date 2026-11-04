@@ -348,21 +348,31 @@ export class ProjectDiscovery {
     return this.formatPermissionedAccounts(members)
   }
 
-  getContract(identifier: string): EntryParameters {
+  /**
+   * Looks a contract up by chain-prefixed address or by name. A name must be
+   * unique in the discovery, or unique on `chain` (long chain name) when it
+   * is given, which multi-chain discoveries with repeated names need.
+   */
+  getContract(identifier: string, chain?: string): EntryParameters {
     const address = identifier.includes(':')
       ? identifier
       : EthereumAddress.tryParse(identifier)
 
     if (address === undefined) {
-      const contracts = this.getContractByName(identifier)
+      const contracts = this.getContractByName(identifier).filter(
+        (contract) =>
+          chain === undefined ||
+          ChainSpecificAddress.longChain(contract.address) === chain,
+      )
+      const where = chain === undefined ? '' : ` on ${chain}`
 
       assert(
         !(contracts.length > 1),
-        `Found more than one contracts of ${identifier} name (${this.projectName})`,
+        `Found more than one contracts of ${identifier} name${where} (${this.projectName})`,
       )
       assert(
         contracts.length === 1,
-        `Found no contract of ${identifier} name (${this.projectName})`,
+        `Found no contract of ${identifier} name${where} (${this.projectName})`,
       )
 
       return contracts[0]

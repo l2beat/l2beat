@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x3dcefb15fe26f63b3fff8051f19c1358e435e973
+
+# Diff at Mon, 02 Nov 2026 17:42:44 GMT:
+
+- id: 3f889c6e
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@7de2489d6143463905a64a13eea216e581898f3f block: 1792144252
+- current timestamp: 1793640020
+
+## Description
+
+Add the BSC deployment of the SmartAccountRelayer.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792144252 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract SmartAccountRelayer (bnb:0x8090a9DB6Aca56fFA186C75Ca0787B18af1058a0) [fluidkey/SmartAccountRelayer]
+    +++ description: Immutable contract through which Fluidkey submits Safe deployments, sends, auto-earn deposits and score transfers. Anyone can submit an operation, but each needs a signature from the authorized caller. It holds no rights over Safes, so a send still needs the Safe owner's signature.
+```
+
 Generated with discovered.json: 0x3cb9b6c7fe0f3ceab4c00c3277c9c7ce0eebb378
 
 # Diff at Fri, 09 Oct 2026 12:34:48 GMT:

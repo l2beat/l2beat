@@ -8,7 +8,14 @@
     "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598",
     "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46",
     "eth:0x1F74b4339990Db761bC0168F20D294A3a141497e", // EIP-7702 delegate named in Railgun's shared config
-    "eth:0x05ae73c5925d843864ae6f261f3175de2ebcd963" // EIP-7702 delegate pinned by RailOxide
+    "eth:0x05ae73c5925d843864ae6f261f3175de2ebcd963", // EIP-7702 delegate pinned by RailOxide
+    // Proxy and RelayAdapt per chain, from Railgun's shared network config
+    "arb1:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+    "arb1:0xB4F2d77bD12c6b548Ae398244d7FAD4ABCE4D89b",
+    "bnb:0x590162bf4b50f6576a459b75309ee21d92178a10",
+    "bnb:0xF82d00fC51F730F42A00F85E74895a2849ffF2Dd",
+    "matic:0x19b620929f97b7b990801496c3b361ca5def8c71",
+    "matic:0xF82d00fC51F730F42A00F85E74895a2849ffF2Dd"
   ],
   "names": {
     "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598": "VerificationKeySetter_64DA",
@@ -18,6 +25,82 @@
     "eth:0x05ae73c5925d843864ae6f261f3175de2ebcd963": "RelayAdapt7702_05ae"
   },
   "overrides": {
+    // ArbSys precompile read by the ArbitrumExecutor for retryable tickets.
+    "arb1:0x000000000000000000000000000000000000006E": {
+      "ignoreDiscovery": true
+    },
+    // The Treasury template reads the Ethereum RAIL balance. BSC and Polygon
+    // have their own fixed-supply RAIL tokens; Arbitrum has no RAIL token,
+    // since its governance is secured by Ethereum RAIL.
+    "arb1:0x3B374464a714525498e445ba050B91571937bFc8": {
+      "fields": {
+        "RAILBalance": {
+          "description": "Arbitrum has no RAIL token: Railgun's Arbitrum governance is secured by RAIL staked on Ethereum.",
+          "handler": { "type": "hardcoded", "value": "0" }
+        }
+      }
+    },
+    "bnb:0xdca05161eE5b5FA6DF170191c88857E70FFB4094": {
+      "fields": {
+        "RAILBalance": {
+          "description": "RAIL held by the treasury, movable by holders of TRANSFER_ROLE.",
+          "handler": {
+            "type": "call",
+            "method": "function balanceOf(address account) view returns (uint256)",
+            "args": ["0xdca05161eE5b5FA6DF170191c88857E70FFB4094"],
+            "address": "0x3F847b01d4d498a293e3197B186356039eCd737F"
+          },
+          "edit": ["format", "Undecimal18"]
+        }
+      }
+    },
+    "matic:0xdca05161eE5b5FA6DF170191c88857E70FFB4094": {
+      "fields": {
+        "RAILBalance": {
+          "description": "RAIL held by the treasury, movable by holders of TRANSFER_ROLE.",
+          "handler": {
+            "type": "call",
+            "method": "function balanceOf(address account) view returns (uint256)",
+            "args": ["0xdca05161eE5b5FA6DF170191c88857E70FFB4094"],
+            "address": "0x92A9C92C215092720C731c96D4Ff508c831a714f"
+          },
+          "edit": ["format", "Undecimal18"]
+        }
+      }
+    },
+    // First GovernorRewards proxies, abandoned for the ones deployed in
+    // November 2022. Every GovernorRewards call on them reverts, but they
+    // still hold TRANSFER_ROLE on the chain's Treasury.
+    "bnb:0xd0198Dde1187b12aF01a743d9e9f2B4B84e8f59b": {
+      "description": "Abandoned first GovernorRewards proxy. Every call to it reverts, but it still holds TRANSFER_ROLE on the BSC Treasury.",
+      "ignoreMethods": [
+        "BASIS_POINTS",
+        "currentInterval",
+        "DISTRIBUTION_INTERVAL",
+        "intervalBP",
+        "nextSnapshotPreCalcInterval",
+        "owner",
+        "staking",
+        "STAKING_DEPLOY_TIME",
+        "STAKING_DISTRIBUTION_INTERVAL_MULTIPLIER",
+        "treasury"
+      ]
+    },
+    "matic:0xd0198Dde1187b12aF01a743d9e9f2B4B84e8f59b": {
+      "description": "Abandoned first GovernorRewards proxy. Every call to it reverts, but it still holds TRANSFER_ROLE on the Polygon PoS Treasury.",
+      "ignoreMethods": [
+        "BASIS_POINTS",
+        "currentInterval",
+        "DISTRIBUTION_INTERVAL",
+        "intervalBP",
+        "nextSnapshotPreCalcInterval",
+        "owner",
+        "staking",
+        "STAKING_DEPLOY_TIME",
+        "STAKING_DISTRIBUTION_INTERVAL_MULTIPLIER",
+        "treasury"
+      ]
+    },
     "eth:0x2eCa05b128bF5cbd5A73CC4BB625B51131FF119B": {
       "proxyType": "Railgun proxy"
     },

@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Insertable, Selectable } from 'kysely'
+import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { TvsEscrowValue } from '../kysely/generated/types'
 import {
@@ -38,6 +38,11 @@ export function toRow(
   }
 }
 
+export interface TvsEscrowDailyValueRecord {
+  timestamp: UnixTime
+  value: number
+}
+
 export class TvsEscrowValueRepository extends BaseRepository {
   async upsertMany(records: TvsEscrowValueRecord[]): Promise<number> {
     if (records.length === 0) return 0
@@ -72,6 +77,44 @@ export class TvsEscrowValueRepository extends BaseRepository {
       .where('timestamp', 'in', timestamps.map(UnixTime.toDate))
       .execute()
     return rows.map(toRecord)
+  }
+
+  /**
+   * Value of the project's escrows on one chain per day, summed at the last
+   * timestamp of each day, for a per-chain TVL chart.
+   */
+  async getDailyValueByProjectAndChain(
+    projectId: string,
+    chain: string,
+    fromInclusive: UnixTime,
+    toExclusive: UnixTime,
+  ): Promise<TvsEscrowDailyValueRecord[]> {
+    const day = sql<Date>`date_trunc('day', "timestamp")`
+    const lastPerDay = this.db
+      .selectFrom('TvsEscrowValue')
+      .select((eb) => [day.as('day'), eb.fn.max('timestamp').as('timestamp')])
+      .where('projectId', '=', projectId)
+      .where('chain', '=', chain)
+      .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+      .where('timestamp', '<', UnixTime.toDate(toExclusive))
+      .groupBy(day)
+
+    const rows = await this.db
+      .selectFrom('TvsEscrowValue as v')
+      .innerJoin(lastPerDay.as('last'), (join) =>
+        join.onRef('last.timestamp', '=', 'v.timestamp'),
+      )
+      .select((eb) => ['last.timestamp', eb.fn.sum('v.value').as('value')])
+      .where('v.projectId', '=', projectId)
+      .where('v.chain', '=', chain)
+      .groupBy('last.timestamp')
+      .orderBy('last.timestamp', 'asc')
+      .execute()
+
+    return rows.map((row) => ({
+      timestamp: UnixTime.fromDate(row.timestamp),
+      value: Number(row.value),
+    }))
   }
 
   async deleteByConfigIds(ids: string[]): Promise<number> {

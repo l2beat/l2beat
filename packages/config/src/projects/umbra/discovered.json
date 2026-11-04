@@ -1,8 +1,302 @@
 {
   "name": "umbra",
-  "timestamp": 1791530581,
-  "configHash": "0x38d98c9a199ce8a9669fbe03c9bdce2024fe457278ded84755b93ce119c41ad5",
+  "timestamp": 1793639811,
+  "configHash": "0x7a9c394c0b0f946bccf76e2504ec18cc8a4d8b1c83addb0a60a654ef8bb1f07c",
   "entries": [
+    {
+      "address": "arb1:0x12aE679061C58e9f7660A2f7e6f06573014d2615",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "StealthKeyRegistry",
+      "address": "arb1:0x31fe56609C65Cd0C510E7125f051D440424D38f3",
+      "type": "Contract",
+      "template": "umbra/StealthKeyRegistry",
+      "sourceHashes": [
+        "0xb9c99bb5f3a66ecab2d7cf945eedf4ccc3c3d5e2ecba8cbba4afec18b84ad4a7"
+      ],
+      "proxyType": "immutable",
+      "description": "Public registry that maps an Ethereum address to its two secp256k1 stealth public keys: a spending key used to derive a fresh stealth address, and a viewing key used to encrypt the transfer metadata for the recipient.",
+      "critical": true,
+      "ignoreInWatchMode": ["registeredAddresses"],
+      "deployerAddress": "arb1:0x5777Aa6F437399Af6cef2Fce0BE8D4B4eD7C7232",
+      "sinceTimestamp": 1646247618,
+      "sinceBlock": 7285946,
+      "values": {
+        "$immutable": true,
+        "DOMAIN_SEPARATOR": "0xe10543a14d7c2adb5e04da61b901474f3b2822238b9ab44712b85a58578d2332",
+        "registeredAddresses": 25310,
+        "STEALTHKEYS_TYPEHASH": "0xab73c83a21fb894c20095a8f28177984b02f6284c760e4c1ac2f82c3d34b79c1"
+      },
+      "fieldMeta": {
+        "registeredAddresses": {
+          "description": "Total number of unique addresses that have registered stealth keys."
+        }
+      },
+      "implementationNames": {
+        "arb1:0x31fe56609C65Cd0C510E7125f051D440424D38f3": "StealthKeyRegistry"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "arb1:0x5777Aa6F437399Af6cef2Fce0BE8D4B4eD7C7232",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0xb4435399AB53D6136C9AEEBb77a0120620b117F9",
+      "type": "EOA",
+      "sourceHashes": [
+        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
+      ],
+      "proxyType": "EIP7702 EOA",
+      "values": {
+        "$implementation": "arb1:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B",
+        "delegationManager": "arb1:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3",
+        "DOMAIN_VERSION": "1",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "EIP7702StatelessDeleGator",
+          "version": "1",
+          "chainId": 42161,
+          "verifyingContract": "arb1:0xb4435399AB53D6136C9AEEBb77a0120620b117F9",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "entryPoint": "arb1:0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+        "getDeposit": 0,
+        "getDomainHash": "0x4888e2d064a01a6af002e7376609ed67edcc66195c382b58ae705a74a1672ad1",
+        "getNonce": 0,
+        "NAME": "EIP7702StatelessDeleGator",
+        "PACKED_USER_OP_TYPEHASH": "0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18",
+        "VERSION": "1.3.0"
+      }
+    },
+    {
+      "address": "arb1:0xB7EE870E2c49B2DEEe70003519cF056247Aac3D4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "UmbraBatchSend",
+      "address": "arb1:0xDbD0f5EBAdA6632Dde7d47713ea200a7C2ff91EB",
+      "type": "Contract",
+      "template": "umbra/UmbraBatchSend",
+      "sourceHashes": [
+        "0x176cf3371a1b1c395e248060f6f2097e788d187f7cd9a018833094e08719481b"
+      ],
+      "proxyType": "immutable",
+      "description": "Helper the app uses to send several stealth payments in one transaction. It pulls the tokens from the sender and calls the Umbra contract once per payment, so each payment emits its own Announcement. It holds no funds between transactions.",
+      "deployerAddress": "arb1:0xB7EE870E2c49B2DEEe70003519cF056247Aac3D4",
+      "sinceTimestamp": 1684272633,
+      "sinceBlock": 91405176,
+      "values": {
+        "$immutable": true,
+        "owner": "arb1:0xB7EE870E2c49B2DEEe70003519cF056247Aac3D4",
+        "UMBRA": "arb1:0xFb2dc580Eed955B528407b4d36FfaFe3da685401"
+      },
+      "fieldMeta": {
+        "owner": { "description": "Can approve new tokens for batch sends." }
+      },
+      "implementationNames": {
+        "arb1:0xDbD0f5EBAdA6632Dde7d47713ea200a7C2ff91EB": "UmbraBatchSend"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Umbra",
+      "address": "arb1:0xFb2dc580Eed955B528407b4d36FfaFe3da685401",
+      "type": "Contract",
+      "template": "umbra/Umbra",
+      "sourceHashes": [
+        "0x6e3d0905ee09aa55ec4a8f64cedf4106e30ada95cf2583911ef9952695eea8d2"
+      ],
+      "proxyType": "immutable",
+      "description": "Main entry point of the Umbra protocol, routing all ETH and ERC-20 stealth payments. On send, it emits an Announcement event that the recipient scans to detect the payment. ETH is forwarded directly to a fresh stealth address, ERC-20s are escrowed in this smart contract.",
+      "critical": true,
+      "ignoreInWatchMode": [
+        "totalTransfers",
+        "totalERC20Deposits",
+        "totalERC20Withdrawals"
+      ],
+      "deployerAddress": "arb1:0x5777Aa6F437399Af6cef2Fce0BE8D4B4eD7C7232",
+      "sinceTimestamp": 1646247591,
+      "sinceBlock": 7285883,
+      "values": {
+        "$immutable": true,
+        "owner": "arb1:0x5777Aa6F437399Af6cef2Fce0BE8D4B4eD7C7232",
+        "toll": 30000000000000,
+        "tollCollector": "arb1:0x12aE679061C58e9f7660A2f7e6f06573014d2615",
+        "tollReceiver": "arb1:0xb4435399AB53D6136C9AEEBb77a0120620b117F9",
+        "totalERC20Deposits": 100191,
+        "totalERC20Withdrawals": 10972,
+        "totalTransfers": 100191
+      },
+      "fieldMeta": {
+        "owner": { "description": "Owner of the Umbra contract." },
+        "totalTransfers": {
+          "description": "Total number of stealth transfers, both ETH and ERC20s"
+        },
+        "totalERC20Deposits": {
+          "description": "Total number of stealth transfers of ERC20 tokens"
+        },
+        "totalERC20Withdrawals": {
+          "description": "Total number of ERC20 withdrawals from stealth address escrows in Umbra contract"
+        }
+      },
+      "implementationNames": {
+        "arb1:0xFb2dc580Eed955B528407b4d36FfaFe3da685401": "Umbra"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "base:0x12aE679061C58e9f7660A2f7e6f06573014d2615",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "StealthKeyRegistry",
+      "address": "base:0x31fe56609C65Cd0C510E7125f051D440424D38f3",
+      "type": "Contract",
+      "template": "umbra/StealthKeyRegistry",
+      "sourceHashes": [
+        "0xb9c99bb5f3a66ecab2d7cf945eedf4ccc3c3d5e2ecba8cbba4afec18b84ad4a7"
+      ],
+      "proxyType": "immutable",
+      "description": "Public registry that maps an Ethereum address to its two secp256k1 stealth public keys: a spending key used to derive a fresh stealth address, and a viewing key used to encrypt the transfer metadata for the recipient.",
+      "critical": true,
+      "ignoreInWatchMode": ["registeredAddresses"],
+      "deployerAddress": "base:0x5777Aa6F437399Af6cef2Fce0BE8D4B4eD7C7232",
+      "sinceTimestamp": 1708312119,
+      "sinceBlock": 10761386,
+      "values": {
+        "$immutable": true,
+        "DOMAIN_SEPARATOR": "0x40e4d7c6a18d81eadc5e4b9de1de2f91b9b51d97a85ce32c848a9af1a43411d9",
+        "registeredAddresses": 2450,
+        "STEALTHKEYS_TYPEHASH": "0xab73c83a21fb894c20095a8f28177984b02f6284c760e4c1ac2f82c3d34b79c1"
+      },
+      "fieldMeta": {
+        "registeredAddresses": {
+          "description": "Total number of unique addresses that have registered stealth keys."
+        }
+      },
+      "implementationNames": {
+        "base:0x31fe56609C65Cd0C510E7125f051D440424D38f3": "StealthKeyRegistry"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "base:0x5777Aa6F437399Af6cef2Fce0BE8D4B4eD7C7232",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "base:0xb4435399AB53D6136C9AEEBb77a0120620b117F9",
+      "type": "EOA",
+      "sourceHashes": [
+        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
+      ],
+      "proxyType": "EIP7702 EOA",
+      "values": {
+        "$implementation": "base:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B",
+        "delegationManager": "base:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3",
+        "DOMAIN_VERSION": "1",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "EIP7702StatelessDeleGator",
+          "version": "1",
+          "chainId": 8453,
+          "verifyingContract": "base:0xb4435399AB53D6136C9AEEBb77a0120620b117F9",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "entryPoint": "base:0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+        "getDeposit": 0,
+        "getDomainHash": "0x2e8334850f39e9d151c253dbc92a721dc139088f19087459f6823d9695e09b6a",
+        "getNonce": 0,
+        "NAME": "EIP7702StatelessDeleGator",
+        "PACKED_USER_OP_TYPEHASH": "0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18",
+        "VERSION": "1.3.0"
+      }
+    },
+    {
+      "address": "base:0xB7EE870E2c49B2DEEe70003519cF056247Aac3D4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "UmbraBatchSend",
+      "address": "base:0xDbD0f5EBAdA6632Dde7d47713ea200a7C2ff91EB",
+      "type": "Contract",
+      "template": "umbra/UmbraBatchSend",
+      "sourceHashes": [
+        "0x176cf3371a1b1c395e248060f6f2097e788d187f7cd9a018833094e08719481b"
+      ],
+      "proxyType": "immutable",
+      "description": "Helper the app uses to send several stealth payments in one transaction. It pulls the tokens from the sender and calls the Umbra contract once per payment, so each payment emits its own Announcement. It holds no funds between transactions.",
+      "deployerAddress": "base:0xB7EE870E2c49B2DEEe70003519cF056247Aac3D4",
+      "sinceTimestamp": 1708315127,
+      "sinceBlock": 10762890,
+      "values": {
+        "$immutable": true,
+        "owner": "base:0xB7EE870E2c49B2DEEe70003519cF056247Aac3D4",
+        "UMBRA": "base:0xFb2dc580Eed955B528407b4d36FfaFe3da685401"
+      },
+      "fieldMeta": {
+        "owner": { "description": "Can approve new tokens for batch sends." }
+      },
+      "implementationNames": {
+        "base:0xDbD0f5EBAdA6632Dde7d47713ea200a7C2ff91EB": "UmbraBatchSend"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Umbra",
+      "address": "base:0xFb2dc580Eed955B528407b4d36FfaFe3da685401",
+      "type": "Contract",
+      "template": "umbra/Umbra",
+      "sourceHashes": [
+        "0x6e3d0905ee09aa55ec4a8f64cedf4106e30ada95cf2583911ef9952695eea8d2"
+      ],
+      "proxyType": "immutable",
+      "description": "Main entry point of the Umbra protocol, routing all ETH and ERC-20 stealth payments. On send, it emits an Announcement event that the recipient scans to detect the payment. ETH is forwarded directly to a fresh stealth address, ERC-20s are escrowed in this smart contract.",
+      "critical": true,
+      "ignoreInWatchMode": [
+        "totalTransfers",
+        "totalERC20Deposits",
+        "totalERC20Withdrawals"
+      ],
+      "deployerAddress": "base:0x5777Aa6F437399Af6cef2Fce0BE8D4B4eD7C7232",
+      "sinceTimestamp": 1708312095,
+      "sinceBlock": 10761374,
+      "values": {
+        "$immutable": true,
+        "owner": "base:0x5777Aa6F437399Af6cef2Fce0BE8D4B4eD7C7232",
+        "toll": 30000000000000,
+        "tollCollector": "base:0x12aE679061C58e9f7660A2f7e6f06573014d2615",
+        "tollReceiver": "base:0xb4435399AB53D6136C9AEEBb77a0120620b117F9",
+        "totalERC20Deposits": 7950,
+        "totalERC20Withdrawals": 1815,
+        "totalTransfers": 7950
+      },
+      "fieldMeta": {
+        "owner": { "description": "Owner of the Umbra contract." },
+        "totalTransfers": {
+          "description": "Total number of stealth transfers, both ETH and ERC20s"
+        },
+        "totalERC20Deposits": {
+          "description": "Total number of stealth transfers of ERC20 tokens"
+        },
+        "totalERC20Withdrawals": {
+          "description": "Total number of ERC20 withdrawals from stealth address escrows in Umbra contract"
+        }
+      },
+      "implementationNames": {
+        "base:0xFb2dc580Eed955B528407b4d36FfaFe3da685401": "Umbra"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
     {
       "address": "eth:0x12aE679061C58e9f7660A2f7e6f06573014d2615",
       "type": "EOA",
@@ -26,7 +320,7 @@
       "values": {
         "$immutable": true,
         "DOMAIN_SEPARATOR": "0xbffc56f4d2a2d2f02a0a5fd845c389cb145f77af539d336fc9ec350637642194",
-        "registeredAddresses": 11983,
+        "registeredAddresses": 11996,
         "STEALTHKEYS_TYPEHASH": "0xab73c83a21fb894c20095a8f28177984b02f6284c760e4c1ac2f82c3d34b79c1"
       },
       "fieldMeta": {
@@ -129,9 +423,9 @@
         "toll": 0,
         "tollCollector": "eth:0x12aE679061C58e9f7660A2f7e6f06573014d2615",
         "tollReceiver": "eth:0xb4435399AB53D6136C9AEEBb77a0120620b117F9",
-        "totalERC20Deposits": 1717,
-        "totalERC20Withdrawals": 1688,
-        "totalTransfers": 25452
+        "totalERC20Deposits": 1754,
+        "totalERC20Withdrawals": 1724,
+        "totalTransfers": 25504
       },
       "fieldMeta": {
         "owner": { "description": "Owner of the Umbra contract." },
@@ -149,9 +443,497 @@
         "eth:0xFb2dc580Eed955B528407b4d36FfaFe3da685401": "Umbra"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "matic:0x12aE679061C58e9f7660A2f7e6f06573014d2615",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "StealthKeyRegistry",
+      "address": "matic:0x31fe56609C65Cd0C510E7125f051D440424D38f3",
+      "type": "Contract",
+      "template": "umbra/StealthKeyRegistry",
+      "sourceHashes": [
+        "0xb9c99bb5f3a66ecab2d7cf945eedf4ccc3c3d5e2ecba8cbba4afec18b84ad4a7"
+      ],
+      "proxyType": "immutable",
+      "description": "Public registry that maps an Ethereum address to its two secp256k1 stealth public keys: a spending key used to derive a fresh stealth address, and a viewing key used to encrypt the transfer metadata for the recipient.",
+      "critical": true,
+      "ignoreInWatchMode": ["registeredAddresses"],
+      "deployerAddress": "matic:0x5777Aa6F437399Af6cef2Fce0BE8D4B4eD7C7232",
+      "sinceTimestamp": 1635533827,
+      "sinceBlock": 20750316,
+      "values": {
+        "$immutable": true,
+        "DOMAIN_SEPARATOR": "0xecad5adf2e2669f8deb31b6e606560fdc80868ebf33ec703256abd0e6decf6a0",
+        "registeredAddresses": 28273,
+        "STEALTHKEYS_TYPEHASH": "0xab73c83a21fb894c20095a8f28177984b02f6284c760e4c1ac2f82c3d34b79c1"
+      },
+      "fieldMeta": {
+        "registeredAddresses": {
+          "description": "Total number of unique addresses that have registered stealth keys."
+        }
+      },
+      "implementationNames": {
+        "matic:0x31fe56609C65Cd0C510E7125f051D440424D38f3": "StealthKeyRegistry"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "matic:0x5777Aa6F437399Af6cef2Fce0BE8D4B4eD7C7232",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "matic:0xb4435399AB53D6136C9AEEBb77a0120620b117F9",
+      "type": "EOA",
+      "sourceHashes": [
+        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
+      ],
+      "proxyType": "EIP7702 EOA",
+      "values": {
+        "$implementation": "matic:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B",
+        "delegationManager": "matic:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3",
+        "DOMAIN_VERSION": "1",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "EIP7702StatelessDeleGator",
+          "version": "1",
+          "chainId": 137,
+          "verifyingContract": "matic:0xb4435399AB53D6136C9AEEBb77a0120620b117F9",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "entryPoint": "matic:0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+        "getDeposit": 0,
+        "getDomainHash": "0xa5c95622c45aec773c26ac6840850396e9960f47bc1d1505281eeb97fbababfc",
+        "getNonce": 0,
+        "NAME": "EIP7702StatelessDeleGator",
+        "PACKED_USER_OP_TYPEHASH": "0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18",
+        "VERSION": "1.3.0"
+      }
+    },
+    {
+      "address": "matic:0xB7EE870E2c49B2DEEe70003519cF056247Aac3D4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "UmbraBatchSend",
+      "address": "matic:0xDbD0f5EBAdA6632Dde7d47713ea200a7C2ff91EB",
+      "type": "Contract",
+      "template": "umbra/UmbraBatchSend",
+      "sourceHashes": [
+        "0x176cf3371a1b1c395e248060f6f2097e788d187f7cd9a018833094e08719481b"
+      ],
+      "proxyType": "immutable",
+      "description": "Helper the app uses to send several stealth payments in one transaction. It pulls the tokens from the sender and calls the Umbra contract once per payment, so each payment emits its own Announcement. It holds no funds between transactions.",
+      "deployerAddress": "matic:0xB7EE870E2c49B2DEEe70003519cF056247Aac3D4",
+      "sinceTimestamp": 1684272922,
+      "sinceBlock": 42790064,
+      "values": {
+        "$immutable": true,
+        "owner": "matic:0xB7EE870E2c49B2DEEe70003519cF056247Aac3D4",
+        "UMBRA": "matic:0xFb2dc580Eed955B528407b4d36FfaFe3da685401"
+      },
+      "fieldMeta": {
+        "owner": { "description": "Can approve new tokens for batch sends." }
+      },
+      "implementationNames": {
+        "matic:0xDbD0f5EBAdA6632Dde7d47713ea200a7C2ff91EB": "UmbraBatchSend"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Umbra",
+      "address": "matic:0xFb2dc580Eed955B528407b4d36FfaFe3da685401",
+      "type": "Contract",
+      "template": "umbra/Umbra",
+      "sourceHashes": [
+        "0x6e3d0905ee09aa55ec4a8f64cedf4106e30ada95cf2583911ef9952695eea8d2"
+      ],
+      "proxyType": "immutable",
+      "description": "Main entry point of the Umbra protocol, routing all ETH and ERC-20 stealth payments. On send, it emits an Announcement event that the recipient scans to detect the payment. ETH is forwarded directly to a fresh stealth address, ERC-20s are escrowed in this smart contract.",
+      "critical": true,
+      "ignoreInWatchMode": [
+        "totalTransfers",
+        "totalERC20Deposits",
+        "totalERC20Withdrawals"
+      ],
+      "deployerAddress": "matic:0x5777Aa6F437399Af6cef2Fce0BE8D4B4eD7C7232",
+      "sinceTimestamp": 1635533467,
+      "sinceBlock": 20750142,
+      "values": {
+        "$immutable": true,
+        "owner": "matic:0x5777Aa6F437399Af6cef2Fce0BE8D4B4eD7C7232",
+        "toll": "50000000000000000",
+        "tollCollector": "matic:0x12aE679061C58e9f7660A2f7e6f06573014d2615",
+        "tollReceiver": "matic:0xb4435399AB53D6136C9AEEBb77a0120620b117F9",
+        "totalERC20Deposits": 102550,
+        "totalERC20Withdrawals": 46492,
+        "totalTransfers": 102550
+      },
+      "fieldMeta": {
+        "owner": { "description": "Owner of the Umbra contract." },
+        "totalTransfers": {
+          "description": "Total number of stealth transfers, both ETH and ERC20s"
+        },
+        "totalERC20Deposits": {
+          "description": "Total number of stealth transfers of ERC20 tokens"
+        },
+        "totalERC20Withdrawals": {
+          "description": "Total number of ERC20 withdrawals from stealth address escrows in Umbra contract"
+        }
+      },
+      "implementationNames": {
+        "matic:0xFb2dc580Eed955B528407b4d36FfaFe3da685401": "Umbra"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "oeth:0x12aE679061C58e9f7660A2f7e6f06573014d2615",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "StealthKeyRegistry",
+      "address": "oeth:0x31fe56609C65Cd0C510E7125f051D440424D38f3",
+      "type": "Contract",
+      "template": "umbra/StealthKeyRegistry",
+      "sourceHashes": [
+        "0xb9c99bb5f3a66ecab2d7cf945eedf4ccc3c3d5e2ecba8cbba4afec18b84ad4a7"
+      ],
+      "proxyType": "immutable",
+      "description": "Public registry that maps an Ethereum address to its two secp256k1 stealth public keys: a spending key used to derive a fresh stealth address, and a viewing key used to encrypt the transfer metadata for the recipient.",
+      "critical": true,
+      "ignoreInWatchMode": ["registeredAddresses"],
+      "deployerAddress": "oeth:0x5777Aa6F437399Af6cef2Fce0BE8D4B4eD7C7232",
+      "sinceTimestamp": 1646256945,
+      "sinceBlock": 4069563,
+      "values": {
+        "$immutable": true,
+        "DOMAIN_SEPARATOR": "0xa7f35e5440b7bba9db8742968be5b40d8e23d45e73f1504d74a90233d796e40d",
+        "registeredAddresses": 14426,
+        "STEALTHKEYS_TYPEHASH": "0xab73c83a21fb894c20095a8f28177984b02f6284c760e4c1ac2f82c3d34b79c1"
+      },
+      "fieldMeta": {
+        "registeredAddresses": {
+          "description": "Total number of unique addresses that have registered stealth keys."
+        }
+      },
+      "implementationNames": {
+        "oeth:0x31fe56609C65Cd0C510E7125f051D440424D38f3": "StealthKeyRegistry"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "oeth:0x5777Aa6F437399Af6cef2Fce0BE8D4B4eD7C7232",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "oeth:0xb4435399AB53D6136C9AEEBb77a0120620b117F9",
+      "type": "EOA",
+      "sourceHashes": [
+        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
+      ],
+      "proxyType": "EIP7702 EOA",
+      "values": {
+        "$implementation": "oeth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B",
+        "delegationManager": "oeth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3",
+        "DOMAIN_VERSION": "1",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "EIP7702StatelessDeleGator",
+          "version": "1",
+          "chainId": 10,
+          "verifyingContract": "oeth:0xb4435399AB53D6136C9AEEBb77a0120620b117F9",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "entryPoint": "oeth:0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+        "getDeposit": 0,
+        "getDomainHash": "0x735d2bcf83826ff137311e830ad521489cfc9f1048bed2690d5d2102bfad6ed7",
+        "getNonce": 0,
+        "NAME": "EIP7702StatelessDeleGator",
+        "PACKED_USER_OP_TYPEHASH": "0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18",
+        "VERSION": "1.3.0"
+      }
+    },
+    {
+      "address": "oeth:0xB7EE870E2c49B2DEEe70003519cF056247Aac3D4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "UmbraBatchSend",
+      "address": "oeth:0xDbD0f5EBAdA6632Dde7d47713ea200a7C2ff91EB",
+      "type": "Contract",
+      "template": "umbra/UmbraBatchSend",
+      "sourceHashes": [
+        "0x176cf3371a1b1c395e248060f6f2097e788d187f7cd9a018833094e08719481b"
+      ],
+      "proxyType": "immutable",
+      "description": "Helper the app uses to send several stealth payments in one transaction. It pulls the tokens from the sender and calls the Umbra contract once per payment, so each payment emits its own Announcement. It holds no funds between transactions.",
+      "deployerAddress": "oeth:0xB7EE870E2c49B2DEEe70003519cF056247Aac3D4",
+      "sinceTimestamp": 1684272619,
+      "sinceBlock": 98880586,
+      "values": {
+        "$immutable": true,
+        "owner": "oeth:0xB7EE870E2c49B2DEEe70003519cF056247Aac3D4",
+        "UMBRA": "oeth:0xFb2dc580Eed955B528407b4d36FfaFe3da685401"
+      },
+      "fieldMeta": {
+        "owner": { "description": "Can approve new tokens for batch sends." }
+      },
+      "implementationNames": {
+        "oeth:0xDbD0f5EBAdA6632Dde7d47713ea200a7C2ff91EB": "UmbraBatchSend"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Umbra",
+      "address": "oeth:0xFb2dc580Eed955B528407b4d36FfaFe3da685401",
+      "type": "Contract",
+      "template": "umbra/Umbra",
+      "sourceHashes": [
+        "0x6e3d0905ee09aa55ec4a8f64cedf4106e30ada95cf2583911ef9952695eea8d2"
+      ],
+      "proxyType": "immutable",
+      "description": "Main entry point of the Umbra protocol, routing all ETH and ERC-20 stealth payments. On send, it emits an Announcement event that the recipient scans to detect the payment. ETH is forwarded directly to a fresh stealth address, ERC-20s are escrowed in this smart contract.",
+      "critical": true,
+      "ignoreInWatchMode": [
+        "totalTransfers",
+        "totalERC20Deposits",
+        "totalERC20Withdrawals"
+      ],
+      "deployerAddress": "oeth:0x5777Aa6F437399Af6cef2Fce0BE8D4B4eD7C7232",
+      "sinceTimestamp": 1646256910,
+      "sinceBlock": 4069556,
+      "values": {
+        "$immutable": true,
+        "owner": "oeth:0x5777Aa6F437399Af6cef2Fce0BE8D4B4eD7C7232",
+        "toll": 30000000000000,
+        "tollCollector": "oeth:0x12aE679061C58e9f7660A2f7e6f06573014d2615",
+        "tollReceiver": "oeth:0xb4435399AB53D6136C9AEEBb77a0120620b117F9",
+        "totalERC20Deposits": 72276,
+        "totalERC20Withdrawals": 4354,
+        "totalTransfers": 72276
+      },
+      "fieldMeta": {
+        "owner": { "description": "Owner of the Umbra contract." },
+        "totalTransfers": {
+          "description": "Total number of stealth transfers, both ETH and ERC20s"
+        },
+        "totalERC20Deposits": {
+          "description": "Total number of stealth transfers of ERC20 tokens"
+        },
+        "totalERC20Withdrawals": {
+          "description": "Total number of ERC20 withdrawals from stealth address escrows in Umbra contract"
+        }
+      },
+      "implementationNames": {
+        "oeth:0xFb2dc580Eed955B528407b4d36FfaFe3da685401": "Umbra"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     }
   ],
   "abis": {
+    "arb1:0x31fe56609C65Cd0C510E7125f051D440424D38f3": [
+      "constructor()",
+      "event StealthKeyChanged(address indexed registrant, uint256 spendingPubKeyPrefix, uint256 spendingPubKey, uint256 viewingPubKeyPrefix, uint256 viewingPubKey)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function STEALTHKEYS_TYPEHASH() view returns (bytes32)",
+      "function setStealthKeys(uint256 _spendingPubKeyPrefix, uint256 _spendingPubKey, uint256 _viewingPubKeyPrefix, uint256 _viewingPubKey)",
+      "function setStealthKeysOnBehalf(address _registrant, uint256 _spendingPubKeyPrefix, uint256 _spendingPubKey, uint256 _viewingPubKeyPrefix, uint256 _viewingPubKey, uint8 _v, bytes32 _r, bytes32 _s)",
+      "function stealthKeys(address _registrant) view returns (uint256 spendingPubKeyPrefix, uint256 spendingPubKey, uint256 viewingPubKeyPrefix, uint256 viewingPubKey)"
+    ],
+    "arb1:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B": [
+      "constructor(address _delegationManager, address _entryPoint)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error ExecutionFailed()",
+      "error InvalidEIP712NameLength()",
+      "error InvalidEIP712VersionLength()",
+      "error InvalidShortString()",
+      "error NotDelegationManager()",
+      "error NotEntryPoint()",
+      "error NotEntryPointOrSelf()",
+      "error NotSelf()",
+      "error StringTooLong(string str)",
+      "error UnauthorizedCallContext()",
+      "error UnsupportedCallType(bytes1 callType)",
+      "error UnsupportedExecType(bytes1 execType)",
+      "event EIP712DomainChanged()",
+      "event SentPrefund(address indexed sender, uint256 amount, bool success)",
+      "event SetDelegationManager(address indexed newDelegationManager)",
+      "event SetEntryPoint(address indexed entryPoint)",
+      "event TryExecuteUnsuccessful(uint256 batchExecutionindex, bytes result)",
+      "function DOMAIN_VERSION() view returns (string)",
+      "function NAME() view returns (string)",
+      "function PACKED_USER_OP_TYPEHASH() view returns (bytes32)",
+      "function VERSION() view returns (string)",
+      "function addDeposit() payable",
+      "function delegationManager() view returns (address)",
+      "function disableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function enableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
+      "function entryPoint() view returns (address)",
+      "function execute(tuple(address target, uint256 value, bytes callData) _execution) payable",
+      "function execute(bytes32 _mode, bytes _executionCalldata) payable",
+      "function executeFromExecutor(bytes32 _mode, bytes _executionCalldata) payable returns (bytes[] returnData_)",
+      "function getDeposit() view returns (uint256)",
+      "function getDomainHash() view returns (bytes32)",
+      "function getNonce(uint192 _key) view returns (uint256)",
+      "function getNonce() view returns (uint256)",
+      "function getPackedUserOperationHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
+      "function getPackedUserOperationTypedDataHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
+      "function isDelegationDisabled(bytes32 _delegationHash) view returns (bool)",
+      "function isValidSignature(bytes32 _hash, bytes _signature) view returns (bytes4 magicValue_)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) view returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) view returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) view returns (bytes4)",
+      "function redeemDelegations(bytes[] _permissionContexts, bytes32[] _modes, bytes[] _executionCallDatas)",
+      "function supportsExecutionMode(bytes32 _mode) view returns (bool)",
+      "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
+      "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp, bytes32, uint256 _missingAccountFunds) returns (uint256 validationData_)",
+      "function withdrawDeposit(address _withdrawAddress, uint256 _withdrawAmount)"
+    ],
+    "arb1:0xDbD0f5EBAdA6632Dde7d47713ea200a7C2ff91EB": [
+      "constructor(address _umbra)",
+      "error NotSorted()",
+      "error TooMuchEthSent()",
+      "event BatchSendExecuted(address indexed sender)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UMBRA() view returns (address)",
+      "function approveToken(address _token)",
+      "function batchSend(uint256 _tollCommitment, tuple(address receiver, address tokenAddr, uint256 amount, bytes32 pkx, bytes32 ciphertext)[] _data) payable",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)"
+    ],
+    "arb1:0xFb2dc580Eed955B528407b4d36FfaFe3da685401": [
+      "constructor(uint256 _toll, address _tollCollector, address _tollReceiver)",
+      "event Announcement(address indexed receiver, uint256 amount, address indexed token, bytes32 pkx, bytes32 ciphertext)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event TokenWithdrawal(address indexed receiver, address indexed acceptor, uint256 amount, address indexed token)",
+      "function collectTolls()",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function sendEth(address _receiver, uint256 _tollCommitment, bytes32 _pkx, bytes32 _ciphertext) payable",
+      "function sendToken(address _receiver, address _tokenAddr, uint256 _amount, bytes32 _pkx, bytes32 _ciphertext) payable",
+      "function setToll(uint256 _newToll)",
+      "function setTollCollector(address _newTollCollector)",
+      "function setTollReceiver(address _newTollReceiver)",
+      "function tokenPayments(address, address) view returns (uint256)",
+      "function toll() view returns (uint256)",
+      "function tollCollector() view returns (address)",
+      "function tollReceiver() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function withdrawToken(address _acceptor, address _tokenAddr)",
+      "function withdrawTokenAndCall(address _acceptor, address _tokenAddr, address _hook, bytes _data)",
+      "function withdrawTokenAndCallOnBehalf(address _stealthAddr, address _acceptor, address _tokenAddr, address _sponsor, uint256 _sponsorFee, address _hook, bytes _data, uint8 _v, bytes32 _r, bytes32 _s)",
+      "function withdrawTokenOnBehalf(address _stealthAddr, address _acceptor, address _tokenAddr, address _sponsor, uint256 _sponsorFee, uint8 _v, bytes32 _r, bytes32 _s)"
+    ],
+    "base:0x31fe56609C65Cd0C510E7125f051D440424D38f3": [
+      "constructor()",
+      "event StealthKeyChanged(address indexed registrant, uint256 spendingPubKeyPrefix, uint256 spendingPubKey, uint256 viewingPubKeyPrefix, uint256 viewingPubKey)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function STEALTHKEYS_TYPEHASH() view returns (bytes32)",
+      "function setStealthKeys(uint256 _spendingPubKeyPrefix, uint256 _spendingPubKey, uint256 _viewingPubKeyPrefix, uint256 _viewingPubKey)",
+      "function setStealthKeysOnBehalf(address _registrant, uint256 _spendingPubKeyPrefix, uint256 _spendingPubKey, uint256 _viewingPubKeyPrefix, uint256 _viewingPubKey, uint8 _v, bytes32 _r, bytes32 _s)",
+      "function stealthKeys(address _registrant) view returns (uint256 spendingPubKeyPrefix, uint256 spendingPubKey, uint256 viewingPubKeyPrefix, uint256 viewingPubKey)"
+    ],
+    "base:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B": [
+      "constructor(address _delegationManager, address _entryPoint)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error ExecutionFailed()",
+      "error InvalidEIP712NameLength()",
+      "error InvalidEIP712VersionLength()",
+      "error InvalidShortString()",
+      "error NotDelegationManager()",
+      "error NotEntryPoint()",
+      "error NotEntryPointOrSelf()",
+      "error NotSelf()",
+      "error StringTooLong(string str)",
+      "error UnauthorizedCallContext()",
+      "error UnsupportedCallType(bytes1 callType)",
+      "error UnsupportedExecType(bytes1 execType)",
+      "event EIP712DomainChanged()",
+      "event SentPrefund(address indexed sender, uint256 amount, bool success)",
+      "event SetDelegationManager(address indexed newDelegationManager)",
+      "event SetEntryPoint(address indexed entryPoint)",
+      "event TryExecuteUnsuccessful(uint256 batchExecutionindex, bytes result)",
+      "function DOMAIN_VERSION() view returns (string)",
+      "function NAME() view returns (string)",
+      "function PACKED_USER_OP_TYPEHASH() view returns (bytes32)",
+      "function VERSION() view returns (string)",
+      "function addDeposit() payable",
+      "function delegationManager() view returns (address)",
+      "function disableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function enableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
+      "function entryPoint() view returns (address)",
+      "function execute(tuple(address target, uint256 value, bytes callData) _execution) payable",
+      "function execute(bytes32 _mode, bytes _executionCalldata) payable",
+      "function executeFromExecutor(bytes32 _mode, bytes _executionCalldata) payable returns (bytes[] returnData_)",
+      "function getDeposit() view returns (uint256)",
+      "function getDomainHash() view returns (bytes32)",
+      "function getNonce(uint192 _key) view returns (uint256)",
+      "function getNonce() view returns (uint256)",
+      "function getPackedUserOperationHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
+      "function getPackedUserOperationTypedDataHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
+      "function isDelegationDisabled(bytes32 _delegationHash) view returns (bool)",
+      "function isValidSignature(bytes32 _hash, bytes _signature) view returns (bytes4 magicValue_)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) view returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) view returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) view returns (bytes4)",
+      "function redeemDelegations(bytes[] _permissionContexts, bytes32[] _modes, bytes[] _executionCallDatas)",
+      "function supportsExecutionMode(bytes32 _mode) view returns (bool)",
+      "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
+      "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp, bytes32, uint256 _missingAccountFunds) returns (uint256 validationData_)",
+      "function withdrawDeposit(address _withdrawAddress, uint256 _withdrawAmount)"
+    ],
+    "base:0xDbD0f5EBAdA6632Dde7d47713ea200a7C2ff91EB": [
+      "constructor(address _umbra)",
+      "error NotSorted()",
+      "error TooMuchEthSent()",
+      "event BatchSendExecuted(address indexed sender)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UMBRA() view returns (address)",
+      "function approveToken(address _token)",
+      "function batchSend(uint256 _tollCommitment, tuple(address receiver, address tokenAddr, uint256 amount, bytes32 pkx, bytes32 ciphertext)[] _data) payable",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)"
+    ],
+    "base:0xFb2dc580Eed955B528407b4d36FfaFe3da685401": [
+      "constructor(uint256 _toll, address _tollCollector, address _tollReceiver)",
+      "event Announcement(address indexed receiver, uint256 amount, address indexed token, bytes32 pkx, bytes32 ciphertext)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event TokenWithdrawal(address indexed receiver, address indexed acceptor, uint256 amount, address indexed token)",
+      "function collectTolls()",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function sendEth(address _receiver, uint256 _tollCommitment, bytes32 _pkx, bytes32 _ciphertext) payable",
+      "function sendToken(address _receiver, address _tokenAddr, uint256 _amount, bytes32 _pkx, bytes32 _ciphertext) payable",
+      "function setToll(uint256 _newToll)",
+      "function setTollCollector(address _newTollCollector)",
+      "function setTollReceiver(address _newTollReceiver)",
+      "function tokenPayments(address, address) view returns (uint256)",
+      "function toll() view returns (uint256)",
+      "function tollCollector() view returns (address)",
+      "function tollReceiver() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function withdrawToken(address _acceptor, address _tokenAddr)",
+      "function withdrawTokenAndCall(address _acceptor, address _tokenAddr, address _hook, bytes _data)",
+      "function withdrawTokenAndCallOnBehalf(address _stealthAddr, address _acceptor, address _tokenAddr, address _sponsor, uint256 _sponsorFee, address _hook, bytes _data, uint8 _v, bytes32 _r, bytes32 _s)",
+      "function withdrawTokenOnBehalf(address _stealthAddr, address _acceptor, address _tokenAddr, address _sponsor, uint256 _sponsorFee, uint8 _v, bytes32 _r, bytes32 _s)"
+    ],
     "eth:0x31fe56609C65Cd0C510E7125f051D440424D38f3": [
       "constructor()",
       "event StealthKeyChanged(address indexed registrant, uint256 spendingPubKeyPrefix, uint256 spendingPubKey, uint256 viewingPubKeyPrefix, uint256 viewingPubKey)",
@@ -248,6 +1030,200 @@
       "function withdrawTokenAndCall(address _acceptor, address _tokenAddr, address _hook, bytes _data)",
       "function withdrawTokenAndCallOnBehalf(address _stealthAddr, address _acceptor, address _tokenAddr, address _sponsor, uint256 _sponsorFee, address _hook, bytes _data, uint8 _v, bytes32 _r, bytes32 _s)",
       "function withdrawTokenOnBehalf(address _stealthAddr, address _acceptor, address _tokenAddr, address _sponsor, uint256 _sponsorFee, uint8 _v, bytes32 _r, bytes32 _s)"
+    ],
+    "matic:0x31fe56609C65Cd0C510E7125f051D440424D38f3": [
+      "constructor()",
+      "event StealthKeyChanged(address indexed registrant, uint256 spendingPubKeyPrefix, uint256 spendingPubKey, uint256 viewingPubKeyPrefix, uint256 viewingPubKey)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function STEALTHKEYS_TYPEHASH() view returns (bytes32)",
+      "function setStealthKeys(uint256 _spendingPubKeyPrefix, uint256 _spendingPubKey, uint256 _viewingPubKeyPrefix, uint256 _viewingPubKey)",
+      "function setStealthKeysOnBehalf(address _registrant, uint256 _spendingPubKeyPrefix, uint256 _spendingPubKey, uint256 _viewingPubKeyPrefix, uint256 _viewingPubKey, uint8 _v, bytes32 _r, bytes32 _s)",
+      "function stealthKeys(address _registrant) view returns (uint256 spendingPubKeyPrefix, uint256 spendingPubKey, uint256 viewingPubKeyPrefix, uint256 viewingPubKey)"
+    ],
+    "matic:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B": [
+      "constructor(address _delegationManager, address _entryPoint)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error ExecutionFailed()",
+      "error InvalidEIP712NameLength()",
+      "error InvalidEIP712VersionLength()",
+      "error InvalidShortString()",
+      "error NotDelegationManager()",
+      "error NotEntryPoint()",
+      "error NotEntryPointOrSelf()",
+      "error NotSelf()",
+      "error StringTooLong(string str)",
+      "error UnauthorizedCallContext()",
+      "error UnsupportedCallType(bytes1 callType)",
+      "error UnsupportedExecType(bytes1 execType)",
+      "event EIP712DomainChanged()",
+      "event SentPrefund(address indexed sender, uint256 amount, bool success)",
+      "event SetDelegationManager(address indexed newDelegationManager)",
+      "event SetEntryPoint(address indexed entryPoint)",
+      "event TryExecuteUnsuccessful(uint256 batchExecutionindex, bytes result)",
+      "function DOMAIN_VERSION() view returns (string)",
+      "function NAME() view returns (string)",
+      "function PACKED_USER_OP_TYPEHASH() view returns (bytes32)",
+      "function VERSION() view returns (string)",
+      "function addDeposit() payable",
+      "function delegationManager() view returns (address)",
+      "function disableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function enableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
+      "function entryPoint() view returns (address)",
+      "function execute(tuple(address target, uint256 value, bytes callData) _execution) payable",
+      "function execute(bytes32 _mode, bytes _executionCalldata) payable",
+      "function executeFromExecutor(bytes32 _mode, bytes _executionCalldata) payable returns (bytes[] returnData_)",
+      "function getDeposit() view returns (uint256)",
+      "function getDomainHash() view returns (bytes32)",
+      "function getNonce(uint192 _key) view returns (uint256)",
+      "function getNonce() view returns (uint256)",
+      "function getPackedUserOperationHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
+      "function getPackedUserOperationTypedDataHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
+      "function isDelegationDisabled(bytes32 _delegationHash) view returns (bool)",
+      "function isValidSignature(bytes32 _hash, bytes _signature) view returns (bytes4 magicValue_)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) view returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) view returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) view returns (bytes4)",
+      "function redeemDelegations(bytes[] _permissionContexts, bytes32[] _modes, bytes[] _executionCallDatas)",
+      "function supportsExecutionMode(bytes32 _mode) view returns (bool)",
+      "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
+      "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp, bytes32, uint256 _missingAccountFunds) returns (uint256 validationData_)",
+      "function withdrawDeposit(address _withdrawAddress, uint256 _withdrawAmount)"
+    ],
+    "matic:0xDbD0f5EBAdA6632Dde7d47713ea200a7C2ff91EB": [
+      "constructor(address _umbra)",
+      "error NotSorted()",
+      "error TooMuchEthSent()",
+      "event BatchSendExecuted(address indexed sender)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UMBRA() view returns (address)",
+      "function approveToken(address _token)",
+      "function batchSend(uint256 _tollCommitment, tuple(address receiver, address tokenAddr, uint256 amount, bytes32 pkx, bytes32 ciphertext)[] _data) payable",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)"
+    ],
+    "matic:0xFb2dc580Eed955B528407b4d36FfaFe3da685401": [
+      "constructor(uint256 _toll, address _tollCollector, address _tollReceiver)",
+      "event Announcement(address indexed receiver, uint256 amount, address indexed token, bytes32 pkx, bytes32 ciphertext)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event TokenWithdrawal(address indexed receiver, address indexed acceptor, uint256 amount, address indexed token)",
+      "function collectTolls()",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function sendEth(address _receiver, uint256 _tollCommitment, bytes32 _pkx, bytes32 _ciphertext) payable",
+      "function sendToken(address _receiver, address _tokenAddr, uint256 _amount, bytes32 _pkx, bytes32 _ciphertext) payable",
+      "function setToll(uint256 _newToll)",
+      "function setTollCollector(address _newTollCollector)",
+      "function setTollReceiver(address _newTollReceiver)",
+      "function tokenPayments(address, address) view returns (uint256)",
+      "function toll() view returns (uint256)",
+      "function tollCollector() view returns (address)",
+      "function tollReceiver() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function withdrawToken(address _acceptor, address _tokenAddr)",
+      "function withdrawTokenAndCall(address _acceptor, address _tokenAddr, address _hook, bytes _data)",
+      "function withdrawTokenAndCallOnBehalf(address _stealthAddr, address _acceptor, address _tokenAddr, address _sponsor, uint256 _sponsorFee, address _hook, bytes _data, uint8 _v, bytes32 _r, bytes32 _s)",
+      "function withdrawTokenOnBehalf(address _stealthAddr, address _acceptor, address _tokenAddr, address _sponsor, uint256 _sponsorFee, uint8 _v, bytes32 _r, bytes32 _s)"
+    ],
+    "oeth:0x31fe56609C65Cd0C510E7125f051D440424D38f3": [
+      "constructor()",
+      "event StealthKeyChanged(address indexed registrant, uint256 spendingPubKeyPrefix, uint256 spendingPubKey, uint256 viewingPubKeyPrefix, uint256 viewingPubKey)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function STEALTHKEYS_TYPEHASH() view returns (bytes32)",
+      "function setStealthKeys(uint256 _spendingPubKeyPrefix, uint256 _spendingPubKey, uint256 _viewingPubKeyPrefix, uint256 _viewingPubKey)",
+      "function setStealthKeysOnBehalf(address _registrant, uint256 _spendingPubKeyPrefix, uint256 _spendingPubKey, uint256 _viewingPubKeyPrefix, uint256 _viewingPubKey, uint8 _v, bytes32 _r, bytes32 _s)",
+      "function stealthKeys(address _registrant) view returns (uint256 spendingPubKeyPrefix, uint256 spendingPubKey, uint256 viewingPubKeyPrefix, uint256 viewingPubKey)"
+    ],
+    "oeth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B": [
+      "constructor(address _delegationManager, address _entryPoint)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error ExecutionFailed()",
+      "error InvalidEIP712NameLength()",
+      "error InvalidEIP712VersionLength()",
+      "error InvalidShortString()",
+      "error NotDelegationManager()",
+      "error NotEntryPoint()",
+      "error NotEntryPointOrSelf()",
+      "error NotSelf()",
+      "error StringTooLong(string str)",
+      "error UnauthorizedCallContext()",
+      "error UnsupportedCallType(bytes1 callType)",
+      "error UnsupportedExecType(bytes1 execType)",
+      "event EIP712DomainChanged()",
+      "event SentPrefund(address indexed sender, uint256 amount, bool success)",
+      "event SetDelegationManager(address indexed newDelegationManager)",
+      "event SetEntryPoint(address indexed entryPoint)",
+      "event TryExecuteUnsuccessful(uint256 batchExecutionindex, bytes result)",
+      "function DOMAIN_VERSION() view returns (string)",
+      "function NAME() view returns (string)",
+      "function PACKED_USER_OP_TYPEHASH() view returns (bytes32)",
+      "function VERSION() view returns (string)",
+      "function addDeposit() payable",
+      "function delegationManager() view returns (address)",
+      "function disableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function enableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
+      "function entryPoint() view returns (address)",
+      "function execute(tuple(address target, uint256 value, bytes callData) _execution) payable",
+      "function execute(bytes32 _mode, bytes _executionCalldata) payable",
+      "function executeFromExecutor(bytes32 _mode, bytes _executionCalldata) payable returns (bytes[] returnData_)",
+      "function getDeposit() view returns (uint256)",
+      "function getDomainHash() view returns (bytes32)",
+      "function getNonce(uint192 _key) view returns (uint256)",
+      "function getNonce() view returns (uint256)",
+      "function getPackedUserOperationHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
+      "function getPackedUserOperationTypedDataHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
+      "function isDelegationDisabled(bytes32 _delegationHash) view returns (bool)",
+      "function isValidSignature(bytes32 _hash, bytes _signature) view returns (bytes4 magicValue_)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) view returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) view returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) view returns (bytes4)",
+      "function redeemDelegations(bytes[] _permissionContexts, bytes32[] _modes, bytes[] _executionCallDatas)",
+      "function supportsExecutionMode(bytes32 _mode) view returns (bool)",
+      "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
+      "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp, bytes32, uint256 _missingAccountFunds) returns (uint256 validationData_)",
+      "function withdrawDeposit(address _withdrawAddress, uint256 _withdrawAmount)"
+    ],
+    "oeth:0xDbD0f5EBAdA6632Dde7d47713ea200a7C2ff91EB": [
+      "constructor(address _umbra)",
+      "error NotSorted()",
+      "error TooMuchEthSent()",
+      "event BatchSendExecuted(address indexed sender)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UMBRA() view returns (address)",
+      "function approveToken(address _token)",
+      "function batchSend(uint256 _tollCommitment, tuple(address receiver, address tokenAddr, uint256 amount, bytes32 pkx, bytes32 ciphertext)[] _data) payable",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)"
+    ],
+    "oeth:0xFb2dc580Eed955B528407b4d36FfaFe3da685401": [
+      "constructor(uint256 _toll, address _tollCollector, address _tollReceiver)",
+      "event Announcement(address indexed receiver, uint256 amount, address indexed token, bytes32 pkx, bytes32 ciphertext)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event TokenWithdrawal(address indexed receiver, address indexed acceptor, uint256 amount, address indexed token)",
+      "function collectTolls()",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function sendEth(address _receiver, uint256 _tollCommitment, bytes32 _pkx, bytes32 _ciphertext) payable",
+      "function sendToken(address _receiver, address _tokenAddr, uint256 _amount, bytes32 _pkx, bytes32 _ciphertext) payable",
+      "function setToll(uint256 _newToll)",
+      "function setTollCollector(address _newTollCollector)",
+      "function setTollReceiver(address _newTollReceiver)",
+      "function tokenPayments(address, address) view returns (uint256)",
+      "function toll() view returns (uint256)",
+      "function tollCollector() view returns (address)",
+      "function tollReceiver() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function withdrawToken(address _acceptor, address _tokenAddr)",
+      "function withdrawTokenAndCall(address _acceptor, address _tokenAddr, address _hook, bytes _data)",
+      "function withdrawTokenAndCallOnBehalf(address _stealthAddr, address _acceptor, address _tokenAddr, address _sponsor, uint256 _sponsorFee, address _hook, bytes _data, uint8 _v, bytes32 _r, bytes32 _s)",
+      "function withdrawTokenOnBehalf(address _stealthAddr, address _acceptor, address _tokenAddr, address _sponsor, uint256 _sponsorFee, uint8 _v, bytes32 _r, bytes32 _s)"
     ]
   },
   "usedTemplates": {
@@ -255,9 +1231,55 @@
     "umbra/Umbra": "0xcc5da2f937a3b09e86b9c8f5f688c9cfe6421f39852a78e70e0395fe81ed21e3",
     "umbra/UmbraBatchSend": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "usedBlockNumbers": { "ethereum": 26153330 },
-  "permissionsConfigHash": "0xab55eb85474eab8b6990483f1e14707c3342e450bc4a8d1af85af36fe4775e11",
+  "usedBlockNumbers": {
+    "arbitrum": 520630259,
+    "base": 53425232,
+    "ethereum": 26328532,
+    "optimism": 159020517,
+    "polygonpos": 96622903
+  },
+  "permissionsConfigHash": "0x4e410bfcbdaebed3a36c10ab61b8ab992c471c17aca4d9234cab5f301f85d5b3",
   "permissions": {
+    "arb1:0x5777Aa6F437399Af6cef2Fce0BE8D4B4eD7C7232": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0xFb2dc580Eed955B528407b4d36FfaFe3da685401",
+          "description": "set an arbitrary ETH toll that must be paid on every transfer routed through the Umbra contract.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "arb1:0xB7EE870E2c49B2DEEe70003519cF056247Aac3D4": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0xDbD0f5EBAdA6632Dde7d47713ea200a7C2ff91EB",
+          "description": "approve new tokens so that batch sends can route them to the Umbra contract.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "base:0x5777Aa6F437399Af6cef2Fce0BE8D4B4eD7C7232": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0xFb2dc580Eed955B528407b4d36FfaFe3da685401",
+          "description": "set an arbitrary ETH toll that must be paid on every transfer routed through the Umbra contract.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "base:0xB7EE870E2c49B2DEEe70003519cF056247Aac3D4": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0xDbD0f5EBAdA6632Dde7d47713ea200a7C2ff91EB",
+          "description": "approve new tokens so that batch sends can route them to the Umbra contract.",
+          "role": ".owner"
+        }
+      ]
+    },
     "eth:0x5777Aa6F437399Af6cef2Fce0BE8D4B4eD7C7232": {
       "receivedPermissions": [
         {
@@ -273,6 +1295,46 @@
         {
           "permission": "interact",
           "from": "eth:0xDbD0f5EBAdA6632Dde7d47713ea200a7C2ff91EB",
+          "description": "approve new tokens so that batch sends can route them to the Umbra contract.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "matic:0x5777Aa6F437399Af6cef2Fce0BE8D4B4eD7C7232": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0xFb2dc580Eed955B528407b4d36FfaFe3da685401",
+          "description": "set an arbitrary ETH toll that must be paid on every transfer routed through the Umbra contract.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "matic:0xB7EE870E2c49B2DEEe70003519cF056247Aac3D4": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0xDbD0f5EBAdA6632Dde7d47713ea200a7C2ff91EB",
+          "description": "approve new tokens so that batch sends can route them to the Umbra contract.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "oeth:0x5777Aa6F437399Af6cef2Fce0BE8D4B4eD7C7232": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "oeth:0xFb2dc580Eed955B528407b4d36FfaFe3da685401",
+          "description": "set an arbitrary ETH toll that must be paid on every transfer routed through the Umbra contract.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "oeth:0xB7EE870E2c49B2DEEe70003519cF056247Aac3D4": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "oeth:0xDbD0f5EBAdA6632Dde7d47713ea200a7C2ff91EB",
           "description": "approve new tokens so that batch sends can route them to the Umbra contract.",
           "role": ".owner"
         }

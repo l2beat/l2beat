@@ -47,13 +47,40 @@ describe(createPrivacyRouter.name, () => {
 
     expect(await response.text()).toEqual('<html />')
   })
+
+  // Tornado Cash is tracked on Ethereum first, then BSC and Arbitrum.
+  it('caches the page per tracked chain, under the primary one otherwise', async () => {
+    const keys: unknown[] = []
+    const router = createRouter((key) => keys.push(key))
+
+    for (const path of [
+      '/privacy/projects/tornado-cash',
+      '/privacy/projects/tornado-cash?chain=bsc',
+      '/privacy/projects/tornado-cash?chain=gnosis',
+      '/privacy/projects/tornado-cash.md?chain=bsc',
+    ]) {
+      await fetchFromRouter(router, path, {
+        headers: { Accept: 'text/html,*/*;q=0.8' },
+      })
+    }
+
+    expect(keys).toEqual([
+      ['privacy', 'projects', 'tornado-cash', 'ethereum'],
+      ['privacy', 'projects', 'tornado-cash', 'bsc'],
+      ['privacy', 'projects', 'tornado-cash', 'ethereum'],
+      ['privacy', 'projects', 'tornado-cash', 'bsc'],
+    ])
+  })
 })
 
-function createRouter() {
+function createRouter(onGet?: (key: unknown) => void) {
   const manifest = mockObject<Manifest>({})
   const cachedPage = { head: {}, props: { entry: ENTRY } }
   const cache = mockObject<InMemoryCache>({
-    get: (async () => cachedPage) as InMemoryCache['get'],
+    get: (async (options: { key: unknown }) => {
+      onGet?.(options.key)
+      return cachedPage
+    }) as InMemoryCache['get'],
   })
   return createPrivacyRouter(manifest, async () => '<html />', cache)
 }
@@ -78,7 +105,9 @@ const ENTRY: ProjectPrivacyEntry = {
   assetsCount: 0,
   hasTvl: false,
   attributes: [],
-  trackedOn: [],
+  chain: 'ethereum',
+  chains: [],
+  deployedOn: [],
   scalingProjects: [],
   exitWindow: { ...RISK, walkawayTest: { passed: true } },
   trustedSetup: { ...RISK, risk: 'green', label: RISK.value },

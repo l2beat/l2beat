@@ -125,6 +125,7 @@ export const zcashNearIntents: BaseProject = {
         },
       ],
     },
+    deployedOn: ['ethereum'],
     trackedOn: ['ethereum'],
     tokens: [],
     zkCatalogId: ProjectId('zcash'),

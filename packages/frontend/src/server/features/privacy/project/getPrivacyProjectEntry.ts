@@ -36,6 +36,7 @@ import {
   getPrivacyReferenceApp,
   type PrivacyReferenceApp,
 } from '../utils/getPrivacyReferenceApp'
+import type { PrivacyChainLink } from '../utils/getPrivacyTrackedChains'
 import {
   getPrivacyTrustedSetup,
   type PrivacyTrustedSetupSummary,
@@ -65,7 +66,14 @@ export interface ProjectPrivacyEntry {
   assetsCount: number
   hasTvl: boolean
   attributes: PrivacyAttribute[]
-  trackedOn: ProjectIconListItem[]
+  /** The tracked chain the page describes. */
+  chain: string
+  /** "on <Chain>", shown under the name when the project is tracked on several chains. */
+  chainSubtitle?: string
+  /** The tracked chains the page can switch to, in config order. */
+  chains: PrivacyChainLink[]
+  /** Every chain with a deployment; the untracked ones are dimmed. */
+  deployedOn: ProjectIconListItem[]
   scalingProjects: ProjectIconListItem[]
   exitWindow: PrivacyExitWindow
   trustedSetup: PrivacyTrustedSetupSummary
@@ -178,6 +186,12 @@ export async function getPrivacyProjectEntry(
     shortName: details.shortName,
     iconUrl: icon,
   }
+  // Per-chain charts of a multi-chain project say which chain they show and
+  // query only it. Single-chain pages are unchanged.
+  const chainSubtitle = details.isMultiChain
+    ? `on ${details.chainName}`
+    : undefined
+  const chartChain = details.isMultiChain ? details.chain : undefined
 
   if (details.hasTvl) {
     sections.push({
@@ -185,10 +199,12 @@ export async function getPrivacyProjectEntry(
       props: {
         id: 'privacy-tvl',
         title: 'Value Locked',
+        subtitle: chainSubtitle,
         defaultRange: defaultChartRange,
         rangeControls: 'privacy',
         project: chartProject,
         milestones: details.milestones,
+        chain: chartChain,
       },
     })
   }
@@ -199,10 +215,12 @@ export async function getPrivacyProjectEntry(
       props: {
         id: 'privacy-anonymity-set',
         title: 'Anonymity sets',
+        subtitle: chainSubtitle,
         defaultRange: defaultChartRange,
         project: chartProject,
         milestones: details.milestones,
         anonymitySetType: details.anonymitySetType,
+        chain: chartChain,
       },
     })
   }
@@ -213,9 +231,11 @@ export async function getPrivacyProjectEntry(
       props: {
         id: 'privacy-flows',
         title: 'Flows',
+        subtitle: chainSubtitle,
         defaultRange: defaultChartRange,
         project: chartProject,
         milestones: details.milestones,
+        chain: chartChain,
       },
     })
 
@@ -224,6 +244,7 @@ export async function getPrivacyProjectEntry(
       props: {
         id: 'privacy-assets-breakdown',
         title: 'Assets Breakdown',
+        subtitle: chainSubtitle,
         assets: details.assets,
         showTvl: details.hasTvl,
       },
@@ -364,7 +385,10 @@ export async function getPrivacyProjectEntry(
     assetsCount: details.assets.length,
     hasTvl: details.hasTvl,
     attributes: details.attributes,
-    trackedOn: details.trackedOn,
+    chain: details.chain,
+    chainSubtitle,
+    chains: details.chains,
+    deployedOn: details.deployedOn,
     scalingProjects: details.scalingProjects,
     exitWindow: details.exitWindow,
     trustedSetup: toTrustedSetupSummaryValue(
@@ -373,12 +397,16 @@ export async function getPrivacyProjectEntry(
     reproducibility: details.reproducibility,
     referenceApp,
     summary: {
-      totalValueLockedUsd: details.hasTvl
-        ? tvs.projects[details.id]?.breakdown.total
-        : undefined,
-      totalValueLockedChange7d: details.hasTvl
-        ? tvs.projects[details.id]?.change.total
-        : undefined,
+      totalValueLockedUsd: !details.hasTvl
+        ? undefined
+        : details.summary.chainTvl
+          ? details.summary.chainTvl.totalValueLockedUsd
+          : tvs.projects[details.id]?.breakdown.total,
+      totalValueLockedChange7d: !details.hasTvl
+        ? undefined
+        : details.summary.chainTvl
+          ? details.summary.chainTvl.totalValueLockedChange7d
+          : tvs.projects[details.id]?.change.total,
       deposits: details.summary.deposits,
       relayerStat: details.summary.relayerStat,
     },

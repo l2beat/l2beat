@@ -1,0 +1,8 @@
+{
+  "TornadoCash_eth_sidechain": {
+    "hash": "0xd92131f7b7c3ea75e73638fdc59e7f80f9dc5425b41bfa5aba74bd6ff87c1e25",
+    "address": "bnb:0xd47438C816c9E7f2E2888E060936a499Af9582b3",
+    "chain": "bsc",
+    "blockNumber": 131278210
+  }
+}

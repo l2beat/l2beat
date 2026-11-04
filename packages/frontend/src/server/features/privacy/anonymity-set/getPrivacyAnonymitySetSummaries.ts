@@ -47,10 +47,11 @@ export async function getPrivacyAnonymitySetSummaries(
   projects: PrivacyProject[],
   currentDay: UnixTime,
 ): Promise<Map<string, PrivacyAnonymitySetSummary>> {
+  // The summary table shows the anonymity set on the primary chain.
   const seriesByProject = new Map(
     projects.map((project) => [
       project.id,
-      getPrivacyAnonymitySetSeries(project),
+      getPrivacyAnonymitySetSeries(project, primaryChain(project)),
     ]),
   )
   if (env.MOCK) return getMockSummaries(projects, seriesByProject)
@@ -124,6 +125,10 @@ export function getPrivacyAnonymitySetSummary(
   }
 }
 
+function primaryChain(project: PrivacyProject): string | undefined {
+  return project.privacyInfo.trackedOn[0]
+}
+
 async function getCoverageByProject(
   db: Database,
   projects: PrivacyProject[],
@@ -134,7 +139,12 @@ async function getCoverageByProject(
       async (project) =>
         [
           project.id,
-          await getPrivacyAnonymitySetCoverage(db, project, currentDay),
+          await getPrivacyAnonymitySetCoverage(
+            db,
+            project,
+            currentDay,
+            primaryChain(project),
+          ),
         ] as const,
     ),
   )

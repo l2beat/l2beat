@@ -7,6 +7,7 @@ import {
 import { useMemo } from 'react'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
+import { ProjectIconList } from '~/components/ProjectIconList'
 import { BasicTable } from '~/components/table/BasicTable'
 import {
   ProjectNameCell,
@@ -99,7 +100,16 @@ function getColumns(anonymitySetTooltip: string | undefined) {
                   <ProjectNameCell project={project} withInfoTooltip />
                 </TwoRowCell.First>
                 <TwoRowCell.Second>
-                  {ctx.row.original.category.label}
+                  <span className="flex items-center gap-2">
+                    {ctx.row.original.category.label}
+                    {ctx.row.original.chains.length > 1 && (
+                      <ProjectIconList
+                        projects={ctx.row.original.chains}
+                        title="Tracked on"
+                        variant="static"
+                      />
+                    )}
+                  </span>
                 </TwoRowCell.Second>
               </TwoRowCell>
             </TableLink>

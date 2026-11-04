@@ -1,4 +1,5 @@
 import {
+  assert,
   ChainSpecificAddress,
   EthereumAddress,
   formatNumber,
@@ -31,129 +32,207 @@ const RAILGUN_DEPOSIT_EVENT =
 const RAILGUN_WITHDRAWAL_EVENT =
   '0xd93cf895c7d5b2cd7dc7a098b678b3089f37d91f48d9b83a0800a91cbdf05284'
 
-interface TrackedToken {
-  address: string
-  symbol: string
+/** A tracked token, by symbol, with an address when the symbol is ambiguous on the chain. */
+type RailgunTokenRef = string | { symbol: string; address: string }
+
+interface RailgunDeployment {
+  chain: string
+  chainId: number
+  /** Tokens the pool holds in meaningful amounts, researched from its balances. */
+  tokens: RailgunTokenRef[]
 }
 
-const TRACKED_TOKENS: TrackedToken[] = [
-  { address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', symbol: 'WETH' },
-  { address: '0xdAC17F958D2ee523a2206206994597C13D831ec7', symbol: 'USDT' },
-  { address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', symbol: 'USDC' },
-  { address: '0x6B175474E89094C44Da98b954EedeAC495271d0F', symbol: 'DAI' },
-  { address: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599', symbol: 'WBTC' },
-  { address: '0x85F17Cf997934a597031b2E18a9aB6ebD4B9f6a4', symbol: 'NEAR' },
-  { address: '0x6f40d4A6237C257fff2dB00FA0510DeEECd303eb', symbol: 'FLUID' },
-  { address: '0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D', symbol: 'RAIL' },
+// The primary chain comes first. Bucket ids on Ethereum predate the other
+// chains and stay as they are, so no Ethereum data resyncs.
+const DEPLOYMENTS: RailgunDeployment[] = [
+  {
+    chain: 'ethereum',
+    chainId: 1,
+    tokens: [
+      'WETH',
+      'USDT',
+      'USDC',
+      'DAI',
+      'WBTC',
+      // Rainbow-bridged NEAR, not the native one of the same symbol.
+      { symbol: 'NEAR', address: '0x85F17Cf997934a597031b2E18a9aB6ebD4B9f6a4' },
+      'FLUID',
+      'RAIL',
+    ],
+  },
+  {
+    chain: 'arbitrum',
+    chainId: 42161,
+    // The token list spells Arbitrum's wrapped BTC "wBTC".
+    tokens: ['WETH', 'USDC', 'USDC.e', 'USDT', 'wBTC', 'DAI', 'ARB'],
+  },
+  {
+    chain: 'bsc',
+    chainId: 56,
+    tokens: ['WBNB', 'USDT', 'BUSD', 'USDC'],
+  },
+  {
+    chain: 'polygonpos',
+    chainId: 137,
+    tokens: [
+      // Native USDC. The PoS-bridged USDC.e shares the symbol in the token list,
+      // so tvs.json keeps it apart as the custom token railgun-polygonpos-USDC.e:
+      // both at one escrow in one token would collide in the escrow value table.
+      { symbol: 'USDC', address: '0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359' },
+      'USDT0',
+      'WPOL',
+      'TEL',
+      'DAI',
+      'WETH',
+    ],
+  },
 ]
 
 const RAIL_TOKEN = getTokenBySymbol('RAIL')
 
-const railgunCore = discovery.getContract('RailgunSmartWallet')
+// Governance and fee parameters in the descriptions come from Ethereum, the
+// primary chain. Contract names repeat across chains, so lookups name the chain.
+const railgunCore = discovery.getContract('RailgunSmartWallet', 'ethereum')
+const ethereumContract = (name: string) =>
+  discovery.getContract(name, 'ethereum').address.toString()
 const shieldFee = discovery.getContractValue<number>(
-  'RailgunSmartWallet',
+  railgunCore.address,
   'shieldFee',
 )
 const unshieldFee = discovery.getContractValue<number>(
-  'RailgunSmartWallet',
+  railgunCore.address,
   'unshieldFee',
 )
-const nftFee = discovery.getContractValue<number>(
-  'RailgunSmartWallet',
-  'nftFee',
-)
+const nftFee = discovery.getContractValue<number>(railgunCore.address, 'nftFee')
+const ethereumStaking = ethereumContract('Staking')
+const ethereumVoting = ethereumContract('Voting')
 const stakeLocktime = discovery.getContractValue<number>(
-  'Staking',
+  ethereumStaking,
   'STAKE_LOCKTIME',
 )
 const proposalSponsorThreshold = discovery.getContractValueBigInt(
-  'Voting',
+  ethereumVoting,
   'PROPOSAL_SPONSOR_THRESHOLD',
 )
 const sponsorWindow = discovery.getContractValue<number>(
-  'Voting',
+  ethereumVoting,
   'SPONSOR_WINDOW',
 )
 const votingStartOffset = discovery.getContractValue<number>(
-  'Voting',
+  ethereumVoting,
   'VOTING_START_OFFSET',
 )
 const votingYayEndOffset = discovery.getContractValue<number>(
-  'Voting',
+  ethereumVoting,
   'VOTING_YAY_END_OFFSET',
 )
 const votingNayEndOffset = discovery.getContractValue<number>(
-  'Voting',
+  ethereumVoting,
   'VOTING_NAY_END_OFFSET',
 )
 const executionStartOffset = discovery.getContractValue<number>(
-  'Voting',
+  ethereumVoting,
   'EXECUTION_START_OFFSET',
 )
 const executionEndOffset = discovery.getContractValue<number>(
-  'Voting',
+  ethereumVoting,
   'EXECUTION_END_OFFSET',
 )
-const quorum = discovery.getContractValueBigInt('Voting', 'QUORUM')
+const quorum = discovery.getContractValueBigInt(ethereumVoting, 'QUORUM')
 const railTotalSupply = discovery.getContractValueBigInt(
   'Rail Token',
   'totalSupply',
 )
 const railTreasuryBalance = Number(
   discovery
-    .getContractValue<string>('Treasury', 'RAILBalance')
+    .getContractValue<string>(ethereumContract('Treasury'), 'RAILBalance')
     .replaceAll(',', ''),
 )
 const railStaked = Number(
   discovery
-    .getContractValue<string>('Staking', 'RAILStaked')
+    .getContractValue<string>(ethereumStaking, 'RAILStaked')
     .replaceAll(',', ''),
 )
 const RAILGUN_SINCE_TIMESTAMP = UnixTime(railgunCore.sinceTimestamp ?? 0)
 
-const privacyTokens: ProjectPrivacyToken[] = TRACKED_TOKENS.map((token) => {
-  const resolved = getTokenByAddress(token.address)
-  const minimumAmounts = PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS[resolved.symbol]
+/**
+ * The shared thresholds are in the base units of the Ethereum token of that
+ * symbol. The same token elsewhere may use other decimals (USDT and USDC on
+ * BSC have 18), so the thresholds are rescaled to the chain's decimals.
+ */
+function scaleMinimumAmounts(
+  symbol: string,
+  decimals: number,
+): string[] | undefined {
+  const amounts = PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS[symbol]
+  if (amounts === undefined) return undefined
+  const shift = decimals - getTokenBySymbol(symbol).decimals
+  if (shift === 0) return amounts
+  assert(shift > 0, `Railgun: ${symbol} has fewer decimals than on Ethereum`)
+  return amounts.map((amount) => `${amount}${'0'.repeat(shift)}`)
+}
 
-  return {
-    token: {
-      address: EthereumAddress(token.address),
-      iconUrl: resolved.iconUrl,
-      symbol: resolved.symbol,
-      decimals: resolved.decimals,
-      priceId: resolved.coingeckoId,
-      sinceTimestamp: resolved.coingeckoListingTimestamp,
-    },
-    buckets: [
-      {
-        id: `railgun-${resolved.symbol}`,
-        type: 'pool',
-        label: resolved.symbol,
-        address: railgunCore.address,
-        sinceTimestamp: Math.max(
-          railgunCore.sinceTimestamp ?? 0,
-          resolved.coingeckoListingTimestamp,
-        ),
-        anonymitySet:
-          minimumAmounts === undefined ? undefined : { minimumAmounts },
-        deposit: {
-          event: RAILGUN_DEPOSIT_EVENT,
-          extractor: 'railgunShield',
-          params: {
-            tokenAddress: EthereumAddress(token.address),
-          },
+const privacyTokens: ProjectPrivacyToken[] = DEPLOYMENTS.flatMap(
+  (deployment) => {
+    const pool = discovery.getContract('RailgunSmartWallet', deployment.chain)
+    return deployment.tokens.map((ref) => {
+      const resolved =
+        typeof ref === 'string'
+          ? getTokenBySymbol(ref, deployment.chainId)
+          : getTokenByAddress(ref.address, deployment.chainId)
+      const address = resolved.address
+      assert(address, `Railgun: ${resolved.symbol} has no address`)
+      const minimumAmounts = scaleMinimumAmounts(
+        resolved.symbol,
+        resolved.decimals,
+      )
+      const bucketId =
+        deployment.chain === 'ethereum'
+          ? `railgun-${resolved.symbol}`
+          : `railgun-${deployment.chain}-${resolved.symbol}`
+
+      return {
+        token: {
+          chain: deployment.chain,
+          address: EthereumAddress(address),
+          iconUrl: resolved.iconUrl,
+          symbol: resolved.symbol,
+          decimals: resolved.decimals,
+          priceId: resolved.coingeckoId,
+          sinceTimestamp: resolved.coingeckoListingTimestamp,
         },
-        withdrawal: {
-          event: RAILGUN_WITHDRAWAL_EVENT,
-          extractor: 'railgunUnshield',
-          params: {
-            tokenAddress: EthereumAddress(token.address),
+        buckets: [
+          {
+            id: bucketId,
+            type: 'pool',
+            label: resolved.symbol,
+            address: pool.address,
+            sinceTimestamp: Math.max(
+              pool.sinceTimestamp ?? 0,
+              resolved.coingeckoListingTimestamp,
+            ),
+            anonymitySet:
+              minimumAmounts === undefined ? undefined : { minimumAmounts },
+            deposit: {
+              event: RAILGUN_DEPOSIT_EVENT,
+              extractor: 'railgunShield',
+              params: {
+                tokenAddress: EthereumAddress(address),
+              },
+            },
+            withdrawal: {
+              event: RAILGUN_WITHDRAWAL_EVENT,
+              extractor: 'railgunUnshield',
+              params: {
+                tokenAddress: EthereumAddress(address),
+              },
+            },
           },
-        },
-      },
-    ],
-  }
-})
+        ],
+      }
+    })
+  },
+)
 
 export const railgun: BaseProject = {
   id: ProjectId('railgun'),
@@ -172,7 +251,7 @@ export const railgun: BaseProject = {
   },
   display: {
     description:
-      'A shielded ledger on Ethereum for ERC-20 tokens, with private transfers and DeFi calls, run by no operator and governed by RAIL stakers.',
+      'A shielded ledger for ERC-20 tokens on Ethereum, Arbitrum, BSC and Polygon PoS, with private transfers and DeFi calls, run by no operator and governed by RAIL stakers.',
     detailedDescription: readProjectMarkdown('railgun', 'detailedDescription', {
       shieldFee: formatBasisPoints(shieldFee),
       unshieldFee: formatBasisPoints(unshieldFee),
@@ -196,12 +275,16 @@ export const railgun: BaseProject = {
       type: 'general',
     },
   ],
-  escrows: TRACKED_TOKENS.map((token) => ({
-    address: ChainSpecificAddress.address(railgunCore.address),
-    chain: ChainSpecificAddress.longChain(railgunCore.address),
-    sinceTimestamp: railgunCore.sinceTimestamp ?? 0,
-    tokens: [token.symbol],
-  })),
+  // One escrow per token and chain, from the pool's deployment, as before.
+  escrows: privacyTokens.map((token) => {
+    const pool = discovery.getContract('RailgunSmartWallet', token.token.chain)
+    return {
+      address: ChainSpecificAddress.address(pool.address),
+      chain: token.token.chain,
+      sinceTimestamp: pool.sinceTimestamp ?? 0,
+      tokens: [token.token.symbol],
+    }
+  }),
   tvsInfo: {
     associatedTokens: [{ symbol: RAIL_TOKEN.symbol, icon: RAIL_TOKEN.iconUrl }],
     warnings: [],
@@ -300,14 +383,20 @@ export const railgun: BaseProject = {
         },
       ],
     },
-    trackedOn: ['ethereum'],
+    deployedOn: DEPLOYMENTS.map((deployment) => deployment.chain),
+    trackedOn: DEPLOYMENTS.map((deployment) => deployment.chain),
     tokens: privacyTokens,
     relayerTracking: {
       type: 'railgunWaku',
-      chainId: 1,
-      // Sampling observes the current network state, so there is no history
-      // to backfill before the first deployment of the sampler.
-      sinceTimestamp: UnixTime(1788134400), // 2026-08-31T00:00:00Z
+      // Every Waku broadcaster serves one chain id. Sampling observes the
+      // current network state, so there is no history to backfill before the
+      // first deployment of each sampler.
+      sources: [
+        { chainId: 1, sinceTimestamp: UnixTime(1788134400) }, // 2026-08-31
+        { chainId: 42161, sinceTimestamp: UnixTime(1793577600) }, // 2026-11-02
+        { chainId: 56, sinceTimestamp: UnixTime(1793577600) }, // 2026-11-02
+        { chainId: 137, sinceTimestamp: UnixTime(1793577600) }, // 2026-11-02
+      ],
     },
     exitWindow: {
       value: formatSeconds(executionStartOffset),
@@ -384,6 +473,6 @@ export const railgun: BaseProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [],
-    zkVerifiers: [discovery.getContract('RailgunSmartWallet').address],
+    zkVerifiers: [railgunCore.address],
   },
 }

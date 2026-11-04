@@ -1,0 +1,13 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RailTokenFixedSupply",
+  "critical": true,
+  "description": "RAIL governance token of this chain's Railgun deployment, minted once to its initial holder with no owner and no further minting. Staking it gives voting power in this chain's DAO.",
+  "category": "gov",
+  "fields": {
+    "totalSupply": {
+      "description": "Fixed RAIL supply on this chain.",
+      "edit": ["format", "Undecimal18"]
+    }
+  }
+}

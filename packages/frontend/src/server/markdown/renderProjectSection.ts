@@ -94,7 +94,13 @@ export function renderProjectSection(
   level: number,
   context: SectionContext,
 ): string {
-  const { id, title } = section.props
+  const { id } = section.props
+  // The HTML shows the subtitle under the title; here it joins the title.
+  const subtitle =
+    'subtitle' in section.props ? section.props.subtitle : undefined
+  const title = subtitle
+    ? `${section.props.title} ${subtitle}`
+    : section.props.title
   const renderBody = (context.sectionBodies?.[section.type] ??
     SECTION_BODIES[section.type]) as SectionBody<typeof section.props>
   const isUnderReview = isSectionUnderReview(section)
