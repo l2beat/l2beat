@@ -41,6 +41,7 @@ export const STATIC_PAGE_PATHS = [
   '/interop/token-frameworks',
   '/interop/intent-bridges',
   '/privacy/summary',
+  '/audits/summary',
   '/projects/ethereum',
   '/zk-catalog',
   '/governance',
@@ -87,6 +88,7 @@ async function getDynamicPages(): Promise<Page[]> {
     zkCatalogProjects,
     privacyProjects,
     defiProjects,
+    auditedProjects,
     interopProtocols,
     chainProjects,
   ] = await Promise.all([
@@ -100,6 +102,7 @@ async function getDynamicPages(): Promise<Page[]> {
     env.CLIENT_SIDE_DEFI_ENABLED
       ? ps.getProjects({ where: ['defiInfo'] })
       : Promise.resolve([]),
+    ps.getProjects({ where: ['auditCoverage'] }),
     // Protocols that are also scaling projects redirect to the scaling page.
     ps.getProjects({ where: ['interopConfig'], whereNot: ['scalingInfo'] }),
     getChainProjects(),
@@ -113,6 +116,7 @@ async function getDynamicPages(): Promise<Page[]> {
     ...zkCatalogProjects.map(projectPage('/zk-catalog')),
     ...privacyProjects.map(projectPage('/privacy/projects')),
     ...defiProjects.map(projectPage('/defi/projects')),
+    ...auditedProjects.map(projectPage('/audits/projects')),
     ...interopProtocols.map(projectPage('/interop/protocols')),
     ...chainProjects.map(projectPage('/projects')),
   ]

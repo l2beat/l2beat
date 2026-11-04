@@ -1,4 +1,5 @@
 import { format } from '@l2beat/discovery'
+import { parseReportDate } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { type AuditIndex, type AuditIndexSnapshot, covers } from './AuditIndex'
 import type { AuditObjects } from './AuditObjects'
@@ -298,4 +299,90 @@ function totalWeight(index: LineIndex, lines: Set<string>): number {
 function weightOf(index: LineIndex, line: string): number {
   const frequency = index.postings.get(line)?.length ?? 1
   return Math.log(index.count / frequency) + 1
+}
+
+/** Report ids to their publication dates; undated reports are absent. */
+export function reportDates(index: AuditIndex): Map<string, number> {
+  const dates = new Map<string, number>()
+  for (const [id, report] of Object.entries(index.reports)) {
+    const date = parseReportDate(report.date, id)
+    if (date !== undefined) dates.set(id, date)
+  }
+  return dates
+}
+
+/**
+ * When each audited object was first covered by a dated report. Objects
+ * covered by undated reports only are absent.
+ */
+export function firstCountedAt(
+  code: AuditedCode,
+  dates: Map<string, number>,
+): Map<string, number> {
+  const first = new Map<string, number>()
+  for (const [object, occurrences] of code.occurrences) {
+    for (const occurrence of occurrences) {
+      for (const report of Object.keys(occurrence.findings)) {
+        const date = dates.get(report)
+        if (date === undefined) continue
+        const known = first.get(object)
+        if (known === undefined || date < known) first.set(object, date)
+      }
+    }
+  }
+  return first
+}
+
+/**
+ * The audited code as known at `cutoff`: only the reports dated at or before
+ * it count, so an occurrence keeps those reports' findings and is dropped
+ * without any, and a declaration stays only where some object of it is still
+ * audited. The split declarations are shared with the full index.
+ */
+export function auditedCodeAt(
+  code: AuditedCode,
+  index: AuditIndex,
+  dates: Map<string, number>,
+  cutoff: number,
+): AuditedCode {
+  const counted = (report: string) => {
+    const date = dates.get(report)
+    return date !== undefined && date <= cutoff
+  }
+  const occurrences = new Map<string, Occurrence[]>()
+  for (const [object, list] of code.occurrences) {
+    const kept = list.flatMap((occurrence): Occurrence[] => {
+      const findings = Object.fromEntries(
+        Object.entries(occurrence.findings).filter(([report]) =>
+          counted(report),
+        ),
+      )
+      const reports = Object.keys(findings)
+      if (reports.length === 0) return []
+      return [
+        {
+          ...occurrence,
+          findings,
+          directoryScoped: occurrence.directoryScoped.filter(counted),
+          collections: collectionsOf(reports, index),
+        },
+      ]
+    })
+    if (kept.length > 0) occurrences.set(object, kept)
+  }
+  const declarations = code.declarations.flatMap(
+    (declaration): AuditedDeclaration[] => {
+      const objects = declaration.objects.filter((o) => occurrences.has(o))
+      return objects.length === 0 ? [] : [{ ...declaration, objects }]
+    },
+  )
+  return {
+    declarations,
+    declarationsByObject: code.declarationsByObject,
+    occurrences,
+    byName: groupByName(declarations),
+    lines: buildLineIndex(declarations),
+    libraries: code.libraries,
+    unparsed: code.unparsed,
+  }
 }

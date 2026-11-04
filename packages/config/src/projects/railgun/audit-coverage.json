@@ -1,0 +1,2272 @@
+{
+  "schema_version": "1.0.0",
+  "project": "railgun",
+  "dataset": {
+    "repository": "sergeyshemyakov/audit-dataset",
+    "commit": "29fc7fd763e95c91755451e0b531c457bc921dc2"
+  },
+  "discoveredAt": 1792756093,
+  "collections": {
+    "_libs/openzeppelin": { "name": "OpenZeppelin", "kind": "library" },
+    "_libs/safe": { "name": "Safe (library)", "kind": "library" },
+    "arbitrum": { "name": "Arbitrum One", "kind": "project" },
+    "optimism": { "name": "OP Mainnet", "kind": "project" },
+    "railgun": { "name": "Railgun", "kind": "project" },
+    "safe": { "name": "Safe", "kind": "project" },
+    "scroll": { "name": "Scroll", "kind": "project" },
+    "starknet": { "name": "Starknet", "kind": "project" },
+    "zksync2": { "name": "ZKsync Era", "kind": "project" }
+  },
+  "reports": {
+    "abdk-railgun-circom-solidity-2021-07": {
+      "collections": ["railgun"],
+      "title": "Smart Contract Audit Railgun: Circom and Solidity",
+      "auditor": "ABDK Consulting",
+      "date": "2021-07-02",
+      "document": "railgun/reports/2021_07-abdk-railgun-circom-and-solidity-audit.pdf"
+    },
+    "ackee-safe-1-4-0": {
+      "collections": ["_libs/safe", "safe"],
+      "title": "Safe Contracts 1.4.0 Security Review",
+      "auditor": "Ackee Blockchain",
+      "date": "2023-03-28",
+      "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_4_0.pdf"
+    },
+    "ackee-safe-1-5-0": {
+      "collections": ["_libs/safe", "safe"],
+      "title": "Safe Smart Account Security Review",
+      "auditor": "Ackee Blockchain Security",
+      "date": "2025-05-28",
+      "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_5_0_Ackee.pdf"
+    },
+    "code4rena-zksync-era-2023-10": {
+      "collections": ["zksync2"],
+      "title": "zkSync Era Findings & Analysis Report",
+      "auditor": "Code4rena",
+      "date": "2024-02-29",
+      "document": "zksync2/reports/2023_10-code4rena-zksync-era.html"
+    },
+    "code4rena-zksync-era-system-contracts-2023-03": {
+      "collections": ["zksync2"],
+      "title": "zkSync Era System Contracts contest Findings & Analysis Report (Code4rena)",
+      "auditor": "Code4rena",
+      "date": "2023-06-14",
+      "document": "zksync2/reports/2023_03-code4rena-zksync-era-system-contracts.html"
+    },
+    "consensys-arbitrum-core-token-bridge-2021-11": {
+      "collections": ["arbitrum"],
+      "title": "Arbitrum Smart Contracts (ConsenSys Diligence, November 2021)",
+      "auditor": "ConsenSys Diligence",
+      "date": "2021-11-05",
+      "document": "arbitrum/reports/2021_11_05_consensys_diligence_security_audit_core_contracts_token_bridge.pdf"
+    },
+    "contracts__audits__2018-10": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "Open Zeppelin v2.0 Security Audit",
+      "auditor": "Level K",
+      "date": "2018-10-21",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2018-10.pdf"
+    },
+    "contracts__audits__2022-10-ERC4626": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin ERC4626 Tokenized Vault Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2022-11-15",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2022-10-ERC4626.pdf"
+    },
+    "contracts__audits__2023-05-v4.9": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "Contracts 4.9 Release Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2023-05-09",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2023-05-v4.9.pdf"
+    },
+    "contracts__audits__2023-10-v5.0": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "Contracts 5.0 Release",
+      "auditor": "OpenZeppelin",
+      "date": "2023-10-03",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2023-10-v5.0.pdf"
+    },
+    "contracts__audits__2025-10-v5.5": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin Contracts v5.5 Diff Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2025-10-17",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2025-10-v5.5.pdf"
+    },
+    "contracts__audits__2026-02-v5.6": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin Contracts v5.6 Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2026-02-27",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2026-02-v5.6.pdf"
+    },
+    "formal-verification__fv__reports__2022-03": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "Formal Verification of OpenZeppelin (March - April 2022)",
+      "auditor": "Certora",
+      "document": "_libs/openzeppelin/reports/formal-verification__fv__reports__2022-03.pdf"
+    },
+    "formal-verification__fv__reports__2022-05": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "Formal Verification of OpenZeppelin (May - June 2022)",
+      "auditor": "Certora",
+      "document": "_libs/openzeppelin/reports/formal-verification__fv__reports__2022-05.pdf"
+    },
+    "hacken-railgun-contracts-2021-11": {
+      "collections": ["railgun"],
+      "title": "Smart Contract Code Review and Security Analysis Report for Right to Privacy",
+      "auditor": "Hacken",
+      "date": "2021-11-02",
+      "document": "railgun/reports/2021_11-hacken-railgun-smart-contracts-audit.pdf"
+    },
+    "hashcloak-railgun-v2-circuits-governance-2022-08": {
+      "collections": ["railgun"],
+      "title": "Railgun v2 Circuits and Governance Review",
+      "auditor": "HashCloak",
+      "date": "2022-08-29",
+      "document": "railgun/reports/2022_08-hashcloak-railgun-v2-circuits-and-governance-review.pdf"
+    },
+    "openzeppelin-ovm-rollup-2021-03": {
+      "collections": ["optimism"],
+      "title": "OpenZeppelin OVM and Rollup Audit (March-May 2021)",
+      "auditor": "OpenZeppelin",
+      "document": "optimism/reports/2021_03-OVM_and_Rollup-OpenZeppelin.pdf"
+    },
+    "openzeppelin-scroll-layer1-audit-2023-07": {
+      "collections": ["scroll"],
+      "title": "Scroll Layer 1 Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2023-07-18",
+      "document": "scroll/reports/openzeppelin-scroll-layer1-audit-2023-07.pdf"
+    },
+    "peckshield-starkex-v1-0-2020-02": {
+      "collections": ["starknet"],
+      "title": "PeckShield StarkEx v1.0 Smart Contract Audit",
+      "auditor": "PeckShield",
+      "date": "2020-02-26",
+      "document": "starknet/reports/2020_02-peckshield-starkex-v1.0-audit.pdf"
+    },
+    "peckshield-starkex-v2-0-2020-10": {
+      "collections": ["starknet"],
+      "title": "PeckShield StarkEx V2 Smart Contract Audit",
+      "auditor": "PeckShield",
+      "date": "2020-10-26",
+      "document": "starknet/reports/2020_10-peckshield-starkex-v2.0-audit.pdf"
+    },
+    "trailofbits-governance-token-bridge-2023-06": {
+      "collections": ["arbitrum"],
+      "title": "Arbitrum Governance Security Assessment (Trail of Bits, governance and token bridge, 2022)",
+      "auditor": "Trail of Bits",
+      "date": "2023-01-06",
+      "document": "arbitrum/reports/2023_06_23_trail_of_bits_security_audit_governance_report_governance_token_bridge.pdf"
+    },
+    "zokyo-rail-token-2022-04": {
+      "collections": ["railgun"],
+      "title": "RAIL Token Smart Contract Audit",
+      "auditor": "Zokyo",
+      "date": "2022-04-21",
+      "document": "railgun/reports/2022_04-zokyo-rail-token-audit.pdf"
+    },
+    "zokyo-railgun-arbitrum-governance-2023-02": {
+      "collections": ["railgun"],
+      "title": "Railgun Smart Contract Audit (Arbitrum L1-L2 Governance)",
+      "auditor": "Zokyo",
+      "date": "2023-02-03",
+      "document": "railgun/reports/2023_02-zokyo-railgun-arbitrum-l1-l2-governance-audit.pdf"
+    },
+    "zokyo-railgun-contracts-2021-11": {
+      "collections": ["railgun"],
+      "title": "RAILGUN Smart Contract Audit",
+      "auditor": "Zokyo",
+      "date": "2021-11-03",
+      "document": "railgun/reports/2021_11-zokyo-railgun-contracts-audit.pdf"
+    },
+    "zokyo-railgun-logic-2022-04": {
+      "collections": ["railgun"],
+      "title": "Railgun Smart Contract Audit",
+      "auditor": "Zokyo",
+      "date": "2022-04-20",
+      "document": "railgun/reports/2022_04-zokyo-railgun-logic-audit.pdf"
+    },
+    "zokyo-railgun-logic-commitments-2021-11": {
+      "collections": ["railgun"],
+      "title": "RAILGUN Smart Contract Audit",
+      "auditor": "Zokyo",
+      "date": "2021-11-23",
+      "document": "railgun/reports/2021_11-zokyo-railgun-logic-commitments-audit.pdf"
+    },
+    "zokyo-railgun-smart-wallet-2022-12": {
+      "collections": ["railgun"],
+      "title": "Railgun Smart Contract Audit (RailgunSmartWallet)",
+      "auditor": "Zokyo",
+      "date": "2022-12-21",
+      "document": "railgun/reports/2022_12-zokyo-railgun-smart-wallet-audit.pdf"
+    },
+    "zokyo-railgun-voting-2022-09": {
+      "collections": ["railgun"],
+      "title": "RAILGUN Smart Contract Audit (Voting)",
+      "auditor": "Zokyo",
+      "date": "2022-09-14",
+      "document": "railgun/reports/2022_09-zokyo-railgun-voting-audit.pdf"
+    }
+  },
+  "auditedFiles": {
+    "017b40d0b1da": {
+      "repository": "Railgun-Privacy/contract",
+      "commit": "d2c63577ddd8310c87dced0d549cf9505b372111",
+      "path": "contracts/proxy/Proxy.sol",
+      "blob": "017b40d0b1dadd7e508f74e2dad39fd46c3249b4"
+    },
+    "05339839ee9a": {
+      "repository": "Railgun-Privacy/contract",
+      "commit": "4385ec73bf7d0da283123e8a3ac3900216cfc3f0",
+      "path": "contracts/logic/Commitments.sol",
+      "blob": "05339839ee9a89bca45215af8987ef62267d3379"
+    },
+    "07a6de4542ee": {
+      "repository": "code-423n4/2023-10-zksync",
+      "commit": "1fb4649b612fac7b4ee613df6f6b7d921ddd6b0d",
+      "path": "code/system-contracts/contracts/openzeppelin/utils/Address.sol",
+      "blob": "07a6de4542ee31b3221052eaa6ec898744866607"
+    },
+    "0b5220e30286": {
+      "repository": "Railgun-Privacy/contract",
+      "commit": "62401e1a64b9af968d85b8f5347f1a72cc56862c",
+      "path": "contracts/logic/Snark.sol",
+      "blob": "0b5220e302869b04234ee3045a4a821110b93102"
+    },
+    "0cb3da84d739": {
+      "repository": "Railgun-Privacy/contract",
+      "commit": "4385ec73bf7d0da283123e8a3ac3900216cfc3f0",
+      "path": "contracts/logic/RailgunLogic.sol",
+      "blob": "0cb3da84d739d549e95254fe4dd892c2459344ec"
+    },
+    "0cc89cb39124": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "6d415c508be94ef8391ed6525df365452466da76",
+      "path": "contracts/math/Math.sol",
+      "blob": "0cc89cb3912439b8ffbd26d17f343343fdda2271"
+    },
+    "0fa79b6bfeda": {
+      "repository": "Railgun-Privacy/contract",
+      "commit": "b74eeb69ca2614212c8060a3460fd05c28bb17e3",
+      "path": "contracts/governance/Voting.sol",
+      "blob": "0fa79b6bfeda5f80848f5b29934e0aa12d178be1"
+    },
+    "1895b12122f4": {
+      "repository": "Railgun-Privacy/contract",
+      "commit": "d2c63577ddd8310c87dced0d549cf9505b372111",
+      "path": "contracts/treasury/Treasury.sol",
+      "blob": "1895b12122f4ee73239c0bda6658484087edb214"
+    },
+    "1cf7e0b2edfc": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+      "path": "contracts/token/ERC20/extensions/IERC20Metadata.sol",
+      "blob": "1cf7e0b2edfce1fb89d4f1ab51380cec2b9960aa"
+    },
+    "1eb423f63bd3": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+      "path": "contracts/token/ERC721/IERC721.sol",
+      "blob": "1eb423f63bd30a984c44bfba460c587c32c47a0d"
+    },
+    "2a56119aa12b": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "109778c17c7020618ea4e035efb9f0f9b82d43ca",
+      "path": "contracts/proxy/utils/Initializable.sol",
+      "blob": "2a56119aa12b8bf6088f9490433596450145f7bd"
+    },
+    "2a7651efa8d0": {
+      "repository": "Railgun-Privacy/contract",
+      "commit": "d2c63577ddd8310c87dced0d549cf9505b372111",
+      "path": "contracts/governance/Delegator.sol",
+      "blob": "2a7651efa8d09b0b9af496aff28f3d16edc4ce3b"
+    },
+    "2d517987d5b4": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "8fff875589443c607ac4ef2d201a6d8bec5a43c8",
+      "path": "contracts/utils/Context.sol",
+      "blob": "2d517987d5b49aee1a37634c95a69dae911b9d7a"
+    },
+    "2e54da7d8ed0": {
+      "repository": "Certora/openzeppelin-contracts",
+      "commit": "4088540aef299ea6d2b7f78a72d35af49eec2ff0",
+      "path": "contracts/access/AccessControl.sol",
+      "blob": "2e54da7d8ed01fe8e5164b358b142b16e9c878ed"
+    },
+    "332d2a2984e9": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
+      "path": "contracts/utils/Strings.sol",
+      "blob": "332d2a2984e917adbca3dd915d8f6a7dc5561504"
+    },
+    "40a91cf35445": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
+      "path": "contracts/token/ERC20/utils/SafeERC20.sol",
+      "blob": "40a91cf3544534fdd4a5cdccb118db9835e22157"
+    },
+    "41ede9d660b2": {
+      "repository": "OffchainLabs/arbitrum-classic",
+      "commit": "d730bc40932c24e239577d16b1737455ab75ee26",
+      "path": "packages/arb-bridge-eth/contracts/interfaces/IERC20.sol",
+      "blob": "41ede9d660b2dfee65788266a6dc867d48e0ff31"
+    },
+    "5b62d2f077c0": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+      "path": "contracts/utils/structs/BitMaps.sol",
+      "blob": "5b62d2f077c04f9748c489395c32c8a01c093247"
+    },
+    "5bbd73283f02": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
+      "path": "contracts/utils/cryptography/ECDSA.sol",
+      "blob": "5bbd73283f02dfd4a88829b4fb87138698bbb237"
+    },
+    "5c2f07b0da6e": {
+      "repository": "Railgun-Privacy/contract",
+      "commit": "d2c63577ddd8310c87dced0d549cf9505b372111",
+      "path": "contracts/governance/Staking.sol",
+      "blob": "5c2f07b0da6e7c517c5d4285cd41ffefc6597137"
+    },
+    "6410139ad0f9": {
+      "repository": "ben-chain/contracts-v2",
+      "commit": "a935e276f5620b40802b52721e3474232e458f72",
+      "path": "contracts/optimistic-ethereum/libraries/resolver/Lib_Ownable.sol",
+      "blob": "6410139ad0f9727a4b9e036e288a8ac432718381"
+    },
+    "7226f1a2f139": {
+      "repository": "Railgun-Privacy/contract",
+      "commit": "62401e1a64b9af968d85b8f5347f1a72cc56862c",
+      "path": "contracts/logic/Verifier.sol",
+      "blob": "7226f1a2f139f8a37b20aff2b7c02d22dde27c98"
+    },
+    "732cc02b109a": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/interfaces/IERC165.sol",
+      "blob": "732cc02b109aec16f55b6851bbdc1aaea463a5f5"
+    },
+    "7c44280f07aa": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "6d415c508be94ef8391ed6525df365452466da76",
+      "path": "contracts/token/ERC20/IERC20.sol",
+      "blob": "7c44280f07aa184f6f7506e335c9da0db8c30469"
+    },
+    "8975d917e1a8": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+      "path": "contracts/token/ERC20/utils/SafeERC20.sol",
+      "blob": "8975d917e1a83241bbf1a7176fa9a22f6b7a6cbb"
+    },
+    "8c60129ee465": {
+      "repository": "Railgun-Privacy/contract",
+      "commit": "d2c63577ddd8310c87dced0d549cf9505b372111",
+      "path": "contracts/proxy/ProxyAdmin.sol",
+      "blob": "8c60129ee465f772fb349f3757535580678db320"
+    },
+    "8d475bd3daf8": {
+      "repository": "code-423n4/2023-03-zksync",
+      "commit": "21d9a364a4a75adfa6f1e038232d8c0f39858a64",
+      "path": "contracts/openzeppelin/token/ERC20/utils/SafeERC20.sol",
+      "blob": "8d475bd3daf8df3bf2d086ef429b5d9f9c05aeb1"
+    },
+    "96dcf1d43040": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+      "path": "contracts/utils/cryptography/ECDSA.sol",
+      "blob": "96dcf1d430403d1287903eda31a3a06fdcba614e"
+    },
+    "979554d4061c": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+      "path": "contracts/token/ERC20/extensions/IERC20Permit.sol",
+      "blob": "979554d4061c5a62d62524fbfda1c16307f4a7cb"
+    },
+    "a19535a30046": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+      "path": "contracts/token/ERC20/IERC20.sol",
+      "blob": "a19535a30046f312e5208ab5b2ff7eb351a0f72d"
+    },
+    "b0e9189675cc": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+      "path": "contracts/utils/StorageSlot.sol",
+      "blob": "b0e9189675cc5f0b86963d29b363a9568d156dd0"
+    },
+    "bbb6abc0a3d8": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "827c8cc12dd45d0c72ee4086716b486405691d99",
+      "path": "contracts/utils/math/Math.sol",
+      "blob": "bbb6abc0a3d822ed0bc51e47602f24b9af950f66"
+    },
+    "be2397872031": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "6d415c508be94ef8391ed6525df365452466da76",
+      "path": "contracts/token/ERC20/ERC20.sol",
+      "blob": "be2397872031a2e1b3b43ff06c7dc76c74d81c1f"
+    },
+    "ca09e0350541": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+      "path": "contracts/access/Ownable.sol",
+      "blob": "ca09e035054133545c505f7d1c4ca829f8b67df9"
+    },
+    "cd6848a128e3": {
+      "repository": "Railgun-Privacy/contract",
+      "commit": "4385ec73bf7d0da283123e8a3ac3900216cfc3f0",
+      "path": "contracts/logic/RailgunSmartWallet.sol",
+      "blob": "cd6848a128e3033df0701aa70216ea410ef3a7b3"
+    },
+    "cd8c88f25a35": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "b5a3e693e7eeca8d5f608460fd8beeee8e332b03",
+      "path": "contracts/utils/math/SignedMath.sol",
+      "blob": "cd8c88f25a356ceff4ebe27e5c7c367de196fc65"
+    },
+    "d2fec947aa6f": {
+      "repository": "Railgun-Privacy/contract",
+      "commit": "b74eeb69ca2614212c8060a3460fd05c28bb17e3",
+      "path": "contracts/treasury/GovernorRewards.sol",
+      "blob": "d2fec947aa6f51eef3a7f1c2c3a749776f93e53e"
+    },
+    "d934eddafe9c": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+      "path": "contracts/access/AccessControl.sol",
+      "blob": "d934eddafe9cd6f9dc4955cb7994a2e298cd20ae"
+    },
+    "e930db91a4c4": {
+      "repository": "Railgun-Privacy/contract",
+      "commit": "62401e1a64b9af968d85b8f5347f1a72cc56862c",
+      "path": "contracts/logic/Poseidon.sol",
+      "blob": "e930db91a4c4d9e89c4cd77586a1f9c407947aba"
+    }
+  },
+  "units": {
+    "e730ab060eed": {
+      "name": "IERC20",
+      "kind": "interface",
+      "lines": 71,
+      "status": "differs",
+      "audited": { "object": "7c44280f07aa", "lines": [7, 23] },
+      "reports": ["contracts__audits__2018-10"],
+      "added": [[23, 23]],
+      "removed": [[23, 3, 3]],
+      "covered": 70
+    },
+    "684cb89721da": {
+      "name": "IERC165",
+      "kind": "interface",
+      "lines": 11,
+      "status": "identical",
+      "audited": { "object": "732cc02b109a", "lines": [5, 15] },
+      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0"]
+    },
+    "ba18d750e681": {
+      "name": "IERC1363",
+      "kind": "interface",
+      "lines": 71,
+      "status": "none"
+    },
+    "cbd91b4f4c05": {
+      "name": "SafeERC20",
+      "kind": "library",
+      "lines": 263,
+      "status": "identical",
+      "audited": { "object": "8975d917e1a8", "lines": [18, 277] },
+      "reports": [
+        "contracts__audits__2025-10-v5.5",
+        "contracts__audits__2026-02-v5.6"
+      ]
+    },
+    "cd869541fe64": {
+      "name": "AddressUpgradeable",
+      "kind": "library",
+      "lines": 236,
+      "status": "none"
+    },
+    "b6997299f381": {
+      "name": "Initializable",
+      "kind": "abstract",
+      "lines": 109,
+      "status": "differs",
+      "audited": { "object": "2a56119aa12b", "lines": [57, 138] },
+      "reports": ["formal-verification__fv__reports__2022-05"],
+      "added": [[29, 29], [89, 89], [94, 107]],
+      "removed": [[29, 24, 24], [89, 76, 76]],
+      "covered": 101
+    },
+    "91480ff4045f": {
+      "name": "ContextUpgradeable",
+      "kind": "abstract",
+      "lines": 25,
+      "status": "none"
+    },
+    "6dd3f0f9ae37": {
+      "name": "OwnableUpgradeable",
+      "kind": "abstract",
+      "lines": 75,
+      "status": "differs",
+      "audited": {
+        "object": "ca09e0350541",
+        "lines": [20, 97],
+        "name": "Ownable"
+      },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[0, 0], [4, 14], [35, 35], [54, 54], [67, 73]],
+      "removed": [
+        [0, 0, 0],
+        [2, 2, 11],
+        [4, 14, 20],
+        [35, 41, 43],
+        [54, 62, 64]
+      ],
+      "covered": 65
+    },
+    "8de967349a1a": {
+      "name": "PoseidonT3",
+      "kind": "library",
+      "lines": 4,
+      "status": "differs",
+      "audited": { "object": "e930db91a4c4", "lines": [10, 13] },
+      "reports": [
+        "hacken-railgun-contracts-2021-11",
+        "zokyo-railgun-contracts-2021-11",
+        "zokyo-railgun-logic-2022-04"
+      ],
+      "added": [[2, 2]],
+      "removed": [[2, 2, 2]],
+      "covered": 3
+    },
+    "d996713dc41a": {
+      "name": "Commitments",
+      "kind": "contract",
+      "lines": 240,
+      "status": "identical",
+      "audited": { "object": "05339839ee9a", "lines": [20, 256] },
+      "reports": ["zokyo-railgun-smart-wallet-2022-12"]
+    },
+    "93aefaaee264": {
+      "name": "TokenBlocklist",
+      "kind": "contract",
+      "lines": 53,
+      "status": "none"
+    },
+    "b470a755a1a0": {
+      "name": "Snark",
+      "kind": "library",
+      "lines": 174,
+      "status": "differs",
+      "audited": { "object": "0b5220e30286", "lines": [7, 171] },
+      "reports": ["zokyo-railgun-logic-2022-04"],
+      "added": [[149, 149]],
+      "removed": [[149, 150, 150]],
+      "covered": 173
+    },
+    "3726b136d877": {
+      "name": "Verifier",
+      "kind": "contract",
+      "lines": 111,
+      "status": "differs",
+      "audited": { "object": "7226f1a2f139", "lines": [18, 128] },
+      "reports": ["zokyo-railgun-logic-2022-04"],
+      "added": [[1, 3], [81, 81], [87, 88], [92, 93], [102, 102]],
+      "removed": [
+        [1, 1, 7],
+        [81, 81, 81],
+        [87, 87, 88],
+        [92, 92, 93],
+        [102, 102, 102]
+      ],
+      "covered": 105
+    },
+    "fb6772f9094e": {
+      "name": "PoseidonT4",
+      "kind": "library",
+      "lines": 4,
+      "status": "differs",
+      "audited": { "object": "e930db91a4c4", "lines": [15, 18] },
+      "reports": ["zokyo-railgun-logic-2022-04"],
+      "added": [[2, 2]],
+      "removed": [[2, 2, 2]],
+      "covered": 3
+    },
+    "c04b80f4a8e5": {
+      "name": "IERC721",
+      "kind": "interface",
+      "lines": 125,
+      "status": "identical",
+      "audited": { "object": "1eb423f63bd3", "lines": [11, 132] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "ed25952f120e": {
+      "name": "StorageSlot",
+      "kind": "library",
+      "lines": 110,
+      "status": "differs",
+      "audited": { "object": "b0e9189675cc", "lines": [34, 138] },
+      "reports": [
+        "contracts__audits__2023-05-v4.9",
+        "contracts__audits__2023-10-v5.0"
+      ],
+      "added": [
+        [16, 19],
+        [33, 33],
+        [42, 42],
+        [51, 51],
+        [60, 60],
+        [64, 72],
+        [78, 78],
+        [87, 87],
+        [96, 96],
+        [105, 105]
+      ],
+      "removed": [
+        [33, 30, 30],
+        [42, 40, 40],
+        [51, 50, 50],
+        [60, 60, 60],
+        [78, 70, 70],
+        [87, 80, 80],
+        [96, 90, 90],
+        [105, 100, 100]
+      ],
+      "covered": 94
+    },
+    "db5f8a5a2f80": {
+      "name": "RailgunLogic",
+      "kind": "contract",
+      "lines": 511,
+      "status": "differs",
+      "audited": { "object": "0cb3da84d739", "lines": [38, 502] },
+      "reports": ["zokyo-railgun-smart-wallet-2022-12"],
+      "added": [
+        [45, 45],
+        [135, 135],
+        [144, 145],
+        [147, 147],
+        [212, 214],
+        [220, 220],
+        [231, 233],
+        [237, 239],
+        [243, 248],
+        [257, 259],
+        [269, 274],
+        [280, 280],
+        [469, 476]
+      ],
+      "removed": [
+        [135, 122, 123],
+        [144, 132, 133],
+        [147, 135, 135],
+        [212, 201, 201],
+        [280, 245, 245],
+        [411, 370, 377]
+      ],
+      "covered": 487
+    },
+    "598abc9abe8b": {
+      "name": "RailgunSmartWallet",
+      "kind": "contract",
+      "lines": 117,
+      "status": "differs",
+      "audited": { "object": "cd6848a128e3", "lines": [26, 109] },
+      "reports": ["zokyo-railgun-smart-wallet-2022-12"],
+      "added": [
+        [5, 5],
+        [10, 30],
+        [33, 36],
+        [39, 39],
+        [52, 52],
+        [89, 94],
+        [106, 108]
+      ],
+      "removed": [
+        [5, 5, 5],
+        [33, 12, 26],
+        [39, 29, 29],
+        [52, 42, 42],
+        [106, 75, 75]
+      ],
+      "covered": 91
+    },
+    "25f5973a8888": {
+      "name": "IWBase",
+      "kind": "interface",
+      "lines": 5,
+      "status": "none"
+    },
+    "6c6e73790068": {
+      "name": "ECDSA",
+      "kind": "library",
+      "lines": 273,
+      "status": "identical",
+      "audited": { "object": "96dcf1d43040", "lines": [12, 285] },
+      "reports": ["contracts__audits__2026-02-v5.6"]
+    },
+    "65eaa1f639e8": {
+      "name": "RelayAdapt7702",
+      "kind": "contract",
+      "lines": 347,
+      "status": "none"
+    },
+    "0d6715927318": {
+      "name": "Address",
+      "kind": "library",
+      "lines": 236,
+      "status": "identical",
+      "audited": { "object": "07a6de4542ee", "lines": [9, 236] },
+      "reports": [
+        "code4rena-zksync-era-2023-10",
+        "code4rena-zksync-era-system-contracts-2023-03"
+      ]
+    },
+    "99abd89835c9": {
+      "name": "IERC20",
+      "kind": "interface",
+      "lines": 70,
+      "status": "identical",
+      "audited": { "object": "a19535a30046", "lines": [9, 78] },
+      "reports": [
+        "code4rena-zksync-era-system-contracts-2023-03",
+        "contracts__audits__2023-10-v5.0"
+      ]
+    },
+    "0fa247bb04ae": {
+      "name": "IERC20Permit",
+      "kind": "interface",
+      "lines": 49,
+      "status": "identical",
+      "audited": { "object": "979554d4061c", "lines": [42, 83] },
+      "reports": ["contracts__audits__2026-02-v5.6"]
+    },
+    "eadfe647538c": {
+      "name": "SafeERC20",
+      "kind": "library",
+      "lines": 125,
+      "status": "identical",
+      "audited": { "object": "40a91cf35445", "lines": [19, 143] },
+      "reports": ["contracts__audits__2023-05-v4.9"]
+    },
+    "f98775a7d0f9": {
+      "name": "IERC165",
+      "kind": "interface",
+      "lines": 11,
+      "status": "identical",
+      "audited": { "object": "732cc02b109a", "lines": [5, 15] },
+      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0"]
+    },
+    "cf70bae8f72d": {
+      "name": "IERC721",
+      "kind": "interface",
+      "lines": 122,
+      "status": "identical",
+      "audited": { "object": "1eb423f63bd3", "lines": [11, 132] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "0d73af18a3a5": {
+      "name": "StorageSlot",
+      "kind": "library",
+      "lines": 105,
+      "status": "identical",
+      "audited": { "object": "b0e9189675cc", "lines": [34, 138] },
+      "reports": [
+        "contracts__audits__2023-05-v4.9",
+        "contracts__audits__2023-10-v5.0"
+      ]
+    },
+    "c3447affdd2d": {
+      "name": "Math",
+      "kind": "library",
+      "lines": 331,
+      "status": "identical",
+      "audited": { "object": "bbb6abc0a3d8", "lines": [9, 337] },
+      "reports": ["contracts__audits__2022-10-ERC4626"]
+    },
+    "adcc06043c13": {
+      "name": "SignedMath",
+      "kind": "library",
+      "lines": 35,
+      "status": "identical",
+      "audited": { "object": "cd8c88f25a35", "lines": [9, 43] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "9e08209aa2c0": {
+      "name": "Strings",
+      "kind": "library",
+      "lines": 74,
+      "status": "identical",
+      "audited": { "object": "332d2a2984e9", "lines": [12, 87] },
+      "reports": ["contracts__audits__2023-05-v4.9"]
+    },
+    "81e1714fad91": {
+      "name": "ECDSA",
+      "kind": "library",
+      "lines": 204,
+      "status": "identical",
+      "audited": { "object": "5bbd73283f02", "lines": [14, 218] },
+      "reports": ["contracts__audits__2023-05-v4.9"]
+    },
+    "df26a08b45b1": {
+      "name": "AddressUpgradeable",
+      "kind": "library",
+      "lines": 187,
+      "status": "none"
+    },
+    "ca9ee66d9338": {
+      "name": "Initializable",
+      "kind": "abstract",
+      "lines": 46,
+      "status": "differs",
+      "audited": { "object": "2a56119aa12b", "lines": [57, 138] },
+      "reports": ["formal-verification__fv__reports__2022-05"],
+      "added": [[4, 4], [15, 19], [23, 23], [41, 44]],
+      "removed": [
+        [4, 5, 5],
+        [10, 11, 15],
+        [10, 18, 18],
+        [21, 23, 27],
+        [30, 34, 34],
+        [32, 37, 57],
+        [41, 67, 80]
+      ],
+      "covered": 40
+    },
+    "e680d147a48e": {
+      "name": "ContextUpgradeable",
+      "kind": "abstract",
+      "lines": 21,
+      "status": "differs",
+      "audited": {
+        "object": "2d517987d5b4",
+        "lines": [16, 24],
+        "name": "Context"
+      },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[0, 5], [13, 19]],
+      "removed": [[0, 0, 0]],
+      "covered": 15
+    },
+    "765f0f8c23ce": {
+      "name": "IAccessControlUpgradeable",
+      "kind": "interface",
+      "lines": 80,
+      "status": "none"
+    },
+    "888814669f8e": {
+      "name": "IERC165Upgradeable",
+      "kind": "interface",
+      "lines": 11,
+      "status": "identical",
+      "audited": {
+        "object": "732cc02b109a",
+        "lines": [5, 15],
+        "name": "IERC165"
+      },
+      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0"]
+    },
+    "ad76095aafad": {
+      "name": "ERC165Upgradeable",
+      "kind": "abstract",
+      "lines": 20,
+      "status": "none"
+    },
+    "861eb432e697": {
+      "name": "StringsUpgradeable",
+      "kind": "library",
+      "lines": 59,
+      "status": "none"
+    },
+    "41813460b59f": {
+      "name": "AccessControlUpgradeable",
+      "kind": "abstract",
+      "lines": 187,
+      "status": "differs",
+      "audited": {
+        "object": "2e54da7d8ed0",
+        "lines": [49, 223],
+        "name": "AccessControl"
+      },
+      "reports": ["formal-verification__fv__reports__2022-03"],
+      "added": [
+        [0, 5],
+        [34, 34],
+        [40, 40],
+        [51, 51],
+        [57, 57],
+        [59, 59],
+        [72, 72],
+        [179, 185]
+      ],
+      "removed": [
+        [0, 0, 0],
+        [34, 29, 29],
+        [40, 35, 35],
+        [51, 46, 46],
+        [57, 52, 52],
+        [59, 54, 54],
+        [72, 67, 67]
+      ],
+      "covered": 175
+    },
+    "aee6957dba32": {
+      "name": "Address",
+      "kind": "library",
+      "lines": 214,
+      "status": "differs",
+      "audited": { "object": "07a6de4542ee", "lines": [9, 236] },
+      "reports": [
+        "code4rena-zksync-era-2023-10",
+        "code4rena-zksync-era-system-contracts-2023-03"
+      ],
+      "added": [
+        [77, 77],
+        [126, 127],
+        [129, 129],
+        [153, 154],
+        [156, 156],
+        [180, 181],
+        [183, 183],
+        [200, 210]
+      ],
+      "removed": [
+        [77, 77, 77],
+        [129, 120, 120],
+        [156, 145, 145],
+        [183, 169, 169],
+        [185, 171, 194],
+        [200, 210, 210],
+        [213, 213, 226]
+      ],
+      "covered": 199
+    },
+    "05412877935f": {
+      "name": "IERC20",
+      "kind": "interface",
+      "lines": 74,
+      "status": "identical",
+      "audited": { "object": "a19535a30046", "lines": [9, 78] },
+      "reports": [
+        "code4rena-zksync-era-system-contracts-2023-03",
+        "contracts__audits__2023-10-v5.0"
+      ]
+    },
+    "3b4df54a2b17": {
+      "name": "SafeERC20",
+      "kind": "library",
+      "lines": 82,
+      "status": "differs",
+      "audited": { "object": "8d475bd3daf8", "lines": [19, 95] },
+      "reports": ["code4rena-zksync-era-system-contracts-2023-03"],
+      "added": [],
+      "removed": [[63, 42, 57]],
+      "covered": 82
+    },
+    "6196cf92cec6": {
+      "name": "Treasury",
+      "kind": "contract",
+      "lines": 57,
+      "status": "differs",
+      "audited": { "object": "1895b12122f4", "lines": [16, 56] },
+      "reports": [
+        "hacken-railgun-contracts-2021-11",
+        "zokyo-railgun-contracts-2021-11"
+      ],
+      "added": [[0, 0], [2, 20], [27, 31], [40, 41]],
+      "removed": [[0, 0, 0], [2, 2, 8], [27, 15, 16], [40, 25, 25]],
+      "covered": 42
+    },
+    "db242be0fc67": {
+      "name": "IntervalPayouts",
+      "kind": "contract",
+      "lines": 85,
+      "status": "none"
+    },
+    "6dff47112b12": {
+      "name": "Context",
+      "kind": "abstract",
+      "lines": 10,
+      "status": "differs",
+      "audited": { "object": "2d517987d5b4", "lines": [16, 24] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[6, 6]],
+      "removed": [],
+      "covered": 9
+    },
+    "b14cffe17030": {
+      "name": "Ownable",
+      "kind": "abstract",
+      "lines": 51,
+      "status": "differs",
+      "audited": { "object": "6410139ad0f9", "lines": [8, 69] },
+      "reports": ["openzeppelin-ovm-rollup-2021-03"],
+      "added": [[0, 1], [9, 11], [13, 19], [25, 25], [37, 38], [45, 48]],
+      "removed": [
+        [0, 0, 6],
+        [1, 8, 12],
+        [10, 21, 22],
+        [13, 26, 27],
+        [25, 31, 31],
+        [37, 46, 47],
+        [45, 55, 56],
+        [47, 58, 59]
+      ],
+      "covered": 36
+    },
+    "f3c2e18143cf": {
+      "name": "PausableUpgradableProxy",
+      "kind": "interface",
+      "lines": 8,
+      "status": "none"
+    },
+    "b31dc3aa76ee": {
+      "name": "ProxyAdmin",
+      "kind": "contract",
+      "lines": 42,
+      "status": "identical",
+      "audited": { "object": "8c60129ee465", "lines": [16, 57] },
+      "reports": [
+        "hacken-railgun-contracts-2021-11",
+        "zokyo-railgun-contracts-2021-11"
+      ]
+    },
+    "bb24b365b687": {
+      "name": "Context",
+      "kind": "abstract",
+      "lines": 13,
+      "status": "differs",
+      "audited": { "object": "2d517987d5b4", "lines": [16, 24] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[8, 11]],
+      "removed": [],
+      "covered": 10
+    },
+    "1708e271bb9b": {
+      "name": "Ownable",
+      "kind": "abstract",
+      "lines": 64,
+      "status": "differs",
+      "audited": { "object": "ca09e0350541", "lines": [20, 97] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[8, 9], [31, 31], [50, 50]],
+      "removed": [[2, 2, 11], [8, 18, 19], [31, 41, 43], [50, 62, 64]],
+      "covered": 60
+    },
+    "b9460fc1f212": {
+      "name": "Delegator",
+      "kind": "contract",
+      "lines": 150,
+      "status": "identical",
+      "audited": { "object": "2a7651efa8d0", "lines": [14, 144] },
+      "reports": [
+        "hacken-railgun-contracts-2021-11",
+        "zokyo-railgun-contracts-2021-11"
+      ]
+    },
+    "fde0b6251d07": {
+      "name": "VKeySetter",
+      "kind": "contract",
+      "lines": 153,
+      "status": "none"
+    },
+    "d768b8759414": {
+      "name": "Context",
+      "kind": "abstract",
+      "lines": 9,
+      "status": "identical",
+      "audited": { "object": "2d517987d5b4", "lines": [16, 24] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "9b385480472b": {
+      "name": "Ownable",
+      "kind": "abstract",
+      "lines": 64,
+      "status": "differs",
+      "audited": { "object": "ca09e0350541", "lines": [20, 97] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[8, 9], [31, 31], [50, 50]],
+      "removed": [[2, 2, 11], [8, 18, 19], [31, 41, 43], [50, 62, 64]],
+      "covered": 60
+    },
+    "1dc2c86c3571": {
+      "name": "AddressUpgradeable",
+      "kind": "library",
+      "lines": 211,
+      "status": "none"
+    },
+    "359c5c809a5e": {
+      "name": "Initializable",
+      "kind": "abstract",
+      "lines": 109,
+      "status": "differs",
+      "audited": { "object": "2a56119aa12b", "lines": [57, 138] },
+      "reports": ["formal-verification__fv__reports__2022-05"],
+      "added": [[29, 29], [94, 107]],
+      "removed": [[29, 24, 24]],
+      "covered": 102
+    },
+    "9c557c702fdd": {
+      "name": "ContextUpgradeable",
+      "kind": "abstract",
+      "lines": 21,
+      "status": "differs",
+      "audited": {
+        "object": "2d517987d5b4",
+        "lines": [16, 24],
+        "name": "Context"
+      },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[0, 5], [13, 19]],
+      "removed": [[0, 0, 0]],
+      "covered": 15
+    },
+    "a5d693e781e6": {
+      "name": "OwnableUpgradeable",
+      "kind": "abstract",
+      "lines": 75,
+      "status": "differs",
+      "audited": {
+        "object": "ca09e0350541",
+        "lines": [20, 97],
+        "name": "Ownable"
+      },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[0, 0], [4, 14], [35, 35], [54, 54], [67, 73]],
+      "removed": [
+        [0, 0, 0],
+        [2, 2, 11],
+        [4, 14, 20],
+        [35, 41, 43],
+        [54, 62, 64]
+      ],
+      "covered": 65
+    },
+    "2e1a05d27f95": {
+      "name": "StorageSlot",
+      "kind": "library",
+      "lines": 57,
+      "status": "differs",
+      "audited": { "object": "b0e9189675cc", "lines": [34, 138] },
+      "reports": [
+        "contracts__audits__2023-05-v4.9",
+        "contracts__audits__2023-10-v5.0"
+      ],
+      "added": [],
+      "removed": [[16, 16, 23], [56, 64, 103]],
+      "covered": 57
+    },
+    "1c1076615bc6": {
+      "name": "Address",
+      "kind": "library",
+      "lines": 236,
+      "status": "identical",
+      "audited": { "object": "07a6de4542ee", "lines": [9, 236] },
+      "reports": [
+        "code4rena-zksync-era-2023-10",
+        "code4rena-zksync-era-system-contracts-2023-03"
+      ]
+    },
+    "9612154d35f8": {
+      "name": "PausableUpgradableProxy",
+      "kind": "contract",
+      "lines": 175,
+      "status": "differs",
+      "audited": { "object": "017b40d0b1da", "lines": [16, 183] },
+      "reports": [
+        "hacken-railgun-contracts-2021-11",
+        "zokyo-railgun-contracts-2021-11"
+      ],
+      "added": [[47, 49], [109, 110]],
+      "removed": [[126, 112, 114], [162, 149, 154]],
+      "covered": 173
+    },
+    "e3f61f9650f4": {
+      "name": "BitMaps",
+      "kind": "library",
+      "lines": 43,
+      "status": "identical",
+      "audited": { "object": "5b62d2f077c0", "lines": [18, 60] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "62b1a28ad743": {
+      "name": "Staking",
+      "kind": "interface",
+      "lines": 23,
+      "status": "none"
+    },
+    "cc08da6f007f": {
+      "name": "ERC165Upgradeable",
+      "kind": "abstract",
+      "lines": 20,
+      "status": "none"
+    },
+    "21aee027a15d": {
+      "name": "MathUpgradeable",
+      "kind": "library",
+      "lines": 331,
+      "status": "identical",
+      "audited": {
+        "object": "bbb6abc0a3d8",
+        "lines": [9, 337],
+        "name": "Math"
+      },
+      "reports": ["contracts__audits__2022-10-ERC4626"]
+    },
+    "08d06b6100f8": {
+      "name": "SignedMathUpgradeable",
+      "kind": "library",
+      "lines": 35,
+      "status": "identical",
+      "audited": {
+        "object": "cd8c88f25a35",
+        "lines": [9, 43],
+        "name": "SignedMath"
+      },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "b70479da8be4": {
+      "name": "StringsUpgradeable",
+      "kind": "library",
+      "lines": 74,
+      "status": "differs",
+      "audited": {
+        "object": "332d2a2984e9",
+        "lines": [12, 87],
+        "name": "Strings"
+      },
+      "reports": ["contracts__audits__2023-05-v4.9"],
+      "added": [[9, 9], [33, 33], [41, 41]],
+      "removed": [[9, 9, 9], [33, 35, 35], [41, 43, 43]],
+      "covered": 71
+    },
+    "169f5a5e9060": {
+      "name": "AccessControlUpgradeable",
+      "kind": "abstract",
+      "lines": 211,
+      "status": "differs",
+      "audited": {
+        "object": "d934eddafe9c",
+        "lines": [49, 212],
+        "name": "AccessControl"
+      },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [
+        [0, 0],
+        [24, 29],
+        [34, 34],
+        [40, 40],
+        [65, 74],
+        [84, 84],
+        [100, 100],
+        [115, 115],
+        [135, 136],
+        [138, 138],
+        [140, 163],
+        [203, 209]
+      ],
+      "removed": [
+        [0, 0, 0],
+        [24, 22, 22],
+        [34, 27, 27],
+        [40, 33, 33],
+        [65, 56, 56],
+        [84, 66, 66],
+        [100, 82, 82],
+        [115, 97, 97],
+        [135, 117, 120],
+        [138, 122, 122]
+      ],
+      "covered": 184
+    },
+    "9b629c4fea25": {
+      "name": "Treasury",
+      "kind": "contract",
+      "lines": 53,
+      "status": "differs",
+      "audited": { "object": "1895b12122f4", "lines": [16, 56] },
+      "reports": [
+        "hacken-railgun-contracts-2021-11",
+        "zokyo-railgun-contracts-2021-11"
+      ],
+      "added": [[0, 0], [2, 18], [25, 29], [38, 43]],
+      "removed": [
+        [0, 0, 0],
+        [2, 2, 8],
+        [25, 15, 16],
+        [38, 25, 25],
+        [46, 28, 33]
+      ],
+      "covered": 36
+    },
+    "6a2292abf3ef": {
+      "name": "GovernorRewards",
+      "kind": "contract",
+      "lines": 488,
+      "status": "differs",
+      "audited": { "object": "d2fec947aa6f", "lines": [24, 410] },
+      "reports": ["hashcloak-railgun-v2-circuits-governance-2022-08"],
+      "added": [
+        [39, 44],
+        [66, 68],
+        [87, 87],
+        [101, 101],
+        [124, 131],
+        [170, 170],
+        [188, 225],
+        [300, 303],
+        [305, 331],
+        [334, 337],
+        [351, 351],
+        [358, 360],
+        [421, 427],
+        [460, 461],
+        [465, 469],
+        [477, 478]
+      ],
+      "removed": [
+        [66, 57, 57],
+        [78, 64, 64],
+        [87, 74, 74],
+        [101, 88, 90],
+        [124, 109, 109],
+        [170, 143, 143],
+        [300, 231, 233],
+        [316, 235, 235],
+        [334, 238, 266],
+        [346, 276, 276],
+        [350, 281, 281],
+        [351, 283, 283],
+        [421, 340, 342]
+      ],
+      "covered": 429
+    },
+    "0d3c0f868cae": {
+      "name": "StorageSlot",
+      "kind": "library",
+      "lines": 53,
+      "status": "differs",
+      "audited": { "object": "b0e9189675cc", "lines": [34, 138] },
+      "reports": [
+        "contracts__audits__2023-05-v4.9",
+        "contracts__audits__2023-10-v5.0"
+      ],
+      "added": [],
+      "removed": [[16, 16, 23], [52, 64, 103]],
+      "covered": 53
+    },
+    "d56a9c4f90e2": {
+      "name": "PausableUpgradableProxy",
+      "kind": "contract",
+      "lines": 168,
+      "status": "differs",
+      "audited": { "object": "017b40d0b1da", "lines": [16, 183] },
+      "reports": [
+        "hacken-railgun-contracts-2021-11",
+        "zokyo-railgun-contracts-2021-11"
+      ],
+      "added": [[46, 48], [104, 105]],
+      "removed": [[121, 112, 114], [155, 149, 154]],
+      "covered": 166
+    },
+    "809d3ad2bcb8": {
+      "name": "IERC20",
+      "kind": "interface",
+      "lines": 74,
+      "status": "identical",
+      "audited": { "object": "a19535a30046", "lines": [9, 78] },
+      "reports": [
+        "code4rena-zksync-era-system-contracts-2023-03",
+        "contracts__audits__2023-10-v5.0"
+      ]
+    },
+    "e6dfb2fb6c38": {
+      "name": "Sweeper",
+      "kind": "contract",
+      "lines": 23,
+      "status": "none"
+    },
+    "33431186bf83": {
+      "name": "RelayAdapt",
+      "kind": "contract",
+      "lines": 321,
+      "status": "none"
+    },
+    "fcb73c1df4da": {
+      "name": "Delegator",
+      "kind": "contract",
+      "lines": 143,
+      "status": "identical",
+      "audited": { "object": "2a7651efa8d0", "lines": [14, 144] },
+      "reports": [
+        "hacken-railgun-contracts-2021-11",
+        "zokyo-railgun-contracts-2021-11"
+      ]
+    },
+    "028aaa3affc0": {
+      "name": "Staking",
+      "kind": "interface",
+      "lines": 12,
+      "status": "none"
+    },
+    "e493be176894": {
+      "name": "Ownable",
+      "kind": "abstract",
+      "lines": 57,
+      "status": "differs",
+      "audited": { "object": "ca09e0350541", "lines": [20, 97] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[8, 9], [23, 23], [43, 43]],
+      "removed": [
+        [2, 2, 11],
+        [8, 18, 19],
+        [18, 36, 44],
+        [23, 26, 26],
+        [43, 62, 64]
+      ],
+      "covered": 53
+    },
+    "bc0b7b437b34": {
+      "name": "Voting",
+      "kind": "contract",
+      "lines": 409,
+      "status": "differs",
+      "audited": { "object": "0fa79b6bfeda", "lines": [15, 409] },
+      "reports": ["hashcloak-railgun-v2-circuits-governance-2022-08"],
+      "findings": {
+        "hashcloak-railgun-v2-circuits-governance-2022-08": [
+          "SetVotingKey in Voting.sol can be set by anyone",
+          "CallVote in Voting.sol can be called by anyone",
+          "ExecuteProposal in Voting.sol can be called by anyone"
+        ]
+      },
+      "added": [[34, 36], [47, 49], [62, 62], [388, 388], [401, 401]],
+      "removed": [[62, 54, 55], [388, 373, 373], [401, 383, 387]],
+      "covered": 405
+    },
+    "756a24936234": {
+      "name": "IERC20",
+      "kind": "interface",
+      "lines": 70,
+      "status": "identical",
+      "audited": { "object": "41ede9d660b2", "lines": [11, 80] },
+      "reports": ["consensys-arbitrum-core-token-bridge-2021-11"]
+    },
+    "5cb0721f72f0": {
+      "name": "IERC20Metadata",
+      "kind": "interface",
+      "lines": 16,
+      "status": "identical",
+      "audited": { "object": "1cf7e0b2edfc", "lines": [13, 28] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "8f0ff1a316be": {
+      "name": "ERC20",
+      "kind": "contract",
+      "lines": 272,
+      "status": "differs",
+      "audited": { "object": "be2397872031", "lines": [13, 182] },
+      "reports": ["contracts__audits__2018-10"],
+      "added": [
+        [0, 0],
+        [2, 3],
+        [6, 54],
+        [59, 59],
+        [66, 67],
+        [78, 79],
+        [86, 87],
+        [97, 98],
+        [115, 120],
+        [137, 138],
+        [156, 159],
+        [178, 187],
+        [189, 189],
+        [201, 204],
+        [206, 208],
+        [222, 230],
+        [232, 232],
+        [234, 270]
+      ],
+      "removed": [
+        [0, 0, 2],
+        [2, 4, 5],
+        [59, 12, 12],
+        [66, 21, 22],
+        [78, 40, 41],
+        [86, 31, 32],
+        [97, 54, 58],
+        [115, 68, 69],
+        [119, 71, 72],
+        [137, 85, 89],
+        [156, 102, 103],
+        [158, 105, 106],
+        [178, 116, 118],
+        [186, 120, 122],
+        [201, 132, 136],
+        [222, 145, 147],
+        [229, 149, 151],
+        [234, 153, 168]
+      ],
+      "covered": 205
+    },
+    "4fd870578192": {
+      "name": "RailToken",
+      "kind": "contract",
+      "lines": 106,
+      "status": "none"
+    },
+    "9f1625bb6f8b": {
+      "name": "Address",
+      "kind": "library",
+      "lines": 182,
+      "status": "differs",
+      "audited": { "object": "07a6de4542ee", "lines": [9, 236] },
+      "reports": [
+        "code4rena-zksync-era-2023-10",
+        "code4rena-zksync-era-system-contracts-2023-03"
+      ],
+      "added": [
+        [19, 26],
+        [72, 72],
+        [108, 110],
+        [112, 112],
+        [132, 134],
+        [136, 136],
+        [156, 158],
+        [160, 160],
+        [162, 180]
+      ],
+      "removed": [
+        [26, 28, 32],
+        [72, 77, 77],
+        [112, 120, 120],
+        [136, 145, 145],
+        [160, 169, 169],
+        [162, 171, 226]
+      ],
+      "covered": 158
+    },
+    "5b056028c0dc": {
+      "name": "SafeERC20",
+      "kind": "library",
+      "lines": 61,
+      "status": "differs",
+      "audited": { "object": "8d475bd3daf8", "lines": [19, 95] },
+      "reports": ["code4rena-zksync-era-system-contracts-2023-03"],
+      "added": [],
+      "removed": [[42, 42, 57]],
+      "covered": 61
+    },
+    "f0554d9428f6": {
+      "name": "Math",
+      "kind": "library",
+      "lines": 24,
+      "status": "identical",
+      "audited": { "object": "0cc89cb39124", "lines": [7, 31] },
+      "reports": ["contracts__audits__2018-10"]
+    },
+    "6794e254ea12": {
+      "name": "Staking",
+      "kind": "contract",
+      "lines": 538,
+      "status": "identical",
+      "audited": { "object": "5c2f07b0da6e", "lines": [18, 496] },
+      "reports": [
+        "hacken-railgun-contracts-2021-11",
+        "zokyo-railgun-contracts-2021-11"
+      ]
+    },
+    "6080d127546d": {
+      "name": "Verifier",
+      "kind": "contract",
+      "lines": 111,
+      "status": "differs",
+      "audited": { "object": "7226f1a2f139", "lines": [18, 128] },
+      "reports": ["zokyo-railgun-logic-2022-04"],
+      "added": [
+        [1, 3],
+        [69, 69],
+        [81, 81],
+        [87, 88],
+        [92, 93],
+        [102, 103],
+        [105, 105]
+      ],
+      "removed": [
+        [1, 1, 7],
+        [69, 69, 69],
+        [81, 81, 81],
+        [87, 87, 88],
+        [92, 92, 93],
+        [102, 102, 103],
+        [105, 105, 105]
+      ],
+      "covered": 102
+    },
+    "9da1e33ae684": {
+      "name": "RailgunLogic",
+      "kind": "contract",
+      "lines": 513,
+      "status": "differs",
+      "audited": { "object": "0cb3da84d739", "lines": [38, 502] },
+      "reports": ["zokyo-railgun-smart-wallet-2022-12"],
+      "added": [
+        [31, 36],
+        [50, 50],
+        [140, 140],
+        [149, 150],
+        [152, 152],
+        [192, 194],
+        [213, 215],
+        [221, 221],
+        [232, 234],
+        [238, 240],
+        [244, 249],
+        [258, 260],
+        [270, 275],
+        [281, 281],
+        [393, 395],
+        [398, 398],
+        [404, 404],
+        [407, 407],
+        [411, 411],
+        [413, 442],
+        [444, 446],
+        [448, 448],
+        [471, 478]
+      ],
+      "removed": [
+        [31, 32, 32],
+        [140, 122, 123],
+        [149, 132, 133],
+        [152, 135, 135],
+        [192, 172, 172],
+        [197, 177, 181],
+        [213, 201, 201],
+        [281, 245, 245],
+        [393, 347, 347],
+        [398, 350, 351],
+        [404, 358, 358],
+        [407, 362, 363],
+        [411, 368, 368],
+        [413, 372, 377],
+        [445, 379, 414],
+        [448, 417, 417]
+      ],
+      "covered": 450
+    },
+    "c765c17fb31e": {
+      "name": "RailgunSmartWallet",
+      "kind": "contract",
+      "lines": 194,
+      "status": "none"
+    }
+  },
+  "flats": {
+    "ae5fea64634fb002121a0a4c2b8169878bb7be5912f81712699c1a6929a99a1c": [
+      ["e730ab060eed", 6],
+      ["684cb89721da", 87],
+      ["ba18d750e681", 106],
+      ["cbd91b4f4c05", 187],
+      ["cd869541fe64", 466],
+      ["b6997299f381", 753],
+      ["91480ff4045f", 873],
+      ["6dd3f0f9ae37", 911],
+      ["8de967349a1a", 995],
+      ["d996713dc41a", 1007],
+      ["93aefaaee264", 1259],
+      ["b470a755a1a0", 1365],
+      ["3726b136d877", 1566],
+      ["fb6772f9094e", 1683],
+      ["c04b80f4a8e5", 1691],
+      ["ed25952f120e", 1844],
+      ["db5f8a5a2f80", 1962],
+      ["598abc9abe8b", 2485],
+      ["25f5973a8888", 2603],
+      ["6c6e73790068", 2615],
+      ["65eaa1f639e8", 2895]
+    ],
+    "34ddf1a502b864779e0772f92263e1517916e681f26252be2e4cb3135f63b3d6": [
+      ["0d6715927318", 6],
+      ["99abd89835c9", 246],
+      ["0fa247bb04ae", 353],
+      ["eadfe647538c", 412],
+      ["cd869541fe64", 553],
+      ["b6997299f381", 840],
+      ["91480ff4045f", 960],
+      ["6dd3f0f9ae37", 998],
+      ["8de967349a1a", 1082],
+      ["d996713dc41a", 1094],
+      ["93aefaaee264", 1346],
+      ["b470a755a1a0", 1452],
+      ["3726b136d877", 1653],
+      ["fb6772f9094e", 1770],
+      ["f98775a7d0f9", 1784],
+      ["cf70bae8f72d", 1799],
+      ["0d73af18a3a5", 1949],
+      ["db5f8a5a2f80", 2062],
+      ["598abc9abe8b", 2585],
+      ["25f5973a8888", 2703],
+      ["c3447affdd2d", 2712],
+      ["adcc06043c13", 3047],
+      ["9e08209aa2c0", 3086],
+      ["81e1714fad91", 3167],
+      ["65eaa1f639e8", 3378]
+    ],
+    "9ff4c1c3741d85b6b5c9e58b9ddae941341d7e806daf02d5fc42530ed19382b1": [
+      ["df26a08b45b1", 6],
+      ["ca9ee66d9338", 221],
+      ["e680d147a48e", 278],
+      ["765f0f8c23ce", 303],
+      ["888814669f8e", 393],
+      ["ad76095aafad", 419],
+      ["861eb432e697", 443],
+      ["41813460b59f", 541],
+      ["aee6957dba32", 732],
+      ["05412877935f", 950],
+      ["3b4df54a2b17", 1034],
+      ["6196cf92cec6", 1122],
+      ["db242be0fc67", 1185]
+    ],
+    "2a70aa98cc7e1770f1d512044e9b9b1c7da55f4e8dbe57979255cc431a66ba14": [
+      ["6dff47112b12", 13],
+      ["b14cffe17030", 36],
+      ["f3c2e18143cf", 89],
+      ["b31dc3aa76ee", 104]
+    ],
+    "ce73217f67cd20449f4e19a10145841d7bc5f51fb10356ac27ad452d0006f78f": [
+      ["bb24b365b687", 13],
+      ["1708e271bb9b", 39],
+      ["b9460fc1f212", 110],
+      ["cd869541fe64", 264],
+      ["b6997299f381", 551],
+      ["91480ff4045f", 671],
+      ["6dd3f0f9ae37", 709],
+      ["b470a755a1a0", 840],
+      ["3726b136d877", 1053],
+      ["fde0b6251d07", 1170]
+    ],
+    "43f8a959fe9201b24e71c9d059b27e5e36701bf406c601e6add33cb15cdfb444": [
+      ["d768b8759414", 13],
+      ["9b385480472b", 35],
+      ["b9460fc1f212", 106],
+      ["1dc2c86c3571", 260],
+      ["359c5c809a5e", 521],
+      ["9c557c702fdd", 641],
+      ["a5d693e781e6", 675],
+      ["b470a755a1a0", 806],
+      ["3726b136d877", 1019],
+      ["fde0b6251d07", 1136]
+    ],
+    "92390fbf02d3d2ab77428487950f8f56f838614fd7f8d42335cf77c822b641e8": [
+      ["2e1a05d27f95", 29],
+      ["1c1076615bc6", 90],
+      ["9612154d35f8", 333]
+    ],
+    "f0abdfbf7faaee916cbc415b5c263e0886c90e3ba20b795f8678b837a39912d9": [
+      ["cd869541fe64", 6],
+      ["b6997299f381", 293],
+      ["91480ff4045f", 413],
+      ["6dd3f0f9ae37", 451],
+      ["0d6715927318", 530],
+      ["99abd89835c9", 770],
+      ["0fa247bb04ae", 877],
+      ["eadfe647538c", 936],
+      ["e3f61f9650f4", 1066],
+      ["62b1a28ad743", 1111],
+      ["765f0f8c23ce", 1138],
+      ["888814669f8e", 1228],
+      ["cc08da6f007f", 1254],
+      ["21aee027a15d", 1278],
+      ["08d06b6100f8", 1613],
+      ["b70479da8be4", 1652],
+      ["169f5a5e9060", 1766],
+      ["9b629c4fea25", 1983],
+      ["0d73af18a3a5", 2064],
+      ["6a2292abf3ef", 2175]
+    ],
+    "7cffbe1ff3d3142704ef8fdd103fa7437eb85db5350e9aae64769674233db52f": [
+      ["0d3c0f868cae", 29],
+      ["aee6957dba32", 86],
+      ["d56a9c4f90e2", 307]
+    ],
+    "c23a2eab81896729d858ee8bbb3aeea538631663b368f18677d0a991871ada74": [
+      ["809d3ad2bcb8", 6],
+      ["e6dfb2fb6c38", 86]
+    ],
+    "b892b7a03e1767394f302cd66ad832ea9a3e68bee13eb33599a8e5c48bd37ead": [
+      ["0d6715927318", 6],
+      ["99abd89835c9", 246],
+      ["0fa247bb04ae", 353],
+      ["eadfe647538c", 412],
+      ["cd869541fe64", 553],
+      ["b6997299f381", 840],
+      ["91480ff4045f", 960],
+      ["6dd3f0f9ae37", 998],
+      ["8de967349a1a", 1082],
+      ["d996713dc41a", 1094],
+      ["93aefaaee264", 1346],
+      ["b470a755a1a0", 1452],
+      ["3726b136d877", 1653],
+      ["fb6772f9094e", 1770],
+      ["f98775a7d0f9", 1784],
+      ["cf70bae8f72d", 1799],
+      ["0d73af18a3a5", 1949],
+      ["db5f8a5a2f80", 2062],
+      ["598abc9abe8b", 2585],
+      ["25f5973a8888", 2703],
+      ["33431186bf83", 2715]
+    ],
+    "f202e5f2776bbdd07c3557738308ef0e63df36f0c9931d3723aa1d22c41e3cb7": [
+      ["6dff47112b12", 13],
+      ["b14cffe17030", 36],
+      ["fcb73c1df4da", 94]
+    ],
+    "e54304cf19cdf46b10a570fae9b67951c958acf9613932a66ad943e6d053550e": [
+      ["028aaa3affc0", 4],
+      ["d768b8759414", 27],
+      ["e493be176894", 49],
+      ["fcb73c1df4da", 113],
+      ["bc0b7b437b34", 262]
+    ],
+    "e23b8af6e6da073f1d7e2bf098415257ab3f759c40b2a787aa2cae9c4a7ff53c": [
+      ["6dff47112b12", 13],
+      ["b14cffe17030", 36],
+      ["756a24936234", 91],
+      ["5cb0721f72f0", 167],
+      ["8f0ff1a316be", 208],
+      ["4fd870578192", 487]
+    ],
+    "e41818027b36370acfeec98f324eebac4433b9d0e5a8c6d19c25ca30590d5408": [
+      ["df26a08b45b1", 6],
+      ["ca9ee66d9338", 221],
+      ["e680d147a48e", 278],
+      ["765f0f8c23ce", 303],
+      ["888814669f8e", 393],
+      ["ad76095aafad", 419],
+      ["861eb432e697", 443],
+      ["41813460b59f", 541],
+      ["aee6957dba32", 732],
+      ["05412877935f", 950],
+      ["3b4df54a2b17", 1034],
+      ["6196cf92cec6", 1122]
+    ],
+    "04fab2eb9b434d47e90c1fcfb162b58f694f13ba1190e0f4ca00dcb7c14e81d8": [
+      ["9f1625bb6f8b", 6],
+      ["756a24936234", 192],
+      ["5b056028c0dc", 272],
+      ["f0554d9428f6", 337],
+      ["6794e254ea12", 369]
+    ],
+    "9e426b002700a0d523c12dcf4840077f119bf4953d0f04b2e638293835c3464f": [
+      ["cd869541fe64", 6],
+      ["b6997299f381", 293],
+      ["91480ff4045f", 413],
+      ["6dd3f0f9ae37", 451],
+      ["8de967349a1a", 535],
+      ["d996713dc41a", 547],
+      ["93aefaaee264", 799],
+      ["b470a755a1a0", 905],
+      ["6080d127546d", 1118],
+      ["0d6715927318", 1233],
+      ["99abd89835c9", 1473],
+      ["0fa247bb04ae", 1580],
+      ["eadfe647538c", 1639],
+      ["fb6772f9094e", 1777],
+      ["f98775a7d0f9", 1791],
+      ["cf70bae8f72d", 1806],
+      ["0d73af18a3a5", 1956],
+      ["9da1e33ae684", 2069],
+      ["c765c17fb31e", 2594]
+    ]
+  },
+  "contracts": {
+    "eth:0x05ae73c5925d843864ae6F261f3175De2ebCd963": {
+      "name": "RelayAdapt7702_05ae",
+      "source": "ae5fea64634fb002121a0a4c2b8169878bb7be5912f81712699c1a6929a99a1c"
+    },
+    "eth:0x1F74b4339990Db761bC0168F20D294A3a141497e": {
+      "name": "RelayAdapt7702_1F74",
+      "source": "34ddf1a502b864779e0772f92263e1517916e681f26252be2e4cb3135f63b3d6"
+    },
+    "eth:0x29905A43aA3865D0D7F2743dDE63754B4aa9CA11": {
+      "name": "IntervalPayouts",
+      "source": "9ff4c1c3741d85b6b5c9e58b9ddae941341d7e806daf02d5fc42530ed19382b1"
+    },
+    "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8": {
+      "name": "ProxyAdmin",
+      "source": "2a70aa98cc7e1770f1d512044e9b9b1c7da55f4e8dbe57979255cc431a66ba14",
+      "critical": true
+    },
+    "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598": {
+      "name": "VerificationKeySetter_64DA",
+      "source": "ce73217f67cd20449f4e19a10145841d7bc5f51fb10356ac27ad452d0006f78f",
+      "critical": true
+    },
+    "eth:0x7673e2E62435D25EDBcb58fD0d88c4C95806b10F": {
+      "name": "IntervalPayouts",
+      "source": "9ff4c1c3741d85b6b5c9e58b9ddae941341d7e806daf02d5fc42530ed19382b1"
+    },
+    "eth:0x859E0C1790b8a721F4943742603cDB685A73BA5D": {
+      "name": "IntervalPayouts",
+      "source": "9ff4c1c3741d85b6b5c9e58b9ddae941341d7e806daf02d5fc42530ed19382b1"
+    },
+    "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46": {
+      "name": "VerificationKeySetter_9086",
+      "source": "43f8a959fe9201b24e71c9d059b27e5e36701bf406c601e6add33cb15cdfb444",
+      "critical": true
+    },
+    "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f": {
+      "name": "GovernorRewards",
+      "source": "92390fbf02d3d2ab77428487950f8f56f838614fd7f8d42335cf77c822b641e8",
+      "implementations": {
+        "eth:0xaC76eB94703b16e704f76ECFFDADF36b6A53ECDB": "f0abdfbf7faaee916cbc415b5c263e0886c90e3ba20b795f8678b837a39912d9"
+      }
+    },
+    "eth:0xa353bC0454931Ac46fd90c8EF27f908Ab9E34686": {
+      "name": "LegacySweeper",
+      "source": "7cffbe1ff3d3142704ef8fdd103fa7437eb85db5350e9aae64769674233db52f",
+      "implementations": {
+        "eth:0x9b1310BdCC19D172D0092240e33209a9156c8EE2": "c23a2eab81896729d858ee8bbb3aeea538631663b368f18677d0a991871ada74"
+      }
+    },
+    "eth:0xa863262Bf5E97e8CFeC47a71402aC360C0983060": {
+      "name": "IntervalPayouts",
+      "source": "9ff4c1c3741d85b6b5c9e58b9ddae941341d7e806daf02d5fc42530ed19382b1"
+    },
+    "eth:0xAc9f360Ae85469B27aEDdEaFC579Ef2d052aD405": {
+      "name": "RelayAdapt",
+      "source": "b892b7a03e1767394f302cd66ad832ea9a3e68bee13eb33599a8e5c48bd37ead"
+    },
+    "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B": {
+      "name": "Delegator",
+      "source": "f202e5f2776bbdd07c3557738308ef0e63df36f0c9931d3723aa1d22c41e3cb7",
+      "critical": true
+    },
+    "eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC": {
+      "name": "Voting",
+      "source": "e54304cf19cdf46b10a570fae9b67951c958acf9613932a66ad943e6d053550e",
+      "critical": true
+    },
+    "eth:0xCA9A2894e814305fAfc2BA83a70B34295b1DdE9D": {
+      "name": "IntervalPayouts",
+      "source": "9ff4c1c3741d85b6b5c9e58b9ddae941341d7e806daf02d5fc42530ed19382b1"
+    },
+    "eth:0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D": {
+      "name": "Rail Token",
+      "source": "e23b8af6e6da073f1d7e2bf098415257ab3f759c40b2a787aa2cae9c4a7ff53c",
+      "critical": true
+    },
+    "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40": {
+      "name": "Treasury",
+      "source": "7cffbe1ff3d3142704ef8fdd103fa7437eb85db5350e9aae64769674233db52f",
+      "implementations": {
+        "eth:0xA092c7577354EA82a6c7e55B423c3DD80f0dF255": "e41818027b36370acfeec98f324eebac4433b9d0e5a8c6d19c25ca30590d5408"
+      }
+    },
+    "eth:0xEE6A649Aa3766bD117e12C161726b693A1B2Ee20": {
+      "name": "Staking",
+      "source": "04fab2eb9b434d47e90c1fcfb162b58f694f13ba1190e0f4ca00dcb7c14e81d8",
+      "critical": true
+    },
+    "eth:0xf5F9d74FbFd04801DFf83425ff6C2002f60B921A": {
+      "name": "IntervalPayouts",
+      "source": "9ff4c1c3741d85b6b5c9e58b9ddae941341d7e806daf02d5fc42530ed19382b1"
+    },
+    "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9": {
+      "name": "RailgunSmartWallet",
+      "source": "7cffbe1ff3d3142704ef8fdd103fa7437eb85db5350e9aae64769674233db52f",
+      "critical": true,
+      "implementations": {
+        "eth:0xD662C4B1F22AcEb0BEaCdf3A493De6f478686A0C": "9e426b002700a0d523c12dcf4840077f119bf4953d0f04b2e638293835c3464f"
+      }
+    }
+  },
+  "history": {
+    "launch": 1625318205,
+    "points": [
+      {
+        "timestamp": 1625318205,
+        "contracts": 1,
+        "withoutSource": 0,
+        "units": { "identical": 0, "differs": 1, "none": 2 },
+        "lines": { "total": 167, "covered": 36 },
+        "reports": [
+          "contracts__audits__2018-10",
+          "openzeppelin-ovm-rollup-2021-03",
+          "peckshield-starkex-v1-0-2020-02",
+          "peckshield-starkex-v2-0-2020-10"
+        ]
+      },
+      {
+        "timestamp": 1625670240,
+        "contracts": 2,
+        "withoutSource": 0,
+        "units": { "identical": 1, "differs": 1, "none": 4 },
+        "lines": { "total": 911, "covered": 60 },
+        "changes": [
+          {
+            "address": "eth:0xEE6A649Aa3766bD117e12C161726b693A1B2Ee20",
+            "name": "Staking",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1625810239,
+        "contracts": 3,
+        "withoutSource": 0,
+        "units": { "identical": 1, "differs": 2, "none": 6 },
+        "lines": { "total": 1115, "covered": 96 },
+        "changes": [
+          {
+            "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
+            "name": "Delegator",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1625961245,
+        "contracts": 4,
+        "withoutSource": 0,
+        "units": { "identical": 1, "differs": 3, "none": 8 },
+        "lines": { "total": 1218, "covered": 132 },
+        "changes": [
+          {
+            "address": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8",
+            "name": "ProxyAdmin",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1635811200,
+        "contracts": 4,
+        "withoutSource": 0,
+        "units": { "identical": 4, "differs": 3, "none": 5 },
+        "lines": { "total": 1218, "covered": 855 },
+        "reports": ["hacken-railgun-contracts-2021-11"]
+      },
+      {
+        "timestamp": 1636070400,
+        "contracts": 4,
+        "withoutSource": 0,
+        "units": { "identical": 4, "differs": 3, "none": 5 },
+        "lines": { "total": 1218, "covered": 855 },
+        "reports": ["consensys-arbitrum-core-token-bridge-2021-11"]
+      },
+      {
+        "timestamp": 1651422389,
+        "contracts": 5,
+        "withoutSource": 0,
+        "units": { "identical": 4, "differs": 4, "none": 7 },
+        "lines": { "total": 1653, "covered": 1021 },
+        "changes": [
+          {
+            "address": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+            "name": "RailgunSmartWallet",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1652034772,
+        "contracts": 5,
+        "withoutSource": 0,
+        "units": { "identical": 9, "differs": 6, "none": 12 },
+        "lines": { "total": 3242, "covered": 2027 },
+        "changes": [
+          {
+            "address": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+            "name": "RailgunSmartWallet",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1662770918,
+        "contracts": 6,
+        "withoutSource": 0,
+        "units": { "identical": 10, "differs": 8, "none": 13 },
+        "lines": { "total": 3860, "covered": 2616 },
+        "changes": [
+          {
+            "address": "eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC",
+            "name": "Voting",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1669738223,
+        "contracts": 6,
+        "withoutSource": 0,
+        "units": { "identical": 5, "differs": 11, "none": 16 },
+        "lines": { "total": 4020, "covered": 2108 },
+        "changes": [
+          {
+            "address": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+            "name": "RailgunSmartWallet",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1671580800,
+        "contracts": 6,
+        "withoutSource": 0,
+        "units": { "identical": 8, "differs": 10, "none": 14 },
+        "lines": { "total": 4020, "covered": 2743 },
+        "reports": ["zokyo-railgun-smart-wallet-2022-12"]
+      },
+      {
+        "timestamp": 1672963200,
+        "contracts": 6,
+        "withoutSource": 0,
+        "units": { "identical": 8, "differs": 10, "none": 14 },
+        "lines": { "total": 4020, "covered": 2743 },
+        "reports": ["trailofbits-governance-token-bridge-2023-06"]
+      },
+      {
+        "timestamp": 1677376967,
+        "contracts": 7,
+        "withoutSource": 0,
+        "units": { "identical": 9, "differs": 13, "none": 19 },
+        "lines": { "total": 4988, "covered": 3216 },
+        "changes": [
+          {
+            "address": "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46",
+            "name": "VerificationKeySetter_9086",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1678360187,
+        "contracts": 7,
+        "withoutSource": 0,
+        "units": { "identical": 7, "differs": 15, "none": 19 },
+        "lines": { "total": 5047, "covered": 3196 },
+        "changes": [
+          {
+            "address": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+            "name": "RailgunSmartWallet",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1679961600,
+        "contracts": 7,
+        "withoutSource": 0,
+        "units": { "identical": 7, "differs": 15, "none": 19 },
+        "lines": { "total": 5047, "covered": 3196 },
+        "reports": ["ackee-safe-1-4-0"]
+      },
+      {
+        "timestamp": 1683590400,
+        "contracts": 7,
+        "withoutSource": 0,
+        "units": { "identical": 7, "differs": 15, "none": 17 },
+        "lines": { "total": 4937, "covered": 3196 },
+        "reports": ["contracts__audits__2023-05-v4.9"]
+      },
+      {
+        "timestamp": 1686700800,
+        "contracts": 7,
+        "withoutSource": 0,
+        "units": { "identical": 9, "differs": 18, "none": 14 },
+        "lines": { "total": 5096, "covered": 3948 },
+        "reports": ["code4rena-zksync-era-system-contracts-2023-03"]
+      },
+      {
+        "timestamp": 1689638400,
+        "contracts": 7,
+        "withoutSource": 0,
+        "units": { "identical": 9, "differs": 18, "none": 14 },
+        "lines": { "total": 5096, "covered": 3948 },
+        "reports": ["openzeppelin-scroll-layer1-audit-2023-07"]
+      },
+      {
+        "timestamp": 1696291200,
+        "contracts": 7,
+        "withoutSource": 0,
+        "units": { "identical": 11, "differs": 16, "none": 5 },
+        "lines": { "total": 4753, "covered": 3880 },
+        "reports": ["contracts__audits__2023-10-v5.0"]
+      },
+      {
+        "timestamp": 1748390400,
+        "contracts": 7,
+        "withoutSource": 0,
+        "units": { "identical": 11, "differs": 16, "none": 5 },
+        "lines": { "total": 4753, "covered": 3880 },
+        "reports": ["ackee-safe-1-5-0"]
+      },
+      {
+        "timestamp": 1752516023,
+        "contracts": 8,
+        "withoutSource": 0,
+        "units": { "identical": 12, "differs": 18, "none": 8 },
+        "lines": { "total": 5602, "covered": 4308 },
+        "changes": [
+          {
+            "address": "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598",
+            "name": "VerificationKeySetter_64DA",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1753717703,
+        "contracts": 8,
+        "withoutSource": 0,
+        "units": { "identical": 13, "differs": 18, "none": 9 },
+        "lines": { "total": 5790, "covered": 4429 },
+        "changes": [
+          {
+            "address": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+            "name": "RailgunSmartWallet",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1772150400,
+        "contracts": 8,
+        "withoutSource": 0,
+        "units": { "identical": 13, "differs": 18, "none": 9 },
+        "lines": { "total": 5790, "covered": 4429 },
+        "reports": ["contracts__audits__2026-02-v5.6"]
+      },
+      {
+        "timestamp": 1786715435,
+        "contracts": 8,
+        "withoutSource": 0,
+        "units": { "identical": 13, "differs": 17, "none": 10 },
+        "lines": { "total": 5869, "covered": 4298 },
+        "changes": [
+          {
+            "address": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+            "name": "RailgunSmartWallet",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1792756093,
+        "contracts": 8,
+        "withoutSource": 0,
+        "units": { "identical": 13, "differs": 17, "none": 10 },
+        "lines": { "total": 5869, "covered": 4298 }
+      }
+    ],
+    "undatedReports": []
+  }
+}

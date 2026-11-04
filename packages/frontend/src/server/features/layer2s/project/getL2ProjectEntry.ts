@@ -179,6 +179,7 @@ export async function getL2ProjectEntry(
     | 'daTrackingConfig'
     | 'garden'
     | 'ossificationHistory'
+    | 'auditCoverage'
   >,
   helpers: SsrHelpers,
 ): Promise<ProjectL2Entry> {
@@ -538,6 +539,8 @@ export async function getL2ProjectEntry(
       tvsConfig: project.tvsConfig,
       isUnderReview: !!project.statuses.reviewStatus,
       architectureImage: project.scalingTechnology.architectureImage,
+      auditCoverage: project.auditCoverage,
+      stacks: project.scalingInfo.stacks,
     },
     contractUtils,
     projectsChangeReport,

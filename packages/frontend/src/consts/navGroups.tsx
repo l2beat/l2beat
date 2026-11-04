@@ -8,6 +8,7 @@ import { L2Icon } from '~/icons/pages/L2'
 import { PrivacyIcon } from '~/icons/pages/Privacy'
 import { TokensIcon } from '~/icons/pages/Tokens'
 import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
+import { ShieldIcon } from '~/icons/Shield'
 
 export const navGroups: NavGroup[] = compact<NavGroup>([
   {
@@ -150,6 +151,16 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
         },
       ],
     ],
+  },
+  {
+    type: 'single',
+    section: 'more',
+    title: 'Audits',
+    match: 'audits',
+    href: '/audits',
+    icon: (
+      <ShieldIcon className="size-5 transition-colors duration-300 group-data-[active=true]:stroke-nav-active" />
+    ),
   },
   env.CLIENT_SIDE_TOKENS_PAGE && {
     type: 'single',

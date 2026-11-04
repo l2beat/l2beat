@@ -17,6 +17,7 @@ export type PrivacyProject = Project<
   | 'zkCatalogInfo'
   | 'ossificationHistory'
   | 'milestones'
+  | 'auditCoverage'
   | 'archivedAt'
 > & {
   /** Own zkCatalogInfo trusted setups, or those of privacyInfo.zkCatalogId. */

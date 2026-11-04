@@ -35,7 +35,7 @@ export interface Match {
 
 const SAME_NAME_SIMILARITY_MIN = 0.5
 const RENAMED_SIMILARITY_MIN = 0.65
-const RENAMED_LINES_MIN = 10
+export const RENAMED_LINES_MIN = 10
 
 export function matchDeclaration(
   deployed: DeployedDeclaration,

@@ -6,3 +6,5 @@ export type CoverageCollection = AuditCoverage['collections'][string]
 export type AuditedFile = AuditCoverage['auditedFiles'][string]
 export type Unit = AuditCoverage['units'][string]
 export type Contract = AuditCoverage['contracts'][string]
+export type AuditCoverageHistory = NonNullable<AuditCoverage['history']>
+export type AuditCoverageHistoryPoint = AuditCoverageHistory['points'][number]

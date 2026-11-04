@@ -33,7 +33,7 @@ export async function getOssificationSeries(
   project: OssificationSeriesProject,
   since: UnixTime,
 ): Promise<OssificationSeries | null> {
-  const source = getValueSource(project)
+  const source = getOssificationValueSource(project)
   if (!source) {
     return null
   }
@@ -91,7 +91,7 @@ export async function getOssificationSeries(
   }
 }
 
-function getValueSource(
+export function getOssificationValueSource(
   project: OssificationSeriesProject,
 ): OssificationValueSource | undefined {
   if (project.tvsConfig) {

@@ -15,6 +15,7 @@ const OPTIONAL = [
   'zkCatalogInfo',
   'ossificationHistory',
   'milestones',
+  'auditCoverage',
   'archivedAt',
 ] as const
 
