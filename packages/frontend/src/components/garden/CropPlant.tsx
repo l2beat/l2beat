@@ -1,6 +1,7 @@
 import type { ProjectCropStatus } from '@l2beat/config'
 import type { ComponentType, CSSProperties } from 'react'
 import { cn } from '~/utils/cn'
+import { getStableFraction } from '~/utils/getStableFraction'
 import { CROP_PLANT_COLOR } from './cropPalette'
 import type { CropSentiment } from './crops'
 
@@ -33,6 +34,28 @@ export type PlantMotion = 'sway' | 'grow' | 'still'
 interface PlantProps {
   delay: number
   motion: PlantMotion
+  jitter: Jitter
+}
+
+/** How far one plant strays from the drawn one, so a bed of them does not move as one. */
+interface Jitter {
+  /** Degrees off upright, about the foot of the stem. */
+  lean: number
+  /** Extra seconds before the idle starts; its keyframes leave from rest, so the phase can only shift this way. */
+  wait: number
+  /** Scales the idle's period, so plants that start together drift apart. */
+  rate: number
+}
+
+const NO_JITTER: Jitter = { lean: 0, wait: 0, rate: 1 }
+
+function getJitter(key: string): Jitter {
+  const fraction = (salt: string) => getStableFraction(`${salt}:${key}`)
+  return {
+    lean: (fraction('lean') * 2 - 1) * 3,
+    wait: fraction('wait') * 1.6,
+    rate: 0.88 + fraction('rate') * 0.24,
+  }
 }
 
 const PLANT: Record<PlantKind, ComponentType<PlantProps>> = {
@@ -54,6 +77,7 @@ export function CropPlant({
   width = 46,
   soil = true,
   motion = 'sway',
+  jitterKey,
   label,
   className,
 }: {
@@ -68,11 +92,14 @@ export function CropPlant({
    */
   soil?: boolean | 'plain'
   motion?: PlantMotion
+  /** Leans the plant and shifts its sway by a fixed amount for this key. Off where the plant is a key to others. */
+  jitterKey?: string
   /** Read out instead of the art. */
   label?: string
   className?: string
 }) {
   const Plant = PLANT[getPlantKind(status, sentiment)]
+  const jitter = jitterKey ? getJitter(jitterKey) : NO_JITTER
   const viewHeight = soil ? 40 : NO_SOIL_HEIGHT
   return (
     <span
@@ -87,7 +114,9 @@ export function CropPlant({
         aria-hidden
       >
         {soil && <Soil status={soil === 'plain' ? 'reviewed' : status} />}
-        <Plant delay={delay} motion={motion} />
+        <g transform={`rotate(${jitter.lean} 17 34)`}>
+          <Plant delay={delay} motion={motion} jitter={jitter} />
+        </g>
       </svg>
     </span>
   )
@@ -97,7 +126,7 @@ export function CropPlant({
 export const EASE_OUT_BACK = 'cubic-bezier(.34,1.56,.64,1)'
 
 /** The stem grows, the leaves unfold, the bloom pops, then the plant idles. */
-function timings(delay: number, motion: PlantMotion) {
+function timings(delay: number, motion: PlantMotion, jitter: Jitter) {
   const at = (origin: string, animation: string): CSSProperties => ({
     transformBox: 'fill-box',
     transformOrigin: origin,
@@ -117,11 +146,11 @@ function timings(delay: number, motion: PlantMotion) {
       '50% 100%',
       `garden-bloom .4s ${EASE_OUT_BACK} ${delay + 0.28}s backwards`,
     ),
-    idle: (name: string, duration: string) =>
+    idle: (name: string, period: number) =>
       at(
         '50% 100%',
         motion === 'sway'
-          ? `${name} ${duration} ease-in-out ${delay + 0.5}s infinite`
+          ? `${name} ${period * jitter.rate}s ease-in-out ${delay + 0.5 + jitter.wait}s infinite`
           : '',
       ),
   }
@@ -149,10 +178,10 @@ const FLOWER = {
     'M13.96 6.21 A3.2 3.2 0 1 1 20.04 6.21 A3.2 3.2 0 1 1 20.11 11.83 A3.2 3.2 0 1 1 13.89 11.83 A3.2 3.2 0 1 1 13.96 6.21 Z',
 }
 
-function Flower({ delay, motion }: PlantProps) {
-  const t = timings(delay, motion)
+function Flower({ delay, motion, jitter }: PlantProps) {
+  const t = timings(delay, motion, jitter)
   return (
-    <g style={t.idle('garden-sway', '4.6s')}>
+    <g style={t.idle('garden-sway', 4.6)}>
       <g style={t.grow}>
         <path d={FLOWER.stem} {...STEM} />
         <path d={FLOWER.leafL} fill="currentColor" style={t.leafL} />
@@ -179,10 +208,10 @@ function Flower({ delay, motion }: PlantProps) {
   )
 }
 
-function Bud({ delay, motion }: PlantProps) {
-  const t = timings(delay, motion)
+function Bud({ delay, motion, jitter }: PlantProps) {
+  const t = timings(delay, motion, jitter)
   return (
-    <g style={t.idle('garden-sway-s', '5.2s')}>
+    <g style={t.idle('garden-sway-s', 5.2)}>
       <g style={t.grow}>
         <path d="M17 34 C17 29 17 25 17 20" {...STEM} />
         <path
@@ -208,10 +237,10 @@ function Bud({ delay, motion }: PlantProps) {
   )
 }
 
-function Wilt({ delay, motion }: PlantProps) {
-  const t = timings(delay, motion)
+function Wilt({ delay, motion, jitter }: PlantProps) {
+  const t = timings(delay, motion, jitter)
   return (
-    <g style={t.idle('garden-wilt', '5.6s')}>
+    <g style={t.idle('garden-wilt', 5.6)}>
       <g style={t.grow}>
         <path d="M17 34 C17 28 18.6 24 13.4 22" {...STEM} />
         <path
@@ -268,15 +297,15 @@ function Ghost({ motion }: PlantProps) {
  * colour of the surface behind them, so where they overlap only the
  * silhouette reads as a line.
  */
-function TransparentFlower({ delay, motion }: PlantProps) {
-  const t = timings(delay, motion)
+function TransparentFlower({ delay, motion, jitter }: PlantProps) {
+  const t = timings(delay, motion, jitter)
   const outline = {
     stroke: 'currentColor',
     strokeLinecap: 'round',
     strokeLinejoin: 'round',
   } as const
   return (
-    <g style={t.idle('garden-sway', '4.6s')} className="fill-surface-primary">
+    <g style={t.idle('garden-sway', 4.6)} className="fill-surface-primary">
       <g style={t.grow}>
         <path
           d="M17 31.5 C17 26 17 19.5 17 13"
