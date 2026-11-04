@@ -44,6 +44,14 @@ describe(AgentTabs.name, () => {
     expect(new AgentTabs().focus('a', undefined)).toEqual(false)
   })
 
+  it('remembers the project a show moved a tab to', () => {
+    const tabs = new AgentTabs()
+    tabs.connect('a', stream())
+    tabs.focus('a', 'arbitrum')
+    tabs.setProject('a', 'linea')
+    expect(tabs.active()).toEqual({ id: 'a', project: 'linea' })
+  })
+
   it('sends an event to one tab only', () => {
     const tabs = new AgentTabs()
     const a = stream()

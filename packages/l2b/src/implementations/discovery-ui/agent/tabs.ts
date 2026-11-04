@@ -68,6 +68,17 @@ export class AgentTabs {
     return active && { id: active[0], project: active[1].project }
   }
 
+  // A show moves the tab to its project, even in a window the researcher is
+  // not focused on, which then reports nothing.
+  setProject(id: string, project: string) {
+    const tab = this.tabs.get(id)
+    assert(
+      tab !== undefined,
+      'Setting the project of a tab that is not connected',
+    )
+    tab.project = project
+  }
+
   send(id: string, event: object): void {
     const tab = this.tabs.get(id)
     assert(tab !== undefined, 'Sending to a tab that is not connected')

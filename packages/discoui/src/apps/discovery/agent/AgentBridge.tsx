@@ -29,7 +29,7 @@ export function AgentBridge() {
       if (isConnected.current) postFocus(projectRef.current)
     }
     const focusWhenVisible = () => {
-      if (document.visibilityState === 'visible') focus()
+      if (isInFront()) focus()
     }
     events.onopen = () => {
       isConnected.current = true
@@ -62,7 +62,7 @@ export function AgentBridge() {
   // The server answers show without a project with the one this tab shows.
   useEffect(() => {
     projectRef.current = project
-    if (isConnected.current && document.visibilityState === 'visible') {
+    if (isConnected.current && isInFront()) {
       postFocus(project)
     }
   }, [project])
@@ -70,6 +70,12 @@ export function AgentBridge() {
   useApplyStep()
   useAgentKeyboard(project)
   return null
+}
+
+// A visible tab in another, unfocused window is not the one the researcher
+// uses, and claiming focus when it reconnects would steal the agent's shows.
+function isInFront(): boolean {
+  return document.visibilityState === 'visible' && document.hasFocus()
 }
 
 function postFocus(project: string | undefined) {
