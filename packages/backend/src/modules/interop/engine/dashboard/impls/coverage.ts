@@ -71,10 +71,7 @@ const ID_SPACES: IdSpace[] = [
   {
     label: 'LayerZero eid',
     plugins: ['layerzero-v2', 'layerzero-v2-ofts', 'stargate'],
-    fromConfigs: [
-      { key: 'layerzero-v2', field: 'eid' },
-      { key: 'layerzero-v1', field: 'eid' },
-    ],
+    fromConfigs: [{ key: 'layerzero-v2', field: 'eid' }],
     names: {},
   },
   {
