@@ -112,12 +112,12 @@ export function ChartLegend({
       {showsHint && (
         <div
           className={cn(
-            '-bottom-4 pointer-events-none absolute inset-x-0 min-w-44 rounded-xs text-center text-brand-deep text-label-value-12 italic transition-[opacity,scale] ease-out group-hover:scale-[1.15]',
+            '-bottom-4 pointer-events-none absolute inset-x-0 min-w-44 rounded-xs text-center text-label-value-12 text-secondary italic transition-[opacity,scale] ease-out group-hover:scale-[1.15]',
             legendOnboardingHintClassName,
           )}
           data-legend-onboarding-hint=""
         >
-          <CursorClickIcon className="-top-0.5 relative inline-block fill-current" />
+          <CursorClickIcon className="-top-0.5 relative inline-block fill-brand" />
           Try clicking legend items to toggle data
         </div>
       )}
