@@ -38,7 +38,7 @@ describe(renderZkCatalogProjectMarkdown.name, () => {
     expect(summary).toInclude(
       [
         '- Trusted setups for Gnark (Groth16):',
-        '  - SP1 Groth16 setup, risk red (highest risk) per the [Trusted Setups Risk Framework](https://forum.l2beat.com/t/the-trusted-setups-framework-for-zk-catalog/381): Run among 7 contributors.',
+        '  - SP1 Groth16 setup, risk red (highest risk) per the [Trusted Setups Risk Framework](https://forum.ethbeat.org/t/the-trusted-setups-framework-for-zk-catalog/381): Run among 7 contributors.',
         '  - Used in: [Katana](https://ethbeat.org/layer2s/projects/katana)',
         '  - Verifiers: 2 successful (verified by [ETHBEAT](https://ethbeat.org)), 1 not verified',
       ].join('\n'),
@@ -186,7 +186,7 @@ describe(renderZkCatalogProjectMarkdown.name, () => {
     )
 
     expect(trustedSetups).toMatchRegex(
-      /^\nRisk levels follow the \[Trusted Setups Risk Framework\]\(https:\/\/forum\.l2beat\.com\/[^)]+\)\. Yellow \(medium risk\): [^\n]*at least 30 contributions[^\n]*Green \(lowest risk\): [^\n]*150 contributions[^\n]*\n\n### SP1 Groth16 setup/,
+      /^\nRisk levels follow the \[Trusted Setups Risk Framework\]\(https:\/\/forum\.ethbeat\.org\/[^)]+\)\. Yellow \(medium risk\): [^\n]*at least 30 contributions[^\n]*Green \(lowest risk\): [^\n]*150 contributions[^\n]*\n\n### SP1 Groth16 setup/,
     )
   })
 

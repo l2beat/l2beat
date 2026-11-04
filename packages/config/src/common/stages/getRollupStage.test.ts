@@ -123,7 +123,7 @@ describe(getRollupStage.name, () => {
             },
             {
               description:
-                'The proof system meets the minimum trusted setup requirements defined in the ETHBEAT [trusted setup assessment framework](https://forum.l2beat.com/t/the-trusted-setups-framework-for-zk-catalog/381).',
+                'The proof system meets the minimum trusted setup requirements defined in the ETHBEAT [trusted setup assessment framework](https://forum.ethbeat.org/t/the-trusted-setups-framework-for-zk-catalog/381).',
               satisfied: true,
             },
             {
