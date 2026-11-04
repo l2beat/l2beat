@@ -286,16 +286,11 @@ export class InteropSyncersManager {
     }
   }
 
-  getBlockProcessor(
-    chain: LongChainName,
-    ready: Promise<void>,
-  ): BlockProcessor {
+  getBlockProcessor(chain: LongChainName): BlockProcessor {
     return {
       chain,
-      processBlock: async (block, logs) => {
-        await ready
-        await this.processNewestBlock(chain, block, logs)
-      },
+      processBlock: (block, logs) =>
+        this.processNewestBlock(chain, block, logs),
     }
   }
 

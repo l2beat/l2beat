@@ -17,14 +17,12 @@ export class InteropBlockProcessor implements BlockProcessor {
     public chain: string,
     private plugins: InteropPlugin[],
     private store: InteropEventStore,
-    private ready: Promise<void>,
     private logger: Logger,
   ) {
     this.logger = logger.for(this).tag({ chain, tag: chain })
   }
 
   async processBlock(block: Block, logs: Log[]): Promise<void> {
-    await this.ready
     await withInteropRpcMetricsContext(
       'interop.capture',
       {

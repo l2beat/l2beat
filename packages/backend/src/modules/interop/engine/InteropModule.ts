@@ -118,14 +118,6 @@ export function createInteropModule({
     providers.clients.rpcMetricsAggregator,
   )
 
-  // Block sync starts before this module. Capturing a block before configs
-  // are loaded drops the events of config-driven plugins, and saving events
-  // before unmatched ones are loaded puts them in memory twice.
-  let markCaptureReady = () => {}
-  const captureReady = new Promise<void>((resolve) => {
-    markCaptureReady = resolve
-  })
-
   const processors: InteropBlockProcessor[] = []
   if (config.interop.capture.enabled) {
     for (const chain of config.interop.capture.chains) {
@@ -133,15 +125,11 @@ export function createInteropModule({
         chain.id,
         eventPlugins,
         eventStore,
-        captureReady,
         logger,
       )
       blockProcessors.push(processor)
       blockProcessors.push(
-        syncersManager.getBlockProcessor(
-          chain.id as LongChainName,
-          captureReady,
-        ),
+        syncersManager.getBlockProcessor(chain.id as LongChainName),
       )
       processors.push(processor)
     }
@@ -290,7 +278,6 @@ export function createInteropModule({
     // Read even with config loops disabled: capture depends on stored configs
     await configStore.start()
     await eventStore.start()
-    markCaptureReady()
 
     if (config.interop && config.interop.matching) {
       matcher.start()
