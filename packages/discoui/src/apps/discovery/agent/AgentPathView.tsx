@@ -29,16 +29,18 @@ export function AgentPathView(props: { focus: AgentFocus }) {
       : [...props.focus.nodes]
   const links = useGraphLinks()
   const edges = useMemo(() => resolvePathEdges(paths, links), [paths, links])
-  const layout = useMemo(() => {
-    const lanes = loose.length > 0 ? [...paths, loose] : paths
+  const isAnswerLink = useMemo(() => {
     const looseIds = new Set(loose)
     const shown = props.focus.nodes
     // Contracts shown on their own have no path, so every link between shown
     // contracts is part of the answer.
-    const keep = (from: string, to: string) =>
+    return (from: string, to: string) =>
       edges.has(edgeKey(from, to)) || (looseIds.has(from) && shown.has(to))
-    return layoutAgentPaths(lanes, indexNodes(nodes), keep, viewport)
-  }, [props.focus, paths, loose, edges, nodes, viewport])
+  }, [props.focus, loose, edges])
+  const layout = useMemo(() => {
+    const lanes = loose.length > 0 ? [...paths, loose] : paths
+    return layoutAgentPaths(lanes, indexNodes(nodes), isAnswerLink, viewport)
+  }, [paths, loose, isAnswerLink, nodes, viewport])
 
   const data = useMemo(() => {
     const placedIds = new Set(layout.nodes.map((node) => node.id))
@@ -54,11 +56,11 @@ export function AgentPathView(props: { focus: AgentFocus }) {
       palette,
       agent: {
         nodes: placedIds,
-        isOnPath: (from, to) => edges.has(edgeKey(from, to)),
+        isOnPath: isAnswerLink,
       },
       hops: linklessHops(paths, layout.nodes, links),
     })
-  }, [layout, selected, edges, paths, links, palette])
+  }, [layout, selected, isAnswerLink, paths, links, palette])
 
   const scale = fitScale(layout, viewport)
   const transform = {
