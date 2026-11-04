@@ -1,27 +1,34 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import type { ChartRange } from '~/utils/range/range'
+import { countPerSecond } from '../layer2s/activity/utils/countPerSecond'
 import { getActivityProjects } from '../layer2s/activity/utils/getActivityProjects'
 import { getFullySyncedActivityRange } from '../layer2s/activity/utils/getFullySyncedActivityRange'
 import { getSummedTvsValues } from '../layer2s/tvs/utils/getSummedTvsValues'
 import { getTvsProjects } from '../layer2s/tvs/utils/getTvsProjects'
 import { createTvsProjectsFilter } from '../layer2s/tvs/utils/projectFilterUtils'
-import { computeSeriesChange } from './computeSeriesChange'
+import {
+  computeSeriesChange,
+  computeWeeklyAverageChange,
+  EMPTY_HOME_KPI,
+  getLatestValue,
+  type HomeKpi,
+  type HomeSeriesPoint,
+  toWeeklySparkline,
+} from './homeSeries'
 
 export interface HomeL2Charts {
-  tvs: {
-    chart: [number, number | null, number | null][]
-    syncedUntil: number
-    change: number | undefined
-  }
-  activity: {
-    /** [timestamp, rollupsUops, validiumsAndOptimiumsUops, ethereumUops] */
-    chart: [number, number | null, number | null, number | null][]
-    syncedUntil: number
-    change: number | undefined
-  }
+  /** Each point breaks down into rollups and validiums & optimiums. */
+  tvs: HomeKpi
+  /** UOPS. */
+  activity: HomeKpi
+}
+
+export const EMPTY_HOME_L2_CHARTS: HomeL2Charts = {
+  tvs: EMPTY_HOME_KPI,
+  activity: EMPTY_HOME_KPI,
 }
 
 export async function getHomeL2Charts(
@@ -64,13 +71,26 @@ async function getHomeTvsChart(
     getSummedTvsValues(validiumsAndOptimiums, range, options),
   ])
 
-  const chart = mergeSeriesByTimestamp(rollupValues, validiumAndOptimiumValues)
-
-  const syncedUntil =
-    chart.findLast(([_, r, v]) => r !== null || v !== null)?.[0] ??
-    UnixTime.now()
-
-  return { chart, syncedUntil, change: computeSummedSeriesChange(chart) }
+  const chart = mergeSeriesByTimestamp(
+    rollupValues,
+    validiumAndOptimiumValues,
+  ).map(
+    ([timestamp, rollups, vAndO]): HomeSeriesPoint => [
+      timestamp,
+      sum(rollups, vAndO),
+      rollups,
+      vAndO,
+    ],
+  )
+  return {
+    chart: {
+      kind: 'daily',
+      points: chart,
+      partLabels: ['Rollups', 'Validiums & Optimiums'],
+    },
+    value: getLatestValue(chart),
+    change: computeSeriesChange(chart),
+  }
 }
 
 async function getHomeActivityChart(
@@ -79,59 +99,36 @@ async function getHomeActivityChart(
   const db = getDb()
   const projects = await getActivityProjects()
 
-  const rollups = projects
-    .filter(
-      (p) =>
-        p.scalingInfo.type === 'ZK Rollup' ||
-        p.scalingInfo.type === 'Optimistic Rollup',
-    )
-    .map((p) => p.id)
-  const validiumsAndOptimiums = projects
-    .filter(
-      (p) =>
-        p.scalingInfo.type === 'Validium' || p.scalingInfo.type === 'Optimium',
-    )
+  // Rollups and validiums & optimiums, as for the value secured.
+  const projectIds = projects
+    .filter((p) => ACTIVITY_TYPES.has(p.scalingInfo.type))
     .map((p) => p.id)
 
   const adjustedRange = await getFullySyncedActivityRange(range)
-  const [rollupEntries, validiumAndOptimiumEntries, ethereumRecords] =
-    await Promise.all([
-      db.activity.getSummedByTimestamp(rollups, adjustedRange),
-      db.activity.getSummedByTimestamp(validiumsAndOptimiums, adjustedRange),
-      db.activity.getByProjectsAndTimeRange(
-        [ProjectId.ETHEREUM],
-        adjustedRange,
-      ),
-    ])
-
-  const toSeries = (entries: { timestamp: number; uopsCount: number }[]) =>
-    entries.map((entry) => ({
-      timestamp: entry.timestamp,
-      value: entry.uopsCount,
-    }))
-  const l2Chart = mergeSeriesByTimestamp(
-    toSeries(rollupEntries),
-    toSeries(validiumAndOptimiumEntries),
+  const entries = await db.activity.getSummedByTimestamp(
+    projectIds,
+    adjustedRange,
   )
-
-  const ethereumByTimestamp = new Map<number, number>(
-    ethereumRecords.map((r) => [r.timestamp, r.uopsCount ?? r.count]),
-  )
-  const chart: HomeL2Charts['activity']['chart'] = l2Chart.map(
-    ([timestamp, rollupsUops, vAndOUops]) => [
-      timestamp,
-      rollupsUops,
-      vAndOUops,
-      ethereumByTimestamp.get(timestamp) ?? null,
+  const chart = entries.map(
+    (entry): HomeSeriesPoint => [
+      entry.timestamp,
+      countPerSecond(entry.uopsCount),
     ],
   )
 
   return {
-    chart,
-    syncedUntil: adjustedRange[1],
-    change: computeSummedSeriesChange(l2Chart),
+    chart: toWeeklySparkline(chart, { perDay: false }),
+    value: getLatestValue(chart),
+    change: computeWeeklyAverageChange(chart),
   }
 }
+
+const ACTIVITY_TYPES = new Set<string | undefined>([
+  'ZK Rollup',
+  'Optimistic Rollup',
+  'Validium',
+  'Optimium',
+])
 
 export function mergeSeriesByTimestamp(
   seriesA: { timestamp: number; value: number | null }[],
@@ -154,14 +151,11 @@ export function mergeSeriesByTimestamp(
     .map(([timestamp, [a, b]]) => [timestamp, a, b])
 }
 
-function computeSummedSeriesChange(
-  chart: [number, number | null, number | null][],
-): number | undefined {
-  return computeSeriesChange(
-    chart.map(([_, rollups, vAndO]) =>
-      rollups !== null || vAndO !== null ? (rollups ?? 0) + (vAndO ?? 0) : null,
-    ),
-  )
+/** Rollups and validiums & optimiums together; null where neither has data. */
+function sum(rollups: number | null, vAndO: number | null): number | null {
+  return rollups !== null || vAndO !== null
+    ? (rollups ?? 0) + (vAndO ?? 0)
+    : null
 }
 
 function getMockHomeL2Charts(range: ChartRange): HomeL2Charts {
@@ -170,13 +164,20 @@ function getMockHomeL2Charts(range: ChartRange): HomeL2Charts {
 
   return {
     tvs: {
-      chart: timestamps.map((timestamp) => [+timestamp, 3000, 2000]),
-      syncedUntil: adjustedRange[1],
+      chart: {
+        kind: 'daily',
+        points: timestamps.map((timestamp) => [+timestamp, 5000, 3000, 2000]),
+        partLabels: ['Rollups', 'Validiums & Optimiums'],
+      },
+      value: 5000,
       change: 0,
     },
     activity: {
-      chart: timestamps.map((timestamp) => [+timestamp, 14000, 10000, 8000]),
-      syncedUntil: adjustedRange[1],
+      chart: toWeeklySparkline(
+        timestamps.map((timestamp) => [+timestamp, countPerSecond(24000)]),
+        { perDay: false },
+      ),
+      value: countPerSecond(24000),
       change: 0,
     },
   }

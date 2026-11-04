@@ -11,9 +11,9 @@ import {
   getTooltipEntries,
   sumEntries,
 } from '~/components/core/chart/ChartTooltip'
-import { CHART_GRADIENTS } from '~/components/core/chart/gradients'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
+import { tinted } from '~/components/core/chart/tint'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PercentChange } from '~/components/PercentChange'
@@ -107,13 +107,11 @@ export function BlobsTvsChart({ projectIds }: { projectIds: DaTvsProjectIds }) {
           series={[
             {
               key: 'fullData',
-              stroke: CHART_GRADIENTS.ethereum.stroke,
-              fill: CHART_GRADIENTS.ethereum.fill,
+              ...tinted(chartMeta.fullData.color),
             },
             {
               key: 'settlementOnly',
-              stroke: CHART_GRADIENTS.yellow.stroke,
-              fill: CHART_GRADIENTS.yellow.fill,
+              ...tinted(chartMeta.settlementOnly.color),
             },
           ]}
           yAxis={{

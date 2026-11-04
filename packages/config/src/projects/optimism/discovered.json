@@ -1,7 +1,7 @@
 {
   "name": "optimism",
   "timestamp": 1792587967,
-  "configHash": "0x04cf4a0a82d00a49884cce302693e9d7342124297f148f2788f7a873f8d7c396",
+  "configHash": "0x43a52895e85936e357d751d1da754a5aef9c149e10648ad4a8bd33e2ef98e900",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -598,14 +598,14 @@
       "proxyType": "immutable",
       "description": "Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.",
       "critical": true,
-      "ignoreInWatchMode": ["timeSinceLastL2beatInteraction"],
+      "ignoreInWatchMode": ["timeSinceLastETHbeatInteraction"],
       "deployerAddress": "eth:0x25BdF215CA623A02622843abE38363FfdB3E79A9",
       "sinceTimestamp": 1717149791,
       "sinceBlock": 19989094,
       "values": {
         "$immutable": true,
         "safe": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "25d 22h",
+        "timeSinceLastETHbeatInteraction": "1mo 6d",
         "version": "1.0.0"
       },
       "implementationNames": {
@@ -1900,7 +1900,7 @@
         "GnosisSafe_modules": [
           "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748"
         ],
-        "isL2beatStillAnOwner": true,
+        "isETHbeatStillAnOwner": true,
         "multisigThreshold": "10 of 13 (77%)",
         "nonce": 71,
         "VERSION": "1.3.0"

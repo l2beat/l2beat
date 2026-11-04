@@ -13,9 +13,9 @@ import {
   ChartTooltipWrapper,
   getTooltipEntries,
 } from '~/components/core/chart/ChartTooltip'
-import { fillGradient } from '~/components/core/chart/gradients'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
+import { tinted } from '~/components/core/chart/tint'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { PrivacyFlowsChartPoint } from '~/server/features/privacy/getPrivacyFlowsChart'
 import { formatRange } from '~/utils/dates'
@@ -98,13 +98,11 @@ export function PrivacyFlowChart({
         series={[
           {
             key: 'deposits',
-            stroke: 'var(--chart-emerald)',
-            fill: fillGradient('var(--chart-emerald)'),
+            ...tinted('var(--chart-emerald)'),
           },
           {
             key: 'withdrawals',
-            stroke: 'var(--chart-pink)',
-            fill: fillGradient('var(--chart-pink)'),
+            ...tinted('var(--chart-pink)'),
           },
         ]}
         yAxis={{

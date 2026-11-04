@@ -1,4 +1,5 @@
 import { externalLinks } from '~/consts/externalLinks'
+import { RENAME_ANNOUNCEMENT_PATH } from '~/consts/siteName'
 import { usePathname } from '~/hooks/usePathname'
 import { cn } from '~/utils/cn'
 import { getMarkdownAlternatePath } from '~/utils/getMarkdownAlternatePath'
@@ -78,7 +79,18 @@ export function Footer({ className, columnClassName }: Props) {
             </li>
           )}
         </ul>
-        <p className="font-normal leading-6">Copyright {currentYear} L2BEAT</p>
+        <p className="font-normal leading-6">
+          Copyright {currentYear} ETHBEAT (
+          <CustomLink
+            href={RENAME_ANNOUNCEMENT_PATH}
+            variant="plain"
+            underline={false}
+            className="font-normal text-secondary underline-offset-2 hover:text-primary hover:underline"
+          >
+            formerly L2BEAT
+          </CustomLink>
+          )
+        </p>
       </div>
     </footer>
   )

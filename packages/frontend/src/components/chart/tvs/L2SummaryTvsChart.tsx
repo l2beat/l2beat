@@ -11,9 +11,9 @@ import {
   getTooltipEntries,
   sumEntries,
 } from '~/components/core/chart/ChartTooltip'
-import { CHART_GRADIENTS } from '~/components/core/chart/gradients'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
+import { tinted } from '~/components/core/chart/tint'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
 import { CustomLink } from '~/components/link/CustomLink'
@@ -100,18 +100,15 @@ export function L2SummaryTvsChart({
           series={[
             {
               key: 'rollups',
-              stroke: CHART_GRADIENTS.pink.stroke,
-              fill: CHART_GRADIENTS.pink.fill,
+              ...tinted(chartMeta.rollups.color),
             },
             {
               key: 'validiumsAndOptimiums',
-              stroke: CHART_GRADIENTS.cyan.stroke,
-              fill: CHART_GRADIENTS.cyan.fill,
+              ...tinted(chartMeta.validiumsAndOptimiums.color),
             },
             {
               key: 'others',
-              stroke: CHART_GRADIENTS.yellow.stroke,
-              fill: CHART_GRADIENTS.yellow.fill,
+              ...tinted(chartMeta.others.color),
             },
           ]}
           yAxis={{

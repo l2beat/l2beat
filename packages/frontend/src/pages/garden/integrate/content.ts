@@ -40,7 +40,7 @@ export const CROPS_API_ENDPOINTS: CropsApiEndpoint[] = [
     description:
       'The CROPS evaluations of one protocol, with the reasoning behind each rating.',
     params: [{ name: 'id', description: 'The project id or its slug.' }],
-    notFound: 'L2BEAT has not reviewed this project.',
+    notFound: 'ETHBEAT has not reviewed this project.',
   },
   {
     key: 'crops',
@@ -54,7 +54,7 @@ export const CROPS_API_ENDPOINTS: CropsApiEndpoint[] = [
 
 // The OpenAPI description in crops-api says the same, at length.
 export const API_NOTES = [
-  'Every response is a static file generated from the L2BEAT repository, so it is served from a CDN with no API key and no rate limit.',
+  'Every response is a static file generated from the ETHBEAT repository, so it is served from a CDN with no API key and no rate limit.',
   'Not found means not reviewed. The project and address files answer 404 with an empty body when we have not reviewed the project or the address - treat it as "not reviewed", not as an error.',
   'Address files are keyed by EIP-155 chain id and lowercase address. Lowercase the address before you build the URL.',
 ]
@@ -68,7 +68,7 @@ export const VERIFY_STEPS = [
 ]
 
 export const BADGE_RULES = [
-  'The snippet links the CROPS guide. Point its `href` at your project page on L2BEAT instead, so a visitor can read the evaluation rather than only see that one exists.',
+  'The snippet links the CROPS guide. Point its `href` at your project page on ETHBEAT instead, so a visitor can read the evaluation rather than only see that one exists.',
   'The badge says we have reviewed you and named you onchain. It is not a certification, an audit, or an endorsement - please do not describe it as any of those.',
   'Your rating can change. Make sure to check the API for the latest status before showing the badge.',
 ]

@@ -1,0 +1,93 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
+  "description": "The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token and from chainId to settlement layer. Since v31 the L2->L1 message and log inclusion proofs it offers are verified by the MessageRoot instead of each chain's diamond.",
+  "category": "shared",
+  "ignoreMethods": [
+    "__DEPRECATED_migrationPaused",
+    "baseToken",
+    "baseTokenAssetId",
+    "chainTypeManager",
+    "ctmAssetIdFromChainId",
+    "getHyperchain",
+    "getZKChain",
+    "settlementLayer",
+    "whitelistedSettlementLayers"
+  ],
+  "ignoreRelatives": ["getAllZKChains"],
+  "fields": {
+    "admin": {
+      "severity": "MEDIUM",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "create new zk chains (based on the current version), register tokens (ZK cluster Admin role)."
+        }
+      ]
+    },
+    "owner": {
+      "severity": "MEDIUM",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set critical contract addresses for the shared cluster (asset router, CTM deployer, message root, chain asset handler, chain registration sender), add and remove chain type managers, whitelist settlement layers, pause and unpause the bridge and register already deployed zk chains."
+        }
+      ]
+    },
+    "paused": { "severity": "MEDIUM" },
+    // ecosystem pointers: the live onlyOwner `setAddresses` can repoint them without any code change —
+    // swapping the asset router redirects every chain's deposit/withdrawal routing, so these are HIGH.
+    "assetRouter": { "severity": "HIGH" },
+    "sharedBridge": { "severity": "HIGH" },
+    "messageRoot": {
+      "severity": "HIGH",
+      "description": "Verifies all L2->L1 message, log and L1->L2 transaction status proofs for every chain since v31."
+    },
+    "l1CtmDeployer": { "severity": "HIGH" },
+    "chainAssetHandler": { "severity": "HIGH" },
+    "chainRegistrationSender": {
+      "severity": "MEDIUM",
+      "description": "Service contract that registers chains with each other for interop. Only stored here, not used by the Bridgehub itself."
+    },
+    "chainTypeManagers": {
+      "description": "ChainTypeManagers registered since the ChainTypeManagerAdded event exists (v29). The Era ChainTypeManager was registered earlier without an event; see the ChainTypeManager immutables of the ProtocolUpgradeHandler for both.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": "chainTypeManager",
+        "add": { "event": "ChainTypeManagerAdded" },
+        "remove": { "event": "ChainTypeManagerRemoved" }
+      }
+    },
+    "chainsCreated": {
+      "description": "All new chains created go through the central Bridgehub and are stored here with their respective CTMs.",
+      "handler": {
+        "type": "event",
+        "select": ["chainId", "chainTypeManager", "chainGovernance"],
+        "add": { "event": "NewChain" },
+        "ignoreRelative": true
+      }
+    },
+    // The pre-v31 SettlementLayerRegistered log has both parameters indexed and the v31 one does not,
+    // so one event ABI cannot decode both: count the logs and read the known settlement layers directly.
+    "settlementLayerUpdates": {
+      "description": "Number of settlement layer whitelist updates (SettlementLayerRegistered logs). A change means a settlement layer was added or its whitelist status changed: check whitelistedSettlementLayers for the chain in question. Chains can only be migrated to whitelisted settlement layers (by their chain admin), and only whitelisted settlement layers are trusted by the L1AssetTracker for token balance migrations.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "eventCount",
+        "topics": [
+          "0x02629feb109d94b16a367231d248ba81c462f51ce5b984835f150f1c9f49ed25"
+        ]
+      }
+    },
+    "eraGatewayWhitelisted": {
+      "description": "Whether the legacy Era-based Gateway (chain 9075) is a whitelisted settlement layer. Removed from the whitelist by ZIP-18 (v31).",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "whitelistedSettlementLayers",
+        "args": [9075]
+      }
+    }
+  }
+}

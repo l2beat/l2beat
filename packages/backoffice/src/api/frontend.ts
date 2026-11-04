@@ -31,7 +31,7 @@ function createFrontendClient(baseUrl: string) {
 
 export type FrontendApi = ReturnType<typeof createFrontendClient>
 
-export const PRODUCTION_FRONTEND_URL = 'https://l2beat.com'
+export const PRODUCTION_FRONTEND_URL = 'https://ethbeat.org'
 
 const LOCAL_FRONTEND_URL =
   (import.meta.env.VITE_LOCAL_FRONTEND_URL as string | undefined) ??

@@ -1,4 +1,4 @@
-Generated with discovered.json: 0xc2d1c930391fa0bff8b24227e3e56e1f543b8410
+Generated with discovered.json: 0x7433580700750e7e4ee7313f657633cb3aab2365
 
 # Diff at Fri, 30 Oct 2026 10:53:31 GMT:
 
@@ -642,6 +642,24 @@ discovery. Values are for block 1792491537 (main branch discovery), not current.
 -        400
       values.getStakingModuleStateConfig.3.0:
 -        "eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1"
+    }
+```
+
+```diff
+    contract CuratedModule (eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1) [lido/CuratedModule] {
+    +++ description: The permissioned Curated Staking Module. It manages approved node operators and validator keys, accepts deposits and top-ups from the StakingRouter, and processes validator lifecycle reports and penalties.
+      sourceHashes.1:
+-        "0x11df3957a67843e530316489a83ca4adda4d9953f0e25c17d0ea7f24edd89c20"
++        "0x0ceb6b13fce2d21622791203fc60e34a4b7c935d47af0d436c7dc2b3134302e6"
+    }
+```
+
+```diff
+    contract CSModule (eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F) [lido/CSModule] {
+    +++ description: Lido's permissionless Community Staking Module. It manages node operators and validator keys, accepts router deposits and top-ups, processes validator exits, and applies bond-backed penalties.
+      sourceHashes.1:
+-        "0x19666aa54a37d52558d2c5a2354e67ce7f975afd7cfa437feb6ef96489092bb8"
++        "0xe09d0ff1c11c177fb63cc357b2eefdd574d723b9be22f0a7502b947d08f9aee3"
     }
 ```
 

@@ -12,8 +12,8 @@ import {
   ChartTooltipWrapper,
   getTooltipEntries,
 } from '~/components/core/chart/ChartTooltip'
-import { CHART_GRADIENTS } from '~/components/core/chart/gradients'
 import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
+import { tinted } from '~/components/core/chart/tint'
 import type { ProjectToken } from '~/server/features/layer2s/tvs/tokens/getTokensForProject'
 import { formatSnapshotTimestamp } from '~/utils/dates'
 import type { ChartResolution } from '~/utils/range/range'
@@ -73,8 +73,7 @@ export function TokenChart({
         series={[
           {
             key: 'value',
-            fill: CHART_GRADIENTS.pink.fill,
-            stroke: CHART_GRADIENTS.pink.stroke,
+            ...tinted(chartMeta.value.color),
           },
         ]}
         yAxis={{

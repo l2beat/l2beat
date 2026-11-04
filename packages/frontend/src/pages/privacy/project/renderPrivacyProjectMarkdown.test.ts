@@ -23,7 +23,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     const markdown = renderPrivacyProjectMarkdown(ENTRY)
 
     expect(markdown).toMatchRegex(
-      /^# Tornado Cash\n\nMarkdown version of https:\/\/l2beat\.com\/privacy\/projects\/tornado-cash\n\n/,
+      /^# Tornado Cash\n\nMarkdown version of https:\/\/ethbeat\.org\/privacy\/projects\/tornado-cash\n\n/,
     )
   })
 
@@ -203,10 +203,10 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     const markdown = renderPrivacyProjectMarkdown(ENTRY)
 
     expect(getSection(markdown, 'Anonymity sets')).toInclude(
-      'https://l2beat.com/privacy/projects/tornado-cash#privacy-anonymity-set',
+      'https://ethbeat.org/privacy/projects/tornado-cash#privacy-anonymity-set',
     )
     expect(getSection(markdown, 'Flows')).toInclude(
-      'https://l2beat.com/privacy/projects/tornado-cash#privacy-flows',
+      'https://ethbeat.org/privacy/projects/tornado-cash#privacy-flows',
     )
   })
 
@@ -243,7 +243,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
 
     it('lists the reference app, then each checked app with its finding and fix', () => {
       expect(privacy()).toInclude(
-        '**Apps**\n\n- **[Classic app](https://tornado.example)** (Reference): The ratings assume this app, since 2026-10-13 · Source [17c54da](https://github.com/tornado-dao/classic-ui/tree/17c54dae9ad91bb3c6d62a7860df6cd365ab76d4)\n- **Mirror app** (Leaks more): Reads every note through a hosted indexer. Fix: Scan notes locally. · [Source (checked 2026-10-22)](https://mirror.example)\n\n[How we pick the reference](https://l2beat.com/publications/privacy-methodology#reference-app)',
+        '**Apps**\n\n- **[Classic app](https://tornado.example)** (Reference): The ratings assume this app, since 2026-10-13 · Source [17c54da](https://github.com/tornado-dao/classic-ui/tree/17c54dae9ad91bb3c6d62a7860df6cd365ab76d4)\n- **Mirror app** (Leaks more): Reads every note through a hosted indexer. Fix: Scan notes locally. · [Source (checked 2026-10-22)](https://mirror.example)\n\n[How we pick the reference](https://ethbeat.org/publications/privacy-methodology#reference-app)',
       )
     })
 
@@ -295,7 +295,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
 
     it('resolves sources pointing into the page against the HTML page', () => {
       expect(privacy()).toInclude(
-        '**Sources**\n\n- [1 ETH pool](https://l2beat.com/privacy/projects/tornado-cash#Pool_1_ETH)\n- [Withdrawal circuit](https://github.com/tornadocash/tornado-core/blob/master/circuits/withdraw.circom)',
+        '**Sources**\n\n- [1 ETH pool](https://ethbeat.org/privacy/projects/tornado-cash#Pool_1_ETH)\n- [Withdrawal circuit](https://github.com/tornadocash/tornado-core/blob/master/circuits/withdraw.circom)',
       )
     })
   })
@@ -599,7 +599,7 @@ const ENTRY: ProjectPrivacyEntry = {
   badges: [],
   projectLinks: [],
   discoUi: {
-    href: 'https://disco.l2beat.com/ui/p/tornado-cash',
+    href: 'https://disco.ethbeat.org/ui/p/tornado-cash',
     images: { desktop: '/desktop.png', mobile: '/mobile.png' },
   },
   bucketCount: 2,

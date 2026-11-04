@@ -131,7 +131,7 @@ export const zcashNearIntents: BaseProject = {
     anonymitySet: {
       type: 'not-applicable',
       description:
-        "The set is Zcash's shielded pool, outside the chains L2BEAT indexes. Amounts are public at the pool edge, so an exit hides among the pool entries that could match it in amount and time.",
+        "The set is Zcash's shielded pool, outside the chains ETHBEAT indexes. Amounts are public at the pool edge, so an exit hides among the pool entries that could match it in amount and time.",
     },
     exitWindow: {
       value: 'None',

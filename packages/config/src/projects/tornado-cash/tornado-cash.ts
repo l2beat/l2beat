@@ -304,6 +304,13 @@ export const tornadoCash: BaseProject = {
       ],
     },
     trackedOn: ['ethereum'],
+    // Chains the pinned classic-ui serves (networkConfig.js).
+    runsOn: [
+      ProjectId('arbitrum'),
+      ProjectId('gnosis'),
+      ProjectId('optimism'),
+      ProjectId('polygon-pos'),
+    ],
     tokens: getPrivacyTokens(),
     relayerTracking: {
       type: 'onchainEvents',

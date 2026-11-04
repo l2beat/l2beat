@@ -110,6 +110,7 @@ export const pageLoaders = {
   MultisigReportPage: async () =>
     (await import('./multisig-report/MultisigReportPage')).MultisigReportPage,
   MandatePage: async () => (await import('./mandate/MandatePage')).MandatePage,
+  NewNamePage: async () => (await import('./new-name/NewNamePage')).NewNamePage,
   TermsOfServicePage: async () =>
     (await import('./terms-of-service/TermsOfServicePage')).TermsOfServicePage,
   NotFoundPage: async () =>

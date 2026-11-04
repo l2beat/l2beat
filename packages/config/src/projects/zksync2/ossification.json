@@ -231,5 +231,8 @@
       "reason": "Matter Labs Multisig, via the EraChainAdminProxy, raised Era's execution delay on the ValidatorTimelock from 3h to 1d (ZIP-17), dating diffHistory entry 11f5e2d6 at block 26141812."
     }
   ],
-  "ignoredUpdates": ["bff2a528"]
+  "ignoredUpdates": ["bff2a528"],
+  "ignoredTransactions": [
+    "0x2b77fe3ec567013163f431bb8a39e3b1db06b5288f6a05c4cd946513a257da50"
+  ]
 }

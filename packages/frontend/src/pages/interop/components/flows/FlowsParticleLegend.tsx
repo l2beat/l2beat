@@ -22,7 +22,7 @@ export function FlowsParticleLegend({
   const avgLine = (
     <>
       Avg value per second ≈{' '}
-      <span className="font-bold text-brand">
+      <span className="font-bold text-brand-deep">
         {formatCurrency(avgValuePerSecond, 'usd')}
       </span>
     </>
@@ -31,7 +31,7 @@ export function FlowsParticleLegend({
   const particleLine = dollarsPerParticle ? (
     <>
       <span className="size-1.5 rounded-full bg-brand" />1 particle ≈{' '}
-      <span className="font-bold text-brand">
+      <span className="font-bold text-brand-deep">
         {formatCurrency(dollarsPerParticle, 'usd', {
           // sub-dollar values ($0.1, $0.5) need a decimal to not render as "<$1"
           decimals: dollarsPerParticle < 1 ? 1 : 0,

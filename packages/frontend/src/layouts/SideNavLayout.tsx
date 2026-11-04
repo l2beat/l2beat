@@ -52,7 +52,10 @@ const columnVariants = cva('mx-auto w-full min-w-0', {
     variant: {
       default: 'max-w-(--breakpoint-lg) md:px-5 lg:pl-0',
       wide: 'max-w-412 md:px-5 lg:pl-0',
-      home: 'md:px-6 lg:px-8 xl:px-10 2xl:max-w-[1840px]',
+      // The padding sits outside the home's size container, so it cannot
+      // ask the container's `home-wide` (1560px, home.css): 1880px is the
+      // window that variant starts at.
+      home: 'md:px-6 lg:px-8 xl:px-10 2xl:max-w-[1840px] min-[1880px]:px-6',
     },
   },
 })
@@ -94,7 +97,11 @@ export function SideNavLayout({
           logoLink="/"
           sideLinks={navSecondaryLinks}
         />
-        <NavSidebar logoLink="/" groups={navGroups} />
+        <NavSidebar
+          logoLink="/"
+          groups={navGroups}
+          showGardenBanner={variant !== 'home'}
+        />
         <div
           className={cn(
             contentWrapperVariants({ variant }),

@@ -371,6 +371,8 @@ export const privacyBoost: BaseProject = {
     },
     tokens: privacyTokens,
     trackedOn: ['base'],
+    // Pools the hosted wallet serves (docs.privacyboost.io contract addresses).
+    runsOn: [ProjectId('ink'), ProjectId('optimism'), ProjectId('soneium')],
     anonymitySet: { type: 'too-small' },
     exitWindow: {
       value: 'None',

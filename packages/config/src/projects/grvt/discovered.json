@@ -1,6 +1,6 @@
 {
   "name": "grvt",
-  "timestamp": 1793617586,
+  "timestamp": 1793715847,
   "configHash": "0x2084c1e51035868baf0c9a414d9ff9295ca19404533437794a0eacdebaec6748",
   "entries": [
     {
@@ -87,6 +87,12 @@
       ],
       "proxyType": "Beacon proxy",
       "description": "Yield strategy of the GRVTL1TreasuryVault for one vault token. Whitelisted operators swap registered receipt tokens (e.g. tokenized treasuries) with the strategy at the price of their price sources, within per-swap and per-token exposure caps. Only the vault can allocate to and withdraw from it.",
+      "ignoreInWatchMode": [
+        "positionBreakdown",
+        "totalExposure",
+        "totalExposureStrict",
+        "withdrawableExposure"
+      ],
       "deployerAddress": "eth:0x1cd92A13A1cD81522CdAf3E4a4C08116FD17CAD4",
       "sinceTimestamp": 1786587971,
       "sinceBlock": 25743097,
@@ -130,13 +136,18 @@
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "positionBreakdown": [
           {
+            "token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "amount": 372843459,
+            "kind": 1
+          },
+          {
             "token": "eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
-            "amount": "250024603666922502566",
+            "amount": "12199124849255028237659843",
             "kind": 0
           },
           {
             "token": "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d",
-            "amount": "5930000000000000000000",
+            "amount": "5648844515678392678189190",
             "kind": 0
           }
         ],
@@ -149,8 +160,8 @@
           "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d"
         ],
         "swapsPaused": false,
-        "totalExposure": 6338884826,
-        "totalExposureStrict": 6338884826,
+        "totalExposure": 19817504767610,
+        "totalExposureStrict": 19817504767610,
         "tvlTokens": [
           "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
           "eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
@@ -159,7 +170,7 @@
         "vault": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
         "vaultToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "vaultTokenDecimals": 6,
-        "withdrawableExposure": 0
+        "withdrawableExposure": 372843459
       },
       "fieldMeta": {
         "pauser": { "severity": "MEDIUM" },
@@ -268,7 +279,7 @@
       "sinceBlock": 23397515,
       "values": {
         "$admin": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
-        "$implementation": "eth:0x556DdC1617D7620f56317d2F2002FE440EA9Ad35",
+        "$implementation": "eth:0x26C45Df28dABb4DC43fC980913C0501cBC3D69F2",
         "$pastUpgrades": [
           [
             "2025-09-19T13:46:35.000Z",
@@ -279,9 +290,14 @@
             "2026-10-01T12:28:47.000Z",
             "0xdc4278c8b23d99f974a206dcaa1c1e20272c49095fa31eac842210ae97b435a8",
             ["eth:0x556DdC1617D7620f56317d2F2002FE440EA9Ad35"]
+          ],
+          [
+            "2026-11-03T10:08:59.000Z",
+            "0x2b77fe3ec567013163f431bb8a39e3b1db06b5288f6a05c4cd946513a257da50",
+            ["eth:0x26C45Df28dABb4DC43fC980913C0501cBC3D69F2"]
           ]
         ],
-        "$upgradeCount": 2,
+        "$upgradeCount": 3,
         "BRIDGE_HUB": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
         "COMMITTER_ROLE": "0x0b60b5d7f7e737e4561eecda7c6a01e19e626c495c26e6f45e5b255f76a20106",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -322,14 +338,9 @@
       },
       "implementationNames": {
         "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776": "TransparentUpgradeableProxy",
-        "eth:0x556DdC1617D7620f56317d2F2002FE440EA9Ad35": "ValidatorTimelock"
+        "eth:0x26C45Df28dABb4DC43fC980913C0501cBC3D69F2": "ValidatorTimelock"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
-    },
-    {
-      "address": "eth:0x2F5C5166BC2f3d39195fE48A4Bcd2aD5747eE749",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "BridgeHub",
@@ -360,7 +371,7 @@
         "isFeeReimburser": "0x1b30784a",
         "owner": "eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "withdrawalRecipient": "eth:0xcE7aC6b6E8559a6E0634223d9692d6ea99bE23Ca"
+        "withdrawalRecipient": "eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"
       },
       "fieldMeta": {
         "authorizedVaults": {
@@ -402,7 +413,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 85,
+        "nonce": 88,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -487,35 +498,6 @@
       "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x421a3f9b8665174B4FcF5fD4A9012B79be457f51": "ProxyAdmin"
-      }
-    },
-    {
-      "address": "eth:0x4296a124A6546473D19bD9CeC3ff4213102a77bB",
-      "type": "EOA",
-      "sourceHashes": [
-        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
-      ],
-      "proxyType": "EIP7702 EOA",
-      "values": {
-        "$implementation": "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B",
-        "delegationManager": "eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3",
-        "DOMAIN_VERSION": "1",
-        "eip712Domain": {
-          "fields": "0x0f",
-          "name": "EIP7702StatelessDeleGator",
-          "version": "1",
-          "chainId": 1,
-          "verifyingContract": "eth:0x4296a124A6546473D19bD9CeC3ff4213102a77bB",
-          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "extensions": []
-        },
-        "entryPoint": "eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032",
-        "getDeposit": 0,
-        "getDomainHash": "0x3d13f9516451664410561e4731f9657e30813b11dcb25c088a7c745872df8e52",
-        "getNonce": 0,
-        "NAME": "EIP7702StatelessDeleGator",
-        "PACKED_USER_OP_TYPEHASH": "0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18",
-        "VERSION": "1.3.0"
       }
     },
     {
@@ -783,6 +765,12 @@
       ],
       "proxyType": "Beacon proxy",
       "description": "Yield strategy of the GRVTL1TreasuryVault that supplies the vault token to Aave V3. Only the vault can allocate to and withdraw from it.",
+      "ignoreInWatchMode": [
+        "positionBreakdown",
+        "totalExposure",
+        "totalExposureStrict",
+        "withdrawableExposure"
+      ],
       "deployerAddress": "eth:0x22B188Ec2C8EefB33646E8c59b39a3214a8179BF",
       "sinceTimestamp": 1782448175,
       "sinceBlock": 25399423,
@@ -810,19 +798,19 @@
         "positionBreakdown": [
           {
             "token": "eth:0x23878914EFE38d27C4D67Ab83ed1b93A74D4086a",
-            "amount": 49570799,
+            "amount": 49577333,
             "kind": 0
           }
         ],
-        "totalExposure": 49570799,
-        "totalExposureStrict": 49570799,
+        "totalExposure": 49577333,
+        "totalExposureStrict": 49577333,
         "tvlTokens": [
           "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
           "eth:0x23878914EFE38d27C4D67Ab83ed1b93A74D4086a"
         ],
         "vault": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
         "vaultToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "withdrawableExposure": 49570799
+        "withdrawableExposure": 49577333
       },
       "implementationNames": {
         "eth:0x646123424BEcBF14a7542bc44340AdB241BA32b3": "BeaconProxy",
@@ -896,11 +884,6 @@
     },
     {
       "address": "eth:0x79BfE9868a2613F3327FB2B9e3a39959165118F4",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x7Bd209a11d6121306DAf4589D50334Cf41A56122",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -982,6 +965,12 @@
       ],
       "proxyType": "Beacon proxy",
       "description": "Yield strategy of the GRVTL1TreasuryVault that converts the vault token to GHO through the Aave GHO Stability Module and deposits it into sGHO. Only the vault can allocate to and withdraw from it.",
+      "ignoreInWatchMode": [
+        "positionBreakdown",
+        "totalExposure",
+        "totalExposureStrict",
+        "withdrawableExposure"
+      ],
       "deployerAddress": "eth:0x22B188Ec2C8EefB33646E8c59b39a3214a8179BF",
       "sinceTimestamp": 1782448247,
       "sinceBlock": 25399429,
@@ -1011,7 +1000,7 @@
         "positionBreakdown": [
           {
             "token": "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d",
-            "amount": "15386635615417910131",
+            "amount": "5213901925181192706640335",
             "kind": 0
           },
           {
@@ -1021,8 +1010,8 @@
           }
         ],
         "sGhoToken": "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d",
-        "totalExposure": 15700357,
-        "totalExposureStrict": 15700357,
+        "totalExposure": 5320955074318,
+        "totalExposureStrict": 5320955074318,
         "tvlTokens": [
           "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
           "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
@@ -1032,7 +1021,7 @@
         "vault": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
         "vaultToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
         "vaultTokenDecimals": 6,
-        "withdrawableExposure": 15700357
+        "withdrawableExposure": 5320955074318
       },
       "implementationNames": {
         "eth:0x89D76f493AECaEe10caBbC1a67dbdC92E947b85E": "BeaconProxy",
@@ -1066,11 +1055,6 @@
     },
     {
       "address": "eth:0x9A4484BBDae765A84c802Cf0A4777D8b16AB1270",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xb594841628A0138614B4d98611D3515cd8BCdE8d",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1127,7 +1111,7 @@
       "targetProject": "shared-zk-stack"
     },
     {
-      "name": "ChainTypeManager",
+      "name": "EraChainTypeManager",
       "address": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
       "type": "Reference",
       "targetType": "Contract",
@@ -1300,15 +1284,15 @@
           ],
           "statuses": [
             {
-              "idle": 5778960152160,
-              "strategy": 3548421827035,
-              "total": 9327381979195,
+              "idle": 4007125900982,
+              "strategy": 0,
+              "total": 4007125900982,
               "skippedStrategies": 0
             },
             {
               "idle": 0,
-              "strategy": 49617824,
-              "total": 49617824,
+              "strategy": 49624365,
+              "total": 49624365,
               "skippedStrategies": 0
             },
             {
@@ -1319,21 +1303,21 @@
             },
             {
               "idle": 0,
-              "strategy": "5945386636058208186858",
-              "total": "5945386636058208186858",
+              "strategy": "10862746440860028175106252",
+              "total": "10862746440860028175106252",
               "skippedStrategies": 0
             },
             { "idle": 0, "strategy": 0, "total": 0, "skippedStrategies": 0 },
             {
               "idle": 106975737483,
-              "strategy": 0,
-              "total": 106975737483,
+              "strategy": 372843459,
+              "total": 107348580942,
               "skippedStrategies": 0
             },
             {
               "idle": 0,
-              "strategy": "17378893190859067450796532",
-              "total": "17378893190859067450796532",
+              "strategy": "12248431030185510080796532",
+              "total": "12248431030185510080796532",
               "skippedStrategies": 0
             }
           ]
@@ -1437,44 +1421,6 @@
       },
       "implementationNames": {
         "eth:0xcAc7375CaA2A8E3024Cd8FB44309ee3246e9B0d3": "TimelockController"
-      }
-    },
-    {
-      "name": "GnosisSafe",
-      "address": "eth:0xcE7aC6b6E8559a6E0634223d9692d6ea99bE23Ca",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "deployerAddress": "eth:0x4296a124A6546473D19bD9CeC3ff4213102a77bB",
-      "sinceTimestamp": 1671520763,
-      "sinceBlock": 16224369,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": [
-          "eth:0x7Bd209a11d6121306DAf4589D50334Cf41A56122",
-          "eth:0x7C1B26554cF3A724613bF47B24f7C65F324702f9",
-          "eth:0x2F5C5166BC2f3d39195fE48A4Bcd2aD5747eE749",
-          "eth:0xdbe6018e2a45e5A5f9D40D54A72Fe4A0eCF8F879",
-          "eth:0x4296a124A6546473D19bD9CeC3ff4213102a77bB",
-          "eth:0xb594841628A0138614B4d98611D3515cd8BCdE8d"
-        ],
-        "$threshold": 3,
-        "domainSeparator": "0xf8a581b13452a1aa514cb15d74c71faadc5056115409ede5b98b3829c7284ff1",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 107,
-        "VERSION": "1.3.0"
-      },
-      "implementationNames": {
-        "eth:0xcE7aC6b6E8559a6E0634223d9692d6ea99bE23Ca": "GnosisSafeProxy",
-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
     },
     {
@@ -1600,11 +1546,6 @@
       "type": "Reference",
       "targetType": "Contract",
       "targetProject": "shared-zk-stack"
-    },
-    {
-      "address": "eth:0xdbe6018e2a45e5A5f9D40D54A72Fe4A0eCF8F879",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "GRVTBridgeProxy",
@@ -1974,7 +1915,7 @@
           "eth:0x907b30407249949521Bf0c89A43558dae200146A",
           "eth:0xFa30EAe30351A83809657299F6Cad9557c232e8C"
         ],
-        "getFirstUnprocessedPriorityTx": 5205,
+        "getFirstUnprocessedPriorityTx": 5208,
         "getL2BootloaderBytecodeHash": "0x01000911c4db4fe62c98e180cfa7e9b3a22fb15f505905d4bf36192f481551e6",
         "getL2DefaultAccountBytecodeHash": "0x010005f73e7c299ed73db937843643bdc276cbc2cc8596287e1e0cf3afc60252",
         "getL2EvmEmulatorBytecodeHash": "0x01000d8bae37b82f311186426184866498b357f41d7a02ced11f3e3fbfbacd63",
@@ -1982,8 +1923,8 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 1,
-        "getPriorityTreeRoot": "0x3096bee69ca632a8a9ef7b14c0a53ac8b930892c62c609572de7c9eb6dd70418",
+        "getPriorityQueueSize": 0,
+        "getPriorityTreeRoot": "0x0f9d004feb63946a790ab084a50b2717f76373cc9048379eac9df28ed5abfa2a",
         "getPriorityTreeStartIndex": 440,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 128849018881,
@@ -1991,13 +1932,13 @@
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
         "getSemverProtocolVersion": [0, 30, 1],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 127821,
-        "getTotalBatchesExecuted": 127779,
-        "getTotalBatchesVerified": 127807,
-        "getTotalBlocksCommitted": 127821,
-        "getTotalBlocksExecuted": 127779,
-        "getTotalBlocksVerified": 127807,
-        "getTotalPriorityTxs": 5206,
+        "getTotalBatchesCommitted": 128219,
+        "getTotalBatchesExecuted": 128176,
+        "getTotalBatchesVerified": 128210,
+        "getTotalBlocksCommitted": 128219,
+        "getTotalBlocksExecuted": 128176,
+        "getTotalBlocksVerified": 128210,
+        "getTotalPriorityTxs": 5208,
         "getTransactionFilterer": "eth:0x3Cd52B238Ac856600b22756133eEb31ECb25109a",
         "getVerifier": "eth:0xCeF0218c0C6dB0768e48debeE26E41B8DAdE7081",
         "getVerifierParams": {
@@ -2009,6 +1950,9 @@
         "isPermanentRollup": 0,
         "isPermanentRollupString": ".",
         "isPriorityQueueActive": false,
+        "priorityModeCanBeActivated": 0,
+        "priorityModeInfo": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "priorityModeTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "validators": ["eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776"]
       },
       "fieldMeta": {
@@ -2039,9 +1983,21 @@
           "description": "true means that the DA mode cannot be changed to Validium in the future. compliant DAValidator pairs for the permanent rollup mode are defined/enforced by the RollupDAManager contract."
         },
         "isPermanentRollupString": { "severity": "HIGH" },
+        "priorityModeCanBeActivated": {
+          "severity": "HIGH",
+          "description": "1 once the chain admin permanently allowed Priority Mode (ZKsync OS permanent rollups only). Then anyone can activate it as soon as the first unprocessed priority transaction is older than 4 days, after which only the shared PermissionlessValidator can settle batches (anyone can submit through it) and only the ChainTypeManager owner can deactivate it."
+        },
+        "priorityModeInfo": {
+          "severity": "HIGH",
+          "description": "Raw Priority Mode storage: last byte canBeActivated, byte before it activated, then the PermissionlessValidator address."
+        },
+        "priorityModeTransactionFilterer": {
+          "severity": "HIGH",
+          "description": "TransactionFilterer that replaces the chain's own filterer once Priority Mode is allowed. Set by the ChainTypeManager owner, zero means no filtering."
+        },
         "getDAValidatorPair": {
           "severity": "HIGH",
-          "description": "l1da, l2da"
+          "description": "l1da, l2da (before v31) or l1da, L2 DA commitment scheme (from v31)."
         },
         "getPubdataPricingMode": {
           "severity": "HIGH",
@@ -2114,6 +2070,12 @@
       ],
       "proxyType": "Beacon proxy",
       "description": "Yield strategy of the GRVTL1TreasuryVault for one vault token. Whitelisted operators swap registered receipt tokens (e.g. tokenized treasuries) with the strategy at the price of their price sources, within per-swap and per-token exposure caps. Only the vault can allocate to and withdraw from it.",
+      "ignoreInWatchMode": [
+        "positionBreakdown",
+        "totalExposure",
+        "totalExposureStrict",
+        "withdrawableExposure"
+      ],
       "deployerAddress": "eth:0x1cd92A13A1cD81522CdAf3E4a4C08116FD17CAD4",
       "sinceTimestamp": 1786587923,
       "sinceBlock": 25743093,
@@ -2157,13 +2119,8 @@
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "positionBreakdown": [
           {
-            "token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
-            "amount": 3548421827035,
-            "kind": 1
-          },
-          {
             "token": "eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
-            "amount": "17378643166255400528293966",
+            "amount": "49306180930481843136689",
             "kind": 0
           },
           {
@@ -2181,8 +2138,8 @@
           "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d"
         ],
         "swapsPaused": false,
-        "totalExposure": 23565049876400,
-        "totalExposureStrict": 23565049876400,
+        "totalExposure": 56796323306,
+        "totalExposureStrict": 56796323306,
         "tvlTokens": [
           "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
           "eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
@@ -2191,7 +2148,7 @@
         "vault": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
         "vaultToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
         "vaultTokenDecimals": 6,
-        "withdrawableExposure": 3548421827035
+        "withdrawableExposure": 0
       },
       "fieldMeta": {
         "pauser": { "severity": "MEDIUM" },
@@ -2592,6 +2549,79 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
     ],
+    "eth:0x26C45Df28dABb4DC43fC980913C0501cBC3D69F2": [
+      "constructor(address _bridgehubAddr)",
+      "error DefaultAdminTransferNotAllowed()",
+      "error ExecutionDelayNotIncreased(uint32 currentDelay, uint32 newDelay)",
+      "error ExecutionDelayTooLarge(uint32 delay, uint32 maxDelay)",
+      "error NotAZKChain(address addr)",
+      "error RoleAccessDenied(address chainAddress, bytes32 role, address account)",
+      "error TimeNotReached(uint256 expectedTimestamp, uint256 actualTimestamp)",
+      "event BatchPrecommitmentSet(uint256 indexed batchNumber, uint256 indexed untrustedLastL2BlockNumberHint, bytes32 precommitment)",
+      "event BlockCommit(uint256 indexed batchNumber, bytes32 indexed batchHash, bytes32 indexed commitment)",
+      "event BlockExecution(uint256 indexed batchNumber, bytes32 indexed batchHash, bytes32 indexed commitment)",
+      "event BlocksRevert(uint256 totalBatchesCommitted, uint256 totalBatchesVerified, uint256 totalBatchesExecuted)",
+      "event BlocksVerification(uint256 indexed previousLastVerifiedBatch, uint256 indexed currentLastVerifiedBatch)",
+      "event Initialized(uint8 version)",
+      "event NewChainExecutionDelay(address indexed _chainAddress, uint256 _newExecutionDelay)",
+      "event NewExecutionDelay(uint256 _newExecutionDelay)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ReportCommittedBatchRangeZKsyncOS(uint64 indexed batchNumber, uint64 indexed firstBlockNumber, uint64 indexed lastBlockNumber)",
+      "event RoleAdminChanged(address indexed chainAddress, bytes32 indexed role, bytes32 previousAdminRole, bytes32 newAdminRole)",
+      "event RoleGranted(address indexed chainAddress, bytes32 indexed role, address indexed account)",
+      "event RoleRevoked(address indexed chainAddress, bytes32 indexed role, address indexed account)",
+      "function BRIDGE_HUB() view returns (address)",
+      "function COMMITTER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function EXECUTOR_ROLE() view returns (bytes32)",
+      "function MAX_EXECUTION_DELAY() view returns (uint32)",
+      "function OPTIONAL_COMMITTER_ADMIN_ROLE() view returns (bytes32)",
+      "function OPTIONAL_EXECUTOR_ADMIN_ROLE() view returns (bytes32)",
+      "function OPTIONAL_PRECOMMITTER_ADMIN_ROLE() view returns (bytes32)",
+      "function OPTIONAL_PROVER_ADMIN_ROLE() view returns (bytes32)",
+      "function OPTIONAL_REVERTER_ADMIN_ROLE() view returns (bytes32)",
+      "function OPTIONAL_UPGRADER_ADMIN_ROLE() view returns (bytes32)",
+      "function PRECOMMITTER_ROLE() view returns (bytes32)",
+      "function PROVER_ROLE() view returns (bytes32)",
+      "function REVERTER_ROLE() view returns (bytes32)",
+      "function UPGRADER_ROLE() view returns (bytes32)",
+      "function acceptOwnership()",
+      "function addValidator(address _chainAddress, address _validator)",
+      "function addValidatorForChainId(uint256 _chainId, address _validator)",
+      "function addValidatorRoles(address _chainAddress, address _validator, tuple(bool rotatePrecommitterRole, bool rotateCommitterRole, bool rotateReverterRole, bool rotateProverRole, bool rotateExecutorRole, bool rotateUpgraderRole) params)",
+      "function chainExecutionDelay(address _chainAddress) view returns (uint32)",
+      "function commitBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)",
+      "function executeBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)",
+      "function executionDelay() view returns (uint32)",
+      "function getCommittedBatchTimestamp(address _chainAddress, uint256 _l2BatchNumber) view returns (uint256)",
+      "function getExecutionDelay(address _chainAddress) view returns (uint32)",
+      "function getName() view returns (string)",
+      "function getRoleAdmin(address _chainAddress, bytes32 _role) view returns (bytes32)",
+      "function getRoleMember(address _chainAddress, bytes32 _role, uint256 _index) view returns (address)",
+      "function getRoleMemberCount(address _chainAddress, bytes32 _role) view returns (uint256)",
+      "function grantRole(address _chainAddress, bytes32 _role, address _account)",
+      "function hasRole(address _chainAddress, bytes32 _role, address _account) view returns (bool)",
+      "function hasRoleForChainId(uint256 _chainId, bytes32 _role, address _address) view returns (bool)",
+      "function increaseChainExecutionDelay(address _chainAddress, uint32 _newExecutionDelay)",
+      "function initialize(address _initialOwner, uint32 _initialExecutionDelay)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function precommitSharedBridge(address _chainAddress, uint256, bytes)",
+      "function proveBatchesSharedBridge(address _chainAddress, uint256, uint256, bytes)",
+      "function removeValidator(address _chainAddress, address _validator)",
+      "function removeValidatorForChainId(uint256 _chainId, address _validator)",
+      "function removeValidatorRoles(address _chainAddress, address _validator, tuple(bool rotatePrecommitterRole, bool rotateCommitterRole, bool rotateReverterRole, bool rotateProverRole, bool rotateExecutorRole, bool rotateUpgraderRole) params)",
+      "function renounceOwnership()",
+      "function renounceRole(address _chainAddress, bytes32 _role)",
+      "function revertBatchesSharedBridge(address _chainAddress, uint256)",
+      "function revokeRole(address _chainAddress, bytes32 _role, address _account)",
+      "function setChainExecutionDelay(address _chainAddress, uint32 _newExecutionDelay)",
+      "function setExecutionDelay(uint32 _newExecutionDelay)",
+      "function setRoleAdmin(address _chainAddress, bytes32 _role, bytes32 _adminRole)",
+      "function transferOwnership(address newOwner)",
+      "function upgradeChainFromVersion(address _chainAddress, uint256, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata))"
+    ],
     "eth:0x28F188A3b89f24B838D0a6e37c7602b5F319DbAF": [
       "constructor(address registry_, address wildcatArchController_, address wildcatV2Factory_)",
       "error AccessControlBadConfirmation()",
@@ -2942,79 +2972,6 @@
       "function scheduleBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt, uint256 delay)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateDelay(uint256 newDelay)"
-    ],
-    "eth:0x556DdC1617D7620f56317d2F2002FE440EA9Ad35": [
-      "constructor(address _bridgehubAddr)",
-      "error DefaultAdminTransferNotAllowed()",
-      "error ExecutionDelayNotIncreased(uint32 currentDelay, uint32 newDelay)",
-      "error ExecutionDelayTooLarge(uint32 delay, uint32 maxDelay)",
-      "error NotAZKChain(address addr)",
-      "error RoleAccessDenied(address chainAddress, bytes32 role, address account)",
-      "error TimeNotReached(uint256 expectedTimestamp, uint256 actualTimestamp)",
-      "event BatchPrecommitmentSet(uint256 indexed batchNumber, uint256 indexed untrustedLastL2BlockNumberHint, bytes32 precommitment)",
-      "event BlockCommit(uint256 indexed batchNumber, bytes32 indexed batchHash, bytes32 indexed commitment)",
-      "event BlockExecution(uint256 indexed batchNumber, bytes32 indexed batchHash, bytes32 indexed commitment)",
-      "event BlocksRevert(uint256 totalBatchesCommitted, uint256 totalBatchesVerified, uint256 totalBatchesExecuted)",
-      "event BlocksVerification(uint256 indexed previousLastVerifiedBatch, uint256 indexed currentLastVerifiedBatch)",
-      "event Initialized(uint8 version)",
-      "event NewChainExecutionDelay(address indexed _chainAddress, uint256 _newExecutionDelay)",
-      "event NewExecutionDelay(uint256 _newExecutionDelay)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event ReportCommittedBatchRangeZKsyncOS(uint64 indexed batchNumber, uint64 indexed firstBlockNumber, uint64 indexed lastBlockNumber)",
-      "event RoleAdminChanged(address indexed chainAddress, bytes32 indexed role, bytes32 previousAdminRole, bytes32 newAdminRole)",
-      "event RoleGranted(address indexed chainAddress, bytes32 indexed role, address indexed account)",
-      "event RoleRevoked(address indexed chainAddress, bytes32 indexed role, address indexed account)",
-      "function BRIDGE_HUB() view returns (address)",
-      "function COMMITTER_ROLE() view returns (bytes32)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function EXECUTOR_ROLE() view returns (bytes32)",
-      "function MAX_EXECUTION_DELAY() view returns (uint32)",
-      "function OPTIONAL_COMMITTER_ADMIN_ROLE() view returns (bytes32)",
-      "function OPTIONAL_EXECUTOR_ADMIN_ROLE() view returns (bytes32)",
-      "function OPTIONAL_PRECOMMITTER_ADMIN_ROLE() view returns (bytes32)",
-      "function OPTIONAL_PROVER_ADMIN_ROLE() view returns (bytes32)",
-      "function OPTIONAL_REVERTER_ADMIN_ROLE() view returns (bytes32)",
-      "function OPTIONAL_UPGRADER_ADMIN_ROLE() view returns (bytes32)",
-      "function PRECOMMITTER_ROLE() view returns (bytes32)",
-      "function PROVER_ROLE() view returns (bytes32)",
-      "function REVERTER_ROLE() view returns (bytes32)",
-      "function UPGRADER_ROLE() view returns (bytes32)",
-      "function acceptOwnership()",
-      "function addValidator(address _chainAddress, address _validator)",
-      "function addValidatorForChainId(uint256 _chainId, address _validator)",
-      "function addValidatorRoles(address _chainAddress, address _validator, tuple(bool rotatePrecommitterRole, bool rotateCommitterRole, bool rotateReverterRole, bool rotateProverRole, bool rotateExecutorRole, bool rotateUpgraderRole) params)",
-      "function chainExecutionDelay(address _chainAddress) view returns (uint32)",
-      "function commitBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)",
-      "function executeBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)",
-      "function executionDelay() view returns (uint32)",
-      "function getCommittedBatchTimestamp(address _chainAddress, uint256 _l2BatchNumber) view returns (uint256)",
-      "function getExecutionDelay(address _chainAddress) view returns (uint32)",
-      "function getName() view returns (string)",
-      "function getRoleAdmin(address _chainAddress, bytes32 _role) view returns (bytes32)",
-      "function getRoleMember(address _chainAddress, bytes32 _role, uint256 _index) view returns (address)",
-      "function getRoleMemberCount(address _chainAddress, bytes32 _role) view returns (uint256)",
-      "function grantRole(address _chainAddress, bytes32 _role, address _account)",
-      "function hasRole(address _chainAddress, bytes32 _role, address _account) view returns (bool)",
-      "function hasRoleForChainId(uint256 _chainId, bytes32 _role, address _address) view returns (bool)",
-      "function increaseChainExecutionDelay(address _chainAddress, uint32 _newExecutionDelay)",
-      "function initialize(address _initialOwner, uint32 _initialExecutionDelay)",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function precommitSharedBridge(address _chainAddress, uint256, bytes)",
-      "function proveBatchesSharedBridge(address _chainAddress, uint256, uint256, bytes)",
-      "function removeValidator(address _chainAddress, address _validator)",
-      "function removeValidatorForChainId(uint256 _chainId, address _validator)",
-      "function removeValidatorRoles(address _chainAddress, address _validator, tuple(bool rotatePrecommitterRole, bool rotateCommitterRole, bool rotateReverterRole, bool rotateProverRole, bool rotateExecutorRole, bool rotateUpgraderRole) params)",
-      "function renounceOwnership()",
-      "function renounceRole(address _chainAddress, bytes32 _role)",
-      "function revertBatchesSharedBridge(address _chainAddress, uint256)",
-      "function revokeRole(address _chainAddress, bytes32 _role, address _account)",
-      "function setChainExecutionDelay(address _chainAddress, uint32 _newExecutionDelay)",
-      "function setExecutionDelay(uint32 _newExecutionDelay)",
-      "function setRoleAdmin(address _chainAddress, bytes32 _role, bytes32 _adminRole)",
-      "function transferOwnership(address newOwner)",
-      "function upgradeChainFromVersion(address _chainAddress, uint256, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata))"
     ],
     "eth:0x55e271ae274BE015Fc46cdf43a2C7C96eF1dFB89": [
       "constructor(address _logic, address initialOwner, bytes _data) payable",
@@ -3435,9 +3392,6 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateDelay(uint256 newDelay)"
     ],
-    "eth:0xcE7aC6b6E8559a6E0634223d9692d6ea99bE23Ca": [
-      "constructor(address _singleton)"
-    ],
     "eth:0xCeF0218c0C6dB0768e48debeE26E41B8DAdE7081": [
       "constructor(address _fflonkVerifier, address _plonkVerifier)",
       "error EmptyProofLength()",
@@ -3506,55 +3460,6 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function unpauseGlobal()",
       "function upgradeAuthority() view returns (address)"
-    ],
-    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
-      "constructor()",
-      "event AddedOwner(address owner)",
-      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
-      "event ChangedFallbackHandler(address handler)",
-      "event ChangedGuard(address guard)",
-      "event ChangedThreshold(uint256 threshold)",
-      "event DisabledModule(address module)",
-      "event EnabledModule(address module)",
-      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
-      "event ExecutionFromModuleFailure(address indexed module)",
-      "event ExecutionFromModuleSuccess(address indexed module)",
-      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
-      "event RemovedOwner(address owner)",
-      "event SafeReceived(address indexed sender, uint256 value)",
-      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
-      "event SignMsg(bytes32 indexed msgHash)",
-      "function VERSION() view returns (string)",
-      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
-      "function approveHash(bytes32 hashToApprove)",
-      "function approvedHashes(address, bytes32) view returns (uint256)",
-      "function changeThreshold(uint256 _threshold)",
-      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
-      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
-      "function disableModule(address prevModule, address module)",
-      "function domainSeparator() view returns (bytes32)",
-      "function enableModule(address module)",
-      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
-      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
-      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
-      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
-      "function getChainId() view returns (uint256)",
-      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
-      "function getOwners() view returns (address[])",
-      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
-      "function getThreshold() view returns (uint256)",
-      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
-      "function isModuleEnabled(address module) view returns (bool)",
-      "function isOwner(address owner) view returns (bool)",
-      "function nonce() view returns (uint256)",
-      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
-      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
-      "function setFallbackHandler(address handler)",
-      "function setGuard(address guard)",
-      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
-      "function signedMessages(bytes32) view returns (uint256)",
-      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
-      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
     "eth:0xE17aeD2fC55f4A876315376ffA49FE6358113a65": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -3766,29 +3671,29 @@
     "global/TimelockController": "0xf7b496cbc7bea640fbf8eb44125f62bb1be686e7172cfd296168d642c8cea881",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "grvt/AaveV3Strategy": "0x7aea28e84ebe42f8b0f6740ff6afa7c23b139e35239b2f9bdee1f859423bac16",
-    "grvt/AaveV3StrategyV2": "0x5211a9fdf9f49d2c4f819a4d2583a988aa47da457c04f9085bf511d7e0530ca2",
+    "grvt/AaveV3StrategyV2": "0x865aaa939bff4f128f20d1a366131713dc4160a4c637393e2e20efc0fd61bce8",
     "grvt/Bootstrap": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "grvt/CompartmentRegistry": "0xcba1e7e3a77c959d542d7bc0a056465a76f3c5128e47e8d69c46783b9f351d4b",
-    "grvt/GenericSwapStrategy": "0xca1c531d8d0f87845f1891dd64dd7aa33721a181022f89a9cb73d08d85573385",
+    "grvt/GenericSwapStrategy": "0xecc4db6507a4103776964056908ae7d581851ab01522316bc0dd84da1b678148",
     "grvt/GRVTBridgeProxy": "0x3f9d8d9dbb6739d3072ee514bdf2b4697c6090b9eb43b96b02d8e13ac244c624",
     "grvt/GRVTL1TreasuryVault": "0x3249e2207d078c67bddf1a5b40c87fe8aeabb7ed988ef1ac9033100e8fc7b208",
     "grvt/HighYieldEarnVaultCompartment": "0x64318b766d80d2efcf624293be7755107598a0fdf4cec6bf8d8bc452ac34efdd",
     "grvt/NativeBridgeGateway": "0x8dec68a73024b5bcadbad1e1008e25f4aadc20b6287675b441f4529d0f42969d",
-    "grvt/SGHOStrategy": "0x0e0c720fca5f30277811c82a8ceffa3d4359fe8bc3d597c3d8c6e2f79d2d0289",
+    "grvt/SGHOStrategy": "0x0bd2e8666875abf629d694f01723e61148d2a3c9d8e8eec698cf0d658267fcf2",
     "grvt/UpgradeAuthority": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "grvt/YieldRecipientTreasury": "0x4190868e223c0dd5ed5dd5e5f6ec517c93399fb182c38a0fe67c45634d6fe15a",
     "shared-zk-stack/ChainAdmin": "0x8be9e939e27d818ead1d430f9f603f4143a5f3d809e6f287aa3d463e5a8f5b8b",
-    "shared-zk-stack/Diamond": "0xf8ceb7cc4613a5afb74ab717732cca35ae7826aaa6ba9643d656020bdb3cec08",
+    "shared-zk-stack/Diamond": "0xd2834698a75183a2a507735400ef998edd6d0efa0643b582577a0932c8c15866",
     "shared-zk-stack/DualVerifier": "0x9378cf0ffe4ba30c57c7c2d9c7eefefc31c62efe9c6be4c177a9fbc3fedd4970",
     "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock_v31": "0xc571d18f4183eb072d6806cece41853993e1559b69d2a903b1d707b05ad8385f",
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 26326688 },
-  "permissionsConfigHash": "0xcce27155895ef3ad07e157bcfb54659f47c2913da7247c399b4f64fc5fa77027",
+  "usedBlockNumbers": { "ethereum": 26334851 },
+  "permissionsConfigHash": "0x3d1b05e405ef4d3efe6c31d643ad224e14e8a023540b617cea4f8bf82f352f71",
   "modelledAgainst": {
-    "shared-zk-stack": "0x46314e1d2cbb1c7cf6eadfeedc7105f4dae01d4adb90efd083410f82f274904e"
+    "shared-zk-stack": "0xf5aeb32bdc1483fa310e04bffe1b607bd86c7ef9b4caed29d8c0d422821460d7"
   },
   "permissions": {
     "eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e": {
@@ -3864,6 +3769,12 @@
           "from": "eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C",
           "description": "one of its 3/3 signers.",
           "role": ".SECURITY_COUNCIL"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+          "description": "soft freeze, hard freeze (all chains of the Era and ZKsync OS ChainTypeManagers), approve a protocol upgrade.",
+          "role": ".securityCouncil"
         }
       ]
     },
@@ -4303,6 +4214,22 @@
         }
       ]
     },
+    "eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746",
+          "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period).",
+          "role": ".VETO_GUARDIAN"
+        },
+        {
+          "permission": "interact",
+          "from": "zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160",
+          "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period).",
+          "role": ".VETO_GUARDIAN"
+        }
+      ]
+    },
     "eth:0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D": {
       "directlyReceivedPermissions": [
         {
@@ -4387,6 +4314,275 @@
           "from": "eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C",
           "description": "one of its 3/3 signers.",
           "role": ".GUARDIANS"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+          "description": "extend the legal veto period, approve a protocol upgrade.",
+          "role": ".guardians"
+        }
+      ]
+    },
+    "eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x18cC381705761aa2d2e8ea62888a4029A0fAd3aB",
+          "description": "set the ecosystem-wide minimum execution delay, manage the shared set of commit validators and its signing threshold, and allow chains to use a custom commit validator set.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x1adF137F59949c9081157D5de1e002D1C992071F",
+          "description": "manage the shared ValidatorTimelock contract address and the admin role, register upgrades and patch upgrades together with the verifier of each protocol version (and set their deadlines), execute upgrades, freeze, revert batches, deactivate Priority Mode and set permissioned validators and fee params for all connected chains.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+          "description": "set critical contract addresses for the shared cluster (asset router, CTM deployer, message root, chain asset handler, chain registration sender), add and remove chain type managers, whitelist settlement layers, pause and unpause the bridge and register already deployed zk chains.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x433b6ff15824806c8C14EcE4a6FE1f1909F7da2F",
+          "description": "add and remove the FFLONK/PLONK verifier pairs that proofs of ZKsync OS chains can select by version.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7fd8B995fc27aD7de97853e65B17CaCfc0a573Cc",
+          "description": "pause / unpause the tracker and re-sync its ChainAssetHandler reference from the Bridgehub.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
+          "description": "pause / unpause the bridge and set the L1AssetTracker that enforces the per-chain balances.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+          "description": "manage the shared ValidatorTimelock contract address and the admin role, register upgrades and patch upgrades together with the verifier of each protocol version (and set their deadlines), execute upgrades, freeze, revert batches, deactivate Priority Mode and set permissioned validators and fee params for all connected chains.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
+          "description": "pause, unpause and set critical escrow address references.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076",
+          "description": "pause and resume chain migrations, pause and unpause the handler, re-sync its MessageRoot and AssetRouter references from the Bridgehub and backfill historical migration intervals of chains that settled on the legacy Gateway.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
+          "description": "manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode).",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "description": "control all roles in the ZkToken access control, including the minter roles.",
+          "role": ".DefaultAdmin",
+          "via": [
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x18cC381705761aa2d2e8ea62888a4029A0fAd3aB",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xff3582a0310916cd62442A4CA88Bf1C757D68938" },
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x1adF137F59949c9081157D5de1e002D1C992071F",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xff3582a0310916cd62442A4CA88Bf1C757D68938" },
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x419A453e690CEac6E57C7798a375cbB2454dd919",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x6078F6B379f103de1Aa912dc46bb8Df0c8809860",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7fd8B995fc27aD7de97853e65B17CaCfc0a573Cc",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8509eA34177B051110826A36621C1C52C9752CAA",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xff3582a0310916cd62442A4CA88Bf1C757D68938" },
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8829AD80E425C646DAB305381ff105169FeEcE56",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xE220059BBA4684BF2Cf0B9E6E5A9DF94D9fb90E9",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e" },
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "role": "admin",
+          "via": [
+            { "address": "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC" },
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+          "role": ".emergencyUpgradeBoard"
         }
       ]
     },
@@ -4441,12 +4637,22 @@
         },
         {
           "permission": "upgrade",
+          "from": "eth:0x419A453e690CEac6E57C7798a375cbB2454dd919",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD",
           "role": "admin"
         },
         {
           "permission": "upgrade",
           "from": "eth:0x6078F6B379f103de1Aa912dc46bb8Df0c8809860",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7fd8B995fc27aD7de97853e65B17CaCfc0a573Cc",
           "role": "admin"
         },
         {
@@ -4472,6 +4678,11 @@
         {
           "permission": "upgrade",
           "from": "eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xE220059BBA4684BF2Cf0B9E6E5A9DF94D9fb90E9",
           "role": "admin"
         }
       ]
@@ -4513,160 +4724,6 @@
       ]
     },
     "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x1adF137F59949c9081157D5de1e002D1C992071F",
-          "description": "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-          "description": "set critical contract addresses for the shared cluster, register settlement layers, pause and unpause migrations and the bridge and manage zk chain registration.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
-          "description": "pause / unpause the bridge.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-          "description": "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
-          "description": "pause, unpause and set critical escrow address references.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076",
-          "description": "pause, resume chain migrations.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
-          "description": "manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode).",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
-          "description": "control all roles in the ZkToken access control, including the minter roles.",
-          "role": ".DefaultAdmin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x18cC381705761aa2d2e8ea62888a4029A0fAd3aB",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xff3582a0310916cd62442A4CA88Bf1C757D68938" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x1adF137F59949c9081157D5de1e002D1C992071F",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xff3582a0310916cd62442A4CA88Bf1C757D68938" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x6078F6B379f103de1Aa912dc46bb8Df0c8809860",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x8829AD80E425C646DAB305381ff105169FeEcE56",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
-          "role": "admin",
-          "via": [
-            { "address": "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC" }
-          ]
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -4687,6 +4744,72 @@
           "permission": "act",
           "from": "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC",
           "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x18cC381705761aa2d2e8ea62888a4029A0fAd3aB",
+          "description": "set the ecosystem-wide minimum execution delay, manage the shared set of commit validators and its signing threshold, and allow chains to use a custom commit validator set.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x1adF137F59949c9081157D5de1e002D1C992071F",
+          "description": "manage the shared ValidatorTimelock contract address and the admin role, register upgrades and patch upgrades together with the verifier of each protocol version (and set their deadlines), execute upgrades, freeze, revert batches, deactivate Priority Mode and set permissioned validators and fee params for all connected chains.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+          "description": "set critical contract addresses for the shared cluster (asset router, CTM deployer, message root, chain asset handler, chain registration sender), add and remove chain type managers, whitelist settlement layers, pause and unpause the bridge and register already deployed zk chains.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x433b6ff15824806c8C14EcE4a6FE1f1909F7da2F",
+          "description": "add and remove the FFLONK/PLONK verifier pairs that proofs of ZKsync OS chains can select by version.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7fd8B995fc27aD7de97853e65B17CaCfc0a573Cc",
+          "description": "pause / unpause the tracker and re-sync its ChainAssetHandler reference from the Bridgehub.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
+          "description": "pause / unpause the bridge and set the L1AssetTracker that enforces the per-chain balances.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+          "description": "manage the shared ValidatorTimelock contract address and the admin role, register upgrades and patch upgrades together with the verifier of each protocol version (and set their deadlines), execute upgrades, freeze, revert batches, deactivate Priority Mode and set permissioned validators and fee params for all connected chains.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
+          "description": "pause, unpause and set critical escrow address references.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076",
+          "description": "pause and resume chain migrations, pause and unpause the handler, re-sync its MessageRoot and AssetRouter references from the Bridgehub and backfill historical migration intervals of chains that settled on the legacy Gateway.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
+          "description": "manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode).",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "description": "control all roles in the ZkToken access control, including the minter roles.",
+          "role": ".DefaultAdmin"
         }
       ]
     },
@@ -4812,6 +4935,155 @@
           "permission": "upgrade",
           "from": "eth:0x1adF137F59949c9081157D5de1e002D1C992071F",
           "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8509eA34177B051110826A36621C1C52C9752CAA",
+          "role": "admin"
+        }
+      ]
+    },
+    "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+          "description": "start (queue) upgrades.",
+          "role": ".L2_PROTOCOL_GOVERNOR"
+        },
+        {
+          "permission": "interact",
+          "from": "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714",
+          "description": "manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC"
+        }
+      ]
+    },
+    "zksync:0x76705327e682F2d96943280D99464Ab61219e34f": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+          "description": "start (queue) upgrades.",
+          "role": ".L2_PROTOCOL_GOVERNOR",
+          "via": [
+            { "address": "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714",
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
+        },
+        {
+          "permission": "interact",
+          "from": "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
+        },
+        {
+          "permission": "interact",
+          "from": "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714",
+          "description": "manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC",
+          "via": [
+            { "address": "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714",
+          "description": "propose transactions.",
+          "role": ".Proposer"
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714",
+          "role": ".Executor"
+        }
+      ]
+    },
+    "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "description": "grant the MINTER_ROLE to arbitrary addresses, thus controlling the minting of the ZK token.",
+          "role": ".MinterAdmin",
+          "via": [
+            {
+              "address": "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+              "delay": 259200
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+          "delay": 259200,
+          "description": "manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC",
+          "via": [
+            {
+              "address": "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+              "delay": 259200
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
+        },
+        {
+          "permission": "interact",
+          "from": "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
+        },
+        {
+          "permission": "interact",
+          "from": "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+          "description": "propose transactions.",
+          "role": ".Proposer"
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+          "delay": 259200,
+          "role": ".Executor"
+        }
+      ]
+    },
+    "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "role": "admin"
+        }
+      ]
+    },
+    "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "description": "grant the MINTER_ROLE to arbitrary addresses, thus controlling the minting of the ZK token.",
+          "role": ".MinterAdmin"
+        },
+        {
+          "permission": "interact",
+          "from": "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+          "delay": 259200,
+          "description": "manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC"
         }
       ]
     }

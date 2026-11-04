@@ -363,6 +363,14 @@
       "transaction": "0xdeb5268cbec1b47c77ad46cb8dd29491833e45ae374d2905f94f4e0499e8110e",
       "updateId": "da922e8f",
       "reason": "Upgraded the Rollup and, in the same upgradeAndCall, pointed it at the new staked Submitter contract at batch 60477: batch commitment, state proposal and slashing now go through the Submitter instead of L1Staking and the BLS signature input was removed (Morph Multisig 1 via the 0-delay timelock and ProxyAdmin)."
+    },
+    {
+      "timestamp": 1793671775,
+      "type": "state",
+      "contract": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1",
+      "transaction": "0x009376ab88bf9b449a9463fff2fb75c2cac917300e93a05d7e4fbdc9b1fe0bbd",
+      "updateId": "2d9dd70d",
+      "reason": "MultipleVersionRollupVerifier: registered the new ZkEvmVerifierV1 0xFF31F579F723e0493D969B46095FE718ebf4401A (guest program v0.6.4, programVkey 0x0084f08a…2902) as the latest verifier from batch 64600, replacing 0x651cA600813fC0126225b727EDbA617949b1d1c9 (v0.6.3)."
     }
   ],
   "ignoredTransactions": [

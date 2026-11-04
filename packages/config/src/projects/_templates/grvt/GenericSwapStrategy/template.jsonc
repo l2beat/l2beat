@@ -7,6 +7,12 @@
     "tvlTokens",
     "vaultToken"
   ],
+  "ignoreInWatchMode": [
+    "positionBreakdown",
+    "totalExposure",
+    "totalExposureStrict",
+    "withdrawableExposure"
+  ],
   "fields": {
     "accessControl": {
       "handler": { "type": "accessControl" }

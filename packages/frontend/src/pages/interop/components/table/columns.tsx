@@ -381,16 +381,3 @@ export function getAllProtocolsColumns(
       makeTokensColumn({ type, apiSelection, showNetMintedValueColumn }),
   ])
 }
-
-export function getHomeTopInteropProtocolsColumns() {
-  return [
-    makeLogoColumn<CompactProtocolEntry>(),
-    makeNameColumn<CompactProtocolEntry>({
-      nameMaxWidthClass: 'max-w-[112px]',
-      headClassName: 'min-w-[7.5rem] lg:pl-2.5',
-      cellClassName: 'lg:pl-2.5',
-    }),
-    makeCategoryColumn<CompactProtocolEntry>(),
-    makeLast24hVolumeColumn<CompactProtocolEntry>('Last 24h volume'),
-  ]
-}

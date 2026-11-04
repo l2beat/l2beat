@@ -163,7 +163,7 @@ export function PrivacyProjectPage({
                           >
                             <ProjectSummaryStat
                               title="Tracked on"
-                              tooltip="Chains on which the protocol deployment is tracked by L2BEAT."
+                              tooltip="Chains on which the protocol deployment is tracked by ETHBEAT."
                               value={
                                 <ProjectIconList
                                   projects={entry.trackedOn}

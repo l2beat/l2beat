@@ -4,11 +4,9 @@ import { type ReactNode, useState } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
-import type { InteropFlowsOverview } from '~/server/features/layer2s/interop/getInteropFlowsOverview'
 import { useTRPC } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
-import { buildInteropUrl } from '../../utils/buildInteropUrl'
 import { getInteropTokenUrl } from '../../utils/getInteropTokenUrl'
 import type { InteropChainWithIcon } from '../chain-selector/types'
 import { TokensDialog } from '../tokens/TokensDialog'
@@ -17,43 +15,8 @@ import { FlowsParticleLegend } from './FlowsParticleLegend'
 import { useScaledParticleCounts } from './graph/utils/useScaledParticleCounts'
 import { useInteropFlows } from './utils/InteropFlowsContext'
 
-interface FlowsGeneralStatsOptions {
-  title?: string
-  description?: string
-  className?: string
-  /**
-   * Link the top route to /interop/summary with the pair preselected
-   * instead of highlighting it on the local graph. Used on the home page.
-   */
-  linkTopRouteToSummary?: boolean
-}
-
-export function FlowsGeneralStats(options: FlowsGeneralStatsOptions) {
+export function FlowsGeneralStats() {
   const trpc = useTRPC()
-  const { selectedChains, selectedProtocols } = useInteropFlows()
-  const { data, isLoading } = useQuery(
-    trpc.interop.flows.queryOptions({
-      chains: selectedChains,
-      protocolIds: selectedProtocols,
-    }),
-  )
-  return (
-    <FlowsGeneralStatsView {...options} data={data} isLoading={isLoading} />
-  )
-}
-
-/** Takes the data as props so the home page can feed it the slim overview. */
-export function FlowsGeneralStatsView({
-  title = 'General stats',
-  description = 'For past 24h between the selected chains and protocols',
-  className,
-  linkTopRouteToSummary = false,
-  data,
-  isLoading,
-}: FlowsGeneralStatsOptions & {
-  data: InteropFlowsOverview | undefined
-  isLoading: boolean
-}) {
   const [isTokensDialogOpen, setIsTokensDialogOpen] = useState(false)
   const {
     selectedChains,
@@ -61,6 +24,12 @@ export function FlowsGeneralStatsView({
     selectedProtocols,
     setHighlightedChainPair,
   } = useInteropFlows()
+  const { data, isLoading } = useQuery(
+    trpc.interop.flows.queryOptions({
+      chains: selectedChains,
+      protocolIds: selectedProtocols,
+    }),
+  )
 
   const tokensQueryInput = {
     from: selectedChains,
@@ -91,22 +60,15 @@ export function FlowsGeneralStatsView({
       ? topChain.totalVolume / data.stats.totalVolume
       : 0
   const topToken = data?.stats.topToken
-  const topProtocol = data?.stats.topProtocol
+  const topProtocol = data?.stats.topProtocols[0]
 
   return (
-    <div
-      className={cn(
-        '@container flex h-full flex-col rounded-lg bg-surface-secondary p-4 dark:bg-header-secondary',
-        className,
-      )}
-    >
-      {!!title && <div className="font-bold text-heading-20">{title}</div>}
-      {!!description && (
-        <div className="mt-1 font-medium text-label-value-14 text-secondary">
-          {description}
-        </div>
-      )}
-      <div className={cn('space-y-2', (!!title || !!description) && 'mt-1.5')}>
+    <div className="@container flex h-full flex-col rounded-lg bg-surface-secondary p-4 dark:bg-header-secondary">
+      <div className="font-bold text-heading-20">General stats</div>
+      <div className="mt-1 font-medium text-label-value-14 text-secondary">
+        For past 24h between the selected chains and protocols
+      </div>
+      <div className="mt-1.5 space-y-2">
         {/* Sized by the panel itself (container query) so it works both as
             a full-width strip (summary below lg) and a narrow side column */}
         <div className="grid @min-[400px]:grid-cols-3 grid-cols-1 gap-2">
@@ -147,28 +109,15 @@ export function FlowsGeneralStatsView({
             className="border-0 p-0!"
             value={
               srcChain && dstChain ? (
-                linkTopRouteToSummary ? (
-                  <a
-                    href={buildInteropUrl('/interop/summary', {
-                      from: [srcChain.id],
-                      to: [dstChain.id],
-                    })}
-                    aria-label={`View ${srcChain.name} to ${dstChain.name} transfers`}
-                    className="flex items-center gap-1.5 rounded p-1 transition-opacity hover:bg-pure-black/5 dark:hover:bg-pure-white/10"
-                  >
-                    <TopRouteIcons srcChain={srcChain} dstChain={dstChain} />
-                  </a>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setHighlightedChainPair(srcChain.id, dstChain.id)
-                    }
-                    className="flex items-center gap-1.5 rounded p-1 transition-opacity hover:bg-pure-black/5 dark:hover:bg-pure-white/10"
-                  >
-                    <TopRouteIcons srcChain={srcChain} dstChain={dstChain} />
-                  </button>
-                )
+                <button
+                  type="button"
+                  onClick={() =>
+                    setHighlightedChainPair(srcChain.id, dstChain.id)
+                  }
+                  className="flex items-center gap-1.5 rounded p-1 transition-opacity hover:bg-pure-black/5 dark:hover:bg-pure-white/10"
+                >
+                  <TopRouteIcons srcChain={srcChain} dstChain={dstChain} />
+                </button>
               ) : (
                 '-'
               )
@@ -185,12 +134,12 @@ export function FlowsGeneralStatsView({
                   {topChainData.href ? (
                     <a
                       href={topChainData.href}
-                      className="text-brand hover:underline"
+                      className="text-brand-deep hover:underline"
                     >
                       {topChainData.name}
                     </a>
                   ) : (
-                    <span className="text-brand">{topChainData.name}</span>
+                    <span className="text-brand-deep">{topChainData.name}</span>
                   )}
                   <span className="text-center font-medium text-label-value-13 text-secondary leading-tight">
                     {formatPercent(topChainVolumeShare)} of volume (
@@ -212,7 +161,7 @@ export function FlowsGeneralStatsView({
                 <div className="flex flex-col items-center gap-0.5 text-heading-18">
                   <a
                     href={`/interop/protocols/${topProtocol.slug}`}
-                    className="text-brand hover:underline"
+                    className="text-brand-deep hover:underline"
                   >
                     {topProtocol.name}
                   </a>

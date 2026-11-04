@@ -14,8 +14,8 @@ import {
   ChartTooltipWrapper,
   getTooltipEntries,
 } from '~/components/core/chart/ChartTooltip'
-import { CHART_GRADIENTS } from '~/components/core/chart/gradients'
 import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
+import { tinted } from '~/components/core/chart/tint'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
   type ActivityMetric,
@@ -56,14 +56,7 @@ export const RECATEGORISED_ACTIVITY_CHART_META = {
   },
 } satisfies ChartMeta
 
-const SERIES_GRADIENTS = {
-  rollups: CHART_GRADIENTS.pink,
-  validiumsAndOptimiums: CHART_GRADIENTS.cyan,
-  others: CHART_GRADIENTS.yellow,
-  ethereum: CHART_GRADIENTS.ethereum,
-} as const
-
-type SeriesKey = keyof typeof SERIES_GRADIENTS
+type SeriesKey = keyof typeof RECATEGORISED_ACTIVITY_CHART_META
 
 interface Props {
   data: RecategorisedActivityChartData | undefined
@@ -143,8 +136,7 @@ export function L2RecategorizedActivityChart({
           ['rollups', 'validiumsAndOptimiums', 'others', 'ethereum'] as const
         ).map((key) => ({
           key,
-          stroke: SERIES_GRADIENTS[key].stroke,
-          fill: SERIES_GRADIENTS[key].fill,
+          ...tinted(RECATEGORISED_ACTIVITY_CHART_META[key].color),
         }))}
         yAxis={{
           scale: scale === 'symlog' ? scaleSymlog : undefined,

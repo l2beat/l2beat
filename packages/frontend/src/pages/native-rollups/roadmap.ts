@@ -42,7 +42,7 @@ export const ROADMAP_YEARS: RoadmapGroup[] = [
         date: '2025',
         title: 'The Native Rollups Book',
         description:
-          'L2BEAT publishes an open research book covering governance risk, bug risk, native execution, messaging, fees, and the evolving proof design.',
+          'ETHBEAT publishes an open research book covering governance risk, bug risk, native execution, messaging, fees, and the evolving proof design.',
         url: NATIVE_ROLLUPS_BOOK_URL,
       },
       {

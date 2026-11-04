@@ -77,6 +77,13 @@ export const cloaked: BaseProject = {
       ],
     },
     trackedOn: ['ethereum'],
+    // Chains the app serves (api.clkd.xyz/v1/supported-chains).
+    runsOn: [
+      ProjectId('arbitrum'),
+      ProjectId('base'),
+      ProjectId('optimism'),
+      ProjectId('robinhood'),
+    ],
     // Cloaked balances live in arbitrary one-time EOAs and cannot be
     // attributed using public chain data. Its Privacy Pools integration uses
     // pools that L2BEAT tracks on the separate Privacy Pools project page.

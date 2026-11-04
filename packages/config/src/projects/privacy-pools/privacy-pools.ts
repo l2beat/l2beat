@@ -216,6 +216,8 @@ export const privacyPools: BaseProject = {
       ],
     },
     trackedOn: ['ethereum'],
+    // Chains v1.privacypools.com serves (src/config/chainData.ts).
+    runsOn: [ProjectId('arbitrum'), ProjectId('optimism')],
     tokens: getPrivacyTokens(),
     relayerTracking: {
       type: 'onchainEvents',

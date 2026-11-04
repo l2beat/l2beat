@@ -58,8 +58,11 @@ export function ChartContainer<T extends { timestamp: number }>({
   isLoading?: boolean
   /** The data is a previous query's, kept on screen while this one loads. */
   isPlaceholderData: boolean
-  /** large: for a page whose main content is the chart */
-  size?: 'regular' | 'small' | 'large'
+  /**
+   * `large` is for a page whose main content is the chart. `fill` takes the
+   * parent's height, e.g. a sparkline's.
+   */
+  size?: 'regular' | 'small' | 'large' | 'fill'
   className?: string
 }) {
   // Building a chart blocks the main thread, so build each one only when it
@@ -82,7 +85,7 @@ export function ChartContainer<T extends { timestamp: number }>({
       <div
         ref={ref}
         data-chart-container
-        className="group relative"
+        className={cn('group relative', size === 'fill' && 'h-full')}
         aria-busy={isPlaceholderData || undefined}
       >
         <ChartSettledSize
@@ -92,6 +95,7 @@ export function ChartContainer<T extends { timestamp: number }>({
             size === 'small' && 'h-[114px] min-h-[114px] w-full',
             size === 'large' &&
               'h-[260px] min-h-[260px] w-full md:h-[340px] md:min-h-[340px]',
+            size === 'fill' && 'size-full',
             className,
           )}
         >
@@ -132,12 +136,12 @@ export function ChartContainer<T extends { timestamp: number }>({
         {!hasData &&
           !isLoading &&
           !(noDataSourcesSelected && shouldMountChart) && (
-            <ChartNoDataState size={size} />
+            <ChartNoDataState size={size === 'regular' ? 'regular' : 'small'} />
           )}
         {noDataSourcesSelected && !isLoading && shouldMountChart && (
           <ChartNoDataSourceState message={noDataSourceMessage} />
         )}
-        {shouldMountChart && size !== 'small' && (
+        {shouldMountChart && size === 'regular' && (
           <Logo
             animated={false}
             className={cn(
@@ -149,7 +153,7 @@ export function ChartContainer<T extends { timestamp: number }>({
             )}
           />
         )}
-        {shouldMountChart && size !== 'small' && project && (
+        {shouldMountChart && size === 'regular' && project && (
           <ChartProjectLogo
             project={project}
             className={cn(

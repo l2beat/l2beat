@@ -44,7 +44,7 @@ export function PinProjectButton({
       className={cn(
         'flex h-6 items-center justify-center gap-1.5 rounded border px-2 font-medium text-2xs uppercase leading-none transition-colors',
         isPinned
-          ? 'border-brand text-brand'
+          ? 'border-brand text-brand-deep'
           : 'border-divider text-secondary hover:text-primary',
         className,
       )}

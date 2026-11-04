@@ -36,6 +36,7 @@ import { createMarkdownAlternatesRouter } from './routers/MarkdownAlternatesRout
 import { createMigratedProjectsRouter } from './routers/MigratedProjectsRouter'
 import { createRobotsRouter } from './routers/RobotsRouter'
 import { createSitemapRouter } from './routers/SitemapRouter'
+import { createSupersededBadgeRouter } from './routers/SupersededBadgeRouter'
 import { createTrpcRouter } from './routers/TrpcRouter'
 
 const port = process.env.PORT ?? 3000
@@ -84,6 +85,7 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
     )
     app.use('/', sirv('./static', { maxAge: 3600 }))
   }
+  app.use('/', createSupersededBadgeRouter(manifest))
 
   const renderToHtml = async (data: RenderData, url: string) => {
     const rendered = await render(data, url)

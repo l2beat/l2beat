@@ -11,11 +11,11 @@ import type {
   ChartProject,
 } from '~/components/core/chart/ChartContext'
 import { ChartTooltipWrapper } from '~/components/core/chart/ChartTooltip'
-import { CHART_GRADIENTS } from '~/components/core/chart/gradients'
 import {
   type ChartSeries,
   TimeSeriesChart,
 } from '~/components/core/chart/TimeSeriesChart'
+import { tinted } from '~/components/core/chart/tint'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatRange } from '~/utils/dates'
 import type { ChartResolution } from '~/utils/range/range'
@@ -42,7 +42,7 @@ interface Props {
 const chartMeta = {
   range: {
     label: 'Min&max submission interval',
-    color: 'var(--chart-pink-stroke-gradient-1)',
+    color: 'var(--chart-pink)',
     indicatorType: {
       shape: 'line',
     },
@@ -65,9 +65,7 @@ const SERIES: ChartSeries<string, LivenessChartDataPoint>[] = [
     key: 'range',
     value: (row) => row.range?.[1],
     value0: (row) => row.range?.[0],
-    stroke: CHART_GRADIENTS.pink.stroke,
-    fill: 'var(--chart-pink-fill-gradient)',
-    fillOpacity: 0.4,
+    ...tinted(chartMeta.range.color),
     gapStroke: GAP_STROKE,
     isolatedDots: {},
   },

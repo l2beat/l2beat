@@ -36,7 +36,8 @@ function Tag({ tag }: { tag: string }) {
         'flex h-[22px] w-fit items-center justify-center rounded px-2 font-medium text-white text-xs uppercase',
         tag === 'upcoming' &&
           'border border-positive/20 bg-positive/20 text-positive',
-        tag === 'governance' && 'border border-brand/15 bg-brand/15 text-brand',
+        tag === 'governance' &&
+          'border border-brand/15 bg-brand/15 text-brand-deep',
       )}
     >
       {tag}

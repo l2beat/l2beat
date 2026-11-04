@@ -30,7 +30,7 @@ export const grvt: ScalingProject = zkStackL2({
     slug: 'grvt',
     tvsWarning: {
       value:
-        'L2BEAT only tracks the funds in the GRVTL1TreasuryVault and its yield strategies, which hold most of the exchange reserves. The funds that remain in the shared ZK stack bridge cannot be tracked due to the lack of a public rpc / explorer.',
+        'ETHBEAT only tracks the funds in the GRVTL1TreasuryVault and its yield strategies, which hold most of the exchange reserves. The funds that remain in the shared ZK stack bridge cannot be tracked due to the lack of a public rpc / explorer.',
       sentiment: 'warning',
     },
     description:

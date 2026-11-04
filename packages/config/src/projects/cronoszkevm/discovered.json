@@ -1,6 +1,6 @@
 {
   "name": "cronoszkevm",
-  "timestamp": 1793617522,
+  "timestamp": 1793715840,
   "configHash": "0x36a165d64b6f00974e4ebed6bf7e6f751e2b89ff59b42e96f6cc609969d36abe",
   "entries": [
     {
@@ -53,7 +53,7 @@
       "sinceBlock": 23397515,
       "values": {
         "$admin": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
-        "$implementation": "eth:0x556DdC1617D7620f56317d2F2002FE440EA9Ad35",
+        "$implementation": "eth:0x26C45Df28dABb4DC43fC980913C0501cBC3D69F2",
         "$pastUpgrades": [
           [
             "2025-09-19T13:46:35.000Z",
@@ -64,9 +64,14 @@
             "2026-10-01T12:28:47.000Z",
             "0xdc4278c8b23d99f974a206dcaa1c1e20272c49095fa31eac842210ae97b435a8",
             ["eth:0x556DdC1617D7620f56317d2F2002FE440EA9Ad35"]
+          ],
+          [
+            "2026-11-03T10:08:59.000Z",
+            "0x2b77fe3ec567013163f431bb8a39e3b1db06b5288f6a05c4cd946513a257da50",
+            ["eth:0x26C45Df28dABb4DC43fC980913C0501cBC3D69F2"]
           ]
         ],
-        "$upgradeCount": 2,
+        "$upgradeCount": 3,
         "BRIDGE_HUB": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
         "COMMITTER_ROLE": "0x0b60b5d7f7e737e4561eecda7c6a01e19e626c495c26e6f45e5b255f76a20106",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -107,7 +112,7 @@
       },
       "implementationNames": {
         "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776": "TransparentUpgradeableProxy",
-        "eth:0x556DdC1617D7620f56317d2F2002FE440EA9Ad35": "ValidatorTimelock"
+        "eth:0x26C45Df28dABb4DC43fC980913C0501cBC3D69F2": "ValidatorTimelock"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
@@ -538,12 +543,12 @@
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
         "getSemverProtocolVersion": [0, 30, 1],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 996,
-        "getTotalBatchesExecuted": 995,
-        "getTotalBatchesVerified": 996,
-        "getTotalBlocksCommitted": 996,
-        "getTotalBlocksExecuted": 995,
-        "getTotalBlocksVerified": 996,
+        "getTotalBatchesCommitted": 997,
+        "getTotalBatchesExecuted": 996,
+        "getTotalBatchesVerified": 997,
+        "getTotalBlocksCommitted": 997,
+        "getTotalBlocksExecuted": 996,
+        "getTotalBlocksVerified": 997,
         "getTotalPriorityTxs": 4846,
         "getTransactionFilterer": "eth:0xA8998F231a660Eca365B382943c71ad9b7619139",
         "getVerifier": "eth:0xCeF0218c0C6dB0768e48debeE26E41B8DAdE7081",
@@ -556,6 +561,9 @@
         "isPermanentRollup": 0,
         "isPermanentRollupString": ".",
         "isPriorityQueueActive": false,
+        "priorityModeCanBeActivated": 0,
+        "priorityModeInfo": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "priorityModeTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "validators": ["eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776"]
       },
       "fieldMeta": {
@@ -586,9 +594,21 @@
           "description": "true means that the DA mode cannot be changed to Validium in the future. compliant DAValidator pairs for the permanent rollup mode are defined/enforced by the RollupDAManager contract."
         },
         "isPermanentRollupString": { "severity": "HIGH" },
+        "priorityModeCanBeActivated": {
+          "severity": "HIGH",
+          "description": "1 once the chain admin permanently allowed Priority Mode (ZKsync OS permanent rollups only). Then anyone can activate it as soon as the first unprocessed priority transaction is older than 4 days, after which only the shared PermissionlessValidator can settle batches (anyone can submit through it) and only the ChainTypeManager owner can deactivate it."
+        },
+        "priorityModeInfo": {
+          "severity": "HIGH",
+          "description": "Raw Priority Mode storage: last byte canBeActivated, byte before it activated, then the PermissionlessValidator address."
+        },
+        "priorityModeTransactionFilterer": {
+          "severity": "HIGH",
+          "description": "TransactionFilterer that replaces the chain's own filterer once Priority Mode is allowed. Set by the ChainTypeManager owner, zero means no filtering."
+        },
         "getDAValidatorPair": {
           "severity": "HIGH",
-          "description": "l1da, l2da"
+          "description": "l1da, l2da (before v31) or l1da, L2 DA commitment scheme (from v31)."
         },
         "getPubdataPricingMode": {
           "severity": "HIGH",
@@ -702,7 +722,7 @@
       "targetProject": "shared-zk-stack"
     },
     {
-      "name": "ChainTypeManager",
+      "name": "EraChainTypeManager",
       "address": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
       "type": "Reference",
       "targetType": "Contract",
@@ -983,6 +1003,79 @@
       "function requestL2Transaction(address _contractL2, uint256 _l2Value, bytes _calldata, uint256 _l2GasLimit, uint256 _l2GasPerPubdataByteLimit, bytes[] _factoryDeps, address _refundRecipient) payable returns (bytes32 canonicalTxHash)",
       "function requestL2TransactionToGatewayMailbox(uint256 _chainId, bytes32 _canonicalTxHash, uint64 _expirationTimestamp) returns (bytes32 canonicalTxHash)"
     ],
+    "eth:0x26C45Df28dABb4DC43fC980913C0501cBC3D69F2": [
+      "constructor(address _bridgehubAddr)",
+      "error DefaultAdminTransferNotAllowed()",
+      "error ExecutionDelayNotIncreased(uint32 currentDelay, uint32 newDelay)",
+      "error ExecutionDelayTooLarge(uint32 delay, uint32 maxDelay)",
+      "error NotAZKChain(address addr)",
+      "error RoleAccessDenied(address chainAddress, bytes32 role, address account)",
+      "error TimeNotReached(uint256 expectedTimestamp, uint256 actualTimestamp)",
+      "event BatchPrecommitmentSet(uint256 indexed batchNumber, uint256 indexed untrustedLastL2BlockNumberHint, bytes32 precommitment)",
+      "event BlockCommit(uint256 indexed batchNumber, bytes32 indexed batchHash, bytes32 indexed commitment)",
+      "event BlockExecution(uint256 indexed batchNumber, bytes32 indexed batchHash, bytes32 indexed commitment)",
+      "event BlocksRevert(uint256 totalBatchesCommitted, uint256 totalBatchesVerified, uint256 totalBatchesExecuted)",
+      "event BlocksVerification(uint256 indexed previousLastVerifiedBatch, uint256 indexed currentLastVerifiedBatch)",
+      "event Initialized(uint8 version)",
+      "event NewChainExecutionDelay(address indexed _chainAddress, uint256 _newExecutionDelay)",
+      "event NewExecutionDelay(uint256 _newExecutionDelay)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ReportCommittedBatchRangeZKsyncOS(uint64 indexed batchNumber, uint64 indexed firstBlockNumber, uint64 indexed lastBlockNumber)",
+      "event RoleAdminChanged(address indexed chainAddress, bytes32 indexed role, bytes32 previousAdminRole, bytes32 newAdminRole)",
+      "event RoleGranted(address indexed chainAddress, bytes32 indexed role, address indexed account)",
+      "event RoleRevoked(address indexed chainAddress, bytes32 indexed role, address indexed account)",
+      "function BRIDGE_HUB() view returns (address)",
+      "function COMMITTER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function EXECUTOR_ROLE() view returns (bytes32)",
+      "function MAX_EXECUTION_DELAY() view returns (uint32)",
+      "function OPTIONAL_COMMITTER_ADMIN_ROLE() view returns (bytes32)",
+      "function OPTIONAL_EXECUTOR_ADMIN_ROLE() view returns (bytes32)",
+      "function OPTIONAL_PRECOMMITTER_ADMIN_ROLE() view returns (bytes32)",
+      "function OPTIONAL_PROVER_ADMIN_ROLE() view returns (bytes32)",
+      "function OPTIONAL_REVERTER_ADMIN_ROLE() view returns (bytes32)",
+      "function OPTIONAL_UPGRADER_ADMIN_ROLE() view returns (bytes32)",
+      "function PRECOMMITTER_ROLE() view returns (bytes32)",
+      "function PROVER_ROLE() view returns (bytes32)",
+      "function REVERTER_ROLE() view returns (bytes32)",
+      "function UPGRADER_ROLE() view returns (bytes32)",
+      "function acceptOwnership()",
+      "function addValidator(address _chainAddress, address _validator)",
+      "function addValidatorForChainId(uint256 _chainId, address _validator)",
+      "function addValidatorRoles(address _chainAddress, address _validator, tuple(bool rotatePrecommitterRole, bool rotateCommitterRole, bool rotateReverterRole, bool rotateProverRole, bool rotateExecutorRole, bool rotateUpgraderRole) params)",
+      "function chainExecutionDelay(address _chainAddress) view returns (uint32)",
+      "function commitBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)",
+      "function executeBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)",
+      "function executionDelay() view returns (uint32)",
+      "function getCommittedBatchTimestamp(address _chainAddress, uint256 _l2BatchNumber) view returns (uint256)",
+      "function getExecutionDelay(address _chainAddress) view returns (uint32)",
+      "function getName() view returns (string)",
+      "function getRoleAdmin(address _chainAddress, bytes32 _role) view returns (bytes32)",
+      "function getRoleMember(address _chainAddress, bytes32 _role, uint256 _index) view returns (address)",
+      "function getRoleMemberCount(address _chainAddress, bytes32 _role) view returns (uint256)",
+      "function grantRole(address _chainAddress, bytes32 _role, address _account)",
+      "function hasRole(address _chainAddress, bytes32 _role, address _account) view returns (bool)",
+      "function hasRoleForChainId(uint256 _chainId, bytes32 _role, address _address) view returns (bool)",
+      "function increaseChainExecutionDelay(address _chainAddress, uint32 _newExecutionDelay)",
+      "function initialize(address _initialOwner, uint32 _initialExecutionDelay)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function precommitSharedBridge(address _chainAddress, uint256, bytes)",
+      "function proveBatchesSharedBridge(address _chainAddress, uint256, uint256, bytes)",
+      "function removeValidator(address _chainAddress, address _validator)",
+      "function removeValidatorForChainId(uint256 _chainId, address _validator)",
+      "function removeValidatorRoles(address _chainAddress, address _validator, tuple(bool rotatePrecommitterRole, bool rotateCommitterRole, bool rotateReverterRole, bool rotateProverRole, bool rotateExecutorRole, bool rotateUpgraderRole) params)",
+      "function renounceOwnership()",
+      "function renounceRole(address _chainAddress, bytes32 _role)",
+      "function revertBatchesSharedBridge(address _chainAddress, uint256)",
+      "function revokeRole(address _chainAddress, bytes32 _role, address _account)",
+      "function setChainExecutionDelay(address _chainAddress, uint32 _newExecutionDelay)",
+      "function setExecutionDelay(uint32 _newExecutionDelay)",
+      "function setRoleAdmin(address _chainAddress, bytes32 _role, bytes32 _adminRole)",
+      "function transferOwnership(address newOwner)",
+      "function upgradeChainFromVersion(address _chainAddress, uint256, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata))"
+    ],
     "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1078,79 +1171,6 @@
     ],
     "eth:0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce": [
       "constructor(address _singleton)"
-    ],
-    "eth:0x556DdC1617D7620f56317d2F2002FE440EA9Ad35": [
-      "constructor(address _bridgehubAddr)",
-      "error DefaultAdminTransferNotAllowed()",
-      "error ExecutionDelayNotIncreased(uint32 currentDelay, uint32 newDelay)",
-      "error ExecutionDelayTooLarge(uint32 delay, uint32 maxDelay)",
-      "error NotAZKChain(address addr)",
-      "error RoleAccessDenied(address chainAddress, bytes32 role, address account)",
-      "error TimeNotReached(uint256 expectedTimestamp, uint256 actualTimestamp)",
-      "event BatchPrecommitmentSet(uint256 indexed batchNumber, uint256 indexed untrustedLastL2BlockNumberHint, bytes32 precommitment)",
-      "event BlockCommit(uint256 indexed batchNumber, bytes32 indexed batchHash, bytes32 indexed commitment)",
-      "event BlockExecution(uint256 indexed batchNumber, bytes32 indexed batchHash, bytes32 indexed commitment)",
-      "event BlocksRevert(uint256 totalBatchesCommitted, uint256 totalBatchesVerified, uint256 totalBatchesExecuted)",
-      "event BlocksVerification(uint256 indexed previousLastVerifiedBatch, uint256 indexed currentLastVerifiedBatch)",
-      "event Initialized(uint8 version)",
-      "event NewChainExecutionDelay(address indexed _chainAddress, uint256 _newExecutionDelay)",
-      "event NewExecutionDelay(uint256 _newExecutionDelay)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event ReportCommittedBatchRangeZKsyncOS(uint64 indexed batchNumber, uint64 indexed firstBlockNumber, uint64 indexed lastBlockNumber)",
-      "event RoleAdminChanged(address indexed chainAddress, bytes32 indexed role, bytes32 previousAdminRole, bytes32 newAdminRole)",
-      "event RoleGranted(address indexed chainAddress, bytes32 indexed role, address indexed account)",
-      "event RoleRevoked(address indexed chainAddress, bytes32 indexed role, address indexed account)",
-      "function BRIDGE_HUB() view returns (address)",
-      "function COMMITTER_ROLE() view returns (bytes32)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function EXECUTOR_ROLE() view returns (bytes32)",
-      "function MAX_EXECUTION_DELAY() view returns (uint32)",
-      "function OPTIONAL_COMMITTER_ADMIN_ROLE() view returns (bytes32)",
-      "function OPTIONAL_EXECUTOR_ADMIN_ROLE() view returns (bytes32)",
-      "function OPTIONAL_PRECOMMITTER_ADMIN_ROLE() view returns (bytes32)",
-      "function OPTIONAL_PROVER_ADMIN_ROLE() view returns (bytes32)",
-      "function OPTIONAL_REVERTER_ADMIN_ROLE() view returns (bytes32)",
-      "function OPTIONAL_UPGRADER_ADMIN_ROLE() view returns (bytes32)",
-      "function PRECOMMITTER_ROLE() view returns (bytes32)",
-      "function PROVER_ROLE() view returns (bytes32)",
-      "function REVERTER_ROLE() view returns (bytes32)",
-      "function UPGRADER_ROLE() view returns (bytes32)",
-      "function acceptOwnership()",
-      "function addValidator(address _chainAddress, address _validator)",
-      "function addValidatorForChainId(uint256 _chainId, address _validator)",
-      "function addValidatorRoles(address _chainAddress, address _validator, tuple(bool rotatePrecommitterRole, bool rotateCommitterRole, bool rotateReverterRole, bool rotateProverRole, bool rotateExecutorRole, bool rotateUpgraderRole) params)",
-      "function chainExecutionDelay(address _chainAddress) view returns (uint32)",
-      "function commitBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)",
-      "function executeBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)",
-      "function executionDelay() view returns (uint32)",
-      "function getCommittedBatchTimestamp(address _chainAddress, uint256 _l2BatchNumber) view returns (uint256)",
-      "function getExecutionDelay(address _chainAddress) view returns (uint32)",
-      "function getName() view returns (string)",
-      "function getRoleAdmin(address _chainAddress, bytes32 _role) view returns (bytes32)",
-      "function getRoleMember(address _chainAddress, bytes32 _role, uint256 _index) view returns (address)",
-      "function getRoleMemberCount(address _chainAddress, bytes32 _role) view returns (uint256)",
-      "function grantRole(address _chainAddress, bytes32 _role, address _account)",
-      "function hasRole(address _chainAddress, bytes32 _role, address _account) view returns (bool)",
-      "function hasRoleForChainId(uint256 _chainId, bytes32 _role, address _address) view returns (bool)",
-      "function increaseChainExecutionDelay(address _chainAddress, uint32 _newExecutionDelay)",
-      "function initialize(address _initialOwner, uint32 _initialExecutionDelay)",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function precommitSharedBridge(address _chainAddress, uint256, bytes)",
-      "function proveBatchesSharedBridge(address _chainAddress, uint256, uint256, bytes)",
-      "function removeValidator(address _chainAddress, address _validator)",
-      "function removeValidatorForChainId(uint256 _chainId, address _validator)",
-      "function removeValidatorRoles(address _chainAddress, address _validator, tuple(bool rotatePrecommitterRole, bool rotateCommitterRole, bool rotateReverterRole, bool rotateProverRole, bool rotateExecutorRole, bool rotateUpgraderRole) params)",
-      "function renounceOwnership()",
-      "function renounceRole(address _chainAddress, bytes32 _role)",
-      "function revertBatchesSharedBridge(address _chainAddress, uint256)",
-      "function revokeRole(address _chainAddress, bytes32 _role, address _account)",
-      "function setChainExecutionDelay(address _chainAddress, uint32 _newExecutionDelay)",
-      "function setExecutionDelay(uint32 _newExecutionDelay)",
-      "function setRoleAdmin(address _chainAddress, bytes32 _role, bytes32 _adminRole)",
-      "function transferOwnership(address newOwner)",
-      "function upgradeChainFromVersion(address _chainAddress, uint256, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata))"
     ],
     "eth:0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4": [
       "constructor(address _adminFacet, address _admin)",
@@ -1281,17 +1301,17 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "shared-zk-stack/Diamond": "0xf8ceb7cc4613a5afb74ab717732cca35ae7826aaa6ba9643d656020bdb3cec08",
+    "shared-zk-stack/Diamond": "0xd2834698a75183a2a507735400ef998edd6d0efa0643b582577a0932c8c15866",
     "shared-zk-stack/DualVerifier": "0x9378cf0ffe4ba30c57c7c2d9c7eefefc31c62efe9c6be4c177a9fbc3fedd4970",
     "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock_v31": "0xc571d18f4183eb072d6806cece41853993e1559b69d2a903b1d707b05ad8385f",
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 26326682 },
+  "usedBlockNumbers": { "ethereum": 26334851 },
   "permissionsConfigHash": "0x5a6701e21a3025f1ae6b97f034f87c2f9833377ff76cde349ed7e127b8e5b7d0",
   "modelledAgainst": {
-    "shared-zk-stack": "0xcddcd0a18868fcd04d7ceadd5de3410ecdb121dcc2aabbe07ac6228da07a1a28"
+    "shared-zk-stack": "0xf5aeb32bdc1483fa310e04bffe1b607bd86c7ef9b4caed29d8c0d422821460d7"
   },
   "permissions": {
     "eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e": {
@@ -1496,7 +1516,7 @@
         {
           "permission": "interact",
           "from": "eth:0x1adF137F59949c9081157D5de1e002D1C992071F",
-          "description": "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains.",
+          "description": "manage the shared ValidatorTimelock contract address and the admin role, register upgrades and patch upgrades together with the verifier of each protocol version (and set their deadlines), execute upgrades, freeze, revert batches, deactivate Priority Mode and set permissioned validators and fee params for all connected chains.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
@@ -1505,7 +1525,25 @@
         {
           "permission": "interact",
           "from": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-          "description": "set critical contract addresses for the shared cluster, register settlement layers, pause and unpause migrations and the bridge and manage zk chain registration.",
+          "description": "set critical contract addresses for the shared cluster (asset router, CTM deployer, message root, chain asset handler, chain registration sender), add and remove chain type managers, whitelist settlement layers, pause and unpause the bridge and register already deployed zk chains.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x433b6ff15824806c8C14EcE4a6FE1f1909F7da2F",
+          "description": "add and remove the FFLONK/PLONK verifier pairs that proofs of ZKsync OS chains can select by version.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7fd8B995fc27aD7de97853e65B17CaCfc0a573Cc",
+          "description": "pause / unpause the tracker and re-sync its ChainAssetHandler reference from the Bridgehub.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
@@ -1514,7 +1552,7 @@
         {
           "permission": "interact",
           "from": "eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
-          "description": "pause / unpause the bridge.",
+          "description": "pause / unpause the bridge and set the L1AssetTracker that enforces the per-chain balances.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
@@ -1523,7 +1561,7 @@
         {
           "permission": "interact",
           "from": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-          "description": "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains.",
+          "description": "manage the shared ValidatorTimelock contract address and the admin role, register upgrades and patch upgrades together with the verifier of each protocol version (and set their deadlines), execute upgrades, freeze, revert batches, deactivate Priority Mode and set permissioned validators and fee params for all connected chains.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
@@ -1541,7 +1579,7 @@
         {
           "permission": "interact",
           "from": "eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076",
-          "description": "pause, resume chain migrations.",
+          "description": "pause and resume chain migrations, pause and unpause the handler, re-sync its MessageRoot and AssetRouter references from the Bridgehub and backfill historical migration intervals of chains that settled on the legacy Gateway.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
@@ -1603,6 +1641,15 @@
         },
         {
           "permission": "upgrade",
+          "from": "eth:0x419A453e690CEac6E57C7798a375cbB2454dd919",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD",
           "role": "admin",
           "via": [
@@ -1616,6 +1663,24 @@
           "role": "admin",
           "via": [
             { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7fd8B995fc27aD7de97853e65B17CaCfc0a573Cc",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8509eA34177B051110826A36621C1C52C9752CAA",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xff3582a0310916cd62442A4CA88Bf1C757D68938" },
             { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
           ]
         },
@@ -1658,6 +1723,15 @@
         {
           "permission": "upgrade",
           "from": "eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xE220059BBA4684BF2Cf0B9E6E5A9DF94D9fb90E9",
           "role": "admin",
           "via": [
             { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
@@ -1730,12 +1804,22 @@
         },
         {
           "permission": "upgrade",
+          "from": "eth:0x419A453e690CEac6E57C7798a375cbB2454dd919",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD",
           "role": "admin"
         },
         {
           "permission": "upgrade",
           "from": "eth:0x6078F6B379f103de1Aa912dc46bb8Df0c8809860",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7fd8B995fc27aD7de97853e65B17CaCfc0a573Cc",
           "role": "admin"
         },
         {
@@ -1761,6 +1845,11 @@
         {
           "permission": "upgrade",
           "from": "eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xE220059BBA4684BF2Cf0B9E6E5A9DF94D9fb90E9",
           "role": "admin"
         }
       ]
@@ -1822,25 +1911,37 @@
         {
           "permission": "interact",
           "from": "eth:0x1adF137F59949c9081157D5de1e002D1C992071F",
-          "description": "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains.",
+          "description": "manage the shared ValidatorTimelock contract address and the admin role, register upgrades and patch upgrades together with the verifier of each protocol version (and set their deadlines), execute upgrades, freeze, revert batches, deactivate Priority Mode and set permissioned validators and fee params for all connected chains.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-          "description": "set critical contract addresses for the shared cluster, register settlement layers, pause and unpause migrations and the bridge and manage zk chain registration.",
+          "description": "set critical contract addresses for the shared cluster (asset router, CTM deployer, message root, chain asset handler, chain registration sender), add and remove chain type managers, whitelist settlement layers, pause and unpause the bridge and register already deployed zk chains.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x433b6ff15824806c8C14EcE4a6FE1f1909F7da2F",
+          "description": "add and remove the FFLONK/PLONK verifier pairs that proofs of ZKsync OS chains can select by version.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7fd8B995fc27aD7de97853e65B17CaCfc0a573Cc",
+          "description": "pause / unpause the tracker and re-sync its ChainAssetHandler reference from the Bridgehub.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
-          "description": "pause / unpause the bridge.",
+          "description": "pause / unpause the bridge and set the L1AssetTracker that enforces the per-chain balances.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-          "description": "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains.",
+          "description": "manage the shared ValidatorTimelock contract address and the admin role, register upgrades and patch upgrades together with the verifier of each protocol version (and set their deadlines), execute upgrades, freeze, revert batches, deactivate Priority Mode and set permissioned validators and fee params for all connected chains.",
           "role": ".owner"
         },
         {
@@ -1852,7 +1953,7 @@
         {
           "permission": "interact",
           "from": "eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076",
-          "description": "pause, resume chain migrations.",
+          "description": "pause and resume chain migrations, pause and unpause the handler, re-sync its MessageRoot and AssetRouter references from the Bridgehub and backfill historical migration intervals of chains that settled on the legacy Gateway.",
           "role": ".owner"
         },
         {
@@ -1924,6 +2025,11 @@
         {
           "permission": "upgrade",
           "from": "eth:0x1adF137F59949c9081157D5de1e002D1C992071F",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8509eA34177B051110826A36621C1C52C9752CAA",
           "role": "admin"
         }
       ]

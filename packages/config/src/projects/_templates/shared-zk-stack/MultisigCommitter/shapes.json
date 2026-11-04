@@ -4,5 +4,11 @@
     "address": "eth:0x3443d387484BA445d12099c2bE1529eB488Af870",
     "chain": "ethereum",
     "blockNumber": 26327178
+  },
+  "MultisigCommitter_v31.sol": {
+    "hash": "0xd504136c807eb6231a00f5a520bdd6e152e37fe10b97ac7470fe873426b657d5",
+    "address": "eth:0x434f65c3875cAF1E4914Bd6557E519b6d5a54dAd",
+    "chain": "ethereum",
+    "blockNumber": 26334746
   }
 }
