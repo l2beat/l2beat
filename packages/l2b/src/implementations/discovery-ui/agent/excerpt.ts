@@ -38,8 +38,9 @@ export function excerptAt(
   for (let line = start; line <= end; line++) {
     numbered.push(`${String(line).padStart(width)}  ${lines[line - 1] ?? ''}`)
   }
-  // Long lines above the snippet go first, so its own line stays in.
-  let length = numbered.join('\n').length
+  // Long lines above the snippet go first, so its own line stays in. Lines
+  // after it are cut at the end anyway, so they do not count here.
+  let length = numbered.slice(0, match.line - start + 1).join('\n').length
   let dropped = 0
   while (length > EXCERPT_CHARACTERS_MAX && start + dropped < match.line) {
     length -= (numbered[dropped]?.length ?? 0) + 1

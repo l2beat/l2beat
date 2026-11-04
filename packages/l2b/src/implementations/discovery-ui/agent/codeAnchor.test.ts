@@ -129,6 +129,21 @@ describe('excerptAt with long lines before the snippet', () => {
     expect(excerpt.includes('target();')).toEqual(true)
     expect(excerpt.length <= EXCERPT_CHARACTERS_MAX).toEqual(true)
   })
+
+  it('keeps the function header when only lines after the snippet are long', () => {
+    const long = `    bytes x = "${'a'.repeat(1_000)}";`
+    const after = Array.from({ length: 9 }, () => long)
+    const code = [
+      'contract Wide {',
+      '  function f() external {',
+      '    target();',
+    ]
+      .concat([...after, '  }', '}'])
+      .join('\n')
+    const excerpt = excerptFor(code, 'target();')
+    expect(excerpt.includes('function f()')).toEqual(true)
+    expect(excerpt.includes('target();')).toEqual(true)
+  })
 })
 
 describe(cutText.name, () => {
