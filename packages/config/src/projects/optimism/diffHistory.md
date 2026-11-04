@@ -1,15 +1,15 @@
-Generated with discovered.json: 0x51ce429c5af57603e1f2467f45990d9f5996f1d9
+Generated with discovered.json: 0x54691d7d608e05db5c04651c398e47b6d24ad3d6
 
-# Diff at Wed, 04 Nov 2026 12:46:12 GMT:
+# Diff at Wed, 04 Nov 2026 12:54:32 GMT:
 
-- id: 1d79844a
+- id: cc3cbf68
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
 - comparing to: main@5c469c670c4ef8d6f95fbe43de6aaa352e9c32f1 block: 1792587967
 - current timestamp: 1792587967
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Rename the L2beat-named custom fields to ETHbeat after the rebrand.
 
 ## Config/verification related changes
 
@@ -22,6 +22,16 @@ discovery. Values are for block 1792587967 (main branch discovery), not current.
     +++ description: Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.
       values.timeSinceLastL2beatInteraction:
 -        "25d 22h"
+    }
+```
+
+```diff
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) [GnosisSafe] {
+    +++ description: None
+      values.isL2beatStillAnOwner:
+-        true
+      values.isETHbeatStillAnOwner:
++        true
     }
 ```
 

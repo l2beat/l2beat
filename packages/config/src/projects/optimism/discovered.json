@@ -1,7 +1,7 @@
 {
   "name": "optimism",
   "timestamp": 1792587967,
-  "configHash": "0xf2be4fcb89179b4383d68dc9b30237a93b54b02797694defa431112a24715ebf",
+  "configHash": "0x43a52895e85936e357d751d1da754a5aef9c149e10648ad4a8bd33e2ef98e900",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -1900,7 +1900,7 @@
         "GnosisSafe_modules": [
           "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748"
         ],
-        "isL2beatStillAnOwner": true,
+        "isETHbeatStillAnOwner": true,
         "multisigThreshold": "10 of 13 (77%)",
         "nonce": 71,
         "VERSION": "1.3.0"

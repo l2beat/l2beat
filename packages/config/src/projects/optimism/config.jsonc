@@ -60,7 +60,7 @@
         }
       ],
       "fields": {
-        "isL2beatStillAnOwner": {
+        "isETHbeatStillAnOwner": {
           "handler": {
             "type": "call",
             "method": "isOwner",
