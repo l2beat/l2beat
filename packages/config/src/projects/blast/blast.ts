@@ -129,6 +129,27 @@ export const blast: ScalingProject = opStackL2({
       description:
         'Escrow for ETH that is invested into yield-bearing contracts such as stETH.',
     }),
+    // DAI in the BlastExit contracts backs USDB, which is counted by its L2 supply
+    discovery.getEscrowDetails({
+      address: ChainSpecificAddress(
+        'eth:0x9D31771458B421C7EA8A06CB8D12663E91617869',
+      ),
+      name: 'BlastExit',
+      tokens: ['ETH'],
+      ...ESCROW.CANONICAL_ADD_TA,
+      description:
+        'Shutdown claim contract holding ETH withdrawn from the Interest-bearing ETH Vault, claimable against a Merkle root of final balances.',
+    }),
+    discovery.getEscrowDetails({
+      address: ChainSpecificAddress(
+        'eth:0x23eA8c6ACEb5673BBd712137cE2Aa33db36CB513',
+      ),
+      name: 'BlastExit2',
+      tokens: ['ETH'],
+      ...ESCROW.CANONICAL_ADD_TA,
+      description:
+        'Second shutdown claim contract holding ETH withdrawn from the Interest-bearing ETH Vault, claimable against a Merkle root of final balances.',
+    }),
   ],
   isNodeAvailable: true,
   associatedTokens: ['BLAST'],
