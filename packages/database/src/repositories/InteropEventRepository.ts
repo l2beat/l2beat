@@ -308,7 +308,7 @@ export class InteropEventRepository extends BaseRepository {
         ) sides
         GROUP BY chain, token
       ),
-      events AS (
+      events AS MATERIALIZED (
         SELECT plugin, chain, timestamp,
           coalesce(args ->> '$dstChain', args ->> '$srcChain') AS counterpart,
           ${token} AS token,
