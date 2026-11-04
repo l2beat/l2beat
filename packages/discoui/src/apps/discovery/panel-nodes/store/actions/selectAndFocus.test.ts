@@ -10,7 +10,7 @@ describe(selectAndFocus.name, () => {
       subnodes: [makeNode('member')],
     }
 
-    const result = selectAndFocus(makeState([group]), 'member')
+    const result = selectAndFocus(makeState([group]), ['member'])
 
     expect(result.selected).toEqual(['member'])
   })
@@ -19,9 +19,24 @@ describe(selectAndFocus.name, () => {
     const group = { ...makeNode('group'), subnodes: [makeNode('member')] }
     const state = { ...makeState([group]), selected: ['group'] }
 
-    const result = selectAndFocus(state, 'member')
+    const result = selectAndFocus(state, ['member'])
 
     expect(result.selected).toEqual([])
+  })
+
+  it('selects every drawn contract and centers the first', () => {
+    const state = makeState([makeNode('first'), makeNode('second')])
+
+    const result = selectAndFocus(state, ['first', 'second'])
+
+    expect(result.selected).toEqual(['first', 'second'])
+    expect(result.transform).not.toEqual(undefined)
+  })
+
+  it('clears the selection when nothing is drawn', () => {
+    const state = { ...makeState([makeNode('a')]), selected: ['a'] }
+
+    expect(selectAndFocus(state, []).selected).toEqual([])
   })
 })
 

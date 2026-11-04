@@ -8,6 +8,7 @@ import type {
 } from '../../../api/types'
 import { ErrorState } from '../../../components/ErrorState'
 import { LoadingState } from '../../../components/LoadingState'
+import { AgentNote } from '../agent/AgentNote'
 import { useProjectQueryOptions } from '../hooks/projectQuery'
 import { usePanelStore } from '../store/panel-store'
 import { Controls } from './controls/Controls'
@@ -15,9 +16,8 @@ import type { AutoGroup } from './store/actions/loadNodes'
 import type { Field, Node } from './store/State'
 import { useStore as useNodeStore, useStore } from './store/store'
 import { NODE_WIDTH } from './store/utils/constants'
+import { drawnNodeIds } from './store/utils/drawnNodeIds'
 import { getGraphProjection } from './store/utils/graphProjection'
-import { expandedNodes } from './store/utils/renderGraph'
-import { topLevelByDescendant } from './store/utils/subnodes'
 import { Viewport } from './view/Viewport'
 
 // Leaf ids of every node that is selected or sits inside a selected one, so a
@@ -61,6 +61,7 @@ export function NodesPanel() {
         <NodesSync data={response.data} project={project} />
         <Viewport />
         <Controls />
+        <AgentNote project={project} />
       </div>
     </div>
   )
@@ -223,13 +224,10 @@ function useSynchronizeSelection() {
     }
     lastGlobal.current = selectedGlobal
     // A contract in an open group is drawn on its own, so it is selected
-    // on its own; only a closed group stands in for its members. One not
-    // drawn clears the graph's selection, which would otherwise win back.
-    const containing = topLevelByDescendant(expandedNodes(nodes)).get(
-      firstGlobal,
-    )
+    // on its own; only a closed group stands in for its members. When none
+    // is drawn, the graph's selection clears, or it would win back.
     isGraphOurs.current = true
-    selectAndFocus(containing?.id ?? firstGlobal)
+    selectAndFocus(drawnNodeIds(nodes, selectedGlobal))
   }, [
     selectedGlobal,
     selectGlobal,

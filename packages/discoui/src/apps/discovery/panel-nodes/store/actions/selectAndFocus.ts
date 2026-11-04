@@ -1,8 +1,13 @@
 import type { State } from '../State'
 import { expandedNodes } from '../utils/renderGraph'
 
-export function selectAndFocus(state: State, selected: string): Partial<State> {
-  const node = expandedNodes(state.nodes).find((x) => x.id === selected)
+// Selects what the graph draws for a selection and centers the first.
+export function selectAndFocus(
+  state: State,
+  selected: readonly string[],
+): Partial<State> {
+  const first = selected[0]
+  const node = expandedNodes(state.nodes).find((x) => x.id === first)
 
   if (!node) {
     return { selected: [] }
@@ -36,6 +41,6 @@ export function selectAndFocus(state: State, selected: string): Partial<State> {
       offsetX,
       offsetY,
     },
-    selected: [selected],
+    selected: [...selected],
   }
 }
