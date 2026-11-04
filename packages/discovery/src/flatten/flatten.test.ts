@@ -825,6 +825,37 @@ describe('flatten', () => {
     )
   })
 
+  it('resolves names imported twice in one import list', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import { Empty, Empty } from "./Errors.sol";
+      contract Root {
+          function f() public pure { revert Empty(); }
+      }
+    `,
+    )
+    const errorsFile = sol('Errors.sol', 'error Empty();')
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, errorsFile],
+      [],
+      { includeAll: true },
+    )
+
+    expect(flattened).toEqual(
+      dedent(`
+      error Empty();
+
+      contract Root {
+          function f() public pure { revert Empty(); }
+      }
+    `),
+    )
+  })
+
   it('../ in unit name', () => {
     const rootFile = sol(
       'a/b/c/Root.sol',

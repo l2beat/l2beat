@@ -134,10 +134,8 @@ export class ParsedFilesManager {
         file.topLevelDeclarations.map((c) => c.name),
       )
 
-      file.importDirectives = result.resolveFileImports(
-        file,
-        result.remappings,
-        alreadyImportedMap,
+      file.importDirectives = uniqueImports(
+        result.resolveFileImports(file, result.remappings, alreadyImportedMap),
       )
     }
 
@@ -541,6 +539,14 @@ function isContractCodeAccess(n: AST.BaseASTNode): boolean {
   if (expression.type !== 'FunctionCall') return false
   const callee = (expression as AST.FunctionCall).expression
   return callee.type === 'Identifier' && callee.name === 'type'
+}
+
+function uniqueImports(imports: ImportDirective[]): ImportDirective[] {
+  const byKey = new Map<string, ImportDirective>()
+  for (const i of imports) {
+    byKey.set(`${i.absolutePath}:${i.originalName}:${i.importedName}`, i)
+  }
+  return [...byKey.values()]
 }
 
 function sha1(s: string): string {
