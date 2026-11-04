@@ -11,7 +11,7 @@ export const MCP_PATH = '/api/agent/mcp'
 const PROTOCOL_VERSIONS = ['2025-11-25', '2025-06-18', '2025-03-26']
 
 const INSTRUCTIONS = [
-  "DiscoUI is L2BEAT's discovery UI. The researcher has it open and sees your answers there.",
+  "DiscoUI is ETHBEAT's discovery UI. The researcher has it open and sees your answers there.",
   'Read what they look at with `context` first: "this" means their selection. Point at your answer with `show`, and change their graph with `view` or `control_map` when they ask.',
   'For "who controls this" start with `permissions`, for "show me the power structure" with `control_map`.',
   "DiscoUI shows each source behind a 12-line note, so its line numbers are the .flat file's plus 12. show reports DiscoUI's; cite those to the researcher.",
