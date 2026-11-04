@@ -122,7 +122,7 @@ export const etherfi: BaseProject = {
       name: 'EigenLayer',
       icon: 'eigenlayer',
       description:
-        "Holds the native stake of EigenPod-backed nodes: their validators' withdrawal credentials point at an EigenLayer EigenPod, so that ETH sits inside EigenLayer contracts. The pods and EigenLayer's DelegationManager, EigenPodManager and StrategyManager are upgradeable by EigenLayer governance, through its timelock or at once by its community multisig, and since the slashing release an AVS can slash delegated stake, but only stake an operator has allocated to it. Exits from these pods also wait out EigenLayer's withdrawal delay. A node created without a pod is itself its validators' withdrawal address and requests exits directly through the EIP-7002 system contract, outside EigenLayer.",
+        "Holds the native stake of EigenPod-backed nodes: their validators' withdrawal credentials point at an EigenLayer EigenPod, so that ETH sits inside EigenLayer contracts. The pods and EigenLayer's DelegationManager, EigenPodManager and StrategyManager are upgradeable by EigenLayer governance, in some cases without delay, and since the slashing release an AVS can slash delegated stake, but only stake an operator has allocated to it. Exits from these pods also wait out EigenLayer's withdrawal delay. A node created without a pod is itself its validators' withdrawal address and requests exits directly through the EIP-7002 system contract, outside EigenLayer.",
     },
     {
       type: 'tracked',

@@ -1,4 +1,4 @@
-ether.fi is a liquid staking protocol for ETH. Deposit ETH for {{eethSymbol}} (rebasing) or its wrapper {{weethSymbol}}, and the pool stakes it both through its own permissioned operators and through third-party liquid staking tokens it accepts. Operators are approved by a multisig and start running validators only after a timelock, a committee sets the exchange rate, and privileged functions are controlled by multisigs behind timelocks.
+ether.fi is a liquid staking protocol for ETH. Deposit ETH for {{eethSymbol}} (rebasing) or its wrapper {{weethSymbol}}, and the pool stakes it both through its own permissioned operators and through third-party liquid staking tokens it accepts. Operators are whitelisted, a committee sets the exchange rate, and privileged functions are controlled by multisigs behind timelocks.
 
 ![ether.fi deposit, staking and exchange-rate flow](/images/architecture/etherfi-deposits.png#center)
 
@@ -14,4 +14,4 @@ eETH is a staking aggregator rather than a single validator set. ETH deposits fu
 
 ### Who holds the keys
 
-Upgrades and every role grant sit behind a {{upgradeDelay}} timelock. A shorter {{operatingDelay}} timelock tunes parameters within fixed ceilings and registers validator spawners, the accounts that register validator keys, so a newly whitelisted operator can only run validators after that delay. Multisigs handle the rest without delay: whitelisting and removing operators, pausing and blacklisting.
+Upgrades and every role grant sit behind a {{upgradeDelay}} timelock. A shorter {{operatingDelay}} timelock tunes parameters within fixed ceilings and registers validator spawners, the accounts that register validator keys, so a newly whitelisted operator can only run validators after that delay. Whitelisting and removing operators, pausing and blacklisting take effect without delay.
