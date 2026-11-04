@@ -32,11 +32,12 @@ export function sortRows(
 }
 
 // Numbers by value, before text, so decimals and negatives order right.
-// Integers compare exactly: uint256 values pass 2^53.
+// Plain decimals compare exactly: uint256 values and token amounts pass 2^53.
 function compareCells(a: string, b: string): number {
-  if (isIntegerText(a) && isIntegerText(b)) {
-    const difference = BigInt(a) - BigInt(b)
-    return difference === 0n ? 0 : difference < 0n ? -1 : 1
+  const exactA = decimalOf(a)
+  const exactB = decimalOf(b)
+  if (exactA !== undefined && exactB !== undefined) {
+    return compareDecimals(exactA, exactB)
   }
   const x = Number(a)
   const y = Number(b)
@@ -46,10 +47,32 @@ function compareCells(a: string, b: string): number {
   return a.localeCompare(b, 'en', { numeric: true })
 }
 
-function isIntegerText(text: string): boolean {
-  const digits = text.startsWith('-') ? text.slice(1) : text
-  if (digits.length === 0) return false
-  for (const char of digits) {
+// The value is units / 10^scale.
+interface Decimal {
+  units: bigint
+  scale: number
+}
+
+function decimalOf(text: string): Decimal | undefined {
+  const isNegative = text.startsWith('-')
+  const body = isNegative ? text.slice(1) : text
+  const parts = body.split('.')
+  const whole = parts[0] ?? ''
+  const fraction = parts[1] ?? ''
+  if (parts.length > 2 || whole.length + fraction.length === 0) return undefined
+  if (!isDigits(whole) || !isDigits(fraction)) return undefined
+  const units = BigInt(`0${whole}${fraction}`)
+  return { units: isNegative ? -units : units, scale: fraction.length }
+}
+
+function compareDecimals(a: Decimal, b: Decimal): number {
+  const left = a.units * 10n ** BigInt(b.scale)
+  const right = b.units * 10n ** BigInt(a.scale)
+  return left === right ? 0 : left < right ? -1 : 1
+}
+
+function isDigits(text: string): boolean {
+  for (const char of text) {
     if (char < '0' || char > '9') return false
   }
   return true
