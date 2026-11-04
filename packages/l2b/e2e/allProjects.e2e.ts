@@ -1,6 +1,7 @@
 import { ConfigReader, getDiscoveryPaths } from '@l2beat/discovery'
 import { expect } from 'earl'
 import type { Server } from 'http'
+import { AgentTabs } from '../src/implementations/discovery-ui/agent/tabs'
 import { createDiscoveryUiApp } from '../src/implementations/discovery-ui/main'
 import type { ApiProjectResponse } from '../src/implementations/discovery-ui/types'
 
@@ -15,7 +16,10 @@ describe('DiscoUI backend serves every project', function () {
   let baseUrl: string
 
   before((done) => {
-    server = createDiscoveryUiApp({ readonly: false }).listen(0, () => {
+    server = createDiscoveryUiApp({
+      readonly: false,
+      agentTabs: new AgentTabs(),
+    }).listen(0, () => {
       const address = server.address()
       expect(address).not.toBeA(String)
       expect(address).not.toBeNullish()
