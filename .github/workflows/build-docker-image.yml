@@ -38,6 +38,14 @@ jobs:
       TURBO_API: ${{ secrets.TURBO_API }}
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
     steps:
+      # Every Coolify app pulls `:latest`, so a build from a branch would
+      # replace what staging and prod run.
+      - name: Refuse to build outside main
+        if: github.ref != 'refs/heads/main'
+        run: |
+          echo "::error title=Deploys run from main only::This workflow builds the image staging and prod pull. Run it from main."
+          exit 1
+
       - parallel:
           - name: Check out code
             uses: actions/checkout@v6
@@ -57,12 +65,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # Every Coolify app pulls `:latest`, so a build from any other branch
-      # would replace what staging and prod run on their next deploy.
-      - name: Warn that a branch build is not deployed
-        if: github.ref != 'refs/heads/main'
-        run: echo "::warning title=Branch build not deployed::Only main builds get the latest tag, which every Coolify app pulls. This image is tagged ${{ github.sha }} only, so deploys in this run redeploy main's image."
-
       - name: Build and push Docker image
         uses: docker/build-push-action@v7
         with:
@@ -70,8 +72,8 @@ jobs:
           file: ${{ inputs.dockerfile }}
           push: true
           tags: |
+            ghcr.io/${{ github.repository }}/${{ inputs.project }}:latest
             ghcr.io/${{ github.repository }}/${{ inputs.project }}:${{ github.sha }}
-            ${{ github.ref == 'refs/heads/main' && format('ghcr.io/{0}/{1}:latest', github.repository, inputs.project) || '' }}
           build-args: |
             TURBO_TEAM=${{ secrets.TURBO_TEAM }}
             ${{ inputs.extra_build_args }}
