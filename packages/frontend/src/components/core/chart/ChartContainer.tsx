@@ -58,7 +58,8 @@ export function ChartContainer<T extends { timestamp: number }>({
   isLoading?: boolean
   /** The data is a previous query's, kept on screen while this one loads. */
   isPlaceholderData: boolean
-  size?: 'regular' | 'small'
+  /** `fill` takes the parent's height, e.g. a sparkline's. */
+  size?: 'regular' | 'small' | 'fill'
   className?: string
 }) {
   // Building a chart blocks the main thread, so build each one only when it
@@ -81,7 +82,7 @@ export function ChartContainer<T extends { timestamp: number }>({
       <div
         ref={ref}
         data-chart-container
-        className="group relative"
+        className={cn('group relative', size === 'fill' && 'h-full')}
         aria-busy={isPlaceholderData || undefined}
       >
         <ChartSettledSize
@@ -89,6 +90,7 @@ export function ChartContainer<T extends { timestamp: number }>({
             size === 'regular' &&
               'h-[188px] min-h-[188px] w-full group-data-project-page/section-wrapper:max-md:h-[50vh] group-data-project-page/section-wrapper:max-md:min-h-[50vh] md:h-[228px] md:min-h-[228px] group-data-project-page/section-wrapper:md:h-[300px] 2xl:h-[258px] 2xl:min-h-[258px]',
             size === 'small' && 'h-[114px] min-h-[114px] w-full',
+            size === 'fill' && 'size-full',
             className,
           )}
         >
@@ -129,12 +131,12 @@ export function ChartContainer<T extends { timestamp: number }>({
         {!hasData &&
           !isLoading &&
           !(noDataSourcesSelected && shouldMountChart) && (
-            <ChartNoDataState size={size} />
+            <ChartNoDataState size={size === 'regular' ? 'regular' : 'small'} />
           )}
         {noDataSourcesSelected && !isLoading && shouldMountChart && (
           <ChartNoDataSourceState message={noDataSourceMessage} />
         )}
-        {shouldMountChart && size !== 'small' && (
+        {shouldMountChart && size === 'regular' && (
           <Logo
             animated={false}
             className={cn(
@@ -146,7 +148,7 @@ export function ChartContainer<T extends { timestamp: number }>({
             )}
           />
         )}
-        {shouldMountChart && size !== 'small' && project && (
+        {shouldMountChart && size === 'regular' && project && (
           <ChartProjectLogo
             project={project}
             className={cn(

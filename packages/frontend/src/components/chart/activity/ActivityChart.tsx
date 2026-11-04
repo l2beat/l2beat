@@ -19,12 +19,12 @@ import {
   ChartTooltipWrapper,
   getTooltipEntries,
 } from '~/components/core/chart/ChartTooltip'
-import { CHART_GRADIENTS } from '~/components/core/chart/gradients'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import {
   type ChartSeries,
   TimeSeriesChart,
 } from '~/components/core/chart/TimeSeriesChart'
+import { tinted } from '~/components/core/chart/tint'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { ActivityMetric } from '~/pages/layer2s/activity/components/ActivityMetricContext'
 import type { ActivityResolution } from '~/server/features/layer2s/activity/utils/getActivityResolution'
@@ -99,19 +99,16 @@ export function ActivityChart({
 
   const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
 
-  const projectsGradient = CHART_GRADIENTS[typeToGradient(type)]
   const series: ChartSeries<SeriesKey, ActivityChartDataPoint>[] = [
     {
       key: 'ethereum',
-      stroke: CHART_GRADIENTS.ethereum.stroke,
-      fill: CHART_GRADIENTS.ethereum.fill,
+      ...tinted(chartMeta.ethereum.color),
     },
     ...(project.id !== ProjectId.ETHEREUM
       ? [
           {
             key: 'projects' as const,
-            stroke: projectsGradient.stroke,
-            fill: projectsGradient.fill,
+            ...tinted(typeToColor(type)),
           },
         ]
       : []),
@@ -218,19 +215,6 @@ export function ActivityCustomTooltip<
       </div>
     </ChartTooltipWrapper>
   )
-}
-
-function typeToGradient(type: ActivityChartType) {
-  switch (type) {
-    case 'Rollups':
-      return 'pink'
-    case 'ValidiumsAndOptimiums':
-      return 'cyan'
-    case 'Others':
-      return 'yellow'
-    default:
-      assertUnreachable(type)
-  }
 }
 
 function typeToColor(type: ActivityChartType) {

@@ -7,8 +7,8 @@ import {
   ChartTooltipValue,
   ChartTooltipWrapper,
 } from '~/components/core/chart/ChartTooltip'
-import { CHART_GRADIENTS } from '~/components/core/chart/gradients'
 import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
+import { tinted } from '~/components/core/chart/tint'
 import type { ActivityResolution } from '~/server/features/layer2s/activity/utils/getActivityResolution'
 import { formatRange } from '~/utils/dates'
 
@@ -57,8 +57,7 @@ export function ActivityRatioChart({
         series={[
           {
             key: 'ratio',
-            stroke: chartMeta.ratio.color,
-            fill: CHART_GRADIENTS.emerald.fill,
+            ...tinted(chartMeta.ratio.color),
           },
         ]}
         yAxis={{

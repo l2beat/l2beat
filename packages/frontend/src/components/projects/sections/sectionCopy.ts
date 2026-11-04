@@ -80,7 +80,7 @@ export function hostChainRisksText(riskCount: number | undefined) {
 /** One sentence per line on the page. */
 export const UNDER_REVIEW_DESCRIPTION = [
   'The information in the section might be incomplete or outdated.',
-  'The L2BEAT Team is working to research & validate the content before publishing.',
+  'The ETHBEAT Team is working to research & validate the content before publishing.',
 ] as const
 
 /** Shown after a bold "Note:". */

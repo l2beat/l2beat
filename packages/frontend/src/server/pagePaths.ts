@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { RENAME_ANNOUNCEMENT_PATH } from '~/consts/siteName'
 import { getCollection } from '~/content/getCollection'
 import { env } from '~/env'
 import {
@@ -48,6 +49,7 @@ export const STATIC_PAGE_PATHS = [
   '/native-rollups',
   '/faq',
   '/about-us',
+  RENAME_ANNOUNCEMENT_PATH,
   '/brand-kit',
   '/changelog',
   '/donate',
@@ -72,9 +74,7 @@ export async function getPages(): Promise<Page[]> {
   if (env.CLIENT_SIDE_OSSIFICATION_ENABLED) {
     paths.push('/ossification')
   }
-  if (env.CLIENT_SIDE_MANDATE_PAGE) {
-    paths.push('/mandate')
-  }
+  paths.push('/mandate')
   if (env.CLIENT_SIDE_GARDEN_ENABLED) {
     paths.push(GARDEN_PATH, SUBMIT_PROTOCOL_PATH, INTEGRATE_CROPS_PATH)
   }

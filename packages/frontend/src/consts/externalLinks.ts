@@ -1,5 +1,5 @@
 export const externalLinks = {
-  x: 'https://x.com/l2beat',
+  x: 'https://x.com/ethbeat_org',
   github: 'https://github.com/l2beat/l2beat',
   linkedin: 'https://www.linkedin.com/company/l2beat/',
   youTube: 'https://www.youtube.com/channel/UCDrl-fNXFjOoykr4lQij9BA/videos',

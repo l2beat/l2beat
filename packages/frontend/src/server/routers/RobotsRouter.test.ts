@@ -55,7 +55,7 @@ describe(createRobotsRouter.name, () => {
     it('points to the sitemap', async () => {
       const body = await getRobotsTxt('production')
 
-      expect(body).toInclude('Sitemap: https://l2beat.com/sitemap.xml')
+      expect(body).toInclude('Sitemap: https://ethbeat.org/sitemap.xml')
     })
   })
 

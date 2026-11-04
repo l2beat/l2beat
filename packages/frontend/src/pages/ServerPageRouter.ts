@@ -25,6 +25,7 @@ import { createL2Router } from './layer2s/L2Router'
 import { createMandateRouter } from './mandate/MandateRouter'
 import { createMultisigReportRouter } from './multisig-report/MutlisigReportRouter'
 import { createNativeRollupsRouter } from './native-rollups/NativeRollupsRouter'
+import { createNewNameRouter } from './new-name/NewNameRouter'
 import { NotFoundHandler } from './not-found/NotFoundHandler'
 import { createOssificationRouter } from './ossification/OssificationRouter'
 import { createPrivacyRouter } from './privacy/PrivacyRouter'
@@ -76,6 +77,7 @@ export function createServerPageRouter(
     createGlossaryRouter,
     createMandateRouter,
     createMultisigReportRouter,
+    createNewNameRouter,
     createPrivacyRouter,
     createDefiRouter,
     createOssificationRouter,

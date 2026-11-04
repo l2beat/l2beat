@@ -15,8 +15,8 @@ import {
   ChartTooltipWrapper,
   getTooltipEntries,
 } from '~/components/core/chart/ChartTooltip'
-import { fillGradient } from '~/components/core/chart/gradients'
 import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
+import { tinted } from '~/components/core/chart/tint'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
@@ -91,11 +91,7 @@ export function MonthlyUpdateActivityChart({
           series={[
             {
               key: 'projects',
-              stroke: 'var(--project-primary)',
-              fill: fillGradient(
-                'var(--project-primary)',
-                'var(--project-secondary)',
-              ),
+              ...tinted('var(--project-primary)'),
             },
           ]}
           yAxis={{

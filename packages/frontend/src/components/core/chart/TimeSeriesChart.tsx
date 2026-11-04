@@ -20,11 +20,6 @@ import { isSeriesSelected, useChart } from './ChartContext'
 import { ChartHoverOverlay, ChartSceneStore } from './ChartHoverOverlay'
 import { NoDataPatternDef } from './defs/NoDataPatternDef'
 import {
-  type FillGradient,
-  GradientDef,
-  type StrokeGradient,
-} from './gradients'
-import {
   getExtent,
   getIsolatedPoints,
   getStackedKeys,
@@ -56,12 +51,12 @@ export interface ChartSeries<K extends string, T = unknown> {
    */
   value0?: (row: T) => Value
   /** Line paint; omit for a fill-only area. */
-  stroke?: string | StrokeGradient
+  stroke?: string
   strokeWidth?: number
   strokeOpacity?: number
   strokeDasharray?: string
   /** Area paint; omit for a line without fill. */
-  fill?: string | FillGradient
+  fill?: string
   fillOpacity?: number
   curve?: 'linear' | 'step' | 'stepAfter' | 'monotone'
   /** Draw across missing values instead of leaving a gap. */
@@ -209,7 +204,7 @@ export function TimeSeriesChart<T, K extends string>({
   const hasRightAxis = !!rightAxis && visible.some((s) => s.axis === 'right')
   const scaleOf = (s: { axis?: 'right' }) =>
     s.axis === 'right' && hasRightAxis ? RIGHT_SCALE : Y_SCALE
-  const ids = useIds()
+  const noDataId = useNoDataId()
 
   const lastSyncedX =
     syncedUntil !== undefined
@@ -226,14 +221,6 @@ export function TimeSeriesChart<T, K extends string>({
           ...(lastSyncedX !== undefined ? [{ x1: lastSyncedX }] : []),
           ...(referenceAreas ?? []),
         ]
-  const gradients = visible.flatMap((s) => [
-    ...(typeof s.fill === 'object'
-      ? [{ id: ids.fill(s.key), gradient: s.fill }]
-      : []),
-    ...(typeof s.stroke === 'object'
-      ? [{ id: ids.stroke(s.key), gradient: s.stroke }]
-      : []),
-  ])
   const isolatedColors = visible.map((s) =>
     s.isolatedDots ? meta[s.key]?.color : undefined,
   )
@@ -356,7 +343,7 @@ export function TimeSeriesChart<T, K extends string>({
               y1: (p) =>
                 p.top[s.key] === null ? null : (p.bottom[s.key] ?? base),
               y2: top,
-              fill: paint(s.fill, ids.fill(s.key)),
+              fill: s.fill,
               fillOpacity: s.fillOpacity ?? 1,
               curve,
               yScale,
@@ -378,7 +365,6 @@ export function TimeSeriesChart<T, K extends string>({
         }
       }
       if (s.stroke) {
-        const stroke = paint(s.stroke, ids.stroke(s.key))
         const strokeOpacity =
           highlight !== undefined && s.key !== highlight
             ? FADED_STROKE_OPACITY
@@ -388,7 +374,7 @@ export function TimeSeriesChart<T, K extends string>({
             line(
               `${edge.id}-stroke`,
               edge.y,
-              stroke,
+              s.stroke,
               strokeOpacity,
               s.connectNulls ? withValue(edge.y) : plotted,
             ),
@@ -436,7 +422,7 @@ export function TimeSeriesChart<T, K extends string>({
             x2: 'x2',
             y1: 'y1',
             y2: 'y2',
-            fill: area.fill ?? `url(#${ids.noData})`,
+            fill: area.fill ?? `url(#${noDataId})`,
             fillOpacity: area.fillOpacity,
             inset: 0,
             key: () => `reference-area-${i}`,
@@ -607,20 +593,16 @@ export function TimeSeriesChart<T, K extends string>({
   const visibleKeys = visible.map((s) => s.key)
   return (
     <>
-      {/* Chart-sized, so stroke gradients across the plot span it. */}
-      <svg
-        aria-hidden
-        className="pointer-events-none absolute inset-0 size-full"
-      >
-        <defs>
-          {gradients.map(({ id, gradient }) => (
-            <GradientDef key={id} id={id} gradient={gradient} />
-          ))}
-          {areas.some((area) => area.fill === undefined) && (
-            <NoDataPatternDef id={ids.noData} />
-          )}
-        </defs>
-      </svg>
+      {areas.some((area) => area.fill === undefined) && (
+        <svg
+          aria-hidden
+          className="pointer-events-none absolute inset-0 size-full"
+        >
+          <defs>
+            <NoDataPatternDef id={noDataId} />
+          </defs>
+        </svg>
+      )}
       <Chart
         definition={definition}
         ariaLabel={ariaLabel}
@@ -662,19 +644,10 @@ function usePlotted<T, K extends string>(
   return useMemo(() => plotRows(rows, seriesRef.current), [rows, key])
 }
 
-/** Document-unique ids for this chart's gradients and hatch. */
-function useIds() {
+/** A document-unique id for this chart's no-data hatch. */
+function useNoDataId() {
   // React's ids contain characters that are awkward inside `url(#…)`.
-  const prefix = `chart${useId().replace(/[^a-zA-Z0-9]/g, '')}`
-  return {
-    fill: (key: string) => `${prefix}-${key}-fill`,
-    stroke: (key: string) => `${prefix}-${key}-stroke`,
-    noData: `${prefix}-no-data`,
-  }
-}
-
-function paint(value: string | FillGradient | StrokeGradient, id: string) {
-  return typeof value === 'string' ? value : `url(#${id})`
+  return `chart${useId().replace(/[^a-zA-Z0-9]/g, '')}-no-data`
 }
 
 /** The lines a series draws: its top, and a stroked band's bottom too. */

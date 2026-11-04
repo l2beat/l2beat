@@ -5,8 +5,8 @@ import type { TvsChartDataPoint } from '~/components/chart/tvs/TvsChart'
 import { TvsCustomTooltip } from '~/components/chart/tvs/TvsChart'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
-import { fillGradient } from '~/components/core/chart/gradients'
 import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
+import { tinted } from '~/components/core/chart/tint'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
@@ -81,11 +81,7 @@ export function MonthlyUpdateTvsChart({
           series={[
             {
               key: 'value',
-              stroke: 'var(--project-primary)',
-              fill: fillGradient(
-                'var(--project-primary)',
-                'var(--project-secondary)',
-              ),
+              ...tinted('var(--project-primary)'),
             },
           ]}
           yAxis={{

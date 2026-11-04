@@ -11,9 +11,9 @@ import {
   ChartTooltipWrapper,
   getTooltipEntries,
 } from '~/components/core/chart/ChartTooltip'
-import { CHART_GRADIENTS } from '~/components/core/chart/gradients'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
+import { tinted } from '~/components/core/chart/tint'
 import { formatRange } from '~/utils/dates'
 import type { ChartResolution } from '~/utils/range/range'
 
@@ -82,8 +82,7 @@ export function DataPostedChart({
             ? [
                 {
                   key: 'ethereum',
-                  stroke: chartMeta.ethereum.color,
-                  fill: CHART_GRADIENTS.ethereum.fill,
+                  ...tinted(chartMeta.ethereum.color),
                 },
               ]
             : []

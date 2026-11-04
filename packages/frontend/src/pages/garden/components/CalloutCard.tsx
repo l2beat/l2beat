@@ -15,10 +15,10 @@ const TONE: Record<
     icon: 'text-garden-accent',
   },
   brand: {
-    border: 'border-purple-100/20 dark:border-pink-200/20',
-    tint: 'bg-purple-300/20 dark:bg-purple-800/30',
-    chip: 'bg-purple-100/15 dark:bg-pink-200/15',
-    icon: 'text-purple-100 dark:text-pink-200',
+    border: 'border-brand/30',
+    tint: 'bg-brand/10 dark:bg-brand/15',
+    chip: 'bg-brand/15',
+    icon: 'text-brand-deep',
   },
 }
 

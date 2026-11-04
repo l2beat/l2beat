@@ -11,12 +11,12 @@ import {
   ChartTooltipWrapper,
   getTooltipEntries,
 } from '~/components/core/chart/ChartTooltip'
-import { CHART_GRADIENTS } from '~/components/core/chart/gradients'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import {
   type ChartSeries,
   TimeSeriesChart,
 } from '~/components/core/chart/TimeSeriesChart'
+import { tinted } from '~/components/core/chart/tint'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatRange } from '~/utils/dates'
 import type { ChartResolution } from '~/utils/range/range'
@@ -96,8 +96,7 @@ export function ProjectDaAbsoluteThroughputChart({
   const series: ChartSeries<SeriesKey, ChartRow>[] = [
     {
       key: 'project',
-      fill: CHART_GRADIENTS.ethereum.fill,
-      stroke: projectChartMeta.project?.color,
+      ...tinted(projectChartMeta.project?.color),
     },
     {
       key: 'projectTarget',

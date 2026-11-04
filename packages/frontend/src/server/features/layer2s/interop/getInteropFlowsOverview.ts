@@ -38,8 +38,13 @@ export interface InteropFlowsOverview extends InteropFlowsGraphData {
 export async function getInteropFlowsOverview(
   params: InteropFlowsParams,
 ): Promise<InteropFlowsOverview> {
-  return toInteropFlowsOverview(await getInteropFlows(params))
+  return toInteropFlowsOverview(
+    await getInteropFlows(params, OVERVIEW_TOP_PROTOCOLS_COUNT),
+  )
 }
+
+/** The home page lists as many protocols as its interop card has room for. */
+const OVERVIEW_TOP_PROTOCOLS_COUNT = 15
 
 export function toInteropFlowsOverview(
   data: InteropFlowsData,

@@ -36,7 +36,7 @@ export function QrCodeSection({
       <div className="absolute flex size-full items-center justify-center">
         <div
           className={cn(
-            'size-[300px] rounded-full bg-[#FFC2FD] blur-3xl dark:bg-[#7C387A]',
+            'size-[300px] rounded-full bg-brand/25 blur-3xl dark:bg-brand/30',
             mobile && 'size-[250px]',
           )}
         />

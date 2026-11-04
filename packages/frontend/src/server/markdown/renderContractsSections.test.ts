@@ -37,8 +37,8 @@ describe(renderContractsSection.name, () => {
       '#### Bridge (custom escrow)',
       `Addresses: [${A1}](https://etherscan.io/address/${A1}), [${A2}](https://etherscan.io/address/${A2}) (Implementation (Upgradable))`,
       'The following tokens are included in the value secured calculation: ETH, USDC',
-      'Proxy used in: [Base](https://l2beat.com/scaling/projects/base#Bridge)',
-      'Implementation used in: [Zora](https://l2beat.com/scaling/projects/zora#Bridge)',
+      'Proxy used in: [Base](https://ethbeat.org/scaling/projects/base#Bridge)',
+      'Implementation used in: [Zora](https://ethbeat.org/scaling/projects/zora#Bridge)',
       '**Upgrade details**\n\nUpgrades go through the ## Timelock.',
     )
     expect(markdown).not.toInclude('Implementation used in: [Base]')
@@ -55,7 +55,7 @@ describe(renderContractsSection.name, () => {
     ])
 
     expect(markdown).toInclude(
-      'Proxy used in: [Base](https://l2beat.com/scaling/projects/base#Security%20Council%20%28old%29)',
+      'Proxy used in: [Base](https://ethbeat.org/scaling/projects/base#Security%20Council%20%28old%29)',
     )
   })
 
@@ -72,7 +72,7 @@ describe(renderContractsSection.name, () => {
     )
 
     expect(markdown).toInclude(
-      "Explore these contracts and permissions in Disco, L2BEAT's contract explorer: https://disco.l2beat.com/ui/p/blobstream",
+      "Explore these contracts and permissions in Disco, ETHBEAT's contract explorer: https://disco.l2beat.com/ui/p/blobstream",
     )
   })
 
@@ -181,7 +181,7 @@ describe(renderContractsSection.name, () => {
     )
 
     expect(markdown).toEqual(
-      '![A diagram of the smart contract architecture](https://l2beat.com/images/architecture/arbitrum.png)',
+      '![A diagram of the smart contract architecture](https://ethbeat.org/images/architecture/arbitrum.png)',
     )
   })
 
@@ -242,7 +242,7 @@ describe(renderPermissionsSection.name, () => {
     expect(markdown).toInclude(
       '### ethereum\n\n#### Actors\n\n##### Security Council',
       `Participants (2): [${A2}](https://e/2) (Alice), [${A3}](https://e/3)`,
-      'Used in: [Base](https://l2beat.com/scaling/projects/base#Bridge)',
+      'Used in: [Base](https://ethbeat.org/scaling/projects/base#Bridge)',
     )
   })
 
@@ -276,7 +276,7 @@ const A3 = '0x3333333333333333333333333333333333333333'
 function resolveLinks(markdown: string) {
   return absolutizeLinks(
     markdown,
-    'https://l2beat.com/scaling/projects/arbitrum',
+    'https://ethbeat.org/scaling/projects/arbitrum',
   )
 }
 

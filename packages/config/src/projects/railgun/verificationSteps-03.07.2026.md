@@ -3,7 +3,7 @@ Railgun smart contract acts as a verifier for ZK proofs for all 91 Railgun circu
 Generally, to regenerate all Railgun verification keys, the following has to be done:
 
 1. Checkout the `main` branch of the [Railgun circuits-v2 repo](https://github.com/Railgun-Privacy/circuits-v2) (commit hash `0aa2d13763a9fcfbb7b7ea9c02e004e71f1394bb`).
-2. Download Railgun trusted setup artifacts, which could be found at IPFS CID `QmUsmnK4PFc7zDp2cmC4wBZxYLjNyRgWfs5GNcJJ2uLcpU` or [on L2BEAT trusted setup hosting](https://trusted-setup-hosting.l2beat.com/privacy/railgun/trusted_setup_railgun.zip). It contains the proving keys for all 91 circuits, which contain circuit information and Groth16 phase 2 trusted setup information.
+2. Download Railgun trusted setup artifacts, which could be found at IPFS CID `QmUsmnK4PFc7zDp2cmC4wBZxYLjNyRgWfs5GNcJJ2uLcpU` or [on ETHBEAT trusted setup hosting](https://trusted-setup-hosting.l2beat.com/privacy/railgun/trusted_setup_railgun.zip). It contains the proving keys for all 91 circuits, which contain circuit information and Groth16 phase 2 trusted setup information.
 3. Build required version of circom and compile circuit sources into `.r1cs` binaries.
 4. Download the phase 1 trusted setup files and use it to verify that all published prover keys correspond to the compiled circuits. This step will implicitly check the integrity of phase 2 contributions.
 5. Generate all 91 verification keys from all prover keys, and make sure that it is identical to the ones in the onchain smart contract.
