@@ -1,5 +1,5 @@
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { BrowserRouter, Route, Routes } from 'react-router'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router'
 import { SidebarProvider } from './components/core/Sidebar'
 import { Toaster } from './components/core/Sonner'
 import {
@@ -103,7 +103,7 @@ function EnvironmentScopedApp() {
             />
             <Route
               path="/interop/insights/coverage-pies"
-              element={<CoveragePage />}
+              element={<Navigate to="/interop/insights/coverage" replace />}
             />
             <Route
               path="/interop/insights/highlights"
