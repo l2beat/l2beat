@@ -232,7 +232,7 @@ function HopChip(props: {
         'rounded-sm border px-1.5 font-mono text-xs leading-5',
         isSelected
           ? 'border-autumn-300 text-autumn-300'
-          : 'border-aux-blue/60 hover:bg-aux-blue hover:text-black',
+          : 'border-aux-blue/60 hover:bg-aux-blue hover:text-coffee-900',
       )}
     >
       {props.showChain && (
@@ -263,7 +263,7 @@ function CodeChip(props: { focus: AgentFocus; entries: ApiProjectChain[] }) {
       <button
         type="button"
         onClick={() => open(code)}
-        className="rounded-sm border border-aux-blue/60 px-1.5 font-mono leading-5 hover:bg-aux-blue hover:text-black"
+        className="rounded-sm border border-aux-blue/60 px-1.5 font-mono leading-5 hover:bg-aux-blue hover:text-coffee-900"
       >
         {name ?? shorten(code.address)} · {placeOf(code)}
       </button>

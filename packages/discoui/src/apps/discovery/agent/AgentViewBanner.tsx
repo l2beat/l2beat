@@ -24,7 +24,7 @@ export function AgentViewBanner(props: { pending: PendingView }) {
   return (
     <div className="pointer-events-auto rounded-lg border border-coffee-700 bg-coffee-900/95 text-coffee-200 shadow-[0_16px_32px_-20px_#000000ee] backdrop-blur-sm">
       <div className="flex items-center gap-2 py-2 pr-2 pl-3">
-        <span className="flex shrink-0 items-center gap-1.5 rounded-sm bg-aux-purple/15 px-1.5 py-0.5 text-[#d68ae0] text-[11px]">
+        <span className="flex shrink-0 items-center gap-1.5 rounded-sm bg-aux-purple/15 px-1.5 py-0.5 text-[11px] text-agent">
           <IconSparkle className="size-2.5" />
           Pending view
         </span>
@@ -95,7 +95,7 @@ function Decision(props: { onSave: () => void }) {
           })
         }}
         title="Keep these changes in your graph; undo still reverts them"
-        className="rounded-sm bg-[#d68ae0] px-2.5 py-1 font-bold text-black hover:brightness-110"
+        className="rounded-sm bg-agent px-2.5 py-1 font-bold text-coffee-900 hover:brightness-110"
       >
         Keep
       </button>
@@ -169,7 +169,7 @@ function SaveForm(props: { initialName: string; onDone: () => void }) {
       <button
         type="submit"
         disabled={busy || name.trim().length === 0}
-        className="rounded-sm bg-[#d68ae0] px-2.5 py-1 font-bold text-black hover:brightness-110 disabled:opacity-40"
+        className="rounded-sm bg-agent px-2.5 py-1 font-bold text-coffee-900 hover:brightness-110 disabled:opacity-40"
       >
         Save
       </button>
