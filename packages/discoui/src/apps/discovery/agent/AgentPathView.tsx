@@ -23,10 +23,7 @@ export function AgentPathView(props: { focus: AgentFocus }) {
   const palette = useGraphPalette()
 
   const { paths } = props.focus.step
-  const loose =
-    props.focus.step.nodes.length > 0 || paths.length > 0
-      ? props.focus.step.nodes
-      : [...props.focus.nodes]
+  const loose = useMemo(() => looseContracts(props.focus), [props.focus])
   const links = useGraphLinks()
   const edges = useMemo(() => resolvePathEdges(paths, links), [paths, links])
   const isAnswerLink = useMemo(() => {
@@ -117,6 +114,13 @@ function PathNodeTarget(props: { node: Node }) {
       onDoubleClick={openInGraph}
     />
   )
+}
+
+// What a step shows off its paths, like the contract it selects, gets a lane.
+function looseContracts(focus: AgentFocus): string[] {
+  const onPaths = new Set(focus.step.paths.flat())
+  const stepNodes = new Set(focus.step.nodes)
+  return [...focus.nodes].filter((id) => stepNodes.has(id) || !onPaths.has(id))
 }
 
 // A field pointing at a contract the answer does not place draws no dot and
