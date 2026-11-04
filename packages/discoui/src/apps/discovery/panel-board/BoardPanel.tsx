@@ -79,8 +79,9 @@ export function BoardPanel() {
   }, [])
   const open = list.data?.open ?? []
   const active = open.find((b) => b.id === chosen) ?? open[open.length - 1]
-  // A board shown by falling back stays shown when the list grows.
-  const activeId = active?.id
+  // A board shown by falling back stays shown when the list grows. The
+  // previous list, shown while a new board is fetched, lacks that board.
+  const activeId = list.isPlaceholderData ? undefined : active?.id
   useEffect(() => {
     if (activeId !== undefined && activeId !== chosen) {
       activateBoard(project, activeId)
