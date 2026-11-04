@@ -38,8 +38,16 @@ export function excerptAt(
   for (let line = start; line <= end; line++) {
     numbered.push(`${String(line).padStart(width)}  ${lines[line - 1] ?? ''}`)
   }
-  const isWindowCut = start > firstLine || end < lastLine
-  const cut = cutText(numbered.join('\n'), EXCERPT_CHARACTERS_MAX)
+  // Long lines above the snippet go first, so its own line stays in.
+  let length = numbered.join('\n').length
+  let dropped = 0
+  while (length > EXCERPT_CHARACTERS_MAX && start + dropped < match.line) {
+    length -= (numbered[dropped]?.length ?? 0) + 1
+    dropped++
+  }
+  const isWindowCut = start + dropped > firstLine || end < lastLine
+  const shown = numbered.slice(dropped).join('\n')
+  const cut = cutText(shown, EXCERPT_CHARACTERS_MAX)
   return { text: cut.text, isCut: isWindowCut || cut.isCut }
 }
 

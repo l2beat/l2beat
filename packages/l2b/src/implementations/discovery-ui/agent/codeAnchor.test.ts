@@ -118,6 +118,19 @@ describe(excerptAt.name, () => {
   })
 })
 
+describe('excerptAt with long lines before the snippet', () => {
+  it('keeps the snippet line when the lines above it fill the limit', () => {
+    const long = `    bytes x = "${'a'.repeat(1_000)}";`
+    const before = Array.from({ length: 9 }, () => long)
+    const code = ['contract Wide {', '  function f() external {', ...before]
+      .concat(['    target();', '  }', '}'])
+      .join('\n')
+    const excerpt = excerptFor(code, 'target();')
+    expect(excerpt.includes('target();')).toEqual(true)
+    expect(excerpt.length <= EXCERPT_CHARACTERS_MAX).toEqual(true)
+  })
+})
+
 describe(cutText.name, () => {
   it('cuts at the last line end within the limit', () => {
     expect(cutText('ab\ncd\nef', 7)).toEqual({ text: 'ab\ncd', isCut: true })
