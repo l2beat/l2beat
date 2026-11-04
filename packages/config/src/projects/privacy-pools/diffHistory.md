@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x89f2b86ff7410174e0406260098653e4497c99c6
+
+# Diff at Tue, 03 Nov 2026 15:45:08 GMT:
+
+- id: cffa8f6b
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@5dabdf7cb402311ede1c313c1891f2094a550030 block: 1791570511
+- current timestamp: 1793703248
+
+## Description
+
+Increased vetting fee on USDT deposits from 0 to 0.5%.
+
+## Watched changes
+
+```diff
+    contract PrivacyPoolUSDT (eth:0xe859C0bD25f260BaEE534Fb52e307D3b64D24572) [privacy-pools/PrivacyPoolComplex] {
+    +++ description: ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.
+      values.assetConfigFromEntrypoint.vettingFeeBPS:
+-        0
++        50
+    }
+```
+
 Generated with discovered.json: 0x263d36dc127498e35b6f897b00b17e460367a79a
 
 # Diff at Fri, 16 Oct 2026 05:36:52 GMT:

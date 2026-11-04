@@ -1,3 +1,148 @@
+Generated with discovered.json: 0x01dfb60935174711c14ce25235f97e7c749910a0
+
+# Diff at Tue, 03 Nov 2026 15:45:03 GMT:
+
+- id: 806e8085
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@5dabdf7cb402311ede1c313c1891f2094a550030 block: 1761642941
+- current timestamp: 1793715852
+
+## Description
+
+No onchain change for Lachain. ZIP-18 (protocol v31) was executed on the shared L1 contracts (see shared-zk-stack), which re-modelled the permissions and descriptions of the shared contracts; Lachain is still on protocol 0.28.0 with its own ValidatorTimelock.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761642941 (main branch discovery), not current.
+
+```diff
+    contract Diamond (eth:0x742A28e22277945BBAAa34810393bf6e8512576C) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
++++ description: 1 once the chain admin permanently allowed Priority Mode (ZKsync OS permanent rollups only). Then anyone can activate it as soon as the first unprocessed priority transaction is older than 4 days, after which only the shared PermissionlessValidator can settle batches (anyone can submit through it) and only the ChainTypeManager owner can deactivate it.
++++ severity: HIGH
+      values.priorityModeCanBeActivated:
++        0
++++ description: Raw Priority Mode storage: last byte canBeActivated, byte before it activated, then the PermissionlessValidator address.
++++ severity: HIGH
+      values.priorityModeInfo:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
++++ description: TransactionFilterer that replaces the chain's own filterer once Priority Mode is allowed. Set by the ChainTypeManager owner, zero means no filtering.
++++ severity: HIGH
+      values.priorityModeTransactionFilterer:
++        "eth:0x0000000000000000000000000000000000000000"
+      fieldMeta.getDAValidatorPair.description:
+-        "l1da, l2da"
++        "l1da, l2da (before v31) or l1da, L2 DA commitment scheme (from v31)."
+      fieldMeta.priorityModeCanBeActivated:
++        {"severity":"HIGH","description":"1 once the chain admin permanently allowed Priority Mode (ZKsync OS permanent rollups only). Then anyone can activate it as soon as the first unprocessed priority transaction is older than 4 days, after which only the shared PermissionlessValidator can settle batches (anyone can submit through it) and only the ChainTypeManager owner can deactivate it."}
+      fieldMeta.priorityModeInfo:
++        {"severity":"HIGH","description":"Raw Priority Mode storage: last byte canBeActivated, byte before it activated, then the PermissionlessValidator address."}
+      fieldMeta.priorityModeTransactionFilterer:
++        {"severity":"HIGH","description":"TransactionFilterer that replaces the chain's own filterer once Priority Mode is allowed. Set by the ChainTypeManager owner, zero means no filtering."}
+    }
+```
+
+```diff
+    external contract EraChainTypeManager (eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: None
+      name:
+-        "ChainTypeManager"
++        "EraChainTypeManager"
+    }
+```
+
+```diff
+    external contract ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) {
+    +++ description: None
+      directlyReceivedPermissions.5:
++        {"permission":"interact","from":"eth:0x1adF137F59949c9081157D5de1e002D1C992071F","description":"manage the shared ValidatorTimelock contract address and the admin role, register upgrades and patch upgrades together with the verifier of each protocol version (and set their deadlines), execute upgrades, freeze, revert batches, deactivate Priority Mode and set permissioned validators and fee params for all connected chains.","role":".owner"}
+      directlyReceivedPermissions.6:
++        {"permission":"interact","from":"eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213","description":"set critical contract addresses for the shared cluster (asset router, CTM deployer, message root, chain asset handler, chain registration sender), add and remove chain type managers, whitelist settlement layers, pause and unpause the bridge and register already deployed zk chains.","role":".owner"}
+      directlyReceivedPermissions.5.description:
+-        "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains."
++        "add and remove the FFLONK/PLONK verifier pairs that proofs of ZKsync OS chains can select by version."
+      directlyReceivedPermissions.5.from:
+-        "eth:0x1adF137F59949c9081157D5de1e002D1C992071F"
++        "eth:0x433b6ff15824806c8C14EcE4a6FE1f1909F7da2F"
+      directlyReceivedPermissions.6.description:
+-        "set critical contract addresses for the shared cluster, register settlement layers, pause and unpause migrations and the bridge and manage zk chain registration."
++        "pause / unpause the tracker and re-sync its ChainAssetHandler reference from the Bridgehub."
+      directlyReceivedPermissions.6.from:
+-        "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213"
++        "eth:0x7fd8B995fc27aD7de97853e65B17CaCfc0a573Cc"
+      directlyReceivedPermissions.7.description:
+-        "pause / unpause the bridge."
++        "pause / unpause the bridge and set the L1AssetTracker that enforces the per-chain balances."
+      directlyReceivedPermissions.8.description:
+-        "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains."
++        "manage the shared ValidatorTimelock contract address and the admin role, register upgrades and patch upgrades together with the verifier of each protocol version (and set their deadlines), execute upgrades, freeze, revert batches, deactivate Priority Mode and set permissioned validators and fee params for all connected chains."
+      directlyReceivedPermissions.10.description:
+-        "pause, resume chain migrations."
++        "pause and resume chain migrations, pause and unpause the handler, re-sync its MessageRoot and AssetRouter references from the Bridgehub and backfill historical migration intervals of chains that settled on the legacy Gateway."
+    }
+```
+
+```diff
+    external contract (eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x1adF137F59949c9081157D5de1e002D1C992071F","description":"manage the shared ValidatorTimelock contract address and the admin role, register upgrades and patch upgrades together with the verifier of each protocol version (and set their deadlines), execute upgrades, freeze, revert batches, deactivate Priority Mode and set permissioned validators and fee params for all connected chains.","role":".owner","via":[{"address":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213","description":"set critical contract addresses for the shared cluster (asset router, CTM deployer, message root, chain asset handler, chain registration sender), add and remove chain type managers, whitelist settlement layers, pause and unpause the bridge and register already deployed zk chains.","role":".owner","via":[{"address":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+      receivedPermissions.1.description:
+-        "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains."
++        "add and remove the FFLONK/PLONK verifier pairs that proofs of ZKsync OS chains can select by version."
+      receivedPermissions.1.from:
+-        "eth:0x1adF137F59949c9081157D5de1e002D1C992071F"
++        "eth:0x433b6ff15824806c8C14EcE4a6FE1f1909F7da2F"
+      receivedPermissions.2.description:
+-        "set critical contract addresses for the shared cluster, register settlement layers, pause and unpause migrations and the bridge and manage zk chain registration."
++        "pause / unpause the tracker and re-sync its ChainAssetHandler reference from the Bridgehub."
+      receivedPermissions.2.from:
+-        "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213"
++        "eth:0x7fd8B995fc27aD7de97853e65B17CaCfc0a573Cc"
+      receivedPermissions.3.description:
+-        "pause / unpause the bridge."
++        "pause / unpause the bridge and set the L1AssetTracker that enforces the per-chain balances."
+      receivedPermissions.4.description:
+-        "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains."
++        "manage the shared ValidatorTimelock contract address and the admin role, register upgrades and patch upgrades together with the verifier of each protocol version (and set their deadlines), execute upgrades, freeze, revert batches, deactivate Priority Mode and set permissioned validators and fee params for all connected chains."
+      receivedPermissions.6.description:
+-        "pause, resume chain migrations."
++        "pause and resume chain migrations, pause and unpause the handler, re-sync its MessageRoot and AssetRouter references from the Bridgehub and backfill historical migration intervals of chains that settled on the legacy Gateway."
+      receivedPermissions.14:
++        {"permission":"upgrade","from":"eth:0x419A453e690CEac6E57C7798a375cbB2454dd919","role":"admin","via":[{"address":"eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+      receivedPermissions.17:
++        {"permission":"upgrade","from":"eth:0x7fd8B995fc27aD7de97853e65B17CaCfc0a573Cc","role":"admin","via":[{"address":"eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+      receivedPermissions.18:
++        {"permission":"upgrade","from":"eth:0x8509eA34177B051110826A36621C1C52C9752CAA","role":"admin","via":[{"address":"eth:0xff3582a0310916cd62442A4CA88Bf1C757D68938"},{"address":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+      receivedPermissions.24:
++        {"permission":"upgrade","from":"eth:0xE220059BBA4684BF2Cf0B9E6E5A9DF94D9fb90E9","role":"admin","via":[{"address":"eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+    }
+```
+
+```diff
+    external contract (eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1) {
+    +++ description: None
+      directlyReceivedPermissions.1:
++        {"permission":"upgrade","from":"eth:0x419A453e690CEac6E57C7798a375cbB2454dd919","role":"admin"}
+      directlyReceivedPermissions.4:
++        {"permission":"upgrade","from":"eth:0x7fd8B995fc27aD7de97853e65B17CaCfc0a573Cc","role":"admin"}
+      directlyReceivedPermissions.10:
++        {"permission":"upgrade","from":"eth:0xE220059BBA4684BF2Cf0B9E6E5A9DF94D9fb90E9","role":"admin"}
+    }
+```
+
+```diff
+    external contract (eth:0xff3582a0310916cd62442A4CA88Bf1C757D68938) {
+    +++ description: None
+      directlyReceivedPermissions.2:
++        {"permission":"upgrade","from":"eth:0x8509eA34177B051110826A36621C1C52C9752CAA","role":"admin"}
+    }
+```
+
 Generated with discovered.json: 0xb2523fb02edc08629d8ea7a7f074a9b47a7f5140
 
 # Diff at Mon, 02 Nov 2026 13:39:43 GMT:

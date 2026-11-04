@@ -9,5 +9,11 @@
     "sGhoToken",
     "tvlTokens",
     "vaultToken"
+  ],
+  "ignoreInWatchMode": [
+    "positionBreakdown",
+    "totalExposure",
+    "totalExposureStrict",
+    "withdrawableExposure"
   ]
 }
