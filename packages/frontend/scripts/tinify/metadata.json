@@ -1612,5 +1612,10 @@
   "static/meta-images/l2beat-is-now-ethbeat/opengraph-image.png": "07be32bb13054ece017e8ebf141515da",
   "static/meta-images/mandate/opengraph-image.png": "94aa608e4808a76f65e4ff5c4778fc43",
   "static/meta-images/publications/l2beat-is-now-ethbeat.png": "45831ae7cf4107cbb8cf464237c16a16",
-  "static/meta-images/publications/l2beat-is-now-ethbeat-pulse-nav.png": "24c8e2ee44e22dc452e827ef9def3805"
+  "static/meta-images/publications/l2beat-is-now-ethbeat-pulse-nav.png": "24c8e2ee44e22dc452e827ef9def3805",
+  "static/icons/reality.png": "48fe81599413007b66ef0aaeebb98369",
+  "static/icons/stakewise.png": "ac115193688e7c334be68b9196dc9cbe",
+  "static/images/architecture/stakewise-deposits.png": "6adbaf8778988966dd7e50a908efa72e",
+  "static/images/architecture/stakewise-withdrawals.png": "b755d4488b192e623d8253bcb537cdf6",
+  "static/meta-images/defi/projects/stakewise/opengraph-image.png": "90a425d15f88f4faa1f7d0c3dcd9fdbd"
 }

@@ -1,0 +1,23 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OsTokenVaultEscrow",
+  "category": "core",
+  "description": "Holds the osETH position of a staker who enters a vault's exit queue with osETH still minted until the exited ETH is claimed. Escrowed positions can be liquidated above a threshold of {{liqThresholdPercent}} (1e18 = 100%) with a bonus of {{liqBonusPercent}}, or redeemed by the redeemer.",
+  "fields": {
+    "owner": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the liquidation threshold and bonus for escrowed positions and replace the authenticator that decides which vaults may register positions, with no delay."
+        }
+      ]
+    },
+    "liqThresholdPercent": {
+      "severity": "MEDIUM"
+    },
+    "liqBonusPercent": {
+      "severity": "MEDIUM"
+    }
+  }
+}

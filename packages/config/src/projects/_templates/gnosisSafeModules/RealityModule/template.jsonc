@@ -1,0 +1,81 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RealityModule",
+  "category": "gov",
+  "description": "Zodiac Reality module (SafeSnap): executes transactions from the Safe once a Reality.eth question confirming an off-chain vote resolves. A question needs a bond of at least {{minimumBondFormatted}} of the oracle's bond token, stays open for {{questionTimeoutFormatted}} after the last answer, can execute after a further {{questionCooldownFormatted}} and expires {{answerExpirationFormatted}} later.",
+  "ignoreMethods": [
+    "DOMAIN_SEPARATOR_TYPEHASH",
+    "TRANSACTION_TYPEHASH",
+    "INVALIDATED",
+    "getChainId",
+    "getGuard",
+    "ZodiacModule_avatar",
+    "ZodiacModule_target",
+    "ZodiacModule_guard",
+    "ZodiacModule_modules"
+  ],
+  "fields": {
+    "questionTimeoutFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "function questionTimeout() view returns (uint32)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "questionCooldownFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "function questionCooldown() view returns (uint32)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "answerExpirationFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "function answerExpiration() view returns (uint32)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "owner": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "invalidate any proposal before it executes, and change the arbitrator, question template, minimum bond, timeout, cooldown, expiration, avatar and target of the vote-execution module, with no delay."
+        }
+      ]
+    },
+    "minimumBond": {
+      "severity": "HIGH"
+    },
+    "questionTimeout": {
+      "severity": "HIGH"
+    },
+    "questionCooldown": {
+      "severity": "HIGH"
+    },
+    "answerExpiration": {
+      "severity": "MEDIUM"
+    },
+    "template": {
+      "severity": "MEDIUM"
+    },
+    "oracle": {
+      "severity": "HIGH"
+    },
+    "questionArbitrator": {
+      "severity": "MEDIUM"
+    },
+    "minimumBondFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "function minimumBond() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "Undecimal18"]
+    }
+  }
+}

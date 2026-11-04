@@ -1,0 +1,53 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OsTokenConfig",
+  "category": "core",
+  "description": "Collateral parameters for minting osETH against vault shares (loan-to-value, liquidation threshold and bonus, 1e18 = 100%), as a default and per-vault overrides; a threshold of 2^64-1 disables liquidations for that vault. Also names the redeemer allowed to burn osETH positions.",
+  "fields": {
+    "defaultConfig": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function getConfig(address vault) view returns (uint128 liqBonusPercent, uint64 liqThresholdPercent, uint64 ltvPercent)",
+        "args": ["0x0000000000000000000000000000000000000000"]
+      },
+      "description": "Default liquidation bonus, liquidation threshold and loan-to-value (1e18 = 100%) for vaults without an override."
+    },
+    "vaultConfigs": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": [
+          "vault",
+          "ltvPercent",
+          "liqThresholdPercent",
+          "liqBonusPercent"
+        ],
+        "dedupBy": "vault",
+        "add": {
+          "event": "OsTokenConfigUpdated"
+        }
+      },
+      "description": "Vault-specific overrides as last set by the owner; the zero address is the default."
+    },
+    "owner": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the loan-to-value, liquidation threshold and bonus for any vault or by default, including disabling liquidations, and replace the redeemer, with no delay."
+        }
+      ]
+    },
+    "redeemer": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "burn osETH positions in any vault at the protocol exchange rate and take the matching ETH out of the vault."
+        }
+      ]
+    }
+  },
+  "ignoreRelatives": ["vaultConfigs"]
+}

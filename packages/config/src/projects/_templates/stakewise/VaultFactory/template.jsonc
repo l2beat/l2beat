@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "core",
+  "description": "Permissionless factory: anyone deploys a vault of this type as a proxy on the current implementation and registers it in the vault registry, becoming its admin.",
+  "ignoreMethods": ["vaultAdmin", "ownMevEscrow"],
+  "ignoreRelatives": ["implementation"]
+}

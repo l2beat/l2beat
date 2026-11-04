@@ -1,0 +1,14 @@
+{
+  "RealityETH_ERC20_v3_0.sol": {
+    "hash": "0xdc924285b02bddd9bfab78648cc8bc1938f3d1745dccaf5853f744ac887e87b6",
+    "address": "eth:0x867092A32bC16816F12Fb326EfF7A2865E1ec138",
+    "chain": "ethereum",
+    "blockNumber": 26342340
+  },
+  "RealityETH_v3_0.sol": {
+    "hash": "0x39be250d45631b170d2f1729762c31bad56f13b1f92198c0b4307ea31eb73d79",
+    "address": "eth:0x5b7dD1E86623548AF054A4985F7fc8Ccbb554E2c",
+    "chain": "ethereum",
+    "blockNumber": 26342340
+  }
+}
