@@ -14,14 +14,11 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { ProjectIconList } from '~/components/ProjectIconList'
 import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 import { StageCell } from '~/components/table/cells/stage/StageCell'
 import { TypeInfo } from '~/components/table/cells/TypeInfo'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
-import {
-  WALK_AWAY_NOT_PASSED_PROJECTS,
-  WALK_AWAY_PASSED_PROJECTS,
-} from '~/consts/walkAwayProjects'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import type { ProjectL2Entry } from '~/server/features/layer2s/project/getL2ProjectEntry'
 import { cn } from '~/utils/cn'
@@ -47,10 +44,11 @@ export function ProjectL2Stats({ project, className }: Props) {
           <span className="mb-0.5 flex items-center gap-2">
             {project.header.tvs.warning && (
               <Tooltip>
-                <TooltipTrigger>
+                <TooltipTrigger aria-label="TVS warning">
                   <RoundedWarningIcon
                     sentiment={project.header.tvs.warning.sentiment}
                     className="size-4"
+                    aria-hidden
                   />
                 </TooltipTrigger>
                 <TooltipContent>
@@ -111,13 +109,7 @@ export function ProjectL2Stats({ project, className }: Props) {
               stageConfig={project.stageConfig}
               isAppchain={project.isAppchain}
               emergencyWarning={project.header.emergencyWarning}
-              walkAway={
-                WALK_AWAY_PASSED_PROJECTS.includes(project.id)
-                  ? 'passed'
-                  : WALK_AWAY_NOT_PASSED_PROJECTS.includes(project.id)
-                    ? 'not-passed'
-                    : undefined
-              }
+              walkAway={project.walkAway}
             />
           </a>
         }
@@ -160,6 +152,19 @@ export function ProjectL2Stats({ project, className }: Props) {
         key="chain-id"
         title="Chain ID"
         value={project.header.chainId}
+      />
+    ) : undefined,
+    project.header.privacyProjects.length > 0 ? (
+      <ProjectSummaryStat
+        key="privacy-projects"
+        title="Privacy projects"
+        tooltip="Privacy projects that run on this project."
+        value={
+          <ProjectIconList
+            projects={project.header.privacyProjects}
+            title="Privacy projects"
+          />
+        }
       />
     ) : undefined,
   ])

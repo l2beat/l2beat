@@ -131,7 +131,7 @@ export const zcashNearIntents: BaseProject = {
     anonymitySet: {
       type: 'not-applicable',
       description:
-        "The set is Zcash's shielded pool, outside the chains L2BEAT indexes. Amounts are public at the pool edge, so an exit hides among the pool entries that could match it in amount and time.",
+        "The set is Zcash's shielded pool, outside the chains ETHBEAT indexes. Amounts are public at the pool edge, so an exit hides among the pool entries that could match it in amount and time.",
     },
     exitWindow: {
       value: 'None',
@@ -149,7 +149,7 @@ export const zcashNearIntents: BaseProject = {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'The Verifier, the bridge token, the Zcash bridge and Zodl are open source. The bridge back end, the 1Click API and the solver relay that every Ethereum leg needs are closed.',
+        "The Verifier, the bridge token, the Zcash bridge and Zodl are open source, but Zodl's App Store builds cannot be rebuilt from that source. The bridge backend, the 1Click API and the solver relay that every Ethereum leg needs are closed.",
     },
     attributes: [
       PRIVACY_ATTRIBUTES.bridged,

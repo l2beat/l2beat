@@ -50,14 +50,23 @@ export function getPrivacyTrustedSetup(
 }
 
 /**
- * The participant count. The no-setup and transparent-setup dots are named
+ * Label the published metric with its own unit. Contribution totals can include
+ * repeated contributors. The no-setup and transparent-setup dots are named
  * instead, and a ceremony without a published count is left unlabelled.
  */
 function getTrustedSetupLabel(
-  trustedSetup: Pick<PrivacyTrustedSetup, 'name' | 'risk' | 'participantCount'>,
+  trustedSetup: Pick<
+    PrivacyTrustedSetup,
+    'name' | 'risk' | 'participantCount' | 'contributionCount'
+  >,
 ): string | undefined {
   if (trustedSetup.participantCount !== undefined) {
     return `${formatInteger(trustedSetup.participantCount)} participants`
+  }
+  if (trustedSetup.contributionCount !== undefined) {
+    const unit =
+      trustedSetup.contributionCount === 1 ? 'contribution' : 'contributions'
+    return `${formatInteger(trustedSetup.contributionCount)} ${unit}`
   }
   return trustedSetup.risk === 'None' || trustedSetup.risk === 'N/A'
     ? trustedSetup.name

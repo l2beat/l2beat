@@ -64,13 +64,13 @@ function Header({
       <div className="flex w-full items-center justify-between gap-5">
         <div className="flex flex-col gap-6">
           <p className="text-paragraph-18">
-            By delegating your governance votes to L2BEAT, you&apos;re
+            By delegating your governance votes to ETHBEAT, you&apos;re
             supporting our mission to protect the interests of the Ethereum
             community and uphold our shared values. Together, we can lead the L2
             ecosystem towards a safer, more secure decentralized future.
           </p>
           <div className="flex flex-col gap-2.5">
-            <span className="font-medium text-purple-100 text-xs uppercase tracking-[-0.14px] dark:text-pink-200">
+            <span className="font-medium text-brand-deep text-xs uppercase tracking-[-0.14px]">
               Delegate your tokens
             </span>
             <div className="grid grid-cols-2 gap-2 md:flex md:flex-wrap">

@@ -163,20 +163,26 @@ export function PrivacyProjectPage({
                           >
                             <ProjectSummaryStat
                               title="Tracked on"
-                              tooltip="Chains on which the protocol deployment is tracked by L2BEAT."
+                              tooltip="Chains on which the protocol deployment is tracked by ETHBEAT."
                               value={
                                 <ProjectIconList
                                   projects={entry.trackedOn}
-                                  dialog={{
-                                    title: 'Tracked on',
-                                    description: 'Search for chains',
-                                    searchPlaceholder:
-                                      'Start typing to find chain...',
-                                    emptyText: 'No chains found.',
-                                  }}
+                                  title="Tracked on"
                                 />
                               }
                             />
+                            {entry.scalingProjects.length > 0 && (
+                              <ProjectSummaryStat
+                                title="Runs on"
+                                tooltip="Scaling projects the protocol runs on."
+                                value={
+                                  <ProjectIconList
+                                    projects={entry.scalingProjects}
+                                    title={`${entry.name} runs on`}
+                                  />
+                                }
+                              />
+                            )}
                             {entry.attributes.length > 0 && (
                               <ProjectSummaryStat
                                 title="Attributes"

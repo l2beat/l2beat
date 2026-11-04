@@ -9,7 +9,7 @@ const TOKEN = {
   key: 'text-[#0d5aa7] dark:text-[#7cc4ff]',
   string: 'text-[#126b35] dark:text-[#3fe07f]',
   number: 'text-[#8a5200] dark:text-[#ffb454]',
-  keyword: 'text-[#7e41cc] dark:text-[#db8bf7]',
+  keyword: 'text-brand-deep',
   punct: 'text-secondary',
   elision: 'text-secondary/70',
 }

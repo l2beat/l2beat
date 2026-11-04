@@ -57,8 +57,19 @@ export function TableFilterSelector({
   )
 }
 
+// Both layouts take the shortcut: a narrow window still has a keyboard.
+function useOpenShortcut() {
+  const { open, setOpen } = useTableFilterInternalContext()
+  useGlobalShortcut('f', () => {
+    if (!open) {
+      setOpen(true)
+    }
+  })
+}
+
 function MobileFilters({ entries }: { entries: FilterableEntry[] }) {
   const { open, setOpen } = useTableFilterInternalContext()
+  useOpenShortcut()
 
   return (
     <>
@@ -82,12 +93,7 @@ function MobileFilters({ entries }: { entries: FilterableEntry[] }) {
 
 function DesktopFilters({ entries }: { entries: FilterableEntry[] }) {
   const { open, setOpen, onEscapeKeyDown } = useTableFilterInternalContext()
-
-  useGlobalShortcut('f', () => {
-    if (!open) {
-      setOpen(true)
-    }
-  })
+  useOpenShortcut()
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -115,7 +121,7 @@ function Trigger() {
       {Object.keys(state).length === 0 ? (
         <>
           <span className="ml-1.5 font-medium text-xs md:text-sm">Filters</span>
-          <kbd className="ml-1.5 flex size-4 select-none items-center justify-center rounded bg-icon-secondary font-bold font-mono text-3xs text-primary-invert max-md:hidden">
+          <kbd className="ml-1.5 flex not-can-hover:hidden size-4 select-none items-center justify-center rounded bg-icon-secondary font-bold font-mono text-3xs text-primary-invert max-md:hidden">
             F
           </kbd>
         </>

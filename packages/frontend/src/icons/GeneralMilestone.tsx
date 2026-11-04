@@ -8,7 +8,7 @@ export function GeneralMilestoneIcon({ className, ...props }: SvgIconProps) {
       height="20"
       viewBox="0 0 20 20"
       role="img"
-      aria-label="Milestone icon"
+      aria-label="Milestone"
       className={cn('fill-green-700 stroke-green-500', className)}
       {...props}
     >

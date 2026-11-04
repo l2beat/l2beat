@@ -37,7 +37,7 @@ export function PanelSection({
         {title}
         {hint && (
           <Tooltip>
-            <TooltipTrigger>
+            <TooltipTrigger aria-label={`About ${title}`}>
               <InfoIcon className="size-3 fill-current" />
             </TooltipTrigger>
             <TooltipContent>{hint}</TooltipContent>
@@ -99,7 +99,7 @@ export function NodeButton({
       type="button"
       onClick={() => onSelectNode(node.id)}
       className={cn(
-        'truncate text-left hover:text-brand hover:underline',
+        'truncate text-left hover:text-brand-deep hover:underline',
         className,
       )}
     >

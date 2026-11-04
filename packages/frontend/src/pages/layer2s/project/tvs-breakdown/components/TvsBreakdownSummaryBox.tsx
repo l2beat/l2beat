@@ -73,10 +73,14 @@ export function TvsBreakdownSummaryBox({
           >
             {warning && (
               <Tooltip>
-                <TooltipTrigger className="relative top-[3px] mr-2">
+                <TooltipTrigger
+                  className="relative top-[3px] mr-2"
+                  aria-label="TVS warning"
+                >
                   <RoundedWarningIcon
                     sentiment={warning?.sentiment}
                     className="size-6"
+                    aria-hidden
                   />
                 </TooltipTrigger>
                 <TooltipContent>{warning?.value}</TooltipContent>
@@ -206,10 +210,11 @@ function StatItemContent(props: StatsItemProps) {
       </ValueWithPercentageChange>
       {props.warning && (
         <Tooltip>
-          <TooltipTrigger>
+          <TooltipTrigger aria-label="Warning">
             <RoundedWarningIcon
               sentiment={props.warning.sentiment}
               className="size-5"
+              aria-hidden
             />
           </TooltipTrigger>
           <TooltipContent>{props.warning.value}</TooltipContent>

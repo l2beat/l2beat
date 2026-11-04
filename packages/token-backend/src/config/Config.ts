@@ -11,6 +11,7 @@ export interface Config {
   readonly readOnlyAuthToken?: string
   readonly jsonBodyLimitMb: number
   readonly tokenIngestion: TokenIngestionConfig
+  readonly tvsCoverage: TvsCoverageConfig
 }
 
 export interface DatabaseConfig {
@@ -30,6 +31,13 @@ export interface AuthConfig {
   JWKS: ReturnType<typeof createRemoteJWKSet>
   aud: string
   teamDomain: string
+}
+
+export interface TvsCoverageConfig {
+  enabled: boolean
+  intervalMs: number
+  windowDays: number
+  minChainVolumeUsd: number
 }
 
 export interface TokenIngestionConfig {

@@ -66,6 +66,7 @@ export interface ProjectPrivacyEntry {
   hasTvl: boolean
   attributes: PrivacyAttribute[]
   trackedOn: ProjectIconListItem[]
+  scalingProjects: ProjectIconListItem[]
   exitWindow: PrivacyExitWindow
   trustedSetup: PrivacyTrustedSetupSummary
   reproducibility: PrivacySummaryValue
@@ -131,7 +132,7 @@ export async function getPrivacyProjectEntry(
   )
 
   const discoUi = {
-    href: `https://disco.l2beat.com/ui/p/${details.id}`,
+    href: `https://disco.ethbeat.org/ui/p/${details.id}`,
     images: {
       desktop: manifest.getUrl('/images/disco-ui-desktop.png'),
       mobile: manifest.getUrl('/images/disco-ui-mobile.png'),
@@ -364,6 +365,7 @@ export async function getPrivacyProjectEntry(
     hasTvl: details.hasTvl,
     attributes: details.attributes,
     trackedOn: details.trackedOn,
+    scalingProjects: details.scalingProjects,
     exitWindow: details.exitWindow,
     trustedSetup: toTrustedSetupSummaryValue(
       getPrivacyTrustedSetup(details.trustedSetups),

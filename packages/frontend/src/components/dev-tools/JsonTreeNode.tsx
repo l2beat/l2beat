@@ -140,11 +140,11 @@ function PrimitiveValue({ value }: { value: unknown }) {
   }
 
   if (typeof value === 'number') {
-    return <span className="text-brand">{value}</span>
+    return <span className="text-brand-deep">{value}</span>
   }
 
   if (typeof value === 'boolean') {
-    return <span className="text-warning">{String(value)}</span>
+    return <span className="text-warning-text">{String(value)}</span>
   }
 
   if (value === null) {

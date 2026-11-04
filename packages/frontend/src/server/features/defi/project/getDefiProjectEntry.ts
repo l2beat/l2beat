@@ -120,7 +120,7 @@ export async function getDefiProjectEntry(
   )
 
   const discoUi = {
-    href: `https://disco.l2beat.com/ui/p/${project.id}`,
+    href: `https://disco.ethbeat.org/ui/p/${project.id}`,
     images: {
       desktop: manifest.getUrl('/images/disco-ui-desktop.png'),
       mobile: manifest.getUrl('/images/disco-ui-mobile.png'),

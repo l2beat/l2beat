@@ -6,10 +6,10 @@ import type { Column, Table } from '@tanstack/react-table'
  * edge-cached and identical for everyone. Without help, a refresh paints every
  * column and then removes the hidden ones once React has hydrated.
  *
- * Like `HomeWhatsNewCard`, the table renders an inline script right before its
- * own markup. The script runs during HTML parsing, reads this table's persisted
- * state and appends a `<style>` to `<head>` hiding the matching cells, so the
- * hidden columns are never painted. Nothing inside the React root is touched.
+ * The table renders an inline script right before its own markup. The script
+ * runs during HTML parsing, reads this table's persisted state and appends a
+ * `<style>` to `<head>` hiding the matching cells, so the hidden columns are
+ * never painted. Nothing inside the React root is touched.
  *
  * `useTable` flags the table as applied in the same render that puts the
  * persisted visibility into React state, which turns the rules off. From then

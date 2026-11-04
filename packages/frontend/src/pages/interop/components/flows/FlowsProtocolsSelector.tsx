@@ -73,7 +73,7 @@ export function FlowsProtocolsSelector({
 
   const trigger = (
     <div className="flex h-9.5 shrink-0 items-center justify-center gap-1.5 rounded-lg border border-divider bg-surface-primary! p-2">
-      <span className="rounded-full bg-pink-900 px-2 py-[3px] font-semibold text-white text-xs leading-none">{`${selectedProtocols.length}/${allProtocols.length}`}</span>
+      <span className="rounded-full bg-brand px-2 py-[3px] font-semibold text-white text-xs leading-none">{`${selectedProtocols.length}/${allProtocols.length}`}</span>
       <span className="font-bold text-lg leading-none">Protocols</span>
       <div className="flex items-center gap-1 max-md:hidden lg:max-xl:hidden">
         <div className="-space-x-2 md:-space-x-1 flex items-center">
@@ -102,7 +102,7 @@ export function FlowsProtocolsSelector({
         type="button"
         onClick={selectAllProtocols}
         disabled={allSelected}
-        className="w-fit cursor-pointer font-medium text-brand text-label-value-15 underline disabled:cursor-not-allowed disabled:text-secondary"
+        className="w-fit cursor-pointer font-medium text-brand-deep text-label-value-15 underline disabled:cursor-not-allowed disabled:text-secondary"
       >
         Select all
       </button>
@@ -110,7 +110,7 @@ export function FlowsProtocolsSelector({
         type="button"
         onClick={deselectAllProtocols}
         disabled={selectedProtocols.length === 0}
-        className="w-fit cursor-pointer font-medium text-brand text-label-value-15 underline disabled:cursor-not-allowed disabled:text-secondary"
+        className="w-fit cursor-pointer font-medium text-brand-deep text-label-value-15 underline disabled:cursor-not-allowed disabled:text-secondary"
       >
         Deselect all
       </button>
@@ -220,7 +220,7 @@ function ProtocolRow({
             className="group inline-flex items-center gap-1"
           >
             <span className={nameClassName}>{protocol.name}</span>
-            <ArrowRightIcon className="size-3 shrink-0 fill-brand opacity-0 transition-opacity group-hover:opacity-100" />
+            <ArrowRightIcon className="size-3 shrink-0 fill-brand not-can-hover:opacity-100 opacity-0 transition-opacity group-hover:opacity-100" />
           </a>
         )}
         {isCanonical && (

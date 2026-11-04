@@ -41,7 +41,7 @@ export const moneroCakeWallet: BaseProject = {
       ],
       socialMedia: ['https://x.com/cakewallet', 'https://x.com/monero'],
       other: [
-        'https://github.com/cake-tech/cake_wallet/blob/main/PRIVACY.md',
+        'https://github.com/cake-tech/cake_wallet/blob/7ce3cd75c3fd0c0add1cead41038ab8806ffebde/PRIVACY.md',
         'https://changenow.io/faq/kyc-aml',
         'https://kycnot.me/service/trocador',
       ],
@@ -130,7 +130,7 @@ export const moneroCakeWallet: BaseProject = {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'Cake Wallet and Monero are open source. The swap services run closed systems.',
+        'Cake Wallet and Monero are open source, but Cake states that its release builds do not reproduce from that source. The swap services run closed systems.',
     },
     attributes: [
       PRIVACY_ATTRIBUTES.bridged,

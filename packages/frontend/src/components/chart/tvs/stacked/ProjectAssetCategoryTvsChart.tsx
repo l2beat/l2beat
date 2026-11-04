@@ -1,11 +1,12 @@
 import type { Milestone } from '@l2beat/config'
-import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { useTvsChartControlsContext } from '~/components/chart/tvs/TvsChartControlsContext'
-import type { ChartProject } from '~/components/core/chart/Chart'
+import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { useL2RwaRestrictedTokensContext } from '~/pages/layer2s/components/L2RwaRestrictedTokensContext'
 import { useTRPC } from '~/trpc/React'
+import { rangeToResolution } from '~/utils/range/range'
 import {
   AssetCategoryTvsChart,
   assetCategoryTvsChartMeta,
@@ -27,13 +28,14 @@ export function ProjectAssetCategoryTvsChart({
     assetCategoryTvsChartMeta,
   )
 
-  const { data, isLoading } = useQuery(
-    trpc.tvs.detailedChart.queryOptions({
+  const { data, isLoading, isPlaceholderData, shownInput } = useChartQuery(
+    trpc.tvs.detailedChart,
+    {
       filter: { type: 'projects', projectIds: [project.id] },
       range,
       excludeAssociatedTokens: false,
       excludeRwaRestrictedTokens,
-    }),
+    },
   )
 
   const chartData = useMemo(
@@ -88,6 +90,8 @@ export function ProjectAssetCategoryTvsChart({
   return (
     <div className="mt-4 mb-3">
       <AssetCategoryTvsChart
+        isPlaceholderData={isPlaceholderData}
+        resolution={rangeToResolution(shownInput.range)}
         data={chartData}
         milestones={milestones}
         unit={unit}
@@ -97,7 +101,7 @@ export function ProjectAssetCategoryTvsChart({
         dataKeys={dataKeys}
         toggleDataKey={toggleDataKey}
         project={project}
-        excludeRwaRestrictedTokens={excludeRwaRestrictedTokens}
+        excludeRwaRestrictedTokens={shownInput.excludeRwaRestrictedTokens}
       />
     </div>
   )

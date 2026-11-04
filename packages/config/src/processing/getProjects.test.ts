@@ -20,6 +20,7 @@ import { asArray } from '../templates/utils'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from '../test/constants'
 import { isRiskCorrectlyFormatted } from '../test/helpers'
 import type { BaseProject } from '../types'
+import { ecosystems } from './ecosystems'
 import { hasEoaWithUpgradePermissions } from './getEoaRedWarning'
 import { getProjects } from './getProjects'
 import { layer2s, milestonesLayer2s } from './layer2s'
@@ -55,11 +56,12 @@ describe('getProjects', () => {
   })
 
   it('every project has statuses and display (except ecosystems and interop protocols)', () => {
+    const ecosystemIds = new Set(ecosystems.map((e) => e.id))
     const missing = projects
       .filter(
         (p) =>
           !(
-            (p.ecosystemConfig || p.interopConfig) &&
+            (ecosystemIds.has(p.id) || p.interopConfig) &&
             (!p.statuses || !p.display)
           ),
       )
@@ -417,6 +419,22 @@ describe('getProjects', () => {
         for (const chain of trackedOn) {
           if (!chainNames.has(chain)) {
             problems.push(`${project.id}: no chainConfig named ${chain}`)
+          }
+        }
+      }
+      expect(problems).toEqual([])
+    })
+
+    it('every project runs on other scaling projects, each listed once', () => {
+      const problems: string[] = []
+      for (const { project, privacyInfo } of privacyProjects) {
+        const scalingProjects = privacyInfo.scalingProjects ?? []
+        if (new Set(scalingProjects).size !== scalingProjects.length) {
+          problems.push(`${project.id}: runsOn repeats a scaling project`)
+        }
+        for (const id of scalingProjects) {
+          if (!projectsById.get(id)?.scalingInfo || id === project.id) {
+            problems.push(`${project.id}: ${id} is not another scaling project`)
           }
         }
       }

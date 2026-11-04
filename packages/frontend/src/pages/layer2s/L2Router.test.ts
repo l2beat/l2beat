@@ -77,6 +77,7 @@ const ENTRY: ProjectL2Entry = {
     chainId: 42161,
     category: 'Optimistic Rollup',
     purposes: ['Universal'],
+    privacyProjects: [],
     tvs: {
       breakdown: {
         total: 15_200_000_000,
@@ -104,5 +105,6 @@ const ENTRY: ProjectL2Entry = {
     message: undefined,
     summary: [],
   },
+  walkAway: undefined,
   discoUiHref: undefined,
 }

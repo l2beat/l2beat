@@ -4,7 +4,7 @@ import { SvgIcon } from './SvgIcon'
 export function ShieldIcon(props: SvgIconProps) {
   return (
     <SvgIcon
-      aria-label="Shield with an exclamation mark icon"
+      aria-label="Warning"
       viewBox="0 0 16 20"
       width="16"
       height="20"

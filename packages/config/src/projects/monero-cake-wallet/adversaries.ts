@@ -72,13 +72,13 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
       },
     },
     networkObserver: {
-      sentiment: 'warning',
+      sentiment: 'good',
       exposureShort:
-        'Moralis, Etherscan and PublicNode look up every Ethereum wallet the app opens, so built-in Tor keeps the legs apart only in separate app sessions.',
+        'Over an IP-hiding route, Moralis, Etherscan and PublicNode get each Ethereum wallet in its own session, so none of them sees both legs.',
       exposureContinued:
-        "Token logos load outside Tor, so a token with a remote logo shows Moralis the user's IP beside the wallet.",
+        "Built-in Tor alone lets token logos out directly, and Cake shows priced tokens anyone sends, so Moralis can see the user's IP beside the wallet.",
       advice:
-        'Turn on built-in Tor, restart the app and add no tokens with remote logos. After the entry, delete the deposit wallet from Cake and restart before the exit.',
+        'Run Cake with all traffic through an IP-hiding route. Delete the deposit wallet from Cake before the exit.',
       interior: {
         sender: 'private',
         recipient: 'private',
@@ -86,17 +86,18 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
         asset: 'exposed',
         linkage: {
           verdict: 'atRisk',
-          note: 'Private only over built-in Tor, with each leg in its own app session.',
+          note: 'Private only over an IP-hiding route, with the deposit wallet deleted before the exit.',
         },
       },
       sources: [
+        S.ipHidingRoutes,
         {
           title: 'Built-in Tor is off unless the user enables it',
           url: CAKE + 'lib/store/settings_store.dart#L1590',
         },
         {
           title:
-            'Opening a wallet connects its node and sends its address to Moralis',
+            'Opening a wallet connects its node and adds the tokens Moralis reports for its address',
           url: CAKE + 'lib/reactions/on_current_wallet_change.dart#L94-L113',
         },
         {

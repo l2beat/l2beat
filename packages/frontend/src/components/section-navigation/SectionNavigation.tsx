@@ -127,7 +127,7 @@ function NavigationListIndex(props: { index: number }) {
         aria-hidden
         className={cn(
           'absolute inset-0 opacity-0 transition-opacity duration-150 motion-reduce:transition-none',
-          'bg-linear-to-r from-purple-100 to-pink-100 group-data-[has-colors=true]/section-wrapper:bg-[image:none] group-data-[has-colors=true]/section-wrapper:bg-branding-primary',
+          'bg-brand group-data-[has-colors=true]/section-wrapper:bg-branding-primary',
           'group-data-[selected=true]:opacity-100',
         )}
       />
@@ -152,7 +152,7 @@ function NavigationSubsectionEntry(props: {
         <div className="flex w-6 flex-col items-center">
           <div
             className={cn(
-              'absolute h-[18px] w-[5px] rounded-full bg-linear-to-r from-purple-100 to-pink-100 group-data-[has-colors=true]/section-wrapper:bg-[image:none] group-data-[has-colors=true]/section-wrapper:bg-branding-primary',
+              'absolute h-[18px] w-[5px] rounded-full bg-brand group-data-[has-colors=true]/section-wrapper:bg-branding-primary',
               'transition-[opacity,transform] duration-150 ease-out motion-reduce:transition-none',
               props.selected ? 'opacity-100' : 'scale-y-75 opacity-0',
             )}

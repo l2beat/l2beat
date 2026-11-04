@@ -202,6 +202,11 @@
       "category": "rwaPublic"
     },
     {
+      "symbol": "USDY",
+      "address": "0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
+      "category": "rwaPublic"
+    },
+    {
       "symbol": "mRe7BTC",
       "address": "0x9FB442d6B612a6dcD2acC67bb53771eF1D9F661A",
       "category": "rwaPublic"
@@ -1279,6 +1284,13 @@
     {
       "symbol": "GHO",
       "address": "0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
+      "category": "stablecoin"
+    },
+    {
+      // Aave Savings GHO vault; not listed on CoinGecko, priced with its GHO underlying
+      "symbol": "sGho",
+      "address": "0xE1753F2e00940cC31213dd92013cF019DFE4ca1d",
+      "coingeckoId": "gho",
       "category": "stablecoin"
     },
     {

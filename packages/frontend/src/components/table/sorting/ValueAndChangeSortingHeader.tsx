@@ -1,5 +1,5 @@
 import { assert } from '@l2beat/shared-pure'
-import type { Header } from '@tanstack/react-table'
+import type { Header, SortDirection } from '@tanstack/react-table'
 import { flexRender } from '@tanstack/react-table'
 import { SortingArrows } from './SortingArrows'
 
@@ -58,6 +58,13 @@ export function ValueAndChangeSortingHeader<TData>({
     'Expected change-sort header to render a string',
   )
 
+  // A table can have several change columns, all called e.g. "7D%".
+  const valueHeaderDef = header.column.columnDef.header
+  const changeLabel =
+    typeof valueHeaderDef === 'string'
+      ? `${valueHeaderDef} ${changeHeader}`
+      : undefined
+
   return (
     <div className="flex items-end gap-2">
       {valueSortingArrows}
@@ -65,9 +72,41 @@ export function ValueAndChangeSortingHeader<TData>({
         direction={changeColumn.getIsSorted()}
         nextDirection={changeColumn.getNextSortingOrder()}
         onClick={changeColumn.getToggleSortingHandler()}
+        aria-label={changeLabel}
       >
         {changeHeader}
       </SortingArrows>
     </div>
   )
+}
+
+/**
+ * For the header cell's `aria-sort`. The cell holds the change companion's
+ * sort control too, so sorting by the change sorts by this cell as well.
+ * Only the primary sort is announced: a Shift-click adds secondary sorts, and
+ * ARIA allows one sorted header at a time.
+ */
+export function getHeaderAriaSort<TData>(header: Header<TData, unknown>) {
+  if (!header.column.getCanSort()) {
+    return undefined
+  }
+  const changeSortColumnId = header.column.columnDef.meta?.changeSortColumnId
+  const changeColumn = changeSortColumnId
+    ? header.getContext().table.getColumn(changeSortColumnId)
+    : undefined
+  const primary = [header.column, changeColumn].find(
+    (column) => column?.getSortIndex() === 0,
+  )
+  return toAriaSort(primary?.getIsSorted() ?? false)
+}
+
+function toAriaSort(direction: false | SortDirection) {
+  switch (direction) {
+    case 'asc':
+      return 'ascending'
+    case 'desc':
+      return 'descending'
+    case false:
+      return 'none'
+  }
 }

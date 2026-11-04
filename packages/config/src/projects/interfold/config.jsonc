@@ -39,7 +39,7 @@
     "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e": "InterfoldGovCore",
     "eth:0x5429D8c7fD14023f3c414126F94BbE25A05fC018": "InterfoldSafeA",
     "eth:0x8B43b2852fc5031D01DDfCDF702973D93A2FF593": "InterfoldSafeB",
-    "eth:0x847A22303639017bcDB7F7E49EEa4a4629c1169f": "CRISPProgram",
+    "eth:0x847A22303639017bcDB7F7E49EEa4a4629c1169f": "CRISPProgramV1",
     "eth:0x6cD258E0a893612Aea41c42dC47450ac1A6E2dD1": "OpenVmBfvCiphertextVerifier",
     "eth:0xF21e25455988887EE797050080141eba67B33920": "AdminPlugin",
     "eth:0x9c0Ff283399Bd1D3111E6c9C689066759b7AccDb": "PublicStagedProposalProcessor",
@@ -62,10 +62,10 @@
   },
   "overrides": {
     "eth:0x6E1eC1e74162D9c141e12B593Cad390aEfFb6bD0": {
-      "description": "Unverified Honk verifier that CRISPProgram uses for ballot proofs in rounds whose voters are listed in a Merkle tree."
+      "description": "Zero-knowledge Honk verifier that CRISPProgram uses for ballot proofs in rounds whose voters are listed in a Merkle tree."
     },
     "eth:0xC496A7ee730590D5A7669E251cbE54F5Fc339Ea8": {
-      "description": "Unverified Honk verifier that CRISPProgram uses for ballot proofs in rounds that read voting power from the token, which includes every governance vote."
+      "description": "Zero-knowledge Honk verifier that CRISPProgram uses for ballot proofs in rounds that read voting power from the token, which includes every governance vote."
     },
     "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e": {
       "fields": {

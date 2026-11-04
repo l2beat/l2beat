@@ -3,13 +3,7 @@ import { SvgIcon } from './SvgIcon'
 
 export function SearchIcon(props: SvgIconProps) {
   return (
-    <SvgIcon
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      aria-label="Search icon"
-      {...props}
-    >
+    <SvgIcon width="24" height="24" viewBox="0 0 24 24" {...props}>
       <path
         fillRule="evenodd"
         clipRule="evenodd"

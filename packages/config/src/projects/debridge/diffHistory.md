@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x1cfa4bfc88c7939b4e2333a1bbccfa9df445f91b
+
+# Diff at Tue, 03 Nov 2026 11:22:18 GMT:
+
+- id: 64231737
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@fc159c853c5f8d531c99eea56f0d0e8595b6625f block: 1791789484
+- current timestamp: 1791789484
+
+## Description
+
+Flattener now keeps contracts whose bytecode is read with type(C).creationCode instead of turning them into interfaces. Only source hashes and flat files change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791789484 (main branch discovery), not current.
+
+```diff
+    contract DeBridgeTokenDeployer (eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464) [debridge/DeBridgeTokenDeployer] {
+    +++ description: Deploys deBridge-wrapped token (deToken) contracts when an asset is bridged to this chain for the first time (callable only by the DeBridgeGate). All deTokens are beacon proxies whose beacon is this contract itself, so its tokenImplementation applies to every deToken on this chain at once.
+      sourceHashes.1:
+-        "0xff2a8bb5572e1959e22acdc6818bcb1da107807340ef1416129cae0cf740d02a"
++        "0xa9992178cce17f92c934ff2617b67a393fb5ec068d6219bde6c62fa46ce32540"
+    }
+```
+
 Generated with discovered.json: 0xfdc5d1592884603eb33552024c6c3b2c94985a89
 
 # Diff at Tue, 27 Oct 2026 11:31:39 GMT:

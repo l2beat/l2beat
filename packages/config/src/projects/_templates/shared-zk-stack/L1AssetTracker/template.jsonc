@@ -1,0 +1,29 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
+  "category": "shared",
+  "description": "Keeps the per-chain token balances of the L1NativeTokenVault escrow: every deposit increases and every withdrawal or failed deposit claim decreases the balance of the chain (or of its whitelisted settlement layer), and a withdrawal that exceeds it reverts. Also migrates balances between a chain and its settlement layer on chain migrations. Legacy balances are moved here from the vault token by token through the permissionless registerLegacyToken().",
+  "ignoreMethods": [
+    "assetMigrationNumber",
+    "chainBalance",
+    "isAssetRegistered",
+    "tokenMigrated",
+    "tokenMigratedThisChain"
+  ],
+  "fields": {
+    "owner": {
+      "severity": "MEDIUM",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause / unpause the tracker and re-sync its ChainAssetHandler reference from the Bridgehub."
+        }
+      ]
+    },
+    "paused": { "severity": "MEDIUM" },
+    "chainAssetHandler": {
+      "description": "Source of the migration number of each chain, used to validate token balance migrations.",
+      "severity": "HIGH"
+    }
+  }
+}

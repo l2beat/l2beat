@@ -92,7 +92,7 @@ export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
 
   return (
     <Tooltip>
-      <TooltipTrigger disabledOnMobile className="h-full" asChild>
+      <TooltipTrigger disabledOnTouch className="h-full" asChild>
         <TableLink href={props.href}>
           <SyncStatusWrapper isSynced={!props.syncWarning}>
             <div className="flex flex-col items-end max-md:py-1">
