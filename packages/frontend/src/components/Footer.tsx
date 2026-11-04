@@ -14,7 +14,6 @@ const FOOTER_LINKS = [
   { title: 'Tools', href: externalLinks.tools },
   { title: 'Glossary', href: '/glossary' },
   { title: 'FAQ', href: '/faq' },
-  { title: 'Jobs', href: externalLinks.jobs },
   { title: 'Donate', href: '/donate' },
   { title: 'Brand Kit', href: '/brand-kit' },
   { title: 'Terms of Service', href: '/terms-of-service' },
