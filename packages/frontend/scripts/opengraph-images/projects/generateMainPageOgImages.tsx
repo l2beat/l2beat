@@ -173,18 +173,10 @@ export const mainPages: MainPage[] = [
     description:
       'See how much data L2s post to Ethereum blobs, against the blob target, and the value they secure.',
   },
-  {
-    path: 'the-crops-guide',
-    title: 'The CROPS guide',
-    description:
-      'Projects that follow the CROPS values: censorship resistance, open source, privacy and security.',
-  },
-  {
-    path: 'submit-your-protocol',
-    label: 'For projects',
-    title: 'Submit your protocol',
-  },
   { path: RENAME_ANNOUNCEMENT_PATH.slice(1), title: 'L2BEAT is now ETHBEAT' },
+  // The CROPS guide's pages (the-crops-guide, submit-your-protocol,
+  // integrate-crops) have hand-made images in the guide's own style, so they
+  // aren't generated here.
 ]
 
 export async function generateMainPageOgImages(kit: OpengraphKit) {
