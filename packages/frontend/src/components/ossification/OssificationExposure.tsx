@@ -35,7 +35,8 @@ export function OssificationExposure({
           </span>
         )}
       </TooltipTrigger>
-      <TooltipContent className="flex max-w-80 flex-col gap-1.5">
+      {/* Table cells set whitespace-pre, which would keep formatRange's line break. */}
+      <TooltipContent className="flex max-w-80 flex-col gap-1.5 whitespace-normal">
         <div>
           <div className="font-bold">Battle-tested exposure</div>
           <div className="text-secondary">
