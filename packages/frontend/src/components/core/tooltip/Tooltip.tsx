@@ -249,8 +249,10 @@ const TooltipTrigger = ({
 const tooltipSurfaceClassName =
   'z-110 rounded-lg bg-surface-primary p-3 text-left font-medium text-paragraph-13 text-primary normal-case shadow-popover max-sm:max-w-screen dark:bg-header-secondary'
 
+// A modal dialog turns off pointer events on the body, which the popup is
+// portaled into, so the popup turns them back on to stay hoverable.
 const tooltipContentVariants = cva(
-  `fade-in-0 zoom-in-95 data-closed:fade-out-0 data-closed:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 origin-(--transform-origin) animate-in data-closed:animate-out data-instant:animate-none ${tooltipSurfaceClassName}`,
+  `fade-in-0 zoom-in-95 data-closed:fade-out-0 data-closed:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 origin-(--transform-origin) animate-in data-closed:animate-out data-instant:animate-none pointer-events-auto ${tooltipSurfaceClassName}`,
   {
     variants: {
       fitContent: {
