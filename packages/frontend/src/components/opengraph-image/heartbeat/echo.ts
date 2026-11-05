@@ -20,11 +20,26 @@ const HAZE = [
   { factor: 2.6, blur: 0.5, opacity: 0.12 },
 ]
 
+// In the inner part of a clearing the rings vanish; they come back by its edge.
+const CLEARING_INNER = 0.62
+
 const { width: W, height: H } = OG_SIZE
 const round = (v: number) => +v.toFixed(2)
 
-/** SVG markup for the glow and rings around the placed heart; draw the lockup over it. */
-export function heartEcho(placement: Placement) {
+/** An ellipse on the canvas, by its centre and radii. */
+export interface Ellipse {
+  cx: number
+  cy: number
+  rx: number
+  ry: number
+}
+
+/**
+ * SVG markup for the glow and rings around the placed heart; draw the lockup
+ * over it. The rings fade out inside `clearing`, so text there reads, while
+ * the glow stays.
+ */
+export function heartEcho(placement: Placement, clearing?: Ellipse) {
   const size = heartHeight(placement)
   const blur = (id: string, sigma: number) =>
     `<filter id="${id}" filterUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><feGaussianBlur stdDeviation="${round(sigma)}"/></filter>`
@@ -36,13 +51,27 @@ export function heartEcho(placement: Placement) {
   const rings = Array.from({ length: RINGS }, (_, i) => {
     const outline = heartOutline(grown(placement, RING_GROWTH ** (i + 1)))
     const opacity = round(RING_OPACITY * RING_FADE ** i)
-    return `<path d="${outline}" fill="none" stroke="${PINK}" stroke-width="${RING_WIDTH}" stroke-linejoin="round" opacity="${opacity}"/>`
+    const stroke = clearing ? 'url(#ringStroke)' : PINK
+    return `<path d="${outline}" fill="none" stroke="${stroke}" stroke-width="${RING_WIDTH}" stroke-linejoin="round" opacity="${opacity}"/>`
   })
 
   // The rings' glow goes under them, so they stay crisp.
   return (
-    `<defs>${HAZE.map((layer, i) => blur(`haze${i}`, layer.blur * size)).join('')}${blur('ringGlow', RING_GLOW * size)}<g id="rings">${rings.join('')}</g></defs>` +
+    `<defs>${clearing ? clearingStroke(clearing) : ''}${HAZE.map((layer, i) => blur(`haze${i}`, layer.blur * size)).join('')}${blur('ringGlow', RING_GLOW * size)}<g id="rings">${rings.join('')}</g></defs>` +
     haze.join('') +
     `<use href="#rings" filter="url(#ringGlow)"/><use href="#rings"/>`
+  )
+}
+
+/** The rings' pink, see-through inside the clearing. */
+function clearingStroke({ cx, cy, rx, ry }: Ellipse) {
+  const stop = (offset: number, opacity: number) =>
+    `<stop offset="${offset}" stop-color="${PINK}" stop-opacity="${opacity}"/>`
+  return (
+    `<radialGradient id="ringStroke" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="1" gradientTransform="translate(${round(cx)} ${round(cy)}) scale(${round(rx)} ${round(ry)})">` +
+    stop(0, 0) +
+    stop(CLEARING_INNER, 0) +
+    stop(1, 1) +
+    '</radialGradient>'
   )
 }

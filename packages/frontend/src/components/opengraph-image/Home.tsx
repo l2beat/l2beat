@@ -1,6 +1,6 @@
 import { heartEcho } from './heartbeat/echo'
 import { Canvas, MARGIN, type TitlePart, wordSpans } from './heartbeat/Frame'
-import { INK, lockup, placeCentred } from './heartbeat/marks'
+import { lockup, placeCentred } from './heartbeat/marks'
 import { OG_SIZE, rasterize } from './heartbeat/render'
 import { satoriWidth, type TextMeasure } from './heartbeat/text'
 
@@ -9,9 +9,11 @@ import { satoriWidth, type TextMeasure } from './heartbeat/text'
 
 const HEART_HEIGHT = 280
 const LOCKUP_TO_TAGLINE = 52
-// The rings fade out in an ellipse this much wider and taller than the
-// tagline: they cross it, and "heartbeat" is as pink as they are.
-const TAGLINE_FADE = { width: 1.3, height: 1.8 }
+// The rings fade out around the tagline: they crossed it, and "heartbeat" is
+// as pink as they are. Only the rings fade, not the glow: darkening the ground
+// there showed as a patch of its own. The clearing is `width` times as wide as
+// the tagline's room and `height` times its size tall.
+const TAGLINE_CLEARING = { width: 1.3, height: 1.9 }
 const TAGLINE_MAX_SIZE = 56
 const TAGLINE: TitlePart[] = [
   'The ',
@@ -27,9 +29,14 @@ export function HomeOpengraphImage({ measure }: { measure: TextMeasure }) {
   const top = (H - blockHeight) / 2
   const logo = placeCentred(W / 2, top + HEART_HEIGHT / 2, HEART_HEIGHT)
   const taglineTop = top + HEART_HEIGHT + LOCKUP_TO_TAGLINE
-  const fade = taglineFade(taglineTop + (size * 1.06) / 2, size)
+  const clearing = {
+    cx: W / 2,
+    cy: taglineTop + (size * 1.06) / 2,
+    rx: ((W - 2 * MARGIN) / 2) * TAGLINE_CLEARING.width,
+    ry: size * TAGLINE_CLEARING.height,
+  }
   return (
-    <Canvas decor={rasterize(heartEcho(logo) + fade + lockup(logo))}>
+    <Canvas decor={rasterize(heartEcho(logo, clearing) + lockup(logo))}>
       <div
         style={{
           display: 'flex',
@@ -44,18 +51,6 @@ export function HomeOpengraphImage({ measure }: { measure: TextMeasure }) {
         {wordSpans({ parts: TAGLINE, size, measure })}
       </div>
     </Canvas>
-  )
-}
-
-function taglineFade(centre: number, size: number) {
-  const rx = ((W - 2 * MARGIN) / 2) * TAGLINE_FADE.width
-  const ry = size * TAGLINE_FADE.height
-  return (
-    `<defs><radialGradient id="taglineFade" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="1" gradientTransform="translate(${W / 2} ${centre}) scale(${rx} ${ry})">` +
-    `<stop offset="0" stop-color="${INK}" stop-opacity="0.9"/>` +
-    `<stop offset="0.6" stop-color="${INK}" stop-opacity="0.9"/>` +
-    `<stop offset="1" stop-color="${INK}" stop-opacity="0"/>` +
-    `</radialGradient></defs><rect width="${W}" height="${H}" fill="url(#taglineFade)"/>`
   )
 }
 
