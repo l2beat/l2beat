@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x7a189f6bb7f4f34f549ca28466751a9704bb6b99
+Generated with discovered.json: 0x97c720819e115127c0232661eef006e1ed99273d
 
-# Diff at Thu, 05 Nov 2026 15:33:54 GMT:
+# Diff at Thu, 05 Nov 2026 15:35:27 GMT:
 
 - id: da5741ad
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
@@ -10,6 +10,8 @@ Generated with discovered.json: 0x7a189f6bb7f4f34f549ca28466751a9704bb6b99
 ## Description
 
 GrvtChainAdminMultisig executed one proposal through each Governance contract in one transaction. Both send L2 transactions through the Bridgehub to the GRVT L2 contract 0x85deE82d: an implementation upgrade to 0x4e2e4488 and a diamond cut that replaces 21 facets. GRVT has no public RPC, so the L2 contracts are not discovered. No L1 contract changed. Decoded: https://tools.l2beat.com/decoder-new/?hash=0xec3a13e3ca08ccabbd2256618bb85e2af1ef6ab5aa5b047e099726777d237565&data=AwA.
+
+Config only: the Chain Admin permission of the Diamond now lists the v31 power to pause all new L1 --> L2 transactions while Priority Mode is not allowed, deposits included.
 
 ## Watched changes
 
@@ -32,6 +34,24 @@ GrvtChainAdminMultisig executed one proposal through each Governance contract in
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1793715847 (main branch discovery), not current.
+
+```diff
+    contract GrvtChainAdminMultisig (eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.17.description:
+-        "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
++        "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers and, from v31 while Priority Mode is not allowed, pause all new L1 --> L2 transactions including deposits (Chain Admin role)."
+    }
+```
+
+```diff
+    contract GrvtZkEvmAdmin (eth:0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5 act through it.
+      directlyReceivedPermissions.0.description:
+-        "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
++        "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers and, from v31 while Priority Mode is not allowed, pause all new L1 --> L2 transactions including deposits (Chain Admin role)."
+    }
+```
 
 ```diff
     external contract ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) {
