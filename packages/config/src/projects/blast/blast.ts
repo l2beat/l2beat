@@ -20,7 +20,7 @@ export const blast: ScalingProject = opStackL2({
     slug: 'blast',
     architectureImage: 'blast',
     headerWarning:
-      'Blast is shutting down (see the [announcement](https://x.com/blast/status/2106032805280891073)). Deposits are closed and the OptimismPortal is paused, so withdrawals through the bridge are no longer possible. The ETH and DAI backing user balances were moved to BlastExit claim contracts on Ethereum, controlled by the Blast multisig.',
+      'Blast is shutting down (see the [announcement](https://x.com/blast/status/2106032805280891073)). Deposits are closed and the OptimismPortal is paused, so withdrawals through the bridge are no longer possible. The ETH and DAI backing user balances were moved to BlastExit claim contracts on Ethereum, controlled by the Blast team.',
     description:
       'Blast is an EVM-compatible Optimistic Rollup supporting native yield. It invests funds deposited into the L1 bridge into various DeFi protocols transferring yield back to the L2.',
     links: {
