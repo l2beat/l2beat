@@ -41,10 +41,10 @@ export function MainPageOpengraphImage({ measure, label, title }: Props) {
 
 // A title ending just past the heart's edge looks like it bumps into it, so
 // one that runs over the heart runs at least this far.
-const MIN_OVERLAP = 96
+const MIN_OVERLAP = 56
 
 /**
- * One line while that keeps the title at 88 px or more, else two lines at up
+ * One line while that keeps the title at 96 px or more, else two lines at up
  * to 96 px, balanced like CSS `text-wrap: balance`: a long name reads better
  * wrapped than shrunk. Sizes that would end the title at the heart's edge are
  * skipped.
@@ -54,7 +54,7 @@ export function fitTitle(measure: TextMeasure, title: string) {
     const width = measure.width(title, size, 700, -0.01 * size)
     return satoriWidth(width) <= COLUMN && !endsAtHeartEdge(width)
   }
-  for (let size = 120; size >= 88; size--) {
+  for (let size = 120; size >= 96; size--) {
     if (fitsOneLine(size)) return { size, width: COLUMN }
   }
   for (let size = 96; size >= 44; size -= 2) {

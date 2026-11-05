@@ -35,7 +35,7 @@ const placement = place(
 /** Where a title starts running over the heart. */
 export const HEART_EDGE = placement.hx + placement.scale * EDGE_DX
 /** How far short of the heart's edge text stops when it doesn't run over the heart. */
-export const HEART_CLEARANCE = 32
+export const HEART_CLEARANCE = 24
 
 const signature = place(
   MARGIN + (SIGNATURE_HEIGHT * HEART_RATIO) / 2,
@@ -221,4 +221,4 @@ export type TitlePart = string | { highlight: string }
 
 // Darkens the ground just around the letters: white on the heart's pink is
 // 3.5:1, and the rings crossing a line of text read as strikes.
-const TEXT_HALO = `0 2px 24px ${INK}80`
+const TEXT_HALO = `0 1px 12px ${INK}4D`
