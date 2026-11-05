@@ -23,7 +23,7 @@ export const doma: ScalingProject = opStackL2({
   display: {
     name: 'Doma',
     warning:
-      'The fault proof system is deployed but is not functional. The dispute games commit to op-program v1.6.0, which predates the Jovian hardfork active on the chain and does not include its chain ID in the embedded superchain registry snapshot, so no dispute can be resolved by execution. Security relies entirely on the permissioned proposer and challenger.',
+      'The fault proof system is deployed but is not functional. The dispute game commits to an op-program release that predates the Jovian hardfork active on the chain, so it cannot derive current blocks and no dispute can be resolved correctly by execution. Security relies entirely on the permissioned proposer and challengers.',
     slug: 'doma',
     description:
       'Doma is an OP Stack Optimium on Ethereum using Celestia for data availability. It tokenizes DNS domains into tradable onchain assets.',

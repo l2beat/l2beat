@@ -34,7 +34,7 @@ export const codex: ScalingProject = opStackL2({
   display: {
     name: 'Codex',
     warning:
-      'The fault proof system is deployed but is not functional. The dispute games commit to op-program v1.6.0, which predates the Jovian hardfork active on the chain and does not include its chain ID in the embedded superchain registry snapshot, so no dispute can be resolved by execution. Security relies entirely on the permissioned proposer and challenger.',
+      'The fault proof system is deployed but is not functional. The dispute game commits to an op-program release that predates the Jovian hardfork active on the chain, so it cannot derive current blocks and no dispute can be resolved correctly by execution. Security relies entirely on the permissioned proposer and challengers.',
     slug: 'codex',
     description:
       'Codex is an OP Stack rollup on Ethereum purpose-built for stablecoin-native payments, FX and settlement.',
