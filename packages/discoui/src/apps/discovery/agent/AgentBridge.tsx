@@ -9,6 +9,7 @@ import {
 import type { ApiAgentEvent } from '../../../api/types'
 import { isEditableTarget } from '../../../utils/isEditableTarget'
 import { useDockingStore } from '../multi-view/store'
+import { useChatStore } from '../panel-chat/chatStore'
 import { useStore as useNodeStore } from '../panel-nodes/store/store'
 import { applyStep } from './applyStep'
 import { readContext } from './readContext'
@@ -26,6 +27,11 @@ let focusedAt = 0
 // Reports may arrive out of order, and the server keeps the latest.
 let reportCount = 0
 let serverId: string | undefined
+
+// The chat routes act for the tab that owns the chat.
+export function agentTabId(): string {
+  return TAB_ID
+}
 
 // randomUUID exists only on secure pages, and DiscoUI is also opened over
 // plain HTTP from other machines.
@@ -165,8 +171,12 @@ function handleEvent(
     useAgentStore.getState().clear()
     return
   }
-  // The chat panel comes in a later change; until then nothing starts one.
-  if (event.type === 'chat' || event.type === 'chat-replay') {
+  if (event.type === 'chat') {
+    useChatStore.getState().apply(event.event)
+    return
+  }
+  if (event.type === 'chat-replay') {
+    useChatStore.getState().replay(event.events)
     return
   }
   // The agent may have run discovery since this tab loaded the project, like
