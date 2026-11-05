@@ -93,8 +93,9 @@
   --negative: #c40000;
   --brand: #ff3776;
   /* Text in the brand colour: #FF3776 is too light to read as small text, so
-     a shade that keeps 4.5:1 on every surface, the grey ones included. */
-  --brand-deep: #c2104a;
+     a shade of the same hue that keeps 4.5:1 on every surface, the grey ones
+     included. Any lighter drops below 4.5:1 on --background. */
+  --brand-deep: #ca0055;
   /* A lighter brand pink, e.g. for the chart loader's second ball. */
   --brand-light: #ff8fb0;
   --selection-brand-share: 30%;
@@ -151,7 +152,8 @@
   --warning: #ffc107;
   --warning-text: #ffc107;
   --negative: #ff3d3d;
-  --brand-deep: #ff7aa5;
+  /* The same hue, as vivid as it gets while keeping 4.5:1 on --surface-secondary. */
+  --brand-deep: #ff7493;
   --brand-light: #ffa3c0;
   --selection-brand-share: 50%;
   --background: #07080c;
@@ -823,6 +825,31 @@
     black 0px,
     transparent 100%
   );
+}
+
+/* A chart tooltip grows out of the hovered point, which its placement sets
+   as --chart-tooltip-origin, so it reads as coming from there. Moves
+   between points keep it mounted and do not replay this. */
+@utility chart-tooltip-enter {
+  transform-origin: var(--chart-tooltip-origin, 0 0);
+  animation: chart-tooltip-enter 150ms var(--ease-out-quint);
+
+  @media (prefers-reduced-motion: reduce) {
+    animation-name: chart-tooltip-fade-in;
+  }
+}
+
+@keyframes chart-tooltip-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+@keyframes chart-tooltip-fade-in {
+  from {
+    opacity: 0;
+  }
 }
 
 @utility word-break-word {

@@ -19,10 +19,6 @@ export const navSecondaryLinks: NavLink[] = [
     href: '/native-rollups',
   },
   {
-    title: 'Jobs',
-    href: externalLinks.jobs,
-  },
-  {
     title: 'FAQ',
     href: '/faq',
   },

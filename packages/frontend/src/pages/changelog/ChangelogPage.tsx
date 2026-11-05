@@ -70,7 +70,7 @@ export function ChangelogPage({ entries, ...props }: Props) {
                         className="relative flex scroll-mt-24 gap-4"
                         id={entry.id}
                       >
-                        <ArrowIcon className="size-[15px] shrink-0 fill-brand text-brand-deep" />
+                        <ArrowIcon className="size-[15px] shrink-0 fill-brand-deep" />
                         <div className="mx-2 flex w-full items-center gap-3">
                           <span className="h-px flex-1 bg-brand" />
                           <span className="font-semibold text-brand-deep text-subtitle-12 uppercase leading-none">

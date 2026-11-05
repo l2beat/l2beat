@@ -1,11 +1,11 @@
-Generated with discovered.json: 0x34f52fa2a0d36a962be0c34b4e715db7eac17cf8
+Generated with discovered.json: 0xb158102b8e7c1cf449cccb4c31cf8eca5dee567c
 
-# Diff at Fri, 30 Oct 2026 11:27:51 GMT:
+# Diff at Thu, 05 Nov 2026 09:55:51 GMT:
 
-- id: dd93d7a9
+- id: e3c8233a
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@3ae429380399592d71c8b4b6480d66bded3ffa9d block: 1793196526
-- current timestamp: 1793359565
+- comparing to: main@7d73c126d3a0e6578451cece14c1045d32222e20 block: 1793196526
+- current timestamp: 1793872539
 
 ## Description
 
@@ -57,8 +57,8 @@ L1Splitter: owner moved to the SuperchainProxyAdminOwner; L1 recipient changed; 
 ```
 
 ```diff
-    contract OperatorFeeVault (unichain:0x420000000000000000000000000000000000001b) [opstack/Layer2/OperatorFeeVault] {
-    +++ description: Holds the 'operator fees' for the L2 network, which are part of the L2 fees that users pay.
+    contract OperatorFeeVault (unichain:0x420000000000000000000000000000000000001b) [opstack/Layer2/OperatorFeeVault_karst] {
+    +++ description: Collects the operator fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.
       values.MIN_WITHDRAWAL_AMOUNT:
 -        0
 +        "150000000000000000"
@@ -113,8 +113,8 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1793196526 (main branch discovery), not current.
 
 ```diff
-    contract OperatorFeeVault (unichain:0x420000000000000000000000000000000000001b) [opstack/Layer2/OperatorFeeVault] {
-    +++ description: Holds the 'operator fees' for the L2 network, which are part of the L2 fees that users pay.
+    contract OperatorFeeVault (unichain:0x420000000000000000000000000000000000001b) [opstack/Layer2/OperatorFeeVault_karst] {
+    +++ description: Collects the operator fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.
       values.recipient:
 -        "unichain:0x4200000000000000000000000000000000000019"
 +        "eth:0x4200000000000000000000000000000000000019"
@@ -123,6 +123,81 @@ discovery. Values are for block 1793196526 (main branch discovery), not current.
 +        "eth:0x4200000000000000000000000000000000000019"
       usedTypes:
 +        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+Generated with discovered.json: 0xeb34fb12dc20c2eabce036da793996652a6b4e3d
+
+# Diff at Thu, 05 Nov 2026 07:14:02 GMT:
+
+- id: 5f5d4999
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@02f1e81176b548fbfa87cd86090398367c11dd2f block: 1793196526
+- current timestamp: 1793196526
+
+## Description
+
+Show who can change the recipient, minimum withdrawal amount and withdrawal network of the fee vaults, and describe the vaults from their code.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793196526 (main branch discovery), not current.
+
+```diff
+    contract SuperchainProxyAdminOwner (eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.3:
++        {"permission":"interact","from":"unichain:0x4200000000000000000000000000000000000011","description":"change the fee recipient, the minimum withdrawal amount and whether fees are withdrawn on L1 or L2.","role":".proxyAdminOwner"}
+      receivedPermissions.4:
++        {"permission":"interact","from":"unichain:0x4200000000000000000000000000000000000019","description":"change the fee recipient, the minimum withdrawal amount and whether fees are withdrawn on L1 or L2.","role":".proxyAdminOwner"}
+      receivedPermissions.5:
++        {"permission":"interact","from":"unichain:0x420000000000000000000000000000000000001A","description":"change the fee recipient, the minimum withdrawal amount and whether fees are withdrawn on L1 or L2.","role":".proxyAdminOwner"}
+      receivedPermissions.6:
++        {"permission":"interact","from":"unichain:0x420000000000000000000000000000000000001b","description":"change the fee recipient, the minimum withdrawal amount and whether fees are withdrawn on L1 or L2.","role":".proxyAdminOwner"}
+    }
+```
+
+```diff
+    contract SequencerFeeVault (unichain:0x4200000000000000000000000000000000000011) [opstack/Layer2/SequencerFeeVault_karst] {
+    +++ description: Collects the sequencer fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.
+      template:
+-        "opstack/Layer2/SequencerFeeVault"
++        "opstack/Layer2/SequencerFeeVault_karst"
+      description:
+-        "Collects the sequencer fees, which are withdrawable to the FeesCollector on L1."
++        "Collects the sequencer fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached."
+    }
+```
+
+```diff
+    contract BaseFeeVault (unichain:0x4200000000000000000000000000000000000019) [opstack/Layer2/BaseFeeVault_karst] {
+    +++ description: Collects the EIP-1559 base fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.
+      description:
+-        "Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1."
++        "Collects the EIP-1559 base fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached."
+    }
+```
+
+```diff
+    contract L1FeeVault (unichain:0x420000000000000000000000000000000000001A) [opstack/Layer2/L1FeeVault_karst] {
+    +++ description: Collects the L1 data portion of the L2 transaction fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.
+      description:
+-        "Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1."
++        "Collects the L1 data portion of the L2 transaction fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached."
+    }
+```
+
+```diff
+    contract OperatorFeeVault (unichain:0x420000000000000000000000000000000000001b) [opstack/Layer2/OperatorFeeVault_karst] {
+    +++ description: Collects the operator fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.
+      template:
+-        "opstack/Layer2/OperatorFeeVault"
++        "opstack/Layer2/OperatorFeeVault_karst"
+      description:
+-        "Holds the 'operator fees' for the L2 network, which are part of the L2 fees that users pay."
++        "Collects the operator fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached."
     }
 ```
 

@@ -970,6 +970,44 @@ describeDatabase(InteropTransferRepository.name, (db) => {
     },
   )
 
+  describe(InteropTransferRepository.prototype.getVolumeByPlugin.name, () => {
+    it('sums the larger side of each transfer per plugin', async () => {
+      await repository.insertMany([
+        {
+          ...transfer('cctp', 'out', 'deposit', UnixTime(200)),
+          srcValueUsd: 100,
+          dstValueUsd: undefined,
+        },
+        {
+          ...transfer('cctp', 'in', 'deposit', UnixTime(300)),
+          srcValueUsd: undefined,
+          dstValueUsd: 100,
+        },
+        {
+          ...transfer('cctp', 'full', 'deposit', UnixTime(300)),
+          srcValueUsd: 50,
+          dstValueUsd: 49,
+        },
+        {
+          ...transfer('across', 'unpriced', 'deposit', UnixTime(300)),
+          srcValueUsd: undefined,
+          dstValueUsd: undefined,
+        },
+        transfer('cctp', 'before', 'deposit', UnixTime(100)),
+      ])
+
+      const result = await repository.getVolumeByPlugin({
+        from: UnixTime(100),
+        to: UnixTime(300),
+      })
+
+      expect(result).toEqualUnsorted([
+        { plugin: 'cctp', count: 3, volumeUsd: 250 },
+        { plugin: 'across', count: 1, volumeUsd: 0 },
+      ])
+    })
+  })
+
   describe(InteropTransferRepository.prototype.getByRange.name, () => {
     beforeEach(async () => {
       await repository.insertMany([

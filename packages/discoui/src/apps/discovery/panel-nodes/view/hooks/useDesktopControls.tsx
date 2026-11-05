@@ -1,3 +1,4 @@
+import { isEditableTarget } from '../../../../../utils/isEditableTarget'
 import { useDockingStore } from '../../../multi-view/store'
 import { useSearchStore } from '../../../search/store'
 import { useStore } from '../../store/store'
@@ -92,19 +93,6 @@ export function useDesktopControls({ containerRef }: Props): DesktopControls {
     onMouseUp: onMouseUp,
     isResizing,
   }
-}
-
-function isEditableTarget(target: EventTarget | null): boolean {
-  if (!(target instanceof HTMLElement)) {
-    return false
-  }
-
-  return (
-    target.isContentEditable ||
-    target instanceof HTMLInputElement ||
-    target instanceof HTMLTextAreaElement ||
-    target instanceof HTMLSelectElement
-  )
 }
 
 function isUndoKeyboardEvent(event: KeyboardEvent): boolean {

@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { type ReactNode, useLayoutEffect, useRef } from 'react'
-import { tooltipContentVariants } from '~/components/core/tooltip/Tooltip'
+import { tooltipSurfaceClassName } from '~/components/core/tooltip/Tooltip'
 import {
   type HomeSparklineSeries,
   WEEK_DAYS,
@@ -111,17 +111,24 @@ function PointTooltip({
         : !fits(roomBelow) && (fits(roomAbove) || roomAbove > roomBelow)
     const top = above ? -GAP - height : chart.clientHeight + GAP
     box.style.transform = `translate(${left}px, ${top}px)`
+    // It opens from the active point's edge of the tooltip.
+    box.style.setProperty(
+      '--chart-tooltip-origin',
+      `${anchorX - left}px ${above ? height : 0}px`,
+    )
   })
   return (
-    <div
-      ref={ref}
-      className={cn(
-        tooltipContentVariants({ fitContent: true }),
-        // Above the cards beside the chart.
-        'pointer-events-none absolute top-0 left-0 z-110 flex flex-col gap-1 px-3 py-2',
-      )}
-    >
-      {children}
+    // Placed by its transform, above the cards beside the chart; the box
+    // inside animates.
+    <div ref={ref} className="pointer-events-none absolute top-0 left-0 z-110">
+      <div
+        className={cn(
+          tooltipSurfaceClassName,
+          'chart-tooltip-enter flex flex-col gap-1 px-3 py-2',
+        )}
+      >
+        {children}
+      </div>
     </div>
   )
 }

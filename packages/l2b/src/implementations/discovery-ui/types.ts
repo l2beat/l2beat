@@ -311,3 +311,28 @@ export type ApiHealthHint =
         templateId: string
       }
     })
+
+export type ApiAgentEvent =
+  | ApiAgentShowEvent
+  | { type: 'clear' }
+  // First on every stream; a new id means the server restarted.
+  | { type: 'connected'; serverId: string }
+
+export interface ApiAgentShowEvent {
+  type: 'show'
+  id: string
+  project: string
+  steps: ApiAgentStep[]
+}
+
+export interface ApiAgentStep {
+  note: string
+  // The code contract first: the code panel shows the first selected one.
+  select: ChainSpecificAddress[]
+  code?: {
+    address: ChainSpecificAddress
+    sourceIndex: number
+    offset: number
+    length: number
+  }
+}

@@ -42,6 +42,7 @@ export function GardenTable({ entries }: { entries: GardenEntry[] }) {
                       key={crop.definition.key}
                       crop={crop}
                       delay={entranceDelay(rowIndex, columnIndex)}
+                      jitterKey={`${entry.slug}:${crop.definition.key}`}
                     />
                   ),
                 )}
@@ -88,7 +89,15 @@ function entranceDelay(rowIndex: number, columnIndex: number) {
   return columnIndex * 0.05 + Math.min(rowIndex * 0.04, MAX_ROW_DELAY)
 }
 
-function EvaluatedCrop({ crop, delay }: { crop: CropEntry; delay: number }) {
+function EvaluatedCrop({
+  crop,
+  delay,
+  jitterKey,
+}: {
+  crop: CropEntry
+  delay: number
+  jitterKey: string
+}) {
   const { definition, evaluation } = crop
   const statusText = getCropStatusText(evaluation.status, evaluation.sentiment)
   return (
@@ -96,6 +105,7 @@ function EvaluatedCrop({ crop, delay }: { crop: CropEntry; delay: number }) {
       status={evaluation.status}
       sentiment={evaluation.sentiment}
       delay={delay}
+      jitterKey={jitterKey}
       label={`${definition.label}: ${statusText}`}
     >
       <CropEvaluationDetails entry={crop} />

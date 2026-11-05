@@ -70,9 +70,9 @@ export type {
 export type { InteropConfigRecord } from './repositories/InteropConfigRepository'
 export type {
   InteropEventContext,
+  InteropEventCounterpartVolumeRecord,
   InteropEventRecord,
   InteropEventStatsRecord,
-  InteropEventSupportBreakdownRecord,
 } from './repositories/InteropEventRepository'
 export type {
   InteropMessageDetailedStatsRecord,
@@ -98,6 +98,7 @@ export {
   type InteropTransferDeployedTokenPairStatsByToken,
   type InteropTransferFinancialsFilter,
   type InteropTransferFinancialsStats,
+  type InteropTransferPluginVolumeRecord,
   type InteropTransferRecord,
   type InteropTransferSupplyChangeRecord,
   type InteropTransfersDetailedStatsRecord,

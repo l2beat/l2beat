@@ -5,7 +5,10 @@ import {
   type ChartMeta,
 } from '~/components/core/chart/ChartContext'
 import { ChartLegend } from '~/components/core/chart/ChartLegend'
-import { ChartTooltipRow } from '~/components/core/chart/ChartTooltip'
+import {
+  ChartTooltipRow,
+  ChartTooltipWrapper,
+} from '~/components/core/chart/ChartTooltip'
 import {
   type Anchor,
   TOOLTIP_OFFSET,
@@ -13,7 +16,6 @@ import {
 } from '~/components/core/chart/useChartTooltip'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
-import { tooltipContentVariants } from '~/components/core/tooltip/Tooltip'
 import { Logo } from '~/components/Logo'
 import { EM_DASH } from '~/consts/characters'
 import { useIsClient } from '~/hooks/useIsClient'
@@ -493,7 +495,7 @@ function CustomTooltip({
   const orderedBuckets = horizontal ? BUCKETS : [...BUCKETS].reverse()
 
   return (
-    <div className={tooltipContentVariants()}>
+    <ChartTooltipWrapper>
       <div className="font-medium text-label-value-14 text-secondary">
         {data.name}
       </div>
@@ -547,7 +549,7 @@ function CustomTooltip({
           </span>
         </div>
       </div>
-    </div>
+    </ChartTooltipWrapper>
   )
 }
 

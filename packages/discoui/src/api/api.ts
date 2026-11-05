@@ -5,6 +5,7 @@ import {
 } from '@l2beat/shared-pure'
 import type {
   ApiAddressUsageResponse,
+  ApiAgentEvent,
   ApiCodeResponse,
   ApiCodeSearchResponse,
   ApiConfigFileResponse,
@@ -140,6 +141,27 @@ export function executeDiscover(
     devMode: devMode.toString(),
   })
   return new EventSource(`/api/terminal/discover?${params}`)
+}
+
+// One stream per tab: the server sends each agent show to one tab.
+export function openAgentEvents(
+  tab: string,
+  onEvent: (event: ApiAgentEvent) => void,
+): EventSource {
+  const events = new EventSource(
+    `/api/agent/events?${new URLSearchParams({ tab })}`,
+  )
+  events.onmessage = (message) => onEvent(JSON.parse(message.data))
+  return events
+}
+
+export async function postAgentTab(report: {
+  tab: string
+  project: string | undefined
+  focusedAt: number
+  sequence: number
+}): Promise<void> {
+  await fetchOk('/api/agent/tab', jsonRequest('POST', report))
 }
 
 export function executeMatchFlat(

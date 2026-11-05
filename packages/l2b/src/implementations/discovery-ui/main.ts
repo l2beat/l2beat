@@ -15,6 +15,7 @@ import { existsSync, readFileSync } from 'fs'
 import type { Server } from 'http'
 import path, { join } from 'path'
 import { getCodePaths } from '../discovery/getCodePaths'
+import { createAgentRouter } from './agent/router'
 import { attachAnalyzeRouter } from './analyze/router'
 import { attachConfigRouter } from './configs/router'
 import { DiffoveryController } from './diffovery/DiffoveryController'
@@ -36,6 +37,7 @@ import { attachLayoutRouter } from './layouts/router'
 import { attachModulesRouter } from './modules'
 import { ProviderCache } from './ProviderCache'
 import { renderProjectPage } from './renderProjectPage'
+import { safeStringSchema } from './safeStringSchema'
 import { searchCode } from './searchCode'
 import { TvlCache } from './TvlCache'
 import {
@@ -44,13 +46,6 @@ import {
 } from './templates/router'
 import { RemoteWorkspaces } from './xref/RemoteWorkspaces'
 import { attachXrefRouter, diskWorkspace } from './xref/router'
-
-const safeStringSchema = z
-  .string()
-  .check(
-    (v) => v.length > 0 && /^[a-zA-Z0-9_-]+$/.test(v),
-    'Input cannot be empty and must be alphanumeric and can contain underscores or hyphens.',
-  )
 
 const ethereumAddressSchema = z.string().transform(ChainSpecificAddress)
 
@@ -147,6 +142,10 @@ export function createDiscoveryUiApp({
   const flatSourceClient = new FlatSourceClient()
   const diffoveryController = new DiffoveryController(flatSourceClient)
 
+  // Before the body parser, so the agent routes refuse a request unread.
+  if (!readonly) {
+    app.use('/api/agent', createAgentRouter(configReader))
+  }
   app.use(express.json())
 
   app.get('/health', (_, res) => {
@@ -467,20 +466,39 @@ export function createDiscoveryUiApp({
   return app
 }
 
-function shutdown(server: Server) {
-  server.close(() => {
-    process.exit(0)
+const SHUTDOWN_TIMEOUT_MS = 10_000
+
+// Shutdown waits for requests in flight, but not for event streams, like
+// each open tab's agent stream, which never finish on their own.
+function attachGracefulShutdown(server: Server) {
+  let requestsInFlight = 0
+  let isShuttingDown = false
+  server.on('request', (req, res) => {
+    if (req.headers.accept === 'text/event-stream') {
+      return
+    }
+    requestsInFlight++
+    res.on('close', () => {
+      requestsInFlight--
+      if (isShuttingDown && requestsInFlight === 0) {
+        server.closeAllConnections()
+      }
+    })
   })
 
-  setTimeout(() => {
-    console.error(
-      'Could not close connections in time, forcefully shutting down',
-    )
-    process.exit(1)
-  }, 10000)
-}
-
-function attachGracefulShutdown(server: Server) {
-  process.on('SIGTERM', () => shutdown(server))
-  process.on('SIGINT', () => shutdown(server))
+  const shutdown = () => {
+    isShuttingDown = true
+    server.close(() => process.exit(0))
+    if (requestsInFlight === 0) {
+      server.closeAllConnections()
+    }
+    setTimeout(() => {
+      console.error(
+        'Could not close connections in time, forcefully shutting down',
+      )
+      process.exit(1)
+    }, SHUTDOWN_TIMEOUT_MS)
+  }
+  process.on('SIGTERM', shutdown)
+  process.on('SIGINT', shutdown)
 }
