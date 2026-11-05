@@ -187,6 +187,7 @@ export function ActivityChart({
             stroke="var(--chart-ethereum)"
             strokeWidth={2}
             strokeDasharray="2 2"
+            ifOverflow="visible"
           />
         )}
         <defs>
@@ -239,7 +240,7 @@ export function ActivityCustomTooltip({
       <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
           {formatRange(timestamp, timestamp + resolutionSeconds)}
-          {isPartial && ' (in progress)'}
+          {isPartial && <div>Hour in progress</div>}
         </div>
         <span className="text-heading-16">Average {metric.toUpperCase()}</span>
         <HorizontalSeparator className="mt-1.5" />
