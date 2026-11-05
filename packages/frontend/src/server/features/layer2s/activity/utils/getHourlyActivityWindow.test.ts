@@ -72,6 +72,26 @@ describe(getHourlyActivityWindow.name, () => {
     expect(window.behind).toEqual([])
   })
 
+  it('stops a chain that follows finality at its target, not past it', () => {
+    // Ethereum indexes up to its finalized block, 14:03, past its 13:00
+    // target. Pages of other projects wait for Ethereum, so it must not hold
+    // them to more than the target. Capping before taking the hour back would
+    // end at 11:00 instead, an hour short after every finality advance
+    const window = getHourlyActivityWindow(
+      optionToRange('1d'),
+      [
+        {
+          ...catchingUp('ethereum', '2026-10-28T15:00:00Z'),
+          target: at('2026-10-28T13:00:00Z'),
+          latestBlockTimestamp: at('2026-10-28T14:03:00Z'),
+        },
+      ],
+      { waitForAll: true },
+    )
+
+    expect(window.end).toEqual(at('2026-10-28T12:00:00Z'))
+  })
+
   it('reads hours from an API as whole up to where they are synced', () => {
     const window = getHourlyActivityWindow(optionToRange('1d'), [
       synced('arbitrum', '2026-10-28T14:00:00Z'),
@@ -200,6 +220,7 @@ function synced(id: string, target: string): SyncMetadataRecord {
     syncedUntil: at(target),
     blockTarget: 1000,
     blockSyncedUntil: 1000,
+    latestBlockTimestamp: null,
   }
 }
 
@@ -212,6 +233,7 @@ function catchingUp(id: string, syncedUntil: string): SyncMetadataRecord {
     syncedUntil: at(syncedUntil),
     blockTarget: 1000,
     blockSyncedUntil: 900,
+    latestBlockTimestamp: null,
   }
 }
 
@@ -223,5 +245,6 @@ function api(id: string, syncedUntil: string): SyncMetadataRecord {
     syncedUntil: at(syncedUntil),
     blockTarget: null,
     blockSyncedUntil: null,
+    latestBlockTimestamp: null,
   }
 }

@@ -8,7 +8,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import { AreaChart } from 'recharts'
+import { AreaChart, ReferenceDot } from 'recharts'
 import type {
   ChartMeta,
   ChartProject,
@@ -67,6 +67,8 @@ interface Props {
   project: ChartProject
   tickCount?: number
   resolution?: ActivityResolution
+  /** The last data point averages only its hour up to `until` */
+  partialHour?: { from: number; until: number }
 }
 
 export function ActivityChart({
@@ -80,6 +82,7 @@ export function ActivityChart({
   project,
   tickCount,
   resolution = 'day',
+  partialHour,
 }: Props) {
   const chartMeta = useMemo(
     () => ({
@@ -111,6 +114,9 @@ export function ActivityChart({
   ) satisfies ChartMeta
 
   const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
+  const partialValue =
+    partialHour &&
+    data?.find((point) => point.timestamp === partialHour.from)?.ethereum
   return (
     <ChartContainer
       data={data}
@@ -165,9 +171,24 @@ export function ActivityChart({
         <ChartTooltip
           filterNull={false}
           content={
-            <ActivityCustomTooltip metric={metric} resolution={resolution} />
+            <ActivityCustomTooltip
+              metric={metric}
+              resolution={resolution}
+              partialHour={partialHour}
+            />
           }
         />
+        {partialHour && typeof partialValue === 'number' && (
+          <ReferenceDot
+            x={partialHour.from}
+            y={partialValue}
+            r={4}
+            fill="var(--background)"
+            stroke="var(--chart-ethereum)"
+            strokeWidth={2}
+            strokeDasharray="2 2"
+          />
+        )}
         <defs>
           {type === 'Rollups' && (
             <>
@@ -200,19 +221,25 @@ export function ActivityCustomTooltip({
   label: timestamp,
   metric,
   resolution = 'day',
+  partialHour,
 }: CustomChartTooltipProps & {
   metric: ActivityMetric
   resolution?: ActivityResolution
+  partialHour?: { from: number; until: number }
 }) {
-  const resolutionSeconds = UnixTime.periodToSeconds(resolution)
   const { meta } = useChart()
   if (!payload || typeof timestamp !== 'number') return null
+  const isPartial = partialHour?.from === timestamp
+  const resolutionSeconds = isPartial
+    ? partialHour.until - partialHour.from
+    : UnixTime.periodToSeconds(resolution)
 
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
           {formatRange(timestamp, timestamp + resolutionSeconds)}
+          {isPartial && ' (in progress)'}
         </div>
         <span className="text-heading-16">Average {metric.toUpperCase()}</span>
         <HorizontalSeparator className="mt-1.5" />

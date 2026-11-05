@@ -25,6 +25,11 @@ export interface ActivityMetricStats {
 export interface ActivityProjectChartStats {
   tps: ActivityMetricStats
   uops: ActivityMetricStats
+  /**
+   * Set when the past day rates run to this latest block instead of the end
+   * of the last full day. The change still compares full days
+   */
+  liveAsOf?: number
 }
 
 interface ActivityMaxCounts {

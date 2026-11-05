@@ -7,6 +7,10 @@ import { getFullySyncedDaRange } from '../data-availability/throughput/utils/get
 import { countPerSecond } from '../layer2s/activity/utils/countPerSecond'
 import { getActivitySyncInfo } from '../layer2s/activity/utils/getActivitySyncInfo'
 import { getFullySyncedActivityRange } from '../layer2s/activity/utils/getFullySyncedActivityRange'
+import {
+  getLiveActivityRates,
+  LIVE_RATE_FULL_HOURS,
+} from '../layer2s/activity/utils/liveActivity'
 import { computeSeriesChange } from './computeSeriesChange'
 
 export interface HomeEthereumCharts {
@@ -14,6 +18,8 @@ export interface HomeEthereumCharts {
     chart: [number, number | null][]
     syncedUntil: number
     pastDayUops: number | undefined
+    /** Of the latest block, when the past day UOPS run to it */
+    pastDayUopsAsOf: number | undefined
     change: number | undefined
   }
   da: {
@@ -45,9 +51,10 @@ async function getEthereumActivitySparkline(
   const db = getDb()
   const adjustedRange = await getFullySyncedActivityRange(range)
 
-  const [records, syncInfo] = await Promise.all([
+  const [records, syncInfo, latestHours] = await Promise.all([
     db.activity.getByProjectsAndTimeRange([ProjectId.ETHEREUM], adjustedRange),
     getActivitySyncInfo(ProjectId.ETHEREUM, adjustedRange[1]),
+    db.hourlyActivity.getLatestHours(ProjectId.ETHEREUM, LIVE_RATE_FULL_HOURS),
   ])
 
   if (!syncInfo.hasSyncData || records.length === 0) {
@@ -55,6 +62,7 @@ async function getEthereumActivitySparkline(
       chart: [],
       syncedUntil: adjustedRange[1],
       pastDayUops: undefined,
+      pastDayUopsAsOf: undefined,
       change: undefined,
     }
   }
@@ -77,13 +85,26 @@ async function getEthereumActivitySparkline(
     return [timestamp, uopsByTimestamp.get(timestamp) ?? 0]
   })
 
+  // The chart and its change keep full days. Only the rate is live
+  const change = computeSeriesChange(chart.map(([_, value]) => value))
+  if (latestHours) {
+    const rates = getLiveActivityRates(latestHours)
+    return {
+      chart,
+      syncedUntil,
+      pastDayUops: rates.uops,
+      pastDayUopsAsOf: rates.asOf,
+      change,
+    }
+  }
   const pastDayCount = uopsByTimestamp.get(syncedUntil)
   return {
     chart,
     syncedUntil,
     pastDayUops:
       pastDayCount !== undefined ? countPerSecond(pastDayCount) : undefined,
-    change: computeSeriesChange(chart.map(([_, value]) => value)),
+    pastDayUopsAsOf: undefined,
+    change,
   }
 }
 
@@ -161,6 +182,7 @@ function getMockHomeEthereumCharts(range: ChartRange): HomeEthereumCharts {
       chart: timestamps.map((timestamp) => [+timestamp, 950_400]),
       syncedUntil: adjustedRange[1],
       pastDayUops: 11,
+      pastDayUopsAsOf: undefined,
       change: 0,
     },
     da: {

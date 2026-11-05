@@ -14,7 +14,10 @@ export function getSyncState(
   const isSynced = isFeatureSynced(record, timestamp)
   const syncedUntil = isSynced
     ? record.target
-    : (record.syncedUntil ?? UnixTime.now())
+    : record.syncedUntil !== null
+      ? // A chain following finality syncs past its target
+        Math.min(record.syncedUntil, record.target)
+      : UnixTime.now()
   return {
     isSynced,
     syncedUntil: Math.min(syncedUntil, timestamp),

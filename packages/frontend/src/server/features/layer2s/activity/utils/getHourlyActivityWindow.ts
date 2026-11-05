@@ -68,15 +68,24 @@ function getFullySyncedUntil(record: SyncMetadataRecord): UnixTime | undefined {
   // every block until it, even when they have had none for a while
   if (record.blockSyncedUntil === record.blockTarget) return record.target
   // Before that, they sync until the end of the hour of their latest block,
-  // which can still get more
-  return UnixTime.toStartOf(record.syncedUntil, 'hour') - HOUR
+  // which can still get more. A chain following finality syncs past its
+  // target, which still bounds it, as the other projects wait for it. Capped
+  // only after taking the hour back, or each finality advance would cost an
+  // hour
+  return Math.min(
+    record.target,
+    UnixTime.toStartOf(record.syncedUntil, 'hour') - HOUR,
+  )
 }
 
 /**
  * The 1D and 7D options end on a recent hour and start whole days before its
  * day. Other ranges, like those from the calendar, keep their start
  */
-function getRollingDays(from: UnixTime, to: UnixTime): number | undefined {
+export function getRollingDays(
+  from: UnixTime,
+  to: UnixTime,
+): number | undefined {
   if (!UnixTime.isFull(to, 'hour')) return
   const days = (UnixTime.toStartOf(to, 'day') - from) / UnixTime.DAY
   return ROLLING_DAYS.includes(days) ? days : undefined

@@ -4,6 +4,7 @@ import {
   formatUopsRatio,
 } from '@l2beat/shared-pure'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
+import { UtcDateTime } from '~/components/core/UtcDateTime'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import type { ActivityMetric } from '~/pages/layer2s/activity/components/ActivityMetricContext'
 import type { ActivityProjectChartStats } from '~/server/features/layer2s/activity/buildActivityProjectChartStats'
@@ -45,25 +46,37 @@ export function ActivityChartStatsPanel({ stats, metric, isLoading }: Props) {
   const pastDayRatio = getPastDayRatio(stats)
   const showTotalCount =
     metricUi.showTotalWithoutData || totalCount !== undefined
+  const liveAsOf = stats?.liveAsOf
 
   return (
     <ChartStats className="mt-4 md:grid-cols-2 lg:grid-cols-4">
       <ChartStatsItem
         label={`Past Day ${metricUi.rateLabel}`}
         className="max-md:h-7"
-        tooltip={`${metricUi.subject} per second averaged over the past day, shown together with a percentage change compared to 7D ago.`}
+        tooltip={
+          liveAsOf !== undefined
+            ? `${metricUi.subject} per second averaged over the 24 hours up to the latest finalized block. The percentage change compares the last full day with the day 7D before it.`
+            : `${metricUi.subject} per second averaged over the past day, shown together with a percentage change compared to 7D ago.`
+        }
         isLoading={isLoading}
       >
         {metricStats?.pastDayCount !== undefined &&
         metricStats.pastDayCount !== null ? (
-          <ValueWithPercentageChange
-            change={metricStats.pastDayChange}
-            changePeriod={metricStats.pastDayChangePeriod}
-            className="text-sm xs:text-lg md:text-lg"
-            changeClassName="text-xs"
-          >
-            {formatActivityCount(metricStats.pastDayCount)}
-          </ValueWithPercentageChange>
+          <div className="flex gap-1 max-md:flex-row-reverse max-md:items-baseline md:flex-col">
+            <ValueWithPercentageChange
+              change={metricStats.pastDayChange}
+              changePeriod={metricStats.pastDayChangePeriod}
+              className="text-sm xs:text-lg md:text-lg"
+              changeClassName="text-xs"
+            >
+              {formatActivityCount(metricStats.pastDayCount)}
+            </ValueWithPercentageChange>
+            {liveAsOf !== undefined && (
+              <div className="font-medium text-label-value-14 text-secondary">
+                as of <UtcDateTime timestamp={liveAsOf} />
+              </div>
+            )}
+          </div>
         ) : (
           'No data'
         )}

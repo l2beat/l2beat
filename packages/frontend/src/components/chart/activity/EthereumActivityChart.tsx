@@ -39,23 +39,29 @@ export function EthereumActivityChart({
   const { data: chart, isLoading } = useQuery(
     trpc.activity.ethereumChart.queryOptions({
       range,
+      hourly: true,
     }),
   )
 
   const type = getChartType(category)
+  const resolution = chart?.resolution ?? 'day'
+  const partialHour = chart?.partialHour
 
-  const chartData = useMemo(
-    () =>
-      chart?.data.map(([timestamp, ethereumTx, ethereumUops]) => {
-        const ethereumMetric = metric === 'tps' ? ethereumTx : ethereumUops
-        return {
-          timestamp,
-          ethereum:
-            ethereumMetric !== null ? ethereumMetric / UnixTime.DAY : null,
-        }
-      }),
-    [chart?.data, metric],
-  )
+  const chartData = useMemo(() => {
+    const resolutionSeconds = UnixTime.periodToSeconds(resolution)
+    return chart?.data.map(([timestamp, ethereumTx, ethereumUops]) => {
+      const ethereumMetric = metric === 'tps' ? ethereumTx : ethereumUops
+      // The hour so far is averaged over its length so far
+      const seconds =
+        partialHour?.from === timestamp
+          ? partialHour.until - partialHour.from
+          : resolutionSeconds
+      return {
+        timestamp,
+        ethereum: ethereumMetric !== null ? ethereumMetric / seconds : null,
+      }
+    })
+  }, [chart?.data, metric, resolution, partialHour])
 
   const ratioData = useMemo(() => {
     return chart?.data.map(([timestamp, ethereumTx, ethereumUops]) => ({
@@ -69,12 +75,16 @@ export function EthereumActivityChart({
     }))
   }, [chart?.data])
 
-  const timeRange = getChartTimeRangeFromData(chartData, { bucket: 'day' })
+  const timeRange = getChartTimeRangeFromData(chartData, { bucket: resolution })
   return (
     <div className="flex flex-col">
       <ChartControlsWrapper>
         <ProjectChartTimeRange timeRange={timeRange} />
-        <ActivityChartRangeControls range={range} setRange={setRange} />
+        <ActivityChartRangeControls
+          range={range}
+          setRange={setRange}
+          hourlyRanges="enabled"
+        />
       </ChartControlsWrapper>
       <div className="mt-4 mb-3">
         <ActivityChart
@@ -87,6 +97,8 @@ export function EthereumActivityChart({
           type={type}
           project={project}
           tickCount={4}
+          resolution={resolution}
+          partialHour={partialHour}
         />
       </div>
       <div className="mb-2">
@@ -94,6 +106,7 @@ export function EthereumActivityChart({
           data={ratioData}
           syncedUntil={chart?.syncedUntil}
           isLoading={isLoading}
+          resolution={resolution}
         />
       </div>
 

@@ -6,6 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { UtcDateTime } from '~/components/core/UtcDateTime'
 import { ETHEREUM_PROJECT_PATH } from '~/pages/ethereum/paths'
 import type { HomeEthereumCharts } from '~/server/features/home/getHomeEthereumCharts'
 import { formatPercent } from '~/utils/calculatePercentageChange'
@@ -52,6 +53,7 @@ export function HomeEthereumCard({ charts, economicSecurity }: Props) {
   )
 
   const pastDayUops = charts.activity.pastDayUops
+  const pastDayUopsAsOf = charts.activity.pastDayUopsAsOf
   const trackedShare = charts.da.trackedShare
   const uopsChange = charts.activity.change
   const dataPostedChange = charts.da.change
@@ -105,6 +107,13 @@ export function HomeEthereumCard({ charts, economicSecurity }: Props) {
               }
               change={uopsChange}
             />
+          }
+          statFooter={
+            pastDayUopsAsOf !== undefined ? (
+              <span className="font-medium text-label-value-12 text-secondary">
+                Past 24h as of <UtcDateTime timestamp={pastDayUopsAsOf} />
+              </span>
+            ) : null
           }
         >
           <HomeChart
