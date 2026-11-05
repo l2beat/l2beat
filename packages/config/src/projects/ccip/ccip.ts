@@ -1,4 +1,9 @@
-import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainSpecificAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
@@ -49,6 +54,30 @@ assert(
   ) && v2DefaultCCVs.size === 1,
   'ccip: a v2 route has lane-mandated CCVs or its own default CCV, update detailedDescription.md',
 )
+const v2Chains = Object.keys(v2SourceRoutes)
+assert(
+  v2Chains.length === Object.keys(v2DestRoutes).length &&
+    v2Chains.every((chain) => chain in v2DestRoutes),
+  'ccip: v2 OnRamp and OffRamp route to different chains, update detailedDescription.md',
+)
+// the description names the shared default CCV the CommitteeVerifier resolver
+const committeeVerifier = discovery.getContract('CommitteeVerifier').address
+const defaultCCV = [...v2DefaultCCVs][0]
+const defaultCCVVerifiers = [
+  'getAllInboundImplementations',
+  'getAllOutboundImplementations',
+].flatMap((field) =>
+  discovery
+    .getContractValue<{ verifier: string }[]>(defaultCCV, field)
+    .map((i) => i.verifier),
+)
+assert(
+  discovery.getContract(defaultCCV).template ===
+    'ccip/VersionedVerifierResolver' &&
+    defaultCCVVerifiers.length > 0 &&
+    defaultCCVVerifiers.every((v) => v === committeeVerifier),
+  'ccip: the shared default CCV is not the CommitteeVerifier resolver, update detailedDescription.md',
+)
 
 const committeeConfigs = Object.values(
   discovery.getContractValue<
@@ -81,10 +110,14 @@ const rmnCallers = discovery.getContractValue<string[]>(
   'RMN',
   'getAllAuthorizedCallers',
 )
+const rmnCurseTimelock = discovery.getContract('RMN_CurseTimelock').address
 assert(
   rmnCallers.length === 2 &&
-    rmnCallers.includes(discovery.getContract('RMN_CurseTimelock').address),
-  'ccip: RMN authorized callers changed, update detailedDescription.md',
+    rmnCallers.includes(rmnCurseTimelock) &&
+    rmnCallers
+      .filter((c) => c !== rmnCurseTimelock)
+      .every((c) => discovery.isEOA(ChainSpecificAddress(c))),
+  'ccip: RMN authorized callers are no longer the curse timelock and an EOA, update detailedDescription.md',
 )
 const cursedSubjects = discovery.getContractValue<string[]>(
   'RMN',
@@ -118,7 +151,7 @@ export const ccip: BaseProject = {
       permissionLessExecutionThresholdFmt: String(
         permissionLessExecutionThresholdFmt,
       ),
-      v2ChainCount: String(Object.keys(v2SourceRoutes).length),
+      v2ChainCount: String(v2Chains.length),
       committeeThreshold: String([...committeeThresholds][0]),
       committeeSignerCount: String(committeeSignerCount),
       usdcCcvRoutes: usdcRoutes('CCV'),

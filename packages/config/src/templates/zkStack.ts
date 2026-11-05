@@ -673,6 +673,8 @@ const ZERO_BYTES32 = `0x${'0'.repeat(64)}`
 interface PriorityMode {
   /** the chain admin called permanentlyAllowPriorityMode() (irreversible) and activation is possible: the chain is a permanent rollup settling on L1 */
   allowed: boolean
+  /** raw canBeActivated flag: set by permanentlyAllowPriorityMode(), it blocks pauseDepositsBeforeInitiatingMigration() */
+  canBeActivated: boolean
   /** anyone activated it after a queued transaction expired; only the ChainTypeManager owner can deactivate it */
   active: boolean
 }
@@ -695,7 +697,7 @@ function getPriorityMode(
     'priorityModeInfo',
   )
   if (raw === undefined) {
-    return { allowed: false, active: false }
+    return { allowed: false, canBeActivated: false, active: false }
   }
   const word = raw.replace(/^0x/, '').padStart(64, '0')
   // activatePriorityMode() is onlyL1 and reverts unless the chain is a permanent rollup
@@ -704,14 +706,16 @@ function getPriorityMode(
       diamond.address,
       'isPermanentRollup',
     ) === 1
+  const canBeActivated = word.slice(62) !== '00'
   return {
-    allowed: word.slice(62) !== '00' && isPermanentRollup && settlesOnL1,
+    allowed: canBeActivated && isPermanentRollup && settlesOnL1,
+    canBeActivated,
     active: word.slice(60, 62) !== '00',
   }
 }
 
 interface L1QueuePause {
-  /** v31 pauseDepositsBeforeInitiatingMigration(): the chain admin stops all new priority transactions at once, until it unpauses. It reverts once Priority Mode is allowed. */
+  /** v31 pauseDepositsBeforeInitiatingMigration(): the chain admin stops all new priority transactions at once, until it unpauses. It reverts once the raw canBeActivated flag is set. */
   possible: boolean
   active: boolean
 }
@@ -727,7 +731,7 @@ function getL1QueuePause(
     'depositsPaused',
   )
   return {
-    possible: paused !== undefined && !priorityMode.allowed,
+    possible: paused !== undefined && !priorityMode.canBeActivated,
     active: paused === true,
   }
 }
@@ -743,11 +747,11 @@ function getTechnologyForceTransactions(
     },
   ]
   if (!priorityMode.allowed) {
-    const pauseNote = l1QueuePause.possible
-      ? ` The chain admin can also pause the L1 queue, which rejects all new forced transactions and deposits until it unpauses.${
-          l1QueuePause.active ? ' The L1 queue is currently paused.' : ''
-        }`
-      : ''
+    const pauseNote = `${
+      l1QueuePause.possible
+        ? ' The chain admin can also pause the L1 queue, which rejects all new forced transactions and deposits until it unpauses.'
+        : ''
+    }${l1QueuePause.active ? ' The L1 queue is currently paused.' : ''}`
     return {
       name: 'Users can force any transaction via L1',
       description: `If a user is censored by the L2 Sequencer, they can try to force their transaction via an L1 queue. Right now there is no mechanism that forces L2 Sequencer to include transactions from the queue in an L2 block. The operator can implement a TransactionFilterer that censors forced transactions.${pauseNote}`,
@@ -775,6 +779,10 @@ function getTechnologyForceTransactions(
       PRIORITY_EXPIRATION_S,
     )}, anyone can activate it. In Priority Mode only the shared PermissionlessValidator can settle batches, and each batch can contain only queued L1 transactions. Anyone can commit, prove and execute such batches through it in one transaction, bypassing the ValidatorTimelock delay. Only the ZKsync governance (owner of the ChainTypeManager) can deactivate it.${
       priorityMode.active ? ' Priority Mode is currently active.' : ''
+    }${
+      l1QueuePause.active
+        ? ' The L1 queue is currently paused, so it rejects new forced transactions and deposits.'
+        : ''
     }`,
     risks: [
       {
