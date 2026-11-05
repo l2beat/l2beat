@@ -27,6 +27,8 @@ export type TooltipSlot = {
   disableHoverableContent: boolean | undefined
   options: React.RefObject<TooltipContentOptions | undefined>
   setContainer: (element: HTMLElement | null) => void
+  /** Set while the shared popup shows this tooltip, to render it again. */
+  rerenderPopup: (() => void) | undefined
 }
 
 export type TooltipHandle = Base.Handle<TooltipSlot>

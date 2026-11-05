@@ -8,6 +8,7 @@ import {
   useContext,
   useId,
   useLayoutEffect,
+  useReducer,
   useRef,
   useState,
 } from 'react'
@@ -88,7 +89,14 @@ function SharedPopup({
   slot: TooltipSlot
   onShow: (slot: TooltipSlot) => void
 }) {
-  useLayoutEffect(() => onShow(slot), [slot, onShow])
+  const [, rerender] = useReducer((count: number) => count + 1, 0)
+  useLayoutEffect(() => {
+    onShow(slot)
+    slot.rerenderPopup = rerender
+    return () => {
+      slot.rerenderPopup = undefined
+    }
+  }, [slot, onShow])
   const options = slot.options.current
   if (!options) return null
   return (
@@ -147,6 +155,7 @@ const Tooltip = ({
     disableHoverableContent,
     options,
     setContainer,
+    rerenderPopup: undefined,
   }))
 
   return (
@@ -290,7 +299,7 @@ const TooltipContent = ({
   }) => {
   const tooltip = useTooltipTriggerContext()
   const inPortal = useContext(InPortalContext)
-  tooltip.slot.options.current = {
+  const options: TooltipContentOptions = {
     className: tooltipContentVariants({
       fitContent,
       className: cn(inPortal && 'z-1000', className),
@@ -305,6 +314,19 @@ const TooltipContent = ({
     onPointerDownOutside,
     popupProps,
   }
+  // The shared popup reads these options in its own tree, so it renders
+  // again when they change, or drops its surface when the content goes.
+  useLayoutEffect(() => {
+    tooltip.slot.options.current = options
+    tooltip.slot.rerenderPopup?.()
+  })
+  useLayoutEffect(() => {
+    const slot = tooltip.slot
+    return () => {
+      slot.options.current = undefined
+      slot.rerenderPopup?.()
+    }
+  }, [tooltip.slot])
 
   return (
     <>
