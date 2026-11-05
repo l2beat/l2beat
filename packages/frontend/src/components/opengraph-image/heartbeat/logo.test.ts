@@ -36,7 +36,23 @@ describe(logoTreatment.name, () => {
 
 describe(onDarkGround.name, () => {
   it('returns a logo that reads on dark untouched, without a glow', () => {
-    expect(onDarkGround(pinkDisc)).toEqual({ src: pinkDisc, glow: false })
+    const { src, glow } = onDarkGround(pinkDisc)
+
+    expect(src).toEqual(pinkDisc)
+    expect(glow).toEqual(false)
+  })
+
+  it('finds where a logo is drawn inside its file', () => {
+    const dotLeftOfCentre = logo(
+      '<circle cx="32" cy="64" r="16" fill="#FF3776"/>',
+    )
+
+    expect(onDarkGround(dotLeftOfCentre).ink).toEqual({
+      x0: 0.125,
+      y0: 0.375,
+      x1: 0.375,
+      y1: 0.625,
+    })
   })
 
   it('redraws a black logo as one that reads on dark without a glow', () => {

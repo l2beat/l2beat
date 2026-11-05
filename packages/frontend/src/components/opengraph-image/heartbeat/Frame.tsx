@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { type Box, heartGlow, heartRings, ringsClearOf } from './echo'
-import { GLOW_REACH, glowBehind, onDarkGround } from './logo'
+import { type DarkGroundLogo, GLOW_REACH, glowBehind } from './logo'
 import { HEART_RATIO, heart, INK, lockup, PINK, place, WHITE } from './marks'
 import { drawnBox, OG_SIZE, rasterize, rowExtents } from './render'
 import { balancedLines, type TextMeasure } from './text'
@@ -18,28 +18,27 @@ export const COLUMN = OG_SIZE.width - 2 * MARGIN
 const HEART_HEIGHT = 400
 // Any smaller and ETH gets hard to read in a card ~500 px wide.
 const SIGNATURE_HEIGHT = 72
-// Every title's first baseline sits here, so cards in a feed line up; a
-// second line grows down from it.
-export const TITLE_BASELINE = 382
 export const TITLE_LINE_HEIGHT = 1.06
-// A description under the title lifts the title by `lift`, so the block keeps
-// its weight in the middle of the card; `gap` runs from the title's last
-// baseline to the description's top. It may take up to `lines` lines, so it
-// keeps clear of the heart across that many.
+// The text block, from the label's capitals to the title's last baseline (or
+// the description's bottom), centres on the heart, but starts at least
+// `belowSignature` under the corner lockup.
+const BLOCK = { centre: OG_SIZE.height / 2, belowSignature: 48 }
+// `gap` runs from the title's last baseline to the description's top. It may
+// take up to `lines` lines, so it keeps clear of the heart across that many.
 const DESCRIPTION = {
   size: 34,
   lineHeight: 1.3,
   lines: 3,
-  lift: 34,
   gap: 48,
   color: `${WHITE}CC`,
 }
 // From the label's baseline down to the top of the title's capitals.
-const LABEL_TO_TITLE = 42
+const LABEL_TO_TITLE = 32
 const LABEL = { size: 40, min: 30, lineHeight: 1.2, tracking: 1.4 / 24 }
-// A logo runs from the label's cap top to the title's baseline, so its edges
-// line up with both, and text starts `gap` right of it. Its corners round like
-// an app icon's.
+// A logo's drawn part runs from the label's cap top to the title's baseline, so
+// its edges line up with both (a wide one gets as wide as that span is tall,
+// centred on it), and text starts `gap` right of it. Its corners round like an
+// app icon's.
 const LOGO = { gap: 32, radius: 0.22 }
 // How far a line's letters reach above and below its baseline, in em: Roboto's
 // tallest lowercase and its descenders.
@@ -90,9 +89,30 @@ export function heartFillBetween(top: number, bottom: number) {
   }
 }
 
-/** Where the title's first baseline sits: higher when a description goes under it. */
-export function titleBaseline(withDescription: boolean) {
-  return withDescription ? TITLE_BASELINE - DESCRIPTION.lift : TITLE_BASELINE
+/** Where the title's first baseline sits so the text block centres on the heart. */
+export function titleBaseline(
+  measure: TextMeasure,
+  block: {
+    titleSize: number
+    titleLines: number
+    withLabel: boolean
+    descriptionLines: number
+  },
+) {
+  const above =
+    (block.withLabel ? measure.capHeight(LABEL.size) + LABEL_TO_TITLE : 0) +
+    measure.capHeight(block.titleSize)
+  const below =
+    (block.titleLines - 1) * TITLE_LINE_HEIGHT * block.titleSize +
+    (block.descriptionLines > 0
+      ? DESCRIPTION.gap +
+        block.descriptionLines * DESCRIPTION.lineHeight * DESCRIPTION.size
+      : 0)
+  const top = Math.max(
+    BLOCK.centre - (above + below) / 2,
+    frameSignatureBox().y1 + BLOCK.belowSignature,
+  )
+  return top + above
 }
 
 /** The box the letters of a line of text cover. */
@@ -115,15 +135,26 @@ export function textLeftBesideLogo(
   measure: TextMeasure,
   titleSize: number,
   withLabel: boolean,
+  ink: DarkGroundLogo['ink'],
 ) {
-  return MARGIN + logoSize(measure, titleSize, withLabel) + LOGO.gap
+  const span = logoSpan(measure, titleSize, withLabel)
+  return MARGIN + logoInkSize(span, ink).width + LOGO.gap
 }
 
-function logoSize(measure: TextMeasure, titleSize: number, withLabel: boolean) {
+/** From the label's cap top (or the title's) to the title's first baseline. */
+function logoSpan(measure: TextMeasure, titleSize: number, withLabel: boolean) {
   const title = measure.capHeight(titleSize)
   return withLabel
     ? title + LABEL_TO_TITLE + measure.capHeight(LABEL.size)
     : title
+}
+
+/** How big a logo's drawn part shows: as tall as the span, and no wider. */
+function logoInkSize(span: number, ink: DarkGroundLogo['ink']) {
+  const aspect = (ink.x1 - ink.x0) / (ink.y1 - ink.y0)
+  return aspect > 1
+    ? { width: span, height: span / aspect }
+    : { width: span * aspect, height: span }
 }
 
 export function HeartbeatFrame({
@@ -132,28 +163,25 @@ export function HeartbeatFrame({
   title,
   titleSize,
   titleLineWidths,
-  titleInkLeft,
+  titleBaseline: baseline,
   description,
   logo,
 }: {
   measure: TextMeasure
   label: string | undefined
+  /** Its lines, each starting its letters on the column's left edge. */
   title: ReactNode
   titleSize: number
   titleLineWidths: number[]
-  /** The title's first-letter side bearing, so its ink starts on the margin. */
-  titleInkLeft: number
+  titleBaseline: number
   description: string | undefined
-  /** A data URI. */
-  logo: string | undefined
+  logo: DarkGroundLogo | undefined
 }) {
-  const baseline = titleBaseline(description !== undefined)
   const capTop = baseline - measure.capHeight(titleSize)
+  const span = logoSpan(measure, titleSize, label !== undefined)
+  const logoInk = logo && logoInkSize(span, logo.ink)
   const textLeft =
-    logo === undefined
-      ? MARGIN
-      : textLeftBesideLogo(measure, titleSize, label !== undefined)
-  const logoHeight = textLeft - LOGO.gap - MARGIN
+    logoInk === undefined ? MARGIN : MARGIN + logoInk.width + LOGO.gap
   const labelBaseline = capTop - LABEL_TO_TITLE
   const fittedLabel =
     label === undefined
@@ -179,12 +207,14 @@ export function HeartbeatFrame({
       ),
     ),
   ]
-  if (logo !== undefined) {
+  const logoInkTop =
+    logoInk === undefined ? 0 : baseline - span + (span - logoInk.height) / 2
+  if (logoInk !== undefined) {
     textBoxes.push({
       x0: MARGIN,
-      y0: baseline - logoHeight,
-      x1: MARGIN + logoHeight,
-      y1: baseline,
+      y0: logoInkTop,
+      x1: MARGIN + logoInk.width,
+      y1: logoInkTop + logoInk.height,
     })
   }
   if (fittedLabel !== undefined) {
@@ -209,12 +239,8 @@ export function HeartbeatFrame({
         {...OG_SIZE}
         style={{ position: 'absolute', left: 0, top: 0 }}
       />
-      {logo !== undefined && (
-        <Logo
-          {...onDarkGround(logo)}
-          size={logoHeight}
-          top={baseline - logoHeight}
-        />
+      {logo !== undefined && logoInk !== undefined && (
+        <Logo logo={logo} inkHeight={logoInk.height} inkTop={logoInkTop} />
       )}
       {fittedLabel && (
         <Label
@@ -228,7 +254,7 @@ export function HeartbeatFrame({
         style={{
           display: 'flex',
           position: 'absolute',
-          left: textLeft - titleInkLeft,
+          left: textLeft,
           top: baseline - measure.baseline(titleSize, TITLE_LINE_HEIGHT),
           width: COLUMN - (textLeft - MARGIN),
         }}
@@ -246,44 +272,45 @@ export function HeartbeatFrame({
   )
 }
 
-/** The logo with app-icon corners, over a small pink glow when it needs one to stand out. */
+/**
+ * The logo with app-icon corners, its drawn part `inkHeight` tall from
+ * `inkTop` and starting on the margin, over a small pink glow when it needs
+ * one to stand out.
+ */
 function Logo({
-  src,
-  glow,
-  size,
-  top,
+  logo: { src, glow, ink },
+  inkHeight,
+  inkTop,
 }: {
-  src: string
-  glow: boolean
-  size: number
-  top: number
+  logo: DarkGroundLogo
+  inkHeight: number
+  inkTop: number
 }) {
-  const reach = GLOW_REACH * size
+  const side = inkHeight / (ink.y1 - ink.y0)
+  const left = MARGIN - ink.x0 * side
+  const top = inkTop - ink.y0 * side
+  const reach = GLOW_REACH * side
   return (
     <>
       {glow && (
         <img
           src={glowBehind(src, LOGO.radius)}
           alt=""
-          width={size + 2 * reach}
-          height={size + 2 * reach}
-          style={{
-            position: 'absolute',
-            left: MARGIN - reach,
-            top: top - reach,
-          }}
+          width={side + 2 * reach}
+          height={side + 2 * reach}
+          style={{ position: 'absolute', left: left - reach, top: top - reach }}
         />
       )}
       <img
         src={src}
         alt=""
-        width={size}
-        height={size}
+        width={side}
+        height={side}
         style={{
           position: 'absolute',
-          left: MARGIN,
+          left,
           top,
-          borderRadius: size * LOGO.radius,
+          borderRadius: side * LOGO.radius,
         }}
       />
     </>
@@ -485,4 +512,4 @@ export type TitlePart = string | { highlight: string }
 
 // Darkens the ground just around the letters: white on the heart's pink is
 // 3.5:1, and the rings crossing a line of text read as strikes.
-const TEXT_HALO = `0 1px 12px ${INK}4D`
+const TEXT_HALO = `0 1px 6px ${INK}4D`

@@ -1,3 +1,4 @@
+import { onDarkGround } from './heartbeat/logo'
 import type { TextMeasure } from './heartbeat/text'
 import { fitTitle, MainPageOpengraphImage, titleFit } from './MainPage'
 
@@ -22,7 +23,8 @@ export function ProjectOpengraphImage({
   shortName,
   logo,
 }: Props) {
-  const fit = titleFit(measure, { label, logo })
+  const onDark = logo === undefined ? undefined : onDarkGround(logo)
+  const fit = titleFit(measure, { label, logo: onDark })
   const title =
     shortName && fitTitle(measure, name, fit).size < MIN_FULL_NAME_SIZE
       ? shortName
@@ -32,7 +34,7 @@ export function ProjectOpengraphImage({
       measure={measure}
       label={label}
       title={title}
-      logo={logo}
+      logo={onDark}
     />
   )
 }

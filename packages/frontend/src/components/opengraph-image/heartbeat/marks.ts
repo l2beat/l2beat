@@ -55,6 +55,10 @@ export function lockup(placement: Placement) {
   return `<g transform="${placement.transform}">${piece(HEART, PINK)}${letters.join('')}</g>`
 }
 
+/** The lockup's BEAT alone, the letters beside its heart. */
+export const beatWord = (placement: Placement) =>
+  `<g transform="${placement.transform}">${[B, E_2, A, T_2].map((d) => piece(d, WHITE)).join('')}</g>`
+
 /** The logo's heart alone, without letters, so a title can run over it. */
 export const heart = (placement: Placement) =>
   `<g transform="${placement.transform}">${piece(HEART, PINK)}</g>`

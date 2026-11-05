@@ -6,8 +6,8 @@ import {
   type TitlePart,
   wordSpans,
 } from './heartbeat/Frame'
-import { lockup, placeCentred } from './heartbeat/marks'
-import { OG_SIZE, rasterize } from './heartbeat/render'
+import { beatWord, lockup, placeCentred } from './heartbeat/marks'
+import { drawnBox, OG_SIZE, rasterize } from './heartbeat/render'
 import { satoriWidth, type TextMeasure } from './heartbeat/text'
 
 // The full lockup in the middle, its heart echoing out across the canvas, and
@@ -33,8 +33,8 @@ export function HomeOpengraphImage({ measure }: { measure: TextMeasure }) {
   const logo = placeCentred(W / 2, top + HEART_HEIGHT / 2, HEART_HEIGHT)
   const taglineTop = top + HEART_HEIGHT + LOCKUP_TO_TAGLINE
   const width = taglineWidth(measure, size)
-  // The rings are cut away around the tagline: they crossed it, and
-  // "heartbeat" is as pink as they are.
+  // The rings are cut away around the tagline, where "heartbeat" is as pink as
+  // they are, and around BEAT. They never reach the heart and its ETH.
   const tagline = lineBox(
     (W - width) / 2,
     taglineTop + measure.baseline(size, TAGLINE_LINE_HEIGHT),
@@ -43,7 +43,10 @@ export function HomeOpengraphImage({ measure }: { measure: TextMeasure }) {
   )
   const decor =
     heartGlow(logo) +
-    ringsClearOf(rasterize(heartRings(logo)), [tagline]) +
+    ringsClearOf(rasterize(heartRings(logo)), [
+      tagline,
+      drawnBox(beatWord(logo)),
+    ]) +
     lockup(logo)
   return (
     <Canvas decor={rasterize(decor)}>

@@ -18,9 +18,10 @@ const INVERT_BELOW = 1.5
 const BRIGHTEN_BELOW = 3.5
 /** Contrast with the ground below which a logo, after its fix, gets a glow: WCAG's minimum for graphics. */
 const GLOW_BELOW = 3
-// The glow hugs the logo's outline and is kept small: its blur and how far its
-// image reaches past the logo's edges are of the logo's size.
-const GLOW = { reach: 0.3, blur: 0.06, opacity: 0.9 }
+// The glow hugs the logo's outline and is kept small: it starts on the
+// outline, grown by `spread`, and fades over about `blur`. Both, and how far
+// its image reaches past the logo, are of the logo's size.
+const GLOW = { reach: 0.3, spread: 0.015, blur: 0.035, opacity: 1 }
 /** How far, of a logo's size, its glow's image reaches past it on every side. */
 export const GLOW_REACH = GLOW.reach
 /** Pixels at least this bright count as light detail. */
@@ -39,19 +40,27 @@ const FILTERS: Record<Exclude<LogoTreatment, 'keep'>, string> = {
     '<feComponentTransfer><feFuncR type="gamma" exponent="0.55"/><feFuncG type="gamma" exponent="0.55"/><feFuncB type="gamma" exponent="0.55"/></feComponentTransfer>',
 }
 
-/**
- * The logo, a data URI, as one that reads on the dark ground, and whether it
- * still needs a glow behind it to stand out.
- */
-export function onDarkGround(logo: string): { src: string; glow: boolean } {
-  const { treatment, contrast } = measureOnGround(logo)
-  if (treatment === 'keep') return { src: logo, glow: contrast < GLOW_BELOW }
+export interface DarkGroundLogo {
+  /** A data URI. */
+  src: string
+  /** Whether it still needs a glow behind it to stand out. */
+  glow: boolean
+  /** Where its drawn part sits in its square image, in fractions of its side. */
+  ink: { x0: number; y0: number; x1: number; y1: number }
+}
+
+/** The logo, a data URI, as one that reads on the dark ground. */
+export function onDarkGround(logo: string): DarkGroundLogo {
+  const { treatment, contrast, ink } = measureOnGround(logo)
+  if (treatment === 'keep') {
+    return { src: logo, glow: contrast < GLOW_BELOW, ink }
+  }
   const svg = square(
     REDRAW_SIZE,
     `<defs><filter id="f" color-interpolation-filters="sRGB">${FILTERS[treatment]}</filter></defs>${image(logo, REDRAW_SIZE, 'filter="url(#f)"')}`,
   )
   const src = `data:image/png;base64,${draw(svg).asPng().toString('base64')}`
-  return { src, glow: measureOnGround(src).contrast < GLOW_BELOW }
+  return { src, glow: measureOnGround(src).contrast < GLOW_BELOW, ink }
 }
 
 /**
@@ -66,7 +75,7 @@ export function glowBehind(logo: string, radius: number) {
   const svg =
     `<svg xmlns="http://www.w3.org/2000/svg" width="${full}" height="${full}"><defs>` +
     `<clipPath id="r"><rect x="${reach}" y="${reach}" width="${size}" height="${size}" rx="${radius * size}"/></clipPath>` +
-    `<filter id="g" filterUnits="userSpaceOnUse" x="0" y="0" width="${full}" height="${full}"><feFlood flood-color="${PINK}" flood-opacity="${GLOW.opacity}"/><feComposite in2="SourceAlpha" operator="in"/><feGaussianBlur stdDeviation="${GLOW.blur * size}"/></filter>` +
+    `<filter id="g" filterUnits="userSpaceOnUse" x="0" y="0" width="${full}" height="${full}"><feMorphology in="SourceAlpha" operator="dilate" radius="${GLOW.spread * size}" result="outline"/><feFlood flood-color="${PINK}" flood-opacity="${GLOW.opacity}"/><feComposite in2="outline" operator="in"/><feGaussianBlur stdDeviation="${GLOW.blur * size}"/></filter>` +
     `</defs><g filter="url(#g)"><image href="${logo}" x="${reach}" y="${reach}" width="${size}" height="${size}" clip-path="url(#r)"/></g></svg>`
   return `data:image/png;base64,${draw(svg).asPng().toString('base64')}`
 }
@@ -75,14 +84,24 @@ export function logoTreatment(logo: string): LogoTreatment {
   return measureOnGround(logo).treatment
 }
 
-/** How the logo contrasts with the ground on average, and what that calls for. */
+/**
+ * How the logo contrasts with the ground on average, what that calls for, and
+ * where its drawn part sits: logo files come with empty margins of all sizes.
+ */
 function measureOnGround(logo: string) {
   const { pixels } = draw(square(MEASURE_SIZE, image(logo, MEASURE_SIZE)))
   let sum = 0
   let opaque = 0
   let light = 0
+  const ink = { x0: MEASURE_SIZE, y0: MEASURE_SIZE, x1: 0, y1: 0 }
   for (let i = 0; i < pixels.length; i += 4) {
     if ((pixels[i + 3] ?? 0) < 128) continue
+    const x = (i / 4) % MEASURE_SIZE
+    const y = Math.floor(i / 4 / MEASURE_SIZE)
+    ink.x0 = Math.min(ink.x0, x)
+    ink.y0 = Math.min(ink.y0, y)
+    ink.x1 = Math.max(ink.x1, x + 1)
+    ink.y1 = Math.max(ink.y1, y + 1)
     const luminance = relativeLuminance(
       pixels[i] ?? 0,
       pixels[i + 1] ?? 0,
@@ -92,8 +111,22 @@ function measureOnGround(logo: string) {
     opaque++
     if (luminance > LIGHT) light++
   }
-  if (opaque === 0)
-    return { treatment: 'keep' as const, contrast: Number.POSITIVE_INFINITY }
+  const inkFractions =
+    opaque === 0
+      ? { x0: 0, y0: 0, x1: 1, y1: 1 }
+      : {
+          x0: ink.x0 / MEASURE_SIZE,
+          y0: ink.y0 / MEASURE_SIZE,
+          x1: ink.x1 / MEASURE_SIZE,
+          y1: ink.y1 / MEASURE_SIZE,
+        }
+  if (opaque === 0) {
+    return {
+      treatment: 'keep' as const,
+      contrast: Number.POSITIVE_INFINITY,
+      ink: inkFractions,
+    }
+  }
   const contrast = (sum / opaque + 0.05) / (INK_LUMINANCE + 0.05)
   const treatment: LogoTreatment =
     light / opaque >= LIGHT_SHARE || contrast >= BRIGHTEN_BELOW
@@ -101,7 +134,7 @@ function measureOnGround(logo: string) {
       : contrast < INVERT_BELOW
         ? 'invert'
         : 'brighten'
-  return { treatment, contrast }
+  return { treatment, contrast, ink: inkFractions }
 }
 
 const square = (size: number, body: string) =>

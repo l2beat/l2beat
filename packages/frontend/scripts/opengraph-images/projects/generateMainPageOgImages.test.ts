@@ -23,9 +23,9 @@ describe('main page descriptions', () => {
       const fit = titleFit(measure, page)
       const title = fitTitle(measure, page.title, fit)
       const layout = descriptionLayout(measure, page.description, {
-        baseline: fit.baseline,
+        baseline: fit.baseline(title.size, title.lines.length),
         size: title.size,
-        lines: title.lineWidths.length,
+        lines: title.lines.length,
       })
       const fits = layout.lines <= 3 && layout.bottom <= OG_SIZE.height - MARGIN
       return fits ? [] : [`${page.path}: ${layout.lines} lines`]
