@@ -54,3 +54,47 @@ test('a column hidden in another session shows again once the choice is cleared'
   await expect(cell).toBeVisible()
   await context.close()
 })
+
+test('a choice cleared before the page hydrates leaves no column hidden', async ({
+  page,
+}) => {
+  await page.goto(PAGE, { waitUntil: 'load' })
+  const table = page.locator(
+    `table[data-table-id="${TABLE_ID}"]:not([role=presentation])`,
+  )
+  const columnId = await table
+    .locator('tbody tr')
+    .first()
+    .evaluate((row) =>
+      [...row.querySelectorAll('td[data-column-id]')]
+        .map((cell) => cell.getAttribute('data-column-id') ?? '')
+        .findLast((id) => /^[\w-]+$/.test(id)),
+    )
+  expect(columnId).toBeTruthy()
+  const cell = table.locator(`tbody td[data-column-id="${columnId}"]`).first()
+
+  await page.evaluate(
+    ([key, id]) => localStorage.setItem(key!, JSON.stringify({ [id!]: false })),
+    [STORAGE_KEY, columnId],
+  )
+  // Stands in for another tab clearing the choice right after the pre-paint
+  // script has added its rules, before React reads storage.
+  await page.addInitScript((key) => {
+    const append = Node.prototype.appendChild
+    Node.prototype.appendChild = function <T extends Node>(node: T): T {
+      const result = append.call(this, node) as T
+      if (
+        node instanceof HTMLStyleElement &&
+        node.textContent?.includes('display:none')
+      ) {
+        localStorage.removeItem(key)
+        Node.prototype.appendChild = append
+      }
+      return result
+    }
+  }, STORAGE_KEY)
+  await page.reload({ waitUntil: 'load' })
+
+  await expect(table).toHaveAttribute('data-columns-applied', '')
+  await expect(cell).toBeVisible()
+})
