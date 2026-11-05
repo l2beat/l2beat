@@ -28,7 +28,7 @@ export const TITLE_LINE_HEIGHT = 1.06
 // The text block, from the label's capitals to the title's last baseline (or
 // the description's bottom), centres on the heart, but starts at least
 // `belowSignature` under the corner lockup.
-const BLOCK = { centre: OG_SIZE.height / 2, belowSignature: 36 }
+const BLOCK = { centre: OG_SIZE.height / 2, belowSignature: 52 }
 // `gap` runs from the title's last baseline to the description's top. It may
 // take up to `lines` lines, so it keeps clear of the heart across that many.
 const DESCRIPTION = {
@@ -351,7 +351,7 @@ export function descriptionLayout(
     top + DESCRIPTION.lines * lineHeight,
   ).nearestStart
   const room = Math.min(COLUMN, heartStart - HEART_CLEARANCE - MARGIN)
-  const { lines } = balancedLines(measure, text, DESCRIPTION.size, 600, room)
+  const lines = balancedLines(measure, text, DESCRIPTION.size, 600, room)
   return { top, lines, bottom: top + lines.length * lineHeight }
 }
 

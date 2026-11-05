@@ -100,9 +100,9 @@ function parse(buffer: Buffer) {
 }
 
 /**
- * `text` wrapped into the narrowest box that keeps the line count a `column`
- * wide box gives, like CSS `text-wrap: balance`, which satori lacks: the box,
- * and each line's text and width.
+ * `text` wrapped into as few lines as fit a `column` wide box, broken where it
+ * reads best (see `raggedness`), like CSS `text-wrap: balance`, which satori
+ * lacks. Every way to break it is tried: there are few for a line or three.
  */
 export function balancedLines(
   measure: TextMeasure,
@@ -112,45 +112,65 @@ export function balancedLines(
   column: number,
 ) {
   const words = text.split(/\s+/).filter(Boolean)
-  const widths = words.map((word) => measure.width(word, size, weight))
-  const space = measure.width(' ', size, weight)
-  const count = wrap(widths, space, column).length
-  let lo = Math.max(...widths)
-  let hi = column
-  while (hi - lo > 1) {
-    const mid = (lo + hi) / 2
-    if (wrap(widths, space, mid).length <= count) hi = mid
-    else lo = mid
+  const lineWidth = (line: string[]) =>
+    measure.width(line.join(' '), size, weight)
+  const count = fewestLines(words, lineWidth, column)
+  let best = { lines: [words], score: Number.POSITIVE_INFINITY }
+  for (const starts of splits(words.length, count)) {
+    const lines = starts.map((start, i) =>
+      words.slice(start, starts[i + 1] ?? words.length),
+    )
+    const widths = lines.map(lineWidth)
+    if (widths.some((width) => satoriWidth(width) > column)) continue
+    const score = raggedness(lines, widths)
+    if (score < best.score) best = { lines, score }
   }
-  const box = Math.min(column, Math.ceil(hi))
-  const lines = wrap(widths, space, box).map((line) =>
-    line.map((i) => words[i]).join(' '),
-  )
-  return {
-    box,
-    lines,
-    widths: lines.map((line) => measure.width(line, size, weight)),
+  return best.lines.map((line) => line.join(' '))
+}
+
+/** How many lines filling each as full as it goes takes: the fewest there can be. */
+function fewestLines(
+  words: string[],
+  lineWidth: (line: string[]) => number,
+  column: number,
+) {
+  let lines = 1
+  let line: string[] = []
+  for (const word of words) {
+    if (line.length > 0 && satoriWidth(lineWidth([...line, word])) > column) {
+      lines++
+      line = []
+    }
+    line.push(word)
+  }
+  return lines
+}
+
+/** Every way to split `n` words into `count` lines, as each line's first word. */
+function* splits(n: number, count: number, from = 0): Generator<number[]> {
+  if (count === 1) {
+    yield [from]
+    return
+  }
+  for (let next = from + 1; next <= n - count + 1; next++) {
+    for (const rest of splits(n, count - 1, next)) yield [from, ...rest]
   }
 }
 
 /**
- * Which words go on each line when they wrap in a `box` wide column. Every
- * word but the last carries a space as its right margin, and satori's flex
- * wrap counts that margin.
+ * How unevenly lines fall short of the widest, squared, so one very short
+ * line costs more than a few slightly short ones. The first line counts
+ * triple: it sets the width the eye expects, and a short one reads as cut
+ * off. The last counts half: it may end short, but a lone word there is a
+ * widow, as bad as an empty line.
  */
-function wrap(words: number[], space: number, box: number) {
-  const lines: number[][] = [[]]
-  let x = 0
-  words.forEach((word, i) => {
-    const margin = i < words.length - 1 ? space : 0
-    const line = lines[lines.length - 1] as number[]
-    if (x > 0 && satoriWidth(x + word + margin) > box) {
-      lines.push([i])
-      x = word + margin
-      return
-    }
-    line.push(i)
-    x += word + margin
-  })
-  return lines
+function raggedness(lines: string[][], lineWidths: number[]) {
+  const widest = Math.max(...lineWidths)
+  const last = lines.length - 1
+  return lineWidths.reduce((score, width, i) => {
+    const widow = i === last && last > 0 && lines[i]?.length === 1
+    const shortBy = widow ? widest : widest - width
+    const weight = i === 0 ? 3 : i === last ? 0.5 : 1
+    return score + weight * shortBy ** 2
+  }, 0)
 }
