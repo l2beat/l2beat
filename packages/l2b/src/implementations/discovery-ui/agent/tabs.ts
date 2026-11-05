@@ -8,8 +8,8 @@ export interface TabStream {
 
 interface Tab {
   stream: TabStream
-  // Higher is more recent; 0 for a tab that has not been focused yet.
-  focusOrder: number
+  // The tab's clock, Unix ms; 0 for a tab that has not been focused yet.
+  focusedAt: number
   project: string | undefined
 }
 
@@ -22,7 +22,6 @@ export interface ActiveTab {
 // never walk through the same steps at once.
 export class AgentTabs {
   private readonly tabs = new Map<string, Tab>()
-  private focusCount = 0
   // The tab that shows the note of the last show, wherever focus went since.
   private showTab: string | undefined
 
@@ -32,7 +31,7 @@ export class AgentTabs {
     const previous = this.tabs.get(id)
     this.tabs.set(id, {
       stream,
-      focusOrder: previous?.focusOrder ?? 0,
+      focusedAt: previous?.focusedAt ?? 0,
       project: previous?.project,
     })
     previous?.stream.end()
@@ -44,27 +43,26 @@ export class AgentTabs {
     }
   }
 
-  // Every tab reports its project, but only the one in front claims focus:
-  // after a restart all tabs reconnect while the researcher is in the
-  // terminal. Returns false for a tab that is not connected, which reports
-  // again once it reconnects.
-  report(id: string, project: string | undefined, isFocused: boolean): boolean {
+  // Every tab reports its project and when the researcher last had it in
+  // front. Tabs keep that time, so after a restart, when all of them
+  // reconnect while the researcher is in the terminal, the order survives.
+  // The clock is this machine's: agent routes answer only local tabs.
+  // Returns false for a tab that is not connected, which reports again once
+  // it reconnects.
+  report(id: string, project: string | undefined, focusedAt: number): boolean {
     const tab = this.tabs.get(id)
     if (tab === undefined) {
       return false
     }
     tab.project = project
-    if (isFocused) {
-      this.focusCount++
-      tab.focusOrder = this.focusCount
-    }
+    tab.focusedAt = focusedAt
     return true
   }
 
   active(): ActiveTab | undefined {
     let active: [string, Tab] | undefined
     for (const entry of this.tabs) {
-      if (active === undefined || entry[1].focusOrder > active[1].focusOrder) {
+      if (active === undefined || entry[1].focusedAt > active[1].focusedAt) {
         active = entry
       }
     }

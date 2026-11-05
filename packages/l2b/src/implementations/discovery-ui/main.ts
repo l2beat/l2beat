@@ -466,23 +466,39 @@ export function createDiscoveryUiApp({
   return app
 }
 
-function shutdown(server: Server) {
-  server.close(() => {
-    process.exit(0)
-  })
-  // Event streams, like an open tab's agent stream, never finish on their
-  // own, and close waits for every connection.
-  server.closeAllConnections()
+const SHUTDOWN_TIMEOUT_MS = 10_000
 
-  setTimeout(() => {
-    console.error(
-      'Could not close connections in time, forcefully shutting down',
-    )
-    process.exit(1)
-  }, 10000)
-}
-
+// Shutdown waits for requests in flight, but not for event streams, like
+// each open tab's agent stream, which never finish on their own.
 function attachGracefulShutdown(server: Server) {
-  process.on('SIGTERM', () => shutdown(server))
-  process.on('SIGINT', () => shutdown(server))
+  let requestsInFlight = 0
+  let isShuttingDown = false
+  server.on('request', (req, res) => {
+    if (req.headers.accept === 'text/event-stream') {
+      return
+    }
+    requestsInFlight++
+    res.on('close', () => {
+      requestsInFlight--
+      if (isShuttingDown && requestsInFlight === 0) {
+        server.closeAllConnections()
+      }
+    })
+  })
+
+  const shutdown = () => {
+    isShuttingDown = true
+    server.close(() => process.exit(0))
+    if (requestsInFlight === 0) {
+      server.closeAllConnections()
+    }
+    setTimeout(() => {
+      console.error(
+        'Could not close connections in time, forcefully shutting down',
+      )
+      process.exit(1)
+    }, SHUTDOWN_TIMEOUT_MS)
+  }
+  process.on('SIGTERM', shutdown)
+  process.on('SIGINT', shutdown)
 }

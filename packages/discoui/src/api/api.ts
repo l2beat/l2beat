@@ -158,7 +158,7 @@ export function openAgentEvents(
 export async function postAgentTab(report: {
   tab: string
   project: string | undefined
-  focused: boolean
+  focusedAt: number
 }): Promise<void> {
   await fetchOk('/api/agent/tab', jsonRequest('POST', report))
 }

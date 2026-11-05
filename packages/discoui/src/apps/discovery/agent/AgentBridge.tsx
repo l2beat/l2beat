@@ -11,6 +11,8 @@ import { useAgentStore, useIsNoteShown } from './store'
 // The server sends each show to the tab the researcher focused last, so
 // every tab tells it its project and when it comes to the front.
 const TAB_ID = createTabId()
+// Kept by the tab, so a restarted server learns which tab was used last.
+let focusedAt = 0
 
 // randomUUID exists only on secure pages, and DiscoUI is also opened over
 // plain HTTP from other machines.
@@ -28,6 +30,7 @@ export function AgentBridge() {
 
   useEffect(() => {
     const report = () => {
+      noteFocus()
       if (isConnected.current) reportTab(projectRef.current)
     }
     const events = openAgentEvents(TAB_ID, (event) =>
@@ -57,6 +60,7 @@ export function AgentBridge() {
   // The server answers show without a project with the one this tab shows.
   useEffect(() => {
     projectRef.current = project
+    noteFocus()
     if (isConnected.current) {
       reportTab(project)
     }
@@ -69,9 +73,14 @@ export function AgentBridge() {
 
 // A visible tab in another, unfocused window is not the one the researcher
 // uses, and claiming focus when it reconnects would steal the agent's shows.
+function noteFocus() {
+  if (document.visibilityState === 'visible' && document.hasFocus()) {
+    focusedAt = Date.now()
+  }
+}
+
 function reportTab(project: string | undefined) {
-  const focused = document.visibilityState === 'visible' && document.hasFocus()
-  postAgentTab({ tab: TAB_ID, project, focused }).catch((error) =>
+  postAgentTab({ tab: TAB_ID, project, focusedAt }).catch((error) =>
     console.warn('Agent tab report not sent', { error }),
   )
 }

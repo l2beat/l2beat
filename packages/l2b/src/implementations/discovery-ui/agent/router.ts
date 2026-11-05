@@ -17,7 +17,9 @@ const tabSchema = safeStringSchema.check(
 const reportSchema = z.object({
   tab: tabSchema,
   project: safeStringSchema.optional(),
-  focused: z.boolean(),
+  focusedAt: z
+    .number()
+    .check((v) => Number.isSafeInteger(v) && v >= 0, 'Bad focus time'),
 })
 
 // The agent routes change what the researcher sees, so they refuse other
@@ -60,8 +62,8 @@ export function createAgentRouter(
       res.status(400).json({ error: body.message })
       return
     }
-    const { tab, project, focused } = body.data
-    const isConnected = tabs.report(tab, project, focused)
+    const { tab, project, focusedAt } = body.data
+    const isConnected = tabs.report(tab, project, focusedAt)
     res.status(isConnected ? 200 : 404).json({ connected: isConnected })
   })
 
