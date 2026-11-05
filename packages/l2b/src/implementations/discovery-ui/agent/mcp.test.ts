@@ -59,7 +59,12 @@ describe(attachMcpRoutes.name, () => {
       inputSchema: { type: string; $schema?: string }
       _meta: object
     }[]
-    expect(tools.map((t) => t.name)).toEqual(['show', 'context', 'clear'])
+    expect(tools.map((t) => t.name)).toEqual([
+      'show',
+      'context',
+      'permissions',
+      'clear',
+    ])
     for (const tool of tools) {
       expect(tool.inputSchema.type).toEqual('object')
       expect(tool.inputSchema.$schema).toEqual(undefined)
