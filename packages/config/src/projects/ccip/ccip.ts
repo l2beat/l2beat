@@ -63,10 +63,11 @@ assert(
 // the description names the shared default CCV the CommitteeVerifier resolver
 const committeeVerifier = discovery.getContract('CommitteeVerifier').address
 const defaultCCV = [...v2DefaultCCVs][0]
+// both directions must resolve, and only to the CommitteeVerifier
 const defaultCCVVerifiers = [
   'getAllInboundImplementations',
   'getAllOutboundImplementations',
-].flatMap((field) =>
+].map((field) =>
   discovery
     .getContractValue<{ verifier: string }[]>(defaultCCV, field)
     .map((i) => i.verifier),
@@ -74,8 +75,10 @@ const defaultCCVVerifiers = [
 assert(
   discovery.getContract(defaultCCV).template ===
     'ccip/VersionedVerifierResolver' &&
-    defaultCCVVerifiers.length > 0 &&
-    defaultCCVVerifiers.every((v) => v === committeeVerifier),
+    defaultCCVVerifiers.every(
+      (verifiers) =>
+        verifiers.length > 0 && verifiers.every((v) => v === committeeVerifier),
+    ),
   'ccip: the shared default CCV is not the CommitteeVerifier resolver, update detailedDescription.md',
 )
 
