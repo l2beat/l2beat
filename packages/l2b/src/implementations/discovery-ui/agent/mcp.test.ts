@@ -90,7 +90,7 @@ describe(attachMcpRoutes.name, () => {
     const written: string[] = []
     const stream: TabStream = { write: (c) => written.push(c), end: () => {} }
     tabs.connect('tab-1', stream)
-    tabs.report('tab-1', undefined, 1)
+    tabs.report('tab-1', { project: undefined, focusedAt: 1, sequence: 1 })
     const result = (await call('tools/call', { name: 'clear' })).result
     tabs.disconnect('tab-1', stream)
     expect(result?.isError).toEqual(false)
@@ -101,7 +101,7 @@ describe(attachMcpRoutes.name, () => {
     const written: string[] = []
     const stream: TabStream = { write: (c) => written.push(c), end: () => {} }
     tabs.connect('tab-1', stream)
-    tabs.report('tab-1', 'linea', 2)
+    tabs.report('tab-1', { project: 'linea', focusedAt: 2, sequence: 2 })
     const steps = [{ note: 'Hi' }]
     const dryRun = await call('tools/call', {
       name: 'show',

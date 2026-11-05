@@ -2,20 +2,10 @@ import { type QueryClient, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useRef } from 'react'
 import { useMatch, useNavigate } from 'react-router'
 import { openAgentEvents, postAgentTab } from '../../../api/api'
-import type {
-  ApiAgentEvent,
-  ApiAgentShowEvent,
-  ApiProjectResponse,
-} from '../../../api/types'
+import type { ApiAgentEvent } from '../../../api/types'
 import { isEditableTarget } from '../../../utils/isEditableTarget'
-import {
-  getProjectQueryOptions,
-  invalidateProjectPayloads,
-} from '../hooks/projectQuery'
 import { useDockingStore } from '../multi-view/store'
-import type { Node } from '../panel-nodes/store/State'
 import { useStore as useNodeStore } from '../panel-nodes/store/store'
-import { topLevelByDescendant } from '../panel-nodes/store/utils/subnodes'
 import { applyStep } from './applyStep'
 import { useAgentStore, useIsNoteShown } from './store'
 
@@ -24,6 +14,9 @@ import { useAgentStore, useIsNoteShown } from './store'
 const TAB_ID = createTabId()
 // Kept by the tab, so a restarted server learns which tab was used last.
 let focusedAt = 0
+// Reports may arrive out of order, and the server keeps the latest.
+let reportCount = 0
+let serverId: string | undefined
 
 // randomUUID exists only on secure pages, and DiscoUI is also opened over
 // plain HTTP from other machines.
@@ -51,11 +44,9 @@ export function AgentBridge() {
         if (window.location.pathname !== path) void navigate(path)
       }),
     )
-    // A restarted server forgot every tab and the show it sent here, so it
-    // could not clear that note once a later show goes to another tab.
+    // A restarted server forgot every tab, so each one reports on reconnect.
     events.onopen = () => {
       isConnected.current = true
-      useAgentStore.getState().clear()
       report()
     }
     events.onerror = () => {
@@ -94,7 +85,9 @@ function noteFocus() {
 }
 
 function reportTab(project: string | undefined) {
-  postAgentTab({ tab: TAB_ID, project, focusedAt }).catch((error) =>
+  reportCount++
+  const report = { tab: TAB_ID, project, focusedAt, sequence: reportCount }
+  postAgentTab(report).catch((error) =>
     console.warn('Agent tab report not sent', { error }),
   )
 }
@@ -104,35 +97,26 @@ function handleEvent(
   queryClient: QueryClient,
   open: (project: string) => void,
 ) {
+  if (event.type === 'connected') {
+    // A new server forgot the show it sent here and could not clear it.
+    if (serverId !== undefined && serverId !== event.serverId) {
+      useAgentStore.getState().clear()
+    }
+    serverId = event.serverId
+    return
+  }
   if (event.type === 'clear') {
     useAgentStore.getState().clear()
     return
   }
-  // The agent may have discovered contracts since this tab loaded the
-  // project, which DiscoUI otherwise keeps until a reload.
-  const cached = queryClient.getQueryData<ApiProjectResponse>(
-    getProjectQueryOptions(event.project).queryKey,
-  )
-  if (cached !== undefined && !hasEveryContract(cached, event)) {
-    void invalidateProjectPayloads(queryClient, event.project)
-  }
+  // The agent may have run discovery since this tab loaded the project, like
+  // the terminal's Run discovery does. Data that did not change keeps its
+  // identity, so the graph reloads only when it did.
+  void queryClient.invalidateQueries({ queryKey: ['projects', event.project] })
   // The graph loads only in a nodes panel, and the steps wait for the graph.
   open(event.project)
   useDockingStore.getState().ensureLeaf('nodes')
   useAgentStore.getState().start(event)
-}
-
-function hasEveryContract(
-  data: ApiProjectResponse,
-  show: ApiAgentShowEvent,
-): boolean {
-  const addresses = new Set<string>()
-  for (const chain of data.entries) {
-    for (const entry of chain.initialContracts) addresses.add(entry.address)
-    for (const entry of chain.discoveredContracts) addresses.add(entry.address)
-    for (const entry of chain.eoas) addresses.add(entry.address)
-  }
-  return show.steps.every((step) => step.select.every((a) => addresses.has(a)))
 }
 
 // Applies each step once its project's graph has loaded: arriving at a
@@ -143,11 +127,9 @@ function useApplyStep() {
   const loadedProject = useNodeStore((state) =>
     state.loaded ? state.projectId : undefined,
   )
-  const select = show?.steps[index]?.select
-  // A graph refetched for new contracts loads after the show arrived.
-  const hasStepContracts = useNodeStore((state) =>
-    select === undefined ? true : hasNodes(state.nodes, select),
-  )
+  // A graph that loads again, with data refetched for the show or after the
+  // researcher changed its depth, comes without the step's selection.
+  const loadCount = useNodeStore((state) => state.loadCount)
   const appliedKey = useRef<string>(undefined)
 
   useEffect(() => {
@@ -160,25 +142,14 @@ function useApplyStep() {
       appliedKey.current = undefined
       return
     }
-    const key = `${show.id}:${index}`
+    const key = `${show.id}:${index}:${loadCount}`
     const step = show.steps[index]
     if (appliedKey.current === key || step === undefined) {
       return
     }
-    if (!hasStepContracts) {
-      return
-    }
     appliedKey.current = key
     applyStep(step)
-  }, [show, index, loadedProject, hasStepContracts])
-}
-
-function hasNodes(
-  nodes: readonly Node[],
-  addresses: readonly string[],
-): boolean {
-  const known = topLevelByDescendant(nodes)
-  return addresses.every((address) => known.has(address))
+  }, [show, index, loadedProject, loadCount])
 }
 
 function useAgentKeyboard(project: string | undefined) {

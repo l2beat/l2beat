@@ -1,7 +1,9 @@
 import type { ConfigReader } from '@l2beat/discovery'
 import { v as z } from '@l2beat/validate'
+import { randomUUID } from 'crypto'
 import express, { type Router } from 'express'
 import { safeStringSchema } from '../safeStringSchema'
+import type { ApiAgentEvent } from '../types'
 import { localOnly } from './localOnly'
 import { attachMcpRoutes } from './mcp'
 import { AgentTabs } from './tabs'
@@ -20,6 +22,9 @@ const reportSchema = z.object({
   focusedAt: z
     .number()
     .check((v) => Number.isSafeInteger(v) && v >= 0, 'Bad focus time'),
+  sequence: z
+    .number()
+    .check((v) => Number.isSafeInteger(v) && v > 0, 'Bad sequence'),
 })
 
 // The agent routes change what the researcher sees, so they refuse other
@@ -28,6 +33,9 @@ export function createAgentRouter(
   configReader: ConfigReader,
   tabs = new AgentTabs(),
 ): Router {
+  // A tab whose stream reconnects to a new server drops its note, which
+  // that server cannot clear.
+  const serverId = randomUUID()
   const router = express.Router()
   router.use(localOnly('DiscoUI agent routes answer only locally'))
   router.use(express.json({ limit: '100kb' }))
@@ -44,7 +52,8 @@ export function createAgentRouter(
       'Cache-Control': 'no-cache',
       Connection: 'keep-alive',
     })
-    res.write(': connected\n\n')
+    const connected: ApiAgentEvent = { type: 'connected', serverId }
+    res.write(`data: ${JSON.stringify(connected)}\n\n`)
     tabs.connect(tab.data, res)
     const keepalive = setInterval(
       () => res.write(': keepalive\n\n'),
@@ -62,8 +71,8 @@ export function createAgentRouter(
       res.status(400).json({ error: body.message })
       return
     }
-    const { tab, project, focusedAt } = body.data
-    const isConnected = tabs.report(tab, project, focusedAt)
+    const { tab, project, focusedAt, sequence } = body.data
+    const isConnected = tabs.report(tab, { project, focusedAt, sequence })
     res.status(isConnected ? 200 : 404).json({ connected: isConnected })
   })
 

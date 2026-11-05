@@ -11,6 +11,14 @@ interface Tab {
   // The tab's clock, Unix ms; 0 for a tab that has not been focused yet.
   focusedAt: number
   project: string | undefined
+  // Of the last report applied; reports may arrive out of order.
+  sequence: number
+}
+
+export interface TabReport {
+  project: string | undefined
+  focusedAt: number
+  sequence: number
 }
 
 export interface ActiveTab {
@@ -33,6 +41,7 @@ export class AgentTabs {
       stream,
       focusedAt: previous?.focusedAt ?? 0,
       project: previous?.project,
+      sequence: previous?.sequence ?? 0,
     })
     previous?.stream.end()
   }
@@ -49,13 +58,17 @@ export class AgentTabs {
   // The clock is this machine's: agent routes answer only local tabs.
   // Returns false for a tab that is not connected, which reports again once
   // it reconnects.
-  report(id: string, project: string | undefined, focusedAt: number): boolean {
+  report(id: string, report: TabReport): boolean {
     const tab = this.tabs.get(id)
     if (tab === undefined) {
       return false
     }
-    tab.project = project
-    tab.focusedAt = focusedAt
+    if (report.sequence <= tab.sequence) {
+      return true
+    }
+    tab.sequence = report.sequence
+    tab.project = report.project
+    tab.focusedAt = report.focusedAt
     return true
   }
 

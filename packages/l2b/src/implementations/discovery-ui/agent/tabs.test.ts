@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 import type { ApiAgentShowEvent } from '../types'
-import { AgentTabs, type TabStream } from './tabs'
+import { AgentTabs, type TabReport, type TabStream } from './tabs'
 
 describe(AgentTabs.name, () => {
   it('has no active tab until one connects', () => {
@@ -11,10 +11,10 @@ describe(AgentTabs.name, () => {
     const tabs = new AgentTabs()
     tabs.connect('a', stream())
     tabs.connect('b', stream())
-    tabs.report('a', 'linea', tick())
-    tabs.report('b', 'arbitrum', tick())
+    tabs.report('a', at('linea', tick()))
+    tabs.report('b', at('arbitrum', tick()))
     expect(tabs.active()).toEqual({ id: 'b', project: 'arbitrum' })
-    tabs.report('a', 'linea', tick())
+    tabs.report('a', at('linea', tick()))
     expect(tabs.active()).toEqual({ id: 'a', project: 'linea' })
   })
 
@@ -22,9 +22,9 @@ describe(AgentTabs.name, () => {
     const tabs = new AgentTabs()
     const streams = { a: stream(), b: stream(), c: stream() }
     for (const [id, s] of Object.entries(streams)) tabs.connect(id, s)
-    tabs.report('b', undefined, tick())
-    tabs.report('c', undefined, tick())
-    tabs.report('a', undefined, tick())
+    tabs.report('b', at(undefined, tick()))
+    tabs.report('c', at(undefined, tick()))
+    tabs.report('a', at(undefined, tick()))
     tabs.disconnect('a', streams.a)
     expect(tabs.active()?.id).toEqual('c')
   })
@@ -34,7 +34,7 @@ describe(AgentTabs.name, () => {
     const old = stream()
     const current = stream()
     tabs.connect('a', old)
-    tabs.report('a', 'linea', tick())
+    tabs.report('a', at('linea', tick()))
     tabs.connect('a', current)
     tabs.disconnect('a', old)
     expect(tabs.active()).toEqual({ id: 'a', project: 'linea' })
@@ -42,15 +42,25 @@ describe(AgentTabs.name, () => {
   })
 
   it('refuses a report from a tab that is not connected', () => {
-    expect(new AgentTabs().report('a', undefined, tick())).toEqual(false)
+    expect(new AgentTabs().report('a', at(undefined, tick()))).toEqual(false)
+  })
+
+  it('ignores a report older than the one it applied', () => {
+    const tabs = new AgentTabs()
+    tabs.connect('a', stream())
+    const older = at('arbitrum', 1_000)
+    const newer = at('linea', 2_000)
+    tabs.report('a', newer)
+    tabs.report('a', older)
+    expect(tabs.active()).toEqual({ id: 'a', project: 'linea' })
   })
 
   it('restores the last-focused tab when every tab reconnects', () => {
     const tabs = new AgentTabs()
     tabs.connect('a', stream())
     tabs.connect('b', stream())
-    tabs.report('a', 'linea', 1_000)
-    tabs.report('b', 'arbitrum', 2_000)
+    tabs.report('a', at('linea', 1_000))
+    tabs.report('b', at('arbitrum', 2_000))
     expect(tabs.active()).toEqual({ id: 'b', project: 'arbitrum' })
   })
 
@@ -58,22 +68,22 @@ describe(AgentTabs.name, () => {
     const tabs = new AgentTabs()
     tabs.connect('a', stream())
     tabs.connect('b', stream())
-    tabs.report('a', 'linea', tick())
-    tabs.report('b', 'arbitrum', 0)
+    tabs.report('a', at('linea', tick()))
+    tabs.report('b', at('arbitrum', 0))
     expect(tabs.active()).toEqual({ id: 'a', project: 'linea' })
   })
 
   it('knows the project of a reconnected tab before it is focused', () => {
     const tabs = new AgentTabs()
     tabs.connect('a', stream())
-    tabs.report('a', 'linea', 0)
+    tabs.report('a', at('linea', 0))
     expect(tabs.active()).toEqual({ id: 'a', project: 'linea' })
   })
 
   it('remembers the project a show moved a tab to', () => {
     const tabs = new AgentTabs()
     tabs.connect('a', stream())
-    tabs.report('a', 'arbitrum', tick())
+    tabs.report('a', at('arbitrum', tick()))
     tabs.show('a', show('linea'))
     expect(tabs.active()).toEqual({ id: 'a', project: 'linea' })
   })
@@ -84,9 +94,9 @@ describe(AgentTabs.name, () => {
     const b = stream()
     tabs.connect('a', a)
     tabs.connect('b', b)
-    tabs.report('a', 'linea', tick())
+    tabs.report('a', at('linea', tick()))
     tabs.show('a', show('linea'))
-    tabs.report('b', 'arbitrum', tick())
+    tabs.report('b', at('arbitrum', tick()))
     expect(tabs.clearShow()).toEqual(true)
     expect(a.written.slice(1)).toEqual(['data: {"type":"clear"}\n\n'])
     expect(b.written).toEqual([])
@@ -113,7 +123,7 @@ describe(AgentTabs.name, () => {
     tabs.connect('b', b)
     tabs.show('a', show('linea'))
     tabs.disconnect('a', a)
-    tabs.report('b', 'arbitrum', tick())
+    tabs.report('b', at('arbitrum', tick()))
     expect(tabs.clearShow()).toEqual(true)
     expect(b.written).toEqual(['data: {"type":"clear"}\n\n'])
     expect(new AgentTabs().clearShow()).toEqual(false)
@@ -133,6 +143,12 @@ describe(AgentTabs.name, () => {
 
 function show(project: string): ApiAgentShowEvent {
   return { type: 'show', id: 'show-1', project, steps: [] }
+}
+
+let sequence = 0
+function at(project: string | undefined, focusedAt: number): TabReport {
+  sequence++
+  return { project, focusedAt, sequence }
 }
 
 let clock = 0

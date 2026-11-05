@@ -441,7 +441,11 @@ export type ApiHealthHint =
       }
     })
 
-export type ApiAgentEvent = ApiAgentShowEvent | { type: 'clear' }
+export type ApiAgentEvent =
+  | ApiAgentShowEvent
+  | { type: 'clear' }
+  // First on every stream; a new id means the server restarted.
+  | { type: 'connected'; serverId: string }
 
 export interface ApiAgentShowEvent {
   type: 'show'

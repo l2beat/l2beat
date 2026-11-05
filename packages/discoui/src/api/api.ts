@@ -159,6 +159,7 @@ export async function postAgentTab(report: {
   tab: string
   project: string | undefined
   focusedAt: number
+  sequence: number
 }): Promise<void> {
   await fetchOk('/api/agent/tab', jsonRequest('POST', report))
 }
