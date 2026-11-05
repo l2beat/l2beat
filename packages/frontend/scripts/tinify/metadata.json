@@ -1507,7 +1507,6 @@
   "static/meta-images/privacy/projects/umbra/opengraph-image.png": "5dc3b17439c22ee21a682d59f7585af2",
   "static/meta-images/interop/projects/butternetwork/opengraph-image.png": "545270eac392d5d4a35cf37d8cd23060",
   "static/icons/butternetwork.png": "d703eb0a0ad7bd2e852192bdb4adc769",
-  "static/meta-images/submit-your-protocol/opengraph-image.png": "70ee674408a9910be08fb3c4a34f6aed",
   "static/meta-images/layer2s/compare/opengraph-image.png": "2997dcb9e55753940226eba8b342300a",
   "static/icons/frankencoin.png": "50dda344103d36973d7cb0a30c676ba6",
   "static/icons/chfau.png": "b7cecee23cbe4a26a447753a1cce40e8",
@@ -1605,12 +1604,13 @@
   "static/icons/offmarket.png": "42974c89e80597554adcbef6000438f8",
   "static/icons/zkmoneyv6.png": "83815b31996360de33269c48d66cd7be",
   "static/meta-images/privacy/projects/zkmoneyv6/opengraph-image.png": "2578049c878a9a0a838be68451d03ca9",
-  "static/meta-images/the-crops-guide/opengraph-image.png": "9b90de2a7da3b053505a10fa36c9328f",
+  "static/meta-images/the-crops-guide/opengraph-image.png": "d3315658cbb4f709d7ce65ff4279ea1e",
   "static/icons/whitechain.png": "bd1ee782b846901ab034da4784b3fc9d",
   "static/icons/arc.png": "84a5c67ec0f91835a2719525f6e4883e",
   "static/meta-images/layer2s/projects/whitechain/opengraph-image.png": "b554a89fc757dd453757b6095eb07932",
   "static/meta-images/l2beat-is-now-ethbeat/opengraph-image.png": "07be32bb13054ece017e8ebf141515da",
   "static/meta-images/mandate/opengraph-image.png": "94aa608e4808a76f65e4ff5c4778fc43",
   "static/meta-images/publications/l2beat-is-now-ethbeat.png": "45831ae7cf4107cbb8cf464237c16a16",
-  "static/meta-images/publications/l2beat-is-now-ethbeat-pulse-nav.png": "24c8e2ee44e22dc452e827ef9def3805"
+  "static/meta-images/publications/l2beat-is-now-ethbeat-pulse-nav.png": "24c8e2ee44e22dc452e827ef9def3805",
+  "static/meta-images/submit-your-protocol/opengraph-image.png": "50111d200c638f4fcb1d5c4789a9d0aa"
 }
