@@ -70,14 +70,17 @@ export function MainPageOpengraphImage({
   )
 }
 
-const MAX_SIZE = 120
-// A title that would end at the heart's edge first grows up to this to run
-// over it, which looks the same as 120 px in a feed, before it shrinks to
-// stop short of it.
-const MAX_SIZE_OVER_HEART = 128
+// One-line titles stay within 10% of 120 px: a title whose end would land at
+// the heart's edge, where it looks like it bumps into the heart, takes the
+// size nearest 120 that clears it, growing past the edge or stopping short.
+const ONE_LINE = { ideal: 120, min: 108, max: 132 }
 const MIN_ONE_LINE_SIZE = 96
 const MAX_TWO_LINE_SIZE = 112
 const MIN_SIZE = 44
+// A name wraps onto a second line only when that makes it more than this
+// much bigger: splitting a short name ("Ebi / Chain") reads worse than a
+// slightly smaller line.
+const SECOND_LINE_COST = 10
 // A line that runs over the heart puts its last letter, about this wide, on
 // the pink.
 const LAST_LETTER = 0.4 // em
@@ -126,14 +129,14 @@ function countDescriptionLines(
 ) {
   let lines = 2
   for (let pass = 0; pass < 2; pass++) {
-    const block = { titleSize: MAX_SIZE, titleLines: 1, withLabel }
+    const block = { titleSize: ONE_LINE.ideal, titleLines: 1, withLabel }
     const baseline = titleBaseline(measure, {
       ...block,
       descriptionLines: lines,
     })
     lines = descriptionLayout(measure, description, {
       baseline,
-      size: MAX_SIZE,
+      size: ONE_LINE.ideal,
       lines: 1,
     }).lines
   }
@@ -141,11 +144,10 @@ function countDescriptionLines(
 }
 
 /**
- * One line at 96–120 px, or up to 128 px to run over the heart instead of
- * ending at its edge, where a line looks like it bumps into the heart. Else
- * two lines at up to 112 px, as balanced as the heart allows: every way to
- * break the title is tried before it shrinks, since a long name reads better
- * wrapped than small.
+ * One line within 10% of 120 px if it can be. Else the bigger of one line at
+ * 96–107 px and two lines at 96–112 px, as balanced as the heart allows (every
+ * way to break the name is tried at a size before it shrinks), the second
+ * line costing 10 px. Two smaller lines last.
  */
 export function fitTitle(
   measure: TextMeasure,
@@ -186,25 +188,35 @@ export function fitTitle(
           Math.max(...b.map((line) => widthOf(line, size))),
       )
 
-  const fitsAtMax = satoriWidth(widthOf(title, MAX_SIZE)) <= column(MAX_SIZE)
-  if (fitsAtMax && !laidOut([title], MAX_SIZE)) {
-    for (let size = MAX_SIZE + 1; size <= MAX_SIZE_OVER_HEART; size++) {
-      if (satoriWidth(widthOf(title, size)) > column(size)) break
-      const fitted = laidOut([title], size)
-      if (fitted) return fitted
+  const oneLine = (sizes: number[]) => firstFit(sizes, (size) => [[title]])
+  const twoLines = (sizes: number[]) =>
+    firstFit(sizes, (size) => (words.length > 1 ? breaks(size) : [[title]]))
+  const firstFit = (
+    sizes: number[],
+    candidates: (size: number) => string[][],
+  ) => {
+    for (const size of sizes) {
+      for (const lines of candidates(size)) {
+        const fitted = laidOut(lines, size)
+        if (fitted) return fitted
+      }
     }
   }
-  for (let size = MAX_SIZE; size >= MIN_ONE_LINE_SIZE; size--) {
-    const fitted = laidOut([title], size)
-    if (fitted) return fitted
-  }
-  for (let size = MAX_TWO_LINE_SIZE; size >= MIN_SIZE; size -= 2) {
-    const candidates = words.length > 1 ? breaks(size) : [[title]]
-    for (const lines of candidates) {
-      const fitted = laidOut(lines, size)
-      if (fitted) return fitted
-    }
-  }
+
+  const nearIdeal = oneLine(nearestFirst(ONE_LINE))
+  if (nearIdeal) return nearIdeal
+  const smallerLine = oneLine(
+    descending(ONE_LINE.min - 1, MIN_ONE_LINE_SIZE, 1),
+  )
+  const wrapped = twoLines(descending(MAX_TWO_LINE_SIZE, MIN_ONE_LINE_SIZE, 2))
+  const worthWrapping =
+    wrapped !== undefined &&
+    (smallerLine === undefined ||
+      wrapped.size - SECOND_LINE_COST > smallerLine.size)
+  const fitted =
+    (worthWrapping ? wrapped : smallerLine) ??
+    twoLines(descending(MIN_ONE_LINE_SIZE - 2, MIN_SIZE, 2))
+  if (fitted) return fitted
   const lines = breaks(MIN_SIZE)[0] ?? [title]
   return {
     size: MIN_SIZE,
@@ -230,4 +242,20 @@ function endsAtHeartEdge(
     end - LAST_LETTER * size >= fill.furthestStart &&
     end + HEART_CLEARANCE <= fill.nearestEnd
   return !stopsShort && !endsOnHeart
+}
+
+/** Sizes from `ideal` outward, nearest first, a larger one first on a tie. */
+function nearestFirst({ ideal, min, max }: typeof ONE_LINE) {
+  const sizes: number[] = []
+  for (let d = 0; ideal + d <= max || ideal - d >= min; d++) {
+    if (ideal + d <= max) sizes.push(ideal + d)
+    if (d > 0 && ideal - d >= min) sizes.push(ideal - d)
+  }
+  return sizes
+}
+
+function descending(from: number, to: number, step: number) {
+  const sizes: number[] = []
+  for (let size = from; size >= to; size -= step) sizes.push(size)
+  return sizes
 }

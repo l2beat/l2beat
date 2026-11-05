@@ -23,7 +23,7 @@ const HAZE = [
 // Around text the rings are cut away: fully within `pad` px of it, coming back
 // over the next `fade` px in `steps` steps, too fine to show. Steps instead of
 // a blur, which would cost a pass over the whole canvas for every image.
-const CLEAR = { pad: 12, fade: 40, steps: 8 }
+const CLEAR = { pad: 16, fade: 40, steps: 8 }
 
 const { width: W, height: H } = OG_SIZE
 const round = (v: number) => +v.toFixed(2)

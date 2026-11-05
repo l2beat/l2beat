@@ -22,14 +22,14 @@ export const TITLE_LINE_HEIGHT = 1.06
 // The text block, from the label's capitals to the title's last baseline (or
 // the description's bottom), centres on the heart, but starts at least
 // `belowSignature` under the corner lockup.
-const BLOCK = { centre: OG_SIZE.height / 2, belowSignature: 48 }
+const BLOCK = { centre: OG_SIZE.height / 2, belowSignature: 36 }
 // `gap` runs from the title's last baseline to the description's top. It may
 // take up to `lines` lines, so it keeps clear of the heart across that many.
 const DESCRIPTION = {
   size: 34,
   lineHeight: 1.3,
   lines: 3,
-  gap: 48,
+  gap: 40,
   color: `${WHITE}CC`,
 }
 // From the label's baseline down to the top of the title's capitals.

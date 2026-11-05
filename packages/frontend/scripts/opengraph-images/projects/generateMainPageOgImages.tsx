@@ -16,13 +16,13 @@ export const mainPages: MainPage[] = [
     path: 'tokens',
     title: 'Tokens',
     description:
-      'How every token exists across chains: which deployments are backed by another, and which burn and mint.',
+      'How every token exists across chains: which deployments another backs, and which burn and mint.',
   },
   {
     path: 'ossification',
     title: 'Ossification',
     description:
-      'How long the critical contracts of each project have gone unchanged, and the value they secured meanwhile.',
+      'How long each project’s critical contracts have gone unchanged, and the value they secured meanwhile.',
   },
   {
     path: 'layer2s/summary',
