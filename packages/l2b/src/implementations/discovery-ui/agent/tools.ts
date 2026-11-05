@@ -32,7 +32,14 @@ export interface AgentTool {
   run: (args: unknown, ui: DiscoUi) => string[]
 }
 
-const refSchema = z.string().check((v) => v.length > 0, 'Empty contract ref')
+// Names and chain:0x addresses are far shorter.
+const REF_CHARACTERS_MAX = 200
+const refSchema = z
+  .string()
+  .check(
+    (v) => v.length > 0 && v.length <= REF_CHARACTERS_MAX,
+    `Contract ref must be 1 to ${REF_CHARACTERS_MAX} characters`,
+  )
 
 const stepSchema = z.object({
   note: z

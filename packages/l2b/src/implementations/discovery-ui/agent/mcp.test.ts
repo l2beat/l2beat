@@ -147,6 +147,20 @@ describe(attachMcpRoutes.name, () => {
     })
   })
 
+  it('refuses a contract ref longer than any name', async () => {
+    const result = await call('tools/call', {
+      name: 'show',
+      arguments: {
+        dryRun: true,
+        steps: [{ note: 'n', contracts: ['x'.repeat(201)] }],
+      },
+    })
+    expect(result.result?.isError).toEqual(true)
+    expect(JSON.stringify(result.result?.content)).toInclude(
+      'Contract ref must be 1 to 200 characters',
+    )
+  })
+
   it('tells the agent a project name is wrong', async () => {
     const result = await call('tools/call', {
       name: 'show',

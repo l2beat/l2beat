@@ -93,8 +93,15 @@ function suggest(entries: readonly AgentEntry[], name: string): string[] {
     if (candidate === undefined) {
       continue
     }
-    const isPart = candidate.includes(needle) || needle.includes(candidate)
-    const edits = isPart ? 0 : editDistance(candidate, needle)
+    if (candidate.includes(needle) || needle.includes(candidate)) {
+      scored.push({ entry, edits: 0 })
+      continue
+    }
+    // Names whose lengths differ by more are further apart than that anyway.
+    if (Math.abs(candidate.length - needle.length) > TYPO_EDITS_MAX) {
+      continue
+    }
+    const edits = editDistance(candidate, needle)
     if (edits <= TYPO_EDITS_MAX) {
       scored.push({ entry, edits })
     }
