@@ -1,10 +1,13 @@
 import express from 'express'
 import { SITE_NAME_WITH_FORMER } from '~/consts/siteName'
 import {
-  DEFI_SUMMARY_DESCRIPTION,
   PRIVACY_SUMMARY_DESCRIPTION,
   ZK_CATALOG_DESCRIPTION,
 } from '~/consts/summaryPageDescriptions'
+import {
+  DEFI_SUMMARY_CATEGORIES,
+  DEFI_SUMMARY_PAGE_DESCRIPTION,
+} from '~/server/features/defi/defiSummaryVisibility'
 import { getDefiListSections } from '~/server/markdown/list-pages/getDefiListSections'
 import { getInteropListSections } from '~/server/markdown/list-pages/getInteropListSections'
 import { getOssificationListSections } from '~/server/markdown/list-pages/getOssificationListSections'
@@ -106,9 +109,15 @@ const LIST_PAGE_DOCUMENTS: Record<
     getSections: getInteropListSections,
   },
   '/defi/summary': {
-    title: `DeFi protocols on ${SITE_NAME_WITH_FORMER}`,
-    summary: 'DeFi protocols tracked by ETHBEAT, with their category.',
-    notes: DEFI_SUMMARY_DESCRIPTION,
+    title:
+      DEFI_SUMMARY_CATEGORIES === undefined
+        ? `DeFi protocols on ${SITE_NAME_WITH_FORMER}`
+        : `Liquid staking protocols on ${SITE_NAME_WITH_FORMER}`,
+    summary:
+      DEFI_SUMMARY_CATEGORIES === undefined
+        ? 'DeFi protocols tracked by ETHBEAT, with their category.'
+        : 'Liquid staking protocols tracked by ETHBEAT, with their risk comparison.',
+    notes: DEFI_SUMMARY_PAGE_DESCRIPTION,
     getSections: getDefiListSections,
   },
   '/ossification': {

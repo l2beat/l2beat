@@ -16,6 +16,7 @@ import type {
   ProjectSectionId,
 } from '~/components/projects/sections/types'
 import { NO_BRIDGE_RISK } from '~/components/rosette/grissini/noBridgeRisk'
+import type { DefiProjectToken } from '~/server/features/defi/project/getDefiProjectTokens'
 import type { DefiDependency } from '~/server/features/defi/resolveDefiDependencies'
 import type { UnverifiedContractEntry } from '~/utils/project/contracts-and-permissions/getUnverifiedContractEntries'
 import { configMarkdown } from './configMarkdown'
@@ -247,6 +248,7 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<SectionProps<T>> } = {
       : bulletList(
           dependencies.map((dependency) => renderDependency(dependency)),
         ),
+  DefiTokensSection: ({ tokens }) => bulletList(tokens.map(renderToken)),
   MilestonesAndIncidentsSection: ({ milestones }) =>
     bulletList(milestones.map(renderMilestone)),
   StateDerivationSection: (props, level) =>
@@ -365,6 +367,12 @@ function renderDependency(dependency: DefiDependency) {
     : dependency.name
   const notReviewed = dependency.reviewed ? '' : ' (not reviewed)'
   return `${name}${notReviewed}: ${dependency.description}`
+}
+
+function renderToken(token: DefiProjectToken) {
+  const title = `${token.symbol} (${token.name})`
+  const name = token.href ? link(title, token.href) : title
+  return `${name}: ${token.description}`
 }
 
 function renderMilestone(milestone: Milestone) {

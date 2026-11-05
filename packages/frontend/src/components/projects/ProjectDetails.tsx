@@ -6,6 +6,7 @@ import { CostsSection } from './sections/costs/CostsSection'
 import { DaRiskSummarySection } from './sections/DaRiskSummarySection'
 import { DetailedDescriptionSection } from './sections/DetailedDescriptionSection'
 import { DataPostedSection } from './sections/data-posted/DataPostedSection'
+import { DefiTokensSection } from './sections/defi/DefiTokensSection'
 import { DefiTvlSection } from './sections/defi/DefiTvlSection'
 import { ExternalDependenciesSection } from './sections/ExternalDependenciesSection'
 import { GardenCropsSection } from './sections/GardenCropsSection'
@@ -431,6 +432,14 @@ function renderSection(
     case 'ExternalDependenciesSection':
       return (
         <ExternalDependenciesSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'DefiTokensSection':
+      return (
+        <DefiTokensSection
           key={item.props.id}
           {...{ nested, sectionOrder }}
           {...item.props}
