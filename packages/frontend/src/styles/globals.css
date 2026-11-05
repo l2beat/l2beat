@@ -87,9 +87,8 @@
   --secondary: #5f6470;
   --positive: #007408;
   --warning: #ab8000;
-  /* --warning stays bright for icons and tints (3:1). Text needs 4.5:1 (WCAG AA) on cards
-     and on warning-tinted table rows; amber rather than olive so it doesn't read as grey. */
-  --warning-text: #966500;
+  /* --warning stays bright for icons and tints (3:1); text needs 4.5:1 on --background (WCAG AA). */
+  --warning-text: #806000;
   /* Dark enough for 4.5:1 on --background, since it also colours text. */
   --negative: #c40000;
   --brand: #ff3776;
