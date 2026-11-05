@@ -136,7 +136,7 @@ function SelectedPathNoDataState({ className }: { className?: string }) {
         className,
       )}
     >
-      <EmptyStateIcon className="mb-4 size-10 fill-warning" />
+      <EmptyStateIcon className="mb-4 size-10 fill-yellow-700 dark:fill-yellow-200" />
       <span className="mb-2 font-bold text-heading-20">
         No data for the selected path
       </span>

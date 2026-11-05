@@ -5,7 +5,10 @@ export function ChartNoDataState({ size }: { size: 'regular' | 'small' }) {
   return (
     <div className="absolute inset-0 z-30 flex select-none flex-col items-center justify-center gap-4 text-center duration-200 dark:from-neutral-900">
       <EmptyStateIcon
-        className={cn('fill-warning', size === 'small' && 'hidden')}
+        className={cn(
+          'fill-yellow-700 dark:fill-yellow-200',
+          size === 'small' && 'hidden',
+        )}
       />
       <span
         className={cn(
