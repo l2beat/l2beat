@@ -1,3 +1,36 @@
+Generated with discovered.json: 0x936ba82e222c5ee6edc95b621fa421a92142f0fa
+
+# Diff at Thu, 05 Nov 2026 08:58:36 GMT:
+
+- id: 78b485f2
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@92a563dab6932b2cedd6791c3571d1d33fc43c20 block: 1793006682
+- current timestamp: 1793006682
+
+## Description
+
+`isPermanentRollup` and `priorityModeInfo` are MEDIUM: a one-way lock only removes options, and the raw Priority Mode slot holds the live activation flag.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793006682 (main branch discovery), not current.
+
+```diff
+    contract Rollup (eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34) [aztecnetwork/Rollup] {
+    +++ description: Core rollup logic contract. It processes checkpoint proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.
+      fieldMeta.latestStakingQueueConfigUpdate.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.getSlasher.severity:
++        "HIGH"
+      fieldMeta.getPendingSlasher.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0x805b100ad39c721abd5684be8e467b879b8b8c7d
 
 # Diff at Tue, 03 Nov 2026 11:25:00 GMT:

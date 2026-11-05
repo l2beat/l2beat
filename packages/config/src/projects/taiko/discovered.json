@@ -2342,7 +2342,7 @@
           "description": "Granted permissions in the DAO. Need to be manually compared to the revoked ones and hardcoded permissions need to be adjusted on change. Use AI with L1 contract context."
         },
         "permsRevoked": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Revoked permissions in the DAO. Need to be manually compared to the granted ones."
         }
       },

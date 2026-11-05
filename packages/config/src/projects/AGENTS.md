@@ -71,6 +71,7 @@ Put the severity in the template when it follows from the contract type, otherwi
 2. changeable on a live system, unlike `gasPayingToken`, which only an upgrade changes
 3. configuration, not a counter: derive `bufferConfig` from `SequencerInbox.buffer` with `"edit": ["delete", "prevBlockNumber", …]`
 4. not a copy of another severity's field: a HIGH `accessControl` counts `EXECUTOR_ROLE.members`, which `executors` shows as MEDIUM
+5. the effective value, not a queued one: `getSlasher` is HIGH, `getPendingSlasher` MEDIUM
 
 Give raw and formatted twins like `getMinDelay` and `getMinDelayFormatted` the same severity. The history follows a field's current name and severity: renaming cuts it off, raising a field to HIGH counts its old changes, lowering it stops counting them.
 

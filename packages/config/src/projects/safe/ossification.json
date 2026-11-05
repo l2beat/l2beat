@@ -1,0 +1,11 @@
+{
+  "events": [
+    {
+      "timestamp": 1686858395,
+      "type": "code",
+      "contract": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+      "transaction": "0x908a975aa07f769f74b04bdcd12a2da97e5cc2e1e3c683ededd1980c86e4f457",
+      "reason": "First deposit into a Safe v1.4.1 account (eth:0x000000000034065b3a94C2118CFe5B4C0067B615), the first custody of the v1.4.1 singleton code."
+    }
+  ]
+}

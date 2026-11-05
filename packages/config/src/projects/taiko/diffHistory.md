@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xba844d002275169ec5fdb3b2016bec1d8918f83c
+
+# Diff at Thu, 05 Nov 2026 08:58:41 GMT:
+
+- id: e35cebda
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@92a563dab6932b2cedd6791c3571d1d33fc43c20 block: 1793195421
+- current timestamp: 1793195421
+
+## Description
+
+`isPermanentRollup` and `priorityModeInfo` are MEDIUM: a one-way lock only removes options, and the raw Priority Mode slot holds the live activation flag.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793195421 (main branch discovery), not current.
+
+```diff
+    contract DAO (eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261) [taiko/DAO] {
+    +++ description: The main contract and entrypoint of the Aragon-based DAO governance framework. Fine-grained DAO permissions, proposals, voting and thresholds are configured here.
+      fieldMeta.permsRevoked.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0x0593d09b29f0fd6daa486c7301ddfe287b9b1aa2
 
 # Diff at Wed, 28 Oct 2026 13:54:39 GMT:
