@@ -51,7 +51,7 @@ A template is `_templates/<name>/template.jsonc` with a `shapes.json` of source 
 Mark a contract `critical: true` in its template, or in a `config.jsonc` override. An override beats the template and survives the contract leaving discovery.
 
 - `sinceTimestamp`: earlier changes do not count.
-- `untilTimestamp`: the contract left the perimeter, for example a verifier that only accepts proofs for finalized batches. Use the onchain time it was detached, not a discovery run. Later changes and its verification status no longer count. Set it on an override to keep the history of a contract that left without a deletion in `diffHistory.md`.
+- `untilTimestamp`: the contract left the perimeter, for example a verifier that only accepts proofs for finalized batches. Use the onchain time it was detached, not a discovery run. A verifier routed by batch index detaches when its last batch finalizes, not when its successor is registered. Later changes and its verification status no longer count. Set it on an override to keep the history of a contract that left without a deletion in `diffHistory.md`.
 
 A project includes the critical contracts of the shared modules it can reach. Each module is judged by its own config, templates, `diffHistory.md` and `ossification.json`.
 
