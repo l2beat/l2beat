@@ -8,8 +8,16 @@ import { signInHint } from './providers'
 const newSessionSchema = z.object({ sessionId: z.string() })
 const promptResultSchema = z.object({ stopReason: z.string() })
 const sessionUpdateSchema = z.object({ update: z.unknown() })
+const initializeResultSchema = z.object({ protocolVersion: z.number() })
 const permissionRequestSchema = z.object({
-  toolCall: z.object({ title: z.union([z.string(), z.null()]).optional() }),
+  toolCall: z.object({
+    title: z.union([z.string(), z.null()]).optional(),
+    kind: z.union([z.string(), z.null()]).optional(),
+    locations: z
+      .union([z.array(z.object({ path: z.string() })), z.null()])
+      .optional(),
+    rawInput: z.unknown().optional(),
+  }),
   options: z.array(
     z.object({ optionId: z.string(), name: z.string(), kind: z.string() }),
   ),
@@ -160,14 +168,23 @@ export class ChatSession {
 
   private async open(chat: RunningChat) {
     try {
-      await chat.connection.request('initialize', {
-        protocolVersion: ACP_PROTOCOL_VERSION,
-        clientCapabilities: {
-          fs: { readTextFile: false, writeTextFile: false },
-          terminal: false,
-        },
-        clientInfo: { name: 'discoui', version: '1' },
-      })
+      const initialized = initializeResultSchema.parse(
+        await chat.connection.request('initialize', {
+          protocolVersion: ACP_PROTOCOL_VERSION,
+          clientCapabilities: {
+            fs: { readTextFile: false, writeTextFile: false },
+            terminal: false,
+          },
+          clientInfo: { name: 'discoui', version: '1' },
+        }),
+      )
+      // An adapter that answers with another version speaks a protocol this
+      // client cannot read.
+      if (initialized.protocolVersion !== ACP_PROTOCOL_VERSION) {
+        throw new ChatError(
+          'The agent speaks another ACP version, update DiscoUI or the adapter',
+        )
+      }
       const session = newSessionSchema.parse(
         await chat.connection.request('session/new', {
           cwd: this.options.cwd,
@@ -248,6 +265,7 @@ export class ChatSession {
       throw new Error('Not supported')
     }
     const request = permissionRequestSchema.parse(params)
+    const { toolCall } = request
     this.permissionCount++
     const id = String(this.permissionCount)
     const optionId = await new Promise<string | undefined>((resolve) => {
@@ -255,7 +273,15 @@ export class ChatSession {
       this.emit(chat, {
         type: 'permission',
         id,
-        title: request.toolCall.title ?? 'Use a tool',
+        title: toolCall.title ?? 'Use a tool',
+        // The researcher approves what runs, not the agent's description of
+        // it: the command or edit and the paths it touches.
+        kind: toolCall.kind ?? undefined,
+        paths: (toolCall.locations ?? []).map((location) => location.path),
+        input:
+          toolCall.rawInput === undefined
+            ? undefined
+            : JSON.stringify(toolCall.rawInput, null, 2),
         options: request.options.map((option) => ({
           id: option.optionId,
           name: option.name,

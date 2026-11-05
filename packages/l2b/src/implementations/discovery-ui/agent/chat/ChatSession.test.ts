@@ -20,7 +20,7 @@ lines.on('line', (line) => {
     update({ sessionUpdate: 'agent_message_chunk', content: { type: 'text', text: 'Hel' } })
     update({ sessionUpdate: 'agent_message_chunk', content: { type: 'text', text: 'lo' } })
     update({ sessionUpdate: 'tool_call', toolCallId: 't1', title: 'Run ls', status: 'pending' })
-    send({ id: 99, method: 'session/request_permission', params: { toolCall: { title: 'Run ls' }, options: [{ optionId: 'allow', name: 'Allow', kind: 'allow_once' }] } })
+    send({ id: 99, method: 'session/request_permission', params: { toolCall: { title: 'Run ls', kind: 'execute', locations: [{ path: '/repo' }], rawInput: { command: 'ls' } }, options: [{ optionId: 'allow', name: 'Allow', kind: 'allow_once' }] } })
   }
   if (message.id === 99 && message.method === undefined) {
     update({ sessionUpdate: 'tool_call_update', toolCallId: 't1', status: 'completed' })
@@ -98,6 +98,10 @@ describe(ChatSession.name, () => {
         type: 'permission',
         id: '1',
         title: 'Run ls',
+        // What the researcher approves, beyond the agent's own title.
+        kind: 'execute',
+        paths: ['/repo'],
+        input: JSON.stringify({ command: 'ls' }, null, 2),
         options: [{ id: 'allow', name: 'Allow', kind: 'allow_once' }],
       },
     ])
@@ -131,6 +135,22 @@ describe(ChatSession.name, () => {
       'The agent is still answering',
     )
     await waitFor(() => chatEvents(owner).some((e) => e.type === 'permission'))
+  })
+
+  it('stops an agent that speaks another ACP version', async () => {
+    const newer = FAKE_AGENT.replace(
+      'result: { protocolVersion: 1 }',
+      'result: { protocolVersion: 2 }',
+    )
+    const { chat, owner } = setup(newer)
+    chat.start('owner', 'claude')
+    const failed = await waitFor(() =>
+      chatEvents(owner).find(
+        (e) => e.type === 'status' && e.status === 'failed',
+      ),
+    )
+    const error = failed.type === 'status' ? failed.error : undefined
+    expect(error ?? '').toInclude('another ACP version')
   })
 
   it('reports an agent that exits', async () => {

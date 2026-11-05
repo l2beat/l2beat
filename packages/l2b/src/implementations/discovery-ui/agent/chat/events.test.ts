@@ -68,6 +68,8 @@ describe(clipEvent.name, () => {
       type: 'permission',
       id: '1',
       title: long,
+      paths: [],
+      input: long,
       options: Array.from({ length: 30 }, () => ({
         id: 'a',
         name: long,
@@ -80,6 +82,10 @@ describe(clipEvent.name, () => {
     expect(
       permission.type === 'permission' && permission.options.length,
     ).toEqual(20)
+    // The input to approve is shown up to 8,000 characters, then marked cut.
+    expect(
+      permission.type === 'permission' ? permission.input : undefined,
+    ).toEqual(`${long.slice(0, 8_000)}\n… (cut)`)
     const error = clipEvent({ type: 'error', message: long })
     expect(error.type === 'error' && error.message.length).toEqual(2_000)
     expect(clipEvent({ type: 'tool', id: 't1', status: 'completed' })).toEqual({

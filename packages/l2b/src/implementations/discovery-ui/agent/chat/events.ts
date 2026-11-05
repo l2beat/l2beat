@@ -8,6 +8,9 @@ const TEXT_CHARACTERS_MAX = 50_000
 // Titles, option names and error messages come from the agent too.
 const LABEL_CHARACTERS_MAX = 2_000
 const OPTIONS_MAX = 20
+const PATHS_MAX = 20
+// What the researcher approves is shown in full up to this much.
+const INPUT_CHARACTERS_MAX = 8_000
 // Tool calls report their status several times, and so does the chat; the
 // latest replaces the earlier one, if it is this recent.
 const MERGE_LOOKBACK = 200
@@ -124,6 +127,13 @@ export function clipEvent(event: ApiChatEvent): ApiChatEvent {
       return {
         ...event,
         title: clipLabel(event.title),
+        kind: event.kind === undefined ? undefined : clipLabel(event.kind),
+        paths: event.paths.slice(0, PATHS_MAX).map(clipLabel),
+        input:
+          event.input === undefined ||
+          event.input.length <= INPUT_CHARACTERS_MAX
+            ? event.input
+            : `${event.input.slice(0, INPUT_CHARACTERS_MAX)}\n… (cut)`,
         options: event.options.slice(0, OPTIONS_MAX).map((option) => ({
           id: clipLabel(option.id),
           name: clipLabel(option.name),

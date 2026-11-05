@@ -383,6 +383,10 @@ export type ApiChatEvent =
       type: 'permission'
       id: string
       title: string
+      kind?: string
+      paths: string[]
+      // The tool's raw input, as JSON: the command or edit to approve.
+      input?: string
       options: { id: string; name: string; kind: string }[]
     }
   | { type: 'permission-done'; id: string }
