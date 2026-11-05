@@ -81,3 +81,52 @@ function parse(buffer: Buffer) {
     ),
   )
 }
+
+/**
+ * `text` wrapped into the narrowest box that keeps the line count a `column`
+ * wide box gives, like CSS `text-wrap: balance`, which satori lacks: the box
+ * and each line's width.
+ */
+export function balancedLines(
+  measure: TextMeasure,
+  text: string,
+  size: number,
+  weight: Weight,
+  column: number,
+) {
+  const space = measure.width(' ', size, weight)
+  const words = text
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((word) => measure.width(word, size, weight))
+  const count = wrap(words, space, column).length
+  let lo = Math.max(...words)
+  let hi = column
+  while (hi - lo > 1) {
+    const mid = (lo + hi) / 2
+    if (wrap(words, space, mid).length <= count) hi = mid
+    else lo = mid
+  }
+  const box = Math.min(column, Math.ceil(hi))
+  return { box, lines: wrap(words, space, box) }
+}
+
+/**
+ * The width of each line when words wrap in a `box` wide column. Every word
+ * but the last carries a space as its right margin, and satori's flex wrap
+ * counts that margin, but a line's letters end before it.
+ */
+function wrap(words: number[], space: number, box: number) {
+  const lines: number[] = []
+  let x = 0
+  words.forEach((word, i) => {
+    const margin = i < words.length - 1 ? space : 0
+    if (x > 0 && satoriWidth(x + word + margin) > box) {
+      lines.push(x - space)
+      x = 0
+    }
+    x += word + margin
+  })
+  lines.push(x)
+  return lines
+}

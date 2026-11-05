@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 import { heartEcho } from './echo'
 import { HEART_RATIO, heart, INK, lockup, PINK, place, WHITE } from './marks'
 import { OG_SIZE, rasterize, rowExtents } from './render'
-import type { TextMeasure } from './text'
+import { balancedLines, type TextMeasure } from './text'
 
 // Every OG image but home's: the logo's heart glowing on the right, its echo
 // spreading across the canvas, and a pink label over a big white title on the
@@ -20,6 +20,18 @@ const SIGNATURE_HEIGHT = 72
 // second line grows down from it.
 export const TITLE_BASELINE = 382
 export const TITLE_LINE_HEIGHT = 1.06
+// A description under the title lifts the title by `lift`, so the block keeps
+// its weight in the middle of the card; `gap` runs from the title's last
+// baseline to the description's top. It may take up to `lines` lines, so it
+// keeps clear of the heart across that many.
+const DESCRIPTION = {
+  size: 34,
+  lineHeight: 1.3,
+  lines: 3,
+  lift: 34,
+  gap: 48,
+  color: `${WHITE}CC`,
+}
 // From the label's baseline down to the top of the title's capitals.
 const LABEL_TO_TITLE = 42
 const LABEL = { size: 40, min: 30, lineHeight: 1.2, tracking: 1.4 / 24 }
@@ -73,21 +85,33 @@ export function heartFillBetween(top: number, bottom: number) {
   }
 }
 
+/** Where the title's first baseline sits: higher when a description goes under it. */
+export function titleBaseline(withDescription: boolean) {
+  return withDescription ? TITLE_BASELINE - DESCRIPTION.lift : TITLE_BASELINE
+}
+
 export function HeartbeatFrame({
   measure,
   label,
   title,
   titleSize,
+  titleLines,
   titleInkLeft,
+  description,
 }: {
   measure: TextMeasure
   label: string | undefined
   title: ReactNode
   titleSize: number
+  titleLines: number
   /** The title's first-letter side bearing, so its ink starts on the margin. */
   titleInkLeft: number
+  description: string | undefined
 }) {
-  const capTop = TITLE_BASELINE - measure.capHeight(titleSize)
+  const baseline = titleBaseline(description !== undefined)
+  const capTop = baseline - measure.capHeight(titleSize)
+  const lastBaseline =
+    baseline + (titleLines - 1) * TITLE_LINE_HEIGHT * titleSize
   return (
     <Canvas decor={frameDecor()}>
       {label && (
@@ -102,13 +126,55 @@ export function HeartbeatFrame({
           display: 'flex',
           position: 'absolute',
           left: MARGIN - titleInkLeft,
-          top: TITLE_BASELINE - measure.baseline(titleSize, TITLE_LINE_HEIGHT),
+          top: baseline - measure.baseline(titleSize, TITLE_LINE_HEIGHT),
           width: COLUMN,
         }}
       >
         {title}
       </div>
+      {description !== undefined && (
+        <Description
+          measure={measure}
+          text={description}
+          top={lastBaseline + DESCRIPTION.gap}
+        />
+      )}
     </Canvas>
+  )
+}
+
+/** A line or two on what the page is for, wrapped before it reaches the heart. */
+function Description({
+  measure,
+  text,
+  top,
+}: {
+  measure: TextMeasure
+  text: string
+  top: number
+}) {
+  const bottom =
+    top + DESCRIPTION.lines * DESCRIPTION.lineHeight * DESCRIPTION.size
+  const heartStart = heartFillBetween(top, bottom).nearestStart
+  const room = Math.min(COLUMN, heartStart - HEART_CLEARANCE - MARGIN)
+  const { box } = balancedLines(measure, text, DESCRIPTION.size, 600, room)
+  return (
+    <div
+      style={{
+        display: 'flex',
+        position: 'absolute',
+        left: MARGIN - measure.inkLeft(text, DESCRIPTION.size, 600),
+        top,
+        width: box,
+        fontSize: DESCRIPTION.size,
+        fontWeight: 600,
+        lineHeight: DESCRIPTION.lineHeight,
+        color: DESCRIPTION.color,
+        textShadow: TEXT_HALO,
+      }}
+    >
+      {text}
+    </div>
   )
 }
 

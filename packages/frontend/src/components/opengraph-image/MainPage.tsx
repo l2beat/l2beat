@@ -6,9 +6,10 @@ import {
   MARGIN,
   TITLE_BASELINE,
   TITLE_LINE_HEIGHT,
+  titleBaseline,
   wordSpans,
 } from './heartbeat/Frame'
-import { satoriWidth, type TextMeasure } from './heartbeat/text'
+import { balancedLines, satoriWidth, type TextMeasure } from './heartbeat/text'
 
 export interface MainPage {
   /** Where the image goes, under static/meta-images. */
@@ -16,21 +17,35 @@ export interface MainPage {
   /** The page's type or section, when it says more than the title. */
   label?: string
   title: string
+  /** A line or two under the title on what the page is for. */
+  description?: string
 }
 
 interface Props {
   measure: TextMeasure
   label?: string
   title: string
+  description?: string
 }
 
-export function MainPageOpengraphImage({ measure, label, title }: Props) {
-  const fitted = fitTitle(measure, title)
+export function MainPageOpengraphImage({
+  measure,
+  label,
+  title,
+  description,
+}: Props) {
+  const fitted = fitTitle(
+    measure,
+    title,
+    titleBaseline(description !== undefined),
+  )
   return (
     <HeartbeatFrame
       measure={measure}
       label={label}
+      description={description}
       titleSize={fitted.size}
+      titleLines={fitted.lines}
       titleInkLeft={measure.inkLeft(title, fitted.size, 700)}
       title={
         <div style={{ display: 'flex', flexWrap: 'wrap', width: fitted.width }}>
@@ -58,35 +73,44 @@ const LAST_LETTER = 0.4 // em
  * two lines at up to 112 px, balanced like CSS `text-wrap: balance`: a long
  * name reads better wrapped than shrunk.
  */
-export function fitTitle(measure: TextMeasure, title: string) {
+export function fitTitle(
+  measure: TextMeasure,
+  title: string,
+  baseline = TITLE_BASELINE,
+) {
   const width = (size: number) => measure.width(title, size, 700, -0.01 * size)
   const fits = (size: number) => satoriWidth(width(size)) <= COLUMN
   const atHeartEdge = (size: number) =>
-    endsAtHeartEdge(measure, width(size), size, TITLE_BASELINE)
+    endsAtHeartEdge(measure, width(size), size, baseline)
 
   if (fits(MAX_SIZE) && atHeartEdge(MAX_SIZE)) {
     for (let size = MAX_SIZE + 1; size <= MAX_SIZE_OVER_HEART; size++) {
       if (!fits(size)) break
-      if (!atHeartEdge(size)) return { size, width: COLUMN }
+      if (!atHeartEdge(size)) return { size, width: COLUMN, lines: 1 }
     }
   }
   for (let size = MAX_SIZE; size >= MIN_ONE_LINE_SIZE; size--) {
-    if (fits(size) && !atHeartEdge(size)) return { size, width: COLUMN }
+    if (fits(size) && !atHeartEdge(size)) {
+      return { size, width: COLUMN, lines: 1 }
+    }
   }
   for (let size = MAX_TWO_LINE_SIZE; size >= 44; size -= 2) {
-    const { box, lines } = balancedLines(measure, title, size)
+    const { box, lines } = balancedLines(measure, title, size, 700, COLUMN)
     const clearOfHeartEdge = lines.every(
       (line, i) =>
         !endsAtHeartEdge(
           measure,
           line,
           size,
-          TITLE_BASELINE + i * TITLE_LINE_HEIGHT * size,
+          baseline + i * TITLE_LINE_HEIGHT * size,
         ),
     )
-    if (lines.length <= 2 && clearOfHeartEdge) return { size, width: box }
+    if (lines.length <= 2 && clearOfHeartEdge) {
+      return { size, width: box, lines: lines.length }
+    }
   }
-  return { size: 44, width: COLUMN }
+  const smallest = balancedLines(measure, title, 44, 700, COLUMN)
+  return { size: 44, width: COLUMN, lines: smallest.lines.length }
 }
 
 /**
@@ -107,43 +131,4 @@ function endsAtHeartEdge(
     end - LAST_LETTER * size >= fill.furthestStart &&
     end + HEART_CLEARANCE <= fill.nearestEnd
   return !stopsShort && !endsOnHeart
-}
-
-/** The title wrapped into the narrowest box that keeps the line count the column gives. */
-function balancedLines(measure: TextMeasure, title: string, size: number) {
-  const space = measure.width(' ', size, 700)
-  const words = title
-    .split(/\s+/)
-    .filter(Boolean)
-    .map((word) => measure.width(word, size, 700))
-  const count = wrap(words, space, COLUMN).length
-  let lo = Math.max(...words)
-  let hi = COLUMN
-  while (hi - lo > 1) {
-    const mid = (lo + hi) / 2
-    if (wrap(words, space, mid).length <= count) hi = mid
-    else lo = mid
-  }
-  const box = Math.min(COLUMN, Math.ceil(hi))
-  return { box, lines: wrap(words, space, box) }
-}
-
-/**
- * The width of each line when words wrap in a `box` wide column. Every word
- * but the last carries a space as its right margin, and satori's flex wrap
- * counts that margin, but a line's letters end before it.
- */
-function wrap(words: number[], space: number, box: number) {
-  const lines: number[] = []
-  let x = 0
-  words.forEach((word, i) => {
-    const margin = i < words.length - 1 ? space : 0
-    if (x > 0 && satoriWidth(x + word + margin) > box) {
-      lines.push(x - space)
-      x = 0
-    }
-    x += word + margin
-  })
-  lines.push(x)
-  return lines
 }

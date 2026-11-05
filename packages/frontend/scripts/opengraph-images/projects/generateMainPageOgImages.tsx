@@ -4,13 +4,19 @@ import { renderOpengraphPng } from '~/components/opengraph-image/heartbeat/rende
 import type { MainPage } from '~/components/opengraph-image/MainPage'
 import { MainPageOpengraphImage } from '~/components/opengraph-image/MainPage'
 import { RENAME_ANNOUNCEMENT_PATH } from '~/consts/siteName'
+import { DEFI_SUMMARY_DESCRIPTION } from '~/consts/summaryPageDescriptions'
 import { writeIfMissing } from './writeIfMissing'
 
 // Labels name the page's section, and only when the title doesn't already.
 const mainPages: MainPage[] = [
   { path: 'tokens', title: 'Tokens' },
   { path: 'ossification', title: 'Ossification' },
-  { path: 'layer2s/summary', title: 'Layer 2s' },
+  {
+    path: 'layer2s/summary',
+    title: 'Layer 2s',
+    description:
+      'The risks, stages and value secured of every Layer 2 on Ethereum.',
+  },
   { path: 'layer2s/risks/overview', label: 'Layer 2s', title: 'Risk analysis' },
   {
     path: 'layer2s/risks/data-availability',
@@ -30,7 +36,12 @@ const mainPages: MainPage[] = [
   { path: 'layer2s/compare', label: 'Layer 2s', title: 'Compare' },
   { path: 'layer2s/upcoming', label: 'Layer 2s', title: 'Upcoming' },
   { path: 'layer2s/archived', label: 'Layer 2s', title: 'Archived' },
-  { path: 'interop/summary', title: 'Interoperability' },
+  {
+    path: 'interop/summary',
+    title: 'Interoperability',
+    description:
+      'Compare interoperability protocols across the Ethereum ecosystem.',
+  },
   { path: 'interop/non-minting', label: 'Interop', title: 'Non-minting' },
   { path: 'interop/lock-&-mint', label: 'Interop', title: 'Lock & mint' },
   { path: 'interop/burn-&-mint', label: 'Interop', title: 'Burn & mint' },
@@ -40,8 +51,17 @@ const mainPages: MainPage[] = [
     title: 'Token frameworks',
   },
   { path: 'interop/intent-bridges', label: 'Interop', title: 'Intent bridges' },
-  { path: 'privacy/summary', title: 'Privacy protocols' },
-  { path: 'defi/summary', title: 'DeFi protocols' },
+  {
+    path: 'privacy/summary',
+    title: 'Privacy protocols',
+    description:
+      'Privacy protocols on Ethereum, rated by what they hide from each adversary.',
+  },
+  {
+    path: 'defi/summary',
+    title: 'DeFi protocols',
+    description: DEFI_SUMMARY_DESCRIPTION,
+  },
   { path: 'zk-catalog', label: 'Proof systems', title: 'ZK catalog' },
   { path: 'stages', title: 'Stages' },
   { path: 'governance', title: 'Governance' },
@@ -83,6 +103,7 @@ export async function generateMainPageOgImages(kit: OpengraphKit) {
           measure={kit.measure}
           label={page.label}
           title={page.title}
+          description={page.description}
         />,
         kit,
       ),
