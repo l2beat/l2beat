@@ -1,6 +1,5 @@
 import { Callout } from '~/components/Callout'
 import { ShieldIcon } from '~/icons/Shield'
-import { cn } from '~/utils/cn'
 import { CONTRACTS_UPDATED_NOTE } from '../sectionCopy'
 
 export function ContractsUpdated() {
@@ -10,7 +9,7 @@ export function ContractsUpdated() {
       color="yellow"
       icon={
         <ShieldIcon
-          className={cn('size-5 fill-yellow-700 dark:fill-yellow-300')}
+          className="size-5 fill-warning-text"
         />
       }
       body={

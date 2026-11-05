@@ -304,9 +304,7 @@ function getCalloutProps(contract: TechnologyContract) {
   if (contract.impactfulChange) {
     return {
       color: undefined,
-      icon: (
-        <ShieldIcon className="size-5 fill-yellow-700 dark:fill-yellow-300" />
-      ),
+      icon: <ShieldIcon className="size-5 fill-warning" />,
     }
   }
 
@@ -328,7 +326,7 @@ export function ContractsWithImpactfulChanges(props: {
   expandableAddresses?: boolean
 }) {
   return (
-    <div className="rounded-lg border border-yellow-200 border-dashed px-4 py-3 text-paragraph-15 md:text-paragraph-16">
+    <div className="rounded-lg border border-warning border-dashed px-4 py-3 text-paragraph-15 md:text-paragraph-16">
       <div className="flex w-full items-center rounded bg-yellow-700/20 p-4">
         {impactfulChangesWarning(props.type)}
       </div>
