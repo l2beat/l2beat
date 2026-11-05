@@ -5,7 +5,6 @@ import { useStore } from '../store/store'
 import { AutoLayoutMenu } from './canvas/AutoLayoutMenu'
 import { HistoryButtons } from './canvas/HistoryButtons'
 import { LayoutLibrary } from './canvas/LayoutLibrary'
-import { Settings } from './canvas/Settings'
 import { ToolButtons } from './canvas/ToolButtons'
 import { VisibilityMenu } from './canvas/VisibilityMenu'
 import { AlignMenu } from './selection/AlignMenu'
@@ -66,7 +65,6 @@ export function Controls() {
           </ToolbarSection>
           <ToolbarSection label="Panel">
             <LayoutLibrary />
-            <Settings />
           </ToolbarSection>
         </Toolbar>
       </div>

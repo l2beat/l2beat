@@ -8,7 +8,7 @@ import { cn } from '../../../utils/cn'
 import { useTerminalStore } from '../panel-terminal/store'
 import { useDiscoveryCommand } from '../panel-terminal/useDiscoveryCommand'
 import { Search } from '../search/Search'
-import { SettingsDialog } from './SettingsDialog'
+import { SettingsDialog } from './settings/SettingsDialog'
 import { addPanel, useDockingStore } from './store'
 
 export function TopBar(props: { project: string }) {
