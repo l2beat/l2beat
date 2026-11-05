@@ -594,24 +594,18 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
         ])
       })
 
-      it('sums projects per day bucket within the range', async () => {
+      it('sums projects per day bucket within the range, ordered by bucket and project', async () => {
         const results = await repository.getSummedByProjectAndBucket(
           ['layer-a'],
           [DAY, DAY + 48 * HOUR],
           UnixTime.DAY,
         )
 
-        expect(results).toEqualUnsorted([
+        expect(results).toEqual([
+          bucket(DAY, DAY + 1 * HOUR, 'layer-a', 9_000n),
           bucket(DAY, DAY + 23 * HOUR, 'project-a', 1_115n),
           bucket(DAY, DAY + 2 * HOUR, 'project-b', 20n),
-          bucket(DAY, DAY + 1 * HOUR, 'layer-a', 9_000n),
           bucket(DAY + 24 * HOUR, DAY + 24 * HOUR, 'project-a', 7n),
-        ])
-        expect(results.map((r) => r.bucketStart)).toEqual([
-          DAY,
-          DAY,
-          DAY,
-          DAY + 24 * HOUR,
         ])
       })
 

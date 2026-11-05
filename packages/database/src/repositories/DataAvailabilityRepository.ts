@@ -314,6 +314,9 @@ export class DataAvailabilityRepository extends BaseRepository {
       .where('timestamp', '<', UnixTime.toDate(to))
       .groupBy([bucketStart, 'projectId', 'daLayer'])
       .orderBy('bucketStart', 'asc')
+      // Callers break ties between equal sizes by row order (chart legend and
+      // colors), so it must not depend on the hash aggregate's output order.
+      .orderBy('projectId', 'asc')
 
     if (from !== null) {
       query = query.where('timestamp', '>=', UnixTime.toDate(from))
