@@ -7,6 +7,9 @@ import {
 import { TokenOpengraphImage } from '~/components/opengraph-image/Token'
 import { findInteropAbstractToken } from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
+import { detectImageMimeType } from './detectImageMimeType'
+
+const ICON_FETCH_TIMEOUT_MS = 5_000
 
 const ogImageCache = new FrontendInMemoryCache('getInteropTokenOgImage')
 
@@ -30,10 +33,40 @@ async function renderInteropTokenOgImage(
   if (!token) return undefined
 
   const kit = await getKit()
-  return renderOpengraphPng(
-    TokenOpengraphImage({ measure: kit.measure, symbol: token.symbol }),
-    kit,
-  )
+  const icon = await fetchIcon(token.iconUrl)
+  const render = (withIcon: boolean) =>
+    renderOpengraphPng(
+      TokenOpengraphImage({
+        measure: kit.measure,
+        symbol: token.symbol,
+        icon: withIcon ? icon : undefined,
+      }),
+      kit,
+    )
+  // An icon that decodes as a PNG or JPEG can still fail to draw, and the
+  // symbol alone still makes a good image.
+  return render(true).catch((error) => {
+    if (icon === undefined) throw error
+    return render(false)
+  })
+}
+
+/** The token's icon as a data URI, unless it can't be fetched or decoded. */
+async function fetchIcon(iconUrl: string | null) {
+  if (!iconUrl) return undefined
+  try {
+    const response = await fetch(iconUrl, {
+      signal: AbortSignal.timeout(ICON_FETCH_TIMEOUT_MS),
+    })
+    if (!response.ok) return undefined
+    const data = Buffer.from(await response.arrayBuffer())
+    // CoinGecko mislabels icons (fxUSD is a PNG served as image/jpeg), and
+    // satori picks its decoder from the data URI, so the bytes decide the type.
+    const mimeType = detectImageMimeType(data)
+    return mimeType && `data:${mimeType};base64,${data.toString('base64')}`
+  } catch {
+    return undefined
+  }
 }
 
 let kitPromise: Promise<OpengraphKit> | undefined

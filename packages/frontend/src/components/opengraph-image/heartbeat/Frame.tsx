@@ -1,13 +1,15 @@
 import type { ReactNode } from 'react'
 import { heartEcho } from './echo'
+import { onDarkGround } from './logo'
 import { HEART_RATIO, heart, INK, lockup, PINK, place, WHITE } from './marks'
 import { OG_SIZE, rasterize, rowExtents } from './render'
 import { balancedLines, type TextMeasure } from './text'
 
 // Every OG image but home's: the logo's heart glowing on the right, its echo
 // spreading across the canvas, and a pink label over a big white title on the
-// left. Long titles run over the heart, so it carries no letters, and the full
-// lockup signs the top-left corner instead: a bare heart doesn't say ETHBEAT.
+// left, with a project's own logo beside them. Long titles run over the heart,
+// so it carries no letters, and the full lockup signs the top-left corner
+// instead: a bare heart doesn't say ETHBEAT.
 
 export const MARGIN = 72
 /** The title column: the whole width between the margins. */
@@ -35,6 +37,10 @@ const DESCRIPTION = {
 // From the label's baseline down to the top of the title's capitals.
 const LABEL_TO_TITLE = 42
 const LABEL = { size: 40, min: 30, lineHeight: 1.2, tracking: 1.4 / 24 }
+// A logo runs from the label's cap top to the title's baseline, so its edges
+// line up with both, and text starts `gap` right of it. Its pink glow spreads
+// `glow` times its size; its corners round like an app icon's.
+const LOGO = { gap: 32, glow: 1.6, radius: 0.22 }
 
 const placement = place(
   OG_SIZE.width - MARGIN - (HEART_HEIGHT * HEART_RATIO) / 2,
@@ -90,6 +96,22 @@ export function titleBaseline(withDescription: boolean) {
   return withDescription ? TITLE_BASELINE - DESCRIPTION.lift : TITLE_BASELINE
 }
 
+/** Where the label and the title start beside a logo: it grows with the title. */
+export function textLeftBesideLogo(
+  measure: TextMeasure,
+  titleSize: number,
+  withLabel: boolean,
+) {
+  return MARGIN + logoSize(measure, titleSize, withLabel) + LOGO.gap
+}
+
+function logoSize(measure: TextMeasure, titleSize: number, withLabel: boolean) {
+  const title = measure.capHeight(titleSize)
+  return withLabel
+    ? title + LABEL_TO_TITLE + measure.capHeight(LABEL.size)
+    : title
+}
+
 export function HeartbeatFrame({
   measure,
   label,
@@ -98,6 +120,7 @@ export function HeartbeatFrame({
   titleLines,
   titleInkLeft,
   description,
+  logo,
 }: {
   measure: TextMeasure
   label: string | undefined
@@ -107,27 +130,42 @@ export function HeartbeatFrame({
   /** The title's first-letter side bearing, so its ink starts on the margin. */
   titleInkLeft: number
   description: string | undefined
+  /** A data URI. */
+  logo: string | undefined
 }) {
   const baseline = titleBaseline(description !== undefined)
   const capTop = baseline - measure.capHeight(titleSize)
   const lastBaseline =
     baseline + (titleLines - 1) * TITLE_LINE_HEIGHT * titleSize
+  const textLeft =
+    logo === undefined
+      ? MARGIN
+      : textLeftBesideLogo(measure, titleSize, label !== undefined)
+  const logoHeight = textLeft - LOGO.gap - MARGIN
   return (
     <Canvas decor={frameDecor()}>
+      {logo !== undefined && (
+        <GlowingLogo
+          src={onDarkGround(logo)}
+          size={logoHeight}
+          top={baseline - logoHeight}
+        />
+      )}
       {label && (
         <Label
           measure={measure}
           text={label}
           baseline={capTop - LABEL_TO_TITLE}
+          left={textLeft}
         />
       )}
       <div
         style={{
           display: 'flex',
           position: 'absolute',
-          left: MARGIN - titleInkLeft,
+          left: textLeft - titleInkLeft,
           top: baseline - measure.baseline(titleSize, TITLE_LINE_HEIGHT),
-          width: COLUMN,
+          width: COLUMN - (textLeft - MARGIN),
         }}
       >
         {title}
@@ -140,6 +178,46 @@ export function HeartbeatFrame({
         />
       )}
     </Canvas>
+  )
+}
+
+/** The logo with app-icon corners, over a pink glow that spreads past it. */
+function GlowingLogo({
+  src,
+  size,
+  top,
+}: {
+  src: string
+  size: number
+  top: number
+}) {
+  const glow = size * LOGO.glow
+  return (
+    <>
+      <div
+        style={{
+          display: 'flex',
+          position: 'absolute',
+          left: MARGIN + (size - glow) / 2,
+          top: top + (size - glow) / 2,
+          width: glow,
+          height: glow,
+          backgroundImage: `radial-gradient(circle at center, ${PINK}55 0%, ${PINK}1A 40%, ${INK}00 62%)`,
+        }}
+      />
+      <img
+        src={src}
+        alt=""
+        width={size}
+        height={size}
+        style={{
+          position: 'absolute',
+          left: MARGIN,
+          top,
+          borderRadius: size * LOGO.radius,
+        }}
+      />
+    </>
   )
 }
 
@@ -183,17 +261,19 @@ function Label({
   measure,
   text,
   baseline,
+  left,
 }: {
   measure: TextMeasure
   text: string
   baseline: number
+  left: number
 }) {
   const caps = text.toUpperCase()
   const heartStart = heartFillBetween(
     baseline - measure.capHeight(LABEL.size),
     baseline,
   ).nearestStart
-  const room = heartStart - HEART_CLEARANCE - MARGIN
+  const room = heartStart - HEART_CLEARANCE - left
   let size = LABEL.size
   while (
     size > LABEL.min &&
@@ -206,7 +286,7 @@ function Label({
       style={{
         display: 'flex',
         position: 'absolute',
-        left: MARGIN - measure.inkLeft(caps, size, 600),
+        left: left - measure.inkLeft(caps, size, 600),
         top: baseline - measure.baseline(size, LABEL.lineHeight),
         fontSize: size,
         fontWeight: 600,

@@ -4,8 +4,8 @@ import {
   HeartbeatFrame,
   heartFillBetween,
   MARGIN,
-  TITLE_BASELINE,
   TITLE_LINE_HEIGHT,
+  textLeftBesideLogo,
   titleBaseline,
   wordSpans,
 } from './heartbeat/Frame'
@@ -26,6 +26,8 @@ interface Props {
   label?: string
   title: string
   description?: string
+  /** A data URI, shown beside the label and the title. */
+  logo?: string
 }
 
 export function MainPageOpengraphImage({
@@ -33,17 +35,19 @@ export function MainPageOpengraphImage({
   label,
   title,
   description,
+  logo,
 }: Props) {
   const fitted = fitTitle(
     measure,
     title,
-    titleBaseline(description !== undefined),
+    titleFit(measure, { label, description, logo }),
   )
   return (
     <HeartbeatFrame
       measure={measure}
       label={label}
       description={description}
+      logo={logo}
       titleSize={fitted.size}
       titleLines={fitted.lines}
       titleInkLeft={measure.inkLeft(title, fitted.size, 700)}
@@ -67,6 +71,26 @@ const MAX_TWO_LINE_SIZE = 112
 // the pink.
 const LAST_LETTER = 0.4 // em
 
+interface TitleFit {
+  baseline: number
+  /** Where the title starts at a size: beside a logo, which grows with it. */
+  left: (size: number) => number
+}
+
+/** Where a page's title sits: higher over a description, right of a logo. */
+export function titleFit(
+  measure: TextMeasure,
+  page: { label?: string; description?: string; logo?: string },
+): TitleFit {
+  return {
+    baseline: titleBaseline(page.description !== undefined),
+    left:
+      page.logo === undefined
+        ? () => MARGIN
+        : (size) => textLeftBesideLogo(measure, size, page.label !== undefined),
+  }
+}
+
 /**
  * One line at 96–120 px, or up to 128 px to run over the heart instead of
  * ending at its edge, where a line looks like it bumps into the heart. Else
@@ -76,31 +100,37 @@ const LAST_LETTER = 0.4 // em
 export function fitTitle(
   measure: TextMeasure,
   title: string,
-  baseline = TITLE_BASELINE,
+  { baseline, left }: TitleFit = titleFit(measure, {}),
 ) {
+  const column = (size: number) => COLUMN - (left(size) - MARGIN)
   const width = (size: number) => measure.width(title, size, 700, -0.01 * size)
-  const fits = (size: number) => satoriWidth(width(size)) <= COLUMN
+  const fits = (size: number) => satoriWidth(width(size)) <= column(size)
   const atHeartEdge = (size: number) =>
-    endsAtHeartEdge(measure, width(size), size, baseline)
+    endsAtHeartEdge(measure, left(size) + width(size), size, baseline)
+  const oneLine = (size: number) => ({ size, width: column(size), lines: 1 })
 
   if (fits(MAX_SIZE) && atHeartEdge(MAX_SIZE)) {
     for (let size = MAX_SIZE + 1; size <= MAX_SIZE_OVER_HEART; size++) {
       if (!fits(size)) break
-      if (!atHeartEdge(size)) return { size, width: COLUMN, lines: 1 }
+      if (!atHeartEdge(size)) return oneLine(size)
     }
   }
   for (let size = MAX_SIZE; size >= MIN_ONE_LINE_SIZE; size--) {
-    if (fits(size) && !atHeartEdge(size)) {
-      return { size, width: COLUMN, lines: 1 }
-    }
+    if (fits(size) && !atHeartEdge(size)) return oneLine(size)
   }
   for (let size = MAX_TWO_LINE_SIZE; size >= 44; size -= 2) {
-    const { box, lines } = balancedLines(measure, title, size, 700, COLUMN)
+    const { box, lines } = balancedLines(
+      measure,
+      title,
+      size,
+      700,
+      column(size),
+    )
     const clearOfHeartEdge = lines.every(
       (line, i) =>
         !endsAtHeartEdge(
           measure,
-          line,
+          left(size) + line,
           size,
           baseline + i * TITLE_LINE_HEIGHT * size,
         ),
@@ -109,22 +139,21 @@ export function fitTitle(
       return { size, width: box, lines: lines.length }
     }
   }
-  const smallest = balancedLines(measure, title, 44, 700, COLUMN)
-  return { size: 44, width: COLUMN, lines: smallest.lines.length }
+  const smallest = balancedLines(measure, title, 44, 700, column(44))
+  return { size: 44, width: column(44), lines: smallest.lines.length }
 }
 
 /**
- * Whether a line `width` wide ends at one of the heart's edges: inside the
+ * Whether a line ending at `end` ends at one of the heart's edges: inside the
  * clearance in front of it, short of putting its last letter on the pink, or
  * so far over that it falls off the heart's other side.
  */
 function endsAtHeartEdge(
   measure: TextMeasure,
-  width: number,
+  end: number,
   size: number,
   baseline: number,
 ) {
-  const end = MARGIN + width
   const fill = heartFillBetween(baseline - measure.capHeight(size), baseline)
   const stopsShort = end + HEART_CLEARANCE <= fill.nearestStart
   const endsOnHeart =
