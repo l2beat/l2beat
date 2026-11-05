@@ -1,5 +1,4 @@
 import type { PROJECT_COUNTDOWNS } from '@l2beat/config'
-import { ThemeProvider } from 'next-themes'
 import { CountdownsContextProvider } from '~/components/CountdownsContext'
 import { ChartLegendOnboardingProvider } from '~/components/core/chart/ChartLegendOnboardingContext'
 import { TooltipProvider } from '~/components/core/tooltip/Tooltip'
@@ -34,26 +33,24 @@ export function AppLayout({
 }) {
   return (
     <TRPCReactProvider>
-      <ThemeProvider attribute="class" storageKey="l2beat-theme">
-        <TooltipProvider delayDuration={300} disableHoverableContent>
-          {/* The static check lets bundlers drop the dev tools from production builds */}
-          {process.env.NODE_ENV !== 'production' &&
-            env.NODE_ENV === 'development' && <L2BeatDevTools />}
-          <CountdownsContextProvider countdowns={countdowns}>
-            <WhatsNewContextProvider whatsNew={whatsNew}>
-              <WhatsNewItemProvider item={whatsNewItem}>
-                <SearchBarContextProvider
-                  recentlyAddedProjects={recentlyAddedProjects}
-                >
-                  <ChartLegendOnboardingProvider>
-                    {children}
-                  </ChartLegendOnboardingProvider>
-                </SearchBarContextProvider>
-              </WhatsNewItemProvider>
-            </WhatsNewContextProvider>
-          </CountdownsContextProvider>
-        </TooltipProvider>
-      </ThemeProvider>
+      <TooltipProvider delayDuration={300} disableHoverableContent>
+        {/* The static check lets bundlers drop the dev tools from production builds */}
+        {process.env.NODE_ENV !== 'production' &&
+          env.NODE_ENV === 'development' && <L2BeatDevTools />}
+        <CountdownsContextProvider countdowns={countdowns}>
+          <WhatsNewContextProvider whatsNew={whatsNew}>
+            <WhatsNewItemProvider item={whatsNewItem}>
+              <SearchBarContextProvider
+                recentlyAddedProjects={recentlyAddedProjects}
+              >
+                <ChartLegendOnboardingProvider>
+                  {children}
+                </ChartLegendOnboardingProvider>
+              </SearchBarContextProvider>
+            </WhatsNewItemProvider>
+          </WhatsNewContextProvider>
+        </CountdownsContextProvider>
+      </TooltipProvider>
     </TRPCReactProvider>
   )
 }

@@ -1,20 +1,18 @@
-import { useTheme } from 'next-themes'
 import { useRef } from 'react'
-import { flushSync } from 'react-dom'
 import { MoonIcon } from '~/icons/Moon'
 import { SunIcon } from '~/icons/Sun'
 import { cn } from '~/utils/cn'
+import { getTheme, setTheme } from '~/utils/theme'
 
 interface DarkThemeToggleProps {
   className?: string
 }
 
 export function DarkThemeToggle({ className }: DarkThemeToggleProps) {
-  const { resolvedTheme, setTheme } = useTheme()
   const buttonRef = useRef<HTMLButtonElement>(null)
 
   const toggleTheme = () => {
-    const newTheme = resolvedTheme === 'dark' ? 'light' : 'dark'
+    const newTheme = getTheme() === 'dark' ? 'light' : 'dark'
     const button = buttonRef.current
 
     const prefersReducedMotion = matchMedia(
@@ -23,7 +21,7 @@ export function DarkThemeToggle({ className }: DarkThemeToggleProps) {
 
     // fallback if View Transitions API not supported, button not available, or reduced motion preferred
     if (!document.startViewTransition || !button || prefersReducedMotion) {
-      withoutTransitions(() => flushSync(() => setTheme(newTheme)))
+      setTheme(newTheme)
       return
     }
 
@@ -43,12 +41,8 @@ export function DarkThemeToggle({ className }: DarkThemeToggleProps) {
     style.setProperty('--circle-y', `${y}px`)
     style.setProperty('--circle-radius', `${radius}px`)
 
-    // flushSync required: View Transitions API needs synchronous DOM updates,
-    // but setTheme() triggers async React state updates
     document
-      .startViewTransition(() => {
-        withoutTransitions(() => flushSync(() => setTheme(newTheme)))
-      })
+      .startViewTransition(() => setTheme(newTheme))
       .finished.finally(() => {
         style.removeProperty('--circle-x')
         style.removeProperty('--circle-y')
@@ -73,23 +67,4 @@ export function DarkThemeToggle({ className }: DarkThemeToggleProps) {
       />
     </button>
   )
-}
-
-/**
- * Swaps the theme without every colour transition on the page animating to
- * the new palette. `flushSync` makes next-themes' effect apply the class
- * before the rule is gone.
- *
- * next-themes' own `disableTransitionOnChange` does the same, but also on
- * every page load, where it costs two restyles of the whole document while
- * the page hydrates.
- */
-function withoutTransitions(change: () => void) {
-  const style = document.createElement('style')
-  style.textContent = '*,*::before,*::after{transition:none!important}'
-  document.head.appendChild(style)
-  change()
-  // Restyles now, while the rule still applies.
-  getComputedStyle(document.body).opacity
-  setTimeout(() => style.remove(), 1)
 }
