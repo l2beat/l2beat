@@ -1,8 +1,9 @@
 import { createContext, useContext } from 'react'
+import type { TooltipController } from './tooltipController'
 
-type TooltipTriggerContextValue = {
-  open: boolean
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
+export type TooltipTriggerContextValue = TooltipController & {
+  /** The popup's id, which describes the trigger while open. */
+  contentId: string
   /** Present only when the tooltip opted into contentInHtml. */
   contentDescriptionId: string | undefined
 }

@@ -770,6 +770,9 @@ importers:
 
   packages/frontend:
     dependencies:
+      '@floating-ui/react-dom':
+        specifier: ^2.1.2
+        version: 2.1.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@l2beat/backend-tools':
         specifier: workspace:*
         version: link:../backend-tools
@@ -818,9 +821,6 @@ importers:
       '@radix-ui/react-tabs':
         specifier: ^1.2.1
         version: 1.2.1(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@radix-ui/react-tooltip':
-        specifier: ^1.4.1
-        version: 1.4.1(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@resvg/resvg-js':
         specifier: ^2.6.2
         version: 2.6.2

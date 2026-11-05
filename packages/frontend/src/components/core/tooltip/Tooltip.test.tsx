@@ -23,9 +23,9 @@ describe(Tooltip.name, () => {
     expect(html).not.toInclude('aria-describedby')
   })
 
-  // An open tooltip is the only state Radix renders on the server, so it is
-  // how these tests observe what Radix does on hover.
-  it('keeps Radix describing the trigger with the open content', () => {
+  // The popup renders only while open, so an open tooltip is how these tests
+  // observe what hover shows.
+  it('describes the trigger with the open popup', () => {
     const html = renderOnServer(
       <Tooltip defaultOpen>
         <TooltipTrigger>Stage 1</TooltipTrigger>
