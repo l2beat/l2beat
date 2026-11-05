@@ -127,6 +127,33 @@ describe(ChatSession.name, () => {
     expect(chatEvents(owner).some((e) => e.type === 'text')).toEqual(false)
   })
 
+  it('shows the details of a call that asks permission with its id alone', async () => {
+    // The details come in the tool call; the request names only its id.
+    const sparse = FAKE_AGENT.replace(
+      "update({ sessionUpdate: 'tool_call', toolCallId: 't1', title: 'Run ls', status: 'pending' })",
+      "update({ sessionUpdate: 'tool_call', toolCallId: 't1', title: 'Run ls', status: 'pending', kind: 'execute', rawInput: { command: 'ls' } })",
+    ).replace(
+      "toolCall: { title: 'Run ls', kind: 'execute', locations: [{ path: '/repo' }], rawInput: { command: 'ls' } }",
+      "toolCall: { toolCallId: 't1' }",
+    )
+    const { chat, owner } = setup(sparse)
+    chat.start('owner', 'claude')
+    await waitFor(() => statuses(owner).includes('ready'))
+    chat.prompt('owner', 'List files')
+    const permission = await waitFor(() =>
+      chatEvents(owner).find((e) => e.type === 'permission'),
+    )
+    expect(permission).toEqual({
+      type: 'permission',
+      id: '1',
+      title: 'Run ls',
+      kind: 'execute',
+      paths: [],
+      input: JSON.stringify({ command: 'ls' }, null, 2),
+      options: [{ id: 'allow', name: 'Allow', kind: 'allow_once' }],
+    })
+  })
+
   it('refuses a prompt while the agent answers', async () => {
     const { chat, owner } = setup()
     chat.start('owner', 'claude')

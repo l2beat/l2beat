@@ -9,15 +9,23 @@ const newSessionSchema = z.object({ sessionId: z.string() })
 const promptResultSchema = z.object({ stopReason: z.string() })
 const sessionUpdateSchema = z.object({ update: z.unknown() })
 const initializeResultSchema = z.object({ protocolVersion: z.number() })
+// What a tool call says it does, in any update: the protocol lets an agent
+// send it earlier and ask permission with the call's id alone.
+const toolCallSchema = z.object({
+  toolCallId: z.string().optional(),
+  title: z.union([z.string(), z.null()]).optional(),
+  kind: z.union([z.string(), z.null()]).optional(),
+  locations: z
+    .union([z.array(z.object({ path: z.string() })), z.null()])
+    .optional(),
+  rawInput: z.unknown().optional(),
+})
+type ToolCall = z.infer<typeof toolCallSchema>
+// Permission requests come for recent calls.
+const TOOL_CALLS_KEPT_MAX = 200
+
 const permissionRequestSchema = z.object({
-  toolCall: z.object({
-    title: z.union([z.string(), z.null()]).optional(),
-    kind: z.union([z.string(), z.null()]).optional(),
-    locations: z
-      .union([z.array(z.object({ path: z.string() })), z.null()])
-      .optional(),
-    rawInput: z.unknown().optional(),
-  }),
+  toolCall: toolCallSchema,
   options: z.array(
     z.object({ optionId: z.string(), name: z.string(), kind: z.string() }),
   ),
@@ -47,6 +55,7 @@ interface RunningChat {
   hasFailed: boolean
   log: ApiChatEvent[]
   permissions: Map<string, (optionId: string | undefined) => void>
+  toolCalls: Map<string, ToolCall>
 }
 
 // DiscoUI's one chat with a coding agent, run as an ACP adapter process.
@@ -87,6 +96,7 @@ export class ChatSession {
       hasFailed: false,
       log: [],
       permissions: new Map(),
+      toolCalls: new Map(),
       connection: new AcpConnection(
         command,
         args,
@@ -251,6 +261,7 @@ export class ChatSession {
     }
     const parsed = sessionUpdateSchema.safeParse(params)
     if (parsed.success) {
+      rememberToolCall(chat, parsed.data.update)
       for (const event of toChatEvents(parsed.data.update)) {
         this.emit(chat, event)
       }
@@ -268,7 +279,11 @@ export class ChatSession {
       throw new Error('Not supported')
     }
     const request = permissionRequestSchema.parse(params)
-    const { toolCall } = request
+    const known = request.toolCall.toolCallId
+    const toolCall = mergeToolCall(
+      known === undefined ? undefined : chat.toolCalls.get(known),
+      request.toolCall,
+    )
     this.permissionCount++
     const id = String(this.permissionCount)
     const optionId = await new Promise<string | undefined>((resolve) => {
@@ -337,6 +352,35 @@ export class ChatSession {
     const clipped = clipEvent(event)
     appendToLog(chat.log, clipped)
     this.tabs.sendChat(chat.owner, { type: 'chat', event: clipped })
+  }
+}
+
+function rememberToolCall(chat: RunningChat, update: unknown) {
+  const parsed = toolCallSchema.safeParse(update)
+  const id = parsed.success ? parsed.data.toolCallId : undefined
+  if (!parsed.success || id === undefined) {
+    return
+  }
+  const merged = mergeToolCall(chat.toolCalls.get(id), parsed.data)
+  chat.toolCalls.delete(id)
+  chat.toolCalls.set(id, merged)
+  const oldest = chat.toolCalls.keys().next().value
+  if (chat.toolCalls.size > TOOL_CALLS_KEPT_MAX && oldest !== undefined) {
+    chat.toolCalls.delete(oldest)
+  }
+}
+
+// A later update replaces only the fields it sends.
+function mergeToolCall(
+  earlier: ToolCall | undefined,
+  later: ToolCall,
+): ToolCall {
+  return {
+    toolCallId: later.toolCallId ?? earlier?.toolCallId,
+    title: later.title ?? earlier?.title,
+    kind: later.kind ?? earlier?.kind,
+    locations: later.locations ?? earlier?.locations,
+    rawInput: later.rawInput ?? earlier?.rawInput,
   }
 }
 
