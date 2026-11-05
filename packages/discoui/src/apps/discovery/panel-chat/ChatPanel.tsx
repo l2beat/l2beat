@@ -8,6 +8,8 @@ import { cn } from '../../../utils/cn'
 import { agentTabId } from '../agent/AgentBridge'
 import { useChatStore } from './chatStore'
 
+const BOTTOM_SLACK_PX = 40
+
 const PROVIDER_NAMES: Record<ApiChatProvider, string> = {
   claude: 'Claude Code',
   codex: 'Codex',
@@ -18,6 +20,8 @@ const PROVIDER_NAMES: Record<ApiChatProvider, string> = {
 export function ChatPanel() {
   const status = useChatStore((state) => state.view.status)
   const [refusal, setRefusal] = useState<string>()
+  // Until the chat reports its status, another click would restart it.
+  const [isStarting, setStarting] = useState(false)
   // Resolves whether the chat took the request.
   const send = async (
     action: Parameters<typeof postChat>[0],
@@ -68,7 +72,13 @@ export function ChatPanel() {
               <Button
                 key={provider}
                 size="small"
-                onClick={() => send('start', { provider })}
+                disabled={isStarting}
+                onClick={() => {
+                  setStarting(true)
+                  void send('start', { provider }).finally(() =>
+                    setStarting(false),
+                  )
+                }}
               >
                 {PROVIDER_NAMES[provider]}
               </Button>
@@ -102,13 +112,28 @@ function Transcript(props: { send: Send }) {
     const status = state.view.status?.status
     return status === 'closed' || status === 'failed'
   })
-  const end = useRef<HTMLDivElement>(null)
+  // New text follows only a reader already at the bottom; one scrolled up
+  // to an earlier message stays there.
+  const list = useRef<HTMLDivElement>(null)
+  const isAtBottom = useRef(true)
   useEffect(() => {
-    end.current?.scrollIntoView({ block: 'end' })
+    const element = list.current
+    if (element !== null && isAtBottom.current) {
+      element.scrollTop = element.scrollHeight
+    }
   }, [entries])
 
   return (
-    <div className="flex flex-1 flex-col gap-2 overflow-y-auto px-3 py-2">
+    <div
+      ref={list}
+      onScroll={(event) => {
+        const element = event.currentTarget
+        const below =
+          element.scrollHeight - element.scrollTop - element.clientHeight
+        isAtBottom.current = below < BOTTOM_SLACK_PX
+      }}
+      className="flex flex-1 flex-col gap-2 overflow-y-auto px-3 py-2"
+    >
       {entries.map((entry, index) => (
         <Entry
           // The transcript only grows, so a position names one entry.
@@ -120,7 +145,6 @@ function Transcript(props: { send: Send }) {
           send={props.send}
         />
       ))}
-      <div ref={end} />
     </div>
   )
 }
