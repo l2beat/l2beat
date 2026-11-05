@@ -25,9 +25,9 @@ const TEXT_COLORS = [
 ]
 const PANEL_SURFACES = ['coffee-900', 'coffee-800']
 
-// Highlighted rows, toasts and active toolbar buttons sit on coffee-700. Dark
-// mode's muted coffee-400 is below AA there, so muted text on it uses
-// coffee-300 instead.
+// Highlighted rows, toasts, chips and active toolbar buttons sit on coffee-700.
+// Dark mode's muted coffee-400 and the status colors are below AA there, so
+// muted text on it uses coffee-300, and colored diffs sit on coffee-800.
 const HOVER_TEXT_COLORS = [
   'coffee-100',
   'coffee-200',
