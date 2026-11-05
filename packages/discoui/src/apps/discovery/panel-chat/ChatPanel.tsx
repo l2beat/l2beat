@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { memo, useEffect, useRef, useState } from 'react'
 import { postChat } from '../../../api/api'
 import type { ApiChatEvent, ApiChatProvider } from '../../../api/types'
 import { Button } from '../../../components/Button'
@@ -149,7 +149,9 @@ function Transcript(props: { send: Send }) {
   )
 }
 
-function Entry(props: {
+// Only the streaming answer changes, so the others keep their rendered
+// markdown instead of parsing it again on every chunk.
+const Entry = memo(function Entry(props: {
   entry: ApiChatEvent
   isAnswered: boolean
   send: Send
@@ -191,7 +193,7 @@ function Entry(props: {
     default:
       return null
   }
-}
+})
 
 function toolMark(status: string | undefined): string {
   if (status === 'completed') return '✓'
@@ -246,16 +248,22 @@ function PermissionCard(props: {
 
 function Composer(props: { isWorking: boolean; send: Send }) {
   const [text, setText] = useState('')
+  // A second Enter or click before the first answer would send it twice.
+  const [isSending, setSending] = useState(false)
   const submit = () => {
-    if (text.trim().length === 0 || props.isWorking) {
+    if (text.trim().length === 0 || props.isWorking || isSending) {
       return
     }
+    setSending(true)
     // A refused message stays in the box to edit and send again.
     // Text typed while the request was on its way stays too.
     const sent = text
-    void props.send('prompt', { text: sent }).then((isTaken) => {
-      if (isTaken) setText((current) => (current === sent ? '' : current))
-    })
+    void props
+      .send('prompt', { text: sent })
+      .then((isTaken) => {
+        if (isTaken) setText((current) => (current === sent ? '' : current))
+      })
+      .finally(() => setSending(false))
   }
 
   return (
@@ -281,7 +289,7 @@ function Composer(props: { isWorking: boolean; send: Send }) {
       ) : (
         <Button
           size="small"
-          disabled={text.trim().length === 0}
+          disabled={text.trim().length === 0 || isSending}
           onClick={submit}
         >
           Send

@@ -6,6 +6,8 @@ export type ChatStatus = Extract<ApiChatEvent, { type: 'status' }>
 // size of its replay.
 const ENTRIES_MAX = 2_000
 const TEXT_CHARACTERS_MAX = 50_000
+// The server merges a tool update into its call only this far back.
+const MERGE_LOOKBACK = 200
 
 // What the panel draws: the conversation, the chat's latest status and the
 // permission requests already answered.
@@ -38,9 +40,7 @@ export function applyChatEvent(view: ChatView, event: ApiChatEvent): ChatView {
     return { ...view, entries }
   }
   if (event.type === 'tool') {
-    const index = entries.findIndex(
-      (e) => e.type === 'tool' && e.id === event.id,
-    )
+    const index = findRecentTool(entries, event.id)
     const previous = entries[index]
     if (previous?.type === 'tool') {
       entries[index] = { ...previous, ...event }
@@ -57,4 +57,15 @@ export function replayChat(events: ApiChatEvent[]): ChatView {
     view = applyChatEvent(view, event)
   }
   return view
+}
+
+function findRecentTool(entries: ApiChatEvent[], id: string): number {
+  const start = Math.max(0, entries.length - MERGE_LOOKBACK)
+  for (let index = entries.length - 1; index >= start; index--) {
+    const entry = entries[index]
+    if (entry?.type === 'tool' && entry.id === id) {
+      return index
+    }
+  }
+  return -1
 }
