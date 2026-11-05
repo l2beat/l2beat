@@ -25,6 +25,21 @@ function runAgent(script: string, handlers: Partial<AcpHandlers>) {
 }
 
 describe(AcpConnection.name, () => {
+  it('rejects a request the agent answers with an error without data', async () => {
+    // JSON-RPC makes the error's data optional, and adapters often omit it.
+    const connection = runAgent(
+      `require('readline').createInterface({ input: process.stdin }).on('line', (line) => {
+        const { id } = JSON.parse(line)
+        process.stdout.write(JSON.stringify({ jsonrpc: '2.0', id, error: { code: -32000, message: 'Not signed in' } }) + '\\n')
+      })`,
+      {},
+    )
+    const error = await connection
+      .request('initialize', {})
+      .catch((e: unknown) => e)
+    expect(error instanceof AcpError && error.detail).toEqual('Not signed in')
+  })
+
   it('drops an answer that settles after closing', async () => {
     let answer: (result: unknown) => void = () => {}
     let asked: () => void = () => {}
