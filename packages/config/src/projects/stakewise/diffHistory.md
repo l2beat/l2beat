@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x14cc13bc2125168161d9e482d8883acad4c84f1c
+Generated with discovered.json: 0x7235715564d77eb3a78cacf42210fb7649f7a405
 
-# Diff at Wed, 04 Nov 2026 22:09:21 GMT:
+# Diff at Thu, 05 Nov 2026 13:05:51 GMT:
 
-- id: 1c9aa235
+- id: 40fbaaac
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- current timestamp: 1793830096
+- current timestamp: 1793883886
 
 ## Description
 
-Initial discovery of StakeWise V3 (osETH): the vault registry, the Keeper and its oracle set, the osETH token and its flash-loan minter, vault controller, collateral config, redeemers and vault escrow, the shared MEV escrow, the deposit data registry, the ten vault factories, the eleven largest vaults (nine with at least 5,000 ETH plus the two nested meta vaults that anchor the osETH rate) with their admins and key managers, and the DAO Safe with its SafeSnap Reality module. The legacy V2 contracts beyond the Genesis vault's migration path, vault fee recipients, three unverified own-MEV escrows and the approved-implementation list are not crawled.
+Initial discovery of StakeWise V3 (osETH): the vault registry, the Keeper and its oracle set, the osETH token and its flash-loan minter, vault controller, collateral config, redeemer and vault escrow, the shared MEV escrow, the deposit data registry, the ten vault factories, the eleven largest vaults (nine with at least 5,000 ETH plus the two nested meta vaults that anchor the osETH rate) with their admins and key managers, and the DAO Safe with its SafeSnap Reality module. The legacy V2 contracts beyond the Genesis vault's migration path, vault fee recipients, three unverified own-MEV escrows, the retired redeemer and the approved-implementation list are not crawled.
 
 ## Initial discovery
 
@@ -236,7 +236,7 @@ Initial discovery of StakeWise V3 (osETH): the vault registry, the Keeper and it
 
 ```diff
 +   Status: CREATED
-    contract OsTokenRedeemerNext (eth:0x9Fc8C7F3C1ff6d0DF39EcB5870884d59777Ea2Bb) [stakewise/OsTokenRedeemer]
+    contract OsTokenRedeemer (eth:0x9Fc8C7F3C1ff6d0DF39EcB5870884d59777Ea2Bb) [stakewise/OsTokenRedeemer]
     +++ description: Exit queue for osToken holders, processed in batches at least 12h apart and funded by redeeming osToken positions listed in a Merkle root the owner publishes; anyone can also buy queued osToken with the underlying asset at the protocol rate. Where a redemption fee exists, the vault controller's owner sets it within the deployed ceiling.
 ```
 
@@ -280,12 +280,6 @@ Initial discovery of StakeWise V3 (osETH): the vault registry, the Keeper and it
 +   Status: CREATED
     contract StakeWise DAO RealityModule (eth:0xB5cF5363c3e766e64B37b2fB9554bFE8D48ED1A0) [gnosisSafeModules/RealityModule]
     +++ description: Zodiac Reality module (SafeSnap): executes transactions from the Safe once a Reality.eth question confirming an off-chain vote resolves. A question needs a bond of at least 1,000,000 of the oracle's bond token, stays open for 1d after the last answer, can execute after a further 1d and expires 7d later.
-```
-
-```diff
-+   Status: CREATED
-    contract OsTokenRedeemer (eth:0xc43A7b16A7a167c0318390Cba16787C11e9e1FD0) [stakewise/OsTokenRedeemer]
-    +++ description: Exit queue for osToken holders, processed in batches at least 12h apart and funded by redeeming osToken positions listed in a Merkle root the owner publishes; anyone can also buy queued osToken with the underlying asset at the protocol rate. Where a redemption fee exists, the vault controller's owner sets it within the deployed ceiling.
 ```
 
 ```diff

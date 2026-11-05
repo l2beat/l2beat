@@ -1,4 +1,4 @@
-StakeWise is a marketplace of staking vaults with one liquid token on top. Anyone can open a vault and stake for it; stakers deposit ETH into the vault of their choice and can mint {{osETH}} against their vault shares. {{osETH}} is backed by positions in many vaults rather than by one pool, and its ETH value follows a single reward rate that an oracle committee reports.
+StakeWise is a marketplace of staking vaults with one liquid token on top. Anyone can open a vault and stake for it; stakers deposit ETH into the vault of their choice and can mint {{osETH}} against their vault shares. {{osETH}} is backed by positions in many vaults rather than by one pool, and its ETH value follows a single reward rate that an oracle committee reports. Only the ETH that stakers choose to borrow against becomes {{osETH}}; the rest of the ETH staked through the vaults is not tokenised, so the token's supply is smaller than the protocol's stake, and the value tracked on this page is the token, not the marketplace.
 
 ### Deposits and staking
 

@@ -1,6 +1,6 @@
 {
   "name": "stakewise",
-  "timestamp": 1793830096,
+  "timestamp": 1793883886,
   "configHash": "0xa4d9110e725ad7f79caf27a554d3a32c9eb36fc6cf22ea1da9e33338fe6825b9",
   "entries": [
     {
@@ -85,8 +85,8 @@
         "metaVault": "eth:0x34284C27A2304132aF751b0dEc5bBa2CF98eD039",
         "pendingMetaSubVault": "eth:0x0000000000000000000000000000000000000000",
         "subVaultsCurator": "eth:0xD30E7e4bDbd396cfBe72Ad2f4856769C54eA6b0b",
-        "subVaultsRewardsNonce": 2142,
-        "subVaultsTotalAssets": "6851843016246476990447"
+        "subVaultsRewardsNonce": 2144,
+        "subVaultsTotalAssets": "6852294300181782592731"
       },
       "fieldMeta": {
         "getSubVaults": {
@@ -192,7 +192,7 @@
         "feePercent": 0,
         "feeRecipient": "eth:0x2685C0e39EEAAd383fB71ec3F493991d532A87ae",
         "subVaultsRegistry": "eth:0x29626C6b7F09cc2B6164e48683f453223FFA8ae4",
-        "totalAssets": "6851844017136784637936",
+        "totalAssets": "6852295301072090172468",
         "totalShares": "6661522867782227583920",
         "version": 7
       },
@@ -460,7 +460,7 @@
         },
         "owner": "eth:0x144a98cb1CdBb23610501fE6108858D9B7D24934",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "redeemer": "eth:0xc43A7b16A7a167c0318390Cba16787C11e9e1FD0",
+        "redeemer": "eth:0x9Fc8C7F3C1ff6d0DF39EcB5870884d59777Ea2Bb",
         "vaultConfigs": [
           {
             "vault": "eth:0x0000000000000000000000000000000000000000",
@@ -563,8 +563,8 @@
         "metaVault": "eth:0x15639E82d2072Fa510E5d2b5F0db361c823bCad3",
         "pendingMetaSubVault": "eth:0x0000000000000000000000000000000000000000",
         "subVaultsCurator": "eth:0xD30E7e4bDbd396cfBe72Ad2f4856769C54eA6b0b",
-        "subVaultsRewardsNonce": 2142,
-        "subVaultsTotalAssets": "6851843016245448306707"
+        "subVaultsRewardsNonce": 2144,
+        "subVaultsTotalAssets": "6852294300180753841239"
       },
       "fieldMeta": {
         "getSubVaults": {
@@ -603,16 +603,16 @@
       "sinceBlock": 18470083,
       "values": {
         "$immutable": true,
-        "avgRewardPerSecond": 738457129,
+        "avgRewardPerSecond": 709690479,
         "capacity": "20000000000000000000000000",
         "capacityFormatted": "20,000,000",
-        "cumulativeFeePerShare": "1004164236568329926",
+        "cumulativeFeePerShare": "1004166191767694260",
         "feePercent": 500,
         "keeper": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
         "owner": "eth:0x144a98cb1CdBb23610501fE6108858D9B7D24934",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "totalAssets": "160471669942211874281098",
-        "totalShares": "148264234230021124674486",
+        "totalAssets": "160494080295873282661466",
+        "totalShares": "148279431210735459693556",
         "treasury": "eth:0x144a98cb1CdBb23610501fE6108858D9B7D24934"
       },
       "fieldMeta": {
@@ -687,7 +687,7 @@
         "feePercent": 0,
         "feeRecipient": "eth:0x2685C0e39EEAAd383fB71ec3F493991d532A87ae",
         "subVaultsRegistry": "eth:0x1376D0233E70E021ecFFdcB2254519a66b8680E7",
-        "totalAssets": "6851843016246476990447",
+        "totalAssets": "6852294300181782592731",
         "totalShares": "6660786745384008724913",
         "version": 7
       },
@@ -989,8 +989,8 @@
         "feePercent": 800,
         "feeRecipient": "eth:0xE0bdDEaC80bD3AdB759844B758Fa0D091B267cDC",
         "mevEscrow": "eth:0x48319f97E5Da1233c21c48b80097c0FB7a20Ff86",
-        "totalAssets": "7868353635482022094264",
-        "totalShares": "7777784945426734860343",
+        "totalAssets": "7868821685004867218993",
+        "totalShares": "7777785174237834923076",
         "validatorsManager": "eth:0x4981331c3E7D60f2bf0884BdaACD7fCA2F0b4dBD",
         "version": 5
       },
@@ -1079,9 +1079,9 @@
         "feeRecipient": "eth:0x919F14E6A47890FCdf6A365E04E116C0DEab9178",
         "keysManager": "eth:0x9e83c6Bf5540f4296D8532e79636993e9eAeD338",
         "mevEscrow": "eth:0x2577609ab927EF4a2Cee449e36cFe156c5aA43B8",
-        "queuedShares": "55094252335069810037",
-        "totalAssets": "76310388265619646092600",
-        "totalShares": "71883734020226685950785",
+        "queuedShares": 1,
+        "totalAssets": "76236905249551851294283",
+        "totalShares": "71813268280837742243390",
         "validatorIndex": 0,
         "validatorsRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "version": 1
@@ -1204,8 +1204,8 @@
         "feePercent": 100,
         "feeRecipient": "eth:0xcB915b7E689bcEcD5De2C1d863A77fb187f713a7",
         "mevEscrow": "eth:0xD9111994DB707209053339C879959014255401BF",
-        "totalAssets": "8659903399642887997426",
-        "totalShares": "8467732534119723521428",
+        "totalAssets": "8660401137582887997426",
+        "totalShares": "8467737400839009898535",
         "validatorsManager": "eth:0xC38332FACB8E7fb79Ca4205f117B17d431694428",
         "version": 5,
         "whitelister": "eth:0x1578eD833D986c1188D1a998aA5FEcD418beF5da"
@@ -1276,7 +1276,7 @@
           "maxAvgRewardPerSecond": "6341958397",
           "validatorsRegistry": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa"
         },
-        "lastRewardsTimestamp": 1793794823,
+        "lastRewardsTimestamp": 1793881607,
         "oracles": [
           "eth:0x6D403394848EaD12356C9Bb667ED27bCe1945914",
           "eth:0xED5a1c366984215A28a95bE95A9a49d59a065e91",
@@ -1292,12 +1292,12 @@
         ],
         "owner": "eth:0x144a98cb1CdBb23610501fE6108858D9B7D24934",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "prevRewardsRoot": "0xd150fc9eb8e6859eed8624f359e1778219e38bb18a3c7c82374ce3f80235bcae",
+        "prevRewardsRoot": "0x29b2e02f5b95e5caf0c797f904d3f1218793779093e5de34a87b234e71a3545e",
         "rewardsDelay": 43200,
         "rewardsDelayFormatted": "12h",
         "rewardsMinOracles": 6,
-        "rewardsNonce": 2142,
-        "rewardsRoot": "0xfdaa780b55086b29699b64f632cb064fbe183fbd751d0b8d5650b5d43aed676f",
+        "rewardsNonce": 2144,
+        "rewardsRoot": "0xd66f2bd225c96f89edc1b62a26208adbbe6eba3acc011ce823af707b306af8e5",
         "totalOracles": 11,
         "validatorsMinOracles": 6
       },
@@ -1404,16 +1404,16 @@
         "$immutable": true,
         "decimals": 18,
         "description": "osETH/ETH",
-        "getRate": "1082335674382884581",
-        "latestAnswer": "1082335674382884581",
+        "getRate": "1082375883056755885",
+        "latestAnswer": "1082375883056755885",
         "latestRoundData": {
           "roundId": 0,
-          "answer": "1082335674382884581",
-          "startedAt": 1793830091,
-          "updatedAt": 1793830091,
+          "answer": "1082375883056755885",
+          "startedAt": 1793883875,
+          "updatedAt": 1793883875,
           "answeredInRound": 0
         },
-        "latestTimestamp": 1793830091,
+        "latestTimestamp": 1793883875,
         "osTokenVaultController": "eth:0x2A261e60FB14586B474C208b1B7AC6D0f5000306",
         "version": 0
       },
@@ -1669,7 +1669,7 @@
       }
     },
     {
-      "name": "OsTokenRedeemerNext",
+      "name": "OsTokenRedeemer",
       "address": "eth:0x9Fc8C7F3C1ff6d0DF39EcB5870884d59777Ea2Bb",
       "type": "Contract",
       "template": "stakewise/OsTokenRedeemer",
@@ -1830,8 +1830,8 @@
         "feePercent": 500,
         "feeRecipient": "eth:0x9934cE3D368F320EFdC26c8eCe543B8C7FEF026e",
         "mevEscrow": "eth:0xB013b4F660108E16514245543f52eA6398202507",
-        "totalAssets": "5329259386948766444005",
-        "totalShares": "4998780884910857350110",
+        "totalAssets": "5329565612216766444005",
+        "totalShares": "4998795246102882531443",
         "validatorsManager": "eth:0x233a61830d3F707565b5E7d18700A60F2241A50D",
         "version": 5
       },
@@ -1921,8 +1921,8 @@
         "feePercent": 500,
         "feeRecipient": "eth:0xf330b5fE72E91d1a3782E65eED876CF3624c7802",
         "mevEscrow": "eth:0x48319f97E5Da1233c21c48b80097c0FB7a20Ff86",
-        "totalAssets": "161541448226632146916068",
-        "totalShares": "148327426877889484190088",
+        "totalAssets": "161521378893172977285656",
+        "totalShares": "148299231753403412896936",
         "validatorsManager": "eth:0xAcdC961c6DDEE379B0771d19F08dD9E5D949D7db",
         "version": 5
       },
@@ -2019,7 +2019,7 @@
         "mevEscrow": "eth:0xdFf3F8DD2199316Da3AB705988bf54B3013D1cd3",
         "name": "CCM Staked ETH",
         "symbol": "ccmETH",
-        "totalAssets": "5573676059821413427844",
+        "totalAssets": "5574122790486312383989",
         "totalShares": "5483103134351838437726",
         "totalSupply": "5483103134351838437726",
         "validatorsManager": "eth:0x0a95D62429399b08841f5dCDC5579Ca8f7794E96",
@@ -2177,77 +2177,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "OsTokenRedeemer",
-      "address": "eth:0xc43A7b16A7a167c0318390Cba16787C11e9e1FD0",
-      "type": "Contract",
-      "template": "stakewise/OsTokenRedeemer",
-      "sourceHashes": [
-        "0x4856e1b74e2012827b5d8a5c978f20262eb707c1b6b90c0bdb3e92dd58430844"
-      ],
-      "proxyType": "immutable",
-      "description": "Exit queue for osToken holders, processed in batches at least 12h apart and funded by redeeming osToken positions listed in a Merkle root the owner publishes; anyone can also buy queued osToken with the underlying asset at the protocol rate. Where a redemption fee exists, the vault controller's owner sets it within the deployed ceiling.",
-      "ignoreInWatchMode": [
-        "getExitQueueData",
-        "getExitQueueCumulativeTickets",
-        "exitQueueTimestamp",
-        "canProcessExitQueue",
-        "queuedShares",
-        "unclaimedAssets",
-        "redeemedAssets",
-        "redeemedShares",
-        "swappedAssets",
-        "swappedShares",
-        "redeemablePositions",
-        "nonce",
-        "accumulatedFees"
-      ],
-      "deployerAddress": "eth:0xFF2B6d2d5c205b99E2e6f607B6aFA3127B9957B6",
-      "sinceTimestamp": 1776712727,
-      "sinceBlock": 24923158,
-      "values": {
-        "$immutable": true,
-        "canProcessExitQueue": false,
-        "exitQueueTimestamp": 1790795783,
-        "exitQueueUpdateDelay": 43200,
-        "exitQueueUpdateDelayFormatted": "12h",
-        "getExitQueueCumulativeTickets": "752750455529878201832",
-        "getExitQueueData": [
-          "29227099893545194294",
-          107913546123485,
-          "723523355636333007538"
-        ],
-        "nonce": 1,
-        "owner": "eth:0x2685C0e39EEAAd383fB71ec3F493991d532A87ae",
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "positionsManager": "eth:0xf900C827cdabFFb24fed00354579131516DAcE28",
-        "queuedShares": "29227099893545194294",
-        "redeemablePositions": {
-          "merkleRoot": "0xc7210eff951c3e534f8b1ca70faf4bd50de0a9d50e885c10c58dc5751a0698d0",
-          "ipfsHash": "bafkreib3i5mekffctc4g6esnv5fagxttrdcmn42hdgiudxrgndxkx7bk2a"
-        },
-        "redeemedAssets": 0,
-        "redeemedShares": 0,
-        "swappedAssets": 0,
-        "swappedShares": 0,
-        "unclaimedAssets": 107913546123485
-      },
-      "fieldMeta": {
-        "owner": { "severity": "HIGH" },
-        "positionsManager": { "severity": "HIGH" },
-        "redemptionFeePercent": {
-          "severity": "MEDIUM",
-          "description": "Fee on redemptions, in basis points."
-        },
-        "maxRedemptionFeePercent": {
-          "description": "Ceiling of the redemption fee, in basis points."
-        }
-      },
-      "implementationNames": {
-        "eth:0xc43A7b16A7a167c0318390Cba16787C11e9e1FD0": "EthOsTokenRedeemer"
-      },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
-    {
       "address": "eth:0xC46e791d4fB1207fAB8Cb0e44889127138539c69",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2358,8 +2287,8 @@
         "feePercent": 500,
         "feeRecipient": "eth:0xA54fBd150518B6131E15B1514466d89d08bdd54c",
         "mevEscrow": "eth:0x1d80A09B60f4A65dfb8Dd3035b1812DCa95FFfe4",
-        "totalAssets": "58999717714631304475917",
-        "totalShares": "53949301910047772716446",
+        "totalAssets": "58942473096277000000000",
+        "totalShares": "53893579420047628191542",
         "validatorsManager": "eth:0x624D55aB24b490cE416Ee1F7EE1468527076639f",
         "version": 5
       },
@@ -2438,7 +2367,7 @@
         "owner": "eth:0x0000000000000000000000000000000000000000",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "osETH",
-        "totalSupply": "148264234230021124674486"
+        "totalSupply": "148279431210735459693556"
       },
       "fieldMeta": {
         "owner": { "description": "Renounced." },
@@ -3889,75 +3818,6 @@
       "function template() view returns (uint256)",
       "function transferOwnership(address newOwner)"
     ],
-    "eth:0xc43A7b16A7a167c0318390Cba16787C11e9e1FD0": [
-      "constructor(address vaultsRegistry_, address osToken_, address osTokenVaultController_, address owner_, uint256 exitQueueUpdateDelay_)",
-      "error AccessDenied()",
-      "error AddressEmptyCode(address target)",
-      "error ExitRequestNotProcessed()",
-      "error FailedCall()",
-      "error InsufficientBalance(uint256 balance, uint256 needed)",
-      "error InvalidAssets()",
-      "error InvalidCheckpointValue()",
-      "error InvalidDelay()",
-      "error InvalidProof()",
-      "error InvalidRedeemablePositions()",
-      "error InvalidShares()",
-      "error InvalidVault()",
-      "error MerkleProofInvalidMultiproof()",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "error ReentrancyGuardReentrantCall()",
-      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
-      "error SafeERC20FailedOperation(address token)",
-      "error TooEarlyUpdate()",
-      "error ValueNotChanged()",
-      "error ZeroAddress()",
-      "event CheckpointCreated(uint256 shares, uint256 assets)",
-      "event ExitQueueEntered(address indexed owner, address indexed receiver, uint256 positionTicket, uint256 shares)",
-      "event ExitedAssetsClaimed(address indexed receiver, uint256 prevPositionTicket, uint256 newPositionTicket, uint256 withdrawnAssets)",
-      "event OsTokenPositionsRedeemed(uint256 shares, uint256 assets)",
-      "event OsTokenSharesSwapped(address indexed sender, address indexed receiver, uint256 shares, uint256 assets)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event PositionsManagerUpdated(address indexed positionsManager)",
-      "event RedeemablePositionsUpdated(bytes32 indexed merkleRoot, string ipfsHash)",
-      "function acceptOwnership()",
-      "function calculateExitedAssets(address receiver, uint256 positionTicket, uint256 exitQueueIndex) view returns (uint256 leftTickets, uint256 exitedTickets, uint256 exitedAssets)",
-      "function canProcessExitQueue() view returns (bool)",
-      "function claimExitedAssets(uint256 positionTicket, uint256 exitQueueIndex)",
-      "function enterExitQueue(uint256 shares, address receiver) returns (uint256 positionTicket)",
-      "function exitQueueTimestamp() view returns (uint256)",
-      "function exitQueueUpdateDelay() view returns (uint256)",
-      "function exitRequests(bytes32 exitRequestHash) view returns (uint256 shares)",
-      "function getExitQueueCumulativeTickets() view returns (uint256)",
-      "function getExitQueueData() view returns (uint256, uint256, uint256)",
-      "function getExitQueueIndex(uint256 positionTicket) view returns (int256)",
-      "function getExitQueueMissingAssets(uint256 targetCumulativeTickets) view returns (uint256 missingAssets)",
-      "function leafToProcessedShares(bytes32 leaf) view returns (uint256 processedShares)",
-      "function multicall(bytes[] data) returns (bytes[] results)",
-      "function nonce() view returns (uint256)",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function permitOsToken(uint256 shares, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
-      "function positionsManager() view returns (address)",
-      "function processExitQueue()",
-      "function queuedShares() view returns (uint128)",
-      "function redeemOsTokenPositions(tuple(address vault, address owner, uint256 leafShares, uint256 sharesToRedeem)[] positions, bytes32[] proof, bool[] proofFlags)",
-      "function redeemSubVaultOsToken(address subVault, uint256 osTokenShares) returns (uint256)",
-      "function redeemSubVaultsAssets(address metaVault, uint256 assetsToRedeem) returns (uint256 totalRedeemedAssets)",
-      "function redeemablePositions() view returns (bytes32 merkleRoot, string ipfsHash)",
-      "function redeemedAssets() view returns (uint128)",
-      "function redeemedShares() view returns (uint128)",
-      "function renounceOwnership()",
-      "function setPositionsManager(address positionsManager_)",
-      "function setRedeemablePositions(tuple(bytes32 merkleRoot, string ipfsHash) newPositions)",
-      "function swapAssetsToOsTokenShares(address receiver) payable returns (uint256 osTokenShares)",
-      "function swappedAssets() view returns (uint128)",
-      "function swappedShares() view returns (uint128)",
-      "function transferOwnership(address newOwner)",
-      "function unclaimedAssets() view returns (uint128)",
-      "function updateVaultState(address vault, tuple(bytes32 rewardsRoot, int160 reward, uint160 unlockedMevReward, bytes32[] proof) harvestParams)"
-    ],
     "eth:0xCd191DfDF52ae7aa2B1AD7B4a6A9D4d4FFB837B5": [
       "constructor(address _implementation, address vaultsRegistry)",
       "event MetaVaultCreated(address indexed caller, address indexed admin, address indexed vault, bytes params)",
@@ -4505,8 +4365,8 @@
     "stakewise/VaultFactory": "0xb57253ef298ddd93d314ff0fd82613b2e012f4bf9e00501a63d73cae35416264",
     "stakewise/VaultsRegistry": "0x0dc5166eb04e9bd6c2575f359c35d5f5c75e4c33510f55c7361d7dc23a75e74a"
   },
-  "usedBlockNumbers": { "ethereum": 26344339 },
-  "permissionsConfigHash": "0x3ce151bb1d322f46064386869d7ccc33a70a0b57821394c098922b0aacc03259",
+  "usedBlockNumbers": { "ethereum": 26348814 },
+  "permissionsConfigHash": "0x6e5de0f81030375a14faa1656763879210038a4f4046e97a9c925d9a45c59e45",
   "permissions": {
     "eth:0x0a95D62429399b08841f5dCDC5579Ca8f7794E96": {
       "receivedPermissions": [
@@ -4547,7 +4407,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "add and remove oracles, set both signature thresholds down to one, and replace the off-chain oracle configuration, with no delay.",
+          "description": "add and remove oracles, which can also halt every update and with it every exit queue by removing them below a threshold, set both signature thresholds down to one, and replace the off-chain oracle configuration, with no delay.",
           "role": ".owner"
         },
         {
@@ -4655,12 +4515,6 @@
         {
           "permission": "interact",
           "from": "eth:0x9Fc8C7F3C1ff6d0DF39EcB5870884d59777Ea2Bb",
-          "description": "publish the Merkle root of osToken positions open to forced redemption and appoint the positions manager, with no delay.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc43A7b16A7a167c0318390Cba16787C11e9e1FD0",
           "description": "publish the Merkle root of osToken positions open to forced redemption and appoint the positions manager, with no delay.",
           "role": ".owner"
         }
@@ -4844,6 +4698,16 @@
         }
       ]
     },
+    "eth:0x9Fc8C7F3C1ff6d0DF39EcB5870884d59777Ea2Bb": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x287d1e2A8dE183A8bf8f2b09Fa1340fBd766eb59",
+          "description": "burn osToken positions in any vault at the protocol exchange rate and take the matching ETH out of the vault.",
+          "role": ".redeemer"
+        }
+      ]
+    },
     "eth:0x9e83c6Bf5540f4296D8532e79636993e9eAeD338": {
       "receivedPermissions": [
         {
@@ -4921,7 +4785,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "add and remove oracles, set both signature thresholds down to one, and replace the off-chain oracle configuration, with no delay.",
+          "description": "add and remove oracles, which can also halt every update and with it every exit queue by removing them below a threshold, set both signature thresholds down to one, and replace the off-chain oracle configuration, with no delay.",
           "role": ".owner",
           "via": [
             { "address": "eth:0x144a98cb1CdBb23610501fE6108858D9B7D24934" }
@@ -5004,16 +4868,6 @@
         }
       ]
     },
-    "eth:0xc43A7b16A7a167c0318390Cba16787C11e9e1FD0": {
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x287d1e2A8dE183A8bf8f2b09Fa1340fBd766eb59",
-          "description": "burn osToken positions in any vault at the protocol exchange rate and take the matching ETH out of the vault.",
-          "role": ".redeemer"
-        }
-      ]
-    },
     "eth:0xeBe12d858E55DDc5FC5A8153dC3e117824fbf5d2": {
       "receivedPermissions": [
         {
@@ -5039,12 +4893,6 @@
         {
           "permission": "interact",
           "from": "eth:0x9Fc8C7F3C1ff6d0DF39EcB5870884d59777Ea2Bb",
-          "description": "redeem any osToken position listed in the current root at the protocol rate, burning the holder's osToken and moving ETH from the vault into the redemption queue.",
-          "role": ".positionsManager"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc43A7b16A7a167c0318390Cba16787C11e9e1FD0",
           "description": "redeem any osToken position listed in the current root at the protocol rate, burning the holder's osToken and moving ETH from the vault into the redemption queue.",
           "role": ".positionsManager"
         }
