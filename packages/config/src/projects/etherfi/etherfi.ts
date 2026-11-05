@@ -102,7 +102,7 @@ export const etherfi: BaseProject = {
     unverifiedContracts: [],
   },
   display: {
-    description: `ether.fi is a liquid staking protocol. Users deposit ETH for ${value('eETH', 'symbol')} (rebasing) or its wrapper ${value('weETH', 'symbol')}, staked through whitelisted operators whose validators withdraw to EigenLayer pods, with an oracle committee setting the exchange rate.`,
+    description: `ether.fi is a liquid staking protocol. Users deposit ETH for ${value('eETH', 'symbol')} (rebasing) or its wrapper ${value('weETH', 'symbol')}, staked through whitelisted operators whose validators withdraw to their node's EigenLayer pod or, for a node without one, the node itself, with an oracle committee setting the exchange rate.`,
     detailedDescription: readProjectMarkdown('etherfi', 'detailedDescription', {
       eethSymbol: value('eETH', 'symbol'),
       weethSymbol: value('weETH', 'symbol'),
