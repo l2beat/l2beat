@@ -6,11 +6,9 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import type { OssificationStats } from '~/server/features/projects/ossification/getOssificationStats'
-import { formatRange } from '~/utils/dates'
+import { formatRange, formatTimestamp } from '~/utils/dates'
 import { formatValueLine } from './formatValueLine'
 import { OSSIFICATION_VALUE_LABELS } from './ossificationValueLabels'
-
-const SECONDS_PER_YEAR = 365 * UnixTime.DAY
 
 type Props = Pick<OssificationStats, 'exposure' | 'valueSource' | 'timeline'>
 
@@ -22,12 +20,18 @@ export function OssificationExposure({
   if (exposure === null) {
     return <NotApplicableBadge />
   }
-  const years = (timeline.to - timeline.clockStart) / SECONDS_PER_YEAR
+  const label = OSSIFICATION_VALUE_LABELS[valueSource ?? 'tvs'].short
+  // The average comes from the shown years, so the two multiply out to the cell.
+  const years = formatYears(exposure.years)
+  // A start hours after the clock would repeat the date above.
+  const dataStartsLater =
+    UnixTime.toStartOf(exposure.since, 'day') >
+    UnixTime.toStartOf(timeline.clockStart, 'day')
   return (
     // The calculation and the peak show nowhere else on the page.
     <Tooltip contentInHtml>
       <TooltipTrigger className="text-left">
-        {formatCurrency(exposure, 'usd')}
+        {formatCurrency(exposure.value, 'usd')}
         <span className="font-normal text-secondary text-xs">·years</span>
         {valueSource === 'defillama' && (
           <span className="block font-normal text-2xs text-secondary">
@@ -43,11 +47,13 @@ export function OssificationExposure({
             {formatRange(timeline.clockStart, timeline.to)}
           </div>
         </div>
-        {years > 0 && (
+        {exposure.years > 0 && (
           <span>
-            {formatCurrency(exposure / years, 'usd')} average{' '}
-            {OSSIFICATION_VALUE_LABELS[valueSource ?? 'tvs'].short} ×{' '}
-            {formatYears(years)} years unchanged.
+            {formatCurrency(exposure.value / Number(years), 'usd')} average{' '}
+            {label} × {years} years
+            {dataStartsLater
+              ? `, since ${label} data starts on ${formatTimestamp(exposure.since)}.`
+              : ' unchanged.'}
           </span>
         )}
         <span>{formatValueLine({ timeline, valueSource })}</span>

@@ -96,8 +96,7 @@ const columns = [
       tooltip: OSSIFICATION_TOOLTIPS.timeline,
     },
   }),
-  // TanStack sorts only undefined last, not null.
-  columnHelper.accessor((entry) => entry.exposure ?? undefined, {
+  columnHelper.accessor((entry) => entry.exposure?.value, {
     id: 'exposure',
     header: 'Battle-tested\nexposure',
     cell: (ctx) => (

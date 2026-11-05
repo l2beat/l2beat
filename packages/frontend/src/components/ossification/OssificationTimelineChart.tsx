@@ -28,12 +28,13 @@ type Props = Pick<OssificationStats, 'timeline' | 'valueSource'>
 
 export function OssificationTimelineChart({ timeline, valueSource }: Props) {
   const id = useId()
-  const { from, to, clockStart, genesis, criticalChanges, values } = timeline
+  const { from, to, clockStart, genesis, criticalChanges, values, peak } =
+    timeline
   const toX = (timestamp: number) => ((timestamp - from) / (to - from)) * WIDTH
   const clockBeforeWindow = clockStart < from
   const clockX = clockBeforeWindow ? 0 : toX(clockStart)
   const genesisInWindow = genesis >= from
-  const area = values ? getAreaPaths(values) : undefined
+  const area = values && peak !== null ? getAreaPaths(values, peak) : undefined
   const description = getDescription({
     timeline,
     valueSource,
@@ -164,9 +165,11 @@ function dotX(x: number) {
   return Math.min(Math.max(x, GENESIS_RADIUS), WIDTH - GENESIS_RADIUS)
 }
 
-/** Area and line through the samples, from a zero baseline to the peak. */
-function getAreaPaths(values: (number | null)[]) {
-  const peak = Math.max(...values.map((value) => value ?? 0))
+/**
+ * Area and line through the samples, from a zero baseline to the peak of the
+ * whole series, which a spike between samples can put above them.
+ */
+function getAreaPaths(values: (number | null)[], peak: number) {
   const step = WIDTH / (values.length - 1)
   const points = values.flatMap((value, i) =>
     value === null

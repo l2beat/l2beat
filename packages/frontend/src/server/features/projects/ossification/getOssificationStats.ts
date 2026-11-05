@@ -5,7 +5,7 @@ import type {
 } from '@l2beat/config'
 import type { OssificationResult } from '@l2beat/shared/frontend'
 import { UnixTime } from '@l2beat/shared-pure'
-import { calculateExposure } from './calculateExposure'
+import { calculateExposure, type Exposure } from './calculateExposure'
 import {
   getOssificationSeries,
   type OssificationSeriesProject,
@@ -21,8 +21,8 @@ export interface OssificationStats {
   isUnverified: boolean
   criticalChangesPerYear: number
   contractCount: number
-  /** USD·years; null without a value series or with unverified contracts */
-  exposure: number | null
+  /** Null without a value series or with unverified contracts */
+  exposure: Exposure | null
   valueSource: OssificationValueSource | null
   /** Absent for DeFi, which has no exit window in config yet */
   exitWindow?: OssificationExitWindow
