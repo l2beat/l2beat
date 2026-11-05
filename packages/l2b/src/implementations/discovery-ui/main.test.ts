@@ -17,7 +17,10 @@ describe(createDiscoveryUiApp.name, () => {
 })
 
 async function pingAgent(options: { readonly: boolean }): Promise<number> {
-  const server: Server = createDiscoveryUiApp(options).listen(0, '127.0.0.1')
+  const server: Server = createDiscoveryUiApp({ ...options, port: 0 }).listen(
+    0,
+    '127.0.0.1',
+  )
   await new Promise((resolve) => server.once('listening', resolve))
   try {
     const { port } = server.address() as AddressInfo
