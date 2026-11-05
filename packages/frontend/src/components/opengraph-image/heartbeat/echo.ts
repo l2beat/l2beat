@@ -20,58 +20,68 @@ const HAZE = [
   { factor: 2.6, blur: 0.5, opacity: 0.12 },
 ]
 
-// In the inner part of a clearing the rings vanish; they come back by its edge.
-const CLEARING_INNER = 0.62
+// Around text the rings are cut away: fully within `pad` px of it, coming back
+// over the next `fade` px in `steps` steps, too fine to show. Steps instead of
+// a blur, which would cost a pass over the whole canvas for every image.
+const CLEAR = { pad: 12, fade: 40, steps: 8 }
 
 const { width: W, height: H } = OG_SIZE
 const round = (v: number) => +v.toFixed(2)
 
-/** An ellipse on the canvas, by its centre and radii. */
-export interface Ellipse {
-  cx: number
-  cy: number
-  rx: number
-  ry: number
+/** A box on the canvas, by its edges. */
+export interface Box {
+  x0: number
+  y0: number
+  x1: number
+  y1: number
 }
 
-/**
- * SVG markup for the glow and rings around the placed heart; draw the lockup
- * over it. The rings fade out inside `clearing`, so text there reads, while
- * the glow stays.
- */
-export function heartEcho(placement: Placement, clearing?: Ellipse) {
-  const size = heartHeight(placement)
-  const blur = (id: string, sigma: number) =>
-    `<filter id="${id}" filterUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><feGaussianBlur stdDeviation="${round(sigma)}"/></filter>`
+const blur = (id: string, sigma: number) =>
+  `<filter id="${id}" filterUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><feGaussianBlur stdDeviation="${round(sigma)}"/></filter>`
 
+/** SVG markup for the glow around the placed heart; draw the heart over it. */
+export function heartGlow(placement: Placement) {
+  const size = heartHeight(placement)
   const haze = HAZE.map(
     (layer, i) =>
       `<path d="${heartOutline(grown(placement, layer.factor))}" fill="${PINK}" opacity="${layer.opacity}" filter="url(#haze${i})"/>`,
   )
-  const rings = Array.from({ length: RINGS }, (_, i) => {
-    const outline = heartOutline(grown(placement, RING_GROWTH ** (i + 1)))
-    const opacity = round(RING_OPACITY * RING_FADE ** i)
-    const stroke = clearing ? 'url(#ringStroke)' : PINK
-    return `<path d="${outline}" fill="none" stroke="${stroke}" stroke-width="${RING_WIDTH}" stroke-linejoin="round" opacity="${opacity}"/>`
-  })
-
-  // The rings' glow goes under them, so they stay crisp.
   return (
-    `<defs>${clearing ? clearingStroke(clearing) : ''}${HAZE.map((layer, i) => blur(`haze${i}`, layer.blur * size)).join('')}${blur('ringGlow', RING_GLOW * size)}<g id="rings">${rings.join('')}</g></defs>` +
-    haze.join('') +
-    `<use href="#rings" filter="url(#ringGlow)"/><use href="#rings"/>`
+    `<defs>${HAZE.map((layer, i) => blur(`haze${i}`, layer.blur * size)).join('')}</defs>` +
+    haze.join('')
   )
 }
 
-/** The rings' pink, see-through inside the clearing. */
-function clearingStroke({ cx, cy, rx, ry }: Ellipse) {
-  const stop = (offset: number, opacity: number) =>
-    `<stop offset="${offset}" stop-color="${PINK}" stop-opacity="${opacity}"/>`
+/** SVG markup for the rings spreading out from the placed heart. */
+export function heartRings(placement: Placement) {
+  const rings = Array.from({ length: RINGS }, (_, i) => {
+    const outline = heartOutline(grown(placement, RING_GROWTH ** (i + 1)))
+    const opacity = round(RING_OPACITY * RING_FADE ** i)
+    return `<path d="${outline}" fill="none" stroke="${PINK}" stroke-width="${RING_WIDTH}" stroke-linejoin="round" opacity="${opacity}"/>`
+  })
+  // The rings' glow goes under them, so they stay crisp.
   return (
-    `<radialGradient id="ringStroke" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="1" gradientTransform="translate(${round(cx)} ${round(cy)}) scale(${round(rx)} ${round(ry)})">` +
-    stop(0, 0) +
-    stop(CLEARING_INNER, 0) +
-    stop(1, 1) +
-    '</radialGradient>'
+    `<defs>${blur('ringGlow', RING_GLOW * heartHeight(placement))}<g id="rings">${rings.join('')}</g></defs>` +
+    '<use href="#rings" filter="url(#ringGlow)"/><use href="#rings"/>'
+  )
+}
+
+/**
+ * SVG markup for `rings`, an image of the whole canvas, cut away around each
+ * box, so the text there reads while the ground and the glow stay.
+ */
+export function ringsClearOf(rings: string, boxes: Box[]) {
+  // Nested rounded boxes, the innermost opaque and the nth 1/n opaque, add up
+  // to a cut that fades evenly from full to none across them.
+  const holes = boxes.flatMap((box) =>
+    Array.from({ length: CLEAR.steps }, (_, i) => {
+      const grow = CLEAR.pad + (CLEAR.fade * i) / (CLEAR.steps - 1)
+      return `<rect x="${round(box.x0 - grow)}" y="${round(box.y0 - grow)}" width="${round(box.x1 - box.x0 + 2 * grow)}" height="${round(box.y1 - box.y0 + 2 * grow)}" rx="${round(grow)}" opacity="${round(1 / (i + 1))}"/>`
+    }),
+  )
+  return (
+    `<defs><g id="holes">${holes.join('')}</g>` +
+    `<filter id="clear" filterUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><feImage href="#holes" result="holes"/><feComposite in="SourceGraphic" in2="holes" operator="out"/></filter></defs>` +
+    `<image href="${rings}" width="${W}" height="${H}" filter="url(#clear)"/>`
   )
 }

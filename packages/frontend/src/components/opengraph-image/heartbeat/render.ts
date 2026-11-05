@@ -68,6 +68,18 @@ export function rowExtents(body: string) {
   })
 }
 
+/** The box drawn SVG covers on the canvas. */
+export function drawnBox(body: string) {
+  const rows = rowExtents(body)
+  const drawn = rows.flatMap((row, y) => (row.start <= row.end ? [y] : []))
+  return {
+    x0: Math.min(...rows.map((row) => row.start)),
+    y0: Math.min(...drawn),
+    x1: Math.max(...rows.map((row) => row.end)) + 1,
+    y1: Math.max(...drawn) + 1,
+  }
+}
+
 function draw(body: string) {
   const { width, height } = OG_SIZE
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">${body}</svg>`

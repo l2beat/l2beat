@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react'
-import { heartEcho } from './echo'
-import { onDarkGround } from './logo'
+import { type Box, heartGlow, heartRings, ringsClearOf } from './echo'
+import { GLOW_REACH, glowBehind, onDarkGround } from './logo'
 import { HEART_RATIO, heart, INK, lockup, PINK, place, WHITE } from './marks'
-import { OG_SIZE, rasterize, rowExtents } from './render'
+import { drawnBox, OG_SIZE, rasterize, rowExtents } from './render'
 import { balancedLines, type TextMeasure } from './text'
 
 // Every OG image but home's: the logo's heart glowing on the right, its echo
@@ -38,9 +38,12 @@ const DESCRIPTION = {
 const LABEL_TO_TITLE = 42
 const LABEL = { size: 40, min: 30, lineHeight: 1.2, tracking: 1.4 / 24 }
 // A logo runs from the label's cap top to the title's baseline, so its edges
-// line up with both, and text starts `gap` right of it. Its pink glow spreads
-// `glow` times its size; its corners round like an app icon's.
-const LOGO = { gap: 32, glow: 1.6, radius: 0.22 }
+// line up with both, and text starts `gap` right of it. Its corners round like
+// an app icon's.
+const LOGO = { gap: 32, radius: 0.22 }
+// How far a line's letters reach above and below its baseline, in em: Roboto's
+// tallest lowercase and its descenders.
+const LETTERS = { above: 0.76, below: 0.22 }
 
 const placement = place(
   OG_SIZE.width - MARGIN - (HEART_HEIGHT * HEART_RATIO) / 2,
@@ -56,19 +59,17 @@ const signature = place(
   SIGNATURE_HEIGHT,
 )
 
-// The rings fade out in an ellipse over the corner lockup and the label: a
-// ring running through small text cuts it. Only the rings fade, not the
-// ground: darkening it there showed as a patch of its own.
-const CORNER_CLEARING = { cx: 190, cy: 200, rx: 330, ry: 230 }
-
 // Drawn on first use, not on import: the server imports this for token images.
+// The rings go on a layer of their own, cut away around each image's text.
 let decor: string | undefined
 const frameDecor = () =>
   (decor ??= rasterize(
-    heartEcho(placement, CORNER_CLEARING) +
-      heart(placement) +
-      lockup(signature),
+    heartGlow(placement) + heart(placement) + lockup(signature),
   ))
+let rings: string | undefined
+const frameRings = () => (rings ??= rasterize(heartRings(placement)))
+let signatureBox: Box | undefined
+const frameSignatureBox = () => (signatureBox ??= drawnBox(lockup(signature)))
 
 let heartRows: { start: number; end: number }[] | undefined
 /**
@@ -94,6 +95,21 @@ export function titleBaseline(withDescription: boolean) {
   return withDescription ? TITLE_BASELINE - DESCRIPTION.lift : TITLE_BASELINE
 }
 
+/** The box the letters of a line of text cover. */
+export function lineBox(
+  left: number,
+  baseline: number,
+  width: number,
+  size: number,
+): Box {
+  return {
+    x0: left,
+    y0: baseline - LETTERS.above * size,
+    x1: left + width,
+    y1: baseline + LETTERS.below * size,
+  }
+}
+
 /** Where the label and the title start beside a logo: it grows with the title. */
 export function textLeftBesideLogo(
   measure: TextMeasure,
@@ -115,7 +131,7 @@ export function HeartbeatFrame({
   label,
   title,
   titleSize,
-  titleLines,
+  titleLineWidths,
   titleInkLeft,
   description,
   logo,
@@ -124,7 +140,7 @@ export function HeartbeatFrame({
   label: string | undefined
   title: ReactNode
   titleSize: number
-  titleLines: number
+  titleLineWidths: number[]
   /** The title's first-letter side bearing, so its ink starts on the margin. */
   titleInkLeft: number
   description: string | undefined
@@ -138,8 +154,61 @@ export function HeartbeatFrame({
       ? MARGIN
       : textLeftBesideLogo(measure, titleSize, label !== undefined)
   const logoHeight = textLeft - LOGO.gap - MARGIN
+  const labelBaseline = capTop - LABEL_TO_TITLE
+  const fittedLabel =
+    label === undefined
+      ? undefined
+      : fitLabel(measure, label, labelBaseline, textLeft)
+  const descriptionLaidOut =
+    description === undefined
+      ? undefined
+      : descriptionLayout(measure, description, {
+          baseline,
+          size: titleSize,
+          lines: titleLineWidths.length,
+        })
+
+  const textBoxes: Box[] = [
+    frameSignatureBox(),
+    ...titleLineWidths.map((width, i) =>
+      lineBox(
+        textLeft,
+        baseline + i * TITLE_LINE_HEIGHT * titleSize,
+        width,
+        titleSize,
+      ),
+    ),
+  ]
+  if (logo !== undefined) {
+    textBoxes.push({
+      x0: MARGIN,
+      y0: baseline - logoHeight,
+      x1: MARGIN + logoHeight,
+      y1: baseline,
+    })
+  }
+  if (fittedLabel !== undefined) {
+    textBoxes.push(
+      lineBox(textLeft, labelBaseline, fittedLabel.width, fittedLabel.size),
+    )
+  }
+  if (descriptionLaidOut !== undefined) {
+    textBoxes.push({
+      x0: MARGIN,
+      y0: descriptionLaidOut.top,
+      x1: MARGIN + descriptionLaidOut.box,
+      y1: descriptionLaidOut.bottom,
+    })
+  }
+
   return (
     <Canvas decor={frameDecor()}>
+      <img
+        src={rasterize(ringsClearOf(frameRings(), textBoxes))}
+        alt=""
+        {...OG_SIZE}
+        style={{ position: 'absolute', left: 0, top: 0 }}
+      />
       {logo !== undefined && (
         <Logo
           {...onDarkGround(logo)}
@@ -147,11 +216,11 @@ export function HeartbeatFrame({
           top={baseline - logoHeight}
         />
       )}
-      {label && (
+      {fittedLabel && (
         <Label
           measure={measure}
-          text={label}
-          baseline={capTop - LABEL_TO_TITLE}
+          label={fittedLabel}
+          baseline={labelBaseline}
           left={textLeft}
         />
       )}
@@ -166,22 +235,18 @@ export function HeartbeatFrame({
       >
         {title}
       </div>
-      {description !== undefined && (
+      {description !== undefined && descriptionLaidOut !== undefined && (
         <Description
           measure={measure}
           text={description}
-          layout={descriptionLayout(measure, description, {
-            baseline,
-            size: titleSize,
-            lines: titleLines,
-          })}
+          layout={descriptionLaidOut}
         />
       )}
     </Canvas>
   )
 }
 
-/** The logo with app-icon corners, over a pink glow when it needs one to stand out. */
+/** The logo with app-icon corners, over a small pink glow when it needs one to stand out. */
 function Logo({
   src,
   glow,
@@ -193,19 +258,19 @@ function Logo({
   size: number
   top: number
 }) {
-  const spread = size * LOGO.glow
+  const reach = GLOW_REACH * size
   return (
     <>
       {glow && (
-        <div
+        <img
+          src={glowBehind(src, LOGO.radius)}
+          alt=""
+          width={size + 2 * reach}
+          height={size + 2 * reach}
           style={{
-            display: 'flex',
             position: 'absolute',
-            left: MARGIN + (size - spread) / 2,
-            top: top + (size - spread) / 2,
-            width: spread,
-            height: spread,
-            backgroundImage: `radial-gradient(circle at center, ${PINK}55 0%, ${PINK}1A 40%, ${INK}00 62%)`,
+            left: MARGIN - reach,
+            top: top - reach,
           }}
         />
       )}
@@ -285,31 +350,37 @@ function Description({
   )
 }
 
-/** Shrinks a label that would reach the heart, down to 30 px: pink on pink would vanish. */
-function Label({
-  measure,
-  text,
-  baseline,
-  left,
-}: {
-  measure: TextMeasure
-  text: string
-  baseline: number
-  left: number
-}) {
+/** The label in caps, shrunk if it would reach the heart, down to 30 px: pink on pink would vanish. */
+function fitLabel(
+  measure: TextMeasure,
+  text: string,
+  baseline: number,
+  left: number,
+) {
   const caps = text.toUpperCase()
   const heartStart = heartFillBetween(
     baseline - measure.capHeight(LABEL.size),
     baseline,
   ).nearestStart
   const room = heartStart - HEART_CLEARANCE - left
+  const width = (size: number) =>
+    measure.width(caps, size, 600, LABEL.tracking * size)
   let size = LABEL.size
-  while (
-    size > LABEL.min &&
-    measure.width(caps, size, 600, LABEL.tracking * size) > room
-  ) {
-    size -= 0.5
-  }
+  while (size > LABEL.min && width(size) > room) size -= 0.5
+  return { caps, size, width: width(size) }
+}
+
+function Label({
+  measure,
+  label: { caps, size },
+  baseline,
+  left,
+}: {
+  measure: TextMeasure
+  label: ReturnType<typeof fitLabel>
+  baseline: number
+  left: number
+}) {
   return (
     <div
       style={{

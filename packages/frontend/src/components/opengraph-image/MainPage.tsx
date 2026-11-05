@@ -49,7 +49,7 @@ export function MainPageOpengraphImage({
       description={description}
       logo={logo}
       titleSize={fitted.size}
-      titleLines={fitted.lines}
+      titleLineWidths={fitted.lineWidths}
       titleInkLeft={measure.inkLeft(title, fitted.size, 700)}
       title={
         <div style={{ display: 'flex', flexWrap: 'wrap', width: fitted.width }}>
@@ -107,7 +107,11 @@ export function fitTitle(
   const fits = (size: number) => satoriWidth(width(size)) <= column(size)
   const atHeartEdge = (size: number) =>
     endsAtHeartEdge(measure, left(size) + width(size), size, baseline)
-  const oneLine = (size: number) => ({ size, width: column(size), lines: 1 })
+  const oneLine = (size: number) => ({
+    size,
+    width: column(size),
+    lineWidths: [width(size)],
+  })
 
   if (fits(MAX_SIZE) && atHeartEdge(MAX_SIZE)) {
     for (let size = MAX_SIZE + 1; size <= MAX_SIZE_OVER_HEART; size++) {
@@ -136,11 +140,11 @@ export function fitTitle(
         ),
     )
     if (lines.length <= 2 && clearOfHeartEdge) {
-      return { size, width: box, lines: lines.length }
+      return { size, width: box, lineWidths: lines }
     }
   }
   const smallest = balancedLines(measure, title, 44, 700, column(44))
-  return { size: 44, width: column(44), lines: smallest.lines.length }
+  return { size: 44, width: column(44), lineWidths: smallest.lines }
 }
 
 /**

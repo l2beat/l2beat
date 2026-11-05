@@ -1,5 +1,5 @@
 import { Resvg } from '@resvg/resvg-js'
-import { INK } from './marks'
+import { INK, PINK } from './marks'
 
 // Logos are drawn for light pages, and many get lost on the dark ground. Ones
 // with nothing light in them turn into their own dark-mode version: near-black
@@ -18,6 +18,11 @@ const INVERT_BELOW = 1.5
 const BRIGHTEN_BELOW = 3.5
 /** Contrast with the ground below which a logo, after its fix, gets a glow: WCAG's minimum for graphics. */
 const GLOW_BELOW = 3
+// The glow hugs the logo's outline and is kept small: its blur and how far its
+// image reaches past the logo's edges are of the logo's size.
+const GLOW = { reach: 0.3, blur: 0.06, opacity: 0.9 }
+/** How far, of a logo's size, its glow's image reaches past it on every side. */
+export const GLOW_REACH = GLOW.reach
 /** Pixels at least this bright count as light detail. */
 const LIGHT = 0.5
 /** A logo with at least this share of light pixels keeps its colours. */
@@ -47,6 +52,23 @@ export function onDarkGround(logo: string): { src: string; glow: boolean } {
   )
   const src = `data:image/png;base64,${draw(svg).asPng().toString('base64')}`
   return { src, glow: measureOnGround(src).contrast < GLOW_BELOW }
+}
+
+/**
+ * A pink glow hugging the logo's outline, its corners rounded by `radius` of
+ * its size like the logo's own, as an image `GLOW_REACH` of its size wider on
+ * every side. Draw the logo over it.
+ */
+export function glowBehind(logo: string, radius: number) {
+  const size = REDRAW_SIZE
+  const reach = GLOW.reach * size
+  const full = size + 2 * reach
+  const svg =
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${full}" height="${full}"><defs>` +
+    `<clipPath id="r"><rect x="${reach}" y="${reach}" width="${size}" height="${size}" rx="${radius * size}"/></clipPath>` +
+    `<filter id="g" filterUnits="userSpaceOnUse" x="0" y="0" width="${full}" height="${full}"><feFlood flood-color="${PINK}" flood-opacity="${GLOW.opacity}"/><feComposite in2="SourceAlpha" operator="in"/><feGaussianBlur stdDeviation="${GLOW.blur * size}"/></filter>` +
+    `</defs><g filter="url(#g)"><image href="${logo}" x="${reach}" y="${reach}" width="${size}" height="${size}" clip-path="url(#r)"/></g></svg>`
+  return `data:image/png;base64,${draw(svg).asPng().toString('base64')}`
 }
 
 export function logoTreatment(logo: string): LogoTreatment {
