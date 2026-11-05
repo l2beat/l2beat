@@ -79,6 +79,8 @@ describe(ActivityHeadTracker.name, () => {
 
     await tracker.update()
     expect(hashes(db)).toEqual(['0x101', '0x102', '0x103b'])
+    // Only the replaced block is fetched again
+    expect(chain.getBlock).toHaveBeenCalledTimes(4)
   })
 
   it('publishes nothing from nodes on different forks', async () => {
