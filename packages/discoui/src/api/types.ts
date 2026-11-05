@@ -446,6 +446,8 @@ export type ApiAgentEvent =
   | { type: 'clear' }
   // First on every stream; a new id means the server restarted.
   | { type: 'connected'; serverId: string }
+  // The tab answers with an ApiAgentContext for this id.
+  | { type: 'context-request'; id: string }
 
 export interface ApiAgentShowEvent {
   type: 'show'
@@ -464,4 +466,15 @@ export interface ApiAgentStep {
     offset: number
     length: number
   }
+}
+
+// What the researcher looks at, in coordinates: the server reads names and
+// code itself.
+export interface ApiAgentContext {
+  project: string | undefined
+  selected: string[]
+  // The code panel's file and selection, offsets in the text it shows.
+  code?: { address: string; sourceName: string; from: number; to: number }
+  // The step of the agent's show on screen, 0-based.
+  note?: { index: number; stepCount: number }
 }

@@ -59,7 +59,7 @@ describe(attachMcpRoutes.name, () => {
       inputSchema: { type: string; $schema?: string }
       _meta: object
     }[]
-    expect(tools.map((t) => t.name)).toEqual(['show', 'clear'])
+    expect(tools.map((t) => t.name)).toEqual(['show', 'context', 'clear'])
     for (const tool of tools) {
       expect(tool.inputSchema.type).toEqual('object')
       expect(tool.inputSchema.$schema).toEqual(undefined)
@@ -117,6 +117,32 @@ describe(attachMcpRoutes.name, () => {
     expect(shown.result?.isError).toEqual(false)
     expect(written.length).toEqual(1)
     expect(written[0]).toInclude('"project":"linea"')
+  })
+
+  it('asks the active tab for context over its stream', async () => {
+    // The tab answers each request the way AgentBridge does, over HTTP.
+    const stream: TabStream = {
+      write: (chunk) => {
+        const event = JSON.parse(chunk.slice('data: '.length))
+        const body = {
+          tab: 'tab-1',
+          request: event.id,
+          context: { project: 'linea', selected: [] },
+        }
+        void fetch(url.replace('/mcp', '/context'), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        })
+      },
+      end: () => {},
+    }
+    tabs.connect('tab-1', stream)
+    tabs.report('tab-1', { project: 'linea', focusedAt: 3, sequence: 3 })
+    const result = (await call('tools/call', { name: 'context' })).result
+    tabs.disconnect('tab-1', stream)
+    expect(result?.isError).toEqual(false)
+    expect(JSON.stringify(result?.content)).toInclude('DiscoUI shows linea.')
   })
 
   it('answers JSON it cannot parse with a JSON-RPC error', async () => {

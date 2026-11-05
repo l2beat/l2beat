@@ -129,6 +129,25 @@ describe(AgentTabs.name, () => {
     expect(new AgentTabs().clearShow()).toEqual(false)
   })
 
+  it('resolves a context request with the answer of the tab asked', async () => {
+    const tabs = new AgentTabs()
+    const a = stream()
+    tabs.connect('a', a)
+    const answer = tabs.askContext('a', 1_000)
+    const request = JSON.parse(a.written[0]?.slice('data: '.length) ?? '')
+    const context = { project: 'linea', selected: [] }
+    expect(tabs.answerContext('b', request.id, context)).toEqual(false)
+    expect(tabs.answerContext('a', request.id, context)).toEqual(true)
+    expect(await answer).toEqual(context)
+    expect(tabs.answerContext('a', request.id, context)).toEqual(false)
+  })
+
+  it('gives up on a tab that does not answer', async () => {
+    const tabs = new AgentTabs()
+    tabs.connect('a', stream())
+    expect(await tabs.askContext('a', 1)).toEqual(undefined)
+  })
+
   it('sends a show to its tab only', () => {
     const tabs = new AgentTabs()
     const a = stream()

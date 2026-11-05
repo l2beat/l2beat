@@ -80,6 +80,8 @@ export class Editor {
   // editor lives. Read-only files have nothing the view state cache misses.
   private readonly fileStates = new Map<string, EditorState>()
   private activeFileKey: string | undefined
+  // The EditorFile id of the file on screen.
+  activeFileId: string | undefined
   private readonly changeListeners = new Set<EditorContentCallback>()
   private readonly loadListeners = new Set<EditorContentCallback>()
   private saveCallback: ((content: string) => string) | null = null
@@ -135,6 +137,7 @@ export class Editor {
     if (key !== this.activeFileKey) {
       this.switchToFile(key, file)
     }
+    this.activeFileId = file.id
     if (this.view.state.readOnly !== file.readOnly) {
       this.view.dispatch({
         effects: this.readOnly.reconfigure(
@@ -173,6 +176,12 @@ export class Editor {
       effects: setSearchQuery.of(new SearchQuery({ search: searchString })),
     })
     findNext(this.view)
+  }
+
+  // The main selection, offsets in the text of the file on screen.
+  getSelection(): { from: number; to: number } {
+    const { from, to } = this.view.state.selection.main
+    return { from, to }
   }
 
   revealAtTop(offset: number) {
