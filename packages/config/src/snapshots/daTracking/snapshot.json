@@ -180,6 +180,18 @@
       }
     }
   ],
+  "base-shadow-batcher": [
+    {
+      "id": "eaf3347dab91",
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0x0000000000000000000000000000000000ba7c4e",
+        "sequencers": ["0x7360f62205709a1501e7a04513f61eda0bd13987"],
+        "sinceBlock": 26337306
+      }
+    }
+  ],
   "bb84": [
     {
       "id": "8a5a5f27b4f0",
