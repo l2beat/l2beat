@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { heartEcho } from './echo'
 import { HEART_RATIO, heart, INK, lockup, PINK, place, WHITE } from './marks'
-import { OG_SIZE, rasterize, rowStarts } from './render'
+import { OG_SIZE, rasterize, rowExtents } from './render'
 import type { TextMeasure } from './text'
 
 // Every OG image but home's: the logo's heart glowing on the right, its echo
@@ -54,19 +54,23 @@ const frameDecor = () =>
     heartEcho(placement) + CORNER_FADE + heart(placement) + lockup(signature),
   ))
 
-let heartRows: number[] | undefined
+let heartRows: { start: number; end: number }[] | undefined
 /**
- * Where the heart's fill starts between two canvas rows: the nearest it comes
- * to text on those rows and the furthest right it starts. Its left side
- * slants, so text has to check the rows its own letters cover.
+ * The heart's fill across the canvas rows from `top` to `bottom`: the nearest
+ * and the furthest it starts from the left, and the nearest it ends on the
+ * right. Both sides slant, so text has to check the rows its letters cover.
  */
-export function heartEdgeBetween(top: number, bottom: number) {
-  heartRows ??= rowStarts(heart(placement))
+export function heartFillBetween(top: number, bottom: number) {
+  heartRows ??= rowExtents(heart(placement))
   const rows = heartRows.slice(
     Math.max(0, Math.floor(top)),
     Math.ceil(bottom) + 1,
   )
-  return { nearest: Math.min(...rows), furthest: Math.max(...rows) }
+  return {
+    nearestStart: Math.min(...rows.map((row) => row.start)),
+    furthestStart: Math.max(...rows.map((row) => row.start)),
+    nearestEnd: Math.min(...rows.map((row) => row.end)),
+  }
 }
 
 export function HeartbeatFrame({
@@ -119,11 +123,11 @@ function Label({
   baseline: number
 }) {
   const caps = text.toUpperCase()
-  const heartEdge = heartEdgeBetween(
+  const heartStart = heartFillBetween(
     baseline - measure.capHeight(LABEL.size),
     baseline,
-  ).nearest
-  const room = heartEdge - HEART_CLEARANCE - MARGIN
+  ).nearestStart
+  const room = heartStart - HEART_CLEARANCE - MARGIN
   let size = LABEL.size
   while (
     size > LABEL.min &&

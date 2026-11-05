@@ -2,7 +2,7 @@ import {
   COLUMN,
   HEART_CLEARANCE,
   HeartbeatFrame,
-  heartEdgeBetween,
+  heartFillBetween,
   MARGIN,
   TITLE_BASELINE,
   TITLE_LINE_HEIGHT,
@@ -90,8 +90,9 @@ export function fitTitle(measure: TextMeasure, title: string) {
 }
 
 /**
- * Whether a line `width` wide ends at the heart's edge: inside the clearance
- * in front of it, but short of putting its last letter on the pink.
+ * Whether a line `width` wide ends at one of the heart's edges: inside the
+ * clearance in front of it, short of putting its last letter on the pink, or
+ * so far over that it falls off the heart's other side.
  */
 function endsAtHeartEdge(
   measure: TextMeasure,
@@ -100,10 +101,12 @@ function endsAtHeartEdge(
   baseline: number,
 ) {
   const end = MARGIN + width
-  const edge = heartEdgeBetween(baseline - measure.capHeight(size), baseline)
-  const stopsShort = end + HEART_CLEARANCE <= edge.nearest
-  const runsOver = end - LAST_LETTER * size >= edge.furthest
-  return !stopsShort && !runsOver
+  const fill = heartFillBetween(baseline - measure.capHeight(size), baseline)
+  const stopsShort = end + HEART_CLEARANCE <= fill.nearestStart
+  const endsOnHeart =
+    end - LAST_LETTER * size >= fill.furthestStart &&
+    end + HEART_CLEARANCE <= fill.nearestEnd
+  return !stopsShort && !endsOnHeart
 }
 
 /** The title wrapped into the narrowest box that keeps the line count the column gives. */

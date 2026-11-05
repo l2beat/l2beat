@@ -48,15 +48,23 @@ export function rasterize(body: string) {
   return `data:image/png;base64,${draw(body).asPng().toString('base64')}`
 }
 
-/** Where drawn SVG starts on each canvas row, from the left; Infinity on an empty row. */
-export function rowStarts(body: string) {
+/**
+ * Where drawn SVG starts and ends on each canvas row. An empty row starts at
+ * Infinity and ends at -Infinity, so it never counts as covered.
+ */
+export function rowExtents(body: string) {
   const { pixels } = draw(body)
   const { width, height } = OG_SIZE
+  const painted = (x: number, y: number) =>
+    (pixels[(y * width + x) * 4 + 3] ?? 0) >= 128
   return Array.from({ length: height }, (_, y) => {
-    for (let x = 0; x < width; x++) {
-      if ((pixels[(y * width + x) * 4 + 3] ?? 0) >= 128) return x
-    }
-    return Number.POSITIVE_INFINITY
+    let start = 0
+    while (start < width && !painted(start, y)) start++
+    let end = width - 1
+    while (end > start && !painted(end, y)) end--
+    return start < width
+      ? { start, end }
+      : { start: Number.POSITIVE_INFINITY, end: Number.NEGATIVE_INFINITY }
   })
 }
 
