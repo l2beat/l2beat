@@ -77,6 +77,7 @@ export function OssificationDetails({
           <OssificationExposure
             exposure={ossification.exposure}
             valueSource={ossification.valueSource}
+            timeline={ossification.timeline}
           />
         </ChartStatsItem>
         <ChartStatsItem

@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x794989a55c66b35d494062149d27b8c3679e9afa
+
+# Diff at Thu, 05 Nov 2026 08:58:39 GMT:
+
+- id: 6d82e27f
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@92a563dab6932b2cedd6791c3571d1d33fc43c20 block: 1793703220
+- current timestamp: 1793703220
+
+## Description
+
+The new SP1 verifier is critical from its registration.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793703220 (main branch discovery), not current.
+
+```diff
+    contract ZkEvmVerifierV1 (eth:0xFF31F579F723e0493D969B46095FE718ebf4401A) [morph/ZkEvmVerifierV1] {
+    +++ description: A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.
+      critical:
++        {"sinceTimestamp":1793671775}
+    }
+```
+
 Generated with discovered.json: 0xa38b7ce54c2704db96d1228658f772af49d24fb0
 
 # Diff at Tue, 03 Nov 2026 15:45:06 GMT:

@@ -16,9 +16,10 @@ The **clock** starts from the newest critical change and falls back to the **gen
 ## What resets the clock
 
 - **Additions YES:** a new implementation, verifier, authority path or HIGH value.
-- **Removals NO**, even when a HIGH field changes: freezing a verifier route, unsetting a verifier, detaching a contract or renouncing a role.
+- **Removals NO**, even when a HIGH field changes: freezing a verifier route, unsetting a verifier, detaching a contract or renouncing a role. They count when they change the mechanism of what remains (see new role holders).
 - **Round-trip upgrades YES**, even when the final code equals the old code. The interim code could rewrite storage.
 - **Version-only upgrades NO:** bytecode that differs only in its version string.
+- **Queued changes** count when they take effect.
 - **New contracts NO.** Code takes effect when a critical contract points to it, which is a code or HIGH state change already. New escrows are a judgment call: weigh their share of the TVS and their code diff to the old escrow.
 - **New role holders NO**, unless they change the mechanism. On a Safe the mechanism changes with:
   - a new threshold (includes move from EOA to ms with >1 threshold)
@@ -38,7 +39,7 @@ A contract is critical when a change to its code or configuration can change the
 ## Field severity
 
 - **HIGH:** decides how assets or protected state are controlled, validated, finalized, frozen, censored, lost, created or disclosed. For example verifiers, vkeys, program hashes, thresholds, delays, authority paths, role powers and custody or accounting rules. Resets the clock.
-- **MEDIUM:** needs review without a reset. For example the pause state, role holders (`owner` and `$admin` included), rate limits, the set of active verifiers, kill switches, one-way locks and watched state of excluded escrows. Reaches the update monitor and puts the project under review on the frontend.
+- **MEDIUM:** needs review without a reset. For example the pause state, role holders (`owner` and `$admin` included), rate limits, the set of active verifiers, kill switches, one-way locks that only remove options, queued values and watched state of excluded escrows. Reaches the update monitor and puts the project under review on the frontend.
 - **LOW or unset:** multisig members and operational actors like sequencers, batch posters or operators. Unset until researched.
 
 How to encode all of this in discovery config and `ossification.json`: [`packages/config/src/projects/AGENTS.md`](../../../../packages/config/src/projects/AGENTS.md).

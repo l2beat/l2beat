@@ -605,7 +605,7 @@
       "values": {
         "$immutable": true,
         "safe": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastETHbeatInteraction": "1mo 6d",
+        "timeSinceLastETHbeatInteraction": "1mo 7d",
         "version": "1.0.0"
       },
       "implementationNames": {
@@ -2452,13 +2452,13 @@
       "name": "SequencerFeeVault",
       "address": "oeth:0x4200000000000000000000000000000000000011",
       "type": "Contract",
-      "template": "opstack/Layer2/SequencerFeeVault",
+      "template": "opstack/Layer2/SequencerFeeVault_karst",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
         "0xb45389729a8fffa7650568cd2922e482d03d3ed57b35f4819650d11174d9237a"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.",
+      "description": "Collects the sequencer fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.",
       "deployerAddress": "oeth:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1636665399,
       "sinceBlock": 0,
@@ -2822,7 +2822,7 @@
         "0xf7b9f825b6af20abb355da09822d54e6e3fa7243439293826bd7271f87747775"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.",
+      "description": "Collects the EIP-1559 base fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.",
       "deployerAddress": "oeth:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1636665399,
       "sinceBlock": 0,
@@ -2868,7 +2868,7 @@
         "0xf7b9f825b6af20abb355da09822d54e6e3fa7243439293826bd7271f87747775"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.",
+      "description": "Collects the L1 data portion of the L2 transaction fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.",
       "deployerAddress": "oeth:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1636665399,
       "sinceBlock": 0,
@@ -2908,13 +2908,13 @@
       "name": "OperatorFeeVault",
       "address": "oeth:0x420000000000000000000000000000000000001b",
       "type": "Contract",
-      "template": "opstack/Layer2/OperatorFeeVault",
+      "template": "opstack/Layer2/OperatorFeeVault_karst",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
         "0x0ba9b644913957c9f60eda0ab433da4523bb2437156e4dd8dadca627c884ba2a"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Holds the 'operator fees' for the L2 network, which are part of the L2 fees that users pay.",
+      "description": "Collects the operator fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.",
       "ignoreInWatchMode": ["totalProcessed"],
       "deployerAddress": "oeth:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1636665399,
@@ -5170,21 +5170,21 @@
     "opstack/L1CrossDomainMessenger": "0xb744f567252900c5026a2b29403304c6744365159db35005ebd26e5236be1b27",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0xe12a1d11b528a86198802d42c94a6960c55724bcfaf859346be9755694a1c641",
-    "opstack/Layer2/BaseFeeVault_karst": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
+    "opstack/Layer2/BaseFeeVault_karst": "0x1e841246c5db643208c1cc742c0f02036672e48e3ef31425be11bd69b342355d",
     "opstack/Layer2/EAS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/GasPriceOracle": "0x8f497de83556de92a063c31d97188024782f910b9b1f254812e9e6b58ece0ccf",
     "opstack/Layer2/L1Block": "0x285f931e841dfeccb9fd8de970781403669decd9880ffbed39a4c35bf5c15333",
     "opstack/Layer2/L1BlockNumber": "0x21c6e550d144ce1c4b375c15824ea847ca6ac0e5fcd4f3f388bd296e8f014797",
-    "opstack/Layer2/L1FeeVault_karst": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
+    "opstack/Layer2/L1FeeVault_karst": "0x1e841246c5db643208c1cc742c0f02036672e48e3ef31425be11bd69b342355d",
     "opstack/Layer2/L2CrossDomainMessenger": "0x6b2f3325184c69786aa4c8225442dd9b795b30aab09628af226705b0b5a30644",
     "opstack/Layer2/L2ERC721Bridge": "0x134c37b08d464eb53a9ae063f26e795155695ec752fda38644e23175466793ca",
     "opstack/Layer2/L2ProxyAdmin_karst": "0x70d00d08dd524425b6612b13b16781498c13da3b7e3fac0a5ccd63078eeb5644",
     "opstack/Layer2/L2StandardBridge": "0x424b2343f5b2cefc1794c1fb948f48409ba0376f49d8694d66914f6127164b5b",
     "opstack/Layer2/L2ToL1MessagePasser": "0x3f407b76384248e32af67feefe154f34a2c61ee1576e0e3037e095d556534fc3",
-    "opstack/Layer2/OperatorFeeVault": "0x044085f5049dce846d88feaa0007d7805521906a1025bb3acc0ee57c09befe47",
+    "opstack/Layer2/OperatorFeeVault_karst": "0x1f250e90d2d74f90bd6cf2229287042f4f2677832e928a76f18dc0af01c3d81b",
     "opstack/Layer2/OptimismMintableERC721Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/SchemaRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
+    "opstack/Layer2/SequencerFeeVault_karst": "0x1e841246c5db643208c1cc742c0f02036672e48e3ef31425be11bd69b342355d",
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismPortal2": "0xe53b15bf3d92307599513bfc4cc3c92ccbd3b002df06d48f2e462ec4d7770f28",
@@ -5195,7 +5195,7 @@
     "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7"
   },
   "usedBlockNumbers": { "ethereum": 26241162, "optimism": 158494595 },
-  "permissionsConfigHash": "0x85d38ad400937b08f022700662aeacf94794140932e98779845bf6ca494ee6ff",
+  "permissionsConfigHash": "0x25930c651424463d144dd0ca2ee9bb089be3796bb27e7f1caea6ed778e8abf79",
   "permissions": {
     "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": {
       "directlyReceivedPermissions": [
@@ -5332,6 +5332,30 @@
           "from": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
           "description": "set the dispute game implementation and initial bond for any game type.",
           "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0x4200000000000000000000000000000000000011",
+          "description": "change the fee recipient, the minimum withdrawal amount and whether fees are withdrawn on L1 or L2.",
+          "role": ".proxyAdminOwner"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0x4200000000000000000000000000000000000019",
+          "description": "change the fee recipient, the minimum withdrawal amount and whether fees are withdrawn on L1 or L2.",
+          "role": ".proxyAdminOwner"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0x420000000000000000000000000000000000001A",
+          "description": "change the fee recipient, the minimum withdrawal amount and whether fees are withdrawn on L1 or L2.",
+          "role": ".proxyAdminOwner"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0x420000000000000000000000000000000000001b",
+          "description": "change the fee recipient, the minimum withdrawal amount and whether fees are withdrawn on L1 or L2.",
+          "role": ".proxyAdminOwner"
         },
         {
           "permission": "upgrade",

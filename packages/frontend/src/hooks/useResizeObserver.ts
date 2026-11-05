@@ -1,6 +1,5 @@
 import type { RefObject } from 'react'
 import { useEffect, useRef, useState } from 'react'
-import { useIsClient } from './useIsClient'
 
 type Size = {
   width: number | undefined
@@ -23,15 +22,12 @@ export function useResizeObserver<T extends HTMLElement = HTMLElement>(
 ): Size {
   const { ref, box = 'content-box' } = options
   const [{ width, height }, setSize] = useState<Size>(initialSize)
-  const isClient = useIsClient()
   const previousSize = useRef<Size>({ ...initialSize })
   const onResize = useRef<((size: Size) => void) | undefined>(undefined)
   onResize.current = options.onResize
 
   useEffect(() => {
-    // Observing before the client flag flips would record the first size
-    // without storing it, and the observer that follows sees no change.
-    if (!isClient || !ref?.current) return
+    if (!ref?.current) return
 
     if (typeof window === 'undefined' || !('ResizeObserver' in window)) return
 
@@ -69,7 +65,7 @@ export function useResizeObserver<T extends HTMLElement = HTMLElement>(
     return () => {
       observer.disconnect()
     }
-  }, [box, ref, isClient])
+  }, [box, ref])
 
   return { width, height }
 }

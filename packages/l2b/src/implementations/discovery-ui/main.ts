@@ -15,6 +15,7 @@ import { existsSync, readFileSync } from 'fs'
 import type { Server } from 'http'
 import path, { join } from 'path'
 import { getCodePaths } from '../discovery/getCodePaths'
+import { adapterCommand } from './agent/chat/providers'
 import { createAgentRouter } from './agent/router'
 import { attachAnalyzeRouter } from './analyze/router'
 import { attachConfigRouter } from './configs/router'
@@ -144,7 +145,15 @@ export function createDiscoveryUiApp({
 
   // Before the body parser, so the agent routes refuse a request unread.
   if (!readonly) {
-    app.use('/api/agent', createAgentRouter(configReader))
+    const port = process.env.PORT ?? 2021
+    app.use(
+      '/api/agent',
+      createAgentRouter(configReader, {
+        cwd: paths.root,
+        mcpUrl: `http://localhost:${port}/api/agent/mcp`,
+        launch: adapterCommand,
+      }),
+    )
   }
   app.use(express.json())
 

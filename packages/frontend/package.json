@@ -22,9 +22,12 @@
     "test:e2e:all-pages": "pnpm build && playwright test e2e/all-pages/all-pages.e2e.ts",
     "perf:resize": "pnpm build && playwright test e2e/resize-perf --no-deps",
     "perf:resize:ratchet": "pnpm build && UPDATE_CEILINGS=1 playwright test e2e/resize-perf --no-deps",
+    "perf:hydration": "pnpm build && playwright test e2e/hydration-perf --no-deps",
+    "perf:hydration:ratchet": "pnpm build && UPDATE_CEILINGS=1 playwright test e2e/hydration-perf --no-deps",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@base-ui/react": "^1.9.0",
     "@l2beat/backend-tools": "workspace:*",
     "@l2beat/config": "workspace:*",
     "@l2beat/database": "workspace:*",
@@ -41,7 +44,6 @@
     "@radix-ui/react-select": "^2.4.1",
     "@radix-ui/react-slot": "^1.5.0",
     "@radix-ui/react-tabs": "^1.2.1",
-    "@radix-ui/react-tooltip": "^1.4.1",
     "@resvg/resvg-js": "^2.6.2",
     "@shuding/opentype.js": "1.4.0-beta.0",
     "@tanstack/charts": "1.1.0",
@@ -68,7 +70,6 @@
     "image-size": "^2.0.1",
     "lodash": "^4.17.21",
     "markdown-it": "^14.1.0",
-    "next-themes": "^0.3.0",
     "react": "19.0.0",
     "react-day-picker": "^9.11.1",
     "react-dom": "19.0.0",

@@ -1,4 +1,6 @@
-import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import type { ConfigReader } from '@l2beat/discovery'
+import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
+import { readReachableEntries } from '../readReachableEntries'
 import { ToolError } from './toolError'
 
 export interface AgentEntry {
@@ -128,4 +130,28 @@ export function editDistance(source: string, target: string): number {
     previous = current
   }
   return previous[target.length] as number
+}
+
+// A contract both the project and a shared module list is one entry, and
+// the zero address is drawn nowhere.
+export function readAgentEntries(
+  configReader: ConfigReader,
+  project: string,
+): AgentEntry[] {
+  return toAgentEntries(readReachableEntries(configReader, project))
+}
+
+export function toAgentEntries(
+  entries: readonly { address: ChainSpecificAddress; name?: string }[],
+): AgentEntry[] {
+  const byAddress = new Map<ChainSpecificAddress, AgentEntry>()
+  for (const entry of entries) {
+    if (ChainSpecificAddress.address(entry.address) === EthereumAddress.ZERO) {
+      continue
+    }
+    if (!byAddress.has(entry.address)) {
+      byAddress.set(entry.address, { address: entry.address, name: entry.name })
+    }
+  }
+  return [...byAddress.values()]
 }
