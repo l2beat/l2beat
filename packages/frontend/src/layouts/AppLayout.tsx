@@ -34,11 +34,7 @@ export function AppLayout({
 }) {
   return (
     <TRPCReactProvider>
-      <ThemeProvider
-        attribute="class"
-        storageKey="l2beat-theme"
-        disableTransitionOnChange
-      >
+      <ThemeProvider attribute="class" storageKey="l2beat-theme">
         <TooltipProvider delayDuration={300} disableHoverableContent>
           {/* The static check lets bundlers drop the dev tools from production builds */}
           {process.env.NODE_ENV !== 'production' &&

@@ -22,6 +22,8 @@
     "test:e2e:all-pages": "pnpm build && playwright test e2e/all-pages/all-pages.e2e.ts",
     "perf:resize": "pnpm build && playwright test e2e/resize-perf --no-deps",
     "perf:resize:ratchet": "pnpm build && UPDATE_CEILINGS=1 playwright test e2e/resize-perf --no-deps",
+    "perf:hydration": "pnpm build && playwright test e2e/hydration-perf --no-deps",
+    "perf:hydration:ratchet": "pnpm build && UPDATE_CEILINGS=1 playwright test e2e/hydration-perf --no-deps",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

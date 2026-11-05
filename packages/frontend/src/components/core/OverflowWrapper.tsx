@@ -1,6 +1,6 @@
 import clamp from 'lodash/clamp'
 import type React from 'react'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { useEventCallback } from '~/hooks/useEventCallback'
 import { useEventListener } from '~/hooks/useEventListener'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
@@ -74,13 +74,13 @@ export const OverflowWrapper = ({
     setVisibleArrows(visibleArrows)
   })
 
-  useEffect(updateArrows, [])
-
   useEventListener('scroll', updateArrows, contentRef)
 
   // ResizeObserver callbacks run after layout, so the scroll metrics below
   // are free to read. A window resize listener read them mid-frame and
-  // forced a layout per wrapper on every resize event.
+  // forced a layout per wrapper on every resize event. Their first call, on
+  // observe, also sets the arrows on load; a mount effect would force the
+  // page's first layout inside the hydration task.
   useResizeObserver({ ref: contentRef, onResize: updateArrows })
   useResizeObserver({ ref: childrenRef, onResize: updateArrows })
 

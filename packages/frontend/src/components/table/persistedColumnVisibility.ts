@@ -21,6 +21,7 @@ export const STORAGE_KEY_PREFIX = 'table-column-visibility-'
 const TABLE_ID_ATTR = 'data-table-id'
 const APPLIED_ATTR = 'data-columns-applied'
 const COLUMN_ID_ATTR = 'data-column-id'
+const RULES_ATTR = 'data-hidden-columns'
 
 export interface PersistedColumns {
   tableId: string
@@ -59,6 +60,16 @@ export function getPrePaintHideScript(tableId: string): string {
   return (
     `try{var v=JSON.parse(localStorage.getItem(${key})||"{}"),c="";` +
     `for(var k in v)if(v[k]===false)c+=${tableSelector}+JSON.stringify(k)+"]{display:none}";` +
-    `if(c){var s=document.createElement("style");s.textContent=c;document.head.appendChild(s)}}catch{}`
+    `if(c){var s=document.createElement("style");s.textContent=c;` +
+    `s.setAttribute("${RULES_ATTR}",${JSON.stringify(tableId)});document.head.appendChild(s)}}catch{}`
+  )
+}
+
+/** Whether the pre-paint script added rules that hide columns of this table. */
+export function hasPrePaintHideRules(tableId: string) {
+  return (
+    document.head.querySelector(
+      `style[${RULES_ATTR}=${JSON.stringify(tableId)}]`,
+    ) !== null
   )
 }
