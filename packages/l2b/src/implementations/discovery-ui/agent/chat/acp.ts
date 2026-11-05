@@ -15,7 +15,16 @@ const messageSchema = z.object({
 })
 type Message = z.infer<typeof messageSchema>
 
-export class AcpError extends Error {}
+// The message is static; what the agent said or why it exited is the
+// detail the chat shows the researcher.
+export class AcpError extends Error {
+  constructor(
+    message: string,
+    readonly detail: string,
+  ) {
+    super(message, { cause: { detail } })
+  }
+}
 
 export interface AcpHandlers {
   onNotification: (method: string, params: unknown) => void
@@ -59,14 +68,18 @@ export class AcpConnection {
     // Writing to an agent that just died fails with EPIPE after the fact.
     this.child.stdin?.on('error', () => this.exit('stopped reading'))
     this.child.on('error', (error) => this.exit(error.message))
-    this.child.on('exit', (code, signal) =>
+    // After stdout and stderr ended: an adapter that fails at once, like
+    // npx without network, says why on stderr just before it exits.
+    this.child.on('close', (code, signal) =>
       this.exit(`exited with ${signal ?? `code ${code}`}`),
     )
   }
 
   request(method: string, params: unknown): Promise<unknown> {
     if (this.exited !== undefined) {
-      return Promise.reject(new AcpError(this.describeExit(this.exited)))
+      return Promise.reject(
+        new AcpError('Agent exited', this.describeExit(this.exited)),
+      )
     }
     const id = this.nextId++
     this.write({ jsonrpc: '2.0', id, method, params })
@@ -138,7 +151,9 @@ export class AcpConnection {
     const waiter = this.waiters.get(message.id)
     this.waiters.delete(message.id)
     if (message.error !== undefined) {
-      waiter?.reject(new AcpError(message.error.message))
+      waiter?.reject(
+        new AcpError('Agent request failed', message.error.message),
+      )
     } else {
       waiter?.resolve(message.result)
     }
@@ -168,12 +183,13 @@ export class AcpConnection {
       return
     }
     this.exited = reason
-    const error = new AcpError(this.describeExit(reason))
+    const detail = this.describeExit(reason)
+    const error = new AcpError('Agent exited', detail)
     for (const waiter of this.waiters.values()) {
       waiter.reject(error)
     }
     this.waiters.clear()
-    this.handlers.onExit(error.message)
+    this.handlers.onExit(detail)
   }
 
   private describeExit(reason: string): string {

@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 import type { ApiChatEvent } from '../../types'
-import { appendToLog, toChatEvents } from './events'
+import { appendToLog, clipEvent, toChatEvents } from './events'
 
 describe(toChatEvents.name, () => {
   it('turns answer chunks and tool calls into chat events', () => {
@@ -58,5 +58,34 @@ describe(appendToLog.name, () => {
     appendToLog(log, { type: 'text', text: 'x'.repeat(60_000) })
     const last = log.at(-1)
     expect(last?.type === 'text' && last.text.length).toEqual(50_000)
+  })
+})
+
+describe(clipEvent.name, () => {
+  it('bounds the strings an agent sends besides answers', () => {
+    const long = 'x'.repeat(10_000)
+    const permission = clipEvent({
+      type: 'permission',
+      id: '1',
+      title: long,
+      options: Array.from({ length: 30 }, () => ({
+        id: 'a',
+        name: long,
+        kind: 'allow_once',
+      })),
+    })
+    expect(permission.type === 'permission' && permission.title.length).toEqual(
+      2_000,
+    )
+    expect(
+      permission.type === 'permission' && permission.options.length,
+    ).toEqual(20)
+    const error = clipEvent({ type: 'error', message: long })
+    expect(error.type === 'error' && error.message.length).toEqual(2_000)
+    expect(clipEvent({ type: 'tool', id: 't1', status: 'completed' })).toEqual({
+      type: 'tool',
+      id: 't1',
+      status: 'completed',
+    })
   })
 })

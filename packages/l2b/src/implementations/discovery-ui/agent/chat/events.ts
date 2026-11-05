@@ -5,6 +5,9 @@ import type { ApiChatEvent } from '../../types'
 // long answers, many tool calls and long conversations.
 const LOG_EVENTS_MAX = 2_000
 const TEXT_CHARACTERS_MAX = 50_000
+// Titles, option names and error messages come from the agent too.
+const LABEL_CHARACTERS_MAX = 2_000
+const OPTIONS_MAX = 20
 // Tool calls report their status several times, and so does the chat; the
 // latest replaces the earlier one, if it is this recent.
 const MERGE_LOOKBACK = 200
@@ -79,7 +82,7 @@ export function appendToLog(log: ApiChatEvent[], event: ApiChatEvent) {
       return
     }
   }
-  log.push(clipText(event))
+  log.push(clipEvent(event))
   if (log.length > LOG_EVENTS_MAX) {
     log.splice(0, log.length - LOG_EVENTS_MAX)
   }
@@ -99,9 +102,47 @@ function findRecent(
   return undefined
 }
 
-function clipText(event: ApiChatEvent): ApiChatEvent {
-  if (event.type !== 'text' && event.type !== 'user') {
-    return event
+// Every string an agent sends is bounded before the log keeps it or the tab
+// draws it.
+export function clipEvent(event: ApiChatEvent): ApiChatEvent {
+  switch (event.type) {
+    case 'text':
+    case 'user':
+      return { ...event, text: event.text.slice(0, TEXT_CHARACTERS_MAX) }
+    case 'tool': {
+      // A key set to undefined would erase the title when updates merge.
+      const tool: ApiChatEvent = { type: 'tool', id: clipLabel(event.id) }
+      if (event.title !== undefined) {
+        tool.title = clipLabel(event.title)
+      }
+      if (event.status !== undefined) {
+        tool.status = event.status
+      }
+      return tool
+    }
+    case 'permission':
+      return {
+        ...event,
+        title: clipLabel(event.title),
+        options: event.options.slice(0, OPTIONS_MAX).map((option) => ({
+          id: clipLabel(option.id),
+          name: clipLabel(option.name),
+          kind: clipLabel(option.kind),
+        })),
+      }
+    case 'status':
+      return event.error === undefined
+        ? event
+        : { ...event, error: clipLabel(event.error) }
+    case 'error':
+      return { ...event, message: clipLabel(event.message) }
+    case 'turn-end':
+      return { ...event, stopReason: clipLabel(event.stopReason) }
+    case 'permission-done':
+      return event
   }
-  return { ...event, text: event.text.slice(0, TEXT_CHARACTERS_MAX) }
+}
+
+function clipLabel(text: string): string {
+  return text.slice(0, LABEL_CHARACTERS_MAX)
 }

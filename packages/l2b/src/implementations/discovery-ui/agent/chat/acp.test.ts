@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { AcpConnection, type AcpHandlers } from './acp'
+import { AcpConnection, AcpError, type AcpHandlers } from './acp'
 
 // A fake agent: a node process that asks the client one question, then
 // waits for input until its stdin closes.
@@ -57,6 +57,10 @@ describe(AcpConnection.name, () => {
     })
     const request = connection.request('initialize', {})
     expect(await reason).toEqual('Agent exited with code 3')
-    await expect(request).toBeRejectedWith('Agent exited with code 3')
+    await expect(request).toBeRejectedWith('Agent exited')
+    const error = await request.catch((e: unknown) => e)
+    expect(error instanceof AcpError && error.detail).toEqual(
+      'Agent exited with code 3',
+    )
   })
 })

@@ -69,8 +69,12 @@ function handle<T>(
     run(parsed.data)
     res.json({ ok: true })
   } catch (error) {
-    if (error instanceof ChatError || error instanceof AcpError) {
+    if (error instanceof ChatError) {
       res.status(409).json({ error: error.message })
+      return
+    }
+    if (error instanceof AcpError) {
+      res.status(409).json({ error: error.detail })
       return
     }
     throw error

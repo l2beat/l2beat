@@ -1,8 +1,8 @@
 import { v as z } from '@l2beat/validate'
 import type { ApiChatEvent, ApiChatProvider } from '../../types'
 import type { AgentTabs } from '../tabs'
-import { ACP_PROTOCOL_VERSION, AcpConnection } from './acp'
-import { appendToLog, toChatEvents } from './events'
+import { ACP_PROTOCOL_VERSION, AcpConnection, AcpError } from './acp'
+import { appendToLog, clipEvent, toChatEvents } from './events'
 import { signInHint } from './providers'
 
 const newSessionSchema = z.object({ sessionId: z.string() })
@@ -305,11 +305,15 @@ export class ChatSession {
     if (chat !== this.chat) {
       return
     }
-    appendToLog(chat.log, event)
-    this.tabs.sendChat(chat.owner, { type: 'chat', event })
+    const clipped = clipEvent(event)
+    appendToLog(chat.log, clipped)
+    this.tabs.sendChat(chat.owner, { type: 'chat', event: clipped })
   }
 }
 
 function messageOf(error: unknown): string {
+  if (error instanceof AcpError) {
+    return error.detail
+  }
   return error instanceof Error ? error.message : 'Failed'
 }
