@@ -11,14 +11,13 @@ interface Props {
 }
 
 const SKIP_WHILE_OFFSCREEN = '[content-visibility:auto]'
-// Skipping implies paint containment, which clips whatever overflows the
-// wrapper: a highlighted card's ring and glow, an open tooltip or popover not
-// rendered through a portal, and a chart's tooltip (kept in the DOM while
-// hidden, so this waits for the chart to be hovered or focused). Containment
-// also makes the wrapper a stacking context, so it has to rise itself to
-// cover its neighbours.
-const SHOW_OVERFLOW =
-  'has-[[data-highlighted],[data-radix-popper-content-wrapper],[data-chart-hover]:hover,[data-chart-hover]:focus]:[content-visibility:visible] has-[[data-highlighted],[data-radix-popper-content-wrapper],[data-chart-hover]:hover,[data-chart-hover]:focus]:relative has-[[data-highlighted],[data-radix-popper-content-wrapper],[data-chart-hover]:hover,[data-chart-hover]:focus]:z-10'
+// `content-visibility: auto` contains the wrapper's paint and layout even
+// while it is on screen: it clips whatever overflows the wrapper (a tooltip,
+// a popover, a highlighted card's glow), traps their z-index below the next
+// section, and moves the wrapper's text by a subpixel whenever it turns on
+// or off. So a wrapper skips only while it is this far off screen, where
+// none of that shows.
+const OFFSCREEN_MARGIN = '100% 0px'
 // A drag fires resize events every frame; remeasuring waits for the last one.
 const RESIZE_SETTLE_MS = 200
 // React 19 compares props by identity and sets innerHTML whenever this object
@@ -34,9 +33,10 @@ const KEEP_SERVER_MARKUP = { __html: '' }
  *
  * The same wrapper lets the browser skip style and layout of the contents
  * while they are off screen (`content-visibility: auto`), which is most of
- * what a long page pays on every resize step and scroll. The class goes on
- * after the first paint, once the browser has remembered each wrapper's real
- * height, so fragment navigation on load lands where it did.
+ * what a long page pays on every resize step and scroll. Only wrappers more
+ * than a viewport away skip, and only once the browser has laid them out and
+ * remembered their real height, so fragment navigation on load lands where
+ * it did.
  *
  * Not a Suspense boundary on purpose: React client-renders a boundary it has
  * not hydrated yet as soon as any context above it changes, and next-themes
@@ -46,13 +46,12 @@ const KEEP_SERVER_MARKUP = { __html: '' }
 export function LazyHydrate({ children, eager = false, className }: Props) {
   const [nearViewportRef, isNear] = useIsNearViewport()
   const isServer = typeof window === 'undefined'
-  // Layout containment from the start, as `content-visibility` implies it
-  // later: it stops the section's top margin collapsing through the wrapper,
-  // so the remembered height already includes that margin.
+  // Its own block formatting context whether it skips or not, so the
+  // section's margins never collapse through it and its height stays the
+  // same when skipping starts or stops.
   const wrapperClassName = cn(
     className,
-    '[contain-intrinsic-size:auto_800px] [contain:layout]',
-    SHOW_OVERFLOW,
+    'flow-root [contain-intrinsic-size:auto_800px]',
   )
 
   const ref = useCallback(
@@ -85,23 +84,38 @@ export function LazyHydrate({ children, eager = false, className }: Props) {
   )
 }
 
-const skippingWrappers = new Set<HTMLElement>()
+const wrappers = new Set<HTMLElement>()
+let offscreenObserver: IntersectionObserver | undefined
 let resizeSettleTimer: ReturnType<typeof setTimeout> | undefined
-let cancelRemeasure = () => {}
 
+// An observer first reports an element after the browser lays out the next
+// frame, which also records each wrapper's height, so a wrapper never skips
+// without its real height. Observing it again repeats that after a resize.
 function skipWhileOffscreen(element: HTMLElement) {
-  if (skippingWrappers.size === 0) {
+  if (typeof IntersectionObserver === 'undefined') return () => {}
+  offscreenObserver ??= new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        entry.target.classList.toggle(
+          SKIP_WHILE_OFFSCREEN,
+          !entry.isIntersecting,
+        )
+      }
+    },
+    { rootMargin: OFFSCREEN_MARGIN },
+  )
+  if (wrappers.size === 0) {
     window.addEventListener('resize', remeasureWhenResizeSettles)
   }
-  skippingWrappers.add(element)
-  const cancel = afterFirstPaint(() =>
-    element.classList.add(SKIP_WHILE_OFFSCREEN),
-  )
+  wrappers.add(element)
+  offscreenObserver.observe(element)
   return () => {
-    cancel()
-    skippingWrappers.delete(element)
-    if (skippingWrappers.size === 0) {
+    offscreenObserver?.unobserve(element)
+    element.classList.remove(SKIP_WHILE_OFFSCREEN)
+    wrappers.delete(element)
+    if (wrappers.size === 0) {
       window.removeEventListener('resize', remeasureWhenResizeSettles)
+      clearTimeout(resizeSettleTimer)
     }
   }
 }
@@ -116,25 +130,9 @@ function remeasureWhenResizeSettles() {
 }
 
 function remeasureAll() {
-  cancelRemeasure()
-  for (const element of skippingWrappers) {
+  for (const element of wrappers) {
     element.classList.remove(SKIP_WHILE_OFFSCREEN)
-  }
-  cancelRemeasure = afterFirstPaint(() => {
-    for (const element of skippingWrappers) {
-      element.classList.add(SKIP_WHILE_OFFSCREEN)
-    }
-  })
-}
-
-// Two frames: the first callback runs before the pending frame paints.
-function afterFirstPaint(callback: () => void) {
-  let inner: number | undefined
-  const outer = requestAnimationFrame(() => {
-    inner = requestAnimationFrame(callback)
-  })
-  return () => {
-    cancelAnimationFrame(outer)
-    if (inner !== undefined) cancelAnimationFrame(inner)
+    offscreenObserver?.unobserve(element)
+    offscreenObserver?.observe(element)
   }
 }
