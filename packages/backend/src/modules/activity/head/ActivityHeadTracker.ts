@@ -1,5 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
+import { NotFoundOnRpcError } from '@l2beat/shared'
 import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { Clock } from '../../../tools/Clock'
 
@@ -89,7 +90,12 @@ export class ActivityHeadTracker {
     try {
       await this.update()
     } catch (error) {
-      this.logger.warn('Failed to follow the head', { error })
+      // Nodes behind a load balancer often lack the newest block for a moment
+      if (error instanceof NotFoundOnRpcError) {
+        this.logger.info('Head block not found yet', { error })
+      } else {
+        this.logger.warn('Failed to follow the head', { error })
+      }
     } finally {
       this.updating = false
     }

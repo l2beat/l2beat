@@ -4,9 +4,9 @@ import { formatTimestamp } from '~/utils/dates'
 import { generateTimestamps } from '../../../utils/generateTimestamps'
 
 /**
- * Ethereum's counts follow its finalized block, which lags the tip by about
- * 14 minutes. A latest block older than this means finality or the indexer
- * has stalled
+ * Ethereum's latest block is the chain's head, seconds old, or, while the
+ * head isn't followed, the finalized block, about 15 minutes old. Older than
+ * this means finality or the indexer has stalled
  */
 const LIVE_ACTIVITY_MAX_AGE = UnixTime.HOUR
 
