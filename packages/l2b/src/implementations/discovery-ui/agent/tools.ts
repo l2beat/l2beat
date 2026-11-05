@@ -3,12 +3,19 @@ import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { toJsonSchema, type Validator, v as z } from '@l2beat/validate'
 import { randomUUID } from 'crypto'
 import { getCodeFromDisk } from '../getCode'
+import { readReachableEntries } from '../readReachableEntries'
 import { safeStringSchema } from '../safeStringSchema'
 import type { ApiAgentShowEvent } from '../types'
 import type { CodeSource } from './codeAnchor'
 import { describeContext } from './context'
 import { cutText } from './excerpt'
-import { describeEntry, readAgentEntries } from './resolveRef'
+import { describePermissions } from './permissions'
+import {
+  describeEntry,
+  readAgentEntries,
+  resolveRef,
+  toAgentEntries,
+} from './resolveRef'
 import { type ResolvedStep, StepResolver } from './steps'
 import type { AgentTabs } from './tabs'
 import { ToolError } from './toolError'
@@ -100,6 +107,19 @@ export const AGENT_TOOLS: AgentTool[] = [
     run: (_, ui) => context(ui),
   }),
   tool({
+    name: 'permissions',
+    description:
+      'Lists who can act on a contract, from the permission model: each ultimate holder (EOA or multisig with its threshold), the contracts its control goes through with their delays, and who is granted it directly. Call it for "who can upgrade/control/pause X".',
+    input: z.object({
+      project: safeStringSchema
+        .optional()
+        .meta({ description: 'defaults to the project open in DiscoUI' }),
+      contract: refSchema,
+    }),
+    readOnly: true,
+    run: (input, ui) => permissions(ui, input.project, input.contract),
+  }),
+  tool({
     name: 'clear',
     description: 'Hides the note show put in DiscoUI.',
     input: z.object({}),
@@ -167,13 +187,7 @@ function show(ui: DiscoUi, input: ShowInput): string[] {
   if (active === undefined && !isDryRun) {
     throw new ToolError(NO_TAB)
   }
-  const project = input.project ?? active?.project
-  if (project === undefined) {
-    throw new ToolError('No project open in DiscoUI, pass project')
-  }
-  if (!hasDiscovery(ui.configReader, project)) {
-    throw new ToolError('No discovered project', { project })
-  }
+  const project = requireProject(ui, input.project ?? active?.project)
   const resolver = new StepResolver(
     readAgentEntries(ui.configReader, project),
     (address) => readSources(ui.configReader, project, address),
@@ -204,6 +218,27 @@ function readSources(
       code: source.code.replaceAll('\r\n', '\n').replaceAll('\r', '\n'),
     }),
   )
+}
+
+function requireProject(ui: DiscoUi, project: string | undefined): string {
+  if (project === undefined) {
+    throw new ToolError('No project open in DiscoUI, pass project')
+  }
+  if (!hasDiscovery(ui.configReader, project)) {
+    throw new ToolError('No discovered project', { project })
+  }
+  return project
+}
+
+function permissions(
+  ui: DiscoUi,
+  requested: string | undefined,
+  contract: string,
+): string[] {
+  const project = requireProject(ui, requested ?? ui.tabs.active()?.project)
+  const entries = readReachableEntries(ui.configReader, project)
+  const target = resolveRef(toAgentEntries(entries), contract)
+  return describePermissions(entries, target)
 }
 
 // ConfigReader throws for a project it cannot find, which here is a typo in

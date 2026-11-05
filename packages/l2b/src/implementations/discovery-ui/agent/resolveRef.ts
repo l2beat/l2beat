@@ -138,8 +138,14 @@ export function readAgentEntries(
   configReader: ConfigReader,
   project: string,
 ): AgentEntry[] {
+  return toAgentEntries(readReachableEntries(configReader, project))
+}
+
+export function toAgentEntries(
+  entries: readonly { address: ChainSpecificAddress; name?: string }[],
+): AgentEntry[] {
   const byAddress = new Map<ChainSpecificAddress, AgentEntry>()
-  for (const entry of readReachableEntries(configReader, project)) {
+  for (const entry of entries) {
     if (ChainSpecificAddress.address(entry.address) === EthereumAddress.ZERO) {
       continue
     }

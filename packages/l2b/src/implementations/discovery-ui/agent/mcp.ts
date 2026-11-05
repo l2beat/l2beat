@@ -18,6 +18,7 @@ const INSTRUCTIONS = [
   'When the researcher asks about "this" or what they are looking at, call `context`: it says what they selected in DiscoUI and prints the code around their selection.',
   'Keep notes short, a sentence or three each; the details go in your reply.',
   'Contracts are names (Bridge), chain:Name (arb1:L2Timelock) when a name repeats across chains, or chain:0x addresses.',
+  'For who can upgrade, pause or otherwise control a contract, call `permissions` and point at the route it prints with `show`.',
   'A code snippet is literal text copied from the source, not a pattern. A wrong name or snippet fails with what to fix: fix it and call again.',
 ].join('\n')
 
