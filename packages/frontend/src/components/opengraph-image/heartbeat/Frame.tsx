@@ -1,18 +1,21 @@
 import type { ReactNode } from 'react'
 import { heartEcho } from './echo'
-import { HEART_RATIO, heart, INK, PINK, place, WHITE } from './marks'
+import { HEART_RATIO, heart, INK, lockup, PINK, place, WHITE } from './marks'
 import { OG_SIZE, rasterize } from './render'
 import type { TextMeasure } from './text'
 
 // Every OG image but home's: the logo's heart glowing on the right, its echo
 // spreading across the canvas, and a pink label over a big white title on the
-// left. Long titles run over the heart, which is why it carries no letters.
+// left. Long titles run over the heart, so it carries no letters, and the full
+// lockup signs the top-left corner instead: a bare heart doesn't say ETHBEAT.
 
 export const MARGIN = 72
 /** The title column: the whole width between the margins. */
 export const COLUMN = OG_SIZE.width - 2 * MARGIN
 
 const HEART_HEIGHT = 440
+// Any smaller and ETH gets hard to read in a card ~500 px wide.
+const SIGNATURE_HEIGHT = 72
 const LABEL_TO_TITLE = 12
 const LABEL = { size: 36, min: 28, tracking: 1.4 / 24 }
 // The heart outline's left edge a little below its middle, where titles cross
@@ -29,10 +32,18 @@ export const HEART_EDGE = placement.hx + placement.scale * EDGE_DX
 /** How far short of the heart's edge text stops when it doesn't run over the heart. */
 export const HEART_CLEARANCE = 32
 
+const signature = place(
+  MARGIN + (SIGNATURE_HEIGHT * HEART_RATIO) / 2,
+  MARGIN + SIGNATURE_HEIGHT / 2,
+  SIGNATURE_HEIGHT,
+)
+
 // Drawn on first use, not on import: the server imports this for token images.
 let decor: string | undefined
 const frameDecor = () =>
-  (decor ??= rasterize(heartEcho(placement) + heart(placement)))
+  (decor ??= rasterize(
+    heartEcho(placement) + heart(placement) + lockup(signature),
+  ))
 
 export function HeartbeatFrame({
   measure,
