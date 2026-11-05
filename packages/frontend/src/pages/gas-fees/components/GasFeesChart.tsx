@@ -42,13 +42,17 @@ import {
 } from './metrics'
 import type { GasFeesChain } from './types'
 
-/** Ethereum and the four busiest L2s; the rest are one legend click away */
+/** Every L2 as one line */
+const L2S_KEY = 'l2s'
+
+/** Ethereum, the L2s combined and the four busiest L2s; the rest are one legend click away */
 const DEFAULT_VISIBLE_CHAINS = [
   'ethereum',
   'base',
   'arbitrum',
   'unichain',
   'optimism',
+  L2S_KEY,
 ]
 
 interface Props {
@@ -66,6 +70,8 @@ interface Props {
   highlightedChainId: string | undefined
   highlightedUpgradeId: string | undefined
   unit: GasFeesUnit
+  setUnit: (unit: GasFeesUnit) => void
+  rangeControl: React.ReactNode
 }
 
 type Point = { timestamp: number } & Record<string, number | null>
@@ -84,34 +90,42 @@ export function GasFeesChart({
   highlightedChainId,
   highlightedUpgradeId,
   unit,
+  setUnit,
+  rangeControl,
 }: Props) {
   const isGas = isGasMetric(shownMetric)
-  const meta = useMemo<ChartMeta>(
-    () =>
-      Object.fromEntries(
-        chains.map((chain) => [
-          chain.id,
-          {
-            label: (
-              <span className="inline-flex items-center gap-1">
-                <img
-                  src={chain.iconUrl}
-                  alt=""
-                  width={14}
-                  height={14}
-                  className="size-3.5 rounded-full"
-                />
-                {chain.shortName ?? chain.name}
-              </span>
-            ),
-            legendLabel: chain.shortName ?? chain.name,
-            color: chain.color,
-            indicatorType: { shape: 'line' },
-          },
-        ]),
-      ),
-    [chains],
-  )
+  const meta = useMemo<ChartMeta>(() => {
+    const entries: [string, ChartMeta[string]][] = chains.map((chain) => [
+      chain.id,
+      {
+        label: (
+          <span className="inline-flex items-center gap-1">
+            <img
+              src={chain.iconUrl}
+              alt=""
+              width={14}
+              height={14}
+              className="size-3.5 rounded-full"
+            />
+            {chain.shortName ?? chain.name}
+          </span>
+        ),
+        legendLabel: chain.shortName ?? chain.name,
+        color: chain.color,
+        indicatorType: { shape: 'line' },
+      },
+    ])
+    // Right after Ethereum in the legend, as the line to compare it with
+    entries.splice(1, 0, [
+      L2S_KEY,
+      {
+        label: 'L2s combined',
+        color: 'var(--primary)',
+        indicatorType: { shape: 'line' },
+      },
+    ])
+    return Object.fromEntries(entries)
+  }, [chains])
   const hidden = useMemo(
     () =>
       chains
@@ -130,6 +144,7 @@ export function GasFeesChart({
         chains.forEach((chain, i) => {
           point[chain.id] = values[i] ?? null
         })
+        point[L2S_KEY] = values[chains.length] ?? null
         return point
       }),
     [data, chains],
@@ -138,10 +153,9 @@ export function GasFeesChart({
   const yAxis = getYAxis(points, shownKeys, scale, isGas)
   // Upgrades sit under the chart as milestones; the one hovered in the list
   // also gets a bar
-  const markers = getUpgradeMarkers(
+  const markers = getUpgradeMarker(
     points,
-    upgrades.filter((u) => u.id === highlightedUpgradeId),
-    highlightedUpgradeId,
+    upgrades.find((u) => u.id === highlightedUpgradeId),
     yAxis.top,
   )
   const milestones = useMemo(() => toMilestones(upgrades), [upgrades])
@@ -162,29 +176,42 @@ export function GasFeesChart({
             timeRange={timeRange}
           />
         </div>
-        <RadioGroup
-          name="gasFeesScale"
-          value={scale}
-          onValueChange={(value) => setScale(value as GasFeesScale)}
-        >
-          <RadioGroupItem value="log">Log</RadioGroupItem>
-          <RadioGroupItem value="lin">Lin</RadioGroupItem>
-        </RadioGroup>
+        <div className="flex gap-2">
+          <RadioGroup
+            name="gasFeesUnit"
+            value={unit}
+            onValueChange={(value) => setUnit(value as GasFeesUnit)}
+          >
+            <RadioGroupItem value="usd">USD</RadioGroupItem>
+            <RadioGroupItem value="gas">Gas price</RadioGroupItem>
+          </RadioGroup>
+          <RadioGroup
+            name="gasFeesScale"
+            value={scale}
+            onValueChange={(value) => setScale(value as GasFeesScale)}
+          >
+            <RadioGroupItem value="log">Log</RadioGroupItem>
+            <RadioGroupItem value="lin">Lin</RadioGroupItem>
+          </RadioGroup>
+        </div>
       </ChartControlsWrapper>
-      <RadioGroup
-        name="gasFeesMetric"
-        value={metric}
-        onValueChange={(value) => setMetric(value as GasFeesMetric)}
-        className="max-w-full overflow-x-auto"
-      >
-        {(unit === 'usd' ? GAS_FEES_USD_METRICS : GAS_FEES_GAS_METRICS).map(
-          (m) => (
-            <RadioGroupItem key={m} value={m} className="whitespace-nowrap">
-              {GAS_FEES_METRIC_LABELS[m].short}
-            </RadioGroupItem>
-          ),
-        )}
-      </RadioGroup>
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <RadioGroup
+          name="gasFeesMetric"
+          value={metric}
+          onValueChange={(value) => setMetric(value as GasFeesMetric)}
+          className="max-w-full overflow-x-auto"
+        >
+          {(unit === 'usd' ? GAS_FEES_USD_METRICS : GAS_FEES_GAS_METRICS).map(
+            (m) => (
+              <RadioGroupItem key={m} value={m} className="whitespace-nowrap">
+                {GAS_FEES_METRIC_LABELS[m].short}
+              </RadioGroupItem>
+            ),
+          )}
+        </RadioGroup>
+        {rangeControl}
+      </div>
       <ChartContainer
         data={points}
         meta={meta}
@@ -205,11 +232,14 @@ export function GasFeesChart({
         <TimeSeriesChart
           data={points}
           ariaLabel={GAS_FEES_METRIC_LABELS[shownMetric].title}
-          series={chains.map((chain) => ({
-            key: chain.id,
-            stroke: chain.color,
-            strokeWidth: chain.id === 'ethereum' ? 2.5 : 1.75,
-          }))}
+          series={[
+            ...chains.map((chain) => ({
+              key: chain.id,
+              stroke: chain.color,
+              strokeWidth: chain.id === 'ethereum' ? 2.5 : 1.75,
+            })),
+            { key: L2S_KEY, stroke: 'var(--primary)', strokeWidth: 2.5 },
+          ]}
           highlight={highlightedChainId}
           yAxis={yAxis.options}
           referenceAreas={markers.areas}
@@ -268,55 +298,49 @@ function getYAxis(
 }
 
 /**
- * A thin bar per upgrade inside the data, and a label above each
- * upgrade (gas limit raises stay unlabeled unless highlighted). Close
- * labels alternate between two rows.
+ * A bar at the selected upgrade, named above the plot, where no line
+ * crosses the label
  */
-function getUpgradeMarkers(
+function getUpgradeMarker(
   points: Point[] | undefined,
-  upgrades: GasFeesUpgrade[],
-  highlightedId: string | undefined,
+  upgrade: GasFeesUpgrade | undefined,
   top: number | undefined,
 ): { areas: ChartReferenceArea[]; labels: ChartReferenceDot[] } {
   const first = points?.[0]?.timestamp
   const last = points?.at(-1)?.timestamp
-  if (first === undefined || last === undefined) {
+  const at = upgrade?.timestamp
+  if (
+    !upgrade ||
+    first === undefined ||
+    last === undefined ||
+    at === null ||
+    at === undefined ||
+    at < first ||
+    at > last
+  ) {
     return { areas: [], labels: [] }
   }
-  const span = last - first
-  const width = Math.max(UnixTime.DAY, span / 400)
-  const areas: ChartReferenceArea[] = []
-  const labels: ChartReferenceDot[] = []
-  let previous: { x: number; row: number } | undefined
-  for (const upgrade of [...upgrades].reverse()) {
-    const at = upgrade.timestamp
-    if (at === null || at < first || at > last) continue
-    const highlighted = upgrade.id === highlightedId
-    areas.push({
-      x1: at,
-      x2: at + (highlighted ? width * 2 : width),
-      fill: highlighted ? 'var(--brand)' : 'var(--secondary)',
-      fillOpacity: highlighted ? 0.9 : upgrade.kind === 'upgrade' ? 0.35 : 0.18,
-    })
-    if (top === undefined) continue
-    if (upgrade.kind !== 'upgrade' && !highlighted) continue
-    const crowded = previous !== undefined && (at - previous.x) / span < 0.06
-    const row = highlighted ? 2 : crowded ? 1 - (previous?.row ?? 0) : 0
-    if (!highlighted) previous = { x: at, row }
-    labels.push({
-      x: at,
-      y: top,
-      r: 0,
-      label: {
-        text: upgrade.title,
-        position: 'bottom',
-        offset: 2 + row * 13,
-        fill: highlighted ? 'var(--brand)' : 'var(--secondary)',
-        fontWeight: highlighted ? 700 : 500,
-      },
-    })
+  const width = Math.max(UnixTime.DAY, (last - first) / 200)
+  return {
+    areas: [{ x1: at, x2: at + width, fill: 'var(--brand)', fillOpacity: 0.9 }],
+    labels:
+      top === undefined
+        ? []
+        : [
+            {
+              x: at,
+              y: top,
+              r: 0,
+              label: {
+                text: upgrade.title,
+                position: 'top',
+                offset: 5,
+                fill: 'var(--brand)',
+                fontWeight: 700,
+              },
+            },
+          ],
   }
-  return { areas, labels }
 }
 
 function toMilestones(upgrades: GasFeesUpgrade[]): Milestone[] {

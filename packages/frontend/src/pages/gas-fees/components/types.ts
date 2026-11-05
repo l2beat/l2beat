@@ -9,4 +9,6 @@ export interface GasFeesChain {
   iconUrl: string
   color: string
   noPriorityFeeNote: string | undefined
+  /** What a priority fee buys on the chain */
+  tipRole: string
 }

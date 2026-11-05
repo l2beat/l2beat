@@ -109,10 +109,15 @@ export function getMetricValue(
 }
 
 export function median(values: number[]) {
+  return quantile(values, 0.5)
+}
+
+/** Linear between the two nearest values */
+export function quantile(values: number[], q: number) {
   if (values.length === 0) return undefined
   const sorted = [...values].sort((a, b) => a - b)
-  const mid = Math.floor(sorted.length / 2)
-  return sorted.length % 2
-    ? sorted[mid]
-    : ((sorted[mid - 1] ?? 0) + (sorted[mid] ?? 0)) / 2
+  const at = (sorted.length - 1) * q
+  const lo = sorted[Math.floor(at)] ?? 0
+  const hi = sorted[Math.ceil(at)] ?? 0
+  return lo + (hi - lo) * (at - Math.floor(at))
 }

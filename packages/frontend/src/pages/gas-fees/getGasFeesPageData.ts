@@ -3,6 +3,7 @@ import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import {
   GAS_FEES_CHAINS,
   NO_PRIORITY_FEE_NOTES,
+  TIP_ROLES,
 } from '~/server/features/gas-fees/chains'
 import { getGasFeesUpgrades } from '~/server/features/gas-fees/getGasFeesUpgrades'
 import { ps } from '~/server/projects'
@@ -97,6 +98,7 @@ async function getCachedData(manifest: Manifest) {
           ? 'var(--chart-ethereum)'
           : (l2Colors[i - 1] ?? 'var(--secondary)'),
       noPriorityFeeNote: NO_PRIORITY_FEE_NOTES[chain.id],
+      tipRole: TIP_ROLES[chain.id],
     }
   })
 

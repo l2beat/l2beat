@@ -61,6 +61,8 @@ export const GAS_FEES_METRIC_LABELS: Record<
 
 /** Two significant digits below a dollar: fees span $100 to a hundredth of a cent */
 export function formatFee(value: number) {
+  // Without a nonzero digit to find, the precision runs away
+  if (value === 0) return formatCurrency(0, 'usd', { decimals: 2 })
   if (value >= 1) return formatCurrency(value, 'usd')
   return formatCurrency(value, 'usd', {
     decimals: Math.max(2, getFirstTwoNonZeroPrecision(value)),

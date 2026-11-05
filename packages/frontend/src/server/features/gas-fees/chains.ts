@@ -44,3 +44,20 @@ export const NO_PRIORITY_FEE_NOTES: Partial<Record<GasFeesChainId, string>> = {
   abstract:
     'Abstract has no priority fees: the sequencer orders transactions first come, first served.',
 }
+
+/** What a priority fee buys on each chain */
+export const TIP_ROLES: Record<GasFeesChainId, string> = {
+  ethereum: 'Sets position',
+  arbitrum: 'Ignored',
+  base: 'Sets position',
+  optimism: 'Sets position',
+  zksync2: 'Ignored',
+  // The base fee is pinned at 7 wei
+  linea: 'Is the price',
+  scroll: 'Sets position',
+  unichain: 'Sets position',
+  ink: 'Sets position',
+  abstract: 'Ignored',
+  taiko: 'Buys preconfirmation',
+  mantle: 'Sets position',
+}
