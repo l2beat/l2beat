@@ -498,7 +498,14 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
       operator: getTechnologyOperator(templateVars, priorityMode),
       forceTransactions:
         templateVars.nonTemplateTechnology?.forceTransactions ??
-        getTechnologyForceTransactions(priorityMode),
+        getTechnologyForceTransactions(
+          priorityMode,
+          getL1QueuePause(
+            templateVars.discovery,
+            diamondContract,
+            priorityMode,
+          ),
+        ),
       exitMechanisms: templateVars.nonTemplateTechnology?.exitMechanisms ?? [
         {
           ...EXITS.REGULAR_MESSAGING('zk'),
@@ -703,8 +710,31 @@ function getPriorityMode(
   }
 }
 
+interface L1QueuePause {
+  /** v31 pauseDepositsBeforeInitiatingMigration(): the chain admin stops all new priority transactions at once, until it unpauses. It reverts once Priority Mode is allowed. */
+  possible: boolean
+  active: boolean
+}
+
+/** `depositsPaused` exists from v31. Mainnet facets start the pause window at 0, so a pause takes effect immediately. */
+function getL1QueuePause(
+  discovery: ProjectDiscovery,
+  diamond: EntryParameters,
+  priorityMode: PriorityMode,
+): L1QueuePause {
+  const paused = discovery.getContractValueOrUndefined<boolean>(
+    diamond.address,
+    'depositsPaused',
+  )
+  return {
+    possible: paused !== undefined && !priorityMode.allowed,
+    active: paused === true,
+  }
+}
+
 function getTechnologyForceTransactions(
   priorityMode: PriorityMode,
+  l1QueuePause: L1QueuePause,
 ): ProjectTechnologyChoice {
   const references = [
     {
@@ -713,16 +743,28 @@ function getTechnologyForceTransactions(
     },
   ]
   if (!priorityMode.allowed) {
+    const pauseNote = l1QueuePause.possible
+      ? ` The chain admin can also pause the L1 queue, which rejects all new forced transactions and deposits until it unpauses.${
+          l1QueuePause.active ? ' The L1 queue is currently paused.' : ''
+        }`
+      : ''
     return {
       name: 'Users can force any transaction via L1',
-      description:
-        'If a user is censored by the L2 Sequencer, they can try to force their transaction via an L1 queue. Right now there is no mechanism that forces L2 Sequencer to include transactions from the queue in an L2 block. The operator can implement a TransactionFilterer that censors forced transactions.',
+      description: `If a user is censored by the L2 Sequencer, they can try to force their transaction via an L1 queue. Right now there is no mechanism that forces L2 Sequencer to include transactions from the queue in an L2 block. The operator can implement a TransactionFilterer that censors forced transactions.${pauseNote}`,
       risks: [
         ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM.risks,
         {
           category: 'Users can be censored if',
           text: 'the operator implements a TransactionFilterer, which is possible without delay.',
         },
+        ...(l1QueuePause.possible
+          ? [
+              {
+                category: 'Users can be censored if' as const,
+                text: 'the chain admin pauses the L1 queue, which is possible without delay.',
+              },
+            ]
+          : []),
       ],
       references,
     }

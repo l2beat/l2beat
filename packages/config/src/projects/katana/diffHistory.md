@@ -1,3 +1,32 @@
+Generated with discovered.json: 0x0cc6af454071d7014a6c8897c35b27d366dbefaa
+
+# Diff at Thu, 05 Nov 2026 10:30:28 GMT:
+
+- id: 1eec78cf
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ed3b78ee5d7973829dff175055ab7e54cc7df91 block: 1793194486
+- current timestamp: 1793874174
+
+## Description
+
+Polygon Multisig 2, the SystemConfig owner, raised the minimum L2 base fee from 0.001 to 0.05 gwei and the operator fee scalar from 100000 to 600000. Under Jovian the operator fee is gasUsed × scalar × 100 wei, so it rises from 0.01 to 0.06 gwei per gas. The minimum execution cost rises tenfold, from 0.011 to 0.11 gwei per gas, before the L1 data fee. Fee parameters only, no change to code or trust assumptions.
+
+The allocator EOA of the Morpho vault behind vbETH emptied the vault's supply queue, so it accepts no deposits. New ETH deposits (555 ETH, 21% of the vbETH backing) stay idle in the vbETH reserve and earn no yield. The vbETH reserve fields are now ignored in watch mode.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.minBaseFee:
+-        1000000
++        50000000
+      values.operatorFeeScalar:
+-        100000
++        600000
+    }
+```
+
 Generated with discovered.json: 0xe46fe10693a03a3269648b3f592527a59b3f66e0
 
 # Diff at Thu, 05 Nov 2026 07:14:25 GMT:

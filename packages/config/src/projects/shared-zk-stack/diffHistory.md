@@ -1,3 +1,50 @@
+Generated with discovered.json: 0x63629757e75d35d8c5683cc7f333c1dac145429e
+
+# Diff at Thu, 05 Nov 2026 10:39:33 GMT:
+
+- id: db66bd77
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ed3b78ee5d7973829dff175055ab7e54cc7df91 block: 1793715716
+- current timestamp: 1793715716
+
+## Description
+
+Seed the v31 RollupDAManager and RollupL1DAValidator, which ZKsync Era uses since it applied the v31 diamond cut. The new RollupDAManager allows one rollup DA configuration: RollupL1DAValidator_v31 with L2 DA commitment scheme 3 (blobs and pubdata keccak256). The RollupL1DAValidator_v31 has the same code as the old one.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793715716 (main branch discovery), not current.
+
+```diff
+    contract EmergencyUpgradeBoard (eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C) [shared-zk-stack/EmergencyUpgradeBoard] {
+    +++ description: A custom contract allowing a 3/3 of eth:0x29D2e773A31C07D375c50F0110422832bd044d08, eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and eth:0x8f525e55F76050d8dFdDa4870DA1b3ede54E908F to `executeEmergencyUpgrade()` via the eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
+      receivedPermissions.6:
++        {"permission":"interact","from":"eth:0xc16161C7f704388285fE58db287F6216a350dAFA","description":"manage allowed rollup DA configurations (allowed to be used by rollups in permanent rollup mode).","role":".owner","via":[{"address":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) [shared-zk-stack/ProtocolUpgradeHandler] {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+      directlyReceivedPermissions.10:
++        {"permission":"interact","from":"eth:0xc16161C7f704388285fE58db287F6216a350dAFA","description":"manage allowed rollup DA configurations (allowed to be used by rollups in permanent rollup mode).","role":".owner"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract RollupL1DAValidator_v31 (eth:0x1c715018c5565eaCC758236D4A9A760162a84Cbd) [shared-zk-stack/RollupL1DAValidator]
+    +++ description: Contract that verifies the data availability of ethereum calldata and blobs. Can be used by ZK stack rollups as the L1 part of a DAValidator pair.
+```
+
+```diff
++   Status: CREATED
+    contract RollupDAManager_v31 (eth:0xc16161C7f704388285fE58db287F6216a350dAFA) [shared-zk-stack/RollupDAManager_v31]
+    +++ description: Simple registry for allowed DA configurations for the 'rollup' data availability mode (can be permanently enforced with isPermanentRollup=true). A configuration pairs an L1 DA validator, usually a contract that validates that data was made available on Ethereum, with an L2 DA commitment scheme.
+```
+
 Generated with discovered.json: 0x7d9cbdc9c3d723cb0278fabab3ef84284cf84378
 
 # Diff at Tue, 03 Nov 2026 15:45:11 GMT:
