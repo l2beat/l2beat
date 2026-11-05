@@ -5,7 +5,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { ActivityConfigProject } from '../../../config/Config'
 import type { Clock } from '../../../tools/Clock'
-import { BlockTargetIndexer } from './BlockTargetIndexer'
+import { BlockTargetIndexer, type FinalizedBlock } from './BlockTargetIndexer'
 
 const LAST_HOUR = UnixTime.now() - 1 * UnixTime.HOUR
 
@@ -157,6 +157,116 @@ describe(BlockTargetIndexer.name, () => {
       )
     })
   })
+})
+
+describe(`${BlockTargetIndexer.name} following the finalized block`, () => {
+  // Methodology: the clock's last hour and the RPC's finalized block are both
+  // mocked, so each test sets how far finality lags behind the hourly target
+  const NOON = UnixTime.fromDate(new Date('2026-11-05T12:00:00Z'))
+  const MINUTE = UnixTime.MINUTE
+
+  it('ticks every minute instead of every hour', async () => {
+    const clock = mockObject<Clock>({
+      every: mockFn().returns(() => {}),
+      getLastHour: () => NOON,
+    })
+    const indexer = createFinalizedIndexer(clock, [block(100, NOON)])
+
+    await indexer.start()
+
+    expect(clock.every).toHaveBeenOnlyCalledWith(
+      UnixTime.MINUTE * 1000,
+      expect.anything(),
+    )
+  })
+
+  it('targets the last hour while finality keeps up, at the finalized block', async () => {
+    const onTick = mockFn().resolvesTo(undefined)
+    const indexer = createFinalizedIndexer(
+      mockObject<Clock>({ getLastHour: () => NOON }),
+      [block(100, NOON + 1 * UnixTime.HOUR + 47 * MINUTE)],
+      onTick,
+    )
+
+    const result = await indexer.tick()
+
+    expect(result).toEqual(100)
+    expect(onTick).toHaveBeenOnlyCalledWith(NOON, 100)
+  })
+
+  it('holds the target at the hour of the finalized block when finality stalls', async () => {
+    // L2 charts wait for Ethereum, so they hold too: accepted on purpose
+    const onTick = mockFn().resolvesTo(undefined)
+    const indexer = createFinalizedIndexer(
+      mockObject<Clock>({ getLastHour: () => NOON }),
+      [block(100, NOON - 90 * MINUTE)],
+      onTick,
+    )
+
+    await indexer.tick()
+
+    expect(onTick).toHaveBeenOnlyCalledWith(NOON - 2 * UnixTime.HOUR, 100)
+  })
+
+  it('keeps the highest finalized block when a lagging RPC returns an older one', async () => {
+    const onTick = mockFn().resolvesTo(undefined)
+    const indexer = createFinalizedIndexer(
+      mockObject<Clock>({ getLastHour: () => NOON }),
+      [block(100, NOON - 30 * MINUTE), block(90, NOON - 58 * MINUTE)],
+      onTick,
+    )
+
+    await indexer.tick()
+    const result = await indexer.tick()
+
+    expect(result).toEqual(100)
+    expect(onTick).toHaveBeenLastCalledWith(NOON - 1 * UnixTime.HOUR, 100)
+  })
+
+  it('throws when the first finalized block is below the one processed before a restart', async () => {
+    const db = mockObject<Database>({
+      activity: mockObject<Database['activity']>({
+        getLatestProcessedBlock: async () => 100,
+      }),
+    })
+    const indexer = createFinalizedIndexer(
+      mockObject<Clock>({ getLastHour: () => NOON }),
+      [block(99, NOON)],
+      undefined,
+      db,
+    )
+
+    await expect(indexer.tick()).toBeRejectedWith(
+      'Block number cannot be smaller',
+    )
+  })
+
+  function createFinalizedIndexer(
+    clock: Clock,
+    blocks: FinalizedBlock[],
+    onTick?: (targetTimestamp: number, blockNumber: number) => Promise<void>,
+    db = getMockDb(),
+  ) {
+    const getFinalizedBlock = mockFn<() => Promise<FinalizedBlock>>()
+    for (const b of blocks) {
+      getFinalizedBlock.resolvesToOnce(b)
+    }
+    return new BlockTargetIndexer(
+      Logger.SILENT,
+      clock,
+      mockObject<BlockTimestampProvider>({}),
+      db,
+      mockObject<ActivityConfigProject>({
+        id: ProjectId('ethereum'),
+        chainName: 'ethereum',
+      }),
+      { onTick, getFinalizedBlock },
+    )
+  }
+
+  function block(number: number, timestamp: UnixTime): FinalizedBlock {
+    return { number, timestamp }
+  }
 })
 
 function getMockDb() {

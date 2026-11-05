@@ -51,6 +51,11 @@ export class Clock {
     return () => clearInterval(interval)
   }
 
+  every(intervalMs: number, callback: () => void) {
+    const interval = setInterval(callback, intervalMs)
+    return () => clearInterval(interval)
+  }
+
   onNewDay(callback: (timestamp: UnixTime) => void) {
     let current = this.getLastDay()
     const onNewTimestamps = () => {

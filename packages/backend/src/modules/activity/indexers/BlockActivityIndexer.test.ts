@@ -67,6 +67,7 @@ describe(BlockActivityIndexer.name, () => {
         ['a'],
         START + 1 * UnixTime.DAY,
         3,
+        START + 1 * UnixTime.DAY,
       )
       expect(newSafeHeight).toEqual(3)
     })
@@ -93,15 +94,45 @@ describe(BlockActivityIndexer.name, () => {
       const activityRepository = mockObject<Database['activity']>({
         getByProjectIncludingDataPoint: mockFn().resolvesTo([]),
       })
+      const syncMetadataRepository = mockSyncMetadataRepository()
 
       const indexer = createIndexer({
-        db: mockDatabase({ activity: activityRepository }),
+        db: mockDatabase({
+          activity: activityRepository,
+          syncMetadata: syncMetadataRepository,
+        }),
       })
 
       const targetHeight = 10
       const newSafeHeight = await indexer.invalidate(targetHeight)
 
       expect(newSafeHeight).toEqual(targetHeight)
+      // Every restart invalidates to the safe height and ends here, and the
+      // counts still reach the latest block
+      expect(
+        syncMetadataRepository.clearLatestBlockTimestamp,
+      ).not.toHaveBeenCalled()
+    })
+
+    it('clears the latest block timestamp with the deleted rows', async () => {
+      const syncMetadataRepository = mockSyncMetadataRepository()
+      const indexer = createIndexer({
+        db: mockDatabaseWith({
+          activity: mockObject<Database['activity']>({
+            getByProjectIncludingDataPoint: mockFn().resolvesTo([
+              activityRecord('a', START, 2, 2, 11, 20),
+            ]),
+            deleteByProjectIdFrom: mockFn().resolvesTo(1),
+          }),
+          syncMetadata: syncMetadataRepository,
+        }),
+      })
+
+      await indexer.invalidate(15)
+
+      expect(
+        syncMetadataRepository.clearLatestBlockTimestamp,
+      ).toHaveBeenOnlyCalledWith('activity', 'a')
     })
 
     it('throws assertion when more than one record found', async () => {
@@ -241,13 +272,18 @@ function mockHourlyActivityRepository() {
   })
 }
 
+function mockSyncMetadataRepository() {
+  return mockObject<Database['syncMetadata']>({
+    updateSyncedUntil: mockFn().resolvesTo(undefined),
+    clearLatestBlockTimestamp: mockFn().resolvesTo(undefined),
+  })
+}
+
 function mockDatabaseWith(overrides: Partial<Database>) {
   return mockDatabase({
     activity: mockActivityRepository(),
     hourlyActivity: mockHourlyActivityRepository(),
-    syncMetadata: mockObject<Database['syncMetadata']>({
-      updateSyncedUntil: mockFn().resolvesTo(undefined),
-    }),
+    syncMetadata: mockSyncMetadataRepository(),
     ...overrides,
   })
 }

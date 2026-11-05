@@ -66,6 +66,7 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
         [this.$.projectId],
         UnixTime.toEndOf(latestTimestamp, 'hour'),
         adjustedTo,
+        latestTimestamp,
       )
     })
 
@@ -104,6 +105,11 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
       if (deletedRows > 0 || deletedHourlyRows > 0) {
         this.logger.info('Deleted rows', { deletedRows, deletedHourlyRows })
       }
+      // The counts no longer reach it. The next update records a new one
+      await this.$.db.syncMetadata.clearLatestBlockTimestamp(
+        'activity',
+        this.$.projectId,
+      )
     })
 
     this.logger.info('Invalidated activity', {

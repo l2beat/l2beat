@@ -1,5 +1,5 @@
 import type { AdjustCount } from '@l2beat/config'
-import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
+import { assertUnreachable, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { BlockActivityIndexer } from './indexers/BlockActivityIndexer'
@@ -56,6 +56,17 @@ export function initActivityModule({
                 },
               ])
             },
+            // Ethereum's own pages show its activity live. Other chains keep
+            // the hourly target, which their RPCs' finality may not support
+            getFinalizedBlock:
+              project.id === ProjectId.ETHEREUM
+                ? async () => {
+                    const block = await providers.clients
+                      .getRpcClient(project.chainName)
+                      .getBlock('finalized', false)
+                    return { number: block.number, timestamp: block.timestamp }
+                  }
+                : undefined,
           },
         )
 
