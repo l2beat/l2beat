@@ -23,9 +23,10 @@ describe(toChatEvents.name, () => {
   it('skips updates it does not draw', () => {
     expect(toChatEvents({ sessionUpdate: 'plan', entries: [] })).toEqual([])
     expect(toChatEvents('garbage')).toEqual([])
+    // A call that first comes with its id alone is still listed.
     expect(
       toChatEvents({ sessionUpdate: 'tool_call_update', toolCallId: 't1' }),
-    ).toEqual([])
+    ).toEqual([{ type: 'tool', id: 't1' }])
   })
 })
 
@@ -68,7 +69,7 @@ describe(clipEvent.name, () => {
       type: 'permission',
       id: '1',
       title: long,
-      paths: [],
+      paths: Array.from({ length: 25 }, (_, i) => `/file${i}`),
       input: long,
       options: Array.from({ length: 30 }, () => ({
         id: 'a',
@@ -86,6 +87,9 @@ describe(clipEvent.name, () => {
     expect(
       permission.type === 'permission' ? permission.input : undefined,
     ).toEqual(`${long.slice(0, 8_000)}\n… (cut)`)
+    expect(
+      permission.type === 'permission' ? permission.paths.at(-1) : undefined,
+    ).toEqual('and 5 more paths')
     const error = clipEvent({ type: 'error', message: long })
     expect(error.type === 'error' && error.message.length).toEqual(2_000)
     expect(clipEvent({ type: 'tool', id: 't1', status: 'completed' })).toEqual({

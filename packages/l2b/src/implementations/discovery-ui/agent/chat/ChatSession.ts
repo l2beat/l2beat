@@ -192,7 +192,8 @@ export class ChatSession {
             {
               type: 'http',
               name: 'discoui',
-              url: this.options.mcpUrl,
+              // Its show and context act in the chat's tab.
+              url: `${this.options.mcpUrl}?tab=${encodeURIComponent(chat.owner)}`,
               headers: [],
             },
           ],
@@ -210,6 +211,8 @@ export class ChatSession {
       this.setStatus(chat, 'ready')
     } catch (error) {
       this.fail(chat, messageOf(error))
+      // A failed start leaves nothing to talk to, only a process to end.
+      chat.connection.close()
     }
   }
 

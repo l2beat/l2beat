@@ -107,6 +107,44 @@ describe(attachMcpRoutes.name, () => {
     expect(written).toEqual(['data: {"type":"clear"}\n\n'])
   })
 
+  it("shows in the chat's tab when the agent names it", async () => {
+    const chatTab: string[] = []
+    const focused: string[] = []
+    const chatStream: TabStream = {
+      write: (c) => chatTab.push(c),
+      end: () => {},
+    }
+    const focusedStream: TabStream = {
+      write: (c) => focused.push(c),
+      end: () => {},
+    }
+    tabs.connect('chat-tab', chatStream)
+    tabs.connect('focused-tab', focusedStream)
+    tabs.report('chat-tab', { project: 'linea', focusedAt: 10, sequence: 10 })
+    tabs.report('focused-tab', {
+      project: 'arbitrum',
+      focusedAt: 20,
+      sequence: 11,
+    })
+    const response = await fetch(`${url}?tab=chat-tab`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        jsonrpc: '2.0',
+        id: 1,
+        method: 'tools/call',
+        params: { name: 'show', arguments: { steps: [{ note: 'Hi' }] } },
+      }),
+    })
+    const body = (await response.json()) as { result?: { isError: boolean } }
+    tabs.disconnect('chat-tab', chatStream)
+    tabs.disconnect('focused-tab', focusedStream)
+    expect(body.result?.isError).toEqual(false)
+    expect(chatTab.length).toEqual(1)
+    expect(chatTab[0]).toInclude('"project":"linea"')
+    expect(focused).toEqual([])
+  })
+
   it('shows in the active tab, in the project it has open', async () => {
     const written: string[] = []
     const stream: TabStream = { write: (c) => written.push(c), end: () => {} }

@@ -1,6 +1,7 @@
 import { type Validator, v as z } from '@l2beat/validate'
 import type { NextFunction, Request, Response, Router } from 'express'
 import { FLATTENER_NOTE_LINE_COUNT } from '../getCode'
+import { safeStringSchema } from '../safeStringSchema'
 import { AGENT_TOOLS, type AgentTool, type DiscoUi, runTool } from './tools'
 
 const MCP_PATH = '/mcp'
@@ -21,6 +22,9 @@ const INSTRUCTIONS = [
   'For who can upgrade, pause or otherwise control a contract, call `permissions` and point at the route it prints with `show`.',
   'A code snippet is literal text copied from the source, not a pattern. A wrong name or snippet fails with what to fix: fix it and call again.',
 ].join('\n')
+
+// The chat's agent names the tab it works for.
+const tabQuerySchema = safeStringSchema.optional()
 
 const messageSchema = z.object({
   jsonrpc: z.literal('2.0'),
@@ -50,6 +54,11 @@ class RpcError extends Error {
 // Mounted under /api/agent, after the body parser.
 export function attachMcpRoutes(router: Router, ui: DiscoUi) {
   router.post(MCP_PATH, async (req, res) => {
+    const tab = tabQuerySchema.safeParse(req.query.tab)
+    if (!tab.success) {
+      res.status(400).json(rpcError(null, -32600, tab.message))
+      return
+    }
     if (Array.isArray(req.body)) {
       res.status(400).json(rpcError(null, -32600, 'Batches are not supported'))
       return
@@ -66,7 +75,7 @@ export function attachMcpRoutes(router: Router, ui: DiscoUi) {
       return
     }
     try {
-      const result = await answer(ui, method, params)
+      const result = await answer({ ...ui, tab: tab.data }, method, params)
       res.json({ jsonrpc: '2.0', id, result })
     } catch (error) {
       if (error instanceof RpcError) {

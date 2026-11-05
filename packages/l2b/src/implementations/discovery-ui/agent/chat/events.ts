@@ -51,10 +51,8 @@ export function toChatEvents(update: unknown): ApiChatEvent[] {
     if (typeof tool.data.status === 'string') {
       event.status = tool.data.status
     }
-    // Updates with only output or input change nothing the panel draws.
-    return event.title === undefined && event.status === undefined
-      ? []
-      : [event]
+    // A call may first come with its id alone, and the panel lists it then.
+    return [event]
   }
   return []
 }
@@ -128,7 +126,7 @@ export function clipEvent(event: ApiChatEvent): ApiChatEvent {
         ...event,
         title: clipLabel(event.title),
         kind: event.kind === undefined ? undefined : clipLabel(event.kind),
-        paths: event.paths.slice(0, PATHS_MAX).map(clipLabel),
+        paths: clipPaths(event.paths),
         input:
           event.input === undefined ||
           event.input.length <= INPUT_CHARACTERS_MAX
@@ -151,6 +149,13 @@ export function clipEvent(event: ApiChatEvent): ApiChatEvent {
     case 'permission-done':
       return event
   }
+}
+
+// The researcher sees that a request touches more than the paths listed.
+function clipPaths(paths: string[]): string[] {
+  const shown = paths.slice(0, PATHS_MAX).map(clipLabel)
+  const more = paths.length - PATHS_MAX
+  return more > 0 ? [...shown, `and ${more} more paths`] : shown
 }
 
 function clipLabel(text: string): string {

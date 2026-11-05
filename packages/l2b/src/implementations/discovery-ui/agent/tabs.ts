@@ -106,6 +106,11 @@ export class AgentTabs {
     return true
   }
 
+  tab(id: string): ActiveTab | undefined {
+    const tab = this.tabs.get(id)
+    return tab && { id, project: tab.project }
+  }
+
   active(): ActiveTab | undefined {
     let active: [string, Tab] | undefined
     for (const entry of this.tabs) {
