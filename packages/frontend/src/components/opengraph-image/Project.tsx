@@ -1,4 +1,6 @@
 import { COLUMN, HeartbeatFrame } from './heartbeat/Frame'
+import { isLostOnDark } from './heartbeat/logo'
+import { WHITE } from './heartbeat/marks'
 import { satoriWidth, type TextMeasure } from './heartbeat/text'
 
 interface Props {
@@ -14,6 +16,8 @@ interface Props {
 
 const GAP = 26
 const MIN_FULL_NAME_SIZE = 58
+/** How much of its plate a plated logo fills, leaving a light rim. */
+const PLATED_LOGO = 0.78
 
 /** The project's own logo, in its own colours, before its name, all on one line. */
 export function ProjectOpengraphImage({
@@ -31,6 +35,15 @@ export function ProjectOpengraphImage({
     size = fitRow(measure, shown)
   }
   const logo = logoSize(size)
+  const image = (width: number) => (
+    <img
+      src={logoSrc}
+      alt=""
+      width={width}
+      height={width}
+      style={roundLogo ? { borderRadius: width / 2 } : undefined}
+    />
+  )
   return (
     <HeartbeatFrame
       measure={measure}
@@ -38,13 +51,23 @@ export function ProjectOpengraphImage({
       titleInkLeft={0}
       title={
         <div style={{ display: 'flex', alignItems: 'center', gap: GAP }}>
-          <img
-            src={logoSrc}
-            alt=""
-            width={logo}
-            height={logo}
-            style={roundLogo ? { borderRadius: logo / 2 } : undefined}
-          />
+          {isLostOnDark(logoSrc) ? (
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: logo,
+                height: logo,
+                borderRadius: logo / 2,
+                backgroundColor: WHITE,
+              }}
+            >
+              {image(logo * PLATED_LOGO)}
+            </div>
+          ) : (
+            image(logo)
+          )}
           <div
             style={{
               fontSize: size,
