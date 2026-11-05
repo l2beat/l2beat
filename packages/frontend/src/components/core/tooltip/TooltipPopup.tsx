@@ -10,6 +10,7 @@ import {
 } from '@floating-ui/react-dom'
 import type React from 'react'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { flushSync } from 'react-dom'
 import { mergeRefs } from '~/utils/mergeRefs'
 import type { TooltipTriggerContextValue } from './TooltipTriggerContext'
 
@@ -281,12 +282,20 @@ function usePresence(
   useLayoutEffect(() => {
     const content = contentRef.current
     if (open || !content) return
-    if (getComputedStyle(content).animationName === 'none') {
+    const exitAnimation = getComputedStyle(content).animationName
+    if (exitAnimation === 'none') {
       onExitComplete()
       return
     }
     const onEnd = (event: AnimationEvent) => {
-      if (event.target === content) onExitComplete()
+      // Closing cancels the enter animation, which must not end the exit
+      if (event.target !== content || event.animationName !== exitAnimation) {
+        return
+      }
+      // React would unmount a frame later, and in that frame the popup is
+      // back at full opacity. Holding the last keyframe hides that frame.
+      content.style.animationFillMode = 'forwards'
+      flushSync(onExitComplete)
     }
     content.addEventListener('animationend', onEnd)
     content.addEventListener('animationcancel', onEnd)
