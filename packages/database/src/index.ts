@@ -10,6 +10,7 @@ export type {
   AbstractTokenSummary,
   AbstractTokenUpdateable,
 } from './repositories/AbstractTokenRepository'
+export type { ActivityHeadBlockRecord } from './repositories/ActivityHeadBlockRepository'
 export type {
   ActivityRecord,
   ActivityTotals,

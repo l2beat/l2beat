@@ -4,6 +4,7 @@ import {
   formatUopsRatio,
 } from '@l2beat/shared-pure'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
+import { TimeAgo } from '~/components/core/TimeAgo'
 import { UtcDateTime } from '~/components/core/UtcDateTime'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import type { ActivityMetric } from '~/pages/layer2s/activity/components/ActivityMetricContext'
@@ -55,7 +56,7 @@ export function ActivityChartStatsPanel({ stats, metric, isLoading }: Props) {
         className="max-md:h-7"
         tooltip={
           liveAsOf !== undefined
-            ? `${metricUi.subject} per second averaged over the 24 hours up to the latest finalized block. The percentage change compares the last full day with the day 7D before it.`
+            ? `${metricUi.subject} per second averaged over the 24 hours up to the latest block. The percentage change compares the last full day with the day 7D before it.`
             : `${metricUi.subject} per second averaged over the past day, shown together with a percentage change compared to 7D ago.`
         }
         isLoading={isLoading}
@@ -73,7 +74,8 @@ export function ActivityChartStatsPanel({ stats, metric, isLoading }: Props) {
             </ValueWithPercentageChange>
             {liveAsOf !== undefined && (
               <div className="font-medium text-label-value-14 text-secondary">
-                as of <UtcDateTime timestamp={liveAsOf} />
+                as of <UtcDateTime timestamp={liveAsOf} />{' '}
+                <TimeAgo timestamp={liveAsOf} />
               </div>
             )}
           </div>

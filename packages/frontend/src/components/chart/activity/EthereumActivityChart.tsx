@@ -8,6 +8,7 @@ import { ActivityChartRangeControls } from '~/pages/layer2s/activity/components/
 import type { ActivityMetric } from '~/pages/layer2s/activity/components/ActivityMetricContext'
 import { ActivityMetricControls } from '~/pages/layer2s/activity/components/ActivityMetricControls'
 import { useTRPC } from '~/trpc/React'
+import { LIVE_ACTIVITY_REFRESH_MS } from '~/utils/liveActivityRefresh'
 import type { ChartRange } from '~/utils/range/range'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { ProjectChartTimeRange } from '../../core/chart/ChartTimeRange'
@@ -37,10 +38,10 @@ export function EthereumActivityChart({
   const [scale, setScale] = useState<ChartScale>('linear')
 
   const { data: chart, isLoading } = useQuery(
-    trpc.activity.ethereumChart.queryOptions({
-      range,
-      hourly: true,
-    }),
+    trpc.activity.ethereumChart.queryOptions(
+      { range, hourly: true },
+      { refetchInterval: LIVE_ACTIVITY_REFRESH_MS },
+    ),
   )
 
   const type = getChartType(category)

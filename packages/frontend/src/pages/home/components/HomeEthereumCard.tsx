@@ -4,12 +4,16 @@ import {
   formatCurrency,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { TimeAgo } from '~/components/core/TimeAgo'
 import { UtcDateTime } from '~/components/core/UtcDateTime'
 import { ETHEREUM_PROJECT_PATH } from '~/pages/ethereum/paths'
 import type { HomeEthereumCharts } from '~/server/features/home/getHomeEthereumCharts'
+import { useTRPC } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
+import { LIVE_ACTIVITY_REFRESH_MS } from '~/utils/liveActivityRefresh'
 import { HomeChart } from './charts/HomeChart'
 import { HomeCard } from './HomeCard'
 import { HomeCardHeader } from './HomeCardHeader'
@@ -25,6 +29,15 @@ interface Props {
 }
 
 export function HomeEthereumCard({ charts, economicSecurity }: Props) {
+  const trpc = useTRPC()
+  const { data: live } = useQuery(
+    trpc.activity.ethereumLiveRates.queryOptions(undefined, {
+      initialData: charts.activity.live,
+      // The page can come from a cache minutes old, so refetch at once
+      staleTime: 0,
+      refetchInterval: LIVE_ACTIVITY_REFRESH_MS,
+    }),
+  )
   const activityChartData = useMemo(
     () =>
       charts.activity.chart.map(([timestamp, uopsCount]) => ({
@@ -52,8 +65,7 @@ export function HomeEthereumCard({ charts, economicSecurity }: Props) {
     [charts.da.chart],
   )
 
-  const pastDayUops = charts.activity.pastDayUops
-  const pastDayUopsAsOf = charts.activity.pastDayUopsAsOf
+  const pastDayUops = live?.uops ?? charts.activity.pastDayUops
   const trackedShare = charts.da.trackedShare
   const uopsChange = charts.activity.change
   const dataPostedChange = charts.da.change
@@ -109,9 +121,10 @@ export function HomeEthereumCard({ charts, economicSecurity }: Props) {
             />
           }
           statFooter={
-            pastDayUopsAsOf !== undefined ? (
+            live ? (
               <span className="font-medium text-label-value-12 text-secondary">
-                Past 24h as of <UtcDateTime timestamp={pastDayUopsAsOf} />
+                Past 24h as of <UtcDateTime timestamp={live.asOf} />{' '}
+                <TimeAgo timestamp={live.asOf} />
               </span>
             ) : null
           }

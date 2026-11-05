@@ -1,6 +1,7 @@
 import type { LogConfig } from 'kysely'
 import type { PoolConfig } from 'pg'
 import { DatabaseClient } from './kysely'
+import { ActivityHeadBlockRepository } from './repositories/ActivityHeadBlockRepository'
 import { ActivityRepository } from './repositories/ActivityRepository'
 import { AggregatedInteropDeployedTokenRepository } from './repositories/AggregatedInteropDeployedTokenRepository'
 import { AggregatedInteropTokenRepository } from './repositories/AggregatedInteropTokenRepository'
@@ -73,6 +74,7 @@ export function createDatabase(
     // #region Activity
     activity: new ActivityRepository(db),
     hourlyActivity: new HourlyActivityRepository(db),
+    activityHeadBlock: new ActivityHeadBlockRepository(db),
     // #endregion
 
     // #region Interop

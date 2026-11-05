@@ -75,10 +75,12 @@ export class HourlyActivityRepository extends BaseRepository {
   }
 
   /**
-   * The hours from `fullHours` before the hour of the latest block the counts
-   * include up to that block, with its timestamp. One statement reads both, so
-   * the last, partial hour holds exactly the blocks until that timestamp.
-   * Undefined while there is no latest block, like after an invalidation
+   * The hours from `fullHours` before the hour of the latest block up to that
+   * block, with its timestamp. Head blocks running on from the last counted
+   * one join their hours, so the latest block can be the chain's head. One statement
+   * reads it all, so the hour so far holds exactly the blocks until that
+   * timestamp. Undefined while no block is counted, like after an
+   * invalidation
    */
   async getLatestHours(
     projectId: ProjectId,
@@ -87,50 +89,80 @@ export class HourlyActivityRepository extends BaseRepository {
     | { latestBlockTimestamp: UnixTime; records: HourlyActivityRecord[] }
     | undefined
   > {
-    const rows = await this.db
-      .selectFrom('SyncMetadata as s')
-      .leftJoin('HourlyActivity as h', (join) =>
-        join
-          .onRef('h.projectId', '=', 's.id')
-          .on((eb) =>
-            eb.and([
-              eb(
-                'h.timestamp',
-                '>=',
-                sql<Date>`date_trunc('hour', s."latestBlockTimestamp") - make_interval(hours => ${fullHours}::int)`,
-              ),
-              eb('h.timestamp', '<=', eb.ref('s.latestBlockTimestamp')),
-            ]),
-          ),
+    const { rows } = await sql<{
+      latestBlockTimestamp: Date
+      timestamp: Date | null
+      count: number | null
+      uopsCount: number | null
+    }>`
+      WITH counted AS (
+        SELECT "id", "blockSyncedUntil", "latestBlockTimestamp"
+        FROM "SyncMetadata"
+        WHERE "feature" = 'activity'
+          AND "id" = ${projectId.toString()}
+          AND "latestBlockTimestamp" IS NOT NULL
+      ),
+      above AS (
+        SELECT b."number", b."timestamp", b."count", b."uopsCount"
+        FROM "ActivityHeadBlock" b
+        JOIN counted ON b."projectId" = counted."id"
+        WHERE b."number" > counted."blockSyncedUntil"
+      ),
+      -- After an invalidation the counts restart below the head blocks, which
+      -- then would skip the blocks between them. Only an unbroken run counts
+      head AS (
+        SELECT "timestamp", "count", "uopsCount"
+        FROM above
+        WHERE (SELECT count(*) FROM above) =
+          (SELECT max("number") FROM above) - (SELECT "blockSyncedUntil" FROM counted)
+      ),
+      latest AS (
+        SELECT GREATEST(
+          counted."latestBlockTimestamp",
+          (SELECT max("timestamp") FROM head)
+        ) AS "timestamp"
+        FROM counted
+      ),
+      hours AS (
+        SELECT h."timestamp", h."count", h."uopsCount"
+        FROM "HourlyActivity" h
+        JOIN counted ON h."projectId" = counted."id"
+        WHERE h."timestamp" <= counted."latestBlockTimestamp"
+        UNION ALL
+        SELECT date_trunc('hour', head."timestamp"), head."count", head."uopsCount"
+        FROM head
       )
-      .select([
-        's.latestBlockTimestamp',
-        'h.timestamp',
-        'h.count',
-        'h.uopsCount',
-      ])
-      .where('s.feature', '=', 'activity')
-      .where('s.id', '=', projectId.toString())
-      .where('s.latestBlockTimestamp', 'is not', null)
-      .orderBy('h.timestamp', 'asc')
-      .execute()
+      SELECT
+        latest."timestamp" AS "latestBlockTimestamp",
+        hours."timestamp",
+        hours."count",
+        hours."uopsCount"
+      FROM latest
+      LEFT JOIN hours ON hours."timestamp" >=
+        date_trunc('hour', latest."timestamp") - make_interval(hours => ${fullHours}::int)
+      ORDER BY hours."timestamp"
+    `.execute(this.db)
 
     const latestBlockTimestamp = rows[0]?.latestBlockTimestamp
     if (!latestBlockTimestamp) return undefined
+
+    const byHour = new Map<UnixTime, HourlyActivityRecord>()
+    for (const row of rows) {
+      if (row.timestamp === null || row.count === null) continue
+      const timestamp = UnixTime.fromDate(row.timestamp)
+      const stored = byHour.get(timestamp)
+      byHour.set(timestamp, {
+        projectId,
+        timestamp,
+        count: (stored?.count ?? 0) + row.count,
+        uopsCount: stored
+          ? (stored.uopsCount ?? stored.count) + (row.uopsCount ?? row.count)
+          : row.uopsCount,
+      })
+    }
     return {
       latestBlockTimestamp: UnixTime.fromDate(latestBlockTimestamp),
-      records: rows.flatMap((row) =>
-        row.timestamp === null || row.count === null
-          ? []
-          : [
-              {
-                projectId,
-                timestamp: UnixTime.fromDate(row.timestamp),
-                count: row.count,
-                uopsCount: row.uopsCount,
-              },
-            ],
-      ),
+      records: [...byHour.values()],
     }
   }
 

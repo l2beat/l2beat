@@ -2,6 +2,8 @@ import type { AdjustCount } from '@l2beat/config'
 import { assertUnreachable, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
+import { ActivityHeadTracker } from './head/ActivityHeadTracker'
+import { RpcHeadBlockSource } from './head/RpcHeadBlockSource'
 import { BlockActivityIndexer } from './indexers/BlockActivityIndexer'
 import { BlockTargetIndexer } from './indexers/BlockTargetIndexer'
 import { DayActivityIndexer } from './indexers/DayActivityIndexer'
@@ -31,6 +33,7 @@ export function initActivityModule({
   const indexerService = new IndexerService(database)
 
   const indexers: ActivityIndexer[] = []
+  const headTrackers: ActivityHeadTracker[] = []
 
   for (const project of config.activity.projects) {
     switch (project.activityConfig.type) {
@@ -94,6 +97,22 @@ export function initActivityModule({
         )
 
         indexers.push(blockTargetIndexer, activityIndexer)
+
+        if (project.id === ProjectId.ETHEREUM) {
+          headTrackers.push(
+            new ActivityHeadTracker(
+              {
+                projectId: project.id,
+                source: new RpcHeadBlockSource(
+                  providers.clients.getRpcClient(project.chainName),
+                  providers.uops.getUopsAnalyzer(project.chainName),
+                ),
+                db: database,
+              },
+              logger,
+            ),
+          )
+        }
         break
       }
 
@@ -240,6 +259,9 @@ export function initActivityModule({
           await indexer.start()
         }),
       )
+      for (const tracker of headTrackers) {
+        tracker.start(clock)
+      }
     },
   }
 }

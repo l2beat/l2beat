@@ -157,6 +157,7 @@ describeDatabase(HourlyActivityRepository.name, (db) => {
 
     afterEach(async () => {
       await db.syncMetadata.deleteAll()
+      await db.activityHeadBlock.deleteAll()
     })
 
     it('reads the full hours before the latest block and its partial hour', async () => {
@@ -202,6 +203,69 @@ describeDatabase(HourlyActivityRepository.name, (db) => {
       expect(result).toEqual(undefined)
     })
 
+    it('adds the head blocks above the counted ones to their hours', async () => {
+      // Methodology: the counts reach block 100 at LATEST, in hour START+25h.
+      // Head blocks 99 and 100 are counted already, 101 joins that hour and
+      // 102 starts the next one, which then is the hour so far
+      await setLatestBlockTimestamp('a', LATEST)
+      await repository.addMany([
+        record('a', START + 24 * HOUR, 3, 3),
+        record('a', START + 25 * HOUR, 4, 4),
+      ])
+      const head = START + 26 * HOUR + 30
+      await db.activityHeadBlock.replaceForProject(ProjectId('a'), [
+        headBlock(99, LATEST - 12, 1000),
+        headBlock(100, LATEST, 1000),
+        headBlock(101, LATEST + 12, 10),
+        headBlock(102, head, 20),
+      ])
+
+      const result = await repository.getLatestHours(ProjectId('a'), 1)
+
+      expect(result).toEqual({
+        latestBlockTimestamp: head,
+        records: [
+          record('a', START + 25 * HOUR, 14, 14),
+          record('a', START + 26 * HOUR, 20, 20),
+        ],
+      })
+    })
+
+    it('ignores head blocks that do not run on from the counted ones', async () => {
+      // As after an invalidation: counts restarted at block 100, head blocks
+      // still from before it start at 103, so 101 and 102 would be missing
+      await setLatestBlockTimestamp('a', LATEST)
+      await repository.addMany([record('a', START + 25 * HOUR, 4, 4)])
+      await db.activityHeadBlock.replaceForProject(ProjectId('a'), [
+        headBlock(103, LATEST + 36, 10),
+        headBlock(104, LATEST + 48, 10),
+      ])
+
+      const result = await repository.getLatestHours(ProjectId('a'), 1)
+
+      expect(result).toEqual({
+        latestBlockTimestamp: LATEST,
+        records: [record('a', START + 25 * HOUR, 4, 4)],
+      })
+    })
+
+    it('reads no head blocks without a latest counted block', async () => {
+      await db.syncMetadata.upsertMany([
+        { ...syncMetadata('a'), latestBlockTimestamp: null },
+      ])
+      await db.activityHeadBlock.replaceForProject(ProjectId('a'), [
+        headBlock(101, LATEST, 10),
+      ])
+
+      const result = await repository.getLatestHours(ProjectId('a'), 23)
+
+      expect(result).toEqual(undefined)
+    })
+
+    function headBlock(number: number, timestamp: UnixTime, count: number) {
+      return { number, timestamp, count, uopsCount: count }
+    }
+
     async function setLatestBlockTimestamp(id: string, timestamp: UnixTime) {
       await db.syncMetadata.upsertMany([
         { ...syncMetadata(id), latestBlockTimestamp: timestamp },
@@ -214,8 +278,8 @@ describeDatabase(HourlyActivityRepository.name, (db) => {
         id,
         target: START,
         syncedUntil: START,
-        blockTarget: 1,
-        blockSyncedUntil: 1,
+        blockTarget: 100,
+        blockSyncedUntil: 100,
       }
     }
   })

@@ -34,6 +34,18 @@ model Activity {
   @@id([projectId, timestamp])
 }
 
+/// Blocks above the last one HourlyActivity and Activity count, which a reorg
+/// can still replace. Rewritten whole every few seconds
+model ActivityHeadBlock {
+  projectId String   @db.VarChar(255)
+  number    Int
+  timestamp DateTime @db.Timestamp(6)
+  count     Int
+  uopsCount Int?
+
+  @@id([projectId, number])
+}
+
 /// Activity per hour, kept for the last two weeks for the 1D and 7D charts
 model HourlyActivity {
   projectId String   @db.VarChar(255)
