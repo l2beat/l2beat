@@ -1,3 +1,54 @@
+Generated with discovered.json: 0x7a189f6bb7f4f34f549ca28466751a9704bb6b99
+
+# Diff at Thu, 05 Nov 2026 15:33:54 GMT:
+
+- id: da5741ad
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@181c6b3e2aefdcafd6dd1dd7151c810ad0e792a6 block: 1793715847
+- current timestamp: 1793874299
+
+## Description
+
+GrvtChainAdminMultisig executed one proposal through each Governance contract in one transaction. Both send L2 transactions through the Bridgehub to the GRVT L2 contract 0x85deE82d: an implementation upgrade to 0x4e2e4488 and a diamond cut that replaces 21 facets. GRVT has no public RPC, so the L2 contracts are not discovered. No L1 contract changed. Decoded: https://tools.l2beat.com/decoder-new/?hash=0xec3a13e3ca08ccabbd2256618bb85e2af1ef6ab5aa5b047e099726777d237565&data=AwA.
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0xbdC07D62fA117B195E579c2e299f037b158E7335) [adi/Governance] {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
++++ description: Number of executed proposals
+      values.executedCount:
+-        57
++        58
++++ description: Number of scheduled transparent proposals
+      values.scheduledTransparentCount:
+-        57
++        58
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793715847 (main branch discovery), not current.
+
+```diff
+    external contract ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) {
+    +++ description: None
+      directlyReceivedPermissions.10:
++        {"permission":"interact","from":"eth:0xc16161C7f704388285fE58db287F6216a350dAFA","description":"manage allowed rollup DA configurations (allowed to be used by rollups in permanent rollup mode).","role":".owner"}
+    }
+```
+
+```diff
+    external contract (eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C) {
+    +++ description: None
+      receivedPermissions.6:
++        {"permission":"interact","from":"eth:0xc16161C7f704388285fE58db287F6216a350dAFA","description":"manage allowed rollup DA configurations (allowed to be used by rollups in permanent rollup mode).","role":".owner","via":[{"address":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+    }
+```
+
 Generated with discovered.json: 0xacbf62810a687b4dfb5a6b236a290f826908e899
 
 # Diff at Thu, 05 Nov 2026 08:58:38 GMT:

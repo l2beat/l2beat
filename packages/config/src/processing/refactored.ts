@@ -22,7 +22,6 @@ import { espressoprover } from '../projects/espressoprover/espressoprover'
 import { ethereum } from '../projects/ethereum/ethereum'
 import { etherfi } from '../projects/etherfi/etherfi'
 import { fluidkey } from '../projects/fluidkey/fluidkey'
-import { frankencoin } from '../projects/frankencoin/frankencoin'
 import { freetunnel } from '../projects/freetunnel/freetunnel'
 import { fusionplus } from '../projects/fusionplus/fusionplus'
 import { gaszip } from '../projects/gaszip/gaszip'
@@ -135,7 +134,6 @@ export const refactored: BaseProject[] = [
   freetunnel,
   basesolbridge,
   // defi
-  frankencoin,
   liquityv2,
   chainlink,
   uniswapv2,

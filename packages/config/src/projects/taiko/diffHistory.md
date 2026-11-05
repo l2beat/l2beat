@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x639f61273610bd8740b564e6f2b158ccbd95a741
+
+# Diff at Thu, 05 Nov 2026 15:34:00 GMT:
+
+- id: f057488a
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@181c6b3e2aefdcafd6dd1dd7151c810ad0e792a6 block: 1793195421
+- current timestamp: 1793874822
+
+## Description
+
+The ejecter 0x45D44033 removed the preconfirmation operator 0x5F62d006 from the PreconfWhitelist and re-added it, twice. The whitelist still holds the same two operators, in swapped order.
+
+## Watched changes
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) [taiko/PreconfWhitelist] {
+    +++ description: Contains the whitelist of addresses eligible to propose batches on L1 and issue preconfirmations. It dynamically selects a single active operator for each epoch using a delayed Ethereum beacon block root as randomness. There is no fallback proposer path in this contract: non-selected operators cannot propose for the current epoch.
+      values.operatorMapping.0:
+-        "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
+      values.operatorMapping.1:
++        "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
+    }
+```
+
 Generated with discovered.json: 0xba844d002275169ec5fdb3b2016bec1d8918f83c
 
 # Diff at Thu, 05 Nov 2026 08:58:41 GMT:

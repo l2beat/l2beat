@@ -1,3 +1,38 @@
+Generated with discovered.json: 0x591ad21d2343f4417db26bbc4868aa204c6c9a62
+
+# Diff at Thu, 05 Nov 2026 10:35:30 GMT:
+
+- id: 61ae758f
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ed3b78ee5d7973829dff175055ab7e54cc7df91 block: 1792144380
+- current timestamp: 1793874843
+
+## Description
+
+The active validator set shrank from 104 to 100 validators (cap 105). The Polygon Labs Engineering/Security Multisig, a member of the PolygonMultisig, added an eighth signer with the threshold unchanged, now 2 of 8.
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) [polygon-pos/StakeManager] {
+    +++ description: Manages the validator set, stakes and rewards. The RootChain uses it to check that each checkpoint is signed by more than 2/3 of the stake.
+      values.currentValidatorSetSize:
+-        104
++        100
+    }
+```
+
+```diff
+    contract Polygon Labs Engineering/Security Multisig (eth:0x9d851f8b8751c5FbC09b9E74E6e68E9950949052) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0xFD621b24968F64E3f14E7a099538ae13e1381417"
+      values.multisigThreshold:
+-        "2 of 7 (29%)"
++        "2 of 8 (25%)"
+    }
+```
+
 Generated with discovered.json: 0x191dd372d41a986c8b24fc272909feb7fcbb8acd
 
 # Diff at Fri, 16 Oct 2026 15:41:09 GMT:

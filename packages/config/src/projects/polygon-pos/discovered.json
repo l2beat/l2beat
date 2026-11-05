@@ -1,6 +1,6 @@
 {
   "name": "polygon-pos",
-  "timestamp": 1792144380,
+  "timestamp": 1793874843,
   "configHash": "0x1b28d8b3c1c0a90ff0ab1bb0a4d07259a315677d494d34d84e6081ac2d0b38d9",
   "entries": [
     {
@@ -179,7 +179,7 @@
       "sinceBlock": 10167763,
       "values": {
         "$immutable": true,
-        "counter": 3206297,
+        "counter": 3212313,
         "isOwner": false,
         "owner": "eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "REGISTRATIONS": [
@@ -537,7 +537,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 12 (33%)",
-        "nonce": 842,
+        "nonce": 843,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -611,7 +611,7 @@
         ],
         "symbol": "MV",
         "tokenURI": ["", "", "", ""],
-        "totalSupply": 138
+        "totalSupply": 137
       },
       "implementationNames": {
         "eth:0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F": "StakingNFT"
@@ -773,13 +773,13 @@
         "CHECKPOINT_REWARD": "64500000000000000000000",
         "checkPointBlockInterval": 5120,
         "checkpointRewardDelta": 10,
-        "currentEpoch": 114260,
-        "currentValidatorSetSize": 104,
-        "currentValidatorSetTotalStake": "3586311353236397182573646007",
+        "currentEpoch": 116066,
+        "currentValidatorSetSize": 100,
+        "currentValidatorSetTotalStake": "3724813153097807727164361827",
         "delegationEnabled": true,
         "delegatorsReward": [0, 0, 0, 0],
         "dynasty": 80,
-        "epoch": 114260,
+        "epoch": 116066,
         "eventsHub": "eth:0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
         "extensionCode": "eth:0xef49Ea6996073752b6840CDA34773FFA78F78166",
         "getRegistry": "eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
@@ -806,21 +806,21 @@
         "proxyType": 2,
         "registry": "eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
         "rewardDecreasePerCheckpoint": 30,
-        "rewardPerStake": "3592907911634623712469424",
+        "rewardPerStake": "3628647304117524037781369",
         "rootChain": "eth:0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
         "signerUpdateLimit": 100,
         "token": "eth:0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "tokenMatic": "eth:0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
-        "totalHeimdallFee": "18540720449428901681108",
+        "totalHeimdallFee": "18541720449428901681108",
         "totalRewards": "201179489204211582010647007",
-        "totalRewardsLiquidated": "170455652423607277189030886",
-        "totalStaked": "11877774720422456057266711",
+        "totalRewardsLiquidated": "173055130450225886150629462",
+        "totalStaked": "11779586975385697569302547",
         "validatorPass": "eth:0x938529C189525e9a03c66C417D337BE9B5762bA4",
         "validatorReward": [0, 0, "1081182134824116177126", 0],
         "validatorShareFactory": "eth:0xc4FA447A0e77Eff9717b09C057B40570813bb642",
         "validatorState": {
-          "amount": "3586311353236397182573646007",
-          "stakerCount": 104
+          "amount": "3724813153097807727164361827",
+          "stakerCount": 100
         },
         "validatorThreshold": 105,
         "WITHDRAWAL_DELAY": 80,
@@ -1031,7 +1031,7 @@
       "sinceTimestamp": 1590849960,
       "sinceBlock": 10167725,
       "values": {
-        "_nextHeaderBlock": 1142600000,
+        "_nextHeaderBlock": 1160660000,
         "$immutable": false,
         "$implementation": "eth:0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "CHAINID": 137,
@@ -1040,8 +1040,8 @@
           "_registry": "eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
           "_heimdallId": "heimdall-137"
         },
-        "currentHeaderBlock": 1142590000,
-        "getLastChildBlock": 95625125,
+        "currentHeaderBlock": 1160650000,
+        "getLastChildBlock": 96778405,
         "heimdallId": "0xd982b078cdb2c4f7afb14b52c5127dd9206472cebd6e13a45f50c113cb9401af",
         "implementation": "eth:0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "isOwner": false,
@@ -1282,6 +1282,7 @@
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "eth:0xFD621b24968F64E3f14E7a099538ae13e1381417",
           "eth:0xf02BE0dA37dB50BEFA5a525158aa94b50F81D4B2",
           "eth:0xFB2a738AE435610354b132c4a4ee647558f663eb",
           "eth:0x6Ab87a62E250A5EB09a53Fca832B9Bda480c3890",
@@ -1294,8 +1295,8 @@
         "domainSeparator": "0x1e10c8adfe5d143b638cfd7dc768d352d2c056220c2d69fef33e91a1c2b79531",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 7 (29%)",
-        "nonce": 49,
+        "multisigThreshold": "2 of 8 (25%)",
+        "nonce": 54,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1473,7 +1474,7 @@
           "eth:0x9d29bD441E9DA3EfF48568Aea1348383544547e7": "eth:0xc576E8BB0017AFfC2Cb245609E304E57401ee78a",
           "eth:0xa63a5122E849d2Fbff88Fc44d3C7EAE9196F1293": "eth:0x02dAEFc2E8AAD089d094579499508398E3057966",
           "eth:0xC4C2614E694cF534D407Ee49F8E44D125E4681c4": "eth:0xd55fCe7CDaB84d84f2EF3F99816D765a2a94a509",
-          "eth:0x0000000000000000000000000000000000000000": "eth:0xbCc7f67d1696fDa9c66e9B2538d0B770090c3c10",
+          "eth:0x0000000000000000000000000000000000000000": "eth:0x475a10De43EB91332b9AcC73CC40dC561Ca879bd",
           "eth:0x346E2C8925D3bdC406181340Eb7485D646055744": "eth:0xd4c1E34187EDc72Fb6EBf3c4011dee50CAbF89c2",
           "eth:0x913D8ADf7CE6986a8CbFee5A54725D9Eea4F0729": "eth:0xDb3b3b147A030F032633f6C4BEBf9a2fB5a882B5",
           "eth:0x56c2162254b0E4417288786eE402c2B41d4e181e": "eth:0x4087F566796b46eEB01A38174c06E2f9924eAea8",
@@ -4533,7 +4534,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 9 (56%)",
-        "nonce": 241,
+        "nonce": 243,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -4548,6 +4549,11 @@
     },
     {
       "address": "eth:0xFB2a738AE435610354b132c4a4ee647558f663eb",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xFD621b24968F64E3f14E7a099538ae13e1381417",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -5785,8 +5791,8 @@
     "polygonposbridge/ValidatorShareFactory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "polygonposbridge/WithdrawManager": "0x2e057300aef6cd9d7ab7f50230cb24293725eaad40a38964c8d974f5fdf12ec1"
   },
-  "usedBlockNumbers": { "ethereum": 26204320 },
-  "permissionsConfigHash": "0x46c261050619bc6e19a95db61ff768d634eec8d871f3282b73b4ce7c3c4e4cf7",
+  "usedBlockNumbers": { "ethereum": 26348062 },
+  "permissionsConfigHash": "0x9cda03f5883af61a1641807b198767d0ddde4235a8c4770cdd25fbc04d906793",
   "permissions": {
     "eth:0x424bDE99FCfB68c5a1218fd3215caFfD031f19C4": {
       "receivedPermissions": [

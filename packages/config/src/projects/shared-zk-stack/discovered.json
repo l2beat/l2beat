@@ -1,7 +1,7 @@
 {
   "name": "shared-zk-stack",
   "timestamp": 1793715716,
-  "configHash": "0xfd39c6bce4de4562327cefb37b5113650bcb7ccb898876a4df603e0b763da2fd",
+  "configHash": "0x1737af942f6823a572391cdd122bf93db3b0b2fa64460cc2df7fab544fbc3de7",
   "entries": [
     {
       "name": "GnosisSafe",
@@ -299,6 +299,26 @@
       "implementationNames": {
         "eth:0x1adF137F59949c9081157D5de1e002D1C992071F": "TransparentUpgradeableProxy",
         "eth:0x7a309e4e852B01fB1448D8A46365D69B03a88bd1": "ZKsyncOSChainTypeManager"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "RollupL1DAValidator_v31",
+      "address": "eth:0x1c715018c5565eaCC758236D4A9A760162a84Cbd",
+      "type": "Contract",
+      "template": "shared-zk-stack/RollupL1DAValidator",
+      "sourceHashes": [
+        "0xc21b762e8274d73c64e7931853066deebdd966051b43891bad2e2074adf4cfd5"
+      ],
+      "proxyType": "immutable",
+      "description": "Contract that verifies the data availability of ethereum calldata and blobs. Can be used by ZK stack rollups as the L1 part of a DAValidator pair.",
+      "critical": true,
+      "deployerAddress": "eth:0xaB75E283274247b43a1f220885850ebEFa399B88",
+      "sinceTimestamp": 1791244235,
+      "sinceBlock": 26129567,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x1c715018c5565eaCC758236D4A9A760162a84Cbd": "RollupL1DAValidator"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
@@ -2277,6 +2297,44 @@
       }
     },
     {
+      "name": "RollupDAManager_v31",
+      "address": "eth:0xc16161C7f704388285fE58db287F6216a350dAFA",
+      "type": "Contract",
+      "template": "shared-zk-stack/RollupDAManager_v31",
+      "sourceHashes": [
+        "0x955a2493833c6a49404d32a0383918e855f3c71b5a7f4b5839dca1825b849f19"
+      ],
+      "proxyType": "immutable",
+      "description": "Simple registry for allowed DA configurations for the 'rollup' data availability mode (can be permanently enforced with isPermanentRollup=true). A configuration pairs an L1 DA validator, usually a contract that validates that data was made available on Ethereum, with an L2 DA commitment scheme.",
+      "critical": true,
+      "deployerAddress": "eth:0xaB75E283274247b43a1f220885850ebEFa399B88",
+      "sinceTimestamp": 1791244163,
+      "sinceBlock": 26129561,
+      "values": {
+        "$immutable": true,
+        "daPairs": [
+          {
+            "l1DAValidator": "eth:0x1c715018c5565eaCC758236D4A9A760162a84Cbd",
+            "l2DACommitmentScheme": 3,
+            "status": true
+          }
+        ],
+        "owner": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "fieldMeta": {
+        "daPairs": {
+          "severity": "HIGH",
+          "description": "allowed l1DAValidator and l2DACommitmentScheme pairs. Schemes: 1 EMPTY_NO_DA, 2 PUBDATA_KECCAK256, 3 BLOBS_AND_PUBDATA_KECCAK256, 4 BLOBS_ZKSYNC_OS."
+        },
+        "owner": { "severity": "MEDIUM" }
+      },
+      "implementationNames": {
+        "eth:0xc16161C7f704388285fE58db287F6216a350dAFA": "RollupDAManager"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
       "name": "ProxyAdmin",
       "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
       "type": "Contract",
@@ -3761,6 +3819,28 @@
       "function validatorTimelock() view returns (address)",
       "function validatorTimelockPostV29() view returns (address)"
     ],
+    "eth:0x1c715018c5565eaCC758236D4A9A760162a84Cbd": [
+      "error BlobCommitmentNotPublished()",
+      "error BlobHashCommitmentError(uint256 index, bool blobHashEmpty, bool blobCommitmentEmpty)",
+      "error EmptyBlobVersionHash(uint256 index)",
+      "error InvalidL2DAOutputHash(bytes32 l2DAValidatorOutputHash)",
+      "error InvalidNumberOfBlobs(uint256 blobsProvided, uint256 maxBlobsSupported)",
+      "error InvalidPubdataCommitmentsSize()",
+      "error InvalidPubdataHash(bytes32 fullPubdataHash, bytes32 providedPubdataHash)",
+      "error InvalidPubdataSource(uint8 pubdataSource)",
+      "error NonEmptyBlobVersionHash(uint256 index)",
+      "error OnlyOneBlobWithCalldataAllowed()",
+      "error OperatorDAInputTooSmall(uint256 operatorDAInputLength, uint256 minAllowedLength)",
+      "error PointEvalCallFailed(bytes)",
+      "error PointEvalFailed(bytes)",
+      "error PubdataCommitmentsEmpty()",
+      "error PubdataInputTooSmall(uint256 pubdataInputLength, uint256 totalBlobsCommitmentSize)",
+      "error PubdataLengthTooBig(uint256 pubdataLength, uint256 totalBlobSizeBytes)",
+      "function checkDA(uint256, uint256, bytes32 _l2DAValidatorOutputHash, bytes _operatorDAInput, uint256 _maxBlobsSupported) view returns (tuple(bytes32 stateDiffHash, bytes32[] blobsLinearHashes, bytes32[] blobsOpeningCommitments) output)",
+      "function isBlobAvailable(bytes32 _blobCommitment) view returns (bool)",
+      "function publishBlobs(bytes _pubdataCommitments)",
+      "function publishedBlobCommitments(bytes32 blobCommitment) view returns (uint256 blockOfPublishing)"
+    ],
     "eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e": [
       "constructor(address initialOwner)",
       "error OwnableInvalidOwner(address owner)",
@@ -4977,6 +5057,21 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
+    "eth:0xc16161C7f704388285fE58db287F6216a350dAFA": [
+      "error InvalidL2DACommitmentScheme(uint8)",
+      "error ZeroAddress()",
+      "event DAPairUpdated(address indexed l1DAValidator, uint8 indexed l2DACommitmentScheme, bool status)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function acceptOwnership()",
+      "function isAllowedDAConfiguration(address l1DAValidator, uint8 l2DACommitmentScheme) view returns (bool)",
+      "function isPairAllowed(address _l1DAValidator, uint8 _l2DACommitmentScheme) view returns (bool)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function updateDAPair(address _l1DAValidator, uint8 _l2DACommitmentScheme, bool _status)"
+    ],
     "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
@@ -5614,6 +5709,7 @@
     "shared-zk-stack/PermissionlessValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-zk-stack/ProtocolUpgradeHandler": "0x099c2d60105ae44bb98820318a16c21effd1aef40bec6df6b8f7d7e10cbc7c63",
     "shared-zk-stack/RollupDAManager": "0xb3064b9a4b6b31c69ab9bb1337849fe653a6264b962bfb9ff611716631669310",
+    "shared-zk-stack/RollupDAManager_v31": "0x54e4d8b93f6d81a6184d79cb1ffb518d5feff1939a60d82b8b92c0bfa2421beb",
     "shared-zk-stack/RollupL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-zk-stack/SecurityCouncil": "0x0b8804832bc8dce16a070579f3ae7bd8a88ec36c613ed48e2ffc2d8fae340180",
     "shared-zk-stack/ServerNotifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
@@ -5623,7 +5719,7 @@
     "shared-zk-stack/ZkToken": "0x22bee2bab1c58cdc909e86d516e6fbb69aa52fedff617cb6adca6c14d4dc0cd4"
   },
   "usedBlockNumbers": { "ethereum": 26334840, "zksync2": 72739049 },
-  "permissionsConfigHash": "0xf5aeb32bdc1483fa310e04bffe1b607bd86c7ef9b4caed29d8c0d422821460d7",
+  "permissionsConfigHash": "0x1edc9a85104e4cb1087b172da8c224b9375c175a0b977b71c27aba5aed671567",
   "permissions": {
     "eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e": {
       "directlyReceivedPermissions": [
@@ -5824,6 +5920,15 @@
           "permission": "interact",
           "from": "eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
           "description": "pause / unpause the bridge and set the L1AssetTracker that enforces the per-chain balances.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc16161C7f704388285fE58db287F6216a350dAFA",
+          "description": "manage allowed rollup DA configurations (allowed to be used by rollups in permanent rollup mode).",
           "role": ".owner",
           "via": [
             { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
@@ -6157,6 +6262,12 @@
           "permission": "interact",
           "from": "eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
           "description": "pause / unpause the bridge and set the L1AssetTracker that enforces the per-chain balances.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc16161C7f704388285fE58db287F6216a350dAFA",
+          "description": "manage allowed rollup DA configurations (allowed to be used by rollups in permanent rollup mode).",
           "role": ".owner"
         },
         {
