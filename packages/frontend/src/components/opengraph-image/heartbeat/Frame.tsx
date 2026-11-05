@@ -135,8 +135,6 @@ export function HeartbeatFrame({
 }) {
   const baseline = titleBaseline(description !== undefined)
   const capTop = baseline - measure.capHeight(titleSize)
-  const lastBaseline =
-    baseline + (titleLines - 1) * TITLE_LINE_HEIGHT * titleSize
   const textLeft =
     logo === undefined
       ? MARGIN
@@ -174,7 +172,11 @@ export function HeartbeatFrame({
         <Description
           measure={measure}
           text={description}
-          top={lastBaseline + DESCRIPTION.gap}
+          layout={descriptionLayout(measure, description, {
+            baseline,
+            size: titleSize,
+            lines: titleLines,
+          })}
         />
       )}
     </Canvas>
@@ -221,29 +223,54 @@ function GlowingLogo({
   )
 }
 
-/** A line or two on what the page is for, wrapped before it reaches the heart. */
+/** Where a description goes under the title: wrapped balanced, short of the heart. */
+export function descriptionLayout(
+  measure: TextMeasure,
+  text: string,
+  title: { baseline: number; size: number; lines: number },
+) {
+  const lastBaseline =
+    title.baseline + (title.lines - 1) * TITLE_LINE_HEIGHT * title.size
+  const top = lastBaseline + DESCRIPTION.gap
+  const lineHeight = DESCRIPTION.lineHeight * DESCRIPTION.size
+  const heartStart = heartFillBetween(
+    top,
+    top + DESCRIPTION.lines * lineHeight,
+  ).nearestStart
+  const room = Math.min(COLUMN, heartStart - HEART_CLEARANCE - MARGIN)
+  const { box, lines } = balancedLines(
+    measure,
+    text,
+    DESCRIPTION.size,
+    600,
+    room,
+  )
+  return {
+    top,
+    box,
+    lines: lines.length,
+    bottom: top + lines.length * lineHeight,
+  }
+}
+
+/** A line or two on what the page is for. */
 function Description({
   measure,
   text,
-  top,
+  layout,
 }: {
   measure: TextMeasure
   text: string
-  top: number
+  layout: ReturnType<typeof descriptionLayout>
 }) {
-  const bottom =
-    top + DESCRIPTION.lines * DESCRIPTION.lineHeight * DESCRIPTION.size
-  const heartStart = heartFillBetween(top, bottom).nearestStart
-  const room = Math.min(COLUMN, heartStart - HEART_CLEARANCE - MARGIN)
-  const { box } = balancedLines(measure, text, DESCRIPTION.size, 600, room)
   return (
     <div
       style={{
         display: 'flex',
         position: 'absolute',
         left: MARGIN - measure.inkLeft(text, DESCRIPTION.size, 600),
-        top,
-        width: box,
+        top: layout.top,
+        width: layout.box,
         fontSize: DESCRIPTION.size,
         fontWeight: 600,
         lineHeight: DESCRIPTION.lineHeight,
