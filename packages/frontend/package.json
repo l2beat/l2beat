@@ -25,6 +25,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@base-ui/react": "^1.9.0",
     "@l2beat/backend-tools": "workspace:*",
     "@l2beat/config": "workspace:*",
     "@l2beat/database": "workspace:*",
@@ -41,7 +42,6 @@
     "@radix-ui/react-select": "^2.4.1",
     "@radix-ui/react-slot": "^1.5.0",
     "@radix-ui/react-tabs": "^1.2.1",
-    "@radix-ui/react-tooltip": "^1.4.1",
     "@resvg/resvg-js": "^2.6.2",
     "@shuding/opentype.js": "1.4.0-beta.0",
     "@tanstack/charts": "1.1.0",
