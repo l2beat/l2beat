@@ -54,7 +54,7 @@ export function SettingsDialog(props: {
               <RadixTabs.Content
                 key={tab.id}
                 value={tab.id}
-                className="min-h-0 flex-1 overflow-y-auto px-6 pt-4 pb-6 max-sm:px-3 focus:outline-hidden"
+                className="min-h-0 flex-1 overflow-y-auto px-6 pt-4 pb-6 focus:outline-hidden max-sm:px-3"
               >
                 <p className="mb-5 px-1 text-coffee-300 text-xs leading-4">
                   {tab.description}
