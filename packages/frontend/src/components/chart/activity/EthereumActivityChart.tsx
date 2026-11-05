@@ -17,6 +17,7 @@ import type { ChartScale } from '../types'
 import { ActivityChart } from './ActivityChart'
 import { ActivityChartStatsPanel } from './ActivityChartStatsPanel'
 import { ActivityRatioChart } from './ActivityRatioChart'
+import { EthereumLiveBlocks } from './EthereumLiveBlocks'
 import { getChartType } from './utils/getChartType'
 
 interface Props {
@@ -79,6 +80,9 @@ export function EthereumActivityChart({
   const timeRange = getChartTimeRangeFromData(chartData, { bucket: resolution })
   return (
     <div className="flex flex-col">
+      <div className="mb-4">
+        <EthereumLiveBlocks metric={metric} />
+      </div>
       <ChartControlsWrapper>
         <ProjectChartTimeRange timeRange={timeRange} />
         <ActivityChartRangeControls

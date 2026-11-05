@@ -14,6 +14,12 @@ export class RpcHeadBlockSource implements HeadBlockSource {
     return this.withMetrics(() => this.rpc.getLatestBlockNumber())
   }
 
+  getBlockHash(number: number): Promise<string> {
+    return this.withMetrics(
+      async () => (await this.rpc.getBlock(number, false)).hash,
+    )
+  }
+
   getBlock(number: number): Promise<HeadBlock> {
     return this.withMetrics(async () => {
       const block = await this.rpc.getBlock(number, true)

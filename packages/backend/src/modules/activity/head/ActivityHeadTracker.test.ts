@@ -67,6 +67,20 @@ describe(ActivityHeadTracker.name, () => {
     expect(hashes(db)).toEqual(['0x101', '0x102b', '0x103b', '0x104b'])
   })
 
+  it('refetches when the newest block is replaced before another follows', async () => {
+    const chain = mockChain(103)
+    const db = mockDb()
+    const tracker = createTracker(chain, db)
+    await tracker.update()
+
+    chain.reorgFrom(103)
+    await tracker.update()
+    expect(hashes(db)).toEqual(['0x101', '0x102', '0x103'])
+
+    await tracker.update()
+    expect(hashes(db)).toEqual(['0x101', '0x102', '0x103b'])
+  })
+
   it('publishes nothing from nodes on different forks', async () => {
     // A load balancer can answer 102 from a fork and 103 from the canonical
     // chain. Their numbers run on, their hashes do not
@@ -141,6 +155,7 @@ function mockChain(latest: number) {
       forkedOnce.add(number)
     },
     getLatestBlockNumber: mockFn(async () => chain.latest),
+    getBlockHash: mockFn(async (number: number) => hashOf(number)),
     getBlock: mockFn(async (number: number): Promise<HeadBlock> => {
       const onFork = forkedOnce.delete(number)
       return {

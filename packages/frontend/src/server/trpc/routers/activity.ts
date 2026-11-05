@@ -12,6 +12,7 @@ import {
   EthereumActivityChartParams,
   getEthereumActivityChart,
 } from '~/server/features/layer2s/activity/getEthereumActivityChart'
+import { getEthereumLiveBlocks } from '~/server/features/layer2s/activity/getEthereumLiveBlocks'
 import { getEthereumLiveRates } from '~/server/features/layer2s/activity/getEthereumLiveRates'
 import { getRecategorisedActivityChart } from '~/server/features/layer2s/activity/getRecategorisedActivityChart'
 import { ActivityProjectFilter } from '~/server/features/layer2s/activity/utils/projectFilterUtils'
@@ -29,6 +30,7 @@ export const activityRouter = router({
     .input(EthereumActivityChartParams)
     .query(({ input }) => getEthereumActivityChart(input)),
   ethereumLiveRates: procedure.query(() => getEthereumLiveRates()),
+  ethereumLiveBlocks: procedure.query(() => getEthereumLiveBlocks()),
   recategorisedChart: procedure
     .input(
       z.object({

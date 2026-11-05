@@ -23,6 +23,7 @@ export interface HeadBlock {
 
 export interface HeadBlockSource {
   getLatestBlockNumber(): Promise<number>
+  getBlockHash(number: number): Promise<string>
   getBlock(number: number): Promise<HeadBlock>
 }
 
@@ -69,7 +70,10 @@ export class ActivityHeadTracker {
       (this.blocks.at(-1)?.number ?? counted) + 1,
       latest,
     )
-    if (!isChain([...this.blocks.slice(-1), ...fetched])) {
+    if (
+      !isChain([...this.blocks.slice(-1), ...fetched]) ||
+      (fetched.length === 0 && !(await this.isNewestStillOnChain()))
+    ) {
       // A reorg, or nodes behind a load balancer on different forks. The
       // published blocks stay until the next update finds one chain
       this.logger.info('Blocks do not link, refetching', {
@@ -118,6 +122,16 @@ export class ActivityHeadTracker {
     if (this.blocks[0] && this.blocks[0].number !== counted + 1) {
       this.blocks = []
     }
+  }
+
+  /**
+   * A reorg can replace the newest block before a block follows it, and
+   * only a following block would show it by its parent hash
+   */
+  private async isNewestStillOnChain(): Promise<boolean> {
+    const newest = this.blocks.at(-1)
+    if (!newest) return true
+    return (await this.$.source.getBlockHash(newest.number)) === newest.hash
   }
 
   private async fetchBlocks(from: number, to: number): Promise<HeadBlock[]> {
