@@ -9,7 +9,7 @@ Generated with discovered.json: 0xe201b8fb561dffc26b5d25105c0f01a11763a393
 
 ## Description
 
-Proposal 73 is in voting: it pays 200 TORN to the proposer and pins a new app build on tornadocash.eth (contenthash e301017012...2a75). Voting ends 2026-11-10 06:49 UTC, execution is possible from 2026-11-12 after the 2-day delay. The source moves from tornado-dao/classic-ui to the fork torndao777-eng/classic-ui (account created 2026-09-20). Its two commits on top of the current pin 17c54dae only change relayer list loading in services/registry/index.js. The new CID is not rebuilt yet: the tornado-cash.ts assert fails once it is pinned.
+Proposal 73 is in voting: it pays 200 TORN to the proposer and pins a new app build on tornadocash.eth (contenthash e301017012...2a75). Voting ends 2026-11-10 06:49 UTC, execution is possible from 2026-11-12 after the 2-day delay. The source moves from tornado-dao/classic-ui to the fork torndao777-eng/classic-ui (account created 2026-09-20). Its two commits on top of the current pin 17c54dae only change relayer list loading in services/registry/index.js. The proposal contract matches its verified source and only does these two things. L2BEAT rebuilt the new CID bafybeiayu2srl6owm6tdbik6uabcpjlji4u32dtph4yrwakreklcfprkou from torndao777-eng/classic-ui 8af0abd with the DAO's recipe (tornado-dao/tornado-ipfs-ui d2aa401), and it matches. Once the proposal executes, REBUILT_APP_CID in tornado-cash.ts needs this CID.
 
 ## Watched changes
 
