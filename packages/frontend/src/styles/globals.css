@@ -825,6 +825,31 @@
   );
 }
 
+/* A chart tooltip grows out of the hovered point, which its placement sets
+   as --chart-tooltip-origin, so it reads as coming from there. Moves
+   between points keep it mounted and do not replay this. */
+@utility chart-tooltip-enter {
+  transform-origin: var(--chart-tooltip-origin, 0 0);
+  animation: chart-tooltip-enter 150ms var(--ease-out-quint);
+
+  @media (prefers-reduced-motion: reduce) {
+    animation-name: chart-tooltip-fade-in;
+  }
+}
+
+@keyframes chart-tooltip-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+@keyframes chart-tooltip-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
 @utility word-break-word {
   word-break: break-word;
 }
