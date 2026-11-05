@@ -5,6 +5,7 @@ import {
 } from '@l2beat/shared-pure'
 import type {
   ApiAddressUsageResponse,
+  ApiAgentContext,
   ApiAgentEvent,
   ApiCodeResponse,
   ApiCodeSearchResponse,
@@ -162,6 +163,14 @@ export async function postAgentTab(report: {
   sequence: number
 }): Promise<void> {
   await fetchOk('/api/agent/tab', jsonRequest('POST', report))
+}
+
+export async function postAgentContext(answer: {
+  tab: string
+  request: string
+  context: ApiAgentContext
+}): Promise<void> {
+  await fetchOk('/api/agent/context', jsonRequest('POST', answer))
 }
 
 export function executeMatchFlat(

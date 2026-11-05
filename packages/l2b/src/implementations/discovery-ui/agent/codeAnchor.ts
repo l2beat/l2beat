@@ -44,18 +44,7 @@ export function anchorSnippet(
     }
     const declarations = parseDeclarations(source.code)
     for (const offset of offsets) {
-      const enclosing = declarations?.find((d) => contains(d, offset))
-      matches.push({
-        sourceIndex,
-        offset,
-        line: lineAt(source.code, offset),
-        declaration: enclosing && {
-          start: rangeOf(enclosing)[0],
-          end: rangeOf(enclosing)[1] + 1,
-        },
-        isImplementation:
-          enclosing !== undefined && isImplementation(enclosing),
-      })
+      matches.push(matchIn(source.code, declarations, sourceIndex, offset))
     }
   }
   const match = matches.find((m) => m.isImplementation) ?? matches[0]
@@ -63,6 +52,35 @@ export function anchorSnippet(
     return undefined
   }
   return { match, others: matches.filter((m) => m !== match) }
+}
+
+// The place in a source the researcher has selected.
+export function matchAt(
+  source: CodeSource,
+  sourceIndex: number,
+  offset: number,
+): CodeMatch {
+  const declarations = parseDeclarations(source.code)
+  return matchIn(source.code, declarations, sourceIndex, offset)
+}
+
+function matchIn(
+  code: string,
+  declarations: BaseASTNode[] | undefined,
+  sourceIndex: number,
+  offset: number,
+): CodeMatch {
+  const enclosing = declarations?.find((d) => contains(d, offset))
+  return {
+    sourceIndex,
+    offset,
+    line: lineAt(code, offset),
+    declaration: enclosing && {
+      start: rangeOf(enclosing)[0],
+      end: rangeOf(enclosing)[1] + 1,
+    },
+    isImplementation: enclosing !== undefined && isImplementation(enclosing),
+  }
 }
 
 function findOffsets(code: string, find: string): number[] {

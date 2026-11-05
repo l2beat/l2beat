@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x83e9a09847d48cafca977c23d81fae3e360ad839
+
+# Diff at Thu, 05 Nov 2026 08:58:42 GMT:
+
+- id: 4b1b504f
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@92a563dab6932b2cedd6791c3571d1d33fc43c20 block: 1793715886
+- current timestamp: 1793715886
+
+## Description
+
+`isPermanentRollup` and `priorityModeInfo` are MEDIUM: a one-way lock only removes options, and the raw Priority Mode slot holds the live activation flag.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793715886 (main branch discovery), not current.
+
+```diff
+    contract Diamond (eth:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.isPermanentRollup.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPermanentRollupString.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.priorityModeInfo.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0xc45b103657d0cf74d696984edf376bab71c09a8a
 
 # Diff at Tue, 03 Nov 2026 15:45:15 GMT:

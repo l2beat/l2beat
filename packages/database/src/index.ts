@@ -52,6 +52,7 @@ export type {
 export type { CropAttestationRecord } from './repositories/CropAttestationRepository'
 export type { CurrentPriceRecord } from './repositories/CurrentPriceRepository'
 export type {
+  BucketedDataAvailabilityRecord,
   DataAvailabilityRecord,
   ProjectsSummedDataAvailabilityRecord,
 } from './repositories/DataAvailabilityRepository'

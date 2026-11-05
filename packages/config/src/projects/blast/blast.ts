@@ -20,7 +20,7 @@ export const blast: ScalingProject = opStackL2({
     slug: 'blast',
     architectureImage: 'blast',
     headerWarning:
-      'Blast is winding down. See the [announcement](https://x.com/blast/status/2106032805280891073) and withdraw your funds to Ethereum by October 26, 2026.',
+      'Blast is shutting down (see the [announcement](https://x.com/blast/status/2106032805280891073)). Deposits are closed and the OptimismPortal is paused, so withdrawals through the bridge are no longer possible. The ETH and DAI backing user balances were moved to BlastExit claim contracts on Ethereum, controlled by the Blast team.',
     description:
       'Blast is an EVM-compatible Optimistic Rollup supporting native yield. It invests funds deposited into the L1 bridge into various DeFi protocols transferring yield back to the L2.',
     links: {
@@ -128,6 +128,27 @@ export const blast: ScalingProject = opStackL2({
       ...ESCROW.CANONICAL_ADD_TA,
       description:
         'Escrow for ETH that is invested into yield-bearing contracts such as stETH.',
+    }),
+    // DAI in the BlastExit contracts backs USDB, which is counted by its L2 supply
+    discovery.getEscrowDetails({
+      address: ChainSpecificAddress(
+        'eth:0x9D31771458B421C7EA8A06CB8D12663E91617869',
+      ),
+      name: 'BlastExit',
+      tokens: ['ETH'],
+      ...ESCROW.CANONICAL_ADD_TA,
+      description:
+        'Merkle claim contract for the shutdown: users claim their ETH and DAI against a root of balances set by the authority.',
+    }),
+    discovery.getEscrowDetails({
+      address: ChainSpecificAddress(
+        'eth:0x23eA8c6ACEb5673BBd712137cE2Aa33db36CB513',
+      ),
+      name: 'BlastExit2',
+      tokens: ['ETH'],
+      ...ESCROW.CANONICAL_ADD_TA,
+      description:
+        'Second Merkle claim contract for the shutdown: users claim their ETH and DAI against a root of balances set by the authority.',
     }),
   ],
   isNodeAvailable: true,

@@ -1593,13 +1593,24 @@
   ],
   "unichain": [
     {
-      "id": "46816d81ce9b",
+      "id": "13faf0e65843",
       "config": {
         "type": "ethereum",
         "daLayer": "ethereum",
         "inbox": "0xFf00000000000000000000000000000000000130",
-        "sequencers": ["0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd"],
-        "sinceBlock": 21116363
+        "sequencers": ["0x9Ef649E8746cC47A17708a5e86B2d66c7F6C00d1"],
+        "sinceBlock": 26299498
+      }
+    },
+    {
+      "id": "46816d81ce9b",
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 21116363,
+        "untilBlock": 26299498,
+        "inbox": "0xFf00000000000000000000000000000000000130",
+        "sequencers": ["0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd"]
       }
     }
   ],

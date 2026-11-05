@@ -10,7 +10,7 @@ describe(describeOssification.name, () => {
     isUnverified: false,
     criticalChangesPerYear: 0,
     contractCount: 1,
-    exposure: 2_640_000_000,
+    exposure: { value: 2_640_000_000, since: clockStart, years: 0 },
     valueSource: null,
     timeline: {
       from: clockStart,
@@ -19,6 +19,7 @@ describe(describeOssification.name, () => {
       genesis: clockStart,
       criticalChanges: [],
       values: null,
+      peak: null,
     },
   }
 

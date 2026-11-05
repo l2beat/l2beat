@@ -162,8 +162,11 @@ export function useStickyTableHeader(enabled: boolean): StickyTableRefs {
     })
     mutationObserver.observe(thead, { childList: true, subtree: true })
     mutationObserver.observe(tbody, { childList: true })
+    // The observer's first call, after the next layout and before paint,
+    // does the first measure. Measuring here, in the hydration commit, would
+    // force the page's first layout there, and the variables it sets would
+    // make the next forced read restyle the whole table.
     observeLayout()
-    update()
     const stopForwarding = forwardStickyHeaderInput(header, scroller, () =>
       getPinnedWidth(columns),
     )

@@ -22,6 +22,7 @@ import type {
 } from '../ssr/types'
 import { jsonForInlineScript } from '../utils/jsonForInlineScript'
 import { type Manifest, manifest } from '../utils/Manifest'
+import { themeScript } from '../utils/theme'
 import { getTokenGraphs } from './features/tokens/getTokenGraphs'
 import { ErrorHandler } from './middlewares/ErrorHandler'
 import { LlmsLinkHeaderMiddleware } from './middlewares/LlmsLinkHeaderMiddleware'
@@ -102,6 +103,7 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
       .replace('<!--app-html-->', rendered.html)
       .replace('<!--ssr-data-->', () => jsonForInlineScript(clientSsrData))
       .replace('<!--env-data-->', () => jsonForInlineScript(getClientEnvData()))
+      .replace('<!--theme-script-->', () => themeScript)
   }
 
   app.use(timeout('25s'))

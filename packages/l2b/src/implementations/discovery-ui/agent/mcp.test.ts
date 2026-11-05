@@ -24,7 +24,12 @@ describe(attachMcpRoutes.name, () => {
       },
       readDiscoveryWithReferences: () => [],
     })
-    app.use('/api/agent', createAgentRouter(configReader, tabs))
+    const chatOptions = {
+      cwd: process.cwd(),
+      mcpUrl: 'http://localhost:0/api/agent/mcp',
+      launch: () => ({ command: process.execPath, args: ['-e', ''] }),
+    }
+    app.use('/api/agent', createAgentRouter(configReader, chatOptions, tabs))
     server = app.listen(0, '127.0.0.1')
     await new Promise((resolve) => server.once('listening', resolve))
     const { port } = server.address() as AddressInfo
@@ -59,7 +64,12 @@ describe(attachMcpRoutes.name, () => {
       inputSchema: { type: string; $schema?: string }
       _meta: object
     }[]
-    expect(tools.map((t) => t.name)).toEqual(['show', 'clear'])
+    expect(tools.map((t) => t.name)).toEqual([
+      'show',
+      'context',
+      'permissions',
+      'clear',
+    ])
     for (const tool of tools) {
       expect(tool.inputSchema.type).toEqual('object')
       expect(tool.inputSchema.$schema).toEqual(undefined)
@@ -97,6 +107,44 @@ describe(attachMcpRoutes.name, () => {
     expect(written).toEqual(['data: {"type":"clear"}\n\n'])
   })
 
+  it("shows in the chat's tab when the agent names it", async () => {
+    const chatTab: string[] = []
+    const focused: string[] = []
+    const chatStream: TabStream = {
+      write: (c) => chatTab.push(c),
+      end: () => {},
+    }
+    const focusedStream: TabStream = {
+      write: (c) => focused.push(c),
+      end: () => {},
+    }
+    tabs.connect('chat-tab', chatStream)
+    tabs.connect('focused-tab', focusedStream)
+    tabs.report('chat-tab', { project: 'linea', focusedAt: 10, sequence: 10 })
+    tabs.report('focused-tab', {
+      project: 'arbitrum',
+      focusedAt: 20,
+      sequence: 11,
+    })
+    const response = await fetch(`${url}?tab=chat-tab`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        jsonrpc: '2.0',
+        id: 1,
+        method: 'tools/call',
+        params: { name: 'show', arguments: { steps: [{ note: 'Hi' }] } },
+      }),
+    })
+    const body = (await response.json()) as { result?: { isError: boolean } }
+    tabs.disconnect('chat-tab', chatStream)
+    tabs.disconnect('focused-tab', focusedStream)
+    expect(body.result?.isError).toEqual(false)
+    expect(chatTab.length).toEqual(1)
+    expect(chatTab[0]).toInclude('"project":"linea"')
+    expect(focused).toEqual([])
+  })
+
   it('shows in the active tab, in the project it has open', async () => {
     const written: string[] = []
     const stream: TabStream = { write: (c) => written.push(c), end: () => {} }
@@ -117,6 +165,32 @@ describe(attachMcpRoutes.name, () => {
     expect(shown.result?.isError).toEqual(false)
     expect(written.length).toEqual(1)
     expect(written[0]).toInclude('"project":"linea"')
+  })
+
+  it('asks the active tab for context over its stream', async () => {
+    // The tab answers each request the way AgentBridge does, over HTTP.
+    const stream: TabStream = {
+      write: (chunk) => {
+        const event = JSON.parse(chunk.slice('data: '.length))
+        const body = {
+          tab: 'tab-1',
+          request: event.id,
+          context: { project: 'linea', selected: [] },
+        }
+        void fetch(url.replace('/mcp', '/context'), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        })
+      },
+      end: () => {},
+    }
+    tabs.connect('tab-1', stream)
+    tabs.report('tab-1', { project: 'linea', focusedAt: 3, sequence: 3 })
+    const result = (await call('tools/call', { name: 'context' })).result
+    tabs.disconnect('tab-1', stream)
+    expect(result?.isError).toEqual(false)
+    expect(JSON.stringify(result?.content)).toInclude('DiscoUI shows linea.')
   })
 
   it('answers JSON it cannot parse with a JSON-RPC error', async () => {

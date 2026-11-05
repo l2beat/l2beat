@@ -1,5 +1,6 @@
 import { hydrateRoot } from 'react-dom/client'
 import { linkGlossaryTerms } from '~/utils/markdown/glossaryPlugin'
+import { watchThemeChanges } from '~/utils/theme'
 import { getPageElement } from '../pages/getPageElement'
 import { getSsrData } from './pageDataScripts'
 
@@ -13,6 +14,7 @@ async function main() {
   )
 
   hydrateRoot(root, pageElement)
+  watchThemeChanges()
 }
 
 void main().catch((error) => {

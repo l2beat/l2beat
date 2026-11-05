@@ -18,7 +18,8 @@ import { LookupPanel } from './LookupPanel'
 import { RediscoverPrompt } from './RediscoverPrompt'
 import { useGoToDefinition } from './useGoToDefinition'
 
-const EDITOR_ID = 'code-panel'
+export const CODE_PANEL_EDITOR_ID = 'code-panel'
+const EDITOR_ID = CODE_PANEL_EDITOR_ID
 
 export function CodePanel() {
   const { project, selectedAddress, projectResponse, selected } =
