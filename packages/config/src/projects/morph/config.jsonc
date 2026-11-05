@@ -62,8 +62,5 @@
         "untilTimestamp": 1790063627
       }
     }
-    // Morph Multisig 1 and 2 are actor containers and not critical. Their
-    // mechanism changes are reviewed events in ossification.json on the
-    // contracts they control.
   }
 }
