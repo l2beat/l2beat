@@ -48,7 +48,7 @@ export function SettingsDialog(props: {
           className="flex min-h-0 flex-1 max-sm:flex-col"
         >
           <SettingsNavigation />
-          <div className="flex min-w-0 flex-1 flex-col">
+          <div className="flex min-h-0 min-w-0 flex-1 flex-col">
             <SettingsHeader tabId={tabId} />
             {SETTINGS_TABS.map((tab) => (
               <RadixTabs.Content
