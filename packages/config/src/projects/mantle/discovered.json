@@ -1,7 +1,7 @@
 {
   "name": "mantle",
   "timestamp": 1792586696,
-  "configHash": "0x85e1d40245ca2000d214769fe150640122026ddc776b161b84d5bea96efdad67",
+  "configHash": "0xb028b2bcdfd8e903202c2c7488d7792f1d3a9019334ae68f32c6c4b9dca9b2a6",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -904,6 +904,7 @@
       "name": "SequencerFeeVault",
       "address": "mantle:0x4200000000000000000000000000000000000011",
       "type": "Contract",
+      "template": "opstack/Layer2/SequencerFeeVault_mantle",
       "sourceHashes": [
         "0xe25193b3a80e29449b74ddabcadc4a7be2b7d45c9bb86d4613c8f4a4a5de4a53",
         "0x463f090b5881cfb4d2beec55f69ee96ef571669e94cc0607aeefe411950f089e"
@@ -919,7 +920,6 @@
         "$implementation": "mantle:0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
-        "l1FeeWallet": "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
         "MIN_WITHDRAWAL_AMOUNT": "10000000000000000000",
         "RECIPIENT": "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
         "totalProcessed": "7077174882360678038883681",
@@ -999,6 +999,7 @@
       "name": "BaseFeeVault",
       "address": "mantle:0x4200000000000000000000000000000000000019",
       "type": "Contract",
+      "template": "opstack/Layer2/BaseFeeVault_mantle",
       "sourceHashes": [
         "0xe25193b3a80e29449b74ddabcadc4a7be2b7d45c9bb86d4613c8f4a4a5de4a53",
         "0x04df44076e2dd29cd651d5e2e6f9ef10ecd0e270a2c6e6d01aff3f66af686e66"
@@ -1032,6 +1033,7 @@
       "name": "L1FeeVault",
       "address": "mantle:0x420000000000000000000000000000000000001A",
       "type": "Contract",
+      "template": "opstack/Layer2/BaseFeeVault_mantle",
       "sourceHashes": [
         "0xe25193b3a80e29449b74ddabcadc4a7be2b7d45c9bb86d4613c8f4a4a5de4a53",
         "0x04df44076e2dd29cd651d5e2e6f9ef10ecd0e270a2c6e6d01aff3f66af686e66"
@@ -1065,6 +1067,7 @@
       "name": "OperatorFeeVault",
       "address": "mantle:0x420000000000000000000000000000000000001b",
       "type": "Contract",
+      "template": "opstack/Layer2/BaseFeeVault_mantle",
       "sourceHashes": [
         "0xe25193b3a80e29449b74ddabcadc4a7be2b7d45c9bb86d4613c8f4a4a5de4a53",
         "0x04df44076e2dd29cd651d5e2e6f9ef10ecd0e270a2c6e6d01aff3f66af686e66"
@@ -1860,6 +1863,8 @@
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/L1CrossDomainMessenger": "0xb744f567252900c5026a2b29403304c6744365159db35005ebd26e5236be1b27",
     "opstack/L1StandardBridge": "0xe12a1d11b528a86198802d42c94a6960c55724bcfaf859346be9755694a1c641",
+    "opstack/Layer2/BaseFeeVault_mantle": "0x2a033e06f7386b028aeb76fca2f1fca58fbe79478ac89502a9958097cb8cea9d",
+    "opstack/Layer2/SequencerFeeVault_mantle": "0x202d3f46072850cd9eba65d9cd3994a4f45d21bf566f834fcdfaf139342f87e8",
     "opstack/OptimismPortal": "0x9965c29a37e54bf5eb2175e2aee7d367fb11669af9b1e358af2c30fd8c9e47b8",
     "opstack/SystemConfig_v1_4_0_mantle": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle": "0x9a1f78fb3786e973f0204ba0c2838e0a89a5abeba36441b67f62257a9fe0d58c"

@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xb974a90d2b866fc991bfc401caa084cd7880a629
+Generated with discovered.json: 0x3df38be9af5c0c912db99012da1301f50f61e0c2
 
-# Diff at Tue, 27 Oct 2026 14:48:18 GMT:
+# Diff at Thu, 05 Nov 2026 07:13:41 GMT:
 
 - id: 21fe5c0b
-- author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@b3346aafa392488900d7a556a206cfabc7acf611 block: 1792586696
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@02f1e81176b548fbfa87cd86090398367c11dd2f block: 1792586696
 - current timestamp: 1792586696
 
 ## Description
@@ -47,25 +47,25 @@ discovery. Values are for block 1792586696 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract SequencerFeeVault (mantle:0x4200000000000000000000000000000000000011) [N/A]
+    contract SequencerFeeVault (mantle:0x4200000000000000000000000000000000000011) [opstack/Layer2/SequencerFeeVault_mantle]
     +++ description: Collects the sequencer fees, which anyone can withdraw as MNT to the recipient on L1 once the minimum withdrawal amount is reached.
 ```
 
 ```diff
 +   Status: CREATED
-    contract BaseFeeVault (mantle:0x4200000000000000000000000000000000000019) [N/A]
+    contract BaseFeeVault (mantle:0x4200000000000000000000000000000000000019) [opstack/Layer2/BaseFeeVault_mantle]
     +++ description: Collects the EIP-1559 base fees, which anyone can withdraw as MNT to the recipient on L1 once the minimum withdrawal amount is reached.
 ```
 
 ```diff
 +   Status: CREATED
-    contract L1FeeVault (mantle:0x420000000000000000000000000000000000001A) [N/A]
+    contract L1FeeVault (mantle:0x420000000000000000000000000000000000001A) [opstack/Layer2/BaseFeeVault_mantle]
     +++ description: Collects the L1 data portion of the L2 transaction fees, which anyone can withdraw as MNT to the recipient on L1 once the minimum withdrawal amount is reached.
 ```
 
 ```diff
 +   Status: CREATED
-    contract OperatorFeeVault (mantle:0x420000000000000000000000000000000000001b) [N/A]
+    contract OperatorFeeVault (mantle:0x420000000000000000000000000000000000001b) [opstack/Layer2/BaseFeeVault_mantle]
     +++ description: Collects the operator fees, which anyone can withdraw as MNT to the recipient on L1 once the minimum withdrawal amount is reached.
 ```
 
