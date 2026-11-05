@@ -150,10 +150,7 @@
     // the vb* assets on Katana and are upgradeable by Katana vaultBridge multisigs, so they
     // and their ProxyAdmins are critical (escrow rule). Their MigrationManager is not: it
     // holds no funds and each vbToken checks every completeMigration against received assets.
-    // SuperchainConfig fork: its guardian can pause the portal and with it the
-    // forced-transaction path (the only censorship-resistance mechanism).
     "eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811": {
-      "critical": true,
       "fields": {
         "guardian": {
           "severity": "MEDIUM",

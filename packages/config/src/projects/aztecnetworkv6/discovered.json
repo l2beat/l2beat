@@ -1273,7 +1273,7 @@
           "description": "Maximum mana that a checkpoint can consume. It is derived from the current mana target."
         },
         "latestStakingQueueConfigUpdate": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Latest owner-set validator entry-queue configuration. If absent, the deployment configuration in constructorArgs is still in effect."
         },
         "getEntryQueueFlushSize": {
@@ -1310,10 +1310,11 @@
           "description": "Reward distributor used by this rollup."
         },
         "getSlasher": {
+          "severity": "HIGH",
           "description": "Active Slasher authorized by this rollup."
         },
         "getPendingSlasher": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Queued replacement Slasher and the timestamp at which anyone can finalize the replacement."
         },
         "getLegacySlasher": {
