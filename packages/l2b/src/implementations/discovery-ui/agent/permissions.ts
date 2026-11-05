@@ -84,7 +84,8 @@ function describeGrant(
     // holder's.
     const hops = [...grant.via].reverse().map((hop) => {
       const delay = hop.delay ? ` +${formatDelay(hop.delay)}` : ''
-      const condition = hop.condition ? ` if ${hop.condition}` : ''
+      // Stored as display text with its own connective, like "if the quorum".
+      const condition = hop.condition ? ` ${hop.condition}` : ''
       return `${name(hop.address)}${delay}${condition}`
     })
     parts.push(`via ${hops.join(' -> ')}`)
@@ -96,7 +97,7 @@ function describeGrant(
     parts.push(`role ${grant.role}`)
   }
   if (grant.condition !== undefined) {
-    parts.push(`if ${grant.condition}`)
+    parts.push(grant.condition)
   }
   const line = parts.join(', ')
   return grant.description === undefined
