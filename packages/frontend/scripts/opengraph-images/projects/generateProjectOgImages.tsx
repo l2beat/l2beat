@@ -1,6 +1,4 @@
 import type { Project } from '@l2beat/config'
-import { readFileSync } from 'fs'
-import path from 'path'
 import type { OpengraphKit } from '~/components/opengraph-image/heartbeat/render'
 import { renderOpengraphPng } from '~/components/opengraph-image/heartbeat/render'
 import { ProjectOpengraphImage } from '~/components/opengraph-image/Project'
@@ -31,7 +29,6 @@ export async function generateProjectOgImages(kit: OpengraphKit) {
             <ProjectOpengraphImage
               measure={kit.measure}
               label={getLabel(project, type)}
-              logoSrc={getLogoSrc(project.slug)}
               name={
                 type === 'interop'
                   ? (project.interopConfig?.name ?? project.name)
@@ -50,7 +47,6 @@ export async function generateProjectOgImages(kit: OpengraphKit) {
       <ProjectOpengraphImage
         measure={kit.measure}
         label="Layer 1"
-        logoSrc={getLogoSrc('ethereum')}
         name="Ethereum"
       />,
       kit,
@@ -75,11 +71,6 @@ function getLabel(
     case 'defi':
       return 'DeFi'
   }
-}
-
-function getLogoSrc(slug: string) {
-  const file = path.join(process.cwd(), 'static/icons', `${slug}.png`)
-  return `data:image/png;base64,${readFileSync(file).toString('base64')}`
 }
 
 export function getOpengraphProjectTypes(

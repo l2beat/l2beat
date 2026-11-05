@@ -49,11 +49,15 @@ const EVENODD = new Set([T, T_2, E, B, E_2, A])
 const piece = (d: string, fill: string) =>
   `<path d="${d}"${EVENODD.has(d) ? ' fill-rule="evenodd"' : ''} fill="${fill}"/>`
 
-/** The dark-ground lockup: pink heart, white ETH and BEAT. `withBeat: false` leaves the heart alone. */
-export function lockup(placement: Placement, { withBeat = true } = {}) {
-  const letters = withBeat ? [B, E_2, A, T_2].map((d) => piece(d, WHITE)) : []
-  return `<g transform="${placement.transform}">${piece(HEART, PINK)}${[E, T, H].map((d) => piece(d, WHITE)).join('')}${letters.join('')}</g>`
+/** The dark-ground lockup: pink heart, white ETH and BEAT. */
+export function lockup(placement: Placement) {
+  const letters = [E, T, H, B, E_2, A, T_2].map((d) => piece(d, WHITE))
+  return `<g transform="${placement.transform}">${piece(HEART, PINK)}${letters.join('')}</g>`
 }
+
+/** The logo's heart alone, without letters, so a title can run over it. */
+export const heart = (placement: Placement) =>
+  `<g transform="${placement.transform}">${piece(HEART, PINK)}</g>`
 
 /** The placed heart's height in px. */
 export const heartHeight = (placement: Placement) =>

@@ -1,29 +1,38 @@
 import type { ReactNode } from 'react'
 import { heartEcho } from './echo'
-import { HEART_RATIO, INK, lockup, PINK, place, WHITE } from './marks'
+import { HEART_RATIO, heart, INK, PINK, place, WHITE } from './marks'
 import { OG_SIZE, rasterize } from './render'
 import type { TextMeasure } from './text'
 
 // Every OG image but home's: the logo's heart glowing on the right, its echo
-// spreading across the canvas, and a pink label over the title on the left.
+// spreading across the canvas, and a pink label over a big white title on the
+// left. Long titles run over the heart, which is why it carries no letters.
 
 export const MARGIN = 72
-/** The title column, from the margin to short of the heart's first ring. */
-export const COLUMN = 528
+/** The title column: the whole width between the margins. */
+export const COLUMN = OG_SIZE.width - 2 * MARGIN
 
-const HEART_HEIGHT = 400
-const LABEL_TO_TITLE = 16
-const LABEL = { size: 32, min: 28, tracking: 1.4 / 24 }
+const HEART_HEIGHT = 440
+const LABEL_TO_TITLE = 12
+const LABEL = { size: 36, min: 28, tracking: 1.4 / 24 }
+// The heart outline's left edge a little below its middle, where titles cross
+// it, from its centre in the pieces' units. Measured on HEART's path.
+const EDGE_DX = -141
 
-const heart = place(
+const placement = place(
   OG_SIZE.width - MARGIN - (HEART_HEIGHT * HEART_RATIO) / 2,
   OG_SIZE.height / 2,
   HEART_HEIGHT,
 )
+/** Where a title starts running over the heart. */
+export const HEART_EDGE = placement.hx + placement.scale * EDGE_DX
+/** How far short of the heart's edge text stops when it doesn't run over the heart. */
+export const HEART_CLEARANCE = 32
+
 // Drawn on first use, not on import: the server imports this for token images.
 let decor: string | undefined
 const frameDecor = () =>
-  (decor ??= rasterize(heartEcho(heart) + lockup(heart, { withBeat: false })))
+  (decor ??= rasterize(heartEcho(placement) + heart(placement)))
 
 export function HeartbeatFrame({
   measure,
@@ -60,13 +69,14 @@ export function HeartbeatFrame({
   )
 }
 
-/** Shrinks a label too long for the column, down to 28 px. */
+/** Shrinks a label that would reach the heart, down to 28 px: pink on pink would vanish. */
 function Label({ measure, text }: { measure: TextMeasure; text: string }) {
   const caps = text.toUpperCase()
+  const room = HEART_EDGE - HEART_CLEARANCE - MARGIN
   let size = LABEL.size
   while (
     size > LABEL.min &&
-    measure.width(caps, size, 600, LABEL.tracking * size) > COLUMN
+    measure.width(caps, size, 600, LABEL.tracking * size) > room
   ) {
     size -= 0.5
   }

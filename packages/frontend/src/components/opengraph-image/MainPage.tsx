@@ -1,4 +1,11 @@
-import { COLUMN, HeartbeatFrame, wordSpans } from './heartbeat/Frame'
+import {
+  COLUMN,
+  HEART_CLEARANCE,
+  HEART_EDGE,
+  HeartbeatFrame,
+  MARGIN,
+  wordSpans,
+} from './heartbeat/Frame'
 import { satoriWidth, type TextMeasure } from './heartbeat/text'
 
 export interface MainPage {
@@ -31,21 +38,35 @@ export function MainPageOpengraphImage({ measure, label, title }: Props) {
   )
 }
 
+// A title ending just past the heart's edge looks like it bumps into it, so
+// one that runs over the heart runs at least this far.
+const MIN_OVERLAP = 96
+
 /**
- * One line while that keeps the title at 56 px or more, else two lines at
- * 44–80 px, balanced like CSS `text-wrap: balance`.
+ * One line while that keeps the title at 64 px or more, else two lines at
+ * 44–80 px, balanced like CSS `text-wrap: balance`. Sizes that would end the
+ * title at the heart's edge are skipped.
  */
-function fitTitle(measure: TextMeasure, title: string) {
-  const fitsOneLine = (size: number) =>
-    satoriWidth(measure.width(title, size, 700)) <= COLUMN
-  for (let size = 96; size >= 56; size--) {
+export function fitTitle(measure: TextMeasure, title: string) {
+  const fitsOneLine = (size: number) => {
+    const width = measure.width(title, size, 700, -0.01 * size)
+    return satoriWidth(width) <= COLUMN && !endsAtHeartEdge(width)
+  }
+  for (let size = 120; size >= 64; size--) {
     if (fitsOneLine(size)) return { size, width: COLUMN }
   }
   for (let size = 80; size >= 44; size -= 2) {
     const balanced = balancedWidth(measure, title, size)
-    if (balanced.lines <= 2) return { size, width: balanced.width }
+    if (balanced.lines <= 2 && !endsAtHeartEdge(balanced.width)) {
+      return { size, width: balanced.width }
+    }
   }
   return { size: 44, width: COLUMN }
+}
+
+function endsAtHeartEdge(width: number) {
+  const end = MARGIN + width
+  return end > HEART_EDGE - HEART_CLEARANCE && end < HEART_EDGE + MIN_OVERLAP
 }
 
 // Every word but the last carries a space as its right margin, and satori's
