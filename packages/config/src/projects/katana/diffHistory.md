@@ -1,3 +1,78 @@
+Generated with discovered.json: 0xe46fe10693a03a3269648b3f592527a59b3f66e0
+
+# Diff at Thu, 05 Nov 2026 07:14:25 GMT:
+
+- id: 9c1d5735
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@02f1e81176b548fbfa87cd86090398367c11dd2f block: 1793194486
+- current timestamp: 1793194486
+
+## Description
+
+Show who can change the recipient, minimum withdrawal amount and withdrawal network of the fee vaults, and describe the vaults from their code.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793194486 (main branch discovery), not current.
+
+```diff
+    contract SequencerFeeVault (katana:0x4200000000000000000000000000000000000011) [opstack/Layer2/SequencerFeeVault_karst] {
+    +++ description: Collects the sequencer fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.
+      template:
+-        "opstack/Layer2/SequencerFeeVault"
++        "opstack/Layer2/SequencerFeeVault_karst"
+      description:
+-        "Collects the sequencer fees."
++        "Collects the sequencer fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached."
+    }
+```
+
+```diff
+    contract BaseFeeVault (katana:0x4200000000000000000000000000000000000019) [opstack/Layer2/BaseFeeVault_karst] {
+    +++ description: Collects the EIP-1559 base fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.
+      description:
+-        "Collects EIP-1559 base fees"
++        "Collects the EIP-1559 base fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached."
+    }
+```
+
+```diff
+    contract L1FeeVault (katana:0x420000000000000000000000000000000000001A) [opstack/Layer2/L1FeeVault_karst] {
+    +++ description: Collects the L1 data portion of the L2 transaction fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.
+      description:
+-        "Collects the L1 portion of the L2 transaction fees."
++        "Collects the L1 data portion of the L2 transaction fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached."
+    }
+```
+
+```diff
+    contract OperatorFeeVault (katana:0x420000000000000000000000000000000000001b) [opstack/Layer2/OperatorFeeVault_karst] {
+    +++ description: Collects the operator fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.
+      template:
+-        "opstack/Layer2/OperatorFeeVault"
++        "opstack/Layer2/OperatorFeeVault_karst"
+      description:
+-        "Collects the operator fees."
++        "Collects the operator fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached."
+    }
+```
+
+```diff
+    contract SafeL2 (katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"katana:0x4200000000000000000000000000000000000011","description":"change the fee recipient, the minimum withdrawal amount and whether fees are withdrawn on L1 or L2.","role":".proxyAdminOwner"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"katana:0x4200000000000000000000000000000000000019","description":"change the fee recipient, the minimum withdrawal amount and whether fees are withdrawn on L1 or L2.","role":".proxyAdminOwner"}
+      receivedPermissions.2:
++        {"permission":"interact","from":"katana:0x420000000000000000000000000000000000001A","description":"change the fee recipient, the minimum withdrawal amount and whether fees are withdrawn on L1 or L2.","role":".proxyAdminOwner"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"katana:0x420000000000000000000000000000000000001b","description":"change the fee recipient, the minimum withdrawal amount and whether fees are withdrawn on L1 or L2.","role":".proxyAdminOwner"}
+    }
+```
+
 Generated with discovered.json: 0x00ea3de1eebe717a111f20395632ee1a351909fe
 
 # Diff at Wed, 28 Oct 2026 13:40:25 GMT:
