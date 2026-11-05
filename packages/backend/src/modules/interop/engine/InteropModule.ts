@@ -275,6 +275,8 @@ export function createInteropModule({
     logger = logger.for('InteropModule')
     logger.info('Starting')
 
+    // Read even with config loops disabled: capture depends on stored configs
+    await configStore.start()
     await eventStore.start()
 
     if (config.interop && config.interop.matching) {
@@ -304,7 +306,6 @@ export function createInteropModule({
       financialsService.start()
     }
     if (config.interop && config.interop.config.enabled) {
-      await configStore.start()
       for (const configLoop of configLoops) {
         configLoop.start()
       }
