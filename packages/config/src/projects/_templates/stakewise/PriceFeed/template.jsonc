@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PriceFeed",
+  "category": "core",
+  "description": "Chainlink-compatible osETH/ETH feed returning the vault controller's exchange rate; no admin and no staleness check.",
+  "ignoreInWatchMode": [
+    "getRate",
+    "latestAnswer",
+    "latestRoundData",
+    "latestTimestamp"
+  ]
+}

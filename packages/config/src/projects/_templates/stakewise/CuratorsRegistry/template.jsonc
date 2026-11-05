@@ -1,0 +1,30 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "CuratorsRegistry",
+  "category": "gov",
+  "description": "List of curators that meta vaults may appoint to allocate deposits and exits across their sub-vaults.",
+  "fields": {
+    "owner": {
+      "severity": "MEDIUM",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add and remove curators available to meta vaults, with no delay."
+        }
+      ]
+    },
+    "curators": {
+      "handler": {
+        "type": "event",
+        "select": "curator",
+        "add": {
+          "event": "CuratorAdded"
+        },
+        "remove": {
+          "event": "CuratorRemoved"
+        }
+      }
+    }
+  },
+  "ignoreRelatives": ["curators"]
+}

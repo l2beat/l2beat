@@ -1,0 +1,14 @@
+{
+  "EthVaultFactory.sol": {
+    "hash": "0xa3679a992a2e3ac40e5af2a98e7c00274adaf7467f1166cc186347b1a3daaaa7",
+    "address": "eth:0x7A8cbBf690084E43De778173cfAcf7313c9122DD",
+    "chain": "ethereum",
+    "blockNumber": 26342340
+  },
+  "EthMetaVaultFactory.sol": {
+    "hash": "0x6b057da682f84df132cf085947d4a58808bd1caf7df71206383313b251975726",
+    "address": "eth:0xE51eE4200510498d5964627B25FE7D4685CB858c",
+    "chain": "ethereum",
+    "blockNumber": 26342340
+  }
+}

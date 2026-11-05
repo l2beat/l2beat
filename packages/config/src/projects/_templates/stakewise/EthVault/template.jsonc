@@ -1,0 +1,62 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "core",
+  "description": "Staking vault. Anyone deposits ETH for shares; the key manager registers staking keys whose withdrawal credentials point at the vault, each registration approved by the oracle quorum in the keeper. On every harvest the vault takes its cumulative reward from the keeper's root, mints {{feePercent}} basis points of the gain to the fee recipient, applies losses to all shares and pays the exit queue from its spare ETH; queued exits are claimable after a delay fixed at deployment. Shareholders can mint osETH against their shares up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
+  "ignoreMethods": [
+    "convertToAssets",
+    "convertToShares",
+    "getExitQueueIndex",
+    "calculateExitedAssets",
+    "DOMAIN_SEPARATOR",
+    "eip712Domain",
+    "UPGRADE_INTERFACE_VERSION",
+    "proxiableUUID",
+    "implementation",
+    "nonces",
+    "osTokenPositions",
+    "getShares",
+    "getExitQueueData",
+    "withdrawableAssets",
+    "validatorsManagerNonce",
+    "isStateUpdateRequired",
+    "vaultId"
+  ],
+  "ignoreInWatchMode": [
+    "totalAssets",
+    "totalShares",
+    "totalSupply",
+    "totalExitingAssets",
+    "queuedShares"
+  ],
+  "ignoreRelatives": ["feeRecipient"],
+  "fields": {
+    "admin": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "appoint the key manager, fee recipient and access managers, raise the fee by at most a fifth every three days, and upgrade the vault to the next implementation approved by the vault registry, with no delay."
+        }
+      ]
+    },
+    "validatorsManager": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "choose which staking keys the vault's ETH funds, subject to oracle approval, and exit or consolidate the vault's stakes."
+        }
+      ]
+    },
+    "feePercent": {
+      "severity": "HIGH",
+      "description": "Share of rewards minted to the fee recipient, in basis points."
+    },
+    "feeRecipient": {
+      "description": "Receiver of the vault's fee shares."
+    },
+    "capacity": {
+      "description": "Maximum total assets, in wei."
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OsTokenVaultController",
+  "category": "core",
+  "description": "Share accounting behind osETH. Registered vaults on an approved implementation mint, registered vaults burn; total assets grow at the reward rate written by the keeper, {{feePercent}} basis points of each increment are minted to the treasury, and the exchange rate is total assets over total shares. Minting stops at a capacity of {{capacity}} wei.",
+  "ignoreMethods": ["convertToAssets", "convertToShares"],
+  "ignoreInWatchMode": [
+    "avgRewardPerSecond",
+    "totalAssets",
+    "totalShares",
+    "cumulativeFeePerShare"
+  ],
+  "fields": {
+    "owner": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the keeper allowed to write the reward rate, which also replaces the rate ceiling, and set the fee up to 100%, the treasury and the capacity, with no delay."
+        }
+      ]
+    },
+    "keeper": {
+      "severity": "HIGH"
+    },
+    "feePercent": {
+      "severity": "HIGH",
+      "description": "Basis points of osETH rewards minted to the treasury."
+    },
+    "capacity": {
+      "severity": "MEDIUM"
+    }
+  }
+}
