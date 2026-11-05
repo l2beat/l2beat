@@ -46,13 +46,16 @@ const ENTRIES = [
 
 describe(describePermissions.name, () => {
   it('lists the ultimate holder with its route and the direct grant', () => {
-    expect(describePermissions(ENTRIES, BRIDGE).slice(0, 6)).toEqual([
+    expect(describePermissions(ENTRIES, BRIDGE)).toEqual([
       `Permissions on ${BRIDGE} (Bridge):`,
       '',
       'Ultimately held by (holder first, through each via):',
       `  upgrade: ${COUNCIL} (Council, 9/12 multisig), via ${TIMELOCK} (Timelock) +3d -> ${ADMIN} (ProxyAdmin), delay 3d. upgrade the bridge.`,
       '',
       'Granted directly to:',
+      `  upgrade: ${ADMIN} (ProxyAdmin)`,
+      '',
+      'To point at a route, show its contracts: the holder, each via, then the target.',
     ])
   })
 
@@ -60,6 +63,51 @@ describe(describePermissions.name, () => {
     expect(describePermissions(ENTRIES, COUNCIL)).toEqual([
       `No permissions are modelled on ${COUNCIL} (Council, 9/12 multisig).`,
     ])
+  })
+})
+
+describe('describePermissions edge cases', () => {
+  it('lists a holder once when a shared module repeats its entry', () => {
+    const council = ENTRIES[3] as EntryParameters
+    const lines = describePermissions([...ENTRIES, { ...council }], BRIDGE)
+    expect(lines.filter((l) => l.startsWith('  upgrade:')).length).toEqual(2)
+  })
+
+  it('marks a permission given to the zero address as renounced', () => {
+    const zero = ChainSpecificAddress(
+      'eth:0x0000000000000000000000000000000000000000',
+    )
+    const entries = [
+      ...ENTRIES,
+      {
+        type: 'EOA',
+        address: zero,
+        receivedPermissions: [{ permission: 'act', from: TIMELOCK }],
+      },
+    ] as unknown as EntryParameters[]
+    expect(describePermissions(entries, TIMELOCK)[3]).toEqual(
+      `  act: ${zero} (zero address, nobody can use it)`,
+    )
+  })
+
+  it('keeps the direct grants when ultimate ones run over the cap', () => {
+    const many = Array.from({ length: 45 }, () => ({
+      permission: 'interact',
+      from: TIMELOCK,
+    }))
+    const entries = [
+      { type: 'EOA', address: COUNCIL, receivedPermissions: many },
+      {
+        type: 'Contract',
+        address: ADMIN,
+        directlyReceivedPermissions: [{ permission: 'act', from: TIMELOCK }],
+      },
+    ] as unknown as EntryParameters[]
+    const lines = describePermissions(entries, TIMELOCK)
+    expect(lines).toInclude(
+      "  and 5 more: read receivedPermissions in the project's discovered.json",
+    )
+    expect(lines).toInclude('Granted directly to:')
   })
 })
 

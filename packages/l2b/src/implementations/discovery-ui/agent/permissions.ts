@@ -1,7 +1,9 @@
 import type { EntryParameters, ReceivedPermission } from '@l2beat/discovery'
-import type { ChainSpecificAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
 
-const LINES_MAX = 60
+// Per section, so a long list of ultimate holders never hides the direct
+// grants.
+const GRANTS_SHOWN_MAX = 40
 
 // Who can act on a contract, from the permission model's grants. The model
 // stores them on each holder, so answering for a target means looking at
@@ -10,36 +12,48 @@ export function describePermissions(
   entries: readonly EntryParameters[],
   target: ChainSpecificAddress,
 ): string[] {
+  // A holder in both the project and a shared module it references has the
+  // same grants attached to each copy.
   const byAddress = new Map(entries.map((e) => [e.address, e]))
+  const holders = [...byAddress.values()]
   const name = (address: ChainSpecificAddress) =>
     describeHolder(byAddress.get(address), address)
-  const ultimate = grantsOn(entries, target, 'receivedPermissions')
-  const direct = grantsOn(entries, target, 'directlyReceivedPermissions')
+  const ultimate = grantsOn(holders, target, 'receivedPermissions')
+  const direct = grantsOn(holders, target, 'directlyReceivedPermissions')
   if (ultimate.length === 0 && direct.length === 0) {
     return [`No permissions are modelled on ${name(target)}.`]
   }
   const lines = [`Permissions on ${name(target)}:`]
   if (ultimate.length > 0) {
     lines.push('', 'Ultimately held by (holder first, through each via):')
-    for (const { holder, grant } of ultimate) {
-      lines.push(`  ${describeGrant(name, holder, grant)}`)
-    }
+    pushGrants(lines, name, ultimate, 'receivedPermissions')
   }
   if (direct.length > 0) {
     lines.push('', 'Granted directly to:')
-    for (const { holder, grant } of direct) {
-      lines.push(`  ${describeGrant(name, holder, grant)}`)
-    }
-  }
-  if (lines.length > LINES_MAX) {
-    const more = lines.length - LINES_MAX
-    lines.splice(LINES_MAX, more, `  and ${more} more lines`)
+    pushGrants(lines, name, direct, 'directlyReceivedPermissions')
   }
   lines.push(
     '',
     'To point at a route, show its contracts: the holder, each via, then the target.',
   )
   return lines
+}
+
+function pushGrants(
+  lines: string[],
+  name: (address: ChainSpecificAddress) => string,
+  grants: { holder: ChainSpecificAddress; grant: ReceivedPermission }[],
+  field: string,
+) {
+  for (const { holder, grant } of grants.slice(0, GRANTS_SHOWN_MAX)) {
+    lines.push(`  ${describeGrant(name, holder, grant)}`)
+  }
+  const more = grants.length - GRANTS_SHOWN_MAX
+  if (more > 0) {
+    lines.push(
+      `  and ${more} more: read ${field} in the project's discovered.json`,
+    )
+  }
 }
 
 function grantsOn(
@@ -94,6 +108,10 @@ function describeHolder(
   entry: EntryParameters | undefined,
   address: ChainSpecificAddress,
 ): string {
+  // A permission given to the zero address was renounced.
+  if (ChainSpecificAddress.address(address) === EthereumAddress.ZERO) {
+    return `${address} (zero address, nobody can use it)`
+  }
   if (entry === undefined) {
     return address
   }
