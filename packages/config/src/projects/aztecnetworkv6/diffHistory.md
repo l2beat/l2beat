@@ -9,7 +9,7 @@ Generated with discovered.json: 0x1a07f69c460b9a87577bc6137a989eae5740bf1e
 
 ## Description
 
-`isPermanentRollup` and `priorityModeInfo` are MEDIUM: a one-way lock only removes options, and the raw Priority Mode slot holds the live activation flag.
+`getSlasher` is HIGH, `getPendingSlasher` and `latestStakingQueueConfigUpdate` MEDIUM: a slasher swap counts when it takes effect, and the entry queue is a rate limit.
 
 ## Config/verification related changes
 

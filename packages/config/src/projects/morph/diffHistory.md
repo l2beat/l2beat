@@ -9,7 +9,7 @@ Generated with discovered.json: 0x794989a55c66b35d494062149d27b8c3679e9afa
 
 ## Description
 
-`isPermanentRollup` and `priorityModeInfo` are MEDIUM: a one-way lock only removes options, and the raw Priority Mode slot holds the live activation flag.
+The new SP1 verifier is critical from its registration.
 
 ## Config/verification related changes
 

@@ -9,7 +9,7 @@ Generated with discovered.json: 0xba844d002275169ec5fdb3b2016bec1d8918f83c
 
 ## Description
 
-`isPermanentRollup` and `priorityModeInfo` are MEDIUM: a one-way lock only removes options, and the raw Priority Mode slot holds the live activation flag.
+`permsRevoked` is MEDIUM: a revocation alone removes a path, and grants are counted by `permsGranted`.
 
 ## Config/verification related changes
 
