@@ -16,6 +16,7 @@ import {
   createInteropPlugins,
   flattenClusters,
   pluginsAsClusters,
+  supportsOneSidedChains,
 } from '../plugins'
 import { RelayApiClient } from '../plugins/relay/RelayApiClient'
 import { RelayIndexer, RelayRootIndexer } from '../plugins/relay/relay.indexer'
@@ -175,6 +176,10 @@ export function createInteropModule({
     financialsEnabled: config.interop.financials.enabled,
     matchingEnabled: config.interop.matching,
     oneSidedChains: config.interop.oneSidedChains,
+    maxTransferValueUsd: config.interop.financials.maxTransferValueUsd,
+    oneSidedPlugins: eventPlugins
+      .filter(supportsOneSidedChains)
+      .map((plugin) => plugin.name),
     tokenDbClient,
   })
 

@@ -10,6 +10,7 @@ import {
   flattenClusters,
   type PluginCluster,
   pluginsAsClusters,
+  supportsOneSidedChains,
 } from './index'
 import type { InteropPlugin, InteropPluginResyncable } from './types'
 import { definedNetworks, isPluginResyncable } from './types'
@@ -154,6 +155,17 @@ describe('Interop Plugins', async () => {
       const result = pluginsAsClusters([pluginA, cluster])
 
       expect(result).toEqual([{ name: 'across', plugins: [pluginA] }, cluster])
+    })
+  })
+
+  describe(supportsOneSidedChains.name, () => {
+    it('detects plugins that take the one-sided chains', () => {
+      const names = flattenClusters(plugins.eventPlugins)
+        .filter(supportsOneSidedChains)
+        .map((plugin) => plugin.name)
+
+      expect(names).toInclude('cctp-v2', 'layerzero-v2-ofts', 'relay')
+      expect(names).not.toInclude('opstack')
     })
   })
 })
