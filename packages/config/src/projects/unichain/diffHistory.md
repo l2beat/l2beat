@@ -13,7 +13,6 @@ SystemConfig: batcher and unsafe block signer rotated.
 DisputeGameFactory: permissioned proposer rotated.
 OperatorFeeVault: now withdraws to an L1 recipient, minimum withdrawal 0 → 0.15 ETH.
 L1Splitter: owner moved to the SuperchainProxyAdminOwner; L1 recipient changed; minimum withdrawal 3 → 0.15 ETH.
-OperatorFeeVault config: `recipient` now recorded as an Ethereum address.
 
 ## Watched changes
 
