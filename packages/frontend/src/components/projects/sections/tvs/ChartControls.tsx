@@ -1,7 +1,7 @@
-import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { TvsChartControls } from '~/components/chart/tvs/TvsChartControls'
 import { useTvsChartControlsContext } from '~/components/chart/tvs/TvsChartControlsContext'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { useL2RwaRestrictedTokensContext } from '~/pages/layer2s/components/L2RwaRestrictedTokensContext'
 import { useTRPC } from '~/trpc/React'
@@ -10,14 +10,12 @@ export function ChartControls({ projectId }: { projectId: string }) {
   const trpc = useTRPC()
   const { range, unit, setUnit, setRange } = useTvsChartControlsContext()
   const { excludeRwaRestrictedTokens } = useL2RwaRestrictedTokensContext()
-  const { data } = useQuery(
-    trpc.tvs.detailedChart.queryOptions({
-      filter: { type: 'projects', projectIds: [projectId] },
-      range,
-      excludeAssociatedTokens: false,
-      excludeRwaRestrictedTokens,
-    }),
-  )
+  const { data, isPlaceholderData } = useChartQuery(trpc.tvs.detailedChart, {
+    filter: { type: 'projects', projectIds: [projectId] },
+    range,
+    excludeAssociatedTokens: false,
+    excludeRwaRestrictedTokens,
+  })
 
   const timeRange = useMemo(
     () =>
@@ -28,6 +26,7 @@ export function ChartControls({ projectId }: { projectId: string }) {
   )
   return (
     <TvsChartControls
+      isPlaceholderData={isPlaceholderData}
       timeRange={timeRange}
       range={{
         value: range,

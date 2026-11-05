@@ -1,4 +1,5 @@
 import { externalLinks } from '~/consts/externalLinks'
+import { RENAME_ANNOUNCEMENT_PATH } from '~/consts/siteName'
 import { usePathname } from '~/hooks/usePathname'
 import { cn } from '~/utils/cn'
 import { getMarkdownAlternatePath } from '~/utils/getMarkdownAlternatePath'
@@ -13,7 +14,6 @@ const FOOTER_LINKS = [
   { title: 'Tools', href: externalLinks.tools },
   { title: 'Glossary', href: '/glossary' },
   { title: 'FAQ', href: '/faq' },
-  { title: 'Jobs', href: externalLinks.jobs },
   { title: 'Donate', href: '/donate' },
   { title: 'Brand Kit', href: '/brand-kit' },
   { title: 'Terms of Service', href: '/terms-of-service' },
@@ -21,17 +21,19 @@ const FOOTER_LINKS = [
 
 interface Props {
   className?: string
-  innerContainerClassName?: string
+  /** The page's content column, so the footer's edges line up with it. */
+  columnClassName?: string
 }
 
-export function Footer({ className, innerContainerClassName }: Props) {
+export function Footer({ className, columnClassName }: Props) {
   const currentYear = new Date().getFullYear()
   const markdownHref = getMarkdownAlternatePath(usePathname())
 
   return (
     <footer
       className={cn(
-        'px-4 py-6 md:px-12 md:pt-4 md:pb-10 lg:pb-5',
+        // From lg the bottom row centres on the sidebar's social icons.
+        'py-8 lg:pb-5',
         // Matches the mobile root background, so bottom overscroll continues the footer.
         'max-lg:border-divider max-lg:border-t max-lg:bg-header-primary',
         className,
@@ -39,18 +41,23 @@ export function Footer({ className, innerContainerClassName }: Props) {
     >
       <div
         className={cn(
-          'mx-auto flex max-w-[1216px] flex-col items-start gap-3 text-secondary md:min-h-6 md:flex-row md:flex-wrap md:items-center md:gap-x-8',
-          innerContainerClassName,
+          '@container flex flex-wrap items-center justify-between gap-x-6 gap-y-4 px-4 font-medium text-secondary text-xs',
+          columnClassName,
         )}
       >
-        <nav className="flex flex-wrap gap-x-4 gap-y-2">
+        {/*
+          The links span the column, as a grid while they would wrap. The
+          copyright joins their row at a fixed width, with room to spare,
+          instead of wrapping wherever the text runs out.
+        */}
+        <nav className="-my-1 @4xl:my-0 @4xl:flex grid @min-[73rem]:w-auto w-full @xl:grid-cols-[repeat(6,auto)] grid-cols-[repeat(3,auto)] @min-[73rem]:justify-start justify-between gap-x-4">
           {FOOTER_LINKS.map((link) => (
             <CustomLink
               key={link.title}
               href={link.href}
               variant="plain"
               underline={false}
-              className="font-medium text-secondary text-xs underline-offset-2 hover:text-primary hover:underline"
+              className="@4xl:py-0 py-1 text-secondary leading-6 underline-offset-2 hover:text-primary hover:underline"
             >
               {link.title}
             </CustomLink>
@@ -71,8 +78,17 @@ export function Footer({ className, innerContainerClassName }: Props) {
             </li>
           )}
         </ul>
-        <p className="font-medium text-xs leading-none md:ml-auto">
-          Copyright {currentYear} L2BEAT
+        <p className="font-normal leading-6">
+          Copyright {currentYear} ETHBEAT (
+          <CustomLink
+            href={RENAME_ANNOUNCEMENT_PATH}
+            variant="plain"
+            underline={false}
+            className="font-normal text-secondary underline-offset-2 hover:text-primary hover:underline"
+          >
+            formerly L2BEAT
+          </CustomLink>
+          )
         </p>
       </div>
     </footer>

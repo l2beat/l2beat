@@ -5,6 +5,7 @@ import { BlobsIcon } from '~/icons/pages/Blobs'
 import { BridgesIcon } from '~/icons/pages/Bridges'
 import { HomeIcon } from '~/icons/pages/Home'
 import { L2Icon } from '~/icons/pages/L2'
+import { LiquidStakingIcon } from '~/icons/pages/LiquidStaking'
 import { PrivacyIcon } from '~/icons/pages/Privacy'
 import { TokensIcon } from '~/icons/pages/Tokens'
 import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
@@ -25,7 +26,10 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
     match: 'privacy',
     href: '/privacy',
     icon: (
-      <PrivacyIcon className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active" />
+      <PrivacyIcon
+        className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active"
+        aria-hidden
+      />
     ),
   },
   {
@@ -99,6 +103,15 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
     ]),
   },
   {
+    type: 'single',
+    title: 'Liquid staking',
+    match: 'liquid-staking',
+    href: '/liquid-staking',
+    // Not built yet: shown so the domain is visible, but not a link.
+    disabled: true,
+    icon: <LiquidStakingIcon />,
+  },
+  {
     type: 'multiple',
     section: 'more',
     title: 'Security',
@@ -155,7 +168,10 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
     match: 'tokens',
     href: '/tokens',
     icon: (
-      <TokensIcon className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active" />
+      <TokensIcon
+        className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active"
+        aria-hidden
+      />
     ),
   },
   env.CLIENT_SIDE_BLOBS_PAGE && {

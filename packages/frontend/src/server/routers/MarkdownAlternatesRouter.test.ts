@@ -18,7 +18,7 @@ import {
 describe(createMarkdownAlternatesRouter.name, () => {
   const ALTERNATE: MarkdownAlternate = {
     path: '/layer2s/summary.md',
-    title: 'L2BEAT scaling projects',
+    title: 'ETHBEAT scaling projects',
     summary: 'Every tracked layer 2.',
     notes: 'Intro shown above the table.',
     getSections: () =>
@@ -49,11 +49,11 @@ describe(createMarkdownAlternatesRouter.name, () => {
       'text/plain; charset=utf-8',
     )
     expect(response.headers.get('link')).toEqual(
-      '<https://l2beat.com/llms.txt>; rel="describedby"',
+      '<https://ethbeat.org/llms.txt>; rel="describedby"',
     )
     expect(await response.text()).toEqual(
       [
-        '# L2BEAT scaling projects',
+        '# ETHBEAT scaling projects',
         '',
         '> Every tracked layer 2.',
         '',
@@ -63,7 +63,7 @@ describe(createMarkdownAlternatesRouter.name, () => {
         '',
         'What the section lists.',
         '',
-        '- [Arbitrum One](https://l2beat.com/layer2s/projects/arbitrum): Optimistic Rollup, Stage 1. A general-purpose rollup.',
+        '- [Arbitrum One](https://ethbeat.org/layer2s/projects/arbitrum): Optimistic Rollup, Stage 1. A general-purpose rollup.',
         '',
       ].join('\n'),
     )
@@ -81,7 +81,7 @@ describe(createMarkdownAlternatesRouter.name, () => {
       'text/markdown; charset=utf-8',
     )
     expect(response.headers.get('vary')).toEqual('Accept')
-    expect(await response.text()).toMatchRegex(/^# L2BEAT scaling projects\n/)
+    expect(await response.text()).toMatchRegex(/^# ETHBEAT scaling projects\n/)
   })
 
   it('leaves the page URL to the HTML page for browsers', async () => {
@@ -140,8 +140,7 @@ describe(createMarkdownAlternatesRouter.name, () => {
         .map((p) => `/layer2s/projects/${p.slug}`)
         .toSorted()
 
-    const { 'Ecosystems (/ecosystems/{slug})': _, ...sections } =
-      await getSectionPaths('/layer2s/summary.md')
+    const sections = await getSectionPaths('/layer2s/summary.md')
 
     expect(pathsOf('layer2', true).length).toBeGreaterThan(0)
     expect(pathsOf('layer3', true).length).toBeGreaterThan(0)

@@ -41,6 +41,7 @@ export function L2SummaryActivityChart({ range }: Props) {
       <Header latestUopsCount={stats} />
       <ActivityMetricContextProvider>
         <L2RecategorizedActivityChart
+          isPlaceholderData={false}
           data={data}
           isLoading={isLoading}
           milestones={[]}

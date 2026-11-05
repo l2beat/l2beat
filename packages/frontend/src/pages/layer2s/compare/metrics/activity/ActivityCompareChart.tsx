@@ -1,6 +1,6 @@
 import { formatActivityCount, UnixTime } from '@l2beat/shared-pure'
-import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { countPerSecond } from '~/server/features/layer2s/activity/utils/countPerSecond'
 import { useTRPC } from '~/trpc/React'
 import { formatRange } from '~/utils/dates'
@@ -18,10 +18,9 @@ export function ActivityCompareChart({
   chartRange,
 }: CompareMetricChartProps) {
   const trpc = useTRPC()
-  const { data, isLoading } = useQuery(
-    trpc.activity.detailedChartWithProjectsRanges.queryOptions(
-      getActivityCompareChartParams(queryProjects, chartRange),
-    ),
+  const { data, isLoading, isPlaceholderData } = useChartQuery(
+    trpc.activity.detailedChartWithProjectsRanges,
+    getActivityCompareChartParams(queryProjects, chartRange),
   )
   const unit = config.activity.unit
 
@@ -39,6 +38,7 @@ export function ActivityCompareChart({
 
   return (
     <CompareMetricLineChart
+      isPlaceholderData={isPlaceholderData}
       projects={projects}
       data={chartData}
       isLoading={isLoading}

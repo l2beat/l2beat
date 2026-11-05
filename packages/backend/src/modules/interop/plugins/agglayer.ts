@@ -2,6 +2,7 @@ import {
   Address32,
   ChainSpecificAddress,
   EthereumAddress,
+  type KnownInteropBridgeType,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { findBestTransferLogByExactAmount } from './logScan'
@@ -55,6 +56,20 @@ function getNetworkById(networkId: number): AgglayerNetwork | undefined {
 
 function getNetworkByChain(chain: string): AgglayerNetwork | undefined {
   return AGGLAYER_NETWORKS.find((n) => n.chain === chain)
+}
+
+// An asset stays locked on its origin network and is minted as a wrapped token
+// on every other network, so its origin network fixes the bridge type even when
+// only one leg is observed.
+function getBridgeType(
+  assetOriginNetwork: number,
+  srcChain: string,
+  dstChain: string,
+): KnownInteropBridgeType {
+  const assetChain = getNetworkById(assetOriginNetwork)?.chain
+  return assetChain === srcChain || assetChain === dstChain
+    ? 'lockAndMint'
+    : 'burnAndMint'
 }
 
 function toNumber(value: number | bigint): number {
@@ -130,6 +145,8 @@ const AgglayerClaimEvent = createInteropEventType<{
 
 export class AgglayerPlugin implements InteropPluginResyncable {
   readonly name = 'agglayer'
+
+  constructor(private oneSidedChains: string[] = []) {}
 
   getDataRequests(): DataRequest[] {
     const bridges = AGGLAYER_NETWORKS.map((n) => n.bridge)
@@ -280,8 +297,41 @@ export class AgglayerPlugin implements InteropPluginResyncable {
     }
   }
 
-  matchTypes = [AgglayerClaimEvent]
+  matchTypes = [AgglayerClaimEvent, AgglayerBridgeEvent]
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
+    if (AgglayerBridgeEvent.checkType(event)) {
+      const bridge = event
+      const dstChain = bridge.args.$dstChain
+      if (
+        bridge.args.leafType !== ASSET_LEAF_TYPE ||
+        bridge.args.amount === 0n ||
+        !this.oneSidedChains.includes(dstChain)
+      ) {
+        return
+      }
+
+      const claim = db.find(AgglayerClaimEvent, {
+        matchId: bridge.args.matchId,
+        ctx: { chain: dstChain },
+      })
+      if (claim) return
+
+      return [
+        Result.Transfer('agglayer.Transfer', {
+          srcEvent: bridge,
+          srcTokenAddress: bridge.args.srcTokenAddress,
+          srcAmount: bridge.args.amount,
+          srcWasBurned: bridge.args.srcWasBurned,
+          dstChain,
+          bridgeType: getBridgeType(
+            bridge.args.originNetwork,
+            bridge.ctx.chain,
+            dstChain,
+          ),
+        }),
+      ]
+    }
+
     if (!AgglayerClaimEvent.checkType(event)) return
     const claim = event
 
@@ -289,7 +339,33 @@ export class AgglayerPlugin implements InteropPluginResyncable {
       matchId: claim.args.matchId,
       $dstChain: claim.ctx.chain,
     })
-    if (!bridge) return
+    if (!bridge) {
+      const srcChain = claim.args.$srcChain
+      if (claim.args.amount === 0n || !this.oneSidedChains.includes(srcChain)) {
+        return
+      }
+      // ClaimEvent has no leafType. A message claim carries the sending network
+      // as its origin and pays out only the native token, so skip that shape.
+      const isMessageClaim =
+        claim.args.dstTokenAddress === Address32.NATIVE &&
+        getNetworkById(claim.args.originNetwork)?.chain === srcChain
+      if (isMessageClaim) return
+
+      return [
+        Result.Transfer('agglayer.Transfer', {
+          srcChain,
+          dstEvent: claim,
+          dstTokenAddress: claim.args.dstTokenAddress,
+          dstAmount: claim.args.amount,
+          dstWasMinted: claim.args.dstWasMinted,
+          bridgeType: getBridgeType(
+            claim.args.originNetwork,
+            srcChain,
+            claim.ctx.chain,
+          ),
+        }),
+      ]
+    }
 
     const isAssetTransfer = bridge.args.leafType === 0
 

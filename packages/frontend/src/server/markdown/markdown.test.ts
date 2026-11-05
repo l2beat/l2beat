@@ -23,7 +23,7 @@ describe(subsection.name, () => {
 })
 
 describe(absolutizeLinks.name, () => {
-  const PAGE_URL = 'https://l2beat.com/scaling/projects/x'
+  const PAGE_URL = 'https://ethbeat.org/scaling/projects/x'
 
   it('prefixes site paths in links and images with the origin', () => {
     expect(
@@ -32,7 +32,7 @@ describe(absolutizeLinks.name, () => {
         PAGE_URL,
       ),
     ).toEqual(
-      'See [best practices](https://l2beat.com/publications/x) and ![diagram](https://l2beat.com/images/y.png).',
+      'See [best practices](https://ethbeat.org/publications/x) and ![diagram](https://ethbeat.org/images/y.png).',
     )
   })
 
@@ -48,7 +48,7 @@ describe(absolutizeLinks.name, () => {
         PAGE_URL,
       ),
     ).toEqual(
-      'See [permissions](https://l2beat.com/scaling/projects/x#permissions), [update](https://l2beat.com/scaling/projects/x?update=1).',
+      'See [permissions](https://ethbeat.org/scaling/projects/x#permissions), [update](https://ethbeat.org/scaling/projects/x?update=1).',
     )
   })
 })

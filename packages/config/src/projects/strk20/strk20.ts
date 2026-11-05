@@ -162,7 +162,7 @@ export const strk20: BaseProject = {
           fix: 'Let users set their own discovery service and prover, as Bramble does.',
           source:
             'https://chromewebstore.google.com/detail/dlcobpjiigpikoobohmabehhmhfoodbb',
-          checked: '2026-10-22',
+          checked: '2026-10-30',
         },
         {
           name: 'Xverse extension',
@@ -172,7 +172,7 @@ export const strk20: BaseProject = {
           fix: 'Accept Tor connections on its privacy servers.',
           source:
             'https://chromewebstore.google.com/detail/idnnbdplmphpflfnlkomgpfbpcgelopg',
-          checked: '2026-10-22',
+          checked: '2026-10-30',
         },
         {
           name: 'Haven web app',
@@ -181,7 +181,7 @@ export const strk20: BaseProject = {
             "Reads the account's balances and transfers through Cartridge's public RPC, a third party that refuses most Tor circuits.",
           fix: "Read the chain through Haven's own servers or a user-set RPC, and accept Tor there.",
           source: 'https://go.haven.hn',
-          checked: '2026-10-27',
+          checked: '2026-10-30',
         },
         {
           name: 'OffMarket web app',
@@ -190,7 +190,7 @@ export const strk20: BaseProject = {
             'Reports each deposit, trade and settled position to FullStory, a session recorder that is always on, so FullStory can link them.',
           fix: 'Remove FullStory from the pages that handle private actions.',
           source: 'https://offmarket.cx',
-          checked: '2026-10-27',
+          checked: '2026-10-30',
         },
       ],
     },
@@ -206,7 +206,7 @@ export const strk20: BaseProject = {
       walkawayTest: {
         passed: false,
         reason:
-          'Although the full software stack needed to generate proofs and exit is published and self-hostable, STRK-20 heavily relies on the permissioned Starknet sequencer: it alone verifies client proofs and must include pool transactions, so users cannot exit without its cooperation.',
+          "The prover and discovery service are open and self-hostable. StarkWare's permissioned sequencer alone checks client proofs and includes pool transactions, so users cannot exit without it.",
       },
     },
     reproducibility: {

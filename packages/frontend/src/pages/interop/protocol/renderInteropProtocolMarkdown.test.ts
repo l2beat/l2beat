@@ -23,7 +23,7 @@ describe(renderInteropProtocolMarkdown.name, () => {
     const markdown = renderInteropProtocolMarkdown(PAGE)
 
     expect(markdown).toMatchRegex(
-      /^# Across\n\nMarkdown version of https:\/\/l2beat\.com\/interop\/protocols\/across\n\n/,
+      /^# Across\n\nMarkdown version of https:\/\/ethbeat\.org\/interop\/protocols\/across\n\n/,
     )
   })
 
@@ -36,8 +36,8 @@ describe(renderInteropProtocolMarkdown.name, () => {
       '- Last 24h top path: Ethereum ↔ Arbitrum One ($900.00 K)',
       '- Last 24h avg. transfer time: 1m 30s',
       '- Last 24h avg. transfer value: $1.25 K',
-      '- Last 24h tokens by volume: [USDC](https://l2beat.com/tokens/usdc-id/usdc) ($800.00 K), [WETH](https://l2beat.com/tokens/weth-id/weth) ($500.00 K), [USDT](https://l2beat.com/tokens/usdt-id/usdt) ($100.00 K), and 12 more',
-      '- Last 24h top token: [USDC](https://l2beat.com/tokens/usdc-id/circle/usdc) ($800.00 K volume, 700 transfers)',
+      '- Last 24h tokens by volume: [USDC](https://ethbeat.org/tokens/usdc-id/usdc) ($800.00 K), [WETH](https://ethbeat.org/tokens/weth-id/weth) ($500.00 K), [USDT](https://ethbeat.org/tokens/usdt-id/usdt) ($100.00 K), and 12 more',
+      '- Last 24h top token: [USDC](https://ethbeat.org/tokens/usdc-id/circle/usdc) ($800.00 K volume, 700 transfers)',
       '- Last 24h transfer size: Under $100: 600 transfers, $100-$1K: 400 transfers, $1K-$10K: 150 transfers, $10K-$100K: 45 transfers, Over $100K: 5 transfers (min $1.00, average $1.25 K, max $250.00 K)',
       '- Last 24h transfer type distribution: Lock & Mint: $150.00 K, Non-minting: $1.35 M',
       'Across is an intent-based bridge.',
@@ -88,13 +88,13 @@ describe(renderInteropProtocolMarkdown.name, () => {
         header: {
           ...PAGE.projectEntry.header,
           links: [{ name: 'Website', links: ['https://across.to'] }],
-          discoUiHref: 'https://disco.l2beat.com/ui/p/across',
+          discoUiHref: 'https://disco.ethbeat.org/ui/p/across',
         },
       },
     })
 
     expect(markdown).toInclude(
-      '### Links\n\n- Website: https://across.to\n- Contracts explorer (Disco): https://disco.l2beat.com/ui/p/across',
+      '### Links\n\n- Website: https://across.to\n- Contracts explorer (Disco): https://disco.ethbeat.org/ui/p/across',
     )
   })
 
@@ -224,7 +224,7 @@ describe(renderInteropProtocolMarkdown.name, () => {
     expect(volume).toInclude(
       '### Top chains by volume (last 24h)\n\nA transfer counts toward the volume of both its source and its destination chain, so the chain volumes add up to more than the total volume.\n\n- Ethereum: $1.40 M (1.10 K transfers)\n- Arbitrum One: $1.10 M (900 transfers)\n- Base: $50.00 K (40 transfers)\n- and 2 more',
       '### Top routes by volume (last 24h)\n\n- Ethereum → Arbitrum One: $700.00 K\n- Arbitrum One → Ethereum: $200.00 K\n- Base → Ethereum: $50.00 K\n\n',
-      'https://l2beat.com/interop/protocols/across#interop-volume',
+      'https://ethbeat.org/interop/protocols/across#interop-volume',
     )
   })
 
@@ -238,10 +238,10 @@ describe(renderInteropProtocolMarkdown.name, () => {
     const markdown = renderInteropProtocolMarkdown(PAGE)
 
     expect(getSection(markdown, 'Top tokens by volume')).toInclude(
-      'https://l2beat.com/interop/protocols/across#interop-tokens',
+      'https://ethbeat.org/interop/protocols/across#interop-tokens',
     )
     expect(getSection(markdown, 'Transfers')).toInclude(
-      'https://l2beat.com/interop/protocols/across#interop-transfers',
+      'https://ethbeat.org/interop/protocols/across#interop-transfers',
     )
   })
 })

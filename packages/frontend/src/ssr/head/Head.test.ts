@@ -53,14 +53,14 @@ describe(Head.name, () => {
   it('links the markdown alternate of project and list pages', () => {
     for (const url of ['/layer2s/projects/arbitrum', '/layer2s/summary']) {
       expect(renderHead(url)).toInclude(
-        `<link rel="alternate" type="text/markdown" href="https://l2beat.com${url}.md"/>`,
+        `<link rel="alternate" type="text/markdown" href="https://ethbeat.org${url}.md"/>`,
       )
     }
   })
 
   it('links the alternate of the page, whatever its query', () => {
     expect(renderHead('/layer2s/projects/arbitrum?update=1')).toInclude(
-      'href="https://l2beat.com/layer2s/projects/arbitrum.md"',
+      'href="https://ethbeat.org/layer2s/projects/arbitrum.md"',
     )
   })
 

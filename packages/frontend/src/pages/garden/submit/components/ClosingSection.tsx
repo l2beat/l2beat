@@ -4,7 +4,7 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { externalLinks } from '~/consts/externalLinks'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import { SproutIcon } from '../../components/SproutIcon'
-import { SUBMISSION_QUESTIONS_PATH } from '../../paths'
+import { SUBMISSION_FORUM_POST_URL } from '../../paths'
 
 export function ClosingSection() {
   return (
@@ -23,7 +23,7 @@ export function ClosingSection() {
           </p>
           <Button asChild variant="fill" className="mt-5 w-full gap-2 sm:w-max">
             <a
-              href={SUBMISSION_QUESTIONS_PATH}
+              href={SUBMISSION_FORUM_POST_URL}
               target="_blank"
               rel="noreferrer noopener"
             >

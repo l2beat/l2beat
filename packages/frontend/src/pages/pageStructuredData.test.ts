@@ -39,7 +39,7 @@ describe('page structured data', () => {
     expect(getTypes(data.head.metadata)).toEqual(['BreadcrumbList', 'Article'])
     expect(data.head.metadata.structuredData[1]).toEqual(
       expect.subset({
-        url: 'https://l2beat.com/publications/privacy-methodology',
+        url: 'https://ethbeat.org/publications/privacy-methodology',
         headline: 'How we assess privacy protocols',
       }),
     )
@@ -61,12 +61,12 @@ describe('page structured data', () => {
     expect(getTypes(data.head.metadata)).toEqual(['BreadcrumbList', 'Article'])
     expect(data.head.metadata.structuredData[1]).toEqual(
       expect.subset({
-        url: 'https://l2beat.com/publications/governance-review-1',
+        url: 'https://ethbeat.org/publications/governance-review-1',
         headline: 'Governance Review #01',
         description:
           'L2BEAT provides weekly updates on governance in concise articles.',
         image:
-          'https://l2beat.com/meta-images/publications/governance-review-1.png',
+          'https://ethbeat.org/meta-images/publications/governance-review-1.png',
         datePublished: '2024-01-19',
         author: {
           '@type': 'Person',

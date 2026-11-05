@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
+  "category": "shared",
+  "description": "Canonical central asset escrow for all ZK stack chains. Since v31 the per-chain balance accounting that caps what each chain can withdraw is enforced by the L1AssetTracker, which the vault calls on every deposit, withdrawal and failed deposit claim.",
+  "ignoreRelatives": ["WETH_TOKEN", "bridgedTokenBeacon"],
+  "ignoreMethods": ["bridgedTokens", "chainBalance"],
+  "ignoreInWatchMode": ["bridgedTokensCount"],
+  "fields": {
+    "owner": {
+      "severity": "MEDIUM",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause / unpause the bridge and set the L1AssetTracker that enforces the per-chain balances."
+        }
+      ]
+    },
+    "paused": { "severity": "MEDIUM" },
+    "bridgedTokenBeacon": { "severity": "HIGH" },
+    "l1AssetTracker": {
+      "description": "Enforces the per-chain token balances on every withdrawal and failed deposit claim. Can be repointed by the owner at any time.",
+      "severity": "HIGH"
+    }
+  }
+}

@@ -71,7 +71,7 @@ const STYLES: {
   },
 ]
 
-const LINK_TITLE = 'Reviewed under the CROPS framework by L2BEAT'
+const LINK_TITLE = 'Reviewed under the CROPS framework by ETHBEAT'
 
 export function BadgeSection({
   badges,

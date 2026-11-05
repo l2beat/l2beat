@@ -129,7 +129,7 @@ function PublicationCard({ publication }: { publication: PublicationEntry }) {
         )}
       </div>
       <div className="mx-4 mt-4 flex items-center gap-2 border-divider border-t py-3">
-        <span className="font-bold text-brand text-label-value-12 uppercase">
+        <span className="font-bold text-brand-deep text-label-value-12 uppercase">
           {getPublicationTagLabel(publication.tag)}
         </span>
         <span className="text-label-value-12 text-secondary">

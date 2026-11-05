@@ -27,7 +27,7 @@ function main() {
   const openapi = new OpenApi(app, {
     openapi: '3.1.0',
     info: {
-      title: 'L2BEAT API',
+      title: 'ETHBEAT API',
       version: '1.0.0',
     },
     servers: [{ url: config.openapi.url }],
@@ -86,7 +86,7 @@ function main() {
     '/docs',
     swaggerUi.serve,
     swaggerUi.setup(undefined, {
-      customSiteTitle: 'L2BEAT - Swagger UI',
+      customSiteTitle: 'ETHBEAT - Swagger UI',
       // customJsStr is supported by swagger-ui-express at runtime but missing from its types.
       // op1.js is loaded dynamically (not via customJs) because swagger-ui-express renders
       // customJs before customJsStr without defer/async — that order would run op1.js

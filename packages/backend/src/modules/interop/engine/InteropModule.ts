@@ -16,6 +16,7 @@ import {
   createInteropPlugins,
   flattenClusters,
   pluginsAsClusters,
+  supportsOneSidedChains,
 } from '../plugins'
 import { RelayApiClient } from '../plugins/relay/RelayApiClient'
 import { RelayIndexer, RelayRootIndexer } from '../plugins/relay/relay.indexer'
@@ -141,6 +142,7 @@ export function createInteropModule({
     tokenDbClient,
     eventPlugins,
     config.interop.capture.chains.map((c) => c.id),
+    config.interop.oneSidedChains,
     logger,
   )
 
@@ -174,6 +176,10 @@ export function createInteropModule({
     financialsEnabled: config.interop.financials.enabled,
     matchingEnabled: config.interop.matching,
     oneSidedChains: config.interop.oneSidedChains,
+    maxTransferValueUsd: config.interop.financials.maxTransferValueUsd,
+    oneSidedPlugins: eventPlugins
+      .filter(supportsOneSidedChains)
+      .map((plugin) => plugin.name),
     tokenDbClient,
   })
 
@@ -274,6 +280,8 @@ export function createInteropModule({
     logger = logger.for('InteropModule')
     logger.info('Starting')
 
+    // Read even with config loops disabled: capture depends on stored configs
+    await configStore.start()
     await eventStore.start()
 
     if (config.interop && config.interop.matching) {
@@ -303,7 +311,6 @@ export function createInteropModule({
       financialsService.start()
     }
     if (config.interop && config.interop.config.enabled) {
-      await configStore.start()
       for (const configLoop of configLoops) {
         configLoop.start()
       }

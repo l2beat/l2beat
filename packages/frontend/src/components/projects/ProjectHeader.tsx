@@ -7,8 +7,8 @@ import type {
 import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 import { cn } from '~/utils/cn'
 import { LiveIndicator } from '../LiveIndicator'
+import { PinProjectButton } from '../pinned-projects/PinProjectButton'
 import { SearchBarButton } from '../search-bar/SearchBarButton'
-import { PinProjectButton } from '../your-projects/PinProjectButton'
 import { ProjectVersionSwitcher } from './ProjectVersionSwitcher'
 import { PROJECT_SECTIONS } from './projectSections'
 
@@ -151,9 +151,9 @@ function ProjectSectionBreadcrumb({
     >
       <a
         href={href}
-        className="flex items-center gap-1.5 text-brand hover:underline"
+        className="flex items-center gap-1.5 text-brand-deep hover:underline"
       >
-        <Icon className="size-3.5 stroke-brand" />
+        <Icon className="size-3.5 stroke-brand-deep" />
         {label}
       </a>
       {otherSections?.map((link) => (

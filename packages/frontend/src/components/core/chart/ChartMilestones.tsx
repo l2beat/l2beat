@@ -2,7 +2,7 @@ import type { Milestone } from '@l2beat/config'
 import { assert, assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import { useMemo, useRef, useState } from 'react'
 import { CustomLink } from '~/components/link/CustomLink'
-import { useDevice } from '~/hooks/useDevice'
+import { useCanHover } from '~/hooks/useCanHover'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { ChevronIcon } from '~/icons/Chevron'
@@ -20,17 +20,20 @@ import {
   DrawerTrigger,
 } from '../Drawer'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
-import { useChart } from './Chart'
-import { useChartLegendOnboarding } from './ChartLegendOnboardingContext'
+import { useChart } from './ChartContext'
+import { useLegendHint } from './ChartLegendOnboardingContext'
+import { previousChartDataClassName } from './ChartPreviousData'
 
 interface Props<T extends { timestamp: number }> {
   data: T[] | undefined
   milestones: Milestone[]
+  isPlaceholderData: boolean
 }
 
 export function ChartMilestones<T extends { timestamp: number }>({
   data,
   milestones,
+  isPlaceholderData,
 }: Props<T>) {
   const ref = useRef<HTMLDivElement>(null)
   // A ResizeObserver reports after layout. Reading the width in an effect
@@ -44,7 +47,11 @@ export function ChartMilestones<T extends { timestamp: number }>({
   if (timestampedMilestones.length < 2) return null
 
   return (
-    <div data-role="milestones" ref={ref}>
+    <div
+      data-role="milestones"
+      ref={ref}
+      className={cn(isPlaceholderData && previousChartDataClassName)}
+    >
       {timestampedMilestones.map((data, index) => {
         if (width === undefined || data.milestones.length === 0) return null
         const x = index / (timestampedMilestones.length - 1)
@@ -71,22 +78,20 @@ function ChartMilestone({
   milestonesAtPoint: Milestone[]
   allMilestones: Milestone[]
 }) {
-  const { isDesktop } = useDevice()
+  const canHover = useCanHover()
   const triggerMilestone = milestonesAtPoint[0]
   assert(triggerMilestone)
   const milestoneIndex = allMilestones.indexOf(triggerMilestone)
   assert(milestoneIndex !== -1)
   const { interactiveLegend } = useChart()
-  const { hasFinishedOnboardingInitial } = useChartLegendOnboarding()
+  const { keepsRoom: keepsHintRoom } = useLegendHint(interactiveLegend)
 
   const common = cn(
-    'absolute bottom-5 flex items-center justify-center group-has-[.recharts-legend-wrapper]:bottom-[34px]',
-    !hasFinishedOnboardingInitial &&
-      interactiveLegend &&
-      !interactiveLegend.disableOnboarding &&
-      'group-has-[.recharts-legend-wrapper]:bottom-[46px]',
+    'absolute bottom-5 flex items-center justify-center group-has-[.chart-legend]:bottom-[34px] max-lg:scale-75',
+    keepsHintRoom && 'group-has-[.chart-legend]:bottom-[46px]',
   )
-  if (isDesktop) {
+  // A tooltip needs hover, so touch gets the drawer at any width.
+  if (canHover !== false) {
     return (
       <Tooltip delayDuration={0} disableHoverableContent={false}>
         <TooltipTrigger asChild>
@@ -104,7 +109,7 @@ function ChartMilestone({
   return (
     <Drawer>
       <DrawerTrigger asChild>
-        <div className={cn(common, 'scale-75 cursor-pointer')} style={{ left }}>
+        <div className={cn(common, 'cursor-pointer')} style={{ left }}>
           <MilestoneMarker milestones={milestonesAtPoint} />
         </div>
       </DrawerTrigger>
@@ -206,7 +211,7 @@ function MilestoneListIcon({ milestone }: { milestone: Milestone }) {
   )
 }
 
-export function MilestoneDrawerContent({
+function MilestoneDrawerContent({
   milestoneIndex,
   allMilestones,
 }: {

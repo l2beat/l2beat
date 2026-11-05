@@ -87,7 +87,7 @@ export const privacyPools: BaseProject = {
       { multisigStats, feeSummary },
     ),
     links: {
-      websites: ['https://privacypools.com'],
+      websites: ['https://v1.privacypools.com'],
       documentation: ['https://docs.privacypools.com'],
       repositories: [
         'https://github.com/0xbow-io/privacy-pools-core',
@@ -203,7 +203,7 @@ export const privacyPools: BaseProject = {
             'Its relay submits both the deposit and the withdrawal, and Cloaked keeps which belong together.',
           fix: 'Track notes on the device and send withdrawals to a relayer with no tie to the Cloaked account.',
           source: 'https://clkd.xyz/docs/privacy',
-          checked: '2026-10-27',
+          checked: '2026-10-30',
         },
         {
           name: 'moneysurfer',
@@ -216,6 +216,8 @@ export const privacyPools: BaseProject = {
       ],
     },
     trackedOn: ['ethereum'],
+    // Chains v1.privacypools.com serves (src/config/chainData.ts).
+    runsOn: [ProjectId('arbitrum'), ProjectId('optimism')],
     tokens: getPrivacyTokens(),
     relayerTracking: {
       type: 'onchainEvents',

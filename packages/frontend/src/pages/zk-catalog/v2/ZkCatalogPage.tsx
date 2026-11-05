@@ -50,7 +50,7 @@ function TrustedSetupFrameworkLink() {
       target="_blank"
       rel="noreferrer"
       className={cn(
-        'flex items-center gap-1 rounded-lg bg-linear-to-r from-purple-100 to-pink-100 font-semibold text-sm text-white',
+        'flex items-center gap-1 rounded-lg bg-brand font-semibold text-sm text-white',
         'h-8 w-fit px-2 py-1',
         'ring-brand ring-offset-1 ring-offset-background focus-visible:outline-none focus-visible:ring-2',
       )}

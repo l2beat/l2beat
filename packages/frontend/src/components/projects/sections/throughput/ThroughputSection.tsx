@@ -8,7 +8,7 @@ import {
   useIncludeL2Only,
 } from '~/components/chart/data-availability/IncludeL2OnlyContext'
 import { ThroughputSectionChart } from '~/components/chart/data-availability/ThroughputSectionChart'
-import type { ChartProject } from '~/components/core/chart/Chart'
+import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { ClockIcon } from '~/icons/Clock'

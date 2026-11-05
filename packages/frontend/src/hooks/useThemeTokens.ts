@@ -16,11 +16,11 @@ const LIGHT_TOKENS: ThemeTokens = {
   isDark: false,
   primary: '#131215',
   secondary: '#5f6470',
-  brand: '#9621bf',
+  brand: '#ff3776',
   surface: '#fafafa',
   surfaceSecondary: '#e6e7ec',
   divider: '#ccd0da',
-  negative: '#d70000',
+  negative: '#c40000',
 }
 
 /** Follows the theme toggle, which swaps a class on the root element */

@@ -28,6 +28,8 @@ export interface WormholeNetwork {
   coreContract?: EthereumAddress
   relayer?: EthereumAddress
   tokenBridge?: EthereumAddress
+  // The token the bridge unwraps to native for completeTransferAndUnwrapETH
+  weth?: EthereumAddress
 }
 
 export const WormholeConfig = defineConfig<WormholeNetwork[]>('wormhole')
@@ -75,6 +77,7 @@ const WORMHOLE_RELAYER = EthereumAddress(
 // Map normalized upstream chain names (docs labels, SDK constant names) to ours
 const UPSTREAM_CHAIN_NAME_TO_CHAIN: Record<string, string> = {
   bnbsmartchain: 'bsc',
+  hypercore: 'hyperliquid',
   polygon: 'polygonpos',
   robinhoodchain: 'robinhood',
 }
@@ -245,6 +248,8 @@ export class WormholeConfigPlugin
       input: Bytes.fromHex(data),
     }))
 
+    const previousNetworks = this.store.get(WormholeConfig) ?? []
+
     const networkPromises = this.chains.map(async (chain) => {
       const rpc = this.rpcs.get(chain.name)
       if (!rpc) return undefined
@@ -294,13 +299,23 @@ export class WormholeConfigPlugin
         const selected = validNonZero[0]
         if (!selected) return undefined
 
+        const tokenBridge = tokenBridgeByChain.get(chain.name)
+        // A failed lookup keeps the WETH last resolved for the same bridge
+        const weth = tokenBridge
+          ? ((await getTokenBridgeWeth(rpc, tokenBridge, block.number)) ??
+            previousNetworks.find(
+              (n) => n.chain === chain.name && n.tokenBridge === tokenBridge,
+            )?.weth)
+          : undefined
+
         return {
           chain: chain.name,
           chainId: chain.id,
           wormholeChainId: selected.wormholeChainId,
           coreContract: selected.coreContract,
           relayer: WORMHOLE_RELAYER,
-          tokenBridge: tokenBridgeByChain.get(chain.name),
+          tokenBridge,
+          ...(weth ? { weth } : {}),
         }
       } catch (error) {
         this.logger.debug('Failed to resolve Wormhole core for chain', {
@@ -315,5 +330,40 @@ export class WormholeConfigPlugin
     const networks = networksArrays.filter((n) => n !== undefined)
 
     return mergeWormholeNetworks(chainIdNetworks, networks)
+  }
+}
+
+const wethAbi = parseAbi(['function WETH() view returns (address)'])
+
+async function getTokenBridgeWeth(
+  rpc: IRpcClient,
+  tokenBridge: EthereumAddress,
+  blockNumber: number,
+): Promise<EthereumAddress | undefined> {
+  // Optional: a failure here must not drop the chain's core and token bridge
+  try {
+    const [result] = await callWithOptionalMulticall(
+      rpc,
+      [
+        {
+          to: tokenBridge,
+          input: Bytes.fromHex(
+            encodeFunctionData({ abi: wethAbi, functionName: 'WETH' }),
+          ),
+        },
+      ],
+      blockNumber,
+    )
+    if (!result?.success || result.data.toString() === '0x') return
+    const weth = decodeFunctionResult({
+      abi: wethAbi,
+      functionName: 'WETH',
+      data: result.data.toString() as Hex,
+    })
+    return weth === '0x0000000000000000000000000000000000000000'
+      ? undefined
+      : EthereumAddress(weth)
+  } catch {
+    return
   }
 }

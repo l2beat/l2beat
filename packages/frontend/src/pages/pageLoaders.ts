@@ -83,9 +83,6 @@ export const pageLoaders = {
   ZkCatalogProjectPage: async () =>
     (await import('./zk-catalog/v2/project/ZkCatalogProjectPage'))
       .ZkCatalogProjectPage,
-  EcosystemProjectPage: async () =>
-    (await import('./ecosystems/project/EcosystemProjectPage'))
-      .EcosystemProjectPage,
   GovernancePage: async () =>
     (await import('./governance/GovernancePage')).GovernancePage,
   NativeRollupsPage: async () =>
@@ -112,6 +109,7 @@ export const pageLoaders = {
   MultisigReportPage: async () =>
     (await import('./multisig-report/MultisigReportPage')).MultisigReportPage,
   MandatePage: async () => (await import('./mandate/MandatePage')).MandatePage,
+  NewNamePage: async () => (await import('./new-name/NewNamePage')).NewNamePage,
   TermsOfServicePage: async () =>
     (await import('./terms-of-service/TermsOfServicePage')).TermsOfServicePage,
   NotFoundPage: async () =>

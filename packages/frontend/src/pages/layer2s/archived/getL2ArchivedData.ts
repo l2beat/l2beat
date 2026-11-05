@@ -5,6 +5,7 @@ import { getL2ArchivedEntries } from '~/server/features/layer2s/archived/getL2Ar
 import { getMetadata, SITE_TITLE } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
+import { getBadgeLookup } from '~/utils/project/getBadgeWithParams'
 
 export async function getL2ArchivedData(
   req: Request,
@@ -40,6 +41,7 @@ export async function getL2ArchivedData(
       props: {
         ...appLayoutProps,
         entries,
+        badgeLookup: getBadgeLookup(entries),
       },
     },
   }

@@ -15,7 +15,7 @@
 ## Privacy can be lost if
 1. {{kmsKeyThreshold}} of {{kmsSignerCount}} KMS operators combine their key shares (see privileged insider).
 2. the token owner appoints an observer or upgrades the token (see privileged insider).
-3. a user swaps, since Zama's app and the swap's compliance address see the amount (see privileged insider).
+3. a user swaps: Zama and the swap's compliance address see the amount, which can reach LI.FI (see privileged insider and network observer).
 4. a user keeps the vault form's default of sharing their balance with Merkl (see privileged insider).
 5. Zama changes its closed-source app to leak amounts to itself or to third parties (see privileged insider).
 6. public wraps, unwraps and vault batch totals bound a user's balance (see public observer and chain analyst).

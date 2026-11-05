@@ -3,7 +3,7 @@ import type { VariantProps } from 'class-variance-authority'
 import { cva } from 'class-variance-authority'
 import type React from 'react'
 import { createContext, useContext, useId, useRef, useState } from 'react'
-import { useDevice } from '~/hooks/useDevice'
+import { cn } from '~/utils/cn'
 import { mergeRefs } from '~/utils/mergeRefs'
 import {
   TooltipTriggerContextProvider,
@@ -44,13 +44,18 @@ const Tooltip = ({
 
 const TooltipTrigger = ({
   ref,
-  disabledOnMobile,
+  disabledOnTouch,
   ...props
 }: React.ComponentProps<typeof TooltipPrimitive.Trigger> & {
-  disabledOnMobile?: boolean
+  /**
+   * A tap does what the trigger does, e.g. follows its link, and never opens
+   * the tooltip.
+   */
+  disabledOnTouch?: boolean
 }) => {
   const localRef = useRef(null)
-  const { isDesktop } = useDevice()
+  // Whether the tooltip was open when the last touch or pen press began.
+  const tapStartedOpen = useRef<boolean>(undefined)
   const { open, setOpen, contentDescriptionId } = useTooltipTriggerContext()
   // While open, Radix adds the id of its own copy of the same content, so the
   // HTML copy would make screen readers read it twice.
@@ -60,8 +65,8 @@ const TooltipTrigger = ({
     return props.children
   }
 
-  // Tooltips do not work on mobile by default
-  if (disabledOnMobile) {
+  // Radix opens a tooltip on hover and focus only, never on a tap
+  if (disabledOnTouch) {
     return (
       <TooltipPrimitive.Trigger
         ref={ref}
@@ -71,16 +76,27 @@ const TooltipTrigger = ({
     )
   }
 
-  const onClick = !isDesktop
-    ? (e: React.MouseEvent) => {
-        e.preventDefault()
-        setOpen(true)
-      }
-    : undefined
+  // Touch has no hover, so the first tap opens the tooltip in place of the
+  // trigger's own action, and a tap on the open tooltip closes it or follows
+  // its link. This goes by the tap, not the width: an iPad in landscape is
+  // as wide as a laptop, and a click in a narrow window must still follow a
+  // link. A key press has no pointer down, so it keeps the trigger's action.
+  const onPointerDown = (e: React.PointerEvent) => {
+    // Recorded before Radix closes an open tooltip on the same press.
+    tapStartedOpen.current = e.pointerType === 'mouse' ? undefined : open
+  }
+  const onClick = (e: React.MouseEvent) => {
+    const startedOpen = tapStartedOpen.current
+    tapStartedOpen.current = undefined
+    if (startedOpen !== false) return
+    e.preventDefault()
+    setOpen(true)
+  }
 
   return (
     <TooltipPrimitive.Trigger
       ref={mergeRefs(ref, localRef)}
+      onPointerDown={onPointerDown}
       onClick={onClick}
       data-role="tooltip-trigger"
       aria-describedby={describedBy}
@@ -90,8 +106,12 @@ const TooltipTrigger = ({
 }
 TooltipTrigger.displayName = TooltipPrimitive.Trigger.displayName
 
+/** The tooltip's look, without Radix's open and close animation. */
+const tooltipSurfaceClassName =
+  'z-110 rounded-lg bg-surface-primary p-3 text-left font-medium text-paragraph-13 text-primary normal-case shadow-popover max-sm:max-w-screen dark:bg-header-secondary'
+
 const tooltipContentVariants = cva(
-  'fade-in-0 zoom-in-95 data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-110 origin-(--radix-tooltip-content-transform-origin) animate-in rounded-lg bg-surface-primary p-3 text-left font-medium text-paragraph-13 text-primary normal-case shadow-popover data-[state=closed]:animate-out max-sm:max-w-screen dark:bg-header-secondary',
+  `fade-in-0 zoom-in-95 data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 origin-(--radix-tooltip-content-transform-origin) animate-in data-[state=closed]:animate-out ${tooltipSurfaceClassName}`,
   {
     variants: {
       fitContent: {
@@ -106,6 +126,17 @@ const tooltipContentVariants = cva(
 
 const InsideHtmlCopyContext = createContext(false)
 
+const InPortalContext = createContext(false)
+
+/**
+ * Renders the tooltips inside it in a portal, above dialogs. Floating UI
+ * places a tooltip that renders inside a CSS size container (`@container`)
+ * away from its trigger, by the container's offset from the window.
+ */
+function TooltipsInPortal({ children }: { children: React.ReactNode }) {
+  return <InPortalContext value={true}>{children}</InPortalContext>
+}
+
 const TooltipContent = ({
   ref,
   className,
@@ -115,6 +146,18 @@ const TooltipContent = ({
 }: React.ComponentProps<typeof TooltipPrimitive.Content> &
   VariantProps<typeof tooltipContentVariants>) => {
   const { contentDescriptionId } = useTooltipTriggerContext()
+  const inPortal = useContext(InPortalContext)
+  const content = (
+    <TooltipPrimitive.Content
+      ref={ref}
+      sideOffset={sideOffset}
+      className={tooltipContentVariants({
+        fitContent,
+        className: cn(inPortal && 'z-1000', className),
+      })}
+      {...props}
+    />
+  )
 
   return (
     <>
@@ -127,12 +170,11 @@ const TooltipContent = ({
           </InsideHtmlCopyContext>
         </span>
       )}
-      <TooltipPrimitive.Content
-        ref={ref}
-        sideOffset={sideOffset}
-        className={tooltipContentVariants({ fitContent, className })}
-        {...props}
-      />
+      {inPortal ? (
+        <TooltipPrimitive.Portal>{content}</TooltipPrimitive.Portal>
+      ) : (
+        content
+      )}
     </>
   )
 }
@@ -147,15 +189,27 @@ const TooltipVisualOnly = ({ children }: { children: React.ReactNode }) => {
   return isInsideHtmlCopy ? null : children
 }
 
+/**
+ * Left out of the tooltip popup but kept in its HTML copy, for text a
+ * compact popup drops but crawlers and LLMs should still read.
+ */
+const TooltipHtmlCopyOnly = ({ children }: { children: React.ReactNode }) => {
+  const isInsideHtmlCopy = useContext(InsideHtmlCopyContext)
+  return isInsideHtmlCopy ? children : null
+}
+
 const TooltipPortal = TooltipPrimitive.Portal
 TooltipPortal.displayName = TooltipPrimitive.Portal.displayName
 
 export {
   Tooltip,
   TooltipContent,
+  TooltipHtmlCopyOnly,
   tooltipContentVariants,
   TooltipProvider,
+  tooltipSurfaceClassName,
   TooltipTrigger,
   TooltipPortal,
+  TooltipsInPortal,
   TooltipVisualOnly,
 }
