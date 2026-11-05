@@ -8,7 +8,7 @@ import {
 import { formatValueLine } from '~/components/ossification/formatValueLine'
 import { OSSIFICATION_VALUE_LABELS } from '~/components/ossification/ossificationValueLabels'
 import type { OssificationStats } from '~/server/features/projects/ossification/getOssificationStats'
-import { formatTimestamp } from '~/utils/dates'
+import { formatRange, formatTimestamp } from '~/utils/dates'
 
 const WIDTH = 132
 const HEIGHT = 30
@@ -199,7 +199,7 @@ function getDescription({
   const { from, to, clockStart } = timeline
   return {
     title: `${OSSIFICATION_VALUE_LABELS[valueSource ?? 'tvs'].short} & critical changes`,
-    period: `${formatTimestamp(from)} – ${formatTimestamp(to)}`,
+    period: formatRange(from, to),
     lines: [
       `Unchanged for ${formatSeconds(to - clockStart)}, since ${formatTimestamp(clockStart)}${clockBeforeWindow ? ' — before this window, so the whole year is highlighted' : ''}.`,
       getChangesLine(timeline, genesisInWindow),
