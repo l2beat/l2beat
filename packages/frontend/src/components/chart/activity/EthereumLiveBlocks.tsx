@@ -1,6 +1,7 @@
 import {
   formatActivityCount,
   formatInteger,
+  SLOT_SECONDS,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
@@ -8,7 +9,6 @@ import { memo, useLayoutEffect, useRef } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { TimeAgo, useNow } from '~/components/core/TimeAgo'
 import { LiveIndicator } from '~/components/LiveIndicator'
-import { usePrefersReducedMotion } from '~/hooks/usePrefersReducedMotion'
 import type { ActivityMetric } from '~/pages/layer2s/activity/components/ActivityMetricContext'
 import type { LiveBlock } from '~/server/features/layer2s/activity/utils/liveBlocks'
 import { useTRPC } from '~/trpc/React'
@@ -19,11 +19,13 @@ import { LIVE_ACTIVITY_REFRESH_MS } from '~/utils/liveActivityRefresh'
 
 /** The backend follows the chain every slot, so older means it stopped */
 const STALE_AFTER = UnixTime.MINUTE
-/** Five minutes of slots, so missed slots leave room on the left */
+/** Five minutes of slots */
 const SLOTS = 25
 const BAR_STEP = 4
 const BAR_WIDTH = 3
 const HEIGHT = 48
+/** Of the strip, kept by its loading and empty states, so nothing below moves */
+const STRIP_HEIGHT_CLASS = 'h-[110px]'
 
 const METRIC_UI = {
   tps: { rate: 'TPS', count: 'txs' },
@@ -43,12 +45,19 @@ export function EthereumLiveBlocks({ metric }: { metric: ActivityMetric }) {
   )
   const now = useNow()
 
-  if (isLoading) return <Skeleton className="h-[92px] w-full rounded-lg" />
+  if (isLoading) {
+    return <Skeleton className={cn(STRIP_HEIGHT_CLASS, 'w-full rounded-lg')} />
+  }
 
   const newest = blocks?.at(-1)
   if (!blocks || !newest) {
     return (
-      <div className="flex h-[92px] items-center justify-center rounded-lg bg-surface-secondary font-medium text-label-value-14 text-secondary">
+      <div
+        className={cn(
+          STRIP_HEIGHT_CLASS,
+          'flex items-center justify-center rounded-lg bg-surface-secondary font-medium text-label-value-14 text-secondary',
+        )}
+      >
         Live data unavailable
       </div>
     )
@@ -56,11 +65,23 @@ export function EthereumLiveBlocks({ metric }: { metric: ActivityMetric }) {
 
   const ui = METRIC_UI[metric]
   const delayed = now !== undefined && now - newest.timestamp > STALE_AFTER
-  const shown = blocks.slice(-SLOTS)
-  const scale = niceCeil(Math.max(...shown.map((b) => rateOf(b, metric))))
+  // By slot, not by order, so a missed slot leaves a gap
+  const shown = blocks
+    .map((block) => ({
+      block,
+      slotsBack: Math.round(
+        (newest.timestamp - block.timestamp) / SLOT_SECONDS,
+      ),
+    }))
+    .filter(({ slotsBack }) => slotsBack < SLOTS)
+  const scale = niceCeil(
+    Math.max(...shown.map(({ block }) => rateOf(block, metric))),
+  )
 
   return (
-    <div className="rounded-lg bg-surface-secondary p-3">
+    <div
+      className={cn(STRIP_HEIGHT_CLASS, 'rounded-lg bg-surface-secondary p-3')}
+    >
       <div className="flex items-center justify-between gap-3 font-medium text-label-value-12">
         <span className="flex min-w-0 items-center gap-1.5">
           <LiveIndicator disabled={delayed} />
@@ -83,12 +104,12 @@ export function EthereumLiveBlocks({ metric }: { metric: ActivityMetric }) {
         role="img"
         aria-label={`${ui.rate} of each Ethereum block in the last five minutes`}
       >
-        {shown.map((block, i) => (
+        {shown.map(({ block, slotsBack }) => (
           <LiveBar
             key={block.number}
-            x={(SLOTS - shown.length + i) * BAR_STEP}
+            x={(SLOTS - 1 - slotsBack) * BAR_STEP}
             height={Math.max(1, (rateOf(block, metric) / scale) * HEIGHT)}
-            isNewest={i === shown.length - 1}
+            isNewest={block === newest}
             title={`Block #${block.number}, ${formatTimestamp(block.timestamp, {
               mode: 'time',
             })}: ${formatInteger(countOf(block, metric))} ${ui.count}, ${formatActivityCount(
@@ -98,14 +119,18 @@ export function EthereumLiveBlocks({ metric }: { metric: ActivityMetric }) {
         ))}
       </svg>
       <div className="mt-1 flex justify-between font-medium text-label-value-12 text-secondary">
-        <span>5 min ago</span>
-        <span>Now</span>
+        <span>
+          {formatTimestamp(newest.timestamp - (SLOTS - 1) * SLOT_SECONDS, {
+            mode: 'time',
+          })}
+        </span>
+        <span>{formatTimestamp(newest.timestamp, { mode: 'time' })}</span>
       </div>
     </div>
   )
 }
 
-/** Memoized, so a new block renders the bar it adds, not all of them */
+/** Memoized, so the strip's clock ticking every second does not render the bars */
 const LiveBar = memo(function LiveBar({
   x,
   height,
@@ -118,9 +143,12 @@ const LiveBar = memo(function LiveBar({
   title: string
 }) {
   const ref = useRef<SVGRectElement>(null)
-  const reducedMotion = usePrefersReducedMotion()
   // biome-ignore lint/correctness/useExhaustiveDependencies: grows in once, as it arrives
   useLayoutEffect(() => {
+    // Read here: the hook reads it only after the first render
+    const reducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    ).matches
     if (!isNewest || reducedMotion || !ref.current) return
     ref.current.animate(
       [{ transform: 'scaleY(0)' }, { transform: 'scaleY(1)' }],
@@ -130,11 +158,10 @@ const LiveBar = memo(function LiveBar({
   return (
     // The group slides each bar left as newer blocks come
     <g
+      className="transition-transform duration-700 motion-reduce:transition-none"
       style={{
         transform: `translateX(${x}px)`,
-        transition: reducedMotion
-          ? undefined
-          : `transform 700ms ${EASE_OUT_QUINT}`,
+        transitionTimingFunction: EASE_OUT_QUINT,
       }}
     >
       <rect

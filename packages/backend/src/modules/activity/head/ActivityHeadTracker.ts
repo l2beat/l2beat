@@ -70,10 +70,15 @@ export class ActivityHeadTracker {
       (this.blocks.at(-1)?.number ?? counted) + 1,
       latest,
     )
-    if (
-      !isChain([...this.blocks.slice(-1), ...fetched]) ||
-      (fetched.length === 0 && !(await this.isNewestStillOnChain()))
-    ) {
+    if (fetched.length === 0 && !(await this.isNewestStillOnChain())) {
+      // The block before it is checked by the parent hash of its replacement
+      this.logger.info('Newest block replaced, refetching it', {
+        blockNumber: this.blocks.at(-1)?.number,
+      })
+      this.blocks.pop()
+      return
+    }
+    if (!isChain([...this.blocks.slice(-1), ...fetched])) {
       // A reorg, or nodes behind a load balancer on different forks. The
       // published blocks stay until the next update finds one chain
       this.logger.info('Blocks do not link, refetching', {
