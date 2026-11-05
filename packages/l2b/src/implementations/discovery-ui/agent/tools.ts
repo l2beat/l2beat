@@ -1,9 +1,11 @@
 import type { ConfigReader } from '@l2beat/discovery'
+import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { toJsonSchema, type Validator, v as z } from '@l2beat/validate'
 import { randomUUID } from 'crypto'
 import { getCodeFromDisk } from '../getCode'
 import { safeStringSchema } from '../safeStringSchema'
 import type { ApiAgentShowEvent } from '../types'
+import type { CodeSource } from './codeAnchor'
 import { describeContext } from './context'
 import { cutText } from './excerpt'
 import { describeEntry, readAgentEntries } from './resolveRef'
@@ -174,7 +176,7 @@ function show(ui: DiscoUi, input: ShowInput): string[] {
   }
   const resolver = new StepResolver(
     readAgentEntries(ui.configReader, project),
-    (address) => getCodeFromDisk(ui.configReader, project, address).sources,
+    (address) => readSources(ui.configReader, project, address),
   )
   const steps = input.steps.map((step) => resolver.resolve(step))
   const lines = [
@@ -187,6 +189,21 @@ function show(ui: DiscoUi, input: ShowInput): string[] {
     ui.tabs.show(active.id, showEvent(project, steps))
   }
   return lines
+}
+
+// The code panel's editor splits lines on \r\n and \r too and joins them
+// with \n, so offsets and hashes only match the text it shows.
+function readSources(
+  configReader: ConfigReader,
+  project: string,
+  address: ChainSpecificAddress,
+): CodeSource[] {
+  return getCodeFromDisk(configReader, project, address).sources.map(
+    (source) => ({
+      name: source.name,
+      code: source.code.replaceAll('\r\n', '\n').replaceAll('\r', '\n'),
+    }),
+  )
 }
 
 // ConfigReader throws for a project it cannot find, which here is a typo in
@@ -272,7 +289,7 @@ async function context(ui: DiscoUi): Promise<string[]> {
   return describeContext(
     { ...answer, project },
     readAgentEntries(ui.configReader, project),
-    (address) => getCodeFromDisk(ui.configReader, project, address).sources,
+    (address) => readSources(ui.configReader, project, address),
   )
 }
 

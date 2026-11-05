@@ -338,7 +338,10 @@ function restoreViewState(view: EditorView, cached: FileViewState) {
 // as Monaco's setValue did, so undo never steps into text it did not record.
 const historyCompartment = new Compartment()
 
-function replaceContent(view: EditorView, content: string) {
+function replaceContent(view: EditorView, text: string) {
+  // The document keeps \n only, so text with \r\n would never match it and
+  // the diff below would split a \r\n into an extra line.
+  const content = text.replaceAll('\r\n', '\n').replaceAll('\r', '\n')
   const current = view.state.doc.toString()
   if (current === content) {
     return
