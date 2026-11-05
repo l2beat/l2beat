@@ -57,19 +57,17 @@ const signature = place(
 )
 
 // The rings fade out in an ellipse over the corner lockup and the label: a
-// ring running through small text cuts it.
-const CORNER_FADE =
-  '<defs><radialGradient id="cornerFade" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="1" gradientTransform="translate(190 200) scale(330 230)">' +
-  `<stop offset="0" stop-color="${INK}" stop-opacity="0.85"/>` +
-  `<stop offset="0.55" stop-color="${INK}" stop-opacity="0.85"/>` +
-  `<stop offset="1" stop-color="${INK}" stop-opacity="0"/>` +
-  `</radialGradient></defs><rect width="${OG_SIZE.width}" height="${OG_SIZE.height}" fill="url(#cornerFade)"/>`
+// ring running through small text cuts it. Only the rings fade, not the
+// ground: darkening it there showed as a patch of its own.
+const CORNER_CLEARING = { cx: 190, cy: 200, rx: 330, ry: 230 }
 
 // Drawn on first use, not on import: the server imports this for token images.
 let decor: string | undefined
 const frameDecor = () =>
   (decor ??= rasterize(
-    heartEcho(placement) + CORNER_FADE + heart(placement) + lockup(signature),
+    heartEcho(placement, CORNER_CLEARING) +
+      heart(placement) +
+      lockup(signature),
   ))
 
 let heartRows: { start: number; end: number }[] | undefined
@@ -143,8 +141,8 @@ export function HeartbeatFrame({
   return (
     <Canvas decor={frameDecor()}>
       {logo !== undefined && (
-        <GlowingLogo
-          src={onDarkGround(logo)}
+        <Logo
+          {...onDarkGround(logo)}
           size={logoHeight}
           top={baseline - logoHeight}
         />
@@ -183,30 +181,34 @@ export function HeartbeatFrame({
   )
 }
 
-/** The logo with app-icon corners, over a pink glow that spreads past it. */
-function GlowingLogo({
+/** The logo with app-icon corners, over a pink glow when it needs one to stand out. */
+function Logo({
   src,
+  glow,
   size,
   top,
 }: {
   src: string
+  glow: boolean
   size: number
   top: number
 }) {
-  const glow = size * LOGO.glow
+  const spread = size * LOGO.glow
   return (
     <>
-      <div
-        style={{
-          display: 'flex',
-          position: 'absolute',
-          left: MARGIN + (size - glow) / 2,
-          top: top + (size - glow) / 2,
-          width: glow,
-          height: glow,
-          backgroundImage: `radial-gradient(circle at center, ${PINK}55 0%, ${PINK}1A 40%, ${INK}00 62%)`,
-        }}
-      />
+      {glow && (
+        <div
+          style={{
+            display: 'flex',
+            position: 'absolute',
+            left: MARGIN + (size - spread) / 2,
+            top: top + (size - spread) / 2,
+            width: spread,
+            height: spread,
+            backgroundImage: `radial-gradient(circle at center, ${PINK}55 0%, ${PINK}1A 40%, ${INK}00 62%)`,
+          }}
+        />
+      )}
       <img
         src={src}
         alt=""

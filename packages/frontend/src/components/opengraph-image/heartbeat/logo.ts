@@ -7,7 +7,8 @@ import { INK } from './marks'
 // brightened. The rest keep their colours, which already read on dark. White
 // detail on a dark logo (a black square with a white mark) counts as light, so
 // such a logo stays as it is: its mark reads, and inverting it would turn the
-// square white.
+// square white. Instead, a logo still that dark gets a pink glow behind it, so
+// its own shape shows; the rest stand out without one.
 
 export type LogoTreatment = 'invert' | 'brighten' | 'keep'
 
@@ -15,6 +16,8 @@ export type LogoTreatment = 'invert' | 'brighten' | 'keep'
 const INVERT_BELOW = 1.5
 /** Contrast with the ground below which such a logo is brightened. */
 const BRIGHTEN_BELOW = 3.5
+/** Contrast with the ground below which a logo, after its fix, gets a glow: WCAG's minimum for graphics. */
+const GLOW_BELOW = 3
 /** Pixels at least this bright count as light detail. */
 const LIGHT = 0.5
 /** A logo with at least this share of light pixels keeps its colours. */
@@ -31,18 +34,27 @@ const FILTERS: Record<Exclude<LogoTreatment, 'keep'>, string> = {
     '<feComponentTransfer><feFuncR type="gamma" exponent="0.55"/><feFuncG type="gamma" exponent="0.55"/><feFuncB type="gamma" exponent="0.55"/></feComponentTransfer>',
 }
 
-/** The logo, a data URI, as one that reads on the dark ground. */
-export function onDarkGround(logo: string) {
-  const treatment = logoTreatment(logo)
-  if (treatment === 'keep') return logo
+/**
+ * The logo, a data URI, as one that reads on the dark ground, and whether it
+ * still needs a glow behind it to stand out.
+ */
+export function onDarkGround(logo: string): { src: string; glow: boolean } {
+  const { treatment, contrast } = measureOnGround(logo)
+  if (treatment === 'keep') return { src: logo, glow: contrast < GLOW_BELOW }
   const svg = square(
     REDRAW_SIZE,
     `<defs><filter id="f" color-interpolation-filters="sRGB">${FILTERS[treatment]}</filter></defs>${image(logo, REDRAW_SIZE, 'filter="url(#f)"')}`,
   )
-  return `data:image/png;base64,${draw(svg).asPng().toString('base64')}`
+  const src = `data:image/png;base64,${draw(svg).asPng().toString('base64')}`
+  return { src, glow: measureOnGround(src).contrast < GLOW_BELOW }
 }
 
 export function logoTreatment(logo: string): LogoTreatment {
+  return measureOnGround(logo).treatment
+}
+
+/** How the logo contrasts with the ground on average, and what that calls for. */
+function measureOnGround(logo: string) {
   const { pixels } = draw(square(MEASURE_SIZE, image(logo, MEASURE_SIZE)))
   let sum = 0
   let opaque = 0
@@ -58,11 +70,16 @@ export function logoTreatment(logo: string): LogoTreatment {
     opaque++
     if (luminance > LIGHT) light++
   }
-  if (opaque === 0 || light / opaque >= LIGHT_SHARE) return 'keep'
+  if (opaque === 0)
+    return { treatment: 'keep' as const, contrast: Number.POSITIVE_INFINITY }
   const contrast = (sum / opaque + 0.05) / (INK_LUMINANCE + 0.05)
-  if (contrast < INVERT_BELOW) return 'invert'
-  if (contrast < BRIGHTEN_BELOW) return 'brighten'
-  return 'keep'
+  const treatment: LogoTreatment =
+    light / opaque >= LIGHT_SHARE || contrast >= BRIGHTEN_BELOW
+      ? 'keep'
+      : contrast < INVERT_BELOW
+        ? 'invert'
+        : 'brighten'
+  return { treatment, contrast }
 }
 
 const square = (size: number, body: string) =>

@@ -35,11 +35,18 @@ describe(logoTreatment.name, () => {
 })
 
 describe(onDarkGround.name, () => {
-  it('returns a logo that reads on dark untouched', () => {
-    expect(onDarkGround(pinkDisc)).toEqual(pinkDisc)
+  it('returns a logo that reads on dark untouched, without a glow', () => {
+    expect(onDarkGround(pinkDisc)).toEqual({ src: pinkDisc, glow: false })
   })
 
-  it('redraws a black logo as one that reads on dark', () => {
-    expect(logoTreatment(onDarkGround(blackDisc))).toEqual('keep')
+  it('redraws a black logo as one that reads on dark without a glow', () => {
+    const { src, glow } = onDarkGround(blackDisc)
+
+    expect(logoTreatment(src)).toEqual('keep')
+    expect(glow).toEqual(false)
+  })
+
+  it('puts a glow behind a dark logo kept for its light mark', () => {
+    expect(onDarkGround(whiteMarkOnBlack).glow).toEqual(true)
   })
 })
