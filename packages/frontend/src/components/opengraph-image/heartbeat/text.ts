@@ -1,9 +1,10 @@
 import opentype from '@shuding/opentype.js'
 
-// Satori lays out text but can't tell us how wide it will be, and the layouts
-// pick sizes by width: a title stays on one line while that keeps it big enough,
-// a label shrinks to end before the heartbeat. So we measure with the same font
-// files satori renders, through satori's own font parser.
+// Satori lays out text but can't tell us how wide it will be or where its
+// baseline lands, and the layouts need both: a title stays on one line while
+// that keeps it big enough, a label shrinks to end before the heart, and every
+// title sits on the same baseline. So we measure with the same font files
+// satori renders, through satori's own font parser.
 
 export type Weight = 600 | 700
 
@@ -22,6 +23,10 @@ export interface TextMeasure {
   ): number
   /** How far right of its box the first letter's ink starts. */
   inkLeft(text: string, size: number, weight: Weight): number
+  /** How far below the top of a line box its baseline sits, as satori lays it out. */
+  baseline(size: number, lineHeight: number): number
+  /** The height of a capital letter. */
+  capHeight(size: number): number
 }
 
 /**
@@ -46,6 +51,17 @@ export function createTextMeasure(fonts: OpengraphFonts): TextMeasure {
       const face = faces[weight]
       const glyph = face.charToGlyph(text.charAt(0))
       return ((glyph.leftSideBearing ?? 0) * size) / face.unitsPerEm
+    },
+    // Satori centres the font's ascender-to-descender box in the line box. Both
+    // weights share Roboto's vertical metrics.
+    baseline(size, lineHeight) {
+      const { ascender, descender, unitsPerEm } = faces[700]
+      const content = (ascender - descender) / unitsPerEm
+      return size * ((lineHeight - content) / 2 + ascender / unitsPerEm)
+    },
+    capHeight(size) {
+      const face = faces[700]
+      return (size * face.tables.os2.sCapHeight) / face.unitsPerEm
     },
   }
 }

@@ -13,11 +13,16 @@ export const MARGIN = 72
 /** The title column: the whole width between the margins. */
 export const COLUMN = OG_SIZE.width - 2 * MARGIN
 
-const HEART_HEIGHT = 440
+const HEART_HEIGHT = 400
 // Any smaller and ETH gets hard to read in a card ~500 px wide.
 const SIGNATURE_HEIGHT = 72
-const LABEL_TO_TITLE = 12
-const LABEL = { size: 36, min: 28, tracking: 1.4 / 24 }
+// Every title's first baseline sits here, so cards in a feed line up; a
+// second line grows down from it.
+const TITLE_BASELINE = 382
+const TITLE_LINE_HEIGHT = 1.06
+// From the label's baseline down to the top of the title's capitals.
+const LABEL_TO_TITLE = 42
+const LABEL = { size: 40, min: 30, lineHeight: 1.2, tracking: 1.4 / 24 }
 // The heart outline's left edge a little below its middle, where titles cross
 // it, from its centre in the pieces' units. Measured on HEART's path.
 const EDGE_DX = -141
@@ -38,50 +43,71 @@ const signature = place(
   SIGNATURE_HEIGHT,
 )
 
+// The rings fade out in an ellipse over the corner lockup and the label: a
+// ring running through small text cuts it.
+const CORNER_FADE =
+  '<defs><radialGradient id="cornerFade" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="1" gradientTransform="translate(190 200) scale(330 230)">' +
+  `<stop offset="0" stop-color="${INK}" stop-opacity="0.85"/>` +
+  `<stop offset="0.55" stop-color="${INK}" stop-opacity="0.85"/>` +
+  `<stop offset="1" stop-color="${INK}" stop-opacity="0"/>` +
+  `</radialGradient></defs><rect width="${OG_SIZE.width}" height="${OG_SIZE.height}" fill="url(#cornerFade)"/>`
+
 // Drawn on first use, not on import: the server imports this for token images.
 let decor: string | undefined
 const frameDecor = () =>
   (decor ??= rasterize(
-    heartEcho(placement) + heart(placement) + lockup(signature),
+    heartEcho(placement) + CORNER_FADE + heart(placement) + lockup(signature),
   ))
 
 export function HeartbeatFrame({
   measure,
   label,
   title,
+  titleSize,
   titleInkLeft,
 }: {
   measure: TextMeasure
   label: string | undefined
   title: ReactNode
+  titleSize: number
   /** The title's first-letter side bearing, so its ink starts on the margin. */
   titleInkLeft: number
 }) {
+  const capTop = TITLE_BASELINE - measure.capHeight(titleSize)
   return (
     <Canvas decor={frameDecor()}>
+      {label && (
+        <Label
+          measure={measure}
+          text={label}
+          baseline={capTop - LABEL_TO_TITLE}
+        />
+      )}
       <div
         style={{
           display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
           position: 'absolute',
-          left: MARGIN,
-          top: 0,
-          bottom: 0,
+          left: MARGIN - titleInkLeft,
+          top: TITLE_BASELINE - measure.baseline(titleSize, TITLE_LINE_HEIGHT),
           width: COLUMN,
         }}
       >
-        {label && <Label measure={measure} text={label} />}
-        <div style={{ display: 'flex', marginLeft: -titleInkLeft }}>
-          {title}
-        </div>
+        {title}
       </div>
     </Canvas>
   )
 }
 
-/** Shrinks a label that would reach the heart, down to 28 px: pink on pink would vanish. */
-function Label({ measure, text }: { measure: TextMeasure; text: string }) {
+/** Shrinks a label that would reach the heart, down to 30 px: pink on pink would vanish. */
+function Label({
+  measure,
+  text,
+  baseline,
+}: {
+  measure: TextMeasure
+  text: string
+  baseline: number
+}) {
   const caps = text.toUpperCase()
   const room = HEART_EDGE - HEART_CLEARANCE - MARGIN
   let size = LABEL.size
@@ -95,12 +121,13 @@ function Label({ measure, text }: { measure: TextMeasure; text: string }) {
     <div
       style={{
         display: 'flex',
-        marginLeft: -measure.inkLeft(caps, size, 600),
-        marginBottom: LABEL_TO_TITLE,
+        position: 'absolute',
+        left: MARGIN - measure.inkLeft(caps, size, 600),
+        top: baseline - measure.baseline(size, LABEL.lineHeight),
         fontSize: size,
         fontWeight: 600,
         letterSpacing: LABEL.tracking * size,
-        lineHeight: 1.2,
+        lineHeight: LABEL.lineHeight,
         color: PINK,
       }}
     >
@@ -149,7 +176,7 @@ export function wordSpans({
   parts,
   size,
   measure,
-  lineHeight = 1.06,
+  lineHeight = TITLE_LINE_HEIGHT,
 }: {
   parts: TitlePart[]
   size: number
@@ -181,6 +208,7 @@ export function wordSpans({
         lineHeight,
         letterSpacing: -0.01 * size,
         color,
+        textShadow: TEXT_HALO,
         marginRight: spaced ? space : 0,
       }}
     >
@@ -190,3 +218,7 @@ export function wordSpans({
 }
 
 export type TitlePart = string | { highlight: string }
+
+// Darkens the ground just around the letters: white on the heart's pink is
+// 3.5:1, and the rings crossing a line of text read as strikes.
+const TEXT_HALO = `0 2px 24px ${INK}80`

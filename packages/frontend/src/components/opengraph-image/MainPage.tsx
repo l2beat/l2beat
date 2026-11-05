@@ -28,6 +28,7 @@ export function MainPageOpengraphImage({ measure, label, title }: Props) {
     <HeartbeatFrame
       measure={measure}
       label={label}
+      titleSize={fitted.size}
       titleInkLeft={measure.inkLeft(title, fitted.size, 700)}
       title={
         <div style={{ display: 'flex', flexWrap: 'wrap', width: fitted.width }}>
@@ -43,19 +44,20 @@ export function MainPageOpengraphImage({ measure, label, title }: Props) {
 const MIN_OVERLAP = 96
 
 /**
- * One line while that keeps the title at 64 px or more, else two lines at
- * 44–80 px, balanced like CSS `text-wrap: balance`. Sizes that would end the
- * title at the heart's edge are skipped.
+ * One line while that keeps the title at 88 px or more, else two lines at up
+ * to 96 px, balanced like CSS `text-wrap: balance`: a long name reads better
+ * wrapped than shrunk. Sizes that would end the title at the heart's edge are
+ * skipped.
  */
 export function fitTitle(measure: TextMeasure, title: string) {
   const fitsOneLine = (size: number) => {
     const width = measure.width(title, size, 700, -0.01 * size)
     return satoriWidth(width) <= COLUMN && !endsAtHeartEdge(width)
   }
-  for (let size = 120; size >= 64; size--) {
+  for (let size = 120; size >= 88; size--) {
     if (fitsOneLine(size)) return { size, width: COLUMN }
   }
-  for (let size = 80; size >= 44; size -= 2) {
+  for (let size = 96; size >= 44; size -= 2) {
     const balanced = balancedWidth(measure, title, size)
     if (balanced.lines <= 2 && !endsAtHeartEdge(balanced.width)) {
       return { size, width: balanced.width }

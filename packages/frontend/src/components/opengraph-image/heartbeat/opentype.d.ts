@@ -6,6 +6,9 @@ declare module '@shuding/opentype.js' {
   }
   interface Font {
     unitsPerEm: number
+    ascender: number
+    descender: number
+    tables: { os2: { sCapHeight: number } }
     charToGlyph(char: string): Glyph
     getAdvanceWidth(
       text: string,
