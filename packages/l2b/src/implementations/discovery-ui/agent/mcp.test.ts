@@ -7,6 +7,12 @@ import { attachMcpRoutes } from './mcp'
 import { createAgentRouter } from './router'
 import { AgentTabs, type TabStream } from './tabs'
 
+// Every tab gets its chat's replay as it connects; these tests look at the
+// rest.
+function keep(chunk: string): boolean {
+  return !chunk.includes('"chat-replay"')
+}
+
 // A real HTTP round trip against the express app, the way an agent's MCP
 // client calls it.
 describe(attachMcpRoutes.name, () => {
@@ -98,7 +104,10 @@ describe(attachMcpRoutes.name, () => {
 
   it('sends clear to the active tab', async () => {
     const written: string[] = []
-    const stream: TabStream = { write: (c) => written.push(c), end: () => {} }
+    const stream: TabStream = {
+      write: (c) => keep(c) && written.push(c),
+      end: () => {},
+    }
     tabs.connect('tab-1', stream)
     tabs.report('tab-1', { project: undefined, focusedAt: 1, sequence: 1 })
     const result = (await call('tools/call', { name: 'clear' })).result
@@ -111,11 +120,11 @@ describe(attachMcpRoutes.name, () => {
     const chatTab: string[] = []
     const focused: string[] = []
     const chatStream: TabStream = {
-      write: (c) => chatTab.push(c),
+      write: (c) => keep(c) && chatTab.push(c),
       end: () => {},
     }
     const focusedStream: TabStream = {
-      write: (c) => focused.push(c),
+      write: (c) => keep(c) && focused.push(c),
       end: () => {},
     }
     tabs.connect('chat-tab', chatStream)
@@ -147,7 +156,10 @@ describe(attachMcpRoutes.name, () => {
 
   it('shows in the active tab, in the project it has open', async () => {
     const written: string[] = []
-    const stream: TabStream = { write: (c) => written.push(c), end: () => {} }
+    const stream: TabStream = {
+      write: (c) => keep(c) && written.push(c),
+      end: () => {},
+    }
     tabs.connect('tab-1', stream)
     tabs.report('tab-1', { project: 'linea', focusedAt: 2, sequence: 2 })
     const steps = [{ note: 'Hi' }]

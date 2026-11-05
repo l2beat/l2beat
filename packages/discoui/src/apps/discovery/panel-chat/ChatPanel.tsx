@@ -206,6 +206,8 @@ function PermissionCard(props: {
   isAnswered: boolean
   send: Send
 }) {
+  // One answer per request: a second click could reach the server first.
+  const [isChoosing, setChoosing] = useState(false)
   return (
     <div className="flex flex-col gap-2 rounded-md border border-coffee-600 p-2">
       <p>
@@ -230,13 +232,18 @@ function PermissionCard(props: {
           <Button
             key={option.id}
             size="small"
-            disabled={props.isAnswered}
-            onClick={() =>
-              props.send('permission', {
-                id: props.entry.id,
-                optionId: option.id,
-              })
-            }
+            disabled={props.isAnswered || isChoosing}
+            onClick={() => {
+              setChoosing(true)
+              void props
+                .send('permission', {
+                  id: props.entry.id,
+                  optionId: option.id,
+                })
+                .then((isTaken) => {
+                  if (!isTaken) setChoosing(false)
+                })
+            }}
           >
             {option.name}
           </Button>
@@ -276,7 +283,9 @@ function Composer(props: { isWorking: boolean; send: Send }) {
         onKeyDown={(event) => {
           // Keys typed here belong to the chat, not to DiscoUI's shortcuts.
           event.stopPropagation()
-          if (event.key === 'Enter' && !event.shiftKey) {
+          // Enter also confirms text typed through an input method.
+          const isComposing = event.nativeEvent.isComposing
+          if (event.key === 'Enter' && !event.shiftKey && !isComposing) {
             event.preventDefault()
             submit()
           }
