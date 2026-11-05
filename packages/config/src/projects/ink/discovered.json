@@ -1,7 +1,7 @@
 {
   "name": "ink",
   "timestamp": 1792587967,
-  "configHash": "0x48be6eb748a65b37f25f194cd0d5e1f22c1b3584e86bae51511a5d1a2edb3494",
+  "configHash": "0xdf4a9b86757081746cdfef567f0cd75d5bd34540d63782e47f4d03c8da57dbe7",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -327,6 +327,11 @@
       "implementationNames": {
         "eth:0x1E1d73536A081Ef2F355d29794547a9770Aeb1E0": "PreimageOracle"
       }
+    },
+    {
+      "address": "eth:0x1eB630b2e7409597D462dd5f3D21E305FC56B8C9",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "LivenessGuard",
@@ -1392,6 +1397,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xa6f0F94C13C4255231958079E7331694205F6c93",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SaferSafes",
       "address": "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a",
       "type": "Contract",
@@ -1851,11 +1861,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "ink:0x1eB630b2e7409597D462dd5f3D21E305FC56B8C9",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "L2CrossDomainMessenger",
       "address": "ink:0x4200000000000000000000000000000000000007",
       "type": "Contract",
@@ -2047,13 +2052,13 @@
           ]
         ],
         "$upgradeCount": 2,
-        "l1FeeWallet": "ink:0xa6f0F94C13C4255231958079E7331694205F6c93",
+        "l1FeeWallet": "eth:0xa6f0F94C13C4255231958079E7331694205F6c93",
         "MIN_WITHDRAWAL_AMOUNT": "2000000000000000000",
         "minWithdrawalAmount": "2000000000000000000",
         "proxyAdmin": "ink:0x4200000000000000000000000000000000000018",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "recipient": "ink:0xa6f0F94C13C4255231958079E7331694205F6c93",
-        "RECIPIENT": "ink:0xa6f0F94C13C4255231958079E7331694205F6c93",
+        "recipient": "eth:0xa6f0F94C13C4255231958079E7331694205F6c93",
+        "RECIPIENT": "eth:0xa6f0F94C13C4255231958079E7331694205F6c93",
         "version": "1.6.1",
         "WITHDRAWAL_NETWORK": 0,
         "withdrawalNetwork": 0
@@ -2062,6 +2067,9 @@
         "ink:0x4200000000000000000000000000000000000011": "Proxy",
         "ink:0xb178cdAa8336f25624A63C049EdB5AF7ca36C2dA": "SequencerFeeVault"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }
+      ],
       "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
@@ -2405,8 +2413,8 @@
         "minWithdrawalAmount": "2000000000000000000",
         "proxyAdmin": "ink:0x4200000000000000000000000000000000000018",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "recipient": "ink:0xa6f0F94C13C4255231958079E7331694205F6c93",
-        "RECIPIENT": "ink:0xa6f0F94C13C4255231958079E7331694205F6c93",
+        "recipient": "eth:0xa6f0F94C13C4255231958079E7331694205F6c93",
+        "RECIPIENT": "eth:0xa6f0F94C13C4255231958079E7331694205F6c93",
         "version": "1.6.1",
         "WITHDRAWAL_NETWORK": 0,
         "withdrawalNetwork": 0
@@ -2415,6 +2423,9 @@
         "ink:0x4200000000000000000000000000000000000019": "Proxy",
         "ink:0xf7bed7215EEF1003fac426682Cf2edeb958569f7": "BaseFeeVault"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }
+      ],
       "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
@@ -2451,8 +2462,8 @@
         "minWithdrawalAmount": "150000000000000000",
         "proxyAdmin": "ink:0x4200000000000000000000000000000000000018",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "recipient": "ink:0x1eB630b2e7409597D462dd5f3D21E305FC56B8C9",
-        "RECIPIENT": "ink:0x1eB630b2e7409597D462dd5f3D21E305FC56B8C9",
+        "recipient": "eth:0x1eB630b2e7409597D462dd5f3D21E305FC56B8C9",
+        "RECIPIENT": "eth:0x1eB630b2e7409597D462dd5f3D21E305FC56B8C9",
         "version": "1.6.1",
         "WITHDRAWAL_NETWORK": 0,
         "withdrawalNetwork": 0
@@ -2461,6 +2472,9 @@
         "ink:0x420000000000000000000000000000000000001A": "Proxy",
         "ink:0xf7bed7215EEF1003fac426682Cf2edeb958569f7": "BaseFeeVault"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }
+      ],
       "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
@@ -2503,8 +2517,8 @@
         "minWithdrawalAmount": "150000000000000000",
         "proxyAdmin": "ink:0x4200000000000000000000000000000000000018",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "recipient": "ink:0x1eB630b2e7409597D462dd5f3D21E305FC56B8C9",
-        "RECIPIENT": "ink:0x1eB630b2e7409597D462dd5f3D21E305FC56B8C9",
+        "recipient": "eth:0x1eB630b2e7409597D462dd5f3D21E305FC56B8C9",
+        "RECIPIENT": "eth:0x1eB630b2e7409597D462dd5f3D21E305FC56B8C9",
         "totalProcessed": 0,
         "version": "1.1.1",
         "WITHDRAWAL_NETWORK": 0,
@@ -2514,6 +2528,9 @@
         "ink:0x420000000000000000000000000000000000001b": "Proxy",
         "ink:0xEddf416c7159387cc6DF3015700F79Cfb8911373": "OperatorFeeVault"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }
+      ],
       "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
@@ -2584,11 +2601,6 @@
         "ink:0x4200000000000000000000000000000000000021": "Proxy",
         "ink:0xbEc660b456B84A081E90aF29BE43385BDa5bF7b6": "EAS"
       }
-    },
-    {
-      "address": "ink:0xa6f0F94C13C4255231958079E7331694205F6c93",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "ink:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -4262,7 +4274,7 @@
     "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7"
   },
   "usedBlockNumbers": { "ethereum": 26241162, "ink": 59089556 },
-  "permissionsConfigHash": "0xf4712ddc9bb46e3c02febecc8243bd63b0ef86d1c045751231087bf8a9eb15ff",
+  "permissionsConfigHash": "0x42ae43b1be59dae9c69adb82b98486d4e78045edd7b1875613609fa6388ce228",
   "permissions": {
     "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": {
       "directlyReceivedPermissions": [

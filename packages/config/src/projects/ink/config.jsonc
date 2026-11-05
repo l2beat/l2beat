@@ -123,6 +123,7 @@
         }
       }
     },
+    // The fee vaults withdraw to L1 (withdrawalNetwork 0), so their recipients are L1 addresses.
     "ink:0x4200000000000000000000000000000000000011": {
       "fields": {
         "proxyAdminOwner": {
@@ -131,7 +132,10 @@
             ["=", "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
             ["format", "UndoL2Alias"]
           ]
-        }
+        },
+        "l1FeeWallet": { "edit": ["format", "EthereumAddress"] },
+        "recipient": { "edit": ["format", "EthereumAddress"] },
+        "RECIPIENT": { "edit": ["format", "EthereumAddress"] }
       }
     },
     "ink:0x4200000000000000000000000000000000000012": {
@@ -186,7 +190,9 @@
             ["=", "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
             ["format", "UndoL2Alias"]
           ]
-        }
+        },
+        "recipient": { "edit": ["format", "EthereumAddress"] },
+        "RECIPIENT": { "edit": ["format", "EthereumAddress"] }
       }
     },
     "ink:0x420000000000000000000000000000000000001A": {
@@ -197,7 +203,9 @@
             ["=", "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
             ["format", "UndoL2Alias"]
           ]
-        }
+        },
+        "recipient": { "edit": ["format", "EthereumAddress"] },
+        "RECIPIENT": { "edit": ["format", "EthereumAddress"] }
       }
     },
     "ink:0x420000000000000000000000000000000000001b": {
@@ -208,7 +216,9 @@
             ["=", "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
             ["format", "UndoL2Alias"]
           ]
-        }
+        },
+        "recipient": { "edit": ["format", "EthereumAddress"] },
+        "RECIPIENT": { "edit": ["format", "EthereumAddress"] }
       }
     },
     "ink:0x4200000000000000000000000000000000000018": {

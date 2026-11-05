@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xef4f6933de3cf14c976efcda4eac56bf5194b640
+Generated with discovered.json: 0xcdbed6d2b952f16a299901faf7cd705e640db3c1
 
-# Diff at Thu, 05 Nov 2026 07:13:43 GMT:
+# Diff at Thu, 05 Nov 2026 09:44:02 GMT:
 
 - id: e09c4376
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@02f1e81176b548fbfa87cd86090398367c11dd2f block: 1792587967
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@951441fc194269887770dce1ea128ec638ea03c2 block: 1792587967
 - current timestamp: 1792587967
 
 ## Description
@@ -42,6 +42,17 @@ discovery. Values are for block 1792587967 (main branch discovery), not current.
       description:
 -        "Collects the sequencer fees, which are withdrawable to the FeesCollector on L1."
 +        "Collects the sequencer fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached."
+      values.l1FeeWallet:
+-        "ink:0xa6f0F94C13C4255231958079E7331694205F6c93"
++        "eth:0xa6f0F94C13C4255231958079E7331694205F6c93"
+      values.recipient:
+-        "ink:0xa6f0F94C13C4255231958079E7331694205F6c93"
++        "eth:0xa6f0F94C13C4255231958079E7331694205F6c93"
+      values.RECIPIENT:
+-        "ink:0xa6f0F94C13C4255231958079E7331694205F6c93"
++        "eth:0xa6f0F94C13C4255231958079E7331694205F6c93"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
     }
 ```
 
@@ -59,6 +70,14 @@ discovery. Values are for block 1792587967 (main branch discovery), not current.
       description:
 -        "Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1."
 +        "Collects the EIP-1559 base fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached."
+      values.recipient:
+-        "ink:0xa6f0F94C13C4255231958079E7331694205F6c93"
++        "eth:0xa6f0F94C13C4255231958079E7331694205F6c93"
+      values.RECIPIENT:
+-        "ink:0xa6f0F94C13C4255231958079E7331694205F6c93"
++        "eth:0xa6f0F94C13C4255231958079E7331694205F6c93"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
     }
 ```
 
@@ -68,6 +87,14 @@ discovery. Values are for block 1792587967 (main branch discovery), not current.
       description:
 -        "Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1."
 +        "Collects the L1 data portion of the L2 transaction fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached."
+      values.recipient:
+-        "ink:0x1eB630b2e7409597D462dd5f3D21E305FC56B8C9"
++        "eth:0x1eB630b2e7409597D462dd5f3D21E305FC56B8C9"
+      values.RECIPIENT:
+-        "ink:0x1eB630b2e7409597D462dd5f3D21E305FC56B8C9"
++        "eth:0x1eB630b2e7409597D462dd5f3D21E305FC56B8C9"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
     }
 ```
 
