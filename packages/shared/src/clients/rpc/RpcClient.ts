@@ -5,7 +5,7 @@ import {
   type json,
 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import type { IRpcClient } from '../../clients2'
+import type { BlockTag, IRpcClient } from '../../clients2'
 import { generateId } from '../../tools/generateId'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
 import type { FetchInit } from '../http/fetchWithTimeout'
@@ -115,17 +115,19 @@ export class RpcClient extends ClientCore implements IRpcClient {
   }
 
   async getBlock(
-    blockNumber: 'latest' | number,
+    blockNumber: BlockTag | number,
     includeTxs: false,
   ): Promise<EVMBlock>
   async getBlock(
-    blockNumber: 'latest' | number,
+    blockNumber: BlockTag | number,
     includeTxs: true,
   ): Promise<EVMBlockWithTransactions>
-  async getBlock(blockNumber: 'latest' | number, includeTxs: boolean) {
+  async getBlock(blockNumber: BlockTag | number, includeTxs: boolean) {
     const method = 'eth_getBlockByNumber'
     const encodedNumber =
-      blockNumber === 'latest' ? 'latest' : Quantity.encode(BigInt(blockNumber))
+      typeof blockNumber === 'number'
+        ? Quantity.encode(BigInt(blockNumber))
+        : blockNumber
     const blockResponse = await this.query(method, [encodedNumber, includeTxs])
     if (isNullResult(blockResponse)) {
       throw new NotFoundOnRpcError('Block not found', {

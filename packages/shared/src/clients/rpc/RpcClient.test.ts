@@ -86,6 +86,26 @@ describe(RpcClient.name, () => {
       )
     })
 
+    it('asks for the finalized block by its tag', async () => {
+      // Activity follows Ethereum's finalized block, which can't be reorged
+      const http = mockObject<HttpClient>({
+        fetch: async () => mockResponse(100),
+      })
+      const rpc = mockClient({ http, generateId: () => 'unique-id' })
+
+      const result = await rpc.getBlock('finalized', false)
+
+      expect(result.number).toEqual(100)
+      expect(http.fetch.calls[0].args[1]?.body).toEqual(
+        JSON.stringify({
+          method: 'eth_getBlockByNumber',
+          params: ['finalized', false],
+          id: 'unique-id',
+          jsonrpc: '2.0',
+        }),
+      )
+    })
+
     it('do not include tx bodies', async () => {
       const http = mockObject<HttpClient>({
         fetch: async () => mockResponse(100),

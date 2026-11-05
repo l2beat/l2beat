@@ -60,6 +60,9 @@ interface Dependencies extends Omit<ClientCoreDependencies, 'sourceName'> {
   maxBatchSize?: number
 }
 
+/** `finalized` is a block that can no longer be reorged */
+export type BlockTag = 'latest' | 'finalized'
+
 export interface IRpcClient extends BlockClient, LogsClient {
   multicallClient?: MulticallV3Client
   getLatestBlockNumber(): Promise<number>
@@ -68,9 +71,9 @@ export interface IRpcClient extends BlockClient, LogsClient {
   ): Promise<EVMBlockWithTransactions>
   getBlockTimestamp(blockNumber: number): Promise<number>
   getBlockParentBeaconRoot(blockNumber: number): Promise<string>
-  getBlock(blockNumber: 'latest' | number, includeTxs: false): Promise<EVMBlock>
+  getBlock(blockNumber: BlockTag | number, includeTxs: false): Promise<EVMBlock>
   getBlock(
-    blockNumber: 'latest' | number,
+    blockNumber: BlockTag | number,
     includeTxs: true,
   ): Promise<EVMBlockWithTransactions>
   getBlockTimestamps(blockNumbers: number[]): Promise<Map<number, number>>
@@ -169,16 +172,17 @@ export class RpcClientCompat implements IRpcClient {
     return block.parentBeaconBlockRoot
   }
 
-  getBlock(blockNumber: 'latest' | number, includeTxs: false): Promise<EVMBlock>
+  getBlock(blockNumber: BlockTag | number, includeTxs: false): Promise<EVMBlock>
   getBlock(
-    blockNumber: 'latest' | number,
+    blockNumber: BlockTag | number,
     includeTxs: true,
   ): Promise<EVMBlockWithTransactions>
   async getBlock(
-    blockNumber: number | 'latest',
+    blockNumber: BlockTag | number,
     includeTxs: boolean,
   ): Promise<EVMBlock | EVMBlockWithTransactions> {
-    const bnParam = blockNumber === 'latest' ? 'latest' : BigInt(blockNumber)
+    const bnParam =
+      typeof blockNumber === 'number' ? BigInt(blockNumber) : blockNumber
     const block = includeTxs
       ? await this.ethRpcClient.getBlockByNumber(bnParam, true)
       : await this.ethRpcClient.getBlockByNumber(bnParam, false)
@@ -370,19 +374,19 @@ export function toEVMLog(log: RpcLog): EVMLog {
 }
 
 export function toEVMBlock(
-  blockNumber: number | 'latest',
+  blockNumber: BlockTag | number,
   block: RpcBlock | null,
 ): EVMBlock
 export function toEVMBlock(
-  blockNumber: number | 'latest',
+  blockNumber: BlockTag | number,
   block: RpcBlockWithTransactions | null,
 ): EVMBlockWithTransactions
 export function toEVMBlock(
-  blockNumber: number | 'latest',
+  blockNumber: BlockTag | number,
   block: RpcBlock | RpcBlockWithTransactions | null,
 ): EVMBlock | EVMBlockWithTransactions
 export function toEVMBlock(
-  blockNumber: number | 'latest',
+  blockNumber: BlockTag | number,
   block: RpcBlock | RpcBlockWithTransactions | null,
 ): EVMBlock | EVMBlockWithTransactions {
   if (block === null) {

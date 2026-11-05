@@ -17,6 +17,8 @@ export interface SyncMetadataRecord {
   syncedUntil: UnixTime | null
   blockTarget: number | null
   blockSyncedUntil: UnixTime | null
+  /** Of the last block the counts include, for the live Ethereum activity */
+  latestBlockTimestamp: UnixTime | null
 }
 
 export function toRecord(row: Selectable<SyncMetadata>): SyncMetadataRecord {
@@ -27,6 +29,9 @@ export function toRecord(row: Selectable<SyncMetadata>): SyncMetadataRecord {
     syncedUntil: row.syncedUntil ? UnixTime.fromDate(row.syncedUntil) : null,
     blockTarget: row.blockTarget,
     blockSyncedUntil: row.blockSyncedUntil,
+    latestBlockTimestamp: row.latestBlockTimestamp
+      ? UnixTime.fromDate(row.latestBlockTimestamp)
+      : null,
   }
 }
 
@@ -49,6 +54,9 @@ export function toRowWithoutTarget(
       ? UnixTime.toDate(record.syncedUntil)
       : null,
     blockSyncedUntil: record.blockSyncedUntil ? record.blockSyncedUntil : null,
+    latestBlockTimestamp: record.latestBlockTimestamp
+      ? UnixTime.toDate(record.latestBlockTimestamp)
+      : null,
   }
 }
 
@@ -87,6 +95,7 @@ export class SyncMetadataRepository extends BaseRepository {
     ids: string[],
     syncedUntil: UnixTime,
     blockSyncedUntil?: number,
+    latestBlockTimestamp?: UnixTime,
   ): Promise<void> {
     if (ids.length === 0) {
       return
@@ -96,9 +105,26 @@ export class SyncMetadataRepository extends BaseRepository {
       .set({
         syncedUntil: UnixTime.toDate(syncedUntil),
         blockSyncedUntil,
+        latestBlockTimestamp:
+          latestBlockTimestamp !== undefined
+            ? UnixTime.toDate(latestBlockTimestamp)
+            : undefined,
       })
       .where('feature', '=', feature)
       .where('id', 'in', ids)
+      .execute()
+  }
+
+  /** Readers then fall back to the counts of whole hours and days */
+  async clearLatestBlockTimestamp(
+    feature: SyncMetadataRecord['feature'],
+    id: string,
+  ): Promise<void> {
+    await this.db
+      .updateTable('SyncMetadata')
+      .set({ latestBlockTimestamp: null })
+      .where('feature', '=', feature)
+      .where('id', '=', id)
       .execute()
   }
 

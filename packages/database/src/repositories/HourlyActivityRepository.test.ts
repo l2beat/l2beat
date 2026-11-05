@@ -152,6 +152,74 @@ describeDatabase(HourlyActivityRepository.name, (db) => {
     },
   )
 
+  describe(HourlyActivityRepository.prototype.getLatestHours.name, () => {
+    const LATEST = START + 25 * HOUR + 1234
+
+    afterEach(async () => {
+      await db.syncMetadata.deleteAll()
+    })
+
+    it('reads the full hours before the latest block and its partial hour', async () => {
+      await setLatestBlockTimestamp('a', LATEST)
+      await repository.addMany([
+        record('a', START + 1 * HOUR, 1, 1),
+        record('a', START + 2 * HOUR, 2, 2),
+        record('a', START + 24 * HOUR, 3, 3),
+        record('a', START + 25 * HOUR, 4, null),
+        // Not counted yet, as after the latest block
+        record('a', START + 26 * HOUR, 5, 5),
+        record('b', START + 25 * HOUR, 6, 6),
+      ])
+
+      const result = await repository.getLatestHours(ProjectId('a'), 23)
+
+      expect(result).toEqual({
+        latestBlockTimestamp: LATEST,
+        records: [
+          record('a', START + 2 * HOUR, 2, 2),
+          record('a', START + 24 * HOUR, 3, 3),
+          record('a', START + 25 * HOUR, 4, null),
+        ],
+      })
+    })
+
+    it('reads no hours when there are none', async () => {
+      await setLatestBlockTimestamp('a', LATEST)
+
+      const result = await repository.getLatestHours(ProjectId('a'), 23)
+
+      expect(result).toEqual({ latestBlockTimestamp: LATEST, records: [] })
+    })
+
+    it('reads nothing without a latest block', async () => {
+      await db.syncMetadata.upsertMany([
+        { ...syncMetadata('a'), latestBlockTimestamp: null },
+      ])
+      await repository.addMany([record('a', START, 1, 1)])
+
+      const result = await repository.getLatestHours(ProjectId('a'), 23)
+
+      expect(result).toEqual(undefined)
+    })
+
+    async function setLatestBlockTimestamp(id: string, timestamp: UnixTime) {
+      await db.syncMetadata.upsertMany([
+        { ...syncMetadata(id), latestBlockTimestamp: timestamp },
+      ])
+    }
+
+    function syncMetadata(id: string) {
+      return {
+        feature: 'activity' as const,
+        id,
+        target: START,
+        syncedUntil: START,
+        blockTarget: 1,
+        blockSyncedUntil: 1,
+      }
+    }
+  })
+
   function hoursOf(projectId: string) {
     return repository.getByProjectsAndTimeRange(
       [ProjectId(projectId)],

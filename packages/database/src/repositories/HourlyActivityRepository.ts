@@ -74,6 +74,66 @@ export class HourlyActivityRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  /**
+   * The hours from `fullHours` before the hour of the latest block the counts
+   * include up to that block, with its timestamp. One statement reads both, so
+   * the last, partial hour holds exactly the blocks until that timestamp.
+   * Undefined while there is no latest block, like after an invalidation
+   */
+  async getLatestHours(
+    projectId: ProjectId,
+    fullHours: number,
+  ): Promise<
+    | { latestBlockTimestamp: UnixTime; records: HourlyActivityRecord[] }
+    | undefined
+  > {
+    const rows = await this.db
+      .selectFrom('SyncMetadata as s')
+      .leftJoin('HourlyActivity as h', (join) =>
+        join
+          .onRef('h.projectId', '=', 's.id')
+          .on((eb) =>
+            eb.and([
+              eb(
+                'h.timestamp',
+                '>=',
+                sql<Date>`date_trunc('hour', s."latestBlockTimestamp") - make_interval(hours => ${fullHours}::int)`,
+              ),
+              eb('h.timestamp', '<=', eb.ref('s.latestBlockTimestamp')),
+            ]),
+          ),
+      )
+      .select([
+        's.latestBlockTimestamp',
+        'h.timestamp',
+        'h.count',
+        'h.uopsCount',
+      ])
+      .where('s.feature', '=', 'activity')
+      .where('s.id', '=', projectId.toString())
+      .where('s.latestBlockTimestamp', 'is not', null)
+      .orderBy('h.timestamp', 'asc')
+      .execute()
+
+    const latestBlockTimestamp = rows[0]?.latestBlockTimestamp
+    if (!latestBlockTimestamp) return undefined
+    return {
+      latestBlockTimestamp: UnixTime.fromDate(latestBlockTimestamp),
+      records: rows.flatMap((row) =>
+        row.timestamp === null || row.count === null
+          ? []
+          : [
+              {
+                projectId,
+                timestamp: UnixTime.fromDate(row.timestamp),
+                count: row.count,
+                uopsCount: row.uopsCount,
+              },
+            ],
+      ),
+    }
+  }
+
   /** Projects indexed per day have no hours */
   async getFirstTimestamp(projectId: ProjectId): Promise<UnixTime | undefined> {
     const result = await this.db

@@ -26,6 +26,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour - UnixTime.HOUR,
           blockTarget: 200,
           blockSyncedUntil: 100,
+          latestBlockTimestamp: null,
         },
         {
           feature: 'l2costs',
@@ -34,6 +35,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour,
           blockTarget: 100,
           blockSyncedUntil: 100,
+          latestBlockTimestamp: null,
         },
       ]
       await repository.upsertMany(records)
@@ -49,6 +51,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour,
           blockTarget: 225,
           blockSyncedUntil: 200,
+          latestBlockTimestamp: null,
         },
       ])
 
@@ -61,6 +64,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour,
           blockTarget: 100,
           blockSyncedUntil: 100,
+          latestBlockTimestamp: null,
         },
         {
           feature: 'activity',
@@ -69,6 +73,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour,
           blockTarget: 225,
           blockSyncedUntil: 200,
+          latestBlockTimestamp: null,
         },
       ])
     })
@@ -82,6 +87,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           blockTarget: 100,
           syncedUntil: roundedHour - UnixTime.HOUR,
           blockSyncedUntil: 99,
+          latestBlockTimestamp: null,
         },
       ])
 
@@ -94,6 +100,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           blockTarget: 100,
           syncedUntil: roundedHour - UnixTime.HOUR,
           blockSyncedUntil: 99,
+          latestBlockTimestamp: null,
         },
       ])
 
@@ -115,6 +122,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           blockTarget: 110,
           syncedUntil: roundedHour - UnixTime.HOUR,
           blockSyncedUntil: 99,
+          latestBlockTimestamp: null,
         },
       ])
     })
@@ -139,6 +147,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
         syncedUntil,
         blockTarget: null,
         blockSyncedUntil: null,
+        latestBlockTimestamp: null,
       }
     }
 
@@ -207,6 +216,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour,
           blockTarget: 200,
           blockSyncedUntil: 100,
+          latestBlockTimestamp: null,
         },
         {
           feature: 'activity',
@@ -215,6 +225,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour + UnixTime.HOUR,
           blockTarget: 100,
           blockSyncedUntil: 100,
+          latestBlockTimestamp: null,
         },
         {
           feature: 'l2costs',
@@ -223,6 +234,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour + 2 * UnixTime.HOUR,
           blockTarget: 300,
           blockSyncedUntil: 200,
+          latestBlockTimestamp: null,
         },
       ]
       await repository.upsertMany(records)
@@ -242,6 +254,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour,
           blockTarget: 100,
           blockSyncedUntil: 100,
+          latestBlockTimestamp: null,
         },
       ])
 
@@ -260,6 +273,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour,
           blockTarget: 200,
           blockSyncedUntil: 100,
+          latestBlockTimestamp: null,
         },
         {
           feature: 'l2costs',
@@ -268,6 +282,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour + UnixTime.HOUR,
           blockTarget: 100,
           blockSyncedUntil: 100,
+          latestBlockTimestamp: null,
         },
       ]
       await repository.upsertMany(records)
@@ -292,6 +307,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
         syncedUntil: roundedHour,
         blockTarget: 200,
         blockSyncedUntil: 100,
+        latestBlockTimestamp: null,
       }
       await repository.upsertMany([record])
 
@@ -313,6 +329,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour,
           blockTarget: 200,
           blockSyncedUntil: 100,
+          latestBlockTimestamp: null,
         },
         {
           feature: 'activity',
@@ -321,6 +338,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour + UnixTime.HOUR,
           blockTarget: 100,
           blockSyncedUntil: 100,
+          latestBlockTimestamp: null,
         },
         {
           feature: 'l2costs',
@@ -329,6 +347,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour + 2 * UnixTime.HOUR,
           blockTarget: 300,
           blockSyncedUntil: 200,
+          latestBlockTimestamp: null,
         },
       ] as const satisfies SyncMetadataRecord[]
       await repository.upsertMany(records)
@@ -348,6 +367,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
         syncedUntil: roundedHour,
         blockTarget: 200,
         blockSyncedUntil: 100,
+        latestBlockTimestamp: null,
       }
       await repository.upsertMany([record])
 
@@ -366,6 +386,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
         syncedUntil: roundedHour,
         blockTarget: 200,
         blockSyncedUntil: 100,
+        latestBlockTimestamp: null,
       }
       await repository.upsertMany([record])
 
@@ -384,6 +405,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour,
           blockTarget: 200,
           blockSyncedUntil: 100,
+          latestBlockTimestamp: null,
         },
         {
           feature: 'activity',
@@ -392,6 +414,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour + UnixTime.HOUR,
           blockTarget: 100,
           blockSyncedUntil: 100,
+          latestBlockTimestamp: null,
         },
         {
           feature: 'activity',
@@ -400,6 +423,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour + 2 * UnixTime.HOUR,
           blockTarget: 300,
           blockSyncedUntil: 200,
+          latestBlockTimestamp: null,
         },
         {
           feature: 'l2costs',
@@ -408,6 +432,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour + 3 * UnixTime.HOUR,
           blockTarget: 400,
           blockSyncedUntil: 300,
+          latestBlockTimestamp: null,
         },
       ]
       await repository.upsertMany(records)
@@ -434,6 +459,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour,
           blockTarget: 200,
           blockSyncedUntil: 100,
+          latestBlockTimestamp: null,
         },
         {
           feature: 'activity',
@@ -442,6 +468,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour + UnixTime.HOUR,
           blockTarget: 100,
           blockSyncedUntil: 100,
+          latestBlockTimestamp: null,
         },
         {
           feature: 'activity',
@@ -450,6 +477,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour + 2 * UnixTime.HOUR,
           blockTarget: 200,
           blockSyncedUntil: 100,
+          latestBlockTimestamp: null,
         },
         {
           feature: 'l2costs',
@@ -458,6 +486,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour + UnixTime.HOUR,
           blockTarget: 100,
           blockSyncedUntil: 100,
+          latestBlockTimestamp: null,
         },
       ]
       await repository.upsertMany(records)
@@ -480,6 +509,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour + UnixTime.HOUR,
           blockTarget: 100,
           blockSyncedUntil: 100,
+          latestBlockTimestamp: null,
         },
         {
           feature: 'activity',
@@ -488,6 +518,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour + 2 * UnixTime.HOUR,
           blockTarget: 200,
           blockSyncedUntil: 100,
+          latestBlockTimestamp: null,
         },
         {
           feature: 'l2costs',
@@ -496,6 +527,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour + UnixTime.HOUR,
           blockTarget: 100,
           blockSyncedUntil: 100,
+          latestBlockTimestamp: null,
         },
         {
           feature: 'activity',
@@ -504,6 +536,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: newSyncedUntil,
           blockTarget: 200,
           blockSyncedUntil: 100,
+          latestBlockTimestamp: null,
         },
       ])
     })
@@ -517,6 +550,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour,
           blockTarget: 1000,
           blockSyncedUntil: 100,
+          latestBlockTimestamp: null,
         },
         {
           feature: 'activity',
@@ -525,6 +559,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour + UnixTime.HOUR,
           blockTarget: 100,
           blockSyncedUntil: 100,
+          latestBlockTimestamp: null,
         },
         {
           feature: 'activity',
@@ -533,6 +568,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour + 2 * UnixTime.HOUR,
           blockTarget: 200,
           blockSyncedUntil: 100,
+          latestBlockTimestamp: null,
         },
         {
           feature: 'l2costs',
@@ -541,6 +577,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour + UnixTime.HOUR,
           blockTarget: 100,
           blockSyncedUntil: 100,
+          latestBlockTimestamp: null,
         },
       ]
       await repository.upsertMany(records)
@@ -565,6 +602,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour + UnixTime.HOUR,
           blockTarget: 100,
           blockSyncedUntil: 100,
+          latestBlockTimestamp: null,
         },
         {
           feature: 'activity',
@@ -573,6 +611,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour + 2 * UnixTime.HOUR,
           blockTarget: 200,
           blockSyncedUntil: 100,
+          latestBlockTimestamp: null,
         },
         {
           feature: 'l2costs',
@@ -581,6 +620,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour + UnixTime.HOUR,
           blockTarget: 100,
           blockSyncedUntil: 100,
+          latestBlockTimestamp: null,
         },
         {
           feature: 'activity',
@@ -589,6 +629,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: newSyncedUntil,
           blockTarget: 1000,
           blockSyncedUntil: newBlockSyncedUntil,
+          latestBlockTimestamp: null,
         },
       ])
     })
@@ -602,6 +643,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour,
           blockTarget: 200,
           blockSyncedUntil: 100,
+          latestBlockTimestamp: null,
         },
       ]
       await repository.upsertMany(records)
@@ -611,6 +653,70 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
 
       const results = await repository.getAll()
       expect(results).toEqual(records)
+    })
+  })
+
+  describe('latestBlockTimestamp', () => {
+    // The live Ethereum surfaces read how far the counts go from it, so the
+    // hourly target ticks must keep it and only an invalidation may clear it
+    const record: SyncMetadataRecord = {
+      feature: 'activity',
+      id: 'ethereum',
+      target: roundedHour,
+      syncedUntil: roundedHour,
+      blockTarget: 200,
+      blockSyncedUntil: 100,
+      latestBlockTimestamp: null,
+    }
+
+    it('is written with syncedUntil and kept by later target upserts', async () => {
+      await repository.upsertMany([record])
+
+      await repository.updateSyncedUntil(
+        'activity',
+        ['ethereum'],
+        roundedHour + UnixTime.HOUR,
+        150,
+        roundedHour + 123,
+      )
+      await repository.upsertMany([{ ...record, blockTarget: 300 }])
+
+      const result = await repository.getByFeatureAndId('activity', 'ethereum')
+      expect(result?.latestBlockTimestamp).toEqual(roundedHour + 123)
+      expect(result?.blockTarget).toEqual(300)
+    })
+
+    it('is kept when syncedUntil is updated without it', async () => {
+      await repository.upsertMany([
+        { ...record, latestBlockTimestamp: roundedHour + 1 },
+      ])
+
+      await repository.updateSyncedUntil(
+        'activity',
+        ['ethereum'],
+        roundedHour + UnixTime.HOUR,
+        150,
+      )
+
+      const result = await repository.getByFeatureAndId('activity', 'ethereum')
+      expect(result?.latestBlockTimestamp).toEqual(roundedHour + 1)
+    })
+
+    it('is cleared for the given project only', async () => {
+      await repository.upsertMany([
+        { ...record, latestBlockTimestamp: roundedHour + 1 },
+        { ...record, id: 'arbitrum', latestBlockTimestamp: roundedHour + 2 },
+      ])
+
+      await repository.clearLatestBlockTimestamp('activity', 'ethereum')
+
+      const results = await repository.getByFeature('activity')
+      expect(
+        results.map((r) => [r.id, r.latestBlockTimestamp]),
+      ).toEqualUnsorted([
+        ['ethereum', null],
+        ['arbitrum', roundedHour + 2],
+      ])
     })
   })
 })
