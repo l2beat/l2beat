@@ -1,5 +1,5 @@
 import { grown, heartHeight, heartOutline, PINK, type Placement } from './marks'
-import { OG_SIZE } from './render'
+import { type Box, OG_SIZE } from './render'
 
 // The logo's heart glowing on the dark ground, with outlines of it spreading
 // out like the echo of a beat. Each ring is the last one grown by the same
@@ -24,18 +24,10 @@ const HAZE = [
 // box: fully within `grow` px of them, coming back over the next `fade` px in
 // `steps` steps, too fine to show. Steps of stroked outlines instead of a
 // blur, which would cost a pass over the whole canvas for every image.
-export const HALO = { grow: 6, fade: 14, steps: 7 }
+const HALO = { grow: 6, fade: 14, steps: 7 }
 
 const { width: W, height: H } = OG_SIZE
 const round = (v: number) => +v.toFixed(2)
-
-/** A box on the canvas, by its edges. */
-export interface Box {
-  x0: number
-  y0: number
-  x1: number
-  y1: number
-}
 
 const blur = (id: string, sigma: number) =>
   `<filter id="${id}" filterUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><feGaussianBlur stdDeviation="${round(sigma)}"/></filter>`

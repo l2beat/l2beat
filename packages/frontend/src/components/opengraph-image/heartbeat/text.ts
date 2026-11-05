@@ -1,10 +1,10 @@
 import opentype from '@shuding/opentype.js'
 
-// Satori lays out text but can't tell us how wide it will be or where its
-// baseline lands, and the layouts need both: a title stays on one line while
-// that keeps it big enough, a label shrinks to end before the heart, and every
-// title sits on the same baseline. So we measure with the same font files
-// satori renders, through satori's own font parser.
+// Satori lays out text but can't tell us how wide it will be, where its
+// baseline lands or where its letters' outlines run, and the layouts need all
+// three: titles are sized to clear the heart's edges, text blocks centre on
+// the heart, and the rings are cut away along the letters. So we measure with
+// the same font files satori renders, through satori's own font parser.
 
 export type Weight = 600 | 700
 

@@ -7,6 +7,7 @@ import {
 import {
   Canvas,
   MARGIN,
+  TITLE_LINE_HEIGHT,
   type TitlePart,
   wordSpans,
   wordsOutline,
@@ -20,32 +21,33 @@ import { satoriWidth, type TextMeasure } from './heartbeat/text'
 
 const HEART_HEIGHT = 280
 const LOCKUP_TO_TAGLINE = 52
-const TAGLINE_LINE_HEIGHT = 1.06
 const TAGLINE_MAX_SIZE = 56
 const TAGLINE: TitlePart[] = [
   'The ',
   { highlight: 'heartbeat' },
   ' of the Ethereum ecosystem',
 ]
+const TAGLINE_TEXT = TAGLINE.map((part) =>
+  typeof part === 'string' ? part : part.highlight,
+).join('')
 
 const { width: W, height: H } = OG_SIZE
 
 export function HomeOpengraphImage({ measure }: { measure: TextMeasure }) {
   const size = taglineSize(measure)
   const blockHeight =
-    HEART_HEIGHT + LOCKUP_TO_TAGLINE + size * TAGLINE_LINE_HEIGHT
+    HEART_HEIGHT + LOCKUP_TO_TAGLINE + size * TITLE_LINE_HEIGHT
   const top = (H - blockHeight) / 2
   const logo = placeCentred(W / 2, top + HEART_HEIGHT / 2, HEART_HEIGHT)
   const taglineTop = top + HEART_HEIGHT + LOCKUP_TO_TAGLINE
   const width = taglineWidth(measure, size)
   // The rings are cut away around the tagline, where "heartbeat" is as pink as
   // they are, and around BEAT. They never reach the heart and its ETH.
-  const text = taglineText()
   const tagline = wordsOutline(
     measure,
-    text,
-    (W - width) / 2 + measure.inkLeft(text, size, 700),
-    taglineTop + measure.baseline(size, TAGLINE_LINE_HEIGHT),
+    TAGLINE_TEXT,
+    (W - width) / 2 + measure.inkLeft(TAGLINE_TEXT, size, 700),
+    taglineTop + measure.baseline(size, TITLE_LINE_HEIGHT),
     size,
   )
   const decor =
@@ -68,12 +70,7 @@ export function HomeOpengraphImage({ measure }: { measure: TextMeasure }) {
           whiteSpace: 'nowrap',
         }}
       >
-        {wordSpans({
-          parts: TAGLINE,
-          size,
-          measure,
-          lineHeight: TAGLINE_LINE_HEIGHT,
-        })}
+        {wordSpans({ parts: TAGLINE, size, measure })}
       </div>
     </Canvas>
   )
@@ -87,10 +84,5 @@ function taglineSize(measure: TextMeasure) {
 }
 
 function taglineWidth(measure: TextMeasure, size: number) {
-  return measure.width(taglineText(), size, 700, -0.01 * size)
+  return measure.width(TAGLINE_TEXT, size, 700, -0.01 * size)
 }
-
-const taglineText = () =>
-  TAGLINE.map((part) =>
-    typeof part === 'string' ? part : part.highlight,
-  ).join('')

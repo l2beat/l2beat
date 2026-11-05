@@ -1,5 +1,6 @@
 import { Resvg } from '@resvg/resvg-js'
 import { INK, PINK } from './marks'
+import type { Box } from './render'
 
 // Logos are drawn for light pages, and many get lost on the dark ground. Ones
 // with nothing light in them turn into their own dark-mode version: near-black
@@ -46,7 +47,7 @@ export interface DarkGroundLogo {
   /** Whether it still needs a glow behind it to stand out. */
   glow: boolean
   /** Where its drawn part sits in its square image, in fractions of its side. */
-  ink: { x0: number; y0: number; x1: number; y1: number }
+  ink: Box
 }
 
 /** The logo, a data URI, as one that reads on the dark ground. */

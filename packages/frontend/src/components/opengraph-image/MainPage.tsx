@@ -154,7 +154,7 @@ export function fitTitle(
     const lineWidths = lines.map((line) => widthOf(line, size))
     const fits = lineWidths.every((width) => satoriWidth(width) <= column(size))
     return fits && clearOfHeartEdge(lineWidths, size)
-      ? { size, lines, lineWidths }
+      ? { size, lines }
       : undefined
   }
   const words = title.split(/\s+/).filter(Boolean)
@@ -200,12 +200,7 @@ export function fitTitle(
     (worthWrapping ? wrapped : smallerLine) ??
     twoLines(descending(MIN_ONE_LINE_SIZE - 2, MIN_SIZE, 2))
   if (fitted) return fitted
-  const lines = breaks(MIN_SIZE)[0] ?? [title]
-  return {
-    size: MIN_SIZE,
-    lines,
-    lineWidths: lines.map((line) => widthOf(line, MIN_SIZE)),
-  }
+  return { size: MIN_SIZE, lines: breaks(MIN_SIZE)[0] ?? [title] }
 }
 
 /**

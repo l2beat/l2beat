@@ -1,14 +1,8 @@
 import type { ReactNode } from 'react'
-import {
-  type Box,
-  boxOutline,
-  heartGlow,
-  heartRings,
-  ringsClearOf,
-} from './echo'
+import { boxOutline, heartGlow, heartRings, ringsClearOf } from './echo'
 import { type DarkGroundLogo, GLOW_REACH, glowBehind } from './logo'
 import { HEART_RATIO, heart, INK, lockup, PINK, place, WHITE } from './marks'
-import { drawnBox, OG_SIZE, rasterize, rowExtents } from './render'
+import { type Box, drawnBox, OG_SIZE, rasterize, rowExtents } from './render'
 import { balancedLines, type TextMeasure } from './text'
 
 // Every OG image but home's: the logo's heart glowing on the right, its echo
@@ -181,7 +175,7 @@ export function HeartbeatFrame({
 }: {
   measure: TextMeasure
   label: string | undefined
-  /** Its lines, each starting its first letter's ink on the column's edge. */
+  /** The title, line by line. */
   title: string[]
   titleSize: number
   titleBaseline: number
@@ -494,21 +488,18 @@ export function Canvas({
 }
 
 /**
- * Words as separate flex items, so a title wraps like inline text and one
- * phrase can take the highlight colour. A space becomes the word's right margin.
- * A plain function, not a component: satori can't render a component that
- * returns a list.
+ * Words as separate spans, so one phrase can take the highlight colour. A
+ * space becomes the word's right margin. A plain function, not a component:
+ * satori can't render a component that returns a list.
  */
 export function wordSpans({
   parts,
   size,
   measure,
-  lineHeight = TITLE_LINE_HEIGHT,
 }: {
   parts: TitlePart[]
   size: number
   measure: TextMeasure
-  lineHeight?: number
 }) {
   const space = measure.width(' ', size, 700)
   const words = parts.flatMap((part) => {
@@ -532,7 +523,7 @@ export function wordSpans({
       style={{
         fontSize: size,
         fontWeight: 700,
-        lineHeight,
+        lineHeight: TITLE_LINE_HEIGHT,
         letterSpacing: -0.01 * size,
         color,
         textShadow: TEXT_HALO,
@@ -547,5 +538,5 @@ export function wordSpans({
 export type TitlePart = string | { highlight: string }
 
 // Darkens the ground just around the letters: white on the heart's pink is
-// 3.5:1, and the rings crossing a line of text read as strikes.
+// only 3.5:1.
 const TEXT_HALO = `0 1px 6px ${INK}4D`

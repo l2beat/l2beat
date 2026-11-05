@@ -68,8 +68,16 @@ export function rowExtents(body: string) {
   })
 }
 
+/** A box by its edges. */
+export interface Box {
+  x0: number
+  y0: number
+  x1: number
+  y1: number
+}
+
 /** The box drawn SVG covers on the canvas. */
-export function drawnBox(body: string) {
+export function drawnBox(body: string): Box {
   const rows = rowExtents(body)
   const drawn = rows.flatMap((row, y) => (row.start <= row.end ? [y] : []))
   return {
