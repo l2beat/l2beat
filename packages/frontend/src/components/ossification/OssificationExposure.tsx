@@ -21,8 +21,6 @@ export function OssificationExposure({
     return <NotApplicableBadge />
   }
   const label = OSSIFICATION_VALUE_LABELS[valueSource ?? 'tvs'].short
-  // The average comes from the shown years, so the two multiply out to the cell.
-  const years = formatYears(exposure.years)
   // A start hours after the clock would repeat the date above.
   const dataStartsLater =
     UnixTime.toStartOf(exposure.since, 'day') >
@@ -49,8 +47,8 @@ export function OssificationExposure({
         </div>
         {exposure.years > 0 && (
           <span>
-            {formatCurrency(exposure.value / Number(years), 'usd')} average{' '}
-            {label} × {years} years
+            {formatCurrency(exposure.value / exposure.years, 'usd')} average{' '}
+            {label} × {formatYears(exposure.years)} years
             {dataStartsLater
               ? `, since ${label} data starts on ${formatTimestamp(exposure.since)}.`
               : ' unchanged.'}
@@ -62,7 +60,12 @@ export function OssificationExposure({
   )
 }
 
-/** Two significant digits under a year, so a day reads 0.0027, not 0.00. */
+// Three significant digits keep both the average and its product with the
+// years within 0.5% of the exact values. Never exponential, unlike toPrecision.
+const YEARS_FORMAT = new Intl.NumberFormat('en-US', {
+  maximumSignificantDigits: 3,
+})
+
 function formatYears(years: number) {
-  return years < 1 ? years.toPrecision(2) : years.toFixed(1)
+  return YEARS_FORMAT.format(years)
 }
