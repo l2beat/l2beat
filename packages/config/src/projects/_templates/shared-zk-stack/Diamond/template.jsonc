@@ -69,7 +69,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers and, from v31, pause all new L1 --> L2 transactions including deposits (Chain Admin role)."
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers and, from v31 while Priority Mode is not allowed, pause all new L1 --> L2 transactions including deposits (Chain Admin role)."
         }
       ]
     },

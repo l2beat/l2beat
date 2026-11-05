@@ -1156,7 +1156,7 @@
     "shared-zk-stack/ValidatorTimelock_v31": "0xc571d18f4183eb072d6806cece41853993e1559b69d2a903b1d707b05ad8385f"
   },
   "usedBlockNumbers": { "ethereum": 26334854 },
-  "permissionsConfigHash": "0x8c3bfce9cfce10094b2871624d5e67e315e742905fb4db8f20d0d2686434e7b3",
+  "permissionsConfigHash": "0xaab4e7a8f4ab17c77c8064fa5cbf08b02fd816e2d756c1531f2b146e57236c8c",
   "modelledAgainst": {
     "shared-zk-stack": "0x1edc9a85104e4cb1087b172da8c224b9375c175a0b977b71c27aba5aed671567"
   },
@@ -1231,7 +1231,7 @@
         {
           "permission": "interact",
           "from": "eth:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9",
-          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers and, from v31, pause all new L1 --> L2 transactions including deposits (Chain Admin role).",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers and, from v31 while Priority Mode is not allowed, pause all new L1 --> L2 transactions including deposits (Chain Admin role).",
           "role": ".getAdmin",
           "via": [
             { "address": "eth:0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3" }
@@ -1695,7 +1695,7 @@
         {
           "permission": "interact",
           "from": "eth:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9",
-          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers and, from v31, pause all new L1 --> L2 transactions including deposits (Chain Admin role).",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers and, from v31 while Priority Mode is not allowed, pause all new L1 --> L2 transactions including deposits (Chain Admin role).",
           "role": ".getAdmin"
         }
       ]
