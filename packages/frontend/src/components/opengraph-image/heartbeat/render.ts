@@ -45,12 +45,25 @@ export async function renderOpengraphPng(
  * one drawing: the glow's blurs take most of an image's render time.
  */
 export function rasterize(body: string) {
+  return `data:image/png;base64,${draw(body).asPng().toString('base64')}`
+}
+
+/** Where drawn SVG starts on each canvas row, from the left; Infinity on an empty row. */
+export function rowStarts(body: string) {
+  const { pixels } = draw(body)
+  const { width, height } = OG_SIZE
+  return Array.from({ length: height }, (_, y) => {
+    for (let x = 0; x < width; x++) {
+      if ((pixels[(y * width + x) * 4 + 3] ?? 0) >= 128) return x
+    }
+    return Number.POSITIVE_INFINITY
+  })
+}
+
+function draw(body: string) {
   const { width, height } = OG_SIZE
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">${body}</svg>`
-  const png = new Resvg(svg, { font: { loadSystemFonts: false } })
-    .render()
-    .asPng()
-  return `data:image/png;base64,${png.toString('base64')}`
+  return new Resvg(svg, { font: { loadSystemFonts: false } }).render()
 }
 
 export async function renderOpengraphSvg(

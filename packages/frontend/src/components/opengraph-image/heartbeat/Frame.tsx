@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { heartEcho } from './echo'
 import { HEART_RATIO, heart, INK, lockup, PINK, place, WHITE } from './marks'
-import { OG_SIZE, rasterize } from './render'
+import { OG_SIZE, rasterize, rowStarts } from './render'
 import type { TextMeasure } from './text'
 
 // Every OG image but home's: the logo's heart glowing on the right, its echo
@@ -18,22 +18,17 @@ const HEART_HEIGHT = 400
 const SIGNATURE_HEIGHT = 72
 // Every title's first baseline sits here, so cards in a feed line up; a
 // second line grows down from it.
-const TITLE_BASELINE = 382
-const TITLE_LINE_HEIGHT = 1.06
+export const TITLE_BASELINE = 382
+export const TITLE_LINE_HEIGHT = 1.06
 // From the label's baseline down to the top of the title's capitals.
 const LABEL_TO_TITLE = 42
 const LABEL = { size: 40, min: 30, lineHeight: 1.2, tracking: 1.4 / 24 }
-// The heart outline's left edge a little below its middle, where titles cross
-// it, from its centre in the pieces' units. Measured on HEART's path.
-const EDGE_DX = -141
 
 const placement = place(
   OG_SIZE.width - MARGIN - (HEART_HEIGHT * HEART_RATIO) / 2,
   OG_SIZE.height / 2,
   HEART_HEIGHT,
 )
-/** Where a title starts running over the heart. */
-export const HEART_EDGE = placement.hx + placement.scale * EDGE_DX
 /** How far short of the heart's edge text stops when it doesn't run over the heart. */
 export const HEART_CLEARANCE = 24
 
@@ -58,6 +53,21 @@ const frameDecor = () =>
   (decor ??= rasterize(
     heartEcho(placement) + CORNER_FADE + heart(placement) + lockup(signature),
   ))
+
+let heartRows: number[] | undefined
+/**
+ * Where the heart's fill starts between two canvas rows: the nearest it comes
+ * to text on those rows and the furthest right it starts. Its left side
+ * slants, so text has to check the rows its own letters cover.
+ */
+export function heartEdgeBetween(top: number, bottom: number) {
+  heartRows ??= rowStarts(heart(placement))
+  const rows = heartRows.slice(
+    Math.max(0, Math.floor(top)),
+    Math.ceil(bottom) + 1,
+  )
+  return { nearest: Math.min(...rows), furthest: Math.max(...rows) }
+}
 
 export function HeartbeatFrame({
   measure,
@@ -109,7 +119,11 @@ function Label({
   baseline: number
 }) {
   const caps = text.toUpperCase()
-  const room = HEART_EDGE - HEART_CLEARANCE - MARGIN
+  const heartEdge = heartEdgeBetween(
+    baseline - measure.capHeight(LABEL.size),
+    baseline,
+  ).nearest
+  const room = heartEdge - HEART_CLEARANCE - MARGIN
   let size = LABEL.size
   while (
     size > LABEL.min &&
