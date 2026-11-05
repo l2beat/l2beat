@@ -16,6 +16,37 @@ const tabSchema = safeStringSchema.check(
   (v) => v.length <= TAB_ID_LENGTH_MAX,
   'Tab id too long',
 )
+const countSchema = z
+  .number()
+  .check((v) => Number.isSafeInteger(v) && v >= 0, 'Bad count')
+// Far above a selection anyone makes; the server ignores what it cannot find.
+const SELECTED_MAX = 200
+const ADDRESS_LENGTH_MAX = 200
+const shortString = z
+  .string()
+  .check((v) => v.length <= ADDRESS_LENGTH_MAX, 'Too long')
+const contextSchema = z.object({
+  tab: tabSchema,
+  request: tabSchema,
+  context: z.object({
+    project: safeStringSchema.optional(),
+    selected: z
+      .array(shortString)
+      .check((v) => v.length <= SELECTED_MAX, 'Too many selected'),
+    code: z
+      .object({
+        address: shortString,
+        sourceName: shortString,
+        sourceHash: shortString,
+        from: countSchema,
+        to: countSchema,
+      })
+      .check((v) => v.from <= v.to, 'Selection ends before it starts')
+      .optional(),
+    note: z.object({ index: countSchema, stepCount: countSchema }).optional(),
+  }),
+})
+
 const reportSchema = z.object({
   tab: tabSchema,
   project: safeStringSchema.optional(),
@@ -74,6 +105,22 @@ export function createAgentRouter(
     const { tab, project, focusedAt, sequence } = body.data
     const isConnected = tabs.report(tab, { project, focusedAt, sequence })
     res.status(isConnected ? 200 : 404).json({ connected: isConnected })
+  })
+
+  router.post('/context', (req, res) => {
+    const body = contextSchema.safeParse(req.body)
+    if (!body.success) {
+      res.status(400).json({ error: body.message })
+      return
+    }
+    const { tab, request, context } = body.data
+    const isPending = tabs.answerContext(tab, request, {
+      project: context.project,
+      selected: context.selected,
+      code: context.code,
+      note: context.note,
+    })
+    res.status(isPending ? 200 : 404).json({ answered: isPending })
   })
 
   return router

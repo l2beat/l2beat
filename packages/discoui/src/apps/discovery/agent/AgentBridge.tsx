@@ -1,12 +1,17 @@
 import { type QueryClient, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useRef } from 'react'
 import { useMatch, useNavigate } from 'react-router'
-import { openAgentEvents, postAgentTab } from '../../../api/api'
+import {
+  openAgentEvents,
+  postAgentContext,
+  postAgentTab,
+} from '../../../api/api'
 import type { ApiAgentEvent } from '../../../api/types'
 import { isEditableTarget } from '../../../utils/isEditableTarget'
 import { useDockingStore } from '../multi-view/store'
 import { useStore as useNodeStore } from '../panel-nodes/store/store'
 import { applyStep } from './applyStep'
+import { readContext } from './readContext'
 import { useAgentStore, useIsNoteShown } from './store'
 
 // The server sends each show to the tab the researcher focused last, so
@@ -39,9 +44,13 @@ export function AgentBridge() {
       if (isConnected.current) reportTab(projectRef.current)
     }
     const events = openAgentEvents(TAB_ID, (event) =>
-      handleEvent(event, queryClient, (target) => {
-        const path = `/ui/p/${encodeURIComponent(target)}`
-        if (window.location.pathname !== path) void navigate(path)
+      handleEvent(event, {
+        queryClient,
+        project: () => projectRef.current,
+        open: (target) => {
+          const path = `/ui/p/${encodeURIComponent(target)}`
+          if (window.location.pathname !== path) void navigate(path)
+        },
       }),
     )
     // A restarted server forgot every tab, so each one reports on reconnect.
@@ -94,9 +103,20 @@ function reportTab(project: string | undefined) {
 
 function handleEvent(
   event: ApiAgentEvent,
-  queryClient: QueryClient,
-  open: (project: string) => void,
+  tab: {
+    queryClient: QueryClient
+    project: () => string | undefined
+    open: (project: string) => void
+  },
 ) {
+  if (event.type === 'context-request') {
+    readContext(tab.project())
+      .then((context) =>
+        postAgentContext({ tab: TAB_ID, request: event.id, context }),
+      )
+      .catch((error) => console.warn('Agent context not sent', { error }))
+    return
+  }
   if (event.type === 'connected') {
     // A new server forgot the show it sent here and could not clear it.
     if (serverId !== undefined && serverId !== event.serverId) {
@@ -112,9 +132,11 @@ function handleEvent(
   // The agent may have run discovery since this tab loaded the project, like
   // the terminal's Run discovery does. Data that did not change keeps its
   // identity, so the graph reloads only when it did.
-  void queryClient.invalidateQueries({ queryKey: ['projects', event.project] })
+  void tab.queryClient.invalidateQueries({
+    queryKey: ['projects', event.project],
+  })
   // The graph loads only in a nodes panel, and the steps wait for the graph.
-  open(event.project)
+  tab.open(event.project)
   useDockingStore.getState().ensureLeaf('nodes')
   useAgentStore.getState().start(event)
 }

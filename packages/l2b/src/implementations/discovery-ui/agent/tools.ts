@@ -1,18 +1,21 @@
 import type { ConfigReader } from '@l2beat/discovery'
-import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
+import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { toJsonSchema, type Validator, v as z } from '@l2beat/validate'
 import { randomUUID } from 'crypto'
 import { getCodeFromDisk } from '../getCode'
-import { readReachableEntries } from '../readReachableEntries'
 import { safeStringSchema } from '../safeStringSchema'
 import type { ApiAgentShowEvent } from '../types'
+import type { CodeSource } from './codeAnchor'
+import { describeContext } from './context'
 import { cutText } from './excerpt'
-import { type AgentEntry, describeEntry } from './resolveRef'
+import { describeEntry, readAgentEntries } from './resolveRef'
 import { type ResolvedStep, StepResolver } from './steps'
 import type { AgentTabs } from './tabs'
 import { ToolError } from './toolError'
 
 export const STEPS_MAX = 30
+// The tab answers from memory, so this only waits out a tab that went away.
+const CONTEXT_TIMEOUT_MS = 2_000
 const NOTE_CHARACTERS_MAX = 2_000
 export const CALL_CHARACTERS_MAX = 40_000
 const OTHER_MATCHES_MAX = 10
@@ -29,7 +32,9 @@ export interface AgentTool {
   name: string
   description: string
   inputSchema: object
-  run: (args: unknown, ui: DiscoUi) => string[]
+  // Clients may run a tool that only reads without asking the researcher.
+  readOnly: boolean
+  run: (args: unknown, ui: DiscoUi) => string[] | Promise<string[]>
 }
 
 // Names and chain:0x addresses are far shorter.
@@ -83,12 +88,22 @@ export const AGENT_TOOLS: AgentTool[] = [
       'Use dryRun first to read what each step opens, then show notes that say what the code does.',
     ].join(' '),
     input: showSchema,
+    readOnly: false,
     run: (input, ui) => show(ui, input),
+  }),
+  tool({
+    name: 'context',
+    description:
+      'Says what the researcher looks at in DiscoUI\'s open tab: the project, the selected contracts, the code around their selection in the code panel, and the step of your show on screen. Call it when they ask about "this".',
+    input: z.object({}),
+    readOnly: true,
+    run: (_, ui) => context(ui),
   }),
   tool({
     name: 'clear',
     description: 'Hides the note show put in DiscoUI.',
     input: z.object({}),
+    readOnly: false,
     run: (_, ui) => clear(ui),
   }),
 ]
@@ -97,12 +112,14 @@ function tool<T>(definition: {
   name: string
   description: string
   input: Validator<T>
-  run: (input: T, ui: DiscoUi) => string[]
+  readOnly: boolean
+  run: (input: T, ui: DiscoUi) => string[] | Promise<string[]>
 }): AgentTool {
   return {
     name: definition.name,
     description: definition.description,
     inputSchema: toInputSchema(definition.input),
+    readOnly: definition.readOnly,
     run: (args, ui) =>
       definition.run(parseArguments(definition.input, args), ui),
   }
@@ -129,13 +146,13 @@ function parseArguments<T>(input: Validator<T>, args: unknown): T {
 }
 
 // Rejections name what to fix, so the agent can correct itself and retry.
-export function runTool(
+export async function runTool(
   tool: AgentTool,
   args: unknown,
   ui: DiscoUi,
-): { text: string; isError: boolean } {
+): Promise<{ text: string; isError: boolean }> {
   try {
-    return { text: tool.run(args, ui).join('\n'), isError: false }
+    return { text: (await tool.run(args, ui)).join('\n'), isError: false }
   } catch (error) {
     if (error instanceof ToolError) {
       return { text: error.describe(), isError: true }
@@ -159,7 +176,7 @@ function show(ui: DiscoUi, input: ShowInput): string[] {
   }
   const resolver = new StepResolver(
     readAgentEntries(ui.configReader, project),
-    (address) => getCodeFromDisk(ui.configReader, project, address).sources,
+    (address) => readSources(ui.configReader, project, address),
   )
   const steps = input.steps.map((step) => resolver.resolve(step))
   const lines = [
@@ -174,6 +191,21 @@ function show(ui: DiscoUi, input: ShowInput): string[] {
   return lines
 }
 
+// The code panel's editor splits lines on \r\n and \r too and joins them
+// with \n, so offsets and hashes only match the text it shows.
+function readSources(
+  configReader: ConfigReader,
+  project: string,
+  address: ChainSpecificAddress,
+): CodeSource[] {
+  return getCodeFromDisk(configReader, project, address).sources.map(
+    (source) => ({
+      name: source.name,
+      code: source.code.replaceAll('\r\n', '\n').replaceAll('\r', '\n'),
+    }),
+  )
+}
+
 // ConfigReader throws for a project it cannot find, which here is a typo in
 // the agent's call, not a failure.
 function hasDiscovery(configReader: ConfigReader, project: string): boolean {
@@ -182,24 +214,6 @@ function hasDiscovery(configReader: ConfigReader, project: string): boolean {
   } catch {
     return false
   }
-}
-
-// A contract both the project and a shared module list is one entry, and
-// the zero address is drawn nowhere.
-function readAgentEntries(
-  configReader: ConfigReader,
-  project: string,
-): AgentEntry[] {
-  const byAddress = new Map<ChainSpecificAddress, AgentEntry>()
-  for (const entry of readReachableEntries(configReader, project)) {
-    if (ChainSpecificAddress.address(entry.address) === EthereumAddress.ZERO) {
-      continue
-    }
-    if (!byAddress.has(entry.address)) {
-      byAddress.set(entry.address, { address: entry.address, name: entry.name })
-    }
-  }
-  return [...byAddress.values()]
 }
 
 function showEvent(project: string, steps: ResolvedStep[]): ApiAgentShowEvent {
@@ -249,6 +263,34 @@ function printSteps(lines: string[], steps: ResolvedStep[]) {
       lines.push(`  also found at: ${others.join(', ')}${tail}`)
     }
   }
+}
+
+async function context(ui: DiscoUi): Promise<string[]> {
+  const active = ui.tabs.active()
+  if (active === undefined) {
+    throw new ToolError(
+      'DiscoUI has no open tab. Ask the researcher to open it.',
+    )
+  }
+  const answer = await ui.tabs.askContext(active.id, CONTEXT_TIMEOUT_MS)
+  if (answer === undefined) {
+    throw new ToolError(
+      'DiscoUI did not answer. Ask the researcher to reload it.',
+    )
+  }
+  const project = answer.project
+  if (project === undefined) {
+    return ['DiscoUI shows no project.']
+  }
+  // Like a project whose discovery was removed after the tab opened it.
+  if (!hasDiscovery(ui.configReader, project)) {
+    return [`DiscoUI shows ${project}, which has no discovery.`]
+  }
+  return describeContext(
+    { ...answer, project },
+    readAgentEntries(ui.configReader, project),
+    (address) => readSources(ui.configReader, project, address),
+  )
 }
 
 function clear(ui: DiscoUi): string[] {
