@@ -19,6 +19,7 @@ describe(describeOssification.name, () => {
       genesis: clockStart,
       criticalChanges: [],
       values: null,
+      peak: null,
     },
   }
 

@@ -7,9 +7,8 @@ export function formatValueLine({
   timeline,
   valueSource,
 }: Pick<OssificationStats, 'timeline' | 'valueSource'>): string {
-  const known = timeline.values?.filter((value) => value !== null) ?? []
-  const current = known.at(-1)
-  return current !== undefined && valueSource
-    ? `${OSSIFICATION_VALUE_LABELS[valueSource].long} now ${formatCurrency(current, 'usd')}, peaking at ${formatCurrency(Math.max(...known), 'usd')} over the past year.`
+  const current = timeline.values?.findLast((value) => value !== null) ?? null
+  return current !== null && timeline.peak !== null && valueSource
+    ? `${OSSIFICATION_VALUE_LABELS[valueSource].long} now ${formatCurrency(current, 'usd')}, peaking at ${formatCurrency(timeline.peak, 'usd')} over the past year.`
     : 'No value data.'
 }

@@ -11,7 +11,7 @@ import {
   type OssificationSeriesProject,
   type OssificationValueSource,
 } from './getOssificationSeries'
-import { sampleTimeline } from './sampleTimeline'
+import { getTimelinePeak, sampleTimeline } from './sampleTimeline'
 
 const TIMELINE_WINDOW = 365 * UnixTime.DAY
 
@@ -45,6 +45,8 @@ interface OssificationTimeline {
   criticalChanges: number[]
   /** Evenly spread from `from` to `to`, see sampleTimeline */
   values: (number | null)[] | null
+  /** Highest value over the window, including between samples */
+  peak: number | null
 }
 
 export interface OssificationStatsProject extends OssificationSeriesProject {
@@ -85,6 +87,7 @@ export async function getOssificationStats(
       genesis: ossification.genesis,
       criticalChanges: ossification.criticalChanges.filter((t) => t >= from),
       values: series ? sampleTimeline(series.points, from, now) : null,
+      peak: series ? getTimelinePeak(series.points, from, now) : null,
     },
   }
 }
