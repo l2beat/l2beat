@@ -448,6 +448,9 @@ export type ApiAgentEvent =
   | { type: 'connected'; serverId: string }
   // The tab answers with an ApiAgentContext for this id.
   | { type: 'context-request'; id: string }
+  // Only to the tab that owns the chat; a replay restarts its transcript.
+  | { type: 'chat'; event: ApiChatEvent }
+  | { type: 'chat-replay'; events: ApiChatEvent[] }
 
 export interface ApiAgentShowEvent {
   type: 'show'
@@ -485,3 +488,36 @@ export interface ApiAgentContext {
   // The step of the agent's show on screen, 0-based.
   note?: { index: number; stepCount: number }
 }
+
+export type ApiChatProvider = 'claude' | 'codex'
+
+// What the chat panel draws, built from the agent's protocol messages on the
+// server.
+export type ApiChatEvent =
+  | {
+      type: 'status'
+      status: 'starting' | 'ready' | 'working' | 'failed' | 'closed'
+      provider: ApiChatProvider
+      error?: string
+    }
+  | { type: 'user'; text: string }
+  | { type: 'text'; text: string }
+  | {
+      type: 'tool'
+      id: string
+      title?: string
+      status?: 'pending' | 'in_progress' | 'completed' | 'failed'
+    }
+  | {
+      type: 'permission'
+      id: string
+      title: string
+      kind?: string
+      paths: string[]
+      // The tool's raw input, as JSON: the command or edit to approve.
+      input?: string
+      options: { id: string; name: string; kind: string }[]
+    }
+  | { type: 'permission-done'; id: string }
+  | { type: 'turn-end'; stopReason: string }
+  | { type: 'error'; message: string }

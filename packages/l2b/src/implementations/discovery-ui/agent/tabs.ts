@@ -37,6 +37,7 @@ export class AgentTabs {
   private readonly tabs = new Map<string, Tab>()
   // The tab that shows the note of the last show, wherever focus went since.
   private showTab: string | undefined
+  private readonly connectListeners: ((id: string) => void)[] = []
   // Each removed when its tab answers or the wait times out.
   private readonly contextRequests = new Map<
     string,
@@ -54,6 +55,29 @@ export class AgentTabs {
       sequence: previous?.sequence ?? 0,
     })
     previous?.stream.end()
+    for (const listener of this.connectListeners) {
+      listener(id)
+    }
+  }
+
+  // Like the chat, which replays its transcript to its tab after a reload.
+  onConnect(listener: (id: string) => void) {
+    this.connectListeners.push(listener)
+  }
+
+  isConnected(id: string): boolean {
+    return this.tabs.has(id)
+  }
+
+  // The chat's own tab may be reconnecting; it gets the transcript then.
+  sendChat(
+    id: string,
+    event: Extract<ApiAgentEvent, { type: 'chat' | 'chat-replay' }>,
+  ) {
+    const tab = this.tabs.get(id)
+    if (tab !== undefined) {
+      write(tab, event)
+    }
   }
 
   disconnect(id: string, stream: TabStream) {
@@ -80,6 +104,11 @@ export class AgentTabs {
     tab.project = report.project
     tab.focusedAt = report.focusedAt
     return true
+  }
+
+  tab(id: string): ActiveTab | undefined {
+    const tab = this.tabs.get(id)
+    return tab && { id, project: tab.project }
   }
 
   active(): ActiveTab | undefined {

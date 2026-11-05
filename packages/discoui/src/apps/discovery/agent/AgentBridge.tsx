@@ -14,9 +14,13 @@ import { applyStep } from './applyStep'
 import { readContext } from './readContext'
 import { useAgentStore, useIsNoteShown } from './store'
 
+const TAB_ID_KEY = 'discoui-agent-tab-id'
+const TAB_ID_LENGTH = 32
+const HEX = '0123456789abcdef'
+
 // The server sends each show to the tab the researcher focused last, so
 // every tab tells it its project and when it comes to the front.
-const TAB_ID = createTabId()
+const TAB_ID = takeSavedTabId() ?? createTabId()
 // Kept by the tab, so a restarted server learns which tab was used last.
 let focusedAt = 0
 // Reports may arrive out of order, and the server keeps the latest.
@@ -29,6 +33,38 @@ function createTabId(): string {
   const bytes = crypto.getRandomValues(new Uint8Array(16))
   return Array.from(bytes, (b) => b.toString(16).padStart(2, '0')).join('')
 }
+
+// A reload keeps the tab's id, so the tab gets its chat back. The id is
+// saved only while the page goes away and taken back as it loads: a tab
+// duplicated meanwhile copies the session storage, and must not share it.
+
+function takeSavedTabId(): string | undefined {
+  try {
+    const id = sessionStorage.getItem(TAB_ID_KEY)
+    sessionStorage.removeItem(TAB_ID_KEY)
+    if (id?.length === TAB_ID_LENGTH && [...id].every((c) => HEX.includes(c))) {
+      return id
+    }
+  } catch {
+    // Storage blocked: a reload starts a new chat.
+  }
+  return undefined
+}
+
+window.addEventListener('pagehide', () => {
+  try {
+    sessionStorage.setItem(TAB_ID_KEY, TAB_ID)
+  } catch {
+    // Storage blocked: a reload starts a new chat.
+  }
+})
+// Back from the browser's page cache the page keeps running, so the saved
+// id must not stay behind for a duplicate to copy.
+window.addEventListener('pageshow', (event) => {
+  if (event.persisted) {
+    takeSavedTabId()
+  }
+})
 
 export function AgentBridge() {
   const navigate = useNavigate()
@@ -127,6 +163,10 @@ function handleEvent(
   }
   if (event.type === 'clear') {
     useAgentStore.getState().clear()
+    return
+  }
+  // The chat panel comes in a later change; until then nothing starts one.
+  if (event.type === 'chat' || event.type === 'chat-replay') {
     return
   }
   // The agent may have run discovery since this tab loaded the project, like

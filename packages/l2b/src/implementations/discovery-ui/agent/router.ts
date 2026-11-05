@@ -4,6 +4,8 @@ import { randomUUID } from 'crypto'
 import express, { type Router } from 'express'
 import { safeStringSchema } from '../safeStringSchema'
 import type { ApiAgentEvent } from '../types'
+import { type ChatOptions, ChatSession } from './chat/ChatSession'
+import { attachChatRoutes } from './chat/router'
 import { localOnly } from './localOnly'
 import { attachMcpRoutes } from './mcp'
 import { AgentTabs } from './tabs'
@@ -62,6 +64,7 @@ const reportSchema = z.object({
 // machines and other sites' pages before reading any body.
 export function createAgentRouter(
   configReader: ConfigReader,
+  chatOptions: ChatOptions,
   tabs = new AgentTabs(),
 ): Router {
   // A tab whose stream reconnects to a new server drops its note, which
@@ -71,6 +74,10 @@ export function createAgentRouter(
   router.use(localOnly('DiscoUI agent routes answer only locally'))
   router.use(express.json({ limit: '100kb' }))
   attachMcpRoutes(router, { configReader, tabs })
+  const chat = new ChatSession(tabs, chatOptions)
+  // The adapter would outlive the server otherwise.
+  process.once('exit', () => chat.close())
+  attachChatRoutes(router, chat)
 
   router.get('/events', (req, res) => {
     const tab = tabSchema.safeParse(req.query.tab)

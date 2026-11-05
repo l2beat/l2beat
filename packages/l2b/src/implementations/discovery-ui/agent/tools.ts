@@ -17,7 +17,7 @@ import {
   toAgentEntries,
 } from './resolveRef'
 import { type ResolvedStep, StepResolver } from './steps'
-import type { AgentTabs } from './tabs'
+import type { ActiveTab, AgentTabs } from './tabs'
 import { ToolError } from './toolError'
 
 export const STEPS_MAX = 30
@@ -33,6 +33,13 @@ const NO_TAB =
 export interface DiscoUi {
   configReader: ConfigReader
   tabs: AgentTabs
+  // Set for the chat's agent, which acts in the chat's tab, wherever focus
+  // went since.
+  tab?: string
+}
+
+function targetTab(ui: DiscoUi): ActiveTab | undefined {
+  return ui.tab === undefined ? ui.tabs.active() : ui.tabs.tab(ui.tab)
 }
 
 export interface AgentTool {
@@ -183,7 +190,7 @@ export async function runTool(
 
 function show(ui: DiscoUi, input: ShowInput): string[] {
   const isDryRun = input.dryRun === true
-  const active = ui.tabs.active()
+  const active = targetTab(ui)
   if (active === undefined && !isDryRun) {
     throw new ToolError(NO_TAB)
   }
@@ -235,7 +242,7 @@ function permissions(
   requested: string | undefined,
   contract: string,
 ): string[] {
-  const project = requireProject(ui, requested ?? ui.tabs.active()?.project)
+  const project = requireProject(ui, requested ?? targetTab(ui)?.project)
   const entries = readReachableEntries(ui.configReader, project)
   const target = resolveRef(toAgentEntries(entries), contract)
   return describePermissions(entries, target)
@@ -301,7 +308,7 @@ function printSteps(lines: string[], steps: ResolvedStep[]) {
 }
 
 async function context(ui: DiscoUi): Promise<string[]> {
-  const active = ui.tabs.active()
+  const active = targetTab(ui)
   if (active === undefined) {
     throw new ToolError(
       'DiscoUI has no open tab. Ask the researcher to open it.',
