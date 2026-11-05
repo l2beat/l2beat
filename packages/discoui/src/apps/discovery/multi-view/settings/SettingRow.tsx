@@ -26,9 +26,9 @@ export function SettingRow(props: {
   children: ReactNode
 }) {
   return (
-    <div className="flex items-center justify-between gap-6 px-4 py-3">
+    <div className="flex items-center justify-between gap-6 px-4 py-3 max-sm:gap-3 max-sm:px-3">
       <div className="min-w-0">
-        <div className="flex h-5 items-center gap-1">
+        <div className="flex min-h-5 items-center gap-1">
           {props.controlId === undefined ? (
             <span className="font-medium text-coffee-100 text-sm">
               {props.title}

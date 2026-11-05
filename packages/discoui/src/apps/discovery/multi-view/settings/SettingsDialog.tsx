@@ -6,7 +6,7 @@ import { IconNodes } from '../../../../icons/IconNodes'
 import { GlobalSettingsTab } from './GlobalSettingsTab'
 import { NodesSettingsTab } from './NodesSettingsTab'
 
-type SettingsTabId = 'global' | 'nodes'
+export type SettingsTabId = 'global' | 'nodes'
 
 const SETTINGS_TABS: {
   id: SettingsTabId
@@ -31,23 +31,21 @@ const SETTINGS_TABS: {
   },
 ]
 
-export function SettingsDialog() {
-  const [tabId, setTabId] = useState<SettingsTabId>('global')
+export function SettingsDialog(props: {
+  trigger: ReactNode
+  defaultTabId: SettingsTabId
+}) {
+  const [tabId, setTabId] = useState<SettingsTabId>(props.defaultTabId)
 
   return (
     <Dialog.Root>
-      <Dialog.Trigger
-        className="flex size-7 items-center justify-center rounded-sm text-coffee-300 hover:bg-coffee-700 hover:text-coffee-100"
-        aria-label="Settings"
-      >
-        <IconGear />
-      </Dialog.Trigger>
+      <Dialog.Trigger asChild>{props.trigger}</Dialog.Trigger>
       <Dialog.Body className="flex h-[min(640px,85vh)] max-w-[820px] flex-col overflow-hidden p-0">
         <RadixTabs.Root
           value={tabId}
           onValueChange={(value) => setTabId(parseSettingsTabId(value))}
           orientation="vertical"
-          className="flex min-h-0 flex-1"
+          className="flex min-h-0 flex-1 max-sm:flex-col"
         >
           <SettingsNavigation />
           <div className="flex min-w-0 flex-1 flex-col">
@@ -56,7 +54,7 @@ export function SettingsDialog() {
               <RadixTabs.Content
                 key={tab.id}
                 value={tab.id}
-                className="min-h-0 flex-1 overflow-y-auto px-6 pt-4 pb-6 focus:outline-hidden"
+                className="min-h-0 flex-1 overflow-y-auto px-6 pt-4 pb-6 max-sm:px-3 focus:outline-hidden"
               >
                 <p className="mb-5 px-1 text-coffee-300 text-xs leading-4">
                   {tab.description}
@@ -77,7 +75,7 @@ function SettingsNavigation() {
   return (
     <RadixTabs.List
       aria-label="Settings sections"
-      className="flex w-40 shrink-0 flex-col gap-0.5 border-coffee-700 border-r bg-coffee-800/50 p-2"
+      className="flex w-40 shrink-0 flex-col gap-0.5 border-coffee-700 border-r bg-coffee-800/50 p-2 max-sm:w-auto max-sm:flex-row max-sm:border-r-0 max-sm:border-b"
     >
       {SETTINGS_TABS.map((tab) => (
         <RadixTabs.Trigger
@@ -99,7 +97,7 @@ function SettingsHeader(props: { tabId: SettingsTabId }) {
     throw new Error('Unknown settings tab', { cause: { tabId: props.tabId } })
   }
   return (
-    <div className="flex h-13 shrink-0 items-center border-coffee-700 border-b pr-12 pl-7">
+    <div className="flex h-13 shrink-0 items-center border-coffee-700 border-b pr-12 pl-7 max-sm:pl-4">
       <Dialog.Title className="mb-0 flex items-center gap-2 font-medium text-sm">
         <span className="text-coffee-300">Settings</span>
         <span className="text-coffee-500">/</span>
