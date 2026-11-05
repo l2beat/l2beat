@@ -14,6 +14,7 @@ import {
 } from '~/components/core/Command'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { useDebouncedValue } from '~/hooks/useDebouncedValue'
+import { useGlobalShortcut } from '~/hooks/useGlobalShortcut'
 import { useOnClickOutside } from '~/hooks/useOnClickOutside'
 import { usePathname } from '~/hooks/usePathname'
 import { useTracking } from '~/hooks/useTracking'
@@ -37,23 +38,6 @@ interface Props {
   recentlyAdded: SearchBarProject[]
 }
 
-const TITLE = 'Search'
-const DESCRIPTION = 'Search projects, tokens and protocols by name or address'
-
-/**
- * Stands in for `SearchBarDialog` until it first opens. It renders the same
- * markup, the dialog's visually hidden title and description, without the
- * search itself, whose hooks and contents would cost every page's hydration
- * and a re-render right after it.
- */
-export function ClosedSearchBarDialog() {
-  return (
-    <CommandDialog title={TITLE} description={DESCRIPTION} open={false}>
-      {null}
-    </CommandDialog>
-  )
-}
-
 export function SearchBarDialog({ recentlyAdded }: Props) {
   const trpc = useTRPC()
   const inputRef = useRef<HTMLInputElement>(null)
@@ -67,6 +51,8 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
     () => getEmptyStateGroups(pinnedProjects, recentlyAdded, pathname),
     [pinnedProjects, recentlyAdded, pathname],
   )
+
+  useGlobalShortcut('/', () => setOpen((open) => !open))
 
   const {
     data: searchResults,
@@ -139,8 +125,8 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
 
   return (
     <CommandDialog
-      title={TITLE}
-      description={DESCRIPTION}
+      title="Search"
+      description="Search projects, tokens and protocols by name or address"
       open={open}
       onOpenChange={setOpen}
       onEscapeKeyDown={onEscapeKeyDown}
