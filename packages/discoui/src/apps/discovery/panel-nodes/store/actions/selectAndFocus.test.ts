@@ -10,18 +10,50 @@ describe(selectAndFocus.name, () => {
       subnodes: [makeNode('member')],
     }
 
-    const result = selectAndFocus(makeState([group]), 'member')
+    const result = selectAndFocus(makeState([group]), ['member'])
 
     expect(result.selected).toEqual(['member'])
   })
 
-  it('clears the selection when the contract is not drawn', () => {
-    const group = { ...makeNode('group'), subnodes: [makeNode('member')] }
-    const state = { ...makeState([group]), selected: ['group'] }
+  it('selects a closed group for its members, once', () => {
+    const group = {
+      ...makeNode('group'),
+      subnodes: [makeNode('admin'), makeNode('council')],
+    }
+    const state = makeState([makeNode('bridge'), group])
 
-    const result = selectAndFocus(state, 'member')
+    const result = selectAndFocus(state, ['council', 'admin'])
 
-    expect(result.selected).toEqual([])
+    expect(result.selected).toEqual(['group'])
+  })
+
+  it('keeps the order of the contracts and skips what is not drawn', () => {
+    const state = makeState([makeNode('bridge'), makeNode('admin')])
+
+    const result = selectAndFocus(state, ['admin', 'nope', 'bridge'])
+
+    expect(result.selected).toEqual(['admin', 'bridge'])
+  })
+
+  it('clears the selection when no contract is drawn', () => {
+    const state = { ...makeState([makeNode('a')]), selected: ['a'] }
+
+    expect(selectAndFocus(state, ['nope']).selected).toEqual([])
+  })
+
+  it('selects every drawn contract and centers the first', () => {
+    const state = makeState([makeNode('first'), makeNode('second')])
+
+    const result = selectAndFocus(state, ['first', 'second'])
+
+    expect(result.selected).toEqual(['first', 'second'])
+    expect(result.transform).not.toEqual(undefined)
+  })
+
+  it('clears the selection when nothing is drawn', () => {
+    const state = { ...makeState([makeNode('a')]), selected: ['a'] }
+
+    expect(selectAndFocus(state, []).selected).toEqual([])
   })
 })
 

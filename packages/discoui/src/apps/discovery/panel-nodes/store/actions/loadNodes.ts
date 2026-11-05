@@ -125,6 +125,7 @@ export function loadNodes(
     nodes: allNodes,
     projectId,
     loaded: true,
+    loadCount: state.loadCount + 1,
   }
 
   const shouldAutoLayoutFromScratch =
@@ -167,6 +168,7 @@ export function loadNodes(
     nodes: nodesWithFallback,
     projectId,
     loaded: true,
+    loadCount: state.loadCount + 1,
   })
 }
 
