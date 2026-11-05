@@ -473,8 +473,15 @@ export interface ApiAgentStep {
 export interface ApiAgentContext {
   project: string | undefined
   selected: string[]
-  // The code panel's file and selection, offsets in the text it shows.
-  code?: { address: string; sourceName: string; from: number; to: number }
+  // The code panel's file and selection, offsets in the text it shows,
+  // which a SHA-256 of that text pins to the source the offsets are in.
+  code?: {
+    address: string
+    sourceName: string
+    sourceHash: string
+    from: number
+    to: number
+  }
   // The step of the agent's show on screen, 0-based.
   note?: { index: number; stepCount: number }
 }

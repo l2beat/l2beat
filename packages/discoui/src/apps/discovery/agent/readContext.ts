@@ -9,7 +9,9 @@ const SELECTED_MAX = 200
 
 // What the researcher looks at, in addresses and offsets only: the server
 // reads names and code from disk itself.
-export function readContext(project: string | undefined): ApiAgentContext {
+export async function readContext(
+  project: string | undefined,
+): Promise<ApiAgentContext> {
   if (project === undefined) {
     return { project: undefined, selected: [] }
   }
@@ -18,7 +20,7 @@ export function readContext(project: string | undefined): ApiAgentContext {
   return {
     project,
     selected,
-    code: readCodeSelection(selected[0]),
+    code: await readCodeSelection(selected[0]),
     note:
       show?.project === project
         ? { index, stepCount: show.steps.length }
@@ -27,9 +29,9 @@ export function readContext(project: string | undefined): ApiAgentContext {
 }
 
 // The code panel shows the first selected contract, one source per file.
-function readCodeSelection(
+async function readCodeSelection(
   address: string | undefined,
-): ApiAgentContext['code'] {
+): Promise<ApiAgentContext['code']> {
   if (address === undefined) {
     return undefined
   }
@@ -39,6 +41,22 @@ function readCodeSelection(
   if (editor === undefined || !fileId?.startsWith(prefix)) {
     return undefined
   }
-  const { from, to } = editor.getSelection()
-  return { address, sourceName: fileId.slice(prefix.length), from, to }
+  const { from, to, text } = editor.getSelection()
+  return {
+    address,
+    sourceName: fileId.slice(prefix.length),
+    sourceHash: await sha256(text),
+    from,
+    to,
+  }
+}
+
+// The agent routes answer only this machine, so the page is a secure
+// context and has subtle crypto.
+async function sha256(text: string): Promise<string> {
+  const bytes = new TextEncoder().encode(text)
+  const digest = await crypto.subtle.digest('SHA-256', bytes)
+  return Array.from(new Uint8Array(digest), (b) =>
+    b.toString(16).padStart(2, '0'),
+  ).join('')
 }

@@ -37,6 +37,7 @@ const contextSchema = z.object({
       .object({
         address: shortString,
         sourceName: shortString,
+        sourceHash: shortString,
         from: countSchema,
         to: countSchema,
       })

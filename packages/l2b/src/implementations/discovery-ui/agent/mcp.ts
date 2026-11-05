@@ -143,7 +143,7 @@ function describeTool(tool: AgentTool) {
     description: tool.description,
     inputSchema: tool.inputSchema,
     annotations: {
-      readOnlyHint: false,
+      readOnlyHint: tool.readOnly,
       destructiveHint: false,
       openWorldHint: false,
     },

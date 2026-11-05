@@ -110,10 +110,11 @@ function handleEvent(
   },
 ) {
   if (event.type === 'context-request') {
-    const context = readContext(tab.project())
-    postAgentContext({ tab: TAB_ID, request: event.id, context }).catch(
-      (error) => console.warn('Agent context not sent', { error }),
-    )
+    readContext(tab.project())
+      .then((context) =>
+        postAgentContext({ tab: TAB_ID, request: event.id, context }),
+      )
+      .catch((error) => console.warn('Agent context not sent', { error }))
     return
   }
   if (event.type === 'connected') {

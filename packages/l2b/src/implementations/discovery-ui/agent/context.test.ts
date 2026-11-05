@@ -1,4 +1,5 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import { createHash } from 'crypto'
 import { expect } from 'earl'
 import type { CodeSource } from './codeAnchor'
 import { describeContext } from './context'
@@ -20,6 +21,7 @@ const SOURCE = [
 ].join('\n')
 const SOURCES: CodeSource[] = [{ name: 'Bridge.sol', code: SOURCE }]
 const read = () => SOURCES
+const SOURCE_HASH = createHash('sha256').update(SOURCE).digest('hex')
 
 describe(describeContext.name, () => {
   it('names the selected contracts, marking ones it does not know', () => {
@@ -44,6 +46,7 @@ describe(describeContext.name, () => {
         code: {
           address: BRIDGE,
           sourceName: 'Bridge.sol',
+          sourceHash: SOURCE_HASH,
           from,
           to: from + 'total += amount'.length,
         },
@@ -73,8 +76,12 @@ describe(describeContext.name, () => {
         code: {
           address: BRIDGE,
           sourceName: 'Bridge.sol',
+          // The tab shows an older text of the same length.
+          sourceHash: createHash('sha256')
+            .update(SOURCE.replace('total', 'TOTAL'))
+            .digest('hex'),
           from: 0,
-          to: SOURCE.length + 1,
+          to: 5,
         },
       },
       ENTRIES,

@@ -30,6 +30,8 @@ export interface AgentTool {
   name: string
   description: string
   inputSchema: object
+  // Clients may run a tool that only reads without asking the researcher.
+  readOnly: boolean
   run: (args: unknown, ui: DiscoUi) => string[] | Promise<string[]>
 }
 
@@ -84,6 +86,7 @@ export const AGENT_TOOLS: AgentTool[] = [
       'Use dryRun first to read what each step opens, then show notes that say what the code does.',
     ].join(' '),
     input: showSchema,
+    readOnly: false,
     run: (input, ui) => show(ui, input),
   }),
   tool({
@@ -91,12 +94,14 @@ export const AGENT_TOOLS: AgentTool[] = [
     description:
       'Says what the researcher looks at in DiscoUI\'s open tab: the project, the selected contracts, the code around their selection in the code panel, and the step of your show on screen. Call it when they ask about "this".',
     input: z.object({}),
+    readOnly: true,
     run: (_, ui) => context(ui),
   }),
   tool({
     name: 'clear',
     description: 'Hides the note show put in DiscoUI.',
     input: z.object({}),
+    readOnly: false,
     run: (_, ui) => clear(ui),
   }),
 ]
@@ -105,12 +110,14 @@ function tool<T>(definition: {
   name: string
   description: string
   input: Validator<T>
+  readOnly: boolean
   run: (input: T, ui: DiscoUi) => string[] | Promise<string[]>
 }): AgentTool {
   return {
     name: definition.name,
     description: definition.description,
     inputSchema: toInputSchema(definition.input),
+    readOnly: definition.readOnly,
     run: (args, ui) =>
       definition.run(parseArguments(definition.input, args), ui),
   }
@@ -257,6 +264,10 @@ async function context(ui: DiscoUi): Promise<string[]> {
   const project = answer.project
   if (project === undefined) {
     return ['DiscoUI shows no project.']
+  }
+  // Like a project whose discovery was removed after the tab opened it.
+  if (!hasDiscovery(ui.configReader, project)) {
+    return [`DiscoUI shows ${project}, which has no discovery.`]
   }
   return describeContext(
     { ...answer, project },

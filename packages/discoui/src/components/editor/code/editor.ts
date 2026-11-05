@@ -179,9 +179,9 @@ export class Editor {
   }
 
   // The main selection, offsets in the text of the file on screen.
-  getSelection(): { from: number; to: number } {
+  getSelection(): { from: number; to: number; text: string } {
     const { from, to } = this.view.state.selection.main
-    return { from, to }
+    return { from, to, text: this.view.state.doc.toString() }
   }
 
   revealAtTop(offset: number) {

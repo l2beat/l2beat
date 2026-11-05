@@ -1,4 +1,5 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
+import { createHash } from 'crypto'
 import type { ApiAgentContext } from '../types'
 import { type CodeSource, lineAt, matchAt } from './codeAnchor'
 import { excerptAt } from './excerpt'
@@ -52,7 +53,7 @@ function describeCode(
   const sourceIndex = sources.findIndex((s) => s.name === code.sourceName)
   const source = sources[sourceIndex]
   // The tab loaded the code before discovery changed it on disk.
-  if (source === undefined || code.to > source.code.length) {
+  if (source === undefined || sha256(source.code) !== code.sourceHash) {
     return [`  code: ${code.sourceName} of ${contract}, changed since shown`]
   }
   const first = lineAt(source.code, code.from)
@@ -68,4 +69,8 @@ function describeCode(
     lines.push('  (excerpt cut, read the rest in the source)')
   }
   return lines
+}
+
+function sha256(text: string): string {
+  return createHash('sha256').update(text, 'utf8').digest('hex')
 }
