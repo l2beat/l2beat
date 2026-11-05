@@ -105,6 +105,7 @@ const columns = [
         <OssificationExposure
           exposure={ctx.row.original.exposure}
           valueSource={ctx.row.original.valueSource}
+          timeline={ctx.row.original.timeline}
         />
       </span>
     ),

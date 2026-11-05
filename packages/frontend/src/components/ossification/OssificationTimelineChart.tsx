@@ -1,10 +1,11 @@
-import { formatCurrency, formatSeconds, pluralize } from '@l2beat/shared-pure'
+import { formatSeconds, pluralize } from '@l2beat/shared-pure'
 import { useId } from 'react'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { formatValueLine } from '~/components/ossification/formatValueLine'
 import { OSSIFICATION_VALUE_LABELS } from '~/components/ossification/ossificationValueLabels'
 import type { OssificationStats } from '~/server/features/projects/ossification/getOssificationStats'
 import { formatTimestamp } from '~/utils/dates'
@@ -195,18 +196,14 @@ function getDescription({
   clockBeforeWindow,
   genesisInWindow,
 }: Props & { clockBeforeWindow: boolean; genesisInWindow: boolean }) {
-  const { from, to, clockStart, values } = timeline
-  const known = values?.filter((value) => value !== null) ?? []
-  const current = known.at(-1)
+  const { from, to, clockStart } = timeline
   return {
     title: `${OSSIFICATION_VALUE_LABELS[valueSource ?? 'tvs'].short} & critical changes`,
     period: `${formatTimestamp(from)} – ${formatTimestamp(to)}`,
     lines: [
       `Unchanged for ${formatSeconds(to - clockStart)}, since ${formatTimestamp(clockStart)}${clockBeforeWindow ? ' — before this window, so the whole year is highlighted' : ''}.`,
       getChangesLine(timeline, genesisInWindow),
-      current !== undefined && valueSource
-        ? `${OSSIFICATION_VALUE_LABELS[valueSource].long} now ${formatCurrency(current, 'usd')}, peaking at ${formatCurrency(Math.max(...known), 'usd')}.`
-        : 'No value data.',
+      formatValueLine({ timeline, valueSource }),
     ],
   }
 }
