@@ -30,7 +30,7 @@ const DESCRIPTION = {
   lineHeight: 1.3,
   lines: 3,
   gap: 40,
-  color: `${WHITE}CC`,
+  color: `${WHITE}E6`,
 }
 // From the label's baseline down to the top of the title's capitals.
 const LABEL_TO_TITLE = 32
