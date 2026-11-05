@@ -27,8 +27,9 @@ describe('main page descriptions', () => {
         size: title.size,
         lines: title.lines.length,
       })
-      const fits = layout.lines <= 3 && layout.bottom <= OG_SIZE.height - MARGIN
-      return fits ? [] : [`${page.path}: ${layout.lines} lines`]
+      const lines = layout.lines.length
+      const fits = lines <= 3 && layout.bottom <= OG_SIZE.height - MARGIN
+      return fits ? [] : [`${page.path}: ${lines} lines`]
     })
 
     expect(tooLong).toEqual([])

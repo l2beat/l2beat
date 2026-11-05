@@ -20,10 +20,11 @@ const HAZE = [
   { factor: 2.6, blur: 0.5, opacity: 0.12 },
 ]
 
-// Around text the rings are cut away: fully within `pad` px of it, coming back
-// over the next `fade` px in `steps` steps, too fine to show. Steps instead of
-// a blur, which would cost a pass over the whole canvas for every image.
-const CLEAR = { pad: 16, fade: 40, steps: 8 }
+// Around text the rings are cut away along its letters, a halo rather than a
+// box: fully within `grow` px of them, coming back over the next `fade` px in
+// `steps` steps, too fine to show. Steps of stroked outlines instead of a
+// blur, which would cost a pass over the whole canvas for every image.
+export const HALO = { grow: 6, fade: 14, steps: 7 }
 
 const { width: W, height: H } = OG_SIZE
 const round = (v: number) => +v.toFixed(2)
@@ -67,21 +68,25 @@ export function heartRings(placement: Placement) {
 }
 
 /**
- * SVG markup for `rings`, an image of the whole canvas, cut away around each
- * box, so the text there reads while the ground and the glow stay.
+ * SVG markup for `rings`, an image of the whole canvas, cut away in a halo
+ * around `outline`, the path data of the text and marks they must stay off,
+ * so the text reads while the ground and the glow stay.
  */
-export function ringsClearOf(rings: string, boxes: Box[]) {
-  // Nested rounded boxes, the innermost opaque and the nth 1/n opaque, add up
-  // to a cut that fades evenly from full to none across them.
-  const holes = boxes.flatMap((box) =>
-    Array.from({ length: CLEAR.steps }, (_, i) => {
-      const grow = CLEAR.pad + (CLEAR.fade * i) / (CLEAR.steps - 1)
-      return `<rect x="${round(box.x0 - grow)}" y="${round(box.y0 - grow)}" width="${round(box.x1 - box.x0 + 2 * grow)}" height="${round(box.y1 - box.y0 + 2 * grow)}" rx="${round(grow)}" opacity="${round(1 / (i + 1))}"/>`
-    }),
-  )
+export function ringsClearOf(rings: string, outline: string) {
+  // The outline stroked ever wider, the innermost opaque and the nth 1/n
+  // opaque, adds up to a cut that fades evenly from full to none across them.
+  const halo = Array.from({ length: HALO.steps }, (_, i) => {
+    const grow = HALO.grow + (HALO.fade * i) / (HALO.steps - 1)
+    return `<path d="${outline}" stroke="black" stroke-width="${round(2 * grow)}" stroke-linejoin="round" opacity="${round(1 / (i + 1))}"/>`
+  })
   return (
-    `<defs><g id="holes">${holes.join('')}</g>` +
-    `<filter id="clear" filterUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><feImage href="#holes" result="holes"/><feComposite in="SourceGraphic" in2="holes" operator="out"/></filter></defs>` +
+    `<defs><g id="halo">${halo.join('')}</g>` +
+    `<filter id="clear" filterUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><feImage href="#halo" result="halo"/><feComposite in="SourceGraphic" in2="halo" operator="out"/></filter></defs>` +
     `<image href="${rings}" width="${W}" height="${H}" filter="url(#clear)"/>`
   )
+}
+
+/** Path data of a box, so a mark can be cleared like text. */
+export function boxOutline({ x0, y0, x1, y1 }: Box) {
+  return `M${round(x0)} ${round(y0)}H${round(x1)}V${round(y1)}H${round(x0)}Z`
 }

@@ -8,7 +8,6 @@ import {
   TITLE_LINE_HEIGHT,
   textLeftBesideLogo,
   titleBaseline,
-  wordSpans,
 } from './heartbeat/Frame'
 import type { DarkGroundLogo } from './heartbeat/logo'
 import { satoriWidth, type TextMeasure } from './heartbeat/text'
@@ -47,25 +46,9 @@ export function MainPageOpengraphImage({
       label={label}
       description={description}
       logo={logo}
+      title={fitted.lines}
       titleSize={fitted.size}
-      titleLineWidths={fitted.lineWidths}
       titleBaseline={fit.baseline(fitted.size, fitted.lines.length)}
-      title={
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          {fitted.lines.map((line) => (
-            // Each line starts its first letter's ink on the column's edge.
-            <div
-              key={line}
-              style={{
-                display: 'flex',
-                marginLeft: -measure.inkLeft(line, fitted.size, 700),
-              }}
-            >
-              {wordSpans({ parts: [line], size: fitted.size, measure })}
-            </div>
-          ))}
-        </div>
-      }
     />
   )
 }
@@ -138,7 +121,7 @@ function countDescriptionLines(
       baseline,
       size: ONE_LINE.ideal,
       lines: 1,
-    }).lines
+    }).lines.length
   }
   return lines
 }
@@ -188,7 +171,7 @@ export function fitTitle(
           Math.max(...b.map((line) => widthOf(line, size))),
       )
 
-  const oneLine = (sizes: number[]) => firstFit(sizes, (size) => [[title]])
+  const oneLine = (sizes: number[]) => firstFit(sizes, () => [[title]])
   const twoLines = (sizes: number[]) =>
     firstFit(sizes, (size) => (words.length > 1 ? breaks(size) : [[title]]))
   const firstFit = (

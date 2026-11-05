@@ -1,5 +1,11 @@
 import type { ReactNode } from 'react'
-import { type Box, heartGlow, heartRings, ringsClearOf } from './echo'
+import {
+  type Box,
+  boxOutline,
+  heartGlow,
+  heartRings,
+  ringsClearOf,
+} from './echo'
 import { type DarkGroundLogo, GLOW_REACH, glowBehind } from './logo'
 import { HEART_RATIO, heart, INK, lockup, PINK, place, WHITE } from './marks'
 import { drawnBox, OG_SIZE, rasterize, rowExtents } from './render'
@@ -40,9 +46,6 @@ const LABEL = { size: 40, min: 30, lineHeight: 1.2, tracking: 1.4 / 24 }
 // centred on it), and text starts `gap` right of it. Its corners round like an
 // app icon's.
 const LOGO = { gap: 32, radius: 0.22 }
-// How far a line's letters reach above and below its baseline, in em: Roboto's
-// tallest lowercase and its descenders.
-const LETTERS = { above: 0.76, below: 0.22 }
 
 const placement = place(
   OG_SIZE.width - MARGIN - (HEART_HEIGHT * HEART_RATIO) / 2,
@@ -115,19 +118,29 @@ export function titleBaseline(
   return top + above
 }
 
-/** The box the letters of a line of text cover. */
-export function lineBox(
+/**
+ * Path data of a line of title-style words (see `wordSpans`) whose first
+ * letter's ink starts at `left`, so rings can be cut away around them.
+ */
+export function wordsOutline(
+  measure: TextMeasure,
+  line: string,
   left: number,
   baseline: number,
-  width: number,
   size: number,
-): Box {
-  return {
-    x0: left,
-    y0: baseline - LETTERS.above * size,
-    x1: left + width,
-    y1: baseline + LETTERS.below * size,
-  }
+) {
+  const space = measure.width(' ', size, 700)
+  const tracking = -0.01 * size
+  let x = left - measure.inkLeft(line, size, 700)
+  return line
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((word) => {
+      const outline = measure.outline(word, x, baseline, size, 700, tracking)
+      x += measure.width(word, size, 700, tracking) + space
+      return outline
+    })
+    .join('')
 }
 
 /** Where the label and the title start beside a logo: it grows with the title. */
@@ -162,17 +175,15 @@ export function HeartbeatFrame({
   label,
   title,
   titleSize,
-  titleLineWidths,
   titleBaseline: baseline,
   description,
   logo,
 }: {
   measure: TextMeasure
   label: string | undefined
-  /** Its lines, each starting its letters on the column's left edge. */
-  title: ReactNode
+  /** Its lines, each starting its first letter's ink on the column's edge. */
+  title: string[]
   titleSize: number
-  titleLineWidths: number[]
   titleBaseline: number
   description: string | undefined
   logo: DarkGroundLogo | undefined
@@ -193,48 +204,50 @@ export function HeartbeatFrame({
       : descriptionLayout(measure, description, {
           baseline,
           size: titleSize,
-          lines: titleLineWidths.length,
+          lines: title.length,
         })
+  const logoInkTop =
+    logoInk === undefined ? 0 : baseline - span + (span - logoInk.height) / 2
 
-  const textBoxes: Box[] = [
-    frameSignatureBox(),
-    ...titleLineWidths.map((width, i) =>
-      lineBox(
+  // The rings stay off everything drawn over them.
+  const outline = [
+    boxOutline(frameSignatureBox()),
+    ...title.map((line, i) =>
+      wordsOutline(
+        measure,
+        line,
         textLeft,
         baseline + i * TITLE_LINE_HEIGHT * titleSize,
-        width,
         titleSize,
       ),
     ),
-  ]
-  const logoInkTop =
-    logoInk === undefined ? 0 : baseline - span + (span - logoInk.height) / 2
-  if (logoInk !== undefined) {
-    textBoxes.push({
-      x0: MARGIN,
-      y0: logoInkTop,
-      x1: MARGIN + logoInk.width,
-      y1: logoInkTop + logoInk.height,
-    })
-  }
-  if (fittedLabel !== undefined) {
-    textBoxes.push(
-      lineBox(textLeft, labelBaseline, fittedLabel.width, fittedLabel.size),
-    )
-  }
-  if (descriptionLaidOut !== undefined) {
-    textBoxes.push({
-      x0: MARGIN,
-      y0: descriptionLaidOut.top,
-      x1: MARGIN + descriptionLaidOut.box,
-      y1: descriptionLaidOut.bottom,
-    })
-  }
+    logoInk === undefined
+      ? ''
+      : boxOutline({
+          x0: MARGIN,
+          y0: logoInkTop,
+          x1: MARGIN + logoInk.width,
+          y1: logoInkTop + logoInk.height,
+        }),
+    fittedLabel === undefined
+      ? ''
+      : measure.outline(
+          fittedLabel.caps,
+          textLeft - measure.inkLeft(fittedLabel.caps, fittedLabel.size, 600),
+          labelBaseline,
+          fittedLabel.size,
+          600,
+          LABEL.tracking * fittedLabel.size,
+        ),
+    descriptionLaidOut === undefined
+      ? ''
+      : descriptionOutline(measure, descriptionLaidOut),
+  ].join('')
 
   return (
     <Canvas decor={frameDecor()}>
       <img
-        src={rasterize(ringsClearOf(frameRings(), textBoxes))}
+        src={rasterize(ringsClearOf(frameRings(), outline))}
         alt=""
         {...OG_SIZE}
         style={{ position: 'absolute', left: 0, top: 0 }}
@@ -256,17 +269,23 @@ export function HeartbeatFrame({
           position: 'absolute',
           left: textLeft,
           top: baseline - measure.baseline(titleSize, TITLE_LINE_HEIGHT),
-          width: COLUMN - (textLeft - MARGIN),
+          flexDirection: 'column',
         }}
       >
-        {title}
+        {title.map((line) => (
+          <div
+            key={line}
+            style={{
+              display: 'flex',
+              marginLeft: -measure.inkLeft(line, titleSize, 700),
+            }}
+          >
+            {wordSpans({ parts: [line], size: titleSize, measure })}
+          </div>
+        ))}
       </div>
-      {description !== undefined && descriptionLaidOut !== undefined && (
-        <Description
-          measure={measure}
-          text={description}
-          layout={descriptionLaidOut}
-        />
+      {descriptionLaidOut !== undefined && (
+        <Description measure={measure} layout={descriptionLaidOut} />
       )}
     </Canvas>
   )
@@ -332,39 +351,45 @@ export function descriptionLayout(
     top + DESCRIPTION.lines * lineHeight,
   ).nearestStart
   const room = Math.min(COLUMN, heartStart - HEART_CLEARANCE - MARGIN)
-  const { box, lines } = balancedLines(
-    measure,
-    text,
-    DESCRIPTION.size,
-    600,
-    room,
-  )
-  return {
-    top,
-    box,
-    lines: lines.length,
-    bottom: top + lines.length * lineHeight,
-  }
+  const { lines } = balancedLines(measure, text, DESCRIPTION.size, 600, room)
+  return { top, lines, bottom: top + lines.length * lineHeight }
 }
 
-/** A line or two on what the page is for. */
+function descriptionOutline(
+  measure: TextMeasure,
+  layout: ReturnType<typeof descriptionLayout>,
+) {
+  const lineHeight = DESCRIPTION.lineHeight * DESCRIPTION.size
+  const baseline = measure.baseline(DESCRIPTION.size, DESCRIPTION.lineHeight)
+  return layout.lines
+    .map((line, i) =>
+      measure.outline(
+        line,
+        MARGIN - measure.inkLeft(line, DESCRIPTION.size, 600),
+        layout.top + i * lineHeight + baseline,
+        DESCRIPTION.size,
+        600,
+      ),
+    )
+    .join('')
+}
+
+/** A line or two on what the page is for, each line starting its ink on the margin. */
 function Description({
   measure,
-  text,
   layout,
 }: {
   measure: TextMeasure
-  text: string
   layout: ReturnType<typeof descriptionLayout>
 }) {
   return (
     <div
       style={{
         display: 'flex',
+        flexDirection: 'column',
         position: 'absolute',
-        left: MARGIN - measure.inkLeft(text, DESCRIPTION.size, 600),
+        left: MARGIN,
         top: layout.top,
-        width: layout.box,
         fontSize: DESCRIPTION.size,
         fontWeight: 600,
         lineHeight: DESCRIPTION.lineHeight,
@@ -372,7 +397,18 @@ function Description({
         textShadow: TEXT_HALO,
       }}
     >
-      {text}
+      {layout.lines.map((line) => (
+        <div
+          key={line}
+          style={{
+            display: 'flex',
+            marginLeft: -measure.inkLeft(line, DESCRIPTION.size, 600),
+            whiteSpace: 'nowrap',
+          }}
+        >
+          {line}
+        </div>
+      ))}
     </div>
   )
 }

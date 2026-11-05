@@ -1,10 +1,15 @@
-import { heartGlow, heartRings, ringsClearOf } from './heartbeat/echo'
+import {
+  boxOutline,
+  heartGlow,
+  heartRings,
+  ringsClearOf,
+} from './heartbeat/echo'
 import {
   Canvas,
-  lineBox,
   MARGIN,
   type TitlePart,
   wordSpans,
+  wordsOutline,
 } from './heartbeat/Frame'
 import { beatWord, lockup, placeCentred } from './heartbeat/marks'
 import { drawnBox, OG_SIZE, rasterize } from './heartbeat/render'
@@ -35,18 +40,20 @@ export function HomeOpengraphImage({ measure }: { measure: TextMeasure }) {
   const width = taglineWidth(measure, size)
   // The rings are cut away around the tagline, where "heartbeat" is as pink as
   // they are, and around BEAT. They never reach the heart and its ETH.
-  const tagline = lineBox(
-    (W - width) / 2,
+  const text = taglineText()
+  const tagline = wordsOutline(
+    measure,
+    text,
+    (W - width) / 2 + measure.inkLeft(text, size, 700),
     taglineTop + measure.baseline(size, TAGLINE_LINE_HEIGHT),
-    width,
     size,
   )
   const decor =
     heartGlow(logo) +
-    ringsClearOf(rasterize(heartRings(logo)), [
-      tagline,
-      drawnBox(beatWord(logo)),
-    ]) +
+    ringsClearOf(
+      rasterize(heartRings(logo)),
+      tagline + boxOutline(drawnBox(beatWord(logo))),
+    ) +
     lockup(logo)
   return (
     <Canvas decor={rasterize(decor)}>
@@ -80,8 +87,10 @@ function taglineSize(measure: TextMeasure) {
 }
 
 function taglineWidth(measure: TextMeasure, size: number) {
-  const text = TAGLINE.map((part) =>
+  return measure.width(taglineText(), size, 700, -0.01 * size)
+}
+
+const taglineText = () =>
+  TAGLINE.map((part) =>
     typeof part === 'string' ? part : part.highlight,
   ).join('')
-  return measure.width(text, size, 700, -0.01 * size)
-}

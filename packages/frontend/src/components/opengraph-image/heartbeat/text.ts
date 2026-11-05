@@ -27,6 +27,15 @@ export interface TextMeasure {
   baseline(size: number, lineHeight: number): number
   /** The height of a capital letter. */
   capHeight(size: number): number
+  /** SVG path data of `text`'s letters, its baseline starting at (x, y). */
+  outline(
+    text: string,
+    x: number,
+    y: number,
+    size: number,
+    weight: Weight,
+    letterSpacing?: number,
+  ): string
 }
 
 /**
@@ -59,6 +68,14 @@ export function createTextMeasure(fonts: OpengraphFonts): TextMeasure {
       const content = (ascender - descender) / unitsPerEm
       return size * ((lineHeight - content) / 2 + ascender / unitsPerEm)
     },
+    outline(text, x, y, size, weight, letterSpacing = 0) {
+      return faces[weight]
+        .getPath(text, x, y, size, {
+          kerning: true,
+          letterSpacing: letterSpacing / size,
+        })
+        .toPathData(1)
+    },
     capHeight(size) {
       const face = faces[700]
       return (size * face.tables.os2.sCapHeight) / face.unitsPerEm
@@ -84,8 +101,8 @@ function parse(buffer: Buffer) {
 
 /**
  * `text` wrapped into the narrowest box that keeps the line count a `column`
- * wide box gives, like CSS `text-wrap: balance`, which satori lacks: the box
- * and each line's width.
+ * wide box gives, like CSS `text-wrap: balance`, which satori lacks: the box,
+ * and each line's text and width.
  */
 export function balancedLines(
   measure: TextMeasure,
@@ -94,39 +111,46 @@ export function balancedLines(
   weight: Weight,
   column: number,
 ) {
+  const words = text.split(/\s+/).filter(Boolean)
+  const widths = words.map((word) => measure.width(word, size, weight))
   const space = measure.width(' ', size, weight)
-  const words = text
-    .split(/\s+/)
-    .filter(Boolean)
-    .map((word) => measure.width(word, size, weight))
-  const count = wrap(words, space, column).length
-  let lo = Math.max(...words)
+  const count = wrap(widths, space, column).length
+  let lo = Math.max(...widths)
   let hi = column
   while (hi - lo > 1) {
     const mid = (lo + hi) / 2
-    if (wrap(words, space, mid).length <= count) hi = mid
+    if (wrap(widths, space, mid).length <= count) hi = mid
     else lo = mid
   }
   const box = Math.min(column, Math.ceil(hi))
-  return { box, lines: wrap(words, space, box) }
+  const lines = wrap(widths, space, box).map((line) =>
+    line.map((i) => words[i]).join(' '),
+  )
+  return {
+    box,
+    lines,
+    widths: lines.map((line) => measure.width(line, size, weight)),
+  }
 }
 
 /**
- * The width of each line when words wrap in a `box` wide column. Every word
- * but the last carries a space as its right margin, and satori's flex wrap
- * counts that margin, but a line's letters end before it.
+ * Which words go on each line when they wrap in a `box` wide column. Every
+ * word but the last carries a space as its right margin, and satori's flex
+ * wrap counts that margin.
  */
 function wrap(words: number[], space: number, box: number) {
-  const lines: number[] = []
+  const lines: number[][] = [[]]
   let x = 0
   words.forEach((word, i) => {
     const margin = i < words.length - 1 ? space : 0
+    const line = lines[lines.length - 1] as number[]
     if (x > 0 && satoriWidth(x + word + margin) > box) {
-      lines.push(x - space)
-      x = 0
+      lines.push([i])
+      x = word + margin
+      return
     }
+    line.push(i)
     x += word + margin
   })
-  lines.push(x)
   return lines
 }
