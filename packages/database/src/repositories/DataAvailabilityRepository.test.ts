@@ -2,6 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
 import {
+  type BucketedDataAvailabilityRecord,
   type DataAvailabilityRecord,
   DataAvailabilityRepository,
 } from './DataAvailabilityRepository'
@@ -566,6 +567,106 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           )
 
         expect(results).toEqual([])
+      })
+    },
+  )
+
+  describe(
+    DataAvailabilityRepository.prototype.getSummedByProjectAndBucket.name,
+    () => {
+      const DAY = UnixTime.toStartOf(START, 'day')
+
+      // Hours of one day, configurations, the layer's own record, a record of
+      // another layer and records outside the range, so each must be summed or
+      // dropped exactly as the hourly grouping in JS did.
+      beforeEach(async () => {
+        await repository.upsertMany([
+          record('project-a', 'layer-a', 'config-1', DAY, 100n),
+          record('project-a', 'layer-a', 'config-2', DAY, 10n),
+          record('project-a', 'layer-a', 'config-1', DAY + 7 * HOUR, 1_000n),
+          record('project-a', 'layer-a', 'config-1', DAY + 23 * HOUR, 5n),
+          record('project-a', 'layer-a', 'config-1', DAY + 24 * HOUR, 7n),
+          record('project-b', 'layer-a', 'config-3', DAY + 2 * HOUR, 20n),
+          record('layer-a', 'layer-a', 'config-4', DAY + 1 * HOUR, 9_000n),
+          record('project-c', 'layer-b', 'config-5', DAY, 50_000n),
+          record('project-a', 'layer-a', 'config-1', DAY - 1 * HOUR, 3n),
+          record('project-a', 'layer-a', 'config-1', DAY + 48 * HOUR, 4n),
+        ])
+      })
+
+      it('sums projects per day bucket within the range', async () => {
+        const results = await repository.getSummedByProjectAndBucket(
+          ['layer-a'],
+          [DAY, DAY + 48 * HOUR],
+          UnixTime.DAY,
+        )
+
+        expect(results).toEqualUnsorted([
+          bucket(DAY, DAY + 23 * HOUR, 'project-a', 1_115n),
+          bucket(DAY, DAY + 2 * HOUR, 'project-b', 20n),
+          bucket(DAY, DAY + 1 * HOUR, 'layer-a', 9_000n),
+          bucket(DAY + 24 * HOUR, DAY + 24 * HOUR, 'project-a', 7n),
+        ])
+        expect(results.map((r) => r.bucketStart)).toEqual([
+          DAY,
+          DAY,
+          DAY,
+          DAY + 24 * HOUR,
+        ])
+      })
+
+      it('aligns six hour buckets to the epoch', async () => {
+        const results = await repository.getSummedByProjectAndBucket(
+          ['layer-a'],
+          [DAY, DAY + 24 * HOUR],
+          UnixTime.SIX_HOURS,
+          ['layer-a', 'project-b'],
+        )
+
+        expect(results).toEqual([
+          bucket(DAY, DAY, 'project-a', 110n),
+          bucket(DAY + 6 * HOUR, DAY + 7 * HOUR, 'project-a', 1_000n),
+          bucket(DAY + 18 * HOUR, DAY + 23 * HOUR, 'project-a', 5n),
+        ])
+      })
+
+      it('reads from the start of data when the range has no start', async () => {
+        const results = await repository.getSummedByProjectAndBucket(
+          ['layer-a'],
+          [null, DAY],
+          UnixTime.DAY,
+        )
+
+        expect(results).toEqual([
+          bucket(DAY - 24 * HOUR, DAY - 1 * HOUR, 'project-a', 3n),
+        ])
+      })
+
+      it('returns empty array when daLayers is empty', async () => {
+        const results = await repository.getSummedByProjectAndBucket(
+          [],
+          [DAY, DAY + 24 * HOUR],
+          UnixTime.DAY,
+        )
+
+        expect(results).toEqual([])
+      })
+
+      it('rejects a bucket that is not a positive integer', async () => {
+        await expect(
+          repository.getSummedByProjectAndBucket(
+            ['layer-a'],
+            [DAY, DAY + 24 * HOUR],
+            0,
+          ),
+        ).toBeRejectedWith('bucketSeconds not positive')
+        await expect(
+          repository.getSummedByProjectAndBucket(
+            ['layer-a'],
+            [DAY, DAY + 24 * HOUR],
+            1.5,
+          ),
+        ).toBeRejectedWith('bucketSeconds not an integer')
       })
     },
   )
@@ -1193,6 +1294,23 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
     })
   })
 })
+
+const HOUR = UnixTime.HOUR
+
+function bucket(
+  bucketStart: UnixTime,
+  latestTimestamp: UnixTime,
+  projectId: string,
+  totalSize: bigint,
+): BucketedDataAvailabilityRecord {
+  return {
+    bucketStart,
+    latestTimestamp,
+    projectId,
+    daLayer: 'layer-a',
+    totalSize,
+  }
+}
 
 function record(
   projectId: string,
