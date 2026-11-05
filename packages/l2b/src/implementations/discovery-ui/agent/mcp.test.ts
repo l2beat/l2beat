@@ -1,33 +1,34 @@
 import type { ConfigReader } from '@l2beat/discovery'
-import { expect } from 'earl'
+import { expect, mockObject } from 'earl'
 import express from 'express'
 import type { Server } from 'http'
 import type { AddressInfo } from 'net'
-import { attachMcpRouter, MCP_PATH } from './mcp'
+import { attachMcpRoutes } from './mcp'
+import { createAgentRouter } from './router'
 import { AgentTabs, type TabStream } from './tabs'
 
 // A real HTTP round trip against the express app, the way an agent's MCP
 // client calls it.
-describe(attachMcpRouter.name, () => {
+describe(attachMcpRoutes.name, () => {
   const tabs = new AgentTabs()
   let url = ''
   let server: Server
 
   before(async () => {
     const app = express()
-    app.use(express.json())
     // Like ConfigReader, it throws for a project it cannot find.
-    const configReader = {
+    const configReader = mockObject<ConfigReader>({
       hasDiscovery: (project: string) => {
         if (project === 'missing') throw new Error('Project not found')
-        return false
+        return project === 'linea'
       },
-    } as unknown as ConfigReader
-    attachMcpRouter(app, { configReader, tabs })
+      readDiscoveryWithReferences: () => [],
+    })
+    app.use('/api/agent', createAgentRouter(configReader, tabs))
     server = app.listen(0, '127.0.0.1')
     await new Promise((resolve) => server.once('listening', resolve))
     const { port } = server.address() as AddressInfo
-    url = `http://127.0.0.1:${port}${MCP_PATH}`
+    url = `http://127.0.0.1:${port}/api/agent/mcp`
   })
 
   after(() => server.close())
@@ -89,11 +90,33 @@ describe(attachMcpRouter.name, () => {
     const written: string[] = []
     const stream: TabStream = { write: (c) => written.push(c), end: () => {} }
     tabs.connect('tab-1', stream)
-    tabs.focus('tab-1', undefined)
+    tabs.report('tab-1', undefined, true)
     const result = (await call('tools/call', { name: 'clear' })).result
     tabs.disconnect('tab-1', stream)
     expect(result?.isError).toEqual(false)
     expect(written).toEqual(['data: {"type":"clear"}\n\n'])
+  })
+
+  it('shows in the active tab, in the project it has open', async () => {
+    const written: string[] = []
+    const stream: TabStream = { write: (c) => written.push(c), end: () => {} }
+    tabs.connect('tab-1', stream)
+    tabs.report('tab-1', 'linea', true)
+    const steps = [{ note: 'Hi' }]
+    const dryRun = await call('tools/call', {
+      name: 'show',
+      arguments: { dryRun: true, steps },
+    })
+    expect(written).toEqual([])
+    const shown = await call('tools/call', {
+      name: 'show',
+      arguments: { steps },
+    })
+    tabs.disconnect('tab-1', stream)
+    expect(dryRun.result?.isError).toEqual(false)
+    expect(shown.result?.isError).toEqual(false)
+    expect(written.length).toEqual(1)
+    expect(written[0]).toInclude('"project":"linea"')
   })
 
   it('answers JSON it cannot parse with a JSON-RPC error', async () => {

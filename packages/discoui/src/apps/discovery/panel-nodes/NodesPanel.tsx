@@ -16,7 +16,6 @@ import type { AutoGroup } from './store/actions/loadNodes'
 import type { Field, Node } from './store/State'
 import { useStore as useNodeStore, useStore } from './store/store'
 import { NODE_WIDTH } from './store/utils/constants'
-import { drawnNodeIds } from './store/utils/drawnNodeIds'
 import { getGraphProjection } from './store/utils/graphProjection'
 import { Viewport } from './view/Viewport'
 
@@ -223,11 +222,9 @@ function useSynchronizeSelection() {
       return
     }
     lastGlobal.current = selectedGlobal
-    // A contract in an open group is drawn on its own, so it is selected
-    // on its own; only a closed group stands in for its members. When none
-    // is drawn, the graph's selection clears, or it would win back.
+    // When none is drawn, the graph's selection clears, or it would win back.
     isGraphOurs.current = true
-    selectAndFocus(drawnNodeIds(nodes, selectedGlobal))
+    selectAndFocus(selectedGlobal)
   }, [
     selectedGlobal,
     selectGlobal,

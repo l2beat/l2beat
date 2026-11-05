@@ -1,13 +1,14 @@
 import { Markdown } from '../../../components/Markdown'
 import { IconClose } from '../../../icons/IconClose'
-import { useAgentStore } from './store'
+import { useAgentStore, useIsNoteShown } from './store'
 
 // The agent's note for the step on screen, over the graph of its project.
 export function AgentNote(props: { project: string }) {
+  const isShown = useIsNoteShown(props.project)
   const show = useAgentStore((state) => state.show)
   const index = useAgentStore((state) => state.index)
   const step = show?.steps[index]
-  if (show?.project !== props.project || step === undefined) {
+  if (!isShown || show === undefined || step === undefined) {
     return null
   }
   const { goTo, clear } = useAgentStore.getState()

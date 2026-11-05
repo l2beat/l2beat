@@ -1,13 +1,24 @@
 import type { State } from '../State'
 import { expandedNodes } from '../utils/renderGraph'
+import { topLevelByDescendant } from '../utils/subnodes'
 
-// Selects what the graph draws for a selection and centers the first.
+// Selects what the graph draws for the contracts and centers the first: a
+// member of an opened group is drawn on its own, a closed group stands in
+// for its members, and a hidden contract is not drawn at all.
 export function selectAndFocus(
   state: State,
-  selected: readonly string[],
+  contracts: readonly string[],
 ): Partial<State> {
+  const drawn = topLevelByDescendant(expandedNodes(state.nodes))
+  const selected: string[] = []
+  for (const contract of contracts) {
+    const id = drawn.get(contract)?.id
+    if (id !== undefined && !selected.includes(id)) {
+      selected.push(id)
+    }
+  }
   const first = selected[0]
-  const node = expandedNodes(state.nodes).find((x) => x.id === first)
+  const node = first === undefined ? undefined : drawn.get(first)
 
   if (!node) {
     return { selected: [] }
@@ -41,6 +52,6 @@ export function selectAndFocus(
       offsetX,
       offsetY,
     },
-    selected: [...selected],
+    selected,
   }
 }

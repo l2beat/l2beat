@@ -15,9 +15,7 @@ import { existsSync, readFileSync } from 'fs'
 import type { Server } from 'http'
 import path, { join } from 'path'
 import { getCodePaths } from '../discovery/getCodePaths'
-import { localOnly } from './agent/localOnly'
-import { attachAgentRouter } from './agent/router'
-import { AgentTabs } from './agent/tabs'
+import { createAgentRouter } from './agent/router'
 import { attachAnalyzeRouter } from './analyze/router'
 import { attachConfigRouter } from './configs/router'
 import { DiffoveryController } from './diffovery/DiffoveryController'
@@ -39,6 +37,7 @@ import { attachLayoutRouter } from './layouts/router'
 import { attachModulesRouter } from './modules'
 import { ProviderCache } from './ProviderCache'
 import { renderProjectPage } from './renderProjectPage'
+import { safeStringSchema } from './safeStringSchema'
 import { searchCode } from './searchCode'
 import { TvlCache } from './TvlCache'
 import {
@@ -47,13 +46,6 @@ import {
 } from './templates/router'
 import { RemoteWorkspaces } from './xref/RemoteWorkspaces'
 import { attachXrefRouter, diskWorkspace } from './xref/router'
-
-const safeStringSchema = z
-  .string()
-  .check(
-    (v) => v.length > 0 && /^[a-zA-Z0-9_-]+$/.test(v),
-    'Input cannot be empty and must be alphanumeric and can contain underscores or hyphens.',
-  )
 
 const ethereumAddressSchema = z.string().transform(ChainSpecificAddress)
 
@@ -118,22 +110,19 @@ const REMOTE_WORKSPACE_CAPACITY = 4
 
 export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   const port = process.env.PORT ?? 2021
-  const agentTabs = new AgentTabs()
-  const app = createDiscoveryUiApp({ readonly, agentTabs })
+  const app = createDiscoveryUiApp({ readonly })
 
   const server = app.listen(port, () => {
     console.log(`Discovery UI live on http://localhost:${port}/ui`)
   })
 
-  attachGracefulShutdown(server, agentTabs)
+  attachGracefulShutdown(server)
 }
 
 export function createDiscoveryUiApp({
   readonly,
-  agentTabs,
 }: {
   readonly: boolean
-  agentTabs: AgentTabs
 }): Express {
   const app = express()
 
@@ -153,10 +142,9 @@ export function createDiscoveryUiApp({
   const flatSourceClient = new FlatSourceClient()
   const diffoveryController = new DiffoveryController(flatSourceClient)
 
-  // The agent routes change what the researcher sees, so they refuse other
-  // machines and other sites' pages before reading any body.
+  // Before the body parser, so the agent routes refuse a request unread.
   if (!readonly) {
-    app.use('/api/agent', localOnly('DiscoUI agent routes answer only locally'))
+    app.use('/api/agent', createAgentRouter(configReader))
   }
   app.use(express.json())
 
@@ -339,7 +327,6 @@ export function createDiscoveryUiApp({
     attachTemplateRouter(app, templateService)
     attachConfigRouter(app, configReader, configWriter, templateService)
     attachModulesRouter(app, configReader, templateService, paths.discovery)
-    attachAgentRouter(app, configReader, agentTabs)
 
     app.get('/api/config/health', (_, res) => {
       const response = getConfigHealth(
@@ -479,11 +466,13 @@ export function createDiscoveryUiApp({
   return app
 }
 
-function shutdown(server: Server, agentTabs: AgentTabs) {
-  agentTabs.closeAll()
+function shutdown(server: Server) {
   server.close(() => {
     process.exit(0)
   })
+  // Event streams, like an open tab's agent stream, never finish on their
+  // own, and close waits for every connection.
+  server.closeAllConnections()
 
   setTimeout(() => {
     console.error(
@@ -493,7 +482,7 @@ function shutdown(server: Server, agentTabs: AgentTabs) {
   }, 10000)
 }
 
-function attachGracefulShutdown(server: Server, agentTabs: AgentTabs) {
-  process.on('SIGTERM', () => shutdown(server, agentTabs))
-  process.on('SIGINT', () => shutdown(server, agentTabs))
+function attachGracefulShutdown(server: Server) {
+  process.on('SIGTERM', () => shutdown(server))
+  process.on('SIGINT', () => shutdown(server))
 }

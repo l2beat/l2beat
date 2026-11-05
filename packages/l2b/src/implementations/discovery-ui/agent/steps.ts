@@ -1,66 +1,56 @@
-import type { ConfigReader } from '@l2beat/discovery'
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { getCodeFromDisk } from '../getCode'
 import { anchorSnippet, type CodeSource } from './codeAnchor'
-import { readAgentEntries } from './entries'
 import { type Excerpt, excerptAt } from './excerpt'
-import { type AgentEntry, describeEntry, resolveRef } from './resolveRef'
+import { type AgentEntry, resolveRef } from './resolveRef'
 import { ToolError } from './toolError'
+import type { ShowInput } from './tools'
 
-export interface StepInput {
-  note: string
-  contracts?: string[]
-  code?: { contract: string; find: string }
-}
+type StepInput = ShowInput['steps'][number]
+type CodeInput = NonNullable<StepInput['code']>
 
 export interface ResolvedStep {
   note: string
   // The code contract first: the code panel shows the first selected one.
-  select: ChainSpecificAddress[]
-  names: string[]
+  contracts: AgentEntry[]
   code: ResolvedCode | undefined
 }
 
 export interface ResolvedCode {
-  address: ChainSpecificAddress
-  contract: string
+  entry: AgentEntry
   sourceIndex: number
   sourceName: string
   offset: number
   length: number
   line: number
   excerpt: Excerpt
-  // Other places with the snippet, as "Source.sol:line".
-  others: string[]
+  // Other places with the snippet.
+  others: { sourceName: string; line: number }[]
 }
 
 // Resolves every step of one call, reading each contract's code once.
 export class StepResolver {
-  private readonly entries: AgentEntry[]
   private readonly sources = new Map<ChainSpecificAddress, CodeSource[]>()
 
   constructor(
-    private readonly configReader: ConfigReader,
-    private readonly project: string,
-  ) {
-    this.entries = readAgentEntries(configReader, project)
-  }
+    private readonly entries: readonly AgentEntry[],
+    private readonly readSources: (
+      address: ChainSpecificAddress,
+    ) => CodeSource[],
+  ) {}
 
   resolve(step: StepInput): ResolvedStep {
     const code = step.code && this.resolveCode(step.code)
-    const select = [
-      ...new Set([
-        ...(code ? [code.address] : []),
-        ...(step.contracts ?? []).map((ref) => resolveRef(this.entries, ref)),
-      ]),
-    ]
-    const names = select.map((address) => describeEntry(this.entryAt(address)))
-    return { note: step.note, select, names, code }
+    const addresses = new Set([
+      ...(code ? [code.entry.address] : []),
+      ...(step.contracts ?? []).map((ref) => resolveRef(this.entries, ref)),
+    ])
+    const contracts = [...addresses].map((address) => this.entryAt(address))
+    return { note: step.note, contracts, code }
   }
 
-  private resolveCode(code: { contract: string; find: string }): ResolvedCode {
-    const address = resolveRef(this.entries, code.contract)
-    const sources = this.readSources(address, code.contract)
+  private resolveCode(code: CodeInput): ResolvedCode {
+    const entry = this.entryAt(resolveRef(this.entries, code.contract))
+    const sources = this.readCached(entry.address, code.contract)
     const anchor = anchorSnippet(sources, code.find)
     if (anchor === undefined) {
       throw new ToolError('Snippet not found in the contract source', {
@@ -69,37 +59,33 @@ export class StepResolver {
       })
     }
     const { match } = anchor
-    const source = sources[match.sourceIndex]
-    if (source === undefined) {
-      throw new Error('Match outside the sources', { cause: match })
-    }
     return {
-      address,
-      contract: this.entryAt(address).name ?? address,
+      entry,
       sourceIndex: match.sourceIndex,
-      sourceName: source.name,
+      sourceName: sourceAt(sources, match.sourceIndex).name,
       offset: match.offset,
       length: code.find.length,
       line: match.line,
-      excerpt: excerptAt(source.code, match, code.find.length),
-      others: anchor.others.map(
-        (m) => `${sources[m.sourceIndex]?.name}:${m.line}`,
+      excerpt: excerptAt(
+        sourceAt(sources, match.sourceIndex).code,
+        match,
+        code.find.length,
       ),
+      others: anchor.others.map((m) => ({
+        sourceName: sourceAt(sources, m.sourceIndex).name,
+        line: m.line,
+      })),
     }
   }
 
-  private readSources(address: ChainSpecificAddress, ref: string) {
+  private readCached(address: ChainSpecificAddress, ref: string) {
     const cached = this.sources.get(address)
     if (cached !== undefined) {
       return cached
     }
     let sources: CodeSource[]
     try {
-      sources = getCodeFromDisk(
-        this.configReader,
-        this.project,
-        address,
-      ).sources
+      sources = this.readSources(address)
     } catch (error) {
       // Missing or outdated .flat files: the agent tells the researcher.
       throw new ToolError('Cannot read the contract source', {
@@ -120,4 +106,12 @@ export class StepResolver {
     }
     return entry
   }
+}
+
+function sourceAt(sources: CodeSource[], index: number): CodeSource {
+  const source = sources[index]
+  if (source === undefined) {
+    throw new Error('Match outside the sources', { cause: { index } })
+  }
+  return source
 }

@@ -440,3 +440,24 @@ export type ApiHealthHint =
         templateId: string
       }
     })
+
+export type ApiAgentEvent = ApiAgentShowEvent | { type: 'clear' }
+
+export interface ApiAgentShowEvent {
+  type: 'show'
+  id: string
+  project: string
+  steps: ApiAgentStep[]
+}
+
+export interface ApiAgentStep {
+  note: string
+  // The code contract first: the code panel shows the first selected one.
+  select: string[]
+  code?: {
+    address: string
+    sourceIndex: number
+    offset: number
+    length: number
+  }
+}

@@ -8,13 +8,14 @@ const ALLOWED_FETCH_SITES = ['same-origin', 'none']
 // The server listens on every interface, so routes that act for the
 // researcher refuse other machines, pages that rebind their domain to this
 // machine (they still name it in the Host header), and pages on other sites
-// (the browser names them in the Origin or Sec-Fetch-Site header).
+// or other localhost ports (the browser names them in the Origin or
+// Sec-Fetch-Site header).
 export function localOnly(refusal: string): RequestHandler {
   return (req, res, next) => {
     if (
       isLocalRequest(
         req.socket.remoteAddress,
-        req.hostname,
+        req.get('host'),
         req.get('origin'),
         req.get('sec-fetch-site'),
       )
@@ -26,34 +27,44 @@ export function localOnly(refusal: string): RequestHandler {
   }
 }
 
+// host is the Host header, with the port.
 export function isLocalRequest(
   remoteAddress: string | undefined,
-  hostname: string,
+  host: string | undefined,
   origin: string | undefined,
   fetchSite: string | undefined,
 ): boolean {
-  if (remoteAddress === undefined) {
+  if (remoteAddress === undefined || host === undefined) {
     return false
   }
-  if (origin !== undefined && !isLocalOrigin(origin)) {
+  if (!LOOPBACK_ADDRESSES.includes(remoteAddress)) {
+    return false
+  }
+  if (!isLoopbackHost(host)) {
+    return false
+  }
+  // A sandboxed frame or a file page sends "null", which is not this page.
+  if (origin !== undefined && !isSameHost(origin, host)) {
     return false
   }
   // A link or frame may omit Origin, but browsers say where it came from.
-  // A page on another localhost port is same-site, not same-origin. Agents
-  // and other local tools send no such header.
+  // Agents and other local tools send no such header.
   if (fetchSite !== undefined && !ALLOWED_FETCH_SITES.includes(fetchSite)) {
     return false
   }
-  return (
-    LOOPBACK_ADDRESSES.includes(remoteAddress) &&
-    LOOPBACK_HOSTNAMES.includes(hostname)
-  )
+  return true
 }
 
-// A sandboxed frame or a file page sends "null", which is not this machine.
-function isLocalOrigin(origin: string): boolean {
+function isLoopbackHost(host: string): boolean {
+  const url = `http://${host}`
+  return URL.canParse(url) && LOOPBACK_HOSTNAMES.includes(new URL(url).hostname)
+}
+
+// The origin of a DiscoUI page names the same host and port as the request.
+function isSameHost(origin: string, host: string): boolean {
   return (
     URL.canParse(origin) &&
-    LOOPBACK_HOSTNAMES.includes(new URL(origin).hostname)
+    URL.canParse(`http://${host}`) &&
+    new URL(origin).host === new URL(`http://${host}`).host
   )
 }

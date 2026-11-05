@@ -1,7 +1,8 @@
 import { expect } from 'earl'
-import { type AgentShow, isStepIndex, useAgentStore } from './store'
+import type { ApiAgentShowEvent } from '../../../api/types'
+import { useAgentStore } from './store'
 
-const SHOW: AgentShow = {
+const SHOW: ApiAgentShowEvent = {
   type: 'show',
   id: 'show-1',
   project: 'linea',
@@ -27,6 +28,7 @@ describe('useAgentStore', () => {
     useAgentStore.getState().goTo(2)
     expect(useAgentStore.getState().index).toEqual(1)
     useAgentStore.getState().goTo(-1)
+    useAgentStore.getState().goTo(0.5)
     expect(useAgentStore.getState().index).toEqual(1)
   })
 
@@ -34,15 +36,5 @@ describe('useAgentStore', () => {
     useAgentStore.getState().start(SHOW)
     useAgentStore.getState().clear()
     expect(useAgentStore.getState().show).toEqual(undefined)
-  })
-})
-
-describe(isStepIndex.name, () => {
-  it('accepts whole indexes below the step count', () => {
-    expect(isStepIndex(0, 2)).toEqual(true)
-    expect(isStepIndex(1, 2)).toEqual(true)
-    expect(isStepIndex(2, 2)).toEqual(false)
-    expect(isStepIndex(-1, 2)).toEqual(false)
-    expect(isStepIndex(0.5, 2)).toEqual(false)
   })
 })

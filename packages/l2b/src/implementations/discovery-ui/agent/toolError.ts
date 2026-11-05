@@ -3,7 +3,7 @@
 export class ToolError extends Error {
   constructor(
     message: string,
-    readonly details: Record<string, string> = {},
+    readonly details: Record<string, string | string[]> = {},
   ) {
     super(message, { cause: details })
   }
@@ -11,7 +11,13 @@ export class ToolError extends Error {
   describe(): string {
     const lines = [this.message]
     for (const [key, value] of Object.entries(this.details)) {
-      lines.push(`  ${key}: ${value}`)
+      if (typeof value === 'string') {
+        lines.push(`  ${key}: ${value}`)
+        continue
+      }
+      if (value.length > 0) {
+        lines.push(`  ${key}:`, ...value.map((item) => `    ${item}`))
+      }
     }
     return lines.join('\n')
   }

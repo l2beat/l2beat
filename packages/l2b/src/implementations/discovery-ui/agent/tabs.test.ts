@@ -1,4 +1,5 @@
 import { expect } from 'earl'
+import type { ApiAgentShowEvent } from '../types'
 import { AgentTabs, type TabStream } from './tabs'
 
 describe(AgentTabs.name, () => {
@@ -10,10 +11,10 @@ describe(AgentTabs.name, () => {
     const tabs = new AgentTabs()
     tabs.connect('a', stream())
     tabs.connect('b', stream())
-    tabs.focus('a', 'linea')
-    tabs.focus('b', 'arbitrum')
+    tabs.report('a', 'linea', true)
+    tabs.report('b', 'arbitrum', true)
     expect(tabs.active()).toEqual({ id: 'b', project: 'arbitrum' })
-    tabs.focus('a', 'linea')
+    tabs.report('a', 'linea', true)
     expect(tabs.active()).toEqual({ id: 'a', project: 'linea' })
   })
 
@@ -21,9 +22,9 @@ describe(AgentTabs.name, () => {
     const tabs = new AgentTabs()
     const streams = { a: stream(), b: stream(), c: stream() }
     for (const [id, s] of Object.entries(streams)) tabs.connect(id, s)
-    tabs.focus('b', undefined)
-    tabs.focus('c', undefined)
-    tabs.focus('a', undefined)
+    tabs.report('b', undefined, true)
+    tabs.report('c', undefined, true)
+    tabs.report('a', undefined, true)
     tabs.disconnect('a', streams.a)
     expect(tabs.active()?.id).toEqual('c')
   })
@@ -33,22 +34,38 @@ describe(AgentTabs.name, () => {
     const old = stream()
     const current = stream()
     tabs.connect('a', old)
-    tabs.focus('a', 'linea')
+    tabs.report('a', 'linea', true)
     tabs.connect('a', current)
     tabs.disconnect('a', old)
     expect(tabs.active()).toEqual({ id: 'a', project: 'linea' })
     expect(old.ended).toEqual(true)
   })
 
-  it('refuses focus from a tab that is not connected', () => {
-    expect(new AgentTabs().focus('a', undefined)).toEqual(false)
+  it('refuses a report from a tab that is not connected', () => {
+    expect(new AgentTabs().report('a', undefined, true)).toEqual(false)
+  })
+
+  it('takes the project of a tab in the back without making it active', () => {
+    const tabs = new AgentTabs()
+    tabs.connect('a', stream())
+    tabs.connect('b', stream())
+    tabs.report('a', 'linea', true)
+    tabs.report('b', 'arbitrum', false)
+    expect(tabs.active()).toEqual({ id: 'a', project: 'linea' })
+  })
+
+  it('knows the project of a reconnected tab before it is focused', () => {
+    const tabs = new AgentTabs()
+    tabs.connect('a', stream())
+    tabs.report('a', 'linea', false)
+    expect(tabs.active()).toEqual({ id: 'a', project: 'linea' })
   })
 
   it('remembers the project a show moved a tab to', () => {
     const tabs = new AgentTabs()
     tabs.connect('a', stream())
-    tabs.focus('a', 'arbitrum')
-    tabs.recordShow('a', 'linea')
+    tabs.report('a', 'arbitrum', true)
+    tabs.show('a', show('linea'))
     expect(tabs.active()).toEqual({ id: 'a', project: 'linea' })
   })
 
@@ -58,11 +75,11 @@ describe(AgentTabs.name, () => {
     const b = stream()
     tabs.connect('a', a)
     tabs.connect('b', b)
-    tabs.focus('a', 'linea')
-    tabs.recordShow('a', 'linea')
-    tabs.focus('b', 'arbitrum')
+    tabs.report('a', 'linea', true)
+    tabs.show('a', show('linea'))
+    tabs.report('b', 'arbitrum', true)
     expect(tabs.clearShow()).toEqual(true)
-    expect(a.written).toEqual(['data: {"type":"clear"}\n\n'])
+    expect(a.written.slice(1)).toEqual(['data: {"type":"clear"}\n\n'])
     expect(b.written).toEqual([])
   })
 
@@ -72,11 +89,11 @@ describe(AgentTabs.name, () => {
     const b = stream()
     tabs.connect('a', a)
     tabs.connect('b', b)
-    tabs.recordShow('a', 'linea')
-    tabs.recordShow('b', 'linea')
-    tabs.recordShow('b', 'linea')
-    expect(a.written).toEqual(['data: {"type":"clear"}\n\n'])
-    expect(b.written).toEqual([])
+    tabs.show('a', show('linea'))
+    tabs.show('b', show('linea'))
+    tabs.show('b', show('linea'))
+    expect(a.written.slice(1)).toEqual(['data: {"type":"clear"}\n\n'])
+    expect(b.written.length).toEqual(2)
   })
 
   it('clears in the active tab once the tab with the note is gone', () => {
@@ -85,34 +102,29 @@ describe(AgentTabs.name, () => {
     const b = stream()
     tabs.connect('a', a)
     tabs.connect('b', b)
-    tabs.recordShow('a', 'linea')
+    tabs.show('a', show('linea'))
     tabs.disconnect('a', a)
-    tabs.focus('b', 'arbitrum')
+    tabs.report('b', 'arbitrum', true)
     expect(tabs.clearShow()).toEqual(true)
     expect(b.written).toEqual(['data: {"type":"clear"}\n\n'])
     expect(new AgentTabs().clearShow()).toEqual(false)
   })
 
-  it('sends an event to one tab only', () => {
+  it('sends a show to its tab only', () => {
     const tabs = new AgentTabs()
     const a = stream()
     const b = stream()
     tabs.connect('a', a)
     tabs.connect('b', b)
-    tabs.send('b', { type: 'clear' })
+    tabs.show('b', show('linea'))
     expect(a.written).toEqual([])
-    expect(b.written).toEqual(['data: {"type":"clear"}\n\n'])
-  })
-
-  it('ends every stream on shutdown', () => {
-    const tabs = new AgentTabs()
-    const a = stream()
-    tabs.connect('a', a)
-    tabs.closeAll()
-    expect(a.ended).toEqual(true)
-    expect(tabs.size).toEqual(0)
+    expect(b.written).toEqual([`data: ${JSON.stringify(show('linea'))}\n\n`])
   })
 })
+
+function show(project: string): ApiAgentShowEvent {
+  return { type: 'show', id: 'show-1', project, steps: [] }
+}
 
 function stream(): TabStream & { written: string[]; ended: boolean } {
   const result = {

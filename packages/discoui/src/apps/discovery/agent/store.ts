@@ -1,39 +1,10 @@
-import { v as z } from '@l2beat/validate'
 import { create } from 'zustand'
-
-const agentStepSchema = z.object({
-  note: z.string(),
-  // The code contract first: the code panel shows the first selected one.
-  select: z.array(z.string()),
-  code: z
-    .object({
-      address: z.string(),
-      sourceIndex: z.number(),
-      offset: z.number(),
-      length: z.number(),
-    })
-    .optional(),
-})
-export type AgentStep = z.infer<typeof agentStepSchema>
-
-const agentShowSchema = z.object({
-  type: z.literal('show'),
-  id: z.string(),
-  project: z.string(),
-  steps: z.array(agentStepSchema),
-})
-export type AgentShow = z.infer<typeof agentShowSchema>
-
-export const agentEventSchema = z.union([
-  agentShowSchema,
-  z.object({ type: z.literal('clear') }),
-])
-export type AgentEvent = z.infer<typeof agentEventSchema>
+import type { ApiAgentShowEvent } from '../../../api/types'
 
 interface State {
-  show: AgentShow | undefined
+  show: ApiAgentShowEvent | undefined
   index: number
-  start: (show: AgentShow) => void
+  start: (show: ApiAgentShowEvent) => void
   goTo: (index: number) => void
   clear: () => void
 }
@@ -44,13 +15,19 @@ export const useAgentStore = create<State>((set, get) => ({
   start: (show) => set({ show, index: 0 }),
   goTo: (index) => {
     const show = get().show
-    if (show !== undefined && isStepIndex(index, show.steps.length)) {
+    if (show === undefined) {
+      return
+    }
+    if (Number.isInteger(index) && index >= 0 && index < show.steps.length) {
       set({ index })
     }
   },
   clear: () => set({ show: undefined, index: 0 }),
 }))
 
-export function isStepIndex(index: number, stepCount: number): boolean {
-  return Number.isInteger(index) && index >= 0 && index < stepCount
+// The note shows over the graph of its own project only.
+export function useIsNoteShown(project: string | undefined): boolean {
+  return useAgentStore(
+    (state) => state.show !== undefined && state.show.project === project,
+  )
 }

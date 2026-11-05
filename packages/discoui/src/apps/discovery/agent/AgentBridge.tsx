@@ -1,12 +1,15 @@
 import { useEffect, useRef } from 'react'
 import { useMatch, useNavigate } from 'react-router'
+import { openAgentEvents, postAgentTab } from '../../../api/api'
+import type { ApiAgentEvent } from '../../../api/types'
+import { isEditableTarget } from '../../../utils/isEditableTarget'
 import { useDockingStore } from '../multi-view/store'
 import { useStore as useNodeStore } from '../panel-nodes/store/store'
 import { applyStep } from './applyStep'
-import { type AgentEvent, agentEventSchema, useAgentStore } from './store'
+import { useAgentStore, useIsNoteShown } from './store'
 
 // The server sends each show to the tab the researcher focused last, so
-// every tab tells it when it comes to the front.
+// every tab tells it its project and when it comes to the front.
 const TAB_ID = createTabId()
 
 // randomUUID exists only on secure pages, and DiscoUI is also opened over
@@ -24,46 +27,38 @@ export function AgentBridge() {
   const isConnected = useRef(false)
 
   useEffect(() => {
-    const events = new EventSource(`/api/agent/events?tab=${TAB_ID}`)
-    const focus = () => {
-      if (isConnected.current) postFocus(projectRef.current)
+    const report = () => {
+      if (isConnected.current) reportTab(projectRef.current)
     }
-    const focusWhenVisible = () => {
-      if (isInFront()) focus()
-    }
+    const events = openAgentEvents(TAB_ID, (event) =>
+      handleEvent(event, (target) => {
+        const path = `/ui/p/${encodeURIComponent(target)}`
+        if (window.location.pathname !== path) void navigate(path)
+      }),
+    )
+    // A restarted server forgot every tab, so each one reports on reconnect.
     events.onopen = () => {
       isConnected.current = true
-      focusWhenVisible()
+      report()
     }
     events.onerror = () => {
       isConnected.current = false
     }
-    events.onmessage = (message) => {
-      const event = agentEventSchema.safeParse(JSON.parse(message.data))
-      if (!event.success) {
-        console.warn('Unknown agent event', { message: event.message })
-        return
-      }
-      handleEvent(event.data, (target) => {
-        const path = `/ui/p/${encodeURIComponent(target)}`
-        if (window.location.pathname !== path) void navigate(path)
-      })
-    }
-    window.addEventListener('focus', focus)
-    document.addEventListener('visibilitychange', focusWhenVisible)
+    window.addEventListener('focus', report)
+    document.addEventListener('visibilitychange', report)
     return () => {
       isConnected.current = false
       events.close()
-      window.removeEventListener('focus', focus)
-      document.removeEventListener('visibilitychange', focusWhenVisible)
+      window.removeEventListener('focus', report)
+      document.removeEventListener('visibilitychange', report)
     }
   }, [navigate])
 
   // The server answers show without a project with the one this tab shows.
   useEffect(() => {
     projectRef.current = project
-    if (isConnected.current && isInFront()) {
-      postFocus(project)
+    if (isConnected.current) {
+      reportTab(project)
     }
   }, [project])
 
@@ -74,19 +69,14 @@ export function AgentBridge() {
 
 // A visible tab in another, unfocused window is not the one the researcher
 // uses, and claiming focus when it reconnects would steal the agent's shows.
-function isInFront(): boolean {
-  return document.visibilityState === 'visible' && document.hasFocus()
+function reportTab(project: string | undefined) {
+  const focused = document.visibilityState === 'visible' && document.hasFocus()
+  postAgentTab({ tab: TAB_ID, project, focused }).catch((error) =>
+    console.warn('Agent tab report not sent', { error }),
+  )
 }
 
-function postFocus(project: string | undefined) {
-  fetch('/api/agent/focus', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ tab: TAB_ID, project }),
-  }).catch((error) => console.warn('Agent focus not sent', { error }))
-}
-
-function handleEvent(event: AgentEvent, open: (project: string) => void) {
+function handleEvent(event: ApiAgentEvent, open: (project: string) => void) {
   if (event.type === 'clear') {
     useAgentStore.getState().clear()
     return
@@ -128,16 +118,18 @@ function useApplyStep() {
 }
 
 function useAgentKeyboard(project: string | undefined) {
-  const isNoteShown = useAgentStore(
-    (state) => state.show !== undefined && state.show.project === project,
-  )
+  const isNoteShown = useIsNoteShown(project)
 
   useEffect(() => {
     if (!isNoteShown) {
       return
     }
     const onKeyDown = (event: KeyboardEvent) => {
-      if (isTyping(event) || document.querySelector('[role="dialog"]')) {
+      if (hasModifier(event) || isEditableTarget(event.target)) {
+        return
+      }
+      // Escape closes an open dialog, and arrows move inside it.
+      if (document.querySelector('[role="dialog"]')) {
         return
       }
       const store = useAgentStore.getState()
@@ -150,18 +142,6 @@ function useAgentKeyboard(project: string | undefined) {
   }, [isNoteShown])
 }
 
-function isTyping(event: KeyboardEvent): boolean {
-  if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
-    return true
-  }
-  const target = event.target
-  if (!(target instanceof HTMLElement)) {
-    return false
-  }
-  return (
-    target.isContentEditable ||
-    target.tagName === 'INPUT' ||
-    target.tagName === 'TEXTAREA' ||
-    target.tagName === 'SELECT'
-  )
+function hasModifier(event: KeyboardEvent): boolean {
+  return event.altKey || event.ctrlKey || event.metaKey || event.shiftKey
 }
