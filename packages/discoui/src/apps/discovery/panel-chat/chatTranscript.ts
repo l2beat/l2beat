@@ -2,6 +2,11 @@ import type { ApiChatEvent } from '../../../api/types'
 
 export type ChatStatus = Extract<ApiChatEvent, { type: 'status' }>
 
+// The server keeps the transcript within these, so a live chat stays the
+// size of its replay.
+const ENTRIES_MAX = 2_000
+const TEXT_CHARACTERS_MAX = 50_000
+
 // What the panel draws: the conversation, the chat's latest status and the
 // permission requests already answered.
 export interface ChatView {
@@ -28,7 +33,8 @@ export function applyChatEvent(view: ChatView, event: ApiChatEvent): ChatView {
   const entries = [...view.entries]
   const last = entries.at(-1)
   if (event.type === 'text' && last?.type === 'text') {
-    entries[entries.length - 1] = { type: 'text', text: last.text + event.text }
+    const text = (last.text + event.text).slice(0, TEXT_CHARACTERS_MAX)
+    entries[entries.length - 1] = { type: 'text', text }
     return { ...view, entries }
   }
   if (event.type === 'tool') {
@@ -42,7 +48,7 @@ export function applyChatEvent(view: ChatView, event: ApiChatEvent): ChatView {
     }
   }
   entries.push(event)
-  return { ...view, entries }
+  return { ...view, entries: entries.slice(-ENTRIES_MAX) }
 }
 
 export function replayChat(events: ApiChatEvent[]): ChatView {

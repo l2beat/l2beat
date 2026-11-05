@@ -33,7 +33,19 @@ export function ChatPanel() {
       return false
     }
   }
-  const isOpen = status !== undefined && status.status !== 'closed'
+  // A failed chat takes no more messages; the researcher starts another.
+  const isOpen =
+    status !== undefined &&
+    status.status !== 'closed' &&
+    status.status !== 'failed'
+  // A message sent while the agent starts waits on the server, and can be
+  // stopped before it goes out.
+  const isWorking = useChatStore(
+    (state) =>
+      state.view.status?.status === 'working' ||
+      (state.view.status?.status === 'starting' &&
+        state.view.entries.some((entry) => entry.type === 'user')),
+  )
 
   return (
     <div className="flex h-full flex-col text-coffee-200 text-xs">
@@ -71,9 +83,7 @@ export function ChatPanel() {
       )}
       <Transcript send={send} />
       {refusal && <p className="px-3 py-1 text-aux-red">{refusal}</p>}
-      {isOpen && (
-        <Composer isWorking={status.status === 'working'} send={send} />
-      )}
+      {isOpen && <Composer isWorking={isWorking} send={send} />}
     </div>
   )
 }

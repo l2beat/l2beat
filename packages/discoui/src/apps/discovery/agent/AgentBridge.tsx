@@ -161,8 +161,10 @@ function handleEvent(
   }
   if (event.type === 'connected') {
     // A new server forgot the show it sent here and could not clear it.
+    // Its chat is gone too: the new server has none to replay.
     if (serverId !== undefined && serverId !== event.serverId) {
       useAgentStore.getState().clear()
+      useChatStore.getState().replay([])
     }
     serverId = event.serverId
     return

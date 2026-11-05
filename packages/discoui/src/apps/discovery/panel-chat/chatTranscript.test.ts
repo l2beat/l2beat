@@ -36,3 +36,20 @@ describe(applyChatEvent.name, () => {
     expect([...view.answered]).toEqual(['1'])
   })
 })
+
+describe('applyChatEvent bounds', () => {
+  it('keeps a live chat within the server limits', () => {
+    let view = replayChat([{ type: 'text', text: 'x'.repeat(40_000) }])
+    view = applyChatEvent(view, { type: 'text', text: 'y'.repeat(20_000) })
+    const answer = view.entries[0]
+    expect(answer?.type === 'text' && answer.text.length).toEqual(50_000)
+
+    const many = Array.from({ length: 2_100 }, (_, i) => ({
+      type: 'user' as const,
+      text: `${i}`,
+    }))
+    const long = replayChat(many)
+    expect(long.entries.length).toEqual(2_000)
+    expect(long.entries[0]).toEqual({ type: 'user', text: '100' })
+  })
+})
