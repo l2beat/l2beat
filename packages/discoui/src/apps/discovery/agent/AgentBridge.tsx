@@ -129,6 +129,10 @@ function handleEvent(
     useAgentStore.getState().clear()
     return
   }
+  // The chat panel comes in a later change; until then nothing starts one.
+  if (event.type === 'chat' || event.type === 'chat-replay') {
+    return
+  }
   // The agent may have run discovery since this tab loaded the project, like
   // the terminal's Run discovery does. Data that did not change keeps its
   // identity, so the graph reloads only when it did.

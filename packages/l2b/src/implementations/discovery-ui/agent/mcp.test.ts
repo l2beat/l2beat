@@ -24,7 +24,12 @@ describe(attachMcpRoutes.name, () => {
       },
       readDiscoveryWithReferences: () => [],
     })
-    app.use('/api/agent', createAgentRouter(configReader, tabs))
+    const chatOptions = {
+      cwd: process.cwd(),
+      mcpUrl: 'http://localhost:0/api/agent/mcp',
+      launch: () => ({ command: process.execPath, args: ['-e', ''] }),
+    }
+    app.use('/api/agent', createAgentRouter(configReader, chatOptions, tabs))
     server = app.listen(0, '127.0.0.1')
     await new Promise((resolve) => server.once('listening', resolve))
     const { port } = server.address() as AddressInfo
