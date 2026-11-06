@@ -171,5 +171,6 @@ function record(
     configurationId: `${projectId}-${daLayer}`,
     timestamp,
     totalSize,
+    totalFeeEth: null,
   }
 }

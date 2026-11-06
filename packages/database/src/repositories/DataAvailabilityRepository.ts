@@ -9,6 +9,8 @@ export interface DataAvailabilityRecord {
   daLayer: string
   configurationId: string
   totalSize: bigint
+  /** ETH paid for the blobs: null on layers other than Ethereum, and on hours indexed before it was tracked */
+  totalFeeEth: number | null
 }
 
 export interface ProjectsSummedDataAvailabilityRecord {
@@ -34,11 +36,15 @@ export function toRecord(
     daLayer: row.daLayer,
     configurationId: row.configurationId,
     totalSize: BigInt(row.totalSize),
+    totalFeeEth: row.totalFeeEth,
   }
 }
 
 export function toProjectsSummedRecord(
-  row: Omit<Selectable<DataAvailability>, 'projectId' | 'configurationId'>,
+  row: Pick<
+    Selectable<DataAvailability>,
+    'daLayer' | 'timestamp' | 'totalSize'
+  >,
 ): ProjectsSummedDataAvailabilityRecord {
   return {
     daLayer: row.daLayer,
@@ -56,6 +62,7 @@ export function toRow(
     daLayer: record.daLayer,
     configurationId: record.configurationId,
     totalSize: record.totalSize.toString(),
+    totalFeeEth: record.totalFeeEth,
   }
 }
 
@@ -73,6 +80,7 @@ export class DataAvailabilityRepository extends BaseRepository {
             .columns(['timestamp', 'daLayer', 'projectId', 'configurationId'])
             .doUpdateSet((eb) => ({
               totalSize: eb.ref('excluded.totalSize'),
+              totalFeeEth: eb.ref('excluded.totalFeeEth'),
             })),
         )
         .execute()

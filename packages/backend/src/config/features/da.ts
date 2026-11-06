@@ -33,6 +33,7 @@ export async function getDaTrackingConfig(
       url: env.string('ETHEREUM_BEACON_API_URL'),
       callsPerMinute: env.integer('ETHEREUM_BEACON_API_CALLS_PER_MINUTE', 600),
       batchSize: env.integer('ETHEREUM_BLOBS_BATCH_SIZE', 2500),
+      blobFeeBatchSize: env.integer('ETHEREUM_BLOB_FEE_BATCH_SIZE', 10_000),
       startingBlock: ETHEREUM_START_BLOCK,
     })
 

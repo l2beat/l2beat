@@ -1319,5 +1319,6 @@ function record(
     projectId,
     configurationId,
     totalSize,
+    totalFeeEth: null,
   }
 }
