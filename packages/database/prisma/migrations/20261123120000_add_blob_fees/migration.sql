@@ -1,6 +1,9 @@
 -- AlterTable
 ALTER TABLE "DataAvailability" ADD COLUMN "totalFeeEth" DOUBLE PRECISION;
 
+-- AlterTable
+ALTER TABLE "LiveBlock" ADD COLUMN "blobBaseFee" BIGINT;
+
 -- CreateTable
 CREATE TABLE "BlobFee" (
     "blockNumber" INTEGER NOT NULL,

@@ -40,6 +40,7 @@ export interface LiveBlobsRows {
   posted: LivePostedRecord[]
   buckets: LiveBucketRecord[]
   pulse: LiveBlockBucketRecord[]
+  ethPriceUsd: number | undefined
 }
 
 /**
@@ -72,6 +73,7 @@ export function buildLiveBlobs(
       blocks: rows.inWindow?.blocks ?? 0,
       newestBlobs: blocks.get(head)?.blobCount ?? 0,
       pulse: pulseOf(rows.pulse, head),
+      ethPriceUsd: rows.ethPriceUsd,
       ...postedWithBuckets(rows, head),
     },
   }

@@ -273,6 +273,7 @@ describe(buildLiveBlobs.name, () => {
       posted: [],
       buckets: [],
       pulse: [],
+      ethPriceUsd: undefined,
       ...overrides,
     }
   }
@@ -283,6 +284,7 @@ describe(buildLiveBlobs.name, () => {
       blockNumber: slot + 1000,
       hash: `0x${slot}`,
       timestamp: UnixTime(slotStart(slot)),
+      blobBaseFee: null,
       blobCount: (HEAD - slot) % 4,
     }
   }
@@ -317,6 +319,7 @@ describe(buildLiveBlobs.name, () => {
       batches: blobs / 2,
       lastSlot,
       lastBlobs: 2,
+      feeEth: 0,
     }
   }
 

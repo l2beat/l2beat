@@ -10,6 +10,8 @@ export interface LiveBlockRecord {
   hash: string
   timestamp: UnixTime
   blobCount: number
+  /** Wei per blob gas. Null for a block stored before fees were kept */
+  blobBaseFee: bigint | null
 }
 
 /** Stored slots from oldest to newest; the ones in between with no block were missed */
@@ -27,11 +29,19 @@ export interface LiveBlockBucketRecord {
 }
 
 export function toRecord(row: Selectable<LiveBlock>): LiveBlockRecord {
-  return { ...row, timestamp: UnixTime.fromDate(row.timestamp) }
+  return {
+    ...row,
+    timestamp: UnixTime.fromDate(row.timestamp),
+    blobBaseFee: row.blobBaseFee === null ? null : BigInt(row.blobBaseFee),
+  }
 }
 
 export function toRow(record: LiveBlockRecord): Insertable<LiveBlock> {
-  return { ...record, timestamp: UnixTime.toDate(record.timestamp) }
+  return {
+    ...record,
+    timestamp: UnixTime.toDate(record.timestamp),
+    blobBaseFee: record.blobBaseFee?.toString() ?? null,
+  }
 }
 
 export class LiveBlockRepository extends BaseRepository {
@@ -48,6 +58,7 @@ export class LiveBlockRepository extends BaseRepository {
             hash: eb.ref('excluded.hash'),
             timestamp: eb.ref('excluded.timestamp'),
             blobCount: eb.ref('excluded.blobCount'),
+            blobBaseFee: eb.ref('excluded.blobBaseFee'),
           })),
         )
         .execute()

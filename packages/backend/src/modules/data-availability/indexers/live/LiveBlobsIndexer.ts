@@ -68,7 +68,7 @@ export interface LiveBlobsIndexerDependencies
  * retried, so the window is cut and the stale blocks dropped in `update`
  */
 export class LiveBlobsIndexer extends ManagedChildIndexer {
-  private storedReattributed = false
+  private storedUpdated = false
 
   constructor(
     private readonly $: LiveBlobsIndexerDependencies,
@@ -95,18 +95,22 @@ export class LiveBlobsIndexer extends ManagedChildIndexer {
       LIVE_METRICS_CONTEXT,
       { daLayer: 'ethereum' },
       async () => {
-        if (!this.storedReattributed) {
+        if (!this.storedUpdated) {
           await this.reattributeStored(to)
-          this.storedReattributed = true
+          await this.priceStored(to)
+          this.storedUpdated = true
         }
 
         const windowStart = liveWindowStart(to)
         const start = Math.max(from, windowStart)
         const end = Math.min(start + this.$.batchSize - 1, to)
 
-        const blocks = await this.fetchWhenOnRpc(start, end)
+        const [blocks, blobBaseFees] = await Promise.all([
+          this.fetchWhenOnRpc(start, end),
+          this.$.daProvider.getBlobBaseFees(start, end),
+        ])
         await this.assertBuildsOnStored(start, blocks)
-        const liveBlocks = blocks.map(toLiveBlock)
+        const liveBlocks = blocks.map((b) => toLiveBlock(b, blobBaseFees))
         const liveBatches = blocks.flatMap((b) => this.toLiveBatches(b))
 
         await this.$.db.transaction(async () => {
@@ -211,6 +215,34 @@ export class LiveBlobsIndexer extends ManagedChildIndexer {
     this.logger.info('Reattributed stored batches', { changed: changed.length })
   }
 
+  /**
+   * Blocks stored before fees were kept get theirs on the first update after
+   * the deploy, a call per thousand blocks, rather than showing their blobs
+   * as free until the window has moved past them
+   */
+  private async priceStored(head: number) {
+    const unpriced = (
+      await this.$.db.liveBlock.getByBlockNumberRange(
+        liveWindowStart(head),
+        head,
+      )
+    ).filter((block) => block.blobBaseFee === null)
+    const first = unpriced[0]
+    const last = unpriced.at(-1)
+    if (!first || !last) return
+    const fees = await this.$.daProvider.getBlobBaseFees(
+      first.blockNumber,
+      last.blockNumber,
+    )
+    await this.$.db.liveBlock.upsertMany(
+      unpriced.map((block) => ({
+        ...block,
+        blobBaseFee: fees.get(block.blockNumber) ?? null,
+      })),
+    )
+    this.logger.info('Priced stored blocks', { blocks: unpriced.length })
+  }
+
   /** The view can show a block no sooner than it is stored */
   private logStored(from: number, to: number, newest: UnixTime | undefined) {
     const now = (this.$.now ?? nowSeconds)()
@@ -260,13 +292,21 @@ function closestMatch(configs: LiveBlobsConfig[], sender: string) {
   )
 }
 
-function toLiveBlock(block: EthereumBlobBlock): LiveBlockRecord {
+/**
+ * The fee comes by block number, from whichever node answered: after a reorg
+ * it may be the other fork's, which differs by a few percent at most
+ */
+function toLiveBlock(
+  block: EthereumBlobBlock,
+  blobBaseFees: Map<number, bigint>,
+): LiveBlockRecord {
   return {
     slot: slotAt(block.timestamp),
     blockNumber: block.number,
     hash: block.hash,
     timestamp: block.timestamp,
     blobCount: block.batches.reduce((sum, b) => sum + b.blobs, 0),
+    blobBaseFee: blobBaseFees.get(block.number) ?? null,
   }
 }
 

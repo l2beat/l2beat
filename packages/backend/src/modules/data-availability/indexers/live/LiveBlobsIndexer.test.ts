@@ -274,6 +274,31 @@ describe(LiveBlobsIndexer.name, () => {
     }
   })
 
+  describe('pricing the stored blocks', () => {
+    it('fetches the fees of the stored blocks lacking one, on the first update only', async () => {
+      // Stored before the deploy that started keeping fees
+      const unpriced = { ...liveBlock(HEAD - 20, 1), blobBaseFee: null }
+      const priced = liveBlock(HEAD - 19, 1)
+      const { indexer, db, daProvider } = setup({
+        stored: [unpriced, priced],
+      })
+
+      await indexer.update(HEAD - 9, HEAD - 9)
+      await indexer.update(HEAD - 8, HEAD - 8)
+
+      expect(daProvider.getBlobBaseFees).toHaveBeenNthCalledWith(
+        1,
+        HEAD - 20,
+        HEAD - 20,
+      )
+      expect(db.liveBlock.upsertMany).toHaveBeenNthCalledWith(1, [
+        { ...unpriced, blobBaseFee: feeOf(HEAD - 20) },
+      ])
+      // one per update for its own blocks, and the one for the stored
+      expect(daProvider.getBlobBaseFees).toHaveBeenCalledTimes(3)
+    })
+  })
+
   describe('reattributing the stored batches', () => {
     it('updates the stored batches whose project changed, on the first update only', async () => {
       // Stored before a deploy that moved the inbox to another project; the
@@ -343,6 +368,9 @@ describe(LiveBlobsIndexer.name, () => {
     const liveBlock = mockObject<Database['liveBlock']>({
       findByBlockNumber: async (blockNumber: number) =>
         stored.find((b) => b.blockNumber === blockNumber),
+      getByBlockNumberRange: mockFn(async (from: number, to: number) =>
+        stored.filter((b) => from <= b.blockNumber && b.blockNumber <= to),
+      ),
       upsertMany: mockFn().resolvesTo(0),
       deleteBeforeBlock: mockFn().resolvesTo(0),
       deleteAfterBlock: mockFn().resolvesTo(0),
@@ -364,6 +392,15 @@ describe(LiveBlobsIndexer.name, () => {
       liveBlobBatch,
     })
     const daProvider = mockObject<EthereumDaProvider>({
+      getBlobBaseFees: mockFn(
+        async (from: number, to: number) =>
+          new Map(
+            Array.from({ length: to - from + 1 }, (_, i) => [
+              from + i,
+              feeOf(from + i),
+            ]),
+          ),
+      ),
       getBlocksWithBlobBatchesFromReceipts: mockFn(
         async (from: number, to: number) =>
           Array.from({ length: to - from + 1 }, (_, i) => ({
@@ -402,6 +439,11 @@ function timestampOf(blockNumber: number) {
   return UnixTime(slotStart(blockNumber + SLOT_OFFSET))
 }
 
+/** As the mocked provider prices every block */
+function feeOf(blockNumber: number) {
+  return BigInt(blockNumber) * 1_000n
+}
+
 function liveBlock(blockNumber: number, blobCount: number) {
   return {
     slot: blockNumber + SLOT_OFFSET,
@@ -409,6 +451,7 @@ function liveBlock(blockNumber: number, blobCount: number) {
     hash: `0x${blockNumber}`,
     timestamp: timestampOf(blockNumber),
     blobCount,
+    blobBaseFee: feeOf(blockNumber),
   }
 }
 
