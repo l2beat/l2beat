@@ -1,3 +1,56 @@
+Generated with discovered.json: 0x1de021954b3397b8bdaee27ceb021277733f8d4c
+
+# Diff at Thu, 05 Nov 2026 15:35:19 GMT:
+
+- id: 3cdedfc5
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@181c6b3e2aefdcafd6dd1dd7151c810ad0e792a6 block: 1793715852
+- current timestamp: 1793715852
+
+## Description
+
+Config only: the Chain Admin permission of the Diamond now lists the v31 power to pause all new L1 --> L2 transactions while Priority Mode is not allowed, deposits included.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793715852 (main branch discovery), not current.
+
+```diff
+    contract Safe (eth:0x916cdc02EE1b48df87049EC764f0BDEa594B3AbE) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
++        "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers and, from v31 while Priority Mode is not allowed, pause all new L1 --> L2 transactions including deposits (Chain Admin role)."
+    }
+```
+
+```diff
+    contract ChainAdminOwnable (eth:0xc4F79BAb04664229eAEf3dBbc528Dd982df81EdD) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0x916cdc02EE1b48df87049EC764f0BDEa594B3AbE act through it.
+      directlyReceivedPermissions.0.description:
+-        "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
++        "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers and, from v31 while Priority Mode is not allowed, pause all new L1 --> L2 transactions including deposits (Chain Admin role)."
+    }
+```
+
+```diff
+    external contract ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) {
+    +++ description: None
+      directlyReceivedPermissions.10:
++        {"permission":"interact","from":"eth:0xc16161C7f704388285fE58db287F6216a350dAFA","description":"manage allowed rollup DA configurations (allowed to be used by rollups in permanent rollup mode).","role":".owner"}
+    }
+```
+
+```diff
+    external contract (eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C) {
+    +++ description: None
+      receivedPermissions.6:
++        {"permission":"interact","from":"eth:0xc16161C7f704388285fE58db287F6216a350dAFA","description":"manage allowed rollup DA configurations (allowed to be used by rollups in permanent rollup mode).","role":".owner","via":[{"address":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+    }
+```
+
 Generated with discovered.json: 0xd2aa50447fd35f904c2035caf2e74c9082462c87
 
 # Diff at Thu, 05 Nov 2026 08:58:38 GMT:

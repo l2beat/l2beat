@@ -15,6 +15,7 @@ import { IconCode } from '../../../icons/IconCode'
 import { IconFileDiff } from '../../../icons/IconFileDiff'
 import { IconGear } from '../../../icons/IconGear'
 import { IconList } from '../../../icons/IconList'
+import { IconMessage } from '../../../icons/IconMessage'
 import { IconNodes } from '../../../icons/IconNodes'
 import { IconShare } from '../../../icons/IconShare'
 import { IconSigma } from '../../../icons/IconSigma'
@@ -25,6 +26,7 @@ import { IconTreemap } from '../../../icons/IconTreemap'
 import { IconWebApp } from '../../../icons/IconWebApp'
 import { cn } from '../../../utils/cn'
 import { AnalyzePanel } from '../panel-analyze/AnalyzePanel'
+import { ChatPanel } from '../panel-chat/ChatPanel'
 import { CodePanel } from '../panel-code/CodePanel'
 import { ConfigPanel } from '../panel-config/ConfigPanel'
 import { DiffHistoryPanel } from '../panel-diff-history/DiffHistoryPanel'
@@ -53,6 +55,7 @@ export const PANEL_IDS = [
   'tvl',
   'tvlMap',
   'usage',
+  'chat',
 ] as const
 
 export type PanelId = (typeof PANEL_IDS)[number]
@@ -76,9 +79,11 @@ const PANELS: Record<PanelId, Panel> = {
   tvl: { icon: IconToken, body: TvlPanel },
   tvlMap: { icon: IconTreemap, body: TvlMapPanel },
   usage: { icon: IconShare, body: UsagePanel },
+  chat: { icon: IconMessage, body: ChatPanel },
 }
 
 const unallowedInReadOnly = new Set([
+  'chat',
   'terminal',
   'analyze',
   'tvl',

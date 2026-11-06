@@ -222,18 +222,6 @@ export const ethereum: BaseProject = {
     },
     sovereignProjectsTrackingConfig: [
       {
-        projectId: ProjectId('codex'),
-        name: 'Codex',
-        daTrackingConfig: [
-          {
-            type: 'ethereum',
-            inbox: '0x8c12f051c161c2cda736f3b3fa1c4bdd35b7922c',
-            sequencers: ['0xb5bd290ef8ef3840cb866c7a8b7cc9e45fde3ab9'],
-            sinceBlock: 20953494,
-          },
-        ],
-      },
-      {
         projectId: ProjectId('quarkchain'),
         name: 'QuarkChain SWC',
         daTrackingConfig: [

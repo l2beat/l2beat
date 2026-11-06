@@ -44,7 +44,7 @@
   "static/icons/celestia.png": "e574812a266adc29e8e627167c5fab8e",
   "static/icons/celo.png": "69c9fc7f1480a12890101929b21eff6f",
   "static/icons/codex.png": "b2761335e6ad14fcd25fba98eaa19af7",
-  "static/meta-images/layer2s/projects/codex/opengraph-image.png": "ecf6736186bf9975a10aa3609d91c2e1",
+  "static/meta-images/layer2s/projects/codex/opengraph-image.png": "aab3687ad2fe31d48063b09fd6f77a6b",
   "static/icons/chainbounty.png": "6db2950e888ed056b7f7125a0d0ad3db",
   "static/meta-images/layer2s/projects/chainbounty/opengraph-image.png": "5b632fa58373815ee2207de71cc1af7b",
   "static/icons/clique.png": "4e297ca4e2935182f46d8e822659fde7",
@@ -1508,15 +1508,12 @@
   "static/meta-images/interop/projects/butternetwork/opengraph-image.png": "d5344777bc9f429e01b470753a2b90d1",
   "static/icons/butternetwork.png": "d703eb0a0ad7bd2e852192bdb4adc769",
   "static/meta-images/layer2s/compare/opengraph-image.png": "7c55343d744ddbdeb5f62a04aedc8bc8",
-  "static/icons/frankencoin.png": "50dda344103d36973d7cb0a30c676ba6",
-  "static/icons/chfau.png": "b7cecee23cbe4a26a447753a1cce40e8",
   "static/images/architecture/liquityv2.png": "6457a9f33481c7cef97fa48977676e37",
   "static/images/architecture/uniswapv3.png": "8828339c8ae5ad448a72e4530d42d4fd",
   "static/meta-images/defi/projects/chainlink/opengraph-image.png": "26edd304a3574db3d58b36945aacab2e",
   "static/meta-images/defi/projects/liquityv2/opengraph-image.png": "c0249cea88aa90fd07131844ed7ff389",
   "static/meta-images/defi/projects/uniswapv3/opengraph-image.png": "3b97b791397b27f5a675cb0a902ca543",
   "static/meta-images/defi/summary/opengraph-image.png": "aa83e2364101312cc29a797393e92a74",
-  "static/meta-images/defi/projects/frankencoin/opengraph-image.png": "d53f6a1fcd7693ebbffcfaa961cf860d",
   "static/meta-images/defi/projects/uniswapv4/opengraph-image.png": "653f09bb85f169c1625b52dcfe1c7c82",
   "static/icons/privacy-boost.png": "556d9480cba16abc6fe7fe04a0dce9bc",
   "static/meta-images/privacy/projects/privacy-boost/opengraph-image.png": "02ac97ad3f4da9d87c83c5e2ab938d2a",
@@ -1613,5 +1610,7 @@
   "static/meta-images/publications/l2beat-is-now-ethbeat.png": "45831ae7cf4107cbb8cf464237c16a16",
   "static/meta-images/publications/l2beat-is-now-ethbeat-pulse-nav.png": "24c8e2ee44e22dc452e827ef9def3805",
   "static/meta-images/submit-your-protocol/opengraph-image.png": "50111d200c638f4fcb1d5c4789a9d0aa",
-  "static/meta-images/integrate-crops/opengraph-image.png": "528391b09f4a3cc450a148b9a9ff5b23"
+  "static/meta-images/integrate-crops/opengraph-image.png": "528391b09f4a3cc450a148b9a9ff5b23",
+  "static/meta-images/layer2s/projects/doma/opengraph-image.png": "a37ea95b0fb0d7519dfa99689e10c8c3",
+  "static/icons/doma.png": "8631818edd9dc2c58ce786c7c970bd3c"
 }
