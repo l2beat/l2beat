@@ -143,21 +143,28 @@ export function toRecentPoints(
 }
 
 /**
- * Whether recent points run on from a chart's last one: it has a value, and
- * the first of them is the next period. Otherwise a period activity has not
- * summed would sit between, and the chart would seem synced past it
+ * A chart up to its last period with a value, without the empty ones after
+ * it that activity has not summed yet, whose place recent points take
+ */
+export function withoutUnsummed<
+  T extends [UnixTime, number | null, ...(number | null)[]],
+>(data: T[]): T[] {
+  let end = data.length
+  while (end > 0 && data[end - 1]?.[1] === null) end--
+  return data.slice(0, end)
+}
+
+/**
+ * Whether the first recent point is the period after a chart's last summed
+ * one. Otherwise a period activity has not summed would sit between, and the
+ * chart would seem synced past it
  */
 export function runsOn(
-  last: [UnixTime, number | null] | undefined,
+  last: UnixTime,
   first: UnixTime | undefined,
   resolution: ActivityResolution,
 ): boolean {
-  return (
-    last !== undefined &&
-    last[1] !== null &&
-    (first === undefined ||
-      first === last[0] + UnixTime.periodToSeconds(resolution))
-  )
+  return first === last + UnixTime.periodToSeconds(resolution)
 }
 
 /**
@@ -172,7 +179,8 @@ export function appendRecentPoints(
   resolution: ActivityResolution,
 ): { data: ActivityChartDataPoint[]; liveUntil: UnixTime | undefined } {
   const own = recent.get(projectId)
-  const last = data.at(-1)
+  const summed = withoutUnsummed(data)
+  const last = summed.at(-1)
   if (!own || !last) return { data, liveUntil: undefined }
   const after = last[0]
   const ethereum = recent.get(ProjectId.ETHEREUM)
@@ -199,8 +207,8 @@ export function appendRecentPoints(
       ]
     },
   )
-  if (!runsOn([after, last[1]], appended[0]?.[0], resolution)) {
+  if (!runsOn(after, appended[0]?.[0], resolution)) {
     return { data, liveUntil: undefined }
   }
-  return { data: [...data, ...appended], liveUntil: own.until }
+  return { data: [...summed, ...appended], liveUntil: own.until }
 }

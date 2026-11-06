@@ -155,6 +155,25 @@ describe(appendRecentPoints.name, () => {
     expect(result.data.at(-1)).toEqual([DAY + 13 * H, 10, null, 12, null])
   })
 
+  it('puts recent points in place of the periods activity has not summed', () => {
+    // Methodology: a range ending this hour has an empty row for it
+    const result = appendRecentPoints(
+      [
+        [DAY + 12 * H, 1, 2, 3, 4],
+        [DAY + 13 * H, null, null, null, null],
+      ],
+      recentOf(DAY + 14 * H + 1200, DAY + 14 * H + 600),
+      PROJECT,
+      'hour',
+    )
+
+    expect(result.data).toEqual([
+      [DAY + 12 * H, 1, 2, 3, 4],
+      [DAY + 13 * H, 10, 5, 12, 6],
+      [DAY + 14 * H, 20, null, 22, null],
+    ])
+  })
+
   it('leaves the chart as it is when a period activity has not summed lies between', () => {
     // Methodology: the chart ends at hour 11 and the recent hours start at
     // 13, so hour 12 is missing; a last row without a value is the same
