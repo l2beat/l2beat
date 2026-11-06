@@ -106,8 +106,8 @@ function ColorsSection() {
         <div>
           <h3 className="mb-3 font-medium text-sm">Backgrounds</h3>
           <div className="grid grid-cols-2 gap-3">
+            <ColorSwatch color="#0D0C0C" label="Ink" />
             <ColorSwatch color="#FFFFFF" label="White" darkText />
-            <ColorSwatch color="#F5F3EE" label="Paper" darkText />
           </div>
         </div>
       </div>
