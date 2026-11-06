@@ -30,6 +30,7 @@ import type { ActivityMetric } from '~/pages/layer2s/activity/components/Activit
 import type { ActivityResolution } from '~/server/features/layer2s/activity/utils/getActivityResolution'
 import { formatRange } from '~/utils/dates'
 import type { ChartScale } from '../types'
+import { getActivityPeriodSeconds } from './utils/getActivityPeriodSeconds'
 
 export type ActivityChartType = 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
 
@@ -53,6 +54,8 @@ interface Props {
   project: ChartProject
   tickCount?: number
   resolution?: ActivityResolution
+  /** Of the newest stored block, when the last point is a period under way */
+  liveUntil?: number
 }
 
 export function ActivityChart({
@@ -67,6 +70,7 @@ export function ActivityChart({
   project,
   tickCount,
   resolution = 'day',
+  liveUntil,
 }: Props) {
   const chartMeta = useMemo(
     () => ({
@@ -149,6 +153,7 @@ export function ActivityChart({
             keys={keys}
             metric={metric}
             resolution={resolution}
+            liveUntil={liveUntil}
           />
         )}
       />
@@ -165,6 +170,7 @@ export function ActivityCustomTooltip<
   metric,
   skipNull,
   resolution = 'day',
+  liveUntil,
 }: {
   row: T
   keys: K[]
@@ -172,16 +178,19 @@ export function ActivityCustomTooltip<
   /** Leave out series without a value, instead of showing "No data". */
   skipNull?: boolean
   resolution?: ActivityResolution
+  liveUntil?: number
 }) {
   const timestamp = row.timestamp
-  const resolutionSeconds = UnixTime.periodToSeconds(resolution)
+  const seconds = getActivityPeriodSeconds(timestamp, resolution, liveUntil)
+  const underWay = seconds < UnixTime.periodToSeconds(resolution)
   const payload = getTooltipEntries(row, keys, { skipNull })
 
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
-          {formatRange(timestamp, timestamp + resolutionSeconds)}
+          {formatRange(timestamp, timestamp + seconds)}
+          {underWay && ' so far'}
         </div>
         <span className="text-heading-16">Average {metric.toUpperCase()}</span>
         <HorizontalSeparator className="mt-1.5" />
@@ -206,7 +215,7 @@ export function ActivityCustomTooltip<
             <ChartTooltipRow key={entry.name} name={entry.name}>
               <ChartTooltipValue
                 value={entry.value}
-                format={(value) => formatInteger(value * resolutionSeconds)}
+                format={(value) => formatInteger(value * seconds)}
                 className="tabular-nums"
               />
             </ChartTooltipRow>
