@@ -147,11 +147,6 @@ export function pageTransitions() {
       }
       for (const line of visible('[data-tab-line]')) {
         named.set(line, `tab-line-${line.dataset.tabLine}`)
-        classes.set(line, 'tab-line')
-      }
-      for (const row of visible('[data-tab-row]')) {
-        named.set(row, `tab-row-${row.dataset.tabRow}`)
-        classes.set(row, 'tab-row')
       }
     } else if (kind === 'crops') {
       const banner = visible(
@@ -251,7 +246,7 @@ export function pageTransitions() {
             anim.cancel()
             continue
           }
-          if (!/^(nav-|crops-|tab-line-|tab-row-)/.test(group)) {
+          if (!/^(nav-|crops-|tab-line-)/.test(group)) {
             continue
           }
           const from = effect.getKeyframes()[0]

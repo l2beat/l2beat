@@ -934,25 +934,13 @@ html:active-view-transition-type(nav) {
      of the list, or the highlight on a page without one, comes and goes at
      once, as it would without a transition. */
   &::view-transition-new(*.nav-group):only-child,
-  &::view-transition-new(nav-highlight):only-child,
-  &::view-transition-new(*.tab-row):only-child,
-  &::view-transition-new(*.tab-line):only-child {
+  &::view-transition-new(nav-highlight):only-child {
     animation: none;
   }
   &::view-transition-old(*.nav-group):only-child,
-  &::view-transition-old(nav-highlight):only-child,
-  &::view-transition-old(*.tab-row):only-child,
-  &::view-transition-old(*.tab-line):only-child {
+  &::view-transition-old(nav-highlight):only-child {
     animation: none;
     opacity: 0;
-  }
-  /* A tab row only moves; its tabs are the same on both pages. */
-  &::view-transition-old(*.tab-row) {
-    animation: none;
-    opacity: 0;
-  }
-  &::view-transition-new(*.tab-row) {
-    animation: none;
   }
   /* The highlight slides under the labels. Over each label lies its copy
      in the highlight's colour, hidden until the script clips both to where

@@ -5,7 +5,6 @@ import { useTracking } from '~/hooks/useTracking'
 import { CloseIcon } from '~/icons/Close'
 import { cn } from '~/utils/cn'
 import { SidebarGroup, SidebarGroupLabel } from '../core/Sidebar'
-import { useDismissal } from './useDismissal'
 import { useWhatsNewItem } from './WhatsNewItemContext'
 
 /** The latest announcement at the bottom of the nav, on every page. */
@@ -26,8 +25,6 @@ export function NavWhatsNew({
     item ? `whats-new-${item.id}` : 'whats-new-none',
     false,
   )
-  // Dismissed, it sinks away before it goes.
-  const { leaving, dismiss, onAnimationEnd } = useDismissal(() => setSeen(true))
   // Not on the server, which cannot know whether it was seen: a seen item
   // would show, then vanish.
   if (!item || !isClient || seen) {
@@ -37,15 +34,7 @@ export function NavWhatsNew({
   return (
     // At the end of the nav, just above its footer; at least 20px under the
     // lists above when the nav is full.
-    <SidebarGroup
-      className={cn(
-        'mt-auto pt-5',
-        leaving &&
-          'fade-out-0 slide-out-to-bottom-3 pointer-events-none animate-out fill-mode-forwards duration-150 ease-out',
-        className,
-      )}
-      onAnimationEnd={onAnimationEnd}
-    >
+    <SidebarGroup className={cn('mt-auto pt-5', className)}>
       <div className="flex items-center justify-between">
         <SidebarGroupLabel>What&apos;s new</SidebarGroupLabel>
         <button
@@ -53,7 +42,7 @@ export function NavWhatsNew({
           onClick={() => {
             // The same event as the floating widget, which it replaces from lg.
             track('whatsNewClicked', { device, action: 'close' })
-            dismiss()
+            setSeen(true)
           }}
           aria-label="Dismiss What's new"
           className="-my-1 grid size-6 place-items-center rounded-md text-secondary transition-colors hover:bg-surface-tertiary hover:text-primary"
