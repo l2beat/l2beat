@@ -14,6 +14,7 @@ import type { ActivityIndexer } from './indexers/types'
 import { HeadFollower } from './live/HeadFollower'
 import { LiveActivityCleaner } from './live/LiveActivityCleaner'
 import { RpcBlockFetcher } from './live/RpcBlockFetcher'
+import { StoredBlockSource } from './live/StoredBlockSource'
 import { BlockTxsCountService } from './services/txs/BlockTxsCountService'
 import { DayTxsCountService } from './services/txs/DayTxsCountService'
 import { SlotTxsCountService } from './services/txs/SlotTxsCountService'
@@ -99,7 +100,17 @@ export function initActivityModule({
             batchSize: project.activityConfig.batchSize ?? 100,
             minHeight: project.activityConfig.startBlock ?? 1,
             parents: [blockTargetIndexer],
-            blockSource,
+            blockSource: fetcher
+              ? new StoredBlockSource(
+                  {
+                    projectId: project.id,
+                    db: database,
+                    fallback: blockSource,
+                    hashes: fetcher,
+                  },
+                  logger,
+                )
+              : blockSource,
             indexerService,
             db: database,
           },
