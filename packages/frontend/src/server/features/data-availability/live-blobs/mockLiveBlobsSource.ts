@@ -21,6 +21,10 @@ const KEPT_SLOTS = 7500
 const MAX_BLOBS = 21
 const MAX_BATCHES = 7
 const MAX_BATCH_BLOBS = 6
+/** Wei per blob gas, about what the fee sits at in quiet times */
+const MOCK_BLOB_BASE_FEE = 4_000_000n
+const MOCK_FEE_ETH_PER_BLOB = (131072 * Number(MOCK_BLOB_BASE_FEE)) / 1e18
+const MOCK_ETH_PRICE_USD = 3000
 const MISSED_ONE_IN = 40
 const UNATTRIBUTED_ONE_IN = 10
 /** So a few posters post most, as on mainnet */
@@ -99,6 +103,13 @@ export function createMockLiveBlobsSource(
       getBucketsSince: async (fromSlot, bucketSlots) =>
         sumBuckets(await storedBatches(fromSlot), bucketSlots),
     },
+    currentPrice: {
+      findByCoingeckoId: async (coingeckoId) => ({
+        coingeckoId,
+        priceUsd: MOCK_ETH_PRICE_USD,
+        updatedAt: new Date(),
+      }),
+    },
   }
 }
 
@@ -112,6 +123,7 @@ function sumPosted(batches: LiveBlobBatchRecord[]): LivePostedRecord[] {
       batches: 0,
       lastSlot: batch.slot,
       lastBlobs: 0,
+      feeEth: 0,
     }
     // oldest first, so a later slot starts the last one over
     if (batch.slot !== posted.lastSlot) {
@@ -121,6 +133,7 @@ function sumPosted(batches: LiveBlobBatchRecord[]): LivePostedRecord[] {
     posted.blobs += batch.blobs
     posted.batches++
     posted.lastBlobs += batch.blobs
+    posted.feeEth += batch.blobs * MOCK_FEE_ETH_PER_BLOB
     byProject.set(batch.projectId, posted)
   }
   return [...byProject.values()]
@@ -200,6 +213,7 @@ function mockSlot(
       hash: `0x${slot.toString(16).padStart(64, '0')}`,
       timestamp: UnixTime(slotStart(slot)),
       blobCount: blobs,
+      blobBaseFee: MOCK_BLOB_BASE_FEE,
     },
     batches,
   }

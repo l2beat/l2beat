@@ -14,6 +14,7 @@ import type { Clock } from '../../tools/Clock'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
+import { BlobFeeIndexer } from './indexers/BlobFeeIndexer'
 import { BlobIndexer } from './indexers/BlobIndexer'
 import { BlockTargetIndexer } from './indexers/BlockTargetIndexer'
 import { DaIndexer } from './indexers/DaIndexer'
@@ -113,7 +114,7 @@ function createIndexers(
   const indexerService = new IndexerService(database)
 
   const targetIndexers: BlockTargetIndexer[] = []
-  const daIndexers: (DaIndexer | BlobIndexer)[] = []
+  const daIndexers: (DaIndexer | BlobIndexer | BlobFeeIndexer)[] = []
   const notificationIndexers: (HourlyIndexer | EthereumBlobNotifierIndexer)[] =
     []
   const liveIndexers: (LiveBlobsTargetIndexer | LiveBlobsIndexer)[] = []
@@ -157,6 +158,23 @@ function createIndexers(
       logger,
     )
     daIndexers.push(blobIndexer)
+
+    // Every block layer is Ethereum so far, and only Ethereum charges blob gas
+    const ethereumDa = providers.ethereumDa
+    assert(ethereumDa, 'Ethereum DA provider is required')
+    daIndexers.push(
+      new BlobFeeIndexer(
+        {
+          db: database,
+          provider: ethereumDa,
+          batchSize: daLayer.blobFeeBatchSize,
+          indexerService,
+          minHeight: daLayer.startingBlock,
+          parents: [targetIndexer],
+        },
+        logger,
+      ),
+    )
 
     if (notifications && notifications.ethereumBlobs) {
       const hourlyIndexer = new HourlyIndexer(logger, clock)
@@ -207,6 +225,7 @@ function createIndexers(
         indexerService,
         db: database,
         blobService,
+        blobFeeProvider: ethereumDa,
       },
       logger,
     )

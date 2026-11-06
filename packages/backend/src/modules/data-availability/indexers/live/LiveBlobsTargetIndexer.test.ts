@@ -250,6 +250,7 @@ function storedRange(from: number, to: number): LiveBlockRecord[] {
       blockNumber: n,
       hash: hashOf(n, undefined),
       timestamp: UnixTime(slotStart(slotOf(n))),
+      blobBaseFee: null,
       blobCount: 0,
     })
   }

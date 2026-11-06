@@ -1,5 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { DaBlob, DaProvider } from '@l2beat/shared'
+import type { DaBlob, DaProvider, EthereumDaProvider } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import uniq from 'lodash/uniq'
@@ -26,6 +26,8 @@ export interface Dependencies
   daLayer: string
   batchSize: number
   blobService: BlobService
+  /** Prices the blobs, on a layer that charges for blob gas */
+  blobFeeProvider?: Pick<EthereumDaProvider, 'getBlobBaseFees'>
 }
 
 export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
@@ -88,7 +90,10 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
           }
         }
 
-        const previousRecords = await this.getPreviousRecordsInBlobsRange(blobs)
+        const [previousRecords, blobBaseFees] = await Promise.all([
+          this.getPreviousRecordsInBlobsRange(blobs),
+          this.$.blobFeeProvider?.getBlobBaseFees(from, adjustedTo),
+        ])
 
         this.logger.info('Loaded previous records', {
           previousRecords: previousRecords.length,
@@ -98,6 +103,7 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
           blobs,
           previousRecords,
           configurations.map((c) => c.properties),
+          blobBaseFees,
         )
 
         return async () => {

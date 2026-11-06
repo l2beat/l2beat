@@ -1,10 +1,14 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
 import {
   type LiveBlobBatchRecord,
   LiveBlobBatchRepository,
 } from './LiveBlobBatchRepository'
+import type { LiveBlockRecord } from './LiveBlockRepository'
+
+/** Wei per blob gas at which a blob costs one ETH */
+const ONE_ETH_PER_BLOB = 10n ** 18n / 131072n
 
 describeDatabase(LiveBlobBatchRepository.name, (db) => {
   const repository = db.liveBlobBatch
@@ -19,10 +23,19 @@ describeDatabase(LiveBlobBatchRepository.name, (db) => {
     batch({ slot: 103, txIndex: 5, blobs: 6, projectId: B }),
     batch({ slot: 104, txIndex: 0, blobs: 2 }),
   ]
+  // Block 104 was stored before fees were kept
+  const BLOCKS = [
+    block(100, ONE_ETH_PER_BLOB),
+    block(101, ONE_ETH_PER_BLOB),
+    block(103, 2n * ONE_ETH_PER_BLOB),
+    block(104, null),
+  ]
 
   beforeEach(async () => {
     await repository.deleteAll()
+    await db.liveBlock.deleteAll()
     await repository.upsertMany(BATCHES)
+    await db.liveBlock.upsertMany(BLOCKS)
   })
 
   describe(LiveBlobBatchRepository.prototype.upsertMany.name, () => {
@@ -55,19 +68,35 @@ describeDatabase(LiveBlobBatchRepository.name, (db) => {
   })
 
   describe(LiveBlobBatchRepository.prototype.getPostedSince.name, () => {
-    it('sums each project up, the unattributed batches as one', async () => {
+    it('sums each project up, the unattributed batches as one, priced by block', async () => {
       const posted = await repository.getPostedSince(100)
 
       expect(posted).toEqualUnsorted([
         // Two batches in its last slot: lastBlobs counts them both
-        { projectId: A, blobs: 6, batches: 3, lastSlot: 101, lastBlobs: 4 },
-        { projectId: B, blobs: 6, batches: 1, lastSlot: 103, lastBlobs: 6 },
+        {
+          projectId: A,
+          blobs: 6,
+          batches: 3,
+          lastSlot: 101,
+          lastBlobs: 4,
+          feeEth: 6,
+        },
+        {
+          projectId: B,
+          blobs: 6,
+          batches: 1,
+          lastSlot: 103,
+          lastBlobs: 6,
+          feeEth: 12,
+        },
+        // the block without a fee counts as free
         {
           projectId: undefined,
           blobs: 3,
           batches: 2,
           lastSlot: 104,
           lastBlobs: 2,
+          feeEth: 1,
         },
       ])
     })
@@ -76,14 +105,29 @@ describeDatabase(LiveBlobBatchRepository.name, (db) => {
       const posted = await repository.getPostedSince(101)
 
       expect(posted).toEqualUnsorted([
-        { projectId: A, blobs: 4, batches: 2, lastSlot: 101, lastBlobs: 4 },
-        { projectId: B, blobs: 6, batches: 1, lastSlot: 103, lastBlobs: 6 },
+        {
+          projectId: A,
+          blobs: 4,
+          batches: 2,
+          lastSlot: 101,
+          lastBlobs: 4,
+          feeEth: 4,
+        },
+        {
+          projectId: B,
+          blobs: 6,
+          batches: 1,
+          lastSlot: 103,
+          lastBlobs: 6,
+          feeEth: 12,
+        },
         {
           projectId: undefined,
           blobs: 2,
           batches: 1,
           lastSlot: 104,
           lastBlobs: 2,
+          feeEth: 0,
         },
       ])
     })
@@ -133,6 +177,17 @@ describeDatabase(LiveBlobBatchRepository.name, (db) => {
 
 function blockOf(slot: number) {
   return slot + 900
+}
+
+function block(slot: number, blobBaseFee: bigint | null): LiveBlockRecord {
+  return {
+    slot,
+    blockNumber: blockOf(slot),
+    hash: `0x${slot}`,
+    timestamp: UnixTime(1_700_000_000 + slot * 12),
+    blobCount: 0,
+    blobBaseFee,
+  }
 }
 
 function batch(

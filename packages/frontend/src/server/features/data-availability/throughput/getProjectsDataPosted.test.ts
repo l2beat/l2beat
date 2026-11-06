@@ -69,6 +69,7 @@ function record(
     projectId,
     timestamp,
     totalSize: BigInt(totalSize),
+    totalFeeEth: null,
     daLayer,
   }
 }

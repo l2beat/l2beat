@@ -304,6 +304,8 @@ export type BlockLayerDaTrackingConfig = {
   url: string
   callsPerMinute: number
   batchSize: number
+  /** Blocks whose fees are fetched at once, a thousand per call */
+  blobFeeBatchSize: number
   startingBlock: number
 }
 

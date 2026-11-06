@@ -6,6 +6,7 @@ export const INDEXER_NAMES = {
   DA: 'da_indexer',
   DA2: 'da_indexer_v2',
   BLOB: 'blob_indexer',
+  BLOB_FEE: 'blob_fee_indexer',
   DEFI_TVL: 'defi_tvl_indexer',
   INTEROP_RELAY: 'relay_indexer',
   INTEROP_RECENT_PRICES: 'interop_recent_prices_indexer',

@@ -10,6 +10,7 @@ import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { sumByResolutionAndProject } from './utils/sumByResolutionAndProject'
+import { sumFees } from './utils/sumFees'
 
 type LargestPoster = Omit<DataAvailabilityRecord, 'configurationId'> & {
   name: string
@@ -325,6 +326,7 @@ function sumByTimestamp(
         projectId: daLayer,
         timestamp: UnixTime(Number(timestamp)),
         totalSize,
+        totalFeeEth: sumFees(values),
         daLayer,
       }
     },
