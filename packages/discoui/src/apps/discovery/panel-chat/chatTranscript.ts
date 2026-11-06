@@ -69,3 +69,44 @@ function findRecentTool(entries: ApiChatEvent[], id: string): number {
   }
   return -1
 }
+
+export type ToolEntry = Extract<ApiChatEvent, { type: 'tool' }>
+
+// The transcript as the panel lays it out: tool calls in a row fold into
+// one activity, and the first block of what the agent says after a question
+// heads the answer. A lone "Stopped" or error is not an answer.
+export type ChatBlock =
+  | { type: 'activity'; key: number; tools: ToolEntry[]; opensAnswer: boolean }
+  | {
+      type: 'entry'
+      key: number
+      entry: Exclude<ApiChatEvent, ToolEntry>
+      opensAnswer: boolean
+    }
+
+export function toBlocks(entries: readonly ApiChatEvent[]): ChatBlock[] {
+  const blocks: ChatBlock[] = []
+  let isAnswerOpen = false
+  for (const [index, entry] of entries.entries()) {
+    if (entry.type === 'user') {
+      blocks.push({ type: 'entry', key: index, entry, opensAnswer: false })
+      isAnswerOpen = false
+      continue
+    }
+    const isAnswer =
+      entry.type === 'text' ||
+      entry.type === 'tool' ||
+      entry.type === 'permission'
+    const opensAnswer = isAnswer && !isAnswerOpen
+    isAnswerOpen = isAnswerOpen || isAnswer
+    const last = blocks.at(-1)
+    if (entry.type !== 'tool') {
+      blocks.push({ type: 'entry', key: index, entry, opensAnswer })
+    } else if (last?.type === 'activity') {
+      last.tools.push(entry)
+    } else {
+      blocks.push({ type: 'activity', key: index, tools: [entry], opensAnswer })
+    }
+  }
+  return blocks
+}

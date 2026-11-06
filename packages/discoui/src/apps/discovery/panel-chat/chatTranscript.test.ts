@@ -1,5 +1,10 @@
 import { expect } from 'earl'
-import { applyChatEvent, EMPTY_CHAT, replayChat } from './chatTranscript'
+import {
+  applyChatEvent,
+  EMPTY_CHAT,
+  replayChat,
+  toBlocks,
+} from './chatTranscript'
 
 describe(applyChatEvent.name, () => {
   it('merges an answer and each tool call, like the server log', () => {
@@ -51,5 +56,38 @@ describe('applyChatEvent bounds', () => {
     const long = replayChat(many)
     expect(long.entries.length).toEqual(2_000)
     expect(long.entries[0]).toEqual({ type: 'user', text: '100' })
+  })
+})
+
+describe(toBlocks.name, () => {
+  it('folds tool calls in a row and heads each answer once', () => {
+    const blocks = toBlocks([
+      { type: 'user', text: 'Who upgrades it?' },
+      { type: 'tool', id: 't1', title: 'mcp__discoui__permissions' },
+      { type: 'tool', id: 't2', title: 'mcp__discoui__show' },
+      { type: 'text', text: 'The council.' },
+      { type: 'tool', id: 't3', title: 'ls' },
+      { type: 'user', text: 'Thanks' },
+      { type: 'text', text: 'Sure.' },
+      { type: 'user', text: 'More' },
+      { type: 'turn-end', stopReason: 'cancelled' },
+    ])
+    expect(
+      blocks.map((block) => [
+        block.type,
+        block.key,
+        block.opensAnswer,
+        block.type === 'activity' ? block.tools.length : block.entry.type,
+      ]),
+    ).toEqual([
+      ['entry', 0, false, 'user'],
+      ['activity', 1, true, 2],
+      ['entry', 3, false, 'text'],
+      ['activity', 4, false, 1],
+      ['entry', 5, false, 'user'],
+      ['entry', 6, true, 'text'],
+      ['entry', 7, false, 'user'],
+      ['entry', 8, false, 'turn-end'],
+    ])
   })
 })
