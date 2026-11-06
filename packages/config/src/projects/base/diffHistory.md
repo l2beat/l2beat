@@ -9,16 +9,13 @@ Generated with discovered.json: 0x4f4b8f82efe17aabd3b66c4768ac3cd04b684400
 
 ## Description
 
-Base's Denim upgrade, L1 side, executed by the Base Governance Multisig on 2026-11-04 (tx `0x037f60045f4304460e2b0d5d4f3d8b223200d220212e2399db1ce0f77a19b77b`, task [2026-10-07-denim-upgrade](https://github.com/base/contract-deployments/tree/main/archive/evm/2026-10-07-denim-upgrade)). The hardfork activates on L2 on 2026-11-05 18:00 UTC: one canonical block every 200 ms instead of every 2 s, Flashblocks retired.
+Base's Denim upgrade. The L1 side was executed by the Base Governance Multisig on 2026-11-04; the hardfork activated on Base on 2026-11-05 at 18:00 UTC, moving block production from one block every 2 seconds to one every 200 ms and retiring Flashblocks.
 
-- `DisputeGameFactory`: game type 621 now points at `AggregateVerifier` 0.3.0, which carries the Denim proof program hashes (TEE image, SP1 range and aggregation), keeps the 600/30-block proposal intervals until the first Denim block and switches to 6000/300 (still 20 minutes) after it, reading the activation time from `ProtocolVersions` index 13.
-- `ProtocolVersions`: Denim registered as upgrade 13, minimum node version raised from v1.4.2 to v1.5.1.
-- `TEEProverRegistry`: the expected image hash follows the new verifier; the manager rotated the registered enclave signers.
-- Twelve L2 predeploys upgraded to base/contracts v8.4.0 through portal deposits: the messenger, both bridges, both token factories, `L1Block`, `L2ToL1MessagePasser`, the three fee vaults (now initialised from storage with the same recipient and 2 ETH minimum), `OperatorFeeVault`, `SchemaRegistry` and `EAS`. The messenger, bridges and ERC20 factory went through a one-shot migrator contract that reset their legacy initializer slot.
-
-Denim activated at block 53556127 (2026-11-05 18:00:01 UTC): the node installed the `BaseTime` implementation behind the pre-existing predeploy proxy, now discovered; the implementation has no verified source on Basescan because it was installed at the fork rather than deployed, so the config points at its source in base/contracts v8.4.0.
-
-Shapes added for the new implementations. The L1FeeVault proxy runs the same build as BaseFeeVault, so its name and description come from the config. The three new program hashes are registered as not verified.
+- AggregateVerifier: new implementation with the Denim TEE and SP1 program hashes; once Denim is active it proposes state roots every 6,000 blocks instead of 600, still 20 minutes.
+- ProtocolVersions: Denim registered as upgrade 13, minimum node version raised from v1.4.2 to v1.5.1.
+- TEEProverRegistry: expects the new enclave image; the manager replaced the registered enclave signers.
+- Twelve L2 predeploys upgraded to base/contracts v8.4.0: the messenger, both bridges, both token factories, L1Block, L2ToL1MessagePasser, the fee vaults, SchemaRegistry and EAS. The fee vaults keep their recipient and 2 ETH minimum, now held in storage.
+- BaseTime: new predeploy installed by the protocol at activation; it exposes the millisecond part of each block's timestamp, set by a system deposit in every block. Its implementation has no verified source on Basescan because it was installed at the fork rather than deployed.
 
 ## Watched changes
 
