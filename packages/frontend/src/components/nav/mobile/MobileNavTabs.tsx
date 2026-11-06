@@ -64,7 +64,9 @@ function NavTabRow({
 }) {
   return (
     <OverflowWrapper className="bg-surface-primary">
-      <div className="flex">
+      {/* Slides by however much the next page has it scrolled, so its tabs
+          move with the underline (pageTransitions.ts). */}
+      <div className="flex" data-tab-row={row}>
         {links
           .filter((link) => !link.disabled)
           .map((link) => {

@@ -691,6 +691,40 @@
   scrollbar-gutter: stable;
 }
 
+/* OverflowWrapper's edges: each side's fade grows from nothing when that
+   side has more to scroll to, as its arrow fades in. */
+@property --overflow-fade-left {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --overflow-fade-right {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@utility overflow-fade {
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    black var(--overflow-fade-left),
+    black calc(100% - var(--overflow-fade-right)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    black var(--overflow-fade-left),
+    black calc(100% - var(--overflow-fade-right)),
+    transparent 100%
+  );
+  transition:
+    --overflow-fade-left 150ms ease-out,
+    --overflow-fade-right 150ms ease-out;
+}
+
 @utility fade-out-to-left-* {
   --fade-size: calc(var(--spacing, 0.25rem) * --value(integer));
   --fade-size: --value([length]);
@@ -879,6 +913,7 @@ html:active-view-transition-type(nav),
 html:active-view-transition-type(crops),
 html:active-view-transition-type(pin),
 html:active-view-transition-type(chips),
+html:active-view-transition-type(values),
 html:active-view-transition-type(badge) {
   &::view-transition-old(root),
   &::view-transition-new(root) {
@@ -900,13 +935,25 @@ html:active-view-transition-type(nav) {
      of the list, or the highlight on a page without one, comes and goes at
      once, as it would without a transition. */
   &::view-transition-new(*.nav-group):only-child,
-  &::view-transition-new(nav-highlight):only-child {
+  &::view-transition-new(nav-highlight):only-child,
+  &::view-transition-new(*.tab-row):only-child,
+  &::view-transition-new(*.tab-line):only-child {
     animation: none;
   }
   &::view-transition-old(*.nav-group):only-child,
-  &::view-transition-old(nav-highlight):only-child {
+  &::view-transition-old(nav-highlight):only-child,
+  &::view-transition-old(*.tab-row):only-child,
+  &::view-transition-old(*.tab-line):only-child {
     animation: none;
     opacity: 0;
+  }
+  /* A tab row only moves; its tabs are the same on both pages. */
+  &::view-transition-old(*.tab-row) {
+    animation: none;
+    opacity: 0;
+  }
+  &::view-transition-new(*.tab-row) {
+    animation: none;
   }
   /* The highlight slides under the labels. Over each label lies its copy
      in the highlight's colour, hidden until the script clips both to where
@@ -951,6 +998,22 @@ html:active-view-transition-type(chips) {
   }
 }
 
+/* A filter value slides to its place in the menu's other group; its tick
+   swaps on the way. */
+html:active-view-transition-type(values) {
+  &::view-transition-group(*.filter-value) {
+    animation-duration: 250ms;
+    animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  &::view-transition-old(*.filter-value) {
+    animation: none;
+    opacity: 0;
+  }
+  &::view-transition-new(*.filter-value) {
+    animation: none;
+  }
+}
+
 /* The badge picked flies into the big slot, the one it replaces among the
    related; the dialog's text swaps at once. */
 html:active-view-transition-type(badge) {
@@ -968,6 +1031,32 @@ html:active-view-transition-type(badge) {
   to {
     opacity: 0;
     scale: 0.9;
+  }
+}
+
+/* A pin pressed in: it comes down on its point, tilting upright, and fills
+   as it lands, while its row flies to the nav. */
+.pin-drive {
+  transform-origin: 50% 92%;
+  animation: pin-drive 260ms cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+@keyframes pin-drive {
+  from {
+    translate: 0 -2.5px;
+    rotate: -14deg;
+    fill-opacity: 0;
+  }
+  55% {
+    translate: 0 1px;
+    rotate: 0deg;
+    fill-opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pin-drive {
+    animation: none;
   }
 }
 

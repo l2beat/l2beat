@@ -47,13 +47,30 @@ export function CopyButton({
           copyToClipboard()
         }}
       >
-        {copied ? (
-          <SatisfiedIcon
-            className={cn('fill-green-700 dark:fill-green-450', iconClassName)}
+        {/* One spot for both: on copying, the tick wipes in from the left
+            as the copy icon wipes out at the same edge. Going back is
+            instant. */}
+        <span className="grid *:col-start-1 *:row-start-1">
+          <CopyIcon
+            className={cn(
+              'fill-current',
+              copied
+                ? '[clip-path:inset(0_0_0_100%)] motion-safe:transition-[clip-path] motion-safe:duration-200 motion-safe:ease-out'
+                : '[clip-path:inset(0)]',
+              iconClassName,
+            )}
           />
-        ) : (
-          <CopyIcon className={cn('fill-current', iconClassName)} />
-        )}
+          <SatisfiedIcon
+            aria-hidden
+            className={cn(
+              'fill-green-700 dark:fill-green-450',
+              copied
+                ? '[clip-path:inset(0)] motion-safe:transition-[clip-path] motion-safe:duration-200 motion-safe:ease-out'
+                : '[clip-path:inset(0_100%_0_0)]',
+              iconClassName,
+            )}
+          />
+        </span>
       </TooltipTrigger>
       <TooltipPortal>
         <TooltipContent

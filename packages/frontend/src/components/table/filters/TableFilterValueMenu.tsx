@@ -7,6 +7,7 @@ import {
   CommandItem,
   CommandList,
 } from '~/components/core/Command'
+import { withViewTransition } from '~/utils/viewTransition'
 import type { FilterableValueId } from './filterableValue'
 import {
   emptyStateLabel,
@@ -43,6 +44,16 @@ export function TableFilterValueMenu({ filterId, values }: Props) {
 
 export function TableFilterValueMenuItems({ filterId, values }: Props) {
   const { state, dispatch } = useTableFilterContext()
+  // Clicked, a value slides to its place in the other group; picked from
+  // the keyboard it just moves.
+  const toggle = (type: 'add' | 'remove', value: string) => {
+    const update = () => dispatch({ type, payload: { id: filterId, value } })
+    if (window.event?.type === 'click') {
+      withViewTransition('values', nameValues, update)
+    } else {
+      update()
+    }
+  }
 
   const sortedValues = values.sort(filterValuesSortFn)
   const [selectedValues, notSelectedValues] = partition(sortedValues, (value) =>
@@ -59,15 +70,8 @@ export function TableFilterValueMenuItems({ filterId, values }: Props) {
                 className="flex gap-2 font-medium"
                 key={value}
                 value={value}
-                onSelect={(value) => {
-                  dispatch({
-                    type: 'remove',
-                    payload: {
-                      id: filterId,
-                      value,
-                    },
-                  })
-                }}
+                data-filter-value={value}
+                onSelect={(value) => toggle('remove', value)}
               >
                 <TableFilterCheckbox checked={true} />
                 <TableFilterValue values={[value]} filterId={filterId} />
@@ -84,15 +88,8 @@ export function TableFilterValueMenuItems({ filterId, values }: Props) {
                 className="flex gap-2 font-medium"
                 key={value}
                 value={value}
-                onSelect={(value) => {
-                  dispatch({
-                    type: 'add',
-                    payload: {
-                      id: filterId,
-                      value,
-                    },
-                  })
-                }}
+                data-filter-value={value}
+                onSelect={(value) => toggle('add', value)}
               >
                 <TableFilterCheckbox checked={false} />
                 <TableFilterValue values={[value]} filterId={filterId} />
@@ -103,4 +100,23 @@ export function TableFilterValueMenuItems({ filterId, values }: Props) {
       )}
     </>
   )
+}
+
+/**
+ * The values the menu's list shows in full: named, one scrolled half out
+ * would be drawn whole, over the list's edge.
+ */
+function nameValues() {
+  const named: HTMLElement[] = []
+  for (const el of document.querySelectorAll<HTMLElement>(
+    '[data-filter-value]',
+  )) {
+    const list = el.closest('[cmdk-list]')?.getBoundingClientRect()
+    const box = el.getBoundingClientRect()
+    if (!list || box.top < list.top || box.bottom > list.bottom) continue
+    el.style.viewTransitionName = `filter-value-${(el.dataset.filterValue ?? '').toLowerCase().replace(/[^\w-]/g, '-')}`
+    el.style.setProperty('view-transition-class', 'filter-value')
+    named.push(el)
+  }
+  return named
 }
