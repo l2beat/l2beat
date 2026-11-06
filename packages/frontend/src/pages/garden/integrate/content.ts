@@ -1,5 +1,5 @@
 // The API is static files on its own host; the website only documents it.
-export const CROPS_API_URL = 'https://crops.l2beat.com'
+export const CROPS_API_URL = 'https://crops.ethbeat.org'
 export const CROPS_API_DOCS_URL = `${CROPS_API_URL}/`
 export const CROPS_API_SPEC_URL = `${CROPS_API_URL}/v1/openapi.json`
 
