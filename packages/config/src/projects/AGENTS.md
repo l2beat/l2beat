@@ -26,7 +26,7 @@ Run `l2b` from `packages/config`. Its `.env` holds RPC keys: never read or print
 
 `l2b ui` serves an MCP server at `/api/agent/mcp`, so a coding agent can walk the researcher through contracts and code in the open DiscoUI tab, read what they selected, list who controls a contract, and put lists and comparisons on a board next to the graph.
 
-DiscoUI's chat panel runs Claude Code or Codex already connected. An agent in a terminal connects once, on the port `l2b ui` prints (2021 unless it was taken):
+DiscoUI's chat panel runs Claude Code or Codex already connected. An agent in a terminal connects once; when 2021 was taken, use the port `l2b ui` prints instead:
 
 - Claude Code: `claude mcp add --transport http discoui http://localhost:2021/api/agent/mcp`
 - Codex: `codex mcp add discoui --url http://localhost:2021/api/agent/mcp`
