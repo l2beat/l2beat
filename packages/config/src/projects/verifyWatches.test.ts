@@ -1,5 +1,6 @@
 import {
   getDiscoveryPaths,
+  isPendingItem,
   sortDeep,
   visitObjects,
   WATCH_TEMPLATES,
@@ -37,7 +38,7 @@ describe('Verify watches', () => {
           JSON.stringify(watched),
         )
         visitObjects(watched, (object) => {
-          expect(Object.hasOwn(object, 'pending')).toEqual(false)
+          expect(isPendingItem(object)).toEqual(false)
         })
       })
     })
