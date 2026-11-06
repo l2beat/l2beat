@@ -76,6 +76,24 @@ describe(getSearchBarEntries.name, () => {
     expect(result.map((entry) => entry.href)).toEqual(['/projects/arbitrum'])
   })
 
+  it('lists a chain that is also a project once, as the project', async () => {
+    env.INTEROP_CHAINS = ['avalanche']
+    ps.getProjects = async () =>
+      [
+        {
+          ...l2Project('avalanche', 'Avalanche'),
+          scalingInfo: undefined,
+          interopConfig: { name: 'Avalanche' },
+        },
+      ] as never
+
+    const result = await getSearchBarEntries('avalanche')
+
+    expect(result.map(({ href, category }) => ({ href, category }))).toEqual([
+      { href: '/projects/avalanche', category: 'interop' },
+    ])
+  })
+
   it('falls back to fuzzy project matches when there are no direct matches', async () => {
     ps.getProjects = async () =>
       [l2Project('jetstreamchain', 'Jetstream')] as never

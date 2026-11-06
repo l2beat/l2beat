@@ -1,4 +1,4 @@
-import type { HTMLAttributes, ReactNode } from 'react'
+import { type HTMLAttributes, type ReactNode, useState } from 'react'
 import {
   AdditionalTrustAssumptionsBanner,
   AdditionalTrustAssumptionsText,
@@ -12,6 +12,7 @@ import {
   ValueSecuredBreakdownTooltipContent,
 } from '~/components/breakdown/ValueSecuredBreakdown'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import {
   Tooltip,
   TooltipContent,
@@ -39,6 +40,9 @@ interface Props {
 
 export interface MergedSummary {
   label: string
+  /** Join the L2 stats, in the same grid. */
+  stats: ReactNode[]
+  /** Go under the tokens and value secured breakdowns. */
   rows: ReactNode
   rosette: ReactNode
 }
@@ -66,7 +70,7 @@ export function ProjectL2Summary({ project, merged }: Props) {
     >
       <div className="flex">
         <div className="w-full">
-          <ProjectL2Stats project={project} />
+          <ProjectL2Stats project={project} extraStats={merged?.stats} />
           <HorizontalSeparator className="mt-5 mb-4" />
           <div
             className={cn(
@@ -237,14 +241,15 @@ export function ProjectL2Summary({ project, merged }: Props) {
         <VerticalSeparator className="mr-8 ml-12 h-[unset] self-stretch max-lg:hidden" />
 
         {merged ? (
-          <div className="my-auto flex flex-col gap-6 max-lg:hidden">
-            <LabelledRosette label="Scaling">
-              <ProjectL2Rosette project={project} size="small" />
-            </LabelledRosette>
-            <LabelledRosette label={merged.label}>
-              {merged.rosette}
-            </LabelledRosette>
-          </div>
+          <RosetteSwitch
+            views={[
+              {
+                label: 'Scaling',
+                rosette: <ProjectL2Rosette project={project} size="small" />,
+              },
+              { label: merged.label, rosette: merged.rosette },
+            ]}
+          />
         ) : (
           <ProjectL2Rosette project={project} size="small" />
         )}
@@ -283,17 +288,27 @@ export function ProjectL2Summary({ project, merged }: Props) {
   )
 }
 
-function LabelledRosette({
-  label,
-  children,
+/** One rosette at a time, for a page that merges sections with one each. */
+function RosetteSwitch({
+  views,
 }: {
-  label: string
-  children: ReactNode
+  views: { label: string; rosette: ReactNode }[]
 }) {
+  const [selected, setSelected] = useState(views[0]?.label)
   return (
-    <div className="flex flex-col items-center gap-1">
-      <p className="font-semibold text-subtitle-12 uppercase">{label}</p>
-      {children}
+    <div className="my-auto flex flex-col items-center gap-3 max-lg:hidden">
+      <RadioGroup
+        name="summaryRosette"
+        value={selected}
+        onValueChange={setSelected}
+      >
+        {views.map((view) => (
+          <RadioGroupItem key={view.label} value={view.label}>
+            {view.label}
+          </RadioGroupItem>
+        ))}
+      </RadioGroup>
+      {views.find((view) => view.label === selected)?.rosette}
     </div>
   )
 }

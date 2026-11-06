@@ -6,6 +6,7 @@ import {
 import chunk from 'lodash/chunk'
 import compact from 'lodash/compact'
 import isEmpty from 'lodash/isEmpty'
+import type { ReactNode } from 'react'
 import { Fragment } from 'react'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -25,10 +26,12 @@ import { cn } from '~/utils/cn'
 
 interface Props {
   project: ProjectL2Entry
+  /** Another section's stats, for a page that merges sections. */
+  extraStats?: ReactNode[]
   className?: string
 }
 
-export function ProjectL2Stats({ project, className }: Props) {
+export function ProjectL2Stats({ project, extraStats, className }: Props) {
   const stats = compact([
     <ProjectSummaryStat
       key="tvs"
@@ -167,6 +170,7 @@ export function ProjectL2Stats({ project, className }: Props) {
         }
       />
     ) : undefined,
+    ...(extraStats ?? []),
   ])
 
   const groups = stats.length > 4 ? 4 : 3

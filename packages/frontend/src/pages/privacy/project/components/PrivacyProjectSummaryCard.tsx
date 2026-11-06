@@ -1,3 +1,4 @@
+import compact from 'lodash/compact'
 import type { ReactNode } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { VerticalSeparator } from '~/components/core/VerticalSeparator'
@@ -46,7 +47,6 @@ export function PrivacyProjectSummaryCard({ entry, children }: Props) {
           />
 
           <PrivacyProjectSummaryRows entry={entry} />
-          {children}
         </div>
         <VerticalSeparator className="mr-8 ml-12 h-[unset] self-stretch max-xl:hidden" />
         <PrivacyProjectRosette
@@ -54,6 +54,7 @@ export function PrivacyProjectSummaryCard({ entry, children }: Props) {
           className="my-auto max-xl:hidden"
         />
       </div>
+      {children}
 
       <HorizontalSeparator className="my-4 max-md:hidden" />
       <div className="max-md:hidden">
@@ -76,20 +77,9 @@ export function PrivacyProjectSummaryRows({
 }: {
   entry: ProjectPrivacyEntry
 }) {
-  const adversaries = getPrivacyAdversariesSummary(entry.sections)
   return (
     <>
-      <HorizontalSeparator className="max-md:my-2 md:mt-4" />
-      <PrivacyProjectRiskProfile
-        trustedSetup={entry.trustedSetup}
-        exitWindow={entry.exitWindow}
-        adversaries={adversaries}
-        href={entry.href}
-        isUnderReview={entry.isUnderReview}
-        reproducibility={entry.reproducibility}
-        className="md:mt-4"
-      />
-
+      <PrivacyProjectRiskProfileRow entry={entry} />
       <HorizontalSeparator className="max-md:my-2 md:mt-4" />
       <div
         className={cn(
@@ -97,44 +87,75 @@ export function PrivacyProjectSummaryRows({
           MOBILE_SUMMARY_ROWS,
         )}
       >
-        <ProjectSummaryStat
-          title="Tracked on"
-          tooltip="Chains on which the protocol deployment is tracked by ETHBEAT."
-          value={
-            <ProjectIconList projects={entry.trackedOn} title="Tracked on" />
-          }
-        />
-        {entry.scalingProjects.length > 0 && (
-          <ProjectSummaryStat
-            title="Runs on"
-            tooltip="Scaling projects the protocol runs on."
-            value={
-              <ProjectIconList
-                projects={entry.scalingProjects}
-                title={`${entry.name} runs on`}
-              />
-            }
-          />
-        )}
-        {entry.attributes.length > 0 && (
-          <ProjectSummaryStat
-            title="Attributes"
-            tooltip="Protocol attributes and capabilities."
-            valueClassName="flex flex-wrap justify-end gap-1 md:justify-start"
-            value={entry.attributes.map((attribute) => (
-              <PrivacyAttributeTag key={attribute.id} attribute={attribute} />
-            ))}
-          />
-        )}
-        {entry.referenceApp && (
-          <PrivacyReferenceAppStat
-            app={entry.referenceApp}
-            href={`#${PRIVACY_ADVERSARIES_SECTION_ID}`}
-          />
-        )}
+        {getPrivacySummaryStats(entry)}
       </div>
     </>
   )
+}
+
+/** Privacy, trusted setup, exit window and reproducibility, under a rule. */
+export function PrivacyProjectRiskProfileRow({
+  entry,
+}: {
+  entry: ProjectPrivacyEntry
+}) {
+  return (
+    <>
+      <HorizontalSeparator className="max-md:my-2 md:mt-4" />
+      <PrivacyProjectRiskProfile
+        trustedSetup={entry.trustedSetup}
+        exitWindow={entry.exitWindow}
+        adversaries={getPrivacyAdversariesSummary(entry.sections)}
+        href={entry.href}
+        isUnderReview={entry.isUnderReview}
+        reproducibility={entry.reproducibility}
+        className="md:mt-4"
+      />
+    </>
+  )
+}
+
+/** Where the protocol runs, its attributes and reference app. */
+export function getPrivacySummaryStats(entry: ProjectPrivacyEntry) {
+  return compact([
+    <ProjectSummaryStat
+      key="tracked-on"
+      title="Tracked on"
+      tooltip="Chains on which the protocol deployment is tracked by ETHBEAT."
+      value={<ProjectIconList projects={entry.trackedOn} title="Tracked on" />}
+    />,
+    entry.scalingProjects.length > 0 && (
+      <ProjectSummaryStat
+        key="runs-on"
+        title="Runs on"
+        tooltip="Scaling projects the protocol runs on."
+        value={
+          <ProjectIconList
+            projects={entry.scalingProjects}
+            title={`${entry.name} runs on`}
+          />
+        }
+      />
+    ),
+    entry.attributes.length > 0 && (
+      <ProjectSummaryStat
+        key="attributes"
+        title="Attributes"
+        tooltip="Protocol attributes and capabilities."
+        valueClassName="flex flex-wrap justify-end gap-1 md:justify-start"
+        value={entry.attributes.map((attribute) => (
+          <PrivacyAttributeTag key={attribute.id} attribute={attribute} />
+        ))}
+      />
+    ),
+    entry.referenceApp && (
+      <PrivacyReferenceAppStat
+        key="reference-app"
+        app={entry.referenceApp}
+        href={`#${PRIVACY_ADVERSARIES_SECTION_ID}`}
+      />
+    ),
+  ])
 }
 
 export function PrivacyProjectRosette({

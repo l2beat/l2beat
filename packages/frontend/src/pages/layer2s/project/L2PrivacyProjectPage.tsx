@@ -1,8 +1,9 @@
 import type { ComponentProps } from 'react'
 import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
 import {
+  getPrivacySummaryStats,
+  PrivacyProjectRiskProfileRow,
   PrivacyProjectRosette,
-  PrivacyProjectSummaryRows,
 } from '../../privacy/project/components/PrivacyProjectSummaryCard'
 import { L2ProjectPage } from './L2ProjectPage'
 
@@ -22,7 +23,8 @@ export function L2PrivacyProjectPage({ privacyEntry, ...props }: Props) {
       {...props}
       mergedSummary={{
         label: 'Privacy',
-        rows: <PrivacyProjectSummaryRows entry={privacyEntry} />,
+        stats: getPrivacySummaryStats(privacyEntry),
+        rows: <PrivacyProjectRiskProfileRow entry={privacyEntry} />,
         rosette: <PrivacyProjectRosette entry={privacyEntry} />,
       }}
     />

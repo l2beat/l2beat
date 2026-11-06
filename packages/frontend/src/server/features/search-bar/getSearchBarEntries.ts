@@ -66,9 +66,14 @@ export async function getSearchBarEntries(search: string) {
   const l2ProjectIds = new Set(
     projects.filter((p) => p.scalingInfo).map((p) => p.id),
   )
+  const projectEntries = projects.flatMap((p) => getSearchBarProjectEntries(p))
+  const projectHrefs = new Set(projectEntries.map((entry) => entry.href))
   const searchBarEntries = [
-    ...projects.flatMap((p) => getSearchBarProjectEntries(p)),
-    ...selectChainProjects(l2ProjectIds).map(getSearchBarChainEntry),
+    ...projectEntries,
+    // A chain that is also a project, e.g. Avalanche, shares its page.
+    ...selectChainProjects(l2ProjectIds)
+      .map(getSearchBarChainEntry)
+      .filter((entry) => !projectHrefs.has(entry.href)),
   ]
 
   if (address) {
