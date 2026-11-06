@@ -12,7 +12,7 @@ import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { toJsonSchema, v as z } from '@l2beat/validate'
 import express, { type Express } from 'express'
 import { existsSync, readFileSync } from 'fs'
-import type { Server } from 'http'
+import { createServer, type Server } from 'http'
 import path, { join } from 'path'
 import { getCodePaths } from '../discovery/getCodePaths'
 import { adapterCommand } from './agent/chat/providers'
@@ -35,6 +35,7 @@ import { getProject } from './getProject'
 import { getProjects } from './getProjects'
 import { getTvl } from './getTvl'
 import { attachLayoutRouter } from './layouts/router'
+import { listenOnFreePort } from './listenOnFreePort'
 import { attachModulesRouter } from './modules'
 import { ProviderCache } from './ProviderCache'
 import { renderProjectPage } from './renderProjectPage'
@@ -109,21 +110,29 @@ const diffHistoryQuerySchema = z.object({
 
 const REMOTE_WORKSPACE_CAPACITY = 4
 
-export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
-  const port = process.env.PORT ?? 2021
-  const app = createDiscoveryUiApp({ readonly })
+const PORT_DEFAULT = 2021
+const PORT_ATTEMPTS_MAX = 20
 
-  const server = app.listen(port, () => {
-    console.log(`Discovery UI live on http://localhost:${port}/ui`)
-  })
+// An explicit PORT is the researcher's choice, so only the default moves on
+// to the next port when it is taken.
+export async function runDiscoveryUi({ readonly }: { readonly: boolean }) {
+  const server = createServer()
+  const port =
+    process.env.PORT === undefined
+      ? await listenOnFreePort(server, PORT_DEFAULT, PORT_ATTEMPTS_MAX)
+      : await listenOnFreePort(server, Number(process.env.PORT), 1)
+  server.on('request', createDiscoveryUiApp({ readonly, port }))
+  console.log(`Discovery UI live on http://localhost:${port}/ui`)
 
   attachGracefulShutdown(server)
 }
 
 export function createDiscoveryUiApp({
   readonly,
+  port,
 }: {
   readonly: boolean
+  port: number
 }): Express {
   const app = express()
 
@@ -145,7 +154,6 @@ export function createDiscoveryUiApp({
 
   // Before the body parser, so the agent routes refuse a request unread.
   if (!readonly) {
-    const port = process.env.PORT ?? 2021
     app.use(
       '/api/agent',
       createAgentRouter(configReader, {

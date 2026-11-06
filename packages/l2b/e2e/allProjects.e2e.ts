@@ -15,14 +15,17 @@ describe('DiscoUI backend serves every project', function () {
   let baseUrl: string
 
   before((done) => {
-    server = createDiscoveryUiApp({ readonly: false }).listen(0, () => {
-      const address = server.address()
-      expect(address).not.toBeA(String)
-      expect(address).not.toBeNullish()
-      if (address === null || typeof address === 'string') return
-      baseUrl = `http://127.0.0.1:${address.port}`
-      done()
-    })
+    server = createDiscoveryUiApp({ readonly: false, port: 0 }).listen(
+      0,
+      () => {
+        const address = server.address()
+        expect(address).not.toBeA(String)
+        expect(address).not.toBeNullish()
+        if (address === null || typeof address === 'string') return
+        baseUrl = `http://127.0.0.1:${address.port}`
+        done()
+      },
+    )
   })
 
   after((done) => {

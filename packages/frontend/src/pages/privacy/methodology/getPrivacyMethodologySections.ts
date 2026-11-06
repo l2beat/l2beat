@@ -39,7 +39,7 @@ export function getPrivacyMethodologySections() {
 
     ratings: joinBlocks([
       heading(2, 'Ratings'),
-      "The ratings assume a careful user follows ordinary hygiene and the review's advice, using settings offered by the reference app. Ordinary hygiene means waiting between steps, common amounts, the largest pool, a fresh exit address through a relayer and a new network session per step.",
+      `The ratings assume a careful user follows ${link('ordinary hygiene', '/publications/privacy-best-practices')} and the review's advice, using settings offered by the reference app. Ordinary hygiene means waiting between steps, common amounts, the largest pool and a new network session per step. It also means exiting through a relayer to a fresh address in a separate wallet.`,
       bulletList([
         `**${VERDICT.good}** (green): the promised field stays hidden from this adversary.`,
         `**${VERDICT.warning}** (yellow): protection is limited, private use can be denied, or keeping the field hidden takes substantial effort beyond the app's options. A workaround must preserve ordinary use of the protocol.`,

@@ -86,6 +86,10 @@ describe(ChatSession.name, () => {
     await waitFor(() => statuses(owner).includes('ready'))
     chat.prompt('owner', 'List files')
     await waitFor(() => chatEvents(owner).some((e) => e.type === 'permission'))
+    const stranger = stream()
+    tabs.connect('stranger', stranger)
+    // A tab without the chat learns it has none.
+    expect(parse(stranger)).toEqual([{ type: 'chat-replay', events: [] }])
     const reloaded = stream()
     tabs.connect('owner', reloaded)
     const replay = parse(reloaded).find((e) => e.type === 'chat-replay')
