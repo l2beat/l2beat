@@ -1,45 +1,33 @@
 import type { ProjectPrivacyInfo } from '@l2beat/config'
-import type { IndexerConfigurationRecord } from '@l2beat/database'
-import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
+import type { SyncMetadataRecord } from '@l2beat/database'
+import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import {
-  getPrivacyFlowIndexerIds,
-  getPrivacyFlowSync,
-} from './getPrivacyFlowSync'
+import { getPrivacyFlowBuckets, getPrivacyFlowSync } from './getPrivacyFlowSync'
 
-const POOL = ChainSpecificAddress(
-  'eth:0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc',
-)
-
-describe(getPrivacyFlowIndexerIds.name, () => {
-  it('names one indexer per chain, with STRK-20 sources on the Starknet one', () => {
-    const result = getPrivacyFlowIndexerIds([
-      {
-        privacyInfo: privacyInfo([
-          bucket(POOL, 'fixedAmount'),
-          bucket(POOL, 'fixedAmount'),
-          bucket({ chain: 'starknet', address: '0x1' }, 'strk20Deposit'),
-        ]),
-      },
+describe(getPrivacyFlowBuckets.name, () => {
+  it('lists every bucket of every token with its start', () => {
+    const result = getPrivacyFlowBuckets([
+      { privacyInfo: privacyInfo([bucket('a', 100)]) },
+      { privacyInfo: privacyInfo([bucket('b', 200), bucket('c', 300)]) },
     ])
 
     expect(result).toEqual([
-      'privacy_flow_indexer::ethereum',
-      'privacy_starknet_flow_indexer::starknet',
+      { id: 'a', sinceTimestamp: UnixTime(100) },
+      { id: 'b', sinceTimestamp: UnixTime(200) },
+      { id: 'c', sinceTimestamp: UnixTime(300) },
     ])
   })
 })
 
 describe(getPrivacyFlowSync.name, () => {
-  it('reads the furthest and slowest heights of the projects', () => {
+  it('reads the furthest and slowest heights of the buckets', () => {
     const result = getPrivacyFlowSync(
+      [flowBucket('a', 0), flowBucket('b', 0)],
       [
-        configuration('a', UnixTime(3_600)),
-        configuration('a', UnixTime(7_200)),
-        configuration('b', UnixTime(1_800)),
-        configuration('other', UnixTime(100)),
+        record('a', UnixTime(7_200)),
+        record('b', UnixTime(1_800)),
+        record('other', UnixTime(100)),
       ],
-      ['a', 'b'],
     )
 
     expect(result).toEqual({
@@ -48,28 +36,10 @@ describe(getPrivacyFlowSync.name, () => {
     })
   })
 
-  it('leaves out ended configurations', () => {
+  it('counts a bucket without a synced height as just before its start', () => {
     const result = getPrivacyFlowSync(
-      [
-        configuration('a', UnixTime(3_600)),
-        { ...configuration('a', UnixTime(100)), maxHeight: UnixTime(200) },
-      ],
-      ['a'],
-    )
-
-    expect(result).toEqual({
-      reached: UnixTime(3_600),
-      slowest: UnixTime(3_600),
-    })
-  })
-
-  it('counts an unstarted configuration as just before its start', () => {
-    const result = getPrivacyFlowSync(
-      [
-        configuration('a', UnixTime(3_600)),
-        { ...configuration('a', null), minHeight: UnixTime(2_000) },
-      ],
-      ['a'],
+      [flowBucket('a', 0), flowBucket('b', 2_000), flowBucket('c', 3_000)],
+      [record('a', UnixTime(3_600)), record('b', null)],
     )
 
     expect(result).toEqual({
@@ -78,26 +48,27 @@ describe(getPrivacyFlowSync.name, () => {
     })
   })
 
-  it('is undefined without a started configuration', () => {
-    expect(getPrivacyFlowSync([configuration('a', null)], ['a'])).toEqual(
-      undefined,
-    )
-    expect(getPrivacyFlowSync([], ['a'])).toEqual(undefined)
+  it('is undefined before any bucket has a synced height', () => {
+    expect(
+      getPrivacyFlowSync([flowBucket('a', 0)], [record('a', null)]),
+    ).toEqual(undefined)
+    expect(getPrivacyFlowSync([flowBucket('a', 0)], [])).toEqual(undefined)
   })
 })
 
-function configuration(
-  projectId: string,
-  currentHeight: UnixTime | null,
-): IndexerConfigurationRecord {
+function record(id: string, syncedUntil: UnixTime | null): SyncMetadataRecord {
   return {
-    id: 'a'.repeat(12),
-    indexerId: 'privacy_flow_indexer::ethereum',
-    properties: JSON.stringify({ projectId, bucketId: 'bucket' }),
-    currentHeight,
-    minHeight: 0,
-    maxHeight: null,
+    feature: 'privacy',
+    id,
+    target: UnixTime(10_000),
+    syncedUntil,
+    blockTarget: null,
+    blockSyncedUntil: null,
   }
+}
+
+function flowBucket(id: string, sinceTimestamp: number) {
+  return { id, sinceTimestamp: UnixTime(sinceTimestamp) }
 }
 
 function privacyInfo(
@@ -109,12 +80,11 @@ function privacyInfo(
 }
 
 function bucket(
-  address: ProjectPrivacyInfo['tokens'][number]['buckets'][number]['address'],
-  extractor: string,
+  id: string,
+  sinceTimestamp: number,
 ): ProjectPrivacyInfo['tokens'][number]['buckets'][number] {
   return {
-    address,
-    deposit: { extractor },
-    withdrawal: { extractor },
-  } as unknown as ProjectPrivacyInfo['tokens'][number]['buckets'][number]
+    id,
+    sinceTimestamp: UnixTime(sinceTimestamp),
+  } as ProjectPrivacyInfo['tokens'][number]['buckets'][number]
 }

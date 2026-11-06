@@ -12,7 +12,7 @@ import {
 } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import {
-  getPrivacyFlowIndexerIds,
+  getPrivacyFlowBuckets,
   getPrivacyFlowSync,
   type PrivacyFlowSync,
 } from './utils/getPrivacyFlowSync'
@@ -34,7 +34,7 @@ export type PrivacyFlowsChartPoint = [
 
 export interface PrivacyFlowsChartResponse {
   chart: PrivacyFlowsChartPoint[]
-  /** Start of the last bucket that every configuration has fully indexed. */
+  /** Start of the last period every bucket has fully indexed. */
   syncedUntil: number | undefined
 }
 
@@ -54,10 +54,12 @@ export async function getPrivacyFlowsChart(
     ids: params.projectIds.map(ProjectId),
     select: ['privacyInfo'],
   })
-  const configurations = await db.indexerConfiguration.getByIndexerIds(
-    getPrivacyFlowIndexerIds(projects),
+  const buckets = getPrivacyFlowBuckets(projects)
+  const records = await db.syncMetadata.getByFeatureAndIds(
+    'privacy',
+    buckets.map((bucket) => bucket.id),
   )
-  const sync = getPrivacyFlowSync(configurations, params.projectIds)
+  const sync = getPrivacyFlowSync(buckets, records)
   const { resolution, from, to, syncedUntil } = getPrivacyFlowsChartWindow(
     params.range,
     sync,
@@ -142,9 +144,9 @@ export async function getPrivacyFlowsChart(
 /**
  * The buckets to chart. Each is a sum over its period, so only periods the
  * indexers have fully covered are shown: the chart runs up to the furthest
- * configuration's height, and `syncedUntil` marks where the slowest one is,
- * so the chart can grey out what a backfill has not reached yet. The client's
- * range end is only its guess of what is synced, so the heights replace it.
+ * bucket's height, and `syncedUntil` marks where the slowest one is, so the
+ * chart can grey out what a backfill has not reached yet. The client's range
+ * end is only its guess of what is synced, so the heights replace it.
  */
 export function getPrivacyFlowsChartWindow(
   range: ChartRange,
