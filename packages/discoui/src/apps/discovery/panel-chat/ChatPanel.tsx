@@ -1,4 +1,4 @@
-import { type ReactNode, useState } from 'react'
+import { type ReactNode, useEffect, useState } from 'react'
 import { postChat } from '../../../api/api'
 import type { ApiChatProvider } from '../../../api/types'
 import { IconTriangleAlert } from '../../../icons/IconTriangleAlert'
@@ -20,22 +20,8 @@ const PROVIDERS: { id: ApiChatProvider; hint: string }[] = [
 export function ChatPanel() {
   const status = useChatStore((state) => state.view.status)
   const hasEntries = useChatStore((state) => state.view.entries.length > 0)
-  const [refusal, setRefusal] = useState<string>()
-  // Resolves whether the chat took the request.
-  const send = async (
-    action: Parameters<typeof postChat>[0],
-    body: Record<string, string> = {},
-  ): Promise<boolean> => {
-    setRefusal(undefined)
-    try {
-      const reason = await postChat(action, { tab: agentTabId(), ...body })
-      setRefusal(reason)
-      return reason === undefined
-    } catch {
-      setRefusal('DiscoUI did not answer')
-      return false
-    }
-  }
+  const { send, refusal } = useChatSend()
+  const { starting, start } = useStartLock(status, send)
   // A message sent while the agent starts waits on the server, and can be
   // stopped before it goes out.
   const isWorking = useChatStore(
@@ -49,13 +35,17 @@ export function ChatPanel() {
     status !== undefined &&
     status.status !== 'closed' &&
     status.status !== 'failed'
-  const start = (provider: ApiChatProvider) => send('start', { provider })
   const error = status?.status === 'failed' ? status.error : undefined
 
   if (!isOpen && !hasEntries) {
     return (
       <EmptyChat>
-        <StartChoices error={error} refusal={refusal} start={start} />
+        <StartChoices
+          error={error}
+          refusal={refusal}
+          starting={starting}
+          start={start}
+        />
       </EmptyChat>
     )
   }
@@ -78,11 +68,57 @@ export function ChatPanel() {
       ) : (
         <div className="flex flex-col gap-2 border-coffee-700 border-t p-3">
           <p className="text-coffee-400">Start a new chat</p>
-          <StartChoices error={error} refusal={refusal} start={start} />
+          <StartChoices
+            error={error}
+            refusal={refusal}
+            starting={starting}
+            start={start}
+          />
         </div>
       )}
     </div>
   )
+}
+
+// Resolves whether the chat took the request; a refusal shows in the panel.
+function useChatSend() {
+  const [refusal, setRefusal] = useState<string>()
+  const send = async (
+    action: Parameters<typeof postChat>[0],
+    body: Record<string, string> = {},
+  ): Promise<boolean> => {
+    setRefusal(undefined)
+    try {
+      const reason = await postChat(action, { tab: agentTabId(), ...body })
+      setRefusal(reason)
+      return reason === undefined
+    } catch {
+      setRefusal('DiscoUI did not answer')
+      return false
+    }
+  }
+  return { send, refusal }
+}
+
+// Another click before the new chat reports in would start another. The
+// server empties the transcript first, which redraws the cards, so the lock
+// lives in the panel and holds until the new status arrives.
+function useStartLock(
+  status: ChatStatus | undefined,
+  send: (
+    action: 'start',
+    body: { provider: ApiChatProvider },
+  ) => Promise<boolean>,
+) {
+  const [starting, setStarting] = useState<ApiChatProvider>()
+  useEffect(() => {
+    if (status?.status === 'starting') setStarting(undefined)
+  }, [status])
+  const start = async (provider: ApiChatProvider) => {
+    setStarting(provider)
+    if (!(await send('start', { provider }))) setStarting(undefined)
+  }
+  return { starting, start }
 }
 
 // m-auto rather than justify-center keeps the top reachable in a short pane.
@@ -153,10 +189,10 @@ function Header(props: { status: ChatStatus; end: () => void }) {
 function StartChoices(props: {
   error: string | undefined
   refusal: string | undefined
-  start: (provider: ApiChatProvider) => Promise<boolean>
+  starting: ApiChatProvider | undefined
+  start: (provider: ApiChatProvider) => void
 }) {
-  // Until the chat reports its status, another click would start another.
-  const [starting, setStarting] = useState<ApiChatProvider>()
+  const { starting } = props
   return (
     <div className="flex w-full flex-col gap-2">
       {[props.error, props.refusal].map(
@@ -176,10 +212,7 @@ function StartChoices(props: {
           key={provider.id}
           type="button"
           disabled={starting !== undefined}
-          onClick={() => {
-            setStarting(provider.id)
-            void props.start(provider.id).finally(() => setStarting(undefined))
-          }}
+          onClick={() => props.start(provider.id)}
           className="flex items-center gap-3 rounded-lg border border-coffee-600 bg-coffee-800 px-3 py-2.5 text-left transition-colors hover:border-coffee-400 hover:bg-coffee-700 disabled:opacity-60 disabled:hover:border-coffee-600 disabled:hover:bg-coffee-800"
         >
           <ProviderMark provider={provider.id} className="size-4 shrink-0" />
