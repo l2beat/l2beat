@@ -87,6 +87,9 @@ export const zklinknova: ScalingProject = {
   badges: [BADGES.VM.EVM, BADGES.DA.DAC, BADGES.L3ParentChain.Linea],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
+    redWarning: {
+      text: 'An attacker [drained](https://etherscan.io/tx/0x4f3c23e75b9134e8cae5a462550daad42fbbc19242567fcc34c0a035e297462c) the Ethereum escrows on October 28, 2026. zkLink halted the network and paused withdrawals. Do not deposit funds.',
+    },
     name: 'zkLink Nova',
     slug: 'zklinknova',
     description:
@@ -823,6 +826,27 @@ export const zklinknova: ScalingProject = {
       ],
     },
   },
+  milestones: [
+    {
+      // Tx 0x4f3c23e7… (block 26,294,188, 22:21 UTC): the attacker calls the
+      // SyncL2TxHashRelayer (eth:0x0fdc28e6…), a permissionless contract that
+      // has been a whitelisted Arbitrator relayer since April 2024.
+      // Arbitrator.claimMessage makes an arbitrary call as the Arbitrator, so
+      // the attacker has it call EthereumL1Gateway.sendMessage with a forged
+      // syncBatchRoot for batch 116,409. The finalizeMessageHash check passes
+      // on a transient value left by a genuine Linea claim earlier in the same
+      // tx. Out: 22.43 ETH, 245.74 pufETH, 18,113 USDC, 3,361 USDT and smaller
+      // tokens. The Optimism escrows are swept on 2026-10-29 07:17 UTC (tx
+      // 0x499cb1f1…, 5.86 ETH). EthereumzkLink paused since (checked
+      // 2026-11-06).
+      title: 'Escrows drained, network halted',
+      url: 'https://x.com/zkLink_Official/status/2116211025104216124',
+      date: '2026-10-28T00:00:00Z',
+      description:
+        'A public relayer lets anyone forge a batch root and drain ~$0.8M from the Ethereum escrows.',
+      type: 'incident',
+    },
+  ],
   discoveryInfo: getDiscoveryInfo([
     discovery,
     discovery,
