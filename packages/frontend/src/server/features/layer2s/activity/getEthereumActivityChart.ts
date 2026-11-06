@@ -17,6 +17,7 @@ import {
   reachesNow,
   runsOn,
   toRecentPoints,
+  withoutUnsummed,
 } from './utils/recentActivity'
 
 export type EthereumActivityChartParams = v.infer<
@@ -118,11 +119,12 @@ export async function getEthereumActivityChart(
     activityTotals[ProjectId.ETHEREUM],
   )
 
+  const summed = withoutUnsummed(data)
   const today = reachesNow(params.range)
-    ? await getToday(data.at(-1))
+    ? await getToday(summed.at(-1))
     : undefined
   return {
-    data: today ? [...data, today.point] : data,
+    data: today ? [...summed, today.point] : data,
     syncWarning,
     syncedUntil,
     stats,
@@ -140,7 +142,7 @@ async function getToday(last: EthereumActivityChartDataPoint | undefined) {
     )
   ).get(ProjectId.ETHEREUM)
   const point = recent && toRecentPoints(recent, 'day', last[0])[0]
-  return point && recent && runsOn([last[0], last[1]], point[0], 'day')
+  return point && recent && runsOn(last[0], point[0], 'day')
     ? { point, until: recent.until }
     : undefined
 }
