@@ -26,40 +26,42 @@ export class BlockTxsCountService {
       },
       async () => {
         const blocks = await this.$.provider.getBlocks(from, to)
-
-        return blocks.map((block) => {
-          let txsCount = this.$.assessCount(block.txsCount, block.number)
-
-          if (txsCount < 0) {
-            this.logger.warn('txsCount is negative', {
-              projectId: this.$.projectId,
-              blockNumber: block.number,
-              txsCount,
-            })
-            txsCount = 0
-          }
-
-          let uopsCount: number | null = null
-          if (block.uopsCount !== null) {
-            uopsCount = this.$.assessCount(block.uopsCount, block.number)
-            if (uopsCount < 0) {
-              this.logger.warn('uopsCount is negative', {
-                projectId: this.$.projectId,
-                blockNumber: block.number,
-                uopsCount,
-              })
-              uopsCount = 0
-            }
-          }
-
-          return {
-            txsCount,
-            uopsCount,
-            timestamp: block.timestamp,
-            number: block.number,
-          }
-        })
+        return blocks.map((block) => this.adjust(block))
       },
     )
+  }
+
+  /** Applies the project's count adjustment to a block counted as is */
+  adjust(block: ActivityBlock): ActivityBlock {
+    let txsCount = this.$.assessCount(block.txsCount, block.number)
+
+    if (txsCount < 0) {
+      this.logger.warn('txsCount is negative', {
+        projectId: this.$.projectId,
+        blockNumber: block.number,
+        txsCount,
+      })
+      txsCount = 0
+    }
+
+    let uopsCount: number | null = null
+    if (block.uopsCount !== null) {
+      uopsCount = this.$.assessCount(block.uopsCount, block.number)
+      if (uopsCount < 0) {
+        this.logger.warn('uopsCount is negative', {
+          projectId: this.$.projectId,
+          blockNumber: block.number,
+          uopsCount,
+        })
+        uopsCount = 0
+      }
+    }
+
+    return {
+      txsCount,
+      uopsCount,
+      timestamp: block.timestamp,
+      number: block.number,
+    }
   }
 }

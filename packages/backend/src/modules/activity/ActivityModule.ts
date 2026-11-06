@@ -1,5 +1,6 @@
 import type { AdjustCount } from '@l2beat/config'
 import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
+import { instrumentCoreFeatureRpcMetricsRun } from '../../tools/coreFeatureRpcMetrics'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { BlockActivityIndexer } from './indexers/BlockActivityIndexer'
@@ -10,6 +11,9 @@ import { HourActivityIndexer } from './indexers/HourActivityIndexer'
 import { HourTargetIndexer } from './indexers/HourTargetIndexer'
 import { SlotTargetIndexer } from './indexers/SlotTargetIndexer'
 import type { ActivityIndexer } from './indexers/types'
+import { HeadFollower } from './live/HeadFollower'
+import { LiveActivityCleaner } from './live/LiveActivityCleaner'
+import { RpcBlockFetcher } from './live/RpcBlockFetcher'
 import { BlockTxsCountService } from './services/txs/BlockTxsCountService'
 import { DayTxsCountService } from './services/txs/DayTxsCountService'
 import { SlotTxsCountService } from './services/txs/SlotTxsCountService'
@@ -31,6 +35,7 @@ export function initActivityModule({
   const indexerService = new IndexerService(database)
 
   const indexers: ActivityIndexer[] = []
+  const headFollowers: HeadFollower[] = []
 
   for (const project of config.activity.projects) {
     switch (project.activityConfig.type) {
@@ -69,6 +74,34 @@ export function initActivityModule({
           logger,
         )
 
+        const rpc = config.activity.followHeads
+          ? providers.clients.rpcClients.find(
+              (client) => client.chain === project.chainName,
+            )
+          : undefined
+        const fetcher =
+          rpc &&
+          new RpcBlockFetcher(
+            rpc,
+            providers.uops.getUopsAnalyzer(project.chainName),
+            blockSource,
+          )
+        const headFollower =
+          fetcher &&
+          instrumentCoreFeatureRpcMetricsRun(
+            new HeadFollower(
+              {
+                projectId: project.id,
+                batchSize: project.activityConfig.batchSize ?? 100,
+                fetcher,
+                db: database,
+              },
+              logger,
+            ),
+            'activity.live',
+            { chain: project.chainName, mode: 'head' },
+          )
+
         const activityIndexer = new BlockActivityIndexer(
           {
             projectId: project.id,
@@ -83,6 +116,7 @@ export function initActivityModule({
         )
 
         indexers.push(blockTargetIndexer, activityIndexer)
+        if (headFollower) headFollowers.push(headFollower)
         break
       }
 
@@ -222,6 +256,11 @@ export function initActivityModule({
     }
   }
 
+  const cleaner =
+    headFollowers.length > 0
+      ? new LiveActivityCleaner(database, logger)
+      : undefined
+
   return {
     start: async () => {
       await Promise.all(
@@ -229,6 +268,10 @@ export function initActivityModule({
           await indexer.start()
         }),
       )
+      cleaner?.start()
+      for (const follower of headFollowers) {
+        follower.start()
+      }
     },
   }
 }

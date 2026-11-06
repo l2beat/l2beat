@@ -396,6 +396,7 @@ export function toEVMBlock(
     parentHash: block.parentHash,
     number: Number(block.number),
     timestamp: Number(block.timestamp),
+    gasUsed: Number(block.gasUsed),
     logsBloom: block.logsBloom,
     parentBeaconBlockRoot: block.parentBeaconBlockRoot,
   }
