@@ -17,7 +17,7 @@ import {
 import { formatWhole } from './format'
 import { labelPresence, smoothstep } from './motion'
 
-const FONT = 'Roboto, Arial, sans-serif'
+export const FONT = 'Roboto, Arial, sans-serif'
 /** Fraction of the slot after which labels fade out */
 const LABELS_LEAVE = 0.9
 /** Half the rim `fillTextOnSurface` draws around text, which a box takes in */
@@ -338,7 +338,7 @@ function crosses(a: Box, b: Box) {
 }
 
 /** The rim keeps text readable over racks and hatching */
-function fillTextOnSurface(
+export function fillTextOnSurface(
   ctx: CanvasRenderingContext2D,
   palette: BeltPalette,
   text: string,

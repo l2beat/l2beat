@@ -21,6 +21,8 @@ export interface BeltPalette {
   glow: string
   hatch: string
   targetLine: string
+  /** The blob fee drawn over the racks */
+  feeLine: string
   /** By poster index */
   posters: PosterInk[]
 }
@@ -53,6 +55,8 @@ export function paletteFor(
     glow: toRgba(tokens.brand, dark ? 0.6 : 0.4),
     hatch: toRgba(ink, dark ? 0.06 : 0.055),
     targetLine: toRgba(ink, dark ? 0.5 : 0.42),
+    // the chart's --chart-orange, which the canvas cannot read
+    feeLine: '#f98a24',
     posters: posters.map((poster) => {
       const fill = readableColor(poster.color, tokens.surface)
       return { fill, sheen: mixColors(fill, '#ffffff', 0.45) }

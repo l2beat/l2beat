@@ -3,6 +3,8 @@ import { UnixTime } from '@l2beat/shared-pure'
 import type { BlobPoster } from '~/server/features/data-availability/live-blobs/getBlobPosters'
 import type { Posted } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
 import { getThroughputInForce } from '~/server/features/data-availability/throughput/utils/getThroughputInForce'
+import { blobCostUsd, formatBlobCost } from '~/utils/blobCost'
+import { formatGwei } from '~/utils/formatGwei'
 
 const BLOB_BYTES = 128 * 1024
 
@@ -87,6 +89,15 @@ export function inRanking(rows: PosterTotal[], ranking: string[] = []) {
     return index === -1 ? ranking.length : index
   }
   return rows.toSorted((a, b) => rank(a) - rank(b))
+}
+
+/** In dollars per blob, or in gwei per blob gas while no ETH price is known */
+export function describeBlobCost(
+  blobBaseFeeGwei: number,
+  ethPriceUsd: number | undefined,
+): string {
+  if (ethPriceUsd === undefined) return `${formatGwei(blobBaseFeeGwei)} gwei`
+  return `${formatBlobCost(blobCostUsd(blobBaseFeeGwei, ethPriceUsd))} / blob`
 }
 
 export interface BlockLimits {

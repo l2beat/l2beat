@@ -4,6 +4,7 @@ import { LiveIndicator } from '~/components/LiveIndicator'
 import { useThemeTokens } from '~/hooks/useThemeTokens'
 import { ChevronIcon } from '~/icons/Chevron'
 import type { LiveBlobs } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
+import { blobCostUsd, formatBlobCost } from '~/utils/blobCost'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import { mixColors, readableColor } from '~/utils/color'
@@ -73,6 +74,7 @@ export function LiveStats({
   const blobBaseFee = data?.blocks.find(
     (b) => b.status === 'proposed',
   )?.blobBaseFee
+  const ethPriceUsd = postedWindow?.ethPriceUsd
   const projects = shares.filter((share) => share.id !== UNKNOWN_ID).length
 
   return (
@@ -119,15 +121,23 @@ export function LiveStats({
               <NumberSkeleton sizedAs="00" />
             )}
           </Stat>
-          <Stat label="Blob base fee" note="gwei">
+          <Stat
+            label="Blob cost"
+            note={ethPriceUsd === undefined ? 'gwei' : 'per blob'}
+          >
             {ready && blobBaseFee !== undefined ? (
               blobBaseFee === null ? (
                 '–'
-              ) : (
+              ) : ethPriceUsd === undefined ? (
                 <RollingNumber value={blobBaseFee} format={formatGwei} />
+              ) : (
+                <RollingNumber
+                  value={blobCostUsd(blobBaseFee, ethPriceUsd)}
+                  format={formatBlobCost}
+                />
               )
             ) : (
-              <NumberSkeleton sizedAs="0.000" />
+              <NumberSkeleton sizedAs="$0.000" />
             )}
           </Stat>
         </dl>

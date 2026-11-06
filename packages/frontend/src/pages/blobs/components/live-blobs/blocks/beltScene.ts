@@ -15,6 +15,8 @@ export interface BeltScene {
   layers: BeltLayers
   targetBlobs: number
   maxBlobs: number
+  /** Prices the fee line; without it the line is not drawn */
+  ethPriceUsd: number | undefined
 }
 
 export interface Playback {

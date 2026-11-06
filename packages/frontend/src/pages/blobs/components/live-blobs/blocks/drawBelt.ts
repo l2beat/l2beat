@@ -1,3 +1,4 @@
+import { blobCostUsd, formatBlobCost } from '~/utils/blobCost'
 import { type BeltLayers, GLOW_REACH, traceRackBody } from './beltLayers'
 import { type BeltLayout, tileBounds } from './beltLayout'
 import type { PosterInk } from './beltPalette'
@@ -21,6 +22,8 @@ import {
   drawBlockNumbers,
   drawLimitLabels,
   drawMissedLabels,
+  FONT,
+  fillTextOnSurface,
 } from './drawBeltLabels'
 import {
   DROP_STAGGER,
@@ -53,6 +56,7 @@ export function drawBelt(
   drawMissedLabels(ctx, scene, belt, reveal)
   drawBay(ctx, scene, belt, landingPulse(scene, playback, belt, now))
   drawTiles(ctx, scene, playback, belt, now, frame, reveal)
+  drawFeeLine(ctx, scene, belt)
   drawBayRing(ctx, scene, belt)
   drawBlockNumbers(ctx, scene, belt, frame, reveal)
 
@@ -308,6 +312,84 @@ function drawTileIcon(
     size * motion.scaleY,
   )
   ctx.globalAlpha = alpha
+}
+
+/**
+ * Dollars per blob at the floor and the top of the racks. A fixed log scale,
+ * so a quiet day draws a flat line low down and a spike climbs: the line
+ * means the same from one visit to the next
+ */
+const FEE_SCALE_USD = [0.0001, 1000] as const
+
+/**
+ * The blob fee of each sealed block, as a line over the racks, priced at its
+ * newest end. Missed slots are bridged. Rimmed in the surface color, so it
+ * reads over tiles of any color
+ */
+function drawFeeLine(
+  ctx: CanvasRenderingContext2D,
+  scene: BeltScene,
+  belt: BeltPosition,
+) {
+  const { layout, palette, blocks, ethPriceUsd } = scene
+  if (ethPriceUsd === undefined) return
+  const points: { x: number; y: number; cost: number }[] = []
+  for (let slot = belt.first; slot <= belt.last; slot++) {
+    const block = blocks.get(slot)
+    if (block?.status !== 'proposed' || block.blobBaseFee === null) continue
+    const cost = blobCostUsd(block.blobBaseFee, ethPriceUsd)
+    points.push({
+      x: rackLeft(belt, layout, slot) + layout.rackWidth / 2,
+      y: feeY(layout, cost),
+      cost,
+    })
+  }
+  const last = points.at(-1)
+  if (points.length < 2 || !last) return
+
+  ctx.save()
+  ctx.beginPath()
+  points.forEach((p, i) =>
+    i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y),
+  )
+  ctx.lineJoin = 'round'
+  ctx.lineCap = 'round'
+  ctx.lineWidth = 4
+  ctx.strokeStyle = palette.surface
+  ctx.stroke()
+  ctx.lineWidth = 2
+  ctx.strokeStyle = palette.feeLine
+  ctx.stroke()
+
+  ctx.beginPath()
+  ctx.arc(last.x, last.y, 3.5, 0, 2 * Math.PI)
+  ctx.fillStyle = palette.feeLine
+  ctx.fill()
+  ctx.lineWidth = 2
+  ctx.strokeStyle = palette.surface
+  ctx.stroke()
+
+  // over the sealed racks, as the arrival labels take the room beside the bay
+  ctx.font = `700 12px ${FONT}`
+  ctx.textAlign = 'right'
+  ctx.textBaseline = 'bottom'
+  fillTextOnSurface(
+    ctx,
+    palette,
+    `${formatBlobCost(last.cost)} / blob`,
+    last.x - 6,
+    last.y - 6,
+    palette.feeLine,
+  )
+  ctx.restore()
+}
+
+function feeY(layout: BeltLayout, costUsd: number) {
+  const lo = Math.log10(FEE_SCALE_USD[0])
+  const hi = Math.log10(FEE_SCALE_USD[1])
+  const share = (Math.log10(Math.max(costUsd, 1e-12)) - lo) / (hi - lo)
+  const clamped = Math.min(1, Math.max(0, share))
+  return layout.floorY - clamped * (layout.floorY - layout.rackTop)
 }
 
 /** The target line and the fee band above it, under the tiles */
