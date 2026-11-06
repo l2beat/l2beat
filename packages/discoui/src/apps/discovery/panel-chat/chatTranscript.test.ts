@@ -69,6 +69,8 @@ describe(toBlocks.name, () => {
       { type: 'tool', id: 't3', title: 'ls' },
       { type: 'user', text: 'Thanks' },
       { type: 'text', text: 'Sure.' },
+      { type: 'user', text: 'More' },
+      { type: 'turn-end', stopReason: 'cancelled' },
     ])
     expect(
       blocks.map((block) => [
@@ -84,6 +86,8 @@ describe(toBlocks.name, () => {
       ['activity', 4, false, 1],
       ['entry', 5, false, 'user'],
       ['entry', 6, true, 'text'],
+      ['entry', 7, false, 'user'],
+      ['entry', 8, false, 'turn-end'],
     ])
   })
 })

@@ -20,9 +20,10 @@ export function describeTool(title: string | undefined): ToolLabel {
   if (title === undefined) {
     return { label: 'Tool call', isDiscoUi: false }
   }
-  const tool = discoUiTool(title.trim())
+  const trimmed = title.trim()
+  const tool = discoUiTool(trimmed)
   if (tool === undefined) {
-    return { label: title, isDiscoUi: false }
+    return { label: trimmed, isDiscoUi: false }
   }
   return {
     label: DISCOUI_LABELS[tool] ?? `Used DiscoUI ${tool}`,

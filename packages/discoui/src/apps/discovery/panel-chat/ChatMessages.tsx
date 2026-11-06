@@ -18,6 +18,7 @@ export type Send = (
 
 export function ChatMessages(props: {
   provider: ApiChatProvider
+  isWorking: boolean
   send: Send
 }) {
   const entries = useChatStore((state) => state.view.entries)
@@ -26,7 +27,7 @@ export function ChatMessages(props: {
   // A closed chat cancelled what it still asked, without saying so per
   // request.
   const isOver = status === 'closed' || status === 'failed'
-  const isWorking = status === 'working'
+  const { isWorking } = props
   const blocks = toBlocks(entries)
   // New text follows only a reader already at the bottom; one scrolled up
   // to an earlier message stays there.
@@ -70,9 +71,21 @@ export function ChatMessages(props: {
           )}
         </div>
       ))}
-      {isWorking && entries.at(-1)?.type !== 'text' && <Working />}
+      {isWorking && !isAnswering(entries.at(-1), answered) && <Working />}
     </div>
   )
+}
+
+// A streaming answer shows itself, and a question to the researcher waits
+// on them, not on the agent.
+function isAnswering(
+  last: ApiChatEvent | undefined,
+  answered: ReadonlySet<string>,
+): boolean {
+  if (last?.type === 'permission') {
+    return !answered.has(last.id)
+  }
+  return last?.type === 'text'
 }
 
 function AnswerHeader(props: { provider: ApiChatProvider }) {
@@ -86,7 +99,10 @@ function AnswerHeader(props: { provider: ApiChatProvider }) {
 
 function Working() {
   return (
-    <div className="flex items-center gap-1 text-coffee-400 text-xs">
+    <div
+      role="status"
+      className="flex items-center gap-1 text-coffee-400 text-xs"
+    >
       <span className="size-1.5 animate-pulse rounded-full bg-coffee-400" />
       <span className="size-1.5 animate-pulse rounded-full bg-coffee-400 [animation-delay:150ms]" />
       <span className="size-1.5 animate-pulse rounded-full bg-coffee-400 [animation-delay:300ms]" />
@@ -106,7 +122,7 @@ const Entry = memo(function Entry(props: {
   switch (entry.type) {
     case 'user':
       return (
-        <p className="max-w-[85%] self-end whitespace-pre-wrap rounded-lg rounded-br-sm bg-coffee-700 px-3 py-2 text-[13px] text-coffee-100 leading-relaxed">
+        <p className="max-w-[85%] self-end whitespace-pre-wrap break-words rounded-lg rounded-br-sm bg-coffee-700 px-3 py-2 text-[13px] text-coffee-100 leading-relaxed">
           {entry.text}
         </p>
       )
@@ -153,6 +169,7 @@ const Activity = memo(
       <div className="text-xs">
         <button
           type="button"
+          aria-expanded={isOpen}
           onClick={() => setToggled(!isOpen)}
           className="flex items-center gap-1.5 text-coffee-400 hover:text-coffee-200"
         >
@@ -270,7 +287,7 @@ function PermissionCard(props: {
             className={cn(
               'h-6 rounded-sm border px-2 font-medium transition-colors disabled:opacity-50',
               option.kind.startsWith('allow')
-                ? 'border-autumn-300 bg-autumn-300 text-coffee-900 hover:bg-autumn-200 disabled:hover:bg-autumn-300'
+                ? 'border-autumn-300 bg-autumn-300 text-black hover:bg-autumn-200 disabled:hover:bg-autumn-300'
                 : 'border-coffee-500 text-coffee-200 hover:bg-coffee-700 disabled:hover:bg-transparent',
             )}
           >

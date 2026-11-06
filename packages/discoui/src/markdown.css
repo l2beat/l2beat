@@ -187,7 +187,16 @@
 .mdc-chat h1,
 .mdc-chat h2,
 .mdc-chat h3 {
-  @apply mt-3 mb-1.5 font-bold text-[13px] text-coffee-50;
+  @apply mt-3 mb-1.5 font-bold text-coffee-50;
+}
+
+.mdc-chat h1,
+.mdc-chat h2 {
+  @apply text-sm;
+}
+
+.mdc-chat h3 {
+  @apply text-[13px];
 }
 
 /* The panel is narrow: a wide table scrolls instead of being cut off. */
@@ -195,10 +204,12 @@
   @apply mb-2.5 block max-w-full overflow-x-auto;
 }
 
-/* As specific as the .mdc table rules, which would win otherwise. */
+/* As specific as the .mdc table rules, which would win otherwise. Breaking
+   anywhere would shrink a column to one letter per line, so cells break
+   between words and a wider table scrolls. */
 .mdc.mdc-chat table th,
 .mdc.mdc-chat table td {
-  @apply border-coffee-700 px-2 py-1 text-left text-[12px];
+  @apply border-coffee-700 px-1.5 py-1 text-left text-[11px];
 }
 
 .mdc.mdc-chat table tr {
