@@ -18,3 +18,7 @@ export const BeaconChainError = v.object({
   code: v.number(),
   message: v.string(),
 })
+
+export const ForkSchema = v.object({
+  data: v.object({ current_version: v.string() }),
+})
