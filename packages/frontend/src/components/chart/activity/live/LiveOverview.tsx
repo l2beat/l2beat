@@ -38,6 +38,10 @@ export function LiveOverview({
   const sentAt = useRef(0)
   const queued = useRef<ReturnType<typeof setTimeout>>(undefined)
   useEffect(() => () => clearTimeout(queued.current), [])
+  // a queued move is clamped as the view is when it is sent, as the range
+  // may have changed since
+  const move = useRef(onMove)
+  move.current = onMove
   const span = to - from
   const busiest = Math.max(1, ...points.map((p) => metricOf(p, metric)))
   // the window and the first bar start on their buckets, so can before `from`
@@ -50,7 +54,7 @@ export function LiveOverview({
   const moveTo = (end: number) => {
     const send = () => {
       sentAt.current = performance.now()
-      onMove(Math.round(end))
+      move.current(Math.round(end))
     }
     clearTimeout(queued.current)
     const wait = sentAt.current + MOVE_EVERY_MS - performance.now()
