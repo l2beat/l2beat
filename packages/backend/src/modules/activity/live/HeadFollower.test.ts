@@ -121,6 +121,20 @@ describe(HeadFollower.name, () => {
       expect(store.hashes()).toEqual(['0x102-1'])
     })
 
+    it('tries the delete again next run when it failed', async () => {
+      const chain = new FakeChain(100)
+      const store = new FakeStore([chain.block(98), chain.block(99)])
+      const head = follower(chain, store)
+      store.repository.deleteByProject.rejectsWithOnce(new Error('DB down'))
+
+      chain.reorg(90)
+      await expect(head.follow()).toBeRejectedWith('DB down')
+      expect(store.numbers()).toEqual([98, 99])
+
+      await head.follow()
+      expect(store.numbers()).toEqual([])
+    })
+
     it('stores the counts with the hashes and gas', async () => {
       const chain = new FakeChain(100)
       const store = new FakeStore()
