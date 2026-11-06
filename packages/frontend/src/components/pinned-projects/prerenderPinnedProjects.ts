@@ -13,22 +13,36 @@ export function prerenderPinnedProjects(
     const raw = localStorage.getItem(storageKey)
     if (!raw) return
     const stored = JSON.parse(raw)
-    const toProjects = (
-      value: unknown,
-    ): { href: string; name: string; iconUrl: string }[] =>
+    type Project = {
+      href: string
+      name: string
+      iconUrl: string
+      otherHrefs?: unknown
+    }
+    const toProjects = (value: unknown): Project[] =>
       (Array.isArray(value) ? value : []).filter(
         (item) =>
           typeof item?.href === 'string' &&
           typeof item.name === 'string' &&
           typeof item.iconUrl === 'string',
       )
+    // Mirrors isSameProject and unpinnedRecent in pinnedProjectsStore.
+    const hrefsOf = (project: Project) => [
+      project.href,
+      ...(Array.isArray(project.otherHrefs) ? project.otherHrefs : []),
+    ]
+    const isSame = (a: Project, b: Project) =>
+      hrefsOf(a).includes(b.href) || hrefsOf(b).includes(a.href)
     const pinned = toProjects(stored?.pinned)
-    const pinnedHrefs = pinned.map((project) => project.href)
-    const lists: Record<string, typeof pinned> = {
+    const recent: Project[] = []
+    for (const project of toProjects(stored?.recent)) {
+      if (![...pinned, ...recent].some((p) => isSame(p, project))) {
+        recent.push(project)
+      }
+    }
+    const lists: Record<string, Project[]> = {
       pinned,
-      recent: toProjects(stored?.recent)
-        .filter((project) => !pinnedHrefs.includes(project.href))
-        .slice(0, recentRows),
+      recent: recent.slice(0, recentRows),
     }
 
     for (const template of root.querySelectorAll('template')) {

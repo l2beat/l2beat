@@ -100,6 +100,7 @@ export function ProjectHeader({
               name={project.name}
               iconUrl={project.icon}
               href={project.href}
+              otherHrefs={sectionLinks?.map((link) => link.href)}
             />
             {!!ongoingAnomaly && (
               <a

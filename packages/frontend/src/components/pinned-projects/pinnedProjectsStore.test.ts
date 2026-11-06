@@ -1,5 +1,9 @@
 import { expect } from 'earl'
-import { type SavedProject, withVisit } from './pinnedProjectsStore'
+import {
+  type SavedProject,
+  unpinnedRecent,
+  withVisit,
+} from './pinnedProjectsStore'
 
 // withVisit is the whole of what a page visit does to the stored lists, so
 // it is tested on plain values, without localStorage.
@@ -48,6 +52,33 @@ describe(withVisit.name, () => {
     )
 
     expect(after.pinned).toEqual([renamed])
+  })
+})
+
+describe(unpinnedRecent.name, () => {
+  // Railgun has a ZK Catalog and a Privacy page.
+  const zk = {
+    ...project('zk-catalog/railgun'),
+    otherHrefs: ['/privacy/railgun'],
+  }
+  const privacy = {
+    ...project('privacy/railgun'),
+    otherHrefs: ['/zk-catalog/railgun'],
+  }
+
+  it("leaves out a project pinned from another section's page", () => {
+    expect(
+      unpinnedRecent({ pinned: [zk], recent: [privacy], hasPinned: true }),
+    ).toEqual([])
+  })
+
+  it('lists a project once, from the page opened last', () => {
+    const after = withVisit(
+      { pinned: [], recent: [privacy], hasPinned: false },
+      zk,
+    )
+
+    expect(unpinnedRecent(after)).toEqual([zk])
   })
 })
 

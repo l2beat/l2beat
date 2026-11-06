@@ -16,19 +16,31 @@ export function PinProjectButton({
   name,
   iconUrl,
   href: canonicalHref,
+  otherHrefs,
   className,
 }: {
   name: string
   iconUrl: string
   /** Keys the saved project; without it, the current path. */
   href?: string
+  /** The project's pages in other sections; the nav lists it once. */
+  otherHrefs?: string[]
   className?: string
 }) {
   const pathname = usePathname()
   const href = canonicalHref ?? pathname
+  // A string, so a new array each render doesn't record a new visit.
+  const otherHrefsKey = (otherHrefs ?? [])
+    .filter((other) => other !== href)
+    .join(' ')
   const project = useMemo<SavedProject>(
-    () => ({ href, name, iconUrl }),
-    [href, name, iconUrl],
+    () => ({
+      href,
+      name,
+      iconUrl,
+      otherHrefs: otherHrefsKey ? otherHrefsKey.split(' ') : [],
+    }),
+    [href, name, iconUrl, otherHrefsKey],
   )
   const { isPinned, toggle } = usePinnedState(project)
 
