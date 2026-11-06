@@ -53,6 +53,25 @@ describeDatabase(LiveActivityBlockRepository.name, (db) => {
   })
 
   describe(
+    LiveActivityBlockRepository.prototype.getByProjectNumberRange.name,
+    () => {
+      it("returns the project's blocks in the range, both ends included", async () => {
+        await repository.upsertMany([
+          block('a', 1),
+          block('a', 2),
+          block('a', 4),
+          block('a', 5),
+          block('b', 3),
+        ])
+
+        expect(
+          await repository.getByProjectNumberRange(ProjectId('a'), 2, 4),
+        ).toEqual([block('a', 2), block('a', 4)])
+      })
+    },
+  )
+
+  describe(
     LiveActivityBlockRepository.prototype.deleteByProjectAfter.name,
     () => {
       it("deletes the project's blocks above the number", async () => {
