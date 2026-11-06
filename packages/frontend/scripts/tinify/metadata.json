@@ -44,7 +44,7 @@
   "static/icons/celestia.png": "e574812a266adc29e8e627167c5fab8e",
   "static/icons/celo.png": "69c9fc7f1480a12890101929b21eff6f",
   "static/icons/codex.png": "b2761335e6ad14fcd25fba98eaa19af7",
-  "static/meta-images/layer2s/projects/codex/opengraph-image.png": "aab3687ad2fe31d48063b09fd6f77a6b",
+  "static/meta-images/layer2s/projects/codex/opengraph-image.png": "e9da94e3af68df41f304396c4b1e447c",
   "static/icons/chainbounty.png": "6db2950e888ed056b7f7125a0d0ad3db",
   "static/meta-images/layer2s/projects/chainbounty/opengraph-image.png": "5b632fa58373815ee2207de71cc1af7b",
   "static/icons/clique.png": "4e297ca4e2935182f46d8e822659fde7",
@@ -1611,6 +1611,6 @@
   "static/meta-images/publications/l2beat-is-now-ethbeat-pulse-nav.png": "24c8e2ee44e22dc452e827ef9def3805",
   "static/meta-images/submit-your-protocol/opengraph-image.png": "50111d200c638f4fcb1d5c4789a9d0aa",
   "static/meta-images/integrate-crops/opengraph-image.png": "528391b09f4a3cc450a148b9a9ff5b23",
-  "static/meta-images/layer2s/projects/doma/opengraph-image.png": "a37ea95b0fb0d7519dfa99689e10c8c3",
+  "static/meta-images/layer2s/projects/doma/opengraph-image.png": "1e91a795e9bb1a986b5f1ab63637b9ec",
   "static/icons/doma.png": "8631818edd9dc2c58ce786c7c970bd3c"
 }
