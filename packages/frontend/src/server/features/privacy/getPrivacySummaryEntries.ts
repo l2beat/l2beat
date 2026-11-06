@@ -86,10 +86,11 @@ export async function getPrivacySummaryEntries(
   const last30dCutoff = currentDay - 30 * UnixTime.DAY
 
   const [daily30d, tvl, anonymitySets] = await Promise.all([
-    db.privacyFlowEvent.getDailyByProjectIds(
+    db.privacyFlowEvent.getBucketedByProjectIds(
       projectIds,
       last30dCutoff,
       currentDay,
+      'day',
     ),
     get7dTvsBreakdown({ type: 'projects', projectIds: tvlProjectIds }),
     getPrivacyAnonymitySetSummaries(projects, currentDay),

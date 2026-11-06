@@ -56,7 +56,7 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
   })
 
   describe(
-    PrivacyFlowEventRepository.prototype.getDailyByProjectIds.name,
+    PrivacyFlowEventRepository.prototype.getBucketedByProjectIds.name,
     () => {
       it('aggregates daily deposits and withdrawals', async () => {
         const records = [
@@ -68,10 +68,11 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
 
         await repository.upsertMany(records)
 
-        const result = await repository.getDailyByProjectIds(
+        const result = await repository.getBucketedByProjectIds(
           ['proj-a'],
           START,
           START + UnixTime.DAY,
+          'day',
         )
 
         expect(result).toEqualUnsorted([
@@ -89,11 +90,52 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
         ])
       })
 
+      it('aligns hour and six-hour buckets to UTC', async () => {
+        const day = UnixTime.toStartOf(START, 'day')
+        await repository.upsertMany([
+          flowEvent('proj-a', day + 5 * UnixTime.HOUR, 100, 'deposit', 1, 1n),
+          flowEvent(
+            'proj-a',
+            day + 5 * UnixTime.HOUR + 59 * UnixTime.MINUTE,
+            101,
+            'deposit',
+            1,
+            1n,
+          ),
+          flowEvent('proj-a', day + 6 * UnixTime.HOUR, 102, 'deposit', 1, 1n),
+        ])
+
+        const hourly = await repository.getBucketedByProjectIds(
+          ['proj-a'],
+          day,
+          day + UnixTime.DAY,
+          'hour',
+        )
+        expect(hourly.map((row) => [row.timestamp, row.depositCount])).toEqual([
+          [day + 5 * UnixTime.HOUR, 2],
+          [day + 6 * UnixTime.HOUR, 1],
+        ])
+
+        const sixHourly = await repository.getBucketedByProjectIds(
+          ['proj-a'],
+          day,
+          day + UnixTime.DAY,
+          'six hours',
+        )
+        expect(
+          sixHourly.map((row) => [row.timestamp, row.depositCount]),
+        ).toEqual([
+          [day, 2],
+          [day + 6 * UnixTime.HOUR, 1],
+        ])
+      })
+
       it('returns empty array when no data', async () => {
-        const result = await repository.getDailyByProjectIds(
+        const result = await repository.getBucketedByProjectIds(
           ['proj-a'],
           START,
           START,
+          'day',
         )
         expect(result).toEqual([])
       })
@@ -102,7 +144,12 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
         await repository.upsertMany([
           flowEvent('proj-a', START, 100, 'deposit', 1, 100n),
         ])
-        const result = await repository.getDailyByProjectIds([], START, START)
+        const result = await repository.getBucketedByProjectIds(
+          [],
+          START,
+          START,
+          'day',
+        )
         expect(result).toEqual([])
       })
     },
