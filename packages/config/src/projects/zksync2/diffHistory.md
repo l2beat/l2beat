@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x32c34717bad3a1a834d8a815e3222af7a8d7f8a7
+Generated with discovered.json: 0x06e1ecdb38633c63129c06c7afec01a664f0625c
 
-# Diff at Thu, 05 Nov 2026 15:34:02 GMT:
+# Diff at Thu, 05 Nov 2026 15:35:30 GMT:
 
 - id: 358e0f18
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
@@ -16,6 +16,8 @@ ZKsync Era is the first chain to apply the staged v31 diamond cut (protocol 0.33
 - New chain admin power: pauseDepositsBeforeInitiatingMigration() immediately rejects all new L1 -> L2 priority transactions, deposits and forced transactions alike, until the admin unpauses.
 - Priority Mode cannot be activated: Era is not a ZKsync OS chain and canBeActivated is 0. The EraPermissionlessValidator is set in priorityModeInfo.
 - Batches are still committed, proven and executed through the EraMultisigValidator. No batch has been executed since the upgrade: at block 26348083, 95 batches were committed and 93 proven but not executed.
+
+Config only: the Chain Admin permission of the Diamond now lists the v31 power to pause all new L1 --> L2 transactions while Priority Mode is not allowed, deposits included.
 
 ## Watched changes
 
@@ -236,6 +238,24 @@ ZKsync Era is the first chain to apply the staged v31 diamond cut (protocol 0.33
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1793715898 (main branch discovery), not current.
+
+```diff
+    external contract EraChainAdminProxy (eth:0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: None
+      directlyReceivedPermissions.2.description:
+-        "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
++        "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers and, from v31 while Priority Mode is not allowed, pause all new L1 --> L2 transactions including deposits (Chain Admin role)."
+    }
+```
+
+```diff
+    external contract Matter Labs Multisig (eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: None
+      receivedPermissions.2.description:
+-        "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
++        "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers and, from v31 while Priority Mode is not allowed, pause all new L1 --> L2 transactions including deposits (Chain Admin role)."
+    }
+```
 
 ```diff
     external contract ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) {

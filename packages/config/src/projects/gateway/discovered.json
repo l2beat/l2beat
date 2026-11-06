@@ -1460,9 +1460,9 @@
     "shared-zk-stack/ValidatorTimelock_post29": "0xe85d88e60922135d7ddda6e3c8d3105129f43fe9e3cc4c4d689a891bfeb14c8e"
   },
   "usedBlockNumbers": { "ethereum": 24419160, "gateway": 158294 },
-  "permissionsConfigHash": "0xcf5f1b989c8084364b85eae87f351af9902f17b72ba7c98cdc13f36a2867a9f0",
+  "permissionsConfigHash": "0x8494c49a96fe7a7e343c6ab3791de23f84398049157bb81cbff389b4ace1fe72",
   "modelledAgainst": {
-    "shared-zk-stack": "0xcddcd0a18868fcd04d7ceadd5de3410ecdb121dcc2aabbe07ac6228da07a1a28"
+    "shared-zk-stack": "0x1edc9a85104e4cb1087b172da8c224b9375c175a0b977b71c27aba5aed671567"
   },
   "permissions": {
     "eth:0x14F19299476664665eDa17DBb7dA7e62E3253aa8": {
@@ -1572,7 +1572,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9",
-          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers and, from v31 while Priority Mode is not allowed, pause all new L1 --> L2 transactions including deposits (Chain Admin role).",
           "role": ".getAdmin",
           "via": [
             { "address": "eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3" }
@@ -1708,7 +1708,7 @@
         {
           "permission": "interact",
           "from": "eth:0x1adF137F59949c9081157D5de1e002D1C992071F",
-          "description": "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains.",
+          "description": "manage the shared ValidatorTimelock contract address and the admin role, register upgrades and patch upgrades together with the verifier of each protocol version (and set their deadlines), execute upgrades, freeze, revert batches, deactivate Priority Mode and set permissioned validators and fee params for all connected chains.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
@@ -1717,7 +1717,25 @@
         {
           "permission": "interact",
           "from": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-          "description": "set critical contract addresses for the shared cluster, register settlement layers, pause and unpause migrations and the bridge and manage zk chain registration.",
+          "description": "set critical contract addresses for the shared cluster (asset router, CTM deployer, message root, chain asset handler, chain registration sender), add and remove chain type managers, whitelist settlement layers, pause and unpause the bridge and register already deployed zk chains.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x433b6ff15824806c8C14EcE4a6FE1f1909F7da2F",
+          "description": "add and remove the FFLONK/PLONK verifier pairs that proofs of ZKsync OS chains can select by version.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7fd8B995fc27aD7de97853e65B17CaCfc0a573Cc",
+          "description": "pause / unpause the tracker and re-sync its ChainAssetHandler reference from the Bridgehub.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
@@ -1726,7 +1744,16 @@
         {
           "permission": "interact",
           "from": "eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
-          "description": "pause / unpause the bridge.",
+          "description": "pause / unpause the bridge and set the L1AssetTracker that enforces the per-chain balances.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc16161C7f704388285fE58db287F6216a350dAFA",
+          "description": "manage allowed rollup DA configurations (allowed to be used by rollups in permanent rollup mode).",
           "role": ".owner",
           "via": [
             { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
@@ -1735,7 +1762,7 @@
         {
           "permission": "interact",
           "from": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-          "description": "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains.",
+          "description": "manage the shared ValidatorTimelock contract address and the admin role, register upgrades and patch upgrades together with the verifier of each protocol version (and set their deadlines), execute upgrades, freeze, revert batches, deactivate Priority Mode and set permissioned validators and fee params for all connected chains.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
@@ -1753,7 +1780,7 @@
         {
           "permission": "interact",
           "from": "eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076",
-          "description": "pause, resume chain migrations.",
+          "description": "pause and resume chain migrations, pause and unpause the handler, re-sync its MessageRoot and AssetRouter references from the Bridgehub and backfill historical migration intervals of chains that settled on the legacy Gateway.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
@@ -1815,6 +1842,15 @@
         },
         {
           "permission": "upgrade",
+          "from": "eth:0x419A453e690CEac6E57C7798a375cbB2454dd919",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD",
           "role": "admin",
           "via": [
@@ -1828,6 +1864,24 @@
           "role": "admin",
           "via": [
             { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7fd8B995fc27aD7de97853e65B17CaCfc0a573Cc",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8509eA34177B051110826A36621C1C52C9752CAA",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xff3582a0310916cd62442A4CA88Bf1C757D68938" },
             { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
           ]
         },
@@ -1870,6 +1924,15 @@
         {
           "permission": "upgrade",
           "from": "eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xE220059BBA4684BF2Cf0B9E6E5A9DF94D9fb90E9",
           "role": "admin",
           "via": [
             { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
@@ -1932,12 +1995,22 @@
         },
         {
           "permission": "upgrade",
+          "from": "eth:0x419A453e690CEac6E57C7798a375cbB2454dd919",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD",
           "role": "admin"
         },
         {
           "permission": "upgrade",
           "from": "eth:0x6078F6B379f103de1Aa912dc46bb8Df0c8809860",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7fd8B995fc27aD7de97853e65B17CaCfc0a573Cc",
           "role": "admin"
         },
         {
@@ -1963,6 +2036,11 @@
         {
           "permission": "upgrade",
           "from": "eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xE220059BBA4684BF2Cf0B9E6E5A9DF94D9fb90E9",
           "role": "admin"
         }
       ]
@@ -2008,25 +2086,43 @@
         {
           "permission": "interact",
           "from": "eth:0x1adF137F59949c9081157D5de1e002D1C992071F",
-          "description": "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains.",
+          "description": "manage the shared ValidatorTimelock contract address and the admin role, register upgrades and patch upgrades together with the verifier of each protocol version (and set their deadlines), execute upgrades, freeze, revert batches, deactivate Priority Mode and set permissioned validators and fee params for all connected chains.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-          "description": "set critical contract addresses for the shared cluster, register settlement layers, pause and unpause migrations and the bridge and manage zk chain registration.",
+          "description": "set critical contract addresses for the shared cluster (asset router, CTM deployer, message root, chain asset handler, chain registration sender), add and remove chain type managers, whitelist settlement layers, pause and unpause the bridge and register already deployed zk chains.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x433b6ff15824806c8C14EcE4a6FE1f1909F7da2F",
+          "description": "add and remove the FFLONK/PLONK verifier pairs that proofs of ZKsync OS chains can select by version.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7fd8B995fc27aD7de97853e65B17CaCfc0a573Cc",
+          "description": "pause / unpause the tracker and re-sync its ChainAssetHandler reference from the Bridgehub.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
-          "description": "pause / unpause the bridge.",
+          "description": "pause / unpause the bridge and set the L1AssetTracker that enforces the per-chain balances.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc16161C7f704388285fE58db287F6216a350dAFA",
+          "description": "manage allowed rollup DA configurations (allowed to be used by rollups in permanent rollup mode).",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-          "description": "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains.",
+          "description": "manage the shared ValidatorTimelock contract address and the admin role, register upgrades and patch upgrades together with the verifier of each protocol version (and set their deadlines), execute upgrades, freeze, revert batches, deactivate Priority Mode and set permissioned validators and fee params for all connected chains.",
           "role": ".owner"
         },
         {
@@ -2038,7 +2134,7 @@
         {
           "permission": "interact",
           "from": "eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076",
-          "description": "pause, resume chain migrations.",
+          "description": "pause and resume chain migrations, pause and unpause the handler, re-sync its MessageRoot and AssetRouter references from the Bridgehub and backfill historical migration intervals of chains that settled on the legacy Gateway.",
           "role": ".owner"
         },
         {
@@ -2081,7 +2177,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9",
-          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers and, from v31 while Priority Mode is not allowed, pause all new L1 --> L2 transactions including deposits (Chain Admin role).",
           "role": ".getAdmin"
         }
       ]
@@ -2121,6 +2217,11 @@
         {
           "permission": "upgrade",
           "from": "eth:0x1adF137F59949c9081157D5de1e002D1C992071F",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8509eA34177B051110826A36621C1C52C9752CAA",
           "role": "admin"
         }
       ]
