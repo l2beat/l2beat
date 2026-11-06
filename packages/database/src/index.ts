@@ -24,7 +24,10 @@ export type {
   AggregatedInteropTransferRecord,
   AggregatedInteropTransferSeriesRecord,
 } from './repositories/AggregatedInteropTransferRepository'
-export type { AggregatedL2CostRecord } from './repositories/AggregatedL2CostRepository'
+export type {
+  AggregatedL2CostRecord,
+  SummedL2CostRecord,
+} from './repositories/AggregatedL2CostRepository'
 export type { AggregatedLivenessRecord } from './repositories/AggregatedLivenessRepository'
 export type { AnomalyRecord } from './repositories/AnomaliesRepository'
 export type { AnomalyStatsRecord } from './repositories/AnomalyStatsRepository'
