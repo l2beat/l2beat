@@ -867,16 +867,11 @@
 }
 
 html:active-view-transition-type(crops) {
-  /* One duration and curve for both: the images blend plus-lighter, so
-     opacities that do not sum to one dim the page midway. Also undoes the
-     theme toggle's reveal, below. */
+  /* The rest of the page swaps at once, as without a transition; this also
+     undoes the theme toggle's reveal, below. */
   &::view-transition-old(root),
   &::view-transition-new(root) {
-    animation: 250ms ease both vt-fade-out;
-    clip-path: none;
-  }
-  &::view-transition-new(root) {
-    animation-name: vt-fade-in;
+    animation: none;
   }
   /* A section keeps its new size throughout, so the old one's open
      sub-links fade inside it instead of over the sections below. */
@@ -896,18 +891,6 @@ html:active-view-transition-type(crops) {
   }
   &::view-transition-new(crops-banner) {
     animation-name: vt-blur-in;
-  }
-}
-
-@keyframes vt-fade-out {
-  to {
-    opacity: 0;
-  }
-}
-
-@keyframes vt-fade-in {
-  from {
-    opacity: 0;
   }
 }
 
