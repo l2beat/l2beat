@@ -23,6 +23,7 @@ import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('zklinknova')
+const archivedAt = UnixTime(1793257200) // 2026-10-29T07:00:00Z, last synced hour before block production was suspended
 
 const optimismUpgradability = {
   upgradableBy: [{ name: 'OptimismOwner', delay: 'no' }],
@@ -81,6 +82,7 @@ export const zklinknova: ScalingProject = {
   id: ProjectId('zklinknova'),
   capability: 'universal',
   addedAt: UnixTime(1705330478), // 2024-01-15T14:54:38Z
+  archivedAt,
   hostChain: ProjectId('linea'),
   badges: [BADGES.VM.EVM, BADGES.DA.DAC, BADGES.L3ParentChain.Linea],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
@@ -117,6 +119,7 @@ export const zklinknova: ScalingProject = {
     chainId,
     explorerUrl: 'https://explorer.zklink.io',
     sinceTimestamp: UnixTime(1709273393),
+    untilTimestamp: archivedAt,
     apis: [
       { type: 'etherscan', chainId },
       { type: 'rpc', url: 'https://rpc.zklink.io', callsPerMinute: 300 },
