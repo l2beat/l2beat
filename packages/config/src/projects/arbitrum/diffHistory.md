@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x26d0ad8e1408338a03daa4ba290e79e2eeadfeb5
+
+# Diff at Fri, 06 Nov 2026 16:33:36 GMT:
+
+- id: 9ea6f0d0
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@42d599abc7be8cc38122c72abc4da1c1dda6fbeb block: 1792657864
+- current timestamp: 1793982728
+
+## Description
+
+Inbox: the Security Council (9/12) upgraded it to a temporary implementation and back in a single transaction. The temporary implementation sent two L2 transactions on behalf of the Binance exploiter address `0x3E2bf1ac6bf0934BBba6456C341c2EcbCED632d5`, moving 74,559,805.2 ARB and 8,425.998 ETH to a holding address that only DAO governance can release (see the [forum post](https://forum.arbitrum.foundation/t/security-council-emergency-action-30-10-2026/31625)).
+
+## Watched changes
+
+```diff
+    contract Inbox (eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f) [orbitstack/Inbox] {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      values.$pastUpgrades.14:
++        ["2026-10-30T00:08:35.000Z","0xb69c81774f507d46ce776aeaed8b4d31df96dd66ce6fd05073481011835355d6",["eth:0x980D1F93FC5809c828539c46084801673FA6A859"]]
+      values.$pastUpgrades.15:
++        ["2026-10-30T00:08:35.000Z","0xb69c81774f507d46ce776aeaed8b4d31df96dd66ce6fd05073481011835355d6",["eth:0x7C058ad1D0Ee415f7e7f30e62DB1BCf568470a10"]]
+      values.$pastUpgrades.16:
++        ["2026-10-30T00:08:35.000Z","0xb69c81774f507d46ce776aeaed8b4d31df96dd66ce6fd05073481011835355d6",["eth:0x980D1F93FC5809c828539c46084801673FA6A859"]]
+      values.$pastUpgrades.17:
++        ["2026-10-30T00:08:35.000Z","0xb69c81774f507d46ce776aeaed8b4d31df96dd66ce6fd05073481011835355d6",["eth:0x7C058ad1D0Ee415f7e7f30e62DB1BCf568470a10"]]
+      values.$upgradeCount:
+-        14
++        18
+    }
+```
+
 Generated with discovered.json: 0x703e4a0d8426891181791eeb7b24bbe1fca5aa45
 
 # Diff at Sat, 24 Oct 2026 16:41:03 GMT:
