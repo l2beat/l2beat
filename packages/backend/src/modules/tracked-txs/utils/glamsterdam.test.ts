@@ -1,6 +1,7 @@
 import { expect } from 'earl'
 import {
   getGlamsterdamCalldataGasUsed,
+  getGlamsterdamIntrinsicBase,
   getGlamsterdamOverhead,
 } from './glamsterdam'
 
@@ -8,6 +9,8 @@ import {
 const TXS = [
   {
     name: 'a floor-bound call',
+    isSelfTransfer: false,
+    hasValue: false,
     hash: '0x536648e5030725b7b8e2017019684dca375dded11e12cf11b882769c2e7f1f05',
     dataLength: 119_674,
     nonZeroBytes: 119_491,
@@ -17,6 +20,8 @@ const TXS = [
   },
   {
     name: 'a floor-bound call with value',
+    isSelfTransfer: false,
+    hasValue: true,
     hash: '0x8e0a9e1215be89c377ac0f2ea849a3319c9a1ae6e1099623588e9e4991186cd4',
     dataLength: 356,
     nonZeroBytes: 43,
@@ -26,6 +31,8 @@ const TXS = [
   },
   {
     name: 'a floor-bound self-transfer',
+    isSelfTransfer: true,
+    hasValue: false,
     hash: '0x3684f83b3a3c2074af0f328a4d51e61dca5c54bfc44d76bef24e31b2d948c8b5',
     dataLength: 228,
     nonZeroBytes: 154,
@@ -35,6 +42,8 @@ const TXS = [
   },
   {
     name: 'a call that pays for its execution',
+    isSelfTransfer: false,
+    hasValue: false,
     hash: '0x0c410cb57569e4c731e5e059b24d34365acc6e7a5d97966758c7fcdf5db66dd4',
     dataLength: 1_124,
     nonZeroBytes: 457,
@@ -51,10 +60,24 @@ describe('glamsterdam', () => {
         tx.dataLength,
         tx.nonZeroBytes,
         tx.gasUsed,
+        getGlamsterdamIntrinsicBase(tx.isSelfTransfer, tx.hasValue),
       )
 
       expect(calldata).toEqual(tx.calldata)
       expect(getGlamsterdamOverhead(tx.gasUsed, calldata)).toEqual(tx.overhead)
     })
   }
+
+  it('does not match a call to the base of a call with value', () => {
+    // 15,000 + 16 * 100 calldata + 10,800 execution lands 6,000 above the
+    // call's floor, on the floor of a call with value
+    const calldata = getGlamsterdamCalldataGasUsed(
+      100,
+      100,
+      27_400,
+      getGlamsterdamIntrinsicBase(false, false),
+    )
+
+    expect(calldata).toEqual(16 * 100)
+  })
 })

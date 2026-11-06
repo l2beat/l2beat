@@ -1,9 +1,18 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { calculateCalldataGasUsed } from './calculateCalldataGasUsed'
+import {
+  type CalldataTx,
+  calculateCalldataGasUsed,
+} from './calculateCalldataGasUsed'
 
 describe(calculateCalldataGasUsed.name, () => {
   const blockTimestamp = UnixTime(1746500000)
+
+  function tx(
+    fields: Omit<CalldataTx, 'is_self_transfer' | 'has_value'>,
+  ): CalldataTx {
+    return { ...fields, is_self_transfer: false, has_value: false }
+  }
 
   it('returns standard calldata cost for blocks before Pectra (< 22431084)', () => {
     const blockNumber = 22431083
@@ -13,11 +22,13 @@ describe(calculateCalldataGasUsed.name, () => {
     const gasUsed = 100000
 
     const result = calculateCalldataGasUsed(
-      blockNumber,
-      blockTimestamp,
-      dataLength,
-      nonZeroBytes,
-      gasUsed,
+      tx({
+        block_number: blockNumber,
+        block_time: blockTimestamp,
+        data_length: dataLength,
+        non_zero_bytes: nonZeroBytes,
+        gas_used: gasUsed,
+      }),
     )
 
     const expectedStandardCalldata = 16 * nonZeroBytes + 4 * zeroBytes
@@ -38,11 +49,13 @@ describe(calculateCalldataGasUsed.name, () => {
       const gasUsed = standardCalldata + 21000 + compute
 
       const result = calculateCalldataGasUsed(
-        blockNumber,
-        blockTimestamp,
-        dataLength,
-        nonZeroBytes,
-        gasUsed,
+        tx({
+          block_number: blockNumber,
+          block_time: blockTimestamp,
+          data_length: dataLength,
+          non_zero_bytes: nonZeroBytes,
+          gas_used: gasUsed,
+        }),
       )
 
       expect(result).toEqual(standardCalldata)
@@ -59,11 +72,13 @@ describe(calculateCalldataGasUsed.name, () => {
       const gasUsed = standardCalldata + 21000 + compute
 
       const result = calculateCalldataGasUsed(
-        blockNumber,
-        blockTimestamp,
-        dataLength,
-        nonZeroBytes,
-        gasUsed,
+        tx({
+          block_number: blockNumber,
+          block_time: blockTimestamp,
+          data_length: dataLength,
+          non_zero_bytes: nonZeroBytes,
+          gas_used: gasUsed,
+        }),
       )
 
       const expectedHigherCost = 40 * nonZeroBytes + 10 * zeroBytes
@@ -78,11 +93,13 @@ describe(calculateCalldataGasUsed.name, () => {
     const gasUsed = 30000
 
     const result = calculateCalldataGasUsed(
-      blockNumber,
-      blockTimestamp,
-      dataLength,
-      nonZeroBytes,
-      gasUsed,
+      tx({
+        block_number: blockNumber,
+        block_time: blockTimestamp,
+        data_length: dataLength,
+        non_zero_bytes: nonZeroBytes,
+        gas_used: gasUsed,
+      }),
     )
 
     // All bytes are zero bytes in this case
@@ -101,11 +118,13 @@ describe(calculateCalldataGasUsed.name, () => {
     const gasUsed = 30000
 
     const result = calculateCalldataGasUsed(
-      blockNumber,
-      blockTimestamp,
-      dataLength,
-      nonZeroBytes,
-      gasUsed,
+      tx({
+        block_number: blockNumber,
+        block_time: blockTimestamp,
+        data_length: dataLength,
+        non_zero_bytes: nonZeroBytes,
+        gas_used: gasUsed,
+      }),
     )
 
     // All bytes are non-zero bytes in this case
@@ -121,11 +140,13 @@ describe(calculateCalldataGasUsed.name, () => {
     // Sepolia 0x536648e5…7f1f05 paid the Glamsterdam calldata floor:
     // 7,674,136 = 15,000 + 64 * 119,674
     const result = calculateCalldataGasUsed(
-      22431084,
-      UnixTime(4102444800),
-      119_674,
-      119_491,
-      7_674_136,
+      tx({
+        block_number: 22431084,
+        block_time: UnixTime(4102444800),
+        data_length: 119_674,
+        non_zero_bytes: 119_491,
+        gas_used: 7_674_136,
+      }),
     )
 
     expect(result).toEqual(16 * 119_491 + 4 * 183)

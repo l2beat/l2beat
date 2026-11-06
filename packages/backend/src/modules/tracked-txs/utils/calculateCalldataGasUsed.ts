@@ -1,31 +1,44 @@
 import type { UnixTime } from '@l2beat/shared-pure'
-import { getGlamsterdamCalldataGasUsed, isGlamsterdam } from './glamsterdam'
+import {
+  getGlamsterdamCalldataGasUsed,
+  getGlamsterdamIntrinsicBase,
+  isGlamsterdam,
+} from './glamsterdam'
 
 const PECTRA_START_BLOCK = 22431084
 
-export function calculateCalldataGasUsed(
-  blockNumber: number,
-  blockTimestamp: UnixTime,
-  dataLength: number,
-  nonZeroBytes: number,
-  gasUsed: number,
-) {
-  if (isGlamsterdam(blockTimestamp)) {
-    return getGlamsterdamCalldataGasUsed(dataLength, nonZeroBytes, gasUsed)
+export interface CalldataTx {
+  block_number: number
+  block_time: UnixTime
+  data_length: number
+  non_zero_bytes: number
+  gas_used: number
+  is_self_transfer: boolean
+  has_value: boolean
+}
+
+export function calculateCalldataGasUsed(tx: CalldataTx) {
+  if (isGlamsterdam(tx.block_time)) {
+    return getGlamsterdamCalldataGasUsed(
+      tx.data_length,
+      tx.non_zero_bytes,
+      tx.gas_used,
+      getGlamsterdamIntrinsicBase(tx.is_self_transfer, tx.has_value),
+    )
   }
 
-  const zeroBytes = dataLength - nonZeroBytes
-  const standardCalldata = 16 * nonZeroBytes + 4 * zeroBytes
+  const zeroBytes = tx.data_length - tx.non_zero_bytes
+  const standardCalldata = 16 * tx.non_zero_bytes + 4 * zeroBytes
 
-  if (blockNumber < PECTRA_START_BLOCK) {
+  if (tx.block_number < PECTRA_START_BLOCK) {
     return standardCalldata
   }
 
-  const compute = gasUsed - standardCalldata - 21_000
+  const compute = tx.gas_used - standardCalldata - 21_000
 
   if (compute >= 1.5 * standardCalldata) {
     return standardCalldata
   }
 
-  return 40 * nonZeroBytes + 10 * zeroBytes
+  return 40 * tx.non_zero_bytes + 10 * zeroBytes
 }
