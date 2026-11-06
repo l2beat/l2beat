@@ -52,9 +52,14 @@ interface Props {
   blobFee?: { data: BlobFeeChartPoint[] | undefined }
 }
 
-type SeriesKey = 'project' | 'projectTarget' | 'projectMax' | 'blobFee'
+type SeriesKey =
+  | 'project'
+  | 'projectTarget'
+  | 'projectMax'
+  | 'blobFee'
+  | 'blobFeePeak'
 type ChartRow = { timestamp: number; blobFeeMax: number | null } & Record<
-  SeriesKey,
+  Exclude<SeriesKey, 'blobFeePeak'>,
   number | null
 >
 
@@ -75,7 +80,7 @@ export function ProjectDaAbsoluteThroughputChart({
     () => getProjectChartMeta(project.id, withBlobFee),
     [project.id, withBlobFee],
   )
-  const hiddenDataKeys = useMemo<SeriesKey[]>(
+  const hiddenDataKeys = useMemo<Exclude<SeriesKey, 'blobFeePeak'>[]>(
     () => (withBlobFee ? ['projectMax', 'blobFee'] : ['projectMax']),
     [withBlobFee],
   )
@@ -145,6 +150,21 @@ export function ProjectDaAbsoluteThroughputChart({
       stroke: projectChartMeta.blobFee?.color,
       axis: 'right',
     },
+    // The band from the average up to the peak, shown with the fee: it has
+    // no legend entry of its own, and a series without one is always drawn
+    ...(dataKeys?.includes('blobFee')
+      ? [
+          {
+            key: 'blobFeePeak' as const,
+            value: (row: ChartRow) => row.blobFeeMax,
+            value0: (row: ChartRow) => row.blobFee,
+            fill: projectChartMeta.blobFee?.color,
+            fillOpacity: 0.2,
+            axis: 'right' as const,
+            activeDot: false,
+          },
+        ]
+      : []),
   ]
 
   return (
@@ -208,7 +228,11 @@ function ProjectDaThroughputCustomTooltip({
       </div>
       <HorizontalSeparator className="my-2" />
       <div className="flex flex-col gap-2">
-        {getTooltipEntries(row, keys).map((entry, index) => {
+        {getTooltipEntries(
+          row,
+          // the peak rides along in the fee row
+          keys.filter((key) => key !== 'blobFeePeak'),
+        ).map((entry, index) => {
           return (
             <ChartTooltipRow
               key={index}
