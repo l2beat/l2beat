@@ -48,10 +48,19 @@ describe(getPrivacyFlowSync.name, () => {
     })
   })
 
-  it('is undefined before any bucket has a synced height', () => {
-    expect(
-      getPrivacyFlowSync([flowBucket('a', 0)], [record('a', null)]),
-    ).toEqual(undefined)
+  it('keeps a project whose buckets have not started behind their start', () => {
+    const result = getPrivacyFlowSync(
+      [flowBucket('a', 2_000), flowBucket('b', 3_000)],
+      [record('a', null), record('b', null)],
+    )
+
+    expect(result).toEqual({
+      reached: UnixTime(2_999),
+      slowest: UnixTime(1_999),
+    })
+  })
+
+  it('is undefined before any bucket has a row', () => {
     expect(getPrivacyFlowSync([flowBucket('a', 0)], [])).toEqual(undefined)
   })
 })

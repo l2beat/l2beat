@@ -35,7 +35,7 @@ export function getPrivacyFlowBuckets(
   )
 }
 
-/** Undefined when no bucket has started, e.g. before the backend writes rows. */
+/** Undefined when no bucket has a row, e.g. before the backend writes them. */
 export function getPrivacyFlowSync(
   buckets: PrivacyFlowBucket[],
   records: SyncMetadataRecord[],
@@ -43,17 +43,10 @@ export function getPrivacyFlowSync(
   const syncedUntil = new Map(
     records.map((record) => [record.id, record.syncedUntil]),
   )
-  const started = buckets
-    .map((bucket) => syncedUntil.get(bucket.id) ?? null)
-    .filter((height): height is number => height !== null)
+  if (!buckets.some((bucket) => syncedUntil.has(bucket.id))) return undefined
 
-  if (started.length === 0) return undefined
-  return {
-    reached: Math.max(...started),
-    slowest: Math.min(
-      ...buckets.map(
-        (bucket) => syncedUntil.get(bucket.id) ?? bucket.sinceTimestamp - 1,
-      ),
-    ),
-  }
+  const heights = buckets.map(
+    (bucket) => syncedUntil.get(bucket.id) ?? bucket.sinceTimestamp - 1,
+  )
+  return { reached: Math.max(...heights), slowest: Math.min(...heights) }
 }
