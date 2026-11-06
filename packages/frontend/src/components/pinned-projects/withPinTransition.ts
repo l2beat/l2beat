@@ -46,11 +46,30 @@ export function recordVisit(project: SavedProject) {
   whenSettled(() => withPinTransition(() => recordProjectVisit(project)))
 }
 
-/** Runs `run` on the first frame with no page transition and live lists. */
-function whenSettled(run: () => void, framesLeft = 120) {
-  const settled =
-    !document.documentElement.hasAttribute('data-page-transition') &&
-    document.querySelector('[data-role="pinned-projects"]')
-  if (settled || framesLeft === 0) run()
-  else requestAnimationFrame(() => whenSettled(run, framesLeft - 1))
+/**
+ * Runs `run` on the first frame with no page transition and live lists, or
+ * at once if the tab goes hidden first: it would run no more frames, and
+ * the visit must still be saved.
+ */
+function whenSettled(run: () => void) {
+  let done = false
+  const go = () => {
+    if (done) return
+    done = true
+    document.removeEventListener('visibilitychange', onHide)
+    run()
+  }
+  const onHide = () => {
+    if (document.hidden) go()
+  }
+  document.addEventListener('visibilitychange', onHide)
+  const check = (framesLeft: number) => {
+    if (done) return
+    const settled =
+      !document.documentElement.hasAttribute('data-page-transition') &&
+      document.querySelector('[data-role="pinned-projects"]')
+    if (settled || framesLeft === 0) go()
+    else requestAnimationFrame(() => check(framesLeft - 1))
+  }
+  check(120)
 }
