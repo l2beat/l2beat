@@ -21,8 +21,12 @@ export function getTableScrollWrapperClassName(tableWrapperClassName?: string) {
   )
 }
 
+/**
+ * Starts the table `STICKY_OVERLAP_PX` left of the scroller, where pinned
+ * cells stick, so they do not shift that pixel on the first touch of scroll.
+ */
 export function getTableElementClassName(className?: string) {
-  return cn('w-full border-collapse text-left', className)
+  return cn('-ml-px w-[calc(100%+1px)] border-collapse text-left', className)
 }
 
 export function getBasicTableGroupedHeaderCellClassName(params: {
