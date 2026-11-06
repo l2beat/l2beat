@@ -258,7 +258,7 @@ export function ProjectLiveActivity({
           </div>
         )}
       </div>
-      {newest !== undefined && data && domain && windowText && (
+      {newest !== undefined && data && domain && (
         <div className="mb-4 flex flex-col gap-1">
           <span className={HOME_TEXT.meta}>
             Last 4 hours, a bar a minute. Press or drag to look back
@@ -268,7 +268,7 @@ export function ProjectLiveActivity({
             from={newest - LIVE_BUFFER_SECONDS}
             to={newest}
             window={domain}
-            windowText={live ? `Live, ${windowText}` : windowText}
+            windowText={live ? 'Live' : `Until ${formatClock(domain[1])}`}
             metric={metric}
             // on a bucket, so moves within one share a read
             onMove={(end) =>
