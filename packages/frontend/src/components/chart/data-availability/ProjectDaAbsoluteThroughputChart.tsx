@@ -1,5 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import { formatBytes, type ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { scaleLog } from 'd3-scale'
 import { useMemo } from 'react'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type {
@@ -94,6 +95,13 @@ export function ProjectDaAbsoluteThroughputChart({
   }, [dataWithConfiguredThroughputs])
   const { denominator, unit } = getDaDataParams(max)
 
+  // The fee runs from thousandths of a gwei to tens within a month: on a
+  // linear axis a spike flattens the rest into the baseline
+  const feeTicks = useMemo(
+    () => getPowerOfTenTicks(blobFee?.data?.map(([, avg]) => avg) ?? []),
+    [blobFee?.data],
+  )
+
   const chartData = useMemo(() => {
     const feeByTimestamp = new Map(
       blobFee?.data?.map(([timestamp, avg, max]) => [timestamp, { avg, max }]),
@@ -160,7 +168,13 @@ export function ProjectDaAbsoluteThroughputChart({
         ariaLabel="Data throughput"
         syncedUntil={syncedUntil}
         yAxis={{ unit: ` ${unit}`, tickCount: 4 }}
-        rightAxis={{ format: formatGwei, unit: ' gwei', tickCount: 4 }}
+        rightAxis={{
+          scale: scaleLog,
+          domain: 'auto',
+          ticks: feeTicks,
+          format: formatGwei,
+          unit: ' gwei',
+        }}
         renderTooltip={(row, keys) => (
           <ProjectDaThroughputCustomTooltip
             row={row}
@@ -228,11 +242,20 @@ function formatBlobFee(avg: number | null, max: number | null) {
   return `${formatGwei(avg)} gwei${peak}`
 }
 
+/** Every power of ten the values span, the bounds included */
+function getPowerOfTenTicks(values: (number | null)[]): number[] {
+  const present = values.filter((v): v is number => v !== null && v > 0)
+  if (present.length === 0) return []
+  const lo = Math.floor(Math.log10(Math.min(...present)))
+  const hi = Math.ceil(Math.log10(Math.max(...present)))
+  return Array.from({ length: hi - lo + 1 }, (_, i) => 10 ** (lo + i))
+}
+
 /** Three significant figures, as the fee runs from thousandths of a gwei to tens */
 function formatGwei(value: number) {
   if (value === 0) return '0'
   const digits = Math.max(0, 2 - Math.floor(Math.log10(Math.abs(value))))
-  return value.toFixed(Math.min(digits, 6))
+  return String(Number(value.toFixed(Math.min(digits, 6))))
 }
 
 function getProjectChartMeta(projectId: ProjectId, withBlobFee: boolean) {
