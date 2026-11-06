@@ -70,6 +70,23 @@ export class LiveActivityBlockRepository extends BaseRepository {
     return rows.map(toRecord).reverse()
   }
 
+  /** Both ends included, oldest first */
+  async getByProjectNumberRange(
+    projectId: ProjectId,
+    from: number,
+    to: number,
+  ): Promise<LiveActivityBlockRecord[]> {
+    const rows = await this.db
+      .selectFrom('LiveActivityBlock')
+      .selectAll()
+      .where('projectId', '=', projectId.toString())
+      .where('number', '>=', from)
+      .where('number', '<=', to)
+      .orderBy('number')
+      .execute()
+    return rows.map(toRecord)
+  }
+
   async deleteByProjectAfter(
     projectId: ProjectId,
     number: number,
