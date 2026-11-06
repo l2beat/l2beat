@@ -18358,6 +18358,27 @@
       }
     },
     {
+      "name": "USDC",
+      "coingeckoId": "usd-coin",
+      "address": "0xd996633a415985DBd7D6D12f4A4343E31f5037cf",
+      "symbol": "USDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1742236935,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 81224,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
+    },
+    {
       "name": "Andy",
       "coingeckoId": "andyerc",
       "address": "0xd43D8aDAC6A4C7d9Aeece7c3151FcA8f23752cf8",
@@ -18590,6 +18611,28 @@
       "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "chainId": 94524,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2 (Hydra mode)",
+            "slug": "stargate"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Bridged USDC (Stargate)",
+      "coingeckoId": "usd-coin",
+      "address": "0x31EEf89D5215C305304a2fA5376a1f1b6C5dc477",
+      "symbol": "USDC.e",
+      "decimals": 6,
+      "deploymentTimestamp": 1762276885,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 97477,
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
