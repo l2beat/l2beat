@@ -3,6 +3,7 @@ import type { NavGroup, NavLink } from '~/components/nav/types'
 import { env } from '~/env'
 import { BlobsIcon } from '~/icons/pages/Blobs'
 import { BridgesIcon } from '~/icons/pages/Bridges'
+import { HeartbeatIcon } from '~/icons/pages/Heartbeat'
 import { HomeIcon } from '~/icons/pages/Home'
 import { L2Icon } from '~/icons/pages/L2'
 import { LiquidStakingIcon } from '~/icons/pages/LiquidStaking'
@@ -182,6 +183,16 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
     href: '/blobs',
     icon: (
       <BlobsIcon className="transition-colors duration-300 group-data-[active=true]:fill-nav-active" />
+    ),
+  },
+  env.CLIENT_SIDE_HEARTBEAT_PAGE && {
+    type: 'single',
+    section: 'more',
+    title: 'Heartbeat',
+    match: 'heartbeat',
+    href: '/heartbeat',
+    icon: (
+      <HeartbeatIcon className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active" />
     ),
   },
 ])

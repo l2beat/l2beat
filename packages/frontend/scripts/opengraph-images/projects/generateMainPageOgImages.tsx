@@ -168,6 +168,12 @@ export const mainPages: MainPage[] = [
       'Native rollups let Ethereum verify L2 blocks with its own EVM program.',
   },
   {
+    path: 'heartbeat',
+    title: 'Heartbeat',
+    description:
+      'Transactions, user operations and gas per second on every chain, block by block.',
+  },
+  {
     path: 'blobs',
     title: 'Blobs',
     description:

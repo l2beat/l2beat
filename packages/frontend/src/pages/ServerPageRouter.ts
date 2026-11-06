@@ -19,6 +19,7 @@ import { createFaqRouter } from './faq/FaqRouter'
 import { createGardenRouter } from './garden/GardenRouter'
 import { createGlossaryRouter } from './glossary/GlossaryRouter'
 import { createGovernanceRouter } from './governance/GovernanceRouter'
+import { createHeartbeatRouter } from './heartbeat/HeartbeatRouter'
 import { createHomeRouter } from './home/HomeRouter'
 import { createInteropRouter } from './interop/InteropRouter'
 import { createL2Router } from './layer2s/L2Router'
@@ -65,6 +66,7 @@ export function createServerPageRouter(
     // After Ethereum's router: it owns /projects/ethereum.
     createChainProjectRouter,
     createBlobsRouter,
+    createHeartbeatRouter,
     createZkCatalogRouter,
     createGovernanceRouter,
     createNativeRollupsRouter,

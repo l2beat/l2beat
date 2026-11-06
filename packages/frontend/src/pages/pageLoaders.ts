@@ -67,6 +67,8 @@ export const pageLoaders = {
   ChainProjectPage: async () =>
     (await import('./chain/ChainProjectPage')).ChainProjectPage,
   BlobsPage: async () => (await import('./blobs/BlobsPage')).BlobsPage,
+  HeartbeatPage: async () =>
+    (await import('./heartbeat/HeartbeatPage')).HeartbeatPage,
   PrivacySummaryPage: async () =>
     (await import('./privacy/summary/PrivacySummaryPage')).PrivacySummaryPage,
   PrivacyProjectPage: async () =>

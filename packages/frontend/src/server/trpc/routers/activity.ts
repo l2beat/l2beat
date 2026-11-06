@@ -1,4 +1,7 @@
 import { v as z } from '@l2beat/validate'
+import { TRPCError } from '@trpc/server'
+import { env } from '~/env'
+import { getHeartbeat } from '~/server/features/heartbeat/getHeartbeat'
 import {
   ActivityChartParams,
   getActivityChart,
@@ -16,6 +19,14 @@ import { getRecategorisedActivityChart } from '~/server/features/layer2s/activit
 import { ActivityProjectFilter } from '~/server/features/layer2s/activity/utils/projectFilterUtils'
 import { ChartRange } from '~/utils/range/range'
 import { procedure, router } from '../trpc'
+
+/** For the heartbeat page alone, so with the page off nobody reads the stored blocks */
+const heartbeatPageProcedure = procedure.use(({ next }) => {
+  if (!env.CLIENT_SIDE_HEARTBEAT_PAGE) {
+    throw new TRPCError({ code: 'NOT_FOUND' })
+  }
+  return next()
+})
 
 export const activityRouter = router({
   chart: procedure
@@ -45,4 +56,5 @@ export const activityRouter = router({
       }),
     )
     .query(({ input }) => getActivityChartStats(input.filter)),
+  heartbeat: heartbeatPageProcedure.query(() => getHeartbeat()),
 })

@@ -19,6 +19,7 @@ import {
 } from '~/components/table/utils/commonPinningStyles'
 import { getRowClassNamesWithoutOpacity } from '~/components/table/utils/rowType'
 import { useInterval } from '~/hooks/useInterval'
+import { useReorder } from '~/hooks/useReorder'
 import { useThemeTokens } from '~/hooks/useThemeTokens'
 import type { LiveBlobs } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
 import { BUCKET_SLOTS } from '~/server/features/data-availability/live-blobs/liveBlobsSlots'
@@ -34,13 +35,7 @@ import {
 } from './blocks/format'
 import { useChainClock } from './chainClock'
 import { anyLanding, type Landing, useLandedTotal } from './landings'
-import {
-  FLASH_CLASS_NAME,
-  Pop,
-  RollingNumber,
-  useFlash,
-  useReorder,
-} from './liveMotion'
+import { FLASH_CLASS_NAME, Pop, RollingNumber, useFlash } from './liveMotion'
 import {
   inRanking,
   type LivePoster,

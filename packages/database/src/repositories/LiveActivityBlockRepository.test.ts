@@ -71,6 +71,38 @@ describeDatabase(LiveActivityBlockRepository.name, (db) => {
     },
   )
 
+  describe(LiveActivityBlockRepository.prototype.getSecondsSince.name, () => {
+    it("sums every project's blocks per second after the timestamp", async () => {
+      const second = START + 100
+      await repository.upsertMany([
+        { ...block('a', 1), timestamp: second - 1 },
+        { ...block('a', 2), timestamp: second },
+        { ...block('a', 3), timestamp: second, uopsCount: null },
+        { ...block('b', 1), timestamp: second + 1 },
+      ])
+
+      expect(await repository.getSecondsSince(second - 1)).toEqual([
+        {
+          projectId: ProjectId('a'),
+          timestamp: second,
+          blocks: 2,
+          count: 50,
+          // Block 3 counts no user operations, so its transactions stand in
+          uopsCount: 52,
+          gasUsed: 5_000_000,
+        },
+        {
+          projectId: ProjectId('b'),
+          timestamp: second + 1,
+          blocks: 1,
+          count: 10,
+          uopsCount: 11,
+          gasUsed: 1_000_000,
+        },
+      ])
+    })
+  })
+
   describe(
     LiveActivityBlockRepository.prototype.deleteByProjectAfter.name,
     () => {

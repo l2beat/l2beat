@@ -124,6 +124,16 @@ export const searchBarPages = withIndex([
         },
       ]
     : []),
+  ...(env.CLIENT_SIDE_HEARTBEAT_PAGE
+    ? [
+        {
+          category: 'other' as const,
+          name: 'Heartbeat',
+          href: '/heartbeat',
+          tags: ['pages', 'heartbeat', 'live', 'activity', 'tps', 'uops'],
+        },
+      ]
+    : []),
   {
     category: 'zkCatalog',
     name: 'ZK Catalog',

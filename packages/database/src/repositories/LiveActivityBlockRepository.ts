@@ -14,6 +14,17 @@ export interface LiveActivityBlockRecord {
   gasUsed: number
 }
 
+/** The blocks of one second of a project's chain, summed */
+export interface LiveActivitySecondRecord {
+  projectId: ProjectId
+  timestamp: UnixTime
+  blocks: number
+  count: number
+  /** The transaction count of blocks with no user operations counted */
+  uopsCount: number
+  gasUsed: number
+}
+
 function toRecord(row: Selectable<LiveActivityBlock>): LiveActivityBlockRecord {
   return {
     ...row,
@@ -85,6 +96,32 @@ export class LiveActivityBlockRepository extends BaseRepository {
       .orderBy('number')
       .execute()
     return rows.map(toRecord)
+  }
+
+  /** Every project's, oldest first */
+  async getSecondsSince(since: UnixTime): Promise<LiveActivitySecondRecord[]> {
+    const rows = await this.db
+      .selectFrom('LiveActivityBlock')
+      .select((eb) => [
+        'projectId',
+        'timestamp',
+        eb.fn.countAll<string>().as('blocks'),
+        eb.fn.sum<string>('count').as('count'),
+        eb.fn.sum<string>(eb.fn.coalesce('uopsCount', 'count')).as('uopsCount'),
+        eb.fn.sum<string>('gasUsed').as('gasUsed'),
+      ])
+      .where('timestamp', '>', UnixTime.toDate(since))
+      .groupBy(['projectId', 'timestamp'])
+      .orderBy('timestamp')
+      .execute()
+    return rows.map((row) => ({
+      projectId: ProjectId(row.projectId),
+      timestamp: UnixTime.fromDate(row.timestamp),
+      blocks: Number(row.blocks),
+      count: Number(row.count),
+      uopsCount: Number(row.uopsCount),
+      gasUsed: Number(row.gasUsed),
+    }))
   }
 
   async deleteByProjectAfter(
