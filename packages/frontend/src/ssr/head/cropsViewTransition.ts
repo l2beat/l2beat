@@ -79,7 +79,11 @@ export function cropsViewTransition() {
       // Keyed by title: the pinned and recent lists come and go.
       for (const el of visible('[data-crops-nav]')) {
         el.style.viewTransitionName =
-          NAV + (el.dataset.cropsNav ?? '').replace(/[^\w-]/g, '-')
+          // Lowercase: Chromium lowercases the name in a pseudo-element
+          // selector passed to `animate()`, and names are case-sensitive,
+          // so `crops-nav-Home` would never move.
+          NAV +
+          (el.dataset.cropsNav ?? '').toLowerCase().replace(/[^\w-]/g, '-')
         el.style.setProperty('view-transition-class', 'crops-nav')
         named.push(el)
       }
