@@ -191,11 +191,16 @@ function ProjectRow({
         type="button"
         onClick={(event) => {
           const lists = event.currentTarget.closest(`[data-role=${LISTS_ROLE}]`)
-          withPinTransition(() => {
+          // Focus follows the row once it has moved, which the transition
+          // does after its first capture.
+          const toggle = () => {
             if (pinned) unpinProject(project.href)
             else pinProject(project)
-          })
-          focusProjectButton(lists, project.href)
+            focusProjectButton(lists, project.href)
+          }
+          // From the keyboard it just moves.
+          if (event.detail === 0) toggle()
+          else withPinTransition(toggle)
         }}
         data-href={project.href}
         aria-label={`${pinned ? 'Unpin' : 'Pin'} ${project.name}`}

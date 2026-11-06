@@ -31,13 +31,22 @@ export function pageTransitions() {
   /** The sidebar's labels on the page opened, each with its turned copy. */
   const labels: { label: HTMLElement; ink: HTMLElement }[] = []
 
+  // A page left from the keyboard swaps at once, as keyboard actions do.
+  let keyboard = false
+  addEventListener('keydown', () => (keyboard = true), true)
+  addEventListener('pointerdown', () => (keyboard = false), true)
+
   addEventListener('pageswap', (e) => {
     store(SCROLL_KEY, String(sidebar()?.scrollTop ?? ''))
     const transition = e.viewTransition
     if (!transition) return
     const to = e.activation?.entry.url
     const kinds: string[] = []
-    if (to && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (
+      to &&
+      !keyboard &&
+      !matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
       const from = location.href
       kinds.push('nav')
       if (isHome(from) !== isHome(to)) kinds.push('crops')

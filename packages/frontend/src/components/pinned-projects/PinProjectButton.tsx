@@ -39,7 +39,12 @@ export function PinProjectButton({
     <button
       type="button"
       onClick={(event) => {
-        setDriving(!isPinned && event.detail > 0)
+        // From the keyboard it just changes.
+        if (event.detail === 0) {
+          toggle()
+          return
+        }
+        setDriving(!isPinned)
         withPinTransition(toggle)
       }}
       aria-pressed={isPinned}
