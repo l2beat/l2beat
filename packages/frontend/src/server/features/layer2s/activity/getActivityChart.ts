@@ -23,7 +23,11 @@ import {
   ActivityProjectFilter,
   createActivityProjectsFilter,
 } from './utils/projectFilterUtils'
-import { appendRecentPoints, getRecentHours } from './utils/recentActivity'
+import {
+  appendRecentPoints,
+  getRecentHours,
+  reachesNow,
+} from './utils/recentActivity'
 
 export type ActivityChartParams = v.infer<typeof ActivityChartParams>
 export const ActivityChartParams = v.object({
@@ -161,6 +165,7 @@ export async function getActivityChart({
       ...(await withRecentPoints(
         dailyData,
         projectId,
+        range,
         'day',
         UnixTime.toStartOf(UnixTime.now(), 'day'),
       )),
@@ -202,6 +207,7 @@ export async function getActivityChart({
     ...(await withRecentPoints(
       hourlyData,
       projectId,
+      range,
       'hour',
       lastHour + UnixTime.HOUR,
     )),
@@ -221,10 +227,16 @@ export async function getActivityChart({
 async function withRecentPoints(
   data: ActivityChartDataPoint[],
   projectId: ProjectId | undefined,
+  range: ChartRange,
   resolution: ActivityResolution,
   since: UnixTime,
 ): Promise<Pick<ActivityChartData, 'data' | 'liveUntil'>> {
-  if (!projectId || !env.CLIENT_SIDE_HEARTBEAT_PAGE || data.length === 0) {
+  if (
+    !projectId ||
+    !env.CLIENT_SIDE_HEARTBEAT_PAGE ||
+    data.length === 0 ||
+    !reachesNow(range)
+  ) {
     return { data, liveUntil: undefined }
   }
   const recent = await getRecentHours([projectId, ProjectId.ETHEREUM], since)

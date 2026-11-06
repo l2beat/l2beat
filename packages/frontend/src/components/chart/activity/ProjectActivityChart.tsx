@@ -15,7 +15,10 @@ import type { ChartScale } from '../types'
 import { ActivityChart } from './ActivityChart'
 import { ActivityChartStatsPanel } from './ActivityChartStatsPanel'
 import { ActivityRatioChart } from './ActivityRatioChart'
-import { getActivityPeriodSeconds } from './utils/getActivityPeriodSeconds'
+import {
+  capTimeRange,
+  getActivityPeriodSeconds,
+} from './utils/getActivityPeriodSeconds'
 import { getChartType } from './utils/getChartType'
 
 interface Props {
@@ -84,7 +87,11 @@ export function ProjectActivityChart({
     }))
   }, [chart?.data])
 
-  const timeRange = getChartTimeRangeFromData(chartData, { bucket: resolution })
+  // a period under way reaches only as far as its newest block
+  const timeRange = capTimeRange(
+    getChartTimeRangeFromData(chartData, { bucket: resolution }),
+    liveUntil,
+  )
   return (
     <div className="flex flex-col">
       <ChartControlsWrapper>

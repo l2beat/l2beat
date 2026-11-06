@@ -15,3 +15,12 @@ export function getActivityPeriodSeconds(
     ? Math.max(1, liveUntil - timestamp + 1)
     : whole
 }
+
+/** A chart's range, ending with the newest block when its last period is under way */
+export function capTimeRange(
+  range: [number, number] | undefined,
+  liveUntil: number | undefined,
+): [number, number] | undefined {
+  if (!range || liveUntil === undefined) return range
+  return [range[0], Math.min(range[1], liveUntil + 1)]
+}
