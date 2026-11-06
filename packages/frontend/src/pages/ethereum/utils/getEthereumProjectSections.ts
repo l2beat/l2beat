@@ -74,6 +74,7 @@ export async function getEthereumProjectSections({
       defaultRange: optionToRange('1y'),
       project: toChartProject(ethereum),
       milestones: ethereum.milestones ?? [],
+      hasLive: env.CLIENT_SIDE_LIVE_ACTIVITY,
     },
   })
 
