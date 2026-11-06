@@ -444,7 +444,7 @@ export const base: ScalingProject = opStackL2({
               description: `Execution through the ${governanceStats} \`Base Governance Multisig\``,
             },
           ],
-          note: 'No timelock, and no Safe carries a delay module. Denim upgrade, November 2026: Coinbase signed at 15:24 UTC, the Council at 15:27 UTC, executed at 15:29 UTC, 26 hours before the hardfork activated.',
+          note: 'No timelock, and no Safe carries a delay module. Beryl verifier-hash update, June 2026: Council approved 22 Jun, Coinbase 23 Jun, executed 43 minutes later.',
         },
         'Emergency upgrade path': `**None** — the normal path executes as soon as both Safes sign, so there is no lower emergency threshold. The fastest lever is a pause: the ${incidentResponderStats} \`Base Multisig 1\` can pause withdrawals alone as Incident Responder, but only once per identifier, since the pause expires after ${pauseExpiry} and it cannot pause again until the Guardian unpauses. The Guardian is the ${governanceStats} \`Base Governance Multisig\` itself, which can also blacklist dispute games, set the respected game type and retire all in-flight games.`,
         'Exit window':
