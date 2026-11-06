@@ -19,6 +19,12 @@ export interface ProjectDataPosted {
   pastDay: number
   change: number
   changePeriod: '7D'
+  /**
+   * What the past day's blobs cost at the blob base fee of their blocks, and
+   * nothing else the batch transactions paid. Undefined before fees were
+   * tracked; USD null when an hour has no ETH price
+   */
+  paidForBlobs: { eth: number; usd: number | null } | undefined
 }
 
 export type ProjectsDataPosted = Record<string, ProjectDataPosted>
@@ -34,6 +40,7 @@ export async function getProjectsDataPosted(
           pastDay: 100_000_000,
           change: 0.1,
           changePeriod: '7D',
+          paidForBlobs: { eth: 0.0123, usd: 42 },
         },
       ]),
     )
@@ -48,18 +55,29 @@ export async function getProjectsDataPosted(
   // chart's range end, which trails ~75min behind now and spans 24-47h.
   const to = from + UnixTime.DAY
 
-  const records = await getDb().dataAvailability.getByProjectIdsAndTimeRange(
-    projectIds,
-    [from - 7 * UnixTime.DAY, to],
-  )
+  const db = getDb()
+  const [records, prices] = await Promise.all([
+    db.dataAvailability.getByProjectIdsAndTimeRange(projectIds, [
+      from - 7 * UnixTime.DAY,
+      to,
+    ]),
+    db.l2CostPrice.getByTimestampRange(from, to),
+  ])
 
-  return buildProjectsDataPosted(records, from, to)
+  return buildProjectsDataPosted(
+    records,
+    from,
+    to,
+    new Map(prices.map((p) => [p.timestamp, p.priceUsd])),
+  )
 }
 
 export function buildProjectsDataPosted(
   records: DataAvailabilityRecord[],
   from: number,
   to: number,
+  /** ETH in USD by hour */
+  prices: Map<number, number> = new Map(),
 ): ProjectsDataPosted {
   const sevenDaysAgoFrom = from - 7 * UnixTime.DAY
   const sevenDaysAgoTo = to - 7 * UnixTime.DAY
@@ -80,10 +98,31 @@ export function buildProjectsDataPosted(
       pastDay,
       change: calculatePercentageChange(pastDay, sevenDaysAgo),
       changePeriod: '7D',
+      paidForBlobs: getPaidForBlobs(projectRecords, [from, to], prices),
     }
   }
 
   return result
+}
+
+function getPaidForBlobs(
+  records: DataAvailabilityRecord[],
+  [from, to]: [number, number],
+  prices: Map<number, number>,
+): ProjectDataPosted['paidForBlobs'] {
+  let eth: number | null = null
+  let usd: number | null = 0
+  for (const record of records) {
+    if (record.timestamp < from || record.timestamp >= to) continue
+    if (record.totalFeeEth === null) continue
+    eth = (eth ?? 0) + record.totalFeeEth
+    const price = prices.get(record.timestamp)
+    usd =
+      usd === null || price === undefined
+        ? null
+        : usd + record.totalFeeEth * price
+  }
+  return eth === null ? undefined : { eth, usd }
 }
 
 function getTotalDataPosted(

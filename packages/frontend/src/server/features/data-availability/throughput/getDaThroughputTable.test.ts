@@ -21,6 +21,7 @@ function record(daLayer: string, timestamp: UnixTime): DataAvailabilityRecord {
     projectId: 'project',
     timestamp,
     totalSize: 1n,
+    totalFeeEth: null,
     daLayer,
   }
 }

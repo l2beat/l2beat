@@ -6,6 +6,10 @@ import {
   PastBlobsParams,
 } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
 import {
+  BlobFeeChartParams,
+  getBlobFeeChart,
+} from '~/server/features/data-availability/throughput/getBlobFeeChart'
+import {
   DaPastDayUsageParams,
   getDaPastDayUsage,
 } from '~/server/features/data-availability/throughput/getDaPastDayUsage'
@@ -50,6 +54,11 @@ export const daRouter = router({
   pastDayUsage: blobsPageProcedure
     .input(DaPastDayUsageParams)
     .query(async ({ input }) => getDaPastDayUsage(input)),
+
+  // null rather than undefined, which React Query takes for a missing answer
+  blobFeeChart: blobsPageProcedure
+    .input(BlobFeeChartParams)
+    .query(async ({ input }) => (await getBlobFeeChart(input)) ?? null),
 
   // null rather than undefined, which React Query takes for a missing answer
   liveBlobs: blobsPageProcedure

@@ -16,6 +16,7 @@ function record(
     daLayer: 'ethereum',
     configurationId,
     totalSize: 1n,
+    totalFeeEth: null,
   }
 }
 

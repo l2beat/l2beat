@@ -509,3 +509,139 @@ function providerAnswering(answers: {
     'ethereum',
   )
 }
+
+describe(`${EthereumDaProvider.name} fees`, () => {
+  // Slot 100 is block 1000. Block 1004 is in slot 105: one slot missed
+  const SLOT_100 = 1606824023 + 100 * 12
+  const history = (blockCount: number, newestBlock: number) => {
+    const oldest = newestBlock - blockCount + 1
+    const fees = Array.from({ length: blockCount + 1 }, (_, i) => oldest + i)
+    return {
+      oldestBlock: oldest,
+      baseFeePerGas: fees.map((n) => BigInt(n) * 16n),
+      baseFeePerBlobGas: fees.map((n) => BigInt(n)),
+      gasUsedRatio: fees.slice(0, blockCount).map(() => 0.5),
+      blobGasUsedRatio: fees.slice(0, blockCount).map(() => 0.5),
+    }
+  }
+  const mockRpc = () =>
+    mockObject<RpcClient>({
+      getFeeHistory: mockFn().executes(
+        async (blockCount: number, newestBlock: number) =>
+          history(blockCount, newestBlock),
+      ),
+      getBlock: mockFn().executes(async (blockNumber: number) => ({
+        timestamp:
+          blockNumber === 1004
+            ? SLOT_100 + 5 * 12
+            : SLOT_100 + (blockNumber - 1000) * 12,
+      })),
+    })
+
+  describe(EthereumDaProvider.prototype.getBlobBaseFees.name, () => {
+    it('maps every block of the range to its blob base fee', async () => {
+      const rpc = mockRpc()
+      const provider = new EthereumDaProvider(
+        mockObject<BeaconChainClient>(),
+        rpc,
+        'ethereum',
+      )
+
+      const fees = await provider.getBlobBaseFees(1000, 1004)
+
+      expect(rpc.getFeeHistory).toHaveBeenOnlyCalledWith(5, 1004, [])
+      expect(fees).toEqual(
+        new Map([
+          [1000, 1000n],
+          [1001, 1001n],
+          [1002, 1002n],
+          [1003, 1003n],
+          [1004, 1004n],
+        ]),
+      )
+    })
+
+    it('asks for the history in chunks of a thousand blocks', async () => {
+      const rpc = mockRpc()
+      const provider = new EthereumDaProvider(
+        mockObject<BeaconChainClient>(),
+        rpc,
+        'ethereum',
+      )
+
+      const fees = await provider.getBlobBaseFees(1000, 3100)
+
+      expect(rpc.getFeeHistory).toHaveBeenCalledTimes(3)
+      expect(rpc.getFeeHistory).toHaveBeenNthCalledWith(1, 1000, 1999, [])
+      expect(rpc.getFeeHistory).toHaveBeenNthCalledWith(2, 1000, 2999, [])
+      expect(rpc.getFeeHistory).toHaveBeenNthCalledWith(3, 101, 3100, [])
+      expect(fees.size).toEqual(2101)
+      expect(fees.get(3100)).toEqual(3100n)
+    })
+
+    it('throws when the history starts elsewhere', async () => {
+      const rpc = mockObject<RpcClient>({
+        getFeeHistory: mockFn().resolvesTo(history(5, 1003)),
+      })
+      const provider = new EthereumDaProvider(
+        mockObject<BeaconChainClient>(),
+        rpc,
+        'ethereum',
+      )
+
+      await expect(provider.getBlobBaseFees(1000, 1004)).toBeRejectedWith(
+        'Fee history does not cover the range',
+      )
+    })
+  })
+
+  describe(EthereumDaProvider.prototype.getBlobFees.name, () => {
+    it('spreads the blocks over the slots between the two headers it fetches', async () => {
+      const rpc = mockRpc()
+      const provider = new EthereumDaProvider(
+        mockObject<BeaconChainClient>(),
+        rpc,
+        'ethereum',
+      )
+
+      const fees = await provider.getBlobFees(1000, 1004)
+
+      expect(rpc.getBlock.calls.map((c) => c.args[0])).toEqual([1000, 1004])
+      // Five blocks over five slots: the missed slot shifts the middle
+      // blocks by at most one slot
+      expect(fees.map((f) => f.timestamp)).toEqual([
+        SLOT_100,
+        SLOT_100 + 12,
+        SLOT_100 + 3 * 12,
+        SLOT_100 + 4 * 12,
+        SLOT_100 + 5 * 12,
+      ])
+      expect(fees[4]).toEqual({
+        blockNumber: 1004,
+        timestamp: SLOT_100 + 5 * 12,
+        blobBaseFee: 1004n,
+        baseFeePerGas: 1004n * 16n,
+      })
+    })
+
+    it('gives a lone block the timestamp of its header', async () => {
+      const rpc = mockRpc()
+      const provider = new EthereumDaProvider(
+        mockObject<BeaconChainClient>(),
+        rpc,
+        'ethereum',
+      )
+
+      const fees = await provider.getBlobFees(1002, 1002)
+
+      expect(fees).toEqual([
+        {
+          blockNumber: 1002,
+          timestamp: SLOT_100 + 2 * 12,
+          blobBaseFee: 1002n,
+          baseFeePerGas: 1002n * 16n,
+        },
+      ])
+    })
+  })
+})

@@ -2,8 +2,9 @@ import type { DataAvailabilityRecord } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import type { ChartResolution } from '~/utils/range/range'
+import { sumFees } from './sumFees'
 
-/** This function sums up totalSize for each day and project */
+/** This function sums up totalSize and totalFeeEth for each day and project */
 export function sumByResolutionAndProject(
   records: DataAvailabilityRecord[],
   resolution: ChartResolution,
@@ -31,6 +32,7 @@ export function sumByResolutionAndProject(
         projectId,
         timestamp: Number(timestamp),
         totalSize,
+        totalFeeEth: sumFees(recordsByTimestamp),
         daLayer,
       })
     }

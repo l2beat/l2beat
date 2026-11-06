@@ -50,6 +50,8 @@ export function BlobsThroughputChart({
   const pastDay = useQuery(
     trpc.da.pastDayUsage.queryOptions({ daLayerId: project.id }),
   )
+  // Hidden until picked in the legend, so it waits for nothing
+  const blobFee = useQuery(trpc.da.blobFeeChart.queryOptions({ range }))
 
   const dataWithConfiguredThroughputs = getDataWithConfiguredThroughputs(
     total.data?.chart,
@@ -76,6 +78,7 @@ export function BlobsThroughputChart({
           resolution={resolution}
           hideProjectLogo
           disableLegendOnboarding
+          blobFee={{ data: blobFee.data?.chart }}
         />
       ) : (
         <DaThroughputByProjectChart

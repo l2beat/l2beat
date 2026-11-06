@@ -36,4 +36,18 @@ export interface EthereumBlobBatch {
   blobs: number
 }
 
+/** Fees of one Ethereum block */
+export interface EthereumBlockFee {
+  blockNumber: number
+  /**
+   * Interpolated between the headers at the ends of the fetched chunk, on the
+   * slot grid: off by a slot for every slot missed before it in the chunk
+   */
+  timestamp: UnixTime
+  /** Wei per blob gas */
+  blobBaseFee: bigint
+  /** Wei per gas */
+  baseFeePerGas: bigint
+}
+
 export type DaBlob = EthereumBlob

@@ -1,4 +1,4 @@
-import { formatBytes } from '@l2beat/shared-pure'
+import { formatBytes, formatCurrency } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import compact from 'lodash/compact'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
@@ -54,6 +54,32 @@ export function getL2RiskDataAvailabilityColumns(hideProofSystem?: boolean) {
         change: row.dataPosted?.change,
         period: row.dataPosted?.changePeriod,
       }),
+    ),
+    columnHelper.accessor(
+      (entry) => entry.dataPosted?.paidForBlobs?.usd ?? undefined,
+      {
+        id: 'paidForBlobs',
+        header: 'Past day paid for blobs',
+        cell: (ctx) => {
+          const paid = ctx.row.original.dataPosted?.paidForBlobs
+          if (!paid) {
+            return <NoDataBadge />
+          }
+          return (
+            <span className="font-medium text-xs md:text-sm">
+              {paid.usd !== null
+                ? formatCurrency(paid.usd, 'usd')
+                : formatCurrency(paid.eth, 'eth', { decimals: 4 })}
+            </span>
+          )
+        },
+        sortUndefined: 'last',
+        meta: {
+          align: 'right',
+          tooltip:
+            'What the blobs the project posted to Ethereum over the past day cost at the blob base fee of their blocks. Only the blob gas: the execution gas of the batch transactions is left out.',
+        },
+      },
     ),
     !hideProofSystem &&
       columnHelper.accessor('proofSystem', {

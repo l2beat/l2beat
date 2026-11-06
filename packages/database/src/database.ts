@@ -11,6 +11,8 @@ import { AggregatedLivenessRepository } from './repositories/AggregatedLivenessR
 import { AnomaliesRepository } from './repositories/AnomaliesRepository'
 import { AnomalyStatsRepository } from './repositories/AnomalyStatsRepository'
 import { AppStateRepository } from './repositories/AppStateRepository'
+import { BlobFeeHourlyRepository } from './repositories/BlobFeeHourlyRepository'
+import { BlobFeeRepository } from './repositories/BlobFeeRepository'
 import { BlobsRepository } from './repositories/BlobsRepository'
 import { CropAttestationRepository } from './repositories/CropAttestationRepository'
 import { CurrentPriceRepository } from './repositories/CurrentPriceRepository'
@@ -95,6 +97,8 @@ export function createDatabase(
     daBeatStats: new DaBeatStatsRepository(db),
     dataAvailability: new DataAvailabilityRepository(db),
     blobs: new BlobsRepository(db),
+    blobFee: new BlobFeeRepository(db),
+    blobFeeHourly: new BlobFeeHourlyRepository(db),
     liveBlock: new LiveBlockRepository(db),
     liveBlobBatch: new LiveBlobBatchRepository(db),
     // #endregion
