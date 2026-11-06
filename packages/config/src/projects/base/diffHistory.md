@@ -17,6 +17,23 @@ Base's Denim upgrade. The L1 side was executed by the Base Governance Multisig o
 - Twelve L2 predeploys upgraded to base/contracts v8.4.0: the messenger, both bridges, both token factories, L1Block, L2ToL1MessagePasser, the fee vaults, SchemaRegistry and EAS. The fee vaults keep their recipient and 2 ETH minimum, now held in storage.
 - BaseTime: new predeploy installed by the protocol at activation; it exposes the millisecond part of each block's timestamp, set by a system deposit in every block. Its implementation has no verified source on Basescan because it was installed at the fork rather than deployed.
 
+Diffs:
+
+- AggregateVerifier 0.2.0 -> 0.3.0: https://disco.l2beat.com/diff/eth:0xeF9eCeA15265321753047EBF7D54C858D53cB94f/eth:0xc08b8fFAF04Abb1d7013B74a0E57Eccbd7fa5A70
+- L2CrossDomainMessenger 1.4.0 -> 2.2.0: https://disco.l2beat.com/diff/base:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007/base:0xFe016829CbD44B469a4Bb76Ed95343A9458DCbA6
+- L2StandardBridge 1.1.0 -> 1.13.0: https://disco.l2beat.com/diff/base:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010/base:0xff312C3496f0848CD94d71dC06C434D487A46a10
+- L2ERC721Bridge 1.1.0 -> 1.10.0: https://disco.l2beat.com/diff/base:0xC0D3c0d3c0d3c0d3c0D3C0d3C0D3C0D3c0d30014/base:0x6cf5489360C17e648d9009c74019699aa716d60c
+- OptimismMintableERC20Factory 1.9.0 -> 1.10.2: https://disco.l2beat.com/diff/base:0x6922ac4DbDfEdEa3a1E5535f12c3171f2b964C91/base:0x87481a9CBf0aABf9a5f92838F51D9Ca635a33878
+- OptimismMintableERC721Factory 1.2.0 -> 1.4.2: https://disco.l2beat.com/diff/base:0xc0d3C0d3C0d3C0d3C0d3c0d3C0D3C0d3C0D30017/base:0x6e4f4f3E193880339c79605F88a2CD15370C8e02
+- L1Block 1.7.0 -> 1.8.0: https://disco.l2beat.com/diff/base:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C/base:0x8BDE8F549F56D405f07e1aA15Df9e1FC69839881
+- L2ToL1MessagePasser 1.0.0 -> 1.2.0: https://disco.l2beat.com/diff/base:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016/base:0xF729d45aA58A015835A745474D4bd18551C3A92c
+- SequencerFeeVault 1.3.0 -> 1.6.0: https://disco.l2beat.com/diff/base:0xd53210eE20948eCFF8B6B8180E29657e0ce8492d/base:0x31574645D1Cc22778e10b394BF3713beA4aa2B68
+- BaseFeeVault 1.3.0 -> 1.6.0: https://disco.l2beat.com/diff/base:0x4E207bDF8aece56de86821f5370b2b993D08C9E9/base:0x113B0749737B06D94267fe59e935D38e13849deF
+- L1FeeVault 1.3.0 -> 1.6.0: https://disco.l2beat.com/diff/base:0x0c9034b92351cF8f067379a1fFA4fa35f5AF9dCC/base:0x93759deE9D2100Ca0a0e3EA10A0e5Cc5f07b229B
+- OperatorFeeVault 1.0.0 -> 1.1.0: https://disco.l2beat.com/diff/base:0x4fa2Be8cd41504037F1838BcE3bCC93bC68Ff537/base:0x47B6C3e3C3d8144c83910D26E3b517DF4f6058c7
+- SchemaRegistry 1.0.1 -> 1.3.1-beta.2: https://disco.l2beat.com/diff/base:0x75505a97BD334E7BD3C476893285569C4136Fa0F/base:0xA88AB4351cC11acd42Ca148cd98Cfd91294Aa7BD
+- EAS 1.0.1 -> 1.4.1-beta.3: https://disco.l2beat.com/diff/base:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed/base:0xb6288DE3f61E3aCfAf4f1b0923656e2ab78C1Ad4
+
 ## Watched changes
 
 ```diff
