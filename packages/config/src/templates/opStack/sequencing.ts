@@ -33,7 +33,6 @@ export interface OpStackCentralizedSequencingConfig {
 /** The subset of HARDCODED.<CHAIN> a centralized OP Stack sequencing spec needs. */
 export interface OpStackCentralizedSequencingHardcoded {
   L2_BLOCK_TIME_SECONDS: number
-  /** Absent when the sequencer streams no pre-confirmations beyond its canonical (unsafe) blocks. */
   FLASHBLOCK_INTERVAL_MILLISECONDS?: number
   SEQUENCING_WINDOW_BLOCKS: number
   MAX_DEPOSIT_CALLDATA_BYTES: number
