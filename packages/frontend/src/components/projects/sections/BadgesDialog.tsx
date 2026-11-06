@@ -58,14 +58,20 @@ export function BadgesDialog({
   const [shown, setShown] = useState(data)
   const animateNext = useRef(false)
   useEffect(() => {
-    if (!data || data === shown) return
+    // Settled with nothing, e.g. a failed fetch: the unavailable state
+    // rather than the badge before.
+    if (!data) {
+      if (!isFetching && shown) setShown(undefined)
+      return
+    }
+    if (data === shown) return
     if (animateNext.current && shown && data.badge.id !== shown.badge.id) {
       animateNext.current = false
       withViewTransition('badge', nameBadges, () => setShown(data))
     } else {
       setShown(data)
     }
-  }, [data, shown])
+  }, [data, shown, isFetching])
   const selectBadge = (badgeId: string, byPointer: boolean) => {
     animateNext.current = byPointer
     setSelectedBadgeId(badgeId)
