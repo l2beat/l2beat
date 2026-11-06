@@ -1,3 +1,36 @@
+Generated with discovered.json: 0xf87056c1650be0fe836d80037345888f3589ea22
+
+# Diff at Fri, 06 Nov 2026 16:36:07 GMT:
+
+- id: cb69b3aa
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@42d599abc7be8cc38122c72abc4da1c1dda6fbeb block: 1792491551
+- current timestamp: 1793982763
+
+## Description
+
+Two Safes rotated one signer each.
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0x0c83EAe1FE72c390A02E426572854931EefF93BA) [GnosisSafe] {
+    +++ description: None
+      values.$members.2:
+-        "eth:0xD31074937B28f65db4eeB243916883E335261650"
++        "eth:0x84997ff27EF5D5E0A40A52AA06dDB7fcb35266FF"
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC) [GnosisSafe] {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x71b67AC997056c9935f8AA98F3344432Ea2ec15c"
++        "eth:0x84997ff27EF5D5E0A40A52AA06dDB7fcb35266FF"
+    }
+```
+
 Generated with discovered.json: 0x60f6e191dfd02f93c8b96b9305182871183cc46a
 
 # Diff at Tue, 27 Oct 2026 11:31:37 GMT:

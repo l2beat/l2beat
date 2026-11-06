@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x739a14475752c076aeaa2443dde0867165718993
+
+# Diff at Fri, 06 Nov 2026 16:37:38 GMT:
+
+- id: 346bb4bd
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@42d599abc7be8cc38122c72abc4da1c1dda6fbeb block: 1789568354
+- current timestamp: 1793982909
+
+## Description
+
+RocketDAONodeTrusted: one oracle member left, 9 seats now filled.
+
+## Watched changes
+
+```diff
+    contract RocketDAONodeTrusted (eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9) [rocketpool/RocketDAONodeTrusted] {
+    +++ description: Membership register for the oracle set: the permissioned group that reports the network balances, the collateral price, and the rewards tree, votes on penalties, and is the only body that can approve a contract upgrade. Seats currently filled: 9. Each seat carries one vote and a proposal passes once votes for it reach 4.59. Membership is bonded: joining locks 1,750 collateral tokens, which a passed kick proposal can fine. The bootstrap account could once seat members directly; that path is permanently closed.
+      description:
+-        "Membership register for the oracle set: the permissioned group that reports the network balances, the collateral price, and the rewards tree, votes on penalties, and is the only body that can approve a contract upgrade. Seats currently filled: 10. Each seat carries one vote and a proposal passes once votes for it reach 5.1. Membership is bonded: joining locks 1,750 collateral tokens, which a passed kick proposal can fine. The bootstrap account could once seat members directly; that path is permanently closed."
++        "Membership register for the oracle set: the permissioned group that reports the network balances, the collateral price, and the rewards tree, votes on penalties, and is the only body that can approve a contract upgrade. Seats currently filled: 9. Each seat carries one vote and a proposal passes once votes for it reach 4.59. Membership is bonded: joining locks 1,750 collateral tokens, which a passed kick proposal can fine. The bootstrap account could once seat members directly; that path is permanently closed."
+      values.memberCount:
+-        10
++        9
++++ description: Addresses currently seated in the oracle set.
++++ severity: HIGH
+      values.members.9:
+-        "eth:0xDf590A63B91E8278a9102BEe9aAfd444F8A4b780"
+      values.quorumVotes:
+-        "5.1"
++        "4.59"
+    }
+```
+
 Generated with discovered.json: 0xab51ca3662038ebe1becf65ff2397f22ee8c09e5
 
 # Diff at Wed, 16 Sep 2026 14:20:22 GMT:
