@@ -62,7 +62,7 @@ describe(RpcBlockFetcher.name, () => {
       )
 
       await expect(fetcher.getBlocks(10, 10)).toBeRejectedWith(
-        'expected block number 10, got 12',
+        'Invalid block number in response',
       )
     })
   })
