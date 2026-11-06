@@ -15,6 +15,7 @@ import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange
 import {
   getRecentHours,
   reachesNow,
+  runsOn,
   toRecentPoints,
 } from './utils/recentActivity'
 
@@ -118,7 +119,7 @@ export async function getEthereumActivityChart(
   )
 
   const today = reachesNow(params.range)
-    ? await getToday(data.at(-1)?.[0])
+    ? await getToday(data.at(-1))
     : undefined
   return {
     data: today ? [...data, today.point] : data,
@@ -129,17 +130,19 @@ export async function getEthereumActivityChart(
   }
 }
 
-/** Today so far, past what activity has summed */
-async function getToday(after: UnixTime | undefined) {
-  if (after === undefined || !env.CLIENT_SIDE_LIVE_ACTIVITY) return undefined
+/** Today so far, past what activity has summed, if it summed the day before */
+async function getToday(last: EthereumActivityChartDataPoint | undefined) {
+  if (last === undefined || !env.CLIENT_SIDE_LIVE_ACTIVITY) return undefined
   const recent = (
     await getRecentHours(
       [ProjectId.ETHEREUM],
       UnixTime.toStartOf(UnixTime.now(), 'day'),
     )
   ).get(ProjectId.ETHEREUM)
-  const point = recent && toRecentPoints(recent, 'day', after)[0]
-  return point && recent ? { point, until: recent.until } : undefined
+  const point = recent && toRecentPoints(recent, 'day', last[0])[0]
+  return point && recent && runsOn([last[0], last[1]], point[0], 'day')
+    ? { point, until: recent.until }
+    : undefined
 }
 
 function getEthereumActivityChartStats(

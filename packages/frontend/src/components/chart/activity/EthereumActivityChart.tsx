@@ -107,6 +107,7 @@ export function EthereumActivityChart({
           isPlaceholderData={isPlaceholderData}
           data={ratioData}
           syncedUntil={liveUntil ?? chart?.syncedUntil}
+          liveUntil={liveUntil}
           isLoading={isLoading}
         />
       </div>

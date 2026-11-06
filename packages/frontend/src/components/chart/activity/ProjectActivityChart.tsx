@@ -126,6 +126,7 @@ export function ProjectActivityChart({
           isPlaceholderData={isPlaceholderData}
           data={ratioData}
           syncedUntil={liveUntil ?? chart?.syncedUntil}
+          liveUntil={liveUntil}
           isLoading={isLoading}
           resolution={resolution}
         />

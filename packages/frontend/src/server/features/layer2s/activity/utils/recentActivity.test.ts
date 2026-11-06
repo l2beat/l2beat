@@ -4,6 +4,7 @@ import type {
 } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import type { ActivityChartDataPoint } from '../getActivityChart'
 import {
   appendRecentPoints,
   type RecentHours,
@@ -152,6 +153,23 @@ describe(appendRecentPoints.name, () => {
     )
 
     expect(result.data.at(-1)).toEqual([DAY + 13 * H, 10, null, 12, null])
+  })
+
+  it('leaves the chart as it is when a period activity has not summed lies between', () => {
+    // Methodology: the chart ends at hour 11 and the recent hours start at
+    // 13, so hour 12 is missing; a last row without a value is the same
+    const gap: ActivityChartDataPoint[] = [[DAY + 11 * H, 1, 2, 3, 4]]
+    const empty: ActivityChartDataPoint[] = [[DAY + 12 * H, null, 2, null, 4]]
+    const recent = recentOf(DAY + 14 * H + 1200, DAY + 14 * H + 600)
+
+    expect(appendRecentPoints(gap, recent, PROJECT, 'hour')).toEqual({
+      data: gap,
+      liveUntil: undefined,
+    })
+    expect(appendRecentPoints(empty, recent, PROJECT, 'hour')).toEqual({
+      data: empty,
+      liveUntil: undefined,
+    })
   })
 
   it('leaves the chart as it is without recent hours of the project', () => {
