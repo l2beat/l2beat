@@ -93,7 +93,7 @@ export function NavSidebar({
               closeMobileSidebar={closeMobileSidebar}
             />
           ))}
-        <SidebarGroup className="mt-5 mb-1">
+        <SidebarGroup className="mt-5 mb-1" data-crops-nav="And more">
           <SidebarGroupLabel>And more</SidebarGroupLabel>
         </SidebarGroup>
         {/* One block, so the content's gap between groups does not apply. */}
@@ -141,7 +141,8 @@ function NavGroupItem({
 }) {
   const pathname = usePathname()
   return (
-    <SidebarGroup>
+    // Slides when the CROPS banner comes or goes (cropsViewTransition.ts).
+    <SidebarGroup data-crops-nav={group.title}>
       {group.type === 'multiple' && (
         <SidebarGroupItem>
           <NavCollapsibleItem

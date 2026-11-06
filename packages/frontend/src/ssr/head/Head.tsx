@@ -2,6 +2,7 @@ import { SITE_NAME } from '~/consts/siteName'
 import { env } from '~/env'
 import { jsonForInlineScript } from '~/utils/jsonForInlineScript'
 import type { Manifest } from '~/utils/Manifest'
+import { cropsViewTransition } from './cropsViewTransition'
 import { FontStyles } from './FontStyles'
 import { fonts } from './fonts'
 import type { Metadata } from './getMetadata'
@@ -71,6 +72,9 @@ export function Head({ manifest, metadata }: HeadProps) {
           }}
         />
       ))}
+      <script
+        dangerouslySetInnerHTML={{ __html: `(${cropsViewTransition})()` }}
+      />
       <script
         type="speculationrules"
         dangerouslySetInnerHTML={{

@@ -39,7 +39,7 @@ export function HomeCropsBanner({
 }) {
   return (
     <HomeCard asChild className={cn(HOME_BANNER_CLASS, className)}>
-      <a href={GARDEN_PATH}>
+      <a href={GARDEN_PATH} data-crops-banner="home">
         <GardenLandscape
           flat
           className="home-wide:left-[54%] left-[40%] max-md:left-[48%]"

@@ -30,6 +30,7 @@ export function CropsMiniBanner({
       href={GARDEN_PATH}
       onClick={onClick}
       data-active={isActive}
+      data-crops-banner="mini"
       className={cn(
         'group @container/crops relative flex items-center overflow-hidden rounded-md border border-garden-accent/30 bg-garden-tint px-2.5 py-2 outline-none ring-brand transition-colors hover:border-garden-accent/50 focus-visible:ring-2 data-[active=true]:border-garden-accent/60',
         className,

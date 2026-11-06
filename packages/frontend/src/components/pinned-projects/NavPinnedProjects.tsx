@@ -143,7 +143,7 @@ function PinnedProjectsGroup({
   children: ReactNode
 }) {
   return (
-    <SidebarGroup className="mt-5">
+    <SidebarGroup className="mt-5" data-crops-nav={label}>
       <SidebarGroupLabel>{label}</SidebarGroupLabel>
       <ul className="flex flex-col">{children}</ul>
       {withPinningHint && (

@@ -859,6 +859,72 @@
   scrollbar-width: none !important; /* Firefox */
 }
 
+/* Pages opt in to cross-document view transitions; a script in <head>
+   (cropsViewTransition.ts) skips all but the CROPS banner's morph between
+   home and the sidebar, and animates the morph's groups itself. */
+@view-transition {
+  navigation: auto;
+}
+
+html:active-view-transition-type(crops) {
+  /* One duration and curve for both: the images blend plus-lighter, so
+     opacities that do not sum to one dim the page midway. Also undoes the
+     theme toggle's reveal, below. */
+  &::view-transition-old(root),
+  &::view-transition-new(root) {
+    animation: 250ms ease both vt-fade-out;
+    clip-path: none;
+  }
+  &::view-transition-new(root) {
+    animation-name: vt-fade-in;
+  }
+  /* A section keeps its new size throughout, so the old one's open
+     sub-links fade inside it instead of over the sections below. */
+  &::view-transition-group(*.crops-nav) {
+    overflow: clip;
+  }
+  &::view-transition-old(*.crops-nav),
+  &::view-transition-new(*.crops-nav) {
+    animation-duration: 150ms;
+  }
+  /* The snapshots scale with the box, so the outgoing text would ghost
+     over the incoming at the wrong size: it hands over early, blurred so
+     the two read as one thing changing. */
+  &::view-transition-old(crops-banner),
+  &::view-transition-new(crops-banner) {
+    animation: 200ms cubic-bezier(0.23, 1, 0.32, 1) both vt-blur-out;
+  }
+  &::view-transition-new(crops-banner) {
+    animation-name: vt-blur-in;
+  }
+}
+
+@keyframes vt-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes vt-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes vt-blur-out {
+  to {
+    opacity: 0;
+    filter: blur(4px);
+  }
+}
+
+@keyframes vt-blur-in {
+  from {
+    opacity: 0;
+    filter: blur(4px);
+  }
+}
+
 /* Theme toggle view transition */
 ::view-transition-old(root) {
   animation: none;
