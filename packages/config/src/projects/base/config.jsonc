@@ -40,7 +40,7 @@
     "base:0x4200000000000000000000000000000000000030": {
       "description": "Exposes the millisecond part of the current block timestamp. A protocol deposit at tx[1] of every block sets it to 0, 200, 400, 600 or 800; only the depositor account can call the setter.",
       "manualSourcePaths": {
-        "base:0xc0D3C0d3C0d3C0D3c0d3C0d3c0D3C0d3c0d30030": "https://github.com/base/contracts/blob/v8.4.0/src/L2/BaseTime.sol"
+        "base:0xc0d3C0D3c0d3c0d3c0d3c0D3c0d3C0D3c0d30030": "https://github.com/base/contracts/blob/v8.4.0/src/L2/BaseTime.sol"
       }
     },
     // Base's L1FeeVault implementation (base/contracts v8.4.0, 1.6.0) is the

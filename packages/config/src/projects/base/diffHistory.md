@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x4f4b8f82efe17aabd3b66c4768ac3cd04b684400
+Generated with discovered.json: 0x9288384fcb3f168921d8cd0b327f6a8023eaa99d
 
-# Diff at Fri, 06 Nov 2026 08:41:33 GMT:
+# Diff at Fri, 06 Nov 2026 19:44:58 GMT:
 
 - id: 560b3731
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
@@ -438,8 +438,8 @@ Diffs:
 ```diff
     contract BaseTime (base:0x4200000000000000000000000000000000000030) [N/A] {
     +++ description: Exposes the millisecond part of the current block timestamp. A protocol deposit at tx[1] of every block sets it to 0, 200, 400, 600 or 800; only the depositor account can call the setter.
-      sourceHashes:
--        ["0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44"]
+      sourceHashes.1:
++        "0x98e0ea35fe01553bc64aade07f8c9dfe6f0dea604f153052fbb140ae7fbde880"
       proxyType:
 -        "immutable"
 +        "EIP1967 proxy"
@@ -455,8 +455,8 @@ Diffs:
 +        0
       implementationNames.base:0xc0d3C0D3c0d3c0d3c0d3c0D3c0d3C0D3c0d30030:
 +        ""
-      unverified:
-+        true
+      references:
++        [{"text":"Source Code","href":"https://github.com/base/contracts/blob/v8.4.0/src/L2/BaseTime.sol"}]
     }
 ```
 
