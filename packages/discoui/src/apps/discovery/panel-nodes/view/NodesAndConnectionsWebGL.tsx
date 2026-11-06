@@ -393,6 +393,7 @@ const float GAUSS_NODES[4] = float[4](
 const float GAUSS_WEIGHTS[4] = float[4](
   0.3626837833783620, 0.3137066458778873, 0.2223810344533745,
   0.1012285362903763);
+const float ARC_PANELS = 4.0;
 const float MIN_STROKE_PX = ${CONNECTION_MIN_STROKE_PX}.0;
 const float MIN_INK_RATIO = ${CONNECTION_MIN_INK_RATIO};
 vec2 control1() { return vec2(i_controlX.x, i_from.y); }
@@ -423,17 +424,22 @@ float segmentCount() {
   return clamp(n, 1.0, SEGMENTS_MAX);
 }
 // Constant cost per vertex, and independent of the segment count, so dashes
-// stay put while zooming changes the tessellation.
+// stay put while zooming changes the tessellation. Close nodes give curves
+// that reverse, where |B'| has kinks one 8-point rule integrates badly
+// (6 world units off); four panels keep it under 1.
 float arcLength(float t) {
-  float half_t = 0.5 * t;
+  float panelHalfWidth = 0.5 * t / ARC_PANELS;
   float sum = 0.0;
-  for (int k = 0; k < 4; k++) {
-    float x = GAUSS_NODES[k];
-    sum += GAUSS_WEIGHTS[k] * (
-      length(bezierTangent(half_t * (1.0 + x))) +
-      length(bezierTangent(half_t * (1.0 - x))));
+  for (int panel = 0; panel < int(ARC_PANELS); panel++) {
+    float panelCenter = (2.0 * float(panel) + 1.0) * panelHalfWidth;
+    for (int k = 0; k < 4; k++) {
+      float offset = panelHalfWidth * GAUSS_NODES[k];
+      sum += GAUSS_WEIGHTS[k] * (
+        length(bezierTangent(panelCenter + offset)) +
+        length(bezierTangent(panelCenter - offset)));
+    }
   }
-  return half_t * sum;
+  return panelHalfWidth * sum;
 }
 void main() {
   float segments = segmentCount();
