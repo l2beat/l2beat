@@ -21,7 +21,7 @@ export function getL2LivenessColumns(hideProofSystem?: boolean) {
   return compact([
     ...getL2CommonProjectColumns(
       columnHelper,
-      (row) => `/layer2s/projects/${row.slug}#liveness`,
+      (row) => `/projects/${row.slug}#liveness`,
     ),
     columnHelper.group({
       id: 'data',
@@ -102,7 +102,7 @@ export function getL2LivenessColumns(hideProofSystem?: boolean) {
         return (
           <AnomalyIndicator
             anomalies={entry.anomalies}
-            href={`/layer2s/projects/${entry.slug}#liveness`}
+            href={`/projects/${entry.slug}#liveness`}
           />
         )
       },

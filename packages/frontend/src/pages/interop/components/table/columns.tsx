@@ -66,7 +66,7 @@ function makeNameColumn<T extends CompactProtocolEntry>(opts?: {
           projectName={ctx.row.original.name}
           description={ctx.row.original.description}
         >
-          <TableLink href={`/interop/protocols/${ctx.row.original.slug}`}>
+          <TableLink href={`/projects/${ctx.row.original.slug}`}>
             <TwoRowCell>
               <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
                 <div

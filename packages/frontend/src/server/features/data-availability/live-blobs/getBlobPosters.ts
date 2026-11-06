@@ -32,7 +32,7 @@ export async function getBlobPosters(): Promise<BlobPoster[]> {
         name: p.shortName ?? p.name,
         iconUrl: manifest.getUrl(`/icons/${p.slug}.png`),
         color: getColor(p),
-        href: `/layer2s/projects/${p.slug}`,
+        href: `/projects/${p.slug}`,
       })),
     ...sovereign
       .filter((p) => p.daTrackingConfig.some((c) => c.type === 'ethereum'))

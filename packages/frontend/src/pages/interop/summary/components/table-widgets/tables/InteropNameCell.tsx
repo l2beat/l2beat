@@ -28,7 +28,7 @@ export function InteropNameCell({
       projectName={shortName ?? name}
       description={description}
     >
-      <TableLink href={`/interop/protocols/${slug}`}>
+      <TableLink href={`/projects/${slug}`}>
         <TwoRowCell>
           <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
             <div className="w-fit max-w-[78px] break-words font-bold text-label-value-15 md:leading-none">

@@ -1,45 +1,35 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
+import type { ComponentProps } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { VerticalSeparator } from '~/components/core/VerticalSeparator'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
-import { PrivacyAttributeTag } from '~/components/PrivacyAttributeTag'
-import { ProjectIconList } from '~/components/ProjectIconList'
-import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
 import { ProjectDetails } from '~/components/projects/ProjectDetails'
 import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
-import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
-import { BigPizzaRosette } from '~/components/rosette/pizza/BigPizzaRosette'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { StickyMobileSectionNavigation } from '~/components/section-navigation/StickyMobileSectionNavigation'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
+import { ZkCatalogHeaderDetails } from '~/pages/zk-catalog/v2/project/components/header/ZkCatalogProjectSummary'
 import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
-import { getPrivacyAdversariesSummary } from '~/server/features/privacy/utils/toPrivacyAdversariesSummary'
-import type { ProjectSectionLink } from '~/server/features/projects/getProjectSectionLinks'
+import type { ProjectSection } from '~/server/features/projects/getProjectSections'
 import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
-import { cn } from '~/utils/cn'
-import {
-  getPrivacyAdversaryRosetteValues,
-  PRIVACY_ADVERSARIES_SECTION_ID,
-} from '../adversaries/privacyAdversaryUi'
-import { PrivacyProjectRiskProfile } from './components/PrivacyProjectRiskProfile'
-import {
-  MOBILE_SUMMARY_ROWS,
-  PrivacyProjectStats,
-} from './components/PrivacyProjectStats'
-import { PrivacyReferenceAppStat } from './components/PrivacyReferenceAppStat'
+import { PrivacyProjectSummaryCard } from './components/PrivacyProjectSummaryCard'
 
 interface Props extends AppLayoutProps {
   entry: ProjectPrivacyEntry
-  sectionLinks: ProjectSectionLink[]
+  /** For a privacy protocol that is also in the ZK Catalog. */
+  zkCatalog?: {
+    creator?: string
+    header: ComponentProps<typeof ZkCatalogHeaderDetails>['header']
+  }
+  projectSections: ProjectSection[]
   versionLinks?: ProjectVersionLinks
   queryState: DehydratedState
   selectedUpdateId?: string
@@ -47,7 +37,8 @@ interface Props extends AppLayoutProps {
 
 export function PrivacyProjectPage({
   entry,
-  sectionLinks,
+  zkCatalog,
+  projectSections,
   versionLinks,
   queryState,
   selectedUpdateId,
@@ -55,7 +46,6 @@ export function PrivacyProjectPage({
 }: Props) {
   const navigationSections = projectDetailsToNavigationSections(entry.sections)
   const isNavigationEmpty = navigationSections.length === 0
-  const adversaries = getPrivacyAdversariesSummary(entry.sections)
 
   return (
     <AppLayout {...props}>
@@ -80,9 +70,15 @@ export function PrivacyProjectPage({
                   <ProjectHeader
                     project={entry}
                     section="privacy"
-                    sectionLinks={sectionLinks}
+                    projectSections={projectSections}
                     versions={versionLinks}
                     recentUpdatesCount={entry.recentUpdatesCount}
+                    secondLine={
+                      // "Railgun by Railgun" says nothing
+                      zkCatalog?.creator !== entry.name
+                        ? zkCatalog?.creator
+                        : undefined
+                    }
                   />
                   <ProjectSummaryBars
                     project={{
@@ -122,109 +118,16 @@ export function PrivacyProjectPage({
 
                 <div className="row-start-2 w-full">
                   <HighlightableLinkContextProvider>
-                    <PrimaryCard
-                      id="summary"
-                      data-role="nav-section"
-                      className="scroll-mt-[100vh] border-divider max-md:rounded-none max-md:border-b max-md:pt-0"
-                    >
-                      <div className="flex">
-                        <div className="w-full min-w-0">
-                          <PrivacyProjectStats
-                            totalValueLockedUsd={
-                              entry.summary.totalValueLockedUsd
-                            }
-                            totalValueLockedChange7d={
-                              entry.summary.totalValueLockedChange7d
-                            }
-                            hasTvl={entry.hasTvl}
-                            assetsCount={entry.assetsCount}
-                            bucketsCount={entry.bucketCount}
-                            deposits={entry.summary.deposits}
-                            relayerStat={entry.summary.relayerStat}
-                          />
-
+                    <PrivacyProjectSummaryCard entry={entry}>
+                      {zkCatalog && (
+                        <>
                           <HorizontalSeparator className="max-md:my-2 md:mt-4" />
-                          <PrivacyProjectRiskProfile
-                            trustedSetup={entry.trustedSetup}
-                            exitWindow={entry.exitWindow}
-                            adversaries={adversaries}
-                            href={entry.href}
-                            isUnderReview={entry.isUnderReview}
-                            reproducibility={entry.reproducibility}
-                            className="md:mt-4"
-                          />
-
-                          <HorizontalSeparator className="max-md:my-2 md:mt-4" />
-                          <div
-                            className={cn(
-                              'flex flex-col md:mt-4 md:flex-row md:gap-8',
-                              MOBILE_SUMMARY_ROWS,
-                            )}
-                          >
-                            <ProjectSummaryStat
-                              title="Tracked on"
-                              tooltip="Chains on which the protocol deployment is tracked by ETHBEAT."
-                              value={
-                                <ProjectIconList
-                                  projects={entry.trackedOn}
-                                  title="Tracked on"
-                                />
-                              }
-                            />
-                            {entry.scalingProjects.length > 0 && (
-                              <ProjectSummaryStat
-                                title="Runs on"
-                                tooltip="Scaling projects the protocol runs on."
-                                value={
-                                  <ProjectIconList
-                                    projects={entry.scalingProjects}
-                                    title={`${entry.name} runs on`}
-                                  />
-                                }
-                              />
-                            )}
-                            {entry.attributes.length > 0 && (
-                              <ProjectSummaryStat
-                                title="Attributes"
-                                tooltip="Protocol attributes and capabilities."
-                                valueClassName="flex flex-wrap justify-end gap-1 md:justify-start"
-                                value={entry.attributes.map((attribute) => (
-                                  <PrivacyAttributeTag
-                                    key={attribute.id}
-                                    attribute={attribute}
-                                  />
-                                ))}
-                              />
-                            )}
-                            {entry.referenceApp && (
-                              <PrivacyReferenceAppStat
-                                app={entry.referenceApp}
-                                href={`#${PRIVACY_ADVERSARIES_SECTION_ID}`}
-                              />
-                            )}
+                          <div className="max-md:py-2 md:mt-4">
+                            <ZkCatalogHeaderDetails header={zkCatalog.header} />
                           </div>
-                        </div>
-                        <VerticalSeparator className="mr-8 ml-12 h-[unset] self-stretch max-xl:hidden" />
-                        <BigPizzaRosette
-                          values={getPrivacyAdversaryRosetteValues(adversaries)}
-                          isUnderReview={entry.isUnderReview}
-                          size="small"
-                          className="my-auto max-xl:hidden"
-                        />
-                      </div>
-
-                      <HorizontalSeparator className="my-4 max-md:hidden" />
-                      <div className="max-md:hidden">
-                        <div className="flex flex-col gap-4 px-4 max-md:mt-2 md:px-0 lg:flex-row lg:gap-8">
-                          {entry.badges && entry.badges.length > 0 && (
-                            <BadgesSection badges={entry.badges} withDialog />
-                          )}
-                          {entry.description && (
-                            <AboutSection description={entry.description} />
-                          )}
-                        </div>
-                      </div>
-                    </PrimaryCard>
+                        </>
+                      )}
+                    </PrivacyProjectSummaryCard>
 
                     <ProjectDetails
                       items={entry.sections}

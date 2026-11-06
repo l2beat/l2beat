@@ -73,8 +73,24 @@ describe(getSearchBarEntries.name, () => {
 
     const result = await getSearchBarEntries('arbitrum')
 
-    expect(result.map((entry) => entry.href)).toEqual([
-      '/layer2s/projects/arbitrum',
+    expect(result.map((entry) => entry.href)).toEqual(['/projects/arbitrum'])
+  })
+
+  it('lists a chain that is also a project once, as the project', async () => {
+    env.INTEROP_CHAINS = ['avalanche']
+    ps.getProjects = async () =>
+      [
+        {
+          ...l2Project('avalanche', 'Avalanche'),
+          scalingInfo: undefined,
+          interopConfig: { name: 'Avalanche' },
+        },
+      ] as never
+
+    const result = await getSearchBarEntries('avalanche')
+
+    expect(result.map(({ href, category }) => ({ href, category }))).toEqual([
+      { href: '/projects/avalanche', category: 'interop' },
     ])
   })
 

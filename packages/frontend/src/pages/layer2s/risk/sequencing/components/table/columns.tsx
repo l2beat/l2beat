@@ -18,7 +18,7 @@ function getSequencingHref(entry: L2RiskSequencingEntry) {
   if (entry.slug === 'ethereum') {
     return ETHEREUM_PROJECT_PATH
   }
-  return `/layer2s/projects/${entry.slug}#sequencing`
+  return `/projects/${entry.slug}#sequencing`
 }
 
 function getStakeDistributionTooltip(

@@ -11,10 +11,7 @@ import type { L2ArchivedEntry } from '~/server/features/layer2s/archived/getL2Ar
 const columnHelper = createColumnHelper<L2ArchivedEntry>()
 
 export const l2ArchivedColumns = [
-  ...getL2CommonProjectColumns(
-    columnHelper,
-    (row) => `/layer2s/projects/${row.slug}`,
-  ),
+  ...getL2CommonProjectColumns(columnHelper, (row) => `/projects/${row.slug}`),
   columnHelper.display({
     header: 'Risks',
     cell: (ctx) => {
@@ -26,7 +23,7 @@ export const l2ArchivedColumns = [
       return (
         <PizzaRosetteCell
           projectName={ctx.row.original.name}
-          href={`/layer2s/projects/${ctx.row.original.slug}#risk-analysis`}
+          href={`/projects/${ctx.row.original.slug}#risk-analysis`}
           values={risks}
           isUnderReview={ctx.row.original.statuses?.underReview === 'config'}
         />

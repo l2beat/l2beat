@@ -1,6 +1,7 @@
 import type { ProjectRedWarning, ProjectRiskCategory } from '@l2beat/config'
 import type { HostChainRisksWarningProps } from '~/components/HostChainRisksWarning'
 import { HostChainRisksWarning } from '~/components/HostChainRisksWarning'
+import { Markdown } from '~/components/markdown/Markdown'
 import { WarningBar } from '~/components/WarningBar'
 import { ShieldIcon } from '~/icons/Shield'
 import { UnverifiedIcon } from '~/icons/Unverified'
@@ -8,6 +9,7 @@ import type { ProjectVerificationWarnings } from '~/server/features/utils/getCom
 import { cn } from '~/utils/cn'
 import type { UnverifiedContractEntry } from '~/utils/project/contracts-and-permissions/getUnverifiedContractEntries'
 import { ProjectSection } from './ProjectSection'
+import { RISK_SUMMARY_MARKDOWN_CLASS_NAME } from './riskSummaryMarkdown'
 import type { ProjectSectionProps } from './types'
 import { UnverifiedContractsWarning } from './UnverifiedContractsWarning'
 
@@ -21,6 +23,11 @@ export interface RiskSummarySectionProps extends ProjectSectionProps {
   redWarning: ProjectRedWarning | undefined
   hostChainWarning?: HostChainRisksWarningProps
   unverifiedContracts: UnverifiedContractEntry[]
+  /**
+   * Risk groups written by hand in markdown, after the generated ones: a
+   * merged page's other section adds those the generated groups lack.
+   */
+  extraRisksMarkdown?: string
 }
 
 export interface RiskGroup {
@@ -42,6 +49,7 @@ export function RiskSummarySection({
   warning,
   hostChainWarning,
   unverifiedContracts,
+  extraRisksMarkdown,
   ...sectionProps
 }: RiskSummarySectionProps) {
   if (riskGroups.length === 0) {
@@ -83,6 +91,16 @@ export function RiskSummarySection({
       )}
       <div className="mt-4 md:mt-6">
         <EnumeratedRisks risks={riskGroups} />
+        {extraRisksMarkdown && (
+          <Markdown
+            className={cn(
+              RISK_SUMMARY_MARKDOWN_CLASS_NAME,
+              'mt-4 text-paragraph-15 md:text-paragraph-16',
+            )}
+          >
+            {extraRisksMarkdown}
+          </Markdown>
+        )}
       </div>
     </ProjectSection>
   )

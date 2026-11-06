@@ -30,7 +30,7 @@ export function FrameworkColumn({
       )}
     >
       <a
-        href={`/interop/protocols/${framework.slug}`}
+        href={`/projects/${framework.slug}`}
         className="-mx-2 inline-flex w-fit items-center gap-2 rounded px-2 py-1 transition-colors hover:bg-pure-black/5 dark:hover:bg-pure-white/10"
       >
         <img

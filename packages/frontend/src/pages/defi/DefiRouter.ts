@@ -1,19 +1,8 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
-import { v } from '@l2beat/validate'
-import express, { type Request } from 'express'
+import express from 'express'
 import { env } from '~/env'
-import {
-  serveMarkdown,
-  serveMarkdownIfPreferred,
-} from '~/server/markdown/markdownAlternate'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
-import { validateRoute } from '~/utils/validateRoute'
-import { sendNotFoundPage } from '../not-found/sendNotFoundPage'
-import {
-  getDefiProjectData,
-  getDefiProjectMarkdown,
-} from './project/getDefiProjectData'
 import { getDefiSummaryData } from './summary/getDefiSummaryData'
 
 export function createDefiRouter(
@@ -46,41 +35,6 @@ export function createDefiRouter(
       res.status(200).send(html)
     })
   }
-
-  const getProjectMarkdown = (req: Request<{ slug: string }>) =>
-    getDefiProjectMarkdown(req.params.slug, manifest, cache)
-
-  // Before `:slug`, which would otherwise take "aave.md" as the slug.
-  router.get(
-    '/defi/projects/:slug.md',
-    validateRoute({ params: v.object({ slug: v.string() }) }),
-    serveMarkdown(getProjectMarkdown),
-  )
-
-  router.get(
-    '/defi/projects/:slug',
-    validateRoute({
-      params: v.object({ slug: v.string() }),
-      query: v.object({ update: v.string().optional() }),
-    }),
-    serveMarkdownIfPreferred(getProjectMarkdown),
-    async (req, res) => {
-      const data = await getDefiProjectData(
-        req.params.slug,
-        manifest,
-        cache,
-        req.query.update,
-      )
-
-      if (!data) {
-        await sendNotFoundPage(manifest, render, req.originalUrl, res)
-        return
-      }
-
-      const html = await render(data, req.originalUrl)
-      res.status(200).send(html)
-    },
-  )
 
   return router
 }

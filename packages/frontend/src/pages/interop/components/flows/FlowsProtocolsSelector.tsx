@@ -216,7 +216,7 @@ function ProtocolRow({
           <span className={nameClassName}>{protocol.name}</span>
         ) : (
           <a
-            href={`/interop/protocols/${protocol.slug}`}
+            href={`/projects/${protocol.slug}`}
             className="group inline-flex items-center gap-1"
           >
             <span className={nameClassName}>{protocol.name}</span>

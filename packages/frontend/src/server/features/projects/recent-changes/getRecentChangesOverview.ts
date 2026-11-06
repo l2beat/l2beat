@@ -78,13 +78,13 @@ function getProjectUpdatesHref(
   project: Project<never, 'scalingInfo' | 'interopConfig' | 'privacyInfo'>,
 ): string | undefined {
   if (project.scalingInfo) {
-    return `/layer2s/projects/${project.slug}`
+    return `/projects/${project.slug}`
   }
   if (project.interopConfig) {
-    return `/interop/protocols/${project.slug}`
+    return `/projects/${project.slug}`
   }
   if (project.privacyInfo) {
-    return `/privacy/projects/${project.slug}`
+    return `/projects/${project.slug}`
   }
   return undefined
 }

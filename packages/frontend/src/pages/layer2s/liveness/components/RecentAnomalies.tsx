@@ -145,7 +145,7 @@ function AnomalyCollapsible({
           })}
         </div>
         <Button variant="outline" size="sm" className="w-full py-1" asChild>
-          <a href={`/layer2s/projects/${projectWithAnomalies.slug}#liveness`}>
+          <a href={`/projects/${projectWithAnomalies.slug}#liveness`}>
             See more details
           </a>
         </Button>
@@ -162,7 +162,7 @@ function FailureMechanism({
   slug: string
 }) {
   const link = (
-    <a href={`/layer2s/projects/${slug}#operator`}>
+    <a href={`/projects/${slug}#operator`}>
       <SentimentText
         sentiment={failureMechanism.sentiment ?? 'neutral'}
         vibrant

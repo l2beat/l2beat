@@ -12,7 +12,7 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import type { InteropProtocolDashboardData } from '~/server/features/layer2s/interop/getInteropProtocolData'
 import type { InteropProtocolEntry } from '~/server/features/layer2s/interop/protocol/getInteropProtocolEntry'
-import type { ProjectSectionLink } from '~/server/features/projects/getProjectSectionLinks'
+import type { ProjectSection } from '~/server/features/projects/getProjectSections'
 import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 import { InteropEntityPageLayout } from '../components/InteropEntityPageLayout'
 import { TopTokenWidget } from '../components/widgets/TopTokenWidget'
@@ -21,7 +21,7 @@ import { InteropProtocolSummary } from './components/InteropProtocolSummary'
 
 interface Props extends AppLayoutProps {
   projectEntry: InteropProtocolEntry
-  sectionLinks: ProjectSectionLink[]
+  projectSections: ProjectSection[]
   versionLinks?: ProjectVersionLinks
   protocolData: InteropProtocolDashboardData
   apiSelection: InteropSelection
@@ -31,7 +31,7 @@ interface Props extends AppLayoutProps {
 
 export function InteropProtocolPage({
   projectEntry,
-  sectionLinks,
+  projectSections,
   versionLinks,
   apiSelection,
   protocolData,
@@ -44,7 +44,7 @@ export function InteropProtocolPage({
       <HydrationBoundary state={queryState}>
         <Content
           projectEntry={projectEntry}
-          sectionLinks={sectionLinks}
+          projectSections={projectSections}
           versionLinks={versionLinks}
           apiSelection={apiSelection}
           protocolData={protocolData}
@@ -57,14 +57,14 @@ export function InteropProtocolPage({
 
 function Content({
   projectEntry,
-  sectionLinks,
+  projectSections,
   versionLinks,
   apiSelection,
   protocolData,
   selectedUpdateId,
 }: {
   projectEntry: InteropProtocolEntry
-  sectionLinks: ProjectSectionLink[]
+  projectSections: ProjectSection[]
   versionLinks?: ProjectVersionLinks
   apiSelection: InteropSelection
   protocolData: InteropProtocolDashboardData
@@ -90,7 +90,7 @@ function Content({
           <ProjectHeader
             project={projectEntry}
             section="interop"
-            sectionLinks={sectionLinks}
+            projectSections={projectSections}
             versions={versionLinks}
             recentUpdatesCount={projectEntry.header.recentUpdatesCount}
           />

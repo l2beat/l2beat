@@ -15,7 +15,7 @@ describe(renderL2ProjectMarkdown.name, () => {
     const markdown = renderL2ProjectMarkdown(ENTRY)
 
     expect(markdown).toMatchRegex(
-      /^# Arbitrum One\n\nMarkdown version of https:\/\/ethbeat\.org\/layer2s\/projects\/arbitrum\n\n/,
+      /^# Arbitrum One\n\nMarkdown version of https:\/\/ethbeat\.org\/projects\/arbitrum\n\n/,
     )
   })
 
@@ -265,7 +265,7 @@ describe(renderL2ProjectMarkdown.name, () => {
     expect(summary).toInclude(
       '- Last 24h cross-chain volume: $12.00 M',
       '- Last 24h cross-chain transfers: 1\n',
-      '- Interop protocols used (last 24h volume): [Across](https://ethbeat.org/interop/protocols/across) ($8.00 M), and 4 more',
+      '- Interop protocols used (last 24h volume): [Across](https://ethbeat.org/projects/across) ($8.00 M), and 4 more',
       '- Tokens by volume (last 24h): [ETH](https://ethbeat.org/tokens/C0Hmkq/eth) ($7.00 M), Unknown ($1.00 M)',
     )
   })
@@ -449,7 +449,7 @@ describe(renderL2ProjectMarkdown.name, () => {
   it('points chart sections without markdown content to the HTML page', () => {
     expect(
       getSection(renderL2ProjectMarkdown(ENTRY), 'Onchain costs'),
-    ).toInclude('https://ethbeat.org/layer2s/projects/arbitrum#onchain-costs')
+    ).toInclude('https://ethbeat.org/projects/arbitrum#onchain-costs')
   })
 
   it('groups the risk summary by category, marking critical risks', () => {

@@ -17,7 +17,7 @@ import { VerifiedCountWithDetails } from '../components/VerifiedCountWithDetails
 const columnHelper = createColumnHelper<ZkCatalogEntry>()
 
 export const zkCatalogColumns = [
-  ...getCommonProjectColumns(columnHelper, (p) => `/zk-catalog/${p.slug}`),
+  ...getCommonProjectColumns(columnHelper, (p) => `/projects/${p.slug}`),
   columnHelper.accessor((row) => row.name, {
     id: 'name',
     cell: (ctx) => {
@@ -31,7 +31,7 @@ export const zkCatalogColumns = [
       return (
         <div className="flex h-full items-center">
           <ProjectNameInfoTooltip project={project}>
-            <TableLink href={`/zk-catalog/${ctx.row.original.slug}`}>
+            <TableLink href={`/projects/${ctx.row.original.slug}`}>
               <ProjectNameCell project={project} withInfoTooltip />
             </TableLink>
           </ProjectNameInfoTooltip>

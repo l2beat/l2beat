@@ -6,7 +6,7 @@ import { PrivacyIcon } from '~/icons/pages/Privacy'
 import { TokensIcon } from '~/icons/pages/Tokens'
 import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
 import type { SvgIconProps } from '~/icons/SvgIcon'
-import type { ProjectSection } from '~/server/features/projects/getProjectSectionLinks'
+import type { ProjectSection } from '~/server/features/projects/getProjectSections'
 
 export const PROJECT_SECTIONS: Record<
   ProjectSection,

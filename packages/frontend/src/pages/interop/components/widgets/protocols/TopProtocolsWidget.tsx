@@ -74,7 +74,7 @@ export function TopProtocolsWidget({
                     />
                     <div className="leading-none">
                       {protocol.slug ? (
-                        <a href={`/interop/protocols/${protocol.slug}`}>
+                        <a href={`/projects/${protocol.slug}`}>
                           {protocol.name}
                         </a>
                       ) : protocol.name === 'Others' ? (

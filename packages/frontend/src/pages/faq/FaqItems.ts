@@ -180,7 +180,7 @@ const items: { question: string; answer: string | string[] }[] = [
   {
     question: 'Can AI agents and LLM tools read ETHBEAT data?',
     answer:
-      'Yes. Project pages for scaling projects, interop protocols, privacy protocols and ZK Catalog projects are available as plain markdown: add `.md` to a project page URL, e.g. [/layer2s/projects/arbitrum.md](/layer2s/projects/arbitrum.md). [llms.txt](/llms.txt) describes the URL pattern for each project type.',
+      'Yes. Project pages for scaling projects, interop protocols, privacy protocols and ZK Catalog projects are available as plain markdown: add `.md` to a project page URL, e.g. [/projects/arbitrum.md](/projects/arbitrum.md). [llms.txt](/llms.txt) describes the URL pattern for each project type.',
   },
 ]
 

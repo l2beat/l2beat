@@ -408,7 +408,7 @@ export async function getL2ProjectEntry(
       props: {
         id: 'tvs',
         title: 'Value Secured',
-        tvsBreakdownUrl: `/layer2s/projects/${project.slug}/tvs-breakdown`,
+        tvsBreakdownUrl: `/projects/${project.slug}/tvs-breakdown`,
         compareUrl: getProjectCompareUrl(project, 'tvs'),
         milestones: sortedMilestones,
         tokens,

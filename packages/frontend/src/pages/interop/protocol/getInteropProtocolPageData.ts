@@ -1,17 +1,21 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import type { ProjectDetailsSection } from '~/components/projects/sections/types'
+import { getChainProjectEntry } from '~/server/features/chains/getChainProjectEntry'
 import { getInteropProtocolData } from '~/server/features/layer2s/interop/getInteropProtocolData'
 import { getInteropProtocolEntry } from '~/server/features/layer2s/interop/protocol/getInteropProtocolEntry'
 import { getInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
-import { getProjectSectionLinks } from '~/server/features/projects/getProjectSectionLinks'
+import { getProjectSections } from '~/server/features/projects/getProjectSections'
 import { getProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
+import { mergeProjectSections } from '~/server/features/projects/mergeProjectSections'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getInteropMetadataDescription } from '~/ssr/head/projectMetaDescriptions'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
+import { getProjectPath } from '~/utils/project/getProjectUrl'
 import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
 import { renderInteropProtocolMarkdown } from './renderInteropProtocolMarkdown'
 
@@ -33,7 +37,7 @@ export async function getInteropProtocolPageData(
       metadata: getMetadata(manifest, {
         name: data.project.name,
         description: data.project.metaDescription,
-        url: req.originalUrl,
+        url: getProjectPath(data.project.slug),
         openGraph: {
           image: `/meta-images/interop/projects/${data.project.slug}/opengraph-image.png`,
         },
@@ -44,7 +48,7 @@ export async function getInteropProtocolPageData(
       props: {
         ...appLayoutProps,
         projectEntry: data.projectEntry,
-        sectionLinks: data.sectionLinks,
+        projectSections: data.projectSections,
         versionLinks: data.versionLinks,
         protocolData: data.protocolData,
         apiSelection: data.apiSelection,
@@ -100,19 +104,45 @@ async function loadInteropProtocolPage(slug: string, manifest: Manifest) {
     interopChains.filter((chain) => !chain.isUpcoming),
   )
 
-  const [protocolData, sectionLinks, versionLinks] = await Promise.all([
+  const [protocolData, projectSections, versionLinks] = await Promise.all([
     getInteropProtocolData({ id: project.id, ...apiSelection }),
-    getProjectSectionLinks(slug),
-    getProjectVersionLinks(slug, 'interop'),
+    getProjectSections(slug),
+    getProjectVersionLinks(slug),
   ])
 
-  const projectEntry = await getInteropProtocolEntry(
-    project,
-    apiSelection,
-    interopChainsWithIcons,
-    protocolData,
-    helpers,
-  )
+  const [projectEntry, chainEntry] = await Promise.all([
+    getInteropProtocolEntry(
+      project,
+      apiSelection,
+      interopChainsWithIcons,
+      protocolData,
+      helpers,
+    ),
+    // A protocol that is also a chain with a page of its own, e.g. Avalanche.
+    getChainProjectEntry(slug, helpers),
+  ])
+  if (chainEntry) {
+    // The chain's flows cover every protocol, this one included (its
+    // canonical bridge button picks it), so they replace the protocol's own.
+    projectEntry.sections = mergeProjectSections(
+      projectEntry.sections,
+      chainEntry.sections.flatMap((section): ProjectDetailsSection[] =>
+        section.type === 'InteropFlowsSection'
+          ? [
+              {
+                ...section,
+                props: {
+                  ...section.props,
+                  title: 'Volume and flows',
+                  aliasIds: ['interop-volume'],
+                },
+              },
+            ]
+          : [],
+      ),
+      { insertAfterId: 'interop-volume' },
+    ).filter((section) => section.props.id !== 'interop-volume')
+  }
 
   return {
     project: {
@@ -125,7 +155,7 @@ async function loadInteropProtocolPage(slug: string, manifest: Manifest) {
       }),
     },
     projectEntry,
-    sectionLinks,
+    projectSections,
     versionLinks,
     protocolData,
     apiSelection,

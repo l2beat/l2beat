@@ -4,18 +4,18 @@ import { expect, mockObject } from 'earl'
 import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
 import { fetchFromRouter } from '~/test/fetchFromRouter'
 import type { Manifest } from '~/utils/Manifest'
-import { createPrivacyRouter } from './PrivacyRouter'
+import { createProjectRouter } from './ProjectRouter'
 
-// Method: mount the real privacy router with a page cache that already holds
+// Method: mount the real project router with a page cache that already holds
 // one project entry (so no data is fetched) and a render function that marks
 // HTML, then request the project page the ways browsers and agents do. This
 // pins the route order: `:slug` registered first would swallow
 // "tornado-cash.md".
-describe(createPrivacyRouter.name, () => {
+describe(`${createProjectRouter.name} for a privacy protocol`, () => {
   it('serves the project page as markdown on the .md URL', async () => {
     const response = await fetchFromRouter(
       createRouter(),
-      '/privacy/projects/tornado-cash.md',
+      '/projects/tornado-cash.md',
     )
 
     expect(response.status).toEqual(200)
@@ -28,7 +28,7 @@ describe(createPrivacyRouter.name, () => {
   it('serves markdown on the page URL when Accept prefers it', async () => {
     const response = await fetchFromRouter(
       createRouter(),
-      '/privacy/projects/tornado-cash',
+      '/projects/tornado-cash',
       { headers: { Accept: 'text/markdown' } },
     )
 
@@ -41,7 +41,7 @@ describe(createPrivacyRouter.name, () => {
   it('serves HTML on the page URL to browsers', async () => {
     const response = await fetchFromRouter(
       createRouter(),
-      '/privacy/projects/tornado-cash',
+      '/projects/tornado-cash',
       { headers: { Accept: 'text/html,*/*;q=0.8' } },
     )
 
@@ -55,7 +55,7 @@ function createRouter() {
   const cache = mockObject<InMemoryCache>({
     get: (async () => cachedPage) as InMemoryCache['get'],
   })
-  return createPrivacyRouter(manifest, async () => '<html />', cache)
+  return createProjectRouter(manifest, async () => '<html />', cache)
 }
 
 const RISK = { value: 'Value', sentiment: 'good', description: '' } as const
@@ -64,7 +64,7 @@ const RISK = { value: 'Value', sentiment: 'good', description: '' } as const
 const ENTRY: ProjectPrivacyEntry = {
   id: ProjectId('tornado-cash'),
   slug: 'tornado-cash',
-  href: '/privacy/projects/tornado-cash',
+  href: '/projects/tornado-cash',
   name: 'Tornado Cash',
   icon: '/icons/tornado-cash.png',
   description: 'Tornado Cash is a non-custodial mixer.',

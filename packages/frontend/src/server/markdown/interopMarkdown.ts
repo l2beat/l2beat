@@ -124,7 +124,7 @@ export function formatAverageDuration(duration: AverageDuration) {
 }
 
 export function interopProtocolUrl(slug: string) {
-  return `/interop/protocols/${slug}` as const
+  return `/projects/${slug}` as const
 }
 
 /** Protocols L2BEAT has no page for are named without a link. */

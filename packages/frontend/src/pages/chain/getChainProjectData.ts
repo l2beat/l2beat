@@ -1,7 +1,7 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getChainProjectEntry } from '~/server/features/chains/getChainProjectEntry'
-import { getProjectSectionLinks } from '~/server/features/projects/getProjectSectionLinks'
+import { getProjectSections } from '~/server/features/projects/getProjectSections'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
@@ -33,10 +33,10 @@ export async function getChainProjectData(
 
 async function loadChainProjectPage(manifest: Manifest, slug: string) {
   const helpers = getSsrHelpers()
-  const [appLayoutProps, entry, sectionLinks] = await Promise.all([
+  const [appLayoutProps, entry, projectSections] = await Promise.all([
     getAppLayoutProps(),
     getChainProjectEntry(slug, helpers),
-    getProjectSectionLinks(slug),
+    getProjectSections(slug),
   ])
   if (!entry) return undefined
 
@@ -47,6 +47,8 @@ async function loadChainProjectPage(manifest: Manifest, slug: string) {
         name: entry.name,
         description: `Cross-chain volume and flows of ${entry.name}: the interop protocols and tokens moving value between ${entry.name} and other chains.`,
         url: getChainProjectPath(entry.slug),
+        // Chain pages show only interop flows, which have no markdown version.
+        hasMarkdown: false,
         openGraph: {
           image: '/meta-images/interop/summary/opengraph-image.png',
         },
@@ -55,7 +57,7 @@ async function loadChainProjectPage(manifest: Manifest, slug: string) {
     props: {
       ...appLayoutProps,
       entry,
-      sectionLinks,
+      projectSections,
       queryState: helpers.dehydrate(),
     },
   }

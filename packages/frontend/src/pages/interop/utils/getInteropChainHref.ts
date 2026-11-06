@@ -14,7 +14,7 @@ export function getInteropChainHref(
   }
   const slug = l2ProjectSlugById.get(projectId)
   if (slug) {
-    return `/layer2s/projects/${slug}`
+    return `/projects/${slug}`
   }
   const chainSlug = getChainProjectSlug(chain, l2ProjectSlugById)
   return chainSlug ? getChainProjectPath(chainSlug) : undefined

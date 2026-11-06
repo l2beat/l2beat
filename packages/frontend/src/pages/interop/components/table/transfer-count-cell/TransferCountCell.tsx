@@ -68,7 +68,7 @@ export function TransferCountCell({
         title={
           <>
             <span>Transfers for </span>
-            <a href={`/interop/protocols/${protocol.slug}`}>
+            <a href={`/projects/${protocol.slug}`}>
               <img
                 src={protocol.iconUrl}
                 alt={protocol.name}

@@ -63,7 +63,7 @@ export const getL2ActivityColumns = (
       (row) =>
         row.id === ProjectId.ETHEREUM
           ? `${ETHEREUM_PROJECT_PATH}#activity`
-          : `/layer2s/projects/${row.slug}#activity`,
+          : `/projects/${row.slug}#activity`,
       opts,
     ),
     columnHelper.accessor('type', {
