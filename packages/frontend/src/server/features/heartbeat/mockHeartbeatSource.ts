@@ -36,8 +36,9 @@ export function createMockHeartbeatSource(
     async getSecondsSince(since) {
       const rows: LiveActivitySecondRecord[] = []
       const last = now()
+      const all = await chains
       for (let second = since + 1; second <= last; second++) {
-        for (const chain of await chains) {
+        for (const chain of all) {
           if (second > last - chain.lag) continue
           const row = mockSecond(chain, second)
           if (row) rows.push(row)
