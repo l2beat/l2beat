@@ -32,6 +32,7 @@ describe(toRecentHours.name, () => {
         [DAY + 13 * H, { count: 61, uopsCount: 61 }],
         [DAY + 14 * H, { count: 7, uopsCount: 7 }],
       ]),
+      since: DAY + 13 * H,
       until: DAY + 14 * H + 600,
     })
   })
@@ -64,11 +65,12 @@ describe(toRecentHours.name, () => {
 })
 
 describe(toRecentPoints.name, () => {
-  const recent = (until: UnixTime): RecentHours => ({
+  const recent = (until: UnixTime, since = DAY + 13 * H): RecentHours => ({
     hours: new Map([
       [DAY + 13 * H, { count: 3600, uopsCount: 4000 }],
       [DAY + 14 * H, { count: 600, uopsCount: 700 }],
     ]),
+    since,
     until,
   })
 
@@ -88,6 +90,7 @@ describe(toRecentPoints.name, () => {
         [DAY + 13 * H, { count: 3600, uopsCount: 4000 }],
         [DAY + 15 * H, { count: 600, uopsCount: 700 }],
       ]),
+      since: DAY + 13 * H,
       until: DAY + 15 * H + 900,
     }
 
@@ -98,6 +101,19 @@ describe(toRecentPoints.name, () => {
     ])
   })
 
+  it('has the hours without blocks right after the given one, at zero', () => {
+    const recent: RecentHours = {
+      hours: new Map([[DAY + 14 * H, { count: 600, uopsCount: 700 }]]),
+      since: DAY + 13 * H,
+      until: DAY + 14 * H + 900,
+    }
+
+    expect(toRecentPoints(recent, 'hour', DAY + 12 * H)).toEqual([
+      [DAY + 13 * H, 0, 0],
+      [DAY + 14 * H, 600, 700],
+    ])
+  })
+
   it('leaves out an hour under way for less than 10 minutes', () => {
     expect(toRecentPoints(recent(DAY + 14 * H + 300), 'hour', DAY)).toEqual([
       [DAY + 13 * H, 3600, 4000],
@@ -105,10 +121,10 @@ describe(toRecentPoints.name, () => {
   })
 
   it('sums the day so far once it is an hour old', () => {
-    expect(toRecentPoints(recent(DAY + 14 * H + 900), 'day', 0)).toEqual([
+    expect(toRecentPoints(recent(DAY + 14 * H + 900, DAY), 'day', 0)).toEqual([
       [DAY, 4200, 4700],
     ])
-    expect(toRecentPoints(recent(DAY + 1800), 'day', 0)).toEqual([])
+    expect(toRecentPoints(recent(DAY + 1800, DAY), 'day', 0)).toEqual([])
   })
 })
 
@@ -123,6 +139,7 @@ describe(appendRecentPoints.name, () => {
             [DAY + 13 * H, { count: 10, uopsCount: 12 }],
             [DAY + 14 * H, { count: 20, uopsCount: 22 }],
           ]),
+          since: DAY + 13 * H,
           until: projectUntil,
         },
       ],
@@ -133,6 +150,7 @@ describe(appendRecentPoints.name, () => {
             [DAY + 13 * H, { count: 5, uopsCount: 6 }],
             [DAY + 14 * H, { count: 7, uopsCount: 8 }],
           ]),
+          since: DAY + 13 * H,
           until: ethereumUntil,
         },
       ],
