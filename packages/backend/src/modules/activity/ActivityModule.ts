@@ -256,10 +256,8 @@ export function initActivityModule({
     }
   }
 
-  const cleaner =
-    headFollowers.length > 0
-      ? new LiveActivityCleaner(database, logger)
-      : undefined
+  // also with no follower, so blocks stored before it was turned off go too
+  const cleaner = new LiveActivityCleaner(database, logger)
 
   return {
     start: async () => {
@@ -268,7 +266,7 @@ export function initActivityModule({
           await indexer.start()
         }),
       )
-      cleaner?.start()
+      cleaner.start()
       for (const follower of headFollowers) {
         follower.start()
       }
