@@ -62,6 +62,170 @@ export function ProjectL2Summary({ project, merged }: Props) {
     : anyWarningWarnings
       ? 'warning'
       : 'neutral'
+  const breakdowns = (
+    <>
+      <HorizontalSeparator className="mt-5 mb-4" />
+      <div
+        className={cn(
+          'grid gap-x-10 gap-y-4',
+          project.type === 'layer2' && 'md:grid-cols-2',
+        )}
+      >
+        <div>
+          <p
+            className={cn(
+              'font-medium text-label-value-12 text-secondary',
+              !hasTokenWarnings && 'mb-2',
+            )}
+          >
+            Tokens breakdown
+          </p>
+          <Tooltip>
+            <TooltipTrigger className="w-full cursor-pointer" asChild>
+              <ConditionalLink
+                className="flex items-center gap-1"
+                aria-label={
+                  project.header.tvs ? 'View tokens breakdown' : undefined
+                }
+                href={
+                  project.header.tvs
+                    ? `/projects/${project.slug}/tvs-breakdown`
+                    : undefined
+                }
+              >
+                <TokenBreakdown
+                  total={project.header.tvs?.tokens.breakdown?.total ?? 0}
+                  ether={project.header.tvs?.tokens.breakdown?.ether ?? 0}
+                  stablecoin={
+                    project.header.tvs?.tokens.breakdown?.stablecoin ?? 0
+                  }
+                  btc={project.header.tvs?.tokens.breakdown?.btc ?? 0}
+                  other={project.header.tvs?.tokens.breakdown?.other ?? 0}
+                  rwaPublic={
+                    project.header.tvs?.tokens.breakdown?.rwaPublic ?? 0
+                  }
+                  rwaRestricted={
+                    project.header.tvs?.tokens.breakdown?.rwaRestricted ?? 0
+                  }
+                  className="h-1.5 w-full"
+                />
+                {hasTokenWarnings && (
+                  <RoundedWarningIcon
+                    sentiment={warningSentiment}
+                    className="size-[22px]"
+                  />
+                )}
+              </ConditionalLink>
+            </TooltipTrigger>
+            <TooltipContent>
+              <TokenBreakdownTooltipContent
+                total={project.header.tvs?.tokens.breakdown?.total ?? 0}
+                associated={
+                  project.header.tvs?.tokens.breakdown?.associated ?? 0
+                }
+                ether={project.header.tvs?.tokens.breakdown?.ether ?? 0}
+                stablecoin={
+                  project.header.tvs?.tokens.breakdown?.stablecoin ?? 0
+                }
+                btc={project.header.tvs?.tokens.breakdown?.btc ?? 0}
+                other={project.header.tvs?.tokens.breakdown?.other ?? 0}
+                rwaPublic={project.header.tvs?.tokens.breakdown?.rwaPublic ?? 0}
+                rwaRestricted={
+                  project.header.tvs?.tokens.breakdown?.rwaRestricted ?? 0
+                }
+                associatedTokens={
+                  project.header.tvs?.tokens.associatedTokens ?? []
+                }
+                tvsWarnings={project.header.tvs?.tokens.warnings ?? []}
+              />
+              {project.header.tvs && (
+                <p className="mt-2 text-label-value-13 text-secondary max-md:hidden">
+                  Click to view TVS breakdown
+                </p>
+              )}
+            </TooltipContent>
+          </Tooltip>
+        </div>
+        <div>
+          <p className="mb-2 font-medium text-label-value-12 text-secondary">
+            Value secured breakdown
+          </p>
+          <Tooltip>
+            <TooltipTrigger className="block w-full cursor-pointer" asChild>
+              <ConditionalLink
+                href={
+                  project.header.tvs
+                    ? `/projects/${project.slug}/tvs-breakdown`
+                    : undefined
+                }
+              >
+                <div className="flex w-full flex-col items-end gap-1">
+                  <ValueSecuredBreakdown
+                    canonical={project.header.tvs?.breakdown?.canonical ?? 0}
+                    external={project.header.tvs?.breakdown?.external ?? 0}
+                    native={project.header.tvs?.breakdown?.native ?? 0}
+                    className="h-1.5 w-full"
+                  />
+                  {project.header.tvs?.additionalTrustAssumptionsPercentage !==
+                    undefined && (
+                    <AdditionalTrustAssumptionsText
+                      percentage={
+                        project.header.tvs.additionalTrustAssumptionsPercentage
+                      }
+                      className="self-start"
+                    />
+                  )}
+                </div>
+              </ConditionalLink>
+            </TooltipTrigger>
+            <TooltipContent className="flex flex-col gap-2">
+              <ValueSecuredBreakdownTooltipContent
+                canonical={project.header.tvs?.breakdown?.canonical ?? 0}
+                external={project.header.tvs?.breakdown?.external ?? 0}
+                native={project.header.tvs?.breakdown?.native ?? 0}
+                change={project.header.tvs?.breakdown?.totalChange ?? 0}
+                syncWarning={undefined}
+                tvsWarnings={[]}
+              />
+              {project.header.tvs?.additionalTrustAssumptionsPercentage !==
+                undefined && (
+                <AdditionalTrustAssumptionsBanner
+                  percentage={
+                    project.header.tvs.additionalTrustAssumptionsPercentage
+                  }
+                />
+              )}
+              {project.header.tvs && (
+                <p className="text-label-value-13 text-secondary max-md:hidden">
+                  Click to view TVS breakdown
+                </p>
+              )}
+              {project.header.tvs?.breakdown && (
+                <p>
+                  <PercentageChangeTooltipContent
+                    period={project.header.tvs.breakdown.totalChangePeriod}
+                  />
+                </p>
+              )}
+            </TooltipContent>
+          </Tooltip>
+          <CustomLink
+            href={`/projects/${project.slug}/tvs-breakdown`}
+            className="mt-2 font-medium text-label-value-13 md:hidden"
+          >
+            View TVS breakdown
+          </CustomLink>
+        </div>
+      </div>
+      {project.header.interop && (
+        <>
+          <HorizontalSeparator className="mt-5 mb-4" />
+          <ProjectInteropMetrics interop={project.header.interop} />
+        </>
+      )}
+    </>
+  )
+
   return (
     <section
       id="summary"
@@ -71,172 +235,7 @@ export function ProjectL2Summary({ project, merged }: Props) {
       <div className="flex">
         <div className="w-full">
           <ProjectL2Stats project={project} extraStats={merged?.stats} />
-          <HorizontalSeparator className="mt-5 mb-4" />
-          <div
-            className={cn(
-              'grid gap-x-10 gap-y-4',
-              project.type === 'layer2' && 'md:grid-cols-2',
-            )}
-          >
-            <div>
-              <p
-                className={cn(
-                  'font-medium text-label-value-12 text-secondary',
-                  !hasTokenWarnings && 'mb-2',
-                )}
-              >
-                Tokens breakdown
-              </p>
-              <Tooltip>
-                <TooltipTrigger className="w-full cursor-pointer" asChild>
-                  <ConditionalLink
-                    className="flex items-center gap-1"
-                    aria-label={
-                      project.header.tvs ? 'View tokens breakdown' : undefined
-                    }
-                    href={
-                      project.header.tvs
-                        ? `/projects/${project.slug}/tvs-breakdown`
-                        : undefined
-                    }
-                  >
-                    <TokenBreakdown
-                      total={project.header.tvs?.tokens.breakdown?.total ?? 0}
-                      ether={project.header.tvs?.tokens.breakdown?.ether ?? 0}
-                      stablecoin={
-                        project.header.tvs?.tokens.breakdown?.stablecoin ?? 0
-                      }
-                      btc={project.header.tvs?.tokens.breakdown?.btc ?? 0}
-                      other={project.header.tvs?.tokens.breakdown?.other ?? 0}
-                      rwaPublic={
-                        project.header.tvs?.tokens.breakdown?.rwaPublic ?? 0
-                      }
-                      rwaRestricted={
-                        project.header.tvs?.tokens.breakdown?.rwaRestricted ?? 0
-                      }
-                      className="h-1.5 w-full"
-                    />
-                    {hasTokenWarnings && (
-                      <RoundedWarningIcon
-                        sentiment={warningSentiment}
-                        className="size-[22px]"
-                      />
-                    )}
-                  </ConditionalLink>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <TokenBreakdownTooltipContent
-                    total={project.header.tvs?.tokens.breakdown?.total ?? 0}
-                    associated={
-                      project.header.tvs?.tokens.breakdown?.associated ?? 0
-                    }
-                    ether={project.header.tvs?.tokens.breakdown?.ether ?? 0}
-                    stablecoin={
-                      project.header.tvs?.tokens.breakdown?.stablecoin ?? 0
-                    }
-                    btc={project.header.tvs?.tokens.breakdown?.btc ?? 0}
-                    other={project.header.tvs?.tokens.breakdown?.other ?? 0}
-                    rwaPublic={
-                      project.header.tvs?.tokens.breakdown?.rwaPublic ?? 0
-                    }
-                    rwaRestricted={
-                      project.header.tvs?.tokens.breakdown?.rwaRestricted ?? 0
-                    }
-                    associatedTokens={
-                      project.header.tvs?.tokens.associatedTokens ?? []
-                    }
-                    tvsWarnings={project.header.tvs?.tokens.warnings ?? []}
-                  />
-                  {project.header.tvs && (
-                    <p className="mt-2 text-label-value-13 text-secondary max-md:hidden">
-                      Click to view TVS breakdown
-                    </p>
-                  )}
-                </TooltipContent>
-              </Tooltip>
-            </div>
-            <div>
-              <p className="mb-2 font-medium text-label-value-12 text-secondary">
-                Value secured breakdown
-              </p>
-              <Tooltip>
-                <TooltipTrigger className="block w-full cursor-pointer" asChild>
-                  <ConditionalLink
-                    href={
-                      project.header.tvs
-                        ? `/projects/${project.slug}/tvs-breakdown`
-                        : undefined
-                    }
-                  >
-                    <div className="flex w-full flex-col items-end gap-1">
-                      <ValueSecuredBreakdown
-                        canonical={
-                          project.header.tvs?.breakdown?.canonical ?? 0
-                        }
-                        external={project.header.tvs?.breakdown?.external ?? 0}
-                        native={project.header.tvs?.breakdown?.native ?? 0}
-                        className="h-1.5 w-full"
-                      />
-                      {project.header.tvs
-                        ?.additionalTrustAssumptionsPercentage !==
-                        undefined && (
-                        <AdditionalTrustAssumptionsText
-                          percentage={
-                            project.header.tvs
-                              .additionalTrustAssumptionsPercentage
-                          }
-                          className="self-start"
-                        />
-                      )}
-                    </div>
-                  </ConditionalLink>
-                </TooltipTrigger>
-                <TooltipContent className="flex flex-col gap-2">
-                  <ValueSecuredBreakdownTooltipContent
-                    canonical={project.header.tvs?.breakdown?.canonical ?? 0}
-                    external={project.header.tvs?.breakdown?.external ?? 0}
-                    native={project.header.tvs?.breakdown?.native ?? 0}
-                    change={project.header.tvs?.breakdown?.totalChange ?? 0}
-                    syncWarning={undefined}
-                    tvsWarnings={[]}
-                  />
-                  {project.header.tvs?.additionalTrustAssumptionsPercentage !==
-                    undefined && (
-                    <AdditionalTrustAssumptionsBanner
-                      percentage={
-                        project.header.tvs.additionalTrustAssumptionsPercentage
-                      }
-                    />
-                  )}
-                  {project.header.tvs && (
-                    <p className="text-label-value-13 text-secondary max-md:hidden">
-                      Click to view TVS breakdown
-                    </p>
-                  )}
-                  {project.header.tvs?.breakdown && (
-                    <p>
-                      <PercentageChangeTooltipContent
-                        period={project.header.tvs.breakdown.totalChangePeriod}
-                      />
-                    </p>
-                  )}
-                </TooltipContent>
-              </Tooltip>
-              <CustomLink
-                href={`/projects/${project.slug}/tvs-breakdown`}
-                className="mt-2 font-medium text-label-value-13 md:hidden"
-              >
-                View TVS breakdown
-              </CustomLink>
-            </div>
-          </div>
-          {project.header.interop && (
-            <>
-              <HorizontalSeparator className="mt-5 mb-4" />
-              <ProjectInteropMetrics interop={project.header.interop} />
-            </>
-          )}
-          {merged?.rows}
+          {merged ? merged.rows : breakdowns}
         </div>
         <VerticalSeparator className="mr-8 ml-12 h-[unset] self-stretch max-lg:hidden" />
 
@@ -254,6 +253,8 @@ export function ProjectL2Summary({ project, merged }: Props) {
           <ProjectL2Rosette project={project} size="small" />
         )}
       </div>
+      {/* Below the merged rows and the rosette, across the whole card */}
+      {merged && breakdowns}
 
       {project.discoUiHref && (
         <div className="md:hidden">

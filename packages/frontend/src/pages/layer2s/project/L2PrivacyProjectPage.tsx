@@ -23,7 +23,7 @@ export function L2PrivacyProjectPage({ privacyEntry, ...props }: Props) {
       {...props}
       mergedSummary={{
         label: 'Privacy',
-        stats: getPrivacySummaryStats(privacyEntry),
+        stats: getPrivacySummaryStats(privacyEntry, 'md:col-span-2'),
         rows: <PrivacyProjectRiskProfileRow entry={privacyEntry} />,
         rosette: <PrivacyProjectRosette entry={privacyEntry} />,
       }}
