@@ -11,13 +11,11 @@ import {
 } from './utils/commonPinningStyles'
 
 /**
- * Once the table scrolls, its sticky cells stop 1px left of where they start,
- * and so does the pinned layer. The range is a plain length: the form measured
- * to stay on the compositor in WebKit.
+ * The copy starts as far left as the table, so the pinned layer drops the
+ * overlap from its width, ending where the table's pinned cells end.
  */
 const PINNED_LAYER_STYLE = {
   '--sticky-table-pinned-overlap': `${STICKY_OVERLAP_PX}px`,
-  animationRange: `0px ${STICKY_OVERLAP_PX}px`,
 } as React.CSSProperties
 
 /**
