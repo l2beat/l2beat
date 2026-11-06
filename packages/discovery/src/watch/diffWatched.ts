@@ -19,7 +19,7 @@ export function diffWatched(
 ): WatchDiff[] {
   const diffs: WatchDiff[] = []
   for (const key of unionOfKeys(previous, current)) {
-    const changes = diffValue(previous[key], current[key])
+    const changes = diffValue(ownValue(previous, key), ownValue(current, key))
     if (changes.length > 0) {
       diffs.push({ key, changes })
     }
@@ -45,8 +45,8 @@ function diffValue(
       for (const key of keys) {
         stack.push({
           path: [...item.path, key],
-          before: item.before[key],
-          after: item.after[key],
+          before: ownValue(item.before, key),
+          after: ownValue(item.after, key),
         })
       }
       continue
@@ -82,4 +82,10 @@ function unionOfKeys(
   b: Record<string, json>,
 ): string[] {
   return [...new Set([...Object.keys(a), ...Object.keys(b)])].sort()
+}
+
+// A key present on one side only must read as absent on the other, even when
+// it names an Object.prototype member such as `constructor`.
+function ownValue(object: Record<string, json>, key: string): json | undefined {
+  return Object.hasOwn(object, key) ? object[key] : undefined
 }
