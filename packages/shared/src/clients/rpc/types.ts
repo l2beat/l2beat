@@ -118,6 +118,7 @@ const _EVMBlock = {
   parentHash: z.string(),
   logsBloom: z.string(),
   number: Quantity.decode.transform((n) => Number(n)),
+  gasUsed: Quantity.decode.transform((n) => Number(n)),
   parentBeaconBlockRoot: z.string().optional(),
   // Avalanche C-Chain after Helicon (ACP-194), see Block.settledHeight
   settledHeight: Quantity.decode.transform((n) => Number(n)).optional(),
