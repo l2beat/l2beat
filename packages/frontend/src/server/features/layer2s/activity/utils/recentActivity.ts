@@ -120,7 +120,10 @@ export function toRecentHours(
   return { hours, until: last.lastTimestamp }
 }
 
-/** [timestamp, count, uopsCount] of each period up to the newest block */
+/**
+ * [timestamp, count, uopsCount] of each period up to the newest block. The
+ * stored blocks run on unbroken, so a period between with none had none
+ */
 export function toRecentPoints(
   recent: RecentHours,
   resolution: ActivityResolution,
@@ -134,12 +137,15 @@ export function toRecentPoints(
     points.set(period, [period, point[1] + count, point[2] + uopsCount])
   }
   const newest = UnixTime.toStartOf(recent.until, resolution)
-  return [...points.values()]
-    .filter(
-      ([period]) =>
-        period < newest || recent.until - period >= MIN_ELAPSED[resolution],
-    )
-    .sort(([a], [b]) => a - b)
+  const periods = [...points.keys()]
+  if (periods.length === 0) return []
+  const step = UnixTime.periodToSeconds(resolution)
+  const filled: [UnixTime, number, number][] = []
+  for (let p = Math.min(...periods); p <= newest; p += step) {
+    if (p === newest && recent.until - p < MIN_ELAPSED[resolution]) break
+    filled.push(points.get(p) ?? [p, 0, 0])
+  }
+  return filled
 }
 
 /**
