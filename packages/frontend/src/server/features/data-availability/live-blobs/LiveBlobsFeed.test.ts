@@ -312,6 +312,7 @@ describe(LiveBlobsFeed.name, () => {
       hash: `0x${slot}-${db.reorgs}`,
       timestamp: UnixTime(slotStart(slot)),
       blobCount: 1,
+      blobBaseFee: null,
     })
     db.source = {
       liveBlock: {
@@ -350,6 +351,12 @@ describe(LiveBlobsFeed.name, () => {
         getBucketsSince: async () => {
           fail()
           return []
+        },
+      },
+      currentPrice: {
+        findByCoingeckoId: async () => {
+          fail()
+          return undefined
         },
       },
     }

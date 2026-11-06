@@ -476,6 +476,8 @@ model LiveBlock {
   hash        String   @db.VarChar(66)
   timestamp   DateTime @db.Timestamp(6)
   blobCount   Int
+  /// Wei per blob gas. Null for a block stored before fees were kept
+  blobBaseFee BigInt?
 
   @@index([blockNumber])
 }
