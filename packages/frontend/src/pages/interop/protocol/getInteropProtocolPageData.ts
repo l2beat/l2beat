@@ -122,21 +122,26 @@ async function loadInteropProtocolPage(slug: string, manifest: Manifest) {
     getChainProjectEntry(slug, helpers),
   ])
   if (chainEntry) {
+    // The chain's flows cover every protocol, this one included (its
+    // canonical bridge button picks it), so they replace the protocol's own.
     projectEntry.sections = mergeProjectSections(
       projectEntry.sections,
-      // The protocol's volume section has the same title.
-      chainEntry.sections.map(
-        (section) =>
-          ({
-            ...section,
-            props: {
-              ...section.props,
-              title: `${chainEntry.name} chain flows`,
-            },
-          }) as ProjectDetailsSection,
+      chainEntry.sections.flatMap((section): ProjectDetailsSection[] =>
+        section.type === 'InteropFlowsSection'
+          ? [
+              {
+                ...section,
+                props: {
+                  ...section.props,
+                  title: 'Volume and flows',
+                  aliasIds: ['interop-volume'],
+                },
+              },
+            ]
+          : [],
       ),
       { insertAfterId: 'interop-volume' },
-    )
+    ).filter((section) => section.props.id !== 'interop-volume')
   }
 
   return {

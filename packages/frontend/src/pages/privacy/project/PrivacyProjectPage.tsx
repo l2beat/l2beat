@@ -3,7 +3,6 @@ import { HydrationBoundary } from '@tanstack/react-query'
 import type { ComponentProps } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
-import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
@@ -74,7 +73,12 @@ export function PrivacyProjectPage({
                     projectSections={projectSections}
                     versions={versionLinks}
                     recentUpdatesCount={entry.recentUpdatesCount}
-                    secondLine={zkCatalog?.creator}
+                    secondLine={
+                      // "Railgun by Railgun" says nothing
+                      zkCatalog?.creator !== entry.name
+                        ? zkCatalog?.creator
+                        : undefined
+                    }
                   />
                   <ProjectSummaryBars
                     project={{
@@ -114,12 +118,16 @@ export function PrivacyProjectPage({
 
                 <div className="row-start-2 w-full">
                   <HighlightableLinkContextProvider>
-                    <PrivacyProjectSummaryCard entry={entry} />
-                    {zkCatalog && (
-                      <PrimaryCard className="border-divider max-md:rounded-none max-md:border-b md:mt-4">
-                        <ZkCatalogHeaderDetails header={zkCatalog.header} />
-                      </PrimaryCard>
-                    )}
+                    <PrivacyProjectSummaryCard entry={entry}>
+                      {zkCatalog && (
+                        <>
+                          <HorizontalSeparator className="max-md:my-2 md:mt-4" />
+                          <div className="max-md:py-2 md:mt-4">
+                            <ZkCatalogHeaderDetails header={zkCatalog.header} />
+                          </div>
+                        </>
+                      )}
+                    </PrivacyProjectSummaryCard>
 
                     <ProjectDetails
                       items={entry.sections}

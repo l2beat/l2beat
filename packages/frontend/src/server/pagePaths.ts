@@ -9,6 +9,7 @@ import {
 } from '~/pages/garden/paths'
 import { getProjectPath } from '~/utils/project/getProjectUrl'
 import { getChainProjects } from './features/chains/getChainProjects'
+import { hasDefiProjectPage } from './features/defi/project/hasDefiProjectPage'
 import {
   getProjectPageKind,
   getProjectPageSections,
@@ -93,19 +94,23 @@ export async function getPages(): Promise<Page[]> {
 async function getDynamicPages(): Promise<Page[]> {
   const [projects, chainProjects] = await Promise.all([
     ps.getProjects({
-      optional: [...PROJECT_PAGE_SECTION_FIELDS, 'tvsConfig', 'archivedAt'],
+      optional: [
+        ...PROJECT_PAGE_SECTION_FIELDS,
+        'tvsConfig',
+        'archivedAt',
+        'ossificationHistory',
+      ],
     }),
     getChainProjects(),
   ])
   const chainSlugs = new Set(chainProjects.map((chain) => chain.slug))
-  const defiEnabled =
-    env.CLIENT_SIDE_DEFI_ENABLED || env.CLIENT_SIDE_OSSIFICATION_ENABLED
 
   const pages: Page[] = []
   for (const project of projects) {
     const sections = getProjectPageSections(project, {
       hasChainPage: chainSlugs.has(project.slug),
-      defiEnabled,
+      // The DeFi page builder 404s on the rest.
+      defiEnabled: hasDefiProjectPage(project),
     })
     // Listed in its own place, among the static pages.
     if (sections.includes('ethereum')) continue

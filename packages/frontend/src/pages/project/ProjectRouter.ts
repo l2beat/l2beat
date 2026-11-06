@@ -111,17 +111,21 @@ export function createProjectRouter(
       params: v.object({ slug: v.string() }),
       query: v.object({ update: v.string().optional() }),
     }),
-    async (req, res) => {
+    async (req, res, next) => {
       const page = await getProjectPage(req.params.slug)
-      const sendHtml = async () =>
-        send(res, req.originalUrl, page && (await html[page](req)))
+      res.locals.page = page
       if (page && !markdown[page]) {
         // No markdown version: HTML for every Accept, and no alternate.
         res.setHeader('Link', LLMS_TXT_LINK)
-        await sendHtml()
+        next()
         return
       }
-      await negotiateMarkdown(req, res, sendHtml)
+      await negotiateMarkdown(req, res, next)
+    },
+    // A handler of its own, so Express catches what rendering throws.
+    async (req, res) => {
+      const page: ProjectPageSection | undefined = res.locals.page
+      await send(res, req.originalUrl, page && (await html[page](req)))
     },
   )
 

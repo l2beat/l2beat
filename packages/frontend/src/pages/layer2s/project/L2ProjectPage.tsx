@@ -11,7 +11,6 @@ import { projectDetailsToNavigationSections } from '~/components/projects/naviga
 import { ProjectDetails } from '~/components/projects/ProjectDetails'
 import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
-import { SummaryViewSwitch } from '~/components/projects/SummaryViewSwitch'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
@@ -20,16 +19,17 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProjectL2Entry } from '~/server/features/layer2s/project/getL2ProjectEntry'
-import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
 import type { ProjectSection } from '~/server/features/projects/getProjectSections'
 import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
-import { PrivacyProjectSummaryCard } from '../../privacy/project/components/PrivacyProjectSummaryCard'
-import { ProjectL2Summary } from './components/L2ProjectSummary'
+import {
+  type MergedSummary,
+  ProjectL2Summary,
+} from './components/L2ProjectSummary'
 
 interface Props extends AppLayoutProps {
   projectEntry: ProjectL2Entry
-  /** For a scaling project that is also a privacy protocol. */
-  privacyEntry?: ProjectPrivacyEntry
+  /** Another section's summary, for a page that merges sections. */
+  mergedSummary?: MergedSummary
   projectSections: ProjectSection[]
   versionLinks?: ProjectVersionLinks
   queryState: DehydratedState
@@ -38,7 +38,7 @@ interface Props extends AppLayoutProps {
 
 export function L2ProjectPage({
   projectEntry,
-  privacyEntry,
+  mergedSummary,
   projectSections,
   versionLinks,
   queryState,
@@ -126,35 +126,10 @@ export function L2ProjectPage({
                   </div>
                 </div>
                 <div className="row-start-2">
-                  {privacyEntry ? (
-                    // TODO: one summary for the merged page.
-                    <SummaryViewSwitch
-                      views={[
-                        {
-                          id: 'scaling',
-                          label: 'Scaling',
-                          content: (
-                            <ProjectL2Summary
-                              project={projectEntry}
-                              asSummarySection={false}
-                            />
-                          ),
-                        },
-                        {
-                          id: 'privacy',
-                          label: 'Privacy',
-                          content: (
-                            <PrivacyProjectSummaryCard
-                              entry={privacyEntry}
-                              asSummarySection={false}
-                            />
-                          ),
-                        },
-                      ]}
-                    />
-                  ) : (
-                    <ProjectL2Summary project={projectEntry} />
-                  )}
+                  <ProjectL2Summary
+                    project={projectEntry}
+                    merged={mergedSummary}
+                  />
 
                   {projectEntry.header.category === 'Other' &&
                     projectEntry.reasonsForBeingOther &&

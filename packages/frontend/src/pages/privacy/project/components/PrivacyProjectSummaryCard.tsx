@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { VerticalSeparator } from '~/components/core/VerticalSeparator'
 import { PrivacyAttributeTag } from '~/components/PrivacyAttributeTag'
@@ -20,23 +21,16 @@ import { PrivacyReferenceAppStat } from './PrivacyReferenceAppStat'
 
 interface Props {
   entry: ProjectPrivacyEntry
-  /**
-   * Whether the card is the page's summary section. A page that shows it
-   * next to another summary puts the section on their shared wrapper.
-   */
-  asSummarySection?: boolean
+  /** Another section's summary rows, for a page that merges sections. */
+  children?: ReactNode
 }
 
 /** Stats, risk profile and adversary rosette at the top of a privacy page. */
-export function PrivacyProjectSummaryCard({
-  entry,
-  asSummarySection = true,
-}: Props) {
-  const adversaries = getPrivacyAdversariesSummary(entry.sections)
+export function PrivacyProjectSummaryCard({ entry, children }: Props) {
   return (
     <PrimaryCard
-      id={asSummarySection ? 'summary' : undefined}
-      data-role={asSummarySection ? 'nav-section' : undefined}
+      id="summary"
+      data-role="nav-section"
       className="scroll-mt-[100vh] border-divider max-md:rounded-none max-md:border-b max-md:pt-0"
     >
       <div className="flex">
@@ -51,72 +45,12 @@ export function PrivacyProjectSummaryCard({
             relayerStat={entry.summary.relayerStat}
           />
 
-          <HorizontalSeparator className="max-md:my-2 md:mt-4" />
-          <PrivacyProjectRiskProfile
-            trustedSetup={entry.trustedSetup}
-            exitWindow={entry.exitWindow}
-            adversaries={adversaries}
-            href={entry.href}
-            isUnderReview={entry.isUnderReview}
-            reproducibility={entry.reproducibility}
-            className="md:mt-4"
-          />
-
-          <HorizontalSeparator className="max-md:my-2 md:mt-4" />
-          <div
-            className={cn(
-              'flex flex-col md:mt-4 md:flex-row md:gap-8',
-              MOBILE_SUMMARY_ROWS,
-            )}
-          >
-            <ProjectSummaryStat
-              title="Tracked on"
-              tooltip="Chains on which the protocol deployment is tracked by ETHBEAT."
-              value={
-                <ProjectIconList
-                  projects={entry.trackedOn}
-                  title="Tracked on"
-                />
-              }
-            />
-            {entry.scalingProjects.length > 0 && (
-              <ProjectSummaryStat
-                title="Runs on"
-                tooltip="Scaling projects the protocol runs on."
-                value={
-                  <ProjectIconList
-                    projects={entry.scalingProjects}
-                    title={`${entry.name} runs on`}
-                  />
-                }
-              />
-            )}
-            {entry.attributes.length > 0 && (
-              <ProjectSummaryStat
-                title="Attributes"
-                tooltip="Protocol attributes and capabilities."
-                valueClassName="flex flex-wrap justify-end gap-1 md:justify-start"
-                value={entry.attributes.map((attribute) => (
-                  <PrivacyAttributeTag
-                    key={attribute.id}
-                    attribute={attribute}
-                  />
-                ))}
-              />
-            )}
-            {entry.referenceApp && (
-              <PrivacyReferenceAppStat
-                app={entry.referenceApp}
-                href={`#${PRIVACY_ADVERSARIES_SECTION_ID}`}
-              />
-            )}
-          </div>
+          <PrivacyProjectSummaryRows entry={entry} />
+          {children}
         </div>
         <VerticalSeparator className="mr-8 ml-12 h-[unset] self-stretch max-xl:hidden" />
-        <BigPizzaRosette
-          values={getPrivacyAdversaryRosetteValues(adversaries)}
-          isUnderReview={entry.isUnderReview}
-          size="small"
+        <PrivacyProjectRosette
+          entry={entry}
           className="my-auto max-xl:hidden"
         />
       </div>
@@ -133,5 +67,91 @@ export function PrivacyProjectSummaryCard({
         </div>
       </div>
     </PrimaryCard>
+  )
+}
+
+/** The privacy rows of the summary: risk profile, chains and attributes. */
+export function PrivacyProjectSummaryRows({
+  entry,
+}: {
+  entry: ProjectPrivacyEntry
+}) {
+  const adversaries = getPrivacyAdversariesSummary(entry.sections)
+  return (
+    <>
+      <HorizontalSeparator className="max-md:my-2 md:mt-4" />
+      <PrivacyProjectRiskProfile
+        trustedSetup={entry.trustedSetup}
+        exitWindow={entry.exitWindow}
+        adversaries={adversaries}
+        href={entry.href}
+        isUnderReview={entry.isUnderReview}
+        reproducibility={entry.reproducibility}
+        className="md:mt-4"
+      />
+
+      <HorizontalSeparator className="max-md:my-2 md:mt-4" />
+      <div
+        className={cn(
+          'flex flex-col md:mt-4 md:flex-row md:gap-8',
+          MOBILE_SUMMARY_ROWS,
+        )}
+      >
+        <ProjectSummaryStat
+          title="Tracked on"
+          tooltip="Chains on which the protocol deployment is tracked by ETHBEAT."
+          value={
+            <ProjectIconList projects={entry.trackedOn} title="Tracked on" />
+          }
+        />
+        {entry.scalingProjects.length > 0 && (
+          <ProjectSummaryStat
+            title="Runs on"
+            tooltip="Scaling projects the protocol runs on."
+            value={
+              <ProjectIconList
+                projects={entry.scalingProjects}
+                title={`${entry.name} runs on`}
+              />
+            }
+          />
+        )}
+        {entry.attributes.length > 0 && (
+          <ProjectSummaryStat
+            title="Attributes"
+            tooltip="Protocol attributes and capabilities."
+            valueClassName="flex flex-wrap justify-end gap-1 md:justify-start"
+            value={entry.attributes.map((attribute) => (
+              <PrivacyAttributeTag key={attribute.id} attribute={attribute} />
+            ))}
+          />
+        )}
+        {entry.referenceApp && (
+          <PrivacyReferenceAppStat
+            app={entry.referenceApp}
+            href={`#${PRIVACY_ADVERSARIES_SECTION_ID}`}
+          />
+        )}
+      </div>
+    </>
+  )
+}
+
+export function PrivacyProjectRosette({
+  entry,
+  className,
+}: {
+  entry: ProjectPrivacyEntry
+  className?: string
+}) {
+  return (
+    <BigPizzaRosette
+      values={getPrivacyAdversaryRosetteValues(
+        getPrivacyAdversariesSummary(entry.sections),
+      )}
+      isUnderReview={entry.isUnderReview}
+      size="small"
+      className={className}
+    />
   )
 }

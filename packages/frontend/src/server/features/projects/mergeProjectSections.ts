@@ -7,55 +7,31 @@ interface MergeOptions {
   replace?: string[]
   /** The other page's sections the merged page leaves out. */
   drop?: string[]
-  /** Said differently by both pages: both stay, each under its own title. */
-  relabel?: Record<
-    string,
-    { base: string; other: { id: string; title: string } }
-  >
 }
 
 /**
  * Adds another section's content to a project page built for its base
  * section. Sections with an id the base already shows are the same data (e.g.
- * permissions), so the base's stays, unless `replace` or `relabel` say so.
+ * permissions), so the base's stays, unless `replace` says otherwise.
  */
 export function mergeProjectSections(
   base: ProjectDetailsSection[],
   other: ProjectDetailsSection[],
   options: MergeOptions,
 ): ProjectDetailsSection[] {
-  const { replace = [], drop = [], relabel = {} } = options
+  const { replace = [], drop = [] } = options
   const baseIds = new Set(base.map((section) => section.props.id))
   const otherById = new Map(other.map((section) => [section.props.id, section]))
 
-  const merged = base.map((section): ProjectDetailsSection => {
-    const id = section.props.id
-    const replacement = replace.includes(id) && otherById.get(id)
-    if (replacement) return replacement
-    const label = relabel[id]?.base
-    return label
-      ? ({
-          ...section,
-          sideNavTitle: label,
-          props: { ...section.props, title: label },
-        } as ProjectDetailsSection)
-      : section
-  })
-
-  const added = other.flatMap((section): ProjectDetailsSection[] => {
-    const id = section.props.id
-    const label = relabel[id]?.other
-    if (label) {
-      return [
-        {
-          ...section,
-          sideNavTitle: label.title,
-          props: { ...section.props, ...label },
-        } as ProjectDetailsSection,
-      ]
-    }
-    return baseIds.has(id) || drop.includes(id) ? [] : [section]
-  })
+  const merged = base.map(
+    (section) =>
+      (replace.includes(section.props.id) && otherById.get(section.props.id)) ||
+      section,
+  )
+  const added = other.filter(
+    (section) =>
+      !baseIds.has(section.props.id) && !drop.includes(section.props.id),
+  )
 
   const index = merged.findIndex(
     (section) => section.props.id === options.insertAfterId,

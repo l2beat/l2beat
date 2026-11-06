@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import { Fragment, type ReactNode } from 'react'
 import { ChevronIcon } from '~/icons/Chevron'
 import type { ProjectSection } from '~/server/features/projects/getProjectSections'
 import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
@@ -141,19 +141,22 @@ function ProjectSectionBreadcrumb({
   return (
     <nav
       aria-label="Breadcrumb"
-      className="flex flex-wrap items-center gap-x-4 gap-y-1 font-bold text-2xs uppercase leading-none tracking-wide"
+      className="flex flex-wrap items-center gap-x-2 gap-y-1 font-bold text-2xs text-brand-deep uppercase leading-none tracking-wide"
     >
-      {sections.map((section) => {
+      {sections.map((section, i) => {
         const { label, href, icon: Icon } = PROJECT_SECTIONS[section]
+        // One icon, the page's own section: the rest read as one label.
         return (
-          <a
-            key={section}
-            href={href}
-            className="flex items-center gap-1.5 text-brand-deep hover:underline"
-          >
-            <Icon className="size-3.5 stroke-brand-deep" />
-            {label}
-          </a>
+          <Fragment key={section}>
+            {i > 0 && <span aria-hidden>·</span>}
+            <a
+              href={href}
+              className="flex items-center gap-1.5 hover:underline"
+            >
+              {i === 0 && <Icon className="size-3.5 stroke-brand-deep" />}
+              {label}
+            </a>
+          </Fragment>
         )
       })}
     </nav>

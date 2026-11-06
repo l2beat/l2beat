@@ -47,6 +47,29 @@ describe(`${createProjectRouter.name} for a scaling project`, () => {
   })
 })
 
+// Express answers 500 only for errors that reach it; a rejection it does not
+// await would escape as an unhandled rejection.
+describe(`${createProjectRouter.name} when the page fails to build`, () => {
+  it('answers 500', async () => {
+    const cache = mockObject<InMemoryCache>({
+      get: (async () => {
+        throw new Error('Database unavailable')
+      }) as InMemoryCache['get'],
+    })
+    const router = createProjectRouter(
+      mockObject<Manifest>({}),
+      async () => '<html />',
+      cache,
+    )
+
+    const response = await fetchFromRouter(router, '/projects/arbitrum', {
+      headers: { Accept: 'text/html' },
+    })
+
+    expect(response.status).toEqual(500)
+  })
+})
+
 function createRouter() {
   const manifest = mockObject<Manifest>({})
   const cachedPage = { head: {}, props: { projectEntry: ENTRY } }

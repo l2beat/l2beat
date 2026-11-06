@@ -26,34 +26,21 @@ describe(mergeProjectSections.name, () => {
     ])
   })
 
-  it('replaces, drops and relabels as told', () => {
+  it('replaces and drops as told', () => {
     const merged = mergeProjectSections(
-      [section('verifiers', 'base'), section('risk-summary', 'Risk summary')],
-      [
-        section('verifiers', 'other'),
-        section('tvs'),
-        section('risk-summary', 'Risk summary'),
-      ],
+      [section('verifiers', 'base'), section('risk-summary')],
+      [section('verifiers', 'other'), section('tvs'), section('flows')],
       {
         insertAfterId: 'risk-summary',
         replace: ['verifiers'],
         drop: ['tvs'],
-        relabel: {
-          'risk-summary': {
-            base: 'Scaling risk summary',
-            other: {
-              id: 'privacy-risk-summary',
-              title: 'Privacy risk summary',
-            },
-          },
-        },
       },
     )
 
     expect(summary(merged)).toEqual([
       'verifiers:other',
-      'risk-summary:Scaling risk summary',
-      'privacy-risk-summary:Privacy risk summary',
+      'risk-summary:risk-summary',
+      'flows:flows',
     ])
   })
 })

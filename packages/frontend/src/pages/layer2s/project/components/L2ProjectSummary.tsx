@@ -1,4 +1,4 @@
-import type { HTMLAttributes } from 'react'
+import type { HTMLAttributes, ReactNode } from 'react'
 import {
   AdditionalTrustAssumptionsBanner,
   AdditionalTrustAssumptionsText,
@@ -33,14 +33,17 @@ import { ProjectL2Stats } from './L2ProjectStats'
 
 interface Props {
   project: ProjectL2Entry
-  /**
-   * Whether this is the page's summary section. A page that shows it next to
-   * another summary puts the section on their shared wrapper.
-   */
-  asSummarySection?: boolean
+  /** Another section's rows and rosette, for a page that merges sections. */
+  merged?: MergedSummary
 }
 
-export function ProjectL2Summary({ project, asSummarySection = true }: Props) {
+export interface MergedSummary {
+  label: string
+  rows: ReactNode
+  rosette: ReactNode
+}
+
+export function ProjectL2Summary({ project, merged }: Props) {
   const hasTokenWarnings =
     project.header.tvs && project.header.tvs?.tokens.warnings?.length > 0
 
@@ -57,8 +60,8 @@ export function ProjectL2Summary({ project, asSummarySection = true }: Props) {
       : 'neutral'
   return (
     <section
-      id={asSummarySection ? 'summary' : undefined}
-      data-role={asSummarySection ? 'nav-section' : undefined}
+      id="summary"
+      data-role="nav-section"
       className="w-full scroll-mt-[100vh] border-divider px-4 max-md:border-b md:rounded-lg md:bg-surface-primary md:p-6"
     >
       <div className="flex">
@@ -229,10 +232,22 @@ export function ProjectL2Summary({ project, asSummarySection = true }: Props) {
               <ProjectInteropMetrics interop={project.header.interop} />
             </>
           )}
+          {merged?.rows}
         </div>
         <VerticalSeparator className="mr-8 ml-12 h-[unset] self-stretch max-lg:hidden" />
 
-        <ProjectL2Rosette project={project} size="small" />
+        {merged ? (
+          <div className="my-auto flex flex-col gap-6 max-lg:hidden">
+            <LabelledRosette label="Scaling">
+              <ProjectL2Rosette project={project} size="small" />
+            </LabelledRosette>
+            <LabelledRosette label={merged.label}>
+              {merged.rosette}
+            </LabelledRosette>
+          </div>
+        ) : (
+          <ProjectL2Rosette project={project} size="small" />
+        )}
       </div>
 
       {project.discoUiHref && (
@@ -265,6 +280,21 @@ export function ProjectL2Summary({ project, asSummarySection = true }: Props) {
         </div>
       </div>
     </section>
+  )
+}
+
+function LabelledRosette({
+  label,
+  children,
+}: {
+  label: string
+  children: ReactNode
+}) {
+  return (
+    <div className="flex flex-col items-center gap-1">
+      <p className="font-semibold text-subtitle-12 uppercase">{label}</p>
+      {children}
+    </div>
   )
 }
 
