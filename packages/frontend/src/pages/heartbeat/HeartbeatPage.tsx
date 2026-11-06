@@ -12,7 +12,7 @@ export function HeartbeatPage({ projects, ...props }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
-        <MainPageHeader description="Every chain's pulse, block by block. Each beat is a second with a block, as tall as its transactions.">
+        <MainPageHeader description="Every chain's pulse, block by block. Each beat sums a few seconds of blocks and is as tall as their transactions.">
           Heartbeat
         </MainPageHeader>
         <HeartbeatMonitor projects={projects} />

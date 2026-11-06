@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { HeartbeatChain } from '~/server/features/heartbeat/buildHeartbeat'
 import type { HeartbeatProject } from '~/server/features/heartbeat/getHeartbeatProjects'
-import { rankChains, sumBeats } from './rankChains'
+import { keepOrder, rankChains, sumBeats } from './rankChains'
 
 const READ_AT = UnixTime(1_800_000_000)
 
@@ -31,6 +31,20 @@ describe(rankChains.name, () => {
     )
 
     expect(result.map((r) => r.project.id)).toEqual(['a'])
+  })
+})
+
+describe(keepOrder.name, () => {
+  it('keeps the earlier order and puts new chains last', () => {
+    const rows = ['a', 'b', 'c'].map((id) => ({
+      project: project(id),
+      chain: chain(id, {}),
+      behindBy: undefined,
+    }))
+
+    const result = keepOrder(rows, ['c', 'a'])
+
+    expect(result.map((r) => r.project.id)).toEqual(['c', 'a', 'b'])
   })
 })
 

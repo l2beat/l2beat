@@ -1,5 +1,5 @@
 import type { UnixTime } from '@l2beat/shared-pure'
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
 import { useAnimationFrame } from '~/hooks/useAnimationFrame'
 import { useElementSize } from '~/hooks/useElementSize'
 import { useIsOnScreen } from '~/hooks/useIsOnScreen'
@@ -8,7 +8,7 @@ import { useThemeTokens } from '~/hooks/useThemeTokens'
 import { cn } from '~/utils/cn'
 import { toRgba } from '~/utils/color'
 import { prepareCanvas } from '~/utils/prepareCanvas'
-import { traceHeights } from './ekg'
+import { secondsPerBeat, toBeats, tracePoints } from './ekg'
 
 /** Seconds the trace shows */
 export const TRACE_SECONDS = 60
@@ -26,12 +26,13 @@ const BASELINE = 0.7
 const SPIKE = 0.6
 
 export function EkgTrace({
-  beats,
+  seconds,
   newest,
   bold = false,
   className,
 }: {
-  beats: [UnixTime, number][]
+  /** [second, transactions] of every second with a block */
+  seconds: [UnixTime, number][]
   /** The trace ends at the newest block, so a chain running behind shows a gap */
   newest: UnixTime
   /** For the line of every chain together */
@@ -44,6 +45,14 @@ export function EkgTrace({
   const still = usePrefersReducedMotion()
   const onScreen = useIsOnScreen(ref)
   const lastDrawn = useRef(0)
+  const perBeat = secondsPerBeat(size.width / TRACE_SECONDS)
+  const beats = useMemo(() => toBeats(seconds, perBeat), [seconds, perBeat])
+  // over all the seconds sent, not those in view, so the scale holds still
+  // while beats scroll in and out
+  const busiest = useMemo(
+    () => Math.max(0, ...beats.map(([, transactions]) => transactions)),
+    [beats],
+  )
 
   const draw = useCallback(
     (now: number) => {
@@ -66,7 +75,7 @@ export function EkgTrace({
         second <= to;
         second += GRID_SECONDS
       ) {
-        const x = Math.round(xOf(second)) + 0.5
+        const x = xOf(second)
         context.moveTo(x, 0)
         context.lineTo(x, height)
       }
@@ -85,13 +94,18 @@ export function EkgTrace({
       }
       if (end <= 0) return
 
-      const heights = traceHeights(beats, { from, to, width })
-      const yOf = (x: number) => baseline - (heights[x] ?? 0) * height * SPIKE
-      const last = Math.floor(end)
+      const points = tracePoints(
+        beats,
+        perBeat,
+        busiest,
+        { from, to, width },
+        end,
+      )
+      const yOf = (level: number) => baseline - level * height * SPIKE
       context.beginPath()
-      for (let x = 0; x <= last; x++) {
-        if (x === 0) context.moveTo(x, yOf(x))
-        else context.lineTo(x, yOf(x))
+      for (const [i, [x, level]] of points.entries()) {
+        if (i === 0) context.moveTo(x, yOf(level))
+        else context.lineTo(x, yOf(level))
       }
       // the oldest seconds fade, as on a monitor drawing over its last sweep
       const ink = context.createLinearGradient(0, 0, width, 0)
@@ -109,10 +123,10 @@ export function EkgTrace({
 
       context.fillStyle = tokens.brand
       context.beginPath()
-      context.arc(last, yOf(last), bold ? 3 : 2.5, 0, 2 * Math.PI)
+      context.arc(end, baseline, bold ? 3 : 2.5, 0, 2 * Math.PI)
       context.fill()
     },
-    [beats, newest, bold, size, tokens],
+    [beats, perBeat, busiest, newest, bold, size, tokens],
   )
 
   useAnimationFrame((_, now) => {

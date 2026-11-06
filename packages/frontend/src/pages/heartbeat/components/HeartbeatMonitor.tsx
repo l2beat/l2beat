@@ -9,11 +9,15 @@ import { cn } from '~/utils/cn'
 import { EkgTrace } from './EkgTrace'
 import {
   type HeartbeatMetric,
+  keepOrder,
   type RankedChain,
   rankChains,
   sumBeats,
 } from './rankChains'
 import { useHeartbeat } from './useHeartbeat'
+
+/** Rates move a little on every refresh, so rows only trade places this often */
+const RERANK_SECONDS = 10
 
 const METRICS: Record<
   HeartbeatMetric,
@@ -34,10 +38,17 @@ export function HeartbeatMonitor({
 }) {
   const { data } = useHeartbeat()
   const [metric, setMetric] = useState<HeartbeatMetric>('uops')
-  const ranked = useMemo(
+  const latest = useMemo(
     () => (data ? rankChains(projects, data, metric) : undefined),
     [projects, data, metric],
   )
+  const rerankAt = data ? Math.floor(data.readAt / RERANK_SECONDS) : undefined
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ranked again only when `rerankAt` or the metric moves on
+  const order = useMemo(
+    () => latest?.map((row) => row.project.id),
+    [rerankAt, metric],
+  )
+  const ranked = latest && order ? keepOrder(latest, order) : latest
   const listRef = useRef<HTMLOListElement>(null)
   useReorder(listRef, ranked?.map((r) => r.project.id).join() ?? '')
 
@@ -61,7 +72,7 @@ export function HeartbeatMonitor({
         <Skeleton className="h-20 w-full" />
       ) : (
         <EkgTrace
-          beats={sumBeats(ranked.map((r) => r.chain))}
+          seconds={sumBeats(ranked.map((r) => r.chain))}
           newest={Math.max(...ranked.map((r) => r.chain.newest))}
           bold
           className="h-20"
@@ -165,7 +176,7 @@ function ChainRow({
         name
       )}
       <EkgTrace
-        beats={chain.beats}
+        seconds={chain.beats}
         newest={chain.newest}
         className="h-10 max-md:col-span-full max-md:row-start-2"
       />

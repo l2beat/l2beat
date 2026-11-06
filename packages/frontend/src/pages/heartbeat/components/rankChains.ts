@@ -44,6 +44,16 @@ export function rankChains(
     )
 }
 
+/** The rows in `order`, by project, with rows it does not have yet last */
+export function keepOrder(
+  ranked: RankedChain[],
+  order: string[],
+): RankedChain[] {
+  const position = new Map(order.map((id, i) => [id, i]))
+  const at = (row: RankedChain) => position.get(row.project.id) ?? order.length
+  return [...ranked].sort((a, b) => at(a) - at(b))
+}
+
 /** Every chain's transactions per second, added up */
 export function sumBeats(chains: HeartbeatChain[]): [UnixTime, number][] {
   const sums = new Map<UnixTime, number>()
