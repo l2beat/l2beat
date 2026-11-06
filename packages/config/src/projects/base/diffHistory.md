@@ -14,7 +14,7 @@ Base's Denim upgrade. The L1 side was executed by the Base Governance Multisig o
 - AggregateVerifier: new implementation with the Denim TEE and SP1 program hashes; once Denim is active it proposes state roots every 6,000 blocks instead of 600, still 20 minutes.
 - ProtocolVersions: Denim registered as upgrade 13, minimum node version raised from v1.4.2 to v1.5.1.
 - TEEProverRegistry: expects the new enclave image; the manager replaced the registered enclave signers.
-- Twelve L2 predeploys upgraded to base/contracts v8.4.0: the messenger, both bridges, both token factories, L1Block, L2ToL1MessagePasser, the fee vaults, SchemaRegistry and EAS. The fee vaults keep their recipient and 2 ETH minimum, now held in storage.
+- Thirteen L2 predeploys upgraded to base/contracts v8.4.0: the messenger, both bridges, both token factories, L1Block, L2ToL1MessagePasser, the three fee vaults, OperatorFeeVault, SchemaRegistry and EAS. The fee vaults keep their recipient and 2 ETH minimum, now held in storage.
 - BaseTime: new predeploy installed by the protocol at activation; it exposes the millisecond part of each block's timestamp, set by a system deposit in every block. Its implementation has no verified source on Basescan because it was installed at the fork rather than deployed.
 
 Diffs:
