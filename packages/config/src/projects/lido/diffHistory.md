@@ -9,7 +9,7 @@ Generated with discovered.json: 0x254b185d8a50c2d0c4f98028cb717f29571a1121
 
 ## Description
 
-Signer rotations in EmergencyBrakesEthereum and ResealCommittee. Three DelegationContracts changed their delegate.
+EmergencyBrakesEthereum: 2 members rotated. ResealCommittee: Member rotated. Three DelegationContracts changed delegate: two oracle committee seats and one Deposit Security Module guardian seat, each effective after the 2-day cooldown.
 
 ## Watched changes
 

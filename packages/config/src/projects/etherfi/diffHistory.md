@@ -9,7 +9,7 @@ Generated with discovered.json: 0xf87056c1650be0fe836d80037345888f3589ea22
 
 ## Description
 
-Two Safes rotated one signer each.
+Safe (treasury and fee recipient) and GnosisSafe (EtherFiOperationParameters owner): Member rotated. The same signer joined both.
 
 ## Watched changes
 

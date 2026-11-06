@@ -9,7 +9,7 @@ Generated with discovered.json: 0x739a14475752c076aeaa2443dde0867165718993
 
 ## Description
 
-RocketDAONodeTrusted: one oracle member left, 9 seats now filled.
+RocketDAONodeTrusted: ConsenSys Codefi kicked by oracle DAO proposal 33 (6 votes for, 0 against, no fine, 1,750 RPL bond returned). 9 seats filled, quorum 4.59 votes.
 
 ## Watched changes
 
