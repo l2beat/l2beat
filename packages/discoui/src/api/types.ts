@@ -545,3 +545,14 @@ export type ApiChatEvent =
   | { type: 'permission-done'; id: string }
   | { type: 'turn-end'; stopReason: string }
   | { type: 'error'; message: string }
+  // What the researcher can switch for the chat, like the model; each
+  // replaces the earlier list.
+  | { type: 'config'; options: ApiChatConfigOption[] }
+
+export interface ApiChatConfigOption {
+  id: string
+  name: string
+  category: 'model' | 'thought_level'
+  currentValue: string
+  values: { value: string; name: string; description?: string }[]
+}

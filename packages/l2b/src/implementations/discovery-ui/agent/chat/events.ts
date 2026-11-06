@@ -1,5 +1,6 @@
 import { v as z } from '@l2beat/validate'
 import type { ApiChatEvent } from '../../types'
+import { readConfigOptions } from './config'
 
 // The chat keeps one transcript in memory, so every part of it is bounded:
 // long answers, many tool calls and long conversations.
@@ -18,6 +19,12 @@ const MERGE_LOOKBACK = 200
 const chunkSchema = z.object({
   sessionUpdate: z.literal('agent_message_chunk'),
   content: z.object({ type: z.string(), text: z.string().optional() }),
+})
+
+// An agent that changes what can be picked, like effort levels per model,
+// sends the whole list again.
+const configUpdateSchema = z.object({
+  sessionUpdate: z.literal('config_option_update'),
 })
 
 const toolSchema = z.object({
@@ -54,6 +61,10 @@ export function toChatEvents(update: unknown): ApiChatEvent[] {
     // A call may first come with its id alone, and the panel lists it then.
     return [event]
   }
+  if (configUpdateSchema.safeParse(update).success) {
+    const options = readConfigOptions(update)
+    return options === undefined ? [] : [{ type: 'config', options }]
+  }
   return []
 }
 
@@ -67,9 +78,10 @@ export function appendToLog(log: ApiChatEvent[], event: ApiChatEvent) {
     log[log.length - 1] = { type: 'text', text }
     return
   }
-  // The panel draws only the latest status.
-  if (event.type === 'status') {
-    const index = findRecent(log, (e) => e.type === 'status')
+  // The panel draws only the latest status and config.
+  if (event.type === 'status' || event.type === 'config') {
+    const type = event.type
+    const index = findRecent(log, (e) => e.type === type)
     if (index !== undefined) {
       log.splice(index, 1)
     }
@@ -147,6 +159,8 @@ export function clipEvent(event: ApiChatEvent): ApiChatEvent {
     case 'turn-end':
       return { ...event, stopReason: clipLabel(event.stopReason) }
     case 'permission-done':
+    case 'config':
+      // Config is bounded as it is read.
       return event
   }
 }

@@ -12,7 +12,7 @@ import { describeTool } from './toolLabels'
 const BOTTOM_SLACK_PX = 40
 
 export type Send = (
-  action: 'prompt' | 'cancel' | 'permission',
+  action: 'prompt' | 'cancel' | 'permission' | 'config',
   body?: Record<string, string>,
 ) => Promise<boolean>
 

@@ -21,6 +21,19 @@ const promptSchema = z.object({
     ),
 })
 const tabOnlySchema = z.object({ tab: tabSchema })
+// Model ids like claude-sonnet-5[1m] are no safe strings, so only bounded.
+const CONFIG_CHARACTERS_MAX = 200
+const configStringSchema = z
+  .string()
+  .check(
+    (v) => v.length > 0 && v.length <= CONFIG_CHARACTERS_MAX,
+    `Must be 1 to ${CONFIG_CHARACTERS_MAX} characters`,
+  )
+const configSchema = z.object({
+  tab: tabSchema,
+  configId: configStringSchema,
+  value: configStringSchema,
+})
 const permissionSchema = z.object({
   tab: tabSchema,
   id: safeStringSchema,
@@ -31,34 +44,41 @@ const permissionSchema = z.object({
 // commands. The tab follows the conversation over its event stream, so a
 // request answers only whether the chat took it.
 export function attachChatRoutes(router: Router, chat: ChatSession) {
-  router.post('/chat/start', (req, res) => {
-    handle(res, startSchema, req.body, (body) =>
+  router.post('/chat/start', async (req, res) => {
+    await handle(res, startSchema, req.body, (body) =>
       chat.start(body.tab, body.provider),
     )
   })
-  router.post('/chat/prompt', (req, res) => {
-    handle(res, promptSchema, req.body, (body) =>
+  router.post('/chat/prompt', async (req, res) => {
+    await handle(res, promptSchema, req.body, (body) =>
       chat.prompt(body.tab, body.text),
     )
   })
-  router.post('/chat/cancel', (req, res) => {
-    handle(res, tabOnlySchema, req.body, (body) => chat.cancel(body.tab))
+  router.post('/chat/cancel', async (req, res) => {
+    await handle(res, tabOnlySchema, req.body, (body) => chat.cancel(body.tab))
   })
-  router.post('/chat/permission', (req, res) => {
-    handle(res, permissionSchema, req.body, (body) =>
+  router.post('/chat/permission', async (req, res) => {
+    await handle(res, permissionSchema, req.body, (body) =>
       chat.answerPermission(body.tab, body.id, body.optionId),
     )
   })
-  router.post('/chat/close', (req, res) => {
-    handle(res, tabOnlySchema, req.body, (body) => chat.closeFor(body.tab))
+  router.post('/chat/config', async (req, res) => {
+    await handle(res, configSchema, req.body, (body) =>
+      chat.setConfig(body.tab, body.configId, body.value),
+    )
+  })
+  router.post('/chat/close', async (req, res) => {
+    await handle(res, tabOnlySchema, req.body, (body) =>
+      chat.closeFor(body.tab),
+    )
   })
 }
 
-function handle<T>(
+async function handle<T>(
   res: Response,
   schema: Validator<T>,
   body: unknown,
-  run: (body: T) => void,
+  run: (body: T) => void | Promise<void>,
 ) {
   const parsed = schema.safeParse(body)
   if (!parsed.success) {
@@ -66,7 +86,7 @@ function handle<T>(
     return
   }
   try {
-    run(parsed.data)
+    await run(parsed.data)
     res.json({ ok: true })
   } catch (error) {
     if (error instanceof ChatError) {

@@ -20,6 +20,23 @@ describe(toChatEvents.name, () => {
     ).toEqual([{ type: 'tool', id: 't1', title: 'Read' }])
   })
 
+  it('turns a config update into the full list of options', () => {
+    const events = toChatEvents({
+      sessionUpdate: 'config_option_update',
+      configOptions: [
+        {
+          id: 'model',
+          name: 'Model',
+          category: 'model',
+          type: 'select',
+          currentValue: 'opus',
+          options: [{ value: 'opus', name: 'Opus' }],
+        },
+      ],
+    })
+    expect(events.map((e) => e.type)).toEqual(['config'])
+  })
+
   it('skips updates it does not draw', () => {
     expect(toChatEvents({ sessionUpdate: 'plan', entries: [] })).toEqual([])
     expect(toChatEvents('garbage')).toEqual([])
@@ -47,6 +64,14 @@ describe(appendToLog.name, () => {
       { type: 'tool', id: 't1', title: 'Read', status: 'completed' },
       { type: 'text', text: 'lo' },
     ])
+  })
+
+  it('keeps only the latest config, like the status', () => {
+    const log: ApiChatEvent[] = []
+    appendToLog(log, { type: 'config', options: [] })
+    appendToLog(log, { type: 'user', text: 'Hi' })
+    appendToLog(log, { type: 'config', options: [] })
+    expect(log.map((e) => e.type)).toEqual(['user', 'config'])
   })
 
   it('keeps a long conversation and a long answer bounded', () => {

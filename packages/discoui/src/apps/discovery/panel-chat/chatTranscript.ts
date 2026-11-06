@@ -1,4 +1,4 @@
-import type { ApiChatEvent } from '../../../api/types'
+import type { ApiChatConfigOption, ApiChatEvent } from '../../../api/types'
 
 export type ChatStatus = Extract<ApiChatEvent, { type: 'status' }>
 
@@ -9,17 +9,19 @@ const TEXT_CHARACTERS_MAX = 50_000
 // The server merges a tool update into its call only this far back.
 const MERGE_LOOKBACK = 200
 
-// What the panel draws: the conversation, the chat's latest status and the
-// permission requests already answered.
+// What the panel draws: the conversation, the chat's latest status, what
+// the researcher can switch and the permission requests already answered.
 export interface ChatView {
   entries: ApiChatEvent[]
   status: ChatStatus | undefined
+  config: ApiChatConfigOption[]
   answered: ReadonlySet<string>
 }
 
 export const EMPTY_CHAT: ChatView = {
   entries: [],
   status: undefined,
+  config: [],
   answered: new Set(),
 }
 
@@ -28,6 +30,9 @@ export const EMPTY_CHAT: ChatView = {
 export function applyChatEvent(view: ChatView, event: ApiChatEvent): ChatView {
   if (event.type === 'status') {
     return { ...view, status: event }
+  }
+  if (event.type === 'config') {
+    return { ...view, config: event.options }
   }
   if (event.type === 'permission-done') {
     return { ...view, answered: new Set([...view.answered, event.id]) }
