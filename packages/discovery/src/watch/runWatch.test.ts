@@ -48,4 +48,20 @@ describe(runWatch.name, () => {
     await expect(runWatch(config, context)).toBeRejectedWith('Watch run failed')
     expect(after).not.toHaveBeenCalled()
   })
+
+  it('rejects a template whose whole value is pending', async () => {
+    const config: WatchConfig = {
+      name: 'alpha',
+      watches: [
+        {
+          key: 'a',
+          template: template(async () => ({ pending: true })),
+          params: {},
+        },
+      ],
+    }
+    await expect(runWatch(config, context)).toBeRejectedWith(
+      'Watch value is a pending item',
+    )
+  })
 })

@@ -2,9 +2,8 @@ import { expect } from 'earl'
 import { countPendingItems, stripPendingItems } from './pendingItems'
 
 describe(stripPendingItems.name, () => {
-  it('removes pending items at the top level and inside keyed objects', () => {
+  it('removes pending items inside keyed objects, keeping pending: false', () => {
     const values = {
-      open: { pending: true },
       leads: {
         a: { status: 'handled' },
         b: { status: 'open', pending: true },
@@ -25,6 +24,15 @@ describe(stripPendingItems.name, () => {
     expect(values).toEqual({ leads: { b: { pending: true } } })
   })
 
+  it('rejects a watch value that is itself pending', () => {
+    expect(() => stripPendingItems({ open: { pending: true } })).toThrow(
+      'Watch value is a pending item',
+    )
+    expect(() => countPendingItems({ open: { pending: true } })).toThrow(
+      'Watch value is a pending item',
+    )
+  })
+
   it('rejects a pending item inside an array', () => {
     expect(() => stripPendingItems({ list: [{ pending: true }] })).toThrow(
       'Pending item inside an array',
@@ -35,14 +43,13 @@ describe(stripPendingItems.name, () => {
 describe(countPendingItems.name, () => {
   it('counts pending items at every level', () => {
     const values = {
-      open: { pending: true },
       leads: {
         a: { status: 'handled' },
         b: { pending: true },
         nested: { c: { pending: true }, d: { pending: false } },
       },
     }
-    expect(countPendingItems(values)).toEqual(3)
+    expect(countPendingItems(values)).toEqual(2)
     expect(countPendingItems(stripPendingItems(values))).toEqual(0)
   })
 })

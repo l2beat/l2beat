@@ -1,4 +1,4 @@
-import type { json } from '@l2beat/shared-pure'
+import { assert, type json } from '@l2beat/shared-pure'
 import { isPendingItem, visitObjects } from './watchedValue'
 
 // A pending item is an object with `pending: true`. It is never accepted into
@@ -9,9 +9,7 @@ export function stripPendingItems(
 ): Record<string, json> {
   const result: Record<string, json> = {}
   for (const [key, value] of Object.entries(values)) {
-    if (isPendingItem(value)) {
-      continue
-    }
+    assertWatchValueNotPending(key, value)
     const copy = structuredClone(value)
     visitObjects(copy, (object) => {
       for (const [childKey, child] of Object.entries(object)) {
@@ -27,11 +25,8 @@ export function stripPendingItems(
 
 export function countPendingItems(values: Record<string, json>): number {
   let count = 0
-  for (const value of Object.values(values)) {
-    if (isPendingItem(value)) {
-      count++
-      continue
-    }
+  for (const [key, value] of Object.entries(values)) {
+    assertWatchValueNotPending(key, value)
     visitObjects(value, (object) => {
       for (const child of Object.values(object)) {
         if (isPendingItem(child)) {
@@ -41,4 +36,10 @@ export function countPendingItems(values: Record<string, json>): number {
     })
   }
   return count
+}
+
+// Only items of keyed objects can be pending. A pending watch value would be
+// stripped whole, leaving its key missing from watched.json.
+export function assertWatchValueNotPending(key: string, value: json): void {
+  assert(!isPendingItem(value), 'Watch value is a pending item', { key })
 }
