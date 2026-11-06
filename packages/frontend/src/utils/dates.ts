@@ -25,11 +25,13 @@ export function parseTimestamp(timestamp: number) {
   assert(day !== undefined, 'Day is undefined')
 
   const time = isoString.slice(11, 16)
+  const seconds = isoString.slice(17, 19)
   return {
     year,
     month,
     day,
     time,
+    seconds,
   }
 }
 
@@ -60,7 +62,11 @@ function toNiceDate(day: string, month?: string, year?: string) {
     : `${dayNumber} ${monthName}`
 }
 
-export function formatRange(from: number, to: number) {
+export function formatRange(
+  from: number,
+  to: number,
+  opts?: { seconds?: boolean },
+) {
   const parsedFrom = parseTimestamp(from)
   const parsedTo = parseTimestamp(to)
 
@@ -80,9 +86,11 @@ export function formatRange(from: number, to: number) {
     return `${fromDate} ${EM_DASH}\n${toDate}`
   }
 
-  // "30 Jun 2026, 01:00 — 02:00 UTC"
+  // "30 Jun 2026, 01:00 — 02:00 UTC", or "01:00:00 — 01:00:24 UTC" to the second
   const date = toNiceDate(parsedFrom.day, parsedFrom.month, parsedFrom.year)
-  return `${date}, ${parsedFrom.time} ${EM_DASH} ${parsedTo.time} UTC`
+  const time = (parsed: ReturnType<typeof parseTimestamp>) =>
+    opts?.seconds ? `${parsed.time}:${parsed.seconds}` : parsed.time
+  return `${date}, ${time(parsedFrom)} ${EM_DASH} ${time(parsedTo)} UTC`
 }
 
 export function formatTimestamp(
