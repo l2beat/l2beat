@@ -11,7 +11,8 @@ export interface BlockHashSource {
 /**
  * Reads the blocks the head follower stored, counted already, and fetches only
  * the ones it has not: before it started, after a reorg it gave up on, or
- * once they are cleaned up
+ * once they are cleaned up. Stored counts keep the adjustment of when they
+ * were stored, so recounting a project also means deleting its stored blocks
  */
 export class StoredBlockSource implements ActivityBlockSource {
   constructor(
