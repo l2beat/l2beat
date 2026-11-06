@@ -708,6 +708,22 @@ export const ethereum: BaseProject = {
           },
         ],
       },
+      {
+        // Base's Rust base-batcher in shadow mode: a second copy of Base mainnet batches, posted to
+        // the SHADOW_BATCH_INBOX_ADDRESS of base/base so a parity validator can re-derive the chain.
+        // Base's chain of record still comes from its canonical batcher, so the copy stays out of
+        // Base's data. Funded by Base's "Ledger - Mainnet" (base/contract-deployments).
+        projectId: ProjectId('base-shadow-batcher'),
+        name: 'Base shadow-mode batcher',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x0000000000000000000000000000000000ba7c4e',
+            sequencers: ['0x7360f62205709a1501e7a04513f61eda0bd13987'],
+            sinceBlock: 26337306,
+          },
+        ],
+      },
     ],
   },
   daBridge: {
