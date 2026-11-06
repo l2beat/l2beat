@@ -32,8 +32,9 @@ export async function updateSyncMetadataTargets(
     }
   }
 
-  await db.syncMetadata.upsertMany(
-    live.map((id) => ({ feature: 'tvs', id, target: targetTimestamp })),
+  await db.syncMetadata.setTargets(
+    'tvs',
+    live.map((id) => ({ id, target: targetTimestamp })),
   )
   await db.syncMetadata.markEnded('tvs', retired)
 }
