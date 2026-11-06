@@ -22,6 +22,7 @@ import { tinted } from '~/components/core/chart/tint'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { BlobFeeChartPoint } from '~/server/features/data-availability/throughput/getBlobFeeChart'
 import { formatRange } from '~/utils/dates'
+import { formatGwei } from '~/utils/formatGwei'
 import type { ChartResolution } from '~/utils/range/range'
 import { getDaDataParams } from './getDaDataParams'
 
@@ -252,17 +253,7 @@ function getPowerOfTenTicks(values: (number | null)[]): number[] {
   return Array.from({ length: hi - lo + 1 }, (_, i) => 10 ** (lo + i))
 }
 
-/** Three significant figures, as the fee runs from thousandths of a gwei to tens */
-function formatGwei(value: number) {
-  if (value === 0) return '0'
-  const digits = Math.max(0, 2 - Math.floor(Math.log10(Math.abs(value))))
-  return String(Number(value.toFixed(Math.min(digits, 6))))
-}
-
-export function getProjectChartMeta(
-  projectId: ProjectId,
-  withBlobFee = false,
-) {
+export function getProjectChartMeta(projectId: ProjectId, withBlobFee = false) {
   switch (projectId) {
     case 'ethereum':
       return {

@@ -30,6 +30,7 @@ import {
  * 32 blocks deep; two epochs on, the chain is final
  */
 const UNSETTLED_SLOTS = 64
+const WEI_PER_GWEI = 1e9
 
 export interface LiveBlobsRows {
   stored: LiveSlotRange | undefined
@@ -118,6 +119,10 @@ function toLiveBlock(
     status: 'proposed',
     blockNumber: block.blockNumber,
     hash: block.hash,
+    blobBaseFee:
+      block.blobBaseFee === null
+        ? null
+        : Number(block.blobBaseFee) / WEI_PER_GWEI,
     batches: batches.map((batch) => ({
       projectId: batch.projectId,
       blobs: batch.blobs,
