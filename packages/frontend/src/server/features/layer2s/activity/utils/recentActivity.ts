@@ -30,6 +30,8 @@ export function reachesNow(range: ChartRange, now = UnixTime.now()): boolean {
 export interface RecentHours {
   /** By the hour's start: what activity summed, and the stored blocks it has not yet */
   hours: Map<UnixTime, { count: number; uopsCount: number }>
+  /** Where the hours start, so a later one missing had no blocks */
+  since: UnixTime
   /** Of the newest stored block */
   until: UnixTime
 }
@@ -117,12 +119,13 @@ export function toRecentHours(
   }
   for (const r of summed) add(r.timestamp, r.count, r.uopsCount ?? r.count)
   for (const h of stored) add(h.timestamp, h.count, h.uopsCount)
-  return { hours, until: last.lastTimestamp }
+  return { hours, since, until: last.lastTimestamp }
 }
 
 /**
- * [timestamp, count, uopsCount] of each period up to the newest block. The
- * stored blocks run on unbroken, so a period between with none had none
+ * [timestamp, count, uopsCount] of each period after `after`, from where the
+ * hours start, up to the newest block. The stored blocks run on from the
+ * summed ones unbroken, so a period with neither had no blocks
  */
 export function toRecentPoints(
   recent: RecentHours,
@@ -137,11 +140,9 @@ export function toRecentPoints(
     points.set(period, [period, point[1] + count, point[2] + uopsCount])
   }
   const newest = UnixTime.toStartOf(recent.until, resolution)
-  const periods = [...points.keys()]
-  if (periods.length === 0) return []
   const step = UnixTime.periodToSeconds(resolution)
   const filled: [UnixTime, number, number][] = []
-  for (let p = Math.min(...periods); p <= newest; p += step) {
+  for (let p = Math.max(after + step, recent.since); p <= newest; p += step) {
     if (p === newest && recent.until - p < MIN_ELAPSED[resolution]) break
     filled.push(points.get(p) ?? [p, 0, 0])
   }
