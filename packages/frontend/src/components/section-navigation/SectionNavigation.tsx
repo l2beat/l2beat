@@ -122,7 +122,7 @@ function NavigationListIndex(props: { index: number }) {
         aria-hidden
         className={cn(
           'absolute inset-0 opacity-0 transition-opacity duration-150 motion-reduce:transition-none',
-          'bg-brand group-data-[has-colors=true]/section-wrapper:bg-branding-primary',
+          'bg-brand',
           'group-data-[selected=true]:opacity-100',
         )}
       />
@@ -173,7 +173,7 @@ function NavigationSubsectionEntry(props: {
         <div className="border-divider border-l" />
         <div
           className={cn(
-            'absolute w-[5px] bg-brand group-data-[has-colors=true]/section-wrapper:bg-branding-primary',
+            'absolute w-[5px] bg-brand',
             'transition-opacity duration-150 ease-out motion-reduce:transition-none',
             props.joinsAbove ? 'top-0' : 'top-0.5 rounded-t-full',
             props.joinsBelow ? 'bottom-0' : 'bottom-0.5 rounded-b-full',

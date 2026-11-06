@@ -14,7 +14,6 @@ const ALL_PROJECT_OPTIONAL_KEYS = [
   'statuses',
   'display',
   'colors',
-  'ecosystemColors',
   'milestones',
   'chainConfig',
   'escrows',
