@@ -73,6 +73,9 @@ const OPCODES: Record<number, string> = {
   0x5d: 'TSTORE',
   0x5e: 'MCOPY',
   0x5f: 'PUSH0',
+  0xe6: 'DUPN',
+  0xe7: 'SWAPN',
+  0xe8: 'EXCHANGE',
   0xf0: 'CREATE',
   0xf1: 'CALL',
   0xf2: 'CALLCODE',
@@ -95,7 +98,7 @@ export interface Instruction {
   offset: number
   opcode: number
   mnemonic: string
-  pushData?: string // hex string for PUSH opcodes
+  immediate?: string // hex string for PUSH1-32, DUPN, SWAPN and EXCHANGE
 }
 
 export function disasmEVM(bytecode: Bytes): Instruction[] {
@@ -105,28 +108,71 @@ export function disasmEVM(bytecode: Bytes): Instruction[] {
 
   while (i < code.length) {
     const opcode = code[i]
-    const mnemonic =
-      OPCODES[opcode] ??
-      `UNKNOWN(0x${opcode.toString(16).padStart(2, '0').toUpperCase()})`
-    const instr: Instruction = { offset: i, opcode, mnemonic }
+    const mnemonic = getMnemonic(code, i)
+    const instruction: Instruction = { offset: i, opcode, mnemonic }
 
-    // PUSH1 (0x60) through PUSH32 (0x7f)
-    if (opcode >= 0x60 && opcode <= 0x7f) {
-      const n = opcode - 0x5f
-      const data = code.subarray(i + 1, i + 1 + n)
-      instr.pushData =
+    const immediateLength = getImmediateLength(code, i)
+    if (immediateLength > 0) {
+      const data = code.subarray(i + 1, i + 1 + immediateLength)
+      instruction.immediate =
         '0x' +
         Buffer.from(data)
           .toString('hex')
-          .padStart(n * 2, '0')
-      i += n
+          .padStart(immediateLength * 2, '0')
+      i += immediateLength
     }
 
-    instructions.push(instr)
+    instructions.push(instruction)
     i++
   }
 
   return instructions
+}
+
+function getMnemonic(code: Buffer, offset: number): string {
+  const opcode = code[offset]
+  const mnemonic = OPCODES[opcode]
+  if (mnemonic === undefined) {
+    return `UNKNOWN(0x${opcode.toString(16).padStart(2, '0').toUpperCase()})`
+  }
+  if (hasDisallowedImmediate(code, offset)) {
+    return `INVALID_${mnemonic}`
+  }
+  return mnemonic
+}
+
+function getImmediateLength(code: Buffer, offset: number): number {
+  const opcode = code[offset]
+  // PUSH1 (0x60) through PUSH32 (0x7f)
+  if (opcode >= 0x60 && opcode <= 0x7f) {
+    return opcode - 0x5f
+  }
+  if (isEIP8024Opcode(opcode)) {
+    if (hasDisallowedImmediate(code, offset)) {
+      return 0
+    }
+    return 1
+  }
+  return 0
+}
+
+// EIP-8024: DUPN (0xe6), SWAPN (0xe7), EXCHANGE (0xe8)
+function isEIP8024Opcode(opcode: number): boolean {
+  return opcode >= 0xe6 && opcode <= 0xe8
+}
+
+// JUMPDEST analysis does not skip EIP-8024 immediates, so the spec forbids
+// JUMPDEST and PUSH1-32 (0x5b-0x7f) there. Such a byte starts the next
+// instruction, which keeps the disassembly aligned with JUMPDEST analysis.
+function hasDisallowedImmediate(code: Buffer, offset: number): boolean {
+  if (!isEIP8024Opcode(code[offset])) {
+    return false
+  }
+  const immediate = code[offset + 1]
+  if (immediate === undefined) {
+    return false
+  }
+  return immediate >= 0x5b && immediate <= 0x7f
 }
 
 export function formatEVMOpcodes(instructions: Instruction[]): string {
@@ -139,8 +185,8 @@ export function formatEVMOpcodes(instructions: Instruction[]): string {
   return instructions
     .map((i) => {
       const offset = i.offset.toString(16).padStart(width, '0')
-      const pushPart = i.pushData ? ` ${i.pushData}` : ''
-      return `${offset}: ${i.mnemonic}${pushPart}`
+      const immediatePart = i.immediate ? ` ${i.immediate}` : ''
+      return `${offset}: ${i.mnemonic}${immediatePart}`
     })
     .join('\n')
 }
