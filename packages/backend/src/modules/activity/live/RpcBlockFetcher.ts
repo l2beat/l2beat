@@ -22,10 +22,10 @@ export class RpcBlockFetcher implements BlockFetcher {
     return await Promise.all(
       range(from, to + 1).map(async (number) => {
         const block = await this.rpc.getBlockWithTransactions(number)
-        assert(
-          block.number === number,
-          `Invalid response: expected block number ${number}, got ${block.number}`,
-        )
+        assert(block.number === number, 'Invalid block number in response', {
+          expected: number,
+          actual: block.number,
+        })
         return {
           ...this.counter.adjust(toActivityBlock(block, this.uopsAnalyzer)),
           hash: block.hash,
