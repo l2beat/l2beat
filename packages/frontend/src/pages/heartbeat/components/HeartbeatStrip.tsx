@@ -18,12 +18,13 @@ export function HeartbeatStrip({
   projects: HeartbeatProject[]
   metric: Extract<HeartbeatMetric, 'uops' | 'tps'>
 }) {
-  const { data } = useHeartbeat()
+  const { data, isError } = useHeartbeat()
   const ranked = useMemo(
     () => (data ? rankChains(projects, data, metric) : undefined),
     [projects, data, metric],
   )
-  if (ranked?.length === 0) return null
+  // the Activity page stands without it, so it shows only once it has chains
+  if (ranked?.length === 0 || (ranked === undefined && isError)) return null
   const total = ranked?.reduce((sum, row) => sum + row.chain[metric], 0)
 
   return (
