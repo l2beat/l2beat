@@ -45,12 +45,9 @@ export function createPrivacyModule({
   const hourlyIndexer = new HourlyIndexer(logger, clock, {
     // One row per bucket: the flow indexers write how far each is synced.
     onTick: async (targetTimestamp) => {
-      await db.syncMetadata.upsertMany(
-        bucketIds.map((id) => ({
-          feature: 'privacy',
-          id,
-          target: targetTimestamp,
-        })),
+      await db.syncMetadata.setTargets(
+        'privacy',
+        bucketIds.map((id) => ({ id, target: targetTimestamp })),
       )
     },
   })
