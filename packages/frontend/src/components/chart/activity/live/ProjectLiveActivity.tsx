@@ -6,7 +6,7 @@ import {
   ProjectId,
 } from '@l2beat/shared-pure'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
-import { useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type {
   ChartMeta,
@@ -102,6 +102,19 @@ export function ProjectLiveActivity({
   const holding = held?.range === range && held.to === to
   const { data, dataUpdatedAt } = holding ? held : query
   const live = to === undefined
+  // only once this window's data is read, as the pointer can come in before,
+  // and then also with the pointer still
+  const hovered = useRef(false)
+  const hold = () => {
+    if (!hovered.current || holding || !query.data || isPlaceholderData) return
+    setHeld({
+      data: query.data,
+      dataUpdatedAt: query.dataUpdatedAt,
+      range,
+      to,
+    })
+  }
+  useEffect(() => hold())
 
   // following the newest block, the window scrolls with the clock: drawn
   // every 1/300 of it, about 2.5 pixels, and slid along in between
@@ -179,16 +192,6 @@ export function ProjectLiveActivity({
     )
     return clamped >= newest - LIVE_RANGES[range] / 20 ? undefined : clamped
   }
-  // only once this window's data is read, as the pointer can come in before
-  const hold = () => {
-    if (holding || !query.data || isPlaceholderData) return
-    setHeld({
-      data: query.data,
-      dataUpdatedAt: query.dataUpdatedAt,
-      range,
-      to,
-    })
-  }
 
   return (
     <div className="flex flex-col">
@@ -214,9 +217,14 @@ export function ProjectLiveActivity({
       </ChartControlsWrapper>
       <div
         ref={charts}
-        onPointerEnter={hold}
-        onPointerMove={hold}
-        onPointerLeave={() => setHeld(undefined)}
+        onPointerEnter={() => {
+          hovered.current = true
+          hold()
+        }}
+        onPointerLeave={() => {
+          hovered.current = false
+          setHeld(undefined)
+        }}
       >
         <div className="mt-4 mb-3">
           <ChartContainer
