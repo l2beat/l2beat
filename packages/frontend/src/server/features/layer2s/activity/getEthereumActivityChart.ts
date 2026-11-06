@@ -131,7 +131,7 @@ export async function getEthereumActivityChart(
 
 /** Today so far, past what activity has summed */
 async function getToday(after: UnixTime | undefined) {
-  if (after === undefined || !env.CLIENT_SIDE_HEARTBEAT_PAGE) return undefined
+  if (after === undefined || !env.CLIENT_SIDE_LIVE_ACTIVITY) return undefined
   const recent = (
     await getRecentHours(
       [ProjectId.ETHEREUM],

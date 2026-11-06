@@ -233,7 +233,7 @@ async function withRecentPoints(
 ): Promise<Pick<ActivityChartData, 'data' | 'liveUntil'>> {
   if (
     !projectId ||
-    !env.CLIENT_SIDE_HEARTBEAT_PAGE ||
+    !env.CLIENT_SIDE_LIVE_ACTIVITY ||
     data.length === 0 ||
     !reachesNow(range)
   ) {
