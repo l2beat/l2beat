@@ -76,12 +76,14 @@ export function HeartbeatMonitor({
       ) : ranked === undefined ? (
         <Skeleton className="h-20 w-full" />
       ) : (
-        <EkgTrace
-          seconds={sumBeats(ranked.map((r) => r.chain))}
-          newest={Math.max(...ranked.map((r) => r.chain.newest))}
-          bold
-          className="h-20"
-        />
+        ranked.length > 0 && (
+          <EkgTrace
+            seconds={sumBeats(ranked.map((r) => r.chain))}
+            newest={Math.max(...ranked.map((r) => r.chain.newest))}
+            bold
+            className="h-20"
+          />
+        )
       )}
       {ranked === undefined && isError ? null : ranked === undefined ? (
         <div className="flex flex-col gap-2">
