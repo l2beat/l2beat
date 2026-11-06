@@ -1,7 +1,5 @@
 import { assert, type UnixTime } from '@l2beat/shared-pure'
 import type {
-  BeaconChainBlob,
-  BeaconChainClient,
   EVMBlockWithTransactions,
   EVMLog,
   EVMTransaction,
@@ -19,7 +17,6 @@ export const ETHEREUM_BLOB_SIZE_BYTES = 131072n
 
 export class EthereumDaProvider implements DaBlobProvider {
   constructor(
-    private readonly beaconChainClient: BeaconChainClient,
     private readonly rpcClient: IRpcClient,
     readonly daLayer: string,
   ) {}
@@ -116,43 +113,6 @@ export class EthereumDaProvider implements DaBlobProvider {
   async getBlockTimestamp(blockNumber: number): Promise<UnixTime> {
     const block = await this.rpcClient.getBlock(blockNumber, false)
     return block.timestamp
-  }
-
-  async getBlobsByVersionedHashesAndBlockNumber(
-    blobVersionedHashes: string[],
-    blockNumber: number,
-  ): Promise<BeaconChainBlob[]> {
-    const blockId = await this.getBeaconBlockId(blockNumber)
-    return await this.beaconChainClient.getBlobs(blockId, blobVersionedHashes)
-  }
-
-  async getRelevantBlobs(txHash: string): Promise<BeaconChainBlob[]> {
-    const tx = await this.rpcClient.getTransaction(txHash)
-
-    assert(tx.blockNumber, `Tx ${tx}: No pending txs allowed`)
-
-    // Skip blob processing for type 2 transactions
-    if (Number(tx.type) === 2) {
-      return []
-    }
-
-    // For type 3 transactions, ensure blobVersionedHashes exists
-    assert(
-      tx.blobVersionedHashes,
-      'Type 3 transaction missing blobVersionedHashes',
-    )
-
-    const blockId = await this.getBeaconBlockId(tx.blockNumber)
-    return await this.beaconChainClient.getBlobs(
-      blockId,
-      tx.blobVersionedHashes,
-    )
-  }
-
-  // this is very hacky, but it's the only way i know to get the beacon block id
-  // if you know a better way, please fix it
-  private async getBeaconBlockId(blockNumber: number): Promise<string> {
-    return await this.rpcClient.getBlockParentBeaconRoot(blockNumber + 1)
   }
 }
 

@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import type { BeaconChainClient, RpcClient } from '../../clients'
+import type { RpcClient } from '../../clients'
 import { EthereumDaProvider } from './EthereumDaProvider'
 import type { EthereumBlob } from './types'
 
@@ -41,11 +41,7 @@ describe(EthereumDaProvider.name, () => {
         ]),
       })
 
-      const provider = new EthereumDaProvider(
-        mockObject<BeaconChainClient>(),
-        mockRpcClient,
-        'ethereum',
-      )
+      const provider = new EthereumDaProvider(mockRpcClient, 'ethereum')
 
       const result = await provider.getBlobs(1, 1)
 
@@ -122,11 +118,7 @@ describe(EthereumDaProvider.name, () => {
           },
         ]),
       })
-      const provider = new EthereumDaProvider(
-        mockObject<BeaconChainClient>(),
-        mockRpcClient,
-        'ethereum',
-      )
+      const provider = new EthereumDaProvider(mockRpcClient, 'ethereum')
 
       const result = await provider.getBlocksWithBlobBatches(1, 2)
 
@@ -183,11 +175,7 @@ describe(EthereumDaProvider.name, () => {
           return []
         }),
       })
-      const provider = new EthereumDaProvider(
-        mockObject<BeaconChainClient>(),
-        mockRpcClient,
-        'ethereum',
-      )
+      const provider = new EthereumDaProvider(mockRpcClient, 'ethereum')
 
       await provider.getBlocksWithBlobBatches(1, 1)
 
@@ -278,11 +266,7 @@ describe(EthereumDaProvider.name, () => {
           ]),
           getLogs: mockFn().resolvesTo([]),
         })
-        const provider = new EthereumDaProvider(
-          mockObject<BeaconChainClient>(),
-          mockRpcClient,
-          'ethereum',
-        )
+        const provider = new EthereumDaProvider(mockRpcClient, 'ethereum')
 
         const result = await provider.getBlocksWithBlobBatchesFromReceipts(1, 2)
 
@@ -321,7 +305,6 @@ describe(EthereumDaProvider.name, () => {
       // As a node on the other side of a reorg would answer
       it('refuses a receipt from another chain than the block', async () => {
         const provider = new EthereumDaProvider(
-          mockObject<BeaconChainClient>(),
           mockObject<RpcClient>({
             getBlock: mockFn().resolvesTo({
               number: 1,
@@ -355,49 +338,12 @@ describe(EthereumDaProvider.name, () => {
     },
   )
 
-  describe(
-    EthereumDaProvider.prototype.getBlobsByVersionedHashesAndBlockNumber.name,
-    () => {
-      it('asks the beacon block after the given block for the hashes', async () => {
-        const mockRpcClient = mockObject<RpcClient>({
-          getBlockParentBeaconRoot: mockFn().resolvesTo('blockId'),
-        })
-        const mockBeaconChainClient = mockObject<BeaconChainClient>({
-          getBlobs: mockFn().resolvesTo([{ data: 'blob1' }]),
-        })
-        const provider = new EthereumDaProvider(
-          mockBeaconChainClient,
-          mockRpcClient,
-          'ethereum',
-        )
-
-        const result = await provider.getBlobsByVersionedHashesAndBlockNumber(
-          ['0x01aa'],
-          1,
-        )
-
-        expect(mockRpcClient.getBlockParentBeaconRoot).toHaveBeenOnlyCalledWith(
-          2,
-        )
-        expect(mockBeaconChainClient.getBlobs).toHaveBeenOnlyCalledWith(
-          'blockId',
-          ['0x01aa'],
-        )
-        expect(result).toEqual([{ data: 'blob1' }])
-      })
-    },
-  )
-
   describe(EthereumDaProvider.prototype.getBlockTimestamp.name, () => {
     it('returns the timestamp of the block', async () => {
       const mockRpcClient = mockObject<RpcClient>({
         getBlock: mockFn().resolvesTo({ timestamp: UnixTime(1_700_000_000) }),
       })
-      const provider = new EthereumDaProvider(
-        mockObject<BeaconChainClient>(),
-        mockRpcClient,
-        'ethereum',
-      )
+      const provider = new EthereumDaProvider(mockRpcClient, 'ethereum')
 
       const timestamp = await provider.getBlockTimestamp(123)
 
@@ -406,79 +352,6 @@ describe(EthereumDaProvider.name, () => {
       expect(mockRpcClient.getBlock).toHaveBeenOnlyCalledWith(
         123,
         false as unknown as true,
-      )
-    })
-  })
-
-  describe(EthereumDaProvider.prototype.getRelevantBlobs.name, () => {
-    it('should return empty blobs for type 2 transaction', async () => {
-      const mockRpcClient = mockObject<RpcClient>({
-        getBlockParentBeaconRoot: mockFn().resolvesTo('blockId'),
-        getTransaction: mockFn().returns({
-          type: '0x2',
-          blockNumber: 1,
-        }),
-      })
-
-      const mockBeaconChainClient = mockObject<BeaconChainClient>()
-
-      const provider = new EthereumDaProvider(
-        mockBeaconChainClient,
-        mockRpcClient,
-        'ethereum',
-      )
-
-      const result = await provider.getRelevantBlobs('txHash')
-      expect(result).toEqual([])
-    })
-
-    it('should return blobs for type 3 transaction', async () => {
-      const mockRpcClient = mockObject<RpcClient>({
-        getBlockParentBeaconRoot: mockFn().resolvesTo('blockId'),
-        getTransaction: mockFn().returns({
-          type: '0x3',
-          blockNumber: 1,
-          blobVersionedHashes: ['0x01aa', '0x01bb'],
-        }),
-      })
-      const mockBeaconChainClient = mockObject<BeaconChainClient>({
-        getBlobs: mockFn().resolvesTo([{ data: 'blob1' }, { data: 'blob2' }]),
-      })
-      const provider = new EthereumDaProvider(
-        mockBeaconChainClient,
-        mockRpcClient,
-        'ethereum',
-      )
-
-      const result = await provider.getRelevantBlobs('txHash')
-
-      expect(mockRpcClient.getBlockParentBeaconRoot).toHaveBeenOnlyCalledWith(2)
-      expect(mockBeaconChainClient.getBlobs).toHaveBeenOnlyCalledWith(
-        'blockId',
-        ['0x01aa', '0x01bb'],
-      )
-      expect(result).toEqual([{ data: 'blob1' }, { data: 'blob2' }])
-    })
-
-    it('should throw on missing blobVersionedHashes', async () => {
-      const mockRpcClient = mockObject<RpcClient>({
-        getBlockParentBeaconRoot: mockFn().resolvesTo('blockId'),
-        getTransaction: mockFn().returns({
-          type: '0x3',
-          blockNumber: 1,
-        }),
-      })
-
-      const mockBeaconChainClient = mockObject<BeaconChainClient>()
-
-      const provider = new EthereumDaProvider(
-        mockBeaconChainClient,
-        mockRpcClient,
-        'ethereum',
-      )
-
-      await expect(provider.getRelevantBlobs('txHash')).toBeRejectedWith(
-        'Type 3 transaction missing blobVersionedHashes',
       )
     })
   })
@@ -503,9 +376,5 @@ function providerAnswering(answers: {
       })),
     ),
   })
-  return new EthereumDaProvider(
-    mockObject<BeaconChainClient>(),
-    rpc,
-    'ethereum',
-  )
+  return new EthereumDaProvider(rpc, 'ethereum')
 }

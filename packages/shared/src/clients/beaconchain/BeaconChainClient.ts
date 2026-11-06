@@ -1,5 +1,4 @@
 import type { json } from '@l2beat/shared-pure'
-import type { v } from '@l2beat/validate'
 import { Readable } from 'stream'
 import { chain } from 'stream-chain'
 import { parser } from 'stream-json'
@@ -7,9 +6,7 @@ import { pick } from 'stream-json/filters/Pick'
 import { streamValues } from 'stream-json/streamers/StreamValues'
 
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
-import { BeaconChainError, type Blob as BlobSchema, BlobsSchema } from './types'
-
-export type BeaconChainBlob = v.infer<typeof BlobSchema>
+import { BeaconChainError } from './types'
 
 interface Dependencies extends ClientCoreDependencies {
   beaconApiUrl: string
@@ -20,47 +17,6 @@ interface Dependencies extends ClientCoreDependencies {
 export class BeaconChainClient extends ClientCore {
   constructor(private readonly $: Dependencies) {
     super({ ...$ })
-  }
-
-  /** In the block's order, which need not be that of `versionedHashes` */
-  async getBlobs(
-    blockId: string,
-    versionedHashes: string[],
-  ): Promise<BeaconChainBlob[]> {
-    // Without the param the endpoint answers every blob of the block
-    if (versionedHashes.length === 0) return []
-
-    // The spec forbids repeating a hash, which a tx may do
-    const query = [...new Set(versionedHashes)]
-      .map((hash) => `versioned_hashes=${hash}`)
-      .join('&')
-    const endpoint = `eth/v1/beacon/blobs/${blockId}?${query}`
-
-    const response = await this.call(endpoint)
-    const parsed = BlobsSchema.safeParse(response)
-
-    if (!parsed.success) {
-      this.$.logger.warn('Invalid response', {
-        endpoint,
-        response: JSON.stringify(response),
-      })
-      throw new Error('Invalid blobs response', { cause: { blockId } })
-    }
-
-    // A beacon block without these blobs answers an empty list, not an error.
-    // A blob posted twice in the block may come back twice, so count distinct
-    // blobs: one per hash found
-    if (new Set(parsed.data.data).size < new Set(versionedHashes).size) {
-      throw new Error('Beacon node answered fewer blobs than asked for', {
-        cause: {
-          blockId,
-          requested: versionedHashes.length,
-          received: parsed.data.data.length,
-        },
-      })
-    }
-
-    return parsed.data.data.map((data) => ({ data }))
   }
 
   async getValidatorsInfo({

@@ -1,7 +1,6 @@
 import type { Env, Logger } from '@l2beat/backend-tools'
 import type { ProjectService } from '@l2beat/config'
 import {
-  BeaconChainClient,
   type DaBlobProvider,
   EthereumDaProvider,
   type HttpClient,
@@ -62,15 +61,7 @@ export async function createPreviewClients(
 
     let provider: DaBlobProvider | undefined
     if (!opts.ethereumFromDbOnly) {
-      const beaconClient = new BeaconChainClient({
-        sourceName: 'beaconApi',
-        beaconApiUrl: layer.url,
-        callsPerMinute: layer.callsPerMinute,
-        retryStrategy: 'RELIABLE',
-        http,
-        logger,
-      })
-      provider = new EthereumDaProvider(beaconClient, rpcClient, layer.name)
+      provider = new EthereumDaProvider(rpcClient, layer.name)
     }
 
     blockLayers.push({

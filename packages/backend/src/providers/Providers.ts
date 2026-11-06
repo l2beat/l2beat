@@ -91,13 +91,10 @@ export class Providers {
     const blobProviders: DaBlobProvider[] = []
     if (this.clients.beacon) {
       const ethereumRpc = this.clients.getRpcClient('ethereum')
-      blobProviders.push(
-        new EthereumDaProvider(this.clients.beacon, ethereumRpc, 'ethereum'),
-      )
+      blobProviders.push(new EthereumDaProvider(ethereumRpc, 'ethereum'))
     }
     if (this.clients.beacon && this.clients.liveBlobsRpc) {
       this.liveBlobsDa = new EthereumDaProvider(
-        this.clients.beacon,
         this.clients.liveBlobsRpc,
         'ethereum',
       )

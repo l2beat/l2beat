@@ -35,8 +35,8 @@ const OUTPUT_PATH = './scripts/da/preview.json'
 
 /**
  * Injected as ETHEREUM_BEACON_API_URL when only DA_PREVIEW_DB_URL is set, so
- * getDaTrackingConfig still assembles ethereum configurations. The beacon
- * client is never constructed in that mode (see ethereumFromDbOnly).
+ * getDaTrackingConfig still assembles ethereum configurations. The live
+ * provider is never constructed in that mode (see ethereumFromDbOnly).
  */
 const DB_CACHE_URL = 'db-cache'
 
