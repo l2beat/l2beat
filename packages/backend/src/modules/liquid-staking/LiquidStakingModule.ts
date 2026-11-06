@@ -1,11 +1,11 @@
 import { DuneQueryService } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
 import { DailyIndexer } from '../../tools/DailyIndexer'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
-import { EthereumStakingIndexer } from './EthereumStakingIndexer'
-import { LiquidStakingIndexer } from './LiquidStakingIndexer'
+import { readExecutionDay } from './network/dune/readExecutionDay'
+import { EthereumStakingIndexer } from './network/EthereumStakingIndexer'
+import { LiquidStakingIndexer } from './tokens/LiquidStakingIndexer'
 
 export function createLiquidStakingModule({
   config,
@@ -31,6 +31,7 @@ export function createLiquidStakingModule({
 
   const { sinceTimestamp, projects } = config.liquidStaking
   const indexerService = new IndexerService(db)
+  const dune = new DuneQueryService({ logger, duneClient })
   const rpc = providers.clients.getRpcClient('ethereum')
   const hourlyIndexer = new HourlyIndexer(logger, clock)
   const dailyIndexer = new DailyIndexer(logger, clock)
@@ -44,7 +45,7 @@ export function createLiquidStakingModule({
           configurations: [
             {
               id: project.configurationId,
-              minHeight: project.sinceTimestamp,
+              minHeight: sinceTimestamp,
               maxHeight: null,
               properties: project,
             },
@@ -61,11 +62,11 @@ export function createLiquidStakingModule({
     {
       parents: [dailyIndexer],
       indexerService,
-      // Heights are day ends, so the first stored day is sinceTimestamp.
-      minHeight: sinceTimestamp + UnixTime.DAY,
+      firstDay: sinceTimestamp,
       db,
       rpc,
-      dune: new DuneQueryService({ logger, duneClient }),
+      readExecutionDay: (day, fromBlock, toBlock) =>
+        readExecutionDay(dune, logger, day, fromBlock, toBlock),
       beacon,
       blockTimestampProvider: providers.blockTimestamp,
     },

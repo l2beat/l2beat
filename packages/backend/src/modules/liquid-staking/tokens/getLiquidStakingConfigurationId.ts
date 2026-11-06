@@ -4,19 +4,16 @@ import { createHash } from 'crypto'
 
 /**
  * The protocol's addresses make the id; keys are sorted, so reordering them in
- * a project file keeps the id and the indexed history. The quoted pools don't:
- * past hours were quoted where the liquidity was, so a pool change applies from
- * then on instead of wiping and re-reading the project.
+ * a project file keeps the id and the indexed history.
  */
 export function getLiquidStakingConfigurationId(
   projectId: ProjectId,
   contracts: ProjectLiquidStakingContracts,
 ): string {
-  const { marketQuotes: _, ...addresses } = contracts
   const identity = {
     projectId,
     contracts: Object.fromEntries(
-      Object.entries(addresses).sort(([a], [b]) => a.localeCompare(b)),
+      Object.entries(contracts).sort(([a], [b]) => a.localeCompare(b)),
     ),
   }
   return createHash('sha1')

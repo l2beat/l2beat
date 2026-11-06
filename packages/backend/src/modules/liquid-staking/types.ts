@@ -1,17 +1,17 @@
-import type { ProjectLiquidStakingContracts } from '@l2beat/config'
+import type {
+  ProjectLiquidStakingContracts,
+  ProjectLiquidStakingMarketQuote,
+} from '@l2beat/config'
 import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 export interface LiquidStakingProjectConfig {
   configurationId: string
   projectId: ProjectId
-  /** The later of the charts' start and the token's launch. */
-  sinceTimestamp: UnixTime
   contracts: ProjectLiquidStakingContracts
+  marketQuotes: ProjectLiquidStakingMarketQuote[]
 }
 
 export interface LiquidStakingConfig {
   sinceTimestamp: UnixTime
-  /** The network indexer reads each day's execution sums from Dune. */
-  duneApiKey: string
   projects: LiquidStakingProjectConfig[]
 }

@@ -1,11 +1,9 @@
 import type { IRpcClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
+import { DEPOSIT_REQUESTS_START_INDEX } from '../ethereumForks'
 
 export type DepositsRpc = Pick<IRpcClient, 'getLogs'>
-
-/** First slot of Electra (epoch 364032), which added the pending deposit queue. */
-export const ELECTRA_SLOT = 364032 * 32
 
 const DEPOSIT_CONTRACT = '0x00000000219ab540356cBB839Cbe05303d7705Fa'
 const depositInterface = new utils.Interface([
@@ -13,17 +11,9 @@ const depositInterface = new utils.Interface([
 ])
 const DEPOSIT_EVENT_TOPIC = depositInterface.getEventTopic('DepositEvent')
 /**
- * The index of the first deposit after Electra. Earlier deposits were
- * credited 7 to 14 hours late, in index order; from this one on, each is
- * credited in its own block.
- */
-const DEPOSIT_REQUESTS_START_INDEX = 2_045_126
-
-/**
  * Blocks in a day at 12-second slots. The search for older deposits reads a
- * day per call rather than its whole range: it stops at the day that has them,
- * almost always yesterday, and each call stays under QuickNode's 10,000-block
- * cap, whose HTTP 413 the legacy RpcClient throws on instead of splitting.
+ * day per call rather than its whole range, as it stops at the day that has
+ * them, almost always yesterday.
  */
 const BLOCKS_PER_DAY = 7200
 /** Days back a queued deposit is looked for before the day fails. */

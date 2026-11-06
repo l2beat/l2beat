@@ -63,10 +63,7 @@ describe(BeaconChainClient.name, () => {
             http: new HttpClient(),
             beaconApiUrl: `${url}/`,
           })
-          return client.getValidatorsInfo({
-            stateId: 'head',
-            status: ['active'],
-          })
+          return client.getValidatorsInfo('head', ['active'])
         },
       )
 
@@ -106,7 +103,27 @@ describe(BeaconChainClient.name, () => {
     })
   })
 
-  describe(BeaconChainClient.prototype.getForkAndDepositIndex.name, () => {
+  describe(BeaconChainClient.prototype.getForkVersion.name, () => {
+    it('reads the current fork version of the state', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({
+          data: {
+            previous_version: '0x04000000',
+            current_version: '0x05000000',
+            epoch: '364032',
+          },
+        }),
+      })
+      const client = mockClient({ http, beaconApiUrl: 'example.com/' })
+
+      expect(await client.getForkVersion(11649024)).toEqual('0x05000000')
+      expect(http.fetch.calls[0]?.args[0]).toEqual(
+        'example.com/eth/v1/beacon/states/11649024/fork',
+      )
+    })
+  })
+
+  describe(BeaconChainClient.prototype.getDepositIndex.name, () => {
     it('reads the counter without waiting for the rest of the state', async () => {
       const result = await withServer(
         (req, res) => {
@@ -122,13 +139,10 @@ describe(BeaconChainClient.name, () => {
           mockClient({
             http: new HttpClient(),
             beaconApiUrl: `${url}/`,
-          }).getForkAndDepositIndex(8103597),
+          }).getDepositIndex(8103597),
       )
 
-      expect(result).toEqual({
-        forkVersion: '0x03000000',
-        depositIndex: 1639287,
-      })
+      expect(result).toEqual(1639287)
     })
   })
 

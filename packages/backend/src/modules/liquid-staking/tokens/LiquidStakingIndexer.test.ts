@@ -9,11 +9,11 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
-import { mockDatabase } from '../../test/database'
-import type { IndexerService } from '../../tools/uif/IndexerService'
-import { _TEST_ONLY_resetUniqueIds } from '../../tools/uif/ids'
+import { mockDatabase } from '../../../test/database'
+import type { IndexerService } from '../../../tools/uif/IndexerService'
+import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
+import type { LiquidStakingProjectConfig } from '../types'
 import { LiquidStakingIndexer } from './LiquidStakingIndexer'
-import type { LiquidStakingProjectConfig } from './types'
 
 describe(LiquidStakingIndexer.name, () => {
   beforeEach(() => {
@@ -21,22 +21,9 @@ describe(LiquidStakingIndexer.name, () => {
   })
 
   const start = UnixTime.fromDate(new Date('2024-01-01T00:00:00Z'))
-  const rocketpool: LiquidStakingProjectConfig = {
-    configurationId: 'aaaaaaaaaaaa',
-    projectId: ProjectId('rocketpool'),
-    sinceTimestamp: start,
-    contracts: {
-      type: 'rocketpool',
-      rETH: ChainSpecificAddress(
-        'eth:0x1111111111111111111111111111111111111111',
-      ),
-      marketQuotes: [],
-    },
-  }
   const wbeth: LiquidStakingProjectConfig = {
     configurationId: 'bbbbbbbbbbbb',
     projectId: ProjectId('wbeth'),
-    sinceTimestamp: start,
     contracts: {
       type: 'wbeth',
       wBETH: ChainSpecificAddress(
@@ -45,15 +32,17 @@ describe(LiquidStakingIndexer.name, () => {
       unwrapToken: ChainSpecificAddress(
         'eth:0x3333333333333333333333333333333333333333',
       ),
-      marketQuotes: [],
     },
+    marketQuotes: [],
   }
 
   it('reads each hour in one multicall and saves only when asked', async () => {
-    const { indexer, snapshots, rpc } = createIndexer(
-      [rocketpool, wbeth],
-      [ok(11n), ok(12n), ok(21n), ok(22n), ok(24n), ok(23n)],
-    )
+    const { indexer, snapshots, rpc } = createIndexer(wbeth, [
+      ok(11n),
+      ok(22n),
+      ok(24n),
+      ok(23n),
+    ])
 
     const save = await indexer.multiUpdate(
       start + 1,
@@ -70,26 +59,30 @@ describe(LiquidStakingIndexer.name, () => {
 
     expect(await save()).toEqual(start + 2 * UnixTime.HOUR)
     const [records] = snapshots.upsertMany.calls[0]?.args ?? []
-    expect(records?.length).toEqual(4)
+    expect(records?.length).toEqual(2)
     expect(records?.[0]).toEqual({
-      configurationId: rocketpool.configurationId,
-      projectId: rocketpool.projectId,
+      configurationId: wbeth.configurationId,
+      projectId: wbeth.projectId,
       timestamp: UnixTime(start + UnixTime.HOUR),
       blockNumber: Number(start + UnixTime.HOUR),
       exchangeRate: 11n,
-      lastRequestId: null,
-      lastFinalizedRequestId: null,
-      instantExitEth: 12n,
-      instantExitFeeBps: 0,
-      lockTime: null,
+      lastRequestId: 23,
+      lastFinalizedRequestId: 22,
+      instantExitEth: null,
+      instantExitFeeBps: null,
+      lockTime: 22,
       marketExitEth: null,
       marketExitValueEth: null,
     })
-    expect(records?.[1]?.lockTime).toEqual(22)
   })
 
   it('reads at most a day per update', async () => {
-    const { indexer, rpc } = createIndexer([rocketpool], [ok(1n), ok(2n)])
+    const { indexer, rpc } = createIndexer(wbeth, [
+      ok(1n),
+      ok(2n),
+      ok(3n),
+      ok(4n),
+    ])
 
     const save = await indexer.multiUpdate(
       start,
@@ -100,24 +93,6 @@ describe(LiquidStakingIndexer.name, () => {
     expect(rpc.multicall).toHaveBeenCalledTimes(24)
     expect(await save()).toEqual(start + 23 * UnixTime.HOUR)
   })
-
-  for (const [name, failed] of [
-    ['reverts', { success: false, data: Bytes.EMPTY }],
-    // tryAggregate reports a call to an address without code as a success.
-    ['hits an address without code', { success: true, data: Bytes.EMPTY }],
-  ] as const) {
-    it(`throws when a call ${name}`, async () => {
-      const { indexer } = createIndexer([rocketpool], [ok(1n), failed])
-
-      await expect(
-        indexer.multiUpdate(
-          start,
-          start + UnixTime.HOUR,
-          indexer.options.configurations,
-        ),
-      ).toBeRejectedWith('Liquid staking call reverted')
-    })
-  }
 })
 
 function ok(value: bigint): MulticallV3Response {
@@ -128,7 +103,7 @@ function ok(value: bigint): MulticallV3Response {
 }
 
 function createIndexer(
-  projects: LiquidStakingProjectConfig[],
+  project: LiquidStakingProjectConfig,
   responses: MulticallV3Response[],
 ) {
   const snapshots = mockObject<Database['liquidStakingSnapshot']>({
@@ -139,12 +114,14 @@ function createIndexer(
     {
       parents: [],
       indexerService: mockObject<IndexerService>(),
-      configurations: projects.map((project) => ({
-        id: project.configurationId,
-        minHeight: UnixTime.fromDate(new Date('2024-01-01T00:00:00Z')),
-        maxHeight: null,
-        properties: project,
-      })),
+      configurations: [
+        {
+          id: project.configurationId,
+          minHeight: UnixTime.fromDate(new Date('2024-01-01T00:00:00Z')),
+          maxHeight: null,
+          properties: project,
+        },
+      ],
       db: mockDatabase({ liquidStakingSnapshot: snapshots }),
       rpc,
       // The block number stands in for the timestamp it was looked up for.

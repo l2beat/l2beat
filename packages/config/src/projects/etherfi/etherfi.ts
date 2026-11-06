@@ -174,35 +174,35 @@ export const etherfi: BaseProject = {
       withdrawRequestNft: discovery.getContract('WithdrawRequestNFT').address,
       redemptionManager: discovery.getContract('EtherFiRedemptionManager')
         .address,
-      // Liquidity moved between these over the period.
-      marketQuotes: [
-        {
-          type: 'fluid',
-          pool: ChainSpecificAddress(
-            'eth:0x86f874212335Af27C41cDb855C2255543d1499cE',
-          ),
-          swap0to1: true,
-        },
-        {
-          type: 'curve',
-          pool: ChainSpecificAddress(
-            'eth:0xDB74dfDD3BB46bE8Ce6C33dC9D82777BCFc3dEd5',
-          ),
-          i: 1,
-          j: 0,
-        },
-        {
-          type: 'curve',
-          pool: ChainSpecificAddress(
-            'eth:0x13947303F63b363876868D070F14dc865C36463b',
-          ),
-          i: 0,
-          j: 1,
-        },
-        { type: 'uniswapV3', fee: 100 },
-        { type: 'uniswapV3', fee: 500 },
-      ],
     },
+    // Liquidity moved between these over the period.
+    marketQuotes: [
+      {
+        type: 'fluid',
+        pool: ChainSpecificAddress(
+          'eth:0x86f874212335Af27C41cDb855C2255543d1499cE',
+        ),
+        swap0to1: true,
+      },
+      {
+        type: 'curve',
+        pool: ChainSpecificAddress(
+          'eth:0xDB74dfDD3BB46bE8Ce6C33dC9D82777BCFc3dEd5',
+        ),
+        i: 1,
+        j: 0,
+      },
+      {
+        type: 'curve',
+        pool: ChainSpecificAddress(
+          'eth:0x13947303F63b363876868D070F14dc865C36463b',
+        ),
+        i: 0,
+        j: 1,
+      },
+      { type: 'uniswapV3', fee: 100 },
+      { type: 'uniswapV3', fee: 500 },
+    ],
     risks: {
       minting: {
         value: 'Permissionless',
