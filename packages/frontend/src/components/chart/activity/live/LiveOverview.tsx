@@ -1,4 +1,4 @@
-import { type KeyboardEvent, type PointerEvent, useRef } from 'react'
+import { type KeyboardEvent, type PointerEvent, useEffect, useRef } from 'react'
 import type { LiveActivityPoint } from '~/server/features/layer2s/activity/live/liveRanges'
 import { cn } from '~/utils/cn'
 import { type LiveMetric, METRIC_INDEX } from './liveSteps'
@@ -37,6 +37,7 @@ export function LiveOverview({
   const dragging = useRef(false)
   const sentAt = useRef(0)
   const queued = useRef<ReturnType<typeof setTimeout>>(undefined)
+  useEffect(() => () => clearTimeout(queued.current), [])
   const span = to - from
   const busiest = Math.max(1, ...points.map((p) => metricOf(p, metric)))
   // the window and the first bar start on their buckets, so can before `from`
@@ -62,6 +63,7 @@ export function LiveOverview({
     moveTo(from + ((event.clientX - box.left) / box.width) * span + length / 2)
   }
   const onKeyDown = (event: KeyboardEvent) => {
+    if (event.altKey || event.ctrlKey || event.metaKey) return
     const step = length / 10
     const ends: Record<string, number> = {
       ArrowLeft: window[1] - step,
@@ -94,7 +96,9 @@ export function LiveOverview({
       aria-label="Look back through the last hours"
       aria-valuemin={from + length}
       aria-valuemax={to}
-      aria-valuenow={Math.round(window[1])}
+      aria-valuenow={Math.round(
+        Math.min(to, Math.max(from + length, window[1])),
+      )}
       aria-valuetext={windowText}
       onKeyDown={onKeyDown}
       onPointerDown={(event) => {
