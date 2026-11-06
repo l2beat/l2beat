@@ -145,8 +145,9 @@ export async function getPrivacyFlowsChart(
  * The buckets to chart. Each is a sum over its period, so only periods the
  * indexers have fully covered are shown: the chart runs up to the furthest
  * bucket's height, and `syncedUntil` marks where the slowest one is, so the
- * chart can grey out what a backfill has not reached yet. The client's range
- * end is only its guess of what is synced, so the heights replace it.
+ * chart can grey out what a backfill has not reached yet. The range end is
+ * honoured up to that height, with the period it falls in included: a
+ * preset's end is only a guess of what is synced, a custom range's is chosen.
  */
 export function getPrivacyFlowsChartWindow(
   range: ChartRange,
@@ -164,7 +165,10 @@ export function getPrivacyFlowsChartWindow(
   return {
     resolution,
     from: range[0] === null ? null : UnixTime.toStartOf(range[0], resolution),
-    to: UnixTime.toStartOf(sync?.reached ?? now, resolution),
+    to: Math.min(
+      UnixTime.toStartOf(sync?.reached ?? now, resolution),
+      UnixTime.toStartOf(range[1], resolution) + step,
+    ),
     syncedUntil:
       sync === undefined
         ? undefined

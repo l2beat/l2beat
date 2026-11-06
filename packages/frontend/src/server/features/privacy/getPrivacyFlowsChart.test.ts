@@ -52,6 +52,17 @@ describe(getPrivacyFlowsChartWindow.name, () => {
     })
   })
 
+  it('keeps the end of a range that stops before the indexed height', () => {
+    const end = DAY - 2 * UnixTime.DAY
+    const result = getPrivacyFlowsChartWindow(
+      [DAY - 7 * UnixTime.DAY, end + 23 * UnixTime.HOUR + 59 * UnixTime.MINUTE],
+      { reached: DAY + 9 * UnixTime.HOUR, slowest: DAY + 9 * UnixTime.HOUR },
+      NOW,
+    )
+
+    expect(result.to).toEqual(end + UnixTime.DAY)
+  })
+
   it('falls back to the current time without indexer heights', () => {
     const result = getPrivacyFlowsChartWindow(
       [DAY - 7 * UnixTime.DAY, NOW],
