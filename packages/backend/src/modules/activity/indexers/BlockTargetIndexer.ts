@@ -2,10 +2,14 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { BlockTimestampProvider } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
-import { Indexer, RootIndexer } from '@l2beat/uif'
+import { RootIndexer } from '@l2beat/uif'
 import type { ActivityConfigProject } from '../../../config/Config'
 import type { Clock } from '../../../tools/Clock'
 import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
+import {
+  retryWhileNotReady,
+  useTipIfStalled,
+} from '../../../tools/dataNotReady'
 
 export class BlockTargetIndexer extends RootIndexer {
   // used only for runtime invalidation protection
@@ -25,9 +29,10 @@ export class BlockTargetIndexer extends RootIndexer {
       logger.tag({
         tag: config.id,
         project: config.id,
+        chain: config.chainName,
       }),
       {
-        tickRetryStrategy: Indexer.getInfiniteRetryStrategy(),
+        tickRetryStrategy: retryWhileNotReady(),
       },
     )
   }
@@ -49,11 +54,18 @@ export class BlockTargetIndexer extends RootIndexer {
         const timestamp = this.clock.getLastHour()
         this.logger.info('Getting block number for timestamp', { timestamp })
 
-        const blockNumber =
-          await this.blockTimestampProvider.getBlockNumberAtOrBefore(
+        const blockNumber = await useTipIfStalled(
+          () =>
+            this.blockTimestampProvider.getBlockNumberAtOrBefore(
+              timestamp,
+              this.config.chainName,
+            ),
+          {
+            logger: this.logger,
+            chain: this.config.chainName,
             timestamp,
-            this.config.chainName,
-          )
+          },
+        )
 
         await this.checkBlockNumber(blockNumber)
 

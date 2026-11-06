@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database, TvsPriceRecord } from '@l2beat/database'
-import type { PriceProvider } from '@l2beat/shared'
+import { DataNotReadyError, type PriceProvider } from '@l2beat/shared'
 import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { mockDatabase } from '../../../test/database'
@@ -24,8 +24,8 @@ describe(TvsPriceIndexer.name, () => {
       const priceProvider = mockObject<PriceProvider>({
         getAdjustedTo: mockFn().returnsOnce(adjustedTo),
         getUsdPriceHistoryHourly: mockFn()
-          .returnsOnce([{ timestamp: UnixTime(150), value: 1500 }])
-          .returnsOnce([{ timestamp: UnixTime(200), value: 2000 }]),
+          .returnsOnce(points(150, 250))
+          .returnsOnce(points(200, 250)),
       })
 
       const syncOptimizer = mockObject<SyncOptimizer>({
@@ -71,7 +71,9 @@ describe(TvsPriceIndexer.name, () => {
 
       const expectedRecords: TvsPriceRecord[] = [
         record('config-1', 'ethereum', 150),
+        record('config-1', 'ethereum', 250),
         record('config-2', 'bitcoin', 200),
+        record('config-2', 'bitcoin', 250),
       ]
 
       expect(tvsPriceRepository.upsertMany).toHaveBeenOnlyCalledWith(
@@ -87,17 +89,15 @@ describe(TvsPriceIndexer.name, () => {
 
       const priceProvider = mockObject<PriceProvider>({
         getAdjustedTo: mockFn().returnsOnce(adjustedTo),
-        getUsdPriceHistoryHourly: mockFn().returnsOnce([
-          { timestamp: UnixTime(150), value: 1500 },
-          { timestamp: UnixTime(200), value: 2000 },
-        ]),
+        getUsdPriceHistoryHourly: mockFn().returnsOnce(points(150, 200, 250)),
       })
 
       const syncOptimizer = mockObject<SyncOptimizer>({
         getTimestampsToSync: mockFn().returnsOnce([UnixTime(150)]),
         shouldTimestampBeSynced: mockFn()
           .returnsOnce(true) // For timestamp 150
-          .returnsOnce(false), // For timestamp 200
+          .returnsOnce(false) // For timestamp 200
+          .returnsOnce(false), // For timestamp 250
       })
 
       const tvsPriceRepository = mockObject<Database['tvsPrice']>({
@@ -129,6 +129,88 @@ describe(TvsPriceIndexer.name, () => {
         expectedRecords,
       )
       expect(safeHeight).toEqual(adjustedTo)
+    })
+
+    it('syncs only up to the last hour every coin has a price for', async () => {
+      const from = UnixTime.HOUR
+      const adjustedTo = 4 * UnixTime.HOUR
+
+      const priceProvider = mockObject<PriceProvider>({
+        getAdjustedTo: mockFn().returnsOnce(adjustedTo),
+        getUsdPriceHistoryHourly: mockFn()
+          .returnsOnce(points(1 * H, 2 * H, 3 * H, 4 * H))
+          // CoinGecko has not published the last two hours for bitcoin yet
+          .returnsOnce(points(1 * H, 2 * H)),
+      })
+      const tvsPriceRepository = mockObject<Database['tvsPrice']>({
+        upsertMany: mockFn().returnsOnce(undefined),
+      })
+      const info = mockFn().returns(undefined)
+      const logger = mockLogger(info)
+
+      const indexer = new TvsPriceIndexer(
+        {
+          configurations: [
+            config('config-1', 'ethereum'),
+            config('config-2', 'bitcoin'),
+          ],
+          priceProvider,
+          db: mockDatabase({ tvsPrice: tvsPriceRepository }),
+          syncOptimizer: syncEverything(),
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        logger,
+      )
+
+      const updateFn = await indexer.multiUpdate(from, adjustedTo, [
+        config('config-1', 'ethereum'),
+        config('config-2', 'bitcoin'),
+      ])
+      const safeHeight = await updateFn()
+
+      expect(safeHeight).toEqual(2 * H)
+      expect(tvsPriceRepository.upsertMany).toHaveBeenOnlyCalledWith([
+        record('config-1', 'ethereum', UnixTime(1 * H)),
+        record('config-1', 'ethereum', UnixTime(2 * H)),
+        record('config-2', 'bitcoin', UnixTime(1 * H)),
+        record('config-2', 'bitcoin', UnixTime(2 * H)),
+      ])
+      expect(info).toHaveBeenCalledWith(
+        'Price range shrunk to available hours',
+        { from, to: adjustedTo, adjustedTo: 2 * H, missingHours: 2 },
+      )
+    })
+
+    it('throws while CoinGecko has not published the first hour', async () => {
+      const from = UnixTime.HOUR
+
+      const priceProvider = mockObject<PriceProvider>({
+        getAdjustedTo: mockFn().returnsOnce(from),
+        getUsdPriceHistoryHourly: mockFn().rejectsWithOnce(
+          new DataNotReadyError('Not published'),
+        ),
+      })
+      const tvsPriceRepository = mockObject<Database['tvsPrice']>({
+        upsertMany: mockFn().returnsOnce(undefined),
+      })
+
+      const indexer = new TvsPriceIndexer(
+        {
+          configurations: [config('config-1', 'ethereum')],
+          priceProvider,
+          db: mockDatabase({ tvsPrice: tvsPriceRepository }),
+          syncOptimizer: syncEverything(),
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
+
+      await expect(
+        indexer.multiUpdate(from, from, [config('config-1', 'ethereum')]),
+      ).toBeRejectedWith(DataNotReadyError)
+      expect(tvsPriceRepository.upsertMany).not.toHaveBeenCalled()
     })
 
     it('returns to value if no timestamps to sync', async () => {
@@ -324,4 +406,27 @@ function record(configurationId: string, priceId: string, timestamp: UnixTime) {
     priceUsd: timestamp * 10,
     priceId,
   }
+}
+
+const H = UnixTime.HOUR
+
+function points(...timestamps: number[]) {
+  return timestamps.map((t) => ({ timestamp: UnixTime(t), value: t * 10 }))
+}
+
+function syncEverything() {
+  return mockObject<SyncOptimizer>({
+    getTimestampsToSync: mockFn().returns([UnixTime(0)]),
+    shouldTimestampBeSynced: mockFn().returns(true),
+  })
+}
+
+function mockLogger(info: Logger['info']) {
+  const logger: Logger = mockObject<Logger>({
+    info,
+    warn: mockFn().returns(undefined),
+    for: () => logger,
+    tag: () => logger,
+  })
+  return logger
 }

@@ -28,7 +28,10 @@ describe(L2CostsPricesIndexer.name, () => {
         }),
       })
 
-      const prices = [{ timestamp: from, priceUsd: 3000 }]
+      const prices = [
+        { timestamp: from, priceUsd: 3000 },
+        { timestamp: to, priceUsd: 3100 },
+      ]
       const fetchPricesMock = mockFn().resolvesTo(prices)
       indexer.fetchPrices = fetchPricesMock
 
@@ -39,6 +42,20 @@ describe(L2CostsPricesIndexer.name, () => {
       expect(repository.insertMany).toHaveBeenCalledWith(prices)
 
       expect(result).toEqual(to)
+    })
+
+    it('syncs only up to the last hour CoinGecko has published', async () => {
+      const from = NOW - 2 * UnixTime.HOUR
+      const to = NOW
+
+      const indexer = createIndexer({ tags: { tag: 'update-unpublished' } })
+      const prices = [
+        { timestamp: from, priceUsd: 3000 },
+        { timestamp: from + UnixTime.HOUR, priceUsd: 3100 },
+      ]
+      indexer.fetchPrices = mockFn().resolvesTo(prices)
+
+      expect(await indexer.update(from, to)).toEqual(from + UnixTime.HOUR)
     })
 
     it('does nothing if no prices to save', async () => {
@@ -88,7 +105,10 @@ describe(L2CostsPricesIndexer.name, () => {
         }),
       })
 
-      const prices = [{ timestamp: from, priceUsd: 3000 }]
+      const prices = [
+        { timestamp: from, priceUsd: 3000 },
+        { timestamp: shiftedTo, priceUsd: 3100 },
+      ]
       const fetchPricesMock = mockFn().resolvesTo(prices)
       indexer.fetchPrices = fetchPricesMock
 

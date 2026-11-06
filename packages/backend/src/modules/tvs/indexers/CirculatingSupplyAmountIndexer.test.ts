@@ -24,8 +24,8 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
       const circulatingSupplyProvider = mockObject<CirculatingSupplyProvider>({
         getAdjustedTo: mockFn().returnsOnce(adjustedTo),
         getCirculatingSupplies: mockFn()
-          .returnsOnce([{ timestamp: UnixTime(150), value: 120000000 }])
-          .returnsOnce([{ timestamp: UnixTime(200), value: 19000000 }]),
+          .returnsOnce([{ timestamp: UnixTime(250), value: 120000000 }])
+          .returnsOnce([{ timestamp: UnixTime(250), value: 19000000 }]),
       })
 
       const syncOptimizer = mockObject<SyncOptimizer>({
@@ -72,12 +72,12 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
       const expectedRecords: TvsAmountRecord[] = [
         {
           configurationId: 'config-1',
-          timestamp: UnixTime(150),
+          timestamp: UnixTime(250),
           amount: BigInt(120000000 * 10 ** 18),
         },
         {
           configurationId: 'config-2',
-          timestamp: UnixTime(200),
+          timestamp: UnixTime(250),
           amount: BigInt(19000000 * 10 ** 8),
         },
       ]
@@ -97,7 +97,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
         getAdjustedTo: mockFn().returnsOnce(adjustedTo),
         getCirculatingSupplies: mockFn().returnsOnce([
           { timestamp: UnixTime(150), value: 120000000 },
-          { timestamp: UnixTime(200), value: 125000000 },
+          { timestamp: UnixTime(250), value: 125000000 },
         ]),
       })
 
@@ -194,7 +194,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
         getAdjustedTo: mockFn().returnsOnce(adjustedTo),
         getCirculatingSupplies: mockFn().returnsOnce([
           { timestamp: UnixTime(150), value: 120000000 },
-          { timestamp: UnixTime(200), value: Number.NaN },
+          { timestamp: UnixTime(250), value: Number.NaN },
         ]),
       })
 

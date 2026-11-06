@@ -2,6 +2,8 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { Database, L2CostPriceRecord } from '@l2beat/database'
 import { CoingeckoQueryService } from '@l2beat/shared'
 import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
+import { Indexer } from '@l2beat/uif'
+import { retryWhileNotReady } from '../../../../../tools/dataNotReady'
 import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
@@ -20,7 +22,16 @@ export class L2CostsPricesIndexer extends ManagedChildIndexer {
     private readonly $: L2CostsPricesIndexerDeps,
     logger: Logger,
   ) {
-    super({ ...$, name: 'l2_costs_prices' }, logger)
+    super(
+      {
+        ...$,
+        name: 'l2_costs_prices',
+        updateRetryStrategy: retryWhileNotReady(
+          Indexer.getDefaultRetryStrategy(),
+        ),
+      },
+      logger,
+    )
   }
 
   override async update(from: number, to: number): Promise<number> {
@@ -49,7 +60,9 @@ export class L2CostsPricesIndexer extends ManagedChildIndexer {
       prices: prices.length,
     })
 
-    return shiftedTo
+    // CoinGecko may not have published the last hours yet, they are fetched
+    // again on the next update
+    return prices[prices.length - 1].timestamp
   }
 
   async fetchPrices(

@@ -101,6 +101,7 @@ export function initClients(config: Config, logger: Logger): Clients {
           chain: chain.name,
           ...indexerApi,
         },
+        chainLogger,
       )
       indexerClients.push(indexerClient)
     }

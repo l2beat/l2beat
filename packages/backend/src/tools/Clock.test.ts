@@ -64,6 +64,25 @@ describe(Clock.name, () => {
     })
   })
 
+  describe(Clock.prototype.withMinDelay.name, () => {
+    it('raises a shorter delay to the minimum', () => {
+      setTime('12:30:00')
+      const clock = new Clock(0, 15 * UnixTime.MINUTE)
+      expect(clock.getLastHour()).toEqual(toTimestamp('12:00:00'))
+      expect(clock.withMinDelay(UnixTime.HOUR).getLastHour()).toEqual(
+        toTimestamp('11:00:00'),
+      )
+    })
+
+    it('keeps a longer delay', () => {
+      setTime('12:30:00')
+      const clock = new Clock(0, 2 * UnixTime.HOUR)
+      expect(clock.withMinDelay(UnixTime.HOUR).getLastHour()).toEqual(
+        toTimestamp('10:00:00'),
+      )
+    })
+  })
+
   describe(Clock.prototype.getLastHour.name, () => {
     it('can return the last hour', () => {
       setTime('13:05:48')

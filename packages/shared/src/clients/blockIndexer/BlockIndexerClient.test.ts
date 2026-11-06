@@ -2,6 +2,10 @@ import { RateLimiter } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { HttpClient } from '../http/HttpClient'
+import {
+  UNCATEGORIZED_METRICS_LABEL,
+  withRpcMetricsContext,
+} from '../rpc/RpcMetricsContext'
 import { BlockIndexerClient } from './BlockIndexerClient'
 
 const API_URL = 'https://example.com/api'
@@ -254,6 +258,24 @@ describe(BlockIndexerClient.name, () => {
       const etherscanClient = new BlockIndexerClient(httpClient, rate, OPTIONS)
       const result = await etherscanClient.call('mod', 'act', {})
       expect(result).toEqual(response.result)
+    })
+
+    it('records a metric labelled with the active core feature', async () => {
+      const httpClient = mockObject<HttpClient>({
+        async fetch() {
+          return { status: '1', message: 'OK', result: '1234' }
+        },
+      })
+
+      const etherscanClient = new BlockIndexerClient(httpClient, rate, OPTIONS)
+      await withRpcMetricsContext({ coreFeature: 'tvs.blockTimestamp' }, () =>
+        etherscanClient.call('mod', 'act', {}),
+      )
+      await etherscanClient.call('mod', 'act', {})
+
+      expect(
+        etherscanClient.metricsAggregator.buffer.map((m) => m.label),
+      ).toEqual(['tvs.blockTimestamp', UNCATEGORIZED_METRICS_LABEL])
     })
 
     it('throws on an error response', async () => {

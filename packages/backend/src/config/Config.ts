@@ -93,6 +93,7 @@ export interface DatabaseConfig {
 export interface ClockConfig {
   readonly minBlockTimestamp: UnixTime
   readonly safeTimeOffsetSeconds: number
+  readonly safeTimeOffsetSource: 'env' | 'default'
 }
 
 export interface TvsConfig {
