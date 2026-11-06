@@ -4,6 +4,7 @@ import type {
 } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
+import { getLogger } from '~/server/utils/logger'
 import type { ChartRange } from '~/utils/range/range'
 import type { ActivityChartDataPoint } from '../getActivityChart'
 import type { ActivityResolution } from './getActivityResolution'
@@ -38,9 +39,24 @@ export interface RecentHours {
  * sums a batch and moves past it in one transaction, so all is read in one
  * snapshot, or a batch could count twice or not at all. A project whose
  * stored blocks don't run on from the ones summed has none: hours would miss
- * the blocks in between
+ * the blocks in between. None at all when the read fails, as charts do well
+ * without them, and the table is missing until its migration is deployed
  */
-export function getRecentHours(
+export async function getRecentHours(
+  projectIds: ProjectId[],
+  since: UnixTime,
+): Promise<Map<ProjectId, RecentHours>> {
+  try {
+    return await readRecentHours(projectIds, since)
+  } catch (error) {
+    getLogger().for('getRecentHours').warn('Recent activity unreadable', {
+      error,
+    })
+    return new Map()
+  }
+}
+
+function readRecentHours(
   projectIds: ProjectId[],
   since: UnixTime,
 ): Promise<Map<ProjectId, RecentHours>> {
