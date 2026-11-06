@@ -1,7 +1,13 @@
+import { useIsFetching } from '@tanstack/react-query'
 import { useMatch, useNavigate } from 'react-router'
-import type { ApiBoardBlock, ApiBoardCell } from '../../../api/types'
+import type {
+  ApiAgentBoard,
+  ApiBoardBlock,
+  ApiBoardCell,
+} from '../../../api/types'
 import { Button } from '../../../components/Button'
 import { Markdown } from '../../../components/Markdown'
+import { useProjectQueryOptions } from '../hooks/projectQuery'
 import { usePanelStore } from '../store/panel-store'
 import { useBoardStore } from './boardStore'
 
@@ -9,9 +15,6 @@ import { useBoardStore } from './boardStore'
 // only. Each new board replaces this one.
 export function BoardPanel() {
   const board = useBoardStore((state) => state.board)
-  const project = useMatch('/ui/p/:project')?.params.project
-  const navigate = useNavigate()
-
   if (board === undefined) {
     return (
       <p className="px-3 py-2 text-coffee-400 text-xs">
@@ -20,6 +23,19 @@ export function BoardPanel() {
       </p>
     )
   }
+  return <Board board={board} />
+}
+
+function Board(props: { board: ApiAgentBoard }) {
+  const { board } = props
+  const project = useMatch('/ui/p/:project')?.params.project
+  const navigate = useNavigate()
+  // A new board may name contracts discovered since the project loaded, and
+  // selecting one before the refetch lands would fall back to the first.
+  const isRefreshing =
+    useIsFetching({
+      queryKey: useProjectQueryOptions(board.project).queryKey,
+    }) > 0
   // Addresses select contracts of the graph on screen, so they link only
   // in the board's own project.
   const isOwnProject = board.project === project
@@ -42,13 +58,17 @@ export function BoardPanel() {
       {board.blocks.map((block, index) => (
         // A board never changes, only gets replaced, so a position names
         // one block.
-        <Block key={index} block={block} isOwnProject={isOwnProject} />
+        <Block
+          key={index}
+          block={block}
+          isLinked={isOwnProject && !isRefreshing}
+        />
       ))}
     </div>
   )
 }
 
-function Block(props: { block: ApiBoardBlock; isOwnProject: boolean }) {
+function Block(props: { block: ApiBoardBlock; isLinked: boolean }) {
   const { block } = props
   if (block.type === 'text') {
     return (
@@ -84,7 +104,7 @@ function Block(props: { block: ApiBoardBlock; isOwnProject: boolean }) {
                     key={index}
                     className="whitespace-pre-wrap break-words px-2 py-1 align-top"
                   >
-                    <Cell cell={cell} isOwnProject={props.isOwnProject} />
+                    <Cell cell={cell} isLinked={props.isLinked} />
                   </td>
                 ))}
               </tr>
@@ -96,13 +116,13 @@ function Block(props: { block: ApiBoardBlock; isOwnProject: boolean }) {
   )
 }
 
-function Cell(props: { cell: ApiBoardCell; isOwnProject: boolean }) {
+function Cell(props: { cell: ApiBoardCell; isLinked: boolean }) {
   const { cell } = props
   if (cell.type === 'text') {
     return cell.text
   }
   const label = cell.name ?? cell.address
-  if (!props.isOwnProject) {
+  if (!props.isLinked) {
     return <span title={cell.address}>{label}</span>
   }
   return (
