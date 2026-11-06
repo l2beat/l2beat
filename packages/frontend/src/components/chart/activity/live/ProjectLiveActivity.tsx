@@ -92,8 +92,13 @@ export function ProjectLiveActivity({
   const [held, setHeld] = useState<{
     data: typeof query.data
     dataUpdatedAt: number
+    range: LiveRange
+    to: number | undefined
   }>()
-  const { data, dataUpdatedAt } = held ?? query
+  // a snapshot belongs to the window it was taken for, as the range or end
+  // can change from the keyboard with the pointer still over the charts
+  const holding = held?.range === range && held.to === to
+  const { data, dataUpdatedAt } = holding ? held : query
   const live = to === undefined
 
   // following the newest block, the window scrolls with the clock: drawn
@@ -105,7 +110,7 @@ export function ProjectLiveActivity({
     dataUpdatedAt,
     redrawEvery,
     (seconds) => glideCharts(charts.current, seconds, LIVE_RANGES[range]),
-    held !== undefined,
+    holding,
   )
   // drawn past the right edge too, for what slides in before the next drawing
   const lookahead = playhead === undefined ? 0 : 2 * redrawEvery
@@ -205,7 +210,12 @@ export function ProjectLiveActivity({
         ref={charts}
         onPointerEnter={() =>
           query.data &&
-          setHeld({ data: query.data, dataUpdatedAt: query.dataUpdatedAt })
+          setHeld({
+            data: query.data,
+            dataUpdatedAt: query.dataUpdatedAt,
+            range,
+            to,
+          })
         }
         onPointerLeave={() => setHeld(undefined)}
       >
