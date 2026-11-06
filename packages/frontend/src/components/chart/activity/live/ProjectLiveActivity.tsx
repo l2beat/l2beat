@@ -154,6 +154,13 @@ export function ProjectLiveActivity({
       </p>
     )
   }
+  if (!data && query.isError) {
+    return (
+      <p className="py-12 text-center text-secondary">
+        Live activity can't be read right now.
+      </p>
+    )
+  }
 
   const newest = data?.newest
   /** Within the buffer, and following the newest block once close to it */
