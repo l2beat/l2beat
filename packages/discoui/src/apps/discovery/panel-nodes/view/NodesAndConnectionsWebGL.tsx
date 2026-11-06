@@ -393,7 +393,6 @@ const float GAUSS_NODES[4] = float[4](
 const float GAUSS_WEIGHTS[4] = float[4](
   0.3626837833783620, 0.3137066458778873, 0.2223810344533745,
   0.1012285362903763);
-const float ARC_PANELS = 4.0;
 const float MIN_STROKE_PX = ${CONNECTION_MIN_STROKE_PX}.0;
 const float MIN_INK_RATIO = ${CONNECTION_MIN_INK_RATIO};
 vec2 control1() { return vec2(i_controlX.x, i_from.y); }
@@ -423,23 +422,47 @@ float segmentCount() {
   float n = ceil(sqrt(0.75 * secondDifferencePx / CHORD_TOLERANCE_PX));
   return clamp(n, 1.0, SEGMENTS_MAX);
 }
-// Constant cost per vertex, and independent of the segment count, so dashes
-// stay put while zooming changes the tessellation. Close nodes give curves
-// that reverse, where |B'| has kinks one 8-point rule integrates badly
-// (6 world units off); four panels keep it under 1.
-float arcLength(float t) {
-  float panelHalfWidth = 0.5 * t / ARC_PANELS;
+float gaussArcLength(float start, float end) {
+  float center = 0.5 * (start + end);
+  float halfWidth = 0.5 * (end - start);
   float sum = 0.0;
-  for (int panel = 0; panel < int(ARC_PANELS); panel++) {
-    float panelCenter = (2.0 * float(panel) + 1.0) * panelHalfWidth;
-    for (int k = 0; k < 4; k++) {
-      float offset = panelHalfWidth * GAUSS_NODES[k];
-      sum += GAUSS_WEIGHTS[k] * (
-        length(bezierTangent(panelCenter + offset)) +
-        length(bezierTangent(panelCenter - offset)));
-    }
+  for (int k = 0; k < 4; k++) {
+    float offset = halfWidth * GAUSS_NODES[k];
+    sum += GAUSS_WEIGHTS[k] * (
+      length(bezierTangent(center + offset)) +
+      length(bezierTangent(center - offset)));
   }
-  return panelHalfWidth * sum;
+  return halfWidth * sum;
+}
+// Where x'(t), a quadratic, is zero inside (0, 1), sorted; -1 marks no root.
+// y'(t) has none there, since each control point shares its endpoint's y.
+vec2 tangentXRoots() {
+  float d0 = i_controlX.x - i_from.x;
+  float d1 = i_controlX.y - i_controlX.x;
+  float d2 = i_to.x - i_controlX.y;
+  float a = d0 - 2.0 * d1 + d2;
+  float b = 2.0 * (d1 - d0);
+  vec2 roots = vec2(-1.0);
+  float discriminant = b * b - 4.0 * a * d0;
+  if (discriminant >= 0.0) {
+    // Stable form: no cancellation in 32-bit floats when a is tiny, and a
+    // linear x'(t) (a = 0) still yields its one root.
+    float q = -0.5 * (b + (b < 0.0 ? -1.0 : 1.0) * sqrt(discriminant));
+    if (q != 0.0) roots.x = d0 / q;
+    if (a != 0.0) roots.y = q / a;
+  }
+  return vec2(min(roots.x, roots.y), max(roots.x, roots.y));
+}
+// Constant cost per vertex, and independent of the segment count, so dashes
+// stay put while zooming changes the tessellation. Curves between close
+// nodes reverse, and |B'| dips sharply there, which one Gauss rule across
+// the dip mis-measures; splitting at the reversals keeps each piece smooth.
+float arcLength(float t) {
+  vec2 roots = tangentXRoots();
+  float first = clamp(roots.x, 0.0, t);
+  float second = clamp(roots.y, 0.0, t);
+  return gaussArcLength(0.0, first) + gaussArcLength(first, second) +
+    gaussArcLength(second, t);
 }
 void main() {
   float segments = segmentCount();
@@ -463,7 +486,9 @@ void main() {
   v_capRadius = i_stroke.x * 0.5;
   v_across = strokeWidth * 0.5 * a_vertex.y;
   v_dashed = i_stroke.y;
-  v_arc = i_stroke.y > 0.5 ? arcLength(t) : 0.0;
+  // Collapsed samples only form zero-area triangles, so skip their arc.
+  bool collapsed = a_vertex.x > segments;
+  v_arc = i_stroke.y > 0.5 && !collapsed ? arcLength(t) : 0.0;
 }`
 
 // Dashes get round caps that reach into the gaps, like SVG's round linecap.
