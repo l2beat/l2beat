@@ -20,7 +20,8 @@ export function getLiveWindow(
   blockSeconds: number,
   to?: UnixTime,
 ) {
-  const block = Math.max(1, blockSeconds)
+  // a sparse sample, as a stale block beside a new one, can't empty the window
+  const block = Math.min(Math.max(1, blockSeconds), LIVE_RANGES[range] / 10)
   const bucket = Math.ceil(LIVE_BUCKET_SECONDS[range] / block) * block
   const end = Math.floor(Math.min(to ?? newest, newest) / bucket) * bucket
   const from = Math.ceil((end - LIVE_RANGES[range]) / bucket) * bucket

@@ -27,6 +27,14 @@ describe(getLiveWindow.name, () => {
     expect(getLiveWindow('5m', T + 4, 0).bucket).toEqual(2)
   })
 
+  it('keeps ten buckets in the window whatever the gap between blocks', () => {
+    // Methodology: a stale block stored hours before a new one
+    const window = getLiveWindow('5m', T + 4, 3 * UnixTime.HOUR)
+
+    expect(window.bucket).toEqual(30)
+    expect((window.to + 1 - window.from) / window.bucket).toEqual(10)
+  })
+
   it('starts on a bucket within the range', () => {
     const window = getLiveWindow('5m', T + 4, 7)
 
