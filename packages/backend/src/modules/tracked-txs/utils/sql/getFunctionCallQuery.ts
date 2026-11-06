@@ -68,7 +68,7 @@ export function getFunctionCallQuery(
           tx.gas_price,
           tx.blob_versioned_hashes,
           tx.data,
-          tx."from" = tx.to AS is_self_transfer,
+          COALESCE(tx."from" = tx.to, false) AS is_self_transfer,
           tx.value > CAST(0 AS UINT256) AS has_value
         FROM ethereum.transactions tx
         CROSS JOIN params p
