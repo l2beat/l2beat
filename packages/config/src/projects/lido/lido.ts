@@ -146,18 +146,18 @@ export const lido: BaseProject = {
       type: 'lido',
       stETH: discovery.getContract(STETH).address,
       withdrawalQueue: discovery.getContract('WithdrawalQueueERC721').address,
-      // The stETH/ETH pool: the deepest for the whole period.
-      marketQuotes: [
-        {
-          type: 'curve',
-          pool: ChainSpecificAddress(
-            'eth:0xDC24316b9AE028F1497c275EB9192a3Ea0f67022',
-          ),
-          i: 1,
-          j: 0,
-        },
-      ],
     },
+    // The stETH/ETH pool: the deepest for the whole period.
+    marketQuotes: [
+      {
+        type: 'curve',
+        pool: ChainSpecificAddress(
+          'eth:0xDC24316b9AE028F1497c275EB9192a3Ea0f67022',
+        ),
+        i: 1,
+        j: 0,
+      },
+    ],
   },
   externalDependencies: [],
   permissions: discovery.getDiscoveredPermissions(),

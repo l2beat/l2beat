@@ -3,21 +3,15 @@ import type { Database, EthereumStakingDailyRecord } from '@l2beat/database'
 import type { BeaconChainClient, BlockTimestampProvider } from '@l2beat/shared'
 import { slotAt, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
-import { withCoreFeatureRpcMetricsContext } from '../../tools/coreFeatureRpcMetrics'
-import { INDEXER_NAMES } from '../../tools/uif/indexerIdentity'
+import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
+import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
-} from '../../tools/uif/ManagedChildIndexer'
-import {
-  type DepositsRpc,
-  ELECTRA_SLOT,
-  readCreditedDeposits,
-} from './creditedDeposits'
-import {
-  type ExecutionDayDune,
-  readExecutionDayFromDune,
-} from './duneExecutionDay'
+} from '../../../tools/uif/ManagedChildIndexer'
+import { ELECTRA_SLOT, SUPPORTED_FORK_VERSIONS } from '../ethereumForks'
+import { type DepositsRpc, readCreditedDeposits } from './creditedDeposits'
+import type { ExecutionDay } from './dune/readExecutionDay'
 
 /**
  * Validators that earn nothing: those waiting to enter, and those exited but
@@ -33,35 +27,30 @@ const INACTIVE_STATUSES = [
 ]
 
 /**
- * Capella to Fulu: 12-second slots, and builders paying proposers on the
- * execution layer. ePBS (Gloas) moves that payment to the consensus layer, so
- * a day in a later fork fails instead of being stored without it.
- */
-const SUPPORTED_FORK_VERSIONS = [
-  '0x03000000',
-  '0x04000000',
-  '0x05000000',
-  '0x06000000',
-]
-
-/**
- * A change re-reads every day from the start: a Dune query and five beacon
+ * A change re-reads every day from the start: a Dune query and seven beacon
  * reads per day, about 100 Dune credits since 2024. Bump it when a fix changes
  * what past days store.
  */
 const STORED_DATA_VERSION = '1'
 
 interface EthereumStakingIndexerDeps
-  extends Omit<ManagedChildIndexerOptions, 'name'> {
+  extends Omit<ManagedChildIndexerOptions, 'name' | 'minHeight'> {
+  /** The first day stored. */
+  firstDay: UnixTime
   db: Database
   rpc: DepositsRpc
-  dune: ExecutionDayDune
+  readExecutionDay: (
+    day: UnixTime,
+    fromBlock: number,
+    toBlock: number,
+  ) => Promise<ExecutionDay>
   beacon: Pick<
     BeaconChainClient,
     | 'getTotalBalance'
     | 'getValidatorsInfo'
     | 'getPendingDepositsAmount'
-    | 'getForkAndDepositIndex'
+    | 'getForkVersion'
+    | 'getDepositIndex'
   >
   blockTimestampProvider: Pick<
     BlockTimestampProvider,
@@ -83,6 +72,7 @@ export class EthereumStakingIndexer extends ManagedChildIndexer {
       {
         ...$,
         name: INDEXER_NAMES.ETHEREUM_STAKING,
+        minHeight: $.firstDay + UnixTime.DAY,
         configHash: STORED_DATA_VERSION,
         updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
       },
@@ -110,47 +100,44 @@ export class EthereumStakingIndexer extends ManagedChildIndexer {
     // Day boundaries never fall on a slot start, so these are the slots before.
     const slot = slotAt(day)
     const nextSlot = slotAt(UnixTime(day + UnixTime.DAY))
+    for (const forkVersion of await Promise.all([
+      this.$.beacon.getForkVersion(slot),
+      this.$.beacon.getForkVersion(nextSlot),
+    ])) {
+      if (!SUPPORTED_FORK_VERSIONS.includes(forkVersion)) {
+        throw new Error('Unsupported Ethereum fork', {
+          cause: { day, forkVersion },
+        })
+      }
+    }
     const [
       totalBalance,
       inactiveBalance,
       pendingDeposits,
-      start,
-      end,
+      startDepositIndex,
+      endDepositIndex,
       fromBlock,
       nextDayBlock,
     ] = await Promise.all([
       this.$.beacon.getTotalBalance(slot),
       this.$.beacon
-        .getValidatorsInfo({ stateId: slot, status: INACTIVE_STATUSES })
+        .getValidatorsInfo(slot, INACTIVE_STATUSES)
         .then((validators) => validators.totalStake),
       slot >= ELECTRA_SLOT
         ? this.$.beacon.getPendingDepositsAmount(slot)
         : Promise.resolve(null),
-      this.$.beacon.getForkAndDepositIndex(slot),
-      this.$.beacon.getForkAndDepositIndex(nextSlot),
+      this.$.beacon.getDepositIndex(slot),
+      this.$.beacon.getDepositIndex(nextSlot),
       this.firstBlockAtOrAfter(day),
       this.firstBlockAtOrAfter(UnixTime(day + UnixTime.DAY)),
     ])
-    for (const state of [start, end]) {
-      if (!SUPPORTED_FORK_VERSIONS.includes(state.forkVersion)) {
-        throw new Error('Unsupported Ethereum fork', {
-          cause: { day, forkVersion: state.forkVersion },
-        })
-      }
-    }
     const toBlock = nextDayBlock - 1
     const [execution, deposits] = await Promise.all([
-      readExecutionDayFromDune(
-        this.$.dune,
-        this.logger,
-        day,
-        fromBlock,
-        toBlock,
-      ),
+      this.$.readExecutionDay(day, fromBlock, toBlock),
       readCreditedDeposits(
         this.$.rpc,
         { from: fromBlock, to: toBlock },
-        { start: start.depositIndex, end: end.depositIndex },
+        { start: startDepositIndex, end: endDepositIndex },
       ),
     ])
 
@@ -175,7 +162,6 @@ export class EthereumStakingIndexer extends ManagedChildIndexer {
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
-    // A day is stored once its end is reached, so keep those ending by the target.
     await this.$.db.ethereumStakingDaily.deleteAfter(
       UnixTime(targetHeight - UnixTime.DAY),
     )

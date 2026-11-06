@@ -11,9 +11,18 @@ import {
   BeaconChainError,
   type Blob as BlobSchema,
   BlockSidecarSchema,
+  ForkSchema,
 } from './types'
 
 export type BeaconChainBlob = v.infer<typeof BlobSchema>
+
+export type BeaconStateId =
+  | 'head'
+  | 'genesis'
+  | 'finalized'
+  | 'justified'
+  | number
+  | `0x${string}`
 
 interface Dependencies extends ClientCoreDependencies {
   beaconApiUrl: string
@@ -46,103 +55,91 @@ export class BeaconChainClient extends ClientCore {
     }))
   }
 
-  async getValidatorsInfo({
-    stateId,
-    status,
-  }: {
-    stateId:
-      | 'head'
-      | 'genesis'
-      | 'finalized'
-      | 'justified'
-      | number
-      | `0x${string}`
-    status?: string[]
-  }) {
+  async getValidatorsInfo(stateId: BeaconStateId, status?: string[]) {
     // Commas unencoded, as the beacon API lists several statuses.
     const query = status ? `?status=${status.join(',')}` : ''
-    const endpoint = `eth/v1/beacon/states/${stateId}/validators${query}`
-
-    const { sum, count } = await this.sumStreamed(
-      endpoint,
-      /^data\.\d+\.balance/,
+    const { wei, count } = await this.sumGwei(
+      `eth/v1/beacon/states/${stateId}/validators${query}`,
+      'balance',
     )
-    return {
-      // gwei to wei
-      totalStake: sum * 10n ** 9n,
-      numberOfValidators: count,
-    }
+    return { totalStake: wei, numberOfValidators: count }
   }
 
   /** Every validator's balance at a state, summed in wei. */
-  async getTotalBalance(slot: number): Promise<bigint> {
-    const { sum } = await this.sumStreamed(
-      `eth/v1/beacon/states/${slot}/validator_balances`,
-      /^data\.\d+\.balance/,
+  async getTotalBalance(stateId: BeaconStateId): Promise<bigint> {
+    const { wei } = await this.sumGwei(
+      `eth/v1/beacon/states/${stateId}/validator_balances`,
+      'balance',
     )
-    return sum * 10n ** 9n
+    return wei
   }
 
   /**
    * Sum of the deposits waiting to be credited at a state, in wei. The queue
    * exists only since Electra.
    */
-  async getPendingDepositsAmount(slot: number): Promise<bigint> {
-    const { sum } = await this.sumStreamed(
-      `eth/v1/beacon/states/${slot}/pending_deposits`,
-      /^data\.\d+\.amount/,
+  async getPendingDepositsAmount(stateId: BeaconStateId): Promise<bigint> {
+    const { wei } = await this.sumGwei(
+      `eth/v1/beacon/states/${stateId}/pending_deposits`,
+      'amount',
     )
-    return sum * 10n ** 9n
+    return wei
+  }
+
+  async getForkVersion(stateId: BeaconStateId): Promise<string> {
+    const endpoint = `eth/v1/beacon/states/${stateId}/fork`
+    const parsed = ForkSchema.safeParse(await this.call(endpoint))
+    if (!parsed.success) {
+      throw new Error('Invalid BeaconChain fork', { cause: { endpoint } })
+    }
+    return parsed.data.data.current_version
   }
 
   /**
-   * The fork version of a state, and how many deposits from the deposit
-   * contract it has credited. From Electra the counter stops at the first new
-   * deposit, as those are credited in their own block. Only the start of the
-   * state is read, as both come before the validators, the fork first.
+   * How many deposits from the deposit contract a state has credited. From
+   * Electra the counter stops at the first new deposit, as those are credited
+   * in their own block. Only the start of the state is read, as the counter
+   * comes before the validators.
    */
-  async getForkAndDepositIndex(
-    slot: number,
-  ): Promise<{ forkVersion: string; depositIndex: number }> {
-    let forkVersion: string | undefined
-    for await (const value of this.streamMatches(
-      `eth/v2/debug/beacon/states/${slot}`,
-      /^data\.(fork\.current_version|eth1_deposit_index)$/,
+  async getDepositIndex(stateId: BeaconStateId): Promise<number> {
+    for await (const value of this.stream(
+      `eth/v2/debug/beacon/states/${stateId}`,
+      'data.eth1_deposit_index',
     )) {
-      if (forkVersion === undefined) {
-        forkVersion = String(value)
-        continue
-      }
-      return { forkVersion, depositIndex: Number(value) }
+      return Number(value)
     }
     throw new Error('BeaconChain state has no deposit index', {
-      cause: { slot },
+      cause: { stateId },
     })
   }
 
-  /** Sums the integers at the paths matching `filter`, and counts them. */
-  private async sumStreamed(
+  /** Sums the gwei amounts at `data[i].<field>` into wei, and counts them. */
+  private async sumGwei(
     endpoint: string,
-    filter: RegExp,
-  ): Promise<{ sum: bigint; count: number }> {
-    let sum = 0n
+    field: string,
+  ): Promise<{ wei: bigint; count: number }> {
+    let gwei = 0n
     let count = 0
-    for await (const value of this.streamMatches(endpoint, filter)) {
-      sum += BigInt(value as string)
+    for await (const value of this.stream(
+      endpoint,
+      (stack) =>
+        stack.length === 3 && stack[0] === 'data' && stack[2] === field,
+    )) {
+      gwei += BigInt(value)
       count++
     }
-    return { sum, count }
+    return { wei: gwei * 10n ** 9n, count }
   }
 
   /**
    * Streams the values at the paths matching `filter`, so a response of
    * hundreds of megabytes is never held in memory. Stopping early stops the
-   * download.
+   * download. The beacon API sends every number as a decimal string.
    */
-  private async *streamMatches(
+  private async *stream(
     endpoint: string,
-    filter: RegExp,
-  ): AsyncGenerator<unknown> {
+    filter: string | ((stack: readonly (number | string | null)[]) => boolean),
+  ): AsyncGenerator<string> {
     const response = await this.$.http.fetchRaw(
       `${this.$.beaconApiUrl}${endpoint}`,
       { timeout: this.$.timeout },
@@ -170,6 +167,11 @@ export class BeaconChainClient extends ClientCore {
     const pipeline = chain([source, parser(), pick({ filter }), streamValues()])
     try {
       for await (const { value } of pipeline) {
+        if (typeof value !== 'string') {
+          throw new Error('BeaconChain value is not a string', {
+            cause: { endpoint, value },
+          })
+        }
         yield value
       }
     } finally {

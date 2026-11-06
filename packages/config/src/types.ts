@@ -1064,10 +1064,13 @@ export interface ProjectDefiInfo {
 }
 
 export interface ProjectLiquidStaking {
-  /** When the token launched, if after 2024-01-01, where the indexer starts. */
-  sinceTimestamp?: UnixTime
   /** What the liquid staking indexer reads. */
   contracts: ProjectLiquidStakingContracts
+  /**
+   * Pools quoted for selling 100 tokens (stETH for Lido); the best quote is
+   * the market exit. A pool that doesn't exist yet gives no quote.
+   */
+  marketQuotes: ProjectLiquidStakingMarketQuote[]
 }
 
 export type ProjectDefiTvlConfig =
@@ -1888,7 +1891,7 @@ export type LivenessOverwriteMode = 'no-data'
  * The contracts the liquid staking indexer reads every hour: the token's
  * exchange rate, plus whatever decides how fast a holder can exit.
  */
-export type ProjectLiquidStakingContracts = (
+export type ProjectLiquidStakingContracts =
   | {
       type: 'lido'
       stETH: ChainSpecificAddress
@@ -1917,13 +1920,6 @@ export type ProjectLiquidStakingContracts = (
        */
       unwrapToken: ChainSpecificAddress
     }
-) & {
-  /**
-   * Pools quoted for selling 100 tokens (stETH for Lido); the best quote is
-   * the market exit. A pool that doesn't exist yet gives no quote.
-   */
-  marketQuotes: ProjectLiquidStakingMarketQuote[]
-}
 
 /** A pool selling the token for ETH or WETH. */
 export type ProjectLiquidStakingMarketQuote =
