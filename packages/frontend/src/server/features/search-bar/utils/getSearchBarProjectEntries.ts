@@ -150,5 +150,13 @@ export function getSearchBarProjectEntries<
 
   // One page per project: the first section's entry stands for the page,
   // privacy before the ZK Catalog, as the page is built on the privacy one.
-  return results.slice(0, 1)
+  const [page, ...others] = results
+  if (!page) return []
+  return [
+    {
+      ...page,
+      tags: dedupeTags([page.tags, ...others.map((o) => o.tags)].flat()),
+      otherKinds: others.length > 0 ? others.map((o) => o.kind) : undefined,
+    },
+  ]
 }

@@ -67,14 +67,17 @@ export async function getSearchBarEntries(search: string) {
     projects.filter((p) => p.scalingInfo).map((p) => p.id),
   )
   const projectEntries = projects.flatMap((p) => getSearchBarProjectEntries(p))
-  const projectHrefs = new Set(projectEntries.map((entry) => entry.href))
-  const searchBarEntries = [
-    ...projectEntries,
-    // A chain that is also a project, e.g. Avalanche, shares its page.
-    ...selectChainProjects(l2ProjectIds)
-      .map(getSearchBarChainEntry)
-      .filter((entry) => !projectHrefs.has(entry.href)),
-  ]
+  const byHref = new Map(projectEntries.map((entry) => [entry.href, entry]))
+  const chainEntries = selectChainProjects(l2ProjectIds)
+    .map(getSearchBarChainEntry)
+    .filter((chain) => {
+      // A chain that is also a project, e.g. Avalanche, shares its page.
+      const project = byHref.get(chain.href)
+      if (!project) return true
+      project.otherKinds = [...(project.otherKinds ?? []), chain.kind]
+      return false
+    })
+  const searchBarEntries = [...projectEntries, ...chainEntries]
 
   if (address) {
     // Tokens first: a bridge escrow lists the token contracts it holds, but

@@ -89,8 +89,18 @@ describe(getSearchBarEntries.name, () => {
 
     const result = await getSearchBarEntries('avalanche')
 
-    expect(result.map(({ href, category }) => ({ href, category }))).toEqual([
-      { href: '/projects/avalanche', category: 'interop' },
+    expect(
+      result.map(({ href, category, otherKinds }) => ({
+        href,
+        category,
+        otherKinds,
+      })),
+    ).toEqual([
+      {
+        href: '/projects/avalanche',
+        category: 'interop',
+        otherKinds: ['chain'],
+      },
     ])
   })
 

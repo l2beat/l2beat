@@ -9,7 +9,6 @@ import type { ProjectVerificationWarnings } from '~/server/features/utils/getCom
 import { cn } from '~/utils/cn'
 import type { UnverifiedContractEntry } from '~/utils/project/contracts-and-permissions/getUnverifiedContractEntries'
 import { ProjectSection } from './ProjectSection'
-import { RISK_SUMMARY_MARKDOWN_CLASS_NAME } from './riskSummaryMarkdown'
 import type { ProjectSectionProps } from './types'
 import { UnverifiedContractsWarning } from './UnverifiedContractsWarning'
 
@@ -23,22 +22,19 @@ export interface RiskSummarySectionProps extends ProjectSectionProps {
   redWarning: ProjectRedWarning | undefined
   hostChainWarning?: HostChainRisksWarningProps
   unverifiedContracts: UnverifiedContractEntry[]
-  /**
-   * Risk groups written by hand in markdown, after the generated ones: a
-   * merged page's other section adds those the generated groups lack.
-   */
-  extraRisksMarkdown?: string
 }
 
 export interface RiskGroup {
   start: number
-  name: ProjectRiskCategory
+  /** A risk category, or a hand-written one like "Privacy can be lost if" */
+  name: ProjectRiskCategory | (string & {})
   items: RiskItem[]
 }
 
 interface RiskItem {
   text: string
-  referencedId: string
+  /** The section the risk comes from; hand-written risks have none and are markdown */
+  referencedId?: string
   isCritical: boolean
 }
 
@@ -49,7 +45,6 @@ export function RiskSummarySection({
   warning,
   hostChainWarning,
   unverifiedContracts,
-  extraRisksMarkdown,
   ...sectionProps
 }: RiskSummarySectionProps) {
   if (riskGroups.length === 0) {
@@ -91,16 +86,6 @@ export function RiskSummarySection({
       )}
       <div className="mt-4 md:mt-6">
         <EnumeratedRisks risks={riskGroups} />
-        {extraRisksMarkdown && (
-          <Markdown
-            className={cn(
-              RISK_SUMMARY_MARKDOWN_CLASS_NAME,
-              'mt-4 text-paragraph-15 md:text-paragraph-16',
-            )}
-          >
-            {extraRisksMarkdown}
-          </Markdown>
-        )}
       </div>
     </ProjectSection>
   )
@@ -119,17 +104,21 @@ export function EnumeratedRisks({ risks }: { risks: RiskGroup[] }) {
       <ol className="list-inside list-decimal px-1.5" start={group.start}>
         {group.items.map((item, i) => (
           <li key={i}>
-            <a href={`#${item.referencedId}`} className="underline">
-              {item.isCritical ? (
-                <>
-                  {item.text.slice(0, -1)}{' '}
-                  <span className="text-red-300 underline"> (CRITICAL)</span>
-                  {item.text.slice(-1)}
-                </>
-              ) : (
-                item.text
-              )}
-            </a>
+            {item.referencedId ? (
+              <a href={`#${item.referencedId}`} className="underline">
+                {item.isCritical ? (
+                  <>
+                    {item.text.slice(0, -1)}{' '}
+                    <span className="text-red-300 underline"> (CRITICAL)</span>
+                    {item.text.slice(-1)}
+                  </>
+                ) : (
+                  item.text
+                )}
+              </a>
+            ) : (
+              <Markdown inline>{item.text}</Markdown>
+            )}
           </li>
         ))}
       </ol>

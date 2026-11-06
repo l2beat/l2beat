@@ -4,19 +4,23 @@ import type { SearchBarEntry } from '~/components/search-bar/types'
 import type { SEARCH_BAR_PROJECT_KEYS } from './utils/toSearchBarProject'
 import type { SEARCH_BAR_TOKEN_KEYS } from './utils/toSearchBarToken'
 
+export type SearchBarProjectKind =
+  | 'ethereum'
+  | 'chain'
+  | 'layer2'
+  | 'layer3'
+  | 'interop'
+  | 'zkCatalog'
+  | 'privacy'
+  | 'defi'
+
 export type SearchBarProjectEntry = SearchBarEntry & {
   type: 'project'
   id: string
   iconUrl: string
-  kind:
-    | 'ethereum'
-    | 'chain'
-    | 'layer2'
-    | 'layer3'
-    | 'interop'
-    | 'zkCatalog'
-    | 'privacy'
-    | 'defi'
+  kind: SearchBarProjectKind
+  /** The other sections the project's page merges, shown next to `kind` */
+  otherKinds?: SearchBarProjectKind[]
   l2Category?: ProjectScalingCategory
   filePrepared?: Fuzzysort.Prepared
   projectAddresses?: EthereumAddress[]

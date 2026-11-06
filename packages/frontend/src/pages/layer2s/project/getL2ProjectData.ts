@@ -1,7 +1,6 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import type { RiskGroup } from '~/components/projects/sections/RiskSummarySection'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { getL2ProjectEntry } from '~/server/features/layer2s/project/getL2ProjectEntry'
 import { getPrivacyProjectDetails } from '~/server/features/privacy/getPrivacyProjectDetails'
@@ -9,6 +8,7 @@ import { getPrivacyProjectEntry } from '~/server/features/privacy/project/getPri
 import { getProjectSections } from '~/server/features/projects/getProjectSections'
 import { getProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 import { mergeProjectSections } from '~/server/features/projects/mergeProjectSections'
+import { mergeRiskGroups } from '~/server/features/projects/mergeRiskGroups'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getScalingMetadataDescription } from '~/ssr/head/projectMetaDescriptions'
@@ -128,9 +128,9 @@ async function loadL2ProjectPage(manifest: Manifest, slug: string) {
         section.props.aliasIds = ['privacy-tvl']
       }
       if (section.type === 'RiskSummarySection') {
-        section.props.extraRisksMarkdown = getMissingRiskGroups(
-          privacy.sections,
+        section.props.riskGroups = mergeRiskGroups(
           section.props.riskGroups,
+          getRiskSummaryMarkdown(privacy.sections),
         )
       }
     }
@@ -188,37 +188,9 @@ async function getPrivacyEntry(slug: string, helpers: SsrHelpers) {
   return details && getPrivacyProjectEntry(details, helpers)
 }
 
-/**
- * The groups of the privacy page's hand-written risk summary whose heading
- * the generated one lacks, e.g. "Privacy can be lost if". Groups both have
- * ("Funds can be stolen if") keep only the generated items, which link to the
- * sections they come from.
- */
-function getMissingRiskGroups(
-  privacySections: ProjectDetailsSection[],
-  riskGroups: RiskGroup[],
-): string | undefined {
-  const summary = privacySections.find(
+function getRiskSummaryMarkdown(sections: ProjectDetailsSection[]) {
+  const summary = sections.find(
     (section) => section.props.id === 'risk-summary',
   )
-  if (summary?.type !== 'MarkdownSection') return undefined
-  const headings = new Set<string>(riskGroups.map((group) => group.name))
-  // The generated groups number their items across the whole summary.
-  let number = riskGroups.reduce((sum, group) => sum + group.items.length, 0)
-  const groups = summary.props.content
-    .split(/^## /m)
-    .slice(1)
-    .filter((group) => !headings.has(group.split('\n')[0]?.trim() ?? ''))
-    .map((group) => {
-      const [heading, ...items] = group
-        .replace(/<br>\s*$/, '')
-        .trim()
-        .split('\n')
-      const list = items
-        .join('\n')
-        .trim()
-        .replace(/^\d+\. /gm, () => `${++number}. `)
-      return `## ${heading}\n\n${list}`
-    })
-  return groups.length > 0 ? groups.join('\n\n') : undefined
+  return summary?.type === 'MarkdownSection' ? summary.props.content : undefined
 }

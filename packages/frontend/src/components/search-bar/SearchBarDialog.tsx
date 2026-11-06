@@ -18,7 +18,10 @@ import { useGlobalShortcut } from '~/hooks/useGlobalShortcut'
 import { useOnClickOutside } from '~/hooks/useOnClickOutside'
 import { usePathname } from '~/hooks/usePathname'
 import { useTracking } from '~/hooks/useTracking'
-import type { SearchBarProject } from '~/server/features/search-bar/types'
+import type {
+  SearchBarProject,
+  SearchBarProjectKind,
+} from '~/server/features/search-bar/types'
 import { useTRPC } from '~/trpc/React'
 import { Skeleton } from '../core/Skeleton'
 import { linkVariants } from '../link/CustomLink'
@@ -398,8 +401,11 @@ function entryToValue(entry: AnySearchBarEntry) {
 function entryToLabel(entry: AnySearchBarEntry) {
   if (entry.type === 'page') return 'Page'
   if (entry.type === 'token') return 'Token'
+  return [entry.kind, ...(entry.otherKinds ?? [])].map(kindToLabel).join(' · ')
+}
 
-  switch (entry.kind) {
+function kindToLabel(kind: SearchBarProjectKind) {
+  switch (kind) {
     case 'ethereum':
       return 'Base layer'
     case 'chain':
@@ -417,7 +423,7 @@ function entryToLabel(entry: AnySearchBarEntry) {
     case 'defi':
       return 'DeFi'
     default:
-      assertUnreachable(entry.kind)
+      assertUnreachable(kind)
   }
 }
 

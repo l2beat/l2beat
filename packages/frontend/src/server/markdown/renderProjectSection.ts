@@ -170,7 +170,6 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<SectionProps<T>> } = {
         props.warning,
       ),
       renderRiskGroups(props.riskGroups, level),
-      configMarkdown(props.extraRisksMarkdown, level),
     ]),
   DaRiskSummarySection: (props, level) => {
     const { layer, bridge } = props

@@ -8,7 +8,6 @@ import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
-import { RISK_SUMMARY_MARKDOWN_CLASS_NAME } from '~/components/projects/sections/riskSummaryMarkdown'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { PRIVACY_ADVERSARIES_SECTION_ID } from '~/pages/privacy/adversaries/privacyAdversaryUi'
 import { getGardenCropsSection } from '~/server/features/garden/getGardenCropsSection'
@@ -250,7 +249,8 @@ export async function getPrivacyProjectEntry(
         id: 'risk-summary',
         title: 'Risk summary',
         content: details.riskSummary,
-        mdClassName: RISK_SUMMARY_MARKDOWN_CLASS_NAME,
+        mdClassName:
+          '[&_.mdc-h2]:mb-0 [&_.mdc-h2]:font-bold [&_.mdc-h2]:text-red-300 [&_.mdc-h2]:text-paragraph-15 md:[&_.mdc-h2]:text-paragraph-16 [&_ol]:mb-0 [&_ol]:list-inside [&_ol]:pl-1.5 [&_li]:ml-0',
       },
     })
   }

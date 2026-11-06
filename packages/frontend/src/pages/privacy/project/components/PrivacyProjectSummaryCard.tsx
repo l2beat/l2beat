@@ -47,22 +47,21 @@ export function PrivacyProjectSummaryCard({ entry, children }: Props) {
           />
 
           <PrivacyProjectRiskProfileRow entry={entry} />
+          <HorizontalSeparator className="max-md:my-2 md:mt-4" />
+          <div
+            className={cn(
+              'flex flex-col md:mt-4 md:flex-row md:gap-8',
+              MOBILE_SUMMARY_ROWS,
+            )}
+          >
+            {getPrivacySummaryStats(entry)}
+          </div>
         </div>
         <VerticalSeparator className="mr-8 ml-12 h-[unset] self-stretch max-xl:hidden" />
         <PrivacyProjectRosette
           entry={entry}
           className="my-auto max-xl:hidden"
         />
-      </div>
-      {/* Below the rosette, so the attribute tags fit on one line */}
-      <HorizontalSeparator className="max-md:my-2 md:mt-4" />
-      <div
-        className={cn(
-          'flex flex-col md:mt-4 md:flex-row md:gap-8',
-          MOBILE_SUMMARY_ROWS,
-        )}
-      >
-        {getPrivacySummaryStats(entry, 'md:min-w-0 md:flex-1')}
       </div>
       {children}
 
@@ -104,53 +103,59 @@ export function PrivacyProjectRiskProfileRow({
 }
 
 /**
- * Where the protocol runs, its reference app and attributes. Attributes go
- * last: their tags are the widest value, so the row gives them the most room.
+ * Where the protocol runs, its attributes and reference app. With
+ * `wideAttributes`, for a grid, attributes go last over two columns: their
+ * tags are the widest value.
  */
 export function getPrivacySummaryStats(
   entry: ProjectPrivacyEntry,
-  attributesClassName?: string,
+  options: { wideAttributes?: boolean } = {},
 ) {
-  return compact([
+  const trackedOn = (
     <ProjectSummaryStat
       key="tracked-on"
       title="Tracked on"
       tooltip="Chains on which the protocol deployment is tracked by ETHBEAT."
       value={<ProjectIconList projects={entry.trackedOn} title="Tracked on" />}
-    />,
-    entry.scalingProjects.length > 0 && (
-      <ProjectSummaryStat
-        key="runs-on"
-        title="Runs on"
-        tooltip="Scaling projects the protocol runs on."
-        value={
-          <ProjectIconList
-            projects={entry.scalingProjects}
-            title={`${entry.name} runs on`}
-          />
-        }
-      />
-    ),
-    entry.referenceApp && (
-      <PrivacyReferenceAppStat
-        key="reference-app"
-        app={entry.referenceApp}
-        href={`#${PRIVACY_ADVERSARIES_SECTION_ID}`}
-      />
-    ),
-    entry.attributes.length > 0 && (
-      <ProjectSummaryStat
-        key="attributes"
-        title="Attributes"
-        tooltip="Protocol attributes and capabilities."
-        className={attributesClassName}
-        valueClassName="flex flex-wrap justify-end gap-1 md:justify-start"
-        value={entry.attributes.map((attribute) => (
-          <PrivacyAttributeTag key={attribute.id} attribute={attribute} />
-        ))}
-      />
-    ),
-  ])
+    />
+  )
+  const runsOn = entry.scalingProjects.length > 0 && (
+    <ProjectSummaryStat
+      key="runs-on"
+      title="Runs on"
+      tooltip="Scaling projects the protocol runs on."
+      value={
+        <ProjectIconList
+          projects={entry.scalingProjects}
+          title={`${entry.name} runs on`}
+        />
+      }
+    />
+  )
+  const attributes = entry.attributes.length > 0 && (
+    <ProjectSummaryStat
+      key="attributes"
+      title="Attributes"
+      tooltip="Protocol attributes and capabilities."
+      className={options.wideAttributes ? 'md:col-span-2' : undefined}
+      valueClassName="flex flex-wrap justify-end gap-1 md:justify-start"
+      value={entry.attributes.map((attribute) => (
+        <PrivacyAttributeTag key={attribute.id} attribute={attribute} />
+      ))}
+    />
+  )
+  const referenceApp = entry.referenceApp && (
+    <PrivacyReferenceAppStat
+      key="reference-app"
+      app={entry.referenceApp}
+      href={`#${PRIVACY_ADVERSARIES_SECTION_ID}`}
+    />
+  )
+  return compact(
+    options.wideAttributes
+      ? [trackedOn, runsOn, referenceApp, attributes]
+      : [trackedOn, runsOn, attributes, referenceApp],
+  )
 }
 
 export function PrivacyProjectRosette({

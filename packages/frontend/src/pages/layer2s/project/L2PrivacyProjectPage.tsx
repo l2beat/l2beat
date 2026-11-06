@@ -1,4 +1,5 @@
 import type { ComponentProps } from 'react'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
 import {
   getPrivacySummaryStats,
@@ -23,8 +24,15 @@ export function L2PrivacyProjectPage({ privacyEntry, ...props }: Props) {
       {...props}
       mergedSummary={{
         label: 'Privacy',
-        stats: getPrivacySummaryStats(privacyEntry, 'md:col-span-2'),
-        rows: <PrivacyProjectRiskProfileRow entry={privacyEntry} />,
+        rows: (
+          <>
+            <PrivacyProjectRiskProfileRow entry={privacyEntry} />
+            <HorizontalSeparator className="max-md:my-2 md:mt-4" />
+            <div className="grid grid-cols-1 gap-x-6 gap-y-3 md:mt-4 md:grid-cols-4">
+              {getPrivacySummaryStats(privacyEntry, { wideAttributes: true })}
+            </div>
+          </>
+        ),
         rosette: <PrivacyProjectRosette entry={privacyEntry} />,
       }}
     />
