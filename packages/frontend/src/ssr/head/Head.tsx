@@ -5,6 +5,7 @@ import type { Manifest } from '~/utils/Manifest'
 import { FontStyles } from './FontStyles'
 import { fonts } from './fonts'
 import type { Metadata } from './getMetadata'
+import { pageTransitions } from './pageTransitions'
 import { speculationRules } from './speculationRules'
 
 export interface HeadProps {
@@ -71,6 +72,7 @@ export function Head({ manifest, metadata }: HeadProps) {
           }}
         />
       ))}
+      <script dangerouslySetInnerHTML={{ __html: `(${pageTransitions})()` }} />
       <script
         type="speculationrules"
         dangerouslySetInnerHTML={{
