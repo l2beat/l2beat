@@ -143,6 +143,24 @@ export function toRecentPoints(
 }
 
 /**
+ * Whether recent points run on from a chart's last one: it has a value, and
+ * the first of them is the next period. Otherwise a period activity has not
+ * summed would sit between, and the chart would seem synced past it
+ */
+export function runsOn(
+  last: [UnixTime, number | null] | undefined,
+  first: UnixTime | undefined,
+  resolution: ActivityResolution,
+): boolean {
+  return (
+    last !== undefined &&
+    last[1] !== null &&
+    (first === undefined ||
+      first === last[0] + UnixTime.periodToSeconds(resolution))
+  )
+}
+
+/**
  * A project's chart with its periods since the last point, and Ethereum's
  * beside the ones whole for both: the point under way is spread over the
  * project's seconds so far, which are not Ethereum's
@@ -154,8 +172,9 @@ export function appendRecentPoints(
   resolution: ActivityResolution,
 ): { data: ActivityChartDataPoint[]; liveUntil: UnixTime | undefined } {
   const own = recent.get(projectId)
-  if (!own) return { data, liveUntil: undefined }
-  const after = data.at(-1)?.[0] ?? 0
+  const last = data.at(-1)
+  if (!own || !last) return { data, liveUntil: undefined }
+  const after = last[0]
   const ethereum = recent.get(ProjectId.ETHEREUM)
   const periodSeconds = UnixTime.periodToSeconds(resolution)
   const ethereumPoints = new Map(
@@ -180,5 +199,8 @@ export function appendRecentPoints(
       ]
     },
   )
+  if (!runsOn([after, last[1]], appended[0]?.[0], resolution)) {
+    return { data, liveUntil: undefined }
+  }
   return { data: [...data, ...appended], liveUntil: own.until }
 }

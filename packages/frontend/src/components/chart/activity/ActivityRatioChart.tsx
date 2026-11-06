@@ -11,6 +11,7 @@ import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import { tinted } from '~/components/core/chart/tint'
 import type { ActivityResolution } from '~/server/features/layer2s/activity/utils/getActivityResolution'
 import { formatRange } from '~/utils/dates'
+import { getActivityPeriodSeconds } from './utils/getActivityPeriodSeconds'
 
 interface ActivityRatioChartDataPoint {
   timestamp: number
@@ -23,6 +24,8 @@ interface Props {
   resolution?: ActivityResolution
   isLoading: boolean
   isPlaceholderData: boolean
+  /** Of the newest block, when the last period is under way */
+  liveUntil?: number
 }
 
 export function ActivityRatioChart({
@@ -31,6 +34,7 @@ export function ActivityRatioChart({
   isPlaceholderData,
   syncedUntil,
   resolution = 'day',
+  liveUntil,
 }: Props) {
   const chartMeta = {
     ratio: {
@@ -67,7 +71,11 @@ export function ActivityRatioChart({
         }}
         syncedUntil={syncedUntil}
         renderTooltip={(row) => (
-          <ActivityCustomTooltip row={row} resolution={resolution} />
+          <ActivityCustomTooltip
+            row={row}
+            resolution={resolution}
+            liveUntil={liveUntil}
+          />
         )}
       />
     </ChartContainer>
@@ -77,20 +85,21 @@ export function ActivityRatioChart({
 function ActivityCustomTooltip({
   row,
   resolution,
+  liveUntil,
 }: {
   row: ActivityRatioChartDataPoint
   resolution: ActivityResolution
+  liveUntil: number | undefined
 }) {
   const timestamp = row.timestamp
+  const seconds = getActivityPeriodSeconds(timestamp, resolution, liveUntil)
 
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
-          {formatRange(
-            timestamp,
-            timestamp + UnixTime.periodToSeconds(resolution),
-          )}
+          {formatRange(timestamp, timestamp + seconds)}
+          {seconds < UnixTime.periodToSeconds(resolution) && ' so far'}
         </div>
         <div className="flex flex-col gap-2">
           <ChartTooltipRow name="ratio">
