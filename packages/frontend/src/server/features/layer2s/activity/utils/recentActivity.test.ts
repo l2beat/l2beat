@@ -4,7 +4,6 @@ import type {
 } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { optionToRange } from '~/utils/range/range'
 import {
   appendRecentPoints,
   type RecentHours,
@@ -98,12 +97,8 @@ describe(toRecentPoints.name, () => {
 
 describe(appendRecentPoints.name, () => {
   const PROJECT = ProjectId('base')
-
-  it("adds the project's recent hours, with Ethereum's whole ones beside", () => {
-    // Methodology: Ethereum's newest block is in hour 14, so hour 13 is whole
-    // for it and hour 14 is under way, measured up to another block than the
-    // project's, so it is left out
-    const recent = new Map<ProjectId, RecentHours>([
+  const recentOf = (projectUntil: UnixTime, ethereumUntil: UnixTime) =>
+    new Map<ProjectId, RecentHours>([
       [
         PROJECT,
         {
@@ -111,7 +106,7 @@ describe(appendRecentPoints.name, () => {
             [DAY + 13 * H, { count: 10, uopsCount: 12 }],
             [DAY + 14 * H, { count: 20, uopsCount: 22 }],
           ]),
-          until: DAY + 14 * H + 1200,
+          until: projectUntil,
         },
       ],
       [
@@ -121,14 +116,17 @@ describe(appendRecentPoints.name, () => {
             [DAY + 13 * H, { count: 5, uopsCount: 6 }],
             [DAY + 14 * H, { count: 7, uopsCount: 8 }],
           ]),
-          until: DAY + 14 * H + 1100,
+          until: ethereumUntil,
         },
       ],
     ])
 
+  it("adds the project's recent hours, with Ethereum's beside the whole ones", () => {
+    // Methodology: the project reaches 14:20, Ethereum 14:10. Hour 13 is
+    // whole for both, hour 14 is under way for both
     const result = appendRecentPoints(
       [[DAY + 12 * H, 1, 2, 3, 4]],
-      recent,
+      recentOf(DAY + 14 * H + 1200, DAY + 14 * H + 600),
       PROJECT,
       'hour',
     )
@@ -141,6 +139,19 @@ describe(appendRecentPoints.name, () => {
       ],
       liveUntil: DAY + 14 * H + 1200,
     })
+  })
+
+  it("leaves out Ethereum's whole hour when it is the project's under way", () => {
+    // The project reaches 13:40 and Ethereum 14:10, so hour 13 is whole for
+    // Ethereum only
+    const result = appendRecentPoints(
+      [[DAY + 12 * H, 1, 2, 3, 4]],
+      recentOf(DAY + 13 * H + 2400, DAY + 14 * H + 600),
+      PROJECT,
+      'hour',
+    )
+
+    expect(result.data.at(-1)).toEqual([DAY + 13 * H, 10, null, 12, null])
   })
 
   it('leaves the chart as it is without recent hours of the project', () => {
@@ -156,11 +167,23 @@ describe(appendRecentPoints.name, () => {
 })
 
 describe(reachesNow.name, () => {
-  it('holds for the ranges picked from the presets, not ones ending earlier', () => {
-    const now = UnixTime.now()
-    expect(reachesNow(optionToRange('7d'))).toEqual(true)
+  // Methodology: just after midnight a preset ends before a calendar range
+  // ending yesterday does, so only how they end tells them apart
+  const NOW = DAY + UnixTime.HOUR + 5 * UnixTime.MINUTE
+
+  it('holds for the presets and a calendar range ending today', () => {
     expect(
-      reachesNow([now - 30 * UnixTime.DAY, now - 2 * UnixTime.DAY]),
+      reachesNow([DAY - 7 * UnixTime.DAY, DAY - UnixTime.HOUR], NOW),
+    ).toEqual(true)
+    expect(
+      reachesNow([DAY - 7 * UnixTime.DAY, DAY + UnixTime.HOUR], NOW),
+    ).toEqual(true)
+  })
+
+  it('does not for a calendar range ending an earlier day', () => {
+    expect(reachesNow([DAY - 7 * UnixTime.DAY, DAY - 1], NOW)).toEqual(false)
+    expect(
+      reachesNow([DAY - 30 * UnixTime.DAY, DAY - 2 * UnixTime.DAY], NOW),
     ).toEqual(false)
   })
 })
