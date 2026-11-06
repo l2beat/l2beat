@@ -72,28 +72,51 @@ export interface TraceWindow {
 }
 
 /**
- * The trace as points from the left edge to `end`, in pixels across and
- * heights where 1 is the tallest spike. Each beat is drawn in the middle of
- * its seconds, and the line runs flat between beats
+ * The trace across the window as points, in pixels across and heights where
+ * 1 is the tallest spike. Each beat is drawn in the middle of its seconds,
+ * and the line runs flat between beats
  */
 export function tracePoints(
   beats: [UnixTime, number][],
   perBeat: number,
   busiest: number,
   window: TraceWindow,
-  end: number,
 ): [number, number][] {
   const pixelsPerSecond = window.width / (window.to - window.from)
   const points: [number, number][] = [[-BEAT_WIDTH, 0]]
   for (const [start, transactions] of beats) {
     const centre = (start + perBeat / 2 - window.from) * pixelsPerSecond
     if (centre + BEAT_WIDTH / 2 < 0) continue
-    if (centre + BEAT_WIDTH / 2 > end) break
+    if (centre - BEAT_WIDTH / 2 > window.width) break
     const amplitude = beatAmplitude(transactions, busiest)
     for (const [x, y] of BEAT_SHAPE) {
       points.push([centre + x * BEAT_WIDTH, y * amplitude])
     }
   }
-  points.push([end, 0])
+  points.push([window.width + BEAT_WIDTH, 0])
   return points
+}
+
+/**
+ * The part of the line between `from` and `to` across, cut where it crosses
+ * them, so a beat the pen is drawing shows only as far as the pen
+ */
+export function clipPoints(
+  points: [number, number][],
+  from: number,
+  to: number,
+): [number, number][] {
+  const clipped: [number, number][] = []
+  for (let i = 1; i < points.length; i++) {
+    const [x0, y0] = points[i - 1] ?? [0, 0]
+    const [x1, y1] = points[i] ?? [0, 0]
+    if (x1 < from || x0 > to || x1 === x0) continue
+    const at = (x: number): [number, number] => [
+      x,
+      y0 + ((y1 - y0) * (x - x0)) / (x1 - x0),
+    ]
+    if (clipped.length === 0) clipped.push(x0 < from ? at(from) : [x0, y0])
+    clipped.push(x1 > to ? at(to) : [x1, y1])
+  }
+  return clipped
 }

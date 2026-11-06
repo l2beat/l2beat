@@ -3,6 +3,7 @@ import {
   BEAT_SHAPE,
   BEAT_WIDTH,
   beatAmplitude,
+  clipPoints,
   secondsPerBeat,
   toBeats,
   tracePoints,
@@ -63,24 +64,49 @@ describe('ekg', () => {
         [
           [20, 25],
           [40, 100],
+          [200, 100],
         ],
         4,
         100,
         window,
-        1000,
       )
 
       expect(points.at(0)).toEqual([-BEAT_WIDTH, 0])
-      expect(points.at(-1)).toEqual([1000, 0])
+      expect(points.at(-1)).toEqual([1000 + BEAT_WIDTH, 0])
       expect(points).toInclude([220, 0.5], [420, 1])
+      expect(points.length).toEqual(2 + 2 * BEAT_SHAPE.length)
+    })
+  })
+
+  describe(clipPoints.name, () => {
+    it('cuts the line where it crosses the ends', () => {
+      const points: [number, number][] = [
+        [0, 0],
+        [10, 1],
+        [20, 0],
+        [30, 0],
+      ]
+
+      expect(clipPoints(points, 5, 15)).toEqual([
+        [5, 0.5],
+        [10, 1],
+        [15, 0.5],
+      ])
+      expect(clipPoints(points, 25, 40)).toEqual([
+        [25, 0],
+        [30, 0],
+      ])
     })
 
-    it('leaves out the beats the trace has not reached yet', () => {
-      const points = tracePoints([[40, 100]], 4, 100, window, 400)
+    it('reads the height at a single point', () => {
+      const points: [number, number][] = [
+        [0, 0],
+        [10, 1],
+      ]
 
-      expect(points).toEqual([
-        [-BEAT_WIDTH, 0],
-        [400, 0],
+      expect(clipPoints(points, 4, 4)).toEqual([
+        [4, 0.4],
+        [4, 0.4],
       ])
     })
   })
