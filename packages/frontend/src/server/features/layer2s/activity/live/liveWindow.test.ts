@@ -35,12 +35,13 @@ describe(getLiveWindow.name, () => {
     expect((window.to + 1 - window.from) / window.bucket).toEqual(10)
   })
 
-  it('starts on a bucket within the range', () => {
+  it('spans the whole range, read from a bucket before it', () => {
     const window = getLiveWindow('5m', T + 4, 7)
 
     expect(window.bucket).toEqual(7)
-    expect(window.from % 7).toEqual(0)
-    expect(window.from >= T - 300).toEqual(true)
+    expect(window.to + 1 - window.from).toEqual(300)
+    expect(window.readFrom % 7).toEqual(0)
+    expect(window.readFrom <= window.from - 60).toEqual(true)
   })
 
   it('ends where looked back to, but not past the newest block', () => {
@@ -48,6 +49,12 @@ describe(getLiveWindow.name, () => {
       T - 3600 - 1,
     )
     expect(getLiveWindow('15m', T + 4, 2, T + 600).to).toEqual(T - 1)
+  })
+
+  it('stays within the buffer as the newest block moves on', () => {
+    const window = getLiveWindow('15m', T, 2, T - 5 * UnixTime.HOUR)
+
+    expect(window.from).toEqual(T - 4 * UnixTime.HOUR)
   })
 })
 

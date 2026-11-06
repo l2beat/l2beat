@@ -146,6 +146,8 @@ export function ProjectLiveActivity({
       indicatorType: { shape: 'line' },
     },
   }
+  const windowText =
+    domain && `${formatMinute(domain[0])} – ${formatMinute(domain[1])} UTC`
   const xAxis = domain && {
     ticks: ticksOf(domain[0], domain[1] + lookahead, range),
     format: formatMinute,
@@ -178,18 +180,22 @@ export function ProjectLiveActivity({
     )
     return clamped >= newest - LIVE_RANGES[range] / 20 ? undefined : clamped
   }
+  // only once this window's data is read, as the pointer can come in before
+  const hold = () => {
+    if (holding || !query.data || isPlaceholderData) return
+    setHeld({
+      data: query.data,
+      dataUpdatedAt: query.dataUpdatedAt,
+      range,
+      to,
+    })
+  }
 
   return (
     <div className="flex flex-col">
       <ChartControlsWrapper>
         <div className="flex h-8 items-center gap-2 whitespace-nowrap font-bold">
-          {domain ? (
-            <>
-              {formatMinute(domain[0])} – {formatMinute(domain[1])} UTC
-            </>
-          ) : (
-            '…'
-          )}
+          {windowText ?? '…'}
         </div>
         <RadioGroup
           name="liveActivityRange"
@@ -208,15 +214,8 @@ export function ProjectLiveActivity({
       </ChartControlsWrapper>
       <div
         ref={charts}
-        onPointerEnter={() =>
-          query.data &&
-          setHeld({
-            data: query.data,
-            dataUpdatedAt: query.dataUpdatedAt,
-            range,
-            to,
-          })
-        }
+        onPointerEnter={hold}
+        onPointerMove={hold}
         onPointerLeave={() => setHeld(undefined)}
       >
         <div className="mt-4 mb-3">
@@ -259,7 +258,7 @@ export function ProjectLiveActivity({
           </div>
         )}
       </div>
-      {newest !== undefined && data && domain && (
+      {newest !== undefined && data && domain && windowText && (
         <div className="mb-4 flex flex-col gap-1">
           <span className={HOME_TEXT.meta}>
             Last 4 hours, a bar a minute. Press or drag to look back
@@ -269,6 +268,7 @@ export function ProjectLiveActivity({
             from={newest - LIVE_BUFFER_SECONDS}
             to={newest}
             window={domain}
+            windowText={live ? `Live, ${windowText}` : windowText}
             metric={metric}
             // on a bucket, so moves within one share a read
             onMove={(end) =>

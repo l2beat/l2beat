@@ -1,6 +1,11 @@
 import type { HourlyActivityRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { LIVE_BUCKET_SECONDS, LIVE_RANGES, type LiveRange } from './liveRanges'
+import {
+  LIVE_BUCKET_SECONDS,
+  LIVE_BUFFER_SECONDS,
+  LIVE_RANGES,
+  type LiveRange,
+} from './liveRanges'
 
 /** Seconds per bucket the rate right now is taken from, a minute's divisor */
 export const LAST_MINUTE_BUCKET = 10
@@ -9,10 +14,10 @@ export const LAST_MINUTE_BUCKET = 10
 const LEAD_SECONDS = UnixTime.MINUTE
 
 /**
- * The buckets of the range ending at `to`, or at the newest block. A bucket
- * spans a whole number of blocks, so a chain with a fixed block time has as
- * many in each instead of alternating, and only buckets the newest block is
- * past are in, so the live edge does not dip
+ * The range ending at `to`, or at the newest block, within the buffer. A
+ * bucket spans a whole number of blocks, so a chain with a fixed block time
+ * has as many in each instead of alternating, and only buckets the newest
+ * block is past are in, so the live edge does not dip
  */
 export function getLiveWindow(
   range: LiveRange,
@@ -23,9 +28,14 @@ export function getLiveWindow(
   // a sparse sample, as a stale block beside a new one, can't empty the window
   const block = Math.min(Math.max(1, blockSeconds), LIVE_RANGES[range] / 10)
   const bucket = Math.ceil(LIVE_BUCKET_SECONDS[range] / block) * block
-  const end = Math.floor(Math.min(to ?? newest, newest) / bucket) * bucket
-  const from = Math.ceil((end - LIVE_RANGES[range]) / bucket) * bucket
-  const readFrom = from - Math.ceil(LEAD_SECONDS / bucket) * bucket
+  const oldestEnd = newest - LIVE_BUFFER_SECONDS + LIVE_RANGES[range]
+  const end =
+    Math.floor(Math.min(Math.max(to ?? newest, oldestEnd), newest) / bucket) *
+    bucket
+  const from = end - LIVE_RANGES[range]
+  const readFrom =
+    Math.floor(from / bucket) * bucket -
+    Math.ceil(LEAD_SECONDS / bucket) * bucket
   return { from, to: end - 1, bucket, readFrom }
 }
 

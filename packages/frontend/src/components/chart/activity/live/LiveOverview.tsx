@@ -1,4 +1,4 @@
-import { type PointerEvent, useRef } from 'react'
+import { type KeyboardEvent, type PointerEvent, useRef } from 'react'
 import type { LiveActivityPoint } from '~/server/features/layer2s/activity/live/liveRanges'
 import { cn } from '~/utils/cn'
 import { type LiveMetric, METRIC_INDEX } from './liveSteps'
@@ -8,13 +8,14 @@ const MOVE_EVERY_MS = 200
 
 /**
  * The whole buffer, a bar a minute, with the window the chart below shows.
- * Pressing or dragging on it moves the window there
+ * Pressing or dragging on it, or the arrow keys, move the window
  */
 export function LiveOverview({
   points,
   from,
   to,
   window,
+  windowText,
   metric,
   onMove,
   className,
@@ -25,6 +26,8 @@ export function LiveOverview({
   to: number
   /** The edges of the window shown below */
   window: [number, number]
+  /** The window as a screen reader says it */
+  windowText: string
   metric: LiveMetric
   /** Where the window should end */
   onMove: (to: number) => void
@@ -41,19 +44,37 @@ export function LiveOverview({
     Math.min(100, Math.max(0, ((t - from) / span) * 100))
   const length = window[1] - window[0]
 
-  // a drag reads a window at most every MOVE_EVERY_MS, the last one too
-  const moveTo = (event: PointerEvent) => {
-    const box = ref.current?.getBoundingClientRect()
-    if (!box) return
-    const at = from + ((event.clientX - box.left) / box.width) * span
+  // a drag or a held key reads a window at most every MOVE_EVERY_MS, the
+  // last one too
+  const moveTo = (end: number) => {
     const send = () => {
       sentAt.current = performance.now()
-      onMove(Math.round(at + length / 2))
+      onMove(Math.round(end))
     }
     clearTimeout(queued.current)
     const wait = sentAt.current + MOVE_EVERY_MS - performance.now()
     if (wait <= 0) send()
     else queued.current = setTimeout(send, wait)
+  }
+  const pointTo = (event: PointerEvent) => {
+    const box = ref.current?.getBoundingClientRect()
+    if (!box) return
+    moveTo(from + ((event.clientX - box.left) / box.width) * span + length / 2)
+  }
+  const onKeyDown = (event: KeyboardEvent) => {
+    const step = length / 10
+    const ends: Record<string, number> = {
+      ArrowLeft: window[1] - step,
+      ArrowDown: window[1] - step,
+      ArrowRight: window[1] + step,
+      ArrowUp: window[1] + step,
+      Home: from + length,
+      End: to,
+    }
+    const end = ends[event.key]
+    if (end === undefined) return
+    event.preventDefault()
+    moveTo(end)
   }
   const stop = () => {
     dragging.current = false
@@ -63,19 +84,25 @@ export function LiveOverview({
     <svg
       ref={ref}
       className={cn(
-        'h-10 w-full cursor-pointer touch-none select-none overflow-visible',
+        'h-10 w-full cursor-pointer touch-none select-none overflow-visible rounded-sm focus-visible:outline-2 focus-visible:outline-brand focus-visible:outline-offset-2',
         className,
       )}
       viewBox={`0 0 100 ${HEIGHT}`}
       preserveAspectRatio="none"
-      role="img"
-      aria-label="The last hours, a bar a minute; press to look back"
+      role="slider"
+      tabIndex={0}
+      aria-label="Look back through the last hours"
+      aria-valuemin={from + length}
+      aria-valuemax={to}
+      aria-valuenow={Math.round(window[1])}
+      aria-valuetext={windowText}
+      onKeyDown={onKeyDown}
       onPointerDown={(event) => {
         dragging.current = true
         event.currentTarget.setPointerCapture(event.pointerId)
-        moveTo(event)
+        pointTo(event)
       }}
-      onPointerMove={(event) => dragging.current && moveTo(event)}
+      onPointerMove={(event) => dragging.current && pointTo(event)}
       onPointerUp={stop}
       onPointerCancel={stop}
       onLostPointerCapture={stop}
