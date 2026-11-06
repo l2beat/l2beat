@@ -37,11 +37,12 @@ export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
 
   return (
     <>
-      <NavTabRow links={links} pathname={pathname} />
+      <NavTabRow links={links} pathname={pathname} row="main" />
       {activeSubLinks && (
         <NavTabRow
           links={activeSubLinks}
           pathname={pathname}
+          row="sub"
           tabClassName="h-8 text-2xs"
         />
       )}
@@ -52,10 +53,13 @@ export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
 function NavTabRow({
   links,
   pathname,
+  row,
   tabClassName,
 }: {
   links: NavLink[]
   pathname: string
+  /** Keys the underline, which slides along its row between pages. */
+  row: 'main' | 'sub'
   tabClassName?: string
 }) {
   return (
@@ -83,12 +87,21 @@ function NavTabRow({
                 key={link.href}
                 data-state={isSelected ? 'selected' : undefined}
                 className={cn(
-                  'flex h-10 w-full items-center justify-center whitespace-nowrap border-divider border-b bg-header-primary px-4 font-medium text-xs leading-none',
-                  'data-[state=selected]:border-nav-active data-[state=selected]:text-nav-active',
+                  'relative flex h-10 w-full items-center justify-center whitespace-nowrap border-divider border-b bg-header-primary px-4 font-medium text-xs leading-none',
+                  'data-[state=selected]:text-nav-active',
                   tabClassName,
                 )}
               >
                 {link.shortTitle ?? link.title}
+                {/* Its own box over the border, so it can slide to the tab
+                    opened on the next page (pageTransitions.ts). */}
+                {isSelected && (
+                  <span
+                    aria-hidden
+                    data-tab-line={row}
+                    className="-bottom-px absolute inset-x-0 h-px bg-nav-active"
+                  />
+                )}
               </a>
             )
           })}

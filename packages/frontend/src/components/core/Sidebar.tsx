@@ -167,6 +167,8 @@ function SidebarSeparator({
 function SidebarContent({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <ScrollWithGradient
+      // Keeps its scroll from page to page (pageTransitions.ts).
+      data-sidebar-scroll
       className={cn(
         'flex min-h-0 flex-1 flex-col gap-1 overflow-auto',
         className,
@@ -252,25 +254,49 @@ function SidebarGroupSubButton({
   asChild = false,
   isActive,
   className,
+  children,
   ...props
 }: React.ComponentProps<'a'> & {
   asChild?: boolean
   isActive?: boolean
 }) {
-  const Comp = asChild ? Slot : 'a'
-
+  if (asChild) {
+    return (
+      <Slot
+        data-active={isActive}
+        className={cn(
+          SUB_BUTTON_CLASS,
+          'data-[active=true]:bg-brand',
+          className,
+        )}
+        {...props}
+      >
+        {children}
+      </Slot>
+    )
+  }
   return (
-    <Comp
+    <a
       data-active={isActive}
-      className={cn(
-        '-translate-x-px flex h-7 min-w-0 items-center gap-2 overflow-hidden rounded px-2.5 py-1.5 text-primary outline-none ring-brand hover:bg-surface-tertiary hover:text-primary focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:shrink-0 [&>svg]:text-primary',
-        'data-[active=true]:bg-brand data-[active=true]:text-primary-invert',
-        className,
-      )}
+      className={cn(SUB_BUTTON_CLASS, 'relative isolate', className)}
       {...props}
-    />
+    >
+      {/* The highlight is its own box, so it can slide between pages while
+          the labels stay put (pageTransitions.ts). */}
+      {isActive && (
+        <span
+          aria-hidden
+          data-nav-highlight
+          className="-z-10 absolute inset-0 rounded bg-brand"
+        />
+      )}
+      {children}
+    </a>
   )
 }
+
+const SUB_BUTTON_CLASS =
+  '-translate-x-px flex h-7 min-w-0 items-center gap-2 overflow-hidden rounded px-2.5 py-1.5 text-primary outline-none ring-brand hover:bg-surface-tertiary hover:text-primary focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:shrink-0 [&>svg]:text-primary data-[active=true]:text-primary-invert'
 
 function SidebarGroupSubLink({
   isActive,
@@ -282,6 +308,7 @@ function SidebarGroupSubLink({
   return (
     <a
       data-active={isActive}
+      data-nav-label
       className={cn(
         'font-medium text-label-value-14',
         'data-[active=true]:text-nav-active',

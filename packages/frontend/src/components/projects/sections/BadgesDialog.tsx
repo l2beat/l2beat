@@ -1,6 +1,6 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Badge } from '~/components/badge/Badge'
 import {
   Dialog,
@@ -24,6 +24,7 @@ import { useDevice } from '~/hooks/useDevice'
 import type { RouterOutputs } from '~/trpc/React'
 import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
+import { nameInView, withViewTransition } from '~/utils/viewTransition'
 
 type BadgeDialogData = NonNullable<RouterOutputs['projects']['badgesDialog']>
 
@@ -51,6 +52,26 @@ export function BadgesDialog({
 
   const isSwitchingBadges = isFetching && isPlaceholderData
 
+  // The badge on show changes once its data lands, not on the click; a
+  // badge picked with a pointer then flies into the big slot, and the one
+  // it replaces into its place among the related.
+  const [shown, setShown] = useState(data)
+  const animateNext = useRef(false)
+  useEffect(() => {
+    if (!data || data === shown) return
+    if (animateNext.current && shown && data.badge.id !== shown.badge.id) {
+      animateNext.current = false
+      withViewTransition('badge', nameBadges, () => setShown(data))
+    } else {
+      setShown(data)
+    }
+  }, [data, shown])
+  const selectBadge = (badgeId: string, byPointer: boolean) => {
+    animateNext.current = byPointer
+    setSelectedBadgeId(badgeId)
+  }
+  const body = shown ?? data
+
   if (isMobile) {
     return (
       <Drawer open onOpenChange={onOpenChange}>
@@ -64,10 +85,10 @@ export function BadgesDialog({
           </DrawerHeader>
           <div className="relative overflow-y-auto">
             <BadgesDialogBody
-              data={data}
+              data={body}
               isLoading={isLoading}
               isSwitchingBadges={isSwitchingBadges}
-              onBadgeSelect={setSelectedBadgeId}
+              onBadgeSelect={selectBadge}
               mobile
             />
           </div>
@@ -86,10 +107,10 @@ export function BadgesDialog({
         </DialogHeader>
         <div className="overflow-y-auto">
           <BadgesDialogBody
-            data={data}
+            data={body}
             isLoading={isLoading}
             isSwitchingBadges={isSwitchingBadges}
-            onBadgeSelect={setSelectedBadgeId}
+            onBadgeSelect={selectBadge}
           />
         </div>
       </DialogContent>
@@ -107,7 +128,7 @@ function BadgesDialogBody({
   data: BadgeDialogData | null | undefined
   isLoading: boolean
   isSwitchingBadges: boolean
-  onBadgeSelect: (badgeId: string) => void
+  onBadgeSelect: (badgeId: string, byPointer: boolean) => void
   mobile?: boolean
 }) {
   if (isLoading && !data) {
@@ -144,6 +165,7 @@ function BadgesDialogBody({
             alt={`${data.badge.name} badge`}
             width={data.badge.width}
             height={data.badge.height}
+            data-badge={data.badge.id}
             className="h-24 w-auto shrink-0"
           />
           <div className={cn('space-y-2', !mobile && 'max-w-[520px]')}>
@@ -173,7 +195,7 @@ function BadgesDialogBody({
                 <button
                   key={badge.id}
                   type="button"
-                  onClick={() => onBadgeSelect(badge.id)}
+                  onClick={(event) => onBadgeSelect(badge.id, event.detail > 0)}
                   className="flex items-center justify-center transition-transform hover:scale-[1.04]"
                 >
                   <img
@@ -181,6 +203,7 @@ function BadgesDialogBody({
                     alt={`${badge.name} badge`}
                     width={badge.width}
                     height={badge.height}
+                    data-badge={badge.id}
                     className="h-20 w-auto"
                   />
                 </button>
@@ -294,4 +317,9 @@ function getRelatedBadgesTitle(type: string, count: number) {
   }
 
   return `Other ${formatBadgeType(type)} badges (${count})`
+}
+
+/** The badges in view, by id, the one on show among them. */
+function nameBadges() {
+  return nameInView('[data-badge]', (el) => el.dataset.badge, 'badge')
 }

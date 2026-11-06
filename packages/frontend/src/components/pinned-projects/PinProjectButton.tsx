@@ -7,6 +7,7 @@ import {
   type SavedProject,
   usePinnedState,
 } from './pinnedProjectsStore'
+import { withPinTransition } from './withPinTransition'
 
 /**
  * Pins the project to the nav's "Pinned" list. Opening the page also adds
@@ -39,7 +40,7 @@ export function PinProjectButton({
   return (
     <button
       type="button"
-      onClick={toggle}
+      onClick={() => withPinTransition(toggle)}
       aria-pressed={isPinned}
       className={cn(
         'flex h-6 items-center justify-center gap-1.5 rounded border px-2 font-medium text-2xs uppercase leading-none transition-colors',

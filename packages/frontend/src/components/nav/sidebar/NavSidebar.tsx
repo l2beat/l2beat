@@ -93,7 +93,7 @@ export function NavSidebar({
               closeMobileSidebar={closeMobileSidebar}
             />
           ))}
-        <SidebarGroup className="mt-5 mb-1">
+        <SidebarGroup className="mt-5 mb-1" data-nav-group="And more">
           <SidebarGroupLabel>And more</SidebarGroupLabel>
         </SidebarGroup>
         {/* One block, so the content's gap between groups does not apply. */}
@@ -141,7 +141,8 @@ function NavGroupItem({
 }) {
   const pathname = usePathname()
   return (
-    <SidebarGroup>
+    // Slides to its place on the next page (pageTransitions.ts).
+    <SidebarGroup data-nav-group={group.title}>
       {group.type === 'multiple' && (
         <SidebarGroupItem>
           <NavCollapsibleItem
@@ -246,7 +247,9 @@ function NavCollapsibleItem({
                       aria-disabled
                       className="text-secondary hover:bg-transparent hover:text-secondary aria-disabled:opacity-100"
                     >
-                      <span className="leading-tight">{item.title}</span>
+                      <span className="leading-tight" data-nav-label>
+                        {item.title}
+                      </span>
                       <SoonBadge className={NAV_SOON_BADGE_CLASS} />
                     </SidebarGroupSubButton>
                   ) : (
@@ -259,7 +262,9 @@ function NavCollapsibleItem({
                       })}
                       onClick={closeMobileSidebar}
                     >
-                      <span className="leading-tight">{item.title}</span>
+                      <span className="leading-tight" data-nav-label>
+                        {item.title}
+                      </span>
                     </SidebarGroupSubButton>
                   )}
                   {item.subLinks && item.subLinks.length > 0 && (

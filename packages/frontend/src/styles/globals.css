@@ -859,6 +859,145 @@
   scrollbar-width: none !important; /* Firefox */
 }
 
+/* While the sidebar's highlight slides in (pageTransitions.ts), the label
+   it is heading for keeps its usual colour until the highlight is under
+   it. */
+html.nav-arriving [data-active="true"]:has(> [data-nav-highlight]) {
+  color: var(--color-primary);
+}
+
+/* Pages opt in to cross-document view transitions; a script in <head>
+   (pageTransitions.ts) skips all but its kinds. Same-page ones run from
+   withViewTransition. Where kinds run together, the later rules win. */
+@view-transition {
+  navigation: auto;
+}
+
+/* The page swaps at once, as without a transition; only the named parts
+   move. This also undoes the theme toggle's reveal, below. */
+html:active-view-transition-type(nav),
+html:active-view-transition-type(crops),
+html:active-view-transition-type(pin),
+html:active-view-transition-type(chips),
+html:active-view-transition-type(badge) {
+  &::view-transition-old(root),
+  &::view-transition-new(root) {
+    animation: none;
+  }
+}
+
+html:active-view-transition-type(nav) {
+  /* A section keeps its new size throughout, so the old one's open
+     sub-links fade inside it instead of over the sections below. */
+  &::view-transition-group(*.nav-group) {
+    overflow: clip;
+  }
+  &::view-transition-old(*.nav-group),
+  &::view-transition-new(*.nav-group) {
+    animation-duration: 150ms;
+  }
+  /* What one page alone shows, e.g. a section the other had scrolled out
+     of the list, or the highlight on a page without one, comes and goes at
+     once, as it would without a transition. */
+  &::view-transition-new(*.nav-group):only-child,
+  &::view-transition-new(nav-highlight):only-child {
+    animation: none;
+  }
+  &::view-transition-old(*.nav-group):only-child,
+  &::view-transition-old(nav-highlight):only-child {
+    animation: none;
+    opacity: 0;
+  }
+  /* The highlight slides under the labels. Over each label lies its copy
+     in the highlight's colour, hidden until the script clips both to where
+     the highlight is; the script also moves both with their section. */
+  &::view-transition-group(*.nav-label),
+  &::view-transition-group(*.nav-ink),
+  &::view-transition-new(*.nav-label),
+  &::view-transition-new(*.nav-ink) {
+    animation: none;
+  }
+  &::view-transition-new(*.nav-ink) {
+    clip-path: inset(0 0 100% 0);
+  }
+}
+
+/* The CROPS banner grows into the home card: the snapshots scale with the
+   box, so the outgoing text would ghost over the incoming at the wrong
+   size. It hands over early, blurred so the two read as one thing
+   changing. */
+html:active-view-transition-type(crops) {
+  &::view-transition-old(crops-banner),
+  &::view-transition-new(crops-banner) {
+    animation: 200ms cubic-bezier(0.23, 1, 0.32, 1) both vt-blur-out;
+  }
+  &::view-transition-new(crops-banner) {
+    animation-name: vt-blur-in;
+  }
+}
+
+/* The others close the gap a removed chip leaves; it shrinks away. */
+html:active-view-transition-type(chips) {
+  &::view-transition-group(*.filter-chip) {
+    animation-duration: 250ms;
+    animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  &::view-transition-old(*.filter-chip),
+  &::view-transition-new(*.filter-chip) {
+    animation: none;
+  }
+  &::view-transition-old(*.filter-chip):only-child {
+    animation: 150ms cubic-bezier(0.23, 1, 0.32, 1) both vt-shrink-out;
+  }
+}
+
+/* The badge picked flies into the big slot, the one it replaces among the
+   related; the dialog's text swaps at once. */
+html:active-view-transition-type(badge) {
+  &::view-transition-group(*.badge) {
+    animation-duration: 300ms;
+    animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  &::view-transition-old(*.badge):only-child,
+  &::view-transition-new(*.badge):only-child {
+    animation-duration: 150ms;
+  }
+}
+
+@keyframes vt-shrink-out {
+  to {
+    opacity: 0;
+    scale: 0.9;
+  }
+}
+
+/* Rows slide to their new places; their contents crossfade. */
+html:active-view-transition-type(pin) {
+  &::view-transition-group(*.pin-row),
+  &::view-transition-group(*.pin-label) {
+    animation-duration: 300ms;
+    animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  &::view-transition-old(*.pin-row),
+  &::view-transition-new(*.pin-row) {
+    animation-duration: 150ms;
+  }
+}
+
+@keyframes vt-blur-out {
+  to {
+    opacity: 0;
+    filter: blur(4px);
+  }
+}
+
+@keyframes vt-blur-in {
+  from {
+    opacity: 0;
+    filter: blur(4px);
+  }
+}
+
 /* Theme toggle view transition */
 ::view-transition-old(root) {
   animation: none;
