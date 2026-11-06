@@ -82,6 +82,22 @@ describe(toRecentPoints.name, () => {
     ).toEqual([[DAY + 14 * H, 600, 700]])
   })
 
+  it('has the hours without blocks between, at zero', () => {
+    const recent: RecentHours = {
+      hours: new Map([
+        [DAY + 13 * H, { count: 3600, uopsCount: 4000 }],
+        [DAY + 15 * H, { count: 600, uopsCount: 700 }],
+      ]),
+      until: DAY + 15 * H + 900,
+    }
+
+    expect(toRecentPoints(recent, 'hour', DAY)).toEqual([
+      [DAY + 13 * H, 3600, 4000],
+      [DAY + 14 * H, 0, 0],
+      [DAY + 15 * H, 600, 700],
+    ])
+  })
+
   it('leaves out an hour under way for less than 10 minutes', () => {
     expect(toRecentPoints(recent(DAY + 14 * H + 300), 'hour', DAY)).toEqual([
       [DAY + 13 * H, 3600, 4000],
