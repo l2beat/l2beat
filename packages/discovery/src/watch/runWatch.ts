@@ -1,4 +1,5 @@
 import { type json, UnixTime } from '@l2beat/shared-pure'
+import { assertWatchValueNotPending } from './pendingItems'
 import type { WatchConfig, Watched } from './WatchReader'
 import type { WatchContext } from './WatchTemplate'
 import { sortDeep } from './watchedValue'
@@ -20,6 +21,7 @@ export async function runWatch(
         cause: { name: config.name, key: watch.key, error },
       })
     }
+    assertWatchValueNotPending(watch.key, value)
     values[watch.key] = sortDeep(value)
   }
   return { timestamp, values }
