@@ -2,7 +2,14 @@ import { assert, type json } from '@l2beat/shared-pure'
 import type { v as z } from '@l2beat/validate'
 import type { IRpcClient } from '../../clients2'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
-import { BeaconChainError, type Blob as BlobSchema, BlobsSchema } from './types'
+import {
+  BeaconChainError,
+  type Blob as BlobSchema,
+  BlobsSchema,
+  GenesisSchema,
+} from './types'
+
+const SECONDS_PER_SLOT = 12
 
 export type Blob = z.infer<typeof BlobSchema>
 export interface BlobsInBlock {
@@ -18,16 +25,10 @@ interface Dependencies extends ClientCoreDependencies {
 }
 
 export class BlobClient extends ClientCore {
+  private genesisTime: number | undefined
+
   constructor(private readonly $: Dependencies) {
     super({ ...$ })
-  }
-
-  async getBlobsByVersionedHashesAndBlockNumber(
-    blobVersionedHashes: string[],
-    blockNumber: number,
-  ): Promise<BlobsInBlock> {
-    const blobs = await this.getBlobs(blockNumber, blobVersionedHashes)
-    return { blobs, blockNumber }
   }
 
   async getRelevantBlobs(txHash: string): Promise<BlobsInBlock> {
@@ -58,12 +59,11 @@ export class BlobClient extends ClientCore {
     // Without the param the endpoint answers every blob of the block
     if (versionedHashes.length === 0) return []
 
-    const blockId = await this.getBeaconBlockId(blockNumber)
+    const slot = await this.getSlot(blockNumber)
     // The spec forbids repeating a hash, which a tx may do
-    const query = [...new Set(versionedHashes)]
-      .map((hash) => `versioned_hashes=${hash}`)
-      .join('&')
-    const endpoint = `eth/v1/beacon/blobs/${blockId}?${query}`
+    const hashes = [...new Set(versionedHashes)]
+    const query = hashes.map((hash) => `versioned_hashes=${hash}`).join('&')
+    const endpoint = `eth/v1/beacon/blobs/${slot}?${query}`
 
     const response = await this.call(endpoint)
     const parsed = BlobsSchema.safeParse(response)
@@ -79,14 +79,10 @@ export class BlobClient extends ClientCore {
     // A beacon block without these blobs answers an empty list, not an error.
     // A blob posted twice in the block may come back twice, so count distinct
     // blobs: one per hash found
-    if (new Set(parsed.data.data).size < new Set(versionedHashes).size) {
+    const received = new Set(parsed.data.data).size
+    if (received < hashes.length) {
       throw new Error('Beacon node answered fewer blobs than asked for', {
-        cause: {
-          blockNumber,
-          blockId,
-          requested: versionedHashes.length,
-          received: parsed.data.data.length,
-        },
+        cause: { blockNumber, slot, requested: hashes.length, received },
       })
     }
 
@@ -121,9 +117,29 @@ export class BlobClient extends ClientCore {
     return { success: true }
   }
 
-  // this is very hacky, but it's the only way i know to get the beacon block id
-  // if you know a better way, please fix it
-  private async getBeaconBlockId(blockNumber: number): Promise<string> {
-    return await this.$.rpcClient.getBlockParentBeaconRoot(blockNumber + 1)
+  // An execution block's timestamp is the start of the slot whose beacon block
+  // commits to it. The parent beacon root of the next block is no substitute:
+  // under ePBS (Glamsterdam) it can name a beacon block whose payload never
+  // came
+  private async getSlot(blockNumber: number): Promise<number> {
+    const [timestamp, genesisTime] = await Promise.all([
+      this.$.rpcClient.getBlockTimestamp(blockNumber),
+      this.getGenesisTime(),
+    ])
+    const sinceGenesis = timestamp - genesisTime
+    if (sinceGenesis % SECONDS_PER_SLOT !== 0) {
+      throw new Error('Block timestamp is off the slot grid', {
+        cause: { blockNumber, timestamp, genesisTime },
+      })
+    }
+    return sinceGenesis / SECONDS_PER_SLOT
+  }
+
+  private async getGenesisTime(): Promise<number> {
+    if (this.genesisTime === undefined) {
+      const response = await this.call('eth/v1/beacon/genesis')
+      this.genesisTime = Number(GenesisSchema.parse(response).data.genesis_time)
+    }
+    return this.genesisTime
   }
 }

@@ -20,16 +20,14 @@ describe(BlobClient.name, () => {
     })
 
     it('should return blobs for type 3 transaction', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({ data: ['blob1', 'blob2'] }),
-      })
+      const http = beaconAnswering(['blob1', 'blob2'])
       const rpcClient = mockObject<RpcClient>({
         getTransaction: mockFn().returns({
           type: '0x3',
           blockNumber: 1,
           blobVersionedHashes: ['0x01aa', '0x01bb'],
         }),
-        getBlockParentBeaconRoot: async () => 'root',
+        getBlockTimestamp: async () => TIMESTAMP,
       })
       const client = mockClient({
         http,
@@ -39,8 +37,8 @@ describe(BlobClient.name, () => {
 
       const result = await client.getRelevantBlobs('txHash')
 
-      expect(http.fetch.calls[0].args[0]).toEqual(
-        'example.com/eth/v1/beacon/blobs/root?versioned_hashes=0x01aa&versioned_hashes=0x01bb',
+      expect(http.fetch.calls[1].args[0]).toEqual(
+        `example.com/eth/v1/beacon/blobs/${SLOT}?versioned_hashes=0x01aa&versioned_hashes=0x01bb`,
       )
       expect(result).toEqual({
         blockNumber: 1,
@@ -64,17 +62,9 @@ describe(BlobClient.name, () => {
   })
 
   describe(BlobClient.prototype.getBlobs.name, () => {
-    it('asks the beacon block after the given block for the hashes', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({
-          execution_optimistic: false,
-          finalized: true,
-          data: ['blob1', 'blob2'],
-        }),
-      })
-      const rpcClient = mockObject<RpcClient>({
-        getBlockParentBeaconRoot: async () => 'root',
-      })
+    it('asks the beacon block at the slot of the block timestamp', async () => {
+      const http = beaconAnswering(['blob1', 'blob2'])
+      const rpcClient = rpcAt(TIMESTAMP)
       const client = mockClient({
         http,
         beaconApiUrl: 'example.com/',
@@ -83,11 +73,35 @@ describe(BlobClient.name, () => {
 
       const result = await client.getBlobs(1, ['0x01aa', '0x01bb'])
 
-      expect(rpcClient.getBlockParentBeaconRoot).toHaveBeenOnlyCalledWith(2)
-      expect(http.fetch.calls[0].args[0]).toEqual(
-        'example.com/eth/v1/beacon/blobs/root?versioned_hashes=0x01aa&versioned_hashes=0x01bb',
-      )
+      expect(rpcClient.getBlockTimestamp).toHaveBeenOnlyCalledWith(1)
+      expect(http.fetch.calls.map((call) => call.args[0])).toEqual([
+        'example.com/eth/v1/beacon/genesis',
+        `example.com/eth/v1/beacon/blobs/${SLOT}?versioned_hashes=0x01aa&versioned_hashes=0x01bb`,
+      ])
       expect(result).toEqual([{ data: 'blob1' }, { data: 'blob2' }])
+    })
+
+    it('asks for the genesis once', async () => {
+      const http = beaconAnswering(['blob'])
+      const client = mockClient({ http, rpcClient: rpcAt(TIMESTAMP) })
+
+      await client.getBlobs(1, ['0x01aa'])
+      await client.getBlobs(2, ['0x01aa'])
+
+      expect(
+        http.fetch.calls.filter((call) =>
+          call.args[0].endsWith('eth/v1/beacon/genesis'),
+        ).length,
+      ).toEqual(1)
+    })
+
+    it('throws for a timestamp off the slot grid', async () => {
+      const http = beaconAnswering(['blob'])
+      const client = mockClient({ http, rpcClient: rpcAt(TIMESTAMP + 6) })
+
+      await expect(client.getBlobs(1, ['0x01aa'])).toBeRejectedWith(
+        'Block timestamp is off the slot grid',
+      )
     })
 
     it('asks nothing for no hashes', async () => {
@@ -101,34 +115,24 @@ describe(BlobClient.name, () => {
     })
 
     it('asks once for a hash the tx repeats', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({ data: ['blob'] }),
-      })
-      const rpcClient = mockObject<RpcClient>({
-        getBlockParentBeaconRoot: async () => 'root',
-      })
+      const http = beaconAnswering(['blob'])
       const client = mockClient({
         http,
         beaconApiUrl: 'example.com/',
-        rpcClient,
+        rpcClient: rpcAt(TIMESTAMP),
       })
 
       const result = await client.getBlobs(1, ['0x01aa', '0x01aa'])
 
-      expect(http.fetch.calls[0].args[0]).toEqual(
-        'example.com/eth/v1/beacon/blobs/root?versioned_hashes=0x01aa',
+      expect(http.fetch.calls[1].args[0]).toEqual(
+        `example.com/eth/v1/beacon/blobs/${SLOT}?versioned_hashes=0x01aa`,
       )
       expect(result).toEqual([{ data: 'blob' }])
     })
 
     it('keeps a blob that two txs of the block posted', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({ data: ['blob', 'blob'] }),
-      })
-      const rpcClient = mockObject<RpcClient>({
-        getBlockParentBeaconRoot: async () => 'root',
-      })
-      const client = mockClient({ http, rpcClient })
+      const http = beaconAnswering(['blob', 'blob'])
+      const client = mockClient({ http, rpcClient: rpcAt(TIMESTAMP) })
 
       const result = await client.getBlobs(1, ['0x01aa'])
 
@@ -136,13 +140,8 @@ describe(BlobClient.name, () => {
     })
 
     it('throws when the node answers fewer blobs than asked for', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({ data: [] }),
-      })
-      const rpcClient = mockObject<RpcClient>({
-        getBlockParentBeaconRoot: async () => 'root',
-      })
-      const client = mockClient({ http, rpcClient })
+      const http = beaconAnswering([])
+      const client = mockClient({ http, rpcClient: rpcAt(TIMESTAMP) })
 
       await expect(client.getBlobs(1, ['0x01aa'])).toBeRejectedWith(
         'Beacon node answered fewer blobs than asked for',
@@ -150,13 +149,8 @@ describe(BlobClient.name, () => {
     })
 
     it('throws when a doubled blob stands in for a missing one', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({ data: ['blob', 'blob'] }),
-      })
-      const rpcClient = mockObject<RpcClient>({
-        getBlockParentBeaconRoot: async () => 'root',
-      })
-      const client = mockClient({ http, rpcClient })
+      const http = beaconAnswering(['blob', 'blob'])
+      const client = mockClient({ http, rpcClient: rpcAt(TIMESTAMP) })
 
       await expect(client.getBlobs(1, ['0x01aa', '0x01bb'])).toBeRejectedWith(
         'Beacon node answered fewer blobs than asked for',
@@ -223,4 +217,22 @@ function mockClient(deps: {
     generateId: deps.generateId,
     sourceName: 'test',
   })
+}
+
+// Mainnet genesis and the slot of block 26354565
+const GENESIS = 1606824023
+const SLOT = 15594090
+const TIMESTAMP = GENESIS + 12 * SLOT
+
+function beaconAnswering(blobs: string[]) {
+  return mockObject<HttpClient>({
+    fetch: async (url: string) =>
+      url.endsWith('eth/v1/beacon/genesis')
+        ? { data: { genesis_time: String(GENESIS) } }
+        : { data: blobs },
+  })
+}
+
+function rpcAt(timestamp: number) {
+  return mockObject<RpcClient>({ getBlockTimestamp: async () => timestamp })
 }

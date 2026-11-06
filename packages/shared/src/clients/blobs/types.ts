@@ -8,6 +8,10 @@ export const BlobsSchema = v.object({
   data: v.array(v.string()),
 })
 
+export const GenesisSchema = v.object({
+  data: v.object({ genesis_time: v.string() }),
+})
+
 export const BeaconChainError = v.object({
   code: v.number(),
   message: v.string(),
