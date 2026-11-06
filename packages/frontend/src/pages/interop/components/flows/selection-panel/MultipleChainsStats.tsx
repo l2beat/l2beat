@@ -86,7 +86,7 @@ export function MultipleChainsStats({
           items={pairData.topProtocols.map((p) => ({
             ...p,
             title: p.name,
-            href: linkTopProtocols ? `/interop/protocols/${p.slug}` : undefined,
+            href: linkTopProtocols ? `/projects/${p.slug}` : undefined,
           }))}
         />
       )}

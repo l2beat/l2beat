@@ -16,7 +16,7 @@ const CASES = [
   },
   {
     name: 'Project TVS',
-    page: '/layer2s/projects/arbitrum',
+    page: '/projects/arbitrum',
     legend: '#tvs .chart-legend',
     finishesOnboarding: true,
   },

@@ -33,9 +33,14 @@ import { ProjectL2Stats } from './L2ProjectStats'
 
 interface Props {
   project: ProjectL2Entry
+  /**
+   * Whether this is the page's summary section. A page that shows it next to
+   * another summary puts the section on their shared wrapper.
+   */
+  asSummarySection?: boolean
 }
 
-export function ProjectL2Summary({ project }: Props) {
+export function ProjectL2Summary({ project, asSummarySection = true }: Props) {
   const hasTokenWarnings =
     project.header.tvs && project.header.tvs?.tokens.warnings?.length > 0
 
@@ -52,8 +57,8 @@ export function ProjectL2Summary({ project }: Props) {
       : 'neutral'
   return (
     <section
-      id="summary"
-      data-role="nav-section"
+      id={asSummarySection ? 'summary' : undefined}
+      data-role={asSummarySection ? 'nav-section' : undefined}
       className="w-full scroll-mt-[100vh] border-divider px-4 max-md:border-b md:rounded-lg md:bg-surface-primary md:p-6"
     >
       <div className="flex">
@@ -84,7 +89,7 @@ export function ProjectL2Summary({ project }: Props) {
                     }
                     href={
                       project.header.tvs
-                        ? `/layer2s/projects/${project.slug}/tvs-breakdown`
+                        ? `/projects/${project.slug}/tvs-breakdown`
                         : undefined
                     }
                   >
@@ -152,7 +157,7 @@ export function ProjectL2Summary({ project }: Props) {
                   <ConditionalLink
                     href={
                       project.header.tvs
-                        ? `/layer2s/projects/${project.slug}/tvs-breakdown`
+                        ? `/projects/${project.slug}/tvs-breakdown`
                         : undefined
                     }
                   >
@@ -211,7 +216,7 @@ export function ProjectL2Summary({ project }: Props) {
                 </TooltipContent>
               </Tooltip>
               <CustomLink
-                href={`/layer2s/projects/${project.slug}/tvs-breakdown`}
+                href={`/projects/${project.slug}/tvs-breakdown`}
                 className="mt-2 font-medium text-label-value-13 md:hidden"
               >
                 View TVS breakdown

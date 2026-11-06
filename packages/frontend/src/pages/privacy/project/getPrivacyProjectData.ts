@@ -2,8 +2,11 @@ import type { InMemoryCache } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getPrivacyProjectDetails } from '~/server/features/privacy/getPrivacyProjectDetails'
 import { getPrivacyProjectEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
-import { getProjectSectionLinks } from '~/server/features/projects/getProjectSectionLinks'
+import { getProjectSections } from '~/server/features/projects/getProjectSections'
 import { getProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
+import { mergeProjectSections } from '~/server/features/projects/mergeProjectSections'
+import { getZkCatalogProjectEntry } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
+import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getPrivacyMetadataDescription } from '~/ssr/head/projectMetaDescriptions'
 import { getWebPageStructuredData } from '~/ssr/head/structured-data/getWebPageStructuredData'
@@ -60,19 +63,39 @@ function getCachedPrivacyProjectPage(
 
 async function loadPrivacyProjectPage(manifest: Manifest, slug: string) {
   const helpers = getSsrHelpers()
-  const [appLayoutProps, details, sectionLinks, versionLinks] =
+  const [appLayoutProps, details, projectSections, versionLinks] =
     await Promise.all([
       getAppLayoutProps(),
       getPrivacyProjectDetails(slug),
-      getProjectSectionLinks(slug),
-      getProjectVersionLinks(slug, 'privacy'),
+      getProjectSections(slug),
+      getProjectVersionLinks(slug),
     ])
 
   if (!details) {
     return undefined
   }
 
-  const projectEntry = await getPrivacyProjectEntry(details, helpers)
+  const [projectEntry, zkCatalog] = await Promise.all([
+    getPrivacyProjectEntry(details, helpers),
+    getZkCatalogEntry(slug),
+  ])
+  if (zkCatalog) {
+    projectEntry.sections = mergeProjectSections(
+      projectEntry.sections,
+      zkCatalog.sections,
+      {
+        insertAfterId: 'verifiers',
+        // The ZK Catalog's versions say more about the same data.
+        replace: ['trusted-setups', 'verifiers'],
+        // The same value as Value Locked. TODO: decide which to show.
+        drop: ['tvs'],
+      },
+    )
+    for (const section of projectEntry.sections) {
+      // Links to the ZK Catalog page's Value Secured land on Value Locked.
+      if (section.type === 'TvsValueSection') section.props.aliasIds = ['tvs']
+    }
+  }
 
   return {
     head: {
@@ -88,7 +111,7 @@ async function loadPrivacyProjectPage(manifest: Manifest, slug: string) {
         }),
         // Derived from the slug, not the request URL: the cache entry is
         // shared by every request for the project, including the .md one.
-        url: `/privacy/projects/${details.slug}`,
+        url: `/projects/${details.slug}`,
         openGraph: {
           image: `/meta-images/privacy/projects/${details.slug}/opengraph-image.png`,
         },
@@ -103,9 +126,27 @@ async function loadPrivacyProjectPage(manifest: Manifest, slug: string) {
     props: {
       ...appLayoutProps,
       entry: projectEntry,
-      sectionLinks,
+      zkCatalog: zkCatalog && {
+        creator: zkCatalog.creator,
+        header: {
+          trustedSetupsByProofSystem:
+            zkCatalog.header.trustedSetupsByProofSystem,
+          techStack: zkCatalog.header.techStack,
+        },
+      },
+      projectSections,
       versionLinks,
       queryState: helpers.dehydrate(),
     },
   }
+}
+
+/** The ZK Catalog page of a privacy protocol that is also in the catalog. */
+async function getZkCatalogEntry(slug: string) {
+  const project = await ps.getProject({
+    slug,
+    select: ['zkCatalogInfo', 'display', 'statuses'],
+    optional: ['archivedAt', 'milestones', 'tvsInfo'],
+  })
+  return project && getZkCatalogProjectEntry(project)
 }

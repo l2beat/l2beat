@@ -11,6 +11,7 @@ import { projectDetailsToNavigationSections } from '~/components/projects/naviga
 import { ProjectDetails } from '~/components/projects/ProjectDetails'
 import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
+import { SummaryViewSwitch } from '~/components/projects/SummaryViewSwitch'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
@@ -19,13 +20,17 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProjectL2Entry } from '~/server/features/layer2s/project/getL2ProjectEntry'
-import type { ProjectSectionLink } from '~/server/features/projects/getProjectSectionLinks'
+import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
+import type { ProjectSection } from '~/server/features/projects/getProjectSections'
 import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
+import { PrivacyProjectSummaryCard } from '../../privacy/project/components/PrivacyProjectSummaryCard'
 import { ProjectL2Summary } from './components/L2ProjectSummary'
 
 interface Props extends AppLayoutProps {
   projectEntry: ProjectL2Entry
-  sectionLinks: ProjectSectionLink[]
+  /** For a scaling project that is also a privacy protocol. */
+  privacyEntry?: ProjectPrivacyEntry
+  projectSections: ProjectSection[]
   versionLinks?: ProjectVersionLinks
   queryState: DehydratedState
   selectedUpdateId?: string
@@ -33,7 +38,8 @@ interface Props extends AppLayoutProps {
 
 export function L2ProjectPage({
   projectEntry,
-  sectionLinks,
+  privacyEntry,
+  projectSections,
   versionLinks,
   queryState,
   selectedUpdateId,
@@ -89,7 +95,7 @@ export function L2ProjectPage({
                   <ProjectHeader
                     project={projectEntry}
                     section="layer2s"
-                    sectionLinks={sectionLinks}
+                    projectSections={projectSections}
                     versions={versionLinks}
                     ongoingAnomaly={projectEntry.header.ongoingAnomaly}
                     recentUpdatesCount={projectEntry.header.recentUpdatesCount}
@@ -120,7 +126,35 @@ export function L2ProjectPage({
                   </div>
                 </div>
                 <div className="row-start-2">
-                  <ProjectL2Summary project={projectEntry} />
+                  {privacyEntry ? (
+                    // TODO: one summary for the merged page.
+                    <SummaryViewSwitch
+                      views={[
+                        {
+                          id: 'scaling',
+                          label: 'Scaling',
+                          content: (
+                            <ProjectL2Summary
+                              project={projectEntry}
+                              asSummarySection={false}
+                            />
+                          ),
+                        },
+                        {
+                          id: 'privacy',
+                          label: 'Privacy',
+                          content: (
+                            <PrivacyProjectSummaryCard
+                              entry={privacyEntry}
+                              asSummarySection={false}
+                            />
+                          ),
+                        },
+                      ]}
+                    />
+                  ) : (
+                    <ProjectL2Summary project={projectEntry} />
+                  )}
 
                   {projectEntry.header.category === 'Other' &&
                     projectEntry.reasonsForBeingOther &&

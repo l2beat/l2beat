@@ -179,7 +179,7 @@ describe(getInteropTokenRelationsGraph.name, () => {
             id: ProjectId('base'),
             name: 'Base Bridge',
             iconUrl: '/icons/base.png',
-            href: '/interop/protocols/base',
+            href: '/projects/base',
           },
         ],
       },

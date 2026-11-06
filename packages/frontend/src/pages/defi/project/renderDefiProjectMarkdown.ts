@@ -14,7 +14,7 @@ export function renderDefiProjectMarkdown(
 ): string {
   return renderProjectMarkdown({
     name: entry.name,
-    pagePath: `/defi/projects/${entry.slug}`,
+    pagePath: `/projects/${entry.slug}`,
     summary: {
       warnings: compact([
         entry.isUnderReview && getUnderReviewText('config'),

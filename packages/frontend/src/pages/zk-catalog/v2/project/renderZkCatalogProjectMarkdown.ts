@@ -17,7 +17,7 @@ export function renderZkCatalogProjectMarkdown(
 ): string {
   return renderProjectMarkdown({
     name: entry.name,
-    pagePath: `/zk-catalog/${entry.slug}`,
+    pagePath: `/projects/${entry.slug}`,
     summary: {
       warnings: compact([
         ...getProjectStatusWarnings(entry),

@@ -55,7 +55,7 @@ export function InteropTopProtocols({
             <HomeRank rank={index + 1} />
             <HomeRankedName
               name={name}
-              href={`/interop/protocols/${slug}`}
+              href={`/projects/${slug}`}
               iconUrl={iconUrl}
               className="flex-1"
             />

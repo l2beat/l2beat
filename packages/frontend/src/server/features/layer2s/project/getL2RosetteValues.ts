@@ -47,7 +47,7 @@ function getL2RosetteValues(
   sectionsInfo: SectionsInfo,
   projectSlug: string,
 ): RosetteValueTuple {
-  const baseUrl = `/layer2s/projects/${projectSlug}`
+  const baseUrl = `/projects/${projectSlug}`
   const fallbackHref = `${baseUrl}#risk-analysis`
   return [
     {

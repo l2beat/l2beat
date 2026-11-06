@@ -68,7 +68,7 @@ export async function getL2DaSolutions(
             daLayer.id === ProjectId.ETHEREUM
               ? ETHEREUM_PROJECT_PATH
               : daLayer.scalingInfo
-                ? `/layer2s/projects/${daLayer.slug}`
+                ? `/projects/${daLayer.slug}`
                 : undefined,
           bridgeName: daBridge?.name ?? 'No bridge',
           hostChainName: project.scalingInfo.hostChain.name,

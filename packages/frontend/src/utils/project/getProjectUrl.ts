@@ -34,15 +34,10 @@ export function getProjectUrl(
   if (project.daBridge || project.daLayer) {
     return undefined
   }
-  if (project.privacyInfo) {
-    return `/privacy/projects/${project.slug}`
-  }
-  if (project.defiInfo) {
-    return `/defi/projects/${project.slug}`
-  }
-  // Scaling projects with a canonical bridge show its interop data on their own page.
-  if (project.interopConfig && !project.scalingInfo) {
-    return `/interop/protocols/${project.slug}`
-  }
-  return `/layer2s/projects/${project.slug}`
+  return getProjectPath(project.slug)
+}
+
+/** Every project's page, whichever sections it is in. */
+export function getProjectPath(slug: string): `/projects/${string}` {
+  return `/projects/${slug}`
 }

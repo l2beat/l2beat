@@ -221,7 +221,7 @@ function getPastDayData(
           ),
           totalPosted: Number(largestPoster.totalSize),
           href: largestPoster.slug
-            ? `/layer2s/projects/${largestPoster.slug}`
+            ? `/projects/${largestPoster.slug}`
             : undefined,
         }
       : undefined,
@@ -246,7 +246,7 @@ function getMockDaThroughputTableData(
                   name: 'Base',
                   percentage: 12,
                   totalPosted: 123123,
-                  href: '/layer2s/projects/base',
+                  href: '/projects/base',
                 },
                 avgCapacityUtilization: 24,
                 totalPosted: 10312412,
@@ -279,7 +279,7 @@ function getMockDaThroughputTableData(
                   name: 'Base',
                   percentage: 40,
                   totalPosted: 123123,
-                  href: '/layer2s/projects/base',
+                  href: '/projects/base',
                 },
                 avgThroughputPerSecond: 100000,
               },

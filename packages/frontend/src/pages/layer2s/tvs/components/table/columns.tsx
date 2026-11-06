@@ -26,7 +26,7 @@ export const getL2TvsColumns = (
 ) => [
   ...getL2CommonProjectColumns(
     columnHelper,
-    (row) => `/layer2s/projects/${row.slug}#tvs`,
+    (row) => `/projects/${row.slug}#tvs`,
     opts,
   ),
   columnHelper.group({
@@ -65,7 +65,7 @@ export const getL2TvsColumns = (
             }
             return (
               <TotalValueSecuredCell
-                href={`/layer2s/projects/${ctx.row.original.slug}/tvs-breakdown`}
+                href={`/projects/${ctx.row.original.slug}/tvs-breakdown`}
                 tvsWarnings={ctx.row.original.tvs.warnings}
                 total={data.breakdown.total}
                 breakdown={
@@ -327,7 +327,7 @@ function BreakdownCell(
     <TableLink
       href={
         data.breakdown[props.dataKey] > 0
-          ? `/layer2s/projects/${props.row.slug}/tvs-breakdown?filters=${filters}#tvs-breakdown-token-table`
+          ? `/projects/${props.row.slug}/tvs-breakdown?filters=${filters}#tvs-breakdown-token-table`
           : undefined
       }
     >

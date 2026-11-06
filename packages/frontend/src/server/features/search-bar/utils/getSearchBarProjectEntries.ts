@@ -91,7 +91,7 @@ export function getSearchBarProjectEntries<
   if (project.scalingInfo) {
     results.push({
       ...common,
-      href: `/layer2s/projects/${project.slug}`,
+      href: `/projects/${project.slug}`,
       category: 'l2',
       kind: project.scalingInfo?.layer ?? 'layer2',
       l2Category: project.scalingInfo?.type,
@@ -109,7 +109,7 @@ export function getSearchBarProjectEntries<
     results.push({
       ...common,
       name: project.interopConfig.name ?? project.name,
-      href: `/interop/protocols/${project.slug}`,
+      href: `/projects/${project.slug}`,
       category: 'interop',
       kind: 'interop',
       tags: dedupeTags([
@@ -121,32 +121,34 @@ export function getSearchBarProjectEntries<
     })
   }
 
-  if (project.zkCatalogInfo) {
-    results.push({
-      ...common,
-      href: `/zk-catalog/${project.slug}`,
-      category: 'zkCatalog',
-      kind: 'zkCatalog',
-    })
-  }
-
   if (project.privacyInfo) {
     results.push({
       ...common,
-      href: `/privacy/projects/${project.slug}`,
+      href: `/projects/${project.slug}`,
       category: 'privacy',
       kind: 'privacy',
+    })
+  }
+
+  if (project.zkCatalogInfo) {
+    results.push({
+      ...common,
+      href: `/projects/${project.slug}`,
+      category: 'zkCatalog',
+      kind: 'zkCatalog',
     })
   }
 
   if (env.CLIENT_SIDE_DEFI_ENABLED && project.defiInfo) {
     results.push({
       ...common,
-      href: `/defi/projects/${project.slug}`,
+      href: `/projects/${project.slug}`,
       category: 'defi',
       kind: 'defi',
     })
   }
 
-  return results
+  // One page per project: the first section's entry stands for the page,
+  // privacy before the ZK Catalog, as the page is built on the privacy one.
+  return results.slice(0, 1)
 }

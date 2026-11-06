@@ -2,7 +2,7 @@ import type { InMemoryCache } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getDefiProjectEntry } from '~/server/features/defi/project/getDefiProjectEntry'
 import { getDefiProjectTotalValueLocked } from '~/server/features/defi/project/getDefiProjectTotalValueLocked'
-import { getProjectSectionLinks } from '~/server/features/projects/getProjectSectionLinks'
+import { getProjectSections } from '~/server/features/projects/getProjectSections'
 import { getProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getProjectMetadataDescription } from '~/ssr/head/projectMetaDescriptions'
@@ -79,14 +79,13 @@ function getCachedTotalValueLocked(slug: string, cache: InMemoryCache) {
 
 async function loadDefiProjectPage(manifest: Manifest, slug: string) {
   const helpers = getSsrHelpers()
-  const [appLayoutProps, entry, sectionLinks, versionLinks] = await Promise.all(
-    [
+  const [appLayoutProps, entry, projectSections, versionLinks] =
+    await Promise.all([
       getAppLayoutProps(),
       getDefiProjectEntry(slug, helpers),
-      getProjectSectionLinks(slug),
-      getProjectVersionLinks(slug, 'defi'),
-    ],
-  )
+      getProjectSections(slug),
+      getProjectVersionLinks(slug),
+    ])
 
   if (!entry) {
     return undefined
@@ -101,7 +100,7 @@ async function loadDefiProjectPage(manifest: Manifest, slug: string) {
         description: getProjectMetadataDescription(entry),
         // Derived from the slug, not the request URL: the cache entry is
         // shared by every request for the project, including the .md one.
-        url: `/defi/projects/${entry.slug}`,
+        url: `/projects/${entry.slug}`,
         openGraph: {
           image: `/meta-images/defi/projects/${entry.slug}/opengraph-image.png`,
         },
@@ -110,7 +109,7 @@ async function loadDefiProjectPage(manifest: Manifest, slug: string) {
     props: {
       ...appLayoutProps,
       entry,
-      sectionLinks,
+      projectSections,
       versionLinks,
       queryState: helpers.dehydrate(),
     },

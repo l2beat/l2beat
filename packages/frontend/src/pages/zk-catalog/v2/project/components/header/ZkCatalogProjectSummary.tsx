@@ -61,6 +61,26 @@ export function ProjectZkCatalogSummary({ project }: Props) {
   )
 }
 
+/** The ZK Catalog header's details, for a page built on another section's. */
+export function ZkCatalogHeaderDetails({
+  header,
+}: {
+  header: Pick<
+    ProjectZkCatalogEntry['header'],
+    'trustedSetupsByProofSystem' | 'techStack'
+  >
+}) {
+  return (
+    <>
+      <TrustedSetupsByProofSystemSection
+        trustedSetupsByProofSystem={header.trustedSetupsByProofSystem}
+      />
+      <HorizontalSeparator className="my-4 md:hidden" />
+      <TechStackSection techStack={header.techStack} />
+    </>
+  )
+}
+
 export function TrustedSetupsByProofSystemSection({
   trustedSetupsByProofSystem,
   variant = 'zkCatalog',

@@ -14,7 +14,7 @@ describe(getInteropChainHref.name, () => {
         { id: 'polygonpos', isUpcoming: false },
         l2ProjectSlugById,
       ),
-    ).toEqual('/layer2s/projects/polygon-pos')
+    ).toEqual('/projects/polygon-pos')
   })
 
   it('links Ethereum to its own page', () => {
@@ -50,6 +50,6 @@ describe(getInteropChainHref.name, () => {
         { id: 'arbitrum', isUpcoming: true },
         l2ProjectSlugById,
       ),
-    ).toEqual('/layer2s/projects/arbitrum')
+    ).toEqual('/projects/arbitrum')
   })
 })

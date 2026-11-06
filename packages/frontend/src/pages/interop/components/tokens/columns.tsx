@@ -55,7 +55,7 @@ function getCommonColumns<T extends CommonRow>(
 
           return (
             <a
-              href={`/interop/protocols/${topProtocol.slug}`}
+              href={`/projects/${topProtocol.slug}`}
               className="flex items-center gap-1.5 hover:underline"
             >
               <img

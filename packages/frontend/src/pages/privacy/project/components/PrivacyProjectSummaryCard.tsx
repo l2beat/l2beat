@@ -1,0 +1,137 @@
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { VerticalSeparator } from '~/components/core/VerticalSeparator'
+import { PrivacyAttributeTag } from '~/components/PrivacyAttributeTag'
+import { ProjectIconList } from '~/components/ProjectIconList'
+import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
+import { AboutSection } from '~/components/projects/sections/AboutSection'
+import { BadgesSection } from '~/components/projects/sections/BadgesSection'
+import { BigPizzaRosette } from '~/components/rosette/pizza/BigPizzaRosette'
+import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
+import { getPrivacyAdversariesSummary } from '~/server/features/privacy/utils/toPrivacyAdversariesSummary'
+import { cn } from '~/utils/cn'
+import {
+  getPrivacyAdversaryRosetteValues,
+  PRIVACY_ADVERSARIES_SECTION_ID,
+} from '../../adversaries/privacyAdversaryUi'
+import { PrivacyProjectRiskProfile } from './PrivacyProjectRiskProfile'
+import { MOBILE_SUMMARY_ROWS, PrivacyProjectStats } from './PrivacyProjectStats'
+import { PrivacyReferenceAppStat } from './PrivacyReferenceAppStat'
+
+interface Props {
+  entry: ProjectPrivacyEntry
+  /**
+   * Whether the card is the page's summary section. A page that shows it
+   * next to another summary puts the section on their shared wrapper.
+   */
+  asSummarySection?: boolean
+}
+
+/** Stats, risk profile and adversary rosette at the top of a privacy page. */
+export function PrivacyProjectSummaryCard({
+  entry,
+  asSummarySection = true,
+}: Props) {
+  const adversaries = getPrivacyAdversariesSummary(entry.sections)
+  return (
+    <PrimaryCard
+      id={asSummarySection ? 'summary' : undefined}
+      data-role={asSummarySection ? 'nav-section' : undefined}
+      className="scroll-mt-[100vh] border-divider max-md:rounded-none max-md:border-b max-md:pt-0"
+    >
+      <div className="flex">
+        <div className="w-full min-w-0">
+          <PrivacyProjectStats
+            totalValueLockedUsd={entry.summary.totalValueLockedUsd}
+            totalValueLockedChange7d={entry.summary.totalValueLockedChange7d}
+            hasTvl={entry.hasTvl}
+            assetsCount={entry.assetsCount}
+            bucketsCount={entry.bucketCount}
+            deposits={entry.summary.deposits}
+            relayerStat={entry.summary.relayerStat}
+          />
+
+          <HorizontalSeparator className="max-md:my-2 md:mt-4" />
+          <PrivacyProjectRiskProfile
+            trustedSetup={entry.trustedSetup}
+            exitWindow={entry.exitWindow}
+            adversaries={adversaries}
+            href={entry.href}
+            isUnderReview={entry.isUnderReview}
+            reproducibility={entry.reproducibility}
+            className="md:mt-4"
+          />
+
+          <HorizontalSeparator className="max-md:my-2 md:mt-4" />
+          <div
+            className={cn(
+              'flex flex-col md:mt-4 md:flex-row md:gap-8',
+              MOBILE_SUMMARY_ROWS,
+            )}
+          >
+            <ProjectSummaryStat
+              title="Tracked on"
+              tooltip="Chains on which the protocol deployment is tracked by ETHBEAT."
+              value={
+                <ProjectIconList
+                  projects={entry.trackedOn}
+                  title="Tracked on"
+                />
+              }
+            />
+            {entry.scalingProjects.length > 0 && (
+              <ProjectSummaryStat
+                title="Runs on"
+                tooltip="Scaling projects the protocol runs on."
+                value={
+                  <ProjectIconList
+                    projects={entry.scalingProjects}
+                    title={`${entry.name} runs on`}
+                  />
+                }
+              />
+            )}
+            {entry.attributes.length > 0 && (
+              <ProjectSummaryStat
+                title="Attributes"
+                tooltip="Protocol attributes and capabilities."
+                valueClassName="flex flex-wrap justify-end gap-1 md:justify-start"
+                value={entry.attributes.map((attribute) => (
+                  <PrivacyAttributeTag
+                    key={attribute.id}
+                    attribute={attribute}
+                  />
+                ))}
+              />
+            )}
+            {entry.referenceApp && (
+              <PrivacyReferenceAppStat
+                app={entry.referenceApp}
+                href={`#${PRIVACY_ADVERSARIES_SECTION_ID}`}
+              />
+            )}
+          </div>
+        </div>
+        <VerticalSeparator className="mr-8 ml-12 h-[unset] self-stretch max-xl:hidden" />
+        <BigPizzaRosette
+          values={getPrivacyAdversaryRosetteValues(adversaries)}
+          isUnderReview={entry.isUnderReview}
+          size="small"
+          className="my-auto max-xl:hidden"
+        />
+      </div>
+
+      <HorizontalSeparator className="my-4 max-md:hidden" />
+      <div className="max-md:hidden">
+        <div className="flex flex-col gap-4 px-4 max-md:mt-2 md:px-0 lg:flex-row lg:gap-8">
+          {entry.badges && entry.badges.length > 0 && (
+            <BadgesSection badges={entry.badges} withDialog />
+          )}
+          {entry.description && (
+            <AboutSection description={entry.description} />
+          )}
+        </div>
+      </div>
+    </PrimaryCard>
+  )
+}

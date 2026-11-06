@@ -14,21 +14,21 @@ import { StickyMobileSectionNavigation } from '~/components/section-navigation/S
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import type { ProjectSectionLink } from '~/server/features/projects/getProjectSectionLinks'
+import type { ProjectSection } from '~/server/features/projects/getProjectSections'
 import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 import type { ProjectZkCatalogEntry } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
 import { ProjectZkCatalogSummary } from './components/header/ZkCatalogProjectSummary'
 
 interface Props extends AppLayoutProps {
   projectEntry: ProjectZkCatalogEntry
-  sectionLinks: ProjectSectionLink[]
+  projectSections: ProjectSection[]
   versionLinks?: ProjectVersionLinks
   queryState: DehydratedState
 }
 
 export function ZkCatalogProjectPage({
   projectEntry,
-  sectionLinks,
+  projectSections,
   versionLinks,
   queryState,
   ...props
@@ -60,7 +60,7 @@ export function ZkCatalogProjectPage({
                   <ProjectHeader
                     project={projectEntry}
                     section="zkCatalog"
-                    sectionLinks={sectionLinks}
+                    projectSections={projectSections}
                     versions={versionLinks}
                     secondLine={projectEntry.creator}
                   />

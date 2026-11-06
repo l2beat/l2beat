@@ -7,7 +7,14 @@ import {
   INTEGRATE_CROPS_PATH,
   SUBMIT_PROTOCOL_PATH,
 } from '~/pages/garden/paths'
+import { getProjectPath } from '~/utils/project/getProjectUrl'
 import { getChainProjects } from './features/chains/getChainProjects'
+import {
+  getProjectPageKind,
+  getProjectPageSections,
+  PROJECT_PAGE_SECTION_FIELDS,
+  type ProjectPageSection,
+} from './features/projects/getProjectPage'
 import { ps } from './projects'
 
 type PagePath = `/${string}`
@@ -21,6 +28,8 @@ export interface Page {
    * ignored by crawlers.
    */
   lastModified?: UnixTime
+  /** False for pages the markdown registry would wrongly give a `.md`. */
+  hasMarkdown?: boolean
 }
 
 export const STATIC_PAGE_PATHS = [
@@ -82,40 +91,51 @@ export async function getPages(): Promise<Page[]> {
 }
 
 async function getDynamicPages(): Promise<Page[]> {
-  const [
-    l2Projects,
-    zkCatalogProjects,
-    privacyProjects,
-    defiProjects,
-    interopProtocols,
-    chainProjects,
-  ] = await Promise.all([
+  const [projects, chainProjects] = await Promise.all([
     ps.getProjects({
-      where: ['scalingInfo'],
-      whereNot: ['archivedAt'],
-      optional: ['tvsConfig'],
+      optional: [...PROJECT_PAGE_SECTION_FIELDS, 'tvsConfig', 'archivedAt'],
     }),
-    ps.getProjects({ select: ['zkCatalogInfo'] }),
-    ps.getProjects({ where: ['privacyInfo'], whereNot: ['archivedAt'] }),
-    env.CLIENT_SIDE_DEFI_ENABLED
-      ? ps.getProjects({ where: ['defiInfo'] })
-      : Promise.resolve([]),
-    // Protocols that are also scaling projects redirect to the scaling page.
-    ps.getProjects({ where: ['interopConfig'], whereNot: ['scalingInfo'] }),
     getChainProjects(),
   ])
+  const chainSlugs = new Set(chainProjects.map((chain) => chain.slug))
+  const defiEnabled =
+    env.CLIENT_SIDE_DEFI_ENABLED || env.CLIENT_SIDE_OSSIFICATION_ENABLED
 
-  const pages: Page[] = [
-    ...l2Projects.map(projectPage('/layer2s/projects')),
-    ...l2Projects
-      .filter((project) => project.tvsConfig)
-      .map(projectPage('/layer2s/projects', '/tvs-breakdown')),
-    ...zkCatalogProjects.map(projectPage('/zk-catalog')),
-    ...privacyProjects.map(projectPage('/privacy/projects')),
-    ...defiProjects.map(projectPage('/defi/projects')),
-    ...interopProtocols.map(projectPage('/interop/protocols')),
-    ...chainProjects.map(projectPage('/projects')),
-  ]
+  const pages: Page[] = []
+  for (const project of projects) {
+    const sections = getProjectPageSections(project, {
+      hasChainPage: chainSlugs.has(project.slug),
+      defiEnabled,
+    })
+    // Listed in its own place, among the static pages.
+    if (sections.includes('ethereum')) continue
+    // Archived scaling and privacy projects keep their page but leave the
+    // sitemap, unless another section still lists them.
+    const listed = sections.filter(
+      (section) =>
+        !project.archivedAt || (section !== 'layer2s' && section !== 'privacy'),
+    )
+    if (listed.length === 0) continue
+    let kind: ProjectPageSection | undefined
+    try {
+      kind = getProjectPageKind(sections)
+    } catch (error) {
+      // The page itself throws; the sitemap of every other page stays up.
+      console.error(error)
+      continue
+    }
+    if (!kind) continue
+    const path = getProjectPath(project.slug)
+    pages.push({ path, hasMarkdown: kind !== 'chain' })
+    if (listed.includes('layer2s') && project.tvsConfig) {
+      pages.push({ path: `${path}/tvs-breakdown` })
+    }
+  }
+  for (const slug of chainSlugs) {
+    if (!projects.some((project) => project.slug === slug)) {
+      pages.push({ path: getProjectPath(slug), hasMarkdown: false })
+    }
+  }
 
   const publications = [
     ...getCollection('governance-publications'),
@@ -129,10 +149,4 @@ async function getDynamicPages(): Promise<Page[]> {
   }
 
   return pages
-}
-
-function projectPage(prefix: PagePath, suffix = '') {
-  return (project: { slug: string }): Page => ({
-    path: `${prefix}/${project.slug}${suffix}`,
-  })
 }

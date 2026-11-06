@@ -188,7 +188,7 @@ function toInteropProjectIconListItems(
       id: project.id,
       name: project.interopConfig.name ?? project.name,
       iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-      href: `/interop/protocols/${project.slug}`,
+      href: `/projects/${project.slug}`,
     }))
     .sort((a, b) => a.name.localeCompare(b.name))
 }

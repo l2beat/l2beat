@@ -34,7 +34,7 @@ export function renderPrivacyProjectMarkdown(
 ): string {
   return renderProjectMarkdown({
     name: entry.name,
-    pagePath: `/privacy/projects/${entry.slug}`,
+    pagePath: `/projects/${entry.slug}`,
     summary: {
       warnings: [
         ...getProjectStatusWarnings({

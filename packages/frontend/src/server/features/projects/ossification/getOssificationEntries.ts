@@ -107,20 +107,20 @@ function getPlacement(
   if (project.scalingInfo) {
     return {
       category: project.scalingInfo.layer === 'layer2' ? 'Layer 2' : 'Layer 3',
-      href: `/layer2s/projects/${project.slug}`,
+      href: `/projects/${project.slug}`,
     }
   }
   if (project.privacyInfo) {
     return {
       category: 'Privacy',
-      href: `/privacy/projects/${project.slug}`,
+      href: `/projects/${project.slug}`,
     }
   }
   if (project.defiInfo) {
     return {
       category: 'DeFi',
       ...(hasDefiProjectPage(project) && {
-        href: `/defi/projects/${project.slug}`,
+        href: `/projects/${project.slug}`,
       }),
     }
   }

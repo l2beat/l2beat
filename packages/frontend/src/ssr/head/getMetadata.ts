@@ -48,6 +48,8 @@ type PartialMetadata = {
     dynamic?: boolean
   }
   excludeFromSearchEngines?: boolean
+  /** False for a page the markdown registry would wrongly give a `.md`. */
+  hasMarkdown?: boolean
   /** Pages between the section and this one, e.g. the project of a subpage. */
   breadcrumbParents?: Breadcrumb[]
   /** Page-specific JSON-LD; the BreadcrumbList is added for every page. */
@@ -66,11 +68,14 @@ export function getMetadata(
     openGraph,
     breadcrumbParents,
     structuredData,
+    hasMarkdown = true,
     ...rest
   } = metadata ?? {}
   const strippedPath = stripQueryParams(url)
   const baseUrl = getBaseUrl()
-  const markdownAlternatePath = getMarkdownAlternatePath(strippedPath)
+  const markdownAlternatePath = hasMarkdown
+    ? getMarkdownAlternatePath(strippedPath)
+    : undefined
   const imagePath = openGraph.dynamic
     ? openGraph.image
     : manifest.getUrl(openGraph.image)

@@ -1,26 +1,12 @@
 import express from 'express'
 import { ETHEREUM_PROJECT_PATH } from '~/pages/ethereum/paths'
-import { isChainProjectSlug } from '~/server/features/chains/getChainProjects'
+import { getProjectPath } from '~/utils/project/getProjectUrl'
 
 export function createLegacyPathsRouter() {
   const router = express.Router()
 
   router.get('/project/:name', (req, res) => {
-    res.redirect(301, `/layer2s/projects/${req.params.name}`)
-  })
-
-  // A live page, not a legacy path: skip the rest of this router.
-  router.get(
-    [ETHEREUM_PROJECT_PATH, `${ETHEREUM_PROJECT_PATH}.md`],
-    (_req, _res, next) => next('router'),
-  )
-
-  router.get('/projects/:name', async (req, res, next) => {
-    if (await isChainProjectSlug(req.params.name)) {
-      next('router')
-      return
-    }
-    res.redirect(301, `/layer2s/projects/${req.params.name}`)
+    res.redirect(301, getProjectPath(req.params.name))
   })
 
   router.get('/scaling/tvl', (_, res) => {
@@ -36,11 +22,11 @@ export function createLegacyPathsRouter() {
   })
 
   router.get('/scaling/projects/:name/tvl-breakdown', (req, res) => {
-    res.redirect(301, `/layer2s/projects/${req.params.name}/tvs-breakdown`)
+    res.redirect(301, `${getProjectPath(req.params.name)}/tvs-breakdown`)
   })
 
   router.get('/data-availability/projects/:name/dac', (req, res) => {
-    res.redirect(301, `/layer2s/projects/${req.params.name}`)
+    res.redirect(301, getProjectPath(req.params.name))
   })
 
   // Before the catch-all below: Ethereum's page outlived the other DA pages.

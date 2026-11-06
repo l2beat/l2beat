@@ -191,7 +191,7 @@ function TopTokenStatCards({
           value={
             topToken?.topProtocol ? (
               <a
-                href={`/interop/protocols/${topToken.topProtocol.slug}`}
+                href={`/projects/${topToken.topProtocol.slug}`}
                 className="inline-flex items-center gap-1.5"
               >
                 <img
@@ -253,7 +253,7 @@ function TopTokenStatRows({
           value={
             topToken?.topProtocol ? (
               <a
-                href={`/interop/protocols/${topToken.topProtocol.slug}`}
+                href={`/projects/${topToken.topProtocol.slug}`}
                 className="inline-flex items-center gap-1.5"
               >
                 <img

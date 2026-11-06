@@ -19,7 +19,7 @@ describe(getProjectUrl.name, () => {
         slug: 'ccip',
         interopConfig: INTEROP_CONFIG,
       }),
-    ).toEqual('/interop/protocols/ccip')
+    ).toEqual('/projects/ccip')
   })
 
   it('links a scaling project with a canonical bridge to its scaling page, which carries the bridge data', () => {
@@ -31,7 +31,7 @@ describe(getProjectUrl.name, () => {
         scalingInfo: {} as ProjectScalingInfo,
         interopConfig: INTEROP_CONFIG,
       }),
-    ).toEqual('/layer2s/projects/gnosis')
+    ).toEqual('/projects/gnosis')
   })
 
   it('links Ethereum, a DA layer and bridge, to its own page', () => {

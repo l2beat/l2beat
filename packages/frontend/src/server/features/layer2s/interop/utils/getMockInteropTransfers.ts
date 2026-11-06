@@ -51,7 +51,7 @@ export function getMockInteropTransfers({
       valueUsd: 1_000,
       bridge: {
         name: 'Polygon PoS',
-        href: '/interop/protocols/polygon-pos',
+        href: '/projects/polygon-pos',
       },
       duration: 60_000,
       srcChain: isTokenMock

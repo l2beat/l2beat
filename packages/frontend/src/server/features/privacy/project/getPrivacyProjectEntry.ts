@@ -348,7 +348,7 @@ export async function getPrivacyProjectEntry(
   return {
     id: details.id,
     slug: details.slug,
-    href: `/privacy/projects/${details.slug}`,
+    href: `/projects/${details.slug}`,
     name: details.name,
     shortName: details.shortName,
     icon,

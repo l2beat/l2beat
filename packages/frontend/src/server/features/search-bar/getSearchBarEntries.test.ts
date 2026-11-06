@@ -73,9 +73,7 @@ describe(getSearchBarEntries.name, () => {
 
     const result = await getSearchBarEntries('arbitrum')
 
-    expect(result.map((entry) => entry.href)).toEqual([
-      '/layer2s/projects/arbitrum',
-    ])
+    expect(result.map((entry) => entry.href)).toEqual(['/projects/arbitrum'])
   })
 
   it('falls back to fuzzy project matches when there are no direct matches', async () => {

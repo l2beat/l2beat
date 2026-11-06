@@ -7,6 +7,10 @@ import {
 } from '~/server/markdown/markdownAlternate'
 import { fetchFromRouter } from '~/test/fetchFromRouter'
 import type { Manifest } from '~/utils/Manifest'
+import {
+  createProjectRedirectsRouter,
+  createProjectRouter,
+} from '../project/ProjectRouter'
 import { createInteropRouter } from './InteropRouter'
 import type { InteropTokenPage } from './token/renderInteropTokenMarkdown'
 
@@ -21,8 +25,8 @@ describe(createInteropRouter.name, () => {
   describe('protocol pages', () => {
     it('serves the protocol page as markdown on the .md URL', async () => {
       const response = await fetchFromRouter(
-        createRouter(),
-        '/interop/protocols/across.md',
+        createPageRouter(),
+        '/projects/across.md',
       )
 
       expect(response.status).toEqual(200)
@@ -34,8 +38,8 @@ describe(createInteropRouter.name, () => {
 
     it('serves markdown on the page URL when Accept prefers it', async () => {
       const response = await fetchFromRouter(
-        createRouter(),
-        '/interop/protocols/across',
+        createPageRouter(),
+        '/projects/across',
         { headers: { Accept: 'text/markdown' } },
       )
 
@@ -47,8 +51,8 @@ describe(createInteropRouter.name, () => {
 
     it('serves HTML on the page URL to browsers', async () => {
       const response = await fetchFromRouter(
-        createRouter(),
-        '/interop/protocols/across',
+        createPageRouter(),
+        '/projects/across',
         { headers: { Accept: 'text/html,*/*;q=0.8' } },
       )
 
@@ -57,15 +61,15 @@ describe(createInteropRouter.name, () => {
 
     it('sends protocols that are scaling projects to the scaling markdown', async () => {
       const response = await fetchFromRouter(
-        createRouter(),
+        createProjectRedirectsRouter(),
         '/interop/protocols/arbitrum.md',
         { redirect: 'manual' },
       )
 
-      expect(response.status).toEqual(302)
+      expect(response.status).toEqual(301)
       expect(
         new URL(response.headers.get('location') ?? '', 'http://x').pathname,
-      ).toEqual('/layer2s/projects/arbitrum.md')
+      ).toEqual('/projects/arbitrum.md')
     })
   })
 
@@ -122,6 +126,18 @@ describe(createInteropRouter.name, () => {
     })
   })
 })
+
+/** The protocol pages, which live under /projects since they merged. */
+function createPageRouter() {
+  const manifest = mockObject<Manifest>({
+    getUrl: (url) => url,
+    getImage: (url) => ({ src: url, width: 1200, height: 630 }),
+  })
+  const cache = mockObject<InMemoryCache>({
+    get: (async () => PROTOCOL_PAGE) as InMemoryCache['get'],
+  })
+  return createProjectRouter(manifest, async () => '<html />', cache)
+}
 
 function createRouter() {
   // Page metadata is built per request, outside the cache.

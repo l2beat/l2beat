@@ -73,7 +73,7 @@ const validityColumnHelper =
 export const l2RiskStateValidationValidityColumns = [
   ...getL2CommonProjectColumns(
     validityColumnHelper,
-    (row) => `/layer2s/projects/${row.slug}#state-validation`,
+    (row) => `/projects/${row.slug}#state-validation`,
   ),
   validityColumnHelper.accessor('proofSystem', {
     header: 'Proof system',
@@ -178,7 +178,7 @@ const optimisticColumnHelper =
 export const l2RiskStateValidationOptimisticColumns = [
   ...getL2CommonProjectColumns(
     optimisticColumnHelper,
-    (row) => `/layer2s/projects/${row.slug}#state-validation`,
+    (row) => `/projects/${row.slug}#state-validation`,
   ),
   optimisticColumnHelper.accessor('proofSystem', {
     header: 'Proof system',
@@ -264,7 +264,7 @@ const noProofsColumnHelper =
 export const l2RiskStateValidationNoProofsColumns = [
   ...getL2CommonProjectColumns(
     noProofsColumnHelper,
-    (row) => `/layer2s/projects/${row.slug}#state-validation`,
+    (row) => `/projects/${row.slug}#state-validation`,
   ),
   noProofsColumnHelper.display({
     id: 'proofSystem',

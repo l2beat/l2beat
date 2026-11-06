@@ -30,7 +30,7 @@ export function createTransferBridgeResolver(
 
     return {
       name: project.interopConfig.name ?? project.name,
-      href: `/interop/protocols/${project.slug}`,
+      href: `/projects/${project.slug}`,
     }
   }
 }
