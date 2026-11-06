@@ -48,12 +48,11 @@ describe(getPrivacyFlowSync.name, () => {
     })
   })
 
-  it('leaves out ended and unstarted configurations', () => {
+  it('leaves out ended configurations', () => {
     const result = getPrivacyFlowSync(
       [
         configuration('a', UnixTime(3_600)),
         { ...configuration('a', UnixTime(100)), maxHeight: UnixTime(200) },
-        configuration('a', null),
       ],
       ['a'],
     )
@@ -61,6 +60,21 @@ describe(getPrivacyFlowSync.name, () => {
     expect(result).toEqual({
       reached: UnixTime(3_600),
       slowest: UnixTime(3_600),
+    })
+  })
+
+  it('counts an unstarted configuration as just before its start', () => {
+    const result = getPrivacyFlowSync(
+      [
+        configuration('a', UnixTime(3_600)),
+        { ...configuration('a', null), minHeight: UnixTime(2_000) },
+      ],
+      ['a'],
+    )
+
+    expect(result).toEqual({
+      reached: UnixTime(3_600),
+      slowest: UnixTime(1_999),
     })
   })
 

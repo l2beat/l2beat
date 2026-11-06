@@ -2,7 +2,8 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { getPrivacyFlowsChartWindow } from './getPrivacyFlowsChart'
 
-const DAY = UnixTime.fromDate(new Date('2026-11-06T00:00:00Z'))
+// rangeToResolution reads the real clock, so the ranges are anchored to today.
+const DAY = UnixTime.toStartOf(UnixTime.now(), 'day')
 const NOW = DAY + 10 * UnixTime.HOUR + 10 * UnixTime.MINUTE
 
 describe(getPrivacyFlowsChartWindow.name, () => {

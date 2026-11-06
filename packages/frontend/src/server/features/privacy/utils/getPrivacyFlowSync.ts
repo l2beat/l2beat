@@ -10,7 +10,10 @@ import { type UnixTime, unique } from '@l2beat/shared-pure'
 export interface PrivacyFlowSync {
   /** The height the furthest configuration has reached. */
   reached: UnixTime
-  /** The height the slowest configuration has reached: a new bucket backfills from its start. */
+  /**
+   * The height the slowest configuration has reached. A new bucket backfills
+   * from its start, and counts as just before it until its first batch lands.
+   */
   slowest: UnixTime
 }
 
@@ -50,17 +53,25 @@ export function getPrivacyFlowSync(
   projectIds: string[],
 ): PrivacyFlowSync | undefined {
   const projects = new Set(projectIds)
-  const heights = configurations
-    .filter(
-      (configuration) =>
-        configuration.maxHeight === null &&
-        projects.has(getProjectId(configuration)),
-    )
+  const active = configurations.filter(
+    (configuration) =>
+      configuration.maxHeight === null &&
+      projects.has(getProjectId(configuration)),
+  )
+  const started = active
     .map((configuration) => configuration.currentHeight)
     .filter((height): height is number => height !== null)
 
-  if (heights.length === 0) return undefined
-  return { reached: Math.max(...heights), slowest: Math.min(...heights) }
+  if (started.length === 0) return undefined
+  return {
+    reached: Math.max(...started),
+    slowest: Math.min(
+      ...active.map(
+        (configuration) =>
+          configuration.currentHeight ?? configuration.minHeight - 1,
+      ),
+    ),
+  }
 }
 
 function getProjectId(configuration: IndexerConfigurationRecord): string {
