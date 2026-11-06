@@ -21,7 +21,7 @@ async function main() {
     If the limit is reached (500 compressions), create a new one for yourself at https://tinypng.com/developers.
   */
   const apiKey =
-    process.env.TINIFY_API_KEY ?? 'XTW3Qwl0dx5gRkc2TmsKtJJtY3c89790'
+    process.env.TINIFY_API_KEY ?? 'zTNdD1tVywLdlM4YshV2KqkQg0f2WWmr'
 
   tinify.key = apiKey
 

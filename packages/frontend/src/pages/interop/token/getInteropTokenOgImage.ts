@@ -1,4 +1,3 @@
-import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 import {
   loadOpengraphKit,
@@ -6,15 +5,9 @@ import {
   renderOpengraphPng,
 } from '~/components/opengraph-image/heartbeat/render'
 import { TokenOpengraphImage } from '~/components/opengraph-image/Token'
-import {
-  findInteropAbstractToken,
-  type InteropAbstractToken,
-} from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
+import { findInteropAbstractToken } from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
-import {
-  detectImageMimeType,
-  type SupportedMimeType,
-} from './detectImageMimeType'
+import { detectImageMimeType } from './detectImageMimeType'
 
 const ICON_FETCH_TIMEOUT_MS = 5_000
 
@@ -39,81 +32,51 @@ async function renderInteropTokenOgImage(
   const token = await findInteropAbstractToken(slug)
   if (!token) return undefined
 
-  const assets = await getStaticAssets()
-  const iconSrc = await fetchIconDataUri(
-    token.iconUrl,
-    assets.placeholderIconSrc,
-  )
-
-  return renderTokenPng(assets, token, iconSrc).catch((error) => {
-    if (iconSrc === assets.placeholderIconSrc) throw error
-    return renderTokenPng(assets, token, assets.placeholderIconSrc)
+  const kit = await getKit()
+  const icon = await fetchIcon(token.iconUrl)
+  const render = (withIcon: boolean) =>
+    renderOpengraphPng(
+      TokenOpengraphImage({
+        measure: kit.measure,
+        symbol: token.symbol,
+        icon: withIcon ? icon : undefined,
+      }),
+      kit,
+    )
+  // An icon that decodes as a PNG or JPEG can still fail to draw, and the
+  // symbol alone still makes a good image.
+  return render(true).catch((error) => {
+    if (icon === undefined) throw error
+    return render(false)
   })
 }
 
-function renderTokenPng(
-  assets: StaticAssets,
-  token: InteropAbstractToken,
-  iconSrc: string,
-): Promise<Buffer> {
-  return renderOpengraphPng(
-    TokenOpengraphImage({
-      measure: assets.kit.measure,
-      iconSrc,
-      symbol: token.symbol,
-    }),
-    assets.kit,
-  )
-}
-
-interface StaticAssets {
-  kit: OpengraphKit
-  placeholderIconSrc: string
-}
-
-let staticAssetsPromise: Promise<StaticAssets> | undefined
-
-function getStaticAssets(): Promise<StaticAssets> {
-  staticAssetsPromise ??= loadStaticAssets().catch((error) => {
-    staticAssetsPromise = undefined
-    throw error
-  })
-  return staticAssetsPromise
-}
-
-async function loadStaticAssets(): Promise<StaticAssets> {
-  const staticDir = path.join(process.cwd(), 'static')
-  const [kit, placeholderIcon] = await Promise.all([
-    loadOpengraphKit(staticDir),
-    readFile(path.join(staticDir, 'images/token-placeholder.png')),
-  ])
-  return {
-    kit,
-    placeholderIconSrc: toDataUri('image/png', placeholderIcon),
-  }
-}
-
-async function fetchIconDataUri(
-  iconUrl: string | null,
-  placeholderSrc: string,
-): Promise<string> {
-  if (!iconUrl) return placeholderSrc
+/** The token's icon as a data URI, unless it can't be fetched or decoded. */
+async function fetchIcon(iconUrl: string | null) {
+  if (!iconUrl) return undefined
   try {
     const response = await fetch(iconUrl, {
       signal: AbortSignal.timeout(ICON_FETCH_TIMEOUT_MS),
     })
-    if (!response.ok) return placeholderSrc
+    if (!response.ok) return undefined
     const data = Buffer.from(await response.arrayBuffer())
-    // coingecko mislabels icons (fxUSD is a png served as image/jpeg) and satori
-    // picks its decoder from the data uri, so the bytes decide the type
+    // CoinGecko mislabels icons (fxUSD is a PNG served as image/jpeg), and
+    // satori picks its decoder from the data URI, so the bytes decide the type.
     const mimeType = detectImageMimeType(data)
-    if (!mimeType) return placeholderSrc
-    return toDataUri(mimeType, data)
+    return mimeType && `data:${mimeType};base64,${data.toString('base64')}`
   } catch {
-    return placeholderSrc
+    return undefined
   }
 }
 
-function toDataUri(mimeType: SupportedMimeType, data: Buffer): string {
-  return `data:${mimeType};base64,${data.toString('base64')}`
+let kitPromise: Promise<OpengraphKit> | undefined
+
+function getKit(): Promise<OpengraphKit> {
+  kitPromise ??= loadOpengraphKit(path.join(process.cwd(), 'static')).catch(
+    (error) => {
+      kitPromise = undefined
+      throw error
+    },
+  )
+  return kitPromise
 }
