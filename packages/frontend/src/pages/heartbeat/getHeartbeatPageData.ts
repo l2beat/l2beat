@@ -24,6 +24,7 @@ export async function getHeartbeatPageData(
         openGraph: {
           image: '/meta-images/heartbeat/opengraph-image.png',
         },
+        breadcrumbParents: [{ name: 'Activity', path: '/layer2s/activity' }],
       }),
     },
     ssr: {

@@ -72,7 +72,7 @@ export async function getPages(): Promise<Page[]> {
     paths.push('/blobs')
   }
   if (env.CLIENT_SIDE_HEARTBEAT_PAGE) {
-    paths.push('/heartbeat')
+    paths.push('/layer2s/activity/live')
   }
   if (env.CLIENT_SIDE_OSSIFICATION_ENABLED) {
     paths.push('/ossification')

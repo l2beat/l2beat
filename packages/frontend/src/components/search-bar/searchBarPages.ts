@@ -129,7 +129,7 @@ export const searchBarPages = withIndex([
         {
           category: 'other' as const,
           name: 'Heartbeat',
-          href: '/heartbeat',
+          href: '/layer2s/activity/live',
           tags: ['pages', 'heartbeat', 'live', 'activity', 'tps', 'uops'],
         },
       ]

@@ -2,6 +2,8 @@ import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { env } from '~/env'
+import { getHeartbeatProjects } from '~/server/features/heartbeat/getHeartbeatProjects'
 import { getL2ActivityEntries } from '~/server/features/layer2s/activity/getL2ActivityEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -15,7 +17,7 @@ export async function getL2ActivityData(
   manifest: Manifest,
   cache: InMemoryCache,
 ): Promise<RenderData> {
-  const [appLayoutProps, data] = await Promise.all([
+  const [appLayoutProps, data, heartbeatProjects] = await Promise.all([
     getAppLayoutProps(),
     cache.get(
       {
@@ -25,6 +27,7 @@ export async function getL2ActivityData(
       },
       () => getCachedData(),
     ),
+    env.CLIENT_SIDE_HEARTBEAT_PAGE ? getHeartbeatProjects(manifest) : undefined,
   ])
 
   return {
@@ -47,6 +50,7 @@ export async function getL2ActivityData(
         ...data,
         milestones: HOMEPAGE_MILESTONES,
         badgeLookup: getBadgeLookup(data.entries),
+        heartbeatProjects,
       },
     },
   }

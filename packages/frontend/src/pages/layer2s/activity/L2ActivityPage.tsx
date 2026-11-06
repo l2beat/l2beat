@@ -10,9 +10,14 @@ import { TableFilterContextProvider } from '~/components/table/filters/TableFilt
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
+import { HeartbeatStrip } from '~/pages/heartbeat/components/HeartbeatStrip'
+import type { HeartbeatProject } from '~/server/features/heartbeat/getHeartbeatProjects'
 import type { L2ActivityEntry } from '~/server/features/layer2s/activity/getL2ActivityEntries'
 import { ActivityChartRangeContextProvider } from './components/ActivityChartRangeContext'
-import { ActivityMetricContextProvider } from './components/ActivityMetricContext'
+import {
+  ActivityMetricContextProvider,
+  useActivityMetricContext,
+} from './components/ActivityMetricContext'
 import { L2ActivityCard } from './components/L2ActivityCard'
 
 interface Props extends AppLayoutProps {
@@ -20,6 +25,8 @@ interface Props extends AppLayoutProps {
   entries: L2ActivityEntry[]
   milestones: Milestone[]
   queryState: DehydratedState
+  /** Only while the live page is on */
+  heartbeatProjects: HeartbeatProject[] | undefined
 }
 
 export function L2ActivityPage({
@@ -27,6 +34,7 @@ export function L2ActivityPage({
   milestones,
   queryState,
   badgeLookup,
+  heartbeatProjects,
   ...props
 }: Props) {
   return (
@@ -38,6 +46,9 @@ export function L2ActivityPage({
               <ActivityChartRangeContextProvider>
                 <ActivityMetricContextProvider>
                   <MainPageHeader>Activity</MainPageHeader>
+                  {heartbeatProjects && (
+                    <LiveStrip projects={heartbeatProjects} />
+                  )}
                   <L2ActivityCard entries={entries} milestones={milestones} />
                 </ActivityMetricContextProvider>
               </ActivityChartRangeContextProvider>
@@ -47,4 +58,10 @@ export function L2ActivityPage({
       </BadgeLookupProvider>
     </AppLayout>
   )
+}
+
+/** Follows the chart's metric */
+function LiveStrip({ projects }: { projects: HeartbeatProject[] }) {
+  const { metric } = useActivityMetricContext()
+  return <HeartbeatStrip projects={projects} metric={metric} />
 }

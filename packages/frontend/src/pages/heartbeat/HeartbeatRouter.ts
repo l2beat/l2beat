@@ -11,7 +11,7 @@ export function createHeartbeatRouter(
   if (!env.CLIENT_SIDE_HEARTBEAT_PAGE) return null
   const router = express.Router()
 
-  router.get('/heartbeat', async (req, res) => {
+  router.get('/layer2s/activity/live', async (req, res) => {
     const data = await getHeartbeatPageData(manifest, req.originalUrl)
     const html = await render(data, req.originalUrl)
     res.status(200).send(html)
