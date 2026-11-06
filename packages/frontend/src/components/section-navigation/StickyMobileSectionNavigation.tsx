@@ -96,13 +96,17 @@ function revealStripAsTitleGoesUnder(tabs: HTMLElement) {
  * It sits below the tabs' z-index, which pages may lower (interop uses 40).
  * Its height, `--project-strip-height`, is part of the `--section-nav-height`
  * that anchored content clears.
+ *
+ * A tap on it scrolls back to the top, like a tap on the iOS status bar. It's
+ * a pointer shortcut only: keyboards have Home, and the strip is aria-hidden.
  */
 function ProjectStrip({ project }: { project: Project }) {
   return (
     <div
       // Shown for screenshots; the page title already names the project.
       aria-hidden
-      className="md:-mx-5 -mb-(--project-strip-height) sticky top-0 z-30 flex h-(--project-strip-height) items-center justify-between gap-4 border-divider/60 border-b bg-header-primary px-4 lg:hidden"
+      onClick={scrollToTop}
+      className="md:-mx-5 -mb-(--project-strip-height) sticky top-0 z-30 flex h-(--project-strip-height) cursor-pointer items-center justify-between gap-4 border-divider/60 border-b bg-header-primary px-4 lg:hidden"
     >
       <div className="flex min-w-0 items-center gap-1.5">
         <img
@@ -117,4 +121,11 @@ function ProjectStrip({ project }: { project: Project }) {
       <Logo animated={false} className="mt-0 h-4.5 w-auto shrink-0" />
     </div>
   )
+}
+
+function scrollToTop() {
+  const reducedMotion = window.matchMedia(
+    '(prefers-reduced-motion: reduce)',
+  ).matches
+  window.scrollTo({ top: 0, behavior: reducedMotion ? 'auto' : 'smooth' })
 }
