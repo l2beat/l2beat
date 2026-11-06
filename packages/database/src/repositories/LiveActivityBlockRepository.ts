@@ -93,6 +93,20 @@ export class LiveActivityBlockRepository extends BaseRepository {
     return rows.map(toRecord).reverse()
   }
 
+  /** Of the project's oldest stored block */
+  async getOldestTimestamp(
+    projectId: ProjectId,
+  ): Promise<UnixTime | undefined> {
+    const row = await this.db
+      .selectFrom('LiveActivityBlock')
+      .select('timestamp')
+      .where('projectId', '=', projectId.toString())
+      .orderBy('number', 'asc')
+      .limit(1)
+      .executeTakeFirst()
+    return row && UnixTime.fromDate(row.timestamp)
+  }
+
   /** Both ends included, oldest first */
   async getByProjectNumberRange(
     projectId: ProjectId,

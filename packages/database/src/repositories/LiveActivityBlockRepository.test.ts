@@ -53,6 +53,26 @@ describeDatabase(LiveActivityBlockRepository.name, (db) => {
   })
 
   describe(
+    LiveActivityBlockRepository.prototype.getOldestTimestamp.name,
+    () => {
+      it("returns when the project's oldest block is from", async () => {
+        await repository.upsertMany([
+          block('b', 1),
+          block('a', 2),
+          block('a', 3),
+        ])
+
+        expect(await repository.getOldestTimestamp(ProjectId('a'))).toEqual(
+          block('a', 2).timestamp,
+        )
+        expect(await repository.getOldestTimestamp(ProjectId('c'))).toEqual(
+          undefined,
+        )
+      })
+    },
+  )
+
+  describe(
     LiveActivityBlockRepository.prototype.getByProjectNumberRange.name,
     () => {
       it("returns the project's blocks in the range, both ends included", async () => {
