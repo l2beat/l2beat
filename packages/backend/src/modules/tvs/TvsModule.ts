@@ -49,11 +49,10 @@ export function initTvsModule({
   const syncOptimizer = new SyncOptimizer(clock)
   const indexerService = new IndexerService(db)
 
+  const { projects } = config.tvs
   const hourlyIndexer = new HourlyIndexer(logger, clock, {
-    onTick: async (targetTimestamp) => {
-      if (!config.tvs) return
-      await updateSyncMetadataTargets(db, config.tvs.projects, targetTimestamp)
-    },
+    onTick: (targetTimestamp) =>
+      updateSyncMetadataTargets(db, projects, targetTimestamp),
   })
 
   const priceIndexer = new TvsPriceIndexer(
