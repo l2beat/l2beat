@@ -38,6 +38,8 @@ export type ProjectLiveActivityParams = v.infer<
 export interface ProjectLiveActivity {
   /** Of the newest stored block. Undefined while there is none */
   newest: UnixTime | undefined
+  /** Of the oldest stored block, before which nothing is known */
+  oldest: UnixTime | undefined
   /** The whole buffer, a minute a point */
   overview: LiveActivityPoint[]
   detail: {
@@ -94,7 +96,8 @@ async function readProjectLiveActivity({
     to,
   )
   const hour = UnixTime.toStartOf(window.to, 'hour')
-  const [lastMinute, overview, hours, detail] = await Promise.all([
+  const [oldest, lastMinute, overview, hours, detail] = await Promise.all([
+    db.liveActivityBlock.getOldestTimestamp(id),
     db.liveActivityBlock.getProjectBuckets(
       id,
       getLastMinuteStart(newest),
@@ -121,6 +124,7 @@ async function readProjectLiveActivity({
 
   return {
     newest,
+    oldest,
     overview: overview.map(toPoint),
     detail: { ...window, points: detail.map(toPoint) },
     now: getLastMinuteRates(lastMinute, newest),
@@ -142,6 +146,7 @@ function toPoint(bucket: LiveActivityBucketRecord): LiveActivityPoint {
 function emptyActivity(now: UnixTime, range: LiveRange): ProjectLiveActivity {
   return {
     newest: undefined,
+    oldest: undefined,
     overview: [],
     detail: {
       from: now - LIVE_RANGES[range] + 1,

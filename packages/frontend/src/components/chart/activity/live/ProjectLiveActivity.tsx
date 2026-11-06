@@ -13,6 +13,7 @@ import type {
   ChartProject,
 } from '~/components/core/chart/ChartContext'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
+import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { ChartTooltipWrapper } from '~/components/core/chart/ChartTooltip'
 import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import { tinted } from '~/components/core/chart/tint'
@@ -29,6 +30,7 @@ import {
   type LiveRange,
 } from '~/server/features/layer2s/activity/live/liveRanges'
 import { useTRPC } from '~/trpc/React'
+import { formatRange, parseTimestamp } from '~/utils/dates'
 import { typeToColor } from '../ActivityChart'
 import { ActivityRatioChart } from '../ActivityRatioChart'
 import { ActivityStats } from '../ActivityStats'
@@ -121,8 +123,7 @@ export function ProjectLiveActivity({
     : undefined
 
   const buckets = useMemo(
-    () =>
-      data ? toBuckets(data.detail, metric, data.overview[0]?.[0]) : undefined,
+    () => (data ? toBuckets(data.detail, metric, data.oldest) : undefined),
     [data, metric],
   )
   const bucket = data?.detail.bucket ?? 1
@@ -146,11 +147,9 @@ export function ProjectLiveActivity({
       indicatorType: { shape: 'line' },
     },
   }
-  const windowText =
-    domain && `${formatMinute(domain[0])} – ${formatMinute(domain[1])} UTC`
   const xAxis = domain && {
     ticks: ticksOf(domain[0], domain[1] + lookahead, range),
-    format: formatMinute,
+    format: formatTick,
     domain,
   }
 
@@ -194,9 +193,10 @@ export function ProjectLiveActivity({
   return (
     <div className="flex flex-col">
       <ChartControlsWrapper>
-        <div className="flex h-8 items-center gap-2 whitespace-nowrap font-bold">
-          {windowText ?? '…'}
-        </div>
+        <ProjectChartTimeRange
+          timeRange={domain}
+          isPlaceholderData={isPlaceholderData}
+        />
         <RadioGroup
           name="liveActivityRange"
           value={range}
@@ -268,7 +268,11 @@ export function ProjectLiveActivity({
             from={newest - LIVE_BUFFER_SECONDS}
             to={newest}
             window={domain}
-            windowText={live ? 'Live' : `Until ${formatClock(domain[1])}`}
+            windowText={
+              live
+                ? 'Live'
+                : formatRange(domain[0], domain[1], { seconds: true })
+            }
             metric={metric}
             // on a bucket, so moves within one share a read
             onMove={(end) =>
@@ -332,7 +336,7 @@ function LiveStats({
     typeof window === 'string'
       ? `last ${RANGE_LABEL[window]}`
       : window
-        ? `${formatMinute(window[0])} – ${formatMinute(window[1])} UTC`
+        ? formatRange(window[0], window[1])
         : ''
   const blocks = {
     label: 'Blocks per minute',
@@ -442,9 +446,7 @@ function LiveTooltip({
 /** Buckets are counted from the epoch, so any time in one gives its start */
 function formatBucket(timestamp: number, bucket: number) {
   const start = Math.floor(timestamp / bucket) * bucket
-  return bucket > 1
-    ? `${formatClock(start)} – ${formatClock(start + bucket)}`
-    : formatClock(start)
+  return formatRange(start, start + bucket, { seconds: true })
 }
 
 /**
@@ -471,25 +473,6 @@ function ticksOf(from: number, to: number, range: LiveRange) {
   return ticks
 }
 
-// UTC, 24-hour, as every other time on the site
-const MINUTE = new Intl.DateTimeFormat('en-US', {
-  timeZone: 'UTC',
-  hourCycle: 'h23',
-  hour: '2-digit',
-  minute: '2-digit',
-})
-const SECOND = new Intl.DateTimeFormat('en-US', {
-  timeZone: 'UTC',
-  hourCycle: 'h23',
-  hour: '2-digit',
-  minute: '2-digit',
-  second: '2-digit',
-})
-
-function formatMinute(unixSeconds: number) {
-  return MINUTE.format(unixSeconds * 1000)
-}
-
-function formatClock(unixSeconds: number) {
-  return `${SECOND.format(unixSeconds * 1000)} UTC`
+function formatTick(timestamp: number) {
+  return parseTimestamp(timestamp).time
 }
