@@ -49,6 +49,10 @@ describe('ekg', () => {
       expect(beatAmplitude(25, 100)).toEqual(0.5)
     })
 
+    it('caps a beat busier than the scale at the full height', () => {
+      expect(beatAmplitude(400, 100)).toEqual(1)
+    })
+
     it('keeps a small beat for seconds with no transactions', () => {
       expect(beatAmplitude(0, 100)).toEqual(0.08)
       expect(beatAmplitude(0, 0)).toEqual(0.08)

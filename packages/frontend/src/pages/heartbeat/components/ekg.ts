@@ -55,12 +55,16 @@ export function toBeats(
 }
 
 /**
- * How tall a beat is next to the busiest one. The square root keeps a single
- * busy beat from flattening the rest
+ * How tall a beat is next to the busiest one, at most the full height: a
+ * sweep keeps the scale it starts with, so a later beat can be busier. The
+ * square root keeps a single busy beat from flattening the rest
  */
 export function beatAmplitude(transactions: number, busiest: number): number {
   if (busiest <= 0 || transactions <= 0) return IDLE_AMPLITUDE
-  return Math.max(IDLE_AMPLITUDE, Math.sqrt(transactions / busiest))
+  return Math.min(
+    1,
+    Math.max(IDLE_AMPLITUDE, Math.sqrt(transactions / busiest)),
+  )
 }
 
 export interface TraceWindow {
