@@ -186,6 +186,10 @@ function handleEvent(
   }
   // A new board, unlike a replay, comes to the front with its project.
   if (event.type === 'board') {
+    // Like a show, the board may name contracts discovered since.
+    void tab.queryClient.invalidateQueries({
+      queryKey: ['projects', event.board.project],
+    })
     tab.open(event.board.project)
     useDockingStore.getState().ensureLeaf('board')
     useBoardStore.getState().set(event.board)
