@@ -4,7 +4,7 @@ import type {
 } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
-import { type ChartRange, optionToRange } from '~/utils/range/range'
+import type { ChartRange } from '~/utils/range/range'
 import type { ActivityChartDataPoint } from '../getActivityChart'
 import type { ActivityResolution } from './getActivityResolution'
 
@@ -14,9 +14,16 @@ const MIN_ELAPSED: Record<ActivityResolution, number> = {
   day: UnixTime.HOUR,
 }
 
-/** Ranges picked from the calendar can end in the past, with nothing recent to add */
-export function reachesNow(range: ChartRange): boolean {
-  return range[1] >= optionToRange('1d')[1]
+/** A range ending this long ago still reaches now, as a page stays open */
+const NOW_WITHIN = 6 * UnixTime.HOUR
+
+/**
+ * Presets end on the hour 75 minutes back, and a calendar range ending today
+ * ends this hour. One ending an earlier day ends a second before midnight,
+ * which can be later than a preset's end just after midnight
+ */
+export function reachesNow(range: ChartRange, now = UnixTime.now()): boolean {
+  return range[1] % UnixTime.HOUR === 0 && range[1] >= now - NOW_WITHIN
 }
 
 export interface RecentHours {
@@ -121,8 +128,8 @@ export function toRecentPoints(
 
 /**
  * A project's chart with its periods since the last point, and Ethereum's
- * beside them where it has them whole: the point under way is the project's,
- * and Ethereum's newest block is elsewhere in it
+ * beside the ones whole for both: the point under way is spread over the
+ * project's seconds so far, which are not Ethereum's
  */
 export function appendRecentPoints(
   data: ActivityChartDataPoint[],
@@ -138,7 +145,10 @@ export function appendRecentPoints(
   const ethereumPoints = new Map(
     ethereum
       ? toRecentPoints(ethereum, resolution, after)
-          .filter(([period]) => period + periodSeconds <= ethereum.until)
+          .filter(
+            ([period]) =>
+              period + periodSeconds <= Math.min(own.until, ethereum.until),
+          )
           .map((p) => [p[0], p])
       : [],
   )
