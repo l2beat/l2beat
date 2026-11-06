@@ -162,17 +162,20 @@ function isEIP8024Opcode(opcode: number): boolean {
 }
 
 // JUMPDEST analysis does not skip EIP-8024 immediates, so the spec forbids
-// JUMPDEST and PUSH1-32 (0x5b-0x7f) there. Such a byte starts the next
-// instruction, which keeps the disassembly aligned with JUMPDEST analysis.
+// JUMPDEST and PUSH1-32 there (EXCHANGE's range starts lower, at 0x52). Such
+// a byte starts the next instruction, which keeps the disassembly aligned
+// with JUMPDEST analysis.
 function hasDisallowedImmediate(code: Buffer, offset: number): boolean {
-  if (!isEIP8024Opcode(code[offset])) {
+  const opcode = code[offset]
+  if (!isEIP8024Opcode(opcode)) {
     return false
   }
   const immediate = code[offset + 1]
   if (immediate === undefined) {
     return false
   }
-  return immediate >= 0x5b && immediate <= 0x7f
+  const disallowedImmediateMin = opcode === 0xe8 ? 0x52 : 0x5b
+  return immediate >= disallowedImmediateMin && immediate <= 0x7f
 }
 
 export function formatEVMOpcodes(instructions: Instruction[]): string {

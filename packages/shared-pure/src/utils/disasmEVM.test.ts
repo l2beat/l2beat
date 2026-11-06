@@ -8051,7 +8051,7 @@ describe('disasmEVM EIP-8024', () => {
 
   // Test vectors from the EIP-8024 spec
   it('decodes a disallowed immediate as the next instruction', () => {
-    const bytecode = Bytes.fromHex('0xe6605be75b')
+    const bytecode = Bytes.fromHex('0xe6605be75be852')
 
     const instructions = disasmEVM(bytecode)
 
@@ -8061,6 +8061,8 @@ describe('disasmEVM EIP-8024', () => {
         '01: PUSH1 0x5b',
         '03: INVALID_SWAPN',
         '04: JUMPDEST',
+        '05: INVALID_EXCHANGE',
+        '06: MSTORE',
       ].join('\n'),
     )
   })
