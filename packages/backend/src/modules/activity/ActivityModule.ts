@@ -1,4 +1,3 @@
-import type { AdjustCount } from '@l2beat/config'
 import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
