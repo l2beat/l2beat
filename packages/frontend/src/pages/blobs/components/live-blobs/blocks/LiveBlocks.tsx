@@ -16,13 +16,17 @@ import { useThemeTokens } from '~/hooks/useThemeTokens'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import type { LiveBlobs } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
 import { cn } from '~/utils/cn'
-import { formatGwei } from '~/utils/formatGwei'
 import { useChainClock } from '../chainClock'
 import { useImages } from '../hooks'
 import { LivePulse } from '../LivePulse'
 import { LandingsContext } from '../landings'
 import { clampView, earliestView } from '../lookBack'
-import { type BlockLimits, type LivePoster, UNKNOWN_ID } from '../model'
+import {
+  type BlockLimits,
+  describeBlobCost,
+  type LivePoster,
+  UNKNOWN_ID,
+} from '../model'
 import { NextBlock } from '../NextBlock'
 import { PointerTooltip } from '../PointerTooltip'
 import type { LiveStatus } from '../useLiveBlobs'
@@ -67,6 +71,7 @@ export function LiveBlocks({ live, status, posters, limits }: Props) {
   const onScreen = useIsOnScreen(beltRef)
   const reducedMotion = usePrefersReducedMotion()
   const { maxBlobsPerBlock, targetBlobsPerBlock } = limits
+  const ethPriceUsd = live?.window.ethPriceUsd
 
   const posterIndexOf = useMemo(() => createPosterIndexOf(posters), [posters])
   // the belt drops what the chain brings in, and the belt needs the chain's
@@ -221,6 +226,7 @@ export function LiveBlocks({ live, status, posters, limits }: Props) {
               slot={hovered.slot}
               blockNumber={hovered.blockNumber}
               blobBaseFee={hovered.blobBaseFee}
+              ethPriceUsd={ethPriceUsd}
               pinned={belt.hover.pinned}
             />
           </BatchTooltip>
@@ -373,6 +379,7 @@ function BatchTooltipContent({
   slot,
   blockNumber,
   blobBaseFee,
+  ethPriceUsd,
   pinned,
 }: {
   poster: LivePoster
@@ -380,6 +387,7 @@ function BatchTooltipContent({
   slot: number
   blockNumber: number
   blobBaseFee: number | null
+  ethPriceUsd: number | undefined
   pinned: boolean
 }) {
   const rows: [string, string][] = [
@@ -388,7 +396,7 @@ function BatchTooltipContent({
     ['Block', formatWhole(blockNumber)],
   ]
   if (blobBaseFee !== null) {
-    rows.push(['Blob base fee', `${formatGwei(blobBaseFee)} gwei`])
+    rows.push(['Blob cost', describeBlobCost(blobBaseFee, ethPriceUsd)])
   }
   // an inbox nobody claims is the one clue to who sent it
   if (poster.id === UNKNOWN_ID) rows.push(['Sent to', formatAddress(batch.to)])
