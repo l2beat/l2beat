@@ -36,7 +36,7 @@ export function HeartbeatMonitor({
 }: {
   projects: HeartbeatProject[]
 }) {
-  const { data } = useHeartbeat()
+  const { data, isError } = useHeartbeat()
   const [metric, setMetric] = useState<HeartbeatMetric>('uops')
   const latest = useMemo(
     () => (data ? rankChains(projects, data, metric) : undefined),
@@ -68,7 +68,12 @@ export function HeartbeatMonitor({
           ))}
         </RadioGroup>
       </div>
-      {ranked === undefined ? (
+      {ranked === undefined && isError ? (
+        // the query keeps asking, so this goes once a read succeeds
+        <p className="py-8 text-center text-secondary">
+          Live blocks can't be read right now.
+        </p>
+      ) : ranked === undefined ? (
         <Skeleton className="h-20 w-full" />
       ) : (
         <EkgTrace
@@ -78,7 +83,7 @@ export function HeartbeatMonitor({
           className="h-20"
         />
       )}
-      {ranked === undefined ? (
+      {ranked === undefined && isError ? null : ranked === undefined ? (
         <div className="flex flex-col gap-2">
           {Array.from({ length: 8 }, (_, i) => (
             <Skeleton key={i} className="h-12 w-full" />
