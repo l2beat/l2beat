@@ -67,12 +67,12 @@ export class ChatSession {
     private readonly tabs: AgentTabs,
     private readonly options: ChatOptions,
   ) {
-    // A reload reconnects the tab, which then needs the whole transcript.
+    // Every tab learns its chat as it connects: the whole transcript after a
+    // reload, or none, for a chat closed or taken over meanwhile.
     tabs.onConnect((id) => {
       const chat = this.chat
-      if (chat?.owner === id) {
-        tabs.sendChat(id, { type: 'chat-replay', events: chat.log })
-      }
+      const events = chat?.owner === id ? chat.log : []
+      tabs.sendChat(id, { type: 'chat-replay', events })
     })
   }
 

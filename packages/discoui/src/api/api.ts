@@ -173,6 +173,20 @@ export async function postAgentContext(answer: {
   await fetchOk('/api/agent/context', jsonRequest('POST', answer))
 }
 
+// Answers the server's reason when the chat refuses, like a prompt while
+// the agent still answers. The conversation itself comes over the tab's
+// agent stream.
+export async function postChat(
+  action: 'start' | 'prompt' | 'cancel' | 'permission' | 'close',
+  body: { tab: string } & Record<string, string>,
+): Promise<string | undefined> {
+  const res = await fetch(
+    `/api/agent/chat/${action}`,
+    jsonRequest('POST', body),
+  )
+  return res.ok ? undefined : await readErrorMessage(res)
+}
+
 export function executeMatchFlat(
   project: string,
   address: string,
