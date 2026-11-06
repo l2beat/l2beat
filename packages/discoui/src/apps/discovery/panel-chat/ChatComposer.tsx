@@ -3,6 +3,7 @@ import { IconArrowUp } from '../../../icons/IconArrowUp'
 import { IconStop } from '../../../icons/IconStop'
 import { cn } from '../../../utils/cn'
 import type { Send } from './ChatMessages'
+import { ConfigPicker } from './ConfigPicker'
 
 // Grows with the message up to this, then scrolls.
 const INPUT_HEIGHT_MAX_PX = 200
@@ -63,9 +64,7 @@ export function ChatComposer(props: { isWorking: boolean; send: Send }) {
           }}
         />
         <div className="flex items-center gap-2 px-2 pb-2">
-          <span className="flex-1 text-[11px] text-coffee-400">
-            Shift+Enter for a new line
-          </span>
+          <ConfigPicker isWorking={props.isWorking} send={props.send} />
           {props.isWorking ? (
             <button
               type="button"

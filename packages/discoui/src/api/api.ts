@@ -177,7 +177,7 @@ export async function postAgentContext(answer: {
 // the agent still answers. The conversation itself comes over the tab's
 // agent stream.
 export async function postChat(
-  action: 'start' | 'prompt' | 'cancel' | 'permission' | 'close',
+  action: 'start' | 'prompt' | 'cancel' | 'permission' | 'config' | 'close',
   body: { tab: string } & Record<string, string>,
 ): Promise<string | undefined> {
   const res = await fetch(

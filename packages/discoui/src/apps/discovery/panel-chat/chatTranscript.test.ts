@@ -42,6 +42,25 @@ describe(applyChatEvent.name, () => {
   })
 })
 
+describe('applyChatEvent config', () => {
+  it('keeps the latest config apart from the conversation', () => {
+    const option = (currentValue: string) => ({
+      id: 'model',
+      name: 'Model',
+      category: 'model' as const,
+      currentValue,
+      values: [{ value: currentValue, name: currentValue }],
+    })
+    const view = replayChat([
+      { type: 'config', options: [option('sonnet')] },
+      { type: 'user', text: 'Hi' },
+      { type: 'config', options: [option('opus')] },
+    ])
+    expect(view.config).toEqual([option('opus')])
+    expect(view.entries).toEqual([{ type: 'user', text: 'Hi' }])
+  })
+})
+
 describe('applyChatEvent bounds', () => {
   it('keeps a live chat within the server limits', () => {
     let view = replayChat([{ type: 'text', text: 'x'.repeat(40_000) }])

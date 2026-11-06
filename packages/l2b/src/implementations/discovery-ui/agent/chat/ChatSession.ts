@@ -1,7 +1,12 @@
 import { v as z } from '@l2beat/validate'
-import type { ApiChatEvent, ApiChatProvider } from '../../types'
+import type {
+  ApiChatConfigOption,
+  ApiChatEvent,
+  ApiChatProvider,
+} from '../../types'
 import type { AgentTabs } from '../tabs'
 import { ACP_PROTOCOL_VERSION, AcpConnection, AcpError } from './acp'
+import { readConfigOptions } from './config'
 import { appendToLog, clipEvent, toChatEvents } from './events'
 import { signInHint } from './providers'
 
@@ -56,6 +61,8 @@ interface RunningChat {
   log: ApiChatEvent[]
   permissions: Map<string, (optionId: string | undefined) => void>
   toolCalls: Map<string, ToolCall>
+  // What the agent last offered to switch, to refuse anything else.
+  config: ApiChatConfigOption[]
 }
 
 // DiscoUI's one chat with a coding agent, run as an ACP adapter process.
@@ -97,6 +104,7 @@ export class ChatSession {
       log: [],
       permissions: new Map(),
       toolCalls: new Map(),
+      config: [],
       connection: new AcpConnection(
         command,
         args,
@@ -137,6 +145,35 @@ export class ChatSession {
       chat.connection.notify('session/cancel', { sessionId: chat.sessionId })
     }
     this.cancelPermissions(chat)
+  }
+
+  // Between answers only: an adapter applies a model to the next turn, and
+  // switching mid-answer would leave it unclear which one answered.
+  async setConfig(tab: string, configId: string, value: string) {
+    const chat = this.owned(tab)
+    if (chat.hasFailed) {
+      throw new ChatError('The agent stopped, start a new chat')
+    }
+    if (chat.sessionId === undefined) {
+      throw new ChatError('The agent is still starting')
+    }
+    if (chat.isInTurn) {
+      throw new ChatError('The agent is answering, switch after it finishes')
+    }
+    const option = chat.config.find((candidate) => candidate.id === configId)
+    if (!option?.values.some((candidate) => candidate.value === value)) {
+      throw new ChatError('The agent does not offer this')
+    }
+    const result = await chat.connection.request('session/set_config_option', {
+      sessionId: chat.sessionId,
+      configId,
+      value,
+    })
+    // The agent answers with every option, like effort levels for the model.
+    const options = readConfigOptions(result)
+    if (options !== undefined) {
+      this.emit(chat, { type: 'config', options })
+    }
   }
 
   answerPermission(tab: string, id: string, optionId: string) {
@@ -195,29 +232,31 @@ export class ChatSession {
           'The agent speaks another ACP version, update DiscoUI or the adapter',
         )
       }
-      const session = newSessionSchema.parse(
-        await chat.connection.request('session/new', {
-          cwd: this.options.cwd,
-          mcpServers: [
-            {
-              type: 'http',
-              name: 'discoui',
-              // Its show and context act in the chat's tab.
-              url: `${this.options.mcpUrl}?tab=${encodeURIComponent(chat.owner)}`,
-              headers: [],
-            },
-          ],
-          // DiscoUI's tools change only what the researcher sees, so Claude
-          // need not ask before each. Older Claude Code matches the bare
-          // server name, newer the glob.
-          _meta: {
-            claudeCode: {
-              options: { allowedTools: ['mcp__discoui', 'mcp__discoui__*'] },
-            },
+      const created = await chat.connection.request('session/new', {
+        cwd: this.options.cwd,
+        mcpServers: [
+          {
+            type: 'http',
+            name: 'discoui',
+            // Its show and context act in the chat's tab.
+            url: `${this.options.mcpUrl}?tab=${encodeURIComponent(chat.owner)}`,
+            headers: [],
           },
-        }),
-      )
-      chat.sessionId = session.sessionId
+        ],
+        // DiscoUI's tools change only what the researcher sees, so Claude
+        // need not ask before each. Older Claude Code matches the bare
+        // server name, newer the glob.
+        _meta: {
+          claudeCode: {
+            options: { allowedTools: ['mcp__discoui', 'mcp__discoui__*'] },
+          },
+        },
+      })
+      chat.sessionId = newSessionSchema.parse(created).sessionId
+      const options = readConfigOptions(created)
+      if (options !== undefined) {
+        this.emit(chat, { type: 'config', options })
+      }
       this.setStatus(chat, 'ready')
     } catch (error) {
       this.fail(chat, messageOf(error))
@@ -350,6 +389,9 @@ export class ChatSession {
       return
     }
     const clipped = clipEvent(event)
+    if (clipped.type === 'config') {
+      chat.config = clipped.options
+    }
     appendToLog(chat.log, clipped)
     this.tabs.sendChat(chat.owner, { type: 'chat', event: clipped })
   }

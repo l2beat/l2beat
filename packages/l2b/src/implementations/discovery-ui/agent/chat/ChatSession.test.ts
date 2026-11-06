@@ -14,7 +14,9 @@ let promptId
 lines.on('line', (line) => {
   const message = JSON.parse(line)
   if (message.method === 'initialize') send({ id: message.id, result: { protocolVersion: 1 } })
-  if (message.method === 'session/new') send({ id: message.id, result: { sessionId: 's1' } })
+  const config = (model) => [{ id: 'model', name: 'Model', category: 'model', type: 'select', currentValue: model, options: [{ value: 'sonnet', name: 'Sonnet' }, { value: 'opus', name: 'Opus' }] }]
+  if (message.method === 'session/new') send({ id: message.id, result: { sessionId: 's1', configOptions: config('sonnet') } })
+  if (message.method === 'session/set_config_option') send({ id: message.id, result: { configOptions: config(message.params.value) } })
   if (message.method === 'session/prompt') {
     promptId = message.id
     update({ sessionUpdate: 'agent_message_chunk', content: { type: 'text', text: 'Hel' } })
@@ -94,6 +96,21 @@ describe(ChatSession.name, () => {
     tabs.connect('owner', reloaded)
     const replay = parse(reloaded).find((e) => e.type === 'chat-replay')
     expect(replay?.type === 'chat-replay' && replay.events).toEqual([
+      {
+        type: 'config',
+        options: [
+          {
+            id: 'model',
+            name: 'Model',
+            category: 'model',
+            currentValue: 'sonnet',
+            values: [
+              { value: 'sonnet', name: 'Sonnet' },
+              { value: 'opus', name: 'Opus' },
+            ],
+          },
+        ],
+      },
       { type: 'user', text: 'List files' },
       { type: 'status', status: 'working', provider: 'claude' },
       { type: 'text', text: 'Hello' },
@@ -156,6 +173,28 @@ describe(ChatSession.name, () => {
       input: JSON.stringify({ command: 'ls' }, null, 2),
       options: [{ id: 'allow', name: 'Allow', kind: 'allow_once' }],
     })
+  })
+
+  it('offers the model and switches it between answers only', async () => {
+    const { chat, owner } = setup()
+    chat.start('owner', 'claude')
+    await waitFor(() => statuses(owner).includes('ready'))
+    const models = () =>
+      chatEvents(owner).flatMap((e) =>
+        e.type === 'config' ? [e.options[0]?.currentValue] : [],
+      )
+    expect(models()).toEqual(['sonnet'])
+    await chat.setConfig('owner', 'model', 'opus')
+    expect(models()).toEqual(['sonnet', 'opus'])
+    // Only what the agent offered goes out.
+    await expect(chat.setConfig('owner', 'model', 'gpt')).toBeRejectedWith(
+      'The agent does not offer this',
+    )
+    chat.prompt('owner', 'List files')
+    await expect(chat.setConfig('owner', 'model', 'sonnet')).toBeRejectedWith(
+      'switch after it finishes',
+    )
+    await waitFor(() => chatEvents(owner).some((e) => e.type === 'permission'))
   })
 
   it('refuses a prompt while the agent answers', async () => {
