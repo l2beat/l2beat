@@ -3,11 +3,14 @@ import { useEffect } from 'react'
 import type { ApiChatConfigOption } from '../../../api/types'
 import { IconChecked } from '../../../icons/IconChcked'
 import { IconChevronDown } from '../../../icons/IconChevronDown'
+import type { Send } from './ChatMessages'
 import { useChatStore } from './chatStore'
 
 export interface Switch {
   configId: string
   value: string
+  // The options the switch started from: any later list confirms it.
+  from: ApiChatConfigOption[]
 }
 
 // The model and effort the agent offers, switched between answers. One
@@ -16,16 +19,16 @@ export function ConfigPicker(props: {
   isWorking: boolean
   switching: Switch | undefined
   setSwitching: (next: Switch | undefined) => void
-  // Resolves whether the chat took the switch.
-  choose: (next: Switch) => Promise<boolean>
+  send: Send
 }) {
   const options = useChatStore((state) => state.view.config)
   const { switching, setSwitching } = props
   // The new options come over the event stream, which the answer to the
-  // request may beat; until they do, the picker shows the choice.
+  // request may beat; until they do, the picker shows the choice. The
+  // server sends them after every switch it took, and the agent may settle
+  // on another value, like the model a default stands for.
   useEffect(() => {
-    const option = options.find((o) => o.id === switching?.configId)
-    if (switching !== undefined && option?.currentValue === switching.value) {
+    if (switching !== undefined && options !== switching.from) {
       setSwitching(undefined)
     }
   }, [options, switching, setSwitching])
@@ -43,11 +46,13 @@ export function ConfigPicker(props: {
           }
           isDisabled={props.isWorking || switching !== undefined}
           onChange={(value) => {
-            const next = { configId: option.id, value }
+            const next = { configId: option.id, value, from: options }
             setSwitching(next)
-            void props.choose(next).then((isTaken) => {
-              if (!isTaken) setSwitching(undefined)
-            })
+            void props
+              .send('config', { configId: option.id, value })
+              .then((isTaken) => {
+                if (!isTaken) setSwitching(undefined)
+              })
           }}
         />
       ))}

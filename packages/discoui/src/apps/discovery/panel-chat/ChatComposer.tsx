@@ -65,7 +65,7 @@ export function ChatComposer(props: { isWorking: boolean; send: Send }) {
             isWorking={props.isWorking}
             switching={switching}
             setSwitching={setSwitching}
-            choose={(next) => props.send('config', { ...next })}
+            send={props.send}
           />
           <SendButton
             isWorking={props.isWorking}
