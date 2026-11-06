@@ -21,6 +21,7 @@
 export function pageTransitions() {
   const KINDS_KEY = 'page-transitions'
   const SCROLL_KEY = 'page-transitions-sidebar-scroll'
+  const KEYBOARD_KEY = 'page-transitions-keyboard'
   const root = document.documentElement
   const DURATION = 400
   /** For the sidebar, which moves a short way, often. */
@@ -38,6 +39,7 @@ export function pageTransitions() {
 
   addEventListener('pageswap', (e) => {
     store(SCROLL_KEY, String(sidebar()?.scrollTop ?? ''))
+    store(KEYBOARD_KEY, keyboard ? '1' : '')
     const transition = e.viewTransition
     if (!transition) return
     const to = e.activation?.entry.url
@@ -71,6 +73,9 @@ export function pageTransitions() {
   })
 
   addEventListener('pagereveal', (e) => {
+    // Reached from the keyboard, the page's own motion skips too
+    // (withPinTransition's visit).
+    if (store(KEYBOARD_KEY, '')) root.setAttribute('data-keyboard-arrival', '')
     // Before the capture, so the sidebar and tabs are where they will stay.
     restoreSidebarScroll()
     for (const line of visible('[data-tab-line]')) {

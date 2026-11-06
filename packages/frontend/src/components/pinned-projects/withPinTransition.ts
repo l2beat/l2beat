@@ -32,9 +32,11 @@ export function recordVisit(project: SavedProject) {
   const row = [
     ...document.querySelectorAll<HTMLElement>('[data-pin-row]'),
   ].find((el) => el.dataset.pinRow === project.href && el.offsetWidth > 0)
-  // A tab opened in the background runs no frames to wait on.
+  // A tab opened in the background runs no frames to wait on; a page
+  // reached from the keyboard moves nothing.
   const rises =
     !document.hidden &&
+    !document.documentElement.hasAttribute('data-keyboard-arrival') &&
     row?.previousElementSibling &&
     row.closest('[data-nav-group="Recently viewed"]')
   if (!rises) {
