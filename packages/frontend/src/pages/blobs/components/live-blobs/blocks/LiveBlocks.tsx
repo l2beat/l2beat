@@ -15,6 +15,7 @@ import { useThemeTokens } from '~/hooks/useThemeTokens'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import type { LiveBlobs } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
 import { cn } from '~/utils/cn'
+import { formatGwei } from '~/utils/formatGwei'
 import { useChainClock } from '../chainClock'
 import { useImages } from '../hooks'
 import { LivePulse } from '../LivePulse'
@@ -218,6 +219,7 @@ export function LiveBlocks({ live, status, posters, limits }: Props) {
               batch={hovered.batch}
               slot={hovered.slot}
               blockNumber={hovered.blockNumber}
+              blobBaseFee={hovered.blobBaseFee}
               pinned={belt.hover.pinned}
             />
           </BatchTooltip>
@@ -369,12 +371,14 @@ function BatchTooltipContent({
   batch,
   slot,
   blockNumber,
+  blobBaseFee,
   pinned,
 }: {
   poster: LivePoster
   batch: BlobBatch
   slot: number
   blockNumber: number
+  blobBaseFee: number | null
   pinned: boolean
 }) {
   const rows: [string, string][] = [
@@ -382,6 +386,9 @@ function BatchTooltipContent({
     ['Slot', formatWhole(slot)],
     ['Block', formatWhole(blockNumber)],
   ]
+  if (blobBaseFee !== null) {
+    rows.push(['Blob base fee', `${formatGwei(blobBaseFee)} gwei`])
+  }
   // an inbox nobody claims is the one clue to who sent it
   if (poster.id === UNKNOWN_ID) rows.push(['Sent to', formatAddress(batch.to)])
   return (

@@ -213,7 +213,9 @@ function mockSlot(
       hash: `0x${slot.toString(16).padStart(64, '0')}`,
       timestamp: UnixTime(slotStart(slot)),
       blobCount: blobs,
-      blobBaseFee: MOCK_BLOB_BASE_FEE,
+      // drifts around the quiet-time fee, so the stat moves block to block
+      blobBaseFee:
+        (MOCK_BLOB_BASE_FEE * BigInt(50 + Math.floor(random() * 150))) / 100n,
     },
     batches,
   }

@@ -68,6 +68,8 @@ export type LiveBlock =
       /** Tells apart a block that replaced another in the same slot */
       hash: string
       batches: LiveBatch[]
+      /** Gwei per blob gas; null for a block stored before fees were kept */
+      blobBaseFee: number | null
     }
   | { slot: number; status: 'missed' }
 

@@ -7,6 +7,7 @@ import type { LiveBlobs } from '~/server/features/data-availability/live-blobs/L
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import { mixColors, readableColor } from '~/utils/color'
+import { formatGwei } from '~/utils/formatGwei'
 import {
   BLOB_KIB,
   describeWindow,
@@ -68,6 +69,10 @@ export function LiveStats({
   )
   const shares = useShares(totals)
   const ready = postedWindow !== undefined && postedWindow.slots > 0
+  // the newest block's: a batch in the next pays this
+  const blobBaseFee = data?.blocks.find(
+    (b) => b.status === 'proposed',
+  )?.blobBaseFee
   const projects = shares.filter((share) => share.id !== UNKNOWN_ID).length
 
   return (
@@ -112,6 +117,17 @@ export function LiveStats({
             ) : (
               // narrow as the number it stands for, or the note wraps on a phone
               <NumberSkeleton sizedAs="00" />
+            )}
+          </Stat>
+          <Stat label="Blob base fee" note="gwei">
+            {ready && blobBaseFee !== undefined ? (
+              blobBaseFee === null ? (
+                '–'
+              ) : (
+                <RollingNumber value={blobBaseFee} format={formatGwei} />
+              )
+            ) : (
+              <NumberSkeleton sizedAs="0.000" />
             )}
           </Stat>
         </dl>

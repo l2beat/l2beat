@@ -10,6 +10,7 @@ describe(isSameBlock.name, () => {
     blockNumber: 5,
     hash: '0xaa',
     batches: [],
+    blobBaseFee: null,
   }
   const missed: ChainBlock = { slot: 100, status: 'missed' }
 

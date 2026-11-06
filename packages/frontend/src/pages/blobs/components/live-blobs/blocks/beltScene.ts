@@ -54,10 +54,24 @@ export function batchKey(slot: number, indexInBlock: number): number {
 export function findBatch(
   blocks: ReadonlyMap<number, ChainBlock>,
   key: number,
-): { slot: number; blockNumber: number; batch: BlobBatch } | undefined {
+):
+  | {
+      slot: number
+      blockNumber: number
+      blobBaseFee: number | null
+      batch: BlobBatch
+    }
+  | undefined {
   const slot = Math.floor(key / KEYS_PER_BLOCK)
   const block = blocks.get(slot)
   if (block?.status !== 'proposed') return undefined
   const batch = block.batches[key - slot * KEYS_PER_BLOCK]
-  return batch && { slot, blockNumber: block.blockNumber, batch }
+  return (
+    batch && {
+      slot,
+      blockNumber: block.blockNumber,
+      blobBaseFee: block.blobBaseFee,
+      batch,
+    }
+  )
 }

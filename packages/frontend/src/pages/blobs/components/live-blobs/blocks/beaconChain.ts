@@ -19,6 +19,8 @@ export type ChainBlock =
       hash: string
       /** Bottom up */
       batches: BlobBatch[]
+      /** Gwei per blob gas; null when unknown */
+      blobBaseFee: number | null
     }
   | { slot: number; status: 'missed' }
 
