@@ -1,19 +1,15 @@
 /**
  * The page-to-page transitions. Pages are separate documents, so these are
  * cross-document view transitions: CSS opts every navigation in
- * (`@view-transition` in globals.css) and this script skips all but these
- * kinds:
+ * (`@view-transition` in globals.css) and this script skips all but the
+ * `nav` kind: the sidebar's sections slide to their places on the page
+ * opened, e.g. when another group opens, and its highlight slides to the
+ * item opened, turning the labels it passes; on phones the tab underline
+ * slides along its row. The rest of the page swaps at once.
  *
- * - `nav`: the sidebar's sections slide to their places on the page opened,
- *   e.g. when another group opens, and its highlight slides to the item
- *   opened, turning the labels it passes; on phones the tab underline
- *   slides along its row. The rest of the page swaps at once.
- * - `crops`: between home and any other page, the sidebar's small CROPS
- *   banner grows into the home page's card, and shrinks back on the way out.
- *
- * Several can run at once. The old page picks the kinds and leaves them in
- * sessionStorage for the new one, which cannot tell how it was reached. The
- * sidebar's scroll goes along the same way, transition or not.
+ * The old page picks the kinds and leaves them in sessionStorage for the
+ * new one, which cannot tell how it was reached. The sidebar's scroll goes
+ * along the same way, transition or not.
  *
  * It runs inline in <head>: `pagereveal` fires before the first frame, too
  * early for the bundle.
@@ -23,9 +19,8 @@ export function pageTransitions() {
   const SCROLL_KEY = 'page-transitions-sidebar-scroll'
   const KEYBOARD_KEY = 'page-transitions-keyboard'
   const root = document.documentElement
-  const DURATION = 400
-  /** For the sidebar, which moves a short way, often. */
-  const NAV_DURATION = 250
+  /** Short: the sidebar moves a short way, often. */
+  const DURATION = 250
   // iOS-like: moves at once, settles long, so it holds up after the wait
   // for the page.
   const EASING = 'cubic-bezier(0.32, 0.72, 0, 1)'
@@ -49,9 +44,7 @@ export function pageTransitions() {
       !keyboard &&
       !matchMedia('(prefers-reduced-motion: reduce)').matches
     ) {
-      const from = location.href
       kinds.push('nav')
-      if (isHome(from) !== isHome(to)) kinds.push('crops')
     }
     const clears = kinds.flatMap((kind) => {
       const clear = name(transition, kind, false)
@@ -162,13 +155,6 @@ export function pageTransitions() {
       for (const line of visible('[data-tab-line]')) {
         named.set(line, `tab-line-${line.dataset.tabLine}`)
       }
-    } else if (kind === 'crops') {
-      const banner = visible(
-        isHome(location.href)
-          ? '[data-crops-banner="home"]'
-          : '[data-crops-banner="mini"]',
-      )[0]
-      if (banner) named.set(banner, 'crops-banner')
     }
     if (named.size === 0) return null
     for (const [el, value] of named) el.style.viewTransitionName = value
@@ -270,7 +256,7 @@ export function pageTransitions() {
             anim.cancel()
             continue
           }
-          if (!/^(nav-|crops-|tab-line-)/.test(group)) {
+          if (!/^(nav-|tab-line-)/.test(group)) {
             continue
           }
           const from = effect.getKeyframes()[0]
@@ -288,7 +274,7 @@ export function pageTransitions() {
             moves.set(group, { x: start.x - end.x, y: start.y - end.y })
           }
           if (group === 'nav-highlight') highlight = [start, end]
-          const stretch = /^(crops-banner|tab-line-.+)$/.test(group)
+          const stretch = group.startsWith('tab-line-')
           const scale = stretch
             ? ` scale(${start.width / end.width}, ${start.height / end.height})`
             : ''
@@ -302,7 +288,7 @@ export function pageTransitions() {
             ],
             {
               pseudoElement: pseudo,
-              duration: duration(group),
+              duration: DURATION,
               easing: EASING,
             },
           )
@@ -318,7 +304,7 @@ export function pageTransitions() {
             start.f += move.y
             root.animate([{ transform: start.toString() }, { transform: to }], {
               pseudoElement: pseudo,
-              duration: NAV_DURATION,
+              duration: DURATION,
               easing: EASING,
             })
           }
@@ -328,10 +314,6 @@ export function pageTransitions() {
       },
       () => {},
     )
-  }
-
-  function duration(group: string) {
-    return /^(nav-|tab-)/.test(group) ? NAV_DURATION : DURATION
   }
 
   /** How far the label's section moves into place. */
@@ -394,7 +376,7 @@ export function pageTransitions() {
       ] as const) {
         root.animate(keyframes, {
           pseudoElement: `::view-transition-new(${el.style.viewTransitionName})`,
-          duration: NAV_DURATION,
+          duration: DURATION,
           easing: EASING,
           fill: 'both',
         })
@@ -429,14 +411,6 @@ export function pageTransitions() {
 
   function px(value: unknown) {
     return Number.parseFloat(String(value))
-  }
-
-  function path(url: string) {
-    return new URL(url).pathname
-  }
-
-  function isHome(url: string | null | undefined) {
-    return !!url && path(url) === '/'
   }
 
   function inView(el: HTMLElement) {

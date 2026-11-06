@@ -910,7 +910,6 @@ html.nav-arriving [data-active="true"]:has(> [data-nav-highlight]) {
 /* The page swaps at once, as without a transition; only the named parts
    move. This also undoes the theme toggle's reveal, below. */
 html:active-view-transition-type(nav),
-html:active-view-transition-type(crops),
 html:active-view-transition-type(pin),
 html:active-view-transition-type(chips),
 html:active-view-transition-type(badge) {
@@ -953,20 +952,6 @@ html:active-view-transition-type(nav) {
   }
   &::view-transition-new(*.nav-ink) {
     clip-path: inset(0 0 100% 0);
-  }
-}
-
-/* The CROPS banner grows into the home card: the snapshots scale with the
-   box, so the outgoing text would ghost over the incoming at the wrong
-   size. It hands over early, blurred so the two read as one thing
-   changing. */
-html:active-view-transition-type(crops) {
-  &::view-transition-old(crops-banner),
-  &::view-transition-new(crops-banner) {
-    animation: 200ms cubic-bezier(0.23, 1, 0.32, 1) both vt-blur-out;
-  }
-  &::view-transition-new(crops-banner) {
-    animation-name: vt-blur-in;
   }
 }
 
@@ -1041,20 +1026,6 @@ html:active-view-transition-type(pin) {
   &::view-transition-old(*.pin-row),
   &::view-transition-new(*.pin-row) {
     animation-duration: 150ms;
-  }
-}
-
-@keyframes vt-blur-out {
-  to {
-    opacity: 0;
-    filter: blur(4px);
-  }
-}
-
-@keyframes vt-blur-in {
-  from {
-    opacity: 0;
-    filter: blur(4px);
   }
 }
 
