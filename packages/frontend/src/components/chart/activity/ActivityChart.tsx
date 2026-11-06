@@ -226,7 +226,7 @@ export function ActivityCustomTooltip<
   )
 }
 
-function typeToColor(type: ActivityChartType) {
+export function typeToColor(type: ActivityChartType) {
   switch (type) {
     case 'Rollups':
       return 'var(--chart-pink)'

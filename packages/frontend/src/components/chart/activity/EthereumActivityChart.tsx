@@ -26,6 +26,8 @@ interface Props {
   project: ChartProject
   category?: ProjectScalingCategory
   defaultRange: ChartRange
+  metric: ActivityMetric
+  setMetric: (metric: ActivityMetric) => void
 }
 
 export function EthereumActivityChart({
@@ -33,10 +35,11 @@ export function EthereumActivityChart({
   project,
   category,
   defaultRange,
+  metric,
+  setMetric,
 }: Props) {
   const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
-  const [metric, setMetric] = useState<ActivityMetric>('uops')
   const [scale, setScale] = useState<ChartScale>('linear')
 
   const {

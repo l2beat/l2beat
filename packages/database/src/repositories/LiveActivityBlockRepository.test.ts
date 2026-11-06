@@ -71,6 +71,43 @@ describeDatabase(LiveActivityBlockRepository.name, (db) => {
     },
   )
 
+  describe(LiveActivityBlockRepository.prototype.getProjectBuckets.name, () => {
+    it("sums the project's blocks in the range per bucket", async () => {
+      const minute = UnixTime.toStartOf(START, 'hour')
+      await repository.upsertMany([
+        { ...block('a', 1), timestamp: minute + 5 },
+        { ...block('a', 2), timestamp: minute + 50, uopsCount: null },
+        { ...block('a', 3), timestamp: minute + 70 },
+        { ...block('a', 4), timestamp: minute + 200 },
+        { ...block('b', 5), timestamp: minute + 10 },
+      ])
+
+      expect(
+        await repository.getProjectBuckets(
+          ProjectId('a'),
+          minute,
+          minute + 120,
+          60,
+        ),
+      ).toEqual([
+        {
+          timestamp: minute,
+          blocks: 2,
+          count: 30,
+          uopsCount: 31,
+          gasUsed: 3_000_000,
+        },
+        {
+          timestamp: minute + 60,
+          blocks: 1,
+          count: 30,
+          uopsCount: 33,
+          gasUsed: 3_000_000,
+        },
+      ])
+    })
+  })
+
   describe(LiveActivityBlockRepository.prototype.getHoursAfter.name, () => {
     it("sums the project's blocks above the number per hour", async () => {
       const hour = UnixTime.toStartOf(START, 'hour')
