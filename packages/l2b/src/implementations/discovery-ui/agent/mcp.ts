@@ -20,6 +20,7 @@ const INSTRUCTIONS = [
   'Keep notes short, a sentence or three each; the details go in your reply.',
   'Contracts are names (Bridge), chain:Name (arb1:L2Timelock) when a name repeats across chains, or chain:0x addresses.',
   'For who can upgrade, pause or otherwise control a contract, call `permissions` and point at the route it prints with `show`.',
+  'For a list or a comparison the researcher keeps open, like every contract and who can upgrade it, gather it with your tools and put it on a `board`.',
   'A code snippet is literal text copied from the source, not a pattern. A wrong name or snippet fails with what to fix: fix it and call again.',
 ].join('\n')
 

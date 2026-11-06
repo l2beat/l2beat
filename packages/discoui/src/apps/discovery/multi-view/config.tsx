@@ -8,6 +8,7 @@ import {
   useDockingHook,
 } from '../../../components/docking'
 import { IS_READONLY } from '../../../config/readonly'
+import { IconBoard } from '../../../icons/IconBoard'
 import { IconChatbot } from '../../../icons/IconChatbot'
 import { IconChecked } from '../../../icons/IconChcked'
 import { IconChevronDown } from '../../../icons/IconChevronDown'
@@ -26,6 +27,7 @@ import { IconTreemap } from '../../../icons/IconTreemap'
 import { IconWebApp } from '../../../icons/IconWebApp'
 import { cn } from '../../../utils/cn'
 import { AnalyzePanel } from '../panel-analyze/AnalyzePanel'
+import { BoardPanel } from '../panel-board/BoardPanel'
 import { ChatPanel } from '../panel-chat/ChatPanel'
 import { CodePanel } from '../panel-code/CodePanel'
 import { ConfigPanel } from '../panel-config/ConfigPanel'
@@ -56,6 +58,7 @@ export const PANEL_IDS = [
   'tvlMap',
   'usage',
   'chat',
+  'board',
 ] as const
 
 export type PanelId = (typeof PANEL_IDS)[number]
@@ -80,10 +83,12 @@ const PANELS: Record<PanelId, Panel> = {
   tvlMap: { icon: IconTreemap, body: TvlMapPanel },
   usage: { icon: IconShare, body: UsagePanel },
   chat: { icon: IconMessage, body: ChatPanel },
+  board: { icon: IconBoard, body: BoardPanel },
 }
 
 const unallowedInReadOnly = new Set([
   'chat',
+  'board',
   'terminal',
   'analyze',
   'tvl',

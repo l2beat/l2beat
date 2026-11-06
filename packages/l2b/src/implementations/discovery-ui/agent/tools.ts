@@ -6,6 +6,13 @@ import { getCodeFromDisk } from '../getCode'
 import { readReachableEntries } from '../readReachableEntries'
 import { safeStringSchema } from '../safeStringSchema'
 import type { ApiAgentShowEvent } from '../types'
+import {
+  BOARD_DESCRIPTION,
+  boardBlocksSchema,
+  boardTitleSchema,
+  describeBoard,
+  resolveBoard,
+} from './board'
 import type { CodeSource } from './codeAnchor'
 import { describeContext } from './context'
 import { cutText } from './excerpt'
@@ -92,6 +99,16 @@ const showSchema = z.object({
 })
 export type ShowInput = z.infer<typeof showSchema>
 
+const boardSchema = z.object({
+  project: safeStringSchema
+    .optional()
+    .meta({ description: 'defaults to the project open in DiscoUI' }),
+  title: boardTitleSchema.meta({
+    description: 'what the board shows, in a few words',
+  }),
+  blocks: boardBlocksSchema,
+})
+
 export const AGENT_TOOLS: AgentTool[] = [
   tool({
     name: 'show',
@@ -125,6 +142,13 @@ export const AGENT_TOOLS: AgentTool[] = [
     }),
     readOnly: true,
     run: (input, ui) => permissions(ui, input.project, input.contract),
+  }),
+  tool({
+    name: 'board',
+    description: BOARD_DESCRIPTION,
+    input: boardSchema,
+    readOnly: false,
+    run: (input, ui) => board(ui, input),
   }),
   tool({
     name: 'clear',
@@ -333,6 +357,24 @@ async function context(ui: DiscoUi): Promise<string[]> {
     readAgentEntries(ui.configReader, project),
     (address) => readSources(ui.configReader, project, address),
   )
+}
+
+function board(ui: DiscoUi, input: z.infer<typeof boardSchema>): string[] {
+  const active = targetTab(ui)
+  if (active === undefined) {
+    throw new ToolError(
+      'DiscoUI has no open tab. Ask the researcher to open it.',
+    )
+  }
+  const project = requireProject(ui, input.project ?? active.project)
+  const resolved = resolveBoard(readAgentEntries(ui.configReader, project), {
+    id: randomUUID(),
+    project,
+    title: input.title,
+    blocks: input.blocks,
+  })
+  ui.tabs.showBoard(active.id, resolved)
+  return describeBoard(resolved)
 }
 
 function clear(ui: DiscoUi): string[] {

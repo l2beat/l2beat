@@ -9,6 +9,7 @@ import {
 import type { ApiAgentEvent } from '../../../api/types'
 import { isEditableTarget } from '../../../utils/isEditableTarget'
 import { useDockingStore } from '../multi-view/store'
+import { useBoardStore } from '../panel-board/boardStore'
 import { useChatStore } from '../panel-chat/chatStore'
 import { useStore as useNodeStore } from '../panel-nodes/store/store'
 import { applyStep } from './applyStep'
@@ -177,6 +178,17 @@ function handleEvent(
   }
   if (event.type === 'chat-replay') {
     useChatStore.getState().replay(event.events)
+    return
+  }
+  if (event.type === 'board-replay') {
+    useBoardStore.getState().set(event.board ?? undefined)
+    return
+  }
+  // A new board, unlike a replay, comes to the front with its project.
+  if (event.type === 'board') {
+    tab.open(event.board.project)
+    useDockingStore.getState().ensureLeaf('board')
+    useBoardStore.getState().set(event.board)
     return
   }
   // The agent may have run discovery since this tab loaded the project, like
