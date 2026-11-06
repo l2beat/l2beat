@@ -150,8 +150,8 @@ export class HeadFollower extends TimeLoop {
       else remembered.pop()
     }
     const replaced = (this.remembered?.length ?? 0) - remembered.length
-    this.remembered = remembered
 
+    // forgotten only once deleted, so a failed delete is tried again next run
     if (forkedAt === undefined) {
       await this.$.db.liveActivityBlock.deleteByProject(this.$.projectId)
       this.logger.warn('Reorg deeper than the remembered blocks, restarting', {
@@ -172,6 +172,7 @@ export class HeadFollower extends TimeLoop {
         tip: forkedAt.number,
       })
     }
+    this.remembered = remembered
   }
 }
 
