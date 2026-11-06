@@ -225,7 +225,6 @@ export interface BaseProject {
   statuses?: ProjectStatuses
   display?: ProjectDisplay
   colors?: ProjectCustomColors
-  ecosystemColors?: ProjectCustomColors
   milestones?: Milestone[]
   chainConfig?: ChainConfig
   escrows?: ProjectEscrow[]

@@ -35,7 +35,7 @@ export function ScrollToTopButton() {
       aria-label="Scroll to top"
       onClick={scrollToTop}
       className={cn(
-        '-bottom-12 fixed right-8 z-999 size-12 rounded-lg bg-brand transition-[bottom,filter] ease-out hover:brightness-90 group-data-[has-colors=true]/section-wrapper:bg-branding-primary',
+        '-bottom-12 fixed right-8 z-999 size-12 rounded-lg bg-brand transition-[bottom,filter] ease-out hover:brightness-90',
         isVisible && 'bottom-8',
       )}
     >
