@@ -4,6 +4,7 @@ import {
   EthereumAddress,
 } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
+import { findAdjacentLog } from './logScan'
 import {
   createEventParser,
   createInteropEventType,
@@ -11,7 +12,6 @@ import {
   type InteropEvent,
   type InteropEventDb,
   type InteropPluginResyncable,
-  isEthTransferLog,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -90,15 +90,12 @@ export class WormholeTokenBridgePlugin implements InteropPluginResyncable {
       : null
     const parsed = parseLogTransferRedeemed(input.log, tokenBridgeAddresses)
     if (!parsed) return
-    // Skip EIP-7708 ETH logs: a WETH unwrap logs its ETH payout before its
-    // Withdrawal, which tells us the token.
-    // biome-ignore lint/style/noNonNullAssertion: It's there
-    let nextLogIndex = input.log.logIndex! + 1
-    let nextLog = input.txLogs.find((x) => x.logIndex === nextLogIndex)
-    while (nextLog && isEthTransferLog(nextLog)) {
-      nextLogIndex++
-      nextLog = input.txLogs.find((x) => x.logIndex === nextLogIndex)
-    }
+    const nextLog = findAdjacentLog(
+      input.txLogs,
+      // biome-ignore lint/style/noNonNullAssertion: It's there
+      input.log.logIndex!,
+      'after',
+    )
     const transfer = nextLog && parseTransfer(nextLog, null)
 
     const senderAddress = EthereumAddress(

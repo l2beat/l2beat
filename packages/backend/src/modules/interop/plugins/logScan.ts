@@ -1,5 +1,5 @@
 import { Address32 } from '@l2beat/shared-pure'
-import type { LogToCapture } from './types'
+import { isEthTransferLog, type LogToCapture } from './types'
 
 /**
  * Shared log scanning tools for the capture phase of plugins.
@@ -54,6 +54,21 @@ export function* iterateLogs(
     if (backward >= 0) {
       yield [logs[backward], backward]
     }
+  }
+}
+
+// The log right before or after startLogIndex, stepping over EIP-7708 ETH
+// transfer logs: a payment between two events a contract emits in a row
+// (a fee, a refund, a WETH unwrap) puts these logs between them.
+export function findAdjacentLog(
+  logs: LogToCapture['txLogs'],
+  startLogIndex: number,
+  direction: 'before' | 'after',
+): LogToCapture['txLogs'][number] | undefined {
+  const step = direction === 'after' ? 1 : -1
+  for (let logIndex = startLogIndex + step; ; logIndex += step) {
+    const log = logs.find((x) => x.logIndex === logIndex)
+    if (!log || !isEthTransferLog(log)) return log
   }
 }
 

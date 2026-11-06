@@ -1,6 +1,7 @@
 import { Address32, assert } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import {
+  findAdjacentLog,
   findBestTransferLog,
   findBestTransferLogByExactAmount,
 } from '../logScan'
@@ -157,9 +158,11 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
             }
 
       // try preceding log but fallback to any log in the same tx
-      let packetSentLog = input.txLogs.find(
+      let packetSentLog = findAdjacentLog(
+        input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
-        (x) => x.logIndex === input.log.logIndex! - 1,
+        input.log.logIndex!,
+        'before',
       )
       if (!packetSentLog) return
       let packetSent = parsePacketSent(packetSentLog, [network.endpointV2])
