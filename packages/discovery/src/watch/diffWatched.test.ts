@@ -23,6 +23,18 @@ describe(diffWatched.name, () => {
     ])
   })
 
+  it('reads keys named like Object.prototype members as absent', () => {
+    expect(
+      diffWatched({ constructor: 1 }, { leads: { toString: 'a' } }),
+    ).toEqual([
+      { key: 'constructor', changes: [{ path: [], before: 1 }] },
+      { key: 'leads', changes: [{ path: [], after: { toString: 'a' } }] },
+    ])
+    expect(
+      diffWatched({ leads: { a: 1 } }, { leads: { a: 1, valueOf: 2 } }),
+    ).toEqual([{ key: 'leads', changes: [{ path: ['valueOf'], after: 2 }] }])
+  })
+
   it('reports a whole watch key added or removed as one change', () => {
     expect(diffWatched({ old: { a: 1 } }, { new: [1] })).toEqual([
       { key: 'new', changes: [{ path: [], after: [1] }] },
