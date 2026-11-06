@@ -1,5 +1,4 @@
 import type { Milestone, ProjectScalingCategory } from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
@@ -16,6 +15,7 @@ import type { ChartScale } from '../types'
 import { ActivityChart } from './ActivityChart'
 import { ActivityChartStatsPanel } from './ActivityChartStatsPanel'
 import { ActivityRatioChart } from './ActivityRatioChart'
+import { getActivityPeriodSeconds } from './utils/getActivityPeriodSeconds'
 import { getChartType } from './utils/getChartType'
 
 interface Props {
@@ -52,22 +52,25 @@ export function ProjectActivityChart({
   const type = getChartType(category)
   const resolution = chart?.resolution ?? 'day'
 
+  const liveUntil = chart?.liveUntil
   const chartData = useMemo(() => {
-    const resolutionSeconds = UnixTime.periodToSeconds(resolution)
     return chart?.data.map(
       ([timestamp, projectsTx, ethereumTx, projectsUops, ethereumUops]) => {
+        const seconds = getActivityPeriodSeconds(
+          timestamp,
+          resolution,
+          liveUntil,
+        )
         const projectMetric = metric === 'tps' ? projectsTx : projectsUops
         const ethereumMetric = metric === 'tps' ? ethereumTx : ethereumUops
         return {
           timestamp,
-          projects:
-            projectMetric !== null ? projectMetric / resolutionSeconds : null,
-          ethereum:
-            ethereumMetric !== null ? ethereumMetric / resolutionSeconds : null,
+          projects: projectMetric !== null ? projectMetric / seconds : null,
+          ethereum: ethereumMetric !== null ? ethereumMetric / seconds : null,
         }
       },
     )
-  }, [chart?.data, metric, resolution])
+  }, [chart?.data, metric, resolution, liveUntil])
 
   const ratioData = useMemo(() => {
     return chart?.data.map(([timestamp, projectsTx, _, projectsUops]) => ({
@@ -103,18 +106,19 @@ export function ProjectActivityChart({
           scale={scale}
           metric={metric}
           isLoading={isLoading}
-          syncedUntil={chart?.syncedUntil}
+          syncedUntil={liveUntil ?? chart?.syncedUntil}
           type={type}
           project={project}
           tickCount={4}
           resolution={resolution}
+          liveUntil={liveUntil}
         />
       </div>
       <div className="mb-2">
         <ActivityRatioChart
           isPlaceholderData={isPlaceholderData}
           data={ratioData}
-          syncedUntil={chart?.syncedUntil}
+          syncedUntil={liveUntil ?? chart?.syncedUntil}
           isLoading={isLoading}
           resolution={resolution}
         />

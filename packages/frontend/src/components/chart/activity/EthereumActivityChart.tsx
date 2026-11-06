@@ -1,5 +1,4 @@
 import type { Milestone, ProjectScalingCategory } from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
@@ -16,6 +15,7 @@ import type { ChartScale } from '../types'
 import { ActivityChart } from './ActivityChart'
 import { ActivityChartStatsPanel } from './ActivityChartStatsPanel'
 import { ActivityRatioChart } from './ActivityRatioChart'
+import { getActivityPeriodSeconds } from './utils/getActivityPeriodSeconds'
 import { getChartType } from './utils/getChartType'
 
 interface Props {
@@ -44,17 +44,18 @@ export function EthereumActivityChart({
 
   const type = getChartType(category)
 
+  const liveUntil = chart?.liveUntil
   const chartData = useMemo(
     () =>
       chart?.data.map(([timestamp, ethereumTx, ethereumUops]) => {
+        const seconds = getActivityPeriodSeconds(timestamp, 'day', liveUntil)
         const ethereumMetric = metric === 'tps' ? ethereumTx : ethereumUops
         return {
           timestamp,
-          ethereum:
-            ethereumMetric !== null ? ethereumMetric / UnixTime.DAY : null,
+          ethereum: ethereumMetric !== null ? ethereumMetric / seconds : null,
         }
       }),
-    [chart?.data, metric],
+    [chart?.data, metric, liveUntil],
   )
 
   const ratioData = useMemo(() => {
@@ -87,17 +88,18 @@ export function EthereumActivityChart({
           scale={scale}
           metric={metric}
           isLoading={isLoading}
-          syncedUntil={chart?.syncedUntil}
+          syncedUntil={liveUntil ?? chart?.syncedUntil}
           type={type}
           project={project}
           tickCount={4}
+          liveUntil={liveUntil}
         />
       </div>
       <div className="mb-2">
         <ActivityRatioChart
           isPlaceholderData={isPlaceholderData}
           data={ratioData}
-          syncedUntil={chart?.syncedUntil}
+          syncedUntil={liveUntil ?? chart?.syncedUntil}
           isLoading={isLoading}
         />
       </div>
