@@ -12,7 +12,11 @@ import {
 import { aggregateActivityRecords } from './utils/aggregateActivityRecords'
 import { getActivitySyncInfo } from './utils/getActivitySyncInfo'
 import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange'
-import { getRecentHours, toRecentPoints } from './utils/recentActivity'
+import {
+  getRecentHours,
+  reachesNow,
+  toRecentPoints,
+} from './utils/recentActivity'
 
 export type EthereumActivityChartParams = v.infer<
   typeof EthereumActivityChartParams
@@ -113,7 +117,9 @@ export async function getEthereumActivityChart(
     activityTotals[ProjectId.ETHEREUM],
   )
 
-  const today = await getToday(data.at(-1)?.[0])
+  const today = reachesNow(params.range)
+    ? await getToday(data.at(-1)?.[0])
+    : undefined
   return {
     data: today ? [...data, today.point] : data,
     syncWarning,

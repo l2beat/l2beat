@@ -4,9 +4,11 @@ import type {
 } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { optionToRange } from '~/utils/range/range'
 import {
   appendRecentPoints,
   type RecentHours,
+  reachesNow,
   toRecentHours,
   toRecentPoints,
 } from './recentActivity'
@@ -97,20 +99,29 @@ describe(toRecentPoints.name, () => {
 describe(appendRecentPoints.name, () => {
   const PROJECT = ProjectId('base')
 
-  it("adds the project's recent hours, with Ethereum's beside them", () => {
+  it("adds the project's recent hours, with Ethereum's whole ones beside", () => {
+    // Methodology: Ethereum's newest block is in hour 14, so hour 13 is whole
+    // for it and hour 14 is under way, measured up to another block than the
+    // project's, so it is left out
     const recent = new Map<ProjectId, RecentHours>([
       [
         PROJECT,
         {
-          hours: new Map([[DAY + 13 * H, { count: 10, uopsCount: 12 }]]),
-          until: DAY + 13 * H + 1200,
+          hours: new Map([
+            [DAY + 13 * H, { count: 10, uopsCount: 12 }],
+            [DAY + 14 * H, { count: 20, uopsCount: 22 }],
+          ]),
+          until: DAY + 14 * H + 1200,
         },
       ],
       [
         ProjectId.ETHEREUM,
         {
-          hours: new Map([[DAY + 13 * H, { count: 5, uopsCount: 6 }]]),
-          until: DAY + 13 * H + 1100,
+          hours: new Map([
+            [DAY + 13 * H, { count: 5, uopsCount: 6 }],
+            [DAY + 14 * H, { count: 7, uopsCount: 8 }],
+          ]),
+          until: DAY + 14 * H + 1100,
         },
       ],
     ])
@@ -126,8 +137,9 @@ describe(appendRecentPoints.name, () => {
       data: [
         [DAY + 12 * H, 1, 2, 3, 4],
         [DAY + 13 * H, 10, 5, 12, 6],
+        [DAY + 14 * H, 20, null, 22, null],
       ],
-      liveUntil: DAY + 13 * H + 1200,
+      liveUntil: DAY + 14 * H + 1200,
     })
   })
 
@@ -140,6 +152,16 @@ describe(appendRecentPoints.name, () => {
       data,
       liveUntil: undefined,
     })
+  })
+})
+
+describe(reachesNow.name, () => {
+  it('holds for the ranges picked from the presets, not ones ending earlier', () => {
+    const now = UnixTime.now()
+    expect(reachesNow(optionToRange('7d'))).toEqual(true)
+    expect(
+      reachesNow([now - 30 * UnixTime.DAY, now - 2 * UnixTime.DAY]),
+    ).toEqual(false)
   })
 })
 

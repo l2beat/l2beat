@@ -4,6 +4,7 @@ import type {
 } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
+import { type ChartRange, optionToRange } from '~/utils/range/range'
 import type { ActivityChartDataPoint } from '../getActivityChart'
 import type { ActivityResolution } from './getActivityResolution'
 
@@ -11,6 +12,11 @@ import type { ActivityResolution } from './getActivityResolution'
 const MIN_ELAPSED: Record<ActivityResolution, number> = {
   hour: 10 * UnixTime.MINUTE,
   day: UnixTime.HOUR,
+}
+
+/** Ranges picked from the calendar can end in the past, with nothing recent to add */
+export function reachesNow(range: ChartRange): boolean {
+  return range[1] >= optionToRange('1d')[1]
 }
 
 export interface RecentHours {
@@ -115,7 +121,8 @@ export function toRecentPoints(
 
 /**
  * A project's chart with its periods since the last point, and Ethereum's
- * beside them where it has them too
+ * beside them where it has them whole: the point under way is the project's,
+ * and Ethereum's newest block is elsewhere in it
  */
 export function appendRecentPoints(
   data: ActivityChartDataPoint[],
@@ -127,9 +134,12 @@ export function appendRecentPoints(
   if (!own) return { data, liveUntil: undefined }
   const after = data.at(-1)?.[0] ?? 0
   const ethereum = recent.get(ProjectId.ETHEREUM)
+  const periodSeconds = UnixTime.periodToSeconds(resolution)
   const ethereumPoints = new Map(
     ethereum
-      ? toRecentPoints(ethereum, resolution, after).map((p) => [p[0], p])
+      ? toRecentPoints(ethereum, resolution, after)
+          .filter(([period]) => period + periodSeconds <= ethereum.until)
+          .map((p) => [p[0], p])
       : [],
   )
   const appended = toRecentPoints(own, resolution, after).map(
