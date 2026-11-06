@@ -22,9 +22,7 @@ const genesisTimestamp = UnixTime(1686074603)
 // https://basescan.org/block/0
 const chainStart = UnixTime.fromDate(new Date('2023-06-15T12:35:47Z'))
 const chainId = 8453
-const l2BlockTimeSeconds = HARDCODED.BASE.L2_BLOCK_TIME_SECONDS
-const flashblockIntervalMilliseconds =
-  HARDCODED.BASE.FLASHBLOCK_INTERVAL_MILLISECONDS
+const l2BlockTimeMilliseconds = HARDCODED.BASE.L2_BLOCK_TIME_SECONDS * 1_000
 const securityCouncilStats = discovery.getMultisigStats('Base Security Council')
 const coordinatorStats = discovery.getMultisigStats('Base Coordinator Multisig')
 const governanceStats = discovery.getMultisigStats('Base Governance Multisig')
@@ -159,7 +157,17 @@ export const base: ScalingProject = opStackL2({
   activityConfig: {
     type: 'block',
     startBlock: 1,
-    adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 1 },
+    // Every block carries the L1 attributes deposit at tx[0]. From the first
+    // Denim block (200 ms blocks) it also carries the BaseTime deposit at
+    // tx[1] that sets the millisecond part of the timestamp.
+    // https://docs.base.org/upgrades/denim/200ms-blocks
+    adjustCount: {
+      type: 'SubtractSinceBlocks',
+      steps: [
+        { blockNumber: 1, count: 1 },
+        { blockNumber: 53556127, count: 2 },
+      ],
+    },
   },
   daTracking: [
     getOpStackDaTracking(discovery, {
@@ -270,7 +278,7 @@ export const base: ScalingProject = opStackL2({
     hardcoded: HARDCODED.BASE,
     description:
       'Base uses a single centralized sequencer for fast confirmations. Users can bypass it with one Ethereum transaction to the OptimismPortal. Base nodes derive the deposited transaction from Ethereum, including it after at most one sequencing window.',
-    trustedPreconfirmationDescription: `The centralized builder streams cumulative Flashblock preconfirmations about every ${flashblockIntervalMilliseconds} ms while sealing regular L2 blocks every ${l2BlockTimeSeconds} seconds. Flashblocks are out of protocol: the promise has no protocol enforcement or slashing, and a preconfirmation can be absent or reorged.`,
+    trustedPreconfirmationDescription: `Since the Denim hardfork the centralized sequencer seals a canonical L2 block every ${l2BlockTimeMilliseconds} ms and publishes it as the unsafe head; the earlier Flashblock stream was retired with it. The unsafe block is the sequencer's promise: it has no protocol enforcement or slashing, and it can be reorged until its batch is derived from Ethereum.`,
     sequencer: {
       value: 'Centralized',
       secondLine: '5-instance Raft HA',
@@ -283,8 +291,8 @@ export const base: ScalingProject = opStackL2({
       'The centralized sequencer provides no real-time censorship resistance. The Ethereum deposit path provides eventual censorship resistance, assuming the deposit is included on Ethereum.',
     references: [
       {
-        title: 'Base documentation - Flashblocks',
-        url: 'https://docs.base.org/base-chain/flashblocks/faq',
+        title: 'Base documentation - Denim 200 ms native blocks',
+        url: 'https://docs.base.org/upgrades/denim/200ms-blocks',
       },
       {
         title: 'Base engineering - Sequencer architecture',
@@ -292,7 +300,7 @@ export const base: ScalingProject = opStackL2({
       },
       {
         title: 'Base source code - Mainnet chain configuration',
-        url: 'https://github.com/base/base/blob/5761d838af8ae52e4904a74af2f3d8b490f56fec/crates/common/chains/src/config.rs#L402-L409',
+        url: 'https://github.com/base/base/blob/v1.5.1/crates/common/chains/src/config.rs#L455-L478',
       },
       {
         title: 'Base Beryl - Reduced withdrawal delay',
@@ -304,7 +312,7 @@ export const base: ScalingProject = opStackL2({
       },
       {
         title: 'AggregateVerifier - source code',
-        url: 'https://etherscan.io/address/0xeF9eCeA15265321753047EBF7D54C858D53cB94f#code',
+        url: 'https://etherscan.io/address/0xc08b8fFAF04Abb1d7013B74a0E57Eccbd7fa5A70#code',
       },
     ],
   },
@@ -335,11 +343,19 @@ export const base: ScalingProject = opStackL2({
       },
     },
     {
-      rollupNodeLink: 'https://github.com/base-org/node',
-      proverSourceLink: 'https://github.com/succinctlabs/op-succinct',
+      rollupNodeLink: 'https://github.com/base/base',
+      proverSourceLink: 'https://github.com/base/base/tree/main/crates/proof',
     },
   ),
   milestones: [
+    {
+      title: 'Base Denim: 200 ms blocks',
+      url: 'https://docs.base.org/upgrades/denim/overview',
+      date: '2026-11-05T00:00:00Z',
+      description:
+        'Base moves from one block every 2 s to five canonical blocks per second and retires Flashblocks.',
+      type: 'general',
+    },
     {
       title: 'Base Azul: multi-proof',
       url: 'https://blog.base.dev/introducing-base-azul',
@@ -428,7 +444,7 @@ export const base: ScalingProject = opStackL2({
               description: `Execution through the ${governanceStats} \`Base Governance Multisig\``,
             },
           ],
-          note: 'No timelock, and no Safe carries a delay module. Beryl verifier-hash update, June 2026: Council approved 22 Jun, Coinbase 23 Jun, executed 43 minutes later.',
+          note: 'No timelock, and no Safe carries a delay module. Denim upgrade, November 2026: Coinbase signed at 15:24 UTC, the Council at 15:27 UTC, executed at 15:29 UTC, 26 hours before the hardfork activated.',
         },
         'Emergency upgrade path': `**None** — the normal path executes as soon as both Safes sign, so there is no lower emergency threshold. The fastest lever is a pause: the ${incidentResponderStats} \`Base Multisig 1\` can pause withdrawals alone as Incident Responder, but only once per identifier, since the pause expires after ${pauseExpiry} and it cannot pause again until the Guardian unpauses. The Guardian is the ${governanceStats} \`Base Governance Multisig\` itself, which can also blacklist dispute games, set the respected game type and retire all in-flight games.`,
         'Exit window':

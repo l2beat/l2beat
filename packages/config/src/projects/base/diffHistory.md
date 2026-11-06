@@ -1,3 +1,540 @@
+Generated with discovered.json: 0x4f4b8f82efe17aabd3b66c4768ac3cd04b684400
+
+# Diff at Fri, 06 Nov 2026 08:41:33 GMT:
+
+- id: 560b3731
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@f6e9d3b108c440cd622dae728d8c7d3f27a561e4 block: 1791538610
+- current timestamp: 1793954518
+
+## Description
+
+Base's Denim upgrade, L1 side, executed by the Base Governance Multisig on 2026-11-04 (tx `0x037f60045f4304460e2b0d5d4f3d8b223200d220212e2399db1ce0f77a19b77b`, task [2026-10-07-denim-upgrade](https://github.com/base/contract-deployments/tree/main/archive/evm/2026-10-07-denim-upgrade)). The hardfork activates on L2 on 2026-11-05 18:00 UTC: one canonical block every 200 ms instead of every 2 s, Flashblocks retired.
+
+- `DisputeGameFactory`: game type 621 now points at `AggregateVerifier` 0.3.0, which carries the Denim proof program hashes (TEE image, SP1 range and aggregation), keeps the 600/30-block proposal intervals until the first Denim block and switches to 6000/300 (still 20 minutes) after it, reading the activation time from `ProtocolVersions` index 13.
+- `ProtocolVersions`: Denim registered as upgrade 13, minimum node version raised from v1.4.2 to v1.5.1.
+- `TEEProverRegistry`: the expected image hash follows the new verifier; the manager rotated the registered enclave signers.
+- Twelve L2 predeploys upgraded to base/contracts v8.4.0 through portal deposits: the messenger, both bridges, both token factories, `L1Block`, `L2ToL1MessagePasser`, the three fee vaults (now initialised from storage with the same recipient and 2 ETH minimum), `OperatorFeeVault`, `SchemaRegistry` and `EAS`. The messenger, bridges and ERC20 factory went through a one-shot migrator contract that reset their legacy initializer slot.
+
+Denim activated at block 53556127 (2026-11-05 18:00:01 UTC): the node installed the `BaseTime` implementation behind the pre-existing predeploy proxy, now discovered; the implementation has no verified source on Basescan because it was installed at the fork rather than deployed, so the config points at its source in base/contracts v8.4.0.
+
+Shapes added for the new implementations. The L1FeeVault proxy runs the same build as BaseFeeVault, so its name and description come from the config. The three new program hashes are registered as not verified.
+
+## Watched changes
+
+```diff
+    contract L2CrossDomainMessenger (base:0x4200000000000000000000000000000000000007) [opstack/Layer2/L2CrossDomainMessenger] {
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+      sourceHashes.1:
+-        "0xc976dd7891ac59d37603c7648ea8e3a566365094a242d169a646ebfed971bab8"
++        "0x2df1086b25c087f24dc6273e2d367f1aa75335963c3591df31378e7edd029ec5"
+      values.$implementation:
+-        "base:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007"
++        "base:0xFe016829CbD44B469a4Bb76Ed95343A9458DCbA6"
+      values.$pastUpgrades.0:
++        ["2026-11-04T15:32:07.000Z","0x376ad9d1263dc516fc05d0db60e77b6741af3aec2a7f2e2537612fef93a70174",["base:0x690D24732FB1Ed4869dCA5Cd2820FE54272aad09"]]
+      values.$pastUpgrades.1:
++        ["2026-11-04T15:32:07.000Z","0x376ad9d1263dc516fc05d0db60e77b6741af3aec2a7f2e2537612fef93a70174",["base:0xFe016829CbD44B469a4Bb76Ed95343A9458DCbA6"]]
+      values.$upgradeCount:
+-        0
++        2
+      values.version:
+-        "1.4.0"
++        "2.2.0"
+      values.ENCODING_OVERHEAD:
++        260
+      values.FLOOR_CALLDATA_OVERHEAD:
++        40
+      values.otherMessenger:
++        "eth:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa"
++++ severity: MEDIUM
+      values.paused:
++        false
+      values.TX_BASE_GAS:
++        21000
+      implementationNames.base:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007:
+-        "L2CrossDomainMessenger"
+      implementationNames.base:0xFe016829CbD44B469a4Bb76Ed95343A9458DCbA6:
++        "L2CrossDomainMessenger"
+    }
+```
+
+```diff
+    contract L2StandardBridge (base:0x4200000000000000000000000000000000000010) [opstack/Layer2/L2StandardBridge] {
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+      sourceHashes.1:
+-        "0x4354fe0c1ae65beab0a93e37ea50f3964a7d5e51a2f4a33c98cb041a1d18d32c"
++        "0x9b2d70fe3bdfea10cc0b8886b8f551b5e2c9179641c33c84deebe30b9d42c815"
+      values.$implementation:
+-        "base:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010"
++        "base:0xff312C3496f0848CD94d71dC06C434D487A46a10"
+      values.$pastUpgrades.0:
++        ["2026-11-04T15:32:07.000Z","0xce2139adf0f68a73cb55b58b228d196dcee374347f60a9b6e771f2e54536b600",["base:0x690D24732FB1Ed4869dCA5Cd2820FE54272aad09"]]
+      values.$pastUpgrades.1:
++        ["2026-11-04T15:32:07.000Z","0xce2139adf0f68a73cb55b58b228d196dcee374347f60a9b6e771f2e54536b600",["base:0xff312C3496f0848CD94d71dC06C434D487A46a10"]]
+      values.$upgradeCount:
+-        0
++        2
+      values.version:
+-        "1.1.0"
++        "1.13.0"
+      values.otherBridge:
++        "eth:0x3154Cf16ccdb4C6d922629664174b904d80F2C35"
++++ severity: MEDIUM
+      values.paused:
++        false
+      implementationNames.base:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010:
+-        "L2StandardBridge"
+      implementationNames.base:0xff312C3496f0848CD94d71dC06C434D487A46a10:
++        "L2StandardBridge"
+    }
+```
+
+```diff
+    contract SequencerFeeVault (base:0x4200000000000000000000000000000000000011) [opstack/Layer2/SequencerFeeVault] {
+    +++ description: Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.
+      sourceHashes.1:
+-        "0x999b85df983a6440f746afe1973bc01ad232f02932cfa2ed42e2bbf7d214bdde"
++        "0x20f11d51c6e1bde3bfc74251f2a524b2686b3be876848ce06eafe717e1f813df"
+      values.$implementation:
+-        "base:0xd53210eE20948eCFF8B6B8180E29657e0ce8492d"
++        "base:0x31574645D1Cc22778e10b394BF3713beA4aa2B68"
+      values.$pastUpgrades.2:
++        ["2026-11-04T15:32:07.000Z","0x2e8d90ade199c2f69dfeab2fcb7f9b1eca263076f2c893f337f547e9490fab73",["base:0x31574645D1Cc22778e10b394BF3713beA4aa2B68"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.version:
+-        "1.3.0"
++        "1.6.0"
+      values.minWithdrawalAmount:
++        "2000000000000000000"
+      values.proxyAdmin:
++        "base:0x4200000000000000000000000000000000000018"
+      values.proxyAdminOwner:
++        "base:0x8cC51c3008b3f03Fe483B28B8Db90e19cF076a6d"
+      values.recipient:
++        "base:0x09C7bAD99688a55a2e83644BFAed09e62bDcCcBA"
+      values.withdrawalNetwork:
++        1
+      implementationNames.base:0xd53210eE20948eCFF8B6B8180E29657e0ce8492d:
+-        "SequencerFeeVault"
+      implementationNames.base:0x31574645D1Cc22778e10b394BF3713beA4aa2B68:
++        "SequencerFeeVault"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (base:0x4200000000000000000000000000000000000012) [opstack/OptimismMintableERC20Factory] {
+    +++ description: Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens.
+      template:
+-        "opstack/Layer2/OptimismMintableERC20Factory"
++        "opstack/OptimismMintableERC20Factory"
+      sourceHashes.1:
+-        "0xee8e51fe818ec5a2ef914c7dfa2ca739f1197b202e9424a30c945892002ce7e8"
++        "0x307d4cb83e682629880fe9bb874a188805e3b93cb11a2cbf80095975f1e5b04e"
+      values.$implementation:
+-        "base:0x6922ac4DbDfEdEa3a1E5535f12c3171f2b964C91"
++        "base:0x87481a9CBf0aABf9a5f92838F51D9Ca635a33878"
+      values.$pastUpgrades.1:
++        ["2026-11-04T15:32:07.000Z","0x3074c5c57a89de904165376e7d81e8fa9dfda6090f03454d043710bc4b7f7bd6",["base:0x690D24732FB1Ed4869dCA5Cd2820FE54272aad09"]]
+      values.$pastUpgrades.2:
++        ["2026-11-04T15:32:07.000Z","0x3074c5c57a89de904165376e7d81e8fa9dfda6090f03454d043710bc4b7f7bd6",["base:0x87481a9CBf0aABf9a5f92838F51D9Ca635a33878"]]
+      values.$upgradeCount:
+-        1
++        3
+      values.version:
+-        "1.9.0"
++        "1.10.2"
+      implementationNames.base:0x6922ac4DbDfEdEa3a1E5535f12c3171f2b964C91:
+-        "OptimismMintableERC20Factory"
+      implementationNames.base:0x87481a9CBf0aABf9a5f92838F51D9Ca635a33878:
++        "OptimismMintableERC20Factory"
+    }
+```
+
+```diff
+    contract L2ERC721Bridge (base:0x4200000000000000000000000000000000000014) [opstack/Layer2/L2ERC721Bridge] {
+    +++ description: The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.
+      sourceHashes.1:
+-        "0xe7457c0a0e9e7ba45f45fb369ff94f8a3613c4bb9083999a6eb18eaf6a077cdd"
++        "0x1eaa11bf9caafca99c36bb0ddadf3fe4767ff9ec5dea2958964872280d7a66ef"
+      values.$implementation:
+-        "base:0xC0D3c0d3c0d3c0d3c0D3C0d3C0D3C0D3c0d30014"
++        "base:0x6cf5489360C17e648d9009c74019699aa716d60c"
+      values.$pastUpgrades.0:
++        ["2026-11-04T15:32:07.000Z","0x9c33d0a9cfc2340a155ae5598f2cf4331fda72ac0c230c85da5ac75b3fd2f255",["base:0x690D24732FB1Ed4869dCA5Cd2820FE54272aad09"]]
+      values.$pastUpgrades.1:
++        ["2026-11-04T15:32:07.000Z","0x9c33d0a9cfc2340a155ae5598f2cf4331fda72ac0c230c85da5ac75b3fd2f255",["base:0x6cf5489360C17e648d9009c74019699aa716d60c"]]
+      values.$upgradeCount:
+-        0
++        2
+      values.version:
+-        "1.1.0"
++        "1.10.0"
+      values.paused:
++        false
+      implementationNames.base:0xC0D3c0d3c0d3c0d3c0D3C0d3C0D3C0D3c0d30014:
+-        "L2ERC721Bridge"
+      implementationNames.base:0x6cf5489360C17e648d9009c74019699aa716d60c:
++        "L2ERC721Bridge"
+    }
+```
+
+```diff
+    contract L1Block (base:0x4200000000000000000000000000000000000015) [opstack/Layer2/L1Block] {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+      sourceHashes.1:
+-        "0x399e57fff478211b47d61c5acb60592a4df8ffa5716959a1a6ee2ccabc44915e"
++        "0x6d917cd4b7dab1626a7916841d01b7b71c990ceeb4bf223920b3af3ecb4fa1ba"
+      values.$implementation:
+-        "base:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C"
++        "base:0x8BDE8F549F56D405f07e1aA15Df9e1FC69839881"
+      values.$pastUpgrades.3:
++        ["2026-11-04T15:32:07.000Z","0xe96cc921e2ed35841913d23405457755d2d86938df02e2faacb7a2db0cb5c890",["base:0x8BDE8F549F56D405f07e1aA15Df9e1FC69839881"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.version:
+-        "1.7.0"
++        "1.8.0"
+      implementationNames.base:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C:
+-        "L1Block"
+      implementationNames.base:0x8BDE8F549F56D405f07e1aA15Df9e1FC69839881:
++        "L1Block"
+    }
+```
+
+```diff
+    contract L2ToL1MessagePasser (base:0x4200000000000000000000000000000000000016) [opstack/Layer2/L2ToL1MessagePasser] {
+    +++ description: Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.
+      sourceHashes.1:
+-        "0xa8bdac224f506426db48b13c4933c57cbe3d88178a3499712638d559204c5eaa"
++        "0xd8aebf68f3dc707d246833290e29301f2329bf5806450ff1fa08e247c042d702"
+      values.$implementation:
+-        "base:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016"
++        "base:0xF729d45aA58A015835A745474D4bd18551C3A92c"
+      values.$pastUpgrades.0:
++        ["2026-11-04T15:32:07.000Z","0xeeb1233f11885e9c521ca60edd4bc6e82e212e37e1b484df08a053ffbb4ae950",["base:0xF729d45aA58A015835A745474D4bd18551C3A92c"]]
+      values.$upgradeCount:
+-        0
++        1
+      values.version:
+-        "1.0.0"
++        "1.2.0"
+      implementationNames.base:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016:
+-        "L2ToL1MessagePasser"
+      implementationNames.base:0xF729d45aA58A015835A745474D4bd18551C3A92c:
++        "L2ToL1MessagePasser"
+    }
+```
+
+```diff
+    contract OptimismMintableERC721Factory (base:0x4200000000000000000000000000000000000017) [opstack/Layer2/OptimismMintableERC721Factory] {
+    +++ description: Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.
+      sourceHashes.1:
+-        "0x889f9ffc10090c8df747b3523aa4fde7bcc0aade333f7ddabece6b3f005a2e80"
++        "0x13f42bdbb8758c321b1db29ef1d7cfe4a951bd896d4df295515748114f2848fa"
+      values.$implementation:
+-        "base:0xc0d3C0d3C0d3C0d3C0d3c0d3C0D3C0d3C0D30017"
++        "base:0x6e4f4f3E193880339c79605F88a2CD15370C8e02"
+      values.$pastUpgrades.0:
++        ["2026-11-04T15:32:07.000Z","0x3e46d5f4e5cb28df6f381d14927303413d2d35a4c19e3611af4580bf7d0d5ff5",["base:0x6e4f4f3E193880339c79605F88a2CD15370C8e02"]]
+      values.$upgradeCount:
+-        0
++        1
+      values.version:
+-        "1.2.0"
++        "1.4.2"
+      values.bridge:
++        "base:0x4200000000000000000000000000000000000014"
+      values.remoteChainID:
++        1
+      implementationNames.base:0xc0d3C0d3C0d3C0d3C0d3c0d3C0D3C0d3C0D30017:
+-        "OptimismMintableERC721Factory"
+      implementationNames.base:0x6e4f4f3E193880339c79605F88a2CD15370C8e02:
++        "OptimismMintableERC721Factory"
+    }
+```
+
+```diff
+    contract ProxyAdmin (base:0x4200000000000000000000000000000000000018) [global/ProxyAdmin] {
+    +++ description: None
+      directlyReceivedPermissions.15:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000030","role":"admin"}
+    }
+```
+
+```diff
+    contract BaseFeeVault (base:0x4200000000000000000000000000000000000019) [opstack/Layer2/BaseFeeVault] {
+    +++ description: Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.
+      sourceHashes.1:
+-        "0x6984953cd11a9b147f3a7fbf655a7d6046b30101f3e0893c6f6d24df3c437faa"
++        "0x56b9368f9bae6662296148b7c1b9ec209a803b4f664590bd6526707fc58b23ab"
+      values.$implementation:
+-        "base:0x4E207bDF8aece56de86821f5370b2b993D08C9E9"
++        "base:0x113B0749737B06D94267fe59e935D38e13849deF"
+      values.$pastUpgrades.2:
++        ["2026-11-04T15:32:07.000Z","0x455a95f522b323471b89226b9cb1d9e70a13b810554a73bbb78cd211e02299c8",["base:0x113B0749737B06D94267fe59e935D38e13849deF"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.version:
+-        "1.3.0"
++        "1.6.0"
+      values.minWithdrawalAmount:
++        "2000000000000000000"
+      values.proxyAdmin:
++        "base:0x4200000000000000000000000000000000000018"
+      values.proxyAdminOwner:
++        "base:0x8cC51c3008b3f03Fe483B28B8Db90e19cF076a6d"
+      values.recipient:
++        "base:0x09C7bAD99688a55a2e83644BFAed09e62bDcCcBA"
+      values.withdrawalNetwork:
++        1
+      implementationNames.base:0x4E207bDF8aece56de86821f5370b2b993D08C9E9:
+-        "BaseFeeVault"
+      implementationNames.base:0x113B0749737B06D94267fe59e935D38e13849deF:
++        "BaseFeeVault"
+    }
+```
+
+```diff
+    contract L1FeeVault (base:0x420000000000000000000000000000000000001A) [opstack/Layer2/BaseFeeVault] {
+    +++ description: Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.
+      template:
+-        "opstack/Layer2/L1FeeVault"
++        "opstack/Layer2/BaseFeeVault"
+      sourceHashes.1:
+-        "0x4a4c92d8fcf0087704a0745d2ea7824a9670e30bd16ffc8cb6ef253417eb0842"
++        "0x56b9368f9bae6662296148b7c1b9ec209a803b4f664590bd6526707fc58b23ab"
+      values.$implementation:
+-        "base:0x0c9034b92351cF8f067379a1fFA4fa35f5AF9dCC"
++        "base:0x93759deE9D2100Ca0a0e3EA10A0e5Cc5f07b229B"
+      values.$pastUpgrades.2:
++        ["2026-11-04T15:32:07.000Z","0x89e7af994f9a814081d13179e46d88a0c4927b39a2782bc44a392995ef659f14",["base:0x93759deE9D2100Ca0a0e3EA10A0e5Cc5f07b229B"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.version:
+-        "1.3.0"
++        "1.6.0"
+      values.minWithdrawalAmount:
++        "2000000000000000000"
+      values.proxyAdmin:
++        "base:0x4200000000000000000000000000000000000018"
+      values.proxyAdminOwner:
++        "base:0x8cC51c3008b3f03Fe483B28B8Db90e19cF076a6d"
+      values.recipient:
++        "base:0x09C7bAD99688a55a2e83644BFAed09e62bDcCcBA"
+      values.withdrawalNetwork:
++        1
+      implementationNames.base:0x0c9034b92351cF8f067379a1fFA4fa35f5AF9dCC:
+-        "L1FeeVault"
+      implementationNames.base:0x93759deE9D2100Ca0a0e3EA10A0e5Cc5f07b229B:
++        "BaseFeeVault"
+    }
+```
+
+```diff
+    contract OperatorFeeVault (base:0x420000000000000000000000000000000000001b) [opstack/Layer2/OperatorFeeVault] {
+    +++ description: Holds the 'operator fees' for the L2 network, which are part of the L2 fees that users pay.
+      sourceHashes.1:
+-        "0x8ee929b67fce68f8daf1dac67514e5e05678a9f554e8d6e676fa28fe81874844"
++        "0x9a24a383551a3f31ec6d4074b497508d7b9948436e0d39ae359d9b7874450180"
+      values.$implementation:
+-        "base:0x4fa2Be8cd41504037F1838BcE3bCC93bC68Ff537"
++        "base:0x47B6C3e3C3d8144c83910D26E3b517DF4f6058c7"
+      values.$pastUpgrades.1:
++        ["2026-11-04T15:32:07.000Z","0xeac20b0d6226f384439ea8da268ce66fa8db3a1dc0ff3d9a28032a353fbd78cd",["base:0x47B6C3e3C3d8144c83910D26E3b517DF4f6058c7"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.version:
+-        "1.0.0"
++        "1.1.0"
+      values.proxyAdmin:
++        "base:0x4200000000000000000000000000000000000018"
+      values.proxyAdminOwner:
++        "base:0x8cC51c3008b3f03Fe483B28B8Db90e19cF076a6d"
+      implementationNames.base:0x4fa2Be8cd41504037F1838BcE3bCC93bC68Ff537:
+-        "OperatorFeeVault"
+      implementationNames.base:0x47B6C3e3C3d8144c83910D26E3b517DF4f6058c7:
++        "OperatorFeeVault"
+    }
+```
+
+```diff
+    contract SchemaRegistry (base:0x4200000000000000000000000000000000000020) [opstack/Layer2/SchemaRegistry] {
+    +++ description: Contracts to register schemas for the Ethereum Attestation Service (EAS).
+      sourceHashes.1:
+-        "0xc94799f3b35c3dedb3578da655614d2690e56477b3e176966113bbf06888e05d"
++        "0xe2a60db541c987ffa9a6ed73b9100c7f62f2574966a20c903a73a8f730c7dfcc"
+      values.$implementation:
+-        "base:0x75505a97BD334E7BD3C476893285569C4136Fa0F"
++        "base:0xA88AB4351cC11acd42Ca148cd98Cfd91294Aa7BD"
+      values.$pastUpgrades.1:
++        ["2026-11-04T15:32:07.000Z","0x4206f1a78045c915ff4d96c2d6c431c587c20a9c551c5b09c34bda16c31cdd1a",["base:0xA88AB4351cC11acd42Ca148cd98Cfd91294Aa7BD"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.version:
+-        "1.0.1"
++        "1.3.1-beta.2"
+      implementationNames.base:0x75505a97BD334E7BD3C476893285569C4136Fa0F:
+-        "SchemaRegistry"
+      implementationNames.base:0xA88AB4351cC11acd42Ca148cd98Cfd91294Aa7BD:
++        "SchemaRegistry"
+    }
+```
+
+```diff
+    contract EAS (base:0x4200000000000000000000000000000000000021) [opstack/Layer2/EAS] {
+    +++ description: Contract containing the main logic for the Ethereum Attestation Service (EAS).
+      sourceHashes.1:
+-        "0x22dcc9bc6d8b0463159f8a96f6f2ee61c897a8ae5e1b684e38e74e2b25b48e66"
++        "0xafd9192c0beaaaefebeb6c67c4451684546b8ca9b5f8aca61b867e4fafd225b7"
+      values.$implementation:
+-        "base:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed"
++        "base:0xb6288DE3f61E3aCfAf4f1b0923656e2ab78C1Ad4"
+      values.$pastUpgrades.1:
++        ["2026-11-04T15:32:07.000Z","0xe78769294337de6f3fab7e831d2550940ce85d325ef618de09435f440bef564d",["base:0xb6288DE3f61E3aCfAf4f1b0923656e2ab78C1Ad4"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.getAttestTypeHash:
+-        "0xdbfdf8dc2b135c26253e00d5b6cbe6f20457e003fd526d97cea183883570de61"
++        "0xfeb2925a02bae3dae48d424a0437a2b6ac939aa9230ddc55a1a76f065d988076"
+      values.getDomainSeparator:
+-        "0x441f04bd3fc4b9bbef0e92ccbdd47cebd80211d531918066401ffc7c91fd954b"
++        "0x6c7caf493ff74dde1783161593c0911e74bb65fce09f90837a991e7282d9e71c"
+      values.getRevokeTypeHash:
+-        "0xa98d02348410c9c76735e0d0bb1396f4015ac2bb9615f9c2611d19d7a8a99650"
++        "0xb5d556f07587ec0f08cf386545cc4362c702a001650c2058002615ee5c9d1e75"
+      values.version:
+-        "1.0.1"
++        "1.4.1-beta.3"
+      implementationNames.base:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed:
+-        "EAS"
+      implementationNames.base:0xb6288DE3f61E3aCfAf4f1b0923656e2ab78C1Ad4:
++        "EAS"
+    }
+```
+
+```diff
+    contract BaseTime (base:0x4200000000000000000000000000000000000030) [N/A] {
+    +++ description: Exposes the millisecond part of the current block timestamp. A protocol deposit at tx[1] of every block sets it to 0, 200, 400, 600 or 800; only the depositor account can call the setter.
+      sourceHashes:
+-        ["0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44"]
+      proxyType:
+-        "immutable"
++        "EIP1967 proxy"
+      values.$immutable:
+-        true
+      values.$admin:
++        "base:0x4200000000000000000000000000000000000018"
+      values.$implementation:
++        "base:0xc0d3C0D3c0d3c0d3c0d3c0D3c0d3C0D3c0d30030"
+      values.$pastUpgrades:
++        []
+      values.$upgradeCount:
++        0
+      implementationNames.base:0xc0d3C0D3c0d3c0d3c0d3c0D3c0d3C0D3c0d30030:
++        ""
+      unverified:
++        true
+    }
+```
+
+```diff
+    contract TEEProverRegistry (eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA) [base/TEEProverRegistry] {
+    +++ description: Registry of authorized TEE enclave signers and proposer addresses. Signer registration requires a valid AWS Nitro attestation document.
++++ description: TEE image hash (PCR0) of the AggregateVerifier registered in the DisputeGameFactory for gameType. Derived, not stored in this contract.
+      values.getExpectedImageHash:
+-        "0x45c538bc396fe4a01b3f9ddc999494c3b993480ecac0a917e2f1af230d78b0e0"
++        "0x73181275ec86503b629510176b5bedec00309060b3f4ff5d8e55d9e83dad5cbd"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
++++ severity: HIGH
+      values.game621:
+-        "eth:0xeF9eCeA15265321753047EBF7D54C858D53cB94f"
++        "eth:0xc08b8fFAF04Abb1d7013B74a0E57Eccbd7fa5A70"
+    }
+```
+
+```diff
+    contract ProtocolVersions (eth:0x7480Afc8D99a5c645c247dB5A1e4a4f440e6e095) [base/ProtocolVersions] {
+    +++ description: Registry of L2 upgrade activation timestamps. Dispute games commit to the upgrades active at their ending L2 block and proofs must match that commitment.
++++ severity: HIGH
+      values.getSchedule.13:
++        1793901600
+      values.minimumProtocolVersion:
+-        "79228162588051313896972091392"
++        "79228162606498057966386675712"
+      values.scheduleId:
+-        "0x3d6185fc0e020da273b0abec02bd96263cd2f079f9f88db097fa683fb74ac896"
++        "0xa7e0db8fbcc1f948bc5fdb3c8957f40a430e1b24942b3635543abb4d6934b68d"
+    }
+```
+
+```diff
+    contract Base Governance Multisig (eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.20:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000030","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract AggregateVerifier (eth:0xeF9eCeA15265321753047EBF7D54C858D53cB94f) [opstack/AggregateVerifier]
+    +++ description: Game type implementation that combines a TEE attestation arm and a ZK proof arm. A single un-nullified proof of either type can resolve a game (PROOF_THRESHOLD = 1). When both arms commit, the finalization window collapses from SLOW_FINALIZATION_DELAY (5d) to FAST_FINALIZATION_DELAY (1d).
+```
+
+```diff
++   Status: CREATED
+    contract AggregateVerifier (eth:0xc08b8fFAF04Abb1d7013B74a0E57Eccbd7fa5A70) [opstack/AggregateVerifier]
+    +++ description: Game type implementation that combines a TEE attestation arm and a ZK proof arm. A single un-nullified proof of either type can resolve a game (PROOF_THRESHOLD = 1). When both arms commit, the finalization window collapses from SLOW_FINALIZATION_DELAY (5d) to FAST_FINALIZATION_DELAY (1d).
+```
+
+## Source code changes
+
+```diff
+.../AggregateVerifier.sol                          |  216 +-
+ .../BaseFeeVault/BaseFeeVault.sol                  | 4758 +++------------
+ .../BaseTime.sol => .flat/BaseTime/Proxy.p.sol}    |    0
+ .../base/{.flat@1791538610 => .flat}/EAS/EAS.sol   |  949 +--
+ .../L1Block/L1Block.sol                            |   16 +-
+ .../base/.flat/L1FeeVault/BaseFeeVault.sol         | 1140 ++++
+ .../L1FeeVault/L1FeeVault.sol => /dev/null         | 4534 --------------
+ .../L2CrossDomainMessenger.sol                     | 3304 ++++-------
+ .../L2ERC721Bridge/L2ERC721Bridge.sol              | 3099 +++-------
+ .../L2StandardBridge/L2StandardBridge.sol          | 6245 +++++++-------------
+ .../L2ToL1MessagePasser/L2ToL1MessagePasser.sol    | 1129 ++--
+ .../OperatorFeeVault/OperatorFeeVault.sol          |  837 ++-
+ .../OptimismMintableERC20Factory.sol               | 1121 +++-
+ .../OptimismMintableERC721Factory.sol              |  523 +-
+ .../SchemaRegistry/SchemaRegistry.sol              |  151 +-
+ .../SequencerFeeVault/SequencerFeeVault.sol        | 4759 +++------------
+ 16 files changed, 9672 insertions(+), 23109 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791538610 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract BaseTime (base:0x4200000000000000000000000000000000000030) [N/A]
+    +++ description: Exposes the millisecond part of the current block timestamp. A protocol deposit at tx[1] of every block sets it to 0, 200, 400, 600 or 800; only the depositor account can call the setter.
+```
+
 Generated with discovered.json: 0xb5e3bfcf111e835244986574b0343050219f0ee7
 
 # Diff at Thu, 05 Nov 2026 07:13:45 GMT:

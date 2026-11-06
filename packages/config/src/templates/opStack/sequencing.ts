@@ -33,7 +33,8 @@ export interface OpStackCentralizedSequencingConfig {
 /** The subset of HARDCODED.<CHAIN> a centralized OP Stack sequencing spec needs. */
 export interface OpStackCentralizedSequencingHardcoded {
   L2_BLOCK_TIME_SECONDS: number
-  FLASHBLOCK_INTERVAL_MILLISECONDS: number
+  /** Absent when the sequencer streams no pre-confirmations beyond its canonical (unsafe) blocks. */
+  FLASHBLOCK_INTERVAL_MILLISECONDS?: number
   SEQUENCING_WINDOW_BLOCKS: number
   MAX_DEPOSIT_CALLDATA_BYTES: number
 }
@@ -61,6 +62,10 @@ export function getOpStackCentralizedSequencingSpec({
   } = hardcoded
   const sequencingWindowSeconds =
     sequencingWindowBlocks * HARDCODED.ETHEREUM.BLOCK_TIME_SECONDS
+  const preconfirmationIntervalMilliseconds =
+    flashblockIntervalMilliseconds ?? l2BlockTimeSeconds * 1_000
+  const preconfirmationUnit =
+    flashblockIntervalMilliseconds !== undefined ? 'Flashblock' : 'block'
   const depositResourceLimit = discovery.getContractValue<{
     maxResourceLimit: number
   }>('SystemConfig', 'resourceConfig').maxResourceLimit
@@ -78,15 +83,18 @@ export function getOpStackCentralizedSequencingSpec({
   return {
     type: 'centralized',
     trustedPreconfirmation: {
-      value: `${flashblockIntervalMilliseconds} ms`,
-      secondLine: `${l2BlockTimeSeconds} s L2 block time`,
+      value: `${preconfirmationIntervalMilliseconds} ms`,
+      secondLine:
+        flashblockIntervalMilliseconds !== undefined
+          ? `${l2BlockTimeSeconds} s L2 block time`
+          : 'Unsafe L2 blocks',
       description: trustedPreconfirmationDescription,
-      orderHint: flashblockIntervalMilliseconds / 1_000,
+      orderHint: preconfirmationIntervalMilliseconds / 1_000,
     },
     trustedOrdering: {
       value: 'Dynamic priority auction',
-      secondLine: 'Fee order per Flashblock',
-      description: `For each ${flashblockIntervalMilliseconds} ms build loop, the centralized builder selects available transactions by priority fee. Transactions committed to an earlier Flashblock are not reordered when a higher-fee transaction arrives later, so arrival time also affects ordering. This policy is not enforced by the derivation rules.`,
+      secondLine: `Fee order per ${preconfirmationUnit}`,
+      description: `For each ${preconfirmationIntervalMilliseconds} ms build loop, the centralized builder selects available transactions by priority fee. Transactions committed to an earlier ${preconfirmationUnit} are not reordered when a higher-fee transaction arrives later, so arrival time also affects ordering. This policy is not enforced by the derivation rules.`,
     },
     sequencer,
     realtimeCensorshipResistance:
@@ -237,10 +245,17 @@ function getCentralizedSequencingExit(
           'AggregateVerifier',
           'SLOW_FINALIZATION_DELAY',
         )
-      const blockInterval = templateVars.discovery.getContractValue<number>(
-        'AggregateVerifier',
-        'BLOCK_INTERVAL',
-      )
+      // AggregateVerifier 0.3.0 (Base Denim) replaced BLOCK_INTERVAL with a
+      // slow and a fast pair; the fast one applies to 200 ms blocks.
+      const blockInterval =
+        templateVars.discovery.getContractValueOrUndefined<number>(
+          'AggregateVerifier',
+          'FAST_BLOCK_INTERVAL',
+        ) ??
+        templateVars.discovery.getContractValue<number>(
+          'AggregateVerifier',
+          'BLOCK_INTERVAL',
+        )
       const checkpointIntervalSeconds =
         blockInterval * hardcoded.L2_BLOCK_TIME_SECONDS
       const portal = getOptimismPortal(templateVars)

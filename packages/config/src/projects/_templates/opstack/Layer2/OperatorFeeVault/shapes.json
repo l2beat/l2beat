@@ -9,5 +9,11 @@
     "address": "katana:0x4fa2Be8cd41504037F1838BcE3bCC93bC68Ff537",
     "chain": "katana",
     "blockNumber": 33142393
+  },
+  "OperatorFeeVault_v1_1_0_base.sol": {
+    "hash": "0x9a24a383551a3f31ec6d4074b497508d7b9948436e0d39ae359d9b7874450180",
+    "address": "base:0x47B6C3e3C3d8144c83910D26E3b517DF4f6058c7",
+    "chain": "base",
+    "blockNumber": 53551478
   }
 }
