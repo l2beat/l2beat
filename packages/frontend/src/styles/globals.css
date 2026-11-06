@@ -911,8 +911,7 @@ html.nav-arriving [data-active="true"]:has(> [data-nav-highlight]) {
    move. This also undoes the theme toggle's reveal, below. */
 html:active-view-transition-type(nav),
 html:active-view-transition-type(pin),
-html:active-view-transition-type(chips),
-html:active-view-transition-type(badge) {
+html:active-view-transition-type(chips) {
   &::view-transition-old(root),
   &::view-transition-new(root) {
     animation: none;
@@ -967,19 +966,6 @@ html:active-view-transition-type(chips) {
   }
   &::view-transition-old(*.filter-chip):only-child {
     animation: 150ms cubic-bezier(0.23, 1, 0.32, 1) both vt-shrink-out;
-  }
-}
-
-/* The badge picked flies into the big slot, the one it replaces among the
-   related; the dialog's text swaps at once. */
-html:active-view-transition-type(badge) {
-  &::view-transition-group(*.badge) {
-    animation-duration: 300ms;
-    animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
-  }
-  &::view-transition-old(*.badge):only-child,
-  &::view-transition-new(*.badge):only-child {
-    animation-duration: 150ms;
   }
 }
 
