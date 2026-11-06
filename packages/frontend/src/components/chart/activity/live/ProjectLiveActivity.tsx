@@ -368,12 +368,13 @@ function LiveStats({
           blocks,
           {
             label: 'Gas per block',
-            value: stats && stats.blocksPerMinute > 0 && (
-              <RollingNumber
-                value={(stats.gasPerSecond * 60) / stats.blocksPerMinute}
-                format={formatGas}
-              />
-            ),
+            value:
+              stats && stats.blocksPerMinute > 0 ? (
+                <RollingNumber
+                  value={(stats.gasPerSecond * 60) / stats.blocksPerMinute}
+                  format={formatGas}
+                />
+              ) : undefined,
           },
         ]}
       />
