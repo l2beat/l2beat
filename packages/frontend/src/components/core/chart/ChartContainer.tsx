@@ -58,8 +58,11 @@ export function ChartContainer<T extends { timestamp: number }>({
   isLoading?: boolean
   /** The data is a previous query's, kept on screen while this one loads. */
   isPlaceholderData: boolean
-  /** `fill` takes the parent's height, e.g. a sparkline's. */
-  size?: 'regular' | 'small' | 'fill'
+  /**
+   * `large` is for a page whose main content is the chart. `fill` takes the
+   * parent's height, e.g. a sparkline's.
+   */
+  size?: 'regular' | 'small' | 'large' | 'fill'
   className?: string
 }) {
   // Building a chart blocks the main thread, so build each one only when it
@@ -90,6 +93,8 @@ export function ChartContainer<T extends { timestamp: number }>({
             size === 'regular' &&
               'h-[188px] min-h-[188px] w-full group-data-project-page/section-wrapper:max-md:h-[50vh] group-data-project-page/section-wrapper:max-md:min-h-[50vh] md:h-[228px] md:min-h-[228px] group-data-project-page/section-wrapper:md:h-[300px] 2xl:h-[258px] 2xl:min-h-[258px]',
             size === 'small' && 'h-[114px] min-h-[114px] w-full',
+            size === 'large' &&
+              'h-[260px] min-h-[260px] w-full md:h-[340px] md:min-h-[340px]',
             size === 'fill' && 'size-full',
             className,
           )}
