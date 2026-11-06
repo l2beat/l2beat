@@ -1,10 +1,14 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { WatchDiff } from '@l2beat/discovery'
 import { expect } from 'earl'
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'fs'
+import { tmpdir } from 'os'
+import { join } from 'path'
 import {
   findUnmergedWatchEntry,
   generateWatchDiffHistoryEntry,
   prependEntry,
+  writeWatchDiffHistory,
 } from './updateWatchDiffHistory'
 
 const TX = `0x8d2f${'0'.repeat(56)}c41a`
@@ -110,6 +114,41 @@ describe(findUnmergedWatchEntry.name, () => {
     expect(() =>
       findUnmergedWatchEntry('d.md', onDisk, main, Logger.SILENT),
     ).toThrow('Unmerged discovery entry in diffHistory.md')
+  })
+})
+
+describe(writeWatchDiffHistory.name, () => {
+  const main = entryText(28, 'Merged.', '## Offchain changes')
+  let directory: string
+
+  beforeEach(() => {
+    directory = mkdtempSync(join(tmpdir(), 'watch-diff-history-'))
+  })
+
+  afterEach(() => {
+    rmSync(directory, { recursive: true, force: true })
+  })
+
+  // `l2b discover` then `l2b watch` with nothing new: the revert to main
+  // would drop the discovery entry and its description.
+  it('refuses an empty diff while an unmerged discovery entry is on disk', async () => {
+    const file = join(directory, 'diffHistory.md')
+    const onDisk = `${entryText(29, 'Disco.', '## Watched changes')}\n${main}`
+    writeFileSync(file, onDisk)
+    await expect(
+      writeWatchDiffHistory(file, main, [], 1, undefined, Logger.SILENT),
+    ).toBeRejectedWith('Unmerged discovery entry in diffHistory.md')
+    expect(readFileSync(file, 'utf-8')).toEqual(onDisk)
+  })
+
+  it('reverts to main on an empty diff after an unmerged watch entry', async () => {
+    const file = join(directory, 'diffHistory.md')
+    writeFileSync(
+      file,
+      `${entryText(29, 'Watch.', '## Offchain changes')}\n${main}`,
+    )
+    await writeWatchDiffHistory(file, main, [], 1, undefined, Logger.SILENT)
+    expect(readFileSync(file, 'utf-8')).toEqual(main)
   })
 })
 

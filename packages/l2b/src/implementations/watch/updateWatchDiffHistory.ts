@@ -40,18 +40,38 @@ export async function updateWatchDiffHistory(
     toGitPath(diffHistoryPath),
     logger,
   )
+  await writeWatchDiffHistory(
+    diffHistoryPath,
+    fromMain,
+    diff,
+    timestamp,
+    description,
+    logger,
+  )
+}
+
+// `fromMain` is the file's version on main, or '' when main has none.
+export async function writeWatchDiffHistory(
+  diffHistoryPath: string,
+  fromMain: string,
+  diff: WatchDiff[],
+  timestamp: number,
+  description: string | undefined,
+  logger: Logger,
+): Promise<void> {
   const onDisk = existsSync(diffHistoryPath)
     ? readFileSync(diffHistoryPath, 'utf-8')
     : undefined
+  // Before the revert too: both paths rebuild the file from main.
+  const unmerged =
+    onDisk === undefined
+      ? { id: undefined, description: undefined }
+      : findUnmergedWatchEntry(diffHistoryPath, onDisk, fromMain, logger)
   if (onDisk !== undefined && diff.length === 0) {
     logger.info('No changes found.')
     await revertDiffHistory(diffHistoryPath, fromMain)
     return
   }
-  const unmerged =
-    onDisk === undefined
-      ? { id: undefined, description: undefined }
-      : findUnmergedWatchEntry(diffHistoryPath, onDisk, fromMain, logger)
   const date = new Date().toUTCString()
   const entry = generateWatchDiffHistoryEntry({
     date,
