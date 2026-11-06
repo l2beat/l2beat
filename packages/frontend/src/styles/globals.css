@@ -913,7 +913,6 @@ html:active-view-transition-type(nav),
 html:active-view-transition-type(crops),
 html:active-view-transition-type(pin),
 html:active-view-transition-type(chips),
-html:active-view-transition-type(values),
 html:active-view-transition-type(badge) {
   &::view-transition-old(root),
   &::view-transition-new(root) {
@@ -995,22 +994,6 @@ html:active-view-transition-type(chips) {
   }
   &::view-transition-old(*.filter-chip):only-child {
     animation: 150ms cubic-bezier(0.23, 1, 0.32, 1) both vt-shrink-out;
-  }
-}
-
-/* A filter value slides to its place in the menu's other group; its tick
-   swaps on the way. */
-html:active-view-transition-type(values) {
-  &::view-transition-group(*.filter-value) {
-    animation-duration: 250ms;
-    animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
-  }
-  &::view-transition-old(*.filter-value) {
-    animation: none;
-    opacity: 0;
-  }
-  &::view-transition-new(*.filter-value) {
-    animation: none;
   }
 }
 
