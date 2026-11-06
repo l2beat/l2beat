@@ -1882,11 +1882,7 @@ export interface SlotActivityConfig {
 export type AdjustCount =
   | { type: 'SubtractOne' }
   | { type: 'SubtractOneSinceBlock'; blockNumber: number }
-  /**
-   * Subtracts a block-height dependent number of system transactions from
-   * every block: the `count` of the last step whose `blockNumber` is at or
-   * below the block, nothing before the first step.
-   */
+  /** Subtracts the `count` of the last step whose `blockNumber` is at or below the block. */
   | {
       type: 'SubtractSinceBlocks'
       steps: { blockNumber: number; count: number }[]
