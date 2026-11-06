@@ -6,7 +6,7 @@ import {
   ProjectId,
 } from '@l2beat/shared-pure'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
-import { useMemo, useRef, useState } from 'react'
+import { useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type {
   ChartMeta,
@@ -23,6 +23,7 @@ import { HOME_TEXT } from '~/pages/home/homeStyles'
 import type { ProjectLiveActivity as ProjectLiveActivityData } from '~/server/features/layer2s/activity/live/getProjectLiveActivity'
 import {
   DEFAULT_LIVE_RANGE,
+  LIVE_BUCKET_SECONDS,
   LIVE_BUFFER_SECONDS,
   LIVE_RANGES,
   type LiveRange,
@@ -259,7 +260,10 @@ export function ProjectLiveActivity({
             to={newest}
             window={domain}
             metric={metric}
-            onMove={(end) => setTo(clampTo(end, range))}
+            // on a bucket, so moves within one share a read
+            onMove={(end) =>
+              setTo(clampTo(end - (end % LIVE_BUCKET_SECONDS[range]), range))
+            }
           />
         </div>
       )}
@@ -438,14 +442,16 @@ function formatBucket(timestamp: number, bucket: number) {
  * not rescale on every read
  */
 function useSteadyTop(max: number | undefined) {
-  const top = useRef<number | undefined>(undefined)
-  if (
-    max !== undefined &&
-    (top.current === undefined || max > top.current || max < top.current * 0.4)
-  ) {
-    top.current = getYAxisTicks([0, max], { tickCount: 3 }, 1).domain[1]
-  }
-  return top.current
+  const committed = useRef<number | undefined>(undefined)
+  const held = committed.current
+  const top =
+    max !== undefined && (held === undefined || max > held || max < held * 0.4)
+      ? getYAxisTicks([0, max], { tickCount: 3 }, 1).domain[1]
+      : held
+  useLayoutEffect(() => {
+    committed.current = top
+  })
+  return top
 }
 
 function ticksOf(from: number, to: number, range: LiveRange) {

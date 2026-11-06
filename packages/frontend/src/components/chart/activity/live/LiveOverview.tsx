@@ -4,6 +4,7 @@ import { cn } from '~/utils/cn'
 import { type LiveMetric, METRIC_INDEX } from './liveSteps'
 
 const HEIGHT = 40
+const MOVE_EVERY_MS = 200
 
 /**
  * The whole buffer, a bar a minute, with the window the chart below shows.
@@ -31,6 +32,8 @@ export function LiveOverview({
 }) {
   const ref = useRef<SVGSVGElement>(null)
   const dragging = useRef(false)
+  const sentAt = useRef(0)
+  const queued = useRef<ReturnType<typeof setTimeout>>(undefined)
   const span = to - from
   const busiest = Math.max(1, ...points.map((p) => metricOf(p, metric)))
   // the window and the first bar start on their buckets, so can before `from`
@@ -38,11 +41,22 @@ export function LiveOverview({
     Math.min(100, Math.max(0, ((t - from) / span) * 100))
   const length = window[1] - window[0]
 
+  // a drag reads a window at most every MOVE_EVERY_MS, the last one too
   const moveTo = (event: PointerEvent) => {
     const box = ref.current?.getBoundingClientRect()
     if (!box) return
     const at = from + ((event.clientX - box.left) / box.width) * span
-    onMove(Math.round(at + length / 2))
+    const send = () => {
+      sentAt.current = performance.now()
+      onMove(Math.round(at + length / 2))
+    }
+    clearTimeout(queued.current)
+    const wait = sentAt.current + MOVE_EVERY_MS - performance.now()
+    if (wait <= 0) send()
+    else queued.current = setTimeout(send, wait)
+  }
+  const stop = () => {
+    dragging.current = false
   }
 
   return (
@@ -62,9 +76,9 @@ export function LiveOverview({
         moveTo(event)
       }}
       onPointerMove={(event) => dragging.current && moveTo(event)}
-      onPointerUp={() => {
-        dragging.current = false
-      }}
+      onPointerUp={stop}
+      onPointerCancel={stop}
+      onLostPointerCapture={stop}
     >
       {points.map((point) => {
         const height = (metricOf(point, metric) / busiest) * (HEIGHT - 2)
