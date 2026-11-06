@@ -23,6 +23,7 @@ import {
   ActivityProjectFilter,
   createActivityProjectsFilter,
 } from './utils/projectFilterUtils'
+import { appendRecentPoints, getRecentHours } from './utils/recentActivity'
 
 export type ActivityChartParams = v.infer<typeof ActivityChartParams>
 export const ActivityChartParams = v.object({
@@ -32,7 +33,7 @@ export const ActivityChartParams = v.object({
   hourly: v.boolean().optional(),
 })
 
-type ActivityChartDataPoint = [
+export type ActivityChartDataPoint = [
   timestamp: number,
   projectsTxCount: number | null,
   ethereumTxCount: number | null,
@@ -48,6 +49,11 @@ export type ActivityChartData = {
   resolution: ActivityResolution
   /** Of a single project. Projects indexed per day have no hours */
   hasHourly: boolean | undefined
+  /**
+   * Of a single project's newest stored block, when the chart reaches past
+   * what activity has summed. A last point after it is a period under way
+   */
+  liveUntil: UnixTime | undefined
 }
 /**
  * A function that computes values for chart data of the activity over time.
@@ -93,6 +99,7 @@ export async function getActivityChart({
       stats: undefined,
       resolution,
       hasHourly,
+      liveUntil: undefined,
     }
   }
   const syncedUntil = syncInfo?.syncedUntil ?? adjustedRange[1]
@@ -129,6 +136,7 @@ export async function getActivityChart({
       stats: undefined,
       resolution,
       hasHourly,
+      liveUntil: undefined,
     }
   }
 
@@ -150,7 +158,12 @@ export async function getActivityChart({
 
   if (resolution === 'day') {
     return {
-      data: dailyData,
+      ...(await withRecentPoints(
+        dailyData,
+        projectId,
+        'day',
+        UnixTime.toStartOf(UnixTime.now(), 'day'),
+      )),
       syncWarning,
       syncedUntil,
       stats,
@@ -174,24 +187,48 @@ export async function getActivityChart({
     firstHourly !== undefined
       ? Math.max(window.start, firstHourly)
       : hourlyEntries.find((e) => e.projectId !== ProjectId.ETHEREUM)?.timestamp
+  const hourlyData =
+    firstHour === undefined
+      ? []
+      : toDataPoints(
+          generateTimestamps([firstHour, lastHour], 'hour'),
+          aggregateActivityRecords(hourlyEntries, {
+            startTimestamp: firstHour,
+          }) ?? {},
+          lastHour,
+          projectId,
+        )
   return {
-    data:
-      firstHour === undefined
-        ? []
-        : toDataPoints(
-            generateTimestamps([firstHour, lastHour], 'hour'),
-            aggregateActivityRecords(hourlyEntries, {
-              startTimestamp: firstHour,
-            }) ?? {},
-            lastHour,
-            projectId,
-          ),
+    ...(await withRecentPoints(
+      hourlyData,
+      projectId,
+      'hour',
+      lastHour + UnixTime.HOUR,
+    )),
     syncWarning,
     syncedUntil: lastHour,
     stats,
     resolution,
     hasHourly,
   }
+}
+
+/**
+ * A project's own chart reaches its newest stored block, past what activity
+ * has summed. Charts of many projects end where all are summed, as some
+ * projects have no blocks stored
+ */
+async function withRecentPoints(
+  data: ActivityChartDataPoint[],
+  projectId: ProjectId | undefined,
+  resolution: ActivityResolution,
+  since: UnixTime,
+): Promise<Pick<ActivityChartData, 'data' | 'liveUntil'>> {
+  if (!projectId || !env.CLIENT_SIDE_HEARTBEAT_PAGE || data.length === 0) {
+    return { data, liveUntil: undefined }
+  }
+  const recent = await getRecentHours([projectId, ProjectId.ETHEREUM], since)
+  return appendRecentPoints(data, recent, projectId, resolution)
 }
 
 function toDataPoints(
@@ -288,5 +325,6 @@ function getMockActivityChart({
     stats: undefined,
     resolution: 'day',
     hasHourly: undefined,
+    liveUntil: undefined,
   }
 }

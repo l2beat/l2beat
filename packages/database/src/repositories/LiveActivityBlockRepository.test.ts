@@ -71,6 +71,41 @@ describeDatabase(LiveActivityBlockRepository.name, (db) => {
     },
   )
 
+  describe(LiveActivityBlockRepository.prototype.getHoursAfter.name, () => {
+    it("sums the project's blocks above the number per hour", async () => {
+      const hour = UnixTime.toStartOf(START, 'hour')
+      await repository.upsertMany([
+        { ...block('a', 1), timestamp: hour + 10 },
+        { ...block('a', 2), timestamp: hour + 20 },
+        { ...block('a', 3), timestamp: hour + 30, uopsCount: null },
+        { ...block('a', 4), timestamp: hour + UnixTime.HOUR + 5 },
+        { ...block('b', 5), timestamp: hour + 40 },
+      ])
+
+      expect(await repository.getHoursAfter(ProjectId('a'), 1)).toEqual([
+        {
+          timestamp: hour,
+          blocks: 2,
+          count: 50,
+          // Block 3 counts no user operations, so its transactions stand in
+          uopsCount: 52,
+          firstNumber: 2,
+          lastNumber: 3,
+          lastTimestamp: hour + 30,
+        },
+        {
+          timestamp: hour + UnixTime.HOUR,
+          blocks: 1,
+          count: 40,
+          uopsCount: 44,
+          firstNumber: 4,
+          lastNumber: 4,
+          lastTimestamp: hour + UnixTime.HOUR + 5,
+        },
+      ])
+    })
+  })
+
   describe(
     LiveActivityBlockRepository.prototype.deleteByProjectAfter.name,
     () => {
