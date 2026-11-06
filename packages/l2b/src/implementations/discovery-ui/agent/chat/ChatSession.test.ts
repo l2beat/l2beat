@@ -200,10 +200,13 @@ describe(ChatSession.name, () => {
   })
 })
 
+// Every tab gets a board replay as it connects, which the chat leaves alone.
 function stream(): TabStream & { written: string[] } {
   const result = {
     written: [] as string[],
-    write: (chunk: string) => result.written.push(chunk),
+    write: (chunk: string) => {
+      if (!chunk.includes('"board-replay"')) result.written.push(chunk)
+    },
     end: () => {},
   }
   return result

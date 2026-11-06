@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import type { ApiAgentShowEvent } from '../types'
+import type { ApiAgentBoard, ApiAgentShowEvent } from '../types'
 import { AgentTabs, type TabReport, type TabStream } from './tabs'
 
 describe(AgentTabs.name, () => {
@@ -158,7 +158,36 @@ describe(AgentTabs.name, () => {
     expect(a.written).toEqual([])
     expect(b.written).toEqual([`data: ${JSON.stringify(show('linea'))}\n\n`])
   })
+
+  it('keeps one board, in the tab it went to last, across reloads', () => {
+    const tabs = new AgentTabs()
+    const a = stream({ withReplays: true })
+    const b = stream({ withReplays: true })
+    tabs.connect('a', a)
+    tabs.connect('b', b)
+    // A tab that connects learns it has no board.
+    expect(a.written).toEqual([replay(null)])
+    tabs.showBoard('a', board('first'))
+    const reloaded = stream({ withReplays: true })
+    tabs.connect('a', reloaded)
+    expect(reloaded.written).toEqual([replay(board('first'))])
+    // The board moves, and the tab that had it drops it.
+    tabs.showBoard('b', board('second'))
+    expect(reloaded.written.at(-1)).toEqual(replay(null))
+    expect(b.written.at(-1)).toEqual(
+      `data: ${JSON.stringify({ type: 'board', board: board('second') })}\n\n`,
+    )
+    expect(tabs.tab('b')).toEqual({ id: 'b', project: 'linea' })
+  })
 })
+
+function board(title: string): ApiAgentBoard {
+  return { id: title, project: 'linea', title, blocks: [] }
+}
+
+function replay(board: ApiAgentBoard | null): string {
+  return `data: ${JSON.stringify({ type: 'board-replay', board })}\n\n`
+}
 
 function show(project: string): ApiAgentShowEvent {
   return { type: 'show', id: 'show-1', project, steps: [] }
@@ -176,11 +205,18 @@ function tick(): number {
   return clock
 }
 
-function stream(): TabStream & { written: string[]; ended: boolean } {
+// Every tab gets a board replay as it connects; most tests look at the rest.
+function stream(
+  options = { withReplays: false },
+): TabStream & { written: string[]; ended: boolean } {
   const result = {
     written: [] as string[],
     ended: false,
-    write: (chunk: string) => result.written.push(chunk),
+    write: (chunk: string) => {
+      if (options.withReplays || !chunk.includes('"board-replay"')) {
+        result.written.push(chunk)
+      }
+    },
     end: () => {
       result.ended = true
     },
