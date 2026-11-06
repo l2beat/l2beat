@@ -37,7 +37,11 @@ export function withViewTransition(
     },
     types: [type],
   })
-  transition.finished.finally(() => clear(named))
+  // Also when the update threw: the names must not outlive the transition.
+  transition.finished.then(
+    () => clear(named),
+    () => clear(named),
+  )
 }
 
 function clear(elements: Iterable<HTMLElement>) {

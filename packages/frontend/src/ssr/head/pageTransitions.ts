@@ -173,7 +173,8 @@ export function pageTransitions() {
     transition.types.add(kind)
     const clear = () => {
       root.classList.remove('nav-arriving')
-      for (const { ink } of labels) ink.remove()
+      // Emptied too: a page back from the bfcache arrives again.
+      for (const { ink } of labels.splice(0)) ink.remove()
       for (const el of named.keys()) {
         el.style.viewTransitionName = ''
         el.style.removeProperty('view-transition-class')
@@ -197,14 +198,23 @@ export function pageTransitions() {
     inList: (el: HTMLElement) => boolean,
   ) {
     const used = new Set<string>()
-    for (const label of visible('[data-nav-label]').filter(inList)) {
-      const key = slug(label.textContent ?? '')
-      if (!key || used.has(key)) continue
-      used.add(key)
+    // Every box read before the first copy goes in, so each append does not
+    // force a layout for the next read.
+    const measured = visible('[data-nav-label]')
+      .filter(inList)
+      .flatMap((label) => {
+        const key = slug(label.textContent ?? '')
+        if (!key || used.has(key)) return []
+        used.add(key)
+        const box = label.getBoundingClientRect()
+        const font = getComputedStyle(label)
+        return [
+          { label, key, box, font: font.font, spacing: font.letterSpacing },
+        ]
+      })
+    for (const { label, key, box, font, spacing } of measured) {
       // Outside React's root, which has yet to hydrate: a node added in a
       // label would fail the hydration.
-      const box = label.getBoundingClientRect()
-      const font = getComputedStyle(label)
       const ink = document.createElement('span')
       ink.textContent = label.textContent
       ink.setAttribute('aria-hidden', 'true')
@@ -215,8 +225,8 @@ export function pageTransitions() {
         width: `${box.width}px`,
         height: `${box.height}px`,
         lineHeight: `${box.height}px`,
-        font: font.font,
-        letterSpacing: font.letterSpacing,
+        font,
+        letterSpacing: spacing,
         color: 'var(--color-primary-invert)',
         whiteSpace: 'nowrap',
         overflow: 'hidden',

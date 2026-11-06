@@ -53,27 +53,22 @@ export function MobileSectionNavigation({ sections }: Props) {
   // biome-ignore lint/correctness/useExhaustiveDependencies: it reads the selection from the DOM, so `visibleIds` is what tells it to move
   useEffect(() => {
     if (isDesktop) return
-    const frame = requestAnimationFrame(() => {
-      const underline = line.current
-      const selected =
-        row.current?.querySelectorAll<HTMLElement>('[data-selected]')
-      if (!underline || !selected) return
-      const first = selected[0]
-      const last = selected[selected.length - 1]
-      if (!first || !last) {
-        underline.style.opacity = '0'
-        return
-      }
-      const left = first.offsetLeft
-      const width = last.offsetLeft + last.offsetWidth - left
-      underline.style.transform = `translateX(${left}px) scaleX(${width})`
-      underline.style.opacity = '1'
-      if (!underline.hasAttribute('data-placed')) {
-        requestAnimationFrame(() => underline.setAttribute('data-placed', ''))
-      }
-    })
+    const frame = requestAnimationFrame(() =>
+      placeUnderline(row.current, line.current),
+    )
     return () => cancelAnimationFrame(frame)
   }, [visibleIds, isDesktop])
+
+  // And again when the row's size changes, e.g. on rotating the phone.
+  useEffect(() => {
+    const items = row.current
+    if (isDesktop || !items) return
+    const resized = new ResizeObserver(() =>
+      placeUnderline(row.current, line.current),
+    )
+    resized.observe(items)
+    return () => resized.disconnect()
+  }, [isDesktop])
 
   if (sections.length === 0) return null
 
@@ -133,4 +128,22 @@ function Item({
       {children}
     </a>
   )
+}
+
+function placeUnderline(row: HTMLElement | null, line: HTMLElement | null) {
+  const selected = row?.querySelectorAll<HTMLElement>('[data-selected]')
+  if (!line || !selected) return
+  const first = selected[0]
+  const last = selected[selected.length - 1]
+  if (!first || !last) {
+    line.style.opacity = '0'
+    return
+  }
+  const left = first.offsetLeft
+  const width = last.offsetLeft + last.offsetWidth - left
+  line.style.transform = `translateX(${left}px) scaleX(${width})`
+  line.style.opacity = '1'
+  if (!line.hasAttribute('data-placed')) {
+    requestAnimationFrame(() => line.setAttribute('data-placed', ''))
+  }
 }

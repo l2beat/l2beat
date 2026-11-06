@@ -32,7 +32,9 @@ export function recordVisit(project: SavedProject) {
   const row = [
     ...document.querySelectorAll<HTMLElement>('[data-pin-row]'),
   ].find((el) => el.dataset.pinRow === project.href && el.offsetWidth > 0)
+  // A tab opened in the background runs no frames to wait on.
   const rises =
+    !document.hidden &&
     row?.previousElementSibling &&
     row.closest('[data-nav-group="Recently viewed"]')
   if (!rises) {
