@@ -66,6 +66,26 @@ describe(RpcBlockFetcher.name, () => {
       )
     })
   })
+
+  describe(RpcBlockFetcher.prototype.getBlockHash.name, () => {
+    it("reads the hash from the block's header", async () => {
+      const rpc = mockObject<IRpcClient>({
+        chain: 'optimism',
+        getBlock: mockFn().resolvesTo({ ...rpcBlock(10), hash: '0xabc' }),
+      })
+      const fetcher = new RpcBlockFetcher(
+        rpc,
+        undefined,
+        counter((count) => count),
+      )
+
+      expect(await fetcher.getBlockHash(10)).toEqual('0xabc')
+      // getBlock is overloaded, and the mock takes only its last signature
+      expect(rpc.getBlock.calls.map((c) => c.args as unknown[])).toEqual([
+        [10, false],
+      ])
+    })
+  })
 })
 
 function counter(assessCount: (count: number) => number) {
