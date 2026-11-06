@@ -74,6 +74,23 @@ describe(readConfigOptions.name, () => {
       ],
     })
     expect(options?.[0]?.values.length).toEqual(60)
+    // A value goes back to the agent as it came, so a long one is skipped.
+    const long = readConfigOptions({
+      configOptions: [
+        {
+          id: 'model',
+          name: 'Model',
+          category: 'model',
+          type: 'select',
+          currentValue: 'm0',
+          options: [
+            { value: 'm0', name: 'M0' },
+            { value: 'x'.repeat(300), name: 'Long' },
+          ],
+        },
+      ],
+    })
+    expect(long?.[0]?.values.map((v) => v.value)).toEqual(['m0'])
     expect(options?.[0]?.values[0]?.name.length).toEqual(200)
     // A message without options says nothing about them.
     expect(readConfigOptions({ sessionId: 's1' })).toEqual(undefined)

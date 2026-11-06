@@ -55,6 +55,9 @@ interface RunningChat {
   sessionId: string | undefined
   ready: Promise<void>
   isInTurn: boolean
+  // A model switch in flight: a prompt sent meanwhile could reach the old
+  // model, and two switches could land in either order.
+  isSwitching: boolean
   // Stopped before the agent started, so the prompt must not go out.
   isCancelledBeforeSend: boolean
   hasFailed: boolean
@@ -78,7 +81,7 @@ export class ChatSession {
     // reload, or none, for a chat closed or taken over meanwhile.
     tabs.onConnect((id) => {
       const chat = this.chat
-      const events = chat?.owner === id ? chat.log : []
+      const events = chat?.owner === id ? replayOf(chat) : []
       tabs.sendChat(id, { type: 'chat-replay', events })
     })
   }
@@ -99,6 +102,7 @@ export class ChatSession {
       sessionId: undefined,
       ready: Promise.resolve(),
       isInTurn: false,
+      isSwitching: false,
       isCancelledBeforeSend: false,
       hasFailed: false,
       log: [],
@@ -132,6 +136,9 @@ export class ChatSession {
     if (chat.isInTurn) {
       throw new ChatError('The agent is still answering')
     }
+    if (chat.isSwitching) {
+      throw new ChatError('The agent is switching, send after it finishes')
+    }
     chat.isInTurn = true
     this.emit(chat, { type: 'user', text })
     void this.runTurn(chat, text)
@@ -160,19 +167,26 @@ export class ChatSession {
     if (chat.isInTurn) {
       throw new ChatError('The agent is answering, switch after it finishes')
     }
+    if (chat.isSwitching) {
+      throw new ChatError('The agent is still switching')
+    }
     const option = chat.config.find((candidate) => candidate.id === configId)
     if (!option?.values.some((candidate) => candidate.value === value)) {
       throw new ChatError('The agent does not offer this')
     }
-    const result = await chat.connection.request('session/set_config_option', {
-      sessionId: chat.sessionId,
-      configId,
-      value,
-    })
-    // The agent answers with every option, like effort levels for the model.
-    const options = readConfigOptions(result)
-    if (options !== undefined) {
+    chat.isSwitching = true
+    try {
+      const result = await chat.connection.request(
+        'session/set_config_option',
+        { sessionId: chat.sessionId, configId, value },
+      )
+      // The agent answers with every option, like effort levels for the
+      // model. One that does not still switched, and the tab hears of it.
+      const options =
+        readConfigOptions(result) ?? withValue(chat.config, configId, value)
       this.emit(chat, { type: 'config', options })
+    } finally {
+      chat.isSwitching = false
     }
   }
 
@@ -395,6 +409,25 @@ export class ChatSession {
     appendToLog(chat.log, clipped)
     this.tabs.sendChat(chat.owner, { type: 'chat', event: clipped })
   }
+}
+
+// The transcript drops its oldest events in a long chat, the options among
+// them, so the replay starts with the latest ones.
+function replayOf(chat: RunningChat): ApiChatEvent[] {
+  const conversation = chat.log.filter((event) => event.type !== 'config')
+  return chat.config.length === 0
+    ? conversation
+    : [{ type: 'config', options: chat.config }, ...conversation]
+}
+
+function withValue(
+  options: ApiChatConfigOption[],
+  configId: string,
+  value: string,
+): ApiChatConfigOption[] {
+  return options.map((option) =>
+    option.id === configId ? { ...option, currentValue: value } : option,
+  )
 }
 
 function rememberToolCall(chat: RunningChat, update: unknown) {

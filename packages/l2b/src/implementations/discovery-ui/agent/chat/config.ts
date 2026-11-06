@@ -7,6 +7,9 @@ const CATEGORIES = ['model', 'thought_level'] as const
 // Far above the dozen models an adapter lists; the rest is cut.
 const VALUES_MAX = 60
 const LABEL_CHARACTERS_MAX = 200
+// Ids and values go back to the agent as they came, so a long one is
+// skipped rather than cut.
+const ID_CHARACTERS_MAX = 200
 
 const valueSchema = z.object({
   value: z.string(),
@@ -26,6 +29,7 @@ const optionSchema = z.object({
   currentValue: z.string(),
   options: z.array(z.union([valueSchema, groupSchema])),
 })
+type Option = z.infer<typeof optionSchema>
 const optionsSchema = z.object({ configOptions: z.array(z.unknown()) })
 
 // Options that do not parse are skipped one by one, so a new kind of option
@@ -43,7 +47,12 @@ export function readConfigOptions(
     const option = parsed.data.configOptions
       .map((raw) => optionSchema.safeParse(raw))
       .flatMap((result) => (result.success ? [result.data] : []))
-      .find((candidate) => candidate.category === category)
+      .find(
+        (candidate) =>
+          candidate.category === category &&
+          candidate.id.length <= ID_CHARACTERS_MAX &&
+          candidate.currentValue.length <= ID_CHARACTERS_MAX,
+      )
     if (option !== undefined) {
       options.push(toConfigOption(option, category))
     }
@@ -52,11 +61,12 @@ export function readConfigOptions(
 }
 
 function toConfigOption(
-  option: z.infer<typeof optionSchema>,
+  option: Option,
   category: (typeof CATEGORIES)[number],
 ): ApiChatConfigOption {
   const values = option.options
     .flatMap((entry) => ('group' in entry ? entry.options : [entry]))
+    .filter((entry) => entry.value.length <= ID_CHARACTERS_MAX)
     .slice(0, VALUES_MAX)
     .map((entry) => {
       const value = { value: entry.value, name: clip(entry.name) }

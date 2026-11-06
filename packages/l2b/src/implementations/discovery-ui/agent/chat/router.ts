@@ -21,10 +21,18 @@ const promptSchema = z.object({
     ),
 })
 const tabOnlySchema = z.object({ tab: tabSchema })
+// Model ids like claude-sonnet-5[1m] are no safe strings, so only bounded.
+const CONFIG_CHARACTERS_MAX = 200
+const configStringSchema = z
+  .string()
+  .check(
+    (v) => v.length > 0 && v.length <= CONFIG_CHARACTERS_MAX,
+    `Must be 1 to ${CONFIG_CHARACTERS_MAX} characters`,
+  )
 const configSchema = z.object({
   tab: tabSchema,
-  configId: z.string(),
-  value: z.string(),
+  configId: configStringSchema,
+  value: configStringSchema,
 })
 const permissionSchema = z.object({
   tab: tabSchema,

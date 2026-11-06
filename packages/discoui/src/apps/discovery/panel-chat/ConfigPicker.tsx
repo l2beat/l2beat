@@ -1,23 +1,54 @@
 import * as RadixSelect from '@radix-ui/react-select'
-import { useState } from 'react'
+import { useEffect } from 'react'
 import type { ApiChatConfigOption } from '../../../api/types'
 import { IconChecked } from '../../../icons/IconChcked'
 import { IconChevronDown } from '../../../icons/IconChevronDown'
-import type { Send } from './ChatMessages'
 import { useChatStore } from './chatStore'
 
-// The model and effort the agent offers, switched between answers: the
-// server refuses while the agent works.
-export function ConfigPicker(props: { isWorking: boolean; send: Send }) {
+export interface Switch {
+  configId: string
+  value: string
+}
+
+// The model and effort the agent offers, switched between answers. One
+// switch at a time, and no message while it lands: the server refuses both.
+export function ConfigPicker(props: {
+  isWorking: boolean
+  switching: Switch | undefined
+  setSwitching: (next: Switch | undefined) => void
+  // Resolves whether the chat took the switch.
+  choose: (next: Switch) => Promise<boolean>
+}) {
   const options = useChatStore((state) => state.view.config)
+  const { switching, setSwitching } = props
+  // The new options come over the event stream, which the answer to the
+  // request may beat; until they do, the picker shows the choice.
+  useEffect(() => {
+    const option = options.find((o) => o.id === switching?.configId)
+    if (switching !== undefined && option?.currentValue === switching.value) {
+      setSwitching(undefined)
+    }
+  }, [options, switching, setSwitching])
+
   return (
     <div className="flex min-w-0 flex-1 items-center gap-1">
       {options.map((option) => (
         <ConfigSelect
           key={option.id}
           option={option}
-          isWorking={props.isWorking}
-          send={props.send}
+          value={
+            switching?.configId === option.id
+              ? switching.value
+              : option.currentValue
+          }
+          isDisabled={props.isWorking || switching !== undefined}
+          onChange={(value) => {
+            const next = { configId: option.id, value }
+            setSwitching(next)
+            void props.choose(next).then((isTaken) => {
+              if (!isTaken) setSwitching(undefined)
+            })
+          }}
         />
       ))}
     </div>
@@ -26,31 +57,24 @@ export function ConfigPicker(props: { isWorking: boolean; send: Send }) {
 
 function ConfigSelect(props: {
   option: ApiChatConfigOption
-  isWorking: boolean
-  send: Send
+  value: string
+  isDisabled: boolean
+  onChange: (value: string) => void
 }) {
   const { option } = props
-  // Shown until the agent confirms with its new options, or refuses.
-  const [pending, setPending] = useState<string>()
-  const value = pending ?? option.currentValue
-  const current = option.values.find((entry) => entry.value === value)
+  const current = option.values.find((entry) => entry.value === props.value)
   return (
     <RadixSelect.Root
-      value={value}
-      disabled={props.isWorking || pending !== undefined}
-      onValueChange={(next) => {
-        setPending(next)
-        void props
-          .send('config', { configId: option.id, value: next })
-          .finally(() => setPending(undefined))
-      }}
+      value={props.value}
+      disabled={props.isDisabled}
+      onValueChange={props.onChange}
     >
       <RadixSelect.Trigger
         aria-label={option.name}
         title={option.name}
         className="flex h-6 min-w-0 items-center gap-1 rounded-md px-1.5 text-[11px] text-coffee-300 outline-hidden transition-colors hover:bg-coffee-700 hover:text-coffee-100 focus-visible:ring-1 focus-visible:ring-autumn-300 disabled:opacity-50 disabled:hover:bg-transparent"
       >
-        <span className="truncate">{current?.name ?? value}</span>
+        <span className="truncate">{current?.name ?? props.value}</span>
         <IconChevronDown className="size-3 shrink-0 opacity-60" />
       </RadixSelect.Trigger>
       <RadixSelect.Portal>

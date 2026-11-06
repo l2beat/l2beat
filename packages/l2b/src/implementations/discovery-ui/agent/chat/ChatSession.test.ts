@@ -184,7 +184,13 @@ describe(ChatSession.name, () => {
         e.type === 'config' ? [e.options[0]?.currentValue] : [],
       )
     expect(models()).toEqual(['sonnet'])
-    await chat.setConfig('owner', 'model', 'opus')
+    const switching = chat.setConfig('owner', 'model', 'opus')
+    // A prompt or another switch meanwhile could reach the old model.
+    expect(() => chat.prompt('owner', 'Hi')).toThrow('The agent is switching')
+    await expect(chat.setConfig('owner', 'model', 'sonnet')).toBeRejectedWith(
+      'The agent is still switching',
+    )
+    await switching
     expect(models()).toEqual(['sonnet', 'opus'])
     // Only what the agent offered goes out.
     await expect(chat.setConfig('owner', 'model', 'gpt')).toBeRejectedWith(
@@ -195,6 +201,25 @@ describe(ChatSession.name, () => {
       'switch after it finishes',
     )
     await waitFor(() => chatEvents(owner).some((e) => e.type === 'permission'))
+  })
+
+  it('replays the options after a long chat dropped them from the log', async () => {
+    // Over 2,000 tool calls push the options out of the transcript.
+    const long = FAKE_AGENT.replace(
+      "update({ sessionUpdate: 'tool_call', toolCallId: 't1', title: 'Run ls', status: 'pending' })",
+      "for (let i = 0; i < 2100; i++) update({ sessionUpdate: 'tool_call', toolCallId: 'c' + i, title: 'Read' })",
+    )
+    const { tabs, chat, owner } = setup(long)
+    chat.start('owner', 'claude')
+    await waitFor(() => statuses(owner).includes('ready'))
+    chat.prompt('owner', 'List files')
+    await waitFor(() => chatEvents(owner).some((e) => e.type === 'permission'))
+    const reloaded = stream()
+    tabs.connect('owner', reloaded)
+    const replay = parse(reloaded).find((e) => e.type === 'chat-replay')
+    const events = replay?.type === 'chat-replay' ? replay.events : []
+    expect(events[0]?.type).toEqual('config')
+    expect(events.filter((e) => e.type === 'config').length).toEqual(1)
   })
 
   it('refuses a prompt while the agent answers', async () => {
