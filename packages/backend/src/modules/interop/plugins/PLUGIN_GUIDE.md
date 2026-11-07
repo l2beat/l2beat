@@ -70,10 +70,10 @@ const myEventLog = 'event MyEvent(address indexed token, uint256 amount)'
 const L1_BRIDGE = ChainSpecificAddress('eth:0x...')
 const L2_BRIDGE = ChainSpecificAddress('base:0x...')
 
-// 3. Event types (add TTL for events awaiting finalization)
+// 3. Event types (source events of withdrawals the user finalizes need SLOW_WITHDRAWAL_TTL)
 const MyL1Event = createInteropEventType<{ amount: bigint }>('my-plugin.L1Event')
 const MyL2Event = createInteropEventType<{ amount: bigint }>('my-plugin.L2Event', {
-  ttl: 30 * UnixTime.DAY,
+  ttl: SLOW_WITHDRAWAL_TTL,
 })
 
 // 4. Event parsers
