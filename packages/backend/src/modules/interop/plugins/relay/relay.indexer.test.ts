@@ -1,12 +1,13 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
+import type { HttpClient } from '@l2beat/shared'
 import { Address32, UnixTime } from '@l2beat/shared-pure'
 import { expect, type MockFunction, mockFn, mockObject } from 'earl'
 import type { IndexerService } from '../../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../../tools/uif/ids'
 import type { InteropEventStore } from '../../engine/capture/InteropEventStore'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
-import type { GetRequestsResponse, RelayApiClient } from './RelayApiClient'
+import { type GetRequestsResponse, RelayApiClient } from './RelayApiClient'
 import {
   RelayIndexer,
   RelayRootIndexer,
@@ -404,6 +405,33 @@ describe(RelayIndexer.name, () => {
       expect(getAllRequests).toHaveBeenCalledTimes(2)
     })
 
+    it('advances past a malformed record instead of retrying the window', async () => {
+      const httpClient = mockObject<HttpClient>({
+        fetchRaw: mockFn().resolvesTo({
+          ok: true,
+          json: async () => ({
+            requests: [{ id: 'malformed', status: 'success' }, v3Request('a')],
+          }),
+        }),
+      })
+      const relayApiClient = new RelayApiClient(
+        httpClient,
+        Logger.SILENT,
+        ['api-key'],
+        { callsPerMinutePerKey: 1_000_000_000, initialRetryDelayMs: 0 },
+      )
+      const saveNewEvents =
+        mockFn<InteropEventStore['saveNewEvents']>().resolvesTo(undefined)
+      const indexer = createIndexer(relayApiClient, {
+        chains: CHAINS,
+        interopEventStore: mockObject<InteropEventStore>({ saveNewEvents }),
+      })
+
+      expect(await indexer.update(FROM, FROM)).toEqual(FROM)
+      expect(savedIds(saveNewEvents)).toEqual([['a']])
+      expect(httpClient.fetchRaw).toHaveBeenCalledTimes(1)
+    })
+
     it('treats an empty continuation as a fully fetched window', async () => {
       const relayApiClient = clientReturning({
         requests: manyInSameSecond(3, '2026-08-24T14:50:59'),
@@ -508,6 +536,19 @@ function successRequest(id: string) {
       hash: `0x${'2'.repeat(64)}`,
       chainId: 10,
       timestamp: FROM,
+    },
+    createdAt: '2026-08-24T14:50:59.000Z',
+    updatedAt: '2026-08-24T14:50:59.000Z',
+  }
+}
+
+function v3Request(id: string) {
+  return {
+    id,
+    status: 'success',
+    data: {
+      inTxs: [{ txHash: `0x${'1'.repeat(64)}`, chainId: 1, timestamp: FROM }],
+      outTxs: [{ txHash: `0x${'2'.repeat(64)}`, chainId: 10, timestamp: FROM }],
     },
     createdAt: '2026-08-24T14:50:59.000Z',
     updatedAt: '2026-08-24T14:50:59.000Z',
