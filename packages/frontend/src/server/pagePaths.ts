@@ -74,6 +74,9 @@ export async function getPages(): Promise<Page[]> {
   if (env.CLIENT_SIDE_OSSIFICATION_ENABLED) {
     paths.push('/ossification')
   }
+  if (env.CLIENT_SIDE_INTEROP_HISTORY_ENABLED) {
+    paths.push('/interop/history')
+  }
   paths.push('/mandate')
   if (env.CLIENT_SIDE_GARDEN_ENABLED) {
     paths.push(GARDEN_PATH, SUBMIT_PROTOCOL_PATH, INTEGRATE_CROPS_PATH)

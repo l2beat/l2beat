@@ -56,6 +56,8 @@ export const pageLoaders = {
       .InteropProtocolPage,
   InteropTokenPage: async () =>
     (await import('./interop/token/InteropTokenPage')).InteropTokenPage,
+  InteropHistoryPage: async () =>
+    (await import('./interop/history/InteropHistoryPage')).InteropHistoryPage,
   InteropTokenFrameworksPage: async () =>
     (await import('./interop/token-frameworks/InteropTokenFrameworksPage'))
       .InteropTokenFrameworksPage,
