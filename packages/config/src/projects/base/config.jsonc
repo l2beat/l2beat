@@ -21,9 +21,12 @@
     "base:0x420000000000000000000000000000000000001A",
     "base:0x420000000000000000000000000000000000001b",
     "base:0x4200000000000000000000000000000000000020",
-    "base:0x4200000000000000000000000000000000000021"
+    "base:0x4200000000000000000000000000000000000021",
+    "base:0x4200000000000000000000000000000000000030"
   ],
   "names": {
+    "base:0x4200000000000000000000000000000000000030": "BaseTime",
+    "base:0x420000000000000000000000000000000000001A": "L1FeeVault",
     "eth:0x9de443AdC5A411E83F1878Ef24C3F52C61571e72": "wstETHEscrow",
     "eth:0xa2f2aC6F5aF72e494A227d79Db20473Cf7A1FFE8": "DelayedWETH_PermissionlessGames",
     "eth:0x3E8a0B63f57e975c268d610ece93da5f78c01321": "DelayedWETH_PermissionedGames",
@@ -31,6 +34,25 @@
     "eth:0x0000F90827F1C53a10cb7A02335B175320002935": "HistoryStorage"
   },
   "overrides": {
+    // Installed behind the pre-existing predeploy proxy by the node at the
+    // first Denim block (no deployment transaction), so Basescan has no
+    // verified source for the implementation.
+    "base:0x4200000000000000000000000000000000000030": {
+      "description": "Exposes the millisecond part of the current block timestamp. A protocol deposit at tx[1] of every block sets it to 0, 200, 400, 600 or 800; only the depositor account can call the setter.",
+      "manualSourcePaths": {
+        "base:0xc0d3C0D3c0d3c0d3c0d3c0D3c0d3C0D3c0d30030": "https://github.com/base/contracts/blob/v8.4.0/src/L2/BaseTime.sol"
+      }
+    },
+    // Base's L1FeeVault implementation (base/contracts v8.4.0, 1.6.0) is the
+    // same BaseFeeVault build as 0x4200...0019, so it matches that template.
+    "base:0x420000000000000000000000000000000000001A": {
+      "description": "Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1."
+    },
+    // Base's L2 factory (base/contracts v8.4.0, 1.10.2) is byte-identical to
+    // the L1 one, so it matches the L1 template; keep the L2 wording.
+    "base:0x4200000000000000000000000000000000000012": {
+      "description": "Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens."
+    },
     "eth:0x8EfB6B5c4767B09Dc9AA6Af4eAA89F749522BaE2": {
       // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
       "critical": true

@@ -1881,6 +1881,11 @@ export interface SlotActivityConfig {
 export type AdjustCount =
   | { type: 'SubtractOne' }
   | { type: 'SubtractOneSinceBlock'; blockNumber: number }
+  /** Subtracts the `count` of the last step whose `blockNumber` is at or below the block. */
+  | {
+      type: 'SubtractSinceBlocks'
+      steps: { blockNumber: number; count: number }[]
+    }
 
 export interface DayActivityConfig {
   type: 'day'
