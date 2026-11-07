@@ -38,6 +38,7 @@ const SECTION_TITLE: Record<ApiDiffHistorySectionKind, string> = {
   'initial-discovery': 'Initial discovery',
   'source-code-changes': 'Source code changes',
   'config-related-changes': 'Config/verification related changes',
+  'offchain-changes': 'Offchain changes',
 }
 
 type BulkOp = { kind: 'expand' | 'collapse' } | null

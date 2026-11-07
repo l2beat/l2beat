@@ -139,6 +139,21 @@ describe(getDiffHistoryChanges.name, () => {
     expect(getDiffHistoryChanges(parser.parse(initial)[0]!)).toEqual([])
   })
 
+  it('reads nothing from an offchain changes section', () => {
+    const offchain = entry(
+      ['- current timestamp: 1777994288'],
+      [
+        block(`    contract A (eth:${ADDRESS}) [x/A] {`, [
+          '      values.$implementation:',
+          '-        "0xa"',
+          '+        "0xb"',
+        ]),
+      ],
+      '## Offchain changes',
+    )
+    expect(getDiffHistoryChanges(parser.parse(offchain)[0]!)).toEqual([])
+  })
+
   it('reads every change of every project', function () {
     this.timeout(60_000)
     const root = getDiscoveryPaths().discovery

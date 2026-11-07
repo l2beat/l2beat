@@ -1,4 +1,5 @@
 {
   "discovery": "./packages/config/src/projects",
-  "cache": "./packages/config/cache/discovery.sqlite"
+  "cache": "./packages/config/cache/discovery.sqlite",
+  "watches": "./packages/config/src/watches"
 }

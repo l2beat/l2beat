@@ -162,6 +162,29 @@ describe(parseDiscoveryUpdates.name, () => {
     expect(discoveryUpdates[0]?.sections[0]?.kind).toEqual('initial-discovery')
   })
 
+  it('drops entries whose only section is offchain changes', () => {
+    const discoveryUpdates = parseDiscoveryUpdates(
+      [
+        '# Diff at Tue, 21 Jan 2026 09:00:00 GMT:',
+        '',
+        '## Description',
+        '',
+        'Audit added.',
+        '',
+        '## Offchain changes',
+        '',
+        '```diff',
+        '    audits {',
+        '+     a/b:c.pdf: {"sha":"1","size":2}',
+        '    }',
+        '```',
+        '',
+      ].join('\n'),
+    )
+
+    expect(discoveryUpdates).toEqual([])
+  })
+
   it('marks high severity for implementation changes', () => {
     const discoveryUpdates = parseDiscoveryUpdates(
       [
