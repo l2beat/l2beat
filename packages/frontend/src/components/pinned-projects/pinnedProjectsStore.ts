@@ -9,6 +9,11 @@ export interface SavedProject {
   href: string
   name: string
   iconUrl: string
+  /**
+   * The same project's pages in other sections, like the ZK Catalog and
+   * Privacy. The lists show a project once, whichever page it was saved from.
+   */
+  otherHrefs?: string[]
 }
 
 export interface PinnedProjects {
@@ -66,14 +71,37 @@ function parsePinnedProjects(raw: string | null): PinnedProjects {
 
 function toProjects(value: unknown): SavedProject[] {
   if (!Array.isArray(value)) return []
-  return value.filter(
-    (item): item is SavedProject =>
-      typeof item === 'object' &&
-      item !== null &&
-      typeof item.href === 'string' &&
-      typeof item.name === 'string' &&
-      typeof item.iconUrl === 'string',
-  )
+  return value
+    .filter(
+      (item): item is SavedProject =>
+        typeof item === 'object' &&
+        item !== null &&
+        typeof item.href === 'string' &&
+        typeof item.name === 'string' &&
+        typeof item.iconUrl === 'string',
+    )
+    .map((item) => {
+      // Older versions saved no other pages.
+      const otherHrefs = Array.isArray(item.otherHrefs)
+        ? item.otherHrefs.filter((href) => typeof href === 'string')
+        : []
+      return { ...item, otherHrefs }
+    })
+}
+
+/**
+ * The recent projects the nav lists: none that is pinned, and each once,
+ * from the page opened last.
+ */
+export function unpinnedRecent(projects: PinnedProjects): SavedProject[] {
+  const shown: SavedProject[] = []
+  for (const project of projects.recent) {
+    const seen = [...projects.pinned, ...shown].some((p) =>
+      isSameProject(p, project),
+    )
+    if (!seen) shown.push(project)
+  }
+  return shown
 }
 
 function write(update: (current: PinnedProjects) => PinnedProjects) {
@@ -120,12 +148,16 @@ export function withVisit(
   current: PinnedProjects,
   project: SavedProject,
 ): PinnedProjects {
-  const pinnedHrefs = new Set(current.pinned.map((p) => p.href))
   let unpinnedLeft = MAX_RECENT
   const recent = [
     project,
-    ...current.recent.filter((p) => p.href !== project.href),
-  ].filter((p) => pinnedHrefs.has(p.href) || unpinnedLeft-- > 0)
+    // Its page in another section counts as the same visit.
+    ...current.recent.filter((p) => !isSameProject(p, project)),
+  ].filter(
+    (p) =>
+      current.pinned.some((pinned) => isSameProject(pinned, p)) ||
+      unpinnedLeft-- > 0,
+  )
   return {
     ...current,
     pinned: current.pinned.map((p) => (p.href === project.href ? project : p)),
@@ -135,12 +167,13 @@ export function withVisit(
 
 export function usePinnedState(project: SavedProject) {
   const { pinned } = usePinnedProjects()
-  const isPinned = pinned.some((p) => p.href === project.href)
+  // Pinned from another section's page counts too.
+  const isPinned = pinned.some((p) => isSameProject(p, project))
   const toggle = useCallback(() => {
     write((current) => ({
       ...current,
-      pinned: current.pinned.some((p) => p.href === project.href)
-        ? current.pinned.filter((p) => p.href !== project.href)
+      pinned: current.pinned.some((p) => isSameProject(p, project))
+        ? current.pinned.filter((p) => !isSameProject(p, project))
         : [...current.pinned, project],
     }))
   }, [project])
@@ -150,7 +183,7 @@ export function usePinnedState(project: SavedProject) {
 export function pinProject(project: SavedProject) {
   write((current) => ({
     ...current,
-    pinned: current.pinned.some((p) => p.href === project.href)
+    pinned: current.pinned.some((p) => isSameProject(p, project))
       ? current.pinned
       : [...current.pinned, project],
   }))
@@ -161,4 +194,12 @@ export function unpinProject(href: string) {
     ...current,
     pinned: current.pinned.filter((p) => p.href !== href),
   }))
+}
+
+function isSameProject(a: SavedProject, b: SavedProject) {
+  return (
+    a.href === b.href ||
+    !!a.otherHrefs?.includes(b.href) ||
+    !!b.otherHrefs?.includes(a.href)
+  )
 }

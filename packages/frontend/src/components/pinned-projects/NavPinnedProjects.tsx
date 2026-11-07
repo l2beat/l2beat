@@ -8,6 +8,7 @@ import {
   pinProject,
   type SavedProject,
   STORAGE_KEY,
+  unpinnedRecent,
   unpinProject,
   usePinnedProjects,
 } from './pinnedProjectsStore'
@@ -62,13 +63,11 @@ export function NavPinnedProjects({ onNavigate }: { onNavigate: () => void }) {
 }
 
 function PinnedProjectsLists({ onNavigate }: { onNavigate: () => void }) {
-  const { pinned, recent, hasPinned } = usePinnedProjects()
+  const projects = usePinnedProjects()
+  const { pinned, hasPinned } = projects
   const pathname = usePathname()
 
-  const pinnedHrefs = new Set(pinned.map((project) => project.href))
-  const recentOnly = recent
-    .filter((project) => !pinnedHrefs.has(project.href))
-    .slice(0, RECENT_ROWS)
+  const recentOnly = unpinnedRecent(projects).slice(0, RECENT_ROWS)
 
   const row = (project: SavedProject, isPinned?: boolean) => (
     <ProjectRow
