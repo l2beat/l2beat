@@ -61,10 +61,9 @@ export function getOpStackCentralizedSequencingSpec({
   } = hardcoded
   const sequencingWindowSeconds =
     sequencingWindowBlocks * HARDCODED.ETHEREUM.BLOCK_TIME_SECONDS
+  const l2BlockTimeMilliseconds = l2BlockTimeSeconds * 1_000
   const preconfirmationIntervalMilliseconds =
-    flashblockIntervalMilliseconds ?? l2BlockTimeSeconds * 1_000
-  const preconfirmationUnit =
-    flashblockIntervalMilliseconds !== undefined ? 'Flashblock' : 'block'
+    flashblockIntervalMilliseconds ?? l2BlockTimeMilliseconds
   const depositResourceLimit = discovery.getContractValue<{
     maxResourceLimit: number
   }>('SystemConfig', 'resourceConfig').maxResourceLimit
@@ -86,15 +85,22 @@ export function getOpStackCentralizedSequencingSpec({
       secondLine:
         flashblockIntervalMilliseconds !== undefined
           ? `${l2BlockTimeSeconds} s L2 block time`
-          : 'Unsafe L2 blocks',
+          : `${l2BlockTimeMilliseconds} ms L2 block time`,
       description: trustedPreconfirmationDescription,
       orderHint: preconfirmationIntervalMilliseconds / 1_000,
     },
-    trustedOrdering: {
-      value: 'Dynamic priority auction',
-      secondLine: `Fee order per ${preconfirmationUnit}`,
-      description: `For each ${preconfirmationIntervalMilliseconds} ms build loop, the centralized builder selects available transactions by priority fee. Transactions committed to an earlier ${preconfirmationUnit} are not reordered when a higher-fee transaction arrives later, so arrival time also affects ordering. This policy is not enforced by the derivation rules.`,
-    },
+    trustedOrdering:
+      flashblockIntervalMilliseconds !== undefined
+        ? {
+            value: 'Dynamic priority auction',
+            secondLine: 'Fee order per Flashblock',
+            description: `For each ${flashblockIntervalMilliseconds} ms build loop, the centralized builder selects available transactions by priority fee. Transactions committed to an earlier Flashblock are not reordered when a higher-fee transaction arrives later, so arrival time also affects ordering. This policy is not enforced by the derivation rules.`,
+          }
+        : {
+            value: 'Dynamic priority auction',
+            secondLine: 'Fee order per block',
+            description: `For each ${l2BlockTimeMilliseconds} ms block, the centralized builder selects available transactions by priority fee. This policy is not enforced by the derivation rules.`,
+          },
     sequencer,
     realtimeCensorshipResistance:
       SEQUENCING_SPEC.NO_REALTIME_CENSORSHIP_RESISTANCE(),
@@ -244,17 +250,12 @@ function getCentralizedSequencingExit(
           'AggregateVerifier',
           'SLOW_FINALIZATION_DELAY',
         )
-      // AggregateVerifier 0.3.0 (Base Denim) replaced BLOCK_INTERVAL with a
-      // slow and a fast pair; the fast one applies to 200 ms blocks.
-      const blockInterval =
-        templateVars.discovery.getContractValueOrUndefined<number>(
-          'AggregateVerifier',
-          'FAST_BLOCK_INTERVAL',
-        ) ??
-        templateVars.discovery.getContractValue<number>(
-          'AggregateVerifier',
-          'BLOCK_INTERVAL',
-        )
+      // AggregateVerifier keeps a slow (2 s blocks, before Denim) and a fast
+      // (200 ms blocks) interval pair. The fast pair is the live one.
+      const blockInterval = templateVars.discovery.getContractValue<number>(
+        'AggregateVerifier',
+        'FAST_BLOCK_INTERVAL',
+      )
       const checkpointIntervalSeconds =
         blockInterval * hardcoded.L2_BLOCK_TIME_SECONDS
       const portal = getOptimismPortal(templateVars)
@@ -282,7 +283,7 @@ function getCentralizedSequencingExit(
       return {
         exitDelay: {
           value: formatSeconds(worstCaseExitDelaySeconds, { fullUnit: true }),
-          secondLine: `${formatSeconds(sequencingWindowSeconds)} inclusion + ${formatSeconds(checkpointIntervalSeconds)} + ${formatSeconds(stateFinalizationDelaySeconds)} state`,
+          secondLine: `${formatSeconds(sequencingWindowSeconds)} inclusion + ${formatSeconds(checkpointIntervalSeconds)} checkpoint + ${formatSeconds(stateFinalizationDelaySeconds)} state`,
           description: readMarkdown(
             'templates/opStack/sequencingExitDelayAggregateProof.md',
             {

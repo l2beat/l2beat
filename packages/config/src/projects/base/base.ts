@@ -278,13 +278,13 @@ export const base: ScalingProject = opStackL2({
     hardcoded: HARDCODED.BASE,
     description:
       'Base uses a single centralized sequencer for fast confirmations. Users can bypass it with one Ethereum transaction to the OptimismPortal. Base nodes derive the deposited transaction from Ethereum, including it after at most one sequencing window.',
-    trustedPreconfirmationDescription: `Since the Denim hardfork the centralized sequencer seals a canonical L2 block every ${l2BlockTimeMilliseconds} ms and publishes it as the unsafe head; the earlier Flashblock stream was retired with it. The unsafe block is the sequencer's promise: it has no protocol enforcement or slashing, and it can be reorged until its batch is derived from Ethereum.`,
+    trustedPreconfirmationDescription: `The centralized sequencer seals a canonical L2 block every ${l2BlockTimeMilliseconds} ms and publishes it as the unsafe head. The unsafe block is a trusted promise with no protocol enforcement or slashing. It can be reorged until its batch is derived from Ethereum.`,
     sequencer: {
       value: 'Centralized',
-      secondLine: '5-instance Raft HA',
+      secondLine: 'Raft HA',
       sentiment: 'bad',
       description:
-        'The Base operator controls real-time ordering. They document five sequencer instances coordinated by op-conductor using Raft leader election, with only the leader producing blocks. The replicas improve availability but do not create independent operators or censorship resistance.',
+        'The Base operator controls real-time ordering. They run a high-availability sequencer cluster coordinated by op-conductor using Raft leader election, with only the leader producing blocks. The replicas improve availability but do not create independent operators or censorship resistance.',
       orderHint: 1,
     },
     censorshipResistance:
@@ -295,8 +295,12 @@ export const base: ScalingProject = opStackL2({
         url: 'https://docs.base.org/upgrades/denim/200ms-blocks',
       },
       {
-        title: 'Base engineering - Sequencer architecture',
-        url: 'https://blog.base.dev/flashblocks-deep-dive',
+        title: 'Base documentation - Transaction ordering',
+        url: 'https://docs.base.org/specifications/transactions/transaction-ordering',
+      },
+      {
+        title: 'Base documentation - Reliability and liveness',
+        url: 'https://docs.base.org/specifications/security/reliability-and-liveness',
       },
       {
         title: 'Base source code - Mainnet chain configuration',
