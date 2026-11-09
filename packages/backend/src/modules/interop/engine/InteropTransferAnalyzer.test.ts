@@ -35,6 +35,11 @@ describe(InteropTransferAnalyzer.name, () => {
           srcValueUsd: 10,
           dstValueUsd: 99_000,
         }),
+        transfer({
+          transferId: 'msg5',
+          srcValueUsd: 0,
+          dstValueUsd: 200_000,
+        }),
       ],
       UnixTime(2_000_000),
     )
@@ -52,6 +57,11 @@ describe(InteropTransferAnalyzer.name, () => {
     ).toEqual([
       { transferId: 'msg1', valueRatio: 6, dominantSide: 'src' },
       { transferId: 'msg3', valueRatio: 10_000, dominantSide: 'dst' },
+      {
+        transferId: 'msg5',
+        valueRatio: Number.POSITIVE_INFINITY,
+        dominantSide: 'dst',
+      },
     ])
   })
 })

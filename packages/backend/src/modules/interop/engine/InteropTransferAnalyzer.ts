@@ -63,9 +63,6 @@ export function analyzeSuspiciousTransfer(
   }
 
   const minSideValueUsd = Math.min(srcValueUsd, dstValueUsd)
-  if (minSideValueUsd === 0) {
-    return
-  }
 
   return {
     dominantSide: srcValueUsd >= dstValueUsd ? 'src' : 'dst',
