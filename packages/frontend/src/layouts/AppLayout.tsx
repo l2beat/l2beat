@@ -33,7 +33,10 @@ export function AppLayout({
 }) {
   return (
     <TRPCReactProvider>
-      <TooltipProvider delayDuration={300} disableHoverableContent>
+      {/* The delay counts from when the cursor stops, so it can be short. It
+          stays long enough that drifting down a table column does not open
+          every row's tooltip, which the warm group would then chain. */}
+      <TooltipProvider delayDuration={150} disableHoverableContent>
         {/* The static check lets bundlers drop the dev tools from production builds */}
         {process.env.NODE_ENV !== 'production' &&
           env.NODE_ENV === 'development' && <L2BeatDevTools />}
