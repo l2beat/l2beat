@@ -7,7 +7,6 @@ import { ChartControls } from '~/components/projects/sections/tvs/ChartControls'
 import { TokenChart } from '~/components/projects/sections/tvs/TokenChart'
 import { TokensControls } from '~/components/projects/sections/tvs/TokensControls'
 import { TvsProjectStats } from '~/components/projects/sections/tvs/TvsProjectStats'
-import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
@@ -76,7 +75,6 @@ export function L2ProjectTvsBreakdownPage({
           </SelectedTokenContextProvider>
         </div>
         <RequestTokenBox />
-        <ScrollToTopButton />
       </SideNavLayout>
     </AppLayout>
   )
