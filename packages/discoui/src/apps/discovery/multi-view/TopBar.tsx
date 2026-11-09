@@ -1,3 +1,4 @@
+import { assert } from '@l2beat/shared-pure'
 import { useRef } from 'react'
 import { Link } from 'react-router'
 import { Button } from '../../../components/Button'
@@ -7,7 +8,7 @@ import { IconGear } from '../../../icons/IconGear'
 import { IconPlus } from '../../../icons/IconPlus'
 import { IconRefresh } from '../../../icons/IconRefresh'
 import { cn } from '../../../utils/cn'
-import { useTerminalStore } from '../panel-terminal/store'
+import { type CommandName, useTerminalStore } from '../panel-terminal/store'
 import { useDiscoveryCommand } from '../panel-terminal/useDiscoveryCommand'
 import { Search } from '../search/Search'
 import { SettingsDialog } from './settings/SettingsDialog'
@@ -90,8 +91,17 @@ export function TopBar(props: { project: string }) {
 const TOP_BAR_DEV_MODE = true
 const REPEAT_CLICK_WINDOW_MS = 500
 
+const STOP_LABELS: Record<CommandName, string> = {
+  discovery: 'Stop discovery',
+  templateMatch: 'Stop template match',
+  projectMatch: 'Stop project match',
+  shapeDownload: 'Stop shape download',
+  minterSearch: 'Stop minter search',
+}
+
 function DiscoverOrStopButton(props: { project: string }) {
   const inFlight = useTerminalStore((state) => state.command.inFlight)
+  const runningCommand = useTerminalStore((state) => state.command.name)
   const { killCommand, discover } = useDiscoveryCommand()
   const lastClickAtMs = useRef(Number.NEGATIVE_INFINITY)
 
@@ -112,16 +122,16 @@ function DiscoverOrStopButton(props: { project: string }) {
   }
 
   if (inFlight) {
+    assert(runningCommand !== undefined, 'A command in flight has a name')
     return (
       <Button
         size="small"
         variant="destructive"
         className="h-7 gap-1"
         onClick={onClick}
-        title="Stop the running command"
       >
         <IconClose />
-        <span className="max-md:hidden">Stop</span>
+        <span className="max-md:hidden">{STOP_LABELS[runningCommand]}</span>
       </Button>
     )
   }

@@ -68,5 +68,5 @@ function discoverButton(page: Page) {
 }
 
 function stopButton(page: Page) {
-  return page.getByRole('button', { name: 'Stop', exact: true })
+  return page.getByRole('button', { name: 'Stop discovery', exact: true })
 }
