@@ -1,3 +1,98 @@
+Generated with discovered.json: 0xc0953c11d874f07351c941b8a13cf8aff51bfbaf
+
+# Diff at Mon, 09 Nov 2026 10:23:06 GMT:
+
+- id: 4a717802
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@88f41001b8a578d927f6c346f74cfee94e90d0c1 block: 1793620813
+- current timestamp: 1794219721
+
+## Description
+
+Lighter upgrade: forced withdrawals, orders, order cancellations, pool share burns, API key changes and governor asset, market and system config requests move to the new L1CoreMessaging, which is the only contract allowed to append them to the priority queue; deposits stay on Lighter. Verifier, DesertVerifier and the `14d` priority expiration are unchanged.
+
+- [ZkLighter diff](https://disco.l2beat.com/diff/eth:0x45A06c03Eedc123C34A66bad4691d7DDb26A80a6/eth:0x9b4FDAE9f4490e3bBdC1eAF3C06b48172AC0f94f)
+- [AdditionalZkLighter diff](https://disco.l2beat.com/diff/eth:0xE1A19e35320218E41526ad619cf55985cfF20810/eth:0xa40ecAFe53Abae5C62014F60819d6f907e58dfE6)
+
+## Watched changes
+
+```diff
+    contract Lighter (eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7) [lighter/ZkLighterWithCoreMessaging] {
+    +++ description: The main rollup contract. It processes L2 batches, manages token deposits and withdrawals, keeps the priority queue (deposits are submitted here, all other L1 requests only through eth:0x183ef7195d443a3dA7EC1d7003BaCa1ff490757D) and controls desert mode (escape hatch). Logic is split between two contracts because of code-size limits, many operations are delegated to AdditionalZKLighter.
+      template:
+-        "lighter/ZkLighterWithSpot"
++        "lighter/ZkLighterWithCoreMessaging"
+      sourceHashes.1:
+-        "0xeaf6f957c231363efad1efa621d45707326b4cf3eeda29f4d13157f50d7e18c9"
++        "0x80f076a3e553ee1ed01e5bdc4ed1257e8d33905f1a835cc85a32e586082e512d"
+      description:
+-        "The main rollup contract. It processes L2 batches, manages token deposits and withdrawals, allows users to submit censorship-resistant L2 transactions and controls desert mode (escape hatch). Logic is split between two contracts because of code-size limits, many operations are delegated to AdditionalZKLighter."
++        "The main rollup contract. It processes L2 batches, manages token deposits and withdrawals, keeps the priority queue (deposits are submitted here, all other L1 requests only through eth:0x183ef7195d443a3dA7EC1d7003BaCa1ff490757D) and controls desert mode (escape hatch). Logic is split between two contracts because of code-size limits, many operations are delegated to AdditionalZKLighter."
+      values.$implementation.0:
+-        "eth:0x45A06c03Eedc123C34A66bad4691d7DDb26A80a6"
++        "eth:0x9b4FDAE9f4490e3bBdC1eAF3C06b48172AC0f94f"
+      values.$implementation.1:
+-        "eth:0xE1A19e35320218E41526ad619cf55985cfF20810"
++        "eth:0xa40ecAFe53Abae5C62014F60819d6f907e58dfE6"
+      values.$pastUpgrades.24:
++        ["2026-11-08T13:32:47.000Z","0xc6cd9e9cd61fbb08f22ce05c7853ca65c76f9354a5266037550af6687ce38e36",["eth:0x9b4FDAE9f4490e3bBdC1eAF3C06b48172AC0f94f"]]
+      values.$upgradeCount:
+-        24
++        25
+      values.additionalZkLighter:
+-        "eth:0xE1A19e35320218E41526ad619cf55985cfF20810"
++        "eth:0xa40ecAFe53Abae5C62014F60819d6f907e58dfE6"
+      values.getTarget:
+-        "eth:0x45A06c03Eedc123C34A66bad4691d7DDb26A80a6"
++        "eth:0x9b4FDAE9f4490e3bBdC1eAF3C06b48172AC0f94f"
+      values.coreMessaging:
++        "eth:0x183ef7195d443a3dA7EC1d7003BaCa1ff490757D"
+      implementationNames.eth:0x45A06c03Eedc123C34A66bad4691d7DDb26A80a6:
+-        "ZkLighter"
+      implementationNames.eth:0xE1A19e35320218E41526ad619cf55985cfF20810:
+-        "AdditionalZkLighter"
+      implementationNames.eth:0x9b4FDAE9f4490e3bBdC1eAF3C06b48172AC0f94f:
++        "ZkLighter"
+      implementationNames.eth:0xa40ecAFe53Abae5C62014F60819d6f907e58dfE6:
++        "AdditionalZkLighter"
+    }
+```
+
+```diff
+    contract UpgradeGatekeeper (eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67) [lighter/UpgradeGatekeeper] {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045. In practice every upgrade so far has been fast-tracked: the security council zeroes the notice period right before each upgrade is finished.
+      values.versionId:
+-        79
++        80
+      directlyReceivedPermissions.0:
++        {"permission":"upgrade","from":"eth:0x183ef7195d443a3dA7EC1d7003BaCa1ff490757D","role":"admin"}
+    }
+```
+
+```diff
+    contract Lighter Multisig 2 (eth:0x97A90Ec950B6BCd9B190b566525B2Bb92A2C03a2) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"upgrade","from":"eth:0x183ef7195d443a3dA7EC1d7003BaCa1ff490757D","role":"admin","via":[{"address":"eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67","delay":1814400}]}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L1CoreMessaging (eth:0x183ef7195d443a3dA7EC1d7003BaCa1ff490757D) [lighter/L1CoreMessaging]
+    +++ description: Entry point for all non-deposit L1 priority requests: users force withdrawals, orders, order cancellations, pool share burns and API key changes through it, and the network governor registers and updates assets, markets and the system config. Requests are validated here and appended to the priority queue of eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7, which accepts them only from this contract.
+```
+
+## Source code changes
+
+```diff
+.../.flat/L1CoreMessaging/L1CoreMessaging.sol      | 4378 ++++++++++++++++++++
+ .../lighter/.flat/L1CoreMessaging/Proxy.p.sol      |  154 +
+ .../Lighter/AdditionalZkLighter.2.sol              |  782 +---
+ .../Lighter/ZkLighter.1.sol                        | 1030 +----
+ 4 files changed, 4926 insertions(+), 1418 deletions(-)
+```
+
 Generated with discovered.json: 0xfdc1778f0146333f79fb7494a23d6f78204183fa
 
 # Diff at Mon, 02 Nov 2026 13:39:44 GMT:
