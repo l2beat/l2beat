@@ -50,7 +50,7 @@ export function ProjectBadge({
   if (disableTooltip) return component
 
   return (
-    <Tooltip delayDuration={0}>
+    <Tooltip>
       <TooltipTrigger asChild disabledOnTouch={disableInteraction}>
         {component}
       </TooltipTrigger>
