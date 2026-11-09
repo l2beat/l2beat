@@ -4,26 +4,6 @@
   "tokens": [
     {
       "mode": "auto",
-      "id": "blast-AMO",
-      "priceId": "amino",
-      "symbol": "AMO",
-      "name": "Amino",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/32677/large/IMG_6956.png?1698920127",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x1a2EB478FA07125C9935A77b3C03a82470801E30",
-        "chain": "ethereum",
-        "escrowAddress": "0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
-        "decimals": 18,
-        "sinceTimestamp": 1708812911,
-        "untilTimestamp": 1747440000
-      },
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
       "id": "blast-ANDY",
       "priceId": "andyerc",
       "symbol": "ANDY",
@@ -34,9 +14,9 @@
         "apiId": "andyerc",
         "decimals": 9,
         "sinceTimestamp": 1711324800,
-        "untilTimestamp": 1793999543,
         "address": "0xd43D8aDAC6A4C7d9Aeece7c3151FcA8f23752cf8",
-        "chain": "blast"
+        "chain": "blast",
+        "untilTimestamp": 1756720800
       },
       "category": "other",
       "source": "native",
@@ -73,9 +53,9 @@
         "apiId": "blast",
         "decimals": 18,
         "sinceTimestamp": 1719446400,
-        "untilTimestamp": 1793999543,
         "address": "0xb1a5700fA2358173Fe465e6eA4Ff52E36e88E2ad",
-        "chain": "blast"
+        "chain": "blast",
+        "untilTimestamp": 1793999543
       },
       "category": "other",
       "source": "native",
@@ -124,26 +104,6 @@
         "sinceTimestamp": 1708812911
       },
       "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "blast-DPX",
-      "priceId": "dopex",
-      "symbol": "DPX",
-      "name": "Dopex Governance Token",
-      "iconUrl": "https://assets.coingecko.com/coins/images/16652/large/DPX_%281%29.png?1696516213",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xEec2bE5c91ae7f8a338e1e5f3b5DE49d07AfdC81",
-        "chain": "ethereum",
-        "escrowAddress": "0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
-        "decimals": 18,
-        "sinceTimestamp": 1708812911,
-        "untilTimestamp": 1776211200
-      },
-      "category": "other",
       "source": "canonical",
       "isAssociated": false
     },
@@ -273,9 +233,9 @@
         "apiId": "juice-finance",
         "decimals": 18,
         "sinceTimestamp": 1711584000,
-        "untilTimestamp": 1793999543,
         "address": "0x818a92bc81Aad0053d72ba753fb5Bc3d0C5C0923",
-        "chain": "blast"
+        "chain": "blast",
+        "untilTimestamp": 1793999543
       },
       "category": "other",
       "source": "native",
@@ -312,12 +272,50 @@
         "apiId": "pacmoon",
         "decimals": 18,
         "sinceTimestamp": 1711497600,
-        "untilTimestamp": 1793999543,
         "address": "0x5ffd9EbD27f2fcAB044c0f0a26A45Cb62fa29c06",
-        "chain": "blast"
+        "chain": "blast",
+        "untilTimestamp": 1793999543
       },
       "category": "other",
       "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "blast-PSTAKE",
+      "priceId": "pstake-finance",
+      "symbol": "PSTAKE",
+      "name": "pSTAKE Finance",
+      "iconUrl": "https://assets.coingecko.com/coins/images/23931/large/PSTAKE_Dark.png?1696523129",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xfB5c6815cA3AC72Ce9F5006869AE67f18bF77006",
+        "chain": "ethereum",
+        "escrowAddress": "0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
+        "decimals": 18,
+        "sinceTimestamp": 1708812911
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "blast-RBX",
+      "priceId": "rabbitx",
+      "symbol": "RBX",
+      "name": "RabbitX",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30048/large/RBX.png?1696528970",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x3Ba925fdeAe6B46d0BB4d424D829982Cb2F7309e",
+        "chain": "ethereum",
+        "escrowAddress": "0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
+        "decimals": 18,
+        "sinceTimestamp": 1708812911
+      },
+      "category": "other",
+      "source": "canonical",
       "isAssociated": false
     },
     {

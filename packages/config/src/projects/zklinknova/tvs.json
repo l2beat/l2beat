@@ -4,71 +4,6 @@
   "tokens": [
     {
       "mode": "auto",
-      "id": "zklinknova-AMO",
-      "priceId": "amino",
-      "symbol": "AMO",
-      "name": "Amino",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/32677/large/IMG_6956.png?1698920127",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x1a2EB478FA07125C9935A77b3C03a82470801E30",
-        "chain": "ethereum",
-        "escrowAddress": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
-        "decimals": 18,
-        "sinceTimestamp": 1709295323,
-        "untilTimestamp": 1747440000
-      },
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "zkLink Nova Bridge from Ethereum"
-          }
-        ]
-      }
-    },
-    {
-      "mode": "auto",
-      "id": "zklinknova-ANDY",
-      "priceId": "andyerc",
-      "symbol": "ANDY",
-      "name": "Andy",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/35767/large/IMG_0310.jpeg?1711371918",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xd43D8aDAC6A4C7d9Aeece7c3151FcA8f23752cf8",
-        "chain": "blast",
-        "escrowAddress": "0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b",
-        "decimals": 9,
-        "sinceTimestamp": 1711324800,
-        "untilTimestamp": 1793999543
-      },
-      "valueForSummary": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1711324800,
-          "untilTimestamp": 1793999543
-        },
-        "priceId": "andyerc"
-      },
-      "category": "other",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "zkLink Nova Bridge from Blast"
-          }
-        ]
-      }
-    },
-    {
-      "mode": "auto",
       "id": "zklinknova-ARB-1",
       "priceId": "arbitrum",
       "symbol": "ARB",
@@ -105,110 +40,101 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-BLAST",
-      "priceId": "blast",
-      "symbol": "BLAST",
-      "name": "Blast",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/35494/large/Blast.jpg?1719385662",
+      "id": "zklinknova-ARB-2",
+      "priceId": "arbitrum",
+      "symbol": "ARB",
+      "name": "Arbitrum",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg?1721358242",
       "amount": {
         "type": "balanceOfEscrow",
-        "address": "0xb1a5700fA2358173Fe465e6eA4Ff52E36e88E2ad",
-        "chain": "blast",
-        "escrowAddress": "0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b",
+        "address": "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",
+        "chain": "ethereum",
+        "escrowAddress": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
         "decimals": 18,
-        "sinceTimestamp": 1719446400,
-        "untilTimestamp": 1793999543
-      },
-      "valueForSummary": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1719446400,
-          "untilTimestamp": 1793999543
-        },
-        "priceId": "blast"
-      },
-      "category": "other",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "zkLink Nova Bridge from Blast"
-          }
-        ]
-      }
-    },
-    {
-      "mode": "auto",
-      "id": "zklinknova-bWOOL",
-      "priceId": "wolf-game-wool",
-      "symbol": "bWOOL",
-      "name": "bWOOL",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/20760/large/KM3RwIVx_400x400.jpg?1696520155",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xb5A86030b64AfAa75c42c0D28f8d5ce5f9f61401",
-        "chain": "blast",
-        "escrowAddress": "0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b",
-        "decimals": 18,
-        "sinceTimestamp": 1715703713,
-        "untilTimestamp": 1793999543
-      },
-      "valueForSummary": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1715703713,
-          "untilTimestamp": 1793999543
-        },
-        "priceId": "wolf-game-wool"
-      },
-      "category": "other",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "zkLink Nova Bridge from Blast"
-          }
-        ]
-      }
-    },
-    {
-      "mode": "auto",
-      "id": "zklinknova-CLIP",
-      "priceId": "clip-finance",
-      "symbol": "CLIP",
-      "name": "Clip Finance",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/38090/large/2pNT21dw_400x400.jpg?1716483837",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x4Ea77a86d6E70FfE8Bb947FC86D68a7F086f198a",
-        "chain": "linea",
-        "escrowAddress": "0x62cE247f34dc316f93D3830e4Bf10959FCe630f8",
-        "decimals": 18,
-        "sinceTimestamp": 1723075200,
-        "untilTimestamp": 1739145600
-      },
-      "valueForSummary": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1723075200,
-          "untilTimestamp": 1739145600
-        },
-        "priceId": "clip-finance"
+        "sinceTimestamp": 1709295323
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Ethereum"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "zklinknova-BRETT",
+      "priceId": "based-brett",
+      "symbol": "BRETT",
+      "name": "Brett",
+      "iconUrl": "https://assets.coingecko.com/coins/images/35529/large/1000050750.png?1709031995",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x532f27101965dd16442E59d40670FaF5eBB142E4",
+        "chain": "base",
+        "escrowAddress": "0x80d12A78EfE7604F00ed07aB2f16F643301674D5",
+        "decimals": 18,
+        "sinceTimestamp": 1711098033
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1711098033
+        },
+        "priceId": "based-brett"
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Base"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "zklinknova-DAI-1",
+      "priceId": "dai",
+      "symbol": "DAI",
+      "name": "Dai Stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
+        "chain": "optimism",
+        "escrowAddress": "0x5Bd51296423A9079b931414C1De65e7057326EaA",
+        "decimals": 18,
+        "sinceTimestamp": 1711095511
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1711095511
+        },
+        "priceId": "dai"
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Optimism"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -284,27 +210,138 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-DPX",
-      "priceId": "dopex",
-      "symbol": "DPX",
-      "name": "Dopex Governance Token",
-      "iconUrl": "https://assets.coingecko.com/coins/images/16652/large/DPX_%281%29.png?1696516213",
+      "id": "zklinknova-DAI-4",
+      "priceId": "dai",
+      "symbol": "DAI",
+      "name": "Dai Stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
       "amount": {
         "type": "balanceOfEscrow",
-        "address": "0xEec2bE5c91ae7f8a338e1e5f3b5DE49d07AfdC81",
-        "chain": "ethereum",
-        "escrowAddress": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
+        "address": "0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
+        "chain": "base",
+        "escrowAddress": "0x80d12A78EfE7604F00ed07aB2f16F643301674D5",
         "decimals": 18,
-        "sinceTimestamp": 1709295323,
-        "untilTimestamp": 1776211200
+        "sinceTimestamp": 1711098033
       },
-      "category": "other",
-      "source": "canonical",
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1711098033
+        },
+        "priceId": "dai"
+      },
+      "category": "stablecoin",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "zkLink Nova Bridge from Ethereum"
+            "name": "zkLink Nova Bridge from Base"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "zklinknova-DEGEN",
+      "priceId": "degen-base",
+      "symbol": "DEGEN",
+      "name": "Degen",
+      "iconUrl": "https://assets.coingecko.com/coins/images/34515/large/android-chrome-512x512.png?1706198225",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed",
+        "chain": "base",
+        "escrowAddress": "0x80d12A78EfE7604F00ed07aB2f16F643301674D5",
+        "decimals": 18,
+        "sinceTimestamp": 1711098033
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1711098033
+        },
+        "priceId": "degen-base"
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Base"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "zklinknova-ETH-1",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "optimism",
+            "escrowAddress": "0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b",
+            "decimals": 18,
+            "sinceTimestamp": 1711092485
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "optimism",
+            "escrowAddress": "0x5Bd51296423A9079b931414C1De65e7057326EaA",
+            "decimals": 18,
+            "sinceTimestamp": 1711095511
+          }
+        ]
+      },
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1711092485
+            },
+            "priceId": "ethereum"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1711095511
+            },
+            "priceId": "ethereum"
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Optimism"
           }
         ]
       }
@@ -579,6 +616,72 @@
     },
     {
       "mode": "auto",
+      "id": "zklinknova-ETH-6",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "base",
+            "escrowAddress": "0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd",
+            "decimals": 18,
+            "sinceTimestamp": 1711095697
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "base",
+            "escrowAddress": "0x80d12A78EfE7604F00ed07aB2f16F643301674D5",
+            "decimals": 18,
+            "sinceTimestamp": 1711098033
+          }
+        ]
+      },
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1711095697
+            },
+            "priceId": "ethereum"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1711098033
+            },
+            "priceId": "ethereum"
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Base"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "zklinknova-ETH-7",
       "priceId": "ethereum",
       "symbol": "ETH",
@@ -734,8 +837,7 @@
           "type": "const",
           "value": "0",
           "decimals": 0,
-          "sinceTimestamp": 1710427013,
-          "untilTimestamp": 1793999543
+          "sinceTimestamp": 1710427013
         },
         "priceId": "renzo-restaked-eth"
       },
@@ -789,21 +891,20 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-FORE",
-      "priceId": "fore-protocol",
-      "symbol": "FORE",
-      "name": "FORE Protocol",
-      "iconUrl": "https://assets.coingecko.com/coins/images/31001/large/EXCHANGE_LOGO_FORE.png?1696529839",
+      "id": "zklinknova-ezETH-6",
+      "priceId": "renzo-restaked-eth",
+      "symbol": "ezETH",
+      "name": "Renzo Restaked ETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34753/large/Ezeth_logo_circle.png?1713496404",
       "amount": {
         "type": "balanceOfEscrow",
-        "address": "0xB2ee0aDBe0EF1281025d0676511bB1df14600f4D",
+        "address": "0xbf5495Efe5DB9ce00f80364C8B423567e58d2110",
         "chain": "ethereum",
         "escrowAddress": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
         "decimals": 18,
-        "sinceTimestamp": 1709295323,
-        "untilTimestamp": 1742428800
+        "sinceTimestamp": 1709295323
       },
-      "category": "other",
+      "category": "ether",
       "source": "canonical",
       "isAssociated": false,
       "bridgedUsing": {
@@ -875,44 +976,6 @@
         "bridges": [
           {
             "name": "zkLink Nova Bridge from Arbitrum"
-          }
-        ]
-      }
-    },
-    {
-      "mode": "auto",
-      "id": "zklinknova-JUICE",
-      "priceId": "juice-finance",
-      "symbol": "JUICE",
-      "name": "Juice",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/36503/large/juice-logo-purple-200x200_%281%29.png?1711619018",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x818a92bc81Aad0053d72ba753fb5Bc3d0C5C0923",
-        "chain": "blast",
-        "escrowAddress": "0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b",
-        "decimals": 18,
-        "sinceTimestamp": 1711584000,
-        "untilTimestamp": 1793999543
-      },
-      "valueForSummary": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1711584000,
-          "untilTimestamp": 1793999543
-        },
-        "priceId": "juice-finance"
-      },
-      "category": "other",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "zkLink Nova Bridge from Blast"
           }
         ]
       }
@@ -1017,6 +1080,68 @@
     },
     {
       "mode": "auto",
+      "id": "zklinknova-mETH-2",
+      "priceId": "mantle-staked-ether",
+      "symbol": "mETH",
+      "name": "mETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33345/large/symbol_transparent_bg.png?1701697066",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xcDA86A272531e8640cD7F1a92c01839911B90bb0",
+        "chain": "mantle",
+        "escrowAddress": "0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2",
+        "decimals": 18,
+        "sinceTimestamp": 1709296907
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1709296907
+        },
+        "priceId": "mantle-staked-ether"
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Mantle"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "zklinknova-mETH-3",
+      "priceId": "mantle-staked-ether",
+      "symbol": "mETH",
+      "name": "mETH",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33345/large/symbol_transparent_bg.png?1701697066",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa",
+        "chain": "ethereum",
+        "escrowAddress": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
+        "decimals": 18,
+        "sinceTimestamp": 1709295323
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Ethereum"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "zklinknova-MNT-1",
       "priceId": "mantle",
       "symbol": "MNT",
@@ -1083,19 +1208,44 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-PAC",
-      "priceId": "pacmoon",
-      "symbol": "PAC",
-      "name": "PacMoon",
-      "iconUrl": "https://assets.coingecko.com/coins/images/36459/large/pacmoon.png?1711501114",
+      "id": "zklinknova-MNT-2",
+      "priceId": "mantle",
+      "symbol": "MNT",
+      "name": "Mantle",
+      "iconUrl": "https://assets.coingecko.com/coins/images/30980/large/token-logo.png?1696529819",
       "amount": {
         "type": "balanceOfEscrow",
-        "address": "0x5ffd9EbD27f2fcAB044c0f0a26A45Cb62fa29c06",
-        "chain": "blast",
-        "escrowAddress": "0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b",
+        "address": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
+        "chain": "ethereum",
+        "escrowAddress": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
         "decimals": 18,
-        "sinceTimestamp": 1711497600,
-        "untilTimestamp": 1793999543
+        "sinceTimestamp": 1709295323
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Ethereum"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "zklinknova-MOZ",
+      "priceId": "mozaic",
+      "symbol": "MOZ",
+      "name": "Mozaic Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/30100/large/Main_Logo_1-200x200jpg.jpg?1696529024",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x20547341E58fB558637FA15379C92e11F7b7F710",
+        "chain": "arbitrum",
+        "escrowAddress": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
+        "decimals": 18,
+        "sinceTimestamp": 1709296973
       },
       "valueForSummary": {
         "type": "value",
@@ -1103,10 +1253,9 @@
           "type": "const",
           "value": "0",
           "decimals": 0,
-          "sinceTimestamp": 1711497600,
-          "untilTimestamp": 1793999543
+          "sinceTimestamp": 1709296973
         },
-        "priceId": "pacmoon"
+        "priceId": "mozaic"
       },
       "category": "other",
       "source": "external",
@@ -1114,7 +1263,69 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "zkLink Nova Bridge from Blast"
+            "name": "zkLink Nova Bridge from Arbitrum"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "zklinknova-OP",
+      "priceId": "optimism",
+      "symbol": "OP",
+      "name": "Optimism",
+      "iconUrl": "/images/custom-tokens/optimism.png",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x4200000000000000000000000000000000000042",
+        "chain": "optimism",
+        "escrowAddress": "0x5Bd51296423A9079b931414C1De65e7057326EaA",
+        "decimals": 18,
+        "sinceTimestamp": 1711095511
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1711095511
+        },
+        "priceId": "optimism"
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Optimism"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "zklinknova-pufETH",
+      "priceId": "pufeth",
+      "symbol": "pufETH",
+      "name": "pufETH",
+      "iconUrl": "https://assets.coingecko.com/coins/images/35176/large/pufETH-200-200-resolution.png?1707753174",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xD9A442856C234a39a81a089C06451EBAa4306a72",
+        "chain": "ethereum",
+        "escrowAddress": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
+        "decimals": 18,
+        "sinceTimestamp": 1709295323
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Ethereum"
           }
         ]
       }
@@ -1193,38 +1404,52 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-rsETH-4",
+      "id": "zklinknova-rsETH-7",
       "priceId": "kelp-dao-restaked-eth",
       "symbol": "rsETH",
-      "name": "KelpDao Restaked ETH",
-      "iconUrl": "https://assets.coingecko.com/coins/images/33800/large/Icon___Dark.png?1702991855",
+      "name": "rsETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33800/large/Icon___Dark.png?1702991855",
       "amount": {
         "type": "balanceOfEscrow",
-        "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
-        "chain": "blast",
-        "escrowAddress": "0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b",
+        "address": "0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7",
+        "chain": "ethereum",
+        "escrowAddress": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
         "decimals": 18,
-        "sinceTimestamp": 1710823563,
-        "untilTimestamp": 1793999543
-      },
-      "valueForSummary": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1710823563,
-          "untilTimestamp": 1793999543
-        },
-        "priceId": "kelp-dao-restaked-eth"
+        "sinceTimestamp": 1709295323
       },
       "category": "ether",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "zkLink Nova Bridge from Blast"
+            "name": "zkLink Nova Bridge from Ethereum"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "zklinknova-rswETH",
+      "priceId": "restaked-swell-eth",
+      "symbol": "rswETH",
+      "name": "rswETH",
+      "iconUrl": "https://assets.coingecko.com/coins/images/34489/large/rswETH_Icon.png?1706865484",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xFAe103DC9cf190eD75350761e95403b7b8aFa6c0",
+        "chain": "ethereum",
+        "escrowAddress": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
+        "decimals": 18,
+        "sinceTimestamp": 1709295323
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Ethereum"
           }
         ]
       }
@@ -1329,57 +1554,18 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-sUSDe-5",
-      "priceId": "ethena-staked-usde",
-      "symbol": "sUSDe",
-      "name": "Staked USDe",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
+      "id": "zklinknova-STONE-5",
+      "priceId": "stakestone-ether",
+      "symbol": "STONE",
+      "name": "StakeStone Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33103/large/200_200.png?1702602672",
       "amount": {
         "type": "balanceOfEscrow",
-        "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
-        "chain": "blast",
-        "escrowAddress": "0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b",
-        "decimals": 18,
-        "sinceTimestamp": 1713651093,
-        "untilTimestamp": 1793999543
-      },
-      "valueForSummary": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1713651093,
-          "untilTimestamp": 1793999543
-        },
-        "priceId": "ethena-staked-usde"
-      },
-      "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "zkLink Nova Bridge from Blast"
-          }
-        ]
-      }
-    },
-    {
-      "mode": "auto",
-      "id": "zklinknova-TRESTLE",
-      "priceId": "trestle",
-      "symbol": "TRESTLE",
-      "name": "Trestle",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/34992/large/PNG_-_Logo_-_3485x.png?1706943532",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xdE8CD13B812BcD82218754A740b27E76ec1e86aD",
+        "address": "0x7122985656e38BDC0302Db86685bb972b145bD3C",
         "chain": "ethereum",
         "escrowAddress": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
         "decimals": 18,
-        "sinceTimestamp": 1709295323,
-        "untilTimestamp": 1742169600
+        "sinceTimestamp": 1709295323
       },
       "category": "other",
       "source": "canonical",
@@ -1394,57 +1580,70 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-UMAMI",
-      "priceId": "umami-finance",
-      "symbol": "UMAMI",
-      "name": "Umami",
-      "iconUrl": "https://assets.coingecko.com/coins/images/21159/large/_UMAMI-200px.jpg?1696520536",
+      "id": "zklinknova-sUSDe-8",
+      "priceId": "ethena-staked-usde",
+      "symbol": "sUSDe",
+      "name": "Staked USDe",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33669/large/photo_2023-12-14_17-00-20.jpg?1702696035",
       "amount": {
         "type": "balanceOfEscrow",
-        "address": "0x1622bF67e6e5747b81866fE0b85178a93C7F86e3",
-        "chain": "arbitrum",
-        "escrowAddress": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
-        "decimals": 9,
-        "sinceTimestamp": 1709296973,
-        "untilTimestamp": 1731196800
+        "address": "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
+        "chain": "ethereum",
+        "escrowAddress": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
+        "decimals": 18,
+        "sinceTimestamp": 1710979200
       },
-      "valueForSummary": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1709296973,
-          "untilTimestamp": 1731196800
-        },
-        "priceId": "umami-finance"
-      },
-      "category": "other",
-      "source": "external",
+      "category": "stablecoin",
+      "source": "canonical",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "zkLink Nova Bridge from Arbitrum"
+            "name": "zkLink Nova Bridge from Ethereum"
           }
         ]
       }
     },
     {
       "mode": "auto",
-      "id": "zklinknova-USDB",
-      "priceId": "usdb",
-      "symbol": "USDB",
-      "name": "USDB",
-      "iconUrl": "https://assets.coingecko.com/coins/images/35595/large/65c67f0ebf2f6a1bd0feb13c_usdb-icon-yellow.png?1709255427",
+      "id": "zklinknova-uniETH",
+      "priceId": "universal-eth",
+      "symbol": "uniETH",
+      "name": "Universal ETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/28477/large/uniETH_200.png?1696527471",
       "amount": {
         "type": "balanceOfEscrow",
-        "address": "0x4300000000000000000000000000000000000003",
-        "chain": "blast",
-        "escrowAddress": "0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b",
+        "address": "0xF1376bceF0f78459C0Ed0ba5ddce976F1ddF51F4",
+        "chain": "ethereum",
+        "escrowAddress": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
         "decimals": 18,
-        "sinceTimestamp": 1710427013,
-        "untilTimestamp": 1793999543
+        "sinceTimestamp": 1709295323
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Ethereum"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "zklinknova-USDC-1",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+        "chain": "optimism",
+        "escrowAddress": "0x5Bd51296423A9079b931414C1De65e7057326EaA",
+        "decimals": 6,
+        "sinceTimestamp": 1711095511
       },
       "valueForSummary": {
         "type": "value",
@@ -1452,10 +1651,9 @@
           "type": "const",
           "value": "0",
           "decimals": 0,
-          "sinceTimestamp": 1710427013,
-          "untilTimestamp": 1793999543
+          "sinceTimestamp": 1711095511
         },
-        "priceId": "usdb"
+        "priceId": "usd-coin"
       },
       "category": "stablecoin",
       "source": "external",
@@ -1463,7 +1661,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "zkLink Nova Bridge from Blast"
+            "name": "zkLink Nova Bridge from Optimism"
           }
         ]
       }
@@ -1542,6 +1740,42 @@
     },
     {
       "mode": "auto",
+      "id": "zklinknova-USDC-4",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+        "chain": "base",
+        "escrowAddress": "0x80d12A78EfE7604F00ed07aB2f16F643301674D5",
+        "decimals": 6,
+        "sinceTimestamp": 1711098033
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1711098033
+        },
+        "priceId": "usd-coin"
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Base"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "zklinknova-USDC-5",
       "priceId": "bridged-usd-coin-manta-pacific",
       "symbol": "USDC",
@@ -1578,6 +1812,42 @@
     },
     {
       "mode": "auto",
+      "id": "zklinknova-USDC-6",
+      "priceId": "mantle-bridged-usdc-mantle",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35296/large/USDC_Icon.png?1708082083",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x09Bc4E0D864854c6aFB6eB9A9cdF58aC190D0dF9",
+        "chain": "mantle",
+        "escrowAddress": "0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2",
+        "decimals": 6,
+        "sinceTimestamp": 1709296907
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1709296907
+        },
+        "priceId": "mantle-bridged-usdc-mantle"
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Mantle"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "zklinknova-USDC-7",
       "priceId": "bridged-usd-coin-linea",
       "symbol": "USDC",
@@ -1608,6 +1878,32 @@
         "bridges": [
           {
             "name": "Circle CCTP"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "zklinknova-USDC-8",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
+        "decimals": 6,
+        "sinceTimestamp": 1709295323
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Ethereum"
           }
         ]
       }
@@ -1722,19 +2018,44 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-USDe-5",
+      "id": "zklinknova-USDe-8",
       "priceId": "ethena-usde",
       "symbol": "USDe",
       "name": "USDe",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/33613/large/USDE.png?1716355685",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33613/large/3466ef_3c088c66c7d941e8856339d0bddf33cc_mv2.png?1702514458",
       "amount": {
         "type": "balanceOfEscrow",
-        "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
-        "chain": "blast",
-        "escrowAddress": "0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b",
+        "address": "0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
+        "chain": "ethereum",
+        "escrowAddress": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
         "decimals": 18,
-        "sinceTimestamp": 1713651041,
-        "untilTimestamp": 1793999543
+        "sinceTimestamp": 1709295323
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Ethereum"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "zklinknova-USDT-1",
+      "priceId": "bridged-usdt",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35001/large/logo.png?1706959346",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
+        "chain": "optimism",
+        "escrowAddress": "0x5Bd51296423A9079b931414C1De65e7057326EaA",
+        "decimals": 6,
+        "sinceTimestamp": 1711095511
       },
       "valueForSummary": {
         "type": "value",
@@ -1742,10 +2063,9 @@
           "type": "const",
           "value": "0",
           "decimals": 0,
-          "sinceTimestamp": 1713651041,
-          "untilTimestamp": 1793999543
+          "sinceTimestamp": 1711095511
         },
-        "priceId": "ethena-usde"
+        "priceId": "bridged-usdt"
       },
       "category": "stablecoin",
       "source": "external",
@@ -1753,7 +2073,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "zkLink Nova Bridge from Blast"
+            "name": "zkLink Nova Bridge from Optimism"
           }
         ]
       }
@@ -1832,6 +2152,42 @@
     },
     {
       "mode": "auto",
+      "id": "zklinknova-USDT-4",
+      "priceId": "tether",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35069/large/logo.png?1707291114",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x201EBa5CC46D216Ce6DC03F6a759e8E766e956aE",
+        "chain": "mantle",
+        "escrowAddress": "0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2",
+        "decimals": 6,
+        "sinceTimestamp": 1709296907
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1709296907
+        },
+        "priceId": "tether"
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Mantle"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "zklinknova-USDT-5",
       "priceId": "tether",
       "symbol": "USDT",
@@ -1868,7 +2224,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-USDT-7",
+      "id": "zklinknova-USDT-6",
       "priceId": "bridged-tether-linea",
       "symbol": "USDT",
       "name": "Tether USD",
@@ -1897,18 +2253,44 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-wBTC-2",
+      "id": "zklinknova-USDT-7",
+      "priceId": "tether",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "chain": "ethereum",
+        "escrowAddress": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
+        "decimals": 6,
+        "sinceTimestamp": 1709295323
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Ethereum"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "zklinknova-wBTC-1",
       "priceId": "wrapped-bitcoin",
       "symbol": "wBTC",
       "name": "Wrapped BTC",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/32217/large/wbtc_%281%29.png?1696832481",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
       "amount": {
         "type": "balanceOfEscrow",
-        "address": "0x305E88d809c9DC03179554BFbf85Ac05Ce8F18d6",
-        "chain": "mantapacific",
-        "escrowAddress": "0x44a65dc12865A1e5249b45b4868f32b0E37168FF",
+        "address": "0x68f180fcCe6836688e9084f035309E29Bf0A2095",
+        "chain": "optimism",
+        "escrowAddress": "0x5Bd51296423A9079b931414C1De65e7057326EaA",
         "decimals": 8,
-        "sinceTimestamp": 1709295839
+        "sinceTimestamp": 1711095511
       },
       "valueForSummary": {
         "type": "value",
@@ -1916,7 +2298,7 @@
           "type": "const",
           "value": "0",
           "decimals": 0,
-          "sinceTimestamp": 1709295839
+          "sinceTimestamp": 1711095511
         },
         "priceId": "wrapped-bitcoin"
       },
@@ -1926,14 +2308,14 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "zkLink Nova Bridge from Mantapacific"
+            "name": "zkLink Nova Bridge from Optimism"
           }
         ]
       }
     },
     {
       "mode": "auto",
-      "id": "zklinknova-wBTC-3",
+      "id": "zklinknova-wBTC-2",
       "priceId": "wrapped-bitcoin",
       "symbol": "wBTC",
       "name": "Wrapped BTC",
@@ -1969,7 +2351,33 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-wBTC-4",
+      "id": "zklinknova-WBTC-2",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "chain": "ethereum",
+        "escrowAddress": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
+        "decimals": 8,
+        "sinceTimestamp": 1709295323
+      },
+      "category": "btc",
+      "source": "canonical",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Ethereum"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "zklinknova-wBTC-3",
       "priceId": "wrapped-bitcoin",
       "symbol": "wBTC",
       "name": "Wrapped BTC",
@@ -1999,6 +2407,42 @@
         "bridges": [
           {
             "name": "zkLink Nova Bridge from Arbitrum"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "zklinknova-wBTC-4",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "wBTC",
+      "name": "Wrapped BTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/32217/large/wbtc_%281%29.png?1696832481",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x305E88d809c9DC03179554BFbf85Ac05Ce8F18d6",
+        "chain": "mantapacific",
+        "escrowAddress": "0x44a65dc12865A1e5249b45b4868f32b0E37168FF",
+        "decimals": 8,
+        "sinceTimestamp": 1709295839
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1709295839
+        },
+        "priceId": "wrapped-bitcoin"
+      },
+      "category": "btc",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Mantapacific"
           }
         ]
       }
@@ -2070,19 +2514,44 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-weETH-3",
+      "id": "zklinknova-weETH-6",
       "priceId": "wrapped-eeth",
       "symbol": "weETH",
       "name": "Wrapped eETH",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
       "amount": {
         "type": "balanceOfEscrow",
-        "address": "0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A",
-        "chain": "blast",
-        "escrowAddress": "0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b",
+        "address": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+        "chain": "ethereum",
+        "escrowAddress": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
         "decimals": 18,
-        "sinceTimestamp": 1712897077,
-        "untilTimestamp": 1793999543
+        "sinceTimestamp": 1709295323
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Ethereum"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "zklinknova-WETH-4",
+      "priceId": "wrapped-ether-mantle-bridge",
+      "symbol": "WETH",
+      "name": "Ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31013/large/wrapped-eth-mantle-bridge.png?1696529850",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdEAddEaDdeadDEadDEADDEAddEADDEAddead1111",
+        "chain": "mantle",
+        "escrowAddress": "0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2",
+        "decimals": 18,
+        "sinceTimestamp": 1709296907
       },
       "valueForSummary": {
         "type": "value",
@@ -2090,10 +2559,9 @@
           "type": "const",
           "value": "0",
           "decimals": 0,
-          "sinceTimestamp": 1712897077,
-          "untilTimestamp": 1793999543
+          "sinceTimestamp": 1709296907
         },
-        "priceId": "wrapped-eeth"
+        "priceId": "wrapped-ether-mantle-bridge"
       },
       "category": "ether",
       "source": "external",
@@ -2101,7 +2569,105 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "zkLink Nova Bridge from Blast"
+            "name": "zkLink Nova Bridge from Mantle"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "zklinknova-WETH-5",
+      "priceId": "weth",
+      "symbol": "WETH",
+      "name": "Wrapped Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "chain": "ethereum",
+        "escrowAddress": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
+        "decimals": 18,
+        "sinceTimestamp": 1709295323
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Ethereum"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "zklinknova-wMNT",
+      "priceId": "wrapped-mantle",
+      "symbol": "wMNT",
+      "name": "Wrapped Mantle",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30983/large/mantle.jpeg?1696529822",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x78c1b0C915c4FAA5FffA6CAbf0219DA63d7f4cb8",
+        "chain": "mantle",
+        "escrowAddress": "0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2",
+        "decimals": 18,
+        "sinceTimestamp": 1709296907
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1709296907
+        },
+        "priceId": "wrapped-mantle"
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Mantle"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "zklinknova-wstETH-1",
+      "priceId": "wrapped-steth",
+      "symbol": "wstETH",
+      "name": "Wrapped liquid staked Ether 2.0",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb",
+        "chain": "optimism",
+        "escrowAddress": "0x5Bd51296423A9079b931414C1De65e7057326EaA",
+        "decimals": 18,
+        "sinceTimestamp": 1711095511
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1711095511
+        },
+        "priceId": "wrapped-steth"
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Optimism"
           }
         ]
       }
@@ -2144,6 +2710,32 @@
     },
     {
       "mode": "auto",
+      "id": "zklinknova-wstETH-4",
+      "priceId": "wrapped-steth",
+      "symbol": "wstETH",
+      "name": "Wrapped liquid staked Ether 2.0",
+      "iconUrl": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+        "chain": "ethereum",
+        "escrowAddress": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
+        "decimals": 18,
+        "sinceTimestamp": 1709295323
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Ethereum"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "zklinknova-ZK",
       "priceId": "zksync",
       "symbol": "ZK",
@@ -2174,6 +2766,46 @@
         "bridges": [
           {
             "name": "zkLink Nova Bridge from ZKsync Era"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "zklinknova-ZKL",
+      "priceId": "zklink",
+      "symbol": "ZKL",
+      "name": "ZKLink",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34982/large/Logo1.png?1714980729",
+      "amount": {
+        "type": "calculation",
+        "operator": "min",
+        "arguments": [
+          {
+            "type": "circulatingSupply",
+            "apiId": "zklink",
+            "decimals": 18,
+            "sinceTimestamp": 1721606400,
+            "address": "0xfC385A1dF85660a7e041423DB512f779070FCede",
+            "chain": "ethereum"
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xfC385A1dF85660a7e041423DB512f779070FCede",
+            "escrowAddress": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
+            "chain": "ethereum",
+            "decimals": 18,
+            "sinceTimestamp": 1721606400
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": true,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Ethereum"
           }
         ]
       }
