@@ -22,6 +22,8 @@ test('a sidebar link starts the nav transition and cleans up after it', async ({
   const arrival = await waitForArrival(page)
 
   expect(arrival.types).toEqual(['nav'])
+  // Captured and animated, not skipped
+  expect(arrival.ready).toBe(true)
   expect(arrival.finished).toBe(true)
   await expect
     .poll(() => leftovers(page))
@@ -95,7 +97,8 @@ function watchErrors(page: Page) {
 
 /**
  * Records, on every page, the view transition it arrives with, once it
- * ends: its types, and whether it ran to the end. None counts as none run.
+ * ends: its types, whether it got to animate (`ready`), and whether it ran
+ * to the end. None counts as none run.
  */
 async function recordArrivals(page: Page) {
   await page.addInitScript(() => {
@@ -104,13 +107,20 @@ async function recordArrivals(page: Page) {
       if (!transition) {
         ;(window as { arrival?: unknown }).arrival = {
           types: [],
+          ready: false,
           finished: false,
         }
         return
       }
+      let ready = false
+      transition.ready.then(
+        () => (ready = true),
+        () => {},
+      )
       const settle = (finished: boolean) => {
         ;(window as { arrival?: unknown }).arrival = {
           types: [...transition.types],
+          ready,
           finished,
         }
       }
@@ -126,7 +136,11 @@ async function waitForArrival(page: Page) {
   const handle = await page.waitForFunction(
     () => (window as { arrival?: unknown }).arrival,
   )
-  return (await handle.jsonValue()) as { types: string[]; finished: boolean }
+  return (await handle.jsonValue()) as {
+    types: string[]
+    ready: boolean
+    finished: boolean
+  }
 }
 
 /** What the script sets during a transition, once it is over. */
