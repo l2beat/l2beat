@@ -9,6 +9,7 @@ import {
   GasFeesSummaryParams,
   getGasFeesSummary,
 } from '~/server/features/gas-fees/getGasFeesSummary'
+import { getGasFeesTips } from '~/server/features/gas-fees/getGasFeesTips'
 import { procedure, router } from '../trpc'
 
 const gasFeesPageProcedure = procedure.use(({ next }) => {
@@ -24,4 +25,5 @@ export const gasFeesRouter = router({
     .input(GasFeesSummaryParams)
     .query(({ input }) => getGasFeesSummary(input)),
   recent: gasFeesPageProcedure.query(() => getGasFeesRecent()),
+  tips: gasFeesPageProcedure.query(() => getGasFeesTips()),
 })

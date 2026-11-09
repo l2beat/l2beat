@@ -10,7 +10,7 @@ import type {
 import { getFirstTwoNonZeroPrecision } from '~/utils/getFirstTwoNonZeroPrecision'
 import type { ChartRange } from '~/utils/range/range'
 
-export const DEFAULT_GAS_FEES_METRIC: GasFeesUsdMetric = 'avgFee'
+export const DEFAULT_GAS_FEES_METRIC: GasFeesUsdMetric = 'medianFee'
 export const DEFAULT_GAS_FEES_GAS_METRIC: GasFeesGasMetric = 'gasPrice'
 
 export const GAS_FEES_METRIC_LABELS: Record<
