@@ -15,7 +15,7 @@ import { l2ArchivedColumns } from './columns'
  * `min-width` too, because the header divider row's colspan defeats `width`.
  */
 const ALIGNED_COLUMN_WIDTHS = [
-  '[&_th:first-child]:w-[56px] [&_th:first-child]:min-w-[56px]',
+  '[&_th:first-child]:w-[48px] [&_th:first-child]:min-w-[48px] md:[&_th:first-child]:w-[52px] md:[&_th:first-child]:min-w-[52px]',
   '[&_th[data-column-id=name]]:w-[256px] [&_th[data-column-id=name]]:min-w-[256px]',
   '[&_th[data-column-id=Risks]]:w-[64px] [&_th[data-column-id=Risks]]:min-w-[64px]',
   '[&_th[data-column-id=type]]:w-[168px] [&_th[data-column-id=type]]:min-w-[168px]',

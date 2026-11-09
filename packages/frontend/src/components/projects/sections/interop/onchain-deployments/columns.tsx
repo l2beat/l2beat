@@ -39,10 +39,10 @@ export const interopTokenOnchainDeploymentsColumns = [
     cell: (ctx) => {
       const chain = ctx.row.original.chain
       return (
-        <div className="flex items-center gap-2 font-bold">
+        <div className="flex w-max items-center gap-2 whitespace-nowrap font-bold">
           {chain.iconUrl && (
             <img
-              className="size-5 shrink-0 rounded-full bg-white shadow"
+              className="size-5 rounded-full bg-white shadow"
               src={chain.iconUrl}
               width={20}
               height={20}
@@ -52,9 +52,6 @@ export const interopTokenOnchainDeploymentsColumns = [
           <span className="capitalize">{chain.name}</span>
         </div>
       )
-    },
-    meta: {
-      cellClassName: 'whitespace-normal',
     },
   }),
   columnHelper.accessor('address', {
@@ -122,7 +119,7 @@ export const interopTokenOnchainDeploymentsColumns = [
     },
   }),
   columnHelper.accessor('transferCount', {
-    header: 'Last 24h\ntransfer count',
+    header: 'Last 24h\ntransfers',
     cell: (ctx) => {
       if (ctx.row.original.transferCount === null)
         return <InteropNoDataBadge tooltip={noDataTooltip(ctx.row.original)} />
