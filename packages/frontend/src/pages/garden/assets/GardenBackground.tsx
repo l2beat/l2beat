@@ -7,23 +7,23 @@ export function GardenBackground() {
     <PageBackdrop name="garden">
       <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-garden-sky to-transparent" />
       <PageBackdropScenery>
-      <Stars />
-      <Sun className="absolute top-10 right-14 max-md:top-6 max-md:right-6 max-md:scale-75 max-md:opacity-60 dark:hidden" />
-      <Moon className="absolute top-10 right-14 hidden max-md:top-6 max-md:right-6 max-md:scale-75 max-md:opacity-60 dark:block" />
-      <svg
-        className="absolute bottom-0 left-0 h-36 w-full"
-        viewBox="0 0 1200 160"
-        preserveAspectRatio="none"
-      >
-        <path
-          d="M0 90 C200 40 380 120 600 80 C820 40 1000 110 1200 70 L1200 160 L0 160 Z"
-          className="fill-[#dcead3]/70 dark:fill-[#1b2415]/70"
-        />
-        <path
-          d="M0 130 C260 90 460 150 720 115 C940 85 1080 140 1200 115 L1200 160 L0 160 Z"
-          className="fill-garden-border/70"
-        />
-      </svg>
+        <Stars />
+        <Sun className="absolute top-10 right-14 max-md:top-6 max-md:right-6 max-md:scale-75 max-md:opacity-60 dark:hidden" />
+        <Moon className="absolute top-10 right-14 hidden max-md:top-6 max-md:right-6 max-md:scale-75 max-md:opacity-60 dark:block" />
+        <svg
+          className="absolute bottom-0 left-0 h-36 w-full"
+          viewBox="0 0 1200 160"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M0 90 C200 40 380 120 600 80 C820 40 1000 110 1200 70 L1200 160 L0 160 Z"
+            className="fill-[#dcead3]/70 dark:fill-[#1b2415]/70"
+          />
+          <path
+            d="M0 130 C260 90 460 150 720 115 C940 85 1080 140 1200 115 L1200 160 L0 160 Z"
+            className="fill-garden-border/70"
+          />
+        </svg>
       </PageBackdropScenery>
     </PageBackdrop>
   )
