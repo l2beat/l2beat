@@ -1,4 +1,4 @@
-import { formatCurrency } from '@l2beat/shared-pure'
+import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
 import { type ColumnHelper, createColumnHelper } from '@tanstack/react-table'
 import compact from 'lodash/compact'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -98,7 +98,7 @@ function getCommonColumns<T extends CommonRow>(
       header: 'Last 24h\ntransfer count',
       cell: (ctx) => (
         <div className="font-medium text-label-value-15">
-          {ctx.row.original.transferCount}
+          {formatInteger(ctx.row.original.transferCount)}
         </div>
       ),
       meta: {

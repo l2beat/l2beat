@@ -1,6 +1,7 @@
 import {
   formatAddress,
   formatCurrency,
+  formatInteger,
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
@@ -125,7 +126,7 @@ export const interopTokenOnchainDeploymentsColumns = [
         return <InteropNoDataBadge tooltip={noDataTooltip(ctx.row.original)} />
       return (
         <span className="font-medium text-label-value-15">
-          {ctx.row.original.transferCount}
+          {formatInteger(ctx.row.original.transferCount)}
         </span>
       )
     },

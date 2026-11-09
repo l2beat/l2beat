@@ -75,9 +75,9 @@ export const ethereum: BaseProject = {
       description: readProjectMarkdown('ethereum', 'technologySequencing'),
       sequencingSpec: {
         type: 'sequencer-set',
-        blockTime: { value: `${ethereumBlockTimeSeconds} seconds` },
+        blockTime: { value: formatSeconds(ethereumBlockTimeSeconds) },
         proposerRotationTime: {
-          value: `${ethereumBlockTimeSeconds} seconds`,
+          value: formatSeconds(ethereumBlockTimeSeconds),
           description:
             'One validator index is selected for every slot with probability proportional to its effective balance. A missed proposal leaves the slot empty.',
         },

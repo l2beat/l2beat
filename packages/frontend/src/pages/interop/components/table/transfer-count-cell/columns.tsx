@@ -18,6 +18,7 @@ import { CustomLinkIcon } from '~/icons/Outlink'
 import { InteropNoDataBadge } from '~/pages/interop/components/InteropNoDataBadge'
 import type { InteropSelection } from '~/pages/interop/utils/types'
 import type { InteropProtocolTransferDetailsItem } from '~/server/features/layer2s/interop/types'
+import { getTokenAmountDecimals } from './getTokenAmountDecimals'
 
 export type TransferRow = InteropProtocolTransferDetailsItem & BasicTableRow
 
@@ -53,11 +54,13 @@ export function getTransferColumns(selectedChains?: InteropSelection) {
           dstSymbol,
           dstTokenHref,
           dstTokenIconUrl,
+          valueUsd,
         } = ctx.row.original
         return (
           <div className="flex w-max items-center gap-2 whitespace-nowrap">
             <TokenAmount
               amount={srcAmount}
+              valueUsd={valueUsd}
               iconUrl={srcTokenIconUrl}
               symbol={srcSymbol}
               href={srcTokenHref}
@@ -66,6 +69,7 @@ export function getTransferColumns(selectedChains?: InteropSelection) {
             <ArrowRightIcon className="size-3.5 shrink-0 fill-brand" />
             <TokenAmount
               amount={dstAmount}
+              valueUsd={valueUsd}
               iconUrl={dstTokenIconUrl}
               symbol={dstSymbol}
               href={dstTokenHref}
@@ -178,22 +182,26 @@ export function getTransferColumns(selectedChains?: InteropSelection) {
 
 function TokenAmount({
   amount,
+  valueUsd,
   symbol,
   href,
   iconUrl,
   selectedChains,
 }: {
   amount: number | undefined
+  valueUsd: number | undefined
   symbol: string
   href: string | undefined
   iconUrl: string
   selectedChains: InteropSelection | undefined
 }) {
+  const decimals =
+    amount !== undefined ? getTokenAmountDecimals(amount, valueUsd) : 0
   const label =
     amount !== undefined
       ? formatNumberWithCommas(amount, {
-          minimumFractionDigits: 0,
-          maximumFractionDigits: 5,
+          minimumFractionDigits: decimals,
+          maximumFractionDigits: decimals,
         })
       : symbol
 

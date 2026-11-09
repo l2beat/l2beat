@@ -1,4 +1,4 @@
-import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
+import { formatCount, formatCurrency } from '@l2beat/shared-pure'
 import times from 'lodash/times'
 import { Skeleton } from '~/components/core/Skeleton'
 import {
@@ -156,7 +156,7 @@ function RouteCard({
         </div>
         {transferCount !== undefined && (
           <div className="font-medium text-label-value-13 text-secondary md:text-label-value-14">
-            {formatInteger(transferCount)} transfers
+            {formatCount(transferCount, 'transfer')}
           </div>
         )}
       </div>
@@ -233,7 +233,7 @@ function RouteRow({
         </span>
         {transferCount !== undefined && (
           <span className="whitespace-nowrap font-medium text-label-value-12 text-secondary">
-            {formatInteger(transferCount)} transfers
+            {formatCount(transferCount, 'transfer')}
           </span>
         )}
       </div>

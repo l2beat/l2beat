@@ -84,7 +84,7 @@ export function getOpStackCentralizedSequencingSpec({
       value: `${preconfirmationIntervalMilliseconds} ms`,
       secondLine:
         flashblockIntervalMilliseconds !== undefined
-          ? `${l2BlockTimeSeconds} s L2 block time`
+          ? `${l2BlockTimeSeconds}s L2 block time`
           : `${l2BlockTimeMilliseconds} ms L2 block time`,
       description: trustedPreconfirmationDescription,
       orderHint: preconfirmationIntervalMilliseconds / 1_000,
