@@ -62,9 +62,7 @@ export async function getPrivacySummaryData(
         groups,
         chartProjects,
         defaultChartRange,
-        bestPracticesBannerImageUrl: manifest.getUrl(
-          '/images/best-practices-banner.png',
-        ),
+        adviceBannerImageUrl: manifest.getUrl('/images/advice-banner.png'),
         queryState,
       },
     },

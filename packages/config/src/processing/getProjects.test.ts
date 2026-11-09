@@ -556,6 +556,31 @@ describe('getProjects', () => {
       expect(problems).toEqual([])
     })
 
+    // Steps are the single home of the advice, and a red cell has nothing a user can do.
+    it('every advice step defends a cell that is not red', () => {
+      const problems: string[] = []
+      for (const { project, privacyInfo } of privacyProjects) {
+        const adversaries = privacyInfo.adversaries
+        if (!adversaries?.advice) continue
+        for (const [adversaryId, cell] of Object.entries(adversaries.cells)) {
+          if (cell.advice !== undefined) {
+            problems.push(`${project.id} ${adversaryId}: advice beside steps`)
+          }
+        }
+        for (const step of adversaries.advice) {
+          if (step.against.length === 0) {
+            problems.push(`${project.id} ${step.name}: defends no cell`)
+          }
+          for (const id of step.against) {
+            if (adversaries.cells[id].sentiment === 'bad') {
+              problems.push(`${project.id} ${step.name}: defends red ${id}`)
+            }
+          }
+        }
+      }
+      expect(problems).toEqual([])
+    })
+
     // Risk summaries share one layout, so readers can compare projects item by item.
     it('every risk summary follows the shared layout', () => {
       const headings = [

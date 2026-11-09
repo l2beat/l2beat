@@ -1,4 +1,6 @@
 import {
+  ADVICE_SNIPPETS as A,
+  adviceLink,
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
@@ -6,11 +8,15 @@ import {
 // v2.1, the circuits behind the verified verifier.
 const CIRCUITS =
   'https://github.com/tornadocash/tornado-core/blob/a533ad9ffb62163a42d4fa9a09984c5dd4e5c41d/circuits/'
+// The DAO's Docker recipe that rebuilds the pinned app to its IPFS hash.
+const RECIPE =
+  'https://github.com/tornado-dao/tornado-ipfs-ui/tree/d2aa401746e1b1195ff692a051636b8c5c43d2e5'
 // The commit governance pinned on tornadocash.eth (proposal 68).
 const APP =
   'https://github.com/tornado-dao/classic-ui/blob/17c54dae9ad91bb3c6d62a7860df6cd365ab76d4/'
 
-export function tornadoCashAdversaries(upgradeDelay: string) {
+/** `appCid` is the reviewed release, which the steps load instead of the name. */
+export function tornadoCashAdversaries(upgradeDelay: string, appCid: string) {
   return definePrivacyAdversaries({
     promise: {
       protects: 'linkage',
@@ -21,7 +27,6 @@ export function tornadoCashAdversaries(upgradeDelay: string) {
         sentiment: 'good',
         exposureShort:
           'Each pool has one fixed amount and no in-pool transfers, so every withdrawal spends exactly one deposit.',
-        advice: S.exitViaRelayer('relayer'),
         sources: [
           { contract: 'Pool_1_ETH', title: '1 ETH pool' },
           { title: 'Withdrawal circuit', url: CIRCUITS + 'withdraw.circom' },
@@ -32,7 +37,6 @@ export function tornadoCashAdversaries(upgradeDelay: string) {
         exposureShort:
           'A relayed withdrawal hides among all unspent deposits of its pool, the anonymity set, which differs sharply between pools.',
         exposureContinued: `Timing, address reuse and relayer choice narrow it further. ${S.walletFingerprint('relayer')}`,
-        advice: `${S.largeAnonymitySet} Deposit and withdraw several notes at different times, not in batches. ${S.freshExit}`,
         sources: [
           {
             contract: 'Pool_1_ETH',
@@ -54,8 +58,6 @@ export function tornadoCashAdversaries(upgradeDelay: string) {
           "The app works in Tor Browser and downloads every deposit of a pool, so its services learn the pool but not the user's note.",
         exposureContinued:
           "The Graph learns whether the note is newer than the app's event cache. Every listed relayer gets a status request, and the chosen one receives the finished withdrawal.",
-        advice:
-          "Use the app in Tor Browser, or from the user's own IPFS node in Firefox set to Tor's proxy. Withdraw through a popular relayer without connecting a wallet.",
         sources: [
           {
             title: 'Deposits fetched per pool and matched locally',
@@ -81,13 +83,12 @@ export function tornadoCashAdversaries(upgradeDelay: string) {
         exposureShort:
           'The pools cannot be paused, upgraded or made to reveal anything.',
         exposureContinued: `Token governance controls the app pinned on tornadocash.eth, the router's pool list and the relayer list. Every change waits at least ${upgradeDelay} from proposal to execution.`,
-        advice: `Load the app from the IPFS hash on tornadocash.eth through the user's own IPFS node. ${S.localBuild}`,
         sources: [
           { contract: 'Pool_0.1_ETH', title: '0.1 ETH pool (no operator)' },
           { section: 'upgrades-and-governance' },
           {
             title: "Build recipe that recomputes the pinned app's IPFS hash",
-            url: 'https://github.com/tornado-dao/tornado-ipfs-ui',
+            url: RECIPE,
           },
         ],
       },
@@ -97,8 +98,6 @@ export function tornadoCashAdversaries(upgradeDelay: string) {
           'Whoever breaks elliptic-curve cryptography can test whether a given deposit could fund a withdrawal, since commitments use a Pedersen hash on an elliptic curve.',
         exposureContinued:
           'The test shrinks the candidate set without singling out one deposit. Notes backed up onchain are encrypted with elliptic-curve keys and become readable.',
-        advice:
-          "Keep the note on the user's device and leave the onchain backup off.",
         sources: [
           {
             title: 'Pedersen hash circuit (pinned circomlib fork)',
@@ -112,5 +111,27 @@ export function tornadoCashAdversaries(upgradeDelay: string) {
         ],
       },
     },
+    advice: [
+      {
+        name: 'Load',
+        text: `Turn on NymVPN with the Random profile, an ${adviceLink('IP-hiding route', 'ipHidingRoutes')} for all of the computer's traffic. Open the ${adviceLink('reviewed release', 'appDelivery')}, \`${appCid}\`, through your own IPFS node, or [rebuild it](${RECIPE}) from the reviewed source to the same hash.`,
+        against: ['networkObserver', 'privilegedInsider'],
+      },
+      {
+        name: 'Deposit',
+        text: `${A.largestPool} Deposit several notes at different times, not in one batch, and keep each note on your device with the onchain backup off.`,
+        against: ['chainAnalyst', 'futureAdversary'],
+      },
+      {
+        name: 'Wait',
+        text: A.wait,
+        against: ['chainAnalyst'],
+      },
+      {
+        name: 'Exit',
+        text: `${A.relayer('relayer')} Pick a popular one, connect no wallet and withdraw each note on its own. ${A.freshAddress}`,
+        against: ['publicObserver', 'chainAnalyst', 'networkObserver'],
+      },
+    ],
   })
 }

@@ -16,6 +16,7 @@ import type { RosetteValue } from '~/components/rosette/types'
 import {
   getExposure,
   getExposureNote,
+  getPrivacyAdversaryBlockId,
   getPrivacyAdversaryDescription,
   getPrivacyAdversarySectionRosetteValue,
   PRIVACY_ADVERSARIES_TOOLTIP,
@@ -23,6 +24,7 @@ import {
   PRIVACY_EXPOSURE_LABEL,
   PRIVACY_INTERIOR_LABEL,
 } from '~/pages/privacy/adversaries/privacyAdversaryUi'
+import { ADVICE } from '~/pages/privacy/adviceUi'
 import type { PrivacyReferenceApp } from '~/server/features/privacy/utils/getPrivacyReferenceApp'
 import { cn } from '~/utils/cn'
 import { RiskBanner } from '../../RiskBanner'
@@ -63,6 +65,12 @@ export function PrivacyAdversariesSection({
         <span className="font-medium">at risk</span> stay private only under the
         condition in their note.
       </p>
+      {adversaries.advice && (
+        <p className="mt-2 text-paragraph-15 md:text-paragraph-16">
+          <span className="font-medium">{ADVICE.label}: </span>
+          <CustomLink href={`#${ADVICE.sectionId}`}>{ADVICE.title}</CustomLink>
+        </p>
+      )}
       <div className="flex justify-center">
         <BigPizzaRosette
           values={blocks.map((block) => block.value)}
@@ -99,15 +107,19 @@ function AdversaryBlock({
   fields: PrivacyFieldInfo[]
 }) {
   return (
-    <div className="flex flex-col gap-3">
+    <div
+      id={getPrivacyAdversaryBlockId(cell.id)}
+      className="flex scroll-mt-section-nav-card flex-col gap-3"
+    >
       <RiskBanner
         {...value}
         description={getPrivacyAdversaryDescription(cell)}
         size="large"
       />
+      {/* Until its project has steps under How to stay private. */}
       {cell.advice && (
         <p className="text-paragraph-15 md:text-paragraph-16">
-          <span className="font-medium">Advice: </span>
+          <span className="font-medium">{ADVICE.label}: </span>
           {cell.advice}
         </p>
       )}

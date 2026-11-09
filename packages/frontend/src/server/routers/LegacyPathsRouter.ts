@@ -1,5 +1,6 @@
 import express from 'express'
 import { ETHEREUM_PROJECT_PATH } from '~/pages/ethereum/paths'
+import { ADVICE } from '~/pages/privacy/adviceUi'
 import { isChainProjectSlug } from '~/server/features/chains/getChainProjects'
 
 export function createLegacyPathsRouter() {
@@ -65,6 +66,11 @@ export function createLegacyPathsRouter() {
   // The L2 list replaced the ecosystem pages, which grouped its projects.
   router.get(['/ecosystems', '/ecosystems/*splat'], (_req, res) => {
     res.redirect(301, '/layer2s/summary')
+  })
+
+  // Merged into the methodology's How to stay private section.
+  router.get('/publications/privacy-best-practices', (_, res) => {
+    res.redirect(301, ADVICE.methodologyHref)
   })
 
   router.get('/governance/publications/:id', (req, res) => {

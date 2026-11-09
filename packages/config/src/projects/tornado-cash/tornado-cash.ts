@@ -84,8 +84,9 @@ const stakeLockPeriod = formatSeconds(
 // tornado-dao/classic-ui 17c54dae with the DAO's Docker recipe
 // (tornado-dao/tornado-ipfs-ui d2aa401) on 2026-10-10. Two download fixes, not
 // build inputs: apt from archive.debian.org (Debian 11 is end of life) and kubo
-// v0.29.0 from GitHub with its sha512. A new pin fails this assert until the
-// new release is rebuilt and the reproducibility text is checked.
+// v0.29.0 from GitHub with its sha512, both proposed upstream. With them the
+// recipe reproduced it again on 2026-11-09. A new pin fails this assert until
+// the new release is rebuilt and the reproducibility text is checked.
 const REBUILT_APP_CID =
   'bafybeigduniojgqrz7e4vntsgmovdli3oi7a2pnzzvz2gfxlvj3yqwk75a'
 const appCid = contenthashToCid(
@@ -335,7 +336,7 @@ export const tornadoCash: BaseProject = {
         'The circuits, contracts, app and relayer are open source. Each app release names its commit and a build recipe for its IPFS hash, and rebuilding the current release reproduces it.',
     },
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.fixedAmounts],
-    adversaries: tornadoCashAdversaries(upgradeDelay),
+    adversaries: tornadoCashAdversaries(upgradeDelay, REBUILT_APP_CID),
     riskSummary: readProjectMarkdown('tornado-cash', 'riskSummary', {
       upgradeDelay,
     }),

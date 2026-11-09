@@ -1479,6 +1479,7 @@ export interface PrivacyAdversaryAssessment {
    * risk, or a field is). Omit when nothing the user does changes the result.
    * Positive instructions only (say what to do), and only what this adversary
    * adds over the public observer: advice is not repeated across cells.
+   * Being replaced by `advice` steps, see PrivacyAdversariesConfig.
    */
   advice?: string
   /**
@@ -1521,11 +1522,27 @@ export interface PrivacyPromise {
   text: string
 }
 
+/**
+ * One step of our advice for the reference app, shown under How to stay
+ * private. The steps run in the order the user takes them and are the single
+ * home of the advice. The adversaries section links them once.
+ */
+export interface PrivacyAdviceStep {
+  /** One or two words, e.g. "Exit". Cells name the step by it. */
+  name: string
+  /** What the user does, imperative markdown, three sentences at most. */
+  text: string
+  /** The adversaries this step keeps the promised field from. Never a red cell. */
+  against: PrivacyAdversaryId[]
+}
+
 export interface PrivacyAdversariesConfig {
   promise: PrivacyPromise
   /** Overrides the default field description for this project, e.g. when linkage means something other than a transfer link. */
   fieldDescriptions?: Partial<Record<PrivacyField, string>>
   cells: Record<PrivacyAdversaryId, PrivacyAdversaryAssessment>
+  /** Replaces cell `advice`: a project has one or the other, until every project has steps. */
+  advice?: PrivacyAdviceStep[]
 }
 
 /** A field this adversary learns more about than the public observer. */
@@ -1556,6 +1573,7 @@ export interface ProjectPrivacyAdversaries {
   adversaries: PrivacyAdversary[]
   fields: PrivacyFieldInfo[]
   cells: Record<PrivacyAdversaryId, PrivacyAdversaryCell>
+  advice?: PrivacyAdviceStep[]
 }
 
 // #endregion

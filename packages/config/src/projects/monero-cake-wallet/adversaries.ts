@@ -1,4 +1,6 @@
 import {
+  ADVICE_SNIPPETS as A,
+  adviceLink,
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
@@ -18,8 +20,6 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
       exposureShort:
         'The Monero transactions between the deposit into a swap service and the payout from its hot wallet hide sender, recipient and amount.',
       exposureContinued: S.entryExitPublic('Both Ethereum transfers'),
-      advice:
-        'Exit to a new in-app Ethereum wallet made with Create New Recovery Phrase.',
       interior: {
         sender: 'private',
         recipient: 'private',
@@ -59,7 +59,6 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
       sentiment: 'good',
       exposureShort:
         'Only amount and timing can pair a deposit into a swap service with a payout from a hot wallet serving every asset the service trades.',
-      advice: `${S.commonAmounts} ${S.freshExit}`,
       interior: {
         sender: 'private',
         recipient: 'private',
@@ -77,8 +76,6 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
         'Over an IP-hiding route, Moralis, Etherscan and PublicNode get each Ethereum wallet in its own session, so none of them sees both legs.',
       exposureContinued:
         "Built-in Tor alone lets token logos out directly, and Cake shows priced tokens anyone sends, so Moralis can see the user's IP beside the wallet.",
-      advice:
-        'Run Cake with all traffic through an IP-hiding route. Delete the deposit wallet from Cake before the exit.',
       interior: {
         sender: 'private',
         recipient: 'private',
@@ -90,7 +87,6 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
         },
       },
       sources: [
-        S.ipHidingRoutes,
         {
           title: 'Built-in Tor is off unless the user enables it',
           url: CAKE + 'lib/store/settings_store.dart#L1590',
@@ -175,4 +171,26 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
       ],
     },
   },
+  advice: [
+    {
+      name: 'Set up',
+      text: A.ipHidingRoute('Cake'),
+      against: ['networkObserver'],
+    },
+    {
+      name: 'Deposit',
+      text: `Exchange from your Ethereum wallet into XMR. ${A.commonAmounts}`,
+      against: ['chainAnalyst'],
+    },
+    {
+      name: 'Wait',
+      text: A.wait,
+      against: ['chainAnalyst'],
+    },
+    {
+      name: 'Exit',
+      text: `Delete the deposit wallet from Cake. Then exchange the XMR into a new Ethereum wallet made with Create New Recovery Phrase, a ${adviceLink('fresh address', 'freshAddress')} with its own seed.`,
+      against: ['publicObserver', 'chainAnalyst', 'networkObserver'],
+    },
+  ],
 })
