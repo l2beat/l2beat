@@ -53,6 +53,9 @@ export const l2ArchivedColumns = [
   columnHelper.display({
     header: 'Purpose',
     cell: (ctx) => ctx.row.original.purposes.join(', '),
+    meta: {
+      cellClassName: 'whitespace-normal',
+    },
   }),
   columnHelper.accessor('totalTvs', {
     id: 'total',
