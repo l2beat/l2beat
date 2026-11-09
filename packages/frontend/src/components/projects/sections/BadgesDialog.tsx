@@ -110,7 +110,9 @@ export function BadgesDialog({
           <DialogTitle>Badge details</DialogTitle>
           <DialogDescription>Badge details dialog</DialogDescription>
         </DialogHeader>
-        <div className="flex min-h-0 flex-1 flex-col">
+        {/* Scrolls only when the window is too short for the projects'
+            minimum height. */}
+        <div className="flex min-h-0 flex-1 flex-col overflow-y-auto">
           <BadgesDialogBody
             data={body}
             isLoading={isLoading}
@@ -241,10 +243,11 @@ function BadgesDialogBody({
         title={`Projects (${data.projectCount})`}
         className={cn(
           'flex flex-col',
-          // The project list scrolls on its own on desktop; in the drawer
+          // The project list scrolls on its own on desktop, keeping at
+          // least a row of cards in a short window; in the drawer
           // it fills at least a screen, so a shorter list never pulls the
           // badges above it up under the pointer.
-          mobile ? 'min-h-[100cqh]' : 'min-h-0 flex-1 pb-0 md:pb-0',
+          mobile ? 'min-h-[100cqh]' : 'min-h-48 flex-1 pb-0 md:pb-0',
         )}
         contentClassName={cn(
           !mobile &&
