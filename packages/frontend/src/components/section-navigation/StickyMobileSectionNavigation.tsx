@@ -92,7 +92,8 @@ function fillAboveWhileStuck(bar: HTMLElement) {
       // A bar hidden at this width has no box and is never stuck.
       fill.hidden = !(height > 0 && entry.intersectionRatio < 1 && top < 1)
     },
-    { rootMargin: '-1px 0px 0px 0px', threshold: 1 },
+    // 0 catches the bar disappearing when the window widens past `lg`.
+    { rootMargin: '-1px 0px 0px 0px', threshold: [0, 1] },
   )
   intersectionObserver.observe(bar)
 
