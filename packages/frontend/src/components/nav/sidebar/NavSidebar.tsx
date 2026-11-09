@@ -1,9 +1,6 @@
 import { Fragment, useMemo, useState } from 'react'
-import { env } from '~/env'
 import { usePathname } from '~/hooks/usePathname'
 import { ChevronIcon } from '~/icons/Chevron'
-import { GARDEN_PATH } from '~/pages/garden/paths'
-import { CropsMiniBanner } from '~/pages/home/components/CropsMiniBanner'
 import { SoonBadge } from '~/pages/home/components/SoonBadge'
 import { cn } from '~/utils/cn'
 import { isLinkActive } from '~/utils/isLinkActive'
@@ -42,7 +39,6 @@ interface Props {
 }
 
 export function NavSidebar({ groups, logoLink, className }: Props) {
-  const pathname = usePathname()
   const { setOpenMobile } = useSidebar()
   const closeMobileSidebar = () => setOpenMobile(false)
   return (
@@ -53,7 +49,11 @@ export function NavSidebar({ groups, logoLink, className }: Props) {
           fixed bar at the top; the full-screen sheet alone keeps the navbar's. */}
       <SidebarHeader className="max-lg:sticky max-lg:top-0 max-lg:h-16 max-lg:bg-background max-lg:px-3.5 max-lg:pt-0 max-lg:pb-px">
         <div className="flex h-[38px] flex-row items-center justify-between max-lg:h-full">
-          <a href={logoLink} onClick={closeMobileSidebar}>
+          <a
+            href={logoLink}
+            onClick={closeMobileSidebar}
+            aria-label="Go to home"
+          >
             <Logo className="block h-8 w-auto" />
           </a>
           <div className="flex flex-row items-center gap-4 max-lg:gap-2 md:max-lg:gap-3">
@@ -65,14 +65,6 @@ export function NavSidebar({ groups, logoLink, className }: Props) {
         </div>
       </SidebarHeader>
       <SidebarContent>
-        {env.CLIENT_SIDE_GARDEN_ENABLED && (
-          <SidebarGroup className="mb-2">
-            <CropsMiniBanner
-              isActive={pathname.startsWith(GARDEN_PATH)}
-              onClick={closeMobileSidebar}
-            />
-          </SidebarGroup>
-        )}
         {groups
           .filter((group) => group.section !== 'more')
           .map((group) => (

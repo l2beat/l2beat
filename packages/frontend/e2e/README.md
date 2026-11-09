@@ -18,8 +18,10 @@ slowest one. That is about 1.5 min now.
 
 - `../playwright.config.ts` sorts the tests into projects:
   - `chromium`: the functional tests, everything outside a `*-perf` folder.
-  - `perf`: the ratchets in `resize-perf`, which count how much work a page
-    does, in `token-graph-perf`, which count what dragging and pinching the
+  - `perf`: the ratchets in `resize-perf` and `hydration-perf`, which count
+    how much work a page does while resizing and while loading, in
+    `nav-perf`, which count the JS chunks a page loads when someone navigates
+    to it, in `token-graph-perf`, which count what dragging and pinching the
     token graph costs on a phone and check that a pinch leaves it sharp, and
     in `blobs-webkit-perf`, which runs in WebKit to catch what only Safari
     slows down on. Tests running beside them push those counts up, so they

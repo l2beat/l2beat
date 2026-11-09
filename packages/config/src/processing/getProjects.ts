@@ -81,6 +81,7 @@ function buildProjects(): BaseProject[] {
     .map(withAuditCoverage)
     .map(withGarden)
     .map(withVersions)
+    .map(withPrivacyScalingProjects)
 }
 
 function withDiscoveryUpdates(project: BaseProject): BaseProject {
@@ -140,6 +141,30 @@ function withVersions(
   }
 }
 
+function withPrivacyScalingProjects(
+  project: BaseProject,
+  _: number,
+  projects: BaseProject[],
+): BaseProject {
+  if (!project.privacyInfo) {
+    return project
+  }
+  const { trackedOn, runsOn = [] } = project.privacyInfo
+  const trackedOnScaling = trackedOn.flatMap((chain) => {
+    const chainProject = projects.find((p) => p.chainConfig?.name === chain)
+    return chainProject?.scalingInfo && chainProject.id !== project.id
+      ? [chainProject.id]
+      : []
+  })
+  return {
+    ...project,
+    privacyInfo: {
+      ...project.privacyInfo,
+      scalingProjects: [...trackedOnScaling, ...runsOn],
+    },
+  }
+}
+
 function layer2Or3ToProject(p: ScalingProject): BaseProject {
   const tvsConfig = getTvsConfig(p)
 
@@ -160,8 +185,6 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
 
     // data
     colors: p.colors,
-    ecosystemColors: ecosystems.find((e) => e.id === p.ecosystemInfo?.id)
-      ?.colors,
     statuses: {
       yellowWarning: p.display.headerWarning,
       redWarning: getEoaUpgradeRedWarning(p.id, p.display.redWarning),

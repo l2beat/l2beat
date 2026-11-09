@@ -1,5 +1,4 @@
 import { formatNumber } from '@l2beat/shared-pure'
-import { useQuery } from '@tanstack/react-query'
 import { type ReactNode, useMemo, useState } from 'react'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import {
@@ -7,6 +6,7 @@ import {
   type ChartRangeOptionValue,
 } from '~/components/core/chart/ChartRangeControls'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import {
   Tooltip,
@@ -88,8 +88,9 @@ interface ChartProps {
 function YieldChart({ projectSeries, defaultRange }: ChartProps) {
   const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
-  const { data, isLoading } = useQuery(
-    trpc.defi.liquidStakingYieldChart.queryOptions({ range }),
+  const { data, isLoading, isPlaceholderData } = useChartQuery(
+    trpc.defi.liquidStakingYieldChart,
+    { range },
   )
 
   const series = useMemo(
@@ -127,11 +128,14 @@ function YieldChart({ projectSeries, defaultRange }: ChartProps) {
       range={range}
       setRange={setRange}
       timeRange={getChartTimeRangeFromData(chartData)}
+      isPlaceholderData={isPlaceholderData}
     >
       <LiquidStakingLineChart
         series={series}
         data={chartData}
         isLoading={isLoading}
+        isPlaceholderData={isPlaceholderData}
+        ariaLabel="Rate-implied yield"
         formatYAxisLabel={(value) => formatYield(value, 1)}
         formatTooltipValue={(value) => formatYield(value, 2)}
         background={ETH_STAKED}
@@ -143,8 +147,9 @@ function YieldChart({ projectSeries, defaultRange }: ChartProps) {
 function CostOfExitChart({ projectSeries, defaultRange }: ChartProps) {
   const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
-  const { data, isLoading } = useQuery(
-    trpc.defi.liquidStakingCostOfExitChart.queryOptions({ range }),
+  const { data, isLoading, isPlaceholderData } = useChartQuery(
+    trpc.defi.liquidStakingCostOfExitChart,
+    { range },
   )
 
   const chartData = useMemo<LiquidStakingChartData | undefined>(
@@ -180,11 +185,14 @@ function CostOfExitChart({ projectSeries, defaultRange }: ChartProps) {
         chartData,
         COST_OF_EXIT_METRIC.dailyBuckets ? { bucket: 'day' } : undefined,
       )}
+      isPlaceholderData={isPlaceholderData}
     >
       <LiquidStakingLineChart
         series={projectSeries}
         data={chartData}
         isLoading={isLoading}
+        isPlaceholderData={isPlaceholderData}
+        ariaLabel="Cost of exit"
         formatYAxisLabel={(value) => `${value.toFixed(0)}d`}
         formatTooltipValue={formatDays}
         isEstimated={(timestamp, key) => estimated.has(`${timestamp}:${key}`)}
@@ -201,6 +209,7 @@ function ChartCard({
   range,
   setRange,
   timeRange,
+  isPlaceholderData,
   children,
 }: {
   name: string
@@ -210,6 +219,7 @@ function ChartCard({
   range: ChartRange
   setRange: (range: ChartRange) => void
   timeRange: [number, number] | undefined
+  isPlaceholderData: boolean
   children: ReactNode
 }) {
   // The date range changes width with the range and while loading, so it gets
@@ -237,7 +247,10 @@ function ChartCard({
         />
       </ChartControlsWrapper>
       <div className="mt-1 mb-4 flex h-5 items-center lg:h-6">
-        <ChartTimeRange timeRange={timeRange} />
+        <ChartTimeRange
+          timeRange={timeRange}
+          isPlaceholderData={isPlaceholderData}
+        />
       </div>
       {children}
     </PrimaryCard>

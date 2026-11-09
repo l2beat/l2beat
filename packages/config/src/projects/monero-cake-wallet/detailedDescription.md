@@ -11,7 +11,7 @@ Shielded pools such as Tornado Cash, Privacy Pools or Zcash's shielded pool prov
 ### Flow
 
 1. **Quote.** EVM asset to XMR: the app polls every enabled service and takes the best rate unless the user picks one.
-2. **Ethereum to the service.** The app sends the amount, the Monero payout address and Cake's API key, for some providers with a markup. The Ethereum wallet address goes along as refund address. The service returns a deposit address it controls. The deposit is a plain, public transfer from the user's wallet. It goes first to the Blink Labs private mempool, on by default, then to the RPC.
+2. **Ethereum to the service.** The app sends the amount, the Monero payout address and Cake's API key, for some providers with a markup. The Ethereum wallet address goes along as refund address. The service returns a deposit address it controls. The deposit is a plain, public transfer from the user's wallet. It goes to the Blink Labs private mempool, on by default, and to the RPC only if Blink fails.
 3. **Into Monero.** The service sends XMR to the payout address. The transaction hides sender, recipient and amount.
 4. **Inside Monero.** The user can self-transfer the XMR any number of times. Outputs unlock after ten blocks.
 5. **Back to Ethereum.** From the Monero wallet the user picks XMR to the Ethereum asset. The app sends the Ethereum exit address and, as refund address, a subaddress not yet used for a swap. The service returns a Monero deposit address, the wallet pays it, and the service pays the exit address from its hot wallet.
@@ -20,7 +20,9 @@ Shielded pools such as Tornado Cash, Privacy Pools or Zcash's shielded pool prov
 
 An EVM wallet in Cake has one address. It is sent as refund address on entry, and an exit to the same wallet pays the very address that deposited. On entry, picking an in-app Monero wallet pays to its primary address every time, so a service can tie a user's entries together.
 
-[Built-in Tor](https://docs.cakewallet.com/features/privacy-and-security/built-in-tor) is off by default. Without it, the swap services, Blink, Etherscan, the nodes, Cake's price API and Moralis see the user's IP. Moralis receives every Ethereum wallet the app opens, and the app offers no switch for it. With Tor on, every call shares one circuit for up to ten minutes, so each leg needs its own app session. Keeping both Ethereum wallets in the app links them for Moralis whenever both are opened close together.
+### Network
+
+[Built-in Tor](https://docs.cakewallet.com/features/privacy-and-security/built-in-tor) is off by default. Without it, the swap services, Blink, Etherscan, the nodes, Cake's price API and Moralis see the user's IP. A custom node replaces the defaults, PublicNode for Ethereum and Cake's own for Monero, but Moralis, Etherscan and the price API stay. With Tor on, every call shares one circuit for up to ten minutes, so each leg needs its own app session. Two requests skip it: the WalletConnect relay and token logos. An IP-hiding route that carries all of the app's traffic covers them too.
 
 ### Swap services
 

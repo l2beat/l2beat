@@ -82,10 +82,71 @@ export interface InteropEventStatsRecord {
   unsupported: number
 }
 
-export interface InteropEventSupportBreakdownRecord {
-  chain: string
-  isSupported: boolean
-  count: number
+export interface InteropEventCounterpartVolumeRecord {
+  plugin: string
+  counterpartChain: string
+  unmatchedEvents: number
+  unmatchedValueUsd: number
+  // Unmatched events with an amount and a price for their token
+  pricedUnmatchedEvents: number
+  lastTimestamp: UnixTime
+}
+
+// Arg names plugins use for the captured side's token and amount, by
+// direction: an event with `$dstChain` was captured on the source side, one
+// with `$srcChain` on the destination side
+const OUTGOING_TOKEN_ARGS = [
+  'tokenAddress',
+  'token',
+  'srcTokenAddress',
+  'inputToken',
+  'tokenIn',
+  'fromToken',
+  'giveTokenAddress',
+  'transferTokenAddress',
+]
+const OUTGOING_AMOUNT_ARGS = [
+  'amount',
+  'value',
+  'srcAmount',
+  'inputAmount',
+  'amountSentLD',
+  'amountIn',
+  'fromAmount',
+  'giveAmount',
+  'transferAmount',
+]
+const INCOMING_TOKEN_ARGS = [
+  'tokenAddress',
+  'token',
+  'dstTokenAddress',
+  'outputToken',
+  'tokenOut',
+  'toToken',
+  'giveTokenAddress',
+  'transferTokenAddress',
+]
+const INCOMING_AMOUNT_ARGS = [
+  'amount',
+  'value',
+  'dstAmount',
+  'outputAmount',
+  'amountReceivedLD',
+  'fillAmount',
+  'giveAmount',
+  'transferAmount',
+]
+
+// Flags on sends a plugin leaves unmatched because CCTP carries the tokens, so
+// their volume is counted under the CCTP plugins
+const CCTP_BACKED_ARGS = ['isCctpBacked', 'cctp']
+
+function coalesceArgs(keys: string[]): string {
+  return `coalesce(${keys.map((key) => `args ->> '${key}'`).join(', ')})`
+}
+
+function argsByDirection(outgoing: string[], incoming: string[]): string {
+  return `CASE WHEN args ->> '$dstChain' IS NOT NULL THEN ${coalesceArgs(outgoing)} ELSE ${coalesceArgs(incoming)} END`
 }
 
 export class InteropEventRepository extends BaseRepository {
@@ -204,34 +265,91 @@ export class InteropEventRepository extends BaseRepository {
     }))
   }
 
-  async getSupportBreakdownByChainArg(
-    type: string,
-    chainArg: '$dstChain' | '$srcChain',
-  ): Promise<InteropEventSupportBreakdownRecord[]> {
-    const chainExpression = sql<string>`COALESCE(NULLIF(args ->> ${chainArg}, ''), '(unknown)')`
+  /**
+   * Events no plugin turned into a transfer or message, by plugin and the
+   * chain on their other side (`$srcChain` or `$dstChain`), with an estimated
+   * USD value. Event args have no fixed shape,
+   * so token and amount are read from the fields plugins use, and priced with
+   * each token's USD per raw unit across the transfers valued since
+   * `pricesFrom`. Like transfer financials, a value above `maxValueUsd` is
+   * left out.
+   */
+  async getUnmatchedCounterpartVolume(
+    from: UnixTime,
+    pricesFrom: UnixTime,
+    maxValueUsd: number,
+  ): Promise<InteropEventCounterpartVolumeRecord[]> {
+    const token = sql.raw(
+      `right(lower(${argsByDirection(OUTGOING_TOKEN_ARGS, INCOMING_TOKEN_ARGS)}), 40)`,
+    )
+    // Amounts are stored as `BigInt(<digits>)` or plain digits, anything else
+    // stays unpriced
+    const rawAmount = argsByDirection(
+      OUTGOING_AMOUNT_ARGS,
+      INCOMING_AMOUNT_ARGS,
+    )
+    const amount = sql.raw(
+      `coalesce(substring(${rawAmount} from '^BigInt\\((\\d+)\\)$'), substring(${rawAmount} from '^(\\d+)$'))::numeric`,
+    )
+    const cctpBacked = sql.raw(coalesceArgs(CCTP_BACKED_ARGS))
+    const result = await sql<{
+      plugin: string
+      counterpartChain: string
+      unmatchedEvents: number
+      unmatchedValueUsd: number | null
+      pricedUnmatchedEvents: number
+      lastTimestamp: Date
+    }>`
+      WITH prices AS (
+        SELECT chain, token, sum(usd) / nullif(sum(raw), 0) AS "perRaw"
+        FROM (
+          SELECT "srcChain" AS chain, right(lower("srcTokenAddress"), 40) AS token,
+            "srcValueUsd" AS usd, "srcRawAmount"::numeric AS raw
+          FROM "InteropTransfer"
+          WHERE timestamp > ${UnixTime.toDate(pricesFrom)} AND "srcValueUsd" > 0
+          UNION ALL
+          SELECT "dstChain", right(lower("dstTokenAddress"), 40),
+            "dstValueUsd", "dstRawAmount"::numeric
+          FROM "InteropTransfer"
+          WHERE timestamp > ${UnixTime.toDate(pricesFrom)} AND "dstValueUsd" > 0
+        ) sides
+        GROUP BY chain, token
+      ),
+      events AS MATERIALIZED (
+        SELECT plugin, chain, timestamp,
+          coalesce(args ->> '$dstChain', args ->> '$srcChain') AS counterpart,
+          ${token} AS token,
+          ${amount} AS amount
+        FROM "InteropEvent"
+        WHERE timestamp > ${UnixTime.toDate(from)}
+          AND NOT matched
+          AND (args ->> '$dstChain' IS NOT NULL OR args ->> '$srcChain' IS NOT NULL)
+          AND ${cctpBacked} IS DISTINCT FROM 'true'
+      ),
+      valued AS (
+        SELECT events.plugin, events.counterpart, events.timestamp,
+          events.amount * prices."perRaw" AS value
+        FROM events
+        LEFT JOIN prices ON prices.chain = events.chain AND prices.token = events.token
+      )
+      SELECT
+        plugin,
+        counterpart AS "counterpartChain",
+        count(*)::int AS "unmatchedEvents",
+        sum(value) FILTER (WHERE value <= ${maxValueUsd})::float8 AS "unmatchedValueUsd",
+        (count(value) FILTER (WHERE value <= ${maxValueUsd}))::int AS "pricedUnmatchedEvents",
+        max(timestamp) AS "lastTimestamp"
+      FROM valued
+      GROUP BY plugin, counterpart
+    `.execute(this.db)
 
-    const source = this.db
-      .selectFrom('InteropEvent')
-      .where('type', '=', type)
-      .select([chainExpression.as('chain'), 'unsupported'])
-      .as('source')
-
-    const rows = await this.db
-      .selectFrom(source)
-      .select((eb) => [
-        'chain',
-        sql<boolean>`NOT unsupported`.as('isSupported'),
-        eb.fn.countAll().as('count'),
-      ])
-      .groupBy(['chain', 'unsupported'])
-      .orderBy('count', 'desc')
-      .orderBy('chain', 'asc')
-      .execute()
-
-    return rows.map((row) => ({
-      chain: row.chain,
-      isSupported: Boolean(row.isSupported),
-      count: Number(row.count),
+    return result.rows.map((row) => ({
+      plugin: row.plugin,
+      counterpartChain: row.counterpartChain,
+      unmatchedEvents: row.unmatchedEvents,
+      unmatchedValueUsd: row.unmatchedValueUsd ?? 0,
+      pricedUnmatchedEvents: row.pricedUnmatchedEvents,
+      lastTimestamp: UnixTime.fromDate(row.lastTimestamp),
     }))
   }
 

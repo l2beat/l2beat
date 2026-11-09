@@ -60,7 +60,7 @@ export function BigPizzaRosette(props: BigPizzaRosetteProps) {
     <RosetteTooltipContextProvider>
       <Tooltip>
         <div className={cn('relative p-12 pb-7', props.className)}>
-          <TooltipTrigger>
+          <TooltipTrigger aria-label="Risk summary">
             <PizzaRosetteIcon
               values={props.values}
               isUnderReview={isUnderReview}

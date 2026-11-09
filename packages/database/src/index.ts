@@ -24,7 +24,10 @@ export type {
   AggregatedInteropTransferRecord,
   AggregatedInteropTransferSeriesRecord,
 } from './repositories/AggregatedInteropTransferRepository'
-export type { AggregatedL2CostRecord } from './repositories/AggregatedL2CostRepository'
+export type {
+  AggregatedL2CostRecord,
+  SummedL2CostRecord,
+} from './repositories/AggregatedL2CostRepository'
 export type { AggregatedLivenessRecord } from './repositories/AggregatedLivenessRepository'
 export type { AnomalyRecord } from './repositories/AnomaliesRepository'
 export type { AnomalyStatsRecord } from './repositories/AnomalyStatsRepository'
@@ -42,6 +45,7 @@ export type {
 export type { CropAttestationRecord } from './repositories/CropAttestationRepository'
 export type { CurrentPriceRecord } from './repositories/CurrentPriceRepository'
 export type {
+  BucketedDataAvailabilityRecord,
   DataAvailabilityRecord,
   ProjectsSummedDataAvailabilityRecord,
 } from './repositories/DataAvailabilityRepository'
@@ -71,9 +75,9 @@ export type {
 export type { InteropConfigRecord } from './repositories/InteropConfigRepository'
 export type {
   InteropEventContext,
+  InteropEventCounterpartVolumeRecord,
   InteropEventRecord,
   InteropEventStatsRecord,
-  InteropEventSupportBreakdownRecord,
 } from './repositories/InteropEventRepository'
 export type {
   InteropMessageDetailedStatsRecord,
@@ -99,7 +103,9 @@ export {
   type InteropTransferDeployedTokenPairStatsByToken,
   type InteropTransferFinancialsFilter,
   type InteropTransferFinancialsStats,
+  type InteropTransferPluginVolumeRecord,
   type InteropTransferRecord,
+  type InteropTransferSupplyChangeRecord,
   type InteropTransfersDetailedStatsRecord,
   type InteropTransfersStatsRecord,
   type InteropTransferTimeRange,

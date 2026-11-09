@@ -74,7 +74,7 @@
     },
     "isPermanentRollup": {
       "description": "true means that the DA mode cannot be changed to Validium in the future. compliant DAValidator pairs for the permanent rollup mode are defined/enforced by the RollupDAManager contract.",
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "storage",
         "slot": 57,
@@ -82,7 +82,7 @@
       }
     },
     "isPermanentRollupString": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "storage",
         "slot": 57,

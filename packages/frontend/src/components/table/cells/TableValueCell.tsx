@@ -22,8 +22,8 @@ interface Props {
   href?: string
   emptyMode?: 'em-dash' | 'no-info' | 'n/a' | 'no-data'
   secondLineClassName?: string
-  /** Tables link the cell to a page with the details, so phones skip the tooltip. */
-  tooltipOnMobile?: boolean
+  /** Tables link the cell to a page with the details, so touch screens skip the tooltip. */
+  tooltipOnTouch?: boolean
 }
 
 export function TableValueCell({
@@ -31,7 +31,7 @@ export function TableValueCell({
   href,
   emptyMode = 'no-info',
   secondLineClassName,
-  tooltipOnMobile = false,
+  tooltipOnTouch = false,
 }: Props) {
   if (!value) {
     if (emptyMode === 'em-dash') {
@@ -86,7 +86,7 @@ export function TableValueCell({
     return (
       <Tooltip contentInHtml>
         <TooltipTrigger
-          disabledOnMobile={!tooltipOnMobile}
+          disabledOnTouch={!tooltipOnTouch}
           className="h-[inherit] min-h-fit"
         >
           {trigger}

@@ -1,3 +1,93 @@
+Generated with discovered.json: 0xbfa456d584b3353a7fc3a4c1318fffbc8e648a7f
+
+# Diff at Thu, 05 Nov 2026 10:34:41 GMT:
+
+- id: 9d322979
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ed3b78ee5d7973829dff175055ab7e54cc7df91 block: 1792144404
+- current timestamp: 1793874793
+
+## Description
+
+Stargate deregistered three pools from its messaging OApps: the USDT pools on Arbitrum (TokenMessagingArbitrum pool 1) and Optimism (TokenMessagingOptimism pool 1), and the METIS pool on Ethereum (CreditMessagingMintableBurnable pool 16). These routes no longer bridge through Stargate. The two StargatePoolMigratable contracts and the planner permissions on them left the discovery.
+
+## Watched changes
+
+```diff
+    contract TokenMessagingArbitrum (arb1:0x19cFCE47eD54a88614648DC3f19A5980097007dD) [stargate/TokenMessaging] {
+    +++ description: A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately (taxi) for higher fees.
+      values.pools.1:
+-        "arb1:0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0"
++        "arb1:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract StargatePoolMigratable (arb1:0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0) [stargate/StargatePoolMigratable]
+    +++ description: None
+```
+
+```diff
+    EOA (arb1:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"arb1:0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0","description":"pause the pool and set deficit offsets (affects crosschain liquidity and fees).","role":".planner"}
+    }
+```
+
+```diff
+    contract CreditMessagingMintableBurnable (eth:0x9b4D17b45d60B8173a5904b85a7bAaeC291E9173) [stargate/CreditMessagingMintableBurnable] {
+    +++ description: A LayerZero OApp owned by Stargate that is used for the virtual crosschain accounting of available tokens to the local pools. A local pool thus has a record of how many tokens are available when bridging to another remote pool. The permissioned Planner role can move these credits across chains, the owner can increase/decrease them arbitrarily.
+      values.pools.16:
+-        "eth:0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract LayerZero Multisig (eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478) [layerzero/OneSigMultisig] {
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+      values.$members.7:
++        "eth:0xD144dad189f060Bf6fda615CcA60479329Dd9e35"
+      values.totalSigners:
+-        7
++        8
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract StargatePoolMigratable (oeth:0x19cFCE47eD54a88614648DC3f19A5980097007dD) [stargate/StargatePoolMigratable]
+    +++ description: None
+```
+
+```diff
+    EOA (oeth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"interact","from":"oeth:0x19cFCE47eD54a88614648DC3f19A5980097007dD","description":"pause the pool and set deficit offsets (affects crosschain liquidity and fees).","role":".planner"}
+    }
+```
+
+```diff
+    contract TokenMessagingOptimism (oeth:0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6) [stargate/TokenMessaging] {
+    +++ description: A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately (taxi) for higher fees.
+      values.pools.1:
+-        "oeth:0x19cFCE47eD54a88614648DC3f19A5980097007dD"
++        "oeth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+## Source code changes
+
+```diff
+.../dev/null                                       | 4984 --------------------
+ .../dev/null                                       | 4984 --------------------
+ .../StargatePoolMigratable.sol}                    |    0
+ 3 files changed, 9968 deletions(-)
+```
+
 Generated with discovered.json: 0x9811ca322b1fec68f7d624b261d007987be2481b
 
 # Diff at Fri, 16 Oct 2026 10:36:26 GMT:

@@ -86,11 +86,13 @@ export class Application {
       createDaBeatModule(deps),
       createCropAttestationsModule(deps),
       createAnomaliesModule(deps),
-      createBlockSyncModule(deps),
 
       interopModule,
       appStateModule,
       backofficeModule,
+
+      // Last: other modules register block processors and load their state first
+      createBlockSyncModule(deps),
     ]
 
     const apiServer = new ApiServer(

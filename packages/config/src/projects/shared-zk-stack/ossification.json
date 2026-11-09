@@ -159,6 +159,13 @@
       "transaction": "0x65faba3f9c7fa39584ae60bcae75ae8c5b1fcff803ba058223edf5006636e728",
       "updateId": "ee77660f",
       "reason": "Rotated the SecurityCouncil (0x66E4…f410 -> 0x5919…9035) and EmergencyUpgradeBoard (0xECE8…e3f6 -> 0xF73a…a111) contracts trusted by the ProtocolUpgradeHandler to approve and execute protocol upgrades."
+    },
+    {
+      "timestamp": 1793700599,
+      "type": "state",
+      "contract": "eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076",
+      "transaction": "0x0c1e348271747cd4b44e7328deb9b954ed722c819f1348c8096f1f8dabadbb23",
+      "reason": "ZIP-18 (v31) follow-up: recorded Era's historical migration interval on the Era Gateway (batches 501260-505960, Gateway batches 440-2746), which the MessageRoot uses to validate proofs of those batches, and unpaused chain migrations in the L1ChainAssetHandler. One minute after the implementation upgrades of update 3fdb1623."
     }
   ]
 }

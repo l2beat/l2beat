@@ -1,5 +1,5 @@
-import { UnixTime } from '@l2beat/shared-pure'
-import type { Insertable, Selectable } from 'kysely'
+import { assert, UnixTime } from '@l2beat/shared-pure'
+import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { DataAvailability } from '../kysely/generated/types'
 
@@ -13,6 +13,14 @@ export interface DataAvailabilityRecord {
 
 export interface ProjectsSummedDataAvailabilityRecord {
   timestamp: UnixTime
+  daLayer: string
+  totalSize: bigint
+}
+
+export interface BucketedDataAvailabilityRecord {
+  bucketStart: UnixTime
+  latestTimestamp: UnixTime
+  projectId: string
   daLayer: string
   totalSize: bigint
 }
@@ -274,6 +282,59 @@ export class DataAvailabilityRepository extends BaseRepository {
         totalSize: row.totalSize.toString(),
       }),
     )
+  }
+
+  // Sums each project's records per bucket in SQL, so a long range returns one
+  // row per project and bucket instead of one per project, configuration and
+  // hour (737k rows for Ethereum on MAX). Buckets start at multiples of
+  // bucketSeconds from the Unix epoch, the same as UnixTime.toStartOf.
+  async getSummedByProjectAndBucket(
+    daLayers: string[],
+    timeRange: [UnixTime | null, UnixTime],
+    bucketSeconds: number,
+    excludedProjectIds?: string[],
+  ): Promise<BucketedDataAvailabilityRecord[]> {
+    assert(Number.isSafeInteger(bucketSeconds), 'bucketSeconds not an integer')
+    assert(bucketSeconds > 0, 'bucketSeconds not positive')
+    if (daLayers.length === 0) return []
+    const [from, to] = timeRange
+    // A literal, not a parameter: Postgres matches the SELECT and GROUP BY
+    // expressions by text, and $1 and $5 would be two different expressions.
+    const bucketStart = sql<Date>`date_bin(make_interval(secs => ${sql.lit(bucketSeconds)}), "timestamp", timestamp '1970-01-01')`
+    let query = this.db
+      .selectFrom('DataAvailability')
+      .select([
+        bucketStart.as('bucketStart'),
+        (eb) => eb.fn.max('timestamp').as('latestTimestamp'),
+        'projectId',
+        'daLayer',
+        (eb) => eb.fn.sum('totalSize').as('totalSize'),
+      ])
+      .where('daLayer', 'in', daLayers)
+      .where('timestamp', '<', UnixTime.toDate(to))
+      .groupBy([bucketStart, 'projectId', 'daLayer'])
+      .orderBy('bucketStart', 'asc')
+      // Callers break ties between equal sizes by row order (chart legend and
+      // colors), so it must not depend on the hash aggregate's output order.
+      .orderBy('projectId', 'asc')
+
+    if (from !== null) {
+      query = query.where('timestamp', '>=', UnixTime.toDate(from))
+    }
+
+    if (excludedProjectIds && excludedProjectIds.length > 0) {
+      query = query.where('projectId', 'not in', excludedProjectIds)
+    }
+
+    const rows = await query.execute()
+
+    return rows.map((row) => ({
+      bucketStart: UnixTime.fromDate(row.bucketStart),
+      latestTimestamp: UnixTime.fromDate(row.latestTimestamp),
+      projectId: row.projectId,
+      daLayer: row.daLayer,
+      totalSize: BigInt(row.totalSize.toString()),
+    }))
   }
 
   async getByDaLayersAndTimeRange(

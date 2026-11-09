@@ -1,12 +1,12 @@
 import type { Node, State } from '../State'
 import { NODE_WIDTH } from '../utils/constants'
+import { flowLayout } from '../utils/flowLayout'
 import {
   getGraphProjection,
   hideItems,
   mapGraphItems,
 } from '../utils/graphProjection'
 import { reconcileCompressedRows } from '../utils/rows'
-import { stackAutoLayout } from '../utils/stackLayout'
 import {
   type NodeLocations,
   recallNodeLayout,
@@ -125,6 +125,7 @@ export function loadNodes(
     nodes: allNodes,
     projectId,
     loaded: true,
+    loadCount: state.loadCount + 1,
   }
 
   const shouldAutoLayoutFromScratch =
@@ -134,7 +135,7 @@ export function loadNodes(
       ...baseState,
       ...layout(
         baseState,
-        stackAutoLayout(visibleNodes, true, projection.visibleEdges),
+        flowLayout(visibleNodes, true, projection.visibleEdges),
       ),
     }
     return collapseAutoGroups(laidOut, autoGroups)
@@ -167,6 +168,7 @@ export function loadNodes(
     nodes: nodesWithFallback,
     projectId,
     loaded: true,
+    loadCount: state.loadCount + 1,
   })
 }
 

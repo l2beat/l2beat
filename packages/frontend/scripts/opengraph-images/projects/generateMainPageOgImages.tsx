@@ -1,212 +1,200 @@
-import { existsSync, mkdirSync, writeFileSync } from 'node:fs'
-import path from 'node:path'
-import { Resvg } from '@resvg/resvg-js'
-import satori from 'satori'
+import { HomeOpengraphImage } from '~/components/opengraph-image/Home'
+import type { OpengraphKit } from '~/components/opengraph-image/heartbeat/render'
+import { renderOpengraphPng } from '~/components/opengraph-image/heartbeat/render'
 import type { MainPage } from '~/components/opengraph-image/MainPage'
 import { MainPageOpengraphImage } from '~/components/opengraph-image/MainPage'
+import { RENAME_ANNOUNCEMENT_PATH } from '~/consts/siteName'
+import { writeIfMissing } from './writeIfMissing'
 
-const mainPages: MainPage[] = [
+// Labels name the page's section, and only when the title doesn't already.
+// Descriptions say what a page offers when its title alone doesn't, in at most
+// three lines (the test checks); most are the page's meta description, cut
+// to fit.
+export const mainPages: MainPage[] = [
   {
-    title: 'Home',
-  },
-  {
+    path: 'tokens',
     title: 'Tokens',
+    description:
+      'How every token exists across chains: which deployments another backs, and which burn and mint.',
   },
   {
+    path: 'ossification',
     title: 'Ossification',
+    description:
+      'How long each project’s critical contracts have gone unchanged, and the value they secured meanwhile.',
   },
   {
-    type: 'layer2s',
-    title: 'Summary',
+    path: 'layer2s/summary',
+    title: 'Layer 2s',
+    description:
+      'The risks, stages and value secured of every Layer 2 on Ethereum.',
   },
   {
-    type: 'layer2s',
-    secondaryLabel: 'RISKS',
-    title: 'Overview',
+    path: 'layer2s/risks/overview',
+    label: 'Layer 2s',
+    title: 'Risk analysis',
+    description:
+      'Understand the risks of Ethereum scaling solutions using ETHBEAT’s assessments.',
   },
   {
-    type: 'layer2s',
-    secondaryLabel: 'RISKS',
-    title: 'Data Availability',
+    path: 'layer2s/risks/data-availability',
+    label: 'Layer 2s',
+    title: 'Data availability',
+    description:
+      'Compare data availability solutions used by Ethereum scaling projects.',
   },
   {
-    type: 'layer2s',
-    secondaryLabel: 'RISKS',
-    title: 'State Validation',
+    path: 'layer2s/risks/state-validation',
+    label: 'Layer 2s',
+    title: 'State validation',
+    description:
+      'How each Layer 2 proves to Ethereum that its state is correct, and the risks of each way.',
   },
   {
-    type: 'layer2s',
-    secondaryLabel: 'RISKS',
+    path: 'layer2s/risks/sequencing',
+    label: 'Layer 2s',
     title: 'Sequencing',
+    description:
+      'Compare decentralized sequencer sets with centralized sequencers and their forced inclusion.',
   },
   {
-    type: 'layer2s',
-    title: 'Value Secured',
+    path: 'layer2s/value-secured',
+    label: 'Layer 2s',
+    title: 'Value secured',
+    description: 'Track total value secured across Ethereum scaling solutions.',
   },
   {
-    type: 'layer2s',
+    path: 'layer2s/activity',
+    label: 'Layer 2s',
     title: 'Activity',
+    description:
+      'Track activity across Ethereum scaling projects with interactive charts.',
   },
-
   {
-    type: 'layer2s',
+    path: 'layer2s/liveness',
+    label: 'Layer 2s',
     title: 'Liveness',
+    description:
+      'Monitor liveness metrics of Ethereum scaling projects and recent anomalies.',
   },
   {
-    type: 'layer2s',
+    path: 'layer2s/costs',
+    label: 'Layer 2s',
     title: 'Costs',
+    description: 'Compare transaction costs across Ethereum scaling solutions.',
   },
   {
-    type: 'layer2s',
+    path: 'layer2s/compare',
+    label: 'Layer 2s',
     title: 'Compare',
+    description:
+      'Compare Ethereum scaling projects across metrics like value secured and activity, on one or more charts.',
+  },
+  { path: 'layer2s/upcoming', label: 'Layer 2s', title: 'Upcoming' },
+  { path: 'layer2s/archived', label: 'Layer 2s', title: 'Archived' },
+  {
+    path: 'interop/summary',
+    title: 'Interoperability',
+    description:
+      'Compare interoperability protocols across the Ethereum ecosystem.',
+  },
+  { path: 'interop/non-minting', label: 'Interop', title: 'Non-minting' },
+  { path: 'interop/lock-&-mint', label: 'Interop', title: 'Lock & mint' },
+  { path: 'interop/burn-&-mint', label: 'Interop', title: 'Burn & mint' },
+  {
+    path: 'interop/token-frameworks',
+    label: 'Interop',
+    title: 'Token frameworks',
+  },
+  { path: 'interop/intent-bridges', label: 'Interop', title: 'Intent bridges' },
+  {
+    path: 'privacy/summary',
+    title: 'Privacy protocols',
+    description:
+      'Privacy protocols on Ethereum, rated by what they hide from each adversary.',
   },
   {
-    type: 'layer2s',
-    title: 'Upcoming',
+    path: 'defi/liquid-staking',
+    label: 'DeFi',
+    title: 'Liquid staking',
+    description:
+      'Ethereum liquid staking protocols compared by risk, alongside what each token yields and what an exit costs.',
   },
   {
-    type: 'layer2s',
-    title: 'Archived',
+    path: 'zk-catalog',
+    label: 'Proof systems',
+    title: 'ZK catalog',
+    description:
+      'Detailed insights into the ZK technology utilized by blockchain projects.',
   },
   {
-    type: 'interop',
-    title: 'Summary',
+    path: 'stages',
+    title: 'Stages',
+    description:
+      'ETHBEAT’s Stages framework: the go-to system for assessing the maturity of rollups on Ethereum.',
   },
   {
-    type: 'interop',
-    title: 'Non-minting',
+    path: 'governance',
+    title: 'Governance',
+    description:
+      'The latest insights, analyses and updates from the ETHBEAT Governance Team.',
   },
   {
-    type: 'interop',
-    title: 'Lock & Mint',
+    path: 'governance/ethereum-connect',
+    label: 'Governance',
+    title: 'Ethereum Connect',
+    description:
+      'A quick survey on what professionals in LATAM want to learn about crypto and Ethereum.',
   },
   {
-    type: 'interop',
-    title: 'Burn & Mint',
+    path: 'publications',
+    title: 'Publications',
+    description:
+      'Research, explainers, essays and interviews: everything ETHBEAT publishes.',
+  },
+  { path: 'glossary', title: 'Glossary' },
+  { path: 'about-us', title: 'About us' },
+  { path: 'mandate', title: 'Our mandate' },
+  { path: 'changelog', title: 'Changelog' },
+  { path: 'donate', title: 'Donate' },
+  { path: 'faq', title: 'FAQ' },
+  { path: 'terms-of-service', title: 'Terms of service' },
+  { path: 'brand-kit', title: 'Brand kit' },
+  { path: 'multisig-report', title: 'Multisig report' },
+  { path: 'icon-preview', title: 'Icon preview' },
+  {
+    path: 'native-rollups',
+    title: 'Native rollups',
+    description:
+      'Native rollups let Ethereum verify L2 blocks with its own EVM program.',
   },
   {
-    type: 'interop',
-    title: 'Token Frameworks',
-  },
-  {
-    type: 'interop',
-    title: 'Intent Bridges',
-  },
-  {
-    type: 'privacy',
-    title: 'Summary',
-  },
-  {
-    type: 'defi',
-    title: 'Liquid Staking',
-  },
-  {
-    title: 'ZK Catalog',
-  },
-  {
-    title: 'About Us',
-  },
-  {
-    title: 'Changelog',
-  },
-  {
-    title: 'Donate',
-  },
-  {
-    title: 'FAQ',
-  },
-  {
-    title: 'Terms of Service',
-  },
-  {
-    title: 'Brand Kit',
-  },
-  {
-    title: 'Multisig Report',
-  },
-  {
-    title: 'Icon preview',
-  },
-  {
-    title: 'Native Rollups',
-  },
-  {
+    path: 'blobs',
     title: 'Blobs',
+    description:
+      'See how much data projects post to Ethereum blobs, against the blob target, and the value they secure.',
   },
-  {
-    title: 'The CROPS guide',
-  },
-  {
-    title: 'Submit your protocol',
-  },
+  { path: RENAME_ANNOUNCEMENT_PATH.slice(1), title: 'L2BEAT is now ETHBEAT' },
+  // The CROPS guide's pages (the-crops-guide, submit-your-protocol,
+  // integrate-crops) have hand-made images in the guide's own style, so they
+  // aren't generated here.
 ]
 
-export async function generateMainPageOgImages(
-  size: { width: number; height: number },
-  fonts: {
-    robotoMedium: Buffer
-    robotoBold: Buffer
-  },
-) {
-  for (const mainPage of mainPages) {
-    const outputDir = path.join(
-      process.cwd(),
-      'static/meta-images',
-      mainPage.type ?? '',
-      mainPage.secondaryLabel
-        ? mainPage.secondaryLabel.toLowerCase().split(' ').join('-')
-        : '',
-      mainPage.title.toLowerCase().split(' ').join('-'),
-    )
-    const outputFile = path.join(outputDir, 'opengraph-image.png')
-    if (existsSync(outputFile)) {
-      continue
-    }
-    const label = mainPage.type
-      ? `${mainPage.type.toUpperCase()} ${mainPage.title}`
-      : mainPage.title
-    console.time(`[MAIN PAGE] ${label}`)
-    const pngBuffer = await generateMainPageOgImage(mainPage, size, fonts)
-    mkdirSync(outputDir, {
-      recursive: true,
-    })
-    writeFileSync(outputFile, pngBuffer)
-    console.timeEnd(`[MAIN PAGE] ${label}`)
-  }
-}
-
-async function generateMainPageOgImage(
-  mainPage: MainPage,
-  size: { width: number; height: number },
-  fonts: {
-    robotoMedium: Buffer
-    robotoBold: Buffer
-  },
-) {
-  const svg = await satori(
-    <MainPageOpengraphImage
-      size={size}
-      baseUrl={'http://localhost:6464'}
-      {...mainPage}
-    />,
-    {
-      ...size,
-      fonts: [
-        {
-          name: 'roboto',
-          data: fonts.robotoMedium,
-          style: 'normal',
-          weight: 500,
-        },
-        {
-          name: 'roboto',
-          data: fonts.robotoBold,
-          style: 'normal',
-          weight: 700,
-        },
-      ],
-    },
+export async function generateMainPageOgImages(kit: OpengraphKit) {
+  await writeIfMissing('MAIN PAGE', 'home', 'Home', () =>
+    renderOpengraphPng(<HomeOpengraphImage measure={kit.measure} />, kit),
   )
-  const resvg = new Resvg(svg)
-  return resvg.render().asPng()
+  for (const page of mainPages) {
+    await writeIfMissing('MAIN PAGE', page.path, page.title, () =>
+      renderOpengraphPng(
+        <MainPageOpengraphImage
+          measure={kit.measure}
+          label={page.label}
+          title={page.title}
+          description={page.description}
+        />,
+        kit,
+      ),
+    )
+  }
 }

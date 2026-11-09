@@ -11,5 +11,5 @@
 2. one party sees both legs, like one service used twice, and finds its payout in the rings behind the exit (see privileged insider).
 3. swap services, Blink, Etherscan, Moralis, PublicNode and the Monero node see the user's IP, since Tor is off by default (see network observer).
 4. the deposit and exit wallets open in one app session, so Moralis, Etherscan and PublicNode pair them (see network observer).
-5. the user adds a token with a remote logo, which loads outside Tor and shows Moralis their IP (see network observer).
+5. an opened wallet holds a token with a remote logo, which loads outside Tor and shows Moralis the user's IP (see network observer).
 6. elliptic-curve cryptography is broken, which reveals the real spend in every ring (see future adversary).

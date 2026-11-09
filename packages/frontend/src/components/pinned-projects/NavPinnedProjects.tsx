@@ -172,7 +172,7 @@ function ProjectRow({
         href={project.href}
         onClick={onNavigate}
         data-active={isActive}
-        className="flex min-w-0 flex-1 items-center gap-2 pl-1.5 text-sm hover:text-primary data-[active=true]:text-brand"
+        className="flex min-w-0 flex-1 items-center gap-2 pl-1.5 text-sm hover:text-primary data-[active=true]:text-brand-deep"
       >
         <img
           src={project.iconUrl}

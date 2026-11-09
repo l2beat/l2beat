@@ -111,7 +111,7 @@ export function renderPermissionsSection(
 /** The HTML banner above the section; DA pages link Disco nowhere else. */
 function renderDiscoUi(discoUi: { href: string } | undefined) {
   if (!discoUi) return ''
-  return `Explore these contracts and permissions in Disco, L2BEAT's contract explorer: ${discoUi.href}`
+  return `Explore these contracts and permissions in Disco, ETHBEAT's contract explorer: ${discoUi.href}`
 }
 
 function hasImpactfulChanges(contracts: TechnologyContract[]) {

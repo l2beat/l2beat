@@ -27,7 +27,7 @@
       "type": "Contract",
       "template": "safe/SafeProxyFactory",
       "sourceHashes": [
-        "0xbf5b822276748072c1b653477b64b6ba78dd14e285da7654dc87f67558abc79c"
+        "0xbe86d75990ab0732d2aeca28a5211d4b6c81553f3ed1b806ac61e38f1f8cceac"
       ],
       "proxyType": "immutable",
       "description": "Deploys Safe accounts as proxies and, when given setup data, sets them up in the same transaction. A proxy deployed without it can be set up by anyone, and the first to do so chooses its owners. The factory has no owner and no control over the accounts it created.",
@@ -237,7 +237,7 @@
       "type": "Contract",
       "template": "safe/SafeProxyFactory",
       "sourceHashes": [
-        "0xfda4d35a812abea3459a31690c18bb447cf8a61398f614756032e400b165f794"
+        "0xd1722bc63e50c32b4bfd037f78d9e35004dacadc810b73f66d235d98479511f4"
       ],
       "proxyType": "immutable",
       "description": "Deploys Safe accounts as proxies and, when given setup data, sets them up in the same transaction. A proxy deployed without it can be set up by anyone, and the first to do so chooses its owners. The factory has no owner and no control over the accounts it created.",

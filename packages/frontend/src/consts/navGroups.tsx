@@ -3,12 +3,14 @@ import type { NavGroup, NavLink } from '~/components/nav/types'
 import { env } from '~/env'
 import { BlobsIcon } from '~/icons/pages/Blobs'
 import { BridgesIcon } from '~/icons/pages/Bridges'
-import { DefiIcon } from '~/icons/pages/Defi'
+import { CropsIcon } from '~/icons/pages/Crops'
 import { HomeIcon } from '~/icons/pages/Home'
 import { L2Icon } from '~/icons/pages/L2'
+import { LiquidStakingIcon } from '~/icons/pages/LiquidStaking'
 import { PrivacyIcon } from '~/icons/pages/Privacy'
 import { TokensIcon } from '~/icons/pages/Tokens'
 import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
+import { GARDEN_PATH } from '~/pages/garden/paths'
 
 export const navGroups: NavGroup[] = compact<NavGroup>([
   {
@@ -20,13 +22,29 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
       <HomeIcon className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active" />
     ),
   },
+  env.CLIENT_SIDE_GARDEN_ENABLED && {
+    type: 'single',
+    title: 'The CROPS guide',
+    shortTitle: 'CROPS',
+    match: 'crops',
+    href: GARDEN_PATH,
+    icon: (
+      <CropsIcon
+        className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active"
+        aria-hidden
+      />
+    ),
+  },
   {
     type: 'single',
     title: 'Privacy',
     match: 'privacy',
     href: '/privacy',
     icon: (
-      <PrivacyIcon className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active" />
+      <PrivacyIcon
+        className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active"
+        aria-hidden
+      />
     ),
   },
   {
@@ -100,6 +118,20 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
     ]),
   },
   {
+    type: 'single',
+    title: 'Liquid staking',
+    match: 'defi',
+    href: '/defi/liquid-staking',
+    // Shown while the page is off, so the domain is visible, but not a link.
+    disabled: !env.CLIENT_SIDE_DEFI_ENABLED,
+    icon: (
+      <LiquidStakingIcon
+        className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active"
+        aria-hidden
+      />
+    ),
+  },
+  {
     type: 'multiple',
     section: 'more',
     title: 'Security',
@@ -156,17 +188,10 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
     match: 'tokens',
     href: '/tokens',
     icon: (
-      <TokensIcon className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active" />
-    ),
-  },
-  env.CLIENT_SIDE_DEFI_ENABLED && {
-    type: 'single',
-    section: 'more',
-    title: 'Liquid Staking',
-    match: 'defi',
-    href: '/defi/liquid-staking',
-    icon: (
-      <DefiIcon className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active" />
+      <TokensIcon
+        className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active"
+        aria-hidden
+      />
     ),
   },
   env.CLIENT_SIDE_BLOBS_PAGE && {

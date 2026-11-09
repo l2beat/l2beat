@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Owns the ProxyAdmins of the CompartmentRegistry and of every compartment. Accounts with the REGISTRY_ADMIN_ROLE in the CompartmentRegistry can use it to upgrade these contracts without delay."
+}

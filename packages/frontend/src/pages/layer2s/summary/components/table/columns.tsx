@@ -37,6 +37,7 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
       header: 'Risks',
       cell: (ctx) => (
         <PizzaRosetteCell
+          projectName={ctx.row.original.name}
           href={`/layer2s/risk?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
           values={ctx.row.original.risks}
           isUnderReview={ctx.row.original.statuses?.underReview === 'config'}
@@ -145,7 +146,7 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
                 <ValueWithPercentageChange
                   change={data?.change}
                   changePeriod={data.changePeriod}
-                  disabledOnMobile
+                  disabledOnTouch
                 >
                   {formatActivityCount(data.pastDayUops)}
                 </ValueWithPercentageChange>

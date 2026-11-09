@@ -1,6 +1,7 @@
 import { createServer } from 'node:http'
 import type { AddressInfo } from 'node:net'
 import type { ChainRecord } from '@l2beat/database'
+import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { numberToHex } from 'viem'
 import { MissingRpcError } from './estimateValues'
@@ -73,6 +74,39 @@ describe(ViemChainReader.name, () => {
 
     expect(await reader.read('base', [call], [])).toEqual([undefined])
     expect(stats.calls).toEqual(1)
+  })
+
+  it('reads at the last block before a time', async () => {
+    const { url } = await rpcServer((request) => {
+      switch (request.method) {
+        case 'eth_getCode':
+          return { result: '0x' }
+        case 'eth_blockNumber':
+          return { result: numberToHex(100) }
+        case 'eth_getBlockByNumber': {
+          // Block n is at n * 10 seconds.
+          const number = Number(request.params?.[0])
+          return {
+            result: {
+              number: numberToHex(number),
+              timestamp: numberToHex(number * 10),
+            },
+          }
+        }
+        default:
+          // Answers with the block number the call was made at.
+          return {
+            result: numberToHex(BigInt(request.params?.[1] as string), {
+              size: 32,
+            }),
+          }
+      }
+    })
+    const reader = new ViemChainReader([chain([{ type: 'rpc', url }])])
+
+    expect(await reader.read('base', [call], [], UnixTime(1_000))).toEqual([
+      99n,
+    ])
   })
 
   it("sends a chain's calls a chunk at a time", async () => {

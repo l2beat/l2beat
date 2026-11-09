@@ -47,7 +47,7 @@ export function ChartStatsPrimaryItem({
         </span>
         {tooltip && (
           <Tooltip>
-            <TooltipTrigger>
+            <TooltipTrigger aria-label="More info">
               <InfoIcon className="size-3.5" />
             </TooltipTrigger>
             <TooltipContent>{tooltip}</TooltipContent>
@@ -87,7 +87,7 @@ export function ChartStatsItem({
         </span>
         {tooltip && (
           <Tooltip>
-            <TooltipTrigger>
+            <TooltipTrigger aria-label="More info">
               <InfoIcon className="size-3.5" />
             </TooltipTrigger>
             <TooltipContent>{tooltip}</TooltipContent>

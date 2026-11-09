@@ -82,7 +82,7 @@ const getBlueprint = (opts?: GetAltDaStageOptions) =>
         },
         nodeSourceAvailable: {
           positive:
-            'A source-available node exists that can reconstruct the L2 state when DA is accessible. Please note that the L2BEAT team has not verified the validity of the node source code.' +
+            'A source-available node exists that can reconstruct the L2 state when DA is accessible. Please note that the ETHBEAT team has not verified the validity of the node source code.' +
             (opts?.nodeSourceLink
               ? ` [View code](${opts.nodeSourceLink})`
               : ''),
@@ -151,9 +151,9 @@ const getBlueprint = (opts?: GetAltDaStageOptions) =>
         },
         noRedTrustedSetups: {
           positive:
-            'The proof system meets the minimum trusted setup requirements defined in the L2BEAT [trusted setup assessment framework](https://forum.l2beat.com/t/the-trusted-setups-framework-for-zk-catalog/381).',
+            'The proof system meets the minimum trusted setup requirements defined in the ETHBEAT [trusted setup assessment framework](https://forum.l2beat.com/t/the-trusted-setups-framework-for-zk-catalog/381).',
           negative:
-            'The proof system does not meet the minimum trusted setup requirements defined in the L2BEAT [trusted setup assessment framework](https://forum.l2beat.com/t/the-trusted-setups-framework-for-zk-catalog/381).',
+            'The proof system does not meet the minimum trusted setup requirements defined in the ETHBEAT [trusted setup assessment framework](https://forum.l2beat.com/t/the-trusted-setups-framework-for-zk-catalog/381).',
         },
         proverSourcePublished: {
           positive:

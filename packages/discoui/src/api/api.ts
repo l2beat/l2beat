@@ -5,6 +5,8 @@ import {
 } from '@l2beat/shared-pure'
 import type {
   ApiAddressUsageResponse,
+  ApiAgentContext,
+  ApiAgentEvent,
   ApiCodeResponse,
   ApiCodeSearchResponse,
   ApiConfigFileResponse,
@@ -140,6 +142,49 @@ export function executeDiscover(
     devMode: devMode.toString(),
   })
   return new EventSource(`/api/terminal/discover?${params}`)
+}
+
+// One stream per tab: the server sends each agent show to one tab.
+export function openAgentEvents(
+  tab: string,
+  onEvent: (event: ApiAgentEvent) => void,
+): EventSource {
+  const events = new EventSource(
+    `/api/agent/events?${new URLSearchParams({ tab })}`,
+  )
+  events.onmessage = (message) => onEvent(JSON.parse(message.data))
+  return events
+}
+
+export async function postAgentTab(report: {
+  tab: string
+  project: string | undefined
+  focusedAt: number
+  sequence: number
+}): Promise<void> {
+  await fetchOk('/api/agent/tab', jsonRequest('POST', report))
+}
+
+export async function postAgentContext(answer: {
+  tab: string
+  request: string
+  context: ApiAgentContext
+}): Promise<void> {
+  await fetchOk('/api/agent/context', jsonRequest('POST', answer))
+}
+
+// Answers the server's reason when the chat refuses, like a prompt while
+// the agent still answers. The conversation itself comes over the tab's
+// agent stream.
+export async function postChat(
+  action: 'start' | 'prompt' | 'cancel' | 'permission' | 'config' | 'close',
+  body: { tab: string } & Record<string, string>,
+): Promise<string | undefined> {
+  const res = await fetch(
+    `/api/agent/chat/${action}`,
+    jsonRequest('POST', body),
+  )
+  return res.ok ? undefined : await readErrorMessage(res)
 }
 
 export function executeMatchFlat(

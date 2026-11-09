@@ -1,10 +1,10 @@
 import type { Milestone } from '@l2beat/config'
-import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { useL2TvsDataKeys } from '~/pages/layer2s/tvs/components/L2TvsDataKeysContext'
 import type { TvsProjectFilter } from '~/server/features/layer2s/tvs/utils/projectFilterUtils'
 import { useTRPC } from '~/trpc/React'
-import type { ChartRange } from '~/utils/range/range'
+import { type ChartRange, rangeToResolution } from '~/utils/range/range'
 import type { ChartUnit } from '../../types'
 import { BridgeTypeTvsChart } from './BridgeTypeTvsChart'
 
@@ -29,13 +29,14 @@ export function L2BridgeTypeTvsChart({
   const { tokenBridgeTypeDataKeys, tokenBridgeTypeToggleDataKey } =
     useL2TvsDataKeys()
 
-  const { data, isLoading } = useQuery(
-    trpc.tvs.detailedChart.queryOptions({
+  const { data, isLoading, isPlaceholderData, shownInput } = useChartQuery(
+    trpc.tvs.detailedChart,
+    {
       range,
       excludeAssociatedTokens,
       filter,
       excludeRwaRestrictedTokens,
-    }),
+    },
   )
 
   const chartData = useMemo(
@@ -63,6 +64,8 @@ export function L2BridgeTypeTvsChart({
 
   return (
     <BridgeTypeTvsChart
+      isPlaceholderData={isPlaceholderData}
+      resolution={rangeToResolution(shownInput.range)}
       data={chartData}
       milestones={milestones}
       unit={unit}

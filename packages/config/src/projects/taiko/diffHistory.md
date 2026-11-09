@@ -1,3 +1,56 @@
+Generated with discovered.json: 0x639f61273610bd8740b564e6f2b158ccbd95a741
+
+# Diff at Thu, 05 Nov 2026 15:34:00 GMT:
+
+- id: f057488a
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@181c6b3e2aefdcafd6dd1dd7151c810ad0e792a6 block: 1793195421
+- current timestamp: 1793874822
+
+## Description
+
+The ejecter 0x45D44033 removed the preconfirmation operator 0x5F62d006 from the PreconfWhitelist and re-added it, twice. The whitelist still holds the same two operators, in swapped order.
+
+## Watched changes
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) [taiko/PreconfWhitelist] {
+    +++ description: Contains the whitelist of addresses eligible to propose batches on L1 and issue preconfirmations. It dynamically selects a single active operator for each epoch using a delayed Ethereum beacon block root as randomness. There is no fallback proposer path in this contract: non-selected operators cannot propose for the current epoch.
+      values.operatorMapping.0:
+-        "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
+      values.operatorMapping.1:
++        "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
+    }
+```
+
+Generated with discovered.json: 0xba844d002275169ec5fdb3b2016bec1d8918f83c
+
+# Diff at Thu, 05 Nov 2026 08:58:41 GMT:
+
+- id: e35cebda
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@92a563dab6932b2cedd6791c3571d1d33fc43c20 block: 1793195421
+- current timestamp: 1793195421
+
+## Description
+
+`permsRevoked` is MEDIUM: a revocation alone removes a path, and grants are counted by `permsGranted`.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793195421 (main branch discovery), not current.
+
+```diff
+    contract DAO (eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261) [taiko/DAO] {
+    +++ description: The main contract and entrypoint of the Aragon-based DAO governance framework. Fine-grained DAO permissions, proposals, voting and thresholds are configured here.
+      fieldMeta.permsRevoked.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0x0593d09b29f0fd6daa486c7301ddfe287b9b1aa2
 
 # Diff at Wed, 28 Oct 2026 13:54:39 GMT:

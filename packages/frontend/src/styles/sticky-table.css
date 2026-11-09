@@ -87,17 +87,19 @@
 
 /*
   The pinned columns again, clipped to their width and not sliding. Its other
-  cells stay hidden. `StickyTableHeader` sets the overlap and the matching
-  `animation-range`.
+  cells stay hidden. `StickyTableHeader` sets the overlap. It comes before the
+  track, for focus order, so the z-index keeps it painted above.
 */
 @utility sticky-table-header-pinned-layer {
   position: absolute;
   top: 0;
   left: 0;
-  width: var(--sticky-table-pinned-width, 0px);
+  z-index: 1;
+  width: calc(
+    var(--sticky-table-pinned-width, 0px) -
+    var(--sticky-table-pinned-overlap, 0px)
+  );
   overflow: clip;
-  animation: sticky-table-header-pinned-layer linear both;
-  animation-timeline: --table-scroll-timeline;
 
   & th:not([data-pinned]) {
     visibility: hidden;
@@ -107,11 +109,5 @@
 @keyframes sticky-table-header-track {
   to {
     transform: translateX(calc(-1 * var(--sticky-table-max-scroll, 0px)));
-  }
-}
-
-@keyframes sticky-table-header-pinned-layer {
-  to {
-    transform: translateX(calc(-1 * var(--sticky-table-pinned-overlap, 0px)));
   }
 }

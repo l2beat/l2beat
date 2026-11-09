@@ -1,5 +1,7 @@
+import { CustomLink } from '~/components/link/CustomLink'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { RENAME_ANNOUNCEMENT_PATH } from '~/consts/siteName'
 import { MissingIcon } from '~/icons/Missing'
 import { SatisfiedIcon } from '~/icons/Satisfied'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
@@ -16,7 +18,7 @@ export function BrandKitPage(props: AppLayoutProps) {
         <div className="flex flex-col md:gap-6">
           <LogoSection
             title="Full Logo"
-            description='The logo should always be used as provided - with both the "L2" icon and "BEAT". Please do not change the placement of the pieces and change the colors. Always use the full logo when space allows.'
+            description='The logo is hand-lettered: always use the files as provided, with both the heart and "BEAT", and never retype the name in a font. Please do not change the placement of the pieces or the colors. Always use the full logo when space allows.'
             lightSvgHref="/brand-kit/logo-light.svg"
             darkSvgHref="/brand-kit/logo-dark.svg"
             lightPngHref="/brand-kit/logo-light.png"
@@ -24,8 +26,7 @@ export function BrandKitPage(props: AppLayoutProps) {
           />
           <LogoSection
             title="Symbol"
-            description="Use the symbol only when the full logo is too large or when L2BEAT is
-          already identified in context."
+            description="The heart with ETH in it, for the same colors on dark and light backgrounds. Use the symbol only when the full logo is too large or when ETHBEAT is already identified in context."
             lightSvgHref="/brand-kit/symbol-light.svg"
             darkSvgHref="/brand-kit/symbol-dark.svg"
             lightPngHref="/brand-kit/symbol-light.png"
@@ -69,7 +70,7 @@ function LogoSection({
           <img
             src={lightSvgHref}
             className="h-20 w-auto"
-            alt="L2BEAT"
+            alt="ETHBEAT"
             loading="lazy"
           />
         </LogoPreviewCard>
@@ -81,7 +82,7 @@ function LogoSection({
           <img
             src={darkSvgHref}
             className="h-20 w-auto"
-            alt="L2BEAT"
+            alt="ETHBEAT"
             loading="lazy"
           />
         </LogoPreviewCard>
@@ -96,17 +97,17 @@ function ColorsSection() {
       <h2 className="mb-4 font-bold text-xl">Colors</h2>
       <div className="grid gap-6 md:grid-cols-2">
         <div>
-          <h3 className="mb-3 font-medium text-sm">Dark Mode</h3>
+          <h3 className="mb-3 font-medium text-sm">Logo</h3>
           <div className="grid grid-cols-2 gap-3">
-            <ColorSwatch color="#BD114F" label="Brand Red" />
-            <ColorSwatch color="#FAFAFA" label="Text" darkText />
+            <ColorSwatch color="#FF3776" label="Heart Pink" />
+            <ColorSwatch color="#0D0C0C" label="Ink" />
           </div>
         </div>
         <div>
-          <h3 className="mb-3 font-medium text-sm">Light Mode</h3>
+          <h3 className="mb-3 font-medium text-sm">Backgrounds</h3>
           <div className="grid grid-cols-2 gap-3">
-            <ColorSwatch color="#F9347B" label="Brand Red" />
-            <ColorSwatch color="#1B1B1B" label="Text" />
+            <ColorSwatch color="#0D0C0C" label="Ink" />
+            <ColorSwatch color="#FFFFFF" label="White" darkText />
           </div>
         </div>
       </div>
@@ -121,15 +122,23 @@ function NameSection() {
       <div className="text-paragraph-15 md:text-paragraph-16">
         <p>
           The name should always be written in uppercase as{' '}
-          <strong>L2BEAT</strong>.
+          <strong>ETHBEAT</strong>.
         </p>
         <div className="flex items-center gap-2">
-          <SatisfiedIcon className="size-5" /> L2BEAT
+          <SatisfiedIcon className="size-5" /> ETHBEAT
         </div>
         <div className="flex items-center gap-2">
-          <MissingIcon className="size-5" /> L2 BEAT, L2Beat, L2beat, L2-beat,
-          etc.
+          <MissingIcon className="size-5" /> EthBeat, Ethbeat, Eth Beat, ETH
+          BEAT, ETH-BEAT, etc.
         </div>
+        <p className="mt-4">
+          We used to be called L2BEAT. That name and its logo are retired:
+          wherever you show the old ones, please replace them with these.{' '}
+          <CustomLink href={RENAME_ANNOUNCEMENT_PATH}>
+            Read about the change
+          </CustomLink>
+          .
+        </p>
       </div>
     </PrimaryCard>
   )

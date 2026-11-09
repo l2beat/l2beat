@@ -2501,6 +2501,11 @@
       {
         "chain": "arbitrum",
         "tx": "0xead243cb6f81932a16cd922556b91bcd95cec094bfe9cbb0d86fbfb76d531f14"
+      },
+      // unlock of the Arbitrum -> Solana order created in 0x0dcc9091
+      {
+        "chain": "arbitrum",
+        "tx": "0xa720a0e1217577e3020559ee559ba434011a26f0eaad6b901ca97f699a6b362d"
       }
     ],
     "expects": {
@@ -2976,6 +2981,82 @@
           "type": "mayan-swift.Transfer",
           "src": { "event": { "ctx": { "chain": "bsc" } } },
           "dst": { "event": { "ctx": { "chain": "ethereum" } } }
+        }
+      ]
+    }
+  },
+  "mayan-swift-onesided": {
+    "loadConfigs": ["wormhole"],
+    "description": "Base -> Solana orders: one refunded (never counted), one counted when Base unlocks it.",
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x6b61308bb28d647d2b5abba6cfa1693119b788f5f8ccd251fbb463220a869681"
+      },
+      {
+        "chain": "base",
+        "tx": "0xb54ed9f95a72cedc740074256a18260ff2bed19e7ae446effb6f725c00cd5cb2"
+      },
+      {
+        "chain": "base",
+        "tx": "0x8a0b05f6721d5ae97c33ed15dd91b12819bc06f820e5bc80d86065f91e3d91ff"
+      },
+      {
+        "chain": "base",
+        "tx": "0xfb556bff751663099976d696cd8d1b2b074ce4477a1f58ddec4c9e8f7b1a5459"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "mayan-swift.OrderCreated",
+          "args": {
+            "key": "0x888022b4ee0eab36f2b3f74d2aec00187c35baaefdfc401aec55d49bf47925da",
+            "$dstChain": "solana"
+          }
+        },
+        {
+          "type": "mayan-swift.OrderRefunded",
+          "args": {
+            "key": "0x888022b4ee0eab36f2b3f74d2aec00187c35baaefdfc401aec55d49bf47925da"
+          }
+        },
+        {
+          "type": "mayan-swift.OrderCreated",
+          "args": {
+            "key": "0x9648194372a70f4b36a99bb7829bec402824d65ca01d4d3db41132fffc136890",
+            "$dstChain": "solana"
+          }
+        },
+        {
+          "type": "mayan-swift.OrderUnlocked",
+          "args": {
+            "key": "0x9648194372a70f4b36a99bb7829bec402824d65ca01d4d3db41132fffc136890",
+            "$srcChain": "solana"
+          }
+        }
+      ],
+      "messages": [
+        {
+          "type": "mayan-swift.Message",
+          "app": "mayan-swift-refund",
+          "src": { "ctx": { "chain": "base" } },
+          "dst": { "ctx": { "chain": "base" } }
+        }
+      ],
+      "transfers": [
+        {
+          "type": "mayan-swift.Transfer",
+          "bridgeType": "nonMinting",
+          "src": {
+            "event": {
+              "ctx": {
+                "chain": "base",
+                "txHash": "0x8a0b05f6721d5ae97c33ed15dd91b12819bc06f820e5bc80d86065f91e3d91ff"
+              }
+            }
+          },
+          "dst": { "chain": "solana" }
         }
       ]
     }

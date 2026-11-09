@@ -79,7 +79,9 @@ describe(InteropCleanerLoop.name, () => {
 
       const messageCutoff = deleteMessageBefore.calls[0]?.args[0] as number
       const transferCutoff = deleteTransferBefore.calls[0]?.args[0] as number
+      const pricesCutoff = deletePricesBefore.calls[0]?.args[0] as number
       expect(messageCutoff - transferCutoff).toEqual(6 * UnixTime.DAY)
+      expect(transferCutoff - pricesCutoff).toEqual(7 * UnixTime.DAY)
       expect(deleteConfigs).toHaveBeenCalledWith(KEEP_LATEST)
       expect(deleteSyncStateNotIn).toHaveBeenCalledWith([
         'plugin-a',

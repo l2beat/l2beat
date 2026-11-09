@@ -30,10 +30,7 @@ export function EthereumProjectPage({ entry, queryState, ...props }: Props) {
           <div
             className="smooth-scroll group/section-wrapper relative z-0 max-md:bg-surface-primary"
             data-project-page
-            data-has-colors={false}
           >
-            <div className="-z-1 -translate-y-2/5 pointer-events-none fixed h-[1440px] w-[900px] translate-x-1/5 rotate-[30deg] bg-radial-[ellipse_closest-side_at_center] from-branding-primary via-25% via-branding-secondary to-transparent max-md:hidden" />
-
             {!isNavigationEmpty && (
               <StickyMobileSectionNavigation
                 sections={navigationSections}
@@ -41,8 +38,6 @@ export function EthereumProjectPage({ entry, queryState, ...props }: Props) {
               />
             )}
             <div className="relative z-0 max-md:bg-surface-primary">
-              <div className="-z-1 absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-branding-primary/75 to-surface-primary md:hidden" />
-
               <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">
                 <div className="pt-6 max-md:px-4 lg:pt-4">
                   <ProjectHeader project={entry} />

@@ -116,7 +116,7 @@ export function DiffView(props: DiffViewProps) {
             className={cn(
               'rounded-sm p-1.5 transition-colors',
               removeUnchanged
-                ? 'bg-autumn-300 text-coffee-800 hover:bg-autumn-200'
+                ? 'bg-autumn-300 text-black hover:bg-autumn-200'
                 : 'hover:bg-coffee-700',
             )}
             onClick={toggleRemoveUnchanged}
@@ -128,7 +128,7 @@ export function DiffView(props: DiffViewProps) {
             className={cn(
               'rounded-sm p-1.5 transition-colors',
               ignoreComments
-                ? 'bg-autumn-300 text-coffee-800 hover:bg-autumn-200'
+                ? 'bg-autumn-300 text-black hover:bg-autumn-200'
                 : 'hover:bg-coffee-700',
             )}
             title="Toggle comments"
@@ -140,7 +140,7 @@ export function DiffView(props: DiffViewProps) {
             className={cn(
               'rounded-sm p-1.5 transition-colors',
               fold
-                ? 'bg-autumn-300 text-coffee-800 hover:bg-autumn-200'
+                ? 'bg-autumn-300 text-black hover:bg-autumn-200'
                 : 'hover:bg-coffee-700',
             )}
             onClick={toggleFold}

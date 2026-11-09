@@ -1,5 +1,4 @@
 import { assert, type UnixTime } from '@l2beat/shared-pure'
-import { utils } from 'ethers'
 import type {
   BeaconChainBlob,
   BeaconChainClient,
@@ -124,8 +123,7 @@ export class EthereumDaProvider implements DaBlobProvider {
     blockNumber: number,
   ): Promise<BeaconChainBlob[]> {
     const blockId = await this.getBeaconBlockId(blockNumber)
-    const blockSidecar = await this.beaconChainClient.getBlockSidecar(blockId)
-    return filterOutIrrelevant(blockSidecar, blobVersionedHashes)
+    return await this.beaconChainClient.getBlobs(blockId, blobVersionedHashes)
   }
 
   async getRelevantBlobs(txHash: string): Promise<BeaconChainBlob[]> {
@@ -145,9 +143,10 @@ export class EthereumDaProvider implements DaBlobProvider {
     )
 
     const blockId = await this.getBeaconBlockId(tx.blockNumber)
-    const blockSidecar = await this.beaconChainClient.getBlockSidecar(blockId)
-
-    return filterOutIrrelevant(blockSidecar, tx.blobVersionedHashes)
+    return await this.beaconChainClient.getBlobs(
+      blockId,
+      tx.blobVersionedHashes,
+    )
   }
 
   // this is very hacky, but it's the only way i know to get the beacon block id
@@ -218,19 +217,4 @@ function isBlobTx(
   tx: EVMTransaction,
 ): tx is EVMTransaction & { blobVersionedHashes: string[] } {
   return Number(tx.type) !== 2 && !!tx.blobVersionedHashes
-}
-
-function filterOutIrrelevant(
-  sidecarData: BeaconChainBlob[],
-  relevantBlobVersionedHashes: string[],
-): BeaconChainBlob[] {
-  return sidecarData.filter((blob) =>
-    relevantBlobVersionedHashes.includes(
-      kzgCommitmentToVersionedHash(blob.kzg_commitment),
-    ),
-  )
-}
-
-function kzgCommitmentToVersionedHash(commitment: string): string {
-  return '0x01' + utils.sha256(commitment).substring(4)
 }

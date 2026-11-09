@@ -1,12 +1,11 @@
 export const externalLinks = {
-  x: 'https://x.com/l2beat',
+  x: 'https://x.com/ethbeat_org',
   github: 'https://github.com/l2beat/l2beat',
   linkedin: 'https://www.linkedin.com/company/l2beat/',
   youTube: 'https://www.youtube.com/channel/UCDrl-fNXFjOoykr4lQij9BA/videos',
   medium: 'https://medium.com/l2beat',
   forum: 'https://forum.l2beat.com/',
-  jobs: 'https://jobs.l2beat.com/',
-  tools: 'https://tools.l2beat.com/',
+  tools: 'https://tools.ethbeat.org/',
   substackSubscribe: 'https://l2beatgov.substack.com/subscribe',
   multisigReport:
     'https://drive.google.com/file/d/182ycEW8C2wk5tGd3X1tG8oQfUy9WmSJk/view',

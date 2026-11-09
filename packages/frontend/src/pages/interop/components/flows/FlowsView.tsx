@@ -169,8 +169,8 @@ function SelectInfo({
           'group-has-[#flows-graph_svg:hover]/flows:scale-[1.15]',
       )}
     >
-      <CursorClickIcon className="size-3 fill-brand md:size-4" />
-      <p className="font-medium text-brand text-label-value-13 italic leading-none md:text-label-value-14">
+      <CursorClickIcon className="size-3 fill-brand-deep md:size-4" />
+      <p className="font-medium text-brand-deep text-label-value-13 italic leading-none md:text-label-value-14">
         {text}
       </p>
     </div>

@@ -152,7 +152,10 @@ function TransactionDetails({
             </p>
             {transaction.params.formula === 'sharedBridge' && (
               <Tooltip>
-                <TooltipTrigger className="inline size-4">
+                <TooltipTrigger
+                  className="inline size-4"
+                  aria-label="About shared bridge tracking"
+                >
                   <InfoIcon />
                 </TooltipTrigger>
                 <TooltipContent>
@@ -261,7 +264,7 @@ function TransactionDetails({
               <span>{transaction.costMultiplier}</span>
             </div>
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger aria-label="About the multiplier">
                 <InfoIcon className="size-3" />
               </TooltipTrigger>
               <TooltipContent>

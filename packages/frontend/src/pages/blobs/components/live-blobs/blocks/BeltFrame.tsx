@@ -49,5 +49,5 @@ function Legend({ items }: { items: ReactNode[] }) {
 }
 
 function LegendValue({ children }: { children: ReactNode }) {
-  return <span className="font-bold text-brand">{children}</span>
+  return <span className="font-bold text-brand-deep">{children}</span>
 }

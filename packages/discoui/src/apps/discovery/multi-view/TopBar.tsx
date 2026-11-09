@@ -2,13 +2,14 @@ import { Link } from 'react-router'
 import { Button } from '../../../components/Button'
 import { IS_READONLY } from '../../../config/readonly'
 import { IconClose } from '../../../icons/IconClose'
+import { IconGear } from '../../../icons/IconGear'
 import { IconPlus } from '../../../icons/IconPlus'
 import { IconRefresh } from '../../../icons/IconRefresh'
 import { cn } from '../../../utils/cn'
 import { useTerminalStore } from '../panel-terminal/store'
 import { useDiscoveryCommand } from '../panel-terminal/useDiscoveryCommand'
 import { Search } from '../search/Search'
-import { SettingsDialog } from './SettingsDialog'
+import { SettingsDialog } from './settings/SettingsDialog'
 import { addPanel, useDockingStore } from './store'
 
 export function TopBar(props: { project: string }) {
@@ -90,7 +91,18 @@ export function TopBar(props: { project: string }) {
           </Button>
         </div>
 
-        <SettingsDialog />
+        <SettingsDialog
+          defaultTabId="global"
+          trigger={
+            <button
+              type="button"
+              className="flex size-7 items-center justify-center rounded-sm text-coffee-300 hover:bg-coffee-700 hover:text-coffee-100"
+              aria-label="Settings"
+            >
+              <IconGear />
+            </button>
+          }
+        />
       </div>
     </div>
   )

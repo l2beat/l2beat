@@ -1,10 +1,13 @@
-import { definePrivacyAdversaries } from '../../common/privacyAdversaries'
+import {
+  definePrivacyAdversaries,
+  PRIVACY_ADVERSARY_SNIPPETS as S,
+} from '../../common/privacyAdversaries'
 import type { PrivacyExposureMap } from '../../types'
 
 const SRC =
   'https://github.com/ethereum/zkapi/blob/045b444ea1b52538d1b40273c7cb6ed09468a052/'
 const OA_CHAT =
-  'https://github.com/OpenAnonymity/oa-chat/blob/60ed5be2957d984c70a7299474927becec47b61f/'
+  'https://github.com/OpenAnonymity/oa-chat/blob/a2623612c17bea09d5efaf8f41b500fe98fb1c8a/'
 
 // Linkage here is deposit-to-request. Deposits and withdrawals of one note are
 // publicly linked by note id, which the promise says.
@@ -72,38 +75,41 @@ export const zkApiAdversaries = definePrivacyAdversaries({
       exposureShort:
         'The app works in Tor Browser, and no third party sees both a deposit and a request.',
       exposureContinued:
-        "The deposit reaches the wallet's RPC, or the app's public RPC when the user funds an address the app shows. The relay at refraction.network carries the app's inference and chain reads by default and sees their timing. Requests go to the operator and the provider, and the hosted app reports feature use to Fathom.",
+        "The deposit reaches the wallet's RPC, or the app's public RPC when the user funds an address the app shows. A relay at refraction.network carries requests to OpenRouter and chain reads by default and sees their timing, and Fathom counts feature use.",
       advice:
-        'Use the app in Tor Browser, and send the deposit through a public RPC over Tor.',
+        'Use the app in Tor Browser, and send the deposit through an IP-hiding route too.',
       interior: {
         ...PUBLIC_INTERIOR,
         linkage: {
           verdict: 'atRisk',
-          note: "Private only over Tor, which keeps the user's IP out of both the deposit and the requests.",
+          note: "Private only when IP-hiding routes keep the user's IP out of both the deposit and the requests.",
         },
       },
       sources: [
+        S.ipHidingRoutes,
         {
           title: 'App relay on by default, direct fallback',
           url: `${OA_CHAT}chat/services/networkProxy.js#L7-L10`,
         },
         {
-          title: 'Hosted app loads Fathom Analytics (checked 2026-10-22)',
+          title: 'Hosted app loads Fathom Analytics (checked 2026-10-30)',
           url: 'https://chat.openanonymity.ai',
         },
       ],
     },
-    // Anonymity set counted by hand on 2026-10-14 from vault events at block
-    // 26190107, ETH/USD 2,495.55: 87 deposits from 70 funders, 19 mutual
-    // closes, 68 active notes from 64 funders. Notes whose deposit covers the
-    // budget tier (an upper bound, the balance is unknown): $1 and $2 tiers 66,
-    // $3 and $4.5 tiers 64, $6 tier 30. 61 active notes come from the launch
-    // days 2026-09-30 to 2026-10-03 and expire by 2026-11-02, leaving 26
-    // without new deposits. Of the 19 closed notes, 9 spent nothing.
+    // Anonymity set counted on 2026-10-30 from vault events up to block
+    // 26306058, ETH/USD 2,215.41 (Chainlink): 105 deposits from 83 funders, 24
+    // mutual closes (6 spent nothing), no escapes or expiry claims. Active
+    // notes whose deposit covers the budget tier (an upper bound, the balance
+    // is unknown), notes/funders: $1 79/75, $2 78/74, $3 76/72, $4.5 40/38, $6
+    // 36/34. The launch notes expire 2026-10-31 to 2026-11-04, leaving 26
+    // notes from 25 funders: $1 24, $2 23, $3 23, $4.5 19, $6 15 funders. The
+    // default model, Auto Router, sends the $2 tier. All-time equals the last
+    // 90 days, since the vault launched on 2026-09-30.
     privilegedInsider: {
       sentiment: 'bad',
       exposureShort:
-        "The operator sees each request's time and budget tier but not its note, and too few active notes cover a top-tier budget to hide among.",
+        "The operator sees each request's time and budget tier but not its note, and too few active notes cover even the default model's budget to hide among.",
       exposureContinued:
         "The candidates are the active notes whose balance covers the request's budget tier, which follows the chosen model's price. The provider can read prompts and responses and link requests under one key.",
       interior: {

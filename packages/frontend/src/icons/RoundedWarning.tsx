@@ -20,7 +20,8 @@ export function RoundedWarningIcon({ className, sentiment, ...rest }: Props) {
       width="24"
       height="24"
       viewBox="0 0 24 24"
-      aria-label="Warning icon"
+      role="img"
+      aria-label="Warning"
       className={iconVariants({
         className,
         sentiment,

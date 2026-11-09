@@ -13,6 +13,7 @@ import {
 import { LiveIndicator } from '~/components/LiveIndicator'
 import { CustomLink } from '~/components/link/CustomLink'
 import { Markdown } from '~/components/markdown/Markdown'
+import { useBadges } from '~/components/projects/BadgeLookup'
 import {
   ProjectTooltipContent,
   type ProjectTooltipSectionData,
@@ -59,16 +60,19 @@ function redWarningDetailHref(project: ProjectCellProject): string | undefined {
 
 function MobileProjectIconTooltip({
   icon,
+  label,
   children,
   contentClassName,
 }: {
   icon: React.ReactNode
+  /** The icon alone says nothing to a screen reader. */
+  label: string
   children: React.ReactNode
   contentClassName?: string
 }) {
   return (
     <Tooltip disableHoverableContent={false}>
-      <TooltipTrigger>{icon}</TooltipTrigger>
+      <TooltipTrigger aria-label={label}>{icon}</TooltipTrigger>
       <TooltipPortal>
         <TooltipContent sideOffset={16} className={contentClassName}>
           {children}
@@ -126,12 +130,18 @@ export function ProjectNameMobileStatusIcons({
   return (
     <div className={cn('flex items-center gap-1.5', className)}>
       {project.isLayer3 && (
-        <MobileProjectIconTooltip icon={<Layer3Icon className="size-4" />}>
+        <MobileProjectIconTooltip
+          label="Layer 3"
+          icon={<Layer3Icon className="size-4" />}
+        >
           {project.nameSecondLine}
         </MobileProjectIconTooltip>
       )}
       {project.ecosystemInfo?.isPartOfSuperchain && (
-        <MobileProjectIconTooltip icon={<SuperchainIcon />}>
+        <MobileProjectIconTooltip
+          label="Part of the Superchain"
+          icon={<SuperchainIcon />}
+        >
           The project is officially part of the Superchain - it contributes
           revenue to the Optimism Collective and uses the SuperchainConfig to
           manage chain configuration values.
@@ -139,6 +149,7 @@ export function ProjectNameMobileStatusIcons({
       )}
       {project.quantumResistance && (
         <MobileProjectIconTooltip
+          label="Quantum resistance"
           icon={<QuantumResistanceIcon className="size-4" />}
         >
           {QUANTUM_RESISTANCE_TOOLTIPS[project.quantumResistance]}
@@ -149,6 +160,7 @@ export function ProjectNameMobileStatusIcons({
           (value) => value !== undefined,
         ) && (
           <MobileProjectIconTooltip
+            label="Verification warning"
             icon={<UnverifiedIcon className="size-4 fill-red-300" />}
             contentClassName="flex flex-col gap-2"
           >
@@ -187,6 +199,7 @@ export function ProjectNameMobileStatusIcons({
         )}
       {project.statuses?.redWarning && (
         <MobileProjectIconTooltip
+          label="Red warning"
           icon={<ShieldIcon className="size-4 fill-red-300" />}
           contentClassName="flex flex-col gap-2"
         >
@@ -204,12 +217,16 @@ export function ProjectNameMobileStatusIcons({
         </MobileProjectIconTooltip>
       )}
       {project.statuses?.underReview && !ignoreUnderReviewIcon && (
-        <MobileProjectIconTooltip icon={<UnderReviewIcon className="size-4" />}>
+        <MobileProjectIconTooltip
+          label="Under review"
+          icon={<UnderReviewIcon className="size-4" />}
+        >
           {getUnderReviewText(project.statuses.underReview)}
         </MobileProjectIconTooltip>
       )}
       {project.statuses?.yellowWarning && (
         <MobileProjectIconTooltip
+          label="Warning"
           icon={
             <ShieldIcon className="size-4 fill-yellow-700 dark:fill-yellow-300" />
           }
@@ -220,12 +237,16 @@ export function ProjectNameMobileStatusIcons({
         </MobileProjectIconTooltip>
       )}
       {project.statuses?.syncWarning && (
-        <MobileProjectIconTooltip icon={<ClockIcon className="size-4" />}>
+        <MobileProjectIconTooltip
+          label="Sync delay"
+          icon={<ClockIcon className="size-4" />}
+        >
           {project.statuses.syncWarning}
         </MobileProjectIconTooltip>
       )}
       {project.statuses?.ongoingAnomaly && (
         <MobileProjectIconTooltip
+          label="Ongoing anomaly"
           icon={<LiveIndicator />}
           contentClassName="flex flex-col gap-2"
         >
@@ -362,10 +383,11 @@ export function ProjectNameInfoTooltip({
 }) {
   const projectName = project.shortName ?? project.name
   const sections = getTooltipSections(project)
+  const badges = useBadges(project.badges)
   const hasTooltipContent =
     !!project.description ||
     !!project.quantumResistance ||
-    (project.badges?.length ?? 0) > 0 ||
+    badges.length > 0 ||
     sections.length > 0
 
   if (!hasTooltipContent) {
@@ -374,7 +396,7 @@ export function ProjectNameInfoTooltip({
 
   return (
     <Tooltip disableHoverableContent={false}>
-      <TooltipTrigger disabledOnMobile asChild>
+      <TooltipTrigger disabledOnTouch asChild>
         {children}
       </TooltipTrigger>
       <TooltipPortal>
@@ -383,7 +405,7 @@ export function ProjectNameInfoTooltip({
             projectName={projectName}
             description={project.description}
             sections={sections}
-            badges={project.badges}
+            badges={badges}
             sectionsFirst
           />
         </TooltipContent>

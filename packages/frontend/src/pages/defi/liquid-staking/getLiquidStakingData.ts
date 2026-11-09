@@ -36,7 +36,7 @@ export async function getLiquidStakingData(
       manifest,
       metadata: getMetadata(manifest, {
         name: 'Liquid Staking',
-        title: 'Ethereum Liquid Staking: Risks, Yield & Cost of Exit - L2BEAT',
+        title: 'Ethereum Liquid Staking: Risks, Yield & Cost of Exit - ETHBEAT',
         description: LIQUID_STAKING_DESCRIPTION,
         url,
         openGraph: {

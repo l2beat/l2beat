@@ -107,7 +107,7 @@ function Calendar({
         range_start: cn('bg-brand', defaultClassNames.range_start),
         range_middle: cn('rounded-none', defaultClassNames.range_middle),
         range_end: cn('bg-brand', defaultClassNames.range_end),
-        today: cn('text-brand', defaultClassNames.today),
+        today: cn('text-brand-deep', defaultClassNames.today),
         outside: cn(
           'text-secondary aria-selected:text-secondary',
           defaultClassNames.outside,

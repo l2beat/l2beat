@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -25,11 +30,11 @@ export const grvt: ScalingProject = zkStackL2({
     slug: 'grvt',
     tvsWarning: {
       value:
-        'L2BEAT is currently unable to track the TVL of the GRVT Validium due to the lack of a public rpc / explorer.',
-      sentiment: 'neutral',
+        'ETHBEAT only tracks the funds in the GRVTL1TreasuryVault and its yield strategies, which hold most of the exchange reserves. The funds that remain in the shared ZK stack bridge cannot be tracked due to the lack of a public rpc / explorer.',
+      sentiment: 'warning',
     },
     description:
-      'Gravity (GRVT) is a hybrid crypto derivatives exchange, providing a centralized exchange-like experience while being based on the ZK stack Validium codebase with confidential data availability and transaction filtering enabled.',
+      'Gravity (GRVT) is a hybrid crypto derivatives exchange, providing a centralized exchange-like experience while being based on the ZK stack Validium codebase with confidential data availability and transaction filtering enabled. Most of the exchange reserves are withdrawn from the shared ZK stack bridge to the GRVT-controlled GRVTL1TreasuryVault on Ethereum, which invests them in external yield strategies.',
     links: {
       websites: ['https://grvt.io'],
       bridges: ['https://grvt.io/exchange/perpetual/BTC-USDT'],
@@ -46,6 +51,40 @@ export const grvt: ScalingProject = zkStackL2({
     id: ProjectId('the-elastic-network'),
   },
   chainId,
+  nonTemplateEscrows: [
+    discovery.getEscrowDetails({
+      address: ChainSpecificAddress(
+        'eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45',
+      ),
+      tokens: ['USDT', 'USDC'],
+      description:
+        'Holds most of the exchange reserves of GRVT, withdrawn from the shared ZK stack bridge by the GRVT exchange. The funds can be allocated to yield strategies or bridged back to GRVT by permissioned operators.',
+    }),
+    discovery.getEscrowDetails({
+      address: ChainSpecificAddress(
+        'eth:0x189b2c1CE2f4Cd8e535E98B005A2d7e798124B18',
+      ),
+      tokens: ['USDC', 'USDY', 'sGho'],
+      description:
+        'Yield strategy of the GRVTL1TreasuryVault that holds tokenized treasuries and sGHO bought with USDC of the vault.',
+    }),
+    discovery.getEscrowDetails({
+      address: ChainSpecificAddress(
+        'eth:0xEC33298A3aC7A5F5B3f21A3218a5D8E862Da8a12',
+      ),
+      tokens: ['USDT', 'USDY', 'sGho'],
+      description:
+        'Yield strategy of the GRVTL1TreasuryVault that holds tokenized treasuries and sGHO bought with USDT of the vault.',
+    }),
+    discovery.getEscrowDetails({
+      address: ChainSpecificAddress(
+        'eth:0x89D76f493AECaEe10caBbC1a67dbdC92E947b85E',
+      ),
+      tokens: ['USDT', 'sGho'],
+      description:
+        'Yield strategy of the GRVTL1TreasuryVault that converts USDT of the vault to GHO and deposits it into sGHO.',
+    }),
+  ],
   daProvider: {
     layer: DA_LAYERS.NONE,
     bridge: DA_BRIDGES.NONE,
