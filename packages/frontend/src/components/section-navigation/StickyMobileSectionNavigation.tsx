@@ -81,9 +81,11 @@ function fillAboveWhileStuck(bar: HTMLElement) {
       '--scroll-range',
       `${root.scrollHeight - root.clientHeight}px`,
     )
+  // The range changes with the page's height, and with the viewport's, which
+  // in-app browsers change as their bars hide.
   const resizeObserver = new ResizeObserver(updateRange)
   resizeObserver.observe(document.body)
-  resizeObserver.observe(root)
+  window.addEventListener('resize', updateRange)
 
   const intersectionObserver = new IntersectionObserver(
     ([entry]) => {
@@ -100,6 +102,7 @@ function fillAboveWhileStuck(bar: HTMLElement) {
   return () => {
     intersectionObserver.disconnect()
     resizeObserver.disconnect()
+    window.removeEventListener('resize', updateRange)
     fill.remove()
     root.style.removeProperty('--scroll-range')
   }
