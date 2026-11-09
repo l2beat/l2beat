@@ -1,9 +1,14 @@
 import fuzzysort from 'fuzzysort'
+import type {
+  SearchBarProjectEntry,
+  SearchBarTokenEntry,
+} from '~/server/features/search-bar/types'
 import {
   type SearchBarCategory,
   type SearchBarCategoryConfig,
   searchBarCategories,
 } from './searchBarCategories'
+import type { DecodedSearchIndex } from './searchIndex'
 import type { SearchBarEntry } from './types'
 
 type SearchableSearchBarEntry = SearchBarEntry & {
@@ -49,6 +54,33 @@ export function searchEntries<T extends SearchableSearchBarEntry>(
     })
 
   return rankSearchResults(searched, options?.limit)
+}
+
+// Limited per type so that dozens of short token symbols (e.g. ROBA, ROBO for
+// "rob") can't outscore and push out a project like "Robinhood Chain".
+const PROJECT_RESULTS_LIMIT = 15
+const TOKEN_RESULTS_LIMIT = 5
+
+export function searchProjectsAndTokens(
+  query: string,
+  index: DecodedSearchIndex,
+) {
+  // Searched together so that direct matches of either type still hide fuzzy ones.
+  const matches = searchEntries<SearchBarProjectEntry | SearchBarTokenEntry>(
+    query,
+    [...index.projects, ...index.tokens],
+    {
+      scoreMultiplier: (entry) => (entry.category === 'zkCatalog' ? 0.9 : 1),
+    },
+  )
+  return [
+    ...matches
+      .filter((entry) => entry.type !== 'token')
+      .slice(0, PROJECT_RESULTS_LIMIT),
+    ...matches
+      .filter((entry) => entry.type === 'token')
+      .slice(0, TOKEN_RESULTS_LIMIT),
+  ]
 }
 
 function rankSearchResults<T extends SearchableSearchBarEntry>(
