@@ -44,6 +44,7 @@ export function TrustedSetupSection({
                           key={proofSystem.type + proofSystem.name}
                           tag={proofSystem}
                           withoutTooltip
+                          displayType="typeAndName"
                         />
                       ))}
                     </div>

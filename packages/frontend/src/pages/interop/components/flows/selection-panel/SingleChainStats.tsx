@@ -8,6 +8,7 @@ import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import { getInteropTokenUrl } from '../../../utils/getInteropTokenUrl'
 import { getChainFlowDerivedStats } from '../utils/flowStats'
+import { describeChainScope } from '../utils/describeChainScope'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
 import { AvgDurationStatValue } from './AvgDurationStatValue'
 import { getChainFlowStatItems } from './getChainFlowStatItems'
@@ -47,7 +48,12 @@ export function SingleChainStats({
 
   return (
     <>
-      <Stats data={data} isLoading={isLoading} chainId={chainId} />
+      <Stats
+        data={data}
+        isLoading={isLoading}
+        chainId={chainId}
+        selectedChainCount={selectedChains.length}
+      />
       <TopRoutes data={data} isLoading={isLoading} chainId={chainId} />
       {chainData && (
         <TopItemsList
@@ -77,11 +83,14 @@ function Stats({
   data,
   isLoading,
   chainId,
+  selectedChainCount,
 }: {
   data: InteropFlowsData
   isLoading: boolean
   chainId: string
+  selectedChainCount: number
 }) {
+  const chainCount = useInteropFlows().allChains.length
   const chainData = data?.chainData.find((cv) => cv.chainId === chainId)
   if (!chainData) {
     return null
@@ -91,8 +100,11 @@ function Stats({
 
   return (
     <div className="rounded-lg border border-divider bg-surface-primary px-4 py-3">
-      <div className="mb-1.5 font-bold text-label-value-12 uppercase">
-        Stats
+      <div className="mb-1.5 flex items-baseline justify-between gap-2">
+        <span className="font-bold text-label-value-12 uppercase">Stats</span>
+        <span className="font-medium text-label-value-12 text-secondary">
+          Last 24h · {describeChainScope(selectedChainCount, chainCount)}
+        </span>
       </div>
       <div className="space-y-1.5">
         {getChainFlowStatItems(chainData).map((item) => (

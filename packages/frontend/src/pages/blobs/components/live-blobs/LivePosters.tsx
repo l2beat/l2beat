@@ -350,14 +350,26 @@ function PosterName({
   poster: LivePoster
   className?: string
 }) {
+  const { head, id } = splitTrailingId(poster.name)
   return (
     // a phone has room for the name or the numbers, so long names give way
     <span
-      className={cn('block truncate font-bold max-md:max-w-[7rem]', className)}
+      className={cn(
+        'flex min-w-0 font-bold max-md:max-w-[7rem]',
+        className,
+      )}
+      title={poster.name}
     >
-      {poster.name}
+      <span className="truncate">{head}</span>
+      {/* Unnamed chains share a stack name and differ only by their id */}
+      {id && <span className="shrink-0">&nbsp;{id}</span>}
     </span>
   )
+}
+
+function splitTrailingId(name: string): { head: string; id?: string } {
+  const match = /^(.+) (\d+)$/.exec(name)
+  return match?.[1] && match[2] ? { head: match[1], id: match[2] } : { head: name }
 }
 
 function pinnedCellProps(index: number, className?: string) {

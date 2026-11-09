@@ -1098,6 +1098,7 @@ const ENTRY: ProjectL2Entry = {
       lastDayUops: 25.3,
       uopsWeeklyChange: -0.021,
       uopsWeeklyChangePeriod: '7D',
+      syncWarning: undefined,
     },
   },
   rosette: { self: ROSETTE },

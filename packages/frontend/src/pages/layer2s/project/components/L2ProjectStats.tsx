@@ -83,15 +83,27 @@ export function ProjectL2Stats({ project, className }: Props) {
       tooltip="User operations per second averaged over the past day displayed together with a percentage change compared to 7D ago."
       value={
         project.header.activity ? (
-          <ValueWithPercentageChange
-            containerClassName="flex-nowrap"
-            change={project.header.activity.uopsWeeklyChange}
-            changePeriod={project.header.activity.uopsWeeklyChangePeriod}
-            className="text-nowrap text-base! leading-[100%]!"
-            changeClassName="text-label-value-14 font-bold"
-          >
-            {formatActivityCount(project.header.activity.lastDayUops)}
-          </ValueWithPercentageChange>
+          <span className="flex items-center gap-2">
+            {project.header.activity.syncWarning && (
+              <Tooltip>
+                <TooltipTrigger aria-label="Activity warning">
+                  <RoundedWarningIcon sentiment="warning" className="size-4" />
+                </TooltipTrigger>
+                <TooltipContent>
+                  {project.header.activity.syncWarning}
+                </TooltipContent>
+              </Tooltip>
+            )}
+            <ValueWithPercentageChange
+              containerClassName="flex-nowrap"
+              change={project.header.activity.uopsWeeklyChange}
+              changePeriod={project.header.activity.uopsWeeklyChangePeriod}
+              className="text-nowrap text-base! leading-[100%]!"
+              changeClassName="text-label-value-14 font-bold"
+            >
+              {formatActivityCount(project.header.activity.lastDayUops)}
+            </ValueWithPercentageChange>
+          </span>
         ) : (
           <NoDataBadge />
         )
