@@ -69,8 +69,11 @@ export async function buildSearchIndex(): Promise<SearchIndex> {
       }),
       ...selectChainProjects(l2ProjectIds).map(toSearchIndexChain),
     ],
+    // The token query has no order, and a reordered list would get a new
+    // hash, making browsers download the same index again.
     tokens: tokens
       .filter((token) => token.id !== UNKNOWN_ABSTRACT_TOKEN_ID)
+      .sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0))
       .map(toSearchIndexToken),
   }
 }

@@ -21,17 +21,31 @@ export async function getAppLayoutProps(): Promise<AppLayoutProps> {
   }
 }
 
+const SEARCH_INDEX_WAIT_MS = 1_000
+
 /**
- * Every page renders the search bar, so a token database outage must not take
- * pages down. The route serves the current index for any hash, uncached.
+ * Every page renders the search bar, so a slow or failing token database must
+ * not hold pages up. A cached index answers at once; a cold build gets a short
+ * wait and keeps running for later pages. The route serves the current index
+ * for any hash, uncached.
  */
 async function getSearchIndexPathOrLatest(): Promise<string> {
+  const logger = getLogger().for('getAppLayoutProps')
+  let deadline: ReturnType<typeof setTimeout> | undefined
+  const timedOut = new Promise<undefined>((resolve) => {
+    deadline = setTimeout(resolve, SEARCH_INDEX_WAIT_MS, undefined)
+  })
   try {
-    return getSearchIndexPath((await getSearchIndexFile()).hash)
+    const file = await Promise.race([getSearchIndexFile(), timedOut])
+    if (file === undefined) {
+      logger.warn('Search index not ready', { waitMs: SEARCH_INDEX_WAIT_MS })
+      return getSearchIndexPath('latest')
+    }
+    return getSearchIndexPath(file.hash)
   } catch (error) {
-    getLogger()
-      .for('getAppLayoutProps')
-      .warn('Search index unavailable', { error })
+    logger.warn('Search index unavailable', { error })
     return getSearchIndexPath('latest')
+  } finally {
+    clearTimeout(deadline)
   }
 }
