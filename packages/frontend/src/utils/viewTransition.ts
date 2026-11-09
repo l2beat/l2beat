@@ -1,6 +1,14 @@
 import { flushSync } from 'react-dom'
 
 /**
+ * What the transitions still running have named. One starting skips the one
+ * before, whose end must not clear what the new one has named, so they
+ * share it, and only the latest clears it.
+ */
+const named = new Set<HTMLElement>()
+let latest: ViewTransition | undefined
+
+/**
  * Runs a React state change as a view transition of `type`: before and
  * after the change, `name` gives `view-transition-name`s to the elements
  * that should move, and each named in both states moves from its old place
@@ -24,31 +32,36 @@ export function withViewTransition(
     update()
     return
   }
-  const named = new Set(name())
-  if (named.size === 0) {
+  const before = name()
+  if (before.length === 0) {
     update()
     return
   }
+  for (const el of before) named.add(el)
   const transition = document.startViewTransition({
     update: () => {
       flushSync(update)
-      clear(named)
+      clear()
       for (const el of name()) named.add(el)
     },
     types: [type],
   })
+  latest = transition
+  // Skipped by a newer one, `ready` rejects, which nothing else awaits.
+  transition.ready.catch(() => {})
   // Also when the update threw: the names must not outlive the transition.
-  transition.finished.then(
-    () => clear(named),
-    () => clear(named),
-  )
+  const end = () => {
+    if (latest === transition) clear()
+  }
+  transition.finished.then(end, end)
 }
 
-function clear(elements: Iterable<HTMLElement>) {
-  for (const el of elements) {
+function clear() {
+  for (const el of named) {
     el.style.viewTransitionName = ''
     el.style.removeProperty('view-transition-class')
   }
+  named.clear()
 }
 
 /**
