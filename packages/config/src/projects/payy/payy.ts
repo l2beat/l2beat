@@ -25,12 +25,14 @@ import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { payyAdversaries } from './adversaries'
 
 const discovery = new ProjectDiscovery('payy')
+const archivedAt = UnixTime(1790244000) // 2026-09-24T10:00:00Z, first full hour after the last settlement, network halted since
 
 export const payy: ScalingProject = {
   type: 'layer2',
   id: ProjectId('payy'),
   capability: 'appchain',
   addedAt: UnixTime(1787616000), // 2026-08-25T00:00:00Z
+  archivedAt,
   badges: [BADGES.VM.AppChain, BADGES.DA.CustomDA, BADGES.Other.Privacy],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
