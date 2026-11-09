@@ -16,6 +16,7 @@ import type { RenderData } from '~/ssr/types'
 import type { SsrHelpers } from '~/trpc/server'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
+import { getProjectOgImagePath } from '~/utils/project/getProjectUrl'
 import { getL2ProjectStructuredData } from './getL2ProjectStructuredData'
 import { renderL2ProjectMarkdown } from './renderL2ProjectMarkdown'
 
@@ -155,7 +156,7 @@ async function loadL2ProjectPage(manifest: Manifest, slug: string) {
         // shared by every request for the project, including the .md one.
         url: `/projects/${project.slug}`,
         openGraph: {
-          image: `/meta-images/layer2s/projects/${project.slug}/opengraph-image.png`,
+          image: getProjectOgImagePath(project.slug),
         },
         structuredData: (page) => [
           getL2ProjectStructuredData(page, {

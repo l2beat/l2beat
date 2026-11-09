@@ -41,3 +41,8 @@ export function getProjectUrl(
 export function getProjectPath(slug: string): `/projects/${string}` {
   return `/projects/${slug}`
 }
+
+/** The social preview image of a project's page, made by `pnpm og-images`. */
+export function getProjectOgImagePath(slug: string) {
+  return `/meta-images/projects/${slug}/opengraph-image.png`
+}

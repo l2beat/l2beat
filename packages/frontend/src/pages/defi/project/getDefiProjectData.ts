@@ -9,6 +9,7 @@ import { getProjectMetadataDescription } from '~/ssr/head/projectMetaDescription
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
+import { getProjectOgImagePath } from '~/utils/project/getProjectUrl'
 import { renderDefiProjectMarkdown } from './renderDefiProjectMarkdown'
 
 export async function getDefiProjectData(
@@ -102,7 +103,7 @@ async function loadDefiProjectPage(manifest: Manifest, slug: string) {
         // shared by every request for the project, including the .md one.
         url: `/projects/${entry.slug}`,
         openGraph: {
-          image: `/meta-images/defi/projects/${entry.slug}/opengraph-image.png`,
+          image: getProjectOgImagePath(entry.slug),
         },
       }),
     },

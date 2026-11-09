@@ -9,6 +9,7 @@ import { getZkCatalogMetadataDescription } from '~/ssr/head/projectMetaDescripti
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
+import { getProjectOgImagePath } from '~/utils/project/getProjectUrl'
 import { renderZkCatalogProjectMarkdown } from './renderZkCatalogProjectMarkdown'
 
 export async function getZkCatalogProjectData(
@@ -85,7 +86,7 @@ async function loadZkCatalogProjectPage(manifest: Manifest, slug: string) {
         // shared by every request for the project, including the .md one.
         url: `/projects/${project.slug}`,
         openGraph: {
-          image: `/meta-images/zk-catalog/projects/${project.slug}/opengraph-image.png`,
+          image: getProjectOgImagePath(project.slug),
         },
       }),
     },

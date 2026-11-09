@@ -15,7 +15,10 @@ import { getInteropMetadataDescription } from '~/ssr/head/projectMetaDescription
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
-import { getProjectPath } from '~/utils/project/getProjectUrl'
+import {
+  getProjectOgImagePath,
+  getProjectPath,
+} from '~/utils/project/getProjectUrl'
 import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
 import { renderInteropProtocolMarkdown } from './renderInteropProtocolMarkdown'
 
@@ -39,7 +42,7 @@ export async function getInteropProtocolPageData(
         description: data.project.metaDescription,
         url: getProjectPath(data.project.slug),
         openGraph: {
-          image: `/meta-images/interop/projects/${data.project.slug}/opengraph-image.png`,
+          image: getProjectOgImagePath(data.project.slug),
         },
       }),
     },

@@ -6,6 +6,7 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
+import { getProjectOgImagePath } from '~/utils/project/getProjectUrl'
 import { getChainProjectPath } from './paths'
 
 export async function getChainProjectData(
@@ -50,7 +51,7 @@ async function loadChainProjectPage(manifest: Manifest, slug: string) {
         // Chain pages show only interop flows, which have no markdown version.
         hasMarkdown: false,
         openGraph: {
-          image: '/meta-images/interop/summary/opengraph-image.png',
+          image: getProjectOgImagePath(entry.slug),
         },
       }),
     },

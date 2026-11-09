@@ -1,60 +1,78 @@
 import { existsSync, readFileSync } from 'node:fs'
 import path from 'node:path'
-import type { Project } from '@l2beat/config'
+import { INTEROP_CHAINS, type Project } from '@l2beat/config'
 import type { OpengraphKit } from '~/components/opengraph-image/heartbeat/render'
 import { renderOpengraphPng } from '~/components/opengraph-image/heartbeat/render'
 import { ProjectOpengraphImage } from '~/components/opengraph-image/Project'
+import { getChainProjectSlug } from '~/server/features/chains/getChainProjects'
+import { PROJECT_PAGE_SECTION_FIELDS } from '~/server/features/projects/getProjectPage'
 import { ps } from '~/server/projects'
 import { writeIfMissing } from './writeIfMissing'
 
-type ProjectPageType = ReturnType<typeof getOpengraphProjectTypes>[number]
-
 export async function generateProjectOgImages(kit: OpengraphKit) {
-  const projects = await ps.getProjects({
-    optional: [
-      'scalingInfo',
-      'zkCatalogInfo',
-      'interopConfig',
-      'privacyInfo',
-      'defiInfo',
-    ],
-  })
+  for (const page of await getProjectOgImagePages()) {
+    await writeIfMissing(
+      'PROJECT DETAILS',
+      // `getProjectOgImagePath` without the `/meta-images/` and file name
+      `projects/${page.slug}`,
+      page.name,
+      () =>
+        renderOpengraphPng(
+          <ProjectOpengraphImage
+            measure={kit.measure}
+            name={page.name}
+            shortName={page.shortName}
+            logo={getLogo(page.slug)}
+          />,
+          kit,
+        ),
+    )
+  }
+}
 
+/**
+ * Every page at `/projects/{slug}`, in any deployment: projects in a section,
+ * Ethereum, and chain pages without a project. Each has one image, whatever
+ * sections it is in.
+ */
+export async function getProjectOgImagePages() {
+  const projects = await ps.getProjects({
+    optional: [...PROJECT_PAGE_SECTION_FIELDS],
+  })
+  const pages: { slug: string; name: string; shortName?: string }[] = [
+    { slug: 'ethereum', name: 'Ethereum' },
+  ]
   for (const project of projects) {
-    for (const type of getOpengraphProjectTypes(project)) {
-      await writeIfMissing(
-        'PROJECT DETAILS',
-        `${type}/projects/${project.slug}`,
-        project.name,
-        () =>
-          renderOpengraphPng(
-            <ProjectOpengraphImage
-              measure={kit.measure}
-              label={getLabel(project, type)}
-              name={
-                type === 'interop'
-                  ? (project.interopConfig?.name ?? project.name)
-                  : project.name
-              }
-              shortName={project.shortName}
-              logo={getLogo(project.slug)}
-            />,
-            kit,
-          ),
-      )
+    if (!PROJECT_PAGE_SECTION_FIELDS.some((field) => project[field])) continue
+    pages.push({
+      slug: project.slug,
+      name: isInteropPage(project)
+        ? (project.interopConfig?.name ?? project.name)
+        : project.name,
+      shortName: project.shortName,
+    })
+  }
+  const l2ProjectIds = new Set(
+    projects.filter((p) => p.scalingInfo).map((p) => p.id),
+  )
+  for (const chain of INTEROP_CHAINS) {
+    const slug = getChainProjectSlug(chain, l2ProjectIds)
+    if (slug && !pages.some((page) => page.slug === slug)) {
+      pages.push({ slug, name: chain.name })
     }
   }
+  return pages
+}
 
-  await writeIfMissing('PROJECT DETAILS', 'projects/ethereum', 'Ethereum', () =>
-    renderOpengraphPng(
-      <ProjectOpengraphImage
-        measure={kit.measure}
-        label="Layer 1"
-        name="Ethereum"
-        logo={getLogo('ethereum')}
-      />,
-      kit,
-    ),
+/** An interop protocol's page shows the protocol's name. */
+function isInteropPage(
+  project: Project<never, (typeof PROJECT_PAGE_SECTION_FIELDS)[number]>,
+) {
+  return (
+    !!project.interopConfig &&
+    !project.scalingInfo &&
+    !project.zkCatalogInfo &&
+    !project.privacyInfo
   )
 }
 
@@ -63,53 +81,4 @@ function getLogo(slug: string) {
   const file = path.join(process.cwd(), 'static/icons', `${slug}.png`)
   if (!existsSync(file)) return undefined
   return `data:image/png;base64,${readFileSync(file).toString('base64')}`
-}
-
-/** The project's type only: a stage or a category would leave a stale image behind when it changes. */
-function getLabel(
-  project: Project<never, 'scalingInfo'>,
-  type: ProjectPageType,
-) {
-  switch (type) {
-    case 'layer2s':
-      return project.scalingInfo?.layer === 'layer3' ? 'Layer 3' : 'Layer 2'
-    case 'zk-catalog':
-      return 'ZK catalog'
-    case 'interop':
-      return 'Interop'
-    case 'privacy':
-      return 'Privacy'
-    case 'defi':
-      return 'DeFi'
-  }
-}
-
-export function getOpengraphProjectTypes(
-  project: Project<
-    never,
-    | 'scalingInfo'
-    | 'zkCatalogInfo'
-    | 'interopConfig'
-    | 'privacyInfo'
-    | 'defiInfo'
-  >,
-) {
-  const types: ('layer2s' | 'zk-catalog' | 'interop' | 'privacy' | 'defi')[] =
-    []
-  if (project.scalingInfo) {
-    types.push('layer2s')
-  }
-  if (project.zkCatalogInfo) {
-    types.push('zk-catalog')
-  }
-  if (project.interopConfig) {
-    types.push('interop')
-  }
-  if (project.privacyInfo) {
-    types.push('privacy')
-  }
-  if (project.defiInfo) {
-    types.push('defi')
-  }
-  return types
 }

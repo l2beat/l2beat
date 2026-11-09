@@ -13,6 +13,7 @@ import { getWebPageStructuredData } from '~/ssr/head/structured-data/getWebPageS
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
+import { getProjectOgImagePath } from '~/utils/project/getProjectUrl'
 import { renderPrivacyProjectMarkdown } from './renderPrivacyProjectMarkdown'
 
 export async function getPrivacyProjectData(
@@ -113,7 +114,7 @@ async function loadPrivacyProjectPage(manifest: Manifest, slug: string) {
         // shared by every request for the project, including the .md one.
         url: `/projects/${details.slug}`,
         openGraph: {
-          image: `/meta-images/privacy/projects/${details.slug}/opengraph-image.png`,
+          image: getProjectOgImagePath(details.slug),
         },
         structuredData: (page) => [
           getWebPageStructuredData(page, {
