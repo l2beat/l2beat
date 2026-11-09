@@ -144,7 +144,8 @@ function TransferSizeBars({
   const legendHeight = legend.height ?? 0
 
   const margin = horizontal
-    ? { top: 4, right: 8, bottom: 4, left: 4 }
+    ? // Right: half of the centred '100%' label.
+      { top: 4, right: 16, bottom: 4, left: 4 }
     : { top: 20, right: 0, bottom: 0, left: 0 }
   const plotLeft = margin.left + (horizontal ? categoryAxisWidth : 30)
   const plotTop = margin.top + (horizontal ? 0 : legendHeight)

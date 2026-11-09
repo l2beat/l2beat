@@ -116,9 +116,11 @@ export function ChartContainer<T extends { timestamp: number }>({
             >
               {shouldMountChart ? children : null}
             </div>
-            {legend && shouldMountChart && (
-              <ChartLegend leading={legendLeading} />
-            )}
+            {legend &&
+              shouldMountChart &&
+              (hasData || isLoading || noDataSourcesSelected) && (
+                <ChartLegend leading={legendLeading} />
+              )}
           </div>
         </ChartSettledSize>
         {(!!isLoading || !shouldMountChart) && (
