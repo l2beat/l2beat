@@ -120,7 +120,7 @@ export class EthereumBlobNotifierIndexer extends ManagedChildIndexer {
       return [
         [
           `**Unmatched Ethereum Blob Pairs** (${date})`,
-          `No address pairs with ${COUNT_THRESHOLD}+ blobs outside project configs.`,
+          `All address pairs with ${COUNT_THRESHOLD}+ blobs are attributed to a project.`,
         ].join('\n'),
       ]
     }

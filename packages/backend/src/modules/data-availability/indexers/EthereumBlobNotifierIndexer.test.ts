@@ -45,7 +45,7 @@ describe(EthereumBlobNotifierIndexer.name, () => {
 
       expect(result).toEqual(oneAm)
       expect(discordClient.sendMessage).toHaveBeenOnlyCalledWith(
-        expect.includes('No address pairs with 100+ blobs'),
+        expect.includes('All address pairs with 100+ blobs are attributed'),
       )
     })
 
