@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type { BlockTimestampProvider, IRpcClient } from '@l2beat/shared'
 import { getBlockNumberAtOrBefore } from '@l2beat/shared'
 import { assert, type UnixTime } from '@l2beat/shared-pure'
@@ -12,20 +13,25 @@ const MAX_REMEMBERED = 1_000
  * 12-second slot, so the block found for an earlier timestamp bounds the
  * search to a few blocks. Only a timestamp with nothing earlier remembered
  * goes to the block timestamp provider, which asks Etherscan first, whose
- * daily limit the backfill would use up.
+ * daily limit the backfill would use up. RPC errors are thrown, not sent
+ * there, so the indexer retries them.
  */
 export class EthereumBlockFinder {
   private readonly found = new Map<UnixTime, Promise<number>>()
+  private head = 0
 
   constructor(
     private readonly $: {
-      rpc: Pick<IRpcClient, 'getBlockHeader'>
+      rpc: Pick<IRpcClient, 'getBlockHeader' | 'getLatestBlockNumber'>
       blockTimestampProvider: Pick<
         BlockTimestampProvider,
         'getBlockNumberAtOrBefore'
       >
     },
-  ) {}
+    private readonly logger: Logger,
+  ) {
+    this.logger = logger.for(this)
+  }
 
   getBlockNumberAtOrBefore(
     timestamp: UnixTime,
@@ -43,11 +49,9 @@ export class EthereumBlockFinder {
   private async find(timestamp: UnixTime): Promise<number> {
     const earlier = this.latestBefore(timestamp)
     if (earlier !== undefined) {
-      try {
-        return await this.findAfter(earlier, timestamp)
-      } catch {
-        // The bound can pass the chain's head, or the earlier search failed
-      }
+      const block = await this.findAfter(earlier, timestamp)
+      if (block !== undefined) return block
+      this.logger.warn('Blocks came faster than slots', { earlier, timestamp })
     }
     return await this.$.blockTimestampProvider.getBlockNumberAtOrBefore(
       timestamp,
@@ -55,19 +59,22 @@ export class EthereumBlockFinder {
     )
   }
 
+  /** Undefined when more blocks came than slots, so the bound doesn't hold. */
   private async findAfter(
     earlier: UnixTime,
     timestamp: UnixTime,
-  ): Promise<number> {
+  ): Promise<number | undefined> {
     const from = await this.getBlockNumberAtOrBefore(earlier, 'ethereum')
-    const to = from + Math.ceil((timestamp - earlier) / SLOT_SECONDS)
+    const bound = from + Math.ceil((timestamp - earlier) / SLOT_SECONDS)
+    if (bound > this.head) {
+      this.head = await this.$.rpc.getLatestBlockNumber()
+    }
     const getBlock = (n: number) => this.$.rpc.getBlockHeader(n)
+    const to = Math.min(bound, this.head)
     const block = await getBlockNumberAtOrBefore(timestamp, from, to, getBlock)
-    // The bound holds for 12-second slots only; a block after it at or before
-    // the timestamp means it didn't
-    if (block === to) {
-      const next = await getBlock(to + 1)
-      assert(next.timestamp > timestamp, 'More blocks than slots')
+    if (block === bound && bound < this.head) {
+      const next = await getBlock(bound + 1)
+      if (next.timestamp <= timestamp) return undefined
     }
     return block
   }

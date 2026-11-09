@@ -1,5 +1,6 @@
+import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 import { EthereumBlockFinder } from './EthereumBlockFinder'
 
 const START = UnixTime(1_704_067_200)
@@ -38,7 +39,7 @@ describe(EthereumBlockFinder.name, () => {
     expect(provider).toHaveBeenCalledTimes(1)
   })
 
-  it('asks the provider when the bound passes the head', async () => {
+  it('stops the search at the head', async () => {
     const chain = makeChain(310, () => true)
     const provider = mockFn(async (timestamp: UnixTime) =>
       chain.blockAtOrBefore(timestamp),
@@ -51,7 +52,34 @@ describe(EthereumBlockFinder.name, () => {
     expect(await finder.getBlockNumberAtOrBefore(next, 'ethereum')).toEqual(
       chain.blockAtOrBefore(next),
     )
-    expect(provider).toHaveBeenCalledTimes(2)
+    expect(provider).toHaveBeenCalledTimes(1)
+  })
+
+  it('throws RPC errors instead of asking the provider', async () => {
+    const chain = makeChain(1_000, () => true)
+    const provider = mockFn(async (timestamp: UnixTime) =>
+      chain.blockAtOrBefore(timestamp),
+    )
+    const finder = new EthereumBlockFinder(
+      {
+        rpc: {
+          getBlockHeader: async () => {
+            throw new Error('RPC down')
+          },
+          getLatestBlockNumber: chain.getLatestBlockNumber,
+        },
+        blockTimestampProvider: { getBlockNumberAtOrBefore: provider },
+      },
+      Logger.SILENT,
+    )
+
+    await finder.getBlockNumberAtOrBefore(START, 'ethereum')
+    const next = UnixTime(START + UnixTime.HOUR)
+
+    await expect(
+      finder.getBlockNumberAtOrBefore(next, 'ethereum'),
+    ).toBeRejectedWith('RPC down')
+    expect(provider).toHaveBeenCalledTimes(1)
   })
 
   it('asks the provider when blocks come faster than slots', async () => {
@@ -59,7 +87,11 @@ describe(EthereumBlockFinder.name, () => {
     const provider = mockFn(async (timestamp: UnixTime) =>
       chain.blockAtOrBefore(timestamp),
     )
-    const finder = makeFinder(chain, provider)
+    const logger = mockObject<Logger>({
+      for: (): Logger => logger,
+      warn: () => {},
+    })
+    const finder = makeFinder(chain, provider, logger)
 
     await finder.getBlockNumberAtOrBefore(START, 'ethereum')
     const next = UnixTime(START + UnixTime.HOUR)
@@ -68,17 +100,28 @@ describe(EthereumBlockFinder.name, () => {
       chain.blockAtOrBefore(next),
     )
     expect(provider).toHaveBeenCalledTimes(2)
+    expect(logger.warn).toHaveBeenOnlyCalledWith(
+      'Blocks came faster than slots',
+      { earlier: START, timestamp: next },
+    )
   })
 })
 
 function makeFinder(
   chain: ReturnType<typeof makeChain>,
   provider: (timestamp: UnixTime) => Promise<number>,
+  logger = Logger.SILENT,
 ) {
-  return new EthereumBlockFinder({
-    rpc: { getBlockHeader: chain.getBlockHeader },
-    blockTimestampProvider: { getBlockNumberAtOrBefore: provider },
-  })
+  return new EthereumBlockFinder(
+    {
+      rpc: {
+        getBlockHeader: chain.getBlockHeader,
+        getLatestBlockNumber: chain.getLatestBlockNumber,
+      },
+      blockTimestampProvider: { getBlockNumberAtOrBefore: provider },
+    },
+    logger,
+  )
 }
 
 /** Blocks from FIRST_BLOCK, one per kept slot, starting 10 slots before START. */
@@ -100,6 +143,7 @@ function makeChain(
       if (timestamp === undefined) throw new Error('No such block')
       return { number, timestamp } as never
     },
+    getLatestBlockNumber: async () => FIRST_BLOCK + timestamps.length - 1,
     blockAtOrBefore: (timestamp: UnixTime) =>
       FIRST_BLOCK + timestamps.filter((t) => t <= timestamp).length - 1,
   }

@@ -34,10 +34,10 @@ export function createLiquidStakingModule({
   const indexerService = new IndexerService(db)
   const dune = new DuneQueryService({ logger, duneClient })
   const rpc = providers.clients.getRpcClient('ethereum')
-  const blockFinder = new EthereumBlockFinder({
-    rpc,
-    blockTimestampProvider: providers.blockTimestamp,
-  })
+  const blockFinder = new EthereumBlockFinder(
+    { rpc, blockTimestampProvider: providers.blockTimestamp },
+    logger,
+  )
   const hourlyIndexer = new HourlyIndexer(logger, clock)
   const dailyIndexer = new DailyIndexer(logger, clock)
   // One indexer per project, so a project whose reads fail stalls alone.
