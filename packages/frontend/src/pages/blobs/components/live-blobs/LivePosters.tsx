@@ -350,26 +350,24 @@ function PosterName({
   poster: LivePoster
   className?: string
 }) {
-  const { head, id } = splitTrailingId(poster.name)
+  // Unnamed chains share a stack name and differ only by a trailing id, so
+  // those truncate from the start. One element, as the table's rows are
+  // ratcheted by element count
+  const endsWithId = / \d+$/.test(poster.name)
   return (
     // a phone has room for the name or the numbers, so long names give way
     <span
       className={cn(
-        'flex min-w-0 font-bold max-md:max-w-[7rem]',
+        'block truncate font-bold max-md:max-w-[7rem]',
+        endsWithId && 'text-left [direction:rtl]',
         className,
       )}
       title={poster.name}
     >
-      <span className="truncate">{head}</span>
-      {/* Unnamed chains share a stack name and differ only by their id */}
-      {id && <span className="shrink-0">&nbsp;{id}</span>}
+      {/* Marks keep the name left to right inside the rtl box */}
+      {endsWithId ? `\u200e${poster.name}\u200e` : poster.name}
     </span>
   )
-}
-
-function splitTrailingId(name: string): { head: string; id?: string } {
-  const match = /^(.+) (\d+)$/.exec(name)
-  return match?.[1] && match[2] ? { head: match[1], id: match[2] } : { head: name }
 }
 
 function pinnedCellProps(index: number, className?: string) {

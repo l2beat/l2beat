@@ -134,7 +134,7 @@ function Header({
           </span>
           {/* The day it covers, as the live total below is over the last 24h */}
           <span className="whitespace-nowrap text-secondary text-xs leading-none">
-            {formatRange(...day).replace('\n', ' ')}
+            {formatRange(...day).replaceAll('\n', ' ')}
           </span>
         </div>
       )}
