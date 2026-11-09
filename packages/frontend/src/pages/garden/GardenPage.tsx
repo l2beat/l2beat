@@ -1,4 +1,3 @@
-import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { CropsAttestationsMeta } from '~/server/features/garden/getAttestationsMeta'
@@ -37,7 +36,6 @@ export function GardenPage({ entries, attestation, ...props }: Props) {
             <CropsSection />
           </main>
         </div>
-        <ScrollToTopButton />
       </SideNavLayout>
     </AppLayout>
   )
