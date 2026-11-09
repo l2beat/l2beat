@@ -1,8 +1,9 @@
 import {
   ChainSpecificAddress,
-  formatNumber,
+  formatCompactAmount,
   formatSeconds,
   ProjectId,
+  pluralize,
   UnixTime,
 } from '@l2beat/shared-pure'
 import {
@@ -187,14 +188,8 @@ const escapeHatchAddress = ChainSpecificAddress.address(escapeHatch.address)
 const v6ActivationTimestamp = UnixTime(1793001623) // 26 October 2026 08:00:23 UTC
 const v6ActivationBlock = 26275528 // https://etherscan.io/tx/0x2ec0909c5d1a39fb123392b18d6d30ffab21072c961497ee36167923bf589a0f
 
-// Compact without padding zeros: 200K, 258.75M
 function formatAztecAmount(amount: bigint): string {
-  const tokens = Number(amount / 10n ** 18n)
-  const compact = tokens.toLocaleString('en-US', {
-    notation: 'compact',
-    maximumFractionDigits: 2,
-  })
-  return `${compact} AZTEC`
+  return formatCompactAmount(Number(amount / 10n ** 18n), 'AZTEC')
 }
 
 function formatPercentage(value: string): string {
@@ -556,12 +551,15 @@ export const aztecnetworkv6: ScalingProject = {
         },
         sequencerCount: {
           value: `${activeSequencerCount.toLocaleString('en-US')} sequencers`,
-          secondLine: `${formatNumber(stakeDistribution.totalStake)} ${stakeDistribution.stakeToken}`,
+          secondLine: formatCompactAmount(
+            stakeDistribution.totalStake,
+            stakeDistribution.stakeToken,
+          ),
         },
         blockProductionAccess: SEQUENCING_SPEC.OPEN_BLOCK_PRODUCTION(),
         stakePerValidator: { value: activationThresholdString + ', constant' },
         rateLimit: {
-          value: `${entryQueueFlushSize} sequencers / epoch`,
+          value: `${entryQueueFlushSize} ${pluralize(entryQueueFlushSize, 'sequencer')} / epoch`,
           description:
             'Can be changed by onchain Governance, but the contract requires nonzero minimum, divisor, and maximum queue-flush parameters.',
         },
