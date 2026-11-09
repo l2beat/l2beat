@@ -32,6 +32,7 @@ describe(ValueService.name, () => {
         address: EthereumAddress.random(),
         chain: 'chain',
         decimals: 0,
+        sinceTimestamp: UnixTime(0),
       } as TotalSupplyAmountFormula
 
       const amountConfigId = createAmountConfig(amountFormula).id
@@ -96,6 +97,7 @@ describe(ValueService.name, () => {
         address: wBTCContractAddress,
         chain: 'bob',
         decimals: 0,
+        sinceTimestamp: UnixTime(0),
       } as TotalSupplyAmountFormula
 
       const wBTCAmountConfigId = createAmountConfig(wBTCAmountFormula).id
@@ -105,6 +107,7 @@ describe(ValueService.name, () => {
         address: solvBTCContractAddress,
         chain: 'bob',
         decimals: 0,
+        sinceTimestamp: UnixTime(0),
       } as TotalSupplyAmountFormula
 
       const solvBTCAmountConfigId = createAmountConfig(solvBTCAmountFormula).id
@@ -115,6 +118,7 @@ describe(ValueService.name, () => {
         chain: 'bob',
         decimals: 0,
         escrowAddress: solvBTCEscrowAddress,
+        sinceTimestamp: UnixTime(0),
       } as BalanceOfEscrowAmountFormula
 
       const wBTCBalanceOfEscrowConfigId = createAmountConfig(
@@ -237,6 +241,7 @@ describe(ValueService.name, () => {
             address: EthereumAddress.random(),
             chain: 'chain',
             decimals: 0,
+            sinceTimestamp: UnixTime(0),
           } as TotalSupplyAmountFormula,
         ],
       } as CalculationFormula
@@ -471,6 +476,7 @@ describe(ValueService.name, () => {
         address: EthereumAddress.random(),
         chain: 'chain',
         decimals: 0,
+        sinceTimestamp: UnixTime(0),
       } as TotalSupplyAmountFormula
 
       const constFormula = {
