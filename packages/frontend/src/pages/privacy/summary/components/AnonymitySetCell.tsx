@@ -45,12 +45,9 @@ export function AnonymitySetCell({ anonymitySet }: Props) {
     return (
       <Tooltip>
         <TooltipTrigger asChild>
-          <button
-            type="button"
-            className="font-medium text-secondary text-xs leading-[15px] md:text-sm md:leading-[1.2]"
-          >
+          <Badge type="gray" size="small">
             Too small
-          </button>
+          </Badge>
         </TooltipTrigger>
         <TooltipContent className="max-w-[320px]">
           Too few users to track exactly.
