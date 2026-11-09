@@ -187,8 +187,14 @@ const escapeHatchAddress = ChainSpecificAddress.address(escapeHatch.address)
 const v6ActivationTimestamp = UnixTime(1793001623) // 26 October 2026 08:00:23 UTC
 const v6ActivationBlock = 26275528 // https://etherscan.io/tx/0x2ec0909c5d1a39fb123392b18d6d30ffab21072c961497ee36167923bf589a0f
 
+// Compact without padding zeros: 200K, 258.75M
 function formatAztecAmount(amount: bigint): string {
-  return `${formatNumber(Number(amount / 10n ** 18n))} AZTEC`
+  const tokens = Number(amount / 10n ** 18n)
+  const compact = tokens.toLocaleString('en-US', {
+    notation: 'compact',
+    maximumFractionDigits: 2,
+  })
+  return `${compact} AZTEC`
 }
 
 function formatPercentage(value: string): string {
