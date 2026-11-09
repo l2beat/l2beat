@@ -9,7 +9,13 @@ import { cn } from '../../../utils/cn'
 import { useTerminalStore } from '../panel-terminal/store'
 import { useDiscoveryCommand } from '../panel-terminal/useDiscoveryCommand'
 import { Search } from '../search/Search'
+import { useGlobalSettingsStore } from '../store/global-settings-store'
 import { SettingsDialog } from './settings/SettingsDialog'
+import {
+  needsAttention,
+  useFilesSyncStatus,
+  useOutputsSyncStatus,
+} from './settings/syncStatus'
 import { addPanel, useDockingStore } from './store'
 
 export function TopBar(props: { project: string }) {
@@ -32,6 +38,12 @@ export function TopBar(props: { project: string }) {
         <p className="truncate font-semibold text-coffee-100 text-sm">
           {props.project}
         </p>
+        <DepthBadge />
+        {IS_READONLY && (
+          <p className="truncate text-coffee-400 text-xs italic">
+            That's the latest state reviewed by ETHBEAT.
+          </p>
+        )}
       </div>
       <div className="hidden md:flex">
         <Search />
@@ -93,19 +105,61 @@ export function TopBar(props: { project: string }) {
           </Button>
         </div>
 
-        <SettingsDialog
-          defaultTabId="global"
-          trigger={
-            <button
-              type="button"
-              className="flex size-7 items-center justify-center rounded-sm text-coffee-300 hover:bg-coffee-700 hover:text-coffee-100"
-              aria-label="Settings"
-            >
-              <IconGear />
-            </button>
-          }
-        />
+        {IS_READONLY ? (
+          <SettingsButton needsAttention={false} />
+        ) : (
+          <SyncAwareSettingsButton project={props.project} />
+        )}
       </div>
     </div>
+  )
+}
+
+function DepthBadge() {
+  const maxReachableDepth = useGlobalSettingsStore((s) => s.maxReachableDepth)
+  if (maxReachableDepth === null) {
+    return null
+  }
+  return (
+    <div className="shrink-0 rounded-sm border border-aux-green/60 px-1.5 text-aux-green text-xs">
+      Depth: {maxReachableDepth}
+    </div>
+  )
+}
+
+// Config models change on every list click, so the sync hooks stay out of the
+// TopBar and rerender only this button.
+function SyncAwareSettingsButton(props: { project: string }) {
+  const outputs = useOutputsSyncStatus(props.project)
+  const files = useFilesSyncStatus()
+  return (
+    <SettingsButton
+      needsAttention={
+        needsAttention(outputs.level) || needsAttention(files.level)
+      }
+    />
+  )
+}
+
+function SettingsButton(props: { needsAttention: boolean }) {
+  return (
+    <SettingsDialog
+      defaultTabId={props.needsAttention ? 'status' : 'global'}
+      trigger={
+        <button
+          type="button"
+          className="relative flex size-7 items-center justify-center rounded-sm text-coffee-300 hover:bg-coffee-700 hover:text-coffee-100"
+          aria-label={
+            props.needsAttention ? 'Settings, sync needs attention' : 'Settings'
+          }
+          title={props.needsAttention ? 'Sync needs attention' : undefined}
+        >
+          <IconGear />
+          {props.needsAttention && (
+            <span className="absolute top-1 right-1 size-1.5 rounded-full bg-aux-yellow" />
+          )}
+        </button>
+      }
+    />
   )
 }
