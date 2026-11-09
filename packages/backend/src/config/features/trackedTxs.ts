@@ -1,4 +1,3 @@
-import type { Env } from '@l2beat/backend-tools'
 import type { ProjectService } from '@l2beat/config'
 import { createTrackedTxId } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
@@ -8,7 +7,6 @@ import type { FeatureFlags } from '../FeatureFlags'
 
 export async function getTrackedTxsConfig(
   ps: ProjectService,
-  env: Env,
   flags: FeatureFlags,
 ): Promise<TrackedTxsConfig> {
   const projects = await ps.getProjects({
@@ -28,7 +26,6 @@ export async function getTrackedTxsConfig(
         (c) => c.id,
       ),
     })),
-    duneApiKey: env.string('DUNE_API_KEY'),
     // TODO: figure out how to set it for local development
     minTimestamp: UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
     uses: {

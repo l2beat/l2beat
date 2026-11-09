@@ -53,6 +53,7 @@ const schema = {
   interopConfig: 'TEXT',
   privacyInfo: 'TEXT',
   defiInfo: 'TEXT',
+  liquidStaking: 'TEXT',
   externalDependencies: 'TEXT',
 
   crops: 'TEXT',
