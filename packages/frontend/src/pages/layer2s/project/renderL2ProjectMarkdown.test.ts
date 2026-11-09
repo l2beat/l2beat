@@ -357,6 +357,27 @@ describe(renderL2ProjectMarkdown.name, () => {
     )
   })
 
+  it('qualifies a stale past day UOPS with its sync warning', () => {
+    const activity = ENTRY.header.activity
+    const summary = getSection(
+      renderL2ProjectMarkdown({
+        ...ENTRY,
+        header: {
+          ...ENTRY.header,
+          activity: activity && {
+            ...activity,
+            syncWarning: 'No activity data since 21 Jun 2026, 06:00 UTC.',
+          },
+        },
+      }),
+      'Summary',
+    )
+
+    expect(summary).toInclude(
+      '  - **Warning:** No activity data since 21 Jun 2026, 06:00 UTC. (sentiment: warning)\n',
+    )
+  })
+
   it('surfaces project warnings before the facts', () => {
     const summary = getSection(
       renderL2ProjectMarkdown({

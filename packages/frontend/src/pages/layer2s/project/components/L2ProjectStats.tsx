@@ -85,7 +85,7 @@ export function ProjectL2Stats({ project, className }: Props) {
         project.header.activity ? (
           <span className="flex items-center gap-2">
             {project.header.activity.syncWarning && (
-              <Tooltip>
+              <Tooltip contentInHtml>
                 <TooltipTrigger aria-label="Activity warning">
                   <RoundedWarningIcon sentiment="warning" className="size-4" />
                 </TooltipTrigger>
