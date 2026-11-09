@@ -22,7 +22,6 @@ export function CodeEditorComponent({
   json,
 }: CodeEditorComponentProps) {
   const editorElement = useRef<HTMLDivElement>(null)
-  const editorRef = useRef<Editor | null>(null)
   const { setEditor, removeEditor } = useCodeStore()
 
   useEffect(() => {
@@ -47,37 +46,16 @@ export function CodeEditorComponent({
     }
 
     setEditor(editorKey, editor)
-    editorRef.current = editor
 
     return () => {
-      editorRef.current = null
       removeEditor(editorKey, editor)
       editor.dispose()
     }
   }, [editorKey, setEditor, removeEditor])
 
   return (
-    <div
-      className="h-full min-h-0 w-full"
-      ref={editorElement}
-      onKeyDown={(event) => event.stopPropagation()}
-      onKeyUp={(event) => {
-        if (!opensGlobalSearch(editorRef.current, event)) {
-          event.stopPropagation()
-        }
-      }}
-    />
+    // Keys pass through to the keybindings, whose when clauses keep them
+    // off keys typed into an editable file.
+    <div className="h-full min-h-0 w-full" ref={editorElement} />
   )
-}
-
-// Read-only code has no use for '/', so it reaches the global search shortcut.
-// The find panel's input lives outside the content and still types it.
-function opensGlobalSearch(
-  editor: Editor | null,
-  event: React.KeyboardEvent,
-): boolean {
-  if (editor === null || event.key !== '/') {
-    return false
-  }
-  return editor.view.state.readOnly && event.target === editor.view.contentDOM
 }
