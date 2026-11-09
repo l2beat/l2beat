@@ -4,6 +4,8 @@ import { Footer } from '~/components/Footer'
 import { MobileTopNavbar } from '~/components/nav/mobile/MobileTopNavbar'
 import { NavSidebar } from '~/components/nav/sidebar/NavSidebar'
 import { TopBanner } from '~/components/TopBanner'
+import { WhatsNewBanner } from '~/components/whats-new/WhatsNewBanner'
+import { useWhatsNewContext } from '~/components/whats-new/WhatsNewContext'
 import { navGroups } from '~/consts/navGroups'
 import { navSecondaryLinks } from '~/consts/navSecondaryLinks'
 import { cn } from '~/utils/cn'
@@ -81,6 +83,7 @@ export function SideNavLayout({
   variant = 'default',
   backdrop,
 }: SideNavLayoutProps) {
+  const whatsNew = useWhatsNewContext()
   const topChildren = <TopBanner className={topBannerVariants({ variant })} />
 
   return (
@@ -112,6 +115,9 @@ export function SideNavLayout({
               variant === 'home' ? 'md:pb-6' : 'md:max-lg:pb-6',
             )}
           >
+            {whatsNew && (
+              <WhatsNewBanner whatsNew={whatsNew} className="lg:hidden" />
+            )}
             {children}
           </div>
           <Footer
