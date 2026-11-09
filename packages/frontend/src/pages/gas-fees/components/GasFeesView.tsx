@@ -1,31 +1,19 @@
-import { useQuery } from '@tanstack/react-query'
 import { useCallback, useState } from 'react'
 import { ChartRangeControls } from '~/components/core/chart/ChartRangeControls'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
-import { rangeToOption } from '~/components/core/chart/utils/rangeToOption'
-import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { GasFeesUpgrade } from '~/server/features/gas-fees/getGasFeesUpgrades'
-import {
-  type GasFeesGasMetric,
-  type GasFeesMetric,
-  type GasFeesUnit,
-  type GasFeesUsdMetric,
-  isGasMetric,
-} from '~/server/features/gas-fees/types'
 import { useTRPC } from '~/trpc/React'
 import { type ChartRange, optionToRange } from '~/utils/range/range'
 import { GasFeesChart } from './GasFeesChart'
-import { GasFeesStats } from './GasFeesStats'
-import { GasFeesTable } from './GasFeesTable'
+import { GasFeesCosts } from './GasFeesCosts'
+import { GasFeesEstimator } from './GasFeesEstimator'
+import { GasFeesHero } from './GasFeesHero'
+import { GasFeesHowItWorks } from './GasFeesHowItWorks'
+import { GasFeesLive } from './GasFeesLive'
+import { GasFeesTipPayers } from './GasFeesTipPayers'
 import { GasFeesUpgrades } from './GasFeesUpgrades'
-import {
-  DEFAULT_GAS_FEES_GAS_METRIC,
-  DEFAULT_GAS_FEES_METRIC,
-  GAS_FEES_RANGE_OPTIONS,
-} from './metrics'
-import type { RecentHover } from './recent/GasFeesRecentStrip'
-import { GasFeesRecentTooltip } from './recent/GasFeesRecentTooltip'
+import { DEFAULT_GAS_FEES_METRIC, GAS_FEES_RANGE_OPTIONS } from './metrics'
 import type { GasFeesChain } from './types'
 
 export type GasFeesScale = 'log' | 'lin'
@@ -47,85 +35,64 @@ interface Props {
 export function GasFeesView({ chains, upgrades, initialRange }: Props) {
   const trpc = useTRPC()
   const [range, setRange] = useState(initialRange)
-  // The chart and the stats above it open on the whole history, the table
-  // on recent fees
-  const [tableRange, setTableRange] = useState(() => optionToRange('30d'))
-  const [unit, setUnit] = useState<GasFeesUnit>('usd')
-  // Each unit keeps its own metric, so switching back restores it
-  const [usdMetric, setUsdMetric] = useState<GasFeesUsdMetric>(
-    DEFAULT_GAS_FEES_METRIC,
-  )
-  const [gasMetric, setGasMetric] = useState<GasFeesGasMetric>(
-    DEFAULT_GAS_FEES_GAS_METRIC,
-  )
-  const metric = unit === 'usd' ? usdMetric : gasMetric
-  const setMetric = (m: GasFeesMetric) =>
-    isGasMetric(m) ? setGasMetric(m) : setUsdMetric(m)
   const [scale, setScale] = useState<GasFeesScale>('log')
-  // One chain is in focus across the page: hovered in the table or its
-  // last 24 hours
-  const [hoveredChainId, setHoveredChainId] = useState<string>()
-  const [recentHover, setRecentHover] = useState<RecentHover>()
-  const highlightedChainId = recentHover?.chainId ?? hoveredChainId
   const [highlightedUpgradeId, setHighlightedUpgradeId] = useState<string>()
-
-  const recent = useQuery(trpc.gasFees.recent.queryOptions())
+  const metric = DEFAULT_GAS_FEES_METRIC
   const chart = useChartQuery(trpc.gasFees.chart, { range, metric })
-  const summary = useChartQuery(trpc.gasFees.summary, { range })
-  const tableSummary = useChartQuery(trpc.gasFees.summary, {
-    range: tableRange,
-  })
   const showWholeHistory = useCallback(() => setRange(optionToRange('max')), [])
-  const shownMetric = chart.shownInput.metric
-
-  const rangeControls = (
-    <ChartRangeControls
-      name="gasFeesRange"
-      value={range}
-      setValue={setRange}
-      options={GAS_FEES_RANGE_OPTIONS.map((value) => ({
-        value,
-        label: RANGE_LABELS[value],
-      }))}
-    />
-  )
 
   return (
     // On mobile the sections run edge to edge, split by a line
     <div className="flex flex-col md:gap-4 [&_.primary-card]:max-md:border-divider [&_.primary-card]:max-md:border-b">
       <PrimaryCard>
-        <GasFeesStats
-          stats={summary.data?.stats}
-          range={summary.shownInput.range}
-          isLoading={summary.isLoading}
-        />
+        <GasFeesHero />
+      </PrimaryCard>
+      <PrimaryCard>
+        <GasFeesLive />
+      </PrimaryCard>
+      <PrimaryCard>
+        <GasFeesEstimator />
+      </PrimaryCard>
+      <PrimaryCard>
+        <GasFeesTipPayers />
       </PrimaryCard>
       {/* The upgrades sit beside the chart, cut to its height */}
       <div className="grid grid-cols-1 md:gap-4 lg:grid-cols-[minmax(0,1fr)_340px]">
         <PrimaryCard>
           <GasFeesChart
+            simple
             chains={chains}
             upgrades={upgrades}
             data={chart.data}
             isLoading={chart.isLoading}
             isPlaceholderData={chart.isPlaceholderData}
-            shownMetric={shownMetric}
+            shownMetric={metric}
             metric={metric}
-            setMetric={setMetric}
+            setMetric={() => {}}
             scale={scale}
             setScale={setScale}
-            highlightedChainId={highlightedChainId}
+            highlightedChainId={undefined}
             highlightedUpgradeId={highlightedUpgradeId}
-            unit={unit}
-            setUnit={setUnit}
-            rangeControl={rangeControls}
+            unit="usd"
+            setUnit={() => {}}
+            rangeControl={
+              <ChartRangeControls
+                name="gasFeesRange"
+                value={range}
+                setValue={setRange}
+                options={GAS_FEES_RANGE_OPTIONS.map((value) => ({
+                  value,
+                  label: RANGE_LABELS[value],
+                }))}
+              />
+            }
           />
         </PrimaryCard>
         <PrimaryCard className="relative max-lg:h-[480px]">
           <div className="absolute inset-0 p-4 md:px-6 md:py-5">
             <GasFeesUpgrades
               upgrades={upgrades}
-              metric={isGasMetric(shownMetric) ? undefined : shownMetric}
+              metric={metric}
               range={chart.shownInput.range}
               highlightedUpgradeId={highlightedUpgradeId}
               setHighlightedUpgradeId={setHighlightedUpgradeId}
@@ -135,45 +102,17 @@ export function GasFeesView({ chains, upgrades, initialRange }: Props) {
         </PrimaryCard>
       </div>
       <PrimaryCard>
-        <GasFeesTable
-          chains={chains}
-          summary={tableSummary.data}
-          isLoading={tableSummary.isLoading}
-          rangeControl={
-            <RadioGroup
-              name="gasFeesTableRange"
-              value={rangeToOption(tableRange, GAS_FEES_RANGE_OPTIONS)}
-              onValueChange={(value) =>
-                setTableRange(
-                  optionToRange(
-                    value as (typeof GAS_FEES_RANGE_OPTIONS)[number],
-                  ),
-                )
-              }
-            >
-              {GAS_FEES_RANGE_OPTIONS.map((option) => (
-                <RadioGroupItem key={option} value={option}>
-                  {option === 'max' ? 'All' : RANGE_LABELS[option]}
-                </RadioGroupItem>
-              ))}
-            </RadioGroup>
-          }
-          recent={{
-            data: recent.data,
-            hover: recentHover,
-            setHover: setRecentHover,
-          }}
-          highlightedChainId={highlightedChainId}
-          setHighlightedChainId={setHoveredChainId}
-        />
+        <GasFeesCosts chains={chains} />
       </PrimaryCard>
-      <GasFeesRecentTooltip
-        hover={recentHover}
-        setHover={setRecentHover}
-        chains={chains}
-        data={recent.data}
-        unit="usd"
-      />
+      <PrimaryCard>
+        <GasFeesHowItWorks />
+      </PrimaryCard>
+      <p className="px-4 pb-4 text-2xs text-secondary md:px-0">
+        Mock for review. Our tips and the wallets' suggestions are live: Ambire
+        is computed from its public code, the others are read from their fee
+        services. Everything else is replayed against Flashbots mempool data,
+        not published live. L2 costs are rough: 30 sampled blocks per chain.
+      </p>
     </div>
   )
 }

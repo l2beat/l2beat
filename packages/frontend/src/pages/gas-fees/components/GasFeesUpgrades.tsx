@@ -67,7 +67,7 @@ export function GasFeesUpgrades({
                     {upgrade.title}
                   </span>
                   {upgrade.timestamp === null ? (
-                    <span className="rounded border border-brand px-1 font-bold text-3xs text-brand uppercase">
+                    <span className="rounded border border-brand px-1 font-bold text-3xs text-primary uppercase">
                       Next
                     </span>
                   ) : (

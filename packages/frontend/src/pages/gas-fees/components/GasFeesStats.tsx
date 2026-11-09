@@ -180,7 +180,7 @@ function TransferCost({ f }: { f: Figures }) {
   )
 }
 
-function Label({
+export function Label({
   children,
   className,
 }: {
@@ -199,7 +199,7 @@ function Label({
   )
 }
 
-function Colored({
+export function Colored({
   color,
   children,
 }: {
@@ -209,7 +209,7 @@ function Colored({
   return <span style={{ color }}>{children}</span>
 }
 
-function Headed({ value, note }: { value: string; note?: string }) {
+export function Headed({ value, note }: { value: string; note?: string }) {
   return (
     <span className="flex items-baseline gap-2">
       <span className="font-bold text-2xl tabular-nums tracking-tight">
@@ -221,7 +221,7 @@ function Headed({ value, note }: { value: string; note?: string }) {
 }
 
 /** Parts of a whole, labelled inside when they fit */
-function BigBar({
+export function BigBar({
   parts,
 }: {
   parts: { value: number; color: string; label?: string }[]
@@ -250,7 +250,7 @@ function BigBar({
 }
 
 /** Parts of a whole with a key under each end */
-function KeyedBar({
+export function KeyedBar({
   parts,
 }: {
   parts: { label: string; value: number; color: string }[]
