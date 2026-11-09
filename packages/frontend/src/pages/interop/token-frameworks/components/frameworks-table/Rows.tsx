@@ -128,7 +128,9 @@ export function RowStats({
           {formatCount(transferCount, 'tx')}
         </span>
       )}
-      <span className="font-bold">{formatCurrency(volume, 'usd')}</span>
+      <span className="font-bold">
+        {formatCurrency(volume, 'usd', { decimals: 1 })}
+      </span>
     </div>
   )
 }

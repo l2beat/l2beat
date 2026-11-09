@@ -200,7 +200,7 @@ function TokenAmount({
   const label =
     amount !== undefined
       ? formatNumberWithCommas(amount, {
-          minimumFractionDigits: decimals,
+          minimumFractionDigits: 0,
           maximumFractionDigits: decimals,
         })
       : symbol

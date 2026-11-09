@@ -1,7 +1,6 @@
 import {
   ChainSpecificAddress,
   formatNumber,
-  formatNumberWithCommas,
   formatSeconds,
   ProjectId,
   UnixTime,
@@ -189,7 +188,7 @@ const v6ActivationTimestamp = UnixTime(1793001623) // 26 October 2026 08:00:23 U
 const v6ActivationBlock = 26275528 // https://etherscan.io/tx/0x2ec0909c5d1a39fb123392b18d6d30ffab21072c961497ee36167923bf589a0f
 
 function formatAztecAmount(amount: bigint): string {
-  return `${formatNumberWithCommas(Number(amount / 10n ** 18n))} AZTEC`
+  return `${formatNumber(Number(amount / 10n ** 18n))} AZTEC`
 }
 
 function formatPercentage(value: string): string {

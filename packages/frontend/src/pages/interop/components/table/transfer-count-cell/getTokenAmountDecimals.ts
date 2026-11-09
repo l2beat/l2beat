@@ -1,6 +1,6 @@
 /**
- * Decimals that resolve about one cent of the token's price, so every row of
- * the same token shows the same precision (USDC: 2, ETH at $3K: 5). Rounding
+ * Most decimals worth showing: about one cent of the token's price, so rows of
+ * the same token stop at the same precision (USDC: 2, ETH at $3K: 5). Rounding
  * the price's magnitude keeps a stablecoin at $1.002 on two decimals.
  */
 export function getTokenAmountDecimals(
