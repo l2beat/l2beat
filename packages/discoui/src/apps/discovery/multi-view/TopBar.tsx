@@ -1,3 +1,4 @@
+import type { MouseEvent } from 'react'
 import { Link } from 'react-router'
 import { Button } from '../../../components/Button'
 import { IS_READONLY } from '../../../config/readonly'
@@ -17,12 +18,6 @@ export function TopBar(props: { project: string }) {
   const selectedLayout = useDockingStore((state) => state.selectedLayout)
   const loadLayout = useDockingStore((state) => state.loadLayout)
   const resetLayout = useDockingStore((state) => state.resetLayout)
-  const { command } = useTerminalStore()
-  const { killCommand, discover } = useDiscoveryCommand()
-
-  // By default when using top bar
-  const useDevMode = true
-
   return (
     <div className="select-none grid-cols-[1fr_auto_1fr] items-center gap-3 px-2 max-md:invisible md:grid md:h-10">
       <div className="hidden min-w-0 items-center gap-2 md:flex">
@@ -38,27 +33,8 @@ export function TopBar(props: { project: string }) {
       </div>
       <div className="hidden items-center gap-3 justify-self-end md:flex">
         {!IS_READONLY && (
-          <div className="flex justify-center gap-1 border-coffee-600 border-r pr-3">
-            <Button
-              size="small"
-              variant="solid"
-              className="h-7 gap-1"
-              disabled={command.inFlight}
-              onClick={() => discover(props.project, useDevMode)}
-            >
-              <IconRefresh className="size-3" />
-              <span className="max-md:hidden">Discover</span>
-            </Button>
-            <Button
-              size="small"
-              variant="destructive"
-              className="h-7 gap-1"
-              disabled={!command.inFlight}
-              onClick={killCommand}
-            >
-              <IconClose />
-              <span className="max-md:hidden">Kill</span>
-            </Button>
+          <div className="flex justify-center border-coffee-600 border-r pr-3">
+            <DiscoverOrStopButton project={props.project} />
           </div>
         )}
         <div className="flex justify-center gap-1">
@@ -108,4 +84,54 @@ export function TopBar(props: { project: string }) {
       </div>
     </div>
   )
+}
+
+// The top bar always runs discovery in dev mode.
+const TOP_BAR_DEV_MODE = true
+
+function DiscoverOrStopButton(props: { project: string }) {
+  const inFlight = useTerminalStore((state) => state.command.inFlight)
+  const { killCommand, discover } = useDiscoveryCommand()
+
+  function onClick(event: MouseEvent<HTMLButtonElement>) {
+    // The second click of a double-click would stop the run the first one started.
+    if (isRepeatClick(event)) {
+      return
+    }
+    if (inFlight) {
+      killCommand()
+    } else {
+      void discover(props.project, TOP_BAR_DEV_MODE)
+    }
+  }
+
+  if (inFlight) {
+    return (
+      <Button
+        size="small"
+        variant="destructive"
+        className="h-7 gap-1"
+        onClick={onClick}
+        title="Stop the running command"
+      >
+        <IconClose />
+        <span className="max-md:hidden">Stop</span>
+      </Button>
+    )
+  }
+  return (
+    <Button
+      size="small"
+      variant="solid"
+      className="h-7 gap-1"
+      onClick={onClick}
+    >
+      <IconRefresh className="size-3" />
+      <span className="max-md:hidden">Discover</span>
+    </Button>
+  )
+}
+
+function isRepeatClick(event: MouseEvent<HTMLButtonElement>): boolean {
+  return event.detail > 1
 }
