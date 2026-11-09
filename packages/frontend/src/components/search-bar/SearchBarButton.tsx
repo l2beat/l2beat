@@ -4,14 +4,18 @@ import { cn } from '~/utils/cn'
 import { EASE_OUT_QUINT } from '~/utils/easing'
 import { useSearchBarContext } from './SearchBarContext'
 import { SEARCH_BAR_EXAMPLES } from './searchBarExamples'
+import { usePrefetchSearchIndex } from './useSearchBarResults'
 
 const EXAMPLE_INTERVAL_MS = 5000
 
 export function SearchBarButton({ className }: { className?: string }) {
   const { setOpen } = useSearchBarContext()
+  const prefetchSearchIndex = usePrefetchSearchIndex()
   return (
     <button
       onClick={() => setOpen((open) => !open)}
+      onPointerEnter={prefetchSearchIndex}
+      onFocus={prefetchSearchIndex}
       // A fixed name: the hint after "Search" changes every few seconds.
       aria-label="Search"
       className={cn(
@@ -36,9 +40,12 @@ export function SearchBarButton({ className }: { className?: string }) {
 
 export function SmallSearchBarButton() {
   const { setOpen } = useSearchBarContext()
+  const prefetchSearchIndex = usePrefetchSearchIndex()
   return (
     <button
       onClick={() => setOpen((open) => !open)}
+      onPointerEnter={prefetchSearchIndex}
+      onFocus={prefetchSearchIndex}
       aria-label="Search"
       className="flex size-6 items-center justify-center transition-transform duration-150 ease-out active:scale-90"
     >

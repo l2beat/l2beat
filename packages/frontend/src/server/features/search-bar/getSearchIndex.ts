@@ -1,4 +1,3 @@
-import { createHash } from 'node:crypto'
 import type { Project } from '@l2beat/config'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import {
@@ -21,34 +20,16 @@ import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import { manifest } from '~/utils/Manifest'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 
-export interface SearchIndexFile {
-  /** Of the JSON, so the browser may cache the file at its URL forever. */
-  hash: string
-  json: string
-}
-
-const SEARCH_INDEX_PATH_PREFIX = '/api/search-index/'
-
-export function getSearchIndexPath(hash: string): string {
-  return `${SEARCH_INDEX_PATH_PREFIX}${hash}`
-}
-
 const searchIndexCache = new FrontendInMemoryCache('getSearchIndex')
 
 // Short, because the token list it reads has a cache of its own: with equal
 // lifetimes, an index built from that cache's stale copy would keep it for
 // another full lifetime. A rebuild costs ~10 ms.
-export function getSearchIndexFile(): Promise<SearchIndexFile> {
+export function getSearchIndexJson(): Promise<string> {
   return searchIndexCache.get(
     { key: ['search-index'], ttl: 60, staleWhileRevalidate: 60 * 15 },
-    buildSearchIndexFile,
+    async () => JSON.stringify(await buildSearchIndex()),
   )
-}
-
-async function buildSearchIndexFile(): Promise<SearchIndexFile> {
-  const json = JSON.stringify(await buildSearchIndex())
-  const hash = createHash('sha256').update(json).digest('hex').slice(0, 16)
-  return { hash, json }
 }
 
 export async function buildSearchIndex(): Promise<SearchIndex> {
@@ -69,8 +50,8 @@ export async function buildSearchIndex(): Promise<SearchIndex> {
       }),
       ...selectChainProjects(l2ProjectIds).map(toSearchIndexChain),
     ],
-    // The token query has no order, and a reordered list would get a new
-    // hash, making browsers download the same index again.
+    // The token query has no order, and a reordered list would change the
+    // ETag, making browsers download the same index again.
     tokens: tokens
       .filter((token) => token.id !== UNKNOWN_ABSTRACT_TOKEN_ID)
       .sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0))

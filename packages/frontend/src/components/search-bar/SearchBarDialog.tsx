@@ -34,10 +34,9 @@ import { useSearchBarResults } from './useSearchBarResults'
 
 interface Props {
   recentlyAdded: SearchBarProject[]
-  searchIndexPath: string
 }
 
-export function SearchBarDialog({ recentlyAdded, searchIndexPath }: Props) {
+export function SearchBarDialog({ recentlyAdded }: Props) {
   const inputRef = useRef<HTMLInputElement>(null)
   const { track } = useTracking()
   const [value, setValue] = useState('')
@@ -58,7 +57,7 @@ export function SearchBarDialog({ recentlyAdded, searchIndexPath }: Props) {
     isLoading,
     problem: searchProblem,
     retry,
-  } = useSearchBarResults({ value, debouncedValue, searchIndexPath, open })
+  } = useSearchBarResults({ value, debouncedValue, open })
 
   useEffect(() => {
     if (debouncedValue === '') return

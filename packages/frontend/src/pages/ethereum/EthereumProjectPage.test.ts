@@ -94,7 +94,6 @@ function renderPage(): string {
         ]),
         queryState: { mutations: [], queries: [] },
         recentlyAddedProjects: [],
-        searchIndexPath: '/api/search-index/latest',
         whatsNewItem: undefined,
         countdowns: PROJECT_COUNTDOWNS,
       }),

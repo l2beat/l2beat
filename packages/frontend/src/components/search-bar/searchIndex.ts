@@ -17,6 +17,9 @@ import type { SearchBarCategory } from './searchBarCategories'
  * small. The server encodes it in `getSearchIndex.ts`.
  */
 
+/** Versioned, so a page never reads rows in a layout it doesn't know. */
+export const SEARCH_INDEX_PATH = '/api/search-index/v1'
+
 export const SearchIndexProjectKind = v.enum([
   'ethereum',
   'layer2',

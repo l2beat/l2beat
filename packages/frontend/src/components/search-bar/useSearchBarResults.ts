@@ -1,6 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
-import { queryOptions, useQuery } from '@tanstack/react-query'
-import { useMemo } from 'react'
+import { queryOptions, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useCallback, useMemo } from 'react'
 import { useTRPC } from '~/trpc/React'
 import { searchBarPages } from './searchBarPages'
 import {
@@ -8,31 +8,31 @@ import {
   searchEntries,
   searchProjectsAndTokens,
 } from './searchBarResults'
-import { decodeSearchIndex, SearchIndex } from './searchIndex'
+import {
+  decodeSearchIndex,
+  SEARCH_INDEX_PATH,
+  SearchIndex,
+} from './searchIndex'
 
 export type SearchProblem = 'offline' | 'failed'
 
 /**
  * Names are searched in the browser on every keystroke, against an index
- * fetched once. Addresses go to the server once typing pauses.
+ * fetched when the dialog opens. Addresses go to the server once typing pauses.
  */
 export function useSearchBarResults(options: {
   value: string
   debouncedValue: string
-  searchIndexPath: string
   open: boolean
 }) {
-  const { value, debouncedValue, searchIndexPath, open } = options
+  const { value, debouncedValue, open } = options
   const trpc = useTRPC()
   const isAddress = EthereumAddress.checkIgnoringCase(value.trim())
   const isDebouncedAddress = EthereumAddress.checkIgnoringCase(
     debouncedValue.trim(),
   )
 
-  const index = useQuery({
-    ...searchIndexQueryOptions(searchIndexPath),
-    enabled: open,
-  })
+  const index = useQuery({ ...searchIndexQueryOptions(), enabled: open })
   const address = useQuery(
     trpc.searchBar.searchByAddress.queryOptions(debouncedValue, {
       enabled: isDebouncedAddress,
@@ -76,18 +76,30 @@ export function useSearchBarResults(options: {
   }
 }
 
-export function searchIndexQueryOptions(path: string) {
+/**
+ * Few visitors search, so the index loads on intent: hovering or focusing a
+ * search button gives the dialog a head start.
+ */
+export function usePrefetchSearchIndex() {
+  const queryClient = useQueryClient()
+  return useCallback(() => {
+    void queryClient.prefetchQuery(searchIndexQueryOptions())
+  }, [queryClient])
+}
+
+// Matches the index's HTTP max-age, past which the browser revalidates it.
+const SEARCH_INDEX_STALE_TIME_MS = 5 * 60 * 1000
+
+function searchIndexQueryOptions() {
   return queryOptions({
-    queryKey: ['search-index', path],
-    queryFn: () => fetchSearchIndex(path),
-    // The path changes with the contents, so a fetched index never goes stale.
-    staleTime: Number.POSITIVE_INFINITY,
-    gcTime: Number.POSITIVE_INFINITY,
+    queryKey: ['search-index', SEARCH_INDEX_PATH],
+    queryFn: fetchSearchIndex,
+    staleTime: SEARCH_INDEX_STALE_TIME_MS,
   })
 }
 
-async function fetchSearchIndex(path: string) {
-  const response = await fetch(path, { cache: 'default' })
+async function fetchSearchIndex() {
+  const response = await fetch(SEARCH_INDEX_PATH, { cache: 'default' })
   if (!response.ok) {
     throw new Error('Search index request failed', {
       cause: { status: response.status },
