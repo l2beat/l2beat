@@ -67,6 +67,21 @@ describe('keybindings', () => {
       )
     })
 
+    it('leaves Space and Enter to a focused button, whatever is bound', () => {
+      const keybindings = computeKeybindings(DEFAULTS, {
+        overrides: { 'panel.close/Alt+Q': 'Enter' },
+        userKeybindings: [],
+      })
+      const onButton = { ...ON_CANVAS, controlFocus: true }
+      expect(resolve(keybindings, 'Enter', ON_CANVAS)?.command).toEqual(
+        'panel.close',
+      )
+      expect(resolve(keybindings, 'Enter', onButton)).toEqual(undefined)
+      expect(resolve(keybindings, 'Alt+Enter', onButton)?.command).toEqual(
+        'panel.add',
+      )
+    })
+
     it('lets a user keybinding win over a default on the same shortcut', () => {
       const keybindings = computeKeybindings(DEFAULTS, {
         overrides: {},

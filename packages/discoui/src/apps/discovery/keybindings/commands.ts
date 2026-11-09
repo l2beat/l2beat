@@ -48,7 +48,7 @@ export interface CommandInfo {
 }
 
 // Shortcuts never take keys typed into a field, except the search toggle,
-// which works from anywhere. Space leaves a focused button to press itself.
+// which works from anywhere.
 export const COMMANDS: Record<CommandId, CommandInfo> = {
   'search.toggle': navigation('Search: Toggle', 'anywhere'),
   'search.open': navigation('Search: Open'),
@@ -70,7 +70,7 @@ export const COMMANDS: Record<CommandId, CommandInfo> = {
   'nodes.redo': { ...nodes('Nodes: Redo', 'canvas'), repeats: true },
   'tool.select': nodes('Tool: Selection', 'canvas'),
   'tool.hand': nodes('Tool: Hand', 'canvas'),
-  'tool.handHold': nodes('Tool: Hand While Held', 'canvasNoButton'),
+  'tool.handHold': nodes('Tool: Hand While Held', 'canvas'),
 }
 
 function navigation(title: string, scope: Scope = 'notTyping'): CommandInfo {

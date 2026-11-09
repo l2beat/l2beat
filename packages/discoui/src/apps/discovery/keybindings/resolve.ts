@@ -10,6 +10,10 @@ export function resolveKeybinding(
   context: ScopeContext,
   platform: Platform,
 ): Keybinding | undefined {
+  // A focused button or link keeps the keys that press it, whatever is bound.
+  if (context.controlFocus && pressesControl(shortcut)) {
+    return undefined
+  }
   for (let index = keybindings.length - 1; index >= 0; index--) {
     const keybinding = keybindings[index]
     if (keybinding === undefined) {
@@ -26,6 +30,12 @@ export function resolveKeybinding(
     }
   }
   return undefined
+}
+
+function pressesControl(shortcut: Shortcut): boolean {
+  const hasModifier =
+    shortcut.mod || shortcut.ctrl || shortcut.alt || shortcut.shift
+  return !hasModifier && (shortcut.key === 'Space' || shortcut.key === 'Enter')
 }
 
 /** The command's first shortcut, the one hints next to buttons show. */

@@ -10,9 +10,6 @@ describe(scopeApplies.name, () => {
       expect(scopeApplies('anywhere', c)).toEqual(true)
       expect(scopeApplies('notTyping', c)).toEqual(!c.inputFocus)
       expect(scopeApplies('canvas', c)).toEqual(onCanvas)
-      expect(scopeApplies('canvasNoButton', c)).toEqual(
-        onCanvas && !c.controlFocus,
-      )
     }
   })
 })
