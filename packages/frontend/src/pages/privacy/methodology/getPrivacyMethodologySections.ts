@@ -79,25 +79,25 @@ export function getPrivacyMethodologySections() {
       ]),
     ]),
 
-    // Raw headings, since markdown headings render without an id to link.
-    // Project steps link each habit through ADVICE_ANCHORS in config.
+    // A raw heading, since markdown headings render without an id to link.
+    // Project pages link the section once, the habits carry no anchors.
     advice: joinBlocks([
       `<h2 id="${ANCHOR.section}">How to stay private</h2>`,
       'Each project page gives our advice as steps that keep its promise with the reference app, in the order the user takes them. Most steps follow the habits below.',
-      `<h3 id="${ANCHOR.freshAddress}">Fresh address</h3>`,
-      'Exit to an address with no history and no public link to you, and use a new one for every exit. Every payment to a reused address links to the others.',
-      `<h3 id="${ANCHOR.separateWallet}">Separate wallet</h3>`,
-      'Keep the fresh address in a different wallet app, created from its own seed. A wallet app can send every address it holds to its servers under one login, and look up the next addresses of its seed.',
-      `<h3 id="${ANCHOR.relayers}">Relayers</h3>`,
-      "A relayer submits the exit and takes its fee from the withdrawn funds. The receiving address then needs no gas from a wallet you own. Gas you pay yourself shows your wallet's fingerprint, even from a fresh address.",
-      `<h3 id="${ANCHOR.timing}">Timing and amounts</h3>`,
+      heading(3, 'Fresh address'),
+      'Exit to an address with no history and no public link to you, and use a new one for every exit.',
+      heading(3, 'Separate wallet'),
+      "Keep the fresh address in a different wallet app, created from its own seed. A wallet app can send every address it holds to its servers under one login, and look up the next addresses of its seed. Spending from the fresh address later shows that app's fingerprint, so a common app on default settings blends in best.",
+      heading(3, 'Relayers'),
+      "A relayer submits the exit and takes its fee from the withdrawn funds. The receiving address then needs no gas from a wallet you own. Gas you pay yourself shows your wallet's fingerprint, such as its fee habits, even from a fresh address.",
+      heading(3, 'Timing and amounts'),
       'Each deposit after yours grows the group you hide among, so wait before exiting. Exit at a different time of day than you deposited. Move common amounts rather than the exact sum you deposited. Use the pool with the most depositors.',
-      `<h3 id="${ANCHOR.sessions}">Sessions</h3>`,
+      heading(3, 'Sessions'),
       "Give each step its own network session, so no service ties the steps by IP, cookie or login. Tor Browser's New Identity starts one. An app that loads every wallet it holds ties them in one session, so remove the deposit wallet before the exit.",
-      `<h3 id="${ANCHOR.ownNode}">Own node</h3>`,
-      'An app that reads the chain through a hosted service tells it which addresses or notes you hold. A local Ethereum node answers those reads without a third party. Set it as the endpoint in the app, and in the depositing wallet where a step says so.',
-      `<h3 id="${ANCHOR.appDelivery}">App delivery</h3>`,
-      `A hosted website can serve different code at any time, to you alone. A name, like an ENS record, serves whatever its owner points it to next, even after a vote. Load the [reviewed release](#${PRIVACY_REFERENCE_APP_ANCHOR}) by the hash or contract address the steps name instead. For an IPFS hash, use your own IPFS node, since a public gateway can serve other code. Kubo, the common IPFS node, serves it at http://127.0.0.1:8080/ipfs/ followed by the hash. Where the build reproduces, building it from the reviewed source gives the same release without IPFS.`,
+      heading(3, 'Own node'),
+      'An app that reads the chain through a hosted service tells it which addresses or notes you hold. A local Ethereum node answers those reads without a third party. Set it as the endpoint in the app, and in the depositing wallet if advised.',
+      heading(3, 'App delivery'),
+      `A hosted website can serve different code at any time, to you alone. A name, like an ENS record, serves whatever its owner or governance points it to. Load the [reviewed release](#${PRIVACY_REFERENCE_APP_ANCHOR}) by the hash or contract address the steps name. For an IPFS hash, use your own IPFS node, since a public gateway can serve other code. Kubo, a common IPFS node, serves it at http://127.0.0.1:8080/ipfs/ followed by the hash. Where the build reproduces, building it from the reviewed source we point at gives the same release without IPFS.`,
     ]),
 
     referenceApp: joinBlocks([

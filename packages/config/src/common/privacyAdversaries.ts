@@ -221,44 +221,42 @@ export function definePrivacyAdversaries(
   }
 }
 
-/** The methodology publication. Its How to stay private section explains every habit a step links. */
+/** The methodology publication. Its How to stay private section explains the habits steps follow. */
 export const PRIVACY_METHODOLOGY_URL = '/publications/privacy-methodology'
 
-/** Anchors in the methodology's How to stay private section, rendered by the frontend. */
+/**
+ * Anchors in the methodology, rendered by the frontend. The project page links
+ * the How to stay private section once, so steps link only the route list.
+ */
 export const ADVICE_ANCHORS = {
   section: 'stay-private',
-  freshAddress: 'fresh-address',
-  separateWallet: 'separate-wallet',
-  relayers: 'relayers',
-  timing: 'timing-and-amounts',
-  sessions: 'sessions',
   ipHidingRoutes: 'ip-hiding-routes',
-  ownNode: 'own-node',
-  appDelivery: 'app-delivery',
 } as const
 
-/** A markdown link to one habit in the methodology's How to stay private section. */
-export function adviceLink(text: string, habit: keyof typeof ADVICE_ANCHORS) {
-  return `[${text}](${PRIVACY_METHODOLOGY_URL}#${ADVICE_ANCHORS[habit]})`
+/** A markdown link into the methodology, for a step's IP-hiding route. */
+export function adviceLink(text: string, anchor: keyof typeof ADVICE_ANCHORS) {
+  return `[${text}](${PRIVACY_METHODOLOGY_URL}#${ADVICE_ANCHORS[anchor]})`
 }
 
 /**
- * Sentences for `advice` steps, imperative and linked to the habit they
- * follow. They replace the advice snippets of PRIVACY_ADVERSARY_SNIPPETS.
+ * Imperative sentences for `advice` steps. They replace the advice snippets of
+ * PRIVACY_ADVERSARY_SNIPPETS.
  */
 export const ADVICE_SNIPPETS = {
   /** Pools. `relayer` is the project's word for it. */
   relayer: (relayer: string) =>
-    `Use a ${adviceLink(relayer, 'relayers')} for the exit, so no wallet of yours pays gas for the receiving address.`,
-  largestPool: `Use the pool with the ${adviceLink('most depositors', 'timing')}.`,
-  commonAmounts: `Move ${adviceLink('common amounts', 'timing')} rather than everything at once.`,
-  wait: `Let ${adviceLink('time pass', 'timing')} before exiting, and exit at a different time of day than you deposited.`,
-  freshAddress: `Send each exit to a ${adviceLink('fresh address', 'freshAddress')} and spend from it with a ${adviceLink('separate wallet', 'separateWallet')}.`,
+    `Use a ${relayer} for the exit, so no wallet of yours pays gas for the receiving address.`,
+  largestPool: 'Use the pool with the most depositors.',
+  commonAmounts: 'Move common amounts rather than everything at once.',
+  wait: 'Let time pass before exiting, and exit at a different time of day than you deposited.',
+  freshAddress:
+    'Send each exit to a fresh address and spend from it with a separate wallet.',
   /** Native apps and anything else Tor Browser cannot run. */
   ipHidingRoute: (app: string) =>
     `Run ${app} with all traffic through an ${adviceLink('IP-hiding route', 'ipHidingRoutes')}.`,
   /** Open clients served from a hosted frontend. */
-  localBuild: `Build the app from the ${adviceLink('reviewed source', 'appDelivery')} and run it locally instead of the hosted website.`,
+  localBuild:
+    'Build the app from the reviewed source and run it locally instead of the hosted website.',
 } as const
 
 export const PRIVACY_ADVERSARY_SNIPPETS = {

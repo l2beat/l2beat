@@ -1,6 +1,5 @@
 import {
   ADVICE_SNIPPETS as A,
-  adviceLink,
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
@@ -189,7 +188,7 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
     },
     {
       name: 'Exit',
-      text: `Delete the deposit wallet from Cake. Then exchange the XMR into a new Ethereum wallet made with Create New Recovery Phrase, a ${adviceLink('fresh address', 'freshAddress')} with its own seed.`,
+      text: 'Delete the deposit wallet from Cake. Then exchange the XMR into a new Ethereum wallet made with Create New Recovery Phrase, a fresh address with its own seed.',
       against: ['publicObserver', 'chainAnalyst', 'networkObserver'],
     },
   ],
