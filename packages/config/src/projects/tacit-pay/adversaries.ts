@@ -13,7 +13,7 @@ import type {
 // page.html, the file the sources below cite.
 export const REFERENCE_PAGE = 'eth:0x0000000d42137547140b0812E1178F025e08bc49'
 // The link goes to html() of the pinned contract (F15 in Etherscan's ABI order),
-// not anon.wei.limo, whose name Tacit's account can point at another page
+// not anon.wei.limo, whose name Tacit's app owner can point at another page
 // without delay.
 export const REFERENCE_APP = {
   name: 'anon.wei',
@@ -141,7 +141,7 @@ export const tacitPayAdversaries = definePrivacyAdversaries({
       exposureShort:
         'Tacit holds no key that spends or decrypts notes, and the reviewed page version is an immutable contract that runs from a saved copy.',
       exposureContinued:
-        "Tacit's relay sees the IP at sign-in, each exit's recipient with the IP that asked, and each deposit address the user views in the app. Tacit's account can point anon.wei at another page and change the relay host and RPC nodes the page reads, without delay.",
+        "Tacit's relay sees the IP at sign-in, each exit's recipient with the IP that asked, and each deposit address the user views in the app. Tacit's app owner can point anon.wei at another page and change the relay host and RPC nodes the page reads, without delay.",
       advice:
         'Serve the page from localhost as the App section describes, not from anon.wei.limo. Exit as the network observer advice says.',
       interior: {
