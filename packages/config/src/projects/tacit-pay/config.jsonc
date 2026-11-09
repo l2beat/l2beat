@@ -1,0 +1,89 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "tacit-pay",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "eth:0x000000c2A20657CE25f2Ba99737933D031AFBEE9",
+    "eth:0x0000006C96Afa6f1cD4DF8FE19bc0d8B6A6Cd7B5",
+    "eth:0x0000008EbBF2323f95c4fBc18254f3D65C53998c",
+    "eth:0x0000000d42137547140b0812e1178f025e08bc49",
+    "eth:0x00000051f365d898132f4ebf345cd3968e02f288",
+    "eth:0x8c7348d039f58c4e9cfa936ef410eec759213b12"
+  ],
+  "overrides": {
+    "eth:0x1C0Aa8cCD568d90d61659F060D1bFb1e6f855A20": {
+      "ignoreMethods": ["getSeq", "nonceSequenceNumber"]
+    },
+    "eth:0x0000000d42137547140b0812e1178f025e08bc49": {
+      "fields": {
+        "anonWeiTarget": {
+          "description": "Contract the name anon.wei resolves to in WNS, which anon.wei.limo serves.",
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "address": "0x0000000000696760e15f265e828db644a0c242eb",
+            "method": "function resolve(uint256 id) view returns (address)",
+            "args": [
+              "33215181652275828497636723112537911631834987782256955570837336119163222133556"
+            ]
+          }
+        },
+        "anonWeiOwner": {
+          "description": "Owner of the name anon.wei in WNS.",
+          "handler": {
+            "type": "call",
+            "address": "0x0000000000696760e15f265e828db644a0c242eb",
+            "method": "function ownerOf(uint256 id) view returns (address)",
+            "args": [
+              "33215181652275828497636723112537911631834987782256955570837336119163222133556"
+            ]
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "point the name anon.wei at any contract, which anon.wei.limo then serves."
+            }
+          ]
+        }
+      }
+    },
+    "eth:0x00000051f365d898132f4ebf345cd3968e02f288": {
+      "fields": {
+        "relayHostEthereum": {
+          "description": "Relay host the anon.wei page uses on Ethereum ahead of its built-in one, unless the user sets a relay.",
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "function listOf(bytes32 service, uint256 chainId) view returns (string[])",
+            "args": [
+              "0x6b65657065727300000000000000000000000000000000000000000000000000",
+              1
+            ]
+          }
+        },
+        "logNodesEthereum": {
+          "description": "RPC nodes the anon.wei page asks first for Ethereum history.",
+          "handler": {
+            "type": "call",
+            "method": "function listOf(bytes32 service, uint256 chainId) view returns (string[])",
+            "args": [
+              "0x6c6f677300000000000000000000000000000000000000000000000000000000",
+              1
+            ]
+          }
+        },
+        "provingKeyMirrors": {
+          "description": "Mirrors the anon.wei page may fetch the proving key and witness program from, each checked against its pinned SHA-256.",
+          "handler": {
+            "type": "call",
+            "method": "function listOf(bytes32 service, uint256 chainId) view returns (string[])",
+            "args": [
+              "0x6d6972726f727300000000000000000000000000000000000000000000000000",
+              0
+            ]
+          }
+        }
+      }
+    }
+  }
+}

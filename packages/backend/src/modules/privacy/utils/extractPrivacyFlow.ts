@@ -11,6 +11,7 @@ import { zkMoneyInterface } from '../zkmoney/abi'
 import { erc20Interface } from './erc20'
 import { extractPrivacyPoolsEvent } from './extractPrivacyPoolsEvent'
 import { extractPrivacyPoolsV2Event } from './extractPrivacyPoolsV2Event'
+import { extractTacitPayTransact } from './extractTacitPayEvent'
 
 const ERC20_TOKEN_TYPE = 0
 
@@ -53,6 +54,14 @@ export function extractPrivacyFlow<T extends EvmPrivacyFlowExtractorConfig>(
       return extractRailgunUnshield(source, log)
     case 'umbraAmount':
       return extractUmbraAmount(source, log)
+    case 'tacitPayDeposit': {
+      const { extAmount } = extractTacitPayTransact(log)
+      return extAmount > 0n ? { count: 1, amount: extAmount } : undefined
+    }
+    case 'tacitPayWithdrawal': {
+      const { extAmount } = extractTacitPayTransact(log)
+      return extAmount < 0n ? { count: 1, amount: -extAmount } : undefined
+    }
     case 'zkMoneyDeposit':
       return {
         count: 1,
