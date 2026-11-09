@@ -90,7 +90,7 @@ export const OverflowWrapper = ({
         title="Scroll left"
         onClick={() => onArrowClick('left')}
         className={cn(
-          'pointer-events-none absolute inset-y-0 left-0 z-10 w-6 bg-linear-to-r opacity-0 transition-opacity duration-300',
+          'pointer-events-none absolute inset-y-0 left-0 z-10 w-6 bg-linear-to-r opacity-0 transition-opacity duration-150',
           (visibleArrows === 'left' || visibleArrows === 'both') &&
             'pointer-events-auto opacity-100',
         )}
@@ -104,9 +104,13 @@ export const OverflowWrapper = ({
         ref={mergeRefs(contentRef, ref)}
         className={cn(
           'scrollbar-hide overflow-x-auto',
-          visibleArrows === 'left' && 'fade-out-to-left-[30px]',
-          visibleArrows === 'right' && 'fade-out-to-right-[30px]',
-          visibleArrows === 'both' && 'fade-out-horizontal-[30px]',
+          // The edges fade in with the arrows, known only once laid out,
+          // rather than cutting in.
+          visibleArrows && 'overflow-fade',
+          (visibleArrows === 'left' || visibleArrows === 'both') &&
+            '[--overflow-fade-left:30px]',
+          (visibleArrows === 'right' || visibleArrows === 'both') &&
+            '[--overflow-fade-right:30px]',
           childrenClassName,
         )}
       >
@@ -116,7 +120,7 @@ export const OverflowWrapper = ({
         title="Scroll right"
         onClick={() => onArrowClick('right')}
         className={cn(
-          'pointer-events-none absolute inset-y-0 right-0 z-10 w-6 bg-linear-to-l opacity-0 transition-opacity duration-200',
+          'pointer-events-none absolute inset-y-0 right-0 z-10 w-6 bg-linear-to-l opacity-0 transition-opacity duration-150',
           (visibleArrows === 'right' || visibleArrows === 'both') &&
             'pointer-events-auto opacity-100',
         )}
