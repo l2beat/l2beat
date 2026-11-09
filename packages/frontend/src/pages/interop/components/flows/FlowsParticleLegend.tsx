@@ -21,9 +21,10 @@ export function FlowsParticleLegend({
 
   const avgLine = (
     <>
-      Avg value per second ≈{' '}
+      {/* Over the whole graph, unlike a chain's own stats beside it */}
+      Avg value per second, all flows shown ≈{' '}
       <span className="font-bold text-brand-deep">
-        {formatCurrency(avgValuePerSecond, 'usd')}
+        {formatCurrency(avgValuePerSecond, 'usd')}/s
       </span>
     </>
   )
