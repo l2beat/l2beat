@@ -50,7 +50,9 @@ export function ProjectBadge({
   if (disableTooltip) return component
 
   return (
-    <Tooltip>
+    // People hover a badge on purpose to read what it means, so it opens at
+    // once instead of waiting out the app-wide rest delay.
+    <Tooltip delayDuration={0}>
       <TooltipTrigger asChild disabledOnTouch={disableInteraction}>
         {component}
       </TooltipTrigger>
