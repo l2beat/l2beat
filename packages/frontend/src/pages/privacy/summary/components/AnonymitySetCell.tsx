@@ -1,5 +1,5 @@
 import { formatInteger } from '@l2beat/shared-pure'
-import { Badge } from '~/components/badge/Badge'
+import { Badge, badgeVariants } from '~/components/badge/Badge'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { Callout } from '~/components/Callout'
@@ -45,9 +45,12 @@ export function AnonymitySetCell({ anonymitySet }: Props) {
     return (
       <Tooltip>
         <TooltipTrigger asChild>
-          <Badge type="gray" size="small">
+          <button
+            type="button"
+            className={badgeVariants({ type: 'gray', size: 'small' })}
+          >
             Too small
-          </Badge>
+          </button>
         </TooltipTrigger>
         <TooltipContent className="max-w-[320px]">
           Too few users to track exactly.
