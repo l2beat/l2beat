@@ -36,7 +36,7 @@ export function openPanelPlugin(clientId: string | undefined): VitePlugin {
                 trackScreenViews: true,
                 trackOutgoingLinks: true,
                 trackAttributes: true,
-                apiUrl: 'https://opapi.l2beat.com',
+                apiUrl: 'https://opapi.ethbeat.org',
               });
             `,
           },
@@ -44,7 +44,7 @@ export function openPanelPlugin(clientId: string | undefined): VitePlugin {
             tag: 'script',
             injectTo: 'head',
             attrs: {
-              src: 'https://analytics.l2beat.com/op1.js',
+              src: 'https://analytics.ethbeat.org/op1.js',
               defer: true,
               async: true,
             },

@@ -25,7 +25,8 @@ export function GlossaryItem(props: Props) {
         </a>
         <CopyButton
           toCopy={toProductionUrl(`/glossary#${props.entry.id}`)}
-          className="md:group-hover:fade-in-0 md:hidden md:group-hover:block md:group-hover:animate-in"
+          // With a mouse it shows on hover or focus; on touch, always.
+          className="can-hover:group-hover:fade-in-0 can-hover:hidden can-hover:group-focus-within:block can-hover:group-hover:block can-hover:group-hover:animate-in"
           iconClassName="size-5"
         />
       </div>

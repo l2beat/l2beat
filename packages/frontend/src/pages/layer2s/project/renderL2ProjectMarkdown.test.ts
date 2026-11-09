@@ -15,7 +15,7 @@ describe(renderL2ProjectMarkdown.name, () => {
     const markdown = renderL2ProjectMarkdown(ENTRY)
 
     expect(markdown).toMatchRegex(
-      /^# Arbitrum One\n\nMarkdown version of https:\/\/l2beat\.com\/layer2s\/projects\/arbitrum\n\n/,
+      /^# Arbitrum One\n\nMarkdown version of https:\/\/ethbeat\.org\/layer2s\/projects\/arbitrum\n\n/,
     )
   })
 
@@ -118,6 +118,27 @@ describe(renderL2ProjectMarkdown.name, () => {
     expect(summary).toInclude(
       '- Stage: Stage 1 (Appchain: The chain only runs one app.)',
     )
+  })
+
+  it('names the privacy projects that run on the project', () => {
+    const summary = getSection(
+      renderL2ProjectMarkdown({
+        ...ENTRY,
+        header: {
+          ...ENTRY.header,
+          privacyProjects: [
+            {
+              id: 'fluidkey',
+              name: 'Fluidkey',
+              iconUrl: '/icons/fluidkey.png',
+            },
+          ],
+        },
+      }),
+      'Summary',
+    )
+
+    expect(summary).toInclude('- Chain ID: 42161\n- Privacy projects: Fluidkey')
   })
 
   it('explains why a project is listed in Others, with each consequence', () => {
@@ -244,8 +265,8 @@ describe(renderL2ProjectMarkdown.name, () => {
     expect(summary).toInclude(
       '- Last 24h cross-chain volume: $12.00 M',
       '- Last 24h cross-chain transfers: 1\n',
-      '- Interop protocols used (last 24h volume): [Across](https://l2beat.com/interop/protocols/across) ($8.00 M), and 4 more',
-      '- Tokens by volume (last 24h): [ETH](https://l2beat.com/tokens/C0Hmkq/eth) ($7.00 M), Unknown ($1.00 M)',
+      '- Interop protocols used (last 24h volume): [Across](https://ethbeat.org/interop/protocols/across) ($8.00 M), and 4 more',
+      '- Tokens by volume (last 24h): [ETH](https://ethbeat.org/tokens/C0Hmkq/eth) ($7.00 M), Unknown ($1.00 M)',
     )
   })
 
@@ -269,13 +290,13 @@ describe(renderL2ProjectMarkdown.name, () => {
             },
           ],
         },
-        discoUiHref: 'https://disco.l2beat.com/ui/p/arbitrum',
+        discoUiHref: 'https://disco.ethbeat.org/ui/p/arbitrum',
       }),
       'Summary',
     )
 
     expect(summary).toInclude(
-      '### Links\n\n- Website: https://arbitrum.io\n- Contracts explorer (Disco): https://disco.l2beat.com/ui/p/arbitrum',
+      '### Links\n\n- Website: https://arbitrum.io\n- Contracts explorer (Disco): https://disco.ethbeat.org/ui/p/arbitrum',
       '### Badges\n\n- Built on Arbitrum Orbit: The project is built on Arbitrum Orbit.',
     )
   })
@@ -389,7 +410,7 @@ describe(renderL2ProjectMarkdown.name, () => {
     )
 
     expect(summary).toInclude(
-      '![diagram](https://l2beat.com/images/arbitrum/overview.png)',
+      '![diagram](https://ethbeat.org/images/arbitrum/overview.png)',
     )
   })
 
@@ -417,18 +438,18 @@ describe(renderL2ProjectMarkdown.name, () => {
     const markdown = renderL2ProjectMarkdown(ENTRY)
 
     expect(getSection(markdown, 'Value Secured')).toInclude(
-      '- [TVS chart (JSON)](https://l2beat.com/api/scaling/tvs/arbitrum)',
-      '- [TVS breakdown by token (JSON)](https://l2beat.com/api/scaling/tvs/arbitrum/breakdown)',
+      '- [TVS chart (JSON)](https://ethbeat.org/api/scaling/tvs/arbitrum)',
+      '- [TVS breakdown by token (JSON)](https://ethbeat.org/api/scaling/tvs/arbitrum/breakdown)',
     )
     expect(getSection(markdown, 'Activity')).toInclude(
-      '- [Activity chart (JSON)](https://l2beat.com/api/scaling/activity/arbitrum)',
+      '- [Activity chart (JSON)](https://ethbeat.org/api/scaling/activity/arbitrum)',
     )
   })
 
   it('points chart sections without markdown content to the HTML page', () => {
     expect(
       getSection(renderL2ProjectMarkdown(ENTRY), 'Onchain costs'),
-    ).toInclude('https://l2beat.com/layer2s/projects/arbitrum#onchain-costs')
+    ).toInclude('https://ethbeat.org/layer2s/projects/arbitrum#onchain-costs')
   })
 
   it('groups the risk summary by category, marking critical risks', () => {
@@ -1051,7 +1072,6 @@ const ENTRY: ProjectL2Entry = {
   icon: '/icons/arbitrum.png',
   archivedAt: undefined,
   isAppchain: false,
-  colors: undefined,
   underReviewStatus: undefined,
   header: {
     description: 'Arbitrum One is a general-purpose optimistic rollup.',
@@ -1061,6 +1081,7 @@ const ENTRY: ProjectL2Entry = {
     category: 'Optimistic Rollup',
     purposes: ['Universal'],
     gasTokens: ['ETH'],
+    privacyProjects: [],
     tvs: {
       breakdown: {
         total: 15_200_000_000,

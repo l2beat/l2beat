@@ -45,7 +45,7 @@ function instructionsEqual(got: Instruction, want: Instruction): boolean {
   if (got.opcode !== want.opcode) {
     return false
   }
-  if (got.pushData !== want.pushData) {
+  if (got.immediate !== want.immediate) {
     return false
   }
   return true

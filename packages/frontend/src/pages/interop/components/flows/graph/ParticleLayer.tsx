@@ -1,9 +1,8 @@
 import { useId } from 'react'
 import { INTEROP_PAIR_SEPARATOR } from '~/server/features/layer2s/interop/consts'
-import type {
-  ChainData,
-  Flow,
-} from '~/server/features/layer2s/interop/getInteropFlows'
+import type { Flow } from '~/server/features/layer2s/interop/getInteropFlows'
+import type { FlowsGraphChainData } from '~/server/features/layer2s/interop/getInteropFlowsOverview'
+import { getStableFraction } from '~/utils/getStableFraction'
 import type { InteropChainWithIcon } from '../../chain-selector/types'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
 import { BubbleHolesClip } from './BubbleHolesClip'
@@ -17,7 +16,7 @@ import { useScaledParticleCounts } from './utils/useScaledParticleCounts'
 
 interface Props {
   flows: Flow[]
-  chainData: ChainData[]
+  chainData: FlowsGraphChainData[]
   visibleChainIds: string[]
   layout: FlowsGraphLayout
   interopChains: InteropChainWithIcon[]
@@ -151,14 +150,4 @@ export function ParticleLayer({
       })}
     </g>
   )
-}
-
-/** Deterministic value in [0, 1) so flows don't all emit in lockstep (FNV-1a) */
-function getStableFraction(key: string): number {
-  let hash = 0x811c9dc5
-  for (let i = 0; i < key.length; i++) {
-    hash ^= key.charCodeAt(i)
-    hash = Math.imul(hash, 0x01000193)
-  }
-  return (hash >>> 0) / 2 ** 32
 }

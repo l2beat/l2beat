@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Checks the signature of the DepositApprover for each user deposit and, on succeeding, forwards the user's funds and bridging request to the L1SharedBridge contract to deposit to GRVT. Compartments registered in the compartmentRegistry can deposit without a signature, but only to the L2 deposit proxy derived from their registered vault ID.",
+  "ignoreRelatives": ["baseToken", "vaultDepositProxyBeacon"],
+  // returns L2 addresses derived for vault IDs, not Ethereum contracts
+  "ignoreMethods": ["getVaultDepositProxyAddress"],
+  "fields": {
+    "depositApprover": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "approve deposits to GRVT via the GRVTBridgeProxy."
+        }
+      ]
+    },
+    "compartmentRegistry": {
+      "description": "Every compartment registered in this registry can deposit its tokens to GRVT without a DepositApprover signature. The zero address disables compartment deposits.",
+      "severity": "MEDIUM"
+    },
+    "vaultDepositProxyBeacon": {
+      "description": "Beacon of the vault deposit proxies on GRVT, used to derive the L2 destination of compartment deposits.",
+      "type": "L2"
+    }
+  }
+}

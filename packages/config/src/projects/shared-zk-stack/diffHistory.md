@@ -1,3 +1,1129 @@
+Generated with discovered.json: 0x63629757e75d35d8c5683cc7f333c1dac145429e
+
+# Diff at Thu, 05 Nov 2026 15:33:50 GMT:
+
+- id: 7a1f27c3
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@181c6b3e2aefdcafd6dd1dd7151c810ad0e792a6 block: 1793715716
+- current timestamp: 1793715716
+
+## Description
+
+Seed the v31 RollupDAManager and RollupL1DAValidator, which ZKsync Era uses since it applied the v31 diamond cut. The new RollupDAManager allows one rollup DA configuration: RollupL1DAValidator_v31 with L2 DA commitment scheme 3 (blobs and pubdata keccak256). The RollupL1DAValidator_v31 has the same code as the old one.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793715716 (main branch discovery), not current.
+
+```diff
+    contract EmergencyUpgradeBoard (eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C) [shared-zk-stack/EmergencyUpgradeBoard] {
+    +++ description: A custom contract allowing a 3/3 of eth:0x29D2e773A31C07D375c50F0110422832bd044d08, eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and eth:0x8f525e55F76050d8dFdDa4870DA1b3ede54E908F to `executeEmergencyUpgrade()` via the eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
+      receivedPermissions.6:
++        {"permission":"interact","from":"eth:0xc16161C7f704388285fE58db287F6216a350dAFA","description":"manage allowed rollup DA configurations (allowed to be used by rollups in permanent rollup mode).","role":".owner","via":[{"address":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) [shared-zk-stack/ProtocolUpgradeHandler] {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+      directlyReceivedPermissions.10:
++        {"permission":"interact","from":"eth:0xc16161C7f704388285fE58db287F6216a350dAFA","description":"manage allowed rollup DA configurations (allowed to be used by rollups in permanent rollup mode).","role":".owner"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract RollupL1DAValidator_v31 (eth:0x1c715018c5565eaCC758236D4A9A760162a84Cbd) [shared-zk-stack/RollupL1DAValidator]
+    +++ description: Contract that verifies the data availability of ethereum calldata and blobs. Can be used by ZK stack rollups as the L1 part of a DAValidator pair.
+```
+
+```diff
++   Status: CREATED
+    contract RollupDAManager_v31 (eth:0xc16161C7f704388285fE58db287F6216a350dAFA) [shared-zk-stack/RollupDAManager_v31]
+    +++ description: Simple registry for allowed DA configurations for the 'rollup' data availability mode (can be permanently enforced with isPermanentRollup=true). A configuration pairs an L1 DA validator, usually a contract that validates that data was made available on Ethereum, with an L2 DA commitment scheme.
+```
+
+Generated with discovered.json: 0x7d9cbdc9c3d723cb0278fabab3ef84284cf84378
+
+# Diff at Tue, 03 Nov 2026 15:45:11 GMT:
+
+- id: 3fdb1623
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@5dabdf7cb402311ede1c313c1891f2094a550030 block: 1793623332
+- current timestamp: 1793715716
+
+## Description
+
+ZIP-18 (protocol v31) was executed on L1 through the ProtocolUpgradeHandler in two transactions on 2026-11-03: https://etherscan.io/tx/0x2b77fe3ec567013163f431bb8a39e3b1db06b5288f6a05c4cd946513a257da50 and https://etherscan.io/tx/0x0c1e348271747cd4b44e7328deb9b954ed722c819f1348c8096f1f8dabadbb23.
+
+New implementations for BridgeHub (https://disco.l2beat.com/diff/eth:0xc89423b4909080fB8F8A43dF5E1C27001e55C24B/eth:0x1Ea8629E1A4E31485E4A39D90699D0c59daC5beB), L1Nullifier, L1AssetRouter, L1NativeTokenVault, MessageRoot, CTMDeploymentTracker, ChainAssetHandler, both ChainTypeManagers, the ValidatorTimelock (same code, metadata only) and the MultisigCommitter. 
+
+- Adds the possibility of priority mode: as soon as Zksync OS rollups upgrade to v31, they could start using it. Chain admin can allow priority mode, after which any unprocessed priority L1 -> L2 transaction after 4 days enables permissionless batch submission and validation. Permissionless validation can be disabled only by governance.
+- The per-chain escrow balances moved from the L1NativeTokenVault to the new L1AssetTracker, which is called on every deposit, withdrawal and failed deposit claim. Legacy balances are migrated token by token with the permissionless `registerLegacyToken()`. 
+- Withdrawal and failed deposit proofs of v31 chains are now verified by the shared L1MessageRoot instead of each chain's diamond. The ChainTypeManagers now register a verifier per protocol version: Era CTM 0.30.1 -> 0.33.0 with the new EraDualVerifier, ZKsync OS CTM 0.30.1 -> 0.31.2 with the new ZKsyncOSDualVerifier.
+- Removes Gateway.
+
+No chain has applied the staged v31 diamond cut yet.
+
+## Watched changes
+
+```diff
+    contract MultisigCommitter (eth:0x18cC381705761aa2d2e8ea62888a4029A0fAd3aB) [shared-zk-stack/MultisigCommitter] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by at least 0s. Duration could be configured individually for zk stack chains by chain admins. All delays are capped at 30 days. This version (MultisigCommitter) can additionally require batch commitments to be signed by a set of commit validators: by default the shared set of 3 validators with a threshold of 0 (0 means no signatures are required), or a custom per-chain set and threshold if enabled by the owner.
+      sourceHashes.1:
+-        "0x032b5bf49ee90069fbe9bad19835229e5ef4efdc24b3e7717e30ed3e9dce77dc"
++        "0xd504136c807eb6231a00f5a520bdd6e152e37fe10b97ac7470fe873426b657d5"
+      values.$implementation:
+-        "eth:0x3443d387484BA445d12099c2bE1529eB488Af870"
++        "eth:0x434f65c3875cAF1E4914Bd6557E519b6d5a54dAd"
+      values.$pastUpgrades.3:
++        ["2026-11-03T10:08:59.000Z","0x2b77fe3ec567013163f431bb8a39e3b1db06b5288f6a05c4cd946513a257da50",["eth:0x434f65c3875cAF1E4914Bd6557E519b6d5a54dAd"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.MAX_EXECUTION_DELAY:
++        2592000
+      values.OPTIONAL_UPGRADER_ADMIN_ROLE:
++        "0xa1426e789273bde4307f3302768d8e4eb615f0f4dea304f29cccd58ff644d640"
+      values.UPGRADER_ROLE:
++        "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3"
+      implementationNames.eth:0x3443d387484BA445d12099c2bE1529eB488Af870:
+-        "MultisigCommitter"
+      implementationNames.eth:0x434f65c3875cAF1E4914Bd6557E519b6d5a54dAd:
++        "MultisigCommitter"
+    }
+```
+
+```diff
+    contract ZKsyncOSChainTypeManager (eth:0x1adF137F59949c9081157D5de1e002D1C992071F) [shared-zk-stack/ChainTypeManager_v31] {
+    +++ description: Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. Since v31 the verifier of each protocol version is registered here and written into a chain when it applies the upgrade. The current protocol version is 0,31,2.
+      template:
+-        "shared-zk-stack/ChainTypeManager"
++        "shared-zk-stack/ChainTypeManager_v31"
+      sourceHashes.1:
+-        "0x6bc5b4d3a049af17ddd605f095ab123765781a3bad4f7a0e27a2b665b27c025e"
++        "0x90809e9e49eb5131d3ab64466d2f5fcbf7a679358fe6990554015cbda3c0fd49"
+      description:
+-        "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,30,1."
++        "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. Since v31 the verifier of each protocol version is registered here and written into a chain when it applies the upgrade. The current protocol version is 0,31,2."
+      values.$implementation:
+-        "eth:0x6908e3ef1417e16c126dbaec5b8c9A097bBc7F58"
++        "eth:0x7a309e4e852B01fB1448D8A46365D69B03a88bd1"
+      values.$pastUpgrades.2:
++        ["2026-11-03T10:08:59.000Z","0x2b77fe3ec567013163f431bb8a39e3b1db06b5288f6a05c4cd946513a257da50",["eth:0x7a309e4e852B01fB1448D8A46365D69B03a88bd1"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.getSemverProtocolVersion.1:
+-        30
++        31
+      values.getSemverProtocolVersion.2:
+-        1
++        2
++++ description: Hash of the diamond cut (facets and init) used for newly created chains.
++++ severity: HIGH
+      values.initialCutHash:
+-        "0x4c21a8d576573df0defddcc90f050b689fdd9296bfe277a7f7e55b7440c53f58"
++        "0xc0eaef1e1573e46b681ae84e525803169e815b323a6719a2ed024eb9ea3f6d96"
++++ description: Hash of the L2 system contracts force-deployed into newly created chains.
++++ severity: HIGH
+      values.initialForceDeploymentHash:
+-        "0xd06d9c40bca0470d287f8105aed2fb7fef40f0daa270e8345589a27280a49b7f"
++        "0x32304a35e5fac56f7dbff9387883285bd7508e0fab71253b39457bbca546c7fd"
++++ severity: HIGH
+      values.l1GenesisUpgrade:
+-        "eth:0x2bf9B0B72573af5471c4f035271616139392Acd8"
++        "eth:0x871faE53b5db4989023936f46e2b1aE161B20E15"
+      values.protocolVersion:
+-        128849018881
++        133143986178
+      values.storedBatchZero:
+-        "0x18bd4bd6909643336ab04fcab99eff346bc4e74799aeeb2ed809341e3a1df6f9"
++        "0xe8ea3601dfa53f7d42f5032fc3180b0cf05779f57577774e37dd410bcca7365f"
++++ description: Verifier registered for the current protocol version. Chains receive it when they apply the upgrade to this version.
++++ severity: HIGH
+      values.currentProtocolVersionVerifier:
++        "eth:0x433b6ff15824806c8C14EcE4a6FE1f1909F7da2F"
+      values.INTEROP_CENTER:
++        "eth:0x000000000000000000000000000000000001000d"
+      values.isZKsyncOS:
++        true
+      values.L1_BYTECODES_SUPPLIER:
++        "eth:0xE55877fC38D774C5bDBe989899F97DAe480A2931"
++++ description: The only address allowed to commit, prove and execute batches of a chain while its Priority Mode is active. Written into each chain when it applies the v31 upgrade.
+      values.PERMISSIONLESS_VALIDATOR:
++        "eth:0x8509eA34177B051110826A36621C1C52C9752CAA"
++++ description: Timestamp until which chains may still run the given protocol version (max uint256 means no deadline).
++++ severity: MEDIUM
+      values.protocolVersionDeadlines:
++        {"124554051585":"115792089237316195423570985008687907853269984665640564039457584007913129639935","128849018880":"115792089237316195423570985008687907853269984665640564039457584007913129639935","128849018881":"115792089237316195423570985008687907853269984665640564039457584007913129639935","133143986178":"115792089237316195423570985008687907853269984665640564039457584007913129639935"}
++++ description: Verifier registered for each protocol version (populated since v31).
++++ severity: HIGH
+      values.protocolVersionVerifiers:
++        {"133143986178":"eth:0x433b6ff15824806c8C14EcE4a6FE1f1909F7da2F"}
++++ description: Hash of the diamond cut that chains on the given (old) protocol version must apply to upgrade. A new entry means a new upgrade was registered for all chains of this CTM.
++++ severity: HIGH
+      values.upgradeCutHashes:
++        {"124554051585":"0x5d29b27c288f69628749c49826f148e0e90ba30c23da0d3dc9e125598eae2c17","128849018880":"0x4640aeac69a967255ab325a864daa94b15446ee7d3934317adf8352f2bd31ff0","128849018881":"0x421ee432aa294a02cef924cd0536f754caa1f6e5b506b9e0c610dc6287fe1547"}
+      fieldMeta.serverNotifierAddress:
++        {"severity":"MEDIUM"}
+      fieldMeta.PERMISSIONLESS_VALIDATOR:
++        {"description":"The only address allowed to commit, prove and execute batches of a chain while its Priority Mode is active. Written into each chain when it applies the v31 upgrade."}
+      fieldMeta.currentProtocolVersionVerifier:
++        {"severity":"HIGH","description":"Verifier registered for the current protocol version. Chains receive it when they apply the upgrade to this version."}
+      fieldMeta.protocolVersionVerifiers:
++        {"severity":"HIGH","description":"Verifier registered for each protocol version (populated since v31)."}
+      fieldMeta.upgradeCutHashes:
++        {"severity":"HIGH","description":"Hash of the diamond cut that chains on the given (old) protocol version must apply to upgrade. A new entry means a new upgrade was registered for all chains of this CTM."}
+      fieldMeta.protocolVersionDeadlines:
++        {"severity":"MEDIUM","description":"Timestamp until which chains may still run the given protocol version (max uint256 means no deadline)."}
+      fieldMeta.initialCutHash:
++        {"severity":"HIGH","description":"Hash of the diamond cut (facets and init) used for newly created chains."}
+      fieldMeta.initialForceDeploymentHash:
++        {"severity":"HIGH","description":"Hash of the L2 system contracts force-deployed into newly created chains."}
+      fieldMeta.l1GenesisUpgrade:
++        {"severity":"HIGH"}
+      implementationNames.eth:0x6908e3ef1417e16c126dbaec5b8c9A097bBc7F58:
+-        "ZKsyncOSChainTypeManager"
+      implementationNames.eth:0x7a309e4e852B01fB1448D8A46365D69B03a88bd1:
++        "ZKsyncOSChainTypeManager"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L1GenesisUpgrade (eth:0x2bf9B0B72573af5471c4f035271616139392Acd8) [shared-zk-stack/L1GenesisUpgrade]
+    +++ description: Diamond implementation code to initialize new ZK chains. Used to set their chainID.
+```
+
+```diff
+    contract BridgeHub (eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213) [shared-zk-stack/BridgeHub_v31] {
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token and from chainId to settlement layer. Since v31 the L2->L1 message and log inclusion proofs it offers are verified by the MessageRoot instead of each chain's diamond.
+      template:
+-        "shared-zk-stack/BridgeHub"
++        "shared-zk-stack/BridgeHub_v31"
+      sourceHashes.1:
+-        "0x7164330a8d67036a0b8dd7419636f90602218fc2937b8571f518f2ab527c974a"
++        "0x0b660c5e7c8258c6c3df203c180fed083425b7ec3de00e5734c27a42eed8fd96"
+      description:
+-        "The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers."
++        "The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token and from chainId to settlement layer. Since v31 the L2->L1 message and log inclusion proofs it offers are verified by the MessageRoot instead of each chain's diamond."
+      values.$implementation:
+-        "eth:0xc89423b4909080fB8F8A43dF5E1C27001e55C24B"
++        "eth:0x1Ea8629E1A4E31485E4A39D90699D0c59daC5beB"
+      values.$pastUpgrades.7:
++        ["2026-11-03T10:08:59.000Z","0x2b77fe3ec567013163f431bb8a39e3b1db06b5288f6a05c4cd946513a257da50",["eth:0x1Ea8629E1A4E31485E4A39D90699D0c59daC5beB"]]
+      values.$upgradeCount:
+-        7
++        8
+      values.migrationPaused:
+-        false
+      values.settlementLayers:
+-        {"9075":true}
++++ description: Service contract that registers chains with each other for interop. Only stored here, not used by the Bridgehub itself.
++++ severity: MEDIUM
+      values.chainRegistrationSender:
++        "eth:0x419A453e690CEac6E57C7798a375cbB2454dd919"
++++ description: ChainTypeManagers registered since the ChainTypeManagerAdded event exists (v29). The Era ChainTypeManager was registered earlier without an event; see the ChainTypeManager immutables of the ProtocolUpgradeHandler for both.
++++ severity: HIGH
+      values.chainTypeManagers:
++        ["eth:0x1adF137F59949c9081157D5de1e002D1C992071F"]
++++ description: Whether the legacy Era-based Gateway (chain 9075) is a whitelisted settlement layer. Removed from the whitelist by ZIP-18 (v31).
++++ severity: HIGH
+      values.eraGatewayWhitelisted:
++        false
++++ description: Number of settlement layer whitelist updates (SettlementLayerRegistered logs). A change means a settlement layer was added or its whitelist status changed: check whitelistedSettlementLayers for the chain in question. Chains can only be migrated to whitelisted settlement layers (by their chain admin), and only whitelisted settlement layers are trusted by the L1AssetTracker for token balance migrations.
++++ severity: HIGH
+      values.settlementLayerUpdates:
++        2
+      fieldMeta.migrationPaused:
+-        {"severity":"MEDIUM"}
+      fieldMeta.messageRoot.description:
++        "Verifies all L2->L1 message, log and L1->L2 transaction status proofs for every chain since v31."
+      fieldMeta.chainsCreated.description:
+-        "All new chains created go thorugh the central bridgehub and are stored here with their respective STMs."
++        "All new chains created go through the central Bridgehub and are stored here with their respective CTMs."
+      fieldMeta.settlementLayers:
+-        {"severity":"HIGH","description":"New settlement layers and their whitelist status. Chains can be migrated to whitelisted settlement layers by their chain admin."}
+      fieldMeta.chainRegistrationSender:
++        {"severity":"MEDIUM","description":"Service contract that registers chains with each other for interop. Only stored here, not used by the Bridgehub itself."}
+      fieldMeta.chainTypeManagers:
++        {"severity":"HIGH","description":"ChainTypeManagers registered since the ChainTypeManagerAdded event exists (v29). The Era ChainTypeManager was registered earlier without an event; see the ChainTypeManager immutables of the ProtocolUpgradeHandler for both."}
+      fieldMeta.settlementLayerUpdates:
++        {"severity":"HIGH","description":"Number of settlement layer whitelist updates (SettlementLayerRegistered logs). A change means a settlement layer was added or its whitelist status changed: check whitelistedSettlementLayers for the chain in question. Chains can only be migrated to whitelisted settlement layers (by their chain admin), and only whitelisted settlement layers are trusted by the L1AssetTracker for token balance migrations."}
+      fieldMeta.eraGatewayWhitelisted:
++        {"severity":"HIGH","description":"Whether the legacy Era-based Gateway (chain 9075) is a whitelisted settlement layer. Removed from the whitelist by ZIP-18 (v31)."}
+      implementationNames.eth:0xc89423b4909080fB8F8A43dF5E1C27001e55C24B:
+-        "Bridgehub"
+      implementationNames.eth:0x1Ea8629E1A4E31485E4A39D90699D0c59daC5beB:
++        "L1Bridgehub"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L1GenesisUpgrade (eth:0x390bc10e854e137d2625573272b3fEe2C615eBA4) [shared-zk-stack/L1GenesisUpgrade]
+    +++ description: Diamond implementation code to initialize new ZK chains. Used to set their chainID.
+```
+
+```diff
+    contract L1MessageRoot (eth:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD) [shared-zk-stack/MessageRoot_v31] {
+    +++ description: Stores the batch roots of all ZK stack chains and verifies the L2->L1 message, log and L1->L2 transaction status proofs used for withdrawals and failed deposit claims. Batch roots are appended by each chain while it settles on Ethereum; proofs of chains settling on a whitelisted settlement layer are verified recursively through that layer's roots. Batches produced before a chain's v31 upgrade are still verified against the chain's own diamond.
+      name:
+-        "MessageRoot"
++        "L1MessageRoot"
+      template:
+-        "shared-zk-stack/MessageRoot"
++        "shared-zk-stack/MessageRoot_v31"
+      sourceHashes.1:
+-        "0x29e0d2dfea2c555eaba6b0533f45bd11302d1c216dea0fc7e1feb85a14e1bae4"
++        "0xae2c6df9e3dac8d19a4779e387f0258d678b24dfe68c26837f66b93d35f4087d"
+      description:
+-        "Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed."
++        "Stores the batch roots of all ZK stack chains and verifies the L2->L1 message, log and L1->L2 transaction status proofs used for withdrawals and failed deposit claims. Batch roots are appended by each chain while it settles on Ethereum; proofs of chains settling on a whitelisted settlement layer are verified recursively through that layer's roots. Batches produced before a chain's v31 upgrade are still verified against the chain's own diamond."
+      values.$implementation:
+-        "eth:0x669ed5BB1377C917333e7d4223ce3419EE4099fD"
++        "eth:0x2a625bd265dcfA6285A4b97dbc11194C968E3087"
+      values.$pastUpgrades.3:
++        ["2026-11-03T10:08:59.000Z","0x2b77fe3ec567013163f431bb8a39e3b1db06b5288f6a05c4cd946513a257da50",["eth:0x2a625bd265dcfA6285A4b97dbc11194C968E3087"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.getChainRoot:
+-        ["0x0000000000000000000000000000000000000000000000000000000000000000"]
++++ description: Decides which settlement layer a chain's batch belongs to when verifying recursive proofs, and registers migrating chains.
+      values.CHAIN_ASSET_HANDLER:
++        "eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076"
++++ description: Chain ID of the legacy Era-based Gateway, whose historical batch roots are kept for chains that settled there before v31.
+      values.ERA_GATEWAY_CHAIN_ID:
++        9075
+      implementationNames.eth:0x669ed5BB1377C917333e7d4223ce3419EE4099fD:
+-        "MessageRoot"
+      implementationNames.eth:0x2a625bd265dcfA6285A4b97dbc11194C968E3087:
++        "L1MessageRoot"
+      fieldMeta:
++        {"CHAIN_ASSET_HANDLER":{"description":"Decides which settlement layer a chain's batch belongs to when verifying recursive proofs, and registers migrating chains."},"ERA_GATEWAY_CHAIN_ID":{"description":"Chain ID of the legacy Era-based Gateway, whose historical batch roots are kept for chains that settled there before v31."}}
+    }
+```
+
+```diff
+    contract CTMDeploymentTracker (eth:0x6078F6B379f103de1Aa912dc46bb8Df0c8809860) [shared-zk-stack/CTMDeploymentTracker] {
+    +++ description: Asset deployment tracker where the 'asset' is a ChainTypeManager. The registering of asset IDs for ChainTypeManagers is necessary to be able to migrate them to a given settlement layer, for example the Gateway.
+      sourceHashes.1:
+-        "0xaf17ca5ee2e209df804f29aa9bf13e346e1e2d636d4fa392b9583436f074a9bd"
++        "0xd273602c91cf4fb59a10d0a1f59d108fe2f673d627ea3bf52f3ac533a7ec551f"
+      values.$implementation:
+-        "eth:0x00e9d8A4b35C32880A10Feb391aDEDA0D3F90991"
++        "eth:0xdbE0a8cfdc09f3920b656e9aEA6bD329e15dA59D"
+      values.$pastUpgrades.2:
++        ["2026-11-03T10:08:59.000Z","0x2b77fe3ec567013163f431bb8a39e3b1db06b5288f6a05c4cd946513a257da50",["eth:0xdbE0a8cfdc09f3920b656e9aEA6bD329e15dA59D"]]
+      values.$upgradeCount:
+-        2
++        3
+      implementationNames.eth:0x00e9d8A4b35C32880A10Feb391aDEDA0D3F90991:
+-        "CTMDeploymentTracker"
+      implementationNames.eth:0xdbE0a8cfdc09f3920b656e9aEA6bD329e15dA59D:
++        "CTMDeploymentTracker"
+    }
+```
+
+```diff
+    contract L1AssetRouter (eth:0x8829AD80E425C646DAB305381ff105169FeEcE56) [shared-zk-stack/L1AssetRouter] {
+    +++ description: Canonical central asset router for all ZK stack chains. Routes deposits and withdrawals to the respective asset handlers (like the L1NativeTokenVault); does not escrow funds itself.
+      sourceHashes.1:
+-        "0xd5d5ac5ccddafa92ad87b70d56d017cfe98cc3d3e4f25d24cd2a7b5f8c9ab803"
++        "0x7b0babeec80ad067b98a6b7221389320e973acace9e8a0990ec432fac20fcb8a"
+      values.$implementation:
+-        "eth:0x2386Bc2E26f39b72f0D4FDE0c07D68e4eEFfC725"
++        "eth:0x9a6a547a16d12743b0647896352D98De708471Ac"
+      values.$pastUpgrades.4:
++        ["2026-11-03T10:08:59.000Z","0x2b77fe3ec567013163f431bb8a39e3b1db06b5288f6a05c4cd946513a257da50",["eth:0x9a6a547a16d12743b0647896352D98De708471Ac"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.L1_CHAIN_ID:
+-        1
+      values.ERA_DIAMOND_PROXY:
++        "eth:0x32400084C286CF3E17e7B677ea9583e60a000324"
+      implementationNames.eth:0x2386Bc2E26f39b72f0D4FDE0c07D68e4eEFfC725:
+-        "L1AssetRouter"
+      implementationNames.eth:0x9a6a547a16d12743b0647896352D98De708471Ac:
++        "L1AssetRouter"
+    }
+```
+
+```diff
+    contract EmergencyUpgradeBoard (eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C) [shared-zk-stack/EmergencyUpgradeBoard] {
+    +++ description: A custom contract allowing a 3/3 of eth:0x29D2e773A31C07D375c50F0110422832bd044d08, eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and eth:0x8f525e55F76050d8dFdDa4870DA1b3ede54E908F to `executeEmergencyUpgrade()` via the eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x1adF137F59949c9081157D5de1e002D1C992071F","description":"manage the shared ValidatorTimelock contract address and the admin role, register upgrades and patch upgrades together with the verifier of each protocol version (and set their deadlines), execute upgrades, freeze, revert batches, deactivate Priority Mode and set permissioned validators and fee params for all connected chains.","role":".owner","via":[{"address":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213","description":"set critical contract addresses for the shared cluster (asset router, CTM deployer, message root, chain asset handler, chain registration sender), add and remove chain type managers, whitelist settlement layers, pause and unpause the bridge and register already deployed zk chains.","role":".owner","via":[{"address":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+      receivedPermissions.1.description:
+-        "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains."
++        "add and remove the FFLONK/PLONK verifier pairs that proofs of ZKsync OS chains can select by version."
+      receivedPermissions.1.from:
+-        "eth:0x1adF137F59949c9081157D5de1e002D1C992071F"
++        "eth:0x433b6ff15824806c8C14EcE4a6FE1f1909F7da2F"
+      receivedPermissions.2.description:
+-        "set critical contract addresses for the shared cluster, register settlement layers, pause and unpause migrations and the bridge and manage zk chain registration."
++        "pause / unpause the tracker and re-sync its ChainAssetHandler reference from the Bridgehub."
+      receivedPermissions.2.from:
+-        "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213"
++        "eth:0x7fd8B995fc27aD7de97853e65B17CaCfc0a573Cc"
+      receivedPermissions.3.description:
+-        "pause / unpause the bridge."
++        "pause / unpause the bridge and set the L1AssetTracker that enforces the per-chain balances."
+      receivedPermissions.4.description:
+-        "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains."
++        "manage the shared ValidatorTimelock contract address and the admin role, register upgrades and patch upgrades together with the verifier of each protocol version (and set their deadlines), execute upgrades, freeze, revert batches, deactivate Priority Mode and set permissioned validators and fee params for all connected chains."
+      receivedPermissions.6.description:
+-        "pause, resume chain migrations."
++        "pause and resume chain migrations, pause and unpause the handler, re-sync its MessageRoot and AssetRouter references from the Bridgehub and backfill historical migration intervals of chains that settled on the legacy Gateway."
+      receivedPermissions.14:
++        {"permission":"upgrade","from":"eth:0x419A453e690CEac6E57C7798a375cbB2454dd919","role":"admin","via":[{"address":"eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+      receivedPermissions.17:
++        {"permission":"upgrade","from":"eth:0x7fd8B995fc27aD7de97853e65B17CaCfc0a573Cc","role":"admin","via":[{"address":"eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+      receivedPermissions.18:
++        {"permission":"upgrade","from":"eth:0x8509eA34177B051110826A36621C1C52C9752CAA","role":"admin","via":[{"address":"eth:0xff3582a0310916cd62442A4CA88Bf1C757D68938"},{"address":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+      receivedPermissions.24:
++        {"permission":"upgrade","from":"eth:0xE220059BBA4684BF2Cf0B9E6E5A9DF94D9fb90E9","role":"admin","via":[{"address":"eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+    }
+```
+
+```diff
+    contract L1NativeTokenVault (eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6) [shared-zk-stack/L1NativeTokenVault_v31] {
+    +++ description: Canonical central asset escrow for all ZK stack chains. Since v31 the per-chain balance accounting that caps what each chain can withdraw is enforced by the L1AssetTracker, which the vault calls on every deposit, withdrawal and failed deposit claim.
+      template:
+-        "shared-zk-stack/L1NativeTokenVault"
++        "shared-zk-stack/L1NativeTokenVault_v31"
+      sourceHashes.1:
+-        "0x24e6f0744dc55f40116debb6c11e8bdd7821fdb1869630b1f31918c8420b7423"
++        "0x29d9b2749a121f8849ae17c017a47b59e45c90585f0ddd80ddf773b50a39e74b"
+      description:
+-        "Canonical central asset escrow for all ZK stack chains."
++        "Canonical central asset escrow for all ZK stack chains. Since v31 the per-chain balance accounting that caps what each chain can withdraw is enforced by the L1AssetTracker, which the vault calls on every deposit, withdrawal and failed deposit claim."
+      values.$implementation:
+-        "eth:0x8E1C5A8c5d8C33ed0eC756d6f4006f2D875bA083"
++        "eth:0x5418e080b7c2cDc00b3BBbbEd67fbD401A34ae68"
+      values.$pastUpgrades.4:
++        ["2026-11-03T10:08:59.000Z","0x2b77fe3ec567013163f431bb8a39e3b1db06b5288f6a05c4cd946513a257da50",["eth:0x5418e080b7c2cDc00b3BBbbEd67fbD401A34ae68"]]
+      values.$upgradeCount:
+-        4
++        5
++++ description: Enforces the per-chain token balances on every withdrawal and failed deposit claim. Can be repointed by the owner at any time.
++++ severity: HIGH
+      values.l1AssetTracker:
++        "eth:0x7fd8B995fc27aD7de97853e65B17CaCfc0a573Cc"
+      fieldMeta.l1AssetTracker:
++        {"severity":"HIGH","description":"Enforces the per-chain token balances on every withdrawal and failed deposit claim. Can be repointed by the owner at any time."}
+      implementationNames.eth:0x8E1C5A8c5d8C33ed0eC756d6f4006f2D875bA083:
+-        "L1NativeTokenVault"
+      implementationNames.eth:0x5418e080b7c2cDc00b3BBbbEd67fbD401A34ae68:
++        "L1NativeTokenVault"
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1) [global/ProxyAdmin] {
+    +++ description: None
+      directlyReceivedPermissions.1:
++        {"permission":"upgrade","from":"eth:0x419A453e690CEac6E57C7798a375cbB2454dd919","role":"admin"}
+      directlyReceivedPermissions.4:
++        {"permission":"upgrade","from":"eth:0x7fd8B995fc27aD7de97853e65B17CaCfc0a573Cc","role":"admin"}
+      directlyReceivedPermissions.10:
++        {"permission":"upgrade","from":"eth:0xE220059BBA4684BF2Cf0B9E6E5A9DF94D9fb90E9","role":"admin"}
+    }
+```
+
+```diff
+    contract EraChainTypeManager (eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) [shared-zk-stack/ChainTypeManager_v31] {
+    +++ description: Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. Since v31 the verifier of each protocol version is registered here and written into a chain when it applies the upgrade. The current protocol version is 0,33,0.
+      name:
+-        "ChainTypeManager"
++        "EraChainTypeManager"
+      template:
+-        "shared-zk-stack/ChainTypeManager"
++        "shared-zk-stack/ChainTypeManager_v31"
+      sourceHashes.1:
+-        "0xb0eebc8da1c8b487e37ce835acafbb43e7540c68772e535769e5a1a1620c2b89"
++        "0x1d92720bdf1d51f5fc897423a6e0c1a6ca645d21cd0d41c0679bd4dacc9688a2"
+      description:
+-        "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,30,1."
++        "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. Since v31 the verifier of each protocol version is registered here and written into a chain when it applies the upgrade. The current protocol version is 0,33,0."
+      values.$implementation:
+-        "eth:0x4aB7204e4205c96C32E23ADa9191720976dC084f"
++        "eth:0x1bD52FDBcd714FFc48C7cE9E8437572102174734"
+      values.$pastUpgrades.7:
++        ["2026-11-03T10:08:59.000Z","0x2b77fe3ec567013163f431bb8a39e3b1db06b5288f6a05c4cd946513a257da50",["eth:0x1bD52FDBcd714FFc48C7cE9E8437572102174734"]]
+      values.$upgradeCount:
+-        7
++        8
+      values.getSemverProtocolVersion.1:
+-        30
++        33
+      values.getSemverProtocolVersion.2:
+-        1
++        0
++++ description: Hash of the diamond cut (facets and init) used for newly created chains.
++++ severity: HIGH
+      values.initialCutHash:
+-        "0x655b8c1f90ae993c79348e61a3376e85c5f15c7cfb00f3afbfd6290160f24c89"
++        "0x51d870a86c347912cd3999bbceb76f491e1984d0728c9faae7000009e7f20512"
++++ description: Hash of the L2 system contracts force-deployed into newly created chains.
++++ severity: HIGH
+      values.initialForceDeploymentHash:
+-        "0xad3fb7f31b114db9c3bce490d6ff173ee5bb075efddae0bd6ed01432f5c09860"
++        "0x5a7a068cf085071451bc01005aebf994e7931ee14abf216b732e6d49c6225e54"
++++ severity: HIGH
+      values.l1GenesisUpgrade:
+-        "eth:0x390bc10e854e137d2625573272b3fEe2C615eBA4"
++        "eth:0x853bEB619c14d6435b770c35642862B8e91a3d08"
+      values.protocolVersion:
+-        128849018881
++        141733920768
+      values.storedBatchZero:
+-        "0x4e89e7408b8a0abb45917cb07d586b1b0affca0ba4e6fd450504bdea9dd079a1"
++        "0xe9e995f50b1f9821d8a795e04251a672743f90e46493220d53b3e1a53c576e07"
++++ description: Verifier registered for the current protocol version. Chains receive it when they apply the upgrade to this version.
++++ severity: HIGH
+      values.currentProtocolVersionVerifier:
++        "eth:0x5D5d33B16D9e79d9d9b8196ec760e70a31A44711"
+      values.INTEROP_CENTER:
++        "eth:0x000000000000000000000000000000000001000d"
+      values.isZKsyncOS:
++        false
+      values.L1_BYTECODES_SUPPLIER:
++        "eth:0x456A572539d9D9697fFD68954A7a039682D99557"
++++ description: The only address allowed to commit, prove and execute batches of a chain while its Priority Mode is active. Written into each chain when it applies the v31 upgrade.
+      values.PERMISSIONLESS_VALIDATOR:
++        "eth:0xE220059BBA4684BF2Cf0B9E6E5A9DF94D9fb90E9"
++++ description: Timestamp until which chains may still run the given protocol version (max uint256 means no deadline).
++++ severity: MEDIUM
+      values.protocolVersionDeadlines:
++        {"107374182400":0,"111669149696":"115792089237316195423570985008687907853269984665640564039457584007913129639935","115964116992":"115792089237316195423570985008687907853269984665640564039457584007913129639935","120259084288":"115792089237316195423570985008687907853269984665640564039457584007913129639935","120259084289":"115792089237316195423570985008687907853269984665640564039457584007913129639935","124554051586":"115792089237316195423570985008687907853269984665640564039457584007913129639935","124554051587":"115792089237316195423570985008687907853269984665640564039457584007913129639935","124554051588":"115792089237316195423570985008687907853269984665640564039457584007913129639935","124554051589":"115792089237316195423570985008687907853269984665640564039457584007913129639935","128849018880":"115792089237316195423570985008687907853269984665640564039457584007913129639935","128849018881":"115792089237316195423570985008687907853269984665640564039457584007913129639935","141733920768":"115792089237316195423570985008687907853269984665640564039457584007913129639935"}
++++ description: Verifier registered for each protocol version (populated since v31).
++++ severity: HIGH
+      values.protocolVersionVerifiers:
++        {"141733920768":"eth:0x5D5d33B16D9e79d9d9b8196ec760e70a31A44711"}
++++ description: Hash of the diamond cut that chains on the given (old) protocol version must apply to upgrade. A new entry means a new upgrade was registered for all chains of this CTM.
++++ severity: HIGH
+      values.upgradeCutHashes:
++        {"103079215104":"0xf267ae1a526fef4f09da470ec30963dbba540314012bcfac298723bde5de6ea1","103079215105":"0x731f41b8959c48bcaa629a388ed2b7ff77397088da3e2c65b46fa4717a52d941","103079215106":"0x0495fdf7fe0ff5d590858931b09a765f9c45971641481a92b4a9af90914f45fd","107374182400":"0x3866635ce72cfdcbfe4a7d6f07d441b917a36112d28b83370df014511ea810e8","111669149696":"0x2a51329430c65d9785e5767e1bacfa54a1ec72491c93c079899c1e37c51fb6a0","115964116992":"0x11681038450fa5b4f07a8deaf33a18d7fb1f88c01cbaf7c2fcbe9bd12fbacb4a","120259084288":"0xb73baacbe086ecbf5d6ad89aec6d8f1f7a2b1f70e732c6f31747bca541e0933f","120259084289":"0xb73baacbe086ecbf5d6ad89aec6d8f1f7a2b1f70e732c6f31747bca541e0933f","124554051586":"0xcde2ca0e996589ae3c816bbe353c02076a25f5534126a1066a4d92329d659a68","124554051587":"0xf48a3d7a26b84c81a2b88e321d80c164dfc5fc39a990dfea17c8f719eab99165","124554051588":"0xcb7a67360236f5f45f26b6e2c0a6e7d40eb22a392684fea77ff1708d63b013ab","124554051589":"0x755ade6e5e161c27fea06d372bb81d27eb3044be5821c6791a80fd8008a1c790","128849018880":"0x48728a854324de3ab2a1df5daa37a7f79266fe7c4b106711c43de639e35b6a7d","128849018881":"0x19d207216f2c81fd65e836643f9dcdc6afba8daa4797240859f9517e0f1cc0eb"}
+      fieldMeta.serverNotifierAddress:
++        {"severity":"MEDIUM"}
+      fieldMeta.PERMISSIONLESS_VALIDATOR:
++        {"description":"The only address allowed to commit, prove and execute batches of a chain while its Priority Mode is active. Written into each chain when it applies the v31 upgrade."}
+      fieldMeta.currentProtocolVersionVerifier:
++        {"severity":"HIGH","description":"Verifier registered for the current protocol version. Chains receive it when they apply the upgrade to this version."}
+      fieldMeta.protocolVersionVerifiers:
++        {"severity":"HIGH","description":"Verifier registered for each protocol version (populated since v31)."}
+      fieldMeta.upgradeCutHashes:
++        {"severity":"HIGH","description":"Hash of the diamond cut that chains on the given (old) protocol version must apply to upgrade. A new entry means a new upgrade was registered for all chains of this CTM."}
+      fieldMeta.protocolVersionDeadlines:
++        {"severity":"MEDIUM","description":"Timestamp until which chains may still run the given protocol version (max uint256 means no deadline)."}
+      fieldMeta.initialCutHash:
++        {"severity":"HIGH","description":"Hash of the diamond cut (facets and init) used for newly created chains."}
+      fieldMeta.initialForceDeploymentHash:
++        {"severity":"HIGH","description":"Hash of the L2 system contracts force-deployed into newly created chains."}
+      fieldMeta.l1GenesisUpgrade:
++        {"severity":"HIGH"}
+      implementationNames.eth:0x4aB7204e4205c96C32E23ADa9191720976dC084f:
+-        "ChainTypeManager"
+      implementationNames.eth:0x1bD52FDBcd714FFc48C7cE9E8437572102174734:
++        "EraChainTypeManager"
+    }
+```
+
+```diff
+    contract L1Nullifier (eth:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB) [shared-zk-stack/L1Nullifier_v31] {
+    +++ description: Contract responsible for bookkeeping L1 bridging transactions. Used to finalize withdrawals and reclaim failed deposits, verifying the proofs through the MessageRoot since v31. Does not escrow funds.
+      template:
+-        "shared-zk-stack/L1Nullifier"
++        "shared-zk-stack/L1Nullifier_v31"
+      sourceHashes.1:
+-        "0x9771a3711c6bb3931cbf0903da92da8e5323f016d1f6ba67696ac20dec6d47f1"
++        "0x5246da6324941352876284507b9bf36625999e4a0217fe58695fd3a2dc651af5"
+      description:
+-        "Contract responsible for bookkeeping L1 bridging transactions. Used to finalize withdrawals and reclaim failed deposits. Does not escrow funds."
++        "Contract responsible for bookkeeping L1 bridging transactions. Used to finalize withdrawals and reclaim failed deposits, verifying the proofs through the MessageRoot since v31. Does not escrow funds."
+      values.$implementation:
+-        "eth:0x71759C4eA628293F5a99aAB1585dF1c8dA4718e0"
++        "eth:0x39a847748AdFbB3A9DE4A401a0F1d90eCed3e669"
+      values.$pastUpgrades.7:
++        ["2026-11-03T10:08:59.000Z","0x2b77fe3ec567013163f431bb8a39e3b1db06b5288f6a05c4cd946513a257da50",["eth:0x39a847748AdFbB3A9DE4A401a0F1d90eCed3e669"]]
+      values.$upgradeCount:
+-        7
++        8
+      values.MESSAGE_ROOT:
++        "eth:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD"
+      fieldMeta.l1NativeTokenVault:
++        {"severity":"HIGH"}
+      implementationNames.eth:0x71759C4eA628293F5a99aAB1585dF1c8dA4718e0:
+-        "L1Nullifier"
+      implementationNames.eth:0x39a847748AdFbB3A9DE4A401a0F1d90eCed3e669:
++        "L1Nullifier"
+    }
+```
+
+```diff
+    contract L1ChainAssetHandler (eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076) [shared-zk-stack/ChainAssetHandler_v31] {
+    +++ description: Specialized asset handler for chains as assets, i.e. chain migrations between Ethereum and whitelisted settlement layers. It records the migration number and the batch intervals of each chain per settlement layer, which the MessageRoot uses to validate proofs, and gates migrations on the chain being upgraded to v31 with its base token registered in the L1AssetTracker.
+      name:
+-        "ChainAssetHandler"
++        "L1ChainAssetHandler"
+      template:
+-        "shared-zk-stack/ChainAssetHandler"
++        "shared-zk-stack/ChainAssetHandler_v31"
+      sourceHashes.1:
+-        "0xf493716caf97cc5a5945395a8c671ba30336e0bfd1f625310252ba29f4ee1377"
++        "0x1ef98e2f334c6e11a47bd8f91e8fffefa410f5ec37e6005c2b09cd3d80fc5055"
+      description:
+-        "Specialized contract for managing chain assets, i.e. chain migrations."
++        "Specialized asset handler for chains as assets, i.e. chain migrations between Ethereum and whitelisted settlement layers. It records the migration number and the batch intervals of each chain per settlement layer, which the MessageRoot uses to validate proofs, and gates migrations on the chain being upgraded to v31 with its base token registered in the L1AssetTracker."
+      values.$implementation:
+-        "eth:0xaa180C70126f751C164465638770B865965A744B"
++        "eth:0x084b32BA77871907eac9864c89A6ad1C7C22A541"
+      values.$pastUpgrades.1:
++        ["2026-11-03T10:08:59.000Z","0x2b77fe3ec567013163f431bb8a39e3b1db06b5288f6a05c4cd946513a257da50",["eth:0x084b32BA77871907eac9864c89A6ad1C7C22A541"]]
+      values.$upgradeCount:
+-        1
++        2
++++ description: Stops chains from starting or finalizing migrations to and from settlement layers. Must be true while a new protocol version is registered in a ChainTypeManager.
++++ severity: MEDIUM
+      values.migrationPaused:
+-        true
++        false
+      values.ASSET_ROUTER:
++        "eth:0x8829AD80E425C646DAB305381ff105169FeEcE56"
+      values.BRIDGEHUB:
++        "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+      values.ETH_TOKEN_ASSET_ID:
++        "0x05e1c3ae4b9732444ae25217ac7666e46fa365fee1768de00c9fcb65532b7609"
+      values.L1_CHAIN_ID:
++        1
+      values.MESSAGE_ROOT:
++        "eth:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD"
++++ description: zk chain migrations that were finalized on Ethereum (chainId, migration number).
+      values.migrationsFinalized:
++        []
+      fieldMeta.migrationPaused.description:
++        "Stops chains from starting or finalizing migrations to and from settlement layers. Must be true while a new protocol version is registered in a ChainTypeManager."
+      fieldMeta.paused.severity:
+-        "LOW"
++        "MEDIUM"
+      fieldMeta.paused.description:
+-        "this 'paused' is unrelated to migrations and only used for initialization."
++        "Pauses starting and finalizing migrations (in addition to migrationPaused)."
+      fieldMeta.migrations.description:
+-        "zk chain migrations that were started. Any chain's migration appears here; Era's own settlement moves are tracked as HIGH on its Diamond (getSettlementLayer)."
++        "zk chain migrations that were started (chainId, migration number, target settlement layer). Any chain's migration appears here; Era's own settlement moves are tracked as HIGH on its Diamond (getSettlementLayer)."
+      fieldMeta.migrationsFinalized:
++        {"description":"zk chain migrations that were finalized on Ethereum (chainId, migration number)."}
+      implementationNames.eth:0xaa180C70126f751C164465638770B865965A744B:
+-        "ChainAssetHandler"
+      implementationNames.eth:0x084b32BA77871907eac9864c89A6ad1C7C22A541:
++        "L1ChainAssetHandler"
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) [shared-zk-stack/ProtocolUpgradeHandler] {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+      directlyReceivedPermissions.5:
++        {"permission":"interact","from":"eth:0x1adF137F59949c9081157D5de1e002D1C992071F","description":"manage the shared ValidatorTimelock contract address and the admin role, register upgrades and patch upgrades together with the verifier of each protocol version (and set their deadlines), execute upgrades, freeze, revert batches, deactivate Priority Mode and set permissioned validators and fee params for all connected chains.","role":".owner"}
+      directlyReceivedPermissions.6:
++        {"permission":"interact","from":"eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213","description":"set critical contract addresses for the shared cluster (asset router, CTM deployer, message root, chain asset handler, chain registration sender), add and remove chain type managers, whitelist settlement layers, pause and unpause the bridge and register already deployed zk chains.","role":".owner"}
+      directlyReceivedPermissions.5.description:
+-        "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains."
++        "add and remove the FFLONK/PLONK verifier pairs that proofs of ZKsync OS chains can select by version."
+      directlyReceivedPermissions.5.from:
+-        "eth:0x1adF137F59949c9081157D5de1e002D1C992071F"
++        "eth:0x433b6ff15824806c8C14EcE4a6FE1f1909F7da2F"
+      directlyReceivedPermissions.6.description:
+-        "set critical contract addresses for the shared cluster, register settlement layers, pause and unpause migrations and the bridge and manage zk chain registration."
++        "pause / unpause the tracker and re-sync its ChainAssetHandler reference from the Bridgehub."
+      directlyReceivedPermissions.6.from:
+-        "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213"
++        "eth:0x7fd8B995fc27aD7de97853e65B17CaCfc0a573Cc"
+      directlyReceivedPermissions.7.description:
+-        "pause / unpause the bridge."
++        "pause / unpause the bridge and set the L1AssetTracker that enforces the per-chain balances."
+      directlyReceivedPermissions.8.description:
+-        "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains."
++        "manage the shared ValidatorTimelock contract address and the admin role, register upgrades and patch upgrades together with the verifier of each protocol version (and set their deadlines), execute upgrades, freeze, revert batches, deactivate Priority Mode and set permissioned validators and fee params for all connected chains."
+      directlyReceivedPermissions.10.description:
+-        "pause, resume chain migrations."
++        "pause and resume chain migrations, pause and unpause the handler, re-sync its MessageRoot and AssetRouter references from the Bridgehub and backfill historical migration intervals of chains that settled on the legacy Gateway."
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xff3582a0310916cd62442A4CA88Bf1C757D68938) [global/ProxyAdmin] {
+    +++ description: None
+      directlyReceivedPermissions.2:
++        {"permission":"upgrade","from":"eth:0x8509eA34177B051110826A36621C1C52C9752CAA","role":"admin"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ChainRegistrationSender (eth:0x419A453e690CEac6E57C7798a375cbB2454dd919) [shared-zk-stack/ChainRegistrationSender]
+    +++ description: Service contract that registers one ZK stack chain on another for interop by sending an L1->L2 service transaction through the Bridgehub. Only chains settling on the same settlement layer can be registered with each other.
+```
+
+```diff
++   Status: CREATED
+    contract ZKsyncOSDualVerifier_v31 (eth:0x433b6ff15824806c8C14EcE4a6FE1f1909F7da2F) [shared-zk-stack/ZKsyncOSDualVerifier]
+    +++ description: A router contract for verifiers of ZKsync OS chains. Routes verification requests to the PLONK verifier of the version selected in the proof, currently eth:0x47a250D4Eb7F1bf9B4De89c31228DB0E938FF415 (version 0). The owner can add and remove verifier versions without a chain upgrade.
+```
+
+```diff
++   Status: CREATED
+    contract ZKsyncOSVerifierPlonk_v31 (eth:0x47a250D4Eb7F1bf9B4De89c31228DB0E938FF415) [shared-zk-stack/L1VerifierPlonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
++   Status: CREATED
+    contract EraDualVerifier_v33 (eth:0x5D5d33B16D9e79d9d9b8196ec760e70a31A44711) [shared-zk-stack/DualVerifier]
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0x870C0A2bd4f253dd867b2239a0d8d86f87D64128 or eth:0x71ef07eB0BaFE5342f7d9513Fe7A544Dc90B8001 depending on the supplied proof type.
+```
+
+```diff
++   Status: CREATED
+    contract EraVerifierPlonk_v33 (eth:0x71ef07eB0BaFE5342f7d9513Fe7A544Dc90B8001) [shared-zk-stack/L1VerifierPlonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
++   Status: CREATED
+    contract ZKsyncOSVerifierFflonk_v31 (eth:0x77EE31260Bed9e6879ffBb66e8ABB3EBCE0B2aBF) [shared-zk-stack/L1VerifierFflonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
++   Status: CREATED
+    contract L1AssetTracker (eth:0x7fd8B995fc27aD7de97853e65B17CaCfc0a573Cc) [shared-zk-stack/L1AssetTracker]
+    +++ description: Keeps the per-chain token balances of the L1NativeTokenVault escrow: every deposit increases and every withdrawal or failed deposit claim decreases the balance of the chain (or of its whitelisted settlement layer), and a withdrawal that exceeds it reverts. Also migrates balances between a chain and its settlement layer on chain migrations. Legacy balances are moved here from the vault token by token through the permissionless registerLegacyToken().
+```
+
+```diff
++   Status: CREATED
+    contract ZKsyncOSPermissionlessValidator (eth:0x8509eA34177B051110826A36621C1C52C9752CAA) [shared-zk-stack/PermissionlessValidator]
+    +++ description: The only address allowed to commit, prove and execute batches of a chain while its Priority Mode (escape hatch) is active. Anyone can call it to settle batches of such a chain in one transaction, bypassing the ValidatorTimelock delay. In Priority Mode each batch can contain only priority (L1 queue) transactions. Anyone can activate Priority Mode once the first unprocessed priority transaction is older than 4 days. This requires a permanent rollup whose admin has permanently allowed Priority Mode.
+```
+
+```diff
++   Status: CREATED
+    contract L1GenesisUpgrade (eth:0x853bEB619c14d6435b770c35642862B8e91a3d08) [shared-zk-stack/L1GenesisUpgrade]
+    +++ description: Diamond implementation code to initialize new ZK chains. Used to set their chainID.
+```
+
+```diff
++   Status: CREATED
+    contract EraVerifierFflonk_v33 (eth:0x870C0A2bd4f253dd867b2239a0d8d86f87D64128) [shared-zk-stack/L1VerifierFflonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
++   Status: CREATED
+    contract ZKsyncOSL1GenesisUpgrade (eth:0x871faE53b5db4989023936f46e2b1aE161B20E15) [shared-zk-stack/L1GenesisUpgrade]
+    +++ description: Diamond implementation code to initialize new ZK chains. Used to set their chainID.
+```
+
+```diff
++   Status: CREATED
+    contract EraPermissionlessValidator (eth:0xE220059BBA4684BF2Cf0B9E6E5A9DF94D9fb90E9) [shared-zk-stack/PermissionlessValidator]
+    +++ description: The only address allowed to commit, prove and execute batches of a chain while its Priority Mode (escape hatch) is active. Anyone can call it to settle batches of such a chain in one transaction, bypassing the ValidatorTimelock delay. In Priority Mode each batch can contain only priority (L1 queue) transactions. Anyone can activate Priority Mode once the first unprocessed priority transaction is older than 4 days. This requires a permanent rollup whose admin has permanently allowed Priority Mode.
+```
+
+## Source code changes
+
+```diff
+.../BridgeHub/L1Bridgehub.sol}                     | 5845 ++++++++------
+ .../CTMDeploymentTracker/CTMDeploymentTracker.sol  | 5141 +++++++++++-
+ .../ChainRegistrationSender.sol                    | 1600 ++++
+ .../TransparentUpgradeableProxy.p.sol              |    0
+ .../EraChainTypeManager/EraChainTypeManager.sol}   | 1676 ++--
+ .../TransparentUpgradeableProxy.p.sol              |    0
+ .../shared-zk-stack/.flat/EraDualVerifier_v33.sol  |  133 +
+ .../PermissionlessValidator.sol                    |  725 ++
+ .../TransparentUpgradeableProxy.p.sol              |  864 ++
+ .../.flat/EraVerifierFflonk_v33.sol                | 1632 ++++
+ .../shared-zk-stack/.flat/EraVerifierPlonk_v33.sol | 1720 ++++
+ .../L1AssetRouter/L1AssetRouter.sol                | 7444 ++++++++++++-----
+ .../.flat/L1AssetTracker/L1AssetTracker.sol        | 6541 +++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  864 ++
+ .../L1ChainAssetHandler/L1ChainAssetHandler.sol}   | 8426 ++++++++++++--------
+ .../TransparentUpgradeableProxy.p.sol              |  864 ++
+ .../L1GenesisUpgrade.sol}                          | 6699 ++++++++++------
+ .../L1MessageRoot/L1MessageRoot.sol}               | 2543 ++++--
+ .../TransparentUpgradeableProxy.p.sol              |    0
+ .../L1NativeTokenVault/L1NativeTokenVault.sol      | 6626 ++++++++++++---
+ .../L1Nullifier/L1Nullifier.sol                    | 7779 ++++++++++++------
+ .../MultisigCommitter/MultisigCommitter.sol        | 6322 ++++++++-------
+ .../ZKsyncOSChainTypeManager.sol                   | 1391 ++--
+ .../.flat/ZKsyncOSDualVerifier_v31.sol             |  379 +
+ .../ZKsyncOSL1GenesisUpgrade.sol}                  | 6266 ++++++++++-----
+ .../PermissionlessValidator.sol                    |  725 ++
+ .../TransparentUpgradeableProxy.p.sol              |  864 ++
+ .../.flat/ZKsyncOSVerifierFflonk_v31.sol           | 1632 ++++
+ .../.flat/ZKsyncOSVerifierPlonk_v31.sol            | 1720 ++++
+ 29 files changed, 65976 insertions(+), 20445 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793623332 (main branch discovery), not current.
+
+```diff
+    contract L1GenesisUpgrade (eth:0x2bf9B0B72573af5471c4f035271616139392Acd8) [shared-zk-stack/L1GenesisUpgrade] {
+    +++ description: Diamond implementation code to initialize new ZK chains. Used to set their chainID.
+      name:
+-        "ZKsyncOSL1GenesisUpgrade"
++        "L1GenesisUpgrade"
+    }
+```
+
+```diff
+    contract L1NativeTokenVault (eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6) [shared-zk-stack/L1NativeTokenVault_v31] {
+    +++ description: Canonical central asset escrow for all ZK stack chains. Since v31 the per-chain balance accounting that caps what each chain can withdraw is enforced by the L1AssetTracker, which the vault calls on every deposit, withdrawal and failed deposit claim.
+      sourceHashes.1:
+-        "0x29d9b2749a121f8849ae17c017a47b59e45c90585f0ddd80ddf773b50a39e74b"
++        "0x4422fa65a08f9eeac1709e006b5c4cfe022d726d5b47a78ae34a23bffa53cd70"
+    }
+```
+
+Generated with discovered.json: 0xece3b641a42a254be06a89fafc0bbe7e2831132c
+
+# Diff at Mon, 02 Nov 2026 13:39:53 GMT:
+
+- id: 0430c49d
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@7de2489d6143463905a64a13eea216e581898f3f block: 1792751305
+- current timestamp: 1793623332
+
+## Description
+
+Stage 0 (of 3) of ZIP-18 executed on L1: https://www.tally.xyz/gov/zksync/proposal/39818012355511486328740463691883430307761328158522613751057493126514636439545?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f. ZIP-18 resubmits the v31 upgrade from ZIP-16, which was approved but never executed. Stages 1 and 2 (proxy upgrades, new protocol versions v0.33.0 for Era and v0.31.2 for ZKsync OS chains, asset tracker, Priority Mode) are approved by the Security Council and ready for execution.
+
+Stage 0 changes:
+- Chain migrations are paused in ChainAssetHandler (to be unpaused in stage 2).
+- ProtocolUpgradeHandler upgraded: https://disco.l2beat.com/diff/eth:0x36625Bd3dDB469377C6e9893712158cA3c0cC14B/eth:0x76C4c9897c610C554C948Ece32BEF1257ddE3811. L2 governance messages are now proven through the Bridgehub (with Era chain ID 324) instead of the Era diamond, and soft / hard freezes now also apply to chains of the ZKsync OS ChainTypeManager. All delays and freeze periods are unchanged.
+- SecurityCouncil, Guardians and EmergencyUpgradeBoard are redeployed with the same members and thresholds and set in the ProtocolUpgradeHandler. The old Guardians (now named LegacyGuardians) remains the VETO_GUARDIAN of ZkTokenGovernor and ZkGovOpsGovernor on ZKsync Era. SecurityCouncil (formatting only): https://disco.l2beat.com/diff/eth:0x59195219d1176E42f8e607e9AC114926D47f9035/eth:0x29D2e773A31C07D375c50F0110422832bd044d08, Guardians (L2 transactions now go through the Bridgehub): https://disco.l2beat.com/diff/eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8/eth:0x8f525e55F76050d8dFdDa4870DA1b3ede54E908F, EmergencyUpgradeBoard (same code): https://disco.l2beat.com/diff/eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111/eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C.
+- The ProtocolUpgradeHandler accepts ownership of the ZKsync OS ChainTypeManager and its shared ValidatorTimelock (MultisigCommitter, can require signatures of commit validators for batch commits, currently threshold 0) from the Governance contract eth:0xC66f0B45c05cF654eeC093650FD67865E85E8566. It also takes ownership of the (not yet discovered) L1AssetTracker, ChainRegistrationSender, two RollupDAManagers, ZKsyncOSDualVerifier and GovernanceUpgradeTimers. ZKsync OS chains (6 chains, none tracked) are thus now governed by the ZK token governance. Matter Labs keeps the admin role of the ZKsync OS ChainTypeManager through ChainAdminOwnable.
+
+Unrelated to ZIP-18: the Matter Labs Multisig upgraded the Era ServerNotifier to an implementation with identical source: https://disco.l2beat.com/diff/eth:0x260813B0DAf35dda95c41F39c6Cc3F24dc87028A/eth:0x9B337e022d136e8F2b6d2d8331831fF5B108c209.
+
+Config: added v31 shapes of ProtocolUpgradeHandler and Guardians, moved the ZKsyncOSChainTypeManager shape from adi/ChainTypeManager to shared-zk-stack/ChainTypeManager, added the MultisigCommitter template and its address to the initial addresses, named the old Guardians and the ZKsync OS ServerNotifier and L1GenesisUpgrade to keep contract names unique.
+
+## Watched changes
+
+```diff
+    contract MultisigCommitter (eth:0x18cC381705761aa2d2e8ea62888a4029A0fAd3aB) [shared-zk-stack/MultisigCommitter] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by at least 0s. Duration could be configured individually for zk stack chains by chain admins. All delays are capped at 30 days. This version (MultisigCommitter) can additionally require batch commitments to be signed by a set of commit validators: by default the shared set of 3 validators with a threshold of 0 (0 means no signatures are required), or a custom per-chain set and threshold if enabled by the owner.
++++ severity: MEDIUM
+      values.owner:
+-        "eth:0xC66f0B45c05cF654eeC093650FD67865E85E8566"
++        "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+      values.pendingOwner:
+-        "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract Matter Labs Multisig (eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x1adF137F59949c9081157D5de1e002D1C992071F","description":"set the pending admin of this contract and the ServerNotifier contract address (ZK cluster Admin role).","role":".admin","via":[{"address":"eth:0x933dEA2C4241B1537fDD6da277eA62841B490172"}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"eth:0xBfaa733261500101996A10A231794263567d52ab","role":"admin","via":[{"address":"eth:0xe5f57E8791281920C1E1FFBb0Bd70e3Bd4c18a4b"},{"address":"eth:0x933dEA2C4241B1537fDD6da277eA62841B490172"}]}
+      directlyReceivedPermissions.1:
++        {"permission":"act","from":"eth:0x933dEA2C4241B1537fDD6da277eA62841B490172","role":".owner"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SecurityCouncil (eth:0x59195219d1176E42f8e607e9AC114926D47f9035) [shared-zk-stack/SecurityCouncil]
+    +++ description: Custom Multisig implementation that has a general threshold of 6 but also specific thresholds for upgrade approvals (4) or soft freezes (3).
+```
+
+```diff
+    contract LegacyGuardians (eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8) [shared-zk-stack/Guardians] {
+    +++ description: Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.
+      receivedPermissions.0:
+-        {"permission":"interact","from":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3","description":"extend the legal veto period, approve a protocol upgrade.","role":".guardians"}
+      receivedPermissions.1:
+-        {"permission":"interact","from":"eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111","description":"one of its 3/3 signers.","role":".GUARDIANS"}
+    }
+```
+
+```diff
+    contract ZK Foundation Multisig (eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111"
++        "eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Governance (eth:0xC66f0B45c05cF654eeC093650FD67865E85E8566) [adi/Governance]
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
+```
+
+```diff
+    contract ChainAssetHandler (eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076) [shared-zk-stack/ChainAssetHandler] {
+    +++ description: Specialized contract for managing chain assets, i.e. chain migrations.
++++ severity: MEDIUM
+      values.migrationPaused:
+-        false
++        true
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) [shared-zk-stack/ProtocolUpgradeHandler] {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+      sourceHashes.1:
+-        "0xe7338cd500c37f1d7babf2aa7b9c2826f7f52ea69aafdaba9ace9138115981bd"
++        "0x94736426ab1ce890a3dc2ff8465aadec6e85a38613ef011bd5c755c3a556ecc0"
+      values.$implementation:
+-        "eth:0x36625Bd3dDB469377C6e9893712158cA3c0cC14B"
++        "eth:0x76C4c9897c610C554C948Ece32BEF1257ddE3811"
+      values.$pastUpgrades.3:
++        ["2026-10-30T10:42:59.000Z","0xeca3bf13d10d5cd4d311e03eecea0156440367eff99e0b58ee17928edb399230",["eth:0x76C4c9897c610C554C948Ece32BEF1257ddE3811"]]
+      values.$upgradeCount:
+-        3
++        4
++++ severity: HIGH
+      values.emergencyUpgradeBoard:
+-        "eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111"
++        "eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C"
++++ severity: HIGH
+      values.guardians:
+-        "eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8"
++        "eth:0x8f525e55F76050d8dFdDa4870DA1b3ede54E908F"
++++ severity: HIGH
+      values.securityCouncil:
+-        "eth:0x59195219d1176E42f8e607e9AC114926D47f9035"
++        "eth:0x29D2e773A31C07D375c50F0110422832bd044d08"
+      values.ZKSYNC_ERA:
+-        "eth:0x32400084C286CF3E17e7B677ea9583e60a000324"
+      values.ERA_CHAIN_ID:
++        324
+      values.ERA_CHAIN_TYPE_MANAGER:
++        "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.ZKSYNC_OS_CHAIN_TYPE_MANAGER:
++        "eth:0x1adF137F59949c9081157D5de1e002D1C992071F"
+      implementationNames.eth:0x36625Bd3dDB469377C6e9893712158cA3c0cC14B:
+-        "ProtocolUpgradeHandler"
+      implementationNames.eth:0x76C4c9897c610C554C948Ece32BEF1257ddE3811:
++        "ProtocolUpgradeHandler"
+      directlyReceivedPermissions.4:
++        {"permission":"interact","from":"eth:0x18cC381705761aa2d2e8ea62888a4029A0fAd3aB","description":"set the ecosystem-wide minimum execution delay, manage the shared set of commit validators and its signing threshold, and allow chains to use a custom commit validator set.","role":".owner"}
+      directlyReceivedPermissions.5:
++        {"permission":"interact","from":"eth:0x1adF137F59949c9081157D5de1e002D1C992071F","description":"manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains.","role":".owner"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract EmergencyUpgradeBoard (eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111) [shared-zk-stack/EmergencyUpgradeBoard]
+    +++ description: A custom contract allowing a 3/3 of eth:0x59195219d1176E42f8e607e9AC114926D47f9035, eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8 to `executeEmergencyUpgrade()` via the eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
+```
+
+```diff
+    contract ServerNotifier (eth:0xfca808A744735D9919EEBe4660B8Fd897456Ce31) [shared-zk-stack/ServerNotifier] {
+    +++ description: A simple contract that can be called by the ChainAdmin to emit notifications about chain migrations.
+      values.$implementation:
+-        "eth:0x260813B0DAf35dda95c41F39c6Cc3F24dc87028A"
++        "eth:0x9B337e022d136e8F2b6d2d8331831fF5B108c209"
+      values.$pastUpgrades.2:
++        ["2026-10-29T13:08:59.000Z","0xbe54ecd76c119de868337f92e684024976b477057032eb57b6a6ffb948cc8251",["eth:0x9B337e022d136e8F2b6d2d8331831fF5B108c209"]]
+      values.$upgradeCount:
+-        2
++        3
+      implementationNames.eth:0x260813B0DAf35dda95c41F39c6Cc3F24dc87028A:
+-        "ServerNotifier"
+      implementationNames.eth:0x9B337e022d136e8F2b6d2d8331831fF5B108c209:
++        "ServerNotifier"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xff3582a0310916cd62442A4CA88Bf1C757D68938) [global/ProxyAdmin] {
+    +++ description: None
+      directlyReceivedPermissions.1:
++        {"permission":"upgrade","from":"eth:0x1adF137F59949c9081157D5de1e002D1C992071F","role":"admin"}
+    }
+```
+
+```diff
+    contract ZkProtocolGovernor (zksync:0x76705327e682F2d96943280D99464Ab61219e34f) [shared-zk-stack/ZkGovernor] {
+    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        19
++        20
+    }
+```
+
+```diff
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) [shared-zk-stack/ZkGovernor] {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        19
++        20
+    }
+```
+
+```diff
+    contract ZkGovOpsGovernor (zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160) [shared-zk-stack/ZkGovernor] {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        4
++        5
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ZKsyncOSChainTypeManager (eth:0x1adF137F59949c9081157D5de1e002D1C992071F) [shared-zk-stack/ChainTypeManager]
+    +++ description: Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,30,1.
+```
+
+```diff
++   Status: CREATED
+    contract SecurityCouncil (eth:0x29D2e773A31C07D375c50F0110422832bd044d08) [shared-zk-stack/SecurityCouncil]
+    +++ description: Custom Multisig implementation that has a general threshold of 6 but also specific thresholds for upgrade approvals (4) or soft freezes (3).
+```
+
+```diff
++   Status: CREATED
+    contract ZKsyncOSL1GenesisUpgrade (eth:0x2bf9B0B72573af5471c4f035271616139392Acd8) [shared-zk-stack/L1GenesisUpgrade]
+    +++ description: Diamond implementation code to initialize new ZK chains. Used to set their chainID.
+```
+
+```diff
++   Status: CREATED
+    contract Guardians (eth:0x8f525e55F76050d8dFdDa4870DA1b3ede54E908F) [shared-zk-stack/Guardians]
+    +++ description: Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.
+```
+
+```diff
++   Status: CREATED
+    contract EmergencyUpgradeBoard (eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C) [shared-zk-stack/EmergencyUpgradeBoard]
+    +++ description: A custom contract allowing a 3/3 of eth:0x29D2e773A31C07D375c50F0110422832bd044d08, eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and eth:0x8f525e55F76050d8dFdDa4870DA1b3ede54E908F to `executeEmergencyUpgrade()` via the eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
+```
+
+```diff
++   Status: CREATED
+    contract ChainAdminOwnable (eth:0x933dEA2C4241B1537fDD6da277eA62841B490172) [shared-zk-stack/ChainAdmin]
+    +++ description: A governance proxy that lets eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828 act through it.
+```
+
+```diff
++   Status: CREATED
+    contract ZKsyncOSServerNotifier (eth:0xBfaa733261500101996A10A231794263567d52ab) [shared-zk-stack/ServerNotifier]
+    +++ description: A simple contract that can be called by the ChainAdmin to emit notifications about chain migrations.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0xe5f57E8791281920C1E1FFBb0Bd70e3Bd4c18a4b) [global/ProxyAdmin]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../shared-zk-stack/.flat/ChainAdminOwnable.sol    | 2005 +++++++
+ .../.flat@1792751305/Governance.sol => /dev/null   |  542 --
+ .../projects/shared-zk-stack/.flat/Guardians.sol   | 1823 +++++++
+ .../ProtocolUpgradeHandler.sol                     | 1398 ++---
+ ...:0xe5f57E8791281920C1E1FFBb0Bd70e3Bd4c18a4b.sol |  217 +
+ .../SecurityCouncil.sol                            |  715 ++-
+ .../TransparentUpgradeableProxy.p.sol              |  864 ++++
+ .../ZKsyncOSChainTypeManager.sol                   | 5454 ++++++++++++++++++++
+ .../.flat/ZKsyncOSL1GenesisUpgrade.sol             | 5337 +++++++++++++++++++
+ .../ZKsyncOSServerNotifier/ServerNotifier.sol      | 3160 ++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  864 ++++
+ 11 files changed, 20785 insertions(+), 1594 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792751305 (main branch discovery), not current.
+
+```diff
+    contract SecurityCouncil (eth:0x59195219d1176E42f8e607e9AC114926D47f9035) [shared-zk-stack/SecurityCouncil] {
+    +++ description: Custom Multisig implementation that has a general threshold of 6 but also specific thresholds for upgrade approvals (4) or soft freezes (3).
+      receivedPermissions.0.description:
+-        "soft freeze, hard freeze, approve a protocol upgrade."
++        "soft freeze, hard freeze (all chains of the Era and ZKsync OS ChainTypeManagers), approve a protocol upgrade."
+    }
+```
+
+```diff
+    contract LegacyGuardians (eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8) [shared-zk-stack/Guardians] {
+    +++ description: Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.
+      name:
+-        "Guardians"
++        "LegacyGuardians"
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) [shared-zk-stack/ProtocolUpgradeHandler] {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+      fieldMeta.protocolFrozenUntil.description:
+-        "Timestamp until which ALL Hyperchains connected to the main STM are frozen. (Mailbox and Executor facets blocked)"
++        "Timestamp until which ALL ZK chains connected to the main (Era) ChainTypeManager and, since v31, to the ZKsync OS ChainTypeManager are frozen. (Mailbox and Executor facets blocked)"
+      directlyReceivedPermissions.2:
++        {"permission":"act","from":"eth:0xff3582a0310916cd62442A4CA88Bf1C757D68938","role":".owner"}
+    }
+```
+
+```diff
+    contract EmergencyUpgradeBoard (eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111) [shared-zk-stack/EmergencyUpgradeBoard] {
+    +++ description: A custom contract allowing a 3/3 of eth:0x59195219d1176E42f8e607e9AC114926D47f9035, eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8 to `executeEmergencyUpgrade()` via the eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"eth:0x18cC381705761aa2d2e8ea62888a4029A0fAd3aB","role":"admin","via":[{"address":"eth:0xff3582a0310916cd62442A4CA88Bf1C757D68938"},{"address":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract MultisigCommitter (eth:0x18cC381705761aa2d2e8ea62888a4029A0fAd3aB) [shared-zk-stack/MultisigCommitter]
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by at least 0s. Duration could be configured individually for zk stack chains by chain admins. All delays are capped at 30 days. This version (MultisigCommitter) can additionally require batch commitments to be signed by a set of commit validators: by default the shared set of 3 validators with a threshold of 0 (0 means no signatures are required), or a custom per-chain set and threshold if enabled by the owner.
+```
+
+```diff
++   Status: CREATED
+    contract Governance (eth:0xC66f0B45c05cF654eeC093650FD67865E85E8566) [adi/Governance]
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0xff3582a0310916cd62442A4CA88Bf1C757D68938) [global/ProxyAdmin]
+    +++ description: None
+```
+
 Generated with discovered.json: 0xab06571f493c120aa3ace82b9451c3d799fe6278
 
 # Diff at Fri, 23 Oct 2026 10:29:35 GMT:

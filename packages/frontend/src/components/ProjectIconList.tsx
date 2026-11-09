@@ -1,9 +1,8 @@
 import type { Stage } from '@l2beat/config'
 import { useCommandState } from 'cmdk'
 import { type ReactNode, useRef, useState } from 'react'
+import { useCanHover } from '~/hooks/useCanHover'
 import { useDevice } from '~/hooks/useDevice'
-import { useIsTouch } from '~/hooks/useIsTouch'
-import { useRouter } from '~/hooks/useRouter'
 import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
 import { StageBadge } from './badge/StageBadge'
@@ -58,7 +57,7 @@ const NO_ROW = '-'
  * links straight to its project.
  */
 export function ProjectIconList({ projects, title, className }: Props) {
-  const isTouch = useIsTouch()
+  const isTouch = useCanHover() === false
   if (projects.length === 0) return null
 
   const visible =
@@ -177,7 +176,7 @@ function ProjectIcon({
     // cursor across a table column does not flash every row's tooltip.
     <Tooltip delayDuration={100}>
       {project.href ? (
-        <TooltipTrigger asChild disabledOnMobile>
+        <TooltipTrigger asChild disabledOnTouch>
           <a
             href={project.href}
             className={cn(
@@ -207,6 +206,13 @@ function ProjectIcon({
               {project.description}
             </p>
           )}
+          {project.stage && (
+            <StageBadge
+              stage={project.stage}
+              isAppchain={false}
+              className="mt-1"
+            />
+          )}
         </TooltipContent>
       </TooltipPortal>
     </Tooltip>
@@ -226,7 +232,7 @@ function FullList({
 }) {
   const [open, setOpen] = useState(false)
   const { isDesktop } = useDevice()
-  const isTouch = useIsTouch()
+  const isTouch = useCanHover() === false
   const triggerRef = useRef<HTMLButtonElement>(null)
   const label = `Show all ${projects.length}: ${title}`
   const list = (
@@ -319,7 +325,6 @@ function ProjectList({
   inDialog: boolean
   onNavigate: () => void
 }) {
-  const router = useRouter()
   const searchable = projects.length >= MIN_SEARCHABLE_PROJECTS
 
   return (
@@ -347,7 +352,9 @@ function ProjectList({
             <CountChip total={projects.length} />
           </span>
           {inDialog && (
-            <DialogClose className="-my-2 -mr-3 static flex size-10 items-center justify-center [&_svg]:size-3.5 [&_svg]:fill-secondary hover:[&_svg]:fill-primary" />
+            // Already 40px, and in flow, where DialogClose's grown hit area
+            // would cover the dialog itself
+            <DialogClose className="-my-2 -mr-3 static flex size-10 items-center justify-center after:hidden [&_svg]:size-3.5 [&_svg]:fill-secondary hover:[&_svg]:fill-primary" />
           )}
         </div>
         {searchable && (
@@ -382,12 +389,6 @@ function ProjectList({
                   'data-[selected=true]:bg-transparent primary-card:data-[selected=true]:bg-transparent',
                 inDialog && project.href && 'active:bg-surface-secondary',
               )}
-              // Enter on the keyboard cursor; clicks go through the link.
-              onSelect={() => {
-                if (!project.href) return
-                onNavigate()
-                router.push(project.href)
-              }}
             >
               <ProjectRow
                 project={project}

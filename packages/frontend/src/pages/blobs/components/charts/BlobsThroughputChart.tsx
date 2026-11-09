@@ -5,7 +5,7 @@ import { useMemo, useState } from 'react'
 import { DaThroughputByProjectChart } from '~/components/chart/data-availability/DaThroughputByProjectChart'
 import { getDataWithConfiguredThroughputs } from '~/components/chart/data-availability/getDataWithConfiguredThroughputs'
 import { ProjectDaAbsoluteThroughputChart } from '~/components/chart/data-availability/ProjectDaAbsoluteThroughputChart'
-import type { ChartProject } from '~/components/core/chart/Chart'
+import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
 import { useTRPC } from '~/trpc/React'
@@ -67,6 +67,7 @@ export function BlobsThroughputChart({
       />
       {view === 'total' ? (
         <ProjectDaAbsoluteThroughputChart
+          isPlaceholderData={false}
           project={project}
           dataWithConfiguredThroughputs={dataWithConfiguredThroughputs}
           isLoading={total.isLoading}
@@ -78,6 +79,7 @@ export function BlobsThroughputChart({
         />
       ) : (
         <DaThroughputByProjectChart
+          isPlaceholderData={false}
           data={byProject.data?.byProjectChart.data}
           syncedUntil={byProject.data?.syncedUntil}
           isLoading={byProject.isLoading}

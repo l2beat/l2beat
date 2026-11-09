@@ -1,13 +1,14 @@
-import { formatCurrency, formatSeconds, pluralize } from '@l2beat/shared-pure'
+import { formatSeconds, pluralize } from '@l2beat/shared-pure'
 import { useId } from 'react'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { formatValueLine } from '~/components/ossification/formatValueLine'
 import { OSSIFICATION_VALUE_LABELS } from '~/components/ossification/ossificationValueLabels'
 import type { OssificationStats } from '~/server/features/projects/ossification/getOssificationStats'
-import { formatTimestamp } from '~/utils/dates'
+import { formatRange, formatTimestamp } from '~/utils/dates'
 
 const WIDTH = 132
 const HEIGHT = 30
@@ -27,12 +28,13 @@ type Props = Pick<OssificationStats, 'timeline' | 'valueSource'>
 
 export function OssificationTimelineChart({ timeline, valueSource }: Props) {
   const id = useId()
-  const { from, to, clockStart, genesis, criticalChanges, values } = timeline
+  const { from, to, clockStart, genesis, criticalChanges, values, peak } =
+    timeline
   const toX = (timestamp: number) => ((timestamp - from) / (to - from)) * WIDTH
   const clockBeforeWindow = clockStart < from
   const clockX = clockBeforeWindow ? 0 : toX(clockStart)
   const genesisInWindow = genesis >= from
-  const area = values ? getAreaPaths(values) : undefined
+  const area = values && peak !== null ? getAreaPaths(values, peak) : undefined
   const description = getDescription({
     timeline,
     valueSource,
@@ -139,7 +141,7 @@ export function OssificationTimelineChart({ timeline, valueSource }: Props) {
           )}
         </svg>
       </TooltipTrigger>
-      <TooltipContent className="flex max-w-80 flex-col gap-1.5">
+      <TooltipContent className="flex max-w-80 flex-col gap-1.5 whitespace-normal">
         <div>
           <div className="font-bold">{description.title}</div>
           <div className="text-secondary">{description.period}</div>
@@ -163,9 +165,11 @@ function dotX(x: number) {
   return Math.min(Math.max(x, GENESIS_RADIUS), WIDTH - GENESIS_RADIUS)
 }
 
-/** Area and line through the samples, from a zero baseline to the peak. */
-function getAreaPaths(values: (number | null)[]) {
-  const peak = Math.max(...values.map((value) => value ?? 0))
+/**
+ * Area and line through the samples, from a zero baseline to the peak of the
+ * whole series, which a spike between samples can put above them.
+ */
+function getAreaPaths(values: (number | null)[], peak: number) {
   const step = WIDTH / (values.length - 1)
   const points = values.flatMap((value, i) =>
     value === null
@@ -195,18 +199,14 @@ function getDescription({
   clockBeforeWindow,
   genesisInWindow,
 }: Props & { clockBeforeWindow: boolean; genesisInWindow: boolean }) {
-  const { from, to, clockStart, values } = timeline
-  const known = values?.filter((value) => value !== null) ?? []
-  const current = known.at(-1)
+  const { from, to, clockStart } = timeline
   return {
     title: `${OSSIFICATION_VALUE_LABELS[valueSource ?? 'tvs'].short} & critical changes`,
-    period: `${formatTimestamp(from)} – ${formatTimestamp(to)}`,
+    period: formatRange(from, to),
     lines: [
       `Unchanged for ${formatSeconds(to - clockStart)}, since ${formatTimestamp(clockStart)}${clockBeforeWindow ? ' — before this window, so the whole year is highlighted' : ''}.`,
       getChangesLine(timeline, genesisInWindow),
-      current !== undefined && valueSource
-        ? `${OSSIFICATION_VALUE_LABELS[valueSource].long} now ${formatCurrency(current, 'usd')}, peaking at ${formatCurrency(Math.max(...known), 'usd')}.`
-        : 'No value data.',
+      formatValueLine({ timeline, valueSource }),
     ],
   }
 }

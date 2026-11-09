@@ -987,7 +987,8 @@
         "address": "0x85D431A3a56FDf2d2970635fF627f386b4ae49CC",
         "chain": "zklinknova",
         "decimals": 18,
-        "sinceTimestamp": 1715322228
+        "sinceTimestamp": 1715322228,
+        "untilTimestamp": 1793257200
       },
       "category": "btc",
       "source": "external",
@@ -1496,7 +1497,8 @@
         "address": "0xbEAf16cFD8eFe0FC97C2a07E349B9411F5dC272C",
         "chain": "zklinknova",
         "decimals": 18,
-        "sinceTimestamp": 1715238151
+        "sinceTimestamp": 1715238151,
+        "untilTimestamp": 1793257200
       },
       "category": "btc",
       "source": "external",

@@ -24,7 +24,7 @@ export async function getChangelogData(
       metadata: getMetadata(manifest, {
         name: 'Changelog',
         description:
-          'Track product and content updates shipped on L2BEAT in one place.',
+          'Track product and content updates shipped on ETHBEAT in one place.',
         url,
         openGraph: {
           image: '/meta-images/changelog/opengraph-image.png',

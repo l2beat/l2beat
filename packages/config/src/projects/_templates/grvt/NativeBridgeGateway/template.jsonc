@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Bridges ETH of the GRVTL1TreasuryVault to the exchange on GRVT and returns failed ETH deposits to the vault. Only the vault can bridge through it.",
+  "ignoreRelatives": ["grvtBridgeProxyFeeToken", "wrappedNativeToken"]
+}

@@ -45,7 +45,7 @@ export function ProjectSummaryStat(props: ProjectSummaryStatProps) {
         )}
         {props.tooltip && (
           <Tooltip>
-            <TooltipTrigger className="size-3">
+            <TooltipTrigger className="size-3" aria-label="More info">
               <InfoIcon className="size-3" variant="gray" />
             </TooltipTrigger>
             <TooltipContent>{props.tooltip}</TooltipContent>

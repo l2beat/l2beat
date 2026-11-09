@@ -225,7 +225,6 @@ export interface BaseProject {
   statuses?: ProjectStatuses
   display?: ProjectDisplay
   colors?: ProjectCustomColors
-  ecosystemColors?: ProjectCustomColors
   milestones?: Milestone[]
   chainConfig?: ChainConfig
   escrows?: ProjectEscrow[]
@@ -1042,7 +1041,22 @@ export interface TrustedSetup {
   risk: 'green' | 'yellow' | 'red' | 'N/A'
   shortDescription: string
   longDescription: string
+  /** Participant total, distinct from the number of contributed updates. */
   participantCount?: number
+  /** Participant-generated updates, excluding beacons. Contributors may repeat. */
+  contributionCount?: number
+  phases?: {
+    phase1?: TrustedSetupPhase
+    phase2?: TrustedSetupPhase
+  }
+}
+
+export interface TrustedSetupPhase {
+  /** Omit when the phase exists but its count is unknown. */
+  count?: number | { min: number; max: number }
+  /** Contributions need not identify distinct participants. */
+  unit: 'participants' | 'contributions'
+  description?: string
 }
 
 // #endregion
@@ -1125,6 +1139,17 @@ export interface ProjectPrivacyInfo {
    * for its icon.
    */
   trackedOn: string[]
+  /**
+   * Scaling projects the protocol runs on besides its trackedOn chains:
+   * zk.money is tracked on Ethereum but runs on Aztec.
+   */
+  runsOn?: ProjectId[]
+  /**
+   * Derived when projects are built, so it can't drift from trackedOn: the
+   * scaling projects of the trackedOn chains, then runsOn. Linked both ways
+   * between their project pages.
+   */
+  scalingProjects?: ProjectId[]
   tokens: ProjectPrivacyToken[]
   /**
    * A project tracks relayers either through onchain events or through
@@ -1201,7 +1226,8 @@ export interface ProjectPrivacyReferenceApp {
   version?: string
   /**
    * Source at the reviewed commit, absent for closed apps. An app counts as
-   * open only when its released build reproduces from this commit.
+   * open when its release builds from this commit, or a trace of the release
+   * matches the endpoints in it.
    * `l2b client-drift` lists what changed upstream since.
    */
   source?: {
@@ -1867,6 +1893,11 @@ export interface SlotActivityConfig {
 export type AdjustCount =
   | { type: 'SubtractOne' }
   | { type: 'SubtractOneSinceBlock'; blockNumber: number }
+  /** Subtracts the `count` of the last step whose `blockNumber` is at or below the block. */
+  | {
+      type: 'SubtractSinceBlocks'
+      steps: { blockNumber: number; count: number }[]
+    }
 
 export interface DayActivityConfig {
   type: 'day'

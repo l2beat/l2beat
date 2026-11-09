@@ -1,9 +1,9 @@
 import type { DaLayerThroughput, Milestone } from '@l2beat/config'
-import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
-import type { ChartProject } from '~/components/core/chart/Chart'
+import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { ChartRangeControls } from '~/components/core/chart/ChartRangeControls'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { useTRPC } from '~/trpc/React'
 import {
@@ -35,15 +35,15 @@ export function ThroughputSectionChart({
   const { includeL2Only, setIncludeL2Only } = useIncludeL2Only()
   const [range, setRange] = useState<ChartRange>(optionToRange('1y'))
 
-  const { data, isLoading } = useQuery(
-    trpc.da.projectCharts.queryOptions({
-      range,
-      projectId: project.id,
-      includeL2Only,
-    }),
+  const { data, isLoading, isPlaceholderData, shownInput } = useChartQuery(
+    trpc.da.projectCharts,
+    { range, projectId: project.id, includeL2Only },
   )
 
-  const resolution = useMemo(() => rangeToResolution(range), [range])
+  const resolution = useMemo(
+    () => rangeToResolution(shownInput.range),
+    [shownInput.range],
+  )
 
   const dataWithConfiguredThroughputs = getDataWithConfiguredThroughputs(
     data?.totalChart.data,
@@ -69,7 +69,10 @@ export function ThroughputSectionChart({
           onCheckedChange={setIncludeL2Only}
         />
         <div className="flex justify-between gap-x-1">
-          <ProjectChartTimeRange timeRange={timeRange} />
+          <ProjectChartTimeRange
+            isPlaceholderData={isPlaceholderData}
+            timeRange={timeRange}
+          />
           <ChartRangeControls
             name="throughput"
             value={range}
@@ -83,6 +86,7 @@ export function ThroughputSectionChart({
       </div>
       <div className="mb-2">
         <ProjectDaAbsoluteThroughputChart
+          isPlaceholderData={isPlaceholderData}
           project={project}
           dataWithConfiguredThroughputs={dataWithConfiguredThroughputs}
           isLoading={isLoading}
@@ -92,6 +96,7 @@ export function ThroughputSectionChart({
         />
       </div>
       <DaThroughputByProjectChart
+        isPlaceholderData={isPlaceholderData}
         data={data?.byProjectChart.data}
         project={project}
         syncedUntil={data?.syncedUntil}

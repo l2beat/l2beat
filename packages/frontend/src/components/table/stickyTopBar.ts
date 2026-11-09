@@ -8,6 +8,10 @@ const TOP_VARIABLE = '--sticky-table-header-top'
  * screens.
  *
  * The bar's parent carries the measurement, so a parent holds one such bar.
+ * The observer's first call, after the next layout, publishes the first
+ * value. Measuring in this ref, during the hydration commit, would force the
+ * page's first layout there, and the write would make the next forced read
+ * restyle everything under the parent.
  */
 export function stickyTopBarRef(bar: HTMLElement | null) {
   const parent = bar?.parentElement
@@ -30,7 +34,6 @@ export function stickyTopBarRef(bar: HTMLElement | null) {
   }
   const resizeObserver = new ResizeObserver(publish)
   resizeObserver.observe(bar)
-  publish()
   return () => {
     resizeObserver.disconnect()
     parent.style.removeProperty(TOP_VARIABLE)

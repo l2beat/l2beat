@@ -278,7 +278,7 @@ export const railgun: BaseProject = {
           fix: "Create wallets without registering the user's addresses with Anon's server.",
           source:
             'https://chromewebstore.google.com/detail/anon-wallet-private-evm-w/gnkbgepgknkbhnnbaihklcfkjhbclajk',
-          checked: '2026-10-27',
+          checked: '2026-10-30',
         },
         {
           name: 'Terminal Wallet',
@@ -296,11 +296,17 @@ export const railgun: BaseProject = {
             "Asks a PPoI node about the user's notes in batches, so the node can tie them together.",
           fix: 'Build PPoI from a local copy of the lists, as RailOxide does.',
           source: 'https://facelessprivacy.eth.limo',
-          checked: '2026-10-27',
+          checked: '2026-10-30',
         },
       ],
     },
     trackedOn: ['ethereum'],
+    // Chains RailOxide v0.2.0-beta.10 serves (railgun-rust crates/core/src/deployment.rs).
+    runsOn: [
+      ProjectId('arbitrum'),
+      ProjectId('base'),
+      ProjectId('polygon-pos'),
+    ],
     tokens: privacyTokens,
     relayerTracking: {
       type: 'railgunWaku',

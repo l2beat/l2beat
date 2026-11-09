@@ -1,13 +1,20 @@
-import { StrictMode } from 'react'
 import { hydrateRoot } from 'react-dom/client'
+import { linkGlossaryTerms } from '~/utils/markdown/glossaryPlugin'
+import { watchThemeChanges } from '~/utils/theme'
 import { getPageElement } from '../pages/getPageElement'
+import { getSsrData } from './pageDataScripts'
 
 async function main() {
   // biome-ignore lint/style/noNonNullAssertion: It's there
   const root = document.getElementById('root')!
-  const pageElement = await getPageElement(window.__SSR_DATA__)
+  const ssrData = getSsrData()
+  const pageElement = await getPageElement(
+    ssrData,
+    linkGlossaryTerms(ssrData.glossaryTerms),
+  )
 
-  hydrateRoot(root, <StrictMode>{pageElement}</StrictMode>)
+  hydrateRoot(root, pageElement)
+  watchThemeChanges()
 }
 
 void main().catch((error) => {

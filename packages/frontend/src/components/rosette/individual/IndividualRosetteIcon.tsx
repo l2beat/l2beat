@@ -85,7 +85,7 @@ export function IndividualPizzaRosetteIcon({
       height="180"
       viewBox="0 0 180 180"
       fill="none"
-      alt-text="Rosette showing risk summary"
+      aria-label="Rosette showing risk summary"
       ref={svgRef}
       onMouseLeave={() => setContent?.(undefined)}
       className={cn(className)}

@@ -172,6 +172,7 @@ function makeState(overrides: Partial<State>): State {
     positionsBeforeMove: {},
     tool: 'select',
     loaded: true,
+    loadCount: 1,
     ...overrides,
   }
 }

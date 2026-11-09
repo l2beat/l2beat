@@ -1,3 +1,46 @@
+Generated with discovered.json: 0xe4eb1c45b70d15bdb46a86393f9e0683f35d97e8
+
+# Diff at Mon, 02 Nov 2026 13:39:52 GMT:
+
+- id: 3fabf013
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@7de2489d6143463905a64a13eea216e581898f3f block: 1791455050
+- current timestamp: 1793617880
+
+## Description
+
+PlonkVerifierOpenVMv2 contract is verified on etherscan.
+
+## Source code changes
+
+```diff
+.../GnosisSafeL2.sol                               |    2 +-
+ .../GnosisSafeL2.sol                               |    2 +-
+ .../PlonkVerifierOpenVMv2.sol => /dev/null         | 2299 --------------------
+ .../GnosisSafe.sol                                 |    2 +-
+ .../GnosisSafe.sol                                 |    2 +-
+ .../GnosisSafe.sol                                 |    2 +-
+ 6 files changed, 5 insertions(+), 2304 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791455050 (main branch discovery), not current.
+
+```diff
+    contract PlonkVerifierOpenVMv2 (eth:0x0d2A59fd7060460F07c30C2817b4E79576da01C6) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x0ffd802e46395eb0f9e68316cd3afa259549980515f4922777333fc64f675834"
++        "0x7312852db9210bd6059c373b7fd3d49a42216c9f9fa7a2f55ebb755ebf411416"
+      implementationNames.eth:0x0d2A59fd7060460F07c30C2817b4E79576da01C6:
+-        ""
++        "OpenVmHalo2Verifier"
+    }
+```
+
 Generated with discovered.json: 0x5fc1f1dd4091cd4772edb740a92dd6a606fc14ca
 
 # Diff at Sat, 24 Oct 2026 16:41:08 GMT:

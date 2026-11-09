@@ -18,7 +18,7 @@ export async function getGlossaryData(
       metadata: getMetadata(manifest, {
         name: 'Glossary',
         description:
-          'Understand key terms in Ethereum’s scaling ecosystem with L2BEAT’s glossary.',
+          'Understand key terms in Ethereum’s scaling ecosystem with ETHBEAT’s glossary.',
         url,
         openGraph: {
           image: '/meta-images/glossary/opengraph-image.png',

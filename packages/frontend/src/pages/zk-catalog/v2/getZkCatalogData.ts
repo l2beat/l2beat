@@ -31,7 +31,7 @@ export async function getZkCatalogData(
       metadata: getMetadata(manifest, {
         name: 'ZK Catalog',
         description:
-          "Browse L2BEAT's comprehensive catalog of zero-knowledge projects with in-depth research.",
+          "Browse ETHBEAT's comprehensive catalog of zero-knowledge projects with in-depth research.",
         url,
         openGraph: {
           image: '/meta-images/zk-catalog/opengraph-image.png',

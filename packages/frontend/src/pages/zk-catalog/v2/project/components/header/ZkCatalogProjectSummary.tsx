@@ -316,7 +316,11 @@ function MergedOnchainVerifierBlock({
           {title}
         </p>
         <Tooltip>
-          <TooltipTrigger type="button" className="text-secondary">
+          <TooltipTrigger
+            type="button"
+            className="text-secondary"
+            aria-label={`About ${title.toLowerCase()}`}
+          >
             <InfoIcon className="size-3.5" variant="gray" />
           </TooltipTrigger>
           <TooltipContent className="max-w-xs">

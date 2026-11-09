@@ -51,7 +51,7 @@ export function ProjectBadge({
 
   return (
     <Tooltip delayDuration={0}>
-      <TooltipTrigger asChild disabledOnMobile={disableInteraction}>
+      <TooltipTrigger asChild disabledOnTouch={disableInteraction}>
         {component}
       </TooltipTrigger>
       <TooltipPortal>

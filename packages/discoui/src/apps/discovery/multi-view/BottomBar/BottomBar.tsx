@@ -78,12 +78,12 @@ export function BottomBar() {
   return (
     <div className="hidden h-7 select-none items-center justify-between border-coffee-700 border-t bg-coffee-800 px-2 text-xs md:flex">
       <div className="flex gap-2 text-coffee-400">
-        <div>Copyright {new Date().getUTCFullYear()} L2BEAT</div>
+        <div>Copyright {new Date().getUTCFullYear()} ETHBEAT</div>
         {IS_READONLY && (
           <>
             <span>-</span>
             <div className="italic">
-              That's the latest state reviewed by L2BEAT.
+              That's the latest state reviewed by ETHBEAT.
             </div>
           </>
         )}

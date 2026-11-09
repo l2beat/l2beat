@@ -123,6 +123,13 @@ export const umbra: BaseProject = {
       },
     },
     trackedOn: ['ethereum'],
+    // Chains the pinned Umbra app serves (frontend/src/components/models.ts).
+    runsOn: [
+      ProjectId('arbitrum'),
+      ProjectId('base'),
+      ProjectId('optimism'),
+      ProjectId('polygon-pos'),
+    ],
     tokens: privacyTokens,
     anonymitySet: {
       type: 'key-registrations',

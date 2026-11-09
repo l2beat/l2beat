@@ -98,7 +98,7 @@ describe(getRollupStage.name, () => {
             },
             {
               description:
-                'A source-available node exists that can recreate the state from Ethereum L1 data. Please note that the L2BEAT team has not verified the validity of the node source code. [View code](randomlink)',
+                'A source-available node exists that can recreate the state from Ethereum L1 data. Please note that the ETHBEAT team has not verified the validity of the node source code. [View code](randomlink)',
               satisfied: true,
             },
           ],
@@ -123,7 +123,7 @@ describe(getRollupStage.name, () => {
             },
             {
               description:
-                'The proof system meets the minimum trusted setup requirements defined in the L2BEAT [trusted setup assessment framework](https://forum.l2beat.com/t/the-trusted-setups-framework-for-zk-catalog/381).',
+                'The proof system meets the minimum trusted setup requirements defined in the ETHBEAT [trusted setup assessment framework](https://forum.l2beat.com/t/the-trusted-setups-framework-for-zk-catalog/381).',
               satisfied: true,
             },
             {

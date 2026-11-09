@@ -10,7 +10,7 @@
 
 # TokenDB
 
-TokenDB is the system that holds L2BEAT's canonical token catalogue —
+TokenDB is the system that holds ETHBEAT's canonical token catalogue —
 **Abstract Tokens** (the asset, e.g. "USDC") and **Deployed Tokens**
 (individual `(chain, address)` instances of an asset), plus the
 relations between deployed tokens. It is served by the `token-backend` package and
@@ -108,7 +108,7 @@ What stays exactly the same for an ignored token:
   maintaining the row (it never clears a manually set `ignored` — see
   [automatic token ingestion](./automatic_token_ingestion.md)).
 - Ordinary read endpoints (tokens by key, relations) keep returning it,
-  and raw transfer lists on l2beat.com keep showing its transfers. The
+  and raw transfer lists on ethbeat.org keep showing its transfers. The
   observations exist and stay inspectable — e.g. to look at minters.
 - token-ui keeps showing the token (marked as ignored), because
   operators must be able to audit it and un-ignore it. Generic
@@ -116,7 +116,7 @@ What stays exactly the same for an ignored token:
 
 What changes — each a deliberate, named interpretation boundary:
 
-- **Financial interpretation** (the choke point for l2beat.com token
+- **Financial interpretation** (the choke point for ethbeat.org token
   data): the interop financials loop refuses to price ignored tokens,
   so their transfers never get `abstractTokenId`/price/value stamped
   onto them. Everything derived from those stamps — the
@@ -126,7 +126,7 @@ What changes — each a deliberate, named interpretation boundary:
   filtering. `AggregatedInteropDeployedToken` is the one aggregate
   keyed by raw address, so it still records the activity; its only
   consumer filters at read time (next point).
-- **Presentation**: l2beat.com reads that list deployed tokens straight
+- **Presentation**: ethbeat.org reads that list deployed tokens straight
   from TokenDB skip ignored rows (currently one such read: the "Onchain
   deployments" section of an interop token page).
 - **Graph clustering**: the token-ui relations graph omits the node and

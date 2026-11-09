@@ -1,0 +1,110 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Registry of compartments: contracts on Ethereum that hold the capital of GRVT vaults withdrawn from L2, deploy it into external yield venues and bridge it back to the vaults on GRVT. The registry also holds the roles and the global pause for all compartments.",
+  // replaced by the `compartments` field, which lists all of them
+  "ignoreMethods": ["compartmentAt"],
+  "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0xbb28eb1a0cfabcecf96003fab466159bc2e051e49d79baf049890044e9072440": "REGISTRY_ADMIN_ROLE",
+          "0x82db594318110a04b6349ce48645aa69f0892751bc893d15e61d9e2b9c4630f5": "CONFIG_ROLE",
+          "0x1eed6f71338418d4f0631892fd1ceb7a54960741149e18d70599a047aa6e8c4f": "COMPARTMENT_CREATOR_ROLE",
+          "0x427da25fe773164f88948d3e215c94b6554e2ed5e5f203a821c9f2f6131cf75a": "UNPAUSER_ROLE",
+          "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a": "PAUSER_ROLE"
+        }
+      }
+    },
+    "compartments": {
+      "description": "All compartments created by the registry.",
+      "handler": {
+        "type": "event",
+        "select": "compartment",
+        "add": { "event": "CompartmentCreated" }
+      }
+    },
+    "defaultAdmin": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage all roles in the CompartmentRegistry."
+        }
+      ]
+    },
+    "registryAdmin": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "0xbb28eb1a0cfabcecf96003fab466159bc2e051e49d79baf049890044e9072440" // REGISTRY_ADMIN_ROLE
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "list and remove the external yield venues of all compartments, and upgrade all compartments and the CompartmentRegistry without delay through the UpgradeAuthority."
+        }
+      ]
+    },
+    "compartmentCreator": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "0x1eed6f71338418d4f0631892fd1ceb7a54960741149e18d70599a047aa6e8c4f" // COMPARTMENT_CREATOR_ROLE
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "create compartments with an arbitrary implementation and vault ID. A new compartment can deposit to GRVT through the GRVTBridgeProxy without a DepositApprover signature."
+        }
+      ]
+    },
+    "configAdmin": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "0x82db594318110a04b6349ce48645aa69f0892751bc893d15e61d9e2b9c4630f5" // CONFIG_ROLE
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant and revoke the operator, rebalancer and pauser roles of all compartments."
+        }
+      ]
+    },
+    "pauser": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a" // PAUSER_ROLE
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause the creation of compartments and deposits of all compartments into their yield venues."
+        }
+      ]
+    },
+    "unpauser": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "0x427da25fe773164f88948d3e215c94b6554e2ed5e5f203a821c9f2f6131cf75a" // UNPAUSER_ROLE
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "unpause the CompartmentRegistry and all compartments, and manage the pauser role of all compartments."
+        }
+      ]
+    },
+    "globallyPaused": {
+      "description": "Stops the creation of compartments and deposits of all compartments into their yield venues. Withdrawals from venues and bridging back to GRVT stay available.",
+      "severity": "MEDIUM"
+    }
+  }
+}

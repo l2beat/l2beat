@@ -42,7 +42,7 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
   }
 
   describeUpgradePermissions(contractOrEoa: EntryParameters) {
-    // Formatting follows: https://docs.l2beat.com/l2b_specs/permissions.html
+    // Formatting follows: https://docs.ethbeat.org/l2b_specs/permissions.html
 
     const upgradePermissions = (contractOrEoa.receivedPermissions ?? []).filter(
       (p) =>
@@ -83,7 +83,7 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
   }
 
   describeInteractPermissions(contractOrEoa: EntryParameters) {
-    // Formatting follows: https://docs.l2beat.com/l2b_specs/permissions.html
+    // Formatting follows: https://docs.ethbeat.org/l2b_specs/permissions.html
 
     const interactPermissions = (
       contractOrEoa.receivedPermissions ?? []

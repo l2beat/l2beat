@@ -1,7 +1,7 @@
 # @l2beat/crops-api
 
 Static site generator for the CROPS API served from
-[crops.l2beat.com](https://crops.l2beat.com). Every JSON file is generated at
+[crops.ethbeat.org](https://crops.ethbeat.org). Every JSON file is generated at
 build time from `@l2beat/config` and the attester's current attestation, read
 from EAS on Ethereum, and served as-is from Cloudflare Workers static assets, so
 there is no server code and no runtime dependency.
@@ -30,7 +30,7 @@ manually with the `environment` input to deploy `staging` or `production`, and
 
 | Environment | Worker              | Hostname                   | Wrangler command                   |
 | ----------- | ------------------- | -------------------------- | ---------------------------------- |
-| production  | `crops-api`         | `crops.l2beat.com`         | `wrangler deploy --env production` |
+| production  | `crops-api`         | `crops.ethbeat.org`        | `wrangler deploy --env production` |
 | staging     | `crops-api-staging` | `crops-staging.l2beat.com` | `wrangler deploy --env staging`    |
 
 The hostnames are custom domains attached to the Workers once by hand, not
@@ -65,7 +65,7 @@ a person has to do this once:
    certificate is pending. The hostname must not already have a DNS record.
 6. Run the verification below against staging.
 7. After the first production deploy from `main`, repeat step 5 for the
-   `crops-api` Worker with `crops.l2beat.com`.
+   `crops-api` Worker with `crops.ethbeat.org`.
 
 ### Verification after a deploy
 

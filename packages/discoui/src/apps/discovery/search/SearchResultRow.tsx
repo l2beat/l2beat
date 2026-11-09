@@ -31,7 +31,7 @@ export function SearchResultRow(props: {
       className={cn(
         'flex h-7 cursor-pointer items-center gap-2.5 px-3 text-[13px] [contain-intrinsic-size:auto_28px] [content-visibility:auto]',
         props.highlighted
-          ? 'bg-coffee-700 shadow-[inset_2px_0_0_#BAD80A]'
+          ? 'bg-coffee-700 shadow-[inset_2px_0_0_var(--color-autumn-300)]'
           : 'text-coffee-200',
       )}
     >
@@ -48,11 +48,21 @@ export function SearchResultRow(props: {
         <Highlighted text={item.title} needles={props.needles} />
       </span>
       {item.detail !== '' && (
-        <span className="min-w-0 shrink-[2] truncate text-coffee-400 text-xs">
+        <span
+          className={cn(
+            'min-w-0 shrink-[2] truncate text-xs',
+            props.highlighted ? 'text-coffee-300' : 'text-coffee-400',
+          )}
+        >
           <Highlighted text={item.detail} needles={props.needles} />
         </span>
       )}
-      <span className="ml-auto shrink-0 font-mono text-coffee-400 text-xs">
+      <span
+        className={cn(
+          'ml-auto shrink-0 font-mono text-xs',
+          props.highlighted ? 'text-coffee-300' : 'text-coffee-400',
+        )}
+      >
         {item.trailing}
       </span>
       {item.kind === 'command' && item.shortcut !== '' && (

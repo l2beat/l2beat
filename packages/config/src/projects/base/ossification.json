@@ -213,6 +213,22 @@
       "transaction": "0xa9ff84a22c4de540be566f561f4ee2a0c890732b19251871b90bfe8941d9be71",
       "updateId": "310f6e25",
       "reason": "Added SP1VerifierGateway route 0x5a093a2f to SP1Verifier v6.1.0 0xc3c6 and froze route 0x4388a21c (SP1Verifier 0xb69f)."
+    },
+    {
+      "timestamp": 1793806151,
+      "type": "state",
+      "contract": "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
+      "transaction": "0x037f60045f4304460e2b0d5d4f3d8b223200d220212e2399db1ce0f77a19b77b",
+      "updateId": "560b3731",
+      "reason": "Set game type 621 to AggregateVerifier 0xc08b8fFAF04Abb1d7013B74a0E57Eccbd7fa5A70 for the Denim hardfork: new TEE image, SP1 range and aggregation program hashes, and 6000/300-block proposal intervals from the first Denim block."
+    },
+    {
+      "timestamp": 1793806151,
+      "type": "state",
+      "contract": "eth:0x7480Afc8D99a5c645c247dB5A1e4a4f440e6e095",
+      "transaction": "0x037f60045f4304460e2b0d5d4f3d8b223200d220212e2399db1ce0f77a19b77b",
+      "updateId": "560b3731",
+      "reason": "Registered Denim as upgrade 13 (activation 2026-11-05 18:00 UTC) and raised the minimum node version from v1.4.2 to v1.5.1 in the same Base Governance Multisig transaction that swapped the AggregateVerifier."
     }
   ]
 }

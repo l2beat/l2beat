@@ -24,7 +24,6 @@ export function InfoIcon({
 }: SvgIconProps & VariantProps<typeof infoVariants>) {
   return (
     <SvgIcon
-      aria-label="Info icon"
       width="16"
       height="16"
       viewBox="0 0 16 16"

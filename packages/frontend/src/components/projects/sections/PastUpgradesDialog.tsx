@@ -58,8 +58,8 @@ export function PastUpgradesDialog({
 }) {
   const trigger = (
     <div className="mt-2 flex items-center gap-1">
-      <HistoryClockIcon className="size-3.5 fill-brand" />
-      <span className="font-bold text-brand text-label-value-15 underline md:text-label-value-16">
+      <HistoryClockIcon className="size-3.5 fill-brand-deep" />
+      <span className="font-bold text-brand-deep text-label-value-15 underline md:text-label-value-16">
         View past upgrades
       </span>
     </div>
@@ -279,6 +279,7 @@ function DiffoLink({ href }: { href: string }) {
       href={href}
       rel="noopener noreferrer"
       target="_blank"
+      aria-label="View diff on Diffo"
       className="flex h-6 flex-row items-center gap-1.5 rounded-sm bg-linear-to-r from-[#854220] to-[#DE7B16] px-[9px] ring-brand ring-inset focus-visible:ring-2"
     >
       <DiffoIcon className="h-[14px] w-[67px] fill-white" />
