@@ -160,6 +160,9 @@ const chartClassNames = cn(
   // The axis options have no per-axis label color, so the x labels are
   // matched by their scene keys, which are not a documented API.
   '[&_text[data-ts-key^="x-tick-label"]]:fill-secondary',
+  // The y labels sit inside the plot, so a halo in the card's color keeps
+  // the series from running through them.
+  '[&_text[data-ts-key^="y-tick-label"]]:stroke-surface-primary [&_text[data-ts-key^="y-tick-label"]]:[paint-order:stroke] [&_text[data-ts-key^="y-tick-label"]]:[stroke-linejoin:round] [&_text[data-ts-key^="y-tick-label"]]:[stroke-width:4px]',
   '[&_svg]:outline-none',
   // Only `highlight` changes a line's opacity.
   '[&_path]:transition-[stroke-opacity] [&_path]:duration-200 motion-reduce:[&_path]:transition-none',

@@ -1,3 +1,4 @@
+import { scaleSymlog } from 'd3-scale'
 import { expect } from 'earl'
 import { fitTicks, getYAxisTicks } from './yAxisTicks'
 
@@ -38,6 +39,23 @@ describe(getYAxisTicks.name, () => {
   it('steps by whole numbers when asked', () => {
     expect(getYAxisTicks([0, 1], {}, 1).ticks).toEqual([0, 0.5, 1])
     expect(getYAxisTicks([0, 1], { integer: true }, 1).ticks).toEqual([0, 1, 2])
+  })
+
+  it('ticks a symlog scale at zero and powers of ten', () => {
+    // d3's symlog ticks are linear, so all but the ends bunch at the top.
+    expect(getYAxisTicks([0, 17000], { scale: scaleSymlog }, 1)).toEqual({
+      domain: [0, 17000],
+      ticks: [0, 1, 10, 100, 1000, 10000],
+    })
+    expect(getYAxisTicks([-150, 20], { scale: scaleSymlog }, 1).ticks).toEqual([
+      -100, -10, -1, 0, 1, 10,
+    ])
+  })
+
+  it('ticks a symlog scale below 10 like a fixed domain', () => {
+    expect(getYAxisTicks([0, 0.18], { scale: scaleSymlog }, 1).ticks).toEqual([
+      0, 0.09, 0.18,
+    ])
   })
 
   it('has no ticks without values', () => {

@@ -1,5 +1,6 @@
 import { formatSeconds, pluralize } from '@l2beat/shared-pure'
 import { useId } from 'react'
+import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import {
   Tooltip,
   TooltipContent,
@@ -35,6 +36,10 @@ export function OssificationTimelineChart({ timeline, valueSource }: Props) {
   const clockX = clockBeforeWindow ? 0 : toX(clockStart)
   const genesisInWindow = genesis >= from
   const area = values && peak !== null ? getAreaPaths(values, peak) : undefined
+  // Without a value series or a change, only the axis and clock would show.
+  if (!area && criticalChanges.length === 0) {
+    return <NotApplicableBadge />
+  }
   const description = getDescription({
     timeline,
     valueSource,

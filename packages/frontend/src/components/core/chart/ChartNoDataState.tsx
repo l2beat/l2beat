@@ -19,8 +19,8 @@ export function ChartNoDataState({ size }: { size: 'regular' | 'small' }) {
         No data
       </span>
       <span className={cn('text-sm', size === 'small' && 'hidden')}>
-        There&apos;s no data for the project and the selected criteria. Please
-        try again later.
+        There&apos;s no data for the selected criteria. Please try again
+        later.
       </span>
     </div>
   )

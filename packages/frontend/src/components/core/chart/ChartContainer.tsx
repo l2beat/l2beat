@@ -113,7 +113,7 @@ export function ChartContainer<T extends { timestamp: number }>({
             >
               {shouldMountChart ? children : null}
             </div>
-            {legend && shouldMountChart && (
+            {legend && shouldMountChart && (hasData || isLoading) && (
               <ChartLegend leading={legendLeading} />
             )}
           </div>
