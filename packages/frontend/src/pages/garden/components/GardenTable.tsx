@@ -18,6 +18,7 @@ import {
   TableHeaderRow,
   TableRow,
 } from '~/components/table/Table'
+import { stickyTableColumnRowProps } from '~/components/table/useStickyTableHeader'
 import { cn } from '~/utils/cn'
 import type { GardenEntry } from '../getGardenData'
 
@@ -27,6 +28,7 @@ export function GardenTable({ entries }: { entries: GardenEntry[] }) {
     <Table
       className={cn('min-w-[680px]', entranceHold)}
       header={<CropLettersHeader />}
+      stickyHeader
     >
       <TableBody>
         {entries.map((entry, rowIndex) => (
@@ -61,25 +63,33 @@ export function GardenTable({ entries }: { entries: GardenEntry[] }) {
 /** Names the plant columns with the letters that spell CROPS, as on project pages. */
 function CropLettersHeader() {
   return (
-    <TableHeader>
-      <TableHeaderRow>
-        <TableHead />
-        <TableHead>
-          <div className="flex gap-3.5 md:mx-auto">
-            {CROP_COLUMNS.map((column) => (
-              <abbr
-                key={column.key}
-                title={column.label}
-                className="w-14 text-center no-underline"
-              >
-                {column.letter}
-              </abbr>
-            ))}
-          </div>
-        </TableHead>
-        <TableHead />
-      </TableHeaderRow>
-    </TableHeader>
+    <>
+      {/* One per column: the sticky header copy takes its widths from these. */}
+      <colgroup>
+        <col />
+        <col />
+        <col />
+      </colgroup>
+      <TableHeader>
+        <TableHeaderRow {...stickyTableColumnRowProps}>
+          <TableHead />
+          <TableHead>
+            <div className="flex gap-3.5 md:mx-auto">
+              {CROP_COLUMNS.map((column) => (
+                <abbr
+                  key={column.key}
+                  title={column.label}
+                  className="w-14 text-center no-underline"
+                >
+                  {column.letter}
+                </abbr>
+              ))}
+            </div>
+          </TableHead>
+          <TableHead />
+        </TableHeaderRow>
+      </TableHeader>
+    </>
   )
 }
 
