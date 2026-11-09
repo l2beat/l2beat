@@ -1,4 +1,4 @@
-import type { MouseEvent } from 'react'
+import { useRef } from 'react'
 import { Link } from 'react-router'
 import { Button } from '../../../components/Button'
 import { IS_READONLY } from '../../../config/readonly'
@@ -88,14 +88,20 @@ export function TopBar(props: { project: string }) {
 
 // The top bar always runs discovery in dev mode.
 const TOP_BAR_DEV_MODE = true
+const REPEAT_CLICK_WINDOW_MS = 500
 
 function DiscoverOrStopButton(props: { project: string }) {
   const inFlight = useTerminalStore((state) => state.command.inFlight)
   const { killCommand, discover } = useDiscoveryCommand()
+  const lastClickAtMs = useRef(Number.NEGATIVE_INFINITY)
 
-  function onClick(event: MouseEvent<HTMLButtonElement>) {
-    // The second click of a double-click would stop the run the first one started.
-    if (isRepeatClick(event)) {
+  function onClick() {
+    const nowMs = performance.now()
+    const sinceLastClickMs = nowMs - lastClickAtMs.current
+    lastClickAtMs.current = nowMs
+    // A double-click, a double Enter or a held Enter would stop the run the
+    // first activation started.
+    if (sinceLastClickMs < REPEAT_CLICK_WINDOW_MS) {
       return
     }
     if (inFlight) {
@@ -130,8 +136,4 @@ function DiscoverOrStopButton(props: { project: string }) {
       <span className="max-md:hidden">Discover</span>
     </Button>
   )
-}
-
-function isRepeatClick(event: MouseEvent<HTMLButtonElement>): boolean {
-  return event.detail > 1
 }
