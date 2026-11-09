@@ -105,16 +105,16 @@ export const tacitPayAdversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'good',
       exposureShort:
-        "With the user's own Ethereum node set before sign-in, the page sends no address and no recipient to a third party on Ethereum.",
+        "The user's own Ethereum node can take every read that names a deposit address or the recipient, leaving third parties only pool-wide logs.",
       exposureContinued:
         'By default, Tenderly and dRPC receive the deposit addresses and the withdrawal recipient in one session, so either can tie both sides. Base and Robinhood Chain nodes still receive the deposit addresses, which are the same on every chain.',
       advice:
-        'Set your own Ethereum node under Endpoints, and in the wallet you sign in with, before signing in. Shield from that wallet rather than through a deposit address.',
+        'Set your own Ethereum node under Endpoints and in your wallet before signing in, and shield from that wallet rather than through a deposit address.',
       interior: {
         ...INTERIOR,
         linkage: {
           verdict: 'atRisk',
-          note: 'Private only with your own Ethereum node set in the app and the wallet before sign-in.',
+          note: 'Private only with your own node set before sign-in.',
         },
       },
       sources: [
