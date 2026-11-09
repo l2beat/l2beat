@@ -151,9 +151,9 @@ function ProjectSectionBreadcrumb({
     >
       <a
         href={href}
-        className="flex items-center gap-1.5 text-brand hover:underline"
+        className="flex items-center gap-1.5 text-brand-deep hover:underline"
       >
-        <Icon className="size-3.5 stroke-brand" />
+        <Icon className="size-3.5 stroke-brand-deep" />
         {label}
       </a>
       {otherSections?.map((link) => (

@@ -9,7 +9,6 @@ export function HomeIcon({ className, ...props }: SvgIconProps) {
       height="20"
       viewBox="0 0 20 20"
       fill="none"
-      aria-label="Home icon"
       className={cn('stroke-primary', className)}
       {...props}
     >

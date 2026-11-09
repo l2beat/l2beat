@@ -30,6 +30,7 @@ export function PrivacyMethodologyPage({
       <Section>{sections.ratings}</Section>
       <CrowdFigure />
       <Section>{sections.adversaries}</Section>
+      <Section>{sections.ipHidingRoutes}</Section>
       <Section>{sections.referenceApp}</Section>
       <Section>{sections.categories}</Section>
       <CategoryMachinesFigure data={figures} />

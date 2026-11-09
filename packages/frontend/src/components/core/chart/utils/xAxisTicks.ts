@@ -1,0 +1,70 @@
+import { UnixTime } from '@l2beat/shared-pure'
+import { MONTHS, parseTimestamp } from '~/utils/dates'
+
+export function getTickCondition(actualRangeInDays: number) {
+  return (timestamp: number) => {
+    const start = UnixTime(timestamp)
+    const date = UnixTime.toDate(start)
+
+    if (actualRangeInDays <= 1) return timestamp % (4 * UnixTime.HOUR) === 0
+    if (actualRangeInDays <= 7) return timestamp % UnixTime.DAY === 0
+    if (actualRangeInDays <= 30)
+      return start % UnixTime.DAY === 0 && date.getUTCDay() === 1
+    if (actualRangeInDays <= 90)
+      return (timestamp + 3 * UnixTime.DAY) % (21 * UnixTime.DAY) === 0
+    if (actualRangeInDays <= 180)
+      return start % UnixTime.DAY === 0 && date.getUTCDate() === 1
+    if (actualRangeInDays <= 365)
+      return (
+        start % UnixTime.DAY === 0 &&
+        date.getUTCDate() === 1 &&
+        date.getUTCMonth() % 2 === 0
+      )
+    if (actualRangeInDays <= 1095)
+      return (
+        start % UnixTime.DAY === 0 &&
+        date.getUTCDate() === 1 &&
+        date.getUTCMonth() % 4 === 0
+      )
+
+    return (
+      start % UnixTime.DAY === 0 &&
+      date.getUTCDate() === 1 &&
+      date.getUTCMonth() === 0
+    )
+  }
+}
+
+function getTickFormatter(actualRangeInDays: number) {
+  return (timestamp: number) => {
+    const { month, day, time, year } = parseTimestamp(timestamp)
+    if (actualRangeInDays <= 1) return time
+    if (actualRangeInDays <= 90)
+      return `${Number(day)} ${MONTHS[month]?.shortName}`
+    if (actualRangeInDays <= 1095)
+      return `${MONTHS[month]?.shortName} ‘${year.slice(-2)}`
+    return year
+  }
+}
+
+/**
+ * Time-axis ticks for rows at `xs`, spaced for the range they span. Labels
+ * near the plot edges would be cut off, so the outer 3% gets none.
+ */
+export function getTimeTicks(xs: number[]) {
+  const first = xs[0]
+  const last = xs.at(-1)
+  if (first === undefined || last === undefined) {
+    return { values: [], format: String }
+  }
+  const rangeInDays =
+    (UnixTime.toStartOf(UnixTime(last), 'day') -
+      UnixTime.toStartOf(UnixTime(first), 'day')) /
+    UnixTime.DAY
+  const isTick = getTickCondition(rangeInDays)
+  const edge = (last - first) * 0.03
+  return {
+    values: xs.filter((t) => isTick(t) && t > first + edge && t < last - edge),
+    format: getTickFormatter(rangeInDays),
+  }
+}

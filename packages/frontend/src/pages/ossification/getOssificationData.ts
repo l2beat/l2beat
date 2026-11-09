@@ -17,7 +17,7 @@ export async function getOssificationData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Ossification - L2BEAT',
+        title: 'Ossification - ETHBEAT',
         description:
           'How long the critical contracts of each project have gone unchanged, and how much value they secured meanwhile.',
         url,

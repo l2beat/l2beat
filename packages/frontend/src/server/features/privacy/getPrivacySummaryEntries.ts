@@ -38,6 +38,7 @@ export interface PrivacySummaryEntry {
   isTracked: boolean
   hasTvl: boolean
   totalValueLockedUsd?: number
+  totalValueLockedChange7d?: number
   poolsTracked: number
   totalValueDeposited30dUsd?: number
   anonymitySet: PrivacyAnonymitySetSummary
@@ -57,6 +58,7 @@ type PrivacySummaryTrackingMetrics = Pick<
   | 'isTracked'
   | 'poolsTracked'
   | 'totalValueLockedUsd'
+  | 'totalValueLockedChange7d'
   | 'totalValueDeposited30dUsd'
   | 'anonymitySet'
 >
@@ -98,7 +100,7 @@ export async function getPrivacySummaryEntries(
   const entries = projects.map((project): PrivacySummaryEntry => {
     const projectId = project.id
     const projectDaily = dailyByProject[projectId] ?? []
-    const totalValueLockedUsd = tvl.projects[projectId]?.breakdown.total
+    const projectTvl = tvl.projects[projectId]
     const totalValueDeposited30dUsd = projectDaily.reduce(
       (sum, row) => sum + row.depositValueUsd,
       0,
@@ -108,7 +110,8 @@ export async function getPrivacySummaryEntries(
       ...getPrivacySummaryBaseEntry(project),
       ...getTrackingMetrics({
         poolsTracked: getPoolsTracked(project),
-        totalValueLockedUsd,
+        totalValueLockedUsd: projectTvl?.breakdown.total,
+        totalValueLockedChange7d: projectTvl?.change.total,
         totalValueDeposited30dUsd,
         anonymitySet: anonymitySets.get(projectId) ?? {
           status: 'unavailable',
@@ -139,6 +142,10 @@ async function getMockPrivacySummaryEntries(
             project.tvsConfig === undefined
               ? undefined
               : Math.random() * 1_000_000_000,
+          totalValueLockedChange7d:
+            project.tvsConfig === undefined
+              ? undefined
+              : Math.random() * 0.4 - 0.2,
           totalValueDeposited30dUsd: Math.random() * 100_000_000,
           anonymitySet: anonymitySets.get(project.id) ?? {
             status: 'unavailable',
@@ -183,6 +190,7 @@ function getTrackingMetrics(
       isTracked: false,
       poolsTracked: metrics.poolsTracked,
       totalValueLockedUsd: metrics.totalValueLockedUsd,
+      totalValueLockedChange7d: metrics.totalValueLockedChange7d,
       anonymitySet: metrics.anonymitySet,
     }
   }

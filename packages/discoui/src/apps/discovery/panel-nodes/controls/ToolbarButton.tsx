@@ -65,7 +65,8 @@ export const ToolbarButton = forwardRef<HTMLButtonElement, ToolbarButtonProps>(
                 'inline-flex h-7 min-w-7 shrink-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-sm px-2 text-coffee-200 text-xs transition-colors duration-100',
                 'hover:bg-coffee-700 data-[state=open]:bg-coffee-700',
                 'disabled:pointer-events-none disabled:opacity-40',
-                active && 'bg-coffee-600 text-autumn-300 hover:bg-coffee-600',
+                active &&
+                  'bg-coffee-700 text-autumn-300 hover:bg-coffee-700 dark:bg-coffee-600 dark:hover:bg-coffee-600',
                 className,
               )}
             />

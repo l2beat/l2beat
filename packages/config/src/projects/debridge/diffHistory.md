@@ -1,3 +1,66 @@
+Generated with discovered.json: 0x43a242c5555dbb00f78d3c879b4edf2aa0a319fc
+
+# Diff at Thu, 05 Nov 2026 10:34:01 GMT:
+
+- id: f8e7fb57
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ed3b78ee5d7973829dff175055ab7e54cc7df91 block: 1791789484
+- current timestamp: 1793874763
+
+## Description
+
+The DEFAULT_ADMIN_ROLE of the IntentManagerValidator moved from the EOA 0xbda458df to the Admin Multisig (5 of 8). It grants and revokes the INTENT_MANAGER_ROLE, which allows creating DLN orders with custom or zero protocol fees. It grants no access to funds.
+
+## Watched changes
+
+```diff
+    contract IntentManagerValidator (eth:0x4247c6f71407359E4C8D29787E98D752F264CD4b) [debridge/IntentManagerValidator] {
+    +++ description: Immutable allowlist contract referenced by DlnSource: addresses holding the INTENT_MANAGER_ROLE can create DLN orders with custom or zero protocol fees. It grants no access to existing funds.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "eth:0xbda458dfc28021dEbD72060671Fc350fA5CB39e5"
++        "eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"
+      values.defaultAdminAC.0:
+-        "eth:0xbda458dfc28021dEbD72060671Fc350fA5CB39e5"
++        "eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"
+    }
+```
+
+```diff
+    contract Admin Multisig (eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x4247c6f71407359E4C8D29787E98D752F264CD4b","description":"grant and revoke the INTENT_MANAGER_ROLE that allows creating DLN orders with custom or zero protocol fees.","role":".defaultAdminAC"}
+    }
+```
+
+Generated with discovered.json: 0x1cfa4bfc88c7939b4e2333a1bbccfa9df445f91b
+
+# Diff at Tue, 03 Nov 2026 11:22:18 GMT:
+
+- id: 64231737
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@fc159c853c5f8d531c99eea56f0d0e8595b6625f block: 1791789484
+- current timestamp: 1791789484
+
+## Description
+
+Flattener now keeps contracts whose bytecode is read with type(C).creationCode instead of turning them into interfaces. Only source hashes and flat files change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791789484 (main branch discovery), not current.
+
+```diff
+    contract DeBridgeTokenDeployer (eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464) [debridge/DeBridgeTokenDeployer] {
+    +++ description: Deploys deBridge-wrapped token (deToken) contracts when an asset is bridged to this chain for the first time (callable only by the DeBridgeGate). All deTokens are beacon proxies whose beacon is this contract itself, so its tokenImplementation applies to every deToken on this chain at once.
+      sourceHashes.1:
+-        "0xff2a8bb5572e1959e22acdc6818bcb1da107807340ef1416129cae0cf740d02a"
++        "0xa9992178cce17f92c934ff2617b67a393fb5ec068d6219bde6c62fa46ce32540"
+    }
+```
+
 Generated with discovered.json: 0xfdc5d1592884603eb33552024c6c3b2c94985a89
 
 # Diff at Tue, 27 Oct 2026 11:31:39 GMT:

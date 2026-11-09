@@ -71,6 +71,11 @@ const tornStaked = discovery.getContractValueBigInt(
   'TORNStaked',
 )
 
+const upgradeDelay = formatSeconds(
+  votingDelay + votingPeriod + executionDelay,
+  { fullUnit: true },
+)
+
 const stakeLockPeriod = formatSeconds(
   voteExtendTime + executionExpiration + executionDelay,
 )
@@ -299,6 +304,13 @@ export const tornadoCash: BaseProject = {
       ],
     },
     trackedOn: ['ethereum'],
+    // Chains the pinned classic-ui serves (networkConfig.js).
+    runsOn: [
+      ProjectId('arbitrum'),
+      ProjectId('gnosis'),
+      ProjectId('optimism'),
+      ProjectId('polygon-pos'),
+    ],
     tokens: getPrivacyTokens(),
     relayerTracking: {
       type: 'onchainEvents',
@@ -323,12 +335,10 @@ export const tornadoCash: BaseProject = {
         'The circuits, contracts, app and relayer are open source. Each app release names its commit and a build recipe for its IPFS hash, and rebuilding the current release reproduces it.',
     },
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.fixedAmounts],
-    adversaries: tornadoCashAdversaries(
-      formatSeconds(votingDelay + votingPeriod + executionDelay, {
-        fullUnit: true,
-      }),
-    ),
-    riskSummary: readProjectMarkdown('tornado-cash', 'riskSummary'),
+    adversaries: tornadoCashAdversaries(upgradeDelay),
+    riskSummary: readProjectMarkdown('tornado-cash', 'riskSummary', {
+      upgradeDelay,
+    }),
     upgradesAndGovernance: {
       content: readProjectMarkdown('tornado-cash', 'upgradesAndGovernance'),
       governanceInfo: {

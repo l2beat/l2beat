@@ -72,6 +72,7 @@ const INITIAL_STATE: State = {
   projectId: '',
   userPreferences: DEFAULT_USER_PREFERENCES,
   loaded: false,
+  loadCount: 0,
 }
 
 if (typeof localStorage !== 'undefined') {

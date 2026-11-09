@@ -1,5 +1,8 @@
 import { cn } from '~/utils/cn'
 
+/** The ball the brand-coloured one swaps places with: a lighter pink. */
+const LIGHT = 'var(--brand-light)'
+
 // SMIL keeps the main thread recalculating style every frame, even for a
 // loader far below the fold, so a loader nobody is waiting on stands still.
 export function ChartLoader({
@@ -19,7 +22,7 @@ export function ChartLoader({
         viewBox="0 0 100 100"
         preserveAspectRatio="xMidYMid"
       >
-        <circle cx="30" cy="50" fill="var(--chart-pink)" r="20" />
+        <circle cx="30" cy="50" fill={LIGHT} r="20" />
         <circle cx="70" cy="50" fill="var(--brand)" r="20" />
       </svg>
     )
@@ -33,7 +36,7 @@ export function ChartLoader({
       viewBox="0 0 100 100"
       preserveAspectRatio="xMidYMid"
     >
-      <circle cx="30" cy="50" fill="var(--chart-pink)" r="20">
+      <circle cx="30" cy="50" fill={LIGHT} r="20">
         <animate
           attributeName="cx"
           repeatCount="indefinite"
@@ -53,7 +56,7 @@ export function ChartLoader({
           begin="0s"
         />
       </circle>
-      <circle cx="30" cy="50" fill="var(--chart-pink)" r="20">
+      <circle cx="30" cy="50" fill={LIGHT} r="20">
         <animate
           attributeName="cx"
           repeatCount="indefinite"

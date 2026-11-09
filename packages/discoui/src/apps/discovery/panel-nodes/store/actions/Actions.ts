@@ -37,7 +37,7 @@ export interface Actions {
   hideUnreachable: () => void
   showHidden: () => void
   clear: () => void
-  selectAndFocus: (selected: string) => void
+  selectAndFocus: (selected: readonly string[]) => void
   registerViewportContainer: (container: HTMLElement | null) => void
 
   setPreferences: (preferences: Partial<State['userPreferences']>) => void

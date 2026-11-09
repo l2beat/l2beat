@@ -26,6 +26,7 @@ import { capx } from '../projects/capx/capx'
 import { cartesiprthoneypot } from '../projects/cartesi-prt-honeypot/cartesi-prt-honeypot'
 import { cartesiprthoneypotv2 } from '../projects/cartesi-prt-honeypot-v2/cartesi-prt-honeypot-v2'
 import { celo } from '../projects/celo/celo'
+import { codex } from '../projects/codex/codex'
 import { corn } from '../projects/corn/corn'
 import { cronoszkevm } from '../projects/cronoszkevm/cronoszkevm'
 import { cyber } from '../projects/cyber/cyber'
@@ -34,6 +35,7 @@ import { degate } from '../projects/degate/degate'
 import { degate2 } from '../projects/degate2/degate2'
 import { degate3 } from '../projects/degate3/degate3'
 import { deversifi } from '../projects/deversifi/deversifi'
+import { doma } from '../projects/doma/doma'
 import { dydx } from '../projects/dydx/dydx'
 import { ebichain } from '../projects/ebichain/ebichain'
 import { eclipse } from '../projects/eclipse/eclipse'
@@ -149,6 +151,7 @@ import { ternoa } from '../projects/ternoa/ternoa'
 import { thebinaryholdings } from '../projects/thebinaryholdings/thebinaryholdings'
 import { treasure } from '../projects/treasure/treasure'
 import { unichain } from '../projects/unichain/unichain'
+import { whitechain } from '../projects/whitechain/whitechain'
 import { wirex } from '../projects/wirex/wirex'
 import { witness } from '../projects/witness/witness'
 import { wonder } from '../projects/wonder/wonder'
@@ -193,6 +196,7 @@ export const layer2s: ScalingProject[] = [
   cartesiprthoneypot,
   cartesiprthoneypotv2,
   celo,
+  codex,
   corn,
   cronoszkevm,
   cyber,
@@ -200,6 +204,7 @@ export const layer2s: ScalingProject[] = [
   degate,
   degate2,
   degate3,
+  doma,
   dydx,
   ebichain,
   eclipse,
@@ -317,6 +322,7 @@ export const layer2s: ScalingProject[] = [
   thebinaryholdings,
   treasure,
   unichain,
+  whitechain,
   wirex,
   witness,
   wonder,

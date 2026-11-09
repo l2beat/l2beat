@@ -6,7 +6,6 @@ import {
   ViewPlugin,
   type ViewUpdate,
 } from '@codemirror/view'
-import colors from '../../../../colors.json'
 import type { EditorPlugin } from '../../plugin'
 
 const setHighlight = StateEffect.define<{ from: number; to: number } | null>()
@@ -41,8 +40,8 @@ const highlighter = ViewPlugin.fromClass(
 // An outline, unlike a border, leaves the text where it is.
 const highlightTheme = EditorView.theme({
   '.cm-range-highlight': {
-    backgroundColor: colors.coffee['600'],
-    outline: `2px solid ${colors.aux.amber}`,
+    backgroundColor: 'var(--color-coffee-600)',
+    outline: '2px solid var(--color-aux-amber)',
     borderRadius: '2px',
   },
 })

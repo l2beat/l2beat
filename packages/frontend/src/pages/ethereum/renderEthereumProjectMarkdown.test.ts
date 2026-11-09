@@ -11,7 +11,7 @@ import { renderEthereumProjectMarkdown } from './renderEthereumProjectMarkdown'
 describe(renderEthereumProjectMarkdown.name, () => {
   it('links the HTML page', () => {
     expect(renderEthereumProjectMarkdown(ENTRY)).toMatchRegex(
-      /^# Ethereum\n\nMarkdown version of https:\/\/l2beat\.com\/projects\/ethereum\n\n/,
+      /^# Ethereum\n\nMarkdown version of https:\/\/ethbeat\.org\/projects\/ethereum\n\n/,
     )
   })
 
@@ -41,7 +41,7 @@ describe(renderEthereumProjectMarkdown.name, () => {
     expect(
       getSection(renderEthereumProjectMarkdown(ENTRY), 'Activity'),
     ).toInclude(
-      '- [Activity chart (JSON)](https://l2beat.com/api/scaling/activity/ethereum)',
+      '- [Activity chart (JSON)](https://ethbeat.org/api/scaling/activity/ethereum)',
     )
   })
 })

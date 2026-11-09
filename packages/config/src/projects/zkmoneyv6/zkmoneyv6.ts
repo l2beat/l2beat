@@ -364,7 +364,7 @@ export const zkmoneyv6: BaseProject = {
             "Runs whatever code Aztec Labs' server sends on each visit, so a changed build could read the user's viewing keys.",
           fix: 'Serve each build under an onchain pin, such as an ENS contenthash, so every code change shows onchain.',
           source: 'https://wallet.zk.money',
-          checked: '2026-10-28',
+          checked: '2026-10-30',
         },
       ],
     },
@@ -395,6 +395,7 @@ export const zkmoneyv6: BaseProject = {
       ],
     },
     trackedOn: ['ethereum'],
+    runsOn: [ProjectId('aztecnetworkv6')],
     tokens: privacyTokens,
     zkCatalogId: ProjectId('barretenberg'),
     exitWindow: {
@@ -412,7 +413,7 @@ export const zkmoneyv6: BaseProject = {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'The Ethereum contracts, the wallet, the enclave software and the circuit sources are public. The refund and resolver verifiers, the L2 contracts and the Desktop app reproduce from them. The approved enclave image and its build files are unpublished.',
+        'The Ethereum contracts, the wallet, the enclave software and the circuit sources are public. The refund and resolver verifiers, the L2 contracts and the Desktop app reproduce from them. The approved enclave image and its build files are unpublished. The hosted wallet runs a build absent from the public source.',
     },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,

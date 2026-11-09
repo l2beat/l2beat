@@ -1,5 +1,6 @@
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { EM_DASH } from '~/consts/characters'
+import type { ChartResolution } from './range/range'
 
 export const MONTHS: Record<string, { shortName: string }> = {
   '01': { shortName: 'Jan' },
@@ -63,7 +64,9 @@ export function formatRange(from: number, to: number) {
   const parsedFrom = parseTimestamp(from)
   const parsedTo = parseTimestamp(to)
 
-  if (to - from >= 23 * UnixTime.HOUR) {
+  const sameDay =
+    UnixTime.toStartOf(from, 'day') === UnixTime.toStartOf(to, 'day')
+  if (to - from >= 23 * UnixTime.HOUR && !sameDay) {
     // "30 Jun — 2 Jul 2026": the start drops the parts it shares with the end
     const sameYear = parsedFrom.year === parsedTo.year
     const fromDate = toNiceDate(
@@ -91,6 +94,18 @@ export function formatTimestamp(
   const { year, month, day, time } = parseTimestamp(timestamp)
   const date = toNiceDate(day, month, year)
   return formatTimeAndDate(date, time, opts?.mode)
+}
+
+/**
+ * A chart snapshot: "3 Jun 2026" in daily data. Finer data always shows the
+ * time, midnight included, so neighboring points read alike.
+ */
+export function formatSnapshotTimestamp(
+  timestamp: number,
+  resolution: ChartResolution,
+) {
+  const mode = resolution === 'day' ? 'date' : 'datetime'
+  return formatTimestamp(timestamp, { mode })
 }
 
 export function formatDate(date: string) {
@@ -148,6 +163,10 @@ export function getNextDateForDayOfWeek(
   return currentDate
 }
 
+/**
+ * In UTC: publication dates are calendar days, stored as midnight UTC, and
+ * the same date must render on the server and in every visitor's timezone.
+ */
 export const formatPublicationDate = (date: Date) => {
   const monthName = String(date.getUTCMonth() + 1).padStart(2, '0')
   const monthRecord = MONTHS[monthName]

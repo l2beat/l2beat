@@ -25,5 +25,11 @@
     "address": "celo:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010",
     "chain": "celo",
     "blockNumber": 79482303
+  },
+  "L2StandardBridge_v1_13_0_base.sol": {
+    "hash": "0x9b2d70fe3bdfea10cc0b8886b8f551b5e2c9179641c33c84deebe30b9d42c815",
+    "address": "base:0xff312C3496f0848CD94d71dC06C434D487A46a10",
+    "chain": "base",
+    "blockNumber": 53551478
   }
 }

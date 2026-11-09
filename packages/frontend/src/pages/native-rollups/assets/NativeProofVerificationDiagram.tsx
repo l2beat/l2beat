@@ -23,8 +23,8 @@ export function NativeProofVerificationDiagram({
           y2="190"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="var(--color-purple-100)" />
-          <stop offset="1" stopColor="var(--color-pink-100)" />
+          <stop stopColor="var(--color-brand-deep)" />
+          <stop offset="1" stopColor="var(--color-brand)" />
         </linearGradient>
         <linearGradient
           id="npv-brand-soft"
@@ -34,12 +34,8 @@ export function NativeProofVerificationDiagram({
           y2="190"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="var(--color-purple-100)" stopOpacity="0.18" />
-          <stop
-            offset="1"
-            stopColor="var(--color-pink-100)"
-            stopOpacity="0.18"
-          />
+          <stop stopColor="var(--color-brand-deep)" stopOpacity="0.18" />
+          <stop offset="1" stopColor="var(--color-brand)" stopOpacity="0.18" />
         </linearGradient>
         <marker
           id="npv-arrow"

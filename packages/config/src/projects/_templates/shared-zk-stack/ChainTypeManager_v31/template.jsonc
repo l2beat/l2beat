@@ -1,0 +1,103 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
+  "category": "shared",
+  "description": "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. Since v31 the verifier of each protocol version is registered here and written into a chain when it applies the upgrade. The current protocol version is {{getSemverProtocolVersion}}.",
+  "ignoreMethods": [
+    "getChainAdmin",
+    "getHyperchain",
+    "getProtocolVersion",
+    "getZKChain",
+    "getZKChainLegacy",
+    "newChainCreationParamsBlock",
+    "protocolVersionDeadline",
+    "protocolVersionIsActive",
+    "protocolVersionVerifier",
+    "upgradeCutDataBlock",
+    "upgradeCutHash"
+  ],
+  "ignoreRelatives": [
+    // the interop center is an L2 system contract address
+    "INTEROP_CENTER",
+    // permissionless registry of bytecodes published for upgrades
+    "L1_BYTECODES_SUPPLIER",
+    // ignore validatorTimelock because it needs chain-specific config
+    "validatorTimelock",
+    "validatorTimelockPostV29"
+  ],
+  "fields": {
+    "owner": {
+      "severity": "MEDIUM",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage the shared ValidatorTimelock contract address and the admin role, register upgrades and patch upgrades together with the verifier of each protocol version (and set their deadlines), execute upgrades, freeze, revert batches, deactivate Priority Mode and set permissioned validators and fee params for all connected chains."
+        }
+      ]
+    },
+    "admin": {
+      "severity": "MEDIUM",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the pending admin of this contract and the ServerNotifier contract address (ZK cluster Admin role)."
+        }
+      ]
+    },
+    "validatorTimelock": { "severity": "HIGH" },
+    "validatorTimelockPostV29": { "severity": "HIGH" },
+    "serverNotifierAddress": { "severity": "MEDIUM" },
+    "PERMISSIONLESS_VALIDATOR": {
+      "description": "The only address allowed to commit, prove and execute batches of a chain while its Priority Mode is active. Written into each chain when it applies the v31 upgrade."
+    },
+    "currentProtocolVersionVerifier": {
+      "description": "Verifier registered for the current protocol version. Chains receive it when they apply the upgrade to this version.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "protocolVersionVerifier",
+        "args": ["{{ protocolVersion }}"]
+      }
+    },
+    "protocolVersionVerifiers": {
+      "description": "Verifier registered for each protocol version (populated since v31).",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": ["verifier"],
+        "groupBy": "protocolVersion",
+        "set": { "event": "NewProtocolVersionVerifier" },
+        "ignoreRelative": true
+      }
+    },
+    "upgradeCutHashes": {
+      "description": "Hash of the diamond cut that chains on the given (old) protocol version must apply to upgrade. A new entry means a new upgrade was registered for all chains of this CTM.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": ["upgradeCutHash"],
+        "groupBy": "protocolVersion",
+        "set": { "event": "NewUpgradeCutHash" }
+      }
+    },
+    "protocolVersionDeadlines": {
+      "description": "Timestamp until which chains may still run the given protocol version (max uint256 means no deadline).",
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "event",
+        "select": ["deadline"],
+        "groupBy": "protocolVersion",
+        "set": { "event": "UpdateProtocolVersionDeadline" }
+      }
+    },
+    "initialCutHash": {
+      "description": "Hash of the diamond cut (facets and init) used for newly created chains.",
+      "severity": "HIGH"
+    },
+    "initialForceDeploymentHash": {
+      "description": "Hash of the L2 system contracts force-deployed into newly created chains.",
+      "severity": "HIGH"
+    },
+    "l1GenesisUpgrade": { "severity": "HIGH" }
+  }
+}

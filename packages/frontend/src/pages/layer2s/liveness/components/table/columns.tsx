@@ -122,7 +122,7 @@ export function getL2LivenessColumns(hideProofSystem?: boolean) {
 
         return (
           <Tooltip>
-            <TooltipTrigger>
+            <TooltipTrigger aria-label="Liveness explanation">
               <InfoIcon variant="blue" />
             </TooltipTrigger>
             <TooltipContent>{explanation}</TooltipContent>

@@ -263,7 +263,7 @@ const AddressEntry = memo(function AddressEntry({
       className={cn(
         'flex min-h-[22px] cursor-pointer select-none items-center gap-1.5 whitespace-pre pl-6 text-[13px] leading-[18px]',
         isSelected &&
-          'bg-autumn-300/15 text-coffee-100 shadow-[inset_2px_0_0_#BAD80A]',
+          'bg-autumn-300/15 text-coffee-100 shadow-[inset_2px_0_0_var(--color-autumn-300)]',
         !isSelected && 'hover:bg-coffee-800',
       )}
       onClick={() => select([entry.address])}

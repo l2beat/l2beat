@@ -31,12 +31,12 @@ describe(createSitemapRouter.name, () => {
     const entries = await getEntries(pages)
 
     expect(entries).toEqual([
-      { loc: 'https://l2beat.com/llms.txt', lastmod: null },
+      { loc: 'https://ethbeat.org/llms.txt', lastmod: null },
       {
-        loc: 'https://l2beat.com/publications/2026-06-update',
+        loc: 'https://ethbeat.org/publications/2026-06-update',
         lastmod: '2026-06-15',
       },
-      { loc: 'https://l2beat.com/faq', lastmod: null },
+      { loc: 'https://ethbeat.org/faq', lastmod: null },
     ])
   })
 
@@ -51,12 +51,15 @@ describe(createSitemapRouter.name, () => {
     const entries = await getEntries(pages)
 
     expect(entries).toEqual([
-      { loc: 'https://l2beat.com/llms.txt', lastmod: null },
-      { loc: 'https://l2beat.com/layer2s/summary', lastmod: '2026-06-15' },
-      { loc: 'https://l2beat.com/layer2s/summary.md', lastmod: '2026-06-15' },
-      { loc: 'https://l2beat.com/layer2s/activity', lastmod: null },
-      { loc: 'https://l2beat.com/layer2s/projects/arbitrum', lastmod: null },
-      { loc: 'https://l2beat.com/layer2s/projects/arbitrum.md', lastmod: null },
+      { loc: 'https://ethbeat.org/llms.txt', lastmod: null },
+      { loc: 'https://ethbeat.org/layer2s/summary', lastmod: '2026-06-15' },
+      { loc: 'https://ethbeat.org/layer2s/summary.md', lastmod: '2026-06-15' },
+      { loc: 'https://ethbeat.org/layer2s/activity', lastmod: null },
+      { loc: 'https://ethbeat.org/layer2s/projects/arbitrum', lastmod: null },
+      {
+        loc: 'https://ethbeat.org/layer2s/projects/arbitrum.md',
+        lastmod: null,
+      },
     ])
   })
 })

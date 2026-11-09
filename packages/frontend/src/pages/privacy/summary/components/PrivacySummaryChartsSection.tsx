@@ -1,12 +1,12 @@
-import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ChartTabs } from '~/pages/layer2s/summary/components/ChartTabs'
 import { useTRPC } from '~/trpc/React'
-import type { ChartRange } from '~/utils/range/range'
+import { type ChartRange, rangeToResolution } from '~/utils/range/range'
 import { PrivacyFlowChart } from '../../project/components/PrivacyFlowChart'
 import { PrivacyFlowsChartRangeControls } from '../../project/components/PrivacyFlowsChartRangeControls'
 import type { PrivacyTvlBreakdownProject } from './PrivacyTvlBreakdownChart'
@@ -29,18 +29,23 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
     () => tvlProjects.map((p) => p.id).sort(),
     [tvlProjects],
   )
-  const { data: flowsData, isLoading: isFlowsLoading } = useQuery(
-    trpc.privacy.flowsChart.queryOptions({
-      projectIds,
-      range,
-    }),
-  )
-  const { data: tvlData, isLoading: isTvlLoading } = useQuery(
-    trpc.tvs.chartByProjects.queryOptions({
-      projectIds: tvlProjectIds,
-      range,
-    }),
-  )
+  const {
+    data: flowsData,
+    isLoading: isFlowsLoading,
+    isPlaceholderData: isFlowsPlaceholderData,
+  } = useChartQuery(trpc.privacy.flowsChart, {
+    projectIds,
+    range,
+  })
+  const {
+    data: tvlData,
+    isLoading: isTvlLoading,
+    isPlaceholderData: isTvlPlaceholderData,
+    shownInput: tvlShownInput,
+  } = useChartQuery(trpc.tvs.chartByProjects, {
+    projectIds: tvlProjectIds,
+    range,
+  })
 
   const flowChartTimeRange = useMemo(
     () =>
@@ -65,9 +70,13 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
         <h2 className="font-bold text-lg md:text-xl">
           Total deposit and withdrawal counts
         </h2>
-        <ChartTimeRange timeRange={flowChartTimeRange} />
+        <ChartTimeRange
+          isPlaceholderData={isFlowsPlaceholderData}
+          timeRange={flowChartTimeRange}
+        />
       </div>
       <PrivacyFlowChart
+        isPlaceholderData={isFlowsPlaceholderData}
         data={flowsData?.chart}
         syncedUntil={flowsData?.syncedUntil}
         isLoading={isFlowsLoading}
@@ -79,9 +88,14 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
     <div>
       <div className="mb-3">
         <h2 className="font-bold text-lg md:text-xl">Total value locked</h2>
-        <ChartTimeRange timeRange={tvlChartTimeRange} />
+        <ChartTimeRange
+          isPlaceholderData={isTvlPlaceholderData}
+          timeRange={tvlChartTimeRange}
+        />
       </div>
       <PrivacyTvlBreakdownChart
+        isPlaceholderData={isTvlPlaceholderData}
+        resolution={rangeToResolution(tvlShownInput.range)}
         data={tvlData?.chart}
         projects={tvlProjects}
         syncedUntil={tvlData?.syncedUntil}

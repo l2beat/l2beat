@@ -1,9 +1,10 @@
 import type { Milestone } from '@l2beat/config'
 import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
-import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
-import type { ChartProject } from '~/components/core/chart/Chart'
+import type { ChartProject } from '~/components/core/chart/ChartContext'
+import { ChartPreviousDataDim } from '~/components/core/chart/ChartPreviousData'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { LivenessChartRangeControls } from '~/pages/layer2s/liveness/components/LivenessChartRangeControls'
 import { LivenessChartSubtypeControls } from '~/pages/layer2s/liveness/components/LivenessChartSubtypeControls'
@@ -42,16 +43,20 @@ export function ProjectLivenessChart({
     getDefaultSubtype(configuredSubtypes),
   )
 
-  const { data: chart, isLoading } = useQuery(
-    trpc.liveness.projectChart.queryOptions({
-      projectId: project.id,
-      range,
-      subtype,
-    }),
-  )
+  const {
+    data: chart,
+    isLoading,
+    isPlaceholderData,
+    shownInput,
+  } = useChartQuery(trpc.liveness.projectChart, {
+    projectId: project.id,
+    range,
+    subtype,
+  })
 
   const anyAnomalyLive = anomalies.some(
-    (anomaly) => anomaly.subtype === subtype && isAnomalyOngoing(anomaly),
+    (anomaly) =>
+      anomaly.subtype === shownInput.subtype && isAnomalyOngoing(anomaly),
   )
   const chartData = useMemo(() => {
     return chart?.data?.map(([timestamp, min, avg, max]) => {
@@ -74,7 +79,7 @@ export function ProjectLivenessChart({
     return lastValidTimestamp
   }, [chart?.data])
 
-  const resolution = rangeToResolution(range)
+  const resolution = rangeToResolution(shownInput.range)
   const timeRange = getChartTimeRangeFromData(chartData, { bucket: resolution })
 
   return (
@@ -85,7 +90,10 @@ export function ProjectLivenessChart({
           hideSubtypeSwitch && 'flex-row justify-between',
         )}
       >
-        <ProjectChartTimeRange timeRange={timeRange} />
+        <ProjectChartTimeRange
+          isPlaceholderData={isPlaceholderData}
+          timeRange={timeRange}
+        />
         <ChartControlsWrapper className="flex-wrap-reverse">
           {!hideSubtypeSwitch && (
             <LivenessChartSubtypeControls
@@ -99,10 +107,11 @@ export function ProjectLivenessChart({
       </div>
       <div className="mt-4 mb-3">
         <LivenessChart
+          isPlaceholderData={isPlaceholderData}
           data={chartData}
           isLoading={isLoading}
           project={project}
-          subtype={subtype}
+          subtype={shownInput.subtype}
           milestones={milestones}
           lastValidTimestamp={lastValidTimestamp}
           anyAnomalyLive={anyAnomalyLive}
@@ -110,13 +119,15 @@ export function ProjectLivenessChart({
           tickCount={4}
         />
       </div>
-      <LivenessChartStats
-        isLoading={isLoading}
-        stats={chart?.stats}
-        anomalies={anomalies}
-        configuredSubtypes={configuredSubtypes}
-        isArchived={isArchived}
-      />
+      <ChartPreviousDataDim isPlaceholderData={isPlaceholderData}>
+        <LivenessChartStats
+          isLoading={isLoading}
+          stats={chart?.stats}
+          anomalies={anomalies}
+          configuredSubtypes={configuredSubtypes}
+          isArchived={isArchived}
+        />
+      </ChartPreviousDataDim>
     </div>
   )
 }

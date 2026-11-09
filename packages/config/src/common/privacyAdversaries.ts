@@ -245,6 +245,13 @@ export const PRIVACY_ADVERSARY_SNIPPETS = {
   freshExit:
     'Wait before exiting and pick a different time of day than the deposit. Exit to a fresh address every time and spend from it with a different wallet than the one that deposited.',
 
+  // Network observer
+  /** Source under advice that names an IP-hiding route: the methodology lists the routes we checked. The frontend's `PRIVACY_IP_HIDING_ROUTES_ANCHOR` names the anchor. */
+  ipHidingRoutes: {
+    title: 'IP-hiding routes we checked',
+    url: '/publications/privacy-methodology#ip-hiding-routes',
+  },
+
   // Privileged insider
   /** Open clients served from a hosted frontend. */
   localBuild:
@@ -252,8 +259,6 @@ export const PRIVACY_ADVERSARY_SNIPPETS = {
   /** Stealth addresses handed out by an operator. */
   operatorViewingKey: (operator: string) =>
     `${operator} holds the viewing key, so it can regenerate every address and tie its activity to the user's account.`,
-  localClientSpendingKeys: (operator: string) =>
-    `Verify address derivations and transactions with an inspected local app. This protects the user's spending keys but does not remove ${operator}'s view.`,
 
   // Future adversary
   /** Stealth addresses without onchain announcements. */

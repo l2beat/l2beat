@@ -28,7 +28,7 @@
     - [EigenDA](./code_walkthroughs/dalayers/eigenda/README.md)
         - [Blob Lifecycle](./code_walkthroughs/dalayers/eigenda/blob_lifecycle.md)
 
-# L2BEAT specs
+# ETHBEAT specs
 
 - [Interop](./l2b_specs/interop.md)
 - [Interop plugin matching](./l2b_specs/interop_plugin_matching.md)

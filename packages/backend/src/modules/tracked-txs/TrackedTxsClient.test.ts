@@ -304,6 +304,8 @@ const TRANSFERS_RESPONSE: DuneTransferResult[] = [
     gas_used: 100,
     data_length: 100,
     non_zero_bytes: 60,
+    is_self_transfer: false,
+    has_value: false,
     blob_versioned_hashes: ['0x1'],
   },
 ]
@@ -324,6 +326,8 @@ const FUNCTIONS_RESPONSE: DuneFunctionCallResult[] = [
     input: CONFIGURATIONS[1].properties.params.selector,
     data_length: 100,
     non_zero_bytes: 60,
+    is_self_transfer: false,
+    has_value: false,
     blob_versioned_hashes: ['0x1'],
   },
   {
@@ -336,6 +340,8 @@ const FUNCTIONS_RESPONSE: DuneFunctionCallResult[] = [
     input: sharpInput,
     data_length: 0,
     non_zero_bytes: 0,
+    is_self_transfer: false,
+    has_value: false,
     blob_versioned_hashes: ['0x1'],
   },
   {
@@ -348,6 +354,8 @@ const FUNCTIONS_RESPONSE: DuneFunctionCallResult[] = [
     input: elasticChainSharedBridgeCommitBatchesInput,
     data_length: 0,
     non_zero_bytes: 0,
+    is_self_transfer: false,
+    has_value: false,
     blob_versioned_hashes: ['0x1'],
   },
   {
@@ -360,6 +368,8 @@ const FUNCTIONS_RESPONSE: DuneFunctionCallResult[] = [
     input: agglayerSharedBridgeVerifyBatchesInput,
     data_length: 0,
     non_zero_bytes: 0,
+    is_self_transfer: false,
+    has_value: false,
     blob_versioned_hashes: ['0x1'],
   },
   {
@@ -372,6 +382,8 @@ const FUNCTIONS_RESPONSE: DuneFunctionCallResult[] = [
     input: elasticChainSharedBridgeExecuteBatchesPost29Input,
     data_length: 0,
     non_zero_bytes: 0,
+    is_self_transfer: false,
+    has_value: false,
     blob_versioned_hashes: ['0x1'],
   },
 ]

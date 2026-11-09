@@ -1,6 +1,6 @@
 ## Funds can be stolen if
 1. the closed-source app is malicious or hacked and steals the user's spending keys.
-2. Privy's code or key share is compromised, for accounts created with Google or Apple login on the web.
+2. Privy's code or key share is compromised, for accounts created with a Google, Apple, email or Farcaster login on the web.
 3. a Fluidkey signer returns an attacker's address when a payer looks up a Fluidkey name.
 4. Fluidkey's server marks a transfer as approved, and the open app signs it without showing the user.
 <br>
@@ -12,6 +12,7 @@
 ## Privacy can be lost if
 1. Fluidkey, or anyone who obtains its records, uses the viewing keys to link all Safes of every account (see privileged insider).
 2. Fluidkey changes its closed-source app to send account data to outside services (see privileged insider).
-3. a payer looks up the user's name through a public RPC, which then sees the name and the new Safe (see network observer).
-3. a user takes Hide Trail and Houdini or the exchanges link the route from their records (see privileged insider).
-4. Fluidkey's relayer marks every spend as a Fluidkey account's (see chain analyst).
+3. Alchemy, behind Fluidkey's proxy, groups the Safes the app shows for each account (see network observer).
+4. a payer looks up the user's name through a public RPC, which then sees the name and the new Safe (see network observer).
+5. a user takes Hide Trail and Houdini or the exchanges link the route from their records (see privileged insider).
+6. Fluidkey's relayer marks every spend as a Fluidkey account's (see chain analyst).

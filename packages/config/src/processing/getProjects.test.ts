@@ -425,6 +425,22 @@ describe('getProjects', () => {
       expect(problems).toEqual([])
     })
 
+    it('every project runs on other scaling projects, each listed once', () => {
+      const problems: string[] = []
+      for (const { project, privacyInfo } of privacyProjects) {
+        const scalingProjects = privacyInfo.scalingProjects ?? []
+        if (new Set(scalingProjects).size !== scalingProjects.length) {
+          problems.push(`${project.id}: runsOn repeats a scaling project`)
+        }
+        for (const id of scalingProjects) {
+          if (!projectsById.get(id)?.scalingInfo || id === project.id) {
+            problems.push(`${project.id}: ${id} is not another scaling project`)
+          }
+        }
+      }
+      expect(problems).toEqual([])
+    })
+
     it('every project has at most one zk catalog trusted setup entry', () => {
       const invalid = privacyProjects
         .filter(({ project }) => {

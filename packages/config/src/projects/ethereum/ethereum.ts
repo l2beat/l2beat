@@ -222,18 +222,6 @@ export const ethereum: BaseProject = {
     },
     sovereignProjectsTrackingConfig: [
       {
-        projectId: ProjectId('codex'),
-        name: 'Codex',
-        daTrackingConfig: [
-          {
-            type: 'ethereum',
-            inbox: '0x8c12f051c161c2cda736f3b3fa1c4bdd35b7922c',
-            sequencers: ['0xb5bd290ef8ef3840cb866c7a8b7cc9e45fde3ab9'],
-            sinceBlock: 20953494,
-          },
-        ],
-      },
-      {
         projectId: ProjectId('quarkchain'),
         name: 'QuarkChain SWC',
         daTrackingConfig: [
@@ -415,19 +403,6 @@ export const ethereum: BaseProject = {
             inbox: '0xff00000000000000000000000000000000042069',
             sequencers: ['0x705623d3985cf88e5a69fc99ca7d089063449902'],
             sinceBlock: 21937906,
-          },
-        ],
-      },
-      {
-        // OP Stack, chainId 1875 (SystemConfig.l2ChainId); Whitechain's L1Block reports this batcher
-        projectId: ProjectId('whitechain'),
-        name: 'Whitechain',
-        daTrackingConfig: [
-          {
-            type: 'ethereum',
-            inbox: '0x00aaa63a0af768749a569dfda5fead3438091ba1',
-            sequencers: ['0x681fcc4272c14f70203ea655b1eaf9a20557a473'],
-            sinceBlock: 26274467,
           },
         ],
       },
@@ -730,6 +705,22 @@ export const ethereum: BaseProject = {
             inbox: '0x0000000000000000000000000000000000000000',
             sequencers: ['0x6defc1def6abb1c39cbc722024985291ff6f9fb7'],
             sinceBlock: 26086572,
+          },
+        ],
+      },
+      {
+        // Base's Rust base-batcher in shadow mode: a second copy of Base mainnet batches, posted to
+        // the SHADOW_BATCH_INBOX_ADDRESS of base/base so a parity validator can re-derive the chain.
+        // Base's chain of record still comes from its canonical batcher, so the copy stays out of
+        // Base's data. Funded by Base's "Ledger - Mainnet" (base/contract-deployments).
+        projectId: ProjectId('base-shadow-batcher'),
+        name: 'Base shadow-mode batcher',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x0000000000000000000000000000000000ba7c4e',
+            sequencers: ['0x7360f62205709a1501e7a04513f61eda0bd13987'],
+            sinceBlock: 26337306,
           },
         ],
       },

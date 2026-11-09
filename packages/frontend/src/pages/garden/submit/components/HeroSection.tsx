@@ -2,7 +2,7 @@ import { Button } from '~/components/core/Button'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import { SproutIcon } from '../../components/SproutIcon'
-import { GARDEN_PATH, SUBMISSION_QUESTIONS_PATH } from '../../paths'
+import { GARDEN_PATH, SUBMISSION_FORUM_POST_URL } from '../../paths'
 
 export function HeroSection() {
   return (
@@ -33,7 +33,7 @@ export function HeroSection() {
         <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
           <Button asChild variant="fill" className="w-full gap-2 sm:w-max">
             <a
-              href={SUBMISSION_QUESTIONS_PATH}
+              href={SUBMISSION_FORUM_POST_URL}
               target="_blank"
               rel="noreferrer noopener"
             >

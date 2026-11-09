@@ -2,5 +2,6 @@
   "spec": ["src/**/*.test.ts", "src/**/*.test.tsx", "scripts/**/*.test.ts"],
   "node-option": ["import=tsx"],
   "watchExtensions": ["ts", "tsx"],
-  "extension": ["ts", "tsx"]
+  "extension": ["ts", "tsx"],
+  "require": ["./src/test/resolveEsmOnlyPackages.ts"]
 }

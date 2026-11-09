@@ -14,7 +14,6 @@ export function CircleQuestionMarkIcon({
       width="20"
       height="20"
       viewBox="0 0 20 20"
-      aria-label="Circle with a question mark inside"
       fill="#4D6785"
       {...props}
     >
