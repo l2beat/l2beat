@@ -9,6 +9,7 @@ const discovery = new ProjectDiscovery('galxegravity')
 
 export const galxegravity: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1719415787), // 2024-06-26T15:29:47Z
+  archivedAt: UnixTime(1793777507), // 2026-11-04T07:31:47Z, last batcher tx — Alpha Mainnet sunset per 2026-07-22 announcement, operations concluded 2026-11-01; successor is Gravity L1
   discovery,
   additionalBadges: [BADGES.RaaS.Conduit],
   associatedTokens: ['G'],
@@ -52,6 +53,7 @@ export const galxegravity: ScalingProject = orbitStackL2({
     chainId: 1625,
     explorerUrl: 'https://gscan.xyz',
     sinceTimestamp: UnixTime(1716054191), // block 1 TS
+    untilTimestamp: UnixTime(1793777507), // 2026-11-04T07:31:47Z
     multicallContracts: [
       {
         sinceBlock: 52682,
