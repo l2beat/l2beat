@@ -9,7 +9,7 @@ export function rangeToResolution(range: Range): Resolution {
 
 export function rangeToDays(range: Range) {
   if (range === 'max') return null
-  const count = Number.parseInt(range.substring(0, range.length - 1), 10)
+  const count = Number.parseInt(range, 10)
   const unit = range.substring(range.length - 1)
 
   if (unit === 'd') {
