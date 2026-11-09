@@ -41,7 +41,7 @@ export function getL2CostsColumns(metric: CostsMetric) {
   return [
     ...getL2CommonProjectColumns(
       columnHelper,
-      (row) => `/layer2s/projects/${row.slug}#onchain-costs`,
+      (row) => `/projects/${row.slug}#onchain-costs`,
     ),
     columnHelper.group({
       id: 'total-cost-group',

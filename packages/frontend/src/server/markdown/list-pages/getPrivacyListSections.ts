@@ -16,13 +16,13 @@ export async function getPrivacyListSections(): Promise<LinkListSection[]> {
   const archived = projects.filter((p) => p.archivedAt)
   return [
     {
-      heading: 'Privacy protocols (/privacy/projects/{slug})',
+      heading: 'Privacy protocols (/projects/{slug})',
       links: active.map(privacyLink),
     },
     ...(archived.length > 0
       ? [
           {
-            heading: 'Archived privacy protocols (/privacy/projects/{slug})',
+            heading: 'Archived privacy protocols (/projects/{slug})',
             links: archived.map(privacyLink),
           },
         ]
@@ -41,7 +41,7 @@ function privacyLink(project: {
 }): MarkdownLink {
   return {
     name: project.name,
-    path: `/privacy/projects/${project.slug}`,
+    path: `/projects/${project.slug}`,
     description: withFacts(firstSentence(project.display?.description ?? ''), [
       project.privacyInfo.category.label,
       `exit window: ${project.privacyInfo.exitWindow.value}`,

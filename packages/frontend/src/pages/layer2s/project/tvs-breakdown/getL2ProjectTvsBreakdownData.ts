@@ -38,7 +38,7 @@ export async function getL2ProjectTvsBreakdownData(
         breadcrumbParents: [
           {
             name: tvsBreakdownData.project.name,
-            path: `/layer2s/projects/${tvsBreakdownData.project.slug}`,
+            path: `/projects/${tvsBreakdownData.project.slug}`,
           },
         ],
         structuredData: (page) => [

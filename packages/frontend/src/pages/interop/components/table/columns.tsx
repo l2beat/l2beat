@@ -66,7 +66,7 @@ function makeNameColumn<T extends CompactProtocolEntry>(opts?: {
           description={ctx.row.original.description}
         >
           <TableLink
-            href={`/interop/protocols/${ctx.row.original.slug}`}
+            href={`/projects/${ctx.row.original.slug}`}
             className="w-auto"
           >
             <TwoRowCell>

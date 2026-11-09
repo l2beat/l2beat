@@ -17,13 +17,18 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProjectL2Entry } from '~/server/features/layer2s/project/getL2ProjectEntry'
-import type { ProjectSectionLink } from '~/server/features/projects/getProjectSectionLinks'
+import type { ProjectSection } from '~/server/features/projects/getProjectSections'
 import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
-import { ProjectL2Summary } from './components/L2ProjectSummary'
+import {
+  type MergedSummary,
+  ProjectL2Summary,
+} from './components/L2ProjectSummary'
 
 interface Props extends AppLayoutProps {
   projectEntry: ProjectL2Entry
-  sectionLinks: ProjectSectionLink[]
+  /** Another section's summary, for a page that merges sections. */
+  mergedSummary?: MergedSummary
+  projectSections: ProjectSection[]
   versionLinks?: ProjectVersionLinks
   queryState: DehydratedState
   selectedUpdateId?: string
@@ -31,7 +36,8 @@ interface Props extends AppLayoutProps {
 
 export function L2ProjectPage({
   projectEntry,
-  sectionLinks,
+  mergedSummary,
+  projectSections,
   versionLinks,
   queryState,
   selectedUpdateId,
@@ -64,7 +70,7 @@ export function L2ProjectPage({
                   <ProjectHeader
                     project={projectEntry}
                     section="layer2s"
-                    sectionLinks={sectionLinks}
+                    projectSections={projectSections}
                     versions={versionLinks}
                     ongoingAnomaly={projectEntry.header.ongoingAnomaly}
                     recentUpdatesCount={projectEntry.header.recentUpdatesCount}
@@ -95,7 +101,10 @@ export function L2ProjectPage({
                   </div>
                 </div>
                 <div className="row-start-2">
-                  <ProjectL2Summary project={projectEntry} />
+                  <ProjectL2Summary
+                    project={projectEntry}
+                    merged={mergedSummary}
+                  />
 
                   {projectEntry.header.category === 'Other' &&
                     projectEntry.reasonsForBeingOther &&

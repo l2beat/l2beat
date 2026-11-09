@@ -3,17 +3,17 @@ import { expect, mockObject } from 'earl'
 import type { ProjectL2Entry } from '~/server/features/layer2s/project/getL2ProjectEntry'
 import { fetchFromRouter } from '~/test/fetchFromRouter'
 import type { Manifest } from '~/utils/Manifest'
-import { createL2Router } from './L2Router'
+import { createProjectRouter } from './ProjectRouter'
 
-// Method: mount the real scaling router with a page cache that already holds
+// Method: mount the real project router with a page cache that already holds
 // one project entry (so no data is fetched) and a render function that marks
 // HTML, then request the project page the ways browsers and agents do. This
 // pins the route order: `:slug` registered first would swallow "arbitrum.md".
-describe(createL2Router.name, () => {
+describe(`${createProjectRouter.name} for a scaling project`, () => {
   it('serves the project page as markdown on the .md URL', async () => {
     const response = await fetchFromRouter(
       createRouter(),
-      '/layer2s/projects/arbitrum.md',
+      '/projects/arbitrum.md',
     )
 
     expect(response.status).toEqual(200)
@@ -26,7 +26,7 @@ describe(createL2Router.name, () => {
   it('serves markdown on the page URL when Accept prefers it', async () => {
     const response = await fetchFromRouter(
       createRouter(),
-      '/layer2s/projects/arbitrum',
+      '/projects/arbitrum',
       { headers: { Accept: 'text/markdown' } },
     )
 
@@ -39,11 +39,34 @@ describe(createL2Router.name, () => {
   it('serves HTML on the page URL to browsers', async () => {
     const response = await fetchFromRouter(
       createRouter(),
-      '/layer2s/projects/arbitrum',
+      '/projects/arbitrum',
       { headers: { Accept: 'text/html,*/*;q=0.8' } },
     )
 
     expect(await response.text()).toEqual('<html />')
+  })
+})
+
+// Express answers 500 only for errors that reach it; a rejection it does not
+// await would escape as an unhandled rejection.
+describe(`${createProjectRouter.name} when the page fails to build`, () => {
+  it('answers 500', async () => {
+    const cache = mockObject<InMemoryCache>({
+      get: (async () => {
+        throw new Error('Database unavailable')
+      }) as InMemoryCache['get'],
+    })
+    const router = createProjectRouter(
+      mockObject<Manifest>({}),
+      async () => '<html />',
+      cache,
+    )
+
+    const response = await fetchFromRouter(router, '/projects/arbitrum', {
+      headers: { Accept: 'text/html' },
+    })
+
+    expect(response.status).toEqual(500)
   })
 })
 
@@ -53,7 +76,7 @@ function createRouter() {
   const cache = mockObject<InMemoryCache>({
     get: (async () => cachedPage) as InMemoryCache['get'],
   })
-  return createL2Router(manifest, async () => '<html />', cache)
+  return createProjectRouter(manifest, async () => '<html />', cache)
 }
 
 /** Only the name is asserted: the renderer's own test covers the content. */

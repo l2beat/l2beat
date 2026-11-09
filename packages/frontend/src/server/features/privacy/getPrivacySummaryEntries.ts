@@ -166,7 +166,7 @@ function getPrivacySummaryBaseEntry(
     name: project.name,
     shortName: project.shortName,
     icon: manifest.getUrl(`/icons/${project.slug}.png`),
-    href: `/privacy/projects/${project.slug}`,
+    href: `/projects/${project.slug}`,
     description: project.display.description,
     hasTvl: project.tvsConfig !== undefined,
     isUnderReview: !!project.statuses.reviewStatus,

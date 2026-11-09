@@ -40,7 +40,7 @@ export function renderL2ProjectMarkdown(entry: ProjectL2Entry): string {
   const summaryRisks = getSummaryRisks(entry)
   return renderProjectMarkdown({
     name: entry.name,
-    pagePath: `/layer2s/projects/${entry.slug}`,
+    pagePath: `/projects/${entry.slug}`,
     summary: {
       // Same order as the banners on the HTML page.
       warnings: compact([

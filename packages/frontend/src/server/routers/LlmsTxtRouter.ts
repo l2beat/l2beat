@@ -61,7 +61,7 @@ const LLMS_TXT = {
     '- Links ending in .md are markdown: summary pages list every tracked project with its page URL, and the Markdown pages section covers single projects. The other links are HTML pages.',
     '- Prefer the .md URLs: page URLs also answer Accept: text/markdown, but an edge cache may serve them as HTML.',
     '- Slugs and interop token ids are case-sensitive: use them exactly as listed.',
-    `- {slug} in API paths is the last segment of a project page URL, e.g. arbitrum for ${PRODUCTION_ORIGIN}/layer2s/projects/arbitrum.`,
+    `- {slug} in API paths is the last segment of a project page URL, e.g. arbitrum for ${PRODUCTION_ORIGIN}/projects/arbitrum.`,
     '- All API endpoints except the scaling summary wrap their result as { success, data }.',
     '- "Stage" is the rollup maturity level (Stage 0, 1 or 2) defined by the stages framework linked below.',
     '',
@@ -71,7 +71,7 @@ const LLMS_TXT = {
     '- To get current or historical total value secured, activity, liveness or cost figures for a layer 2, via the pages or the JSON API.',
     '- To check where a layer 2 posts its data and how secure that data availability layer and its bridge are.',
     '- To look up which proving system, stack or ecosystem a project uses, or the definitions behind ETHBEAT terms.',
-    '- To review or compare privacy protocols on Ethereum (privacy pools, shielded pools and ledgers, stealth addresses, confidential tokens): what each one hides and from which adversary, anonymity set sizes, trusted setups and exit windows. Start from /privacy/summary.md, then /privacy/projects/{slug}.md for one protocol.',
+    '- To review or compare privacy protocols on Ethereum (privacy pools, shielded pools and ledgers, stealth addresses, confidential tokens): what each one hides and from which adversary, anonymity set sizes, trusted setups and exit windows. Start from /privacy/summary.md, then /projects/{slug}.md for one protocol.',
     '- Not for token prices, exchange data, wallet balances or anything outside Ethereum scaling, privacy and their infrastructure.',
   ].join('\n'),
 }
@@ -342,46 +342,16 @@ const MARKDOWN_PAGES_SECTION: LinkListSection = {
   heading: 'Markdown pages',
   links: [
     {
-      name: 'Scaling project',
-      path: '/layer2s/projects/{slug}.md',
+      name: 'Project',
+      path: '/projects/{slug}.md',
       description:
-        'One layer 2 or layer 3 as markdown: stage and its requirements, risks with sentiments, TVS and activity, technology, permissions and contracts.',
-    },
-    {
-      name: 'Ethereum',
-      path: '/projects/ethereum.md',
-      description:
-        'Ethereum as the data availability layer of the scaling projects: economic security, validators, blob throughput, risks and technology.',
-    },
-    {
-      name: 'Privacy protocol',
-      path: '/privacy/projects/{slug}.md',
-      description:
-        'Full review of one privacy protocol as markdown: what it promises to hide and how that holds against each adversary, trusted setup, exit window, deposits and value locked per asset, governance, permissions and contracts.',
-    },
-    {
-      name: 'Interop protocol',
-      path: '/interop/protocols/{slug}.md',
-      description:
-        'One bridge as markdown: last 24h volume, transfers, top path, transfer time and top token, description, volume by chain, permissions and contracts. Canonical bridges of scaling projects redirect to /layer2s/projects/{slug}.md.',
-    },
-    {
-      name: 'ZK catalog project',
-      path: '/zk-catalog/{slug}.md',
-      description:
-        'One proving system: trusted setup risks, verifier IDs and deployments, program hashes.',
+        'One project as markdown, with what each section it is in covers. A layer 2 or layer 3: stage and its requirements, risks with sentiments, TVS and activity, technology. A privacy protocol: what it promises to hide and how that holds against each adversary, trusted setup, exit window, deposits and value locked per asset, governance. An interop protocol: last 24h volume, transfers, top path, transfer time and top token, volume by chain. A ZK Catalog proving system: trusted setup risks, verifier IDs and deployments, program hashes. Ethereum (slug ethereum): economic security, validators, blob throughput as the data availability layer. Permissions and contracts for each.',
     },
     {
       name: 'Interop token',
       path: '/tokens/{slug}.md',
       description:
         'One token across bridges as markdown: past-day volume, transfers and top path, the protocols moving it, and its onchain deployments with minting bridges. {slug} is the case-sensitive token id, the segment right after /tokens/ in a token page URL; interop protocol pages link their top token.',
-    },
-    {
-      name: 'DeFi project',
-      path: '/defi/projects/{slug}.md',
-      description:
-        'One DeFi protocol as markdown: TVL, category, warnings, description, external dependencies, permissions and contracts.',
     },
   ],
 }

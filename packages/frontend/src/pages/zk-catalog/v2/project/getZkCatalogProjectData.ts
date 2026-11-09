@@ -1,6 +1,6 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getProjectSectionLinks } from '~/server/features/projects/getProjectSectionLinks'
+import { getProjectSections } from '~/server/features/projects/getProjectSections'
 import { getProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 import { getZkCatalogProjectEntry } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
 import { ps } from '~/server/projects'
@@ -62,12 +62,12 @@ async function loadZkCatalogProjectPage(manifest: Manifest, slug: string) {
   })
   if (!project) return undefined
 
-  const [appLayoutProps, projectEntry, sectionLinks, versionLinks] =
+  const [appLayoutProps, projectEntry, projectSections, versionLinks] =
     await Promise.all([
       getAppLayoutProps(),
       getZkCatalogProjectEntry(project),
-      getProjectSectionLinks(slug),
-      getProjectVersionLinks(slug, 'zkCatalog'),
+      getProjectSections(slug),
+      getProjectVersionLinks(slug),
     ])
 
   return {
@@ -83,7 +83,7 @@ async function loadZkCatalogProjectPage(manifest: Manifest, slug: string) {
         }),
         // Derived from the slug, not the request URL: the cache entry is
         // shared by every request for the project, including the .md one.
-        url: `/zk-catalog/${project.slug}`,
+        url: `/projects/${project.slug}`,
         openGraph: {
           image: `/meta-images/zk-catalog/projects/${project.slug}/opengraph-image.png`,
         },
@@ -92,7 +92,7 @@ async function loadZkCatalogProjectPage(manifest: Manifest, slug: string) {
     props: {
       ...appLayoutProps,
       projectEntry,
-      sectionLinks,
+      projectSections,
       versionLinks,
       queryState: helpers.dehydrate(),
     },

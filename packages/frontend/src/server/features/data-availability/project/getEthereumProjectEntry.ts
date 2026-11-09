@@ -89,7 +89,7 @@ export async function getEthereumProjectEntry(
     .map((x) => ({
       ...x,
       icon: manifest.getUrl(`/icons/${x.slug}.png`),
-      url: `/layer2s/projects/${x.slug}`,
+      url: `/projects/${x.slug}`,
     }))
 
   const latestThroughput = ethereum.daLayer.throughput

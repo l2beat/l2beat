@@ -23,7 +23,7 @@ describe(renderInteropProtocolMarkdown.name, () => {
     const markdown = renderInteropProtocolMarkdown(PAGE)
 
     expect(markdown).toMatchRegex(
-      /^# Across\n\nMarkdown version of https:\/\/ethbeat\.org\/interop\/protocols\/across\n\n/,
+      /^# Across\n\nMarkdown version of https:\/\/ethbeat\.org\/projects\/across\n\n/,
     )
   })
 
@@ -224,7 +224,7 @@ describe(renderInteropProtocolMarkdown.name, () => {
     expect(volume).toInclude(
       '### Top chains by volume (last 24h)\n\nA transfer counts toward the volume of both its source and its destination chain, so the chain volumes add up to more than the total volume.\n\n- Ethereum: $1.40 M (1.10 K transfers)\n- Arbitrum One: $1.10 M (900 transfers)\n- Base: $50.00 K (40 transfers)\n- and 2 more',
       '### Top routes by volume (last 24h)\n\n- Ethereum → Arbitrum One: $700.00 K\n- Arbitrum One → Ethereum: $200.00 K\n- Base → Ethereum: $50.00 K\n\n',
-      'https://ethbeat.org/interop/protocols/across#interop-volume',
+      'https://ethbeat.org/projects/across#interop-volume',
     )
   })
 
@@ -238,10 +238,10 @@ describe(renderInteropProtocolMarkdown.name, () => {
     const markdown = renderInteropProtocolMarkdown(PAGE)
 
     expect(getSection(markdown, 'Top tokens by volume')).toInclude(
-      'https://ethbeat.org/interop/protocols/across#interop-tokens',
+      'https://ethbeat.org/projects/across#interop-tokens',
     )
     expect(getSection(markdown, 'Transfers')).toInclude(
-      'https://ethbeat.org/interop/protocols/across#interop-transfers',
+      'https://ethbeat.org/projects/across#interop-transfers',
     )
   })
 })

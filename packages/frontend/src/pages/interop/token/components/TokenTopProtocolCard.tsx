@@ -133,7 +133,7 @@ function TopProtocolIdentity({
   isLoading: boolean
 }) {
   const href = topProtocol
-    ? buildInteropUrl(`/interop/protocols/${topProtocol.slug}`, apiSelection)
+    ? buildInteropUrl(`/projects/${topProtocol.slug}`, apiSelection)
     : undefined
   const content = isLoading ? (
     <Skeleton className="h-8 w-28" />

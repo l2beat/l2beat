@@ -33,7 +33,7 @@ export function getProtocolsByVolumeColumns(
       id: 'logo',
       cell: (ctx) => {
         return (
-          <a href={`/interop/protocols/${ctx.row.original.slug}`}>
+          <a href={`/projects/${ctx.row.original.slug}`}>
             <img
               className="min-h-[20px] min-w-[20px]"
               src={ctx.row.original.icon}
@@ -56,7 +56,7 @@ export function getProtocolsByVolumeColumns(
       header: 'Name',
       cell: (ctx) => (
         <TableLink
-          href={`/interop/protocols/${ctx.row.original.slug}`}
+          href={`/projects/${ctx.row.original.slug}`}
           className="w-auto"
         >
           <span className="font-bold text-label-value-15">

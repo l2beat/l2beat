@@ -16,7 +16,7 @@ export function getL2RiskDataAvailabilityColumns(hideProofSystem?: boolean) {
   return compact([
     ...getL2CommonProjectColumns(
       columnHelper,
-      (row) => `/layer2s/projects/${row.slug}`,
+      (row) => `/projects/${row.slug}`,
     ),
     ...withChangeSort(
       columnHelper,
@@ -30,9 +30,7 @@ export function getL2RiskDataAvailabilityColumns(hideProofSystem?: boolean) {
           }
 
           return (
-            <TableLink
-              href={`/layer2s/projects/${ctx.row.original.slug}#data-posted`}
-            >
+            <TableLink href={`/projects/${ctx.row.original.slug}#data-posted`}>
               <ValueWithPercentageChange
                 change={data.change}
                 changePeriod={data.changePeriod}

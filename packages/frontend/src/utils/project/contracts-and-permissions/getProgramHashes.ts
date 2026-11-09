@@ -31,7 +31,7 @@ export function getProgramHashes(
         zkCatalogProject: zkCatalogProject
           ? {
               name: zkCatalogProject.name,
-              href: `/zk-catalog/${zkCatalogProject.slug}`,
+              href: `/projects/${zkCatalogProject.slug}`,
               icon: manifest.getUrl(`/icons/${zkCatalogProject.slug}.png`),
             }
           : undefined,
@@ -55,6 +55,6 @@ export function toUsedInProjectWithIcon(
     name: project.name,
     slug: project.slug,
     icon: manifest.getUrl(`/icons/${project.slug}.png`),
-    url: `/layer2s/projects/${project.slug}`,
+    url: `/projects/${project.slug}`,
   }
 }

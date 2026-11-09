@@ -4,6 +4,7 @@ import { env } from '~/env'
 import type { ProjectDefiEntry } from '~/server/features/defi/project/getDefiProjectEntry'
 import { fetchFromRouter } from '~/test/fetchFromRouter'
 import type { Manifest } from '~/utils/Manifest'
+import { createProjectRouter } from '../project/ProjectRouter'
 import { createDefiRouter } from './DefiRouter'
 
 // Method: turn the DeFi feature flag on, mount the real DeFi router with a
@@ -24,8 +25,8 @@ describe(createDefiRouter.name, () => {
 
   it('serves the project page as markdown on the .md URL', async () => {
     const response = await fetchFromRouter(
-      createRouter(),
-      '/defi/projects/lido.md',
+      createPageRouter(),
+      '/projects/lido.md',
     )
 
     expect(response.status).toEqual(200)
@@ -37,8 +38,8 @@ describe(createDefiRouter.name, () => {
 
   it('serves markdown on the page URL when Accept prefers it', async () => {
     const response = await fetchFromRouter(
-      createRouter(),
-      '/defi/projects/lido',
+      createPageRouter(),
+      '/projects/lido',
       { headers: { Accept: 'text/markdown' } },
     )
 
@@ -50,8 +51,8 @@ describe(createDefiRouter.name, () => {
 
   it('serves HTML on the page URL to browsers', async () => {
     const response = await fetchFromRouter(
-      createRouter(),
-      '/defi/projects/lido',
+      createPageRouter(),
+      '/projects/lido',
       { headers: { Accept: 'text/html,*/*;q=0.8' } },
     )
 
@@ -79,8 +80,8 @@ describe(`${createDefiRouter.name} with only Ossification enabled`, () => {
 
   it('serves project pages, so Ossification can link to them', async () => {
     const response = await fetchFromRouter(
-      createRouter(),
-      '/defi/projects/uniswapv3',
+      createPageRouter(),
+      '/projects/uniswapv3',
     )
 
     expect(await response.text()).toEqual('<html />')
@@ -93,6 +94,16 @@ describe(`${createDefiRouter.name} with only Ossification enabled`, () => {
     expect((await fetchFromRouter(router, '/defi')).status).toEqual(404)
   })
 })
+
+/** The project pages, which live under /projects since they merged. */
+function createPageRouter() {
+  const manifest = mockObject<Manifest>({})
+  const cachedPage = { head: {}, props: { entry: ENTRY } }
+  const cache = mockObject<InMemoryCache>({
+    get: (async () => cachedPage) as InMemoryCache['get'],
+  })
+  return createProjectRouter(manifest, async () => '<html />', cache)
+}
 
 function createRouter() {
   const manifest = mockObject<Manifest>({})

@@ -36,7 +36,7 @@ export function getProverInfos(
     return {
       name: zkCatalogProject.name,
       icon: manifest.getUrl(`/icons/${zkCatalogProject.slug}.png`),
-      href: `/zk-catalog/${zkCatalogProject.slug}`,
+      href: `/projects/${zkCatalogProject.slug}`,
       quantumResistant: zkCatalogProject.zkCatalogInfo.quantumResistant,
       trustedSetups,
     }

@@ -8,6 +8,6 @@ export function toProtocolItems(
     id: protocol.slug,
     name: protocol.name,
     iconUrl: protocol.iconUrl,
-    href: `/interop/protocols/${protocol.slug}`,
+    href: `/projects/${protocol.slug}`,
   }))
 }

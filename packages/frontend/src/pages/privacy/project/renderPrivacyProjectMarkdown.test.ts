@@ -23,7 +23,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     const markdown = renderPrivacyProjectMarkdown(ENTRY)
 
     expect(markdown).toMatchRegex(
-      /^# Tornado Cash\n\nMarkdown version of https:\/\/ethbeat\.org\/privacy\/projects\/tornado-cash\n\n/,
+      /^# Tornado Cash\n\nMarkdown version of https:\/\/ethbeat\.org\/projects\/tornado-cash\n\n/,
     )
   })
 
@@ -203,10 +203,10 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     const markdown = renderPrivacyProjectMarkdown(ENTRY)
 
     expect(getSection(markdown, 'Anonymity sets')).toInclude(
-      'https://ethbeat.org/privacy/projects/tornado-cash#privacy-anonymity-set',
+      'https://ethbeat.org/projects/tornado-cash#privacy-anonymity-set',
     )
     expect(getSection(markdown, 'Flows')).toInclude(
-      'https://ethbeat.org/privacy/projects/tornado-cash#privacy-flows',
+      'https://ethbeat.org/projects/tornado-cash#privacy-flows',
     )
   })
 
@@ -295,7 +295,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
 
     it('resolves sources pointing into the page against the HTML page', () => {
       expect(privacy()).toInclude(
-        '**Sources**\n\n- [1 ETH pool](https://ethbeat.org/privacy/projects/tornado-cash#Pool_1_ETH)\n- [Withdrawal circuit](https://github.com/tornadocash/tornado-core/blob/master/circuits/withdraw.circom)',
+        '**Sources**\n\n- [1 ETH pool](https://ethbeat.org/projects/tornado-cash#Pool_1_ETH)\n- [Withdrawal circuit](https://github.com/tornadocash/tornado-core/blob/master/circuits/withdraw.circom)',
       )
     })
   })
@@ -592,7 +592,7 @@ const SECTIONS: ProjectDetailsSection[] = [
 const ENTRY: ProjectPrivacyEntry = {
   id: ProjectId('tornado-cash'),
   slug: 'tornado-cash',
-  href: '/privacy/projects/tornado-cash',
+  href: '/projects/tornado-cash',
   name: 'Tornado Cash',
   icon: '/icons/tornado-cash.png',
   description: 'Tornado Cash is a non-custodial mixer.',

@@ -11,7 +11,7 @@ import type { L2RiskCentralizedSequencingEntry } from '~/server/features/layer2s
 const columnHelper = createColumnHelper<L2RiskCentralizedSequencingEntry>()
 
 function getSequencingHref(entry: L2RiskCentralizedSequencingEntry) {
-  return `/layer2s/projects/${entry.slug}#sequencing`
+  return `/projects/${entry.slug}#sequencing`
 }
 
 export const l2CentralizedSequencingColumns = [

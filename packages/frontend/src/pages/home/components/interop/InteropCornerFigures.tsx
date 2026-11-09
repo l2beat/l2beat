@@ -64,7 +64,7 @@ export function InteropCornerFigures({
               {protocols.map(({ slug, name, iconUrl, volume }) => (
                 <li key={slug} className="col-span-3 grid grid-cols-subgrid">
                   <a
-                    href={`/interop/protocols/${slug}`}
+                    href={`/projects/${slug}`}
                     title={name}
                     className="group col-span-3 grid grid-cols-subgrid items-center"
                   >

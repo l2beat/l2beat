@@ -58,7 +58,7 @@ export function buildDefiSummaryEntries(
         name: project.name,
         shortName: project.shortName,
         icon: manifest.getUrl(`/icons/${project.slug}.png`),
-        href: `/defi/projects/${project.slug}`,
+        href: `/projects/${project.slug}`,
         description: project.display.description,
         category: project.defiInfo.category,
         totalValueLockedUsd: tvlByProject.get(project.id),

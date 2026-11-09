@@ -16,6 +16,8 @@ export interface ExtendedProjectSectionProps {
    */
   compareUrl?: string
   id: ProjectSectionId
+  /** Ids this section also answers to, for links from before a page merge. */
+  aliasIds?: string[]
   nested?: boolean
   sectionOrder: string | undefined
   className?: string
@@ -55,6 +57,14 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
       asChild
     >
       <Component>
+        {props.aliasIds?.map((aliasId) => (
+          <span
+            key={aliasId}
+            id={aliasId}
+            aria-hidden
+            className="block scroll-mt-section-nav-card"
+          />
+        ))}
         <ProjectDetailsSectionHeader
           title={props.title}
           id={props.id}

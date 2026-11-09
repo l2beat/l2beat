@@ -53,7 +53,7 @@ export function renderHostChainWarning(
   const { hostChainName, hostChainSlug, riskCount } = hostChainWarning
   return renderRelatedProjectBanner({
     text: hostChainRisksText(riskCount),
-    href: `/layer2s/projects/${hostChainSlug}`,
+    href: `/projects/${hostChainSlug}`,
     project: { name: hostChainName },
   })
 }

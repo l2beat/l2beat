@@ -8,6 +8,8 @@ export type SearchBarProjectEntry = SearchBarEntry & {
   id: string
   iconUrl: string
   kind: SearchIndexProjectKind
+  /** The other sections the project's page merges, shown next to `kind` */
+  otherKinds?: SearchIndexProjectKind[]
   l2Category?: ProjectScalingCategory
 }
 

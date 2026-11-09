@@ -52,7 +52,7 @@ describe(getPrivacyTrackedChains.name, () => {
       getPrivacyTrackedChains(['ethereum', 'polygonpos', 'arbitrum'], projects)
     expect(ethereumChain?.href).toEqual('/projects/ethereum')
     expect(polygonChain?.href).toEqual(undefined)
-    expect(arbitrumChain?.href).toEqual('/layer2s/projects/arbitrum')
+    expect(arbitrumChain?.href).toEqual('/projects/arbitrum')
   })
 
   it('skips chains without a matching chainConfig', () => {

@@ -41,14 +41,19 @@ export async function buildSearchIndex(): Promise<SearchIndex> {
   const l2ProjectIds = new Set(
     projects.filter((p) => p.scalingInfo).map((p) => p.id),
   )
+  // Rows are arrays themselves, so they are wrapped to survive flatMap.
+  const projectRows = projects.flatMap((p) => {
+    const row = toSearchIndexProject(p)
+    return row ? [row] : []
+  })
+  const slugs = new Set(projectRows.map(([, slug]) => slug))
   return {
     projects: [
-      // Rows are arrays themselves, so they are wrapped to survive flatMap.
-      ...projects.flatMap((p) => {
-        const row = toSearchIndexProject(p)
-        return row ? [row] : []
-      }),
-      ...selectChainProjects(l2ProjectIds).map(toSearchIndexChain),
+      ...projectRows,
+      // A chain that is also a project shows on that project's page.
+      ...selectChainProjects(l2ProjectIds)
+        .filter((chain) => !slugs.has(chain.slug))
+        .map(toSearchIndexChain),
     ],
     // The token query has no order, and a reordered list would change the
     // ETag, making browsers download the same index again.
@@ -108,8 +113,9 @@ function getProjectKinds(
   if (project.scalingInfo) kinds.push(project.scalingInfo.layer)
   // A scaling project's bridge is listed on its scaling page.
   if (project.interopConfig && !project.scalingInfo) kinds.push('interop')
-  if (project.zkCatalogInfo) kinds.push('zkCatalog')
+  // Privacy before the ZK Catalog: the merged page is built on the privacy one.
   if (project.privacyInfo) kinds.push('privacy')
+  if (project.zkCatalogInfo) kinds.push('zkCatalog')
   if (env.CLIENT_SIDE_DEFI_ENABLED && project.defiInfo) kinds.push('defi')
   return kinds
 }

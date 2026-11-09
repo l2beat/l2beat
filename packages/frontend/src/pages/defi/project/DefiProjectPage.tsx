@@ -17,12 +17,12 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProjectDefiEntry } from '~/server/features/defi/project/getDefiProjectEntry'
-import type { ProjectSectionLink } from '~/server/features/projects/getProjectSectionLinks'
+import type { ProjectSection } from '~/server/features/projects/getProjectSections'
 import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 
 interface Props extends AppLayoutProps {
   entry: ProjectDefiEntry
-  sectionLinks: ProjectSectionLink[]
+  projectSections: ProjectSection[]
   versionLinks?: ProjectVersionLinks
   queryState: DehydratedState
   selectedUpdateId?: string
@@ -30,7 +30,7 @@ interface Props extends AppLayoutProps {
 
 export function DefiProjectPage({
   entry,
-  sectionLinks,
+  projectSections,
   versionLinks,
   queryState,
   selectedUpdateId,
@@ -64,7 +64,7 @@ export function DefiProjectPage({
                     // Ossification keeps DeFi project pages up without the
                     // DeFi section, so there is no index to link to
                     section={env.CLIENT_SIDE_DEFI_ENABLED ? 'defi' : undefined}
-                    sectionLinks={sectionLinks}
+                    projectSections={projectSections}
                     versions={versionLinks}
                   />
                   <ProjectSummaryBars

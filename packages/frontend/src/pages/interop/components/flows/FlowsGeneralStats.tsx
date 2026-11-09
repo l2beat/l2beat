@@ -160,7 +160,7 @@ export function FlowsGeneralStats() {
               topProtocol ? (
                 <div className="flex flex-col items-center gap-0.5 text-heading-18">
                   <a
-                    href={`/interop/protocols/${topProtocol.slug}`}
+                    href={`/projects/${topProtocol.slug}`}
                     className="text-brand-deep hover:underline"
                   >
                     {topProtocol.name}

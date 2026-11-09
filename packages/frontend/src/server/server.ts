@@ -9,6 +9,7 @@ import sirv from 'sirv'
 import type { ViteDevServer } from 'vite'
 import { CLIENT_ENV_KEYS, env, rawEnv } from '~/env'
 import { isFrontendCacheEnabled } from '~/utils/FrontendInMemoryCache'
+import { createProjectRedirectsRouter } from '../pages/project/ProjectRouter'
 import { createServerPageRouter } from '../pages/ServerPageRouter'
 import {
   CLIENT_ASSETS_OUTPUT_DIR,
@@ -119,6 +120,7 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
   app.use('/', createMarkdownAlternatesRouter())
   app.use('/', createMigratedProjectsRouter())
   app.use('/', createLegacyPathsRouter())
+  app.use('/', createProjectRedirectsRouter())
   app.use('/api/trpc', createTrpcRouter())
 
   app.use('/', createApiRouter())

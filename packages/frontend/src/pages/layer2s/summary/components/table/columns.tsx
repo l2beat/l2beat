@@ -31,7 +31,7 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
   return [
     ...getL2CommonProjectColumns(
       columnHelper,
-      (row) => `/layer2s/projects/${row.slug}`,
+      (row) => `/projects/${row.slug}`,
     ),
     columnHelper.display({
       header: 'Risks',
@@ -69,7 +69,7 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
         id: 'stage',
         cell: (ctx) => (
           <StageCell
-            href={`/layer2s/projects/${ctx.row.original.slug}#stage`}
+            href={`/projects/${ctx.row.original.slug}#stage`}
             stageConfig={ctx.row.original.stage}
             isAppchain={ctx.row.original.capability === 'appchain'}
             emergencyWarning={ctx.row.original.statuses?.emergencyWarning}

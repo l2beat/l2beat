@@ -276,7 +276,7 @@ function getTopL2Projects(
     return {
       id: entry.id.toString(),
       name: entry.name,
-      href: `/layer2s/projects/${entry.slug}`,
+      href: `/projects/${entry.slug}`,
       iconUrl: entry.icon,
       stage: entry.stage.stage,
       tvs: tvs?.breakdown.total,
@@ -331,7 +331,7 @@ function getRecentProjectListing(
   if (scalingInfo) {
     return {
       name,
-      href: `/layer2s/projects/${slug}`,
+      href: `/projects/${slug}`,
       label:
         scalingInfo.type === 'Other'
           ? `${scalingInfo.layer === 'layer3' ? 'Layer 3s' : 'Layer 2s'} - Other`
@@ -341,17 +341,17 @@ function getRecentProjectListing(
   // Privacy is checked before the ZK Catalog: projects listed in both
   // (e.g. Railgun, Tornado Cash) should surface as privacy projects.
   if (project.privacyInfo) {
-    return { name, href: `/privacy/projects/${slug}`, label: 'Privacy' }
+    return { name, href: `/projects/${slug}`, label: 'Privacy' }
   }
   if (project.zkCatalogInfo) {
-    return { name, href: `/zk-catalog/${slug}`, label: 'ZK Catalog' }
+    return { name, href: `/projects/${slug}`, label: 'ZK Catalog' }
   }
   // Scaling projects that are also interop protocols are handled by the
   // scaling branch, matching the redirect on /interop/protocols/:slug.
   if (project.interopConfig) {
     return {
       name: project.interopConfig.name ?? name,
-      href: `/interop/protocols/${slug}`,
+      href: `/projects/${slug}`,
       label: 'Interoperability',
     }
   }

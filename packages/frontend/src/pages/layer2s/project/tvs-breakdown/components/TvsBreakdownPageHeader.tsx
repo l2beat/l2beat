@@ -32,7 +32,7 @@ export function TvsBreakdownPageHeader({
                   <span className="leading-none">{title}</span>
                 </div>
               ),
-              href: `/layer2s/projects/${slug}`,
+              href: `/projects/${slug}`,
             },
             {
               content: 'TVS Breakdown',

@@ -11,7 +11,7 @@ describe(`${serveMarkdown.name} and ${serveMarkdownIfPreferred.name}`, () => {
   it('serves the .md suffix as markdown', async () => {
     const response = await fetchFromRouter(
       createRouter(),
-      '/layer2s/projects/arbitrum.md',
+      '/projects/arbitrum.md',
     )
 
     expect(response.status).toEqual(200)
@@ -24,7 +24,7 @@ describe(`${serveMarkdown.name} and ${serveMarkdownIfPreferred.name}`, () => {
   it('sends the .md suffix with the headers of every markdown document', async () => {
     const response = await fetchFromRouter(
       createRouter(),
-      '/layer2s/projects/arbitrum.md',
+      '/projects/arbitrum.md',
     )
 
     expect(response.headers.get('link')).toEqual(
@@ -38,7 +38,7 @@ describe(`${serveMarkdown.name} and ${serveMarkdownIfPreferred.name}`, () => {
   it('answers 404 in markdown for a page that does not exist, uncached', async () => {
     const response = await fetchFromRouter(
       createRouter(),
-      '/layer2s/projects/unknown.md',
+      '/projects/unknown.md',
     )
 
     expect(response.status).toEqual(404)
@@ -53,7 +53,7 @@ describe(`${serveMarkdown.name} and ${serveMarkdownIfPreferred.name}`, () => {
     for (const accept of ['text/markdown', 'text/markdown, text/html;q=0.9']) {
       const response = await fetchFromRouter(
         createRouter(),
-        '/layer2s/projects/arbitrum',
+        '/projects/arbitrum',
         { headers: { Accept: accept } },
       )
 
@@ -67,16 +67,12 @@ describe(`${serveMarkdown.name} and ${serveMarkdownIfPreferred.name}`, () => {
   })
 
   it('advertises the markdown alternate only of a page that exists', async () => {
-    const found = await fetchFromRouter(
-      createRouter(),
-      '/layer2s/projects/arbitrum',
-      { headers: { Accept: 'text/markdown' } },
-    )
-    const missing = await fetchFromRouter(
-      createRouter(),
-      '/layer2s/projects/unknown',
-      { headers: { Accept: 'text/markdown' } },
-    )
+    const found = await fetchFromRouter(createRouter(), '/projects/arbitrum', {
+      headers: { Accept: 'text/markdown' },
+    })
+    const missing = await fetchFromRouter(createRouter(), '/projects/unknown', {
+      headers: { Accept: 'text/markdown' },
+    })
 
     expect(found.headers.get('link') ?? '').toInclude('rel="alternate"')
     expect(missing.status).toEqual(404)
@@ -90,7 +86,7 @@ describe(`${serveMarkdown.name} and ${serveMarkdownIfPreferred.name}`, () => {
     // would be served to browsers asking for the same URL.
     const response = await fetchFromRouter(
       createRouter(),
-      '/layer2s/projects/arbitrum',
+      '/projects/arbitrum',
       { headers: { Accept: 'text/markdown' } },
     )
 
@@ -104,7 +100,7 @@ describe(`${serveMarkdown.name} and ${serveMarkdownIfPreferred.name}`, () => {
     for (const accept of [browserAccept, '*/*', undefined]) {
       const response = await fetchFromRouter(
         createRouter(),
-        '/layer2s/projects/arbitrum',
+        '/projects/arbitrum',
         { headers: accept ? { Accept: accept } : {} },
       )
 
@@ -122,9 +118,9 @@ function createRouter() {
 
   const router = express.Router()
   router.use(LlmsLinkHeaderMiddleware())
-  router.get('/layer2s/projects/:slug.md', serveMarkdown(getMarkdown))
+  router.get('/projects/:slug.md', serveMarkdown(getMarkdown))
   router.get(
-    '/layer2s/projects/:slug',
+    '/projects/:slug',
     serveMarkdownIfPreferred(getMarkdown),
     (_req, res) => {
       res.header('Content-Type', 'text/html; charset=utf-8').send('<html />')

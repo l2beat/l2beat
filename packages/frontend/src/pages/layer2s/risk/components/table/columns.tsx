@@ -14,7 +14,7 @@ const columnHelper = createColumnHelper<L2RiskEntry>()
 export const l2RiskColumns = [
   ...getL2CommonProjectColumns(
     columnHelper,
-    (row) => `/layer2s/projects/${row.slug}#risk-analysis`,
+    (row) => `/projects/${row.slug}#risk-analysis`,
   ),
   columnHelper.accessor((e) => adjustTableValue(e.risks.stateValidation), {
     header: 'State\nValidation',
@@ -137,5 +137,5 @@ function getProjectSectionLink(
   project: L2RiskEntry,
   sectionId: ProjectSectionId,
 ) {
-  return `/layer2s/projects/${project.slug}#${sectionId}`
+  return `/projects/${project.slug}#${sectionId}`
 }

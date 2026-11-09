@@ -10,17 +10,17 @@ import { StickyMobileSectionNavigation } from '~/components/section-navigation/S
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ChainProjectPageEntry } from '~/server/features/chains/getChainProjectEntry'
-import type { ProjectSectionLink } from '~/server/features/projects/getProjectSectionLinks'
+import type { ProjectSection } from '~/server/features/projects/getProjectSections'
 
 interface Props extends AppLayoutProps {
   entry: ChainProjectPageEntry
-  sectionLinks: ProjectSectionLink[]
+  projectSections: ProjectSection[]
   queryState: DehydratedState
 }
 
 export function ChainProjectPage({
   entry,
-  sectionLinks,
+  projectSections,
   queryState,
   ...props
 }: Props) {
@@ -29,7 +29,7 @@ export function ChainProjectPage({
   return (
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
-        <SideNavLayout childrenWrapperClassName="md:pt-0">
+        <SideNavLayout childrenWrapperClassName="md:pt-0" hasMarkdown={false}>
           <div
             className="smooth-scroll group/section-wrapper relative z-0 max-md:bg-surface-primary"
             data-project-page
@@ -44,7 +44,7 @@ export function ChainProjectPage({
                   <ProjectHeader
                     project={entry}
                     section="interop"
-                    sectionLinks={sectionLinks}
+                    projectSections={projectSections}
                   />
                 </div>
                 <div className="row-start-2 w-full">
