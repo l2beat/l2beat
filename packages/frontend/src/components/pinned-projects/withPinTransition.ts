@@ -36,7 +36,8 @@ export function withPinTransition(update: () => void, lift?: string) {
 
 /**
  * Records the visit to a project's page. Its row in "Recently viewed",
- * drawn from the list as it was, rises to the top once React has taken
+ * drawn from the list as it was, rises to the top once the page has
+ * arrived, which a second transition would cut short, and React has taken
  * the lists over from their prerendered copy. A row already first, or out
  * of view, just stays.
  */
@@ -44,9 +45,11 @@ export function recordVisit(project: SavedProject) {
   const row = [
     ...document.querySelectorAll<HTMLElement>('[data-pin-row]'),
   ].find((el) => el.dataset.pinRow === project.href && el.offsetWidth > 0)
-  // A tab opened in the background runs no frames to wait on.
+  // A tab opened in the background runs no frames to wait on; a page
+  // reached from the keyboard moves nothing.
   const rises =
     !document.hidden &&
+    !document.documentElement.hasAttribute('data-keyboard-arrival') &&
     row?.previousElementSibling &&
     row.closest('[data-nav-group="Recently viewed"]')
   if (!rises) {
@@ -72,9 +75,11 @@ export function recordVisit(project: SavedProject) {
   })
 }
 
-/** Runs `run` on the first frame with live lists. */
+/** Runs `run` on the first frame with no page transition and live lists. */
 function whenSettled(run: () => void, framesLeft = 120) {
-  const settled = document.querySelector('[data-role="pinned-projects"]')
+  const settled =
+    !document.documentElement.hasAttribute('data-page-transition') &&
+    document.querySelector('[data-role="pinned-projects"]')
   if (settled || framesLeft === 0) run()
   else requestAnimationFrame(() => whenSettled(run, framesLeft - 1))
 }

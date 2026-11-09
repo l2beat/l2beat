@@ -5,6 +5,7 @@ import type { Manifest } from '~/utils/Manifest'
 import { FontStyles } from './FontStyles'
 import { fonts } from './fonts'
 import type { Metadata } from './getMetadata'
+import { pageTransitions } from './pageTransitions'
 import { speculationRules } from './speculationRules'
 
 export interface HeadProps {
@@ -71,6 +72,17 @@ export function Head({ manifest, metadata }: HeadProps) {
           }}
         />
       ))}
+      {env.PAGE_TRANSITIONS_ENABLED && (
+        <>
+          {/* Opts pages in to cross-document view transitions; the script
+              skips each one it has nothing to move in, and without it,
+              every one would crossfade the whole page. */}
+          <style>{'@view-transition{navigation:auto}'}</style>
+          <script
+            dangerouslySetInnerHTML={{ __html: `(${pageTransitions})()` }}
+          />
+        </>
+      )}
       <script
         type="speculationrules"
         dangerouslySetInnerHTML={{

@@ -58,6 +58,9 @@ const SERVER_CONFIG = {
   // abandoned request cannot keep occupying the database.
   DATABASE_STATEMENT_TIMEOUT_MS: positiveInteger.default(20_000),
   DISABLE_CACHE: coerceBoolean.default(false),
+  // The sidebar's motion between pages (ssr/head/pageTransitions.ts); off,
+  // pages swap at once.
+  PAGE_TRANSITIONS_ENABLED: featureFlag,
   MOCK: coerceBoolean.default(false),
   EXCLUDED_ACTIVITY_PROJECTS: stringArray.optional(),
   EXCLUDED_TVS_PROJECTS: stringArray.optional(),
@@ -131,6 +134,7 @@ function getRawEnv(): Record<
     TOKENS_DATABASE_LOG_ENABLED: process.env.TOKENS_DATABASE_LOG_ENABLED,
     DATABASE_STATEMENT_TIMEOUT_MS: process.env.DATABASE_STATEMENT_TIMEOUT_MS,
     DISABLE_CACHE: process.env.DISABLE_CACHE,
+    PAGE_TRANSITIONS_ENABLED: process.env.PAGE_TRANSITIONS_ENABLED,
     MOCK: process.env.MOCK,
     NODE_ENV: process.env.NODE_ENV,
     COOLIFY_URL: process.env.COOLIFY_URL,

@@ -893,13 +893,67 @@
   scrollbar-width: none !important; /* Firefox */
 }
 
+/* While the sidebar's highlight slides in (pageTransitions.ts), the label
+   it is heading for keeps its usual colour until the highlight is under
+   it. */
+html.nav-arriving [data-active="true"]:has(> [data-nav-highlight]) {
+  color: var(--color-primary);
+}
+
 /* The page swaps at once, as without a transition; only the named parts
    move. This also undoes the theme toggle's reveal, below. */
+html:active-view-transition-type(nav),
 html:active-view-transition-type(pin),
 html:active-view-transition-type(chips) {
   &::view-transition-old(root),
   &::view-transition-new(root) {
     animation: none;
+  }
+}
+
+html:active-view-transition-type(nav) {
+  /* A section's captures do not crossfade: its header swaps at once, and
+     the script reveals or hides its sub-links like a drawer as the
+     sections below slide (pageTransitions.ts, drawSections). */
+  &::view-transition-old(*.nav-group),
+  &::view-transition-new(*.nav-group) {
+    animation: none;
+  }
+  /* The arriving labels and their turned copies draw over the highlight,
+     and the highlight over the sections, so their guide lines don't stripe
+     it. On a page with no highlight of its own (no turned labels, see
+     pageTransitions.ts addInk), one closing with its section draws under
+     it, keeping its label on top. */
+  &:not(.nav-arriving)::view-transition-group(*.nav-group) {
+    z-index: 1;
+  }
+  &::view-transition-group(*.nav-label),
+  &::view-transition-group(*.nav-ink) {
+    z-index: 2;
+  }
+  /* What one page alone shows, e.g. a section the other had scrolled out
+     of the list, or the highlight on a page without one, comes and goes at
+     once, as it would without a transition. */
+  &::view-transition-new(*.nav-group):only-child,
+  &::view-transition-new(nav-highlight):only-child {
+    animation: none;
+  }
+  &::view-transition-old(*.nav-group):only-child,
+  &::view-transition-old(nav-highlight):only-child {
+    animation: none;
+    opacity: 0;
+  }
+  /* The highlight slides under the labels. Over each label lies its copy
+     in the highlight's colour, hidden until the script clips both to where
+     the highlight is; the script also moves both with their section. */
+  &::view-transition-group(*.nav-label),
+  &::view-transition-group(*.nav-ink),
+  &::view-transition-new(*.nav-label),
+  &::view-transition-new(*.nav-ink) {
+    animation: none;
+  }
+  &::view-transition-new(*.nav-ink) {
+    clip-path: inset(0 0 100% 0);
   }
 }
 
