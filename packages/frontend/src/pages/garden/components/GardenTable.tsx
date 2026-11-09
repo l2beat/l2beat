@@ -26,7 +26,7 @@ export function GardenTable({ entries }: { entries: GardenEntry[] }) {
   const entranceHold = useEntranceHold()
   return (
     <Table
-      className={cn('min-w-[680px]', entranceHold)}
+      className={cn('md:min-w-[680px]', entranceHold)}
       header={<CropLettersHeader />}
       stickyHeader
     >
@@ -37,7 +37,7 @@ export function GardenTable({ entries }: { entries: GardenEntry[] }) {
               <ProjectCell entry={entry} />
             </TableCell>
             <TableCell className="py-3">
-              <div className="flex gap-3.5 md:justify-center">
+              <div className="flex gap-2 md:justify-center md:gap-3.5">
                 {toCropEntries(entry.crops, entry.ossification).map(
                   (crop, columnIndex) => (
                     <EvaluatedCrop
@@ -74,7 +74,7 @@ function CropLettersHeader() {
         <TableHeaderRow {...stickyTableColumnRowProps}>
           <TableHead />
           <TableHead>
-            <div className="flex gap-3.5 md:mx-auto">
+            <div className="flex gap-2 md:mx-auto md:gap-3.5">
               {CROP_COLUMNS.map((column) => (
                 <abbr
                   key={column.key}
@@ -87,6 +87,10 @@ function CropLettersHeader() {
             </div>
           </TableHead>
           <TableHead />
+        </TableHeaderRow>
+        {/* Sets the stuck header apart from the rows it covers, as on other tables. Desktop has none. */}
+        <TableHeaderRow className="md:hidden">
+          <th colSpan={3} className="mx-0.5 h-0.5 rounded-full bg-divider" />
         </TableHeaderRow>
       </TableHeader>
     </>
@@ -131,7 +135,7 @@ function ProjectCell({ entry }: { entry: GardenEntry }) {
         alt=""
         width={40}
         height={40}
-        className="size-[34px] rounded-lg md:size-10"
+        className="size-[34px] shrink-0 rounded-lg md:size-10"
       />
       <div className="flex flex-col leading-tight">
         <span
