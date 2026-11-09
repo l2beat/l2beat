@@ -1,5 +1,4 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
-import { useQuery } from '@tanstack/react-query'
 import { Command as CommandPrimitive } from 'cmdk'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import {
@@ -19,7 +18,6 @@ import { useOnClickOutside } from '~/hooks/useOnClickOutside'
 import { usePathname } from '~/hooks/usePathname'
 import { useTracking } from '~/hooks/useTracking'
 import type { SearchBarProject } from '~/server/features/search-bar/types'
-import { useTRPC } from '~/trpc/React'
 import { Skeleton } from '../core/Skeleton'
 import { linkVariants } from '../link/CustomLink'
 import {
@@ -30,16 +28,15 @@ import { useSearchBarContext } from './SearchBarContext'
 import type { SearchBarCategory } from './searchBarCategories'
 import { searchBarCategories } from './searchBarCategories'
 import { getEmptyStateGroups } from './searchBarEmptyState'
-import { searchBarPages } from './searchBarPages'
-import { groupSearchResults, searchEntries } from './searchBarResults'
 import type { AnySearchBarEntry } from './types'
+import { useSearchBarResults } from './useSearchBarResults'
 
 interface Props {
   recentlyAdded: SearchBarProject[]
+  searchIndexPath: string
 }
 
-export function SearchBarDialog({ recentlyAdded }: Props) {
-  const trpc = useTRPC()
+export function SearchBarDialog({ recentlyAdded, searchIndexPath }: Props) {
   const inputRef = useRef<HTMLInputElement>(null)
   const { track } = useTracking()
   const [value, setValue] = useState('')
@@ -55,46 +52,17 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
   useGlobalShortcut('/', () => setOpen((open) => !open))
 
   const {
-    data: searchResults,
-    isFetching,
-    isError,
-    fetchStatus,
-    refetch,
-  } = useQuery(
-    trpc.searchBar.search.queryOptions(debouncedValue, {
-      enabled: debouncedValue !== '',
-    }),
-  )
-  // Both leave the list empty, which would otherwise read as "No results
-  // found". A paused query runs by itself on the browser's `online` event.
-  const isOffline = fetchStatus === 'paused'
-  const isFailed = isError && fetchStatus === 'idle'
-  const showsResults = value === debouncedValue && value !== ''
-  const searchProblem = !showsResults
-    ? undefined
-    : isOffline
-      ? 'offline'
-      : isFailed
-        ? 'failed'
-        : undefined
+    groups: grouped,
+    showsResults,
+    isLoading,
+    problem: searchProblem,
+    retry,
+  } = useSearchBarResults({ value, debouncedValue, searchIndexPath, open })
 
   useEffect(() => {
     if (debouncedValue === '') return
     track('searchBarSearched', { value: debouncedValue })
   }, [debouncedValue, track])
-
-  const filteredPages = useMemo(
-    () => searchEntries(debouncedValue, searchBarPages),
-    [debouncedValue],
-  )
-
-  const grouped = useMemo(() => {
-    // Pages are searched locally, so they can still be listed when the server
-    // can't be reached.
-    if (!searchResults && !isOffline && !isFailed) return []
-
-    return groupSearchResults([...(searchResults ?? []), ...filteredPages])
-  }, [searchResults, filteredPages, isOffline, isFailed])
 
   const onEscapeKeyDown = (e?: KeyboardEvent) => {
     e?.preventDefault()
@@ -140,7 +108,7 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
           onAction={() => onEscapeKeyDown()}
         />
         <CommandList className="max-h-screen supports-[height:100dvh]:max-h-dvh md:h-[270px] md:max-h-[270px]">
-          {((value !== debouncedValue && value !== '') || isFetching) && (
+          {isLoading && (
             <CommandPrimitive.Loading>
               <CommandGroup>
                 <div className="flex h-8 items-center px-2 py-3">
@@ -164,7 +132,7 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
                 <button
                   type="button"
                   className={linkVariants()}
-                  onClick={() => void refetch()}
+                  onClick={retry}
                 >
                   Try again
                 </button>

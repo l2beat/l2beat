@@ -1,10 +1,32 @@
 import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { searchProjectsAndTokens } from '~/components/search-bar/searchBarResults'
+import {
+  decodeSearchIndex,
+  SearchIndex,
+} from '~/components/search-bar/searchIndex'
 import { env } from '~/env'
+import { UNKNOWN_ABSTRACT_TOKEN_ID } from '~/server/features/layer2s/interop/consts'
+import type { InteropAbstractToken } from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
 import { ps } from '~/server/projects'
-import { getSearchBarEntries } from './getSearchBarEntries'
+import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
+import { getSearchBarAddressEntries } from './getSearchBarAddressEntries'
+import { buildSearchIndex, toSearchIndexToken } from './getSearchIndex'
 
-describe(getSearchBarEntries.name, () => {
+/**
+ * Searches the way the browser does: the index goes through JSON and the
+ * browser's parser, so the tests cover encoding and decoding too.
+ */
+async function getSearchBarEntries(search: string) {
+  if (EthereumAddress.checkIgnoringCase(search.trim())) {
+    return getSearchBarAddressEntries(search)
+  }
+  const json = JSON.stringify(await buildSearchIndex())
+  const index = decodeSearchIndex(SearchIndex.parse(JSON.parse(json)))
+  return searchProjectsAndTokens(search, index)
+}
+
+describe('search bar search', () => {
   const originalGetProjects = ps.getProjects.bind(ps)
   const originalMock = env.MOCK
   const originalInteropChains = env.INTEROP_CHAINS
@@ -157,7 +179,111 @@ describe(getSearchBarEntries.name, () => {
 
     expect(result.map((entry) => entry.name)).toEqual(['USDC'])
   })
+
+  it('lists a project once per page it has', async () => {
+    ps.getProjects = async () =>
+      [
+        {
+          ...l2Project('scroll', 'Scroll', 'ZK Rollup'),
+          zkCatalogInfo: {},
+          interopConfig: { name: 'Scroll Canonical' },
+        },
+      ] as never
+
+    const result = await getSearchBarEntries('scroll')
+
+    expect(
+      result.map((entry) => ({
+        href: entry.href,
+        category: entry.category,
+        l2Category: entry.type === 'project' ? entry.l2Category : undefined,
+      })),
+    ).toEqual([
+      {
+        href: '/layer2s/projects/scroll',
+        category: 'l2',
+        l2Category: 'ZK Rollup',
+      },
+      {
+        href: '/zk-catalog/scroll',
+        category: 'zkCatalog',
+        l2Category: undefined,
+      },
+    ])
+  })
+
+  it('names an interop protocol by its interop name and finds it by alias', async () => {
+    ps.getProjects = async () =>
+      [
+        {
+          id: ProjectId('stargate'),
+          slug: 'stargate',
+          name: 'Stargate Finance',
+          aliases: ['LayerZero'],
+          interopConfig: { name: 'Stargate' },
+        },
+      ] as never
+
+    const result = await getSearchBarEntries('layerzero')
+
+    expect(result.map(({ name, href }) => ({ name, href }))).toEqual([
+      { name: 'Stargate', href: '/interop/protocols/stargate' },
+    ])
+  })
 })
+
+describe(toSearchIndexToken.name, () => {
+  it('keeps only the number and file of a CoinGecko icon', () => {
+    const row = toSearchIndexToken(
+      token({
+        iconUrl:
+          'https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694',
+      }),
+    )
+    const [entry] = decodeSearchIndex({ projects: [], tokens: [row] }).tokens
+
+    expect(row[3]).toEqual('6319/usdc.png')
+    expect(entry?.iconUrl).toEqual(
+      'https://coin-images.coingecko.com/coins/images/6319/large/usdc.png',
+    )
+  })
+
+  it('keeps other icons whole', () => {
+    const iconUrl = 'https://example.com/icon.png'
+    const row = toSearchIndexToken(token({ iconUrl }))
+    const [entry] = decodeSearchIndex({ projects: [], tokens: [row] }).tokens
+
+    expect(entry?.iconUrl).toEqual(iconUrl)
+  })
+
+  it('links issuerless tokens by id and symbol and falls back to the placeholder icon', () => {
+    const row = toSearchIndexToken(
+      token({ id: 'eth001', symbol: 'ETH', issuer: null, iconUrl: null }),
+    )
+    const [entry] = decodeSearchIndex({ projects: [], tokens: [row] }).tokens
+
+    expect(entry?.href).toEqual('/tokens/eth001/eth')
+    expect(entry?.iconUrl).toEqual(TOKEN_PLACEHOLDER_ICON_URL)
+  })
+
+  it('rejects the unknown abstract token', () => {
+    expect(() =>
+      toSearchIndexToken(token({ id: UNKNOWN_ABSTRACT_TOKEN_ID })),
+    ).toThrow()
+  })
+})
+
+function token(overrides: Partial<InteropAbstractToken>): InteropAbstractToken {
+  return {
+    id: 'tkn001',
+    symbol: 'TKN',
+    issuer: null,
+    iconUrl: 'https://example.com/icon.png',
+    category: 'stablecoin',
+    isPriceUnreliable: false,
+    ...overrides,
+  }
+}
 
 const USDC_ADDRESS = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
 
@@ -177,7 +303,7 @@ function l2ProjectWithContract(slug: string, name: string, address: string) {
 function l2Project(
   slug: string,
   name: string,
-  l2Category: 'Other' | 'Optimistic Rollup' = 'Other',
+  l2Category: 'Other' | 'Optimistic Rollup' | 'ZK Rollup' = 'Other',
   layer: 'layer2' | 'layer3' = 'layer2',
 ) {
   return {

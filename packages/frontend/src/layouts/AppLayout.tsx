@@ -16,6 +16,8 @@ import { TRPCReactProvider } from '~/trpc/React'
 
 export interface AppLayoutProps {
   recentlyAddedProjects: SearchBarProject[]
+  /** Hashed URL of the search index, cached by the browser for good. */
+  searchIndexPath: string
   whatsNew: WhatsNewWidget | undefined
   /** The announcement at the end of the nav. */
   whatsNewItem: WhatsNewItem | undefined
@@ -25,6 +27,7 @@ export interface AppLayoutProps {
 export function AppLayout({
   children,
   recentlyAddedProjects,
+  searchIndexPath,
   whatsNew,
   whatsNewItem,
   countdowns,
@@ -45,6 +48,7 @@ export function AppLayout({
             <WhatsNewItemProvider item={whatsNewItem}>
               <SearchBarContextProvider
                 recentlyAddedProjects={recentlyAddedProjects}
+                searchIndexPath={searchIndexPath}
               >
                 <ChartLegendOnboardingProvider>
                   {children}
