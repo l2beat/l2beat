@@ -23,7 +23,11 @@ All keys derive from one signature of the user's wallet over a fixed message, so
 
 ### App
 
-anon.wei is one HTML page stored as contract code on Ethereum, each version immutable. The reviewed version is the TacitPay8244 contract below. Save it from your own node with `cast call 0x0000000d42137547140b0812E1178F025e08bc49 "html()(string)" --rpc-url <node> --json | jq -j '.[0]' > anon.html`, check that the file's sha256 is `3b94ab980316470756345dd754cd212dde57067e0ef95dce1531fcaecfde9c08` and serve it from localhost. Its sign-in note sends users to anon.wei.limo, which serves whichever version the app owner names. The page checks the proving files against pinned hashes and reads the chain through public RPC nodes. It syncs from the relay's history feed, which it checks against the pool. Under Endpoints the user can set their own node and another relay or none.
+anon.wei is one HTML page stored as contract code on Ethereum, each version immutable. The reviewed version is the TacitPay8244 contract below. Save it from your own node with `cast call 0x0000000d42137547140b0812E1178F025e08bc49 "html()(string)" --rpc-url <node> --json | jq -j '.[0]' > anon.html`, check that the file's sha256 is `3b94ab980316470756345dd754cd212dde57067e0ef95dce1531fcaecfde9c08` and serve it from localhost. Its sign-in note sends users to anon.wei.limo, which serves whichever version the app owner names. The page checks the proving files against pinned hashes.
+
+### Network
+
+The page reads the chain through public RPC nodes and syncs from the relay's history feed. It keeps a feed page only where the tree it builds matches a root the pool has held. The feed can still hide a note, which Rebuild recovers from chain logs. Under Endpoints the user can set their own node and another relay or none.
 
 ### Exits
 

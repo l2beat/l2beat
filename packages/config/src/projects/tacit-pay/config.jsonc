@@ -3,9 +3,6 @@
   "name": "tacit-pay",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
-    "eth:0x000000c2A20657CE25f2Ba99737933D031AFBEE9",
-    "eth:0x0000006C96Afa6f1cD4DF8FE19bc0d8B6A6Cd7B5",
-    "eth:0x0000008EbBF2323f95c4fBc18254f3D65C53998c",
     "eth:0x0000000d42137547140b0812e1178f025e08bc49",
     "eth:0x00000051f365d898132f4ebf345cd3968e02f288",
     "eth:0x8c7348d039f58c4e9cfa936ef410eec759213b12"
