@@ -2,18 +2,7 @@
 
 ETHBEAT (formerly L2BEAT) is an independent research and analytics organization for Ethereum. We check what Layer 2s, interop protocols, privacy protocols, ZK systems and other things built on Ethereum really inherit from it: whom their users must trust, what those parties can do, and whether users can still get out if everyone else walks away.
 
-The site lives at https://ethbeat.org. Every l2beat.com link redirects there permanently, so both names appear across the code, the data and the outside world. The repository stays at `github.com/l2beat/l2beat`.
-
-## Who we are
-
-We started as L2BEAT over five years ago to answer one question: do L2s that promise to scale Ethereum really inherit its security? Along the way we became a central reference point for L2 development. Our Stages framework and risk assessments are how much of the ecosystem talks about L2 security. Scaling is now being addressed on L1 itself, and the same questions are being asked of privacy, interop, DeFi and more, so we renamed and widened our scope. L2s are still covered as closely as ever; they're just no longer the only focus.
-
-Our mandate (`/mandate` on the site) is to help people understand and reduce their dependence on intermediaries. We believe disintermediation is one of the most effective ways to protect individual freedom. We do four things:
-
-- **Research** how systems actually work, and track how their guarantees change.
-- **Recognize** applications that uphold censorship resistance, open source, privacy and security (**CROPS**), so people can find them.
-- **Develop standards** with researchers, builders and users, for assessing systems and for building them better.
-- **Build** open source tools that put these principles into practice.
+Our mission is to help people understand and reduce their dependence on intermediaries. Before work that touches what we assess or how we present it, read the mandate in `packages/frontend/src/pages/mandate/mandateText.ts`.
 
 ## What we can never compromise on
 
@@ -44,16 +33,12 @@ People put real money behind what our pages say. A wrong "green" is worse than a
 
 Old links, API responses and badges are embedded all over the ecosystem. People cite us, link deep pages and poll the API, so breaking a URL or a response shape breaks someone else's work.
 
-## A small glossary
+## Terms we use differently
 
-- **you** means the agent reading this file.
-- **we, us** mean the ETHBEAT team.
-- **project** means a system we cover: an L2, a bridge, a privacy protocol, a DA layer, a ZK system.
-- **Stages** is our framework for how far an L2 has removed its "training wheels" (Stage 0, 1, 2).
-- **TVS** (Total Value Secured) is the value of canonically bridged, externally bridged and natively minted assets on a project. It's broader than DeFi TVL, and we used to call it TVL.
-- **DA** means data availability: where a project publishes the data users need to rebuild state and exit.
+- **TVS** (Total Value Secured) counts every canonically bridged, externally bridged and natively minted asset on a project, used in DeFi or not. It used to be called TVL, and it is not DeFi TVL.
+- **CROPS** is censorship resistance, open source, privacy and security: the properties we recognize applications for.
 - **Walkaway test**: can users still fully use the system if every centralized participant disappears?
-- **Discovery** is how we read a project's deployed contracts and their permissions from chain, and how we notice when they change. Researchers review and classify each change.
+- **Discovery** is how we read a project's deployed contracts and permissions from chain, and notice when they change. Researchers review and classify each change.
 
 ## Where to discuss methodology
 
