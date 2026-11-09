@@ -1,4 +1,4 @@
-Circuit-specific Phase 2 trusted setup for the single Groth16 circuit of Tacit Pay, `transact.circom`
+Circuit-specific Phase 2 trusted setup for the single Groth16 circuit, `transact.circom`
 (2 inputs, 2 outputs, 44,414 constraints), over the BN254 curve. It builds on the Hermez ceremony as
 Phase 1, using `powersOfTau28_hez_final_16.ptau`, which contains 54 Perpetual Powers of Tau participant
 contributions and one public randomness beacon.

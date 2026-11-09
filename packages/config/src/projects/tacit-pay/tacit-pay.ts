@@ -146,7 +146,7 @@ export const tacitPay: BaseProject = {
     verifierHashes: [
       {
         hash: 'Tacit Pay transact verifier 27.09.2026',
-        name: 'Tacit Pay transact verifier',
+        name: 'Transact verifier',
         sourceLink: `${TACIT_REPOSITORY}/tree/${TACIT_COMMIT}/dapp/circuits/evm-pool`,
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
         knownDeployments: [{ address: VERIFIER.address }],

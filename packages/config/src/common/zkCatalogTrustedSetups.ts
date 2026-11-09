@@ -281,7 +281,7 @@ export const TRUSTED_SETUPS = {
   },
   TacitPay: {
     id: 'TacitPay',
-    name: 'Tacit Pay',
+    name: 'Transact circuit ceremony',
     risk: 'red',
     contributionCount: 176,
     phases: {
@@ -294,7 +294,7 @@ export const TRUSTED_SETUPS = {
       },
     },
     shortDescription:
-      'Circuit-specific trusted setup for the Groth16 transact circuit of Tacit Pay over BN254. Phase 1 used 54 participant contributions and a public randomness beacon. Phase 2 counts 176 contributions under self-made keys with repeats allowed, so the number of participants is unknown. Proving system could be broken if either phase 1 or 2 is compromised.',
+      'Circuit-specific trusted setup for the Groth16 transact circuit over BN254. Phase 1 used 54 participant contributions and a public randomness beacon. Phase 2 counts 176 contributions under self-made keys with repeats allowed, so the number of participants is unknown. Proving system could be broken if either phase 1 or 2 is compromised.',
     longDescription: readMarkdown('common/trustedSetups/TacitPay.md'),
   },
 } as const satisfies Record<string, TrustedSetup>

@@ -12,11 +12,12 @@ import type {
 // scripts/strip.mjs and the pins of deploy/repin.sh rebuild byte for byte from
 // page.html, the file the sources below cite.
 export const REFERENCE_PAGE = 'eth:0x0000000d42137547140b0812E1178F025e08bc49'
-// The link goes to the pinned contract, not anon.wei.limo, whose name Tacit's
-// account can point at another page without delay.
+// The link goes to html() of the pinned contract (F15 in Etherscan's ABI order),
+// not anon.wei.limo, whose name Tacit's account can point at another page
+// without delay.
 export const REFERENCE_APP = {
   name: 'anon.wei',
-  url: `https://etherscan.io/address/${REFERENCE_PAGE.replace('eth:', '')}#code`,
+  url: `https://etherscan.io/address/${REFERENCE_PAGE.replace('eth:', '')}#readContract#F15`,
   since: '2026-11-09',
   source: {
     repository: 'https://github.com/ERC8244/dapps',
@@ -142,7 +143,7 @@ export const tacitPayAdversaries = definePrivacyAdversaries({
       exposureContinued:
         "Tacit's relay sees the IP at sign-in, each exit's recipient with the IP that asked, and each deposit address the user views in the app. Tacit's account can point anon.wei at another page and change the relay host and RPC nodes the page reads, without delay.",
       advice:
-        'Save html() of the TacitPay8244 contract and run the page from that file, not from anon.wei.limo. Exit as the network observer advice says.',
+        'Serve the page from localhost as the App section describes, not from anon.wei.limo. Exit as the network observer advice says.',
       interior: {
         ...INTERIOR,
         recipient: {
