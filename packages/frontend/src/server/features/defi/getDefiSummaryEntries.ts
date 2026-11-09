@@ -27,7 +27,7 @@ export interface DefiSummaryEntry {
   description: string
   category: ProjectDefiCategory
   totalValueLockedUsd?: number
-  /** External provider name, undefined when the TVL comes from L2BEAT. */
+  /** External provider name, undefined when the TVL is our own. */
   tvlDataSource?: string
   dependencies?: DefiDependency[]
   isUnderReview: boolean

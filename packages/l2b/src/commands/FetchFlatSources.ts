@@ -8,7 +8,7 @@ import { Directory, HttpUrl } from './types'
 
 export const FetchFlatSources = command({
   name: 'fetch-flat-sources',
-  description: 'Fetches flat sources from L2BEAT backend.',
+  description: 'Fetches flat sources from ETHBEAT backend.',
   args: {
     backendUrl: option({
       type: HttpUrl,
