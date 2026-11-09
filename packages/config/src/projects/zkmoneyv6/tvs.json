@@ -1,0 +1,44 @@
+{
+  "$schema": "../tvs-config-schema.json",
+  "projectId": "zkmoneyv6",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "zkmoneyv6-DAI",
+      "priceId": "dai",
+      "symbol": "DAI",
+      "name": "Dai Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "chain": "ethereum",
+        "escrowAddress": "0xCB99C58Fe81Ae6b2cB4835e46F7b703745879042",
+        "decimals": 18,
+        "sinceTimestamp": 1793015927
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zkmoneyv6-sUSDS",
+      "priceId": "susds",
+      "symbol": "sUSDS",
+      "name": "Savings USDS",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52721/large/sUSDS_Coin.png?1734086971",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
+        "chain": "ethereum",
+        "escrowAddress": "0x2EbFEE284bABf94869FAC44BC85eDb3C34e536D8",
+        "decimals": 18,
+        "sinceTimestamp": 1793018447
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}
