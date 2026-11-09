@@ -12,9 +12,11 @@ import type {
 // scripts/strip.mjs and the pins of deploy/repin.sh rebuild byte for byte from
 // page.html, the file the sources below cite.
 export const REFERENCE_PAGE = 'eth:0x0000000d42137547140b0812E1178F025e08bc49'
+// The link goes to the pinned contract, not anon.wei.limo, whose name Tacit's
+// account can point at another page without delay.
 export const REFERENCE_APP = {
   name: 'anon.wei',
-  url: 'https://anon.wei.limo',
+  url: `https://etherscan.io/address/${REFERENCE_PAGE.replace('eth:', '')}#code`,
   since: '2026-11-09',
   source: {
     repository: 'https://github.com/ERC8244/dapps',

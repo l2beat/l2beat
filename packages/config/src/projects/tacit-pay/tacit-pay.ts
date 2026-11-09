@@ -83,7 +83,7 @@ export const tacitPay: BaseProject = {
       'detailedDescription',
     ),
     links: {
-      websites: ['https://tacit.finance/pay/eth/', REFERENCE_APP.url],
+      websites: ['https://tacit.finance'],
       documentation: [`${TACIT_REPOSITORY}/blob/main/docs/EVM-POOL.md`],
       repositories: [TACIT_REPOSITORY, 'https://github.com/ERC8244/dapps'],
     },
