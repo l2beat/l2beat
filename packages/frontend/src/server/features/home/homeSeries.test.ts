@@ -40,6 +40,15 @@ describe(toWeeklyAverages.name, () => {
     ])
   })
 
+  it('averages each part like the value, so the tooltip can break it down', () => {
+    const data: HomeSeriesPoint[] = [
+      [0, 30, 10, 20],
+      [DAY, 50, 20, null],
+      [2 * DAY, 40, 30, 10],
+    ]
+    expect(toWeeklyAverages(data)).toEqual([[0, 40, 20, 15]])
+  })
+
   it('keeps a series shorter than a week as one point', () => {
     expect(toWeeklyAverages(days([4, 6, 8]))).toEqual([[0, 6]])
   })

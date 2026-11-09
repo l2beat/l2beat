@@ -92,15 +92,13 @@ function SparklineChart({
   // The scrub area maps points to pixels with the last rendered scales. It
   // is a sibling, so scrubbing does not render the chart again.
   const [sceneRef] = useState(() => new ChartSceneStore())
-  // A weekly series has few enough points to show its corners.
-  const curve = series.kind === 'weekly' ? 'monotone' : 'linear'
-  const perDay = series.kind === 'weekly' && series.perDay
+  const { perDay } = series
   const definition = useMemo(
     () =>
-      getDefinition(data, curve, (value) =>
+      getDefinition(data, (value) =>
         perDay ? `${formatValue(value)}/day` : formatValue(value),
       ),
-    [data, curve, formatValue, perDay],
+    [data, formatValue, perDay],
   )
 
   return (
@@ -277,13 +275,14 @@ const LABEL_GAP = 5
 
 const LABEL_FONT_SIZE = 12
 
+/** Weeks are few enough points to round off their corners. */
+const CURVE = d3Curve(curveMonotoneX)
+
 function getDefinition(
   data: SparklinePoint[],
-  curveType: 'monotone' | 'linear',
   formatLabel: (value: number) => string,
 ) {
   const { domain, range } = getSparklineScale(data)
-  const curve = curveType === 'monotone' ? d3Curve(curveMonotoneX) : undefined
   const getX = (d: SparklinePoint) => d.timestamp
   const getY = (d: SparklinePoint) => d.value
   const first = data[0]
@@ -323,7 +322,7 @@ function getDefinition(
           y2: getY,
           fill: STROKE,
           fillOpacity: AREA_FILL_OPACITY,
-          curve,
+          curve: CURVE,
         }),
       ),
       decorative(
@@ -333,7 +332,7 @@ function getDefinition(
           y: getY,
           stroke: STROKE,
           strokeWidth: 2,
-          curve,
+          curve: CURVE,
         }),
       ),
       // The high above the right end of its line, the low below the left

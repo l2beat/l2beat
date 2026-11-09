@@ -83,11 +83,10 @@ async function getHomeTvsChart(
     ],
   )
   return {
-    chart: {
-      kind: 'daily',
-      points: chart,
-      partLabels: ['Rollups', 'Validiums & Optimiums'],
-    },
+    chart: toWeeklySparkline(chart, {
+      perDay: false,
+      partLabels: TVS_PART_LABELS,
+    }),
     value: getLatestValue(chart),
     change: computeSeriesChange(chart),
   }
@@ -122,6 +121,8 @@ async function getHomeActivityChart(
     change: computeWeeklyAverageChange(chart),
   }
 }
+
+const TVS_PART_LABELS = ['Rollups', 'Validiums & Optimiums']
 
 const ACTIVITY_TYPES = new Set<string | undefined>([
   'ZK Rollup',
@@ -164,11 +165,10 @@ function getMockHomeL2Charts(range: ChartRange): HomeL2Charts {
 
   return {
     tvs: {
-      chart: {
-        kind: 'daily',
-        points: timestamps.map((timestamp) => [+timestamp, 5000, 3000, 2000]),
-        partLabels: ['Rollups', 'Validiums & Optimiums'],
-      },
+      chart: toWeeklySparkline(
+        timestamps.map((timestamp) => [+timestamp, 5000, 3000, 2000]),
+        { perDay: false, partLabels: TVS_PART_LABELS },
+      ),
       value: 5000,
       change: 0,
     },
