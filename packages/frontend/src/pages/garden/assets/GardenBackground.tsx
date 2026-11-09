@@ -1,4 +1,4 @@
-import { PageBackdrop } from '~/layouts/PageBackdrop'
+import { PageBackdrop, PageBackdropScenery } from '~/layouts/PageBackdrop'
 import { cn } from '~/utils/cn'
 
 /** A sky wash, a sun and two hills. In dark mode the day turns into night. */
@@ -6,6 +6,7 @@ export function GardenBackground() {
   return (
     <PageBackdrop name="garden">
       <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-garden-sky to-transparent" />
+      <PageBackdropScenery>
       <Stars />
       <Sun className="absolute top-10 right-14 max-md:top-6 max-md:right-6 max-md:scale-75 max-md:opacity-60 dark:hidden" />
       <Moon className="absolute top-10 right-14 hidden max-md:top-6 max-md:right-6 max-md:scale-75 max-md:opacity-60 dark:block" />
@@ -23,6 +24,7 @@ export function GardenBackground() {
           className="fill-garden-border/70"
         />
       </svg>
+      </PageBackdropScenery>
     </PageBackdrop>
   )
 }

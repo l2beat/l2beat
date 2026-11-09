@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react'
-import { PageBackdrop } from '~/layouts/PageBackdrop'
+import { PageBackdrop, PageBackdropScenery } from '~/layouts/PageBackdrop'
 import { cn } from '~/utils/cn'
 
 /** An early-morning plot: clouds, furrows, seedlings and an empty trellis. */
@@ -8,6 +8,7 @@ export function PlotBackground() {
     <PageBackdrop name="plot">
       <div className="absolute inset-x-0 top-0 h-80 bg-gradient-to-b from-plot-canvas via-[#f4f6e6]/40 to-transparent dark:via-[#161c12]/40" />
 
+      <PageBackdropScenery>
       <Cloud className="absolute top-16 left-[7%] w-44 max-md:top-8 max-md:w-28" />
       <Cloud
         className="absolute top-36 right-[12%] w-28 max-md:hidden"
@@ -64,6 +65,7 @@ export function PlotBackground() {
           ))}
         </div>
       </div>
+      </PageBackdropScenery>
     </PageBackdrop>
   )
 }
