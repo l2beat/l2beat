@@ -135,8 +135,8 @@ export type {
   PrivacyAnonymitySetSenderDayRecord,
 } from './repositories/PrivacyAnonymitySetEventRepository'
 export type {
+  PrivacyFlowBucketRecord,
   PrivacyFlowBucketTotalRecord,
-  PrivacyFlowDailyRecord,
   PrivacyFlowDirection,
   PrivacyFlowEventRecord,
 } from './repositories/PrivacyFlowEventRepository'
