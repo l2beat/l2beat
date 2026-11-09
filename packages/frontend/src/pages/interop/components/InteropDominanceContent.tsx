@@ -161,8 +161,8 @@ function DominanceRowItem({
   return (
     <div className="flex flex-col gap-1">
       <div className="flex items-center justify-between gap-3">
-        {row.header}
-        <div className="flex items-baseline gap-1">
+        <div className="min-w-0">{row.header}</div>
+        <div className="flex shrink-0 items-baseline gap-1 whitespace-nowrap">
           <span className="font-bold text-label-value-16">
             {metric === 'volume'
               ? formatCurrency(value, 'usd', { decimals: 2 })

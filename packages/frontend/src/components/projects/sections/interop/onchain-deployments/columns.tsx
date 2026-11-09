@@ -120,7 +120,7 @@ export const interopTokenOnchainDeploymentsColumns = [
     },
   }),
   columnHelper.accessor('transferCount', {
-    header: 'Last 24h\ntransfer count',
+    header: 'Last 24h\ntransfers',
     cell: (ctx) => {
       if (ctx.row.original.transferCount === null)
         return <InteropNoDataBadge tooltip={noDataTooltip(ctx.row.original)} />
