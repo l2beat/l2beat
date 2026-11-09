@@ -3,9 +3,9 @@ import { DailyIndexer } from '../../tools/DailyIndexer'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
-import { EthereumBlockFinder } from './EthereumBlockFinder'
 import { readExecutionDay } from './network/dune/readExecutionDay'
 import { EthereumStakingIndexer } from './network/EthereumStakingIndexer'
+import { shareBlockLookups } from './shareBlockLookups'
 import { LiquidStakingIndexer } from './tokens/LiquidStakingIndexer'
 
 export function createLiquidStakingModule({
@@ -34,9 +34,9 @@ export function createLiquidStakingModule({
   const indexerService = new IndexerService(db)
   const dune = new DuneQueryService({ logger, duneClient })
   const rpc = providers.clients.getRpcClient('ethereum')
-  const blockFinder = new EthereumBlockFinder(
-    { rpc, blockTimestampProvider: providers.blockTimestamp },
-    logger,
+  // Over RPC, as Etherscan's daily limit is shared with the other modules
+  const blockFinder = shareBlockLookups(
+    providers.block.getBlockProvider('ethereum'),
   )
   const hourlyIndexer = new HourlyIndexer(logger, clock)
   const dailyIndexer = new DailyIndexer(logger, clock)
@@ -58,7 +58,7 @@ export function createLiquidStakingModule({
           tags: { tag: project.projectId, project: project.projectId },
           db,
           rpc,
-          blockTimestampProvider: blockFinder,
+          blockFinder,
         },
         logger,
       ),
@@ -73,7 +73,7 @@ export function createLiquidStakingModule({
       readExecutionDay: (day, fromBlock, toBlock) =>
         readExecutionDay(dune, logger, day, fromBlock, toBlock),
       beacon,
-      blockTimestampProvider: blockFinder,
+      blockFinder,
     },
     logger,
   )
