@@ -47,9 +47,7 @@ export function TopProtocolsByVolumeChart({
       containerWidth={containerWidth}
       center={{
         label: 'Volume',
-        value: formatCurrency(totalVolume, 'usd', {
-          decimals: 1,
-        }),
+        value: formatCurrency(totalVolume, 'usd'),
       }}
     />
   )

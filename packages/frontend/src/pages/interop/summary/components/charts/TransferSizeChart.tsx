@@ -1,4 +1,4 @@
-import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
+import { formatCount, formatCurrency } from '@l2beat/shared-pure'
 import { type PointerEvent, useId, useRef } from 'react'
 import {
   ChartContext,
@@ -509,7 +509,7 @@ function CustomTooltip({
             Total identified transfers
           </span>
           <span className="font-medium text-label-value-15 text-primary tabular-nums">
-            {formatInteger(totalTransfers)} transfers
+            {formatCount(totalTransfers, 'transfer')}
           </span>
         </div>
         {orderedBuckets.map((bucket) => {
@@ -523,7 +523,7 @@ function CustomTooltip({
               wrapLabel={false}
             >
               <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                {formatInteger(count)} transfers
+                {formatCount(count, 'transfer')}
               </span>
             </ChartTooltipRow>
           )

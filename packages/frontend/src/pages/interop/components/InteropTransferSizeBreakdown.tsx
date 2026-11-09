@@ -1,4 +1,4 @@
-import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
+import { formatCount, formatCurrency } from '@l2beat/shared-pure'
 import type { CSSProperties } from 'react'
 import { Breakdown } from '~/components/breakdown/Breakdown'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -76,7 +76,7 @@ function TransferSizeTooltipContent({
             Total identified transfers
           </span>
           <span className="font-medium text-label-value-15 text-primary tabular-nums">
-            {formatInteger(totalTransfers)} transfers
+            {formatCount(totalTransfers, 'transfer')}
           </span>
         </div>
         {breakdownValues.map((entry) => (
@@ -91,7 +91,7 @@ function TransferSizeTooltipContent({
               </span>
             </div>
             <span className="font-medium text-label-value-15 text-primary tabular-nums">
-              {formatInteger(entry.value)} transfers
+              {formatCount(entry.value, 'transfer')}
             </span>
           </div>
         ))}
