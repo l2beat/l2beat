@@ -1,3 +1,66 @@
+Generated with discovered.json: 0x254b185d8a50c2d0c4f98028cb717f29571a1121
+
+# Diff at Fri, 06 Nov 2026 16:36:36 GMT:
+
+- id: ea1313ed
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@42d599abc7be8cc38122c72abc4da1c1dda6fbeb block: 1793357595
+- current timestamp: 1793982907
+
+## Description
+
+EmergencyBrakesEthereum: 2 members rotated. ResealCommittee: Member rotated. Three DelegationContracts changed delegate: two oracle committee seats and one Deposit Security Module guardian seat, each effective after the 2-day cooldown.
+
+## Watched changes
+
+```diff
+    contract DelegationContract (eth:0x4E3F2DEeb59eB9a205D82D17647b3e56422e0FEe) [lido/DelegationContract] {
+    +++ description: Execution Delegation Framework contract that holds a Lido protocol role, such as an oracle committee seat or a Deposit Security Module guardian seat, on behalf of one entity. Its current delegate can make arbitrary calls from this contract and produce ERC-1271 signatures for it. The immutable owner can nominate a new delegate, which becomes effective only after the immutable cooldown, revoke the delegate immediately, or irreversibly terminate the contract.
+      values.getDelegate:
+-        "eth:0x565F04cB319EC2295E1fcbBbe5F708687FFcCE75"
++        "eth:0x3f0dAF0066533bE244dBeF17fDD21fb1F24F41e0"
+    }
+```
+
+```diff
+    contract EmergencyBrakesEthereum (eth:0x73b047fe6337183A454c5217241D780a932777bD) [GnosisSafe] {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x6f5c9B92DC47C89155930E708fBc305b55A5519A"
++        "eth:0x989514afbf073ab4759e920729d93D1e4306d923"
+      values.$members.4:
+-        "eth:0x2a61d3ba5030Ef471C74f612962c7367ECa3a62d"
++        "eth:0xeF83852FaBd22bda23857abF171e05Bae9463F95"
+    }
+```
+
+```diff
+    contract DelegationContract (eth:0xC4f2704273598d51A0ec76A31C12553ec8f5A891) [lido/DelegationContract] {
+    +++ description: Execution Delegation Framework contract that holds a Lido protocol role, such as an oracle committee seat or a Deposit Security Module guardian seat, on behalf of one entity. Its current delegate can make arbitrary calls from this contract and produce ERC-1271 signatures for it. The immutable owner can nominate a new delegate, which becomes effective only after the immutable cooldown, revoke the delegate immediately, or irreversibly terminate the contract.
+      values.getDelegate:
+-        "eth:0xC10258969442c7957351A0ddc8194D2685B2a2c2"
++        "eth:0x0194Ab59A22b6787ef7529954142B269824551d2"
+    }
+```
+
+```diff
+    contract DelegationContract (eth:0xe387Ba1d5C9f6306eCe9ac949C7fB6233dD5411E) [lido/DelegationContract] {
+    +++ description: Execution Delegation Framework contract that holds a Lido protocol role, such as an oracle committee seat or a Deposit Security Module guardian seat, on behalf of one entity. Its current delegate can make arbitrary calls from this contract and produce ERC-1271 signatures for it. The immutable owner can nominate a new delegate, which becomes effective only after the immutable cooldown, revoke the delegate immediately, or irreversibly terminate the contract.
+      values.getDelegate:
+-        "eth:0xAEbd3E0c29111C02166FB2d560f7158a6ccE6841"
++        "eth:0x20aB528Ba6c3323B5a54f0f146f9873aea7f0e96"
+    }
+```
+
+```diff
+    contract ResealCommittee (eth:0xFFe21561251c49AdccFad065C94Fb4931dF49081) [GnosisSafe] {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x9A3f38AF97b791C85c043D46a64f56f87E0283D4"
++        "eth:0xC80C089d5151A7456aaeb116174CB5A8EcC94fF9"
+    }
+```
+
 Generated with discovered.json: 0x7433580700750e7e4ee7313f657633cb3aab2365
 
 # Diff at Fri, 30 Oct 2026 10:53:31 GMT:
