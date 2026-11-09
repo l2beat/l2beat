@@ -60,7 +60,7 @@ export function getIntentBridgeColumns(transfer: InteropTransferDefaults) {
           >
             <TwoRowCell>
               <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
-                <div className="w-fit max-w-[112px] font-bold text-label-value-15 md:leading-none">
+                <div className="w-fit max-w-[112px] break-words font-bold text-label-value-15 md:leading-none">
                   {ctx.row.original.bridge.name}
                 </div>
               </TwoRowCell.First>
