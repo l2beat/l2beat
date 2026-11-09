@@ -1,10 +1,7 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import type { PrivacyRpcLog } from '../types'
+import type { PrivacyFlowExtractResult, PrivacyRpcLog } from '../types'
 
-// One event serves every Tacit Pay action. A positive extAmount is a deposit,
-// a negative one pays -extAmount to the recipient, and zero is a private
-// transfer. The relayer's fee is paid out of the pool on top of either.
 const tacitPayInterface = new utils.Interface([
   'event Transact(bytes32 indexed nf0, bytes32 indexed nf1, bytes32 outLeaf0, bytes32 outLeaf1, uint256 firstIndex, bytes32 newRoot, address recipient, int256 extAmount, address relayer, uint256 fee, bytes memo0, bytes memo1)',
 ])
@@ -12,19 +9,40 @@ const tacitPayInterface = new utils.Interface([
 export const TACIT_PAY_TRANSACT_TOPIC =
   tacitPayInterface.getEventTopic('Transact')
 
-export interface TacitPayTransact {
+type TacitPayAction = 'deposit' | 'transfer' | 'withdrawal'
+
+interface TacitPayTransact {
+  action: TacitPayAction
+  /** The value that crossed the pool boundary, zero for a transfer. */
+  amount: bigint
   recipient: EthereumAddress
-  extAmount: bigint
   relayer: EthereumAddress
   fee: bigint
 }
 
+// One event serves every Tacit Pay action, told apart by the sign of
+// extAmount: a deposit is positive, a withdrawal pays -extAmount to the
+// recipient, and a private transfer is zero. The relayer's fee is paid out of
+// the pool on top of any of them.
 export function extractTacitPayTransact(log: PrivacyRpcLog): TacitPayTransact {
   const { args } = tacitPayInterface.parseLog(log)
+  const extAmount = BigInt(args.extAmount.toString())
   return {
+    action:
+      extAmount > 0n ? 'deposit' : extAmount < 0n ? 'withdrawal' : 'transfer',
+    amount: extAmount < 0n ? -extAmount : extAmount,
     recipient: EthereumAddress(args.recipient),
-    extAmount: BigInt(args.extAmount.toString()),
     relayer: EthereumAddress(args.relayer),
     fee: BigInt(args.fee.toString()),
   }
+}
+
+export function extractTacitPayFlow(
+  log: PrivacyRpcLog,
+  action: Exclude<TacitPayAction, 'transfer'>,
+): PrivacyFlowExtractResult | undefined {
+  const transact = extractTacitPayTransact(log)
+  return transact.action === action
+    ? { count: 1, amount: transact.amount }
+    : undefined
 }

@@ -114,8 +114,8 @@ const tornadoCashWithdrawal: RelayerExtractorDefinition = {
 const tacitPayWithdrawal: RelayerExtractorDefinition = {
   event: TACIT_PAY_TRANSACT_TOPIC,
   extract: (log) => {
-    const { extAmount, fee, relayer, recipient } = extractTacitPayTransact(log)
-    if (extAmount >= 0n || fee === 0n) {
+    const { action, fee, relayer, recipient } = extractTacitPayTransact(log)
+    if (action !== 'withdrawal' || fee === 0n) {
       return Promise.resolve(undefined)
     }
     return toRelayerActivity(relayer.toString(), recipient.toString())
