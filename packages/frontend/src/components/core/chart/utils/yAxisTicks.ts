@@ -19,8 +19,8 @@ export interface YAxisTicksOptions {
   /** Room above a fixed domain's top, as a share of its height. */
   headroom?: number
   /**
-   * Compact linear by default; pass d3's `scaleSymlog` or `scaleLog` for a
-   * log axis, which is ticked at zero and powers of ten.
+   * Compact linear by default; pass d3's `scaleSymlog` for a log axis, which
+   * is ticked at zero and powers of ten.
    */
   scale?: () => InferableScaleLike<number>
   /** Fixed ticks instead of computed ones. */
