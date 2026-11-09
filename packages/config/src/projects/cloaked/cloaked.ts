@@ -45,6 +45,9 @@ export const cloaked: BaseProject = {
     },
     badges: [],
   },
+  upgradesAndGovernance: {
+    content: readProjectMarkdown('cloaked', 'upgradesAndGovernance'),
+  },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.stealthAddress,
     referenceApp: {
@@ -117,9 +120,6 @@ export const cloaked: BaseProject = {
     ],
     adversaries: cloakedAdversaries,
     riskSummary: readProjectMarkdown('cloaked', 'riskSummary'),
-    upgradesAndGovernance: {
-      content: readProjectMarkdown('cloaked', 'upgradesAndGovernance'),
-    },
   },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {

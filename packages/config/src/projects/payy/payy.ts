@@ -270,7 +270,6 @@ export const payy: ScalingProject = {
     // backend (extractPrivacyFlow) plus the extractor union in types.ts, and a
     // solution for withdrawal amounts. Until then Payy is shown as untracked.
     tokens: [],
-    zkCatalogId: ProjectId('barretenberg'),
     exitWindow: {
       value: 'None',
       sentiment: 'bad',
@@ -296,11 +295,6 @@ export const payy: ScalingProject = {
     ],
     adversaries: payyAdversaries,
     riskSummary: readProjectMarkdown('payy', 'riskSummary'),
-    upgradesAndGovernance: {
-      content: readProjectMarkdown('payy', 'upgradesAndGovernance', {
-        multisigStats: discovery.getMultisigStats('PayyMultisig'),
-      }),
-    },
   },
   contracts: {
     addresses: {

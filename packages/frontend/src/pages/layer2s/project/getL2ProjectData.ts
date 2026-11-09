@@ -89,6 +89,7 @@ async function loadL2ProjectPage(manifest: Manifest, slug: string) {
       'customDa',
       'archivedAt',
       'milestones',
+      'upgradesAndGovernance',
       'trackedTxsConfig',
       'tvsConfig',
       'discoveryInfo',

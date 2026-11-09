@@ -13,7 +13,6 @@ import { PRIVACY_ADVERSARIES_SECTION_ID } from '~/pages/privacy/adversaries/priv
 import { getGardenCropsSection } from '~/server/features/garden/getGardenCropsSection'
 import { getUpdatesSection } from '~/server/features/projects/discovery-updates/getUpdatesSection'
 import { countRecentDiscoveryUpdates } from '~/server/features/projects/recent-changes/discoveryUpdates'
-import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
@@ -21,9 +20,7 @@ import { getContractUtils } from '~/utils/project/contracts-and-permissions/getC
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
-import { PROJECT_PAGE_METADATA_FIELDS } from '~/utils/project/getProjectUrl'
 import { getTrustedSetupsSectionFromTrustedSetups } from '~/utils/project/getTrustedSetupsSection'
-import { getVerifiersSection } from '~/utils/project/getVerifiersSection'
 import { optionToRange } from '~/utils/range/range'
 import {
   EMPTY_TVS_BREAKDOWN,
@@ -98,11 +95,8 @@ export async function getPrivacyProjectEntry(
   helpers: SsrHelpers,
 ): Promise<ProjectPrivacyEntry> {
   const defaultChartRange = optionToRange('1y')
-  const [contractUtils, allProjects, tvs] = await Promise.all([
+  const [contractUtils, tvs] = await Promise.all([
     getContractUtils(),
-    ps.getProjects({
-      optional: ['display', ...PROJECT_PAGE_METADATA_FIELDS],
-    }),
     get7dTvsBreakdown({ type: 'all' }),
   ])
 
@@ -267,35 +261,15 @@ export async function getPrivacyProjectEntry(
     })
   }
 
-  if (details.trustedSetups.length > 0) {
+  // A project in the ZK Catalog gets its trusted setups and verifiers from
+  // there, merged in by the page.
+  if (details.trustedSetups.length > 0 && !details.zkCatalogInfo) {
     sections.push({
       type: 'TrustedSetupSection',
       props: {
         id: 'trusted-setups',
         title: 'Trusted setup',
         ...getTrustedSetupsSectionFromTrustedSetups(details.trustedSetups),
-      },
-    })
-  }
-
-  if (
-    details.zkCatalogInfo?.verifierHashes &&
-    details.zkCatalogInfo.verifierHashes.length > 0
-  ) {
-    const verifiersSection = await getVerifiersSection(
-      details.zkCatalogInfo.verifierHashes,
-      contractUtils,
-      allProjects,
-      tvs,
-    )
-
-    sections.push({
-      type: 'VerifiersSection',
-      props: {
-        id: 'verifiers',
-        title: 'Verifier IDs',
-        variant: 'privacy',
-        ...verifiersSection,
       },
     })
   }

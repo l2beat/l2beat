@@ -351,6 +351,16 @@ export const zamaCw: BaseProject = {
     associatedTokens: [],
     warnings: [],
   },
+  upgradesAndGovernance: {
+    content: readProjectMarkdown('zama-cw', 'upgradesAndGovernance', {
+      multisigAStats,
+      multisigBStats,
+      defiMultisigStats,
+      gatewaySafeStats,
+      aclPauserCount,
+      gatewayPauserCount,
+    }),
+  },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.confidentialAmounts,
     referenceApp: {
@@ -440,16 +450,6 @@ export const zamaCw: BaseProject = {
       coprocessorThreshold,
       coprocessorSignerCount,
     }),
-    upgradesAndGovernance: {
-      content: readProjectMarkdown('zama-cw', 'upgradesAndGovernance', {
-        multisigAStats,
-        multisigBStats,
-        defiMultisigStats,
-        gatewaySafeStats,
-        aclPauserCount,
-        gatewayPauserCount,
-      }),
-    },
   },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {

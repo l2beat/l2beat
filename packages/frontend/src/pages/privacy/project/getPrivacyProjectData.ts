@@ -85,9 +85,7 @@ async function loadPrivacyProjectPage(manifest: Manifest, slug: string) {
       projectEntry.sections,
       zkCatalog.sections,
       {
-        insertAfterId: 'verifiers',
-        // The ZK Catalog's versions say more about the same data.
-        replace: ['trusted-setups', 'verifiers'],
+        insertAfterId: 'upgrades-and-governance',
         // The same value as Value Locked. TODO: decide which to show.
         drop: ['tvs'],
       },

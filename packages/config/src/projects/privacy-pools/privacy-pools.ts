@@ -56,10 +56,6 @@ assert(
   ENTRYPOINT.sinceTimestamp !== undefined,
   'PrivacyPoolsEntrypoint must have a sinceTimestamp',
 )
-const PRIVACY_POOLS_SINCE_TIMESTAMP = UnixTime(
-  Math.min(...BUCKETS.map((bucket) => bucket.sinceTimestamp)),
-)
-
 const multisigStats = discovery.getMultisigStats('Privacy Pools Multisig')
 const feeSummary = formatPrivacyPoolsFeeSummary()
 
@@ -142,17 +138,10 @@ export const privacyPools: BaseProject = {
     techStack: {
       zkVM: [ZK_CATALOG_TAGS.curve.BN254, ZK_CATALOG_TAGS.Groth16.Snarkjs],
     },
-    proofSystemInfo: '',
     trustedSetups: [
       {
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
         ...TRUSTED_SETUPS.PrivacyPools,
-      },
-    ],
-    projectsForTvs: [
-      {
-        projectId: ProjectId('privacy-pools'),
-        sinceTimestamp: PRIVACY_POOLS_SINCE_TIMESTAMP,
       },
     ],
     verifierHashes: [
@@ -164,16 +153,10 @@ export const privacyPools: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
         knownDeployments: [
           {
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6',
-            ),
+            address: discovery.getContract('RagequitVerifier').address,
           },
           {
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d',
-            ),
+            address: discovery.getContract('WithdrawalVerifier').address,
           },
         ],
         verificationStatus: 'successful',
@@ -184,6 +167,11 @@ export const privacyPools: BaseProject = {
         ),
       },
     ],
+  },
+  upgradesAndGovernance: {
+    content: readProjectMarkdown('privacy-pools', 'upgradesAndGovernance', {
+      multisigStats,
+    }),
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.pool,
@@ -250,20 +238,11 @@ export const privacyPools: BaseProject = {
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.anyAmount],
     adversaries: privacyPoolsAdversaries,
     riskSummary: readProjectMarkdown('privacy-pools', 'riskSummary'),
-    upgradesAndGovernance: {
-      content: readProjectMarkdown('privacy-pools', 'upgradesAndGovernance', {
-        multisigStats,
-      }),
-    },
   },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [],
-    zkVerifiers: [
-      discovery.getContract('WithdrawalVerifier').address,
-      discovery.getContract('RagequitVerifier').address,
-    ],
   },
 }
 

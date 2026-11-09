@@ -141,6 +141,9 @@ export const strk20: BaseProject = {
       type: 'general',
     },
   ],
+  upgradesAndGovernance: {
+    content: readProjectMarkdown('strk20', 'upgradesAndGovernance'),
+  },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
     referenceApp: {
@@ -223,9 +226,6 @@ export const strk20: BaseProject = {
     ],
     adversaries: strk20Adversaries,
     riskSummary: readProjectMarkdown('strk20', 'riskSummary'),
-    upgradesAndGovernance: {
-      content: readProjectMarkdown('strk20', 'upgradesAndGovernance'),
-    },
   },
 }
 
