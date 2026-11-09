@@ -1,8 +1,4 @@
-import {
-  formatCurrency,
-  formatNumberWithCommas,
-  formatSeconds,
-} from '@l2beat/shared-pure'
+import { formatCurrency, formatSeconds } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import {
   Tooltip,
@@ -18,7 +14,7 @@ import { CustomLinkIcon } from '~/icons/Outlink'
 import { InteropNoDataBadge } from '~/pages/interop/components/InteropNoDataBadge'
 import type { InteropSelection } from '~/pages/interop/utils/types'
 import type { InteropProtocolTransferDetailsItem } from '~/server/features/layer2s/interop/types'
-import { getTokenAmountDecimals } from './getTokenAmountDecimals'
+import { formatTokenAmount } from './formatTokenAmount'
 
 export type TransferRow = InteropProtocolTransferDetailsItem & BasicTableRow
 
@@ -195,15 +191,8 @@ function TokenAmount({
   iconUrl: string
   selectedChains: InteropSelection | undefined
 }) {
-  const decimals =
-    amount !== undefined ? getTokenAmountDecimals(amount, valueUsd) : 0
   const label =
-    amount !== undefined
-      ? formatNumberWithCommas(amount, {
-          minimumFractionDigits: 0,
-          maximumFractionDigits: decimals,
-        })
-      : symbol
+    amount === undefined ? symbol : formatTokenAmount(amount, valueUsd)
 
   const content = (
     <>
