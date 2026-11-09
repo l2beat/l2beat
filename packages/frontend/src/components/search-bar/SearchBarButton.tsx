@@ -32,7 +32,7 @@ export function SearchBarButton({ className }: { className?: string }) {
       </span>
       {/* Touch usually comes without a keyboard. */}
       <kbd className="ml-auto flex not-can-hover:hidden size-5 select-none items-center justify-center rounded border border-none bg-icon-secondary px-1.5 font-bold font-mono text-2xs text-primary-invert leading-none">
-        /
+        <span className="[text-box:trim-both_cap_alphabetic]">/</span>
       </kbd>
     </button>
   )

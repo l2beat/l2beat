@@ -16,7 +16,6 @@ import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
 import { BigPizzaRosette } from '~/components/rosette/pizza/BigPizzaRosette'
-import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { StickyMobileSectionNavigation } from '~/components/section-navigation/StickyMobileSectionNavigation'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
@@ -248,7 +247,6 @@ export function PrivacyProjectPage({
                 )}
               </div>
             </div>
-            <ScrollToTopButton />
           </div>
         </SideNavLayout>
       </HydrationBoundary>

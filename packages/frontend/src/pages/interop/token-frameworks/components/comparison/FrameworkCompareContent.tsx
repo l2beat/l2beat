@@ -77,7 +77,7 @@ export function FrameworkCompareContent({
               lowerIsBetter: true,
             },
             {
-              label: 'Avg. transfer size',
+              label: 'Avg. transfer value',
               leftValue: left?.entry.averageValue ?? null,
               rightValue: right?.entry.averageValue ?? null,
               format: (value) => formatCurrency(value, 'usd'),

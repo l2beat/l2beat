@@ -1,6 +1,6 @@
 import {
   EthereumAddress,
-  formatNumber,
+  formatCompactAmount,
   formatSeconds,
   ProjectId,
   UnixTime,
@@ -75,15 +75,18 @@ export const ethereum: BaseProject = {
       description: readProjectMarkdown('ethereum', 'technologySequencing'),
       sequencingSpec: {
         type: 'sequencer-set',
-        blockTime: { value: `${ethereumBlockTimeSeconds} seconds` },
+        blockTime: { value: formatSeconds(ethereumBlockTimeSeconds) },
         proposerRotationTime: {
-          value: `${ethereumBlockTimeSeconds} seconds`,
+          value: formatSeconds(ethereumBlockTimeSeconds),
           description:
             'One validator index is selected for every slot with probability proportional to its effective balance. A missed proposal leaves the slot empty.',
         },
         sequencerCount: {
           value: `${stakeDistribution.validatorCount.toLocaleString('en-US')} validator indices`,
-          secondLine: `${formatNumber(stakeDistribution.totalStake)} ${stakeDistribution.stakeToken}`,
+          secondLine: formatCompactAmount(
+            stakeDistribution.totalStake,
+            stakeDistribution.stakeToken,
+          ),
           description:
             'This snapshot is generated from Dune validator-day summaries and curated staking attribution. Lido stake is split among its node operators. Validator indices are not independent operators, and compounding validators can have different effective balances.',
         },
