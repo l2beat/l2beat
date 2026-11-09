@@ -9,6 +9,7 @@ export type SyncMetadataFeature =
   | 'liveness'
   | 'dataAvailability'
   | 'tvs'
+  | 'privacy'
 
 export interface SyncMetadataRecord {
   feature: SyncMetadataFeature
