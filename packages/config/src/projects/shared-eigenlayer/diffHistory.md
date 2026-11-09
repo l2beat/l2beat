@@ -9,7 +9,7 @@ Generated with discovered.json: 0x483333e8c8aca8f7025720e44d0a9e5f22c32d2f
 
 ## Description
 
-EigenLayerOperationsMultisig: 5 members rotated. StrategyManager: first entry in the burn-or-redistribute queue, operator set 0 of an unverified AVS deployed 2026-10-29 by the Lightblocks Labs (eOracle) operator, which allocated the 31.08 stETH-strategy shares delegated to it from its own dormant staker wallet and self-slashed them twice with redistribution to itself: 31.1 stETH already withdrawn through Lido, 2.68 shares pending.
+EigenLayerOperationsMultisig: 5 members rotated. StrategyManager: first entry in the burn-or-redistribute queue. The Lightblocks Labs (eOracle) operator deployed an unverified AVS on 2026-10-29 with itself as the only operator and the AVS as slasher and redistribution recipient, then slashed the 31.08 stETH-strategy shares delegated to it by its own staker wallet, dormant since 2024, and received the proceeds: 31.1 stETH already withdrawn through Lido, 2.68 shares pending. It appears the operator used redistributable slashing to pull its own stake out of a staker wallet it can no longer sign from.
 
 ## Watched changes
 
