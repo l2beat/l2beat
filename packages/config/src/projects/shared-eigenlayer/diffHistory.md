@@ -9,7 +9,7 @@ Generated with discovered.json: 0x483333e8c8aca8f7025720e44d0a9e5f22c32d2f
 
 ## Description
 
-EigenLayerOperationsMultisig: 5 members rotated. StrategyManager: first entry in the burn-or-redistribute queue, from an unverified AVS deployed 2026-10-29 whose deployer is its only operator, slasher and redistribution recipient; it self-slashed twice in the stETH strategy, 31.1 stETH already redistributed to the deployer, 2.68 shares pending. Discovery no longer follows the AVS addresses in getPendingOperatorSets.
+EigenLayerOperationsMultisig: 5 members rotated. StrategyManager: first entry in the burn-or-redistribute queue, from an unverified AVS deployed 2026-10-29 that is its own slasher and redistribution recipient, with its deployer as its only operator; two self-slashes in the stETH strategy, 31.1 stETH already redistributed and forwarded to the deployer, 2.68 shares pending. Discovery no longer follows the AVS addresses in getPendingOperatorSets.
 
 ## Watched changes
 
