@@ -1,3 +1,4 @@
+import { ProjectId } from '@l2beat/shared-pure'
 import fuzzysort from 'fuzzysort'
 import type {
   SearchBarProjectEntry,
@@ -73,6 +74,15 @@ export function searchProjectsAndTokens(
       scoreMultiplier: (entry) => (entry.category === 'zkCatalog' ? 0.9 : 1),
     },
   )
+  if (isEthereumPrefix(query)) {
+    // Ranked first, so "eth" or "ethere" never shows Ethereal above it.
+    for (const entry of matches) {
+      if (entry.type === 'project' && entry.id === ProjectId.ETHEREUM) {
+        entry.searchScore = Number.POSITIVE_INFINITY
+      }
+    }
+    matches.sort((a, b) => b.searchScore - a.searchScore || 0)
+  }
   return [
     ...matches
       .filter((entry) => entry.type !== 'token')
@@ -81,6 +91,11 @@ export function searchProjectsAndTokens(
       .filter((entry) => entry.type === 'token')
       .slice(0, TOKEN_RESULTS_LIMIT),
   ]
+}
+
+function isEthereumPrefix(query: string): boolean {
+  const normalized = normalize(query)
+  return normalized !== '' && ProjectId.ETHEREUM.startsWith(normalized)
 }
 
 function rankSearchResults<T extends SearchableSearchBarEntry>(
