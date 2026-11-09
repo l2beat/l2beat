@@ -1,5 +1,5 @@
 import type { DaLayerThroughput, Milestone } from '@l2beat/config'
-import { formatBytes } from '@l2beat/shared-pure'
+import { formatBytes, UnixTime } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { DaThroughputByProjectChart } from '~/components/chart/data-availability/DaThroughputByProjectChart'
@@ -9,7 +9,7 @@ import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
 import { useTRPC } from '~/trpc/React'
-import { formatRange } from '~/utils/dates'
+import { formatTimestamp } from '~/utils/dates'
 import { optionToRange, rangeToResolution } from '~/utils/range/range'
 
 export interface BlobsThroughputChartProps {
@@ -132,12 +132,22 @@ function Header({
           <span className="whitespace-nowrap font-bold text-xl">
             {formatBytes(used)}
           </span>
-          {/* The day it covers, as the live total below is over the last 24h */}
+          {/* Names its day, as the live total below is over the last 24h */}
           <span className="whitespace-nowrap text-secondary text-xs leading-none">
-            {formatRange(...day).replaceAll('\n', ' ')}
+            {describePastDay(day)}
           </span>
         </div>
       )}
     </div>
   )
+}
+
+/**
+ * One date, not a range, so it reads as the value's day rather than the
+ * chart's span. A lagging indexer's 24 hours end mid-day, so they get a time.
+ */
+function describePastDay([from, to]: [number, number]): string {
+  return from === UnixTime.toStartOf(from, 'day')
+    ? `/ day · ${formatTimestamp(from)}`
+    : `/ 24h to ${formatTimestamp(to, { mode: 'datetime' })}`
 }
