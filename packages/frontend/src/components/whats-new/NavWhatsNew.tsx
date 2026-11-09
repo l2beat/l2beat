@@ -19,8 +19,7 @@ export function NavWhatsNew({
   const isClient = useIsClient()
   const { track } = useTracking()
   const { isDesktop } = useDevice()
-  // Opening the item or dismissing it hides it until the next one; either
-  // also retires the What's new banner for it.
+  // Opening the item or dismissing it hides it until the next one.
   const [seen, setSeen] = useLocalStorage(
     item ? `whats-new-${item.id}` : 'whats-new-none',
     false,
@@ -40,7 +39,6 @@ export function NavWhatsNew({
         <button
           type="button"
           onClick={() => {
-            // The same event as the banner, which it replaces from lg.
             track('whatsNewClicked', { device, action: 'close' })
             setSeen(true)
           }}

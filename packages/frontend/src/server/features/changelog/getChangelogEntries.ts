@@ -1,4 +1,3 @@
-import type { WhatsNewWidget } from '~/components/whats-new/WhatsNewWidget'
 import type { CollectionEntry } from '~/content/getCollection'
 import { getCollection } from '~/content/getCollection'
 
@@ -52,9 +51,8 @@ export function selectActiveWhatsNewEntry(
 }
 
 /**
- * The announcement in the nav. The nav always has room for it, so unlike the
- * banner it falls back to the most recent published entry when no
- * campaign is active.
+ * The announcement in the nav. The nav always has room for it, so it falls
+ * back to the most recent published entry when no campaign is active.
  */
 export function selectNavWhatsNewEntry(
   entries: ChangelogEntry[],
@@ -66,31 +64,6 @@ export function selectNavWhatsNewEntry(
       (entry) => entry.whatsNew && entry.publishedAt.getTime() <= now.getTime(),
     )
   )
-}
-
-export function selectActiveChangelogWhatsNewWidget(
-  entries: ChangelogEntry[],
-  now: Date,
-): WhatsNewWidget | undefined {
-  const entry = selectActiveWhatsNewEntry(entries, now)
-  if (!entry?.whatsNew) {
-    return undefined
-  }
-
-  return {
-    id: `changelog-${entry.id}`,
-    title: entry.title,
-    href: entry.whatsNew.href ?? `/changelog#${entry.id}`,
-    image: entry.whatsNew.image,
-    disabledOnMatches: entry.whatsNew.disabledOnMatches,
-    alt: entry.whatsNew.alt,
-  }
-}
-
-export function getActiveChangelogWhatsNewWidget(
-  now: Date = new Date(),
-): WhatsNewWidget | undefined {
-  return selectActiveChangelogWhatsNewWidget(getChangelogEntries(), now)
 }
 
 function mapChangelogEntry(
