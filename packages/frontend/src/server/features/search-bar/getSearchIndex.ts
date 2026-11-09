@@ -35,10 +35,12 @@ export function getSearchIndexPath(hash: string): string {
 
 const searchIndexCache = new FrontendInMemoryCache('getSearchIndex')
 
-// Same lifetime as the cached token list it is built from.
+// Short, because the token list it reads has a cache of its own: with equal
+// lifetimes, an index built from that cache's stale copy would keep it for
+// another full lifetime. A rebuild costs ~10 ms.
 export function getSearchIndexFile(): Promise<SearchIndexFile> {
   return searchIndexCache.get(
-    { key: ['search-index'], ttl: 60 * 10, staleWhileRevalidate: 60 * 15 },
+    { key: ['search-index'], ttl: 60, staleWhileRevalidate: 60 * 15 },
     buildSearchIndexFile,
   )
 }
