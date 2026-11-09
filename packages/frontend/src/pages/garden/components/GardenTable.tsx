@@ -130,12 +130,13 @@ function EvaluatedCrop({
 function ProjectCell({ entry }: { entry: GardenEntry }) {
   const content = (
     <>
+      {/* Preflight's max-width: 100% makes WebKit size the column as if the icon were not there, so the name overlaps the plants. */}
       <img
         src={entry.iconUrl}
         alt=""
         width={40}
         height={40}
-        className="size-[34px] shrink-0 rounded-lg md:size-10"
+        className="size-[34px] max-w-none shrink-0 rounded-lg md:size-10"
       />
       <div className="flex flex-col leading-tight">
         <span
