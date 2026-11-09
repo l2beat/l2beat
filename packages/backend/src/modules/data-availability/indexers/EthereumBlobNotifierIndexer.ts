@@ -27,7 +27,8 @@ const COUNT_THRESHOLD = 100
 /**
  * This indexer is used to notify about unmatched blob pairs for Ethereum.
  * It is run daily and checks for unmatched blob pairs for the previous day.
- * If there are any unmatched blob pairs, it will notify about them on discord channel.
+ * It posts to a discord channel every day, even when there is nothing to
+ * report, so a silent channel means the notifier is down.
  */
 export class EthereumBlobNotifierIndexer extends ManagedChildIndexer {
   constructor(
@@ -52,12 +53,6 @@ export class EthereumBlobNotifierIndexer extends ManagedChildIndexer {
 
     this.logger.info('Checking for unmatched blob pairs', { to })
     const unmatchedPairs = await this.getUnmatchedPairs(to)
-
-    if (unmatchedPairs.length === 0) {
-      this.logger.info('No unmatched blob pairs found')
-      return to
-    }
-
     this.logger.info('Found unmatched blob pairs', {
       count: unmatchedPairs.length,
     })
@@ -120,6 +115,15 @@ export class EthereumBlobNotifierIndexer extends ManagedChildIndexer {
     const date = new Date((UnixTime.toStartOf(to, 'day') - UnixTime.DAY) * 1000)
       .toISOString()
       .slice(0, 10)
+
+    if (pairs.length === 0) {
+      return [
+        [
+          `**Unmatched Ethereum Blob Pairs** (${date})`,
+          `No address pairs with ${COUNT_THRESHOLD}+ blobs outside project configs.`,
+        ].join('\n'),
+      ]
+    }
 
     const sorted = [...pairs].sort((a, b) => b.count - a.count)
 

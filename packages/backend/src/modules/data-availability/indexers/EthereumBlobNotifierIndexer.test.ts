@@ -28,7 +28,8 @@ describe(EthereumBlobNotifierIndexer.name, () => {
       expect(discordClient.sendMessage).not.toHaveBeenCalled()
     })
 
-    it('runs at 1 AM UTC and sends no notification when no unmatched pairs', async () => {
+    // A daily post even on quiet days tells "nothing to report" apart from "notifier down"
+    it('sends an all-clear notification when no unmatched pairs', async () => {
       const discordClient = mockDiscordClient()
       const indexer = createIndexer({
         blobsRepository: mockBlobsRepository([
@@ -43,7 +44,9 @@ describe(EthereumBlobNotifierIndexer.name, () => {
       const result = await indexer.update(0, oneAm)
 
       expect(result).toEqual(oneAm)
-      expect(discordClient.sendMessage).not.toHaveBeenCalled()
+      expect(discordClient.sendMessage).toHaveBeenOnlyCalledWith(
+        expect.includes('No address pairs with 100+ blobs'),
+      )
     })
 
     it('sends Discord notification for unmatched pairs', async () => {
