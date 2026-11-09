@@ -7,7 +7,7 @@ import {
 import type { InteropNotifier } from './notifications/InteropNotifier'
 
 describe(InteropTransferAnalyzer.name, () => {
-  it('notifies only extreme suspicious transfers from the processed batch', () => {
+  it('notifies extreme mismatches whose larger side reaches the threshold', () => {
     const notifier = mockObject<InteropNotifier>({
       notifySuspiciousTransfers: mockFn().returns(undefined),
     } as any)
@@ -17,18 +17,23 @@ describe(InteropTransferAnalyzer.name, () => {
       [
         transfer({
           transferId: 'msg1',
-          srcValueUsd: 600,
-          dstValueUsd: 100,
+          srcValueUsd: 600_000,
+          dstValueUsd: 100_000,
         }),
         transfer({
           transferId: 'msg2',
-          srcValueUsd: 200,
-          dstValueUsd: 100,
+          srcValueUsd: 200_000,
+          dstValueUsd: 100_000,
         }),
         transfer({
           transferId: 'msg3',
           srcValueUsd: 50,
-          dstValueUsd: 400,
+          dstValueUsd: 500_000,
+        }),
+        transfer({
+          transferId: 'msg4',
+          srcValueUsd: 10,
+          dstValueUsd: 99_000,
         }),
       ],
       UnixTime(2_000_000),
@@ -38,10 +43,16 @@ describe(InteropTransferAnalyzer.name, () => {
     const suspiciousTransfers =
       notifier.notifySuspiciousTransfers.calls[0]?.args[1]
 
-    expect(suspiciousTransfers).toHaveLength(1)
-    expect(suspiciousTransfers?.[0]?.transferId).toEqual('msg1')
-    expect(suspiciousTransfers?.[0]?.valueRatio).toEqual(6)
-    expect(suspiciousTransfers?.[0]?.dominantSide).toEqual('src')
+    expect(
+      suspiciousTransfers?.map(({ transferId, valueRatio, dominantSide }) => ({
+        transferId,
+        valueRatio,
+        dominantSide,
+      })),
+    ).toEqual([
+      { transferId: 'msg1', valueRatio: 6, dominantSide: 'src' },
+      { transferId: 'msg3', valueRatio: 10_000, dominantSide: 'dst' },
+    ])
   })
 })
 
