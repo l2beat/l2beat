@@ -12,11 +12,13 @@ export interface SyncStatus {
 
 // Outputs: whether the discovered outputs still match the project config.
 export function useOutputsSyncStatus(project: string): SyncStatus {
-  const { reasons, isPending, isError } = useConfigSyncStatus({ project })
+  const { reasons, isError } = useConfigSyncStatus({ project })
+  // The hook also reports pending on every 20s background refresh; keeping the
+  // last result meanwhile stops the gear dot from blinking off.
   return toOutputsSyncStatus({
     reasons: reasons ?? [],
     isError,
-    isPending,
+    isPending: reasons === undefined && !isError,
   })
 }
 

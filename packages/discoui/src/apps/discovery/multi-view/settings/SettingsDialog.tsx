@@ -130,7 +130,7 @@ function SettingsNavigation() {
   return (
     <RadixTabs.List
       aria-label="Settings sections"
-      className="flex w-40 shrink-0 flex-col gap-0.5 border-coffee-700 border-r bg-coffee-800/50 p-2 max-sm:w-auto max-sm:flex-row max-sm:border-r-0 max-sm:border-b"
+      className="flex w-40 shrink-0 flex-col gap-0.5 border-coffee-700 border-r bg-coffee-800/50 p-2 max-sm:w-auto max-sm:flex-row max-sm:overflow-x-auto max-sm:border-r-0 max-sm:border-b"
     >
       {SETTINGS_TABS.map((tab) => (
         <RadixTabs.Trigger
