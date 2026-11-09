@@ -17,7 +17,11 @@ import type { SearchBarCategory } from './searchBarCategories'
  * small. The server encodes it in `getSearchIndex.ts`.
  */
 
-/** Versioned, so a page never reads rows in a layout it doesn't know. */
+/**
+ * Versioned, so a page never reads rows in a layout it doesn't know. Bump it
+ * on any change to the schemas below, new enum values included: open tabs
+ * parse strictly, so one they don't know would fail their search.
+ */
 export const SEARCH_INDEX_PATH = '/api/search-index/v1'
 
 export const SearchIndexProjectKind = v.enum([

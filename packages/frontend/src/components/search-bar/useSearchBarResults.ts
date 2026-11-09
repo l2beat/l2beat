@@ -39,11 +39,14 @@ export function useSearchBarResults(options: {
     }),
   )
   const source = isAddress ? address : index
+  // A loaded index keeps answering while it revalidates in the background,
+  // so only a missing one shows the skeleton or a problem.
+  const hasIndex = !isAddress && index.data !== undefined
 
   // Both leave the list empty, which would otherwise read as "No results
   // found". A paused query runs by itself on the browser's `online` event.
-  const isOffline = source.fetchStatus === 'paused'
-  const isFailed = source.isError && source.fetchStatus === 'idle'
+  const isOffline = !hasIndex && source.fetchStatus === 'paused'
+  const isFailed = !hasIndex && source.isError && source.fetchStatus === 'idle'
   const isSettled = !isAddress || value === debouncedValue
   const problem: SearchProblem | undefined =
     value === '' || !isSettled
@@ -70,7 +73,7 @@ export function useSearchBarResults(options: {
   return {
     groups,
     showsResults: value !== '' && isSettled,
-    isLoading: value !== '' && (!isSettled || source.isFetching),
+    isLoading: value !== '' && !hasIndex && (!isSettled || source.isFetching),
     problem,
     retry: () => void source.refetch(),
   }
