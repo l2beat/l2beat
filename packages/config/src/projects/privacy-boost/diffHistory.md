@@ -1,3 +1,130 @@
+Generated with discovered.json: 0xf24975692aa4869786cc558947cacc37aa4a8ec7
+
+# Diff at Mon, 09 Nov 2026 12:39:58 GMT:
+
+- id: 68e87011
+- author: Dawid Drobny (<dawdrobny@gmail.com>)
+- comparing to: main@12c03e9d5137c5fbfad3f3b6fb22930c1055aa34 block: 1790852159
+- current timestamp: 1794227912
+
+## Description
+
+Add the OP Mainnet deployment next to Base.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790852159 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract AuthPoseidon (oeth:0x09257a2B24C27586c2Db2C18c4b53bE459c7e870) [privacy-boost/AuthPoseidon]
+    +++ description: Poseidon2 hashing helper used by AuthRegistry to compute account IDs, authorization leaves, spend approval commitments and Merkle tree nodes.
+```
+
+```diff
++   Status: CREATED
+    contract TokenRegistryProxyAdmin_OP (oeth:0x11B75DE42f6107AE4D5C50e4e34af6E34F63C0dd) [global/ProxyAdmin]
+    +++ description: Admin contract of the TokenRegistry proxy.
+```
+
+```diff
++   Status: CREATED
+    contract Groth16DepositVerifier (oeth:0x16e1dE876dEB1C3251A1E923A206605D084F25C5) [privacy-boost/Groth16DepositVerifier_v2]
+    +++ description: Groth16 verifier for PrivacyBoost deposit epoch proofs. Verification keys are stored in SSTORE2 data contracts.
+```
+
+```diff
++   Status: CREATED
+    contract Groth16GiftClaimVerifier (oeth:0x3C0028300aA32e5B0069fc4731D367E40BCF4670) [privacy-boost/Groth16GiftClaimVerifier]
+    +++ description: Groth16 verifier for PrivacyBoost gift settlement and public gift exit proofs. Verification keys are stored in SSTORE2 data contracts.
+```
+
+```diff
++   Status: CREATED
+    contract ExternalCallGateway (oeth:0x54B576782d3CE325CAc9861E17bB5d7926e41955) [privacy-boost/ExternalCallGateway]
+    +++ description: Gateway executing pool-authorized external calls against an allowlist of target addresses and function selectors, with optional input/output token constraints. Enforces proof-bound settlement receipts and redeposits returned funds into the pool.
+```
+
+```diff
++   Status: CREATED
+    contract AuthRegistry_OP (oeth:0x54e87D7D0E420B24B9FdFE9cFcAe88162093A48f) [privacy-boost/AuthRegistry_v2]
+    +++ description: Registry of PrivacyBoost account authorization keys and onchain spend approvals. Supports BabyJubJub keys authorized by account-owner signatures, approval-only accounts and revocable batches of spend approvals. Tracks current and recently superseded auth roots; forced withdrawals validate live auth records directly.
+```
+
+```diff
++   Status: CREATED
+    contract AdminMultisig_OP (oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Groth16PortalDepositVerifier (oeth:0x6806eA551C3c8350Ab156eC5001D28705dCda2B6) [privacy-boost/Groth16PortalDepositVerifier]
+    +++ description: Groth16 verifier for PrivacyBoost portal deposit epoch proofs. Verification keys are stored in SSTORE2 data contracts.
+```
+
+```diff
++   Status: CREATED
+    contract OperatorMultisig_OP (oeth:0x78a927114A20Fb34b9d8d9c6a9A75E65f918D52B) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenRegistry_OP (oeth:0x867872f80b1e22D30C4b06FcB474aC10B9DAA2f6) [privacy-boost/TokenRegistry]
+    +++ description: Registry mapping compact token IDs to the ERC-20 tokens accepted by the PrivacyBoost pool.
+```
+
+```diff
++   Status: CREATED
+    contract AuditGatewayProxyAdmin_OP (oeth:0x96f3E5551E1330f31974597217019812667544c8) [global/ProxyAdmin]
+    +++ description: Admin contract of the AuditGateway proxy.
+```
+
+```diff
++   Status: CREATED
+    contract PrivacyBoostProxyAdmin_OP (oeth:0x9d3F3CcD3c7a084eE73C4584CE33e77CEdaEc7E2) [global/ProxyAdmin]
+    +++ description: Admin contract of the PrivacyBoost proxy.
+```
+
+```diff
++   Status: CREATED
+    contract Groth16ForcedVerifier (oeth:0xA307E5d45Dee6F1EF1F7ef67619a0aFE8DcdacFE) [privacy-boost/Groth16ForcedVerifier_v2]
+    +++ description: Groth16 verifier for PrivacyBoost forced withdrawal proofs. Verification keys are stored in SSTORE2 data contracts.
+```
+
+```diff
++   Status: CREATED
+    contract Groth16EpochVerifier (oeth:0xac23C35cBA4a6C60EccBef31bC59Eacc2868663B) [privacy-boost/Groth16EpochVerifier_v2]
+    +++ description: Groth16 verifier for PrivacyBoost private transfer and withdrawal epochs. Keys are indexed by (max transfers, inputs per transfer, outputs per transfer). The nested key registry is not enumerable and emits no registration events; discovery monitors the reviewed production circuit configurations.
+```
+
+```diff
++   Status: CREATED
+    contract AuditGateway_OP (oeth:0xb328535aB3bCe578996AE9af5A7f44f175721118) [privacy-boost/AuditGateway]
+    +++ description: Manages the list of auditors authorized to query private user data through the Audit API of the TEE, and stores an onchain log of every audit access so that users can publicly verify whether and when their private data was disclosed.
+```
+
+```diff
++   Status: CREATED
+    contract TreasuryMultisig_OP (oeth:0xc82018cbC82A50064e3DdEF79EAdC319710Ffc5e) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PrivacyBoost_OP (oeth:0xca689828854a422CF1f778be03CA80549408F620) [privacy-boost/PrivacyBoost_v2]
+    +++ description: Main contract of the PrivacyBoost pool. Escrows ERC-20 tokens and verifies relay-submitted private transfer, withdrawal, deposit, portal deposit and gift settlement proofs. Supports approved external gateway calls and permissionless exits through delayed forced withdrawals or public gift exits.
+```
+
+```diff
++   Status: CREATED
+    contract AuthRegistryProxyAdmin_OP (oeth:0xfB66dfD80B9a96c2BF2bcfDC5E6715C48916eD6C) [global/ProxyAdmin]
+    +++ description: Admin contract of the AuthRegistry proxy.
+```
+
 Generated with discovered.json: 0x362a7dc44795b95f722fd65f5082ea11197bb2bc
 
 # Diff at Fri, 16 Oct 2026 05:36:52 GMT:
