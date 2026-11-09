@@ -9,7 +9,7 @@ Generated with discovered.json: 0x483333e8c8aca8f7025720e44d0a9e5f22c32d2f
 
 ## Description
 
-EigenLayerOperationsMultisig: 5 members rotated. StrategyManager: first entry in the burn-or-redistribute queue, from an unverified AVS deployed 2026-10-29 that is its own slasher and redistribution recipient, with its deployer as its only operator; two self-slashes in the stETH strategy, 31.1 stETH already redistributed and forwarded to the deployer, 2.68 shares pending. Discovery no longer follows the AVS addresses in getPendingOperatorSets.
+EigenLayerOperationsMultisig: 5 members rotated. StrategyManager: first entry in the burn-or-redistribute queue, operator set 0 of an unverified AVS deployed 2026-10-29 by the Lightblocks Labs (eOracle) operator, which allocated the 31.08 stETH-strategy shares delegated to it from its own dormant staker wallet and self-slashed them twice with redistribution to itself: 31.1 stETH already withdrawn through Lido, 2.68 shares pending.
 
 ## Watched changes
 
