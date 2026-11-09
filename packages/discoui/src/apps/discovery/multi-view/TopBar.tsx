@@ -24,17 +24,19 @@ export function TopBar(props: { project: string }) {
   const useDevMode = true
 
   return (
-    <div className="select-none items-center justify-between px-2 max-md:invisible md:flex md:h-10">
-      <div className="hidden items-center gap-2 md:flex">
+    <div className="select-none grid-cols-[1fr_auto_1fr] items-center gap-3 px-2 max-md:invisible md:grid md:h-10">
+      <div className="hidden min-w-0 items-center gap-2 md:flex">
         <Link to="/ui">
           <img className="relative top-[-3px] h-[20px]" src="/logo.svg" />
         </Link>
-        <p className="font-semibold text-coffee-100 text-sm">{props.project}</p>
-        <div className="border-coffee-600 border-l pl-3">
-          <Search />
-        </div>
+        <p className="truncate font-semibold text-coffee-100 text-sm">
+          {props.project}
+        </p>
       </div>
-      <div className="hidden items-center gap-3 md:flex">
+      <div className="hidden md:flex">
+        <Search />
+      </div>
+      <div className="hidden items-center gap-3 justify-self-end md:flex">
         {!IS_READONLY && (
           <div className="flex justify-center gap-1 border-coffee-600 border-r pr-3">
             <Button
