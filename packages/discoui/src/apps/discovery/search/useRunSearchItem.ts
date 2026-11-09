@@ -69,7 +69,7 @@ export function useRunSearchItem(project: string): (item: SearchItem) => void {
   const ensureLeaf = useDockingStore((s) => s.ensureLeaf)
   const setSourceIndex = useCodeStore((s) => s.setSourceIndex)
   const showRange = useCodeStore((s) => s.showRange)
-  const setOpen = useSearchStore((s) => s.setOpen)
+  const closeWithFreshQuery = useSearchStore((s) => s.closeWithFreshQuery)
   const setScope = useSearchStore((s) => s.setScope)
   const pushRecentAddress = useSearchStore((s) => s.pushRecentAddress)
   const runCommand = useRunSearchCommand(project)
@@ -106,7 +106,7 @@ export function useRunSearchItem(project: string): (item: SearchItem) => void {
         runCommand(item.command)
         break
     }
-    setOpen(false)
+    closeWithFreshQuery()
   }
 }
 
