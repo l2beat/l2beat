@@ -2,13 +2,13 @@ import { isEditableTarget } from '../../../utils/isEditableTarget'
 import { useDockingStore } from '../multi-view/store'
 import { useSearchStore } from '../search/store'
 import { resolveKeybinding } from './resolve'
+import type { ScopeContext } from './scope'
 import { PLATFORM, shortcutFromEvent } from './shortcut'
 import {
   type Keybinding,
   selectKeybindings,
   useKeybindingsStore,
 } from './store'
-import type { WhenContext } from './when'
 
 /** The keybinding a key press runs right now, if any. */
 export function findKeybindingForEvent(
@@ -24,17 +24,15 @@ export function findKeybindingForEvent(
   return resolveKeybinding(
     selectKeybindings(useKeybindingsStore.getState()),
     shortcut,
-    readWhenContext(event.target),
+    readScopeContext(event.target),
     PLATFORM,
   )
 }
 
-export function readWhenContext(target: EventTarget | null): WhenContext {
+function readScopeContext(target: EventTarget | null): ScopeContext {
   const activeLeaf = useDockingStore.getState().activeLeaf
   return {
     inputFocus: acceptsTyping(target),
-    editorFocus:
-      target instanceof Element && target.closest('.cm-editor') !== null,
     nodesPanelActive: activeLeaf === undefined || activeLeaf === 'nodes',
     searchOpen: useSearchStore.getState().opened,
     controlFocus:

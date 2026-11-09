@@ -6,6 +6,7 @@ import { cn } from '../../../../utils/cn'
 import { COMMANDS } from '../../keybindings/commands'
 import { groupKeybindings } from '../../keybindings/groups'
 import { findConflicts } from '../../keybindings/resolve'
+import { SCOPE_LABELS } from '../../keybindings/scope'
 import {
   PLATFORM,
   type Shortcut,
@@ -20,7 +21,6 @@ import { AddKeybindingPopover } from './AddKeybindingPopover'
 import { KeyChips } from './KeyChips'
 import { SettingsSection } from './SettingRow'
 import { ShortcutRecorder } from './ShortcutRecorder'
-import { WhenPicker } from './WhenPicker'
 
 export function KeybindingsSettingsTab() {
   const keybindings = useKeybindingsStore(selectKeybindings)
@@ -150,9 +150,8 @@ function KeybindingRow(props: {
           <span className="font-medium text-coffee-100 text-sm">{title}</span>
           <KeybindingActions keybinding={keybinding} title={title} />
         </div>
-        <div className="mt-1 flex min-h-5 items-center gap-2 text-xs">
-          <span className="text-coffee-400">When</span>
-          <WhenPicker keybinding={keybinding} title={title} />
+        <div className="mt-1 text-coffee-400 text-xs leading-4">
+          {SCOPE_LABELS[COMMANDS[keybinding.command].scope]}
         </div>
         {props.conflicts.length > 0 && (
           <div className="mt-1 text-aux-yellow text-xs leading-4">

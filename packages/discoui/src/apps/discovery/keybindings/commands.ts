@@ -1,3 +1,4 @@
+import type { Scope } from './scope'
 import type { Platform } from './shortcut'
 
 export const PRESS_COMMAND_IDS = [
@@ -41,12 +42,15 @@ export type CommandSection = (typeof COMMAND_SECTIONS)[number]
 export interface CommandInfo {
   readonly section: CommandSection
   readonly title: string
+  readonly scope: Scope
   /** Whether holding the key down runs the command again and again. */
   readonly repeats: boolean
 }
 
+// Shortcuts never take keys typed into a field, except the search toggle,
+// which works from anywhere. Space leaves a focused button to press itself.
 export const COMMANDS: Record<CommandId, CommandInfo> = {
-  'search.toggle': navigation('Search: Toggle'),
+  'search.toggle': navigation('Search: Toggle', 'anywhere'),
   'search.open': navigation('Search: Open'),
   'layout.select1': navigation('Layout: Select 1'),
   'layout.select2': navigation('Layout: Select 2'),
@@ -57,39 +61,34 @@ export const COMMANDS: Record<CommandId, CommandInfo> = {
   'panel.add': navigation('Panel: Add'),
   'panel.close': navigation('Panel: Close'),
   'panel.toggleFullScreen': navigation('Panel: Toggle Full Screen'),
-  'discovery.run': {
-    section: 'Discovery',
-    title: 'Discovery: Run',
-    repeats: false,
-  },
-  'discovery.kill': {
-    section: 'Discovery',
-    title: 'Discovery: Kill Command',
-    repeats: false,
-  },
-  'nodes.group': nodes('Nodes: Group Selected'),
-  'nodes.ungroup': nodes('Nodes: Ungroup Selected'),
-  'nodes.hideSelected': nodes('Nodes: Hide Selected'),
-  'nodes.undo': { section: 'Nodes', title: 'Nodes: Undo', repeats: true },
-  'nodes.redo': { section: 'Nodes', title: 'Nodes: Redo', repeats: true },
-  'tool.select': nodes('Tool: Selection'),
-  'tool.hand': nodes('Tool: Hand'),
-  'tool.handHold': nodes('Tool: Hand While Held'),
+  'discovery.run': discovery('Discovery: Run'),
+  'discovery.kill': discovery('Discovery: Kill Command'),
+  'nodes.group': nodes('Nodes: Group Selected', 'notTyping'),
+  'nodes.ungroup': nodes('Nodes: Ungroup Selected', 'notTyping'),
+  'nodes.hideSelected': nodes('Nodes: Hide Selected', 'canvas'),
+  'nodes.undo': { ...nodes('Nodes: Undo', 'canvas'), repeats: true },
+  'nodes.redo': { ...nodes('Nodes: Redo', 'canvas'), repeats: true },
+  'tool.select': nodes('Tool: Selection', 'canvas'),
+  'tool.hand': nodes('Tool: Hand', 'canvas'),
+  'tool.handHold': nodes('Tool: Hand While Held', 'canvasNoButton'),
 }
 
-function navigation(title: string): CommandInfo {
-  return { section: 'Navigation', title, repeats: false }
+function navigation(title: string, scope: Scope = 'notTyping'): CommandInfo {
+  return { section: 'Navigation', title, scope, repeats: false }
 }
 
-function nodes(title: string): CommandInfo {
-  return { section: 'Nodes', title, repeats: false }
+function discovery(title: string): CommandInfo {
+  return { section: 'Discovery', title, scope: 'notTyping', repeats: false }
+}
+
+function nodes(title: string, scope: Scope): CommandInfo {
+  return { section: 'Nodes', title, scope, repeats: false }
 }
 
 export interface DefaultKeybinding {
   readonly id: string
   readonly command: CommandId
   readonly shortcut: string
-  readonly when: string | null
 }
 
 export const LAYOUT_COMMANDS = [
@@ -101,44 +100,36 @@ export const LAYOUT_COMMANDS = [
   'layout.select6',
 ] as const satisfies readonly CommandId[]
 
-// Shortcuts never take keys typed into a field, except the search toggle,
-// which works from anywhere. Space leaves a focused button to press itself.
-export const NOT_TYPING = '!inputFocus'
-export const ON_CANVAS = 'nodesPanelActive && !searchOpen && !inputFocus'
-const ON_CANVAS_SPACE = `${ON_CANVAS} && !controlFocus`
-
 export function getDefaultKeybindings(platform: Platform): DefaultKeybinding[] {
   const bindings: Omit<DefaultKeybinding, 'id'>[] = [
-    { command: 'search.toggle', shortcut: 'Mod+K', when: null },
-    { command: 'search.open', shortcut: '/', when: NOT_TYPING },
-    { command: 'search.open', shortcut: 'Alt+P', when: NOT_TYPING },
+    { command: 'search.toggle', shortcut: 'Mod+K' },
+    { command: 'search.open', shortcut: '/' },
+    { command: 'search.open', shortcut: 'Alt+P' },
     ...LAYOUT_COMMANDS.map((command, index) => ({
       command,
       shortcut: `Alt+${index + 1}`,
-      when: NOT_TYPING,
     })),
-    { command: 'panel.add', shortcut: 'Alt+Enter', when: NOT_TYPING },
-    { command: 'panel.close', shortcut: 'Alt+Q', when: NOT_TYPING },
-    { command: 'panel.toggleFullScreen', shortcut: 'Alt+F', when: NOT_TYPING },
-    { command: 'discovery.run', shortcut: 'Alt+R', when: NOT_TYPING },
-    { command: 'discovery.kill', shortcut: 'Alt+K', when: NOT_TYPING },
-    { command: 'nodes.group', shortcut: 'Alt+G', when: NOT_TYPING },
-    { command: 'nodes.ungroup', shortcut: 'Alt+Shift+G', when: NOT_TYPING },
+    { command: 'panel.add', shortcut: 'Alt+Enter' },
+    { command: 'panel.close', shortcut: 'Alt+Q' },
+    { command: 'panel.toggleFullScreen', shortcut: 'Alt+F' },
+    { command: 'discovery.run', shortcut: 'Alt+R' },
+    { command: 'discovery.kill', shortcut: 'Alt+K' },
+    { command: 'nodes.group', shortcut: 'Alt+G' },
+    { command: 'nodes.ungroup', shortcut: 'Alt+Shift+G' },
     // The first shortcut is the one tooltips show, and Mac keyboards label
     // Backspace as delete.
     ...hideShortcuts(platform).map((shortcut) => ({
       command: 'nodes.hideSelected' as const,
       shortcut,
-      when: ON_CANVAS,
     })),
-    { command: 'nodes.undo', shortcut: 'Mod+Z', when: ON_CANVAS },
-    { command: 'nodes.redo', shortcut: 'Mod+Shift+Z', when: ON_CANVAS },
+    { command: 'nodes.undo', shortcut: 'Mod+Z' },
+    { command: 'nodes.redo', shortcut: 'Mod+Shift+Z' },
     ...(platform === 'other'
-      ? [{ command: 'nodes.redo' as const, shortcut: 'Mod+Y', when: ON_CANVAS }]
+      ? [{ command: 'nodes.redo' as const, shortcut: 'Mod+Y' }]
       : []),
-    { command: 'tool.select', shortcut: 'V', when: ON_CANVAS },
-    { command: 'tool.hand', shortcut: 'H', when: ON_CANVAS },
-    { command: 'tool.handHold', shortcut: 'Space', when: ON_CANVAS_SPACE },
+    { command: 'tool.select', shortcut: 'V' },
+    { command: 'tool.hand', shortcut: 'H' },
+    { command: 'tool.handHold', shortcut: 'Space' },
   ]
   return bindings.map((binding) => ({
     ...binding,

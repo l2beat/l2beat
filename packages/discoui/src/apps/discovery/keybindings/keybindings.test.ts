@@ -2,39 +2,34 @@ import { expect } from 'earl'
 import { COMMAND_IDS, getDefaultKeybindings } from './commands'
 import { groupKeybindings } from './groups'
 import { findConflicts, resolveKeybinding } from './resolve'
+import type { ScopeContext } from './scope'
 import { formatShortcut, parseShortcut, type Shortcut } from './shortcut'
 import {
   computeKeybindings,
   type KeybindingsState,
   sanitizeStoredState,
 } from './store'
-import { parseWhen, type WhenContext } from './when'
 
 const DEFAULTS = getDefaultKeybindings('other')
 const EMPTY: KeybindingsState = { overrides: {}, userKeybindings: [] }
 
-const ON_CANVAS: WhenContext = {
+const ON_CANVAS: ScopeContext = {
   inputFocus: false,
-  editorFocus: false,
   nodesPanelActive: true,
   searchOpen: false,
   controlFocus: false,
 }
-const TYPING: WhenContext = { ...ON_CANVAS, inputFocus: true }
+const TYPING: ScopeContext = { ...ON_CANVAS, inputFocus: true }
 
 describe('keybindings', () => {
   describe(getDefaultKeybindings.name, () => {
-    it('stores every shortcut and when clause in canonical form', () => {
+    it('stores every shortcut in canonical form', () => {
       for (const platform of ['mac', 'other'] as const) {
         for (const binding of getDefaultKeybindings(platform)) {
           const shortcut = parseShortcut(binding.shortcut)
           expect(shortcut.success && formatShortcut(shortcut.value)).toEqual(
             binding.shortcut,
           )
-          if (binding.when !== null) {
-            const when = parseWhen(binding.when)
-            expect(when.success && when.value.source).toEqual(binding.when)
-          }
         }
       }
     })
@@ -56,7 +51,7 @@ describe('keybindings', () => {
   })
 
   describe(resolveKeybinding.name, () => {
-    it('runs a default only where its when clause holds', () => {
+    it('runs a shortcut only where its command scope holds', () => {
       const keybindings = computeKeybindings(DEFAULTS, EMPTY)
       expect(resolve(keybindings, 'H', ON_CANVAS)?.command).toEqual('tool.hand')
       expect(resolve(keybindings, 'H', TYPING)).toEqual(undefined)
@@ -76,7 +71,7 @@ describe('keybindings', () => {
       const keybindings = computeKeybindings(DEFAULTS, {
         overrides: {},
         userKeybindings: [
-          { id: 'user/1', command: 'panel.add', shortcut: 'H', when: null },
+          { id: 'user/1', command: 'panel.add', shortcut: 'H' },
         ],
       })
       expect(resolve(keybindings, 'H', ON_CANVAS)?.command).toEqual('panel.add')
@@ -89,7 +84,7 @@ describe('keybindings', () => {
 
     it('stops matching a default whose shortcut was removed', () => {
       const keybindings = computeKeybindings(DEFAULTS, {
-        overrides: { 'tool.hand/H': { shortcut: null, when: null } },
+        overrides: { 'tool.hand/H': null },
         userKeybindings: [],
       })
       expect(resolve(keybindings, 'H', ON_CANVAS)).toEqual(undefined)
@@ -101,21 +96,17 @@ describe('keybindings', () => {
     it('keeps valid entries in canonical form', () => {
       const state = sanitizeStoredState(
         {
-          overrides: {
-            'tool.hand/H': { shortcut: 'Shift+Mod+H', when: ' editorFocus ' },
-          },
+          overrides: { 'tool.hand/H': 'Shift+Mod+H' },
           userKeybindings: [
-            { id: 'user/1', command: 'panel.add', shortcut: null, when: null },
+            { id: 'user/1', command: 'panel.add', shortcut: null },
           ],
         },
         DEFAULTS,
       )
       expect(state).toEqual({
-        overrides: {
-          'tool.hand/H': { shortcut: 'Mod+Shift+H', when: 'editorFocus' },
-        },
+        overrides: { 'tool.hand/H': 'Mod+Shift+H' },
         userKeybindings: [
-          { id: 'user/1', command: 'panel.add', shortcut: null, when: null },
+          { id: 'user/1', command: 'panel.add', shortcut: null },
         ],
       })
     })
@@ -124,21 +115,16 @@ describe('keybindings', () => {
       const state = sanitizeStoredState(
         {
           overrides: {
-            'gone/X': { shortcut: 'X', when: null },
-            'tool.hand/H': { shortcut: 'Hyper+H', when: null },
-            'tool.select/V': { shortcut: 'V', when: 'terminalFocus' },
+            'gone/X': 'X',
+            'tool.hand/H': 'Hyper+H',
+            'tool.select/V': 42,
           },
           userKeybindings: [
-            { id: 'user/1', command: 'gone', shortcut: 'X', when: null },
-            { id: 'user/2', command: 'panel.add', shortcut: 'X', when: null },
-            { id: 'user/2', command: 'panel.close', shortcut: 'Y', when: null },
+            { id: 'user/1', command: 'gone', shortcut: 'X' },
+            { id: 'user/2', command: 'panel.add', shortcut: 'X' },
+            { id: 'user/2', command: 'panel.close', shortcut: 'Y' },
             // Not a user id: it would collide with the default's.
-            {
-              id: 'tool.hand/H',
-              command: 'panel.add',
-              shortcut: 'X',
-              when: null,
-            },
+            { id: 'tool.hand/H', command: 'panel.add', shortcut: 'X' },
             { id: 'user/3', command: 'panel.add' },
           ],
         },
@@ -147,7 +133,7 @@ describe('keybindings', () => {
       expect(state).toEqual({
         overrides: {},
         userKeybindings: [
-          { id: 'user/2', command: 'panel.add', shortcut: 'X', when: null },
+          { id: 'user/2', command: 'panel.add', shortcut: 'X' },
         ],
       })
     })
@@ -156,15 +142,15 @@ describe('keybindings', () => {
       const state = sanitizeStoredState(
         {
           overrides: {
-            'tool.hand/H': { shortcut: 'J', when: null },
-            'tool.select/V': 'not an object',
+            'tool.hand/H': 'J',
+            'tool.select/V': { shortcut: 'V' },
           },
           userKeybindings: [42],
         },
         DEFAULTS,
       )
       expect(state).toEqual({
-        overrides: { 'tool.hand/H': { shortcut: 'J', when: null } },
+        overrides: { 'tool.hand/H': 'J' },
         userKeybindings: [],
       })
     })
@@ -196,7 +182,7 @@ describe('keybindings', () => {
       ])
     })
 
-    it('matches every word against title, when clause and shortcut', () => {
+    it('matches every word against title, scope and shortcut', () => {
       const keybindings = computeKeybindings(DEFAULTS, EMPTY)
       const ids = (query: string) =>
         groupKeybindings(keybindings, query, 'other').flatMap((s) =>
@@ -213,7 +199,7 @@ describe('keybindings', () => {
 function resolve(
   keybindings: ReturnType<typeof computeKeybindings>,
   source: string,
-  context: WhenContext,
+  context: ScopeContext,
 ) {
   return resolveKeybinding(keybindings, parse(source), context, 'other')
 }

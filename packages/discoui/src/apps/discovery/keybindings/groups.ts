@@ -1,4 +1,5 @@
 import { COMMAND_SECTIONS, COMMANDS, type CommandSection } from './commands'
+import { SCOPE_LABELS } from './scope'
 import { formatShortcut, type Platform, shortcutLabels } from './shortcut'
 import type { Keybinding } from './store'
 
@@ -10,7 +11,7 @@ export interface KeybindingSection {
 /**
  * Sections in a fixed order, commands by title within one, and keybindings of
  * one command in precedence order. Every word of the query must match the
- * title, command id, when clause or shortcut.
+ * title, command id, scope or shortcut.
  */
 export function groupKeybindings(
   keybindings: readonly Keybinding[],
@@ -40,12 +41,8 @@ export function groupKeybindings(
 }
 
 function searchText(keybinding: Keybinding, platform: Platform): string {
-  const parts = [COMMANDS[keybinding.command].title, keybinding.command]
-  if (keybinding.when === null) {
-    parts.push('always')
-  } else {
-    parts.push(keybinding.when.source)
-  }
+  const command = COMMANDS[keybinding.command]
+  const parts = [command.title, keybinding.command, SCOPE_LABELS[command.scope]]
   if (keybinding.shortcut !== null) {
     parts.push(formatShortcut(keybinding.shortcut))
     parts.push(shortcutLabels(keybinding.shortcut, platform).join('+'))

@@ -36,7 +36,7 @@ const SETTINGS_TABS: {
     label: 'Keybindings',
     icon: <IconKeyboard className="size-3.5" />,
     description:
-      'Change the keyboard shortcuts. Click a shortcut, then press the new one. When decides where a shortcut works.',
+      'Change the keyboard shortcuts. Click a shortcut, then press the new one.',
     Content: KeybindingsSettingsTab,
   },
 ]
@@ -52,7 +52,7 @@ export function SettingsDialog(props: {
       <Dialog.Trigger asChild>{props.trigger}</Dialog.Trigger>
       <Dialog.Body
         className="flex h-[min(640px,85vh)] max-w-[820px] flex-col overflow-hidden p-0"
-        // Keys pressed in the settings stay there, so typing a when clause or
+        // Keys pressed in the settings stay there, so typing a search or
         // trying a key never runs a shortcut on the page behind.
         onKeyDown={(event) => event.stopPropagation()}
       >

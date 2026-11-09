@@ -1,13 +1,13 @@
-import type { CommandId } from './commands'
+import { COMMANDS, type CommandId } from './commands'
+import { type ScopeContext, scopeApplies } from './scope'
 import { type Platform, type Shortcut, shortcutsEqual } from './shortcut'
 import type { Keybinding } from './store'
-import { evaluateWhen, type WhenContext } from './when'
 
 /** The last keybinding that matches wins, so later ones override earlier. */
 export function resolveKeybinding(
   keybindings: readonly Keybinding[],
   shortcut: Shortcut,
-  context: WhenContext,
+  context: ScopeContext,
   platform: Platform,
 ): Keybinding | undefined {
   for (let index = keybindings.length - 1; index >= 0; index--) {
@@ -21,7 +21,7 @@ export function resolveKeybinding(
     if (!shortcutsEqual(keybinding.shortcut, shortcut, platform)) {
       continue
     }
-    if (keybinding.when === null || evaluateWhen(keybinding.when, context)) {
+    if (scopeApplies(COMMANDS[keybinding.command].scope, context)) {
       return keybinding
     }
   }
@@ -41,7 +41,7 @@ export function findCommandShortcut(
   return undefined
 }
 
-/** Other commands bound to the same shortcut, whatever their when clauses. */
+/** Other commands bound to the same shortcut, whatever their scopes. */
 export function findConflicts(
   keybindings: readonly Keybinding[],
   keybinding: Keybinding,

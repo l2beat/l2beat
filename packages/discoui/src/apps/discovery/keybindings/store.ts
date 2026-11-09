@@ -9,46 +9,37 @@ import {
 } from './commands'
 import {
   formatShortcut,
-  type ParseResult,
   PLATFORM,
   parseShortcut,
   type Shortcut,
 } from './shortcut'
-import { parseWhen, type WhenClause } from './when'
 
 export interface Keybinding {
   readonly id: string
   readonly command: CommandId
   /** null leaves the command without a shortcut. */
   readonly shortcut: Shortcut | null
-  /** null runs the command everywhere. */
-  readonly when: WhenClause | null
   readonly origin: 'default' | 'user'
   /** A user keybinding is always modified, a default one once overridden. */
   readonly isModified: boolean
 }
 
-// Stored strings are canonical and parse, `sanitizeStoredState` makes sure of
-// both when loading.
-interface StoredKeybinding {
-  readonly shortcut: string | null
-  readonly when: string | null
-}
-
-interface UserKeybinding extends StoredKeybinding {
+// Stored shortcuts are canonical and parse, `sanitizeStoredState` makes sure
+// of both when loading. null leaves the command without a shortcut.
+interface UserKeybinding {
   readonly id: string
   readonly command: CommandId
+  readonly shortcut: string | null
 }
 
 export interface KeybindingsState {
-  /** Changes to default keybindings, by default keybinding id. */
-  readonly overrides: Readonly<Record<string, StoredKeybinding>>
+  /** New shortcuts of default keybindings, by default keybinding id. */
+  readonly overrides: Readonly<Record<string, string | null>>
   readonly userKeybindings: readonly UserKeybinding[]
 }
 
 interface Actions {
   setShortcut: (id: string, shortcut: Shortcut | null) => void
-  setWhen: (id: string, when: WhenClause | null) => void
   resetKeybinding: (id: string) => void
   removeKeybinding: (id: string) => void
   /** Adds a keybinding without a shortcut and returns its id. */
@@ -68,25 +59,17 @@ export const useKeybindingsStore = create<KeybindingsState & Actions>()(
       ...EMPTY_STATE,
       setShortcut: (id, shortcut) =>
         set(
-          updateKeybinding(get(), id, {
-            shortcut: shortcut === null ? null : formatShortcut(shortcut),
-          }),
+          setShortcut(
+            get(),
+            id,
+            shortcut === null ? null : formatShortcut(shortcut),
+          ),
         ),
-      setWhen: (id, when) =>
-        set(updateKeybinding(get(), id, { when: when?.source ?? null })),
       resetKeybinding: (id) => set(resetKeybinding(get(), id)),
       removeKeybinding: (id) => set(removeKeybinding(get(), id)),
       addKeybinding: (command) => {
         const id = createUserKeybindingId(get())
-        const defaultBinding = DEFAULT_KEYBINDINGS.find(
-          (b) => b.command === command,
-        )
-        const added: UserKeybinding = {
-          id,
-          command,
-          shortcut: null,
-          when: defaultBinding?.when ?? null,
-        }
+        const added: UserKeybinding = { id, command, shortcut: null }
         set({ userKeybindings: [...get().userKeybindings, added] })
         return id
       },
@@ -141,7 +124,9 @@ export function computeKeybindings(
     keybindings.push({
       id: binding.id,
       command: binding.command,
-      ...parseStored(override ?? binding),
+      shortcut: parseStored(
+        override === undefined ? binding.shortcut : override,
+      ),
       origin: 'default',
       isModified: override !== undefined,
     })
@@ -150,7 +135,7 @@ export function computeKeybindings(
     keybindings.push({
       id: binding.id,
       command: binding.command,
-      ...parseStored(binding),
+      shortcut: parseStored(binding.shortcut),
       origin: 'user',
       isModified: true,
     })
@@ -158,47 +143,34 @@ export function computeKeybindings(
   return keybindings
 }
 
-function parseStored(stored: StoredKeybinding) {
-  return {
-    shortcut:
-      stored.shortcut === null
-        ? null
-        : parseOrThrow(parseShortcut(stored.shortcut)),
-    when: stored.when === null ? null : parseOrThrow(parseWhen(stored.when)),
+function parseStored(source: string | null): Shortcut | null {
+  if (source === null) {
+    return null
   }
-}
-
-function parseOrThrow<T>(result: ParseResult<T>): T {
-  if (!result.success) {
-    throw new Error('Stored keybinding does not parse', {
-      cause: { message: result.message },
+  const parsed = parseShortcut(source)
+  if (!parsed.success) {
+    throw new Error('Stored shortcut does not parse', {
+      cause: { source, message: parsed.message },
     })
   }
-  return result.value
+  return parsed.value
 }
 
-function updateKeybinding(
+function setShortcut(
   state: KeybindingsState,
   id: string,
-  change: Partial<StoredKeybinding>,
+  shortcut: string | null,
 ): Partial<KeybindingsState> {
   const defaultBinding = DEFAULT_KEYBINDINGS.find((b) => b.id === id)
   if (defaultBinding !== undefined) {
-    const next = { ...(state.overrides[id] ?? defaultBinding), ...change }
     const { [id]: _, ...rest } = state.overrides
-    const isDefault =
-      next.shortcut === defaultBinding.shortcut &&
-      next.when === defaultBinding.when
-    return {
-      overrides: isDefault
-        ? rest
-        : { ...rest, [id]: { shortcut: next.shortcut, when: next.when } },
-    }
+    const isDefault = shortcut === defaultBinding.shortcut
+    return { overrides: isDefault ? rest : { ...rest, [id]: shortcut } }
   }
   assertUserKeybinding(state, id)
   return {
     userKeybindings: state.userKeybindings.map((binding) =>
-      binding.id === id ? { ...binding, ...change } : binding,
+      binding.id === id ? { ...binding, shortcut } : binding,
     ),
   }
 }
@@ -238,16 +210,12 @@ function createUserKeybindingId(state: KeybindingsState): string {
   return id
 }
 
-const StoredKeybindingSchema = v.object({
-  shortcut: v.union([v.string(), v.null()]),
-  when: v.union([v.string(), v.null()]),
-})
+const StoredShortcutSchema = v.union([v.string(), v.null()])
 
 const UserKeybindingSchema = v.object({
   id: v.string(),
   command: v.string(),
-  shortcut: v.union([v.string(), v.null()]),
-  when: v.union([v.string(), v.null()]),
+  shortcut: StoredShortcutSchema,
 })
 
 // Entries parse one by one, so one bad entry costs only itself.
@@ -267,12 +235,14 @@ export function sanitizeStoredState(
   if (!result.success) {
     return EMPTY_STATE
   }
-  const overrides: Record<string, StoredKeybinding> = {}
+  const overrides: Record<string, string | null> = {}
   for (const [id, entry] of Object.entries(result.data.overrides)) {
-    const stored = StoredKeybindingSchema.safeParse(entry)
-    const canonical = stored.success ? canonicalStored(stored.data) : undefined
+    const stored = StoredShortcutSchema.safeParse(entry)
+    const canonical = stored.success
+      ? canonicalShortcut(stored.data)
+      : undefined
     if (defaults.some((b) => b.id === id) && canonical !== undefined) {
-      overrides[id] = canonical
+      overrides[id] = canonical.shortcut
     }
   }
   const userKeybindings: UserKeybinding[] = []
@@ -283,7 +253,7 @@ export function sanitizeStoredState(
     }
     const { id } = stored.data
     const command = parseCommandId(stored.data.command)
-    const canonical = canonicalStored(stored.data)
+    const canonical = canonicalShortcut(stored.data.shortcut)
     const isUserId = id.startsWith(USER_KEYBINDING_ID_PREFIX)
     const isDuplicate = userKeybindings.some((b) => b.id === id)
     if (
@@ -292,30 +262,19 @@ export function sanitizeStoredState(
       isUserId &&
       !isDuplicate
     ) {
-      userKeybindings.push({ id, command, ...canonical })
+      userKeybindings.push({ id, command, shortcut: canonical.shortcut })
     }
   }
   return { overrides, userKeybindings }
 }
 
-function canonicalStored(
-  stored: StoredKeybinding,
-): StoredKeybinding | undefined {
-  let shortcut: string | null = null
-  if (stored.shortcut !== null) {
-    const parsed = parseShortcut(stored.shortcut)
-    if (!parsed.success) {
-      return undefined
-    }
-    shortcut = formatShortcut(parsed.value)
+/** undefined when the stored shortcut does not parse. */
+function canonicalShortcut(
+  source: string | null,
+): { shortcut: string | null } | undefined {
+  if (source === null) {
+    return { shortcut: null }
   }
-  let when: string | null = null
-  if (stored.when !== null) {
-    const parsed = parseWhen(stored.when)
-    if (!parsed.success) {
-      return undefined
-    }
-    when = parsed.value.source
-  }
-  return { shortcut, when }
+  const parsed = parseShortcut(source)
+  return parsed.success ? { shortcut: formatShortcut(parsed.value) } : undefined
 }
