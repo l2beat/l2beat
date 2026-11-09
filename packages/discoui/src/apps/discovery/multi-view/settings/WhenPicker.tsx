@@ -49,7 +49,12 @@ export function WhenPicker(props: { keybinding: Keybinding; title: string }) {
         </span>
         <IconChevronDown className="size-3 shrink-0 text-coffee-400" />
       </PopoverTrigger>
-      <PopoverContent align="start" className="w-[min(360px,90vw)] p-3">
+      <PopoverContent
+        align="start"
+        // Taller than the room on either side of a row on a laptop screen, so
+        // it scrolls instead of running off the top.
+        className="max-h-(--radix-popover-content-available-height) w-[min(360px,90vw)] overflow-y-auto p-3"
+      >
         <WhenEditor initialSource={source ?? ''} onApply={apply} />
         <PresetList current={source ?? null} onApply={apply} />
         <ContextReference />
