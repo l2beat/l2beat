@@ -9,7 +9,7 @@ Generated with discovered.json: 0x26d0ad8e1408338a03daa4ba290e79e2eeadfeb5
 
 ## Description
 
-Inbox: the Security Council (9/12) upgraded it to a temporary implementation and back in a single transaction. The temporary implementation sent two L2 transactions on behalf of the Binance exploiter address `0x3E2bf1ac6bf0934BBba6456C341c2EcbCED632d5`, moving 74,559,805.2 ARB and 8,425.998 ETH to a holding address that only DAO governance can release (see the [forum post](https://forum.arbitrum.foundation/t/security-council-emergency-action-30-10-2026/31625)).
+Inbox: the Security Council (9/12) upgraded it to a temporary implementation and back in a single transaction. The temporary implementation sent two L2 transactions on behalf of the Binance exploiter address `0x3E2bf1ac6bf0934BBba6456C341c2EcbCED632d5`, moving 74,559,805.2 ARB and 8,425.998 ETH to `0x0000000000000000000000000000000000000DA0`, which has no code and no known private key. Moving the funds again requires another Inbox upgrade, which the Security Council or the DAO can do; the Arbitrum Foundation says only an ArbitrumDAO vote will release them (see the [forum post](https://forum.arbitrum.foundation/t/security-council-emergency-action-30-10-2026/31625)).
 
 ## Watched changes
 
