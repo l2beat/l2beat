@@ -451,6 +451,10 @@ export type ApiAgentEvent =
   // Only to the tab that owns the chat; a replay restarts its transcript.
   | { type: 'chat'; event: ApiChatEvent }
   | { type: 'chat-replay'; events: ApiChatEvent[] }
+  // A new board opens the board panel; a replay, sent on every connect, only
+  // restores the tab's board, or drops one the agent moved to another tab.
+  | { type: 'board'; board: ApiAgentBoard }
+  | { type: 'board-replay'; board: ApiAgentBoard | null }
 
 export interface ApiAgentShowEvent {
   type: 'show'
@@ -458,6 +462,26 @@ export interface ApiAgentShowEvent {
   project: string
   steps: ApiAgentStep[]
 }
+
+export interface ApiAgentBoard {
+  id: string
+  project: string
+  title: string
+  blocks: ApiBoardBlock[]
+}
+
+export type ApiBoardBlock =
+  | { type: 'text'; text: string }
+  | {
+      type: 'table'
+      title?: string
+      columns: string[]
+      rows: ApiBoardCell[][]
+    }
+
+export type ApiBoardCell =
+  | { type: 'text'; text: string }
+  | { type: 'contract'; address: string; name?: string }
 
 export interface ApiAgentStep {
   note: string
@@ -521,3 +545,14 @@ export type ApiChatEvent =
   | { type: 'permission-done'; id: string }
   | { type: 'turn-end'; stopReason: string }
   | { type: 'error'; message: string }
+  // What the researcher can switch for the chat, like the model; each
+  // replaces the earlier list.
+  | { type: 'config'; options: ApiChatConfigOption[] }
+
+export interface ApiChatConfigOption {
+  id: string
+  name: string
+  category: 'model' | 'thought_level'
+  currentValue: string
+  values: { value: string; name: string; description?: string }[]
+}

@@ -1,6 +1,7 @@
 import { assert } from '@l2beat/shared-pure'
 import { randomUUID } from 'crypto'
 import type {
+  ApiAgentBoard,
   ApiAgentContext,
   ApiAgentEvent,
   ApiAgentShowEvent,
@@ -37,6 +38,9 @@ export class AgentTabs {
   private readonly tabs = new Map<string, Tab>()
   // The tab that shows the note of the last show, wherever focus went since.
   private showTab: string | undefined
+  // One board, in the tab the agent last showed it in, so it survives a
+  // reload of that tab.
+  private board: { tab: string; board: ApiAgentBoard } | undefined
   private readonly connectListeners: ((id: string) => void)[] = []
   // Each removed when its tab answers or the wait times out.
   private readonly contextRequests = new Map<
@@ -48,13 +52,18 @@ export class AgentTabs {
   // may arrive after the new one opened.
   connect(id: string, stream: TabStream) {
     const previous = this.tabs.get(id)
-    this.tabs.set(id, {
+    const tab: Tab = {
       stream,
       focusedAt: previous?.focusedAt ?? 0,
       project: previous?.project,
       sequence: previous?.sequence ?? 0,
-    })
+    }
+    this.tabs.set(id, tab)
     previous?.stream.end()
+    // A tab without the board learns it has none, like one that held a
+    // board of a server that restarted since.
+    const board = this.board?.tab === id ? this.board.board : null
+    write(tab, { type: 'board-replay', board })
     for (const listener of this.connectListeners) {
       listener(id)
     }
@@ -135,6 +144,21 @@ export class AgentTabs {
       write(previousTab, { type: 'clear' })
     }
     this.showTab = id
+  }
+
+  showBoard(id: string, board: ApiAgentBoard) {
+    const tab = this.tabs.get(id)
+    assert(tab !== undefined, 'Showing a board in a tab that is not connected')
+    write(tab, { type: 'board', board })
+    // Like show, the tab opens the board's project.
+    tab.project = board.project
+    // A board left in another tab would be one the agent replaced.
+    const previous = this.board?.tab === id ? undefined : this.board?.tab
+    const previousTab = previous && this.tabs.get(previous)
+    if (previousTab) {
+      write(previousTab, { type: 'board-replay', board: null })
+    }
+    this.board = { tab: id, board }
   }
 
   // Asks the tab what the researcher looks at. Resolves undefined when the

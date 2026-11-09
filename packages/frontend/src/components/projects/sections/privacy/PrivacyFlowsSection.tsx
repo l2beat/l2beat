@@ -16,7 +16,7 @@ import {
 import { PrivacyFlowChart } from '~/pages/privacy/project/components/PrivacyFlowChart'
 import { PrivacyFlowsChartRangeControls } from '~/pages/privacy/project/components/PrivacyFlowsChartRangeControls'
 import { useTRPC } from '~/trpc/React'
-import type { ChartRange } from '~/utils/range/range'
+import { type ChartRange, rangeToResolution } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 
@@ -41,7 +41,7 @@ export function PrivacyFlowsSection({
   const [range, setRange] = useState<ChartRange>(defaultRange)
   const [metric, setMetric] = useState<FlowsMetric>('count')
   const [scale, setScale] = useState<ChartScale>('linear')
-  const { data, isLoading, isPlaceholderData } = useChartQuery(
+  const { data, isLoading, isPlaceholderData, shownInput } = useChartQuery(
     trpc.privacy.flowsChart,
     {
       projectIds: [project.id],
@@ -49,16 +49,15 @@ export function PrivacyFlowsSection({
       chain,
     },
   )
+  const resolution = rangeToResolution(shownInput.range)
 
   const timeRange = useMemo(
     () =>
       getChartTimeRangeFromData(
         data?.chart.map(([timestamp]) => ({ timestamp })),
-        {
-          bucket: 'day',
-        },
+        { bucket: resolution },
       ),
-    [data],
+    [data, resolution],
   )
 
   return (
@@ -79,6 +78,7 @@ export function PrivacyFlowsSection({
         syncedUntil={data?.syncedUntil}
         isLoading={isLoading}
         metric={metric}
+        resolution={resolution}
         scale={scale}
         project={project}
         milestones={milestones}

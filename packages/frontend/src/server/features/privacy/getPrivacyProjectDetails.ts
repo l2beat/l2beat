@@ -17,8 +17,8 @@ import type {
   ProjectZkCatalogInfo,
 } from '@l2beat/config'
 import type {
+  PrivacyFlowBucketRecord,
   PrivacyFlowBucketTotalRecord,
-  PrivacyFlowDailyRecord,
   TokenValueRecord,
 } from '@l2beat/database'
 import {
@@ -62,7 +62,7 @@ import { getPrivacyTrackedChains } from './utils/getPrivacyTrackedChains'
 
 interface PrivacyProjectFlowData {
   totals: PrivacyFlowBucketTotalRecord[]
-  daily30d: PrivacyFlowDailyRecord[]
+  daily30d: PrivacyFlowBucketRecord[]
   tokenValues: TokenValueRecord[]
   /** Value of each bucket's pool at its asset's latest TVL, by bucket id. */
   bucketTvls: Map<string, number>
@@ -175,8 +175,8 @@ export async function getPrivacyProjectDetails(
     totalIndex.set(`${total.projectId}::${total.bucketId}`, total)
   }
 
-  const daily30dIndex = new Map<string, PrivacyFlowDailyRecord>()
-  const daily7dIndex = new Map<string, PrivacyFlowDailyRecord>()
+  const daily30dIndex = new Map<string, PrivacyFlowBucketRecord>()
+  const daily7dIndex = new Map<string, PrivacyFlowBucketRecord>()
   for (const row of daily30d) {
     const key = `${row.projectId}::${row.bucketId}`
     const base = {
@@ -342,9 +342,9 @@ export async function getPrivacyProjectDetails(
 interface PrivacyStatsContext {
   projectId: ProjectId
   totalIndex: Map<string, PrivacyFlowBucketTotalRecord>
-  daily7dIndex: Map<string, PrivacyFlowDailyRecord>
-  daily30dIndex: Map<string, PrivacyFlowDailyRecord>
-  daily30d: PrivacyFlowDailyRecord[]
+  daily7dIndex: Map<string, PrivacyFlowBucketRecord>
+  daily30dIndex: Map<string, PrivacyFlowBucketRecord>
+  daily30d: PrivacyFlowBucketRecord[]
   last7dCutoff: UnixTime
   bucketTvls: Map<string, number>
 }
@@ -626,7 +626,7 @@ async function getPrivacyProjectFlowData(
   const db = getDb()
   const [totals, daily30d, tokenValues] = await Promise.all([
     db.privacyFlowEvent.getBucketTotalsByProjectIds([projectId]),
-    db.privacyFlowEvent.getDailyByProjectIds([projectId], from, to),
+    db.privacyFlowEvent.getBucketedByProjectIds([projectId], from, to, 'day'),
     db.tvsTokenValue.getLastNonZeroValue(now, projectId),
   ])
   const escrowValues = await db.tvsEscrowValue
@@ -674,7 +674,7 @@ function getMockPrivacyProjectFlowData(
     }),
   )
 
-  const daily30d: PrivacyFlowDailyRecord[] = []
+  const daily30d: PrivacyFlowBucketRecord[] = []
   for (let timestamp = from; timestamp <= to; timestamp += UnixTime.DAY) {
     for (const bucketId of bucketIds) {
       daily30d.push({

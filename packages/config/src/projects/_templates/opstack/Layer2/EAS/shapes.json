@@ -32,5 +32,11 @@
     "address": "unichain:0xbEc660b456B84A081E90aF29BE43385BDa5bF7b6",
     "chain": "unichain",
     "blockNumber": 59972128
+  },
+  "EAS_v1_4_1_beta3_base.sol": {
+    "hash": "0xafd9192c0beaaaefebeb6c67c4451684546b8ca9b5f8aca61b867e4fafd225b7",
+    "address": "base:0xb6288DE3f61E3aCfAf4f1b0923656e2ab78C1Ad4",
+    "chain": "base",
+    "blockNumber": 53551478
   }
 }

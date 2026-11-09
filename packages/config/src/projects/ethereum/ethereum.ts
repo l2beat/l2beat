@@ -1,6 +1,6 @@
 import {
   EthereumAddress,
-  formatNumber,
+  formatCompactAmount,
   formatSeconds,
   ProjectId,
   UnixTime,
@@ -75,15 +75,18 @@ export const ethereum: BaseProject = {
       description: readProjectMarkdown('ethereum', 'technologySequencing'),
       sequencingSpec: {
         type: 'sequencer-set',
-        blockTime: { value: `${ethereumBlockTimeSeconds} seconds` },
+        blockTime: { value: formatSeconds(ethereumBlockTimeSeconds) },
         proposerRotationTime: {
-          value: `${ethereumBlockTimeSeconds} seconds`,
+          value: formatSeconds(ethereumBlockTimeSeconds),
           description:
             'One validator index is selected for every slot with probability proportional to its effective balance. A missed proposal leaves the slot empty.',
         },
         sequencerCount: {
           value: `${stakeDistribution.validatorCount.toLocaleString('en-US')} validator indices`,
-          secondLine: `${formatNumber(stakeDistribution.totalStake)} ${stakeDistribution.stakeToken}`,
+          secondLine: formatCompactAmount(
+            stakeDistribution.totalStake,
+            stakeDistribution.stakeToken,
+          ),
           description:
             'This snapshot is generated from Dune validator-day summaries and curated staking attribution. Lido stake is split among its node operators. Validator indices are not independent operators, and compounding validators can have different effective balances.',
         },
@@ -705,6 +708,22 @@ export const ethereum: BaseProject = {
             inbox: '0x0000000000000000000000000000000000000000',
             sequencers: ['0x6defc1def6abb1c39cbc722024985291ff6f9fb7'],
             sinceBlock: 26086572,
+          },
+        ],
+      },
+      {
+        // Base's Rust base-batcher in shadow mode: a second copy of Base mainnet batches, posted to
+        // the SHADOW_BATCH_INBOX_ADDRESS of base/base so a parity validator can re-derive the chain.
+        // Base's chain of record still comes from its canonical batcher, so the copy stays out of
+        // Base's data. Funded by Base's "Ledger - Mainnet" (base/contract-deployments).
+        projectId: ProjectId('base-shadow-batcher'),
+        name: 'Base shadow-mode batcher',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x0000000000000000000000000000000000ba7c4e',
+            sequencers: ['0x7360f62205709a1501e7a04513f61eda0bd13987'],
+            sinceBlock: 26337306,
           },
         ],
       },

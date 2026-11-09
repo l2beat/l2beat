@@ -1,7 +1,12 @@
 import { v as z } from '@l2beat/validate'
-import type { ApiChatEvent, ApiChatProvider } from '../../types'
+import type {
+  ApiChatConfigOption,
+  ApiChatEvent,
+  ApiChatProvider,
+} from '../../types'
 import type { AgentTabs } from '../tabs'
 import { ACP_PROTOCOL_VERSION, AcpConnection, AcpError } from './acp'
+import { readConfigOptions } from './config'
 import { appendToLog, clipEvent, toChatEvents } from './events'
 import { signInHint } from './providers'
 
@@ -50,12 +55,17 @@ interface RunningChat {
   sessionId: string | undefined
   ready: Promise<void>
   isInTurn: boolean
+  // A model switch in flight: a prompt sent meanwhile could reach the old
+  // model, and two switches could land in either order.
+  isSwitching: boolean
   // Stopped before the agent started, so the prompt must not go out.
   isCancelledBeforeSend: boolean
   hasFailed: boolean
   log: ApiChatEvent[]
   permissions: Map<string, (optionId: string | undefined) => void>
   toolCalls: Map<string, ToolCall>
+  // What the agent last offered to switch, to refuse anything else.
+  config: ApiChatConfigOption[]
 }
 
 // DiscoUI's one chat with a coding agent, run as an ACP adapter process.
@@ -67,12 +77,12 @@ export class ChatSession {
     private readonly tabs: AgentTabs,
     private readonly options: ChatOptions,
   ) {
-    // A reload reconnects the tab, which then needs the whole transcript.
+    // Every tab learns its chat as it connects: the whole transcript after a
+    // reload, or none, for a chat closed or taken over meanwhile.
     tabs.onConnect((id) => {
       const chat = this.chat
-      if (chat?.owner === id) {
-        tabs.sendChat(id, { type: 'chat-replay', events: chat.log })
-      }
+      const events = chat?.owner === id ? replayOf(chat) : []
+      tabs.sendChat(id, { type: 'chat-replay', events })
     })
   }
 
@@ -92,11 +102,13 @@ export class ChatSession {
       sessionId: undefined,
       ready: Promise.resolve(),
       isInTurn: false,
+      isSwitching: false,
       isCancelledBeforeSend: false,
       hasFailed: false,
       log: [],
       permissions: new Map(),
       toolCalls: new Map(),
+      config: [],
       connection: new AcpConnection(
         command,
         args,
@@ -124,6 +136,9 @@ export class ChatSession {
     if (chat.isInTurn) {
       throw new ChatError('The agent is still answering')
     }
+    if (chat.isSwitching) {
+      throw new ChatError('The agent is switching, send after it finishes')
+    }
     chat.isInTurn = true
     this.emit(chat, { type: 'user', text })
     void this.runTurn(chat, text)
@@ -137,6 +152,42 @@ export class ChatSession {
       chat.connection.notify('session/cancel', { sessionId: chat.sessionId })
     }
     this.cancelPermissions(chat)
+  }
+
+  // Between answers only: an adapter applies a model to the next turn, and
+  // switching mid-answer would leave it unclear which one answered.
+  async setConfig(tab: string, configId: string, value: string) {
+    const chat = this.owned(tab)
+    if (chat.hasFailed) {
+      throw new ChatError('The agent stopped, start a new chat')
+    }
+    if (chat.sessionId === undefined) {
+      throw new ChatError('The agent is still starting')
+    }
+    if (chat.isInTurn) {
+      throw new ChatError('The agent is answering, switch after it finishes')
+    }
+    if (chat.isSwitching) {
+      throw new ChatError('The agent is still switching')
+    }
+    const option = chat.config.find((candidate) => candidate.id === configId)
+    if (!option?.values.some((candidate) => candidate.value === value)) {
+      throw new ChatError('The agent does not offer this')
+    }
+    chat.isSwitching = true
+    try {
+      const result = await chat.connection.request(
+        'session/set_config_option',
+        { sessionId: chat.sessionId, configId, value },
+      )
+      // The agent answers with every option, like effort levels for the
+      // model. One that does not still switched, and the tab hears of it.
+      const options =
+        readConfigOptions(result) ?? withValue(chat.config, configId, value)
+      this.emit(chat, { type: 'config', options })
+    } finally {
+      chat.isSwitching = false
+    }
   }
 
   answerPermission(tab: string, id: string, optionId: string) {
@@ -195,29 +246,31 @@ export class ChatSession {
           'The agent speaks another ACP version, update DiscoUI or the adapter',
         )
       }
-      const session = newSessionSchema.parse(
-        await chat.connection.request('session/new', {
-          cwd: this.options.cwd,
-          mcpServers: [
-            {
-              type: 'http',
-              name: 'discoui',
-              // Its show and context act in the chat's tab.
-              url: `${this.options.mcpUrl}?tab=${encodeURIComponent(chat.owner)}`,
-              headers: [],
-            },
-          ],
-          // DiscoUI's tools change only what the researcher sees, so Claude
-          // need not ask before each. Older Claude Code matches the bare
-          // server name, newer the glob.
-          _meta: {
-            claudeCode: {
-              options: { allowedTools: ['mcp__discoui', 'mcp__discoui__*'] },
-            },
+      const created = await chat.connection.request('session/new', {
+        cwd: this.options.cwd,
+        mcpServers: [
+          {
+            type: 'http',
+            name: 'discoui',
+            // Its show and context act in the chat's tab.
+            url: `${this.options.mcpUrl}?tab=${encodeURIComponent(chat.owner)}`,
+            headers: [],
           },
-        }),
-      )
-      chat.sessionId = session.sessionId
+        ],
+        // DiscoUI's tools change only what the researcher sees, so Claude
+        // need not ask before each. Older Claude Code matches the bare
+        // server name, newer the glob.
+        _meta: {
+          claudeCode: {
+            options: { allowedTools: ['mcp__discoui', 'mcp__discoui__*'] },
+          },
+        },
+      })
+      chat.sessionId = newSessionSchema.parse(created).sessionId
+      const options = readConfigOptions(created)
+      if (options !== undefined) {
+        this.emit(chat, { type: 'config', options })
+      }
       this.setStatus(chat, 'ready')
     } catch (error) {
       this.fail(chat, messageOf(error))
@@ -350,9 +403,31 @@ export class ChatSession {
       return
     }
     const clipped = clipEvent(event)
+    if (clipped.type === 'config') {
+      chat.config = clipped.options
+    }
     appendToLog(chat.log, clipped)
     this.tabs.sendChat(chat.owner, { type: 'chat', event: clipped })
   }
+}
+
+// The transcript drops its oldest events in a long chat, the options among
+// them, so the replay starts with the latest ones.
+function replayOf(chat: RunningChat): ApiChatEvent[] {
+  const conversation = chat.log.filter((event) => event.type !== 'config')
+  return chat.config.length === 0
+    ? conversation
+    : [{ type: 'config', options: chat.config }, ...conversation]
+}
+
+function withValue(
+  options: ApiChatConfigOption[],
+  configId: string,
+  value: string,
+): ApiChatConfigOption[] {
+  return options.map((option) =>
+    option.id === configId ? { ...option, currentValue: value } : option,
+  )
 }
 
 function rememberToolCall(chat: RunningChat, update: unknown) {

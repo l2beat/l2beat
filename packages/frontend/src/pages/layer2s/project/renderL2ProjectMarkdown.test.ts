@@ -1072,7 +1072,6 @@ const ENTRY: ProjectL2Entry = {
   icon: '/icons/arbitrum.png',
   archivedAt: undefined,
   isAppchain: false,
-  colors: undefined,
   underReviewStatus: undefined,
   header: {
     description: 'Arbitrum One is a general-purpose optimistic rollup.',

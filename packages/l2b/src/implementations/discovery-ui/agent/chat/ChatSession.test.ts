@@ -14,7 +14,9 @@ let promptId
 lines.on('line', (line) => {
   const message = JSON.parse(line)
   if (message.method === 'initialize') send({ id: message.id, result: { protocolVersion: 1 } })
-  if (message.method === 'session/new') send({ id: message.id, result: { sessionId: 's1' } })
+  const config = (model) => [{ id: 'model', name: 'Model', category: 'model', type: 'select', currentValue: model, options: [{ value: 'sonnet', name: 'Sonnet' }, { value: 'opus', name: 'Opus' }] }]
+  if (message.method === 'session/new') send({ id: message.id, result: { sessionId: 's1', configOptions: config('sonnet') } })
+  if (message.method === 'session/set_config_option') send({ id: message.id, result: { configOptions: config(message.params.value) } })
   if (message.method === 'session/prompt') {
     promptId = message.id
     update({ sessionUpdate: 'agent_message_chunk', content: { type: 'text', text: 'Hel' } })
@@ -86,10 +88,29 @@ describe(ChatSession.name, () => {
     await waitFor(() => statuses(owner).includes('ready'))
     chat.prompt('owner', 'List files')
     await waitFor(() => chatEvents(owner).some((e) => e.type === 'permission'))
+    const stranger = stream()
+    tabs.connect('stranger', stranger)
+    // A tab without the chat learns it has none.
+    expect(parse(stranger)).toEqual([{ type: 'chat-replay', events: [] }])
     const reloaded = stream()
     tabs.connect('owner', reloaded)
     const replay = parse(reloaded).find((e) => e.type === 'chat-replay')
     expect(replay?.type === 'chat-replay' && replay.events).toEqual([
+      {
+        type: 'config',
+        options: [
+          {
+            id: 'model',
+            name: 'Model',
+            category: 'model',
+            currentValue: 'sonnet',
+            values: [
+              { value: 'sonnet', name: 'Sonnet' },
+              { value: 'opus', name: 'Opus' },
+            ],
+          },
+        ],
+      },
       { type: 'user', text: 'List files' },
       { type: 'status', status: 'working', provider: 'claude' },
       { type: 'text', text: 'Hello' },
@@ -154,6 +175,53 @@ describe(ChatSession.name, () => {
     })
   })
 
+  it('offers the model and switches it between answers only', async () => {
+    const { chat, owner } = setup()
+    chat.start('owner', 'claude')
+    await waitFor(() => statuses(owner).includes('ready'))
+    const models = () =>
+      chatEvents(owner).flatMap((e) =>
+        e.type === 'config' ? [e.options[0]?.currentValue] : [],
+      )
+    expect(models()).toEqual(['sonnet'])
+    const switching = chat.setConfig('owner', 'model', 'opus')
+    // A prompt or another switch meanwhile could reach the old model.
+    expect(() => chat.prompt('owner', 'Hi')).toThrow('The agent is switching')
+    await expect(chat.setConfig('owner', 'model', 'sonnet')).toBeRejectedWith(
+      'The agent is still switching',
+    )
+    await switching
+    expect(models()).toEqual(['sonnet', 'opus'])
+    // Only what the agent offered goes out.
+    await expect(chat.setConfig('owner', 'model', 'gpt')).toBeRejectedWith(
+      'The agent does not offer this',
+    )
+    chat.prompt('owner', 'List files')
+    await expect(chat.setConfig('owner', 'model', 'sonnet')).toBeRejectedWith(
+      'switch after it finishes',
+    )
+    await waitFor(() => chatEvents(owner).some((e) => e.type === 'permission'))
+  })
+
+  it('replays the options after a long chat dropped them from the log', async () => {
+    // Over 2,000 tool calls push the options out of the transcript.
+    const long = FAKE_AGENT.replace(
+      "update({ sessionUpdate: 'tool_call', toolCallId: 't1', title: 'Run ls', status: 'pending' })",
+      "for (let i = 0; i < 2100; i++) update({ sessionUpdate: 'tool_call', toolCallId: 'c' + i, title: 'Read' })",
+    )
+    const { tabs, chat, owner } = setup(long)
+    chat.start('owner', 'claude')
+    await waitFor(() => statuses(owner).includes('ready'))
+    chat.prompt('owner', 'List files')
+    await waitFor(() => chatEvents(owner).some((e) => e.type === 'permission'))
+    const reloaded = stream()
+    tabs.connect('owner', reloaded)
+    const replay = parse(reloaded).find((e) => e.type === 'chat-replay')
+    const events = replay?.type === 'chat-replay' ? replay.events : []
+    expect(events[0]?.type).toEqual('config')
+    expect(events.filter((e) => e.type === 'config').length).toEqual(1)
+  })
+
   it('refuses a prompt while the agent answers', async () => {
     const { chat, owner } = setup()
     chat.start('owner', 'claude')
@@ -196,10 +264,13 @@ describe(ChatSession.name, () => {
   })
 })
 
+// Every tab gets a board replay as it connects, which the chat leaves alone.
 function stream(): TabStream & { written: string[] } {
   const result = {
     written: [] as string[],
-    write: (chunk: string) => result.written.push(chunk),
+    write: (chunk: string) => {
+      if (!chunk.includes('"board-replay"')) result.written.push(chunk)
+    },
     end: () => {},
   }
   return result

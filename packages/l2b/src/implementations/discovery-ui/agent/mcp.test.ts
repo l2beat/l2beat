@@ -7,6 +7,12 @@ import { attachMcpRoutes } from './mcp'
 import { createAgentRouter } from './router'
 import { AgentTabs, type TabStream } from './tabs'
 
+// Every tab gets its chat's and its board's replay as it connects; these
+// tests look at the rest.
+function keep(chunk: string): boolean {
+  return !chunk.includes('"chat-replay"') && !chunk.includes('"board-replay"')
+}
+
 // A real HTTP round trip against the express app, the way an agent's MCP
 // client calls it.
 describe(attachMcpRoutes.name, () => {
@@ -68,6 +74,7 @@ describe(attachMcpRoutes.name, () => {
       'show',
       'context',
       'permissions',
+      'board',
       'clear',
     ])
     for (const tool of tools) {
@@ -98,7 +105,10 @@ describe(attachMcpRoutes.name, () => {
 
   it('sends clear to the active tab', async () => {
     const written: string[] = []
-    const stream: TabStream = { write: (c) => written.push(c), end: () => {} }
+    const stream: TabStream = {
+      write: (c) => keep(c) && written.push(c),
+      end: () => {},
+    }
     tabs.connect('tab-1', stream)
     tabs.report('tab-1', { project: undefined, focusedAt: 1, sequence: 1 })
     const result = (await call('tools/call', { name: 'clear' })).result
@@ -111,11 +121,11 @@ describe(attachMcpRoutes.name, () => {
     const chatTab: string[] = []
     const focused: string[] = []
     const chatStream: TabStream = {
-      write: (c) => chatTab.push(c),
+      write: (c) => keep(c) && chatTab.push(c),
       end: () => {},
     }
     const focusedStream: TabStream = {
-      write: (c) => focused.push(c),
+      write: (c) => keep(c) && focused.push(c),
       end: () => {},
     }
     tabs.connect('chat-tab', chatStream)
@@ -147,7 +157,10 @@ describe(attachMcpRoutes.name, () => {
 
   it('shows in the active tab, in the project it has open', async () => {
     const written: string[] = []
-    const stream: TabStream = { write: (c) => written.push(c), end: () => {} }
+    const stream: TabStream = {
+      write: (c) => keep(c) && written.push(c),
+      end: () => {},
+    }
     tabs.connect('tab-1', stream)
     tabs.report('tab-1', { project: 'linea', focusedAt: 2, sequence: 2 })
     const steps = [{ note: 'Hi' }]
@@ -165,6 +178,49 @@ describe(attachMcpRoutes.name, () => {
     expect(shown.result?.isError).toEqual(false)
     expect(written.length).toEqual(1)
     expect(written[0]).toInclude('"project":"linea"')
+  })
+
+  it('shows a board in the active tab', async () => {
+    const written: string[] = []
+    const stream: TabStream = {
+      write: (c) => keep(c) && written.push(c),
+      end: () => {},
+    }
+    tabs.connect('tab-1', stream)
+    tabs.report('tab-1', { project: 'linea', focusedAt: 4, sequence: 4 })
+    const result = await call('tools/call', {
+      name: 'board',
+      arguments: {
+        title: 'Delays',
+        blocks: [
+          { type: 'text', text: 'From discovered.json' },
+          {
+            type: 'table',
+            columns: ['Contract', 'Delay'],
+            rows: [['A', '7d']],
+          },
+        ],
+      },
+    })
+    tabs.disconnect('tab-1', stream)
+    expect(result.result?.isError).toEqual(false)
+    expect(JSON.stringify(result.result?.content)).toInclude('1 rows')
+    expect(written.length).toEqual(1)
+    expect(written[0]).toInclude('"type":"board"')
+  })
+
+  it('names the table whose row lacks a cell', async () => {
+    const result = await call('tools/call', {
+      name: 'board',
+      arguments: {
+        title: 'Delays',
+        blocks: [{ type: 'table', columns: ['A', 'B'], rows: [['only']] }],
+      },
+    })
+    expect(result.result?.isError).toEqual(true)
+    expect(JSON.stringify(result.result?.content)).toInclude(
+      'Every row has one cell per column',
+    )
   })
 
   it('asks the active tab for context over its stream', async () => {

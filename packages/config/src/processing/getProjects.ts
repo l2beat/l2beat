@@ -185,8 +185,6 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
 
     // data
     colors: p.colors,
-    ecosystemColors: ecosystems.find((e) => e.id === p.ecosystemInfo?.id)
-      ?.colors,
     statuses: {
       yellowWarning: p.display.headerWarning,
       redWarning: getEoaUpgradeRedWarning(p.id, p.display.redWarning),

@@ -1,9 +1,6 @@
 import { Fragment, useMemo, useState } from 'react'
-import { env } from '~/env'
 import { usePathname } from '~/hooks/usePathname'
 import { ChevronIcon } from '~/icons/Chevron'
-import { GARDEN_PATH } from '~/pages/garden/paths'
-import { CropsMiniBanner } from '~/pages/home/components/CropsMiniBanner'
 import { SoonBadge } from '~/pages/home/components/SoonBadge'
 import { cn } from '~/utils/cn'
 import { isLinkActive } from '~/utils/isLinkActive'
@@ -38,18 +35,10 @@ import type { NavGroup } from '../types'
 interface Props {
   groups: NavGroup[]
   logoLink: string
-  /** Off where the page has a garden banner of its own (home). */
-  showGardenBanner: boolean
   className?: string
 }
 
-export function NavSidebar({
-  groups,
-  logoLink,
-  showGardenBanner,
-  className,
-}: Props) {
-  const pathname = usePathname()
+export function NavSidebar({ groups, logoLink, className }: Props) {
   const { setOpenMobile } = useSidebar()
   const closeMobileSidebar = () => setOpenMobile(false)
   return (
@@ -76,14 +65,6 @@ export function NavSidebar({
         </div>
       </SidebarHeader>
       <SidebarContent>
-        {env.CLIENT_SIDE_GARDEN_ENABLED && showGardenBanner && (
-          <SidebarGroup className="mb-2">
-            <CropsMiniBanner
-              isActive={pathname.startsWith(GARDEN_PATH)}
-              onClick={closeMobileSidebar}
-            />
-          </SidebarGroup>
-        )}
         {groups
           .filter((group) => group.section !== 'more')
           .map((group) => (

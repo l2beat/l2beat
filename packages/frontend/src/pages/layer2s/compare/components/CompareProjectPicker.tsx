@@ -19,6 +19,7 @@ import { CloseIcon } from '~/icons/Close'
 import { PlusIcon } from '~/icons/Plus'
 import type { CompareProjectEntry } from '~/server/features/layer2s/compare/getCompareProjectEntries'
 import { cn } from '~/utils/cn'
+import { nameInView, withViewTransition } from '~/utils/viewTransition'
 import type { CompareMetric } from '../metrics/types'
 import { useCompareSeries } from './CompareSeriesContext'
 
@@ -132,6 +133,7 @@ export function CompareProjectPicker({
                 onMouseLeave={() => setHoveredProjectId(undefined)}
                 onFocus={() => setHoveredProjectId(project.id)}
                 onBlur={() => setHoveredProjectId(undefined)}
+                data-compare-chip={project.slug}
                 className="flex h-7 items-center gap-1.5 rounded-lg border border-divider bg-surface-primary py-1 pr-1.5 pl-1"
                 // The ring makes the chip strip double as the charts' color key,
                 // so it must show exactly the series color the charts use - and
@@ -161,7 +163,14 @@ export function CompareProjectPicker({
                 <button
                   type="button"
                   aria-label={`Remove ${project.name}`}
-                  onClick={() => toggleProject(project.slug)}
+                  onClick={(event) => {
+                    const remove = () => toggleProject(project.slug)
+                    // With a pointer, the chip shrinks away and the rest
+                    // close the gap, as filter chips do; from the keyboard
+                    // it just goes.
+                    if (event.detail === 0) remove()
+                    else withViewTransition('chips', nameChips, remove)
+                  }}
                   className="after:-inset-1 relative flex size-4 cursor-pointer items-center justify-center rounded-full after:absolute after:content-[''] hover:bg-surface-tertiary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
                 >
                   <CloseIcon className="size-2 fill-secondary" aria-hidden />
@@ -173,6 +182,7 @@ export function CompareProjectPicker({
         )
       })}
       <DashedButton
+        data-compare-chip="add"
         onClick={() => {
           setPinnedSlugs(selectedSlugs)
           setOpen(true)
@@ -185,6 +195,7 @@ export function CompareProjectPicker({
       {!isDefaultSelection && (
         <button
           type="button"
+          data-compare-chip="reset"
           onClick={() => onChange(undefined)}
           className="h-7 cursor-pointer px-1 font-medium text-secondary text-sm leading-none"
         >
@@ -259,5 +270,14 @@ export function CompareProjectPicker({
         </Command>
       </CommandDialog>
     </div>
+  )
+}
+
+/** The chips and the buttons after them, which close a removed chip's gap. */
+function nameChips() {
+  return nameInView(
+    '[data-compare-chip]',
+    (el) => el.dataset.compareChip,
+    'filter-chip',
   )
 }

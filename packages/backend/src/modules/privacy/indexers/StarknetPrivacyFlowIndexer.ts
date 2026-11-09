@@ -18,6 +18,7 @@ import type {
   StarknetPrivacyFlowIndexerConfig,
 } from '../types'
 import { extractStarknetPrivacyFlow } from '../utils/extractStarknetPrivacyFlow'
+import { getPrivacyBucketIds } from '../utils/getPrivacyBucketIds'
 
 interface StarknetPrivacyFlowIndexerDeps
   extends Omit<
@@ -60,6 +61,11 @@ export class StarknetPrivacyFlowIndexer extends ManagedMultiIndexer<StarknetPriv
 
     return async () => {
       await this.$.db.privacyFlowEvent.upsertMany(records)
+      await this.$.db.syncMetadata.updateSyncedUntil(
+        'privacy',
+        getPrivacyBucketIds(configurations.map((c) => c.properties)),
+        adjustedTo,
+      )
       this.logger.info('Saved Starknet privacy flow events', {
         from,
         to: adjustedTo,

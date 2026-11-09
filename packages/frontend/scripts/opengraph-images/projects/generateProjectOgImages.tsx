@@ -1,6 +1,6 @@
+import { existsSync, readFileSync } from 'node:fs'
+import path from 'node:path'
 import type { Project } from '@l2beat/config'
-import { readFileSync } from 'fs'
-import path from 'path'
 import type { OpengraphKit } from '~/components/opengraph-image/heartbeat/render'
 import { renderOpengraphPng } from '~/components/opengraph-image/heartbeat/render'
 import { ProjectOpengraphImage } from '~/components/opengraph-image/Project'
@@ -31,13 +31,13 @@ export async function generateProjectOgImages(kit: OpengraphKit) {
             <ProjectOpengraphImage
               measure={kit.measure}
               label={getLabel(project, type)}
-              logoSrc={getLogoSrc(project.slug)}
               name={
                 type === 'interop'
                   ? (project.interopConfig?.name ?? project.name)
                   : project.name
               }
               shortName={project.shortName}
+              logo={getLogo(project.slug)}
             />,
             kit,
           ),
@@ -50,12 +50,19 @@ export async function generateProjectOgImages(kit: OpengraphKit) {
       <ProjectOpengraphImage
         measure={kit.measure}
         label="Layer 1"
-        logoSrc={getLogoSrc('ethereum')}
         name="Ethereum"
+        logo={getLogo('ethereum')}
       />,
       kit,
     ),
   )
+}
+
+/** The project's icon as a data URI, if it has one. */
+function getLogo(slug: string) {
+  const file = path.join(process.cwd(), 'static/icons', `${slug}.png`)
+  if (!existsSync(file)) return undefined
+  return `data:image/png;base64,${readFileSync(file).toString('base64')}`
 }
 
 /** The project's type only: a stage or a category would leave a stale image behind when it changes. */
@@ -75,11 +82,6 @@ function getLabel(
     case 'defi':
       return 'DeFi'
   }
-}
-
-function getLogoSrc(slug: string) {
-  const file = path.join(process.cwd(), 'static/icons', `${slug}.png`)
-  return `data:image/png;base64,${readFileSync(file).toString('base64')}`
 }
 
 export function getOpengraphProjectTypes(

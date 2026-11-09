@@ -172,9 +172,7 @@ function ProjectIcon({
 }) {
   const image = <IconImage project={project} />
   return (
-    // Short enough to feel instant on purpose, long enough that sweeping the
-    // cursor across a table column does not flash every row's tooltip.
-    <Tooltip delayDuration={100}>
+    <Tooltip>
       {project.href ? (
         <TooltipTrigger asChild disabledOnTouch>
           <a

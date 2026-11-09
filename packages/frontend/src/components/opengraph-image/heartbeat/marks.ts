@@ -1,7 +1,7 @@
-import { A, B, BEATS, E, E_2, H, HEART, T, T_2 } from './pieces'
+import { A, B, E, E_2, H, HEART, T, T_2 } from './pieces'
 
-// SVG fragments of the logo and its heartbeat, placed on a 1200×630 canvas.
-// The pieces come in the X header's coordinates; place() maps them.
+// SVG fragments of the logo, placed on a 1200×630 canvas. The pieces come in
+// the X header's coordinates; place() maps them.
 
 export const PINK = '#FF3776'
 export const INK = '#0D0C0C'
@@ -13,9 +13,6 @@ const HEART_CENTER = {
   y: (HEART_BOX.y0 + HEART_BOX.y1) / 2,
 }
 const LOCKUP_RIGHT = 1414.9
-const BEATS_X0 = 537.4
-const BEATS_X1 = 730.6
-const BEATS_Y = 206.7
 
 /** Heart width per px of heart height. */
 export const HEART_RATIO =
@@ -41,79 +38,60 @@ export function place(hx: number, hy: number, heartH: number): Placement {
   }
 }
 
-/** The lockup with its right edge at `right`. */
-export function placeByRight(right: number, hy: number, heartH: number) {
+/** The lockup centred on `cx`, from the heart's left edge to the T's right. */
+export function placeCentred(cx: number, hy: number, heartH: number) {
   const scale = heartH / (HEART_BOX.y1 - HEART_BOX.y0)
-  return place(right - scale * (LOCKUP_RIGHT - HEART_CENTER.x), hy, heartH)
+  const centre = (HEART_BOX.x0 + LOCKUP_RIGHT) / 2
+  return place(cx - scale * (centre - HEART_CENTER.x), hy, heartH)
 }
 
 const EVENODD = new Set([T, T_2, E, B, E_2, A])
 const piece = (d: string, fill: string) =>
   `<path d="${d}"${EVENODD.has(d) ? ' fill-rule="evenodd"' : ''} fill="${fill}"/>`
 
-/** The light-ground lockup: pink heart, white ETH, ink BEAT. `withBeat: false` leaves the heart alone. */
-export function lockup(placement: Placement, { withBeat = true } = {}) {
-  const letters = withBeat ? [B, E_2, A, T_2].map((d) => piece(d, INK)) : []
-  return `<g transform="${placement.transform}">${piece(HEART, PINK)}${[E, T, H].map((d) => piece(d, WHITE)).join('')}${letters.join('')}</g>`
+/** The dark-ground lockup: pink heart, white ETH and BEAT. */
+export function lockup(placement: Placement) {
+  const letters = [E, T, H, B, E_2, A, T_2].map((d) => piece(d, WHITE))
+  return `<g transform="${placement.transform}">${piece(HEART, PINK)}${letters.join('')}</g>`
 }
 
-/** Where the heartbeat enters the heart: its widest line, where pink separates the outline from the E. */
-export const pulseY = (placement: Placement) =>
-  placement.hy - 11 * placement.scale
+/** The lockup's BEAT alone, the letters beside its heart. */
+export const beatWord = (placement: Placement) =>
+  `<g transform="${placement.transform}">${[B, E_2, A, T_2].map((d) => piece(d, WHITE)).join('')}</g>`
 
-// The outline's left edge at pulseY's height, from the heart's centre in the
-// pieces' units, measured on HEART's path.
-const PULSE_ENTRY_DX = -154.0738
+/** The logo's heart alone, without letters, so a title can run over it. */
+export const heart = (placement: Placement) =>
+  `<g transform="${placement.transform}">${piece(HEART, PINK)}</g>`
 
-/** Where the heartbeat line meets the placed heart's outline, so it ends exactly on it. */
-export const pulseEntryX = (placement: Placement) =>
-  placement.hx + placement.scale * PULSE_ENTRY_DX
+/** The placed heart's height in px. */
+export const heartHeight = (placement: Placement) =>
+  placement.scale * (HEART_BOX.y1 - HEART_BOX.y0)
 
-/** A flat line from x0, then the header's three beats, ending at x1 inside the heart. */
-export function pulse({
-  x0,
-  x1,
-  y,
-  scale,
-}: {
-  x0: number
-  x1: number
-  y: number
-  scale: number
-}) {
-  const end = x1 - 6 * scale
-  const start = end - scale * (BEATS_X1 - BEATS_X0)
-  const tokens = BEATS.replace(/([CH])/g, ' $1 ')
-    .trim()
-    .split(/\s+/)
-  let path = ''
-  for (let i = 0; i < tokens.length; ) {
-    const command = tokens[i++]
-    if (command === 'H') {
-      path += `H${round(start + scale * (Number(tokens[i++]) - BEATS_X0))}`
-    } else {
-      const points: string[] = []
-      for (let k = 0; k < 3; k++) {
-        const x = Number(tokens[i++])
-        const py = Number(tokens[i++])
-        points.push(
-          `${round(start + scale * (x - BEATS_X0))} ${round(y + scale * (py - BEATS_Y))}`,
-        )
-      }
-      path += `C${points.join(' ')}`
-    }
-  }
-  return `M${round(x0)} ${round(y)}H${round(start)}${path}H${round(x1 + 40 * scale)}`
+/** The placed heart's outline in canvas px, so a stroke around it is in px too. */
+export function heartOutline(placement: Placement) {
+  // HEART is absolute commands only, so its numbers alternate x and y.
+  let axis = 0
+  return HEART.replace(/\d+(\.\d+)?/g, (n) => {
+    const v = Number(n)
+    const placed =
+      axis++ % 2 === 0
+        ? placement.hx + placement.scale * (v - HEART_CENTER.x)
+        : placement.hy + placement.scale * (v - HEART_CENTER.y)
+    return String(round(placed))
+  })
 }
 
-/** Where the beats of a pulse ending at x1 begin: text left of the line ends before it. */
-export const beatsStart = (x1: number, scale: number) =>
-  x1 - 6 * scale - scale * (BEATS_X1 - BEATS_X0)
+// The point the heart's echoes grow from: on its axis, a little above its middle,
+// so they spread wider below, towards the tip, than above.
+const ECHO_ORIGIN = { x: 882.6, y: 203 }
 
-export const stroke = (d: string, color: string, attrs = '') =>
-  `<path d="${d}" fill="none" stroke="${color}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"${attrs ? ` ${attrs}` : ''}/>`
-
-export function svgDataUri(width: number, height: number, body: string) {
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">${body}</svg>`
-  return `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`
+/** The heart `factor` times bigger, grown from ECHO_ORIGIN, which stays put. */
+export function grown(placement: Placement, factor: number): Placement {
+  const dx = placement.scale * (HEART_CENTER.x - ECHO_ORIGIN.x)
+  const dy = placement.scale * (HEART_CENTER.y - ECHO_ORIGIN.y)
+  return place(
+    placement.hx + (factor - 1) * dx,
+    placement.hy + (factor - 1) * dy,
+    heartHeight(placement) * factor,
+  )
 }

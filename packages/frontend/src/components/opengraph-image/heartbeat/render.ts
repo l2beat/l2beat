@@ -40,6 +40,60 @@ export async function renderOpengraphPng(
   return new Resvg(svg, { font: { loadSystemFonts: false } }).render().asPng()
 }
 
+/**
+ * Draws SVG decoration as a PNG data URI, so images that share it can reuse
+ * one drawing: the glow's blurs take most of an image's render time.
+ */
+export function rasterize(body: string) {
+  return `data:image/png;base64,${draw(body).asPng().toString('base64')}`
+}
+
+/**
+ * Where drawn SVG starts and ends on each canvas row. An empty row starts at
+ * Infinity and ends at -Infinity, so it never counts as covered.
+ */
+export function rowExtents(body: string) {
+  const { pixels } = draw(body)
+  const { width, height } = OG_SIZE
+  const painted = (x: number, y: number) =>
+    (pixels[(y * width + x) * 4 + 3] ?? 0) >= 128
+  return Array.from({ length: height }, (_, y) => {
+    let start = 0
+    while (start < width && !painted(start, y)) start++
+    let end = width - 1
+    while (end > start && !painted(end, y)) end--
+    return start < width
+      ? { start, end }
+      : { start: Number.POSITIVE_INFINITY, end: Number.NEGATIVE_INFINITY }
+  })
+}
+
+/** A box by its edges. */
+export interface Box {
+  x0: number
+  y0: number
+  x1: number
+  y1: number
+}
+
+/** The box drawn SVG covers on the canvas. */
+export function drawnBox(body: string): Box {
+  const rows = rowExtents(body)
+  const drawn = rows.flatMap((row, y) => (row.start <= row.end ? [y] : []))
+  return {
+    x0: Math.min(...rows.map((row) => row.start)),
+    y0: Math.min(...drawn),
+    x1: Math.max(...rows.map((row) => row.end)) + 1,
+    y1: Math.max(...drawn) + 1,
+  }
+}
+
+function draw(body: string) {
+  const { width, height } = OG_SIZE
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">${body}</svg>`
+  return new Resvg(svg, { font: { loadSystemFonts: false } }).render()
+}
+
 export async function renderOpengraphSvg(
   element: ReactNode,
   kit: OpengraphKit,
