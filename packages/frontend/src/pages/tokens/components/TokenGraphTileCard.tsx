@@ -50,9 +50,7 @@ export function TokenGraphTileCard({
       </span>
 
       <span className="text-label-value-12 text-secondary">
-        {tile.deploymentsCount === tile.totalDeploymentsCount
-          ? count(tile.deploymentsCount, 'deployment')
-          : `${tile.deploymentsCount} of ${count(tile.totalDeploymentsCount, 'deployment')}`}
+        {count(tile.deploymentsCount, 'deployment')}
         {' · '}
         {count(tile.chainsCount, 'chain')}
         {tile.bridgesCount > 0 && (

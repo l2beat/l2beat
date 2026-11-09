@@ -148,6 +148,6 @@ function Header({
  */
 function describePastDay([from, to]: [number, number]): string {
   return from === UnixTime.toStartOf(from, 'day')
-    ? `/ day · ${formatTimestamp(from)}`
-    : `/ 24h to ${formatTimestamp(to, { mode: 'datetime' })}`
+    ? `on ${formatTimestamp(from)}`
+    : `in 24h to ${formatTimestamp(to, { mode: 'datetime' })}`
 }

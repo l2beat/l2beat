@@ -3,10 +3,7 @@ import type {
   DeployedTokenAssignment,
   TokenRelationRoute,
 } from '@l2beat/database'
-import {
-  getDeploymentsByVolume,
-  getUnconnectedIds,
-} from '~/components/projects/sections/interop/onchain-deployments/relations-graph/graphSelectors'
+import { getUnconnectedIds } from '~/components/projects/sections/interop/onchain-deployments/relations-graph/graphSelectors'
 import { getInteropTokenUrl } from '~/pages/interop/utils/getInteropTokenUrl'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import { endpointKey } from '../layer2s/interop/token/buildTokenRelationsGraph'
@@ -41,8 +38,6 @@ export interface TokenGraphTile {
   volume: number | null
   /** Over related deployments only, like the graph shows them by default. */
   deploymentsCount: number
-  /** Every deployment, as the token page counts them. */
-  totalDeploymentsCount: number
   chainsCount: number
   bridgesCount: number
   graph: {
@@ -124,7 +119,6 @@ export function toTokenGraphTile(
     href: linkable ? getInteropTokenUrl(token) : undefined,
     volume,
     deploymentsCount: deployments.length,
-    totalDeploymentsCount: getDeploymentsByVolume(graph).length,
     chainsCount: new Set(deployments.map((deployment) => deployment.chain.id))
       .size,
     bridgesCount: new Set(bridgeIds).size,

@@ -109,7 +109,6 @@ describe(toTokenGraphTile.name, () => {
       href: '/tokens/usdc01/circle/usdc',
       volume: 500,
       deploymentsCount: 3,
-      totalDeploymentsCount: 4,
       chainsCount: 3,
       bridgesCount: 2,
       graph: {
