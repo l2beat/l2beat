@@ -113,8 +113,8 @@ export function fitTicks(
 
 /**
  * Zero and ±10^k within `[min, max]`: d3's symlog ticks are linear, so all
- * but the ends would bunch at the top of the axis. Below 10, where symlog is
- * close to linear and few powers fit, the fixed-domain ticks.
+ * but the ends would bunch at the top of the axis. When fewer than three
+ * fit, as in a narrow domain between two powers, the fixed-domain ticks.
  */
 function getLogTicks(
   min: number,
@@ -122,18 +122,17 @@ function getLogTicks(
   count: number,
   integer?: boolean,
 ) {
-  const extent = Math.max(-min, max)
-  if (extent < 10) {
-    return getFixedDomainTicks(min, max, count, integer)
-  }
   const powers: number[] = []
-  for (let power = 1; power <= extent; power *= 10) {
+  for (let power = 1; power <= Math.max(-min, max); power *= 10) {
     powers.push(power)
   }
   const negatives = powers.map((p) => -p).reverse()
-  return [...negatives, 0, ...powers].filter(
+  const ticks = [...negatives, 0, ...powers].filter(
     (tick) => tick >= min && tick <= max,
   )
+  return ticks.length >= 3
+    ? ticks
+    : getFixedDomainTicks(min, max, count, integer)
 }
 
 /**

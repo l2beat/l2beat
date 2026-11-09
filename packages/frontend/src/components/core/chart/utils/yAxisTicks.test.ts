@@ -52,7 +52,10 @@ describe(getYAxisTicks.name, () => {
     ])
   })
 
-  it('ticks a symlog scale below 10 like a fixed domain', () => {
+  it('ticks a symlog scale like a fixed domain when few powers fit', () => {
+    expect(
+      getYAxisTicks([12, 18], { scale: scaleSymlog, domain: 'auto' }, 1).ticks,
+    ).toEqual([12, 15, 18])
     expect(getYAxisTicks([0, 0.18], { scale: scaleSymlog }, 1).ticks).toEqual([
       0, 0.09, 0.18,
     ])
