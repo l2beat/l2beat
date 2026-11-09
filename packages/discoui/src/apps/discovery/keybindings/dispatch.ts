@@ -35,6 +35,8 @@ function readScopeContext(target: EventTarget | null): ScopeContext {
     inputFocus: acceptsTyping(target),
     nodesPanelActive: activeLeaf === undefined || activeLeaf === 'nodes',
     searchOpen: useSearchStore.getState().opened,
+    dialogFocus:
+      target instanceof Element && target.closest('[role="dialog"]') !== null,
     controlFocus:
       target instanceof Element &&
       target.closest('button, a[href], [role="button"], summary') !== null,

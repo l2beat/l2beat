@@ -17,6 +17,7 @@ const ON_CANVAS: ScopeContext = {
   inputFocus: false,
   nodesPanelActive: true,
   searchOpen: false,
+  dialogFocus: false,
   controlFocus: false,
 }
 const TYPING: ScopeContext = { ...ON_CANVAS, inputFocus: true }
@@ -55,6 +56,10 @@ describe('keybindings', () => {
       const keybindings = computeKeybindings(DEFAULTS, EMPTY)
       expect(resolve(keybindings, 'H', ON_CANVAS)?.command).toEqual('tool.hand')
       expect(resolve(keybindings, 'H', TYPING)).toEqual(undefined)
+      // A dialog covers the canvas, so Delete there never hides nodes.
+      expect(
+        resolve(keybindings, 'Delete', { ...ON_CANVAS, dialogFocus: true }),
+      ).toEqual(undefined)
       // A focused button keeps Space to press itself.
       expect(resolve(keybindings, 'Space', ON_CANVAS)?.command).toEqual(
         'tool.handHold',

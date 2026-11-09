@@ -7,6 +7,8 @@ export interface ScopeContext {
   readonly inputFocus: boolean
   readonly nodesPanelActive: boolean
   readonly searchOpen: boolean
+  /** Focus is inside a dialog, which covers the canvas. */
+  readonly dialogFocus: boolean
   /** Focus is on a button or link, which Space and Enter press. */
   readonly controlFocus: boolean
 }
@@ -27,5 +29,5 @@ export function scopeApplies(scope: Scope, context: ScopeContext): boolean {
   if (scope === 'notTyping') {
     return true
   }
-  return context.nodesPanelActive && !context.searchOpen
+  return context.nodesPanelActive && !context.searchOpen && !context.dialogFocus
 }
