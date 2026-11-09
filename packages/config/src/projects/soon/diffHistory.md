@@ -9,6 +9,7 @@ Generated with discovered.json: 0x28d28eea05e1615ada9403420f726382f16be00c
 
 ## Description
 
+SOON paused its bridges on 2026-10-31 after an exploit causing abnormal withdrawals ([announcement](https://www.kucoin.com/news/flash/soon-foundation-suspends-two-cross-chain-bridges-after-abnormal-withdrawals)).
 - SuperchainConfig: the guardian paused it on 2026-10-31; it was unpaused on 2026-11-04.
 - OptimismPortal: the guardian froze 6 withdrawals.
 - L2OutputOracle: the challenger (SoonMultisig) deleted the 2 latest outputs and raised the finalization period from 3d to 7d.
