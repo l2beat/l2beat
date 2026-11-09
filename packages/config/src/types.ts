@@ -1125,7 +1125,8 @@ export interface ProjectPrivacyInfo {
   /**
    * Chains on which L2BEAT tracks this protocol's deployment, mostly through
    * project discovery. Each chain needs a project with a matching chainConfig
-   * for its icon.
+   * for its icon. When buckets span several of them, the project page gets a
+   * tab per chain in this order, so list the main deployment first.
    */
   trackedOn: string[]
   /**

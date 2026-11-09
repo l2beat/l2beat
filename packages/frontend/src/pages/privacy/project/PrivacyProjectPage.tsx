@@ -21,7 +21,10 @@ import { StickyMobileSectionNavigation } from '~/components/section-navigation/S
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
+import type {
+  PrivacyChainEntry,
+  ProjectPrivacyEntry,
+} from '~/server/features/privacy/project/getPrivacyProjectEntry'
 import { getPrivacyAdversariesSummary } from '~/server/features/privacy/utils/toPrivacyAdversariesSummary'
 import type { ProjectSectionLink } from '~/server/features/projects/getProjectSectionLinks'
 import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
@@ -30,6 +33,11 @@ import {
   getPrivacyAdversaryRosetteValues,
   PRIVACY_ADVERSARIES_SECTION_ID,
 } from '../adversaries/privacyAdversaryUi'
+import {
+  PrivacyChainProvider,
+  PrivacyChainTabs,
+  usePrivacyChain,
+} from './components/PrivacyChainSwitch'
 import { PrivacyProjectRiskProfile } from './components/PrivacyProjectRiskProfile'
 import {
   MOBILE_SUMMARY_ROWS,
@@ -43,6 +51,7 @@ interface Props extends AppLayoutProps {
   versionLinks?: ProjectVersionLinks
   queryState: DehydratedState
   selectedUpdateId?: string
+  selectedChain?: string
 }
 
 export function PrivacyProjectPage({
@@ -51,8 +60,10 @@ export function PrivacyProjectPage({
   versionLinks,
   queryState,
   selectedUpdateId,
+  selectedChain,
   ...props
 }: Props) {
+  const chains = entry.chains?.map((c) => c.chain)
   const navigationSections = projectDetailsToNavigationSections(entry.sections)
   const isNavigationEmpty = navigationSections.length === 0
   const adversaries = getPrivacyAdversariesSummary(entry.sections)
@@ -60,198 +71,222 @@ export function PrivacyProjectPage({
   return (
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
-        <SideNavLayout childrenWrapperClassName="md:pt-0">
-          <div
-            className="smooth-scroll group/section-wrapper relative z-0 max-md:bg-surface-primary"
-            data-project-page
-          >
-            {!isNavigationEmpty && (
-              <StickyMobileSectionNavigation
-                sections={navigationSections}
-                project={{
-                  name: entry.shortName ?? entry.name,
-                  icon: entry.icon,
-                }}
-              />
-            )}
-            <div className="relative z-0 max-md:bg-surface-primary">
-              <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">
-                <div className="pt-6 max-md:px-4 lg:pt-4">
-                  <ProjectHeader
-                    project={entry}
-                    section="privacy"
-                    sectionLinks={sectionLinks}
-                    versions={versionLinks}
-                    recentUpdatesCount={entry.recentUpdatesCount}
-                  />
-                  <ProjectSummaryBars
-                    project={{
-                      archivedAt: entry.archivedAt,
-                      underReviewStatus: entry.isUnderReview
-                        ? 'config'
-                        : undefined,
-                      header: {
-                        warning: entry.warnings.yellow,
-                        redWarning: entry.warnings.red,
-                        emergencyWarning: entry.warnings.emergency,
-                      },
-                    }}
-                    versions={versionLinks}
-                  />
-                  {entry.badges && entry.badges.length > 0 && (
-                    <BadgesSection
-                      badges={entry.badges}
-                      className="mb-4 md:hidden"
-                      withDialog
+        <PrivacyChainProvider
+          initialChain={
+            chains?.some((c) => c.id === selectedChain)
+              ? selectedChain
+              : undefined
+          }
+        >
+          <SideNavLayout childrenWrapperClassName="md:pt-0">
+            <div
+              className="smooth-scroll group/section-wrapper relative z-0 max-md:bg-surface-primary"
+              data-project-page
+            >
+              {!isNavigationEmpty && (
+                <StickyMobileSectionNavigation
+                  sections={navigationSections}
+                  project={{
+                    name: entry.shortName ?? entry.name,
+                    icon: entry.icon,
+                  }}
+                />
+              )}
+              <div className="relative z-0 max-md:bg-surface-primary">
+                <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">
+                  <div className="pt-6 max-md:px-4 lg:pt-4">
+                    <ProjectHeader
+                      project={entry}
+                      section="privacy"
+                      sectionLinks={sectionLinks}
+                      versions={versionLinks}
+                      recentUpdatesCount={entry.recentUpdatesCount}
                     />
-                  )}
-                  {entry.description && (
-                    <AboutSection
-                      description={entry.description}
-                      className="md:hidden"
+                    <ProjectSummaryBars
+                      project={{
+                        archivedAt: entry.archivedAt,
+                        underReviewStatus: entry.isUnderReview
+                          ? 'config'
+                          : undefined,
+                        header: {
+                          warning: entry.warnings.yellow,
+                          redWarning: entry.warnings.red,
+                          emergencyWarning: entry.warnings.emergency,
+                        },
+                      }}
+                      versions={versionLinks}
                     />
-                  )}
-                  <HorizontalSeparator className="my-4 md:hidden" />
-                  <div className="mb-3 max-md:hidden">
-                    <DesktopProjectLinks
-                      projectLinks={entry.projectLinks}
-                      discoUiHref={entry.discoveryHref}
-                    />
+                    {entry.badges && entry.badges.length > 0 && (
+                      <BadgesSection
+                        badges={entry.badges}
+                        className="mb-4 md:hidden"
+                        withDialog
+                      />
+                    )}
+                    {entry.description && (
+                      <AboutSection
+                        description={entry.description}
+                        className="md:hidden"
+                      />
+                    )}
+                    <HorizontalSeparator className="my-4 md:hidden" />
+                    <div className="mb-3 max-md:hidden">
+                      <DesktopProjectLinks
+                        projectLinks={entry.projectLinks}
+                        discoUiHref={entry.discoveryHref}
+                      />
+                    </div>
                   </div>
-                </div>
 
-                <div className="row-start-2 w-full">
-                  <HighlightableLinkContextProvider>
-                    <PrimaryCard
-                      id="summary"
-                      data-role="nav-section"
-                      className="scroll-mt-[100vh] border-divider max-md:rounded-none max-md:border-b max-md:pt-0"
-                    >
-                      <div className="flex">
-                        <div className="w-full min-w-0">
-                          <PrivacyProjectStats
-                            totalValueLockedUsd={
-                              entry.summary.totalValueLockedUsd
-                            }
-                            totalValueLockedChange7d={
-                              entry.summary.totalValueLockedChange7d
-                            }
-                            hasTvl={entry.hasTvl}
-                            assetsCount={entry.assetsCount}
-                            bucketsCount={entry.bucketCount}
-                            deposits={entry.summary.deposits}
-                            relayerStat={entry.summary.relayerStat}
-                          />
+                  <div className="row-start-2 w-full">
+                    <HighlightableLinkContextProvider>
+                      {chains && <PrivacyChainTabs chains={chains} />}
+                      <PrimaryCard
+                        id="summary"
+                        data-role="nav-section"
+                        className={cn(
+                          'scroll-mt-[100vh] border-divider max-md:rounded-none max-md:border-b max-md:pt-0',
+                          chains && 'md:rounded-tl-none',
+                        )}
+                      >
+                        <div className="flex">
+                          <div className="w-full min-w-0">
+                            <PrivacyProjectSummaryStats entry={entry} />
 
-                          <HorizontalSeparator className="max-md:my-2 md:mt-4" />
-                          <PrivacyProjectRiskProfile
-                            trustedSetup={entry.trustedSetup}
-                            exitWindow={entry.exitWindow}
-                            adversaries={adversaries}
-                            href={entry.href}
-                            isUnderReview={entry.isUnderReview}
-                            reproducibility={entry.reproducibility}
-                            className="md:mt-4"
-                          />
-
-                          <HorizontalSeparator className="max-md:my-2 md:mt-4" />
-                          <div
-                            className={cn(
-                              'flex flex-col md:mt-4 md:flex-row md:gap-8',
-                              MOBILE_SUMMARY_ROWS,
-                            )}
-                          >
-                            <ProjectSummaryStat
-                              title="Tracked on"
-                              tooltip="Chains on which the protocol deployment is tracked by ETHBEAT."
-                              value={
-                                <ProjectIconList
-                                  projects={entry.trackedOn}
-                                  title="Tracked on"
-                                />
-                              }
+                            <HorizontalSeparator className="max-md:my-2 md:mt-4" />
+                            <PrivacyProjectRiskProfile
+                              trustedSetup={entry.trustedSetup}
+                              exitWindow={entry.exitWindow}
+                              adversaries={adversaries}
+                              href={entry.href}
+                              isUnderReview={entry.isUnderReview}
+                              reproducibility={entry.reproducibility}
+                              className="md:mt-4"
                             />
-                            {entry.scalingProjects.length > 0 && (
+
+                            <HorizontalSeparator className="max-md:my-2 md:mt-4" />
+                            <div
+                              className={cn(
+                                'flex flex-col md:mt-4 md:flex-row md:gap-8',
+                                MOBILE_SUMMARY_ROWS,
+                              )}
+                            >
                               <ProjectSummaryStat
-                                title="Runs on"
-                                tooltip="Scaling projects the protocol runs on."
+                                title="Tracked on"
+                                tooltip="Chains on which the protocol deployment is tracked by ETHBEAT."
                                 value={
                                   <ProjectIconList
-                                    projects={entry.scalingProjects}
-                                    title={`${entry.name} runs on`}
+                                    projects={entry.trackedOn}
+                                    title="Tracked on"
                                   />
                                 }
                               />
+                              {entry.scalingProjects.length > 0 && (
+                                <ProjectSummaryStat
+                                  title="Runs on"
+                                  tooltip="Scaling projects the protocol runs on."
+                                  value={
+                                    <ProjectIconList
+                                      projects={entry.scalingProjects}
+                                      title={`${entry.name} runs on`}
+                                    />
+                                  }
+                                />
+                              )}
+                              {entry.attributes.length > 0 && (
+                                <ProjectSummaryStat
+                                  title="Attributes"
+                                  tooltip="Protocol attributes and capabilities."
+                                  valueClassName="flex flex-wrap justify-end gap-1 md:justify-start"
+                                  value={entry.attributes.map((attribute) => (
+                                    <PrivacyAttributeTag
+                                      key={attribute.id}
+                                      attribute={attribute}
+                                    />
+                                  ))}
+                                />
+                              )}
+                              {entry.referenceApp && (
+                                <PrivacyReferenceAppStat
+                                  app={entry.referenceApp}
+                                  href={`#${PRIVACY_ADVERSARIES_SECTION_ID}`}
+                                />
+                              )}
+                            </div>
+                          </div>
+                          <VerticalSeparator className="mr-8 ml-12 h-[unset] self-stretch max-xl:hidden" />
+                          <BigPizzaRosette
+                            values={getPrivacyAdversaryRosetteValues(
+                              adversaries,
                             )}
-                            {entry.attributes.length > 0 && (
-                              <ProjectSummaryStat
-                                title="Attributes"
-                                tooltip="Protocol attributes and capabilities."
-                                valueClassName="flex flex-wrap justify-end gap-1 md:justify-start"
-                                value={entry.attributes.map((attribute) => (
-                                  <PrivacyAttributeTag
-                                    key={attribute.id}
-                                    attribute={attribute}
-                                  />
-                                ))}
-                              />
+                            isUnderReview={entry.isUnderReview}
+                            size="small"
+                            className="my-auto max-xl:hidden"
+                          />
+                        </div>
+
+                        <HorizontalSeparator className="my-4 max-md:hidden" />
+                        <div className="max-md:hidden">
+                          <div className="flex flex-col gap-4 px-4 max-md:mt-2 md:px-0 lg:flex-row lg:gap-8">
+                            {entry.badges && entry.badges.length > 0 && (
+                              <BadgesSection badges={entry.badges} withDialog />
                             )}
-                            {entry.referenceApp && (
-                              <PrivacyReferenceAppStat
-                                app={entry.referenceApp}
-                                href={`#${PRIVACY_ADVERSARIES_SECTION_ID}`}
-                              />
+                            {entry.description && (
+                              <AboutSection description={entry.description} />
                             )}
                           </div>
                         </div>
-                        <VerticalSeparator className="mr-8 ml-12 h-[unset] self-stretch max-xl:hidden" />
-                        <BigPizzaRosette
-                          values={getPrivacyAdversaryRosetteValues(adversaries)}
-                          isUnderReview={entry.isUnderReview}
-                          size="small"
-                          className="my-auto max-xl:hidden"
-                        />
-                      </div>
+                      </PrimaryCard>
 
-                      <HorizontalSeparator className="my-4 max-md:hidden" />
-                      <div className="max-md:hidden">
-                        <div className="flex flex-col gap-4 px-4 max-md:mt-2 md:px-0 lg:flex-row lg:gap-8">
-                          {entry.badges && entry.badges.length > 0 && (
-                            <BadgesSection badges={entry.badges} withDialog />
-                          )}
-                          {entry.description && (
-                            <AboutSection description={entry.description} />
-                          )}
-                        </div>
-                      </div>
-                    </PrimaryCard>
-
-                    <ProjectDetails
-                      items={entry.sections}
-                      selectedUpdateId={selectedUpdateId}
-                    />
-                  </HighlightableLinkContextProvider>
-                </div>
-
-                {!isNavigationEmpty && (
-                  <div className="row-start-2 mt-2 hidden shrink-0 lg:block">
-                    <DesktopProjectNavigation
-                      project={{
-                        title: entry.shortName ?? entry.name,
-                        slug: entry.slug,
-                        isUnderReview: entry.isUnderReview,
-                        icon: entry.icon,
-                      }}
-                      sections={navigationSections}
-                    />
+                      <ProjectDetails
+                        items={entry.sections}
+                        selectedUpdateId={selectedUpdateId}
+                      />
+                    </HighlightableLinkContextProvider>
                   </div>
-                )}
+
+                  {!isNavigationEmpty && (
+                    <div className="row-start-2 mt-2 hidden shrink-0 lg:block">
+                      <DesktopProjectNavigation
+                        project={{
+                          title: entry.shortName ?? entry.name,
+                          slug: entry.slug,
+                          isUnderReview: entry.isUnderReview,
+                          icon: entry.icon,
+                        }}
+                        sections={navigationSections}
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
+              <ScrollToTopButton />
             </div>
-            <ScrollToTopButton />
-          </div>
-        </SideNavLayout>
+          </SideNavLayout>
+        </PrivacyChainProvider>
       </HydrationBoundary>
     </AppLayout>
+  )
+}
+
+function PrivacyProjectSummaryStats({ entry }: { entry: ProjectPrivacyEntry }) {
+  const chains = entry.chains?.map((c) => c.chain)
+  const chain = usePrivacyChain(chains)
+  const view: Pick<
+    PrivacyChainEntry,
+    'assetsCount' | 'bucketCount' | 'summary'
+  > = entry.chains?.find((c) => c.chain.id === chain) ?? entry
+
+  return (
+    <PrivacyProjectStats
+      totalValueLockedUsd={view.summary.totalValueLockedUsd}
+      totalValueLockedChange7d={view.summary.totalValueLockedChange7d}
+      hasTvl={entry.hasTvl}
+      assetsCount={view.assetsCount}
+      bucketsCount={view.bucketCount}
+      chainsCount={chain === undefined ? chains?.length : undefined}
+      deposits={view.summary.deposits}
+      relayerStat={view.summary.relayerStat}
+    />
   )
 }

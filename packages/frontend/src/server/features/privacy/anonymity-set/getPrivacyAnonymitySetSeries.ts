@@ -21,6 +21,7 @@ export interface PrivacyAnonymitySetSeries {
   configurationId: string
   projectId: string
   bucketId: string
+  chain: string
   label: string
   /** Lists the series while its history is still being indexed. */
   compactLabel: string
@@ -36,7 +37,7 @@ export interface PrivacyAnonymitySetSeries {
 
 type SeriesBase = Pick<
   PrivacyAnonymitySetSeries,
-  'configurationId' | 'projectId' | 'bucketId' | 'sinceTimestamp'
+  'configurationId' | 'projectId' | 'bucketId' | 'chain' | 'sinceTimestamp'
 >
 
 type DepositSource = Extract<
@@ -49,27 +50,48 @@ const WAIT_STEP = `Wait for a randomized duration of time up to ${ANONYMITY_SET_
 export function getPrivacyAnonymitySetSeries(
   project: PrivacyAnonymitySetProject,
 ): PrivacyAnonymitySetSeries[] {
-  return getPrivacyAnonymitySetSources(project.privacyInfo).flatMap(
-    (anonymitySet) => {
-      const { bucketId, chain, address, sinceTimestamp, source } = anonymitySet
-      const base: SeriesBase = {
-        configurationId: createPrivacyAnonymitySetConfigurationId({
-          projectId: project.id,
-          bucketId,
-          chain,
-          address,
-          ...source,
-        }),
+  const sources = getPrivacyAnonymitySetSources(project.privacyInfo)
+  // Each chain's pool is its own anonymity set, so labels tell them apart.
+  const isMultiChain = new Set(sources.map((s) => s.chain)).size > 1
+  const series = sources.flatMap((anonymitySet) => {
+    const { bucketId, chain, address, sinceTimestamp, source } = anonymitySet
+    const base: SeriesBase = {
+      configurationId: createPrivacyAnonymitySetConfigurationId({
         projectId: project.id,
         bucketId,
-        sinceTimestamp,
-      }
+        chain,
+        address,
+        ...source,
+      }),
+      projectId: project.id,
+      bucketId,
+      chain,
+      sinceTimestamp,
+    }
 
-      return anonymitySet.type === 'key-registrations'
-        ? [getKeyRegistrationsSeries(base, project.name)]
-        : getDepositSeries(base, anonymitySet, project.name)
-    },
-  )
+    return anonymitySet.type === 'key-registrations'
+      ? [getKeyRegistrationsSeries(base, project.name)]
+      : getDepositSeries(base, anonymitySet, project.name)
+  })
+  return isMultiChain ? series.map(withChainLabel) : series
+}
+
+function withChainLabel(
+  series: PrivacyAnonymitySetSeries,
+): PrivacyAnonymitySetSeries {
+  const suffix = ` · ${formatChainName(series.chain)}`
+  return {
+    ...series,
+    label: series.label + suffix,
+    compactLabel: series.compactLabel + suffix,
+    ...(series.headlineLabel !== undefined && {
+      headlineLabel: series.headlineLabel + suffix,
+    }),
+  }
+}
+
+function formatChainName(chain: string): string {
+  return chain.charAt(0).toUpperCase() + chain.slice(1)
 }
 
 /** Key registrations replace bucket sets; the config tests reject a project with both. */
@@ -112,7 +134,7 @@ function getDepositSeries(
   projectName: string,
 ): PrivacyAnonymitySetSeries[] {
   const { symbol, decimals } = token.token
-  const chainName = chain.charAt(0).toUpperCase() + chain.slice(1)
+  const chainName = formatChainName(chain)
 
   return bucket.anonymitySet.minimumAmounts.map((minimumAmount) => {
     const amount = formatTokenAmount(minimumAmount, decimals)

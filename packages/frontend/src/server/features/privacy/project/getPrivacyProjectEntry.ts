@@ -82,6 +82,8 @@ export interface ProjectPrivacyEntry {
     }
     relayerStat?: PrivacyRelayerStat
   }
+  /** Set when the tracked buckets span more than one chain; `summary` holds their totals. */
+  chains?: PrivacyChainEntry[]
   archivedAt?: UnixTime
   isUnderReview: boolean
   recentUpdatesCount: number
@@ -91,6 +93,13 @@ export interface ProjectPrivacyEntry {
     emergency?: string
   }
   sections: ProjectDetailsSection[]
+}
+
+export interface PrivacyChainEntry {
+  chain: ProjectIconListItem
+  assetsCount: number
+  bucketCount: number
+  summary: ProjectPrivacyEntry['summary']
 }
 
 export async function getPrivacyProjectEntry(
@@ -172,6 +181,11 @@ export async function getPrivacyProjectEntry(
   // point only at sections this page renders.
   const adversariesSectionIndex = sections.length
 
+  const statsChains = details.chains?.map((c) => c.chain)
+  const anonymitySetChains = details.trackedOn.filter((chain) =>
+    details.anonymitySetChains.includes(chain.id),
+  )
+
   const chartProject = {
     id: details.id,
     name: details.name,
@@ -189,6 +203,7 @@ export async function getPrivacyProjectEntry(
         rangeControls: 'privacy',
         project: chartProject,
         milestones: details.milestones,
+        privacyChains: statsChains,
       },
     })
   }
@@ -203,6 +218,7 @@ export async function getPrivacyProjectEntry(
         project: chartProject,
         milestones: details.milestones,
         anonymitySetType: details.anonymitySetType,
+        chains: anonymitySetChains.length > 1 ? anonymitySetChains : undefined,
       },
     })
   }
@@ -216,6 +232,7 @@ export async function getPrivacyProjectEntry(
         defaultRange: defaultChartRange,
         project: chartProject,
         milestones: details.milestones,
+        chains: statsChains,
       },
     })
 
@@ -226,6 +243,10 @@ export async function getPrivacyProjectEntry(
         title: 'Assets Breakdown',
         assets: details.assets,
         showTvl: details.hasTvl,
+        chainAssets: details.chains?.map(({ chain, assets }) => ({
+          chain,
+          assets,
+        })),
       },
     })
   }
@@ -373,15 +394,28 @@ export async function getPrivacyProjectEntry(
     reproducibility: details.reproducibility,
     referenceApp,
     summary: {
-      totalValueLockedUsd: details.hasTvl
-        ? tvs.projects[details.id]?.breakdown.total
-        : undefined,
+      totalValueLockedUsd: !details.hasTvl
+        ? undefined
+        : details.chains
+          ? sumDefined(details.chains.map((c) => c.totalValueLockedUsd))
+          : tvs.projects[details.id]?.breakdown.total,
       totalValueLockedChange7d: details.hasTvl
         ? tvs.projects[details.id]?.change.total
         : undefined,
       deposits: details.summary.deposits,
       relayerStat: details.summary.relayerStat,
     },
+    chains: details.chains?.map((c) => ({
+      chain: c.chain,
+      assetsCount: c.assets.length,
+      bucketCount: c.summary.bucketCount,
+      summary: {
+        totalValueLockedUsd: details.hasTvl ? c.totalValueLockedUsd : undefined,
+        totalValueLockedChange7d: undefined,
+        deposits: c.summary.deposits,
+        relayerStat: c.summary.relayerStat,
+      },
+    })),
     archivedAt: details.archivedAt,
     isUnderReview: !!details.statuses.reviewStatus,
     recentUpdatesCount: countRecentDiscoveryUpdates(discoveryUpdates),
@@ -392,4 +426,9 @@ export async function getPrivacyProjectEntry(
     },
     sections,
   }
+}
+
+function sumDefined(values: (number | undefined)[]): number | undefined {
+  const defined = values.filter((value) => value !== undefined)
+  return defined.length === 0 ? undefined : defined.reduce((a, b) => a + b, 0)
 }

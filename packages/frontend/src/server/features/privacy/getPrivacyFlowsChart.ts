@@ -1,9 +1,11 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { getPrivacyBucketAddress } from '@l2beat/shared'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { getChartStartTimestamp } from '~/server/features/utils/getChartStartTimestamp'
+import { ps } from '~/server/projects'
 import { ChartRange } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { getFullySyncedPrivacyRange } from './utils/getFullySyncedPrivacyRange'
@@ -11,6 +13,8 @@ import { getFullySyncedPrivacyRange } from './utils/getFullySyncedPrivacyRange'
 export const PrivacyFlowsChartParams = v.object({
   projectIds: v.array(v.string()),
   range: ChartRange,
+  /** Limits the flows to the buckets on this chain. */
+  chain: v.string().optional(),
 })
 
 export type PrivacyFlowsChartParams = v.infer<typeof PrivacyFlowsChartParams>
@@ -42,15 +46,22 @@ export async function getPrivacyFlowsChart(
   const db = getDb()
   const [from, to] = getFullySyncedPrivacyRange(params.range)
 
-  const [dailyRows, syncedUntil, firstTimestamp] = await Promise.all([
-    db.privacyFlowEvent.getDailyByProjectIds(params.projectIds, from, to),
-    db.privacyFlowEvent.getLatestTimestampByProjectIds(params.projectIds),
-    db.privacyFlowEvent.getFirstTimestampByProjectIds(params.projectIds),
-  ])
+  const [dailyRows, syncedUntil, firstTimestamp, chainBucketIds] =
+    await Promise.all([
+      db.privacyFlowEvent.getDailyByProjectIds(params.projectIds, from, to),
+      db.privacyFlowEvent.getLatestTimestampByProjectIds(params.projectIds),
+      db.privacyFlowEvent.getFirstTimestampByProjectIds(params.projectIds),
+      params.chain === undefined
+        ? undefined
+        : getChainBucketIds(params.projectIds, params.chain),
+    ])
 
   const projectIds = new Set(params.projectIds)
   const historyRows = dailyRows.filter(
-    (row) => projectIds.has(row.projectId) && Number(row.timestamp) > 0,
+    (row) =>
+      projectIds.has(row.projectId) &&
+      (chainBucketIds === undefined || chainBucketIds.has(row.bucketId)) &&
+      Number(row.timestamp) > 0,
   )
 
   if (historyRows.length === 0) {
@@ -127,6 +138,27 @@ export async function getPrivacyFlowsChart(
   }
 }
 
+async function getChainBucketIds(
+  projectIds: string[],
+  chain: string,
+): Promise<Set<string>> {
+  const projects = await ps.getProjects({
+    ids: projectIds.map(ProjectId),
+    select: ['privacyInfo'],
+  })
+  return new Set(
+    projects.flatMap((project) =>
+      project.privacyInfo.tokens.flatMap((token) =>
+        token.buckets.flatMap((bucket) =>
+          getPrivacyBucketAddress(bucket.address).chain === chain
+            ? [bucket.id]
+            : [],
+        ),
+      ),
+    ),
+  )
+}
+
 function getMockPrivacyFlowsChart(
   params: PrivacyFlowsChartParams,
 ): PrivacyFlowsChartResponse {
@@ -134,10 +166,12 @@ function getMockPrivacyFlowsChart(
   const to = UnixTime.toStartOf(UnixTime.now(), 'day')
   const from = params.range[0] ?? to - days * UnixTime.DAY
 
+  // A chain holds part of the total, so its mock flows are smaller.
+  const scale = params.chain === undefined ? 1 : 0.4
   const chart = generateTimestamps([from, to], 'day').map(
     (timestamp): PrivacyFlowsChartPoint => {
-      const depositsCount = Math.round(Math.random() * 100)
-      const withdrawalsCount = Math.round(Math.random() * 100)
+      const depositsCount = Math.round(Math.random() * 100 * scale)
+      const withdrawalsCount = Math.round(Math.random() * 100 * scale)
       return [
         timestamp,
         depositsCount,

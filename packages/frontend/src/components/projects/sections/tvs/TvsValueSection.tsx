@@ -7,6 +7,8 @@ import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapp
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
+import type { ProjectIconListItem } from '~/components/ProjectIconList'
+import { PrivacyAllChainsBadge } from '~/pages/privacy/project/components/PrivacyChainSwitch'
 import { PrivacyFlowsChartRangeControls } from '~/pages/privacy/project/components/PrivacyFlowsChartRangeControls'
 import { useTRPC } from '~/trpc/React'
 import { type ChartRange, rangeToResolution } from '~/utils/range/range'
@@ -18,6 +20,8 @@ export interface TvsValueSectionProps extends ProjectSectionProps {
   project: ChartProject
   milestones: Milestone[]
   rangeControls: 'tvs' | 'privacy'
+  /** Tracked chains of a multi-chain privacy project, whose chart shows their total. */
+  privacyChains?: ProjectIconListItem[]
 }
 
 export function TvsValueSection({
@@ -25,6 +29,7 @@ export function TvsValueSection({
   project,
   milestones,
   rangeControls,
+  privacyChains,
   ...projectSectionProps
 }: TvsValueSectionProps) {
   const trpc = useTRPC()
@@ -57,7 +62,12 @@ export function TvsValueSection({
       : PrivacyFlowsChartRangeControls
 
   return (
-    <ProjectSection {...projectSectionProps}>
+    <ProjectSection
+      {...projectSectionProps}
+      headerAccessory={
+        privacyChains && <PrivacyAllChainsBadge chains={privacyChains} />
+      }
+    >
       <ChartControlsWrapper className="mb-4">
         <ProjectChartTimeRange
           isPlaceholderData={isPlaceholderData}

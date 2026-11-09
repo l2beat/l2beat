@@ -31,6 +31,8 @@ import {
 export const PrivacyAnonymitySetChartParams = v.object({
   projectId: v.string(),
   range: ChartRange,
+  /** Limits the series to the anonymity sets on this chain. */
+  chain: v.string().optional(),
 })
 
 export type PrivacyAnonymitySetChartParams = v.infer<
@@ -58,7 +60,9 @@ export async function getPrivacyAnonymitySetChart(
   })
   if (!project) return emptyResponse()
 
-  const series = getPrivacyAnonymitySetSeries(project)
+  const series = getPrivacyAnonymitySetSeries(project).filter(
+    (item) => params.chain === undefined || item.chain === params.chain,
+  )
   if (series.length === 0) return emptyResponse()
 
   const currentDay = UnixTime.toStartOf(UnixTime.now(), 'day')
@@ -69,6 +73,7 @@ export async function getPrivacyAnonymitySetChart(
           key: [
             'privacy-anonymity-set-chart',
             project.id,
+            params.chain ?? 'all',
             currentDay.toString(),
           ],
           ttl: 10 * UnixTime.MINUTE,
@@ -224,14 +229,22 @@ function getMockResponse(
     history: endpoints.map((timestamp, index) => [
       timestamp,
       ...series.map((_, seriesIndex) =>
-        Math.round((seriesIndex + 1) * 20 + index * 0.5),
+        Math.round(
+          ((seriesIndex % 4) + 1) * 20 * mockChainScale(series, seriesIndex) +
+            index * 0.5,
+        ),
       ),
     ]),
     holdingDuration: HOLDING_DURATIONS.map((days) => {
       return [
         days,
         ...series.map((_, seriesIndex) =>
-          Math.round((seriesIndex + 1) * days * 0.8),
+          Math.round(
+            ((seriesIndex % 4) + 1) *
+              days *
+              0.8 *
+              mockChainScale(series, seriesIndex),
+          ),
         ),
       ]
     }),
@@ -241,4 +254,13 @@ function getMockResponse(
     }),
     syncedUntil: endpoint,
   }
+}
+
+/** Later chains get smaller mock sets, like a project's newer deployments. */
+function mockChainScale(
+  series: PrivacyAnonymitySetSeries[],
+  index: number,
+): number {
+  const chains = [...new Set(series.map((item) => item.chain))]
+  return 1 / (chains.indexOf(series[index]?.chain ?? '') + 1)
 }

@@ -23,6 +23,7 @@ function makeSummary(
       id: 'eth:1',
       projectId: 'project',
       bucketId: 'eth',
+      chain: 'ethereum',
       label: '≥0.1 ETH',
       compactLabel: '≥0.1 ETH',
       headlineLabel: '≥0.1 ETH',

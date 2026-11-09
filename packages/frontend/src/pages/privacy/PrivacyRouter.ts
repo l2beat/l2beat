@@ -53,7 +53,10 @@ export function createPrivacyRouter(
     '/privacy/projects/:slug',
     validateRoute({
       params: v.object({ slug: v.string() }),
-      query: v.object({ update: v.string().optional() }),
+      query: v.object({
+        update: v.string().optional(),
+        chain: v.string().optional(),
+      }),
     }),
     serveMarkdownIfPreferred(getProjectMarkdown),
     async (req, res) => {
@@ -62,6 +65,7 @@ export function createPrivacyRouter(
         req.params.slug,
         cache,
         req.query.update,
+        req.query.chain,
       )
 
       if (!data) {

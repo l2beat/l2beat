@@ -8,6 +8,11 @@ import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
+import type { ProjectIconListItem } from '~/components/ProjectIconList'
+import {
+  PrivacySectionChainBadge,
+  usePrivacyChain,
+} from '~/pages/privacy/project/components/PrivacyChainSwitch'
 import { PrivacyFlowChart } from '~/pages/privacy/project/components/PrivacyFlowChart'
 import { PrivacyFlowsChartRangeControls } from '~/pages/privacy/project/components/PrivacyFlowsChartRangeControls'
 import { useTRPC } from '~/trpc/React'
@@ -19,6 +24,7 @@ export interface PrivacyFlowsSectionProps extends ProjectSectionProps {
   defaultRange: ChartRange
   project: ChartProject
   milestones: Milestone[]
+  chains?: ProjectIconListItem[]
 }
 
 type FlowsMetric = 'count' | 'value'
@@ -27,9 +33,11 @@ export function PrivacyFlowsSection({
   defaultRange,
   project,
   milestones,
+  chains,
   ...projectSectionProps
 }: PrivacyFlowsSectionProps) {
   const trpc = useTRPC()
+  const chain = usePrivacyChain(chains)
   const [range, setRange] = useState<ChartRange>(defaultRange)
   const [metric, setMetric] = useState<FlowsMetric>('count')
   const [scale, setScale] = useState<ChartScale>('linear')
@@ -38,6 +46,7 @@ export function PrivacyFlowsSection({
     {
       projectIds: [project.id],
       range,
+      chain,
     },
   )
 
@@ -53,7 +62,10 @@ export function PrivacyFlowsSection({
   )
 
   return (
-    <ProjectSection {...projectSectionProps}>
+    <ProjectSection
+      {...projectSectionProps}
+      headerAccessory={chains && <PrivacySectionChainBadge chains={chains} />}
+    >
       <ChartControlsWrapper className="mb-4">
         <ProjectChartTimeRange
           isPlaceholderData={isPlaceholderData}

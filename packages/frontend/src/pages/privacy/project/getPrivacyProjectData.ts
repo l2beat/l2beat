@@ -17,6 +17,7 @@ export async function getPrivacyProjectData(
   slug: string,
   cache: InMemoryCache,
   selectedUpdateId?: string,
+  selectedChain?: string,
 ): Promise<RenderData | undefined> {
   const data = await getCachedPrivacyProjectPage(manifest, slug, cache)
   if (!data) return undefined
@@ -28,6 +29,7 @@ export async function getPrivacyProjectData(
       props: {
         ...data.props,
         selectedUpdateId,
+        selectedChain,
       },
     },
   }

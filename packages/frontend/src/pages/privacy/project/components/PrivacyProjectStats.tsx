@@ -20,6 +20,8 @@ interface Props {
   hasTvl: boolean
   assetsCount: number
   bucketsCount: number
+  /** Set when the stats are totals across several tracked chains. */
+  chainsCount?: number
   deposits: {
     total: number
     last7d: number
@@ -35,6 +37,7 @@ export function PrivacyProjectStats({
   hasTvl,
   assetsCount,
   bucketsCount,
+  chainsCount,
   deposits,
   relayerStat,
 }: Props) {
@@ -110,7 +113,10 @@ export function PrivacyProjectStats({
               />
               {/* contain-inline-size: wrap this line instead of widening the column */}
               <span className="font-medium text-paragraph-12 text-secondary leading-normal contain-inline-size">
-                across {formatInteger(assetsCount ?? 0)} assets and{' '}
+                across{' '}
+                {chainsCount !== undefined &&
+                  `${formatInteger(chainsCount)} chains, `}
+                {formatInteger(assetsCount ?? 0)} assets and{' '}
                 {formatInteger(bucketsCount ?? 0)} buckets
               </span>
             </div>

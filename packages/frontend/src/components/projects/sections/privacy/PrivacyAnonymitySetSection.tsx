@@ -5,8 +5,13 @@ import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapp
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
+import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import { PrivacyAnonymitySetChart } from '~/pages/privacy/project/components/PrivacyAnonymitySetChart'
 import { PrivacyAnonymitySetChartRangeControls } from '~/pages/privacy/project/components/PrivacyAnonymitySetChartRangeControls'
+import {
+  PrivacySectionChainBadge,
+  usePrivacyChain,
+} from '~/pages/privacy/project/components/PrivacyChainSwitch'
 import { ANONYMITY_SET_WINDOW_DAYS } from '~/server/features/privacy/anonymity-set/calculateAnonymitySets'
 import type { PrivacyAnonymitySetType } from '~/server/features/privacy/anonymity-set/getPrivacyAnonymitySetSeries'
 import { useTRPC } from '~/trpc/React'
@@ -21,6 +26,8 @@ export interface PrivacyAnonymitySetSectionProps extends ProjectSectionProps {
   project: ChartProject
   milestones: Milestone[]
   anonymitySetType: PrivacyAnonymitySetType
+  /** Set when the anonymity sets span more than one chain. */
+  chains?: ProjectIconListItem[]
 }
 
 export function PrivacyAnonymitySetSection({
@@ -28,8 +35,10 @@ export function PrivacyAnonymitySetSection({
   project,
   milestones,
   anonymitySetType,
+  chains,
   ...projectSectionProps
 }: PrivacyAnonymitySetSectionProps) {
+  const chain = usePrivacyChain(chains)
   const copy = anonymitySetCopy(anonymitySetType, ANONYMITY_SET_WINDOW_DAYS)
   const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
@@ -38,6 +47,7 @@ export function PrivacyAnonymitySetSection({
     {
       projectId: project.id,
       range,
+      chain,
     },
   )
   const timeRange = useMemo(
@@ -55,7 +65,10 @@ export function PrivacyAnonymitySetSection({
   )
 
   return (
-    <ProjectSection {...projectSectionProps}>
+    <ProjectSection
+      {...projectSectionProps}
+      headerAccessory={chains && <PrivacySectionChainBadge chains={chains} />}
+    >
       {data !== undefined && !hasSyncedSeries ? (
         <div className="rounded bg-surface-secondary px-4 py-3 text-paragraph-15 text-secondary">
           {copy.indexingNote}
