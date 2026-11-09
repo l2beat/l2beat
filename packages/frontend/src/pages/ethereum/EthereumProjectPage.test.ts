@@ -96,7 +96,6 @@ function renderPage(): string {
         recentlyAddedProjects: [],
         searchIndexPath: '/api/search-index/latest',
         whatsNewItem: undefined,
-        whatsNew: undefined,
         countdowns: PROJECT_COUNTDOWNS,
       }),
     ),

@@ -24,6 +24,7 @@ import {
   type SavedProject,
   usePinnedProjects,
 } from '../pinned-projects/pinnedProjectsStore'
+import { trackScrollFades } from '../ScrollWithGradient'
 import { useSearchBarContext } from './SearchBarContext'
 import type { SearchBarCategory } from './searchBarCategories'
 import { searchBarCategories } from './searchBarCategories'
@@ -107,7 +108,10 @@ export function SearchBarDialog({ recentlyAdded, searchIndexPath }: Props) {
           onValueChange={setValue}
           onAction={() => onEscapeKeyDown()}
         />
-        <CommandList className="max-h-screen supports-[height:100dvh]:max-h-dvh md:h-[270px] md:max-h-[270px]">
+        <CommandList
+          ref={trackScrollFades}
+          className="max-h-screen supports-[height:100dvh]:max-h-dvh md:h-[270px] md:max-h-[270px]"
+        >
           {isLoading && (
             <CommandPrimitive.Loading>
               <CommandGroup>
