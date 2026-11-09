@@ -36,16 +36,29 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
     ),
   },
   {
-    type: 'single',
+    type: 'multiple',
     title: 'Privacy',
     match: 'privacy',
-    href: '/privacy',
     icon: (
       <PrivacyIcon
         className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active"
         aria-hidden
       />
     ),
+    links: [
+      [
+        {
+          title: 'Summary',
+          href: '/privacy/summary',
+        },
+      ],
+      [
+        {
+          title: 'Archived',
+          href: '/privacy/archived',
+        },
+      ],
+    ],
   },
   {
     type: 'multiple',

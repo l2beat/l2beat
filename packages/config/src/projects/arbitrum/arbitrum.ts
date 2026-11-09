@@ -2,6 +2,7 @@ import {
   assert,
   ChainSpecificAddress,
   EthereumAddress,
+  formatCompactAmount,
   formatSeconds,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -204,7 +205,7 @@ function ceilToFullHours(seconds: number): number {
 }
 
 function formatWethAmount(amount: string): string {
-  return `${Number(formatEther(amount)).toLocaleString('en-US')} WETH`
+  return formatCompactAmount(Number(formatEther(amount)), 'WETH')
 }
 
 const chainId = 42161

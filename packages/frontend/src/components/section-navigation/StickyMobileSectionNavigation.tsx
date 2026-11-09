@@ -30,9 +30,13 @@ export function StickyMobileSectionNavigation({
     (tabs: HTMLDivElement | null) => {
       const stopRevealing =
         tabs && hasProject ? revealStripAsTitleGoesUnder(tabs) : undefined
+      // With a strip, the strip holds the top edge; the tabs move under it.
+      const stopFilling =
+        tabs && !hasProject ? fillAboveWhileStuck(tabs) : undefined
       const stopPublishing = stickyTopBarRef(tabs)
       return () => {
         stopRevealing?.()
+        stopFilling?.()
         stopPublishing?.()
       }
     },
@@ -54,6 +58,54 @@ export function StickyMobileSectionNavigation({
       </div>
     </>
   )
+}
+
+/**
+ * While `bar` is stuck to the top, paints the header colour just above the
+ * viewport. In-app browsers like Telegram's put the page under a see-through
+ * top bar and show what is scrolled above the viewport there. They clip fixed
+ * and sticky elements to the viewport, so the fill is an element that scrolls
+ * with the page and a scroll-driven animation keeps it above the viewport (see
+ * `section-navigation.css`). Elsewhere it is off-screen.
+ */
+function fillAboveWhileStuck(bar: HTMLElement) {
+  const root = document.documentElement
+  const fill = document.createElement('div')
+  fill.className = 'section-nav-top-fill'
+  fill.hidden = true
+  document.body.append(fill)
+
+  // The animation moves the fill by the whole scroll range.
+  const updateRange = () =>
+    root.style.setProperty(
+      '--scroll-range',
+      `${root.scrollHeight - root.clientHeight}px`,
+    )
+  // The range changes with the page's height, and with the viewport's, which
+  // in-app browsers change as their bars hide.
+  const resizeObserver = new ResizeObserver(updateRange)
+  resizeObserver.observe(document.body)
+  window.addEventListener('resize', updateRange)
+
+  const intersectionObserver = new IntersectionObserver(
+    ([entry]) => {
+      if (!entry) return
+      const { top, height } = entry.boundingClientRect
+      // A bar hidden at this width has no box and is never stuck.
+      fill.hidden = !(height > 0 && entry.intersectionRatio < 1 && top < 1)
+    },
+    // 0 catches the bar disappearing when the window widens past `lg`.
+    { rootMargin: '-1px 0px 0px 0px', threshold: [0, 1] },
+  )
+  intersectionObserver.observe(bar)
+
+  return () => {
+    intersectionObserver.disconnect()
+    resizeObserver.disconnect()
+    window.removeEventListener('resize', updateRange)
+    fill.remove()
+    root.style.removeProperty('--scroll-range')
+  }
 }
 
 /**
@@ -101,8 +153,14 @@ function revealStripAsTitleGoesUnder(tabs: HTMLElement) {
  * a pointer shortcut only: keyboards have Home, and the strip is aria-hidden.
  */
 function ProjectStrip({ project }: { project: Project }) {
+  const stripRef = useCallback(
+    (strip: HTMLDivElement | null) =>
+      strip ? fillAboveWhileStuck(strip) : undefined,
+    [],
+  )
   return (
     <div
+      ref={stripRef}
       // Shown for screenshots; the page title already names the project.
       aria-hidden
       onClick={scrollToTop}

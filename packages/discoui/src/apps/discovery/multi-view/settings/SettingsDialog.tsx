@@ -2,11 +2,13 @@ import * as RadixTabs from '@radix-ui/react-tabs'
 import { type ReactNode, useState } from 'react'
 import { Dialog } from '../../../../components/Dialog'
 import { IconGear } from '../../../../icons/IconGear'
+import { IconKeyboard } from '../../../../icons/IconKeyboard'
 import { IconNodes } from '../../../../icons/IconNodes'
 import { GlobalSettingsTab } from './GlobalSettingsTab'
+import { KeybindingsSettingsTab } from './KeybindingsSettingsTab'
 import { NodesSettingsTab } from './NodesSettingsTab'
 
-export type SettingsTabId = 'global' | 'nodes'
+export type SettingsTabId = 'global' | 'nodes' | 'keybindings'
 
 const SETTINGS_TABS: {
   id: SettingsTabId
@@ -29,6 +31,14 @@ const SETTINGS_TABS: {
     description: 'Change how nodes are displayed in every nodes panel.',
     Content: NodesSettingsTab,
   },
+  {
+    id: 'keybindings',
+    label: 'Keybindings',
+    icon: <IconKeyboard className="size-3.5" />,
+    description:
+      'Change the keyboard shortcuts. Click a shortcut, then press the new one.',
+    Content: KeybindingsSettingsTab,
+  },
 ]
 
 export function SettingsDialog(props: {
@@ -40,7 +50,12 @@ export function SettingsDialog(props: {
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>{props.trigger}</Dialog.Trigger>
-      <Dialog.Body className="flex h-[min(640px,85vh)] max-w-[820px] flex-col overflow-hidden p-0">
+      <Dialog.Body
+        className="flex h-[min(640px,85vh)] max-w-[820px] flex-col overflow-hidden p-0"
+        // Keys pressed in the settings stay there, so typing a search or
+        // trying a key never runs a shortcut on the page behind.
+        onKeyDown={(event) => event.stopPropagation()}
+      >
         <RadixTabs.Root
           value={tabId}
           onValueChange={(value) => setTabId(parseSettingsTabId(value))}

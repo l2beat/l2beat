@@ -7,7 +7,6 @@ import { projectDetailsToNavigationSections } from '~/components/projects/naviga
 import { ProjectDetails } from '~/components/projects/ProjectDetails'
 import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
-import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { StickyMobileSectionNavigation } from '~/components/section-navigation/StickyMobileSectionNavigation'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -75,7 +74,6 @@ export function EthereumProjectPage({ entry, queryState, ...props }: Props) {
                 )}
               </div>
             </div>
-            <ScrollToTopButton />
           </div>
         </SideNavLayout>
       </HydrationBoundary>

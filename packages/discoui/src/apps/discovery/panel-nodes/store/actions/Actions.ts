@@ -42,4 +42,6 @@ export interface Actions {
 
   setPreferences: (preferences: Partial<State['userPreferences']>) => void
   setTool: (tool: Tool) => void
+  /** The key that borrows the hand tool while held, Space by default. */
+  setSpacePressed: (pressed: boolean) => void
 }

@@ -42,9 +42,10 @@ export function PrivacyAnonymitySetSection({
   )
   const timeRange = useMemo(
     () =>
+      // Each point is a snapshot of the preceding days, not a bucket that
+      // runs to the next day, so the range ends on the last point.
       getChartTimeRangeFromData(
         data?.history.map(([timestamp]) => ({ timestamp })),
-        { bucket: 'day' },
       ),
     [data],
   )

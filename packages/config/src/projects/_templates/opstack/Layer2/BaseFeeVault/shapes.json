@@ -19,5 +19,11 @@
     "address": "katana:0x7e27d992B349B96ea8D32378B7c53b3D58139a2E",
     "chain": "katana",
     "blockNumber": 33142393
+  },
+  "BaseFeeVault_v1_6_0_base.sol": {
+    "hash": "0x56b9368f9bae6662296148b7c1b9ec209a803b4f664590bd6526707fc58b23ab",
+    "address": "base:0x113B0749737B06D94267fe59e935D38e13849deF",
+    "chain": "base",
+    "blockNumber": 53551478
   }
 }

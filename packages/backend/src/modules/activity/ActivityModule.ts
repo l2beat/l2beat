@@ -1,4 +1,3 @@
-import type { AdjustCount } from '@l2beat/config'
 import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
@@ -13,6 +12,7 @@ import type { ActivityIndexer } from './indexers/types'
 import { BlockTxsCountService } from './services/txs/BlockTxsCountService'
 import { DayTxsCountService } from './services/txs/DayTxsCountService'
 import { SlotTxsCountService } from './services/txs/SlotTxsCountService'
+import { assessCount } from './utils/assessCount'
 
 export function initActivityModule({
   config,
@@ -179,20 +179,4 @@ export function initActivityModule({
       )
     },
   }
-}
-
-function assessCount(
-  adjustCount: AdjustCount | undefined,
-): (count: number, block: number) => number {
-  if (!adjustCount) {
-    return (count) => count
-  }
-  if (adjustCount.type === 'SubtractOne') {
-    return (count) => count - 1
-  }
-  if (adjustCount.type === 'SubtractOneSinceBlock') {
-    return (count: number, block: number) =>
-      block >= adjustCount.blockNumber ? count - 1 : count
-  }
-  throw new Error('Unknown config for adjustCount')
 }

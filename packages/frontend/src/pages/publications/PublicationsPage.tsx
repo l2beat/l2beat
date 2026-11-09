@@ -1,5 +1,4 @@
 import { MainPageHeader } from '~/components/MainPageHeader'
-import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -28,7 +27,6 @@ export function PublicationsPage({
             newsletterBgUrl={newsletterBgUrl}
           />
         </TableFilterContextProvider>
-        <ScrollToTopButton />
       </SideNavLayout>
     </AppLayout>
   )

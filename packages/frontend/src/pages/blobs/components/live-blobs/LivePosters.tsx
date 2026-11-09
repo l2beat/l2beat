@@ -350,12 +350,22 @@ function PosterName({
   poster: LivePoster
   className?: string
 }) {
+  // Unnamed chains share a stack name and differ only by a trailing id, so
+  // those truncate from the start. One element, as the table's rows are
+  // ratcheted by element count
+  const endsWithId = / \d+$/.test(poster.name)
   return (
     // a phone has room for the name or the numbers, so long names give way
     <span
-      className={cn('block truncate font-bold max-md:max-w-[7rem]', className)}
+      className={cn(
+        'block truncate font-bold max-md:max-w-[7rem]',
+        endsWithId && 'text-left [direction:rtl]',
+        className,
+      )}
+      title={poster.name}
     >
-      {poster.name}
+      {/* Marks keep the name left to right inside the rtl box */}
+      {endsWithId ? `\u200e${poster.name}\u200e` : poster.name}
     </span>
   )
 }
