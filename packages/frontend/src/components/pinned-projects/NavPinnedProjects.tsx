@@ -12,6 +12,7 @@ import {
   usePinnedProjects,
 } from './pinnedProjectsStore'
 import { prerenderPinnedProjects } from './prerenderPinnedProjects'
+import { withPinTransition } from './withPinTransition'
 
 /** Recent rows, so the announcement under them keeps its room. */
 const RECENT_ROWS = 5
@@ -143,8 +144,8 @@ function PinnedProjectsGroup({
   children: ReactNode
 }) {
   return (
-    <SidebarGroup className="mt-5">
-      <SidebarGroupLabel>{label}</SidebarGroupLabel>
+    <SidebarGroup className="mt-5" data-nav-group={label}>
+      <SidebarGroupLabel data-pin-label={label}>{label}</SidebarGroupLabel>
       <ul className="flex flex-col">{children}</ul>
       {withPinningHint && (
         <p className="mt-1 pl-1.5 text-2xs text-secondary leading-snug">
@@ -167,7 +168,10 @@ function ProjectRow({
   pinned?: boolean
 }) {
   return (
-    <li className="group/row flex h-7 items-center gap-1">
+    <li
+      className="group/row flex h-7 items-center gap-1"
+      data-pin-row={project.href}
+    >
       <a
         href={project.href}
         onClick={onNavigate}
@@ -187,9 +191,16 @@ function ProjectRow({
         type="button"
         onClick={(event) => {
           const lists = event.currentTarget.closest(`[data-role=${LISTS_ROLE}]`)
-          if (pinned) unpinProject(project.href)
-          else pinProject(project)
-          focusProjectButton(lists, project.href)
+          // Focus follows the row once it has moved, which the transition
+          // does after its first capture.
+          const toggle = () => {
+            if (pinned) unpinProject(project.href)
+            else pinProject(project)
+            focusProjectButton(lists, project.href)
+          }
+          // From the keyboard it just moves.
+          if (event.detail === 0) toggle()
+          else withPinTransition(toggle, project.href)
         }}
         data-href={project.href}
         aria-label={`${pinned ? 'Unpin' : 'Pin'} ${project.name}`}

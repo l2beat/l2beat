@@ -99,8 +99,11 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
     // Pass the data through functions, so `replace` does not read a `$&` or
     // `$'` in it as a pattern
     return template
-      .replace('<!--app-head-->', rendered.head + pagePreloads(data.ssr.page))
-      .replace('<!--app-html-->', rendered.html)
+      .replace(
+        '<!--app-head-->',
+        () => rendered.head + pagePreloads(data.ssr.page),
+      )
+      .replace('<!--app-html-->', () => rendered.html)
       .replace('<!--ssr-data-->', () => jsonForInlineScript(clientSsrData))
       .replace('<!--env-data-->', () => jsonForInlineScript(getClientEnvData()))
       .replace('<!--theme-script-->', () => themeScript)
