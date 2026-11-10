@@ -20,7 +20,6 @@ import type {
   PrivacyFlowBucketRecord,
   PrivacyFlowBucketTotalRecord,
   TokenValueRecord,
-  TvsEscrowValueRecord,
 } from '@l2beat/database'
 import type { OssificationHistory } from '@l2beat/shared/frontend'
 import type { ProjectId } from '@l2beat/shared-pure'
@@ -60,9 +59,7 @@ import type {
   PrivacyRelayerStat,
 } from './types'
 import {
-  getCurrentTokenValues,
   getPrivacyBucketTvls,
-  getPrivacyChainAssetTvls,
   getPrivacySingleEscrowBucketTvls,
 } from './utils/getPrivacyBucketTvls'
 import { getPrivacyProjectPages } from './utils/getPrivacyProjectPages'
@@ -73,7 +70,6 @@ interface PrivacyProjectFlowData {
   totals: PrivacyFlowBucketTotalRecord[]
   daily30d: PrivacyFlowBucketRecord[]
   tokenValues: TokenValueRecord[]
-  escrowValues: TvsEscrowValueRecord[]
   /** Value of each bucket's pool at its asset's latest TVL, by bucket id. */
   bucketTvls: Map<string, number>
 }
@@ -189,7 +185,7 @@ export async function getPrivacyProjectDetails(
   const selected = tabs.find((tab) => tab.id === page.chain)
 
   const [
-    { totals, daily30d, tokenValues, escrowValues, bucketTvls },
+    { totals, daily30d, tokenValues, bucketTvls },
     relayerStat,
     scalingProjects,
     ossification,
@@ -278,26 +274,21 @@ export async function getPrivacyProjectDetails(
   let stats: ReturnType<typeof buildPrivacyStats>
   let chainView: PrivacyChainView | undefined
   if (selected) {
-    // What counts towards the chain's value shown above them.
-    const currentValues = getCurrentTokenValues(tokenValues)
     const chainBucketTvls = new Map([
       ...getPrivacySingleEscrowBucketTvls(
         tokens,
         project.tvsConfig ?? [],
-        currentValues,
+        tokenValues,
       ),
       ...bucketTvls,
     ])
-    const chainAssetTvls = getPrivacyChainAssetTvls(
-      project.tvsConfig ?? [],
-      currentValues,
-      escrowValues,
-      selected.id,
-    )
+    // An asset's value on one chain is what its buckets there hold.
     stats = buildPrivacyStats(
       shown.privacyInfo.tokens,
       { ...statsContext, bucketTvls: chainBucketTvls },
-      (token) => chainAssetTvls.get(token.token.symbol) ?? null,
+      (token) =>
+        sumAll(token.buckets.map((bucket) => chainBucketTvls.get(bucket.id))) ??
+        null,
     )
     const value = chainValues?.get(selected.id)
     chainView = {
@@ -690,7 +681,7 @@ async function getPrivacyProjectFlowData(
     tokenValues,
     escrowValues,
   )
-  return { totals, daily30d, tokenValues, escrowValues, bucketTvls }
+  return { totals, daily30d, tokenValues, bucketTvls }
 }
 
 function getMockPrivacyProjectFlowData(
@@ -752,5 +743,5 @@ function getMockPrivacyProjectFlowData(
     bucketIds.map((bucketId) => [bucketId, Math.random() * 1_000_000]),
   )
 
-  return { totals, daily30d, tokenValues, escrowValues: [], bucketTvls }
+  return { totals, daily30d, tokenValues, bucketTvls }
 }

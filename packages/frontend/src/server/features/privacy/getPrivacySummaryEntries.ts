@@ -31,6 +31,7 @@ import type { PrivacyAdversariesSummary, PrivacyProject } from './types'
 import { getPrivacyFlowBuckets } from './utils/getPrivacyFlowSync'
 import {
   getPrivacyProjectPages,
+  getPrivacyProjectPath,
   type PrivacyProjectPage,
 } from './utils/getPrivacyProjectPages'
 import { getPrivacyTrackedChains } from './utils/getPrivacyTrackedChains'
@@ -84,11 +85,24 @@ type PrivacySummaryBaseEntry = Omit<
   keyof PrivacySummaryTrackingMetrics
 >
 
+/**
+ * @param entryPer `page` gives a project with a page per chain an entry per
+ *   chain. `project` gives it one, with the figures of all its chains.
+ */
 export async function getPrivacySummaryEntries(
   projects: PrivacyProject[],
+  entryPer: 'page' | 'project' = 'page',
 ): Promise<PrivacySummaryEntry[]> {
   const currentDay = UnixTime.toStartOf(UnixTime.now(), 'day')
-  const pages = projects.flatMap(getPrivacyProjectPages)
+  const pages =
+    entryPer === 'page'
+      ? projects.flatMap(getPrivacyProjectPages)
+      : projects.map(
+          (project): PrivacyProjectPage<PrivacyProject> => ({
+            project,
+            path: getPrivacyProjectPath(project.slug),
+          }),
+        )
   const pageProjects = pages.map((page) => page.project)
   const chains = await getPageChains(pages)
 
