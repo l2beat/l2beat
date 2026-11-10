@@ -11,6 +11,7 @@ import { PrivacyFlowsChartRangeControls } from '~/pages/privacy/project/componen
 import { useTRPC } from '~/trpc/React'
 import { type ChartRange, rangeToResolution } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
+import { type SectionChain, SectionChainBadge } from '../SectionChainBadge'
 import type { ProjectSectionProps } from '../types'
 
 export interface TvsValueSectionProps extends ProjectSectionProps {
@@ -18,6 +19,8 @@ export interface TvsValueSectionProps extends ProjectSectionProps {
   project: ChartProject
   milestones: Milestone[]
   rangeControls: 'tvs' | 'privacy'
+  /** Named in the header when the page around the chart shows one of them. */
+  allChains?: SectionChain[]
 }
 
 export function TvsValueSection({
@@ -25,6 +28,7 @@ export function TvsValueSection({
   project,
   milestones,
   rangeControls,
+  allChains,
   ...projectSectionProps
 }: TvsValueSectionProps) {
   const trpc = useTRPC()
@@ -57,7 +61,12 @@ export function TvsValueSection({
       : PrivacyFlowsChartRangeControls
 
   return (
-    <ProjectSection {...projectSectionProps}>
+    <ProjectSection
+      {...projectSectionProps}
+      headerAccessory={
+        allChains && <SectionChainBadge chains={allChains} label="All chains" />
+      }
+    >
       <ChartControlsWrapper className="mb-4">
         <ProjectChartTimeRange
           isPlaceholderData={isPlaceholderData}

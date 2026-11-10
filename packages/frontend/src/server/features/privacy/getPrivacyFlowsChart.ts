@@ -1,3 +1,5 @@
+import type { ProjectPrivacyInfo } from '@l2beat/config'
+import { getPrivacyBucketAddress } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
@@ -20,6 +22,8 @@ import {
 export const PrivacyFlowsChartParams = v.object({
   projectIds: v.array(v.string()),
   range: ChartRange,
+  /** Limits the flows to the buckets on this chain. */
+  chain: v.string().optional(),
 })
 
 export type PrivacyFlowsChartParams = v.infer<typeof PrivacyFlowsChartParams>
@@ -54,7 +58,13 @@ export async function getPrivacyFlowsChart(
     ids: params.projectIds.map(ProjectId),
     select: ['privacyInfo'],
   })
-  const buckets = getPrivacyFlowBuckets(projects)
+  const chainBucketIds =
+    params.chain === undefined
+      ? undefined
+      : getChainBucketIds(projects, params.chain)
+  const buckets = getPrivacyFlowBuckets(projects).filter(
+    (bucket) => chainBucketIds === undefined || chainBucketIds.has(bucket.id),
+  )
   const records = await db.syncMetadata.getByFeatureAndIds(
     'privacy',
     buckets.map((bucket) => bucket.id),
@@ -67,7 +77,7 @@ export async function getPrivacyFlowsChart(
   )
   const step = UnixTime.periodToSeconds(resolution)
 
-  const [rows, firstTimestamp] = await Promise.all([
+  const [allRows, firstTimestamp] = await Promise.all([
     db.privacyFlowEvent.getBucketedByProjectIds(
       params.projectIds,
       from,
@@ -76,6 +86,9 @@ export async function getPrivacyFlowsChart(
     ),
     db.privacyFlowEvent.getFirstTimestampByProjectIds(params.projectIds),
   ])
+  const rows = allRows.filter(
+    (row) => chainBucketIds === undefined || chainBucketIds.has(row.bucketId),
+  )
 
   if (rows.length === 0) {
     if (from === null || to - step < from) {
@@ -176,6 +189,23 @@ export function getPrivacyFlowsChartWindow(
   }
 }
 
+function getChainBucketIds(
+  projects: { privacyInfo: Pick<ProjectPrivacyInfo, 'tokens'> }[],
+  chain: string,
+): Set<string> {
+  return new Set(
+    projects.flatMap((project) =>
+      project.privacyInfo.tokens.flatMap((token) =>
+        token.buckets.flatMap((bucket) =>
+          getPrivacyBucketAddress(bucket.address).chain === chain
+            ? [bucket.id]
+            : [],
+        ),
+      ),
+    ),
+  )
+}
+
 function getMockPrivacyFlowsChart(
   params: PrivacyFlowsChartParams,
 ): PrivacyFlowsChartResponse {
@@ -184,10 +214,12 @@ function getMockPrivacyFlowsChart(
   const to = UnixTime.toStartOf(UnixTime.now(), resolution)
   const from = params.range[0] ?? to - days * UnixTime.DAY
 
+  // A chain holds part of the total, so its mock flows are smaller.
+  const scale = params.chain === undefined ? 1 : 0.4
   const chart = generateTimestamps([from, to], resolution).map(
     (timestamp): PrivacyFlowsChartPoint => {
-      const depositsCount = Math.round(Math.random() * 100)
-      const withdrawalsCount = Math.round(Math.random() * 100)
+      const depositsCount = Math.round(Math.random() * 100 * scale)
+      const withdrawalsCount = Math.round(Math.random() * 100 * scale)
       return [
         timestamp,
         depositsCount,

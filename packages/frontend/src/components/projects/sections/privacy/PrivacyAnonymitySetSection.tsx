@@ -38,6 +38,7 @@ export function PrivacyAnonymitySetSection({
     {
       projectId: project.id,
       range,
+      chain: projectSectionProps.chain?.id,
     },
   )
   const timeRange = useMemo(

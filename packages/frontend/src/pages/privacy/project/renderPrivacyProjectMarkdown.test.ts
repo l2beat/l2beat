@@ -45,6 +45,40 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     )
   })
 
+  it('says which chain the page is about and links the other chains', () => {
+    const ethereum = {
+      id: 'ethereum',
+      name: 'Ethereum',
+      iconUrl: '/icons/ethereum.png',
+      href: '/privacy/projects/tornado-cash',
+    }
+    const summary = getSection(
+      renderPrivacyProjectMarkdown({
+        ...ENTRY,
+        chainView: {
+          chains: [
+            ethereum,
+            {
+              id: 'bsc',
+              name: 'BNB Smart Chain',
+              iconUrl: '/icons/bsc.png',
+              href: '/privacy/projects/tornado-cash/bsc',
+            },
+          ],
+          selected: ethereum,
+          totalValueLockedUsd: 500_000_000,
+        },
+      }),
+      'Summary',
+    )
+
+    expect(summary).toInclude(
+      '- Chain on this page: Ethereum',
+      '- Value locked on 2 chains: $500.00 M',
+      '- Pages of other chains: [BNB Smart Chain](https://ethbeat.org/privacy/projects/tornado-cash/bsc.md)',
+    )
+  })
+
   it('names the scaling projects the protocol runs on', () => {
     const summary = getSection(
       renderPrivacyProjectMarkdown({

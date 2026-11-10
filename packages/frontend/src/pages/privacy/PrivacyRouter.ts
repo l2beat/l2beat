@@ -46,20 +46,31 @@ export function createPrivacyRouter(
     res.status(200).send(html)
   })
 
-  const getProjectMarkdown = (req: Request<{ slug: string }>) =>
-    getPrivacyProjectMarkdown(manifest, req.params.slug, cache)
+  // A project tracked on several chains has a page per chain: its first
+  // chain at the project's URL, the others at `{project}/{chain}`.
+  const projectParams = v.object({
+    slug: v.string(),
+    chain: v.string().optional(),
+  })
+  const getProjectMarkdown = (req: Request<v.infer<typeof projectParams>>) =>
+    getPrivacyProjectMarkdown(
+      manifest,
+      req.params.slug,
+      req.params.chain,
+      cache,
+    )
 
-  // Before `:slug`, which would otherwise take "tornado-cash.md" as the slug.
+  // Before the page route, which would otherwise take "tornado-cash.md" as the slug.
   router.get(
-    '/privacy/projects/:slug.md',
-    validateRoute({ params: v.object({ slug: v.string() }) }),
+    '/privacy/projects/:slug{/:chain}.md',
+    validateRoute({ params: projectParams }),
     serveMarkdown(getProjectMarkdown),
   )
 
   router.get(
-    '/privacy/projects/:slug',
+    '/privacy/projects/:slug{/:chain}',
     validateRoute({
-      params: v.object({ slug: v.string() }),
+      params: projectParams,
       query: v.object({ update: v.string().optional() }),
     }),
     serveMarkdownIfPreferred(getProjectMarkdown),
@@ -67,12 +78,17 @@ export function createPrivacyRouter(
       const data = await getPrivacyProjectData(
         manifest,
         req.params.slug,
+        req.params.chain,
         cache,
         req.query.update,
       )
 
       if (!data) {
         await sendNotFoundPage(manifest, render, req.originalUrl, res)
+        return
+      }
+      if ('redirect' in data) {
+        res.redirect(301, data.redirect)
         return
       }
 

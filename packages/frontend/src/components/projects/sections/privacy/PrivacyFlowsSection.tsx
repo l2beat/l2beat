@@ -38,6 +38,7 @@ export function PrivacyFlowsSection({
     {
       projectIds: [project.id],
       range,
+      chain: projectSectionProps.chain?.id,
     },
   )
   const resolution = rangeToResolution(shownInput.range)

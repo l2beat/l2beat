@@ -76,6 +76,7 @@ function makeSeries(minimumAmount: string): PrivacyAnonymitySetSeries {
     configurationId: 'configuration',
     projectId: 'project',
     bucketId: 'bucket',
+    chain: 'ethereum',
     label: `≥${minimumAmount} ETH`,
     compactLabel: `≥${minimumAmount} ETH`,
     description: '',
@@ -96,6 +97,7 @@ function makeRows(): PrivacyAnonymitySetSenderDayRecord[] {
       {
         projectId: 'project',
         bucketId: 'bucket',
+        chain: 'ethereum',
         timestamp,
         sender: `sender-${day % 41}`,
         maximumAmount: BigInt((day % 9) + 1),
@@ -103,6 +105,7 @@ function makeRows(): PrivacyAnonymitySetSenderDayRecord[] {
       {
         projectId: 'project',
         bucketId: 'bucket',
+        chain: 'ethereum',
         timestamp,
         sender: `sender-${(day * 7) % 53}`,
         maximumAmount: BigInt((day % 3) + 1),

@@ -43,3 +43,37 @@ export function getPrivacyBucketTvls(
   }
   return result
 }
+
+/**
+ * Value of each bucket whose asset is held in that pool alone. The TVS
+ * backend stores escrow values only for tokens that sum several escrows, so
+ * such a bucket has no escrow rows and its value is its token's.
+ */
+export function getPrivacySingleEscrowBucketTvls(
+  tokens: ProjectPrivacyToken[],
+  tvsConfig: TvsToken[],
+  tokenValues: TokenValueRecord[],
+): Map<string, number> {
+  const valueByTokenId = new Map(
+    tokenValues.map((value) => [value.tokenId, value.valueForProject]),
+  )
+
+  const result = new Map<string, number>()
+  for (const token of tokens) {
+    for (const bucket of token.buckets) {
+      const { chain, address } = getPrivacyBucketAddress(bucket.address)
+      const tvsToken = tvsConfig.find(
+        (t) =>
+          t.symbol === token.token.symbol &&
+          t.amount.type === 'balanceOfEscrow' &&
+          t.amount.chain === chain &&
+          t.amount.escrowAddress.toLowerCase() === address.toLowerCase(),
+      )
+      const value = tvsToken && valueByTokenId.get(tvsToken.id)
+      if (value !== undefined) {
+        result.set(bucket.id, value)
+      }
+    }
+  }
+  return result
+}

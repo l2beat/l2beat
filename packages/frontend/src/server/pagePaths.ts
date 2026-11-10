@@ -1,3 +1,4 @@
+import type { ProjectPrivacyInfo } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { RENAME_ANNOUNCEMENT_PATH } from '~/consts/siteName'
 import { getCollection } from '~/content/getCollection'
@@ -8,6 +9,10 @@ import {
   SUBMIT_PROTOCOL_PATH,
 } from '~/pages/garden/paths'
 import { getChainProjects } from './features/chains/getChainProjects'
+import {
+  getPrivacyChainPagePath,
+  getPrivacyPageChains,
+} from './features/privacy/utils/getPrivacyPageChains'
 import { ps } from './projects'
 
 type PagePath = `/${string}`
@@ -97,7 +102,7 @@ async function getDynamicPages(): Promise<Page[]> {
       optional: ['tvsConfig'],
     }),
     ps.getProjects({ select: ['zkCatalogInfo'] }),
-    ps.getProjects({ where: ['privacyInfo'], whereNot: ['archivedAt'] }),
+    ps.getProjects({ select: ['privacyInfo'], whereNot: ['archivedAt'] }),
     env.CLIENT_SIDE_DEFI_ENABLED
       ? ps.getProjects({ where: ['defiInfo'] })
       : Promise.resolve([]),
@@ -113,6 +118,7 @@ async function getDynamicPages(): Promise<Page[]> {
       .map(projectPage('/layer2s/projects', '/tvs-breakdown')),
     ...zkCatalogProjects.map(projectPage('/zk-catalog')),
     ...privacyProjects.map(projectPage('/privacy/projects')),
+    ...privacyProjects.flatMap(getPrivacyChainPages),
     ...defiProjects.map(projectPage('/defi/projects')),
     ...interopProtocols.map(projectPage('/interop/protocols')),
     ...chainProjects.map(projectPage('/projects')),
@@ -130,6 +136,17 @@ async function getDynamicPages(): Promise<Page[]> {
   }
 
   return pages
+}
+
+/** A privacy project with a page per chain: its first chain is the project's page. */
+function getPrivacyChainPages(project: {
+  slug: string
+  privacyInfo: ProjectPrivacyInfo
+}): Page[] {
+  const chains = getPrivacyPageChains(project.privacyInfo)
+  return chains.slice(1).map((chain) => ({
+    path: getPrivacyChainPagePath(project.slug, chains, chain),
+  }))
 }
 
 function projectPage(prefix: PagePath, suffix = '') {

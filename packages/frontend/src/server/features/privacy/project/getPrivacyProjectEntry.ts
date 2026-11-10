@@ -8,6 +8,7 @@ import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
+import type { SectionChain } from '~/components/projects/sections/SectionChainBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { PRIVACY_ADVERSARIES_SECTION_ID } from '~/pages/privacy/adversaries/privacyAdversaryUi'
 import { getGardenCropsSection } from '~/server/features/garden/getGardenCropsSection'
@@ -32,6 +33,7 @@ import {
 import { EMPTY_PROJECTS_CHANGE_REPORT } from '../../projects-change-report/getProjectsChangeReport'
 import type { PrivacyProjectDetails } from '../getPrivacyProjectDetails'
 import type { PrivacyRelayerStat } from '../types'
+import { getPrivacyChainPagePath } from '../utils/getPrivacyPageChains'
 import {
   getPrivacyReferenceApp,
   type PrivacyReferenceApp,
@@ -43,9 +45,16 @@ import {
 } from '../utils/getPrivacyTrustedSetup'
 import { resolvePrivacySources } from '../utils/resolvePrivacySources'
 
+/** A tab of a project that is shown one tracked chain at a time. */
+export interface PrivacyChainTab extends SectionChain {
+  /** The page of the project on this chain. */
+  href: string
+}
+
 export interface ProjectPrivacyEntry {
   id: ProjectId
   slug: string
+  /** This page: the project's, or the project's on the selected chain. */
   href: string
   name: string
   shortName?: string
@@ -81,6 +90,16 @@ export interface ProjectPrivacyEntry {
       last30d: number
     }
     relayerStat?: PrivacyRelayerStat
+  }
+  /**
+   * Set when the project is shown one tracked chain at a time: the stats, the
+   * risks and the sections that name the chain are then the selected chain's.
+   */
+  chainView?: {
+    chains: PrivacyChainTab[]
+    selected: SectionChain
+    /** Value locked on every tracked chain. */
+    totalValueLockedUsd: number | undefined
   }
   archivedAt?: UnixTime
   isUnderReview: boolean
@@ -172,6 +191,18 @@ export async function getPrivacyProjectEntry(
   // point only at sections this page renders.
   const adversariesSectionIndex = sections.length
 
+  const pageChains = details.chainView?.chains.map((c) => c.id) ?? []
+  const toSectionChain = ({ id, name, iconUrl }: SectionChain) => ({
+    id,
+    name,
+    iconUrl,
+  })
+  // Sections about one chain name it in their header.
+  const chain = details.chainView && toSectionChain(details.chainView.selected)
+  const href = chain
+    ? getPrivacyChainPagePath(details.slug, pageChains, chain.id)
+    : `/privacy/projects/${details.slug}`
+
   const chartProject = {
     id: details.id,
     name: details.name,
@@ -189,6 +220,8 @@ export async function getPrivacyProjectEntry(
         rangeControls: 'privacy',
         project: chartProject,
         milestones: details.milestones,
+        // This chart can't be limited to one chain yet.
+        allChains: details.chainView?.chains.map(toSectionChain),
       },
     })
   }
@@ -203,6 +236,7 @@ export async function getPrivacyProjectEntry(
         project: chartProject,
         milestones: details.milestones,
         anonymitySetType: details.anonymitySetType,
+        chain,
       },
     })
   }
@@ -216,6 +250,7 @@ export async function getPrivacyProjectEntry(
         defaultRange: defaultChartRange,
         project: chartProject,
         milestones: details.milestones,
+        chain,
       },
     })
 
@@ -226,6 +261,7 @@ export async function getPrivacyProjectEntry(
         title: 'Assets Breakdown',
         assets: details.assets,
         showTvl: details.hasTvl,
+        chain,
       },
     })
   }
@@ -248,6 +284,7 @@ export async function getPrivacyProjectEntry(
       props: {
         id: 'risk-summary',
         title: 'Risk summary',
+        chain,
         content: details.riskSummary,
         mdClassName:
           '[&_.mdc-h2]:mb-0 [&_.mdc-h2]:font-bold [&_.mdc-h2]:text-red-300 [&_.mdc-h2]:text-paragraph-15 md:[&_.mdc-h2]:text-paragraph-16 [&_ol]:mb-0 [&_ol]:list-inside [&_ol]:pl-1.5 [&_li]:ml-0',
@@ -261,6 +298,7 @@ export async function getPrivacyProjectEntry(
       props: {
         id: 'upgrades-and-governance',
         title: 'Upgrades & Governance',
+        chain,
         content: details.upgradesAndGovernance.content,
         governanceInfo: details.upgradesAndGovernance.governanceInfo,
       },
@@ -317,6 +355,7 @@ export async function getPrivacyProjectEntry(
         ...permissionsSection,
         id: 'permissions',
         title: 'Permissions',
+        chain,
         discoUi,
       },
     })
@@ -329,6 +368,7 @@ export async function getPrivacyProjectEntry(
         ...contractsSection,
         id: 'contracts',
         title: 'Smart contracts',
+        chain,
         discoUi,
       },
     })
@@ -339,16 +379,24 @@ export async function getPrivacyProjectEntry(
     props: {
       id: PRIVACY_ADVERSARIES_SECTION_ID,
       title: 'Privacy',
+      chain,
       isUnderReview: !!details.statuses.reviewStatus,
       adversaries: resolvePrivacySources(details.adversaries, sections),
       referenceApp,
     },
   })
 
+  const totalValueLockedUsd = details.hasTvl
+    ? tvs.projects[details.id]?.breakdown.total
+    : undefined
+  const allChainsValueLockedUsd = details.hasTvl
+    ? details.chainView?.allChainsValueLockedUsd
+    : undefined
+
   return {
     id: details.id,
     slug: details.slug,
-    href: `/privacy/projects/${details.slug}`,
+    href,
     name: details.name,
     shortName: details.shortName,
     icon,
@@ -373,15 +421,28 @@ export async function getPrivacyProjectEntry(
     reproducibility: details.reproducibility,
     referenceApp,
     summary: {
-      totalValueLockedUsd: details.hasTvl
-        ? tvs.projects[details.id]?.breakdown.total
-        : undefined,
-      totalValueLockedChange7d: details.hasTvl
-        ? tvs.projects[details.id]?.change.total
-        : undefined,
+      totalValueLockedUsd: !details.hasTvl
+        ? undefined
+        : details.chainView
+          ? details.chainView.totalValueLockedUsd
+          : totalValueLockedUsd,
+      // The value on one chain comes from its buckets, which have no history.
+      totalValueLockedChange7d:
+        details.hasTvl && !details.chainView
+          ? tvs.projects[details.id]?.change.total
+          : undefined,
       deposits: details.summary.deposits,
       relayerStat: details.summary.relayerStat,
     },
+    chainView: details.chainView &&
+      chain && {
+        chains: details.chainView.chains.map((c) => ({
+          ...toSectionChain(c),
+          href: getPrivacyChainPagePath(details.slug, pageChains, c.id),
+        })),
+        selected: chain,
+        totalValueLockedUsd: allChainsValueLockedUsd,
+      },
     archivedAt: details.archivedAt,
     isUnderReview: !!details.statuses.reviewStatus,
     recentUpdatesCount: countRecentDiscoveryUpdates(discoveryUpdates),

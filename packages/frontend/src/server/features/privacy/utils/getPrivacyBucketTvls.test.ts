@@ -6,7 +6,10 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { getPrivacyBucketTvls } from './getPrivacyBucketTvls'
+import {
+  getPrivacyBucketTvls,
+  getPrivacySingleEscrowBucketTvls,
+} from './getPrivacyBucketTvls'
 
 const POOL_A = EthereumAddress('0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc')
 const POOL_B = EthereumAddress('0x47CE0C6eD5B0Ce3d3A51fdb1C52DC66a7c3c2936')
@@ -36,6 +39,33 @@ describe(getPrivacyBucketTvls.name, () => {
       ['eth-a', 10],
       ['eth-b', 20],
     ])
+  })
+})
+
+describe(getPrivacySingleEscrowBucketTvls.name, () => {
+  it('values a bucket at its token when the token is held in that pool alone', () => {
+    const result = getPrivacySingleEscrowBucketTvls(
+      [
+        {
+          token: { symbol: 'USDC' },
+          buckets: [bucket('usdc-a', POOL_A), bucket('usdc-b', POOL_B)],
+        } as unknown as ProjectPrivacyToken,
+      ],
+      [
+        {
+          id: 'project-USDC',
+          symbol: 'USDC',
+          amount: {
+            type: 'balanceOfEscrow',
+            chain: 'ethereum',
+            escrowAddress: POOL_A.toLowerCase(),
+          },
+        } as unknown as TvsToken,
+      ],
+      [{ tokenId: 'project-USDC', valueForProject: 40 } as TokenValueRecord],
+    )
+
+    expect([...result]).toEqual([['usdc-a', 40]])
   })
 })
 
