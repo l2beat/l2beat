@@ -18,6 +18,15 @@ const AMBIRE_BLOCKS = 3
 const AMBIRE_PERCENTILES = [25, 50, 72]
 const AMBIRE_MIN_TIP_GWEI = 0.0001
 const AMBIRE_MIN_STEP = 1.25
+/**
+ * Used after ETH_RPC_URL, or alone when it is unset (previews), so the card
+ * still runs live. All take a 300 block eth_feeHistory
+ */
+const PUBLIC_RPCS = [
+  'https://ethereum-rpc.publicnode.com',
+  'https://eth.drpc.org',
+  'https://1rpc.io/eth',
+]
 
 /**
  * Each block must take the tip this often for 95% of transactions to land in time. With k chances and a
@@ -69,11 +78,24 @@ const lastReads: { tips: GasFeesWalletTip[]; readAt: number }[] = []
 
 /** Reads past blocks only, so anyone with a node can compute the same numbers */
 export async function getGasFeesTips(): Promise<GasFeesLiveTips | null> {
-  const url = process.env.ETH_RPC_URL
-  if (!url) return null
   if (cached && Date.now() - checkedAt < HEAD_CHECK_MS) return cached
   checkedAt = Date.now()
+  const configured = process.env.ETH_RPC_URL
+  const urls = configured ? [configured, ...PUBLIC_RPCS] : PUBLIC_RPCS
+  let failure: unknown
+  for (const url of urls) {
+    try {
+      return await readTips(url)
+    } catch (error) {
+      failure = error
+    }
+  }
+  // A public node that rate limits us shouldn't blank the card
+  if (cached) return cached
+  throw new Error('No RPC answered', { cause: failure })
+}
 
+async function readTips(url: string): Promise<GasFeesLiveTips> {
   const head = await rpc<string>(url, 'eth_blockNumber', [])
   const block = Number(BigInt(head))
   if (cached?.block === block) return cached

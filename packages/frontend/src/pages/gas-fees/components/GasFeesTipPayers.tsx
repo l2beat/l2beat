@@ -32,7 +32,7 @@ export function GasFeesTipPayers() {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-1">
-        <h2 className="font-bold text-xl md:text-2xl">Who pays the tips</h2>
+        <h3 className="font-bold text-lg">Who pays the tips</h3>
         <p className="font-medium text-base">
           {txs.high}% of transactions pay {tips.high}% of the tips. {onRound}%
           tip exactly 1 or 2 gwei.

@@ -72,8 +72,6 @@ interface Props {
   unit: GasFeesUnit
   setUnit: (unit: GasFeesUnit) => void
   rangeControl: React.ReactNode
-  /** One fixed metric: hides the unit and metric pickers */
-  simple?: boolean
 }
 
 type Point = { timestamp: number } & Record<string, number | null>
@@ -94,7 +92,6 @@ export function GasFeesChart({
   unit,
   setUnit,
   rangeControl,
-  simple,
 }: Props) {
   const isGas = isGasMetric(shownMetric)
   const meta = useMemo<ChartMeta>(() => {
@@ -180,16 +177,14 @@ export function GasFeesChart({
           />
         </div>
         <div className="flex gap-2">
-          {!simple && (
-            <RadioGroup
-              name="gasFeesUnit"
-              value={unit}
-              onValueChange={(value) => setUnit(value as GasFeesUnit)}
-            >
-              <RadioGroupItem value="usd">USD</RadioGroupItem>
-              <RadioGroupItem value="gas">Gas price</RadioGroupItem>
-            </RadioGroup>
-          )}
+          <RadioGroup
+            name="gasFeesUnit"
+            value={unit}
+            onValueChange={(value) => setUnit(value as GasFeesUnit)}
+          >
+            <RadioGroupItem value="usd">USD</RadioGroupItem>
+            <RadioGroupItem value="gas">Gas price</RadioGroupItem>
+          </RadioGroup>
           <RadioGroup
             name="gasFeesScale"
             value={scale}
@@ -201,22 +196,20 @@ export function GasFeesChart({
         </div>
       </ChartControlsWrapper>
       <div className="flex flex-wrap items-center justify-between gap-2">
-        {!simple && (
-          <RadioGroup
-            name="gasFeesMetric"
-            value={metric}
-            onValueChange={(value) => setMetric(value as GasFeesMetric)}
-            className="max-w-full overflow-x-auto"
-          >
-            {(unit === 'usd' ? GAS_FEES_USD_METRICS : GAS_FEES_GAS_METRICS).map(
-              (m) => (
-                <RadioGroupItem key={m} value={m} className="whitespace-nowrap">
-                  {GAS_FEES_METRIC_LABELS[m].short}
-                </RadioGroupItem>
-              ),
-            )}
-          </RadioGroup>
-        )}
+        <RadioGroup
+          name="gasFeesMetric"
+          value={metric}
+          onValueChange={(value) => setMetric(value as GasFeesMetric)}
+          className="max-w-full overflow-x-auto"
+        >
+          {(unit === 'usd' ? GAS_FEES_USD_METRICS : GAS_FEES_GAS_METRICS).map(
+            (m) => (
+              <RadioGroupItem key={m} value={m} className="whitespace-nowrap">
+                {GAS_FEES_METRIC_LABELS[m].short}
+              </RadioGroupItem>
+            ),
+          )}
+        </RadioGroup>
         {rangeControl}
       </div>
       <ChartContainer

@@ -1,3 +1,15 @@
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '~/components/core/Dialog'
+import { InfoIcon } from '~/icons/Info'
+import mock from './pageMock.json'
+
 /** The rule as the server runs it (getGasFeesTips), with each tier's measured record from METHODOLOGY.md */
 const TIERS = [
   {
@@ -23,10 +35,67 @@ const TIERS = [
   },
 ]
 
-export function GasFeesHowItWorks() {
+/** The estimator's methodology, kept out of the way behind a button */
+export function GasFeesMethodology() {
   return (
-    <div className="flex flex-col gap-5">
-      <h2 className="font-bold text-xl md:text-2xl">How our estimator works</h2>
+    <Dialog>
+      <DialogTrigger className="flex items-center gap-1.5 rounded-lg border border-divider px-2.5 py-1 font-medium text-xs hover:bg-surface-secondary">
+        <InfoIcon className="size-3.5 fill-current" />
+        How we estimate
+      </DialogTrigger>
+      <DialogContent className="primary-card flex max-h-[90dvh] w-[768px] flex-col gap-0 overflow-hidden bg-surface-primary p-0 lg:w-[960px]">
+        <DialogClose className="top-5 right-5" />
+        <DialogHeader className="border-divider border-b px-6 py-5">
+          <DialogTitle className="font-bold text-xl">
+            How our estimator works
+          </DialogTitle>
+          <DialogDescription className="text-secondary text-xs">
+            Ethereum L1 only. Tested against Flashbots mempool data, Aug 2023 to
+            Nov 2026.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="overflow-y-auto px-6 py-5">
+          <MethodologyBody />
+        </div>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+function MethodologyBody() {
+  const { tips } = mock
+  return (
+    <div className="flex flex-col gap-6">
+      <dl className="flex flex-col gap-1.5 text-sm">
+        <div>
+          <dt className="inline font-bold">
+            Slow, medium and fast are our estimates:{' '}
+          </dt>
+          <dd className="inline">
+            from the last 300 Ethereum blocks only, the tips that land 95% of
+            transactions within a minute, within 2 blocks and in the next block.
+          </dd>
+        </div>
+        <div>
+          <dt className="inline font-bold">× ours: </dt>
+          <dd className="inline">
+            how many times our tip each wallet suggests for the same speed.
+          </dd>
+        </div>
+        <div>
+          <dt className="inline font-bold">Overtipped: </dt>
+          <dd className="inline">
+            what ordinary transactions paid on top of our fast tip.
+          </dd>
+        </div>
+        <div>
+          <dt className="inline font-bold">Ordinary: </dt>
+          <dd className="inline">
+            tips under 2.5 gwei, just above the pile at 2 gwei. That leaves out{' '}
+            ${Math.round(tips.positionalUsd / 1e6)}M.
+          </dd>
+        </div>
+      </dl>
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         <section className="flex flex-col gap-3">
           <h3 className="font-semibold text-base">The rule</h3>

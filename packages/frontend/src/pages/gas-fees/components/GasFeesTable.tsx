@@ -1,5 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
-import { Fragment, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import {
   Select,
   SelectContent,
@@ -23,7 +22,6 @@ import {
   TableRow,
 } from '~/components/table/Table'
 import { EM_DASH } from '~/consts/characters'
-import type { GasFeesRecent } from '~/server/features/gas-fees/getGasFeesRecent'
 import type {
   GasFeesSummary,
   GasFeesSummaryRow,
@@ -34,27 +32,17 @@ import {
 } from '~/server/features/gas-fees/types'
 import { cn } from '~/utils/cn'
 import { FEE_SPLIT_LABELS, FeeSplitBar, FeeSplitKey } from './FeeSplitBar'
-import { getTipDomain, TipLegend, TipPlot } from './GasFeesTips'
 import { formatFee, formatTimes, GAS_FEES_METRIC_LABELS } from './metrics'
-import {
-  GasFeesRecentStrip,
-  type RecentHover,
-} from './recent/GasFeesRecentStrip'
-import { GasFeesRecentLegend } from './recent/GasFeesRecentTooltip'
-import { formatHour } from './recent/recentScale'
 import type { GasFeesChain } from './types'
 
 interface Props {
   chains: GasFeesChain[]
   summary: GasFeesSummary | undefined
   isLoading: boolean
-  /** Picks the range of the tinted columns */
+  /** Picks the range every value in the table is for */
   rangeControl: React.ReactNode
-  recent: {
-    data: GasFeesRecent | undefined
-    hover: RecentHover | undefined
-    setHover: (hover: RecentHover | undefined) => void
-  }
+  /** The picked range in words, e.g. "past 30 days" */
+  period: string
   highlightedChainId: string | undefined
   setHighlightedChainId: (id: string | undefined) => void
 }
@@ -64,8 +52,7 @@ interface Column {
   head: React.ReactNode
   tooltip?: string
   align?: 'right'
-  /** Follows the table's range, unlike the last 24 hours */
-  ranged?: boolean
+  className?: string
   sortValue?: (row: GasFeesSummaryRow) => number
   cell: (row: GasFeesSummaryRow, chain: GasFeesChain) => React.ReactNode
 }
@@ -77,30 +64,29 @@ export function GasFeesTable({
   summary,
   isLoading,
   rangeControl,
-  recent,
+  period,
   highlightedChainId,
   setHighlightedChainId,
 }: Props) {
-  const [action, setAction] = useState<GasFeesUsdMetric>('transfer')
+  const [action, setAction] = useState<GasFeesUsdMetric>('erc20')
   const [sort, setSort] = useState<Sort>({ id: 'cost', desc: false })
   const notLive = summary?.notLiveIds
     .map((id) => chains.find((c) => c.id === id)?.name)
     .filter(Boolean)
-  const unsplit = summary?.rows.find((r) => r.id === 'ethereum')?.split.unsplit
+  const ethereum = summary?.rows.find((r) => r.id === 'ethereum')
+  const unsplit = ethereum?.split.unsplit
 
   const columns: Column[] = [
-    ...getCostColumns(action, setAction),
+    ...getCostColumns(action, ethereum),
     {
       id: 'total',
       head: 'Total fees',
       align: 'right',
-      ranged: true,
+      className: 'pl-8!',
       sortValue: (row) => row.totalFees,
       cell: (row) => formatFee(row.totalFees),
     },
     getSplitColumn(),
-    getRecentColumn(recent),
-    getTipColumn(recent.data),
     {
       id: 'paidIn',
       head: 'Paid in',
@@ -130,94 +116,63 @@ export function GasFeesTable({
       )
     return [...ethereum, ...l2s]
   }, [summary, sortValue, sort.desc])
-  // The ranged columns come first, so they can share a group
-  const ranged = columns.filter((c) => c.ranged)
-  const rest = columns.filter((c) => !c.ranged)
 
   return (
-    <div className="flex flex-col gap-3">
-      <div className="flex flex-wrap items-center justify-between gap-x-5 gap-y-1">
-        <h2 className="font-bold text-xl">Ethereum vs Layer 2s</h2>
-        <div className="flex flex-wrap items-center gap-x-5 gap-y-1">
-          <FeeSplitKey keys={['base', 'priority', 'l1Data']} />
-          <GasFeesRecentLegend />
-          <TipLegend />
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
+        <div className="flex flex-col gap-1">
+          <h2 className="font-bold text-xl md:text-2xl">
+            Ethereum vs Layer 2s
+          </h2>
+          <p className="text-secondary text-xs">
+            {GAS_FEES_METRIC_LABELS[action].short} cost and fees, {period}. L2
+            costs include their L1 fee.
+          </p>
+        </div>
+        <div className="flex flex-wrap items-center gap-2">
+          <ActionPicker value={action} onChange={setAction} />
+          {rangeControl}
         </div>
       </div>
       <Table
         header={
-          <>
-            {/* The ranged columns sit in a tinted group, like the liveness
-                table's intervals; a filler column keeps it apart */}
-            <colgroup>
-              <col />
-            </colgroup>
-            <colgroup className="bg-header-secondary">
-              {ranged.map((column) => (
-                <col key={column.id} />
-              ))}
-            </colgroup>
-            <colgroup className={FILLER}>
-              <col />
-            </colgroup>
-            <colgroup>
-              {rest.map((column) => (
-                <col key={column.id} />
-              ))}
-            </colgroup>
-            <TableHeader>
-              <TableHeaderRow>
-                <th />
-                <th
-                  colSpan={ranged.length}
-                  className="rounded-t-lg px-6 pt-4 text-left font-medium text-primary normal-case tracking-[-0.13px]"
+          <TableHeader>
+            <TableHeaderRow>
+              <TableHead>Chain</TableHead>
+              {columns.map((column) => (
+                <TableHead
+                  key={column.id}
+                  align={column.align}
+                  tooltip={column.tooltip}
+                  className={column.className}
                 >
-                  <span className="flex items-center gap-2">
-                    Values for
-                    {rangeControl}
-                  </span>
-                </th>
-                <th className={FILLER} />
-                <th colSpan={rest.length} />
-              </TableHeaderRow>
-              <TableHeaderRow>
-                <TableHead>Chain</TableHead>
-                {columns.map((column, i) => (
-                  <Fragment key={column.id}>
-                    <TableHead
+                  {column.sortValue ? (
+                    <SortableHead
                       align={column.align}
-                      tooltip={column.tooltip}
-                      className={groupPadding(i, ranged.length)}
+                      sort={sort.id === column.id ? sort : undefined}
+                      onSort={() =>
+                        setSort((s) => ({
+                          id: column.id,
+                          desc: s.id === column.id ? !s.desc : false,
+                        }))
+                      }
                     >
-                      {column.sortValue ? (
-                        <SortableHead
-                          sort={sort.id === column.id ? sort : undefined}
-                          onSort={() =>
-                            setSort((s) => ({
-                              id: column.id,
-                              desc: s.id === column.id ? !s.desc : false,
-                            }))
-                          }
-                        >
-                          {column.head}
-                        </SortableHead>
-                      ) : (
-                        column.head
-                      )}
-                    </TableHead>
-                    {i === ranged.length - 1 && <th className={FILLER} />}
-                  </Fragment>
-                ))}
-              </TableHeaderRow>
-            </TableHeader>
-          </>
+                      {column.head}
+                    </SortableHead>
+                  ) : (
+                    column.head
+                  )}
+                </TableHead>
+              ))}
+            </TableHeaderRow>
+          </TableHeader>
         }
       >
         <TableBody>
           {isLoading || !summary
             ? chains.map((chain) => (
                 <TableRow key={chain.id} highlightId={undefined}>
-                  <TableCell colSpan={columns.length + 2}>
+                  <TableCell colSpan={columns.length + 1}>
                     <Skeleton className="h-6 w-full" />
                   </TableCell>
                 </TableRow>
@@ -239,75 +194,77 @@ export function GasFeesTable({
                     <TableCell>
                       <ChainCell chain={chain} />
                     </TableCell>
-                    {columns.map((column, i) => (
-                      <Fragment key={column.id}>
-                        <TableCell
-                          align={column.align}
-                          className={cn(
-                            'tabular-nums',
-                            groupPadding(i, ranged.length, true),
-                          )}
-                        >
-                          {column.cell(row, chain)}
-                        </TableCell>
-                        {i === ranged.length - 1 && <td className={FILLER} />}
-                      </Fragment>
+                    {columns.map((column) => (
+                      <TableCell
+                        key={column.id}
+                        align={column.align}
+                        className={cn('tabular-nums', column.className)}
+                      >
+                        {column.cell(row, chain)}
+                      </TableCell>
                     ))}
                   </TableRow>
                 )
               })}
-          {/* Rounds off the bottom of the group */}
-          <tr aria-hidden>
-            <td />
-            <td colSpan={ranged.length} className="h-4 rounded-b-lg" />
-            <td className={FILLER} />
-            <td colSpan={rest.length} />
-          </tr>
         </TableBody>
       </Table>
-      <div className="flex flex-col gap-1 text-2xs text-secondary">
-        {unsplit !== undefined && unsplit > 0 && (
-          <span>
-            Ethereum's base and priority fees start at London (5 Aug 2021).
-          </span>
-        )}
-        {notLive && notLive.length > 0 && (
-          <span>Not live yet: {notLive.join(', ')}</span>
-        )}
+      <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
+        <FeeSplitKey keys={['base', 'priority', 'l1Data']} />
+        <div className="flex flex-col gap-1 text-2xs text-secondary md:items-end">
+          {unsplit !== undefined && unsplit > 0 && (
+            <span>
+              Ethereum's base and priority fees start at London (5 Aug 2021).
+            </span>
+          )}
+          {notLive && notLive.length > 0 && (
+            <span>Not live yet: {notLive.join(', ')}</span>
+          )}
+        </div>
       </div>
     </div>
   )
 }
 
-const FILLER = 'h-full w-4 min-w-4'
-
-/** The group's edge columns get the same inset as the liveness table's */
-function groupPadding(index: number, size: number, body = false) {
-  if (index === 0) return body ? 'pl-6!' : 'pl-6'
-  if (index === size - 1) return body ? 'pr-6!' : 'pr-6'
-  return undefined
-}
-
 function getCostColumns(
   action: GasFeesUsdMetric,
-  setAction: (action: GasFeesUsdMetric) => void,
+  ethereum: GasFeesSummaryRow | undefined,
 ): Column[] {
   return [
     {
       id: 'cost',
-      head: <ActionPicker value={action} onChange={setAction} />,
+      head: `${GAS_FEES_METRIC_LABELS[action].short} cost`,
       align: 'right',
-      ranged: true,
       sortValue: (row) => row[action],
       cell: (row) => (
-        <span className="font-medium">{formatFee(row[action])}</span>
+        <span className="font-bold">{formatFee(row[action])}</span>
       ),
+    },
+    {
+      id: 'compared',
+      head: 'Compared with Ethereum',
+      tooltip: "Each chain's cost to scale, with Ethereum's as the full track.",
+      className: 'pl-6!',
+      cell: (row, chain) => {
+        const base = ethereum?.[action]
+        if (!base) return null
+        const share = row[action] / base
+        return (
+          <span className="flex h-2.5 w-40 overflow-hidden rounded-full bg-surface-secondary lg:w-56">
+            <span
+              className="block h-full rounded-full"
+              style={{
+                width: `max(4px, ${Math.min(100, share * 100)}%)`,
+                backgroundColor: chain.color,
+              }}
+            />
+          </span>
+        )
+      },
     },
     {
       id: 'cheaper',
       head: 'Cheaper by',
       align: 'right',
-      ranged: true,
       sortValue: (row) => row.timesCheaper?.[action] ?? 1,
       cell: (row) => {
         const times = row.timesCheaper?.[action]
@@ -333,7 +290,7 @@ function ActionPicker({
       value={value}
       onValueChange={(v) => onChange(v as GasFeesUsdMetric)}
     >
-      <SelectTrigger className="-my-1 min-h-7 border border-divider px-2 font-medium text-xs normal-case md:text-xs">
+      <SelectTrigger className="min-h-8 rounded-lg bg-surface-secondary px-3 font-medium">
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
@@ -350,14 +307,18 @@ function ActionPicker({
 function SortableHead({
   sort,
   onSort,
+  align,
   children,
 }: {
   sort: Sort | undefined
   onSort: () => void
+  align?: 'right'
   children: React.ReactNode
 }) {
   return (
-    <span className="flex items-end gap-1">
+    <span
+      className={cn('flex items-end gap-1', align === 'right' && 'justify-end')}
+    >
       {children}
       <button
         type="button"
@@ -374,59 +335,6 @@ function SortableHead({
   )
 }
 
-/** A dense row of 24 hours, oldest first */
-function getRecentColumn(recent: Props['recent']): Column {
-  const hours = recent.data?.hours
-  const span = (from: number | undefined, to: number | undefined) =>
-    from === undefined || to === undefined
-      ? ''
-      : `${formatHour(from)}–${formatHour(to + UnixTime.HOUR)}`
-  const baseline =
-    "Each hour's average fee per transaction vs the chain's usual: the median of its daily averages over the past 30 days. The average follows the mix of transactions, so an hour with fewer cheap bot transactions reads above usual even when prices didn't move."
-  const order = `${span(hours?.[0], hours?.[23])} UTC, oldest first.`
-  return {
-    id: 'recent',
-    head: 'Last 24h',
-    tooltip: hours ? `${baseline} ${order}` : baseline,
-    cell: (row) => {
-      if (!recent.data) return <Skeleton className="h-4 w-[120px]" />
-      const chain = recent.data.chains.find((c) => c.id === row.id)
-      if (!chain) return <span className="text-secondary">{EM_DASH}</span>
-      return (
-        <GasFeesRecentStrip
-          chainId={row.id}
-          series={chain.usd}
-          hover={recent.hover}
-          onHover={recent.setHover}
-        />
-      )
-    },
-  }
-}
-
-/** The base fee and the spread of tips over the last 24 hours */
-function getTipColumn(data: GasFeesRecent | undefined): Column {
-  const chains = data?.chains ?? []
-  const domains = new Map(
-    [...new Set(chains.map((c) => c.gasToken))].map((token) => [
-      token,
-      getTipDomain(chains, token),
-    ]),
-  )
-  return {
-    id: 'tip',
-    head: 'Tip · last 24h',
-    tooltip:
-      "The last hour's base fee and the spread of tips per gas, on a log scale shared by chains priced in the same token. Hover a row for the values and unit.",
-    cell: (row, chain) => {
-      if (!data) return <Skeleton className="h-8 w-40" />
-      const recent = data.chains.find((c) => c.id === row.id)
-      const domain = domains.get(recent?.gasToken ?? 'ETH') ?? { lo: -7, hi: 0 }
-      return <TipPlot chain={recent} domain={domain} role={chain.tipRole} />
-    },
-  }
-}
-
 /** The whole split as one bar, with the values on hover */
 function getSplitColumn(): Column {
   return {
@@ -434,7 +342,7 @@ function getSplitColumn(): Column {
     head: 'Base · Priority · L1 fee',
     tooltip:
       'Base fee: set by the protocol from demand, burned on Ethereum; on L2s, the L2’s own execution fee. Priority fee: a tip for being included sooner. L1 fee: what L2 users pay for posting their data to Ethereum.',
-    ranged: true,
+    className: 'pl-6!',
     cell: (row, chain) => {
       const { base, priority, l1Data } = row.split
       const parts = [

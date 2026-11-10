@@ -76,9 +76,6 @@ async function getCachedData(manifest: Manifest) {
     helpers.queryClient.prefetchQuery(
       helpers.trpc.gasFees.summary.queryOptions({ range: initialRange }),
     ),
-    helpers.queryClient.prefetchQuery(
-      helpers.trpc.gasFees.recent.queryOptions(),
-    ),
   ])
 
   // Ethereum keeps the site-wide Ethereum color, so it takes no palette slot
