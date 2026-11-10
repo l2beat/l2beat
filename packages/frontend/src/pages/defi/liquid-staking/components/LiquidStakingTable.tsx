@@ -6,15 +6,16 @@ import {
 } from '@tanstack/react-table'
 import { useState } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
+import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
 import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
+import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
 import type { LiquidStakingEntry } from '~/server/features/defi/liquid-staking/getLiquidStakingEntries'
 import { LIQUID_STAKING_METRICS } from '../liquidStakingMetrics'
 import { LIQUID_STAKING_RISKS } from '../liquidStakingRisks'
 import {
-  getLiquidStakingNameColumn,
   getLiquidStakingStatColumns,
   TVL_COLUMN_ID,
 } from './liquidStakingColumns'
@@ -23,7 +24,34 @@ const columnHelper = createColumnHelper<LiquidStakingEntry>()
 
 const columns = [
   ...getCommonProjectColumns(columnHelper, (row) => row.href),
-  getLiquidStakingNameColumn(columnHelper),
+  columnHelper.accessor('name', {
+    header: 'Name',
+    enableHiding: false,
+    cell: (ctx) => (
+      <TableLink href={ctx.row.original.href}>
+        <ProjectNameCell
+          project={{
+            name: ctx.row.original.name,
+            shortName: ctx.row.original.shortName,
+            slug: ctx.row.original.slug,
+            icon: ctx.row.original.icon,
+            backgroundColor: undefined,
+            description: ctx.row.original.description,
+            statuses: {
+              underReview: ctx.row.original.isUnderReview
+                ? 'config'
+                : undefined,
+            },
+          }}
+        />
+      </TableLink>
+    ),
+    enableSorting: false,
+    meta: {
+      cellClassName: 'pl-4',
+      headClassName: 'pl-4',
+    },
+  }),
   ...getLiquidStakingStatColumns(columnHelper),
   ...LIQUID_STAKING_RISKS.map(({ key, title, tooltip }) =>
     columnHelper.accessor((entry) => entry.risks[key], {

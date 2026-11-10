@@ -10,8 +10,8 @@ import { CustomLink } from '~/components/link/CustomLink'
 import { BasicTable } from '~/components/table/BasicTable'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
 import { useTable } from '~/hooks/useTable'
+import { UnderReviewIcon } from '~/icons/UnderReview'
 import {
-  getLiquidStakingNameColumn,
   getLiquidStakingStatColumns,
   TVL_COLUMN_ID,
 } from '~/pages/defi/liquid-staking/components/liquidStakingColumns'
@@ -34,7 +34,27 @@ const columnHelper = createColumnHelper<LiquidStakingStatsEntry>()
 
 const columns = [
   ...getCommonProjectColumns(columnHelper, (row) => row.href),
-  getLiquidStakingNameColumn(columnHelper),
+  columnHelper.accessor((entry) => entry.shortName ?? entry.name, {
+    id: 'name',
+    header: 'Name',
+    enableSorting: false,
+    // ProjectNameCell would bring the listing tables' code to every project page.
+    cell: (ctx) => (
+      <a
+        href={ctx.row.original.href}
+        className="flex items-center gap-1.5 font-bold text-base"
+      >
+        {ctx.getValue()}
+        {ctx.row.original.isUnderReview && (
+          <UnderReviewIcon className="size-4" />
+        )}
+      </a>
+    ),
+    meta: {
+      cellClassName: 'pl-4',
+      headClassName: 'pl-4',
+    },
+  }),
   columnHelper.accessor((entry) => entry.tokens.join(', '), {
     id: 'tokens',
     header: 'Tokens',
