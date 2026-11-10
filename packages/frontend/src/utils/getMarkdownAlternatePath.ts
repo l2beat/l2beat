@@ -36,7 +36,7 @@ export const LIST_PAGES_WITH_MARKDOWN = [
   // Behind the same flags as the pages: advertised while off, these would be
   // 404s. Everything that lists markdown pages filters by this registry, so
   // the flags are read here only.
-  ...(env.CLIENT_SIDE_DEFI_ENABLED ? (['/defi/summary'] as const) : []),
+  ...(env.CLIENT_SIDE_DEFI_ENABLED ? (['/defi/liquid-staking'] as const) : []),
   ...(env.CLIENT_SIDE_OSSIFICATION_ENABLED ? (['/ossification'] as const) : []),
 ] as const satisfies ListPagePath[]
 
@@ -59,7 +59,7 @@ export type ListPageWithMarkdown = (typeof LIST_PAGES_WITH_MARKDOWN)[number]
 /** Static pages plus the flagged ones `STATIC_PAGE_PATHS` cannot list unconditionally. */
 type ListPagePath =
   | (typeof STATIC_PAGE_PATHS)[number]
-  | '/defi/summary'
+  | '/defi/liquid-staking'
   | '/ossification'
 
 const PAGES_WITH_MARKDOWN: readonly string[] = [
