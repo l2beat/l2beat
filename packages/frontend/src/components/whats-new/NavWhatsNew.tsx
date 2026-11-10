@@ -4,6 +4,7 @@ import { useLocalStorage } from '~/hooks/useLocalStorage'
 import { useTracking } from '~/hooks/useTracking'
 import { CloseIcon } from '~/icons/Close'
 import { cn } from '~/utils/cn'
+import { jsonForInlineScript } from '~/utils/jsonForInlineScript'
 import { SidebarGroup, SidebarGroupLabel } from '../core/Sidebar'
 import { useWhatsNewItem } from './WhatsNewItemContext'
 
@@ -20,20 +21,24 @@ export function NavWhatsNew({
   const { track } = useTracking()
   const { isDesktop } = useDevice()
   // Opening the item or dismissing it hides it until the next one.
-  const [seen, setSeen] = useLocalStorage(
-    item ? `whats-new-${item.id}` : 'whats-new-none',
-    false,
-  )
-  // Not on the server, which cannot know whether it was seen: a seen item
-  // would show, then vanish.
-  if (!item || !isClient || seen) {
+  const seenKey = item ? (`whats-new-${item.id}` as const) : 'whats-new-none'
+  const [seen, setSeen] = useLocalStorage(seenKey, false)
+  // The server cannot know whether the item was seen, so it always renders
+  // it, and the script at its end hides a seen one before the first paint.
+  // Rendering it only in the browser made it vanish and come back on every
+  // page load.
+  if (!item || (isClient && seen)) {
     return null
   }
   const device = isDesktop ? 'desktop' : 'mobile'
   return (
     // At the end of the nav, just above its footer; at least 20px under the
     // lists above when the nav is full.
-    <SidebarGroup className={cn('mt-auto pt-5', className)}>
+    <SidebarGroup
+      className={cn('mt-auto pt-5', className)}
+      // The script below may have hidden it before React got here.
+      suppressHydrationWarning
+    >
       <div className="flex items-center justify-between">
         <SidebarGroupLabel>What&apos;s new</SidebarGroupLabel>
         <button
@@ -76,6 +81,11 @@ export function NavWhatsNew({
           )}
         </span>
       </a>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `try{localStorage.getItem(${jsonForInlineScript(seenKey)})==="true"&&(document.currentScript.parentElement.style.display="none")}catch{}`,
+        }}
+      />
     </SidebarGroup>
   )
 }
