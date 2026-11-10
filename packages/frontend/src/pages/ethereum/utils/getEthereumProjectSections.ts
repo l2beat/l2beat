@@ -4,6 +4,7 @@ import type { RosetteValue } from '~/components/rosette/types'
 import { env } from '~/env'
 import { getLiquidStakingOverview } from '~/server/features/defi/liquid-staking/getLiquidStakingOverview'
 import type { ProjectInteropData } from '~/server/features/layer2s/interop/getProjectInteropData'
+import { getLogger } from '~/server/utils/logger'
 import { getDiagramParams } from '~/utils/project/getDiagramParams'
 import { toTechnologyRisk } from '~/utils/project/risk-summary/toTechnologyRisk'
 import { toChartProject } from '~/utils/project/toChartProject'
@@ -38,7 +39,15 @@ export async function getEthereumProjectSections({
   const [throughputSection, liquidStaking] = await Promise.all([
     getDaThroughputSection(ethereum),
     // Its links lead to DeFi pages, so it follows their flag.
-    env.CLIENT_SIDE_DEFI_ENABLED ? getLiquidStakingOverview() : undefined,
+    env.CLIENT_SIDE_DEFI_ENABLED
+      ? getLiquidStakingOverview().catch((error) => {
+          // The section is optional, so the page renders without it.
+          getLogger()
+            .for('getEthereumProjectSections')
+            .error('Liquid staking overview failed', { error })
+          return undefined
+        })
+      : undefined,
   ])
 
   if (interopData) {
