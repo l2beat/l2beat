@@ -70,6 +70,9 @@ export const pageLoaders = {
   GasFeesPage: async () => (await import('./gas-fees/GasFeesPage')).GasFeesPage,
   PrivacySummaryPage: async () =>
     (await import('./privacy/summary/PrivacySummaryPage')).PrivacySummaryPage,
+  PrivacyArchivedPage: async () =>
+    (await import('./privacy/archived/PrivacyArchivedPage'))
+      .PrivacyArchivedPage,
   PrivacyProjectPage: async () =>
     (await import('./privacy/project/PrivacyProjectPage')).PrivacyProjectPage,
   TokensPage: async () => (await import('./tokens/TokensPage')).TokensPage,

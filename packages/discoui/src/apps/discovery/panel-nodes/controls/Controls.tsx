@@ -1,13 +1,14 @@
 import { TooltipProvider } from '../../../../components/Tooltip'
 import { IS_READONLY } from '../../../../config/readonly'
 import { cn } from '../../../../utils/cn'
+import { SettingsDialog } from '../../multi-view/settings/SettingsDialog'
 import { useStore } from '../store/store'
 import { AutoLayoutMenu } from './canvas/AutoLayoutMenu'
 import { HistoryButtons } from './canvas/HistoryButtons'
 import { LayoutLibrary } from './canvas/LayoutLibrary'
-import { Settings } from './canvas/Settings'
 import { ToolButtons } from './canvas/ToolButtons'
 import { VisibilityMenu } from './canvas/VisibilityMenu'
+import { IconControlGear } from './icons/IconControlGear'
 import { AlignMenu } from './selection/AlignMenu'
 import { ColorButton } from './selection/ColorButton'
 import { GroupButtons } from './selection/GroupButtons'
@@ -17,6 +18,7 @@ import { SelectionName } from './selection/SelectionName'
 import { selectOnlySelectedNode } from './selection/selectOnlySelectedNode'
 import { ValuesButton } from './selection/ValuesButton'
 import { Toolbar, ToolbarSection } from './Toolbar'
+import { ToolbarButton } from './ToolbarButton'
 
 export function Controls() {
   const hasSelection = useStore((state) => state.selected.length > 0)
@@ -66,7 +68,17 @@ export function Controls() {
           </ToolbarSection>
           <ToolbarSection label="Panel">
             <LayoutLibrary />
-            <Settings />
+            {/* Phones hide the top bar, so its settings button is unreachable. */}
+            <div className="md:hidden">
+              <SettingsDialog
+                defaultTabId="nodes"
+                trigger={
+                  <ToolbarButton label="Settings">
+                    <IconControlGear />
+                  </ToolbarButton>
+                }
+              />
+            </div>
           </ToolbarSection>
         </Toolbar>
       </div>

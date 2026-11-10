@@ -48,9 +48,9 @@ export function sentimentToTextColor(
 ): string {
   switch (sentiment) {
     case 'bad':
-      return 'text-negative dark:text-orange-600'
+      return 'text-red-550 dark:text-orange-600'
     case 'warning':
-      return 'text-warning-text'
+      return 'text-yellow-700 dark:text-yellow-200'
     case 'good':
       return opts?.vibrant ? 'text-green-700 dark:text-green-450' : ''
     case 'neutral':

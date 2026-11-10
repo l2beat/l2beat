@@ -22,6 +22,17 @@ Run `l2b` from `packages/config`. Its `.env` holds RPC keys: never read or print
 - `<project>/.flat/`: the flattened source of every contract discovery analyzed.
 - `abis` in `discovered.json`: discovery calls only functions without arguments (and probes single `uint256` getters at indices 0 to 4). Functions with other arguments, events, constructor arguments (`constructorArgs`, e.g. a verifier set at deployment) and private variables need a handler.
 
+## Point at it in DiscoUI
+
+`l2b ui` serves an MCP server at `/api/agent/mcp`, so a coding agent can walk the researcher through contracts and code in the open DiscoUI tab, read what they selected, list who controls a contract, and put lists and comparisons on a board next to the graph.
+
+DiscoUI's chat panel runs Claude Code or Codex already connected. An agent in a terminal connects once; when 2021 was taken, use the port `l2b ui` prints instead:
+
+- Claude Code: `claude mcp add --transport http discoui http://localhost:2021/api/agent/mcp`
+- Codex: `codex mcp add discoui --url http://localhost:2021/api/agent/mcp`
+
+The tools carry their own instructions. It answers only on this machine, and not with `l2b ui --readonly`.
+
 ## Templates
 
 A template is `_templates/<name>/template.jsonc` with a `shapes.json` of source hashes. It applies to every contract with that source, in every project, so it is where anything about a contract's code goes. `config.jsonc` overrides are for this project's addresses.
@@ -42,7 +53,7 @@ A template is `_templates/<name>/template.jsonc` with a `shapes.json` of source 
 Mark a contract `critical: true` in its template, or in a `config.jsonc` override. An override beats the template and survives the contract leaving discovery.
 
 - `sinceTimestamp`: earlier changes do not count.
-- `untilTimestamp`: the contract left the perimeter, for example a verifier that only accepts proofs for finalized batches. Use the onchain time it was detached, not a discovery run. Later changes and its verification status no longer count. Set it on an override to keep the history of a contract that left without a deletion in `diffHistory.md`.
+- `untilTimestamp`: the contract left the perimeter, for example a verifier that only accepts proofs for finalized batches. Use the onchain time it was detached, not a discovery run. A verifier routed by batch index detaches when its last batch finalizes, not when its successor is registered. Later changes and its verification status no longer count. Set it on an override to keep the history of a contract that left without a deletion in `diffHistory.md`.
 
 A project includes the critical contracts of the shared modules it can reach. Each module is judged by its own config, templates, `diffHistory.md` and `ossification.json`.
 
@@ -62,6 +73,7 @@ Put the severity in the template when it follows from the contract type, otherwi
 2. changeable on a live system, unlike `gasPayingToken`, which only an upgrade changes
 3. configuration, not a counter: derive `bufferConfig` from `SequencerInbox.buffer` with `"edit": ["delete", "prevBlockNumber", …]`
 4. not a copy of another severity's field: a HIGH `accessControl` counts `EXECUTOR_ROLE.members`, which `executors` shows as MEDIUM
+5. the effective value, not a queued one: `getSlasher` is HIGH, `getPendingSlasher` MEDIUM
 
 Give raw and formatted twins like `getMinDelay` and `getMinDelayFormatted` the same severity. The history follows a field's current name and severity: renaming cuts it off, raising a field to HIGH counts its old changes, lowering it stops counting them.
 

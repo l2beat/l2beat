@@ -23,7 +23,7 @@ const additionalTrustPercentVariants = cva('font-bold', {
   variants: {
     sentiment: {
       good: 'text-positive',
-      warning: 'text-warning-text',
+      warning: 'text-warning',
       bad: 'text-negative',
     },
   },

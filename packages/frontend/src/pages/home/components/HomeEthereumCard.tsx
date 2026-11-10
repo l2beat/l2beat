@@ -27,7 +27,7 @@ export function HomeEthereumCard({
     // foot of their rankings.
     <HomeCard
       className={cn(
-        'home-wide:row-span-3 flex home-wide:grid min-w-0 home-wide:grid-rows-subgrid flex-col gap-5 home-wide:gap-6 home-wide:[&>:nth-child(2)]:row-span-2',
+        'home-wide:row-span-3 flex home-wide:grid min-w-0 home-wide:grid-rows-subgrid flex-col gap-5 home-wide:[&>:nth-child(2)]:row-span-2',
         className,
       )}
     >

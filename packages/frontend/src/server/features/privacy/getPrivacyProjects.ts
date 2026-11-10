@@ -18,12 +18,15 @@ const OPTIONAL = [
   'archivedAt',
 ] as const
 
-/** Archived projects keep their own page, reachable from their newer version,
- *  but drop out of the lists. */
-export async function getPrivacyProjects(): Promise<PrivacyProject[]> {
+/** Archived projects drop out of the summary and are listed on the archived
+ *  page instead. */
+export async function getPrivacyProjects(
+  status: 'active' | 'archived' = 'active',
+): Promise<PrivacyProject[]> {
   const projects = await ps.getProjects({
-    where: ['privacyInfo'],
-    whereNot: ['archivedAt'],
+    ...(status === 'active'
+      ? { where: ['privacyInfo'], whereNot: ['archivedAt'] }
+      : { where: ['privacyInfo', 'archivedAt'] }),
     select: [...SELECT],
     optional: [...OPTIONAL],
   })

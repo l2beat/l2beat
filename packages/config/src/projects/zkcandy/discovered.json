@@ -643,16 +643,16 @@
           "description": "zkPorter is a volition-like contruction and changes the zk proof input requirements."
         },
         "isPermanentRollup": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "true means that the DA mode cannot be changed to Validium in the future. compliant DAValidator pairs for the permanent rollup mode are defined/enforced by the RollupDAManager contract."
         },
-        "isPermanentRollupString": { "severity": "HIGH" },
+        "isPermanentRollupString": { "severity": "MEDIUM" },
         "priorityModeCanBeActivated": {
           "severity": "HIGH",
           "description": "1 once the chain admin permanently allowed Priority Mode (ZKsync OS permanent rollups only). Then anyone can activate it as soon as the first unprocessed priority transaction is older than 4 days, after which only the shared PermissionlessValidator can settle batches (anyone can submit through it) and only the ChainTypeManager owner can deactivate it."
         },
         "priorityModeInfo": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Raw Priority Mode storage: last byte canBeActivated, byte before it activated, then the PermissionlessValidator address."
         },
         "priorityModeTransactionFilterer": {
@@ -1154,9 +1154,9 @@
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 26334855 },
-  "permissionsConfigHash": "0x3684f43fa2f85e044830926d25b0911356238c6f57b371fa2e2b7af85a7ce1a7",
+  "permissionsConfigHash": "0xfaf64badb83aeb83b0e5a3ccb04cc08f7cd1837f7d7559df9fd239ae4be4343f",
   "modelledAgainst": {
-    "shared-zk-stack": "0xf5aeb32bdc1483fa310e04bffe1b607bd86c7ef9b4caed29d8c0d422821460d7"
+    "shared-zk-stack": "0x1edc9a85104e4cb1087b172da8c224b9375c175a0b977b71c27aba5aed671567"
   },
   "permissions": {
     "eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e": {
@@ -1229,7 +1229,7 @@
         {
           "permission": "interact",
           "from": "eth:0xF2704433d11842d15aa76BBF0E00407267a99C92",
-          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers and, from v31 while Priority Mode is not allowed, pause all new L1 --> L2 transactions including deposits (Chain Admin role).",
           "role": ".getAdmin"
         }
       ]
@@ -1316,7 +1316,7 @@
         {
           "permission": "interact",
           "from": "eth:0xF2704433d11842d15aa76BBF0E00407267a99C92",
-          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers and, from v31 while Priority Mode is not allowed, pause all new L1 --> L2 transactions including deposits (Chain Admin role).",
           "role": ".getAdmin",
           "via": [
             { "address": "eth:0x309EfA797ec5cd324Cb473F141F95214F3a25ab2" }
@@ -1398,6 +1398,15 @@
           "permission": "interact",
           "from": "eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
           "description": "pause / unpause the bridge and set the L1AssetTracker that enforces the per-chain balances.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc16161C7f704388285fE58db287F6216a350dAFA",
+          "description": "manage allowed rollup DA configurations (allowed to be used by rollups in permanent rollup mode).",
           "role": ".owner",
           "via": [
             { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
@@ -1745,6 +1754,12 @@
           "permission": "interact",
           "from": "eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
           "description": "pause / unpause the bridge and set the L1AssetTracker that enforces the per-chain balances.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc16161C7f704388285fE58db287F6216a350dAFA",
+          "description": "manage allowed rollup DA configurations (allowed to be used by rollups in permanent rollup mode).",
           "role": ".owner"
         },
         {

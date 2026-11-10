@@ -1,6 +1,6 @@
 {
   "name": "soon",
-  "timestamp": 1787239875,
+  "timestamp": 1793982695,
   "configHash": "0x45e96448cfce995dff65f020d413453d2bb3f6d373265e453500064e7e26596e",
   "entries": [
     {
@@ -52,15 +52,17 @@
         "$upgradeCount": 4,
         "challenger": "eth:0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
         "CHALLENGER": "eth:0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
-        "deletedOutputs": [],
-        "FINALIZATION_PERIOD_SECONDS": 259200,
-        "finalizationPeriodSeconds": 259200,
+        "deletedOutputs": [
+          { "prevNextOutputIndex": 1200, "newNextOutputIndex": 1198 }
+        ],
+        "FINALIZATION_PERIOD_SECONDS": 604800,
+        "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 6858000,
-        "latestOutputIndex": 1026,
-        "nextBlockNumber": 6861000,
-        "nextOutputIndex": 1027,
+        "latestBlockNumber": 7419000,
+        "latestOutputIndex": 1213,
+        "nextBlockNumber": 7422000,
+        "nextOutputIndex": 1214,
         "proposer": "eth:0xF56334795629466E5c138B02Ace334EE46C9513b",
         "PROPOSER": "eth:0xF56334795629466E5c138B02Ace334EE46C9513b",
         "startingBlockNumber": 0,
@@ -263,8 +265,15 @@
           ]
         ],
         "$upgradeCount": 5,
-        "frozenWithdrawals": [],
-        "guardian": "eth:0xcb17B5F3Cf75eb40F0Addf97B0D457922f10B911",
+        "frozenWithdrawals": [
+          "0xbd3b5993b37edcd561be51ab4022df88631d4650c016293ae910dafacf2d325e",
+          "0xfc6fb240754bb03e416f6fcfa17598decc2caa070f1896051c735384cc4772c5",
+          "0x0d835f3f5f388931678e8373df8208f9d1a3bfe3a0f89b3bcc71cf1a16b6a943",
+          "0x1e8c60e4d74f38af78f53c17c1870b0f20cee8d16d390ad390d2636ac61e2bfe",
+          "0xd1113c38f110b747b015cf68975db42c149af415f4d91b36065c8f198d76b777",
+          "0x8d43f16f44bdd0be1b00bfd2e81f10a1b174587cd554eb0a06e6b1073616497c"
+        ],
+        "guardian": "eth:0xc5B6f119823BA48C1366235cFc941aC0E2a6B306",
         "l2Oracle": "eth:0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448",
         "l2Sender": "0x0000000000000000000000000000000000000000000000000000000000000001",
         "MIN_BRIDGE_VALUE": "0.001",
@@ -414,7 +423,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292669096",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292669112",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -439,6 +448,39 @@
         "eth:0x6846B4E0b9992E154fE7d315667B1e385445C503": "L1CrossDomainMessenger"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "name": "Safe",
+      "address": "eth:0xc5B6f119823BA48C1366235cFc941aC0E2a6B306",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xe11de7576ff53dbc2f216729426016b32575102a9e8b0d9ec13e34766ffae943",
+        "0xb66849da6643e8cd188f73efe4edb32704a1540eda5b1aef77a2217ad2d81f78"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xDAdE7A3321398c1E3Cc8Ae5b3e5c48e6225C4d47",
+      "sinceTimestamp": 1793778131,
+      "sinceBlock": 26340024,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b",
+        "$members": [
+          "eth:0xcb17B5F3Cf75eb40F0Addf97B0D457922f10B911",
+          "eth:0xd1bc675f91C9E54C8eA5Adc7B22Cae4C6AD39BB8"
+        ],
+        "$threshold": 1,
+        "domainSeparator": "0xbcd5334ec65407fadc245a3a5541dd13063ec9f79673c6f87a3e5fea006d3c9c",
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 2 (50%)",
+        "nonce": 1,
+        "VERSION": "1.5.0"
+      },
+      "implementationNames": {
+        "eth:0xc5B6f119823BA48C1366235cFc941aC0E2a6B306": "SafeProxy",
+        "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b": "Safe"
+      }
     },
     {
       "address": "eth:0xcb17B5F3Cf75eb40F0Addf97B0D457922f10B911",
@@ -476,7 +518,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "guardian": "eth:0xcb17B5F3Cf75eb40F0Addf97B0D457922f10B911",
+        "guardian": "eth:0xc5B6f119823BA48C1366235cFc941aC0E2a6B306",
         "GUARDIAN_SLOT": "0xd30e835d3f35624761057ff5b27d558f97bd5be034621e62240e5c0b784abe68",
         "paused": false,
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
@@ -522,7 +564,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 41,
+        "nonce": 43,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -844,6 +886,9 @@
     "eth:0xbB138cE37870443d5b2B02a36619D3478738E0f6": [
       "constructor(address _addressManager, string _implementationName)"
     ],
+    "eth:0xc5B6f119823BA48C1366235cFc941aC0E2a6B306": [
+      "constructor(address _singleton)"
+    ],
     "eth:0xD02631b334FfDCD5674217e57fe524c44B341DD4": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -965,6 +1010,56 @@
       "function setCode(bytes _code)",
       "function setOwner(address _owner)",
       "function setStorage(bytes32 _key, bytes32 _value)"
+    ],
+    "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b": [
+      "constructor()",
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedModuleGuard(address indexed moduleGuard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkNSignatures(address executor, bytes32 dataHash, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function checkSignatures(address executor, bytes32 dataHash, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32 txHash)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setModuleGuard(address moduleGuard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ]
   },
   "usedTemplates": {
@@ -979,8 +1074,8 @@
     "opstack/SuperchainConfigFake": "0x159f809db0f23240c435b95879e5d69a807ac5f4bedb61ce4bdb57dcd4a92ccc",
     "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7"
   },
-  "usedBlockNumbers": { "ethereum": 25797241 },
-  "permissionsConfigHash": "0xc283f71afe630050a7132b5e7b587701cb1663054cc70a8a69efa05483e5dbe2",
+  "usedBlockNumbers": { "ethereum": 26357022 },
+  "permissionsConfigHash": "0x4c3f39b957a0b215f08bb39c899ae30f00be578c1412382d89816be3c674979b",
   "permissions": {
     "eth:0x267576444F8504B23B98F2b3C0e31bB32eB6Eb7a": {
       "receivedPermissions": [
@@ -1155,8 +1250,8 @@
         }
       ]
     },
-    "eth:0xcb17B5F3Cf75eb40F0Addf97B0D457922f10B911": {
-      "receivedPermissions": [
+    "eth:0xc5B6f119823BA48C1366235cFc941aC0E2a6B306": {
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07",
@@ -1174,6 +1269,68 @@
           "from": "eth:0xD02631b334FfDCD5674217e57fe524c44B341DD4",
           "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
           "role": ".guardian"
+        }
+      ]
+    },
+    "eth:0xcb17B5F3Cf75eb40F0Addf97B0D457922f10B911": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
+          "role": ".guardian",
+          "via": [
+            { "address": "eth:0xc5B6f119823BA48C1366235cFc941aC0E2a6B306" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07",
+          "description": "freeze specific withdrawals.",
+          "role": ".guardian",
+          "via": [
+            { "address": "eth:0xc5B6f119823BA48C1366235cFc941aC0E2a6B306" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xD02631b334FfDCD5674217e57fe524c44B341DD4",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
+          "role": ".guardian",
+          "via": [
+            { "address": "eth:0xc5B6f119823BA48C1366235cFc941aC0E2a6B306" }
+          ]
+        }
+      ]
+    },
+    "eth:0xd1bc675f91C9E54C8eA5Adc7B22Cae4C6AD39BB8": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
+          "role": ".guardian",
+          "via": [
+            { "address": "eth:0xc5B6f119823BA48C1366235cFc941aC0E2a6B306" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07",
+          "description": "freeze specific withdrawals.",
+          "role": ".guardian",
+          "via": [
+            { "address": "eth:0xc5B6f119823BA48C1366235cFc941aC0E2a6B306" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xD02631b334FfDCD5674217e57fe524c44B341DD4",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
+          "role": ".guardian",
+          "via": [
+            { "address": "eth:0xc5B6f119823BA48C1366235cFc941aC0E2a6B306" }
+          ]
         }
       ]
     }

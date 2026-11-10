@@ -61,7 +61,7 @@ export function getStageBadgeClassName(
     case 'Stage 0':
       return 'bg-orange-600 border border-[#F98A24] dark:bg-[#E03109] dark:border-[#F25430] text-white'
     case 'UnderReview':
-      return 'border border-current text-warning-text'
+      return 'border border-current text-n-yellow-700 dark:text-yellow-200'
     case 'NotApplicable':
       return 'bg-[#B4C7D5] dark:bg-[#3D4361] border border-[#D1E1EC] dark:border-[#343955] text-zinc-800 dark:text-primary'
     default:
@@ -76,11 +76,11 @@ export function getStageTextClassname(
     case 'Stage 2':
       return 'text-positive'
     case 'Stage 1':
-      return 'text-warning-text'
+      return 'text-warning'
     case 'Stage 0':
       return 'text-negative'
     case 'UnderReview':
-      return 'text-warning-text'
+      return 'text-n-yellow-700 dark:text-yellow-200'
     default:
       return 'text-secondary'
   }

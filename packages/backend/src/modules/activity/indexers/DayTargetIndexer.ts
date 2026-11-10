@@ -20,6 +20,7 @@ export class DayTargetIndexer extends RootIndexer {
   }
 
   async tick(): Promise<number> {
+    // Today isn't fully processed by the sources yet, so sync up to its start
     const target = UnixTime.toStartOf(this.clock.getLastHour(), 'day')
     const day = UnixTime.toDays(target)
 

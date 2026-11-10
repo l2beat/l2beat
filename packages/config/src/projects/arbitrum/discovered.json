@@ -1,6 +1,6 @@
 {
   "name": "arbitrum",
-  "timestamp": 1792657864,
+  "timestamp": 1793982728,
   "configHash": "0x0b60481ff56eae0e3d8ac30da2cc448b06ac954350f3c2d95c66108e51659601",
   "entries": [
     {
@@ -124,7 +124,7 @@
         ],
         "$upgradeCount": 11,
         "counterpartGateway": "eth:0xcEe284F754E854890e311e3280b767F80797180d",
-        "exitNum": 20304,
+        "exitNum": 20347,
         "router": "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "fieldMeta": {
@@ -192,7 +192,7 @@
         "beaconProxyFactory": "arb1:0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
         "counterpartGateway": "eth:0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "exitNum": 46477,
+        "exitNum": 46713,
         "router": "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "fieldMeta": {
@@ -995,7 +995,7 @@
         "l2Gateway": "arb1:0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B",
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "115591322810497341007878"
+        "totalSupply": "115922751369012295474028"
       },
       "fieldMeta": {
         "l1Address": { "severity": "HIGH" },
@@ -1178,7 +1178,7 @@
         "$upgradeCount": 2,
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x81e28e6f37e32d4756bbeaf3c057b82178ac53398af819adfc680fad31b2ecd5",
-        "getTotalDelegation": "5169442681379512163183688461",
+        "getTotalDelegation": "5164149102296812012192160841",
         "l1Address": "arb1:0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",
         "MIN_MINT_INTERVAL": 31536000,
         "MINT_CAP_DENOMINATOR": 10000,
@@ -1473,7 +1473,7 @@
         ],
         "$upgradeCount": 1,
         "counterpartGateway": "eth:0xbbcE8aA77782F13D4202a230d978F361B011dB27",
-        "exitNum": 2391,
+        "exitNum": 2394,
         "router": "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "fieldMeta": {
@@ -2187,7 +2187,7 @@
           ]
         ],
         "$upgradeCount": 6,
-        "batchCount": 1361329,
+        "batchCount": 1370303,
         "batchPosterManager": "eth:0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "eth:0x0237e0EA0d86D53aF18dCf4CbE8182037b44ef1A",
@@ -2200,9 +2200,9 @@
           "bufferBlocks": 14400,
           "max": 14400,
           "threshold": 150,
-          "prevBlockNumber": 26246906,
+          "prevBlockNumber": 26356950,
           "replenishRateInBasis": 500,
-          "prevSequencedBlockNumber": 26246970
+          "prevSequencedBlockNumber": 26357022
         },
         "bufferConfig": {
           "max": 14400,
@@ -2233,7 +2233,7 @@
         "rollup": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 4,
-        "totalDelayedMessagesRead": 2599956,
+        "totalDelayedMessagesRead": 2612844,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -2597,9 +2597,29 @@
             "2026-06-15T10:08:47.000Z",
             "0xc2e247e5869aaf5b57ff1cc5da8b56f6675161ad6f980b547846f209e43e145b",
             ["eth:0x7C058ad1D0Ee415f7e7f30e62DB1BCf568470a10"]
+          ],
+          [
+            "2026-10-30T00:08:35.000Z",
+            "0xb69c81774f507d46ce776aeaed8b4d31df96dd66ce6fd05073481011835355d6",
+            ["eth:0x980D1F93FC5809c828539c46084801673FA6A859"]
+          ],
+          [
+            "2026-10-30T00:08:35.000Z",
+            "0xb69c81774f507d46ce776aeaed8b4d31df96dd66ce6fd05073481011835355d6",
+            ["eth:0x7C058ad1D0Ee415f7e7f30e62DB1BCf568470a10"]
+          ],
+          [
+            "2026-10-30T00:08:35.000Z",
+            "0xb69c81774f507d46ce776aeaed8b4d31df96dd66ce6fd05073481011835355d6",
+            ["eth:0x980D1F93FC5809c828539c46084801673FA6A859"]
+          ],
+          [
+            "2026-10-30T00:08:35.000Z",
+            "0xb69c81774f507d46ce776aeaed8b4d31df96dd66ce6fd05073481011835355d6",
+            ["eth:0x7C058ad1D0Ee415f7e7f30e62DB1BCf568470a10"]
           ]
         ],
-        "$upgradeCount": 14,
+        "$upgradeCount": 18,
         "allowListEnabled": false,
         "bridge": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "getProxyAdmin": "eth:0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD",
@@ -2670,7 +2690,7 @@
         "getValidators": [],
         "inbox": "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isPostBoLD": true,
-        "latestConfirmed": "0x9dfca65fb9607b4892206cb6defa99446cd912e8d4a0cd2caf971c043e81d4f3",
+        "latestConfirmed": "0x12ff15b22cae7f3204480c70f310e44f16a101d866b5880eb146b0109b3dcb9c",
         "loserStakeEscrow": "eth:0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -3151,7 +3171,7 @@
           "eth:0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "eth:0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 2599959,
+        "delayedMessageCount": 2612849,
         "inboxHistory": [
           "eth:0x1c9DbddC9C2f1B29d4613E45BD5F35C0b1FBA8d6",
           "eth:0x57Bd336d579A51938619271a7Cc137a46D0501B1",
@@ -3165,8 +3185,8 @@
         ],
         "rollup": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerInbox": "eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 1361329,
-        "sequencerReportedSubMessageCount": 494964110
+        "sequencerMessageCount": 1370303,
+        "sequencerReportedSubMessageCount": 499635702
       },
       "fieldMeta": {
         "rollup": { "severity": "HIGH" },
@@ -3468,7 +3488,7 @@
         "novaGateway": "eth:0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
         "novaRouter": "eth:0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48",
         "symbol": "ARB",
-        "totalSupply": "244734187791919971132727815"
+        "totalSupply": "262728687374693101464744533"
       },
       "fieldMeta": {
         "arbOneGateway": { "severity": "HIGH" },
@@ -8119,7 +8139,7 @@
           "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
         ],
         "multisigThreshold": "9 of 12 (75%)",
-        "nonce": 7,
+        "nonce": 8,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -10947,7 +10967,7 @@
     "orbitstack/Timelock": "0x829942d628216f5e3ccb318e325a75285505725be8242695aa60ebe14e54e2aa",
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301"
   },
-  "usedBlockNumbers": { "arbitrum": 517172102, "ethereum": 26246973 },
+  "usedBlockNumbers": { "arbitrum": 521843733, "ethereum": 26357024 },
   "permissionsConfigHash": "0x84e8e1582719ff4051368d1565d2efb9ce61b9d6702279a515234bef597cfaff",
   "permissions": {
     "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0": {

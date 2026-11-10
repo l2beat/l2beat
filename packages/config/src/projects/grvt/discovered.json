@@ -1,6 +1,6 @@
 {
   "name": "grvt",
-  "timestamp": 1793715847,
+  "timestamp": 1793874299,
   "configHash": "0x2084c1e51035868baf0c9a414d9ff9295ca19404533437794a0eacdebaec6748",
   "entries": [
     {
@@ -137,17 +137,17 @@
         "positionBreakdown": [
           {
             "token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-            "amount": 372843459,
+            "amount": 496722716,
             "kind": 1
           },
           {
             "token": "eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
-            "amount": "12199124849255028237659843",
+            "amount": "10199124849255028237659843",
             "kind": 0
           },
           {
             "token": "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d",
-            "amount": "5648844515678392678189190",
+            "amount": "7904357676155784495874486",
             "kind": 0
           }
         ],
@@ -160,8 +160,8 @@
           "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d"
         ],
         "swapsPaused": false,
-        "totalExposure": 19817504767610,
-        "totalExposureStrict": 19817504767610,
+        "totalExposure": 19819825382502,
+        "totalExposureStrict": 19819825382502,
         "tvlTokens": [
           "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
           "eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
@@ -170,7 +170,7 @@
         "vault": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
         "vaultToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "vaultTokenDecimals": 6,
-        "withdrawableExposure": 372843459
+        "withdrawableExposure": 496722716
       },
       "fieldMeta": {
         "pauser": { "severity": "MEDIUM" },
@@ -413,7 +413,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 88,
+        "nonce": 89,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -798,19 +798,19 @@
         "positionBreakdown": [
           {
             "token": "eth:0x23878914EFE38d27C4D67Ab83ed1b93A74D4086a",
-            "amount": 49577333,
+            "amount": 49591542,
             "kind": 0
           }
         ],
-        "totalExposure": 49577333,
-        "totalExposureStrict": 49577333,
+        "totalExposure": 49591542,
+        "totalExposureStrict": 49591542,
         "tvlTokens": [
           "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
           "eth:0x23878914EFE38d27C4D67Ab83ed1b93A74D4086a"
         ],
         "vault": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
         "vaultToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "withdrawableExposure": 49577333
+        "withdrawableExposure": 49591542
       },
       "implementationNames": {
         "eth:0x646123424BEcBF14a7542bc44340AdB241BA32b3": "BeaconProxy",
@@ -1000,7 +1000,7 @@
         "positionBreakdown": [
           {
             "token": "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d",
-            "amount": "5213901925181192706640335",
+            "amount": "9135964896369299008838796",
             "kind": 0
           },
           {
@@ -1010,8 +1010,8 @@
           }
         ],
         "sGhoToken": "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d",
-        "totalExposure": 5320955074318,
-        "totalExposureStrict": 5320955074318,
+        "totalExposure": 9325655236254,
+        "totalExposureStrict": 9325655236254,
         "tvlTokens": [
           "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
           "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
@@ -1021,7 +1021,7 @@
         "vault": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
         "vaultToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
         "vaultTokenDecimals": 6,
-        "withdrawableExposure": 5320955074318
+        "withdrawableExposure": 9325655236254
       },
       "implementationNames": {
         "eth:0x89D76f493AECaEe10caBbC1a67dbdC92E947b85E": "BeaconProxy",
@@ -1073,12 +1073,12 @@
       "sinceBlock": 22866325,
       "values": {
         "$immutable": true,
-        "executedCount": 57,
+        "executedCount": 58,
         "minDelay": 0,
         "owner": "eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "scheduledShadowCount": 0,
-        "scheduledTransparentCount": 57,
+        "scheduledTransparentCount": 58,
         "securityCouncil": "eth:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
@@ -1284,15 +1284,15 @@
           ],
           "statuses": [
             {
-              "idle": 4007125900982,
+              "idle": 4007125902,
               "strategy": 0,
-              "total": 4007125900982,
+              "total": 4007125902,
               "skippedStrategies": 0
             },
             {
               "idle": 0,
-              "strategy": 49624365,
-              "total": 49624365,
+              "strategy": 49638587,
+              "total": 49638587,
               "skippedStrategies": 0
             },
             {
@@ -1303,21 +1303,21 @@
             },
             {
               "idle": 0,
-              "strategy": "10862746440860028175106252",
-              "total": "10862746440860028175106252",
+              "strategy": "17040322572525526294990009",
+              "total": "17040322572525526294990009",
               "skippedStrategies": 0
             },
             { "idle": 0, "strategy": 0, "total": 0, "skippedStrategies": 0 },
             {
-              "idle": 106975737483,
-              "strategy": 372843459,
-              "total": 107348580942,
+              "idle": 0,
+              "strategy": 496722716,
+              "total": 496722716,
               "skippedStrategies": 0
             },
             {
               "idle": 0,
-              "strategy": "12248431030185510080796532",
-              "total": "12248431030185510080796532",
+              "strategy": "10248431030185510080796532",
+              "total": "10248431030185510080796532",
               "skippedStrategies": 0
             }
           ]
@@ -1915,7 +1915,7 @@
           "eth:0x907b30407249949521Bf0c89A43558dae200146A",
           "eth:0xFa30EAe30351A83809657299F6Cad9557c232e8C"
         ],
-        "getFirstUnprocessedPriorityTx": 5208,
+        "getFirstUnprocessedPriorityTx": 5237,
         "getL2BootloaderBytecodeHash": "0x01000911c4db4fe62c98e180cfa7e9b3a22fb15f505905d4bf36192f481551e6",
         "getL2DefaultAccountBytecodeHash": "0x010005f73e7c299ed73db937843643bdc276cbc2cc8596287e1e0cf3afc60252",
         "getL2EvmEmulatorBytecodeHash": "0x01000d8bae37b82f311186426184866498b357f41d7a02ced11f3e3fbfbacd63",
@@ -1924,7 +1924,7 @@
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
         "getPriorityQueueSize": 0,
-        "getPriorityTreeRoot": "0x0f9d004feb63946a790ab084a50b2717f76373cc9048379eac9df28ed5abfa2a",
+        "getPriorityTreeRoot": "0x60921a7c36cb8aebc52dde8b10e8603011a5a859568b8598a56e5e50531d9827",
         "getPriorityTreeStartIndex": 440,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 128849018881,
@@ -1932,13 +1932,13 @@
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
         "getSemverProtocolVersion": [0, 30, 1],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 128219,
-        "getTotalBatchesExecuted": 128176,
-        "getTotalBatchesVerified": 128210,
-        "getTotalBlocksCommitted": 128219,
-        "getTotalBlocksExecuted": 128176,
-        "getTotalBlocksVerified": 128210,
-        "getTotalPriorityTxs": 5208,
+        "getTotalBatchesCommitted": 128857,
+        "getTotalBatchesExecuted": 128850,
+        "getTotalBatchesVerified": 128851,
+        "getTotalBlocksCommitted": 128857,
+        "getTotalBlocksExecuted": 128850,
+        "getTotalBlocksVerified": 128851,
+        "getTotalPriorityTxs": 5237,
         "getTransactionFilterer": "eth:0x3Cd52B238Ac856600b22756133eEb31ECb25109a",
         "getVerifier": "eth:0xCeF0218c0C6dB0768e48debeE26E41B8DAdE7081",
         "getVerifierParams": {
@@ -1979,16 +1979,16 @@
           "description": "zkPorter is a volition-like contruction and changes the zk proof input requirements."
         },
         "isPermanentRollup": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "true means that the DA mode cannot be changed to Validium in the future. compliant DAValidator pairs for the permanent rollup mode are defined/enforced by the RollupDAManager contract."
         },
-        "isPermanentRollupString": { "severity": "HIGH" },
+        "isPermanentRollupString": { "severity": "MEDIUM" },
         "priorityModeCanBeActivated": {
           "severity": "HIGH",
           "description": "1 once the chain admin permanently allowed Priority Mode (ZKsync OS permanent rollups only). Then anyone can activate it as soon as the first unprocessed priority transaction is older than 4 days, after which only the shared PermissionlessValidator can settle batches (anyone can submit through it) and only the ChainTypeManager owner can deactivate it."
         },
         "priorityModeInfo": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Raw Priority Mode storage: last byte canBeActivated, byte before it activated, then the PermissionlessValidator address."
         },
         "priorityModeTransactionFilterer": {
@@ -2138,8 +2138,8 @@
           "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d"
         ],
         "swapsPaused": false,
-        "totalExposure": 56796323306,
-        "totalExposureStrict": 56796323306,
+        "totalExposure": 56807782063,
+        "totalExposureStrict": 56807782063,
         "tvlTokens": [
           "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
           "eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
@@ -3690,10 +3690,10 @@
     "shared-zk-stack/ValidatorTimelock_v31": "0xc571d18f4183eb072d6806cece41853993e1559b69d2a903b1d707b05ad8385f",
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 26334851 },
-  "permissionsConfigHash": "0x3d1b05e405ef4d3efe6c31d643ad224e14e8a023540b617cea4f8bf82f352f71",
+  "usedBlockNumbers": { "ethereum": 26348017 },
+  "permissionsConfigHash": "0x6adff0ed84cf6abd8e3f177ce10a7697069da958a2cd14c4868c40a0bc80ab34",
   "modelledAgainst": {
-    "shared-zk-stack": "0xf5aeb32bdc1483fa310e04bffe1b607bd86c7ef9b4caed29d8c0d422821460d7"
+    "shared-zk-stack": "0x1edc9a85104e4cb1087b172da8c224b9375c175a0b977b71c27aba5aed671567"
   },
   "permissions": {
     "eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e": {
@@ -3947,7 +3947,7 @@
         {
           "permission": "interact",
           "from": "eth:0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E",
-          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers and, from v31 while Priority Mode is not allowed, pause all new L1 --> L2 transactions including deposits (Chain Admin role).",
           "role": ".getAdmin",
           "via": [
             { "address": "eth:0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D" }
@@ -4235,7 +4235,7 @@
         {
           "permission": "interact",
           "from": "eth:0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E",
-          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers and, from v31 while Priority Mode is not allowed, pause all new L1 --> L2 transactions including deposits (Chain Admin role).",
           "role": ".getAdmin"
         }
       ]
@@ -4374,6 +4374,15 @@
           "permission": "interact",
           "from": "eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
           "description": "pause / unpause the bridge and set the L1AssetTracker that enforces the per-chain balances.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc16161C7f704388285fE58db287F6216a350dAFA",
+          "description": "manage allowed rollup DA configurations (allowed to be used by rollups in permanent rollup mode).",
           "role": ".owner",
           "via": [
             { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
@@ -4779,6 +4788,12 @@
           "permission": "interact",
           "from": "eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
           "description": "pause / unpause the bridge and set the L1AssetTracker that enforces the per-chain balances.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc16161C7f704388285fE58db287F6216a350dAFA",
+          "description": "manage allowed rollup DA configurations (allowed to be used by rollups in permanent rollup mode).",
           "role": ".owner"
         },
         {

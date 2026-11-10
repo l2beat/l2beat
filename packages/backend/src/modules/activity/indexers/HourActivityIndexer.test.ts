@@ -24,8 +24,8 @@ describeDatabase(HourActivityIndexer.name, (db) => {
     await db.activity.deleteAll()
     await db.hourlyActivity.deleteAll()
     await db.syncMetadata.deleteAll()
-    await db.syncMetadata.upsertMany([
-      { feature: 'activity', id: PROJECT, target: TODAY },
+    await db.syncMetadata.setTargets('activity', [
+      { id: PROJECT, target: TODAY },
     ])
   })
 

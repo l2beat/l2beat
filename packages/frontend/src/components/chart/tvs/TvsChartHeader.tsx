@@ -1,5 +1,6 @@
 import { formatCurrency } from '@l2beat/shared-pure'
 import { previousChartDataClassName } from '~/components/core/chart/ChartPreviousData'
+import type { ChartTimeRangeValue } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { INFINITY } from '~/consts/characters'
 import { cn } from '~/utils/cn'
 import type { ChartRange } from '~/utils/range/range'
@@ -13,7 +14,7 @@ interface Props {
   value: number | undefined
   change: number | undefined
   range: ChartRange
-  timeRange: [number, number] | undefined
+  timeRange: ChartTimeRangeValue
   isPlaceholderData: boolean
 }
 

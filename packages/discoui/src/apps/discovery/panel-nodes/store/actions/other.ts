@@ -44,6 +44,13 @@ export function setTool(_state: State, tool: Tool): Partial<State> {
   return { tool }
 }
 
+export function setSpacePressed(
+  state: State,
+  pressed: boolean,
+): Partial<State> {
+  return { input: { ...state.input, spacePressed: pressed } }
+}
+
 // One hiding mechanism, one full reset: showing hidden means showing every
 // hidden value, which in turn shows every node hidden through those values.
 export function showHidden(state: State): Partial<State> {

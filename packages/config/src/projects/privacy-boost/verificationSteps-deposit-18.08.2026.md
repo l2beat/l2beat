@@ -1,7 +1,7 @@
 The deposit verifier stores verification keys for 3 different batched deposit circuits across 3 registered batch sizes (`d1`, `d8`, `d32`). The steps below reproduce all 3 verification keys from circuit sources and trusted setup files. They require 36-64 GiB RAM and ~90 GiB disk space.
 
 Helper scripts implementing all of the reproduction steps are in the
-[script archive](https://trusted-setup-hosting.l2beat.com/privacy/privacy-boost/privacy_boost_vk_digest.zip).
+[script archive](https://trusted-setup-hosting.ethbeat.org/privacy/privacy-boost/privacy_boost_vk_digest.zip).
 
 1. Download the V1 production ceremony public bundle (about 33 GB) and extract it. The archive
    used for this attestation hashes to

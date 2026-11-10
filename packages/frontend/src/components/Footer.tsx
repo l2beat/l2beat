@@ -7,17 +7,16 @@ import { CustomLink } from './link/CustomLink'
 
 const FOOTER_LINKS = [
   { title: 'About Us', href: '/about-us' },
-  { title: 'Publications', href: '/publications' },
-  { title: 'Changelog', href: '/changelog' },
-  { title: 'Native Rollups', href: '/native-rollups' },
-  { title: 'Forum', href: externalLinks.forum },
-  { title: 'Tools', href: externalLinks.tools },
-  { title: 'Glossary', href: '/glossary' },
-  { title: 'FAQ', href: '/faq' },
-  { title: 'Jobs', href: externalLinks.jobs },
-  { title: 'Donate', href: '/donate' },
   { title: 'Brand Kit', href: '/brand-kit' },
+  { title: 'Changelog', href: '/changelog' },
+  { title: 'Donate', href: '/donate' },
+  { title: 'FAQ', href: '/faq' },
+  { title: 'Forum', href: externalLinks.forum },
+  { title: 'Glossary', href: '/glossary' },
+  { title: 'Native Rollups', href: '/native-rollups' },
+  { title: 'Publications', href: '/publications' },
   { title: 'Terms of Service', href: '/terms-of-service' },
+  { title: 'Tools', href: externalLinks.tools },
 ]
 
 interface Props {

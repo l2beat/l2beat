@@ -16,15 +16,14 @@ export function ChartNoDataState({
       />
       <span
         className={cn(
-          'font-medium text-2xl text-warning-text leading-none',
+          'font-medium text-2xl text-yellow-700 leading-none dark:text-yellow-200',
           size === 'small' && 'text-xl',
         )}
       >
         No data
       </span>
       <span className={cn('text-sm', size === 'small' && 'hidden')}>
-        There&apos;s no data for the project and the selected criteria. Please
-        try again later.
+        There&apos;s no data for the selected criteria. Please try again later.
       </span>
     </div>
   )

@@ -1,3 +1,8 @@
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
 import { EM_DASH } from '~/consts/characters'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import type { ProtocolEntry } from '~/server/features/layer2s/interop/types'
@@ -18,21 +23,36 @@ export function TopRouteCell({ route }: { route: ProtocolEntry['topRoute'] }) {
   }
 
   return (
-    <button
-      type="button"
-      onClick={handleClick}
-      aria-label={`Show ${srcChain.name} to ${dstChain.name} route in the flows chart`}
-      className="md:-mx-2 flex items-center gap-1.5 rounded transition-colors md:px-2 md:py-2 md:hover:bg-pure-black/5 md:dark:hover:bg-pure-white/10"
-    >
-      <img src={srcChain.iconUrl} alt={srcChain.name} className="size-5" />
-      <span className="truncate font-medium text-label-value-15 max-md:hidden">
-        {srcChain.name}
-      </span>
-      <ArrowRightIcon className="size-4 shrink-0 fill-brand" />
-      <img src={dstChain.iconUrl} alt={dstChain.name} className="size-5" />
-      <span className="truncate font-medium text-label-value-15 max-md:hidden">
-        {dstChain.name}
-      </span>
-    </button>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <button
+          type="button"
+          onClick={handleClick}
+          aria-label={`Show ${srcChain.name} to ${dstChain.name} route in the flows chart`}
+          className="md:-mx-2 flex items-center gap-1.5 rounded transition-colors md:px-2 md:py-2 md:hover:bg-pure-black/5 md:dark:hover:bg-pure-white/10"
+        >
+          <img
+            src={srcChain.iconUrl}
+            alt={srcChain.name}
+            className="size-5 shrink-0"
+          />
+          <span className="truncate font-medium text-label-value-15 max-2xl:hidden">
+            {srcChain.name}
+          </span>
+          <ArrowRightIcon className="size-4 shrink-0 fill-brand" />
+          <img
+            src={dstChain.iconUrl}
+            alt={dstChain.name}
+            className="size-5 shrink-0"
+          />
+          <span className="truncate font-medium text-label-value-15 max-2xl:hidden">
+            {dstChain.name}
+          </span>
+        </button>
+      </TooltipTrigger>
+      <TooltipContent>
+        {srcChain.name} → {dstChain.name}
+      </TooltipContent>
+    </Tooltip>
   )
 }

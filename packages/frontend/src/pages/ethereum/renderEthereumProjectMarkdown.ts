@@ -25,11 +25,17 @@ export function renderEthereumProjectMarkdown(
       }),
       facts: [
         // Tooltips become parentheticals.
-        ...getEthereumProjectStats(entry).map(({ title, value, tooltip }) => ({
+        ...[
+          ...getEthereumProjectStats(entry),
+          {
+            title: 'DA Bridge',
+            value: header.bridgeName,
+            tooltip: header.bridgeTooltip,
+          },
+        ].map(({ title, value, tooltip }) => ({
           label: title,
           value: withRegularSpaces(tooltip ? `${value} (${tooltip})` : value),
         })),
-        { label: 'DA Bridge', value: header.bridgeName },
         ...(header.usedIn.length > 0
           ? [
               {
@@ -40,7 +46,7 @@ export function renderEthereumProjectMarkdown(
           : []),
       ],
       risks: [],
-      description: `**${header.callout.title}:** ${header.callout.description}`,
+      description: undefined,
     },
     header: { links: header.links },
     apiLinks: {

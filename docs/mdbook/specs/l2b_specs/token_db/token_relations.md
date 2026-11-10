@@ -633,7 +633,7 @@ the endpoint-ordering constraint only rejects *identical* endpoints. One
 consequence to expect: `getMintingPluginsForMany` now returns `manual`
 records to the public frontend, which **skips them for now** when resolving
 minter projects (there is no interop project to link to), rather than warning
-about an unresolvable plugin. Displaying manual bridges on l2beat.com is a
+about an unresolvable plugin. Displaying manual bridges on ethbeat.org is a
 future decision.
 
 ## Known limitations

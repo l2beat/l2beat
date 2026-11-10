@@ -7,5 +7,5 @@ export function HomeCard({
   className,
   ...props
 }: ComponentProps<typeof PrimaryCard>) {
-  return <PrimaryCard className={cn('min-w-0 md:py-6', className)} {...props} />
+  return <PrimaryCard className={cn('min-w-0', className)} {...props} />
 }

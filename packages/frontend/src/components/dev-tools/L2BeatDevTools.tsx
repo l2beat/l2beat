@@ -189,7 +189,7 @@ export function L2BeatDevTools() {
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        aria-label="Open L2BEAT dev tools"
+        aria-label="Open ETHBEAT dev tools"
         className={cn(
           'flex size-12 items-center justify-center gap-2 rounded-full border border-divider bg-surface-primary shadow-lg transition-colors hover:bg-surface-primary-hover',
           isOpen && 'hidden',

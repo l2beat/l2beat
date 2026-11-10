@@ -1,6 +1,7 @@
 import express from 'express'
 import { createInternalApiRouter } from './InternalApiRouter'
 import { createPublicApiRouter } from './PublicApiRouter'
+import { createSearchIndexRouter } from './SearchIndexRouter'
 
 export function createApiRouter() {
   const router = express.Router()
@@ -18,6 +19,7 @@ export function createApiRouter() {
 
   router.use('/', createPublicApiRouter())
   router.use('/', createInternalApiRouter())
+  router.use('/', createSearchIndexRouter())
 
   return router
 }

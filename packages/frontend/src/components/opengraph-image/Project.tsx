@@ -1,78 +1,40 @@
-import { COLUMN, HeartbeatFrame } from './heartbeat/Frame'
-import { satoriWidth, type TextMeasure } from './heartbeat/text'
+import { onDarkGround } from './heartbeat/logo'
+import type { TextMeasure } from './heartbeat/text'
+import { fitTitle, MainPageOpengraphImage, titleFit } from './MainPage'
 
 interface Props {
   measure: TextMeasure
   /** The project's type: Layer 2, Privacy, DeFi... Never a stage or a number, so the image can't go stale. */
   label: string
-  logoSrc: string
   name: string
   /** Shown instead of a name that would fall under 58 px. */
   shortName?: string
-  roundLogo?: boolean
+  /** A data URI. Dark logos get a version that reads on the dark ground. */
+  logo?: string
 }
 
-const GAP = 26
 const MIN_FULL_NAME_SIZE = 58
 
-/** The project's own logo, in its own colours, before its name, all on one line. */
+/** The project's name under its type, beside its logo. */
 export function ProjectOpengraphImage({
   measure,
   label,
-  logoSrc,
   name,
   shortName,
-  roundLogo,
+  logo,
 }: Props) {
-  let shown = name
-  let size = fitRow(measure, shown)
-  if (size < MIN_FULL_NAME_SIZE && shortName) {
-    shown = shortName
-    size = fitRow(measure, shown)
-  }
-  const logo = logoSize(size)
+  const onDark = logo === undefined ? undefined : onDarkGround(logo)
+  const fit = titleFit(measure, { label, logo: onDark })
+  const title =
+    shortName && fitTitle(measure, name, fit).size < MIN_FULL_NAME_SIZE
+      ? shortName
+      : name
   return (
-    <HeartbeatFrame
+    <MainPageOpengraphImage
       measure={measure}
       label={label}
-      titleInkLeft={0}
-      title={
-        <div style={{ display: 'flex', alignItems: 'center', gap: GAP }}>
-          <img
-            src={logoSrc}
-            alt=""
-            width={logo}
-            height={logo}
-            style={roundLogo ? { borderRadius: logo / 2 } : undefined}
-          />
-          <div
-            style={{
-              fontSize: size,
-              fontWeight: 700,
-              lineHeight: 1.06,
-              letterSpacing: -0.01 * size,
-              whiteSpace: 'nowrap',
-            }}
-          >
-            {shown}
-          </div>
-        </div>
-      }
+      title={title}
+      logo={onDark}
     />
   )
-}
-
-const logoSize = (size: number) =>
-  Math.max(64, Math.min(112, Math.round(size * 1.18)))
-
-/** The largest size, 38–96 px, at which logo and name fit the column. */
-function fitRow(measure: TextMeasure, name: string) {
-  for (let size = 96; size > 38; size--) {
-    const width =
-      satoriWidth(measure.width(name, size, 700, -0.01 * size)) +
-      logoSize(size) +
-      GAP
-    if (width <= COLUMN) return size
-  }
-  return 38
 }

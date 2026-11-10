@@ -95,7 +95,9 @@ async function getOssificationEntries(): Promise<OssificationEntry[]> {
   return entries
     .filter((entry) => entry !== undefined)
     .sort(
-      (a, b) => b.score - a.score || (b.exposure ?? -1) - (a.exposure ?? -1),
+      (a, b) =>
+        b.score - a.score ||
+        (b.exposure?.value ?? -1) - (a.exposure?.value ?? -1),
     )
 }
 

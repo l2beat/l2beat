@@ -1,8 +1,10 @@
 import { expect } from 'earl'
 import type { Node, State } from '../State'
+import { effectiveTool } from '../utils/tool'
 import { onDoubleClick } from './onDoubleClick'
 import { onKeyDown } from './onKeyDown'
 import { onMouseDown } from './onMouseDown'
+import { setSpacePressed } from './other'
 
 describe('hand tool', () => {
   describe(onMouseDown.name, () => {
@@ -65,25 +67,25 @@ describe('hand tool', () => {
   })
 
   describe(onKeyDown.name, () => {
-    it('selects the hand tool with H and the selection tool with V', () => {
-      expect(onKeyDown(makeState({ tool: 'select' }), keyEvent('h'))).toEqual({
-        tool: 'hand',
-      })
-      expect(onKeyDown(makeState({ tool: 'hand' }), keyEvent('v'))).toEqual({
-        tool: 'select',
-      })
-      expect(onKeyDown(makeState({ tool: 'hand' }), keyEvent('V'))).toEqual({
-        tool: 'select',
-      })
-    })
-
-    it('ignores key repeat and modifier combinations', () => {
+    // H, V and Space are keybindings now, run by the keybinding dispatcher.
+    it('leaves tool keys to the keybindings', () => {
       const state = makeState({ tool: 'select' })
 
-      expect(onKeyDown(state, keyEvent('h', { repeat: true }))).toEqual(state)
-      expect(onKeyDown(state, keyEvent('h', { ctrlKey: true }))).toEqual(state)
-      expect(onKeyDown(state, keyEvent('h', { metaKey: true }))).toEqual(state)
-      expect(onKeyDown(state, keyEvent('v', { altKey: true }))).toEqual(state)
+      expect(onKeyDown(state, keyEvent('h'))).toEqual(state)
+      expect(onKeyDown(state, keyEvent('v'))).toEqual(state)
+      expect(onKeyDown(state, keyEvent(' '))).toEqual(state)
+    })
+  })
+
+  describe(setSpacePressed.name, () => {
+    it('borrows the hand tool while held', () => {
+      const state = makeState({ tool: 'select' })
+
+      const held = { ...state, ...setSpacePressed(state, true) }
+      expect(effectiveTool(held)).toEqual('hand')
+
+      const released = { ...held, ...setSpacePressed(held, false) }
+      expect(effectiveTool(released)).toEqual('select')
     })
   })
 })
@@ -99,19 +101,13 @@ function leftClick(clientX: number, clientY: number): MouseEvent {
   } as unknown as MouseEvent
 }
 
-function keyEvent(
-  key: string,
-  init: Partial<
-    Pick<KeyboardEvent, 'repeat' | 'ctrlKey' | 'metaKey' | 'altKey'>
-  > = {},
-): KeyboardEvent {
+function keyEvent(key: string): KeyboardEvent {
   return {
     key,
     repeat: false,
     ctrlKey: false,
     metaKey: false,
     altKey: false,
-    ...init,
   } as unknown as KeyboardEvent
 }
 
@@ -172,6 +168,7 @@ function makeState(overrides: Partial<State>): State {
     positionsBeforeMove: {},
     tool: 'select',
     loaded: true,
+    loadCount: 1,
     ...overrides,
   }
 }

@@ -55,7 +55,10 @@ export function getProtocolsByVolumeColumns(
     columnHelper.accessor('name', {
       header: 'Name',
       cell: (ctx) => (
-        <TableLink href={`/interop/protocols/${ctx.row.original.slug}`}>
+        <TableLink
+          href={`/interop/protocols/${ctx.row.original.slug}`}
+          className="w-auto"
+        >
           <span className="font-bold text-label-value-15">
             {ctx.row.original.name}
           </span>
@@ -82,7 +85,10 @@ export function getProtocolsByVolumeColumns(
       enableSorting: false,
       cell: (ctx) => {
         return (
-          <div className="flex items-center gap-1" key={ctx.row.original.id}>
+          <div
+            className="flex max-w-40 flex-wrap items-center gap-1 2xl:max-w-none"
+            key={ctx.row.original.id}
+          >
             {ctx.row.original.bridgeTypes.map((bridgeType) => (
               <BridgeTypeBadge
                 size="extraSmall"

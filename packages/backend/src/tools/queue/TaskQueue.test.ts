@@ -258,6 +258,38 @@ describe(TaskQueue.name, () => {
 
     expect(queue.length).toEqual(0)
   })
+
+  it('wakes up for the earliest retry', async () => {
+    const retryDelayMs: Record<string, number> = { late: 1000, early: 100 }
+    const failed = new Set<string>()
+    const completedAt = new Map<string, number>()
+
+    async function execute(name: string) {
+      await wait(1)
+      if (!failed.has(name)) {
+        failed.add(name)
+        throw new Error(name)
+      }
+      completedAt.set(name, Date.now())
+    }
+
+    const queue = new TaskQueue(execute, Logger.SILENT, {
+      shouldRetry: (_, error) => ({
+        shouldStop: false,
+        notify: false,
+        executeAfter: retryDelayMs[(error as Error).message],
+      }),
+      metricsId: 'test',
+    })
+
+    queue.addToBack('late')
+    queue.addToBack('early')
+
+    await time.runAllAsync()
+
+    // late fails at 1ms, early fails at 2ms and retries at 102ms.
+    expect(completedAt.get('early')).toEqual(103)
+  })
 })
 
 // Unfortunately fake-timers do not work well with timers/promises

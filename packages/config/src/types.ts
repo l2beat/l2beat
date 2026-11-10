@@ -225,7 +225,6 @@ export interface BaseProject {
   statuses?: ProjectStatuses
   display?: ProjectDisplay
   colors?: ProjectCustomColors
-  ecosystemColors?: ProjectCustomColors
   milestones?: Milestone[]
   chainConfig?: ChainConfig
   escrows?: ProjectEscrow[]
@@ -255,6 +254,8 @@ export interface BaseProject {
 
   // defi data
   defiInfo?: ProjectDefiInfo
+  /** Only on projects whose DeFi category is "Liquid Staking". */
+  liquidStaking?: ProjectLiquidStaking
 
   // external dependency data
   externalDependencies?: ProjectExternalDependency[]
@@ -1076,6 +1077,16 @@ export interface ProjectDefiInfo {
   tvl?: ProjectDefiTvlConfig
 }
 
+export interface ProjectLiquidStaking {
+  /** What the liquid staking indexer reads. */
+  contracts: ProjectLiquidStakingContracts
+  /**
+   * Pools quoted for selling 100 tokens (stETH for Lido); the best quote is
+   * the market exit. A pool that doesn't exist yet gives no quote.
+   */
+  marketQuotes: ProjectLiquidStakingMarketQuote[]
+}
+
 export type ProjectDefiTvlConfig =
   | {
       /** Uses L2BEAT TVS data and requires the project to define tvsConfig. */
@@ -1273,6 +1284,8 @@ export type PrivacyRelayerExtractorConfig =
         // Privacy Pools v2, from the vault: the fee recipient of a paid
         // processor's payout, or the sender of a withdrawal without one.
         | 'privacyPoolsV2Withdrawal'
+        // Tacit Pay, from the pool: the relayer a withdrawal pays a fee.
+        | 'tacitPayWithdrawal'
         | 'tornadoCashWithdrawal'
     }
   | {
@@ -1614,6 +1627,7 @@ export type PrivacyAnonymitySetDepositSource = {
       | 'privacyPoolsV2Value'
       | 'railgunShield'
       | 'strk20Deposit'
+      | 'tacitPayDeposit'
       | 'zkMoneyDeposit'
   }
 >
@@ -1694,6 +1708,19 @@ export type PrivacyFlowExtractorConfig =
       params: {
         tokenAddress: string
       }
+    }
+  | {
+      /** Tacit Pay's Transact with a positive extAmount: the deposited value. */
+      extractor: 'tacitPayDeposit'
+      params: Record<string, never>
+    }
+  | {
+      /**
+       * Tacit Pay's Transact with a negative extAmount: the value paid to the
+       * recipient. The relayer's fee is paid on top and not counted.
+       */
+      extractor: 'tacitPayWithdrawal'
+      params: Record<string, never>
     }
   | {
       /** Credited DAI amount, after the portal's fee sponsorship cut. */
@@ -1882,6 +1909,11 @@ export interface SlotActivityConfig {
 export type AdjustCount =
   | { type: 'SubtractOne' }
   | { type: 'SubtractOneSinceBlock'; blockNumber: number }
+  /** Subtracts the `count` of the last step whose `blockNumber` is at or below the block. */
+  | {
+      type: 'SubtractSinceBlocks'
+      steps: { blockNumber: number; count: number }[]
+    }
 
 export interface DayActivityConfig {
   type: 'day'
@@ -1901,6 +1933,67 @@ export interface HourActivityConfig {
 }
 
 export type LivenessOverwriteMode = 'no-data'
+
+/**
+ * The contracts the liquid staking indexer reads every hour: the token's
+ * exchange rate, plus whatever decides how fast a holder can exit.
+ */
+export type ProjectLiquidStakingContracts =
+  | {
+      type: 'lido'
+      stETH: ChainSpecificAddress
+      /** Its request counters give the queue wait. */
+      withdrawalQueue: ChainSpecificAddress
+    }
+  | {
+      type: 'rocketpool'
+      /** Its collateral is the ETH that burning rETH can pay out at once. */
+      rETH: ChainSpecificAddress
+    }
+  | {
+      type: 'etherfi'
+      weETH: ChainSpecificAddress
+      /** Its request counters give the queue wait. */
+      withdrawRequestNft: ChainSpecificAddress
+      /** Pays out at once, for a fee, up to a rate-limited amount. */
+      redemptionManager: ChainSpecificAddress
+    }
+  | {
+      type: 'wbeth'
+      wBETH: ChainSpecificAddress
+      /**
+       * Its lock time, and its request and allocation counters, give the wait
+       * for an onchain redemption.
+       */
+      unwrapToken: ChainSpecificAddress
+    }
+
+/** A pool selling the token for ETH or WETH. */
+export type ProjectLiquidStakingMarketQuote =
+  | {
+      type: 'curve'
+      pool: ChainSpecificAddress
+      /** Coin indexes of the token sold and of ETH or WETH. */
+      i: number
+      j: number
+    }
+  | {
+      /** Quoted by Uniswap's QuoterV2, against WETH. */
+      type: 'uniswapV3'
+      /** The pool's fee tier, in hundredths of a basis point. */
+      fee: number
+    }
+  | {
+      /** Quoted by BalancerQueries, against WETH. */
+      type: 'balancerV2'
+      poolId: string
+    }
+  | {
+      type: 'fluid'
+      pool: ChainSpecificAddress
+      /** Whether the token sold is the pool's token0. */
+      swap0to1: boolean
+    }
 
 export interface ProjectLivenessInfo {
   explanation?: string

@@ -20,6 +20,7 @@ import {
   hideUnreachable,
   layout,
   setPreferences,
+  setSpacePressed,
   setTool,
   showHidden,
 } from './actions/other'
@@ -72,6 +73,7 @@ const INITIAL_STATE: State = {
   projectId: '',
   userPreferences: DEFAULT_USER_PREFERENCES,
   loaded: false,
+  loadCount: 0,
 }
 
 if (typeof localStorage !== 'undefined') {
@@ -102,6 +104,7 @@ export const useStore = create<StoreState>()(
       registerViewportContainer: wrapAction(set, registerViewportContainer),
       setPreferences: wrapAction(set, setPreferences),
       setTool: wrapAction(set, setTool),
+      setSpacePressed: wrapAction(set, setSpacePressed),
 
       onKeyDown: wrapUndoableAction(set, onKeyDown),
       onKeyUp: wrapAction(set, onKeyUp),

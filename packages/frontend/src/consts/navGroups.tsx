@@ -3,6 +3,7 @@ import type { NavGroup, NavLink } from '~/components/nav/types'
 import { env } from '~/env'
 import { BlobsIcon } from '~/icons/pages/Blobs'
 import { BridgesIcon } from '~/icons/pages/Bridges'
+import { CropsIcon } from '~/icons/pages/Crops'
 import { GasFeesIcon } from '~/icons/pages/GasFees'
 import { HomeIcon } from '~/icons/pages/Home'
 import { L2Icon } from '~/icons/pages/L2'
@@ -10,6 +11,7 @@ import { LiquidStakingIcon } from '~/icons/pages/LiquidStaking'
 import { PrivacyIcon } from '~/icons/pages/Privacy'
 import { TokensIcon } from '~/icons/pages/Tokens'
 import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
+import { GARDEN_PATH } from '~/pages/garden/paths'
 
 export const navGroups: NavGroup[] = compact<NavGroup>([
   {
@@ -21,17 +23,43 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
       <HomeIcon className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active" />
     ),
   },
-  {
+  env.CLIENT_SIDE_GARDEN_ENABLED && {
     type: 'single',
+    title: 'The CROPS guide',
+    shortTitle: 'CROPS',
+    match: 'crops',
+    href: GARDEN_PATH,
+    icon: (
+      <CropsIcon
+        className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active"
+        aria-hidden
+      />
+    ),
+  },
+  {
+    type: 'multiple',
     title: 'Privacy',
     match: 'privacy',
-    href: '/privacy',
     icon: (
       <PrivacyIcon
         className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active"
         aria-hidden
       />
     ),
+    links: [
+      [
+        {
+          title: 'Summary',
+          href: '/privacy/summary',
+        },
+      ],
+      [
+        {
+          title: 'Archived',
+          href: '/privacy/archived',
+        },
+      ],
+    ],
   },
   {
     type: 'multiple',

@@ -7,9 +7,14 @@
     "eth:0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
     "eth:0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115",
     "eth:0x0733F618118bF420b6b604c969498ecf143681a8",
-    "eth:0x4316A00D31da1313617DbB04fD92F9fF8D1aF7Db"
+    "eth:0x4316A00D31da1313617DbB04fD92F9fF8D1aF7Db",
+    // BlastExit contracts holding the funds withdrawn from the yield managers during the shutdown
+    "eth:0x9D31771458B421C7EA8A06CB8D12663E91617869",
+    "eth:0x23eA8c6ACEb5673BBd712137cE2Aa33db36CB513"
   ],
   "names": {
+    "eth:0x9D31771458B421C7EA8A06CB8D12663E91617869": "BlastExit",
+    "eth:0x23eA8c6ACEb5673BBd712137cE2Aa33db36CB513": "BlastExit2",
     "eth:0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d": "LaunchBridge",
     "eth:0x4316A00D31da1313617DbB04fD92F9fF8D1aF7Db": "LidoYieldProvider",
     "eth:0x0733F618118bF420b6b604c969498ecf143681a8": "DSRYieldProvider",
@@ -58,6 +63,8 @@
       "description": "Contract escrowing stablecoins and managing Yield Providers for stablecoins (like for example DAI).",
       "ignoreRelatives": ["TOKEN", "insurance"],
       "ignoreMethods": [
+        // reverts since the shutdown withdrawals emptied the manager
+        "sharePrice",
         "availableBalance",
         "tokenBalance",
         "getProviderInfoAt",
@@ -80,6 +87,8 @@
       "description": "Contract managing Yield Providers for ETH.",
       "ignoreRelatives": ["insurance"],
       "ignoreMethods": [
+        // reverts since the shutdown withdrawals emptied the manager
+        "sharePrice",
         "availableBalance",
         "tokenBalance",
         "getProviderInfoAt",

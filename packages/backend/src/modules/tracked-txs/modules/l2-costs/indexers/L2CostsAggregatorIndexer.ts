@@ -18,8 +18,12 @@ import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../../../../tools/uif/ManagedChildIndexer'
+import {
+  getGlamsterdamOverhead,
+  isGlamsterdam,
+} from '../../../utils/glamsterdam'
 
-// Amount of gas required for a basic tx
+// Amount of gas required for a basic tx before Glamsterdam
 const OVERHEAD = 21_000
 
 export interface ProjectL2Cost extends L2CostRecord {
@@ -227,7 +231,7 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
     const gasPriceETH = this.weiToEth(tx.gasPrice)
     const totalGas = Math.round(tx.gasUsed * factor)
     const calldataGas = Math.round(tx.calldataGasUsed * factor)
-    const overheadGas = Math.round(OVERHEAD * factor)
+    const overheadGas = Math.round(this.getOverhead(tx) * factor)
     const computeGas = totalGas - calldataGas - overheadGas
     const totalGasEth = totalGas * gasPriceETH
     const calldataGasEth = calldataGas * gasPriceETH
@@ -293,6 +297,12 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
     }
 
     return multipliers
+  }
+
+  private getOverhead(tx: L2CostRecord): number {
+    return isGlamsterdam(tx.timestamp)
+      ? getGlamsterdamOverhead(tx.gasUsed, tx.calldataGasUsed)
+      : OVERHEAD
   }
 
   private weiToEth(wei: bigint): number {
