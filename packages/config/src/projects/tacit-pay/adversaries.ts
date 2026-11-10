@@ -137,11 +137,11 @@ export const tacitPayAdversaries = definePrivacyAdversaries({
       ],
     },
     privilegedInsider: {
-      sentiment: 'good',
+      sentiment: 'warning',
       exposureShort:
-        'Tacit holds no key that spends or decrypts notes, and the reviewed page version is an immutable contract that runs from a saved copy.',
+        'Tacit holds no key to any note, but its app owner can change the page anon.wei serves, its relay host and RPC nodes without delay.',
       exposureContinued:
-        "Tacit's relay sees the IP at sign-in, each exit's recipient with the IP that asked, and each deposit address the user views in the app. Tacit's app owner can point anon.wei at another page and change the relay host and RPC nodes the page reads, without delay.",
+        "The reviewed page version is an immutable contract, but running a saved copy of it takes command-line work. Tacit's relay sees the IP at sign-in, each exit's recipient with the IP that asked, and each deposit address the user views in the app.",
       advice:
         'Serve the page from localhost as the App section describes, not from anon.wei.limo. Exit as the network observer advice says.',
       interior: {
