@@ -80,7 +80,7 @@ export const zkApiAdversaries = definePrivacyAdversaries({
         ...PUBLIC_INTERIOR,
         linkage: {
           verdict: 'atRisk',
-          note: "Private only when IP-hiding routes keep the user's IP out of both the deposit and the requests.",
+          note: 'Private only when the requests go through Tor Browser and no prompt names the user.',
         },
       },
       sources: [

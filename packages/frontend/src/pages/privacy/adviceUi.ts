@@ -72,7 +72,7 @@ export function getWaitInstruction(windowDays: number): string {
   return `Draw the wait once, at random between 0 and ${windowDays} days, the window the anonymity set counts.`
 }
 
-/** "12 days 7 hours", "7 hours", "under an hour". */
+/** "12 days 7 hours", "7 hours", and minutes only under an hour: "42 minutes". */
 export function formatWait(minutes: number): string {
   const days = Math.floor(minutes / 1440)
   const hours = Math.floor((minutes % 1440) / 60)
@@ -80,5 +80,6 @@ export function formatWait(minutes: number): string {
     days > 0 ? `${days} ${days === 1 ? 'day' : 'days'}` : '',
     hours > 0 ? `${hours} ${hours === 1 ? 'hour' : 'hours'}` : '',
   ].filter(Boolean)
-  return parts.length > 0 ? parts.join(' ') : 'under an hour'
+  if (parts.length > 0) return parts.join(' ')
+  return `${minutes} ${minutes === 1 ? 'minute' : 'minutes'}`
 }
