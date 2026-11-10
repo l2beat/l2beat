@@ -144,6 +144,7 @@ function getAssessment({
       },
     },
     adversaries: getPrivacyBoostAdversaries({ contracts, chainAnalyst }),
+    anonymitySet: { type: 'too-small' },
     riskSummary: readProjectMarkdown('privacy-boost', 'riskSummary'),
     upgradesAndGovernance: {
       content: readProjectMarkdown('privacy-boost', 'upgradesAndGovernance', {
@@ -544,7 +545,6 @@ export const privacyBoost: BaseProject = {
     ),
     // Pools the hosted wallet serves (docs.privacyboost.io contract addresses).
     runsOn: [ProjectId('ink'), ProjectId('soneium')],
-    anonymitySet: { type: 'too-small' },
     reproducibility: {
       value: 'Partially reproducible',
       sentiment: 'warning',
