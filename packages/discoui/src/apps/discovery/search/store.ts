@@ -16,15 +16,20 @@ interface SearchState {
   setText: (text: string) => void
   setCodeInSelected: (codeInSelected: boolean) => void
   pushRecentAddress: (address: string) => void
+  closeWithFreshQuery: () => void
 }
+
+const FRESH_QUERY = {
+  scope: 'all',
+  text: '',
+  codeInSelected: false,
+} as const satisfies Pick<SearchState, 'scope' | 'text' | 'codeInSelected'>
 
 export const useSearchStore = create<SearchState>()(
   persist(
     (set) => ({
       opened: false,
-      scope: 'all',
-      text: '',
-      codeInSelected: false,
+      ...FRESH_QUERY,
       recentAddresses: [],
 
       setOpen: (opened) => set(() => ({ opened })),
@@ -38,6 +43,7 @@ export const useSearchStore = create<SearchState>()(
             ...state.recentAddresses.filter((a) => a !== address),
           ].slice(0, RECENT_ADDRESSES_MAX),
         })),
+      closeWithFreshQuery: () => set(() => ({ opened: false, ...FRESH_QUERY })),
     }),
     {
       name: 'discovery-search-store-v1',

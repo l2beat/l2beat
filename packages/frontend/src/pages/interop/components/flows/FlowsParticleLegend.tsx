@@ -21,9 +21,10 @@ export function FlowsParticleLegend({
 
   const avgLine = (
     <>
-      Avg value per second ≈{' '}
+      {/* Over the whole graph, unlike a chain's own stats beside it */}
+      Avg value per second, all flows shown ≈{' '}
       <span className="font-bold text-brand-deep">
-        {formatCurrency(avgValuePerSecond, 'usd')}
+        {formatCurrency(avgValuePerSecond, 'usd')}/s
       </span>
     </>
   )
@@ -44,18 +45,13 @@ export function FlowsParticleLegend({
     return (
       <div
         className={cn(
-          'flex flex-wrap items-center gap-x-2 gap-y-1 font-medium text-label-value-11 text-secondary md:text-label-value-12',
+          'flex flex-wrap items-center gap-x-4 gap-y-1 font-medium text-label-value-11 text-secondary md:text-label-value-12',
           className,
         )}
       >
         <span>{avgLine}</span>
         {particleLine && (
-          <>
-            <span className="text-tertiary">|</span>
-            <span className="inline-flex items-center gap-1">
-              {particleLine}
-            </span>
-          </>
+          <span className="inline-flex items-center gap-1">{particleLine}</span>
         )}
       </div>
     )

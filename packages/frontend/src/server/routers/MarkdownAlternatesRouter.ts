@@ -26,7 +26,7 @@ import {
 } from '~/utils/getMarkdownAlternatePath'
 
 /**
- * Markdown versions of the pages that list what L2BEAT tracks, at the page
+ * Markdown versions of the pages that list what ETHBEAT tracks, at the page
  * URL plus `.md` as the llms.txt spec recommends. llms.txt links here instead
  * of listing every project itself, so it stays small enough to fit in context
  * while an agent can still map a project name to its page and API slug.

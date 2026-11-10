@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { Article } from '~/components/markdown/Article'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { useLocalStorage } from '~/hooks/useLocalStorage'
 import { ArrowIcon } from '~/icons/Arrow'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
@@ -111,7 +110,6 @@ export function ChangelogPage({ entries, ...props }: Props) {
             </ol>
           )}
         </PrimaryCard>
-        <ScrollToTopButton />
       </SideNavLayout>
     </AppLayout>
   )

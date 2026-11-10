@@ -15,3 +15,8 @@ export interface LiquidStakingConfig {
   sinceTimestamp: UnixTime
   projects: LiquidStakingProjectConfig[]
 }
+
+/** Finds the last Ethereum block at or before a timestamp. */
+export interface EthereumBlockFinder {
+  getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<number>
+}

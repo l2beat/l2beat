@@ -100,12 +100,12 @@ const CommandInput = ({
   return (
     <div
       className={cn(
-        'flex items-center border-divider border-b px-3',
+        'flex items-center gap-2 border-divider border-b px-3',
         wrapperClassName,
       )}
       cmdk-input-wrapper=""
     >
-      <SearchIcon className="mr-2 size-4 shrink-0 fill-secondary" />
+      <SearchIcon className="size-4 shrink-0 fill-secondary" />
       <CommandPrimitive.Input
         ref={ref}
         className={cn(
@@ -133,7 +133,7 @@ const CommandInputActionButton = ({
   <button
     className={linkVariants({
       underline: false,
-      className: cn('text-xs', className),
+      className: cn('shrink-0 text-xs', className),
     })}
     onClick={onClick}
   >

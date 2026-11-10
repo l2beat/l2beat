@@ -7,6 +7,7 @@ import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import { tinted } from '~/components/core/chart/tint'
+import type { ChartTimeRangeValue } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
@@ -107,7 +108,7 @@ function Header({
   stats,
   unit,
 }: {
-  timeRange: [number, number] | undefined
+  timeRange: ChartTimeRangeValue
   stats: { total: number; marketShare: number } | undefined
   unit: string
 }) {

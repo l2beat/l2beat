@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xeb16b1b3e247bf82ca9884c9174b5a2ba5b60f5d
+
+# Diff at Fri, 06 Nov 2026 16:33:08 GMT:
+
+- id: 24c5b7a0
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@42d599abc7be8cc38122c72abc4da1c1dda6fbeb block: 1793113693
+- current timestamp: 1793982721
+
+## Description
+
+Caldera Multisig 3: two signers removed, threshold now 3/5.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 3 (eth:0x2bf43034b9559643e986A2fE3cE015a18247b904) [GnosisSafe] {
+    +++ description: None
+      values.$members.4:
+-        "eth:0x9e14B1baFCEB80B67934aBE4fB00a7291aCfBcD0"
+      values.$members.5:
+-        "eth:0xe62a4A1e6D237d6fc40d88F819D5cE580a996A6b"
+      values.multisigThreshold:
+-        "3 of 7 (43%)"
++        "3 of 5 (60%)"
+    }
+```
+
 Generated with discovered.json: 0xc520f766c324650d7d5ee6b4321118de877df863
 
 # Diff at Tue, 27 Oct 2026 15:09:17 GMT:

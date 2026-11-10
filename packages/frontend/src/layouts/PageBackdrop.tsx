@@ -31,3 +31,16 @@ export function PageBackdrop({
     </div>
   )
 }
+
+/**
+ * The backdrop's shapes (clouds, hills, furrows). From lg they start right of
+ * the nav: the nav has no background of its own over a backdrop, so a shape
+ * behind it would run through its links. Washes of colour can stay full-width.
+ */
+export function PageBackdropScenery({ children }: { children: ReactNode }) {
+  return (
+    <div className="absolute inset-0 lg:left-(--sidebar-width) lg:[mask-image:linear-gradient(to_right,transparent,black_3rem)]">
+      {children}
+    </div>
+  )
+}

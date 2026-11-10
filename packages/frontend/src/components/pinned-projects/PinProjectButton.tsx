@@ -1,12 +1,9 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { usePathname } from '~/hooks/usePathname'
 import { PinIcon } from '~/icons/Pin'
 import { cn } from '~/utils/cn'
-import {
-  recordProjectVisit,
-  type SavedProject,
-  usePinnedState,
-} from './pinnedProjectsStore'
+import { type SavedProject, usePinnedState } from './pinnedProjectsStore'
+import { recordVisit, withPinTransition } from './withPinTransition'
 
 /**
  * Pins the project to the nav's "Pinned" list. Opening the page also adds
@@ -31,18 +28,31 @@ export function PinProjectButton({
     [href, name, iconUrl],
   )
   const { isPinned, toggle } = usePinnedState(project)
+  // Pinned with a pointer, the pin drives in as the row flies to the nav.
+  const [driving, setDriving] = useState(false)
 
   useEffect(() => {
-    recordProjectVisit(project)
+    recordVisit(project)
   }, [project])
 
   return (
     <button
       type="button"
-      onClick={toggle}
+      onClick={(event) => {
+        // From the keyboard it just changes.
+        if (event.detail === 0) {
+          toggle()
+          return
+        }
+        // The pin drives in with the new state, as its row starts to fly.
+        withPinTransition(() => {
+          setDriving(!isPinned)
+          toggle()
+        }, href)
+      }}
       aria-pressed={isPinned}
       className={cn(
-        'flex h-6 items-center justify-center gap-1.5 rounded border px-2 font-medium text-2xs uppercase leading-none transition-colors',
+        'flex h-6 items-center justify-center gap-1.5 rounded border px-2 font-medium text-2xs uppercase leading-none',
         isPinned
           ? 'border-brand text-brand-deep'
           : 'border-divider text-secondary hover:text-primary',
@@ -51,7 +61,12 @@ export function PinProjectButton({
     >
       <PinIcon
         aria-hidden
-        className={cn('size-3', isPinned && 'fill-current')}
+        className={cn(
+          'size-3',
+          isPinned && 'fill-current',
+          driving && 'pin-drive',
+        )}
+        onAnimationEnd={() => setDriving(false)}
       />
       {isPinned ? 'Pinned' : 'Pin'}
     </button>

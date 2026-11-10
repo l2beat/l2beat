@@ -279,4 +279,22 @@ export const TRUSTED_SETUPS = {
       'Circuit-specific trusted setup for 54 Groth16 Railgun circuits over BN254. Phase 1 used 54 participant contributions and a public randomness beacon. The published 1×1 circuit transcript counts 304 phase 2 contributions. Proving system could be broken if either phase 1 or 2 is compromised.',
     longDescription: readMarkdown('common/trustedSetups/Railgun.md'),
   },
+  TacitPay: {
+    id: 'TacitPay',
+    name: 'Transact circuit ceremony',
+    risk: 'red',
+    contributionCount: 176,
+    phases: {
+      phase1: { count: 54, unit: 'contributions' },
+      phase2: {
+        count: 176,
+        unit: 'contributions',
+        description:
+          'Under self-made keys, 171 named "anonymous" and 5 operator test entries. One key could contribute any number of times.',
+      },
+    },
+    shortDescription:
+      'Circuit-specific trusted setup for the Groth16 transact circuit over BN254. Phase 1 used 54 participant contributions and a public randomness beacon. Phase 2 counts 176 contributions under self-made keys with repeats allowed, so the number of participants is unknown. Proving system could be broken if either phase 1 or 2 is compromised.',
+    longDescription: readMarkdown('common/trustedSetups/TacitPay.md'),
+  },
 } as const satisfies Record<string, TrustedSetup>

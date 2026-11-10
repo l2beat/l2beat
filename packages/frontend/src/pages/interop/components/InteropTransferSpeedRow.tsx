@@ -1,4 +1,4 @@
-import { formatInteger, formatSeconds } from '@l2beat/shared-pure'
+import { formatCount, formatSeconds } from '@l2beat/shared-pure'
 
 export function InteropTransferSpeedRow({
   slug,
@@ -29,9 +29,7 @@ export function InteropTransferSpeedRow({
           {durationSeconds !== null ? formatSeconds(durationSeconds) : '—'}
         </span>
         <span className="w-16 text-right font-medium text-label-value-15 text-secondary">
-          {durationSeconds !== null
-            ? `${formatInteger(transferCount)} txs`
-            : '—'}
+          {durationSeconds !== null ? formatCount(transferCount, 'tx') : '—'}
         </span>
       </div>
       <SpeedBar duration={durationSeconds ?? 0} color={color} />

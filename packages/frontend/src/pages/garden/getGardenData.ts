@@ -117,7 +117,7 @@ async function getTotalDepositCounts(
   return counts
 }
 
-// Value secured where tracked, by L2BEAT or, for DeFi, the TVL source the
+// Value secured where tracked, by ETHBEAT or, for DeFi, the TVL source the
 // DeFi pages use; otherwise the deposit count, for a privacy protocol whose
 // payments are forwarded rather than escrowed.
 function getMetric(

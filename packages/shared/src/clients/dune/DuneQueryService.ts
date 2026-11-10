@@ -12,7 +12,7 @@ type Dependencies = {
   progressLogIntervalMs?: number
 }
 
-// Dune bills API export per megabyte; L2BEAT is on the Plus plan.
+// Dune bills API export per megabyte; ETHBEAT is on the Plus plan.
 const DUNE_PLUS_CREDITS_PER_MB = 2
 const BYTES_PER_MB = 1_000_000
 

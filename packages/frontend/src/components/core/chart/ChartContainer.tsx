@@ -86,9 +86,12 @@ export function ChartContainer<T extends { timestamp: number }>({
         aria-busy={isPlaceholderData || undefined}
       >
         <ChartSettledSize
+          // Big on phone project pages, sized by width: in-app browsers like
+          // Telegram's resize the viewport as their bars hide, so a height in
+          // viewport units would change mid-scroll and make the page jump.
           className={cn(
             size === 'regular' &&
-              'h-[188px] min-h-[188px] w-full group-data-project-page/section-wrapper:max-md:h-[50vh] group-data-project-page/section-wrapper:max-md:min-h-[50vh] md:h-[228px] md:min-h-[228px] group-data-project-page/section-wrapper:md:h-[300px] 2xl:h-[258px] 2xl:min-h-[258px]',
+              'h-[188px] min-h-[188px] w-full md:h-[228px] md:min-h-[228px] group-data-project-page/section-wrapper:md:h-[300px] 2xl:h-[258px] 2xl:min-h-[258px] group-data-project-page/section-wrapper:max-md:portrait:h-[min(100vw,440px)] group-data-project-page/section-wrapper:max-md:portrait:min-h-[min(100vw,440px)]',
             size === 'small' && 'h-[114px] min-h-[114px] w-full',
             size === 'fill' && 'size-full',
             className,
@@ -113,9 +116,11 @@ export function ChartContainer<T extends { timestamp: number }>({
             >
               {shouldMountChart ? children : null}
             </div>
-            {legend && shouldMountChart && (
-              <ChartLegend leading={legendLeading} />
-            )}
+            {legend &&
+              shouldMountChart &&
+              (hasData || isLoading || noDataSourcesSelected) && (
+                <ChartLegend leading={legendLeading} />
+              )}
           </div>
         </ChartSettledSize>
         {(!!isLoading || !shouldMountChart) && (
