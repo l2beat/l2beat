@@ -2,6 +2,7 @@ import type { InMemoryCache } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getPrivacyProjectDetails } from '~/server/features/privacy/getPrivacyProjectDetails'
 import { getPrivacyProjectEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
+import { resolvePrivacySources } from '~/server/features/privacy/utils/resolvePrivacySources'
 import { getProjectSections } from '~/server/features/projects/getProjectSections'
 import { getProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 import { mergeProjectSections } from '~/server/features/projects/mergeProjectSections'
@@ -93,6 +94,13 @@ async function loadPrivacyProjectPage(manifest: Manifest, slug: string) {
     for (const section of projectEntry.sections) {
       // Links to the ZK Catalog page's Value Secured land on Value Locked.
       if (section.type === 'TvsValueSection') section.props.aliasIds = ['tvs']
+      // Sources may cite sections the catalog adds, like trusted setups.
+      if (section.type === 'PrivacyAdversariesSection') {
+        section.props.adversaries = resolvePrivacySources(
+          details.adversaries,
+          projectEntry.sections,
+        )
+      }
     }
   }
 
