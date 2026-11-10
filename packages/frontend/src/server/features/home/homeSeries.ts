@@ -11,30 +11,20 @@ export type HomeSeriesPoint = [
 ]
 
 /**
- * What a home sparkline draws, as it draws it, so the client does not have
- * to know how each figure is bucketed.
+ * What a home sparkline draws: a daily figure as its weekly averages (see
+ * `toWeeklyAverages`). Levels (TVS) and flows (activity, deposits) alike, so
+ * the charts side by side on the page show the same amount of detail.
  */
-export type HomeSparklineSeries =
-  | {
-      /** A value per day, e.g. TVS at the end of each day. */
-      kind: 'daily'
-      points: HomeSeriesPoint[]
-      /** The tooltip's names for each point's parts, in their order. */
-      partLabels?: string[]
-    }
-  | {
-      /**
-       * Daily figures that swing day to day (activity, deposits), as weekly
-       * averages: the trend the change describes. See `toWeeklyAverages`.
-       */
-      kind: 'weekly'
-      points: [timestamp: number, value: number | null][]
-      /**
-       * Amounts per day (deposits, blob data) beside a total: the high and
-       * low say "/day", so the chart's scale does not read as the figure's.
-       */
-      perDay: boolean
-    }
+export interface HomeSparklineSeries {
+  points: HomeSeriesPoint[]
+  /**
+   * Amounts per day (deposits, blob data) beside a total: the high and low
+   * say "/day", so the chart's scale does not read as the figure's.
+   */
+  perDay: boolean
+  /** The tooltip's names for each point's parts, in their order. */
+  partLabels?: string[]
+}
 
 /** A headline figure with its change, and the sparkline under it. */
 export interface HomeKpi {
@@ -46,7 +36,7 @@ export interface HomeKpi {
 }
 
 export const EMPTY_HOME_KPI: HomeKpi = {
-  chart: { kind: 'daily', points: [] },
+  chart: { points: [], perDay: false },
   value: undefined,
   change: undefined,
 }
@@ -78,35 +68,59 @@ export const WEEK_DAYS = 7
 /**
  * Seven-day buckets counted back from the latest day, so the last point is
  * the latest full week. Each is stamped with its first day and holds the mean
- * of the days that have data. Days left over at the start, too few for a
- * week, are dropped rather than drawn as one.
+ * of the days that have data, for the value and each part alike. Days left
+ * over at the start, too few for a week, are dropped rather than drawn as one.
  */
-export function toWeeklyAverages(
-  series: HomeSeriesPoint[],
-): [timestamp: number, value: number | null][] {
-  const weeks: [number, number | null][] = []
+export function toWeeklyAverages(points: HomeSeriesPoint[]): HomeSeriesPoint[] {
+  const series = toOnePerDay(points)
+  const weeks: HomeSeriesPoint[] = []
   const start = series.length >= WEEK_DAYS ? series.length % WEEK_DAYS : 0
   for (let end = series.length; end > start; end -= WEEK_DAYS) {
     const days = series.slice(Math.max(start, end - WEEK_DAYS), end)
     const [firstDay] = days
     if (!firstDay) continue
-    const values = days.flatMap(([, value]) => (value === null ? [] : [value]))
-    weeks.push([
-      firstDay[0],
-      values.length > 0
-        ? values.reduce((sum, v) => sum + v, 0) / values.length
-        : null,
-    ])
+    // The value, then each part.
+    const [value = null, ...parts] = firstDay
+      .slice(1)
+      .map((_, column) => average(days.map((day) => day[column + 1] ?? null)))
+    weeks.push([firstDay[0], value, ...parts])
   }
   return weeks.reverse()
+}
+
+/**
+ * A level (TVS) ends with the latest hour after that day's midnight: keep
+ * each day's latest point with data, so a week is seven days, not seven
+ * points.
+ */
+function toOnePerDay(series: HomeSeriesPoint[]): HomeSeriesPoint[] {
+  const days: HomeSeriesPoint[] = []
+  for (const point of series) {
+    const last = days.at(-1)
+    const day = UnixTime.toStartOf(UnixTime(point[0]), 'day')
+    if (last && UnixTime.toStartOf(UnixTime(last[0]), 'day') === day) {
+      if (point[1] !== null) days[days.length - 1] = point
+    } else {
+      days.push(point)
+    }
+  }
+  return days
+}
+
+/** The mean of the values that are there; null when none is. */
+function average(values: (number | null)[]): number | null {
+  const present = values.filter((value): value is number => value !== null)
+  return present.length > 0
+    ? present.reduce((sum, value) => sum + value, 0) / present.length
+    : null
 }
 
 /** A daily series drawn as its weekly averages. */
 export function toWeeklySparkline(
   series: HomeSeriesPoint[],
-  { perDay }: { perDay: boolean },
+  options: Omit<HomeSparklineSeries, 'points'>,
 ): HomeSparklineSeries {
-  return { kind: 'weekly', points: toWeeklyAverages(series), perDay }
+  return { points: toWeeklyAverages(series), ...options }
 }
 
 /**
