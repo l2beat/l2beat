@@ -56,6 +56,7 @@ export async function buildSearchIndex(): Promise<SearchIndex> {
       .filter((token) => token.id !== UNKNOWN_ABSTRACT_TOKEN_ID)
       .sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0))
       .map(toSearchIndexToken),
+    versionGroups: getVersionGroups(projects),
   }
 }
 
@@ -66,6 +67,7 @@ type SearchIndexProjectKey =
   | 'privacyInfo'
   | 'defiInfo'
   | 'aliases'
+  | 'versions'
 
 export const SEARCH_INDEX_PROJECT_KEYS: SearchIndexProjectKey[] = [
   'scalingInfo',
@@ -74,6 +76,7 @@ export const SEARCH_INDEX_PROJECT_KEYS: SearchIndexProjectKey[] = [
   'privacyInfo',
   'defiInfo',
   'aliases',
+  'versions',
 ]
 
 type SearchIndexSourceProject = Project<never, SearchIndexProjectKey>
@@ -92,12 +95,34 @@ export function toSearchIndexProject(
     manifest.getUrl(`/icons/${project.slug}.png`),
     kinds,
     project.scalingInfo?.type ?? null,
-    [project.shortName, ...(project.aliases ?? [])].filter(
-      (tag): tag is string => !!tag,
-    ),
+    // The group name, so "privacy pools" matches v2 as directly as v1 (slug
+    // "privacy-pools"), instead of hiding it as a fuzzy match.
+    [
+      project.shortName,
+      ...(project.aliases ?? []),
+      project.versions?.group.name,
+    ].filter((tag): tag is string => !!tag),
     project.interopConfig?.name ?? null,
     project.interopConfig?.shortName ?? null,
   ]
+}
+
+/** Project ids of each version group, latest first, then newest first. */
+function getVersionGroups(projects: SearchIndexSourceProject[]): string[][] {
+  const groups = new Map<string, string[]>()
+  for (const { versions } of projects) {
+    if (!versions || groups.has(versions.group.id)) continue
+    // Siblings are in display order, oldest first.
+    const { siblings } = versions
+    groups.set(versions.group.id, [
+      ...siblings.filter((s) => s.isLatest).map((s) => s.id),
+      ...siblings
+        .filter((s) => !s.isLatest)
+        .reverse()
+        .map((s) => s.id),
+    ])
+  }
+  return [...groups.values()]
 }
 
 function getProjectKinds(

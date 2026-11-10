@@ -74,6 +74,7 @@ export function searchProjectsAndTokens(
       scoreMultiplier: (entry) => (entry.category === 'zkCatalog' ? 0.9 : 1),
     },
   )
+  rankVersionsTogether(matches)
   if (isEthereumPrefix(query)) {
     // Ranked first, so "eth" or "ethere" never shows Ethereal above it.
     for (const entry of matches) {
@@ -81,16 +82,40 @@ export function searchProjectsAndTokens(
         entry.searchScore = Number.POSITIVE_INFINITY
       }
     }
-    matches.sort((a, b) => b.searchScore - a.searchScore || 0)
   }
+  const ranked = rankSearchResults(matches)
   return [
-    ...matches
+    ...ranked
       .filter((entry) => entry.type !== 'token')
       .slice(0, PROJECT_RESULTS_LIMIT),
-    ...matches
+    ...ranked
       .filter((entry) => entry.type === 'token')
       .slice(0, TOKEN_RESULTS_LIMIT),
   ]
+}
+
+// Far below the gap between any two fuzzysort scores.
+const VERSION_SCORE_STEP = 1e-9
+
+/**
+ * Versions of a project score as their best match and list the latest first.
+ * Otherwise an older version with a shorter slug outscores the latest one.
+ */
+function rankVersionsTogether(
+  matches: SearchResult<SearchBarProjectEntry | SearchBarTokenEntry>[],
+) {
+  const bestScores = new Map<string, number>()
+  const versioned = matches.flatMap((entry) => {
+    if (entry.type !== 'project' || !entry.version) return []
+    const key = `${entry.category}:${entry.version.group}`
+    const best = bestScores.get(key) ?? Number.NEGATIVE_INFINITY
+    bestScores.set(key, Math.max(best, entry.searchScore))
+    return [{ entry, key, rank: entry.version.rank }]
+  })
+  for (const { entry, key, rank } of versioned) {
+    const best = bestScores.get(key) ?? entry.searchScore
+    entry.searchScore = best - rank * VERSION_SCORE_STEP
+  }
 }
 
 function isEthereumPrefix(query: string): boolean {
