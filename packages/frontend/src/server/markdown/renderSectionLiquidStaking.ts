@@ -1,9 +1,11 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import type { LiquidStakingSectionProps } from '~/components/projects/sections/defi/LiquidStakingSection'
 import {
   ETH_STAKED_TITLE,
   formatEthStaked,
   formatLatestValue,
   LIQUID_STAKING_METRICS,
+  type LiquidStakingMetric,
 } from '~/pages/defi/liquid-staking/liquidStakingMetrics'
 import {
   formatUsd,
@@ -39,10 +41,23 @@ export function renderLiquidStakingSection({
           : NO_DATA,
         ...LIQUID_STAKING_METRICS.map((metric) => {
           const latest = entry[metric.key]
-          return latest ? formatLatestValue(metric, latest) : NO_DATA
+          return latest
+            ? `${formatLatestValue(metric, latest)} (${formatLatestUtcDate(metric, latest.timestamp)})`
+            : NO_DATA
         }),
       ]),
     ),
     `${link('Compare the risks of liquid staking protocols', '/defi/liquid-staking')}.`,
   ])
+}
+
+/** A daily value covers its whole UTC day, the others are as of a moment. */
+export function formatLatestUtcDate(
+  metric: LiquidStakingMetric,
+  timestamp: number,
+) {
+  const start = UnixTime(timestamp)
+  return metric.dailyBuckets
+    ? `over ${formatUtcDateTime(start)} to ${formatUtcDateTime(UnixTime(start + UnixTime.DAY))}`
+    : `on ${formatUtcDateTime(start)}`
 }

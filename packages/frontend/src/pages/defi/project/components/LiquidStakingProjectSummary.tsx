@@ -1,4 +1,4 @@
-import { formatCurrency, UnixTime } from '@l2beat/shared-pure'
+import { formatCurrency } from '@l2beat/shared-pure'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
@@ -10,8 +10,8 @@ import type {
   LiquidStakingLatestValue,
   LiquidStakingSummary,
 } from '~/server/features/defi/liquid-staking/getLiquidStakingSummary'
-import { formatRange, formatTimestamp } from '~/utils/dates'
 import {
+  formatLatestDate,
   formatLatestValue,
   LIQUID_STAKING_METRICS,
   type LiquidStakingMetric,
@@ -79,8 +79,5 @@ function withDate(
   latest: LiquidStakingLatestValue | undefined,
 ) {
   if (!latest) return metric.tooltip
-  const date = metric.dailyBuckets
-    ? formatRange(latest.timestamp, latest.timestamp + UnixTime.DAY)
-    : formatTimestamp(latest.timestamp, { mode: 'date' })
-  return `${metric.tooltip} Latest value from ${date}.`
+  return `${metric.tooltip} Latest value from ${formatLatestDate(metric, latest)}.`
 }

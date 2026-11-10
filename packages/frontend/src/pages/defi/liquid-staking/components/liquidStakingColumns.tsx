@@ -1,8 +1,14 @@
 import { formatCurrency } from '@l2beat/shared-pure'
 import type { ColumnHelper } from '@tanstack/react-table'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
 import type { LiquidStakingStatsEntry } from '~/server/features/defi/liquid-staking/getLiquidStakingEntries'
 import {
+  formatLatestDate,
   formatLatestValue,
   LIQUID_STAKING_METRICS,
   TVL_TOOLTIP,
@@ -43,9 +49,14 @@ export function getLiquidStakingStatColumns<T extends LiquidStakingStatsEntry>(
           return latest === undefined ? (
             <NoDataBadge />
           ) : (
-            <span className="font-medium text-sm">
-              {formatLatestValue(metric, latest)}
-            </span>
+            <Tooltip>
+              <TooltipTrigger disabledOnTouch className="font-medium text-sm">
+                {formatLatestValue(metric, latest)}
+              </TooltipTrigger>
+              <TooltipContent>
+                Latest value from {formatLatestDate(metric, latest)}.
+              </TooltipContent>
+            </Tooltip>
           )
         },
         sortUndefined: 'last',

@@ -550,7 +550,7 @@ describe(renderProjectSection.name, () => {
 
     expect(markdown).toInclude(
       'ETH staked: 35.40 M ETH (as of 2025-11-09 00:00 UTC)',
-      '| [Lido](https://ethbeat.org/defi/projects/lido) | stETH, wstETH | $30.00 B | 2.75% | ~2.5 days |',
+      '| [Lido](https://ethbeat.org/defi/projects/lido) | stETH, wstETH | $30.00 B | 2.75% (on 2025-11-09 00:00 UTC) | ~2.5 days (over 2025-11-09 00:00 UTC to 2025-11-10 00:00 UTC) |',
       '| [Binance Staked ETH](https://ethbeat.org/defi/projects/wbeth) (under review) | wBETH | No data | No data | No data |',
     )
   })
