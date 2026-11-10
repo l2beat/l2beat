@@ -1,6 +1,10 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import express, { type Request } from 'express'
+import express, {
+  type NextFunction,
+  type Request,
+  type Response,
+} from 'express'
 import {
   serveMarkdown,
   serveMarkdownIfPreferred,
@@ -11,6 +15,7 @@ import { validateRoute } from '~/utils/validateRoute'
 import { sendNotFoundPage } from '../not-found/sendNotFoundPage'
 import { getPrivacyArchivedData } from './archived/getPrivacyArchivedData'
 import {
+  getPrivacyFirstChainPath,
   getPrivacyProjectData,
   getPrivacyProjectMarkdown,
 } from './project/getPrivacyProjectData'
@@ -59,11 +64,30 @@ export function createPrivacyRouter(
       req.params.chain,
       cache,
     )
+  // Whatever the request prefers: markdown has the same one URL per page.
+  const redirectFirstChain =
+    (extension: '' | '.md') =>
+    async (
+      req: Request<v.infer<typeof projectParams>>,
+      res: Response,
+      next: NextFunction,
+    ) => {
+      const path = await getPrivacyFirstChainPath(
+        req.params.slug,
+        req.params.chain,
+      )
+      if (path === undefined) {
+        next()
+        return
+      }
+      res.redirect(301, `${path}${extension}`)
+    }
 
   // Before the page route, which would otherwise take "tornado-cash.md" as the slug.
   router.get(
     '/privacy/projects/:slug{/:chain}.md',
     validateRoute({ params: projectParams }),
+    redirectFirstChain('.md'),
     serveMarkdown(getProjectMarkdown),
   )
 
@@ -73,6 +97,7 @@ export function createPrivacyRouter(
       params: projectParams,
       query: v.object({ update: v.string().optional() }),
     }),
+    redirectFirstChain(''),
     serveMarkdownIfPreferred(getProjectMarkdown),
     async (req, res) => {
       const data = await getPrivacyProjectData(
@@ -85,10 +110,6 @@ export function createPrivacyRouter(
 
       if (!data) {
         await sendNotFoundPage(manifest, render, req.originalUrl, res)
-        return
-      }
-      if ('redirect' in data) {
-        res.redirect(301, data.redirect)
         return
       }
 
