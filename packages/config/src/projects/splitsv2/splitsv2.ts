@@ -106,6 +106,7 @@ export const splitsv2: BaseProject = {
       additionalConsiderations: [
         'In a push split, a token that refuses to pay one recipient pays none of them. A token issuer can cause this by blacklisting a single recipient.',
         'A recipient contract of a push split can block the ETH payouts of all its recipients.',
+        "A split's owner, where its creator set one, can pause its payouts.",
       ],
     },
     openSource: {
@@ -136,7 +137,7 @@ export const splitsv2: BaseProject = {
         'An independent researcher audited the v2.0 code before its release.',
       ],
       additionalConsiderations: [
-        "A split's owner, where its creator set one, can pause it, replace its recipients and move its funds.",
+        "A split's owner, where its creator set one, can replace its recipients and move its funds.",
         'A split without an owner cannot be repaired. Funds it cannot pay out stay in it, like USDT in a v2.0 pull split on Ethereum.',
         'The changes in v2.1 and v2.2 have no published audit.',
         'No circuit breakers or rate limits. Every pull split pays into one Warehouse, so a bug there would reach all of them.',

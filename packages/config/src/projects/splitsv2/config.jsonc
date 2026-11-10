@@ -5,7 +5,7 @@
   "initialAddresses": [
     "eth:0x8fb66F38cF86A3d5e8768f8F1754A24A6c661Fb8", // SplitsWarehouse
     // Each factory leads to the implementation its splits delegate to. The
-    // splits themselves are minimal proxies, tens of thousands of them, and
+    // splits themselves are minimal proxies, thousands of them, and
     // are left out.
     "eth:0x80f1B766817D04870f115fEBbcCADF8DBF75E017", // PullSplitFactory v2.0
     "eth:0xaDC87646f736d6A82e9a6539cddC488b2aA07f38", // PushSplitFactory v2.0
