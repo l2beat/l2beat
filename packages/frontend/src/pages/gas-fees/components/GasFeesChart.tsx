@@ -72,6 +72,8 @@ interface Props {
   unit: GasFeesUnit
   setUnit: (unit: GasFeesUnit) => void
   rangeControl: React.ReactNode
+  /** For Ethereum's own page: no "L2s combined" line, and a subsection heading */
+  ethereumOnly?: boolean
 }
 
 type Point = { timestamp: number } & Record<string, number | null>
@@ -92,6 +94,7 @@ export function GasFeesChart({
   unit,
   setUnit,
   rangeControl,
+  ethereumOnly,
 }: Props) {
   const isGas = isGasMetric(shownMetric)
   const meta = useMemo<ChartMeta>(() => {
@@ -116,16 +119,17 @@ export function GasFeesChart({
       },
     ])
     // Right after Ethereum in the legend, as the line to compare it with
-    entries.splice(1, 0, [
-      L2S_KEY,
-      {
-        label: 'L2s combined',
-        color: 'var(--primary)',
-        indicatorType: { shape: 'line' },
-      },
-    ])
+    if (!ethereumOnly)
+      entries.splice(1, 0, [
+        L2S_KEY,
+        {
+          label: 'L2s combined',
+          color: 'var(--primary)',
+          indicatorType: { shape: 'line' },
+        },
+      ])
     return Object.fromEntries(entries)
-  }, [chains])
+  }, [chains, ethereumOnly])
   const hidden = useMemo(
     () =>
       chains
@@ -144,10 +148,10 @@ export function GasFeesChart({
         chains.forEach((chain, i) => {
           point[chain.id] = values[i] ?? null
         })
-        point[L2S_KEY] = values[chains.length] ?? null
+        if (!ethereumOnly) point[L2S_KEY] = values[chains.length] ?? null
         return point
       }),
-    [data, chains],
+    [data, chains, ethereumOnly],
   )
 
   const yAxis = getYAxis(points, shownKeys, scale, isGas)
@@ -160,17 +164,21 @@ export function GasFeesChart({
   )
   const milestones = useMemo(() => toMilestones(upgrades), [upgrades])
   const timeRange = useMemo(() => getChartTimeRangeFromData(points), [points])
+  const Heading = ethereumOnly ? 'h3' : 'h2'
 
   return (
     <div className="flex flex-col gap-3">
       <ChartControlsWrapper className="flex-wrap items-start">
         <div>
-          <h2 className="font-bold text-xl">
+          <Heading
+            className={ethereumOnly ? 'font-bold text-lg' : 'font-bold text-xl'}
+          >
             {GAS_FEES_METRIC_LABELS[shownMetric].title}
+            {ethereumOnly && ' on Ethereum'}
             {isGas && (
               <span className="font-normal text-secondary"> · gwei</span>
             )}
-          </h2>
+          </Heading>
           <ChartTimeRange
             isPlaceholderData={isPlaceholderData}
             timeRange={timeRange}
@@ -221,7 +229,8 @@ export function GasFeesChart({
         noDataSourceMessage="Select at least one chain"
         milestones={milestones}
         size="large"
-        legend
+        // One line needs no legend
+        legend={!ethereumOnly}
         legendLeading={
           <ChartLegendToggleAll
             showAllSelected={showAllSelected}
@@ -238,7 +247,9 @@ export function GasFeesChart({
               stroke: chain.color,
               strokeWidth: chain.id === 'ethereum' ? 2.5 : 1.75,
             })),
-            { key: L2S_KEY, stroke: 'var(--primary)', strokeWidth: 2.5 },
+            ...(ethereumOnly
+              ? []
+              : [{ key: L2S_KEY, stroke: 'var(--primary)', strokeWidth: 2.5 }]),
           ]}
           highlight={highlightedChainId}
           yAxis={yAxis.options}

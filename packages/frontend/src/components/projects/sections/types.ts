@@ -7,6 +7,7 @@ import type { DataPostedSectionProps } from './data-posted/DataPostedSection'
 import type { DefiTvlSectionProps } from './defi/DefiTvlSection'
 import type { ExternalDependenciesSectionProps } from './ExternalDependenciesSection'
 import type { GardenCropsSectionProps } from './GardenCropsSection'
+import type { GasFeesSectionProps } from './GasFeesSection'
 import type { GrissiniRiskAnalysisSectionProps } from './GrissiniRiskAnalysisSection'
 import type { GroupSectionProps } from './GroupSection'
 import type { InteropFlowsSectionProps } from './interop/InteropFlowsSection'
@@ -47,6 +48,7 @@ import type { VerifiersSectionProps } from './verifiers/VerifiersSection'
 export type SectionId =
   | 'tvs'
   | 'activity'
+  | 'gas-fees'
   | 'onchain-costs'
   | 'liveness'
   | 'detailed-description'
@@ -120,6 +122,11 @@ interface ProjectDetailsL2TvsSection {
 interface ProjectDetailsActivitySection {
   type: 'ActivitySection'
   props: ProjectDetailsProps<ActivitySectionProps>
+}
+
+interface ProjectDetailsGasFeesSection {
+  type: 'GasFeesSection'
+  props: ProjectDetailsProps<GasFeesSectionProps>
 }
 
 interface ProjectDetailsDetailedDescriptionSection {
@@ -344,6 +351,7 @@ export type ProjectDetailsSection = {
   | ProjectDetailsThroughputSection
   | ProjectDetailsL2TvsSection
   | ProjectDetailsActivitySection
+  | ProjectDetailsGasFeesSection
   | ProjectDetailsTrustedSetupSection
   | ProjectDetailsVerifiersSection
   | ProjectDetailsProgramHashesSection

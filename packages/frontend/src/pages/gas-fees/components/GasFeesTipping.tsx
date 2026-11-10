@@ -22,7 +22,7 @@ export function GasFeesTipping() {
         <Label>Ethereum L1 only · past year</Label>
       </div>
       <div className="grid grid-cols-1 gap-x-10 gap-y-6 lg:grid-cols-2">
-        <TipsSummary />
+        <GasFeesTipsSummary />
         <div className="border-divider max-lg:border-t max-lg:pt-6 lg:border-l lg:pl-10">
           <GasFeesTipPayers />
         </div>
@@ -37,7 +37,7 @@ export function GasFeesTipping() {
   )
 }
 
-function TipsSummary() {
+export function GasFeesTipsSummary() {
   const { tips } = mock
   const over = tips.ordinaryUsd - tips.atFastUsd
   return (
