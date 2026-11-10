@@ -1967,7 +1967,10 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       ...BOOTLOADER_CONFIG('StarkWare_GpsStatementVerifier_2026_14'),
       programUrl:
         'https://github.com/starkware-libs/cairo-lang/blob/d435ed7003919b3842a48fc07bbb06a08ed9bbad/src/starkware/cairo/bootloaders/bootloader/bootloader_config_hash.json',
-      verificationStatus: 'notVerified',
+      verificationStatus: 'successful',
+      verificationSteps: readMarkdown(
+        'common/programHashes/2806880238119746810536368140979050442273882135835972263431721318985365898844.md',
+      ),
     },
   '3427958597398434235135013788958741576989752718219267963615783564775551242024':
     {
