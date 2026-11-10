@@ -18,11 +18,16 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { InfoIcon } from '~/icons/Info'
+import type { LiquidStakingEntry } from '~/server/features/defi/liquid-staking/getLiquidStakingEntries'
 import { useTRPC } from '~/trpc/React'
 import { generateAccessibleColors } from '~/utils/generateColors'
 import type { ChartRange } from '~/utils/range/range'
 import { formatDays, formatYield } from '../formatLiquidStaking'
-import { COST_OF_EXIT_METRIC, YIELD_METRIC } from '../liquidStakingMetrics'
+import {
+  COST_OF_EXIT_METRIC,
+  formatMetricDate,
+  YIELD_METRIC,
+} from '../liquidStakingMetrics'
 import {
   type LiquidStakingChartBackground,
   type LiquidStakingChartData,
@@ -30,11 +35,10 @@ import {
   LiquidStakingLineChart,
 } from './LiquidStakingLineChart'
 
-export interface LiquidStakingChartProject {
-  id: string
-  name: string
-  icon: string
-}
+type ChartProject = Pick<
+  LiquidStakingEntry,
+  'id' | 'name' | 'shortName' | 'icon'
+>
 
 const NETWORK_KEY = 'network'
 
@@ -58,7 +62,7 @@ export function LiquidStakingCharts({
   projects,
   defaultRange,
 }: {
-  projects: LiquidStakingChartProject[]
+  projects: ChartProject[]
   defaultRange: ChartRange
 }) {
   const [range, setRange] = useState<ChartRange>(defaultRange)
@@ -145,6 +149,9 @@ function YieldChart({ projectSeries, range }: ChartProps) {
         ariaLabel="Rate-implied yield"
         formatYAxisLabel={(value) => formatYield(value, 1)}
         formatTooltipValue={(value) => formatYield(value, 2)}
+        formatTooltipDate={(timestamp) =>
+          formatMetricDate(YIELD_METRIC, timestamp)
+        }
         background={ETH_STAKED}
       />
     </ChartCard>
@@ -167,12 +174,7 @@ function CostOfExitChart({ projectSeries, range }: ChartProps) {
     [data],
   )
   const estimated = useMemo(
-    () =>
-      new Set(
-        data?.flatMap((point) =>
-          point.estimated.map((id) => `${point.timestamp}:${id}`),
-        ),
-      ),
+    () => new Map(data?.map((point) => [point.timestamp, point.estimated])),
     [data],
   )
 
@@ -184,10 +186,7 @@ function CostOfExitChart({ projectSeries, range }: ChartProps) {
         "The discount is the day's median of hourly quotes for selling 100 tokens on the deepest pools, on days they could fill the sale for most hours. An instant exit counts on days it could pay out 100 ETH for most hours. wBETH unwraps wait for Binance to allocate ETH, and at least the operator-set lock time; its pools are too thin to quote.",
       ].join(' ')}
       // A point is a day, so the range runs to the end of the last one.
-      timeRange={getChartTimeRangeFromData(
-        chartData,
-        COST_OF_EXIT_METRIC.dailyBuckets ? { bucket: 'day' } : undefined,
-      )}
+      timeRange={getChartTimeRangeFromData(chartData, { bucket: 'day' })}
       isPlaceholderData={isPlaceholderData}
     >
       <LiquidStakingLineChart
@@ -197,9 +196,13 @@ function CostOfExitChart({ projectSeries, range }: ChartProps) {
         isPlaceholderData={isPlaceholderData}
         ariaLabel="Cost of exit"
         formatYAxisLabel={(value) => `${value.toFixed(0)}d`}
-        formatTooltipValue={formatDays}
-        isEstimated={(timestamp, key) => estimated.has(`${timestamp}:${key}`)}
-        dailyBuckets={COST_OF_EXIT_METRIC.dailyBuckets}
+        // ~ marks a value that counts requests still queued.
+        formatTooltipValue={(value, key, timestamp) =>
+          `${estimated.get(timestamp)?.includes(key) ? '~' : ''}${formatDays(value)}`
+        }
+        formatTooltipDate={(timestamp) =>
+          formatMetricDate(COST_OF_EXIT_METRIC, timestamp)
+        }
       />
     </ChartCard>
   )
@@ -243,7 +246,7 @@ function ChartCard({
   )
 }
 
-function ProjectLabel({ project }: { project: LiquidStakingChartProject }) {
+function ProjectLabel({ project }: { project: ChartProject }) {
   return (
     <span className="inline-flex items-center gap-1">
       <img
@@ -253,7 +256,7 @@ function ProjectLabel({ project }: { project: LiquidStakingChartProject }) {
         height={14}
         className="size-3.5 rounded-full"
       />
-      {project.name}
+      {project.shortName ?? project.name}
     </span>
   )
 }

@@ -59,7 +59,7 @@ export async function getLiquidStakingYieldChart(
   const projects = await getLiquidStakingProjects()
   const projectIds = projects.map((project) => project.id)
   if (env.MOCK) {
-    const days = getMockDays(params, 'started')
+    const days = getDays(params, 'started').days
     const yields = projectIds.map(() => randomWalk(days.length, 0.03, 0.4))
     const network = randomWalk(days.length, 0.032, 0.2)
     const ethStaked = randomWalk(days.length, 34_000_000, 0.05)
@@ -70,7 +70,7 @@ export async function getLiquidStakingYieldChart(
       ethStaked: ethStaked[i] ?? null,
     }))
   }
-  const { from, to, lookback } = getDays(params, 'started')
+  const { days, to, lookback } = getDays(params, 'started')
   const db = getDb()
   const [snapshots, network] = await Promise.all([
     db.liquidStakingSnapshot.getDayStartsByProjectsInRange(
@@ -81,7 +81,7 @@ export async function getLiquidStakingYieldChart(
     db.ethereumStakingDaily.getInRange(lookback, to),
   ])
   return computeYieldChart({
-    days: generateTimestamps([from, to], 'day'),
+    days,
     projectIds,
     snapshots,
     network,
@@ -95,7 +95,7 @@ export async function getLiquidStakingCostOfExitChart(
   const projects = await getLiquidStakingProjects()
   const projectIds = projects.map((project) => project.id)
   if (env.MOCK) {
-    const days = getMockDays(params, 'ended')
+    const days = getDays(params, 'ended').days
     const costOfExit = projectIds.map(() => randomWalk(days.length, 3, 1))
     return days.map((timestamp, i) => ({
       timestamp,
@@ -103,27 +103,20 @@ export async function getLiquidStakingCostOfExitChart(
       estimated: i === days.length - 1 ? projectIds : [],
     }))
   }
-  const { from, to, lookback } = getDays(params, 'ended')
+  const { days, lookback } = getDays(params, 'ended')
   const snapshots = await getDb().liquidStakingSnapshot.getByProjectsInRange(
-    projects.map((p) => p.id),
+    projectIds,
     lookback,
     // Up to now, so requests made by the chart's end find when they were
     // finalized, even when that came after the end, and the estimate for
     // requests still queued starts from the latest counters.
     UnixTime.now(),
   )
-  return computeCostOfExitChart({
-    days: generateTimestamps([from, to], 'day'),
-    projects: projects.map((p) => ({
-      id: p.id,
-      type: p.liquidStaking.contracts.type,
-    })),
-    snapshots,
-  })
+  return computeCostOfExitChart({ days, projectIds, snapshots })
 }
 
 /**
- * The chart's first and last day, and how far back the first day's values
+ * The chart's days, its last one, and how far back the first day's values
  * look: a yield window.
  */
 function getDays(
@@ -133,16 +126,7 @@ function getDays(
   const to = getLastChartDay(params.range[1], lastDay)
   const from = UnixTime(Math.max(params.range[0] ?? FIRST_DAY, FIRST_DAY))
   const lookback = UnixTime(from - YIELD_WINDOW_DAYS * UnixTime.DAY)
-  return { from, to, lookback }
-}
-
-function getMockDays(
-  params: LiquidStakingChartsParams,
-  lastDay: 'started' | 'ended',
-) {
-  const to = getLastChartDay(params.range[1], lastDay)
-  const from = params.range[0] ?? to - 1000 * UnixTime.DAY
-  return generateTimestamps([from, to], 'day')
+  return { days: generateTimestamps([from, to], 'day'), to, lookback }
 }
 
 function byProject(projectIds: string[], series: number[][], index: number) {

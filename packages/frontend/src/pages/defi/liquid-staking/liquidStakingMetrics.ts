@@ -1,7 +1,9 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import type {
   LiquidStakingLatestValue,
   LiquidStakingSummary,
 } from '~/server/features/defi/liquid-staking/getLiquidStakingSummary'
+import { formatRange, formatTimestamp } from '~/utils/dates'
 import { formatDays, formatYield } from './formatLiquidStaking'
 
 /** Shown next to the metrics, in the table and on project pages. */
@@ -43,6 +45,16 @@ export function formatLatestValue(
   latest: LiquidStakingLatestValue,
 ): string {
   return `${latest.estimated ? '~' : ''}${metric.format(latest.value)}`
+}
+
+/** The date of a metric's value: the day it covers, or the day it is as of. */
+export function formatMetricDate(
+  metric: LiquidStakingMetric,
+  timestamp: number,
+): string {
+  return metric.dailyBuckets
+    ? formatRange(timestamp, timestamp + UnixTime.DAY)
+    : formatTimestamp(timestamp, { mode: 'date' })
 }
 
 /** The chart values, also shown in the table and on project pages. */

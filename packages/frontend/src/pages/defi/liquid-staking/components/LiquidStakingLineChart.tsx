@@ -1,4 +1,3 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
@@ -13,7 +12,6 @@ import {
   type ChartSeries,
   TimeSeriesChart,
 } from '~/components/core/chart/TimeSeriesChart'
-import { formatRange, formatTimestamp } from '~/utils/dates'
 
 export interface LiquidStakingChartSeries {
   key: string
@@ -43,14 +41,8 @@ interface Props {
   isPlaceholderData: boolean
   ariaLabel: string
   formatYAxisLabel: (value: number) => string
-  formatTooltipValue: (value: number) => string
-  /** Whether a series' value on a day is an estimate, shown with ~. */
-  isEstimated?: (timestamp: number, key: string) => boolean
-  /**
-   * Each point is a day's average, not a moment, so the tooltip shows the
-   * day as a range.
-   */
-  dailyBuckets?: boolean
+  formatTooltipValue: (value: number, key: string, timestamp: number) => string
+  formatTooltipDate: (timestamp: number) => string
   background?: LiquidStakingChartBackground
 }
 
@@ -63,8 +55,7 @@ export function LiquidStakingLineChart({
   ariaLabel,
   formatYAxisLabel,
   formatTooltipValue,
-  isEstimated,
-  dailyBuckets,
+  formatTooltipDate,
   background,
 }: Props) {
   const chartMeta = useMemo<ChartMeta>(() => {
@@ -145,8 +136,7 @@ export function LiquidStakingLineChart({
             row={row}
             keys={keys}
             formatValue={formatTooltipValue}
-            isEstimated={isEstimated}
-            dailyBuckets={dailyBuckets}
+            formatDate={formatTooltipDate}
             background={background}
           />
         )}
@@ -159,15 +149,13 @@ function CustomTooltip({
   row,
   keys,
   formatValue,
-  isEstimated,
-  dailyBuckets,
+  formatDate,
   background,
 }: {
   row: LiquidStakingChartData[number]
   keys: string[]
-  formatValue: (value: number) => string
-  isEstimated?: (timestamp: number, key: string) => boolean
-  dailyBuckets?: boolean
+  formatValue: Props['formatTooltipValue']
+  formatDate: Props['formatTooltipDate']
   background?: LiquidStakingChartBackground
 }) {
   const label = row.timestamp
@@ -186,16 +174,14 @@ function CustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-[200px] flex-col [@media(min-width:600px)]:w-60">
         <div className="font-medium text-label-value-14 text-secondary">
-          {dailyBuckets
-            ? formatRange(label, label + UnixTime.DAY)
-            : formatTimestamp(label, { mode: 'date' })}
+          {formatDate(label)}
         </div>
         <div className="mt-2 flex flex-col gap-2">
           {lines.map((entry) => (
             <TooltipRow
               key={entry.name}
               name={entry.name}
-              value={`${isEstimated?.(label, entry.name) ? '~' : ''}${formatValue(entry.value)}`}
+              value={formatValue(entry.value, entry.name, label)}
             />
           ))}
           {background && backgroundEntry && (

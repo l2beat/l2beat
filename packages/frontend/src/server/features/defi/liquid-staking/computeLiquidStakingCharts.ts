@@ -1,4 +1,3 @@
-import type { ProjectLiquidStakingContracts } from '@l2beat/config'
 import type {
   EthereumStakingDailyRecord,
   LiquidStakingSnapshotRecord,
@@ -32,11 +31,6 @@ export const REFERENCE_EXIT_ETH = 100
 /** Requests still queued are estimated at the finalization pace of this many days. */
 const PACE_WINDOW_DAYS = 7
 
-export interface LiquidStakingChartToken {
-  id: string
-  type: ProjectLiquidStakingContracts['type']
-}
-
 export interface YieldChartInputs {
   /** The chart's days, oldest first. */
   days: UnixTime[]
@@ -50,7 +44,7 @@ export interface YieldChartInputs {
 export interface CostOfExitChartInputs {
   /** The chart's days, oldest first. */
   days: UnixTime[]
-  projects: LiquidStakingChartToken[]
+  projectIds: string[]
   /** Hourly, oldest first, from YIELD_WINDOW_DAYS before the first day to now. */
   snapshots: LiquidStakingSnapshotRecord[]
 }
@@ -83,18 +77,15 @@ export function computeCostOfExitChart(
   inputs: CostOfExitChartInputs,
 ): LiquidStakingCostOfExitPoint[] {
   const byProject = new Map(
-    inputs.projects.map((project) => [
-      project.id,
-      new ExitCostSeries(
-        project,
-        inputs.snapshots.filter((s) => s.projectId === project.id),
-      ),
+    inputs.projectIds.map((id) => [
+      id,
+      new ExitCostSeries(inputs.snapshots.filter((s) => s.projectId === id)),
     ]),
   )
 
   return inputs.days.map((day) => {
-    const costs = inputs.projects.map(
-      (p) => [p.id, byProject.get(p.id)?.costOfExitAt(day) ?? null] as const,
+    const costs = inputs.projectIds.map(
+      (id) => [id, byProject.get(id)?.costOfExitAt(day) ?? null] as const,
     )
     return {
       timestamp: day,
@@ -145,10 +136,7 @@ class ExitCostSeries {
   /** Request day → the request-weighted wait of its requests. */
   private readonly queueWaits: Map<number, ExitCost>
 
-  constructor(
-    private readonly project: LiquidStakingChartToken,
-    snapshots: LiquidStakingSnapshotRecord[],
-  ) {
+  constructor(snapshots: LiquidStakingSnapshotRecord[]) {
     this.rates = new ExchangeRates(snapshots)
     this.hoursByDay = new Map()
     for (const snapshot of snapshots) {
@@ -182,48 +170,49 @@ class ExitCostSeries {
   /** A queued exit earns nothing while it waits, so it costs the wait. */
   private queueAt(day: number): ExitCost | null {
     const wait = this.queueWaits.get(day)
-    if (wait || this.project.type !== 'wbeth') return wait ?? null
-    // Without requests that day, an exit would still wait out the lock.
+    if (wait) return wait
+    // Without requests that day, an exit would still wait out the lock. Only
+    // wBETH has one.
     const lockTime = this.hoursByDay.get(day)?.[0]?.lockTime
     return lockTime != null ? { days: lockTime / DAY, estimated: false } : null
   }
 
   /**
    * Burning rETH, or ether.fi's instant redemption, when it could pay out the
-   * reference exit for most of the day. The fee costs the days of yield it
-   * equals.
+   * reference exit. The fee costs the days of yield it equals.
    */
   private instantAt(day: number, annualYield: number | null): ExitCost | null {
-    const hours = this.hoursByDay.get(day) ?? []
-    const open = hours.filter(
-      (s) =>
-        s.instantExitEth !== null &&
-        toEth(s.instantExitEth) >= REFERENCE_EXIT_ETH,
+    return this.routeAt(day, annualYield, (s) =>
+      s.instantExitEth !== null && toEth(s.instantExitEth) >= REFERENCE_EXIT_ETH
+        ? (s.instantExitFeeBps ?? 0) / 10_000
+        : null,
     )
-    if (open.length === 0 || open.length * 2 < hours.length) return null
-    const feeBps = median(open.map((s) => s.instantExitFeeBps ?? 0)) ?? 0
-    const days = toYieldDays(feeBps / 10_000, annualYield)
-    return days === null ? null : { days, estimated: false }
+  }
+
+  /** Selling at a discount costs the days of yield the discount equals. */
+  private marketAt(day: number, annualYield: number | null): ExitCost | null {
+    return this.routeAt(day, annualYield, (s) =>
+      s.marketExitEth !== null && s.marketExitValueEth
+        ? 1 - toEth(s.marketExitEth) / toEth(s.marketExitValueEth)
+        : null,
+    )
   }
 
   /**
-   * Selling at a discount costs the days of yield the discount equals. Like
-   * the instant exit, it counts only when a pool could fill the sale for most
-   * of the day.
+   * A route counts on days it was open for most hours, at the median of its
+   * hourly costs. `hourCost` is a share of the exit, null while closed.
    */
-  private marketAt(day: number, annualYield: number | null): ExitCost | null {
+  private routeAt(
+    day: number,
+    annualYield: number | null,
+    hourCost: (snapshot: LiquidStakingSnapshotRecord) => number | null,
+  ): ExitCost | null {
     const hours = this.hoursByDay.get(day) ?? []
-    const discounts = hours.flatMap((s) =>
-      s.marketExitEth !== null && s.marketExitValueEth
-        ? [1 - toEth(s.marketExitEth) / toEth(s.marketExitValueEth)]
-        : [],
-    )
-    const discount = median(discounts)
-    if (discount === undefined || discounts.length * 2 < hours.length) {
-      return null
-    }
+    const costs = hours.map(hourCost).filter((cost) => cost !== null)
+    const cost = median(costs)
+    if (cost === undefined || costs.length * 2 < hours.length) return null
     // Selling at a premium exits for free.
-    const days = toYieldDays(Math.max(0, discount), annualYield)
+    const days = toYieldDays(Math.max(0, cost), annualYield)
     return days === null ? null : { days, estimated: false }
   }
 }
