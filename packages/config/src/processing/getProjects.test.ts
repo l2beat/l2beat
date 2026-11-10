@@ -1,5 +1,6 @@
 import {
   createTrackedTxId,
+  getPrivacyBucketAddress,
   type TrackedTxConfigEntry,
   type TrackedTxFunctionCallConfig,
   type TrackedTxTransferConfig,
@@ -494,7 +495,7 @@ describe('getProjects', () => {
       for (const { project, privacyInfo } of privacyProjects) {
         const trackedBucketIds = new Set<string>()
         const seriesIds = new Set<string>()
-        let configuredBuckets = 0
+        const configuredBuckets = new Map<string, number>()
 
         for (const token of privacyInfo.tokens ?? []) {
           for (const bucket of token.buckets) {
@@ -509,7 +510,11 @@ describe('getProjects', () => {
             }
             trackedBucketIds.add(bucket.id)
 
-            configuredBuckets++
+            const { chain } = getPrivacyBucketAddress(bucket.address)
+            configuredBuckets.set(
+              chain,
+              (configuredBuckets.get(chain) ?? 0) + 1,
+            )
             for (const amount of amounts) {
               if (!/^[1-9]\d*$/.test(amount)) {
                 problems.push(`${project.id} ${bucket.id}: invalid ${amount}`)
@@ -525,15 +530,45 @@ describe('getProjects', () => {
 
         // Partially attributed sets are tracked through buckets. Every other
         // state replaces them: key registrations are tracked through a
-        // registry, and the remaining states are not tracked at all.
-        const anonymitySet = privacyInfo.anonymitySet
-        if (anonymitySet?.type === 'partially-attributed') {
-          if (configuredBuckets === 0) {
-            problems.push(`${project.id}: ${anonymitySet.type} without buckets`)
+        // registry, and the remaining states are not tracked at all. A chain
+        // with its own assessment answers for its own buckets, the project
+        // for the rest.
+        const chainAssessments = Object.entries(
+          privacyInfo.chainAssessments ?? {},
+        )
+        const sum = (counts: number[]) => counts.reduce((a, b) => a + b, 0)
+        const onOwnChains = sum(
+          chainAssessments.map(([chain]) => configuredBuckets.get(chain) ?? 0),
+        )
+        const states = [
+          {
+            name: project.id as string,
+            state: privacyInfo.anonymitySet,
+            buckets: sum([...configuredBuckets.values()]) - onOwnChains,
+          },
+          ...chainAssessments.map(([chain, assessment]) => ({
+            name: `${project.id} on ${chain}`,
+            state: assessment.anonymitySet,
+            buckets: configuredBuckets.get(chain) ?? 0,
+          })),
+        ]
+        for (const { name, state, buckets } of states) {
+          if (state?.type === 'partially-attributed') {
+            if (buckets === 0) {
+              problems.push(`${name}: ${state.type} without buckets`)
+            }
+          } else if (state !== undefined && buckets !== 0) {
+            problems.push(`${name}: ${state.type} with buckets`)
           }
-        } else if (anonymitySet !== undefined && configuredBuckets !== 0) {
-          problems.push(`${project.id}: ${anonymitySet.type} with buckets`)
         }
+        // The backend indexes the registry of the project's first chain only.
+        for (const [chain, assessment] of chainAssessments) {
+          if (assessment.anonymitySet?.type === 'key-registrations') {
+            problems.push(`${project.id} on ${chain}: key registrations`)
+          }
+        }
+
+        const anonymitySet = privacyInfo.anonymitySet
 
         if (anonymitySet?.type === 'key-registrations') {
           const contracts = Object.values(project.contracts?.addresses ?? {})

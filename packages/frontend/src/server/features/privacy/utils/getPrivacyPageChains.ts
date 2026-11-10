@@ -1,4 +1,7 @@
-import type { ProjectPrivacyInfo } from '@l2beat/config'
+import type {
+  ProjectPrivacyAssessment,
+  ProjectPrivacyInfo,
+} from '@l2beat/config'
 import { getPrivacyBucketAddress } from '@l2beat/shared'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 
@@ -55,21 +58,33 @@ export function getPrivacyProjectPages<
 
 /**
  * The project as it is tracked and rated on one of its page chains: only the
- * buckets and the key registry there, and that chain's assessment.
+ * buckets there, and that chain's assessment. A chain's own assessment
+ * replaces the project's as a whole. A chain without one shares the
+ * project's, except a key registry, which counts for its own chain only.
  */
 export function getPrivacyProjectOnChain<
   T extends { privacyInfo: ProjectPrivacyInfo },
 >(project: T, chain: string): T {
-  const { chainAssessments, anonymitySet, ...privacyInfo } = project.privacyInfo
-  const isElsewhere =
-    anonymitySet?.type === 'key-registrations' &&
-    ChainSpecificAddress.longChain(anonymitySet.registry) !== chain
+  const { chainAssessments, ...privacyInfo } = project.privacyInfo
+  const own = chainAssessments?.[chain]
+  const assessment: ProjectPrivacyAssessment = own ?? {
+    exitWindow: privacyInfo.exitWindow,
+    adversaries: privacyInfo.adversaries,
+    riskSummary: privacyInfo.riskSummary,
+    upgradesAndGovernance: privacyInfo.upgradesAndGovernance,
+    anonymitySet: isKeyRegistryElsewhere(privacyInfo.anonymitySet, chain)
+      ? undefined
+      : privacyInfo.anonymitySet,
+  }
   return {
     ...project,
     privacyInfo: {
       ...privacyInfo,
-      ...chainAssessments?.[chain],
-      anonymitySet: isElsewhere ? undefined : anonymitySet,
+      exitWindow: assessment.exitWindow,
+      adversaries: assessment.adversaries,
+      riskSummary: assessment.riskSummary,
+      upgradesAndGovernance: assessment.upgradesAndGovernance,
+      anonymitySet: assessment.anonymitySet,
       tokens: privacyInfo.tokens.flatMap((token) => {
         const buckets = token.buckets.filter(
           (bucket) => getPrivacyBucketAddress(bucket.address).chain === chain,
@@ -78,4 +93,14 @@ export function getPrivacyProjectOnChain<
       }),
     },
   }
+}
+
+function isKeyRegistryElsewhere(
+  anonymitySet: ProjectPrivacyAssessment['anonymitySet'],
+  chain: string,
+): boolean {
+  return (
+    anonymitySet?.type === 'key-registrations' &&
+    ChainSpecificAddress.longChain(anonymitySet.registry) !== chain
+  )
 }

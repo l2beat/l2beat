@@ -50,44 +50,28 @@ const WAIT_STEP = `Wait for a randomized duration of time up to ${ANONYMITY_SET_
 export function getPrivacyAnonymitySetSeries(
   project: PrivacyAnonymitySetProject,
 ): PrivacyAnonymitySetSeries[] {
-  const sources = getPrivacyAnonymitySetSources(project.privacyInfo)
-  // Each chain's pool is its own anonymity set, so labels tell them apart.
-  const isMultiChain = new Set(sources.map((s) => s.chain)).size > 1
-  const series = sources.flatMap((anonymitySet) => {
-    const { bucketId, chain, address, sinceTimestamp, source } = anonymitySet
-    const base: SeriesBase = {
-      configurationId: createPrivacyAnonymitySetConfigurationId({
+  return getPrivacyAnonymitySetSources(project.privacyInfo).flatMap(
+    (anonymitySet) => {
+      const { bucketId, chain, address, sinceTimestamp, source } = anonymitySet
+      const base: SeriesBase = {
+        configurationId: createPrivacyAnonymitySetConfigurationId({
+          projectId: project.id,
+          bucketId,
+          chain,
+          address,
+          ...source,
+        }),
         projectId: project.id,
         bucketId,
         chain,
-        address,
-        ...source,
-      }),
-      projectId: project.id,
-      bucketId,
-      chain,
-      sinceTimestamp,
-    }
+        sinceTimestamp,
+      }
 
-    return anonymitySet.type === 'key-registrations'
-      ? [getKeyRegistrationsSeries(base, project.name)]
-      : getDepositSeries(base, anonymitySet, project.name)
-  })
-  return isMultiChain ? series.map(withChainLabel) : series
-}
-
-function withChainLabel(
-  series: PrivacyAnonymitySetSeries,
-): PrivacyAnonymitySetSeries {
-  const suffix = ` · ${formatChainName(series.chain)}`
-  return {
-    ...series,
-    label: series.label + suffix,
-    compactLabel: series.compactLabel + suffix,
-    ...(series.headlineLabel !== undefined && {
-      headlineLabel: series.headlineLabel + suffix,
-    }),
-  }
+      return anonymitySet.type === 'key-registrations'
+        ? [getKeyRegistrationsSeries(base, project.name)]
+        : getDepositSeries(base, anonymitySet, project.name)
+    },
+  )
 }
 
 function formatChainName(chain: string): string {
