@@ -190,10 +190,12 @@ function NavCollapsibleItem({
   return (
     <Collapsible className="flex flex-col" open={open} onOpenChange={setOpen}>
       {/* The title opens the group's first page, usually its summary; only the
-          chevron folds the list, so it can be browsed without leaving. */}
+          chevron folds the list, so it can be browsed without leaving. In the
+          mobile menu the chevron is too small to aim at, so its hit area
+          covers the whole row. */}
       <div
         className={cn(
-          'group flex items-center gap-0.5 p-1.5',
+          'group flex items-center gap-0.5 p-1.5 max-lg:relative',
           small && 'h-6 py-1 max-lg:h-8',
         )}
         data-active={isGroupActive}
@@ -216,7 +218,7 @@ function NavCollapsibleItem({
         </a>
         <CollapsibleTrigger
           aria-label={`${open ? 'Hide' : 'Show'} ${group.title} pages`}
-          className="flex size-6 items-center justify-center max-lg:size-8"
+          className="flex size-6 items-center justify-center max-lg:size-8 max-lg:after:absolute max-lg:after:inset-0"
         >
           <ChevronIcon
             className={cn(
