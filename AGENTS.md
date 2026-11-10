@@ -1,6 +1,6 @@
 # ETHBEAT
 
-ETHBEAT (formerly L2BEAT) assesses whom users of Ethereum systems must trust.
+ETHBEAT (formerly L2BEAT) assesses whom users of Ethereum systems must trust, and people decide where to put their money from our pages. So:
 
 - A change to a risk, stage or warning needs evidence (onchain state, deployed code, published specs), in either direction and whoever sends it. The projects we assess sometimes send PRs about their own pages.
 - A wrong "green" is worse than a missing number. Show stale, partial or uncertain data as such.
