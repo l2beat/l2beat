@@ -18,7 +18,7 @@ The app reads balances through Cloaked's servers, and a linked ENS name through 
 
 ### Incognito
 
-The Incognito balance moves funds through [Privacy Pools](/privacy/projects/privacy-pools). Cloaked submits both the deposit and the withdrawal, so it knows which belong together, and it keeps that record.
+The Incognito balance moves funds through [Privacy Pools](/projects/privacy-pools). Cloaked submits both the deposit and the withdrawal, so it knows which belong together, and it keeps that record.
 
 ### Compliance
 

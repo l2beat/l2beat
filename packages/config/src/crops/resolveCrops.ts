@@ -154,14 +154,12 @@ function getGardenProjectPath(project: {
   defiInfo?: ProjectDefiInfo | undefined
   ossificationHistory?: OssificationHistory | undefined
 }): string | null {
-  if (project.privacyInfo) {
-    return `/privacy/projects/${project.slug}`
-  }
-  if (project.scalingInfo) {
-    return `/layer2s/projects/${project.slug}`
-  }
-  if (project.defiInfo && project.ossificationHistory !== undefined) {
-    return `/defi/projects/${project.slug}`
+  if (
+    project.privacyInfo ||
+    project.scalingInfo ||
+    (project.defiInfo && project.ossificationHistory !== undefined)
+  ) {
+    return `/projects/${project.slug}`
   }
   return null
 }
