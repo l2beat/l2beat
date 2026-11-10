@@ -48,7 +48,10 @@ import {
   type PrivacyAnonymitySetType,
 } from './anonymity-set/getPrivacyAnonymitySetSeries'
 import { getPrivacyProject } from './getPrivacyProjects'
-import { getPrivacyChainValues } from './getPrivacyValueLockedChart'
+import {
+  getPrivacyChainValues,
+  hasPrivacyValueLocked,
+} from './getPrivacyValueLockedChart'
 import type {
   PrivacyAsset,
   PrivacyBucket,
@@ -340,7 +343,7 @@ export async function getPrivacyProjectDetails(
     referenceApp: project.privacyInfo.referenceApp,
     reproducibility: project.privacyInfo.reproducibility,
     anonymitySetType: getPrivacyAnonymitySetType(shown),
-    hasTvl: project.tvsConfig !== undefined,
+    hasTvl: hasPrivacyValueLocked(project.tvsConfig, selected?.id),
     detailedDescription:
       project.privacyInfo.detailedDescription ??
       project.display.detailedDescription,

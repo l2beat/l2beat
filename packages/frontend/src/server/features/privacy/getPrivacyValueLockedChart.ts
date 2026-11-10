@@ -1,5 +1,5 @@
-import type { TvsToken } from '@l2beat/config'
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { Formula, TvsToken } from '@l2beat/config'
+import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -9,6 +9,7 @@ import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import {
   ChartRange,
   type ChartResolution,
+  optionToRange,
   rangeToResolution,
 } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
@@ -74,6 +75,30 @@ export interface PrivacyChainValue {
   change7d: number | undefined
 }
 
+/**
+ * Whether the project's value locked is tracked: on the chain, when the page
+ * is about one, which takes a TVS token that reads an amount there.
+ */
+export function hasPrivacyValueLocked(
+  tvsConfig: TvsToken[] | undefined,
+  chain: string | undefined,
+): boolean {
+  if (tvsConfig === undefined || chain === undefined) {
+    return tvsConfig !== undefined
+  }
+  return tvsConfig.some((token) => getChains(token.amount).includes(chain))
+}
+
+function getChains(formula: Formula): string[] {
+  if (formula.type === 'calculation') {
+    return formula.arguments.flatMap(getChains)
+  }
+  if (formula.type === 'value') {
+    return getChains(formula.amount)
+  }
+  return 'chain' in formula ? [formula.chain] : []
+}
+
 /** What each of the chains holds now, with its change over seven days. */
 export async function getPrivacyChainValues(
   projectId: string,
@@ -85,6 +110,9 @@ export async function getPrivacyChainValues(
     UnixTime.toStartOf(now, 'day') - 8 * UnixTime.DAY,
     now,
   ]
+  // As old as a project's value may be and still be shown as current.
+  const [oldestCurrent] = optionToRange('3d')
+  assert(oldestCurrent !== null, 'Three days without a start')
   const entries = await Promise.all(
     chains.map(async (chain) => {
       // Hourly, so the value seven days before is from the same hour.
@@ -95,23 +123,31 @@ export async function getPrivacyChainValues(
         range,
         'hour',
       )
-      const last = rows.at(-1)
-      if (!last) return undefined
-      const weekBefore = rows.findLast(
-        (row) => row.timestamp <= last.timestamp - 7 * UnixTime.DAY,
-      )
-      return [
-        chain,
-        {
-          value: last.value,
-          change7d:
-            weekBefore &&
-            calculatePercentageChange(last.value, weekBefore.value),
-        },
-      ] as const
+      const value = getCurrentChainValue(rows, oldestCurrent)
+      return value && ([chain, value] as const)
     }),
   )
   return new Map(entries.filter((entry) => entry !== undefined))
+}
+
+/**
+ * The newest of the rows as the chain's value now. Undefined when it is older
+ * than `oldestCurrent`: the chain stopped syncing, or its tokens ended.
+ */
+export function getCurrentChainValue(
+  rows: { timestamp: UnixTime; value: number }[],
+  oldestCurrent: number,
+): PrivacyChainValue | undefined {
+  const last = rows.at(-1)
+  if (!last || last.timestamp < oldestCurrent) return undefined
+  const weekBefore = rows.findLast(
+    (row) => row.timestamp <= last.timestamp - 7 * UnixTime.DAY,
+  )
+  return {
+    value: last.value,
+    change7d:
+      weekBefore && calculatePercentageChange(last.value, weekBefore.value),
+  }
 }
 
 /**

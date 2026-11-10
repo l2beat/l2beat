@@ -466,6 +466,20 @@ describe('getProjects', () => {
       expect(problems).toEqual([])
     })
 
+    // Privacy pages split a calculated token by its escrow values, which the
+    // backend prices from the amount alone.
+    it('no token with a calculated amount has its own value for the project', () => {
+      const problems: string[] = []
+      for (const { project } of privacyProjects) {
+        for (const token of project.tvsConfig ?? []) {
+          if (token.amount.type === 'calculation' && token.valueForProject) {
+            problems.push(`${project.id}: ${token.id}`)
+          }
+        }
+      }
+      expect(problems).toEqual([])
+    })
+
     // The project's own assessment is the first chain's, so that chain can't have another.
     it('every chain assessment is of a tracked chain other than the first', () => {
       const problems: string[] = []
