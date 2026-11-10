@@ -5,18 +5,22 @@ import {
   type SortingState,
 } from '@tanstack/react-table'
 import { useState } from 'react'
-import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
 import { CustomLink } from '~/components/link/CustomLink'
 import { BasicTable } from '~/components/table/BasicTable'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
 import { useTable } from '~/hooks/useTable'
+import { InfoIcon } from '~/icons/Info'
 import { UnderReviewIcon } from '~/icons/UnderReview'
 import {
   getLiquidStakingStatColumns,
   TVL_COLUMN_ID,
 } from '~/pages/defi/liquid-staking/components/liquidStakingColumns'
 import {
-  ETH_STAKED_TITLE,
   ETH_STAKED_TOOLTIP,
   formatEthStaked,
 } from '~/pages/defi/liquid-staking/liquidStakingMetrics'
@@ -90,20 +94,31 @@ export function LiquidStakingSection({
 
   return (
     <ProjectSection {...sectionProps}>
-      {ethStaked && (
-        <ChartStats className="mb-4 md:grid-cols-1 lg:grid-cols-1">
-          <ChartStatsItem
-            label={ETH_STAKED_TITLE}
-            tooltip={`${ETH_STAKED_TOOLTIP} Latest value from ${formatTimestamp(ethStaked.timestamp, { mode: 'date' })}.`}
-          >
-            {formatEthStaked(ethStaked.value)}
-          </ChartStatsItem>
-        </ChartStats>
-      )}
+      <div className="mb-2 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+        {ethStaked && (
+          <div className="flex items-baseline gap-2">
+            <span className="font-bold text-lg">
+              {formatEthStaked(ethStaked.value)}
+            </span>
+            <span className="flex items-center gap-1.5 font-medium text-secondary text-xs">
+              staked on Ethereum
+              <Tooltip>
+                <TooltipTrigger aria-label="More info">
+                  <InfoIcon className="size-3.5" />
+                </TooltipTrigger>
+                <TooltipContent>
+                  {ETH_STAKED_TOOLTIP} Latest value from{' '}
+                  {formatTimestamp(ethStaked.timestamp, { mode: 'date' })}.
+                </TooltipContent>
+              </Tooltip>
+            </span>
+          </div>
+        )}
+        <CustomLink href="/defi/liquid-staking" className="ml-auto text-sm">
+          Compare risks
+        </CustomLink>
+      </div>
       <BasicTable table={table} />
-      <CustomLink href="/defi/liquid-staking" className="mt-4 inline-block">
-        Compare risks
-      </CustomLink>
     </ProjectSection>
   )
 }
