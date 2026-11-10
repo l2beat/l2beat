@@ -126,9 +126,9 @@ function getChainFacts({ chainView, hasTvl }: ProjectPrivacyEntry) {
   return compact([
     { label: 'Chain on this page', value: chainView.selected.name },
     hasTvl &&
-      chainView.totalValueLockedUsd !== undefined && {
+      chainView.allChainsValueLockedUsd !== undefined && {
         label: `Value locked on ${chainView.chains.length} chains`,
-        value: formatUsd(chainView.totalValueLockedUsd),
+        value: formatUsd(chainView.allChainsValueLockedUsd),
       },
     {
       label: 'Pages of other chains',

@@ -5,8 +5,9 @@ import {
   PopoverPortal,
   PopoverTrigger,
 } from '~/components/core/Popover'
+import { ChainIcon } from '~/components/projects/sections/SectionChainBadge'
 import { ChevronIcon } from '~/icons/Chevron'
-import type { PrivacyChainTab } from '~/server/features/privacy/project/getPrivacyProjectEntry'
+import type { PrivacyChainTab } from '~/server/features/privacy/getPrivacyProjectDetails'
 import { cn } from '~/utils/cn'
 
 /** Chain tabs shown before the tab that lists the rest. */
@@ -41,7 +42,7 @@ export function PrivacyChainTabs({
             aria-current={chain.id === selectedId ? 'page' : undefined}
             className={tabClassName(chain.id === selectedId)}
           >
-            <ChainIcon chain={chain} />
+            <ChainIcon chain={chain} className="ring-surface-primary" />
             {chain.name}
           </a>
         ))}
@@ -49,18 +50,22 @@ export function PrivacyChainTabs({
           <Popover>
             <PopoverTrigger
               aria-label="More chains"
-              className={cn(tabClassName(!!picked), 'rounded-b-none')}
+              className={cn(tabClassName(!!picked), 'md:rounded-b-none')}
             >
               {picked ? (
                 <>
-                  <ChainIcon chain={picked} />
+                  <ChainIcon chain={picked} className="ring-surface-primary" />
                   {picked.name}
                 </>
               ) : (
                 <>
                   <span className="-space-x-1 flex">
                     {rest.slice(0, 3).map((chain) => (
-                      <ChainIcon key={chain.id} chain={chain} />
+                      <ChainIcon
+                        key={chain.id}
+                        chain={chain}
+                        className="ring-surface-primary"
+                      />
                     ))}
                   </span>
                   +{rest.length} more
@@ -85,7 +90,7 @@ export function PrivacyChainTabs({
                         'bg-surface-secondary font-bold',
                     )}
                   >
-                    <ChainIcon chain={chain} />
+                    <ChainIcon chain={chain} className="ring-surface-primary" />
                     {chain.name}
                   </a>
                 ))}
@@ -100,21 +105,13 @@ export function PrivacyChainTabs({
 
 function tabClassName(selected: boolean) {
   return cn(
-    'flex h-8 shrink-0 items-center justify-center gap-1.5 rounded-t-md px-4 md:h-10 md:min-w-36 md:rounded-t-xl',
+    'flex h-8 shrink-0 items-center justify-center gap-1.5 px-4 max-md:rounded-md md:h-10 md:min-w-36 md:rounded-t-xl',
     'whitespace-nowrap font-bold text-xs md:text-sm',
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset',
-    selected ? 'bg-surface-primary' : 'bg-surface-tertiary text-secondary',
-  )
-}
-
-function ChainIcon({ chain }: { chain: PrivacyChainTab }) {
-  return (
-    <img
-      src={chain.iconUrl}
-      alt=""
-      width={16}
-      height={16}
-      className="size-4 rounded-full bg-pure-white ring-1 ring-surface-primary"
-    />
+    // From md up the selected tab joins the card under it. A phone has no
+    // card to join, so there the selected tab is the filled one.
+    selected
+      ? 'bg-surface-primary max-md:bg-surface-tertiary'
+      : 'bg-surface-tertiary text-secondary max-md:bg-transparent',
   )
 }

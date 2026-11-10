@@ -25,7 +25,11 @@ import {
 } from './anonymity-set/getPrivacyAnonymitySetSummaries'
 import { getPrivacyChainValues } from './getPrivacyValueLockedChart'
 import type { PrivacyAdversariesSummary, PrivacyProject } from './types'
-import { getPrivacyProjectPages } from './utils/getPrivacyPageChains'
+import { getPrivacyFlowBuckets } from './utils/getPrivacyFlowSync'
+import {
+  getPrivacyProjectPages,
+  type PrivacyProjectPage,
+} from './utils/getPrivacyProjectPages'
 import { getPrivacyTrackedChains } from './utils/getPrivacyTrackedChains'
 import {
   getPrivacyTrustedSetup,
@@ -143,9 +147,7 @@ export async function getPrivacySummaryEntries(
     const projectId = project.id
     // A chain's page counts the deposits into its own buckets.
     const bucketIds = new Set(
-      project.privacyInfo.tokens.flatMap((token) =>
-        token.buckets.map((bucket) => bucket.id),
-      ),
+      getPrivacyFlowBuckets([project]).map((bucket) => bucket.id),
     )
     const totalValueDeposited30dUsd = (dailyByProject[projectId] ?? [])
       .filter((row) => chain === undefined || bucketIds.has(row.bucketId))
@@ -179,13 +181,9 @@ export async function getPrivacySummaryEntries(
   return entries.sort(comparePrivacySummaryEntries)
 }
 
-type PrivacyProjectPage = ReturnType<
-  typeof getPrivacyProjectPages<PrivacyProject>
->[number]
-
 /** Name and icon of every chain that has a page of its own. */
 async function getPageChains(
-  pages: PrivacyProjectPage[],
+  pages: PrivacyProjectPage<PrivacyProject>[],
 ): Promise<Map<string, SectionChain>> {
   const names = unique(pages.flatMap((page) => page.chain ?? []))
   if (names.length === 0) return new Map()
@@ -201,7 +199,9 @@ async function getPageChains(
 }
 
 /** The value locked on each chain of the projects that have a page per chain. */
-async function getChainValuesByProject(pages: PrivacyProjectPage[]) {
+async function getChainValuesByProject(
+  pages: PrivacyProjectPage<PrivacyProject>[],
+) {
   const chainsByProject = groupBy(
     pages.filter((page) => page.chain !== undefined),
     (page) => page.project.id,
@@ -213,6 +213,7 @@ async function getChainValuesByProject(pages: PrivacyProjectPage[]) {
           projectId,
           await getPrivacyChainValues(
             projectId,
+            projectPages[0]?.project.tvsConfig ?? [],
             projectPages.flatMap((page) => page.chain ?? []),
           ),
         ] as const,

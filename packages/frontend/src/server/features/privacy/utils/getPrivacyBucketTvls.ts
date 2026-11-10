@@ -45,10 +45,19 @@ export function getPrivacyBucketTvls(
 }
 
 /**
- * Value of each bucket whose asset is held in that pool alone. The TVS
- * backend stores escrow values only for tokens that sum several escrows, so
- * such a bucket has no escrow rows and its value is its token's.
+ * The escrow of a token the TVS backend holds in one place. Such a token has
+ * no escrow values: the backend stores those only for tokens that sum several
+ * escrows. So its value counts as a whole for its escrow, and for its chain.
  */
+export function getSingleEscrow(
+  token: TvsToken,
+): { chain: string; address: string } | undefined {
+  return token.amount.type === 'balanceOfEscrow'
+    ? { chain: token.amount.chain, address: token.amount.escrowAddress }
+    : undefined
+}
+
+/** Value of each bucket whose asset is held in that pool alone. */
 export function getPrivacySingleEscrowBucketTvls(
   tokens: ProjectPrivacyToken[],
   tvsConfig: TvsToken[],
@@ -62,13 +71,14 @@ export function getPrivacySingleEscrowBucketTvls(
   for (const token of tokens) {
     for (const bucket of token.buckets) {
       const { chain, address } = getPrivacyBucketAddress(bucket.address)
-      const tvsToken = tvsConfig.find(
-        (t) =>
+      const tvsToken = tvsConfig.find((t) => {
+        const escrow = getSingleEscrow(t)
+        return (
           t.symbol === token.token.symbol &&
-          t.amount.type === 'balanceOfEscrow' &&
-          t.amount.chain === chain &&
-          t.amount.escrowAddress.toLowerCase() === address.toLowerCase(),
-      )
+          escrow?.chain === chain &&
+          escrow.address.toLowerCase() === address.toLowerCase()
+        )
+      })
       const value = tvsToken && valueByTokenId.get(tvsToken.id)
       if (value !== undefined) {
         result.set(bucket.id, value)

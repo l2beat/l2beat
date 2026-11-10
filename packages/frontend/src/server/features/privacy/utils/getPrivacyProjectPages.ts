@@ -5,12 +5,45 @@ import type {
 import { getPrivacyBucketAddress } from '@l2beat/shared'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 
+export interface PrivacyProjectPage<T> {
+  /** The project as it is tracked and rated on this page. */
+  project: T
+  /** The page's chain, for a project with a page per chain. */
+  chain?: string
+  path: `/${string}`
+}
+
 /**
- * The tracked chains a privacy project has a page for, in `trackedOn` order:
- * those with buckets or with their own assessment, and the first chain once
- * another one has its own. With fewer than two the project has one page.
+ * The pages of a privacy project. A project with buckets or assessments on
+ * several tracked chains has a page per chain, in `trackedOn` order: its
+ * first chain at the project's own URL, the others under it. Any other
+ * project has the one page it always had.
  */
-export function getPrivacyPageChains(
+export function getPrivacyProjectPages<
+  T extends { slug: string; privacyInfo: ProjectPrivacyInfo },
+>(project: T): PrivacyProjectPage<T>[] {
+  const path = getPrivacyProjectPath(project.slug)
+  const chains = getPageChains(project.privacyInfo)
+  if (chains.length < 2) {
+    return [{ project, path }]
+  }
+  return chains.map((chain, i) => ({
+    project: getPrivacyProjectOnChain(project, chain),
+    chain,
+    path: i === 0 ? path : `${path}/${chain}`,
+  }))
+}
+
+export function getPrivacyProjectPath(slug: string) {
+  return `/privacy/projects/${slug}` as const
+}
+
+/**
+ * Chains with buckets or with their own assessment. Once there are several,
+ * or a chain is assessed on its own, the first tracked chain is one of them
+ * too: the project's URL shows it and the project's own assessment rates it.
+ */
+function getPageChains(
   privacyInfo: Pick<
     ProjectPrivacyInfo,
     'trackedOn' | 'tokens' | 'chainAssessments'
@@ -24,40 +57,17 @@ export function getPrivacyPageChains(
       ),
     ),
   )
+  const chains = privacyInfo.trackedOn.filter(
+    (chain) => withBuckets.has(chain) || assessed.includes(chain),
+  )
+  const withFirst = chains.length > 1 || assessed.length > 0
   return privacyInfo.trackedOn.filter(
-    (chain, i) =>
-      withBuckets.has(chain) ||
-      assessed.includes(chain) ||
-      (i === 0 && assessed.length > 0),
+    (chain, i) => chains.includes(chain) || (withFirst && i === 0),
   )
 }
 
-/** The first page chain is shown at the project's own URL. */
-export function getPrivacyChainPagePath(
-  slug: string,
-  pageChains: string[],
-  chain: string,
-): `/${string}` {
-  const path = `/privacy/projects/${slug}` as const
-  return chain === pageChains[0] ? path : `${path}/${chain}`
-}
-
-/** The project once per page chain, or once as it is when it has one page. */
-export function getPrivacyProjectPages<
-  T extends { slug: string; privacyInfo: ProjectPrivacyInfo },
->(project: T): { project: T; chain?: string; path: `/${string}` }[] {
-  const chains = getPrivacyPageChains(project.privacyInfo)
-  return chains.length > 1
-    ? chains.map((chain) => ({
-        project: getPrivacyProjectOnChain(project, chain),
-        chain,
-        path: getPrivacyChainPagePath(project.slug, chains, chain),
-      }))
-    : [{ project, path: `/privacy/projects/${project.slug}` }]
-}
-
 /**
- * The project as it is tracked and rated on one of its page chains: only the
+ * The project as it is tracked and rated on one tracked chain: only the
  * buckets there, and that chain's assessment. A chain's own assessment
  * replaces the project's as a whole. A chain without one shares the
  * project's, except a key registry, which counts for its own chain only.
