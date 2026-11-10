@@ -1,4 +1,7 @@
-import { definePrivacyAdversaries } from '../../common/privacyAdversaries'
+import {
+  ADVICE_SNIPPETS as A,
+  definePrivacyAdversaries,
+} from '../../common/privacyAdversaries'
 import type { PrivacyFieldExposure } from '../../types'
 
 const INTENTS =
@@ -205,6 +208,7 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
       name: 'Set up',
       text: 'Turn on Tor in Zodl and point it at a lightwalletd server you run.',
       against: ['networkObserver'],
+      outside: true,
     },
     {
       name: 'Hold',
@@ -213,7 +217,7 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
     },
     {
       name: 'Swap back',
-      text: 'Swap back amounts that match no payout.',
+      text: `Swap back amounts that match no payout. ${A.freshAddress}`,
       against: ['chainAnalyst'],
     },
   ],

@@ -114,8 +114,9 @@ export function tornadoCashAdversaries(upgradeDelay: string, appCid: string) {
     advice: [
       {
         name: 'Load',
-        text: `Turn on NymVPN with the Random profile, an ${adviceLink('IP-hiding route', 'ipHidingRoutes')} for all of the computer's traffic. Open the reviewed release, \`${appCid}\`, through your own IPFS node, or [rebuild it](${RECIPE}) from the reviewed source to the same hash.`,
+        text: `Turn on NymVPN with the Random profile, an ${adviceLink('IP-hiding route', 'ipHidingRoutes')} for all of the computer's traffic. Install IPFS Desktop and open the reviewed release at \`http://localhost:8080/ipfs/${appCid}\`. A [rebuild](${RECIPE}) from the reviewed source gives the same hash.`,
         against: ['networkObserver', 'privilegedInsider'],
+        outside: true,
       },
       {
         name: 'Deposit',

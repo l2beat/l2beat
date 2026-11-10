@@ -291,6 +291,16 @@ describe(renderPrivacyProjectMarkdown.name, () => {
       )
     })
 
+    it('links each adversary to the steps that defend it', () => {
+      expect(privacy()).toInclude('**Advice:** step 1 (Wait).')
+    })
+
+    it('names the adversaries no step helps against', () => {
+      expect(
+        getSection(renderPrivacyProjectMarkdown(ENTRY), 'How to stay private'),
+      ).toInclude('**No step helps against:** future adversary.')
+    })
+
     it('lists every inside field for the public observer, with notes', () => {
       expect(privacy()).toInclude(
         '**Inside**\n\n- Sender: private\n- Recipient: private\n- Amount: at risk. Private only for fixed denominations.\n- Asset: private\n- Link: private',

@@ -245,9 +245,11 @@ export const ADVICE_SNIPPETS = {
     `Use a ${relayer} for the exit, so no wallet of yours pays gas for the receiving address.`,
   largestPool: 'Use the pool with the most depositors.',
   commonAmounts: 'Move common amounts rather than everything at once.',
-  wait: 'Let time pass before exiting, and exit at a different time of day than you deposited.',
+  wait: 'Exit only after many others have moved funds in and out, at a different time of day than you deposited.',
   freshAddress:
     'Send each exit to a fresh address and spend from it with a separate wallet.',
+  /** Hosted web apps that work in Tor Browser. */
+  torBrowser: `Open the app in ${adviceLink('Tor Browser', 'ipHidingRoutes')}.`,
   /** Native apps and anything else Tor Browser cannot run. */
   ipHidingRoute: (app: string) =>
     `Run ${app} with all traffic through an ${adviceLink('IP-hiding route', 'ipHidingRoutes')}.`,

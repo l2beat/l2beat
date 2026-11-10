@@ -1,5 +1,6 @@
 import {
   ADVICE_SNIPPETS as A,
+  adviceLink,
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
@@ -135,16 +136,16 @@ export const tacitPayAdversaries = definePrivacyAdversaries({
       ],
     },
     privilegedInsider: {
-      sentiment: 'good',
+      sentiment: 'warning',
       exposureShort:
-        'Tacit holds no key that spends or decrypts notes, and the reviewed page version is an immutable contract that runs from a saved copy.',
+        'Tacit holds no key to any note, but its app owner can change the page anon.wei serves, its relay host and RPC nodes without delay.',
       exposureContinued:
-        "Tacit's relay sees the IP at sign-in, each exit's recipient with the IP that asked, and each deposit address the user views in the app. Tacit's app owner can point anon.wei at another page and change the relay host and RPC nodes the page reads, without delay.",
+        "The reviewed page version is an immutable contract, but running a saved copy of it takes command-line work. Tacit's relay sees the IP at sign-in, each exit's recipient with the IP that asked, and each deposit address the user views in the app.",
       interior: {
         ...INTERIOR,
         recipient: {
           verdict: 'atRisk',
-          note: 'The relay sees the recipient of every exit, with the IP that asked.',
+          note: "Private only over an IP-hiding route, since the relay sees every exit's recipient with the IP that asked.",
         },
         linkage: {
           verdict: 'atRisk',
@@ -201,11 +202,13 @@ export const tacitPayAdversaries = definePrivacyAdversaries({
       name: 'Load',
       text: 'Save the reviewed page version from your own node, check its hash and serve it from localhost, as the App section describes, not from anon.wei.limo.',
       against: ['privilegedInsider'],
+      outside: true,
     },
     {
       name: 'Sign in',
-      text: 'Set your own Ethereum node under Endpoints and in your wallet before signing in.',
-      against: ['networkObserver'],
+      text: `Set your own Ethereum node under Endpoints and in your wallet before signing in. Send all other traffic through an ${adviceLink('IP-hiding route', 'ipHidingRoutes')}, so the relay sees no IP of yours.`,
+      against: ['networkObserver', 'privilegedInsider'],
+      outside: true,
     },
     {
       name: 'Shield',

@@ -180,11 +180,12 @@ export const strk20Adversaries = definePrivacyAdversaries({
       name: 'Set up',
       text: A.ipHidingRoute('Bramble'),
       against: ['networkObserver'],
+      outside: true,
     },
     {
       name: 'Deposit',
       text: 'Hold STRK or USDC, and open channels in a transaction without a deposit.',
-      against: ['chainAnalyst'],
+      against: ['chainAnalyst', 'networkObserver'],
     },
     {
       name: 'Pay',

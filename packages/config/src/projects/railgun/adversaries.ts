@@ -147,6 +147,7 @@ export function railgunAdversaries(upgradeDelay: string) {
         name: 'Set up',
         text: 'Before unlocking RailOxide, set a local Ethereum node as the direct endpoint for reads, and keep one public endpoint for submissions.',
         against: ['networkObserver'],
+        outside: true,
       },
       {
         name: 'Shield',

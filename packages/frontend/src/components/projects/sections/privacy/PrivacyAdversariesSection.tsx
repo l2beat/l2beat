@@ -24,7 +24,11 @@ import {
   PRIVACY_EXPOSURE_LABEL,
   PRIVACY_INTERIOR_LABEL,
 } from '~/pages/privacy/adversaries/privacyAdversaryUi'
-import { ADVICE } from '~/pages/privacy/adviceUi'
+import {
+  ADVICE,
+  getAdviceStepId,
+  getStepsAgainst,
+} from '~/pages/privacy/adviceUi'
 import type { PrivacyReferenceApp } from '~/server/features/privacy/utils/getPrivacyReferenceApp'
 import { cn } from '~/utils/cn'
 import { RiskBanner } from '../../RiskBanner'
@@ -86,6 +90,7 @@ export function PrivacyAdversariesSection({
             cell={block.cell}
             baseline={block.id === 'publicObserver' ? undefined : baseline}
             fields={adversaries.fields}
+            steps={getStepsAgainst(adversaries.advice, block.id)}
           />
         ))}
       </div>
@@ -98,10 +103,13 @@ function AdversaryBlock({
   cell,
   baseline,
   fields,
+  steps,
 }: {
   /** The adversary's rosette slice. */
   value: RosetteValue
   cell: PrivacyAdversaryCell
+  /** The advice steps that defend this cell. */
+  steps: ReturnType<typeof getStepsAgainst>
   /** The public observer cell; undefined when rendering the baseline itself. */
   baseline: PrivacyAdversaryCell | undefined
   fields: PrivacyFieldInfo[]
@@ -113,7 +121,12 @@ function AdversaryBlock({
     >
       <RiskBanner
         {...value}
-        description={getPrivacyAdversaryDescription(cell)}
+        // The reason for the colour leads in bold, what follows extends it.
+        description={
+          cell.exposureContinued
+            ? `**${cell.exposureShort}** ${cell.exposureContinued}`
+            : getPrivacyAdversaryDescription(cell)
+        }
         size="large"
       />
       {cell.interior &&
@@ -126,6 +139,23 @@ function AdversaryBlock({
         ) : (
           <ExposureChips map={cell.interior} fields={fields} />
         ))}
+      {steps.length > 0 && (
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-paragraph-13">
+          <span className="text-secondary">{ADVICE.label}:</span>
+          {steps.map(({ step, index }) => (
+            <CustomLink
+              key={step.name}
+              href={`#${getAdviceStepId(index)}`}
+              className="inline-flex items-center gap-1"
+            >
+              <span className="flex size-4 items-center justify-center rounded-full bg-surface-tertiary font-bold text-[10px] text-primary no-underline">
+                {index + 1}
+              </span>
+              {step.name}
+            </CustomLink>
+          ))}
+        </div>
+      )}
       {cell.sources && cell.sources.length > 0 && (
         <div className="flex flex-wrap gap-x-4 gap-y-1 text-paragraph-13">
           <span className="text-secondary">Sources:</span>

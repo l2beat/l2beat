@@ -206,6 +206,7 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
       name: 'Set up',
       text: `Run Desktop on a system that sends ${adviceLink('all traffic through Tor', 'ipHidingRoutes')} and blocks UDP, such as Whonix. Set your own Aztec node and Ethereum node in the endpoint settings.`,
       against: ['networkObserver', 'privilegedInsider'],
+      outside: true,
     },
     {
       name: 'Register',

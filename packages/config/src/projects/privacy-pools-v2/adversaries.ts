@@ -208,8 +208,9 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
   advice: [
     {
       name: 'Set up',
-      text: `${A.localBuild} Send all traffic through an ${adviceLink('IP-hiding route', 'ipHidingRoutes')}, and set a local node as the endpoint before signing in.`,
+      text: `Send all traffic through an ${adviceLink('IP-hiding route', 'ipHidingRoutes')}, and set a local node as the endpoint before signing in.`,
       against: ['networkObserver', 'privilegedInsider'],
+      outside: true,
     },
     {
       name: 'Deposit',
@@ -230,6 +231,7 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
       name: 'Check',
       text: `Before withdrawing, check the size of the approved list that the ASPRegistry's latest root links on IPFS.`,
       against: ['privilegedInsider'],
+      outside: true,
     },
     {
       name: 'Withdraw',

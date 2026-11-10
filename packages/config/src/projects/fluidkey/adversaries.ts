@@ -1,5 +1,5 @@
 import {
-  adviceLink,
+  ADVICE_SNIPPETS as A,
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
@@ -147,8 +147,9 @@ export function fluidkeyAdversaries(accounts: number) {
     advice: [
       {
         name: 'Sign in',
-        text: `Open the app in ${adviceLink('Tor Browser', 'ipHidingRoutes')}. Connect a new wallet that has never sent a transaction, not a Google, Apple, email or Farcaster login.`,
+        text: `${A.torBrowser} Connect a new wallet that has never sent a transaction, not a Google, Apple, email or Farcaster login.`,
         against: ['networkObserver', 'futureAdversary'],
+        outside: true,
       },
       {
         name: 'Receive',

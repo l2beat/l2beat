@@ -18,7 +18,11 @@ import {
   PRIVACY_EXPOSURE_LABEL,
   PRIVACY_INTERIOR_LABEL,
 } from '~/pages/privacy/adversaries/privacyAdversaryUi'
-import { ADVICE } from '~/pages/privacy/adviceUi'
+import {
+  ADVICE,
+  getStepsAgainst,
+  getUncoveredAdversaries,
+} from '~/pages/privacy/adviceUi'
 import {
   formatBucketLabel,
   getPrivacyAssetsTotals,
@@ -65,6 +69,7 @@ export function renderPrivacyAdversaries(
       return renderAdversary(adversary, cell, level, {
         baseline: adversary.id === 'publicObserver' ? undefined : baseline,
         fields: adversaries.fields,
+        steps: getStepsAgainst(adversaries.advice, adversary.id),
       })
     }),
   ])
@@ -108,10 +113,13 @@ function renderAdversary(
   {
     baseline,
     fields,
+    steps,
   }: {
     /** The public observer cell; undefined when rendering the baseline itself. */
     baseline: PrivacyAdversaryCell | undefined
     fields: PrivacyFieldInfo[]
+    /** The advice steps that defend this cell. */
+    steps: ReturnType<typeof getStepsAgainst>
   },
 ) {
   return joinBlocks([
@@ -124,6 +132,9 @@ function renderAdversary(
         ? renderInteriorDiff(cell.interior, baseline.interior, fields)
         : renderInterior(`**${PRIVACY_INTERIOR_LABEL}**`, cell.interior, fields)
       : '',
+    steps.length > 0
+      ? `**${ADVICE.label}:** ${steps.map(({ step, index }) => `step ${index + 1} (${step.name})`).join(', ')}.`
+      : '',
     renderSources(cell.sources ?? []),
   ])
 }
@@ -132,7 +143,9 @@ function renderAdversary(
 export function renderPrivacyAdvice({
   steps,
   adversaries,
-}: Pick<PrivacyAdviceSectionProps, 'steps' | 'adversaries'>) {
+  sentiments,
+}: Pick<PrivacyAdviceSectionProps, 'steps' | 'adversaries' | 'sentiments'>) {
+  const uncovered = getUncoveredAdversaries(steps, adversaries, sentiments)
   return joinBlocks([
     `${ADVICE.intro} ${link(ADVICE.methodologyLink, ADVICE.methodologyHref)}`,
     numberedList(
@@ -140,9 +153,15 @@ export function renderPrivacyAdvice({
         const against = adversaries
           .filter((adversary) => step.against.includes(adversary.id))
           .map((adversary) => adversary.label.toLowerCase())
-        return `**${step.name}.** ${step.text} ${ADVICE.againstLabel}: ${against.join(', ')}.`
+        const name = step.outside
+          ? `${step.name}, ${ADVICE.outsideLabel}`
+          : step.name
+        return `**${name}.** ${step.text} ${ADVICE.againstLabel}: ${against.join(', ')}.`
       }),
     ),
+    uncovered.length > 0
+      ? `**${ADVICE.uncoveredLabel}:** ${uncovered.map((adversary) => adversary.label.toLowerCase()).join(', ')}.`
+      : '',
   ])
 }
 

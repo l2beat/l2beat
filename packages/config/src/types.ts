@@ -1520,12 +1520,21 @@ export interface PrivacyPromise {
  * home of the advice. The adversaries section links them once.
  */
 export interface PrivacyAdviceStep {
-  /** One or two words, e.g. "Exit". Cells name the step by it. */
+  /** One or two words, e.g. "Exit". Unique within the project. */
   name: string
   /** What the user does, imperative markdown, three sentences at most. */
   text: string
-  /** The adversaries this step keeps the promised field from. Never a red cell. */
+  /**
+   * The adversaries this step keeps the promised field from, or a field their
+   * cell marks at risk. Never a red cell.
+   */
   against: PrivacyAdversaryId[]
+  /**
+   * True when the step needs something the reference app does not ship:
+   * another program, a node, a build from source or a system setting. The page
+   * marks it, so the effort the ratings assume is visible.
+   */
+  outside?: boolean
 }
 
 export interface PrivacyAdversariesConfig {

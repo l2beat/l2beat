@@ -1,5 +1,6 @@
 import {
   ADVICE_SNIPPETS as A,
+  adviceLink,
   definePrivacyAdversaries,
 } from '../../common/privacyAdversaries'
 
@@ -146,8 +147,9 @@ export function umbraAdversaries(registrants: number) {
     advice: [
       {
         name: 'Set up',
-        text: `${A.localBuild} Leave its indexer URL empty, point all RPC URLs and your wallet at your own node, and block cloudflare-eth.com.`,
+        text: `${A.localBuild} Leave its indexer URL empty, point all RPC URLs and your wallet at your own node, and block cloudflare-eth.com. Send all other traffic through an ${adviceLink('IP-hiding route', 'ipHidingRoutes')}, so the relayer sees no IP of yours.`,
         against: ['networkObserver', 'privilegedInsider'],
+        outside: true,
       },
       {
         name: 'Register',

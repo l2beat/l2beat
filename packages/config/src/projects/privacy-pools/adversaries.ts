@@ -1,6 +1,5 @@
 import {
   ADVICE_SNIPPETS as A,
-  adviceLink,
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
@@ -57,9 +56,9 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'good',
       exposureShort:
-        "The app scans every pool whole and matches notes locally, so over an IP-hiding route no third party learns which deposits are the user's.",
+        "The website works in Tor Browser and scans every pool whole, matching notes locally without revealing the user's deposits to third parties.",
       exposureContinued:
-        'Fast Relay receives amount and asset for a quote and the recipient once the user confirms. The app confirms a relayed withdrawal from bulk reads of new blocks, so no request names its hash. On a quiet pool, the RPC can time a wallet sign-in against the withdrawal the same session waits for.',
+        "Fast Relay receives amount and asset for a quote and the recipient once the user confirms, Cloaked Relay all three with the first quote. The website confirms a relayed withdrawal from bulk reads of new blocks, so no request names its hash. 0xbow's Google Analytics runs without a consent prompt and records the hash of any explorer link the user opens. On a quiet pool, the RPC can time a wallet sign-in against the withdrawal the same session waits for.",
       sources: [
         {
           title: 'Sign-in with a recovery phrase needs no wallet',
@@ -74,7 +73,8 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
           url: WEBSITE + 'utils/relayedReceipt.ts#L1-L44',
         },
         {
-          title: 'Recipient sent once the user confirms',
+          title:
+            'Recipient sent on confirm, or with the first quote where the relayer requires it',
           url: WEBSITE + 'utils/quotePhases.ts#L4-L140',
         },
       ],
@@ -129,8 +129,9 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
   advice: [
     {
       name: 'Load',
-      text: `${A.localBuild} Block www.googletagmanager.com in your hosts file, and set an RPC endpoint that serves old logs without a key, such as rpc.mevblocker.io. Turn on NymVPN with the Random profile, an ${adviceLink('IP-hiding route', 'ipHidingRoutes')} for all of the computer's traffic.`,
-      against: ['networkObserver', 'privilegedInsider'],
+      text: A.torBrowser,
+      against: ['networkObserver'],
+      outside: true,
     },
     {
       name: 'Deposit',
@@ -144,13 +145,14 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
     },
     {
       name: 'Sign in',
-      text: 'Sign in with your recovery phrase in a new session, so no wallet address is queried.',
+      text: 'Sign in with your recovery phrase in a new Tor Browser session, so no wallet address is queried. Open no explorer links in that session.',
       against: ['networkObserver'],
     },
     {
       name: 'Check',
       text: 'Before withdrawing, check the size of the approved list that the latest RootUpdated event links on IPFS.',
       against: ['privilegedInsider'],
+      outside: true,
     },
     {
       name: 'Withdraw',

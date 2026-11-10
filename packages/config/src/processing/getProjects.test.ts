@@ -562,6 +562,10 @@ describe('getProjects', () => {
       for (const { project, privacyInfo } of privacyProjects) {
         const adversaries = privacyInfo.adversaries
         if (!adversaries?.advice) continue
+        const names = adversaries.advice.map((step) => step.name)
+        if (new Set(names).size !== names.length) {
+          problems.push(`${project.id}: step names repeat`)
+        }
         for (const step of adversaries.advice) {
           if (step.against.length === 0) {
             problems.push(`${project.id} ${step.name}: defends no cell`)

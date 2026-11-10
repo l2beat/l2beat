@@ -1,4 +1,5 @@
 import {
+  ADVICE_SNIPPETS as A,
   adviceLink,
   definePrivacyAdversaries,
 } from '../../common/privacyAdversaries'
@@ -151,14 +152,16 @@ export const zkApiAdversaries = definePrivacyAdversaries({
   },
   advice: [
     {
-      name: 'Deposit',
-      text: `Send the deposit through an ${adviceLink('IP-hiding route', 'ipHidingRoutes')}.`,
+      name: 'Set up',
+      text: A.torBrowser,
       against: ['networkObserver'],
+      outside: true,
     },
     {
-      name: 'Chat',
-      text: 'Use the app in Tor Browser.',
+      name: 'Deposit',
+      text: `Deposit from a wallet whose traffic also takes an ${adviceLink('IP-hiding route', 'ipHidingRoutes')}.`,
       against: ['networkObserver'],
+      outside: true,
     },
   ],
 })

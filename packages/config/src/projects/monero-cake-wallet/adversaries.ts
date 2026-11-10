@@ -175,6 +175,7 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
       name: 'Set up',
       text: A.ipHidingRoute('Cake'),
       against: ['networkObserver'],
+      outside: true,
     },
     {
       name: 'Deposit',
@@ -183,7 +184,7 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
     },
     {
       name: 'Wait',
-      text: A.wait,
+      text: 'Hold the XMR for days, and exit at a different time of day than you deposited.',
       against: ['chainAnalyst'],
     },
     {
