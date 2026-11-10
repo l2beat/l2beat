@@ -9,22 +9,17 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { LiquidStakingEntry } from '~/server/features/defi/liquid-staking/getLiquidStakingEntries'
 import type { ChartRange } from '~/utils/range/range'
-import {
-  type LiquidStakingChartProject,
-  LiquidStakingCharts,
-} from './components/LiquidStakingCharts'
+import { LiquidStakingCharts } from './components/LiquidStakingCharts'
 import { LiquidStakingTable } from './components/LiquidStakingTable'
 
 interface Props extends AppLayoutProps {
   entries: LiquidStakingEntry[]
-  chartProjects: LiquidStakingChartProject[]
   defaultChartRange: ChartRange
   queryState: DehydratedState
 }
 
 export function LiquidStakingPage({
   entries,
-  chartProjects,
   defaultChartRange,
   queryState,
   ...props
@@ -37,7 +32,7 @@ export function LiquidStakingPage({
             Liquid Staking
           </MainPageHeader>
           <LiquidStakingCharts
-            projects={chartProjects}
+            projects={entries}
             defaultRange={defaultChartRange}
           />
           <PrimaryCard className="mt-4">

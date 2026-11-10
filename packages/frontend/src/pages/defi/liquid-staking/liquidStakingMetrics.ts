@@ -47,14 +47,14 @@ export function formatLatestValue(
   return `${latest.estimated ? '~' : ''}${metric.format(latest.value)}`
 }
 
-/** A daily value shows the day it covers, the others their date. */
-export function formatLatestDate(
+/** The date of a metric's value: the day it covers, or the day it is as of. */
+export function formatMetricDate(
   metric: LiquidStakingMetric,
-  latest: LiquidStakingLatestValue,
+  timestamp: number,
 ): string {
   return metric.dailyBuckets
-    ? formatRange(latest.timestamp, latest.timestamp + UnixTime.DAY)
-    : formatTimestamp(latest.timestamp, { mode: 'date' })
+    ? formatRange(timestamp, timestamp + UnixTime.DAY)
+    : formatTimestamp(timestamp, { mode: 'date' })
 }
 
 /** The chart values, also shown in the table and on project pages. */

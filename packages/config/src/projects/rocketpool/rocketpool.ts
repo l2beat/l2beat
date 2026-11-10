@@ -61,26 +61,24 @@ const balanceCadence =
   ) === 86400
     ? 'daily'
     : `every ${duration('RocketDAOProtocolSettingsNetwork', 'getSubmitBalancesFrequency')}`
-const voteDelay = duration(
+const voteDelaySeconds = discovery.getContractValue<number>(
   'RocketDAONodeTrustedSettingsProposals',
   'getVoteDelayTime',
 )
-const upgradeVetoWindow = duration(
+const upgradeVetoSeconds = discovery.getContractValue<number>(
   'RocketDAOProtocolSettingsSecurity',
   'getUpgradeDelay',
 )
+const voteDelay = formatSeconds(voteDelaySeconds, { fullUnit: true })
+const upgradeVetoWindow = formatSeconds(upgradeVetoSeconds, { fullUnit: true })
 // Vote delay plus the post-vote veto window: the shortest path from an
 // upgrade proposal to its execution, excluding the vote itself.
-const upgradePathDays =
-  (discovery.getContractValue<number>(
-    'RocketDAONodeTrustedSettingsProposals',
-    'getVoteDelayTime',
-  ) +
-    discovery.getContractValue<number>(
-      'RocketDAOProtocolSettingsSecurity',
-      'getUpgradeDelay',
-    )) /
-  86400
+const upgradePathDays = (voteDelaySeconds + upgradeVetoSeconds) / 86400
+const oracleQuorum = membersNeeded('RocketDAONodeTrusted')
+const maxRethDelta = percent(
+  'RocketDAOProtocolSettingsNetwork',
+  'getMaxRethDelta',
+)
 
 export const rocketpool: BaseProject = {
   id: ProjectId('rocketpool'),
@@ -226,10 +224,10 @@ export const rocketpool: BaseProject = {
           'Each validator withdraws to its own Rocket Pool contract, fixed when it is funded. Returned ETH is split onchain between the operator and the pool, and the vault and token contracts cannot be upgraded.',
       },
       oracle: {
-        value: `${membersNeeded('RocketDAONodeTrusted')} of ${oracleSetSize}`,
-        secondLine: `${balanceCadence} · ≤${percent('RocketDAOProtocolSettingsNetwork', 'getMaxRethDelta')}`,
+        value: `${oracleQuorum} of ${oracleSetSize}`,
+        secondLine: `${balanceCadence} · ≤${maxRethDelta}`,
         sentiment: 'warning',
-        description: `${membersNeeded('RocketDAONodeTrusted')} of ${oracleSetSize} oracle DAO members report the rate ${balanceCadence}, moving it at most ${percent('RocketDAOProtocolSettingsNetwork', 'getMaxRethDelta')} per report. If they stop, the last rate stays in force. The security council can switch reporting off.`,
+        description: `${oracleQuorum} of ${oracleSetSize} oracle DAO members report the rate ${balanceCadence}, moving it at most ${maxRethDelta} per report. If they stop, the last rate stays in force. The security council can switch reporting off.`,
       },
       exit: {
         value: 'Burn anytime',
@@ -243,10 +241,10 @@ export const rocketpool: BaseProject = {
         description: `Anyone can burn ${rethSymbol} for ETH instantly, with no queue or pause. ETH comes only from a liquid buffer (target ${percent('RocketDAOProtocolSettingsNetwork', 'getTargetRethCollateralRate')} of backing); when it is empty, the burn fails.`,
       },
       upgrades: {
-        value: `Oracle DAO (${membersNeeded('RocketDAONodeTrusted')}/${oracleSetSize})`,
+        value: `Oracle DAO (${oracleQuorum}/${oracleSetSize})`,
         secondLine: `≥${upgradePathDays}d · council veto`,
         sentiment: 'warning',
-        description: `Only the oracle DAO (${membersNeeded('RocketDAONodeTrusted')}-of-${oracleSetSize} majority) can change the code: ${voteDelay} before voting, then ${upgradeVetoWindow} in which the ${councilSeatThreshold} security council can veto. The vault and token contracts cannot be upgraded.`,
+        description: `Only the oracle DAO (${oracleQuorum}-of-${oracleSetSize} majority) can change the code: ${voteDelay} before voting, then ${upgradeVetoWindow} in which the ${councilSeatThreshold} security council can veto. The vault and token contracts cannot be upgraded.`,
       },
     },
   },

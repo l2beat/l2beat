@@ -11,8 +11,8 @@ import type {
   LiquidStakingSummary,
 } from '~/server/features/defi/liquid-staking/getLiquidStakingSummary'
 import {
-  formatLatestDate,
   formatLatestValue,
+  formatMetricDate,
   LIQUID_STAKING_METRICS,
   type LiquidStakingMetric,
   TVL_TOOLTIP,
@@ -79,5 +79,5 @@ function withDate(
   latest: LiquidStakingLatestValue | undefined,
 ) {
   if (!latest) return metric.tooltip
-  return `${metric.tooltip} Latest value from ${formatLatestDate(metric, latest)}.`
+  return `${metric.tooltip} Latest value from ${formatMetricDate(metric, latest.timestamp)}.`
 }

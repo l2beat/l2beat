@@ -9,7 +9,6 @@ import {
   computeYieldChart,
   getLastChartDay,
   getQueueWaits,
-  type LiquidStakingChartToken,
 } from './computeLiquidStakingCharts'
 
 const DAY = UnixTime.DAY
@@ -21,7 +20,7 @@ const DAY_31 = START + 31 * DAY
 describe(computeYieldChart.name, () => {
   it('annualises the 30-day rate change without compounding', () => {
     const charts = compute(
-      [project('lido')],
+      ['lido'],
       [snapshot('lido', START + DAY, 1.0), snapshot('lido', DAY_31, 1.003)],
     )
     expect(present(charts.yield[0]?.projects.lido)).toBeCloseTo(
@@ -67,7 +66,7 @@ describe(computeCostOfExitChart.name, () => {
     // 2 requests in the hour to 01:00, 1 in the hour to 02:00; all three
     // finalized at 05:00, so they waited 4 and 3 hours.
     const charts = compute(
-      [project('etherfi')],
+      ['etherfi'],
       [
         snapshot('etherfi', START + DAY, 1),
         snapshot('etherfi', DAY_31, 1, {
@@ -115,7 +114,7 @@ describe(computeCostOfExitChart.name, () => {
       }),
     ]
     // The two requests waited 1 and 24 hours.
-    const completed = compute([project('etherfi')], snapshots)
+    const completed = compute(['etherfi'], snapshots)
     expect(present(completed.costOfExit[0]?.projects.etherfi)).toBeCloseTo(
       (1 + 24) / 2 / 24,
       1e-6,
@@ -124,7 +123,7 @@ describe(computeCostOfExitChart.name, () => {
     // While the second is still queued, it waits at the pace of the
     // finalizations so far: half a request an hour, with one request ahead
     // of it, so two more hours after the hour it has waited.
-    const partial = compute([project('etherfi')], snapshots.slice(0, -1))
+    const partial = compute(['etherfi'], snapshots.slice(0, -1))
     expect(present(partial.costOfExit[0]?.projects.etherfi)).toBeCloseTo(
       (1 + 3) / 2 / 24,
       1e-12,
@@ -135,7 +134,7 @@ describe(computeCostOfExitChart.name, () => {
 
   it('takes the market when it is cheaper than the queue', () => {
     const charts = compute(
-      [project('wbeth')],
+      ['wbeth'],
       [
         snapshot('wbeth', START + DAY, 1.0),
         // 100 tokens fetch 0.1% under what they're worth at the rate.
@@ -161,7 +160,7 @@ describe(computeCostOfExitChart.name, () => {
     }
     const unfilled = { lockTime: 40 * DAY }
     const charts = compute(
-      [project('wbeth')],
+      ['wbeth'],
       [
         snapshot('wbeth', START + DAY, 1.0),
         // One hour of three could sell; the other two found no pool deep enough.
@@ -177,7 +176,7 @@ describe(computeCostOfExitChart.name, () => {
   it('exits Rocket Pool at once only while its buffer holds the reference exit', () => {
     const at = (instantExitEth: bigint) =>
       compute(
-        [project('rocketpool')],
+        ['rocketpool'],
         [
           snapshot('rocketpool', START + DAY, 1),
           snapshot('rocketpool', DAY_31, 1, {
@@ -194,7 +193,7 @@ describe(computeCostOfExitChart.name, () => {
 
   it('counts an instant redemption’s fee in days of yield', () => {
     const charts = compute(
-      [project('etherfi')],
+      ['etherfi'],
       [
         snapshot('etherfi', START + DAY, 1.0),
         snapshot('etherfi', DAY_31, 1.003, {
@@ -213,14 +212,14 @@ describe(computeCostOfExitChart.name, () => {
   it('makes wBETH unwraps wait at least the lock, even without requests', () => {
     const lockTime = 10 * DAY
     const quiet = compute(
-      [project('wbeth')],
+      ['wbeth'],
       [snapshot('wbeth', DAY_31, 1, { lockTime })],
     )
     expect(quiet.costOfExit[0]?.projects.wbeth).toEqual(10)
 
     // A request allocated ETH after an hour still waits out its lock.
     const allocated = compute(
-      [project('wbeth')],
+      ['wbeth'],
       [
         snapshot('wbeth', DAY_31, 1, {
           lockTime,
@@ -283,7 +282,7 @@ describe(getLastChartDay.name, () => {
 })
 
 function compute(
-  projects: LiquidStakingChartToken[],
+  projectIds: string[],
   snapshots: LiquidStakingSnapshotRecord[],
   network: EthereumStakingDailyRecord[] = [],
 ) {
@@ -291,18 +290,12 @@ function compute(
   return {
     yield: computeYieldChart({
       days,
-      projectIds: projects.map((p) => p.id),
+      projectIds,
       snapshots,
       network,
     }),
-    costOfExit: computeCostOfExitChart({ days, projects, snapshots }),
+    costOfExit: computeCostOfExitChart({ days, projectIds, snapshots }),
   }
-}
-
-function project(
-  type: LiquidStakingChartToken['type'],
-): LiquidStakingChartToken {
-  return { id: type, type }
 }
 
 function snapshot(

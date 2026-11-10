@@ -8,8 +8,8 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import type { LiquidStakingStatsEntry } from '~/server/features/defi/liquid-staking/getLiquidStakingEntries'
 import {
-  formatLatestDate,
   formatLatestValue,
+  formatMetricDate,
   LIQUID_STAKING_METRICS,
   TVL_TOOLTIP,
 } from '../liquidStakingMetrics'
@@ -54,7 +54,7 @@ export function getLiquidStakingStatColumns<T extends LiquidStakingStatsEntry>(
                 {formatLatestValue(metric, latest)}
               </TooltipTrigger>
               <TooltipContent>
-                Latest value from {formatLatestDate(metric, latest)}.
+                Latest value from {formatMetricDate(metric, latest.timestamp)}.
               </TooltipContent>
             </Tooltip>
           )

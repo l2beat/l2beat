@@ -18,20 +18,15 @@ export async function getLiquidStakingData(
   url: string,
   cache: InMemoryCache,
 ): Promise<RenderData> {
-  const {
-    appLayoutProps,
-    entries,
-    chartProjects,
-    defaultChartRange,
-    queryState,
-  } = await cache.get(
-    {
-      key: ['defi', 'liquid-staking', 'data'],
-      ttl: 5 * 60,
-      staleWhileRevalidate: 25 * 60,
-    },
-    getCachedData,
-  )
+  const { appLayoutProps, entries, defaultChartRange, queryState } =
+    await cache.get(
+      {
+        key: ['defi', 'liquid-staking', 'data'],
+        ttl: 5 * 60,
+        staleWhileRevalidate: 25 * 60,
+      },
+      getCachedData,
+    )
 
   return {
     head: {
@@ -60,7 +55,6 @@ export async function getLiquidStakingData(
       props: {
         ...appLayoutProps,
         entries,
-        chartProjects,
         defaultChartRange,
         queryState,
       },
@@ -99,11 +93,6 @@ async function getCachedData() {
   return {
     appLayoutProps,
     entries,
-    chartProjects: entries.map((entry) => ({
-      id: entry.id,
-      name: entry.shortName ?? entry.name,
-      icon: entry.icon,
-    })),
     defaultChartRange,
     queryState: helpers.dehydrate(),
   }
