@@ -1,5 +1,6 @@
 import type { ProjectPrivacyInfo } from '@l2beat/config'
 import { getPrivacyBucketAddress } from '@l2beat/shared'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 
 /**
  * The tracked chains a privacy project has a page for, in `trackedOn` order:
@@ -54,17 +55,21 @@ export function getPrivacyProjectPages<
 
 /**
  * The project as it is tracked and rated on one of its page chains: only the
- * buckets there, and that chain's assessment.
+ * buckets and the key registry there, and that chain's assessment.
  */
 export function getPrivacyProjectOnChain<
   T extends { privacyInfo: ProjectPrivacyInfo },
 >(project: T, chain: string): T {
-  const { chainAssessments, ...privacyInfo } = project.privacyInfo
+  const { chainAssessments, anonymitySet, ...privacyInfo } = project.privacyInfo
+  const isElsewhere =
+    anonymitySet?.type === 'key-registrations' &&
+    ChainSpecificAddress.longChain(anonymitySet.registry) !== chain
   return {
     ...project,
     privacyInfo: {
       ...privacyInfo,
       ...chainAssessments?.[chain],
+      anonymitySet: isElsewhere ? undefined : anonymitySet,
       tokens: privacyInfo.tokens.flatMap((token) => {
         const buckets = token.buckets.filter(
           (bucket) => getPrivacyBucketAddress(bucket.address).chain === chain,

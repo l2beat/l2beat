@@ -10,7 +10,6 @@ import type {
   ProjectGarden,
   ProjectPermissions,
   ProjectPrivacyAdversaries,
-  ProjectPrivacyAssessment,
   ProjectPrivacyReferenceApp,
   ProjectPrivacyToken,
   ProjectStatuses,
@@ -169,6 +168,10 @@ export async function getPrivacyProjectDetails(
     viewChains.length > 1
       ? (viewChains.find((c) => c.id === chain) ?? viewChains[0])
       : undefined
+  // On a chain's page: its buckets, its key registry and its assessment.
+  const shown = selected
+    ? getPrivacyProjectOnChain(project, selected.id)
+    : project
 
   const [
     { totals, daily30d, tokenValues, bucketTvls },
@@ -264,7 +267,7 @@ export async function getPrivacyProjectDetails(
     ])
     // An asset's value on one chain is what its buckets there hold.
     stats = buildPrivacyStats(
-      getPrivacyProjectOnChain(project, selected.id).privacyInfo.tokens,
+      shown.privacyInfo.tokens,
       { ...statsContext, bucketTvls: chainBucketTvls },
       (token) =>
         sumDefined(
@@ -289,9 +292,6 @@ export async function getPrivacyProjectDetails(
     )
   }
 
-  const assessment: ProjectPrivacyAssessment = selected
-    ? getPrivacyProjectOnChain(project, selected.id).privacyInfo
-    : project.privacyInfo
   // A chain's page lists what is deployed there, and on chains with no page.
   const otherViewChains = new Set(
     selected
@@ -323,17 +323,17 @@ export async function getPrivacyProjectDetails(
     ossificationHistory: project.ossificationHistory,
     trustedSetups: project.trustedSetups,
     category: project.privacyInfo.category,
-    exitWindow: assessment.exitWindow,
-    adversaries: assessment.adversaries,
+    exitWindow: shown.privacyInfo.exitWindow,
+    adversaries: shown.privacyInfo.adversaries,
     referenceApp: project.privacyInfo.referenceApp,
     reproducibility: project.privacyInfo.reproducibility,
-    anonymitySetType: getPrivacyAnonymitySetType(project),
+    anonymitySetType: getPrivacyAnonymitySetType(shown),
     hasTvl: project.tvsConfig !== undefined,
     detailedDescription:
       project.privacyInfo.detailedDescription ??
       project.display.detailedDescription,
-    riskSummary: assessment.riskSummary,
-    upgradesAndGovernance: assessment.upgradesAndGovernance,
+    riskSummary: shown.privacyInfo.riskSummary,
+    upgradesAndGovernance: shown.privacyInfo.upgradesAndGovernance,
     attributes: project.privacyInfo.attributes ?? [],
     milestones: [...(project.milestones ?? [])].sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
