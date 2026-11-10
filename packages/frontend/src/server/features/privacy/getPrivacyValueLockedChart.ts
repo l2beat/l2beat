@@ -73,7 +73,8 @@ export async function getPrivacyChainValues(
   ]
   const entries = await Promise.all(
     chains.map(async (chain) => {
-      const rows = await getChainValueHistory(projectId, chain, range, 'day')
+      // Hourly, so the value seven days before is from the same hour.
+      const rows = await getChainValueHistory(projectId, chain, range, 'hour')
       const last = rows.at(-1)
       if (!last) return undefined
       const weekBefore = rows.findLast(

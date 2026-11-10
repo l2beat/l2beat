@@ -21,7 +21,6 @@ export interface PrivacyAnonymitySetSeries {
   configurationId: string
   projectId: string
   bucketId: string
-  chain: string
   label: string
   /** Lists the series while its history is still being indexed. */
   compactLabel: string
@@ -37,7 +36,7 @@ export interface PrivacyAnonymitySetSeries {
 
 type SeriesBase = Pick<
   PrivacyAnonymitySetSeries,
-  'configurationId' | 'projectId' | 'bucketId' | 'chain' | 'sinceTimestamp'
+  'configurationId' | 'projectId' | 'bucketId' | 'sinceTimestamp'
 >
 
 type DepositSource = Extract<
@@ -63,7 +62,6 @@ export function getPrivacyAnonymitySetSeries(
         }),
         projectId: project.id,
         bucketId,
-        chain,
         sinceTimestamp,
       }
 
@@ -72,10 +70,6 @@ export function getPrivacyAnonymitySetSeries(
         : getDepositSeries(base, anonymitySet, project.name)
     },
   )
-}
-
-function formatChainName(chain: string): string {
-  return chain.charAt(0).toUpperCase() + chain.slice(1)
 }
 
 /** Key registrations replace bucket sets; the config tests reject a project with both. */
@@ -118,7 +112,7 @@ function getDepositSeries(
   projectName: string,
 ): PrivacyAnonymitySetSeries[] {
   const { symbol, decimals } = token.token
-  const chainName = formatChainName(chain)
+  const chainName = chain.charAt(0).toUpperCase() + chain.slice(1)
 
   return bucket.anonymitySet.minimumAmounts.map((minimumAmount) => {
     const amount = formatTokenAmount(minimumAmount, decimals)

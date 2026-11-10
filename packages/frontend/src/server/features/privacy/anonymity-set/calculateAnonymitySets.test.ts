@@ -88,7 +88,6 @@ function series(
     configurationId: 'configuration',
     projectId: 'project',
     bucketId: 'bucket',
-    chain: 'ethereum',
     label: '≥10 ETH',
     compactLabel: '≥10 ETH',
     description: '',
