@@ -7,7 +7,10 @@ import {
 } from '~/components/core/chart/ChartRangeControls'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
-import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
+import {
+  type ChartTimeRangeValue,
+  getChartTimeRangeFromData,
+} from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import {
   Tooltip,
   TooltipContent,
@@ -218,7 +221,7 @@ function ChartCard({
   info: string
   range: ChartRange
   setRange: (range: ChartRange) => void
-  timeRange: [number, number] | undefined
+  timeRange: ChartTimeRangeValue
   isPlaceholderData: boolean
   children: ReactNode
 }) {
