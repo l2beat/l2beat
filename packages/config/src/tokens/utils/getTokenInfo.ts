@@ -114,6 +114,7 @@ async function getDecimals(
 
   return Number.parseInt(
     CODER.decodeFunctionResult('decimals', decimals)[0] as string,
+    10,
   )
 }
 

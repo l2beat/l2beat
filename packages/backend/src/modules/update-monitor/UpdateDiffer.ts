@@ -142,8 +142,8 @@ export class UpdateDiffer {
           return true
         }
         if (f.key === 'values.$upgradeCount') {
-          const before = Number.parseInt(f.before ?? '0')
-          const after = Number.parseInt(f.after ?? '0')
+          const before = Number.parseInt(f.before ?? '0', 10)
+          const after = Number.parseInt(f.after ?? '0', 10)
           return after > before
         }
         return false
@@ -268,7 +268,7 @@ function involvesUpgrade(
   // earlier in the same array - which is the norm here, because
   // `sortReceivedPermissions` orders by JSON and "interact" sorts before
   // "upgrade", so any non-upgrade change renumbers every upgrade after it.
-  const index = Number.parseInt(segments[1] ?? '')
+  const index = Number.parseInt(segments[1] ?? '', 10)
   return (previous[index] ?? latest[index])?.permission === UPGRADE
 }
 
