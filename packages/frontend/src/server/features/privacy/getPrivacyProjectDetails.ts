@@ -360,6 +360,7 @@ function withoutChains(
         ([chain]) => !chains.has(chain),
       ),
     ),
+    escrows: contracts.escrows?.filter((escrow) => !chains.has(escrow.chain)),
     zkVerifiers: contracts.zkVerifiers?.filter(
       (address) => !chains.has(ChainSpecificAddress.longChain(address)),
     ),

@@ -80,7 +80,7 @@ export async function getPrivacyAnonymitySetSummaries(
         configurations,
         rows,
         currentDay,
-        coverageByProject.get(project.id),
+        coverageByProject.get(project),
       ),
     ]),
   )
@@ -129,12 +129,12 @@ async function getCoverageByProject(
   db: Database,
   projects: PrivacyProject[],
   currentDay: UnixTime,
-): Promise<Map<string, PrivacyAnonymitySetCoverage | undefined>> {
+): Promise<Map<PrivacyProject, PrivacyAnonymitySetCoverage | undefined>> {
   const entries = await Promise.all(
     projects.map(
       async (project) =>
         [
-          project.id,
+          project,
           await getPrivacyAnonymitySetCoverage(db, project, currentDay),
         ] as const,
     ),

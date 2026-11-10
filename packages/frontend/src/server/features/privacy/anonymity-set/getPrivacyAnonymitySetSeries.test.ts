@@ -97,7 +97,6 @@ describe(getPrivacyAnonymitySetSeries.name, () => {
         configurationId: expect.a(String),
         projectId: 'registry',
         bucketId: 'key-registrations',
-        chain: 'ethereum',
         label: 'Registered recipients',
         compactLabel: 'Registered recipients',
         description:

@@ -27,11 +27,12 @@ import {
   HOLDING_DURATIONS,
   loadAnonymitySetCharts,
 } from './anonymity-set/loadAnonymitySetCharts'
+import { getPrivacyProjectOnChain } from './utils/getPrivacyPageChains'
 
 export const PrivacyAnonymitySetChartParams = v.object({
   projectId: v.string(),
   range: ChartRange,
-  /** Limits the series to the anonymity sets on this chain. */
+  /** Limits the chart to the anonymity sets and the coverage on this chain. */
   chain: v.string().optional(),
 })
 
@@ -54,15 +55,17 @@ const cache = new FrontendInMemoryCache('getPrivacyAnonymitySetChart')
 export async function getPrivacyAnonymitySetChart(
   params: PrivacyAnonymitySetChartParams,
 ): Promise<PrivacyAnonymitySetChartResponse> {
-  const project = await ps.getProject({
+  const tracked = await ps.getProject({
     id: ProjectId(params.projectId),
     select: ['privacyInfo'],
   })
-  if (!project) return emptyResponse()
+  if (!tracked) return emptyResponse()
+  const project =
+    params.chain === undefined
+      ? tracked
+      : getPrivacyProjectOnChain(tracked, params.chain)
 
-  const series = getPrivacyAnonymitySetSeries(project).filter(
-    (item) => params.chain === undefined || item.chain === params.chain,
-  )
+  const series = getPrivacyAnonymitySetSeries(project)
   if (series.length === 0) return emptyResponse()
 
   const currentDay = UnixTime.toStartOf(UnixTime.now(), 'day')
@@ -229,22 +232,14 @@ function getMockResponse(
     history: endpoints.map((timestamp, index) => [
       timestamp,
       ...series.map((_, seriesIndex) =>
-        Math.round(
-          ((seriesIndex % 4) + 1) * 20 * mockChainScale(series, seriesIndex) +
-            index * 0.5,
-        ),
+        Math.round((seriesIndex + 1) * 20 + index * 0.5),
       ),
     ]),
     holdingDuration: HOLDING_DURATIONS.map((days) => {
       return [
         days,
         ...series.map((_, seriesIndex) =>
-          Math.round(
-            ((seriesIndex % 4) + 1) *
-              days *
-              0.8 *
-              mockChainScale(series, seriesIndex),
-          ),
+          Math.round((seriesIndex + 1) * days * 0.8),
         ),
       ]
     }),
@@ -254,13 +249,4 @@ function getMockResponse(
     }),
     syncedUntil: endpoint,
   }
-}
-
-/** Later chains get smaller mock sets, like a project's newer deployments. */
-function mockChainScale(
-  series: PrivacyAnonymitySetSeries[],
-  index: number,
-): number {
-  const chains = [...new Set(series.map((item) => item.chain))]
-  return 1 / (chains.indexOf(series[index]?.chain ?? '') + 1)
 }
