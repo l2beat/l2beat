@@ -402,5 +402,5 @@ function getProtocolHref(protocolId: string | undefined) {
     return undefined
   }
 
-  return `${PRODUCTION_FRONTEND_URL}/interop/protocols/${protocolId}`
+  return `${PRODUCTION_FRONTEND_URL}/projects/${protocolId}`
 }

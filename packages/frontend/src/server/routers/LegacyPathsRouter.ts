@@ -1,11 +1,15 @@
 import express from 'express'
 import { ETHEREUM_PROJECT_PATH } from '~/pages/ethereum/paths'
-import { getProjectPath } from '~/utils/project/getProjectUrl'
+import {
+  getProjectPath,
+  PROJECT_REDIRECT_CACHE_CONTROL,
+} from '~/utils/project/getProjectUrl'
 
 export function createLegacyPathsRouter() {
   const router = express.Router()
 
   router.get('/project/:name', (req, res) => {
+    res.setHeader('Cache-Control', PROJECT_REDIRECT_CACHE_CONTROL)
     res.redirect(301, getProjectPath(req.params.name))
   })
 
@@ -23,6 +27,14 @@ export function createLegacyPathsRouter() {
 
   router.get('/scaling/projects/:name/tvl-breakdown', (req, res) => {
     res.redirect(301, `${getProjectPath(req.params.name)}/tvs-breakdown`)
+  })
+
+  // Straight to the page, not through /layer2s/projects/{name}. Also takes
+  // "{name}.md".
+  router.get('/scaling/projects/:name', (req, res) => {
+    const query = req.originalUrl.slice(req.path.length)
+    res.setHeader('Cache-Control', PROJECT_REDIRECT_CACHE_CONTROL)
+    res.redirect(301, `${getProjectPath(req.params.name)}${query}`)
   })
 
   router.get('/data-availability/projects/:name/dac', (req, res) => {

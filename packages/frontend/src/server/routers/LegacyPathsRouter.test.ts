@@ -13,6 +13,8 @@ describe(createLegacyPathsRouter.name, () => {
     ['/da-risk-framework', '/blobs'],
     ['/data-availability/projects/xai/dac', '/projects/xai'],
     ['/project/arbitrum', '/projects/arbitrum'],
+    ['/scaling/projects/arbitrum', '/projects/arbitrum'],
+    ['/scaling/projects/arbitrum.md', '/projects/arbitrum.md'],
     [
       '/scaling/projects/arbitrum/tvl-breakdown',
       '/projects/arbitrum/tvs-breakdown',
@@ -43,6 +45,21 @@ describe(createLegacyPathsRouter.name, () => {
       ).toEqual(to)
     })
   }
+
+  it('keeps the query string of an old scaling project URL', async () => {
+    const response = await fetchFromRouter(
+      createLegacyPathsRouter(),
+      '/scaling/projects/arbitrum?update=x',
+      { redirect: 'manual' },
+    )
+
+    expect(response.headers.get('location')).toEqual(
+      '/projects/arbitrum?update=x',
+    )
+    expect(response.headers.get('cache-control')).toEqual(
+      'public, max-age=86400',
+    )
+  })
 
   // Not handled here, so the request reaches the page router behind it.
   for (const path of [
