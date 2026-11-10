@@ -7,6 +7,7 @@ import {
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import {
+  getCurrentTokenValues,
   getPrivacyBucketTvls,
   getPrivacyChainAssetTvls,
   getPrivacySingleEscrowBucketTvls,
@@ -67,6 +68,18 @@ describe(getPrivacySingleEscrowBucketTvls.name, () => {
     )
 
     expect([...result]).toEqual([['usdc-a', 40]])
+  })
+})
+
+describe(getCurrentTokenValues.name, () => {
+  it('leaves out a token whose last positive value is from an earlier hour', () => {
+    const current = { tokenId: 'project-ETH', timestamp: LATEST }
+    const result = getCurrentTokenValues([
+      current,
+      { tokenId: 'project-USDC', timestamp: EARLIER },
+    ] as TokenValueRecord[])
+
+    expect(result).toEqual([current as TokenValueRecord])
   })
 })
 

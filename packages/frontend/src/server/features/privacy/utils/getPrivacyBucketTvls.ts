@@ -90,6 +90,18 @@ export function getPrivacySingleEscrowBucketTvls(
   return result
 }
 
+/**
+ * The values from the project's newest hour. A token that dropped to zero, or
+ * is no longer tracked, stays in `tokenValues` with its last positive value,
+ * which a chain's value now does not count.
+ */
+export function getCurrentTokenValues(
+  tokenValues: TokenValueRecord[],
+): TokenValueRecord[] {
+  const newest = Math.max(...tokenValues.map((value) => value.timestamp))
+  return tokenValues.filter((value) => value.timestamp === newest)
+}
+
 /** Whether the token's amount is read from the chain, and from nowhere else. */
 export function isTvsTokenOnChain(token: TvsToken, chain: string): boolean {
   // Only an amount read from one chain names its chain.
