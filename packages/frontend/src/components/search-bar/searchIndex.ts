@@ -22,7 +22,7 @@ import type { SearchBarCategory } from './searchBarCategories'
  * on any change to the schemas below, new enum values included: open tabs
  * parse strictly, so one they don't know would fail their search.
  */
-export const SEARCH_INDEX_PATH = '/api/search-index/v1'
+export const SEARCH_INDEX_PATH = '/api/search-index/v2'
 
 export const SearchIndexProjectKind = v.enum([
   'ethereum',
@@ -59,6 +59,8 @@ export const SearchIndexProject = v.tuple([
   v.array(v.string()), // tags besides the slug and the name
   v.union([v.string(), v.null()]), // interop name
   v.union([v.string(), v.null()]), // interop short name
+  // Version group id and rank, 0 for the latest version, see `SearchBarProjectEntry`.
+  v.union([v.tuple([v.string(), v.number()]), v.null()]),
 ])
 export type SearchIndexProject = v.infer<typeof SearchIndexProject>
 
@@ -106,8 +108,8 @@ const PROJECT_PAGES: Record<
 export function decodeSearchIndexProject(
   row: SearchIndexProject,
 ): SearchBarProjectEntry[] {
-  const [id, slug, name, iconUrl, kinds, l2Category, tags, ...interop] = row
-  const [interopName, interopShortName] = interop
+  const [id, slug, name, iconUrl, kinds, l2Category, tags, ...rest] = row
+  const [interopName, interopShortName, version] = rest
   assert(kinds.length > 0, 'Search index project without a page')
 
   const commonTags = unique([slug, name, ...tags])
@@ -124,6 +126,7 @@ export function decodeSearchIndexProject(
       kind,
       tags: commonTags,
     }
+    if (version) entry.version = { group: version[0], rank: version[1] }
     if (kind === 'layer2' || kind === 'layer3') {
       entry.tags = interopTags
       if (l2Category !== null) entry.l2Category = l2Category

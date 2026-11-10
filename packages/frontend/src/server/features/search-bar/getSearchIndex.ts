@@ -66,6 +66,7 @@ type SearchIndexProjectKey =
   | 'privacyInfo'
   | 'defiInfo'
   | 'aliases'
+  | 'versions'
 
 export const SEARCH_INDEX_PROJECT_KEYS: SearchIndexProjectKey[] = [
   'scalingInfo',
@@ -74,6 +75,7 @@ export const SEARCH_INDEX_PROJECT_KEYS: SearchIndexProjectKey[] = [
   'privacyInfo',
   'defiInfo',
   'aliases',
+  'versions',
 ]
 
 type SearchIndexSourceProject = Project<never, SearchIndexProjectKey>
@@ -92,12 +94,31 @@ export function toSearchIndexProject(
     manifest.getUrl(`/icons/${project.slug}.png`),
     kinds,
     project.scalingInfo?.type ?? null,
-    [project.shortName, ...(project.aliases ?? [])].filter(
-      (tag): tag is string => !!tag,
-    ),
+    // The group name, so "privacy pools" matches v2 as directly as v1 (slug
+    // "privacy-pools"), instead of hiding it as a fuzzy match.
+    [
+      project.shortName,
+      ...(project.aliases ?? []),
+      project.versions?.group.name,
+    ].filter((tag): tag is string => !!tag),
     project.interopConfig?.name ?? null,
     project.interopConfig?.shortName ?? null,
+    getVersionRank(project),
   ]
+}
+
+function getVersionRank(
+  project: SearchIndexSourceProject,
+): [string, number] | null {
+  if (!project.versions) return null
+  const { group, siblings } = project.versions
+  // Siblings are in display order, oldest first.
+  const newestFirst = [
+    ...siblings.filter((s) => s.isLatest),
+    ...siblings.filter((s) => !s.isLatest).reverse(),
+  ]
+  const rank = newestFirst.findIndex((s) => s.id === project.id)
+  return rank === -1 ? null : [group.id, rank]
 }
 
 function getProjectKinds(
@@ -125,6 +146,7 @@ function toSearchIndexChain(
     ['chain'],
     null,
     [chain.display],
+    null,
     null,
     null,
   ]
