@@ -1,14 +1,9 @@
-import { getTotalValueLockedByProject } from '../getDefiTotalValueLocked'
+import { getLiquidStakingCharts } from './getLiquidStakingCharts'
 import {
-  getLiquidStakingCostOfExitChart,
-  getLiquidStakingYieldChart,
-} from './getLiquidStakingCharts'
-import {
-  getLiquidStakingEntries,
-  getLiquidStakingEntriesRange,
   type LiquidStakingStatsEntry,
+  loadLiquidStakingEntries,
 } from './getLiquidStakingEntries'
-import { getLiquidStakingProjects } from './getLiquidStakingProjects'
+import { getLatestValuesRange } from './getLiquidStakingSummary'
 
 export interface LiquidStakingOverview {
   entries: LiquidStakingStatsEntry[]
@@ -18,18 +13,11 @@ export interface LiquidStakingOverview {
 
 /** The protocols' latest numbers, without the risk comparison. */
 export async function getLiquidStakingOverview(): Promise<LiquidStakingOverview> {
-  const range = getLiquidStakingEntriesRange()
-  const projects = await getLiquidStakingProjects()
-  const [tvlByProject, yieldChart, costOfExit] = await Promise.all([
-    getTotalValueLockedByProject(projects),
-    getLiquidStakingYieldChart({ range }),
-    getLiquidStakingCostOfExitChart({ range }),
-  ])
-  const entries = getLiquidStakingEntries(projects, tvlByProject, {
-    yield: yieldChart,
-    costOfExit,
-  })
-  const latest = yieldChart.findLast((point) => point.ethStaked != null)
+  const { entries, charts } = await loadLiquidStakingEntries(() =>
+    getLiquidStakingCharts({ range: getLatestValuesRange() }),
+  )
+  // The yield chart draws it in the background, so it is already read.
+  const latest = charts.yield.findLast((point) => point.ethStaked != null)
 
   return {
     entries: entries.map(({ risks: _, ...entry }) => entry),

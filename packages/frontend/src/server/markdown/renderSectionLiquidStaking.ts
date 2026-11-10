@@ -1,11 +1,9 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import type { LiquidStakingSectionProps } from '~/components/projects/sections/defi/LiquidStakingSection'
 import {
   ETH_STAKED_TITLE,
   formatEthStaked,
   formatLatestValue,
   LIQUID_STAKING_METRICS,
-  type LiquidStakingMetric,
 } from '~/pages/defi/liquid-staking/liquidStakingMetrics'
 import {
   formatUsd,
@@ -15,7 +13,7 @@ import {
   table,
   withRegularSpaces,
 } from './markdown'
-import { formatUtcDateTime } from './renderSectionParts'
+import { formatUtcDateOrDay, formatUtcDateTime } from './renderSectionParts'
 
 /** The same rows as the HTML table, each protocol linked to its page. */
 export function renderLiquidStakingSection({
@@ -42,22 +40,11 @@ export function renderLiquidStakingSection({
         ...LIQUID_STAKING_METRICS.map((metric) => {
           const latest = entry[metric.key]
           return latest
-            ? `${formatLatestValue(metric, latest)} (${formatLatestUtcDate(metric, latest.timestamp)})`
+            ? `${formatLatestValue(metric, latest)} (${formatUtcDateOrDay(latest.timestamp, metric.dailyBuckets)})`
             : NO_DATA
         }),
       ]),
     ),
     `${link('Compare the risks of liquid staking protocols', '/defi/liquid-staking')}.`,
   ])
-}
-
-/** A daily value covers its whole UTC day, the others are as of a moment. */
-export function formatLatestUtcDate(
-  metric: LiquidStakingMetric,
-  timestamp: number,
-) {
-  const start = UnixTime(timestamp)
-  return metric.dailyBuckets
-    ? `over ${formatUtcDateTime(start)} to ${formatUtcDateTime(UnixTime(start + UnixTime.DAY))}`
-    : `on ${formatUtcDateTime(start)}`
 }

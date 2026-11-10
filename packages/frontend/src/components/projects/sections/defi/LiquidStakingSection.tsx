@@ -13,6 +13,7 @@ import {
 import { CustomLink } from '~/components/link/CustomLink'
 import { BasicTable } from '~/components/table/BasicTable'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
+import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
 import { InfoIcon } from '~/icons/Info'
 import { UnderReviewIcon } from '~/icons/UnderReview'
@@ -44,15 +45,15 @@ const columns = [
     enableSorting: false,
     // ProjectNameCell would bring the listing tables' code to every project page.
     cell: (ctx) => (
-      <a
+      <TableLink
         href={ctx.row.original.href}
-        className="flex items-center gap-1.5 font-bold text-base"
+        className="gap-1.5 font-bold text-base"
       >
         {ctx.getValue()}
         {ctx.row.original.isUnderReview && (
           <UnderReviewIcon className="size-4" />
         )}
-      </a>
+      </TableLink>
     ),
     meta: {
       cellClassName: 'pl-4',

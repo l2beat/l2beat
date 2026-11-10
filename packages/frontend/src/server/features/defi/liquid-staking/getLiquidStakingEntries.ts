@@ -1,7 +1,10 @@
 import { manifest } from '~/utils/Manifest'
-import { type ChartRange, optionToRange } from '~/utils/range/range'
+import { getTotalValueLockedByProject } from '../getDefiTotalValueLocked'
 import type { LiquidStakingCharts } from './getLiquidStakingCharts'
-import type { LiquidStakingProject } from './getLiquidStakingProjects'
+import {
+  getLiquidStakingProjects,
+  type LiquidStakingProject,
+} from './getLiquidStakingProjects'
 import {
   buildLiquidStakingSummary,
   type LiquidStakingSummary,
@@ -20,22 +23,29 @@ export interface LiquidStakingEntry extends LiquidStakingSummary {
   tokens: string[]
 }
 
-/** An entry without its risks, for lists that show only the numbers. */
+/**
+ * An entry without its risks, for lists that show only the numbers. The risks
+ * carry long descriptions, which a page that never shows them should not load.
+ */
 export type LiquidStakingStatsEntry = Omit<LiquidStakingEntry, 'risks'>
 
 /**
- * The chart range the lists take their latest values from. One range, so a
- * protocol with a gap in its data reads the same in every list.
+ * The entries of every list of liquid staking protocols. The caller reads
+ * the charts, so a page that shows them can go through its query cache.
  */
-export function getLiquidStakingEntriesRange(): ChartRange {
-  return optionToRange('1y')
+export async function loadLiquidStakingEntries(
+  loadCharts: () => Promise<LiquidStakingCharts>,
+): Promise<{ entries: LiquidStakingEntry[]; charts: LiquidStakingCharts }> {
+  const projects = await getLiquidStakingProjects()
+  const [tvlByProject, charts] = await Promise.all([
+    getTotalValueLockedByProject(projects),
+    loadCharts(),
+  ])
+  return { entries: getEntries(projects, tvlByProject, charts), charts }
 }
 
-/**
- * Sorted by TVL, the projects without one last. The latest yield and cost of
- * exit come from `charts`, so the page reads them once.
- */
-export function getLiquidStakingEntries(
+/** Sorted by TVL, the projects without one last. */
+function getEntries(
   projects: LiquidStakingProject[],
   tvlByProject: Map<string, number>,
   charts: LiquidStakingCharts,

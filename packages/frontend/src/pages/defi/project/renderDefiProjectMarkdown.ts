@@ -2,7 +2,7 @@ import compact from 'lodash/compact'
 import type { ProjectDefiEntry } from '~/server/features/defi/project/getDefiProjectEntry'
 import { formatUsd } from '~/server/markdown/markdown'
 import { renderProjectMarkdown } from '~/server/markdown/renderProjectMarkdown'
-import { formatLatestUtcDate } from '~/server/markdown/renderSectionLiquidStaking'
+import { formatUtcDateOrDay } from '~/server/markdown/renderSectionParts'
 import { getUnderReviewText } from '~/utils/project/underReview'
 import {
   formatLatestValue,
@@ -69,7 +69,7 @@ function getLiquidStakingFacts(summary: ProjectDefiEntry['liquidStaking']) {
       return (
         latest && {
           label: metric.title,
-          value: `${formatLatestValue(metric, latest)} (${formatLatestUtcDate(metric, latest.timestamp)}). ${metric.tooltip}`,
+          value: `${formatLatestValue(metric, latest)} (${formatUtcDateOrDay(latest.timestamp, metric.dailyBuckets)}). ${metric.tooltip}`,
         }
       )
     }),

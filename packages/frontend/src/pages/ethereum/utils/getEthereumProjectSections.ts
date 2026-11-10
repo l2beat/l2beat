@@ -35,10 +35,9 @@ export async function getEthereumProjectSections({
 
   const items: ProjectDetailsSection[] = []
 
-  const [throughputSection, liquidStaking] = await Promise.all([
+  const [throughputSection, liquidStakingSection] = await Promise.all([
     getDaThroughputSection(ethereum),
-    // Its links lead to DeFi pages, so it follows their flag.
-    env.CLIENT_SIDE_DEFI_ENABLED ? getLiquidStakingOverview() : undefined,
+    getLiquidStakingSection(),
   ])
 
   if (interopData) {
@@ -78,15 +77,8 @@ export async function getEthereumProjectSections({
     },
   })
 
-  if (liquidStaking && liquidStaking.entries.length > 0) {
-    items.push({
-      type: 'LiquidStakingSection',
-      props: {
-        id: 'liquid-staking',
-        title: 'Liquid staking',
-        ...liquidStaking,
-      },
-    })
+  if (liquidStakingSection) {
+    items.push(liquidStakingSection)
   }
 
   if (
@@ -135,4 +127,17 @@ export async function getEthereumProjectSections({
   })
 
   return items
+}
+
+async function getLiquidStakingSection(): Promise<
+  ProjectDetailsSection | undefined
+> {
+  // Its links lead to DeFi pages, so it follows their flag.
+  if (!env.CLIENT_SIDE_DEFI_ENABLED) return undefined
+  const overview = await getLiquidStakingOverview()
+  if (overview.entries.length === 0) return undefined
+  return {
+    type: 'LiquidStakingSection',
+    props: { id: 'liquid-staking', title: 'Liquid staking', ...overview },
+  }
 }
