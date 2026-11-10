@@ -1300,6 +1300,8 @@ export type PrivacyRelayerExtractorConfig =
         // Privacy Pools v2, from the vault: the fee recipient of a paid
         // processor's payout, or the sender of a withdrawal without one.
         | 'privacyPoolsV2Withdrawal'
+        // Tacit Pay, from the pool: the relayer a withdrawal pays a fee.
+        | 'tacitPayWithdrawal'
         | 'tornadoCashWithdrawal'
     }
   | {
@@ -1641,6 +1643,7 @@ export type PrivacyAnonymitySetDepositSource = {
       | 'privacyPoolsV2Value'
       | 'railgunShield'
       | 'strk20Deposit'
+      | 'tacitPayDeposit'
       | 'zkMoneyDeposit'
   }
 >
@@ -1721,6 +1724,19 @@ export type PrivacyFlowExtractorConfig =
       params: {
         tokenAddress: string
       }
+    }
+  | {
+      /** Tacit Pay's Transact with a positive extAmount: the deposited value. */
+      extractor: 'tacitPayDeposit'
+      params: Record<string, never>
+    }
+  | {
+      /**
+       * Tacit Pay's Transact with a negative extAmount: the value paid to the
+       * recipient. The relayer's fee is paid on top and not counted.
+       */
+      extractor: 'tacitPayWithdrawal'
+      params: Record<string, never>
     }
   | {
       /** Credited DAI amount, after the portal's fee sponsorship cut. */

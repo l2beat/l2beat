@@ -33,7 +33,7 @@ export class InteropMatchingLoop extends TimeLoop {
     private supportedChains: string[],
     private oneSidedChains: string[],
     protected logger: Logger,
-    private readonly intervalMs = 10_000,
+    intervalMs = 10_000,
   ) {
     super({ intervalMs })
     this.logger = logger.for(this)

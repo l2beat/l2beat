@@ -9,6 +9,9 @@ export type SearchBarProjectEntry = SearchBarEntry & {
   iconUrl: string
   kind: SearchIndexProjectKind
   l2Category?: ProjectScalingCategory
+  /** For a project with several versions, each with its own page. Rank 0 is
+   *  the latest, then newest first. */
+  version?: { group: string; rank: number }
 }
 
 export type SearchBarTokenEntry = SearchBarEntry & {

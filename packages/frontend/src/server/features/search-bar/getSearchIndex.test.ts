@@ -100,6 +100,60 @@ describe('search bar search', () => {
     ])
   })
 
+  // Regression: "az" listed Aztec Network v5 first, as its shorter slug
+  // ("aztecnetwork") scored higher than v6's.
+  it('lists the versions of a project together, latest first', async () => {
+    const v4 = l2Project('aztec', 'Aztec Network v4', 'ZK Rollup')
+    const v5 = l2Project('aztecnetwork', 'Aztec Network v5', 'ZK Rollup')
+    const v6 = l2Project('aztecnetworkv6', 'Aztec Network v6', 'ZK Rollup')
+    const siblings = [v4, v5, v6].map((p) => ({
+      id: p.id,
+      isLatest: p === v6,
+    }))
+    ps.getProjects = async () =>
+      [
+        l2Project('azure', 'Azure'),
+        ...[v4, v5, v6].map((p) => ({
+          ...p,
+          versions: { group: { id: 'aztec', name: 'Aztec' }, siblings },
+        })),
+      ] as never
+
+    for (const query of ['az', 'aztec', 'aztec network']) {
+      const result = await getSearchBarEntries(query)
+      const names = result.map((entry) => entry.name)
+      expect(names.filter((name) => name.startsWith('Aztec'))).toEqual([
+        'Aztec Network v6',
+        'Aztec Network v5',
+        'Aztec Network v4',
+      ])
+      // Together, wherever the group ranks.
+      const first = names.indexOf('Aztec Network v6')
+      expect(names[first + 1]).toEqual('Aztec Network v5')
+      expect(names[first + 2]).toEqual('Aztec Network v4')
+    }
+  })
+
+  // Regression: "privacy pools" equals v1's slug, a direct match that hid v2.
+  it('finds every version by the name of their group', async () => {
+    const v1 = l2Project('privacy-pools', 'Privacy Pools v1')
+    const v2 = l2Project('privacy-pools-v2', 'Privacy Pools v2')
+    const siblings = [
+      { id: v1.id, isLatest: false },
+      { id: v2.id, isLatest: true },
+    ]
+    const group = { id: 'privacy-pools', name: 'Privacy Pools' }
+    ps.getProjects = async () =>
+      [v1, v2].map((p) => ({ ...p, versions: { group, siblings } })) as never
+
+    const result = await getSearchBarEntries('privacy pools')
+
+    expect(result.map((entry) => entry.name)).toEqual([
+      'Privacy Pools v2',
+      'Privacy Pools v1',
+    ])
+  })
+
   it('falls back to fuzzy project matches when there are no direct matches', async () => {
     ps.getProjects = async () =>
       [l2Project('jetstreamchain', 'Jetstream')] as never

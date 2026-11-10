@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TacitEvmPoolRouter",
+  "category": "core",
+  "critical": true,
+  "description": "Periphery of one pool. It derives deposit and receive boxes, addresses anyone can pay and anyone can sweep into the pool as notes the owner fixed in advance, and runs withdrawals that call other contracts in the same transaction.",
+  "ignoreRelatives": ["PERMIT2", "ZROUTER", "V1"]
+}

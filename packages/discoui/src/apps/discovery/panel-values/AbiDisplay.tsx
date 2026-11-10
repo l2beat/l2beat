@@ -43,24 +43,27 @@ function AbiCode({ entries }: { entries: ApiAbiEntry[] }) {
   return (
     <div>
       <Folder
-        title={`Events (${events.length})`}
+        title="Events"
+        count={events.length}
         collapsed={events.length === 0}
       >
         <AbiCodeEntries entries={events} />
       </Folder>
       <Folder
-        title={`Read Functions (${read.length})`}
+        title="Read Functions"
+        count={read.length}
         collapsed={read.length === 0}
       >
         <AbiCodeEntries entries={read} />
       </Folder>
       <Folder
-        title={`Write Functions (${write.length})`}
+        title="Write Functions"
+        count={write.length}
         collapsed={write.length === 0}
       >
         <AbiCodeEntries entries={write} />
       </Folder>
-      <Folder title={`Errors (${errors.length})`} collapsed={true}>
+      <Folder title="Errors" count={errors.length} collapsed={true}>
         <AbiCodeEntries entries={errors} />
       </Folder>
     </div>
