@@ -52,6 +52,7 @@ import {
 } from './renderSectionCharts'
 import { renderGardenCropsSection } from './renderSectionCrops'
 import { renderUpgradesAndGovernance } from './renderSectionGovernance'
+import { renderLiquidStakingSection } from './renderSectionLiquidStaking'
 import {
   INCOMPLETE_NOTE,
   renderDiagram,
@@ -297,6 +298,7 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<SectionProps<T>> } = {
           `${token.href ? link(token.symbol, token.href) : token.symbol} (${token.name}): ${token.description}`,
       ),
     ),
+  LiquidStakingSection: renderLiquidStakingSection,
   GardenCropsSection: renderGardenCropsSection,
   InteropFlowsSection: pointToHtmlPage('The interactive flows chart is shown'),
   InteropTokenOnchainDeploymentsSection: renderOnchainDeployments,

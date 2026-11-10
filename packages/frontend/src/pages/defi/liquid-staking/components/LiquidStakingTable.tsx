@@ -1,4 +1,3 @@
-import { formatCurrency } from '@l2beat/shared-pure'
 import {
   createColumnHelper,
   getCoreRowModel,
@@ -6,90 +5,26 @@ import {
   type SortingState,
 } from '@tanstack/react-table'
 import { useState } from 'react'
-import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { BasicTable } from '~/components/table/BasicTable'
-import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
 import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
-import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
 import type { LiquidStakingEntry } from '~/server/features/defi/liquid-staking/getLiquidStakingEntries'
-import {
-  formatLatestValue,
-  LIQUID_STAKING_METRICS,
-  TVL_TOOLTIP,
-} from '../liquidStakingMetrics'
+import { LIQUID_STAKING_METRICS } from '../liquidStakingMetrics'
 import { LIQUID_STAKING_RISKS } from '../liquidStakingRisks'
+import {
+  getLiquidStakingNameColumn,
+  getLiquidStakingStatColumns,
+  TVL_COLUMN_ID,
+} from './liquidStakingColumns'
 
 const columnHelper = createColumnHelper<LiquidStakingEntry>()
 
 const columns = [
   ...getCommonProjectColumns(columnHelper, (row) => row.href),
-  columnHelper.accessor('name', {
-    header: 'Name',
-    enableHiding: false,
-    cell: (ctx) => (
-      <TableLink href={ctx.row.original.href}>
-        <ProjectNameCell
-          project={{
-            name: ctx.row.original.name,
-            shortName: ctx.row.original.shortName,
-            slug: ctx.row.original.slug,
-            icon: ctx.row.original.icon,
-            backgroundColor: undefined,
-            description: ctx.row.original.description,
-            statuses: {
-              underReview: ctx.row.original.isUnderReview
-                ? 'config'
-                : undefined,
-            },
-          }}
-        />
-      </TableLink>
-    ),
-    enableSorting: false,
-    meta: {
-      cellClassName: 'pl-4',
-      headClassName: 'pl-4',
-    },
-  }),
-  columnHelper.accessor('totalValueLockedUsd', {
-    header: 'TVL',
-    cell: (ctx) => {
-      const value = ctx.getValue()
-      return value === undefined ? (
-        <NoDataBadge />
-      ) : (
-        <span className="font-medium text-sm">
-          {formatCurrency(value, 'usd')}
-        </span>
-      )
-    },
-    sortUndefined: 'last',
-    meta: {
-      align: 'right',
-      tooltip: TVL_TOOLTIP,
-    },
-  }),
-  ...LIQUID_STAKING_METRICS.map((metric) =>
-    columnHelper.accessor((entry) => entry[metric.key]?.value, {
-      id: metric.key,
-      header: metric.title,
-      cell: (ctx) => {
-        const latest = ctx.row.original[metric.key]
-        return latest === undefined ? (
-          <NoDataBadge />
-        ) : (
-          <span className="font-medium text-sm">
-            {formatLatestValue(metric, latest)}
-          </span>
-        )
-      },
-      sortUndefined: 'last',
-      meta: { align: 'right', tooltip: metric.tooltip },
-    }),
-  ),
+  getLiquidStakingNameColumn(columnHelper),
+  ...getLiquidStakingStatColumns(columnHelper),
   ...LIQUID_STAKING_RISKS.map(({ key, title, tooltip }) =>
     columnHelper.accessor((entry) => entry.risks[key], {
       id: key,
@@ -108,7 +43,7 @@ const HIDDEN_METRICS = Object.fromEntries(
   LIQUID_STAKING_METRICS.map(({ key }) => [key, false]),
 )
 
-const initialSorting: SortingState = [{ id: 'totalValueLockedUsd', desc: true }]
+const initialSorting: SortingState = [{ id: TVL_COLUMN_ID, desc: true }]
 
 export function LiquidStakingTable({
   entries,

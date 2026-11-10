@@ -19,7 +19,12 @@ import { useTRPC } from '~/trpc/React'
 import { generateAccessibleColors } from '~/utils/generateColors'
 import type { ChartRange } from '~/utils/range/range'
 import { formatDays, formatYield } from '../formatLiquidStaking'
-import { COST_OF_EXIT_METRIC, YIELD_METRIC } from '../liquidStakingMetrics'
+import {
+  COST_OF_EXIT_METRIC,
+  ETH_STAKED_TITLE,
+  formatEthStaked,
+  YIELD_METRIC,
+} from '../liquidStakingMetrics'
 import {
   type LiquidStakingChartBackground,
   type LiquidStakingChartData,
@@ -45,10 +50,10 @@ const RANGE_OPTIONS: { value: ChartRangeOptionValue; label: string }[] = [
 
 const ETH_STAKED: LiquidStakingChartBackground = {
   key: 'ethStaked',
-  label: 'ETH staked',
+  label: ETH_STAKED_TITLE,
   color: 'var(--chart-ethereum-secondary)',
   formatAxisLabel: (value) => formatNumber(value),
-  formatTooltipValue: (value) => `${formatNumber(value)} ETH`,
+  formatTooltipValue: formatEthStaked,
 }
 
 export function LiquidStakingCharts({

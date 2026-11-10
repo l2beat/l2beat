@@ -1,6 +1,8 @@
 import type { Project } from '@l2beat/config'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
+import { env } from '~/env'
+import { getLiquidStakingOverview } from '~/server/features/defi/liquid-staking/getLiquidStakingOverview'
 import type { ProjectInteropData } from '~/server/features/layer2s/interop/getProjectInteropData'
 import { getDiagramParams } from '~/utils/project/getDiagramParams'
 import { toTechnologyRisk } from '~/utils/project/risk-summary/toTechnologyRisk'
@@ -33,7 +35,11 @@ export async function getEthereumProjectSections({
 
   const items: ProjectDetailsSection[] = []
 
-  const throughputSection = await getDaThroughputSection(ethereum)
+  const [throughputSection, liquidStaking] = await Promise.all([
+    getDaThroughputSection(ethereum),
+    // Its links lead to DeFi pages, so it follows their flag.
+    env.CLIENT_SIDE_DEFI_ENABLED ? getLiquidStakingOverview() : undefined,
+  ])
 
   if (interopData) {
     items.push({
@@ -71,6 +77,17 @@ export async function getEthereumProjectSections({
       milestones: ethereum.milestones ?? [],
     },
   })
+
+  if (liquidStaking && liquidStaking.entries.length > 0) {
+    items.push({
+      type: 'LiquidStakingSection',
+      props: {
+        id: 'liquid-staking',
+        title: 'Liquid staking',
+        ...liquidStaking,
+      },
+    })
+  }
 
   if (
     riskSummarySection.layer.risks.concat(riskSummarySection.bridge.risks)

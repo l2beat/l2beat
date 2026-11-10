@@ -1,3 +1,4 @@
+import { formatNumber } from '@l2beat/shared-pure'
 import type {
   LiquidStakingLatestValue,
   LiquidStakingSummary,
@@ -47,3 +48,10 @@ export function formatLatestValue(
 
 /** The chart values, also shown in the table and on project pages. */
 export const LIQUID_STAKING_METRICS = [YIELD_METRIC, COST_OF_EXIT_METRIC]
+
+export const ETH_STAKED_TITLE = 'ETH staked'
+export const ETH_STAKED_TOOLTIP = 'Balance of all active Ethereum validators.'
+
+export function formatEthStaked(value: number): string {
+  return `${formatNumber(value)} ETH`
+}

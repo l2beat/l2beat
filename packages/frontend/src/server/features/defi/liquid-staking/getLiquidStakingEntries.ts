@@ -15,7 +15,12 @@ export interface LiquidStakingEntry extends LiquidStakingSummary {
   href: string
   description: string
   isUnderReview: boolean
+  /** Symbols of the protocol's tokens. */
+  tokens: string[]
 }
+
+/** An entry without its risks, for lists that show only the numbers. */
+export type LiquidStakingStatsEntry = Omit<LiquidStakingEntry, 'risks'>
 
 /**
  * Sorted by TVL, the projects without one last. The latest yield and cost of
@@ -37,6 +42,7 @@ export function getLiquidStakingEntries(
         href: `/defi/projects/${project.slug}`,
         description: project.display.description,
         isUnderReview: !!project.statuses.reviewStatus,
+        tokens: (project.defiInfo.tokens ?? []).map((token) => token.symbol),
         ...buildLiquidStakingSummary(
           project.id,
           project.liquidStaking.risks,
