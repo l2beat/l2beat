@@ -13,7 +13,10 @@ import {
 import { ps } from '~/server/projects'
 import type { RenderData, RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
-import { getProjectPath } from '~/utils/project/getProjectUrl'
+import {
+  getProjectPath,
+  PROJECT_REDIRECT_CACHE_CONTROL,
+} from '~/utils/project/getProjectUrl'
 import { validateRoute } from '~/utils/validateRoute'
 import { getChainProjectData } from '../chain/getChainProjectData'
 import {
@@ -190,6 +193,7 @@ export function createProjectRedirectsRouter() {
       const search = new URL(req.originalUrl, 'http://x').searchParams
       if (options.migration) search.set('migration', '1')
       const query = search.size > 0 ? `?${search}` : ''
+      res.setHeader('Cache-Control', PROJECT_REDIRECT_CACHE_CONTROL)
       res.redirect(
         301,
         `${getProjectPath(slug)}${options.suffix ?? ''}${query}`,
@@ -215,6 +219,7 @@ export function createProjectRedirectsRouter() {
         optional: ['scalingInfo', 'interopConfig'],
       })
       if (project?.scalingInfo && project.interopConfig) {
+        res.setHeader('Cache-Control', PROJECT_REDIRECT_CACHE_CONTROL)
         res.redirect(
           301,
           `${getProjectPath(project.slug)}?protocols=${project.id}#interop-flows`,

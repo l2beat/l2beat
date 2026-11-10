@@ -24,9 +24,9 @@
   </script>
   <!-- Project pages reached through a redirect from their old section URL carry ?migration=1, as the browser may hold a
        stale 301 from /projects/{slug} back to /layer2s/projects/{slug}. Drop the marker from the address bar and
-       overwrite that cached redirect, so the next visit to the clean URL works without it -->
+       overwrite that cached redirect, once per page, so the next visit to the clean URL works without it -->
   <script>
-    (function () { try { var u = new URL(window.location.href); if (u.searchParams.get("migration") !== "1") return; u.searchParams.delete("migration"); var path = u.pathname + u.search; history.replaceState(history.state, "", path + u.hash); fetch(u.pathname, { cache: "reload", redirect: "manual" }).catch(function () { }) } catch (e) { } })();
+    (function () { try { var u = new URL(window.location.href); if (u.searchParams.get("migration") !== "1") return; u.searchParams.delete("migration"); var path = u.pathname + u.search; history.replaceState(history.state, "", path + u.hash); var key = "project-redirect-cache-purged:" + u.pathname; if (localStorage.getItem(key)) return; fetch(u.pathname, { cache: "reload", redirect: "manual" }).then(function () { localStorage.setItem(key, "1") }).catch(function () { }) } catch (e) { } })();
   </script>
   <script type="module" src="/src/ssr/ClientEntry.tsx"></script>
 </body>

@@ -98,7 +98,7 @@ export const UNISWAP: CropsApiInputProject = {
   id: 'uniswapv3',
   slug: 'uniswap-v3',
   name: 'Uniswap V3',
-  garden: gardenOf('/layer2s/projects/uniswap-v3', {
+  garden: gardenOf('/projects/uniswap-v3', {
     crops: ALL_GOOD,
     listing: 'listed',
   }),
