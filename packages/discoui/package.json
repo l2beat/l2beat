@@ -63,7 +63,7 @@
     "@vitejs/plugin-react": "^6.1.1",
     "earl": "^1.1.0",
     "mocha": "^10.2.0",
-    "playwright": "^1.60.0",
+    "playwright": "^1.64.1",
     "tailwindcss": "^4.3.3",
     "vite": "^8.3.0"
   }
