@@ -474,7 +474,11 @@ export class TemplateService {
         const key = h.toString()
         const bucket = this.hashIndex.get(key)
         const entry = { templateId, criteria: shape.criteria }
-        bucket ? bucket.push(entry) : this.hashIndex.set(key, [entry])
+        if (bucket) {
+          bucket.push(entry)
+        } else {
+          this.hashIndex.set(key, [entry])
+        }
       }
     }
     return this.hashIndex
