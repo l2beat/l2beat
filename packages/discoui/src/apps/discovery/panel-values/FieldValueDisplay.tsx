@@ -1,12 +1,15 @@
 import { memo, type ReactNode } from 'react'
 import type { FieldValue } from '../../../api/types'
 import { AddressDisplay } from './AddressDisplay'
+import { groupDigits } from './groupDigits'
 
 const EM_DASH = '—'
+export const HEX_WORD_LENGTH = 66
 
 export interface FieldValueDisplayProps {
   name?: FieldValue
   index?: number
+  indexDigits?: number
   topLevel?: boolean
   value: FieldValue
 }
@@ -16,6 +19,7 @@ export interface FieldValueDisplayProps {
 export const FieldValueDisplay = memo(function FieldValueDisplay({
   name,
   index,
+  indexDigits,
   topLevel,
   value,
 }: FieldValueDisplayProps) {
@@ -25,9 +29,9 @@ export const FieldValueDisplay = memo(function FieldValueDisplay({
   if (value.type === 'address') {
     inlineDisplay = <AddressDisplay value={value} />
   } else if (value.type === 'hex') {
-    if (value.value.length <= 66) {
+    if (value.value.length <= HEX_WORD_LENGTH) {
       inlineDisplay = (
-        <div className="flex font-mono text-coffee-400 text-xs">
+        <div className="break-all font-mono text-coffee-400 text-xs">
           {value.value}
         </div>
       )
@@ -57,13 +61,13 @@ export const FieldValueDisplay = memo(function FieldValueDisplay({
     )
   } else if (value.type === 'number') {
     inlineDisplay = (
-      <p className="wrap-break-word overflow-hidden font-mono text-aux-orange text-xs">
-        {BigInt(value.value)}
+      <p className="wrap-anywhere font-mono text-aux-orange text-xs">
+        <GroupedDigits text={BigInt(value.value).toString()} />
       </p>
     )
   } else if (value.type === 'boolean') {
     inlineDisplay = (
-      <p className="font-bold font-mono text-aux-orange text-xs uppercase">
+      <p className="font-mono text-aux-orange text-xs">
         {value.value.toString()}
       </p>
     )
@@ -71,8 +75,13 @@ export const FieldValueDisplay = memo(function FieldValueDisplay({
     if (value.values.length !== 0) {
       blockDisplay = (
         <ol className="border-coffee-600 border-l pl-3">
-          {value.values.map((value, i) => (
-            <FieldValueDisplay key={i} index={i} value={value} />
+          {value.values.map((item, i) => (
+            <FieldValueDisplay
+              key={i}
+              index={i}
+              indexDigits={String(value.values.length - 1).length}
+              value={item}
+            />
           ))}
         </ol>
       )
@@ -97,9 +106,17 @@ export const FieldValueDisplay = memo(function FieldValueDisplay({
       )
     }
   } else if (value.type === 'unknown') {
-    inlineDisplay = value.value
+    inlineDisplay = (
+      <span className="wrap-anywhere font-mono text-coffee-300 text-xs">
+        {value.value}
+      </span>
+    )
   } else if (value.type === 'error') {
-    inlineDisplay = `Error: ${value.error}`
+    inlineDisplay = (
+      <span className="wrap-anywhere font-mono text-aux-red text-xs">
+        Error: {value.error}
+      </span>
+    )
   } else if (value.type === 'empty') {
     inlineDisplay = <span className="text-coffee-400 text-xs">{EM_DASH}</span>
   }
@@ -113,7 +130,7 @@ export const FieldValueDisplay = memo(function FieldValueDisplay({
     )
   }
 
-  const nameNode = getNameNode(name, index)
+  const nameNode = getNameNode(name, index, indexDigits)
 
   return (
     <li className="text-xs leading-5">
@@ -129,7 +146,20 @@ export const FieldValueDisplay = memo(function FieldValueDisplay({
   )
 })
 
-function getNameNode(name: FieldValue | undefined, index: number | undefined) {
+function GroupedDigits({ text }: { text: string }) {
+  // Margins instead of separator characters keep copied numbers intact.
+  return groupDigits(text).map((group, i) => (
+    <span key={i} className="not-first:ml-[0.35em]">
+      {group}
+    </span>
+  ))
+}
+
+function getNameNode(
+  name: FieldValue | undefined,
+  index: number | undefined,
+  indexDigits: number | undefined,
+) {
   if (name?.type === 'string') {
     return (
       <span className="font-medium font-mono text-coffee-300 text-xs">
@@ -142,7 +172,10 @@ function getNameNode(name: FieldValue | undefined, index: number | undefined) {
   }
   if (index !== undefined) {
     return (
-      <span className="select-none font-mono text-coffee-400 text-xs tabular-nums">
+      <span
+        className="inline-block select-none text-right font-mono text-coffee-400 text-xs tabular-nums"
+        style={{ minWidth: `${indexDigits ?? 1}ch` }}
+      >
         {index}
       </span>
     )
