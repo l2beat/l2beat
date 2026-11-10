@@ -4,15 +4,15 @@ import type {
   PrivacyAdversarySentiment,
   PrivacyAdviceStep,
 } from '@l2beat/config'
-import {
-  PRIVACY_ADVICE_ANCHOR,
-  PRIVACY_METHODOLOGY_PATH,
-} from './methodology/paths'
+import { PRIVACY_ADVICE_HREF, PRIVACY_ADVICE_TITLE } from './methodology/paths'
 
-/** Copy shared by the HTML page and its markdown alternate. */
+/**
+ * Copy shared by the project page and its markdown alternate. Only project
+ * pages import this on the client, which keeps it in their chunk.
+ */
 export const ADVICE = {
   sectionId: 'stay-private',
-  title: 'How to stay private',
+  title: PRIVACY_ADVICE_TITLE,
   intro:
     'What a careful user does with the reference app, in order. The ratings assume these steps.',
   againstLabel: 'Against',
@@ -28,7 +28,7 @@ export const ADVICE = {
   /** Our word for the steps, as the framework uses it, linking to this section. */
   label: 'Advice',
   methodologyLink: 'Every habit explained',
-  methodologyHref: `${PRIVACY_METHODOLOGY_PATH}#${PRIVACY_ADVICE_ANCHOR}`,
+  methodologyHref: PRIVACY_ADVICE_HREF,
 } as const
 
 /**

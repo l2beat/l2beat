@@ -1517,7 +1517,7 @@ export interface PrivacyPromise {
 /**
  * One step of our advice for the reference app, shown under How to stay
  * private. The steps run in the order the user takes them and are the single
- * home of the advice. The adversaries section links them once.
+ * home of the advice. Each adversary block links the steps that defend it.
  */
 export interface PrivacyAdviceStep {
   /** One or two words, e.g. "Exit". Unique within the project. */

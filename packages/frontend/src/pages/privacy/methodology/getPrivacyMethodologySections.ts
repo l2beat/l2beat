@@ -17,6 +17,7 @@ import { PRIVACY_ADVERSARY_VERDICT as VERDICT } from '../adversaries/privacyAdve
 import { PRIVACY_COLUMN_DESCRIPTIONS as COLUMNS } from '../privacySummaryColumns'
 import {
   PRIVACY_ADVICE_ANCHOR,
+  PRIVACY_ADVICE_TITLE,
   PRIVACY_IP_HIDING_ROUTES_ANCHOR,
   PRIVACY_REFERENCE_APP_ANCHOR,
 } from './paths'
@@ -41,7 +42,7 @@ export function getPrivacyMethodologySections() {
 
     ratings: joinBlocks([
       heading(2, 'Ratings'),
-      `The ratings assume a careful user takes the steps a project page lists under [How to stay private](#${PRIVACY_ADVICE_ANCHOR}), with settings the reference app offers.`,
+      `The ratings assume a careful user takes the steps a project page lists under [${PRIVACY_ADVICE_TITLE}](#${PRIVACY_ADVICE_ANCHOR}), with settings the reference app offers.`,
       bulletList([
         `**${VERDICT.good}** (green): the promised field stays hidden from this adversary.`,
         `**${VERDICT.warning}** (yellow): protection is limited, private use can be denied, or keeping the field hidden takes substantial effort beyond the app's options. A workaround must preserve ordinary use of the protocol.`,
@@ -88,7 +89,7 @@ export function getPrivacyMethodologySections() {
     // A raw heading, since markdown headings render without an id to link.
     // Project pages link the section once, the habits carry no anchors.
     advice: joinBlocks([
-      `<h2 id="${PRIVACY_ADVICE_ANCHOR}">How to stay private</h2>`,
+      `<h2 id="${PRIVACY_ADVICE_ANCHOR}">${PRIVACY_ADVICE_TITLE}</h2>`,
       'Each project page gives our advice as steps that keep the privacy promise with the reference app, in the order the user takes them. Most steps follow the habits below.',
       heading(3, 'Fresh address'),
       'Exit to an address with no history and no public link to you, and use a new one for every exit.',

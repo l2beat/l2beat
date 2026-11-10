@@ -16,6 +16,7 @@ import chalk from 'chalk'
 import { expect } from 'earl'
 import { existsSync } from 'fs'
 import uniq from 'lodash/uniq'
+import { ADVICE_SNIPPETS } from '../common/privacyAdversaries'
 import { asArray } from '../templates/utils'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from '../test/constants'
 import { isRiskCorrectlyFormatted } from '../test/helpers'
@@ -569,6 +570,15 @@ describe('getProjects', () => {
         for (const step of adversaries.advice) {
           if (step.against.length === 0) {
             problems.push(`${project.id} ${step.name}: defends no cell`)
+          }
+          // The wait snippet tells the user to wait a random time, which the page draws.
+          if (
+            (step.text === ADVICE_SNIPPETS.wait) !==
+            (step.randomWait === true)
+          ) {
+            problems.push(
+              `${project.id} ${step.name}: wait snippet and randomWait differ`,
+            )
           }
           for (const id of step.against) {
             if (adversaries.cells[id].sentiment === 'bad') {
