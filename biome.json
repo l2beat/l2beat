@@ -70,12 +70,17 @@
         "noUnsafeFinally": "error",
         "noUnsafeOptionalChaining": "error",
         "noUnusedLabels": "error",
+        "noUnusedPrivateClassMembers": "error",
         "noUnusedVariables": "error",
         "useIsNan": "error",
+        "useParseIntRadix": "error",
         "useValidForDirection": "error",
         "useYield": "error",
         "noInvalidBuiltinInstantiation": "error",
-        "useValidTypeof": "error"
+        "useValidTypeof": "error",
+        "noInvalidUseBeforeDeclaration": "error",
+        "noConstructorReturn": "error",
+        "noStringCaseMismatch": "error"
       },
       "style": {
         "useForOf": "error",
@@ -113,6 +118,7 @@
       },
       "nursery": {
         "noFloatingPromises": "error",
+        "noMisusedPromises": "error",
         "useSortedClasses": {
           "level": "error",
           "fix": "safe",
@@ -149,12 +155,21 @@
         "noPrototypeBuiltins": "error",
         "noRedeclare": "error",
         "noShadowRestrictedNames": "error",
+        "noUnassignedVariables": "error",
         "noUnsafeDeclarationMerging": "error",
         "noUnsafeNegation": "error",
         "useAwait": "error",
         "useGetterReturn": "error",
         "noWith": "error",
-        "noDuplicateElseIf": "error"
+        "noDuplicateElseIf": "error",
+        "noConstantBinaryExpressions": "error",
+        "noSelfCompare": "error",
+        "noMisrefactoredShorthandAssign": "error",
+        "noMisplacedAssertion": "error",
+        "noIrregularWhitespace": "error"
+      },
+      "security": {
+        "noGlobalEval": "error"
       }
     }
   },

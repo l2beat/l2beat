@@ -33,7 +33,7 @@ for (let shard = 0; shard < SHARD_COUNT; shard++) {
         errors.length = 0
         await page.goto(`/ui/p/${project}`)
 
-        const listed = page.getByText(`${project} on `).first()
+        const listed = page.getByTitle(`${project} on `).first()
         const failed = page.getByText('Something went wrong').first()
         await expect(listed.or(failed)).toBeVisible({ timeout: 30_000 })
         await network.waitForQuiet(100)
