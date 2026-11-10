@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PullSplit",
+  "critical": true,
+  "description": "Implementation that every pull split of its version delegates to. A pull split collects ETH and ERC-20 tokens. Anyone can distribute them, which credits each recipient's share as a balance in the SplitsWarehouse for the recipient to withdraw. A split created with an owner lets that owner change the recipients, pause distributions and execute any call from the split.",
+  // ERC-7528 placeholder address for the native token, not a contract.
+  "ignoreRelatives": ["NATIVE_TOKEN"]
+}

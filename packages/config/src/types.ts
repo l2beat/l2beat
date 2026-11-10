@@ -1070,6 +1070,7 @@ export type ProjectDefiCategory =
   | 'Stablecoin'
   | 'Prediction market'
   | 'Multisig'
+  | 'Payments'
 
 export interface ProjectDefiInfo {
   /** Short category label shown in the DeFi table, e.g. "Stablecoin". */
