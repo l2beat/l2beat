@@ -13,7 +13,6 @@ import {
   rangeToResolution,
 } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
-import { isTvsTokenOnChain } from './utils/getPrivacyBucketTvls'
 
 export const PrivacyValueLockedChartParams = v.object({
   projectId: v.string(),
@@ -176,8 +175,11 @@ async function getChainValueHistory(
   const [tokenRows, escrowRows] = await Promise.all([
     db.tvsTokenValue.getSummedByTokensAtResolution(
       projectId,
+      // Only an amount read from one chain names its chain.
       tvsConfig.flatMap((token) =>
-        isTvsTokenOnChain(token, chain) ? [token.id] : [],
+        'chain' in token.amount && token.amount.chain === chain
+          ? [token.id]
+          : [],
       ),
       dbRange,
       resolution,

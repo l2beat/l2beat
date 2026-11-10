@@ -7,9 +7,7 @@ import {
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import {
-  getCurrentTokenValues,
   getPrivacyBucketTvls,
-  getPrivacyChainAssetTvls,
   getPrivacySingleEscrowBucketTvls,
 } from './getPrivacyBucketTvls'
 
@@ -68,62 +66,6 @@ describe(getPrivacySingleEscrowBucketTvls.name, () => {
     )
 
     expect([...result]).toEqual([['usdc-a', 40]])
-  })
-})
-
-describe(getCurrentTokenValues.name, () => {
-  it('leaves out a token whose last positive value is from an earlier hour', () => {
-    const current = { tokenId: 'project-ETH', timestamp: LATEST }
-    const result = getCurrentTokenValues([
-      current,
-      { tokenId: 'project-USDC', timestamp: EARLIER },
-    ] as TokenValueRecord[])
-
-    expect(result).toEqual([current as TokenValueRecord])
-  })
-})
-
-describe(getPrivacyChainAssetTvls.name, () => {
-  it('adds the tokens read on the chain and the escrows there of the others', () => {
-    const result = getPrivacyChainAssetTvls(
-      [
-        // Several escrows read at once: no bucket of it can be valued.
-        {
-          id: 'project-ETH',
-          symbol: 'ETH',
-          amount: { type: 'balanceOfEscrows', chain: 'ethereum' },
-        },
-        {
-          id: 'project-ETH-arb',
-          symbol: 'ETH',
-          amount: { type: 'balanceOfEscrow', chain: 'arbitrum' },
-        },
-        {
-          id: 'project-USDC',
-          symbol: 'USDC',
-          amount: { type: 'calculation', operator: 'sum', arguments: [] },
-        },
-      ] as unknown as TvsToken[],
-      [
-        { tokenId: 'project-ETH', timestamp: LATEST, valueForProject: 40 },
-        { tokenId: 'project-ETH-arb', timestamp: LATEST, valueForProject: 7 },
-        { tokenId: 'project-USDC', timestamp: LATEST, valueForProject: 60 },
-      ] as TokenValueRecord[],
-      [
-        { ...escrowValue(POOL_A, LATEST, 10), tokenId: 'project-USDC' },
-        { ...escrowValue(POOL_A, EARLIER, 99), tokenId: 'project-USDC' },
-        {
-          ...escrowValue(POOL_B, LATEST, 50, 'arbitrum'),
-          tokenId: 'project-USDC',
-        },
-      ],
-      'ethereum',
-    )
-
-    expect([...result]).toEqual([
-      ['ETH', 40],
-      ['USDC', 10],
-    ])
   })
 })
 
