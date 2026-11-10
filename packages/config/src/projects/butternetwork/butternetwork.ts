@@ -26,7 +26,7 @@ export const butternetwork: BaseProject = {
   discoveryInfo: getDiscoveryInfo([discovery]),
   statuses: {
     yellowWarning:
-      'The bridge is paused during a [routing infrastructure upgrade](https://x.com/ButterNetworkio/status/2110682522564825340).',
+      'The bridge is paused during a [routing infrastructure upgrade](https://x.com/ButterNetworkio/status/2110682522564825340). On Base, its admins withdrew all USDC and WETH liquidity from the bridge [to a multisig](https://basescan.org/tx/0x92f287eec13a8d25e9eb10d1d45c6b16e050e515ae09865e5940cbe58fd0c57c).',
     redWarning: undefined,
     emergencyWarning: undefined,
     reviewStatus: undefined,

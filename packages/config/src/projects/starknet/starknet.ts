@@ -178,8 +178,16 @@ const finalizationPeriod = 0
 
 const scThreshold = discovery.getMultisigStats('Starkware Security Council')
 const sharpMsThreshold = discovery.getMultisigStats('SHARP Multisig')
-const currentSHARPOuterBootloaderProgramHash =
-  '3427958597398434235135013788958741576989752718219267963615783564775551242024'
+// Standard Cairo program hash of the executable returned by each shared
+// CairoBootloaderProgram contract (`getCompiledProgram()`), by contract address.
+const sharpOuterBootloaderProgramHashes: Record<string, string> = {
+  // 1,182 felts, StarkWare_GpsStatementVerifier_2026_14
+  'eth:0x8ad2429Dbd77ECe844ED28222b26798A9449C2F3':
+    '416945816847640482138159166670986616346304244502647016366644374949046452837',
+  // 1,166 felts, StarkWare_GpsStatementVerifier_2026_13
+  'eth:0x24105e6697AdD9B4B1BDE04079a91BDFCCa24A47':
+    '3427958597398434235135013788958741576989752718219267963615783564775551242024',
+}
 
 interface ModernSHARPBootloaderConfig {
   [key: string]: string
@@ -189,34 +197,54 @@ interface ModernSHARPBootloaderConfig {
 }
 
 // A verifier accepts facts registered locally or in its reference registry until
-// that reference expires. Collect the accepted registry deployments and their
-// bootloader-configuration pins, plus the current shared outer bootloader.
+// that reference expires. Collect the accepted registry deployments with their
+// outer bootloader and bootloader-configuration pins.
 export function getAcceptedSHARPVerifierChain(): {
   programPins: string[]
   factRegistries: ChainSpecificAddress[]
 } {
-  // Derived standard Cairo program hash for the exact 1,166-felt executable
-  // returned by the current shared CairoBootloaderProgram contract.
-  const programPins: string[] = [currentSHARPOuterBootloaderProgramHash]
+  const programPins: string[] = []
   const factRegistries: ChainSpecificAddress[] = []
   let sharpVerifierAddress = discovery.getContract('SHARPVerifier').address
   let expirationTimestamp = Number.MAX_SAFE_INTEGER
   const timestampNow = Date.now() / 1000
   while (timestampNow < expirationTimestamp) {
     factRegistries.push(sharpVerifierAddress)
-    const bootloaderConfig = discovery.getContractValue<
-      ModernSHARPBootloaderConfig | string[]
-    >(sharpVerifierAddress, 'getBootloaderConfig')
-    if (Array.isArray(bootloaderConfig)) {
-      // Older verifier generations expose only the simple-bootloader program
-      // hash and recursive Cairo-verifier allowlist commitment.
-      programPins.push(...bootloaderConfig)
+    const outerBootloader = discovery.getContractValue<ChainSpecificAddress>(
+      sharpVerifierAddress,
+      'bootloaderProgramContractAddress',
+    )
+    const outerBootloaderProgramHash =
+      sharpOuterBootloaderProgramHashes[outerBootloader]
+    assert(
+      outerBootloaderProgramHash !== undefined,
+      `Program hash of the SHARP outer bootloader ${outerBootloader} is unknown: derive it from getCompiledProgram()`,
+    )
+    programPins.push(outerBootloaderProgramHash)
+
+    // Verifiers from 2026_14 pin the bootloader configuration as one hash,
+    // earlier ones as separate words.
+    const bootloaderConfigHash = discovery.getContractValueOrUndefined<string>(
+      sharpVerifierAddress,
+      'getBootloaderConfigHash',
+    )
+    if (bootloaderConfigHash !== undefined) {
+      programPins.push(bootloaderConfigHash)
     } else {
-      programPins.push(
-        bootloaderConfig.simpleBootloaderConfigurationCommitment,
-        bootloaderConfig.applicativeBootloaderProgramHash,
-        bootloaderConfig.supportedCairoVerifierProgramHashesCommitment,
-      )
+      const bootloaderConfig = discovery.getContractValue<
+        ModernSHARPBootloaderConfig | string[]
+      >(sharpVerifierAddress, 'getBootloaderConfig')
+      if (Array.isArray(bootloaderConfig)) {
+        // Older verifier generations expose only the simple-bootloader program
+        // hash and recursive Cairo-verifier allowlist commitment.
+        programPins.push(...bootloaderConfig)
+      } else {
+        programPins.push(
+          bootloaderConfig.simpleBootloaderConfigurationCommitment,
+          bootloaderConfig.applicativeBootloaderProgramHash,
+          bootloaderConfig.supportedCairoVerifierProgramHashesCommitment,
+        )
+      }
     }
 
     expirationTimestamp = discovery.getContractValue<number>(
@@ -580,7 +608,7 @@ export const starknet: ScalingProject = {
       {
         title: 'Proven Program',
         description:
-          'The current Starknet OS and aggregator sources are published in the [Starknet sequencer repository](https://github.com/starkware-libs/sequencer/tree/APOLLO-0.14.4-RC.8/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core), and the bootloader sources are published in [cairo-lang](https://github.com/starkware-libs/cairo-lang/tree/1c5dace6fbd1dc9d1ae2eb878dc1dd85f23512ab/src/starkware/cairo/bootloaders). The exact 1,166-felt outer bootloader stored onchain has been reproduced from [this source revision](https://github.com/starkware-libs/cairo-lang/tree/56407b69f3f19f69302a8623baa8c5f71f967eed/src/starkware/cairo/bootloaders/bootloader). However, SHARP also commits to an ordered allowlist of recursive Cairo verifier programs whose active preimages and source-to-hash mappings have not been published, so the complete proven program is not independently reproducible.',
+          'The current Starknet OS and aggregator sources are published in the [Starknet sequencer repository](https://github.com/starkware-libs/sequencer/tree/APOLLO-0.14.4-RC.8/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core). The default SHARP verifier pins a 1,182-felt outer bootloader and one hash of its bootloader configuration. The bootloader published in [cairo-lang](https://github.com/starkware-libs/cairo-lang/tree/cf9bf972bede402a125e8638bb258e77563ae933/src/starkware/cairo/bootloaders) still outputs a three-word configuration. The current outer bootloader and the preimage of its configuration hash are therefore not independently reproducible.',
         risks: [],
       },
       {
@@ -604,7 +632,7 @@ export const starknet: ScalingProject = {
     // exposed by the shared SHARP discovery.
     zkVerifiers: acceptedSHARPVerifierChain.factRegistries,
     programHashesDescription:
-      'The Starknet OS, virtual Starknet OS, aggregator, outer bootloader, supported-simple-bootloader commitment, and applicative bootloader are reproducible. Every SHARP verifier in the currently accepted fact-registry chain also pins a commitment to an ordered allowlist of recursive Cairo verifier programs. The active allowlist preimages and the programs behind them have not been reproduced, so an invalid nested-proof verifier cannot be ruled out independently.',
+      'The Starknet OS, virtual Starknet OS and aggregator are reproducible. The outer bootloader and the bootloader configuration hash of the default SHARP verifier have not been reproduced, their source is not published.',
   },
   upgradesAndGovernance: {
     content: readProjectMarkdown('starknet', 'upgradesAndGovernance', {

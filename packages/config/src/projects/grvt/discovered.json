@@ -1,10 +1,15 @@
 {
   "name": "grvt",
-  "timestamp": 1793874299,
+  "timestamp": 1794319593,
   "configHash": "0x2084c1e51035868baf0c9a414d9ff9295ca19404533437794a0eacdebaec6748",
   "entries": [
     {
       "address": "eth:0x0000000000000000000000000000000000000001",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x0AaBB14Da51F3c2ddB678A73f71239760fc9e952",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -137,31 +142,32 @@
         "positionBreakdown": [
           {
             "token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-            "amount": 496722716,
+            "amount": 1106524,
             "kind": 1
           },
           {
             "token": "eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
-            "amount": "10199124849255028237659843",
+            "amount": "2459475778333685907659843",
             "kind": 0
           },
           {
             "token": "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d",
-            "amount": "7904357676155784495874486",
+            "amount": "16168419128206308977950745",
             "kind": 0
           }
         ],
         "priceSources": [
           "eth:0x016Aa3B97f3a5B08Ddb49656d58C20543C0b11EA",
-          "eth:0x61917077B3f03e01814B913FDD28CB1bF574148E"
+          "eth:0x61917077B3f03e01814B913FDD28CB1bF574148E",
+          "eth:0x27c567cd31FD0495cdC4CabeC99694d82d7B7F12"
         ],
         "receiptTokens": [
           "eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
           "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d"
         ],
         "swapsPaused": false,
-        "totalExposure": 19819825382502,
-        "totalExposureStrict": 19819825382502,
+        "totalExposure": 19349595444222,
+        "totalExposureStrict": 19349595444222,
         "tvlTokens": [
           "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
           "eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
@@ -170,7 +176,7 @@
         "vault": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
         "vaultToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "vaultTokenDecimals": 6,
-        "withdrawableExposure": 496722716
+        "withdrawableExposure": 1106524
       },
       "fieldMeta": {
         "pauser": { "severity": "MEDIUM" },
@@ -413,7 +419,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 89,
+        "nonce": 92,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -798,19 +804,19 @@
         "positionBreakdown": [
           {
             "token": "eth:0x23878914EFE38d27C4D67Ab83ed1b93A74D4086a",
-            "amount": 49591542,
+            "amount": 49624396,
             "kind": 0
           }
         ],
-        "totalExposure": 49591542,
-        "totalExposureStrict": 49591542,
+        "totalExposure": 49624396,
+        "totalExposureStrict": 49624396,
         "tvlTokens": [
           "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
           "eth:0x23878914EFE38d27C4D67Ab83ed1b93A74D4086a"
         ],
         "vault": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
         "vaultToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "withdrawableExposure": 49591542
+        "withdrawableExposure": 49624396
       },
       "implementationNames": {
         "eth:0x646123424BEcBF14a7542bc44340AdB241BA32b3": "BeaconProxy",
@@ -1000,18 +1006,18 @@
         "positionBreakdown": [
           {
             "token": "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d",
-            "amount": "9135964896369299008838796",
+            "amount": "9816181931110753858690290",
             "kind": 0
           },
           {
             "token": "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
-            "amount": 554000000000,
+            "amount": 901000000000,
             "kind": 1
           }
         ],
         "sGhoToken": "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d",
-        "totalExposure": 9325655236254,
-        "totalExposureStrict": 9325655236254,
+        "totalExposure": 10026364266419,
+        "totalExposureStrict": 10026364266419,
         "tvlTokens": [
           "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
           "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
@@ -1021,7 +1027,7 @@
         "vault": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
         "vaultToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
         "vaultTokenDecimals": 6,
-        "withdrawableExposure": 9325655236254
+        "withdrawableExposure": 10026364266419
       },
       "implementationNames": {
         "eth:0x89D76f493AECaEe10caBbC1a67dbdC92E947b85E": "BeaconProxy",
@@ -1284,40 +1290,40 @@
           ],
           "statuses": [
             {
-              "idle": 4007125902,
+              "idle": 30664774,
               "strategy": 0,
-              "total": 4007125902,
+              "total": 30664774,
               "skippedStrategies": 0
             },
             {
               "idle": 0,
-              "strategy": 49638587,
-              "total": 49638587,
+              "strategy": 49671472,
+              "total": 49671472,
               "skippedStrategies": 0
             },
             {
               "idle": 0,
-              "strategy": 554000000000,
-              "total": 554000000000,
+              "strategy": 901000000000,
+              "total": 901000000000,
               "skippedStrategies": 0
             },
             {
               "idle": 0,
-              "strategy": "17040322572525526294990009",
-              "total": "17040322572525526294990009",
+              "strategy": "25984601059317505626917762",
+              "total": "25984601059317505626917762",
               "skippedStrategies": 0
             },
             { "idle": 0, "strategy": 0, "total": 0, "skippedStrategies": 0 },
             {
               "idle": 0,
-              "strategy": 496722716,
-              "total": 496722716,
+              "strategy": 1106524,
+              "total": 1106524,
               "skippedStrategies": 0
             },
             {
               "idle": 0,
-              "strategy": "10248431030185510080796532",
-              "total": "10248431030185510080796532",
+              "strategy": "2508781959264167750796532",
+              "total": "2508781959264167750796532",
               "skippedStrategies": 0
             }
           ]
@@ -1496,21 +1502,33 @@
           },
           "OPERATOR_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["eth:0xbF3D8452244849f3598165981FcF5b2DA15eaE4f"]
+            "members": [
+              "eth:0xbF3D8452244849f3598165981FcF5b2DA15eaE4f",
+              "eth:0x0AaBB14Da51F3c2ddB678A73f71239760fc9e952"
+            ]
           },
           "REBALANCER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["eth:0xbF3D8452244849f3598165981FcF5b2DA15eaE4f"]
+            "members": [
+              "eth:0xbF3D8452244849f3598165981FcF5b2DA15eaE4f",
+              "eth:0x0AaBB14Da51F3c2ddB678A73f71239760fc9e952"
+            ]
           }
         },
         "axcessVaultList": ["eth:0x1ADd118F7CcA31386C1d872f7EBAcf1bBdDf51D7"],
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "initialized": true,
         "nestVaultList": ["eth:0x5FbB19247a41E0b67a520Cb85BD7DDAFde6Ed487"],
-        "operator": ["eth:0xbF3D8452244849f3598165981FcF5b2DA15eaE4f"],
+        "operator": [
+          "eth:0xbF3D8452244849f3598165981FcF5b2DA15eaE4f",
+          "eth:0x0AaBB14Da51F3c2ddB678A73f71239760fc9e952"
+        ],
         "paused": false,
         "pauser": [],
-        "rebalancer": ["eth:0xbF3D8452244849f3598165981FcF5b2DA15eaE4f"],
+        "rebalancer": [
+          "eth:0xbF3D8452244849f3598165981FcF5b2DA15eaE4f",
+          "eth:0x0AaBB14Da51F3c2ddB678A73f71239760fc9e952"
+        ],
         "registry": "eth:0x55e271ae274BE015Fc46cdf43a2C7C96eF1dFB89",
         "wildcatArchController": "eth:0xfEB516d9D946dD487A9346F6fee11f40C6945eE4",
         "wildcatMarketList": ["eth:0x4A8364A38cD1F98dBB69485D857221710bdb1DfC"],
@@ -1915,7 +1933,7 @@
           "eth:0x907b30407249949521Bf0c89A43558dae200146A",
           "eth:0xFa30EAe30351A83809657299F6Cad9557c232e8C"
         ],
-        "getFirstUnprocessedPriorityTx": 5237,
+        "getFirstUnprocessedPriorityTx": 5259,
         "getL2BootloaderBytecodeHash": "0x01000911c4db4fe62c98e180cfa7e9b3a22fb15f505905d4bf36192f481551e6",
         "getL2DefaultAccountBytecodeHash": "0x010005f73e7c299ed73db937843643bdc276cbc2cc8596287e1e0cf3afc60252",
         "getL2EvmEmulatorBytecodeHash": "0x01000d8bae37b82f311186426184866498b357f41d7a02ced11f3e3fbfbacd63",
@@ -1923,8 +1941,8 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 0,
-        "getPriorityTreeRoot": "0x60921a7c36cb8aebc52dde8b10e8603011a5a859568b8598a56e5e50531d9827",
+        "getPriorityQueueSize": 2,
+        "getPriorityTreeRoot": "0x9d1b725b1bd7e64064238526bdaa32f0805a4545598d9ee5a439add8a301146e",
         "getPriorityTreeStartIndex": 440,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 128849018881,
@@ -1932,13 +1950,13 @@
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
         "getSemverProtocolVersion": [0, 30, 1],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 128857,
-        "getTotalBatchesExecuted": 128850,
-        "getTotalBatchesVerified": 128851,
-        "getTotalBlocksCommitted": 128857,
-        "getTotalBlocksExecuted": 128850,
-        "getTotalBlocksVerified": 128851,
-        "getTotalPriorityTxs": 5237,
+        "getTotalBatchesCommitted": 130610,
+        "getTotalBatchesExecuted": 130568,
+        "getTotalBatchesVerified": 130597,
+        "getTotalBlocksCommitted": 130610,
+        "getTotalBlocksExecuted": 130568,
+        "getTotalBlocksVerified": 130597,
+        "getTotalPriorityTxs": 5261,
         "getTransactionFilterer": "eth:0x3Cd52B238Ac856600b22756133eEb31ECb25109a",
         "getVerifier": "eth:0xCeF0218c0C6dB0768e48debeE26E41B8DAdE7081",
         "getVerifierParams": {
@@ -2131,15 +2149,16 @@
         ],
         "priceSources": [
           "eth:0x1189E2C915e3DEcb41d4127dc142540e3ef0fE76",
-          "eth:0x609c1ecfd342fA697644673f978a8978BaBc8e25"
+          "eth:0x609c1ecfd342fA697644673f978a8978BaBc8e25",
+          "eth:0x48c400441Db43D4518dba4FC859866Fcd794256D"
         ],
         "receiptTokens": [
           "eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
           "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d"
         ],
         "swapsPaused": false,
-        "totalExposure": 56807782063,
-        "totalExposureStrict": 56807782063,
+        "totalExposure": 56834075525,
+        "totalExposureStrict": 56834075525,
         "tvlTokens": [
           "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
           "eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
@@ -3690,12 +3709,28 @@
     "shared-zk-stack/ValidatorTimelock_v31": "0xc571d18f4183eb072d6806cece41853993e1559b69d2a903b1d707b05ad8385f",
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 26348017 },
-  "permissionsConfigHash": "0x6adff0ed84cf6abd8e3f177ce10a7697069da958a2cd14c4868c40a0bc80ab34",
+  "usedBlockNumbers": { "ethereum": 26385000 },
+  "permissionsConfigHash": "0x42c678ab5a391a957e645ee0ae4e63e103d9c37f6c6bcf29dfc20124067e629d",
   "modelledAgainst": {
     "shared-zk-stack": "0x1edc9a85104e4cb1087b172da8c224b9375c175a0b977b71c27aba5aed671567"
   },
   "permissions": {
+    "eth:0x0AaBB14Da51F3c2ddB678A73f71239760fc9e952": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD3A975f7dca47D7bDfA426BB7cD64F4145CcEc44",
+          "description": "bridge the compartment's funds to its vault on GRVT.",
+          "role": ".rebalancer"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xD3A975f7dca47D7bDfA426BB7cD64F4145CcEc44",
+          "description": "deposit the compartment's funds into its listed Axcess, Nest and Wildcat venues and withdraw them back to the compartment.",
+          "role": ".operator"
+        }
+      ]
+    },
     "eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e": {
       "directlyReceivedPermissions": [
         {

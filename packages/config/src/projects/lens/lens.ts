@@ -1,11 +1,4 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import {
-  DA_BRIDGES,
-  DA_LAYERS,
-  RISK_VIEW,
-  TECHNOLOGY_DATA_AVAILABILITY,
-} from '../../common'
-import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { zkStackL2 } from '../../templates/zkStack'
@@ -19,21 +12,13 @@ export const lens: ScalingProject = zkStackL2({
   chainId,
   capability: 'universal',
   additionalPurposes: ['Social'],
-  additionalBadges: [BADGES.DA.AvailVector],
   addedAt: UnixTime(1716536821), // 2024-05-24T07:47:01Z
-  daAttestedByIndependentParty: true,
-  daVerifierSecureOnL1: true,
-  daVerifier7DayExitWindow: true,
-  daCommitteeDecentralized: true,
-  daVerifierLink:
-    'https://etherscan.io/address/0x8f50d93B9955B285f787043B30B5F51D09bE0120#code',
   display: {
     name: 'Lens',
     aliases: ['Avara'],
     slug: 'lens',
     description:
-      "Lens Network is the main social networking hub for the user base of Lens Protocol, built on a Validium using ZKsync's ZK Stack technology.",
-    architectureImage: 'zkstack-validium-vector',
+      "Lens Network is the main social networking hub for the user base of Lens Protocol, built as a ZK rollup using ZKsync's ZK Stack technology.",
     links: {
       websites: ['https://lens.xyz'],
       bridges: [
@@ -83,20 +68,17 @@ export const lens: ScalingProject = zkStackL2({
       },
     }),
   ],
-  daProvider: {
-    layer: DA_LAYERS.AVAIL,
-    riskView: RISK_VIEW.DATA_AVAIL(true),
-    technology: {
-      ...TECHNOLOGY_DATA_AVAILABILITY.AVAIL_OFF_CHAIN(true),
-      references: [
-        {
-          title: 'AvailL1DAValidator - checkDA() function',
-          url: 'https://etherscan.io/address/0x8f50d93B9955B285f787043B30B5F51D09bE0120#code#F1#L16',
-        },
+  daTracking: [
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 26384574, // rollup DA validator pair set after the v31 upgrade
+      inbox: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
+      sequencers: [
+        EthereumAddress('0xBf02Dc815BA63140Bfc170cFcF97987B504d36Bc'),
       ],
     },
-    bridge: DA_BRIDGES.VECTOR,
-  },
+  ],
   nonTemplateTrackedTxs: [
     {
       uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
@@ -196,6 +178,14 @@ export const lens: ScalingProject = zkStackL2({
     id: ProjectId('the-elastic-network'),
   },
   milestones: [
+    {
+      title: 'Lens becomes a ZK rollup',
+      url: 'https://etherscan.io/tx/0x71e8d09eced669b57e6f9a99f69cac7c11352e10cfb63c56128f217aac29e3b8',
+      date: '2026-11-10T00:00:00.00Z',
+      description:
+        'Lens upgrades to ZK Stack v31 and posts its data to Ethereum blobs instead of Avail.',
+      type: 'general',
+    },
     {
       title: 'Upgrade to Vector DA Bridge',
       url: 'https://etherscan.io/tx/0x2e3912d3ae33abe684199823322702094a610681ab982b76f2cfc0c7ef34d87f', // TODO better announcement link

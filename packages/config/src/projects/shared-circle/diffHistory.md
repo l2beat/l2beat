@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xaad9abe5b9e1066c180452d5acd7b73713e54517
+
+# Diff at Tue, 10 Nov 2026 14:26:37 GMT:
+
+- id: 21d6d469
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@28ea16426fac1900c2fffd1cec3ecc6b84981c76 block: 1791379304
+- current timestamp: 1794319734
+
+## Description
+
+The SeizureRegistry address manager allowlisted a second recipient, the EOA eth:0xd1E1fa2056096499aF88F2Ebbf1b15Df81b271B4. The secondary market burner then recorded the written-off balance of the blocklisted address 0x290b6eBBdCA04EE984fB8617E1B92DeEA23052e3 on five CCTP domains (Ethereum, Avalanche, Arbitrum, Base, Polygon PoS) and minted 4,180,098.5 USDC on Ethereum to that recipient. The written-off balances are not verified onchain.
+
+## Watched changes
+
+```diff
+    contract SeizureRegistry (eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd) [N/A] {
+    +++ description: USDC minter that re-mints seized balances. When the balance of a blocklisted address on any CCTP domain is written off, the secondary market burner records it once per address and domain and mints the same amount of USDC on Ethereum to an allowlisted recipient. The written-off balance is not verified onchain, so minting is bounded only by the allowance the MasterMinter controllers grant this contract.
++++ description: Recipients that re-minted USDC can be sent to, managed by the address manager.
+      values.allowedRecipients.1:
++        "eth:0xd1E1fa2056096499aF88F2Ebbf1b15Df81b271B4"
+      values.totalSecondaryMarketBurnedAmount:
+-        381235000000
++        4561333500000
+    }
+```
+
 Generated with discovered.json: 0x7e7a0c98e032cfcd6c0e4488e1e55c2d08759802
 
 # Diff at Wed, 07 Oct 2026 13:25:53 GMT:

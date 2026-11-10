@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x42aeb2a13363e4fdd524558211913dd36bffbddf
+
+# Diff at Tue, 10 Nov 2026 14:26:49 GMT:
+
+- id: b062d935
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@28ea16426fac1900c2fffd1cec3ecc6b84981c76 block: 1793874630
+- current timestamp: 1794319707
+
+## Description
+
+Proposal 74 is in voting, with no votes yet. It pays 500 TORN to its proposer (eth:0xE90D1518e517453C6d6df4b251082216CeF3EFBb, not the proposer of 73) and pins another app build on tornadocash.eth (contenthash e30101701220ff5f...85e8, CID bafybeih7l55bvm33s2svdk65hxdirbtws2mteif6a6y3akurjljbgpuf5a). Voting ends 2026-11-14 14:23 UTC, execution is possible from 2026-11-16 after the 2-day delay. The verified proposal contract only does these two things. The source of this build is not identified and the CID is not rebuilt yet.
+
+Proposal 73 passed and is executable from 2026-11-12. If both execute, the pin of 74 replaces the pin of 73.
+
+## Watched changes
+
+```diff
+    contract GovernanceProposalStateUpgrade (eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) [tornado-cash/GovernanceProposalStateUpgrade] {
+    +++ description: Upgradeable Tornado Cash governance contract that manages proposals, voting, execution, and treasury-connected governance modules. If you trust this contract, you trust its upgrade path and proposal rules to change protocol governance behavior.
+      values.proposalCount:
+-        73
++        74
+    }
+```
+
 Generated with discovered.json: 0xe201b8fb561dffc26b5d25105c0f01a11763a393
 
 # Diff at Thu, 05 Nov 2026 10:31:57 GMT:
