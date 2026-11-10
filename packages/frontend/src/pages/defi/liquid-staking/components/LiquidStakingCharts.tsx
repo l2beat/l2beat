@@ -61,6 +61,7 @@ export function LiquidStakingCharts({
   projects: LiquidStakingChartProject[]
   defaultRange: ChartRange
 }) {
+  const [range, setRange] = useState<ChartRange>(defaultRange)
   const projectSeries = useMemo(() => {
     const colors = generateAccessibleColors(projects.length)
     return projects.map(
@@ -73,24 +74,30 @@ export function LiquidStakingCharts({
   }, [projects])
 
   return (
-    <div className="grid gap-4 md:mt-4 lg:grid-cols-2">
-      <YieldChart projectSeries={projectSeries} defaultRange={defaultRange} />
-      <CostOfExitChart
-        projectSeries={projectSeries}
-        defaultRange={defaultRange}
-      />
-    </div>
+    <>
+      <div className="grid gap-4 md:mt-4 lg:grid-cols-2">
+        <YieldChart projectSeries={projectSeries} range={range} />
+        <CostOfExitChart projectSeries={projectSeries} range={range} />
+      </div>
+      <ChartControlsWrapper className="mt-4 justify-end max-md:pr-4">
+        <ChartRangeControls
+          name="liquid-staking"
+          value={range}
+          setValue={setRange}
+          options={RANGE_OPTIONS}
+        />
+      </ChartControlsWrapper>
+    </>
   )
 }
 
 interface ChartProps {
   projectSeries: LiquidStakingChartSeries[]
-  defaultRange: ChartRange
+  range: ChartRange
 }
 
-function YieldChart({ projectSeries, defaultRange }: ChartProps) {
+function YieldChart({ projectSeries, range }: ChartProps) {
   const trpc = useTRPC()
-  const [range, setRange] = useState<ChartRange>(defaultRange)
   const { data, isLoading, isPlaceholderData } = useChartQuery(
     trpc.defi.liquidStakingYieldChart,
     { range },
@@ -121,15 +128,12 @@ function YieldChart({ projectSeries, defaultRange }: ChartProps) {
 
   return (
     <ChartCard
-      name="liquid-staking-yield"
       title="Rate-implied yield"
       info={[
         YIELD_METRIC.tooltip,
         'Network average is the return of active Ethereum validators before any protocol fee: consensus rewards plus what proposers earn from blocks, over their balance, for the same 30 days. Validators waiting to enter, or exited and not yet withdrawn, earn nothing and are left out.',
         'The shaded area is the ETH held by active validators (right axis): rewards per validator shrink as the square root of the total stake, so the yield falls as the stake grows.',
       ].join(' ')}
-      range={range}
-      setRange={setRange}
       timeRange={getChartTimeRangeFromData(chartData)}
       isPlaceholderData={isPlaceholderData}
     >
@@ -147,9 +151,8 @@ function YieldChart({ projectSeries, defaultRange }: ChartProps) {
   )
 }
 
-function CostOfExitChart({ projectSeries, defaultRange }: ChartProps) {
+function CostOfExitChart({ projectSeries, range }: ChartProps) {
   const trpc = useTRPC()
-  const [range, setRange] = useState<ChartRange>(defaultRange)
   const { data, isLoading, isPlaceholderData } = useChartQuery(
     trpc.defi.liquidStakingCostOfExitChart,
     { range },
@@ -175,14 +178,11 @@ function CostOfExitChart({ projectSeries, defaultRange }: ChartProps) {
 
   return (
     <ChartCard
-      name="liquid-staking-cost-of-exit"
       title="Cost of exit"
       info={[
         COST_OF_EXIT_METRIC.tooltip,
         "The discount is the day's median of hourly quotes for selling 100 tokens on the deepest pools, on days they could fill the sale for most hours. An instant exit counts on days it could pay out 100 ETH for most hours. wBETH unwraps wait for Binance to allocate ETH, and at least the operator-set lock time; its pools are too thin to quote.",
       ].join(' ')}
-      range={range}
-      setRange={setRange}
       // A point is a day, so the range runs to the end of the last one.
       timeRange={getChartTimeRangeFromData(
         chartData,
@@ -206,49 +206,32 @@ function CostOfExitChart({ projectSeries, defaultRange }: ChartProps) {
 }
 
 function ChartCard({
-  name,
   title,
   info,
-  range,
-  setRange,
   timeRange,
   isPlaceholderData,
   children,
 }: {
-  name: string
   title: string
   /** What the chart measures and where the data comes from. */
   info: string
-  range: ChartRange
-  setRange: (range: ChartRange) => void
   timeRange: ChartTimeRangeValue
   isPlaceholderData: boolean
   children: ReactNode
 }) {
-  // The date range changes width with the range and while loading, so it gets
-  // a line of its own at a fixed height; otherwise it would decide whether the
-  // controls wrap, and the card would change height on every switch. Whether
-  // the controls sit beside the title follows the card's width, not its title,
-  // so both cards always match. Phones show the controls as a compact select.
+  // The date range changes width with the range and while loading, so its
+  // line has a fixed height to keep both cards the same size.
   return (
-    <PrimaryCard className="@container">
-      <ChartControlsWrapper className="items-center md:@max-lg:flex-col md:@max-lg:items-start">
-        <div className="flex items-center gap-2">
-          <h2 className="font-bold text-lg md:text-xl">{title}</h2>
-          <Tooltip>
-            <TooltipTrigger>
-              <InfoIcon className="size-3.5" />
-            </TooltipTrigger>
-            <TooltipContent>{info}</TooltipContent>
-          </Tooltip>
-        </div>
-        <ChartRangeControls
-          name={name}
-          value={range}
-          setValue={setRange}
-          options={RANGE_OPTIONS}
-        />
-      </ChartControlsWrapper>
+    <PrimaryCard>
+      <div className="flex items-center gap-2">
+        <h2 className="font-bold text-lg md:text-xl">{title}</h2>
+        <Tooltip>
+          <TooltipTrigger>
+            <InfoIcon className="size-3.5" />
+          </TooltipTrigger>
+          <TooltipContent>{info}</TooltipContent>
+        </Tooltip>
+      </div>
       <div className="mt-1 mb-4 flex h-5 items-center lg:h-6">
         <ChartTimeRange
           timeRange={timeRange}
