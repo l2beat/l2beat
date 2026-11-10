@@ -97,7 +97,7 @@ export function NewProjectPage() {
                 placeholder="7"
                 disabled={createConfigFileMutation.isPending}
                 onChange={(e) => {
-                  const value = Number.parseInt(e.target.value)
+                  const value = Number.parseInt(e.target.value, 10)
                   if (!isNaN(value) && value >= 0) {
                     setMaxDepth(value)
                   }
@@ -122,7 +122,7 @@ export function NewProjectPage() {
                 placeholder="100"
                 disabled={createConfigFileMutation.isPending}
                 onChange={(e) => {
-                  const value = Number.parseInt(e.target.value)
+                  const value = Number.parseInt(e.target.value, 10)
                   if (!isNaN(value) && value >= 1) {
                     setMaxAddresses(value)
                   }
