@@ -2467,6 +2467,34 @@ describeDatabase(TokenValueRepository.name, (db) => {
     },
   )
 
+  describe(
+    TokenValueRepository.prototype.getSummedByTokensAtResolution.name,
+    () => {
+      it('sums only the given tokens of the project, at the chart rows', async () => {
+        const HOUR = UnixTime.HOUR
+        // Midnight UTC
+        const T = UnixTime(1_700_006_400)
+        await repository.upsertMany([
+          tokenValue('a', 'project', T, 1, 10, 10, 10, 1),
+          tokenValue('b', 'project', T, 1, 5, 5, 5, 1),
+          tokenValue('c', 'project', T, 1, 100, 100, 100, 1),
+          tokenValue('d', 'other', T, 1, 1000, 1000, 1000, 1),
+          tokenValue('a', 'project', T + HOUR, 1, 20, 20, 20, 1),
+          tokenValue('a', 'project', T + 2 * HOUR, 1, 30, 30, 30, 1),
+        ])
+
+        const result = await repository.getSummedByTokensAtResolution(
+          'project',
+          ['a', 'b', 'd'],
+          [null, T + 26 * HOUR],
+          'day',
+        )
+
+        expect(result).toEqual([{ timestamp: T, value: 15 }])
+      })
+    },
+  )
+
   afterEach(async () => {
     await repository.deleteAll()
   })

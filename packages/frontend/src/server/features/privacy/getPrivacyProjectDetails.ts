@@ -22,7 +22,6 @@ import type {
   PrivacyFlowBucketTotalRecord,
   TokenValueRecord,
 } from '@l2beat/database'
-import { getPrivacyBucketAddress } from '@l2beat/shared'
 import type { OssificationHistory } from '@l2beat/shared/frontend'
 import type { ProjectId } from '@l2beat/shared-pure'
 import {
@@ -48,6 +47,7 @@ import {
   type PrivacyAnonymitySetType,
 } from './anonymity-set/getPrivacyAnonymitySetSeries'
 import { getPrivacyProject } from './getPrivacyProjects'
+import { getPrivacyChainValues } from './getPrivacyValueLockedChart'
 import type {
   PrivacyAsset,
   PrivacyBucket,
@@ -58,7 +58,10 @@ import {
   getPrivacyBucketTvls,
   getPrivacySingleEscrowBucketTvls,
 } from './utils/getPrivacyBucketTvls'
-import { getPrivacyPageChains } from './utils/getPrivacyPageChains'
+import {
+  getPrivacyPageChains,
+  getPrivacyProjectOnChain,
+} from './utils/getPrivacyPageChains'
 import { getScalingProjectItems } from './utils/getPrivacyScalingLinks'
 import { getPrivacyTrackedChains } from './utils/getPrivacyTrackedChains'
 
@@ -131,8 +134,9 @@ export interface PrivacyChainView {
   /** In tab order, which is the project's `trackedOn` order. */
   chains: ProjectIconListItem[]
   selected: ProjectIconListItem
-  /** Value locked on the selected chain, the sum of its buckets. */
+  /** Value locked on the selected chain. */
   totalValueLockedUsd: number | undefined
+  totalValueLockedChange7d: number | undefined
   /** The sum of the chains, so their values add up to it. */
   allChainsValueLockedUsd: number | undefined
 }
@@ -159,14 +163,6 @@ export async function getPrivacyProjectDetails(
 
   const { trackedOn, chainProjects } = await getTrackedOn(project)
   const tokens = project.privacyInfo.tokens
-  const bucketChains = new Map(
-    tokens.flatMap((token) =>
-      token.buckets.map(
-        (bucket) =>
-          [bucket.id, getPrivacyBucketAddress(bucket.address).chain] as const,
-      ),
-    ),
-  )
   const pageChains = getPrivacyPageChains(project.privacyInfo)
   const viewChains = trackedOn.filter((c) => pageChains.includes(c.id))
   const selected =
@@ -179,6 +175,7 @@ export async function getPrivacyProjectDetails(
     relayerStat,
     scalingProjects,
     ossification,
+    chainValues,
   ] = await Promise.all([
     getPrivacyProjectFlowData(project, last30dCutoff, currentDay, now),
     getRelayerStat(
@@ -189,6 +186,7 @@ export async function getPrivacyProjectDetails(
     ),
     getScalingProjects(project),
     getProjectOssification(project),
+    selected ? getPrivacyChainValues(project.id, pageChains) : undefined,
   ])
 
   const tvlBySymbol = new Map<string, number>()
@@ -256,12 +254,6 @@ export async function getPrivacyProjectDetails(
   let stats: ReturnType<typeof buildPrivacyStats>
   let chainView: PrivacyChainView | undefined
   if (selected) {
-    const chainTokens = tokens.flatMap((token) => {
-      const buckets = token.buckets.filter(
-        (bucket) => bucketChains.get(bucket.id) === selected.id,
-      )
-      return buckets.length === 0 ? [] : [{ ...token, buckets }]
-    })
     const chainBucketTvls = new Map([
       ...getPrivacySingleEscrowBucketTvls(
         tokens,
@@ -272,20 +264,22 @@ export async function getPrivacyProjectDetails(
     ])
     // An asset's value on one chain is what its buckets there hold.
     stats = buildPrivacyStats(
-      chainTokens,
+      getPrivacyProjectOnChain(project, selected.id).privacyInfo.tokens,
       { ...statsContext, bucketTvls: chainBucketTvls },
       (token) =>
         sumDefined(
           token.buckets.map((bucket) => chainBucketTvls.get(bucket.id)),
         ) ?? null,
     )
+    const value = chainValues?.get(selected.id)
     chainView = {
       chains: viewChains,
       selected,
-      totalValueLockedUsd: sumDefined(
-        stats.assets.map((asset) => asset.totalValueUsd ?? undefined),
+      totalValueLockedUsd: value?.value,
+      totalValueLockedChange7d: value?.change7d,
+      allChainsValueLockedUsd: sumDefined(
+        [...(chainValues?.values() ?? [])].map((v) => v.value),
       ),
-      allChainsValueLockedUsd: sumDefined([...chainBucketTvls.values()]),
     }
   } else {
     stats = buildPrivacyStats(
@@ -295,9 +289,9 @@ export async function getPrivacyProjectDetails(
     )
   }
 
-  const assessment: ProjectPrivacyAssessment =
-    (selected && project.privacyInfo.chainAssessments?.[selected.id]) ??
-    project.privacyInfo
+  const assessment: ProjectPrivacyAssessment = selected
+    ? getPrivacyProjectOnChain(project, selected.id).privacyInfo
+    : project.privacyInfo
   // A chain's page lists what is deployed there, and on chains with no page.
   const otherViewChains = new Set(
     selected

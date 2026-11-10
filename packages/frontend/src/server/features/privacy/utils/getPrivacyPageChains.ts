@@ -37,3 +37,40 @@ export function getPrivacyChainPagePath(
   const path = `/privacy/projects/${slug}` as const
   return chain === pageChains[0] ? path : `${path}/${chain}`
 }
+
+/** The project once per page chain, or once as it is when it has one page. */
+export function getPrivacyProjectPages<
+  T extends { slug: string; privacyInfo: ProjectPrivacyInfo },
+>(project: T): { project: T; chain?: string; path: `/${string}` }[] {
+  const chains = getPrivacyPageChains(project.privacyInfo)
+  return chains.length > 1
+    ? chains.map((chain) => ({
+        project: getPrivacyProjectOnChain(project, chain),
+        chain,
+        path: getPrivacyChainPagePath(project.slug, chains, chain),
+      }))
+    : [{ project, path: `/privacy/projects/${project.slug}` }]
+}
+
+/**
+ * The project as it is tracked and rated on one of its page chains: only the
+ * buckets there, and that chain's assessment.
+ */
+export function getPrivacyProjectOnChain<
+  T extends { privacyInfo: ProjectPrivacyInfo },
+>(project: T, chain: string): T {
+  const { chainAssessments, ...privacyInfo } = project.privacyInfo
+  return {
+    ...project,
+    privacyInfo: {
+      ...privacyInfo,
+      ...chainAssessments?.[chain],
+      tokens: privacyInfo.tokens.flatMap((token) => {
+        const buckets = token.buckets.filter(
+          (bucket) => getPrivacyBucketAddress(bucket.address).chain === chain,
+        )
+        return buckets.length === 0 ? [] : [{ ...token, buckets }]
+      }),
+    },
+  }
+}

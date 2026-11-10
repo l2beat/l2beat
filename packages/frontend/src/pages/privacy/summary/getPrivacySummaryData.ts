@@ -1,4 +1,5 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
+import uniqBy from 'lodash/uniqBy'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getPrivacyProjects } from '~/server/features/privacy/getPrivacyProjects'
 import { getPrivacySummaryEntries } from '~/server/features/privacy/getPrivacySummaryEntries'
@@ -110,9 +111,11 @@ async function getCachedData() {
   return {
     appLayoutProps,
     groups: getPrivacySummaryGroups(entries),
-    chartProjects: entries
-      .filter((e) => e.isTracked || e.hasTvl)
-      .map((e) => ({ id: e.id, name: e.name, hasTvl: e.hasTvl })),
+    // A project with an entry per chain is charted once, as a whole.
+    chartProjects: uniqBy(
+      entries.filter((e) => e.isTracked || e.hasTvl),
+      (e) => e.id,
+    ).map((e) => ({ id: e.id, name: e.name, hasTvl: e.hasTvl })),
     queryState: helpers.dehydrate(),
     defaultChartRange,
   }

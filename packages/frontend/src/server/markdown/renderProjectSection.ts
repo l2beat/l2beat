@@ -319,6 +319,9 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<SectionProps<T>> } = {
   ThroughputSection: renderThroughputSection,
   TrustedSetupSection: renderTrustedSetups,
   TvsValueSection: pointToHtmlPage('The interactive value chart is shown'),
+  PrivacyValueLockedSection: pointToHtmlPage(
+    'The interactive value chart is shown',
+  ),
   UpdatesSection: renderUpdatesSection,
   VerifiersSection: renderVerifiers,
   ZkCatalogTvsSection: pointToHtmlPage('The interactive TVS chart is shown'),
