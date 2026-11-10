@@ -56,6 +56,7 @@ export async function buildSearchIndex(): Promise<SearchIndex> {
       .filter((token) => token.id !== UNKNOWN_ABSTRACT_TOKEN_ID)
       .sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0))
       .map(toSearchIndexToken),
+    versionGroups: getVersionGroups(projects),
   }
 }
 
@@ -103,22 +104,25 @@ export function toSearchIndexProject(
     ].filter((tag): tag is string => !!tag),
     project.interopConfig?.name ?? null,
     project.interopConfig?.shortName ?? null,
-    getVersionRank(project),
   ]
 }
 
-function getVersionRank(
-  project: SearchIndexSourceProject,
-): [string, number] | null {
-  if (!project.versions) return null
-  const { group, siblings } = project.versions
-  // Siblings are in display order, oldest first.
-  const newestFirst = [
-    ...siblings.filter((s) => s.isLatest),
-    ...siblings.filter((s) => !s.isLatest).reverse(),
-  ]
-  const rank = newestFirst.findIndex((s) => s.id === project.id)
-  return rank === -1 ? null : [group.id, rank]
+/** Project ids of each version group, latest first, then newest first. */
+function getVersionGroups(projects: SearchIndexSourceProject[]): string[][] {
+  const groups = new Map<string, string[]>()
+  for (const { versions } of projects) {
+    if (!versions || groups.has(versions.group.id)) continue
+    // Siblings are in display order, oldest first.
+    const { siblings } = versions
+    groups.set(versions.group.id, [
+      ...siblings.filter((s) => s.isLatest).map((s) => s.id),
+      ...siblings
+        .filter((s) => !s.isLatest)
+        .reverse()
+        .map((s) => s.id),
+    ])
+  }
+  return [...groups.values()]
 }
 
 function getProjectKinds(
@@ -146,7 +150,6 @@ function toSearchIndexChain(
     ['chain'],
     null,
     [chain.display],
-    null,
     null,
     null,
   ]
