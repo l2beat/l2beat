@@ -98,7 +98,8 @@ export const splitsv2: BaseProject = {
       sentiment: 'good',
       points: [
         CROP_NOTES.infiniteExitWindow,
-        'Anyone can create a split, trigger its payouts and trigger a withdrawal from the Warehouse, with no permission and no operator in the path.',
+        'Anyone can create a split and trigger its payouts, with no permission and no operator in the path.',
+        'A recipient can always withdraw its own balance from the Warehouse.',
         CROP_NOTES.passesWalkawayTest(
           'splits and the Warehouse work without the team or its interfaces, and any wallet or contract can call them directly.',
         ),

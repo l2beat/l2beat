@@ -12,6 +12,8 @@ Push splits use the Warehouse as a fallback. ETH that a recipient does not accep
 
 A split created without an owner never changes. The owner of any other split can replace its recipients, pause its payouts and make any call from the split, which includes moving its funds. The owner can also sign messages as the split, pass the role on or give it up.
 
+An owner who sets a withdrawal reward for a pull split itself exposes its funds. Anyone can then withdraw the split's Warehouse balance for the reward, put the rest back and repeat.
+
 ### How a split gets stuck
 
 - **A token refuses one push split recipient.** A push split pays all recipients in one transaction, with no fallback for ERC-20 transfers. If a token's issuer blacklists one recipient, none of them gets that token.

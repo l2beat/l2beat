@@ -1,6 +1,5 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "displayName": "PushSplit",
   "critical": true,
   "description": "Implementation that every push split of its version delegates to. A push split collects ETH and ERC-20 tokens. Anyone can distribute them, which sends each recipient's share straight to its address. ETH that a recipient does not accept is deposited for it in the SplitsWarehouse. A split created with an owner lets that owner change the recipients, pause distributions and execute any call from the split.",
   // ERC-7528 placeholder address for the native token, not a contract.
