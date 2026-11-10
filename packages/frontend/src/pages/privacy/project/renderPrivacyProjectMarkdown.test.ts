@@ -287,7 +287,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
       expect(
         getSection(renderPrivacyProjectMarkdown(ENTRY), 'How to stay private'),
       ).toInclude(
-        '1. **Wait.** Wait before withdrawing. Draw the wait at random between 0 and 30 days, the window the anonymity set counts. Against: chain analyst.',
+        '1. **Wait.** Wait before withdrawing. Draw the wait once, at random between 0 and 30 days, the window the anonymity set counts. Against: chain analyst.',
       )
     })
 

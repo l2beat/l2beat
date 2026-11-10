@@ -23,6 +23,8 @@ export const ADVICE = {
   drawWaitLabel: 'Draw a wait',
   redrawWaitLabel: 'Draw again',
   waitAfterDeposit: 'after your deposit',
+  /** Under the control once a wait is drawn. */
+  redrawWaitNote: 'Clicking often to get a shorter time reduces privacy.',
   /** Our word for the steps, as the framework uses it, linking to this section. */
   label: 'Advice',
   methodologyLink: 'Every habit explained',
@@ -60,14 +62,14 @@ export function getStepsAgainst(
     .filter(({ step }) => step.against.includes(id))
 }
 
-/** Under the draw control: where the wait comes from and that it stays local. */
+/** Under the draw button: the range the wait comes from. */
 export function getWaitNote(windowDays: number): string {
-  return `Random between 0 and ${windowDays} days, the window the anonymity set counts. Drawn in your browser.`
+  return `Random between 0 and ${windowDays} days, the anonymity set's window.`
 }
 
 /** The markdown alternate cannot draw, so it says how to. */
 export function getWaitInstruction(windowDays: number): string {
-  return `Draw the wait at random between 0 and ${windowDays} days, the window the anonymity set counts.`
+  return `Draw the wait once, at random between 0 and ${windowDays} days, the window the anonymity set counts.`
 }
 
 /** "12 days 7 hours", "7 hours", "under an hour". */
