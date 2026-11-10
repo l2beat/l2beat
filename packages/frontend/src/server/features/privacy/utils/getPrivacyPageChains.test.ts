@@ -53,6 +53,27 @@ describe(getPrivacyProjectOnChain.name, () => {
     expect(privacyInfo.tokens).toEqual([token('optimism')])
     expect(privacyInfo.riskSummary).toEqual('optimism')
   })
+
+  it('keeps a key registry only on its own chain', () => {
+    const anonymitySet = {
+      type: 'key-registrations',
+      registry: ChainSpecificAddress.fromLong('base', POOL),
+    }
+    const project = {
+      privacyInfo: {
+        trackedOn: ['base', 'optimism'],
+        tokens: [],
+        anonymitySet,
+      } as unknown as ProjectPrivacyInfo,
+    }
+
+    expect(
+      getPrivacyProjectOnChain(project, 'base').privacyInfo.anonymitySet,
+    ).toEqual(anonymitySet as ProjectPrivacyInfo['anonymitySet'])
+    expect(
+      getPrivacyProjectOnChain(project, 'optimism').privacyInfo.anonymitySet,
+    ).toEqual(undefined)
+  })
 })
 
 function token(chain: string) {

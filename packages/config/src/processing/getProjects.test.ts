@@ -640,11 +640,11 @@ describe('getProjects', () => {
             }
             continue
           }
-          for (const name of see.split(' and ')) {
-            if (!Object.values(cellNames).includes(name)) {
-              problems.push(`${name}: unknown pointer ${name}`)
+          for (const pointer of see.split(' and ')) {
+            if (!Object.values(cellNames).includes(pointer)) {
+              problems.push(`${name}: unknown pointer ${pointer}`)
             }
-            pointed.add(name)
+            pointed.add(pointer)
           }
         }
 
