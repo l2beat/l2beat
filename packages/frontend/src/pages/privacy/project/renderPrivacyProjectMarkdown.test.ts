@@ -191,6 +191,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     expect(headings).toEqual([
       '## Summary',
       '## Privacy',
+      '## How to stay private',
       '## Value Locked',
       '## Anonymity sets',
       '## Flows',
@@ -274,7 +275,19 @@ describe(renderPrivacyProjectMarkdown.name, () => {
 
     it('grades the promise against each adversary and says why', () => {
       expect(privacy()).toInclude(
-        '### Chain analyst\n\nLink at risk (sentiment: warning)\n\n**Who:** Correlates all public data. Examples: Chain analytics firms.\n\nTiming narrows the anonymity set.\n\n**Advice:** Wait before withdrawing.',
+        '### Chain analyst\n\nLink at risk (sentiment: warning)\n\n**Who:** Correlates all public data. Examples: Chain analytics firms.\n\nTiming narrows the anonymity set.',
+      )
+    })
+
+    it('links the advice once, which lists each step with the adversaries it defends', () => {
+      expect(privacy()).toInclude(
+        '**Advice:** How to stay private, the next section.',
+      )
+      expect(privacy()).not.toInclude('**Advice:** Wait')
+      expect(
+        getSection(renderPrivacyProjectMarkdown(ENTRY), 'How to stay private'),
+      ).toInclude(
+        '1. **Wait.** Wait before withdrawing. Against: chain analyst.',
       )
     })
 
@@ -452,7 +465,6 @@ const ADVERSARIES: ProjectPrivacyAdversaries = {
       'warning',
       'Timing narrows the anonymity set.',
       {
-        advice: 'Wait before withdrawing.',
         interior: { ...PUBLIC_OBSERVER_INTERIOR, linkage: 'exposed' },
       },
     ),
@@ -475,6 +487,13 @@ const ADVERSARIES: ProjectPrivacyAdversaries = {
       'A quantum computer could break the commitments.',
     ),
   },
+  advice: [
+    {
+      name: 'Wait',
+      text: 'Wait before withdrawing.',
+      against: ['chainAnalyst'],
+    },
+  ],
 }
 
 function chartSection(
@@ -560,6 +579,22 @@ const SECTIONS: ProjectDetailsSection[] = [
       title: 'Privacy',
       adversaries: ADVERSARIES,
       referenceApp: REFERENCE_APP,
+    },
+  },
+  {
+    type: 'PrivacyAdviceSection',
+    props: {
+      id: 'stay-private',
+      title: 'How to stay private',
+      steps: ADVERSARIES.advice ?? [],
+      adversaries: ADVERSARIES.adversaries,
+      sentiments: {
+        publicObserver: 'good',
+        chainAnalyst: 'warning',
+        networkObserver: 'good',
+        privilegedInsider: 'good',
+        futureAdversary: 'bad',
+      },
     },
   },
   chartSection('TvsValueSection', 'privacy-tvl', 'Value Locked'),

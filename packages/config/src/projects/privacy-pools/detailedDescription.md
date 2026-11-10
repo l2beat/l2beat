@@ -14,7 +14,7 @@ All notes derive from one recovery phrase. The website creates a random one or d
 
 ### App
 
-0xbow hosts the app, built from public source. It accepts the user's own RPC endpoint and a sign-in with the recovery phrase alone. It picks the first of Fast Relay and Cloaked Relay that answers, which over Tor is mostly Cloaked Relay. It offers no way to submit a withdrawal yourself, while anyone can relay onchain. Google Analytics gets a two-year cookie and the browser's screen size, language and version on every visit. That links a normal browser's visits even over an IP-hiding route. Accounts from the older 12-word key method send their deposit labels to 0xbow during migration.
+0xbow hosts the app, built from [public source](https://github.com/0xbow-io/privacy-pools-website/tree/7df411128f7a18a61a77f7a0371bf0b857969e2a). A local build needs one setting, `NEXT_PUBLIC_ASP_ENDPOINT_NON_TEST=https://api.0xbow.io`, and its own RPC endpoint. Every build [loads 0xbow's Google Analytics](https://github.com/0xbow-io/privacy-pools-website/blob/7df411128f7a18a61a77f7a0371bf0b857969e2a/src/app/layout.tsx#L27), whose two-year cookie links a browser's visits across routes and records the hash of any explorer link the user opens. Cloaked Relay answers only the hosted website, and Fast Relay refuses most Tor exits, so a local build needs a route like NymVPN. Its requests name localhost as their origin, which sets them apart from the hosted website's. The app offers no way to submit a withdrawal yourself. Accounts from the older 12-word key method send their deposit labels to 0xbow during migration.
 
 ### Exits
 

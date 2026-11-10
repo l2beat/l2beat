@@ -1,6 +1,6 @@
 import {
+  ADVICE_SNIPPETS as A,
   definePrivacyAdversaries,
-  PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
 import type { PrivacyExposureMap } from '../../types'
 
@@ -50,8 +50,6 @@ export function zamaCwAdversaries(
           'Wraps, unwraps and vault batch totals publish their amounts, while confidential transfers keep theirs encrypted.',
         exposureContinued:
           "Either party to a transfer can disclose its amount onchain at any time. A vault batch with a single depositor publishes that depositor's amount.",
-        advice:
-          'Pay and get paid inside the confidential token, and unwrap only what the user needs.',
         interior: INTERIOR,
         sources: [
           {
@@ -79,7 +77,6 @@ export function zamaCwAdversaries(
           "An account's balance is bounded by its public wraps and unwraps, and exact if it never took part in a confidential transfer.",
         exposureContinued:
           'Transfer partners and timing are public, so a wrap, a transfer and an unwrap in a row pair up by amount. Swap market makers decrypt the amounts of each order and its decoys, and the winner learns which one is real.',
-        advice: `Transfer often, even zero amounts, and unwrap only after a while. ${S.commonAmounts}`,
         interior: {
           ...INTERIOR,
           amount: {
@@ -111,8 +108,6 @@ export function zamaCwAdversaries(
           'No third party sees a transfer amount, since the app encrypts amounts on the device and reads balances under a key only the device holds.',
         exposureContinued:
           "A swap quote sends the cleartext amount to Zama's server, which can pass it to LI.FI.",
-        advice:
-          'Reject the analytics prompt, so Google Analytics and Sentry receive nothing, and skip swaps for amounts that must stay hidden.',
         interior: {
           ...INTERIOR,
           amount: {
@@ -187,5 +182,22 @@ export function zamaCwAdversaries(
         ],
       },
     },
+    advice: [
+      {
+        name: 'Set up',
+        text: 'Reject the analytics prompt, so Google Analytics and Sentry receive nothing.',
+        against: ['networkObserver'],
+      },
+      {
+        name: 'Pay',
+        text: 'Pay and get paid inside the confidential token. Transfer often, even zero amounts, and skip swaps for amounts that must stay hidden.',
+        against: ['publicObserver', 'chainAnalyst', 'networkObserver'],
+      },
+      {
+        name: 'Unwrap',
+        text: `Unwrap only what you need and only after a while. ${A.commonAmounts}`,
+        against: ['publicObserver', 'chainAnalyst'],
+      },
+    ],
   })
 }

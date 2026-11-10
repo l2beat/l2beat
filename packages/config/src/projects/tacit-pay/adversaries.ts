@@ -1,4 +1,5 @@
 import {
+  ADVICE_SNIPPETS as A,
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
@@ -61,7 +62,6 @@ export const tacitPayAdversaries = definePrivacyAdversaries({
         'A zero-knowledge proof hides which notes a withdrawal or transfer spends, and a transfer publishes only note hashes and encrypted memos.',
       exposureContinued:
         'Payments to one deposit address are public and linked to each other. Anyone holding a payment link can tell its deposit address belongs to the payee.',
-      advice: `${S.exitViaRelayer('relay')} Give each payer its own deposit address.`,
       interior: {
         ...INTERIOR,
         linkage: {
@@ -108,8 +108,6 @@ export const tacitPayAdversaries = definePrivacyAdversaries({
         "The user's own Ethereum node can take every read that names a deposit address or the recipient, leaving third parties only pool-wide logs.",
       exposureContinued:
         'By default, Tenderly and dRPC receive the deposit addresses and the withdrawal recipient in one session, so either can tie both sides. Base and Robinhood Chain nodes still receive the deposit addresses, which are the same on every chain.',
-      advice:
-        'Set your own Ethereum node under Endpoints and in your wallet before signing in, and shield from that wallet rather than through a deposit address.',
       interior: {
         ...INTERIOR,
         linkage: {
@@ -142,8 +140,6 @@ export const tacitPayAdversaries = definePrivacyAdversaries({
         'Tacit holds no key that spends or decrypts notes, and the reviewed page version is an immutable contract that runs from a saved copy.',
       exposureContinued:
         "Tacit's relay sees the IP at sign-in, each exit's recipient with the IP that asked, and each deposit address the user views in the app. Tacit's app owner can point anon.wei at another page and change the relay host and RPC nodes the page reads, without delay.",
-      advice:
-        'Serve the page from localhost as the App section describes, not from anon.wei.limo. Exit as the network observer advice says.',
       interior: {
         ...INTERIOR,
         recipient: {
@@ -200,4 +196,26 @@ export const tacitPayAdversaries = definePrivacyAdversaries({
       ],
     },
   },
+  advice: [
+    {
+      name: 'Load',
+      text: 'Save the reviewed page version from your own node, check its hash and serve it from localhost, as the App section describes, not from anon.wei.limo.',
+      against: ['privilegedInsider'],
+    },
+    {
+      name: 'Sign in',
+      text: 'Set your own Ethereum node under Endpoints and in your wallet before signing in.',
+      against: ['networkObserver'],
+    },
+    {
+      name: 'Shield',
+      text: 'Shield from that wallet rather than through a deposit address. Give each payer its own deposit address.',
+      against: ['networkObserver', 'publicObserver'],
+    },
+    {
+      name: 'Withdraw',
+      text: A.relayer('relay'),
+      against: ['publicObserver'],
+    },
+  ],
 })

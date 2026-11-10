@@ -55,7 +55,7 @@ export function tornadoCashAdversaries(upgradeDelay: string, appCid: string) {
       networkObserver: {
         sentiment: 'good',
         exposureShort:
-          "The app works in Tor Browser and downloads every deposit of a pool, so its services learn the pool but not the user's note.",
+          "The app downloads every deposit of a pool, so over an IP-hiding route its services learn the pool but not the user's note.",
         exposureContinued:
           "The Graph learns whether the note is newer than the app's event cache. Every listed relayer gets a status request, and the chosen one receives the finished withdrawal.",
         sources: [

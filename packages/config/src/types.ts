@@ -1451,7 +1451,7 @@ export interface PrivacyAdversaryAssessment {
    * reference client?": good = yes, warning = only outside supported options
    * or by accepting a leak to another adversary, bad = no. It judges the
    * promised field only; other leaks are a derived marker. User
-   * hygiene never lowers the sentiment (it goes into `advice` and `atRisk`
+   * hygiene never lowers the sentiment (it goes into the advice steps and `atRisk`
    * notes); facts about the deployment do, such as an anonymity set too small
    * for care to matter or a structural leak the adversary exploits. Network
    * observer baseline: Tor, and an own node where the client has an RPC
@@ -1474,14 +1474,6 @@ export interface PrivacyAdversaryAssessment {
    * says it all.
    */
   exposureContinued?: string
-  /**
-   * How a user keeps it private, when that is conditional (the cell is at
-   * risk, or a field is). Omit when nothing the user does changes the result.
-   * Positive instructions only (say what to do), and only what this adversary
-   * adds over the public observer: advice is not repeated across cells.
-   * Being replaced by `advice` steps, see PrivacyAdversariesConfig.
-   */
-  advice?: string
   /**
    * Actions taken while shielded (private transfers, in-pool DeFi). Present
    * for all adversaries of a project or for none. Entry and exit are public
@@ -1541,7 +1533,7 @@ export interface PrivacyAdversariesConfig {
   /** Overrides the default field description for this project, e.g. when linkage means something other than a transfer link. */
   fieldDescriptions?: Partial<Record<PrivacyField, string>>
   cells: Record<PrivacyAdversaryId, PrivacyAdversaryAssessment>
-  /** Replaces cell `advice`: a project has one or the other, until every project has steps. */
+  /** Our advice as ordered steps. Absent when no step changes a cell, e.g. every cell is red. */
   advice?: PrivacyAdviceStep[]
 }
 

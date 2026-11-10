@@ -119,8 +119,6 @@ function renderAdversary(
     withSentiment(cell.value, cell.sentiment),
     `**Who:** ${adversary.description} Examples: ${adversary.examples}`,
     getPrivacyAdversaryDescription(cell),
-    // Until its project has steps under How to stay private.
-    cell.advice ? `**${ADVICE.label}:** ${cell.advice}` : '',
     cell.interior
       ? baseline?.interior
         ? renderInteriorDiff(cell.interior, baseline.interior, fields)

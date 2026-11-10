@@ -67,8 +67,6 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
         'Only the amount and timing of a round trip can pair a payout into the pool with a later deposit to the bridge.',
       exposureContinued:
         'Deposit addresses are fresh per quote and spent together with the bridge change address, which marks every exit as NEAR Intents.',
-      advice:
-        'Hold the ZEC in the pool for days, split or merge it with other shielded funds, and swap back amounts that match no payout.',
       interior: {
         sender: 'private',
         recipient: PAYOUT_RECIPIENT,
@@ -101,8 +99,6 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
         "Each sync sends the account's transparent addresses to lightwalletd before fetching its transactions, so lightwalletd can tie the payout and the exit to the account.",
       exposureContinued:
         "With Tor on, each 1Click request and each sent transaction gets its own circuit, and sync lookups go over Tor while blocks download directly. Tor hides the user's IP from the lookups, not the addresses they name.",
-      advice:
-        'Turn on Tor in Zodl and point it at a lightwalletd server the user runs.',
       interior: {
         sender: 'private',
         recipient: 'private',
@@ -204,4 +200,21 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
       ],
     },
   },
+  advice: [
+    {
+      name: 'Set up',
+      text: 'Turn on Tor in Zodl and point it at a lightwalletd server you run.',
+      against: ['networkObserver'],
+    },
+    {
+      name: 'Hold',
+      text: 'Hold the ZEC in the pool for days, and split or merge it with other shielded funds.',
+      against: ['chainAnalyst'],
+    },
+    {
+      name: 'Swap back',
+      text: 'Swap back amounts that match no payout.',
+      against: ['chainAnalyst'],
+    },
+  ],
 })

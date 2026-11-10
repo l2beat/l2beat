@@ -562,11 +562,6 @@ describe('getProjects', () => {
       for (const { project, privacyInfo } of privacyProjects) {
         const adversaries = privacyInfo.adversaries
         if (!adversaries?.advice) continue
-        for (const [adversaryId, cell] of Object.entries(adversaries.cells)) {
-          if (cell.advice !== undefined) {
-            problems.push(`${project.id} ${adversaryId}: advice beside steps`)
-          }
-        }
         for (const step of adversaries.advice) {
           if (step.against.length === 0) {
             problems.push(`${project.id} ${step.name}: defends no cell`)

@@ -238,10 +238,7 @@ export function adviceLink(text: string, anchor: keyof typeof ADVICE_ANCHORS) {
   return `[${text}](${PRIVACY_METHODOLOGY_URL}#${ADVICE_ANCHORS[anchor]})`
 }
 
-/**
- * Imperative sentences for `advice` steps. They replace the advice snippets of
- * PRIVACY_ADVERSARY_SNIPPETS.
- */
+/** Imperative sentences for `advice` steps. */
 export const ADVICE_SNIPPETS = {
   /** Pools. `relayer` is the project's word for it. */
   relayer: (relayer: string) =>
@@ -257,6 +254,9 @@ export const ADVICE_SNIPPETS = {
   /** Open clients served from a hosted frontend. */
   localBuild:
     'Build the app from the reviewed source and run it locally instead of the hosted website.',
+  /** Account keys a wallet signature would derive. `alternative` is the app's own option, e.g. "from a recovery phrase". */
+  notWalletSignature: (alternative: string) =>
+    `Create your account ${alternative}, not from a wallet signature.`,
 } as const
 
 export const PRIVACY_ADVERSARY_SNIPPETS = {
@@ -264,37 +264,16 @@ export const PRIVACY_ADVERSARY_SNIPPETS = {
   /** Pools: the public ends of a shielded flow. */
   entryExitPublic: (entryExit = 'Deposits and withdrawals') =>
     `${entryExit} show address, token and amount.`,
-  /** Pools. `relayer` is the project's word for it. */
-  exitViaRelayer: (relayer: string) =>
-    `Exit through a ${relayer}, so none of the user's wallets pay gas for the receiving address.`,
   /** Stealth addresses handed out by an operator: the rest of the promise. */
   stealthPromiseTail:
     'The payer knows the address it was given; sender, asset, amount and where the funds go next are public.',
-  /** Stealth addresses: receive hygiene. `separate` is the client's way to keep balances apart. */
-  freshReceive: (separate: string) =>
-    `Generate a fresh address for each receive, ${separate}, and send to destinations with no public link to the user.`,
 
   // Chain analyst
   /** Pools: the self-paid alternative to a relayer. */
   walletFingerprint: (relayer: string) =>
     `Paying gas from the user's wallet instead of a ${relayer} exposes its fingerprint, account implementation and fee habits, even from a fresh address.`,
-  largeAnonymitySet: 'Use a pool with a large anonymity set.',
-  commonAmounts: 'Withdraw common amounts rather than everything at once.',
-  /** Pools: hygiene every pool needs on top of its specifics. */
-  freshExit:
-    'Wait before exiting and pick a different time of day than the deposit. Exit to a fresh address every time and spend from it with a different wallet than the one that deposited.',
-
-  // Network observer
-  /** Source under advice that names an IP-hiding route. Steps link the routes in their text instead. */
-  ipHidingRoutes: {
-    title: 'IP-hiding routes we checked',
-    url: `${PRIVACY_METHODOLOGY_URL}#${ADVICE_ANCHORS.ipHidingRoutes}`,
-  },
 
   // Privileged insider
-  /** Open clients served from a hosted frontend. */
-  localBuild:
-    'Run an inspected local build of the app instead of the hosted frontend.',
   /** Stealth addresses handed out by an operator. */
   operatorViewingKey: (operator: string) =>
     `${operator} holds the viewing key, so it can regenerate every address and tie its activity to the user's account.`,
@@ -306,7 +285,4 @@ export const PRIVACY_ADVERSARY_SNIPPETS = {
   /** Account keys derived from a wallet signature. `extra` names what else is needed, e.g. a PIN. */
   walletSignatureAccounts: (extra?: string) =>
     `Accounts created from a wallet signature reduce to that wallet's key${extra ? ` ${extra}` : ''}.`,
-  /** `alternative` is the client's own option, e.g. "from a seed phrase". */
-  notWalletSignature: (alternative: string) =>
-    `Create the user's account ${alternative}, not from a wallet signature.`,
 } as const

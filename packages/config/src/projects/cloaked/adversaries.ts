@@ -21,9 +21,6 @@ export const cloakedAdversaries = definePrivacyAdversaries({
         'Each payment reaches a fresh address, and nothing onchain names the account behind it.',
       exposureContinued:
         'A send draws from several addresses in one transaction unless the user picks one with Advanced Control. Its change goes to a fresh address in the same transaction, which links the two.',
-      advice: S.freshReceive(
-        'spend one address at a time with Advanced Control',
-      ),
       sources: [
         {
           title: 'Address derivation from server-held ephemeral material',
@@ -45,8 +42,6 @@ export const cloakedAdversaries = definePrivacyAdversaries({
         "Cloaked's relayers and fee Safe mark every spend as a Cloaked user's, so an address hides among all stealth addresses Cloaked has ever spent from.",
       exposureContinued:
         'Timing, distinctive amounts, recurring counterparties and change outputs cluster recipients further. Incognito withdrawals from Privacy Pools carry the same relayer and fee marks.',
-      advice:
-        "Space out related payments, avoid distinctive amounts and follow the user's own change outputs to see what a counterparty can trace.",
       sources: [
         {
           title: 'Documented links and change handling',
@@ -73,8 +68,6 @@ export const cloakedAdversaries = definePrivacyAdversaries({
         "Cloaked's servers read and spend each account's addresses through RPC providers such as Alchemy, which can group them by account.",
       exposureContinued:
         "A linked ENS name, which the app reads through Alchemy, can tie such a group to the user. A payer who looks up the user's name gives their RPC the name and the new address. An email login hands the email to Web3Auth, whose key then derives the user's secrets.",
-      advice:
-        'Share a payment link or a fresh address instead of the name. Log in with a passkey rather than email, and leave your own ENS name unlinked.',
       sources: [
         {
           title:
@@ -108,7 +101,6 @@ export const cloakedAdversaries = definePrivacyAdversaries({
       sentiment: 'good',
       exposureShort: S.noAnnouncement,
       exposureContinued: `${S.walletSignatureAccounts('plus a four-digit PIN')} Passkey secrets do not follow from breaking the passkey.`,
-      advice: `${S.notWalletSignature('with a passkey')} Keep the backup file from setup, since the passkey works only on Cloaked's domain.`,
       sources: [
         {
           title:
@@ -128,4 +120,21 @@ export const cloakedAdversaries = definePrivacyAdversaries({
       ],
     },
   },
+  advice: [
+    {
+      name: 'Sign up',
+      text: `Create your account with a passkey, not from a wallet signature or email. Keep the backup file from setup, since the passkey works only on Cloaked's domain. Leave your own ENS name unlinked.`,
+      against: ['networkObserver', 'futureAdversary'],
+    },
+    {
+      name: 'Receive',
+      text: 'Share a payment link or a fresh address for each payment instead of your name.',
+      against: ['publicObserver', 'networkObserver'],
+    },
+    {
+      name: 'Spend',
+      text: 'Spend one address at a time with Advanced Control, and send to destinations with no public link to you. Space out related payments, avoid distinctive amounts and follow your change outputs to see what a counterparty can trace.',
+      against: ['publicObserver', 'chainAnalyst'],
+    },
+  ],
 })

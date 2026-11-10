@@ -116,13 +116,6 @@ function AdversaryBlock({
         description={getPrivacyAdversaryDescription(cell)}
         size="large"
       />
-      {/* Until its project has steps under How to stay private. */}
-      {cell.advice && (
-        <p className="text-paragraph-15 md:text-paragraph-16">
-          <span className="font-medium">{ADVICE.label}: </span>
-          {cell.advice}
-        </p>
-      )}
       {cell.interior &&
         (baseline?.interior ? (
           <ExposureDiff

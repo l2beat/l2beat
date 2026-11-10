@@ -93,7 +93,7 @@ export function getPrivacyMethodologySections() {
       heading(3, 'Timing and amounts'),
       'Each deposit after yours grows the group you hide among, so wait before exiting. Exit at a different time of day than you deposited. Move common amounts rather than the exact sum you deposited. Use the pool with the most depositors.',
       heading(3, 'Sessions'),
-      "Give each step its own network session, so no service ties the steps by IP, cookie or login. Tor Browser's New Identity starts one. An app that loads every wallet it holds ties them in one session, so remove the deposit wallet before the exit.",
+      "Give each step its own network session, so no service ties the steps by IP, cookie or login. Tor Browser's New Identity starts one. With a route for all traffic, reconnect it for a new exit and clear the browser's cookies. An app that loads every wallet it holds ties them in one session, so remove the deposit wallet before the exit.",
       heading(3, 'Own node'),
       'An app that reads the chain through a hosted service tells it which addresses or notes you hold. A local Ethereum node answers those reads without a third party. Set it as the endpoint in the app, and in the depositing wallet if advised.',
       heading(3, 'App delivery'),

@@ -1,4 +1,5 @@
 import {
+  ADVICE_SNIPPETS as A,
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
@@ -28,8 +29,6 @@ export const strk20Adversaries = definePrivacyAdversaries({
       exposureShort:
         "Transfers inside the pool are encrypted, but the first payment to each new contact writes the recipient's address in cleartext.",
       exposureContinued: `${S.entryExitPublic()} DeFi actions name their target contract, and a shadow account shows its funding, calls and positions.`,
-      advice:
-        'Submit every private action through a paymaster. Treat the first payment to a new contact, and any DeFi action, as public.',
       interior: {
         sender: 'private',
         recipient: {
@@ -61,7 +60,6 @@ export const strk20Adversaries = definePrivacyAdversaries({
       exposureShort:
         'Every token except STRK has fewer than 1,000 depositors to hide among.',
       exposureContinued: `A channel opened in the same transaction as a deposit ties the two together, and most withdrawal addresses have also deposited. ${S.walletFingerprint('paymaster')}`,
-      advice: `Hold STRK or USDC, open channels in a transaction without a deposit, and withdraw amounts that match no deposit. ${S.freshExit}`,
       interior: {
         sender: {
           verdict: 'atRisk',
@@ -90,7 +88,6 @@ export const strk20Adversaries = definePrivacyAdversaries({
         "Every pool request goes through Starknet Holdings' gateway, so AVNU and StarkWare's discovery service see only the gateway.",
       exposureContinued:
         'The gateway answers over Tor, and Bramble runs only in Chromium, not in Tor Browser.',
-      advice: 'Run Bramble with all traffic through an IP-hiding route.',
       interior: {
         sender: 'private',
         recipient: 'exposed',
@@ -105,7 +102,6 @@ export const strk20Adversaries = definePrivacyAdversaries({
         },
       },
       sources: [
-        S.ipHidingRoutes,
         {
           title: "Default routes go through the operator's gateway",
           url: BRAMBLE + 'packages/features/privacy/src/config.ts#L17-L19',
@@ -179,4 +175,31 @@ export const strk20Adversaries = definePrivacyAdversaries({
       ],
     },
   },
+  advice: [
+    {
+      name: 'Set up',
+      text: A.ipHidingRoute('Bramble'),
+      against: ['networkObserver'],
+    },
+    {
+      name: 'Deposit',
+      text: 'Hold STRK or USDC, and open channels in a transaction without a deposit.',
+      against: ['chainAnalyst'],
+    },
+    {
+      name: 'Pay',
+      text: 'Submit every private action through a paymaster. Treat the first payment to a new contact, and any DeFi action, as public.',
+      against: ['publicObserver'],
+    },
+    {
+      name: 'Wait',
+      text: A.wait,
+      against: ['chainAnalyst'],
+    },
+    {
+      name: 'Withdraw',
+      text: `Withdraw amounts that match no deposit. ${A.freshAddress}`,
+      against: ['chainAnalyst'],
+    },
+  ],
 })
