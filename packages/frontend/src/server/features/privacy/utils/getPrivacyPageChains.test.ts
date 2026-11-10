@@ -54,6 +54,23 @@ describe(getPrivacyProjectOnChain.name, () => {
     expect(privacyInfo.riskSummary).toEqual('optimism')
   })
 
+  it("leaves a field unset when the chain's assessment has none", () => {
+    const project = {
+      privacyInfo: {
+        trackedOn: ['base', 'optimism'],
+        tokens: [],
+        riskSummary: 'base',
+        anonymitySet: { type: 'too-small' },
+        chainAssessments: { optimism: {} },
+      } as unknown as ProjectPrivacyInfo,
+    }
+
+    const { privacyInfo } = getPrivacyProjectOnChain(project, 'optimism')
+
+    expect(privacyInfo.riskSummary).toEqual(undefined)
+    expect(privacyInfo.anonymitySet).toEqual(undefined)
+  })
+
   it('keeps a key registry only on its own chain', () => {
     const anonymitySet = {
       type: 'key-registrations',
