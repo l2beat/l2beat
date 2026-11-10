@@ -60,31 +60,40 @@ function collectPageErrors(page: Page): string[] {
 
 // An event stream, like the one DiscoUI keeps open for agents, never
 // finishes, so it is not part of a page loading.
+//
+// Chromium reports no end for a request that its page abandons by navigating
+// away, so the requests of the page before are dropped when the next one
+// arrives, or they would count as in flight forever.
 function trackNetwork(page: Page) {
-  let inFlight = 0
+  const inFlight = new Set<Request>()
   const isLoad = (request: Request) => request.resourceType() !== 'eventsource'
   page.on('request', (request) => {
-    if (isLoad(request)) inFlight++
+    if (isLoad(request)) inFlight.add(request)
   })
-  page.on('requestfinished', (request) => {
-    if (isLoad(request)) inFlight--
-  })
-  page.on('requestfailed', (request) => {
-    if (isLoad(request)) inFlight--
+  page.on('requestfinished', (request) => inFlight.delete(request))
+  page.on('requestfailed', (request) => inFlight.delete(request))
+  page.on('response', (response) => {
+    const request = response.request()
+    if (request.isNavigationRequest() && request.frame() === page.mainFrame()) {
+      inFlight.clear()
+      inFlight.add(request)
+    }
   })
   return {
     async waitForQuiet(quietMs: number) {
       const deadline = Date.now() + 30_000
       let quietSince = Date.now()
       while (Date.now() < deadline) {
-        if (inFlight > 0) {
+        if (inFlight.size > 0) {
           quietSince = Date.now()
         } else if (Date.now() - quietSince >= quietMs) {
           return
         }
         await page.waitForTimeout(20)
       }
-      throw new Error(`network still busy after 30s: ${inFlight} in flight`)
+      throw new Error('network still busy after 30s', {
+        cause: { urls: [...inFlight].map((request) => request.url()) },
+      })
     },
   }
 }
