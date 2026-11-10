@@ -7,7 +7,6 @@ import { createSuspiciousTransfersColumns } from './columns'
 interface SuspiciousTransfersTableProps {
   data: SuspiciousTransferRow[]
   getExplorerUrl: (chain: string) => string | undefined
-  valueDiffThresholdPercent: number
   enableCsvExport?: boolean
   highlightTransferId?: string
 }
@@ -15,7 +14,6 @@ interface SuspiciousTransfersTableProps {
 export function SuspiciousTransfersTable({
   data,
   getExplorerUrl,
-  valueDiffThresholdPercent,
   enableCsvExport = false,
   highlightTransferId,
 }: SuspiciousTransfersTableProps) {
@@ -23,9 +21,8 @@ export function SuspiciousTransfersTable({
     () =>
       createSuspiciousTransfersColumns({
         getExplorerUrl,
-        valueDiffThresholdPercent,
       }),
-    [getExplorerUrl, valueDiffThresholdPercent],
+    [getExplorerUrl],
   )
 
   const {
