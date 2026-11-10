@@ -91,9 +91,8 @@ function trackNetwork(page: Page) {
         }
         await page.waitForTimeout(20)
       }
-      throw new Error('network still busy after 30s', {
-        cause: { urls: [...inFlight].map((request) => request.url()) },
-      })
+      const urlsInFlight = [...inFlight].map((request) => request.url())
+      expect(urlsInFlight, 'network still busy after 30s').toEqual([])
     },
   }
 }
