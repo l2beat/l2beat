@@ -1,5 +1,5 @@
 import type { Milestone } from '@l2beat/config'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { TvsValueChart } from '~/components/chart/tvs/TvsValueChart'
 import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
@@ -13,6 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~/components/core/Select'
+import { useRouter } from '~/hooks/useRouter'
 import { PrivacyFlowsChartRangeControls } from '~/pages/privacy/project/components/PrivacyFlowsChartRangeControls'
 import { useTRPC } from '~/trpc/React'
 import { type ChartRange, rangeToResolution } from '~/utils/range/range'
@@ -26,27 +27,48 @@ export interface PrivacyValueLockedSectionProps extends ProjectSectionProps {
   defaultRange: ChartRange
   project: ChartProject
   milestones: Milestone[]
-  /** The project's tracked chains, any of which the chart can show. */
-  chains: SectionChain[]
-  /** The chain of the page, shown first. */
-  defaultChain: string
+  /** The project's tracked chains, each with its page. */
+  chains: (SectionChain & { href: string })[]
+  /** The chain of the page this section is on. */
+  pageChain: string
 }
 
 /**
- * Value locked in a project that has a page per tracked chain. The chart has
- * its own chain field, so a reader can compare chains without leaving the page.
+ * Value locked in a project that has a page per tracked chain. Its chain
+ * field follows the page's chain tabs both ways: it shows the page's chain,
+ * and picking another one opens that chain's page at this section. The page
+ * has no tab for all chains, so that choice only changes the chart.
  */
 export function PrivacyValueLockedSection({
   defaultRange,
   project,
   milestones,
   chains,
-  defaultChain,
+  pageChain,
   ...projectSectionProps
 }: PrivacyValueLockedSectionProps) {
   const trpc = useTRPC()
+  const router = useRouter()
   const [range, setRange] = useState<ChartRange>(defaultRange)
-  const [chain, setChain] = useState(defaultChain)
+  const [chain, setChain] = useState(pageChain)
+  // Picking a chain opens its page at this section. The sections above are
+  // still settling their height when the browser jumps there, so it can stop
+  // short of the section or past it.
+  useEffect(() => {
+    if (window.location.hash === `#${projectSectionProps.id}`) {
+      document
+        .getElementById(projectSectionProps.id)
+        ?.scrollIntoView({ behavior: 'instant' })
+    }
+  }, [projectSectionProps.id])
+  const selectChain = (value: string) => {
+    const page = chains.find((c) => c.id === value)
+    if (page && page.id !== pageChain) {
+      router.push(`${page.href}#${projectSectionProps.id}`)
+      return
+    }
+    setChain(value)
+  }
   const { data, isLoading, isPlaceholderData, shownInput } = useChartQuery(
     trpc.privacy.valueLockedChart,
     {
@@ -69,7 +91,7 @@ export function PrivacyValueLockedSection({
     <ProjectSection
       {...projectSectionProps}
       headerAccessory={
-        <Select value={chain} onValueChange={setChain}>
+        <Select value={chain} onValueChange={selectChain}>
           <SelectTrigger aria-label="Chain">
             <SelectValue />
           </SelectTrigger>

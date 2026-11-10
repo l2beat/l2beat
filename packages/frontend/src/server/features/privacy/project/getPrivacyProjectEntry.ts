@@ -197,6 +197,10 @@ export async function getPrivacyProjectEntry(
     name,
     iconUrl,
   })
+  const toChainTab = (c: SectionChain): PrivacyChainTab => ({
+    ...toSectionChain(c),
+    href: getPrivacyChainPagePath(details.slug, pageChains, c.id),
+  })
   // Sections about one chain name it in their header.
   const chain = details.chainView && toSectionChain(details.chainView.selected)
   const href = chain
@@ -224,8 +228,8 @@ export async function getPrivacyProjectEntry(
             type: 'PrivacyValueLockedSection',
             props: {
               ...valueSection,
-              chains: details.chainView.chains.map(toSectionChain),
-              defaultChain: chain.id,
+              chains: details.chainView.chains.map(toChainTab),
+              pageChain: chain.id,
             },
           }
         : {
@@ -445,10 +449,7 @@ export async function getPrivacyProjectEntry(
     },
     chainView: details.chainView &&
       chain && {
-        chains: details.chainView.chains.map((c) => ({
-          ...toSectionChain(c),
-          href: getPrivacyChainPagePath(details.slug, pageChains, c.id),
-        })),
+        chains: details.chainView.chains.map(toChainTab),
         selected: chain,
         totalValueLockedUsd: allChainsValueLockedUsd,
       },
