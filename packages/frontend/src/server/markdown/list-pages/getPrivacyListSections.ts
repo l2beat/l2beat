@@ -12,8 +12,7 @@ export async function getPrivacyListSections(): Promise<LinkListSection[]> {
     optional: ['display', 'archivedAt'],
   })
   const active = projects.filter((p) => !p.archivedAt)
-  // Privacy has no archived page, so this list is where retired versions stay
-  // findable.
+  // /privacy/archived has no markdown version, so they stay findable here.
   const archived = projects.filter((p) => p.archivedAt)
   return [
     {

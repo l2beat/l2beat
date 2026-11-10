@@ -92,6 +92,7 @@ export const mainPages: MainPage[] = [
   },
   { path: 'layer2s/upcoming', label: 'Layer 2s', title: 'Upcoming' },
   { path: 'layer2s/archived', label: 'Layer 2s', title: 'Archived' },
+  { path: 'privacy/archived', label: 'Privacy', title: 'Archived' },
   {
     path: 'interop/summary',
     title: 'Interoperability',

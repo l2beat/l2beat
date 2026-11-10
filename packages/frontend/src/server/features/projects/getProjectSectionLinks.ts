@@ -32,7 +32,7 @@ export async function getProjectSectionLinks(
   })
   if (!project) return []
 
-  // Must match the pages getSearchBarProjectEntries links to
+  // Must match the pages the search bar links to (searchIndex.ts)
   return compact<ProjectSectionLink>([
     project.scalingInfo && {
       section: 'layer2s',

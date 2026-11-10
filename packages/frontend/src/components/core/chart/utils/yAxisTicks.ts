@@ -18,7 +18,10 @@ export interface YAxisTicksOptions {
   domain?: YDomain
   /** Room above a fixed domain's top, as a share of its height. */
   headroom?: number
-  /** Compact linear by default; pass e.g. d3's `scaleSymlog`. */
+  /**
+   * Compact linear by default; pass d3's `scaleSymlog` for a log axis, which
+   * is ticked at zero and powers of ten.
+   */
   scale?: () => InferableScaleLike<number>
   /** Fixed ticks instead of computed ones. */
   ticks?: number[]
@@ -66,7 +69,7 @@ export function getYAxisTicks(
     const scale = axis.scale().domain([lo, hi])
     return {
       domain: scale.domain() as [number, number],
-      ticks: axis.ticks ?? [...(scale.ticks?.(count) ?? [lo, hi])],
+      ticks: axis.ticks ?? getLogTicks(lo, hi, count, axis.integer),
     }
   }
   if (typeof domain !== 'string') {
@@ -106,6 +109,30 @@ export function fitTicks(
     }
   }
   return kept.reverse()
+}
+
+/**
+ * Zero and ±10^k within `[min, max]`: d3's symlog ticks are linear, so all
+ * but the ends would bunch at the top of the axis. When fewer than three
+ * fit, as in a narrow domain between two powers, the fixed-domain ticks.
+ */
+function getLogTicks(
+  min: number,
+  max: number,
+  count: number,
+  integer?: boolean,
+) {
+  const powers: number[] = []
+  for (let power = 1; power <= Math.max(-min, max); power *= 10) {
+    powers.push(power)
+  }
+  const negatives = powers.map((p) => -p).reverse()
+  const ticks = [...negatives, 0, ...powers].filter(
+    (tick) => tick >= min && tick <= max,
+  )
+  return ticks.length >= 3
+    ? ticks
+    : getFixedDomainTicks(min, max, count, integer)
 }
 
 /**

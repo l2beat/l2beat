@@ -145,9 +145,9 @@ export class InMemoryEventDb implements InteropEventDb {
     const matches: InteropEvent<T>[] = []
     for (const e of events) {
       if (
-        // @ts-ignore
+        // @ts-expect-error
         e.args[approximate.key] >= minValue &&
-        // @ts-ignore
+        // @ts-expect-error
         e.args[approximate.key] <= maxValue
       ) {
         matches.push(e)
@@ -445,7 +445,7 @@ function matchesQuery<T>(
   for (const key in query) {
     if (key === 'ctx') {
       for (const ctxKey in query[key]) {
-        // @ts-ignore
+        // @ts-expect-error
         if (event.ctx[ctxKey] !== query.ctx[ctxKey]) {
           return false
         }
@@ -455,7 +455,7 @@ function matchesQuery<T>(
       key !== 'sameTxAfter' &&
       key !== 'sameTxAtOffset'
     ) {
-      // @ts-ignore
+      // @ts-expect-error
       if (event.args[key] !== query[key]) {
         return false
       }

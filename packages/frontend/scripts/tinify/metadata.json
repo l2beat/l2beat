@@ -1442,7 +1442,7 @@
   "static/meta-images/privacy/projects/tornado-cash/opengraph-image.png": "27af2eca7015dbb2310bf2c6adf41a82",
   "static/meta-images/publications/exchange-risk-and-how-lighter-escapes-it.png": "991dcd64d992263321dc54e497ef7810",
   "static/meta-images/publications/privacy-best-practices.png": "6c38650bc1c85336801f4b7bb405ab8c",
-  "static/meta-images/publications/privacy-methodology.png": "d2e41f5e9ba5caa11f28f807a4b28367",
+  "static/meta-images/publications/privacy-methodology.png": "6cb0b50ea25bc4610f6153919c23c3b9",
   "static/images/privacy/best-practices-root.png": "8f31ef7ec59dd099834546515018138d",
   "static/meta-images/publications/governance-review-96.png": "c720921f9a56cd5a4e1796cf92e28c04",
   "static/images/architecture/opstack-rollup-superchain-opfp-aggverifier.png": "316a1bf06c30b030d15e86c9be1e7ff7",
@@ -1612,5 +1612,10 @@
   "static/meta-images/integrate-crops/opengraph-image.png": "528391b09f4a3cc450a148b9a9ff5b23",
   "static/meta-images/layer2s/projects/doma/opengraph-image.png": "1e91a795e9bb1a986b5f1ab63637b9ec",
   "static/icons/doma.png": "8631818edd9dc2c58ce786c7c970bd3c",
-  "static/meta-images/defi/liquid-staking/opengraph-image.png": "b9bebfcdce66853512f2a019a809853c"
+  "static/meta-images/defi/liquid-staking/opengraph-image.png": "b9bebfcdce66853512f2a019a809853c",
+  "static/meta-images/privacy/archived/opengraph-image.png": "23c8eb0c3c02ff1dc02ad44d67ed5842",
+  "static/icons/tacit-pay.png": "dee61fd764a20a4c81d75d2659312d4d",
+  "static/icons/tacit-finance.png": "a1cba05396511d6a74dfef79b8f29794",
+  "static/meta-images/privacy/projects/tacit-pay/opengraph-image.png": "c9bb5cbcb0ddfaa38e6350fa4272a32c",
+  "static/meta-images/zk-catalog/projects/tacit-pay/opengraph-image.png": "3e8ef48acf9bb6211b4313e310dd1e79"
 }

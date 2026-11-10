@@ -102,7 +102,7 @@ export function VerifierRowDetails({
           <span className="shrink-0 font-medium text-label-value-14 text-secondary">
             Verifier ID:
           </span>
-          <code className="min-w-0 break-all text-label-value-14">
+          <code className="wrap-anywhere min-w-0 text-label-value-14">
             {verifierHash.hash}
           </code>
         </div>

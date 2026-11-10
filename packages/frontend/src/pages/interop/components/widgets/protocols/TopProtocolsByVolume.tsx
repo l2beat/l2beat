@@ -15,11 +15,7 @@ export function TopProtocolsByVolume({
       heading="Last 24 hours volume"
       topProtocols={topProtocols}
       isLoading={isLoading}
-      formatValue={(value) =>
-        formatCurrency(value, 'usd', {
-          decimals: 1,
-        })
-      }
+      formatValue={(value) => formatCurrency(value, 'usd')}
     />
   )
 }

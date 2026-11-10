@@ -1,21 +1,21 @@
-Generated with discovered.json: 0x091850de58a0eb461aecc40003fabeccec9b7ab9
+Generated with discovered.json: 0xba8807406dcfb69bf675517b74bfd029a3523587
 
-# Diff at Mon, 02 Nov 2026 11:48:25 GMT:
+# Diff at Tue, 10 Nov 2026 12:11:45 GMT:
 
-- id: 5160d689
+- id: d17aac3d
 - author: vilcht (<dawdrobny@gmail.com>)
-- comparing to: main@a1cf0a990c45564159b583337ff7436e8a5c9407 block: 1792491551
-- current timestamp: 1792491551
+- comparing to: main@7f72d28dfc45169ea6269f014192849bf6910bda block: 1793982763
+- current timestamp: 1793982763
 
 ## Description
 
-Read the proposers of both timelocks, so discovery follows them to the Safes behind upgrades (6/10, 10-day delay) and parameter changes (the 4/7 operations Safe, 2-day delay).
+
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1792491551 (main branch discovery), not current.
+discovery. Values are for block 1793982763 (main branch discovery), not current.
 
 ```diff
     contract GnosisSafe (eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC) [GnosisSafe] {
@@ -61,6 +61,39 @@ discovery. Values are for block 1792491551 (main branch discovery), not current.
 +   Status: CREATED
     contract GnosisSafe (eth:0xcdd57D11476c22d265722F68390b036f3DA48c21) [GnosisSafe]
     +++ description: None
+```
+
+Generated with discovered.json: 0xf87056c1650be0fe836d80037345888f3589ea22
+
+# Diff at Fri, 06 Nov 2026 16:36:07 GMT:
+
+- id: cb69b3aa
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@42d599abc7be8cc38122c72abc4da1c1dda6fbeb block: 1792491551
+- current timestamp: 1793982763
+
+## Description
+
+Safe (treasury and fee recipient) and GnosisSafe (EtherFiOperationParameters owner): Member rotated. The same signer joined both.
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0x0c83EAe1FE72c390A02E426572854931EefF93BA) [GnosisSafe] {
+    +++ description: None
+      values.$members.2:
+-        "eth:0xD31074937B28f65db4eeB243916883E335261650"
++        "eth:0x84997ff27EF5D5E0A40A52AA06dDB7fcb35266FF"
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC) [GnosisSafe] {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x71b67AC997056c9935f8AA98F3344432Ea2ec15c"
++        "eth:0x84997ff27EF5D5E0A40A52AA06dDB7fcb35266FF"
+    }
 ```
 
 Generated with discovered.json: 0x60f6e191dfd02f93c8b96b9305182871183cc46a

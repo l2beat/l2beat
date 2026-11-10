@@ -1,3 +1,5 @@
+import { assert } from '@l2beat/shared-pure'
+import { useRef } from 'react'
 import { Link } from 'react-router'
 import { Button } from '../../../components/Button'
 import { IS_READONLY } from '../../../config/readonly'
@@ -6,10 +8,16 @@ import { IconGear } from '../../../icons/IconGear'
 import { IconPlus } from '../../../icons/IconPlus'
 import { IconRefresh } from '../../../icons/IconRefresh'
 import { cn } from '../../../utils/cn'
-import { useTerminalStore } from '../panel-terminal/store'
+import { type CommandName, useTerminalStore } from '../panel-terminal/store'
 import { useDiscoveryCommand } from '../panel-terminal/useDiscoveryCommand'
 import { Search } from '../search/Search'
+import { useGlobalSettingsStore } from '../store/global-settings-store'
 import { SettingsDialog } from './settings/SettingsDialog'
+import {
+  needsAttention,
+  useFilesSyncStatus,
+  useOutputsSyncStatus,
+} from './settings/syncStatus'
 import { addPanel, useDockingStore } from './store'
 
 export function TopBar(props: { project: string }) {
@@ -17,46 +25,29 @@ export function TopBar(props: { project: string }) {
   const selectedLayout = useDockingStore((state) => state.selectedLayout)
   const loadLayout = useDockingStore((state) => state.loadLayout)
   const resetLayout = useDockingStore((state) => state.resetLayout)
-  const { command } = useTerminalStore()
-  const { killCommand, discover } = useDiscoveryCommand()
-
-  // By default when using top bar
-  const useDevMode = true
-
   return (
-    <div className="select-none items-center justify-between px-2 max-md:invisible md:flex md:h-10">
-      <div className="hidden items-center gap-2 md:flex">
+    <div className="select-none grid-cols-[1fr_auto_1fr] items-center gap-3 px-2 max-md:invisible md:grid md:h-10">
+      <div className="hidden min-w-0 items-center gap-2 md:flex">
         <Link to="/ui">
           <img className="relative top-[-3px] h-[20px]" src="/logo.svg" />
         </Link>
-        <p className="font-semibold text-coffee-100 text-sm">{props.project}</p>
-        <div className="border-coffee-600 border-l pl-3">
-          <Search />
-        </div>
+        <p className="truncate font-semibold text-coffee-100 text-sm">
+          {props.project}
+        </p>
+        <DepthBadge />
+        {IS_READONLY && (
+          <p className="truncate text-coffee-400 text-xs italic">
+            That's the latest state reviewed by ETHBEAT.
+          </p>
+        )}
       </div>
-      <div className="hidden items-center gap-3 md:flex">
+      <div className="hidden md:flex">
+        <Search />
+      </div>
+      <div className="hidden items-center gap-3 justify-self-end md:flex">
         {!IS_READONLY && (
-          <div className="flex justify-center gap-1 border-coffee-600 border-r pr-3">
-            <Button
-              size="small"
-              variant="solid"
-              className="h-7 gap-1"
-              disabled={command.inFlight}
-              onClick={() => discover(props.project, useDevMode)}
-            >
-              <IconRefresh className="size-3" />
-              <span className="max-md:hidden">Discover</span>
-            </Button>
-            <Button
-              size="small"
-              variant="destructive"
-              className="h-7 gap-1"
-              disabled={!command.inFlight}
-              onClick={killCommand}
-            >
-              <IconClose />
-              <span className="max-md:hidden">Kill</span>
-            </Button>
+          <div className="flex justify-center border-coffee-600 border-r pr-3">
+            <DiscoverOrStopButton project={props.project} />
           </div>
         )}
         <div className="flex justify-center gap-1">
@@ -91,19 +82,122 @@ export function TopBar(props: { project: string }) {
           </Button>
         </div>
 
-        <SettingsDialog
-          defaultTabId="global"
-          trigger={
-            <button
-              type="button"
-              className="flex size-7 items-center justify-center rounded-sm text-coffee-300 hover:bg-coffee-700 hover:text-coffee-100"
-              aria-label="Settings"
-            >
-              <IconGear />
-            </button>
-          }
-        />
+        {IS_READONLY ? (
+          <SettingsButton needsAttention={false} />
+        ) : (
+          <SyncAwareSettingsButton project={props.project} />
+        )}
       </div>
     </div>
+  )
+}
+
+function DepthBadge() {
+  const maxReachableDepth = useGlobalSettingsStore((s) => s.maxReachableDepth)
+  if (maxReachableDepth === null) {
+    return null
+  }
+  return (
+    <div className="shrink-0 rounded-sm border border-aux-green/60 px-1.5 text-aux-green text-xs">
+      Depth: {maxReachableDepth}
+    </div>
+  )
+}
+
+// Config models change on every list click, so the sync hooks stay out of the
+// TopBar and rerender only this button.
+function SyncAwareSettingsButton(props: { project: string }) {
+  const outputs = useOutputsSyncStatus(props.project)
+  const files = useFilesSyncStatus()
+  return (
+    <SettingsButton
+      needsAttention={
+        needsAttention(outputs.level) || needsAttention(files.level)
+      }
+    />
+  )
+}
+
+function SettingsButton(props: { needsAttention: boolean }) {
+  return (
+    <SettingsDialog
+      defaultTabId={props.needsAttention ? 'status' : 'global'}
+      trigger={
+        <button
+          type="button"
+          className="relative flex size-7 items-center justify-center rounded-sm text-coffee-300 hover:bg-coffee-700 hover:text-coffee-100"
+          aria-label={
+            props.needsAttention ? 'Settings, sync needs attention' : 'Settings'
+          }
+          title={props.needsAttention ? 'Sync needs attention' : undefined}
+        >
+          <IconGear />
+          {props.needsAttention && (
+            <span className="absolute top-1 right-1 size-1.5 rounded-full bg-aux-yellow" />
+          )}
+        </button>
+      }
+    />
+  )
+}
+
+// The top bar always runs discovery in dev mode.
+const TOP_BAR_DEV_MODE = true
+const REPEAT_CLICK_WINDOW_MS = 500
+
+const STOP_LABELS: Record<CommandName, string> = {
+  discovery: 'Stop discovery',
+  templateMatch: 'Stop template match',
+  projectMatch: 'Stop project match',
+  shapeDownload: 'Stop shape download',
+  minterSearch: 'Stop minter search',
+}
+
+function DiscoverOrStopButton(props: { project: string }) {
+  const inFlight = useTerminalStore((state) => state.command.inFlight)
+  const runningCommand = useTerminalStore((state) => state.command.name)
+  const { killCommand, discover } = useDiscoveryCommand()
+  const lastClickAtMs = useRef(Number.NEGATIVE_INFINITY)
+
+  function onClick() {
+    const nowMs = performance.now()
+    const sinceLastClickMs = nowMs - lastClickAtMs.current
+    lastClickAtMs.current = nowMs
+    // A double-click, a double Enter or a held Enter would stop the run the
+    // first activation started.
+    if (sinceLastClickMs < REPEAT_CLICK_WINDOW_MS) {
+      return
+    }
+    if (inFlight) {
+      killCommand()
+    } else {
+      void discover(props.project, TOP_BAR_DEV_MODE)
+    }
+  }
+
+  if (inFlight) {
+    assert(runningCommand !== undefined, 'A command in flight has a name')
+    return (
+      <Button
+        size="small"
+        variant="destructive"
+        className="h-7 gap-1"
+        onClick={onClick}
+      >
+        <IconClose />
+        <span className="max-md:hidden">{STOP_LABELS[runningCommand]}</span>
+      </Button>
+    )
+  }
+  return (
+    <Button
+      size="small"
+      variant="solid"
+      className="h-7 gap-1"
+      onClick={onClick}
+    >
+      <IconRefresh className="size-3" />
+      <span className="max-md:hidden">Discover</span>
+    </Button>
   )
 }

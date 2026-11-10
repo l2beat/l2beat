@@ -53,7 +53,6 @@ function makeLogoColumn<T extends CompactProtocolEntry>() {
 }
 
 function makeNameColumn<T extends CompactProtocolEntry>(opts?: {
-  nameMaxWidthClass?: string
   headClassName?: string
   cellClassName?: string
 }) {
@@ -66,15 +65,13 @@ function makeNameColumn<T extends CompactProtocolEntry>(opts?: {
           projectName={ctx.row.original.name}
           description={ctx.row.original.description}
         >
-          <TableLink href={`/interop/protocols/${ctx.row.original.slug}`}>
+          <TableLink
+            href={`/interop/protocols/${ctx.row.original.slug}`}
+            className="w-auto"
+          >
             <TwoRowCell>
               <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
-                <div
-                  className={cn(
-                    'w-fit break-words font-bold text-label-value-15 md:leading-none',
-                    opts?.nameMaxWidthClass ?? 'max-w-[76px]',
-                  )}
-                >
+                <div className="w-fit font-bold text-label-value-15 md:leading-none">
                   {ctx.row.original.name}
                 </div>
                 {ctx.row.original.subgroup && (

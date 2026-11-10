@@ -2,6 +2,7 @@ import {
   assert,
   ChainSpecificAddress,
   EthereumAddress,
+  formatCompactAmount,
   formatSeconds,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -204,7 +205,7 @@ function ceilToFullHours(seconds: number): number {
 }
 
 function formatWethAmount(amount: string): string {
-  return `${Number(formatEther(amount)).toLocaleString('en-US')} WETH`
+  return formatCompactAmount(Number(formatEther(amount)), 'WETH')
 }
 
 const chainId = 42161
@@ -713,6 +714,14 @@ export const arbitrum: ScalingProject = orbitStackL2({
     ],
   },
   milestones: [
+    {
+      title: 'Security Council freezes Binance exploiter funds',
+      url: 'https://forum.arbitrum.foundation/t/security-council-emergency-action-30-10-2026/31625',
+      date: '2026-10-30T00:00:00Z',
+      description:
+        'Security Council emergency action freezes ~74.6M ARB and ~8,426 ETH held by the Binance exploiter.',
+      type: 'general',
+    },
     {
       title: 'Stylus activations paused',
       url: 'https://arbiscan.io/tx/0x9eb3a4be3ba777f9fc82250eddc10f8356731cc97c09a70801d30ce33322c652',

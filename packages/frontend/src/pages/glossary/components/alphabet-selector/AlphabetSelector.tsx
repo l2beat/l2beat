@@ -27,7 +27,7 @@ export function AlphabetSelector<T extends { id: string }>(props: Props<T>) {
 
   return (
     <OverflowWrapper ref={overflowContainer}>
-      <ul className="flex gap-2">
+      <ul className="flex gap-2 lg:justify-between lg:gap-1">
         {optionsWithEntry.map(({ char, entry }) => {
           const selected = currentSection
             ? isSelected(currentSection?.id, char)

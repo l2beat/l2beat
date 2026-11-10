@@ -128,6 +128,7 @@ export interface ProjectL2Entry {
       lastDayUops: number
       uopsWeeklyChange: number
       uopsWeeklyChangePeriod: PercentageChangePeriod
+      syncWarning: string | undefined
     }
     gasTokens?: string[]
     privacyProjects: ProjectIconListItem[]

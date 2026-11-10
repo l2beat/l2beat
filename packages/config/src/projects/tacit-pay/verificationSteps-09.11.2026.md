@@ -1,0 +1,10 @@
+Tacit Pay uses one Groth16 circuit, `transact.circom` (2 inputs, 2 outputs, 44,414 constraints). The TacitEvmPool names the TransactVerifier, which hard-codes the circuit's verification key. The steps below tie the deployed bytecode to the published circuit and ceremony key.
+
+Steps, all on `src-company/tacit` commit `389dd680cf18541eca1c0de922368fde2f5596f5`:
+
+1. In `dapp/circuits`, install the locked dependencies (circomlib 2.0.5, snarkjs 0.7.6) and compile `evm-pool/transact.circom` with circom 2.2.3 and `--O2`. The sha256 of `transact.r1cs` is `b0a246d1790151c722e42ccfa89450cb96c7f5a9f4b70a2162b7d9fc79b6ddb3` and of `transact_js/transact.wasm` is `02dd5e84970e5bc629a7a3cd4d7eae5fc9ca05579fa22c9b39b5ea70c8d8a6c1`, as `dapp/evm-pool/pin.json` records.
+2. Download the phase 1 file `powersOfTau28_hez_final_16.ptau`, BLAKE2b `6a6277a2f74e1073601b4f9fed6e1e55226917efb0f0db8a07d98ab01df1ccf43eb0e8c3159432acd4960e2f29fe84a4198501fa54c8dad9e43297453efec125` as the snarkjs README lists it. Tacit pins a copy at IPFS `bafybeie73kd3suqjeshnitj6pmr3qxf6ckjbwxxuqyaaixk77ezeoohtau`.
+3. The committed `dapp/evm-pool/transact_final.zkey` has sha256 `40758061a0786fb0bdc5e5dec4c354bbf85fc106f7412716e25e781af4e79c4b`, like the copy in the ceremony bundle `bafybeia4yvn2zoggvgpjwg5vpwpt6aivjbcm6tgzxoxsukao2nm5yyypfy`.
+4. Run `snarkjs zkey verify transact.r1cs powersOfTau28_hez_final_16.ptau transact_final.zkey`. The key verifies with 176 contributions and a beacon from the hash of Bitcoin block 968840, and the contribution hashes equal those in the bundle's `transcript.json`.
+5. Run `snarkjs zkey export verificationkey transact_final.zkey`. It equals the committed `dapp/evm-pool/transact_vk.json`, and every coordinate of `vk_alpha_1`, `vk_beta_2`, `vk_gamma_2`, `vk_delta_2` and the 12 `IC` points equals a constant of `contracts/src/TransactVerifier.sol`.
+6. The source of the verifier at `0x000000b1c0e84CEc8AdF8278B90c4d6400DfB153`, verified on Etherscan and Sourcify, equals `contracts/src/TransactVerifier.sol`, and `VERIFIER()` of the pool returns that address.

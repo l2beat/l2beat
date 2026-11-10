@@ -49,7 +49,7 @@ interface ProjectMarkdown {
 export interface ProjectHeader {
   links?: ProjectLink[]
   badges?: ProjectBadge[]
-  /** L2BEAT's contract explorer for the project, linked from the HTML header. */
+  /** ETHBEAT's contract explorer for the project, linked from the HTML header. */
   discoUiHref?: string
 }
 

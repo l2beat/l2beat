@@ -1,5 +1,7 @@
 export * from './formatActivityCount.js'
 export * from './formatBytes.js'
+export * from './formatCompactAmount.js'
+export * from './formatCount.js'
 export * from './formatCurrency.js'
 export * from './formatDollarValueNumber.js'
 export * from './formatInteger.js'
