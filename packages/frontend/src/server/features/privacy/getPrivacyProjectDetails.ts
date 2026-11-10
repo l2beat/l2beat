@@ -60,6 +60,7 @@ import type {
   PrivacyRelayerStat,
 } from './types'
 import {
+  getCurrentTokenValues,
   getPrivacyBucketTvls,
   getPrivacyChainAssetTvls,
   getPrivacySingleEscrowBucketTvls,
@@ -277,17 +278,19 @@ export async function getPrivacyProjectDetails(
   let stats: ReturnType<typeof buildPrivacyStats>
   let chainView: PrivacyChainView | undefined
   if (selected) {
+    // What counts towards the chain's value shown above them.
+    const currentValues = getCurrentTokenValues(tokenValues)
     const chainBucketTvls = new Map([
       ...getPrivacySingleEscrowBucketTvls(
         tokens,
         project.tvsConfig ?? [],
-        tokenValues,
+        currentValues,
       ),
       ...bucketTvls,
     ])
     const chainAssetTvls = getPrivacyChainAssetTvls(
       project.tvsConfig ?? [],
-      tokenValues,
+      currentValues,
       escrowValues,
       selected.id,
     )
