@@ -4,19 +4,14 @@ ETHBEAT (formerly L2BEAT) is an independent research organization that assesses 
 
 ## What we never compromise on
 
-- **Credibly neutral.** No one can pay for a better assessment, and our funding is public. A change to a risk, stage or warning needs evidence, in either direction and whoever sends it. The projects we assess sometimes send PRs about their own pages.
+- **Credibly neutral.** No one can pay for a better assessment. A change to a risk, stage or warning needs evidence, in either direction and whoever sends it. The projects we assess sometimes send PRs about their own pages.
 - **Verifiable.** Every claim points to evidence: onchain state, deployed code, published specs. We don't do security audits, so nothing we publish should read like one.
-- **Open source.** Everything is public under MIT. Outsiders read this repo to check and challenge our assessments, so write configs and descriptions for them too.
+- **Open source.** Outsiders read this repo to check and challenge our assessments, so write configs and descriptions they can follow.
 - **Accurate over flattering.** A wrong "green" is worse than a missing number, because people use our pages to decide where to put their money. Show stale, partial or uncertain data as such.
 
-## Who reads ETHBEAT
+## Who depends on us
 
-- **Users** deciding which systems to trust with their money.
-- **Researchers and builders** using our frameworks, data and public API.
-- **The projects we assess**, who watch their pages closely and push back.
-- **AI agents**, through markdown project pages (append `.md`) and `/llms.txt`.
-
-Public URLs, API response shapes and badge URLs are embedded across the ecosystem. When you rename or remove one, add a redirect (see `packages/frontend/src/server/routers/LegacyPathsRouter.ts`) or keep the old shape.
+Researchers, builders and the projects we assess reuse and scrutinize our work, and AI agents read it through `.md` project pages and `/llms.txt`. Our public URLs (those included), API response shapes and badge URLs are embedded across the ecosystem. When you change published content, check the `.md` pages too. When you rename or remove a URL or field, add a redirect (see `packages/frontend/src/server/routers/LegacyPathsRouter.ts`) or keep the old shape.
 
 ## Terms we use differently
 
