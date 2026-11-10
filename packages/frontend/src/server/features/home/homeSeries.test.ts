@@ -49,6 +49,13 @@ describe(toWeeklyAverages.name, () => {
     expect(toWeeklyAverages(data)).toEqual([[0, 40, 20, 15]])
   })
 
+  it('counts a day with a later snapshot once, at its latest value', () => {
+    // A level (TVS) ends with the latest hour after that day's midnight.
+    const data = days(Array(7).fill(10))
+    data.push([6 * DAY + 13 * 3600, 80])
+    expect(toWeeklyAverages(data)).toEqual([[0, (6 * 10 + 80) / 7]])
+  })
+
   it('keeps a series shorter than a week as one point', () => {
     expect(toWeeklyAverages(days([4, 6, 8]))).toEqual([[0, 6]])
   })

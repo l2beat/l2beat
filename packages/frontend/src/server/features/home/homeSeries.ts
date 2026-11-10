@@ -71,7 +71,8 @@ export const WEEK_DAYS = 7
  * of the days that have data, for the value and each part alike. Days left
  * over at the start, too few for a week, are dropped rather than drawn as one.
  */
-export function toWeeklyAverages(series: HomeSeriesPoint[]): HomeSeriesPoint[] {
+export function toWeeklyAverages(points: HomeSeriesPoint[]): HomeSeriesPoint[] {
+  const series = toOnePerDay(points)
   const weeks: HomeSeriesPoint[] = []
   const start = series.length >= WEEK_DAYS ? series.length % WEEK_DAYS : 0
   for (let end = series.length; end > start; end -= WEEK_DAYS) {
@@ -85,6 +86,24 @@ export function toWeeklyAverages(series: HomeSeriesPoint[]): HomeSeriesPoint[] {
     weeks.push([firstDay[0], value, ...parts])
   }
   return weeks.reverse()
+}
+
+/**
+ * A level (TVS) ends with the latest hour after that day's midnight: keep
+ * each day's latest point, so a week is seven days, not seven points.
+ */
+function toOnePerDay(series: HomeSeriesPoint[]): HomeSeriesPoint[] {
+  const days: HomeSeriesPoint[] = []
+  for (const point of series) {
+    const last = days.at(-1)
+    const day = UnixTime.toStartOf(UnixTime(point[0]), 'day')
+    if (last && UnixTime.toStartOf(UnixTime(last[0]), 'day') === day) {
+      days[days.length - 1] = point
+    } else {
+      days.push(point)
+    }
+  }
+  return days
 }
 
 /** The mean of the values that are there; null when none is. */
