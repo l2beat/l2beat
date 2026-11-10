@@ -788,7 +788,7 @@
         "0x69d58c583f7c1689f33f52112c458212177cc01844f86873c742231206d49e50"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "USDC minter that re-mints seized balances. When the balance of a blocklisted address on any CCTP domain is written off, the secondary market burner records it once per address and domain and mints the same amount of USDC on Ethereum to an allowlisted recipient. The written-off balance is not verified onchain, so minting is bounded only by the allowance the MasterMinter controllers grant this contract.",
+      "description": "USDC minter that re-mints seized balances. The balance of a blocklisted address on any CCTP domain stays frozen at that address and is not burned. The secondary market burner records it once per address and domain and mints the same amount of USDC on Ethereum to an allowlisted recipient. The recorded balance is not verified onchain, so minting is bounded only by the allowance the MasterMinter controllers grant this contract.",
       "deployerAddress": "eth:0xe4b567Ac531c217EEfE01Db45fac7F60ED77F94b",
       "sinceTimestamp": 1790610479,
       "sinceBlock": 26076948,
@@ -1931,7 +1931,7 @@
     "tokens/circle/USDC": "0xc2ce8a8cab32d9d960c30279a87e8c3ed9354274306b76a5d27063e74b928ec6"
   },
   "usedBlockNumbers": { "ethereum": 26385012 },
-  "permissionsConfigHash": "0xb47b594e4e3884d00e81c05fa4dbd540ce8cce3c741471dadb0d4a08c9e138cf",
+  "permissionsConfigHash": "0x62d7e12595bc1842020315b6b9cd602f7f782d75897aabded194cea6ba763133",
   "permissions": {
     "eth:0x0057f169b9E1E57dD25CAb68A23ae79C7B3F6Ba5": {
       "receivedPermissions": [
@@ -1968,7 +1968,7 @@
         {
           "permission": "interact",
           "from": "eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd",
-          "description": "record the written-off balance of a blocklisted address and mint the same amount of USDC to an allowlisted recipient, within the minter allowance.",
+          "description": "record the frozen balance of a blocklisted address and mint the same amount of USDC to an allowlisted recipient, within the minter allowance.",
           "role": ".secondaryMarketBurner"
         }
       ]

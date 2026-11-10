@@ -428,7 +428,7 @@ export const starknet: ScalingProject = {
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,
         noRedTrustedSetups: true,
-        programHashesReproducible: true,
+        programHashesReproducible: 'UnderReview',
         proverSourcePublished: true,
         verifierContractsReproducible: true,
       },
@@ -608,7 +608,7 @@ export const starknet: ScalingProject = {
       {
         title: 'Proven Program',
         description:
-          'The current Starknet OS and aggregator sources are published in the [Starknet sequencer repository](https://github.com/starkware-libs/sequencer/tree/APOLLO-0.14.4-RC.8/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core). The default SHARP verifier pins a 1,182-felt outer bootloader and one hash of its bootloader configuration. The bootloader published in [cairo-lang](https://github.com/starkware-libs/cairo-lang/tree/cf9bf972bede402a125e8638bb258e77563ae933/src/starkware/cairo/bootloaders) still outputs a three-word configuration. The current outer bootloader and the preimage of its configuration hash are therefore not independently reproducible.',
+          'The current Starknet OS and aggregator sources are published in the [Starknet sequencer repository](https://github.com/starkware-libs/sequencer/tree/APOLLO-0.14.4-RC.8/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core). The default SHARP verifier pins a 1,182-felt outer bootloader and one hash of its bootloader configuration. Their sources are published in [cairo-lang](https://github.com/starkware-libs/cairo-lang/tree/d435ed7003919b3842a48fc07bbb06a08ed9bbad/src/starkware/cairo/bootloaders). The outer bootloader stored onchain has been reproduced from this revision. The configuration hash has been reproduced from its four published parts, with the simple bootloaders and the circuit applicative bootloader recompiled. It also commits to nine Stwo Cairo verifiers and a circuit verifier that have not been reproduced, so the complete proven program is not independently reproducible yet.',
         risks: [],
       },
       {
@@ -632,7 +632,7 @@ export const starknet: ScalingProject = {
     // exposed by the shared SHARP discovery.
     zkVerifiers: acceptedSHARPVerifierChain.factRegistries,
     programHashesDescription:
-      'The Starknet OS, virtual Starknet OS and aggregator are reproducible. The outer bootloader and the bootloader configuration hash of the default SHARP verifier have not been reproduced, their source is not published.',
+      'The Starknet OS, virtual Starknet OS, aggregator and outer bootloader are reproducible. The bootloader configuration hash of the default SHARP verifier commits to nine Stwo Cairo verifiers and a circuit verifier that have not been reproduced, so an invalid nested-proof verifier cannot be ruled out independently.',
   },
   upgradesAndGovernance: {
     content: readProjectMarkdown('starknet', 'upgradesAndGovernance', {

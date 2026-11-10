@@ -15,7 +15,7 @@ The SHARP Multisig switched the default SHARP verifier to a new GpsStatementVeri
 - The MemoryPageFactRegistry and the 8 CPU verifiers are reused.
 - Facts of the previous default verifier stay valid through the referral until 2026-11-28 (1795855307).
 
-Risk: the source of the new outer bootloader and the preimage of the config hash are not published (cairo-lang master still outputs the three-word config), so the programs behind the default verifier are no longer reproducible. Both new program hashes are listed as not verified for Starknet and the other SHARP users.
+Reproducibility: StarkWare published the sources in cairo-lang v0.14.4a0 (d435ed7) after the switch. The new outer bootloader reproduces exactly from it, and the config hash reproduces from its four published parts (simple bootloaders and circuit applicative bootloader recompiled, 21 Stone Cairo verifiers unchanged). Nine new Stwo Cairo verifier hashes and the circuit verifier hash it commits to are not reproduced, so the config hash stays listed as not verified and Starknet's program hash reproducibility is under review.
 
 Config: shapes for the new verifier and bootloader, `getBootloaderConfigHash` field, previous verifier and bootloader renamed and critical until the referral expires.
 
