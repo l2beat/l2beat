@@ -81,7 +81,7 @@ export function getPrivacyMethodologySections() {
         '**[Tor Browser](https://www.torproject.org/download/)**: a free install. Websites, each site on its own circuit.',
         '**[NymVPN](https://nym.com/download) with the Random profile**: a paid install. All traffic on desktop and mobile, UDP included. Its exits accept only listed ports. Its default and mixnet profiles pick gateways near the user, which fails the second check in some regions. It sends network statistics under a persistent id until Anonymous network stats is turned off in its settings.',
         "**[Orbot](https://orbot.app/en/download/)'s VPN mode**: a free install on Android. All traffic through Tor, which carries no UDP.",
-        '**[Tails](https://tails.net/install/) or [Whonix](https://www.whonix.org/wiki/Download)**: a second operating system. All traffic through Tor. A local node must be reachable from inside it.',
+        '**[Tails](https://tails.net/install/) or [Whonix](https://www.whonix.org/wiki/Download)**: a second operating system. All traffic through Tor. A local node must be reachable from inside it. [Qubes OS](https://www.qubes-os.org/downloads/) ships Whonix.',
       ]),
     ]),
 
