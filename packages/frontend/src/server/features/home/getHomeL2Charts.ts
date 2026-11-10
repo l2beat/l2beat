@@ -71,17 +71,7 @@ async function getHomeTvsChart(
     getSummedTvsValues(validiumsAndOptimiums, range, options),
   ])
 
-  const chart = mergeSeriesByTimestamp(
-    rollupValues,
-    validiumAndOptimiumValues,
-  ).map(
-    ([timestamp, rollups, vAndO]): HomeSeriesPoint => [
-      timestamp,
-      sum(rollups, vAndO),
-      rollups,
-      vAndO,
-    ],
-  )
+  const chart = mergeTvsParts(rollupValues, validiumAndOptimiumValues)
   return {
     chart: toWeeklySparkline(chart, {
       perDay: false,
@@ -131,32 +121,27 @@ const ACTIVITY_TYPES = new Set<string | undefined>([
   'Optimium',
 ])
 
-export function mergeSeriesByTimestamp(
-  seriesA: { timestamp: number; value: number | null }[],
-  seriesB: { timestamp: number; value: number | null }[],
-): [number, number | null, number | null][] {
-  const byTimestamp = new Map<number, [number | null, number | null]>()
-  for (const { timestamp, value } of seriesA) {
-    byTimestamp.set(timestamp, [value, null])
-  }
-  for (const { timestamp, value } of seriesB) {
-    const entry = byTimestamp.get(timestamp)
-    if (entry) {
-      entry[1] = value
-    } else {
-      byTimestamp.set(timestamp, [null, value])
-    }
-  }
-  return [...byTimestamp.entries()]
-    .sort(([a], [b]) => a - b)
-    .map(([timestamp, [a, b]]) => [timestamp, a, b])
-}
-
-/** Rollups and validiums & optimiums together; null where neither has data. */
-function sum(rollups: number | null, vAndO: number | null): number | null {
-  return rollups !== null || vAndO !== null
-    ? (rollups ?? 0) + (vAndO ?? 0)
-    : null
+/**
+ * Rollups and validiums & optimiums by timestamp, with their total. A point
+ * missing either part is null throughout: a total of one part would read as
+ * a drop, and parts averaged over other days than the total would not add up.
+ */
+export function mergeTvsParts(
+  rollups: { timestamp: number; value: number | null }[],
+  vAndO: { timestamp: number; value: number | null }[],
+): HomeSeriesPoint[] {
+  const rollupsAt = new Map(rollups.map((p) => [p.timestamp, p.value]))
+  const vAndOAt = new Map(vAndO.map((p) => [p.timestamp, p.value]))
+  const timestamps = [...new Set([...rollupsAt.keys(), ...vAndOAt.keys()])]
+  return timestamps
+    .sort((a, b) => a - b)
+    .map((timestamp) => {
+      const rollup = rollupsAt.get(timestamp) ?? null
+      const other = vAndOAt.get(timestamp) ?? null
+      return rollup !== null && other !== null
+        ? [timestamp, rollup + other, rollup, other]
+        : [timestamp, null, null, null]
+    })
 }
 
 function getMockHomeL2Charts(range: ChartRange): HomeL2Charts {

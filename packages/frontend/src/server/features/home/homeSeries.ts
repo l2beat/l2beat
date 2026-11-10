@@ -90,7 +90,8 @@ export function toWeeklyAverages(points: HomeSeriesPoint[]): HomeSeriesPoint[] {
 
 /**
  * A level (TVS) ends with the latest hour after that day's midnight: keep
- * each day's latest point, so a week is seven days, not seven points.
+ * each day's latest point with data, so a week is seven days, not seven
+ * points.
  */
 function toOnePerDay(series: HomeSeriesPoint[]): HomeSeriesPoint[] {
   const days: HomeSeriesPoint[] = []
@@ -98,7 +99,7 @@ function toOnePerDay(series: HomeSeriesPoint[]): HomeSeriesPoint[] {
     const last = days.at(-1)
     const day = UnixTime.toStartOf(UnixTime(point[0]), 'day')
     if (last && UnixTime.toStartOf(UnixTime(last[0]), 'day') === day) {
-      days[days.length - 1] = point
+      if (point[1] !== null) days[days.length - 1] = point
     } else {
       days.push(point)
     }
