@@ -6,9 +6,17 @@ import { CloseIcon } from '~/icons/Close'
 import { cn } from '~/utils/cn'
 import { jsonForInlineScript } from '~/utils/jsonForInlineScript'
 import { SidebarGroup, SidebarGroupLabel } from '../core/Sidebar'
+import { hideSeenWhatsNew } from './hideSeenWhatsNew'
 import { useWhatsNewItem } from './WhatsNewItemContext'
 
-/** The latest announcement at the bottom of the nav, on every page. */
+/**
+ * The latest announcement at the bottom of the nav, on every page.
+ *
+ * Whether the visitor has seen it lives in localStorage and pages are cached
+ * at the edge, so the server can't know. It renders the card for everyone,
+ * and an inline script hides a seen one before the first paint. Rendering it
+ * only in the browser made it vanish and come back on every page load.
+ */
 export function NavWhatsNew({
   onNavigate,
   className,
@@ -23,20 +31,18 @@ export function NavWhatsNew({
   // Opening the item or dismissing it hides it until the next one.
   const seenKey = item ? (`whats-new-${item.id}` as const) : 'whats-new-none'
   const [seen, setSeen] = useLocalStorage(seenKey, false)
-  // The server cannot know whether the item was seen, so it always renders
-  // it, and the script at its end hides a seen one before the first paint.
-  // Rendering it only in the browser made it vanish and come back on every
-  // page load.
+  // Before hydration the markup is the server's, with the card in it.
   if (!item || (isClient && seen)) {
     return null
   }
+  const script = `(${hideSeenWhatsNew.toString()})(document.currentScript.parentElement, ${jsonForInlineScript(seenKey)})`
   const device = isDesktop ? 'desktop' : 'mobile'
   return (
     // At the end of the nav, just above its footer; at least 20px under the
     // lists above when the nav is full.
     <SidebarGroup
       className={cn('mt-auto pt-5', className)}
-      // The script below may have hidden it before React got here.
+      // The script may have hidden it; React would log the difference in dev.
       suppressHydrationWarning
     >
       <div className="flex items-center justify-between">
@@ -82,9 +88,9 @@ export function NavWhatsNew({
         </span>
       </a>
       <script
-        dangerouslySetInnerHTML={{
-          __html: `try{localStorage.getItem(${jsonForInlineScript(seenKey)})==="true"&&(document.currentScript.parentElement.style.display="none")}catch{}`,
-        }}
+        dangerouslySetInnerHTML={{ __html: script }}
+        // The server and the browser bundle print the function differently.
+        suppressHydrationWarning
       />
     </SidebarGroup>
   )
