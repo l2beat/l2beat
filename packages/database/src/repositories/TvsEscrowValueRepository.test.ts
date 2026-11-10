@@ -46,6 +46,38 @@ describeDatabase(TvsEscrowValueRepository.name, (db) => {
     })
   })
 
+  describe(
+    TvsEscrowValueRepository.prototype.getSummedByChainAtResolution.name,
+    () => {
+      it('sums the escrows of the project on the chain, at the chart rows', async () => {
+        const HOUR = UnixTime.HOUR
+        // Midnight UTC
+        const T = UnixTime(1_700_006_400)
+        await repository.upsertMany([
+          escrowValue({ timestamp: T, escrowAddress: '0xa', value: 10 }),
+          escrowValue({ timestamp: T, escrowAddress: '0xb', value: 5 }),
+          escrowValue({ timestamp: T, chain: 'base', value: 100 }),
+          escrowValue({
+            timestamp: T,
+            configurationId: 'b'.repeat(12),
+            projectId: 'other',
+            value: 1000,
+          }),
+          escrowValue({ timestamp: UnixTime(T + HOUR), value: 20 }),
+        ])
+
+        const result = await repository.getSummedByChainAtResolution(
+          'project',
+          'ethereum',
+          [null, UnixTime(T + 26 * HOUR)],
+          'day',
+        )
+
+        expect(result).toEqual([{ timestamp: T, value: 15 }])
+      })
+    },
+  )
+
   describe(TvsEscrowValueRepository.prototype.deleteByConfigIds.name, () => {
     it('deletes rows of the given configurations', async () => {
       const kept = escrowValue({ configurationId: 'b'.repeat(12) })

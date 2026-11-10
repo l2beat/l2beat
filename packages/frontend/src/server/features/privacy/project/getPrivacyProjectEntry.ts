@@ -211,19 +211,28 @@ export async function getPrivacyProjectEntry(
   }
 
   if (details.hasTvl) {
-    sections.push({
-      type: 'TvsValueSection',
-      props: {
-        id: 'privacy-tvl',
-        title: 'Value Locked',
-        defaultRange: defaultChartRange,
-        rangeControls: 'privacy',
-        project: chartProject,
-        milestones: details.milestones,
-        // This chart can't be limited to one chain yet.
-        allChains: details.chainView?.chains.map(toSectionChain),
-      },
-    })
+    const valueSection = {
+      id: 'privacy-tvl',
+      title: 'Value Locked',
+      defaultRange: defaultChartRange,
+      project: chartProject,
+      milestones: details.milestones,
+    } as const
+    sections.push(
+      details.chainView && chain
+        ? {
+            type: 'PrivacyValueLockedSection',
+            props: {
+              ...valueSection,
+              chains: details.chainView.chains.map(toSectionChain),
+              defaultChain: chain.id,
+            },
+          }
+        : {
+            type: 'TvsValueSection',
+            props: { ...valueSection, rangeControls: 'privacy' },
+          },
+    )
   }
 
   if (details.anonymitySetType !== undefined) {
@@ -426,11 +435,11 @@ export async function getPrivacyProjectEntry(
         : details.chainView
           ? details.chainView.totalValueLockedUsd
           : totalValueLockedUsd,
-      // The value on one chain comes from its buckets, which have no history.
-      totalValueLockedChange7d:
-        details.hasTvl && !details.chainView
-          ? tvs.projects[details.id]?.change.total
-          : undefined,
+      totalValueLockedChange7d: !details.hasTvl
+        ? undefined
+        : details.chainView
+          ? details.chainView.totalValueLockedChange7d
+          : tvs.projects[details.id]?.change.total,
       deposits: details.summary.deposits,
       relayerStat: details.summary.relayerStat,
     },

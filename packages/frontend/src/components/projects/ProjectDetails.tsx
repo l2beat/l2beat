@@ -28,6 +28,7 @@ import { PrivacyAdversariesSection } from './sections/privacy/PrivacyAdversaries
 import { PrivacyAnonymitySetSection } from './sections/privacy/PrivacyAnonymitySetSection'
 import { PrivacyAssetsBreakdownSection } from './sections/privacy/PrivacyAssetsBreakdownSection'
 import { PrivacyFlowsSection } from './sections/privacy/PrivacyFlowsSection'
+import { PrivacyValueLockedSection } from './sections/privacy/PrivacyValueLockedSection'
 import { ProgramHashesSection } from './sections/program-hashes/ProgramHashesSection'
 import { RiskAnalysisSection } from './sections/RiskAnalysisSection'
 import { RiskSummarySection } from './sections/RiskSummarySection'
@@ -383,6 +384,14 @@ function renderSection(
     case 'TvsValueSection':
       return (
         <TvsValueSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'PrivacyValueLockedSection':
+      return (
+        <PrivacyValueLockedSection
           key={item.props.id}
           {...{ nested, sectionOrder }}
           {...item.props}

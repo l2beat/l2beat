@@ -117,8 +117,8 @@ export async function getHomePrivacyData(
     },
     // The /privacy order: privacy rating first, value locked after.
     topProtocols: entries.slice(0, TOP_PROTOCOLS_COUNT).map((entry) => ({
-      id: entry.id,
-      name: entry.name,
+      id: entry.href,
+      name: entry.chain ? `${entry.name} on ${entry.chain.name}` : entry.name,
       href: entry.href,
       iconUrl: entry.icon,
       tvl: entry.hasTvl ? entry.totalValueLockedUsd : undefined,

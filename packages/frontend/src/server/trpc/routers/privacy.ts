@@ -6,6 +6,10 @@ import {
   getPrivacyFlowsChart,
   PrivacyFlowsChartParams,
 } from '~/server/features/privacy/getPrivacyFlowsChart'
+import {
+  getPrivacyValueLockedChart,
+  PrivacyValueLockedChartParams,
+} from '~/server/features/privacy/getPrivacyValueLockedChart'
 import { procedure, router } from '../trpc'
 
 export const privacyRouter = router({
@@ -15,4 +19,7 @@ export const privacyRouter = router({
   flowsChart: procedure
     .input(PrivacyFlowsChartParams)
     .query(({ input }) => getPrivacyFlowsChart(input)),
+  valueLockedChart: procedure
+    .input(PrivacyValueLockedChartParams)
+    .query(({ input }) => getPrivacyValueLockedChart(input)),
 })
