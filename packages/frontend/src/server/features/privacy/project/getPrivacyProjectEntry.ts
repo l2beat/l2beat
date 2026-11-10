@@ -226,11 +226,7 @@ export async function getPrivacyProjectEntry(
       details.chainView && chain
         ? {
             type: 'PrivacyValueLockedSection',
-            props: {
-              ...valueSection,
-              chains: details.chainView.chains.map(toChainTab),
-              pageChain: chain.id,
-            },
+            props: { ...valueSection, chain },
           }
         : {
             type: 'TvsValueSection',

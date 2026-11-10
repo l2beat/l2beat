@@ -3,7 +3,6 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { getTvsChartByProjects } from '~/server/features/tvs/getTvsChartByProjects'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { ps } from '~/server/projects'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
@@ -17,8 +16,8 @@ import { rangeToDays } from '~/utils/range/rangeToDays'
 export const PrivacyValueLockedChartParams = v.object({
   projectId: v.string(),
   range: ChartRange,
-  /** One of the project's tracked chains. Every chain when left out. */
-  chain: v.string().optional(),
+  /** One of the project's tracked chains. */
+  chain: v.string(),
 })
 
 export type PrivacyValueLockedChartParams = v.infer<
@@ -30,26 +29,12 @@ export interface PrivacyValueLockedChartResponse {
   syncedUntil: number | undefined
 }
 
-/** The value locked in a privacy project, on every chain or on one of them. */
+/** The value locked in a privacy project on one of its tracked chains. */
 export async function getPrivacyValueLockedChart({
   projectId,
   range,
   chain,
 }: PrivacyValueLockedChartParams): Promise<PrivacyValueLockedChartResponse> {
-  if (chain === undefined) {
-    const { chart, syncedUntil } = await getTvsChartByProjects({
-      projectIds: [projectId],
-      range,
-    })
-    return {
-      chart: chart.map(([timestamp, values]) => [
-        timestamp,
-        values[projectId] ?? null,
-      ]),
-      syncedUntil,
-    }
-  }
-
   const resolution = rangeToResolution(range)
   const rows = await getChainValueHistory(projectId, chain, range, resolution)
   const last = rows.at(-1)
