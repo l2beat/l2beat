@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x590994e53b5b5b666d19cf7f773138265ad146e4
+Generated with discovered.json: 0x5f1f84e9ee1684da75d880cc964b94f9a4e0c25b
 
-# Diff at Tue, 10 Nov 2026 15:07:10 GMT:
+# Diff at Tue, 10 Nov 2026 17:10:23 GMT:
 
 - id: 21d6d469
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@c96b37253cde8b080f0d1294f3315fbb90361cf7 block: 1791379304
+- comparing to: main@3e7f80c2eb530702e907f902d428416a31e27855 block: 1791379304
 - current timestamp: 1794319734
 
 ## Description
@@ -17,7 +17,7 @@ Config: the SeizureRegistry description says that the blocklisted balance stays 
 
 ```diff
     contract SeizureRegistry (eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd) [N/A] {
-    +++ description: USDC minter that re-mints seized balances. The balance of a blocklisted address on any CCTP domain stays frozen at that address and is not burned. The secondary market burner records it once per address and domain and mints the same amount of USDC on Ethereum to an allowlisted recipient. The recorded balance is not verified onchain, so minting is bounded only by the allowance the MasterMinter controllers grant this contract.
+    +++ description: USDC minter that re-mints seized balances: the secondary market burner records the balance of a blocklisted address once per address and CCTP domain and mints the same amount of USDC on Ethereum to an allowlisted recipient. The blocklisted balance stays frozen and is not burned, and the recorded amount is not verified onchain.
 +++ description: Recipients that re-minted USDC can be sent to, managed by the address manager.
       values.allowedRecipients.1:
 +        "eth:0xd1E1fa2056096499aF88F2Ebbf1b15Df81b271B4"
@@ -44,10 +44,10 @@ discovery. Values are for block 1791379304 (main branch discovery), not current.
 
 ```diff
     contract SeizureRegistry (eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd) [N/A] {
-    +++ description: USDC minter that re-mints seized balances. The balance of a blocklisted address on any CCTP domain stays frozen at that address and is not burned. The secondary market burner records it once per address and domain and mints the same amount of USDC on Ethereum to an allowlisted recipient. The recorded balance is not verified onchain, so minting is bounded only by the allowance the MasterMinter controllers grant this contract.
+    +++ description: USDC minter that re-mints seized balances: the secondary market burner records the balance of a blocklisted address once per address and CCTP domain and mints the same amount of USDC on Ethereum to an allowlisted recipient. The blocklisted balance stays frozen and is not burned, and the recorded amount is not verified onchain.
       description:
 -        "USDC minter that re-mints seized balances. When the balance of a blocklisted address on any CCTP domain is written off, the secondary market burner records it once per address and domain and mints the same amount of USDC on Ethereum to an allowlisted recipient. The written-off balance is not verified onchain, so minting is bounded only by the allowance the MasterMinter controllers grant this contract."
-+        "USDC minter that re-mints seized balances. The balance of a blocklisted address on any CCTP domain stays frozen at that address and is not burned. The secondary market burner records it once per address and domain and mints the same amount of USDC on Ethereum to an allowlisted recipient. The recorded balance is not verified onchain, so minting is bounded only by the allowance the MasterMinter controllers grant this contract."
++        "USDC minter that re-mints seized balances: the secondary market burner records the balance of a blocklisted address once per address and CCTP domain and mints the same amount of USDC on Ethereum to an allowlisted recipient. The blocklisted balance stays frozen and is not burned, and the recorded amount is not verified onchain."
     }
 ```
 

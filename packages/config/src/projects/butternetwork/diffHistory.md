@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x71c7361733e6bfe7e8d15605e66041848d7609ac
+Generated with discovered.json: 0x53051bd603c4a411a8667ed7b63c9d6236dcdf48
 
-# Diff at Tue, 10 Nov 2026 14:25:39 GMT:
+# Diff at Tue, 10 Nov 2026 17:10:28 GMT:
 
 - id: 95eda926
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@28ea16426fac1900c2fffd1cec3ecc6b84981c76 block: 1793874658
+- comparing to: main@3e7f80c2eb530702e907f902d428416a31e27855 block: 1793874658
 - current timestamp: 1794320084
 
 ## Description
@@ -63,7 +63,7 @@ discovery. Values are for block 1793874658 (main branch discovery), not current.
     +++ description: Butter's Base bridge endpoint. Outbound transfers lock or burn assets and emit messages for the MAP relay chain; inbound transfers execute only after a LightNode-validated receipt proof for the configured MAP relay contract. The bridge can mint configured mintable tokens, release escrowed assets, and invoke receiver callbacks, so compromise of validation, relay configuration, or management authority can lead to loss of bridged funds.
       fieldMeta.authority.description:
 -        "Authority contract consulted by all Bridge management functions marked restricted. Its role members can pause the bridge, change supported tokens and service contracts, change the relay, configure trust-list entries, and upgrade the Bridge implementation."
-+        "Authority contract consulted by all Bridge management functions marked restricted. Its role members can pause the bridge, change supported tokens and service contracts, change the relay, configure trust-list entries, withdraw any asset held by the Bridge with `emergencyWithdraw()`, and upgrade the Bridge implementation."
++        "Authority contract consulted by all Bridge management functions marked restricted. Its role members can pause the bridge, change supported tokens and service contracts, change the relay, configure trust-list entries, upgrade the Bridge implementation and, in implementations that have `emergencyWithdraw()`, withdraw any asset held by the Bridge."
     }
 ```
 

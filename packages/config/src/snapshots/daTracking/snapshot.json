@@ -739,13 +739,16 @@
   ],
   "lens": [
     {
-      "id": "ed7f9e1d639e",
+      "id": "afdbbfe89a91",
       "config": {
         "type": "ethereum",
         "daLayer": "ethereum",
-        "sinceBlock": 26384574,
         "inbox": "0x2e5110cF18678Ec99818bFAa849B8C881744b776",
-        "sequencers": ["0xBf02Dc815BA63140Bfc170cFcF97987B504d36Bc"]
+        "sequencers": [
+          "0xBf02Dc815BA63140Bfc170cFcF97987B504d36Bc",
+          "0x9971903268BAED330DA9DD533D97924c725AB593"
+        ],
+        "sinceBlock": 26384574
       }
     }
   ],
@@ -1387,13 +1390,16 @@
   ],
   "sophon": [
     {
-      "id": "318778ae3815",
+      "id": "c3d925f9c504",
       "config": {
         "type": "ethereum",
         "daLayer": "ethereum",
-        "sinceBlock": 26362912,
         "inbox": "0x2e5110cF18678Ec99818bFAa849B8C881744b776",
-        "sequencers": ["0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B"]
+        "sequencers": [
+          "0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B",
+          "0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3"
+        ],
+        "sinceBlock": 26362912
       }
     }
   ],

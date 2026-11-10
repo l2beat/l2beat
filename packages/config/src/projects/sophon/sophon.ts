@@ -6,7 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { zkStackL2 } from '../../templates/zkStack'
+import { getZkStackDaTracking, zkStackL2 } from '../../templates/zkStack'
 
 const discovery = new ProjectDiscovery('sophon')
 const chainId = 50104
@@ -62,15 +62,8 @@ export const sophon: ScalingProject = zkStackL2({
     ],
   },
   daTracking: [
-    {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
-      sinceBlock: 26362912, // rollup DA validator pair set after the v31 upgrade
-      inbox: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
-      sequencers: [
-        EthereumAddress('0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B'),
-      ],
-    },
+    // rollup DA validator pair set after the v31 upgrade
+    getZkStackDaTracking(discovery, { sinceBlock: 26362912 }),
   ],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({

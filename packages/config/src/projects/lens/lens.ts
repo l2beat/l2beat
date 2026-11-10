@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { zkStackL2 } from '../../templates/zkStack'
+import { getZkStackDaTracking, zkStackL2 } from '../../templates/zkStack'
 
 const discovery = new ProjectDiscovery('lens')
 const chainId = 232
@@ -69,15 +69,8 @@ export const lens: ScalingProject = zkStackL2({
     }),
   ],
   daTracking: [
-    {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
-      sinceBlock: 26384574, // rollup DA validator pair set after the v31 upgrade
-      inbox: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
-      sequencers: [
-        EthereumAddress('0xBf02Dc815BA63140Bfc170cFcF97987B504d36Bc'),
-      ],
-    },
+    // rollup DA validator pair set after the v31 upgrade
+    getZkStackDaTracking(discovery, { sinceBlock: 26384574 }),
   ],
   nonTemplateTrackedTxs: [
     {

@@ -161,6 +161,20 @@
           "eth:0x61917077B3f03e01814B913FDD28CB1bF574148E",
           "eth:0x27c567cd31FD0495cdC4CabeC99694d82d7B7F12"
         ],
+        "receiptConfigs": {
+          "eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C": {
+            "priceSource": "eth:0x27c567cd31FD0495cdC4CabeC99694d82d7B7F12",
+            "maxPriceAge": 0,
+            "exposureCapVaultToken": 0,
+            "maxSwapVaultToken": 0
+          },
+          "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d": {
+            "priceSource": "eth:0x61917077B3f03e01814B913FDD28CB1bF574148E",
+            "maxPriceAge": 0,
+            "exposureCapVaultToken": 0,
+            "maxSwapVaultToken": 0
+          }
+        },
         "receiptTokens": [
           "eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
           "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d"
@@ -187,6 +201,10 @@
         "priceSources": {
           "severity": "HIGH",
           "description": "Whitelisted price sources that can price receipt tokens."
+        },
+        "receiptConfigs": {
+          "severity": "HIGH",
+          "description": "Latest configuration set per receipt token: its price source, maximum price age and the exposure and per-swap caps in the vault token."
         },
         "swapsPaused": { "severity": "MEDIUM" }
       },
@@ -2152,6 +2170,20 @@
           "eth:0x609c1ecfd342fA697644673f978a8978BaBc8e25",
           "eth:0x48c400441Db43D4518dba4FC859866Fcd794256D"
         ],
+        "receiptConfigs": {
+          "eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C": {
+            "priceSource": "eth:0x48c400441Db43D4518dba4FC859866Fcd794256D",
+            "maxPriceAge": 0,
+            "exposureCapVaultToken": 0,
+            "maxSwapVaultToken": 0
+          },
+          "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d": {
+            "priceSource": "eth:0x609c1ecfd342fA697644673f978a8978BaBc8e25",
+            "maxPriceAge": 0,
+            "exposureCapVaultToken": 0,
+            "maxSwapVaultToken": 0
+          }
+        },
         "receiptTokens": [
           "eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
           "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d"
@@ -2178,6 +2210,10 @@
         "priceSources": {
           "severity": "HIGH",
           "description": "Whitelisted price sources that can price receipt tokens."
+        },
+        "receiptConfigs": {
+          "severity": "HIGH",
+          "description": "Latest configuration set per receipt token: its price source, maximum price age and the exposure and per-swap caps in the vault token."
         },
         "swapsPaused": { "severity": "MEDIUM" }
       },
@@ -3693,7 +3729,7 @@
     "grvt/AaveV3StrategyV2": "0x865aaa939bff4f128f20d1a366131713dc4160a4c637393e2e20efc0fd61bce8",
     "grvt/Bootstrap": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "grvt/CompartmentRegistry": "0xcba1e7e3a77c959d542d7bc0a056465a76f3c5128e47e8d69c46783b9f351d4b",
-    "grvt/GenericSwapStrategy": "0xecc4db6507a4103776964056908ae7d581851ab01522316bc0dd84da1b678148",
+    "grvt/GenericSwapStrategy": "0xe47ef7b0d67d7da0403d07756cbffd0dde72492bc8d1ad55c2b15739efdd92f0",
     "grvt/GRVTBridgeProxy": "0x3f9d8d9dbb6739d3072ee514bdf2b4697c6090b9eb43b96b02d8e13ac244c624",
     "grvt/GRVTL1TreasuryVault": "0x3249e2207d078c67bddf1a5b40c87fe8aeabb7ed988ef1ac9033100e8fc7b208",
     "grvt/HighYieldEarnVaultCompartment": "0x64318b766d80d2efcf624293be7755107598a0fdf4cec6bf8d8bc452ac34efdd",

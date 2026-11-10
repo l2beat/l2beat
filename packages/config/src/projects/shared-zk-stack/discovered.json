@@ -3589,7 +3589,7 @@
         "0x6f55b371d53af62533c24ad7d466bffae8a3d28ed6044d45c11d652486383b54"
       ],
       "proxyType": "immutable",
-      "description": "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.",
+      "description": "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs), which are advisory and execute through the GovOpsTimelockController. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.",
       "ignoreInWatchMode": ["clock"],
       "deployerAddress": "zksync:0x043DA37F21c4C83b97b546724c75600c2D0C9E16",
       "sinceTimestamp": 1738971666,

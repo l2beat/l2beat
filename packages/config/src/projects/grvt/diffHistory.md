@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x02e14e07cfb936843ab775719c0db47f22df6836
+Generated with discovered.json: 0xcd736e39f8f1008a61b85a396b5437062695c8f3
 
-# Diff at Tue, 10 Nov 2026 14:25:54 GMT:
+# Diff at Tue, 10 Nov 2026 17:10:21 GMT:
 
 - id: 008128ea
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@28ea16426fac1900c2fffd1cec3ecc6b84981c76 block: 1793874299
+- comparing to: main@3e7f80c2eb530702e907f902d428416a31e27855 block: 1793874299
 - current timestamp: 1794319593
 
 ## Description
@@ -12,6 +12,8 @@ Generated with discovered.json: 0x02e14e07cfb936843ab775719c0db47f22df6836
 The GrvtChainAdminMultisig, through the TimelockController that owns the strategies, whitelisted a new USDY price source on both GenericSwapStrategy contracts (USDC and USDT) and bound USDY to it. Operators now swap USDY with the strategies at the price of Ondo's USDYOracleWrapper (eth:0x87b126e5518b6a1Bb8465779b4607C45C643DF90), whose owner can point it to another oracle, instead of Ondo's RWADynamicOracle. The fixed 1:1 USD leg to USDC and USDT is the same as before. The old USDY price sources stay whitelisted.
 
 A new EOA (eth:0x0AaBB14Da51F3c2ddB678A73f71239760fc9e952) got the OPERATOR_ROLE and REBALANCER_ROLE of the HighYieldEarnVaultCompartment.
+
+Config: the GenericSwapStrategy template now tracks the latest configuration of each receipt token, including its bound price source.
 
 ## Watched changes
 
@@ -21,6 +23,9 @@ A new EOA (eth:0x0AaBB14Da51F3c2ddB678A73f71239760fc9e952) got the OPERATOR_ROLE
 +++ description: Whitelisted price sources that can price receipt tokens.
 +++ severity: HIGH
       values.priceSources.2:
++        "eth:0x27c567cd31FD0495cdC4CabeC99694d82d7B7F12"
+      values.receiptConfigs.eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C.priceSource:
+-        "eth:0x016Aa3B97f3a5B08Ddb49656d58C20543C0b11EA"
 +        "eth:0x27c567cd31FD0495cdC4CabeC99694d82d7B7F12"
     }
 ```
@@ -46,6 +51,39 @@ A new EOA (eth:0x0AaBB14Da51F3c2ddB678A73f71239760fc9e952) got the OPERATOR_ROLE
 +++ severity: HIGH
       values.priceSources.2:
 +        "eth:0x48c400441Db43D4518dba4FC859866Fcd794256D"
+      values.receiptConfigs.eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C.priceSource:
+-        "eth:0x1189E2C915e3DEcb41d4127dc142540e3ef0fE76"
++        "eth:0x48c400441Db43D4518dba4FC859866Fcd794256D"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793874299 (main branch discovery), not current.
+
+```diff
+    contract GenericSwapStrategy (eth:0x189b2c1CE2f4Cd8e535E98B005A2d7e798124B18) [grvt/GenericSwapStrategy] {
+    +++ description: Yield strategy of the GRVTL1TreasuryVault for one vault token. Whitelisted operators swap registered receipt tokens (e.g. tokenized treasuries) with the strategy at the price of their price sources, within per-swap and per-token exposure caps. Only the vault can allocate to and withdraw from it.
++++ description: Latest configuration set per receipt token: its price source, maximum price age and the exposure and per-swap caps in the vault token.
++++ severity: HIGH
+      values.receiptConfigs:
++        {"eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C":{"priceSource":"eth:0x016Aa3B97f3a5B08Ddb49656d58C20543C0b11EA","maxPriceAge":0,"exposureCapVaultToken":0,"maxSwapVaultToken":0},"eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d":{"priceSource":"eth:0x61917077B3f03e01814B913FDD28CB1bF574148E","maxPriceAge":0,"exposureCapVaultToken":0,"maxSwapVaultToken":0}}
+      fieldMeta.receiptConfigs:
++        {"severity":"HIGH","description":"Latest configuration set per receipt token: its price source, maximum price age and the exposure and per-swap caps in the vault token."}
+    }
+```
+
+```diff
+    contract GenericSwapStrategy (eth:0xEC33298A3aC7A5F5B3f21A3218a5D8E862Da8a12) [grvt/GenericSwapStrategy] {
+    +++ description: Yield strategy of the GRVTL1TreasuryVault for one vault token. Whitelisted operators swap registered receipt tokens (e.g. tokenized treasuries) with the strategy at the price of their price sources, within per-swap and per-token exposure caps. Only the vault can allocate to and withdraw from it.
++++ description: Latest configuration set per receipt token: its price source, maximum price age and the exposure and per-swap caps in the vault token.
++++ severity: HIGH
+      values.receiptConfigs:
++        {"eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C":{"priceSource":"eth:0x1189E2C915e3DEcb41d4127dc142540e3ef0fE76","maxPriceAge":0,"exposureCapVaultToken":0,"maxSwapVaultToken":0},"eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d":{"priceSource":"eth:0x609c1ecfd342fA697644673f978a8978BaBc8e25","maxPriceAge":0,"exposureCapVaultToken":0,"maxSwapVaultToken":0}}
+      fieldMeta.receiptConfigs:
++        {"severity":"HIGH","description":"Latest configuration set per receipt token: its price source, maximum price age and the exposure and per-swap caps in the vault token."}
     }
 ```
 

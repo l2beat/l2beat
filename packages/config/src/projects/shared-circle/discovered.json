@@ -788,7 +788,7 @@
         "0x69d58c583f7c1689f33f52112c458212177cc01844f86873c742231206d49e50"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "USDC minter that re-mints seized balances. The balance of a blocklisted address on any CCTP domain stays frozen at that address and is not burned. The secondary market burner records it once per address and domain and mints the same amount of USDC on Ethereum to an allowlisted recipient. The recorded balance is not verified onchain, so minting is bounded only by the allowance the MasterMinter controllers grant this contract.",
+      "description": "USDC minter that re-mints seized balances: the secondary market burner records the balance of a blocklisted address once per address and CCTP domain and mints the same amount of USDC on Ethereum to an allowlisted recipient. The blocklisted balance stays frozen and is not burned, and the recorded amount is not verified onchain.",
       "deployerAddress": "eth:0xe4b567Ac531c217EEfE01Db45fac7F60ED77F94b",
       "sinceTimestamp": 1790610479,
       "sinceBlock": 26076948,

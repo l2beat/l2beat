@@ -82,9 +82,14 @@ check(
     config["supported_cairo_verifier_hash_list_hash"],
 )
 
+# The value that the SHARP verifier 0x91C57B64738b80f4494d83b485AD3f9C0f95E2A3 returns from
+# getBootloaderConfigHash().
+ONCHAIN_CONFIG_HASH = 2806880238119746810536368140979050442273882135835972263431721318985365898844
+config_hash = combine_bootloader_config_hash(
+    simple_list_hash, circuit_applicative_hash, config_commitment_value, verifier_list_hash
+)
 print(
     "bootloader config hash",
-    combine_bootloader_config_hash(
-        simple_list_hash, circuit_applicative_hash, config_commitment_value, verifier_list_hash
-    ),
+    config_hash,
+    "MATCH" if config_hash == ONCHAIN_CONFIG_HASH else "MISMATCH",
 )
