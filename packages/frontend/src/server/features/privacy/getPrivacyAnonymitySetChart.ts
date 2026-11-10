@@ -27,7 +27,7 @@ import {
   HOLDING_DURATIONS,
   loadAnonymitySetCharts,
 } from './anonymity-set/loadAnonymitySetCharts'
-import { getPrivacyProjectOnChain } from './utils/getPrivacyPageChains'
+import { getPrivacyProjectOnChain } from './utils/getPrivacyProjectPages'
 
 export const PrivacyAnonymitySetChartParams = v.object({
   projectId: v.string(),

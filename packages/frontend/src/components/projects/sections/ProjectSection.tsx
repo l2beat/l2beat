@@ -32,9 +32,7 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
   const Component = props.as ?? 'section'
   const headerAccessory =
     props.headerAccessory ??
-    (props.chain && (
-      <SectionChainBadge chains={[props.chain]} label={props.chain.name} />
-    ))
+    (props.chain && <SectionChainBadge chain={props.chain} />)
   const content = (
     <ParentHeadingLevelProvider value={sectionHeadingLevel(props.nested)}>
       {props.children}

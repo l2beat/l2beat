@@ -1,7 +1,9 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getPrivacyProjectDetails } from '~/server/features/privacy/getPrivacyProjectDetails'
+import { getPrivacyProject } from '~/server/features/privacy/getPrivacyProjects'
 import { getPrivacyProjectEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
+import { getPrivacyProjectPages } from '~/server/features/privacy/utils/getPrivacyProjectPages'
 import { getProjectSectionLinks } from '~/server/features/projects/getProjectSectionLinks'
 import { getProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 import { getMetadata } from '~/ssr/head/getMetadata'
@@ -56,19 +58,14 @@ async function getPrivacyProjectPage(
   chain: string | undefined,
   cache: InMemoryCache,
 ) {
-  const projectPage = await getCachedPrivacyProjectPage(
-    manifest,
-    slug,
-    undefined,
-    cache,
-  )
-  if (!projectPage || chain === undefined) return projectPage
-
-  // The project's page lists its chains, so only their pages get cached.
-  const { entry } = projectPage.props
-  const tab = entry.chainView?.chains.find((c) => c.id === chain)
-  if (!tab) return undefined
-  if (tab.href === entry.href) return { redirect: tab.href }
+  if (chain !== undefined) {
+    // Only the project's own chains have a page, so only those get cached.
+    const project = await getPrivacyProject(slug)
+    const pages = project ? getPrivacyProjectPages(project) : []
+    const page = pages.find((p) => p.chain === chain)
+    if (!page) return undefined
+    if (page === pages[0]) return { redirect: page.path }
+  }
   return getCachedPrivacyProjectPage(manifest, slug, chain, cache)
 }
 

@@ -1,42 +1,23 @@
-import { formatCurrency } from '@l2beat/shared-pure'
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { VerticalSeparator } from '~/components/core/VerticalSeparator'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
-import { PrivacyAttributeTag } from '~/components/PrivacyAttributeTag'
-import { ProjectIconList } from '~/components/ProjectIconList'
-import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
 import { ProjectDetails } from '~/components/projects/ProjectDetails'
 import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
-import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
-import { BigPizzaRosette } from '~/components/rosette/pizza/BigPizzaRosette'
 import { StickyMobileSectionNavigation } from '~/components/section-navigation/StickyMobileSectionNavigation'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
-import { getPrivacyAdversariesSummary } from '~/server/features/privacy/utils/toPrivacyAdversariesSummary'
 import type { ProjectSectionLink } from '~/server/features/projects/getProjectSectionLinks'
 import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
-import { cn } from '~/utils/cn'
-import {
-  getPrivacyAdversaryRosetteValues,
-  PRIVACY_ADVERSARIES_SECTION_ID,
-} from '../adversaries/privacyAdversaryUi'
-import { PrivacyChainTabs } from './components/PrivacyChainTabs'
-import { PrivacyProjectRiskProfile } from './components/PrivacyProjectRiskProfile'
-import {
-  MOBILE_SUMMARY_ROWS,
-  PrivacyProjectStats,
-} from './components/PrivacyProjectStats'
-import { PrivacyReferenceAppStat } from './components/PrivacyReferenceAppStat'
+import { PrivacyProjectSummary } from './components/PrivacyProjectSummary'
 
 interface Props extends AppLayoutProps {
   entry: ProjectPrivacyEntry
@@ -56,176 +37,6 @@ export function PrivacyProjectPage({
 }: Props) {
   const navigationSections = projectDetailsToNavigationSections(entry.sections)
   const isNavigationEmpty = navigationSections.length === 0
-  const adversaries = getPrivacyAdversariesSummary(entry.sections)
-  const { chainView } = entry
-
-  const stats = (
-    <PrivacyProjectStats
-      totalValueLockedUsd={entry.summary.totalValueLockedUsd}
-      totalValueLockedChange7d={entry.summary.totalValueLockedChange7d}
-      hasTvl={entry.hasTvl}
-      assetsCount={entry.assetsCount}
-      bucketsCount={entry.bucketCount}
-      deposits={entry.summary.deposits}
-      relayerStat={entry.summary.relayerStat}
-    />
-  )
-  const riskProfile = (
-    <PrivacyProjectRiskProfile
-      trustedSetup={entry.trustedSetup}
-      exitWindow={entry.exitWindow}
-      adversaries={adversaries}
-      href={entry.href}
-      isUnderReview={entry.isUnderReview}
-      reproducibility={entry.reproducibility}
-      className="md:mt-4"
-    />
-  )
-  const rosette = (
-    <>
-      <VerticalSeparator className="mr-8 ml-12 h-[unset] self-stretch max-xl:hidden" />
-      <BigPizzaRosette
-        values={getPrivacyAdversaryRosetteValues(adversaries)}
-        isUnderReview={entry.isUnderReview}
-        size="small"
-        className="my-auto max-xl:hidden"
-      />
-    </>
-  )
-
-  const runsOnStat = entry.scalingProjects.length > 0 && (
-    <ProjectSummaryStat
-      title="Runs on"
-      tooltip="Scaling projects the protocol runs on."
-      value={
-        <ProjectIconList
-          projects={entry.scalingProjects}
-          title={`${entry.name} runs on`}
-        />
-      }
-    />
-  )
-  const attributesStat = entry.attributes.length > 0 && (
-    <ProjectSummaryStat
-      title="Attributes"
-      tooltip="Protocol attributes and capabilities."
-      valueClassName="flex flex-wrap justify-end gap-1 md:justify-start"
-      value={entry.attributes.map((attribute) => (
-        <PrivacyAttributeTag key={attribute.id} attribute={attribute} />
-      ))}
-    />
-  )
-  const referenceAppStat = entry.referenceApp && (
-    <PrivacyReferenceAppStat
-      app={entry.referenceApp}
-      href={`#${PRIVACY_ADVERSARIES_SECTION_ID}`}
-    />
-  )
-  const about = (
-    <div className="max-md:hidden">
-      <div className="flex flex-col gap-4 px-4 max-md:mt-2 md:px-0 lg:flex-row lg:gap-8">
-        {entry.badges && entry.badges.length > 0 && (
-          <BadgesSection badges={entry.badges} withDialog />
-        )}
-        {entry.description && <AboutSection description={entry.description} />}
-      </div>
-    </div>
-  )
-
-  const summaryCardClassName =
-    'scroll-mt-[100vh] border-divider max-md:rounded-none max-md:border-b max-md:pt-0'
-  const summary = chainView ? (
-    // A project shown one tracked chain at a time: a card for what is the
-    // same on every chain, then the chain tabs on the selected chain's card.
-    <>
-      <PrimaryCard className={summaryCardClassName}>
-        <div className="max-w-[80ch]">{about}</div>
-        <HorizontalSeparator className="my-4 max-md:hidden" />
-        <ul
-          className={cn(
-            'flex flex-col md:flex-row md:gap-12',
-            MOBILE_SUMMARY_ROWS,
-          )}
-        >
-          {attributesStat}
-          {referenceAppStat}
-          {runsOnStat}
-        </ul>
-      </PrimaryCard>
-      {/* The tabs start past the card's rounded corner. */}
-      <div className="flex items-end gap-4 md:mt-4 md:px-4">
-        <span className="self-center font-medium text-paragraph-12 text-secondary max-md:hidden">
-          Tracked on
-        </span>
-        <PrivacyChainTabs
-          chains={chainView.chains}
-          selectedId={chainView.selected.id}
-        />
-        {chainView.totalValueLockedUsd !== undefined && (
-          <div className="ml-auto flex shrink-0 items-baseline gap-2 self-center whitespace-nowrap max-md:hidden">
-            <span className="font-medium text-paragraph-12 text-secondary">
-              Value locked on {chainView.chains.length} chains
-            </span>
-            <span className="font-bold text-label-value-16">
-              {formatCurrency(chainView.totalValueLockedUsd, 'usd')}
-            </span>
-          </div>
-        )}
-      </div>
-      <PrimaryCard
-        id="summary"
-        data-role="nav-section"
-        className={summaryCardClassName}
-      >
-        <div className="flex">
-          <div className="w-full min-w-0">
-            {stats}
-            <HorizontalSeparator className="max-md:my-2 md:mt-4" />
-            {riskProfile}
-          </div>
-          {rosette}
-        </div>
-      </PrimaryCard>
-    </>
-  ) : (
-    <PrimaryCard
-      id="summary"
-      data-role="nav-section"
-      className={summaryCardClassName}
-    >
-      <div className="flex">
-        <div className="w-full min-w-0">
-          {stats}
-          <HorizontalSeparator className="max-md:my-2 md:mt-4" />
-          {riskProfile}
-          <HorizontalSeparator className="max-md:my-2 md:mt-4" />
-          <div
-            className={cn(
-              'flex flex-col md:mt-4 md:flex-row md:gap-8',
-              MOBILE_SUMMARY_ROWS,
-            )}
-          >
-            <ProjectSummaryStat
-              title="Tracked on"
-              tooltip="Chains on which the protocol deployment is tracked by ETHBEAT."
-              value={
-                <ProjectIconList
-                  projects={entry.trackedOn}
-                  title="Tracked on"
-                />
-              }
-            />
-            {runsOnStat}
-            {attributesStat}
-            {referenceAppStat}
-          </div>
-        </div>
-        {rosette}
-      </div>
-      <HorizontalSeparator className="my-4 max-md:hidden" />
-      {about}
-    </PrimaryCard>
-  )
 
   return (
     <AppLayout {...props}>
@@ -292,7 +103,7 @@ export function PrivacyProjectPage({
 
                 <div className="row-start-2 w-full">
                   <HighlightableLinkContextProvider>
-                    {summary}
+                    <PrivacyProjectSummary entry={entry} />
 
                     <ProjectDetails
                       items={entry.sections}

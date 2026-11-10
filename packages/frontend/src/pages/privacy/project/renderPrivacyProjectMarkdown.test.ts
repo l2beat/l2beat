@@ -66,7 +66,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
             },
           ],
           selected: ethereum,
-          totalValueLockedUsd: 500_000_000,
+          allChainsValueLockedUsd: 500_000_000,
         },
       }),
       'Summary',

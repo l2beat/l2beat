@@ -2,38 +2,64 @@ import type { ProjectPrivacyInfo } from '@l2beat/config'
 import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import {
-  getPrivacyPageChains,
   getPrivacyProjectOnChain,
-} from './getPrivacyPageChains'
+  getPrivacyProjectPages,
+} from './getPrivacyProjectPages'
 
 const POOL = EthereumAddress('0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc')
 
-describe(getPrivacyPageChains.name, () => {
-  it('lists the chains with buckets in trackedOn order', () => {
+describe(getPrivacyProjectPages.name, () => {
+  const pagesOf = (privacyInfo: Partial<ProjectPrivacyInfo>) =>
+    getPrivacyProjectPages({
+      slug: 'project',
+      privacyInfo: privacyInfo as ProjectPrivacyInfo,
+    }).map(({ chain, path }) => ({ chain, path }))
+
+  it('gives a project with buckets on one chain its single page', () => {
     expect(
-      getPrivacyPageChains({
+      pagesOf({ trackedOn: ['ethereum', 'base'], tokens: [token('base')] }),
+    ).toEqual([{ chain: undefined, path: '/privacy/projects/project' }])
+  })
+
+  it('gives a page per chain with buckets, the first at the project URL', () => {
+    expect(
+      pagesOf({
         trackedOn: ['base', 'ethereum', 'optimism'],
         tokens: [token('optimism'), token('base')],
       }),
-    ).toEqual(['base', 'optimism'])
+    ).toEqual([
+      { chain: 'base', path: '/privacy/projects/project' },
+      { chain: 'optimism', path: '/privacy/projects/project/optimism' },
+    ])
   })
 
-  it('adds a chain with its own assessment, and the first chain with it', () => {
+  it('always has a page for the first tracked chain once there are several', () => {
     expect(
-      getPrivacyPageChains({
+      pagesOf({
+        trackedOn: ['ethereum', 'base', 'optimism'],
+        tokens: [token('base'), token('optimism')],
+      }).map((page) => page.chain),
+    ).toEqual(['ethereum', 'base', 'optimism'])
+    expect(
+      pagesOf({
         trackedOn: ['ethereum', 'base', 'arbitrum'],
         tokens: [],
-        chainAssessments: {
-          arbitrum: {} as ProjectPrivacyInfo,
-        },
-      }),
+        chainAssessments: { arbitrum: {} as ProjectPrivacyInfo },
+      }).map((page) => page.chain),
     ).toEqual(['ethereum', 'arbitrum'])
   })
 
-  it('lists nothing for a project tracked on chains without buckets', () => {
-    expect(
-      getPrivacyPageChains({ trackedOn: ['ethereum', 'base'], tokens: [] }),
-    ).toEqual([])
+  it('narrows each page to its chain', () => {
+    const [base, optimism] = getPrivacyProjectPages({
+      slug: 'project',
+      privacyInfo: {
+        trackedOn: ['base', 'optimism'],
+        tokens: [token('base'), token('optimism')],
+      } as ProjectPrivacyInfo,
+    })
+
+    expect(base?.project.privacyInfo.tokens).toEqual([token('base')])
+    expect(optimism?.project.privacyInfo.tokens).toEqual([token('optimism')])
   })
 })
 

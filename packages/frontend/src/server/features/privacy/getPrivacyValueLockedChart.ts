@@ -12,6 +12,7 @@ import {
   rangeToResolution,
 } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
+import { getSingleEscrow } from './utils/getPrivacyBucketTvls'
 
 export const PrivacyValueLockedChartParams = v.object({
   projectId: v.string(),
@@ -35,8 +36,21 @@ export async function getPrivacyValueLockedChart({
   range,
   chain,
 }: PrivacyValueLockedChartParams): Promise<PrivacyValueLockedChartResponse> {
+  const project = await ps.getProject({
+    id: ProjectId(projectId),
+    select: ['tvsConfig'],
+  })
+  if (!project) {
+    return { chart: [], syncedUntil: undefined }
+  }
   const resolution = rangeToResolution(range)
-  const rows = await getChainValueHistory(projectId, chain, range, resolution)
+  const rows = await getChainValueHistory(
+    projectId,
+    project.tvsConfig,
+    chain,
+    range,
+    resolution,
+  )
   const last = rows.at(-1)
   const first = rows[0]
   if (!first || !last) {
@@ -64,6 +78,7 @@ export interface PrivacyChainValue {
 /** What each of the chains holds now, with its change over seven days. */
 export async function getPrivacyChainValues(
   projectId: string,
+  tvsConfig: TvsToken[],
   chains: string[],
 ): Promise<Map<string, PrivacyChainValue>> {
   const now = UnixTime.now()
@@ -74,7 +89,13 @@ export async function getPrivacyChainValues(
   const entries = await Promise.all(
     chains.map(async (chain) => {
       // Hourly, so the value seven days before is from the same hour.
-      const rows = await getChainValueHistory(projectId, chain, range, 'hour')
+      const rows = await getChainValueHistory(
+        projectId,
+        tvsConfig,
+        chain,
+        range,
+        'hour',
+      )
       const last = rows.at(-1)
       if (!last) return undefined
       const weekBefore = rows.findLast(
@@ -101,6 +122,7 @@ export async function getPrivacyChainValues(
  */
 async function getChainValueHistory(
   projectId: string,
+  tvsConfig: TvsToken[],
   chain: string,
   range: ChartRange,
   resolution: ChartResolution,
@@ -108,12 +130,6 @@ async function getChainValueHistory(
   if (env.MOCK) {
     return getMockChainValueHistory(range, resolution)
   }
-
-  const project = await ps.getProject({
-    id: ProjectId(projectId),
-    select: ['tvsConfig'],
-  })
-  if (!project) return []
 
   const db = getDb()
   const dbRange: [UnixTime | null, UnixTime] = [
@@ -123,7 +139,9 @@ async function getChainValueHistory(
   const [tokenRows, escrowRows] = await Promise.all([
     db.tvsTokenValue.getSummedByTokensAtResolution(
       projectId,
-      getSingleEscrowTokenIds(project.tvsConfig, chain),
+      tvsConfig.flatMap((token) =>
+        getSingleEscrow(token)?.chain === chain ? [token.id] : [],
+      ),
       dbRange,
       resolution,
     ),
@@ -142,17 +160,6 @@ async function getChainValueHistory(
   return [...values]
     .map(([timestamp, value]) => ({ timestamp, value }))
     .sort((a, b) => a.timestamp - b.timestamp)
-}
-
-function getSingleEscrowTokenIds(
-  tvsConfig: TvsToken[],
-  chain: string,
-): string[] {
-  return tvsConfig.flatMap((token) =>
-    token.amount.type === 'balanceOfEscrow' && token.amount.chain === chain
-      ? [token.id]
-      : [],
-  )
 }
 
 function getMockChainValueHistory(

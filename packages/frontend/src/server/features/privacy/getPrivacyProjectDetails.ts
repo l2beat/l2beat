@@ -24,12 +24,14 @@ import type {
 import type { OssificationHistory } from '@l2beat/shared/frontend'
 import type { ProjectId } from '@l2beat/shared-pure'
 import {
+  assert,
   assertUnreachable,
   ChainSpecificAddress,
   UnixTime,
   unique,
 } from '@l2beat/shared-pure'
 import type { ProjectIconListItem } from '~/components/ProjectIconList'
+import type { SectionChain } from '~/components/projects/sections/SectionChainBadge'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import {
@@ -57,10 +59,7 @@ import {
   getPrivacyBucketTvls,
   getPrivacySingleEscrowBucketTvls,
 } from './utils/getPrivacyBucketTvls'
-import {
-  getPrivacyPageChains,
-  getPrivacyProjectOnChain,
-} from './utils/getPrivacyPageChains'
+import { getPrivacyProjectPages } from './utils/getPrivacyProjectPages'
 import { getScalingProjectItems } from './utils/getPrivacyScalingLinks'
 import { getPrivacyTrackedChains } from './utils/getPrivacyTrackedChains'
 
@@ -75,6 +74,8 @@ interface PrivacyProjectFlowData {
 export interface PrivacyProjectDetails {
   id: ProjectId
   slug: string
+  /** This page: the project's, or the project's on the shown chain. */
+  path: string
   name: string
   shortName?: string
   archivedAt?: UnixTime
@@ -129,10 +130,15 @@ export interface PrivacyStatsSummary {
   relayerStat?: PrivacyRelayerStat
 }
 
+/** A chain of a project that has a page per tracked chain, with that page. */
+export interface PrivacyChainTab extends SectionChain {
+  href: string
+}
+
 export interface PrivacyChainView {
   /** In tab order, which is the project's `trackedOn` order. */
-  chains: ProjectIconListItem[]
-  selected: ProjectIconListItem
+  chains: PrivacyChainTab[]
+  selected: PrivacyChainTab
   /** Value locked on the selected chain. */
   totalValueLockedUsd: number | undefined
   totalValueLockedChange7d: number | undefined
@@ -141,8 +147,8 @@ export interface PrivacyChainView {
 }
 
 /**
- * @param chain The tracked chain to show a multi-chain project on. Its first
- *   chain is shown when this is not one of its chains.
+ * @param chain The chain of the page to show, for a project with a page per
+ *   tracked chain. Its first page is shown when this is not one of its chains.
  */
 export async function getPrivacyProjectDetails(
   slug: string,
@@ -162,16 +168,18 @@ export async function getPrivacyProjectDetails(
 
   const { trackedOn, chainProjects } = await getTrackedOn(project)
   const tokens = project.privacyInfo.tokens
-  const pageChains = getPrivacyPageChains(project.privacyInfo)
-  const viewChains = trackedOn.filter((c) => pageChains.includes(c.id))
-  const selected =
-    viewChains.length > 1
-      ? (viewChains.find((c) => c.id === chain) ?? viewChains[0])
-      : undefined
+  const pages = getPrivacyProjectPages(project)
+  const page = pages.find((p) => p.chain === chain) ?? pages[0]
+  assert(page, 'Privacy project without a page')
   // On a chain's page: its buckets, its key registry and its assessment.
-  const shown = selected
-    ? getPrivacyProjectOnChain(project, selected.id)
-    : project
+  const shown = page.project
+  const tabs = pages.flatMap((p): PrivacyChainTab[] => {
+    const item = trackedOn.find((c) => c.id === p.chain)
+    return item
+      ? [{ id: item.id, name: item.name, iconUrl: item.iconUrl, href: p.path }]
+      : []
+  })
+  const selected = tabs.find((tab) => tab.id === page.chain)
 
   const [
     { totals, daily30d, tokenValues, bucketTvls },
@@ -189,7 +197,13 @@ export async function getPrivacyProjectDetails(
     ),
     getScalingProjects(project),
     getProjectOssification(project),
-    selected ? getPrivacyChainValues(project.id, pageChains) : undefined,
+    selected
+      ? getPrivacyChainValues(
+          project.id,
+          project.tvsConfig ?? [],
+          tabs.map((tab) => tab.id),
+        )
+      : undefined,
   ])
 
   const tvlBySymbol = new Map<string, number>()
@@ -276,7 +290,7 @@ export async function getPrivacyProjectDetails(
     )
     const value = chainValues?.get(selected.id)
     chainView = {
-      chains: viewChains,
+      chains: tabs,
       selected,
       totalValueLockedUsd: value?.value,
       totalValueLockedChange7d: value?.change7d,
@@ -293,26 +307,25 @@ export async function getPrivacyProjectDetails(
   }
 
   // A chain's page lists what is deployed there, and on chains with no page.
-  const otherViewChains = new Set(
-    selected
-      ? viewChains.flatMap((c) => (c.id === selected.id ? [] : [c.id]))
-      : [],
+  const otherPageChains = new Set(
+    tabs.flatMap((tab) => (tab.id === selected?.id ? [] : [tab.id])),
   )
 
   return {
     id: project.id,
     slug: project.slug,
+    path: page.path,
     name: project.name,
     shortName: project.shortName,
     archivedAt: project.archivedAt,
     display: project.display,
     contracts:
-      project.contracts && withoutChains(project.contracts, otherViewChains),
+      project.contracts && withoutChains(project.contracts, otherPageChains),
     permissions:
       project.permissions &&
       Object.fromEntries(
         Object.entries(project.permissions).filter(
-          ([permissionsChain]) => !otherViewChains.has(permissionsChain),
+          ([permissionsChain]) => !otherPageChains.has(permissionsChain),
         ),
       ),
     discoveryUpdates: project.discoveryUpdates,

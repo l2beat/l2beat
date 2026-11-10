@@ -1,17 +1,14 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import { TvsChartRangeControls } from '~/components/chart/tvs/TvsChartRangeControls'
-import { TvsValueChart } from '~/components/chart/tvs/TvsValueChart'
 import type { ChartProject } from '~/components/core/chart/ChartContext'
-import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
-import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
-import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { PrivacyFlowsChartRangeControls } from '~/pages/privacy/project/components/PrivacyFlowsChartRangeControls'
 import { useTRPC } from '~/trpc/React'
-import { type ChartRange, rangeToResolution } from '~/utils/range/range'
+import type { ChartRange } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
+import { TvsValueSectionChart } from './TvsValueSectionChart'
 
 export interface TvsValueSectionProps extends ProjectSectionProps {
   defaultRange: ChartRange
@@ -46,11 +43,6 @@ export function TvsValueSection({
     [data, project.id],
   )
 
-  const timeRange = useMemo(
-    () => getChartTimeRangeFromData(chartData),
-    [chartData],
-  )
-
   const RangeControls =
     rangeControls === 'tvs'
       ? TvsChartRangeControls
@@ -58,19 +50,13 @@ export function TvsValueSection({
 
   return (
     <ProjectSection {...projectSectionProps}>
-      <ChartControlsWrapper className="mb-4">
-        <ProjectChartTimeRange
-          isPlaceholderData={isPlaceholderData}
-          timeRange={timeRange}
-        />
-        <RangeControls range={range} setRange={setRange} />
-      </ChartControlsWrapper>
-      <TvsValueChart
-        isPlaceholderData={isPlaceholderData}
-        resolution={rangeToResolution(shownInput.range)}
+      <TvsValueSectionChart
         data={chartData}
         syncedUntil={data?.syncedUntil}
         isLoading={isLoading}
+        isPlaceholderData={isPlaceholderData}
+        shownRange={shownInput.range}
+        rangeControls={<RangeControls range={range} setRange={setRange} />}
         project={project}
         milestones={milestones}
       />

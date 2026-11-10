@@ -5,6 +5,7 @@ import {
   getPrivacySummaryEntries,
   type PrivacySummaryEntry,
 } from '../privacy/getPrivacySummaryEntries'
+import { getPrivacyProjectPath } from '../privacy/utils/getPrivacyProjectPages'
 import { getTvsChartByProjects } from '../tvs/getTvsChartByProjects'
 import {
   computeRangeTotal,
@@ -116,16 +117,20 @@ export async function getHomePrivacyData(
       change,
     },
     // The /privacy order: privacy rating first, value locked after.
-    topProtocols: entries.slice(0, TOP_PROTOCOLS_COUNT).map((entry) => ({
-      id: entry.href,
-      name: entry.chain ? `${entry.name} on ${entry.chain.name}` : entry.name,
-      href: entry.href,
-      iconUrl: entry.icon,
-      tvl: entry.hasTvl ? entry.totalValueLockedUsd : undefined,
-      tvlChange: entry.hasTvl ? entry.totalValueLockedChange7d : undefined,
-      deposited30d: entry.totalValueDeposited30dUsd,
-      adversaries: entry.adversaries,
-      isUnderReview: entry.isUnderReview,
-    })),
+    // A project with a page per chain is listed once, as its own page.
+    topProtocols: entries
+      .filter((entry) => entry.href === getPrivacyProjectPath(entry.slug))
+      .slice(0, TOP_PROTOCOLS_COUNT)
+      .map((entry) => ({
+        id: entry.id,
+        name: entry.name,
+        href: entry.href,
+        iconUrl: entry.icon,
+        tvl: entry.hasTvl ? entry.totalValueLockedUsd : undefined,
+        tvlChange: entry.hasTvl ? entry.totalValueLockedChange7d : undefined,
+        deposited30d: entry.totalValueDeposited30dUsd,
+        adversaries: entry.adversaries,
+        isUnderReview: entry.isUnderReview,
+      })),
   }
 }
