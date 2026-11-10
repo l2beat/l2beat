@@ -284,9 +284,8 @@ export async function getPrivacyProjectDetails(
       shown.privacyInfo.tokens,
       { ...statsContext, bucketTvls: chainBucketTvls },
       (token) =>
-        sumDefined(
-          token.buckets.map((bucket) => chainBucketTvls.get(bucket.id)),
-        ) ?? null,
+        sumAll(token.buckets.map((bucket) => chainBucketTvls.get(bucket.id))) ??
+        null,
     )
     const value = chainValues?.get(selected.id)
     chainView = {
@@ -294,8 +293,8 @@ export async function getPrivacyProjectDetails(
       selected,
       totalValueLockedUsd: value?.value,
       totalValueLockedChange7d: value?.change7d,
-      allChainsValueLockedUsd: sumDefined(
-        [...(chainValues?.values() ?? [])].map((v) => v.value),
+      allChainsValueLockedUsd: sumAll(
+        tabs.map((tab) => chainValues?.get(tab.id)?.value),
       ),
     }
   } else {
@@ -512,9 +511,14 @@ function buildPrivacyStats(
   }
 }
 
-function sumDefined(values: (number | undefined)[]): number | undefined {
-  const defined = values.filter((value) => value !== undefined)
-  return defined.length === 0 ? undefined : defined.reduce((a, b) => a + b, 0)
+/** Undefined when a part is missing, so a subtotal never passes for the whole. */
+function sumAll(values: (number | undefined)[]): number | undefined {
+  let sum = 0
+  for (const value of values) {
+    if (value === undefined) return undefined
+    sum += value
+  }
+  return values.length === 0 ? undefined : sum
 }
 
 function getRelayerChains(

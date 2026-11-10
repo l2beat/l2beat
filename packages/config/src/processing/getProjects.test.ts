@@ -450,6 +450,22 @@ describe('getProjects', () => {
       expect(problems).toEqual([])
     })
 
+    // A page shows the buckets on its chain, so a bucket elsewhere would show nowhere.
+    it('every bucket is on a tracked chain', () => {
+      const problems: string[] = []
+      for (const { project, privacyInfo } of privacyProjects) {
+        for (const token of privacyInfo.tokens ?? []) {
+          for (const bucket of token.buckets) {
+            const { chain } = getPrivacyBucketAddress(bucket.address)
+            if (!privacyInfo.trackedOn.includes(chain)) {
+              problems.push(`${project.id} ${bucket.id}: ${chain}`)
+            }
+          }
+        }
+      }
+      expect(problems).toEqual([])
+    })
+
     // The project's own assessment is the first chain's, so that chain can't have another.
     it('every chain assessment is of a tracked chain other than the first', () => {
       const problems: string[] = []

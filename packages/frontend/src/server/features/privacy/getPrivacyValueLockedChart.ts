@@ -12,7 +12,6 @@ import {
   rangeToResolution,
 } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
-import { getSingleEscrow } from './utils/getPrivacyBucketTvls'
 
 export const PrivacyValueLockedChartParams = v.object({
   projectId: v.string(),
@@ -116,9 +115,10 @@ export async function getPrivacyChainValues(
 }
 
 /**
- * A chain's value over time, oldest first. A token held in one escrow counts
- * for its chain as a whole. A token summed from several escrows counts by the
- * escrow values the backend stores for it. Other tokens count for no chain.
+ * A chain's value over time, oldest first. A token whose amount is read from
+ * one chain counts for that chain as a whole. A token calculated from several
+ * escrows counts by the escrow values the backend stores for it. Other
+ * tokens count for no chain.
  */
 async function getChainValueHistory(
   projectId: string,
@@ -139,8 +139,11 @@ async function getChainValueHistory(
   const [tokenRows, escrowRows] = await Promise.all([
     db.tvsTokenValue.getSummedByTokensAtResolution(
       projectId,
+      // Only an amount read from one chain names its chain.
       tvsConfig.flatMap((token) =>
-        getSingleEscrow(token)?.chain === chain ? [token.id] : [],
+        'chain' in token.amount && token.amount.chain === chain
+          ? [token.id]
+          : [],
       ),
       dbRange,
       resolution,

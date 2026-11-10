@@ -46,14 +46,16 @@ export function getPrivacyBucketTvls(
 
 /**
  * The escrow of a token the TVS backend holds in one place. Such a token has
- * no escrow values: the backend stores those only for tokens that sum several
- * escrows. So its value counts as a whole for its escrow, and for its chain.
+ * no escrow values: the backend stores those only for tokens calculated from
+ * several escrows. So its value is its escrow's.
  */
-export function getSingleEscrow(
+function getSingleEscrow(
   token: TvsToken,
 ): { chain: string; address: string } | undefined {
-  return token.amount.type === 'balanceOfEscrow'
-    ? { chain: token.amount.chain, address: token.amount.escrowAddress }
+  const { amount } = token
+  return amount.type === 'balanceOfEscrow' ||
+    amount.type === 'starknetBalanceOf'
+    ? { chain: amount.chain, address: amount.escrowAddress }
     : undefined
 }
 

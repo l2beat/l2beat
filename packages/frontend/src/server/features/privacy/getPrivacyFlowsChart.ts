@@ -104,7 +104,12 @@ export async function getPrivacyFlowsChart(
 
   const start = getChartStartTimestamp({
     rangeStart: from,
-    firstProjectTimestamp: firstTimestamp,
+    // A chain's chart starts with its own buckets, not with the project's
+    // first event on any chain.
+    firstProjectTimestamp:
+      chain === undefined
+        ? firstTimestamp
+        : Math.min(...buckets.map((bucket) => bucket.sinceTimestamp)),
     dataStart: Math.min(...rows.map((row) => row.timestamp)),
     resolution,
   })
