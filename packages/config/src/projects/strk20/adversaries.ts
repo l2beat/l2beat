@@ -184,7 +184,7 @@ export const strk20Adversaries = definePrivacyAdversaries({
     },
     {
       name: 'Deposit',
-      text: 'Hold STRK or USDC, and open channels in a transaction without a deposit.',
+      text: 'Hold STRK or USDC. Deposit in its own transaction, and pay a new contact only afterwards.',
       against: ['chainAnalyst', 'networkObserver'],
     },
     {
@@ -196,6 +196,7 @@ export const strk20Adversaries = definePrivacyAdversaries({
       name: 'Wait',
       text: A.wait,
       against: ['chainAnalyst'],
+      randomWait: true,
     },
     {
       name: 'Withdraw',

@@ -208,7 +208,7 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
   advice: [
     {
       name: 'Set up',
-      text: `Send all traffic through an ${adviceLink('IP-hiding route', 'ipHidingRoutes')}, and set a local node as the endpoint before signing in.`,
+      text: `Send all traffic through an ${adviceLink('IP-hiding route', 'ipHidingRoutes')}. In the app's settings, set a local Ethereum node as the endpoint before signing in. Let the node accept requests from the app's origin.`,
       against: ['networkObserver', 'privilegedInsider'],
       outside: true,
     },
@@ -226,10 +226,11 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
       name: 'Wait',
       text: A.wait,
       against: ['chainAnalyst'],
+      randomWait: true,
     },
     {
       name: 'Check',
-      text: `Before withdrawing, check the size of the approved list that the ASPRegistry's latest root links on IPFS.`,
+      text: "Before withdrawing, find the ASPRegistry's latest root and open the list it names on IPFS. Withdraw only if the list holds many deposits.",
       against: ['privilegedInsider'],
       outside: true,
     },

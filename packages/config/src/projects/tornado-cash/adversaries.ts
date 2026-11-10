@@ -120,13 +120,14 @@ export function tornadoCashAdversaries(upgradeDelay: string, appCid: string) {
       },
       {
         name: 'Deposit',
-        text: `${A.largestPool} Deposit several notes at different times, not in one batch, and keep each note on your device with the onchain backup off.`,
+        text: `${A.largestPool} Deposit several notes at different times, not in one batch. Save each note yourself and leave the onchain backup off.`,
         against: ['chainAnalyst', 'futureAdversary'],
       },
       {
         name: 'Wait',
         text: A.wait,
         against: ['chainAnalyst'],
+        randomWait: true,
       },
       {
         name: 'Exit',

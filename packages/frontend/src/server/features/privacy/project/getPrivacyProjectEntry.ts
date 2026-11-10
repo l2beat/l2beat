@@ -13,6 +13,7 @@ import type { ProjectDetailsSection } from '~/components/projects/sections/types
 import { PRIVACY_ADVERSARIES_SECTION_ID } from '~/pages/privacy/adversaries/privacyAdversaryUi'
 import { ADVICE } from '~/pages/privacy/adviceUi'
 import { getGardenCropsSection } from '~/server/features/garden/getGardenCropsSection'
+import { ANONYMITY_SET_WINDOW_DAYS } from '~/server/features/privacy/anonymity-set/calculateAnonymitySets'
 import { getUpdatesSection } from '~/server/features/projects/discovery-updates/getUpdatesSection'
 import { countRecentDiscoveryUpdates } from '~/server/features/projects/recent-changes/discoveryUpdates'
 import { ps } from '~/server/projects'
@@ -349,6 +350,7 @@ export async function getPrivacyProjectEntry(
           details.adversaries.cells,
           (cell) => cell.sentiment,
         ),
+        waitWindowDays: ANONYMITY_SET_WINDOW_DAYS,
       },
     })
   }

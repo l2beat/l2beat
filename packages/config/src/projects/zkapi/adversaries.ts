@@ -1,6 +1,5 @@
 import {
   ADVICE_SNIPPETS as A,
-  adviceLink,
   definePrivacyAdversaries,
 } from '../../common/privacyAdversaries'
 import type { PrivacyExposureMap } from '../../types'
@@ -159,9 +158,13 @@ export const zkApiAdversaries = definePrivacyAdversaries({
     },
     {
       name: 'Deposit',
-      text: `Deposit from a wallet whose traffic also takes an ${adviceLink('IP-hiding route', 'ipHidingRoutes')}.`,
+      text: 'Fund the address the app shows from any wallet, so no wallet connects to the session that sends your requests.',
       against: ['networkObserver'],
-      outside: true,
+    },
+    {
+      name: 'Chat',
+      text: 'Leave your name, addresses and other identifying details out of prompts, since the provider reads them.',
+      against: ['networkObserver'],
     },
   ],
 })

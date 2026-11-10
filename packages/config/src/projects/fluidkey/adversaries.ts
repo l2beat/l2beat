@@ -153,7 +153,7 @@ export function fluidkeyAdversaries(accounts: number) {
       },
       {
         name: 'Receive',
-        text: 'Share a fresh Safe address for each payment instead of your name, also when it arrives on another chain. Label payments by payer.',
+        text: 'Share a fresh Safe address for each payment instead of your name. Use a new one for each chain as well. Label payments by payer.',
         against: ['publicObserver', 'chainAnalyst', 'networkObserver'],
       },
       {

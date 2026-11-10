@@ -222,6 +222,7 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
       name: 'Wait',
       text: A.wait,
       against: ['chainAnalyst'],
+      randomWait: true,
     },
     {
       name: 'Withdraw',

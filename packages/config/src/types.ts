@@ -1535,6 +1535,12 @@ export interface PrivacyAdviceStep {
    * marks it, so the effort the ratings assume is visible.
    */
   outside?: boolean
+  /**
+   * True on the wait step of a pool. The page draws a waiting time at random
+   * within the window the anonymity set counts, since a fixed wait is a
+   * pattern and people pick random numbers badly.
+   */
+  randomWait?: boolean
 }
 
 export interface PrivacyAdversariesConfig {

@@ -22,6 +22,7 @@ import {
   ADVICE,
   getStepsAgainst,
   getUncoveredAdversaries,
+  getWaitInstruction,
 } from '~/pages/privacy/adviceUi'
 import {
   formatBucketLabel,
@@ -144,7 +145,11 @@ export function renderPrivacyAdvice({
   steps,
   adversaries,
   sentiments,
-}: Pick<PrivacyAdviceSectionProps, 'steps' | 'adversaries' | 'sentiments'>) {
+  waitWindowDays,
+}: Pick<
+  PrivacyAdviceSectionProps,
+  'steps' | 'adversaries' | 'sentiments' | 'waitWindowDays'
+>) {
   const uncovered = getUncoveredAdversaries(steps, adversaries, sentiments)
   return joinBlocks([
     `${ADVICE.intro} ${link(ADVICE.methodologyLink, ADVICE.methodologyHref)}`,
@@ -156,7 +161,10 @@ export function renderPrivacyAdvice({
         const name = step.outside
           ? `${step.name}, ${ADVICE.outsideLabel}`
           : step.name
-        return `**${name}.** ${step.text} ${ADVICE.againstLabel}: ${against.join(', ')}.`
+        const text = step.randomWait
+          ? `${step.text} ${getWaitInstruction(waitWindowDays)}`
+          : step.text
+        return `**${name}.** ${text} ${ADVICE.againstLabel}: ${against.join(', ')}.`
       }),
     ),
     uncovered.length > 0

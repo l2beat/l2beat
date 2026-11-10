@@ -212,7 +212,7 @@ export const tacitPayAdversaries = definePrivacyAdversaries({
     },
     {
       name: 'Shield',
-      text: 'Shield from that wallet rather than through a deposit address. Give each payer its own deposit address.',
+      text: 'Shield your own funds from that wallet, not through a deposit address. Give each payer their own deposit address.',
       against: ['networkObserver', 'publicObserver'],
     },
     {

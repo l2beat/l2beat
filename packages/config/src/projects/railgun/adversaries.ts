@@ -156,13 +156,14 @@ export function railgunAdversaries(upgradeDelay: string) {
       },
       {
         name: 'Receive',
-        text: 'Share your 0zk address privately, with a fresh one per counterparty where possible.',
+        text: 'Share your 0zk address privately, and only with payers you trust to keep it.',
         against: ['futureAdversary'],
       },
       {
         name: 'Wait',
         text: A.wait,
         against: ['chainAnalyst'],
+        randomWait: true,
       },
       {
         name: 'Unshield',

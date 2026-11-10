@@ -190,7 +190,7 @@ export function zamaCwAdversaries(
       },
       {
         name: 'Pay',
-        text: 'Pay and get paid inside the confidential token. Transfer often, even zero amounts, and skip swaps for amounts that must stay hidden.',
+        text: 'Pay and get paid inside the confidential token, since wraps and unwraps show their amounts. Transfer often, even zero amounts, so your balance stops matching your wraps. Skip swaps for amounts that must stay hidden.',
         against: ['publicObserver', 'chainAnalyst', 'networkObserver'],
       },
       {

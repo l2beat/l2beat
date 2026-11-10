@@ -15,6 +15,7 @@ import {
 import { PrivacySentimentDot } from '~/pages/privacy/PrivacySentimentDot'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
+import { PrivacyWaitDraw } from './PrivacyWaitDraw'
 
 export interface PrivacyAdviceSectionProps extends ProjectSectionProps {
   steps: PrivacyAdviceStep[]
@@ -22,6 +23,8 @@ export interface PrivacyAdviceSectionProps extends ProjectSectionProps {
   adversaries: PrivacyAdversary[]
   /** Each adversary cell's colour, so a step's links match the rosette. */
   sentiments: Record<PrivacyAdversaryId, PrivacyAdversarySentiment>
+  /** The window the anonymity set counts, which a random wait is drawn from. */
+  waitWindowDays: number
 }
 
 /** The advice of every adversary cell, as steps in the order the user takes them. */
@@ -29,6 +32,7 @@ export function PrivacyAdviceSection({
   steps,
   adversaries,
   sentiments,
+  waitWindowDays,
   ...sectionProps
 }: PrivacyAdviceSectionProps) {
   const uncovered = getUncoveredAdversaries(steps, adversaries, sentiments)
@@ -83,6 +87,9 @@ export function PrivacyAdviceSection({
               </div>
               <div className="wrap-anywhere text-paragraph-15 md:col-span-2 md:text-paragraph-16">
                 <Markdown inline>{step.text}</Markdown>
+                {step.randomWait && (
+                  <PrivacyWaitDraw windowDays={waitWindowDays} />
+                )}
               </div>
             </div>
           </li>

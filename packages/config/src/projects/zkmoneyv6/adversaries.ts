@@ -194,7 +194,7 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
   advice: [
     {
       name: 'Set up',
-      text: `Set your own Ethereum node as the L1 endpoint. Send all of the computer's traffic through NymVPN, an ${adviceLink('IP-hiding route', 'ipHidingRoutes')} that carries UDP, whose exits refuse the port contacts and payment requests use. A system on Tor with UDP blocked, like Whonix, keeps them but must reach your node.`,
+      text: `Set your own Ethereum node as the L1 endpoint. Send all traffic through NymVPN with the Random profile, an ${adviceLink('IP-hiding route', 'ipHidingRoutes')} that carries UDP, under which contacts and payment requests fail. A system on Tor with UDP blocked, like Whonix, keeps them but must reach your node.`,
       against: ['networkObserver'],
       outside: true,
     },
@@ -212,6 +212,7 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
       name: 'Wait',
       text: A.wait,
       against: ['chainAnalyst'],
+      randomWait: true,
     },
     {
       name: 'Withdraw',

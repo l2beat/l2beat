@@ -245,7 +245,8 @@ export const ADVICE_SNIPPETS = {
     `Use a ${relayer} for the exit, so no wallet of yours pays gas for the receiving address.`,
   largestPool: 'Use the pool with the most depositors.',
   commonAmounts: 'Move common amounts rather than everything at once.',
-  wait: 'Exit only after many others have moved funds in and out, at a different time of day than you deposited.',
+  /** Set `randomWait` on its step, so the page draws the time. */
+  wait: 'Wait a random time before exiting, and exit only after many others have moved funds in and out.',
   freshAddress:
     'Send each exit to a fresh address and spend from it with a separate wallet.',
   /** Hosted web apps that work in Tor Browser. */

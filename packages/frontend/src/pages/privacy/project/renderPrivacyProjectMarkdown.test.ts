@@ -287,7 +287,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
       expect(
         getSection(renderPrivacyProjectMarkdown(ENTRY), 'How to stay private'),
       ).toInclude(
-        '1. **Wait.** Wait before withdrawing. Against: chain analyst.',
+        '1. **Wait.** Wait before withdrawing. Draw the wait at random between 0 and 30 days, the window the anonymity set counts. Against: chain analyst.',
       )
     })
 
@@ -502,6 +502,7 @@ const ADVERSARIES: ProjectPrivacyAdversaries = {
       name: 'Wait',
       text: 'Wait before withdrawing.',
       against: ['chainAnalyst'],
+      randomWait: true,
     },
   ],
 }
@@ -598,6 +599,7 @@ const SECTIONS: ProjectDetailsSection[] = [
       title: 'How to stay private',
       steps: ADVERSARIES.advice ?? [],
       adversaries: ADVERSARIES.adversaries,
+      waitWindowDays: 30,
       sentiments: {
         publicObserver: 'good',
         chainAnalyst: 'warning',

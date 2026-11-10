@@ -4,8 +4,10 @@ import type {
   PrivacyAdversarySentiment,
   PrivacyAdviceStep,
 } from '@l2beat/config'
-import { ADVICE_ANCHORS } from '@l2beat/config/build/common/privacyAdversaries'
-import { PRIVACY_METHODOLOGY_PATH } from './methodology/paths'
+import {
+  PRIVACY_ADVICE_ANCHOR,
+  PRIVACY_METHODOLOGY_PATH,
+} from './methodology/paths'
 
 /** Copy shared by the HTML page and its markdown alternate. */
 export const ADVICE = {
@@ -18,10 +20,13 @@ export const ADVICE = {
   uncoveredLabel: 'No step helps against',
   /** Marks a step that needs something the reference app does not ship. */
   outsideLabel: 'outside the app',
+  drawWaitLabel: 'Draw a wait',
+  redrawWaitLabel: 'Draw again',
+  waitAfterDeposit: 'after your deposit',
   /** Our word for the steps, as the framework uses it, linking to this section. */
   label: 'Advice',
   methodologyLink: 'Every habit explained',
-  methodologyHref: `${PRIVACY_METHODOLOGY_PATH}#${ADVICE_ANCHORS.section}`,
+  methodologyHref: `${PRIVACY_METHODOLOGY_PATH}#${PRIVACY_ADVICE_ANCHOR}`,
 } as const
 
 /**
@@ -53,4 +58,25 @@ export function getStepsAgainst(
   return (steps ?? [])
     .map((step, index) => ({ step, index }))
     .filter(({ step }) => step.against.includes(id))
+}
+
+/** Under the draw control: where the wait comes from and that it stays local. */
+export function getWaitNote(windowDays: number): string {
+  return `Random between 0 and ${windowDays} days, the window the anonymity set counts. Drawn in your browser.`
+}
+
+/** The markdown alternate cannot draw, so it says how to. */
+export function getWaitInstruction(windowDays: number): string {
+  return `Draw the wait at random between 0 and ${windowDays} days, the window the anonymity set counts.`
+}
+
+/** "12 days 7 hours", "7 hours", "under an hour". */
+export function formatWait(minutes: number): string {
+  const days = Math.floor(minutes / 1440)
+  const hours = Math.floor((minutes % 1440) / 60)
+  const parts = [
+    days > 0 ? `${days} ${days === 1 ? 'day' : 'days'}` : '',
+    hours > 0 ? `${hours} ${hours === 1 ? 'hour' : 'hours'}` : '',
+  ].filter(Boolean)
+  return parts.length > 0 ? parts.join(' ') : 'under an hour'
 }

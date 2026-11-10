@@ -133,7 +133,7 @@ export const cloakedAdversaries = definePrivacyAdversaries({
     },
     {
       name: 'Spend',
-      text: 'Spend one address at a time with Advanced Control, and send to destinations with no public link to you. Space out related payments, avoid distinctive amounts and follow your change outputs to see what a counterparty can trace.',
+      text: 'Spend one address at a time with Advanced Control, and send to destinations with no public link to you. Space out related payments and avoid distinctive amounts. A payee can trace the change of their payment, so choose which address pays whom.',
       against: ['publicObserver', 'chainAnalyst'],
     },
   ],

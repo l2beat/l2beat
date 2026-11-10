@@ -128,29 +128,25 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
   },
   advice: [
     {
-      name: 'Load',
-      text: A.torBrowser,
-      against: ['networkObserver'],
-      outside: true,
-    },
-    {
       name: 'Deposit',
-      text: `${A.notWalletSignature('from a recovery phrase')} ${A.largestPool}`,
+      text: `${A.notWalletSignature('from a recovery phrase')} ${A.largestPool} Your usual browser and wallet will do, since the deposit is public.`,
       against: ['futureAdversary', 'chainAnalyst'],
     },
     {
       name: 'Wait',
       text: A.wait,
       against: ['chainAnalyst'],
+      randomWait: true,
     },
     {
       name: 'Sign in',
-      text: 'Sign in with your recovery phrase in a new Tor Browser session, so no wallet address is queried. Open no explorer links in that session.',
+      text: `${A.torBrowser} Sign in with your recovery phrase, so no wallet address is queried. Open no explorer links in that session.`,
       against: ['networkObserver'],
+      outside: true,
     },
     {
       name: 'Check',
-      text: 'Before withdrawing, check the size of the approved list that the latest RootUpdated event links on IPFS.',
+      text: 'Before withdrawing, find the latest RootUpdated event of the Entrypoint contract and open the list it names on IPFS. Withdraw only if the list holds many deposits.',
       against: ['privilegedInsider'],
       outside: true,
     },

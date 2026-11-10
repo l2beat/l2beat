@@ -189,7 +189,7 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
     },
     {
       name: 'Exit',
-      text: 'Delete the deposit wallet from Cake. Then exchange the XMR into a new Ethereum wallet made with Create New Recovery Phrase, a fresh address with its own seed.',
+      text: "Reconnect the route. Back up the deposit wallet's seed and delete the wallet from Cake. Then exchange the XMR into a new Ethereum wallet made with Create New Recovery Phrase, a fresh address with its own seed.",
       against: ['publicObserver', 'chainAnalyst', 'networkObserver'],
     },
   ],

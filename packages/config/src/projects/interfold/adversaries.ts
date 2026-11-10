@@ -124,7 +124,7 @@ export function interfoldAdversaries(
     advice: [
       {
         name: 'Vote',
-        text: 'Keep the random weight on.',
+        text: 'Keep the random weight on, which blurs your exact voting power in the totals.',
         against: ['chainAnalyst'],
       },
     ],
