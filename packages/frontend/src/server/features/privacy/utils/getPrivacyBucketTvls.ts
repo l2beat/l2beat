@@ -89,3 +89,47 @@ export function getPrivacySingleEscrowBucketTvls(
   }
   return result
 }
+
+/** Whether the token's amount is read from the chain, and from nowhere else. */
+export function isTvsTokenOnChain(token: TvsToken, chain: string): boolean {
+  // Only an amount read from one chain names its chain.
+  return 'chain' in token.amount && token.amount.chain === chain
+}
+
+/**
+ * Value of each asset on one chain, by symbol. A token read from the chain
+ * counts as a whole, a token calculated from several escrows by its escrows
+ * there. So the assets add up to the chain's value, see `getChainValueHistory`.
+ */
+export function getPrivacyChainAssetTvls(
+  tvsConfig: TvsToken[],
+  tokenValues: TokenValueRecord[],
+  escrowValues: TvsEscrowValueRecord[],
+  chain: string,
+): Map<string, number> {
+  const tokens = new Map<string, TvsToken>(tvsConfig.map((t) => [t.id, t]))
+  const latestByTokenId = new Map(
+    tokenValues.map((value) => [value.tokenId, value.timestamp]),
+  )
+
+  const result = new Map<string, number>()
+  const add = (symbol: string, value: number) =>
+    result.set(symbol, (result.get(symbol) ?? 0) + value)
+  for (const value of tokenValues) {
+    const token = tokens.get(value.tokenId)
+    if (token && isTvsTokenOnChain(token, chain)) {
+      add(token.symbol, value.valueForProject)
+    }
+  }
+  for (const escrow of escrowValues) {
+    const token = tokens.get(escrow.tokenId)
+    if (
+      token &&
+      escrow.chain === chain &&
+      latestByTokenId.get(escrow.tokenId) === escrow.timestamp
+    ) {
+      add(token.symbol, escrow.value)
+    }
+  }
+  return result
+}

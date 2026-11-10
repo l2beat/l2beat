@@ -15,18 +15,28 @@ import type { Manifest } from '~/utils/Manifest'
 import { renderPrivacyProjectMarkdown } from './renderPrivacyProjectMarkdown'
 
 /**
- * @param chain The tracked chain of the URL, for a project with a page per
- *   chain. Its first chain is the project's own page, so that URL redirects.
+ * The project's own page, when `chain` is its first chain: that chain's URL
+ * is only another name for it, so every request for it redirects there.
  */
+export async function getPrivacyFirstChainPath(
+  slug: string,
+  chain: string | undefined,
+): Promise<string | undefined> {
+  if (chain === undefined) return undefined
+  const [first] = await getPages(slug)
+  return first?.chain === chain ? first.path : undefined
+}
+
+/** @param chain One of the project's chains that has a page of its own. */
 export async function getPrivacyProjectData(
   manifest: Manifest,
   slug: string,
   chain: string | undefined,
   cache: InMemoryCache,
   selectedUpdateId?: string,
-): Promise<RenderData | { redirect: string } | undefined> {
+): Promise<RenderData | undefined> {
   const page = await getPrivacyProjectPage(manifest, slug, chain, cache)
-  if (!page || 'redirect' in page) return page
+  if (!page) return undefined
 
   return {
     head: page.head,
@@ -48,8 +58,7 @@ export async function getPrivacyProjectMarkdown(
   cache: InMemoryCache,
 ): Promise<string | undefined> {
   const page = await getPrivacyProjectPage(manifest, slug, chain, cache)
-  if (!page || 'redirect' in page) return undefined
-  return renderPrivacyProjectMarkdown(page.props.entry)
+  return page && renderPrivacyProjectMarkdown(page.props.entry)
 }
 
 async function getPrivacyProjectPage(
@@ -60,13 +69,16 @@ async function getPrivacyProjectPage(
 ) {
   if (chain !== undefined) {
     // Only the project's own chains have a page, so only those get cached.
-    const project = await getPrivacyProject(slug)
-    const pages = project ? getPrivacyProjectPages(project) : []
-    const page = pages.find((p) => p.chain === chain)
-    if (!page) return undefined
-    if (page === pages[0]) return { redirect: page.path }
+    // The first is at the project's URL, with no chain in it.
+    const [, ...others] = await getPages(slug)
+    if (!others.some((page) => page.chain === chain)) return undefined
   }
   return getCachedPrivacyProjectPage(manifest, slug, chain, cache)
+}
+
+async function getPages(slug: string) {
+  const project = await getPrivacyProject(slug)
+  return project ? getPrivacyProjectPages(project) : []
 }
 
 function getCachedPrivacyProjectPage(
