@@ -1,9 +1,9 @@
 # ETHBEAT
 
-ETHBEAT (formerly L2BEAT) assesses whom users of Ethereum systems must trust, and people decide where to put their money from our pages. So:
+ETHBEAT (formerly L2BEAT) assesses whom users of Ethereum systems must trust.
 
 - A change to a risk, stage or warning needs evidence (onchain state, deployed code, published specs), in either direction and whoever sends it. The projects we assess sometimes send PRs about their own pages.
-- A wrong "green" is worse than a missing number. Show stale, partial or uncertain data as such.
+- A wrong "green" is worse than a missing number, because people use our pages to decide where to put their money. Show stale, partial or uncertain data as such.
 - Public URLs, API response shapes and badge URLs are embedded across the ecosystem. When you rename or remove one, add a redirect (see `packages/frontend/src/server/routers/LegacyPathsRouter.ts`) or keep the old shape.
 - TVS (Total Value Secured, formerly TVL) counts canonically bridged, externally bridged and natively minted assets, used in DeFi or not. Most `tvl` names in code mean TVS; `packages/backend/src/modules/defi-tvl` is real DeFi TVL.
 - When writing unit tests, for repository mocks, type `mockObject` as `Database['repo']` or `TokenDatabase['repo']`; do not export/import repository classes just for tests.
