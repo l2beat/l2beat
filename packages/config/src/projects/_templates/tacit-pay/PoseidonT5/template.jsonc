@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PoseidonT5",
+  "category": "shared",
+  "critical": true,
+  "description": "Four-input Poseidon hash from poseidon-solidity. The router computes the note of each receive box sweep with it."
+}

@@ -27,12 +27,11 @@ describe(renderEthereumProjectMarkdown.name, () => {
     expect(summary).toMatchRegex(/- Total Value Secured: \$40\.00 B \(Total/)
   })
 
-  it('explains the enshrined bridge instead of a risk rosette', () => {
+  it('explains the enshrined bridge in its tooltip, not a risk rosette', () => {
     const summary = getSection(renderEthereumProjectMarkdown(ENTRY), 'Summary')
 
     expect(summary).toInclude(
-      '- DA Bridge: Enshrined Bridge',
-      '### About\n\n**Enshrined Bridge:** Full nodes self-verify the data availability of each block.',
+      '- DA Bridge: Enshrined Bridge (Full nodes self-verify the data availability of each block.)',
     )
     expect(summary).not.toInclude('### Risks')
   })
@@ -87,11 +86,8 @@ const ENTRY: EthereumProjectPageEntry = {
       },
     ],
     bridgeName: 'Enshrined Bridge',
-    callout: {
-      title: 'Enshrined Bridge',
-      description:
-        'Full nodes self-verify the data availability of each block.',
-    },
+    bridgeTooltip:
+      'Full nodes self-verify the data availability of each block.',
     numberOfValidators: 1_050_000,
   },
   sections: [ACTIVITY_SECTION],

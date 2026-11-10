@@ -5,7 +5,6 @@ import type { ProjectSummaryStatProps } from '~/components/projects/ProjectSumma
 import type { EthereumProjectPageEntry } from '~/server/features/data-availability/project/getEthereumProjectEntry'
 import { getEthereumProjectStats } from '../utils/getEthereumProjectStats'
 import { DaProjectStats } from './DaProjectStats'
-import { InfoCallout } from './InfoCallout'
 
 interface Props {
   project: EthereumProjectPageEntry
@@ -18,6 +17,7 @@ export function EthereumProjectSummary({ project }: Props) {
       key: 'da-bridge',
       title: 'DA Bridge',
       value: project.header.bridgeName,
+      tooltip: project.header.bridgeTooltip,
     },
     {
       key: 'used-by',
@@ -37,12 +37,7 @@ export function EthereumProjectSummary({ project }: Props) {
       data-role="nav-section"
       className="w-full scroll-mt-[100vh] border-divider bg-surface-primary px-4 max-md:border-b md:rounded-lg md:p-6"
     >
-      <DaProjectStats stats={stats} className="mb-6" />
-
-      <InfoCallout
-        title={project.header.callout.title}
-        description={project.header.callout.description}
-      />
+      <DaProjectStats stats={stats} className="max-md:mb-6" />
 
       <div className="-mx-4 !mt-0 px-4 md:hidden">
         <HorizontalSeparator className="-mx-4 w-[calc(100%+2rem)]" />

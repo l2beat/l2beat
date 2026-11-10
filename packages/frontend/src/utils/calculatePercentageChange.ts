@@ -18,7 +18,11 @@ export function calculatePercentageChange(now: number, then: number) {
     return 0
   }
   const change = now / then - 1
-  if (change === Number.POSITIVE_INFINITY || change === null || isNaN(change)) {
+  if (
+    change === Number.POSITIVE_INFINITY ||
+    change === null ||
+    Number.isNaN(change)
+  ) {
     return 0
   }
   return change
