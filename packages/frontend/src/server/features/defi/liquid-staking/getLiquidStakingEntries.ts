@@ -1,4 +1,5 @@
 import { manifest } from '~/utils/Manifest'
+import { type ChartRange, optionToRange } from '~/utils/range/range'
 import type { LiquidStakingCharts } from './getLiquidStakingCharts'
 import type { LiquidStakingProject } from './getLiquidStakingProjects'
 import {
@@ -21,6 +22,14 @@ export interface LiquidStakingEntry extends LiquidStakingSummary {
 
 /** An entry without its risks, for lists that show only the numbers. */
 export type LiquidStakingStatsEntry = Omit<LiquidStakingEntry, 'risks'>
+
+/**
+ * The chart range the lists take their latest values from. One range, so a
+ * protocol with a gap in its data reads the same in every list.
+ */
+export function getLiquidStakingEntriesRange(): ChartRange {
+  return optionToRange('1y')
+}
 
 /**
  * Sorted by TVL, the projects without one last. The latest yield and cost of

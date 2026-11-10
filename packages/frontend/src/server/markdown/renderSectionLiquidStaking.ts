@@ -32,7 +32,7 @@ export function renderLiquidStakingSection({
         ...LIQUID_STAKING_METRICS.map((metric) => metric.title),
       ],
       entries.map((entry) => [
-        link(entry.name, entry.href),
+        `${link(entry.name, entry.href)}${entry.isUnderReview ? ' (under review)' : ''}`,
         entry.tokens.join(', '),
         entry.totalValueLockedUsd !== undefined
           ? formatUsd(entry.totalValueLockedUsd)
