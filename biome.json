@@ -75,7 +75,10 @@
         "useValidForDirection": "error",
         "useYield": "error",
         "noInvalidBuiltinInstantiation": "error",
-        "useValidTypeof": "error"
+        "useValidTypeof": "error",
+        "noInvalidUseBeforeDeclaration": "error",
+        "noConstructorReturn": "error",
+        "noStringCaseMismatch": "error"
       },
       "style": {
         "useForOf": "error",
@@ -113,6 +116,7 @@
       },
       "nursery": {
         "noFloatingPromises": "error",
+        "noMisusedPromises": "error",
         "useSortedClasses": {
           "level": "error",
           "fix": "safe",
@@ -154,7 +158,15 @@
         "useAwait": "error",
         "useGetterReturn": "error",
         "noWith": "error",
-        "noDuplicateElseIf": "error"
+        "noDuplicateElseIf": "error",
+        "noConstantBinaryExpressions": "error",
+        "noSelfCompare": "error",
+        "noMisrefactoredShorthandAssign": "error",
+        "noMisplacedAssertion": "error",
+        "noIrregularWhitespace": "error"
+      },
+      "security": {
+        "noGlobalEval": "error"
       }
     }
   },
