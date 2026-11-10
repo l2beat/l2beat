@@ -147,7 +147,7 @@ export function umbraAdversaries(registrants: number) {
     advice: [
       {
         name: 'Set up',
-        text: `${A.localBuild} Leave its indexer URL empty, point all RPC URLs and your wallet at your own Ethereum node, and block cloudflare-eth.com in your hosts file. Send all traffic, the node's included, through an ${adviceLink('IP-hiding route', 'ipHidingRoutes')}, so neither the relayer nor the node's peers see your IP.`,
+        text: `${A.localBuild} Leave its indexer URL empty, point all RPC URLs and your wallet at your own Ethereum node, and block cloudflare-eth.com with [uBlock Origin](https://addons.mozilla.org/firefox/addon/ublock-origin/). Send all traffic, the node's included, through an ${adviceLink('IP-hiding route', 'ipHidingRoutes')}, so neither the relayer nor the node's peers see your IP.`,
         against: ['networkObserver', 'privilegedInsider'],
         outside: true,
       },
