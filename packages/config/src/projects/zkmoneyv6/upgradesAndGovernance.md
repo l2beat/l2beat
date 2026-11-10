@@ -2,7 +2,7 @@ Aztec Network's v6 rollup and zk.money's portals, enclave registry and payout co
 
 ### Enclave signers and freeze
 
-Anyone can register a signer with an AWS Nitro attestation of the approved image up to {{attestationMaxAge}} old. Both portals share {{teeSignerCount}} signers. If Aztec governance makes another rollup canonical, anyone can freeze the portals for good, leaving only refunds.
+Anyone can register a signer with an AWS Nitro attestation of the approved image up to {{attestationMaxAge}} old. Both portals share {{teeSignerCount}} signers. If [Aztec governance](https://stake.aztec.network/governance) makes another rollup canonical, anyone can freeze the portals for good, leaving only refunds.
 
 ### Deposit addresses and names
 
@@ -10,4 +10,4 @@ One Aztec Labs EOA owns the SIPAFactory, the ForwardingTable, the NameRegistry a
 
 ### Savings asset
 
-Sky governance can upgrade sUSDS and change its savings rate.
+[Sky governance](https://vote.sky.money/) can upgrade sUSDS and change its savings rate.
