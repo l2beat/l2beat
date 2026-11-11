@@ -1618,6 +1618,10 @@
   "static/icons/tacit-finance.png": "a1cba05396511d6a74dfef79b8f29794",
   "static/meta-images/privacy/projects/tacit-pay/opengraph-image.png": "c9bb5cbcb0ddfaa38e6350fa4272a32c",
   "static/meta-images/zk-catalog/projects/tacit-pay/opengraph-image.png": "3e8ef48acf9bb6211b4313e310dd1e79",
+  "static/icons/cbeth.png": "c03ed7961869da2921bbb055e5290dce",
+  "static/images/architecture/cbeth-deposits.png": "2449c9187e42580058c5c8bd8c836f52",
+  "static/images/architecture/cbeth-withdrawals.png": "bd5269357316bc8a7f7e7f11c9247d57",
+  "static/meta-images/defi/projects/cbeth/opengraph-image.png": "bfd6412c137d981fbbc4e180546e7f46",
   "static/icons/derivev3.png": "5f92f086afad4f89a19ff955627c6bc8",
   "static/meta-images/layer2s/projects/derivev3/opengraph-image.png": "d07aa59a7c4e19a0073a80680f7fd089"
 }
