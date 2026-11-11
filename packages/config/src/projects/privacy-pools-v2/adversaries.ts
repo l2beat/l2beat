@@ -106,9 +106,9 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'good',
       exposureShort:
-        'A sign-in with the account key names the account to no third party, so no third party sees both a deposit and a withdrawal.',
+        "While 0xbow's registry feeds answer, an account-key sign-in names the account to no third party, so none sees both a deposit and a withdrawal.",
       exposureContinued:
-        "A connected wallet's address goes to the default RPCs, led by Alchemy under 0xbow's key, which also see when that session withdraws.",
+        "A connected wallet's address goes to the default RPCs, led by Alchemy under 0xbow's key, which also see when that session withdraws. When the feeds fail, the app asks them about the account instead, right before the spend.",
       interior: {
         sender: 'private',
         recipient: 'private',
@@ -116,13 +116,17 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
         asset: 'private',
         linkage: {
           verdict: 'atRisk',
-          note: 'Private only over an IP-hiding route and in a session that never connected a wallet.',
+          note: "Private only over an IP-hiding route, in a private window that never connected a wallet, while 0xbow's registry feeds answer.",
         },
       },
       sources: [
         {
           title: 'Sign-in checks registration against bulk ASP feeds',
           url: WEBSITE + 'components/sdk-provider.tsx#L711-L757',
+        },
+        {
+          title: 'Own-account reads ask the RPC when the feeds have no current data',
+          url: WEBSITE + 'services/keystore-registry-reads.ts#L9-L18',
         },
         {
           title: "A connected wallet's tokens are read from Alchemy by address",
@@ -205,7 +209,7 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
   advice: [
     {
       name: 'Set up',
-      text: `Turn on NymVPN with the Random profile, an ${adviceLink('IP-hiding route', 'ipHidingRoutes')} for all of the computer's traffic. 0xbow's relayer refuses Tor exits on the app's default settings.`,
+      text: `Turn on NymVPN with the Random profile, an ${adviceLink('IP-hiding route', 'ipHidingRoutes')} for all of the computer's traffic. Reconnect it before each session, so the deposit and the withdrawal leave from different exits. 0xbow's relayer refuses Tor exits on the app's default settings.`,
       against: ['networkObserver', 'privilegedInsider'],
       outside: true,
     },
@@ -233,7 +237,7 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
     },
     {
       name: 'Withdraw',
-      text: `Sign in with the account key in a new browser session instead of with a wallet, and withdraw common amounts rather than everything at once. ${A.relayer('relayer')} ${A.freshAddress}`,
+      text: `Sign in with the account key in a private window instead of with a wallet, and withdraw common amounts rather than everything at once. ${A.relayer('relayer')} ${A.freshAddress}`,
       against: ['publicObserver', 'chainAnalyst', 'networkObserver'],
     },
     {

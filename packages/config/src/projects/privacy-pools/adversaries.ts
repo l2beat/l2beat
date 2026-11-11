@@ -84,7 +84,7 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
       exposureShort:
         'The ASP postman can publish a new approved list at any time with no delay, and withdrawals must prove against the latest one.',
       exposureContinued:
-        "It can deny the user a private exit or publish a list containing only their deposit, reducing their anonymity set to one. The website counts the anonymity set it shows from 0xbow's own feed, not from the list the user's withdrawal proves against. 0xbow's website and ASP feeds see every session's IP and Fast Relay, its relayer, each exit's recipient, so it can pair deposit and exit sessions. It can also change the website at any time.",
+        "It can deny the user a private exit or publish a list containing only their deposit, reducing their anonymity set to one. The website counts the anonymity set it shows from 0xbow's own feed, not from the list the user's withdrawal proves against. 0xbow's website and ASP feeds see every session's IP and Fast Relay, its relayer, each recipient it relays, so 0xbow can pair deposit and exit sessions. It can also change the website at any time.",
       sources: [
         {
           contract: 'PrivacyPoolsEntrypoint',
