@@ -34,11 +34,11 @@ export function GasFeesTipPayers() {
       <div className="flex flex-col gap-1">
         <h3 className="font-bold text-lg">Who pays the tips</h3>
         <p className="font-medium text-base">
-          {txs.high}% of transactions pay {tips.high}% of the tips. {onRound}%
-          tip exactly 1 or 2 gwei.
+          The {txs.high}% of transactions that tip 1 to 2.5 gwei pay {tips.high}
+          % of the tips. {onRound}% tip exactly 1 or 2 gwei.
         </p>
         <p className="text-secondary text-xs">
-          Ordinary transactions, past year.
+          Ordinary transactions, {mock.period}.
         </p>
       </div>
       <div className="flex flex-col gap-3 pr-8">

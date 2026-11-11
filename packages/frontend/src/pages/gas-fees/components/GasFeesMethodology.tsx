@@ -8,30 +8,35 @@ import {
   DialogTrigger,
 } from '~/components/core/Dialog'
 import { InfoIcon } from '~/icons/Info'
-import mock from './pageMock.json'
 
-/** The rule as the server runs it (getGasFeesTips), with each tier's measured record from METHODOLOGY.md */
+/**
+ * The rule as the server runs it (getGasFeesTips), and its replayed record
+ * from METHODOLOGY.md: the worst 26 weeks in a row and the worst week
+ */
 const TIERS = [
   {
     name: 'Slow',
-    target: 'Within 1 minute',
-    rule: '45.2th percentile of the blocks’ 10th percentile tips',
-    test: '96.0%, 92.7%',
-    blind: '99.5%, 97.4%',
+    lands: 'Within 1 minute',
+    price: '10th percentile tip',
+    beats: '45.2% of the last 300 blocks',
+    worstHalfYear: '96.0%',
+    worstWeek: '92.1%',
   },
   {
     name: 'Medium',
-    target: 'Within 2 blocks',
-    rule: '85th percentile of their 25th percentile tips',
-    test: '98.5%, 96.4%',
-    blind: '99.3%, 96.0%',
+    lands: 'Within 2 blocks',
+    price: '25th percentile tip',
+    beats: '85% of the last 300 blocks',
+    worstHalfYear: '96.6%',
+    worstWeek: '90.7%',
   },
   {
     name: 'Fast',
-    target: 'In the next block',
-    rule: '99th percentile of the 25th percentile tips of the last 1,800 blocks',
-    test: '97.2%, 94.2%',
-    blind: '97.0%, 92.3%',
+    lands: 'In the next block',
+    price: '25th percentile tip',
+    beats: '99% of the last 1,800 blocks',
+    worstHalfYear: '95.3%',
+    worstWeek: '92.3%',
   },
 ]
 
@@ -43,18 +48,18 @@ export function GasFeesMethodology() {
         <InfoIcon className="size-3.5 fill-current" />
         How we estimate
       </DialogTrigger>
-      <DialogContent className="primary-card flex max-h-[90dvh] w-[768px] flex-col gap-0 overflow-hidden bg-surface-primary p-0 lg:w-[960px]">
+      <DialogContent className="primary-card flex max-h-[90dvh] w-[640px] flex-col gap-0 overflow-hidden bg-surface-primary p-0">
         <DialogClose className="top-5 right-5" />
         <DialogHeader className="border-divider border-b px-6 py-5">
           <DialogTitle className="font-bold text-xl">
             How our estimator works
           </DialogTitle>
           <DialogDescription className="text-secondary text-xs">
-            Ethereum L1 only. Tested against Flashbots mempool data, Aug 2023 to
-            Nov 2026.
+            Ethereum L1 only. Replayed against Flashbots mempool data, Aug 2023
+            to Nov 2026.
           </DialogDescription>
         </DialogHeader>
-        <div className="overflow-y-auto px-6 py-5">
+        <div className="overflow-y-auto px-6 py-6">
           <MethodologyBody />
         </div>
       </DialogContent>
@@ -63,127 +68,140 @@ export function GasFeesMethodology() {
 }
 
 function MethodologyBody() {
-  const { tips } = mock
   return (
-    <div className="flex flex-col gap-6">
-      <dl className="flex flex-col gap-1.5 text-sm">
-        <div>
-          <dt className="inline font-bold">
-            Slow, medium and fast are our estimates:{' '}
-          </dt>
-          <dd className="inline">
-            from past Ethereum blocks only, the tips that land transactions
-            within a minute, within 2 blocks and in the next block. Each
-            promises that 95% of the transactions paying it land in time over
-            any 6 months, and never fewer than 90% in a week.
-          </dd>
-        </div>
-        <div>
-          <dt className="inline font-bold">× ours: </dt>
-          <dd className="inline">
-            how many times our tip each wallet suggests for the same speed.
-          </dd>
-        </div>
-        <div>
-          <dt className="inline font-bold">Overtipped: </dt>
-          <dd className="inline">
-            what ordinary transactions paid on top of our fast tip.
-          </dd>
-        </div>
-        <div>
-          <dt className="inline font-bold">Ordinary: </dt>
-          <dd className="inline">
-            tips under 2.5 gwei, just above the pile at 2 gwei. That leaves out{' '}
-            ${Math.round(tips.positionalUsd / 1e6)}M.
-          </dd>
-        </div>
-      </dl>
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        <section className="flex flex-col gap-3">
-          <h3 className="font-semibold text-base">The rule</h3>
-          <p className="text-sm">
-            Read each block’s 10th and 25th percentile tips with{' '}
-            <code className="text-xs">eth_feeHistory</code>: the last 300
-            blocks, about an hour, for slow and medium, and the last 1,800,
-            about 6 hours, for fast. Then:
-          </p>
-          <table className="w-full border-separate border-spacing-y-1 text-sm">
-            <thead>
-              <tr className="text-secondary text-xs">
-                <th className="text-left font-normal">Tier</th>
-                <th className="pl-3 text-left font-normal">Tip</th>
-                <th className="pl-3 text-right font-normal">Test months</th>
-                <th className="pl-3 text-right font-normal">Blind years</th>
-              </tr>
-            </thead>
-            <tbody>
-              {TIERS.map((tier) => (
-                <tr key={tier.name} className="align-top">
-                  <td>
-                    <span className="block font-bold">{tier.name}</span>
-                    <span className="block text-secondary text-xs">
-                      {tier.target}
-                    </span>
-                  </td>
-                  <td className="pl-3">{tier.rule}</td>
-                  <td className="pl-3 text-right tabular-nums">{tier.test}</td>
-                  <td className="pl-3 text-right tabular-nums">{tier.blind}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <p className="text-secondary text-xs">
-            Each result is the average, then the worst week. Each tier is at
-            least as high as the one below. It is recomputed every block and
-            needs no mempool, so anyone with a node can run it.
-          </p>
-          <p className="text-sm">
-            The 95% is what to expect over months; the 90% is the worst week to
-            plan for. Shorter stretches can fall below 95%: in the worst
-            calendar month the tiers landed 91.5% to 93.4%. Both parts are a
-            record, not a guarantee: they were set from the data we have.
-          </p>
-        </section>
-        <section className="flex flex-col gap-3">
-          <h3 className="font-semibold text-base">How we got it</h3>
-          <ol className="flex flex-col gap-3 text-sm">
-            <li>
-              <b>The target sets the percentile.</b> If each block takes your
-              tip with chance <i>a</i>, you miss <i>k</i> blocks in a row with
-              chance (1 − <i>a</i>)<sup>k</sup>. One thing no tip fixes: even at
-              2 gwei, 1.7% of transactions miss the next block anyway, so at
-              most 98.3% can make it. Together:
-              <code className="my-2 block rounded-md bg-surface-secondary px-3 py-2 text-xs">
-                (1 − 0.983<i>a</i>) × (1 − <i>a</i>)<sup>k − 1</sup> = 5%
-              </code>
-              Solving for <i>a</i> gives 96.6% for 1 block, 78.3% for 2 and
-              45.2% for 5, which is one minute. That is enough for 95% on
-              average if blocks were independent chances. Slow keeps 45.2%.
-            </li>
-            <li>
-              <b>The data chose the rest.</b> Blocks are not independent
-              chances: with 78.3%, the medium tier fell to 89.1% in a week of
-              February 2026. So we tried other block percentiles, windows and
-              shares on Nov 2025 to Apr 2026, and for medium and fast kept the
-              rule that overpaid least while keeping the promise. Medium beats
-              85% of blocks. Fast reads the last 1,800 blocks and beats 99% of
-              their 25th percentile tips, which overpays about a quarter less
-              than beating 96.6% of the last 300 blocks&apos; median tips.
-            </li>
-            <li>
-              <b>Then it was frozen and tested.</b> First on May to Nov 2026,
-              then blind on Aug 2023 to Nov 2025: 813 days nobody had looked at,
-              with base fees up to 58 gwei. Every tier kept both parts of the
-              promise in all three periods.
-            </li>
-            <li>
-              <b>Its weakness.</b> It reads what people already pay, so when
-              everyone tips high, it does too. In a typical hour of the blind
-              test its fast tip was 1.3 gwei.
-            </li>
-          </ol>
-        </section>
-      </div>
+    <div className="flex flex-col gap-8 text-sm leading-relaxed">
+      <Section title="The promise">
+        <p>
+          Three tips for three speeds. Of the transactions that pay a tip, 95%
+          land in time over any 6 months, and never fewer than 90% in a week.
+        </p>
+        <Table
+          head={['Lands', 'Worst 6 months', 'Worst week']}
+          rows={TIERS.map((tier) => [
+            tier.lands,
+            tier.worstHalfYear,
+            tier.worstWeek,
+          ])}
+          numeric={[1, 2]}
+        />
+        <Note>
+          Replayed week by week. The rules were chosen on Nov 2025 to Apr 2026;
+          the other 33 months were never used to choose them.
+        </Note>
+      </Section>
+
+      <Section title="How it works">
+        <p>
+          It reads past blocks only, with{' '}
+          <code className="text-xs">eth_feeHistory</code>, so anyone with a node
+          gets the same tips. Each block’s 10th or 25th percentile tip is the
+          price that block asked. Each speed beats that price in a set share of
+          recent blocks.
+        </p>
+        <Table
+          head={['Price read', 'Beats it in']}
+          rows={TIERS.map((tier) => [tier.price, tier.beats])}
+        />
+        <Note>
+          300 blocks is about an hour, 1,800 about 6 hours. Each speed is at
+          least the one below, and all three are recomputed every block.
+        </Note>
+      </Section>
+
+      <Section title="Why these shares">
+        <p>
+          If each block takes your tip with chance <i>a</i>, you miss <i>k</i>{' '}
+          blocks in a row with chance{' '}
+          <span className="whitespace-nowrap">
+            (1 − <i>a</i>)<sup>k</sup>
+          </span>
+          . Even at 2 gwei, 1.7% of transactions miss the next block anyway, so
+          at most 98.3% can make the first. Missing 5% of the time means:
+        </p>
+        <code className="block rounded-md bg-surface-secondary px-3 py-2 text-xs">
+          (1 − 0.983<i>a</i>) × (1 − <i>a</i>)<sup>k − 1</sup> = 5%
+        </code>
+        <p>
+          For 5 blocks, a minute, this gives 45.2%, which slow uses. For 2
+          blocks and 1 it gives 78.3% and 96.6%, but blocks are not independent
+          chances: with 78.3%, medium fell to 89.1% in a week of February 2026.
+          So for medium and fast we tried other prices, shares and windows on
+          Nov 2025 to Apr 2026, and kept the cheapest rule that kept the
+          promise.
+        </p>
+      </Section>
+
+      <Section title="Where it falls short">
+        <p>
+          It reads what people already pay, so when everyone tips high, it does
+          too. From Aug 2023 to Nov 2025, its fast tip was 1.3 gwei in a typical
+          hour.
+        </p>
+      </Section>
     </div>
+  )
+}
+
+function Section({
+  title,
+  children,
+}: {
+  title: string
+  children: React.ReactNode
+}) {
+  return (
+    <section className="flex flex-col gap-3">
+      <h3 className="font-bold text-base">{title}</h3>
+      {children}
+    </section>
+  )
+}
+
+function Note({ children }: { children: React.ReactNode }) {
+  return <p className="text-secondary text-xs">{children}</p>
+}
+
+/** One row per speed, named in the first column */
+function Table({
+  head,
+  rows,
+  numeric = [],
+}: {
+  head: string[]
+  rows: string[][]
+  numeric?: number[]
+}) {
+  const align = (column: number) =>
+    numeric.includes(column) ? 'text-right tabular-nums' : 'text-left'
+  return (
+    <table className="w-full">
+      <thead>
+        <tr className="text-secondary text-xs">
+          <th className="pb-1.5 text-left font-normal">
+            <span className="sr-only">Speed</span>
+          </th>
+          {head.map((label, column) => (
+            <th
+              key={label}
+              className={`pb-1.5 pl-4 font-normal ${align(column)}`}
+            >
+              {label}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((cells, row) => (
+          <tr key={TIERS[row]?.name} className="border-divider border-t">
+            <th className="py-2 text-left font-bold">{TIERS[row]?.name}</th>
+            {cells.map((cell, column) => (
+              <td key={head[column]} className={`py-2 pl-4 ${align(column)}`}>
+                {cell}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
   )
 }

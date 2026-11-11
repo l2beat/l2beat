@@ -8,9 +8,12 @@ const HEAD_CHECK_MS = 2_000
 const ETH_USD_FEED = '0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419'
 const LATEST_ANSWER = '0x50d25bcd'
 const ERC20_TRANSFER_GAS = 46_109
-const WALLET_CHECK_MS = 60_000
-/** Fee services rate limit, so a failed read keeps the last one this long, then the wallet is dropped */
-const WALLET_KEEP_MS = 5 * 60_000
+/** Wallet suggestions sit beside ours for comparison, so minutes old is fine, and fee services rate limit */
+const WALLET_CHECK_MS = 5 * 60_000
+/** A failed read keeps the last good one this long, then the wallet is dropped */
+const WALLET_KEEP_MS = 30 * 60_000
+/** A fee service that answers 429 is not asked again for this long */
+const WALLET_BACKOFF_MS = 30 * 60_000
 const METAMASK_FEES =
   'https://gas.api.cx.metamask.io/networks/1/suggestedGasFees'
 const RABBY_FEES = 'https://api.rabby.io/v1/wallet/gas_market?chain_id=eth'
@@ -73,7 +76,7 @@ export interface GasFeesLiveTips {
   tips: GasFeesTip[]
   /** The newest blocks, oldest first */
   blocks: GasFeesBlock[]
-  /** Read from each wallet's fee service, or computed from its public code. A wallet with no good read for 5 minutes is left out */
+  /** Read from each wallet's fee service, or computed from its public code. A wallet with no good read for 30 minutes is left out */
   wallets: GasFeesWalletTip[]
 }
 
@@ -81,7 +84,14 @@ let cached: GasFeesLiveTips | undefined
 let checkedAt = 0
 let wallets: GasFeesWalletTip[] = []
 let walletsCheckedAt = 0
+const WALLET_SOURCES: ((url: string) => Promise<GasFeesWalletTip[]>)[] = [
+  readMetaMask,
+  readRabby,
+  computeAmbire,
+]
 const lastReads: { tips: GasFeesWalletTip[]; readAt: number }[] = []
+/** When each wallet's fee service may be asked again after a 429, by its place in WALLET_SOURCES */
+const retryAt: number[] = []
 /** Each block's tips at BLOCK_PERCENTILES, by block number, so a new head reads only the newest blocks */
 const blockTips = new Map<number, number[]>()
 
@@ -205,20 +215,29 @@ async function readBlockTips(url: string, head: number) {
 async function getWalletTips(url: string) {
   if (Date.now() - walletsCheckedAt < WALLET_CHECK_MS) return wallets
   walletsCheckedAt = Date.now()
-  const reads = await Promise.allSettled([
-    readMetaMask(),
-    readRabby(),
-    computeAmbire(url),
-  ])
+  const reads = await Promise.allSettled(
+    WALLET_SOURCES.map((read, i) =>
+      Date.now() < (retryAt[i] ?? 0) ? undefined : read(url),
+    ),
+  )
   reads.forEach((read, i) => {
     if (read.status === 'fulfilled') {
-      lastReads[i] = { tips: read.value, readAt: Date.now() }
+      if (read.value) lastReads[i] = { tips: read.value, readAt: Date.now() }
+    } else if (isRateLimited(read.reason)) {
+      retryAt[i] = Date.now() + WALLET_BACKOFF_MS
     }
   })
   wallets = lastReads.flatMap((read) =>
     read && Date.now() - read.readAt < WALLET_KEEP_MS ? read.tips : [],
   )
   return wallets
+}
+
+function isRateLimited(error: unknown) {
+  return (
+    error instanceof Error &&
+    (error.cause as { status?: number } | undefined)?.status === 429
+  )
 }
 
 async function readMetaMask(): Promise<GasFeesWalletTip[]> {

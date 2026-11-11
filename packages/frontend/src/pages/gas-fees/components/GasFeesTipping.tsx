@@ -43,23 +43,24 @@ export function GasFeesTipsSummary() {
       <div className="flex flex-col gap-2">
         <h3 className="font-bold text-lg">Overtipping</h3>
         <p className="font-bold text-xl leading-tight tracking-tight md:text-2xl">
-          Ordinary transactions tipped {usd(tips.ordinaryUsd)}. At our fast tip
-          they would have tipped{' '}
-          <Colored color={OVER_TEXT}>{usd(over)}</Colored> less.
+          Ordinary transactions tipped {usd(tips.ordinaryUsd)}.{' '}
+          <Colored color={OVER_TEXT}>{usd(over)}</Colored> of it was above our
+          fast tip.
         </p>
         <p className="text-secondary text-xs">
-          Past year. Ordinary means a tip under 2.5 gwei, which leaves out{' '}
-          {usd(tips.positionalUsd)} of larger tips.
+          {mock.period}. Ordinary means a tip under 2.5 gwei. Higher tips land
+          near the front of the block much more often, which our fast tip
+          doesn’t aim for, so they don’t count as overtipping.
         </p>
       </div>
       <SplitBar
         parts={[
           {
-            label: 'Fast tip, our estimate',
+            label: 'Up to our fast tip',
             value: tips.atFastUsd,
             color: FAST,
           },
-          { label: 'Overtipped', value: over, color: OVER },
+          { label: 'Above it', value: over, color: OVER },
         ]}
       />
     </div>

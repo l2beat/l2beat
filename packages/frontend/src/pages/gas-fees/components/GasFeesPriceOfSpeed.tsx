@@ -16,8 +16,9 @@ export function GasFeesPriceOfSpeed() {
           {fromSure} to {toSure} seconds.
         </p>
         <p className="text-secondary text-xs">
-          From real transactions over the past year. Each block you miss adds 12
-          seconds.
+          From real transactions, {mock.period}. Each block you miss adds 12
+          seconds. Each dot is the transactions in one narrow tip range, at
+          their average tip.
         </p>
       </div>
       <SpeedCurve />
@@ -39,7 +40,13 @@ const X_TICKS = [0, 0.05, 0.1, 0.15, 0.2, 0.25].filter(
 const Y_TICKS = [20, 30, 40, 50]
 const left = (usd: number) => (usd / X_MAX) * 100
 const top = (seconds: number) => (1 - (seconds - Y_MIN) / (Y_MAX - Y_MIN)) * 100
-const twoDigits = (value: number) => `${Number(value.toPrecision(2))}`
+/** Ranges are 0.05 gwei wide from 0.1 gwei up, and narrower below */
+const rangeEdge = (gwei: number) =>
+  gwei < 0.1 ? `${Number(gwei.toPrecision(2))}` : gwei.toFixed(2)
+const transactions = new Intl.NumberFormat('en-US', {
+  notation: 'compact',
+  maximumSignificantDigits: 3,
+})
 
 /** Dollars on a true scale, so the flat part looks as long as it is expensive */
 function SpeedCurve() {
@@ -65,8 +72,8 @@ function SpeedCurve() {
         <span>99% sure within</span>
         <span className={cn(!point && 'invisible')}>
           {point
-            ? `${twoDigits(point.tip)} gwei: ${formatFee(point.usd)}, ${point.seconds}s`
-            : '0.00 gwei: $0.000, 00s'}
+            ? `${rangeEdge(point.from)} to ${rangeEdge(point.to)} gwei (${transactions.format(point.n)} transactions): ${formatFee(point.usd)}, ${point.seconds}s`
+            : '0.000 to 0.000 gwei (000K transactions): $0.000, 00s'}
         </span>
       </div>
       <div className="pb-5 pl-8">
