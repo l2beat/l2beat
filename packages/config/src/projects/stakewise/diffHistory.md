@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xf03036806f4349e2e477e906b0ceec4c7a74e1ce
+Generated with discovered.json: 0x3641d0922b97ef9432f928342a8c97b2c9634af9
 
-# Diff at Wed, 11 Nov 2026 12:29:39 GMT:
+# Diff at Wed, 11 Nov 2026 14:08:13 GMT:
 
-- id: 95ca6e65
+- id: be17295a
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - current timestamp: 1793883886
 
 ## Description
 
-Initial discovery of StakeWise V3 (osETH): the vault registry, the Keeper and its oracle set, the osETH token and its flash-loan minter, vault controller, collateral config, redeemer and vault escrow, the shared MEV escrow, the deposit data registry, the ten vault factories, the eleven largest vaults (nine with at least 5,000 ETH plus the two nested meta vaults that anchor the osETH rate) with their admins and key managers, and the DAO Safe with its SafeSnap Reality module. The legacy V2 contracts beyond the Genesis vault's migration path, vault fee recipients, three unverified own-MEV escrows, the retired redeemer and the approved-implementation list are not crawled.
+Initial discovery of StakeWise V3 (osETH): the vault registry, the Keeper and its oracle set, the osETH token and its flash-loan minter, vault controller, collateral config, the current and the retired redeemer, vault escrow, the shared MEV escrow, the deposit data registry, the ten vault factories, the eleven largest vaults (nine with at least 5,000 ETH plus the two nested meta vaults that anchor the osETH rate) with their admins and key managers, and the DAO Safe with its SafeSnap Reality module. The legacy V2 contracts beyond the Genesis vault's migration path, vault fee recipients, three unverified own-MEV escrows and the approved-implementation list are not crawled.
 
 ## Initial discovery
 
@@ -280,6 +280,12 @@ Initial discovery of StakeWise V3 (osETH): the vault registry, the Keeper and it
 +   Status: CREATED
     contract StakeWise DAO RealityModule (eth:0xB5cF5363c3e766e64B37b2fB9554bFE8D48ED1A0) [gnosisSafeModules/RealityModule]
     +++ description: Zodiac Reality module (SafeSnap): executes transactions from the Safe once a Reality.eth question confirming an off-chain vote resolves. A question needs a bond of at least 1,000,000 of the oracle's bond token, stays open for 1d after the last answer, can execute after a further 1d and expires 7d later.
+```
+
+```diff
++   Status: CREATED
+    contract RetiredOsTokenRedeemer (eth:0xc43A7b16A7a167c0318390Cba16787C11e9e1FD0) [stakewise/OsTokenRedeemer]
+    +++ description: Previous osToken redeemer. Vaults accept redemptions only from the redeemer named in the collateral config, so this contract can no longer redeem positions; osToken still queued in it is paid out only when someone buys it with the underlying asset.
 ```
 
 ```diff

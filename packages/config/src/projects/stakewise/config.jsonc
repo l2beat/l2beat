@@ -10,6 +10,7 @@
     "eth:0x2A261e60FB14586B474C208b1B7AC6D0f5000306", // OsTokenVaultController
     "eth:0x287d1e2A8dE183A8bf8f2b09Fa1340fBd766eb59", // OsTokenConfig
     "eth:0x9Fc8C7F3C1ff6d0DF39EcB5870884d59777Ea2Bb", // OsTokenRedeemer (set in OsTokenConfig on 2026-11-05)
+    "eth:0xc43A7b16A7a167c0318390Cba16787C11e9e1FD0", // previous OsTokenRedeemer, osETH still queued in it
     "eth:0x09e84205DF7c68907e619D07aFD90143c5763605", // OsTokenVaultEscrow
     "eth:0x48319f97E5Da1233c21c48b80097c0FB7a20Ff86", // SharedMevEscrow
     "eth:0x75AB6DdCe07556639333d3Df1eaa684F5735223e", // DepositDataRegistry
@@ -46,6 +47,7 @@
     "eth:0x2A261e60FB14586B474C208b1B7AC6D0f5000306": "OsTokenVaultController",
     "eth:0x287d1e2A8dE183A8bf8f2b09Fa1340fBd766eb59": "OsTokenConfig",
     "eth:0x9Fc8C7F3C1ff6d0DF39EcB5870884d59777Ea2Bb": "OsTokenRedeemer",
+    "eth:0xc43A7b16A7a167c0318390Cba16787C11e9e1FD0": "RetiredOsTokenRedeemer",
     "eth:0x09e84205DF7c68907e619D07aFD90143c5763605": "OsTokenVaultEscrow",
     "eth:0x48319f97E5Da1233c21c48b80097c0FB7a20Ff86": "SharedMevEscrow",
     "eth:0x75AB6DdCe07556639333d3Df1eaa684F5735223e": "DepositDataRegistry",
@@ -103,6 +105,16 @@
   // and oracle set. Factories point at the approved vault implementations, which already
   // appear as the implementation of each vault proxy. Meta vaults' curator is stateless.
   "overrides": {
+    // Replaced as the redeemer on 2026-11-05. Vaults accept redemptions only from the
+    // redeemer named in OsTokenConfig, so its owner and positions manager no longer
+    // hold any power over user funds; it stays in scope for the osETH still queued in it.
+    "eth:0xc43A7b16A7a167c0318390Cba16787C11e9e1FD0": {
+      "description": "Previous osToken redeemer. Vaults accept redemptions only from the redeemer named in the collateral config, so this contract can no longer redeem positions; osToken still queued in it is paid out only when someone buys it with the underlying asset.",
+      "fields": {
+        "owner": { "permissions": [] },
+        "positionsManager": { "permissions": [] }
+      }
+    },
     "eth:0x867092A32bC16816F12Fb326EfF7A2865E1ec138": {
       "ignoreRelatives": ["token"]
     },

@@ -1,7 +1,7 @@
 {
   "name": "stakewise",
   "timestamp": 1793883886,
-  "configHash": "0xa4d9110e725ad7f79caf27a554d3a32c9eb36fc6cf22ea1da9e33338fe6825b9",
+  "configHash": "0xcd8d5d99a7e8c7e8fa4cf704f8158e6feb79bb38bf3c02cf926401d44a5c5576",
   "entries": [
     {
       "name": "OsTokenVaultEscrow",
@@ -2179,6 +2179,77 @@
       "proxyType": "EOA"
     },
     {
+      "name": "RetiredOsTokenRedeemer",
+      "address": "eth:0xc43A7b16A7a167c0318390Cba16787C11e9e1FD0",
+      "type": "Contract",
+      "template": "stakewise/OsTokenRedeemer",
+      "sourceHashes": [
+        "0x4856e1b74e2012827b5d8a5c978f20262eb707c1b6b90c0bdb3e92dd58430844"
+      ],
+      "proxyType": "immutable",
+      "description": "Previous osToken redeemer. Vaults accept redemptions only from the redeemer named in the collateral config, so this contract can no longer redeem positions; osToken still queued in it is paid out only when someone buys it with the underlying asset.",
+      "ignoreInWatchMode": [
+        "getExitQueueData",
+        "getExitQueueCumulativeTickets",
+        "exitQueueTimestamp",
+        "canProcessExitQueue",
+        "queuedShares",
+        "unclaimedAssets",
+        "redeemedAssets",
+        "redeemedShares",
+        "swappedAssets",
+        "swappedShares",
+        "redeemablePositions",
+        "nonce",
+        "accumulatedFees"
+      ],
+      "deployerAddress": "eth:0xFF2B6d2d5c205b99E2e6f607B6aFA3127B9957B6",
+      "sinceTimestamp": 1776712727,
+      "sinceBlock": 24923158,
+      "values": {
+        "$immutable": true,
+        "canProcessExitQueue": false,
+        "exitQueueTimestamp": 1790795783,
+        "exitQueueUpdateDelay": 43200,
+        "exitQueueUpdateDelayFormatted": "12h",
+        "getExitQueueCumulativeTickets": "752750455529878201832",
+        "getExitQueueData": [
+          "29227099893545194294",
+          107913546123485,
+          "723523355636333007538"
+        ],
+        "nonce": 1,
+        "owner": "eth:0x2685C0e39EEAAd383fB71ec3F493991d532A87ae",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "positionsManager": "eth:0xf900C827cdabFFb24fed00354579131516DAcE28",
+        "queuedShares": "29227099893545194294",
+        "redeemablePositions": {
+          "merkleRoot": "0xc7210eff951c3e534f8b1ca70faf4bd50de0a9d50e885c10c58dc5751a0698d0",
+          "ipfsHash": "bafkreib3i5mekffctc4g6esnv5fagxttrdcmn42hdgiudxrgndxkx7bk2a"
+        },
+        "redeemedAssets": 0,
+        "redeemedShares": 0,
+        "swappedAssets": 0,
+        "swappedShares": 0,
+        "unclaimedAssets": 107913546123485
+      },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "positionsManager": { "severity": "HIGH" },
+        "redemptionFeePercent": {
+          "severity": "MEDIUM",
+          "description": "Fee on redemptions, in basis points."
+        },
+        "maxRedemptionFeePercent": {
+          "description": "Ceiling of the redemption fee, in basis points."
+        }
+      },
+      "implementationNames": {
+        "eth:0xc43A7b16A7a167c0318390Cba16787C11e9e1FD0": "EthOsTokenRedeemer"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
       "address": "eth:0xC46e791d4fB1207fAB8Cb0e44889127138539c69",
       "type": "EOA",
       "proxyType": "EOA"
@@ -3820,6 +3891,75 @@
       "function template() view returns (uint256)",
       "function transferOwnership(address newOwner)"
     ],
+    "eth:0xc43A7b16A7a167c0318390Cba16787C11e9e1FD0": [
+      "constructor(address vaultsRegistry_, address osToken_, address osTokenVaultController_, address owner_, uint256 exitQueueUpdateDelay_)",
+      "error AccessDenied()",
+      "error AddressEmptyCode(address target)",
+      "error ExitRequestNotProcessed()",
+      "error FailedCall()",
+      "error InsufficientBalance(uint256 balance, uint256 needed)",
+      "error InvalidAssets()",
+      "error InvalidCheckpointValue()",
+      "error InvalidDelay()",
+      "error InvalidProof()",
+      "error InvalidRedeemablePositions()",
+      "error InvalidShares()",
+      "error InvalidVault()",
+      "error MerkleProofInvalidMultiproof()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error ReentrancyGuardReentrantCall()",
+      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
+      "error SafeERC20FailedOperation(address token)",
+      "error TooEarlyUpdate()",
+      "error ValueNotChanged()",
+      "error ZeroAddress()",
+      "event CheckpointCreated(uint256 shares, uint256 assets)",
+      "event ExitQueueEntered(address indexed owner, address indexed receiver, uint256 positionTicket, uint256 shares)",
+      "event ExitedAssetsClaimed(address indexed receiver, uint256 prevPositionTicket, uint256 newPositionTicket, uint256 withdrawnAssets)",
+      "event OsTokenPositionsRedeemed(uint256 shares, uint256 assets)",
+      "event OsTokenSharesSwapped(address indexed sender, address indexed receiver, uint256 shares, uint256 assets)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event PositionsManagerUpdated(address indexed positionsManager)",
+      "event RedeemablePositionsUpdated(bytes32 indexed merkleRoot, string ipfsHash)",
+      "function acceptOwnership()",
+      "function calculateExitedAssets(address receiver, uint256 positionTicket, uint256 exitQueueIndex) view returns (uint256 leftTickets, uint256 exitedTickets, uint256 exitedAssets)",
+      "function canProcessExitQueue() view returns (bool)",
+      "function claimExitedAssets(uint256 positionTicket, uint256 exitQueueIndex)",
+      "function enterExitQueue(uint256 shares, address receiver) returns (uint256 positionTicket)",
+      "function exitQueueTimestamp() view returns (uint256)",
+      "function exitQueueUpdateDelay() view returns (uint256)",
+      "function exitRequests(bytes32 exitRequestHash) view returns (uint256 shares)",
+      "function getExitQueueCumulativeTickets() view returns (uint256)",
+      "function getExitQueueData() view returns (uint256, uint256, uint256)",
+      "function getExitQueueIndex(uint256 positionTicket) view returns (int256)",
+      "function getExitQueueMissingAssets(uint256 targetCumulativeTickets) view returns (uint256 missingAssets)",
+      "function leafToProcessedShares(bytes32 leaf) view returns (uint256 processedShares)",
+      "function multicall(bytes[] data) returns (bytes[] results)",
+      "function nonce() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function permitOsToken(uint256 shares, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function positionsManager() view returns (address)",
+      "function processExitQueue()",
+      "function queuedShares() view returns (uint128)",
+      "function redeemOsTokenPositions(tuple(address vault, address owner, uint256 leafShares, uint256 sharesToRedeem)[] positions, bytes32[] proof, bool[] proofFlags)",
+      "function redeemSubVaultOsToken(address subVault, uint256 osTokenShares) returns (uint256)",
+      "function redeemSubVaultsAssets(address metaVault, uint256 assetsToRedeem) returns (uint256 totalRedeemedAssets)",
+      "function redeemablePositions() view returns (bytes32 merkleRoot, string ipfsHash)",
+      "function redeemedAssets() view returns (uint128)",
+      "function redeemedShares() view returns (uint128)",
+      "function renounceOwnership()",
+      "function setPositionsManager(address positionsManager_)",
+      "function setRedeemablePositions(tuple(bytes32 merkleRoot, string ipfsHash) newPositions)",
+      "function swapAssetsToOsTokenShares(address receiver) payable returns (uint256 osTokenShares)",
+      "function swappedAssets() view returns (uint128)",
+      "function swappedShares() view returns (uint128)",
+      "function transferOwnership(address newOwner)",
+      "function unclaimedAssets() view returns (uint128)",
+      "function updateVaultState(address vault, tuple(bytes32 rewardsRoot, int160 reward, uint160 unlockedMevReward, bytes32[] proof) harvestParams)"
+    ],
     "eth:0xCd191DfDF52ae7aa2B1AD7B4a6A9D4d4FFB837B5": [
       "constructor(address _implementation, address vaultsRegistry)",
       "event MetaVaultCreated(address indexed caller, address indexed admin, address indexed vault, bytes params)",
@@ -4368,7 +4508,7 @@
     "stakewise/VaultsRegistry": "0x0dc5166eb04e9bd6c2575f359c35d5f5c75e4c33510f55c7361d7dc23a75e74a"
   },
   "usedBlockNumbers": { "ethereum": 26348814 },
-  "permissionsConfigHash": "0x6e5de0f81030375a14faa1656763879210038a4f4046e97a9c925d9a45c59e45",
+  "permissionsConfigHash": "0xd54cb4dfb67581505505e86ff1b00d4e7dc10428c60dfbf2cde1db11ae168eac",
   "permissions": {
     "eth:0x0a95D62429399b08841f5dCDC5579Ca8f7794E96": {
       "receivedPermissions": [
@@ -4447,7 +4587,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations.",
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (its slope capped by the keeper), staking key registrations, exit signatures and consolidations.",
           "role": ".oracles"
         }
       ]
@@ -4547,7 +4687,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations.",
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (its slope capped by the keeper), staking key registrations, exit signatures and consolidations.",
           "role": ".oracles"
         }
       ]
@@ -4567,7 +4707,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations.",
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (its slope capped by the keeper), staking key registrations, exit signatures and consolidations.",
           "role": ".oracles"
         }
       ]
@@ -4577,7 +4717,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations.",
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (its slope capped by the keeper), staking key registrations, exit signatures and consolidations.",
           "role": ".oracles"
         }
       ]
@@ -4597,7 +4737,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations.",
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (its slope capped by the keeper), staking key registrations, exit signatures and consolidations.",
           "role": ".oracles"
         }
       ]
@@ -4629,7 +4769,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations.",
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (its slope capped by the keeper), staking key registrations, exit signatures and consolidations.",
           "role": ".oracles"
         }
       ]
@@ -4639,7 +4779,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations.",
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (its slope capped by the keeper), staking key registrations, exit signatures and consolidations.",
           "role": ".oracles"
         }
       ]
@@ -4659,7 +4799,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations.",
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (its slope capped by the keeper), staking key registrations, exit signatures and consolidations.",
           "role": ".oracles"
         }
       ]
@@ -4835,7 +4975,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations.",
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (its slope capped by the keeper), staking key registrations, exit signatures and consolidations.",
           "role": ".oracles"
         }
       ]
@@ -4855,7 +4995,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations.",
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (its slope capped by the keeper), staking key registrations, exit signatures and consolidations.",
           "role": ".oracles"
         }
       ]
@@ -4865,7 +5005,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations.",
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (its slope capped by the keeper), staking key registrations, exit signatures and consolidations.",
           "role": ".oracles"
         }
       ]

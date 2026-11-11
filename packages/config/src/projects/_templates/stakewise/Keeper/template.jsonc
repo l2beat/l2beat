@@ -43,7 +43,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (bounded per update by the keeper), staking key registrations, exit signatures and consolidations."
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (its slope capped by the keeper), staking key registrations, exit signatures and consolidations."
         }
       ]
     },

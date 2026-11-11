@@ -52,7 +52,7 @@ const keeperArgs = discovery.getContractValue<{
 }>('Keeper', 'constructorArgs')
 const maxRatePerYear = wad(keeperArgs.maxAvgRewardPerSecond) * SECONDS_PER_YEAR
 const rateCapYear = percent(maxRatePerYear)
-const rateCapUpdate = percent(
+const rateCapInterval = percent(
   (maxRatePerYear * rewardsDelaySeconds) / SECONDS_PER_YEAR,
   3,
 )
@@ -92,6 +92,14 @@ const approvedImplCount = discovery.getContractValue<string[]>(
   'VaultsRegistry',
   'vaultImpls',
 ).length
+
+// A redeemer the DAO replaced keeps the osETH queued in it, but vaults only
+// honour the current redeemer, so that queue is paid only through swaps.
+const retiredQueued = BigInt(value('RetiredOsTokenRedeemer', 'queuedShares'))
+const retiredRedeemerNote =
+  retiredQueued > 0n
+    ? ` A redeemer the DAO has since replaced still holds ${osETH} queued before the switch; it can no longer redeem positions, so that queue is paid out only when someone buys the queued ${osETH} with ETH.`
+    : ''
 
 const redeemInterval = duration(
   number('OsTokenRedeemer', 'exitQueueUpdateDelay'),
@@ -135,7 +143,8 @@ export const stakewise: BaseProject = {
         validatorThreshold,
         rewardsInterval,
         rateCapYear,
-        rateCapUpdate,
+        rateCapInterval,
+        retiredRedeemerNote,
         osFee,
         defaultLtv,
         defaultLiqThreshold,
@@ -191,11 +200,11 @@ export const stakewise: BaseProject = {
       },
       {
         category: 'Funds can lose value if',
-        text: `the oracle quorum sets the ${osETH} reward rate above the real yield or misreports a vault's rewards; the rate can only rise, by at most ${rateCapUpdate} per update, but the per-vault rewards are not bounded and ${noLiqVaultCount} vaults mint ${osETH} up to ${maxLtv} with liquidations disabled.`,
+        text: `the oracle quorum sets the ${osETH} reward rate above the real yield or misreports a vault's rewards; the rate is capped at ${rateCapYear} a year (about ${rateCapInterval} every ${rewardsInterval}) and never falls, but the per-vault rewards are not bounded and ${noLiqVaultCount} vaults mint ${osETH} up to ${maxLtv} with liquidations disabled.`,
       },
       {
         category: 'Funds can be frozen if',
-        text: 'the oracles stop signing: rewards and both exit queues only advance with their updates, so ETH that key managers withdraw from validators stays in the vault and nobody else can release it.',
+        text: 'the oracles stop signing: vault balances and both exit queues only advance with their updates, so ETH that key managers withdraw from validators stays in the vault and nobody else can release it, while the ${osETH} rate keeps rising at the last reported rate.',
       },
     ],
   },
