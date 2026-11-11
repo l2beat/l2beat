@@ -1,4 +1,3 @@
-import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -41,7 +40,6 @@ export function IntegrateCropsPage({
             <AttestationsSection attestations={attestations} />
           </main>
         </div>
-        <ScrollToTopButton />
       </SideNavLayout>
     </AppLayout>
   )

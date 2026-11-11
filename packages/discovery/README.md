@@ -18,7 +18,7 @@ How to research a project with these commands, level by level, is in [`packages/
 
 # To run the discovery UI
 
-`l2b ui` runs the discovery UI on http://localhost:2021/ui.
+`l2b ui` runs the discovery UI on http://localhost:2021/ui, or on the next free port when 2021 is taken.
 
 # AI templatizer
 

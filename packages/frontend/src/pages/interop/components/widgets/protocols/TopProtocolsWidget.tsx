@@ -87,7 +87,7 @@ export function TopProtocolsWidget({
                   <td className="@max-[373px]:hidden w-10 text-right font-medium text-2xs text-secondary">
                     {protocol[metricType].share.toFixed(1)}%
                   </td>
-                  <td className="w-12.5 text-right font-medium text-2xs">
+                  <td className="w-12.5 whitespace-nowrap pl-1 text-right font-medium text-2xs">
                     {formatValue(protocol[metricType].value)}
                   </td>
                 </tr>

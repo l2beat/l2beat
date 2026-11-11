@@ -6,12 +6,23 @@ declare module '@shuding/opentype.js' {
   }
   interface Font {
     unitsPerEm: number
+    ascender: number
+    descender: number
+    tables: { os2: { sCapHeight: number } }
     charToGlyph(char: string): Glyph
     getAdvanceWidth(
       text: string,
       fontSize: number,
       options?: { kerning?: boolean },
     ): number
+    /** `letterSpacing` is in em, added after every glyph. */
+    getPath(
+      text: string,
+      x: number,
+      y: number,
+      fontSize: number,
+      options?: { kerning?: boolean; letterSpacing?: number },
+    ): { toPathData(decimalPlaces?: number): string }
   }
   const opentype: { parse(buffer: ArrayBufferLike): Font }
   // biome-ignore lint/style/noDefaultExport: the package exports it as default

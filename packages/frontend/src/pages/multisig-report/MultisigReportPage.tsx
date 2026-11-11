@@ -18,7 +18,7 @@ export function MultisigReportPage({ multisigReportImage, ...props }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
-        <main className="flex flex-col md:items-center">
+        <main className="flex flex-col max-md:px-4 md:items-center">
           <ReportBanner image={multisigReportImage} />
           <ReportDownloadButton fileUrl={multisigReportUrl} />
           <div className="mt-12 mb-6 w-full leading-7">

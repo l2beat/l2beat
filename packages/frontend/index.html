@@ -10,6 +10,9 @@
 
 <body
   class="text-base text-primary md:text-lg font-roboto">
+  <!-- Sets the theme class before anything paints. After the stylesheet: run
+       before it, the sidebar starts a colour transition once the styles land -->
+  <script><!--theme-script--></script>
   <!-- Before #root, so inline scripts there can read it; it is tiny -->
   <script type="application/json" id="env-data"><!--env-data--></script>
   <div id="root"><!--app-html--></div>

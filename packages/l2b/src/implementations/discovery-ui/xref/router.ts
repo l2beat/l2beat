@@ -1,12 +1,9 @@
-import {
-  attachPermissions,
-  type ConfigReader,
-  getReachableEntries,
-} from '@l2beat/discovery'
+import type { ConfigReader } from '@l2beat/discovery'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v as z } from '@l2beat/validate'
 import type { Express } from 'express'
 import { FlatWorkspace } from '../../xref/FlatWorkspace'
+import { readReachableEntries } from '../readReachableEntries'
 import { contractAt, definitionAt, referencesAt } from './navigation'
 
 const PROJECT_CHARACTERS =
@@ -36,20 +33,14 @@ const positionSchema = z.object({
   offset: nonNegativeInteger,
 })
 
-// The panel lists only entries reachable from the project, like getProject,
-// so answers pointing anywhere else could not be opened.
+// The panel lists only reachable entries, so answers pointing anywhere else
+// could not be opened.
 export function reachableAddresses(
   configReader: ConfigReader,
   project: string,
 ): Set<ChainSpecificAddress> {
-  const discoveries = configReader.readDiscoveryWithReferences(project)
-  attachPermissions(discoveries)
-  const entries = discoveries
-    .flatMap((d) => d.entries)
-    .filter((e) => e.type !== 'Reference')
-  const entrypoints = (discoveries[0]?.entries ?? []).map((e) => e.address)
   return new Set(
-    getReachableEntries(entries, entrypoints).map((e) => e.address),
+    readReachableEntries(configReader, project).map((e) => e.address),
   )
 }
 

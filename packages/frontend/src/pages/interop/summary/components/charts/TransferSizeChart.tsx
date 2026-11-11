@@ -1,11 +1,14 @@
-import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
+import { formatCount, formatCurrency } from '@l2beat/shared-pure'
 import { type PointerEvent, useId, useRef } from 'react'
 import {
   ChartContext,
   type ChartMeta,
 } from '~/components/core/chart/ChartContext'
 import { ChartLegend } from '~/components/core/chart/ChartLegend'
-import { ChartTooltipRow } from '~/components/core/chart/ChartTooltip'
+import {
+  ChartTooltipRow,
+  ChartTooltipWrapper,
+} from '~/components/core/chart/ChartTooltip'
 import {
   type Anchor,
   TOOLTIP_OFFSET,
@@ -13,7 +16,6 @@ import {
 } from '~/components/core/chart/useChartTooltip'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
-import { tooltipContentVariants } from '~/components/core/tooltip/Tooltip'
 import { Logo } from '~/components/Logo'
 import { EM_DASH } from '~/consts/characters'
 import { useIsClient } from '~/hooks/useIsClient'
@@ -142,7 +144,8 @@ function TransferSizeBars({
   const legendHeight = legend.height ?? 0
 
   const margin = horizontal
-    ? { top: 4, right: 8, bottom: 4, left: 4 }
+    ? // Right: half of the centred '100%' label.
+      { top: 4, right: 16, bottom: 4, left: 4 }
     : { top: 20, right: 0, bottom: 0, left: 0 }
   const plotLeft = margin.left + (horizontal ? categoryAxisWidth : 30)
   const plotTop = margin.top + (horizontal ? 0 : legendHeight)
@@ -493,7 +496,7 @@ function CustomTooltip({
   const orderedBuckets = horizontal ? BUCKETS : [...BUCKETS].reverse()
 
   return (
-    <div className={tooltipContentVariants()}>
+    <ChartTooltipWrapper>
       <div className="font-medium text-label-value-14 text-secondary">
         {data.name}
       </div>
@@ -506,7 +509,7 @@ function CustomTooltip({
             Total identified transfers
           </span>
           <span className="font-medium text-label-value-15 text-primary tabular-nums">
-            {formatInteger(totalTransfers)} transfers
+            {formatCount(totalTransfers, 'transfer')}
           </span>
         </div>
         {orderedBuckets.map((bucket) => {
@@ -520,7 +523,7 @@ function CustomTooltip({
               wrapLabel={false}
             >
               <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                {formatInteger(count)} transfers
+                {formatCount(count, 'transfer')}
               </span>
             </ChartTooltipRow>
           )
@@ -547,7 +550,7 @@ function CustomTooltip({
           </span>
         </div>
       </div>
-    </div>
+    </ChartTooltipWrapper>
   )
 }
 

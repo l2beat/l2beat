@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
 import { Button } from './core/Button'
 
@@ -73,10 +74,10 @@ function PaginationPrevious({
     <PaginationLink
       aria-label="Go to previous page"
       size="default"
-      className={cn('pl-1.5!', className)}
+      className={cn('gap-1 pl-1.5!', className)}
       {...props}
     >
-      {/* <ChevronLeftIcon data-icon="inline-start" className="cn-rtl-flip" /> */}
+      <ChevronIcon className="size-3 rotate-90 fill-current" />
       <span className="hidden sm:block">{text}</span>
     </PaginationLink>
   )
@@ -91,11 +92,11 @@ function PaginationNext({
     <PaginationLink
       aria-label="Go to next page"
       size="default"
-      className={cn('pr-1.5!', className)}
+      className={cn('gap-1 pr-1.5!', className)}
       {...props}
     >
       <span className="hidden sm:block">{text}</span>
-      {/* <ChevronRightIcon data-icon="inline-end" className="cn-rtl-flip" /> */}
+      <ChevronIcon className="-rotate-90 size-3 fill-current" />
     </PaginationLink>
   )
 }

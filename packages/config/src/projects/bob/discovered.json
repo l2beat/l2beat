@@ -1,6 +1,6 @@
 {
   "name": "bob",
-  "timestamp": 1793195449,
+  "timestamp": 1793982680,
   "configHash": "0xcba796d39bd6e708604c80087a9a2303756eae46f8d132a6fe3892df465abf27",
   "entries": [
     {
@@ -526,6 +526,15 @@
             "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
             "value": 0,
             "data": "0xd0a6af308b38038c000000000000000000000000000000000000000000000000000000000000000000000000000000009660bd6dcdf455dcfb30c07c642ab22e7cb89f50",
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": 259200
+          },
+          {
+            "id": "0xf40a937e65e41f9adb997f8f4b5a1b39d83bb01cdb8b9e4f7e63c6bdb80d2d12",
+            "index": 0,
+            "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+            "value": 0,
+            "data": "0xd0a6af30e71e6620000000000000000000000000000000000000000000000000000000000000000000000000000000005144a37e65fd032f628663cb21e16490378a8630",
             "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
             "delay": 259200
           }
@@ -1296,7 +1305,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 21000,
-          "prevBlockNum": 26290008
+          "prevBlockNum": 26349982
         },
         "paused": false,
         "proofMaturityDelaySeconds": 86400,
@@ -1463,7 +1472,7 @@
         "game9Args": "0x",
         "game9Vm": "UNRESOLVED",
         "game9Weth": "UNRESOLVED",
-        "gameCount": 1195,
+        "gameCount": 1268,
         "initBondGame0": 0,
         "initBondGame1": 0,
         "initBondGame42": 0,
@@ -1474,7 +1483,7 @@
         "initVersion": 1,
         "owner": "eth:0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E",
         "permissionedGameArgs": "0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6b6b6342ff75b4213cbf101c135f1fc33695acc13c9ac21acd8696b64270716528bf83630ea7a293c048d0cff3f0729117f44da6494dbf4d78e593d95000000000000000000000000000000000000000000000000000000000000ed887cb1022d30b9860c36b243e7b181a1d46f618c69c91482a96e9c2a104d9298d1980eccf8c4dc764e",
-        "permissionedGamesTotal": 337,
+        "permissionedGamesTotal": 410,
         "proposerFromDGF": "eth:0x7cB1022D30b9860C36b243E7B181A1d46f618C69",
         "proxyAdmin": "eth:0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0",
         "proxyAdminOwner": "eth:0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E",
@@ -2034,13 +2043,13 @@
           ]
         ],
         "$upgradeCount": 5,
-        "anchorGame": "eth:0x8e63e6C5aEa9ccE07499da8a88B814Ec09fB4ee9",
+        "anchorGame": "eth:0x890dc147E5E1453Fa284AdE40696ff208F178795",
         "blacklistedGames": [],
         "disputeGameFactory": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",
         "disputeGameFinalityDelaySeconds": 43200,
         "getAnchorRoot": [
-          "0x061944ee1818c1fd2d2140de331191d593f536cfc09877cfed9cea7695579094",
-          40117048
+          "0xa944164dabb888b967e2219c7e828b72a931e73ec6723b60720af9aeca1ffb49",
+          40511319
         ],
         "getStartingAnchorRoot": {
           "root": "0xdead000000000000000000000000000000000000000000000000000000000000",
@@ -2271,7 +2280,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292660848",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292660851",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -3844,7 +3853,7 @@
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/RiscZeroGroth16VerifierLegacy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 26291640 },
+  "usedBlockNumbers": { "ethereum": 26357020 },
   "permissionsConfigHash": "0xb4e16bbcf8d5224d3b1a2995c070523fb79823fdd62266fbf8ce5004f1998afd",
   "permissions": {
     "eth:0x08F9F14fF43E112B18c96f0986F28Cb1878f1D11": {

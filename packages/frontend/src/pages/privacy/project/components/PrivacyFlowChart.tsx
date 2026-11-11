@@ -1,5 +1,5 @@
 import type { Milestone } from '@l2beat/config'
-import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
+import { formatCurrency, formatInteger, UnixTime } from '@l2beat/shared-pure'
 import { scaleSymlog } from 'd3-scale'
 import { useMemo } from 'react'
 import type { ChartScale } from '~/components/chart/types'
@@ -19,6 +19,7 @@ import { tinted } from '~/components/core/chart/tint'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { PrivacyFlowsChartPoint } from '~/server/features/privacy/getPrivacyFlowsChart'
 import { formatRange } from '~/utils/dates'
+import type { ChartResolution } from '~/utils/range/range'
 
 interface Props {
   data: PrivacyFlowsChartPoint[] | undefined
@@ -26,6 +27,8 @@ interface Props {
   isLoading: boolean
   isPlaceholderData: boolean
   metric: 'count' | 'value'
+  /** Of the data on screen: each point sums one period of this length. */
+  resolution: ChartResolution
   scale?: ChartScale
   project?: ChartProject
   milestones?: Milestone[]
@@ -52,6 +55,7 @@ export function PrivacyFlowChart({
   isLoading,
   isPlaceholderData,
   metric,
+  resolution,
   scale = 'linear',
   project,
   milestones,
@@ -116,7 +120,12 @@ export function PrivacyFlowChart({
         }}
         syncedUntil={syncedUntil}
         renderTooltip={(row, keys) => (
-          <PrivacyFlowChartTooltip row={row} keys={keys} metric={metric} />
+          <PrivacyFlowChartTooltip
+            row={row}
+            keys={keys}
+            metric={metric}
+            resolution={resolution}
+          />
         )}
       />
     </ChartContainer>
@@ -127,17 +136,19 @@ function PrivacyFlowChartTooltip({
   row,
   keys,
   metric,
+  resolution,
 }: {
   row: { timestamp: number } & Record<SeriesKey, number | null>
   keys: SeriesKey[]
   metric: 'count' | 'value'
+  resolution: ChartResolution
 }) {
   const label = row.timestamp
 
   return (
     <ChartTooltipWrapper>
       <div className="font-medium text-label-value-14 text-secondary">
-        {formatRange(label, label + 1 * 24 * 60 * 60)}
+        {formatRange(label, label + UnixTime.periodToSeconds(resolution))}
       </div>
       <HorizontalSeparator className="my-2" />
       <div className="flex flex-col gap-2">

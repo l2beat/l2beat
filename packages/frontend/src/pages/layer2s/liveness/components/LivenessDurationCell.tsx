@@ -38,7 +38,7 @@ export function getDurationColorClassName(durationInSeconds: number) {
     return ''
   }
   if (durationInSeconds < UnixTime.DAY) {
-    return 'text-warning-text dark:text-yellow-100'
+    return 'text-yellow-700 dark:text-yellow-100'
   }
   return 'text-orange-600 dark:text-orange-500'
 }

@@ -206,13 +206,13 @@ export function TimeSeriesChart<T, K extends string>({
     s.axis === 'right' && hasRightAxis ? RIGHT_SCALE : Y_SCALE
   const noDataId = useNoDataId()
 
-  const lastSyncedX =
+  // The unsynced area starts at the last synced row, or at the first row
+  // when the synced data ends before the chart does.
+  const lastSyncedRow =
     syncedUntil !== undefined
-      ? (() => {
-          const row = rows.findLast((d) => x(d) <= syncedUntil)
-          return row !== undefined ? x(row) : undefined
-        })()
+      ? (rows.findLast((d) => x(d) <= syncedUntil) ?? rows[0])
       : undefined
+  const lastSyncedX = lastSyncedRow !== undefined ? x(lastSyncedRow) : undefined
   // With every series deselected the plot is empty, areas included.
   const areas: ChartReferenceArea[] =
     visible.length === 0

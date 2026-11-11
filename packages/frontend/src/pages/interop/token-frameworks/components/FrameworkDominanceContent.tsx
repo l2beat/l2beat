@@ -73,7 +73,7 @@ function toDominanceRow(item: DisplayItem): DominanceRow {
     averageDurationSeconds: entry.averageDurationSeconds,
     header: <FrameworkHeader framework={framework} />,
     thirdStat: {
-      label: 'Avg. transfer size',
+      label: 'Avg. transfer value',
       value:
         entry.averageValue !== null
           ? formatCurrency(entry.averageValue, 'usd', { decimals: 2 })

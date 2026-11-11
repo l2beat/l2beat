@@ -2,7 +2,7 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { DiscordClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
-import uniqBy from 'lodash/uniqBy'
+import uniq from 'lodash/uniq'
 import type {
   BlockDaIndexedConfig,
   DataAvailabilityTrackingConfig,
@@ -122,6 +122,7 @@ function createIndexers(
     const configurations = config.blockProjects.filter(
       (c) => c.daLayer === daLayer.name,
     )
+    const projectIds = uniq(configurations.map((c) => c.projectId))
 
     const targetIndexer = new BlockTargetIndexer(
       logger,
@@ -129,14 +130,10 @@ function createIndexers(
       providers.blockTimestamp,
       daLayer.name,
       {
-        onTick: async (targetTimestamp, blockNumber) => {
-          await database.syncMetadata.upsertMany(
-            uniqBy(configurations, (e) => e.projectId).map((c) => ({
-              feature: 'dataAvailability',
-              id: c.projectId,
-              target: targetTimestamp,
-              blockTarget: blockNumber,
-            })),
+        onTick: async (target, blockTarget) => {
+          await database.syncMetadata.setTargets(
+            'dataAvailability',
+            projectIds.map((id) => ({ id, target, blockTarget })),
           )
         },
       },
@@ -202,6 +199,7 @@ function createIndexers(
         daProvider: providers.da,
         daService: daService,
         daLayer: daLayer.name,
+        projectIds,
         batchSize: daLayer.batchSize,
         parents: [blobIndexer],
         indexerService,

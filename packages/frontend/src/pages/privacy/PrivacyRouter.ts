@@ -9,6 +9,7 @@ import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
 import { sendNotFoundPage } from '../not-found/sendNotFoundPage'
+import { getPrivacyArchivedData } from './archived/getPrivacyArchivedData'
 import {
   getPrivacyProjectData,
   getPrivacyProjectMarkdown,
@@ -35,6 +36,12 @@ export function createPrivacyRouter(
       },
       () => getPrivacySummaryData(manifest, req.originalUrl, cache),
     )
+    const html = await render(data, req.originalUrl)
+    res.status(200).send(html)
+  })
+
+  router.get('/privacy/archived', async (req, res) => {
+    const data = await getPrivacyArchivedData(manifest, req.originalUrl, cache)
     const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })

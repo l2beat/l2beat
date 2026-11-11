@@ -144,7 +144,7 @@ function PrimitiveValue({ value }: { value: unknown }) {
   }
 
   if (typeof value === 'boolean') {
-    return <span className="text-warning-text">{String(value)}</span>
+    return <span className="text-warning">{String(value)}</span>
   }
 
   if (value === null) {

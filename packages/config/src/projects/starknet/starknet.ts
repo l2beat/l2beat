@@ -437,7 +437,7 @@ export const starknet: ScalingProject = {
         type: 'centralized',
         trustedPreconfirmation: {
           value: `${preconfirmationTimeMilliseconds} ms`,
-          secondLine: `${l2BlockTimeMilliseconds / 1_000}s L2 block time`,
+          secondLine: `${l2BlockTimeMilliseconds / 1_000} s L2 block time`,
           description: `The current proposer targets a PRE_CONFIRMED receipt in about ${preconfirmationTimeMilliseconds} ms. It is a trusted promise before consensus decides the block, with no onchain enforcement or slashing, and can be reverted if the proposal does not become the consensus block. The ${l2BlockTimeMilliseconds / 1_000}-second L2 block time is a target: a block can close earlier when it reaches a resource limit or later while transactions are still executing or consensus takes longer.`,
           orderHint: preconfirmationTimeMilliseconds / 1_000,
         },

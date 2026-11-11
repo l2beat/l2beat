@@ -48,8 +48,9 @@ export function OssificationDetails({
         exposure is the value secured, summed over that unchanged period.
       </p>
       {/* The same values as a row of the ossification table. */}
-      <ChartStats className="lg:grid-cols-3">
+      <ChartStats className="max-md:gap-y-4 lg:grid-cols-3">
         <ChartStatsItem
+          className={STACKED_ITEM}
           label="Ossification %"
           tooltip={OSSIFICATION_TOOLTIPS.score}
         >
@@ -62,6 +63,7 @@ export function OssificationDetails({
           </SecondLine>
         </ChartStatsItem>
         <ChartStatsItem
+          className={STACKED_ITEM}
           label={`${OSSIFICATION_VALUE_LABELS[ossification.valueSource ?? 'tvs'].short} & changes (1Y)`}
           tooltip={OSSIFICATION_TOOLTIPS.timeline}
         >
@@ -71,15 +73,18 @@ export function OssificationDetails({
           />
         </ChartStatsItem>
         <ChartStatsItem
+          className={STACKED_ITEM}
           label="Battle-tested exposure"
           tooltip={OSSIFICATION_TOOLTIPS.exposure}
         >
           <OssificationExposure
             exposure={ossification.exposure}
             valueSource={ossification.valueSource}
+            timeline={ossification.timeline}
           />
         </ChartStatsItem>
         <ChartStatsItem
+          className={STACKED_ITEM}
           label="Critical changes / year"
           tooltip={OSSIFICATION_TOOLTIPS.criticalChangesPerYear}
         >
@@ -89,6 +94,7 @@ export function OssificationDetails({
           </SecondLine>
         </ChartStatsItem>
         <ChartStatsItem
+          className={STACKED_ITEM}
           label="Exit window"
           tooltip={OSSIFICATION_TOOLTIPS.exitWindow}
         >
@@ -103,6 +109,9 @@ export function OssificationDetails({
     </div>
   )
 }
+
+/** Below md each row's value runs to several lines, so the label sits on its first line. */
+const STACKED_ITEM = 'max-md:items-start max-md:gap-4 max-md:text-right'
 
 function SecondLine({ children }: { children: React.ReactNode }) {
   return (

@@ -10,10 +10,10 @@
     "chain": "katana",
     "blockNumber": 33142393
   },
-  "OperatorFeeVault_v1_1_1": {
-    "hash": "0x0ba9b644913957c9f60eda0ab433da4523bb2437156e4dd8dadca627c884ba2a",
-    "address": "oeth:0xEddf416c7159387cc6DF3015700F79Cfb8911373",
-    "chain": "optimism",
-    "blockNumber": 154170183
+  "OperatorFeeVault_v1_1_0_base.sol": {
+    "hash": "0x9a24a383551a3f31ec6d4074b497508d7b9948436e0d39ae359d9b7874450180",
+    "address": "base:0x47B6C3e3C3d8144c83910D26E3b517DF4f6058c7",
+    "chain": "base",
+    "blockNumber": 53551478
   }
 }

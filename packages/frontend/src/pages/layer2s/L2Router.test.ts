@@ -68,7 +68,6 @@ const ENTRY: ProjectL2Entry = {
   icon: '/icons/arbitrum.png',
   archivedAt: undefined,
   isAppchain: false,
-  colors: undefined,
   underReviewStatus: undefined,
   header: {
     description: 'Arbitrum One is a general-purpose optimistic rollup.',
@@ -94,6 +93,7 @@ const ENTRY: ProjectL2Entry = {
       lastDayUops: 25.3,
       uopsWeeklyChange: -0.021,
       uopsWeeklyChangePeriod: '7D',
+      syncWarning: undefined,
     },
   },
   rosette: { self: [RISK, RISK, RISK, RISK, RISK] },

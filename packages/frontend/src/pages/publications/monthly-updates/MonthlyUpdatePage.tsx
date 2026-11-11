@@ -2,7 +2,6 @@ import type { UnixTime } from '@l2beat/shared-pure'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { SectionNavigation } from '~/components/section-navigation/SectionNavigation'
 import { StickyMobileSectionNavigation } from '~/components/section-navigation/StickyMobileSectionNavigation'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
@@ -79,7 +78,6 @@ export function MonthlyUpdatePage({ entry, ...props }: Props) {
             </div>
           </div>
         </div>
-        <ScrollToTopButton />
       </SideNavLayout>
     </AppLayout>
   )

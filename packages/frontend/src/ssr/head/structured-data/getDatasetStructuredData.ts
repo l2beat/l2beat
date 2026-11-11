@@ -1,4 +1,4 @@
-import { L2BEAT_ORGANIZATION } from './getOrganizationStructuredData'
+import { SITE_ORGANIZATION } from './getOrganizationStructuredData'
 import type { StructuredDataPage } from './StructuredData'
 
 /**
@@ -16,7 +16,7 @@ export function getDatasetStructuredData(
     name: dataset.name,
     description: page.description,
     isAccessibleForFree: true,
-    creator: L2BEAT_ORGANIZATION,
+    creator: SITE_ORGANIZATION,
     distribution: dataset.distribution,
   }
 }

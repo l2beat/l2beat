@@ -1,7 +1,7 @@
 {
   "name": "morph",
   "timestamp": 1793703220,
-  "configHash": "0xaa5554055d00a20e9290f7e7b8f32d7e1a06c323c8a9fb56f82221ee2b5ea422",
+  "configHash": "0x87306547330c2a472002b7355f9bee23af7ddae506853af36970592d69879c88",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -1408,6 +1408,7 @@
       ],
       "proxyType": "immutable",
       "description": "A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.",
+      "critical": { "sinceTimestamp": 1793671775 },
       "deployerAddress": "eth:0x5add06F01e73b75A4184C8cb74485bB0A897b23E",
       "sinceTimestamp": 1793586059,
       "sinceBlock": 26324067,

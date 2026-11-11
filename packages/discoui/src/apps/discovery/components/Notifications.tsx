@@ -22,7 +22,7 @@ export function NotificationsRoot() {
           toast:
             'flex w-full items-center gap-3 rounded-none border border-coffee-400 bg-coffee-700 px-3 py-2 text-coffee-200 shadow-lg shadow-coffee-900',
           title: 'text-sm font-medium',
-          description: 'text-xs text-coffee-400',
+          description: 'text-xs text-coffee-300',
           error: 'border-aux-red!',
           success: 'border-aux-green!',
           warning: 'border-aux-yellow!',

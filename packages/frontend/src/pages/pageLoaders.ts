@@ -69,11 +69,14 @@ export const pageLoaders = {
   BlobsPage: async () => (await import('./blobs/BlobsPage')).BlobsPage,
   PrivacySummaryPage: async () =>
     (await import('./privacy/summary/PrivacySummaryPage')).PrivacySummaryPage,
+  PrivacyArchivedPage: async () =>
+    (await import('./privacy/archived/PrivacyArchivedPage'))
+      .PrivacyArchivedPage,
   PrivacyProjectPage: async () =>
     (await import('./privacy/project/PrivacyProjectPage')).PrivacyProjectPage,
   TokensPage: async () => (await import('./tokens/TokensPage')).TokensPage,
-  DefiSummaryPage: async () =>
-    (await import('./defi/summary/DefiSummaryPage')).DefiSummaryPage,
+  LiquidStakingPage: async () =>
+    (await import('./defi/liquid-staking/LiquidStakingPage')).LiquidStakingPage,
   DefiProjectPage: async () =>
     (await import('./defi/project/DefiProjectPage')).DefiProjectPage,
   OssificationPage: async () =>

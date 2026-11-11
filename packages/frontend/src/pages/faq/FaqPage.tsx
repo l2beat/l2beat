@@ -1,7 +1,6 @@
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { Markdown } from '~/components/markdown/Markdown'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -45,7 +44,6 @@ export function FaqPage(props: AppLayoutProps) {
           </PrimaryCard>
           <FaqSideNav entries={faqItemsWithId} />
         </main>
-        <ScrollToTopButton />
       </SideNavLayout>
     </AppLayout>
   )

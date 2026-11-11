@@ -1,3 +1,107 @@
+Generated with discovered.json: 0x0cc6af454071d7014a6c8897c35b27d366dbefaa
+
+# Diff at Thu, 05 Nov 2026 15:33:57 GMT:
+
+- id: 4cee7ca8
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@181c6b3e2aefdcafd6dd1dd7151c810ad0e792a6 block: 1793194486
+- current timestamp: 1793874174
+
+## Description
+
+Polygon Multisig 2, the SystemConfig owner, raised the minimum L2 base fee from 0.001 to 0.05 gwei and the operator fee scalar from 100000 to 600000. Under Jovian the operator fee is gasUsed × scalar × 100 wei, so it rises from 0.01 to 0.06 gwei per gas. The minimum execution cost rises tenfold, from 0.011 to 0.11 gwei per gas, before the L1 data fee. Fee parameters only, no change to code or trust assumptions.
+
+The allocator EOA of the Morpho vault behind vbETH emptied the vault's supply queue, so it accepts no deposits. New ETH deposits (555 ETH, 21% of the vbETH backing) stay idle in the vbETH reserve and earn no yield. The vbETH reserve fields are now ignored in watch mode.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.minBaseFee:
+-        1000000
++        50000000
+      values.operatorFeeScalar:
+-        100000
++        600000
+    }
+```
+
+Generated with discovered.json: 0xe46fe10693a03a3269648b3f592527a59b3f66e0
+
+# Diff at Thu, 05 Nov 2026 07:14:25 GMT:
+
+- id: 9c1d5735
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@02f1e81176b548fbfa87cd86090398367c11dd2f block: 1793194486
+- current timestamp: 1793194486
+
+## Description
+
+Show who can change the recipient, minimum withdrawal amount and withdrawal network of the fee vaults, and describe the vaults from their code.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793194486 (main branch discovery), not current.
+
+```diff
+    contract SequencerFeeVault (katana:0x4200000000000000000000000000000000000011) [opstack/Layer2/SequencerFeeVault_karst] {
+    +++ description: Collects the sequencer fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.
+      template:
+-        "opstack/Layer2/SequencerFeeVault"
++        "opstack/Layer2/SequencerFeeVault_karst"
+      description:
+-        "Collects the sequencer fees."
++        "Collects the sequencer fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached."
+    }
+```
+
+```diff
+    contract BaseFeeVault (katana:0x4200000000000000000000000000000000000019) [opstack/Layer2/BaseFeeVault_karst] {
+    +++ description: Collects the EIP-1559 base fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.
+      description:
+-        "Collects EIP-1559 base fees"
++        "Collects the EIP-1559 base fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached."
+    }
+```
+
+```diff
+    contract L1FeeVault (katana:0x420000000000000000000000000000000000001A) [opstack/Layer2/L1FeeVault_karst] {
+    +++ description: Collects the L1 data portion of the L2 transaction fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.
+      description:
+-        "Collects the L1 portion of the L2 transaction fees."
++        "Collects the L1 data portion of the L2 transaction fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached."
+    }
+```
+
+```diff
+    contract OperatorFeeVault (katana:0x420000000000000000000000000000000000001b) [opstack/Layer2/OperatorFeeVault_karst] {
+    +++ description: Collects the operator fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.
+      template:
+-        "opstack/Layer2/OperatorFeeVault"
++        "opstack/Layer2/OperatorFeeVault_karst"
+      description:
+-        "Collects the operator fees."
++        "Collects the operator fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached."
+    }
+```
+
+```diff
+    contract SafeL2 (katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"katana:0x4200000000000000000000000000000000000011","description":"change the fee recipient, the minimum withdrawal amount and whether fees are withdrawn on L1 or L2.","role":".proxyAdminOwner"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"katana:0x4200000000000000000000000000000000000019","description":"change the fee recipient, the minimum withdrawal amount and whether fees are withdrawn on L1 or L2.","role":".proxyAdminOwner"}
+      receivedPermissions.2:
++        {"permission":"interact","from":"katana:0x420000000000000000000000000000000000001A","description":"change the fee recipient, the minimum withdrawal amount and whether fees are withdrawn on L1 or L2.","role":".proxyAdminOwner"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"katana:0x420000000000000000000000000000000000001b","description":"change the fee recipient, the minimum withdrawal amount and whether fees are withdrawn on L1 or L2.","role":".proxyAdminOwner"}
+    }
+```
+
 Generated with discovered.json: 0x00ea3de1eebe717a111f20395632ee1a351909fe
 
 # Diff at Wed, 28 Oct 2026 13:40:25 GMT:

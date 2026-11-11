@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
 import type { ProjectNavigationSection } from '~/components/projects/navigation/types'
-import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { StickyMobileSectionNavigation } from '~/components/section-navigation/StickyMobileSectionNavigation'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 
@@ -50,7 +49,6 @@ export function InteropEntityPageLayout({
             </div>
           )}
         </div>
-        <ScrollToTopButton />
       </div>
     </SideNavLayout>
   )

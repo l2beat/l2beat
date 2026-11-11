@@ -97,7 +97,7 @@ function SelectionOverlay({ message }: { message: string }) {
       />
       <div className="pointer-events-none flex items-center justify-center pb-6">
         <div className="flex items-center gap-1.5 rounded-lg border border-divider bg-surface-primary px-3 py-2">
-          <CursorClickIcon className="size-3.5 shrink-0 fill-brand" />
+          <CursorClickIcon className="size-3.5 shrink-0 fill-brand-deep" />
           <p className="font-medium text-brand-deep text-label-value-14 leading-none">
             {message}
           </p>

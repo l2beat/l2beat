@@ -18,7 +18,7 @@ git checkout releases/prover/v1.0.5
 4. Download trusted setup files (132 GiB) from the ETHBEAT hosting server into the `prover/prover-assets/kzgsrs` dir:
 ```
 cd prover/prover-assets/kzgsrs
-wget -r -np -nH --cut-dirs=1 -R "index.html*" https://trusted-setup-hosting.l2beat.com/files/
+wget -r -np -nH --cut-dirs=1 -R "index.html*" https://trusted-setup-hosting.ethbeat.org/files/
 ```
 5. Build the circuits and the verifier contract, this step takes several hours:
 ```

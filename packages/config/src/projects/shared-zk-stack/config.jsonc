@@ -6,6 +6,9 @@
     "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213", // BridgeHub
     "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
     "eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119",
+    // rollup DA contracts of the v31 diamond cut, used by the chains that applied it
+    "eth:0xc16161C7f704388285fE58db287F6216a350dAFA",
+    "eth:0x1c715018c5565eaCC758236D4A9A760162a84Cbd",
     // MultisigCommitter: shared ValidatorTimelock of the ZKsync OS ChainTypeManager, owned by the ProtocolUpgradeHandler since v31.
     // The ChainTypeManager template ignores validatorTimelockPostV29 (normally configured per chain) and no project tracks the ZKsync OS chains.
     "eth:0x18cC381705761aa2d2e8ea62888a4029A0fAd3aB",
@@ -31,6 +34,8 @@
     // verifiers registered in the ChainTypeManagers for the current protocol versions. Versioned names: the chain
     // projects still discover their current (older) verifiers under the unversioned names and look them up by name.
     "eth:0x5d5d33b16d9e79d9d9b8196ec760e70a31a44711": "EraDualVerifier_v33",
+    "eth:0xc16161C7f704388285fE58db287F6216a350dAFA": "RollupDAManager_v31",
+    "eth:0x1c715018c5565eaCC758236D4A9A760162a84Cbd": "RollupL1DAValidator_v31",
     "eth:0x870C0A2bd4f253dd867b2239a0d8d86f87D64128": "EraVerifierFflonk_v33",
     "eth:0x71ef07eB0BaFE5342f7d9513Fe7A544Dc90B8001": "EraVerifierPlonk_v33",
     "eth:0x433b6ff15824806c8c14ece4a6fe1f1909f7da2f": "ZKsyncOSDualVerifier_v31",

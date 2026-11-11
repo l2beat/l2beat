@@ -1,6 +1,5 @@
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import type { CollectionEntry } from '~/content/getCollection'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -26,7 +25,6 @@ export function GlossaryPage({ glossaryEntries, ...props }: Props) {
           </PrimaryCard>
           <GlossarySideNav entries={glossaryEntries} />
         </main>
-        <ScrollToTopButton />
       </SideNavLayout>
     </AppLayout>
   )

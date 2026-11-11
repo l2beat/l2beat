@@ -7,8 +7,8 @@ import { IconFolder } from '../../../icons/IconFolder'
 import { IconSearch } from '../../../icons/IconSearch'
 import { IconSigma } from '../../../icons/IconSigma'
 import { cn } from '../../../utils/cn'
-import { Keys } from '../multi-view/BottomBar/Keys'
 import type { SearchItem } from './items'
+import { Keys } from './Keys'
 import { highlightSegments } from './rank'
 
 export function SearchResultRow(props: {
@@ -48,11 +48,21 @@ export function SearchResultRow(props: {
         <Highlighted text={item.title} needles={props.needles} />
       </span>
       {item.detail !== '' && (
-        <span className="min-w-0 shrink-[2] truncate text-coffee-400 text-xs">
+        <span
+          className={cn(
+            'min-w-0 shrink-[2] truncate text-xs',
+            props.highlighted ? 'text-coffee-300' : 'text-coffee-400',
+          )}
+        >
           <Highlighted text={item.detail} needles={props.needles} />
         </span>
       )}
-      <span className="ml-auto shrink-0 font-mono text-coffee-400 text-xs">
+      <span
+        className={cn(
+          'ml-auto shrink-0 font-mono text-xs',
+          props.highlighted ? 'text-coffee-300' : 'text-coffee-400',
+        )}
+      >
         {item.trailing}
       </span>
       {item.kind === 'command' && item.shortcut !== '' && (

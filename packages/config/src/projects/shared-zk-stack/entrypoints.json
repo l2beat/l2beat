@@ -20,6 +20,11 @@
       "type": "Contract",
       "project": "shared-zk-stack"
     },
+    "eth:0x1c715018c5565eaCC758236D4A9A760162a84Cbd": {
+      "name": "RollupL1DAValidator_v31",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
     "eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e": {
       "name": "ProxyAdmin",
       "type": "Contract",
@@ -182,6 +187,11 @@
     },
     "eth:0xBfaa733261500101996A10A231794263567d52ab": {
       "name": "ZKsyncOSServerNotifier",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0xc16161C7f704388285fE58db287F6216a350dAFA": {
+      "name": "RollupDAManager_v31",
       "type": "Contract",
       "project": "shared-zk-stack"
     },

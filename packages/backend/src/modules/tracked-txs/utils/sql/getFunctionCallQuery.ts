@@ -67,7 +67,9 @@ export function getFunctionCallQuery(
           tx.gas_used,
           tx.gas_price,
           tx.blob_versioned_hashes,
-          tx.data
+          tx.data,
+          COALESCE(tx."from" = tx.to, false) AS is_self_transfer,
+          tx.value > CAST(0 AS UINT256) AS has_value
         FROM ethereum.transactions tx
         CROSS JOIN params p
         WHERE tx.block_time >= p.t_start
@@ -82,6 +84,8 @@ export function getFunctionCallQuery(
       tx.gas_used,
       tx.gas_price,
       tx.blob_versioned_hashes,
+      tx.is_self_transfer,
+      tx.has_value,
       length(tx.data) AS data_length,
       length(replace(regexp_replace(to_hex(tx.data), '([0-9A-Fa-f]{2})', '$1x'), '00x', '')) / 3 AS non_zero_bytes,
       CASE

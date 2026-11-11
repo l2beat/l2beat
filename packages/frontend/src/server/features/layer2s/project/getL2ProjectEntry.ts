@@ -1,7 +1,6 @@
 import type {
   Project,
   ProjectAssociatedToken,
-  ProjectCustomColors,
   ProjectRedWarning,
   ProjectScalingCategory,
   ProjectScalingProofSystem,
@@ -84,12 +83,6 @@ export interface ProjectL2Entry {
   icon: string
   archivedAt: UnixTime | undefined
   isAppchain: boolean
-  colors:
-    | {
-        project: ProjectCustomColors | undefined
-        ecosystem: ProjectCustomColors | undefined
-      }
-    | undefined
   underReviewStatus: UnderReviewStatus
   header: {
     warning?: string
@@ -135,6 +128,7 @@ export interface ProjectL2Entry {
       lastDayUops: number
       uopsWeeklyChange: number
       uopsWeeklyChangePeriod: PercentageChangePeriod
+      syncWarning: string | undefined
     }
     gasTokens?: string[]
     privacyProjects: ProjectIconListItem[]
@@ -172,8 +166,6 @@ export async function getL2ProjectEntry(
     | 'livenessConfig'
     | 'costsInfo'
     | 'activityConfig'
-    | 'colors'
-    | 'ecosystemColors'
     | 'discoveryInfo'
     | 'discoveryUpdates'
     | 'daTrackingConfig'
@@ -324,10 +316,6 @@ export async function getL2ProjectEntry(
     }),
     archivedAt: project.archivedAt,
     isAppchain: project.scalingInfo.capability === 'appchain',
-    colors: {
-      project: project.colors,
-      ecosystem: project.ecosystemColors,
-    },
     header,
     reasonsForBeingOther: project.scalingInfo.reasonsForBeingOther,
     rosette: getL2Rosette(project, {

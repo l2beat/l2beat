@@ -1,6 +1,7 @@
 import compact from 'lodash/compact'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
+import { isListedDefiProject } from '../defi/isListedDefiProject'
 
 export type ProjectSection =
   | 'layer2s'
@@ -31,7 +32,7 @@ export async function getProjectSectionLinks(
   })
   if (!project) return []
 
-  // Must match the pages getSearchBarProjectEntries links to
+  // Must match the pages the search bar links to (searchIndex.ts)
   return compact<ProjectSectionLink>([
     project.scalingInfo && {
       section: 'layer2s',
@@ -51,7 +52,7 @@ export async function getProjectSectionLinks(
       href: `/privacy/projects/${slug}`,
     },
     env.CLIENT_SIDE_DEFI_ENABLED &&
-      project.defiInfo && {
+      isListedDefiProject(project.defiInfo) && {
         section: 'defi',
         href: `/defi/projects/${slug}`,
       },

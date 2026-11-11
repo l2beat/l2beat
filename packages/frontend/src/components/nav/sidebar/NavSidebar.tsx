@@ -1,9 +1,6 @@
 import { Fragment, useMemo, useState } from 'react'
-import { env } from '~/env'
 import { usePathname } from '~/hooks/usePathname'
 import { ChevronIcon } from '~/icons/Chevron'
-import { GARDEN_PATH } from '~/pages/garden/paths'
-import { CropsMiniBanner } from '~/pages/home/components/CropsMiniBanner'
 import { SoonBadge } from '~/pages/home/components/SoonBadge'
 import { cn } from '~/utils/cn'
 import { isLinkActive } from '~/utils/isLinkActive'
@@ -38,18 +35,10 @@ import type { NavGroup } from '../types'
 interface Props {
   groups: NavGroup[]
   logoLink: string
-  /** Off where the page has a garden banner of its own (home). */
-  showGardenBanner: boolean
   className?: string
 }
 
-export function NavSidebar({
-  groups,
-  logoLink,
-  showGardenBanner,
-  className,
-}: Props) {
-  const pathname = usePathname()
+export function NavSidebar({ groups, logoLink, className }: Props) {
   const { setOpenMobile } = useSidebar()
   const closeMobileSidebar = () => setOpenMobile(false)
   return (
@@ -76,14 +65,6 @@ export function NavSidebar({
         </div>
       </SidebarHeader>
       <SidebarContent>
-        {env.CLIENT_SIDE_GARDEN_ENABLED && showGardenBanner && (
-          <SidebarGroup className="mb-2">
-            <CropsMiniBanner
-              isActive={pathname.startsWith(GARDEN_PATH)}
-              onClick={closeMobileSidebar}
-            />
-          </SidebarGroup>
-        )}
         {groups
           .filter((group) => group.section !== 'more')
           .map((group) => (
@@ -203,18 +184,28 @@ function NavCollapsibleItem({
 
   const [open, setOpen] = useState(isAnyLinkActive)
 
-  if (allGroupLinks.length === 0) return null
+  const titleHref = allGroupLinks.find((link) => !link.disabled)?.href
+  if (!titleHref) return null
 
   return (
     <Collapsible className="flex flex-col" open={open} onOpenChange={setOpen}>
-      <CollapsibleTrigger
+      {/* The title opens the group's first page, usually its summary; only the
+          chevron folds the list, so it can be browsed without leaving. In the
+          mobile menu the chevron is too small to aim at, so its hit area
+          covers the whole row. */}
+      <div
         className={cn(
-          'group flex items-center gap-1.5 p-1.5',
+          'group flex items-center gap-0.5 p-1.5 max-lg:relative',
           small && 'h-6 py-1 max-lg:h-8',
         )}
         data-active={isGroupActive}
+        data-state={open ? 'open' : 'closed'}
       >
-        <div className="flex items-center gap-2">
+        <a
+          href={titleHref}
+          onClick={closeMobileSidebar}
+          className="flex items-center gap-2"
+        >
           {!small && <div>{group.icon}</div>}
           <span
             className={cn(
@@ -224,14 +215,19 @@ function NavCollapsibleItem({
           >
             {group.title}
           </span>
-        </div>
-        <ChevronIcon
-          className={cn(
-            '-rotate-90 size-3 fill-primary transition-[rotate,color,fill] duration-300 group-data-[state=open]:rotate-0 group-data-[active=true]:fill-nav-active',
-            small && 'size-2.5',
-          )}
-        />
-      </CollapsibleTrigger>
+        </a>
+        <CollapsibleTrigger
+          aria-label={`${open ? 'Hide' : 'Show'} ${group.title} pages`}
+          className="flex size-6 items-center justify-center max-lg:size-8 max-lg:after:absolute max-lg:after:inset-0"
+        >
+          <ChevronIcon
+            className={cn(
+              '-rotate-90 size-3 fill-primary transition-[rotate,color,fill] duration-300 group-data-[state=open]:rotate-0 group-data-[active=true]:fill-nav-active',
+              small && 'size-2.5',
+            )}
+          />
+        </CollapsibleTrigger>
+      </div>
       <CollapsibleContent>
         <SidebarGroupSub>
           {group.links.map((section, index) => (

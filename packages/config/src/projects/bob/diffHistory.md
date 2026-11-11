@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x37fc8ad42797a5416195bab03dbad6fa667c658b
+
+# Diff at Fri, 06 Nov 2026 16:32:33 GMT:
+
+- id: 30c3219c
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@42d599abc7be8cc38122c72abc4da1c1dda6fbeb block: 1793195449
+- current timestamp: 1793982680
+
+## Description
+
+TimelockController: scheduled adding the RISC Zero v3.1.0 Groth16 verifier (behind an emergency stop) to the RiscZeroVerifierRouter, executable on 2026-11-08 after the 3d delay.
+
+## Watched changes
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
+      values.callsScheduled.25:
++        {"id":"0xf40a937e65e41f9adb997f8f4b5a1b39d83bb01cdb8b9e4f7e63c6bdb80d2d12","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af30e71e6620000000000000000000000000000000000000000000000000000000000000000000000000000000005144a37e65fd032f628663cb21e16490378a8630","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200}
+    }
+```
+
 Generated with discovered.json: 0x5b361dc495764bcdeec7d186eb577f8c4d7e6c74
 
 # Diff at Wed, 28 Oct 2026 13:54:41 GMT:

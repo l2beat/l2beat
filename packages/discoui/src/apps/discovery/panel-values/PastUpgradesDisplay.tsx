@@ -27,7 +27,7 @@ export function PastUpgradesDisplay({ value }: PastUpgradesDisplayProps) {
   }
 
   if (rows.length === 0) {
-    return <span className="text-coffee-600">no past upgrades</span>
+    return <span className="text-coffee-400">no past upgrades</span>
   }
 
   const columnCount = Math.max(...rows.map((row) => row.addresses.length))
