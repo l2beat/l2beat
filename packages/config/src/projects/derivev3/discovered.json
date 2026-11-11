@@ -1,6 +1,6 @@
 {
   "name": "derivev3",
-  "timestamp": 1794396778,
+  "timestamp": 1794435183,
   "configHash": "0x993852e23cac6bc68424f957003b985b217afe4ac83ab038e2b735a18c6d1e54",
   "entries": [
     {
@@ -128,7 +128,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 172,
+        "nonce": 173,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -368,7 +368,7 @@
         "domainSeparator": "0xfcd64e1db27f7d6e5172795dbedb048153220dc0ea32a4cdab13069538fe03c1",
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 7 (29%)",
-        "nonce": 12,
+        "nonce": 13,
         "VERSION": "1.5.0"
       },
       "implementationNames": {
@@ -406,6 +406,123 @@
           ]
         ],
         "$upgradeCount": 2,
+        "assets": {
+          "eth:0x562a87F5652025DDE4837f13c707b0119aC67E45": {
+            "asset": "eth:0x562a87F5652025DDE4837f13c707b0119aC67E45",
+            "token": "eth:0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+            "vault": "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42"
+          },
+          "eth:0x7da2D398dddDfC946Efd2C758c4688D21887790d": {
+            "asset": "eth:0x7da2D398dddDfC946Efd2C758c4688D21887790d",
+            "token": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+            "vault": "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42"
+          },
+          "eth:0xC1efE4c45B79250A29A5Dc66cCADc60DB0FcEEe8": {
+            "asset": "eth:0xC1efE4c45B79250A29A5Dc66cCADc60DB0FcEEe8",
+            "token": "eth:0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+            "vault": "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42"
+          },
+          "eth:0xb901C7756a8EADeEDE3350353aceec73608ea9C4": {
+            "asset": "eth:0xb901C7756a8EADeEDE3350353aceec73608ea9C4",
+            "token": "eth:0x2e3023ca882Ee359EBfa69b740bE318dF1B5cD7c",
+            "vault": "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42"
+          },
+          "eth:0x1Abdb2896e57047fD989af7B3Ee6B7e81830F8D2": {
+            "asset": "eth:0x1Abdb2896e57047fD989af7B3Ee6B7e81830F8D2",
+            "token": "eth:0xB1D1eae60EEA9525032a6DCb4c1CE336a1dE71BE",
+            "vault": "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42"
+          },
+          "eth:0xE201fCEfD4852f96810C069f66560dc25B2C7A55": {
+            "asset": "eth:0xE201fCEfD4852f96810C069f66560dc25B2C7A55",
+            "token": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+            "vault": "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42"
+          },
+          "eth:0x7F1FfBF00B05A280298C843f02ca293209756B49": {
+            "asset": "eth:0x7F1FfBF00B05A280298C843f02ca293209756B49",
+            "token": "eth:0x13FD17b60735Be034b874E31Ef4aeD2cd613c9F9",
+            "vault": "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42"
+          },
+          "eth:0x8A7133556a94f74B694AC9f7908EEf53A1e612fE": {
+            "asset": "eth:0x8A7133556a94f74B694AC9f7908EEf53A1e612fE",
+            "token": "eth:0x06ea695B91700071B161A434fED42D1DcbAD9f00",
+            "vault": "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42"
+          },
+          "eth:0x2dd469DB6ee0dBF0277F0f3021fd8a6486A751ce": {
+            "asset": "eth:0x2dd469DB6ee0dBF0277F0f3021fd8a6486A751ce",
+            "token": "eth:0x0762365e088Fb8D285b295d782BB7b23690713e2",
+            "vault": "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42"
+          },
+          "eth:0x2C1Ba2ECA0B58E8899ff2341C25f14A80458bACc": {
+            "asset": "eth:0x2C1Ba2ECA0B58E8899ff2341C25f14A80458bACc",
+            "token": "eth:0xc2908Db337AA16fB22b01bd4e8fF91460b23fF4B",
+            "vault": "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42"
+          },
+          "eth:0x9FDf0d5722EF1491B5b79F96e120E9B84b73925e": {
+            "asset": "eth:0x9FDf0d5722EF1491B5b79F96e120E9B84b73925e",
+            "token": "eth:0x319053B625e598994Dd1179948771a4C2f66b873",
+            "vault": "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42"
+          },
+          "eth:0xeaF03Bb3280C609d35E7F84d24a996c7C0b74F5f": {
+            "asset": "eth:0xeaF03Bb3280C609d35E7F84d24a996c7C0b74F5f",
+            "token": "eth:0x8236a87084f8B84306f72007F36F2618A5634494",
+            "vault": "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42"
+          },
+          "eth:0x76eDB76a1593d9497922675bAb765E21bc45E5A3": {
+            "asset": "eth:0x76eDB76a1593d9497922675bAb765E21bc45E5A3",
+            "token": "eth:0xb5EaD284CD00fD0EB37E84327a4ee781172A07D6",
+            "vault": "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42"
+          },
+          "eth:0x375804CdcF0D534FDD2657584A7c4Ff5AB14A2bb": {
+            "asset": "eth:0x375804CdcF0D534FDD2657584A7c4Ff5AB14A2bb",
+            "token": "eth:0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
+            "vault": "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42"
+          },
+          "eth:0x57B03E14d409ADC7fAb6CFc44b5886CAD2D5f02b": {
+            "asset": "eth:0x57B03E14d409ADC7fAb6CFc44b5886CAD2D5f02b",
+            "token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "vault": "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42"
+          },
+          "eth:0x028B9fFA86fc4c366e11AA8b3E71dc0502713ABF": {
+            "asset": "eth:0x028B9fFA86fc4c366e11AA8b3E71dc0502713ABF",
+            "token": "eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
+            "vault": "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42"
+          },
+          "eth:0x5E72430EC945CCc183c34e2860FFC2b5bac712c2": {
+            "asset": "eth:0x5E72430EC945CCc183c34e2860FFC2b5bac712c2",
+            "token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+            "vault": "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42"
+          },
+          "eth:0xF30EE744fCfd135A135E6a4e327e01d0f697e6Ec": {
+            "asset": "eth:0xF30EE744fCfd135A135E6a4e327e01d0f697e6Ec",
+            "token": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+            "vault": "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42"
+          },
+          "eth:0x69c7AADFfD607F74eE610f047f552CaDecabca4E": {
+            "asset": "eth:0x69c7AADFfD607F74eE610f047f552CaDecabca4E",
+            "token": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+            "vault": "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42"
+          },
+          "eth:0x437255054A9f5743138A4C02a414CBEc8bD08329": {
+            "asset": "eth:0x437255054A9f5743138A4C02a414CBEc8bD08329",
+            "token": "eth:0x68749665FF8D2d112Fa859AA293F07A622782F38",
+            "vault": "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42"
+          },
+          "eth:0xf99b94Ac3796d901837AC5d02164f6DC43661F74": {
+            "asset": "eth:0xf99b94Ac3796d901837AC5d02164f6DC43661F74",
+            "token": "eth:0xEE70394909906E9B5fe6D19D16b8c07058B06d74",
+            "vault": "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42"
+          },
+          "eth:0xb0431da0c2293Df9f0d96C3aF9A5B8d547014608": {
+            "asset": "eth:0xb0431da0c2293Df9f0d96C3aF9A5B8d547014608",
+            "token": "eth:0x1eBb06ae854F186030a80BB7b3e73D5F22240fD6",
+            "vault": "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42"
+          },
+          "eth:0x7C276e409Aa8eb3Cd1E3C31Bd5fc49F58415aE39": {
+            "asset": "eth:0x7C276e409Aa8eb3Cd1E3C31Bd5fc49F58415aE39",
+            "token": "eth:0x232CE3bd40fCd6f80f3d55A522d03f25Df784Ee2",
+            "vault": "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42"
+          }
+        },
         "deferredWithdrawalId": 5,
         "guardian": "eth:0x682CD085aC63739a9F44E069E91BB6AA09a312E8",
         "minGuardianRefill": 7200,
@@ -425,6 +542,12 @@
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "VERIFIABLE_APP": "eth:0xd330145C17fB6EF2a21ACf1275Ce683A305F58BB",
         "WRAPPED_ETH_ASSET": "eth:0xE201fCEfD4852f96810C069f66560dc25B2C7A55"
+      },
+      "fieldMeta": {
+        "assets": {
+          "severity": "HIGH",
+          "description": "Token and vault of each registered asset. Deposits are pulled into, and withdrawals paid out of, the asset's vault."
+        }
       },
       "implementationNames": {
         "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63": "TransparentUpgradeableProxy",
@@ -519,22 +642,24 @@
         "$upgradeCount": 2,
         "ACTION_MANAGER": "eth:0xE366CcA474968e33b777E13905829A3b800CFAD3",
         "batchSubmitter": "eth:0x000000c88C2C8A7F8317783f2268eB2B9b41257E",
-        "celestiaLastCommitment": "0x9cf580a95b6abc34d92fb9f484d9b782b53ef44a4ce003bc87ce13c4cf3cbba2",
-        "celestiaTrustedHash": "0x81622e399988a9697ed6fc8aed30c1c7ddbaf92d026f9b6076c43df25486506d",
-        "celestiaTrustedHeight": 15792781,
+        "celestiaAnchorResets": 1,
+        "celestiaLastCommitment": "0xb5f020076bdf723d2a65b5b67097922ab96fdf86b3bf7ac8b9801a01af4791bb",
+        "celestiaTrustedHash": "0xc89ca6cd4f400fbcbb828283d63996b7fbdd409ebd48abf18aaf73c0ae3a6913",
+        "celestiaTrustedHeight": 15806286,
         "consumedAdminAccIndex": 120,
-        "consumedPublicAccIndex": 6891,
+        "consumedPublicAccIndex": 6996,
         "getCelestiaAnchor": {
-          "height": 15792781,
-          "headerHash": "0x81622e399988a9697ed6fc8aed30c1c7ddbaf92d026f9b6076c43df25486506d",
-          "lastCommitment": "0x9cf580a95b6abc34d92fb9f484d9b782b53ef44a4ce003bc87ce13c4cf3cbba2"
+          "height": 15806286,
+          "headerHash": "0xc89ca6cd4f400fbcbb828283d63996b7fbdd409ebd48abf18aaf73c0ae3a6913",
+          "lastCommitment": "0xb5f020076bdf723d2a65b5b67097922ab96fdf86b3bf7ac8b9801a01af4791bb"
         },
-        "lastOpTimestamp": 1794396057,
+        "lastOpTimestamp": 1794434502,
         "MAX_DA_HEADER_AGE": 172800,
         "owner": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "programVKey": "0x00bc954fe627a8c36173e608608795425e22b4134914c7da5bd233b4718c855b",
-        "stateRoot": "0x63771c01b89d5b72fb0062a89579b053b0df597499a188c37fa4319b758cd2d5",
+        "rootRotations": 301,
+        "stateRoot": "0xab1657739b56a2f6e5a738a4d68384172caae1b16050a72db11d531cea8454c3",
         "submitterStallTimeout": 2419200,
         "verifier": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "WITHDRAWAL_OUTBOX": "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63"
@@ -545,7 +670,15 @@
           "description": "Time after which anyone can remove the batch submitter if an L1 action stays unprocessed."
         },
         "programVKey": { "severity": "HIGH" },
-        "verifier": { "severity": "HIGH" }
+        "verifier": { "severity": "HIGH" },
+        "rootRotations": {
+          "severity": "HIGH",
+          "description": "Number of times the owner replaced the state root (RootRotated)."
+        },
+        "celestiaAnchorResets": {
+          "severity": "HIGH",
+          "description": "Number of times the owner re-pointed the trusted Celestia anchor (CelestiaHeadBootstrapped)."
+        }
       },
       "implementationNames": {
         "eth:0xd330145C17fB6EF2a21ACf1275Ce683A305F58BB": "TransparentUpgradeableProxy",
@@ -625,8 +758,8 @@
         "owner": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "PUBLIC_ACTION_DOMAIN": "0xe40f88659781022c735f391b4acc350fa0730948845bed98f660e46c61c3a256",
-        "publicActionsAcc": "0x9482e035497b4aae9cd6088283d18c7674da1c6d1a12fb72921de0f438cb83d4",
-        "publicHeadIndex": 6891,
+        "publicActionsAcc": "0xd2c4d7de4ddef494fe4a2477ee678baa012f37e55c3eddc2dc14ddab8840411d",
+        "publicHeadIndex": 6997,
         "WITHDRAWAL_FEE": 2000000000000000,
         "WITHDRAWAL_OUTBOX": "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63",
         "WITHDRAWAL_TYPE": 3
@@ -1229,14 +1362,14 @@
   "usedTemplates": {
     "derivev3/OnchainActionManager": "0x436a9f8b87934b7c48df28440556cbf698e251dc6ee0b9dded16b687283c95bb",
     "derivev3/SpotVault": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "derivev3/VerifiableApp": "0x350f4f14186fabde8739fc79fc1e50c0780434b36c2e2531af32bbde19871196",
-    "derivev3/WithdrawalOutbox": "0xda4133e459e06b319492b5b251ba1d4c50bd57be4113737e28b4112ac13ba1f5",
+    "derivev3/VerifiableApp": "0xaa4a11e391868729e9f6d02f766198456a063b2107ee751d420c487170e2ce58",
+    "derivev3/WithdrawalOutbox": "0x8ea8b3d357e67ad748ccc78d6be368647e3c15c00f6ace04e2a856dd8b6c017c",
     "derivev3/WithdrawFactory": "0xf7474a0dcf4d2056c8f88d0618023b230c3595d5f052035d07b7630045256f1e",
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "global/TimelockController": "0xf7b496cbc7bea640fbf8eb44125f62bb1be686e7172cfd296168d642c8cea881",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 26391403 },
+  "usedBlockNumbers": { "ethereum": 26394598 },
   "permissionsConfigHash": "0xbb62609efb6774af2a6565cf14a6669a8e1062908be5bb22586ecd618316ccae",
   "modelledAgainst": {
     "shared-sp1": "0x2dc205a7a9fab0f4b2920f2ca38bd4030cf05d763d8ff9e332b9e53214bccb6b"

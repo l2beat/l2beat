@@ -3,6 +3,18 @@
   "description": "Pays out withdrawals committed to by batches proven in {{ VERIFIABLE_APP }} from the registered asset vaults, subject to USD-denominated per-recipient and global rate limits.",
   "ignoreMethods": ["deferredWithdrawals"],
   "fields": {
+    // Latest registration per asset label; a zero token means the asset is disabled.
+    "assets": {
+      "description": "Token and vault of each registered asset. Deposits are pulled into, and withdrawals paid out of, the asset's vault.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": ["asset", "token", "vault"],
+        "groupBy": "asset",
+        "set": { "event": "AssetRegistered" },
+        "ignoreRelative": true
+      }
+    },
     "owner": {
       "permissions": [
         {
