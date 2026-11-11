@@ -10,7 +10,7 @@ Binance can also mint {{symbol}} through its `OperatorWallet` against BETH balan
 
 ### Exchange rate
 
-A Binance bot reports the ETH-per-{{symbol}} rate through a limiter currently allowing up to {{rateCapPercent}} of cumulative change over {{rateCapInterval}}. The contracts do not derive this rate from validator balances. Binance can reconfigure or replace the oracle immediately, bypassing the limit.
+{{rateSentence}} The contracts do not derive this rate from validator balances. Binance can reconfigure or replace the oracle immediately, bypassing the limit.
 
 ### Redeeming
 

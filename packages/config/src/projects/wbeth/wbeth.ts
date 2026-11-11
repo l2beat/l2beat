@@ -27,16 +27,22 @@ const callerLimits = discovery.getContractValue<
   { caller: string; amount: string; interval: number }[]
 >('ExchangeRateUpdater', 'callerLimits')
 const rateCap = callerLimits[0]
-// The oracle risk says a single Binance key writes the rate.
+// The oracle risk says a single Binance key writes the rate. With no caller
+// the relay is disabled, which the page describes instead of failing.
 assert(
-  rateCap !== undefined && callerLimits.length === 1,
+  callerLimits.length <= 1,
   'wbeth: ExchangeRateUpdater has more than one caller, update the oracle risk',
 )
 const percentOfEth = (wei: bigint) =>
   `${Number.parseFloat((Number(wei) / 1e16).toFixed(4))}%`
-const rateCapPercent = percentOfEth(BigInt(rateCap.amount))
-const rateCapPerIntervalPercent = percentOfEth(2n * BigInt(rateCap.amount))
-const rateCapInterval = formatSeconds(rateCap.interval, { fullUnit: true })
+const rateCapPercent = rateCap && percentOfEth(BigInt(rateCap.amount))
+const rateCapPerIntervalPercent =
+  rateCap && percentOfEth(2n * BigInt(rateCap.amount))
+const rateCapInterval =
+  rateCap && formatSeconds(rateCap.interval, { fullUnit: true })
+const rateSentence = rateCap
+  ? `A Binance bot reports the ETH-per-${value('wBETH', 'symbol')} rate through a limiter currently allowing up to ${rateCapPercent} of cumulative change over ${rateCapInterval}.`
+  : 'The rate relay has no callers, so the rate cannot change through it.'
 const symbol = value('wBETH', 'symbol')
 const lockTimeDays =
   discovery.getContractValue<number>('UnwrapTokenV1ETH', 'lockTimeSeconds') /
@@ -60,8 +66,7 @@ export const wbeth: BaseProject = {
     description: `Binance Wrapped Beacon ETH (${value('wBETH', 'symbol')}) is a liquid staking token for ETH issued by Binance. Users can mint by depositing ETH onchain, while Binance also mints it against BETH balances held on its exchange. Binance controls the exchange rate and custody, must fund queued redemptions (currently delayed by ${duration('UnwrapTokenV1ETH', 'lockTimeSeconds')}), and can mint, pause, blacklist or upgrade without delay.`,
     detailedDescription: readProjectMarkdown('wbeth', 'detailedDescription', {
       symbol: value('wBETH', 'symbol'),
-      rateCapPercent,
-      rateCapInterval,
+      rateSentence,
       lockTime: duration('UnwrapTokenV1ETH', 'lockTimeSeconds'),
       minLockTime: duration('UnwrapTokenV1ETH', 'MIN_LOCK_TIME'),
     }),
@@ -130,12 +135,20 @@ export const wbeth: BaseProject = {
         description:
           'Deposited ETH moves to a Binance wallet. The token contract holds about 0.04% of the ETH its supply represents; the rest is an exchange balance that cannot be checked onchain.',
       },
-      oracle: {
-        value: '1 of 1',
-        secondLine: `daily · ≤${rateCapPercent}`,
-        sentiment: 'bad',
-        description: `One Binance key writes the rate. Each change, up or down, spends from an allowance of ${rateCapPercent} that refills over ${rateCapInterval}, so one update can move the rate by up to ${rateCapPercent}, and by up to ${rateCapPerIntervalPercent} over ${rateCapInterval}. The owner can switch the oracle and set any rate at once.`,
-      },
+      oracle: rateCap
+        ? {
+            value: '1 of 1',
+            secondLine: `daily · ≤${rateCapPercent}`,
+            sentiment: 'bad',
+            description: `One Binance key writes the rate. Each change, up or down, spends from an allowance of ${rateCapPercent} that refills over ${rateCapInterval}, so one update can move the rate by up to ${rateCapPercent}, and by up to ${rateCapPerIntervalPercent} over ${rateCapInterval}. The owner can switch the oracle and set any rate at once.`,
+          }
+        : {
+            value: 'Frozen',
+            secondLine: 'relay has no callers',
+            sentiment: 'bad',
+            description:
+              'No key can write the rate through the relay. The owner can switch the oracle and set any rate at once.',
+          },
       exit: {
         value: 'Binance-funded',
         secondLine: `${lockTimeDays} days · pausable`,
