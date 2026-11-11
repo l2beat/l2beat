@@ -154,9 +154,10 @@ function TrackRecord() {
             <ChartTimeRange isPlaceholderData={false} timeRange={timeRange} />
             <span>
               Our {tier.name.toLowerCase()} tip, replayed by week. Promise:{' '}
-              {TARGET}% {tier.wait} over any 6 months, never below {WORST_WEEK}%
-              in a week. {reached} of {points.length} weeks reached {TARGET}%,
-              and the worst was {worst}%.
+              {TARGET}% of transactions at this tip land {tier.wait} over any 6
+              months, never fewer than {WORST_WEEK}% in a week. {reached} of{' '}
+              {points.length} weeks reached {TARGET}%, and the worst was {worst}
+              %.
             </span>
           </div>
         </div>

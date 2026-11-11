@@ -20,7 +20,7 @@ It reads past blocks only, with `eth_feeHistory`: each block's 10th and 25th per
 | Medium | 95% within 2 blocks | 25th percentile tip | 85th |
 | Fast | 95% in the next block | 25th percentile tip, last 1,800 blocks | 99th |
 
-Each tier promises 95% over any 6 months and never below 90% in a week. Shorter stretches can fall below 95%: in the worst calendar month the tiers landed 91.5% to 93.4%, and in the worst 13 weeks 93.9% to 94.5%. Both parts are a record from Aug 2023 to Nov 2026, not a guarantee.
+Each tier promises that 95% of the transactions paying its tip land in time over any 6 months, and never fewer than 90% in a week. Shorter stretches can fall below 95%: in the worst calendar month the tiers landed 91.5% to 93.4%, and in the worst 13 weeks 93.9% to 94.5%. Both parts are a record from Aug 2023 to Nov 2026, not a guarantee.
 
 Each tier is at least as high as the one below.
 

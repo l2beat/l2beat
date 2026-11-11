@@ -74,7 +74,8 @@ function MethodologyBody() {
           <dd className="inline">
             from past Ethereum blocks only, the tips that land transactions
             within a minute, within 2 blocks and in the next block. Each
-            promises 95% over any 6 months and never below 90% in a week.
+            promises that 95% of the transactions paying it land in time over
+            any 6 months, and never fewer than 90% in a week.
           </dd>
         </div>
         <div>
