@@ -54,6 +54,7 @@ import { rocketpool } from '../projects/rocketpool/rocketpool'
 import { safe } from '../projects/safe/safe'
 import { sp1hypercube } from '../projects/sp1hypercube/sp1hypercube'
 import { sp1turbo } from '../projects/sp1turbo/sp1turbo'
+import { splitsv2 } from '../projects/splitsv2/splitsv2'
 import { stargate } from '../projects/stargate/stargate'
 import { stone } from '../projects/stone/stone'
 import { strk20 } from '../projects/strk20/strk20'
@@ -148,6 +149,7 @@ export const refactored: BaseProject[] = [
   polymarket,
   rocketpool,
   safe,
+  splitsv2,
   // privacy
   cloaked,
   fluidkey,
