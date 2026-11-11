@@ -195,16 +195,16 @@ export const stakewise: BaseProject = {
     risks: [
       {
         category: 'Funds can be stolen if',
-        text: `the DAO multisig raises a vault's loan-to-value or replaces the Keeper and lets a vault it controls mint unbacked ${osETH}, or ${oracleThreshold} oracles report balances a vault does not have; none of this needs a delay.`,
+        text: `the oracle quorum reports false vault balances, or the DAO multisig changes the oracle set or collateral rules, so unbacked ${osETH} is minted.`,
         isCritical: true,
       },
       {
         category: 'Funds can lose value if',
-        text: `the oracle quorum sets the ${osETH} reward rate above the real yield or misreports a vault's rewards; the rate is capped at ${rateCapYear} a year (about ${rateCapInterval} every ${rewardsInterval}) and never falls, but the per-vault rewards are not bounded and ${noLiqVaultCount} vaults mint ${osETH} up to ${maxLtv} with liquidations disabled.`,
+        text: `the oracles set the ${osETH} reward rate above the real yield, or a vault that mints up to ${maxLtv} without liquidation takes a loss.`,
       },
       {
         category: 'Funds can be frozen if',
-        text: 'the oracles stop signing: vault balances and both exit queues only advance with their updates, so ETH that key managers withdraw from validators stays in the vault and nobody else can release it, while the ${osETH} rate keeps rising at the last reported rate.',
+        text: 'the oracles stop signing, since both exit queues only advance with their updates.',
       },
     ],
   },
