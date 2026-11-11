@@ -108,7 +108,7 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
       exposureShort:
         "When 0xbow's registry feeds fail, the default RPCs, led by Alchemy under 0xbow's key, receive the account right before its withdrawal.",
       exposureContinued:
-        "A connected wallet's address reaches them too, and they see when that session withdraws. A local node set in the app receives these reads instead.",
+        "A connected wallet's address reaches Alchemy's token API whatever the endpoint, and Alchemy sees when that session withdraws. A local node set in the app receives the account reads instead.",
       interior: {
         sender: 'private',
         recipient: 'private',
@@ -210,7 +210,7 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
   advice: [
     {
       name: 'Set up',
-      text: `Turn on NymVPN with the Random profile, an ${adviceLink('IP-hiding route', 'ipHidingRoutes')} for all of the computer's traffic, and reconnect it before each session. In the app's settings, set a local Ethereum node that accepts the app's origin as the endpoint before signing in. 0xbow's relayer refuses Tor exits on the app's default settings.`,
+      text: `Turn on NymVPN with the Random profile, an ${adviceLink('IP-hiding route', 'ipHidingRoutes')} for all of the computer's traffic, and reconnect it before each session. In every window, private ones included, set a local Ethereum node that accepts the app's origin as the app's endpoint before signing in. 0xbow's relayer refuses Tor exits on the app's default settings.`,
       against: ['networkObserver', 'privilegedInsider'],
       outside: true,
     },
