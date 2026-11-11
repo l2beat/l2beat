@@ -104,11 +104,11 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
       ],
     },
     networkObserver: {
-      sentiment: 'good',
+      sentiment: 'warning',
       exposureShort:
-        "While 0xbow's registry feeds answer, an account-key sign-in names the account to no third party, so none sees both a deposit and a withdrawal.",
+        "When 0xbow's registry feeds fail, the default RPCs, led by Alchemy under 0xbow's key, receive the account right before its withdrawal.",
       exposureContinued:
-        "A connected wallet's address goes to the default RPCs, led by Alchemy under 0xbow's key, which also see when that session withdraws. When the feeds fail, the app asks them about the account instead, right before the spend.",
+        'A connected wallet\'s address reaches them too, and they see when that session withdraws. A local node set in the app receives these reads instead.',
       interior: {
         sender: 'private',
         recipient: 'private',
@@ -116,25 +116,26 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
         asset: 'private',
         linkage: {
           verdict: 'atRisk',
-          note: "Private only over an IP-hiding route, in a private window that never connected a wallet, while 0xbow's registry feeds answer.",
+          note: 'Private only with a local node, an IP-hiding route and a private window that never connected a wallet.',
         },
       },
       sources: [
         {
-          title: 'Sign-in checks registration against bulk ASP feeds',
-          url: WEBSITE + 'components/sdk-provider.tsx#L711-L757',
+          title:
+            'Own-account reads ask the RPC when the feeds have no current data',
+          url: WEBSITE + 'services/keystore-registry-reads.ts#L9-L18',
         },
         {
-          title: 'Own-account reads ask the RPC when the feeds have no current data',
-          url: WEBSITE + 'services/keystore-registry-reads.ts#L9-L18',
+          title: 'Alchemy first, public node last',
+          url: WEBSITE + 'config/rpc-order.ts#L55-L70',
         },
         {
           title: "A connected wallet's tokens are read from Alchemy by address",
           url: WEBSITE + 'services/wallet-tokens.ts#L182-L190',
         },
         {
-          title: 'Alchemy first, public node last',
-          url: WEBSITE + 'config/rpc-order.ts#L55-L70',
+          title: 'A custom endpoint replaces the defaults, with no fallback',
+          url: WEBSITE + 'config/custom-rpc.ts#L17-L20',
         },
       ],
     },
@@ -209,7 +210,7 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
   advice: [
     {
       name: 'Set up',
-      text: `Turn on NymVPN with the Random profile, an ${adviceLink('IP-hiding route', 'ipHidingRoutes')} for all of the computer's traffic. Reconnect it before each session, so the deposit and the withdrawal leave from different exits. 0xbow's relayer refuses Tor exits on the app's default settings.`,
+      text: `Turn on NymVPN with the Random profile, an ${adviceLink('IP-hiding route', 'ipHidingRoutes')} for all of the computer's traffic, and reconnect it before each session. In the app's settings, set a local Ethereum node that accepts the app's origin as the endpoint before signing in. 0xbow's relayer refuses Tor exits on the app's default settings.`,
       against: ['networkObserver', 'privilegedInsider'],
       outside: true,
     },

@@ -22,5 +22,5 @@
 3. 0xbow's relayer refuses a withdrawal, so the user must self-relay from a public wallet (see chain analyst).
 4. a note's label, which passes to every later payee, links to its deposit when timed against the ASP's updates (see chain analyst).
 5. 0xbow pairs the IP of a deposit session with the IP of a withdrawal request across its ASP and relayer (see privileged insider).
-6. a user withdraws after connecting a wallet or while 0xbow's registry feeds fail, so the default RPCs see the withdrawing account (see network observer).
+6. a user keeps the default RPCs, which see the withdrawing account when 0xbow's registry feeds fail or a wallet connects (see network observer).
 7. elliptic-curve cryptography is broken, which decrypts every onchain note from the published viewing keys (see future adversary).
