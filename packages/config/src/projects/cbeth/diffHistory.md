@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x0a246cfd097afec3c6b9f0d2f30636173427d13d
+Generated with discovered.json: 0x22444215927b11b862e2a5dc5c05b6f4307b057d
 
-# Diff at Tue, 20 Oct 2026 16:20:58 GMT:
+# Diff at Wed, 11 Nov 2026 10:51:50 GMT:
 
 - id: 55eab8a8
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
@@ -15,13 +15,13 @@ Initial discovery of Coinbase's cbETH: the token, its rate-limited oracle relay 
 ```diff
 +   Status: CREATED
     contract MintForwarder (eth:0x6D44bfB8432d17882bB6e84652f5C3B36fcC8280) [cbeth/MintForwarder]
-    +++ description: Rate-limited minting relay registered as a minter of the token. Whitelisted callers mint tokens to any address through it, each within an allowance that caps the amount per refill interval; the allowance refills linearly. No ETH is attached to a mint, so minted tokens are backed only by the issuer's off-chain records.
+    +++ description: Rate-limited minting relay registered as a minter of the token. Whitelisted callers mint tokens to any address through it, each within an allowance that refills linearly over its interval. No ETH is attached to a mint.
 ```
 
 ```diff
 +   Status: CREATED
     contract ExchangeRateUpdater (eth:0x9b37180d847B27ADC13C2277299045C1237Ae281) [shared-wrapped-tokens/ExchangeRateUpdater]
-    +++ description: Rate-limited relay registered as the token's oracle. Whitelisted callers write the exchange rate through it, and each caller has an allowance that caps the cumulative absolute change it may push; the allowance refills linearly over the caller's interval. Apart from the token's own minimum-value check, this is the only bound on the exchange rate, and the token owner can bypass it by repointing the oracle.
+    +++ description: Rate-limited relay registered as the token's oracle. Whitelisted callers write the exchange rate through it, and each caller has an allowance that caps the cumulative absolute change it may push, refilling linearly over its interval. Apart from the token's own minimum-value check, this is the only bound on the exchange rate, and the token owner can bypass it by repointing the oracle.
 ```
 
 ```diff

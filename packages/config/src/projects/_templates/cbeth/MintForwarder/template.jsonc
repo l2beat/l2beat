@@ -2,7 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "category": "core",
   "canActIndependently": false,
-  "description": "Rate-limited minting relay registered as a minter of the token. Whitelisted callers mint tokens to any address through it, each within an allowance that caps the amount per refill interval; the allowance refills linearly. No ETH is attached to a mint, so minted tokens are backed only by the issuer's off-chain records.",
+  "description": "Rate-limited minting relay registered as a minter of the token. Whitelisted callers mint tokens to any address through it, each within an allowance that refills linearly over its interval. No ETH is attached to a mint.",
   "fields": {
     "owner": {
       "severity": "HIGH",

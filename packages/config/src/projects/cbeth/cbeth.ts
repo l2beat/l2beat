@@ -88,7 +88,7 @@ export const cbeth: BaseProject = {
     unverifiedContracts: [],
   },
   display: {
-    description: `Coinbase Wrapped Staked ETH (${value('cbETH', 'symbol')}) is a liquid staking token for ETH issued by Coinbase. It is minted and redeemed only through Coinbase's exchange against staked ETH in Coinbase custody: the contracts hold no ETH and have no deposit or redemption function. Coinbase sets the exchange rate, controls supply and custody, and can mint, pause, blacklist or upgrade without delay.`,
+    description: `Coinbase Wrapped Staked ETH (${value('cbETH', 'symbol')}) is Coinbase's liquid staking token. It is minted and redeemed only through Coinbase, and no contract holds the ETH behind it. Coinbase sets the exchange rate and can mint, pause, blacklist or upgrade without delay.`,
     detailedDescription: readProjectMarkdown('cbeth', 'detailedDescription', {
       symbol: value('cbETH', 'symbol'),
       rateCapEth,
@@ -129,16 +129,16 @@ export const cbeth: BaseProject = {
     risks: [
       {
         category: 'Funds can be stolen if',
-        text: 'the proxy admin key upgrades the token to malicious code, or a minting key mints unbacked supply; each is a single key acting with no delay.',
+        text: 'the proxy admin upgrades the token to malicious code, or a minting key mints unbacked supply.',
         isCritical: true,
       },
       {
         category: 'Funds can lose value if',
-        text: 'the rate key or the oracle owner misreports the exchange rate; the relay cap does not bind at current values and the token only checks that the rate is non-zero.',
+        text: 'the rate key or the oracle owner misreports the exchange rate. The relay cap does not bind at current values.',
       },
       {
         category: 'Funds can be frozen if',
-        text: 'the pauser halts transfers or the blacklister freezes an address, both with no delay, or if Coinbase declines or delays custodial redemption, the only exit for the token.',
+        text: 'the pauser halts transfers, the blacklister freezes an address, or Coinbase stops redeeming.',
       },
     ],
   },

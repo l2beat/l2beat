@@ -27,7 +27,7 @@
         "0xef444c27c40188877fd3ac53431814621d6fbfb5bed0566d4a13b1b582a26718"
       ],
       "proxyType": "immutable",
-      "description": "Rate-limited minting relay registered as a minter of the token. Whitelisted callers mint tokens to any address through it, each within an allowance that caps the amount per refill interval; the allowance refills linearly. No ETH is attached to a mint, so minted tokens are backed only by the issuer's off-chain records.",
+      "description": "Rate-limited minting relay registered as a minter of the token. Whitelisted callers mint tokens to any address through it, each within an allowance that refills linearly over its interval. No ETH is attached to a mint.",
       "deployerAddress": "eth:0xbf6877B0Cc4136Bc4BB0fCDb689e78720b2428A7",
       "sinceTimestamp": 1643909067,
       "sinceBlock": 14134349,
@@ -93,7 +93,7 @@
         "0x9da1385c5bc89e1e0c1b0f00884026599427a7ffcd22ab976f0f74da6da35170"
       ],
       "proxyType": "immutable",
-      "description": "Rate-limited relay registered as the token's oracle. Whitelisted callers write the exchange rate through it, and each caller has an allowance that caps the cumulative absolute change it may push; the allowance refills linearly over the caller's interval. Apart from the token's own minimum-value check, this is the only bound on the exchange rate, and the token owner can bypass it by repointing the oracle.",
+      "description": "Rate-limited relay registered as the token's oracle. Whitelisted callers write the exchange rate through it, and each caller has an allowance that caps the cumulative absolute change it may push, refilling linearly over its interval. Apart from the token's own minimum-value check, this is the only bound on the exchange rate, and the token owner can bypass it by repointing the oracle.",
       "deployerAddress": "eth:0xbf6877B0Cc4136Bc4BB0fCDb689e78720b2428A7",
       "sinceTimestamp": 1643910274,
       "sinceBlock": 14134435,
@@ -210,7 +210,7 @@
           "description": "Addresses allowed to mint tokens within the allowance the masterMinter set, and to burn their own balance."
         },
         "minterAllowances": {
-          "description": "Mint allowance per minter as last configured by the masterMinter; the live remaining allowance decreases with every mint. A minter with a zero allowance can still burn."
+          "description": "Mint allowance per minter as last configured by the masterMinter. The live allowance decreases with every mint. A minter with a zero allowance can still burn."
         },
         "pauser": { "severity": "HIGH" },
         "blacklister": { "severity": "HIGH" },
@@ -380,7 +380,7 @@
     "shared-wrapped-tokens/ExchangeRateUpdater": "0x6c0385a2cde573ea7fa7d39dfb64644d8a553877f5abdaf55c2e0671bb5ac020"
   },
   "usedBlockNumbers": { "ethereum": 26233157 },
-  "permissionsConfigHash": "0xff7556a69cf37afe58719af532d2e16b0b526b814bfe9255f02231a4d288f27d",
+  "permissionsConfigHash": "0xb9d3702303dc39852391502cca845a04d9af4d79c63363a79fa7e7acff950226",
   "permissions": {
     "eth:0x1812156465601d025A82e2eDC55175bd8D16Bbe6": {
       "receivedPermissions": [
@@ -447,7 +447,7 @@
         {
           "permission": "interact",
           "from": "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
-          "description": "set the ETH-per-token exchange rate. The token itself only requires the new rate to be non-zero; any tighter bound comes from the oracle contract.",
+          "description": "set the ETH-per-token exchange rate. Any bound beyond a non-zero check comes from the oracle contract.",
           "role": ".oracle"
         }
       ]

@@ -1,6 +1,6 @@
 {
   "name": "wbeth",
-  "timestamp": 1792513199,
+  "timestamp": 1791381204,
   "configHash": "0x7ad15a182713907fda47d613cde8413976b7732c26150ca7043569a7950fe6bb",
   "entries": [
     {
@@ -56,7 +56,7 @@
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "admin": "eth:0xA3eE6926edcce93BacF05F4222c243c4d9F6d853",
-        "availableAllocateAmount": "89806860937065033563",
+        "availableAllocateAmount": "89818794001183212172",
         "blacklister": "eth:0x099d699C07Bbc8eE6eB5703746063E04B2aA62A7",
         "ethBackAddress": "eth:0x26ad6395DABF271fD9bFDC82d7377261930E6B86",
         "ethStaked": 0,
@@ -67,13 +67,13 @@
         "MAX_LOOP_NUM": 1000,
         "MIN_LOCK_TIME": 172800,
         "needEthAmount": 0,
-        "nextIndex": 139,
+        "nextIndex": 138,
         "operatorAddress": "eth:0x2B59215778e99035CF38663454eF1240a7AE70F5",
         "owner": "eth:0x099d699C07Bbc8eE6eB5703746063E04B2aA62A7",
         "paused": false,
         "pauser": "eth:0x099d699C07Bbc8eE6eB5703746063E04B2aA62A7",
         "rechargeAddress": "eth:0x3E4BD5FB2fCeF981BAFd1D164f838DFC31370Fb1",
-        "startAllocatedEthIndex": 139,
+        "startAllocatedEthIndex": 138,
         "WBETH_TOKEN_ADDRESS": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1"
       },
       "fieldMeta": {
@@ -115,7 +115,7 @@
         "0x9da1385c5bc89e1e0c1b0f00884026599427a7ffcd22ab976f0f74da6da35170"
       ],
       "proxyType": "immutable",
-      "description": "Rate-limited relay registered as the token's oracle. Whitelisted callers write the exchange rate through it, and each caller has an allowance that caps the cumulative absolute change it may push; the allowance refills linearly over the caller's interval. Apart from the token's own minimum-value check, this is the only bound on the exchange rate, and the token owner can bypass it by repointing the oracle.",
+      "description": "Rate-limited relay registered as the token's oracle. Whitelisted callers write the exchange rate through it, and each caller has an allowance that caps the cumulative absolute change it may push, refilling linearly over its interval. Apart from the token's own minimum-value check, this is the only bound on the exchange rate, and the token owner can bypass it by repointing the oracle.",
       "deployerAddress": "eth:0x86Fd4673527F9d5999C5e490Ab98766c0CFA8801",
       "sinceTimestamp": 1681902335,
       "sinceBlock": 17080242,
@@ -189,7 +189,7 @@
         "currency": "ETH",
         "decimals": 18,
         "ethReceiver": "eth:0x26ad6395DABF271fD9bFDC82d7377261930E6B86",
-        "exchangeRate": "1.10884183066",
+        "exchangeRate": "1.107959969613",
         "implementation": "eth:0x9E021c9607bD3ADB7424D3b25a2D35763ff180BB",
         "masterMinter": "eth:0x099d699C07Bbc8eE6eB5703746063E04B2aA62A7",
         "minters": ["eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6"],
@@ -201,7 +201,7 @@
         "pauser": "eth:0x099d699C07Bbc8eE6eB5703746063E04B2aA62A7",
         "rescuer": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "wBETH",
-        "totalSupply": "3175326476826790248608476",
+        "totalSupply": "3175326484242918733473370",
         "version": "2"
       },
       "fieldMeta": {
@@ -539,7 +539,7 @@
     "wbeth/UnwrapTokenV1ETH": "0x89f75c83a04007813f7a6e064a17bc2bef63b03fe5ab3ec6bdd7372578154b14",
     "wbeth/WrapTokenV3ETH": "0x49732aee04baa0e994a33265af990039b9b2e38aeff872b635d167a9a49c1b68"
   },
-  "usedBlockNumbers": { "ethereum": 26234951 },
+  "usedBlockNumbers": { "ethereum": 26140932 },
   "permissionsConfigHash": "0x4d6a4316ed6e3de3f6f04524c793416970bd092fa74e8590b67c407245bd9232",
   "permissions": {
     "eth:0x099d699C07Bbc8eE6eB5703746063E04B2aA62A7": {
