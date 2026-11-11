@@ -20,7 +20,7 @@ It reads past blocks only, with `eth_feeHistory`: each block's 10th and 25th per
 | Medium | 95% within 2 blocks | 25th percentile tip | 85th |
 | Fast | 95% in the next block | 25th percentile tip, last 1,800 blocks | 99th |
 
-Each tier promises 95% on average and never below 90% in a week. The 90% is a record from the weeks we have, not a guarantee.
+Each tier promises 95% over any 6 months and never below 90% in a week. Shorter stretches can fall below 95%: in the worst calendar month the tiers landed 91.5% to 93.4%, and in the worst 13 weeks 93.9% to 94.5%. Both parts are a record from Aug 2023 to Nov 2026, not a guarantee.
 
 Each tier is at least as high as the one below.
 
@@ -32,7 +32,7 @@ Each tier is at least as high as the one below.
 
 That gives `a` = 96.6% for 1 chance, 78.3% for 2, and 45.2% for 5, one minute being 5 blocks.
 
-This is enough for 95% on average if blocks were independent chances. The promise also asks for never below 90% in a week, and the derived 78.3% let the medium tier fall to 89.1% in a week of February 2026. The medium tier therefore beats 85% of blocks: the cheapest share, among those tried on the tuning months, that kept every tuning week at 90% or more. On the same criterion the fast tier reads the 25th percentile tip of the last 1,800 blocks, about 6 hours, and beats 99% of them. Every tier kept both parts of the promise in every week of the tuning months, the test months and the blind years.
+This is enough for 95% on average if blocks were independent chances. The promise also asks for never below 90% in a week, and the derived 78.3% let the medium tier fall to 89.1% in a week of February 2026. The medium tier therefore beats 85% of blocks: the cheapest share, among those tried on the tuning months, that kept every tuning week at 90% or more. On the same criterion the fast tier reads the 25th percentile tip of the last 1,800 blocks, about 6 hours, and beats 99% of them. Every tier kept both parts of the promise across the tuning months, the test months and the blind years.
 
 The 1.7% is the only number measured from mempool data: the share of transactions at 2 gwei that still missed the next block over the past year. Latency explains part of it: at 2 gwei, 42% of the misses came from transactions first seen in the last 2 seconds before the block's slot, which missed 3 to 7% of the time. Seen 2 to 11 seconds before, 1.2% still missed, for reasons not established. At near-zero and 0.1 gwei tips, many misses came at blocks less than 30% full. The per-block percentiles and the window were chosen on the tuning months.
 

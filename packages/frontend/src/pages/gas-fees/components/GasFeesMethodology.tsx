@@ -74,7 +74,7 @@ function MethodologyBody() {
           <dd className="inline">
             from past Ethereum blocks only, the tips that land transactions
             within a minute, within 2 blocks and in the next block. Each
-            promises 95% on average and never below 90% in a week.
+            promises 95% over any 6 months and never below 90% in a week.
           </dd>
         </div>
         <div>
@@ -137,10 +137,10 @@ function MethodologyBody() {
             needs no mempool, so anyone with a node can run it.
           </p>
           <p className="text-sm">
-            The 95% is what to expect over time; the 90% is the worst week to
-            plan for. An average alone would hide the busy weeks, when the
-            estimator falls short and when the tip matters most. The 90% is a
-            record, not a guarantee: it was set from the weeks we have.
+            The 95% is what to expect over months; the 90% is the worst week to
+            plan for. Shorter stretches can fall below 95%: in the worst
+            calendar month the tiers landed 91.5% to 93.4%. Both parts are a
+            record, not a guarantee: they were set from the data we have.
           </p>
         </section>
         <section className="flex flex-col gap-3">
@@ -173,7 +173,7 @@ function MethodologyBody() {
               <b>Then it was frozen and tested.</b> First on May to Nov 2026,
               then blind on Aug 2023 to Nov 2025: 813 days nobody had looked at,
               with base fees up to 58 gwei. Every tier kept both parts of the
-              promise in every week.
+              promise in all three periods.
             </li>
             <li>
               <b>Its weakness.</b> It reads what people already pay, so when

@@ -133,7 +133,7 @@ function TrackRecord() {
       indicatorType: { shape: 'line' },
     },
     target: {
-      label: `${TARGET}% on average`,
+      label: `${TARGET}% over any 6 months`,
       color: 'var(--chart-stacked-pink)',
       indicatorType: { shape: 'line' },
     },
@@ -154,9 +154,9 @@ function TrackRecord() {
             <ChartTimeRange isPlaceholderData={false} timeRange={timeRange} />
             <span>
               Our {tier.name.toLowerCase()} tip, replayed by week. Promise:{' '}
-              {TARGET}% {tier.wait} on average, never below {WORST_WEEK}% in a
-              week. {reached} of {points.length} weeks reached {TARGET}%, and
-              the worst was {worst}%.
+              {TARGET}% {tier.wait} over any 6 months, never below {WORST_WEEK}%
+              in a week. {reached} of {points.length} weeks reached {TARGET}%,
+              and the worst was {worst}%.
             </span>
           </div>
         </div>
@@ -183,7 +183,7 @@ function TrackRecord() {
           >
             <TimeSeriesChart
               data={points}
-              ariaLabel="Share of transactions landing in time by week, against our promise of 95% on average and never below 90% in a week"
+              ariaLabel="Share of transactions landing in time by week, against our promise of 95% over any 6 months and never below 90% in a week"
               syncId="gasFeesRecord"
               xAxis={xAxis}
               series={[
