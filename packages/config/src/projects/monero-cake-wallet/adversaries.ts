@@ -5,7 +5,7 @@ import {
 } from '../../common/privacyAdversaries'
 
 const CAKE =
-  'https://github.com/cake-tech/cake_wallet/blob/7ce3cd75c3fd0c0add1cead41038ab8806ffebde/'
+  'https://github.com/cake-tech/cake_wallet/blob/d803aecf9de21461c7459c974ce5e3f2d92b70ed/'
 const MONERO = 'https://github.com/monero-project/monero/blob/v0.18.5.1/'
 
 export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
@@ -88,7 +88,7 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
       sources: [
         {
           title: 'Built-in Tor is off unless the user enables it',
-          url: CAKE + 'lib/store/settings_store.dart#L1590',
+          url: CAKE + 'lib/store/settings_store.dart#L1604',
         },
         {
           title:
@@ -101,7 +101,7 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
         },
         {
           title: 'The Ethereum client binds its proxy setting once',
-          url: CAKE + 'cw_evm/lib/clients/evm_chain_client.dart#L24',
+          url: CAKE + 'cw_evm/lib/clients/evm_chain_client.dart#L25',
         },
       ],
     },

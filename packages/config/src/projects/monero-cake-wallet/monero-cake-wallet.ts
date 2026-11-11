@@ -41,7 +41,7 @@ export const moneroCakeWallet: BaseProject = {
       ],
       socialMedia: ['https://x.com/cakewallet', 'https://x.com/monero'],
       other: [
-        'https://github.com/cake-tech/cake_wallet/blob/7ce3cd75c3fd0c0add1cead41038ab8806ffebde/PRIVACY.md',
+        'https://github.com/cake-tech/cake_wallet/blob/d803aecf9de21461c7459c974ce5e3f2d92b70ed/PRIVACY.md',
         'https://changenow.io/faq/kyc-aml',
         'https://kycnot.me/service/trocador',
       ],
@@ -54,10 +54,10 @@ export const moneroCakeWallet: BaseProject = {
       name: 'Cake Wallet',
       url: 'https://cakewallet.com',
       since: '2026-09-29',
-      version: '6.4.6',
+      version: '6.5.3',
       source: {
         repository: 'https://github.com/cake-tech/cake_wallet',
-        commit: '7ce3cd75c3fd0c0add1cead41038ab8806ffebde',
+        commit: 'd803aecf9de21461c7459c974ce5e3f2d92b70ed',
       },
       checkedApps: [
         {

@@ -23,7 +23,7 @@ The user's Starknet account signs every action, and their viewing key decrypts t
 
 ### App
 
-The app is an open-source Chromium extension that Starknet Holdings publishes. By default it talks to Starknet Holdings' gateway, which forwards note discovery to StarkWare's discovery service and relayed transactions to AVNU's paymaster. Starkscan, also run by Starknet Holdings, serves the activity list. The settings point the RPC, discovery service, prover and paymaster elsewhere. A self-run discovery service keeps the viewing key from the gateway. A self-run [prover](https://github.com/starkware-libs/sequencer/tree/f2d0c93a057675f6c9eab7292c2fcb13a6dea24d/crates/starknet_transaction_prover) (high hardware requirements) covers transfers and withdrawals, while deposits need a prover with screening credentials.
+The app is an open-source Chromium extension that Starknet Holdings publishes. By default it talks to Starknet Holdings' gateway, which forwards note discovery to StarkWare's discovery service and relayed transactions to AVNU's paymaster. Starknet Holdings' Starkscan serves activity, NFTs and staking. The settings point the RPC, discovery service, prover and paymaster elsewhere. The gateway stays the fallback RPC, and every shield to the user's own balance asks it for sponsorship. A self-run discovery service and [prover](https://github.com/starkware-libs/sequencer/tree/f2d0c93a057675f6c9eab7292c2fcb13a6dea24d/crates/starknet_transaction_prover) (heavy hardware) keep the viewing key from the gateway for transfers and withdrawals. Deposits need a prover with screening credentials, which receives it.
 
 ### Compliance
 

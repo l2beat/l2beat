@@ -85,7 +85,7 @@ export function fluidkeyAdversaries(accounts: number) {
           "Without Tor, the proxy can also pass it the user's IP. A payer who looks up the user's name gives their RPC the name and the new Safe. A Google, Apple, email or Farcaster login hands the identity to Privy, whose code then creates the signature the user's keys come from.",
         sources: [
           {
-            title: 'Served app, build entrypoint-908cd83c (checked 2026-10-30)',
+            title: 'Served app, build entrypoint-4e96d22b (checked 2026-11-11)',
             url: 'https://app.fluidkey.com',
           },
           {

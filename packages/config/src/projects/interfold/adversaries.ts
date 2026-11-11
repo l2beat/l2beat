@@ -1,7 +1,7 @@
 import { definePrivacyAdversaries } from '../../common/privacyAdversaries'
 
 const GOV =
-  'https://github.com/theinterfold/the-interfold-governance/blob/28b03a8b529dfa7491f01229724391665f06bd95/'
+  'https://github.com/theinterfold/the-interfold-governance/blob/870c40599fdb0e8dd73e225aa2dab44ac06477e5/'
 // Its two ballot verifiers compile byte for byte to the deployed ones (solc 0.8.28,
 // 1 optimizer run, paris), so a re-pin must keep that true.
 const CRISP =

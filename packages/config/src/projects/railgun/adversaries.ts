@@ -10,7 +10,7 @@ const ENGINE =
 // Railgun names no reference wallet. The cells are rated with RailOxide, the
 // most private released open-source client we found.
 const RAILOXIDE =
-  'https://github.com/triamazikamno/railoxide/blob/7981f35afe8fe5a198a450e0cad66d37f159556e/'
+  'https://github.com/triamazikamno/railoxide/blob/d9e244c059d01fb52c21b878cb596971f8c1208c/'
 
 const INTERIOR: PrivacyExposureMap = {
   sender: 'private',
@@ -37,7 +37,7 @@ export function railgunAdversaries(upgradeDelay: string) {
         sources: [
           { contract: 'RailgunSmartWallet', title: 'Shield and unshield' },
           { contract: 'RelayAdapt', title: 'DeFi bundles' },
-          { contract: 'RelayAdapt7702_05ae', title: 'Swap accounts' },
+          { contract: 'RelayAdapt7702_1F74', title: 'Swap accounts' },
         ],
       },
       chainAnalyst: {
@@ -82,7 +82,7 @@ export function railgunAdversaries(upgradeDelay: string) {
           },
           {
             title: 'Sensitive reads go over their own isolated route',
-            url: `${RAILOXIDE}crates/wallet-ops/src/public_wallet/balances.rs#L152-L160`,
+            url: `${RAILOXIDE}crates/wallet-ops/src/public_wallet/balances.rs#L158-L166`,
           },
           {
             title: 'An isolated route never shares a Tor circuit',

@@ -10,9 +10,9 @@ const SNP =
 // SDK release PRIVACY-0.14.3-RC.8.
 const SDK =
   'https://github.com/starkware-libs/starknet-privacy/blob/fcc7c90f544ceb08621c32616bde29f1fdcbeb54/sdk/src/'
-// Bramble v0.10.7, whose store build matches a rebuild of this commit.
+// Bramble v0.10.10, whose store build matches a rebuild of this commit.
 const BRAMBLE =
-  'https://github.com/starknet-innovation/bramble/blob/d90222a2653c997a5cf8d8c6433df5ea10c16112/'
+  'https://github.com/starknet-innovation/bramble/blob/a01b240c77db7e847091127975f927f1a1956cb2/'
 const WALLET_API =
   'https://github.com/starknet-io/types-js/blob/0b483f51f4bc33c7253b209a25136d9d6ec1bc41/src/wallet-api/methods.ts'
 const POOL =
@@ -134,7 +134,7 @@ export const strk20Adversaries = definePrivacyAdversaries({
         },
         {
           title: "Default routes go through the operator's gateway",
-          url: BRAMBLE + 'packages/features/privacy/src/config.ts#L96-L109',
+          url: BRAMBLE + 'packages/features/privacy/src/config.ts#L106-L123',
         },
         {
           title: 'Proving request carries the viewing key',
