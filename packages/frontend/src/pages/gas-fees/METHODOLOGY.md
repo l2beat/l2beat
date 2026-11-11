@@ -183,7 +183,7 @@ The cheaper choices look good on the older years and then underpay badly when co
 - **No claim about motive.** The page reports measured tips only. Nothing here shows why a wallet picks a number, or that any payment flows from builders to wallets. In the closest non-crypto study, payment for order flow did not explain the differences in execution.
 - **L2 costs on this mock are rough:** 30 sampled blocks per chain. The real page should get them from the production pipeline.
 
-## Before this ships
+## Open work
 
 - Forward test: log published tips and grade them on new Flashbots files.
 - Log wallet endpoints from now on, so wallets can have real history.

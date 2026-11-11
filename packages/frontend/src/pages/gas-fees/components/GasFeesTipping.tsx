@@ -20,6 +20,10 @@ export function GasFeesTipping() {
       <div className="flex flex-col gap-1">
         <h2 className="font-bold text-xl md:text-2xl">Tipping on Ethereum</h2>
         <Label>Ethereum L1 only</Label>
+        <p className="mt-1 text-secondary text-sm">
+          A tip is the part of a fee you choose, on top of the base fee the
+          network sets.
+        </p>
       </div>
       <GasFeesLive action={<GasFeesMethodology />} />
       <div className="grid grid-cols-1 gap-x-10 gap-y-6 border-divider border-t pt-6 lg:grid-cols-2">

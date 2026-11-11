@@ -28,14 +28,14 @@ const GROUPS = [
 const THINNEST_LABELLED = 6
 
 export function GasFeesTipPayers() {
-  const { txs, tips, onRound } = mock.payers
+  const { txs, tips } = mock.payers
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-1">
         <h3 className="font-bold text-lg">Who pays the tips</h3>
         <p className="font-medium text-base">
           The {txs.high}% of transactions that tip 1 to 2.5 gwei pay {tips.high}
-          % of the tips. {onRound}% tip exactly 1 or 2 gwei.
+          % of the tips.
         </p>
         <p className="text-secondary text-xs">
           Ordinary transactions, {mock.period}.
