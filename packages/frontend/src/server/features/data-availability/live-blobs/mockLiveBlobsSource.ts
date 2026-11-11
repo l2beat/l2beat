@@ -25,6 +25,13 @@ const MISSED_ONE_IN = 40
 const UNATTRIBUTED_ONE_IN = 10
 /** So a few posters post most, as on mainnet */
 const POSTER_FALLOFF = 0.75
+/**
+ * A floor under every poster's weight, so each of `MAX_POSTERS` posts a few
+ * times a day and the perf ratchets watch a table as long as mainnet's
+ */
+const POSTER_TAIL_WEIGHT = 0.002
+/** Mainnet's posters in a day, with the unattributed row, in November 2026 */
+const MAX_POSTERS = 63
 
 interface MockSlot {
   block: LiveBlockRecord
@@ -205,8 +212,11 @@ function mockSlot(
   }
 }
 
-function createPosterPicker(posterIds: string[]) {
-  const weights = posterIds.map((_, rank) => POSTER_FALLOFF ** rank)
+function createPosterPicker(allPosterIds: string[]) {
+  const posterIds = allPosterIds.slice(0, MAX_POSTERS)
+  const weights = posterIds.map(
+    (_, rank) => POSTER_FALLOFF ** rank + POSTER_TAIL_WEIGHT,
+  )
   const totalWeight = weights.reduce((sum, weight) => sum + weight, 0)
   return (roll: number) => {
     let left = roll * totalWeight

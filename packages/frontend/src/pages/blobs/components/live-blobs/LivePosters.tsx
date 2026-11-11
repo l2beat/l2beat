@@ -1,5 +1,6 @@
 import { formatSeconds, SLOT_SECONDS } from '@l2beat/shared-pure'
-import { memo, useCallback, useRef, useState } from 'react'
+import { memo, useCallback, useEffect, useRef, useState } from 'react'
+import { Button } from '~/components/core/Button'
 import { Skeleton } from '~/components/core/Skeleton'
 import { BasicTableHeaderDividerRow } from '~/components/table/BasicTable'
 import {
@@ -18,8 +19,8 @@ import {
   PINNED_CELL_ATTRIBUTE,
 } from '~/components/table/utils/commonPinningStyles'
 import { getRowClassNamesWithoutOpacity } from '~/components/table/utils/rowType'
-import { useInterval } from '~/hooks/useInterval'
 import { useThemeTokens } from '~/hooks/useThemeTokens'
+import { ChevronIcon } from '~/icons/Chevron'
 import type { LiveBlobs } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
 import { BUCKET_SLOTS } from '~/server/features/data-availability/live-blobs/liveBlobsSlots'
 import { formatPercent } from '~/utils/calculatePercentageChange'
@@ -32,7 +33,6 @@ import {
   formatKib,
   formatWhole,
 } from './blocks/format'
-import { useChainClock } from './chainClock'
 import { anyLanding, type Landing, useLandedTotal } from './landings'
 import {
   FLASH_CLASS_NAME,
@@ -55,6 +55,14 @@ interface Props {
 
 /** # and the logo stay in view on a phone; the name would take most of a narrow screen */
 const PINNED_COLUMNS = 2
+/**
+ * Rows shown until the visitor asks for all. Safari spends most of a frame on
+ * the table after any change to it, more the more rows it has, and a day has
+ * over 60 posters: with all of them the belt above runs at a few frames a
+ * second on an iPhone
+ */
+const SHOWN_ROWS = 20
+
 /** Where the logo sticks until the sticky header measures the # column */
 const RANK_WIDTH = 32
 
@@ -114,12 +122,14 @@ export function LivePosters({ live: data, totals }: Props) {
     landing,
     totals?.posters.map((row) => row.poster.id),
   )
-  const rows = totals && inRanking(totals.posters, ranking)
+  const ranked = totals && inRanking(totals.posters, ranking)
+  const [showAll, setShowAll] = useShowAll()
+  const rows = showAll ? ranked : ranked?.slice(0, SHOWN_ROWS)
 
   const tableRef = useRef<HTMLDivElement>(null)
   useReorder(tableRef, rows?.map((row) => row.poster.id).join() ?? '')
 
-  if (!postedWindow || !rows) return <PostersSkeleton />
+  if (!postedWindow || !ranked || !rows) return <PostersSkeleton />
   const seconds = postedWindow.slots * SLOT_SECONDS
 
   return (
@@ -174,11 +184,41 @@ export function LivePosters({ live: data, totals }: Props) {
           </TableBody>
         </Table>
       </div>
+      {ranked.length > SHOWN_ROWS && (
+        <Button
+          variant="outline"
+          className="mx-auto mt-3 gap-2.5 text-sm"
+          aria-expanded={showAll}
+          onClick={() => setShowAll(!showAll)}
+        >
+          {showAll ? 'Show fewer' : `Show all ${ranked.length}`}
+          <ChevronIcon
+            className={cn(
+              'size-3 transition-transform duration-300',
+              showAll && 'rotate-180',
+            )}
+          />
+        </Button>
+      )}
     </section>
   )
 }
 
-/** Memoized: the ages tick in cells of their own, not with the row */
+/** Open once the legend's "+N more" leads here, as it promises the rest */
+function useShowAll() {
+  const [showAll, setShowAll] = useState(false)
+  useEffect(() => {
+    const openIfLinked = () => {
+      if (window.location.hash === `#${LIVE_POSTERS_ID}`) setShowAll(true)
+    }
+    openIfLinked()
+    window.addEventListener('hashchange', openIfLinked)
+    return () => window.removeEventListener('hashchange', openIfLinked)
+  }, [])
+  return [showAll, setShowAll] as const
+}
+
+/** Memoized: a row changes only when its poster's numbers or the head do */
 const PosterRow = memo(function PosterRow({
   row,
   color,
@@ -301,22 +341,11 @@ const PosterRow = memo(function PosterRow({
         {batches > 1 ? formatSeconds(seconds / batches) : '–'}
       </TableCell>
       <TableCell align="right" className="tabular-nums">
-        <LastBatchAgo lastSlot={row.lastSlot} />
+        {head === undefined ? '–' : describeLastBatch(head - row.lastSlot)}
       </TableCell>
     </tr>
   )
 })
-
-/**
- * Alone in the row to render every second. On the chain's clock, as a device
- * clock a minute off would age every batch a minute
- */
-function LastBatchAgo({ lastSlot }: { lastSlot: number }) {
-  const clock = useChainClock()
-  const [, rerender] = useState(0)
-  useInterval(() => rerender((tick) => tick + 1), 1000)
-  return describeAgo((clock.progressNow() - lastSlot) * SLOT_SECONDS)
-}
 
 /** `value` as it was before `holding` began, while it lasts */
 function useHeldWhile<T>(holding: boolean, value: T) {
@@ -388,8 +417,8 @@ function pinnedCellProps(index: number, className?: string) {
   }
 }
 
-/** About as many projects as post in a day, so the page moves little when real rows come */
-const SKELETON_ROWS = 36
+/** As many as are shown, so the page moves little when real rows come */
+const SKELETON_ROWS = SHOWN_ROWS
 
 function PostersSkeleton() {
   return (
@@ -409,8 +438,14 @@ function PostersSkeleton() {
   )
 }
 
-function describeAgo(seconds: number) {
-  const whole = Math.floor(seconds)
-  if (whole <= 1) return 'just now'
-  return `${formatSeconds(whole)} ago`
+/**
+ * As of the newest block, so it changes with the row once a block: a tick
+ * every second would change the table every second, and in Safari each change
+ * costs most of a frame. Past a minute in whole minutes, as the seconds would
+ * stand still between blocks
+ */
+function describeLastBatch(slotsAgo: number) {
+  if (slotsAgo <= 0) return 'just now'
+  const seconds = slotsAgo * SLOT_SECONDS
+  return `${formatSeconds(seconds < 60 ? seconds : Math.floor(seconds / 60) * 60)} ago`
 }
