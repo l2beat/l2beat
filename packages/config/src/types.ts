@@ -1073,9 +1073,25 @@ export type ProjectDefiCategory =
   | 'Payments'
 
 export interface ProjectDefiInfo {
-  /** Short category label shown in the DeFi table, e.g. "Stablecoin". */
+  /** Short category label shown on the project page, e.g. "Stablecoin". */
   category: ProjectDefiCategory
   tvl?: ProjectDefiTvlConfig
+  /** Listed in the Tokens section of the project page. */
+  tokens?: ProjectDefiToken[]
+}
+
+export interface ProjectDefiToken {
+  /** Linked to its token page when the token database has it. */
+  address: ChainSpecificAddress
+  /** The ticker as the contract reports it, e.g. "stETH". */
+  symbol: string
+  name: string
+  /** One or two sentences: what the token is and how its value moves. */
+  description: string
+}
+
+export interface ProjectDefiRiskValue extends TableReadyValue {
+  description: string
 }
 
 export interface ProjectLiquidStaking {
@@ -1086,6 +1102,23 @@ export interface ProjectLiquidStaking {
    * the market exit. A pool that doesn't exist yet gives no quote.
    */
   marketQuotes: ProjectLiquidStakingMarketQuote[]
+  /** The row of the liquid staking risk comparison. */
+  risks: ProjectLiquidStakingRisks
+}
+
+export interface ProjectLiquidStakingRisks {
+  /** Who can mint, what caps apply, and who routes deposited ETH to validators. */
+  minting: ProjectDefiRiskValue
+  /** Who runs validators, whether they post a bond, and who absorbs slashing. */
+  operators: ProjectDefiRiskValue
+  /** Where the backing ETH sits and who controls withdrawal credentials. */
+  backing: ProjectDefiRiskValue
+  /** Who writes the exchange rate, on what quorum and bounds, and what silence does. */
+  oracle: ProjectDefiRiskValue
+  /** The exit path, what gates it, how long it takes, and whether it can be paused. */
+  exit: ProjectDefiRiskValue
+  /** Who can change code, the minimum delay, and whether holders have a veto. */
+  upgrades: ProjectDefiRiskValue
 }
 
 export type ProjectDefiTvlConfig =
@@ -1967,6 +2000,11 @@ export type ProjectLiquidStakingContracts =
        * for an onchain redemption.
        */
       unwrapToken: ChainSpecificAddress
+    }
+  | {
+      /** No onchain redemption: the rate is the only protocol read. */
+      type: 'cbeth'
+      cbETH: ChainSpecificAddress
     }
 
 /** A pool selling the token for ETH or WETH. */
