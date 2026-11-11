@@ -108,7 +108,7 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
       exposureShort:
         "When 0xbow's registry feeds fail, the default RPCs, led by Alchemy under 0xbow's key, receive the account right before its withdrawal.",
       exposureContinued:
-        'A connected wallet\'s address reaches them too, and they see when that session withdraws. A local node set in the app receives these reads instead.',
+        "A connected wallet's address reaches them too, and they see when that session withdraws. A local node set in the app receives these reads instead.",
       interior: {
         sender: 'private',
         recipient: 'private',
