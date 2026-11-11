@@ -1617,5 +1617,7 @@
   "static/icons/tacit-pay.png": "dee61fd764a20a4c81d75d2659312d4d",
   "static/icons/tacit-finance.png": "a1cba05396511d6a74dfef79b8f29794",
   "static/meta-images/privacy/projects/tacit-pay/opengraph-image.png": "c9bb5cbcb0ddfaa38e6350fa4272a32c",
-  "static/meta-images/zk-catalog/projects/tacit-pay/opengraph-image.png": "3e8ef48acf9bb6211b4313e310dd1e79"
+  "static/meta-images/zk-catalog/projects/tacit-pay/opengraph-image.png": "3e8ef48acf9bb6211b4313e310dd1e79",
+  "static/icons/derivev3.png": "5f92f086afad4f89a19ff955627c6bc8",
+  "static/meta-images/layer2s/projects/derivev3/opengraph-image.png": "d07aa59a7c4e19a0073a80680f7fd089"
 }
