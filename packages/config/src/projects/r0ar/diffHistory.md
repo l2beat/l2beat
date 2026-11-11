@@ -1,3 +1,72 @@
+Generated with discovered.json: 0x7d650e06e4fa97dfd2999f0ae929efcf64cf7e0f
+
+# Diff at Fri, 16 Oct 2026 09:37:49 GMT:
+
+- id: f96a512b
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1765550969
+- current timestamp: 1765550969
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765550969 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal (eth:0x2c6AF306F8D0Cd6d9E76D43b2DC9a4E60a7f446e) [opstack/OptimismPortal] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      fieldMeta.guardian:
++        {"severity":"MEDIUM"}
+      fieldMeta.GUARDIAN:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x66e58c9D0b42110E956F54aA850C0d629f4B56C5) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x689db31D7C367ed2c264994c0838a82EdD6Bc9AA) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.enabledFeatures:
++        {"severity":"HIGH","description":"Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."}
+      fieldMeta.isCustomGasToken:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xF014d8028A7028352baD6226A4894Ae596e2846c) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0x5c05953b400f15f4319498a44d66c6f4b431282d
 
 # Diff at Tue, 29 Sep 2026 17:46:59 GMT:

@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SwapEscrowV2",
+  "category": "core",
+  "description": "SwapEscrowV2 implementation. A clone swaps via the Curve 3pool (and Uniswap for ETH) with a slippage bound of {{STABLE_MAX_SLIPPAGE_BPS}} bps for stablecoins and {{ETH_MAX_SLIPPAGE_BPS}} bps against the Chainlink ETH/USD price for ETH. It can first swap a capped share of the DAI to ETH for the recipient's gas. If the swap cannot execute, only the recovery key committed in the clone's address can move the funds.",
+  "ignoreMethods": [
+    "daiForGas",
+    "minEthForGas",
+    "nonce",
+    "recipient",
+    "recoveryCommitment",
+    "relayerTip",
+    "route"
+  ],
+  "ignoreRelatives": [
+    "DAI",
+    "DAI_WETH_PAIR",
+    "ETH_USD_FEED",
+    "THREE_POOL",
+    "UNISWAP_UNIVERSAL_ROUTER",
+    "USDC",
+    "USDT",
+    "WETH"
+  ]
+}

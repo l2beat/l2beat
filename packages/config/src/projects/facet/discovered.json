@@ -1,7 +1,7 @@
 {
   "name": "facet",
   "timestamp": 1780407005,
-  "configHash": "0x50ce456a5743b1b9d2170eae27d032e0f467a124fb4af13d6d6ea0f9074b4fd9",
+  "configHash": "0xd3f25051ceca451b1d57333ca1c0b572c2fa3b157fcc5772f94dd4ae521be0df",
   "entries": [
     {
       "name": "Inbox",
@@ -43,11 +43,6 @@
         "eth:0x68c56f4D88846A4Cdce966d92D92a0636baf40FE": "FacetEtherBridgeV6"
       },
       "category": { "name": "External Bridges", "priority": 1 }
-    },
-    {
-      "address": "eth:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "Rollup",
@@ -164,7 +159,7 @@
       "values": {
         "$immutable": true,
         "depositNonce": 4,
-        "l2Bridge": "eth:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4",
+        "l2Bridge": "facet:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4",
         "owner": "eth:0x0000000000000000000000000000000000000000",
         "paused": false,
         "rollup": "eth:0x686E7d01C7BFCB563721333A007699F154C04eb4",
@@ -173,6 +168,9 @@
       "implementationNames": {
         "eth:0x4E2eBa30a786c0643699b92234d74a71e958C08E": "L1Bridge"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "facet" } }
+      ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -296,12 +294,14 @@
       },
       "fieldMeta": {
         "activeVerifiers": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Verifiers that are routed to by their selector and not frozen."
         },
         "allVerifiers": {
+          "severity": "HIGH",
           "description": "All verifiers that were ever routed to by this gateway."
-        }
+        },
+        "owner": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66": "SP1VerifierGateway"
@@ -340,6 +340,7 @@
         "paused": false,
         "version": "2.2.0"
       },
+      "fieldMeta": { "$admin": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909": "L1ChugSplashProxy",
         "eth:0x77764Bdf2B52C4B2635A73927945541B65DF74E9": "PausedL1StandardBridge"
@@ -377,12 +378,14 @@
       },
       "fieldMeta": {
         "activeVerifiers": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Verifiers that are routed to by their selector and not frozen."
         },
         "allVerifiers": {
+          "severity": "HIGH",
           "description": "All verifiers that were ever routed to by this gateway."
-        }
+        },
+        "owner": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xa236E6E31d94b613923d18313f534CE5b6b98eE1": "SP1VerifierGateway"
@@ -470,9 +473,9 @@
       "sinceBlock": 1722346,
       "values": {
         "$immutable": true,
-        "aliasedL1Bridge": "facet:0x5F3fbA30A786C0643699b92234d74A71E958D19F",
+        "aliasedL1Bridge": "eth:0x4E2eBa30a786c0643699b92234d74a71e958C08E",
         "decimals": 18,
-        "l1Bridge": "facet:0x4E2eBa30a786c0643699b92234d74a71e958C08E",
+        "l1Bridge": "eth:0x4E2eBa30a786c0643699b92234d74a71e958C08E",
         "MESSAGE_PASSER": "facet:0x4200000000000000000000000000000000000016",
         "name": "Bluebird WETH",
         "symbol": "BBWETH",
@@ -481,6 +484,9 @@
       "implementationNames": {
         "facet:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4": "L2Bridge"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }
+      ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -512,16 +518,6 @@
         "facet:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016": "L2ToL1MessagePasser"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
-    },
-    {
-      "address": "facet:0x4E2eBa30a786c0643699b92234d74a71e958C08E",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "facet:0x5F3fbA30A786C0643699b92234d74A71E958D19F",
-      "type": "EOA",
-      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -1006,8 +1002,8 @@
     "facet/FacetEtherBridge": "0xe29f5262256de7e9ec78abe7c54cf5f6f24680b6d137c20633dbbb2d4f48b27f",
     "facet/FacetSafeModule": "0x6f2371af8e7f8af4e383d97b7ac36a626827fbe25be6bd42613bed29ed5b9df2",
     "facet/FacetSafeProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "facet/L1ETHBridge": "0xb80d346feab296ef138fe965341535880e9a50bdea2d06aa7d853b87313825d9",
-    "facet/L2ERC20Bridge": "0xdabbf407e0534e147b8f55fa8354ab880ad52bee712fe59838a8645c0d15fb24",
+    "facet/L1ETHBridge": "0x4c33368a5efb144b32a82830a1e74856e1473a12ef297ba64108415a1fd77ff7",
+    "facet/L2ERC20Bridge": "0x946306ef0923c7168418307ec3b70cf767c04af72aa1e0e48cdf7a4783a04f19",
     "facet/L2ToL1MessagePasser": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "facet/Rollup": "0x9ed8e373cd1b59d3d84cefce11ae7874152d8bc465fbe2de0480a127abf5b74b",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
@@ -1016,7 +1012,7 @@
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
   "usedBlockNumbers": { "ethereum": 25230004, "facet": 3880205 },
-  "permissionsConfigHash": "0xec30d6ac3c2ed13a767cfa17321fa632d14af40434b68b097ca5908676781b76",
+  "permissionsConfigHash": "0xc99f1584e6cc2a69c3aa47c6510215a360d90219f6a13baaf2c5f078e8a8330c",
   "permissions": {
     "eth:0x3235AdE33cF7013f5b5A51089390396e931e6BCF": {
       "directlyReceivedPermissions": [

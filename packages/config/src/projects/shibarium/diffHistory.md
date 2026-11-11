@@ -1,3 +1,162 @@
+Generated with discovered.json: 0x51411027372923b505e28b7175c04a4d5599557d
+
+# Diff at Fri, 16 Oct 2026 15:41:18 GMT:
+
+- id: 095adf9f
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fb5631b3f310638441a584e1a8740a9dc717c3ca block: 1782392290
+- current timestamp: 1782392290
+
+## Description
+
+Config-only: shared polygonposbridge templates gained descriptions and categories. The proxy owner of RootChain, DepositManager and Governance now gets the upgrade permission it holds. RLPReader is no longer discovered: it was reached through `childChainManagerAddress`, an address on the child chain.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782392290 (main branch discovery), not current.
+
+```diff
+    contract ERC1155Predicate (eth:0x0057bed57066F61c64DACB395B38c6E1792e03B8) [polygonposbridge/predicate] {
+    +++ description: Escrow (predicate) for one token type. The RootChainManager locks deposits here and releases them on proven exits.
+      description:
++        "Escrow (predicate) for one token type. The RootChainManager locks deposits here and releases them on proven exits."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract MintableERC721Predicate (eth:0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665) [polygonposbridge/predicate] {
+    +++ description: Escrow (predicate) for one token type. The RootChainManager locks deposits here and releases them on proven exits.
+      description:
++        "Escrow (predicate) for one token type. The RootChainManager locks deposits here and releases them on proven exits."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract EventsHub (eth:0x12185669Dac70749f717247971E0B8819b2e472e) [polygonposbridge/EventsHub] {
+    +++ description: Emits staking events on behalf of the StakeManager and the validator share contracts.
+      template:
++        "polygonposbridge/EventsHub"
+      description:
++        "Emits staking events on behalf of the StakeManager and the validator share contracts."
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract StakingNFT (eth:0x495eea66B0f8b636D441dC6a98d8F5C3D455C4c0) [polygonposbridge/StakingNFT] {
+    +++ description: NFT that represents each validator slot. The holder controls the validator.
+      description:
++        "NFT that represents each validator slot. The holder controls the validator."
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract StakingInfo (eth:0x539964b3d225194717fb896D26c8b3E635b8A1aE) [polygonposbridge/StakingInfo] {
+    +++ description: Contains logging and getter functions about staking.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract ERC20Predicate (eth:0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa) [polygonposbridge/predicate] {
+    +++ description: Escrow (predicate) for one token type. The RootChainManager locks deposits here and releases them on proven exits.
+      description:
++        "Escrow (predicate) for one token type. The RootChainManager locks deposits here and releases them on proven exits."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ExitNFT (eth:0x7ad7f98f229c5C1EA5161bEd952c3007DBE1F307) [polygonposbridge/ExitNFT] {
+    +++ description: NFTs used to represent a withdrawal in the withdrawal PriorityQueue (Only used for tokens initially deposited via DepositManager).
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract DepositManager (eth:0x885fcE983b6a01633f764325B8c3c5D31032C995) [polygonposbridge/DepositManager] {
+    +++ description: Contract to deposit and escrow ETH, ERC20 or ERC721 tokens.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ERC721Predicate (eth:0x98C831cFB18852f7deB3E3a970e907475b49730f) [polygonposbridge/predicate] {
+    +++ description: Escrow (predicate) for one token type. The RootChainManager locks deposits here and releases them on proven exits.
+      description:
++        "Escrow (predicate) for one token type. The RootChainManager locks deposits here and releases them on proven exits."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    EOA (eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96) {
+    +++ description: None
+      receivedPermissions.19:
++        {"permission":"upgrade","from":"eth:0x885fcE983b6a01633f764325B8c3c5D31032C995","role":".owner"}
+      receivedPermissions.22:
++        {"permission":"upgrade","from":"eth:0xC476E20c2F7FA3B35aC242aBE71B59e902242f06","role":".owner"}
+      receivedPermissions.23:
++        {"permission":"upgrade","from":"eth:0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9","role":".owner"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract RLPReader (eth:0xc107664eeEEA2c84e51D56F1B7a479EbCf9541c4) [polygonposbridge/RLPReader]
+    +++ description: None
+```
+
+```diff
+    contract EtherPredicate (eth:0xc3897302aB4B42931cB4857050Fa60f53B775870) [polygonposbridge/predicate] {
+    +++ description: Escrow (predicate) for one token type. The RootChainManager locks deposits here and releases them on proven exits.
+      description:
++        "Escrow (predicate) for one token type. The RootChainManager locks deposits here and releases them on proven exits."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract Governance (eth:0xC476E20c2F7FA3B35aC242aBE71B59e902242f06) [polygonposbridge/Governance] {
+    +++ description: Simple contract that allows the owner to call an `update` function on arbitrary contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract RootChain (eth:0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9) [polygonposbridge/RootChain] {
+    +++ description: Contract storing chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the validators.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract Registry (eth:0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB) [polygonposbridge/Registry] {
+    +++ description: Maintains the addresses of the contracts used in the system, part of the old 'plasma bridge'.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
 Generated with discovered.json: 0xbc6e30cbee8272f199bd5f9e3e89fe235783eeaa
 
 # Diff at Thu, 25 Jun 2026 12:59:23 GMT:

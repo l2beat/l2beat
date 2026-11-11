@@ -3,6 +3,7 @@ import type { ZkCatalogAttester } from '@l2beat/config/build/common/zkCatalogAtt
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import type { ProgramHashesSectionProps } from '~/components/projects/sections/program-hashes/ProgramHashesSection'
 import type { TrustedSetupSectionProps } from '~/components/projects/sections/TrustedSetupsSection'
+import type { KnownDeployment } from '~/components/projects/sections/verifiers/KnownDeployments'
 import type { VerifiersSectionProps } from '~/components/projects/sections/verifiers/VerifiersSection'
 import { externalLinks } from '~/consts/externalLinks'
 import {
@@ -13,6 +14,7 @@ import {
   type VerifierStatus,
 } from '~/pages/zk-catalog/v2/components/zkCatalogUi'
 import type { TrustedSetupsByProofSystem } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
+import { getTrustedSetupParticipantSummaries } from '~/utils/project/getTrustedSetupParticipantSummaries'
 import { configMarkdown } from './configMarkdown'
 import { bulletList, heading, joinBlocks, link, subsection } from './markdown'
 
@@ -34,6 +36,10 @@ export function renderTrustedSetups(
         bulletList([
           `Risk: ${formatTrustedSetupRisk(setup.risk)}`,
           `Proof systems: ${setup.proofSystems.map(formatTag).join(', ')}`,
+          ...getTrustedSetupParticipantSummaries(setup).map(
+            ({ label, value, unit, description }) =>
+              `${label}: ${value}${unit ? ` ${unit}` : ''}${description ? ` (${description})` : ''}`,
+          ),
         ]),
         configMarkdown(setup.description, level + 1),
       ]),
@@ -258,9 +264,7 @@ function renderVerifier(
   ])
 }
 
-function renderKnownDeployments(
-  deployments: VerifiersSectionProps['proofSystemVerifiers'][number]['verifierHashes'][number]['knownDeployments'],
-) {
+function renderKnownDeployments(deployments: KnownDeployment[]) {
   if (deployments.length === 0) return ''
   return joinBlocks([
     '**Known deployments**',

@@ -158,7 +158,7 @@ describe(renderProjectSection.name, () => {
         'Rollup operators cannot compromise the system, but being **application-specific** might bring additional risk.\n\nLong.\n\n**Note:** We',
         '**New requirements coming soon** (effective 2026-09-21 14:13 UTC)',
         '- The proof system is permissioned.',
-        '[Learn more about Stages](https://l2beat.com/stages).',
+        '[Learn more about Stages](https://ethbeat.org/stages).',
       )
     })
   })
@@ -173,6 +173,15 @@ describe(renderProjectSection.name, () => {
         content: 'The DAO upgrades.',
         governanceInfo: {
           securityCouncil: { Threshold: '9/12' },
+          upgrades: {
+            'Normal upgrade path': {
+              steps: [
+                { description: 'Vote' },
+                { description: 'Timelock (3d)', isWait: true },
+              ],
+              note: 'About 10 days.',
+            },
+          },
           tokenGovernance: { Token: 'ARB' },
         },
         pastUpgrades: {
@@ -183,8 +192,8 @@ describe(renderProjectSection.name, () => {
     })
 
     expect(markdown).toInclude(
-      '![A diagram](https://l2beat.com/images/diagram.png)\n\nThe DAO upgrades.',
-      '### Governance profile\n\n#### Security Council\n\n| Property | Value |\n| --- | --- |\n| Threshold | 9/12 |\n\n#### Token governance',
+      '![A diagram](https://ethbeat.org/images/diagram.png)\n\nThe DAO upgrades.',
+      '### Governance profile\n\n#### Security Council\n\n| Property | Value |\n| --- | --- |\n| Threshold | 9/12 |\n\n#### Upgrades\n\n| Property | Value |\n| --- | --- |\n| Normal upgrade path | Vote → Timelock (3d). About 10 days. |\n\n#### Token governance',
       '### Past upgrades',
       '- Count of upgrades: No upgrades\n- Last upgrade: N/A\n- Avg upgrade interval: N/A',
     )
@@ -234,8 +243,8 @@ describe(renderProjectSection.name, () => {
     })
 
     expect(markdown).toInclude(
-      '![A diagram](https://l2beat.com/images/diagram.png)',
-      '### Prover: [SP1](https://l2beat.com/zk-catalog/sp1)\n\n#### Trusted setups\n\n- Groth16 (Groth16):\n  - Aztec Ignition, risk green (lowest risk) per the [Trusted Setups Risk Framework](https://forum.l2beat.com/t/the-trusted-setups-framework-for-zk-catalog/381): Large ceremony.\n  - Used in: none\n  - Verifiers: 2 successful',
+      '![A diagram](https://ethbeat.org/images/diagram.png)',
+      '### Prover: [SP1](https://ethbeat.org/zk-catalog/sp1)\n\n#### Trusted setups\n\n- Groth16 (Groth16):\n  - Aztec Ignition, risk green (lowest risk) per the [Trusted Setups Risk Framework](https://forum.l2beat.com/t/the-trusted-setups-framework-for-zk-catalog/381): Large ceremony.\n  - Used in: none\n  - Verifiers: 2 successful',
       '### Program Hashes\n\n#### Aggregation program',
       'Hashes are checked onchain.',
     )
@@ -324,11 +333,11 @@ describe(renderProjectSection.name, () => {
     })
 
     expect(riskSummary).toInclude(
-      'There are 3 additional risks coming from the host chain [Arbitrum One](https://l2beat.com/layer2s/projects/arbitrum)',
+      'There are 3 additional risks coming from the host chain [Arbitrum One](https://ethbeat.org/layer2s/projects/arbitrum)',
     )
     expect(technology).toInclude(
-      'The section considers only the L3 properties. For more details please refer to [Arbitrum One](https://l2beat.com/layer2s/projects/arbitrum)',
-      'Blobs go to Celestia.\n\nLearn more about the DA layer here: [Celestia](https://l2beat.com/layer2s/projects/celestia)',
+      'The section considers only the L3 properties. For more details please refer to [Arbitrum One](https://ethbeat.org/layer2s/projects/arbitrum)',
+      'Blobs go to Celestia.\n\nLearn more about the DA layer here: [Celestia](https://ethbeat.org/layer2s/projects/celestia)',
     )
   })
 
@@ -353,7 +362,7 @@ describe(renderProjectSection.name, () => {
     })
 
     expect(markdown).toInclude(
-      '### [2026-08-29 10:40 UTC](https://l2beat.com/layer2s/projects/arbitrum?update=update-1) (high severity, 3 changes)\n\nUpgraded the bridge.',
+      '### [2026-08-29 10:40 UTC](https://ethbeat.org/layer2s/projects/arbitrum?update=update-1) (high severity, 3 changes)\n\nUpgraded the bridge.',
     )
   })
 
@@ -407,7 +416,7 @@ describe(renderProjectSection.name, () => {
 
     expect(markdown).toInclude(
       '### Ongoing anomaly\n\n- No state updates have been performed for the past 2h (since 2026-08-29 10:40 UTC). These typically occur every 1h on average.',
-      'The interactive liveness chart is shown on [the HTML page](https://l2beat.com/layer2s/projects/arbitrum#liveness).',
+      'The interactive liveness chart is shown on [the HTML page](https://ethbeat.org/layer2s/projects/arbitrum#liveness).',
       '#### State updates\n\n- functionCall: 2023-11-14 22:13 UTC - now; currently used; address: [0x1111111111111111111111111111111111111111](https://etherscan.io/address/0x1111111111111111111111111111111111111111); selector: 0x12345678; signature: `function update()`',
       '### Last 30 day anomalies',
     )
@@ -427,7 +436,7 @@ describe(renderProjectSection.name, () => {
       props: {
         id: 'crops',
         title: 'Crops',
-        inGarden: false,
+        listing: 'ratedBad',
         crops: {
           censorshipResistance: {
             ...crop,
@@ -447,20 +456,25 @@ describe(renderProjectSection.name, () => {
           privacy: { ...crop, status: 'notReviewed', sentiment: 'neutral' },
           security: crop,
         },
+        ossification: [
+          'Score: 99 of 100.',
+          'No critical change since 2020 May 18.',
+        ],
       },
     })
 
     expect(markdown).toInclude(
-      'Not in the garden yet. 2 of 4 in bloom.',
+      'Not listed in the CROPS guide: a property is rated bad. 2 of 4 rated good.',
+      '### Security\n\nGood\n\n**Ossification**\n\n- Score: 99 of 100.\n- No critical change since 2020 May 18.',
       '### Censorship resistance\n\nBad\n\n**What is missing**\n\n- No forced transactions.',
       "### Open source\n\nGood\n\n**What's good**\n\n- License: [MIT License](https://mit)\n- Code is public.",
       '### Privacy\n\nNot reviewed',
-      '[See the whole garden](https://l2beat.com/garden).',
+      '[See the CROPS guide](https://ethbeat.org/crops).',
     )
   })
 
-  it('names the DA layers a project posts to, or posted to once it stopped', () => {
-    const dataPosted = (currentDaLayers: { name: string; logo: string }[]) =>
+  it('names the DA layers a project posts to, or posted to once it stopped, linking those with a page', () => {
+    const dataPosted = (currentDaLayers: (typeof ETHEREUM)[]) =>
       render({
         type: 'DataPostedSection',
         props: {
@@ -476,10 +490,10 @@ describe(renderProjectSection.name, () => {
       })
 
     expect(dataPosted([ETHEREUM])).toInclude(
-      'The project currently posts data to Ethereum; previously it posted to Celestia.',
+      'The project currently posts data to [Ethereum](https://ethbeat.org/projects/ethereum); previously it posted to Celestia.',
     )
     expect(dataPosted([])).toInclude(
-      'The project no longer posts data; previously it posted to Celestia.',
+      'We no longer track where the project posts data; previously it posted to Celestia.',
     )
   })
 
@@ -495,7 +509,7 @@ describe(renderProjectSection.name, () => {
     })
 
     expect(markdown).toInclude(
-      'The interactive tokens table is shown on [the HTML page](https://l2beat.com/layer2s/projects/arbitrum#interop-tokens).',
+      'The interactive tokens table is shown on [the HTML page](https://ethbeat.org/layer2s/projects/arbitrum#interop-tokens).',
     )
   })
 
@@ -553,7 +567,7 @@ describe(renderProjectSection.name, () => {
   })
 })
 
-const PAGE_URL = 'https://l2beat.com/layer2s/projects/arbitrum'
+const PAGE_URL = 'https://ethbeat.org/layer2s/projects/arbitrum'
 
 /** Links resolve against the page once the whole document is assembled, as `renderProjectMarkdown` does. */
 function render(section: ProjectDetailsSection) {
@@ -667,11 +681,13 @@ const GROTH16 = {
 const ETHEREUM = {
   name: 'Ethereum',
   logo: '/icons/ethereum.png',
+  href: '/projects/ethereum',
 }
 
 const CELESTIA = {
   name: 'Celestia',
   logo: '/icons/celestia.png',
+  href: undefined,
 }
 
 const CHART_PROJECT = {

@@ -5,6 +5,7 @@
   "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by at least {{executionDelay_fmt}}. Duration could be configured individually for zk stack chains by chain admins. All delays are capped at 30 days.",
   "ignoreRelatives": ["accessControl"],
   "fields": {
+    "owner": { "severity": "MEDIUM" },
     "executionDelay": {
       "description": "Ecosystem-wide minimum execution delay (in seconds), set by the owner. The delay enforced for a chain is the maximum of this value and the chain-specific delay.",
       "severity": "HIGH"

@@ -6,10 +6,10 @@ import type { Column, Table } from '@tanstack/react-table'
  * edge-cached and identical for everyone. Without help, a refresh paints every
  * column and then removes the hidden ones once React has hydrated.
  *
- * Like `HomeWhatsNewCard`, the table renders an inline script right before its
- * own markup. The script runs during HTML parsing, reads this table's persisted
- * state and appends a `<style>` to `<head>` hiding the matching cells, so the
- * hidden columns are never painted. Nothing inside the React root is touched.
+ * The table renders an inline script right before its own markup. The script
+ * runs during HTML parsing, reads this table's persisted state and appends a
+ * `<style>` to `<head>` hiding the matching cells, so the hidden columns are
+ * never painted. Nothing inside the React root is touched.
  *
  * `useTable` flags the table as applied in the same render that puts the
  * persisted visibility into React state, which turns the rules off. From then
@@ -21,6 +21,7 @@ export const STORAGE_KEY_PREFIX = 'table-column-visibility-'
 const TABLE_ID_ATTR = 'data-table-id'
 const APPLIED_ATTR = 'data-columns-applied'
 const COLUMN_ID_ATTR = 'data-column-id'
+const RULES_ATTR = 'data-hidden-columns'
 
 export interface PersistedColumns {
   tableId: string
@@ -59,6 +60,16 @@ export function getPrePaintHideScript(tableId: string): string {
   return (
     `try{var v=JSON.parse(localStorage.getItem(${key})||"{}"),c="";` +
     `for(var k in v)if(v[k]===false)c+=${tableSelector}+JSON.stringify(k)+"]{display:none}";` +
-    `if(c){var s=document.createElement("style");s.textContent=c;document.head.appendChild(s)}}catch{}`
+    `if(c){var s=document.createElement("style");s.textContent=c;` +
+    `s.setAttribute("${RULES_ATTR}",${JSON.stringify(tableId)});document.head.appendChild(s)}}catch{}`
+  )
+}
+
+/** Whether the pre-paint script added rules that hide columns of this table. */
+export function hasPrePaintHideRules(tableId: string) {
+  return (
+    document.head.querySelector(
+      `style[${RULES_ATTR}=${JSON.stringify(tableId)}]`,
+    ) !== null
   )
 }

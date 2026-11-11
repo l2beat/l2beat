@@ -36,4 +36,10 @@ export const PRIVACY_CATEGORIES = {
     description:
       'Accounts and counterparties are public, balances and transfer amounts are encrypted.',
   },
+  secretBallot: {
+    id: 'secretBallot',
+    label: 'Secret ballot',
+    description:
+      'Voters and their voting power are public, ballots are encrypted and only the tally is decrypted. Hides which option each voter chose.',
+  },
 } as const satisfies Record<string, PrivacyCategory>

@@ -162,14 +162,21 @@ export class AbstractTokenRepository extends BaseRepository {
   ): Promise<
     Pick<
       AbstractTokenRecord,
-      'id' | 'symbol' | 'iconUrl' | 'issuer' | 'category'
+      'id' | 'symbol' | 'iconUrl' | 'issuer' | 'category' | 'isPriceUnreliable'
     >[]
   > {
     if (ids.length === 0) return []
 
     const result = await this.db
       .selectFrom('AbstractToken')
-      .select(['id', 'symbol', 'iconUrl', 'issuer', 'category'])
+      .select([
+        'id',
+        'symbol',
+        'iconUrl',
+        'issuer',
+        'category',
+        'isPriceUnreliable',
+      ])
       .where('id', 'in', ids)
       .execute()
 

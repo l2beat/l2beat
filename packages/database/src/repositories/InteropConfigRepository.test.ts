@@ -6,6 +6,8 @@ import {
   InteropConfigRepository,
 } from './InteropConfigRepository'
 
+const TIMESTAMP = UnixTime(1)
+
 describeDatabase(InteropConfigRepository.name, (database) => {
   const repository = database.interopConfig
 
@@ -163,6 +165,6 @@ function mockConfig(key: string, value: unknown): InteropConfigRecord {
   return {
     key,
     value,
-    timestamp: UnixTime.now(),
+    timestamp: TIMESTAMP,
   }
 }

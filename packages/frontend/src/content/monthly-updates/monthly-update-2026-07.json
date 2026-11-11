@@ -187,30 +187,6 @@
       ]
     },
     {
-      "type": "data-availability",
-      "id": "eigenlayer",
-      "daLayerId": "eigenda",
-      "name": "EigenLayer",
-      "news": [
-        {
-          "title": "Eigen Labs Partners with Succinct Labs and Ethereum Foundation to Launch SNARK.fast Post Quantum Research Challenge",
-          "content": "Eigen Labs [partnered](https://x.com/eigenlabs/status/2082874098817155517) with Succinct Labs and the Ethereum Foundation to launch SNARK.fast, an open autoresearch challenge focused on accelerating post quantum cryptography for Ethereum. The initiative targets Flock, a leading post quantum proof system, to address the long term security risks posed by quantum computing to digital assets.\n\nThrough SNARK.fast, independent researchers and autonomous AI agents can submit performance optimizations to improve proof generation speeds. Every verified performance improvement automatically becomes the new baseline for all participants, with rewards planned for top solver contributions. Eigen Labs highlighted the launch as a critical effort to advance post quantum security, zero knowledge proof acceleration, and ethereum cryptographic scalability."
-        },
-        {
-          "title": "Eigen Labs Partners with Berkeley and Princeton Researchers to Launch Autoresearch Challenges on Frontier CS",
-          "content": "Eigen Labs [announced](https://x.com/eigenlabs/status/2075022637772964100) a partnership with researchers from UC Berkeley and Princeton University to launch a suite of open science autoresearch challenges hosted on Frontier CS. Presented at the International Conference on Machine Learning (ICML) in Seoul, the initiative is based on the research paper \"FrontierCS: Evolving Challenges for Evolving Intelligence.\"\n\nFrontier CS provides a benchmark consisting of 156 open ended computer science problems designed and reviewed by domain experts, including computer science PhDs and competitive programmers. The benchmark evaluates AI intelligence and autonomous research capabilities in real time. Eigen Labs highlighted the global launch as a significant step forward in advancing open science AI research, autonomous research benchmarks, and decentralized AI evaluation."
-        },
-        {
-          "title": "OpenFrontierCS Launches on Codeforces to Drive Human and AI Agent Research Collaboration",
-          "content": "Eigen Labs [launched](https://x.com/eigenlabs/status/2075395973686374774) OpenFrontierCS on competitive programming platform Codeforces, bringing its open science autoresearch challenges directly to global competitive programmers.\n\nThe launch invites developers and problem solvers to participate in open agentic research by testing, solving, and evaluating complex computer science problems alongside AI agents. By bringing Frontier CS to Codeforces, Eigen Labs aims to accelerate decentralized AI evaluation, refine autonomous reasoning models, and foster human AI agent collaboration across the global developer community."
-        },
-        {
-          "title": "Eigen Labs and Poolside AI Launch MLX.fast Competition to Accelerate Laguna XS 2.1 on Apple Silicon",
-          "content": "Eigen Labs teamed up with Poolside AI to [launch](https://x.com/eigencloud/status/2082129503779008991) MLX.fast, a public optimization competition designed to improve the execution speed of the Laguna XS 2.1 coding model on Apple Silicon consumer devices. Laguna XS 2.1 shares the same architecture as Poolside's Laguna S 2.1 model, offering strong coding agent capabilities at a fraction of the parameter size of larger models like DeepSeek V4 Pro.\n\nThe community driven initiative achieved a 36.8 percent performance boost within its first 24 hours. By inviting open source developers and performance engineers to optimize model execution on Apple hardware, Eigen Cloud and Eigen Labs aim to advance local AI model execution, Apple Silicon optimization, and decentralized community performance tuning."
-        }
-      ]
-    },
-    {
       "name": "Nethermind",
       "type": "upcoming-project",
       "projectId": "nethermind",

@@ -437,7 +437,7 @@ export const starknet: ScalingProject = {
         type: 'centralized',
         trustedPreconfirmation: {
           value: `${preconfirmationTimeMilliseconds} ms`,
-          secondLine: `${l2BlockTimeMilliseconds / 1_000}s L2 block time`,
+          secondLine: `${l2BlockTimeMilliseconds / 1_000} s L2 block time`,
           description: `The current proposer targets a PRE_CONFIRMED receipt in about ${preconfirmationTimeMilliseconds} ms. It is a trusted promise before consensus decides the block, with no onchain enforcement or slashing, and can be reverted if the proposal does not become the consensus block. The ${l2BlockTimeMilliseconds / 1_000}-second L2 block time is a target: a block can close earlier when it reaches a resource limit or later while transactions are still executing or consensus takes longer.`,
           orderHint: preconfirmationTimeMilliseconds / 1_000,
         },
@@ -628,8 +628,40 @@ export const starknet: ScalingProject = {
           '**No**, the community can only dispute the emergency upgrades after the fact in advisory way.',
       },
       upgrades: {
-        'Major upgrade path': `Release announcement (≥1 SNIP + specific GitHub commit) → 2-week community deliberation → 1-week final review → 1-week STRK vote on the [Governance Hub on L2](https://governance.starknet.io/) → Security Council vetting → deployment queued in the DelayedExecutor by the ${starkwareMultisig1Stats} Starkware Multisig 1, whose ${executionDelay} onchain delay covers the procedural ≥7-day freeze → execution. Minimum wall-clock ≈ **5 weeks** (${executionDelay} onchain-enforced if executed via DelayedExecutor).`,
-        'Minor upgrade path': `Announcement (SNIP may be submitted in parallel) → 1-week review → 1-week STRK vote on L2 → deployment queued in the DelayedExecutor, whose ${executionDelay} onchain delay covers the procedural ≥5-day freeze → execution. No Security Council approval required. Minimum wall-clock ≈ **22 days** (${executionDelay} onchain-enforced if executed via DelayedExecutor).`,
+        'Major upgrade path': {
+          steps: [
+            {
+              description:
+                'Release announcement (≥1 SNIP + specific GitHub commit)',
+            },
+            { description: '2-week community deliberation' },
+            { description: '1-week final review' },
+            {
+              description:
+                '1-week STRK vote on the [Governance Hub on L2](https://governance.starknet.io/)',
+            },
+            { description: 'Security Council vetting' },
+            {
+              description: `Deployment queued in the DelayedExecutor by the ${starkwareMultisig1Stats} Starkware Multisig 1, whose ${executionDelay} onchain delay covers the procedural ≥7-day freeze`,
+              isWait: true,
+            },
+            { description: 'Execution' },
+          ],
+          note: `Minimum wall-clock ≈ **5 weeks** (${executionDelay} onchain-enforced if executed via DelayedExecutor).`,
+        },
+        'Minor upgrade path': {
+          steps: [
+            { description: 'Announcement (SNIP may be submitted in parallel)' },
+            { description: '1-week review' },
+            { description: '1-week STRK vote on L2' },
+            {
+              description: `Deployment queued in the DelayedExecutor, whose ${executionDelay} onchain delay covers the procedural ≥5-day freeze`,
+              isWait: true,
+            },
+            { description: 'Execution' },
+          ],
+          note: `No Security Council approval required. Minimum wall-clock ≈ **22 days** (${executionDelay} onchain-enforced if executed via DelayedExecutor).`,
+        },
         'Emergency upgrade path': `**${scThreshold} Security Council, instant**.`,
         'Exit window': `**${executionDelay}** enforced onchain by the DelayedExecutor on the normal upgrade path (procedurally ≥7 days after the vote for major releases, ≥5 days for minor). **0** for emergency upgrades by the Security Council.`,
       },
@@ -759,7 +791,8 @@ export const starknet: ScalingProject = {
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(ESCROW_USDC_ADDRESS),
         sinceTimestamp: UnixTime(1657137639),
-        tokens: [], // removed due to custom config in starknet.json
+        tokens: [], // removed due to custom config in tvs.json
+        ...ESCROW.CANONICAL_ADD_TA,
         description:
           'StarkGate bridge for USDC.' + ' ' + escrowUSDCMaxTotalBalanceString,
       }),
@@ -856,6 +889,7 @@ export const starknet: ScalingProject = {
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(ESCROW_LBTC_ADDRESS),
         tokens: ['LBTC'],
+        ...ESCROW.CANONICAL_ADD_TA,
         description: 'StarkGate bridge for LBTC.',
       }),
     ],

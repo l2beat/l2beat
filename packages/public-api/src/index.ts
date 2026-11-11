@@ -27,7 +27,7 @@ function main() {
   const openapi = new OpenApi(app, {
     openapi: '3.1.0',
     info: {
-      title: 'L2BEAT API',
+      title: 'ETHBEAT API',
       version: '1.0.0',
     },
     servers: [{ url: config.openapi.url }],
@@ -86,7 +86,7 @@ function main() {
     '/docs',
     swaggerUi.serve,
     swaggerUi.setup(undefined, {
-      customSiteTitle: 'L2BEAT - Swagger UI',
+      customSiteTitle: 'ETHBEAT - Swagger UI',
       // customJsStr is supported by swagger-ui-express at runtime but missing from its types.
       // op1.js is loaded dynamically (not via customJs) because swagger-ui-express renders
       // customJs before customJsStr without defer/async — that order would run op1.js
@@ -100,10 +100,10 @@ function main() {
             trackScreenViews: true,
             trackOutgoingLinks: true,
             trackAttributes: true,
-            apiUrl: 'https://opapi.l2beat.com',
+            apiUrl: 'https://opapi.ethbeat.org',
           });
           var s = document.createElement('script');
-          s.src = 'https://analytics.l2beat.com/op1.js';
+          s.src = 'https://analytics.ethbeat.org/op1.js';
           s.defer = true;
           s.async = true;
           document.head.appendChild(s);

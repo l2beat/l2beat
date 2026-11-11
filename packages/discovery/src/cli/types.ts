@@ -1,5 +1,5 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
-import type { Type } from 'cmd-ts'
+import { extendType, number, type Type } from 'cmd-ts'
 import { chains } from '../config/chains'
 
 export const EthereumAddressValue: Type<string, EthereumAddress> = {
@@ -25,3 +25,34 @@ export const ChainValue: Type<string, string> = {
     })
   },
 }
+
+/**
+ * A count the code can honour as given. `AuthoringLoop` would clamp a zero
+ * or negative `--ai-rounds` to one turn, while the benchmark report would
+ * record the value as typed.
+ */
+export const PositiveInteger: Type<string, number> = extendType(number, {
+  from(value): Promise<number> {
+    if (!Number.isInteger(value) || value < 1) {
+      return Promise.reject(
+        new Error(`Expected a positive integer, got ${value}`),
+      )
+    }
+    return Promise.resolve(value)
+  },
+  displayName: 'positive integer',
+  description: 'a positive integer',
+})
+
+export const NonNegativeInteger: Type<string, number> = extendType(number, {
+  from(value): Promise<number> {
+    if (!Number.isInteger(value) || value < 0) {
+      return Promise.reject(
+        new Error('Expected a non-negative integer', { cause: { value } }),
+      )
+    }
+    return Promise.resolve(value)
+  },
+  displayName: 'non-negative integer',
+  description: 'a non-negative integer',
+})

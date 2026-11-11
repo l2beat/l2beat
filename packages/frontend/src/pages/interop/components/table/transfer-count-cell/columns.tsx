@@ -1,8 +1,4 @@
-import {
-  formatCurrency,
-  formatNumberWithCommas,
-  formatSeconds,
-} from '@l2beat/shared-pure'
+import { formatCurrency, formatSeconds } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import {
   Tooltip,
@@ -10,6 +6,7 @@ import {
   TooltipPortal,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { UtcDateTime } from '~/components/core/UtcDateTime'
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { EM_DASH } from '~/consts/characters'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
@@ -17,7 +14,7 @@ import { CustomLinkIcon } from '~/icons/Outlink'
 import { InteropNoDataBadge } from '~/pages/interop/components/InteropNoDataBadge'
 import type { InteropSelection } from '~/pages/interop/utils/types'
 import type { InteropProtocolTransferDetailsItem } from '~/server/features/layer2s/interop/types'
-import { formatTimestamp } from '~/utils/dates'
+import { formatTokenAmount } from './formatTokenAmount'
 
 export type TransferRow = InteropProtocolTransferDetailsItem & BasicTableRow
 
@@ -30,7 +27,7 @@ export function getTransferColumns(selectedChains?: InteropSelection) {
       enableSorting: false,
       cell: (ctx) => (
         <span className="font-medium text-label-value-14 text-primary">
-          {formatTimestamp(ctx.row.original.timestamp, { mode: 'datetime' })}
+          <UtcDateTime timestamp={ctx.row.original.timestamp} />
         </span>
       ),
       meta: {
@@ -53,11 +50,13 @@ export function getTransferColumns(selectedChains?: InteropSelection) {
           dstSymbol,
           dstTokenHref,
           dstTokenIconUrl,
+          valueUsd,
         } = ctx.row.original
         return (
           <div className="flex w-max items-center gap-2 whitespace-nowrap">
             <TokenAmount
               amount={srcAmount}
+              valueUsd={valueUsd}
               iconUrl={srcTokenIconUrl}
               symbol={srcSymbol}
               href={srcTokenHref}
@@ -66,6 +65,7 @@ export function getTransferColumns(selectedChains?: InteropSelection) {
             <ArrowRightIcon className="size-3.5 shrink-0 fill-brand" />
             <TokenAmount
               amount={dstAmount}
+              valueUsd={valueUsd}
               iconUrl={dstTokenIconUrl}
               symbol={dstSymbol}
               href={dstTokenHref}
@@ -178,24 +178,21 @@ export function getTransferColumns(selectedChains?: InteropSelection) {
 
 function TokenAmount({
   amount,
+  valueUsd,
   symbol,
   href,
   iconUrl,
   selectedChains,
 }: {
   amount: number | undefined
+  valueUsd: number | undefined
   symbol: string
   href: string | undefined
   iconUrl: string
   selectedChains: InteropSelection | undefined
 }) {
   const label =
-    amount !== undefined
-      ? formatNumberWithCommas(amount, {
-          minimumFractionDigits: 0,
-          maximumFractionDigits: 5,
-        })
-      : symbol
+    amount === undefined ? symbol : formatTokenAmount(amount, valueUsd)
 
   const content = (
     <>

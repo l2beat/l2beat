@@ -67,7 +67,8 @@ export function L2RecategorizedActivityStats({ entries }: Props) {
 const statsMeta = {
   rollups: {
     label: 'Rollups',
-    color: 'var(--chart-fuchsia)',
+    // As in the charts above, where rollups are the pink series.
+    color: 'var(--chart-pink)',
   },
   validiumsAndOptimiums: {
     label: 'Validiums & Optimiums',
@@ -132,7 +133,7 @@ function Stat({
 function ScalingFactorTooltip({ metric }: { metric: ActivityMetric }) {
   return (
     <Tooltip>
-      <TooltipTrigger>
+      <TooltipTrigger aria-label="About the scaling factor">
         <InfoIcon className="size-3 fill-current" />
       </TooltipTrigger>
       <TooltipContent>

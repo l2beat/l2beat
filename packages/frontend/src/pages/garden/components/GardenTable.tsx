@@ -1,38 +1,53 @@
 import { formatDollarValueNumber, formatInteger } from '@l2beat/shared-pure'
 import { CropBadge } from '~/components/garden/CropBadge'
 import { CropEvaluationDetails } from '~/components/garden/CropFindings'
-import type { ResolvedCropEvaluation } from '~/components/garden/crops'
 import {
   CROP_COLUMNS,
-  type CropDefinition,
+  type CropEntry,
   getCropStatusText,
+  toCropEntries,
 } from '~/components/garden/crops'
 import { useEntranceHold } from '~/components/garden/useEntranceHold'
 import { PercentChange } from '~/components/PercentChange'
-import { Table, TableBody, TableCell, TableRow } from '~/components/table/Table'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableHeaderRow,
+  TableRow,
+} from '~/components/table/Table'
+import { stickyTableColumnRowProps } from '~/components/table/useStickyTableHeader'
 import { cn } from '~/utils/cn'
 import type { GardenEntry } from '../getGardenData'
 
 export function GardenTable({ entries }: { entries: GardenEntry[] }) {
   const entranceHold = useEntranceHold()
   return (
-    <Table className={cn('min-w-[680px]', entranceHold)}>
+    <Table
+      className={cn('md:min-w-[680px]', entranceHold)}
+      header={<CropLettersHeader />}
+      stickyHeader
+    >
       <TableBody>
         {entries.map((entry, rowIndex) => (
           <TableRow key={entry.slug} highlightId={undefined}>
-            <TableCell className="whitespace-nowrap">
+            <TableCell className="whitespace-nowrap max-md:first:pl-4">
               <ProjectCell entry={entry} />
             </TableCell>
             <TableCell className="py-3">
-              <div className="flex gap-3.5">
-                {CROP_COLUMNS.map((column, columnIndex) => (
-                  <EvaluatedCrop
-                    key={column.key}
-                    column={column}
-                    evaluation={entry.crops[column.key]}
-                    delay={entranceDelay(rowIndex, columnIndex)}
-                  />
-                ))}
+              <div className="flex gap-2 md:justify-center md:gap-3.5">
+                {toCropEntries(entry.crops, entry.ossification).map(
+                  (crop, columnIndex) => (
+                    <EvaluatedCrop
+                      key={crop.definition.key}
+                      crop={crop}
+                      delay={entranceDelay(rowIndex, columnIndex)}
+                      jitterKey={`${entry.slug}:${crop.definition.key}`}
+                    />
+                  ),
+                )}
               </div>
             </TableCell>
             <TableCell align="right">
@@ -45,6 +60,43 @@ export function GardenTable({ entries }: { entries: GardenEntry[] }) {
   )
 }
 
+/** Names the plant columns with the letters that spell CROPS, as on project pages. */
+function CropLettersHeader() {
+  return (
+    <>
+      {/* One per column: the sticky header copy takes its widths from these. */}
+      <colgroup>
+        <col />
+        <col />
+        <col />
+      </colgroup>
+      <TableHeader>
+        <TableHeaderRow {...stickyTableColumnRowProps}>
+          <TableHead />
+          <TableHead>
+            <div className="flex gap-2 md:mx-auto md:gap-3.5">
+              {CROP_COLUMNS.map((column) => (
+                <abbr
+                  key={column.key}
+                  title={column.label}
+                  className="w-14 text-center no-underline"
+                >
+                  {column.letter}
+                </abbr>
+              ))}
+            </div>
+          </TableHead>
+          <TableHead />
+        </TableHeaderRow>
+        {/* Sets the stuck header apart from the rows it covers, as on other tables. Desktop has none. */}
+        <TableHeaderRow className="md:hidden">
+          <th colSpan={3} className="mx-0.5 h-0.5 rounded-full bg-divider" />
+        </TableHeaderRow>
+      </TableHeader>
+    </>
+  )
+}
+
 /** Rows ripple down the table, capped so a long table's last row is not left waiting. */
 function entranceDelay(rowIndex: number, columnIndex: number) {
   const MAX_ROW_DELAY = 0.3
@@ -52,27 +104,25 @@ function entranceDelay(rowIndex: number, columnIndex: number) {
 }
 
 function EvaluatedCrop({
-  column,
-  evaluation,
+  crop,
   delay,
+  jitterKey,
 }: {
-  column: CropDefinition
-  evaluation: ResolvedCropEvaluation
+  crop: CropEntry
   delay: number
+  jitterKey: string
 }) {
+  const { definition, evaluation } = crop
   const statusText = getCropStatusText(evaluation.status, evaluation.sentiment)
   return (
     <CropBadge
       status={evaluation.status}
       sentiment={evaluation.sentiment}
       delay={delay}
-      label={`${column.label}: ${statusText}`}
+      jitterKey={jitterKey}
+      label={`${definition.label}: ${statusText}`}
     >
-      <CropEvaluationDetails
-        label={column.label}
-        note={column.note}
-        evaluation={evaluation}
-      />
+      <CropEvaluationDetails entry={crop} />
     </CropBadge>
   )
 }
@@ -80,23 +130,26 @@ function EvaluatedCrop({
 function ProjectCell({ entry }: { entry: GardenEntry }) {
   const content = (
     <>
+      {/* Preflight's max-width: 100% makes WebKit size the column as if the icon were not there, so the name overlaps the plants. */}
       <img
         src={entry.iconUrl}
         alt=""
-        width={34}
-        height={34}
-        className="size-[34px] rounded-lg"
+        width={40}
+        height={40}
+        className="size-[34px] max-w-none shrink-0 rounded-lg md:size-10"
       />
       <div className="flex flex-col leading-tight">
         <span
           className={cn(
-            'font-semibold text-primary text-sm',
+            'font-semibold text-primary text-sm md:text-base',
             entry.href && 'group-hover/project:underline',
           )}
         >
           {entry.name}
         </span>
-        <span className="text-secondary text-xs">{entry.subtitle}</span>
+        <span className="text-secondary text-xs md:text-sm">
+          {entry.subtitle}
+        </span>
       </div>
     </>
   )
@@ -110,26 +163,35 @@ function ProjectCell({ entry }: { entry: GardenEntry }) {
   )
 }
 
+// The change has a column of its own, empty when there is none, so amounts and the dash share a right edge.
 function MetricCell({ metric }: { metric: GardenEntry['metric'] }) {
-  if (!metric) {
-    return <span className="text-secondary">&mdash;</span>
-  }
   return (
-    <div className="inline-flex flex-col items-end gap-px">
-      <span className="font-semibold text-[10px] text-secondary uppercase tracking-wider">
-        {metric.label}
-      </span>
-      <span className="font-semibold text-primary text-sm tabular-nums">
-        {metric.kind === 'usd'
-          ? formatDollarValueNumber(metric.value)
-          : formatInteger(metric.value)}
-        {metric.change !== undefined && (
-          <>
-            {' '}
-            <PercentChange value={metric.change} textClassName="text-xs" />
-          </>
-        )}
-      </span>
+    <div className="inline-grid grid-cols-[auto_3.5rem] items-baseline gap-x-1 gap-y-px text-right">
+      {metric ? (
+        <>
+          <span className="font-medium text-[12px] text-secondary">
+            {metric.label}
+          </span>
+          <span className="row-start-2 font-semibold text-base text-primary tabular-nums">
+            {metric.kind === 'usd'
+              ? formatDollarValueNumber(metric.value)
+              : formatInteger(metric.value)}
+          </span>
+          <span className="row-start-2 text-left">
+            {metric.change !== undefined && (
+              <PercentChange value={metric.change} textClassName="text-xs" />
+            )}
+          </span>
+        </>
+      ) : (
+        <>
+          {/* Holds the label's line, so the dash sits on the amounts' line. */}
+          <span aria-hidden className="text-[12px]">
+            &nbsp;
+          </span>
+          <span className="row-start-2 text-secondary">&mdash;</span>
+        </>
+      )}
     </div>
   )
 }

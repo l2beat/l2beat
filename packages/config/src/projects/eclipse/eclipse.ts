@@ -71,14 +71,6 @@ export const eclipse: ScalingProject = {
         tokens: ['ETH'],
       },
     ],
-    daTracking: [
-      {
-        type: 'celestia',
-        daLayer: ProjectId('celestia'),
-        sinceBlock: 0, // Edge Case: config added @ DA Module start
-        namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAGVjbGlwc2U=',
-      },
-    ],
     activityConfig: {
       type: 'slot',
       startSlot: 1,
@@ -103,7 +95,7 @@ export const eclipse: ScalingProject = {
     categories: [
       {
         title: 'No state validation',
-        description: `Eclipse implements a custom permissioned bridge. Withdrawals need to be actively authorized by a Multisig. Moreover, there is no mechanism to send arbitrary messages from Eclipse back to Ethereum. There is a ${formatSeconds(withdrawalDelaySeconds)} delay for withdrawals.`,
+        description: `Eclipse implements a custom permissioned bridge. Withdrawals need to be actively authorized by the ${discovery.getMultisigStats('Eclipse Multisig')} Eclipse Multisig. Moreover, there is no mechanism to send arbitrary messages from Eclipse back to Ethereum. There is a ${formatSeconds(withdrawalDelaySeconds)} delay for withdrawals.`,
         references: [
           {
             title:

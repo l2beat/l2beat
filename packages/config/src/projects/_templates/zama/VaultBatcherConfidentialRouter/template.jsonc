@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "VaultBatcherConfidentialRouter",
+  "category": "core",
+  "description": "Ownerless router that splits one confidential deposit or redemption across several vault batchers. It accepts only wrappers listed in the ConfidentialTokenWrappersRegistry."
+}

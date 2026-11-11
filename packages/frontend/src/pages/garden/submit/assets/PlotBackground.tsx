@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react'
-import { PageBackdrop } from '~/layouts/PageBackdrop'
+import { PageBackdrop, PageBackdropScenery } from '~/layouts/PageBackdrop'
 import { cn } from '~/utils/cn'
 
 /** An early-morning plot: clouds, furrows, seedlings and an empty trellis. */
@@ -8,62 +8,64 @@ export function PlotBackground() {
     <PageBackdrop name="plot">
       <div className="absolute inset-x-0 top-0 h-80 bg-gradient-to-b from-plot-canvas via-[#f4f6e6]/40 to-transparent dark:via-[#161c12]/40" />
 
-      <Cloud className="absolute top-16 left-[7%] w-44 max-md:top-8 max-md:w-28" />
-      <Cloud
-        className="absolute top-36 right-[12%] w-28 max-md:hidden"
-        duration="52s"
-        delay="-14s"
-      />
-
-      {POLLEN.map((pollen) => (
-        <span
-          key={pollen.left}
-          className="absolute size-1.5 rounded-full bg-garden-sun/50 max-md:hidden dark:bg-garden-sun/25"
-          style={{
-            left: pollen.left,
-            bottom: pollen.bottom,
-            animation: `garden-float ${pollen.duration} linear ${pollen.delay} infinite`,
-          }}
+      <PageBackdropScenery>
+        <Cloud className="absolute top-16 left-[7%] w-44 max-md:top-8 max-md:w-28" />
+        <Cloud
+          className="absolute top-36 right-[12%] w-28 max-md:hidden"
+          duration="52s"
+          delay="-14s"
         />
-      ))}
 
-      <Trellis className="absolute right-[9%] bottom-24 max-lg:hidden" />
+        {POLLEN.map((pollen) => (
+          <span
+            key={pollen.left}
+            className="absolute size-1.5 rounded-full bg-garden-sun/50 max-md:hidden dark:bg-garden-sun/25"
+            style={{
+              left: pollen.left,
+              bottom: pollen.bottom,
+              animation: `garden-float ${pollen.duration} linear ${pollen.delay} infinite`,
+            }}
+          />
+        ))}
 
-      <div className="absolute inset-x-0 bottom-0 h-44">
-        <svg
-          className="absolute inset-0 size-full"
-          viewBox="0 0 1200 176"
-          preserveAspectRatio="none"
-        >
-          <path
-            d="M0 66 C300 54 900 54 1200 66 L1200 176 L0 176 Z"
-            className="fill-[#e7dcc6]/70 dark:fill-[#241f16]/75"
-          />
-          <path
-            d="M0 96 C300 86 900 86 1200 96 L1200 176 L0 176 Z"
-            className="fill-[#d8c9ac]/70 dark:fill-[#2a251b]/75"
-          />
-          {FURROWS.map((furrow) => (
+        <Trellis className="absolute right-[9%] bottom-24 max-lg:hidden" />
+
+        <div className="absolute inset-x-0 bottom-0 h-44">
+          <svg
+            className="absolute inset-0 size-full"
+            viewBox="0 0 1200 176"
+            preserveAspectRatio="none"
+          >
             <path
-              key={furrow}
-              d={`M0 ${furrow} C300 ${furrow - 9} 900 ${furrow - 9} 1200 ${furrow}`}
-              fill="none"
-              strokeWidth="2"
-              className="stroke-[#c3b394]/70 dark:stroke-[#3a3226]/80"
+              d="M0 66 C300 54 900 54 1200 66 L1200 176 L0 176 Z"
+              className="fill-[#e7dcc6]/70 dark:fill-[#241f16]/75"
             />
-          ))}
-        </svg>
-        <div className="absolute inset-x-4 bottom-[74px] flex items-end justify-between md:inset-x-10">
-          {SEEDLINGS.map((seedling, index) => (
-            <Seedling
-              key={seedling.size}
-              size={seedling.size}
-              delay={index * 0.16}
-              className={seedling.className}
+            <path
+              d="M0 96 C300 86 900 86 1200 96 L1200 176 L0 176 Z"
+              className="fill-[#d8c9ac]/70 dark:fill-[#2a251b]/75"
             />
-          ))}
+            {FURROWS.map((furrow) => (
+              <path
+                key={furrow}
+                d={`M0 ${furrow} C300 ${furrow - 9} 900 ${furrow - 9} 1200 ${furrow}`}
+                fill="none"
+                strokeWidth="2"
+                className="stroke-[#c3b394]/70 dark:stroke-[#3a3226]/80"
+              />
+            ))}
+          </svg>
+          <div className="absolute inset-x-4 bottom-[74px] flex items-end justify-between md:inset-x-10">
+            {SEEDLINGS.map((seedling, index) => (
+              <Seedling
+                key={seedling.size}
+                size={seedling.size}
+                delay={index * 0.16}
+                className={seedling.className}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      </PageBackdropScenery>
     </PageBackdrop>
   )
 }
@@ -102,7 +104,7 @@ function Seedling({
   const grow: CSSProperties = {
     transformBox: 'fill-box',
     transformOrigin: '50% 100%',
-    animation: `garden-grow .9s cubic-bezier(.18,.7,.24,1) ${delay}s both`,
+    animation: `garden-grow .9s cubic-bezier(.18,.7,.24,1) ${delay}s backwards`,
   }
   const sway: CSSProperties = {
     transformBox: 'fill-box',

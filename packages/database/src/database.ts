@@ -12,13 +12,15 @@ import { AnomaliesRepository } from './repositories/AnomaliesRepository'
 import { AnomalyStatsRepository } from './repositories/AnomalyStatsRepository'
 import { AppStateRepository } from './repositories/AppStateRepository'
 import { BlobsRepository } from './repositories/BlobsRepository'
+import { CropAttestationRepository } from './repositories/CropAttestationRepository'
 import { CurrentPriceRepository } from './repositories/CurrentPriceRepository'
 import { DaBeatStatsRepository } from './repositories/DaBeatStatsRepository'
 import { DataAvailabilityRepository } from './repositories/DataAvailabilityRepository'
 import { DefiTvlRepository } from './repositories/DefiTvlRepository'
 import { DiscoveryCacheRepository } from './repositories/DiscoveryCacheRepository'
-import { EcosystemTokenRepository } from './repositories/EcosystemTokenRepository'
+import { EthereumStakingDailyRepository } from './repositories/EthereumStakingDailyRepository'
 import { FlatSourcesRepository } from './repositories/FlatSourcesRepository'
+import { HourlyActivityRepository } from './repositories/HourlyActivityRepository'
 import { IndexerConfigurationRepository } from './repositories/IndexerConfigurationRepository'
 import { IndexerStateRepository } from './repositories/IndexerStateRepository'
 import { InteropAggregateStatusRepository } from './repositories/InteropAggregateStatusRepository'
@@ -31,6 +33,7 @@ import { InteropRecentPricesRepository } from './repositories/InteropRecentPrice
 import { InteropTransferRepository } from './repositories/InteropTransferRepository'
 import { L2CostPriceRepository } from './repositories/L2CostPriceRepository'
 import { L2CostRepository } from './repositories/L2CostRepository'
+import { LiquidStakingSnapshotRepository } from './repositories/LiquidStakingSnapshotRepository'
 import { LiveBlobBatchRepository } from './repositories/LiveBlobBatchRepository'
 import { LiveBlockRepository } from './repositories/LiveBlockRepository'
 import { LivenessRepository } from './repositories/LivenessRepository'
@@ -49,6 +52,7 @@ import { TokenMetadataRepository } from './repositories/TokenMetadataRepository'
 import { TokenValueRepository } from './repositories/TokenValueRepository'
 import { TvsAmountRepository } from './repositories/TvsAmountRepository'
 import { TvsBlockTimestampRepository } from './repositories/TvsBlockTimestampRepository'
+import { TvsEscrowValueRepository } from './repositories/TvsEscrowValueRepository'
 import { TvsPriceRepository } from './repositories/TvsPriceRepository'
 import { UpdateDiffRepository } from './repositories/UpdateDiffRepository'
 import { UpdateMessageRepository } from './repositories/UpdateMessageRepository'
@@ -69,6 +73,7 @@ export function createDatabase(
 
     // #region Activity
     activity: new ActivityRepository(db),
+    hourlyActivity: new HourlyActivityRepository(db),
     // #endregion
 
     // #region Interop
@@ -105,12 +110,14 @@ export function createDatabase(
     flatSources: new FlatSourcesRepository(db),
     // #endregion
 
-    // #region Ecosystems
-    ecosystemToken: new EcosystemTokenRepository(db),
+    // #region CROPS
+    cropAttestation: new CropAttestationRepository(db),
     // #endregion
 
     // #region DeFi
     defiTvl: new DefiTvlRepository(db),
+    liquidStakingSnapshot: new LiquidStakingSnapshotRepository(db),
+    ethereumStakingDaily: new EthereumStakingDailyRepository(db),
     // #endregion
 
     // #region UIF
@@ -149,6 +156,7 @@ export function createDatabase(
     // #region Tvs
     tvsPrice: new TvsPriceRepository(db),
     tvsAmount: new TvsAmountRepository(db),
+    tvsEscrowValue: new TvsEscrowValueRepository(db),
     tvsBlockTimestamp: new TvsBlockTimestampRepository(db),
     tvsTokenValue: new TokenValueRepository(db),
     tvsTokenMetadata: new TokenMetadataRepository(db),

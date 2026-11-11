@@ -21,7 +21,7 @@
       ]
     },
     "owner": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",
@@ -30,7 +30,7 @@
       ]
     },
     "$admin": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "gameType": {
       "severity": "HIGH"

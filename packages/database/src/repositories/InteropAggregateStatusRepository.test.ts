@@ -147,6 +147,49 @@ describeDatabase(InteropAggregateStatusRepository.name, (db) => {
 
   describe(
     InteropAggregateStatusRepository.prototype
+      .getLatestPromotedTimestampAtOrBefore.name,
+    () => {
+      it('returns the latest promoted timestamp at or before the bound, skipping blocked ones', async () => {
+        await repository.upsertAuto({
+          timestamp: UnixTime(100),
+          status: 'promoted',
+        })
+        await repository.upsertAuto({
+          timestamp: UnixTime(200),
+          status: 'blocked',
+        })
+        await repository.upsertAuto({
+          timestamp: UnixTime(300),
+          status: 'promoted',
+        })
+
+        expect(
+          await repository.getLatestPromotedTimestampAtOrBefore(UnixTime(200)),
+        ).toEqual(UnixTime(100))
+        expect(
+          await repository.getLatestPromotedTimestampAtOrBefore(UnixTime(300)),
+        ).toEqual(UnixTime(300))
+      })
+
+      it('returns undefined when nothing promoted exists at or before the bound', async () => {
+        await repository.upsertAuto({
+          timestamp: UnixTime(100),
+          status: 'blocked',
+        })
+        await repository.upsertAuto({
+          timestamp: UnixTime(200),
+          status: 'promoted',
+        })
+
+        expect(
+          await repository.getLatestPromotedTimestampAtOrBefore(UnixTime(100)),
+        ).toEqual(undefined)
+      })
+    },
+  )
+
+  describe(
+    InteropAggregateStatusRepository.prototype
       .getEarliestPromotedTimestampForDay.name,
     () => {
       it('returns the earliest promoted timestamp of the day, skipping blocked', async () => {
@@ -173,6 +216,38 @@ describeDatabase(InteropAggregateStatusRepository.name, (db) => {
         expect(
           await repository.getEarliestPromotedTimestampForDay(day),
         ).toEqual(undefined)
+      })
+    },
+  )
+
+  describe(
+    InteropAggregateStatusRepository.prototype
+      .getPromotedMidnightTimestampsSince.name,
+    () => {
+      it('returns promoted midnight snapshots from the start', async () => {
+        const day = (n: number, hours = 0) =>
+          UnixTime(n * UnixTime.DAY + hours * UnixTime.HOUR)
+
+        await repository.upsertAuto({ timestamp: day(1), status: 'promoted' })
+        await repository.upsertAuto({ timestamp: day(2), status: 'blocked' })
+        await repository.upsertAuto({
+          timestamp: day(2, 1),
+          status: 'promoted',
+        })
+        await repository.upsertAuto({ timestamp: day(3), status: 'promoted' })
+        await repository.upsertAuto({
+          timestamp: day(3, 1),
+          status: 'promoted',
+        })
+        await repository.upsertAuto({
+          timestamp: day(4, 2),
+          status: 'promoted',
+        })
+        await repository.upsertAuto({ timestamp: day(5), status: 'promoted' })
+
+        expect(
+          await repository.getPromotedMidnightTimestampsSince(day(2)),
+        ).toEqual([day(3), day(5)])
       })
     },
   )

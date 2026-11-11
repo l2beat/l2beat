@@ -10,6 +10,7 @@ import { VerticalSeparator } from '~/components/core/VerticalSeparator'
 import { useDevice } from '~/hooks/useDevice'
 import { CloseIcon } from '~/icons/Close'
 import { cn } from '~/utils/cn'
+import { nameInView, withViewTransition } from '~/utils/viewTransition'
 import type { FilterableValueId } from './filterableValue'
 import { filterIdToLabel } from './filterableValue'
 import { useTableFilterContext } from './TableFilterContext'
@@ -35,6 +36,8 @@ export function TableFilter({ filter, possibleValues }: Props) {
 
   return (
     <div
+      // The chips after a removed one close the gap (nameChips).
+      data-filter-chip={filter.id}
       className={cn(
         'flex h-8 w-max select-none items-center rounded-lg bg-surface-primary primary-card:bg-surface-secondary font-medium text-xs leading-none md:text-sm',
         'fade-in-0 zoom-in-95 slide-in-from-left-2 animate-in',
@@ -62,7 +65,14 @@ export function TableFilter({ filter, possibleValues }: Props) {
       <VerticalSeparator className="h-[30px]" />
       <button
         className="h-full rounded-r-lg pr-2.5 pl-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset"
-        onClick={() => dispatch({ type: 'remove', payload: { id: filter.id } })}
+        onClick={(event) => {
+          const remove = () =>
+            dispatch({ type: 'remove', payload: { id: filter.id } })
+          // From the keyboard it just goes.
+          if (event.detail === 0) remove()
+          else withViewTransition('chips', nameChips, remove)
+        }}
+        aria-label={`Remove ${filterIdToLabel[filter.id]} filter`}
       >
         <div className="inline-flex size-3 items-center justify-center rounded-sm bg-brand">
           <CloseIcon className="size-2.5 fill-white dark:fill-black dark:group-hover:fill-gray-950" />
@@ -121,4 +131,16 @@ function operatorLabel(filter: Filter) {
   }
 
   return filter.values.length > 1 ? 'is any of' : 'is'
+}
+
+/**
+ * The filter chips in view: the removed one shrinks away where it was, the
+ * others slide over into its room. The table under them swaps at once.
+ */
+function nameChips() {
+  return nameInView(
+    '[data-filter-chip]',
+    (el) => el.dataset.filterChip,
+    'filter-chip',
+  )
 }

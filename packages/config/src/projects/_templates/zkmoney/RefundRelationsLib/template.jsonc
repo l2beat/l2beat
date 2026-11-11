@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  // Referrer-only: the resolver uses the same library source outside the custody perimeter.
+  "displayName": "RelationsLib",
+  "critical": true,
+  "category": "core",
+  "description": "Library immutably linked into a zk.money refund verifier. It evaluates the UltraHonk circuit constraints during proof verification."
+}

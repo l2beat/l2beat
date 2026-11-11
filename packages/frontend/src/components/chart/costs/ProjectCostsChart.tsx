@@ -1,8 +1,9 @@
 import type { Milestone } from '@l2beat/config'
-import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
-import type { ChartProject } from '~/components/core/chart/Chart'
+import type { ChartProject } from '~/components/core/chart/ChartContext'
+import { ChartPreviousDataDim } from '~/components/core/chart/ChartPreviousData'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
@@ -29,11 +30,9 @@ export function ProjectCostsChart({
   const [range, setRange] = useState<ChartRange>(defaultRange)
   const [unit, setUnit] = useState<CostsUnit>('usd')
 
-  const { data, isLoading } = useQuery(
-    trpc.costs.projectChart.queryOptions({
-      range,
-      projectId: project.id,
-    }),
+  const { data, isLoading, isPlaceholderData, shownInput } = useChartQuery(
+    trpc.costs.projectChart,
+    { range, projectId: project.id },
   )
 
   const chartData = useMemo(() => {
@@ -57,9 +56,6 @@ export function ProjectCostsChart({
         blobsEth,
         blobsUsd,
         ethereum,
-        celestia,
-        avail,
-        eigenda,
       ]) => {
         return {
           timestamp,
@@ -84,9 +80,6 @@ export function ProjectCostsChart({
                 ? overheadEth
                 : overheadGas,
           ethereum,
-          celestia,
-          avail,
-          eigenda,
         }
       },
     )
@@ -95,33 +88,39 @@ export function ProjectCostsChart({
   const timeRange = useMemo(
     () =>
       getChartTimeRangeFromData(chartData, {
-        bucket: rangeToResolution(range),
+        bucket: rangeToResolution(shownInput.range),
       }),
-    [chartData, range],
+    [chartData, shownInput.range],
   )
 
   return (
     <div>
       <div className="mt-4 mb-3 flex justify-between gap-1">
-        <ProjectChartTimeRange timeRange={timeRange} />
+        <ProjectChartTimeRange
+          isPlaceholderData={isPlaceholderData}
+          timeRange={timeRange}
+        />
         <CostsChartRangeControls range={range} setRange={setRange} />
       </div>
       <div className="mt-4 mb-3">
         <CostsChart
+          isPlaceholderData={isPlaceholderData}
           project={project}
           data={chartData}
           syncedUntil={data?.syncedUntil}
           unit={unit}
           isLoading={isLoading}
           milestones={milestones}
-          range={range}
+          range={shownInput.range}
           hasBlobs={!!data?.hasBlobs}
           tickCount={4}
         />
       </div>
       <UnitControls unit={unit} setUnit={setUnit} isLoading={isLoading} />
       <HorizontalSeparator className="my-4" />
-      <ProjectCostsChartStats data={data} isLoading={isLoading} unit={unit} />
+      <ChartPreviousDataDim isPlaceholderData={isPlaceholderData}>
+        <ProjectCostsChartStats data={data} isLoading={isLoading} unit={unit} />
+      </ChartPreviousDataDim>
     </div>
   )
 }

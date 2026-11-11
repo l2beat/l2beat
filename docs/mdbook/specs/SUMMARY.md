@@ -28,7 +28,7 @@
     - [EigenDA](./code_walkthroughs/dalayers/eigenda/README.md)
         - [Blob Lifecycle](./code_walkthroughs/dalayers/eigenda/blob_lifecycle.md)
 
-# L2BEAT specs
+# ETHBEAT specs
 
 - [Interop](./l2b_specs/interop.md)
 - [Interop plugin matching](./l2b_specs/interop_plugin_matching.md)
@@ -37,7 +37,9 @@
 - [Finality page](./l2b_specs/finality.md)
 - [Stages edge cases](./l2b_specs/stages_edgecases.md)
 - [Diffovery](./l2b_specs/diffovery.md)
+- [Canonical bridge](./l2b_specs/canonical_bridge.md)
 - [Ossification](./l2b_specs/ossification.md)
+- [AI templatizer](./l2b_specs/ai_templatizer.md)
 - [TokenDB](./l2b_specs/token_db/README.md)
     - [Automatic token ingestion](./l2b_specs/token_db/automatic_token_ingestion.md)
     - [Token relations](./l2b_specs/token_db/token_relations.md)

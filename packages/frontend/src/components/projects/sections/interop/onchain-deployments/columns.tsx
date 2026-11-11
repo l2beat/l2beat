@@ -1,6 +1,7 @@
 import {
   formatAddress,
   formatCurrency,
+  formatInteger,
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
@@ -94,17 +95,7 @@ export const interopTokenOnchainDeploymentsColumns = [
         return <InteropNoDataBadge tooltip={NO_MINTERS_TOOLTIP} />
       }
 
-      return (
-        <ProjectIconList
-          projects={minters}
-          dialog={{
-            title: 'Minting bridges',
-            description: 'Search for a bridge minting this deployment',
-            searchPlaceholder: 'Start typing to find a bridge...',
-            emptyText: 'No bridges found.',
-          }}
-        />
-      )
+      return <ProjectIconList projects={minters} title="Minting bridges" />
     },
     meta: {
       tooltip:
@@ -129,13 +120,13 @@ export const interopTokenOnchainDeploymentsColumns = [
     },
   }),
   columnHelper.accessor('transferCount', {
-    header: 'Last 24h\ntransfer count',
+    header: 'Last 24h\ntransfers',
     cell: (ctx) => {
       if (ctx.row.original.transferCount === null)
         return <InteropNoDataBadge tooltip={noDataTooltip(ctx.row.original)} />
       return (
         <span className="font-medium text-label-value-15">
-          {ctx.row.original.transferCount}
+          {formatInteger(ctx.row.original.transferCount)}
         </span>
       )
     },

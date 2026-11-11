@@ -1,3 +1,4 @@
+import { assert } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import type { ChartRange } from '~/utils/range/range'
 import { getActivityAdjustedTimestamp } from './syncStatus'
@@ -13,6 +14,7 @@ export async function getFullySyncedActivityRange(
   const db = getDb()
 
   const target = await db.syncMetadata.getMaxTargetForFeature('activity')
+  assert(target, 'Max target for feature not found')
   const end = getActivityAdjustedTimestamp(target)
 
   return [range[0], Math.min(range[1], end)]

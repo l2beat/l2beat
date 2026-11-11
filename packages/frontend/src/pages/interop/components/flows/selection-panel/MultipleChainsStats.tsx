@@ -1,4 +1,4 @@
-import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
+import { formatCount, formatCurrency, formatInteger } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
@@ -22,6 +22,7 @@ export function MultipleChainsStats({
   chainIdB,
   selectedChains,
   tokenId,
+  snapshotTimestamp,
   linkTopProtocols,
   hideTopProtocols,
 }: {
@@ -29,6 +30,7 @@ export function MultipleChainsStats({
   chainIdB: string
   selectedChains: string[]
   tokenId?: string
+  snapshotTimestamp?: number
   linkTopProtocols?: boolean
   hideTopProtocols?: boolean
 }) {
@@ -39,6 +41,7 @@ export function MultipleChainsStats({
       chains: selectedChains,
       protocolIds: selectedProtocols,
       tokenId,
+      snapshotTimestamp,
     }),
   )
 
@@ -249,7 +252,7 @@ function Routes({
                 <div className="mt-0.5 flex items-center gap-2 font-semibold text-[13px] leading-none">
                   <span>{formatCurrency(flow.volume, 'usd')}</span>
                   <span className="text-secondary">
-                    {formatInteger(flow.transferCount)} txs
+                    {formatCount(flow.transferCount, 'tx')}
                   </span>
                 </div>
               )}

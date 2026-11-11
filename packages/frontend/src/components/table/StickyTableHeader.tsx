@@ -5,16 +5,17 @@ import {
   type StickyTableRefs,
   stickyTableHeaderClassNames,
 } from './useStickyTableHeader'
-import { STICKY_OVERLAP_PX } from './utils/commonPinningStyles'
+import {
+  NOT_A_FOOTER_PROPS,
+  STICKY_OVERLAP_PX,
+} from './utils/commonPinningStyles'
 
 /**
- * Once the table scrolls, its sticky cells stop 1px left of where they start,
- * and so does the pinned layer. The range is a plain length: the form measured
- * to stay on the compositor in WebKit.
+ * The copy starts as far left as the table, so the pinned layer drops the
+ * overlap from its width, ending where the table's pinned cells end.
  */
 const PINNED_LAYER_STYLE = {
   '--sticky-table-pinned-overlap': `${STICKY_OVERLAP_PX}px`,
-  animationRange: `0px ${STICKY_OVERLAP_PX}px`,
 } as React.CSSProperties
 
 /**
@@ -51,15 +52,18 @@ export function StickyTableHeader({
     <div
       ref={header}
       className={cn(stickyTableHeaderClassNames.header, 'bg-surface-primary')}
+      {...NOT_A_FOOTER_PROPS}
     >
-      <div className={stickyTableHeaderClassNames.track}>
-        {renderCopy(track)}
-      </div>
+      {/* First, so focus meets the pinned columns' controls before the rest,
+          in the order they show. */}
       <div
         className={stickyTableHeaderClassNames.pinnedLayer}
         style={PINNED_LAYER_STYLE}
       >
         {renderCopy(pinned)}
+      </div>
+      <div className={stickyTableHeaderClassNames.track}>
+        {renderCopy(track)}
       </div>
     </div>
   )

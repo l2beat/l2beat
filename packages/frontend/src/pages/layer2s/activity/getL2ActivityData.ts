@@ -7,6 +7,7 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
+import { getBadgeLookup } from '~/utils/project/getBadgeWithParams'
 import { optionToRange } from '~/utils/range/range'
 
 export async function getL2ActivityData(
@@ -45,6 +46,7 @@ export async function getL2ActivityData(
         ...appLayoutProps,
         ...data,
         milestones: HOMEPAGE_MILESTONES,
+        badgeLookup: getBadgeLookup(data.entries),
       },
     },
   }
@@ -63,6 +65,8 @@ async function getCachedData() {
           type: 'projects',
           projectIds: entries.map((entry) => entry.id),
         },
+        // Matches the chart's query, so the page renders with its data
+        hourly: true,
       }),
     ),
     helpers.queryClient.prefetchQuery(

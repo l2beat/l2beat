@@ -3,11 +3,9 @@ import { Analyze } from './Analyze'
 import { AuditCoverage } from './AuditCoverage'
 import { BlobSenders } from './BlobSenders'
 import { CheckRpc } from './CheckRpc'
+import { ClientDrift } from './ClientDrift'
 import { Colorize } from './Colorize'
 import { CountUserOperations } from './CountUserOperations'
-import { CropsAttest } from './CropsAttest'
-import { CropsVerify } from './CropsVerify'
-import { DecodeEigenDACommitment } from './DecodeEigenDACommitment'
 import { DeploymentTimestamp } from './DeploymentTimestamp'
 import { Discover } from './Discover'
 import { DownloadAllShapes, DownloadShapes } from './DownloadShapes'
@@ -16,7 +14,6 @@ import { FetchAgglayer } from './FetchAggLayer'
 import { FetchDiscoveryCache } from './FetchDiscoveryCache'
 import { FetchFlatSources } from './FetchFlatSources'
 import { FetchZkStack } from './FetchZkStack'
-import { FindCelestiaNamespace } from './FindCelestiaNamespace'
 import { FindUnusedShapes } from './FindUnusedShapes'
 import { Flatten } from './Flatten'
 import { FlattenerValidator } from './FlattenerValidator'
@@ -43,6 +40,7 @@ import { StarknetProgramHashes } from './StarknetProgramHashes'
 import { TVL } from './TVL'
 import { UI } from './UI'
 import { Why } from './Why'
+import { Xref } from './Xref'
 import { ZkGovProposal } from './ZkGovProposal'
 
 export function getSubcommands() {
@@ -52,11 +50,9 @@ export function getSubcommands() {
     AuditCoverage,
     BlobSenders,
     CheckRpc,
+    ClientDrift,
     Colorize,
     CountUserOperations,
-    CropsAttest,
-    CropsVerify,
-    DecodeEigenDACommitment,
     DeploymentTimestamp,
     DetectProxy,
     Discover,
@@ -67,7 +63,6 @@ export function getSubcommands() {
     FetchDiscoveryCache,
     FetchFlatSources,
     FetchZkStack,
-    FindCelestiaNamespace,
     FindUnusedShapes,
     Flatten,
     FlattenerValidator,
@@ -93,6 +88,7 @@ export function getSubcommands() {
     TVL,
     UI,
     Why,
+    Xref,
     ZkGovProposal,
   ]
 }

@@ -1,3 +1,191 @@
+Generated with discovered.json: 0xba8807406dcfb69bf675517b74bfd029a3523587
+
+# Diff at Tue, 10 Nov 2026 12:11:45 GMT:
+
+- id: d17aac3d
+- author: vilcht (<dawdrobny@gmail.com>)
+- comparing to: main@7f72d28dfc45169ea6269f014192849bf6910bda block: 1793982763
+- current timestamp: 1793982763
+
+## Description
+
+
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793982763 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC) [GnosisSafe] {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a","delay":172800,"role":".proposers"}]
+    }
+```
+
+```diff
+    contract EtherFiTimelock (eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761) [etherfi/EtherFiTimelock] {
+    +++ description: OpenZeppelin TimelockController governing contract upgrades and privileged operations. Two instances: a longer Upgrade timelock and a shorter Operating timelock.
+      values.proposers:
++        ["eth:0xcdd57D11476c22d265722F68390b036f3DA48c21"]
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"eth:0x2093Bbb221f1d8C7c932c32ee28Be6dEe4a37A6a","role":"admin"},{"permission":"upgrade","from":"eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000","role":"admin"},{"permission":"upgrade","from":"eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9","role":"admin"},{"permission":"upgrade","from":"eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479","role":"admin"},{"permission":"upgrade","from":"eth:0xcd2eb13D6831d4602D80E5db9230A57596CDCA63","role":"admin","via":[{"address":"eth:0xa9E9bBf04F95688D7fd82036f83544630E463CAc"}]},{"permission":"upgrade","from":"eth:0xD789870beA40D056A4d26055d0bEFcC8755DA146","role":"admin","via":[{"address":"eth:0xDBf6bE120D4dc72f01534673a1223182D9F6261D"}]}]
+      directlyReceivedPermissions.2:
++        {"permission":"upgrade","from":"eth:0x2093Bbb221f1d8C7c932c32ee28Be6dEe4a37A6a","role":"admin"}
+      directlyReceivedPermissions.3:
++        {"permission":"upgrade","from":"eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000","role":"admin"}
+      directlyReceivedPermissions.4:
++        {"permission":"upgrade","from":"eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9","role":"admin"}
+      directlyReceivedPermissions.5:
++        {"permission":"upgrade","from":"eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479","role":"admin"}
+    }
+```
+
+```diff
+    contract EtherFiTimelock (eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a) [etherfi/EtherFiTimelock] {
+    +++ description: OpenZeppelin TimelockController governing contract upgrades and privileged operations. Two instances: a longer Upgrade timelock and a shorter Operating timelock.
+      values.proposers:
++        ["eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0xA195D4A57C4802651F67fB56349e10a7adDADD82) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0xcdd57D11476c22d265722F68390b036f3DA48c21) [GnosisSafe]
+    +++ description: None
+```
+
+Generated with discovered.json: 0xf87056c1650be0fe836d80037345888f3589ea22
+
+# Diff at Fri, 06 Nov 2026 16:36:07 GMT:
+
+- id: cb69b3aa
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@42d599abc7be8cc38122c72abc4da1c1dda6fbeb block: 1792491551
+- current timestamp: 1793982763
+
+## Description
+
+Safe (treasury and fee recipient) and GnosisSafe (EtherFiOperationParameters owner): Member rotated. The same signer joined both.
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0x0c83EAe1FE72c390A02E426572854931EefF93BA) [GnosisSafe] {
+    +++ description: None
+      values.$members.2:
+-        "eth:0xD31074937B28f65db4eeB243916883E335261650"
++        "eth:0x84997ff27EF5D5E0A40A52AA06dDB7fcb35266FF"
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC) [GnosisSafe] {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x71b67AC997056c9935f8AA98F3344432Ea2ec15c"
++        "eth:0x84997ff27EF5D5E0A40A52AA06dDB7fcb35266FF"
+    }
+```
+
+Generated with discovered.json: 0x60f6e191dfd02f93c8b96b9305182871183cc46a
+
+# Diff at Tue, 27 Oct 2026 11:31:37 GMT:
+
+- id: a1ed7e26
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@de2e3d4ee6aef60add0cf0b261ced3c797f9fb6e block: 1792491551
+- current timestamp: 1792491551
+
+## Description
+
+Mark EtherFiViewer non-critical. It is a read-only helper, so its EOA upgrade admin does not get the red warning.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792491551 (main branch discovery), not current.
+
+```diff
+    contract EtherFiViewer (eth:0x2ecd155405cA52a5ca0e552981fF44A8252FAb81) [etherfi/EtherFiViewer] {
+    +++ description: Stateless read-only aggregator for off-chain interfaces. Holds no funds or permissions.
+      category.name:
+-        "Local Infrastructure"
++        "Non-Critical"
+      category.priority:
+-        5
++        0
+    }
+```
+
+```diff
+    EOA (eth:0xf8a86ea1Ac39EC529814c377Bd484387D395421e) {
+    +++ description: None
+      eoaWithUpgradePermissions:
+-        true
+    }
+```
+
+Generated with discovered.json: 0x0ab304e777774211eb63c10dfd44e9ca642b730f
+
+# Diff at Fri, 16 Oct 2026 05:36:49 GMT:
+
+- id: c2fd7f06
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1791381140
+- current timestamp: 1791381140
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791381140 (main branch discovery), not current.
+
+```diff
+    contract UpgradeableBeacon (eth:0x29b1C223be35CCB6bfBd43154528cD0B881756e9) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0xf4718766a7fc8c81F788669B0985FAC03D064D29. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (eth:0x3c55986Cfee455E2533F4D29006634EcF9B7c03F) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0x73Df4a005332525fB0A0B2cf067352a9b706f233. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xa9E9bBf04F95688D7fd82036f83544630E463CAc) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xDBf6bE120D4dc72f01534673a1223182D9F6261D) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
 Generated with discovered.json: 0xf4af50fdb3e4403cd6d8ea8c1ec9d5317d106f47
 
 # Diff at Wed, 07 Oct 2026 13:54:24 GMT:

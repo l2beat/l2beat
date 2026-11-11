@@ -1,7 +1,6 @@
 import type {
-  BlockDaTrackingConfig,
   ProjectActivityConfig,
-  TimestampDaTrackingConfig,
+  ProjectDaTrackingConfig,
 } from '@l2beat/config'
 import type { CleanableRepoName } from '@l2beat/database'
 import type {
@@ -10,9 +9,10 @@ import type {
   DiscoveryPaths,
 } from '@l2beat/discovery'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
-import type { CoingeckoId, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { createRemoteJWKSet } from 'jose'
 import type { DefiTvlConfig } from '../modules/defi-tvl/types'
+import type { LiquidStakingConfig } from '../modules/liquid-staking/types'
 import type { PrivacyConfig } from '../modules/privacy/types'
 import type {
   AmountConfig,
@@ -33,11 +33,13 @@ export interface Config {
   readonly notifications: NotificationsConfig | false
   readonly database: DatabaseConfig
   readonly coingeckoApiKey: string
+  readonly duneApiKey: string | undefined
   readonly coingeckoApiUrl: string | undefined
   readonly api: ApiConfig
   readonly health: HealthConfig
   readonly tvs: TvsConfig | false
   readonly defiTvl: DefiTvlConfig | false
+  readonly liquidStaking: LiquidStakingConfig | false
   readonly trackedTxsConfig: TrackedTxsConfig | false
   readonly activity: ActivityConfig | false
   readonly updateMonitor: UpdateMonitorConfig | false
@@ -47,7 +49,7 @@ export interface Config {
   readonly statusEnabled: boolean
   readonly chains: { name: string; chainId: number | undefined }[]
   readonly daBeat: DaBeatConfig | false
-  readonly ecosystems: EcosystemsConfig | false
+  readonly cropAttestations: CropAttestationsConfig | false
   readonly chainConfig: ChainApi[]
   readonly beaconApi: {
     readonly url: string | undefined
@@ -97,7 +99,10 @@ export interface ClockConfig {
 }
 
 export interface TvsConfig {
-  readonly projects: (ProjectTvsConfig & { amountSources: string[] })[]
+  readonly projects: (ProjectTvsConfig & {
+    amountSources: string[]
+    storeEscrowValues: boolean
+  })[]
   readonly amounts: AmountConfig[]
   readonly prices: PriceConfig[]
   readonly chains: string[]
@@ -117,7 +122,6 @@ export interface TrackedTxProject {
 
 export interface TrackedTxsConfig {
   readonly projects: TrackedTxProject[]
-  readonly duneApiKey: string
   readonly minTimestamp: UnixTime
   readonly uses: {
     readonly liveness: boolean
@@ -278,20 +282,6 @@ export interface DaBeatConfig {
   readonly projectsForDaBeatStats: ProjectId[]
   /** Coingecko ids of tokens for economic security */
   readonly coingeckoIds: string[]
-  readonly celestiaApiUrl: string
-  readonly celestiaCallsPerMinute: number
-  readonly nearRpcUrl: string
-  readonly availRpcUrl: string
-  readonly espressoApiUrl: string
-}
-
-export interface EcosystemTokenConfig {
-  readonly configurationId: string
-  readonly projectId: ProjectId
-  readonly coingeckoId: CoingeckoId
-}
-export interface EcosystemsConfig {
-  readonly tokens: EcosystemTokenConfig[]
 }
 
 type BlockLayerAsProjectDaTrackingConfig = {
@@ -301,15 +291,8 @@ type BlockLayerAsProjectDaTrackingConfig = {
   untilBlock?: number
 }
 
-type TimestampLayerAsProjectDaTrackingConfig = {
-  type: 'baseLayer'
-  daLayer: string
-  sinceTimestamp: UnixTime
-  untilTimestamp?: UnixTime
-}
-
 export type BlockDaIndexedConfig = (
-  | BlockDaTrackingConfig
+  | ProjectDaTrackingConfig
   | BlockLayerAsProjectDaTrackingConfig
 ) & {
   /** Hash computed automatically based on fields */
@@ -317,39 +300,18 @@ export type BlockDaIndexedConfig = (
   projectId: ProjectId
 }
 
-export type TimestampDaIndexedConfig = (
-  | TimestampDaTrackingConfig
-  | TimestampLayerAsProjectDaTrackingConfig
-) & {
-  /** Hash computed automatically based on fields */
-  configurationId: string
-  projectId: ProjectId
-}
-
 export type BlockLayerDaTrackingConfig = {
-  type: 'ethereum' | 'celestia' | 'avail'
+  type: 'ethereum'
   name: string
   url: string
   callsPerMinute: number
-  timeout?: number
   batchSize: number
   startingBlock: number
 }
 
-export type TimestampLayerDaTrackingConfig = {
-  type: 'eigen-da'
-  name: string
-  url: string
-  callsPerMinute: number
-  startingTimestamp: UnixTime
-  perProjectUrl?: string
-}
-
 export interface DataAvailabilityTrackingConfig {
   readonly blockLayers: BlockLayerDaTrackingConfig[]
-  readonly timestampLayers: TimestampLayerDaTrackingConfig[]
   readonly blockProjects: BlockDaIndexedConfig[]
-  readonly timestampProjects: TimestampDaIndexedConfig[]
   /** The last day of Ethereum blocks and blobs, kept slot by slot */
   readonly liveBlobs: LiveBlobsTrackingConfig | false
 }
@@ -372,4 +334,12 @@ export interface LiveBlobsTrackingConfig {
 export interface BlockSyncModuleConfig {
   delayFromTipInSeconds: number
   ethereumWsUrl?: string
+}
+
+export interface CropAttestationsConfig {
+  /**
+   * GitHub token allowed to run the crops-api deploy workflow. Set only where
+   * a change should republish the API, i.e. production.
+   */
+  readonly githubToken: string | undefined
 }

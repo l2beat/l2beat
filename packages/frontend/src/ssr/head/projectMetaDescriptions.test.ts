@@ -168,77 +168,27 @@ describe(getScalingMetadataDescription.name, () => {
 describe(getDaMetadataDescription.name, () => {
   it('leads with TVS and economic security', () => {
     const description = getDaMetadataDescription({
-      name: 'Celestia',
-      bridge: undefined,
+      name: 'Ethereum',
       tvs: 1_500_000_000,
       economicSecurity: 2_300_000_000,
-      description: 'Celestia is a modular data availability network.',
+      description: 'Ethereum is a data availability layer.',
     })
 
     expect(description).toEqual(
-      'DA layer · $1.5B TVS · $2.3B economic security. Celestia is a modular data availability network.',
+      'DA layer · $1.5B TVS · $2.3B economic security. Ethereum is a data availability layer.',
     )
   })
 
   it('omits economic security when the layer has none', () => {
     const description = getDaMetadataDescription({
-      name: 'EigenDA',
-      bridge: undefined,
+      name: 'Ethereum',
       tvs: 1_500_000_000,
       economicSecurity: undefined,
-      description: 'EigenDA is a data availability service.',
+      description: 'Ethereum is a blockchain.',
     })
 
     expect(description).toEqual(
-      'DA layer · $1.5B TVS. EigenDA is a data availability service.',
-    )
-  })
-})
-
-describe('DA bridge pages', () => {
-  // The page joins the layer's and the bridge's descriptions; a layer's own
-  // bridge repeats the layer text word for word.
-  it('names the bridge and drops a repeated sentence', () => {
-    const description = getDaMetadataDescription({
-      name: 'EigenDA',
-      bridge: { name: 'EigenDA', isNoBridge: false },
-      tvs: 20_000_000,
-      economicSecurity: undefined,
-      description:
-        'EigenDA is a data availability solution. EigenDA is a data availability solution.',
-    })
-
-    expect(description).toEqual(
-      'DA layer · EigenDA bridge · $20M TVS. EigenDA is a data availability solution.',
-    )
-  })
-
-  it('says so when the page is for the layer without a bridge', () => {
-    const description = getDaMetadataDescription({
-      name: 'EigenDA',
-      bridge: { name: 'No bridge', isNoBridge: true },
-      tvs: 20_000_000,
-      economicSecurity: undefined,
-      description: 'EigenDA is a data availability solution.',
-    })
-
-    expect(description).toEqual(
-      'DA layer · no DA bridge · $20M TVS. EigenDA is a data availability solution.',
-    )
-  })
-
-  it('leaves out a bridge the description already names', () => {
-    const description = getDaMetadataDescription({
-      name: 'Celestia',
-      bridge: { name: 'Blobstream', isNoBridge: false },
-      tvs: 20_000_000,
-      economicSecurity: undefined,
-      description:
-        'Celestia is a modular network. The Blobstream bridge serves as a ZK light client.',
-    })
-
-    expect(description).toEqual(
-      'DA layer · $20M TVS. Celestia is a modular network. The Blobstream bridge serves as a ZK light client.',
+      'DA layer · $1.5B TVS. Ethereum is a blockchain.',
     )
   })
 })
@@ -345,15 +295,17 @@ describe(getInteropMetadataDescription.name, () => {
 })
 
 describe(getPrivacyMetadataDescription.name, () => {
-  it('leads with the privacy category', () => {
+  it('leads with the privacy category and ends with what the protocol hides', () => {
     const description = getPrivacyMetadataDescription({
       name: 'Railgun',
       category: 'Shielded ledger',
       description: 'An onchain privacy system for Ethereum.',
+      promise:
+        'Hides everything inside the pool. Shields and unshields are public.',
     })
 
     expect(description).toEqual(
-      'Shielded ledger. Railgun – An onchain privacy system for Ethereum.',
+      'Shielded ledger. Railgun – An onchain privacy system for Ethereum. Hides everything inside the pool.',
     )
   })
 
@@ -364,19 +316,47 @@ describe(getPrivacyMetadataDescription.name, () => {
       name: 'Umbra Cash',
       category: 'Stealth address',
       description: 'A stealth-address payment protocol.',
+      promise: 'Hides the recipient.',
     })
     const inName = getPrivacyMetadataDescription({
       name: 'Privacy Pools',
       category: 'Pool',
       description: 'A selective-disclosure privacy system.',
+      promise: 'Hides the link.',
     })
 
     expect(hyphenated).toEqual(
-      'Umbra Cash – A stealth-address payment protocol.',
+      'Umbra Cash – A stealth-address payment protocol. Hides the recipient.',
     )
     expect(inName).toEqual(
-      'Privacy Pools – A selective-disclosure privacy system.',
+      'Privacy Pools – A selective-disclosure privacy system. Hides the link.',
     )
+  })
+
+  it('leaves out the promise when the description already says what it hides', () => {
+    const description = getPrivacyMetadataDescription({
+      name: 'zkAPI',
+      category: 'Pool',
+      description:
+        'Anonymous access to AI models that hides which deposit pays for which request.',
+      promise: 'Hides which deposit pays for which API request.',
+    })
+
+    expect(description).toEqual(
+      'Pool. zkAPI – Anonymous access to AI models that hides which deposit pays for which request.',
+    )
+  })
+
+  it('drops the promise before cutting into the description', () => {
+    const longDescription = `A shielded ledger ${'with many features, '.repeat(13)}and more.`
+    const description = getPrivacyMetadataDescription({
+      name: 'Railgun',
+      category: 'Shielded ledger',
+      description: longDescription,
+      promise: 'Hides everything inside the pool.',
+    })
+
+    expect(description).toEqual(`Railgun – ${longDescription}`)
   })
 })
 

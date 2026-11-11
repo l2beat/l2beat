@@ -1,3 +1,4 @@
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import mockFs from 'mock-fs'
 import { ConfigReader } from './ConfigReader'
@@ -124,6 +125,19 @@ describe('readConfig layering', () => {
     expect(field?.handler).toEqual(undefined)
   })
 
+  it('puts an override layer above config.jsonc', () => {
+    const reader = new ConfigReader('/layered')
+
+    expect(reader.readConfig('proj').structure.maxDepth).toEqual(
+      Number.POSITIVE_INFINITY,
+    )
+    const config = reader.readConfig('proj', { maxDepth: 0 })
+    expect(config.structure.maxDepth).toEqual(0)
+    expect(config.structure.initialAddresses).toEqual([
+      ChainSpecificAddress(ADDRESS),
+    ])
+  })
+
   it('makes every config value read-only, inherited or not', () => {
     const reader = new ConfigReader('/layered')
     const config = reader.readConfig('proj')
@@ -232,6 +246,21 @@ describe('config and discovery resolution', () => {
       const result = reader.readAllDiscoveredProjects()
 
       expect(result).toEqual(['project1', 'project2'])
+    })
+  })
+
+  describe('hasDiscovery', () => {
+    it('tells whether a project has a discovered.json yet', () => {
+      mockFs({
+        '/base/old/config.jsonc': JSON.stringify({}),
+        '/base/old/discovered.json': JSON.stringify({}),
+        '/base/new/config.jsonc': JSON.stringify({}),
+      })
+
+      const reader = new ConfigReader('/base')
+
+      expect(reader.hasDiscovery('old')).toEqual(true)
+      expect(reader.hasDiscovery('new')).toEqual(false)
     })
   })
 

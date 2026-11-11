@@ -17,7 +17,7 @@ describe(createMockLiveBlobsSource.name, () => {
       Promise.resolve(['base', 'arbitrum', 'optimism']),
       now,
     )
-    const feed = new LiveBlobsFeed(source, Logger.SILENT, now)
+    const feed = new LiveBlobsFeed(source, Logger.SILENT, source, now)
 
     const blobs = await feed.latest()
     feed.stop()

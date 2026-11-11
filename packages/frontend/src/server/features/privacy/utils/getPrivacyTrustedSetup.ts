@@ -3,7 +3,7 @@ import type {
   ProjectZkCatalogInfo,
   TrustedSetup,
 } from '@l2beat/config'
-import { formatInteger } from '@l2beat/shared-pure'
+import { formatCount } from '@l2beat/shared-pure'
 import type { TrustedSetupRisk } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
 
 /** A trusted setup, or the 'None' placeholder for projects without a ZK system. */
@@ -50,14 +50,21 @@ export function getPrivacyTrustedSetup(
 }
 
 /**
- * The participant count. The no-setup and transparent-setup dots are named
+ * Label the published metric with its own unit. Contribution totals can include
+ * repeated contributors. The no-setup and transparent-setup dots are named
  * instead, and a ceremony without a published count is left unlabelled.
  */
 function getTrustedSetupLabel(
-  trustedSetup: Pick<PrivacyTrustedSetup, 'name' | 'risk' | 'participantCount'>,
+  trustedSetup: Pick<
+    PrivacyTrustedSetup,
+    'name' | 'risk' | 'participantCount' | 'contributionCount'
+  >,
 ): string | undefined {
   if (trustedSetup.participantCount !== undefined) {
-    return `${formatInteger(trustedSetup.participantCount)} participants`
+    return formatCount(trustedSetup.participantCount, 'participant')
+  }
+  if (trustedSetup.contributionCount !== undefined) {
+    return formatCount(trustedSetup.contributionCount, 'contribution')
   }
   return trustedSetup.risk === 'None' || trustedSetup.risk === 'N/A'
     ? trustedSetup.name

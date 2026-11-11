@@ -11,6 +11,9 @@
     "quorum"
   ],
   "fields": {
+    "proposalThreshold": {
+      "severity": "HIGH"
+    },
     "currentQuorum": {
       "severity": "HIGH",
       "handler": {

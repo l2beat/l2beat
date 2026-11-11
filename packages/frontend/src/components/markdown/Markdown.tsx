@@ -4,12 +4,12 @@ import { createMarkdown } from '~/utils/markdown/createMarkdown'
 import {
   type GlossaryRenderEnv,
   glossaryPlugin,
-  linkGlossaryTerms,
 } from '~/utils/markdown/glossaryPlugin'
 import {
   type HeadingLevelEnv,
   headingLevelPlugin,
 } from '~/utils/markdown/headingLevelPlugin'
+import { identifierBreaksPlugin } from '~/utils/markdown/identifierBreaksPlugin'
 import { outLinksPlugin } from '~/utils/markdown/outlinksPlugin'
 import { useGlossaryContext } from './GlossaryContext'
 import { GlossaryTooltipWrapper } from './GlossaryTooltipWrapper'
@@ -26,9 +26,10 @@ const markdown = createMarkdown()
   .use(outLinksPlugin)
   .use(glossaryPlugin)
   .use(headingLevelPlugin)
+  .use(identifierBreaksPlugin)
 
 export function Markdown(props: MarkdownProps) {
-  const terms = useGlossaryContext()
+  const linkTerms = useGlossaryContext()
   const parentHeadingLevel = useParentHeadingLevel()
   const glossaryDescriptionIdPrefix = useId()
   const Comp = props.inline ? 'span' : 'div'
@@ -45,9 +46,7 @@ export function Markdown(props: MarkdownProps) {
   // Markdown-it does not support pre-render hooks and token rerendering so
   // we have to the do linking of glossary terms here explicitly.
   const rendered = render(
-    props.ignoreGlossary
-      ? props.children
-      : linkGlossaryTerms(terms)(props.children),
+    props.ignoreGlossary ? props.children : linkTerms(props.children),
   )
   const collapsed = processCollapsibleText(rendered)
 

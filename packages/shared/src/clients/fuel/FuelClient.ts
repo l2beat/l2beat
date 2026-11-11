@@ -1,11 +1,12 @@
 import type { Block, json } from '@l2beat/shared-pure'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
-import type { BlockClient } from '../types'
+import type { BlockClient, BlockHeader } from '../types'
 import { tai64ToUnix } from './tai64ToUnix'
 import {
+  FuelBlockHeaderResponse,
   FuelBlockResponse,
   FuelError,
-  FuelLatestBlockNumberResponse,
+  FuelLatestBlockHeaderResponse,
 } from './types'
 
 interface Dependencies extends ClientCoreDependencies {
@@ -18,27 +19,67 @@ export class FuelClient extends ClientCore implements BlockClient {
   }
 
   async getLatestBlockNumber() {
+    const header = await this.getBlockHeader('latest')
+    return header.number
+  }
+
+  async getBlockHeader(blockNumber: number | 'latest'): Promise<BlockHeader> {
+    const block =
+      blockNumber === 'latest'
+        ? await this.queryLatestBlockHeader()
+        : await this.queryBlockHeader(blockNumber)
+    return {
+      number: Number(block.height),
+      timestamp: tai64ToUnix(block.header.time),
+    }
+  }
+
+  private async queryLatestBlockHeader() {
     const query = `query LatestBlocks {
         blocks(last: 1) {
           nodes {
             height
+            header {
+                time
+            }
           }
         }
       }`
 
     const response = await this.query(query)
 
-    const latestBlockNumberResponse =
-      FuelLatestBlockNumberResponse.safeParse(response)
+    const parsed = FuelLatestBlockHeaderResponse.safeParse(response)
 
-    if (
-      !latestBlockNumberResponse.success ||
-      latestBlockNumberResponse.data.data.blocks.nodes.length === 0
-    ) {
-      throw new Error('Latest block number: Error during parsing')
+    if (!parsed.success || parsed.data.data.blocks.nodes.length === 0) {
+      throw new Error('Latest block header: Error during parsing')
     }
 
-    return Number(latestBlockNumberResponse.data.data.blocks.nodes[0].height)
+    return parsed.data.data.blocks.nodes[0]
+  }
+
+  private async queryBlockHeader(blockNumber: number) {
+    const query = `query BlockHeader($height: U32) {
+        block(height: $height) {
+            height
+            header {
+                time
+            }
+        }
+      }`
+
+    const response = await this.query(query, {
+      height: blockNumber.toString(),
+    })
+
+    const parsed = FuelBlockHeaderResponse.safeParse(response)
+
+    if (!parsed.success) {
+      throw new Error('Block header: Error during parsing', {
+        cause: { blockNumber },
+      })
+    }
+
+    return parsed.data.data.block
   }
 
   async getBlockWithTransactions(blockNumber: number): Promise<Block> {

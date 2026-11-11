@@ -4,5 +4,11 @@
     "address": "eth:0xf143b969ea481Ccf251194D15F82007C67AABc53",
     "chain": "ethereum",
     "blockNumber": 25831469
+  },
+  "BfvDecryptionVerifier_v0.19.0": {
+    "hash": "0xc1aedbd9da3b976869bcfb8c15300a78e4ec776c82148f8e6b56b51d5d717112",
+    "address": "eth:0x194A489c918b74F11C6b03e12Ea26F198110f9A5",
+    "chain": "ethereum",
+    "blockNumber": 26204316
   }
 }

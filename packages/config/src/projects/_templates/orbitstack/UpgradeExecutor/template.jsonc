@@ -6,18 +6,18 @@
   "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
   "fields": {
     "$admin": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
-    // Membership is identity: EXECUTOR_ROLE.members is the same list as
-    // `executors`, which is LOW. Role wiring (adminRole) would be HIGH but
-    // cannot be separated from members in this one field.
+    // Role holders: MEDIUM puts every change under review. A mechanism change
+    // (new authority structure, not a Safe swap) is a reviewed event.
     "accessControl": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl"
       }
     },
     "executors": {
-      "severity": "LOW",
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "EXECUTOR_ROLE"

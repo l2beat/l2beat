@@ -13,11 +13,9 @@
     "eth:0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F": "StakingNFT",
     "eth:0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B": "StakingInfo",
     "eth:0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287": "RootChain",
-    "eth:0x5A09cD4601b66bc107D377AB81E0dbb5dFABaA84": "RootChainInitialImplementation",
     "eth:0x28e4F3a7f651294B9564800b2D01f35189A5bFbE": "StateSender",
     "eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908": "StakeManager",
     "eth:0xef49Ea6996073752b6840CDA34773FFA78F78166": "StakeManagerExtension",
-    "eth:0x7e94d6cAbb20114b22a088d828772645f68CC67B": "ValidatorShare",
     "eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77": "RootChainManager",
     "eth:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf": "ERC20Predicate",
     "eth:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD": "ERC721Predicate",
@@ -33,116 +31,18 @@
     "eth:0x436f5Ba0DCf22f991475fC7A6DE75DAAE2f40cB5": "PolygonERC20MintBurnPredicate",
     "eth:0xDF74156420Bd57ab387B195ed81EcA36F9fABAca": "ExitNFT",
     "eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c": "PolygonMultisig",
+    "eth:0x424bDE99FCfB68c5a1218fd3215caFfD031f19C4": "PolygonMultisig2",
     "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf": "Timelock",
     "eth:0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8": "MaticWETH"
   },
   "overrides": {
-    "eth:0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8": {
-      "ignoreInWatchMode": ["totalSupply"]
-    },
-    "eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77": {
-      "fields": {
-        "PREDICATES": {
-          "handler": {
-            "type": "event",
-            "select": "predicateAddress",
-            "add": { "event": "PredicateRegistered" }
-          }
-        }
-      }
-    },
+    // initial RootChain implementation, named in the proxy constructor args
     "eth:0x5A09cD4601b66bc107D377AB81E0dbb5dFABaA84": {
-      "ignoreMethods": ["headerBlocks"]
-    },
-    "eth:0x1906fd9c4AC440561F7197Da0A4BD2E88DF5fA70": {
       "ignoreDiscovery": true
     },
-    "eth:0x401F6c983eA34274ec46f84D70b31C151321188b": {
-      "ignoreMethods": ["deposits"]
-    },
-    "eth:0x2A88696e0fFA76bAA1338F2C74497cC013495922": {
-      "ignoreMethods": ["exits"]
-    },
-    "eth:0x28e4F3a7f651294B9564800b2D01f35189A5bFbE": {
-      "fields": {
-        "REGISTRATIONS": {
-          "handler": {
-            "type": "event",
-            "select": "sender",
-            "add": { "event": "RegistrationUpdated" }
-          }
-        }
-      },
-      "ignoreInWatchMode": ["counter"],
-      "ignoreRelatives": ["REGISTRATIONS"]
-    },
-    "eth:0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F": {
-      "ignoreMethods": ["tokenByIndex"],
-      "ignoreInWatchMode": ["totalSupply"]
-    },
-    "eth:0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287": {
-      "fields": {
-        "constructorArgs": {
-          "handler": { "type": "constructorArgs", "nameArgs": true }
-        }
-      },
-      "ignoreMethods": ["headerBlocks"],
-      "ignoreInWatchMode": [
-        "_nextHeaderBlock",
-        "getLastChildBlock",
-        "currentHeaderBlock"
-      ]
-    },
-    "eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908": {
-      "ignoreRelatives": ["token", "tokenMatic", "migration"],
-      "ignoreMethods": [
-        "getValidatorContract",
-        "delegatedAmount",
-        "isValidator",
-        "latestSignerUpdateEpoch",
-        "signers",
-        "validatorAuction",
-        "validators",
-        "validatorStake",
-        "validatorStateChanges",
-        "accountStateRoot"
-      ],
-      "ignoreInWatchMode": [
-        "currentEpoch",
-        "currentValidatorSetTotalStake",
-        "epoch",
-        "rewardPerStake",
-        "totalRewardsLiquidated",
-        "totalStaked",
-        "validatorState",
-        "totalHeimdallFee",
-        "NFTCounter"
-      ]
-    },
-    "eth:0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B": {
-      "ignoreMethods": [
-        "getValidatorContractAddress",
-        "totalValidatorStake",
-        "validatorNonce"
-      ]
-    },
-    "eth:0xef49Ea6996073752b6840CDA34773FFA78F78166": {
-      "ignoreMethods": [
-        "latestSignerUpdateEpoch",
-        "validatorAuction",
-        "validators",
-        "validatorStateChanges",
-        "signers"
-      ]
-    },
-    "eth:0xDF74156420Bd57ab387B195ed81EcA36F9fABAca": {
-      "ignoreMethods": ["exists"]
-    },
-    "eth:0x7e94d6cAbb20114b22a088d828772645f68CC67B": {
-      "ignoreMethods": ["getRewardPerShare"]
-    },
-    "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf": {
-      "fields": { "accessControl": { "handler": { "type": "accessControl" } } }
+    // third-party predicate registered for the Aavegotchi token type and run by its team
+    "eth:0x1906fd9c4AC440561F7197Da0A4BD2E88DF5fA70": {
+      "ignoreDiscovery": true
     }
   }
 }

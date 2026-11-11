@@ -25,5 +25,11 @@
     "address": "celo:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007",
     "chain": "celo",
     "blockNumber": 79482303
+  },
+  "L2CrossDomainMessenger_v2_2_0_base.sol": {
+    "hash": "0x2df1086b25c087f24dc6273e2d367f1aa75335963c3591df31378e7edd029ec5",
+    "address": "base:0xFe016829CbD44B469a4Bb76Ed95343A9458DCbA6",
+    "chain": "base",
+    "blockNumber": 53551478
   }
 }

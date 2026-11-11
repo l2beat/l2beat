@@ -6,8 +6,9 @@ export const INDEXER_NAMES = {
   DA: 'da_indexer',
   DA2: 'da_indexer_v2',
   BLOB: 'blob_indexer',
-  ECOSYSTEM_TOKEN: 'ecosystem_token_indexer',
   DEFI_TVL: 'defi_tvl_indexer',
+  LIQUID_STAKING: 'liquid_staking_indexer',
+  ETHEREUM_STAKING: 'ethereum_staking_indexer',
   INTEROP_RELAY: 'relay_indexer',
   INTEROP_RECENT_PRICES: 'interop_recent_prices_indexer',
   // TVS

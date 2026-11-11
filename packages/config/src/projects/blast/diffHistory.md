@@ -1,3 +1,294 @@
+Generated with discovered.json: 0x28375009a95d4b061ab5a0b3f05010c13f25b1c2
+
+# Diff at Wed, 04 Nov 2026 15:19:03 GMT:
+
+- id: 8a65e7f7
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@314cc03cc4ab30a27af0a163e966f35b69ed7ff0 block: 1791966825
+- current timestamp: 1793803409
+
+## Description
+
+OptimismPortal: paused.
+L1BlastBridge: upgraded; its ETH and ERC20 deposit functions revert after L1 block 26298276 (2026-10-29).
+ETHYieldManager and USDYieldManager: upgraded; new `withdrawFunds` lets the owner send any amount of ETH or tokens to any address.
+BlastMultisig 1: threshold 3/5 → 2/5.
+BlastExit and BlastExit2: added to discovery; shutdown claim contracts holding the funds withdrawn from the yield managers, with BlastMultisig 1 as authority.
+
+## Watched changes
+
+```diff
+    contract OptimismPortal (eth:0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb) [opstack/OptimismPortal] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
++++ severity: MEDIUM
+      values.paused:
+-        false
++        true
+    }
+```
+
+```diff
+    contract BlastExit2 (eth:0x23eA8c6ACEb5673BBd712137cE2Aa33db36CB513) [blast/BlastExit] {
+    +++ description: Merkle claim contract that pays out ETH and DAI. A user, or a redeemer approved for that user, claims once against a root of balances set by the authority.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "EIP1967 proxy"
+      template:
++        "blast/BlastExit"
+      sourceHashes:
++        ["0x5d5be4899b381a760f67129f9b207a2a06866a3ce03792b093825eaceb64a3c8","0x0a02cf40e3095fd3fa8301811da5b24c2c4de75548e8294f33faf0e8e6ab063a"]
+      description:
++        "Merkle claim contract that pays out ETH and DAI. A user, or a redeemer approved for that user, claims once against a root of balances set by the authority."
+      deployerAddress:
++        "eth:0x32BB93599Eb77eD5d3A357d3898fcF8200f5b2E9"
+      sinceTimestamp:
++        1793675279
+      sinceBlock:
++        26331479
+      values:
++        {"$admin":"eth:0x0000000000000000000000000000000000000000","$implementation":"eth:0xBd905D3d62f5D72ab18c4c2D3eDCfE549CBeA46D","$pastUpgrades":[["2026-11-03T03:07:59.000Z","0x448c08150fd23d7ca3e2e7955ca62d4d7d6bb50dbd4ffa5a2cf5bad3979264bc",["eth:0x8b8B4bF2020b29872d374CAf8d078354d3DFC880"]],["2026-11-03T03:08:35.000Z","0xd2c105fc4ad8d6244eeac2150626f751dbf3248ab750612cd45bfa06ec0c8c2d",["eth:0xBd905D3d62f5D72ab18c4c2D3eDCfE549CBeA46D"]]],"$upgradeCount":2,"authority":"eth:0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05","DAI":"eth:0x6B175474E89094C44Da98b954EedeAC495271d0F","paused":false,"UPGRADE_INTERFACE_VERSION":"5.0.0"}
+      implementationNames:
++        {"eth:0x23eA8c6ACEb5673BBd712137cE2Aa33db36CB513":"ERC1967Proxy","eth:0xBd905D3d62f5D72ab18c4c2D3eDCfE549CBeA46D":"BlastExit"}
+    }
+```
+
+```diff
+    contract L1BlastBridge (eth:0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115) [N/A] {
+    +++ description: Custom bridge gateway for Blast that allows the Operators to reinvest L1 tokens while they are bridged to the L2.
+      sourceHashes.1:
+-        "0x2de77137c7520591ce7be53e8fdff330d246d95d6713af63b93c30d6188df3c1"
++        "0xd60c5c590b884d3f4f0577a2f6666baeefbdfcc317e2aba4749d5d388bd2c279"
+      values.$implementation:
+-        "eth:0x7A2075519Dd9598b62075FD397aF0Dd34b14619a"
++        "eth:0xC245b4994cd229ad6Ab7B464205d71bfe85a96b7"
+      values.DEPOSIT_CUTOFF_BLOCK:
++        26298276
+      implementationNames.eth:0x7A2075519Dd9598b62075FD397aF0Dd34b14619a:
+-        "L1BlastBridge"
+      implementationNames.eth:0xC245b4994cd229ad6Ab7B464205d71bfe85a96b7:
++        "L1BlastBridge"
+    }
+```
+
+```diff
+    contract BlastMultisig 1 (eth:0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05) [GnosisSafe] {
+    +++ description: None
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "2 of 5 (40%)"
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x23eA8c6ACEb5673BBd712137cE2Aa33db36CB513","description":"set the Merkle roots of claimable balances, approve redeemers for any user (who then receive that user's claim), pause claims and transfer or give up the authority.","role":".authority"}
+      receivedPermissions.6:
++        {"permission":"interact","from":"eth:0x9D31771458B421C7EA8A06CB8D12663E91617869","description":"set the Merkle roots of claimable balances, approve redeemers for any user (who then receive that user's claim), pause claims and transfer or give up the authority.","role":".authority"}
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"eth:0x23eA8c6ACEb5673BBd712137cE2Aa33db36CB513","description":"upgrade the contract (UUPS).","role":".authority"}
+      receivedPermissions.17:
++        {"permission":"upgrade","from":"eth:0x9D31771458B421C7EA8A06CB8D12663E91617869","description":"upgrade the contract (UUPS).","role":".authority"}
+    }
+```
+
+```diff
+    contract ETHYieldManager (eth:0x98078db053902644191f93988341E31289E1C8FE) [N/A] {
+    +++ description: Contract managing Yield Providers for ETH.
+      sourceHashes.1:
+-        "0xb87f66cb0d382c418fb77d2ac7850660f016f0817764937c3d267c8f4eda3088"
++        "0x7fc9f40b99aca9703746db2c15109f5208bd6bf266a4249e43d916868091bace"
+      values.$implementation:
+-        "eth:0xf2F6148327B3020610FCa26E094D9A5cc4689525"
++        "eth:0x7B646deC285dA35AD81C6e330435b1f92D8799AB"
+      implementationNames.eth:0xf2F6148327B3020610FCa26E094D9A5cc4689525:
+-        "ETHYieldManager"
+      implementationNames.eth:0x7B646deC285dA35AD81C6e330435b1f92D8799AB:
++        "ETHYieldManager"
+    }
+```
+
+```diff
+    contract BlastExit (eth:0x9D31771458B421C7EA8A06CB8D12663E91617869) [blast/BlastExit] {
+    +++ description: Merkle claim contract that pays out ETH and DAI. A user, or a redeemer approved for that user, claims once against a root of balances set by the authority.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "EIP1967 proxy"
+      template:
++        "blast/BlastExit"
+      sourceHashes:
++        ["0x5d5be4899b381a760f67129f9b207a2a06866a3ce03792b093825eaceb64a3c8","0x0a02cf40e3095fd3fa8301811da5b24c2c4de75548e8294f33faf0e8e6ab063a"]
+      description:
++        "Merkle claim contract that pays out ETH and DAI. A user, or a redeemer approved for that user, claims once against a root of balances set by the authority."
+      deployerAddress:
++        "eth:0x32BB93599Eb77eD5d3A357d3898fcF8200f5b2E9"
+      sinceTimestamp:
++        1793400635
+      sinceBlock:
++        26308673
+      values:
++        {"$admin":"eth:0x0000000000000000000000000000000000000000","$implementation":"eth:0xC0ed1264c60540591D3D9fe224c7b957d24F69df","$pastUpgrades":[["2026-10-30T22:50:35.000Z","0x18c8b568f4e82fe43e09c674892cd4310fce2208e6ee2208eb65177a0b92e562",["eth:0x556e323EDA06e37393B019F044457832B7b3786b"]],["2026-10-30T23:02:59.000Z","0xb91392d2b4123fcf5850cff9fb8336b1177f95341b03e35853d32d708823f562",["eth:0xbAAC0CeA4915a61B194124C09B50A2A44b727C54"]],["2026-10-30T23:40:59.000Z","0x6318712b87a1db3ec976c41807a77c1913dcd1fd4c9259645546b70f46151200",["eth:0x27D04309350eD79D03441a746d5A7563BF8f755e"]],["2026-10-31T00:00:35.000Z","0x73ddd4db61f5adff0bff6b488f9696fc7a1597aaa9f0113af119e0e09dd1b5a4",["eth:0xB5983040A5639c92A71fcA0845bF6a9b898386e7"]],["2026-10-31T00:31:35.000Z","0x27d128c0ee4cce17fff4037a60624a1ef223d100bcc4ab072e17d8683dfee9cc",["eth:0xC0ed1264c60540591D3D9fe224c7b957d24F69df"]]],"$upgradeCount":5,"authority":"eth:0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05","DAI":"eth:0x6B175474E89094C44Da98b954EedeAC495271d0F","paused":false,"UPGRADE_INTERFACE_VERSION":"5.0.0"}
+      implementationNames:
++        {"eth:0x9D31771458B421C7EA8A06CB8D12663E91617869":"ERC1967Proxy","eth:0xC0ed1264c60540591D3D9fe224c7b957d24F69df":"BlastExit"}
+    }
+```
+
+```diff
+    contract USDYieldManager (eth:0xa230285d5683C74935aD14c446e137c8c8828438) [N/A] {
+    +++ description: Contract escrowing stablecoins and managing Yield Providers for stablecoins (like for example DAI).
+      sourceHashes.1:
+-        "0x956934682bbb4fe0586d036110d75b514aac8f9dc5c5aa1958fe59d2d023d69f"
++        "0x5301073ef907295441e06a95bb25caecdd13e1b257e854941b63355c05b8443d"
+      values.$implementation:
+-        "eth:0xeCDdf748A60E23609c07af6CA3856744B139B911"
++        "eth:0x697751527e199b9C2C350D68fBA840558cFfC52a"
+      implementationNames.eth:0xeCDdf748A60E23609c07af6CA3856744B139B911:
+-        "USDYieldManager"
+      implementationNames.eth:0x697751527e199b9C2C350D68fBA840558cFfC52a:
++        "USDYieldManager"
+    }
+```
+
+## Source code changes
+
+```diff
+.../projects/blast/.flat/BlastExit/BlastExit.sol   | 1714 ++++++++++++++++++++
+ .../blast/.flat/BlastExit/ERC1967Proxy.p.sol       |  773 +++++++++
+ .../projects/blast/.flat/BlastExit2/BlastExit.sol  | 1714 ++++++++++++++++++++
+ .../blast/.flat/BlastExit2/ERC1967Proxy.p.sol      |  773 +++++++++
+ .../ETHYieldManager/ETHYieldManager.sol            |   91 +-
+ .../L1BlastBridge/L1BlastBridge.sol                |  132 +-
+ .../USDYieldManager/USDYieldManager.sol            |   68 +-
+ 7 files changed, 5236 insertions(+), 29 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791966825 (main branch discovery), not current.
+
+```diff
+    contract ETHYieldManager (eth:0x98078db053902644191f93988341E31289E1C8FE) [N/A] {
+    +++ description: Contract managing Yield Providers for ETH.
+      values.sharePrice:
+-        "1000000000000000000000000000"
+    }
+```
+
+```diff
+    contract USDYieldManager (eth:0xa230285d5683C74935aD14c446e137c8c8828438) [N/A] {
+    +++ description: Contract escrowing stablecoins and managing Yield Providers for stablecoins (like for example DAI).
+      values.sharePrice:
+-        "1000000000000000000000000000"
+    }
+```
+
+Generated with discovered.json: 0x8e20e6e55ccdbf85af2353cdec6347e623bc595d
+
+# Diff at Fri, 16 Oct 2026 09:37:44 GMT:
+
+- id: cfae408e
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1791966825
+- current timestamp: 1791966825
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791966825 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal (eth:0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb) [opstack/OptimismPortal] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      fieldMeta.guardian:
++        {"severity":"MEDIUM"}
+      fieldMeta.GUARDIAN:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x364289230b8cc7d9120eF962AF37ebCFe23cE883) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP).
++++ severity: HIGH
+      values.enabledFeatures:
++        []
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.enabledFeatures:
++        {"severity":"HIGH","description":"Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."}
+      fieldMeta.isCustomGasToken:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xE064B565Cf2A312a3e66Fe4118890583727380C0) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+Generated with discovered.json: 0xba2e922bc48c35b401f8ad7bc543f66283b3b1c0
+
+# Diff at Wed, 14 Oct 2026 08:34:53 GMT:
+
+- id: ec5eb970
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@54e2fac6e37e04c70f7a26682917ed70a7c5e994 block: 1772118382
+- current timestamp: 1791966825
+
+## Description
+
+L2OutputOracle implementation replaced: proposed state roots, and with them withdrawals, now finalize after 1d instead of 7d.
+
+## Watched changes
+
+```diff
+    contract L2OutputOracle (eth:0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76) [opstack/L2OutputOracle] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      values.$implementation:
+-        "eth:0x1C90963D451316E3DBFdD5A30354EE56C29016EB"
++        "eth:0x550893B7041E91A090e7d03Cf437029Fe0f68ABc"
+      values.$pastUpgrades.3:
++        ["2026-10-02T18:05:11.000Z","0xf80d3e9a9768cde2683afdc6a71b7d595d4dc32768c965446b1bb79bb0bc63a8",["eth:0x550893B7041E91A090e7d03Cf437029Fe0f68ABc"]]
+      values.$upgradeCount:
+-        3
++        4
++++ description: Challenge period (Number of seconds until a state root is finalized).
+      values.FINALIZATION_PERIOD_SECONDS:
+-        604800
++        86400
+      values.finalizationPeriodSeconds:
+-        604800
++        86400
+      implementationNames.eth:0x1C90963D451316E3DBFdD5A30354EE56C29016EB:
+-        "L2OutputOracle"
+      implementationNames.eth:0x550893B7041E91A090e7d03Cf437029Fe0f68ABc:
++        "L2OutputOracle"
+    }
+```
+
 Generated with discovered.json: 0x933178658ad917b117babc306f33dd02a046d174
 
 # Diff at Wed, 23 Sep 2026 05:45:29 GMT:

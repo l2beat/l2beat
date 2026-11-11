@@ -4,7 +4,7 @@
   "critical": true,
   "category": "bridge-canonical",
   "description": "Counterpart to the Bridge on L1. Mints and burns WETH on L2.",
-  "ignoreRelatives": ["l1Weth", "l2Weth"],
+  "ignoreRelatives": ["l1Weth", "l2Weth", "counterpartGateway"],
   "ignoreMethods": ["exitNum"],
   "fields": {
     "l2Weth": {
@@ -17,10 +17,11 @@
       "severity": "HIGH"
     },
     "counterpartGateway": {
-      "severity": "HIGH"
+      "severity": "HIGH",
+      "edit": ["format", "EthereumAddress"]
     },
     "$admin": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     }
   }
 }

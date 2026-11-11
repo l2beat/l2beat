@@ -120,9 +120,17 @@ describeDatabase(AnomalyStatsRepository.name, (db) => {
 
   describe(AnomalyStatsRepository.prototype.getLatestStats.name, () => {
     it('should return latest stats', async () => {
-      const result = await repository.getLatestStats()
+      const result = await repository.getLatestStats(START - 3 * UnixTime.HOUR)
 
       expect(result).toEqual([DATA[0]!, DATA[1]!])
+    })
+
+    it('should skip stats older than the given timestamp', async () => {
+      const result = await repository.getLatestStats(
+        START - 90 * UnixTime.MINUTE,
+      )
+
+      expect(result).toEqual([DATA[0]!])
     })
   })
 

@@ -114,26 +114,6 @@
       ]
     },
     {
-      "type": "data-availability",
-      "id": "eigenlayer",
-      "daLayerId": "eigenda",
-      "name": "EigenLayer",
-      "news": [
-        {
-          "title": "Eigen Labs Launches Yukon for Open Frontier Research",
-          "content": "Eigen Labs [introduced](https://x.com/eigenlabs/status/2087571639605289355) Yukon Research, a platform designed to open complex research problems to a distributed network of human researchers and AI systems, allowing multiple approaches to be explored in parallel and the strongest results to be iterated on.\n\nDuring its first two months, Yukon reported improvements across several research areas, including outperforming a Google frontier result in quantum circuits by more than 50% and making Poolside’s open-weight model run 2.6x faster. The initiative explores how coordinated human and AI research can accelerate progress on measurable technical problems."
-        },
-        {
-          "title": "Darkbloom Becomes a Paid Provider on OpenRouter",
-          "content": "Darkbloom [became](https://x.com/eigenlabs/status/2090937606620303675) a paid inference provider on OpenRouter, marking a new milestone for Eigen Labs’ distributed AI network. The platform has served around 4.5 billion tokens, up 113% month over month, while operating entirely on consumer Apple Silicon.\n\nAround 250 Macs were actively providing compute at the time of the announcement, with operators earning between $120 and $200 per month on average. Darkbloom also reported approximately $102,000 in annual recurring revenue as it moves from free inference toward a paid distributed compute model."
-        },
-        {
-          "title": "Yukon Expands Post-Quantum Ethereum Research to x86",
-          "content": "Eigen Labs [expanded](https://x.com/eigenlabs/status/2089784019080892497) the SNARK.fast research challenge to x86 Linux after Yukon participants achieved a 3x performance improvement for post-quantum Ethereum cryptography on Mac hardware. The initiative is being developed alongside the Ethereum Foundation, Succinct Labs, and Espresso Systems.\n\nThe new phase focuses on the hardware commonly used across Ethereum infrastructure, allowing researchers and AI agents to explore improvements including vectorization, threading, memory layout, cache behavior, and proof scheduling. Valid performance improvements submitted through the challenge become the new public baseline for subsequent research."
-        }
-      ]
-    },
-    {
       "name": "Nethermind",
       "type": "upcoming-project",
       "projectId": "nethermind",

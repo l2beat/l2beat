@@ -8,7 +8,7 @@ import { getLatestAggregatedInteropTransferWithTokens } from '../utils/getLatest
 
 export type InteropAbstractToken = Pick<
   AbstractTokenRecord,
-  'id' | 'symbol' | 'issuer' | 'iconUrl' | 'category'
+  'id' | 'symbol' | 'issuer' | 'iconUrl' | 'category' | 'isPriceUnreliable'
 >
 
 const interopAbstractTokensCache = new FrontendInMemoryCache(
@@ -38,6 +38,21 @@ export async function getInteropAbstractTokens(
   )
 }
 
+/**
+ * Looks the token up directly rather than in the latest snapshot's list, so a
+ * token missing from that snapshot still gets a page saying it is not synced.
+ */
+export async function findInteropAbstractToken(
+  id: string,
+): Promise<InteropAbstractToken | undefined> {
+  if (env.MOCK) {
+    return MOCK_INTEROP_ABSTRACT_TOKENS.find((token) => token.id === id)
+  }
+
+  const [token] = await getTokenDb().abstractToken.getByIds([id])
+  return token
+}
+
 async function getInteropAbstractTokensData(
   chainIds: string[],
 ): Promise<InteropAbstractToken[]> {
@@ -65,6 +80,7 @@ const MOCK_INTEROP_ABSTRACT_TOKENS: InteropAbstractToken[] = [
     iconUrl:
       'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
     category: 'ether',
+    isPriceUnreliable: false,
   },
   {
     id: 'usdc01',
@@ -73,6 +89,7 @@ const MOCK_INTEROP_ABSTRACT_TOKENS: InteropAbstractToken[] = [
     iconUrl:
       'https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694',
     category: 'stablecoin',
+    isPriceUnreliable: false,
   },
   {
     id: 'usdt01',
@@ -81,5 +98,6 @@ const MOCK_INTEROP_ABSTRACT_TOKENS: InteropAbstractToken[] = [
     iconUrl:
       'https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663',
     category: 'stablecoin',
+    isPriceUnreliable: false,
   },
 ]

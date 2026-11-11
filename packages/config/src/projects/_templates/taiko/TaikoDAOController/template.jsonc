@@ -5,7 +5,9 @@
   "category": "gov",
   "ignoreMethods": ["proxiableUUID"],
   "fields": {
+    "$admin": { "severity": "MEDIUM" },
     "owner": {
+      "severity": "MEDIUM",
       "permissions": [{ "type": "act" }]
     },
     "paused": { "severity": "MEDIUM" }

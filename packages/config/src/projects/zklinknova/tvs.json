@@ -561,7 +561,8 @@
             "chain": "blast",
             "escrowAddress": "0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD",
             "decimals": 18,
-            "sinceTimestamp": 1710417729
+            "sinceTimestamp": 1710417729,
+            "untilTimestamp": 1793999543
           },
           {
             "type": "balanceOfEscrow",
@@ -569,7 +570,8 @@
             "chain": "blast",
             "escrowAddress": "0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b",
             "decimals": 18,
-            "sinceTimestamp": 1710427013
+            "sinceTimestamp": 1710427013,
+            "untilTimestamp": 1793999543
           }
         ]
       },
@@ -583,7 +585,8 @@
               "type": "const",
               "value": "0",
               "decimals": 0,
-              "sinceTimestamp": 1710417729
+              "sinceTimestamp": 1710417729,
+              "untilTimestamp": 1793999543
             },
             "priceId": "ethereum"
           },
@@ -593,7 +596,8 @@
               "type": "const",
               "value": "0",
               "decimals": 0,
-              "sinceTimestamp": 1710427013
+              "sinceTimestamp": 1710427013,
+              "untilTimestamp": 1793999543
             },
             "priceId": "ethereum"
           }
@@ -824,7 +828,8 @@
         "chain": "blast",
         "escrowAddress": "0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b",
         "decimals": 18,
-        "sinceTimestamp": 1710427013
+        "sinceTimestamp": 1710427013,
+        "untilTimestamp": 1793999543
       },
       "valueForSummary": {
         "type": "value",
@@ -987,7 +992,8 @@
         "address": "0x85D431A3a56FDf2d2970635fF627f386b4ae49CC",
         "chain": "zklinknova",
         "decimals": 18,
-        "sinceTimestamp": 1715322228
+        "sinceTimestamp": 1715322228,
+        "untilTimestamp": 1793257200
       },
       "category": "btc",
       "source": "external",
@@ -1496,7 +1502,8 @@
         "address": "0xbEAf16cFD8eFe0FC97C2a07E349B9411F5dC272C",
         "chain": "zklinknova",
         "decimals": 18,
-        "sinceTimestamp": 1715238151
+        "sinceTimestamp": 1715238151,
+        "untilTimestamp": 1793257200
       },
       "category": "btc",
       "source": "external",
@@ -2146,7 +2153,7 @@
     {
       "mode": "auto",
       "id": "zklinknova-USDT-4",
-      "priceId": "mantle-bridged-usdt-mantle",
+      "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/35069/large/logo.png?1707291114",
@@ -2166,7 +2173,7 @@
           "decimals": 0,
           "sinceTimestamp": 1709296907
         },
-        "priceId": "mantle-bridged-usdt-mantle"
+        "priceId": "tether"
       },
       "category": "stablecoin",
       "source": "external",
@@ -2407,7 +2414,7 @@
     {
       "mode": "auto",
       "id": "zklinknova-wBTC-4",
-      "priceId": "bridged-wrapped-bitcoin-manta-pacific",
+      "priceId": "wrapped-bitcoin",
       "symbol": "wBTC",
       "name": "Wrapped BTC",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/32217/large/wbtc_%281%29.png?1696832481",
@@ -2427,7 +2434,7 @@
           "decimals": 0,
           "sinceTimestamp": 1709295839
         },
-        "priceId": "bridged-wrapped-bitcoin-manta-pacific"
+        "priceId": "wrapped-bitcoin"
       },
       "category": "btc",
       "source": "external",

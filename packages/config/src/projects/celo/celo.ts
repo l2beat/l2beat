@@ -141,7 +141,6 @@ export const celo: ScalingProject = opStackL2({
       {
         type: 'etherscan',
         chainId,
-        contractCreationUnsupported: true,
       },
     ],
   },
@@ -161,7 +160,22 @@ export const celo: ScalingProject = opStackL2({
         'DAO can override SC?': `**No — the Council administers itself.** Seats are changed by the Council Safe calling itself, so ${celoCouncilThreshold} of the ${celoCouncilSize} sitting members decide who joins or leaves. CELO governance ratified the inaugural cohort by vote but holds no standing power, because the \`Governance\` contract reaches Celo core contracts and the Community Fund rather than the Ethereum-side rollup contracts.`,
       },
       upgrades: {
-        'Normal upgrade path': `A task is published in the public [celo-superchain-ops](https://github.com/celo-org/celo-superchain-ops) repo → **${celoCouncilStats} Security Council approval** → **${cLabsStats} cLabs approval** → execution through the ${celoOwnerStats} \`CeloProxyAdminOwner\`. Task files carry a nonce per signing layer, including a \`grand_child\` entry for the nested Safe inside the Council. No timelock at any step.`,
+        'Normal upgrade path': {
+          steps: [
+            {
+              description:
+                'A task is published in the public [celo-superchain-ops](https://github.com/celo-org/celo-superchain-ops) repo',
+            },
+            {
+              description: `**${celoCouncilStats} Security Council approval**`,
+            },
+            { description: `**${cLabsStats} cLabs approval**` },
+            {
+              description: `Execution through the ${celoOwnerStats} \`CeloProxyAdminOwner\``,
+            },
+          ],
+          note: 'Task files carry a nonce per signing layer, including a `grand_child` entry for the nested Safe inside the Council. No timelock at any step.',
+        },
         'Emergency upgrade path': `**No separate path** — the normal path executes as soon as both halves have signed, so there is no lower emergency threshold. The fast levers are pauses, and neither belongs to the Security Council: the ${cLabsStats} \`Celo cLabs Multisig\` is the \`CeloSuperchainConfig\` guardian and can pause Celo withdrawals alone, while the shared \`SuperchainConfig\` guardian resolves to the ${opCouncilStats} \`Optimism Security Council\`, which can pause the whole Superchain including Celo without any Celo party consenting. Pauses lapse after ${pauseExpiry}. Celo can reassign its own guardian but cannot remove Optimism's, since the shared config is upgradable only by the ${superchainOwnerStats} \`SuperchainProxyAdminOwner\`.`,
         'Exit window': `**None** — nothing separates the second approval from the upgrade taking effect, so users get no notice and cannot withdraw ahead of an unwanted change. Routine changes run through the same gate: rotating the OP Succinct verification keys is a \`DisputeGameFactory.setImplementation\` call and needs the full ${celoOwnerStats}.`,
         'Proof-system levers': `Beyond upgrades, whoever controls the proof system controls withdrawals. \`AccessManager\` is cLabs-owned and currently allowlists ${proposerCount} proposers and ${challengerCount} challengers (5 independent plus one cLabs). A game can be challenged for ${maxChallengeDuration}, and if no proposal lands for ${fallbackTimeout} the system falls back to permissionless proposing.`,
@@ -170,7 +184,7 @@ export const celo: ScalingProject = opStackL2({
         'Governance token':
           '`CELO` — 1,000,000,000 total supply. Voting weight comes from Locked CELO, not raw balance. Governance is native to the Celo chain and predates the L2 migration.',
         'Voting venue':
-          'The onchain `Governance` contract on Celo, with proposals raised as CGPs and discussed on the [Celo forum](https://forum.celo.org). Ethereum-side rollup contracts are not reachable from it.',
+          'The onchain `Governance` contract on Celo, with proposals raised as CGPs, discussed on the [Celo forum](https://forum.celo.org) and voted on in [Celo Mondo](https://mondo.celo.org/governance). Ethereum-side rollup contracts are not reachable from it.',
         'Proposal threshold':
           '**10,000 CELO deposit** to queue a proposal. Queued proposals expire after 4 weeks, and only the 3 most-upvoted are promoted to a vote each day.',
         Quorum:
@@ -239,13 +253,5 @@ export const celo: ScalingProject = opStackL2({
     startBlock: 31060842,
     adjustCount: { type: 'SubtractOne' },
   },
-  daTracking: [
-    getOpStackDaTracking(discovery, { sinceBlock: 22038831 }),
-    {
-      type: 'eigen-da',
-      customerId: '0xecf08b0a4f196e06e9aece95d5dd724bc121f09c',
-      daLayer: ProjectId('eigenda'),
-      sinceTimestamp: UnixTime(1741806000),
-    },
-  ],
+  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 22038831 })],
 })

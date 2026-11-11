@@ -1,26 +1,29 @@
 import { expect } from 'earl'
-import { getProjects } from '../processing/getProjects'
-import { CROP_ATTESTATIONS } from './attestations'
+import { utils } from 'ethers'
+import { CROP_ATTESTATION_SOURCE } from './attestations'
 
-// The site claims "attested" straight from the committed ledger, so a crop
-// evaluation added or removed in config without re-attesting would ship a
-// false claim. Comparing the two sets here blocks that PR until
-// `l2b crops-attest` has run and its ledger is committed.
-describe('crop attestations', () => {
-  const reviewed = getProjects()
-    .filter((p) => p.crops !== undefined)
-    .map((p) => p.id.toString())
-    .sort()
-  const current = CROP_ATTESTATIONS.live.filter(
-    (x) => x.schema.toLowerCase() === CROP_ATTESTATIONS.schemaUid.toLowerCase(),
-  )
-
-  it('exactly one attestation is live under the current schema', () => {
-    expect(current.length).toEqual(1)
+describe('crop attestation source', () => {
+  it('names the schema by the uid SchemaRegistry gives it', () => {
+    // keccak256(abi.encodePacked(schema, resolver, revocable)), with no resolver and revocable.
+    const uid = utils.solidityKeccak256(
+      ['string', 'address', 'bool'],
+      [
+        CROP_ATTESTATION_SOURCE.schema,
+        '0x0000000000000000000000000000000000000000',
+        true,
+      ],
+    )
+    expect(uid).toEqual(CROP_ATTESTATION_SOURCE.schemaUid)
   })
 
-  it('the live attestation names exactly the projects with crop evaluations', () => {
-    const attested = [...(current[0]?.projectIds ?? [])].sort()
-    expect(attested).toEqual(reviewed)
+  it('has checksummed addresses', () => {
+    for (const address of [
+      CROP_ATTESTATION_SOURCE.eas,
+      ...(CROP_ATTESTATION_SOURCE.attester
+        ? [CROP_ATTESTATION_SOURCE.attester.address]
+        : []),
+    ]) {
+      expect(utils.getAddress(address)).toEqual(address)
+    }
   })
 })

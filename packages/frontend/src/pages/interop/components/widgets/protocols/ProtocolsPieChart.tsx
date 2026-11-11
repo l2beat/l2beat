@@ -1,16 +1,8 @@
-import { assert, formatCurrency } from '@l2beat/shared-pure'
-import { Label, Pie, PieChart } from 'recharts'
-import type {
-  ChartMeta,
-  CustomChartTooltipProps,
-} from '~/components/core/chart/Chart'
+import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import {
-  ChartTooltip,
-  ChartTooltipWrapper,
-  SimpleChartContainer,
-  useChart,
-} from '~/components/core/chart/Chart'
-import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
+  DonutChart,
+  type DonutChartEntry,
+} from '~/components/core/chart/DonutChart'
 import { Skeleton } from '~/components/core/Skeleton'
 import { useIsClient } from '~/hooks/useIsClient'
 import { cn } from '~/utils/cn'
@@ -21,15 +13,17 @@ export function ProtocolsPieChart({
   center,
   isLoading,
   containerWidth,
+  formatValue,
 }: {
   chartMeta: ChartMeta
-  chartData: { name: string; value: number; fill: string }[]
+  chartData: DonutChartEntry[]
   center: {
     label: string
     value: string | number
   }
   isLoading: boolean
   containerWidth: number | undefined
+  formatValue?: (value: number) => string
 }) {
   const isClient = useIsClient()
   const showSmallerChart = containerWidth && containerWidth < 373
@@ -52,96 +46,23 @@ export function ProtocolsPieChart({
 
   return (
     <div className={chartWrapperClassName}>
-      <SimpleChartContainer meta={chartMeta}>
-        <PieChart
-          responsive
-          height={showSmallerChart ? 128 : 164}
-          width="100%"
-          className={cn(
-            'aspect-square! h-41 min-h-41',
-            showSmallerChart && 'h-[128px] min-h-[128px]',
-          )}
-        >
-          <ChartTooltip cursor={false} content={<CustomTooltip />} />
-          <Pie
-            data={chartData}
-            dataKey="value"
-            nameKey="name"
-            isAnimationActive={false}
-            innerRadius={showSmallerChart ? 42 : 54}
-            outerRadius={showSmallerChart ? 64 : 82}
-          >
-            <Label
-              content={() => {
-                return (
-                  <text x="50%" y="50%" textAnchor="middle">
-                    <tspan
-                      x="50%"
-                      y="50%"
-                      className="fill-secondary font-medium text-2xs leading-none"
-                      dy={showSmallerChart ? -9 : -16}
-                    >
-                      {center.label}
-                    </tspan>
-                    <tspan
-                      x="50%"
-                      y="50%"
-                      className={cn(
-                        'fill-primary font-semibold text-2xl leading-none',
-                        showSmallerChart && 'text-lg',
-                      )}
-                      dy={9}
-                    >
-                      {center.value}
-                    </tspan>
-                  </text>
-                )
-              }}
-            />
-          </Pie>
-        </PieChart>
-      </SimpleChartContainer>
+      <DonutChart
+        ariaLabel="Protocols"
+        meta={chartMeta}
+        data={chartData}
+        className={cn(
+          'aspect-square h-41 min-h-41',
+          showSmallerChart && 'h-[128px] min-h-[128px]',
+        )}
+        innerRadius={showSmallerChart ? 42 : 54}
+        outerRadius={showSmallerChart ? 64 : 82}
+        formatValue={formatValue}
+        centerLabel={{
+          lines: [center.label],
+          value: center.value,
+          compact: !!showSmallerChart,
+        }}
+      />
     </div>
-  )
-}
-
-function CustomTooltip({ payload }: CustomChartTooltipProps) {
-  const { meta } = useChart()
-  if (!payload) return null
-  return (
-    <ChartTooltipWrapper>
-      <div className="flex flex-col gap-1">
-        {payload.map((entry) => {
-          if (
-            entry.name === undefined ||
-            entry.value === undefined ||
-            entry.value === null
-          )
-            return null
-          const config = meta[entry.name]
-          assert(config, 'No config')
-
-          return (
-            <div
-              key={entry.name}
-              className="flex items-center justify-between gap-x-3"
-            >
-              <span className="flex items-center gap-1">
-                <ChartDataIndicator
-                  backgroundColor={config.color}
-                  type={config.indicatorType}
-                />
-                <span className="whitespace-nowrap leading-none sm:w-fit">
-                  {config.label}
-                </span>
-              </span>
-              <span className="whitespace-nowrap font-medium leading-none">
-                {formatCurrency(entry.value, 'usd')}
-              </span>
-            </div>
-          )
-        })}
-      </div>
-    </ChartTooltipWrapper>
   )
 }

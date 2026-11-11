@@ -1,4 +1,4 @@
-import type { Logger } from '@l2beat/backend-tools'
+import { type Logger, redactUrl } from '@l2beat/backend-tools'
 import type { HttpClient } from '@l2beat/shared'
 import { Retries, type UnixTime } from '@l2beat/shared-pure'
 import { EtherscanClient } from './EtherscanClient'
@@ -67,8 +67,9 @@ export class RoutescanClient
         const etherscanResponse = tryParseEtherscanResponse(response)
 
         if (!etherscanResponse) {
-          const message = `Invalid Routescan response [${JSON.stringify(response)}] for request [${url}].`
-          throw new TypeError(message)
+          throw new TypeError('Invalid Routescan response', {
+            cause: { url: redactUrl(url), response },
+          })
         }
 
         // PATCH POINT

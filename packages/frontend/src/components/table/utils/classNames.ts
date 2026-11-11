@@ -11,18 +11,22 @@ export type BasicTableGroupParams = {
 }
 
 export function getTableOuterWrapperClassName() {
-  return 'max-md:-mr-4'
+  return 'table-scroll-root max-md:-mr-4'
 }
 
 export function getTableScrollWrapperClassName(tableWrapperClassName?: string) {
   return cn(
-    'relative w-full overflow-x-auto pb-3 max-md:pr-4',
+    'table-scroller relative w-full overflow-x-auto pb-3 max-md:pr-4',
     tableWrapperClassName,
   )
 }
 
+/**
+ * Starts the table `STICKY_OVERLAP_PX` left of the scroller, where pinned
+ * cells stick, so they do not shift that pixel on the first touch of scroll.
+ */
 export function getTableElementClassName(className?: string) {
-  return cn('w-full border-collapse text-left', className)
+  return cn('-ml-px w-[calc(100%+1px)] border-collapse text-left', className)
 }
 
 export function getBasicTableGroupedHeaderCellClassName(params: {

@@ -1,28 +1,22 @@
 import type { Milestone } from '@l2beat/config'
 import { formatBytes, type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import { Area, AreaChart, ReferenceArea } from 'recharts'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type {
   ChartMeta,
   ChartProject,
-  CustomChartTooltipProps,
-} from '~/components/core/chart/Chart'
+} from '~/components/core/chart/ChartContext'
 import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
+  ChartTooltipRow,
   ChartTooltipWrapper,
-  useChart,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
-import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { EthereumFillGradientDef } from '~/components/core/chart/defs/EthereumGradientDef'
-import { FuchsiaFillGradientDef } from '~/components/core/chart/defs/FuchsiaGradientDef'
-import { LimeFillGradientDef } from '~/components/core/chart/defs/LimeGradientDef'
-import { NoDataPatternDef } from '~/components/core/chart/defs/NoDataPatternDef'
-import { SkyFillGradientDef } from '~/components/core/chart/defs/SkyGradientDef'
+  getTooltipEntries,
+} from '~/components/core/chart/ChartTooltip'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import {
+  type ChartSeries,
+  TimeSeriesChart,
+} from '~/components/core/chart/TimeSeriesChart'
+import { tinted } from '~/components/core/chart/tint'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatRange } from '~/utils/dates'
 import type { ChartResolution } from '~/utils/range/range'
@@ -40,10 +34,10 @@ interface Props {
     | undefined
   project: ChartProject
   isLoading: boolean
+  isPlaceholderData: boolean
   milestones: Milestone[]
   syncedUntil: UnixTime | undefined
   resolution: ChartResolution
-  dataGap: [number, number] | undefined
   /** For when the page already says whose data it is */
   hideProjectLogo?: boolean
   /** The hint's extra row would lift this chart's baseline above a hint-less chart beside it */
@@ -52,14 +46,17 @@ interface Props {
 
 const hiddenDataKeys = ['projectMax'] as const
 
+type SeriesKey = 'project' | 'projectTarget' | 'projectMax'
+type ChartRow = { timestamp: number } & Record<SeriesKey, number | null>
+
 export function ProjectDaAbsoluteThroughputChart({
   dataWithConfiguredThroughputs,
   project,
   isLoading,
+  isPlaceholderData,
   milestones,
   syncedUntil,
   resolution,
-  dataGap,
   hideProjectLogo,
   disableLegendOnboarding,
 }: Props) {
@@ -96,8 +93,30 @@ export function ProjectDaAbsoluteThroughputChart({
     )
   }, [dataWithConfiguredThroughputs, denominator])
 
+  const series: ChartSeries<SeriesKey, ChartRow>[] = [
+    {
+      key: 'project',
+      ...tinted(projectChartMeta.project?.color),
+    },
+    {
+      key: 'projectTarget',
+      stroke: projectChartMeta.projectTarget?.color,
+      strokeDasharray:
+        projectChartMeta.projectTarget?.indicatorType.strokeDasharray,
+      curve: 'stepAfter',
+    },
+    {
+      key: 'projectMax',
+      stroke: projectChartMeta.projectMax?.color,
+      strokeDasharray:
+        projectChartMeta.projectMax?.indicatorType.strokeDasharray,
+      curve: 'stepAfter',
+    },
+  ]
+
   return (
     <ChartContainer
+      isPlaceholderData={isPlaceholderData}
       meta={projectChartMeta}
       data={chartData}
       project={hideProjectLogo ? undefined : project}
@@ -108,101 +127,39 @@ export function ProjectDaAbsoluteThroughputChart({
         disableOnboarding: disableLegendOnboarding,
       }}
       milestones={milestones}
+      legend
     >
-      <AreaChart responsive data={chartData} margin={{ top: 20 }}>
-        <defs>
-          {project.id === 'ethereum' && (
-            <EthereumFillGradientDef id="ethereum-fill" />
-          )}
-          {project.id === 'celestia' && (
-            <FuchsiaFillGradientDef id="celestia-fill" />
-          )}
-          {project.id === 'avail' && <SkyFillGradientDef id="avail-fill" />}
-          {project.id === 'eigenda' && (
-            <LimeFillGradientDef id="eigenda-fill" />
-          )}
-          <NoDataPatternDef />
-        </defs>
-        <ChartLegend content={<ChartLegendContent />} />
-        <Area
-          dataKey="project"
-          fill={`url(#${project.id}-fill)`}
-          fillOpacity={1}
-          stroke={projectChartMeta.project?.color}
-          isAnimationActive={false}
-          dot={false}
-          hide={!dataKeys.includes('project')}
-        />
-        <Area
-          dataKey="projectTarget"
-          isAnimationActive={false}
-          fillOpacity={0}
-          stroke={projectChartMeta.projectTarget?.color}
-          strokeDasharray={
-            projectChartMeta.projectTarget?.indicatorType.strokeDasharray
-          }
-          type="stepAfter"
-          dot={false}
-          hide={!dataKeys.includes('projectTarget')}
-        />
-        <Area
-          dataKey="projectMax"
-          isAnimationActive={false}
-          fillOpacity={0}
-          stroke={projectChartMeta.projectMax?.color}
-          strokeDasharray={
-            projectChartMeta.projectMax?.indicatorType.strokeDasharray
-          }
-          type="stepAfter"
-          dot={false}
-          hide={!dataKeys.includes('projectMax')}
-        />
-        {dataGap && (
-          <ReferenceArea
-            x1={dataGap[0]}
-            x2={dataGap[1]}
-            fill="url(#noDataFill)"
+      <TimeSeriesChart
+        data={chartData}
+        series={series}
+        ariaLabel="Data throughput"
+        syncedUntil={syncedUntil}
+        yAxis={{ unit: ` ${unit}`, tickCount: 4 }}
+        renderTooltip={(row, keys) => (
+          <ProjectDaThroughputCustomTooltip
+            row={row}
+            keys={keys}
+            denominator={denominator}
+            resolution={resolution}
           />
         )}
-        <ChartTooltip
-          filterNull={false}
-          content={
-            <ProjectDaThroughputCustomTooltip
-              denominator={denominator}
-              resolution={resolution}
-              dataGap={dataGap}
-            />
-          }
-        />
-        <ChartCommonComponents
-          data={chartData}
-          isLoading={isLoading}
-          yAxis={{
-            unit: ` ${unit}`,
-            tickCount: 4,
-          }}
-          syncedUntil={syncedUntil}
-        />
-      </AreaChart>
+      />
     </ChartContainer>
   )
 }
 
-export function ProjectDaThroughputCustomTooltip({
-  payload,
-  label,
+function ProjectDaThroughputCustomTooltip({
+  row,
+  keys,
   denominator,
   resolution,
-  dataGap,
-}: CustomChartTooltipProps & {
+}: {
+  row: ChartRow
+  keys: SeriesKey[]
   denominator: number
   resolution: ChartResolution
-  dataGap?: [number, number]
 }) {
-  const { meta: config } = useChart()
-  if (!payload || typeof label !== 'number') return null
-
-  const isInDataGap = !!dataGap && label >= dataGap[0] && label <= dataGap[1]
+  const label = row.timestamp
 
   return (
     <ChartTooltipWrapper>
@@ -211,40 +168,24 @@ export function ProjectDaThroughputCustomTooltip({
       </div>
       <HorizontalSeparator className="my-2" />
       <div className="flex flex-col gap-2">
-        {payload.map((entry, index) => {
-          const configEntry = entry.name ? config[entry.name] : undefined
-          if (!configEntry || entry.hide) return null
-
+        {getTooltipEntries(row, keys).map((entry, index) => {
           return (
-            <div
+            <ChartTooltipRow
               key={index}
-              className="flex items-center justify-between gap-x-6"
+              name={entry.name}
+              gap="gap-x-6"
+              wrapLabel={false}
             >
-              <div className="flex items-center gap-1">
-                <ChartDataIndicator
-                  type={configEntry.indicatorType}
-                  backgroundColor={configEntry.color}
-                />
-                <span className="font-medium text-label-value-14">
-                  {configEntry.label}
-                </span>
-              </div>
-              {(entry.value === null || entry.value === undefined) &&
-              configEntry.label === 'Actual data size' ? (
-                <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                  {isInDataGap ? 'Data not available' : 'No data'}
-                </span>
-              ) : entry.value === null &&
-                configEntry.label === 'Max capacity' ? (
-                <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                  No cap
-                </span>
-              ) : (
-                <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                  {formatBytes((entry.value ?? 0) * denominator)}
-                </span>
-              )}
-            </div>
+              <span className="font-medium text-label-value-15 text-primary tabular-nums">
+                {entry.value !== null
+                  ? formatBytes(entry.value * denominator)
+                  : entry.name === 'project'
+                    ? 'No data'
+                    : entry.name === 'projectMax'
+                      ? 'No cap'
+                      : formatBytes(0)}
+              </span>
+            </ChartTooltipRow>
           )
         })}
       </div>
@@ -269,45 +210,6 @@ function getProjectChartMeta(projectId: ProjectId) {
         projectMax: {
           label: 'Max capacity',
           color: 'var(--chart-ethereum)',
-          indicatorType: { shape: 'line', strokeDasharray: '3 3' },
-        },
-      } satisfies ChartMeta
-    case 'celestia':
-      return {
-        project: {
-          label: 'Actual data size',
-          color: 'var(--chart-fuchsia)',
-          indicatorType: { shape: 'line' },
-        },
-        projectMax: {
-          label: 'Max capacity',
-          color: 'var(--chart-fuchsia)',
-          indicatorType: { shape: 'line', strokeDasharray: '3 3' },
-        },
-      } satisfies ChartMeta
-    case 'avail':
-      return {
-        project: {
-          label: 'Actual data size',
-          color: 'var(--chart-sky)',
-          indicatorType: { shape: 'line' },
-        },
-        projectMax: {
-          label: 'Max capacity',
-          color: 'var(--chart-sky)',
-          indicatorType: { shape: 'line', strokeDasharray: '3 3' },
-        },
-      } satisfies ChartMeta
-    case 'eigenda':
-      return {
-        project: {
-          label: 'Actual data size',
-          color: 'var(--chart-lime)',
-          indicatorType: { shape: 'line' },
-        },
-        projectMax: {
-          label: 'Max capacity',
-          color: 'var(--chart-lime)',
           indicatorType: { shape: 'line', strokeDasharray: '3 3' },
         },
       } satisfies ChartMeta

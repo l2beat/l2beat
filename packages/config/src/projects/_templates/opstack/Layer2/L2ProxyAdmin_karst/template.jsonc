@@ -12,6 +12,7 @@
       // there are none. Predeploy upgrades are covered by their $pastUpgrades.
     },
     "owner": {
+      "severity": "MEDIUM",
       "permissions": [{ "type": "act" }]
     }
   }

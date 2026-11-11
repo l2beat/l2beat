@@ -1,3 +1,102 @@
+Generated with discovered.json: 0xc434b8bad7ec261526b25c784ea1e90af935f1c6
+
+# Diff at Wed, 21 Oct 2026 13:49:08 GMT:
+
+- id: 8e03e9ba
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@39da84c441e4ad2ce4105a231c0bc2276f1ddd51 block: 1790944922
+- current timestamp: 1792587967
+
+## Description
+
+OpFoundationUpgradeSafe: Member rotated.
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) [GnosisSafe] {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x7F1D4FE689B73B628285454667B93cfd09409f27"
++        "eth:0xa564C83958f7F9fA5a255a540EF5e49445873104"
+    }
+```
+
+Generated with discovered.json: 0x4f3bfb7559aa28aed22d9481619f6fecc78fc45b
+
+# Diff at Fri, 16 Oct 2026 09:37:50 GMT:
+
+- id: 08e24e24
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1790944922
+- current timestamp: 1790944922
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790944922 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x11B190Ae661c6d6884dFEE48E215691E0DdB842e) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x2c03e8BF8b16Af89079852BE87f0e9eC674a5952) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract SuperchainProxyAdmin (eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xcee78437aE9e15cee9c78E63757E0153c0FD7479) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0xfF11e41D5C4F522E423Ff6C064Ff8D55AF8f7355) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP).
++++ severity: HIGH
+      values.enabledFeatures:
++        []
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.enabledFeatures:
++        {"severity":"HIGH","description":"Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."}
+      fieldMeta.isCustomGasToken:
++        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0xdebb25c2199de34a3bec9370ea9a91cfa28c3352
 
 # Diff at Sun, 04 Oct 2026 05:55:36 GMT:

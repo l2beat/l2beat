@@ -1,6 +1,6 @@
 # @l2beat/frontend
 
-The dynamic, public-facing frontend of L2BEAT.
+The dynamic, public-facing frontend of ETHBEAT.
 
 ## Setup
 
@@ -34,7 +34,8 @@ pnpm build:dependencies
 - `pnpm test-all-pages` - test all pages
 - `pnpm perf:resize` - build and check a drag-resize of each page in `e2e/resize-perf/ceilings.json` against its ceiling (also runs as part of `test:e2e`)
 - `pnpm perf:resize:ratchet` - build, measure, and lower the resize ceilings to the current source
-- `pnpm test:e2e:blobs` - build and check the blobs page on a desktop, an Android phone (Chromium), an iPhone and an iPad (WebKit; install it once with `pnpm exec playwright install webkit`)
+
+How the e2e tests are split across CI runners, and how to keep the split even: [e2e/README.md](e2e/README.md).
 
 ### Environment variables
 If you are running `pnpm dev:mock` you do not need any environment variables.
@@ -49,4 +50,4 @@ Optional database tuning:
 Optional for interop debugging:
 - `INTEROP_AGGREGATE_TIMESTAMP_OVERRIDE` - if present, interop aggregate queries use the earliest timestamp from the timestamp's day instead of the latest timestamp
 
-*if you currently work at L2BEAT: feel free to directly connect to our staging DB* 😉
+*if you currently work at ETHBEAT: feel free to directly connect to our staging DB* 😉

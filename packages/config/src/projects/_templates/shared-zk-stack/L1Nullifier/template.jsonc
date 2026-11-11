@@ -12,7 +12,7 @@
   "ignoreRelatives": ["legacyBridge"],
   "fields": {
     "owner": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",

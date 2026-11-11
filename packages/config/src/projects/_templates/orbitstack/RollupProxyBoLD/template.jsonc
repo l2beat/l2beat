@@ -50,7 +50,7 @@
       "severity": "HIGH"
     },
     "$admin": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "getValidators": {
       "severity": "LOW",
@@ -67,6 +67,14 @@
         "value": true
       }
     },
+    // live onlyOwner setters on RollupAdminLogic: the fraud-proof adjudicator
+    // and whether anyone may challenge.
+    "challengeManager": {
+      "severity": "HIGH"
+    },
+    "validatorWhitelistDisabled": {
+      "severity": "HIGH"
+    },
     "anyTrustFastConfirmer": {
       "severity": "HIGH",
       "permissions": [
@@ -77,6 +85,7 @@
       ]
     },
     "owner": {
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",

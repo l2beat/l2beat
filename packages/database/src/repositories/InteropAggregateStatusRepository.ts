@@ -150,6 +150,20 @@ export class InteropAggregateStatusRepository extends BaseRepository {
       : undefined
   }
 
+  async getLatestPromotedTimestampAtOrBefore(
+    timestamp: UnixTime,
+  ): Promise<UnixTime | undefined> {
+    const result = await this.db
+      .selectFrom('InteropAggregateStatus')
+      .select((eb) => eb.fn.max('timestamp').as('max_timestamp'))
+      .where('status', '=', 'promoted')
+      .where('timestamp', '<=', UnixTime.toDate(timestamp))
+      .executeTakeFirst()
+    return result?.max_timestamp
+      ? UnixTime.fromDate(result.max_timestamp)
+      : undefined
+  }
+
   async getEarliestPromotedTimestampForDay(
     timestamp: UnixTime,
   ): Promise<UnixTime | undefined> {
@@ -166,6 +180,25 @@ export class InteropAggregateStatusRepository extends BaseRepository {
     return result?.min_timestamp
       ? UnixTime.fromDate(result.min_timestamp)
       : undefined
+  }
+
+  /**
+   * Promoted snapshots taken at midnight UTC, from `from` on. Each covers the
+   * 24 hours before it, so they tile the range without overlap, and daily
+   * retention keeps them as the first snapshot of their day.
+   */
+  async getPromotedMidnightTimestampsSince(
+    from: UnixTime,
+  ): Promise<UnixTime[]> {
+    const rows = await this.db
+      .selectFrom('InteropAggregateStatus')
+      .select('timestamp')
+      .where('status', '=', 'promoted')
+      .where('timestamp', '>=', UnixTime.toDate(from))
+      .where(sql<boolean>`timestamp = date_trunc('day', timestamp)`)
+      .orderBy('timestamp')
+      .execute()
+    return rows.map((row) => UnixTime.fromDate(row.timestamp))
   }
 
   async getByTimestamp(

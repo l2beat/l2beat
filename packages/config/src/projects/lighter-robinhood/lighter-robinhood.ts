@@ -218,7 +218,7 @@ export const lighterRobinhood: ScalingProject = {
         references: [
           {
             title: 'Deployed DesertVerifier on Robinhood Chain',
-            url: 'https://robinhoodchain.blockscout.com/address/0x56aeED6920DBB9E198C2C0072147A45684A06E10',
+            url: 'https://robinhoodchain.blockscout.com/address/0x93c83bdA3A45241729Ce150C1e3677bA7389c0D0',
           },
         ],
       },
@@ -270,7 +270,7 @@ export const lighterRobinhood: ScalingProject = {
         references: [
           {
             title: 'ZK Lighter verifier verification keys',
-            url: 'https://robinhoodchain.blockscout.com/address/0x61CA82e45F5a57d00E66b522Be72D8bA41e634Aa',
+            url: 'https://robinhoodchain.blockscout.com/address/0x7817a34136c56A6097C7042B3cAAe24b9eEd9fb4',
           },
         ],
       },
@@ -282,7 +282,7 @@ export const lighterRobinhood: ScalingProject = {
         references: [
           {
             title: 'Deployed DesertVerifier implementation',
-            url: 'https://robinhoodchain.blockscout.com/address/0x56aeED6920DBB9E198C2C0072147A45684A06E10',
+            url: 'https://robinhoodchain.blockscout.com/address/0x93c83bdA3A45241729Ce150C1e3677bA7389c0D0',
           },
         ],
       },

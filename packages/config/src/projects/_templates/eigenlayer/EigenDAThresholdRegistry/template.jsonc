@@ -14,6 +14,25 @@
     "quorumNumbersRequired": {
       "severity": "HIGH",
       "type": "RISK_PARAMETER"
+    },
+    "versionedBlobParams": {
+      "description": "Blob versions and their coding parameters (max operators, chunk count, coding rate) that cert verifiers check certificates against, indexed by version.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": ["version", "versionedBlobParams"],
+        "add": {
+          "event": "VersionedBlobParamsAdded"
+        }
+      }
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can add blob versions with their coding parameters, which define what the cert verifiers accept as a valid blob."
+        }
+      ]
     }
   }
 }

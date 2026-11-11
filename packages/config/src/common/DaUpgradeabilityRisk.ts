@@ -53,30 +53,6 @@ function SecurityCouncil(delaySeconds: number): TableReadyValue {
   }
 }
 
-function Eoa(delaySeconds: number): TableReadyValue {
-  const common = {}
-
-  if (delaySeconds >= SEVEN_DAYS_SECONDS) {
-    return {
-      ...common,
-      value: formatSeconds(delaySeconds),
-      sentiment: 'warning',
-      description: `Users have more than ${formatSeconds(
-        delaySeconds,
-      )} days to exit the system before the bridge implementation update is completed.`,
-    }
-  }
-
-  return {
-    ...common,
-    value: formatSeconds(delaySeconds),
-    sentiment: 'bad',
-    description: `Users have more than ${formatSeconds(
-      delaySeconds,
-    )} days to exit the system before the bridge implementation update is completed.`,
-  }
-}
-
 function LowOrNoDelay(delaySeconds?: number): TableReadyValue {
   const value =
     delaySeconds && delaySeconds < SEVEN_DAYS_SECONDS
@@ -92,7 +68,6 @@ function LowOrNoDelay(delaySeconds?: number): TableReadyValue {
 }
 
 export const DaUpgradeabilityRisk = {
-  Eoa,
   Immutable,
   ImmutableNoSecurity,
   LowOrNoDelay,

@@ -590,6 +590,62 @@ describe('flatten', () => {
     )
   })
 
+  it('includes file-scoped using declarations for a type defined in another file', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import { Element, LibElement } from "Element.sol";
+
+      using LibElement for Element;
+
+      contract Root {
+          function length(Element e) public pure returns (uint256) {
+              return e.length();
+          }
+      }
+    `,
+    )
+    const elementFile = sol(
+      'Element.sol',
+      `
+      type Element is uint256;
+
+      library LibElement {
+          function length(Element e) internal pure returns (uint256) {
+              return Element.unwrap(e) >> 160;
+          }
+      }
+    `,
+    )
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, elementFile],
+      [],
+    )
+
+    expect(flattened).toEqual(
+      dedent(`
+      type Element is uint256;
+
+      library LibElement {
+          function length(Element e) internal pure returns (uint256) {
+              return Element.unwrap(e) >> 160;
+          }
+      }
+
+      using LibElement for Element;
+
+      contract Root {
+          function length(Element e) public pure returns (uint256) {
+              return e.length();
+          }
+      }
+    `),
+    )
+  })
+
   it('renames library aliases in global using declarations', () => {
     const rootFile = sol(
       'Root.sol',
@@ -683,6 +739,123 @@ describe('flatten', () => {
     )
   })
 
+  it('keeps only the root file ABI coder before Solidity 0.8', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      pragma solidity ^0.7.6;
+      import { Lib } from "./Lib.sol";
+      contract Root {
+          function f() public pure returns (uint256) { return Lib.g(); }
+      }
+    `,
+    )
+    const libFile = sol(
+      'Lib.sol',
+      `
+      pragma solidity ^0.7.6;
+      pragma abicoder v2;
+      library Lib {
+          function g() internal pure returns (uint256) { return 1; }
+      }
+    `,
+    )
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, libFile],
+      [],
+    )
+
+    expect(flattened).toEqual(
+      dedent(`
+      library Lib {
+          function g() internal pure returns (uint256) { return 1; }
+      }
+
+      contract Root {
+          function f() public pure returns (uint256) { return Lib.g(); }
+      }
+    `),
+    )
+  })
+
+  it('keeps dependency ABI coder pragmas from Solidity 0.8', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      pragma solidity ^0.8.0;
+      import { Lib } from "./Lib.sol";
+      contract Root {
+          function f() public pure returns (uint256) { return Lib.g(); }
+      }
+    `,
+    )
+    const libFile = sol(
+      'Lib.sol',
+      `
+      pragma solidity ^0.8.0;
+      pragma experimental ABIEncoderV2;
+      library Lib {
+          function g() internal pure returns (uint256) { return 1; }
+      }
+    `,
+    )
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, libFile],
+      [],
+    )
+
+    expect(flattened).toEqual(
+      dedent(`
+      pragma experimental ABIEncoderV2;
+
+      library Lib {
+          function g() internal pure returns (uint256) { return 1; }
+      }
+
+      contract Root {
+          function f() public pure returns (uint256) { return Lib.g(); }
+      }
+    `),
+    )
+  })
+
+  it('resolves names imported twice in one import list', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import { Empty, Empty } from "./Errors.sol";
+      contract Root {
+          function f() public pure { revert Empty(); }
+      }
+    `,
+    )
+    const errorsFile = sol('Errors.sol', 'error Empty();')
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, errorsFile],
+      [],
+      { includeAll: true },
+    )
+
+    expect(flattened).toEqual(
+      dedent(`
+      error Empty();
+
+      contract Root {
+          function f() public pure { revert Empty(); }
+      }
+    `),
+    )
+  })
+
   it('../ in unit name', () => {
     const rootFile = sol(
       'a/b/c/Root.sol',
@@ -757,6 +930,61 @@ describe('flatten', () => {
         function doSomething() public {
           emit EventHappened(GLOBAL_VALUE, msg.sender);
           revert CustomError(msg.sender);
+        }
+      }
+    `),
+    )
+  })
+
+  it('renames file-level constants with the same name', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import { first } from "./First.sol";
+      import { second } from "./Second.sol";
+      contract R1 {
+        function f() public pure returns (uint256) {
+          return first() + second();
+        }
+      }
+    `,
+    )
+    const firstFile = sol(
+      'First.sol',
+      `
+      uint256 constant LIMIT = 1;
+      function first() pure returns (uint256) { return LIMIT; }
+    `,
+    )
+    const secondFile = sol(
+      'Second.sol',
+      `
+      uint256 constant LIMIT = 2;
+      function second() pure returns (uint256) { return LIMIT; }
+    `,
+    )
+
+    const flattened = flattenStartingFrom(
+      'R1',
+      'Root.sol',
+      [rootFile, firstFile, secondFile],
+      [],
+      { includeAll: true },
+    )
+
+    expect(flattened).toEqual(
+      dedent(`
+      uint256 constant LIMIT = 1;
+
+      function first() pure returns (uint256) { return LIMIT; }
+
+      uint256 constant LIMIT_1 = 2;
+
+      function second() pure returns (uint256) { return LIMIT_1; }
+
+      contract R1 {
+        function f() public pure returns (uint256) {
+          return first() + second();
         }
       }
     `),
@@ -925,6 +1153,200 @@ describe('flatten', () => {
           }
       }
     `),
+    )
+  })
+
+  it('contracts whose code is read with type(C) are not turned into interfaces', () => {
+    const file = sol(
+      'Root.sol',
+      `
+      contract Created {
+          function f() external {}
+      }
+
+      contract Run {
+          function g() external {}
+      }
+
+      contract R1 {
+          function code() public pure returns (bytes memory, bytes memory) {
+              return (type(Created).creationCode, type(Run).runtimeCode);
+          }
+      }
+    `,
+    )
+
+    const flattened = flattenStartingFrom('R1', 'Root.sol', [file], [], {
+      includeAll: true,
+    })
+    expect(flattened).toEqual(
+      dedent(`
+      contract Created {
+          function f() external {}
+      }
+
+      contract Run {
+          function g() external {}
+      }
+
+      contract R1 {
+          function code() public pure returns (bytes memory, bytes memory) {
+              return (type(Created).creationCode, type(Run).runtimeCode);
+          }
+      }
+    `),
+    )
+  })
+
+  it('does not crash on type() of an aliased contract in a dynamic contract', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import "./Deployer.sol";
+      contract R1 {
+          function f(address x) public {
+              Deployer(x).deploy();
+          }
+      }
+    `,
+    )
+    const deployerFile = sol(
+      'Deployer.sol',
+      `
+      import "./Created.sol" as K;
+      contract Deployer {
+          function deploy() public returns (bytes memory) {
+              return type(K.Created).creationCode;
+          }
+      }
+    `,
+    )
+    const createdFile = sol('Created.sol', 'contract Created {}')
+
+    expect(() =>
+      flattenStartingFrom(
+        'R1',
+        'Root.sol',
+        [rootFile, deployerFile, createdFile],
+        [],
+        { includeAll: true },
+      ),
+    ).not.toThrow()
+  })
+
+  it('generated getters of struct state variables return the members', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import { Registry } from "./Registry.sol";
+      contract Root {
+          function signer(address registry) public view returns (address s) {
+              (, s, ) = Registry(registry).validators(1);
+          }
+      }
+    `,
+    )
+    const registryFile = sol(
+      'Registry.sol',
+      `
+      contract Registry {
+          struct Validator {
+              uint256 amount;
+              address signer;
+              uint256[] history;
+              mapping(address => bool) delegates;
+              string name;
+          }
+          mapping(uint256 => Validator) public validators;
+      }
+    `,
+    )
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, registryFile],
+      [],
+      { includeAll: true },
+    )
+
+    expect(flattened).toEqual(
+      dedent(`
+      // NOTE(l2beat): This is an interface, generated from the contract source code.
+      interface Registry {
+          struct Validator {
+              uint256 amount;
+              address signer;
+              uint256[] history;
+              mapping(address => bool) delegates;
+              string name;
+          }
+
+          function validators(uint256) external view returns (uint256 amount, address signer, string memory name);
+      }
+
+      contract Root {
+          function signer(address registry) public view returns (address s) {
+              (, s, ) = Registry(registry).validators(1);
+          }
+      }
+    `),
+    )
+  })
+
+  it('generated struct getters resolve the struct in the contract scope', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import { Other } from "./Other.sol";
+      import { Registry } from "./Registry.sol";
+      contract Root {
+          function f(address registry, address other) public view returns (uint256 x, address who) {
+              (x, ) = Registry(registry).info();
+              (who) = Other(other).info();
+          }
+      }
+    `,
+    )
+    const otherFile = sol(
+      'Other.sol',
+      `
+      struct Info {
+          address who;
+      }
+      contract Other {
+          Info public info;
+      }
+    `,
+    )
+    const registryFile = sol(
+      'Registry.sol',
+      `
+      interface IBase {
+          struct Info {
+              uint256 x;
+              uint256 y;
+          }
+      }
+      contract Registry is IBase {
+          Info public info;
+      }
+    `,
+    )
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, otherFile, registryFile],
+      [],
+      { includeAll: true },
+    )
+
+    expect(flattened).toInclude(
+      'function info() external view returns (address who);',
+    )
+    expect(flattened).toInclude(
+      'function info() external view returns (uint256 x, uint256 y);',
     )
   })
 

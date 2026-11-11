@@ -2,6 +2,7 @@ import {
   assert,
   ChainSpecificAddress,
   EthereumAddress,
+  formatCompactAmount,
   formatSeconds,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -204,7 +205,7 @@ function ceilToFullHours(seconds: number): number {
 }
 
 function formatWethAmount(amount: string): string {
-  return `${Number(formatEther(amount)).toLocaleString('en-US')} WETH`
+  return formatCompactAmount(Number(formatEther(amount)), 'WETH')
 }
 
 const chainId = 42161
@@ -378,6 +379,12 @@ export const arbitrum: ScalingProject = orbitStackL2({
       { type: 'blockscoutV2', url: 'https://arbitrum.blockscout.com/api/v2' },
     ],
   },
+  activityConfig: {
+    type: 'block',
+    startBlock: 1,
+    // first Nitro block with the ArbitrumInternalTx; classic blocks have none
+    adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 22207818 },
+  },
   ossificationHistory: discovery.getOssificationHistory(chainStart),
   upgradesAndGovernance: {
     content: getNitroGovernance(
@@ -399,7 +406,25 @@ export const arbitrum: ScalingProject = orbitStackL2({
         'DAO can override SC?': `**No** — although DAO Constitution §3 gives the DAO authority to modify or eliminate the SC, an active ${securityCouncilStats} SC holds Canceller on both L1 and L2 Timelocks and can execute emergency upgrades during the ~${exitWindowDays}d execution window. If the SC is inactive or cooperative, the DAO can replace it through normal governance.`,
       },
       upgrades: {
-        'Normal upgrade path': `Forum temp-check → On-chain vote (${formatSeconds(coreVotingPeriodSeconds)}) → L2 Timelock (${formatSeconds(l2TimelockDelay)}) → L2→L1 outbox (~${outboxDays}d) → L1 Timelock (${formatSeconds(l1TimelockDelay)}) → execute. Total wall-clock ≈ ${constitutionalWallClockDays} days for Constitutional AIPs (≈ ${onchainEnforcedDays}d onchain-enforced), ≈ ${treasuryWallClockDays} days for Treasury AIPs.`,
+        'Normal upgrade path': {
+          steps: [
+            { description: 'Forum temp-check' },
+            {
+              description: `On-chain vote (${formatSeconds(coreVotingPeriodSeconds)})`,
+            },
+            {
+              description: `L2 Timelock (${formatSeconds(l2TimelockDelay)})`,
+              isWait: true,
+            },
+            { description: `L2→L1 outbox (~${outboxDays}d)`, isWait: true },
+            {
+              description: `L1 Timelock (${formatSeconds(l1TimelockDelay)})`,
+              isWait: true,
+            },
+            { description: 'Execute' },
+          ],
+          note: `Total wall-clock ≈ ${constitutionalWallClockDays} days for Constitutional AIPs (≈ ${onchainEnforcedDays}d onchain-enforced), ≈ ${treasuryWallClockDays} days for Treasury AIPs.`,
+        },
         'Emergency upgrade path': `**${securityCouncilStats} SC, instant** — no timelock, no exit window. E.g. KelpDAO freeze (21 Apr 2026), Stylus stack-depth fix (13 Oct 2025).`,
         'Exit window': `**~${exitWindowDays}d** non-emergency · **0** emergency. L2 Timelock + L2→L1 outbox + L1 Timelock provide the non-emergency window; emergency actions skip all three.`,
       },
@@ -407,7 +432,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
         'Governance token':
           '`ARB` — 10,000,000,000 total · ~6.15B circulating · ~3.5B in DAO treasury. 1 token = 1 vote, delegated. Foundation tokens excluded from Votable Tokens.',
         'Voting venue':
-          '[Tally](https://www.tally.xyz/gov/arbitrum) — two on-chain governors on Arbitrum One: Core (Constitutional) `0xf07DeD9d…` · Treasury (Non-Constitutional) `0x789fC990…`.',
+          '[Arbitrum Governance](https://alt.gov.arbitrum.foundation/) — two on-chain governors on Arbitrum One: Core (Constitutional) `0xf07DeD9d…` · Treasury (Non-Constitutional) `0x789fC990…`.',
         'Proposal threshold':
           '**1,000,000 ARB** delegated to submit on-chain. 500k ARB delegated to post a Snapshot temperature check.',
         Quorum: `**${l2CoreQuorumPercent}%** of Delegated Voting Power Constitutional · **${l2TreasuryQuorumPercent}%** Treasury, with floor/ceiling bounds of 150–450M ARB (Const) / 100–300M ARB (Treasury). Counts "For" + "Abstain".`,
@@ -689,6 +714,22 @@ export const arbitrum: ScalingProject = orbitStackL2({
     ],
   },
   milestones: [
+    {
+      title: 'Security Council freezes Binance exploiter funds',
+      url: 'https://forum.arbitrum.foundation/t/security-council-emergency-action-30-10-2026/31625',
+      date: '2026-10-30T00:00:00Z',
+      description:
+        'Security Council emergency action freezes ~74.6M ARB and ~8,426 ETH held by the Binance exploiter.',
+      type: 'general',
+    },
+    {
+      title: 'Stylus activations paused',
+      url: 'https://arbiscan.io/tx/0x9eb3a4be3ba777f9fc82250eddc10f8356731cc97c09a70801d30ce33322c652',
+      date: '2026-10-02T00:00:00Z',
+      description:
+        'Security Council halts new Stylus program activations; existing programs keep running.',
+      type: 'incident',
+    },
     {
       title: 'Timeboost replaced by Priority Gas Auctions',
       url: 'https://forum.arbitrum.foundation/t/constitutional-aip-transition-arbitrum-one-ordering-policy-to-priority-gas-auctions-pga/30942',

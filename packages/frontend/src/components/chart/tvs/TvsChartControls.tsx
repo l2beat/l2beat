@@ -3,6 +3,7 @@ import { TvsChartUnitControls } from '~/components/chart/tvs/TvsChartUnitControl
 import type { ChartUnit } from '~/components/chart/types'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
+import type { ChartTimeRangeValue } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { cn } from '~/utils/cn'
 import type { ChartRange } from '~/utils/range/range'
 
@@ -11,8 +12,9 @@ export function TvsChartControls({
   unit,
   range,
   className,
+  isPlaceholderData,
 }: {
-  timeRange: [number, number] | undefined
+  timeRange: ChartTimeRangeValue
   unit?: {
     value: ChartUnit
     setValue: (unit: ChartUnit) => void
@@ -22,10 +24,14 @@ export function TvsChartControls({
     setValue: (range: ChartRange) => void
   }
   className?: string
+  isPlaceholderData: boolean
 }) {
   return (
     <ChartControlsWrapper className={cn('flex-wrap gap-y-0', className)}>
-      <ProjectChartTimeRange timeRange={timeRange} />
+      <ProjectChartTimeRange
+        isPlaceholderData={isPlaceholderData}
+        timeRange={timeRange}
+      />
       <div className="flex w-full items-center justify-between gap-1">
         {unit && (
           <TvsChartUnitControls unit={unit.value} setUnit={unit.setValue} />

@@ -16,23 +16,28 @@ import {
   formatChallengePeriod,
   formatExecutionDelay,
 } from '../common/formatDelays'
+import { REASON_FOR_BEING_OTHER } from '../common/reasonsForBeingOther'
+import { resolveGarden } from '../crops/resolveCrops'
 import { loadAuditCoverage } from '../discovery/loadAuditCoverage'
 import { loadDiscoveryUpdates } from '../discovery/loadDiscoveryUpdates'
 import type {
-  Bridge,
   Layer2TxConfig,
   ProjectScalingRiskView,
   ScalingProject,
 } from '../internalTypes'
+import { versionGroups } from '../projects/versions'
 import { asArray, emptyArrayToUndefined } from '../templates/utils'
 import {
   type BaseProject,
+  type ProjectContracts,
   type ProjectCostsInfo,
   type ProjectDiscoveryInfo,
   type ProjectLivenessInfo,
+  type ProjectPermissions,
   type ProjectRiskView,
   type ProjectScalingCategory,
   ProjectTvsConfigSchema,
+  type ProjectVersionSibling,
   type TvsToken,
 } from '../types'
 import {
@@ -74,6 +79,9 @@ function buildProjects(): BaseProject[] {
     .concat(ecosystems)
     .map(withDiscoveryUpdates)
     .map(withAuditCoverage)
+    .map(withGarden)
+    .map(withVersions)
+    .map(withPrivacyScalingProjects)
 }
 
 function withDiscoveryUpdates(project: BaseProject): BaseProject {
@@ -84,6 +92,77 @@ function withDiscoveryUpdates(project: BaseProject): BaseProject {
 function withAuditCoverage(project: BaseProject): BaseProject {
   const auditCoverage = loadAuditCoverage(project.id)
   return auditCoverage ? { ...project, auditCoverage } : project
+}
+
+function withGarden(project: BaseProject): BaseProject {
+  return project.crops
+    ? {
+        ...project,
+        garden: resolveGarden({ ...project, crops: project.crops }),
+      }
+    : project
+}
+
+function withVersions(
+  project: BaseProject,
+  _: number,
+  projects: BaseProject[],
+): BaseProject {
+  const group = versionGroups.find((g) =>
+    g.versions.some((v) => v.project === project.id),
+  )
+  const own = group?.versions.find((v) => v.project === project.id)
+  if (!group || !own) {
+    return project
+  }
+  const siblings = group.versions.flatMap((v): ProjectVersionSibling[] => {
+    const sibling = projects.find((p) => p.id === v.project)
+    if (!sibling) {
+      return []
+    }
+    return [
+      {
+        id: sibling.id,
+        slug: sibling.slug,
+        name: sibling.name,
+        label: v.label,
+        isLatest: sibling.id === group.latest,
+        archivedAt: sibling.archivedAt,
+      },
+    ]
+  })
+  return {
+    ...project,
+    versions: {
+      group: { id: group.id, name: group.name },
+      label: own.label,
+      siblings,
+    },
+  }
+}
+
+function withPrivacyScalingProjects(
+  project: BaseProject,
+  _: number,
+  projects: BaseProject[],
+): BaseProject {
+  if (!project.privacyInfo) {
+    return project
+  }
+  const { trackedOn, runsOn = [] } = project.privacyInfo
+  const trackedOnScaling = trackedOn.flatMap((chain) => {
+    const chainProject = projects.find((p) => p.chainConfig?.name === chain)
+    return chainProject?.scalingInfo && chainProject.id !== project.id
+      ? [chainProject.id]
+      : []
+  })
+  return {
+    ...project,
+    privacyInfo: {
+      ...project.privacyInfo,
+      scalingProjects: [...trackedOnScaling, ...runsOn],
+    },
+  }
 }
 
 function layer2Or3ToProject(p: ScalingProject): BaseProject {
@@ -106,8 +185,6 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
 
     // data
     colors: p.colors,
-    ecosystemColors: ecosystems.find((e) => e.id === p.ecosystemInfo?.id)
-      ?.colors,
     statuses: {
       yellowWarning: p.display.headerWarning,
       redWarning: getEoaUpgradeRedWarning(p.id, p.display.redWarning),
@@ -185,7 +262,9 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
       p.type === 'layer2' ? p.config.trackedTxs : undefined,
     ),
     chainConfig: p.chainConfig,
-    ossificationHistory: p.ossificationHistory,
+    // Without working proofs the proposer decides the state, so the age of
+    // the code says nothing about the safety of funds.
+    ossificationHistory: hasNoProofs(p) ? undefined : p.ossificationHistory,
     milestones: p.milestones,
     daTrackingConfig: p.config.daTracking,
     ecosystemInfo: p.ecosystemInfo,
@@ -258,6 +337,14 @@ function getProcessedRiskView(
       secondLine,
     },
   }
+}
+
+function hasNoProofs(p: ScalingProject): boolean {
+  return (
+    p.reasonsForBeingOther?.some(
+      (r) => r.label === REASON_FOR_BEING_OTHER.NO_PROOFS.label,
+    ) ?? false
+  )
 }
 
 function getLivenessInfo(p: ScalingProject): ProjectLivenessInfo | undefined {
@@ -369,9 +456,11 @@ function toBackendTrackedTxParams(
   }
 }
 
-export function adjustDiscoveryInfo(
-  project: ScalingProject | Bridge,
-): ProjectDiscoveryInfo {
+export function adjustDiscoveryInfo(project: {
+  discoveryInfo: ProjectDiscoveryInfo
+  contracts?: ProjectContracts
+  permissions?: Record<string, ProjectPermissions>
+}): ProjectDiscoveryInfo {
   const contractsDiscoDriven = areContractsDiscoveryDriven(project.contracts)
   const permissionsDiscoDriven = arePermissionsDiscoveryDriven(
     project.permissions,

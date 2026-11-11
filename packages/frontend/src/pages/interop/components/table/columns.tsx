@@ -13,7 +13,10 @@ import { IndexCell } from '~/components/table/cells/IndexCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { TableLink } from '~/components/table/TableLink'
 import { EM_DASH } from '~/consts/characters'
-import type { ProtocolEntry } from '~/server/features/layer2s/interop/types'
+import type {
+  CompactProtocolEntry,
+  ProtocolEntry,
+} from '~/server/features/layer2s/interop/types'
 import { cn } from '~/utils/cn'
 import type { InteropSelection } from '../../utils/types'
 import { InteropNoDataBadge } from '../InteropNoDataBadge'
@@ -28,31 +31,33 @@ export type ProtocolRow = ProtocolEntry & BasicTableRow
 
 const columnHelper = createColumnHelper<ProtocolEntry>()
 
-const logoColumn = columnHelper.display({
-  id: 'logo',
-  cell: (ctx) => (
-    <img
-      className="min-h-[20px] min-w-[20px]"
-      src={ctx.row.original.iconUrl}
-      width={20}
-      height={20}
-      alt={`${ctx.row.original.name} logo`}
-    />
-  ),
-  meta: {
-    headClassName: 'w-0',
-    cellClassName: 'lg:pr-1.5!',
-  },
-  size: 28,
-  enableHiding: false,
-})
+function makeLogoColumn<T extends CompactProtocolEntry>() {
+  return createColumnHelper<T>().display({
+    id: 'logo',
+    cell: (ctx) => (
+      <img
+        className="min-h-[20px] min-w-[20px]"
+        src={ctx.row.original.iconUrl}
+        width={20}
+        height={20}
+        alt={`${ctx.row.original.name} logo`}
+      />
+    ),
+    meta: {
+      headClassName: 'w-0',
+      cellClassName: 'lg:pr-1.5!',
+    },
+    size: 28,
+    enableHiding: false,
+  })
+}
 
-function makeNameColumn(opts?: {
-  nameMaxWidthClass?: string
+function makeNameColumn<T extends CompactProtocolEntry>(opts?: {
   headClassName?: string
   cellClassName?: string
 }) {
-  return columnHelper.accessor('name', {
+  return createColumnHelper<T>().accessor((row) => row.name, {
+    id: 'name',
     header: 'Name',
     cell: (ctx) => {
       return (
@@ -60,15 +65,13 @@ function makeNameColumn(opts?: {
           projectName={ctx.row.original.name}
           description={ctx.row.original.description}
         >
-          <TableLink href={`/interop/protocols/${ctx.row.original.slug}`}>
+          <TableLink
+            href={`/interop/protocols/${ctx.row.original.slug}`}
+            className="w-auto"
+          >
             <TwoRowCell>
               <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
-                <div
-                  className={cn(
-                    'w-fit break-words font-bold text-label-value-15 md:leading-none',
-                    opts?.nameMaxWidthClass ?? 'max-w-[76px]',
-                  )}
-                >
+                <div className="w-fit font-bold text-label-value-15 md:leading-none">
                   {ctx.row.original.name}
                 </div>
                 {ctx.row.original.subgroup && (
@@ -90,46 +93,50 @@ function makeNameColumn(opts?: {
   })
 }
 
-const commonColumns = [logoColumn, makeNameColumn()]
+function makeCategoryColumn<T extends CompactProtocolEntry>() {
+  return createColumnHelper<T>().accessor((row) => row.type, {
+    id: 'type',
+    header: 'Category',
+    cell: (ctx) => (
+      <div className="whitespace-nowrap font-medium text-xs capitalize leading-[15px] md:text-sm md:leading-[1.2]">
+        {ctx.row.original.type}
+      </div>
+    ),
+    meta: {
+      headClassName: 'text-2xs',
+    },
+  })
+}
 
-const homeCommonColumns = [
-  logoColumn,
-  makeNameColumn({
-    nameMaxWidthClass: 'max-w-[112px]',
-    headClassName: 'min-w-[7.5rem] lg:pl-2.5',
-    cellClassName: 'lg:pl-2.5',
-  }),
+function makeLast24hVolumeColumn<T extends CompactProtocolEntry>(
+  header = 'Last 24h\nVolume',
+) {
+  return createColumnHelper<T>().accessor((row) => row.volume, {
+    id: 'volume',
+    header,
+    cell: (ctx) => {
+      if (!ctx.row.original.volume) return EM_DASH
+      return (
+        <span className="font-medium text-label-value-15">
+          {formatCurrency(ctx.row.original.volume, 'usd')}
+        </span>
+      )
+    },
+    meta: {
+      align: 'right',
+      headClassName: 'text-2xs text-right',
+      tooltip:
+        'The total USD value of all token transfers completed in the past 24 hours.',
+    },
+  })
+}
+
+const commonColumns = [
+  makeLogoColumn<ProtocolEntry>(),
+  makeNameColumn<ProtocolEntry>(),
 ]
-
-const categoryColumn = columnHelper.accessor('type', {
-  header: 'Category',
-  cell: (ctx) => (
-    <div className="whitespace-nowrap font-medium text-xs capitalize leading-[15px] md:text-sm md:leading-[1.2]">
-      {ctx.row.original.type}
-    </div>
-  ),
-  meta: {
-    headClassName: 'text-2xs',
-  },
-})
-
-const last24hVolumeColumn = columnHelper.accessor('volume', {
-  header: 'Last 24h\nVolume',
-  cell: (ctx) => {
-    if (!ctx.row.original.volume) return EM_DASH
-    return (
-      <span className="font-medium text-label-value-15">
-        {formatCurrency(ctx.row.original.volume, 'usd')}
-      </span>
-    )
-  },
-  meta: {
-    align: 'right',
-    headClassName: 'text-2xs text-right',
-    tooltip:
-      'The total USD value of all token transfers completed in the past 24 hours.',
-  },
-})
+const categoryColumn = makeCategoryColumn<ProtocolEntry>()
+const last24hVolumeColumn = makeLast24hVolumeColumn<ProtocolEntry>()
 
 const averageValueColumn = columnHelper.accessor('averageValue', {
   header: 'Last 24h avg.\ntransfer value',
@@ -370,12 +377,4 @@ export function getAllProtocolsColumns(
     !hideTokensColumn &&
       makeTokensColumn({ type, apiSelection, showNetMintedValueColumn }),
   ])
-}
-
-export function getHomeTopInteropProtocolsColumns() {
-  return [
-    ...homeCommonColumns,
-    categoryColumn,
-    { ...last24hVolumeColumn, header: 'Last 24h volume' },
-  ]
 }

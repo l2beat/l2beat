@@ -1,20 +1,22 @@
 import { externalLinks } from '~/consts/externalLinks'
 import { toProductionUrl } from '~/consts/productionOrigin'
+import { SITE_NAME } from '~/consts/siteName'
 
-/** L2BEAT as the author or publisher embedded in other blocks. */
-export const L2BEAT_ORGANIZATION = {
+/** ETHBEAT as the author or publisher embedded in other blocks. */
+export const SITE_ORGANIZATION = {
   '@type': 'Organization' as const,
   '@id': toProductionUrl('/#organization'),
-  name: 'L2BEAT',
+  name: SITE_NAME,
   url: toProductionUrl(''),
   logo: toProductionUrl('/logo.png'),
 }
 
 export function getOrganizationStructuredData() {
   return {
-    ...L2BEAT_ORGANIZATION,
+    ...SITE_ORGANIZATION,
+    alternateName: 'L2BEAT',
     description:
-      'L2BEAT is an independent, public goods research organization that analyzes and compares Ethereum layer 2 scaling solutions, data availability layers, bridges, and other ecosystem projects, focusing on their risks, security, and trust assumptions.',
+      'ETHBEAT (formerly L2BEAT) is an independent, public goods research organization that analyzes and compares Ethereum layer 2 scaling solutions, data availability layers, bridges, and other ecosystem projects, focusing on their risks, security, and trust assumptions.',
     sameAs: [
       externalLinks.x,
       externalLinks.github,

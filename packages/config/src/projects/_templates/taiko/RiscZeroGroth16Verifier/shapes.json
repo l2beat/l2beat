@@ -39,5 +39,11 @@
     "address": "eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF",
     "chain": "ethereum",
     "blockNumber": 25430675
+  },
+  "RiscZeroGroth16Verifier_v3_1_0.sol": {
+    "hash": "0x38fa135926cc6618e3edc27094b6bc98b39f8b4df036a6fad9058e62426cdc11",
+    "address": "eth:0x953814e6dfC46d007557B511Dc4F2954dAaf2c9e",
+    "chain": "ethereum",
+    "blockNumber": 26258520
   }
 }

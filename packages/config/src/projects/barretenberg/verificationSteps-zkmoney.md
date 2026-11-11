@@ -1,4 +1,4 @@
-The four zk.money verifiers are regenerated from the same source with the same commands. The Noir circuits compile in under a minute on a standard Linux machine.
+Four circuits serve seven zk.money verifier deployments. Each refund circuit has a DAI deployment and an sUSDS deployment with the same verification key. The Noir circuits compile in under a minute on a standard Linux machine.
 
 Prepare:
 
@@ -41,9 +41,12 @@ Verify:
 4. Optionally, run `nargo test` in `resolver_circuit`. The `comb_table_matches_curve_library` test re-derives every precomputed secp256k1 point in `src/comb_table.nr`, which the circuit uses to check the resolver operator's key.
 5. Compare each regenerated verifier's **full executable source** with the deployed, verified source, including `loadVerificationKey`, the proof decoder, transcript, relations and pairing checks. A matching `VK_HASH` constant alone does not establish that the contract uses that key or verifies proofs correctly. Each verifier calls separately deployed libraries, whose verified source must be the same file.
 
-   | Circuit | Ethereum verifier | Linked libraries |
-   | --- | --- | --- |
-   | Frozen notes | [0x0694…B877](https://etherscan.io/address/0x0694fF404DDA586C73EfCe21f34fe084541BB877#code) | [RelationsLib](https://etherscan.io/address/0x41F721e09a9C8027165C6Bf1B3771848f6a43D29#code) |
-   | Frozen deposit | [0xa2fd…3cCe](https://etherscan.io/address/0xa2fd594dCA2d598aF231d615E5D34903154C3cCe#code) | [RelationsLib](https://etherscan.io/address/0xb66C441BbeFe703E423dbcAa515d32F50e507C2b#code) |
-   | Unprocessed deposit | [0x5C48…0FA5](https://etherscan.io/address/0x5C487AEb500BD0fE65fe52Be7e55a150c3220FA5#code) | [RelationsLib](https://etherscan.io/address/0x9e2131C7B89D070a6b27f29c2b8e066399ECA5b7#code) |
-   | Resolver | [0xbF05…E451](https://etherscan.io/address/0xbF058D54c5033F4cB45c6E1Eba103CaeF232E451#code) | [RelationsLib](https://etherscan.io/address/0x02353dB283087CD51b13eE088A615Dad03949070#code), [ZKTranscriptLib](https://etherscan.io/address/0xf3E445E6E292dE756bD66011c23717DAb9e12DBD#code) |
+   | Circuit | Asset | Ethereum verifier | Linked libraries |
+   | --- | --- | --- | --- |
+   | Frozen notes | DAI | [0x0694…B877](https://etherscan.io/address/0x0694fF404DDA586C73EfCe21f34fe084541BB877#code) | [RelationsLib](https://etherscan.io/address/0x41F721e09a9C8027165C6Bf1B3771848f6a43D29#code) |
+   | Frozen notes | sUSDS | [0xd24a…abf2](https://etherscan.io/address/0xd24a49321878AB82E46992ab853A11903882abf2#code) | [RelationsLib](https://etherscan.io/address/0x1ab8c7439B47B474d72963076aB1C8C944750241#code) |
+   | Frozen deposit | DAI | [0xa2fd…3cCe](https://etherscan.io/address/0xa2fd594dCA2d598aF231d615E5D34903154C3cCe#code) | [RelationsLib](https://etherscan.io/address/0xb66C441BbeFe703E423dbcAa515d32F50e507C2b#code) |
+   | Frozen deposit | sUSDS | [0x2E0C…4522](https://etherscan.io/address/0x2E0C30821b9fcCf1CDB47F4e3a3A993593344522#code) | [RelationsLib](https://etherscan.io/address/0x871Af018DeD698d9753766D41Dbc80B777944263#code) |
+   | Unprocessed deposit | DAI | [0x5C48…0FA5](https://etherscan.io/address/0x5C487AEb500BD0fE65fe52Be7e55a150c3220FA5#code) | [RelationsLib](https://etherscan.io/address/0x9e2131C7B89D070a6b27f29c2b8e066399ECA5b7#code) |
+   | Unprocessed deposit | sUSDS | [0x8ACc…b787](https://etherscan.io/address/0x8ACcBa3958cEF8E30b255c70A4C16CD2D14fb787#code) | [RelationsLib](https://etherscan.io/address/0x567771A39903323B81E18b388372897FdAd6338C#code) |
+   | Resolver | Shared | [0xbF05…E451](https://etherscan.io/address/0xbF058D54c5033F4cB45c6E1Eba103CaeF232E451#code) | [RelationsLib](https://etherscan.io/address/0x02353dB283087CD51b13eE088A615Dad03949070#code), [ZKTranscriptLib](https://etherscan.io/address/0xf3E445E6E292dE756bD66011c23717DAb9e12DBD#code) |

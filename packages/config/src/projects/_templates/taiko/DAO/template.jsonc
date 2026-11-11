@@ -10,6 +10,7 @@
   "ignoreMethods": ["proxiableUUID"],
   "ignoreRelatives": ["permsGranted", "permsRevoked"],
   "fields": {
+    "$admin": { "severity": "MEDIUM" },
     "permsGranted": {
       "severity": "HIGH",
       "handler": {
@@ -22,7 +23,7 @@
       "description": "Granted permissions in the DAO. Need to be manually compared to the revoked ones and hardcoded permissions need to be adjusted on change. Use AI with L1 contract context."
     },
     "permsRevoked": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "event",
         "groupBy": "who",

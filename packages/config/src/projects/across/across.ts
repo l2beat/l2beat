@@ -4,6 +4,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 
@@ -24,6 +25,7 @@ export const across: BaseProject = {
   name: 'Across',
   shortName: undefined,
   addedAt: UnixTime(1712746402),
+  discoveryInfo: getDiscoveryInfo([discovery]),
   interopConfig: {
     description:
       'Intent framework specialised on popular chains and assets, speed and security.',

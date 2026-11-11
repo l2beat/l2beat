@@ -1,8 +1,9 @@
 import { SLOT_SECONDS } from '@l2beat/shared-pure'
 import { type CSSProperties, useRef } from 'react'
+import { useAnimationFrame } from '~/hooks/useAnimationFrame'
+import { useIsOnScreen } from '~/hooks/useIsOnScreen'
 import { cn } from '~/utils/cn'
 import { useChainClock } from './chainClock'
-import { useAnimationFrame, useIsOnScreen } from './hooks'
 import { writeText } from './liveMotion'
 
 const RING_RADIUS = 6

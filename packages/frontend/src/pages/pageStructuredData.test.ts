@@ -2,6 +2,7 @@ import { expect } from 'earl'
 import { getCollectionEntry } from '~/content/getCollection'
 import { getFaqData } from '~/pages/faq/getFaqData'
 import { getGlossaryData } from '~/pages/glossary/getGlossaryData'
+import { getPrivacyMethodologyData } from '~/pages/privacy/methodology/getPrivacyMethodologyData'
 import { getGovernancePublicationData } from '~/pages/publications/governance/getGovernancePublicationData'
 import { identityManifest as manifest } from '~/test/identityManifest'
 
@@ -24,6 +25,26 @@ describe('page structured data', () => {
     ])
   })
 
+  it('privacy methodology publication emits an Article', async () => {
+    const post = getCollectionEntry('other-publications', 'privacy-methodology')
+    if (!post) throw new Error('privacy-methodology is missing')
+
+    const data = await getPrivacyMethodologyData(
+      manifest,
+      post,
+      '/publications/privacy-methodology',
+    )
+
+    expect(data.ssr.page).toEqual('PrivacyMethodologyPage')
+    expect(getTypes(data.head.metadata)).toEqual(['BreadcrumbList', 'Article'])
+    expect(data.head.metadata.structuredData[1]).toEqual(
+      expect.subset({
+        url: 'https://ethbeat.org/publications/privacy-methodology',
+        headline: 'How we assess privacy protocols',
+      }),
+    )
+  })
+
   it('governance publication page emits an Article of the real post', async () => {
     const post = getCollectionEntry(
       'governance-publications',
@@ -40,12 +61,12 @@ describe('page structured data', () => {
     expect(getTypes(data.head.metadata)).toEqual(['BreadcrumbList', 'Article'])
     expect(data.head.metadata.structuredData[1]).toEqual(
       expect.subset({
-        url: 'https://l2beat.com/publications/governance-review-1',
+        url: 'https://ethbeat.org/publications/governance-review-1',
         headline: 'Governance Review #01',
         description:
           'L2BEAT provides weekly updates on governance in concise articles.',
         image:
-          'https://l2beat.com/meta-images/publications/governance-review-1.png',
+          'https://ethbeat.org/meta-images/publications/governance-review-1.png',
         datePublished: '2024-01-19',
         author: {
           '@type': 'Person',

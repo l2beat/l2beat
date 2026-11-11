@@ -10,6 +10,7 @@ export const espressoprover: BaseProject = {
   name: 'Espresso',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2025-09-17')),
+  archivedAt: UnixTime.fromDate(new Date('2026-10-23')),
   display: {
     description:
       'Espresso Light Client prover generates a Plonk proof of the HotShot consensus of the Espresso network.',
@@ -46,12 +47,6 @@ export const espressoprover: BaseProject = {
       {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Jellyfish,
         ...TRUSTED_SETUPS.AztecIgnition,
-      },
-    ],
-    projectsForTvs: [
-      {
-        projectId: ProjectId('espresso'),
-        sinceTimestamp: UnixTime(1730830799),
       },
     ],
     verifierHashes: [

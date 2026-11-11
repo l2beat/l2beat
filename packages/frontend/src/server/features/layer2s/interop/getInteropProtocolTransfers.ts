@@ -17,6 +17,7 @@ import {
 } from './utils/buildTokensDetailsMap'
 import { createTransferBridgeResolver } from './utils/createTransferBridgeResolver'
 import { getAbstractTokenIds } from './utils/getAbstractTokenIds'
+import { getCarriedFrom } from './utils/getCarriedFrom'
 import { getFilteredInteropTransfersPage } from './utils/getFilteredInteropTransfersPage'
 import { getMockInteropTransfers } from './utils/getMockInteropTransfers'
 import {
@@ -62,6 +63,17 @@ export async function getInteropProtocolTransfers({
     .flatMap((project) => project.interopConfig.plugins)
     .filter((plugin) => !type || plugin.bridgeType === type)
   if (plugins.length === 0) return empty
+
+  const carriedFrom = await getCarriedFrom({
+    snapshotTimestamp,
+    from,
+    to,
+    type,
+    protocolIds: ids,
+    anchorChain,
+    tokenId,
+  })
+  if (carriedFrom !== undefined) return { ...empty, carriedFrom }
 
   const classifier = new InteropTransferClassifier()
   const matcher = classifier.createMatcher<InteropTransferRecord>(plugins)

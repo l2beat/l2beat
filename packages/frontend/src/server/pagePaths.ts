@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { RENAME_ANNOUNCEMENT_PATH } from '~/consts/siteName'
 import { getCollection } from '~/content/getCollection'
 import { env } from '~/env'
 import {
@@ -6,6 +7,8 @@ import {
   INTEGRATE_CROPS_PATH,
   SUBMIT_PROTOCOL_PATH,
 } from '~/pages/garden/paths'
+import { getChainProjects } from './features/chains/getChainProjects'
+import { isListedDefiProject } from './features/defi/isListedDefiProject'
 import { ps } from './projects'
 
 type PagePath = `/${string}`
@@ -30,7 +33,6 @@ export const STATIC_PAGE_PATHS = [
   '/layer2s/risk/data-availability',
   '/layer2s/risk/sequencing',
   '/layer2s/tvs',
-  '/layer2s/tvs/breakdown',
   '/layer2s/liveness',
   '/layer2s/costs',
   '/layer2s/archived',
@@ -41,12 +43,15 @@ export const STATIC_PAGE_PATHS = [
   '/interop/token-frameworks',
   '/interop/intent-bridges',
   '/privacy/summary',
+  '/privacy/archived',
+  '/projects/ethereum',
   '/zk-catalog',
   '/governance',
   '/governance/ethereum-connect',
   '/native-rollups',
   '/faq',
   '/about-us',
+  RENAME_ANNOUNCEMENT_PATH,
   '/brand-kit',
   '/changelog',
   '/donate',
@@ -60,7 +65,7 @@ export const STATIC_PAGE_PATHS = [
 export async function getPages(): Promise<Page[]> {
   const paths: PagePath[] = [...STATIC_PAGE_PATHS, '/layer2s/compare']
   if (env.CLIENT_SIDE_DEFI_ENABLED) {
-    paths.push('/defi/summary')
+    paths.push('/defi/liquid-staking')
   }
   if (env.CLIENT_SIDE_TOKENS_PAGE) {
     paths.push('/tokens')
@@ -71,6 +76,7 @@ export async function getPages(): Promise<Page[]> {
   if (env.CLIENT_SIDE_OSSIFICATION_ENABLED) {
     paths.push('/ossification')
   }
+  paths.push('/mandate')
   if (env.CLIENT_SIDE_GARDEN_ENABLED) {
     paths.push(GARDEN_PATH, SUBMIT_PROTOCOL_PATH, INTEGRATE_CROPS_PATH)
   }
@@ -81,9 +87,10 @@ async function getDynamicPages(): Promise<Page[]> {
   const [
     l2Projects,
     zkCatalogProjects,
-    ecosystemProjects,
     privacyProjects,
     defiProjects,
+    interopProtocols,
+    chainProjects,
   ] = await Promise.all([
     ps.getProjects({
       where: ['scalingInfo'],
@@ -91,11 +98,17 @@ async function getDynamicPages(): Promise<Page[]> {
       optional: ['tvsConfig'],
     }),
     ps.getProjects({ select: ['zkCatalogInfo'] }),
-    ps.getProjects({ where: ['ecosystemConfig'] }),
-    ps.getProjects({ where: ['privacyInfo'] }),
+    ps.getProjects({ where: ['privacyInfo'], whereNot: ['archivedAt'] }),
     env.CLIENT_SIDE_DEFI_ENABLED
-      ? ps.getProjects({ where: ['defiInfo'] })
+      ? ps
+          .getProjects({ select: ['defiInfo'] })
+          .then((projects) =>
+            projects.filter((p) => isListedDefiProject(p.defiInfo)),
+          )
       : Promise.resolve([]),
+    // Protocols that are also scaling projects redirect to the scaling page.
+    ps.getProjects({ where: ['interopConfig'], whereNot: ['scalingInfo'] }),
+    getChainProjects(),
   ])
 
   const pages: Page[] = [
@@ -104,9 +117,10 @@ async function getDynamicPages(): Promise<Page[]> {
       .filter((project) => project.tvsConfig)
       .map(projectPage('/layer2s/projects', '/tvs-breakdown')),
     ...zkCatalogProjects.map(projectPage('/zk-catalog')),
-    ...ecosystemProjects.map(projectPage('/ecosystems')),
     ...privacyProjects.map(projectPage('/privacy/projects')),
     ...defiProjects.map(projectPage('/defi/projects')),
+    ...interopProtocols.map(projectPage('/interop/protocols')),
+    ...chainProjects.map(projectPage('/projects')),
   ]
 
   const publications = [

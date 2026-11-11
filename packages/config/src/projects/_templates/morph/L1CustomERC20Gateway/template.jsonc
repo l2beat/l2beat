@@ -5,8 +5,12 @@
   "critical": true,
   "ignoreRelatives": ["tokenMapping"],
   "fields": {
+    "owner": { "severity": "MEDIUM" },
+    "$admin": { "severity": "MEDIUM" },
+    // MEDIUM: a new listing changes no existing route. A remap of a listed
+    // token is a reviewed event.
     "tokenMapping": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "description": "L1-to-L2 token mapping used to validate custom-token deposits and withdrawals.",
       "handler": {
         "type": "event",

@@ -67,7 +67,7 @@ export class SourcifyClient implements IEtherscanClient {
 
     return {
       name: result.compilation.name,
-      rootFile: undefined,
+      rootFile: getRootFile(result.compilation.fullyQualifiedName, files),
       isVerified: true,
       abi,
       solidityVersion: result.compilation.compilerVersion,
@@ -196,6 +196,19 @@ function decodeSourcifySource(
   )
 }
 
+// Sources can declare the root contract in more than one file (e.g. the same
+// path with and without a leading slash), so pin the file sourcify compiled.
+function getRootFile(
+  fullyQualifiedName: string | undefined,
+  files: Record<string, string>,
+): string | undefined {
+  if (fullyQualifiedName === undefined || Object.keys(files).length <= 1) {
+    return undefined
+  }
+  const path = fullyQualifiedName.slice(0, fullyQualifiedName.lastIndexOf(':'))
+  return path in files ? path : undefined
+}
+
 const SourcifyAbiSchema = v.array(v.unknown())
 type SourcifyAbi = v.infer<typeof SourcifyAbiSchema>
 
@@ -238,6 +251,7 @@ const SourcifySourceSchema = v.object({
         .optional(),
     }),
     name: v.string(),
+    fullyQualifiedName: v.string().optional(),
   }),
   creationBytecode: v.object({
     transformationValues: v.union([

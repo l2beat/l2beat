@@ -91,22 +91,6 @@
       ]
     },
     {
-      "type": "data-availability",
-      "id": "eigenlayer",
-      "daLayerId": "eigenda",
-      "name": "EigenLayer",
-      "news": [
-        {
-          "title": "Redistribution is Live on the Mainnet ",
-          "content": "EigenLayer has activated its [Redistribution feature](https://x.com/eigenlayer/status/1947681916028916128) on the mainnet, marking the next evolution of its slashing functionality. With Redistribution, slashed funds are no longer permanently burned but can now be repurposed and redirected based on predefined use cases. This unlocks new opportunities for Actively Validated Services (AVSs) in areas like lending, insurance, and cross-chain interoperability."
-        },
-        {
-          "title": "EigenLayer Introduces MOOCOW: Optimizing Restaking at Scale",
-          "content": "ELIP-009, titled MOOCOW (Massively Optimized Operations Consolidation and Withdrawals), [proposes](https://github.com/eigenfoundation/ELIPs/blob/main/ELIPs/ELIP-009.md) a major upgrade to the EigenPod system following Ethereum’s Pectra upgrade. It significantly enhances usability and efficiency for native ETH restakers. With MOOCOW, restakers operating multiple validators can consolidate them, achieving up to 64x reduction in proof size and gas costs. The upgrade also introduces support for 0x02 compounding credentials, allowing consensus-layer rewards to auto-compound without additional transactions or fees."
-        }
-      ]
-    },
-    {
       "name": "Nethermind",
       "type": "upcoming-project",
       "projectId": "nethermind",

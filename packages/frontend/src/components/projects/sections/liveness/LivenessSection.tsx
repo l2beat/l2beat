@@ -3,7 +3,7 @@ import { pluralize, type TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import React from 'react'
 import { Callout } from '~/components/Callout'
 import { ProjectLivenessChart } from '~/components/chart/liveness/ProjectLivenessChart'
-import type { ChartProject } from '~/components/core/chart/Chart'
+import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { LiveIndicator } from '~/components/LiveIndicator'
 import { TrackedTxsOutageNotice } from '~/components/TrackedTxsOutageNotice'
@@ -19,7 +19,6 @@ import { TrackedTransactions } from '../costs/TrackedTransactions'
 import { ProjectSection } from '../ProjectSection'
 import { SubsectionHeading } from '../Subsection'
 import {
-  DA_BRIDGE_LIVENESS_DESCRIPTION,
   LIVENESS_DESCRIPTION,
   TRACKED_CONTRACTS_CHANGED_WARNING,
 } from '../sectionCopy'
@@ -40,7 +39,6 @@ export interface LivenessSectionProps extends ProjectSectionProps {
   defaultRange: ChartRange
   isArchived: boolean
   hideSubtypeSwitch?: boolean
-  isForDaBridge?: boolean
 }
 
 export function LivenessSection({
@@ -54,14 +52,13 @@ export function LivenessSection({
   defaultRange,
   isArchived,
   hideSubtypeSwitch,
-  isForDaBridge,
   ...sectionProps
 }: LivenessSectionProps) {
   const ongoingAnomalies = anomalies.filter(isAnomalyOngoing)
   return (
     <ProjectSection {...sectionProps}>
       <p className="mb-4 text-paragraph-15 md:text-paragraph-16">
-        {isForDaBridge ? DA_BRIDGE_LIVENESS_DESCRIPTION : LIVENESS_DESCRIPTION}
+        {LIVENESS_DESCRIPTION}
       </p>
       {env.CLIENT_SIDE_TRACKED_TXS_OUTAGE && (
         <TrackedTxsOutageNotice type="section" />

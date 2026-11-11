@@ -1,24 +1,16 @@
 import { Button } from '~/components/core/Button'
 import { cn } from '~/utils/cn'
-import { SproutIcon } from './SproutIcon'
 
 export type CalloutTone = 'garden' | 'brand'
 
-const TONE: Record<
-  CalloutTone,
-  { card: string; glow: string; chip: string; icon: string }
-> = {
+const TONE: Record<CalloutTone, { border: string; tint: string }> = {
   garden: {
-    card: 'border-garden-border bg-gradient-to-br from-garden-tint via-surface-primary to-surface-primary',
-    glow: 'bg-crop-good/30 dark:bg-crop-good/20',
-    chip: 'bg-garden-accent/15',
-    icon: 'text-garden-accent',
+    border: 'border-garden-border',
+    tint: 'bg-garden-tint',
   },
   brand: {
-    card: 'border-purple-300 bg-gradient-to-br from-purple-300/40 via-surface-primary to-surface-primary dark:border-purple-700 dark:from-purple-800/60',
-    glow: 'bg-purple-450/30 dark:bg-pink-200/20',
-    chip: 'bg-purple-300 dark:bg-pink-200/15',
-    icon: 'text-purple-100 dark:text-pink-200',
+    border: 'border-brand/30',
+    tint: 'bg-brand/10 dark:bg-brand/15',
   },
 }
 
@@ -44,39 +36,25 @@ export function CalloutCard({
   return (
     <div
       className={cn(
-        'relative flex flex-col overflow-hidden rounded-2xl border p-5 md:p-6',
-        style.card,
+        // A solid backdrop under the tint keeps the hills from showing through.
+        'relative flex flex-col overflow-hidden rounded-xl border bg-surface-primary p-4 md:p-8',
+        style.border,
       )}
     >
-      <span
-        aria-hidden
-        className={cn(
-          '-top-20 -right-12 pointer-events-none absolute rounded-full blur-3xl',
-          horizontal ? 'size-64' : 'size-48',
-          style.glow,
-        )}
-      />
+      <span aria-hidden className={cn('absolute inset-0', style.tint)} />
       <div
         className={cn(
           'relative flex grow flex-col',
           horizontal && 'md:flex-row md:items-center md:gap-8',
         )}
       >
-        <div className={cn('flex flex-col', horizontal && 'md:grow')}>
-          <span
-            className={cn(
-              'flex size-9 items-center justify-center rounded-xl',
-              style.chip,
-            )}
-          >
-            <SproutIcon className={cn('size-[18px]', style.icon)} />
-          </span>
-          <p className="mt-3.5 font-bold text-heading-16 md:text-heading-20">
+        <div className="flex grow flex-col">
+          <p className="font-bold text-heading-16 md:text-heading-20">
             {title}
           </p>
           <p
             className={cn(
-              'mt-1.5 text-paragraph-13 text-secondary md:text-paragraph-15',
+              'mt-1.5 text-pretty text-paragraph-14 text-secondary md:text-paragraph-15',
               horizontal ? 'md:max-w-2xl' : 'grow',
             )}
           >
@@ -87,14 +65,11 @@ export function CalloutCard({
           asChild
           variant="fill"
           className={cn(
-            'mt-5 w-full shrink-0 gap-2 md:w-max',
+            'mt-5 w-full shrink-0 md:w-max',
             horizontal && 'md:mt-0',
           )}
         >
-          <a href={href}>
-            <SproutIcon />
-            {cta}
-          </a>
+          <a href={href}>{cta}</a>
         </Button>
       </div>
     </div>

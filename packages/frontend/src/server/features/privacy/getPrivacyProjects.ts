@@ -11,15 +11,22 @@ const OPTIONAL = [
   'permissions',
   'discoveryInfo',
   'discoveryUpdates',
-  'crops',
+  'garden',
   'zkCatalogInfo',
   'ossificationHistory',
   'milestones',
+  'archivedAt',
 ] as const
 
-export async function getPrivacyProjects(): Promise<PrivacyProject[]> {
+/** Archived projects drop out of the summary and are listed on the archived
+ *  page instead. */
+export async function getPrivacyProjects(
+  status: 'active' | 'archived' = 'active',
+): Promise<PrivacyProject[]> {
   const projects = await ps.getProjects({
-    where: ['privacyInfo'],
+    ...(status === 'active'
+      ? { where: ['privacyInfo'], whereNot: ['archivedAt'] }
+      : { where: ['privacyInfo', 'archivedAt'] }),
     select: [...SELECT],
     optional: [...OPTIONAL],
   })

@@ -78,7 +78,11 @@
         "groupBy": "l2ChainId",
         "ignoreRelative": true
       },
-      "edit": ["map_keys", ["format", "ChainIdToName"]]
+      "edit": [
+        "pipe",
+        ["map_keys", ["format", "ChainIdToName"]],
+        ["set", "OP Mainnet", ["format", "OptimismAddress"]]
+      ]
     },
     "spokePool": {
       "handler": {

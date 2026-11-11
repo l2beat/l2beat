@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -68,14 +68,6 @@ export const nillion: ScalingProject = opStackL2({
     ],
   },
   genesisTimestamp,
-  daTracking: [
-    {
-      type: 'celestia',
-      daLayer: ProjectId('celestia'),
-      sinceBlock: 8976650, // https://celenium.io/tx/1477fe4e04ea83b101b9b8c957c6072f966f61ef14f71a563a14fc631b9e004c
-      namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAgBOFuc8Ges=',
-    },
-  ],
   isNodeAvailable: true,
   milestones: [
     {

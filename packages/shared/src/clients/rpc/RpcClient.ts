@@ -9,7 +9,7 @@ import type { IRpcClient } from '../../clients2'
 import { generateId } from '../../tools/generateId'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
 import type { FetchInit } from '../http/fetchWithTimeout'
-import type { LogsTopicFilter } from '../types'
+import type { BlockHeader, LogsTopicFilter } from '../types'
 import type { MulticallV3Client } from './multicall/MulticallV3Client'
 import { BATCH_REJECTED, isBatchRejected, RpcBatcher } from './RpcBatcher'
 import type { RpcMetricsRecorder } from './RpcMetricsAggregator'
@@ -52,6 +52,15 @@ type Param =
   | Record<string, string | string[] | LogsTopicFilter>
   | number[]
 
+/**
+ * The RPC answered `null`: it has not got the block or transaction. A node
+ * behind a load balancer can trail the chain by a block, so a caller at the
+ * head may wait for it, where any other parsing failure is a real one
+ */
+export class NotFoundOnRpcError extends Error {
+  override name = 'NotFoundOnRpcError'
+}
+
 export class RpcClient extends ClientCore implements IRpcClient {
   multicallClient?: MulticallV3Client
   private readonly batcher: RpcBatcher
@@ -85,9 +94,14 @@ export class RpcClient extends ClientCore implements IRpcClient {
   }
 
   /** Calls eth_getBlockByNumber on RPC without transaction bodies. */
+  async getBlockHeader(blockNumber: number | 'latest'): Promise<BlockHeader> {
+    return await this.getBlock(blockNumber, false)
+  }
+
+  /** Calls eth_getBlockByNumber on RPC without transaction bodies. */
   async getBlockTimestamp(blockNumber: number): Promise<number> {
-    const block = await this.getBlock(blockNumber, false)
-    return block.timestamp
+    const header = await this.getBlockHeader(blockNumber)
+    return header.timestamp
   }
 
   async getBlockParentBeaconRoot(blockNumber: number): Promise<string> {
@@ -113,6 +127,11 @@ export class RpcClient extends ClientCore implements IRpcClient {
     const encodedNumber =
       blockNumber === 'latest' ? 'latest' : Quantity.encode(BigInt(blockNumber))
     const blockResponse = await this.query(method, [encodedNumber, includeTxs])
+    if (isNullResult(blockResponse)) {
+      throw new NotFoundOnRpcError('Block not found', {
+        cause: { blockNumber },
+      })
+    }
 
     const block = includeTxs
       ? EVMBlockWithTransactionsResponse.safeParse(blockResponse)
@@ -164,6 +183,12 @@ export class RpcClient extends ClientCore implements IRpcClient {
       'eth_getTransactionReceipt',
       txHashes.map((txHash) => [txHash]),
     )
+    const missing = txHashes.filter((_, i) => isNullResult(responses[i]))
+    if (missing.length > 0) {
+      throw new NotFoundOnRpcError('Receipts not found', {
+        cause: { txHashes: missing },
+      })
+    }
 
     const receipts = EVMTransactionReceiptsResponse.safeParse(responses)
     if (!receipts.success) {
@@ -225,7 +250,11 @@ export class RpcClient extends ClientCore implements IRpcClient {
     if (!logsResponse.success) {
       // in EVM chains there can be a limit on the number of logs returned
       const parsedError = RPCError.safeParse(response)
-      if (parsedError.success && isLimitExceededError(parsedError.data.error)) {
+      if (
+        from < to &&
+        parsedError.success &&
+        isLimitExceededError(parsedError.data.error)
+      ) {
         const midpoint = Math.floor((from + to) / 2)
 
         this.$.logger.warn('Limit exceeded for logs. Splitting in half', {
@@ -539,5 +568,14 @@ export function isLimitExceededError({ message }: { message: string }) {
     message.includes('query exceeds max block range 100000') ||
     message.includes('eth_getLogs is limited to a 10,000 range') ||
     message.includes('returned more than 10000')
+  )
+}
+
+function isNullResult(response: unknown): boolean {
+  return (
+    typeof response === 'object' &&
+    response !== null &&
+    'result' in response &&
+    response.result === null
   )
 }

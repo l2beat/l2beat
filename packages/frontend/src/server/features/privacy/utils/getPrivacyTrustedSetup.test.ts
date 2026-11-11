@@ -33,10 +33,40 @@ describe(getPrivacyTrustedSetup.name, () => {
     })
   })
 
+  it('labels a single participant in the singular', () => {
+    expect(
+      getPrivacyTrustedSetup([
+        { ...trustedSetup, participantCount: 1, proofSystem },
+      ]).label,
+    ).toEqual('1 participant')
+  })
+
   it('leaves a ceremony without a participant count unlabelled', () => {
     expect(
       getPrivacyTrustedSetup([{ ...trustedSetup, proofSystem }]).label,
     ).toEqual(undefined)
+  })
+
+  it('labels repeated-participant updates as contributions', () => {
+    const result = getPrivacyTrustedSetup([
+      { ...trustedSetup, contributionCount: 54, proofSystem },
+    ])
+
+    expect(result.label).toEqual('54 contributions')
+    expect(toTrustedSetupSummaryValue(result).value).toEqual('54 contributions')
+  })
+
+  it('uses a published participant total when both metrics are available', () => {
+    expect(
+      getPrivacyTrustedSetup([
+        {
+          ...trustedSetup,
+          participantCount: 52,
+          contributionCount: 54,
+          proofSystem,
+        },
+      ]).label,
+    ).toEqual('52 participants')
   })
 
   it('names a transparent setup', () => {

@@ -6,6 +6,7 @@
   "canActIndependently": false,
   "fields": {
     "accessControl": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "scrollAccessControl",
         "roleNames": {
@@ -22,6 +23,7 @@
       }
     },
     "scNoDelay": {
+      "severity": "MEDIUM",
       "copy": "accessControl",
       "edit": ["get", "roles", "SECURITY_COUNCIL_NO_DELAY_ROLE", "members"],
       "permissions": [

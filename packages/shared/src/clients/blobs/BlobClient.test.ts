@@ -1,82 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
 import { expect, mockFn, mockObject } from 'earl'
-import { utils } from 'ethers'
 import type { HttpClient } from '../http/HttpClient'
 import type { RpcClient } from '../rpc/RpcClient'
 import { BlobClient } from './BlobClient'
 
-function generateKzgCommitment(): string {
-  return (
-    '0x' +
-    Array.from({ length: 96 }, () =>
-      Math.floor(Math.random() * 16).toString(16),
-    ).join('')
-  )
-}
-
 describe(BlobClient.name, () => {
-  describe(
-    BlobClient.prototype.getBlobsByVersionedHashesAndBlockNumber.name,
-    () => {
-      it('should return blobs for given versioned hashes', async () => {
-        const kzgCommitment1 = generateKzgCommitment()
-        const kzgCommitment2 = generateKzgCommitment()
-        const versionedHash1 =
-          '0x01' + utils.sha256(kzgCommitment1).substring(4)
-        const client = mockClient({})
-        client.getBlockSidecar = mockFn().resolvesTo([
-          {
-            kzg_commitment: kzgCommitment1,
-            data: 'blob1',
-          },
-          {
-            kzg_commitment: kzgCommitment2,
-            data: 'blob2',
-          },
-        ])
-
-        const result = await client.getBlobsByVersionedHashesAndBlockNumber(
-          [versionedHash1],
-          1,
-        )
-        expect(result).toEqual({
-          blockNumber: 1,
-          blobs: [
-            {
-              kzg_commitment: kzgCommitment1,
-              data: 'blob1',
-            },
-          ],
-        })
-      })
-
-      it('should return empty array for no versioned hashes', async () => {
-        const kzgCommitment1 = generateKzgCommitment()
-        const kzgCommitment2 = generateKzgCommitment()
-        const client = mockClient({})
-        client.getBlockSidecar = mockFn().resolvesTo([
-          {
-            kzg_commitment: kzgCommitment1,
-            data: 'blob1',
-          },
-          {
-            kzg_commitment: kzgCommitment2,
-            data: 'blob2',
-          },
-        ])
-
-        const result = await client.getBlobsByVersionedHashesAndBlockNumber(
-          [],
-          1,
-        )
-        expect(result).toEqual({
-          blockNumber: 1,
-          blobs: [],
-        })
-      })
-    },
-  )
-
   describe(BlobClient.prototype.getRelevantBlobs.name, () => {
     it('should return empty blobs for type 2 transaction', async () => {
       const rpcClient = mockObject<RpcClient>({
@@ -92,39 +20,32 @@ describe(BlobClient.name, () => {
     })
 
     it('should return blobs for type 3 transaction', async () => {
-      const kzgCommitment1 = generateKzgCommitment()
-      const kzgCommitment2 = generateKzgCommitment()
-      const versionedHash1 = '0x01' + utils.sha256(kzgCommitment1).substring(4)
-      const versionedHash2 = '0x01' + utils.sha256(kzgCommitment2).substring(4)
-      const blob1 = {
-        kzg_commitment: kzgCommitment1,
-        data: 'blob1',
-      }
-      const blob2 = {
-        kzg_commitment: kzgCommitment2,
-        data: 'blob2',
-      }
-
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({ data: ['blob1', 'blob2'] }),
+      })
       const rpcClient = mockObject<RpcClient>({
         getTransaction: mockFn().returns({
           type: '0x3',
           blockNumber: 1,
-          blobVersionedHashes: [versionedHash1, versionedHash2],
+          blobVersionedHashes: ['0x01aa', '0x01bb'],
         }),
+        getBlockParentBeaconRoot: async () => 'root',
       })
-      const client = mockClient({ rpcClient })
-
-      client.getBlockSidecar = async () => [
-        blob1,
-        blob2,
-        {
-          kzg_commitment: generateKzgCommitment(),
-          data: 'blob3',
-        },
-      ]
+      const client = mockClient({
+        http,
+        beaconApiUrl: 'example.com/',
+        rpcClient,
+      })
 
       const result = await client.getRelevantBlobs('txHash')
-      expect(result).toEqual({ blockNumber: 1, blobs: [blob1, blob2] })
+
+      expect(http.fetch.calls[0].args[0]).toEqual(
+        'example.com/eth/v1/beacon/blobs/root?versioned_hashes=0x01aa&versioned_hashes=0x01bb',
+      )
+      expect(result).toEqual({
+        blockNumber: 1,
+        blobs: [{ data: 'blob1' }, { data: 'blob2' }],
+      })
     })
 
     it('should throw on missing blobVersionedHashes', async () => {
@@ -142,19 +63,13 @@ describe(BlobClient.name, () => {
     })
   })
 
-  describe(BlobClient.prototype.getBlockSidecar.name, async () => {
-    it('should call rpc and return result', async () => {
-      const kzg_commitment = 'commitment'
-      const blob = 'blob'
-      const expected = [
-        {
-          kzg_commitment,
-          blob,
-        },
-      ]
+  describe(BlobClient.prototype.getBlobs.name, () => {
+    it('asks the beacon block after the given block for the hashes', async () => {
       const http = mockObject<HttpClient>({
         fetch: async () => ({
-          data: expected,
+          execution_optimistic: false,
+          finalized: true,
+          data: ['blob1', 'blob2'],
         }),
       })
       const rpcClient = mockObject<RpcClient>({
@@ -166,17 +81,86 @@ describe(BlobClient.name, () => {
         rpcClient,
       })
 
-      const result = await client.getBlockSidecar(1)
+      const result = await client.getBlobs(1, ['0x01aa', '0x01bb'])
+
+      expect(rpcClient.getBlockParentBeaconRoot).toHaveBeenOnlyCalledWith(2)
+      expect(http.fetch.calls[0].args[0]).toEqual(
+        'example.com/eth/v1/beacon/blobs/root?versioned_hashes=0x01aa&versioned_hashes=0x01bb',
+      )
+      expect(result).toEqual([{ data: 'blob1' }, { data: 'blob2' }])
+    })
+
+    it('asks nothing for no hashes', async () => {
+      const http = mockObject<HttpClient>({ fetch: mockFn() })
+      const client = mockClient({ http })
+
+      const result = await client.getBlobs(1, [])
+
+      expect(result).toEqual([])
+      expect(http.fetch).not.toHaveBeenCalled()
+    })
+
+    it('asks once for a hash the tx repeats', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({ data: ['blob'] }),
+      })
+      const rpcClient = mockObject<RpcClient>({
+        getBlockParentBeaconRoot: async () => 'root',
+      })
+      const client = mockClient({
+        http,
+        beaconApiUrl: 'example.com/',
+        rpcClient,
+      })
+
+      const result = await client.getBlobs(1, ['0x01aa', '0x01aa'])
 
       expect(http.fetch.calls[0].args[0]).toEqual(
-        'example.com/eth/v1/beacon/blob_sidecars/root',
+        'example.com/eth/v1/beacon/blobs/root?versioned_hashes=0x01aa',
       )
-      expect(result).toEqual([
-        {
-          kzg_commitment,
-          data: blob,
-        },
-      ])
+      expect(result).toEqual([{ data: 'blob' }])
+    })
+
+    it('keeps a blob that two txs of the block posted', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({ data: ['blob', 'blob'] }),
+      })
+      const rpcClient = mockObject<RpcClient>({
+        getBlockParentBeaconRoot: async () => 'root',
+      })
+      const client = mockClient({ http, rpcClient })
+
+      const result = await client.getBlobs(1, ['0x01aa'])
+
+      expect(result).toEqual([{ data: 'blob' }, { data: 'blob' }])
+    })
+
+    it('throws when the node answers fewer blobs than asked for', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({ data: [] }),
+      })
+      const rpcClient = mockObject<RpcClient>({
+        getBlockParentBeaconRoot: async () => 'root',
+      })
+      const client = mockClient({ http, rpcClient })
+
+      await expect(client.getBlobs(1, ['0x01aa'])).toBeRejectedWith(
+        'Beacon node answered fewer blobs than asked for',
+      )
+    })
+
+    it('throws when a doubled blob stands in for a missing one', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({ data: ['blob', 'blob'] }),
+      })
+      const rpcClient = mockObject<RpcClient>({
+        getBlockParentBeaconRoot: async () => 'root',
+      })
+      const client = mockClient({ http, rpcClient })
+
+      await expect(client.getBlobs(1, ['0x01aa', '0x01bb'])).toBeRejectedWith(
+        'Beacon node answered fewer blobs than asked for',
+      )
     })
   })
 

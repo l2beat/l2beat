@@ -25,14 +25,16 @@ export function MobileSelectedLink({
     pathname.startsWith(link.href),
   )
 
-  if (!selectedGroup && !selectedSideLink) return null
+  const title =
+    (selectedGroup?.type === 'single' && selectedGroup.shortTitle) ||
+    selectedGroup?.title ||
+    selectedSideLink?.title
+  if (!title) return null
 
   return (
     <>
       <VerticalSeparator className="h-10" />
-      <span className="font-bold text-base">
-        {selectedGroup?.title ?? selectedSideLink?.title}
-      </span>
+      <span className="font-bold text-base">{title}</span>
     </>
   )
 }

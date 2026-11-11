@@ -1,45 +1,31 @@
 import { CountBadge } from '~/components/badge/CountBadge'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { cn } from '~/utils/cn'
 import { PrivacyRosetteLegend } from '../../rosette/PrivacyRosetteLegend'
 import type { PrivacySummaryGroup } from '../privacySummaryGroups'
 import { PrivacySummaryTable } from './PrivacySummaryTable'
 
-/** The first group spans the page, the others sit side by side below it. */
+/**
+ * Groups stack at every width: the page content tops out near 1180px, so two
+ * side by side would each be narrower than their table.
+ */
 export function PrivacySummaryTables({
   groups,
 }: {
   groups: PrivacySummaryGroup[]
 }) {
-  const [first, ...rest] = groups
-
   return (
     <div className="mt-4 flex flex-col gap-4">
       <PrivacyRosetteLegend />
-      {first && <PrivacySummaryGroupCard group={first} />}
-      {/* Rows shared through subgrids start both tables on the same line. */}
-      <div className="grid gap-4 xl:grid-cols-2 xl:grid-rows-[auto_auto_1fr]">
-        {rest.map((group) => (
-          <PrivacySummaryGroupCard
-            key={group.field}
-            group={group}
-            className="xl:row-span-3 xl:grid xl:grid-rows-subgrid xl:gap-0"
-          />
-        ))}
-      </div>
+      {groups.map((group) => (
+        <PrivacySummaryGroupCard key={group.field} group={group} />
+      ))}
     </div>
   )
 }
 
-function PrivacySummaryGroupCard({
-  group,
-  className,
-}: {
-  group: PrivacySummaryGroup
-  className?: string
-}) {
+function PrivacySummaryGroupCard({ group }: { group: PrivacySummaryGroup }) {
   return (
-    <PrimaryCard className={cn('flex min-w-0 flex-col', className)}>
+    <PrimaryCard className="flex min-w-0 flex-col">
       <h2 className="flex items-center gap-2 font-bold text-heading-16 md:text-heading-20">
         {group.label}
         <CountBadge>{group.entries.length}</CountBadge>
@@ -51,6 +37,7 @@ function PrivacySummaryGroupCard({
         <PrivacySummaryTable
           entries={group.entries}
           hiddenColumns={group.hiddenColumns}
+          anonymitySetTooltip={group.anonymitySetTooltip}
         />
       </div>
     </PrimaryCard>

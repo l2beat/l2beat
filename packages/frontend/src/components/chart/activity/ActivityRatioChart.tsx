@@ -1,21 +1,15 @@
-import { assert, formatActivityCount, UnixTime } from '@l2beat/shared-pure'
+import { formatActivityCount, UnixTime } from '@l2beat/shared-pure'
 import round from 'lodash/round'
-import { Area, AreaChart } from 'recharts'
-import type {
-  ChartMeta,
-  CustomChartTooltipProps,
-} from '~/components/core/chart/Chart'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
+import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
+  ChartTooltipRow,
+  ChartTooltipValue,
   ChartTooltipWrapper,
-  useChart,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
-import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { EmeraldFillGradientDef } from '~/components/core/chart/defs/EmeraldGradientDef'
+} from '~/components/core/chart/ChartTooltip'
+import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
+import { tinted } from '~/components/core/chart/tint'
+import type { ActivityResolution } from '~/server/features/layer2s/activity/utils/getActivityResolution'
 import { formatRange } from '~/utils/dates'
 
 interface ActivityRatioChartDataPoint {
@@ -26,10 +20,18 @@ interface ActivityRatioChartDataPoint {
 interface Props {
   data: ActivityRatioChartDataPoint[] | undefined
   syncedUntil: number | undefined
+  resolution?: ActivityResolution
   isLoading: boolean
+  isPlaceholderData: boolean
 }
 
-export function ActivityRatioChart({ data, isLoading, syncedUntil }: Props) {
+export function ActivityRatioChart({
+  data,
+  isLoading,
+  isPlaceholderData,
+  syncedUntil,
+  resolution = 'day',
+}: Props) {
   const chartMeta = {
     ratio: {
       label: 'UOPS/TPS Ratio',
@@ -41,88 +43,63 @@ export function ActivityRatioChart({ data, isLoading, syncedUntil }: Props) {
   } satisfies ChartMeta
   return (
     <ChartContainer
+      isPlaceholderData={isPlaceholderData}
       data={data}
       meta={chartMeta}
       isLoading={isLoading}
       milestones={undefined}
       size="small"
+      legend
     >
-      <AreaChart responsive data={data} margin={{ top: 20 }}>
-        <Area
-          dataKey="ratio"
-          fillOpacity={1}
-          fill="url(#fillRatio)"
-          stroke={chartMeta.ratio.color}
-          dot={false}
-          isAnimationActive={false}
-        />
-
-        <ChartCommonComponents
-          data={data}
-          isLoading={isLoading}
-          yAxis={{
-            tickFormatter: (value) => `${round(value, 2)}x`,
-            domain: ([_, dataMax]) => [1, dataMax + (dataMax - 1) * 0.1],
-          }}
-          syncedUntil={syncedUntil}
-        />
-
-        <ChartTooltip filterNull={false} content={<ActivityCustomTooltip />} />
-        <ChartLegend content={<ChartLegendContent />} />
-        <defs>
-          <EmeraldFillGradientDef id="fillRatio" />
-        </defs>
-      </AreaChart>
+      <TimeSeriesChart
+        data={data}
+        ariaLabel="UOPS/TPS ratio"
+        series={[
+          {
+            key: 'ratio',
+            ...tinted(chartMeta.ratio.color),
+          },
+        ]}
+        yAxis={{
+          format: (value) => `${round(value, 2)}x`,
+          domain: [1, 'auto'],
+          headroom: 0.1,
+        }}
+        syncedUntil={syncedUntil}
+        renderTooltip={(row) => (
+          <ActivityCustomTooltip row={row} resolution={resolution} />
+        )}
+      />
     </ChartContainer>
   )
 }
 
 function ActivityCustomTooltip({
-  payload,
-  label: timestamp,
-}: CustomChartTooltipProps) {
-  const { meta } = useChart()
-  if (!payload || typeof timestamp !== 'number') return null
+  row,
+  resolution,
+}: {
+  row: ActivityRatioChartDataPoint
+  resolution: ActivityResolution
+}) {
+  const timestamp = row.timestamp
 
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
-          {formatRange(timestamp, timestamp + UnixTime.DAY)}
+          {formatRange(
+            timestamp,
+            timestamp + UnixTime.periodToSeconds(resolution),
+          )}
         </div>
         <div className="flex flex-col gap-2">
-          {payload.map((entry) => {
-            if (
-              entry.name === undefined ||
-              entry.value === undefined ||
-              entry.type === 'none'
-            )
-              return null
-            const config = meta[entry.name]
-            assert(config, 'No config')
-
-            return (
-              <div
-                key={entry.name}
-                className="flex w-full items-center justify-between gap-2"
-              >
-                <div className="flex items-center gap-1">
-                  <ChartDataIndicator
-                    backgroundColor={config.color}
-                    type={config.indicatorType}
-                  />
-                  <span className="w-20 font-medium text-label-value-14 sm:w-fit">
-                    {config.label}
-                  </span>
-                </div>
-                <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                  {entry.value === null
-                    ? 'No data'
-                    : formatActivityCount(entry.value)}
-                </span>
-              </div>
-            )
-          })}
+          <ChartTooltipRow name="ratio">
+            <ChartTooltipValue
+              value={row.ratio}
+              format={formatActivityCount}
+              className="tabular-nums"
+            />
+          </ChartTooltipRow>
         </div>
       </div>
     </ChartTooltipWrapper>

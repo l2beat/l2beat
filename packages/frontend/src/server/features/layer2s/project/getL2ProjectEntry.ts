@@ -1,7 +1,6 @@
 import type {
   Project,
   ProjectAssociatedToken,
-  ProjectCustomColors,
   ProjectRedWarning,
   ProjectScalingCategory,
   ProjectScalingProofSystem,
@@ -11,13 +10,12 @@ import type {
 } from '@l2beat/config'
 import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
+import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
-import {
-  WALK_AWAY_NOT_PASSED_PROJECTS,
-  WALK_AWAY_PASSED_PROJECTS,
-} from '~/consts/walkAwayProjects'
+import type { WalkAwayVerdict } from '~/consts/walkAwayProjects'
+import { getWalkAwayVerdict } from '~/consts/walkAwayProjects'
 import { env } from '~/env'
 import type { CompareMetricId } from '~/pages/layer2s/compare/utils/compareChartState'
 import { getCompareEntryUrl } from '~/pages/layer2s/compare/utils/getCompareEntryUrl'
@@ -60,6 +58,7 @@ import {
   getUnderReviewStatus,
   type UnderReviewStatus,
 } from '~/utils/project/underReview'
+import { getPrivacyProjectsRunningOn } from '../../privacy/utils/getPrivacyScalingLinks'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { getProjectVerification } from '../../utils/getIsProjectVerified'
 import { getActivityProjectStats } from '../activity/getActivityProjectStats'
@@ -84,12 +83,6 @@ export interface ProjectL2Entry {
   icon: string
   archivedAt: UnixTime | undefined
   isAppchain: boolean
-  colors:
-    | {
-        project: ProjectCustomColors | undefined
-        ecosystem: ProjectCustomColors | undefined
-      }
-    | undefined
   underReviewStatus: UnderReviewStatus
   header: {
     warning?: string
@@ -135,8 +128,10 @@ export interface ProjectL2Entry {
       lastDayUops: number
       uopsWeeklyChange: number
       uopsWeeklyChangePeriod: PercentageChangePeriod
+      syncWarning: string | undefined
     }
     gasTokens?: string[]
+    privacyProjects: ProjectIconListItem[]
     interop?: ProjectInteropData['summary']
   }
   rosette: L2Rosette
@@ -144,6 +139,7 @@ export interface ProjectL2Entry {
   reasonsForBeingOther?: ReasonForBeingInOther[]
   hostChainName: string
   stageConfig: ProjectScalingStage
+  walkAway: WalkAwayVerdict | undefined
   discoUiHref: string | undefined
 }
 
@@ -170,12 +166,10 @@ export async function getL2ProjectEntry(
     | 'livenessConfig'
     | 'costsInfo'
     | 'activityConfig'
-    | 'colors'
-    | 'ecosystemColors'
     | 'discoveryInfo'
     | 'discoveryUpdates'
     | 'daTrackingConfig'
-    | 'crops'
+    | 'garden'
     | 'ossificationHistory'
   >,
   helpers: SsrHelpers,
@@ -218,7 +212,7 @@ export async function getL2ProjectEntry(
       select: ['display'],
       optional: [...PROJECT_PAGE_METADATA_FIELDS],
     }),
-    getL2ProjectInteropData(project.id),
+    getL2ProjectInteropData(project.id, helpers),
     getProjectOssification(project),
   ])
 
@@ -287,6 +281,7 @@ export async function getL2ProjectEntry(
       .map((badge) => getBadgeWithParamsAndLink(badge, project))
       .filter((b) => !!b),
     gasTokens: project.chainConfig?.gasTokens,
+    privacyProjects: getPrivacyProjectsRunningOn(project.id, allProjects),
     interop: interopData?.summary,
   }
 
@@ -321,10 +316,6 @@ export async function getL2ProjectEntry(
     }),
     archivedAt: project.archivedAt,
     isAppchain: project.scalingInfo.capability === 'appchain',
-    colors: {
-      project: project.colors,
-      ecosystem: project.ecosystemColors,
-    },
     header,
     reasonsForBeingOther: project.scalingInfo.reasonsForBeingOther,
     rosette: getL2Rosette(project, {
@@ -339,8 +330,9 @@ export async function getL2ProjectEntry(
       project.scalingInfo.type === 'Other'
         ? { stage: 'NotApplicable' as const }
         : project.scalingStage,
+    walkAway: getWalkAwayVerdict(project),
     discoUiHref: project.discoveryInfo?.hasDiscoUi
-      ? `https://disco.l2beat.com/ui/p/${project.id}`
+      ? `https://disco.ethbeat.org/ui/p/${project.id}`
       : undefined,
   }
 
@@ -393,7 +385,7 @@ export async function getL2ProjectEntry(
 
   const chartProject = toChartProject(project)
 
-  const gardenCropsSection = getGardenCropsSection(project.crops)
+  const gardenCropsSection = await getGardenCropsSection(project, ossification)
   if (gardenCropsSection) {
     sections.push(gardenCropsSection)
   }
@@ -625,11 +617,7 @@ export async function getL2ProjectEntry(
             : undefined,
         scopeOfAssessment: project.scalingInfo.scopeOfAssessment,
         emergencyWarning: project.statuses.emergencyWarning,
-        walkAway: WALK_AWAY_PASSED_PROJECTS.includes(project.id)
-          ? 'passed'
-          : WALK_AWAY_NOT_PASSED_PROJECTS.includes(project.id)
-            ? 'not-passed'
-            : undefined,
+        walkAway: common.walkAway,
       },
     })
   }
@@ -812,7 +800,10 @@ function getProjectCompareUrl(
 
 // Interop flows are the slowest independent loader after the ecosystem-wide
 // TVS query, so they must run inside the parallel block rather than after it.
-async function getL2ProjectInteropData(projectId: ProjectId) {
+async function getL2ProjectInteropData(
+  projectId: ProjectId,
+  helpers: SsrHelpers,
+) {
   const interopProjects = await ps.getProjects({ select: ['interopConfig'] })
-  return getProjectInteropData(projectId, interopProjects)
+  return getProjectInteropData(projectId, interopProjects, helpers)
 }

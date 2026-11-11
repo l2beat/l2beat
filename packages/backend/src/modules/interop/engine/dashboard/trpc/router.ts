@@ -6,7 +6,7 @@ import type { ProcessorStatus } from '../impls/processors'
 import { createActivityRouter } from './routers/activity'
 import { createAggregatesRouter } from './routers/aggregates'
 import { createChainsRouter } from './routers/chains'
-import { createCoveragePiesRouter } from './routers/coveragePies'
+import { createCoverageRouter } from './routers/coverage'
 import { createEventsRouter } from './routers/events'
 import { createFinancialsRouter } from './routers/financials'
 import { createHighlightsRouter } from './routers/highlights'
@@ -38,6 +38,8 @@ export interface InteropTrpcRouterDeps {
   financialsEnabled: boolean
   matchingEnabled: boolean
   oneSidedChains: readonly string[]
+  oneSidedPlugins: readonly string[]
+  maxTransferValueUsd: number
   tokenDbClient: TokenDbClient
 }
 
@@ -46,7 +48,7 @@ export function createInteropTrpcRouter(deps: InteropTrpcRouterDeps) {
     aggregates: createAggregatesRouter(deps),
     activity: createActivityRouter(),
     chains: createChainsRouter(deps),
-    coveragePies: createCoveragePiesRouter(),
+    coverage: createCoverageRouter(deps),
     events: createEventsRouter(),
     financials: createFinancialsRouter(),
     highlights: createHighlightsRouter(deps),

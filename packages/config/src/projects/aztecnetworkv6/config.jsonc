@@ -1,0 +1,32 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "aztecnetworkv6",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": ["eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298"],
+  "overrides": {
+    "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2": {
+      "fields": {
+        "owner": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "mint AZTEC only through the CoinIssuer's capped issuance function. The CoinIssuer exposes no path to transfer or renounce ownership of the AZTEC token."
+            }
+          ]
+        }
+      }
+    },
+    "eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80": {
+      "displayName": "AztecTokenPositionRegistry_ProtocolTreasury",
+      "description": "AZTEC token-position Registry referenced by the ProtocolTreasury for its activation cutoff and by other ecosystem vesting contracts."
+    },
+    // SlasherDeploymentExtLib of the v6 Rollup, only called by its constructor
+    "eth:0xd8cc2cBc696Ce1950C8070571a5359642045ff22": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xBbB4aF368d02827945748b28CD4b2D42e4A37480": {
+      "displayName": "SlashVeto Council",
+      "category": "gov"
+    }
+  }
+}

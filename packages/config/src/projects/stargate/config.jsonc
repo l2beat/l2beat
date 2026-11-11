@@ -31,7 +31,7 @@
   },
   "overrides": {
     "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059": {
-      "description": "Is tasked to execute verified messages at the destination for a fee paid at the origin. Jobs are assigned to this contract by the LayerZero Endpoint."
+      "description": "Upgradeable contract referenced as an executor by LayerZero message libraries. Its current implementation is unverified, so execution and fee handling cannot be checked against source."
     },
     "oeth:0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6": {
       "ignoreRelatives": ["endpoint", "oApp", "owner"],

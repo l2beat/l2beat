@@ -1,4 +1,3 @@
-import type { AdjustCount } from '@l2beat/config'
 import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
@@ -6,11 +5,14 @@ import { BlockActivityIndexer } from './indexers/BlockActivityIndexer'
 import { BlockTargetIndexer } from './indexers/BlockTargetIndexer'
 import { DayActivityIndexer } from './indexers/DayActivityIndexer'
 import { DayTargetIndexer } from './indexers/DayTargetIndexer'
+import { HourActivityIndexer } from './indexers/HourActivityIndexer'
+import { HourTargetIndexer } from './indexers/HourTargetIndexer'
 import { SlotTargetIndexer } from './indexers/SlotTargetIndexer'
 import type { ActivityIndexer } from './indexers/types'
 import { BlockTxsCountService } from './services/txs/BlockTxsCountService'
 import { DayTxsCountService } from './services/txs/DayTxsCountService'
 import { SlotTxsCountService } from './services/txs/SlotTxsCountService'
+import { assessCount } from './utils/assessCount'
 
 export function initActivityModule({
   config,
@@ -31,6 +33,12 @@ export function initActivityModule({
   const indexers: ActivityIndexer[] = []
 
   for (const project of config.activity.projects) {
+    const onTick = async (target: UnixTime, blockTarget?: number) => {
+      await database.syncMetadata.setTargets('activity', [
+        { id: project.id, target, blockTarget },
+      ])
+    }
+
     switch (project.activityConfig.type) {
       case 'block': {
         const blockTargetIndexer = new BlockTargetIndexer(
@@ -39,26 +47,11 @@ export function initActivityModule({
           providers.blockTimestamp,
           database,
           project,
-          {
-            onTick: async (targetTimestamp, blockNumber) => {
-              if (!config.activity) {
-                return
-              }
-
-              await database.syncMetadata.upsertMany([
-                {
-                  feature: 'activity',
-                  id: project.id,
-                  target: targetTimestamp,
-                  blockTarget: blockNumber,
-                },
-              ])
-            },
-          },
+          { onTick },
         )
 
         const provider = providers.activityBlock.getProvider(project.chainName)
-        const txsCountService = new BlockTxsCountService(
+        const blockSource = new BlockTxsCountService(
           {
             provider,
             projectId: project.id,
@@ -73,7 +66,7 @@ export function initActivityModule({
             batchSize: project.activityConfig.batchSize ?? 100,
             minHeight: project.activityConfig.startBlock ?? 1,
             parents: [blockTargetIndexer],
-            txsCountService,
+            blockSource,
             indexerService,
             db: database,
           },
@@ -90,26 +83,11 @@ export function initActivityModule({
           clock,
           providers.slotTimestamp,
           project,
-          {
-            onTick: async (targetTimestamp, slotTarget) => {
-              if (!config.activity) {
-                return
-              }
-
-              await database.syncMetadata.upsertMany([
-                {
-                  feature: 'activity',
-                  id: project.id,
-                  target: targetTimestamp,
-                  blockTarget: slotTarget,
-                },
-              ])
-            },
-          },
+          { onTick },
         )
 
         const provider = providers.svmBlock.getBlockProvider(project.chainName)
-        const txsCountService = new SlotTxsCountService(
+        const blockSource = new SlotTxsCountService(
           {
             provider,
             projectId: project.id,
@@ -123,7 +101,7 @@ export function initActivityModule({
             batchSize: project.activityConfig.batchSize ?? 100,
             minHeight: project.activityConfig.startSlot ?? 1,
             parents: [slotTargetIndexer],
-            txsCountService,
+            blockSource,
             indexerService,
             db: database,
           },
@@ -135,23 +113,7 @@ export function initActivityModule({
       }
 
       case 'day': {
-        const dayTargetIndexer = new DayTargetIndexer(logger, clock, {
-          // We do not want to index today's data because it's not fully processed yet
-          // We want to process full previous day
-          onTick: async (targetTimestamp) => {
-            if (!config.activity) {
-              return
-            }
-
-            await database.syncMetadata.upsertMany([
-              {
-                feature: 'activity',
-                id: project.id,
-                target: targetTimestamp,
-              },
-            ])
-          },
-        })
+        const dayTargetIndexer = new DayTargetIndexer(logger, clock, { onTick })
 
         const provider = providers.day.getDayProvider(project.chainName)
         const txsCountService = new DayTxsCountService({
@@ -180,6 +142,29 @@ export function initActivityModule({
         break
       }
 
+      case 'hour': {
+        const hourTargetIndexer = new HourTargetIndexer(logger, clock, {
+          onTick,
+        })
+
+        const activityIndexer = new HourActivityIndexer(
+          {
+            projectId: project.id,
+            minHeight:
+              UnixTime.toStartOf(project.activityConfig.sinceTimestamp, 'day') /
+              UnixTime.HOUR,
+            parents: [hourTargetIndexer],
+            provider: providers.day.getHourlyProvider(project.chainName),
+            indexerService,
+            db: database,
+          },
+          logger,
+        )
+
+        indexers.push(hourTargetIndexer, activityIndexer)
+        break
+      }
+
       default:
         assertUnreachable(project.activityConfig)
     }
@@ -194,20 +179,4 @@ export function initActivityModule({
       )
     },
   }
-}
-
-function assessCount(
-  adjustCount: AdjustCount | undefined,
-): (count: number, block: number) => number {
-  if (!adjustCount) {
-    return (count) => count
-  }
-  if (adjustCount.type === 'SubtractOne') {
-    return (count) => count - 1
-  }
-  if (adjustCount.type === 'SubtractOneSinceBlock') {
-    return (count: number, block: number) =>
-      block >= adjustCount.blockNumber ? count - 1 : count
-  }
-  throw new Error('Unknown config for adjustCount')
 }

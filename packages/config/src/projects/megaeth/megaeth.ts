@@ -43,6 +43,32 @@ export const megaeth: ScalingProject = opStackL2({
   daProvider: EIGENDA_DA_PROVIDER(false, DA_LAYERS.ETH_BLOBS),
   additionalBadges: [BADGES.Stack.OPKailua],
   kailuaVanguardAppliesToAllProposals: true,
+  // Batches go to EigenDA. The blobs are the Vanguard's Kailua proposals, which carry
+  // their intermediate output commitments.
+  daTracking: [
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      inbox: '0xe4e456c64b9b0de5fe8a90d809180ca71534d623',
+      sequencers: ['0x6644d495d22b0d25e904098d61520c95befc8ec5'],
+      sinceBlock: 23888698,
+      untilBlock: 25050480, // last proposal before the KailuaTreasury replacement
+    },
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      inbox: ChainSpecificAddress.address(activeKailuaTreasury),
+      sequencers: [
+        ChainSpecificAddress.address(
+          discovery.getContractValue<ChainSpecificAddress>(
+            activeKailuaTreasury,
+            'vanguard',
+          ),
+        ),
+      ],
+      sinceBlock: 25050829,
+    },
+  ],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
@@ -176,14 +202,6 @@ export const megaeth: ScalingProject = opStackL2({
     startBlock: 1,
     adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 1 },
   },
-  daTracking: [
-    {
-      type: 'eigen-da',
-      daLayer: ProjectId('eigenda'),
-      sinceTimestamp: UnixTime(1762995600), // 2025-11-13T01:00:00Z
-      customerId: '0x42b5ea5238752cc6f70d93fa4249feae480a0b39',
-    },
-  ],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: ChainSpecificAddress(

@@ -1,4 +1,8 @@
-import type { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
+import {
+  formatInteger,
+  type KnownInteropBridgeType,
+  type ProjectId,
+} from '@l2beat/shared-pure'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { getCoreRowModel } from '@tanstack/react-table'
 import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
@@ -22,6 +26,7 @@ import type { InteropScope } from '~/server/features/layer2s/interop/types'
 import { useTRPC } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { BetweenChainsInfo } from '../../BetweenChainsInfo'
+import { CarriedForwardNotice } from '../../CarriedForwardNotice'
 import { getTransferColumns, type TransferRow } from './columns'
 
 const SCROLL_LOAD_THRESHOLD_PX = 120
@@ -60,7 +65,7 @@ export function TransferCountCell({
         className="cursor-pointer font-medium text-label-value-15 text-primary hover:underline"
         onClick={() => setIsOpen(true)}
       >
-        {transferCount}
+        {formatInteger(transferCount)}
       </button>
       <TransferDetailsDialog
         scope={{ type: 'project', projectId: protocol.id }}
@@ -135,6 +140,7 @@ export function TransferDetailsDialog({
     () => data?.pages.flatMap((page) => page.items) ?? [],
     [data],
   )
+  const carriedFrom = data?.pages[0]?.carriedFrom
   const canLoadMore =
     isOpen && !!hasNextPage && !isLoading && !isFetchingNextPage
 
@@ -170,7 +176,23 @@ export function TransferDetailsDialog({
     manualFiltering: true,
   })
 
-  if (breakpoint === 'xs' || breakpoint === 'sm') {
+  const isMobile = breakpoint === 'xs' || breakpoint === 'sm'
+  const transferList =
+    carriedFrom !== undefined ? (
+      <CarriedForwardNotice
+        carriedFrom={carriedFrom}
+        className={isMobile ? 'mx-4' : undefined}
+      />
+    ) : (
+      <BasicTable
+        table={table}
+        isLoading={isLoading}
+        skeletonCount={8}
+        tableWrapperClassName="pb-0"
+      />
+    )
+
+  if (isMobile) {
     return (
       <Drawer open={isOpen} onOpenChange={setIsOpen}>
         <DrawerContent>
@@ -183,12 +205,7 @@ export function TransferDetailsDialog({
             onScroll={(e) => handleScroll(e.currentTarget)}
             className="max-h-[60vh] overflow-x-auto overflow-y-auto"
           >
-            <BasicTable
-              table={table}
-              isLoading={isLoading}
-              skeletonCount={8}
-              tableWrapperClassName="pb-0"
-            />
+            {transferList}
             {isFetchingNextPage && (
               <div className="px-4 py-2 text-center font-medium text-label-value-14 text-secondary">
                 Loading more transfers...
@@ -214,12 +231,7 @@ export function TransferDetailsDialog({
           className="max-h-[460px] overflow-x-auto overflow-y-auto"
         >
           <div className="mx-6">
-            <BasicTable
-              table={table}
-              isLoading={isLoading}
-              skeletonCount={8}
-              tableWrapperClassName="pb-0"
-            />
+            {transferList}
             {isFetchingNextPage && (
               <div className="py-2 text-center font-medium text-label-value-14 text-secondary">
                 Loading more transfers...

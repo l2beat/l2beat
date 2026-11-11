@@ -1,0 +1,14 @@
+{
+  "RelayAdapt7702.sol": {
+    "hash": "0xe677c8fcceecb91897609845535917eb2012931220853e62705536acc690e42b",
+    "address": "eth:0x1F74b4339990Db761bC0168F20D294A3a141497e",
+    "chain": "ethereum",
+    "blockNumber": 26078451
+  },
+  "RelayAdapt7702_05ae.sol": {
+    "hash": "0x3a7054177e9d80290cb64fa9155d1580fa13d58a1d568a0b44b210ab79ef993b",
+    "address": "eth:0x05ae73c5925d843864ae6F261f3175De2ebCd963",
+    "chain": "ethereum",
+    "blockNumber": 26254454
+  }
+}

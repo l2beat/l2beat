@@ -5,6 +5,9 @@ import type { Handler } from './Handler'
 import { LimitedArrayHandler } from './system/LimitedArrayHandler'
 import { SimpleMethodHandler } from './system/SimpleMethodHandler'
 
+/** How many indices, from 0, V1 reads of every view function with one `uint256` argument. */
+export const PROBED_INDICES = 5
+
 export function getSystemHandlers(
   abiEntries: string[],
   config: StructureContractConfig,
@@ -25,7 +28,7 @@ export function getSystemHandlers(
     if (fn.inputs.length === 0) {
       methodHandlers.push(new SimpleMethodHandler(fn))
     } else if (fn.inputs.length === 1 && fn.inputs[0]?.type === 'uint256') {
-      arrayHandlers.push(new LimitedArrayHandler(fn, 5))
+      arrayHandlers.push(new LimitedArrayHandler(fn, PROBED_INDICES))
     }
   }
 

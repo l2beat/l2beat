@@ -15,12 +15,6 @@ export interface BlobRecord {
   size: bigint | null
 }
 
-export interface BlobPairCount {
-  from: string
-  to: string | null
-  count: number
-}
-
 export function toRecord(row: Selectable<Blob>): BlobRecord {
   return {
     id: row.id,
@@ -87,26 +81,20 @@ export class BlobsRepository extends BaseRepository {
     return rows.length
   }
 
-  async getCountPerAddressInbox(
+  async getByTimestampRange(
     daLayer: string,
     from: UnixTime,
     to: UnixTime,
-  ): Promise<BlobPairCount[]> {
+  ): Promise<BlobRecord[]> {
     const rows = await this.db
       .selectFrom('Blob')
-      .select(['from', 'to'])
-      .select((eb) => eb.fn.countAll<number>().as('count'))
+      .selectAll()
       .where('daLayer', '=', daLayerToNumber(daLayer))
       .where('timestamp', '>=', UnixTime.toDate(from))
       .where('timestamp', '<', UnixTime.toDate(to))
-      .groupBy(['from', 'to'])
       .execute()
 
-    return rows.map((r) => ({
-      from: r.from,
-      to: r.to ?? null,
-      count: Number(r.count),
-    }))
+    return rows.map(toRecord)
   }
 
   async getAll(): Promise<BlobRecord[]> {

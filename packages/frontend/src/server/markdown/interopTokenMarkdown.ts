@@ -37,7 +37,10 @@ export function renderOnchainDeployments(
   ])
 }
 
-/** Columns of the protocols table on the token page; entries arrive sorted by volume. */
+/**
+ * Columns of the protocols table on the token page; entries arrive sorted by
+ * volume, or by transfer count when the token's price is unreliable.
+ */
 export function renderProtocolsTable(entries: ProtocolEntry[]) {
   if (entries.length === 0) return 'No protocol data for this token.'
   return table(

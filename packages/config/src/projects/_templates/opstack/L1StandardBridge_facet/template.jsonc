@@ -12,6 +12,7 @@
   ],
   "fields": {
     "$admin": {
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "upgrade",

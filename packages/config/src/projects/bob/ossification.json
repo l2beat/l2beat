@@ -1,12 +1,44 @@
 {
   "events": [
     {
-      "timestamp": 1752759527,
+      "timestamp": 1741870439,
+      "type": "state",
+      "contract": "eth:0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0",
+      "transaction": "0x0ca390e0ff6ff0ac7ba8ac53ce10b6f696c6628eebcde0b375b38231543feaf6",
+      "updateId": "1ffbb65f",
+      "reason": "Bob Multisig 1, owner of this ProxyAdmin, raised its threshold from 4/6 to 5/7 while adding a signer (ChangedThreshold)."
+    },
+    {
+      "timestamp": 1741870439,
+      "type": "state",
+      "contract": "eth:0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393",
+      "transaction": "0x0ca390e0ff6ff0ac7ba8ac53ce10b6f696c6628eebcde0b375b38231543feaf6",
+      "updateId": "1ffbb65f",
+      "reason": "Bob Multisig 1, owner of the SystemConfig, raised its threshold from 4/6 to 5/7 while adding a signer (ChangedThreshold)."
+    },
+    {
+      "timestamp": 1742468147,
+      "type": "state",
+      "contract": "eth:0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0",
+      "transaction": "0x43a85e6e4e6e14adfb36563dc8dbf22fba559830c6b9749e283b4be4a13b06af",
+      "updateId": "163173aa",
+      "reason": "Bob Multisig 1, owner of this ProxyAdmin, lowered its threshold from 5/7 to 4/6 while removing a signer (ChangedThreshold)."
+    },
+    {
+      "timestamp": 1742468147,
+      "type": "state",
+      "contract": "eth:0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393",
+      "transaction": "0x43a85e6e4e6e14adfb36563dc8dbf22fba559830c6b9749e283b4be4a13b06af",
+      "updateId": "163173aa",
+      "reason": "Bob Multisig 1, owner of the SystemConfig, lowered its threshold from 5/7 to 4/6 while removing a signer (ChangedThreshold)."
+    },
+    {
+      "timestamp": 1752758927,
       "type": "code",
       "contract": "eth:0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
-      "transaction": "0xfdd53dea057419dee4a1f773029c57925865a0db916df2eddf1dbc988e6f3d56",
+      "transaction": "0x1d93c182527e3c738f03ffb7baf66bbddfb29e1e60bbd9f5457c7de1a90eaaf1",
       "updateId": "2f577ebe",
-      "reason": "Upgraded L1StandardBridge during BOB's fault-proof migration."
+      "reason": "Upgraded L1StandardBridge during BOB's fault-proof migration (implementation 0xeeafa156 to 0x64b5a5ed)."
     },
     {
       "timestamp": 1752761915,
@@ -14,6 +46,21 @@
       "contract": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",
       "transaction": "0x5fc7da71db9e1541e3eeeedbc3dd3058bf01b5d03b10eee95eaa5668e9efd74e",
       "reason": "Changed the dispute-game implementation during BOB's fault-proof migration."
+    },
+    {
+      "timestamp": 1752761915,
+      "type": "code",
+      "contract": "eth:0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
+      "transaction": "0x5fc7da71db9e1541e3eeeedbc3dd3058bf01b5d03b10eee95eaa5668e9efd74e",
+      "updateId": "2f577ebe",
+      "reason": "Upgraded L1StandardBridge again during BOB's fault-proof migration (implementation 0x64b5a5ed to 0x0b09ba35)."
+    },
+    {
+      "timestamp": 1752761915,
+      "type": "code",
+      "contract": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",
+      "transaction": "0x5fc7da71db9e1541e3eeeedbc3dd3058bf01b5d03b10eee95eaa5668e9efd74e",
+      "reason": "Upgraded the DisputeGameFactory in the same transaction that changed its dispute-game implementation."
     },
     {
       "timestamp": 1752764699,
@@ -74,21 +121,6 @@
       "transaction": "0x73d1b0bc059bf4a920e9017acd31695c2760a6e716b724aa760c893b312c218f",
       "updateId": "d25db477",
       "reason": "RISC Zero timelock executed addVerifier(0x242f9d5b, RiscZeroVerifierEmergencyStop 0x844D5f01 wrapping the RiscZeroSetVerifier), adding a live verifier route that can verify Kailua proofs."
-    },
-    {
-      "timestamp": 1762813583,
-      "type": "state",
-      "contract": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
-      "transaction": "0x4034a5ff890175a954f604129de7a6971ecf55183c8fd76aec3d20d597936f21",
-      "updateId": "c1f6733c",
-      "reason": "RISC Zero timelock executed removeVerifier(0x50bd1769), removing a live (unpaused) verifier route from the router used by Kailua."
-    },
-    {
-      "timestamp": 1762813655,
-      "type": "state",
-      "contract": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
-      "transaction": "0x17e31ee3b1308a5b30253935460e6dc8dd6f3e65eadc08893559b8d6e22a88a7",
-      "reason": "RISC Zero timelock executed removeVerifier(0xc101b42b), removing a second live (unpaused) verifier route from the router used by Kailua."
     },
     {
       "timestamp": 1764685823,

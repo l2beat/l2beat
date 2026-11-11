@@ -120,28 +120,17 @@ export const daTrackingStatusColumns: TableOptions<DaTrackingStatusRow>['columns
             : formatSeconds(row.original.ageSeconds),
       },
     }),
-    columnHelper.accessor('since', {
-      header: 'Since',
+    columnHelper.accessor('sinceBlock', {
+      header: 'Since block',
       cell: ({ row }) => (
-        <span className="font-mono text-xs">
-          {formatSince(row.original.since, row.original.sinceUnit)}
-        </span>
+        <span className="font-mono text-xs">{row.original.sinceBlock}</span>
       ),
       meta: {
-        csvHeader: 'Since',
-        getCsvValue: ({ row }) =>
-          formatSince(row.original.since, row.original.sinceUnit),
+        csvHeader: 'Since block',
+        getCsvValue: ({ row }) => row.original.sinceBlock.toString(),
       },
     }),
   ]
-
-function formatSince(value: number, unit: DaTrackingStatusRow['sinceUnit']) {
-  if (unit === 'timestamp') {
-    return `${formatTimestamp(value)} UTC`
-  }
-
-  return value.toString()
-}
 
 function DetailsCell({ value }: { value: string }) {
   return (

@@ -164,21 +164,23 @@ export async function getZkCatalogProjectEntry(
     },
   })
 
-  const verifiersSection = await getVerifiersSection(
-    project.zkCatalogInfo.verifierHashes,
-    contractUtils,
-    allProjects,
-    tvs,
-  )
-  sections.push({
-    type: 'VerifiersSection',
-    props: {
-      id: 'verifiers',
-      title: 'Verifier IDs',
-      variant: 'zkCatalog',
-      ...verifiersSection,
-    },
-  })
+  if (project.zkCatalogInfo.verifierHashes.length > 0) {
+    const verifiersSection = await getVerifiersSection(
+      project.zkCatalogInfo.verifierHashes,
+      contractUtils,
+      allProjects,
+      tvs,
+    )
+    sections.push({
+      type: 'VerifiersSection',
+      props: {
+        id: 'verifiers',
+        title: 'Verifier IDs',
+        variant: 'zkCatalog',
+        ...verifiersSection,
+      },
+    })
+  }
 
   const programHashesSection = await getProgramHashesSection(
     project,

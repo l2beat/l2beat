@@ -319,6 +319,14 @@ export const nova: ScalingProject = orbitStackL2({
   },
   milestones: [
     {
+      title: 'Stylus activations paused',
+      url: 'https://nova.arbiscan.io/tx/0x79e0fed470dff7a22059b108e3f8f42eddd2b580a6771594060c4e7326c5f984',
+      date: '2026-10-02T00:00:00Z',
+      description:
+        'Security Council halts new Stylus program activations; existing programs keep running.',
+      type: 'incident',
+    },
+    {
       title: 'Nova stops using its Data Availability Committee',
       url: 'https://etherscan.io/tx/0x7b7d15c0458651b00e689bf7e5444a3504098ff4fefadf71811d2963dfe3ff26',
       date: '2026-08-31T00:00:00Z',

@@ -5,6 +5,7 @@ import { getRowBackgroundColor } from '~/components/table/utils/rowType'
 import { hasDefiProjectPage } from '~/server/features/defi/project/hasDefiProjectPage'
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
 import { ps } from '~/server/projects'
+import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import { manifest } from '~/utils/Manifest'
 import { getUnderReviewStatus } from '~/utils/project/underReview'
 import {
@@ -22,7 +23,7 @@ export interface OssificationEntry
     > {
   category: OssificationCategory
   /** Project page; absent for DeFi projects without one */
-  href?: string
+  href?: `/${string}`
 }
 
 type OssificationEntryProject = Project<
@@ -30,7 +31,21 @@ type OssificationEntryProject = Project<
   'scalingInfo' | 'scalingRisks' | 'privacyInfo' | 'defiInfo' | 'tvsConfig'
 >
 
-export async function getOssificationEntries(): Promise<OssificationEntry[]> {
+const cache = new FrontendInMemoryCache('getOssificationEntries')
+
+/** Shared by the page and its markdown version, which would otherwise each read every value series. */
+export function getCachedOssificationEntries(): Promise<OssificationEntry[]> {
+  return cache.get(
+    {
+      key: ['ossification', 'entries'],
+      ttl: 5 * 60,
+      staleWhileRevalidate: 25 * 60,
+    },
+    getOssificationEntries,
+  )
+}
+
+async function getOssificationEntries(): Promise<OssificationEntry[]> {
   const projects = await ps.getProjects({
     select: ['ossificationHistory', 'statuses'],
     optional: [
@@ -80,7 +95,9 @@ export async function getOssificationEntries(): Promise<OssificationEntry[]> {
   return entries
     .filter((entry) => entry !== undefined)
     .sort(
-      (a, b) => b.score - a.score || (b.exposure ?? -1) - (a.exposure ?? -1),
+      (a, b) =>
+        b.score - a.score ||
+        (b.exposure?.value ?? -1) - (a.exposure?.value ?? -1),
     )
 }
 

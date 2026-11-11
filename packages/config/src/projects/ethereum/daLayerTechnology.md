@@ -3,9 +3,6 @@ Ethereum's consensus protocol combines two separate consensus protocols, LMD GHO
 LMD GHOST is a fork choice rule that ensures the liveness of the chain by selecting the Greedy Heaviest-Observed Sub-Tree (GHOST), and considering only the validators most recent vote (Latest Message Driven, LMD). 
 The weight of a branch is calculated by summing the votes for its root block and those for all child branches, acknowledging that a vote for a block inherently supports all its ancestors. 
 
-![GHOST fork choice](/images/da-layer-technology/ethereum/ghost.png#center)
-
-
 This mechanism ensures that the branch with the greatest validator support is favored when making fork choices.
 
 On the other hand, Casper FFG provides finality to the chain by modifying the fork choice rule. It ensures that once certain blocks are finalized, they are protected from being reverted, effectively pruning branches from the block tree. 
@@ -23,9 +20,6 @@ Moreover, in each slot one validator is chosen to propose a block which includes
 To ensure consistency among validators voting at different times within an epoch, they are required to vote for a common checkpoint, specifically the first slot of the epoch.
 Casper FFG achieves finality through a two-round process. In the first round, each validator proposes what they believe is the best checkpoint and collects attestation from the network about other validators' views. 
 If 2/3 of the validators agree on the same checkpoint, it becomes justified. In the second round, validators share the justified checkpoint from the first round. If again 2/3 of the validators agree, the checkpoint is finalized.
-
-![Casper finality](/images/da-layer-technology/ethereum/casper.png#center)
-
 
 Finalization is achieved when confirmation is received from over 2/3 of the validators, indicating that they have observed commitments from more than 2/3 of the validators agreeing not to revert the checkpoint. 
 A finalized checkpoint becomes irreversible unless at least 1/3 of the validators change their stance, which would lead to their stake being slashed. 

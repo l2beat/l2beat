@@ -8,5 +8,11 @@
     "hash": "0xaf17ca5ee2e209df804f29aa9bf13e346e1e2d636d4fa392b9583436f074a9bd",
     "address": "eth:0x00e9d8A4b35C32880A10Feb391aDEDA0D3F90991",
     "blockNumber": 23588465
+  },
+  "CTMDeploymentTracker_v31.sol": {
+    "hash": "0xd273602c91cf4fb59a10d0a1f59d108fe2f673d627ea3bf52f3ac533a7ec551f",
+    "address": "eth:0xdbE0a8cfdc09f3920b656e9aEA6bD329e15dA59D",
+    "chain": "ethereum",
+    "blockNumber": 26334746
   }
 }

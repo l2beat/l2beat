@@ -4,8 +4,9 @@
   "critical": true,
   "description": "Thin router that forwards SP1 ZK proof verification to the {{SP1_VERIFIER}}. Can be permanently nullified.",
   "fields": {
+    // MEDIUM: a one-way kill switch, the other proof type then resolves alone.
     "nullified": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     }
   }
 }

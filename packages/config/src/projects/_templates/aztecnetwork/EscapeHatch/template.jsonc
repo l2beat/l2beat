@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
   "description": "Provides a fallback mechanism for block production if the primary sequencer committee fails or censors. Candidates post a bond of {{getBondSizeFmt}} AZTEC and enter the candidate set. For each hatch, the contract snapshots the eligible set and uses RANDAO to select one designated proposer; posting a bond does not grant immediate proposal rights. If the designated proposer fails to propose and prove, their bond is slashed by {{getFailedHatchPunishmentFmt}} AZTEC. The minimum tax deducted from their bond is {{getWithdrawalTaxFmt}} AZTEC, even if the proposal is successful. The escape hatch regularly opens every {{getFrequency}} epochs, given there are any eligible bonded candidates.",
   "ignoreMethods": [
     "getCandidateAtIndex",
@@ -37,8 +38,7 @@
       "edit": ["format", "Undecimal18"]
     },
     "getCandidateCount": {
-      "description": "Hatch proposer candidates who posted the bond.",
-      "severity": "HIGH"
+      "description": "Hatch proposer candidates who posted the bond."
     },
     "getBondToken": {
       "description": "The ERC20 token used for candidate bonds."
@@ -66,6 +66,9 @@
     },
     "LAG_IN_EPOCHS_FOR_RANDAO": {
       "description": "The number of epochs to look back from the start of the hatch for a stable RANDAO seed."
+    },
+    "getRollupLagInEpochsForRandao": {
+      "description": "The Rollup's RANDAO lag in epochs. The hatch adds it when reading the Rollup's sample seed, so the seed reflects RANDAO at the hatch's seed epoch."
     },
     "LAG_IN_EPOCHS_FOR_SET_SIZE": {
       "description": "The number of epochs to look back from the start of the hatch to snapshot the stable candidate set."

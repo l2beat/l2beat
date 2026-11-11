@@ -1,4 +1,4 @@
-export const NATIVE_ROLLUPS_BOOK_URL = 'https://native-rollups.l2beat.com'
+export const NATIVE_ROLLUPS_BOOK_URL = 'https://native-rollups.ethbeat.org'
 export const NATIVE_ROLLUPS_DEMO_URL = 'https://nativerollups.fyi'
 export const NATIVE_ROLLUPS_EIP_URL = 'https://eips.ethereum.org/EIPS/eip-8079'
 export const NATIVE_PROOF_VERIFICATION_URL =
@@ -14,4 +14,4 @@ export const L2_FOCIL_RESEARCH_URL =
 export const EIP_8025_URL = 'https://eips.ethereum.org/EIPS/eip-8025'
 export const EIP_8142_URL = 'https://eips.ethereum.org/EIPS/eip-8142'
 export const EIP_8288_URL = 'https://eips.ethereum.org/EIPS/eip-8288'
-export const EIP_8357_URL = 'https://github.com/ethereum/EIPs/pull/12055'
+export const EIP_8357_URL = 'https://eips.ethereum.org/EIPS/eip-8357'

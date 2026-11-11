@@ -1,4 +1,5 @@
 import { TableLink } from '~/components/table/TableLink'
+import { cn } from '~/utils/cn'
 import {
   Tooltip,
   TooltipContent,
@@ -9,9 +10,15 @@ import { PizzaRosetteIcon } from './PizzaRosetteIcon'
 import { PizzaRosetteTooltip } from './PizzaRosetteTooltip'
 
 interface Props {
+  /** Names the link, e.g. "Arbitrum One risk analysis". */
+  projectName: string
   href: string
   values: RosetteValue[]
   isUnderReview?: boolean
+  /** For the rosette, e.g. its size. */
+  iconClassName?: string
+  /** For the link around it, e.g. its hover background. */
+  linkClassName?: string
 }
 
 export function PizzaRosetteCell(props: Props) {
@@ -21,11 +28,15 @@ export function PizzaRosetteCell(props: Props) {
 
   return (
     <Tooltip contentInHtml>
-      <TooltipTrigger asChild disabledOnMobile>
-        <TableLink href={props.href} aria-label="Risk analysis">
+      <TooltipTrigger asChild disabledOnTouch>
+        <TableLink
+          href={props.href}
+          aria-label={`${props.projectName} risk analysis`}
+          className={props.linkClassName}
+        >
           <PizzaRosetteIcon
             values={props.values}
-            className="size-6 md:size-8"
+            className={cn('size-6 md:size-8', props.iconClassName)}
             isUnderReview={isUnderReview}
             background={false}
             disableSectionLinking

@@ -13,6 +13,7 @@ const chainId = 81457
 
 export const blast: ScalingProject = opStackL2({
   addedAt: UnixTime(1700555008), // 2023-11-21T08:23:28Z
+  archivedAt: UnixTime(1793999543), // 2026-11-06T21:12:23Z, last batcher tx — chain wound down per 2026-10-02 announcement, L1BlastBridge deposits reverting since 2026-10-29, OptimismPortal paused 2026-11-04
   discovery,
   daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 19300387 })],
   display: {
@@ -20,7 +21,7 @@ export const blast: ScalingProject = opStackL2({
     slug: 'blast',
     architectureImage: 'blast',
     headerWarning:
-      'Blast is winding down. See the [announcement](https://x.com/blast/status/2106032805280891073) and withdraw your funds to Ethereum by October 26, 2026.',
+      'Blast is shutting down (see the [announcement](https://x.com/blast/status/2106032805280891073)). Deposits are closed and the OptimismPortal is paused, so withdrawals through the bridge are no longer possible. The ETH and DAI backing user balances were moved to BlastExit claim contracts on Ethereum, controlled by the Blast team.',
     description:
       'Blast is an EVM-compatible Optimistic Rollup supporting native yield. It invests funds deposited into the L1 bridge into various DeFi protocols transferring yield back to the L2.',
     links: {
@@ -72,7 +73,7 @@ export const blast: ScalingProject = opStackL2({
           },
           {
             title: 'L2OutputOracle.sol - Etherscan source code, PROPOSER check',
-            url: 'https://etherscan.io/address/0x1C90963D451316E3DBFdD5A30354EE56C29016EB#code',
+            url: 'https://etherscan.io/address/0x550893B7041E91A090e7d03Cf437029Fe0f68ABc#code',
           },
         ],
         risks: [EXITS.RISK_REHYPOTHECATED_ASSETS, EXITS.RISK_LACK_OF_LIQUIDITY],
@@ -94,6 +95,7 @@ export const blast: ScalingProject = opStackL2({
     chainId,
     explorerUrl: 'https://blastscan.io',
     sinceTimestamp: UnixTime.fromDate(new Date('2024-02-24T21:23:35Z')),
+    untilTimestamp: UnixTime(1793999543), // 2026-11-06T21:12:23Z
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -128,6 +130,27 @@ export const blast: ScalingProject = opStackL2({
       ...ESCROW.CANONICAL_ADD_TA,
       description:
         'Escrow for ETH that is invested into yield-bearing contracts such as stETH.',
+    }),
+    // DAI in the BlastExit contracts backs USDB, which is counted by its L2 supply
+    discovery.getEscrowDetails({
+      address: ChainSpecificAddress(
+        'eth:0x9D31771458B421C7EA8A06CB8D12663E91617869',
+      ),
+      name: 'BlastExit',
+      tokens: ['ETH'],
+      ...ESCROW.CANONICAL_ADD_TA,
+      description:
+        'Merkle claim contract for the shutdown: users claim their ETH and DAI against a root of balances set by the authority.',
+    }),
+    discovery.getEscrowDetails({
+      address: ChainSpecificAddress(
+        'eth:0x23eA8c6ACEb5673BBd712137cE2Aa33db36CB513',
+      ),
+      name: 'BlastExit2',
+      tokens: ['ETH'],
+      ...ESCROW.CANONICAL_ADD_TA,
+      description:
+        'Second Merkle claim contract for the shutdown: users claim their ETH and DAI against a root of balances set by the authority.',
     }),
   ],
   isNodeAvailable: true,

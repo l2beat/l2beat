@@ -13,7 +13,6 @@ import { rangeToDays } from '~/utils/range/rangeToDays'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { getChartStartTimestamp } from '../../utils/getChartStartTimestamp'
 import { isThroughputSynced } from './isThroughputSynced'
-import { isInEigendaLayerDataGap } from './utils/eigendaDataGap'
 import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
 
 type ProjectDaThroughputChart = {
@@ -50,13 +49,9 @@ export async function getProjectDaThroughputChart(
   const { grouped, from, to, maxTimestamp, syncedUntil } = data
 
   const timestamps = generateTimestamps([from, to], resolution)
-  const hasEigendaGap = params.projectId === 'eigenda' && !params.includeL2Only
 
   return {
     chart: timestamps.map((timestamp) => {
-      if (hasEigendaGap && isInEigendaLayerDataGap(timestamp, resolution)) {
-        return [timestamp, null]
-      }
       const posted =
         timestamp <= maxTimestamp ? (grouped[timestamp] ?? 0) : null
       return [timestamp, posted]
@@ -176,7 +171,7 @@ function getMockProjectDaThroughputChart({
   const to = UnixTime.toStartOf(UnixTime.now(), 'day')
   const from = range[0] ?? to - days * UnixTime.DAY
 
-  if (!['ethereum', 'celestia', 'avail', 'eigenda'].includes(projectId)) {
+  if (projectId !== 'ethereum') {
     return {
       chart: [],
       range: [from, to],

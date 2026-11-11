@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "FeeHandlerRouter",
+  "description": "Routes bridge deposit fees to a configured fee handler for each token resource.",
+  "fields": { "accessControl": { "handler": { "type": "accessControl" } } }
+}

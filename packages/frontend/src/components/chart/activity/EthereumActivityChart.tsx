@@ -1,8 +1,8 @@
 import type { Milestone, ProjectScalingCategory } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
-import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
-import type { ChartProject } from '~/components/core/chart/Chart'
+import type { ChartProject } from '~/components/core/chart/ChartContext'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { ActivityChartRangeControls } from '~/pages/layer2s/activity/components/ActivityChartRangeControls'
 import type { ActivityMetric } from '~/pages/layer2s/activity/components/ActivityMetricContext'
@@ -36,11 +36,11 @@ export function EthereumActivityChart({
   const [metric, setMetric] = useState<ActivityMetric>('uops')
   const [scale, setScale] = useState<ChartScale>('linear')
 
-  const { data: chart, isLoading } = useQuery(
-    trpc.activity.ethereumChart.queryOptions({
-      range,
-    }),
-  )
+  const {
+    data: chart,
+    isLoading,
+    isPlaceholderData,
+  } = useChartQuery(trpc.activity.ethereumChart, { range })
 
   const type = getChartType(category)
 
@@ -70,15 +70,18 @@ export function EthereumActivityChart({
   }, [chart?.data])
 
   const timeRange = getChartTimeRangeFromData(chartData, { bucket: 'day' })
-  const lastRatio = ratioData?.at(-1)?.ratio
   return (
     <div className="flex flex-col">
       <ChartControlsWrapper>
-        <ProjectChartTimeRange timeRange={timeRange} />
+        <ProjectChartTimeRange
+          isPlaceholderData={isPlaceholderData}
+          timeRange={timeRange}
+        />
         <ActivityChartRangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>
       <div className="mt-4 mb-3">
         <ActivityChart
+          isPlaceholderData={isPlaceholderData}
           data={chartData}
           milestones={milestones}
           scale={scale}
@@ -92,6 +95,7 @@ export function EthereumActivityChart({
       </div>
       <div className="mb-2">
         <ActivityRatioChart
+          isPlaceholderData={isPlaceholderData}
           data={ratioData}
           syncedUntil={chart?.syncedUntil}
           isLoading={isLoading}
@@ -116,7 +120,6 @@ export function EthereumActivityChart({
       <ActivityChartStatsPanel
         stats={chart?.stats}
         metric={metric}
-        lastRatio={lastRatio}
         isLoading={isLoading}
       />
     </div>

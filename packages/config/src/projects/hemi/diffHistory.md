@@ -1,3 +1,72 @@
+Generated with discovered.json: 0x16444dcbd136bed6b27e2445d6cdb96fff37b505
+
+# Diff at Fri, 16 Oct 2026 09:37:47 GMT:
+
+- id: cc820b22
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1767717347
+- current timestamp: 1767717347
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1767717347 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal (eth:0x39a0005415256B9863aFE2d55Edcf75ECc3A4D7e) [opstack/OptimismPortal] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      fieldMeta.guardian:
++        {"severity":"MEDIUM"}
+      fieldMeta.GUARDIAN:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x5ae68684D9179A8053883f1Df599Ea7Fb35303c3) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP).
++++ severity: HIGH
+      values.enabledFeatures:
++        []
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.enabledFeatures:
++        {"severity":"HIGH","description":"Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."}
+      fieldMeta.isCustomGasToken:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x5eaa10F99e7e6D177eF9F74E519E319aa49f191e) [opstack/L1StandardBridge_usdc_recovery] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This version includes a guardian function to recover USDC that was incorrectly sent to the L2 Stargate USDC address.
+      fieldMeta:
++        {"$admin":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xA5F37791378c55941a52B4dCb70Be4D8D09f5e43) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xbE81A9D662422f667F634f3Fc301e2E360FeFB30) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
 Generated with discovered.json: 0x747f6ac646792317cd50902f396c8b6000c19f84
 
 # Diff at Wed, 23 Sep 2026 05:46:47 GMT:

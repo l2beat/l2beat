@@ -1,4 +1,8 @@
-import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -42,13 +46,23 @@ export const edgechain: ScalingProject = orbitStackL3({
   chainConfig: {
     name: 'edgechain',
     chainId: 3343,
+    explorerUrl: 'https://edge-mainnet.explorer.alchemy.com',
     sinceTimestamp: UnixTime(1761511538),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 2121,
+        version: '3',
+      },
+    ],
     apis: [
       {
         type: 'rpc',
         url: 'https://edge-mainnet.g.alchemy.com/v2/p7XZ9PmQlUFoTRxwIeB38',
         callsPerMinute: 300,
       },
+      { type: 'sourcify', chainId: 3343 },
     ],
   },
   nonTemplateEscrows: [

@@ -20,15 +20,11 @@ import { configReader, configs, discoveryOf, paths } from './fixtures'
 // (so we don't show them on the frontend), but we still
 // want to monitor using discovery.
 export const onChainProjects: string[] = [
-  'blobstream',
-  'eigenda',
   'shared-eigenlayer',
   'swell',
   'worldcoin',
   'cronoszkevm',
   'nebraupa',
-  'vector',
-  'espresso',
   'dydx',
   'lido',
   'gateway',
@@ -333,22 +329,6 @@ describe('discovery config.jsonc', () => {
       }
       expect(invalid).toEqual([])
     })
-  })
-
-  // TODO(radomski): We have to skip this test because we have to duplicate
-  // names for different chains, we don't have a catch-all chain
-  it.skip('every name in config.jsonc is unique', () => {
-    for (const c of configs ?? []) {
-      if (c.color.names === undefined) {
-        continue
-      }
-
-      assert(
-        new Set(Object.values(c.color.names)).size ===
-          Object.values(c.color.names).length,
-        `names field in ${c.name} configuration includes duplicate names`,
-      )
-    }
   })
 
   it('discovered.json hash matches the one stored in diffHistory.md', () => {

@@ -9,6 +9,7 @@
   "ignoreMethods": ["addresslistLengthAtBlock", "getEncryptionAgents"],
   "ignoreRelatives": ["settings"],
   "fields": {
+    "$admin": { "severity": "MEDIUM" },
     "multisigSigners": {
       "handler": {
         "type": "event",

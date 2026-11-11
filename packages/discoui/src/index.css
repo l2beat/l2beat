@@ -1,0 +1,192 @@
+@import "./markdown.css" layer(base);
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme static {
+  --color-*: initial;
+  --color-transparent: transparent;
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  --color-coffee-50: #ffffff;
+  --color-coffee-100: #f8ebdd;
+  --color-coffee-200: #f0d8bd;
+  --color-coffee-300: #cdb090;
+  --color-coffee-400: #a98763;
+  --color-coffee-500: #816a53;
+  --color-coffee-600: #594c43;
+  --color-coffee-700: #3c332d;
+  --color-coffee-800: #282422;
+  --color-coffee-900: #1d1816;
+
+  --color-autumn-200: #d4f417;
+  --color-autumn-300: #bad80a;
+  --color-autumn-600: #4c9e2e;
+
+  --color-aux-blue: #8b8be8;
+  --color-aux-orange: #fe8019;
+  --color-aux-red: #ff5540;
+  --color-aux-green: #9dde6c;
+  --color-aux-teal: #83a599;
+  --color-aux-yellow: #fabd30;
+  --color-aux-amber: #ffc107;
+  --color-aux-cyan: #2e9bb1;
+  --color-aux-pink: #e27991;
+  --color-aux-purple: #a73db5;
+  --color-aux-brown: #7f3d0c;
+
+  --color-scrim: #000000;
+}
+
+@theme {
+  --font-*: initial;
+  --font-sans: system-ui, sans-serif;
+  --font-mono:
+    ui-monospace, Menlo, Monaco, Cascadia Code, Source Code Pro, Consolas,
+    DejaVu Sans Mono, monospace;
+  --font-serif: Charter, Bitstream Charter, Sitka Text, Cambria, serif;
+
+  --text-2xs: 0.625rem;
+  --text-3xs: 0.5rem;
+  --text-xs--line-height: 1rem;
+  --text-sm--line-height: 1.25rem;
+  --text-base--line-height: 1.5rem;
+  --text-lg--line-height: 1.75rem;
+  --text-xl--line-height: 1.75rem;
+  --text-2xl--line-height: 2rem;
+  --text-4xl--line-height: 2.5rem;
+
+  --animate-spin-reverse: spin-reverse 1s linear infinite;
+  --animate-breath: breath 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+  @keyframes spin-reverse {
+    to {
+      transform: rotate(-360deg);
+    }
+  }
+
+  @keyframes breath {
+    0%,
+    100% {
+      opacity: 0.3;
+    }
+    50% {
+      opacity: 0.8;
+    }
+  }
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    --editor-active-line: rgba(255, 255, 255, 0.05);
+    --editor-active-line-number: #c6c6c6;
+    --editor-selection-match: rgba(173, 214, 255, 0.15);
+    --editor-bracket-match: rgba(0, 100, 0, 0.3);
+    --editor-search-match: rgba(234, 92, 0, 0.33);
+    --editor-search-match-selected: rgba(81, 92, 106, 1);
+    --editor-goto-target: rgba(255, 255, 255, 0.1);
+    --editor-shadow: rgba(0, 0, 0, 0.6);
+    --diff-removed: rgba(255, 0, 0, 0.2);
+    --diff-inserted-line: rgba(155, 185, 85, 0.2);
+    --diff-inserted-text: rgba(156, 204, 44, 0.2);
+    --diff-diagonal: rgba(204, 204, 204, 0.2);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  button,
+  input,
+  optgroup,
+  select,
+  textarea {
+    font-style: normal;
+  }
+
+  th,
+  td {
+    padding: 1px;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: #9ca3af;
+  }
+}
+
+@layer utilities {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-coffee-400) transparent;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-autumn-300 outline-solid;
+  }
+
+  ::selection {
+    @apply bg-coffee-700;
+  }
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+
+  --color-coffee-50: #100c0a;
+  --color-coffee-100: #1e1a16;
+  --color-coffee-200: #2f2721;
+  --color-coffee-300: #51453c;
+  --color-coffee-400: #6c5d52;
+  --color-coffee-500: #908479;
+  --color-coffee-600: #bcb2aa;
+  --color-coffee-700: #e1d9d1;
+  --color-coffee-800: #f2eee8;
+  --color-coffee-900: #fefdfa;
+
+  --color-autumn-200: #697903;
+  --color-autumn-300: #556300;
+  --color-autumn-600: #2b7800;
+
+  --color-aux-blue: #5e5ab2;
+  --color-aux-orange: #973f00;
+  --color-aux-red: #d01601;
+  --color-aux-green: #417501;
+  --color-aux-teal: #446359;
+  --color-aux-yellow: #876201;
+  --color-aux-amber: #997204;
+  --color-aux-cyan: #037386;
+  --color-aux-pink: #a13f5a;
+  --color-aux-purple: #a439b1;
+  --color-aux-brown: #e9d9c4;
+
+  --color-scrim: #100c0a;
+
+  --editor-active-line: rgba(60, 40, 20, 0.05);
+  --editor-active-line-number: #1e1a16;
+  --editor-selection-match: rgba(60, 120, 200, 0.15);
+  --editor-bracket-match: rgba(0, 120, 0, 0.18);
+  --editor-search-match: rgba(234, 92, 0, 0.25);
+  --editor-search-match-selected: rgba(170, 190, 215, 1);
+  --editor-goto-target: rgba(60, 40, 20, 0.08);
+  --editor-shadow: rgba(60, 40, 20, 0.18);
+  --diff-removed: rgba(255, 0, 0, 0.15);
+  --diff-inserted-line: rgba(155, 185, 85, 0.25);
+  --diff-inserted-text: rgba(120, 170, 20, 0.3);
+  --diff-diagonal: rgba(60, 40, 20, 0.1);
+}
+
+/* Lime stays the fill color, as black text reads well on it; on paper, lime
+   text and lines do not, so everything else takes the darker olive. */
+[data-theme="light"]
+  :is(.bg-autumn-300, .hover\:bg-autumn-200, .hover\:bg-autumn-300) {
+  --color-autumn-200: #d4f417;
+  --color-autumn-300: #bad80a;
+}
+
+[data-theme="light"] img[src$="logo.svg"] {
+  filter: brightness(0.25);
+}

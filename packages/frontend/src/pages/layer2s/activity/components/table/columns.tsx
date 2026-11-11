@@ -18,6 +18,7 @@ import type { CommonProjectColumnsOptions } from '~/components/table/common-proj
 import { getL2CommonProjectColumns } from '~/components/table/common-project-columns/L2CommonProjectColumns'
 import { withChangeSort } from '~/components/table/sorting/changeSortColumn'
 import { EM_DASH } from '~/consts/characters'
+import { ETHEREUM_PROJECT_PATH } from '~/pages/ethereum/paths'
 import type { L2ActivityEntry } from '~/server/features/layer2s/activity/getL2ActivityEntries'
 import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { formatTimestamp } from '~/utils/dates'
@@ -61,7 +62,7 @@ export const getL2ActivityColumns = (
       columnHelper,
       (row) =>
         row.id === ProjectId.ETHEREUM
-          ? undefined
+          ? `${ETHEREUM_PROJECT_PATH}#activity`
           : `/layer2s/projects/${row.slug}#activity`,
       opts,
     ),

@@ -49,10 +49,13 @@ PopoverContent.displayName = PopoverPrimitive.Content.displayName
 
 const PopoverAnchor = PopoverPrimitive.Anchor
 
+const PopoverPortal = PopoverPrimitive.Portal
+
 export {
   Popover,
   PopoverTrigger,
   PopoverContent,
   PopoverAnchor,
+  PopoverPortal,
   popoverTriggerClasses,
 }

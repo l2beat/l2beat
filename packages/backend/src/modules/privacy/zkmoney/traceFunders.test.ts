@@ -7,8 +7,12 @@ import {
   BOB,
   DAI,
   DEPOSIT_FEE,
+  ESCROW,
+  ESCROW_FACTORY,
+  escrowExecuted,
   FUNDED,
   FUNDING_PARAMS,
+  MIGRATION_EXECUTOR,
   mockZkMoneyRpc,
   PORTAL,
   portalDeposit,
@@ -64,6 +68,49 @@ describe(traceZkMoneyFunders.name, () => {
 
     expect(funders).toEqual(new Map([[portalEvent, ALICE]]))
     expect(logsProvider.getLogs).not.toHaveBeenCalled()
+  })
+
+  it('keys a migrated deposit by its recipient commitment', async () => {
+    const portalEvent = portalDeposit(1, { logIndex: 4 })
+
+    const funders = await trace(
+      portalEvent,
+      {
+        rpc: mockZkMoneyRpc({
+          receipt: [
+            transfer(MIGRATION_EXECUTOR, PORTAL, FUNDED, { logIndex: 3 }),
+            portalEvent,
+          ],
+          implementation: EthereumAddress.ZERO,
+        }),
+        logsProvider: mockLogsProvider([]),
+      },
+      { ...FUNDING_PARAMS, migrationExecutors: [MIGRATION_EXECUTOR] },
+    )
+
+    expect(funders).toEqual(new Map([[portalEvent, `0x${'00'.repeat(31)}01`]]))
+  })
+
+  it('leaves a deposit by an internal escrow unattributed', async () => {
+    const portalEvent = portalDeposit(1, { logIndex: 4 })
+    const receipt = [
+      transfer(ESCROW, PORTAL, FUNDED, { logIndex: 3 }),
+      portalEvent,
+      escrowExecuted(ESCROW, { logIndex: 5 }),
+    ]
+    const deps = {
+      rpc: mockZkMoneyRpc({ receipt, implementation: EthereumAddress.ZERO }),
+      logsProvider: mockLogsProvider([]),
+    }
+
+    const internal = await trace(portalEvent, deps, {
+      ...FUNDING_PARAMS,
+      internalEscrowFactories: [ESCROW_FACTORY],
+    })
+    const external = await trace(portalEvent, deps)
+
+    expect(internal).toEqual(new Map())
+    expect(external).toEqual(new Map([[portalEvent, ESCROW]]))
   })
 
   it('leaves a deposit from a clone the factory does not vouch for unattributed', async () => {
@@ -184,10 +231,11 @@ function trace(
   portalEvent: Log,
   deps: Omit<TraceFundersDependencies, 'getBlockNumberAtOrBefore'> &
     Partial<TraceFundersDependencies>,
+  params = FUNDING_PARAMS,
 ) {
   return traceZkMoneyFunders(
     [{ log: portalEvent, timestamp: DEPOSIT_TIMESTAMP }],
-    FUNDING_PARAMS,
+    params,
     {
       getBlockNumberAtOrBefore: async () => LOOKBACK_BLOCK,
       ...deps,

@@ -18,7 +18,7 @@
   ],
   "fields": {
     "dao": {
-      "description": "Aragon DAO whose permission manager controls voting settings, targets and upgrades."
+      "description": "Aragon governance contract whose permission manager controls voting settings, targets and upgrades."
     },
     "getVotingToken": {
       "description": "Immutable IVotes source used for proposal snapshots and vote weights."

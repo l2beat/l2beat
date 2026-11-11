@@ -1,9 +1,9 @@
-import { inflateRawSync } from 'zlib'
 import type { Chain } from '../../../config/types'
-import type { AlchemyClient } from '../../../third-party/AlchemyClient'
+import type { ChainRpcClient } from '../../../third-party/ChainRpcClient'
 import type { IAddressService } from './AddressService'
 import type { AddressAlias } from './addressAlias'
 import type { Decoder, Transaction } from './Decoder'
+import { decodeCalldata } from './decodeCalldata'
 import type { ISignatureService } from './SignatureService'
 
 export interface ApiQuery {
@@ -25,6 +25,7 @@ export interface SignatureResult {
 export interface PreimageResult {
   hash: `0x${string}`
   preimage: string
+  minusOne?: boolean
 }
 
 export interface AddressResult {
@@ -32,6 +33,7 @@ export interface AddressResult {
   address: `0x${string}`
   name?: string
   alias?: AddressAlias
+  token?: { name: string; decimals: number }
   abi: SignatureResult[]
 }
 
@@ -52,7 +54,7 @@ export class ApiController {
     private decoder: Decoder,
     private signatureService: ISignatureService,
     private addressService: IAddressService,
-    private alchemyClient: AlchemyClient,
+    private chainRpcClient: ChainRpcClient,
     private chains: Chain[],
     private hashes: Record<`0x${string}`, string>,
   ) {}
@@ -88,6 +90,7 @@ export class ApiController {
       address,
       name: result.name,
       alias: result.alias,
+      token: result.token,
       abi: result.abi,
     }
   }
@@ -95,14 +98,19 @@ export class ApiController {
   async getSafeState(chainId: number, address: `0x${string}`) {
     const chain = this.chains.find((x) => x.chainId === chainId)
     if (!chain) throw new Error('Unknown chain id')
-    return await this.alchemyClient.getSafeState(address, chain)
+    return await this.chainRpcClient.getSafeState(address, chain)
   }
 
   lookupPreimages(hashes: `0x${string}`[]): PreimageResult[] {
-    return hashes.flatMap((hash) => {
+    return hashes.flatMap((hash): PreimageResult[] => {
       const preimage = this.hashes[hash]
-      if (!preimage) return []
-      return [{ hash, preimage }]
+      if (preimage) return [{ hash, preimage }]
+      const plusOne: `0x${string}` = `0x${(BigInt(hash) + 1n).toString(16).padStart(64, '0')}`
+      const preimageMinusOne = this.hashes[plusOne]
+      if (preimageMinusOne) {
+        return [{ hash, preimage: preimageMinusOne, minusOne: true }]
+      }
+      return []
     })
   }
 
@@ -160,46 +168,24 @@ export class ApiController {
       if (!chain) {
         throw new Error('Unknown chain id!')
       }
-      const tx = await this.alchemyClient.getTransaction(hash, chain)
+      const tx = await this.chainRpcClient.getTransaction(hash, chain)
       if (!tx) {
         throw new Error('Transaction not found!')
       }
       return { chain, data: tx.data, to: tx.to }
     }
 
-    const results = await Promise.allSettled(
-      this.chains.map(async (c): Promise<Transaction | undefined> => {
-        const tx = await this.alchemyClient.getTransaction(hash, c)
-        if (tx) {
-          return { chain: c, data: tx.data, to: tx.to }
-        }
-      }),
-    )
-    for (const res of results) {
-      if (res.status === 'fulfilled' && res.value) {
-        return res.value
+    const lookups = this.chains.map(async (c): Promise<Transaction> => {
+      const tx = await this.chainRpcClient.getTransaction(hash, c)
+      if (!tx) {
+        throw new Error('Transaction not found!')
       }
+      return { chain: c, data: tx.data, to: tx.to }
+    })
+    try {
+      return await Promise.any(lookups)
+    } catch {
+      throw new Error('Transaction not found!')
     }
-    throw new Error('Transaction not found!')
   }
-}
-
-function decodeCalldata(calldata: string): `0x${string}` {
-  if (calldata.length > 4096) {
-    throw new Error('Calldata too long')
-  }
-
-  const compressedBytes = urlSafeBase64Decode(calldata)
-  const bytes = inflateRawSync(compressedBytes, { maxOutputLength: 128 * 1024 })
-  const result = `0x${bytes.toString('hex')}` as const
-  return result
-}
-
-function urlSafeBase64Decode(data: string): Buffer {
-  const replaced = data
-    .replace(/-/g, '+')
-    .replace(/_/g, '/')
-    .padEnd(data.length + ((4 - (data.length % 4)) % 4), '=')
-
-  return Buffer.from(replaced, 'base64')
 }

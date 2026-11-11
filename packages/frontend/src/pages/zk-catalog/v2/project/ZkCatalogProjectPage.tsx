@@ -9,21 +9,26 @@ import { ProjectDetails } from '~/components/projects/ProjectDetails'
 import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
-import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { StickyMobileSectionNavigation } from '~/components/section-navigation/StickyMobileSectionNavigation'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type { ProjectSectionLink } from '~/server/features/projects/getProjectSectionLinks'
+import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 import type { ProjectZkCatalogEntry } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
 import { ProjectZkCatalogSummary } from './components/header/ZkCatalogProjectSummary'
 
 interface Props extends AppLayoutProps {
   projectEntry: ProjectZkCatalogEntry
+  sectionLinks: ProjectSectionLink[]
+  versionLinks?: ProjectVersionLinks
   queryState: DehydratedState
 }
 
 export function ZkCatalogProjectPage({
   projectEntry,
+  sectionLinks,
+  versionLinks,
   queryState,
   ...props
 }: Props) {
@@ -53,9 +58,15 @@ export function ZkCatalogProjectPage({
                 <div className="pt-6 max-md:px-4 lg:pt-4">
                   <ProjectHeader
                     project={projectEntry}
+                    section="zkCatalog"
+                    sectionLinks={sectionLinks}
+                    versions={versionLinks}
                     secondLine={projectEntry.creator}
                   />
-                  <ProjectSummaryBars project={projectEntry} />
+                  <ProjectSummaryBars
+                    project={projectEntry}
+                    versions={versionLinks}
+                  />
                   {projectEntry.header.description && (
                     <AboutSection
                       description={projectEntry.header.description}
@@ -89,7 +100,6 @@ export function ZkCatalogProjectPage({
                   </div>
                 )}
               </div>
-              <ScrollToTopButton />
             </div>
           </div>
         </SideNavLayout>

@@ -1,5 +1,5 @@
 import { SLOT_SECONDS } from '@l2beat/shared-pure'
-import { mixColors } from '../color'
+import { mixColors } from '~/utils/color'
 import { tileBounds } from './beltLayout'
 import type { BeltPalette } from './beltPalette'
 import {

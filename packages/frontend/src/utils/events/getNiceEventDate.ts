@@ -1,25 +1,24 @@
-import { formatTimestamp } from '../dates'
+import { UnixTime } from '@l2beat/shared-pure'
+import { formatRange, formatTimestamp } from '../dates'
 import type { OneTimeEvent } from './getOneTimeEvents'
 
 export function getNiceEventDate(event: OneTimeEvent) {
-  const startDay = event.data.startDate.getDate()
-  const startTimestamp = Math.ceil(event.data.startDate.getTime() / 1000)
-
+  const start = UnixTime.fromDate(event.data.startDate)
   if (!event.data.endDate) {
-    return formatTimestamp(startTimestamp, { mode: 'datetime' })
+    return formatTimestamp(start, { mode: 'datetime' })
   }
 
-  const endDay = event.data.endDate.getDate()
-  const endTimestamp = Math.ceil(event.data.endDate.getTime() / 1000)
-
-  if (startDay === endDay) {
-    return `${formatTimestamp(startTimestamp, {
-      mode: 'date',
-    })}\n${formatTimestamp(startTimestamp, { mode: 'time' }).slice(
-      0,
-      -4,
-    )} - ${formatTimestamp(endTimestamp, { mode: 'time' })}`
+  const end = UnixTime.fromDate(event.data.endDate)
+  if (isSameUtcDay(start, end)) {
+    return formatRange(start, end)
   }
+  // formatRange shows hours for short spans; day starts keep an overnight event as two dates
+  return formatRange(
+    UnixTime.toStartOf(start, 'day'),
+    UnixTime.toStartOf(end, 'day'),
+  )
+}
 
-  return `${formatTimestamp(startTimestamp)} - ${formatTimestamp(endTimestamp)}`
+function isSameUtcDay(a: UnixTime, b: UnixTime) {
+  return UnixTime.toStartOf(a, 'day') === UnixTime.toStartOf(b, 'day')
 }

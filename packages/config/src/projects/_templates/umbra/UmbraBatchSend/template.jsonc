@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "UmbraBatchSend",
+  "description": "Helper the app uses to send several stealth payments in one transaction. It pulls the tokens from the sender and calls the Umbra contract once per payment, so each payment emits its own Announcement. It holds no funds between transactions.",
+  "category": "core",
+  "fields": {
+    "owner": {
+      "description": "Can approve new tokens for batch sends.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "approve new tokens so that batch sends can route them to the Umbra contract."
+        }
+      ]
+    }
+  }
+}

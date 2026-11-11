@@ -9,6 +9,7 @@
       "severity": "HIGH"
     },
     "timelockAdminAC": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "TIMELOCK_ADMIN_ROLE"
@@ -30,11 +31,13 @@
       "edit": ["format", "FormatSeconds"]
     },
     "accessControl": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl"
       }
     },
     "Proposer": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "PROPOSER_ROLE"
@@ -51,6 +54,7 @@
       ]
     },
     "Canceller": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "CANCELLER_ROLE"
@@ -63,6 +67,7 @@
       ]
     },
     "Executor": {
+      "severity": "MEDIUM",
       "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address",
       "handler": {
         "type": "accessControl",

@@ -1,29 +1,19 @@
 import type { Milestone } from '@l2beat/config'
-import { assert, formatBytes, UnixTime } from '@l2beat/shared-pure'
-import pick from 'lodash/pick'
-import { useMemo } from 'react'
-import { AreaChart } from 'recharts'
+import { formatBytes, UnixTime } from '@l2beat/shared-pure'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type {
+  ChartMeta,
   ChartProject,
-  CustomChartTooltipProps,
-} from '~/components/core/chart/Chart'
+} from '~/components/core/chart/ChartContext'
 import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
+  ChartTooltipRow,
+  ChartTooltipValue,
   ChartTooltipWrapper,
-  useChart,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
-import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { EthereumFillGradientDef } from '~/components/core/chart/defs/EthereumGradientDef'
-import { FuchsiaFillGradientDef } from '~/components/core/chart/defs/FuchsiaGradientDef'
-import { LimeFillGradientDef } from '~/components/core/chart/defs/LimeGradientDef'
-import { NoDataPatternDef } from '~/components/core/chart/defs/NoDataPatternDef'
-import { SkyFillGradientDef } from '~/components/core/chart/defs/SkyGradientDef'
+  getTooltipEntries,
+} from '~/components/core/chart/ChartTooltip'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
-import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
+import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
+import { tinted } from '~/components/core/chart/tint'
 import { formatRange } from '~/utils/dates'
 import type { ChartResolution } from '~/utils/range/range'
 
@@ -31,31 +21,18 @@ const chartMeta = {
   ethereum: {
     label: 'Ethereum',
     color: 'var(--chart-ethereum)',
-    indicatorType: { shape: 'line' as const },
+    indicatorType: { shape: 'line' },
   },
-  celestia: {
-    label: 'Celestia',
-    color: 'var(--chart-fuchsia)',
-    indicatorType: { shape: 'line' as const },
-  },
-  avail: {
-    label: 'Avail',
-    color: 'var(--chart-sky)',
-    indicatorType: { shape: 'line' as const },
-  },
-  eigenda: {
-    label: 'EigenDA',
-    color: 'var(--chart-lime)',
-    indicatorType: { shape: 'line' as const },
-  },
-}
+} satisfies ChartMeta
+
+/** The legend and the series are left out while no value is posted. */
+const EMPTY_META: ChartMeta = {}
+
+type SeriesKey = keyof typeof chartMeta
 
 interface DataPostedChartDataPoint {
   timestamp: number
   ethereum: number | null
-  celestia: number | null
-  avail: number | null
-  eigenda: number | null
 }
 
 interface Props {
@@ -63,6 +40,7 @@ interface Props {
   project?: ChartProject
   resolution: ChartResolution
   isLoading: boolean
+  isPlaceholderData: boolean
   syncedUntil: number | undefined
   tickCount?: number
   milestones: Milestone[]
@@ -73,24 +51,18 @@ export function DataPostedChart({
   project,
   resolution,
   isLoading,
+  isPlaceholderData,
   syncedUntil,
   tickCount,
   milestones,
 }: Props) {
-  const filteredChartMeta = useMemo(
-    () =>
-      pick(
-        chartMeta,
-        Object.keys(chartMeta).filter((key) =>
-          data?.some((d) => d[key as keyof DataPostedChartDataPoint] !== null),
-        ),
-      ),
-    [data],
-  )
+  const hasData = data?.some((d) => d.ethereum !== null) ?? false
+  const filteredChartMeta = hasData ? chartMeta : EMPTY_META
   const { dataKeys, toggleDataKey } = useChartDataKeys(filteredChartMeta)
 
   return (
     <ChartContainer
+      isPlaceholderData={isPlaceholderData}
       data={data}
       meta={filteredChartMeta}
       isLoading={isLoading}
@@ -100,51 +72,46 @@ export function DataPostedChart({
         dataKeys,
         onItemClick: toggleDataKey,
       }}
+      legend
     >
-      <AreaChart responsive data={data} margin={{ top: 20 }}>
-        <ChartLegend content={<ChartLegendContent />} />
-        <ChartStrokeOverFillAreaComponents
-          data={Object.keys(filteredChartMeta).flatMap((key) => ({
-            dataKey: key,
-            stroke:
-              filteredChartMeta[key as keyof typeof filteredChartMeta]?.color,
-            fill: `url(#${key}-fill)`,
-            hide: !dataKeys.includes(key as keyof typeof filteredChartMeta),
-          }))}
-        />
-        <ChartCommonComponents
-          data={data}
-          isLoading={isLoading}
-          yAxis={{
-            tickCount,
-            tickFormatter: (value: number) => formatBytes(value),
-          }}
-          syncedUntil={syncedUntil}
-        />
-        <ChartTooltip
-          content={<DataPostedCustomTooltip resolution={resolution} />}
-        />
-        <defs>
-          <EthereumFillGradientDef id="ethereum-fill" />
-          <FuchsiaFillGradientDef id="celestia-fill" />
-          <LimeFillGradientDef id="eigenda-fill" />
-          <SkyFillGradientDef id="avail-fill" />
-          <NoDataPatternDef />
-        </defs>
-      </AreaChart>
+      <TimeSeriesChart
+        data={data}
+        ariaLabel="Data posted"
+        series={
+          hasData
+            ? [
+                {
+                  key: 'ethereum',
+                  ...tinted(chartMeta.ethereum.color),
+                },
+              ]
+            : []
+        }
+        yAxis={{ tickCount, format: formatBytes }}
+        syncedUntil={syncedUntil}
+        renderTooltip={(row, keys) => (
+          <DataPostedCustomTooltip
+            row={row}
+            keys={keys}
+            resolution={resolution}
+          />
+        )}
+      />
     </ChartContainer>
   )
 }
 
 function DataPostedCustomTooltip({
-  payload,
-  label: timestamp,
+  row,
+  keys,
   resolution,
-}: CustomChartTooltipProps & {
+}: {
+  row: DataPostedChartDataPoint
+  keys: SeriesKey[]
   resolution: ChartResolution
 }) {
-  const { meta } = useChart()
-  if (!payload || typeof timestamp !== 'number') return null
+  const timestamp = row.timestamp
+  const payload = getTooltipEntries(row, keys, { skipNull: true })
 
   return (
     <ChartTooltipWrapper>
@@ -156,33 +123,15 @@ function DataPostedCustomTooltip({
           )}
         </div>
         <div className="flex flex-col gap-2">
-          {payload.map((entry) => {
-            if (entry.name === undefined || entry.type === 'none') return null
-            const config = meta[entry.name]
-            assert(config, 'No config')
-
-            return (
-              <div
-                key={entry.name}
-                className="flex w-full items-center justify-between gap-2"
-              >
-                <div className="flex items-center gap-1">
-                  <ChartDataIndicator
-                    backgroundColor={config.color}
-                    type={config.indicatorType}
-                  />
-                  <span className="w-20 font-medium text-label-value-14 sm:w-fit">
-                    {config.label}
-                  </span>
-                </div>
-                <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                  {entry.value !== null && entry.value !== undefined
-                    ? formatBytes(entry.value)
-                    : 'No data'}
-                </span>
-              </div>
-            )
-          })}
+          {payload.map((entry) => (
+            <ChartTooltipRow key={entry.name} name={entry.name}>
+              <ChartTooltipValue
+                value={entry.value}
+                format={formatBytes}
+                className="tabular-nums"
+              />
+            </ChartTooltipRow>
+          ))}
         </div>
       </div>
     </ChartTooltipWrapper>

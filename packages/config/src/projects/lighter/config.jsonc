@@ -7,6 +7,14 @@
     "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7": {
       "proxyType": "zkLighter proxy"
     },
+    // Governance and ZkLighterVerifier: the gatekeeper's UpgradeComplete events
+    // are their only upgrade record
+    "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1": {
+      "proxyType": "UpgradeGatekeeper proxy"
+    },
+    "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA": {
+      "proxyType": "UpgradeGatekeeper proxy"
+    },
     "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67": {
       // Ossification: approvedUpgradeNoticePeriod is reset to the hardcoded 3 weeks after every finished or
       // canceled upgrade and can only be cut to zero by the immutable security council while an upgrade is
@@ -20,13 +28,13 @@
         }
       }
     },
-    "eth:0x866418061d4C1168e1c8E8f6facE79675395E008": {
+    "eth:0x975210588389526a3A1DeF1628e7A4d7aBdFD121": {
       "description": "Verifies the zk proofs that let users exit their funds directly on L1 while the system is in desert mode (escape hatch).",
       "critical": true
     }
   },
   "names": {
-    "eth:0x866418061d4C1168e1c8E8f6facE79675395E008": "DesertVerifier",
+    "eth:0x975210588389526a3A1DeF1628e7A4d7aBdFD121": "DesertVerifier",
     "eth:0x97A90Ec950B6BCd9B190b566525B2Bb92A2C03a2": "Lighter Multisig 2"
   }
 }

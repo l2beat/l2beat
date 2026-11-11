@@ -1,0 +1,12 @@
+{
+  "events": [
+    {
+      "timestamp": 1792062491,
+      "type": "state",
+      "contract": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+      "transaction": "0xd67f9c6a3176c18b5ca6e51888f657dc3e92cacdd68fc3484056ddfeef1b5d1c",
+      "updateId": "3e47563b",
+      "reason": "The chain-specific execution delay of Lens in the ValidatorTimelock went from 3h to 1d."
+    }
+  ]
+}

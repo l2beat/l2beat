@@ -34,10 +34,17 @@ const FEATURES: Record<string, string[]> = {
     'SyncMetadata',
   ],
   'defi-tvl': ['IndexerState', 'IndexerConfiguration', 'DefiTvl'],
+  'liquid-staking': [
+    'IndexerState',
+    'IndexerConfiguration',
+    'LiquidStakingSnapshot',
+    'EthereumStakingDaily',
+  ],
   activity: [
     'IndexerState',
     'IndexerConfiguration',
     'Activity',
+    'HourlyActivity',
     'SyncMetadata',
   ],
   shared: [

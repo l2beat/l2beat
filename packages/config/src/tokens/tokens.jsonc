@@ -18,6 +18,27 @@
       "category": "stablecoin"
     },
     {
+      // Privacy Pools v2 share over Aave v3 aEthUSDC; not listed on CoinGecko, priced with its USDC underlying
+      "symbol": "ppUSDC",
+      "address": "0xC246aFb23482fF9596E9cee5f1f678eFe0EB1ad6",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin"
+    },
+    {
+      // Privacy Pools v2 share over Aave v3 aEthUSDT; not listed on CoinGecko, priced with its USDT underlying
+      "symbol": "ppUSDT",
+      "address": "0xA4cF419558Ef36CC6FfB666195684dC963910426",
+      "coingeckoId": "tether",
+      "category": "stablecoin"
+    },
+    {
+      // Privacy Pools v2 share over Aave v3 aEthWETH; not listed on CoinGecko, priced with ETH
+      "symbol": "ppETH",
+      "address": "0x66051920D25af4E3596A8a46309F4D045F9D83B7",
+      "coingeckoId": "ethereum",
+      "category": "ether"
+    },
+    {
       // Steakhouse Confidential Prime USDC vault; not listed on CoinGecko, priced with its USDC underlying
       "symbol": "steakcUSDC",
       "address": "0xbEEF00A59B577423653A1526c7009bdE103F542B",
@@ -178,6 +199,11 @@
     {
       "symbol": "OUSG",
       "address": "0x1B19C19393e2d034D8Ff31ff34c81252FcBbee92",
+      "category": "rwaPublic"
+    },
+    {
+      "symbol": "USDY",
+      "address": "0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
       "category": "rwaPublic"
     },
     {
@@ -1258,6 +1284,13 @@
     {
       "symbol": "GHO",
       "address": "0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
+      "category": "stablecoin"
+    },
+    {
+      // Aave Savings GHO vault; not listed on CoinGecko, priced with its GHO underlying
+      "symbol": "sGho",
+      "address": "0xE1753F2e00940cC31213dd92013cF019DFE4ca1d",
+      "coingeckoId": "gho",
       "category": "stablecoin"
     },
     {
@@ -4888,6 +4921,7 @@
       "address": "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
       "category": "btc",
       "source": "external",
+      "coingeckoId": "wrapped-bitcoin",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -5879,6 +5913,7 @@
       "symbol": "wBTC",
       "category": "btc",
       "address": "0x305E88d809c9DC03179554BFbf85Ac05Ce8F18d6",
+      "coingeckoId": "wrapped-bitcoin",
       "source": "canonical",
       "supply": "zero"
     },
@@ -6088,6 +6123,7 @@
     {
       "symbol": "USDT",
       "address": "0x201EBa5CC46D216Ce6DC03F6a759e8E766e956aE",
+      "coingeckoId": "tether",
       "category": "stablecoin",
       "source": "canonical",
       "supply": "zero"
@@ -8446,6 +8482,42 @@
           }
         ]
       }
+    },
+    {
+      // Ethena USDe OFT; peer is the USDe OFT adapter (lockbox) on ethereum.
+      "symbol": "USDe",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "coingeckoId": "ethena-usde",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      },
+      "deploymentTimestamp": 1761566187
+    },
+    {
+      // Ethena sUSDe OFT; peer is the sUSDe OFT adapter (lockbox) on ethereum.
+      "symbol": "sUSDe",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "coingeckoId": "ethena-staked-usde",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      },
+      "deploymentTimestamp": 1761566506
     }
   ],
   "soneium": [
@@ -9568,6 +9640,7 @@
     {
       "symbol": "USDC.e",
       "address": "0x78adD880A697070c1e765Ac44D65323a0DcCE913",
+      "coingeckoId": "usd-coin",
       "category": "stablecoin",
       "source": "external",
       "supply": "totalSupply",
@@ -9994,6 +10067,64 @@
           }
         ]
       }
+    },
+    {
+      // Ethena USDe OFT; peer is the USDe OFT adapter (lockbox) on ethereum.
+      "symbol": "USDe",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "coingeckoId": "ethena-usde",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      },
+      // manual override: the megaeth RPC prunes state. Creation tx in block 4311884.
+      "deploymentTimestamp": 1767108895
+    },
+    {
+      // Ethena sUSDe OFT; peer is the sUSDe OFT adapter (lockbox) on ethereum.
+      "symbol": "sUSDe",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "coingeckoId": "ethena-staked-usde",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      },
+      // manual override: the megaeth RPC prunes state. Creation tx in block 4312010.
+      "deploymentTimestamp": 1767109021
+    },
+    {
+      // Cap staked cUSD OFT; peer is an adapter locking ethereum stcUSD.
+      // Not a vault here (holds no megaeth cUSD), so no overlap with megaeth cUSD.
+      "symbol": "stcUSD",
+      "address": "0x88887bE419578051FF9F4eb6C858A951921D8888",
+      "coingeckoId": "staked-cap-usd",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      },
+      // manual override: the megaeth RPC prunes state. Creation tx in block 4237024.
+      "deploymentTimestamp": 1767034035
     }
   ],
   "roninnetwork": [
@@ -10186,6 +10317,46 @@
       "category": "stablecoin",
       "source": "native",
       "supply": "totalSupply"
+    }
+  ],
+  "codex": [
+    {
+      // Circle-issued native USDC, moved crosschain through CCTP.
+      "symbol": "USDC",
+      "address": "0xd996633a415985DBd7D6D12f4A4343E31f5037cf",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      },
+      "deploymentTimestamp": 1742236935
+    }
+  ],
+  "doma": [
+    {
+      // Stargate v2 Hydra: minted on Doma by StargateOFTUSDC against USDC
+      // locked in Stargate pools on other chains.
+      "symbol": "USDC.e",
+      "category": "stablecoin",
+      "address": "0x31EEf89D5215C305304a2fA5376a1f1b6C5dc477",
+      "source": "external",
+      "supply": "totalSupply",
+      "coingeckoId": "usd-coin",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2 (Hydra mode)",
+            "slug": "stargate"
+          }
+        ]
+      },
+      "deploymentTimestamp": 1762276885
     }
   ]
 }

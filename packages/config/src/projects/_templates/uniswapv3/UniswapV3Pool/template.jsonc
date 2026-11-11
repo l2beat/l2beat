@@ -21,9 +21,11 @@
     "slot0": {
       "description": "Current sqrtPriceX96, tick, oracle observation index/cardinality, protocol fee setting, and the reentrancy lock; changes with every swap."
     },
+    // Not HIGH: setFeeProtocol only allows 0 or 1/4 to 1/10 of future LP fees,
+    // a bounded accounting rule that never touches principal.
     "feeProtocol": {
       "description": "Current token0/token1 protocol-fee shares packed into two nibbles; changing them redirects a share of future LP swap fees.",
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function slot0() view returns (uint160 sqrtPriceX96, int24 tick, uint16 observationIndex, uint16 observationCardinality, uint16 observationCardinalityNext, uint8 feeProtocol, bool unlocked)",

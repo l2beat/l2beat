@@ -1,0 +1,24 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ERC721Vault",
+  "critical": true,
+  "description": "Escrows canonical ERC721 tokens and mints or burns their bridged representations. An immutable resolver selects the local bridge, counterpart vaults and default bridged token implementation. Releases authenticate the bridge and source vault.",
+  "ignoreMethods": ["proxiableUUID"],
+  "fields": {
+    "$admin": { "severity": "MEDIUM" },
+    "owner": {
+      "severity": "MEDIUM",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause and unpause NFT deposits, releases and refunds."
+        }
+      ]
+    },
+    "pendingOwner": { "severity": "MEDIUM" },
+    "paused": { "severity": "MEDIUM" },
+    "resolver": {
+      "description": "Immutable resolver selecting trusted bridge and vault counterparties and default token implementations."
+    }
+  }
+}

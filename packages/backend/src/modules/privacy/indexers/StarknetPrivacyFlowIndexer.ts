@@ -4,6 +4,7 @@ import type { BlockProvider, StarknetClient } from '@l2beat/shared'
 import { createPrivacyConfigurationId } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
+import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -17,6 +18,7 @@ import type {
   StarknetPrivacyFlowIndexerConfig,
 } from '../types'
 import { extractStarknetPrivacyFlow } from '../utils/extractStarknetPrivacyFlow'
+import { getPrivacyBucketIds } from '../utils/getPrivacyBucketIds'
 
 interface StarknetPrivacyFlowIndexerDeps
   extends Omit<
@@ -51,10 +53,19 @@ export class StarknetPrivacyFlowIndexer extends ManagedMultiIndexer<StarknetPriv
     configurations: Configuration<StarknetPrivacyFlowIndexerConfig>[],
   ) {
     const adjustedTo = Math.min(UnixTime.toNext(from, 'day'), to)
-    const records = await this.fetchRecords(configurations, from, adjustedTo)
+    const records = await withCoreFeatureRpcMetricsContext(
+      'privacy.flow',
+      { chain: this.$.chain },
+      () => this.fetchRecords(configurations, from, adjustedTo),
+    )
 
     return async () => {
       await this.$.db.privacyFlowEvent.upsertMany(records)
+      await this.$.db.syncMetadata.updateSyncedUntil(
+        'privacy',
+        getPrivacyBucketIds(configurations.map((c) => c.properties)),
+        adjustedTo,
+      )
       this.logger.info('Saved Starknet privacy flow events', {
         from,
         to: adjustedTo,

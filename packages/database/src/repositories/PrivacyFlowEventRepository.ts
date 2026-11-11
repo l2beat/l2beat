@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { UnixTime, type UnixTimePeriod } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import { sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
@@ -22,7 +22,7 @@ export interface PrivacyFlowEventRecord {
   valueUsd: number
 }
 
-export interface PrivacyFlowDailyRecord {
+export interface PrivacyFlowBucketRecord {
   projectId: string
   bucketId: string
   timestamp: UnixTime
@@ -97,20 +97,28 @@ export class PrivacyFlowEventRepository extends BaseRepository {
     return rows.length
   }
 
-  async getDailyByProjectIds(
+  /**
+   * Sums the flows of each bucket per period, aligned to UTC: days start at
+   * midnight and six-hour periods at 00:00, 06:00, 12:00 and 18:00.
+   */
+  async getBucketedByProjectIds(
     projectIds: string[],
     fromInclusive: UnixTime | null,
     toExclusive: UnixTime,
-  ): Promise<PrivacyFlowDailyRecord[]> {
+    resolution: UnixTimePeriod,
+  ): Promise<PrivacyFlowBucketRecord[]> {
     if (projectIds.length === 0) return []
 
-    const day = sql<Date>`date_trunc('day', "timestamp")`
+    // A literal, not a parameter: GROUP BY has to repeat the expression and
+    // Postgres does not take two parameters as the same value.
+    const interval = sql.lit(`${UnixTime.periodToSeconds(resolution)} seconds`)
+    const period = sql<Date>`date_bin(${interval}::interval, "timestamp", '1970-01-01'::timestamp)`
     let query = this.db
       .selectFrom('PrivacyFlowEvent')
       .select((eb) => [
         'projectId',
         'bucketId',
-        day.as('timestamp'),
+        period.as('timestamp'),
         eb.fn
           .sum('count')
           .filterWhere('direction', '=', 'deposit')
@@ -148,7 +156,7 @@ export class PrivacyFlowEventRepository extends BaseRepository {
 
     query = query
       .where('timestamp', '<', UnixTime.toDate(toExclusive))
-      .groupBy(['projectId', 'bucketId', day])
+      .groupBy(['projectId', 'bucketId', period])
       .orderBy('timestamp', 'asc')
 
     const rows = await query.execute()
@@ -167,8 +175,8 @@ export class PrivacyFlowEventRepository extends BaseRepository {
   }
 
   /**
-   * Skips zero-amount deposits, as the anonymity set indexer does, so this
-   * count and PrivacyAnonymitySetEvent cover the same deposits.
+   * Skips zero-amount deposits, which the anonymity set extractor drops too,
+   * so this count and the deposits in PrivacyAnonymitySetEvent match.
    */
   async getNonZeroDepositCount(
     projectId: string,

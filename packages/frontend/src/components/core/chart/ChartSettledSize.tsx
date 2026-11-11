@@ -2,8 +2,8 @@ import { startTransition, useLayoutEffect, useRef, useState } from 'react'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
 import { cn } from '~/utils/cn'
 
-// Recharts recomputes every series on every ResizeObserver tick, and that
-// re-render was most of each frame while dragging the window edge. The chart
+// A chart rebuilds every series when its size changes, and that rebuild was
+// most of each frame while dragging the window edge. The chart
 // keeps its last settled size and is stretched with a transform until the
 // container stops moving, so it re-renders once per drag instead of per frame.
 const SETTLE_MS = 150

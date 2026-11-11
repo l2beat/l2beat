@@ -48,6 +48,36 @@
     "eth:0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e": {
       "ignoreDiscovery": true
     },
+    // Governance owns tornadocash.eth. These fields watch the app it pins.
+    "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce": {
+      "fields": {
+        "appEnsResolver": {
+          "description": "Resolver set for tornadocash.eth in the ENS registry.",
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "address": "eth:0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+            "method": "function resolver(bytes32 node) view returns (address)",
+            "args": [
+              "0xe6ae31d630cc7a8279c0f1c7cbe6e7064814c47d1785fa2703d9ae511ee2be0c"
+            ],
+            "ignoreRelative": true
+          }
+        },
+        "appContenthash": {
+          "description": "IPFS contenthash of tornadocash.eth, the app that governance pins.",
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "address": "{{ appEnsResolver }}",
+            "method": "function contenthash(bytes32 node) view returns (bytes)",
+            "args": [
+              "0xe6ae31d630cc7a8279c0f1c7cbe6e7064814c47d1785fa2703d9ae511ee2be0c"
+            ]
+          }
+        }
+      }
+    },
     "eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe": {
       "description": "MiMC hasher used by every Tornado pool for commitment-tree operations (linked library in the 2019 pools, constructor argument in the 2021 pools), manually verified against the pinned Tornado circomlib generator.",
       "critical": true,

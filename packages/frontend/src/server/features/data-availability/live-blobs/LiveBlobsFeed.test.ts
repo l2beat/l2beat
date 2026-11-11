@@ -264,6 +264,17 @@ describe(LiveBlobsFeed.name, () => {
     expect(db.headReads).toEqual(reads)
   })
 
+  it('reads pages of the day from their own source, apart from the polling', async () => {
+    const live = fakeDb()
+    feed = new LiveBlobsFeed(live.source, Logger.SILENT, fakeDb().source)
+    await feed.latest()
+
+    live.failing = true
+    const page = await feed.past({ page: 28 })
+
+    expect(page.blocks).toHaveLength(32)
+  })
+
   it('takes only whole pages counted from genesis', () => {
     expect(PastBlobsParams.safeValidate({ page: 30 }).success).toEqual(true)
     // past the safe integers, a slot minus one is the same slot

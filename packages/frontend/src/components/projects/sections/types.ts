@@ -1,8 +1,10 @@
 import type { ActivitySectionProps } from './ActivitySection'
 import type { ContractsSectionProps } from './contracts/ContractsSection'
 import type { CostsSectionProps } from './costs/CostsSection'
+import type { DaRiskSummarySectionProps } from './DaRiskSummarySection'
 import type { DetailedDescriptionSectionProps } from './DetailedDescriptionSection'
 import type { DataPostedSectionProps } from './data-posted/DataPostedSection'
+import type { DefiTokensSectionProps } from './defi/DefiTokensSection'
 import type { DefiTvlSectionProps } from './defi/DefiTvlSection'
 import type { ExternalDependenciesSectionProps } from './ExternalDependenciesSection'
 import type { GardenCropsSectionProps } from './GardenCropsSection'
@@ -35,6 +37,7 @@ import type { StateDerivationSectionProps } from './StateDerivationSection'
 import type { StateValidationSectionProps } from './state-validation/StateValidationSection'
 import type { TechnologyChoicesSectionProps } from './TechnologyChoicesSection'
 import type { TrustedSetupSectionProps } from './TrustedSetupsSection'
+import type { ThroughputSectionProps } from './throughput/ThroughputSection'
 import type { L2TvsSectionProps } from './tvs/L2TvsSection'
 import type { TvsValueSectionProps } from './tvs/TvsValueSection'
 import type { ZkCatalogTvsSectionProps } from './tvs/ZkCatalogTvsSection'
@@ -64,6 +67,7 @@ export type SectionId =
   | 'permissions'
   | 'contracts'
   | 'sequencing'
+  | 'throughput'
   | 'data-posted'
   | 'proof-system'
   | 'trusted-setups'
@@ -81,6 +85,7 @@ export type SectionId =
   | 'privacy-assets-breakdown'
   | 'privacy-adversaries'
   | 'external-dependencies'
+  | 'defi-tokens'
   | 'crops'
 
 type GroupId = 'da-layer'
@@ -102,6 +107,11 @@ interface ProjectDetailsCostsSection {
 interface ProjectDetailsLivenessSection {
   type: 'LivenessSection'
   props: ProjectDetailsProps<LivenessSectionProps>
+}
+
+interface ProjectDetailsThroughputSection {
+  type: 'ThroughputSection'
+  props: ProjectDetailsProps<ThroughputSectionProps>
 }
 
 interface ProjectDetailsL2TvsSection {
@@ -127,6 +137,11 @@ interface ProjectDetailsMilestonesAndIncidentsSection {
 interface ProjectDetailsRiskSummarySection {
   type: 'RiskSummarySection'
   props: ProjectDetailsProps<RiskSummarySectionProps>
+}
+
+interface ProjectDetailsDaRiskSummarySection {
+  type: 'DaRiskSummarySection'
+  props: ProjectDetailsProps<DaRiskSummarySectionProps>
 }
 
 interface ProjectDetailsRiskAnalysisSection {
@@ -279,6 +294,11 @@ interface ProjectDetailsDefiTvlSection {
   props: ProjectDetailsProps<DefiTvlSectionProps>
 }
 
+interface ProjectDetailsDefiTokensSection {
+  type: 'DefiTokensSection'
+  props: ProjectDetailsProps<DefiTokensSectionProps>
+}
+
 interface ProjectDetailsPrivacyFlowsSection {
   type: 'PrivacyFlowsSection'
   props: ProjectDetailsProps<PrivacyFlowsSectionProps>
@@ -313,6 +333,7 @@ export type ProjectDetailsSection = {
   | ProjectDetailsDetailedDescriptionSection
   | ProjectDetailsMilestonesAndIncidentsSection
   | ProjectDetailsRiskSummarySection
+  | ProjectDetailsDaRiskSummarySection
   | ProjectDetailsRiskAnalysisSection
   | L3ProjectDetailsRiskAnalysisSection
   | ProjectDetailsStageSection
@@ -327,6 +348,7 @@ export type ProjectDetailsSection = {
   | ProjectDetailsGroup
   | ProjectDetailsGardenCropsSection
   | ProjectDetailsGrissiniRiskAnalysisSection
+  | ProjectDetailsThroughputSection
   | ProjectDetailsL2TvsSection
   | ProjectDetailsActivitySection
   | ProjectDetailsTrustedSetupSection
@@ -345,6 +367,7 @@ export type ProjectDetailsSection = {
   | ProjectDetailsUpdatesSection
   | ProjectDetailsTvsValueSection
   | ProjectDetailsDefiTvlSection
+  | ProjectDetailsDefiTokensSection
   | ProjectDetailsPrivacyFlowsSection
   | ProjectDetailsPrivacyAnonymitySetSection
   | ProjectDetailsPrivacyAssetsBreakdownSection

@@ -95,10 +95,10 @@ const abi = new utils.Interface([
   'event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)',
 ])
 
-async function getPastProxyUpgrades(
+async function getUpgradeLogs(
   provider: IProvider,
   address: ChainSpecificAddress,
-): Promise<DateAddresses[]> {
+) {
   const logs = await provider.getLogs(address, [
     [
       abi.getEventTopic('Upgraded'),
@@ -116,6 +116,15 @@ async function getPastProxyUpgrades(
   const dateMap = Object.fromEntries(
     blocks.map((b) => [b.number, UnixTime.toDate(b.timestamp).toISOString()]),
   )
+
+  return { logs, dateMap }
+}
+
+async function getPastProxyUpgrades(
+  provider: IProvider,
+  address: ChainSpecificAddress,
+): Promise<DateAddresses[]> {
+  const { logs, dateMap } = await getUpgradeLogs(provider, address)
 
   return logs.map((l) => {
     const implementation = ChainSpecificAddress.fromLong(
@@ -190,23 +199,7 @@ async function getPastDiamondUpgrades(
   provider: IProvider,
   address: ChainSpecificAddress,
 ): Promise<DateAddresses[]> {
-  const logs = await provider.getLogs(address, [
-    [
-      abi.getEventTopic('Upgraded'),
-      abi.getEventTopic('ImplementationUpgraded'),
-    ],
-  ])
-
-  const blockNumbers = [...new Set(logs.map((l) => l.blockNumber))]
-  const blocks = await Promise.all(
-    blockNumbers.map(
-      async (blockNumber) => await provider.getBlock(blockNumber),
-    ),
-  )
-  assert(blocks.every((b) => b !== undefined))
-  const dateMap = Object.fromEntries(
-    blocks.map((b) => [b.number, UnixTime.toDate(b.timestamp).toISOString()]),
-  )
+  const { logs, dateMap } = await getUpgradeLogs(provider, address)
 
   return await Promise.all(
     logs.map(async (l) => {

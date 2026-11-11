@@ -1,5 +1,6 @@
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { Indexer } from '@l2beat/uif'
+import { DailyIndexer } from '../../tools/DailyIndexer'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
@@ -19,6 +20,7 @@ import type {
   StarknetPrivacyAnonymitySetIndexerConfig,
   StarknetPrivacyFlowIndexerConfig,
 } from './types'
+import { getPrivacyBucketIds } from './utils/getPrivacyBucketIds'
 
 export function createPrivacyModule({
   config,
@@ -36,7 +38,20 @@ export function createPrivacyModule({
   const indexerService = new IndexerService(db)
   const indexers: Indexer[] = []
 
-  const hourlyIndexer = new HourlyIndexer(logger, clock)
+  const bucketIds = getPrivacyBucketIds([
+    ...config.privacy.flowConfigs,
+    ...config.privacy.starknetFlowConfigs,
+  ])
+  const hourlyIndexer = new HourlyIndexer(logger, clock, {
+    // One row per bucket: the flow indexers write how far each is synced.
+    onTick: async (targetTimestamp) => {
+      await db.syncMetadata.setTargets(
+        'privacy',
+        bucketIds.map((id) => ({ id, target: targetTimestamp })),
+      )
+    },
+  })
+  const dailyIndexer = new DailyIndexer(logger, clock)
   const priceIndexer =
     config.privacy.priceConfigs.length > 0
       ? new PrivacyPriceIndexer(
@@ -151,12 +166,9 @@ export function createPrivacyModule({
         new PrivacyAnonymitySetIndexer(
           {
             chain: blockTimestampConfig.chain,
-            parents: [hourlyIndexer],
+            parents: [blockTimestampIndexer, dailyIndexer],
             indexerService,
-            blockTimestampProvider: providers.blockTimestamp,
-            blockProvider: providers.block.getBlockProvider(
-              blockTimestampConfig.chain,
-            ),
+            blockProvider,
             logsProvider: providers.logs.getLogsProvider(
               blockTimestampConfig.chain,
             ),
@@ -186,6 +198,9 @@ export function createPrivacyModule({
             indexerService,
             blockProvider,
             logsProvider: providers.logs.getLogsProvider(
+              blockTimestampConfig.chain,
+            ),
+            rpcClient: providers.clients.getRpcClient(
               blockTimestampConfig.chain,
             ),
             configurations: flowConfigs.map((flowConfig) => ({
@@ -317,6 +332,7 @@ export function createPrivacyModule({
       logger.info('Starting...')
       if (hasOnchainIndexers) {
         await hourlyIndexer.start()
+        await dailyIndexer.start()
         await priceIndexer?.start()
         for (const indexer of indexers) {
           await indexer.start()

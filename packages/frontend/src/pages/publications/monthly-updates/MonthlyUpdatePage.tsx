@@ -2,16 +2,13 @@ import type { UnixTime } from '@l2beat/shared-pure'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { SectionNavigation } from '~/components/section-navigation/SectionNavigation'
 import { StickyMobileSectionNavigation } from '~/components/section-navigation/StickyMobileSectionNavigation'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import type { DaMonthlyUpdateEntry } from '~/server/features/monthly-reports/getDaEntries'
 import type { EcosystemMonthlyUpdateEntry } from '~/server/features/monthly-reports/getEcosystemEntries'
 import type { UpcomingProjectUpdateEntry } from '~/server/features/monthly-reports/getUpcomingEntries'
-import { PublicationTag } from '../components/PublicationsList'
-import { DaUpdateSection } from './components/da/DaUpdateSection'
+import { PublicationTag } from '../components/PublicationTag'
 import { EcosystemUpdateSection } from './components/ecosystems/EcosystemUpdateSection'
 import { UpcomingProjectUpdateSection } from './components/upcoming/UpcomingProjectUpdateSection'
 
@@ -22,7 +19,6 @@ interface Props extends AppLayoutProps {
     from: UnixTime
     to: UnixTime
     ecosystemsUpdatesEntries: EcosystemMonthlyUpdateEntry[]
-    daUpdatesEntries: DaMonthlyUpdateEntry[]
     upcomingProjectsUpdatesEntries: UpcomingProjectUpdateEntry[]
   }
 }
@@ -30,7 +26,6 @@ interface Props extends AppLayoutProps {
 export function MonthlyUpdatePage({ entry, ...props }: Props) {
   const sections = [
     ...entry.ecosystemsUpdatesEntries,
-    ...entry.daUpdatesEntries,
     ...entry.upcomingProjectsUpdatesEntries,
   ].map((item) => ({
     id: item.id,
@@ -51,7 +46,7 @@ export function MonthlyUpdatePage({ entry, ...props }: Props) {
             <div>
               <div className="flex items-baseline gap-2">
                 <PublicationTag tag="monthly-update" />
-                <p className="text-brand text-subtitle-12 uppercase">
+                <p className="text-brand-deep text-subtitle-12 uppercase">
                   Published on {entry.publishedOn}
                 </p>
               </div>
@@ -65,14 +60,6 @@ export function MonthlyUpdatePage({ entry, ...props }: Props) {
                 <EcosystemUpdateSection
                   key={ecosystem.id}
                   ecosystem={ecosystem}
-                  from={entry.from}
-                  to={entry.to}
-                />
-              ))}
-              {entry.daUpdatesEntries.map((da) => (
-                <DaUpdateSection
-                  key={da.id}
-                  daLayer={da}
                   from={entry.from}
                   to={entry.to}
                 />
@@ -91,7 +78,6 @@ export function MonthlyUpdatePage({ entry, ...props }: Props) {
             </div>
           </div>
         </div>
-        <ScrollToTopButton />
       </SideNavLayout>
     </AppLayout>
   )

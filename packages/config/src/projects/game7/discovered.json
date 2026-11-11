@@ -144,10 +144,11 @@
         "sequencerReportedSubMessageCount": 1672291
       },
       "fieldMeta": {
+        "rollup": { "severity": "HIGH" },
         "sequencerInbox": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
         "allowedOutboxList": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Can make calls as the bridge, steal all funds."
         },
         "outboxHistory": {
@@ -155,7 +156,7 @@
           "description": "All Outboxes that were ever set as allowed in the bridge."
         },
         "allowedDelayedInboxList": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."
         },
         "inboxHistory": {
@@ -265,6 +266,7 @@
         "$immutable": true,
         "owner": "arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "arb1:0x401eCb1D350407f13ba348573E5630B83638E30D": "ProxyAdmin"
       }
@@ -346,7 +348,7 @@
       "fieldMeta": {
         "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "arb1:0x4066F7e44B76Cd4b745C7c8913F21A19a32044a1": "TransparentUpgradeableProxy",
@@ -461,7 +463,7 @@
       "fieldMeta": {
         "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
         "maxTimeVariation": {
           "severity": "HIGH",
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
@@ -771,11 +773,13 @@
         "whitelist": "arb1:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
+        "defaultGateway": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "whitelist": { "severity": "HIGH" },
         "router": { "severity": "HIGH" },
         "inbox": { "severity": "HIGH" },
         "counterpartGateway": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "arb1:0x8098247EE48ee54ADD4Feda2F93b3bA0d014d4c7": "TransparentUpgradeableProxy",
@@ -888,8 +892,9 @@
         ]
       },
       "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
-        "executors": { "severity": "LOW" }
+        "$admin": { "severity": "MEDIUM" },
+        "accessControl": { "severity": "MEDIUM" },
+        "executors": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "arb1:0x8b2600BA65E7908D38Af906fbcafB2f62D395765": "TransparentUpgradeableProxy",
@@ -984,7 +989,7 @@
         "allowListEnabled": { "severity": "HIGH" },
         "sequencerInbox": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "arb1:0xB1146A7eb098ECF46e8AAf695f4A960A963948d6": "TransparentUpgradeableProxy",
@@ -1028,6 +1033,7 @@
         "$immutable": true,
         "owner": "arb1:0x8b2600BA65E7908D38Af906fbcafB2f62D395765"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "arb1:0xd12478d6edD1db996313E2F4350F2FD99c118B6E": "ProxyAdmin"
       }
@@ -1169,8 +1175,9 @@
         "rollup": "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
       },
       "fieldMeta": {
+        "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "arb1:0xfbe537816d181888fAbE52338a5D921eE131E9Db": "TransparentUpgradeableProxy",

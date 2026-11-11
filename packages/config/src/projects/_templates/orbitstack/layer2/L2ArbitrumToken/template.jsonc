@@ -15,10 +15,10 @@
     "MINT_CAP_DENOMINATOR": {},
     "MINT_CAP_NUMERATOR": {},
     "owner": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "$admin": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "mintCapPerYer": {
       "handler": {

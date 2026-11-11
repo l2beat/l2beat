@@ -37,7 +37,7 @@ export const sp1turbo: BaseProject = {
   },
   milestones: [
     {
-      title: '[Disclosed vulnerability] Plonky3 FRI size check vulnerability',
+      title: 'Plonky3 FRI size check vulnerability',
       url: 'https://x.com/SuccinctLabs/status/1905818676848406801',
       date: '2025-03-28T00:00:00Z',
       description:
@@ -45,8 +45,7 @@ export const sp1turbo: BaseProject = {
       type: 'incident',
     },
     {
-      title:
-        '[Disclosed vulnerability] Plonky3 final polynomial degree check vulnerability',
+      title: 'Plonky3 final polynomial degree check bug',
       url: 'https://x.com/SuccinctLabs/status/1929773028034204121',
       date: '2025-06-03T00:00:00Z',
       description:
@@ -84,6 +83,7 @@ export const sp1turbo: BaseProject = {
       {
         projectId: ProjectId('fluent'),
         sinceTimestamp: UnixTime(1776599267), // first onchain commitBatch 2026-04-19
+        untilTimestamp: UnixTime(1791526391), // v5 route permanently frozen on the Ethereum SP1 gateway
       },
       {
         projectId: ProjectId('derivev3'),
@@ -98,20 +98,14 @@ export const sp1turbo: BaseProject = {
         sinceTimestamp: UnixTime(1751328000),
       },
       {
-        projectId: ProjectId('blobstream'),
-        sinceTimestamp: UnixTime(1717608107),
-      },
-      {
-        projectId: ProjectId('vector'),
-        sinceTimestamp: UnixTime(1720128227),
-      },
-      {
         projectId: ProjectId('sophon'),
         sinceTimestamp: UnixTime(1745341091),
+        untilTimestamp: UnixTime(1791526391), // v5 route permanently frozen on the Ethereum SP1 gateway
       },
       {
         projectId: ProjectId('lens'),
         sinceTimestamp: UnixTime(1745359200),
+        untilTimestamp: UnixTime(1791526391), // v5 route permanently frozen on the Ethereum SP1 gateway
       },
       {
         projectId: ProjectId('plumenetwork'),
@@ -126,18 +120,22 @@ export const sp1turbo: BaseProject = {
       {
         projectId: ProjectId('rari'),
         sinceTimestamp: UnixTime(1734562800),
+        untilTimestamp: UnixTime(1791526391), // uses Blobstream, whose v5 route was permanently frozen on the Arbitrum SP1 gateway
       },
       {
         projectId: ProjectId('winr'),
         sinceTimestamp: UnixTime(1747088280),
+        untilTimestamp: UnixTime(1791526391), // uses Blobstream, whose v5 route was permanently frozen on the Arbitrum SP1 gateway
       },
       {
         projectId: ProjectId('molten'),
         sinceTimestamp: UnixTime(1731480840),
+        untilTimestamp: UnixTime(1779997282), // NitroEnclaveVerifier switched to a direct SP1 v6.1.0 verifier (setZkConfiguration, 2026-05-28)
       },
       {
         projectId: ProjectId('taiko'),
         sinceTimestamp: UnixTime(1730452800),
+        untilTimestamp: UnixTime(1791526391), // v5 route permanently frozen on the Ethereum SP1 gateway
       },
       {
         projectId: ProjectId('lumia'),
@@ -150,6 +148,7 @@ export const sp1turbo: BaseProject = {
       {
         projectId: ProjectId('xlayer'),
         sinceTimestamp: UnixTime(1753882500),
+        untilTimestamp: UnixTime(1791526391), // v5 route permanently frozen on the Ethereum SP1 gateway
       },
       {
         projectId: ProjectId('silicon'),
@@ -185,6 +184,7 @@ export const sp1turbo: BaseProject = {
       {
         projectId: ProjectId('mantle'),
         sinceTimestamp: UnixTime(1757973600),
+        untilTimestamp: UnixTime(1791526391), // v5 route permanently frozen on the Ethereum SP1 gateway
       },
       {
         projectId: ProjectId('zircuit'),
@@ -214,6 +214,7 @@ export const sp1turbo: BaseProject = {
       {
         projectId: ProjectId('kroma'),
         sinceTimestamp: UnixTime(1739228400),
+        untilTimestamp: UnixTime(1791526391), // v5 route permanently frozen on the Ethereum SP1 gateway
       },
       {
         projectId: ProjectId('haust'),
@@ -222,10 +223,12 @@ export const sp1turbo: BaseProject = {
       {
         projectId: ProjectId('celo'),
         sinceTimestamp: UnixTime(1765324800),
+        untilTimestamp: UnixTime(1791526391), // v5 route permanently frozen on the Ethereum SP1 gateway
       },
       {
         projectId: ProjectId('rise'),
         sinceTimestamp: UnixTime(1767605759), // mainnet genesis 2026-01-05
+        untilTimestamp: UnixTime(1791526391), // v5 route permanently frozen on the Ethereum SP1 gateway
       },
       {
         projectId: ProjectId('appchain'),

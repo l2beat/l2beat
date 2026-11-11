@@ -29,7 +29,6 @@ const MEMO: DaProjectTableValue = {
   value: 'MEMO',
   sentiment: 'warning',
   description: 'The data is posted to MEMO (a decentralized storage).',
-  projectId: ProjectId('memo'),
 }
 
 const DAC: DaProjectTableValue = {
@@ -43,14 +42,12 @@ const CELESTIA: DaProjectTableValue = {
   value: 'Celestia',
   sentiment: 'warning',
   description: 'The data is posted to Celestia.',
-  projectId: ProjectId('celestia'),
 }
 
 const AVAIL: DaProjectTableValue = {
   value: 'Avail',
   sentiment: 'warning',
   description: 'The data is posted to Avail.',
-  projectId: ProjectId('avail'),
 }
 
 const NONE: DaProjectTableValue = {
@@ -85,7 +82,6 @@ const EIGEN_DA: DaProjectTableValue = {
   sentiment: 'warning',
   description:
     'The data is posted to EigenDA which is a separate data availability layer developed by the Eigenlayer team. Only commitments to the data are published on an onchain inbox.',
-  projectId: ProjectId('eigenda'),
 }
 
 const NEAR_DA: DaProjectTableValue = {
@@ -93,7 +89,6 @@ const NEAR_DA: DaProjectTableValue = {
   sentiment: 'warning',
   description:
     'The data is posted to NearDA which is a separate data availability layer on the Near protocol. Only hashes of data are published on an onchain inbox.',
-  projectId: ProjectId('near-da'),
 }
 
 const POLYGON_POS_DA: DaProjectTableValue = {
@@ -128,7 +123,6 @@ const ESPRESSO: DaProjectTableValue = {
   value: 'Espresso',
   sentiment: 'warning',
   description: 'The data is posted to Espresso.',
-  projectId: ProjectId('espresso'),
 }
 
 export const DA_LAYERS = {

@@ -194,6 +194,26 @@ export const privacyBoost: BaseProject = {
     },
     badges: [],
   },
+  milestones: [
+    {
+      // Pool proxy deployed on OP Mainnet 2026-04-14 (tx 0xdcf02ee3…).
+      title: 'Privacy Boost live on OP Mainnet',
+      url: 'https://optimism.io/blog/privacy-comes-to-the-op-stack',
+      date: '2026-04-20T00:00:00Z',
+      description:
+        'Sunnyside Labs opens Privacy Boost to its customers on OP Mainnet.',
+      type: 'general',
+    },
+    {
+      // Pool proxy deployed on Base 2026-09-02 19:37 UTC (tx 0xb57d5d9d…).
+      title: 'Privacy Boost live on Base',
+      url: 'https://privacyboost.io/resources/blog/privacy-boost-live-on-base',
+      date: '2026-09-08T00:00:00Z',
+      description:
+        'Sunnyside Labs opens the hosted wallet and SDK to anyone on Base.',
+      type: 'general',
+    },
+  ],
   escrows: [
     {
       address: poolAddress,
@@ -234,7 +254,7 @@ export const privacyBoost: BaseProject = {
         hash: 'Privacy Boost epoch verifier 23.09.2026',
         name: 'Privacy Boost epoch verifier, 9 circuits',
         description:
-          'Verifies the batched private transfer and withdrawal proofs. The deployed verification keys have not yet been reproduced by L2BEAT.',
+          'Verifies the batched private transfer and withdrawal proofs.',
         sourceLink:
           'https://github.com/sunnyside-io/privacy-boost-protocol/blob/5792c139b9529ed80643262d75b5489055be11b0/frontend/epoch_circuit.go',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
@@ -245,7 +265,12 @@ export const privacyBoost: BaseProject = {
             ),
           },
         ],
-        verificationStatus: 'notVerified',
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'privacy-boost',
+          'verificationSteps-round3-23.09.2026',
+        ),
       },
       {
         hash: 'Privacy Boost deposit verifier 09.09.2026',
@@ -271,8 +296,7 @@ export const privacyBoost: BaseProject = {
       {
         hash: 'Privacy Boost forced withdrawal verifier 23.09.2026',
         name: 'Privacy Boost forced withdrawal verifier, 1 circuit',
-        description:
-          'Verifies the client-side forced withdrawal proofs. The deployed verification keys have not yet been reproduced by L2BEAT.',
+        description: 'Verifies the client-side forced withdrawal proofs.',
         sourceLink:
           'https://github.com/sunnyside-io/privacy-boost-protocol/blob/5792c139b9529ed80643262d75b5489055be11b0/frontend/forced_withdraw_circuit.go',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
@@ -283,7 +307,12 @@ export const privacyBoost: BaseProject = {
             ),
           },
         ],
-        verificationStatus: 'notVerified',
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'privacy-boost',
+          'verificationSteps-round3-23.09.2026',
+        ),
       },
       {
         hash: 'Privacy Boost portal deposit verifier 09.09.2026',
@@ -311,7 +340,7 @@ export const privacyBoost: BaseProject = {
         hash: 'Privacy Boost gift claim verifier 23.09.2026',
         name: 'Privacy Boost gift claim verifier, 2 circuits',
         description:
-          'Verifies the batched gift claim, refund and public gift exit proofs. The deployed verification keys have not yet been reproduced by L2BEAT.',
+          'Verifies the batched gift claim, refund and public gift exit proofs.',
         sourceLink:
           'https://github.com/sunnyside-io/privacy-boost-protocol/blob/5792c139b9529ed80643262d75b5489055be11b0/frontend/gift_claim_circuit.go',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
@@ -322,14 +351,28 @@ export const privacyBoost: BaseProject = {
             ),
           },
         ],
-        verificationStatus: 'notVerified',
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'privacy-boost',
+          'verificationSteps-round3-23.09.2026',
+        ),
       },
     ],
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
+    referenceApp: {
+      name: 'Privacy Boost wallet',
+      url: 'https://app.privacyboost.io',
+      since: '2026-10-13',
+      build: 'dpl_GoQKQWZv8oxvnAMMf5RVDPBhoipo',
+      checked: '2026-10-30',
+    },
     tokens: privacyTokens,
     trackedOn: ['base'],
+    // Pools the hosted wallet serves (docs.privacyboost.io contract addresses).
+    runsOn: [ProjectId('ink'), ProjectId('optimism'), ProjectId('soneium')],
     anonymitySet: { type: 'too-small' },
     exitWindow: {
       value: 'None',
@@ -347,7 +390,7 @@ export const privacyBoost: BaseProject = {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'The circuits are published. The epoch, forced withdrawal and gift claim verification keys deployed in September 2026 remain unreproduced, and the TEE source code is unpublished.',
+        "The circuits and the trusted setup transcripts are published, and every deployed verification key reproduces from them. The source code of the TEE and of the SDK's compiled core is unpublished.",
     },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,

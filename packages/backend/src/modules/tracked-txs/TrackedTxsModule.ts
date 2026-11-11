@@ -1,7 +1,6 @@
 import { CoingeckoQueryService, DuneQueryService } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
-import partition from 'lodash/partition'
-import uniqBy from 'lodash/uniqBy'
+import uniq from 'lodash/uniq'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
@@ -46,25 +45,18 @@ export function createTrackedTxsModule(
   )
 
   const hourlyIndexer = new HourlyIndexer(logger, clock, {
-    onTick: async (targetTimestamp) => {
-      const [l2CostsConfigs, livenessConfigs] = partition(
-        runtimeConfigurations,
-        (c) => c.type === 'l2costs',
-      )
-      await db.syncMetadata.upsertMany([
-        // There might be multiple configurations for the same project
-        // so we need to uniq them
-        ...uniqBy(l2CostsConfigs, (c) => c.projectId).map((c) => ({
-          feature: 'l2costs' as const,
-          id: c.projectId,
-          target: targetTimestamp,
-        })),
-        ...uniqBy(livenessConfigs, (c) => c.projectId).map((c) => ({
-          feature: 'liveness' as const,
-          id: c.projectId,
-          target: targetTimestamp,
-        })),
-      ])
+    onTick: async (target) => {
+      for (const feature of ['l2costs', 'liveness'] as const) {
+        const projectIds = uniq(
+          runtimeConfigurations
+            .filter((c) => c.type === feature)
+            .map((c) => c.projectId),
+        )
+        await db.syncMetadata.setTargets(
+          feature,
+          projectIds.map((id) => ({ id, target })),
+        )
+      }
     },
   })
 

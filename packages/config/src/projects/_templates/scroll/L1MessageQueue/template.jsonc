@@ -19,5 +19,9 @@
     "nextCrossDomainMessageIndex",
     "nextUnfinalizedQueueIndex"
   ],
-  "ignoreRelatives": ["messageQueueV1"] // deprecated
+  "ignoreRelatives": ["messageQueueV1"], // deprecated
+  "fields": {
+    "owner": { "severity": "MEDIUM" },
+    "$admin": { "severity": "MEDIUM" }
+  }
 }

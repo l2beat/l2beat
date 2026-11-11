@@ -38,6 +38,14 @@ jobs:
       TURBO_API: ${{ secrets.TURBO_API }}
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
     steps:
+      # Every Coolify app pulls `:latest`, so a build from a branch would
+      # replace what staging and prod run.
+      - name: Refuse to build outside main
+        if: github.ref != 'refs/heads/main'
+        run: |
+          echo "::error title=Deploys run from main only::This workflow builds the image staging and prod pull. Run it from main."
+          exit 1
+
       - parallel:
           - name: Check out code
             uses: actions/checkout@v6

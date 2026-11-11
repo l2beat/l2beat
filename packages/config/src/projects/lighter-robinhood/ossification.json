@@ -52,6 +52,38 @@
       "transaction": "0xdb46f86078aeede8cf03c5e226424ea8a0e9251cc5a291ad12dbbf9b13e6f793",
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 6).",
       "updateId": "64487888"
+    },
+    {
+      "timestamp": 1791457125,
+      "type": "code",
+      "contract": "robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
+      "transaction": "0xfb3043dfd28378f1bfabd4c0b60ff2f9a54a2a4f393f27e3b25ad518139601c2",
+      "updateId": "b94370c0",
+      "reason": "Replaced a Lighter rollup implementation (ZkLighter/AdditionalZkLighter) that holds all user funds (UpgradeGatekeeper version 7)."
+    },
+    {
+      "timestamp": 1791469146,
+      "type": "code",
+      "contract": "robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
+      "transaction": "0x8ad402ee186907414bea85e0a3218e425e5ecf9d45c7c9bbfa86ff450d751de9",
+      "updateId": "b94370c0",
+      "reason": "Replaced a Lighter rollup implementation (ZkLighter/AdditionalZkLighter) that holds all user funds (UpgradeGatekeeper version 8)."
+    },
+    {
+      "timestamp": 1791469146,
+      "type": "state",
+      "contract": "robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
+      "transaction": "0x8ad402ee186907414bea85e0a3218e425e5ecf9d45c7c9bbfa86ff450d751de9",
+      "updateId": "b94370c0",
+      "reason": "Lighter: desertVerifier changed from robinhood:0x56aeED6920DBB9E198C2C0072147A45684A06E10 to robinhood:0x93c83bdA3A45241729Ce150C1e3677bA7389c0D0 during the upgrade (UpgradeGatekeeper version 8)."
+    },
+    {
+      "timestamp": 1791469146,
+      "type": "code",
+      "contract": "robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31",
+      "transaction": "0x8ad402ee186907414bea85e0a3218e425e5ecf9d45c7c9bbfa86ff450d751de9",
+      "updateId": "b94370c0",
+      "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 8)."
     }
   ]
 }

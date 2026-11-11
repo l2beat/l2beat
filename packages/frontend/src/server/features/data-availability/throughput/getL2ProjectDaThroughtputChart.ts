@@ -8,7 +8,6 @@ import { getActivityForProjectAndRange } from '../../layer2s/activity/getActivit
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { getChartStartTimestamp } from '../../utils/getChartStartTimestamp'
 import { isThroughputSynced } from './isThroughputSynced'
-import { THROUGHPUT_ENABLED_DA_LAYERS } from './utils/consts'
 import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
 import {
   groupByTimestampAndDaLayerId,
@@ -27,9 +26,6 @@ export type L2ProjectDaThroughputChart = {
 type L2ProjectDaThroughputChartPoint = [
   timestamp: number,
   ethereum: number | null,
-  celestia: number | null,
-  avail: number | null,
-  eigenda: number | null,
 ]
 
 export const L2ProjectDaThroughputChartParams = v.object({
@@ -70,15 +66,9 @@ export async function getL2ProjectDaThroughputChart({
   )
   const total = sumGroupedDataPosted(grouped)
 
-  const lastTimestampForLayers: Record<string, number> = {}
-  for (const layer of THROUGHPUT_ENABLED_DA_LAYERS) {
-    const lastValue = Object.entries(grouped).findLast(
-      ([_, values]) => values[layer] && values[layer] > 0,
-    )
-    if (lastValue) {
-      lastTimestampForLayers[layer] = Number(lastValue[0])
-    }
-  }
+  const lastPostedTimestamp = Object.entries(grouped).findLast(
+    ([_, values]) => values.ethereum && values.ethereum > 0,
+  )?.[0]
 
   const expectedTo = getThroughputExpectedTimestamp({
     to: range[1],
@@ -106,17 +96,12 @@ export async function getL2ProjectDaThroughputChart({
 
   const chart: L2ProjectDaThroughputChartPoint[] = timestamps.map(
     (timestamp) => {
-      const getDaValue = (layer: string) => {
-        const lastTimestamp = lastTimestampForLayers[layer]
-        const isBefore = lastTimestamp && timestamp <= lastTimestamp
-        return isBefore ? (grouped[timestamp]?.[layer] ?? 0) : null
-      }
+      const isBeforeLastPost =
+        lastPostedTimestamp !== undefined &&
+        timestamp <= Number(lastPostedTimestamp)
       return [
         timestamp,
-        getDaValue('ethereum'),
-        getDaValue('celestia'),
-        getDaValue('avail'),
-        getDaValue('eigenda'),
+        isBeforeLastPost ? (grouped[timestamp]?.ethereum ?? 0) : null,
       ]
     },
   )
@@ -159,11 +144,8 @@ function getMockL2ProjectDaThroughputChart({
   const chart: L2ProjectDaThroughputChartPoint[] = timestamps.map(
     (timestamp) => {
       const ethereum = Math.random() * 900_000_000 + 90_000_000
-      const celestia = Math.random() * 900_000_000 + 90_000_000
-      const avail = Math.random() * 900_000_000 + 90_000_000
-      const eigenda = Math.random() * 900_000_000 + 90_000_000
-      total += ethereum + celestia + avail + eigenda
-      return [timestamp, ethereum, celestia, avail, eigenda]
+      total += ethereum
+      return [timestamp, ethereum]
     },
   )
 

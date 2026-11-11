@@ -4,5 +4,11 @@
     "address": "eth:0x028deEA644258c78b1B5B2eacF469F5D781Fb43E",
     "chain": "ethereum",
     "blockNumber": 25831469
+  },
+  "BondedVotes_v0.19.0": {
+    "hash": "0xb5e89109487b92153adbbb07cb5316b512c6df31c8f5e9949d206958ccf988d8",
+    "address": "eth:0x6Cd2976AD3d908E503c6D93A5E010392E25DcFB6",
+    "chain": "ethereum",
+    "blockNumber": 26204316
   }
 }

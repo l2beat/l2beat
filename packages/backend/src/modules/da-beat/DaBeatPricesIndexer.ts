@@ -76,10 +76,12 @@ export class DaBeatPricesIndexer extends ManagedMultiIndexer<DaBeatPricesConfig>
   override async wipeData(configurations: WipeRemovalConfiguration[]) {
     assert(configurations.length === 1)
 
+    // The removed configuration carries only its id, so its coingecko ids are
+    // unknown here. Keep the current ones and drop everything else.
     const coingeckoIds = this.$.configurations[0].properties.coingeckoIds
 
     const deletedRecords =
-      await this.$.db.currentPrice.deleteByCoingeckoIds(coingeckoIds)
+      await this.$.db.currentPrice.deleteAllExcept(coingeckoIds)
 
     if (deletedRecords > 0) {
       this.logger.info('Deleted records for configuration', {

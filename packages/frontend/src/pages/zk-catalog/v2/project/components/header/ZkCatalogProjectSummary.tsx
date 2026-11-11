@@ -259,10 +259,7 @@ function UsedInBlock({
       }
     >
       <p className="font-medium text-label-value-12 text-secondary">Used in</p>
-      <ProjectsUsedIn
-        noL2ClassName="text-label-value-12 font-medium text-secondary"
-        usedIn={projectsUsedIn}
-      />
+      <ProjectsUsedIn usedIn={projectsUsedIn} />
     </div>
   )
 }
@@ -319,7 +316,11 @@ function MergedOnchainVerifierBlock({
           {title}
         </p>
         <Tooltip>
-          <TooltipTrigger type="button" className="text-secondary">
+          <TooltipTrigger
+            type="button"
+            className="text-secondary"
+            aria-label={`About ${title.toLowerCase()}`}
+          >
             <InfoIcon className="size-3.5" variant="gray" />
           </TooltipTrigger>
           <TooltipContent className="max-w-xs">
@@ -444,7 +445,7 @@ function TvsStat({
         value ? (
           <span className="mb-0.5 flex items-center gap-2">
             <ValueWithPercentageChange
-              className="!text-base !font-medium !leading-[100%] text-nowrap"
+              className="!text-base !leading-[100%] text-nowrap"
               changeClassName="text-label-value-14 font-bold"
               change={change}
               changePeriod={changePeriod}

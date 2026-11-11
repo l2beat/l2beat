@@ -1,8 +1,8 @@
 import type { Milestone, ProjectScalingCategory } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
-import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
-import type { ChartProject } from '~/components/core/chart/Chart'
+import type { ChartProject } from '~/components/core/chart/ChartContext'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { ActivityChartRangeControls } from '~/pages/layer2s/activity/components/ActivityChartRangeControls'
 import type { ActivityMetric } from '~/pages/layer2s/activity/components/ActivityMetricContext'
@@ -36,35 +36,38 @@ export function ProjectActivityChart({
   const [metric, setMetric] = useState<ActivityMetric>('uops')
   const [scale, setScale] = useState<ChartScale>('linear')
 
-  const { data: chart, isLoading } = useQuery(
-    trpc.activity.chart.queryOptions({
-      range,
-      filter: {
-        type: 'projects',
-        projectIds: [project.id],
-      },
-    }),
-  )
+  const {
+    data: chart,
+    isLoading,
+    isPlaceholderData,
+  } = useChartQuery(trpc.activity.chart, {
+    range,
+    filter: {
+      type: 'projects',
+      projectIds: [project.id],
+    },
+    hourly: true,
+  })
 
   const type = getChartType(category)
+  const resolution = chart?.resolution ?? 'day'
 
-  const chartData = useMemo(
-    () =>
-      chart?.data.map(
-        ([timestamp, projectsTx, ethereumTx, projectsUops, ethereumUops]) => {
-          const projectMetric = metric === 'tps' ? projectsTx : projectsUops
-          const ethereumMetric = metric === 'tps' ? ethereumTx : ethereumUops
-          return {
-            timestamp,
-            projects:
-              projectMetric !== null ? projectMetric / UnixTime.DAY : null,
-            ethereum:
-              ethereumMetric !== null ? ethereumMetric / UnixTime.DAY : null,
-          }
-        },
-      ),
-    [chart?.data, metric],
-  )
+  const chartData = useMemo(() => {
+    const resolutionSeconds = UnixTime.periodToSeconds(resolution)
+    return chart?.data.map(
+      ([timestamp, projectsTx, ethereumTx, projectsUops, ethereumUops]) => {
+        const projectMetric = metric === 'tps' ? projectsTx : projectsUops
+        const ethereumMetric = metric === 'tps' ? ethereumTx : ethereumUops
+        return {
+          timestamp,
+          projects:
+            projectMetric !== null ? projectMetric / resolutionSeconds : null,
+          ethereum:
+            ethereumMetric !== null ? ethereumMetric / resolutionSeconds : null,
+        }
+      },
+    )
+  }, [chart?.data, metric, resolution])
 
   const ratioData = useMemo(() => {
     return chart?.data.map(([timestamp, projectsTx, _, projectsUops]) => ({
@@ -78,16 +81,23 @@ export function ProjectActivityChart({
     }))
   }, [chart?.data])
 
-  const timeRange = getChartTimeRangeFromData(chartData, { bucket: 'day' })
-  const lastRatio = ratioData?.at(-1)?.ratio
+  const timeRange = getChartTimeRangeFromData(chartData, { bucket: resolution })
   return (
     <div className="flex flex-col">
       <ChartControlsWrapper>
-        <ProjectChartTimeRange timeRange={timeRange} />
-        <ActivityChartRangeControls range={range} setRange={setRange} />
+        <ProjectChartTimeRange
+          isPlaceholderData={isPlaceholderData}
+          timeRange={timeRange}
+        />
+        <ActivityChartRangeControls
+          range={range}
+          setRange={setRange}
+          hourlyRanges={chart?.hasHourly === false ? 'disabled' : 'enabled'}
+        />
       </ChartControlsWrapper>
       <div className="mt-4 mb-3">
         <ActivityChart
+          isPlaceholderData={isPlaceholderData}
           data={chartData}
           milestones={milestones}
           scale={scale}
@@ -97,13 +107,16 @@ export function ProjectActivityChart({
           type={type}
           project={project}
           tickCount={4}
+          resolution={resolution}
         />
       </div>
       <div className="mb-2">
         <ActivityRatioChart
+          isPlaceholderData={isPlaceholderData}
           data={ratioData}
           syncedUntil={chart?.syncedUntil}
           isLoading={isLoading}
+          resolution={resolution}
         />
       </div>
 
@@ -125,7 +138,6 @@ export function ProjectActivityChart({
       <ActivityChartStatsPanel
         stats={chart?.stats}
         metric={metric}
-        lastRatio={lastRatio}
         isLoading={isLoading}
       />
     </div>

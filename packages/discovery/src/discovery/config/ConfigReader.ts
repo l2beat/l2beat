@@ -40,8 +40,11 @@ export class ConfigReader {
 
   constructor(private rootPath: string) {}
 
-  readConfig(name: string): ConfigRegistry {
+  readConfig(name: string, override?: ConfigLayer): ConfigRegistry {
     const layers = this.readConfigLayers(name)
+    if (override !== undefined) {
+      layers.push(override)
+    }
     const merged = layers.reduce((base, layer) => mergeConfigLayer(base, layer))
     return new ConfigRegistry(merged)
   }
@@ -145,6 +148,12 @@ export class ConfigReader {
         existsSync(path.join(projectPath, 'discovered.json')),
       )
       .map((projectPath) => path.basename(projectPath))
+  }
+
+  hasDiscovery(name: string): boolean {
+    return existsSync(
+      path.join(this.resolveProjectPath(name), 'discovered.json'),
+    )
   }
 
   readDiffHistoryHash(name: string): Hash160 | undefined {

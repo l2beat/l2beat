@@ -71,12 +71,12 @@ export class CurrentPriceRepository extends BaseRepository {
     return records.length
   }
 
-  async deleteByCoingeckoIds(coingeckoIds: string[]): Promise<number> {
-    if (coingeckoIds.length === 0) return 0
+  async deleteAllExcept(coingeckoIds: string[]): Promise<number> {
+    if (coingeckoIds.length === 0) return await this.deleteAll()
 
     const result = await this.db
       .deleteFrom('CurrentPrice')
-      .where('coingeckoId', 'in', coingeckoIds)
+      .where('coingeckoId', 'not in', coingeckoIds)
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }

@@ -1,24 +1,17 @@
 import type { Milestone } from '@l2beat/config'
 import { formatCurrency } from '@l2beat/shared-pure'
-import { Area, AreaChart } from 'recharts'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type {
   ChartMeta,
   ChartProject,
-  CustomChartTooltipProps,
-} from '~/components/core/chart/Chart'
+} from '~/components/core/chart/ChartContext'
 import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipWrapper,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
-import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { formatPercent } from '~/utils/calculatePercentageChange'
-import { formatTimestamp } from '~/utils/dates'
+  type ChartSeries,
+  TimeSeriesChart,
+} from '~/components/core/chart/TimeSeriesChart'
+import type { ChartResolution } from '~/utils/range/range'
 import type { ChartUnit } from '../../types'
+import { StackedTvsChartTooltip } from './StackedTvsChartTooltip'
 
 interface BridgeTypeChartDataPoint {
   timestamp: number
@@ -33,6 +26,8 @@ interface Props {
   milestones: Milestone[]
   unit: ChartUnit
   isLoading: boolean
+  isPlaceholderData: boolean
+  resolution: ChartResolution
   dataKeys: (keyof typeof bridgeTypeTvsChartMeta)[]
   toggleDataKey: (dataKey: string) => void
   tickCount?: number
@@ -57,22 +52,36 @@ export const bridgeTypeTvsChartMeta = {
   },
 } satisfies ChartMeta
 
+type SeriesKey = keyof typeof bridgeTypeTvsChartMeta
+
 export function BridgeTypeTvsChart({
   data,
   syncedUntil,
   milestones,
   unit,
   isLoading,
+  isPlaceholderData,
+  resolution,
   tickCount,
   dataKeys,
   toggleDataKey,
   project,
 }: Props) {
+  // Bottom of the stack first.
+  const series: ChartSeries<SeriesKey, BridgeTypeChartDataPoint>[] = (
+    ['external', 'native', 'canonical'] as const
+  ).map((key) => ({
+    key,
+    fill: bridgeTypeTvsChartMeta[key].color,
+    stack: true,
+  }))
+
   // If only one data key is selected we want to change the domain
   // Having it from 0 to MAX does make sense for stacked chart (better comparison)
   // But for single data source it should not start from 0
   return (
     <ChartContainer
+      isPlaceholderData={isPlaceholderData}
       data={data}
       meta={bridgeTypeTvsChartMeta}
       isLoading={isLoading}
@@ -82,139 +91,27 @@ export function BridgeTypeTvsChart({
         onItemClick: toggleDataKey,
       }}
       project={project}
+      legend
     >
-      {/* Without right:1 the chart last point is not hoverable for some reason */}
-      <AreaChart responsive data={data} margin={{ top: 20, right: 1 }}>
-        <ChartLegend content={<ChartLegendContent />} />
-        <ChartCommonComponents
-          data={data}
-          isLoading={isLoading}
-          yAxis={{
-            domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
-            tickFormatter: (value: number) => formatCurrency(value, unit),
-            tickCount,
-          }}
-          syncedUntil={syncedUntil}
-        />
-        <Area
-          dataKey="external"
-          hide={!dataKeys.includes('external')}
-          fill={bridgeTypeTvsChartMeta.external.color}
-          fillOpacity={1}
-          strokeWidth={0}
-          stackId={dataKeys.length === 1 ? undefined : 'a'}
-          isAnimationActive={false}
-          activeDot={
-            !dataKeys.includes('canonical') && !dataKeys.includes('native')
-          }
-        />
-        <Area
-          dataKey="native"
-          hide={!dataKeys.includes('native')}
-          fill={bridgeTypeTvsChartMeta.native.color}
-          fillOpacity={1}
-          strokeWidth={0}
-          stackId={dataKeys.length === 1 ? undefined : 'a'}
-          isAnimationActive={false}
-          activeDot={!dataKeys.includes('canonical')}
-        />
-        <Area
-          dataKey="canonical"
-          hide={!dataKeys.includes('canonical')}
-          fill={bridgeTypeTvsChartMeta.canonical.color}
-          fillOpacity={1}
-          strokeWidth={0}
-          stackId={dataKeys.length === 1 ? undefined : 'a'}
-          isAnimationActive={false}
-        />
-
-        <ChartTooltip
-          content={<CustomTooltip unit={unit} />}
-          filterNull={false}
-        />
-      </AreaChart>
-    </ChartContainer>
-  )
-}
-
-function CustomTooltip({
-  payload,
-  label,
-  unit,
-}: CustomChartTooltipProps & { unit: ChartUnit }) {
-  if (!payload || typeof label !== 'number') return null
-
-  const total = payload.reduce<number | null>((acc, curr) => {
-    if (curr.value === null || curr.value === undefined || curr.hide) {
-      return acc
-    }
-    if (acc === null) {
-      return curr?.value ?? null
-    }
-    return acc + curr.value
-  }, null)
-  const actualPayload = [...payload].reverse().filter((entry) => !entry.hide)
-
-  return (
-    <ChartTooltipWrapper>
-      <div className="flex w-46 flex-col sm:w-66!">
-        <div className="font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
-        </div>
-        {actualPayload.length > 1 && (
-          <>
-            <div className="mt-3 flex w-full items-center justify-between gap-2 text-heading-16">
-              <span className="[@media(min-width:600px)]:hidden">Total</span>
-              <span className="hidden [@media(min-width:600px)]:inline">
-                Total value secured
-              </span>
-              <span className="text-primary">
-                {total !== null ? formatCurrency(total, unit) : 'No data'}
-              </span>
-            </div>
-            <HorizontalSeparator className="mt-1.5" />
-          </>
+      <TimeSeriesChart
+        data={data}
+        series={series}
+        ariaLabel="Value secured by bridge type"
+        syncedUntil={syncedUntil}
+        yAxis={{
+          domain: 'autoIfSingle',
+          format: (value) => formatCurrency(value, unit),
+          tickCount,
+        }}
+        renderTooltip={(row, keys) => (
+          <StackedTvsChartTooltip
+            row={row}
+            keys={keys}
+            unit={unit}
+            resolution={resolution}
+          />
         )}
-        <div className="mt-2 flex flex-col gap-2">
-          {actualPayload.map((entry) => {
-            if (entry.type === 'none') return null
-            const config =
-              bridgeTypeTvsChartMeta[
-                entry.name as keyof typeof bridgeTypeTvsChartMeta
-              ]
-            return (
-              <div
-                key={entry.name}
-                className="flex items-center justify-between gap-x-1"
-              >
-                <span className="flex items-center gap-1">
-                  <ChartDataIndicator
-                    backgroundColor={config.color}
-                    type={config.indicatorType}
-                  />
-                  <span className="w-20 font-medium text-label-value-14 sm:w-fit">
-                    {config.label}
-                  </span>
-                </span>
-                <div className="flex items-end justify-end gap-1 max-sm:flex-col sm:items-center">
-                  <span className="whitespace-nowrap font-medium text-label-value-15">
-                    {entry.value !== null && entry.value !== undefined
-                      ? formatCurrency(entry.value, unit)
-                      : 'No data'}
-                  </span>
-                  {entry.value !== null &&
-                    entry.value !== undefined &&
-                    total !== null && (
-                      <span className="font-medium text-label-value-13 text-secondary sm:text-label-value-15">
-                        ({formatPercent(total !== 0 ? entry.value / total : 0)})
-                      </span>
-                    )}
-                </div>
-              </div>
-            )
-          })}
-        </div>
-      </div>
-    </ChartTooltipWrapper>
+      />
+    </ChartContainer>
   )
 }

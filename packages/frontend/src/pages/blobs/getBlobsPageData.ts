@@ -1,5 +1,6 @@
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { ETHEREUM_PROJECT_PATH } from '~/pages/ethereum/paths'
 import { getBlobPosters } from '~/server/features/data-availability/live-blobs/getBlobPosters'
 import { getDaTvsProjectIds } from '~/server/features/data-availability/summary/getDaTvsProjectIds'
 import { ps } from '~/server/projects'
@@ -37,11 +38,6 @@ export async function getBlobsPageData(
   ])
   assert(ethereum, 'Ethereum DA layer not found')
 
-  const ethereumBridge = daBridges.find(
-    (bridge) => bridge.daBridge.daLayer === ethereum.id,
-  )
-  assert(ethereumBridge, 'Ethereum DA bridge not found')
-
   return {
     head: {
       manifest,
@@ -60,7 +56,7 @@ export async function getBlobsPageData(
       props: {
         ...appLayoutProps,
         ethereum: {
-          href: `/data-availability/projects/${ethereum.slug}/${ethereumBridge.slug}`,
+          href: ETHEREUM_PROJECT_PATH,
           iconUrl: manifest.getUrl(`/icons/${ethereum.slug}.png`),
         },
         tvsProjectIds: getDaTvsProjectIds(

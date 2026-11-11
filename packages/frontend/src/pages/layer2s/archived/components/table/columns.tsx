@@ -25,6 +25,7 @@ export const l2ArchivedColumns = [
 
       return (
         <PizzaRosetteCell
+          projectName={ctx.row.original.name}
           href={`/layer2s/projects/${ctx.row.original.slug}#risk-analysis`}
           values={risks}
           isUnderReview={ctx.row.original.statuses?.underReview === 'config'}
@@ -52,6 +53,9 @@ export const l2ArchivedColumns = [
   columnHelper.display({
     header: 'Purpose',
     cell: (ctx) => ctx.row.original.purposes.join(', '),
+    meta: {
+      cellClassName: 'lg:whitespace-normal',
+    },
   }),
   columnHelper.accessor('totalTvs', {
     id: 'total',

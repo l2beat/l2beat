@@ -14,14 +14,20 @@ export type {
   ActivityRecord,
   ActivityTotals,
 } from './repositories/ActivityRepository'
-export type { AggregatedInteropDeployedTokenRecord } from './repositories/AggregatedInteropDeployedTokenRepository'
+export type {
+  AggregatedInteropDeployedTokenRecord,
+  AggregatedInteropDeployedTokenStats,
+} from './repositories/AggregatedInteropDeployedTokenRepository'
 export type { AggregatedInteropTokenRecord } from './repositories/AggregatedInteropTokenRepository'
 export type { AggregatedInteropTokensPairRecord } from './repositories/AggregatedInteropTokensPairRepository'
 export type {
   AggregatedInteropTransferRecord,
   AggregatedInteropTransferSeriesRecord,
 } from './repositories/AggregatedInteropTransferRepository'
-export type { AggregatedL2CostRecord } from './repositories/AggregatedL2CostRepository'
+export type {
+  AggregatedL2CostRecord,
+  SummedL2CostRecord,
+} from './repositories/AggregatedL2CostRepository'
 export type { AggregatedLivenessRecord } from './repositories/AggregatedLivenessRepository'
 export type { AnomalyRecord } from './repositories/AnomaliesRepository'
 export type { AnomalyStatsRecord } from './repositories/AnomalyStatsRepository'
@@ -30,14 +36,16 @@ export {
   AppStatePair,
   type AppStateRecord,
 } from './repositories/AppStateRepository'
-export type { BlobPairCount, BlobRecord } from './repositories/BlobsRepository'
+export type { BlobRecord } from './repositories/BlobsRepository'
 export type {
   ChainApi,
   ChainRecord,
   ChainUpdateable,
 } from './repositories/ChainRepository'
+export type { CropAttestationRecord } from './repositories/CropAttestationRepository'
 export type { CurrentPriceRecord } from './repositories/CurrentPriceRepository'
 export type {
+  BucketedDataAvailabilityRecord,
   DataAvailabilityRecord,
   ProjectsSummedDataAvailabilityRecord,
 } from './repositories/DataAvailabilityRepository'
@@ -52,10 +60,12 @@ export type {
   DeployedTokenUpdateable,
 } from './repositories/DeployedTokenRepository'
 export type { DiscoveryCacheRecord } from './repositories/DiscoveryCacheRepository'
+export type { EthereumStakingDailyRecord } from './repositories/EthereumStakingDailyRepository'
 export type {
   FlatSourcesJsonRecord,
   FlatSourcesRecord,
 } from './repositories/FlatSourcesRepository'
+export type { HourlyActivityRecord } from './repositories/HourlyActivityRepository'
 export type { IndexerConfigurationRecord } from './repositories/IndexerConfigurationRepository'
 export type { IndexerStateRecord } from './repositories/IndexerStateRepository'
 export type {
@@ -65,9 +75,9 @@ export type {
 export type { InteropConfigRecord } from './repositories/InteropConfigRepository'
 export type {
   InteropEventContext,
+  InteropEventCounterpartVolumeRecord,
   InteropEventRecord,
   InteropEventStatsRecord,
-  InteropEventSupportBreakdownRecord,
 } from './repositories/InteropEventRepository'
 export type {
   InteropMessageDetailedStatsRecord,
@@ -93,7 +103,9 @@ export {
   type InteropTransferDeployedTokenPairStatsByToken,
   type InteropTransferFinancialsFilter,
   type InteropTransferFinancialsStats,
+  type InteropTransferPluginVolumeRecord,
   type InteropTransferRecord,
+  type InteropTransferSupplyChangeRecord,
   type InteropTransfersDetailedStatsRecord,
   type InteropTransfersStatsRecord,
   type InteropTransferTimeRange,
@@ -105,6 +117,7 @@ export type {
 } from './repositories/InteropTransferTypeStats'
 export type { L2CostPriceRecord } from './repositories/L2CostPriceRepository'
 export type { L2CostRecord } from './repositories/L2CostRepository'
+export type { LiquidStakingSnapshotRecord } from './repositories/LiquidStakingSnapshotRepository'
 export type {
   LiveBlobBatchRecord,
   LiveBucketRecord,
@@ -122,8 +135,8 @@ export type {
   PrivacyAnonymitySetSenderDayRecord,
 } from './repositories/PrivacyAnonymitySetEventRepository'
 export type {
+  PrivacyFlowBucketRecord,
   PrivacyFlowBucketTotalRecord,
-  PrivacyFlowDailyRecord,
   PrivacyFlowDirection,
   PrivacyFlowEventRecord,
 } from './repositories/PrivacyFlowEventRepository'
@@ -172,6 +185,11 @@ export type {
 } from './repositories/TokenValueRepository'
 export type { TvsAmountRecord } from './repositories/TvsAmountRepository'
 export type { TvsBlockTimestampRecord } from './repositories/TvsBlockTimestampRepository'
+export type {
+  TvsCoverageDismissalKey,
+  TvsCoverageDismissalRecord,
+} from './repositories/TvsCoverageDismissalRepository'
+export type { TvsEscrowValueRecord } from './repositories/TvsEscrowValueRepository'
 export type { TvsPriceRecord } from './repositories/TvsPriceRepository'
 export type { UpdateDiffRecord } from './repositories/UpdateDiffRepository'
 export type { UpdateMessageRecord } from './repositories/UpdateMessageRepository'
