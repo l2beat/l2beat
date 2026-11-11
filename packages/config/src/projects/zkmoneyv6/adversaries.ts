@@ -136,7 +136,7 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
       exposureShort:
         'An AWS Nitro enclave reads payments, withdrawals and deposit claims, and wallets accept only one registered with an attestation of the approved image.',
       exposureContinued:
-        "Aztec Labs' default Aztec nodes, like Alchemy under its key, see an account's deposit addresses and withdrawals in one session. The resolver operator, Aztec Labs today, derives each deposit address paid through a name, so it knows the recipient.",
+        "Aztec Labs' unsigned contract lists name the portal, and a new portal can approve another image. Aztec Labs' default Aztec nodes, like Alchemy under its key, see an account's deposit addresses and withdrawals in one session. The resolver operator, Aztec Labs today, derives each deposit address paid through a name, so it knows the recipient.",
       interior: {
         ...INTERIOR,
         sender: {
