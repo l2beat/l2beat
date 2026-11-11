@@ -1,5 +1,11 @@
-import { formatSeconds, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { discoveredDefiToken } from '../../templates/defiTokens'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
@@ -180,6 +186,72 @@ export const stakewise: BaseProject = {
   defiInfo: {
     category: 'Liquid Staking',
     tvl: { source: 'l2beat' },
+    tokens: [
+      discoveredDefiToken(
+        discovery,
+        'osETH',
+        'Appreciating token minted against StakeWise vault shares. An oracle committee sets the rate.',
+      ),
+    ],
+  },
+  liquidStaking: {
+    contracts: {
+      type: 'stakewise',
+      osETH: discovery.getContract('osETH').address,
+      vaultController: discovery.getContract('OsTokenVaultController').address,
+      redeemer: discovery.getContract('OsTokenRedeemer').address,
+      previousRedeemer: discovery.getContract('RetiredOsTokenRedeemer').address,
+    },
+    // The ETH market since 2025-12. Before it, osETH traded against ETH on a
+    // Balancer V2 pool that was drained on 2025-11-03 and now quotes zero.
+    marketQuotes: [
+      {
+        type: 'fluid',
+        pool: ChainSpecificAddress(
+          'eth:0xC0652bdDcfF7739dadf0C9567584B35Ca63eB8E1',
+        ),
+        swap0to1: false,
+      },
+    ],
+    risks: {
+      minting: {
+        value: 'Permissionless',
+        secondLine: `≤${defaultLtv} LTV`,
+        sentiment: 'good',
+        description: `Anyone can deposit ETH into a vault and mint ${osETH} against the shares, up to ${defaultLtv} of their value by default. The ETH stays in the vault until ${validatorThreshold} of ${oracleCount} oracles approve its staking keys.`,
+      },
+      operators: {
+        value: 'Permissionless',
+        secondLine: 'no bond',
+        sentiment: 'warning',
+        description: `Anyone can open a vault and choose who stakes for it, with no bond. A vault's losses fall on its own stakers; ${osETH} is exposed through the collateral rules, and ${noLiqVaultCount} vaults mint up to ${maxLtv} with no liquidation.`,
+      },
+      backing: {
+        value: 'Vault contracts',
+        secondLine: 'creds: vault',
+        sentiment: 'good',
+        description:
+          "Each vault's stake withdraws to the vault itself, so ETH can only return to the vault that funded it.",
+      },
+      oracle: {
+        value: oracleThreshold,
+        secondLine: `${formatSeconds(rewardsDelaySeconds)} · ≤${rateCapYear}/yr`,
+        sentiment: 'warning',
+        description: `${oracleThreshold} oracles report at most once every ${rewardsInterval}. The ${osETH} rate grows at a slope capped at ${rateCapYear} a year and never falls, but each vault's reported balance is unbounded. If the oracles stop, the exit queues stop while the rate keeps growing.`,
+      },
+      exit: {
+        value: 'Redemption queue',
+        secondLine: `${formatSeconds(number('OsTokenRedeemer', 'exitQueueUpdateDelay'))} batches · no pause`,
+        sentiment: 'warning',
+        description: `${osETH} holders queue in the redeemer, paid in batches at least ${redeemInterval} apart by redeeming staker positions that a ${opsSafe} multisig selects. Nothing can pause the queue, but it moves only when positions are redeemed.`,
+      },
+      upgrades: {
+        value: `${daoSafe} multisig`,
+        secondLine: 'no delay · no veto',
+        sentiment: 'bad',
+        description: `Core contracts cannot be upgraded, but the ${daoSafe} DAO multisig changes oracles, collateral rules and approved vault code with no delay. SWISE votes can also execute through SafeSnap after ${voteDelay}; holders have no veto.`,
+      },
+    },
   },
   externalDependencies: [
     {
