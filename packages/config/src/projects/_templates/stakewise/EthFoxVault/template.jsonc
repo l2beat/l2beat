@@ -40,7 +40,6 @@
       ]
     },
     "feePercent": {
-      "severity": "HIGH",
       "description": "Share of rewards minted to the fee recipient, in basis points; fixed at creation."
     },
     "feeRecipient": {

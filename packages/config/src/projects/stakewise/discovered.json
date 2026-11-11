@@ -622,7 +622,8 @@
           "severity": "HIGH",
           "description": "Basis points of osToken rewards minted to the treasury."
         },
-        "capacity": { "severity": "MEDIUM" }
+        "capacity": { "severity": "MEDIUM" },
+        "capacityFormatted": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x2A261e60FB14586B474C208b1B7AC6D0f5000306": "OsTokenVaultController"
@@ -1089,7 +1090,6 @@
       "fieldMeta": {
         "admin": { "severity": "HIGH" },
         "feePercent": {
-          "severity": "HIGH",
           "description": "Share of rewards minted to the fee recipient, in basis points; fixed at creation."
         },
         "feeRecipient": {
@@ -1311,7 +1311,6 @@
         },
         "rewardsMinOracles": { "severity": "HIGH" },
         "validatorsMinOracles": { "severity": "HIGH" },
-        "rewardsDelay": { "severity": "HIGH" },
         "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
@@ -2145,14 +2144,17 @@
         "ZodiacModule_target": "eth:0x144a98cb1CdBb23610501fE6108858D9B7D24934"
       },
       "fieldMeta": {
+        "questionTimeoutFormatted": { "severity": "HIGH" },
+        "questionCooldownFormatted": { "severity": "HIGH" },
+        "answerExpirationFormatted": { "severity": "MEDIUM" },
         "owner": { "severity": "HIGH" },
         "minimumBond": { "severity": "HIGH" },
         "questionTimeout": { "severity": "HIGH" },
         "questionCooldown": { "severity": "HIGH" },
         "answerExpiration": { "severity": "MEDIUM" },
         "template": { "severity": "MEDIUM" },
-        "oracle": { "severity": "HIGH" },
-        "questionArbitrator": { "severity": "MEDIUM" }
+        "questionArbitrator": { "severity": "MEDIUM" },
+        "minimumBondFormatted": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xB5cF5363c3e766e64B37b2fB9554bFE8D48ED1A0": "RealityModuleERC20"
@@ -4341,7 +4343,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "gnosisSafeModules/RealityModule": "0xbf8a764ee077fbd7f6b92be25219e6bce7ae7f3a87e3044f61f2a96494a2aa76",
+    "gnosisSafeModules/RealityModule": "0x6bbcd3e712c75c35c02dfdd703d6201ded47748f91adb3a3647b437821b3fba7",
     "stakewise/CuratorsRegistry": "0xae6d6fc19a90f5baead836f2abfa36a3beade79a8bbe6f5ed3620902f8e9beac",
     "stakewise/DepositDataRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "stakewise/EthFoxVault": "0x61a4843d426c3a9e12489230f451240741808a2b1dd66944c5844e59b30bcd9e",
@@ -4350,7 +4352,7 @@
     "stakewise/EthPrivErc20Vault": "0x61fcd6815a0f30e33fbfa7128d39bd1b5d02e8c84d0057410607f2f7101c8ccb",
     "stakewise/EthPrivVault": "0x61fcd6815a0f30e33fbfa7128d39bd1b5d02e8c84d0057410607f2f7101c8ccb",
     "stakewise/EthVault": "0x69e336c764d109950583c73b422b5774b6527db4c3191fd3d28d092754cb8353",
-    "stakewise/Keeper": "0x59dbf31292aa9958902ea7eea963ae044165f0fa1daffd269ee5e779c9dfd956",
+    "stakewise/Keeper": "0x6c8d268ea1b2c03853b9764101a0a9cf6bfdac5b27824db03c23653197ef59f2",
     "stakewise/OsToken": "0xee1abc77abf884083bf610287e9db44f326d478df0c53953d3b51b515600f2cc",
     "stakewise/OsTokenConfig": "0xa8cd23b9bcab33006ae71d98b91956a5042e1e5c7ad87981b4b35510460bd43d",
     "stakewise/OsTokenFlashLoans": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",

@@ -21,7 +21,8 @@
         "method": "function questionTimeout() view returns (uint32)",
         "args": []
       },
-      "edit": ["format", "FormatSeconds"]
+      "edit": ["format", "FormatSeconds"],
+      "severity": "HIGH"
     },
     "questionCooldownFormatted": {
       "handler": {
@@ -29,7 +30,8 @@
         "method": "function questionCooldown() view returns (uint32)",
         "args": []
       },
-      "edit": ["format", "FormatSeconds"]
+      "edit": ["format", "FormatSeconds"],
+      "severity": "HIGH"
     },
     "answerExpirationFormatted": {
       "handler": {
@@ -37,7 +39,8 @@
         "method": "function answerExpiration() view returns (uint32)",
         "args": []
       },
-      "edit": ["format", "FormatSeconds"]
+      "edit": ["format", "FormatSeconds"],
+      "severity": "MEDIUM"
     },
     "owner": {
       "severity": "HIGH",
@@ -63,9 +66,6 @@
     "template": {
       "severity": "MEDIUM"
     },
-    "oracle": {
-      "severity": "HIGH"
-    },
     "questionArbitrator": {
       "severity": "MEDIUM"
     },
@@ -75,7 +75,8 @@
         "method": "function minimumBond() view returns (uint256)",
         "args": []
       },
-      "edit": ["format", "Undecimal18"]
+      "edit": ["format", "Undecimal18"],
+      "severity": "HIGH"
     }
   }
 }

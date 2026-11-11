@@ -36,7 +36,8 @@
         "method": "function capacity() view returns (uint256)",
         "args": []
       },
-      "edit": ["format", "Undecimal18"]
+      "edit": ["format", "Undecimal18"],
+      "severity": "MEDIUM"
     }
   }
 }
