@@ -12,13 +12,15 @@ These are targets with a public track record, never guarantees. A tip is set bef
 
 ## The estimator
 
-It reads past blocks only: one `eth_feeHistory` call over the last 300 blocks, about 1 hour, with reward percentiles 10, 25 and 50.
+It reads past blocks only, with `eth_feeHistory`: each block's 10th and 25th percentile tips, over the last 300 blocks, about 1 hour, for slow and medium, and over the last 1,800, about 6 hours, for fast.
 
-| Tier | Target | Per-block number | Percentile across the 300 blocks |
+| Tier | Target | Per-block number | Percentile across blocks |
 |---|---|---|---|
 | Slow | 95% within 1 minute | 10th percentile tip | 45.2th |
-| Medium | 95% within 2 blocks | 25th percentile tip | 78.3th |
-| Fast | 95% in the next block | 50th percentile tip | 96.6th |
+| Medium | 95% within 2 blocks | 25th percentile tip | 85th |
+| Fast | 95% in the next block | 25th percentile tip, last 1,800 blocks | 99th |
+
+Each tier promises 95% on average and never below 90% in a week. The 90% is a record from the weeks we have, not a guarantee.
 
 Each tier is at least as high as the one below.
 
@@ -30,7 +32,9 @@ Each tier is at least as high as the one below.
 
 That gives `a` = 96.6% for 1 chance, 78.3% for 2, and 45.2% for 5, one minute being 5 blocks.
 
-The 1.7% is the only number measured from mempool data: the share of transactions at 2 gwei that still missed the next block over the past year. Its cause is not established. Late arrival alone doesn't seem to explain it: in a check on Dec 2025 to Jan 2026 at near-zero and 0.1 gwei tips, transactions seen at least 2 seconds before the block missed about as often, and many misses came at blocks less than 30% full. It has not been checked at 2 gwei. The per-block percentiles and the window were chosen on the tuning months.
+This is enough for 95% on average if blocks were independent chances. The promise also asks for never below 90% in a week, and the derived 78.3% let the medium tier fall to 89.1% in a week of February 2026. The medium tier therefore beats 85% of blocks: the cheapest share, among those tried on the tuning months, that kept every tuning week at 90% or more. On the same criterion the fast tier reads the 25th percentile tip of the last 1,800 blocks, about 6 hours, and beats 99% of them. Every tier kept both parts of the promise in every week of the tuning months, the test months and the blind years.
+
+The 1.7% is the only number measured from mempool data: the share of transactions at 2 gwei that still missed the next block over the past year. Latency explains part of it: at 2 gwei, 42% of the misses came from transactions first seen in the last 2 seconds before the block's slot, which missed 3 to 7% of the time. Seen 2 to 11 seconds before, 1.2% still missed, for reasons not established. At near-zero and 0.1 gwei tips, many misses came at blocks less than 30% full. The per-block percentiles and the window were chosen on the tuning months.
 
 **It is the same shape as geth's rule:** a low-tip number from each recent block, then a percentile across blocks. Geth uses the 3 lowest tips of 20 blocks and the 60th percentile, for one suggestion with no stated target.
 
@@ -120,7 +124,7 @@ Reference scores on the test months (slow, medium, fast): perfect hindsight 0.08
 ### What the tests showed
 
 - **It holds its target across a 1,000× range of base fees,** with no retuning. Only fast's worst blind month dipped below 95%.
-- **It overpays, especially in the older years.** Fast averaged 1.7 gwei in the blind test, 2 to 45× the tip needed, and barely beat a fixed 2 gwei on score (0.148 against 0.151). Block tips partly reflect what people already pay, so the formula follows the market more than it measures need.
+- **It overpays, especially in the older years.** In a typical hour of the blind test fast tipped 1.3 gwei, against 1.7 gwei for the earlier rule that read the median tip of 300 blocks. Block tips partly reflect what people already pay, so the formula follows the market more than it measures need.
 - **Fixed tips break when conditions change.** A fixed 0.0022 gwei, fine in the calm year, fell to 68.8% in its worst blind month and sat below the tip needed in 63% of hours. Fixed 0.28 gwei fell to 89%. Fixed tips appear here as comparisons only.
 - **In the calm year the formula is only about level with fixed tips chosen on the tuning months** (scores 0.122, 0.161, 0.197). Its advantage is that nobody has to pick a number and it moves with conditions.
 - **The formula's fast tip was about 2 gwei in 2023 and 2024, then fell about 8× while 2 gwei stayed flat.** 2 gwei went from 2× the tip needed in 2024 Q2 to 420× in 2026 Q4. The data shows that this happened, not why any wallet chose its number.
@@ -153,7 +157,9 @@ The cheaper choices look good on the older years and then underpay badly when co
 | 12.5% base fee rise | Protocol | EIP-1559 |
 | 95% in all tiers | Choice | One certainty level. 99% in the next block is out of reach at any tip |
 | 1 minute, 2 blocks, next block | Choice | The waits people recognise |
-| 45.2th, 78.3th, 96.6th percentiles | Derived | From the target, the number of chances and the 1.7% that miss at any tip |
+| 45.2th percentile, slow | Derived | From the target, the number of chances and the 1.7% that miss at any tip |
+| 99th percentile of the 25th percentile tips over 1,800 blocks, fast | Chosen on tuning months | The cheapest rule that kept the promise; the derived 96.6th of the median tips over 300 blocks also kept it but overpaid about a quarter more |
+| 85th percentile, medium | Chosen on tuning months | The derived 78.3th kept 95% on average but fell to 89.1% in one week; 85th is the cheapest share that kept every tuning week at 90% or more |
 | 1.7% miss at any tip | Measured | Next-block misses at 2 gwei |
 | Block p10, p25, p50 | Chosen on tuning months | Lowest score, one per tier |
 | 300 blocks | Chosen on tuning months | Lowest score. Landing barely changes with the window |
@@ -167,7 +173,7 @@ The cheaper choices look good on the older years and then underpay badly when co
 - **Replayed, not live.** Only the suggested tips at the top of the page are live. Everything else is a replay. Once estimates are published live, the page must mark where real ones begin.
 - **Wallets appear only as live readings.** We don't know how MetaMask or Rabby compute their suggestions: their fee services are closed, so we read them once a minute and never attribute past results to them. Rabby's rate limits calls, so a failed read keeps the last good one for up to 5 minutes, then the wallet disappears. Ambire's rule is open source, so we compute it on our own node from `ambire-common`, without having compared it with the wallet itself. That rule changed on 16 Oct 2026, so replaying it further back would not be valid. All three services and rules can change, and we should check that calling those endpoints from production is allowed.
 - **Live multiples swing and can fall below 1×.** The live card shows each wallet's tip as a multiple of ours. Our fast tip moved from 0.2 to 0.8 gwei within half an hour on 6 Nov, so the same 2 gwei read as 10× and 2.5×. Ambire is often below 1×, and that stays visible. Slow multiples run into the tens of thousands because our slow tip is about 2,000 wei, close to zero, so read them with the dollars: the gap there is under $0.02.
-- **Our fast tip does not beat every fixed tip on average.** Over the calm past year a fixed 0.5 gwei landed 97.3% in the next block at about the same average cost, against 96.9% for our fast tip. What the fast tip adds is steadiness: it landed 96.2% to 97.1% across the quiet and busy quarters of the year, while a fixed 0.15 gwei went from 97.1% to 91.8%, and it survived the older years where fixed tips broke.
+- **A fixed tip can come close, but only in hindsight.** Over the past year a fixed 0.35 gwei, about our fast tip's average, landed 95.6% in the next block, against 96.3% for our fast tip. Choosing that fixed tip needed the year's results; the estimator reads only past blocks.
 - **`gas_price` changes type in Xatu.** It is an integer before block 25,189,000 and a little-endian blob after it, as is the single file at 24,933,000. The year job reads each file's type and checks every EIP-1559 tip against `min(maxPriorityFee, maxFee - baseFee)`: 645 million tips, no mismatches. A first version decoded the integers as blobs, which corrupted tips before 28 May 2026.
 - **Rows are transactions tipping that amount, not a wallet's users.** Public mempool data cannot see private routing.
 - **Association, not experiment.** Matched on hour and point in the slot, 2 gwei beats 0.25 gwei by 2.7 points of next-block landing and saves 0.49 seconds on average, but this is not matched on sender. Only randomised transactions close that.

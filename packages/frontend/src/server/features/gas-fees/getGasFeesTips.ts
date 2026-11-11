@@ -1,4 +1,5 @@
-const BLOCKS = 300
+/** Most nodes return at most 1,024 blocks per eth_feeHistory, so longer windows are read in parts */
+const FEE_HISTORY_BLOCKS = 300
 const SHOWN_BLOCKS = 60
 /** Every second percentile up to the top, so a block's shares are good to 2% */
 const SHARE_PERCENTILES = Array.from({ length: 50 }, (_, i) => (i + 1) * 2)
@@ -29,14 +30,20 @@ const PUBLIC_RPCS = [
 ]
 
 /**
- * Each block must take the tip this often for 95% of transactions to land in time. With k chances and a
- * 1.7% chance of arriving too late for the first block: (1 - a * 0.983) * (1 - a)^(k - 1) = 0.05.
+ * Each tier beats `share` of the last `blocks` blocks' tips at `blockPercentile`, and is at least the
+ * tier below. Slow's share comes from its target: with 5 chances and a 1.7% chance of arriving too late
+ * for the first block, (1 - a * 0.983) * (1 - a)^4 = 0.05. Medium and fast are the cheapest rules that
+ * kept 95% on average and 90% in every week of Nov 2025 to Apr 2026.
  */
 const TIERS = [
-  { key: 'slow', blockPercentile: 10, share: 0.4522 },
-  { key: 'medium', blockPercentile: 25, share: 0.7829 },
-  { key: 'fast', blockPercentile: 50, share: 0.9664 },
+  { key: 'slow', blockPercentile: 10, blocks: 300, share: 0.4522 },
+  { key: 'medium', blockPercentile: 25, blocks: 300, share: 0.85 },
+  { key: 'fast', blockPercentile: 25, blocks: 1800, share: 0.99 },
 ] as const
+const BLOCK_PERCENTILES = [
+  ...new Set(TIERS.map((tier) => tier.blockPercentile)),
+]
+const HISTORY_BLOCKS = Math.max(...TIERS.map((tier) => tier.blocks))
 
 export interface GasFeesTip {
   key: (typeof TIERS)[number]['key']
@@ -75,6 +82,8 @@ let checkedAt = 0
 let wallets: GasFeesWalletTip[] = []
 let walletsCheckedAt = 0
 const lastReads: { tips: GasFeesWalletTip[]; readAt: number }[] = []
+/** Each block's tips at BLOCK_PERCENTILES, by block number, so a new head reads only the newest blocks */
+const blockTips = new Map<number, number[]>()
 
 /** Reads past blocks only, so anyone with a node can compute the same numbers */
 export async function getGasFeesTips(): Promise<GasFeesLiveTips | null> {
@@ -100,12 +109,8 @@ async function readTips(url: string): Promise<GasFeesLiveTips> {
   const block = Number(BigInt(head))
   if (cached?.block === block) return cached
 
-  const [history, recent, answer, walletTips] = await Promise.all([
-    rpc<{ reward: string[][] }>(url, 'eth_feeHistory', [
-      `0x${BLOCKS.toString(16)}`,
-      head,
-      TIERS.map((tier) => tier.blockPercentile),
-    ]),
+  const [, recent, answer, walletTips] = await Promise.all([
+    readBlockTips(url, block),
     rpc<{ reward: string[][]; gasUsedRatio: number[] }>(url, 'eth_feeHistory', [
       `0x${SHOWN_BLOCKS.toString(16)}`,
       head,
@@ -120,10 +125,14 @@ async function readTips(url: string): Promise<GasFeesLiveTips> {
   const ethUsd = Number(BigInt(answer)) / 1e8
 
   let floor = 0
-  const tips = TIERS.map((tier, column) => {
-    const values = history.reward
-      .map((row) => Number(BigInt(row[column] ?? '0x0')) / 1e9)
-      .sort((a, b) => a - b)
+  const tips = TIERS.map((tier) => {
+    const column = BLOCK_PERCENTILES.indexOf(tier.blockPercentile)
+    const values: number[] = []
+    for (let number = block - tier.blocks + 1; number <= block; number++) {
+      const value = blockTips.get(number)?.[column]
+      if (value !== undefined) values.push(value)
+    }
+    values.sort((a, b) => a - b)
     const index = Math.floor(tier.share * values.length)
     floor = Math.max(floor, values[Math.min(values.length - 1, index)] ?? 0)
     return {
@@ -151,6 +160,46 @@ async function readTips(url: string): Promise<GasFeesLiveTips> {
   })
   cached = { block, tips, blocks, wallets: walletTips }
   return cached
+}
+
+async function readBlockTips(url: string, head: number) {
+  const oldest = head - HISTORY_BLOCKS + 1
+  for (const number of blockTips.keys()) {
+    if (number < oldest) blockTips.delete(number)
+  }
+  // The newest blocks are read again every time, in case of a reorg
+  const calls = [{ newest: head, count: FEE_HISTORY_BLOCKS }]
+  for (let number = head - FEE_HISTORY_BLOCKS; number >= oldest; number--) {
+    if (blockTips.has(number)) continue
+    const last = calls.at(-1)
+    if (
+      last &&
+      last.newest - last.count === number &&
+      last.count < FEE_HISTORY_BLOCKS
+    ) {
+      last.count++
+    } else {
+      calls.push({ newest: number, count: 1 })
+    }
+  }
+  const histories = await Promise.all(
+    calls.map(({ newest, count }) =>
+      rpc<{ oldestBlock: string; reward: string[][] }>(url, 'eth_feeHistory', [
+        `0x${count.toString(16)}`,
+        `0x${newest.toString(16)}`,
+        BLOCK_PERCENTILES,
+      ]),
+    ),
+  )
+  for (const history of histories) {
+    const first = Number(BigInt(history.oldestBlock))
+    history.reward.forEach((row, i) => {
+      blockTips.set(
+        first + i,
+        row.map((value) => Number(BigInt(value)) / 1e9),
+      )
+    })
+  }
 }
 
 async function getWalletTips(url: string) {

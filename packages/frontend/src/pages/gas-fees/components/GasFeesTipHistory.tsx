@@ -14,6 +14,7 @@ import mock from './pageMock.json'
 type Tier = keyof typeof mock.record
 
 const TARGET = 95
+const WORST_WEEK = 90
 const WEEK = 7 * 86400
 /** A log axis has no zero, so weeks with nothing overpaid sit on this floor */
 const SMALLEST_USD = 1e-6
@@ -132,12 +133,18 @@ function TrackRecord() {
       indicatorType: { shape: 'line' },
     },
     target: {
-      label: 'Our target',
+      label: `${TARGET}% on average`,
       color: 'var(--chart-stacked-pink)',
+      indicatorType: { shape: 'line' },
+    },
+    floor: {
+      label: `Never below ${WORST_WEEK}% in a week`,
+      color: 'var(--secondary)',
       indicatorType: { shape: 'line' },
     },
   }
   const reached = points.filter((p) => p.landed >= TARGET).length
+  const worst = Math.min(...points.map((p) => p.landed))
   return (
     <div className="flex flex-col gap-3">
       <div className="flex flex-wrap items-end justify-between gap-3">
@@ -146,8 +153,10 @@ function TrackRecord() {
           <div className="flex flex-wrap items-center gap-2 text-secondary text-xs">
             <ChartTimeRange isPlaceholderData={false} timeRange={timeRange} />
             <span>
-              Our {tier.name.toLowerCase()} tip, replayed by week. Target:{' '}
-              {tier.promise}, reached in {reached} of {points.length} weeks.
+              Our {tier.name.toLowerCase()} tip, replayed by week. Promise:{' '}
+              {TARGET}% {tier.wait} on average, never below {WORST_WEEK}% in a
+              week. {reached} of {points.length} weeks reached {TARGET}%, and
+              the worst was {worst}%.
             </span>
           </div>
         </div>
@@ -174,7 +183,7 @@ function TrackRecord() {
           >
             <TimeSeriesChart
               data={points}
-              ariaLabel="Share of transactions landing in time by week, against our 95% target"
+              ariaLabel="Share of transactions landing in time by week, against our promise of 95% on average and never below 90% in a week"
               syncId="gasFeesRecord"
               xAxis={xAxis}
               series={[
@@ -183,6 +192,13 @@ function TrackRecord() {
                   stroke: 'var(--chart-stacked-pink)',
                   strokeWidth: 1.5,
                   strokeDasharray: '4 3',
+                },
+                {
+                  key: 'floor',
+                  value: () => WORST_WEEK,
+                  stroke: 'var(--secondary)',
+                  strokeWidth: 1.5,
+                  strokeDasharray: '2 3',
                 },
                 {
                   key: 'landed',
