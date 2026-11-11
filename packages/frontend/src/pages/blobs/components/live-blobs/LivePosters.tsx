@@ -123,7 +123,7 @@ export function LivePosters({ live: data, totals }: Props) {
     totals?.posters.map((row) => row.poster.id),
   )
   const ranked = totals && inRanking(totals.posters, ranking)
-  const [showAll, setShowAll] = useShowAll()
+  const [showAll, toggleShowAll] = useShowAll()
   const rows = showAll ? ranked : ranked?.slice(0, SHOWN_ROWS)
 
   const tableRef = useRef<HTMLDivElement>(null)
@@ -189,7 +189,7 @@ export function LivePosters({ live: data, totals }: Props) {
           variant="outline"
           className="mx-auto mt-3 gap-2.5 text-sm"
           aria-expanded={showAll}
-          onClick={() => setShowAll(!showAll)}
+          onClick={toggleShowAll}
         >
           {showAll ? 'Show fewer' : `Show all ${ranked.length}`}
           <ChevronIcon
@@ -204,19 +204,31 @@ export function LivePosters({ live: data, totals }: Props) {
   )
 }
 
-/** Open once the legend's "+N more" leads here, as it promises the rest */
+/**
+ * Open once the legend's "+N more" leads here, as it promises the rest.
+ * Folding drops the link's hash, or following it again would change nothing
+ */
 function useShowAll() {
   const [showAll, setShowAll] = useState(false)
   useEffect(() => {
     const openIfLinked = () => {
-      if (window.location.hash === `#${LIVE_POSTERS_ID}`) setShowAll(true)
+      if (window.location.hash === LINKED_HASH) setShowAll(true)
     }
     openIfLinked()
     window.addEventListener('hashchange', openIfLinked)
     return () => window.removeEventListener('hashchange', openIfLinked)
   }, [])
-  return [showAll, setShowAll] as const
+  const toggle = () => {
+    if (showAll && window.location.hash === LINKED_HASH) {
+      const { pathname, search } = window.location
+      history.replaceState(history.state, '', pathname + search)
+    }
+    setShowAll(!showAll)
+  }
+  return [showAll, toggle] as const
 }
+
+const LINKED_HASH = `#${LIVE_POSTERS_ID}`
 
 /** Memoized: a row changes only when its poster's numbers or the head do */
 const PosterRow = memo(function PosterRow({
