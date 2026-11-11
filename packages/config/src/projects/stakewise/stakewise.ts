@@ -237,13 +237,13 @@ export const stakewise: BaseProject = {
         value: oracleThreshold,
         secondLine: `${formatSeconds(rewardsDelaySeconds)} · ≤${rateCapYear}/yr`,
         sentiment: 'warning',
-        description: `${oracleThreshold} oracles report at most once every ${rewardsInterval}. The ${osETH} rate grows at a slope capped at ${rateCapYear} a year and never falls, but each vault's reported balance is unbounded. If the oracles stop, the exit queues stop while the rate keeps growing.`,
+        description: `${oracleThreshold} oracles report at most once every ${rewardsInterval}. The ${osETH} rate grows at a slope capped at ${rateCapYear} a year and never falls, but each vault's reported balance is unbounded. If the oracles stop, vault exit queues stop while the rate keeps growing.`,
       },
       exit: {
         value: 'Redemption queue',
         secondLine: `${formatSeconds(number('OsTokenRedeemer', 'exitQueueUpdateDelay'))} batches · no pause`,
         sentiment: 'warning',
-        description: `${osETH} holders queue in the redeemer, paid in batches at least ${redeemInterval} apart by redeeming staker positions that a ${opsSafe} multisig selects. Nothing can pause the queue, but it moves only when positions are redeemed.`,
+        description: `${osETH} holders queue in the redeemer, paid in batches at least ${redeemInterval} apart by redeeming staker positions that a ${opsSafe} multisig selects. Nothing can pause the queue, but it moves only when positions are redeemed or someone buys queued ${osETH}.`,
       },
       upgrades: {
         value: `${daoSafe} multisig`,
@@ -276,7 +276,7 @@ export const stakewise: BaseProject = {
       },
       {
         category: 'Funds can be frozen if',
-        text: 'the oracles stop signing, since both exit queues only advance with their updates.',
+        text: `the oracles stop signing, since vault exit queues only advance with their updates, and the ${osETH} redemption queue finds no positions to redeem or buyers.`,
       },
     ],
   },

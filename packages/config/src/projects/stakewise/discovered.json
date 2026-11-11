@@ -4508,7 +4508,7 @@
     "stakewise/VaultsRegistry": "0x0dc5166eb04e9bd6c2575f359c35d5f5c75e4c33510f55c7361d7dc23a75e74a"
   },
   "usedBlockNumbers": { "ethereum": 26348814 },
-  "permissionsConfigHash": "0xd54cb4dfb67581505505e86ff1b00d4e7dc10428c60dfbf2cde1db11ae168eac",
+  "permissionsConfigHash": "0xa85e86fcd350e4f801ccfd99851ef35ef9a8f8771647dc02502d0cbeb7ee92e3",
   "permissions": {
     "eth:0x0a95D62429399b08841f5dCDC5579Ca8f7794E96": {
       "receivedPermissions": [
@@ -4587,7 +4587,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (its slope capped by the keeper), staking key registrations, exit signatures and consolidations.",
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (capped by the keeper), staking key registrations, exit signatures and consolidations.",
           "role": ".oracles"
         }
       ]
@@ -4687,7 +4687,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (its slope capped by the keeper), staking key registrations, exit signatures and consolidations.",
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (capped by the keeper), staking key registrations, exit signatures and consolidations.",
           "role": ".oracles"
         }
       ]
@@ -4707,7 +4707,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (its slope capped by the keeper), staking key registrations, exit signatures and consolidations.",
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (capped by the keeper), staking key registrations, exit signatures and consolidations.",
           "role": ".oracles"
         }
       ]
@@ -4717,7 +4717,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (its slope capped by the keeper), staking key registrations, exit signatures and consolidations.",
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (capped by the keeper), staking key registrations, exit signatures and consolidations.",
           "role": ".oracles"
         }
       ]
@@ -4737,7 +4737,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (its slope capped by the keeper), staking key registrations, exit signatures and consolidations.",
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (capped by the keeper), staking key registrations, exit signatures and consolidations.",
           "role": ".oracles"
         }
       ]
@@ -4769,7 +4769,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (its slope capped by the keeper), staking key registrations, exit signatures and consolidations.",
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (capped by the keeper), staking key registrations, exit signatures and consolidations.",
           "role": ".oracles"
         }
       ]
@@ -4779,7 +4779,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (its slope capped by the keeper), staking key registrations, exit signatures and consolidations.",
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (capped by the keeper), staking key registrations, exit signatures and consolidations.",
           "role": ".oracles"
         }
       ]
@@ -4799,7 +4799,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (its slope capped by the keeper), staking key registrations, exit signatures and consolidations.",
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (capped by the keeper), staking key registrations, exit signatures and consolidations.",
           "role": ".oracles"
         }
       ]
@@ -4975,7 +4975,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (its slope capped by the keeper), staking key registrations, exit signatures and consolidations.",
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (capped by the keeper), staking key registrations, exit signatures and consolidations.",
           "role": ".oracles"
         }
       ]
@@ -4995,7 +4995,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (its slope capped by the keeper), staking key registrations, exit signatures and consolidations.",
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (capped by the keeper), staking key registrations, exit signatures and consolidations.",
           "role": ".oracles"
         }
       ]
@@ -5005,7 +5005,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (its slope capped by the keeper), staking key registrations, exit signatures and consolidations.",
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (capped by the keeper), staking key registrations, exit signatures and consolidations.",
           "role": ".oracles"
         }
       ]
