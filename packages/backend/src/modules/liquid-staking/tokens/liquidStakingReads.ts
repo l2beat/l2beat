@@ -3,6 +3,7 @@ import { assert, type UnixTime } from '@l2beat/shared-pure'
 import type { LiquidStakingProjectConfig } from '../types'
 import { returnData } from './calls'
 import { getMarketQuote } from './marketQuotes'
+import { getCbethReads } from './protocols/cbeth'
 import { getEtherFiReads } from './protocols/etherfi'
 import { getLidoReads } from './protocols/lido'
 import { getRocketPoolReads } from './protocols/rocketpool'
@@ -87,5 +88,7 @@ function getProtocolReads(
       return getEtherFiReads(contracts, blockNumber)
     case 'wbeth':
       return getWbethReads(contracts)
+    case 'cbeth':
+      return getCbethReads(contracts)
   }
 }

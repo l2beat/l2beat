@@ -1,5 +1,11 @@
-import { formatSeconds, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { discoveredDefiToken } from '../../templates/defiTokens'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
@@ -68,6 +74,13 @@ const mintCallerCount = discovery.getContractValue<string[]>(
   'MintForwarder',
   'callers',
 ).length
+// --- Liquid staking risk comparison ---
+const symbol = value('cbETH', 'symbol')
+const rateCallerCount = callerLimits('ExchangeRateUpdater').length
+const rateCapPercent = `${Number.parseFloat((units(rateCap.amount) * 100).toFixed(2))}%`
+const rateCapIntervalShort =
+  rateCap.interval === 365 * 86400 ? 'yr' : rateCapInterval
+
 const minterCount = discovery.getContractValue<string[]>(
   'cbETH',
   'minters',
@@ -118,6 +131,76 @@ export const cbeth: BaseProject = {
   defiInfo: {
     category: 'Liquid Staking',
     tvl: { source: 'l2beat' },
+    tokens: [
+      discoveredDefiToken(
+        discovery,
+        'cbETH',
+        'Appreciating token for ETH staked through Coinbase. A Coinbase key sets the rate.',
+      ),
+    ],
+  },
+  liquidStaking: {
+    contracts: {
+      type: 'cbeth',
+      cbETH: discovery.getContract('cbETH').address,
+    },
+    // Liquidity moved between these over the period. Coinbase redeems
+    // off-chain, so the market is the only onchain exit.
+    marketQuotes: [
+      { type: 'uniswapV3', fee: 500 },
+      {
+        type: 'curve',
+        pool: ChainSpecificAddress(
+          'eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A',
+        ),
+        i: 1,
+        j: 0,
+      },
+    ],
+    risks: {
+      minting: {
+        value: 'Coinbase only',
+        secondLine: 'no onchain deposit',
+        sentiment: 'bad',
+        description: `There is no deposit function. Coinbase keys mint ${symbol} through a rate-limited relay, with no ETH attached, against balances on its exchange.`,
+      },
+      operators: {
+        value: 'Coinbase',
+        secondLine: 'no bond',
+        sentiment: 'bad',
+        description: `No contract tracks validators, balances or slashing. Whether losses pass to ${symbol} holders is Coinbase's policy, not code.`,
+      },
+      backing: {
+        value: 'Coinbase-held',
+        secondLine: 'creds: Coinbase',
+        sentiment: 'bad',
+        description:
+          'No contract holds ETH. The backing is a Coinbase balance that cannot be checked onchain.',
+      },
+      oracle: {
+        value: `${rateCallerCount} of ${rateCallerCount}`,
+        secondLine: `daily · ≤${rateCapPercent}/${rateCapIntervalShort}`,
+        sentiment: 'bad',
+        warning: {
+          value: `The cap is about ${rateCapMultiple} the current rate, so it does not bind.`,
+          sentiment: 'bad',
+        },
+        description: `One Coinbase key writes the rate, capped at ${rateCapPercent} of one ETH over ${rateCapInterval}. The owner can replace the oracle at once. No contract uses the rate.`,
+      },
+      exit: {
+        value: 'Coinbase only',
+        secondLine: 'no onchain redemption',
+        sentiment: 'bad',
+        description: `${symbol} cannot be redeemed onchain. Holders redeem through Coinbase on its terms, or sell. Coinbase keys can pause transfers or blacklist holders.`,
+      },
+      upgrades: {
+        value: 'Single EOA',
+        secondLine: 'no delay · no veto',
+        sentiment: 'bad',
+        description:
+          'A single key can replace the token code instantly. There is no multisig, timelock or governance.',
+      },
+    },
   },
   // The contracts call no bridge, price feed or other protocol; the two relays
   // only call the token. Coinbase's off-chain custody and validator operation
