@@ -41,12 +41,15 @@ interface Props {
 
 /**
  * The Ethereum half of /gas-fees for Ethereum's own page: its fee history,
- * then tips, then the estimator's track record
+ * then tips now, what tips cost, and the estimator's track record
  */
 export function GasFeesEthereum({ ethereum, upgrades }: Props) {
   return (
     <div className="flex flex-col gap-6">
       <FeeHistory ethereum={ethereum} upgrades={upgrades} />
+      <Divided>
+        <GasFeesLive action={<GasFeesMethodology />} showBlocks />
+      </Divided>
       <Divided>
         <div className="grid grid-cols-1 gap-x-10 gap-y-6 lg:grid-cols-2">
           <GasFeesTipsSummary />
@@ -54,9 +57,6 @@ export function GasFeesEthereum({ ethereum, upgrades }: Props) {
             <GasFeesTipPayers />
           </div>
         </div>
-      </Divided>
-      <Divided>
-        <GasFeesLive action={<GasFeesMethodology />} showBlocks />
       </Divided>
       <Divided>
         <GasFeesPriceOfSpeed />

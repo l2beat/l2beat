@@ -19,16 +19,14 @@ export function GasFeesTipping() {
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-1">
         <h2 className="font-bold text-xl md:text-2xl">Tipping on Ethereum</h2>
-        <Label>Ethereum L1 only · past year</Label>
+        <Label>Ethereum L1 only</Label>
       </div>
-      <div className="grid grid-cols-1 gap-x-10 gap-y-6 lg:grid-cols-2">
+      <GasFeesLive action={<GasFeesMethodology />} />
+      <div className="grid grid-cols-1 gap-x-10 gap-y-6 border-divider border-t pt-6 lg:grid-cols-2">
         <GasFeesTipsSummary />
         <div className="border-divider max-lg:border-t max-lg:pt-6 lg:border-l lg:pl-10">
           <GasFeesTipPayers />
         </div>
-      </div>
-      <div className="border-divider border-t pt-5">
-        <GasFeesLive action={<GasFeesMethodology />} />
       </div>
       <div className="border-divider border-t pt-6">
         <GasFeesPriceOfSpeed />
@@ -45,9 +43,13 @@ export function GasFeesTipsSummary() {
       <div className="flex flex-col gap-2">
         <h3 className="font-bold text-lg">Overtipping</h3>
         <p className="font-bold text-xl leading-tight tracking-tight md:text-2xl">
-          Ordinary transactions tipped {usd(tips.ordinaryUsd)}.{' '}
-          <Colored color={OVER_TEXT}>{usd(over)}</Colored> of it was more than
-          our fast tip estimate.
+          Ordinary transactions tipped {usd(tips.ordinaryUsd)}. At our fast tip
+          they would have tipped{' '}
+          <Colored color={OVER_TEXT}>{usd(over)}</Colored> less.
+        </p>
+        <p className="text-secondary text-xs">
+          Past year. Ordinary means a tip under 2.5 gwei, which leaves out{' '}
+          {usd(tips.positionalUsd)} of larger tips.
         </p>
       </div>
       <SplitBar
