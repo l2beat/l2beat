@@ -1,3 +1,72 @@
+Generated with discovered.json: 0xf808f925e888f67a4d4794ef745abe31baa5a261
+
+# Diff at Mon, 26 Oct 2026 08:55:10 GMT:
+
+- id: 09a49de8
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1492cd63d867e9138efeb5e6a04dedf3b7590b2e block: 1791898285
+- current timestamp: 1791898285
+
+## Description
+
+Governance and ZkLighterVerifier use the UpgradeGatekeeper proxy type, and Lighter gets `$pastUpgrades`: all come from the UpgradeGatekeeper's `UpgradeComplete` events, the only record of zkLighter upgrades.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791898285 (main branch discovery), not current.
+
+```diff
+    contract Lighter (robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d) [lighter/ZkLighterWithSpotQuoteAsset] {
+    +++ description: The main rollup contract. It processes L2 batches, manages token deposits and withdrawals, allows users to submit priority requests and controls desert mode (escape hatch). This variant uses a configurable quote asset and commits state differences through host-chain calldata instead of EIP-4844 blob hashes. Logic is split between two contracts because of code-size limits, with many operations delegated to AdditionalZkLighter.
+      values.$pastUpgrades:
++        [["2026-06-26T12:42:27.000Z","0x56119cbe72da40648b646b402e71c66a174a4e0e62a10d3a90f9c3b0d8ecdad3",["robinhood:0x6C23703ba62a845893758ea35E5eD854639ef8BA"]],["2026-07-17T05:23:48.000Z","0x5181eb1330f92fc9eac8a8c732c081403c2343a503a36f9861a320c7a69c0280",["robinhood:0xE470e41Cacc197EA07f879577765A8c81234ED7B"]],["2026-08-21T14:54:41.000Z","0x9c6057cc94adc86e19803d3a40f879531829b2d921cb65f6e232d18bb85d1b0d",["robinhood:0x82DE5B1161C93afDFE21bA0D5343f01Cd7401d90"]],["2026-10-08T10:58:45.000Z","0xfb3043dfd28378f1bfabd4c0b60ff2f9a54a2a4f393f27e3b25ad518139601c2",["robinhood:0xEaDfD60eb47C472e4021F3917C7c3a9a48cf36e1"]],["2026-10-08T14:19:06.000Z","0x8ad402ee186907414bea85e0a3218e425e5ecf9d45c7c9bbfa86ff450d751de9",["robinhood:0x998ecf039Eb110b72F5F6C1Ea31C2fA41a458FAA"]]]
+      values.$upgradeCount:
++        5
+    }
+```
+
+```diff
+    contract ZkLighterVerifier (robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31) [lighter/ZkLighterVerifier] {
+    +++ description: The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.
+      proxyType:
+-        "EIP1967 proxy"
++        "UpgradeGatekeeper proxy"
+      values.$pastUpgrades.0:
++        ["2026-06-26T12:42:27.000Z","0x56119cbe72da40648b646b402e71c66a174a4e0e62a10d3a90f9c3b0d8ecdad3",["robinhood:0x807973D47e4DA8eF312060c01eF24Ee3E4aFc1E1"]]
+      values.$pastUpgrades.1:
++        ["2026-06-28T19:17:37.000Z","0x091b043b446536db90f58cf5e81f5baabf6f61f2c39da72192c2dca4004e1738",["robinhood:0x335dE9265A1F54296252acbAc2D05dd6E8CeD9cE"]]
+      values.$pastUpgrades.2:
++        ["2026-06-30T16:55:12.000Z","0x1125517c448cb5f720bf12cfc61489ab74bd7391253318cec5fb7e439b558678",["robinhood:0xecC8482041F2a4969C8Cf570969d4016B8db36cD"]]
+      values.$pastUpgrades.3:
++        ["2026-07-12T19:12:00.000Z","0x31e788341529a053186923dfdeefa3495042a5536f8f770e6df969d06dcf79ea",["robinhood:0xA3c70B197AcE329D9e09C753DA7874B78F1D00f4"]]
+      values.$pastUpgrades.4:
++        ["2026-08-21T14:54:41.000Z","0x9c6057cc94adc86e19803d3a40f879531829b2d921cb65f6e232d18bb85d1b0d",["robinhood:0x61CA82e45F5a57d00E66b522Be72D8bA41e634Aa"]]
+      values.$pastUpgrades.5:
++        ["2026-09-01T17:40:17.000Z","0xdb46f86078aeede8cf03c5e226424ea8a0e9251cc5a291ad12dbbf9b13e6f793",["robinhood:0xCBF92533F5816c6Ee0e4250F4E138b3f49962EF2"]]
+      values.$pastUpgrades.6:
++        ["2026-10-08T14:19:06.000Z","0x8ad402ee186907414bea85e0a3218e425e5ecf9d45c7c9bbfa86ff450d751de9",["robinhood:0x7817a34136c56A6097C7042B3cAAe24b9eEd9fb4"]]
+      values.$upgradeCount:
+-        0
++        7
+    }
+```
+
+```diff
+    contract Governance (robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7) [lighter/Governance] {
+    +++ description: Manages the list of validators and the network governor.
+      proxyType:
+-        "EIP1967 proxy"
++        "UpgradeGatekeeper proxy"
+      values.$pastUpgrades.0:
++        ["2026-06-26T12:42:27.000Z","0x56119cbe72da40648b646b402e71c66a174a4e0e62a10d3a90f9c3b0d8ecdad3",["robinhood:0x3468Dcab5a2D81Af207B3e301DFA889321989a61"]]
+      values.$upgradeCount:
+-        0
++        1
+    }
+```
+
 Generated with discovered.json: 0xc9eb22a4cae1c70c82f72f3b296ba62827ab1cae
 
 # Diff at Fri, 16 Oct 2026 05:36:51 GMT:

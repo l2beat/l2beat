@@ -1,25 +1,17 @@
 import type { ProjectScalingCategory } from '@l2beat/config'
-import type { EthereumAddress } from '@l2beat/shared-pure'
+import type { SearchIndexProjectKind } from '~/components/search-bar/searchIndex'
 import type { SearchBarEntry } from '~/components/search-bar/types'
 import type { SEARCH_BAR_PROJECT_KEYS } from './utils/toSearchBarProject'
-import type { SEARCH_BAR_TOKEN_KEYS } from './utils/toSearchBarToken'
 
 export type SearchBarProjectEntry = SearchBarEntry & {
   type: 'project'
   id: string
   iconUrl: string
-  kind:
-    | 'ethereum'
-    | 'layer2'
-    | 'layer3'
-    | 'interop'
-    | 'zkCatalog'
-    | 'ecosystem'
-    | 'privacy'
-    | 'defi'
+  kind: SearchIndexProjectKind
   l2Category?: ProjectScalingCategory
-  filePrepared?: Fuzzysort.Prepared
-  projectAddresses?: EthereumAddress[]
+  /** For a project with several versions, each with its own page. Rank 0 is
+   *  the latest, then newest first. */
+  version?: { group: string; rank: number }
 }
 
 export type SearchBarTokenEntry = SearchBarEntry & {
@@ -35,7 +27,4 @@ export type SearchBarProject = Pick<
   (typeof SEARCH_BAR_PROJECT_KEYS)[number]
 >
 
-export type SearchBarToken = Pick<
-  SearchBarTokenEntry,
-  (typeof SEARCH_BAR_TOKEN_KEYS)[number]
->
+export type SearchBarToken = SearchBarTokenEntry

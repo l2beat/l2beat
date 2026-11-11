@@ -8,13 +8,6 @@
       "reason": "Granted three temporary callers control over critical Railgun proxies through ProxyAdmin."
     },
     {
-      "timestamp": 1652034772,
-      "type": "state",
-      "contract": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
-      "transaction": "0x2bd98cd135e2eaf7b7239bb4951a043f655629b5d0f0ca12334ce05718512361",
-      "reason": "Revoked the temporary callers' control over critical Railgun proxies."
-    },
-    {
       "timestamp": 1665068219,
       "type": "state",
       "contract": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
@@ -62,22 +55,6 @@
       "contract": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
       "transaction": "0x256b66eb07d1bc6f1e87375917077f4c607952f13b12f577021a14f9f1a22eca",
       "reason": "Completed a batch rollout of new smart wallet SNARK verification keys."
-    },
-    {
-      "timestamp": 1788946295,
-      "type": "state",
-      "contract": "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46",
-      "transaction": "0x954f695980615ba281c505b1ca35c37f1bd643642ee74389bc7598364965555e",
-      "updateId": "eed67565",
-      "reason": "The owner EOA returned this VKeySetter from COMMITTING to SETTING, closing its path to push the 2023 verification keys (or empty keys) to the smart wallet without governance."
-    },
-    {
-      "timestamp": 1788947087,
-      "type": "state",
-      "contract": "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598",
-      "transaction": "0x5432fa7fa6ebda2004e92c9d6cde65d7b519f28ddf17ade7303014727dc29731",
-      "updateId": "eed67565",
-      "reason": "The owner EOA returned this VKeySetter from COMMITTING to SETTING, closing its path to push staged verification keys (or empty keys) to the smart wallet without governance."
     }
   ]
 }

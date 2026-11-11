@@ -1,0 +1,32 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TeeRegistry",
+  "critical": true,
+  "category": "core",
+  "description": "Registry of the TEE signers that the zk.money portals accept for withdrawals and refunds. Anyone can register a signer with an AWS Nitro attestation of the enclave image PCR0_HASH that is at most TEE_ATTESTATION_MAX_AGE seconds old. Registration also sends an L1->L2 message to L2_RECIPIENT, whose inclusion the zk.money contracts on Aztec prove to accept the signer there. Registrations are permanent, and the approved image cannot change.",
+  "ignoreRelatives": ["INBOX"],
+  "fields": {
+    "PCR0_HASH": {
+      "description": "keccak256 of the PCR0 measurement of the only AWS Nitro enclave image whose attestations can register signers."
+    },
+    "L2_RECIPIENT": {
+      "description": "Aztec address that signer registration messages are sent to."
+    },
+    "teeSigners": {
+      "description": "Registered TEE signers. Registrations are permanent.",
+      "handler": {
+        "type": "event",
+        "select": "tee",
+        "add": {
+          "event": "TEEAdded"
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "co-sign withdrawals and refunds. Without a signature from a registered TEE signer, no funds can leave the portals that use this registry."
+        }
+      ]
+    }
+  }
+}

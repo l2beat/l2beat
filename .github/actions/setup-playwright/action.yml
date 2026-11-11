@@ -21,12 +21,22 @@ runs:
       working-directory: ${{ inputs.package-dir }}
       run: echo "version=$(pnpm exec playwright --version | awk '{print $2}')" >> "$GITHUB_OUTPUT"
 
+    # Playwright builds browsers per Ubuntu release, so a build cached on one
+    # release fails to load its libraries on another, and ubuntu-latest moves
+    # between them
+    - name: Read runner image
+      id: image
+      shell: bash
+      run: |
+        echo "os=$ImageOS" >> "$GITHUB_OUTPUT"
+        echo "version=$ImageOS-$ImageVersion" >> "$GITHUB_OUTPUT"
+
     - name: Restore Playwright browsers
       id: cache
       uses: actions/cache@v6
       with:
         path: ~/.cache/ms-playwright
-        key: playwright-${{ runner.os }}-${{ steps.version.outputs.version }}-headless-shell${{ inputs.webkit == 'true' && '-webkit' || '' }}
+        key: playwright-${{ steps.image.outputs.os }}-${{ steps.version.outputs.version }}-headless-shell${{ inputs.webkit == 'true' && '-webkit' || '' }}
 
     # Headless tests run on the headless shell, so the full Chrome build and
     # ffmpeg are never used. The runner image already has the system libraries.
@@ -42,9 +52,50 @@ runs:
       working-directory: ${{ inputs.package-dir }}
       run: pnpm exec playwright install webkit
 
-    # System libraries are not in the browser cache, so they go in every run
+    # WebKit's system libraries are 117 MB of packages from Ubuntu's mirror,
+    # which on bad days serves them at 10-200 kB/s and runs the job out of
+    # time. Their .deb files are cached, keyed on the runner image so that a
+    # new image refreshes them, and apt downloads only the ones that changed.
+    - name: Restore WebKit's system packages
+      if: inputs.webkit == 'true'
+      id: webkit-packages
+      uses: actions/cache/restore@v6
+      with:
+        path: ~/.cache/webkit-packages
+        key: webkit-packages-${{ steps.image.outputs.version }}-${{ steps.version.outputs.version }}
+        restore-keys: webkit-packages-${{ steps.image.outputs.os }}-
+
     - name: Install WebKit's system libraries
       if: inputs.webkit == 'true'
       shell: bash
       working-directory: ${{ inputs.package-dir }}
-      run: pnpm exec playwright install-deps webkit
+      run: |
+        mkdir -p ~/.cache/webkit-packages
+        find ~/.cache/webkit-packages -name '*.deb' -exec sudo cp -t /var/cache/apt/archives {} +
+        # On an Ubuntu release it does not know, install-deps warns and exits 0,
+        # and WebKit then fails in the tests instead
+        pnpm exec playwright install-deps webkit 2>&1 | tee "$RUNNER_TEMP/install-deps.log"
+        if grep -q 'Cannot install dependencies' "$RUNNER_TEMP/install-deps.log"; then
+          echo "::error::Playwright cannot install WebKit's system libraries on $ImageOS"
+          exit 1
+        fi
+
+    # Only main saves the cache, as with pnpm's. autoclean drops the versions
+    # the mirror no longer serves, so a partial restore does not pile them up.
+    - name: Collect WebKit's system packages
+      if: inputs.webkit == 'true' && (github.ref == 'refs/heads/main' || github.head_ref == 'cache-webkit-system-packages') && steps.webkit-packages.outputs.cache-hit != 'true'
+      shell: bash
+      run: |
+        sudo apt-get autoclean
+        rm -rf ~/.cache/webkit-packages
+        mkdir -p ~/.cache/webkit-packages
+        cp /var/cache/apt/archives/*.deb ~/.cache/webkit-packages
+        ls ~/.cache/webkit-packages | wc -l
+        du -sh ~/.cache/webkit-packages
+
+    - name: Save WebKit's system packages
+      if: inputs.webkit == 'true' && (github.ref == 'refs/heads/main' || github.head_ref == 'cache-webkit-system-packages') && steps.webkit-packages.outputs.cache-hit != 'true'
+      uses: actions/cache/save@v6
+      with:
+        path: ~/.cache/webkit-packages
+        key: ${{ steps.webkit-packages.outputs.cache-primary-key }}

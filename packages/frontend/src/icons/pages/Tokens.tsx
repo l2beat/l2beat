@@ -11,14 +11,14 @@ export function TokensIcon({ className, ...props }: SvgIconProps) {
       fill="none"
       {...props}
     >
-      <circle cx="8.5" cy="10" r="5.25" strokeWidth="1.7" />
+      <circle cx="7.9" cy="10" r="6.3" strokeWidth="1.7" />
       <path
-        d="M11.5 5.1a5.25 5.25 0 0 1 1 10.4"
+        d="M11.5 4.1a6.3 6.3 0 0 1 1.2 12.5"
         strokeWidth="1.7"
         strokeLinecap="round"
       />
       <path
-        d="M8.5 7.75v4.5M7 9.25h3M7 11h3"
+        d="M7.9 7.3v5.4M6.1 9.1h3.6M6.1 11.2h3.6"
         strokeWidth="1.4"
         strokeLinecap="round"
       />

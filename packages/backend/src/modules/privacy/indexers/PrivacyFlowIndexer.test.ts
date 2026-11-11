@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { PrivacyFlowExtractorConfig } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
-import type { BlockProvider, LogsProvider } from '@l2beat/shared'
+import type { BlockProvider, IRpcClient, LogsProvider } from '@l2beat/shared'
 import { EthereumAddress, type Log, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { mockDatabase } from '../../../test/database'
@@ -83,14 +83,19 @@ describe(PrivacyFlowIndexer.name, () => {
       const privacyFlowEventRepo = mockObject<Database['privacyFlowEvent']>({
         upsertMany: mockFn().returnsOnce(undefined),
       })
+      const syncMetadataRepo = mockObject<Database['syncMetadata']>({
+        updateSyncedUntil: mockFn().resolvesTo(undefined),
+      })
 
       const indexer = new PrivacyFlowIndexer(
         {
           chain: 'ethereum',
+          rpcClient: mockObject<IRpcClient>({}),
           configurations: configs,
           blockProvider,
           logsProvider,
           db: mockDatabase({
+            syncMetadata: syncMetadataRepo,
             privacyBlockTimestamp: privacyBlockTimestampRepo,
             privacyPrice: privacyPriceRepo,
             privacyFlowEvent: privacyFlowEventRepo,
@@ -130,6 +135,12 @@ describe(PrivacyFlowIndexer.name, () => {
           valueUsd: 2000,
         },
       ])
+
+      expect(syncMetadataRepo.updateSyncedUntil).toHaveBeenOnlyCalledWith(
+        'privacy',
+        ['bucket-1'],
+        to,
+      )
 
       // adjustedTo = min(toNext(from, 'day'), to). For 5-hour window inside a day,
       // adjustedTo === to.
@@ -171,10 +182,14 @@ describe(PrivacyFlowIndexer.name, () => {
       const indexer = new PrivacyFlowIndexer(
         {
           chain: 'ethereum',
+          rpcClient: mockObject<IRpcClient>({}),
           configurations: configs,
           blockProvider: mockObject<BlockProvider>({}),
           logsProvider,
           db: mockDatabase({
+            syncMetadata: mockObject<Database['syncMetadata']>({
+              updateSyncedUntil: mockFn().resolvesTo(undefined),
+            }),
             privacyBlockTimestamp: privacyBlockTimestampRepo,
             privacyPrice: mockObject(),
             privacyFlowEvent: privacyFlowEventRepo,
@@ -214,10 +229,14 @@ describe(PrivacyFlowIndexer.name, () => {
       const indexer = new PrivacyFlowIndexer(
         {
           chain: 'ethereum',
+          rpcClient: mockObject<IRpcClient>({}),
           configurations: [placeholder],
           blockProvider: mockObject<BlockProvider>({}),
           logsProvider,
           db: mockDatabase({
+            syncMetadata: mockObject<Database['syncMetadata']>({
+              updateSyncedUntil: mockFn().resolvesTo(undefined),
+            }),
             privacyBlockTimestamp: mockObject(),
             privacyPrice: mockObject(),
             privacyFlowEvent: privacyFlowEventRepo,
@@ -260,10 +279,14 @@ describe(PrivacyFlowIndexer.name, () => {
       const indexer = new PrivacyFlowIndexer(
         {
           chain: 'ethereum',
+          rpcClient: mockObject<IRpcClient>({}),
           configurations: configs,
           blockProvider: mockObject<BlockProvider>({}),
           logsProvider: mockObject<LogsProvider>({}),
           db: mockDatabase({
+            syncMetadata: mockObject<Database['syncMetadata']>({
+              updateSyncedUntil: mockFn().resolvesTo(undefined),
+            }),
             privacyBlockTimestamp: privacyBlockTimestampRepo,
             privacyPrice: mockObject(),
             privacyFlowEvent: mockObject(),
@@ -367,10 +390,14 @@ describe(PrivacyFlowIndexer.name, () => {
       const indexer = new PrivacyFlowIndexer(
         {
           chain: 'ethereum',
+          rpcClient: mockObject<IRpcClient>({}),
           configurations: configs,
           blockProvider,
           logsProvider,
           db: mockDatabase({
+            syncMetadata: mockObject<Database['syncMetadata']>({
+              updateSyncedUntil: mockFn().resolvesTo(undefined),
+            }),
             privacyBlockTimestamp: privacyBlockTimestampRepo,
             privacyPrice: privacyPriceRepo,
             privacyFlowEvent: privacyFlowEventRepo,
@@ -441,10 +468,14 @@ describe(PrivacyFlowIndexer.name, () => {
       const indexer = new PrivacyFlowIndexer(
         {
           chain: 'ethereum',
+          rpcClient: mockObject<IRpcClient>({}),
           configurations: configs,
           blockProvider: mockObject<BlockProvider>({}),
           logsProvider,
           db: mockDatabase({
+            syncMetadata: mockObject<Database['syncMetadata']>({
+              updateSyncedUntil: mockFn().resolvesTo(undefined),
+            }),
             privacyBlockTimestamp: privacyBlockTimestampRepo,
             privacyPrice: privacyPriceRepo,
             privacyFlowEvent: privacyFlowEventRepo,
@@ -519,10 +550,14 @@ describe(PrivacyFlowIndexer.name, () => {
       const indexer = new PrivacyFlowIndexer(
         {
           chain: 'ethereum',
+          rpcClient: mockObject<IRpcClient>({}),
           configurations: configs,
           blockProvider: mockObject<BlockProvider>({}),
           logsProvider,
           db: mockDatabase({
+            syncMetadata: mockObject<Database['syncMetadata']>({
+              updateSyncedUntil: mockFn().resolvesTo(undefined),
+            }),
             privacyBlockTimestamp: privacyBlockTimestampRepo,
             privacyPrice: privacyPriceRepo,
             privacyFlowEvent: privacyFlowEventRepo,
@@ -589,10 +624,14 @@ describe(PrivacyFlowIndexer.name, () => {
       const indexer = new PrivacyFlowIndexer(
         {
           chain: 'ethereum',
+          rpcClient: mockObject<IRpcClient>({}),
           configurations: configs,
           blockProvider: mockObject<BlockProvider>({}),
           logsProvider,
           db: mockDatabase({
+            syncMetadata: mockObject<Database['syncMetadata']>({
+              updateSyncedUntil: mockFn().resolvesTo(undefined),
+            }),
             privacyBlockTimestamp: privacyBlockTimestampRepo,
             privacyPrice: privacyPriceRepo,
             privacyFlowEvent: mockObject(),
@@ -662,10 +701,14 @@ describe(PrivacyFlowIndexer.name, () => {
       const indexer = new PrivacyFlowIndexer(
         {
           chain: 'ethereum',
+          rpcClient: mockObject<IRpcClient>({}),
           configurations: [badConfig],
           blockProvider: mockObject<BlockProvider>({}),
           logsProvider,
           db: mockDatabase({
+            syncMetadata: mockObject<Database['syncMetadata']>({
+              updateSyncedUntil: mockFn().resolvesTo(undefined),
+            }),
             privacyBlockTimestamp: privacyBlockTimestampRepo,
             privacyPrice: mockObject(),
             privacyFlowEvent: mockObject(),
@@ -754,10 +797,14 @@ describe(PrivacyFlowIndexer.name, () => {
       const indexer = new PrivacyFlowIndexer(
         {
           chain: 'ethereum',
+          rpcClient: mockObject<IRpcClient>({}),
           configurations: [configA, configB],
           blockProvider: mockObject<BlockProvider>({}),
           logsProvider,
           db: mockDatabase({
+            syncMetadata: mockObject<Database['syncMetadata']>({
+              updateSyncedUntil: mockFn().resolvesTo(undefined),
+            }),
             privacyBlockTimestamp: privacyBlockTimestampRepo,
             privacyPrice: privacyPriceRepo,
             privacyFlowEvent: privacyFlowEventRepo,
@@ -859,10 +906,14 @@ describe(PrivacyFlowIndexer.name, () => {
       const indexer = new PrivacyFlowIndexer(
         {
           chain: 'ethereum',
+          rpcClient: mockObject<IRpcClient>({}),
           configurations: configs,
           blockProvider: mockObject<BlockProvider>({}),
           logsProvider,
           db: mockDatabase({
+            syncMetadata: mockObject<Database['syncMetadata']>({
+              updateSyncedUntil: mockFn().resolvesTo(undefined),
+            }),
             privacyBlockTimestamp: privacyBlockTimestampRepo,
             privacyPrice: privacyPriceRepo,
             privacyFlowEvent: privacyFlowEventRepo,
@@ -949,10 +1000,14 @@ describe(PrivacyFlowIndexer.name, () => {
     const indexer = new PrivacyFlowIndexer(
       {
         chain: 'ethereum',
+        rpcClient: mockObject<IRpcClient>({}),
         configurations: configs,
         blockProvider: mockObject<BlockProvider>({}),
         logsProvider,
         db: mockDatabase({
+          syncMetadata: mockObject<Database['syncMetadata']>({
+            updateSyncedUntil: mockFn().resolvesTo(undefined),
+          }),
           privacyBlockTimestamp: mockObject<Database['privacyBlockTimestamp']>({
             findBlockNumberByChainAndTimestamp: mockFn()
               .returnsOnce(50)
@@ -1010,10 +1065,14 @@ describe(PrivacyFlowIndexer.name, () => {
       const indexer = new PrivacyFlowIndexer(
         {
           chain: 'ethereum',
+          rpcClient: mockObject<IRpcClient>({}),
           configurations: [placeholder],
           blockProvider: mockObject<BlockProvider>({}),
           logsProvider: mockObject<LogsProvider>({}),
           db: mockDatabase({
+            syncMetadata: mockObject<Database['syncMetadata']>({
+              updateSyncedUntil: mockFn().resolvesTo(undefined),
+            }),
             privacyBlockTimestamp: mockObject(),
             privacyPrice: mockObject(),
             privacyFlowEvent: privacyFlowEventRepo,
@@ -1056,10 +1115,14 @@ describe(PrivacyFlowIndexer.name, () => {
       const indexer = new PrivacyFlowIndexer(
         {
           chain: 'ethereum',
+          rpcClient: mockObject<IRpcClient>({}),
           configurations: [placeholder],
           blockProvider: mockObject<BlockProvider>({}),
           logsProvider: mockObject<LogsProvider>({}),
           db: mockDatabase({
+            syncMetadata: mockObject<Database['syncMetadata']>({
+              updateSyncedUntil: mockFn().resolvesTo(undefined),
+            }),
             privacyBlockTimestamp: mockObject(),
             privacyPrice: mockObject(),
             privacyFlowEvent: privacyFlowEventRepo,

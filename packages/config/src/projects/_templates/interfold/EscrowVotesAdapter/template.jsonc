@@ -7,7 +7,7 @@
   "ignoreInWatchMode": ["clock"],
   "fields": {
     "dao": {
-      "description": "Aragon DAO whose permission manager grants delegation administration and upgrade roles."
+      "description": "Aragon governance contract whose permission manager grants delegation administration and upgrade roles."
     },
     "escrow": {
       "description": "VotingEscrow from which lock balances and ownership are read."

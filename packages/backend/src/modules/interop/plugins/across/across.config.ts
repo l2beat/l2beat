@@ -48,13 +48,23 @@ const ACROSS_CHAIN_NAME_FALLBACKS = [
     querySpokePool: false,
   },
   {
-    name: 'hypercore',
+    name: 'hyperliquid',
     id: 1_337,
     querySpokePool: false,
   },
   {
     name: 'lighter',
     id: 2_337,
+    querySpokePool: false,
+  },
+  {
+    name: 'tron',
+    id: 728_126_428,
+    querySpokePool: false,
+  },
+  {
+    name: 'arc',
+    id: 5_042,
     querySpokePool: false,
   },
 ] as const satisfies AcrossBootstrapChain[]

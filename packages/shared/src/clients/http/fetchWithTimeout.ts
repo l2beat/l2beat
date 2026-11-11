@@ -1,5 +1,5 @@
+import { redactUrl } from '@l2beat/backend-tools'
 import { pipeBody } from './pipeBody'
-import { sanitizeUrl } from './sanitizeUrl'
 
 const DEFAULT_TIMEOUT_MS = 10_000
 
@@ -15,7 +15,7 @@ export type FetchInit = RequestInit & {
 
 export class HttpTimeoutError extends Error {
   constructor(url: string, timeoutMs: number) {
-    super(`Timeout: no data from ${sanitizeUrl(url)} for ${timeoutMs}ms`)
+    super('HTTP timeout', { cause: { url: redactUrl(url), timeoutMs } })
     this.name = 'HttpTimeoutError'
   }
 }

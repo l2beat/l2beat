@@ -67,6 +67,12 @@ export const mantle: ScalingProject = opStackL2({
       },
     ],
   },
+  activityConfig: {
+    type: 'block',
+    startBlock: 1,
+    // first Mantle v2 (Tectonic) block with the L1-info deposit tx
+    adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 61171947 },
+  },
   ossificationHistory: discovery.getOssificationHistory(genesisTimestamp, {
     // OPSuccinctL2OutputOracle verifier set to the SP1VerifierGateway 0x3B60 (tx
     // 0xa29314393be594bcb4caad62ff4a282f108031aa8c58ff649bbfe82453903365). Before,

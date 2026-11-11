@@ -1,3 +1,5 @@
+import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
+
 export interface FaqItem {
   question: string
   /** Markdown, with paragraphs separated by a blank line. */
@@ -8,24 +10,29 @@ export interface FaqItem {
 const items: { question: string; answer: string | string[] }[] = [
   // General
   {
-    question: 'What is the overall purpose of this site?',
+    question: 'Is ETHBEAT the same as L2BEAT?',
     answer:
-      'L2BEAT was created to provide transparent and verifiable insights into emerging layer two (L2) technologies which, in line with the [rollup-centric Ethereum scaling roadmap](https://ethereum-magicians.org/t/a-rollup-centric-ethereum-roadmap/4698) are aimed at scaling Ethereum. Since then we have expanded to cover the interoperability protocols that connect these chains, privacy protocols on Ethereum, and the ZK technology many of these projects rely on.',
+      'Yes. ETHBEAT (formerly L2BEAT) is the same team doing the same research with the same data, under a new name. [L2BEAT is now ETHBEAT](/l2beat-is-now-ethbeat) explains what changed and what did not.',
   },
   {
-    question: 'What does L2BEAT cover besides L2s?',
+    question: 'What is the overall purpose of this site?',
+    answer:
+      'We started as L2BEAT to provide transparent and verifiable insights into emerging layer two (L2) technologies which, in line with the [rollup-centric Ethereum scaling roadmap](https://ethereum-magicians.org/t/a-rollup-centric-ethereum-roadmap/4698) are aimed at scaling Ethereum. Since then we have expanded to cover the interoperability protocols that connect these chains, privacy protocols on Ethereum, and the ZK technology many of these projects rely on.',
+  },
+  {
+    question: 'What does ETHBEAT cover besides L2s?',
     answer: [
       '- **[Layer 2s](/layer2s/summary)** - risk analysis, Stages, value secured, activity, liveness and costs of Ethereum scaling projects.',
       '- **[Interop](/interop/summary)** - how value moves across chains: cross-chain volumes and flows, protocols compared by bridge type, token frameworks and intent bridges.',
-      '- **[Privacy](/privacy/summary)** - live balances, flows and privacy assessments of privacy protocols on Ethereum.',
+      '- **[Privacy](/privacy/summary)** - reviews of privacy protocols on Ethereum: what each one hides and from whom, anonymity sets, trusted setups and exit windows, alongside value locked, volume and deposit and withdrawal counts.',
       '- **[ZK Catalog](/zk-catalog)** - the ZK proving systems used by blockchain projects, including their trusted setups and onchain verifiers.',
     ],
   },
   {
     question:
-      'Why do you need L2BEAT when you already have DeFiLlama, growthepie and other analytics platforms?',
+      'Why do you need ETHBEAT when you already have DeFiLlama, growthepie and other analytics platforms?',
     answer:
-      'While those platforms are great, they primarily focus on tracking value locked in DeFi projects and other performance metrics across various chains. In comparison, L2BEAT focuses on the decentralization and trust assumptions of the projects we track, such as Ethereum scaling projects (L2s and L3s), interop protocols and privacy protocols, and reports not just TVS but also various metrics related to the liveness and security of these projects.',
+      'While those platforms are great, they primarily focus on tracking value locked in DeFi projects and other performance metrics across various chains. In comparison, ETHBEAT focuses on the decentralization and trust assumptions of the projects we track, such as Ethereum scaling projects (L2s and L3s), interop protocols and privacy protocols, and reports not just TVS but also various metrics related to the liveness and security of these projects.',
   },
   // L2s
   {
@@ -83,13 +90,13 @@ const items: { question: string; answer: string | string[] }[] = [
   {
     question: "Are there any other ways L2 validators can steal user's coins?",
     answer:
-      'Most L2 constructions are upgradable and until upgradability mechanism is either fully disabled or controlled by a sufficiently decentralized DAO, the funds can be, in theory, stolen through the upgrade mechanism. L2BEAT will closely monitor how the particular construction is upgradable and who currently controls the upgradability keys.',
+      'Most L2 constructions are upgradable and until upgradability mechanism is either fully disabled or controlled by a sufficiently decentralized DAO, the funds can be, in theory, stolen through the upgrade mechanism. ETHBEAT will closely monitor how the particular construction is upgradable and who currently controls the upgradability keys.',
   },
   {
     question: 'What about data availability? Why is it important?',
     answer: [
       "To trustlessly withdraw coins from L2, users need to prove ownership of the coins to L1 smart contract that holds all the funds. For that they need to have access to all L2's transactions or its current state. To not introduce any additional trust assumptions, L2 transactions can simply be recorded on L1 (as cheap calldata).",
-      "For more details on data availability and its importance in security of scaling protocols, see our [data availability risk analysis](https://l2beat.com/layer2s/risk/data-availability), as well as Ethereum.org's [page on the topic](https://ethereum.org/en/developers/docs/data-availability/).",
+      `For more details on data availability and its importance in security of scaling protocols, see our [data availability risk analysis](${PRODUCTION_ORIGIN}/layer2s/risk/data-availability), as well as Ethereum.org's [page on the topic](https://ethereum.org/en/developers/docs/data-availability/).`,
     ],
   },
   // TVS
@@ -99,7 +106,7 @@ const items: { question: string; answer: string | string[] }[] = [
       'Total Value Secured (TVS) is the sum of canonically bridged, externally bridged and natively minted assets (e.g. L2-native governance tokens like ARB and OP), i.e. all assets managed in some form by the project.',
       'We used to call this metric TVL (Total Value Locked). When we started, we only tracked value locked in canonical bridges, but as we expanded our scope to include externally bridged and natively minted assets, which are not necessarily locked, we renamed it to TVS to better reflect the broader scope of assets we track.',
       'The term TVL is usually associated with value locked in DeFi, which is why our TVS for a chain often differs from the TVL reported by DeFi-focused platforms like DefiLlama. Their TVL counts assets actively engaged in dApps on a given network, while our TVS counts every asset secured by the chain, whether it is used in a dApp or not.',
-      "Example: let's assume L2BEAT reports a TVS of 2.5 billion, while DefiLlama reports a TVL of 1 billion for the same L2 (e.g. Arbitrum). This suggests that 1.5 billion worth of assets have been bridged (canonically or externally) or natively minted on Arbitrum, but are not yet being used in any dApps listed by DefiLlama. For instance, if you deposit 1 ETH to Optimism, L2BEAT would include it in its TVS, but DefiLlama TVL would not. However, if you use that 1 ETH on Optimism to provide liquidity on Uniswap, DefiLlama would then include it in its TVL.",
+      "Example: let's assume ETHBEAT reports a TVS of 2.5 billion, while DefiLlama reports a TVL of 1 billion for the same L2 (e.g. Arbitrum). This suggests that 1.5 billion worth of assets have been bridged (canonically or externally) or natively minted on Arbitrum, but are not yet being used in any dApps listed by DefiLlama. For instance, if you deposit 1 ETH to Optimism, ETHBEAT would include it in its TVS, but DefiLlama TVL would not. However, if you use that 1 ETH on Optimism to provide liquidity on Uniswap, DefiLlama would then include it in its TVL.",
     ],
   },
   {
@@ -137,6 +144,7 @@ const items: { question: string; answer: string | string[] }[] = [
     answer: [
       'We analyze privacy protocols on Ethereum through the CROPS principles: censorship resistance, open source, privacy and security. For each protocol the [Privacy page](/privacy/summary) shows how well it protects you against different adversaries.',
       'We also check whether a protocol passes the **walkaway test**, meaning users can still fully use it if every centralized participant disappears.',
+      'The [privacy methodology](/publications/privacy-methodology) explains the adversaries, the verdicts and every column of the Privacy page.',
     ],
   },
   {
@@ -146,8 +154,8 @@ const items: { question: string; answer: string | string[] }[] = [
   },
   // Methodology and contributing
   {
-    question: 'Is L2BEAT performing a security audit for each L2?',
-    answer: `No, the L2BEAT team **DOES NOT DO SECURITY AUDIT**. All the information
+    question: 'Is ETHBEAT performing a security audit for each L2?',
+    answer: `No, the ETHBEAT team **DOES NOT DO SECURITY AUDIT**. All the information
     that we present on our site should be independently verified by anyone
     wanting to use given L2. Our goal is to collect as much information as
     we can about the "state of L2s" and allow the community to
@@ -158,7 +166,7 @@ const items: { question: string; answer: string | string[] }[] = [
     question:
       'Where can I learn more about your methodology or ask questions about it?',
     answer: [
-      'Our risk frameworks, such as the [Stages framework](https://forum.l2beat.com/t/the-stages-framework/291), and the reasoning behind every change to them are published on the [L2BEAT Forum](https://forum.l2beat.com/c/methodology-and-framework/5) in the Methodology & Framework category.',
+      'Our risk frameworks, such as the [Stages framework](https://forum.l2beat.com/t/the-stages-framework/291), and the reasoning behind every change to them are published on the [ETHBEAT Forum](https://forum.l2beat.com/c/methodology-and-framework/5) in the Methodology & Framework category.',
       'The forum is the best place to ask how we assess projects, challenge our reasoning or propose improvements to our frameworks.',
     ],
   },
@@ -170,7 +178,7 @@ const items: { question: string; answer: string | string[] }[] = [
     ],
   },
   {
-    question: 'Can AI agents and LLM tools read L2BEAT data?',
+    question: 'Can AI agents and LLM tools read ETHBEAT data?',
     answer:
       'Yes. Project pages for scaling projects, interop protocols, privacy protocols and ZK Catalog projects are available as plain markdown: add `.md` to a project page URL, e.g. [/layer2s/projects/arbitrum.md](/layer2s/projects/arbitrum.md). [llms.txt](/llms.txt) describes the URL pattern for each project type.',
   },

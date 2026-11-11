@@ -1,7 +1,7 @@
 {
   "name": "katana",
-  "timestamp": 1792144034,
-  "configHash": "0x8ec0069625521603dcc9417c79737aab3730b7b0430d5f556abc95a584421c3b",
+  "timestamp": 1793874174,
+  "configHash": "0x885f978781bdd02b57d74dc791e9b2704321d8c631e128c4eb9c6dfd0e7a4549",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -114,12 +114,12 @@
         "lastAccInputHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
-        "latestBlockNumber": 45396070,
-        "latestOutputIndex": 10791,
+        "latestBlockNumber": 47129431,
+        "latestOutputIndex": 11614,
         "MAX_AGGCHAIN_SIGNERS": 255,
         "networkName": "katana",
-        "nextBlockNumber": 45396071,
-        "nextOutputIndex": 10792,
+        "nextBlockNumber": 47129432,
+        "nextOutputIndex": 11615,
         "optimisticMode": false,
         "optimisticModeManager": "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC",
         "pendingAdmin": "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC",
@@ -151,7 +151,7 @@
         "pendingAggchainManager": { "severity": "MEDIUM" },
         "pendingAdmin": { "severity": "MEDIUM" },
         "rollupConfigHash": { "severity": "LOW" },
-        "submissionInterval": { "severity": "HIGH" },
+        "submissionInterval": { "severity": "MEDIUM" },
         "getThreshold": { "severity": "HIGH" },
         "$admin": { "severity": "MEDIUM" },
         "CONSENSUS_TYPE": {
@@ -212,7 +212,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "critical": true,
       "deployerAddress": "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6",
       "sinceTimestamp": 1747909835,
       "sinceBlock": 22537828,
@@ -337,7 +336,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 3371,
+        "nonce": 3387,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -786,9 +785,10 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge WBTC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbWBTC-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.",
-      "critical": true,
       "ignoreInWatchMode": [
         "backingDifference",
+        "reservedAssets",
+        "reservePercentage",
         "stakedAssets",
         "totalAssets",
         "totalSupply",
@@ -855,10 +855,10 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": 16012082535,
+        "stakedAssets": 10100256098,
         "symbol": "vbWBTC",
-        "totalAssets": 16012082535,
-        "totalSupply": 16012082535,
+        "totalAssets": 10100256098,
+        "totalSupply": 10100256098,
         "underlyingToken": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
         "version": "0.5.0",
         "yield": 0,
@@ -870,13 +870,13 @@
       "fieldMeta": {
         "accessControl": { "severity": "MEDIUM" },
         "yieldVault": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "external vault where the underlying backing assets are deposited to generate yield."
         },
         "yieldRecipient": { "severity": "MEDIUM" },
-        "migrationManager": { "severity": "HIGH" },
+        "migrationManager": { "severity": "MEDIUM" },
         "minimumReservePercentage": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "share of the underlying that must stay in reserve instead of being deposited into the yield vault."
         },
         "paused": { "severity": "MEDIUM" }
@@ -898,9 +898,10 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge ETH) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbETH-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.",
-      "critical": true,
       "ignoreInWatchMode": [
         "backingDifference",
+        "reservedAssets",
+        "reservePercentage",
         "stakedAssets",
         "totalAssets",
         "totalSupply",
@@ -944,7 +945,7 @@
         "asset": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "backingDifference": {
           "positive": true,
-          "difference": "64866960525830130"
+          "difference": "65697911398726787"
         },
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -968,15 +969,15 @@
         "paused": false,
         "PAUSER_ROLE": "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a",
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
-        "reservedAssets": 0,
-        "reservePercentage": 0,
-        "stakedAssets": "2076433883859931827033",
+        "reservedAssets": "554554378172804022290",
+        "reservePercentage": "209093214301737971",
+        "stakedAssets": "2097698670842865314610",
         "symbol": "vbETH",
-        "totalAssets": "2076433883859931827033",
-        "totalSupply": "2076369016899405996903",
+        "totalAssets": "2652253049015669336900",
+        "totalSupply": "2652187351104270610113",
         "underlyingToken": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "version": "0.5.0",
-        "yield": "64866960525830130",
+        "yield": "65697911398726787",
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50",
         "yieldVault": "eth:0x31A5684983EeE865d943A696AAC155363bA024f9",
@@ -985,13 +986,13 @@
       "fieldMeta": {
         "accessControl": { "severity": "MEDIUM" },
         "yieldVault": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "external vault where the underlying backing assets are deposited to generate yield."
         },
         "yieldRecipient": { "severity": "MEDIUM" },
-        "migrationManager": { "severity": "HIGH" },
+        "migrationManager": { "severity": "MEDIUM" },
         "minimumReservePercentage": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "share of the underlying that must stay in reserve instead of being deposited into the yield vault."
         },
         "paused": { "severity": "MEDIUM" }
@@ -1131,7 +1132,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "critical": true,
       "deployerAddress": "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6",
       "sinceTimestamp": 1747909835,
       "sinceBlock": 22537828,
@@ -1156,9 +1156,10 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDS) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDS-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.",
-      "critical": true,
       "ignoreInWatchMode": [
         "backingDifference",
+        "reservedAssets",
+        "reservePercentage",
         "stakedAssets",
         "totalAssets",
         "totalSupply",
@@ -1240,13 +1241,13 @@
       "fieldMeta": {
         "accessControl": { "severity": "MEDIUM" },
         "yieldVault": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "external vault where the underlying backing assets are deposited to generate yield."
         },
         "yieldRecipient": { "severity": "MEDIUM" },
-        "migrationManager": { "severity": "HIGH" },
+        "migrationManager": { "severity": "MEDIUM" },
         "minimumReservePercentage": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "share of the underlying that must stay in reserve instead of being deposited into the yield vault."
         },
         "paused": { "severity": "MEDIUM" }
@@ -1355,7 +1356,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "critical": true,
       "deployerAddress": "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6",
       "sinceTimestamp": 1747909835,
       "sinceBlock": 22537828,
@@ -1414,7 +1414,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 353,
+        "nonce": 373,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1507,9 +1507,10 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDC-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.",
-      "critical": true,
       "ignoreInWatchMode": [
         "backingDifference",
+        "reservedAssets",
+        "reservePercentage",
         "stakedAssets",
         "totalAssets",
         "totalSupply",
@@ -1551,7 +1552,7 @@
           }
         },
         "asset": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "backingDifference": { "positive": true, "difference": 662394663 },
+        "backingDifference": { "positive": true, "difference": 717881754 },
         "decimals": 6,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DOMAIN_SEPARATOR": "0xf208e01223892bb2dfb35c2d306f682552de4492b4e45dff4876243fc048a8c2",
@@ -1576,13 +1577,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": 7366155606790,
+        "stakedAssets": 7027400043473,
         "symbol": "vbUSDC",
-        "totalAssets": 7366155606790,
-        "totalSupply": 7365493212127,
+        "totalAssets": 7027400043473,
+        "totalSupply": 7026682161719,
         "underlyingToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "version": "0.5.0",
-        "yield": 662394663,
+        "yield": 717881754,
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50",
         "yieldVault": "eth:0xBEefb9f61CC44895d8AEc381373555a64191A9c4",
@@ -1591,13 +1592,13 @@
       "fieldMeta": {
         "accessControl": { "severity": "MEDIUM" },
         "yieldVault": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "external vault where the underlying backing assets are deposited to generate yield."
         },
         "yieldRecipient": { "severity": "MEDIUM" },
-        "migrationManager": { "severity": "HIGH" },
+        "migrationManager": { "severity": "MEDIUM" },
         "minimumReservePercentage": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "share of the underlying that must stay in reserve instead of being deposited into the yield vault."
         },
         "paused": { "severity": "MEDIUM" }
@@ -1733,9 +1734,10 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDT) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDT-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.",
-      "critical": true,
       "ignoreInWatchMode": [
         "backingDifference",
+        "reservedAssets",
+        "reservePercentage",
         "stakedAssets",
         "totalAssets",
         "totalSupply",
@@ -1777,7 +1779,7 @@
           }
         },
         "asset": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "backingDifference": { "positive": true, "difference": 149198611 },
+        "backingDifference": { "positive": true, "difference": 142900487 },
         "decimals": 6,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DOMAIN_SEPARATOR": "0xb80a4f7d2a2cc76fdaf2e936f017dddaca3e63f59cc318bc7506fafc54b81d3c",
@@ -1802,13 +1804,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": 2966428250395,
+        "stakedAssets": 2404656588631,
         "symbol": "vbUSDT",
-        "totalAssets": 2966428250395,
-        "totalSupply": 2966279051784,
+        "totalAssets": 2404656588631,
+        "totalSupply": 2404513688144,
         "underlyingToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
         "version": "0.5.0",
-        "yield": 149198611,
+        "yield": 142900487,
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50",
         "yieldVault": "eth:0xc54b4E08C1Dcc199fdd35c6b5Ab589ffD3428a8d",
@@ -1817,13 +1819,13 @@
       "fieldMeta": {
         "accessControl": { "severity": "MEDIUM" },
         "yieldVault": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "external vault where the underlying backing assets are deposited to generate yield."
         },
         "yieldRecipient": { "severity": "MEDIUM" },
-        "migrationManager": { "severity": "HIGH" },
+        "migrationManager": { "severity": "MEDIUM" },
         "minimumReservePercentage": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "share of the underlying that must stay in reserve instead of being deposited into the yield vault."
         },
         "paused": { "severity": "MEDIUM" }
@@ -1892,7 +1894,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 9 (33%)",
-        "nonce": 334,
+        "nonce": 340,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1909,7 +1911,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "critical": true,
       "deployerAddress": "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6",
       "sinceTimestamp": 1747909835,
       "sinceBlock": 22537828,
@@ -2043,6 +2044,7 @@
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "eth:0xFD621b24968F64E3f14E7a099538ae13e1381417",
           "eth:0xf02BE0dA37dB50BEFA5a525158aa94b50F81D4B2",
           "eth:0xFB2a738AE435610354b132c4a4ee647558f663eb",
           "eth:0x6Ab87a62E250A5EB09a53Fca832B9Bda480c3890",
@@ -2055,8 +2057,8 @@
         "domainSeparator": "0x1e10c8adfe5d143b638cfd7dc768d352d2c056220c2d69fef33e91a1c2b79531",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 7 (29%)",
-        "nonce": 49,
+        "multisigThreshold": "2 of 8 (25%)",
+        "nonce": 54,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2423,11 +2425,11 @@
         "lastUsedOPCM": "eth:0x6FD5B86B93A0405c1eF082ED6Ed3b28e94f022f4",
         "lastUsedOPCMVersion": "7.1.17",
         "maximumGasLimit": 500000000,
-        "minBaseFee": 1000000,
+        "minBaseFee": 50000000,
         "minimumGasLimit": 21000000,
         "OPCM_SLOT": "0x99f45962df4bc30de8d4c3c6d1ffc0f100edce16e80c7a5768b6d55ca463ff42",
         "operatorFeeConstant": 0,
-        "operatorFeeScalar": 100000,
+        "operatorFeeScalar": 600000,
         "opStackDA": {
           "isSequencerSendingBlobTx": true,
           "isUsingCelestia": false,
@@ -2533,7 +2535,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 53,
+        "nonce": 54,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2550,7 +2552,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "critical": true,
       "deployerAddress": "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6",
       "sinceTimestamp": 1747909835,
       "sinceBlock": 22537828,
@@ -2975,7 +2976,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 12 (17%)",
-        "nonce": 163,
+        "nonce": 173,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -3000,6 +3001,11 @@
     },
     {
       "address": "eth:0xfB948CB3fE208fd067d36768B2bACd5dCF886066",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xFD621b24968F64E3f14E7a099538ae13e1381417",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -3089,19 +3095,19 @@
         "$upgradeCount": 4,
         "bridgeLib": "katana:0xb30C032b183525de7427f04e79F45Cd19866E124",
         "bridgeManager": "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
-        "claimedGlobalIndexHashChain": "0x962c1a7c9cd7b1f6d77f699a505bf0dae690ffd3f1b01c693ffc2a8fc843652e",
-        "depositCount": 23543,
+        "claimedGlobalIndexHashChain": "0xfda0c869eeb6a6a0cd5586101b276c850614c02218f2ed36596782e509069026",
+        "depositCount": 23784,
         "emergencyBridgePauser": "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
         "emergencyBridgeUnpauser": "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
         "gasTokenAddress": "katana:0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
         "getProxiedTokensManager": "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
-        "getRoot": "0xba680df03de74fba0c0d8d0bd3969f30e8c4e60a9b11fb3194b9214dcc25c1e7",
+        "getRoot": "0xb769e38444719cc1e2e1eed64ada63b86033f1b2f804f4b123a37c78e29b02ae",
         "getWrappedTokenBridgeImplementation": "katana:0xF0777a825470092b3Debc9af291634460b8E1a2c",
         "globalExitRootManager": "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
         "isEmergencyState": false,
-        "lastUpdatedDepositCount": 23543,
+        "lastUpdatedDepositCount": 23784,
         "networkID": 20,
         "pendingEmergencyBridgePauser": "katana:0x0000000000000000000000000000000000000000",
         "pendingEmergencyBridgeUnpauser": "katana:0x0000000000000000000000000000000000000000",
@@ -3261,7 +3267,7 @@
         "$upgradeCount": 3,
         "baseFee": 0,
         "baseFeeScalar": 1368,
-        "blobBaseFee": 3652300,
+        "blobBaseFee": 3546037,
         "blobBaseFeeScalar": 801949,
         "decimals": 6,
         "DECIMALS": 6,
@@ -3270,7 +3276,7 @@
         "isFjord": true,
         "isIsthmus": true,
         "isJovian": true,
-        "l1BaseFee": 61368791,
+        "l1BaseFee": 59237219,
         "version": "1.6.0"
       },
       "implementationNames": {
@@ -3333,13 +3339,13 @@
       "name": "SequencerFeeVault",
       "address": "katana:0x4200000000000000000000000000000000000011",
       "type": "Contract",
-      "template": "opstack/Layer2/SequencerFeeVault",
+      "template": "opstack/Layer2/SequencerFeeVault_karst",
       "sourceHashes": [
         "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
         "0xb45389729a8fffa7650568cd2922e482d03d3ed57b35f4819650d11174d9237a"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Collects the sequencer fees.",
+      "description": "Collects the sequencer fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.",
       "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1746742812,
       "sinceBlock": 0,
@@ -3542,10 +3548,10 @@
           ]
         ],
         "$upgradeCount": 3,
-        "basefee": 61368791,
+        "basefee": 59237219,
         "baseFeeScalar": 1368,
         "batcherHash": "0x0000000000000000000000001ffda89c755f6d4af069897d77ccabb580fd412a",
-        "blobBaseFee": 3652300,
+        "blobBaseFee": 3546037,
         "blobBaseFeeScalar": 801949,
         "daFootprintGasScalar": 400,
         "DEPOSITOR_ACCOUNT": "katana:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -3555,17 +3561,17 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0x12ffb4cb6cd618b0016396f102688ce95282f779b330df557e5085a4da022b21",
+        "hash": "0xe5d85ea5cfcd62686c2abcb8b57264f59d28e40ff7747215ef4ce64c5f365609",
         "isCustomGasToken": false,
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 26204286,
+        "number": 26348002,
         "operatorFeeConstant": 0,
-        "operatorFeeScalar": 100000,
+        "operatorFeeScalar": 600000,
         "proxyAdmin": "katana:0x4200000000000000000000000000000000000018",
         "proxyAdminOwner": "katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC",
-        "sequenceNumber": 8,
-        "timestamp": 1792143971,
+        "sequenceNumber": 6,
+        "timestamp": 1793874107,
         "version": "1.9.0"
       },
       "implementationNames": {
@@ -3708,7 +3714,7 @@
         "0xf7b9f825b6af20abb355da09822d54e6e3fa7243439293826bd7271f87747775"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Collects EIP-1559 base fees",
+      "description": "Collects the EIP-1559 base fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.",
       "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1746742812,
       "sinceBlock": 0,
@@ -3759,7 +3765,7 @@
         "0xf7b9f825b6af20abb355da09822d54e6e3fa7243439293826bd7271f87747775"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Collects the L1 portion of the L2 transaction fees.",
+      "description": "Collects the L1 data portion of the L2 transaction fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.",
       "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1746742812,
       "sinceBlock": 0,
@@ -3804,13 +3810,13 @@
       "name": "OperatorFeeVault",
       "address": "katana:0x420000000000000000000000000000000000001b",
       "type": "Contract",
-      "template": "opstack/Layer2/OperatorFeeVault",
+      "template": "opstack/Layer2/OperatorFeeVault_karst",
       "sourceHashes": [
         "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
         "0x0ba9b644913957c9f60eda0ab433da4523bb2437156e4dd8dadca627c884ba2a"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Collects the operator fees.",
+      "description": "Collects the operator fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.",
       "ignoreInWatchMode": ["totalProcessed"],
       "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1746742812,
@@ -4014,7 +4020,7 @@
         "getChainId": 747474,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 13,
+        "nonce": 14,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -4052,8 +4058,8 @@
         "GER_SOVEREIGN_VERSION": "al-v0.3.0",
         "globalExitRootRemover": "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
         "globalExitRootUpdater": "katana:0x3138BBdAeAd339d34F084445192B2be9dd4B9f27",
-        "insertedGERHashChain": "0xa9db425722f54852b6112a15d6a168e4155df691d15c16a555f65da9b3521592",
-        "lastRollupExitRoot": "0xba680df03de74fba0c0d8d0bd3969f30e8c4e60a9b11fb3194b9214dcc25c1e7",
+        "insertedGERHashChain": "0x8f1ca8a29fcf1868aa05e5662bab8b655eaa229ef49d6e6aada01465c1ed55e4",
+        "lastRollupExitRoot": "0xb769e38444719cc1e2e1eed64ada63b86033f1b2f804f4b123a37c78e29b02ae",
         "pendingGlobalExitRootRemover": "katana:0x0000000000000000000000000000000000000000",
         "pendingGlobalExitRootUpdater": "katana:0x0000000000000000000000000000000000000000",
         "removedGERHashChain": "0x0000000000000000000000000000000000000000000000000000000000000000"
@@ -7057,33 +7063,33 @@
     "opstack/L1CrossDomainMessenger": "0xb744f567252900c5026a2b29403304c6744365159db35005ebd26e5236be1b27",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0xe12a1d11b528a86198802d42c94a6960c55724bcfaf859346be9755694a1c641",
-    "opstack/Layer2/BaseFeeVault_karst": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
+    "opstack/Layer2/BaseFeeVault_karst": "0x1e841246c5db643208c1cc742c0f02036672e48e3ef31425be11bd69b342355d",
     "opstack/Layer2/EAS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/GasPriceOracle": "0x8f497de83556de92a063c31d97188024782f910b9b1f254812e9e6b58ece0ccf",
     "opstack/Layer2/L1Block": "0x285f931e841dfeccb9fd8de970781403669decd9880ffbed39a4c35bf5c15333",
     "opstack/Layer2/L1BlockNumber": "0x21c6e550d144ce1c4b375c15824ea847ca6ac0e5fcd4f3f388bd296e8f014797",
-    "opstack/Layer2/L1FeeVault_karst": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
+    "opstack/Layer2/L1FeeVault_karst": "0x1e841246c5db643208c1cc742c0f02036672e48e3ef31425be11bd69b342355d",
     "opstack/Layer2/L2CrossDomainMessenger": "0x6b2f3325184c69786aa4c8225442dd9b795b30aab09628af226705b0b5a30644",
     "opstack/Layer2/L2ERC721Bridge": "0x134c37b08d464eb53a9ae063f26e795155695ec752fda38644e23175466793ca",
     "opstack/Layer2/L2ProxyAdmin_karst": "0x70d00d08dd524425b6612b13b16781498c13da3b7e3fac0a5ccd63078eeb5644",
     "opstack/Layer2/L2StandardBridge": "0x424b2343f5b2cefc1794c1fb948f48409ba0376f49d8694d66914f6127164b5b",
     "opstack/Layer2/L2ToL1MessagePasser": "0x3f407b76384248e32af67feefe154f34a2c61ee1576e0e3037e095d556534fc3",
-    "opstack/Layer2/OperatorFeeVault": "0x044085f5049dce846d88feaa0007d7805521906a1025bb3acc0ee57c09befe47",
+    "opstack/Layer2/OperatorFeeVault_karst": "0x1f250e90d2d74f90bd6cf2229287042f4f2677832e928a76f18dc0af01c3d81b",
     "opstack/Layer2/OptimismMintableERC721Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/SchemaRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
+    "opstack/Layer2/SequencerFeeVault_karst": "0x1e841246c5db643208c1cc742c0f02036672e48e3ef31425be11bd69b342355d",
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7",
-    "polygon-cdk/GenericVaultBridgeToken": "0x8f2f7de70d9d896531454700be7cf820d5095bd49d0c5da4ff998df7533d5823",
+    "polygon-cdk/GenericVaultBridgeToken": "0x18a8ad4a9e421bf881d37ccea4bfeb15c5423c1c4150f1f8657130a0beebaf78",
     "polygon-cdk/L2Timelock": "0xabef12a0b5dfe935a21e07c0e869f49752b4e127836e2001215b9f0b2c24a5e7",
     "polygon-cdk/MigrationManager": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384"
   },
-  "usedBlockNumbers": { "ethereum": 26204291, "katana": 45401223 },
-  "permissionsConfigHash": "0xa6f2dde2d5e76d32cd16ddcb52353b6a68775d3c095f5882ea8d9bace75047da",
+  "usedBlockNumbers": { "ethereum": 26348007, "katana": 47131363 },
+  "permissionsConfigHash": "0x779170b60f1469a7ef3eee93be7d73652e387701863bebf9266c0173f75fa57f",
   "modelledAgainst": {
     "shared-polygon-cdk": "0xe9304873e93dfe13b5bffa1058853e7cf85f6a7b0a8666193059e58f9208571b"
   },
@@ -7970,6 +7976,30 @@
     },
     "katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC": {
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "katana:0x4200000000000000000000000000000000000011",
+          "description": "change the fee recipient, the minimum withdrawal amount and whether fees are withdrawn on L1 or L2.",
+          "role": ".proxyAdminOwner"
+        },
+        {
+          "permission": "interact",
+          "from": "katana:0x4200000000000000000000000000000000000019",
+          "description": "change the fee recipient, the minimum withdrawal amount and whether fees are withdrawn on L1 or L2.",
+          "role": ".proxyAdminOwner"
+        },
+        {
+          "permission": "interact",
+          "from": "katana:0x420000000000000000000000000000000000001A",
+          "description": "change the fee recipient, the minimum withdrawal amount and whether fees are withdrawn on L1 or L2.",
+          "role": ".proxyAdminOwner"
+        },
+        {
+          "permission": "interact",
+          "from": "katana:0x420000000000000000000000000000000000001b",
+          "description": "change the fee recipient, the minimum withdrawal amount and whether fees are withdrawn on L1 or L2.",
+          "role": ".proxyAdminOwner"
+        },
         {
           "permission": "interact",
           "from": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13",

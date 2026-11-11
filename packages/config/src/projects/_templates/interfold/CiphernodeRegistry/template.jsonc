@@ -27,7 +27,8 @@
     "ciphernodes",
     "numCiphernodes",
     "root",
-    "treeSize"
+    "treeSize",
+    "unreleasedCommitteeCount"
   ],
   "fields": {
     "owner": {

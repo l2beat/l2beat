@@ -1,3 +1,133 @@
+Generated with discovered.json: 0xcdbed6d2b952f16a299901faf7cd705e640db3c1
+
+# Diff at Thu, 05 Nov 2026 09:44:02 GMT:
+
+- id: e09c4376
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@951441fc194269887770dce1ea128ec638ea03c2 block: 1792587967
+- current timestamp: 1792587967
+
+## Description
+
+Discover the OperatorFeeVault predeploy. Show who can change the recipient, minimum withdrawal amount and withdrawal network of the fee vaults.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792587967 (main branch discovery), not current.
+
+```diff
+    contract SuperchainProxyAdminOwner (eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.3:
++        {"permission":"interact","from":"ink:0x4200000000000000000000000000000000000011","description":"change the fee recipient, the minimum withdrawal amount and whether fees are withdrawn on L1 or L2.","role":".proxyAdminOwner"}
+      receivedPermissions.4:
++        {"permission":"interact","from":"ink:0x4200000000000000000000000000000000000019","description":"change the fee recipient, the minimum withdrawal amount and whether fees are withdrawn on L1 or L2.","role":".proxyAdminOwner"}
+      receivedPermissions.5:
++        {"permission":"interact","from":"ink:0x420000000000000000000000000000000000001A","description":"change the fee recipient, the minimum withdrawal amount and whether fees are withdrawn on L1 or L2.","role":".proxyAdminOwner"}
+      receivedPermissions.6:
++        {"permission":"interact","from":"ink:0x420000000000000000000000000000000000001b","description":"change the fee recipient, the minimum withdrawal amount and whether fees are withdrawn on L1 or L2.","role":".proxyAdminOwner"}
+      receivedPermissions.31:
++        {"permission":"upgrade","from":"ink:0x420000000000000000000000000000000000001b","role":"admin","via":[{"address":"ink:0x4200000000000000000000000000000000000018"}]}
+    }
+```
+
+```diff
+    contract SequencerFeeVault (ink:0x4200000000000000000000000000000000000011) [opstack/Layer2/SequencerFeeVault_karst] {
+    +++ description: Collects the sequencer fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.
+      template:
+-        "opstack/Layer2/SequencerFeeVault"
++        "opstack/Layer2/SequencerFeeVault_karst"
+      description:
+-        "Collects the sequencer fees, which are withdrawable to the FeesCollector on L1."
++        "Collects the sequencer fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached."
+      values.l1FeeWallet:
+-        "ink:0xa6f0F94C13C4255231958079E7331694205F6c93"
++        "eth:0xa6f0F94C13C4255231958079E7331694205F6c93"
+      values.recipient:
+-        "ink:0xa6f0F94C13C4255231958079E7331694205F6c93"
++        "eth:0xa6f0F94C13C4255231958079E7331694205F6c93"
+      values.RECIPIENT:
+-        "ink:0xa6f0F94C13C4255231958079E7331694205F6c93"
++        "eth:0xa6f0F94C13C4255231958079E7331694205F6c93"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (ink:0x4200000000000000000000000000000000000018) [opstack/Layer2/L2ProxyAdmin_karst] {
+    +++ description: Administration contract for the L2 predeploy proxies. Adds upgradePredeploys(address), which can only be called by the system depositor account and delegatecalls an L2ContractsManager to upgrade every predeploy in a single network upgrade transaction.
+      directlyReceivedPermissions.13:
++        {"permission":"upgrade","from":"ink:0x420000000000000000000000000000000000001b","role":"admin"}
+    }
+```
+
+```diff
+    contract BaseFeeVault (ink:0x4200000000000000000000000000000000000019) [opstack/Layer2/BaseFeeVault_karst] {
+    +++ description: Collects the EIP-1559 base fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.
+      description:
+-        "Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1."
++        "Collects the EIP-1559 base fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached."
+      values.recipient:
+-        "ink:0xa6f0F94C13C4255231958079E7331694205F6c93"
++        "eth:0xa6f0F94C13C4255231958079E7331694205F6c93"
+      values.RECIPIENT:
+-        "ink:0xa6f0F94C13C4255231958079E7331694205F6c93"
++        "eth:0xa6f0F94C13C4255231958079E7331694205F6c93"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract L1FeeVault (ink:0x420000000000000000000000000000000000001A) [opstack/Layer2/L1FeeVault_karst] {
+    +++ description: Collects the L1 data portion of the L2 transaction fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.
+      description:
+-        "Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1."
++        "Collects the L1 data portion of the L2 transaction fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached."
+      values.recipient:
+-        "ink:0x1eB630b2e7409597D462dd5f3D21E305FC56B8C9"
++        "eth:0x1eB630b2e7409597D462dd5f3D21E305FC56B8C9"
+      values.RECIPIENT:
+-        "ink:0x1eB630b2e7409597D462dd5f3D21E305FC56B8C9"
++        "eth:0x1eB630b2e7409597D462dd5f3D21E305FC56B8C9"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract OperatorFeeVault (ink:0x420000000000000000000000000000000000001b) [opstack/Layer2/OperatorFeeVault_karst]
+    +++ description: Collects the operator fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.
+```
+
+Generated with discovered.json: 0xd7e563d8199910646a1abd9fc8a906d2b5228066
+
+# Diff at Wed, 21 Oct 2026 13:48:52 GMT:
+
+- id: e063daa7
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@39da84c441e4ad2ce4105a231c0bc2276f1ddd51 block: 1790862352
+- current timestamp: 1792587967
+
+## Description
+
+OpFoundationUpgradeSafe: Member rotated.
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) [GnosisSafe] {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x7F1D4FE689B73B628285454667B93cfd09409f27"
++        "eth:0xa564C83958f7F9fA5a255a540EF5e49445873104"
+    }
+```
+
 Generated with discovered.json: 0x1a466b6f5f061a045a4ea3aeedad14c7ba7f1a73
 
 # Diff at Tue, 20 Oct 2026 12:39:59 GMT:

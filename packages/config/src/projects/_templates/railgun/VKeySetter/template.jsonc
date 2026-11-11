@@ -32,11 +32,10 @@
     },
     "state": {
       "description": "Current workflow phase: SETTING (0), WAITING (1) or COMMITTING (2). COMMITTING is entered only through governance (the Delegator) and lets the owner push the staged keys, including empty keys that delete a circuit, to the smart wallet without further governance until the owner returns the helper to SETTING.",
-      // Ossification: COMMITTING is a live authority path for a single owner
-      // EOA to change or delete smart wallet verification keys. Both setters
-      // stayed in COMMITTING after their rollouts until 2026-09-09. A pure
-      // SETTING <-> WAITING toggle grants nothing and belongs in ignoredUpdates.
-      "severity": "HIGH"
+      // Ossification: only governance opens COMMITTING, the owner EOA's path
+      // to change or delete smart wallet verification keys. That opening is a
+      // reviewed event, the owner's return to SETTING closes the path.
+      "severity": "MEDIUM"
     }
   }
 }

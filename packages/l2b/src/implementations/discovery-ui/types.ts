@@ -1,11 +1,24 @@
-// This file is duplicated in protocolbeat and l2b!
+// This file is duplicated in discoui and l2b!
 
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 
 export type ApiProjectsResponse = ApiProjectEntry[]
 
+export type ApiProjectCategory =
+  | 'rollups'
+  | 'validiumsAndOptimiums'
+  | 'others'
+  | 'interop'
+  | 'privacy'
+  | 'defi'
+  | 'zkCatalog'
+  | 'sharedModules'
+  | 'unlisted'
+  | 'archived'
+
 export interface ApiProjectEntry {
   name: string
+  category: ApiProjectCategory
   addresses: string[]
   contractNames: string[]
 }
@@ -220,6 +233,50 @@ export interface ApiCodeSearchResponse {
   }[]
 }
 
+export interface ApiDefinitionResponse {
+  symbol: string
+  receiver: { address: string; name: string | undefined } | undefined
+  definitions: {
+    address: string
+    name: string
+    label: string
+    resolution: 'discovered-value' | 'abi-match' | 'in-file'
+    fileName: string
+    line: number
+    sourceIndex: number
+    offset: number
+    length: number
+    alsoIn: number
+    // Whole lines, from the comment above the declaration to its end.
+    declaration: { line: number; offset: number; text: string }
+  }[]
+}
+
+export interface ApiContractAtResponse {
+  symbol: string
+  address: string | undefined
+  name: string | undefined
+}
+
+export interface ApiReferencesResponse {
+  symbol: string
+  definitions: ApiDefinitionResponse['definitions']
+  references: {
+    address: string
+    name: string
+    fileName: string
+    line: number
+    sourceIndex: number
+    offset: number
+    length: number
+    resolution: 'discovered-value' | 'abi-match' | 'in-file'
+    isCall: boolean
+    elsewhere: boolean
+    text: string
+    copies: number
+  }[]
+}
+
 export interface UpgradeabilityActor {
   name: string
   delay: string
@@ -254,3 +311,119 @@ export type ApiHealthHint =
         templateId: string
       }
     })
+
+export type ApiAgentEvent =
+  | ApiAgentShowEvent
+  | { type: 'clear' }
+  // First on every stream; a new id means the server restarted.
+  | { type: 'connected'; serverId: string }
+  // The tab answers with an ApiAgentContext for this id.
+  | { type: 'context-request'; id: string }
+  // Only to the tab that owns the chat; a replay restarts its transcript.
+  | { type: 'chat'; event: ApiChatEvent }
+  | { type: 'chat-replay'; events: ApiChatEvent[] }
+  // A new board opens the board panel; a replay, sent on every connect, only
+  // restores the tab's board, or drops one the agent moved to another tab.
+  | { type: 'board'; board: ApiAgentBoard }
+  | { type: 'board-replay'; board: ApiAgentBoard | null }
+
+export interface ApiAgentShowEvent {
+  type: 'show'
+  id: string
+  project: string
+  steps: ApiAgentStep[]
+}
+
+export interface ApiAgentBoard {
+  id: string
+  project: string
+  title: string
+  blocks: ApiBoardBlock[]
+}
+
+export type ApiBoardBlock =
+  | { type: 'text'; text: string }
+  | {
+      type: 'table'
+      title?: string
+      columns: string[]
+      rows: ApiBoardCell[][]
+    }
+
+export type ApiBoardCell =
+  | { type: 'text'; text: string }
+  | { type: 'contract'; address: ChainSpecificAddress; name?: string }
+
+export interface ApiAgentStep {
+  note: string
+  // The code contract first: the code panel shows the first selected one.
+  select: ChainSpecificAddress[]
+  code?: {
+    address: ChainSpecificAddress
+    sourceIndex: number
+    offset: number
+    length: number
+  }
+}
+
+// What the researcher looks at, in coordinates: the server reads names and
+// code itself.
+export interface ApiAgentContext {
+  project: string | undefined
+  selected: string[]
+  // The code panel's file and selection, offsets in the text it shows,
+  // which a SHA-256 of that text pins to the source the offsets are in.
+  code?: {
+    address: string
+    sourceName: string
+    sourceHash: string
+    from: number
+    to: number
+  }
+  // The step of the agent's show on screen, 0-based.
+  note?: { index: number; stepCount: number }
+}
+
+export type ApiChatProvider = 'claude' | 'codex'
+
+// What the chat panel draws, built from the agent's protocol messages on the
+// server.
+export type ApiChatEvent =
+  | {
+      type: 'status'
+      status: 'starting' | 'ready' | 'working' | 'failed' | 'closed'
+      provider: ApiChatProvider
+      error?: string
+    }
+  | { type: 'user'; text: string }
+  | { type: 'text'; text: string }
+  | {
+      type: 'tool'
+      id: string
+      title?: string
+      status?: 'pending' | 'in_progress' | 'completed' | 'failed'
+    }
+  | {
+      type: 'permission'
+      id: string
+      title: string
+      kind?: string
+      paths: string[]
+      // The tool's raw input, as JSON: the command or edit to approve.
+      input?: string
+      options: { id: string; name: string; kind: string }[]
+    }
+  | { type: 'permission-done'; id: string }
+  | { type: 'turn-end'; stopReason: string }
+  | { type: 'error'; message: string }
+  // What the researcher can switch for the chat, like the model; each
+  // replaces the earlier list.
+  | { type: 'config'; options: ApiChatConfigOption[] }
+
+export interface ApiChatConfigOption {
+  id: string
+  name: string
+  category: 'model' | 'thought_level'
+  currentValue: string
+  values: { value: string; name: string; description?: string }[]
+}

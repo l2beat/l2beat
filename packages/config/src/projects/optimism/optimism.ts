@@ -85,7 +85,6 @@ export const optimism: ScalingProject = opStackL2({
             'opstack-standardbridge.L1ToL2Transfer',
             'beefy-bridge.L1ToL2Transfer',
             'maker-bridge.L1ToL2Transfer',
-            'sorare-base.L1ToL2Transfer',
             'lido-wsteth.L1ToL2Transfer',
             'synthetix-bridge.L1ToL2Transfer',
           ],
@@ -109,7 +108,6 @@ export const optimism: ScalingProject = opStackL2({
             'opstack-standardbridge.L1ToL2Transfer',
             'beefy-bridge.L1ToL2Transfer',
             'maker-bridge.L1ToL2Transfer',
-            'sorare-base.L1ToL2Transfer',
             'lido-wsteth.L1ToL2Transfer',
             'synthetix-bridge.L1ToL2Transfer',
           ],
@@ -145,11 +143,6 @@ export const optimism: ScalingProject = opStackL2({
       {
         chain: 'optimism',
         plugin: 'maker-bridge',
-        bridgeType: 'lockAndMint',
-      },
-      {
-        chain: 'optimism',
-        plugin: 'sorare-base',
         bridgeType: 'lockAndMint',
       },
       {
@@ -389,7 +382,25 @@ export const optimism: ScalingProject = opStackL2({
           "**Veto, plus member removal** — Token House and Citizens' House can veto DAB-approved upgrades during the 7-day veto window (subject to participation thresholds). Token House can remove SC members by simple majority within one voting cycle (≤3 weeks) for Code of Conduct violations. LivenessModule auto-removes signers inactive ≥3 months 8 days; if signer count drops below 8, control reverts to the Foundation Upgrade Safe.",
       },
       upgrades: {
-        'Normal upgrade path': `Technical review by the 7-member elected Developer Advisory Board (DAB, 5/7 quorum for approval) → release on Sepolia → **7-day veto window** during which Token House and/or Citizens' House can veto a DAB-approved upgrade or override a DAB rejection if participation thresholds are met (17% with two groups, 14% with three, 11% with four) → if not vetoed, SC + Foundation Upgrade Safe (${proxyAdminOwnerStats} SuperchainProxyAdminOwner) co-sign the L1 transaction → execute. Maintenance upgrades use a shortened path. Live since Aug 1, 2025.`,
+        'Normal upgrade path': {
+          steps: [
+            {
+              description:
+                'Technical review by the 7-member elected Developer Advisory Board (DAB, 5/7 quorum for approval)',
+            },
+            { description: 'Release on Sepolia' },
+            {
+              description:
+                "**7-day veto window** during which Token House and/or Citizens' House can veto a DAB-approved upgrade or override a DAB rejection if participation thresholds are met (17% with two groups, 14% with three, 11% with four)",
+              isWait: true,
+            },
+            {
+              description: `If not vetoed, SC + Foundation Upgrade Safe (${proxyAdminOwnerStats} SuperchainProxyAdminOwner) co-sign the L1 transaction`,
+            },
+            { description: 'Execute' },
+          ],
+          note: 'Maintenance upgrades use a shortened path. Live since Aug 1, 2025.',
+        },
         'Emergency upgrade path': `**SC + Foundation Upgrade Safe (${proxyAdminOwnerStats}), instant** — "may preemptively address actual or anticipated bugs, defects, or stability issues without specific Governance approval" (Charter v0.1). No DAB review, no veto window. Mandatory after-the-fact public retrospective.`,
         'Exit window': `**None** — upgrades take effect as soon as they are co-signed by the ${proxyAdminOwnerStats} SuperchainProxyAdminOwner, with no onchain delay or prior notice, so users cannot exit ahead of an unwanted upgrade.`,
       },
@@ -406,6 +417,14 @@ export const optimism: ScalingProject = opStackL2({
     },
   },
   milestones: [
+    {
+      title: 'Binance exploiter funds moved',
+      url: 'https://etherscan.io/tx/0xd80476b3ec56283723804cf7bc2d96f800c81d3ebd0fea843555396ffe94f28f',
+      date: '2026-10-31T00:00:00Z',
+      description:
+        'Security Council and Foundation move 44.2M OP out of the exploiter address via a temporary upgrade.',
+      type: 'incident',
+    },
     {
       title: 'Upgrade 17 - Jovian Hardfork and Fusaka Readiness',
       url: 'https://vote.optimism.io/proposals/3118571676657709551286937570456546163542507117143005939043790253732885172699',

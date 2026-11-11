@@ -1,17 +1,17 @@
 import type { Milestone } from '@l2beat/config'
-import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import type { ChartScale } from '~/components/chart/types'
-import type { ChartProject } from '~/components/core/chart/Chart'
+import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrivacyFlowChart } from '~/pages/privacy/project/components/PrivacyFlowChart'
 import { PrivacyFlowsChartRangeControls } from '~/pages/privacy/project/components/PrivacyFlowsChartRangeControls'
 import { useTRPC } from '~/trpc/React'
-import type { ChartRange } from '~/utils/range/range'
+import { type ChartRange, rangeToResolution } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 
@@ -33,35 +33,40 @@ export function PrivacyFlowsSection({
   const [range, setRange] = useState<ChartRange>(defaultRange)
   const [metric, setMetric] = useState<FlowsMetric>('count')
   const [scale, setScale] = useState<ChartScale>('linear')
-  const { data, isLoading } = useQuery(
-    trpc.privacy.flowsChart.queryOptions({
+  const { data, isLoading, isPlaceholderData, shownInput } = useChartQuery(
+    trpc.privacy.flowsChart,
+    {
       projectIds: [project.id],
       range,
-    }),
+    },
   )
+  const resolution = rangeToResolution(shownInput.range)
 
   const timeRange = useMemo(
     () =>
       getChartTimeRangeFromData(
         data?.chart.map(([timestamp]) => ({ timestamp })),
-        {
-          bucket: 'day',
-        },
+        { bucket: resolution },
       ),
-    [data],
+    [data, resolution],
   )
 
   return (
     <ProjectSection {...projectSectionProps}>
       <ChartControlsWrapper className="mb-4">
-        <ProjectChartTimeRange timeRange={timeRange} />
+        <ProjectChartTimeRange
+          isPlaceholderData={isPlaceholderData}
+          timeRange={timeRange}
+        />
         <PrivacyFlowsChartRangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>
       <PrivacyFlowChart
+        isPlaceholderData={isPlaceholderData}
         data={data?.chart}
         syncedUntil={data?.syncedUntil}
         isLoading={isLoading}
         metric={metric}
+        resolution={resolution}
         scale={scale}
         project={project}
         milestones={milestones}

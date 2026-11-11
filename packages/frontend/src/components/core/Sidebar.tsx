@@ -15,6 +15,8 @@ import { HorizontalSeparator } from './HorizontalSeparator'
 
 const SIDEBAR_WIDTH = '15rem'
 const SIDEBAR_WIDTH_MOBILE = '100%'
+/** Lets the mobile menu buttons point `aria-controls` at the sheet. */
+export const MOBILE_SIDEBAR_ID = 'mobile-sidebar'
 
 type SidebarContextProps = {
   openMobile: boolean
@@ -89,26 +91,30 @@ function Sidebar({
   if (breakpoint === 'xs' || breakpoint === 'sm' || breakpoint === 'md') {
     return (
       <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
+        {/* From the left, where the desktop sidebar sits: the whole screen
+            on phones, the desktop sidebar's width from tablets up. */}
         <SheetContent
+          id={MOBILE_SIDEBAR_ID}
           // iOS Safari tints its toolbars from the overlay and swaps the tint in
           // one frame, so a full-width sheet needs a matching overlay and no
           // animation. The 1% see-through keeps Chrome drawing the page beneath,
           // so closing isn't delayed on Android. From `sm` the sheet is
           // `max-w-sm`, so the page beside it stays dimmed.
-          className="z-999 w-(--sidebar-width) animate-none! border-none bg-background/99 p-0 text-primary [&>button]:hidden"
+          className="z-999 w-(--sidebar-width) animate-none! border-none bg-background/99 p-0 text-primary md:max-w-(--sidebar-width-desktop) [&>button]:hidden"
           overlayClassName="animate-none! max-sm:bg-background/99"
           style={
             {
               '--sidebar-width': SIDEBAR_WIDTH_MOBILE,
+              '--sidebar-width-desktop': SIDEBAR_WIDTH,
             } as React.CSSProperties
           }
-          side="right"
+          side="left"
         >
           <SheetHeader className="sr-only">
             <SheetTitle>Sidebar</SheetTitle>
             <SheetDescription>Displays the mobile sidebar.</SheetDescription>
           </SheetHeader>
-          <div className="flex size-full flex-col gap-4">{children}</div>
+          <div className="flex size-full flex-col gap-6">{children}</div>
         </SheetContent>
       </Sheet>
     )
@@ -159,8 +165,19 @@ function SidebarSeparator({
 }
 
 function SidebarContent({ className, ...props }: React.ComponentProps<'div'>) {
+  const ref = React.useRef<HTMLDivElement>(null)
+  React.useEffect(() => {
+    const list = ref.current
+    if (!list) return
+    // The list shrinks after hydration, when the client-only what's new
+    // block mounts under it, so check again whenever its size changes.
+    const observer = new ResizeObserver(() => scrollCurrentPageIntoView(list))
+    observer.observe(list)
+    return () => observer.disconnect()
+  }, [])
   return (
     <ScrollWithGradient
+      ref={ref}
       className={cn(
         'flex min-h-0 flex-1 flex-col gap-1 overflow-auto',
         className,
@@ -168,6 +185,24 @@ function SidebarContent({ className, ...props }: React.ComponentProps<'div'>) {
       {...props}
     />
   )
+}
+
+/**
+ * On a short window the current page's link can sit below the fold or under
+ * the list's 48px fade, which leaves no sign of where you are. Centring it
+ * clears both fades.
+ */
+function scrollCurrentPageIntoView(list: HTMLElement) {
+  // A page's link comes after its group's, so the last match is the page.
+  const active = [...list.querySelectorAll('[data-active="true"]')].at(-1)
+  if (!active) return
+  const listBox = list.getBoundingClientRect()
+  const box = active.getBoundingClientRect()
+  const fade = 48
+  if (box.top >= listBox.top + fade && box.bottom <= listBox.bottom - fade) {
+    return
+  }
+  list.scrollTop += box.top - listBox.top - (listBox.height - box.height) / 2
 }
 
 function SidebarGroup({ className, ...props }: React.ComponentProps<'div'>) {
@@ -194,6 +229,22 @@ function SidebarGroupItem({
   )
 }
 
+/** A heading over a run of groups, e.g. "And more": sentence case, like the links under it. */
+function SidebarGroupLabel({
+  className,
+  ...props
+}: React.ComponentProps<'span'>) {
+  return (
+    <span
+      className={cn(
+        'pl-1.5 font-medium text-label-value-13 text-secondary',
+        className,
+      )}
+      {...props}
+    />
+  )
+}
+
 function SidebarGroupLink({
   isActive = false,
   className,
@@ -206,30 +257,7 @@ function SidebarGroupLink({
       data-active={isActive}
       className={cn(
         'group flex h-8 w-full items-center gap-2 overflow-hidden rounded-md p-1.5 text-left text-base outline-none ring-brand focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:shrink-0',
-        'data-[active=true]:text-brand',
-        className,
-      )}
-      {...props}
-    />
-  )
-}
-
-function SidebarGroupSmallLink({
-  isActive = false,
-  className,
-  ...props
-}: React.ComponentProps<'a'> & {
-  href: string
-  isActive?: boolean
-}) {
-  const isInternalLink = props.href.startsWith('/')
-
-  return (
-    <a
-      target={isInternalLink ? undefined : '_blank'}
-      className={cn(
-        'flex items-center gap-1 pl-1.5 text-primary text-xs leading-none transition-colors hover:text-secondary',
-        isActive && 'text-brand hover:text-brand',
+        'data-[active=true]:text-nav-active',
         className,
       )}
       {...props}
@@ -285,7 +313,7 @@ function SidebarGroupSubLink({
       data-active={isActive}
       className={cn(
         'font-medium text-label-value-14',
-        'data-[active=true]:text-brand',
+        'data-[active=true]:text-nav-active',
         className,
       )}
       {...props}
@@ -300,8 +328,8 @@ export {
   SidebarGroup,
   SidebarHeader,
   SidebarGroupLink,
-  SidebarGroupSmallLink,
   SidebarGroupItem,
+  SidebarGroupLabel,
   SidebarGroupSub,
   SidebarGroupSubButton,
   SidebarGroupSubLink,

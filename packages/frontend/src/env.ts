@@ -1,4 +1,5 @@
 import { v as z } from '@l2beat/validate'
+import { getEnvData } from './ssr/pageDataScripts'
 
 const coerceBoolean = z.string().transform((val) => {
   return val !== 'false' && val !== '0'
@@ -30,7 +31,6 @@ const CLIENT_CONFIG = {
     .default('development'),
   DEPLOYMENT_ENV: z.enum(['preview', 'staging', 'production']).optional(),
   CLIENT_SIDE_GITCOIN_ROUND_LIVE: coerceBoolean.default(false),
-  CLIENT_SIDE_SHOW_HIRING_BADGE: coerceBoolean.default(false),
   CLIENT_SIDE_TRACKED_TXS_OUTAGE: coerceBoolean.default(false),
   CLIENT_SIDE_DEFI_ENABLED: featureFlag,
   CLIENT_SIDE_GARDEN_ENABLED: featureFlag,
@@ -120,7 +120,7 @@ function getRawEnv(): Record<
   string | undefined
 > {
   if (typeof process === 'undefined') {
-    return window.__ENV__
+    return getEnvData()
   }
 
   return {
@@ -149,7 +149,6 @@ function getRawEnv(): Record<
     INTEROP_UPCOMING_CHAINS: process.env.INTEROP_UPCOMING_CHAINS,
     // Client
     CLIENT_SIDE_GITCOIN_ROUND_LIVE: process.env.CLIENT_SIDE_GITCOIN_ROUND_LIVE,
-    CLIENT_SIDE_SHOW_HIRING_BADGE: process.env.CLIENT_SIDE_SHOW_HIRING_BADGE,
     CLIENT_SIDE_TRACKED_TXS_OUTAGE: process.env.CLIENT_SIDE_TRACKED_TXS_OUTAGE,
     CLIENT_SIDE_DEFI_ENABLED: process.env.CLIENT_SIDE_DEFI_ENABLED,
     CLIENT_SIDE_GARDEN_ENABLED: process.env.CLIENT_SIDE_GARDEN_ENABLED,

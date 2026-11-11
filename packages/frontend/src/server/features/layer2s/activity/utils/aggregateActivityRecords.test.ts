@@ -69,6 +69,29 @@ describe(aggregateActivityRecords.name, () => {
     })
   })
 
+  // A quiet chain can have no hour at the start of a 1D or 7D window
+  it('starts at the given timestamp even without a record there', () => {
+    const records: ActivityRecord[] = [
+      record(NOW, ProjectId.ETHEREUM, 1000, null),
+      record(NOW + 2 * UnixTime.DAY, ProjectId('arbitrum'), 100, null),
+      record(NOW + 2 * UnixTime.DAY, ProjectId.ETHEREUM, 2000, null),
+    ]
+
+    const result = aggregateActivityRecords(records, {
+      startTimestamp: NOW + 1 * UnixTime.DAY,
+    })
+
+    expect(result).toEqual({
+      [NOW + 2 * UnixTime.DAY]: {
+        timestamp: NOW + 2 * UnixTime.DAY,
+        count: 100,
+        ethereumCount: 2000,
+        uopsCount: 100,
+        ethereumUopsCount: 2000,
+      },
+    })
+  })
+
   it('handles empty input array', () => {
     const result = aggregateActivityRecords([])
     expect(result).toEqual(undefined)

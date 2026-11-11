@@ -2,6 +2,7 @@ import { expect } from 'earl'
 import {
   drawRelationGraph,
   getLinkStyle,
+  getNodeOpacity,
   getNodeRingOpacity,
   nodeVisualScreenScale,
   type RelationGraphViewState,
@@ -47,6 +48,20 @@ describe(drawRelationGraph.name, () => {
     drawRelationGraph(recordingContext(drawnText), sceneWith(node), view)
 
     expect(drawnText).toEqual([])
+  })
+
+  it('labels highlighted conflicts at overview zoom', () => {
+    const node = sceneNode('unichain', '0xaaa')
+    node.x = 50
+    node.y = 50
+    const drawnText: { text: string; x: number; y: number }[] = []
+    const view = viewState()
+    view.camera.k = 0.5
+    view.conflictNodeIds = new Set([node.data.id])
+
+    drawRelationGraph(recordingContext(drawnText), sceneWith(node), view)
+
+    expect(drawnText.map((entry) => entry.text)).toEqual(['TOKEN', 'unichain'])
   })
 
   it('keeps the cluster heading above a focused symbol when zoomed out', () => {
@@ -131,6 +146,56 @@ describe(getLinkStyle.name, () => {
       getLinkStyle(link, styleInputs({ highlightAnomalies: true })),
     ).toEqual({ color: RELATION_COLORS.muted, opacity: 0.22, width: 1.4 })
   })
+
+  it('keeps the links of highlighted conflicts visible and fades the rest', () => {
+    expect(
+      getLinkStyle(
+        link,
+        styleInputs({ conflictNodeIds: new Set([link.target.data.id]) }),
+      ).opacity,
+    ).toEqual(0.75)
+    expect(
+      getLinkStyle(link, styleInputs({ conflictNodeIds: new Set() })).opacity,
+    ).toEqual(0.15)
+  })
+
+  it('keeps anomalies visible while conflicts are highlighted', () => {
+    expect(
+      getLinkStyle(
+        sceneLink('lockAndMint', true),
+        styleInputs({ highlightAnomalies: true, conflictNodeIds: new Set() }),
+      ).opacity,
+    ).toEqual(0.95)
+  })
+})
+
+describe(getNodeOpacity.name, () => {
+  const node = sceneNode('ethereum', '0xaaa')
+
+  it('fades nodes that are not highlighted conflicts', () => {
+    expect(
+      getNodeOpacity(
+        node,
+        styleInputs({ conflictNodeIds: new Set([node.data.id]) }),
+      ),
+    ).toEqual(1)
+    expect(
+      getNodeOpacity(node, styleInputs({ conflictNodeIds: new Set() })),
+    ).toEqual(0.3)
+    expect(getNodeOpacity(node, styleInputs({}))).toEqual(1)
+  })
+
+  it('lets a focus decide over highlighted conflicts', () => {
+    expect(
+      getNodeOpacity(
+        node,
+        styleInputs({
+          conflictNodeIds: new Set([node.data.id]),
+          focus: { nodeIds: new Set(), relationIds: new Set() },
+        }),
+      ),
+    ).toEqual(0.12)
+  })
 })
 
 describe(getNodeRingOpacity.name, () => {
@@ -184,12 +249,14 @@ function styleInputs(overrides: {
   selection?: RelationGraphSelection
   focus?: RelationGraphFocus
   highlightAnomalies?: boolean
+  conflictNodeIds?: ReadonlySet<string>
 }) {
   return {
     hovered: overrides.hovered,
     selection: overrides.selection,
     focus: overrides.focus,
     highlightAnomalies: overrides.highlightAnomalies ?? false,
+    conflictNodeIds: overrides.conflictNodeIds,
   }
 }
 
@@ -226,6 +293,7 @@ function viewState(): RelationGraphViewState {
     selection: undefined,
     focus: undefined,
     highlightAnomalies: false,
+    conflictNodeIds: undefined,
     deletedRelationIds: new Set(),
     theme: {
       background: '#fff',

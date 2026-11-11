@@ -26,7 +26,7 @@ interface Props {
   className?: string
   textClassName?: string
   period?: PercentageChangePeriod
-  disabledOnMobile?: boolean
+  disabledOnTouch?: boolean
 }
 
 export function PercentChange({
@@ -34,7 +34,7 @@ export function PercentChange({
   className,
   textClassName,
   period,
-  disabledOnMobile,
+  disabledOnTouch,
 }: Props) {
   const isMore = value > 0
   const isLess = value < 0
@@ -61,7 +61,7 @@ export function PercentChange({
           textClassName,
         )}
       >
-        {isNaN(value) ? EM_DASH : formatPercent(Math.abs(value))}
+        {Number.isNaN(value) ? EM_DASH : formatPercent(Math.abs(value))}
       </span>
     </span>
   )
@@ -72,7 +72,7 @@ export function PercentChange({
 
   return (
     <Tooltip>
-      <TooltipTrigger asChild disabledOnMobile={disabledOnMobile}>
+      <TooltipTrigger asChild disabledOnTouch={disabledOnTouch}>
         {content}
       </TooltipTrigger>
       <TooltipPortal>

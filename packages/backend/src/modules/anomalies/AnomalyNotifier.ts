@@ -39,7 +39,7 @@ export class AnomalyNotifier {
     private readonly discordClient: DiscordClient,
     private readonly db: Database,
     private readonly minDuration: number,
-    private readonly trackedTxsConfig: TrackedTxsConfig,
+    trackedTxsConfig: TrackedTxsConfig,
   ) {
     this.logger = logger.for(this)
     this.notificationQueue = new TaskQueue<void>(
@@ -88,7 +88,9 @@ export class AnomalyNotifier {
       `- interval: \`${formatDuration(interval)}\`\n` +
       `- avg interval: \`${formatDuration(latestStat.mean)}\`\n` +
       `- z-score: \`${z}\` (interval: \`${interval}\`, mean: \`${latestStat.mean}\`, stddev: \`${latestStat.stdDev}\`)\n\n` +
-      `Run \`pnpm anomalies --approve ${newAnomaly.projectId}-${newAnomaly.subtype}\` to approve the anomaly`
+      (newAnomaly.isApproved
+        ? 'Already approved'
+        : `Run \`pnpm anomalies --approve ${newAnomaly.projectId}-${newAnomaly.subtype}\` to approve the anomaly`)
 
     const id = await this.sendDiscordNotification(message)
 

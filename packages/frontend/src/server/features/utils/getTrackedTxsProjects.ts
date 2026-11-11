@@ -21,7 +21,7 @@ export function getTrackedTxsProjects(
     .filter((x) => x !== undefined)
 }
 
-export function getTrackedTxsProject(
+function getTrackedTxsProject(
   project: Project<'trackedTxsConfig'>,
   configurations: IndexerConfigurationRecord[],
   type: 'liveness' | 'l2costs',

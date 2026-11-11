@@ -1,3 +1,371 @@
+Generated with discovered.json: 0xb158102b8e7c1cf449cccb4c31cf8eca5dee567c
+
+# Diff at Thu, 05 Nov 2026 09:55:51 GMT:
+
+- id: e3c8233a
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@7d73c126d3a0e6578451cece14c1045d32222e20 block: 1793196526
+- current timestamp: 1793872539
+
+## Description
+
+SystemConfig: batcher and unsafe block signer rotated.
+DisputeGameFactory: permissioned proposer rotated.
+OperatorFeeVault: now withdraws to an L1 recipient, minimum withdrawal 0 → 0.15 ETH.
+L1Splitter: owner moved to the SuperchainProxyAdminOwner; L1 recipient changed; minimum withdrawal 3 → 0.15 ETH.
+
+## Watched changes
+
+```diff
+    contract DisputeGameFactory (eth:0x2F12d621a16e2d3285929C9996f478508951dFe4) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      values.game5Args:
+-        "0x27cf508e4e3aa8d30b3226ac3b5ea0e8bcacaff9d5f0e2912c70771c589cd8bb087ede0dab4afa9a"
++        "0x27cf508e4e3aa8d30b3226ac3b5ea0e8bcacaff986b392ca30ad7453c8d88b56eb5a04fd0e2175b7"
+      values.game5Proposer:
+-        "eth:0xD5F0E2912C70771C589CD8bB087EDE0Dab4AFA9A"
++        "eth:0x86b392cA30aD7453c8d88B56EB5A04fD0E2175b7"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Unichain Multisig 2 (eth:0x9245d5D10AA8a842B31530De71EA86c0760Ca1b1) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+    contract SystemConfig (eth:0xc407398d063f942feBbcC6F80a156b47F3f1BDA6) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ severity: LOW
+      values.batcherHash:
+-        "eth:0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd"
++        "eth:0x9Ef649E8746cC47A17708a5e86B2d66c7F6C00d1"
+      values.unsafeBlockSigner:
+-        "eth:0x833C6f278474A78658af91aE8edC926FE33a230e"
++        "eth:0xFaACA0A10e4a23C5E01485DE07767547d4D8056D"
+    }
+```
+
+```diff
+    contract L1Block (unichain:0x4200000000000000000000000000000000000015) [opstack/Layer2/L1Block] {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+      values.batcherHash:
+-        "0x0000000000000000000000002f60a5184c63ca94f82a27100643dbabe4f3f7fd"
++        "0x0000000000000000000000009ef649e8746cc47a17708a5e86b2d66c7f6c00d1"
+    }
+```
+
+```diff
+    contract OperatorFeeVault (unichain:0x420000000000000000000000000000000000001b) [opstack/Layer2/OperatorFeeVault_karst] {
+    +++ description: Collects the operator fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.
+      values.MIN_WITHDRAWAL_AMOUNT:
+-        0
++        "150000000000000000"
+      values.minWithdrawalAmount:
+-        0
++        "150000000000000000"
+      values.recipient:
+-        "eth:0x4200000000000000000000000000000000000019"
++        "eth:0x7d324ADedacddc6A284245279C6856eFAcEAA915"
+      values.RECIPIENT:
+-        "eth:0x4200000000000000000000000000000000000019"
++        "eth:0x7d324ADedacddc6A284245279C6856eFAcEAA915"
+      values.WITHDRAWAL_NETWORK:
+-        1
++        0
+      values.withdrawalNetwork:
+-        1
++        0
+    }
+```
+
+```diff
+    contract L1Splitter (unichain:0x4300c0d3c0d3c0D3c0d3C0D3c0d3C0D3C0D30003) [unichain/L1Splitter] {
+    +++ description: Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (eth:0x7d324ADedacddc6A284245279C6856eFAcEAA915).
+      description:
+-        "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (eth:0xFb9d55c1846D1d442B277F6f87Da319156941401)."
++        "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (eth:0x7d324ADedacddc6A284245279C6856eFAcEAA915)."
+      values.l1Recipient:
+-        "eth:0xFb9d55c1846D1d442B277F6f87Da319156941401"
++        "eth:0x7d324ADedacddc6A284245279C6856eFAcEAA915"
+      values.minWithdrawalAmount:
+-        "3000000000000000000"
++        "150000000000000000"
+      values.owner:
+-        "eth:0x9245d5D10AA8a842B31530De71EA86c0760Ca1b1"
++        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Unichain Multisig 2/Safe.sol => /dev/null      | 1216 --------------------
+ .../SafeProxy.p.sol => /dev/null                   |   42 -
+ 2 files changed, 1258 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793196526 (main branch discovery), not current.
+
+```diff
+    contract OperatorFeeVault (unichain:0x420000000000000000000000000000000000001b) [opstack/Layer2/OperatorFeeVault_karst] {
+    +++ description: Collects the operator fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.
+      values.recipient:
+-        "unichain:0x4200000000000000000000000000000000000019"
++        "eth:0x4200000000000000000000000000000000000019"
+      values.RECIPIENT:
+-        "unichain:0x4200000000000000000000000000000000000019"
++        "eth:0x4200000000000000000000000000000000000019"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+Generated with discovered.json: 0xeb34fb12dc20c2eabce036da793996652a6b4e3d
+
+# Diff at Thu, 05 Nov 2026 07:14:02 GMT:
+
+- id: 5f5d4999
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@02f1e81176b548fbfa87cd86090398367c11dd2f block: 1793196526
+- current timestamp: 1793196526
+
+## Description
+
+Show who can change the recipient, minimum withdrawal amount and withdrawal network of the fee vaults, and describe the vaults from their code.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793196526 (main branch discovery), not current.
+
+```diff
+    contract SuperchainProxyAdminOwner (eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.3:
++        {"permission":"interact","from":"unichain:0x4200000000000000000000000000000000000011","description":"change the fee recipient, the minimum withdrawal amount and whether fees are withdrawn on L1 or L2.","role":".proxyAdminOwner"}
+      receivedPermissions.4:
++        {"permission":"interact","from":"unichain:0x4200000000000000000000000000000000000019","description":"change the fee recipient, the minimum withdrawal amount and whether fees are withdrawn on L1 or L2.","role":".proxyAdminOwner"}
+      receivedPermissions.5:
++        {"permission":"interact","from":"unichain:0x420000000000000000000000000000000000001A","description":"change the fee recipient, the minimum withdrawal amount and whether fees are withdrawn on L1 or L2.","role":".proxyAdminOwner"}
+      receivedPermissions.6:
++        {"permission":"interact","from":"unichain:0x420000000000000000000000000000000000001b","description":"change the fee recipient, the minimum withdrawal amount and whether fees are withdrawn on L1 or L2.","role":".proxyAdminOwner"}
+    }
+```
+
+```diff
+    contract SequencerFeeVault (unichain:0x4200000000000000000000000000000000000011) [opstack/Layer2/SequencerFeeVault_karst] {
+    +++ description: Collects the sequencer fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.
+      template:
+-        "opstack/Layer2/SequencerFeeVault"
++        "opstack/Layer2/SequencerFeeVault_karst"
+      description:
+-        "Collects the sequencer fees, which are withdrawable to the FeesCollector on L1."
++        "Collects the sequencer fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached."
+    }
+```
+
+```diff
+    contract BaseFeeVault (unichain:0x4200000000000000000000000000000000000019) [opstack/Layer2/BaseFeeVault_karst] {
+    +++ description: Collects the EIP-1559 base fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.
+      description:
+-        "Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1."
++        "Collects the EIP-1559 base fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached."
+    }
+```
+
+```diff
+    contract L1FeeVault (unichain:0x420000000000000000000000000000000000001A) [opstack/Layer2/L1FeeVault_karst] {
+    +++ description: Collects the L1 data portion of the L2 transaction fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.
+      description:
+-        "Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1."
++        "Collects the L1 data portion of the L2 transaction fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached."
+    }
+```
+
+```diff
+    contract OperatorFeeVault (unichain:0x420000000000000000000000000000000000001b) [opstack/Layer2/OperatorFeeVault_karst] {
+    +++ description: Collects the operator fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.
+      template:
+-        "opstack/Layer2/OperatorFeeVault"
++        "opstack/Layer2/OperatorFeeVault_karst"
+      description:
+-        "Holds the 'operator fees' for the L2 network, which are part of the L2 fees that users pay."
++        "Collects the operator fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached."
+    }
+```
+
+Generated with discovered.json: 0x99df4644937c7f4892199d2cdd0503c88538b0a8
+
+# Diff at Thu, 29 Oct 2026 11:17:39 GMT:
+
+- id: ee800e59
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@cc7e9e73c101d0a260af6bfe078851f3ff1d60cb block: 1792587967
+- current timestamp: 1793196526
+
+## Description
+
+SystemConfig: owner moved from Unichain Multisig 2 to the OpFoundationUpgradeSafe.
+L1Splitter: L1 recipient changed; minimum withdrawal 10 → 3 ETH.
+L1Splitter template: `l1Recipient` now recorded as an Ethereum address.
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xc407398d063f942feBbcC6F80a156b47F3f1BDA6","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","role":".owner"}
+    }
+```
+
+```diff
+    contract Unichain Multisig 2 (eth:0x9245d5D10AA8a842B31530De71EA86c0760Ca1b1) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0xc407398d063f942feBbcC6F80a156b47F3f1BDA6","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","role":".owner"}]
+    }
+```
+
+```diff
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a) [gnosisSafeModules/SaferSafes] {
+    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xc407398d063f942feBbcC6F80a156b47F3f1BDA6","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","role":".owner","via":[{"address":"eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92"}]}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0xc407398d063f942feBbcC6F80a156b47F3f1BDA6) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ severity: MEDIUM
+      values.owner:
+-        "eth:0x9245d5D10AA8a842B31530De71EA86c0760Ca1b1"
++        "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92"
+    }
+```
+
+```diff
+    contract L1Splitter (unichain:0x4300c0d3c0d3c0D3c0d3C0D3c0d3C0D3C0D30003) [unichain/L1Splitter] {
+    +++ description: Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (eth:0xFb9d55c1846D1d442B277F6f87Da319156941401).
+      description:
+-        "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (eth:0x7078c4537C04c2b2E52ddBa06074dBdACF23cA15)."
++        "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (eth:0xFb9d55c1846D1d442B277F6f87Da319156941401)."
+      values.l1Recipient:
+-        "eth:0x7078c4537C04c2b2E52ddBa06074dBdACF23cA15"
++        "eth:0xFb9d55c1846D1d442B277F6f87Da319156941401"
+      values.minWithdrawalAmount:
+-        "10000000000000000000"
++        "3000000000000000000"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792587967 (main branch discovery), not current.
+
+```diff
+    contract L1Splitter (unichain:0x4300C0D3C0D3C0D3C0d3C0d3c0d3C0d3C0d30002) [unichain/L1Splitter] {
+    +++ description: Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (eth:0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa).
+      description:
+-        "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (unichain:0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa)."
++        "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (eth:0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa)."
+      values.l1Recipient:
+-        "unichain:0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa"
++        "eth:0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract L1Splitter (unichain:0x4300c0d3c0d3c0D3c0d3C0D3c0d3C0D3C0D30003) [unichain/L1Splitter] {
+    +++ description: Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (eth:0x7078c4537C04c2b2E52ddBa06074dBdACF23cA15).
+      description:
+-        "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (unichain:0x7078c4537C04c2b2E52ddBa06074dBdACF23cA15)."
++        "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (eth:0x7078c4537C04c2b2E52ddBa06074dBdACF23cA15)."
+      values.l1Recipient:
+-        "unichain:0x7078c4537C04c2b2E52ddBa06074dBdACF23cA15"
++        "eth:0x7078c4537C04c2b2E52ddBa06074dBdACF23cA15"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+Generated with discovered.json: 0x4f419e254c06e339b7bc14cac5cde4cf3b4fdc5c
+
+# Diff at Tue, 27 Oct 2026 11:57:32 GMT:
+
+- id: 5e0910ed
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@de2e3d4ee6aef60add0cf0b261ced3c797f9fb6e block: 1792587967
+- current timestamp: 1792587967
+
+## Description
+
+Discover the OperatorFeeVault predeploy, so changes to its recipient, withdrawal network and minimum withdrawal show up in diffs.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792587967 (main branch discovery), not current.
+
+```diff
+    contract SuperchainProxyAdminOwner (eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.28:
++        {"permission":"upgrade","from":"unichain:0x420000000000000000000000000000000000001b","role":"admin","via":[{"address":"unichain:0x4200000000000000000000000000000000000018"}]}
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (unichain:0x4200000000000000000000000000000000000018) [opstack/Layer2/L2ProxyAdmin_karst] {
+    +++ description: Administration contract for the L2 predeploy proxies. Adds upgradePredeploys(address), which can only be called by the system depositor account and delegatecalls an L2ContractsManager to upgrade every predeploy in a single network upgrade transaction.
+      directlyReceivedPermissions.14:
++        {"permission":"upgrade","from":"unichain:0x420000000000000000000000000000000000001b","role":"admin"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract OperatorFeeVault (unichain:0x420000000000000000000000000000000000001b) [opstack/Layer2/OperatorFeeVault]
+    +++ description: Holds the 'operator fees' for the L2 network, which are part of the L2 fees that users pay.
+```
+
+Generated with discovered.json: 0xb573653535562c9a7aa02bcef1d3233e02725688
+
+# Diff at Wed, 21 Oct 2026 13:50:19 GMT:
+
+- id: 525b49ad
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@39da84c441e4ad2ce4105a231c0bc2276f1ddd51 block: 1790862365
+- current timestamp: 1792587967
+
+## Description
+
+OpFoundationUpgradeSafe: Member rotated.
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) [GnosisSafe] {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x7F1D4FE689B73B628285454667B93cfd09409f27"
++        "eth:0xa564C83958f7F9fA5a255a540EF5e49445873104"
+    }
+```
+
 Generated with discovered.json: 0x66260a5dcb7c4a2fa2fa2729fc911f7c07da00c2
 
 # Diff at Tue, 20 Oct 2026 12:40:08 GMT:

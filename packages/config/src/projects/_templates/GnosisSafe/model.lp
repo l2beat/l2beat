@@ -1,4 +1,4 @@
-msig(@self, &$threshold).
+msig(@self, &$threshold|orNil).
 member(@self, 
-  &$members
+  &$members|orNil
 ).

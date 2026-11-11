@@ -30,6 +30,10 @@ import {
   getTvsChartByProjects,
   TvsChartByProjectsParams,
 } from '~/server/features/tvs/getTvsChartByProjects'
+import {
+  getZkCatalogTvsChart,
+  ZkCatalogTvsChartParams,
+} from '~/server/features/zk-catalog/getZkCatalogTvsChart'
 import { procedure, router } from '../trpc'
 
 export const tvsRouter = router({
@@ -57,4 +61,7 @@ export const tvsRouter = router({
   table: procedure
     .input(TvsBreakdownProjectParams)
     .query(({ input }) => getTvsTableData(input)),
+  zkCatalogChart: procedure
+    .input(ZkCatalogTvsChartParams)
+    .query(({ input }) => getZkCatalogTvsChart(input)),
 })

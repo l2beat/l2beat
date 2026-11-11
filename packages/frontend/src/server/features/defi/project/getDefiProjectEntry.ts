@@ -4,6 +4,7 @@ import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { env } from '~/env'
+import { getGardenCropsSection } from '~/server/features/garden/getGardenCropsSection'
 import { getUpdatesSection } from '~/server/features/projects/discovery-updates/getUpdatesSection'
 import { getProjectOssification } from '~/server/features/projects/ossification/getProjectOssification'
 import { ps } from '~/server/projects'
@@ -19,9 +20,14 @@ import { EMPTY_TVS_BREAKDOWN } from '../../layer2s/tvs/get7dTvsBreakdown'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { getDefiTvlDataSource } from '../getDefiTvlDataSource'
 import {
+  getLiquidStakingSummary,
+  type LiquidStakingSummary,
+} from '../liquid-staking/getLiquidStakingSummary'
+import {
   getDefiDependencyProjectsById,
   resolveDefiDependencies,
 } from '../resolveDefiDependencies'
+import { getDefiTokens } from './getDefiTokens'
 import { hasDefiProjectPage } from './hasDefiProjectPage'
 
 export interface ProjectDefiEntry {
@@ -43,6 +49,8 @@ export interface ProjectDefiEntry {
     }
   }
   isUnderReview: boolean
+  /** The project's row of the liquid staking page. */
+  liquidStaking?: LiquidStakingSummary
   warnings: {
     yellow?: string
     red?: ProjectRedWarning
@@ -65,6 +73,8 @@ export async function getDefiProjectEntry(
       'externalDependencies',
       'discoveryUpdates',
       'ossificationHistory',
+      'garden',
+      'liquidStaking',
     ],
   })
 
@@ -79,11 +89,17 @@ export async function getDefiProjectEntry(
     projectsChangeReport,
     dependencyProjectsById,
     ossification,
+    tokens,
+    liquidStaking,
   ] = await Promise.all([
     getContractUtils(),
     getProjectsChangeReport(),
     getDefiDependencyProjectsById(project.externalDependencies),
     getProjectOssification(project),
+    getDefiTokens(project.defiInfo.tokens ?? []),
+    project.liquidStaking
+      ? getLiquidStakingSummary(project, project.liquidStaking.risks)
+      : undefined,
   ])
   // DeFi pages get the Updates section together with ossification.
   const discoveryUpdates = env.CLIENT_SIDE_OSSIFICATION_ENABLED
@@ -118,7 +134,7 @@ export async function getDefiProjectEntry(
   )
 
   const discoUi = {
-    href: `https://disco.l2beat.com/ui/p/${project.id}`,
+    href: `https://disco.ethbeat.org/ui/p/${project.id}`,
     images: {
       desktop: manifest.getUrl('/images/disco-ui-desktop.png'),
       mobile: manifest.getUrl('/images/disco-ui-mobile.png'),
@@ -126,6 +142,11 @@ export async function getDefiProjectEntry(
   }
 
   const sections: ProjectDetailsSection[] = []
+
+  const gardenCropsSection = await getGardenCropsSection(project, ossification)
+  if (gardenCropsSection) {
+    sections.push(gardenCropsSection)
+  }
 
   if (
     project.display.detailedDescription ||
@@ -139,6 +160,17 @@ export async function getDefiProjectEntry(
         description: undefined,
         detailedDescription: project.display.detailedDescription,
         references: project.display.references,
+      },
+    })
+  }
+
+  if (tokens.length > 0) {
+    sections.push({
+      type: 'DefiTokensSection',
+      props: {
+        id: 'defi-tokens',
+        title: 'Tokens',
+        tokens,
       },
     })
   }
@@ -226,6 +258,7 @@ export async function getDefiProjectEntry(
       contractsSection || permissionsSection ? discoUi.href : undefined,
     discoUi,
     isUnderReview,
+    liquidStaking,
     warnings: {
       yellow: project.statuses.yellowWarning,
       red: project.statuses.redWarning,

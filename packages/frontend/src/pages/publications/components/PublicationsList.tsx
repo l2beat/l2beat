@@ -15,10 +15,8 @@ import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import { formatPublicationDate } from '~/utils/dates'
 import { isExternalUrl } from '~/utils/isExternalUrl'
-import {
-  getPublicationTagLabel,
-  type PublicationEntry,
-} from '../utils/getPublicationEntry'
+import type { PublicationEntry } from '../utils/getPublicationEntry'
+import { getPublicationTagLabel } from './PublicationTag'
 
 export function PublicationsList({
   publications,
@@ -131,7 +129,7 @@ function PublicationCard({ publication }: { publication: PublicationEntry }) {
         )}
       </div>
       <div className="mx-4 mt-4 flex items-center gap-2 border-divider border-t py-3">
-        <span className="font-bold text-brand text-label-value-12 uppercase">
+        <span className="font-bold text-brand-deep text-label-value-12 uppercase">
           {getPublicationTagLabel(publication.tag)}
         </span>
         <span className="text-label-value-12 text-secondary">

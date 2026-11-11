@@ -8,5 +8,11 @@
     "hash": "0xa0a8e3ebc196ae2703fc2c0dc5bc16012644bbcd103c34bf6241389ccadc0fd0",
     "address": "eth:0x5253D4C91e80b880DdB54B78E74082Abe066F6b9",
     "blockNumber": 25500995
+  },
+  "MainnetInbox.sol_proposal24": {
+    "hash": "0x2dcf603b82b38ffd0745a55af8329dd811aff4e0b4e754f1fc240cc39e6b474e",
+    "address": "eth:0xA18431d42C8dF9778905fBEa912aCF1881b49D2e",
+    "chain": "ethereum",
+    "blockNumber": 26223334
   }
 }

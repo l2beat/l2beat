@@ -6,8 +6,9 @@
   "critical": true,
   "ignoreMethods": ["getStakers", "stakerSet"],
   "fields": {
+    // MEDIUM: an incentive, it changes no safety rule.
     "rewardPercentage": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "messenger": {
       "severity": "HIGH"
@@ -29,7 +30,7 @@
     },
     // Bond of the L2 sequencer stakers; not slashed by the Rollup, which slashes Submitter stakes.
     "stakingValue": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     // Not read by the Rollup, which takes the challenge deposit from the Submitter contract.
     "challengeDeposit": {

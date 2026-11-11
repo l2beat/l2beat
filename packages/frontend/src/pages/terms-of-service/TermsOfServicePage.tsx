@@ -1,7 +1,6 @@
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { Article } from '~/components/markdown/Article'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import type { CollectionEntry } from '~/content/getCollection'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -17,7 +16,7 @@ export function TermsOfServicePage({ content, lastUpdated, ...props }: Props) {
       <SideNavLayout>
         <MainPageHeader>Terms of Service</MainPageHeader>
         <PrimaryCard className="md:p-8">
-          <p className="font-medium text-2xs text-purple-100 uppercase dark:text-pink-200">
+          <p className="font-medium text-2xs text-brand-deep uppercase">
             Last updated on {lastUpdated}
           </p>
           <main>
@@ -26,7 +25,6 @@ export function TermsOfServicePage({ content, lastUpdated, ...props }: Props) {
             </Article>
           </main>
         </PrimaryCard>
-        <ScrollToTopButton />
       </SideNavLayout>
     </AppLayout>
   )

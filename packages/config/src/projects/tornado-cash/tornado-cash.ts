@@ -71,6 +71,11 @@ const tornStaked = discovery.getContractValueBigInt(
   'TORNStaked',
 )
 
+const upgradeDelay = formatSeconds(
+  votingDelay + votingPeriod + executionDelay,
+  { fullUnit: true },
+)
+
 const stakeLockPeriod = formatSeconds(
   voteExtendTime + executionExpiration + executionDelay,
 )
@@ -278,7 +283,34 @@ export const tornadoCash: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.pool,
+    referenceApp: {
+      name: 'Tornado Cash classic app',
+      url: 'https://explorer.ens.domains/tornadocash.eth/records',
+      since: '2026-10-13',
+      source: {
+        repository: 'https://github.com/tornado-dao/classic-ui',
+        commit: '17c54dae9ad91bb3c6d62a7860df6cd365ab76d4',
+      },
+      checkedApps: [
+        {
+          name: 'Tornado CLI',
+          icon: 'tornado-cash',
+          finding:
+            "With Tor on, its fee checks still reach the RPC directly, so the RPC sees the user's IP next to each deposit and withdrawal.",
+          fix: 'Send the fee checks through the Tor proxy like every other request.',
+          source:
+            'https://github.com/tornado-dao/tornado-cli/blob/662dc0ea769bc72a785c29faa0269c866d34757f/cli.js#L1726',
+        },
+      ],
+    },
     trackedOn: ['ethereum'],
+    // Chains the pinned classic-ui serves (networkConfig.js).
+    runsOn: [
+      ProjectId('arbitrum'),
+      ProjectId('gnosis'),
+      ProjectId('optimism'),
+      ProjectId('polygon-pos'),
+    ],
     tokens: getPrivacyTokens(),
     relayerTracking: {
       type: 'onchainEvents',
@@ -303,24 +335,50 @@ export const tornadoCash: BaseProject = {
         'The circuits, contracts, app and relayer are open source. Each app release names its commit and a build recipe for its IPFS hash, and rebuilding the current release reproduces it.',
     },
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.fixedAmounts],
-    adversaries: tornadoCashAdversaries(
-      formatSeconds(votingDelay + votingPeriod + executionDelay, {
-        fullUnit: true,
-      }),
-    ),
-    riskSummary: readProjectMarkdown('tornado-cash', 'riskSummary'),
+    adversaries: tornadoCashAdversaries(upgradeDelay),
+    riskSummary: readProjectMarkdown('tornado-cash', 'riskSummary', {
+      upgradeDelay,
+    }),
     upgradesAndGovernance: {
       content: readProjectMarkdown('tornado-cash', 'upgradesAndGovernance'),
       governanceInfo: {
         upgrades: {
-          'Normal upgrade path': `Lock and optionally delegate TORN in the [Governance contract](https://etherscan.io/address/0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) → submit a proposal with at least **${formatNumber(Number(proposalThreshold / 10n ** 18n))} TORN** → wait ${formatSeconds(votingDelay)} → vote for ${formatSeconds(votingPeriod)} (extended by ${formatSeconds(voteExtendTime)} if the outcome changes during the last ${formatSeconds(closingPeriod)}) → pass with a simple majority and **${formatNumber(Number(quorumVotes / 10n ** 18n))} TORN** quorum → wait ${formatSeconds(executionDelay)} → permissionless execution within ${formatSeconds(executionExpiration)}. The DAO controls protocol and periphery components, but cannot upgrade or modify existing pools.`,
+          'Normal upgrade path': {
+            steps: [
+              {
+                description:
+                  'Lock and optionally delegate TORN in the [Governance contract](https://etherscan.io/address/0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce)',
+              },
+              {
+                description: `Submit a proposal with at least **${formatNumber(Number(proposalThreshold / 10n ** 18n))} TORN**`,
+              },
+              {
+                description: `Wait ${formatSeconds(votingDelay)}`,
+                isWait: true,
+              },
+              {
+                description: `Vote for ${formatSeconds(votingPeriod)} (extended by ${formatSeconds(voteExtendTime)} if the outcome changes during the last ${formatSeconds(closingPeriod)})`,
+              },
+              {
+                description: `Pass with a simple majority and **${formatNumber(Number(quorumVotes / 10n ** 18n))} TORN** quorum`,
+              },
+              {
+                description: `Wait ${formatSeconds(executionDelay)}`,
+                isWait: true,
+              },
+              {
+                description: `Permissionless execution within ${formatSeconds(executionExpiration)}`,
+              },
+            ],
+            note: 'The DAO controls protocol and periphery components, but cannot upgrade or modify existing pools.',
+          },
           'Exit window': `**${formatSeconds(executionDelay)}** for DAO-controlled changes — an accepted proposal remains timelocked for this period before it can be executed. Existing Tornado Cash pools are immutable and cannot be upgraded by the DAO.`,
         },
         tokenGovernance: {
           'Governance token': `\`TORN\`, 1 token = 1 vote, delegated. Total supply: **${formatNumber(Number(tornTotalSupply / 10n ** 18n))} TORN**, DAO-owned TORN (unavailable for voting): **${formatNumber(Number(tornTreasury / 10n ** 18n))} TORN**, staked for voting: **${formatNumber(Number(tornStaked / 10n ** 18n))} TORN**, the rest is circulating supply.`,
           'Stake lock': `After voting or proposing, staked tokens are locked for **${stakeLockPeriod}** after proposal ends, preventing governance hopping.`,
           'Voting venue':
-            '[Governance contract](https://etherscan.io/address/0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) on Ethereum. Proposals are viewable on the governance page of the app, see the App section above.',
+            '[Governance contract](https://etherscan.io/address/0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) on Ethereum. Proposals are viewable on the [governance page](https://tornadocash.eth.limo/governance) of the app, see the App section above.',
           'Proposal threshold': `**${formatNumber(Number(proposalThreshold / 10n ** 18n))} TORN** locked in governance.`,
           Quorum: `**${formatNumber(Number(quorumVotes / 10n ** 18n))} TORN**, with a simple majority required for acceptance.`,
           'Execution model': `**Permissionless execution after an onchain vote and timelock.** An accepted proposal waits ${formatSeconds(executionDelay)} and can then be executed by anyone within ${formatSeconds(executionExpiration)}. Proposal executable payload is committed in the \`propose()\` transaction.`,
@@ -354,9 +412,8 @@ export const tornadoCash: BaseProject = {
     },
     security: {
       sentiment: 'good',
-      points: ['Simple, well-ossified design.'],
+      points: ['Simple design.'],
       missing: [
-        'Not quantum-resistant, which may expose user privacy to harvest-now-decrypt-later attacks.',
         'Brittle onchain governance (token voting) controls the official frontend (ENS+IPFS).',
       ],
       notReviewed: ['Formal verification.'],

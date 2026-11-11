@@ -55,6 +55,7 @@ export function InteropCompareContent({
           value={leftId}
           onChange={setLeftId}
           excludeId={rightId}
+          label="First project"
         />
         <span className="text-center font-semibold text-base text-secondary sm:text-left">
           vs.
@@ -64,6 +65,7 @@ export function InteropCompareContent({
           value={rightId}
           onChange={setRightId}
           excludeId={leftId}
+          label="Second project"
         />
       </div>
 

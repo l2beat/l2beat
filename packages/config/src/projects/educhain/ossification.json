@@ -15,6 +15,14 @@
       "transaction": "0x74bb20e2a6636af46bda920d00f85dca6e34c8f8b3cfc4754f5373b6bbcd8a6c",
       "updateId": "c0a4e15c",
       "reason": "SequencerInbox: DAC keyset changed (dacKeyset; InvalidateKeyset 0x3d618b2236dc77e04f0569d6cbc1d66d329b7b285af1e8bc21b26e4b8585b739 0x)."
+    },
+    {
+      "timestamp": 1792052049,
+      "type": "state",
+      "contract": "arb1:0xC92793985e0026583Dc70aBDFBa167b1932b834D",
+      "updateId": "6ad09a3e",
+      "transaction": "0x8c453a221d03faebd0c907971e4ce705cd600c8ad49879353d2f24517579bbd9",
+      "reason": "RollupProxy wasmModuleRoot changed from 0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499 (ArbOS v51) to 0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97 (ArbOS v61)."
     }
   ]
 }

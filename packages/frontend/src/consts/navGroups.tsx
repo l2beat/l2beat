@@ -1,18 +1,16 @@
 import compact from 'lodash/compact'
 import type { NavGroup, NavLink } from '~/components/nav/types'
-import { PARTNERS_ORDER } from '~/consts/partnersOrder'
 import { env } from '~/env'
 import { BlobsIcon } from '~/icons/pages/Blobs'
 import { BridgesIcon } from '~/icons/pages/Bridges'
-import { DefiIcon } from '~/icons/pages/Defi'
-import { EcosystemsIcon } from '~/icons/pages/Ecosystems'
+import { CropsIcon } from '~/icons/pages/Crops'
 import { HomeIcon } from '~/icons/pages/Home'
 import { L2Icon } from '~/icons/pages/L2'
-import { OssificationIcon } from '~/icons/pages/Ossification'
+import { LiquidStakingIcon } from '~/icons/pages/LiquidStaking'
 import { PrivacyIcon } from '~/icons/pages/Privacy'
 import { TokensIcon } from '~/icons/pages/Tokens'
 import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
-import { createOrderedSort } from '~/utils/sort'
+import { GARDEN_PATH } from '~/pages/garden/paths'
 
 export const navGroups: NavGroup[] = compact<NavGroup>([
   {
@@ -21,15 +19,53 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
     match: 'home',
     href: '/',
     icon: (
-      <HomeIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+      <HomeIcon className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active" />
     ),
+  },
+  env.CLIENT_SIDE_GARDEN_ENABLED && {
+    type: 'single',
+    title: 'The CROPS guide',
+    shortTitle: 'CROPS',
+    match: 'crops',
+    href: GARDEN_PATH,
+    icon: (
+      <CropsIcon
+        className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active"
+        aria-hidden
+      />
+    ),
+  },
+  {
+    type: 'multiple',
+    title: 'Privacy',
+    match: 'privacy',
+    icon: (
+      <PrivacyIcon
+        className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active"
+        aria-hidden
+      />
+    ),
+    links: [
+      [
+        {
+          title: 'Summary',
+          href: '/privacy/summary',
+        },
+      ],
+      [
+        {
+          title: 'Archived',
+          href: '/privacy/archived',
+        },
+      ],
+    ],
   },
   {
     type: 'multiple',
     title: 'Layer 2s',
     match: 'layer2s',
     icon: (
-      <L2Icon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+      <L2Icon className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active" />
     ),
     links: compact<NavLink[]>([
       [
@@ -95,11 +131,51 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
     ]),
   },
   {
+    type: 'single',
+    title: 'Liquid staking',
+    match: 'defi',
+    href: '/defi/liquid-staking',
+    // Shown while the page is off, so the domain is visible, but not a link.
+    disabled: !env.CLIENT_SIDE_DEFI_ENABLED,
+    icon: (
+      <LiquidStakingIcon
+        className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active"
+        aria-hidden
+      />
+    ),
+  },
+  {
     type: 'multiple',
+    section: 'more',
+    title: 'Security',
+    // Its pages share no path; the nav also matches them by their links.
+    match: 'zk-catalog',
+    disableMobileTabs: true,
+    icon: (
+      <ZkCatalogIcon className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active" />
+    ),
+    links: [
+      [
+        {
+          title: 'ZK Catalog',
+          href: '/zk-catalog',
+        },
+        // Behind a flag: listed, but not a link.
+        {
+          title: 'Ossification',
+          href: '/ossification',
+          disabled: !env.CLIENT_SIDE_OSSIFICATION_ENABLED,
+        },
+      ],
+    ],
+  },
+  {
+    type: 'multiple',
+    section: 'more',
     title: 'Interop',
     match: 'interop',
     icon: (
-      <BridgesIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+      <BridgesIcon className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active" />
     ),
     links: [
       [
@@ -118,92 +194,27 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
       ],
     ],
   },
-  {
-    type: 'single',
-    title: 'Privacy',
-    match: 'privacy',
-    href: '/privacy',
-    icon: (
-      <PrivacyIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
-    ),
-  },
   env.CLIENT_SIDE_TOKENS_PAGE && {
     type: 'single',
+    section: 'more',
     title: 'Tokens',
     match: 'tokens',
     href: '/tokens',
     icon: (
-      <TokensIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
-    ),
-  },
-  env.CLIENT_SIDE_OSSIFICATION_ENABLED && {
-    type: 'single',
-    title: 'Ossification',
-    match: 'ossification',
-    href: '/ossification',
-    icon: (
-      <OssificationIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
-    ),
-  },
-  env.CLIENT_SIDE_DEFI_ENABLED && {
-    type: 'single',
-    title: 'DeFi',
-    match: 'defi',
-    href: '/defi',
-    icon: (
-      <DefiIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+      <TokensIcon
+        className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active"
+        aria-hidden
+      />
     ),
   },
   env.CLIENT_SIDE_BLOBS_PAGE && {
     type: 'single',
+    section: 'more',
     title: 'Blobs',
     match: 'blobs',
     href: '/blobs',
     icon: (
-      <BlobsIcon className="transition-colors duration-300 group-data-[active=true]:fill-brand" />
+      <BlobsIcon className="transition-colors duration-300 group-data-[active=true]:fill-nav-active" />
     ),
-  },
-  {
-    type: 'single',
-    title: 'ZK Catalog',
-    match: 'zk-catalog',
-    href: '/zk-catalog',
-    icon: (
-      <ZkCatalogIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
-    ),
-  },
-  {
-    type: 'multiple',
-    title: 'Ecosystems',
-    match: 'ecosystems',
-    disableMobileTabs: true,
-    icon: (
-      <EcosystemsIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
-    ),
-    links: [
-      [
-        {
-          name: 'Agglayer',
-          slug: 'agglayer',
-        },
-        {
-          name: 'Arbitrum Orbit',
-          slug: 'arbitrum-orbit',
-        },
-        {
-          name: 'Superchain',
-          slug: 'superchain',
-        },
-        {
-          name: 'The Elastic Network',
-          slug: 'the-elastic-network',
-        },
-      ]
-        .sort(createOrderedSort(PARTNERS_ORDER, (item) => item.slug))
-        .map((ecosystem) => ({
-          title: ecosystem.name,
-          href: `/ecosystems/${ecosystem.slug}`,
-        })),
-    ],
   },
 ])

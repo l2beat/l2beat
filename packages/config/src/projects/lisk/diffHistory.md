@@ -1,3 +1,95 @@
+Generated with discovered.json: 0xb78222d308fb9aa3782433f28c61721c08419a21
+
+# Diff at Fri, 06 Nov 2026 16:32:34 GMT:
+
+- id: 7f1f94ea
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@42d599abc7be8cc38122c72abc4da1c1dda6fbeb block: 1792587967
+- current timestamp: 1793982680
+
+## Description
+
+Lisk Multisig: its single owner changed from the Gelato Multisig to a new 3/5 Safe, so Gelato no longer controls upgrades.
+
+## Watched changes
+
+```diff
+    contract Gelato Multisig (eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.2:
+-        {"permission":"interact","from":"eth:0x0CF7D3706a27CCE2017aEB11E8a9c8b5388c282C","description":"set the dispute game implementation and initial bond for any game type.","role":".owner","via":[{"address":"eth:0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"}]}
+      receivedPermissions.3:
+-        {"permission":"interact","from":"eth:0x2dF7057d3F25212E51aFEA8dA628668229Ea423f","description":"set and change address mappings.","role":".owner","via":[{"address":"eth:0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"},{"address":"eth:0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"}]}
+      receivedPermissions.4:
+-        {"permission":"interact","from":"eth:0x31eFC2c8012c56E007E5Bdb8E5B7955D197C168e","description":"can pull funds from the contract in case of emergency.","role":".owner","via":[{"address":"eth:0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"}]}
+      receivedPermissions.5:
+-        {"permission":"upgrade","from":"eth:0x05f23282FFDCA8286E4738C1aF79079f3d843750","role":"admin","via":[{"address":"eth:0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"},{"address":"eth:0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"}]}
+      receivedPermissions.6:
+-        {"permission":"upgrade","from":"eth:0x0CF7D3706a27CCE2017aEB11E8a9c8b5388c282C","role":"admin","via":[{"address":"eth:0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"},{"address":"eth:0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"}]}
+      receivedPermissions.7:
+-        {"permission":"upgrade","from":"eth:0x2658723Bf70c7667De6B25F99fcce13A16D25d08","role":"admin","via":[{"address":"eth:0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"},{"address":"eth:0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"}]}
+      receivedPermissions.8:
+-        {"permission":"upgrade","from":"eth:0x26dB93F8b8b4f7016240af62F7730979d353f9A7","role":"admin","via":[{"address":"eth:0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"},{"address":"eth:0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"}]}
+      receivedPermissions.9:
+-        {"permission":"upgrade","from":"eth:0x31B72D76FB666844C41EdF08dF0254875Dbb7edB","role":"admin","via":[{"address":"eth:0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"},{"address":"eth:0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"}]}
+      receivedPermissions.10:
+-        {"permission":"upgrade","from":"eth:0x31eFC2c8012c56E007E5Bdb8E5B7955D197C168e","role":"admin","via":[{"address":"eth:0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"},{"address":"eth:0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"}]}
+      receivedPermissions.11:
+-        {"permission":"upgrade","from":"eth:0x3A44A3b263FB631cdbf25f339e2D29497511A81f","role":"admin","via":[{"address":"eth:0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"},{"address":"eth:0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"}]}
+      receivedPermissions.12:
+-        {"permission":"upgrade","from":"eth:0x7ad0d165B9607960AD850090DDd7B9eB381D9c1e","role":"admin","via":[{"address":"eth:0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"},{"address":"eth:0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"}]}
+      receivedPermissions.13:
+-        {"permission":"upgrade","from":"eth:0xc1dA06CC5DD5cE23bABa924463de7F762039252d","role":"admin","via":[{"address":"eth:0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"},{"address":"eth:0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"}]}
+    }
+```
+
+```diff
+    contract Lisk Multisig (eth:0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
++        "eth:0xD2D7535e099F26EbfbA26d96bD1a661d3531d0e9"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0xD2D7535e099F26EbfbA26d96bD1a661d3531d0e9) [GnosisSafe]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../projects/lisk/.flat/Safe/GnosisSafeProxy.p.sol |   38 +
+ .../src/projects/lisk/.flat/Safe/Safe.sol          | 1797 ++++++++++++++++++++
+ 2 files changed, 1835 insertions(+)
+```
+
+Generated with discovered.json: 0x12a478db5115b3f31269c188ef050ca144681e14
+
+# Diff at Wed, 21 Oct 2026 13:06:51 GMT:
+
+- id: 2d83c6ae
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@39da84c441e4ad2ce4105a231c0bc2276f1ddd51 block: 1790808274
+- current timestamp: 1792587967
+
+## Description
+
+OpFoundationUpgradeSafe: Member rotated.
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) [GnosisSafe] {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x7F1D4FE689B73B628285454667B93cfd09409f27"
++        "eth:0xa564C83958f7F9fA5a255a540EF5e49445873104"
+    }
+```
+
 Generated with discovered.json: 0xfe2620db7e64b8170ee4d36579273418e2c569d9
 
 # Diff at Fri, 16 Oct 2026 09:37:48 GMT:

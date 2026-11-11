@@ -3,6 +3,7 @@ import type { Database, PrivacyFlowEventRecord } from '@l2beat/database'
 import {
   type BlockProvider,
   createPrivacyConfigurationId,
+  type IRpcClient,
   type LogsProvider,
   stringifyPrivacyConfigurationParams,
 } from '@l2beat/shared'
@@ -19,9 +20,11 @@ import type {
 } from '../../../tools/uif/multi/types'
 import type { PrivacyFlowIndexerConfig } from '../types'
 import { extractPrivacyFlow } from '../utils/extractPrivacyFlow'
+import { adjustPrivacyPoolsV2Flow } from '../utils/extractPrivacyPoolsV2Event'
+import { getPrivacyBucketIds } from '../utils/getPrivacyBucketIds'
 import {
+  extractPrivacyLogMatches,
   fetchPrivacyLogMatches,
-  type PrivacyLogMatch,
 } from '../utils/privacyLogIndexerUtils'
 
 interface PrivacyFlowIndexerDeps
@@ -32,6 +35,7 @@ interface PrivacyFlowIndexerDeps
   chain: string
   blockProvider: BlockProvider
   logsProvider: LogsProvider
+  rpcClient: IRpcClient
   db: Database
 }
 
@@ -80,6 +84,11 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
 
     return async () => {
       await this.$.db.privacyFlowEvent.upsertMany(records)
+      await this.$.db.syncMetadata.updateSyncedUntil(
+        'privacy',
+        getPrivacyBucketIds(configurations.map((c) => c.properties)),
+        adjustedTo,
+      )
 
       this.logger.info('Saved privacy flow events into DB', {
         from,
@@ -143,36 +152,26 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
       blockProvider: this.$.blockProvider,
       logger: this.logger,
     })
-    const rawRecords = this.extractRawRecords(matches)
+    const rawRecords = await extractPrivacyLogMatches(
+      matches,
+      this.$.rpcClient,
+      async ({ log, timestamp, configuration }, context) => {
+        const extracted = extractPrivacyFlow(configuration.properties, log)
+        if (!extracted || (extracted.count === 0 && extracted.amount === 0n)) {
+          return undefined
+        }
+        const result = await adjustPrivacyPoolsV2Flow(log, extracted, context)
+        if (!result) {
+          return undefined
+        }
+        return { configuration, log, timestamp, ...result }
+      },
+    )
 
     if (rawRecords.length === 0) return []
 
     const priceLookup = await this.buildPriceLookup(rawRecords)
     return this.buildRecords(rawRecords, priceLookup)
-  }
-
-  private extractRawRecords(
-    matches: PrivacyLogMatch<PrivacyFlowIndexerConfig>[],
-  ): RawRecord[] {
-    const rawRecords: RawRecord[] = []
-
-    for (const { log, timestamp, configuration } of matches) {
-      const result = extractPrivacyFlow(configuration.properties, log)
-
-      if (!result || (result.count === 0 && result.amount === 0n)) {
-        continue
-      }
-
-      rawRecords.push({
-        configuration,
-        log,
-        count: result.count,
-        amount: result.amount,
-        timestamp,
-      })
-    }
-
-    return rawRecords
   }
 
   private buildRecords(

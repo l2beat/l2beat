@@ -58,7 +58,7 @@ export const cloakedAdversaries = definePrivacyAdversaries({
         },
         {
           title:
-            'Fee Safe payers: 2,495 stealth addresses since launch, 1,148 in the 90 days to 2026-10-14',
+            'Fee Safe payers: 2,631 stealth addresses since launch, 966 in the 90 days to 2026-10-29',
           url: 'https://etherscan.io/address/0x145444c66A32A0464059D400Dc488CCf4704f9B5#internaltx',
         },
         {
@@ -68,14 +68,17 @@ export const cloakedAdversaries = definePrivacyAdversaries({
       ],
     },
     networkObserver: {
-      sentiment: 'bad',
+      sentiment: 'warning',
       exposureShort:
-        'The app is closed source with no open alternative, so what it sends to third parties is up to Cloaked and can change at any time.',
+        "Cloaked's servers read and spend each account's addresses through RPC providers such as Alchemy, which can group them by account.",
       exposureContinued:
-        "Today's app sends spends, quotes and balance reads to Cloaked's own API. Linking the user's own ENS name reads it through Alchemy under Cloaked's key, and wallet logins go through WalletConnect. A payer who looks up the user's name through a third-party RPC shows it that name and the new address.",
+        "A linked ENS name, which the app reads through Alchemy, can tie such a group to the user. A payer who looks up the user's name gives their RPC the name and the new address. An email login hands the email to Web3Auth, whose key then derives the user's secrets.",
+      advice:
+        'Share a payment link or a fresh address instead of the name. Log in with a passkey rather than email, and leave your own ENS name unlinked.',
       sources: [
         {
-          title: 'Service providers: RPC, hosting and wallet connection',
+          title:
+            'Privacy policy: RPC providers such as Alchemy receive personal data',
           url: PRIVACY,
         },
         {

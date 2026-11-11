@@ -8,5 +8,11 @@
     "hash": "0x8c321c556b08797474b0cbe91d7f1ce367ef3f7eb0c653221a21fc3af9cd6392",
     "address": "eth:0xF459348962F5eA3A9A101826B03A2CE1F459E51A",
     "blockNumber": 25428902
+  },
+  "EscapeHatch_v6.sol": {
+    "hash": "0x105b89ff45892b34800dd50e432ebce8e4ed2fe693f1377ca59f17a2e37b81e8",
+    "address": "eth:0x613fF7D166C834816384FeaeA2B48568363A4D57",
+    "chain": "ethereum",
+    "blockNumber": 26160103
   }
 }

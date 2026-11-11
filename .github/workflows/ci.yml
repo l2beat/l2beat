@@ -67,8 +67,8 @@ jobs:
           name: frontend-build-summary
           path: .turbo/runs
 
-  build-protocolbeat:
-    name: Build protocolbeat
+  build-discoui:
+    name: Build discoui
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
@@ -82,8 +82,8 @@ jobs:
       - name: Set up pnpm and install dependencies
         uses: ./.github/actions/setup-pnpm
 
-      - name: Build protocolbeat
-        run: pnpm build:protocolbeat
+      - name: Build discoui
+        run: pnpm build:discoui
 
   build-tools:
     name: Build tools
@@ -102,24 +102,6 @@ jobs:
 
       - name: Build tools
         run: pnpm build:tools
-
-  build-uops-dashboard:
-    name: Build uops-dashboard
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    env:
-      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-      TURBO_API: ${{ secrets.TURBO_API_RO }}
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v6
-        
-      - name: Set up pnpm and install dependencies
-        uses: ./.github/actions/setup-pnpm
-
-      - name: Build tx-decoder
-        run: pnpm build:uops-dashboard
 
   build-token-backend:
     name: Build token-backend container image
@@ -221,12 +203,8 @@ jobs:
           - name: perf
             args: --project perf --no-deps
             webkit: true
-          - name: blobs perf 1/3
-            args: --project "blobs perf" --no-deps --shard 1/3
-          - name: blobs perf 2/3
-            args: --project "blobs perf" --no-deps --shard 2/3
-          - name: blobs perf 3/3
-            args: --project "blobs perf" --no-deps --shard 3/3
+          - name: blobs perf
+            args: --project "blobs perf" --no-deps
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
@@ -290,13 +268,13 @@ jobs:
           - name: Set up Playwright
             uses: ./.github/actions/setup-playwright
             with:
-              package-dir: packages/protocolbeat
+              package-dir: packages/discoui
 
           - name: Build dependencies
             run: pnpm build:dependencies:l2b
 
       - name: Run page e2e tests
-        working-directory: packages/protocolbeat
+        working-directory: packages/discoui
         run: pnpm test:e2e --shard ${{ matrix.shard }}/2
 
       - name: Run backend e2e tests

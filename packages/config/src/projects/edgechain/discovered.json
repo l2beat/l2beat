@@ -1,18 +1,8 @@
 {
   "name": "edgechain",
-  "timestamp": 1791533705,
+  "timestamp": 1793982767,
   "configHash": "0x2780c5d06615788113c5a323ad4ef6df557fed7b8a7bed7cf234a924b6fc247e",
   "entries": [
-    {
-      "address": "arb1:0x001271c57AeC639952B5201D052767c316755512",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "arb1:0x04a25F65200E56EAd142652b7E5eF372E169F2Bd",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
     {
       "name": "RollupProxy",
       "address": "arb1:0x0D9cCeB5Cd108CC9B0b7Ac3aACe3d85c28243c9e",
@@ -58,7 +48,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "anyTrustFastConfirmer": "arb1:0x42124A2E725E6458701b8Ef46B78Db55827fA836",
+        "anyTrustFastConfirmer": "arb1:0xA9595BEB8A32467C9d2083AafD75883DC0825cF0",
         "arbOsFromWmRoot": "ArbOS v61 wasmModuleRoot",
         "baseStake": 0,
         "bridge": "arb1:0x6F4836aFD5e21EDcee9b838C5a4125829EC198d0",
@@ -68,11 +58,11 @@
         "challenges": [],
         "confirmPeriodBlocks": 50400,
         "genesisAssertionHash": "0x75c2df1d9a6f98d1de62c8fc955f91b87f16fefa2fafe4d6b52118fc30e1c278",
-        "getValidators": ["arb1:0x3f90c4913621e6758eB8767EA934FCa59ae5Dee8"],
+        "getValidators": ["arb1:0x4F12e3d982C3308039761298E4582a91Fd9C4209"],
         "inbox": "arb1:0xeB88b89e085D6B747Dd6b9CEaf2716bdd89F1E7c",
         "isPostBoLD": true,
-        "latestConfirmed": "0xc378e922107a1fcfd73e2b36b4cd7cead4be8de473ad45458eb6698ef5e13603",
-        "loserStakeEscrow": "arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28",
+        "latestConfirmed": "0xe8c4a0efe0dd1490a97e1a7b5235007c4d838195df8fef234a2178c596491ab9",
+        "loserStakeEscrow": "arb1:0x13d4d9C70888Ee78A26d58F0A0717b6B93614fD7",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0x9f427c80C4DF962726808d4c876fc2c55474a764",
         "owner": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf",
@@ -80,7 +70,7 @@
         "rollupDeploymentBlock": 26082513,
         "rollupEventInbox": "arb1:0xdA3102d2f80CaD9571a9Eb3656e808e973620dBD",
         "sequencerInbox": "arb1:0xe44B83D8a3A86994043C809E29B723a44FAEE479",
-        "stakerCount": 1,
+        "stakerCount": 2,
         "stakeToken": "arb1:0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
         "totalWithdrawableFunds": 0,
         "validatorAfkBlocks": 201600,
@@ -207,6 +197,11 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "address": "arb1:0x13d4d9C70888Ee78A26d58F0A0717b6B93614fD7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "OneStepProverHostIo",
       "address": "arb1:0x18Cc27B3a95a6FdEf9EAA391eff28F48F42fFe3F",
       "type": "Contract",
@@ -232,11 +227,6 @@
     },
     {
       "address": "arb1:0x1EC1398AE7772eAAd8B4523613B94b240158cF8b",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "arb1:0x35A2079110aa30d1De381cf75aCd1836b6dEE1d7",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -289,40 +279,9 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "address": "arb1:0x3f90c4913621e6758eB8767EA934FCa59ae5Dee8",
+      "address": "arb1:0x4F12e3d982C3308039761298E4582a91Fd9C4209",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "GnosisSafeL2",
-      "address": "arb1:0x42124A2E725E6458701b8Ef46B78Db55827fA836",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "deployerAddress": "arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28",
-      "sinceTimestamp": 1762350107,
-      "sinceBlock": 397070318,
-      "values": {
-        "$immutable": false,
-        "$implementation": "arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
-        "$members": ["arb1:0x3f90c4913621e6758eB8767EA934FCa59ae5Dee8"],
-        "$threshold": 1,
-        "domainSeparator": "0x4ab60990f431894339fc8ffb19c82e8b8dead7e2ef793ac69f329c996e1b60ac",
-        "getChainId": 42161,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 140736,
-        "VERSION": "1.3.0"
-      },
-      "implementationNames": {
-        "arb1:0x42124A2E725E6458701b8Ef46B78Db55827fA836": "GnosisSafeProxy",
-        "arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
-      }
     },
     {
       "name": "OneStepProverMemory",
@@ -342,6 +301,11 @@
       "implementationNames": {
         "arb1:0x583F8BA007580c83EFB4B02C66694096cD5c56d1": "OneStepProverMemory"
       }
+    },
+    {
+      "address": "arb1:0x5e65E7ED796e12dDFBD82829AD64BC76c87c7A88",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "OneStepProofEntry",
@@ -373,6 +337,11 @@
       "implementationNames": {
         "arb1:0x61006c8566fac9a3315F646dA4624C00BbCF15E4": "OneStepProofEntry"
       }
+    },
+    {
+      "address": "arb1:0x656A28457C85483AA80499A4E8A739129CC77247",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Bridge",
@@ -418,7 +387,7 @@
         "allowedOutboxList": [
           "arb1:0x9f427c80C4DF962726808d4c876fc2c55474a764"
         ],
-        "delayedMessageCount": 173179,
+        "delayedMessageCount": 180826,
         "inboxHistory": [
           "arb1:0xeB88b89e085D6B747Dd6b9CEaf2716bdd89F1E7c",
           "arb1:0xdA3102d2f80CaD9571a9Eb3656e808e973620dBD"
@@ -426,8 +395,8 @@
         "outboxHistory": ["arb1:0x9f427c80C4DF962726808d4c876fc2c55474a764"],
         "rollup": "arb1:0x0D9cCeB5Cd108CC9B0b7Ac3aACe3d85c28243c9e",
         "sequencerInbox": "arb1:0xe44B83D8a3A86994043C809E29B723a44FAEE479",
-        "sequencerMessageCount": 156554,
-        "sequencerReportedSubMessageCount": 829819
+        "sequencerMessageCount": 164200,
+        "sequencerReportedSubMessageCount": 850907
       },
       "fieldMeta": {
         "rollup": { "severity": "HIGH" },
@@ -497,46 +466,6 @@
       }
     },
     {
-      "name": "SafeL2",
-      "address": "arb1:0x871e290d5447b958131F6d44f915F10032436ee6",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "deployerAddress": "arb1:0xB3aA47edBc9A1178B56bB55D1a9E3821845870e8",
-      "sinceTimestamp": 1758905666,
-      "sinceBlock": 383274625,
-      "values": {
-        "$immutable": false,
-        "$implementation": "arb1:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
-        "$members": [
-          "arb1:0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d",
-          "arb1:0xa3353Ae4458F663f1F888705b044269bd30cd110",
-          "arb1:0xFB00073F931A817b244bF211aA2E5DCBfff8B1ca",
-          "arb1:0x35A2079110aa30d1De381cf75aCd1836b6dEE1d7",
-          "arb1:0x001271c57AeC639952B5201D052767c316755512",
-          "arb1:0x04a25F65200E56EAd142652b7E5eF372E169F2Bd",
-          "arb1:0xd1447Dd15D9e24ddFF99f0fE3C88Bf64d23D1670",
-          "arb1:0xeD9919D57162D518014C391a687AA8fb9DB55654"
-        ],
-        "$threshold": 3,
-        "domainSeparator": "0x52821c1d2c017858aec7419fdeebd777b613f1ff150cb4573521471af0e178e2",
-        "getChainId": 42161,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 8 (38%)",
-        "nonce": 6,
-        "VERSION": "1.4.1"
-      },
-      "implementationNames": {
-        "arb1:0x871e290d5447b958131F6d44f915F10032436ee6": "SafeProxy",
-        "arb1:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
-      }
-    },
-    {
       "address": "arb1:0x8BD5e5C114375f8A7A034f96fE2e67B31EEb48Ac",
       "type": "EOA",
       "proxyType": "EOA"
@@ -594,14 +523,35 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "address": "arb1:0x9f787F6e07469BBA84f0BE488c42eDC4c766cC83",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "arb1:0xa3353Ae4458F663f1F888705b044269bd30cd110",
-      "type": "EOA",
-      "proxyType": "EOA"
+      "name": "GnosisSafeL2",
+      "address": "arb1:0xA9595BEB8A32467C9d2083AafD75883DC0825cF0",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "arb1:0x8BcB57a8441F10F037527e68fA74d17A84206C8d",
+      "sinceTimestamp": 1793171113,
+      "sinceBlock": 518975652,
+      "values": {
+        "$immutable": false,
+        "$implementation": "arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "$members": ["arb1:0x4F12e3d982C3308039761298E4582a91Fd9C4209"],
+        "$threshold": 1,
+        "domainSeparator": "0x27eee482a1c1ea2bf192d7d238f236346fb93e3bbd14d2e1cae5cc365cf0e551",
+        "getChainId": 42161,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 1 (100%)",
+        "nonce": 96,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "arb1:0xA9595BEB8A32467C9d2083AafD75883DC0825cF0": "GnosisSafeProxy",
+        "arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
+      }
     },
     {
       "name": "UpgradeExecutor",
@@ -640,19 +590,13 @@
           },
           "EXECUTOR_ROLE": {
             "adminRole": "ADMIN_ROLE",
-            "members": [
-              "arb1:0x871e290d5447b958131F6d44f915F10032436ee6",
-              "arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28"
-            ]
+            "members": ["arb1:0xD11411b0486B344D868752d44f5B871Dd3623d31"]
           }
         },
         "ADMIN_ROLE": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
-        "executors": [
-          "arb1:0x871e290d5447b958131F6d44f915F10032436ee6",
-          "arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28"
-        ],
+        "executors": ["arb1:0xD11411b0486B344D868752d44f5B871Dd3623d31"],
         "transactionFilteringPrecompile": "edge:0x0000000000000000000000000000000000000074"
       },
       "fieldMeta": {
@@ -686,7 +630,7 @@
       }
     },
     {
-      "address": "arb1:0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d",
+      "address": "arb1:0xb8E3c28e88F33B9F61a37E0eE86d29C48f1cAE09",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -696,9 +640,41 @@
       "proxyType": "EOA"
     },
     {
-      "address": "arb1:0xd1447Dd15D9e24ddFF99f0fE3C88Bf64d23D1670",
-      "type": "EOA",
-      "proxyType": "EOA"
+      "name": "SafeL2",
+      "address": "arb1:0xD11411b0486B344D868752d44f5B871Dd3623d31",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "arb1:0xCF21fC6219624e42115B5c064cD3bBa13DA41131",
+      "sinceTimestamp": 1793615329,
+      "sinceBlock": 520540512,
+      "values": {
+        "$immutable": false,
+        "$implementation": "arb1:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
+        "$members": [
+          "arb1:0xb8E3c28e88F33B9F61a37E0eE86d29C48f1cAE09",
+          "arb1:0x656A28457C85483AA80499A4E8A739129CC77247",
+          "arb1:0xDcaA8bfe9644c27eF3b40EaCB7cE7535D3223798",
+          "arb1:0xf8828200C86BC00aA05963804E44152c0e4FcB54",
+          "arb1:0xF5540a7AE6B1bA11d9E724be02ca58427CF21919"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0x3f2e2084d7c9c994dd7d24b04af5e325d5d460d9c4efcf6fe28d8c8bad3655c0",
+        "getChainId": 42161,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 0,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "arb1:0xD11411b0486B344D868752d44f5B871Dd3623d31": "SafeProxy",
+        "arb1:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
+      }
     },
     {
       "name": "RollupEventInbox",
@@ -745,6 +721,11 @@
       }
     },
     {
+      "address": "arb1:0xDcaA8bfe9644c27eF3b40EaCB7cE7535D3223798",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SequencerInbox",
       "address": "arb1:0xe44B83D8a3A86994043C809E29B723a44FAEE479",
       "type": "Contract",
@@ -786,9 +767,9 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 156554,
+        "batchCount": 164200,
         "batchPosterManager": "arb1:0x0000000000000000000000000000000000000000",
-        "batchPosters": ["arb1:0x9f787F6e07469BBA84f0BE488c42eDC4c766cC83"],
+        "batchPosters": ["arb1:0x5e65E7ED796e12dDFBD82829AD64BC76c87c7A88"],
         "bridge": "arb1:0x6F4836aFD5e21EDcee9b838C5a4125829EC198d0",
         "BROTLI_MESSAGE_HEADER_FLAG": "0x00",
         "buffer": {
@@ -801,11 +782,8 @@
         },
         "dacKeyset": {
           "requiredSignatures": 2,
-          "membersCount": 5,
+          "membersCount": 2,
           "blsSignatures": [
-            "YA10Tx0VOmY6ZaRDft0hy9Jp3KTNup+mJYlWIyySLr7CZ6ZWlfIhMVv15OXej5a+NhmH1xFFxZLR5uMgYkA+uKIDRuFYmRrAHzlBMCfnytPl68fV4yTolBaNmGb1uO/1cgjO0nnOrgADTYh1jMmZu0y87DtvsdDYr2u+hFEo1StVGlZhfd5qg0+zWEXEDrBD2BGxapx2BBj9nPt+1SlH0HDq29nHnfyiOKM0B5nAoXbBne4QdxfkKlS0XW9X2ikeJwwLvXivK+EazbtWLS+e6XgFG6pKbxzdG5+iGNBYQLC3DPb6Q1Weabl99gsebWoVPBfS3hdeoHTTq5fnpHI0iDdiM7i9t6LqMM5vmDgLMgi/w3yxOVyBSwpjn7Wt+3NkLw==",
-            "YAPs5RkU8pYUUt68mNKAJNIZ03qrn8DMCY1KU4KCnh5eiJaQ+K0TfcWpBTgOMyoCcBgCN15WdyFdFswj2Z0w/UYzFKBYo3lrudeovLSeRULZ+xHv96dUjnwJvtQkJEKZdxCmrdC/Xits0gGGxfbFEhB6Ywv/sKpgz7MVQcB+/by/l3DNvR+VuYpr8qm/0kNjFRYH9OULZM51D/N3uyni4aolb/NCeZJFQ9ni2jeNfvoiU7Vo5M6H3c43k+1VZJfEZhjvz9TlJbp3rg3Fmo2UBOWKkH3R4P3jcgo357B23LMoyHsdRcyoOCjYw2tZqOH1tBeaedvgFTu5d/r4l5aTMA6Hu31mkDbz0Jk1DPy2WpwBjmAMOtT/wLYAbEbGYrs7mg==",
-            "YAca1+a2vM6xO7/Z5qHD0swdq+vsGAierMiGew+GQAQBT3zZW7Z/LDorJtr5b6dq5wmeJFNPoGnF9kgGElWkG9lyL4vtU4Jr65YmgEOE28MecNaEtXfZM48s1RunXX04FhgJdHujSzQYkc3xxQdpIdJdVzglSXP/I9o/y1BmQFVlNQOzKFP+1HNFpephWb0WEhQsakr0KMn46QK10lD5euEeQXOKBo8srablM6v/ESP3K6QkmJtu1LD0hxW0rz83/hRYMTB2/9hMKhgQ1Nm/0veou49hv3AY3gCx85ZcSs0cLms/sp1NovNPybkQhxkTMRRz9FdXlXpgVVs/jW1KzbLs00/0wxitGfvIFrNiSkGgnPGAVqS9uCgYaX6Y+KREuA==",
             "YA8PdhR9G6EFhblLWymAJ931fvjjb4tOk4a377DXogOfYChxbQETJT3GBYtAvIMmlRUujXEY4uCXjmv5toOcVoDkU4w1wYSvoK3r441hwJw7pG+R+aeGUINtROsxI9sqwhiafKADPPdxLy80mUTK5oIaPztF7RG2WhKMFNK7Ebjsrn4si90qAKRIt7sfneEO4wdeuC5erBen3tLJ7lE32uCi13sEJZYU7UKfr2cwoDQSZyvYePb2KX9U3bHhTpXBbwGKg2pIUGZ5g5GiOuV42wdbfqMjrsOZiLuMbgyYfVl3OOUpDUPGZyupZdGvkzk0rhGY/O/dF1Pv+BCcuX9qUCldfrFYiAvWqYcny+5xKXSQLSlU9cBdTePXy/dotyR7vA==",
             "YBP6/hdXzakIwPZ68/ORUMDJcuhMwQr/C9anzOd5pbWBokbORN1nrEGAOJMmRfLLtRdcABs+DNEopeD4JnwdzbB5e3pHjqqhJvFJzPQ+Rvvo3uPhbECR/Ptf0Umd35mD+AQPB0rLQbAngxs8tNUnS6IllQIW/FeEGm3LwjZ32m+D08Vh5rgqMKWOpGk/Op4sIhGP3Ishpq6yC/kd+GVSDj+vc30oOuNzVtsuAGMTTy8SmlNR47eVX9eMW9bEWIk65QCAaO4T5EqH5IWNKmWZI0Q0yGSHgvslmUZHApw2vIXn0rrzc5DwyUcgn3XZz2H5vhUXvV95qFARTQ9V7SDIXr134ixoaAmhEHqeav9vhlVZE13e9ghd5iNr6BZQn7SrpQ=="
           ]
@@ -817,7 +795,7 @@
         "HEADER_LENGTH": 40,
         "isDelayBufferable": true,
         "isUsingFeeToken": false,
-        "keySetUpdates": 2,
+        "keySetUpdates": 3,
         "maxDataSize": 104857,
         "maxTimeVariation": {
           "delayBlocks": 28800,
@@ -829,8 +807,8 @@
         "reader4844": "arb1:0x0000000000000000000000000000000000000000",
         "rollup": "arb1:0x0D9cCeB5Cd108CC9B0b7Ac3aACe3d85c28243c9e",
         "sequencerVersion": "0x88",
-        "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 173178,
+        "setIsBatchPosterCount": 3,
+        "totalDelayedMessagesRead": 180825,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -909,11 +887,6 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "address": "arb1:0xeD9919D57162D518014C391a687AA8fb9DB55654",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "EdgeChallengeManager",
       "address": "arb1:0xedC476079a899382ff54790e943315bcBb3de7f7",
       "type": "Contract",
@@ -966,7 +939,12 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "arb1:0xFB00073F931A817b244bF211aA2E5DCBfff8B1ca",
+      "address": "arb1:0xF5540a7AE6B1bA11d9E724be02ca58427CF21919",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0xf8828200C86BC00aA05963804E44152c0e4FcB54",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -982,7 +960,10 @@
       "description": "ArbOS transaction-filtering precompile (0x..74), available from ArbOS 60. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay. With no filterers set, no transaction hashes can be added or removed; hashes added earlier stay filtered.",
       "values": {
         "$immutable": true,
-        "chainOwners": ["edge:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28"],
+        "chainOwners": [
+          "edge:0x5205da9C507cfb1F9d333f05b609B4E5B26B32a9",
+          "edge:0xD11411b0486B344D868752d44f5B871Dd3623d31"
+        ],
         "filteredTransactionsAdded": 0,
         "filteredTransactionsDeleted": 0,
         "transactionFilterers": []
@@ -1002,7 +983,91 @@
       ]
     },
     {
-      "address": "edge:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28",
+      "name": "",
+      "address": "edge:0x5205da9C507cfb1F9d333f05b609B4E5B26B32a9",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "values": {
+        "$admin": "edge:0x9bf1C25C42c8Dd3d8229053df037cF2871047443",
+        "$implementation": "edge:0x658379d8f3B1f89886D26F429cc16190dC937857",
+        "$pastUpgrades": [
+          [
+            "2025-10-26T21:06:12.000Z",
+            "0x356892884c731a4c2200ea489f709691ef0dc140291fa744dd819139364fb09e",
+            ["edge:0x6096eb252A3bf4d0ae228dC3beA480A2d5EC36Ec"]
+          ],
+          [
+            "2025-10-26T21:06:12.000Z",
+            "0x356892884c731a4c2200ea489f709691ef0dc140291fa744dd819139364fb09e",
+            ["edge:0x658379d8f3B1f89886D26F429cc16190dC937857"]
+          ]
+        ],
+        "$upgradeCount": 2
+      },
+      "implementationNames": {
+        "edge:0x5205da9C507cfb1F9d333f05b609B4E5B26B32a9": "",
+        "edge:0x658379d8f3B1f89886D26F429cc16190dC937857": ""
+      }
+    },
+    {
+      "address": "edge:0x656A28457C85483AA80499A4E8A739129CC77247",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "",
+      "address": "edge:0x9bf1C25C42c8Dd3d8229053df037cF2871047443",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "edge:0x9bf1C25C42c8Dd3d8229053df037cF2871047443": ""
+      }
+    },
+    {
+      "address": "edge:0xb8E3c28e88F33B9F61a37E0eE86d29C48f1cAE09",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "",
+      "address": "edge:0xD11411b0486B344D868752d44f5B871Dd3623d31",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "gnosis safe",
+      "values": {
+        "$immutable": false,
+        "$implementation": "edge:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
+        "$members": [
+          "edge:0xb8E3c28e88F33B9F61a37E0eE86d29C48f1cAE09",
+          "edge:0x656A28457C85483AA80499A4E8A739129CC77247",
+          "edge:0xDcaA8bfe9644c27eF3b40EaCB7cE7535D3223798",
+          "edge:0xf8828200C86BC00aA05963804E44152c0e4FcB54",
+          "edge:0xF5540a7AE6B1bA11d9E724be02ca58427CF21919"
+        ],
+        "$threshold": 3,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 5 (60%)"
+      },
+      "implementationNames": {
+        "edge:0xD11411b0486B344D868752d44f5B871Dd3623d31": "",
+        "edge:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": ""
+      }
+    },
+    {
+      "address": "edge:0xDcaA8bfe9644c27eF3b40EaCB7cE7535D3223798",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "edge:0xF5540a7AE6B1bA11d9E724be02ca58427CF21919",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "edge:0xf8828200C86BC00aA05963804E44152c0e4FcB54",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -1267,9 +1332,6 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "arb1:0x42124A2E725E6458701b8Ef46B78Db55827fA836": [
-      "constructor(address _singleton)"
-    ],
     "arb1:0x4ca08847418DE7860a6da0De2e5536F1Cd78458A": [
       "error AlreadyInit()",
       "error AlreadySpent(uint256 index)",
@@ -1384,9 +1446,6 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "arb1:0x871e290d5447b958131F6d44f915F10032436ee6": [
-      "constructor(address _singleton)"
-    ],
     "arb1:0x9c84a387930853D963892D299153B0d5840dc1F5": [
       "event DefaultGatewayUpdated(address newDefaultGateway)",
       "event GatewaySet(address indexed l1Token, address indexed gateway)",
@@ -1426,6 +1485,9 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "arb1:0xA9595BEB8A32467C9d2083AafD75883DC0825cF0": [
+      "constructor(address _singleton)"
     ],
     "arb1:0xAb7A44CE7e66963d2116dCe74AB63eeF88266C82": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1543,6 +1605,9 @@
     ],
     "arb1:0xB08Ca18499389ABfDF7b14b09BD2Bd4d56D7fbbb": [
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge, bytes32 initialWasmModuleRoot), tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) pure returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) mod)"
+    ],
+    "arb1:0xD11411b0486B344D868752d44f5B871Dd3623d31": [
+      "constructor(address _singleton)"
     ],
     "arb1:0xdA3102d2f80CaD9571a9Eb3656e808e973620dBD": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -1840,10 +1905,10 @@
     "orbitstack/SequencerInbox": "0x242c266139c0b675ee453744a901bca264036da90f68204820c26babc7888e1f",
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301"
   },
-  "usedBlockNumbers": { "arbitrum": 513140286, "edgechain": 829819 },
-  "permissionsConfigHash": "0xce0c67dab1680c92df5715f7f700ee20c3fa7f1dd415a132807fd7da14dcdd2f",
+  "usedBlockNumbers": { "arbitrum": 521843880, "edgechain": 850907 },
+  "permissionsConfigHash": "0x3351baff594992124d4abab2f43890a9c774f7cde6ae91bc6e0c2af1357ea51c",
   "permissions": {
-    "arb1:0x3f90c4913621e6758eB8767EA934FCa59ae5Dee8": {
+    "arb1:0x4F12e3d982C3308039761298E4582a91Fd9C4209": {
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1851,7 +1916,7 @@
           "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
           "role": ".anyTrustFastConfirmer",
           "via": [
-            { "address": "arb1:0x42124A2E725E6458701b8Ef46B78Db55827fA836" }
+            { "address": "arb1:0xA9595BEB8A32467C9d2083AafD75883DC0825cF0" }
           ]
         },
         {
@@ -1862,13 +1927,13 @@
         }
       ]
     },
-    "arb1:0x42124A2E725E6458701b8Ef46B78Db55827fA836": {
-      "directlyReceivedPermissions": [
+    "arb1:0x5e65E7ED796e12dDFBD82829AD64BC76c87c7A88": {
+      "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "arb1:0x0D9cCeB5Cd108CC9B0b7Ac3aACe3d85c28243c9e",
-          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
-          "role": ".anyTrustFastConfirmer"
+          "from": "arb1:0xe44B83D8a3A86994043C809E29B723a44FAEE479",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
+          "role": ".batchPosters"
         }
       ]
     },
@@ -1921,7 +1986,17 @@
         }
       ]
     },
-    "arb1:0x871e290d5447b958131F6d44f915F10032436ee6": {
+    "arb1:0xA9595BEB8A32467C9d2083AafD75883DC0825cF0": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x0D9cCeB5Cd108CC9B0b7Ac3aACe3d85c28243c9e",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
+          "role": ".anyTrustFastConfirmer"
+        }
+      ]
+    },
+    "arb1:0xD11411b0486B344D868752d44f5B871Dd3623d31": {
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -2027,16 +2102,6 @@
           "permission": "act",
           "from": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf",
           "role": ".executors"
-        }
-      ]
-    },
-    "arb1:0x9f787F6e07469BBA84f0BE488c42eDC4c766cC83": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb1:0xe44B83D8a3A86994043C809E29B723a44FAEE479",
-          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
-          "role": ".batchPosters"
         }
       ]
     },
@@ -2060,117 +2125,26 @@
         }
       ]
     },
-    "arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28": {
+    "edge:0x5205da9C507cfb1F9d333f05b609B4E5B26B32a9": {
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "arb1:0x0D9cCeB5Cd108CC9B0b7Ac3aACe3d85c28243c9e",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
-          "role": ".owner",
-          "via": [
-            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x0D9cCeB5Cd108CC9B0b7Ac3aACe3d85c28243c9e",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x107695630130919cb040B095b9b20511D6e211bB",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
-            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x3616995dF5D07B28f2B186F1386cace9EB9Bbd20",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
-            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x6F4836aFD5e21EDcee9b838C5a4125829EC198d0",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
-            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x9f427c80C4DF962726808d4c876fc2c55474a764",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
-            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
-            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xdA3102d2f80CaD9571a9Eb3656e808e973620dBD",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
-            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xe44B83D8a3A86994043C809E29B723a44FAEE479",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
-            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xeB88b89e085D6B747Dd6b9CEaf2716bdd89F1E7c",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
-            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xedC476079a899382ff54790e943315bcBb3de7f7",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
-            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
-          ]
+          "from": "edge:0x0000000000000000000000000000000000000074",
+          "description": "ArbOS chain owner: can change any ArbOS chain parameter, add chain owners and add transaction filterers, which can forcibly fail any transaction, including force-included ones.",
+          "role": ".chainOwners"
         }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf",
-          "role": ".executors"
-        }
-      ],
-      "eoaWithUpgradePermissions": true
+      ]
     },
-    "edge:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28": {
+    "edge:0x9bf1C25C42c8Dd3d8229053df037cF2871047443": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "edge:0x5205da9C507cfb1F9d333f05b609B4E5B26B32a9",
+          "role": "admin"
+        }
+      ]
+    },
+    "edge:0xD11411b0486B344D868752d44f5B871Dd3623d31": {
       "receivedPermissions": [
         {
           "permission": "interact",

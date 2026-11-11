@@ -11,10 +11,10 @@ import {
 import {
   ARBITRUM_CONTRACT,
   ATTESTATION_UID,
+  ATTESTATIONS,
   FACTORY,
   FIXTURE_INPUT,
   IMPLEMENTATION,
-  LEDGER,
   lowerAddress,
   MULTISIG,
   PROXY,
@@ -92,7 +92,7 @@ describe(generateCropsApiFiles.name, () => {
         uid: ATTESTATION_UID,
         revision: 3,
         reviewedAt: 1787132641,
-        explorerUrl: LEDGER.current?.explorerUrl,
+        explorerUrl: ATTESTATIONS.current?.explorerUrl,
       },
     })
   })
@@ -127,7 +127,7 @@ describe(generateCropsApiFiles.name, () => {
       id: 'uniswapv3',
       slug: 'uniswap-v3',
       name: 'Uniswap V3',
-      href: 'https://l2beat.com/layer2s/projects/uniswap-v3',
+      href: 'https://ethbeat.org/layer2s/projects/uniswap-v3',
       contractName: 'Governance',
       crops: {
         censorshipResistance: { sentiment: 'good', status: 'reviewed' },
@@ -155,7 +155,7 @@ describe(generateCropsApiFiles.name, () => {
   it('stamps every file with the attestation metadata, commit and time, checked file by file', () => {
     for (const file of files) {
       expect(file.body).toHaveSubset({
-        attestations: LEDGER,
+        attestations: ATTESTATIONS,
         generatedAt: 1_800_000_000,
         commit: 'abc123',
       })

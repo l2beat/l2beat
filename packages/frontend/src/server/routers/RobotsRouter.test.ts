@@ -18,10 +18,19 @@ describe(createRobotsRouter.name, () => {
   })
 
   describe('in production', () => {
-    it('has only the `*` group, so AI crawlers get the same rules as everyone else', async () => {
+    it('names the AI crawlers it welcomes in the `*` group, so they get the same rules as everyone else', async () => {
       const groups = parseRobotsTxt(await getRobotsTxt('production'))
 
-      expect([...groups.keys()]).toEqual(['*'])
+      expect([...groups.keys()]).toEqual([
+        'GPTBot',
+        'OAI-SearchBot',
+        'ClaudeBot',
+        'PerplexityBot',
+        '*',
+      ])
+      for (const agent of groups.keys()) {
+        expect(groups.get(agent)).toEqual(groups.get('*'))
+      }
     })
 
     it('allows the site and the public scaling API, hides the rest of the API and /dev', async () => {
@@ -46,7 +55,7 @@ describe(createRobotsRouter.name, () => {
     it('points to the sitemap', async () => {
       const body = await getRobotsTxt('production')
 
-      expect(body).toInclude('Sitemap: https://l2beat.com/sitemap.xml')
+      expect(body).toInclude('Sitemap: https://ethbeat.org/sitemap.xml')
     })
   })
 

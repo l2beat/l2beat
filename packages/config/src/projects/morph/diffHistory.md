@@ -1,3 +1,128 @@
+Generated with discovered.json: 0x794989a55c66b35d494062149d27b8c3679e9afa
+
+# Diff at Thu, 05 Nov 2026 08:58:39 GMT:
+
+- id: 6d82e27f
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@92a563dab6932b2cedd6791c3571d1d33fc43c20 block: 1793703220
+- current timestamp: 1793703220
+
+## Description
+
+The new SP1 verifier is critical from its registration.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793703220 (main branch discovery), not current.
+
+```diff
+    contract ZkEvmVerifierV1 (eth:0xFF31F579F723e0493D969B46095FE718ebf4401A) [morph/ZkEvmVerifierV1] {
+    +++ description: A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.
+      critical:
++        {"sinceTimestamp":1793671775}
+    }
+```
+
+Generated with discovered.json: 0xa38b7ce54c2704db96d1228658f772af49d24fb0
+
+# Diff at Tue, 03 Nov 2026 15:45:06 GMT:
+
+- id: 2d9dd70d
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@5dabdf7cb402311ede1c313c1891f2094a550030 block: 1790851283
+- current timestamp: 1793703220
+
+## Description
+
+A new ZkEvmVerifierV1 (https://etherscan.io/address/0xFF31F579F723e0493D969B46095FE718ebf4401A, deployed 2026-11-02) with the same source as the previous one but a new programVkey (0x0084f08a…2902) was registered in the MultipleVersionRollupVerifier as the latest verifier from batch 64600. The vkey is the Morph guest program v0.6.4 (commit 1cee926534d031fd9f41d6b3cf3edda6da467f57, still SP1 v6.2.0), reproduced and added to programHashes: it upgrades the morph-reth dependencies and schedules the Jade and Celadon hardforks (Celadon on mainnet at 2026-11-04 06:00 UTC).
+
+## Watched changes
+
+```diff
+    contract MultipleVersionRollupVerifier (eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1) [morph/MultipleVersionRollupVerifier] {
+    +++ description: Used to update the verifier and keep track of current and old versions. Routes to a registered verifier by batch index, so that every batch is verified by the latest verifier that is enabled for this batch.
+      values.latestVerifier.1.verifier:
+-        "eth:0x651cA600813fC0126225b727EDbA617949b1d1c9"
++        "eth:0xFF31F579F723e0493D969B46095FE718ebf4401A"
+      values.latestVerifier.1.startBatchIndex:
+-        60478
++        64600
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ZkEvmVerifierV1 (eth:0x651cA600813fC0126225b727EDbA617949b1d1c9) [morph/ZkEvmVerifierV1]
+    +++ description: A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierV1 (eth:0xFF31F579F723e0493D969B46095FE718ebf4401A) [morph/ZkEvmVerifierV1]
+    +++ description: A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.
+```
+
+## Source code changes
+
+```diff
+.../ZkEvmVerifierV1-eth:0xFF31F579F723e0493D969B46095FE718ebf4401A.sol}   | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+```
+
+Generated with discovered.json: 0x5e8078628d435c8d6294bee62d129b60fd2d612f
+
+# Diff at Sat, 24 Oct 2026 16:41:06 GMT:
+
+- id: a9649894
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@466c0ed155939c67d1118322a0272a7923e178e7 block: 1790851283
+- current timestamp: 1790851283
+
+## Description
+
+`tokenMapping`, `rewardPercentage`, `stakingValue` and `minimumStake` are MEDIUM: listings and incentives, not safety rules.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790851283 (main branch discovery), not current.
+
+```diff
+    contract L1Staking (eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7) [morph/L1Staking] {
+    +++ description: Staking registry of the L2 sequencer set. It relays staker additions and removals to the L2 Staking contract through the messenger, which determines the L2 block-producing sequencer set. The Rollup does not reference it: L1 batch submission and slashing are authorized through the Submitter contract, so the stake, challenge-deposit and reward parameters here are not enforced by the Rollup.
+      fieldMeta.rewardPercentage.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.stakingValue.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract L1CustomERC20Gateway (eth:0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1) [morph/L1CustomERC20Gateway] {
+    +++ description: Contract used to bridge ERC20 tokens with custom L2 representations from L1 to L2. It allows to change the token mappings.
+      fieldMeta.tokenMapping.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Submitter (eth:0xf2d50000C994565A4742059802fdbb0BEE1CBef6) [morph/Submitter] {
+    +++ description: Registry and ETH staking contract for the accounts allowed to commit transaction batches and propose state roots to the Rollup. The owner whitelists submitters, who are active only while registered, not withdrawing and staked at or above the minimum. When a submitter's batch is successfully challenged, the Rollup slashes the submitter's whole stake through this contract: the configured reward share is forwarded to the Rollup for the challenger and the remainder accrues to the owner. Stake withdrawals are claimable only once the batch committed at withdrawal time is finalized.
+      fieldMeta.minimumStake.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.rewardPercentage.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0xeeab701c6beeddd65f048e415597faefef282343
 
 # Diff at Fri, 16 Oct 2026 09:37:48 GMT:

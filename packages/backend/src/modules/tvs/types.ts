@@ -8,7 +8,7 @@ import type {
   TotalSupplyAmountFormula,
   TvsToken,
 } from '@l2beat/config'
-import type { TokenValueRecord } from '@l2beat/database'
+import type { TokenValueRecord, TvsEscrowValueRecord } from '@l2beat/database'
 import type { UnixTime } from '@l2beat/shared-pure'
 
 export type ProjectTvsConfig = {
@@ -83,6 +83,8 @@ export function isOnchainAmountConfig(
 }
 
 export type TokenValue = Omit<TokenValueRecord, 'configurationId'>
+
+export type EscrowValue = Omit<TvsEscrowValueRecord, 'configurationId'>
 
 export interface TvsBreakdown {
   tvs: number

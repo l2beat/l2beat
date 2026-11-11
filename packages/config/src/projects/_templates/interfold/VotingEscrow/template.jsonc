@@ -18,7 +18,7 @@
   ],
   "fields": {
     "dao": {
-      "description": "Aragon DAO whose permission manager grants the escrow's admin, pause, sweep and upgrade roles."
+      "description": "Aragon governance contract whose permission manager grants the escrow's admin, pause, sweep and upgrade roles."
     },
     "token": { "description": "FOLD token custodied by the escrow." },
     "ivotesAdapter": {

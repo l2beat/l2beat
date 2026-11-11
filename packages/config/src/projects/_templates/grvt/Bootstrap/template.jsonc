@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Placeholder implementation that new compartment proxies are deployed with, so that their CREATE2 address does not depend on the real implementation. The CompartmentRegistry upgrades a compartment to its real implementation in the same transaction."
+}

@@ -1,3 +1,64 @@
+Generated with discovered.json: 0x03bb1e716239929bb12b9a199e167bb2af021de9
+
+# Diff at Thu, 05 Nov 2026 10:34:13 GMT:
+
+- id: 0b402e5a
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ed3b78ee5d7973829dff175055ab7e54cc7df91 block: 1792144369
+- current timestamp: 1793874781
+
+## Description
+
+The LayerZero Multisig (OneSig) added an eighth signer, 0xD144dad1. The threshold stays at 5, now 5 of 8.
+
+## Watched changes
+
+```diff
+    contract LayerZero Multisig (eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478) [layerzero/OneSigMultisig] {
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+      values.$members.7:
++        "eth:0xD144dad189f060Bf6fda615CcA60479329Dd9e35"
+      values.totalSigners:
+-        7
++        8
+    }
+```
+
+Generated with discovered.json: 0xb67f4678a980616c3571f22148767fe09f4a09ab
+
+# Diff at Tue, 27 Oct 2026 11:31:32 GMT:
+
+- id: 04f36f28
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@de2e3d4ee6aef60add0cf0b261ced3c797f9fb6e block: 1792144369
+- current timestamp: 1792144369
+
+## Description
+
+Mark the Executor non-critical. It holds no role in the endpoint or the message libraries, so its EOA upgrade admin does not get the red warning.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792144369 (main branch discovery), not current.
+
+```diff
+    contract Executor (eth:0x173272739Bd7Aa6e4e214714048a9fE699453059) [N/A] {
+    +++ description: Upgradeable contract referenced as an executor by LayerZero message libraries. Its current implementation is unverified, so execution and fee handling cannot be checked against source.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    EOA (eth:0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5) {
+    +++ description: None
+      eoaWithUpgradePermissions:
+-        true
+    }
+```
+
 Generated with discovered.json: 0xad8886b5b84ea7a7ddb531f8772cd3fa36712856
 
 # Diff at Fri, 16 Oct 2026 10:35:39 GMT:

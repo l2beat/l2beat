@@ -157,7 +157,6 @@ export function getSyncStatus(
   if (valueTimestamp < targetTimestamp) {
     return `No token data since ${formatTimestamp(valueTimestamp, {
       mode: 'datetime',
-      longMonthName: true,
     })}.`
   }
 }

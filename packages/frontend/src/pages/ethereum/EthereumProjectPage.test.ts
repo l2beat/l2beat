@@ -8,6 +8,7 @@ import type {
   ProjectSectionId,
 } from '~/components/projects/sections/types'
 import type { EthereumProjectPageEntry } from '~/server/features/data-availability/project/getEthereumProjectEntry'
+import { withEmptyGlossary } from '~/test/withEmptyGlossary'
 import { EthereumProjectPage } from './EthereumProjectPage'
 
 // Why: screen readers and LLMs navigate a page by its heading outline, so the
@@ -67,36 +68,36 @@ describe(EthereumProjectPage.name, () => {
 
 function renderPage(): string {
   return renderToString(
-    createElement(EthereumProjectPage, {
-      entry: ethereumEntry([
-        markdownSection(
-          'detailed-description',
-          'Detailed description',
-          '# Architecture\n\nBody\n\n## Upgradeability\n\nBody',
-        ),
-        {
-          type: 'Group',
-          props: {
-            id: 'da-layer',
-            title: 'Ethereum layer',
-            items: [
-              markdownSection(
-                'da-layer-technology',
-                'Technology',
-                // Real DA technology descriptions start at `##`.
-                '## Consensus\n\nBody',
-              ),
-            ],
+    withEmptyGlossary(
+      createElement(EthereumProjectPage, {
+        entry: ethereumEntry([
+          markdownSection(
+            'detailed-description',
+            'Detailed description',
+            '# Architecture\n\nBody\n\n## Upgradeability\n\nBody',
+          ),
+          {
+            type: 'Group',
+            props: {
+              id: 'da-layer',
+              title: 'Ethereum layer',
+              items: [
+                markdownSection(
+                  'da-layer-technology',
+                  'Technology',
+                  // Real DA technology descriptions start at `##`.
+                  '## Consensus\n\nBody',
+                ),
+              ],
+            },
           },
-        },
-      ]),
-      queryState: { mutations: [], queries: [] },
-      terms: [],
-      recentlyAddedProjects: [],
-      recentChangelogEntriesIds: [],
-      whatsNew: undefined,
-      countdowns: PROJECT_COUNTDOWNS,
-    }),
+        ]),
+        queryState: { mutations: [], queries: [] },
+        recentlyAddedProjects: [],
+        whatsNewItem: undefined,
+        countdowns: PROJECT_COUNTDOWNS,
+      }),
+    ),
   )
 }
 
@@ -126,7 +127,7 @@ function ethereumEntry(
       maxThroughputPerSecond: undefined,
       usedIn: [],
       bridgeName: 'Enshrined bridge',
-      callout: { title: 'Callout', description: 'Callout description' },
+      bridgeTooltip: 'Bridge tooltip',
       numberOfValidators: undefined,
     },
     sections,

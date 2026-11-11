@@ -11,6 +11,7 @@ import {
   type PercentageChangePeriod,
 } from '~/utils/calculatePercentageChange'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
+import { getLatestTvsTimestamp } from '../utils/getLatestTvsTimestamp'
 import { getTvsTargetTimestamp } from '../utils/getTvsTargetTimestamp'
 import { sourceToLabel } from '../utils/sourceToLabel'
 import { extractAddressesFromTokenConfig } from './extractAddressesFromTokenConfig'
@@ -62,19 +63,23 @@ export async function getProjectTokensEntries(
   }
 
   const db = getDb()
-  const targetTimestamp = getTvsTargetTimestamp()
-  const sevenDaysAgoTargetTimestamp = targetTimestamp - 7 * UnixTime.DAY
+  const latestTimestamp = await getLatestTvsTimestamp()
 
-  const [projects, tokenValues, sevenDaysAgoTokenValues] = await Promise.all([
+  const [projects, tokenValues] = await Promise.all([
     ps.getProjects({
       select: ['chainConfig'],
     }),
-    db.tvsTokenValue.getByProjectAtOrBefore(project.id, targetTimestamp),
-    db.tvsTokenValue.getByProjectAtOrBefore(
-      project.id,
-      sevenDaysAgoTargetTimestamp,
-    ),
+    db.tvsTokenValue.getByProjectAtOrBefore(project.id, latestTimestamp),
   ])
+  // The 7d changes need values exactly seven days apart, so count back from
+  // each value's own hour, not the latest
+  const sevenDaysAgoTokenValues = await db.tvsTokenValue.getAtOrBefore(
+    tokenValues.map((x) => ({
+      projectId: x.projectId,
+      tokenId: x.tokenId,
+      timestamp: x.timestamp - 7 * UnixTime.DAY,
+    })),
+  )
 
   const chains = projects.map((x) => x.chainConfig)
   const tokenValuesMap = new Map(
@@ -89,7 +94,7 @@ export async function getProjectTokensEntries(
     tokenValuesMap,
     sevenDaysAgoTokenValuesMap,
     chains,
-    targetTimestamp,
+    getTvsTargetTimestamp(),
   )
 
   return entries

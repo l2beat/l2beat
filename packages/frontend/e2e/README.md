@@ -18,16 +18,18 @@ slowest one. That is about 1.5 min now.
 
 - `../playwright.config.ts` sorts the tests into projects:
   - `chromium`: the functional tests, everything outside a `*-perf` folder.
-  - `perf`: the ratchets in `resize-perf`, which count how much work a page
-    does, in `token-graph-perf`, which count what dragging and pinching the
+  - `perf`: the ratchets in `resize-perf` and `hydration-perf`, which count
+    how much work a page does while resizing and while loading, in
+    `nav-perf`, which count the JS chunks a page loads when someone navigates
+    to it, in `token-graph-perf`, which count what dragging and pinching the
     token graph costs on a phone and check that a pinch leaves it sharp, and
     in `blobs-webkit-perf`, which runs in WebKit to catch what only Safari
     slows down on. Tests running beside them push those counts up, so they
     run one at a time (`workers: 1`) after the rest. Its runner installs
     WebKit (`webkit: true` in its matrix entry); locally, run
     `pnpm exec playwright install webkit` once.
-  - `blobs perf`: the ratchets in `blobs-perf`. Each one watches the chain for
-    a few 12 s slots, so each takes about 50 s however fast the machine is.
+  - `blobs perf`: the ratchet in `blobs-perf`. It watches the chain for a few
+    12 s slots, so it takes about 50 s however fast the machine is.
 - The `test-e2e-shard` job in `/.github/workflows/ci.yml` has one matrix entry
   per runner, each with the Playwright arguments that runner gets.
 - The `test-e2e` job, named "E2E tests", is the check branch protection
@@ -36,11 +38,11 @@ slowest one. That is about 1.5 min now.
 
 The current runners:
 
-| Runner             | Arguments                                         |
-| ------------------ | ------------------------------------------------- |
-| Chromium 1/2, 2/2  | `--project chromium --shard N/2`                  |
-| perf               | `--project perf --no-deps`                        |
-| blobs perf 1/3–3/3 | `--project "blobs perf" --no-deps --shard N/3`    |
+| Runner            | Arguments                          |
+| ----------------- | ---------------------------------- |
+| Chromium 1/2, 2/2 | `--project chromium --shard N/2`   |
+| perf              | `--project perf --no-deps`         |
+| blobs perf        | `--project "blobs perf" --no-deps` |
 
 The perf runners pass `--no-deps` because locally the perf projects wait for
 `chromium` to finish, and on CI those tests already run on other runners.
@@ -98,10 +100,11 @@ bars: 31 ms a change, 3 ms fixed; boxes under a percent height, 68 and 0).
 - **A long test of its own**: give its file `mode: 'parallel'` if its tests
   do not depend on each other, so the shards can spread them.
 - **A resize ceiling**: it joins `perf`. That job has room for a few more.
-- **A blobs ceiling** (a key in `blobs-perf/ceilings.json` or
-  `swipeCeilings.json`): it adds a test to `blobs perf`, which runs one test
-  per runner. Add a `blobs perf N/M` entry and raise every `--shard N/M` to
-  the new test count, or two tests will share a runner and take twice as long.
+- **A blobs ceiling** (a key in `blobs-perf/ceilings.json`): it adds a 50 s
+  test to `blobs perf`, which holds one. Give it a runner of its own: add
+  `blobs perf N/M` entries with `--shard N/M` and set
+  `fullyParallel: true` on the project, so a shard can take one test of the
+  file. Otherwise two tests share a runner and take twice as long.
 - **A new perf folder** (`*-perf`): it is picked up by `perf`. If it runs as
   long as the blobs ratchets, give it a project and runners of its own, as
   `blobs perf` has.
@@ -124,20 +127,20 @@ gh run view <run-id> --json jobs \
 
 The log of each job ends with the tests' own time, e.g. `16 passed (38.4s)`.
 
-## How the blobs ratchets count
+## How the blobs ratchet counts
 
 Mock mode makes each slot's block from the slot's number, so which blocks a
 run sees depends on when it runs. A block of five posters restyles about four
 times what a block of one does, as each poster's row in the table washes and
-counts up. So the ratchets divide restyles by the rows the block washed, read
+counts up. So the ratchet divides restyles by the rows the block washed, read
 from the page's own feed, and take the best of three slots.
 
-They also stop what moves on its own clock, not the slots': the live dot's
+It also stops what moves on its own clock, not the slots': the live dot's
 ping and the logo's beat. Each lays out or restyles on every frame it runs,
 and a slot would meet more or less of it by chance.
 
 ## DiscoUI
 
-`packages/protocolbeat` works the same way in the `test-e2e-discoui` job: its
+`packages/discoui` works the same way in the `test-e2e-discoui` job: its
 page suite runs as `--shard N/2`, and the second runner also runs the `l2b`
 backend suite, which takes about 20 s.

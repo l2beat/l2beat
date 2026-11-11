@@ -11,8 +11,6 @@ const SWAGGER_UI_ASSETS = [
   'swagger-ui.css',
   'swagger-ui-bundle.js',
   'swagger-ui-standalone-preset.js',
-  'favicon-16x16.png',
-  'favicon-32x32.png',
 ]
 
 main().catch((error) => {
@@ -28,7 +26,7 @@ async function main() {
   for (const file of files) {
     writeJson(file.path, file.body)
   }
-  writeJson('v1/openapi.json', buildOpenApiDocument(input.ledger))
+  writeJson('v1/openapi.json', buildOpenApiDocument(input.attestations))
   cpSync(STATIC_DIR, OUT_DIR, { recursive: true })
   copySwaggerUi()
 

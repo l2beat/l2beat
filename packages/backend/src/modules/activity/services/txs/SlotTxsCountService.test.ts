@@ -2,12 +2,11 @@ import { Logger } from '@l2beat/backend-tools'
 import type { SvmBlockProvider } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { activityRecord } from '../../utils/aggregatePerDay.test'
 import { SlotTxsCountService } from './SlotTxsCountService'
 
 describe(SlotTxsCountService.name, () => {
-  describe(SlotTxsCountService.prototype.getTxsCount.name, () => {
-    it('should return txs count', async () => {
+  describe(SlotTxsCountService.prototype.getBlocks.name, () => {
+    it('returns the txs count of each block, leaving out empty slots', async () => {
       const START = UnixTime.now()
       const mockProvider = mockObject<SvmBlockProvider>({
         chain: 'ethereum',
@@ -38,21 +37,22 @@ describe(SlotTxsCountService.name, () => {
         Logger.SILENT,
       )
 
-      const result = await service.getTxsCount(1, 4)
-      expect(result).toEqual({
-        records: [
-          activityRecord('a', UnixTime.toStartOf(START, 'day'), 5, 5, 1, 2),
-          activityRecord(
-            'a',
-            UnixTime.toStartOf(START + 2 * UnixTime.DAY, 'day'),
-            2,
-            2,
-            3,
-            3,
-          ),
-        ],
-        latestTimestamp: UnixTime.toStartOf(START + 2 * UnixTime.DAY, 'day'),
-      })
+      const result = await service.getBlocks(1, 4)
+      expect(result).toEqual([
+        { timestamp: START, txsCount: 1, uopsCount: 1, number: 1 },
+        {
+          timestamp: UnixTime.toStartOf(START, 'day'),
+          txsCount: 4,
+          uopsCount: 4,
+          number: 2,
+        },
+        {
+          timestamp: UnixTime.toStartOf(START + 2 * UnixTime.DAY, 'day'),
+          txsCount: 2,
+          uopsCount: 2,
+          number: 3,
+        },
+      ])
 
       expect(mockProvider.getBlockWithTransactions).toHaveBeenCalledTimes(4)
     })

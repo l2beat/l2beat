@@ -37,7 +37,7 @@ export const ARTICLES: Article[] = [
   {
     kind: 'document',
     label: 'The Native Rollups Book',
-    source: 'l2beat.com',
+    source: 'ethbeat.org',
     description:
       'The open technical notebook covering native execution, settlement contracts, messaging, fees, and proof design.',
     href: NATIVE_ROLLUPS_BOOK_URL,

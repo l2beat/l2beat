@@ -1,11 +1,12 @@
 import express from 'express'
+import { SITE_NAME_WITH_FORMER } from '~/consts/siteName'
 import {
-  DEFI_SUMMARY_DESCRIPTION,
+  LIQUID_STAKING_DESCRIPTION,
   PRIVACY_SUMMARY_DESCRIPTION,
   ZK_CATALOG_DESCRIPTION,
 } from '~/consts/summaryPageDescriptions'
-import { getDefiListSections } from '~/server/markdown/list-pages/getDefiListSections'
 import { getInteropListSections } from '~/server/markdown/list-pages/getInteropListSections'
+import { getLiquidStakingListSections } from '~/server/markdown/list-pages/getLiquidStakingListSections'
 import { getOssificationListSections } from '~/server/markdown/list-pages/getOssificationListSections'
 import { getPrivacyListSections } from '~/server/markdown/list-pages/getPrivacyListSections'
 import { getScalingListSections } from '~/server/markdown/list-pages/getScalingListSections'
@@ -25,7 +26,7 @@ import {
 } from '~/utils/getMarkdownAlternatePath'
 
 /**
- * Markdown versions of the pages that list what L2BEAT tracks, at the page
+ * Markdown versions of the pages that list what ETHBEAT tracks, at the page
  * URL plus `.md` as the llms.txt spec recommends. llms.txt links here instead
  * of listing every project itself, so it stays small enough to fit in context
  * while an agent can still map a project name to its page and API slug.
@@ -73,13 +74,13 @@ const LIST_PAGE_DOCUMENTS: Record<
   Omit<MarkdownAlternate, 'path'>
 > = {
   '/layer2s/summary': {
-    title: 'L2BEAT scaling projects',
+    title: `Scaling projects on ${SITE_NAME_WITH_FORMER}`,
     summary:
-      'Every layer 2 and layer 3 tracked by L2BEAT, with category, stage, stack and host chain. Each link is the project page; its last path segment is the {slug} for the public API.',
+      'Every layer 2 and layer 3 tracked by ETHBEAT, with category, stage, stack and host chain. Each link is the project page; its last path segment is the {slug} for the public API.',
     getSections: getScalingListSections,
   },
   '/zk-catalog': {
-    title: 'L2BEAT ZK catalog',
+    title: `ZK catalog on ${SITE_NAME_WITH_FORMER}`,
     summary:
       'Zero-knowledge proving systems used by tracked projects, with their creators, trusted setups and onchain verifiers.',
     notes: [
@@ -90,28 +91,29 @@ const LIST_PAGE_DOCUMENTS: Record<
     getSections: getZkListSections,
   },
   '/privacy/summary': {
-    title: 'L2BEAT privacy protocols',
+    title: `Privacy protocols on ${SITE_NAME_WITH_FORMER}`,
     summary:
-      'Privacy protocols on Ethereum and its layer 2s tracked by L2BEAT, with their category and exit window.',
+      'Privacy protocols on Ethereum and its layer 2s tracked by ETHBEAT, with their category and exit window.',
     notes: PRIVACY_SUMMARY_DESCRIPTION,
     getSections: getPrivacyListSections,
   },
   '/interop/summary': {
-    title: 'L2BEAT interoperability protocols',
+    title: `Interoperability protocols on ${SITE_NAME_WITH_FORMER}`,
     summary:
-      'Cross-chain protocols tracked by L2BEAT, with their type and the bridge types they use.',
+      'Cross-chain protocols tracked by ETHBEAT, with their type and the bridge types they use.',
     notes:
-      'Token pages live at /interop/tokens/{id}/{issuer}/{symbol}, where {id} is case-sensitive and alone identifies the token. Token ids come from the database, so they are not listed here: take them from the token links on the protocol pages.',
+      'Token pages live at /tokens/{id}/{issuer}/{symbol}, where {id} is case-sensitive and alone identifies the token. Token ids come from the database, so they are not listed here: take them from the token links on the protocol pages.',
     getSections: getInteropListSections,
   },
-  '/defi/summary': {
-    title: 'L2BEAT DeFi protocols',
-    summary: 'DeFi protocols tracked by L2BEAT, with their category.',
-    notes: DEFI_SUMMARY_DESCRIPTION,
-    getSections: getDefiListSections,
+  '/defi/liquid-staking': {
+    title: `Liquid staking protocols on ${SITE_NAME_WITH_FORMER}`,
+    summary:
+      'Ethereum liquid staking protocols tracked by ETHBEAT, with their minting, node operator, backing, oracle, exit and upgrade risks.',
+    notes: LIQUID_STAKING_DESCRIPTION,
+    getSections: getLiquidStakingListSections,
   },
   '/ossification': {
-    title: 'L2BEAT ossification',
+    title: `Ossification on ${SITE_NAME_WITH_FORMER}`,
     summary:
       'How long the critical contracts of each tracked project have gone unchanged, and how much value they secured meanwhile, with the exit window where the project has one.',
     notes: [

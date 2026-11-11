@@ -35,7 +35,7 @@ export const payyAdversaries = definePrivacyAdversaries({
       },
       sources: [
         {
-          title: 'Spend graph explorer built from Payy blocks (by L2BEAT)',
+          title: 'Spend graph explorer built from Payy blocks',
           url: 'https://sekuba.github.io/payy-graph/',
         },
         {
@@ -74,8 +74,9 @@ export const payyAdversaries = definePrivacyAdversaries({
       },
       sources: [
         {
-          title: 'Public block API',
-          url: 'https://validators.mainnet.payy.network/v0/blocks',
+          title:
+            'Public amounts fix every note along a path without splits or merges',
+          url: 'https://github.com/sekuba/payy-graph/blob/8b41a6b340ab46dde414ed6f8bb7acba970aeacc/src/graph/amounts.ts#L11-L23',
         },
         {
           title: 'One deposit address stored per wallet',
@@ -95,9 +96,9 @@ export const payyAdversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'bad',
       exposureShort:
-        'The Payy app is closed source and no open client works on mainnet, so what it sends to third parties is up to Payy and can change at any time.',
+        "The payment-link website hands each link's redeem secret to PostHog analytics, which records the full page URL.",
       exposureContinued:
-        "The payment-link website loads a third-party analytics script that records the page URL, which holds the link's redeem secret.",
+        'PostHog also records the session with inputs unmasked, and the download page passes the full link to Framer. The mobile app is untraced.',
       interior: {
         sender: 'unverifiable',
         recipient: 'unverifiable',
@@ -166,9 +167,9 @@ export const payyAdversaries = definePrivacyAdversaries({
     futureAdversary: {
       sentiment: 'bad',
       exposureShort:
-        'The per-transaction proofs are public and not zero-knowledge, and the commitments inside them rest on elliptic curves.',
+        'Whoever breaks elliptic-curve cryptography learns at least what the public observer sees: which notes fund which.',
       exposureContinued:
-        'How much more whoever breaks elliptic-curve cryptography extracts from those proofs is not established.',
+        'The public per-transaction proofs lack zero knowledge, and their commitments rest on elliptic curves. How much more such a break extracts from them is not established.',
       interior: {
         sender: 'atRisk',
         recipient: 'atRisk',

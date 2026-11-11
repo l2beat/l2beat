@@ -144,5 +144,9 @@
       "updateId": "cd925ce0",
       "reason": "Transferred the L2ProxyAdmin from the aliased UnichainProxyAdminOwner to the aliased SuperchainProxyAdminOwner, matching the L1 ProxyAdmin transfer."
     }
+  ],
+  "ignoredTransactions": [
+    "0xf556934cb4de1ab40a4cfba17856cd601cbc8b875b96a9ccd8ee32bcd363abf5",
+    "0xbfdac60c9687a2e469159bf2458e73de2915a0a5eb53c4991a7ecde2b1fb3f15"
   ]
 }

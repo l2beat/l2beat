@@ -72,13 +72,13 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
       },
     },
     networkObserver: {
-      sentiment: 'warning',
+      sentiment: 'good',
       exposureShort:
-        'Built-in Tor sends every call over one shared circuit for up to ten minutes, so only separate app sessions keep the legs apart.',
+        'Over an IP-hiding route, Moralis, Etherscan and PublicNode get each Ethereum wallet in its own session, so none of them sees both legs.',
       exposureContinued:
-        'Moralis receives every Ethereum wallet the app opens, so deposit and exit wallets kept in the app pair up whenever both open close together.',
+        "Built-in Tor alone lets token logos out directly, and Cake shows priced tokens anyone sends, so Moralis can see the user's IP beside the wallet.",
       advice:
-        'Turn on built-in Tor and restart the app, since the Ethereum client keeps the connection it started with. After the entry, delete the deposit wallet from Cake and restart, so later sessions only see the exit wallet.',
+        'Run Cake with all traffic through an IP-hiding route. Delete the deposit wallet from Cake before the exit.',
       interior: {
         sender: 'private',
         recipient: 'private',
@@ -86,17 +86,18 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
         asset: 'exposed',
         linkage: {
           verdict: 'atRisk',
-          note: 'Private only over built-in Tor, with each leg in its own app session.',
+          note: 'Private only over an IP-hiding route, with the deposit wallet deleted before the exit.',
         },
       },
       sources: [
+        S.ipHidingRoutes,
         {
           title: 'Built-in Tor is off unless the user enables it',
           url: CAKE + 'lib/store/settings_store.dart#L1590',
         },
         {
           title:
-            'Opening a wallet connects its node and sends its address to Moralis',
+            'Opening a wallet connects its node and adds the tokens Moralis reports for its address',
           url: CAKE + 'lib/reactions/on_current_wallet_change.dart#L94-L113',
         },
         {

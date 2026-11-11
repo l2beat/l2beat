@@ -1,3 +1,95 @@
+Generated with discovered.json: 0xe4eb1c45b70d15bdb46a86393f9e0683f35d97e8
+
+# Diff at Mon, 02 Nov 2026 13:39:52 GMT:
+
+- id: 3fabf013
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@7de2489d6143463905a64a13eea216e581898f3f block: 1791455050
+- current timestamp: 1793617880
+
+## Description
+
+PlonkVerifierOpenVMv2 contract is verified on etherscan.
+
+## Source code changes
+
+```diff
+.../GnosisSafeL2.sol                               |    2 +-
+ .../GnosisSafeL2.sol                               |    2 +-
+ .../PlonkVerifierOpenVMv2.sol => /dev/null         | 2299 --------------------
+ .../GnosisSafe.sol                                 |    2 +-
+ .../GnosisSafe.sol                                 |    2 +-
+ .../GnosisSafe.sol                                 |    2 +-
+ 6 files changed, 5 insertions(+), 2304 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791455050 (main branch discovery), not current.
+
+```diff
+    contract PlonkVerifierOpenVMv2 (eth:0x0d2A59fd7060460F07c30C2817b4E79576da01C6) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x0ffd802e46395eb0f9e68316cd3afa259549980515f4922777333fc64f675834"
++        "0x7312852db9210bd6059c373b7fd3d49a42216c9f9fa7a2f55ebb755ebf411416"
+      implementationNames.eth:0x0d2A59fd7060460F07c30C2817b4E79576da01C6:
+-        ""
++        "OpenVmHalo2Verifier"
+    }
+```
+
+Generated with discovered.json: 0x5fc1f1dd4091cd4772edb740a92dd6a606fc14ca
+
+# Diff at Sat, 24 Oct 2026 16:41:08 GMT:
+
+- id: 1a275b7f
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@466c0ed155939c67d1118322a0272a7923e178e7 block: 1791455050
+- current timestamp: 1791455050
+
+## Description
+
+`tokenMapping`, USDC `masterMinter` and `removedMinters` are MEDIUM: listings, a role holder and removals.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791455050 (main branch discovery), not current.
+
+```diff
+    contract pufETHEscrow (eth:0xA033Ff09f2da45f0e9ae495f525363722Df42b2a) [scroll/L1CustomERC20Gateway] {
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings.
+      fieldMeta.tokenMapping.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract L1CustomERC20Gateway (eth:0xb2b10a289A229415a124EFDeF310C10cb004B6ff) [scroll/L1CustomERC20Gateway] {
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings.
+      fieldMeta.tokenMapping.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Scroll USDC (scr:0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4) [N/A] {
+    +++ description: Contract of the USDC token on Scroll.
+      fieldMeta.masterMinter.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.removedMinters.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0x9e7ea0a61c410c82430c3e84659fc36f9085c680
 
 # Diff at Tue, 20 Oct 2026 07:52:41 GMT:

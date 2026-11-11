@@ -1,0 +1,14 @@
+{
+  "CompatibilityFallbackHandler.sol": {
+    "hash": "0x703abe4c48ae5a8e3fabb6fd389106a0f12629f358a94dcf1930fe786046d582",
+    "address": "eth:0xfd0732Dc9E303f09fCEf3a7388Ad10A83459Ec99",
+    "chain": "ethereum",
+    "blockNumber": 26175472
+  },
+  "CompatibilityFallbackHandler_v1_5_0.sol": {
+    "hash": "0xfebae10a6125eb53f30a72ac1274b5400ffd7b0c061c18290005344d121ea0eb",
+    "address": "eth:0x3EfCBb83A4A7AfcB4F68D501E2c2203a38be77f4",
+    "chain": "ethereum",
+    "blockNumber": 26175472
+  }
+}

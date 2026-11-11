@@ -1,14 +1,15 @@
 import type { DaLayerThroughput, Milestone } from '@l2beat/config'
-import { formatBytes } from '@l2beat/shared-pure'
+import { formatBytes, UnixTime } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { DaThroughputByProjectChart } from '~/components/chart/data-availability/DaThroughputByProjectChart'
 import { getDataWithConfiguredThroughputs } from '~/components/chart/data-availability/getDataWithConfiguredThroughputs'
 import { ProjectDaAbsoluteThroughputChart } from '~/components/chart/data-availability/ProjectDaAbsoluteThroughputChart'
-import type { ChartProject } from '~/components/core/chart/Chart'
+import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
 import { useTRPC } from '~/trpc/React'
+import { formatTimestamp } from '~/utils/dates'
 import { optionToRange, rangeToResolution } from '~/utils/range/range'
 
 export interface BlobsThroughputChartProps {
@@ -61,12 +62,14 @@ export function BlobsThroughputChart({
     <div className="flex flex-col gap-4 lg:contents">
       <Header
         used={pastDay.data?.used}
+        day={pastDay.data?.day}
         isLoading={pastDay.isLoading}
         view={view}
         setView={setView}
       />
       {view === 'total' ? (
         <ProjectDaAbsoluteThroughputChart
+          isPlaceholderData={false}
           project={project}
           dataWithConfiguredThroughputs={dataWithConfiguredThroughputs}
           isLoading={total.isLoading}
@@ -78,6 +81,7 @@ export function BlobsThroughputChart({
         />
       ) : (
         <DaThroughputByProjectChart
+          isPlaceholderData={false}
           data={byProject.data?.byProjectChart.data}
           syncedUntil={byProject.data?.syncedUntil}
           isLoading={byProject.isLoading}
@@ -93,11 +97,13 @@ export function BlobsThroughputChart({
 
 function Header({
   used,
+  day,
   isLoading,
   view,
   setView,
 }: {
   used: number | undefined
+  day: [number, number] | undefined
   isLoading: boolean
   view: View
   setView: (view: View) => void
@@ -118,7 +124,7 @@ function Header({
       </div>
       {isLoading ? (
         <Skeleton className="my-[5px] h-5 w-40" />
-      ) : used === undefined ? (
+      ) : used === undefined || day === undefined ? (
         <span className="whitespace-nowrap font-bold text-xl">No data</span>
       ) : (
         // laid out as the TVS header is, so the two read alike
@@ -126,11 +132,22 @@ function Header({
           <span className="whitespace-nowrap font-bold text-xl">
             {formatBytes(used)}
           </span>
+          {/* Names its day, as the live total below is over the last 24h */}
           <span className="whitespace-nowrap text-secondary text-xs leading-none">
-            / past day
+            {describePastDay(day)}
           </span>
         </div>
       )}
     </div>
   )
+}
+
+/**
+ * One date, not a range, so it reads as the value's day rather than the
+ * chart's span. A lagging indexer's 24 hours end mid-day, so they get a time.
+ */
+function describePastDay([from, to]: [number, number]): string {
+  return from === UnixTime.toStartOf(from, 'day')
+    ? `on ${formatTimestamp(from)}`
+    : `in 24h to ${formatTimestamp(to, { mode: 'datetime' })}`
 }

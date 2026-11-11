@@ -30,7 +30,6 @@ const schema = {
   statuses: 'TEXT',
   display: 'TEXT',
   colors: 'TEXT',
-  ecosystemColors: 'TEXT',
   milestones: 'TEXT',
   chainConfig: 'TEXT',
   escrows: 'TEXT',
@@ -54,9 +53,11 @@ const schema = {
   interopConfig: 'TEXT',
   privacyInfo: 'TEXT',
   defiInfo: 'TEXT',
+  liquidStaking: 'TEXT',
   externalDependencies: 'TEXT',
 
   crops: 'TEXT',
+  garden: 'TEXT',
 
   tvsInfo: 'TEXT',
   tvsConfig: 'TEXT',
@@ -67,7 +68,6 @@ const schema = {
   trackedTxsConfig: 'TEXT',
   daTrackingConfig: 'TEXT',
   ecosystemInfo: 'TEXT',
-  ecosystemConfig: 'TEXT',
 
   permissions: 'TEXT',
   contracts: 'TEXT',
@@ -75,6 +75,7 @@ const schema = {
   discoveryUpdates: 'TEXT',
   ossificationHistory: 'TEXT',
   auditCoverage: 'TEXT',
+  versions: 'TEXT',
 
   archivedAt: 'INTEGER',
   hasTestnet: 'BOOLEAN',

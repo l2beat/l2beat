@@ -1,12 +1,12 @@
 import { Logger } from '@l2beat/backend-tools'
-import type { Database } from '@l2beat/database'
+import type { Database, HourlyActivityRecord } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import { BlockActivityIndexer } from './BlockActivityIndexer'
-import type { ActivityIndexerDeps, TxsCountService } from './types'
+import type { ActivityBlockSource, BlockActivityIndexerDeps } from './types'
 
 const START = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
 
@@ -17,171 +17,74 @@ describe(BlockActivityIndexer.name, () => {
 
   describe(BlockActivityIndexer.prototype.update.name, () => {
     it('make update based on batchSize', async () => {
-      const txsCountService = mockObject<TxsCountService>({
-        getTxsCount: mockFn().resolvesTo({
-          records: [],
-        }),
-      })
+      const blockSource = mockBlockSource([block(START, 1, 1, 50)])
 
       const indexer = createIndexer({
-        txsCountService,
+        blockSource,
         batchSize: 50,
       })
 
       const newSafeHeight = await indexer.update(0, 100)
 
-      expect(txsCountService.getTxsCount).toHaveBeenCalledWith(0, 50)
+      expect(blockSource.getBlocks).toHaveBeenCalledWith(0, 50)
       expect(newSafeHeight).toEqual(50)
     })
 
-    it('gets blocks counts, sum with current counts, saves to db and updates sync metadata', async () => {
+    it('adds the hours and the days of the batch', async () => {
+      const hourlyActivityRepository = mockHourlyActivityRepository()
       const activityRepository = mockObject<Database['activity']>({
-        getByProjectAndTimeRange: mockFn().resolvesTo([
-          activityRecord('a', START, 7, 7, 0, 8),
-          activityRecord('a', START + 1 * UnixTime.DAY, 3, 4, 11, 13),
-        ]),
-        upsertMany: mockFn().resolvesTo(undefined),
+        addMany: mockFn().resolvesTo(2),
       })
-
       const syncMetadataRepository = mockObject<Database['syncMetadata']>({
         updateSyncedUntil: mockFn().resolvesTo(undefined),
       })
-
-      const txsCountService = mockObject<TxsCountService>({
-        getTxsCount: mockFn().resolvesTo({
-          records: [
-            activityRecord('a', START, 5, 5, 9, 10),
-            activityRecord('a', START + 1 * UnixTime.DAY, 4, 5, 13, 15),
-            activityRecord('a', START + 2 * UnixTime.DAY, 2, 2, 16, 20),
-          ],
-          latestTimestamp: START + 2 * UnixTime.DAY,
-        }),
-      })
-
       const indexer = createIndexer({
-        txsCountService,
-        db: mockDatabase({
+        blockSource: mockBlockSource([
+          block(START + 10, 3, 3, 1),
+          block(START + 70, 4, 4, 2),
+          block(START + 1 * UnixTime.DAY, 2, 2, 3),
+        ]),
+        db: mockDatabaseWith({
           activity: activityRepository,
+          hourlyActivity: hourlyActivityRepository,
           syncMetadata: syncMetadataRepository,
         }),
         batchSize: 100,
       })
 
-      const newSafeHeight = await indexer.update(0, 10)
+      const newSafeHeight = await indexer.update(1, 3)
 
-      expect(txsCountService.getTxsCount).toHaveBeenCalledWith(0, 10)
-      expect(activityRepository.upsertMany).toHaveBeenCalledWith([
-        activityRecord('a', START, 12, 12, 0, 10),
-        activityRecord('a', START + 1 * UnixTime.DAY, 7, 9, 11, 15),
-        activityRecord('a', START + 2 * UnixTime.DAY, 2, 2, 16, 20),
+      expect(hourlyActivityRepository.addMany).toHaveBeenOnlyCalledWith([
+        hourlyRecord(START, 7),
+        hourlyRecord(START + 1 * UnixTime.DAY, 2),
+      ])
+      expect(activityRepository.addMany).toHaveBeenOnlyCalledWith([
+        activityRecord('a', START, 7, 7, 1, 2),
+        activityRecord('a', START + 1 * UnixTime.DAY, 2, 2, 3, 3),
       ])
       expect(syncMetadataRepository.updateSyncedUntil).toHaveBeenCalledWith(
         'activity',
         ['a'],
-        START + 2 * UnixTime.DAY,
-        10,
+        START + 1 * UnixTime.DAY,
+        3,
       )
-      expect(newSafeHeight).toEqual(10)
+      expect(newSafeHeight).toEqual(3)
     })
 
-    it('handle cases with block with 0 txs', async () => {
-      const activityRepository = mockObject<Database['activity']>({
-        getByProjectAndTimeRange: mockFn().resolvesTo([
-          activityRecord('a', START, 7, 10, 0, 8),
+    it('keeps two weeks of hours back from the newest block', async () => {
+      const hourlyActivityRepository = mockHourlyActivityRepository()
+      const indexer = createIndexer({
+        blockSource: mockBlockSource([
+          block(START + 30 * UnixTime.DAY + 90, 1, 1, 1),
         ]),
-        upsertMany: mockFn().resolvesTo(undefined),
+        db: mockDatabaseWith({ hourlyActivity: hourlyActivityRepository }),
       })
 
-      const syncMetadataRepository = mockObject<Database['syncMetadata']>({
-        updateSyncedUntil: mockFn().resolvesTo(undefined),
-      })
+      await indexer.update(1, 1)
 
-      const txsCountService = mockObject<TxsCountService>({
-        getTxsCount: mockFn().resolvesTo({
-          records: [activityRecord('a', START, 0, 0, 9, 10)],
-          latestTimestamp: START,
-        }),
-      })
-
-      const indexer = createIndexer({
-        txsCountService,
-        db: mockDatabase({
-          activity: activityRepository,
-          syncMetadata: syncMetadataRepository,
-        }),
-        batchSize: 100,
-      })
-
-      const newSafeHeight = await indexer.update(0, 10)
-
-      expect(txsCountService.getTxsCount).toHaveBeenCalledWith(0, 10)
-      expect(activityRepository.upsertMany).toHaveBeenCalledWith([
-        {
-          projectId: ProjectId('a'),
-          timestamp: START,
-          count: 7,
-          uopsCount: 10,
-          start: 0,
-          end: 10,
-        },
-      ])
-      expect(syncMetadataRepository.updateSyncedUntil).toHaveBeenCalledWith(
-        'activity',
-        ['a'],
-        START,
-        10,
-      )
-      expect(newSafeHeight).toEqual(10)
-    })
-  })
-
-  describe(BlockActivityIndexer.prototype.getDatabaseEntries.name, () => {
-    it('return an empty map if there are no records', async () => {
-      const indexer = createIndexer()
-
-      const entries = await indexer.getDatabaseEntries([])
-
-      expect(entries).toEqual(new Map())
-    })
-
-    it('returns a map of timestamps to records', async () => {
-      const mockActivityRecords = [
-        activityRecord('a', START, 1, 1),
-        activityRecord('a', START + 1 * UnixTime.DAY, 2, 2),
-        activityRecord('a', START + 2 * UnixTime.DAY, 4, 6),
-      ]
-
-      const activityRepository = mockObject<Database['activity']>({
-        getByProjectAndTimeRange: mockFn().resolvesTo(mockActivityRecords),
-      })
-
-      const indexer = createIndexer({
-        db: mockDatabase({ activity: activityRepository }),
-        batchSize: 100,
-      })
-
-      const entries = await indexer.getDatabaseEntries([
-        activityRecord('a', START + 2 * UnixTime.DAY, 4, 6),
-        activityRecord('a', START + 1 * UnixTime.HOUR, 4, 4),
-        activityRecord('a', START, 1, 1),
-      ])
-
-      // finds min and max timestamp
       expect(
-        activityRepository.getByProjectAndTimeRange,
-      ).toHaveBeenNthCalledWith(1, ProjectId('a'), [
-        START,
-        START + 2 * UnixTime.DAY,
-      ])
-
-      // returns a map of timestamps to counts
-      expect(entries).toEqual(
-        new Map([
-          [START, mockActivityRecords[0]],
-          [START + 1 * UnixTime.DAY, mockActivityRecords[1]],
-          [START + 2 * UnixTime.DAY, mockActivityRecords[2]],
-        ]),
-      )
+        hourlyActivityRepository.deleteByProjectIdUntil,
+      ).toHaveBeenOnlyCalledWith(ProjectId('a'), START + 16 * UnixTime.DAY)
     })
   })
 
@@ -225,6 +128,28 @@ describe(BlockActivityIndexer.name, () => {
       )
     })
 
+    it('deletes the hours from the start of the invalidated day', async () => {
+      const activityRepository = mockObject<Database['activity']>({
+        getByProjectIncludingDataPoint: mockFn().resolvesTo([
+          activityRecord('a', START, 2, 2, 11, 20),
+        ]),
+        deleteByProjectIdFrom: mockFn().resolvesTo(1),
+      })
+      const hourlyActivityRepository = mockHourlyActivityRepository()
+      const indexer = createIndexer({
+        db: mockDatabaseWith({
+          activity: activityRepository,
+          hourlyActivity: hourlyActivityRepository,
+        }),
+      })
+
+      await indexer.invalidate(15)
+
+      expect(
+        hourlyActivityRepository.deleteByProjectIdFrom,
+      ).toHaveBeenOnlyCalledWith(ProjectId('a'), START)
+    })
+
     it('deletes records and returns adjusted targetHeight', async () => {
       const mockProjectId = ProjectId('a')
       const mockActivityRecords = [
@@ -238,7 +163,7 @@ describe(BlockActivityIndexer.name, () => {
       })
 
       const indexer = createIndexer({
-        db: mockDatabase({ activity: activityRepository }),
+        db: mockDatabaseWith({ activity: activityRepository }),
       })
 
       const targetHeight = 15
@@ -279,24 +204,62 @@ function activityRecord(
   }
 }
 
+function block(
+  timestamp: UnixTime,
+  txsCount: number,
+  uopsCount: number | null,
+  number: number,
+) {
+  return { timestamp, txsCount, uopsCount, number }
+}
+
+/** Uops follow txs, so that only the values a test is about need setting */
+function hourlyRecord(
+  timestamp: UnixTime,
+  count: number,
+): HourlyActivityRecord {
+  return { projectId: ProjectId('a'), timestamp, count, uopsCount: count }
+}
+
+function mockBlockSource(blocks: ReturnType<typeof block>[]) {
+  return mockObject<ActivityBlockSource>({
+    getBlocks: mockFn().resolvesTo(blocks),
+  })
+}
+
+function mockActivityRepository() {
+  return mockObject<Database['activity']>({
+    addMany: mockFn().resolvesTo(1),
+  })
+}
+
+function mockHourlyActivityRepository() {
+  return mockObject<Database['hourlyActivity']>({
+    addMany: mockFn().resolvesTo(0),
+    deleteByProjectIdUntil: mockFn().resolvesTo(0),
+    deleteByProjectIdFrom: mockFn().resolvesTo(0),
+  })
+}
+
+function mockDatabaseWith(overrides: Partial<Database>) {
+  return mockDatabase({
+    activity: mockActivityRepository(),
+    hourlyActivity: mockHourlyActivityRepository(),
+    syncMetadata: mockObject<Database['syncMetadata']>({
+      updateSyncedUntil: mockFn().resolvesTo(undefined),
+    }),
+    ...overrides,
+  })
+}
+
 function createIndexer(
-  deps?: Partial<ActivityIndexerDeps>,
+  deps?: Partial<BlockActivityIndexerDeps>,
 ): BlockActivityIndexer {
   return new BlockActivityIndexer(
     {
       parents: [],
-      txsCountService: mockObject<TxsCountService>({
-        getTxsCount: mockFn().resolvesTo([]),
-      }),
-      db: mockDatabase({
-        activity: mockObject<Database['activity']>({
-          getByProjectAndTimeRange: mockFn().resolvesTo([]),
-          upsertMany: mockFn().resolvesTo(undefined),
-        }),
-        syncMetadata: mockObject<Database['syncMetadata']>({
-          updateSyncedUntil: mockFn().resolvesTo(undefined),
-        }),
-      }),
+      blockSource: mockBlockSource([]),
+      db: mockDatabaseWith({}),
       projectId: ProjectId('a'),
       indexerService: mockObject<IndexerService>({}),
       minHeight: 0,

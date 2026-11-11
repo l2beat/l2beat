@@ -14,7 +14,7 @@ All notes derive from one recovery phrase. The website creates a random one or d
 
 ### App
 
-The ratings assume the website at [privacypools.com](https://privacypools.com), built from [public source](https://github.com/0xbow-io/privacy-pools-website) and hosted by 0xbow. It accepts the user's own RPC endpoint and a sign-in with the recovery phrase alone. It offers two relayers, Fast Relay and Cloaked Relay, while anyone can relay onchain. Over Tor, Fast Relay often refuses the connection and the website switches to Cloaked Relay. Accounts from the older 12-word key method send their deposit labels to 0xbow while they migrate.
+0xbow hosts the app, built from public source. It accepts the user's own RPC endpoint and a sign-in with the recovery phrase alone. It picks the first of Fast Relay and Cloaked Relay that answers, which over Tor is mostly Cloaked Relay. It offers no way to submit a withdrawal yourself, while anyone can relay onchain. Google Analytics gets a two-year cookie and the browser's screen size, language and version on every visit. That links a normal browser's visits even over an IP-hiding route. Accounts from the older 12-word key method send their deposit labels to 0xbow during migration.
 
 ### Exits
 

@@ -1,4 +1,5 @@
 import { formatNumberWithCommas } from '@l2beat/shared-pure'
+import type { GardenListing } from '~/components/garden/crops'
 import type { PrivacyAnonymitySetCoverage } from '~/server/features/privacy/anonymity-set/getPrivacyAnonymitySetCoverage'
 import type { PrivacyAnonymitySetType } from '~/server/features/privacy/anonymity-set/getPrivacyAnonymitySetSeries'
 
@@ -79,7 +80,7 @@ export function hostChainRisksText(riskCount: number | undefined) {
 /** One sentence per line on the page. */
 export const UNDER_REVIEW_DESCRIPTION = [
   'The information in the section might be incomplete or outdated.',
-  'The L2BEAT Team is working to research & validate the content before publishing.',
+  'The ETHBEAT Team is working to research & validate the content before publishing.',
 ] as const
 
 /** Shown after a bold "Note:". */
@@ -175,8 +176,15 @@ export function anonymitySetCoverageNote(
   return `Depositors were identified for ${formatNumberWithCommas(coverage.attributed)} of ${formatNumberWithCommas(coverage.total)} deposits (${percentage}%) during the last ${windowDays} complete UTC days. The remaining deposits are not counted.`
 }
 
-export function gardenVerdictText(inGarden: boolean) {
-  return inGarden ? 'Grows in the garden.' : 'Not in the garden yet.'
+export function gardenVerdictText(listing: GardenListing) {
+  switch (listing) {
+    case 'listed':
+      return 'Listed in the CROPS guide.'
+    case 'ratedBad':
+      return 'Not listed in the CROPS guide: a property is rated bad.'
+    case 'noOssificationScore':
+      return 'Not listed in the CROPS guide yet: it has no ossification score.'
+  }
 }
 
 /** Split around the stage, which the page shows as a badge. */

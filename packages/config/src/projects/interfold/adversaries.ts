@@ -2,6 +2,8 @@ import { definePrivacyAdversaries } from '../../common/privacyAdversaries'
 
 const GOV =
   'https://github.com/theinterfold/the-interfold-governance/blob/28b03a8b529dfa7491f01229724391665f06bd95/'
+// Its two ballot verifiers compile byte for byte to the deployed ones (solc 0.8.28,
+// 1 optimizer run, paris), so a re-pin must keep that true.
 const CRISP =
   'https://github.com/theinterfold/CRISP/blob/35dbda14c4026510ba91e15d700399df115900ab/'
 const INTERFOLD =
@@ -9,8 +11,8 @@ const INTERFOLD =
 
 /**
  * @param decryptionThreshold committee members that can rebuild the BFV secret key, asserted against discovery
- * @param committeeMembers members of the committee a DAO vote requests, from discovery
- * @param minimumDecryptionThreshold the same for the smallest committee size governance can select
+ * @param committeeMembers members of the smallest committee Interfold allows, from discovery
+ * @param minimumDecryptionThreshold the same for the smallest committee size governance can allow
  * @param minimumCommitteeMembers members of the smallest committee size, from discovery
  */
 export function interfoldAdversaries(
@@ -60,7 +62,7 @@ export function interfoldAdversaries(
           },
           {
             title: 'Interfold: the public result can show how a voter voted',
-            url: `${INTERFOLD}docs/pages/governance.mdx#L237-L270`,
+            url: `${INTERFOLD}docs/pages/governance.mdx#L246-L248`,
           },
         ],
       },
@@ -69,7 +71,7 @@ export function interfoldAdversaries(
         exposureShort:
           'The ballot leaves the browser only as ciphertext with its proof, so traffic shows at most that the user sent a ballot.',
         exposureContinued:
-          'The app reads the chain through the CRISP server and sends ballots to it, so these requests reach no third party. WalletConnect runs with analytics off.',
+          "The app sends ballots to the CRISP server and reads the chain through it, falling back to an RPC proxy on Interfold's host.",
         sources: [
           {
             title: 'Chain reads go to the CRISP server first',
@@ -79,16 +81,12 @@ export function interfoldAdversaries(
             title: 'Ballots are sent to the CRISP server',
             url: `${GOV}app/plugins/crispVoting/hooks/useCrispServer.ts#L700-L712`,
           },
-          {
-            title: 'WalletConnect analytics disabled',
-            url: `${GOV}app/context/index.tsx#L32`,
-          },
         ],
       },
       privilegedInsider: {
         sentiment: 'bad',
         exposureShort: `Any ${decryptionThreshold} of the ${committeeMembers} ciphernodes in a vote's committee can combine their key shares and decrypt every ballot of that vote.`,
-        exposureContinued: `Operators are unnamed, and the lottery limits only each bond-owner address to one seat. The Interfold multisigs can instantly shrink future committees to ${minimumCommitteeMembers} members, ${minimumDecryptionThreshold} of whom decrypt, and Interfold's hosted app sees the choice before encrypting it.`,
+        exposureContinued: `Operators are unnamed, and one party can take several seats through several bond-owner addresses. The Interfold multisigs can instantly lower the minimum committee of future votes to ${minimumCommitteeMembers} members, ${minimumDecryptionThreshold} of whom decrypt. They can also swap the program that sums future ballots for one that outputs a single ballot to decrypt. Interfold can change its hosted app to leak the choice before encryption.`,
         sources: [
           {
             title:
@@ -109,17 +107,17 @@ export function interfoldAdversaries(
       futureAdversary: {
         sentiment: 'warning',
         exposureShort:
-          'Archived ballots rest on lattice assumptions with no known quantum attack, so a break adds nothing to what the totals show.',
+          'Whoever breaks elliptic-curve cryptography learns at least what the chain analyst sees: the totals can show how a voter with outsized weight voted.',
         exposureContinued:
-          "A recovered wallet key can replace a voter's ballot in an open vote but opens no past one. The contracts that verify ballot proofs are unverified, so whether the proofs hide the vote cannot be checked.",
+          'Ballots and key shares rest on lattice assumptions with no known quantum attack, and a recovered wallet key opens no past ballot. Whether the zero-knowledge ballot proofs still hide the vote after such a break is unverified.',
         sources: [
           {
-            title: 'Key shares are BFV-encrypted and never published',
-            url: `${INTERFOLD}docs/pages/internals/dkg.mdx#L764-L772`,
+            title: 'Key shares are BFV-encrypted to each recipient',
+            url: `${INTERFOLD}docs/pages/internals/dkg.mdx#L54`,
           },
           {
-            contract: 'CrispOnchainBallotVerifier',
-            title: 'Unverified ballot proof verifier',
+            title: 'The ballot verifier is a zero-knowledge Honk verifier',
+            url: `${CRISP}packages/crisp-contracts/contracts/verifiers/CRISPOnchainVerifier.sol#L2485`,
           },
         ],
       },

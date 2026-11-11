@@ -14,14 +14,11 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { ProjectIconList } from '~/components/ProjectIconList'
 import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 import { StageCell } from '~/components/table/cells/stage/StageCell'
 import { TypeInfo } from '~/components/table/cells/TypeInfo'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
-import {
-  WALK_AWAY_NOT_PASSED_PROJECTS,
-  WALK_AWAY_PASSED_PROJECTS,
-} from '~/consts/walkAwayProjects'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import type { ProjectL2Entry } from '~/server/features/layer2s/project/getL2ProjectEntry'
 import { cn } from '~/utils/cn'
@@ -47,10 +44,11 @@ export function ProjectL2Stats({ project, className }: Props) {
           <span className="mb-0.5 flex items-center gap-2">
             {project.header.tvs.warning && (
               <Tooltip>
-                <TooltipTrigger>
+                <TooltipTrigger aria-label="TVS warning">
                   <RoundedWarningIcon
                     sentiment={project.header.tvs.warning.sentiment}
                     className="size-4"
+                    aria-hidden
                   />
                 </TooltipTrigger>
                 <TooltipContent>
@@ -60,7 +58,7 @@ export function ProjectL2Stats({ project, className }: Props) {
             )}
             <ValueWithPercentageChange
               containerClassName="flex-nowrap"
-              className="!text-base !font-medium !leading-[100%] text-nowrap"
+              className="!text-base !leading-[100%] text-nowrap"
               changeClassName="text-label-value-14 font-bold"
               change={project.header.tvs.breakdown.totalChange}
               changePeriod={project.header.tvs.breakdown.totalChangePeriod}
@@ -85,15 +83,27 @@ export function ProjectL2Stats({ project, className }: Props) {
       tooltip="User operations per second averaged over the past day displayed together with a percentage change compared to 7D ago."
       value={
         project.header.activity ? (
-          <ValueWithPercentageChange
-            containerClassName="flex-nowrap"
-            change={project.header.activity.uopsWeeklyChange}
-            changePeriod={project.header.activity.uopsWeeklyChangePeriod}
-            className="text-nowrap font-medium! text-base! leading-[100%]!"
-            changeClassName="text-label-value-14 font-bold"
-          >
-            {formatActivityCount(project.header.activity.lastDayUops)}
-          </ValueWithPercentageChange>
+          <span className="flex items-center gap-2">
+            {project.header.activity.syncWarning && (
+              <Tooltip contentInHtml>
+                <TooltipTrigger aria-label="Activity warning">
+                  <RoundedWarningIcon sentiment="warning" className="size-4" />
+                </TooltipTrigger>
+                <TooltipContent>
+                  {project.header.activity.syncWarning}
+                </TooltipContent>
+              </Tooltip>
+            )}
+            <ValueWithPercentageChange
+              containerClassName="flex-nowrap"
+              change={project.header.activity.uopsWeeklyChange}
+              changePeriod={project.header.activity.uopsWeeklyChangePeriod}
+              className="text-nowrap text-base! leading-[100%]!"
+              changeClassName="text-label-value-14 font-bold"
+            >
+              {formatActivityCount(project.header.activity.lastDayUops)}
+            </ValueWithPercentageChange>
+          </span>
         ) : (
           <NoDataBadge />
         )
@@ -111,13 +121,7 @@ export function ProjectL2Stats({ project, className }: Props) {
               stageConfig={project.stageConfig}
               isAppchain={project.isAppchain}
               emergencyWarning={project.header.emergencyWarning}
-              walkAway={
-                WALK_AWAY_PASSED_PROJECTS.includes(project.id)
-                  ? 'passed'
-                  : WALK_AWAY_NOT_PASSED_PROJECTS.includes(project.id)
-                    ? 'not-passed'
-                    : undefined
-              }
+              walkAway={project.walkAway}
             />
           </a>
         }
@@ -160,6 +164,19 @@ export function ProjectL2Stats({ project, className }: Props) {
         key="chain-id"
         title="Chain ID"
         value={project.header.chainId}
+      />
+    ) : undefined,
+    project.header.privacyProjects.length > 0 ? (
+      <ProjectSummaryStat
+        key="privacy-projects"
+        title="Privacy projects"
+        tooltip="Privacy projects that run on this project."
+        value={
+          <ProjectIconList
+            projects={project.header.privacyProjects}
+            title="Privacy projects"
+          />
+        }
       />
     ) : undefined,
   ])

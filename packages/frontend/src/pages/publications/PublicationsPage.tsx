@@ -1,5 +1,4 @@
 import { MainPageHeader } from '~/components/MainPageHeader'
-import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -19,7 +18,7 @@ export function PublicationsPage({
   return (
     <AppLayout {...props}>
       <SideNavLayout>
-        <MainPageHeader description="Your hub for everything we publish: research-driven blog posts, must-read explainers, Medium essays, YouTube interviews, and curated social highlights. Stay current on Ethereum scaling with L2BEAT’s data, risk analysis, and commentary on the Layer 2 ecosystem. Use filters to view content by category.">
+        <MainPageHeader description="Your hub for everything we publish: research-driven blog posts, must-read explainers, Medium essays, YouTube interviews, and curated social highlights. Stay current on Ethereum scaling with ETHBEAT’s data, risk analysis, and commentary on the Layer 2 ecosystem. Use filters to view content by category.">
           Publications
         </MainPageHeader>
         <TableFilterContextProvider>
@@ -28,7 +27,6 @@ export function PublicationsPage({
             newsletterBgUrl={newsletterBgUrl}
           />
         </TableFilterContextProvider>
-        <ScrollToTopButton />
       </SideNavLayout>
     </AppLayout>
   )

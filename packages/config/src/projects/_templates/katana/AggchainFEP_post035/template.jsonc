@@ -26,7 +26,7 @@
       "severity": "LOW"
     },
     "submissionInterval": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     // Effective threshold: reads either this contract or the AgglayerGateway,
     // depending on useDefaultSigners.

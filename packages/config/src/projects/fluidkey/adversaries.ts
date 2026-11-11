@@ -82,16 +82,21 @@ export function fluidkeyAdversaries(accounts: number) {
         ],
       },
       networkObserver: {
-        sentiment: 'bad',
+        sentiment: 'warning',
         exposureShort:
-          'The app is closed source with no open alternative, so what it sends to third parties is up to Fluidkey and can change at any time.',
+          "Alchemy, behind Fluidkey's proxy, receives the Safes the app shows and can group those of one account.",
         exposureContinued:
-          "Today, the web app reads the chain only through Fluidkey's servers and gives outside services just the user's login and username. A payer who looks up the user's name through a third-party RPC shows it that name and the new address.",
+          "Without Tor, the proxy can also pass it the user's IP. A payer who looks up the user's name gives their RPC the name and the new Safe. A Google, Apple, email or Farcaster login hands the identity to Privy, whose code then creates the signature the user's keys come from.",
+        advice:
+          'Run the app in Tor Browser. Share a fresh Safe address instead of the name, and connect a wallet rather than a Google, Apple, email or Farcaster login.',
         sources: [
           {
-            title:
-              "The app's content security policy lists every endpoint it contacts",
+            title: 'Served app, build entrypoint-908cd83c (checked 2026-10-30)',
             url: 'https://app.fluidkey.com',
+          },
+          {
+            title: 'Web keys are generated through a Privy embedded wallet',
+            url: DOCS + 'readme/account-set-up/',
           },
           {
             contract: 'OffchainResolver',
@@ -104,15 +109,11 @@ export function fluidkeyAdversaries(accounts: number) {
         sentiment: 'bad',
         exposureShort: S.operatorViewingKey('Fluidkey'),
         exposureContinued:
-          "It also runs the closed-source app that handles the user's keys. With Google or Apple login on the web, Privy's code creates the signature the user's keys come from. Bank transfers add the user's verified identity, and Hide Trail shows the user's route to Houdini and two exchanges.",
+          "Its closed-source app handles the user's keys. Bank transfers add the user's verified identity, and Hide Trail shows the user's route to Houdini and two exchanges.",
         sources: [
           {
             title: 'Private viewing key shared with the service',
             url: KIT + 'extractViewingPrivateKeyNode.ts#L14-L30',
-          },
-          {
-            title: 'Web keys are generated through a Privy embedded wallet',
-            url: DOCS + 'readme/account-set-up/',
           },
           {
             title: 'Verification results and identity attributes',
@@ -129,7 +130,7 @@ export function fluidkeyAdversaries(accounts: number) {
         exposureShort: S.noAnnouncement,
         exposureContinued: S.walletSignatureAccounts('plus a four-digit PIN'),
         advice:
-          'Connect a new wallet that has never sent a transaction instead of logging in with Google or Apple.',
+          'Connect a new wallet that has never sent a transaction instead of a Google, Apple, email or Farcaster login.',
         sources: [
           {
             title: 'Stealth signer depends on a hashed shared secret',

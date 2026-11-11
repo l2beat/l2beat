@@ -18,7 +18,7 @@ The app is closed source, so how it creates and backs up keys is unverified. Pay
 
 ### App
 
-The ratings assume the Payy mobile app, which is closed source and talks only to Payy's servers. The [repository](https://github.com/polybase/payy) publishes the contracts, circuits, node and backend interfaces. Its open TypeScript client knows only Payy's testnet.
+The Payy mobile app is closed source. The [repository](https://github.com/polybase/payy) publishes the contracts, circuits, node and backend interfaces. Its open TypeScript client knows only Payy's testnet.
 
 ### Compliance
 

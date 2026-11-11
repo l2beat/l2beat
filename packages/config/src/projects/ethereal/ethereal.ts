@@ -7,10 +7,12 @@ import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL3 } from '../../templates/orbitStack'
 
 const discovery = new ProjectDiscovery('ethereal')
+const archivedAt = UnixTime(1793829600) // 2026-11-04T22:00:00Z, last synced hour before rpc.ethereal.trade was disabled
 
 export const ethereal: ScalingProject = orbitStackL3({
   capability: 'universal',
   addedAt: UnixTime(1753781100),
+  archivedAt,
   hostChain: ProjectId('arbitrum'),
   overridingPurposes: ['Exchange'],
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Conduit],
@@ -41,6 +43,7 @@ export const ethereal: ScalingProject = orbitStackL3({
     chainId: 5064014,
     explorerUrl: 'https://explorer.ethereal.trade',
     sinceTimestamp: UnixTime(1758570902),
+    untilTimestamp: archivedAt,
     apis: [
       {
         type: 'sourcify',

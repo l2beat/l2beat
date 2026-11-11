@@ -3,7 +3,8 @@ import {
   PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
 
-// v2.16.2, the build privacypools.com serves.
+// v1.privacypools.com serves main 8b3fbf0 (v2.17.0 and a Next.js bump), whose
+// diff from this pin touches no network code.
 const WEBSITE =
   'https://github.com/0xbow-io/privacy-pools-website/blob/7df411128f7a18a61a77f7a0371bf0b857969e2a/src/'
 // v1.2.1, the circuits behind the verified verifiers.
@@ -58,9 +59,9 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
       exposureShort:
         "The website works in Tor Browser and scans every pool whole, matching notes locally without revealing the user's deposits to third parties.",
       exposureContinued:
-        "The relayer receives amount and asset for a quote and the recipient once the user confirms. With a wallet sign-in on the default RPC, Alchemy sees the wallet and then the polling for the user's withdrawal, tying the two by timing.",
+        "Fast Relay receives amount and asset for a quote and the recipient once the user confirms, Cloaked Relay all three with the first quote. The website confirms a relayed withdrawal from bulk reads of new blocks, so no request names its hash. 0xbow's Google Analytics runs without a consent prompt and records the hash of any explorer link the user opens. On a quiet pool, the RPC can time a wallet sign-in against the withdrawal the same session waits for.",
       advice:
-        "Withdraw in a new Tor Browser session, signed in with the user's recovery phrase so no wallet address is queried. Before signing in, set the user's own node as the Ethereum endpoint.",
+        "Withdraw in a new Tor Browser session, signed in with the user's recovery phrase so no wallet address is queried. Open no explorer links in that session.",
       sources: [
         {
           title: 'Sign-in with a recovery phrase needs no wallet',
@@ -71,12 +72,13 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
           url: WEBSITE + 'utils/dataService.ts#L11-L34',
         },
         {
-          title: 'A custom endpoint takes over reads and scans',
-          url: WEBSITE + 'config/chainData.ts#L660-L689',
+          title: 'Relayed withdrawals confirmed without naming the hash',
+          url: WEBSITE + 'utils/relayedReceipt.ts#L1-L44',
         },
         {
-          title: 'Recipient sent to the relayer on confirm',
-          url: WEBSITE + 'utils/quotePhases.ts#L4-L43',
+          title:
+            'Recipient sent on confirm, or with the first quote where the relayer requires it',
+          url: WEBSITE + 'utils/quotePhases.ts#L4-L140',
         },
       ],
     },
@@ -85,8 +87,8 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
       exposureShort:
         'The ASP postman can publish a new approved list at any time with no delay, and withdrawals must prove against the latest one.',
       exposureContinued:
-        "It can deny the user a private exit or publish a list containing only their deposit, reducing their anonymity set to one. The website counts the anonymity set it shows from 0xbow's own feed, not from the list the user's withdrawal proves against. 0xbow can also change the hosted website at any time.",
-      advice: `Before withdrawing, check the size of the approved list behind the latest root, which its RootUpdated event links on IPFS. ${S.localBuild}`,
+        "It can deny the user a private exit or publish a list containing only their deposit, reducing their anonymity set to one. The website counts the anonymity set it shows from 0xbow's own feed, not from the list the user's withdrawal proves against. 0xbow sees every session's IP at its website and ASP feeds, so it can pair a deposit session with a withdrawal session. It can also change the website at any time.",
+      advice: `Exit as the network observer advice says, after checking the size of the approved list that the latest RootUpdated event links on IPFS. ${S.localBuild}`,
       sources: [
         {
           contract: 'PrivacyPoolsEntrypoint',

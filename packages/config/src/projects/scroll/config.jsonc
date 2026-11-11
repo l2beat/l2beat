@@ -274,7 +274,7 @@
           "severity": "MEDIUM"
         },
         "masterMinter": {
-          "severity": "HIGH"
+          "severity": "MEDIUM"
         },
         "minterAllowances": {
           "severity": "HIGH",
@@ -287,7 +287,7 @@
           }
         },
         "removedMinters": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "USDC minter removals.",
           "handler": {
             "type": "event",

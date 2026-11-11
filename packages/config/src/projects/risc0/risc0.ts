@@ -180,26 +180,21 @@ export const risc0: BaseProject = {
           'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of `control_root` and bytes32 value of `bn254_control_id` of contract constructor values.',
       },
       {
-        // Is a dummy to show soon as using risc0 proof system. Verifier
-        // contract sources are unknown, so the actual hash cannot be computed.
-        // Fix once the sources are on etherscan.
-        hash: '0x0000000000000000000000000000000000000000000000000000000000000000',
-        name: 'RiscZero Soon verifier',
+        hash: '0xf5904d2c6c6ecb457efb46a01d9ae0a11c666ad6c70668ce3df9b6b28604da3b',
+        name: 'RiscZero v3.1.0',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
         knownDeployments: [
           {
-            // Based on standard Risc0 verifier architecture, this contract should be
-            // a verifier router that points to an actual verifier. But it's unverified, so idk
             address: ChainSpecificAddress.fromLong(
               'ethereum',
-              '0x455218fa82e96A6adCcf182EE8A90A93BE7a6Bc6',
+              '0x953814e6dfC46d007557B511Dc4F2954dAaf2c9e',
             ),
+            overrideUsedIn: [ProjectId('taiko')],
           },
         ],
-        verificationStatus: 'unsuccessful',
-        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationStatus: 'notVerified',
         description:
-          'Verifier smart contract sources are not available on Etherscan, hash value is set to 0x0 to indicate that it is not known.',
+          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of `control_root` and bytes32 value of `bn254_control_id` of contract constructor values. The contract code equals v3.0.0. Its Groth16 verifying key, `control_root` and `bn254_control_id` appear in no public RISC Zero release. No trusted setup ceremony for this verifying key is published.',
       },
       {
         hash: '0x79325d9dc09af1afcea4dbf04db9fada7a71846045ad56daa1996bbebf9468d8',

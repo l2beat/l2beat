@@ -5,10 +5,10 @@ import type {
 } from '@l2beat/shared'
 import {
   type ChainSpecificAddress,
-  type CoingeckoId,
   EthereumAddress,
   isDateOnly,
   type KnownInteropBridgeType,
+  type OssificationBand,
   type ProjectId,
   TokenId,
   type TrackedTxsConfigSubtype,
@@ -17,7 +17,7 @@ import {
 import { type Parser, v } from '@l2beat/validate'
 import type { ZkCatalogAttester } from './common/zkCatalogAttesters'
 import type { ZkCatalogTagType } from './common/zkCatalogTags'
-import type { OsiLicenseId } from './crops/osiLicenses'
+import type { OsiLicense, OsiLicenseId } from './crops/osiLicenses'
 
 // #region shared types
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
@@ -225,7 +225,6 @@ export interface BaseProject {
   statuses?: ProjectStatuses
   display?: ProjectDisplay
   colors?: ProjectCustomColors
-  ecosystemColors?: ProjectCustomColors
   milestones?: Milestone[]
   chainConfig?: ChainConfig
   escrows?: ProjectEscrow[]
@@ -255,12 +254,16 @@ export interface BaseProject {
 
   // defi data
   defiInfo?: ProjectDefiInfo
+  /** Only on projects whose DeFi category is "Liquid Staking". */
+  liquidStaking?: ProjectLiquidStaking
 
   // external dependency data
   externalDependencies?: ProjectExternalDependency[]
 
   // crops data
   crops?: ProjectCrops
+  /** Built from `crops` when config builds, see `ProjectGarden`. */
+  garden?: ProjectGarden
 
   // feature configs
   tvsInfo?: ProjectTvsInfo
@@ -272,7 +275,6 @@ export interface BaseProject {
   trackedTxsConfig?: TrackedTxConfigEntryWithoutId[]
   daTrackingConfig?: ProjectDaTrackingConfig[]
   ecosystemInfo?: ProjectEcosystemInfo
-  ecosystemConfig?: ProjectEcosystemConfig
   zkCatalogInfo?: ProjectZkCatalogInfo
 
   // discovery data
@@ -286,9 +288,31 @@ export interface BaseProject {
   ossificationHistory?: OssificationHistory
   auditCoverage?: ProjectAuditCoverage
 
+  /** For projects that ship each version as new contracts, with its own
+   *  page. Built from `projects/versions.ts` when config builds. */
+  versions?: ProjectVersions
+
   // tags
   archivedAt?: UnixTime
   hasTestnet?: true
+}
+
+export interface ProjectVersions {
+  group: { id: string; name: string }
+  /** This project's label within the group, e.g. "v2". */
+  label: string
+  /** Every version in the group, this project included, in display order. */
+  siblings: ProjectVersionSibling[]
+}
+
+export interface ProjectVersionSibling {
+  id: ProjectId
+  slug: string
+  name: string
+  label: string
+  /** The version to show by default. */
+  isLatest: boolean
+  archivedAt?: UnixTime
 }
 
 // #region common data
@@ -726,8 +750,21 @@ export interface ProjectScalingDa {
 export interface ProjectGovernanceInfo {
   securityCouncil?: Record<string, string>
   guardians?: Record<string, string>
-  upgrades?: Record<string, string>
+  upgrades?: Record<string, string | ProjectUpgradePath>
   tokenGovernance?: Record<string, string>
+}
+
+/** An upgrade path spelled out step by step, so pages can draw it as a timeline. */
+export interface ProjectUpgradePath {
+  steps: ProjectUpgradePathStep[]
+  /** Remarks about the path as a whole, such as its total duration. */
+  note?: string
+}
+
+export interface ProjectUpgradePathStep {
+  description: string
+  /** A stretch where nobody acts (timelock, veto window, delay), drawn apart from the steps where someone does. */
+  isWait?: boolean
 }
 
 export interface ProjectScalingTechnology {
@@ -1004,7 +1041,22 @@ export interface TrustedSetup {
   risk: 'green' | 'yellow' | 'red' | 'N/A'
   shortDescription: string
   longDescription: string
+  /** Participant total, distinct from the number of contributed updates. */
   participantCount?: number
+  /** Participant-generated updates, excluding beacons. Contributors may repeat. */
+  contributionCount?: number
+  phases?: {
+    phase1?: TrustedSetupPhase
+    phase2?: TrustedSetupPhase
+  }
+}
+
+export interface TrustedSetupPhase {
+  /** Omit when the phase exists but its count is unknown. */
+  count?: number | { min: number; max: number }
+  /** Contributions need not identify distinct participants. */
+  unit: 'participants' | 'contributions'
+  description?: string
 }
 
 // #endregion
@@ -1017,11 +1069,55 @@ export type ProjectDefiCategory =
   | 'Oracle'
   | 'Stablecoin'
   | 'Prediction market'
+  | 'Multisig'
 
 export interface ProjectDefiInfo {
-  /** Short category label shown in the DeFi table, e.g. "Stablecoin". */
+  /** Short category label shown on the project page, e.g. "Stablecoin". */
   category: ProjectDefiCategory
   tvl?: ProjectDefiTvlConfig
+  /** Listed in the Tokens section of the project page. */
+  tokens?: ProjectDefiToken[]
+}
+
+export interface ProjectDefiToken {
+  /** Linked to its token page when the token database has it. */
+  address: ChainSpecificAddress
+  /** The ticker as the contract reports it, e.g. "stETH". */
+  symbol: string
+  name: string
+  /** One or two sentences: what the token is and how its value moves. */
+  description: string
+}
+
+export interface ProjectDefiRiskValue extends TableReadyValue {
+  description: string
+}
+
+export interface ProjectLiquidStaking {
+  /** What the liquid staking indexer reads. */
+  contracts: ProjectLiquidStakingContracts
+  /**
+   * Pools quoted for selling 100 tokens (stETH for Lido); the best quote is
+   * the market exit. A pool that doesn't exist yet gives no quote.
+   */
+  marketQuotes: ProjectLiquidStakingMarketQuote[]
+  /** The row of the liquid staking risk comparison. */
+  risks: ProjectLiquidStakingRisks
+}
+
+export interface ProjectLiquidStakingRisks {
+  /** Who can mint, what caps apply, and who routes deposited ETH to validators. */
+  minting: ProjectDefiRiskValue
+  /** Who runs validators, whether they post a bond, and who absorbs slashing. */
+  operators: ProjectDefiRiskValue
+  /** Where the backing ETH sits and who controls withdrawal credentials. */
+  backing: ProjectDefiRiskValue
+  /** Who writes the exchange rate, on what quorum and bounds, and what silence does. */
+  oracle: ProjectDefiRiskValue
+  /** The exit path, what gates it, how long it takes, and whether it can be paused. */
+  exit: ProjectDefiRiskValue
+  /** Who can change code, the minimum delay, and whether holders have a veto. */
+  upgrades: ProjectDefiRiskValue
 }
 
 export type ProjectDefiTvlConfig =
@@ -1076,6 +1172,17 @@ export interface ProjectPrivacyInfo {
    * for its icon.
    */
   trackedOn: string[]
+  /**
+   * Scaling projects the protocol runs on besides its trackedOn chains:
+   * zk.money is tracked on Ethereum but runs on Aztec.
+   */
+  runsOn?: ProjectId[]
+  /**
+   * Derived when projects are built, so it can't drift from trackedOn: the
+   * scaling projects of the trackedOn chains, then runsOn. Linked both ways
+   * between their project pages.
+   */
+  scalingProjects?: ProjectId[]
   tokens: ProjectPrivacyToken[]
   /**
    * A project tracks relayers either through onchain events or through
@@ -1083,6 +1190,11 @@ export interface ProjectPrivacyInfo {
    * mixing kinds within one project is not representable.
    */
   relayerTracking?: ProjectPrivacyRelayerTracking
+  /**
+   * The most private released app found for the protocol, which the adversary
+   * ratings assume. The project page lists it above the other apps checked.
+   */
+  referenceApp?: ProjectPrivacyReferenceApp
   /** The deployed mechanism. Decides the promised field, not the grade. */
   category: PrivacyCategory
   anonymitySet?:
@@ -1135,6 +1247,56 @@ export type PrivacyAnonymitySetRegistrationSource = {
   extractor: 'umbraStealthKeyChanged'
 }
 
+export interface ProjectPrivacyReferenceApp {
+  name: string
+  /** Icon slug under /icons. Defaults to the project's icon, for apps its team builds. */
+  icon?: string
+  /** Where users get the app: its website, release page or repository. */
+  url: string
+  /** Day the ratings first assumed this app, YYYY-MM-DD. */
+  since: string
+  /** Release the review covers, without a leading v. Absent for hosted apps. */
+  version?: string
+  /**
+   * Source at the reviewed commit, absent for closed apps. An app counts as
+   * open when its release builds from this commit, or a trace of the release
+   * matches the endpoints in it.
+   * `l2b client-drift` lists what changed upstream since.
+   */
+  source?: {
+    /** GitHub repository, e.g. https://github.com/owner/repo */
+    repository: string
+    /** Full commit hash. Adversary sources into the repository pin it. */
+    commit: string
+  }
+  /**
+   * Served build the review traced, e.g. a deployment or bundle id. For a
+   * closed hosted app without a release version.
+   */
+  build?: string
+  /** Day the review traced the closed app, YYYY-MM-DD. Absent when untraced. */
+  checked?: string
+  /**
+   * Other released apps for the protocol, checked but not rated. Each one
+   * leaks more than the reference app, which its finding shows.
+   */
+  checkedApps?: ProjectPrivacyCheckedApp[]
+}
+
+export interface ProjectPrivacyCheckedApp {
+  name: string
+  /** Icon slug under /icons, e.g. "railway" for /icons/railway.png. Absent when the app has no logo. */
+  icon?: string
+  /** The traced behaviour that leaks more, as one sentence. */
+  finding: string
+  /** What the app changes to match the reference app on this finding, as one sentence. */
+  fix?: string
+  /** Proves the finding: pinned code, or the app itself when it is closed. */
+  source: string
+  /** Day the finding was checked, YYYY-MM-DD. Set when `source` is the app itself. */
+  checked?: string
+}
+
 export type ProjectPrivacyRelayerTracking =
   | {
       type: 'onchainEvents'
@@ -1149,7 +1311,16 @@ export type ProjectPrivacyOnchainRelayerSource = {
 } & PrivacyRelayerExtractorConfig
 
 export type PrivacyRelayerExtractorConfig =
-  | { extractor: 'privacyPoolsWithdrawalRelayed' | 'tornadoCashWithdrawal' }
+  | {
+      extractor:
+        | 'privacyPoolsWithdrawalRelayed'
+        // Privacy Pools v2, from the vault: the fee recipient of a paid
+        // processor's payout, or the sender of a withdrawal without one.
+        | 'privacyPoolsV2Withdrawal'
+        // Tacit Pay, from the pool: the relayer a withdrawal pays a fee.
+        | 'tacitPayWithdrawal'
+        | 'tornadoCashWithdrawal'
+    }
   | {
       extractor: 'zkMoneyWithdrawalRelayer'
       params: ZkMoneyWithdrawalRelayerParams
@@ -1175,6 +1346,18 @@ export type ZkMoneyFundingParams = ZkMoneyDepositParams & {
    * before a scan starts count as untraceable until the SIPA is emptied.
    */
   historyFromBlock: number
+  /**
+   * Executors that redeposit refunds from an earlier deployment. Each of their
+   * deposits joins as its own member, keyed by its recipient commitment, since
+   * the refund names no funder.
+   */
+  migrationExecutors?: EthereumAddress[]
+  /**
+   * Factories whose escrows move funds between the project's own portals. A
+   * deposit by one of their escrows joins no member, since its mover already
+   * holds funds in the project.
+   */
+  internalEscrowFactories?: EthereumAddress[]
 }
 
 /** Identifies withdrawal finalizers and excludes observable self-finalizations. */
@@ -1183,6 +1366,8 @@ export type ZkMoneyWithdrawalRelayerParams = {
   executorAddress: EthereumAddress
   /** Helper that forwards fees to its caller, so the payout is followed through it. */
   operationExecutor: EthereumAddress
+  /** Receives the fixed fee the executor pays before the principal, if it charges one. */
+  feeBeneficiary?: EthereumAddress
 }
 
 /** Relayers counted from daily observations of fee advertisements on the Railgun Waku network. */
@@ -1472,8 +1657,10 @@ export type PrivacyAnonymitySetDepositSource = {
     extractor:
       | 'fixedAmount'
       | 'privacyPoolsValue'
+      | 'privacyPoolsV2Value'
       | 'railgunShield'
       | 'strk20Deposit'
+      | 'tacitPayDeposit'
       | 'zkMoneyDeposit'
   }
 >
@@ -1513,6 +1700,19 @@ export type PrivacyFlowExtractorConfig =
       params: Record<string, never>
     }
   | {
+      /**
+       * Privacy Pools v2 PoolVault events Deposited, Transacted and Ragequit,
+       * which all index the asset and carry its amount. Only logs of
+       * `tokenAddress` count, so one multi-asset vault serves one bucket per
+       * asset. A relayed private transfer pays its fee as a Transacted
+       * payout, which the flow indexer drops after reading the transaction.
+       */
+      extractor: 'privacyPoolsV2Value'
+      params: {
+        tokenAddress: EthereumAddress
+      }
+    }
+  | {
       extractor: 'railgunShield'
       params: {
         tokenAddress: EthereumAddress
@@ -1541,6 +1741,19 @@ export type PrivacyFlowExtractorConfig =
       params: {
         tokenAddress: string
       }
+    }
+  | {
+      /** Tacit Pay's Transact with a positive extAmount: the deposited value. */
+      extractor: 'tacitPayDeposit'
+      params: Record<string, never>
+    }
+  | {
+      /**
+       * Tacit Pay's Transact with a negative extAmount: the value paid to the
+       * recipient. The relayer's fee is paid on top and not counted.
+       */
+      extractor: 'tacitPayWithdrawal'
+      params: Record<string, never>
     }
   | {
       /** Credited DAI amount, after the portal's fee sponsorship cut. */
@@ -1619,6 +1832,44 @@ export interface ProjectCrops {
   security: ProjectCropEvaluation
 }
 
+/** `neutral` is never declared in config: it is what an ungraded crop resolves to. */
+export type CropSentiment = ProjectCropSentiment | 'neutral'
+
+/** An evaluation with every optional field resolved to a concrete value. */
+export interface ResolvedCropEvaluation {
+  sentiment: CropSentiment
+  status: ProjectCropStatus
+  /** Only on the open source crop, once the license is confirmed. */
+  license?: OsiLicense
+  points: string[]
+  missing: string[]
+  additionalConsiderations: string[]
+  notReviewed: string[]
+}
+
+export type ResolvedCrops = Record<keyof ProjectCrops, ResolvedCropEvaluation>
+
+/** Whether a reviewed project is listed in the garden, and if not, why. */
+export type GardenListing = 'listed' | 'ratedBad' | 'noOssificationScore'
+
+/** `crops` as shown: every default filled in, Security capped, and whether the garden lists the project. */
+export interface GardenVerdict {
+  crops: ResolvedCrops
+  listing: GardenListing
+}
+
+/**
+ * What the site and the CROPS API show for a reviewed project. Security is
+ * capped by the ossification score, which moves with time while the config
+ * build is cached, so there is a verdict per band: read the one for the band
+ * measured now (`measureOssificationBand`).
+ */
+export interface ProjectGarden {
+  /** The l2beat.com page to link, or null when the project has none. */
+  path: string | null
+  verdicts: Record<OssificationBand, GardenVerdict>
+}
+
 // #endregion
 
 // #region feature configs
@@ -1670,6 +1921,7 @@ export interface ElasticChainEscrow {
 export type ProjectActivityConfig =
   | BlockActivityConfig
   | DayActivityConfig
+  | HourActivityConfig
   | SlotActivityConfig
 
 export interface BlockActivityConfig {
@@ -1690,6 +1942,11 @@ export interface SlotActivityConfig {
 export type AdjustCount =
   | { type: 'SubtractOne' }
   | { type: 'SubtractOneSinceBlock'; blockNumber: number }
+  /** Subtracts the `count` of the last step whose `blockNumber` is at or below the block. */
+  | {
+      type: 'SubtractSinceBlocks'
+      steps: { blockNumber: number; count: number }[]
+    }
 
 export interface DayActivityConfig {
   type: 'day'
@@ -1700,7 +1957,76 @@ export interface DayActivityConfig {
   batchSize?: number
 }
 
+/** For APIs that count by the hour. Synced each hour, like block chains */
+export interface HourActivityConfig {
+  type: 'hour'
+  sinceTimestamp: UnixTime
+  /** Source of the data, will be displayed in the UI */
+  dataSource: string
+}
+
 export type LivenessOverwriteMode = 'no-data'
+
+/**
+ * The contracts the liquid staking indexer reads every hour: the token's
+ * exchange rate, plus whatever decides how fast a holder can exit.
+ */
+export type ProjectLiquidStakingContracts =
+  | {
+      type: 'lido'
+      stETH: ChainSpecificAddress
+      /** Its request counters give the queue wait. */
+      withdrawalQueue: ChainSpecificAddress
+    }
+  | {
+      type: 'rocketpool'
+      /** Its collateral is the ETH that burning rETH can pay out at once. */
+      rETH: ChainSpecificAddress
+    }
+  | {
+      type: 'etherfi'
+      weETH: ChainSpecificAddress
+      /** Its request counters give the queue wait. */
+      withdrawRequestNft: ChainSpecificAddress
+      /** Pays out at once, for a fee, up to a rate-limited amount. */
+      redemptionManager: ChainSpecificAddress
+    }
+  | {
+      type: 'wbeth'
+      wBETH: ChainSpecificAddress
+      /**
+       * Its lock time, and its request and allocation counters, give the wait
+       * for an onchain redemption.
+       */
+      unwrapToken: ChainSpecificAddress
+    }
+
+/** A pool selling the token for ETH or WETH. */
+export type ProjectLiquidStakingMarketQuote =
+  | {
+      type: 'curve'
+      pool: ChainSpecificAddress
+      /** Coin indexes of the token sold and of ETH or WETH. */
+      i: number
+      j: number
+    }
+  | {
+      /** Quoted by Uniswap's QuoterV2, against WETH. */
+      type: 'uniswapV3'
+      /** The pool's fee tier, in hundredths of a basis point. */
+      fee: number
+    }
+  | {
+      /** Quoted by BalancerQueries, against WETH. */
+      type: 'balancerV2'
+      poolId: string
+    }
+  | {
+      type: 'fluid'
+      pool: ChainSpecificAddress
+      /** Whether the token sold is the pool's token0. */
+      swap0to1: boolean
+    }
 
 export interface ProjectLivenessInfo {
   explanation?: string
@@ -1750,30 +2076,6 @@ export interface ProjectEcosystemInfo {
   isPartOfSuperchain?: boolean
   sinceTimestamp?: UnixTime
   untilTimestamp?: UnixTime
-}
-
-export interface ProjectEcosystemConfig {
-  startedAt?: UnixTime
-  token: {
-    coingeckoId: CoingeckoId
-    description: string
-  }
-  links: {
-    buildOn: string
-    learnMore: string
-    governanceDelegateToL2BEAT: string
-    governanceProposals: string
-    tools?: string[]
-    grants?: string
-  }
-  firstBanner?: {
-    headlineText?: string
-    mainText?: string
-  }
-  secondBanner?: {
-    headlineText?: string
-    mainText?: string
-  }
 }
 // #endregion
 
@@ -1949,7 +2251,6 @@ export interface ProjectDiscoveryUpdateSection {
 
 export type InteropPluginName =
   | 'across'
-  | 'across-settlement'
   | 'across-settlement-op'
   | 'across-settlement-orbit'
   | 'agglayer'
@@ -1982,7 +2283,6 @@ export type InteropPluginName =
   | 'lifi-intents'
   | 'maker-bridge'
   | 'mayan-forwarder'
-  | 'mayan-mctp'
   | 'mayan-mctp-fast'
   | 'mayan-swift'
   | 'mayan-swift-settlement'
@@ -1998,7 +2298,6 @@ export type InteropPluginName =
   | 'relay'
   | 'sky-bridge'
   | 'sorare-base'
-  | 'squid-coral'
   | 'stargate'
   | 'synthetix-bridge'
   | 'world-id'

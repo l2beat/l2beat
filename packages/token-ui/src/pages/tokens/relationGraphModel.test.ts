@@ -2,6 +2,7 @@ import { expect } from 'earl'
 import {
   filterTokensWithoutRelations,
   getClusterLabelOpacity,
+  getConflictNodeIds,
   getExistingRelationGraphSelection,
   getNodeIdsOutsideRelationChains,
   getNodeVisualScale,
@@ -147,6 +148,27 @@ describe(filterTokensWithoutRelations.name, () => {
     expect(filterTokensWithoutRelations(graph, 'hide').relations).toEqual(
       graph.relations,
     )
+  })
+})
+
+describe(getConflictNodeIds.name, () => {
+  it('returns the sorted node ids of conflicts that are on the graph', () => {
+    const graph: RelationGraph = {
+      nodes: [
+        graphNode('ethereum', '0xaaa'),
+        missingNode('base:0xbbb'),
+        graphNode('arbitrum', '0xccc'),
+      ],
+      relations: [],
+    }
+
+    expect(
+      getConflictNodeIds(graph, [
+        { chain: 'ethereum', address: '0xAAA' },
+        { chain: 'polygon', address: '0xddd' },
+        { chain: 'base', address: '0xbbb' },
+      ]),
+    ).toEqual(['base:0xbbb', 'ethereum:0xaaa'])
   })
 })
 

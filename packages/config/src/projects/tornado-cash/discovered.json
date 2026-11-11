@@ -1,6 +1,6 @@
 {
   "name": "tornado-cash",
-  "timestamp": 1791619122,
+  "timestamp": 1793874630,
   "configHash": "0x742b7c8f230f1ee2e02867746880fddfb8a5ac3e3f17f3b5dbea142066a852c5",
   "entries": [
     {
@@ -77,13 +77,13 @@
       "sinceBlock": 12066007,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 24,
+        "currentRootIndex": 27,
         "denomination": "10000000000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x11c9de51b81aa3009845f4584621f5b4229547330a056a5c50c8a2b301a40603",
+        "getLastRoot": "0x0dead881206bffea844a28336280594f3afc2b48991120484d4551725727276d",
         "hasher": "eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe",
         "levels": 20,
-        "nextIndex": 3444,
+        "nextIndex": 3447,
         "ROOT_HISTORY_SIZE": 30,
         "token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
@@ -126,12 +126,12 @@
       "sinceBlock": 9162012,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 15,
+        "currentRootIndex": 35,
         "denomination": 1000000000,
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x0782d28f8d6db16f9d1ec5a70d843e93f2436f9f0f44cf2156c9936a1877987b",
+        "getLastRoot": "0x07cd377d782223d9502bb4b6e5a7c26630aa2fccb16a03d5f7816e12524f938d",
         "levels": 20,
-        "nextIndex": 2115,
+        "nextIndex": 2135,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "operatorRenounced": true,
         "ROOT_HISTORY_SIZE": 100,
@@ -149,7 +149,7 @@
           "description": "Legacy operator role retained from the trusted-setup phase."
         },
         "operatorRenounced": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Whether verifier-upgrade authority has been permanently renounced."
         },
         "token": {
@@ -201,13 +201,13 @@
       "sinceBlock": 9116966,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 24,
+        "currentRootIndex": 95,
         "denomination": "100000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x154ea040ac91b6048c594abffda260a0b28cd6b763f6a889aa45c3442c8df3dc",
+        "getLastRoot": "0x2e68055993598857cddbd2719c46bc8ccd1ac9222d918854817843fcea7b299c",
         "isMigrated": true,
         "levels": 20,
-        "nextIndex": 73680,
+        "nextIndex": 76051,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "operatorRenounced": true,
         "ROOT_HISTORY_SIZE": 100,
@@ -224,7 +224,7 @@
           "description": "Legacy operator role retained from the trusted-setup phase."
         },
         "operatorRenounced": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Whether verifier-upgrade and migration authority has been permanently renounced."
         },
         "verifier": {
@@ -232,7 +232,7 @@
           "description": "zkSNARK verifier used to authorize withdrawals from the pool."
         },
         "isMigrated": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Whether the one-time legacy state migration path has already been used. If true, this pool behaves like the ones without this function."
         }
       },
@@ -258,12 +258,12 @@
       "sinceBlock": 9162005,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 76,
+        "currentRootIndex": 97,
         "denomination": 100000000,
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x0f7ea251d4e72892fe05afe5167ab13a51dce1f475c537739fae6dc7e7c70d19",
+        "getLastRoot": "0x197f55012e018e39ae1b2080b7c311bdf33e1b4b9185fcb99fda3d2c9b262f3a",
         "levels": 20,
-        "nextIndex": 976,
+        "nextIndex": 997,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "operatorRenounced": true,
         "ROOT_HISTORY_SIZE": 100,
@@ -281,7 +281,7 @@
           "description": "Legacy operator role retained from the trusted-setup phase."
         },
         "operatorRenounced": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Whether verifier-upgrade authority has been permanently renounced."
         },
         "token": {
@@ -386,7 +386,7 @@
           "description": "Legacy operator role retained from the trusted-setup phase."
         },
         "operatorRenounced": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Whether verifier-upgrade authority has been permanently renounced."
         },
         "token": {
@@ -419,13 +419,13 @@
       "sinceBlock": 12066048,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 5,
+        "currentRootIndex": 3,
         "denomination": "100000000000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x2f235e782504c31b4d5664a30a0e62d3f0b15d5d2ad2e9315ff4a10344c8ba80",
+        "getLastRoot": "0x1854bc9c9e0f4e3d602358853110ba4724a001c6603aa11d1ddcde14f02d8cd2",
         "hasher": "eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe",
         "levels": 20,
-        "nextIndex": 4385,
+        "nextIndex": 4413,
         "ROOT_HISTORY_SIZE": 30,
         "token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
@@ -524,7 +524,7 @@
       "sinceBlock": 13429786,
       "values": {
         "$immutable": true,
-        "TORNStaked": "2576055395417081515376538"
+        "TORNStaked": "2565821609613996653053585"
       },
       "fieldMeta": {
         "TORNStaked": {
@@ -617,7 +617,7 @@
           "description": "Legacy operator role retained from the trusted-setup phase."
         },
         "operatorRenounced": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Whether verifier-upgrade authority has been permanently renounced."
         },
         "token": {
@@ -650,12 +650,12 @@
       "sinceBlock": 9117609,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 8,
+        "currentRootIndex": 91,
         "denomination": "1000000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x09d91c55e62593e0bc338e714a855cb3982b6511116e7a796f9f88dc14ae980b",
+        "getLastRoot": "0x2e440951eaa240d9bf36b611d4ab98e3b1ef323ece18d8c25f1d74236f557281",
         "levels": 20,
-        "nextIndex": 95108,
+        "nextIndex": 97091,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "operatorRenounced": true,
         "ROOT_HISTORY_SIZE": 100,
@@ -672,7 +672,7 @@
           "description": "Legacy operator role retained from the trusted-setup phase."
         },
         "operatorRenounced": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Whether verifier-upgrade authority has been permanently renounced."
         },
         "verifier": {
@@ -1106,7 +1106,9 @@
           "eth:0x0A5B2bF3cCfB44C1D22F07Eed9553eCba752D4aD",
           "eth:0xEE4C45Cc5eAa535CB8a8ffdc92f2839A601fe226",
           "eth:0x16CB924b5b7ef604139bE95F8762ed817852Db92",
-          "eth:0xb69e1e65142d293035323470d2B3c0c5d4E03F8e"
+          "eth:0xb69e1e65142d293035323470d2B3c0c5d4E03F8e",
+          "eth:0x64d38735695377D98Dfb4205bFEeC07c3466De3C",
+          "eth:0x999099076bE29A81cAd25f3BB63Eb62C0fD99999"
         ],
         "staking": "eth:0x5B3f656C80E8ddb9ec01Dd9018815576E9238c29",
         "torn": "eth:0x77777FeDdddFfC19Ff86DB637967013e6C6A116C",
@@ -1323,7 +1325,7 @@
         "EXECUTION_EXPIRATION": 259200,
         "gasCompensationVault": "eth:0xFA4C1f3f7D5dd7c12a9Adb82Cd7dDA542E3d59ef",
         "PROPOSAL_THRESHOLD": "1000000000000000000000",
-        "proposalCount": 72,
+        "proposalCount": 73,
         "QUORUM_VOTES": "100000000000000000000000",
         "returnMultisigAddress": "eth:0xb04E030140b30C27bcdfaafFFA98C57d80eDa7B4",
         "Staking": "eth:0x5B3f656C80E8ddb9ec01Dd9018815576E9238c29",
@@ -1441,15 +1443,15 @@
           },
           {
             "instance": "eth:0x47CE0C6eD5B0Ce3d3A51fdb1C52DC66a7c3c2936",
-            "deviation": -7
+            "deviation": -48
           },
           {
             "instance": "eth:0x910Cbd523D972eb0a6f4cAe4618aD62622b39DbF",
-            "deviation": -1
+            "deviation": -42
           },
           {
             "instance": "eth:0xA160cdAB225685dA1d56aa342Ad8841c3b53f291",
-            "deviation": -1
+            "deviation": 0
           },
           {
             "instance": "eth:0xD4B88Df4D29F5CedD6857912842cff3b20C8Cfa3",
@@ -1461,11 +1463,11 @@
           },
           {
             "instance": "eth:0x07687e702b410Fa43f4cB4Af7FA097918ffD2730",
-            "deviation": -51
+            "deviation": 4
           },
           {
             "instance": "eth:0x23773E65ed146A459791799d01336DB287f25334",
-            "deviation": 10
+            "deviation": 62
           },
           {
             "instance": "eth:0x22aaA7720ddd5388A3c0A3333430953C68f1849b",
@@ -1501,15 +1503,15 @@
           },
           {
             "instance": "eth:0x178169B423a011fff22B9e3F3abeA13414dDD0F1",
-            "deviation": -43
+            "deviation": -50
           },
           {
             "instance": "eth:0x610B717796ad172B316836AC95a2ffad065CeaB4",
-            "deviation": -341
+            "deviation": -346
           },
           {
             "instance": "eth:0xbB93e510BbCD0B7beb5A853875f9eC60275CF498",
-            "deviation": 406
+            "deviation": 396
           }
         ],
         "governance": "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce",
@@ -1904,12 +1906,12 @@
       "sinceBlock": 9117720,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 58,
+        "currentRootIndex": 0,
         "denomination": "10000000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x25649214dc9890906ca674d7f5409552c0db9e08fe5514e0cc1d4678e70f9cc3",
+        "getLastRoot": "0x12eef9b410840f40a078a25431394bce1b9e117a1cfa00d312b80c27fb85cd53",
         "levels": 20,
-        "nextIndex": 77558,
+        "nextIndex": 79300,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "operatorRenounced": true,
         "ROOT_HISTORY_SIZE": 100,
@@ -1926,7 +1928,7 @@
           "description": "Legacy operator role retained from the trusted-setup phase."
         },
         "operatorRenounced": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Whether verifier-upgrade authority has been permanently renounced."
         },
         "verifier": {
@@ -1972,12 +1974,12 @@
       "sinceBlock": 9161895,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 16,
+        "currentRootIndex": 38,
         "denomination": "100000000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x2af6f7e73f80ba6397e091eea5d56542ad7cbd11cb5c009aca950d1e9b73a2af",
+        "getLastRoot": "0x1cf91393dc488172706236274bcc04fa6d8f3c4abd9b2066e8530ccae488d1b3",
         "levels": 20,
-        "nextIndex": 48616,
+        "nextIndex": 49938,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "operatorRenounced": true,
         "ROOT_HISTORY_SIZE": 100,
@@ -1994,7 +1996,7 @@
           "description": "Legacy operator role retained from the trusted-setup phase."
         },
         "operatorRenounced": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Whether verifier-upgrade authority has been permanently renounced."
         },
         "verifier": {
@@ -2486,12 +2488,12 @@
       "sinceBlock": 9117612,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 65,
+        "currentRootIndex": 82,
         "denomination": "100000000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x13b4cf11310f83728608f604b7f5243f5aa885511902dc8b6a13533e4420da79",
+        "getLastRoot": "0x14a2026af497ac95fb70bbef46e6cb63a5563d001e3a3e2e607dc66e0c03f8f0",
         "levels": 20,
-        "nextIndex": 465,
+        "nextIndex": 482,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "operatorRenounced": true,
         "ROOT_HISTORY_SIZE": 100,
@@ -2509,7 +2511,7 @@
           "description": "Legacy operator role retained from the trusted-setup phase."
         },
         "operatorRenounced": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Whether verifier-upgrade authority has been permanently renounced."
         },
         "token": {
@@ -2596,12 +2598,12 @@
       "sinceBlock": 9161958,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 92,
+        "currentRootIndex": 97,
         "denomination": 100000000,
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x09b89867e60f96a0c95ae9d09100cabc768e70824b7238a90b902d32605c52a0",
+        "getLastRoot": "0x239c572a9d08baad13e14d8365f1c2fd508973ea794714bfa06142d4aea7069c",
         "levels": 20,
-        "nextIndex": 392,
+        "nextIndex": 397,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "operatorRenounced": true,
         "ROOT_HISTORY_SIZE": 100,
@@ -2619,7 +2621,7 @@
           "description": "Legacy operator role retained from the trusted-setup phase."
         },
         "operatorRenounced": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Whether verifier-upgrade authority has been permanently renounced."
         },
         "token": {
@@ -2689,12 +2691,12 @@
       "sinceBlock": 9161917,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 63,
+        "currentRootIndex": 84,
         "denomination": "1000000000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x1107a9ba8a76d882825ea278d7d7860baa77f282185b0443f0e8521c31b6d20c",
+        "getLastRoot": "0x1652089dd350f8b39469f9fe70352acf2cc7e5ea9799d59421a48ca45b236211",
         "levels": 20,
-        "nextIndex": 1363,
+        "nextIndex": 1384,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "operatorRenounced": true,
         "ROOT_HISTORY_SIZE": 100,
@@ -2712,7 +2714,7 @@
           "description": "Legacy operator role retained from the trusted-setup phase."
         },
         "operatorRenounced": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Whether verifier-upgrade authority has been permanently renounced."
         },
         "token": {
@@ -3849,7 +3851,7 @@
     "tornado-cash/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "tornado-cash/WithdrawVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 26160688 },
+  "usedBlockNumbers": { "ethereum": 26348044 },
   "permissionsConfigHash": "0xa6ec83ce4899bc6f50c195e64efd5142f116dc3606b17f15a010409e98f0bb5a",
   "permissions": {
     "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce": {

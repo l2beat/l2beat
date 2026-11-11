@@ -1,12 +1,29 @@
 import { expect } from 'earl'
-import { CROP_ATTESTATIONS } from './attestations'
+import { utils } from 'ethers'
+import { CROP_ATTESTATION_SOURCE } from './attestations'
 
-describe('crop attestations', () => {
-  it('exactly one attestation is live under the current schema', () => {
-    const current = CROP_ATTESTATIONS.live.filter(
-      (x) =>
-        x.schema.toLowerCase() === CROP_ATTESTATIONS.schemaUid.toLowerCase(),
+describe('crop attestation source', () => {
+  it('names the schema by the uid SchemaRegistry gives it', () => {
+    // keccak256(abi.encodePacked(schema, resolver, revocable)), with no resolver and revocable.
+    const uid = utils.solidityKeccak256(
+      ['string', 'address', 'bool'],
+      [
+        CROP_ATTESTATION_SOURCE.schema,
+        '0x0000000000000000000000000000000000000000',
+        true,
+      ],
     )
-    expect(current.length).toEqual(1)
+    expect(uid).toEqual(CROP_ATTESTATION_SOURCE.schemaUid)
+  })
+
+  it('has checksummed addresses', () => {
+    for (const address of [
+      CROP_ATTESTATION_SOURCE.eas,
+      ...(CROP_ATTESTATION_SOURCE.attester
+        ? [CROP_ATTESTATION_SOURCE.attester.address]
+        : []),
+    ]) {
+      expect(utils.getAddress(address)).toEqual(address)
+    }
   })
 })

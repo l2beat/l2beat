@@ -5,20 +5,22 @@ import type {
   PrivacyExitWindow,
   PrivacySummaryValue,
   ProjectContracts,
-  ProjectCrops,
   ProjectDiscoveryUpdate,
   ProjectDisplay,
+  ProjectGarden,
   ProjectPermissions,
   ProjectPrivacyAdversaries,
+  ProjectPrivacyReferenceApp,
   ProjectStatuses,
   ProjectUpgradesAndGovernance,
   ProjectZkCatalogInfo,
 } from '@l2beat/config'
 import type {
+  PrivacyFlowBucketRecord,
   PrivacyFlowBucketTotalRecord,
-  PrivacyFlowDailyRecord,
   TokenValueRecord,
 } from '@l2beat/database'
+import type { OssificationHistory } from '@l2beat/shared/frontend'
 import type { ProjectId } from '@l2beat/shared-pure'
 import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import type { ProjectIconListItem } from '~/components/ProjectIconList'
@@ -29,6 +31,7 @@ import {
   type ProjectOssificationView,
 } from '~/server/features/projects/ossification/getProjectOssification'
 import { ps } from '~/server/projects'
+import { getLogger } from '~/server/utils/logger'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { PROJECT_PAGE_METADATA_FIELDS } from '~/utils/project/getProjectUrl'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
@@ -43,12 +46,16 @@ import type {
   PrivacyProject,
   PrivacyRelayerStat,
 } from './types'
+import { getPrivacyBucketTvls } from './utils/getPrivacyBucketTvls'
+import { getScalingProjectItems } from './utils/getPrivacyScalingLinks'
 import { getPrivacyTrackedChains } from './utils/getPrivacyTrackedChains'
 
 interface PrivacyProjectFlowData {
   totals: PrivacyFlowBucketTotalRecord[]
-  daily30d: PrivacyFlowDailyRecord[]
+  daily30d: PrivacyFlowBucketRecord[]
   tokenValues: TokenValueRecord[]
+  /** Value of each bucket's pool at its asset's latest TVL, by bucket id. */
+  bucketTvls: Map<string, number>
 }
 
 export interface PrivacyProjectDetails {
@@ -56,6 +63,7 @@ export interface PrivacyProjectDetails {
   slug: string
   name: string
   shortName?: string
+  archivedAt?: UnixTime
   display: ProjectDisplay
   contracts?: ProjectContracts
   permissions?: Record<string, ProjectPermissions>
@@ -63,11 +71,14 @@ export interface PrivacyProjectDetails {
   ossification?: ProjectOssificationView
   statuses: ProjectStatuses
   zkCatalogInfo?: ProjectZkCatalogInfo
-  crops?: ProjectCrops
+  garden?: ProjectGarden
+  /** Picks which `garden` verdict applies, see `ProjectGarden`. */
+  ossificationHistory?: OssificationHistory
   trustedSetups: ProjectZkCatalogInfo['trustedSetups']
   category: PrivacyCategory
   exitWindow: PrivacyExitWindow
   adversaries: ProjectPrivacyAdversaries
+  referenceApp?: ProjectPrivacyReferenceApp
   reproducibility: PrivacySummaryValue
   anonymitySetType: PrivacyAnonymitySetType | undefined
   hasTvl: boolean
@@ -77,6 +88,7 @@ export interface PrivacyProjectDetails {
   attributes: PrivacyAttribute[]
   milestones: Milestone[]
   trackedOn: ProjectIconListItem[]
+  scalingProjects: ProjectIconListItem[]
   assets: PrivacyAsset[]
   summary: {
     bucketCount: number
@@ -111,14 +123,16 @@ export async function getPrivacyProjectDetails(
   const last30dCutoff = currentDay - 30 * UnixTime.DAY
 
   const [
-    { totals, daily30d, tokenValues },
+    { totals, daily30d, tokenValues, bucketTvls },
     relayerStat,
     trackedOn,
+    scalingProjects,
     ossification,
   ] = await Promise.all([
     getPrivacyProjectFlowData(project, last30dCutoff, currentDay, now),
     getRelayerStat(project, UnixTime(now - 30 * UnixTime.DAY), now),
     getTrackedOn(project),
+    getScalingProjects(project),
     getProjectOssification(project),
   ])
 
@@ -137,8 +151,8 @@ export async function getPrivacyProjectDetails(
     totalIndex.set(`${total.projectId}::${total.bucketId}`, total)
   }
 
-  const daily30dIndex = new Map<string, PrivacyFlowDailyRecord>()
-  const daily7dIndex = new Map<string, PrivacyFlowDailyRecord>()
+  const daily30dIndex = new Map<string, PrivacyFlowBucketRecord>()
+  const daily7dIndex = new Map<string, PrivacyFlowBucketRecord>()
   for (const row of daily30d) {
     const key = `${row.projectId}::${row.bucketId}`
     const base = {
@@ -211,7 +225,7 @@ export async function getPrivacyProjectDetails(
         type: bucket.type,
         denomination: bucket.denomination,
         totalAmount: null,
-        totalValueUsd: null,
+        totalValueUsd: bucketTvls.get(bucket.id) ?? null,
         deposits: {
           total: depositCountTotal,
           last7d: depositCount7d,
@@ -278,6 +292,7 @@ export async function getPrivacyProjectDetails(
     slug: project.slug,
     name: project.name,
     shortName: project.shortName,
+    archivedAt: project.archivedAt,
     display: project.display,
     contracts: project.contracts,
     permissions: project.permissions,
@@ -285,11 +300,13 @@ export async function getPrivacyProjectDetails(
     ossification,
     statuses: project.statuses,
     zkCatalogInfo: project.zkCatalogInfo,
-    crops: project.crops,
+    garden: project.garden,
+    ossificationHistory: project.ossificationHistory,
     trustedSetups: project.trustedSetups,
     category: project.privacyInfo.category,
     exitWindow: project.privacyInfo.exitWindow,
     adversaries: project.privacyInfo.adversaries,
+    referenceApp: project.privacyInfo.referenceApp,
     reproducibility: project.privacyInfo.reproducibility,
     anonymitySetType: getPrivacyAnonymitySetType(project),
     hasTvl: project.tvsConfig !== undefined,
@@ -303,6 +320,7 @@ export async function getPrivacyProjectDetails(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
     ),
     trackedOn,
+    scalingProjects,
     assets: orderedAssets,
     summary: {
       bucketCount: summaryBucketCount,
@@ -339,6 +357,19 @@ async function getTrackedOn(
     optional: [...PROJECT_PAGE_METADATA_FIELDS],
   })
   return getPrivacyTrackedChains(project.privacyInfo.trackedOn, chainProjects)
+}
+
+async function getScalingProjects(
+  project: PrivacyProject,
+): Promise<ProjectIconListItem[]> {
+  const ids = project.privacyInfo.scalingProjects
+  if (!ids || ids.length === 0) return []
+  const scalingProjects = await ps.getProjects({
+    ids,
+    select: ['scalingInfo'],
+    optional: ['scalingStage', ...PROJECT_PAGE_METADATA_FIELDS],
+  })
+  return getScalingProjectItems(ids, scalingProjects)
 }
 
 const MIN_OBSERVED_DAYS_FOR_AVERAGE = 7
@@ -413,10 +444,28 @@ async function getPrivacyProjectFlowData(
   const db = getDb()
   const [totals, daily30d, tokenValues] = await Promise.all([
     db.privacyFlowEvent.getBucketTotalsByProjectIds([projectId]),
-    db.privacyFlowEvent.getDailyByProjectIds([projectId], from, to),
+    db.privacyFlowEvent.getBucketedByProjectIds([projectId], from, to, 'day'),
     db.tvsTokenValue.getLastNonZeroValue(now, projectId),
   ])
-  return { totals, daily30d, tokenValues }
+  const escrowValues = await db.tvsEscrowValue
+    .getByProjectAt(projectId, [
+      ...new Set(tokenValues.map((value) => value.timestamp)),
+    ])
+    .catch((error) => {
+      // Bucket values are optional, so the page still renders when they
+      // can't be read, e.g. before the backend has created their table.
+      getLogger()
+        .for('getPrivacyProjectDetails')
+        .warn('Escrow values unavailable', { projectId, error })
+      return []
+    })
+  const bucketTvls = getPrivacyBucketTvls(
+    project.privacyInfo.tokens,
+    project.tvsConfig ?? [],
+    tokenValues,
+    escrowValues,
+  )
+  return { totals, daily30d, tokenValues, bucketTvls }
 }
 
 function getMockPrivacyProjectFlowData(
@@ -443,7 +492,7 @@ function getMockPrivacyProjectFlowData(
     }),
   )
 
-  const daily30d: PrivacyFlowDailyRecord[] = []
+  const daily30d: PrivacyFlowBucketRecord[] = []
   for (let timestamp = from; timestamp <= to; timestamp += UnixTime.DAY) {
     for (const bucketId of bucketIds) {
       daily30d.push({
@@ -474,5 +523,9 @@ function getMockPrivacyProjectFlowData(
     }),
   )
 
-  return { totals, daily30d, tokenValues }
+  const bucketTvls = new Map(
+    bucketIds.map((bucketId) => [bucketId, Math.random() * 1_000_000]),
+  )
+
+  return { totals, daily30d, tokenValues, bucketTvls }
 }

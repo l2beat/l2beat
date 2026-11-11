@@ -1,0 +1,87 @@
+import { TooltipProvider } from '../../../../components/Tooltip'
+import { IS_READONLY } from '../../../../config/readonly'
+import { cn } from '../../../../utils/cn'
+import { SettingsDialog } from '../../multi-view/settings/SettingsDialog'
+import { useStore } from '../store/store'
+import { AutoLayoutMenu } from './canvas/AutoLayoutMenu'
+import { HistoryButtons } from './canvas/HistoryButtons'
+import { LayoutLibrary } from './canvas/LayoutLibrary'
+import { ToolButtons } from './canvas/ToolButtons'
+import { VisibilityMenu } from './canvas/VisibilityMenu'
+import { IconControlGear } from './icons/IconControlGear'
+import { AlignMenu } from './selection/AlignMenu'
+import { ColorButton } from './selection/ColorButton'
+import { GroupButtons } from './selection/GroupButtons'
+import { HideButton } from './selection/HideButton'
+import { ModuleButton } from './selection/ModuleButton'
+import { SelectionName } from './selection/SelectionName'
+import { selectOnlySelectedNode } from './selection/selectOnlySelectedNode'
+import { ValuesButton } from './selection/ValuesButton'
+import { Toolbar, ToolbarSection } from './Toolbar'
+import { ToolbarButton } from './ToolbarButton'
+
+export function Controls() {
+  const hasSelection = useStore((state) => state.selected.length > 0)
+  const onlySelected = useStore(selectOnlySelectedNode)
+  const isGroupSelected =
+    onlySelected !== undefined && onlySelected.subnodes.length > 0
+
+  return (
+    <TooltipProvider>
+      <div className="@container pointer-events-none absolute inset-x-2 bottom-3 z-10 flex flex-col items-center gap-1.5">
+        {hasSelection && (
+          <Toolbar label="Selection">
+            <ToolbarSection
+              label="Selected nodes"
+              className={cn(!isGroupSelected && '@max-md:hidden')}
+            >
+              <SelectionName />
+            </ToolbarSection>
+            <ToolbarSection
+              label="Appearance"
+              className={cn(
+                !isGroupSelected &&
+                  '@max-md:ml-0 @max-md:border-l-0 @max-md:pl-0',
+              )}
+            >
+              <ColorButton />
+              <ValuesButton />
+              <HideButton />
+            </ToolbarSection>
+            <ToolbarSection label="Arrange">
+              <GroupButtons />
+              <AlignMenu />
+              {!IS_READONLY && <ModuleButton />}
+            </ToolbarSection>
+          </Toolbar>
+        )}
+        <Toolbar label="Canvas">
+          <ToolbarSection label="Tools">
+            <ToolButtons />
+          </ToolbarSection>
+          <ToolbarSection label="History">
+            <HistoryButtons />
+          </ToolbarSection>
+          <ToolbarSection label="Graph">
+            <AutoLayoutMenu />
+            <VisibilityMenu />
+          </ToolbarSection>
+          <ToolbarSection label="Panel">
+            <LayoutLibrary />
+            {/* Phones hide the top bar, so its settings button is unreachable. */}
+            <div className="md:hidden">
+              <SettingsDialog
+                defaultTabId="nodes"
+                trigger={
+                  <ToolbarButton label="Settings">
+                    <IconControlGear />
+                  </ToolbarButton>
+                }
+              />
+            </div>
+          </ToolbarSection>
+        </Toolbar>
+      </div>
+    </TooltipProvider>
+  )
+}

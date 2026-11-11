@@ -27,6 +27,8 @@ import {
 import {
   findHyperlaneChain,
   HyperlaneConfig,
+  type HyperlaneWarpRouteScale,
+  HyperlaneWarpRouteScalesConfig,
   HyperlaneWarpRoutesConfig,
   hyperlaneWarpRouteKey,
 } from './hyperlane.config'
@@ -122,9 +124,11 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
   capture(input: LogToCapture) {
     const networks = this.configs.get(HyperlaneConfig) ?? []
     const warpRoutes = this.configs.get(HyperlaneWarpRoutesConfig) ?? {}
-    const warpRouteStandard =
-      warpRoutes[hyperlaneWarpRouteKey(input.chain, input.log.address)]
-    const isNativeWarpRoute = warpRouteStandard === 'EvmHypNative'
+    const warpRouteScales =
+      this.configs.get(HyperlaneWarpRouteScalesConfig) ?? {}
+    const warpRouteKey = hyperlaneWarpRouteKey(input.chain, input.log.address)
+    const isNativeWarpRoute = warpRoutes[warpRouteKey] === 'EvmHypNative'
+    const warpRouteScale = warpRouteScales[warpRouteKey]
 
     if (input.tx.kind !== 'canonical') {
       return
@@ -165,17 +169,15 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
         input.log.logIndex!,
         (log, _index) => parseCctpDepositForBurn(log),
       )
+      const amount = toLocalAmount(sentTransferRemote.amount, warpRouteScale)
       const transferMatch = isNativeWarpRoute
         ? { hasTransfer: false }
         : findBestTransferLog(
             input.txLogs,
-            depositForBurn?.amount ?? sentTransferRemote.amount,
+            depositForBurn?.amount ?? amount,
             // biome-ignore lint/style/noNonNullAssertion: It's there
             input.log.logIndex!,
           )
-      const amountWhenNoTransfer = isNativeWarpRoute
-        ? sentTransferRemote.amount
-        : (input.tx.value ?? 0n)
       if (depositForBurn) {
         return [
           HwrTransferSent.create(input, {
@@ -193,17 +195,17 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
         ]
       }
 
+      // Without a token Transfer the route may be native or an NFT, so only
+      // routes the registry lists as native are treated as native
+      if (!isNativeWarpRoute && !transferMatch.hasTransfer) return
+
       return [
         HwrTransferSent.create(input, {
           messageId,
           $dstChain,
           destination: Number(sentTransferRemote.destination),
           recipient: Address32.from(sentTransferRemote.recipient),
-          amount: pickTransferAmount(
-            sentTransferRemote.amount,
-            transferMatch,
-            amountWhenNoTransfer,
-          ),
+          amount: transferMatch.transfer?.value ?? amount,
           tokenAddress: transferMatch.transfer?.logAddress ?? Address32.NATIVE,
           cctp: false,
           burned: transferMatch.transfer
@@ -240,17 +242,23 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
         Number(receivedTransferRemote.origin),
       )
 
+      const recipient = Address32.from(receivedTransferRemote.recipient)
+      const amount = toLocalAmount(
+        receivedTransferRemote.amount,
+        warpRouteScale,
+      )
+      // Batched deliveries carry Transfers to other recipients
       const transferMatch = isNativeWarpRoute
         ? { hasTransfer: false }
         : findBestTransferLog(
             input.txLogs,
-            receivedTransferRemote.amount,
+            amount,
             // biome-ignore lint/style/noNonNullAssertion: It's there
             input.log.logIndex!,
+            (transfer) => transfer.to === recipient,
           )
-      const amountWhenNoTransfer = isNativeWarpRoute
-        ? receivedTransferRemote.amount
-        : (input.tx.value ?? 0n)
+      if (!isNativeWarpRoute && !transferMatch.hasTransfer) return
+
       const dstTokenData = transferMatch.transfer
         ? {
             address: transferMatch.transfer.logAddress,
@@ -263,12 +271,8 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
           messageId,
           $srcChain,
           origin: Number(receivedTransferRemote.origin),
-          recipient: Address32.from(receivedTransferRemote.recipient),
-          amount: pickTransferAmount(
-            receivedTransferRemote.amount,
-            transferMatch,
-            amountWhenNoTransfer,
-          ),
+          recipient,
+          amount: transferMatch.transfer?.value ?? amount,
           tokenAddress: dstTokenData?.address ?? Address32.NATIVE,
           minted: dstTokenData?.minted ?? false,
         }),
@@ -384,24 +388,24 @@ export function findBestTransferLog(
   logs: LogToCapture['txLogs'],
   targetAmount: bigint,
   startLogIndex: number,
+  predicate?: (transfer: ParsedTransferLog) => boolean,
 ): { transfer?: ParsedTransferLog; hasTransfer: boolean } {
   return findBestTransferLogWithParser(
     logs,
     targetAmount,
     startLogIndex,
     (log) => parseTransfer(log, null),
+    predicate,
   )
 }
 
-function pickTransferAmount(
-  targetAmount: bigint,
-  transferMatch: { transfer?: ParsedTransferLog; hasTransfer: boolean },
-  amountWhenNoTransfer: bigint,
+// SentTransferRemote and ReceivedTransferRemote carry the message amount, which
+// the router scales from the local token's decimals (e.g. 18-decimal BSC USDC
+// is sent as 6 decimals)
+function toLocalAmount(
+  messageAmount: bigint,
+  scale: HyperlaneWarpRouteScale | undefined,
 ): bigint {
-  if (!transferMatch.hasTransfer) return amountWhenNoTransfer
-  const transferValue = transferMatch.transfer?.value
-  if (transferValue !== undefined && transferValue !== targetAmount) {
-    return transferValue
-  }
-  return targetAmount
+  if (!scale) return messageAmount
+  return (messageAmount * BigInt(scale.denominator)) / BigInt(scale.numerator)
 }

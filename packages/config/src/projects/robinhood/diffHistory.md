@@ -1,3 +1,123 @@
+Generated with discovered.json: 0xb31d9f698d9996067ff9b534e05682b808fcff72
+
+# Diff at Fri, 06 Nov 2026 17:35:37 GMT:
+
+- id: 3e0c73b5
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@42d599abc7be8cc38122c72abc4da1c1dda6fbeb block: 1793196526
+- current timestamp: 1793984419
+
+## Description
+
+ArbFilteredTransactionsManager: 4 more filtered transactions.
+
+## Watched changes
+
+```diff
+    contract ArbFilteredTransactionsManager (robinhood:0x0000000000000000000000000000000000000074) [N/A] {
+    +++ description: ArbOS 61 transaction-filtering precompile. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.
+      values.filteredTransactionsAdded:
+-        6228
++        6232
+    }
+```
+
+Generated with discovered.json: 0x5510ca7bdcaa6403810068742f848cc2037bfb3f
+
+# Diff at Wed, 28 Oct 2026 14:12:44 GMT:
+
+- id: c57b8808
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@cc7e9e73c101d0a260af6bfe078851f3ff1d60cb block: 1793113693
+- current timestamp: 1793196526
+
+## Description
+
+ArbFilteredTransactionsManager: FilteredTransactionAdded events 6208 → 6228, all forced L1 transactions targeting the same frozen wallet holding most of the Green Bull (VLAD) memecoin supply.
+
+## Watched changes
+
+```diff
+    contract ArbFilteredTransactionsManager (robinhood:0x0000000000000000000000000000000000000074) [N/A] {
+    +++ description: ArbOS 61 transaction-filtering precompile. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.
+      values.filteredTransactionsAdded:
+-        6208
++        6228
+    }
+```
+
+Generated with discovered.json: 0x519dccb9495d0fc74e431aa688cc8b518567a107
+
+# Diff at Tue, 27 Oct 2026 15:10:29 GMT:
+
+- id: ae79d956
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b3346aafa392488900d7a556a206cfabc7acf611 block: 1792661570
+- current timestamp: 1793113693
+
+## Description
+
+ArbFilteredTransactionsManager: filter list 6150 → 6208.
+
+## Watched changes
+
+```diff
+    contract ArbFilteredTransactionsManager (robinhood:0x0000000000000000000000000000000000000074) [N/A] {
+    +++ description: ArbOS 61 transaction-filtering precompile. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.
+      values.filteredTransactionsAdded:
+-        6150
++        6208
+    }
+```
+
+Generated with discovered.json: 0x967527dc5790af79b8cb82978e634de315017827
+
+# Diff at Thu, 22 Oct 2026 09:31:57 GMT:
+
+- id: 66bab08b
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@bec160b11359d152c893eb245856d63bc5076062 block: 1792495058
+- current timestamp: 1792661570
+
+## Description
+
+ArbFilteredTransactionsManager: filter list 6144 → 6150. The new entries are forced L1 transactions trying to move funds out of a frozen wallet holding most of the Green Bull (VLAD) memecoin supply, as are nearly all filtered transactions so far.
+
+## Watched changes
+
+```diff
+    contract ArbFilteredTransactionsManager (robinhood:0x0000000000000000000000000000000000000074) [N/A] {
+    +++ description: ArbOS 61 transaction-filtering precompile. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.
+      values.filteredTransactionsAdded:
+-        6144
++        6150
+    }
+```
+
+Generated with discovered.json: 0xc12309498d9428ae476a29867d0c7c981f66056a
+
+# Diff at Wed, 21 Oct 2026 12:46:56 GMT:
+
+- id: 8b235667
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@dc08d98704842a5d838f9a032c606eefa07d4154 block: 1790671700
+- current timestamp: 1792495058
+
+## Description
+
+ArbFilteredTransactionsManager: filter list 6096 → 6144.
+
+## Watched changes
+
+```diff
+    contract ArbFilteredTransactionsManager (robinhood:0x0000000000000000000000000000000000000074) [N/A] {
+    +++ description: ArbOS 61 transaction-filtering precompile. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.
+      values.filteredTransactionsAdded:
+-        6096
++        6144
+    }
+```
+
 Generated with discovered.json: 0xe430380481f2b90be2f48de06c6812f83dfde2aa
 
 # Diff at Tue, 20 Oct 2026 12:40:03 GMT:

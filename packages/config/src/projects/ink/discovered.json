@@ -1,7 +1,7 @@
 {
   "name": "ink",
-  "timestamp": 1790862352,
-  "configHash": "0xd8e2c40318ae560fdd12bde2f372cbcefe03d77b266f8e507998fbe24fd88718",
+  "timestamp": 1792587967,
+  "configHash": "0xdf4a9b86757081746cdfef567f0cd75d5bd34540d63782e47f4d03c8da57dbe7",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -189,7 +189,7 @@
         "game9Args": "0x031ac6f15c19010da258f5cb633ef6ca9318c2d0f244bea6b2045ce6b790e1dfacc005dcd857b401e4732e6f7837135a22825cfaee018baf058227872540ac60efbd38b023d9dae257b4c29daee99a28e6e86778b499361294c134ea0000000000000000000000000000000000000000000000000000000000000000",
         "game9Vm": "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA",
         "game9Weth": "eth:0x57b4C29DAee99a28E6E86778b499361294c134eA",
-        "gameCount": 2537,
+        "gameCount": 2581,
         "initBondGame0": 0,
         "initBondGame1": 0,
         "initBondGame42": 0,
@@ -327,6 +327,11 @@
       "implementationNames": {
         "eth:0x1E1d73536A081Ef2F355d29794547a9770Aeb1E0": "PreimageOracle"
       }
+    },
+    {
+      "address": "eth:0x1eB630b2e7409597D462dd5f3D21E305FC56B8C9",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "LivenessGuard",
@@ -470,7 +475,7 @@
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "symbol": "WETH",
         "systemConfig": "eth:0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364",
-        "totalSupply": "5790376000000000000",
+        "totalSupply": "6313141400000000000",
         "version": "1.5.1"
       },
       "implementationNames": {
@@ -647,7 +652,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 514422,
-          "prevBlockNum": 26097740
+          "prevBlockNum": 26241063
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1088,7 +1093,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292651421",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292652381",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1174,11 +1179,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x7F1D4FE689B73B628285454667B93cfd09409f27",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "OpFoundationUpgradeSafe",
       "address": "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
       "type": "Contract",
@@ -1199,7 +1199,7 @@
           "eth:0xf1EfbdC2C0BDC4554E0f1639D7fe88cD870a4639",
           "eth:0x3041BA32f451F5850c147805F5521AC206421623",
           "eth:0xC2Db495f5a1F91172A361AAFA6FdE47c41de6dF5",
-          "eth:0x7F1D4FE689B73B628285454667B93cfd09409f27",
+          "eth:0xa564C83958f7F9fA5a255a540EF5e49445873104",
           "eth:0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
           "eth:0x69acfE2096Dfb8d5A041eF37693553c48d9BFd02",
           "eth:0xa2A58E31C03C59e34ab4d996d811DA0C035BfDea"
@@ -1211,7 +1211,7 @@
           "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
         ],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 73,
+        "nonce": 74,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1388,6 +1388,16 @@
     },
     {
       "address": "eth:0xa2A58E31C03C59e34ab4d996d811DA0C035BfDea",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xa564C83958f7F9fA5a255a540EF5e49445873104",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xa6f0F94C13C4255231958079E7331694205F6c93",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1791,13 +1801,13 @@
           ]
         ],
         "$upgradeCount": 9,
-        "anchorGame": "eth:0x0000000000000000000000000000000000000000",
+        "anchorGame": "eth:0xb5b45863ac575Fd1a903EAa97544352dF857107f",
         "blacklistedGames": [],
         "disputeGameFactory": "eth:0x10d7B35078d3baabB96Dd45a9143B94be65b12CD",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x25b22a0c711fa1d01b3cdb95fb98c0e7ff003b00909bfe8fade3507a6e62d44e",
-          1788848282
+          "0x30389be4d93e6d69fe17db34259fc2753267b1158a6e807db7bef22588275343",
+          1791954839
         ],
         "getStartingAnchorRoot": {
           "root": "0x25b22a0c711fa1d01b3cdb95fb98c0e7ff003b00909bfe8fade3507a6e62d44e",
@@ -1851,11 +1861,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "ink:0x1eB630b2e7409597D462dd5f3D21E305FC56B8C9",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "L2CrossDomainMessenger",
       "address": "ink:0x4200000000000000000000000000000000000007",
       "type": "Contract",
@@ -1891,7 +1896,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "l1CrossDomainMessenger": "eth:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621347",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621351",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1952,7 +1957,7 @@
         "$upgradeCount": 3,
         "baseFee": 0,
         "baseFeeScalar": 4424,
-        "blobBaseFee": 20988573,
+        "blobBaseFee": 5303886,
         "blobBaseFeeScalar": 810831,
         "decimals": 6,
         "DECIMALS": 6,
@@ -1961,7 +1966,7 @@
         "isFjord": true,
         "isIsthmus": true,
         "isJovian": true,
-        "l1BaseFee": 358869314,
+        "l1BaseFee": 97014248,
         "version": "1.6.0"
       },
       "implementationNames": {
@@ -2021,13 +2026,13 @@
       "name": "SequencerFeeVault",
       "address": "ink:0x4200000000000000000000000000000000000011",
       "type": "Contract",
-      "template": "opstack/Layer2/SequencerFeeVault",
+      "template": "opstack/Layer2/SequencerFeeVault_karst",
       "sourceHashes": [
         "0x6a90057e0a817ce81f9ed4b565f5efdbf1ebf76d5f59f3ce62f2994455e8199d",
         "0xb45389729a8fffa7650568cd2922e482d03d3ed57b35f4819650d11174d9237a"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.",
+      "description": "Collects the sequencer fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.",
       "deployerAddress": "ink:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1733498412,
       "sinceBlock": 0,
@@ -2047,13 +2052,13 @@
           ]
         ],
         "$upgradeCount": 2,
-        "l1FeeWallet": "ink:0xa6f0F94C13C4255231958079E7331694205F6c93",
+        "l1FeeWallet": "eth:0xa6f0F94C13C4255231958079E7331694205F6c93",
         "MIN_WITHDRAWAL_AMOUNT": "2000000000000000000",
         "minWithdrawalAmount": "2000000000000000000",
         "proxyAdmin": "ink:0x4200000000000000000000000000000000000018",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "recipient": "ink:0xa6f0F94C13C4255231958079E7331694205F6c93",
-        "RECIPIENT": "ink:0xa6f0F94C13C4255231958079E7331694205F6c93",
+        "recipient": "eth:0xa6f0F94C13C4255231958079E7331694205F6c93",
+        "RECIPIENT": "eth:0xa6f0F94C13C4255231958079E7331694205F6c93",
         "version": "1.6.1",
         "WITHDRAWAL_NETWORK": 0,
         "withdrawalNetwork": 0
@@ -2062,6 +2067,9 @@
         "ink:0x4200000000000000000000000000000000000011": "Proxy",
         "ink:0xb178cdAa8336f25624A63C049EdB5AF7ca36C2dA": "SequencerFeeVault"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }
+      ],
       "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
@@ -2221,10 +2229,10 @@
           ]
         ],
         "$upgradeCount": 3,
-        "basefee": 358869314,
+        "basefee": 97014248,
         "baseFeeScalar": 4424,
         "batcherHash": "0x0000000000000000000000006db6161fc5662450e801398bad62dd9921216b98",
-        "blobBaseFee": 20988573,
+        "blobBaseFee": 5303886,
         "blobBaseFeeScalar": 810831,
         "daFootprintGasScalar": 400,
         "DEPOSITOR_ACCOUNT": "ink:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -2234,17 +2242,17 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0x0d3854e10c386ef91dfc18d2f594cca122d7460ee68c390a70031f17def6a294",
+        "hash": "0xb89642b7e443ef2423a5a534e824d83054f8bc725e67b3f21c7eebac51801039",
         "isCustomGasToken": false,
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 26097846,
+        "number": 26241156,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
         "proxyAdmin": "ink:0x4200000000000000000000000000000000000018",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "sequenceNumber": 7,
-        "timestamp": 1790862275,
+        "sequenceNumber": 4,
+        "timestamp": 1792587887,
         "version": "1.9.0"
       },
       "implementationNames": {
@@ -2381,7 +2389,7 @@
         "0xf7b9f825b6af20abb355da09822d54e6e3fa7243439293826bd7271f87747775"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.",
+      "description": "Collects the EIP-1559 base fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.",
       "deployerAddress": "ink:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1733498412,
       "sinceBlock": 0,
@@ -2405,8 +2413,8 @@
         "minWithdrawalAmount": "2000000000000000000",
         "proxyAdmin": "ink:0x4200000000000000000000000000000000000018",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "recipient": "ink:0xa6f0F94C13C4255231958079E7331694205F6c93",
-        "RECIPIENT": "ink:0xa6f0F94C13C4255231958079E7331694205F6c93",
+        "recipient": "eth:0xa6f0F94C13C4255231958079E7331694205F6c93",
+        "RECIPIENT": "eth:0xa6f0F94C13C4255231958079E7331694205F6c93",
         "version": "1.6.1",
         "WITHDRAWAL_NETWORK": 0,
         "withdrawalNetwork": 0
@@ -2415,6 +2423,9 @@
         "ink:0x4200000000000000000000000000000000000019": "Proxy",
         "ink:0xf7bed7215EEF1003fac426682Cf2edeb958569f7": "BaseFeeVault"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }
+      ],
       "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
@@ -2427,7 +2438,7 @@
         "0xf7b9f825b6af20abb355da09822d54e6e3fa7243439293826bd7271f87747775"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.",
+      "description": "Collects the L1 data portion of the L2 transaction fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.",
       "deployerAddress": "ink:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1733498412,
       "sinceBlock": 0,
@@ -2451,8 +2462,8 @@
         "minWithdrawalAmount": "150000000000000000",
         "proxyAdmin": "ink:0x4200000000000000000000000000000000000018",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "recipient": "ink:0x1eB630b2e7409597D462dd5f3D21E305FC56B8C9",
-        "RECIPIENT": "ink:0x1eB630b2e7409597D462dd5f3D21E305FC56B8C9",
+        "recipient": "eth:0x1eB630b2e7409597D462dd5f3D21E305FC56B8C9",
+        "RECIPIENT": "eth:0x1eB630b2e7409597D462dd5f3D21E305FC56B8C9",
         "version": "1.6.1",
         "WITHDRAWAL_NETWORK": 0,
         "withdrawalNetwork": 0
@@ -2461,6 +2472,65 @@
         "ink:0x420000000000000000000000000000000000001A": "Proxy",
         "ink:0xf7bed7215EEF1003fac426682Cf2edeb958569f7": "BaseFeeVault"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }
+      ],
+      "category": { "name": "Non-Critical", "priority": 0 }
+    },
+    {
+      "name": "OperatorFeeVault",
+      "address": "ink:0x420000000000000000000000000000000000001b",
+      "type": "Contract",
+      "template": "opstack/Layer2/OperatorFeeVault_karst",
+      "sourceHashes": [
+        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
+        "0x0ba9b644913957c9f60eda0ab433da4523bb2437156e4dd8dadca627c884ba2a"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Collects the operator fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.",
+      "ignoreInWatchMode": ["totalProcessed"],
+      "deployerAddress": "ink:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1733498412,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "ink:0x4200000000000000000000000000000000000018",
+        "$implementation": "ink:0xEddf416c7159387cc6DF3015700F79Cfb8911373",
+        "$pastUpgrades": [
+          [
+            "2025-05-09T16:00:01.000Z",
+            "0xf162acc8ebbaf9237755736b62331a4817fe27bbbe3712f473ecfa8fee499f7c",
+            ["ink:0x4fa2Be8cd41504037F1838BcE3bCC93bC68Ff537"]
+          ],
+          [
+            "2026-07-08T16:00:01.000Z",
+            "0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",
+            ["ink:0x2A5A3eabB9Fd571A3Af0299eebdF8EaafE29a914"]
+          ],
+          [
+            "2026-07-08T16:00:01.000Z",
+            "0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",
+            ["ink:0xEddf416c7159387cc6DF3015700F79Cfb8911373"]
+          ]
+        ],
+        "$upgradeCount": 3,
+        "MIN_WITHDRAWAL_AMOUNT": "150000000000000000",
+        "minWithdrawalAmount": "150000000000000000",
+        "proxyAdmin": "ink:0x4200000000000000000000000000000000000018",
+        "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
+        "recipient": "eth:0x1eB630b2e7409597D462dd5f3D21E305FC56B8C9",
+        "RECIPIENT": "eth:0x1eB630b2e7409597D462dd5f3D21E305FC56B8C9",
+        "totalProcessed": 0,
+        "version": "1.1.1",
+        "WITHDRAWAL_NETWORK": 0,
+        "withdrawalNetwork": 0
+      },
+      "implementationNames": {
+        "ink:0x420000000000000000000000000000000000001b": "Proxy",
+        "ink:0xEddf416c7159387cc6DF3015700F79Cfb8911373": "OperatorFeeVault"
+      },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }
+      ],
       "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
@@ -2531,11 +2601,6 @@
         "ink:0x4200000000000000000000000000000000000021": "Proxy",
         "ink:0xbEc660b456B84A081E90aF29BE43385BDa5bF7b6": "EAS"
       }
-    },
-    {
-      "address": "ink:0xa6f0F94C13C4255231958079E7331694205F6c93",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "ink:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -3786,6 +3851,16 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
+    "ink:0x420000000000000000000000000000000000001b": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
     "ink:0x4200000000000000000000000000000000000020": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -4075,6 +4150,37 @@
       "function getL1BlockNumber() view returns (uint256)",
       "function version() view returns (string)"
     ],
+    "ink:0xEddf416c7159387cc6DF3015700F79Cfb8911373": [
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error ProxyAdminOwnedBase_NotProxyAdmin()",
+      "error ProxyAdminOwnedBase_NotProxyAdminOrProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_NotProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_NotResolvedDelegateProxy()",
+      "error ProxyAdminOwnedBase_NotSharedProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_ProxyAdminNotFound()",
+      "event Initialized(uint64 version)",
+      "event MinWithdrawalAmountUpdated(uint256 oldWithdrawalAmount, uint256 newWithdrawalAmount)",
+      "event RecipientUpdated(address oldRecipient, address newRecipient)",
+      "event Withdrawal(uint256 value, address to, address from)",
+      "event Withdrawal(uint256 value, address to, address from, uint8 withdrawalNetwork)",
+      "event WithdrawalNetworkUpdated(uint8 oldWithdrawalNetwork, uint8 newWithdrawalNetwork)",
+      "function MIN_WITHDRAWAL_AMOUNT() view returns (uint256)",
+      "function RECIPIENT() view returns (address)",
+      "function WITHDRAWAL_NETWORK() view returns (uint8)",
+      "function initialize(address _recipient, uint256 _minWithdrawalAmount, uint8 _withdrawalNetwork)",
+      "function minWithdrawalAmount() view returns (uint256)",
+      "function proxyAdmin() view returns (address)",
+      "function proxyAdminOwner() view returns (address)",
+      "function recipient() view returns (address)",
+      "function setMinWithdrawalAmount(uint256 _newMinWithdrawalAmount)",
+      "function setRecipient(address _newRecipient)",
+      "function setWithdrawalNetwork(uint8 _newWithdrawalNetwork)",
+      "function totalProcessed() view returns (uint256)",
+      "function version() view returns (string)",
+      "function withdraw() returns (uint256 value_)",
+      "function withdrawalNetwork() view returns (uint8)"
+    ],
     "ink:0xf43862B9d814BB4504158CecCB0b74b31265e4eE": [
       "constructor()",
       "error ProxyAdminOwnedBase_NotProxyAdmin()",
@@ -4143,20 +4249,21 @@
     "opstack/L1CrossDomainMessenger": "0xb744f567252900c5026a2b29403304c6744365159db35005ebd26e5236be1b27",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0xe12a1d11b528a86198802d42c94a6960c55724bcfaf859346be9755694a1c641",
-    "opstack/Layer2/BaseFeeVault_karst": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
+    "opstack/Layer2/BaseFeeVault_karst": "0x1e841246c5db643208c1cc742c0f02036672e48e3ef31425be11bd69b342355d",
     "opstack/Layer2/EAS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/GasPriceOracle": "0x8f497de83556de92a063c31d97188024782f910b9b1f254812e9e6b58ece0ccf",
     "opstack/Layer2/L1Block": "0x285f931e841dfeccb9fd8de970781403669decd9880ffbed39a4c35bf5c15333",
     "opstack/Layer2/L1BlockNumber": "0x21c6e550d144ce1c4b375c15824ea847ca6ac0e5fcd4f3f388bd296e8f014797",
-    "opstack/Layer2/L1FeeVault_karst": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
+    "opstack/Layer2/L1FeeVault_karst": "0x1e841246c5db643208c1cc742c0f02036672e48e3ef31425be11bd69b342355d",
     "opstack/Layer2/L2CrossDomainMessenger": "0x6b2f3325184c69786aa4c8225442dd9b795b30aab09628af226705b0b5a30644",
     "opstack/Layer2/L2ERC721Bridge": "0x134c37b08d464eb53a9ae063f26e795155695ec752fda38644e23175466793ca",
     "opstack/Layer2/L2ProxyAdmin_karst": "0x70d00d08dd524425b6612b13b16781498c13da3b7e3fac0a5ccd63078eeb5644",
     "opstack/Layer2/L2StandardBridge": "0x424b2343f5b2cefc1794c1fb948f48409ba0376f49d8694d66914f6127164b5b",
     "opstack/Layer2/L2ToL1MessagePasser": "0x3f407b76384248e32af67feefe154f34a2c61ee1576e0e3037e095d556534fc3",
+    "opstack/Layer2/OperatorFeeVault_karst": "0x1f250e90d2d74f90bd6cf2229287042f4f2677832e928a76f18dc0af01c3d81b",
     "opstack/Layer2/OptimismMintableERC721Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/SchemaRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
+    "opstack/Layer2/SequencerFeeVault_karst": "0x1e841246c5db643208c1cc742c0f02036672e48e3ef31425be11bd69b342355d",
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismPortal2": "0xe53b15bf3d92307599513bfc4cc3c92ccbd3b002df06d48f2e462ec4d7770f28",
@@ -4166,8 +4273,8 @@
     "opstack/SuperPermissionedDisputeGame": "0xa146247ae93d5a2d8d731791462cda682c3558bd36eceef57df055c8d7cfdfd9",
     "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7"
   },
-  "usedBlockNumbers": { "ethereum": 26097852, "ink": 57363941 },
-  "permissionsConfigHash": "0xd84b13919348dd3b831b28c8bdd3eb14b8c5147b75355ade302cecf375131aaa",
+  "usedBlockNumbers": { "ethereum": 26241162, "ink": 59089556 },
+  "permissionsConfigHash": "0x42ae43b1be59dae9c69adb82b98486d4e78045edd7b1875613609fa6388ce228",
   "permissions": {
     "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": {
       "directlyReceivedPermissions": [
@@ -4263,6 +4370,30 @@
           "via": [
             { "address": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }
           ]
+        },
+        {
+          "permission": "interact",
+          "from": "ink:0x4200000000000000000000000000000000000011",
+          "description": "change the fee recipient, the minimum withdrawal amount and whether fees are withdrawn on L1 or L2.",
+          "role": ".proxyAdminOwner"
+        },
+        {
+          "permission": "interact",
+          "from": "ink:0x4200000000000000000000000000000000000019",
+          "description": "change the fee recipient, the minimum withdrawal amount and whether fees are withdrawn on L1 or L2.",
+          "role": ".proxyAdminOwner"
+        },
+        {
+          "permission": "interact",
+          "from": "ink:0x420000000000000000000000000000000000001A",
+          "description": "change the fee recipient, the minimum withdrawal amount and whether fees are withdrawn on L1 or L2.",
+          "role": ".proxyAdminOwner"
+        },
+        {
+          "permission": "interact",
+          "from": "ink:0x420000000000000000000000000000000000001b",
+          "description": "change the fee recipient, the minimum withdrawal amount and whether fees are withdrawn on L1 or L2.",
+          "role": ".proxyAdminOwner"
         },
         {
           "permission": "upgrade",
@@ -4451,6 +4582,14 @@
         {
           "permission": "upgrade",
           "from": "ink:0x420000000000000000000000000000000000001A",
+          "role": "admin",
+          "via": [
+            { "address": "ink:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "ink:0x420000000000000000000000000000000000001b",
           "role": "admin",
           "via": [
             { "address": "ink:0x4200000000000000000000000000000000000018" }
@@ -4716,6 +4855,11 @@
         {
           "permission": "upgrade",
           "from": "ink:0x420000000000000000000000000000000000001A",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ink:0x420000000000000000000000000000000000001b",
           "role": "admin"
         },
         {

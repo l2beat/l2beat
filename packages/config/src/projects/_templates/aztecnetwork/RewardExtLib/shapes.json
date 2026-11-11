@@ -3,5 +3,11 @@
     "hash": "0x6a07ad9524a29f0c193ab7a712c898133134cea16d7c866fe5f55a642f7820e5",
     "address": "eth:0xD6E890c615d6f99681a00771C20ed04516288898",
     "blockNumber": 25428902
+  },
+  "RewardExtLib_v6.sol": {
+    "hash": "0x846bac87aab4773beace2d08678586d753d9b5c3c3bd991a98c05ebacc6be41f",
+    "address": "eth:0x6A76197044f6FFcA086523b1A89654E626778bf1",
+    "chain": "ethereum",
+    "blockNumber": 26160096
   }
 }

@@ -1,6 +1,6 @@
 import { expect, type Page, test } from 'playwright/test'
 import { checkDehydrated, type DehydratedResult } from './dehydrated'
-import { DYNAMIC_PAGES, type PageToVerify, STATIC_PAGES } from './pages'
+import { PAGES, type PageToVerify } from './pages'
 import {
   checkNoRefetch,
   type NoRefetchResult,
@@ -10,23 +10,8 @@ import {
 test.describe.configure({ mode: 'parallel' })
 
 test.describe('tRPC SSR prefetches', () => {
-  for (const pageToVerify of STATIC_PAGES) {
+  for (const pageToVerify of PAGES) {
     test(pageToVerify.url, async ({ baseURL, page }) => {
-      await verifyPrefetches({ baseURL, page, pageToVerify })
-    })
-  }
-
-  for (const dynamicPage of DYNAMIC_PAGES) {
-    test(dynamicPage.name, async ({ baseURL, page }) => {
-      const pageToVerify = await dynamicPage.resolve()
-      if (!pageToVerify) {
-        test.skip(
-          true,
-          `${dynamicPage.name} could not be resolved from project config`,
-        )
-        return
-      }
-
       await verifyPrefetches({ baseURL, page, pageToVerify })
     })
   }

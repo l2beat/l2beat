@@ -4,10 +4,10 @@
  */
 
 export const ZK_CATALOG_DESCRIPTION =
-  'ZK Catalog by L2BEAT is a community-driven resource offering detailed insights into the ZK technology utilized by various blockchain projects. It aims to enhance transparency and understanding of ZK tech implementations across the industry.'
+  'ZK Catalog by ETHBEAT is a community-driven resource offering detailed insights into the ZK technology utilized by various blockchain projects. It aims to enhance transparency and understanding of ZK tech implementations across the industry.'
 
 export const PRIVACY_SUMMARY_DESCRIPTION =
   'Reviews of privacy protocols on Ethereum: privacy pools, shielded ledgers, stealth addresses, confidential tokens and anonymous access. Each is rated by what it hides from each adversary, alongside its anonymity set and trusted setup where it has them. The reviews follow the CROPS principles: censorship resistance, open source, privacy and security.'
 
-export const DEFI_SUMMARY_DESCRIPTION =
-  'Overview of DeFi protocols tracked by L2BEAT.'
+export const LIQUID_STAKING_DESCRIPTION =
+  'A risk comparison of Ethereum liquid staking protocols: who can mint the token, who runs the validators, where the backing sits, who sets the exchange rate, how holders exit and who can upgrade the code, alongside what each token yields and what an exit costs.'

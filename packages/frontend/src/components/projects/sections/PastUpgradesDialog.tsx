@@ -18,13 +18,13 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '~/components/core/Drawer'
+import { UtcDateTime } from '~/components/core/UtcDateTime'
 import { EtherscanLink } from '~/components/EtherscanLink'
 import { CustomLink } from '~/components/link/CustomLink'
 import { ScrollWithGradient } from '~/components/ScrollWithGradient'
 import { DiffoIcon } from '~/icons/Diffo'
 import { HistoryClockIcon } from '~/icons/HistoryClock'
 import { cn } from '~/utils/cn'
-import { formatTimestamp } from '~/utils/dates'
 import type { PastUpgradeProxyContract } from '~/utils/project/contracts-and-permissions/getPastUpgradesData'
 
 export interface PastUpgradesData {
@@ -58,8 +58,8 @@ export function PastUpgradesDialog({
 }) {
   const trigger = (
     <div className="mt-2 flex items-center gap-1">
-      <HistoryClockIcon className="size-3.5 fill-brand" />
-      <span className="font-bold text-brand text-label-value-15 underline md:text-label-value-16">
+      <HistoryClockIcon className="size-3.5 fill-brand-deep" />
+      <span className="font-bold text-brand-deep text-label-value-15 underline md:text-label-value-16">
         View past upgrades
       </span>
     </div>
@@ -167,10 +167,7 @@ function PastUpgradeEntry({
           title={upgrade.isInitialDeployment ? 'Deployment time' : 'Time'}
         >
           <span className="font-medium text-label-value-15">
-            {formatTimestamp(upgrade.timestamp, {
-              mode: 'datetime',
-              longMonthName: false,
-            })}
+            <UtcDateTime timestamp={upgrade.timestamp} />
           </span>
         </ValueWithTitle>
         {showProxyContract && (
@@ -282,6 +279,7 @@ function DiffoLink({ href }: { href: string }) {
       href={href}
       rel="noopener noreferrer"
       target="_blank"
+      aria-label="View diff on Diffo"
       className="flex h-6 flex-row items-center gap-1.5 rounded-sm bg-linear-to-r from-[#854220] to-[#DE7B16] px-[9px] ring-brand ring-inset focus-visible:ring-2"
     >
       <DiffoIcon className="h-[14px] w-[67px] fill-white" />

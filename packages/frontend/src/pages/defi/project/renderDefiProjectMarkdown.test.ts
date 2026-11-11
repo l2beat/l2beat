@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { TechnologyContract } from '~/components/projects/sections/ContractEntry'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
@@ -14,7 +14,7 @@ describe(renderDefiProjectMarkdown.name, () => {
     const markdown = renderDefiProjectMarkdown(ENTRY, TOTAL_VALUE_LOCKED_USD)
 
     expect(markdown).toMatchRegex(
-      /^# Lido\n\nMarkdown version of https:\/\/l2beat\.com\/defi\/projects\/lido\n\n/,
+      /^# Lido\n\nMarkdown version of https:\/\/ethbeat\.org\/defi\/projects\/lido\n\n/,
     )
   })
 
@@ -29,6 +29,41 @@ describe(renderDefiProjectMarkdown.name, () => {
       '### About\n\nLido is a liquid staking protocol.',
     )
     expect(summary).not.toInclude('### Risks')
+  })
+
+  it('dates a daily cost of exit by its day, and a yield by its moment', () => {
+    const day = UnixTime.fromDate(new Date('2026-11-01T00:00:00Z'))
+    const risk = {
+      value: 'Value',
+      sentiment: 'warning',
+      description: 'Why.',
+    } as const
+    const summary = getSection(
+      renderDefiProjectMarkdown(
+        {
+          ...ENTRY,
+          liquidStaking: {
+            risks: {
+              minting: risk,
+              operators: risk,
+              backing: risk,
+              oracle: risk,
+              exit: risk,
+              upgrades: risk,
+            },
+            yield: { value: 0.028, timestamp: day, estimated: false },
+            costOfExit: { value: 3, timestamp: day, estimated: false },
+          },
+        },
+        TOTAL_VALUE_LOCKED_USD,
+      ),
+      'Summary',
+    )
+
+    expect(summary).toInclude('(on 2026-11-01 00:00 UTC)')
+    expect(summary).toInclude(
+      '(over 2026-11-01 00:00 UTC to 2026-11-02 00:00 UTC)',
+    )
   })
 
   it('leaves out the TVL of a project whose value is not tracked', () => {
@@ -47,7 +82,7 @@ describe(renderDefiProjectMarkdown.name, () => {
     )
 
     expect(summary).toInclude(
-      '### Links\n\n- Website: https://lido.fi\n- Contracts explorer (Disco): https://disco.l2beat.com/ui/p/lido',
+      '### Links\n\n- Website: https://lido.fi\n- Contracts explorer (Disco): https://disco.ethbeat.org/ui/p/lido',
       '### Badges\n\n- Ethereum: Ethereum badge.\n- Chainlink: Chainlink badge.',
     )
   })
@@ -113,7 +148,7 @@ describe(renderDefiProjectMarkdown.name, () => {
         renderDefiProjectMarkdown(ENTRY, TOTAL_VALUE_LOCKED_USD),
         'Value Locked',
       ),
-    ).toInclude('https://l2beat.com/defi/projects/lido#tvs')
+    ).toInclude('https://ethbeat.org/defi/projects/lido#tvs')
   })
 
   it('lists external dependencies with absolute links and review status', () => {
@@ -124,7 +159,7 @@ describe(renderDefiProjectMarkdown.name, () => {
 
     expect(dependencies).toInclude(
       [
-        '- [Chainlink](https://l2beat.com/defi/projects/chainlink): Provides the ETH/USD price.',
+        '- [Chainlink](https://ethbeat.org/defi/projects/chainlink): Provides the ETH/USD price.',
         '- Obol (not reviewed): Runs distributed validators.',
       ].join('\n'),
     )
@@ -220,7 +255,7 @@ function externalDependencies(
 }
 
 const DISCO_UI = {
-  href: 'https://disco.l2beat.com/ui/p/lido',
+  href: 'https://disco.ethbeat.org/ui/p/lido',
   images: { desktop: '/desktop.png', mobile: '/mobile.png' },
 }
 

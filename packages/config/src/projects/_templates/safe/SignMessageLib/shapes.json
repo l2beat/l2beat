@@ -1,0 +1,20 @@
+{
+  "SignMessageLib.sol": {
+    "hash": "0x548d93c2960494e9fcc0d27df3ff350f043750d4b85df524db57362aacfd6ad1",
+    "address": "eth:0xd53cd0aB83D845Ac265BE939c57F53AD838012c9",
+    "chain": "ethereum",
+    "blockNumber": 26175472
+  },
+  "SignMessageLib_v1_3_0.sol": {
+    "hash": "0x759df654225536508ea2f305df143af618a8dc69107b7f976e77c94224106c76",
+    "address": "eth:0xA65387F16B013cf2Af4605Ad8aA5ec25a2cbA3a2",
+    "chain": "ethereum",
+    "blockNumber": 26175472
+  },
+  "SignMessageLib_v1_5_0.sol": {
+    "hash": "0x607cc1dc54358c4cd6b785e146a68476c9dc77c88acbebe0a616767b9f2f499d",
+    "address": "eth:0x4FfeF8222648872B3dE295Ba1e49110E61f5b5aa",
+    "chain": "ethereum",
+    "blockNumber": 26175472
+  }
+}

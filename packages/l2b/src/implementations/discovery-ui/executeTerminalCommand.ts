@@ -6,6 +6,9 @@ function sendSSE(res: Response, data: string) {
   res.write(`data: ${sanitizedData}\n\n`)
 }
 
+// Windows has no process groups, and detaching opens a separate console.
+const USE_PROCESS_GROUP = process.platform !== 'win32'
+
 export function executeTerminalCommand(command: string, res: Response): void {
   res.setHeader('Content-Type', 'text/event-stream')
   res.setHeader('Cache-Control', 'no-cache')
@@ -13,6 +16,7 @@ export function executeTerminalCommand(command: string, res: Response): void {
 
   const proc = spawn(command, {
     shell: true,
+    detached: USE_PROCESS_GROUP,
     env: {
       ...process.env,
       TERM: 'screen-256color',
@@ -43,6 +47,19 @@ export function executeTerminalCommand(command: string, res: Response): void {
   })
 
   res.on('close', () => {
-    proc.kill()
+    if (proc.pid === undefined || proc.exitCode !== null) {
+      return
+    }
+    if (!USE_PROCESS_GROUP) {
+      proc.kill()
+      return
+    }
+    try {
+      process.kill(-proc.pid, 'SIGTERM')
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code !== 'ESRCH') {
+        throw error
+      }
+    }
   })
 }

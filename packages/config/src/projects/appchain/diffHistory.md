@@ -1,3 +1,86 @@
+Generated with discovered.json: 0xeb16b1b3e247bf82ca9884c9174b5a2ba5b60f5d
+
+# Diff at Fri, 06 Nov 2026 16:33:08 GMT:
+
+- id: 24c5b7a0
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@42d599abc7be8cc38122c72abc4da1c1dda6fbeb block: 1793113693
+- current timestamp: 1793982721
+
+## Description
+
+Caldera Multisig 3: two signers removed, threshold now 3/5.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 3 (eth:0x2bf43034b9559643e986A2fE3cE015a18247b904) [GnosisSafe] {
+    +++ description: None
+      values.$members.4:
+-        "eth:0x9e14B1baFCEB80B67934aBE4fB00a7291aCfBcD0"
+      values.$members.5:
+-        "eth:0xe62a4A1e6D237d6fc40d88F819D5cE580a996A6b"
+      values.multisigThreshold:
+-        "3 of 7 (43%)"
++        "3 of 5 (60%)"
+    }
+```
+
+Generated with discovered.json: 0xc520f766c324650d7d5ee6b4321118de877df863
+
+# Diff at Tue, 27 Oct 2026 15:09:17 GMT:
+
+- id: 39e05a3c
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b3346aafa392488900d7a556a206cfabc7acf611 block: 1791533604
+- current timestamp: 1793113693
+
+## Description
+
+RollupProxy: ArbOS v40 → v61 wasm module root.
+Caldera Multisig 3: 1 member added, threshold 3/6 → 3/7.
+EspressoNitroTEEVerifier: 1 enclave hash and 1 signer added.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (eth:0x28293c7855797B0441000EF144119727f3cBCA9B) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
++++ description: ArbOS version derived from known wasmModuleRoots.
+      values.arbOsFromWmRoot:
+-        "ArbOS v40 wasmModuleRoot"
++        "ArbOS v61 wasmModuleRoot"
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
++++ severity: HIGH
+      values.wasmModuleRoot:
+-        "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a"
++        "0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97"
+    }
+```
+
+```diff
+    contract Caldera Multisig 3 (eth:0x2bf43034b9559643e986A2fE3cE015a18247b904) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x9ed35515aAF24a6d236ff2C95c67e29a335bE291"
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "3 of 7 (43%)"
+    }
+```
+
+```diff
+    contract EspressoNitroTEEVerifier (eth:0x4e98A1a038831B7D756ea9214508C4b34f4e4D3a) [espresso/Sequencing/EspressoNitroTEEVerifier_WithServices] {
+    +++ description: Verifies attestations of an AWS Nitro TEE. 
+Note: currently only Succinct proofs are used.
+      values.registeredSigners.1:
++        "eth:0x18a3DB98cc57DF0ba57393dC9226c067daccD39F"
++++ severity: HIGH
+      values.validEnclaveHashes.1:
++        "0xe01fc6daa6f80128ffd381ffef639c7b1531b21406e3f3bfbbd09f3920f63f98"
+    }
+```
+
 Generated with discovered.json: 0x4fbdb9de147977565070df6070e92e0e019cfb2d
 
 # Diff at Fri, 16 Oct 2026 09:37:44 GMT:

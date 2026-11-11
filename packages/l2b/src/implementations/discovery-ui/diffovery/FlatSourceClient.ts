@@ -23,6 +23,7 @@ export type FlatSource =
 
 export class FlatSourceClient {
   private cache = new Map<string, FlatSource>()
+  private sourceProviders = new Map<string, Promise<IProvider>>()
   private httpClient = new HttpClient()
   private allProviders: AllProviders
 
@@ -57,52 +58,75 @@ export class FlatSourceClient {
       return result
     }
 
-    const source = await provider.getSource(address)
-    const name = source.name.length > 0 ? source.name : 'Unknown'
-
-    if (!source.isVerified) {
-      return {
-        kind: 'unverified',
-        name,
-        flat: '// NOTE: Source code for this address has not been verified',
-      }
-    }
-
-    const input = Object.entries(source.files)
-      .map(([fileName, content]) => ({ path: fileName, content }))
-      .filter((e) => e.path.endsWith('.sol'))
-
-    if (input.length === 0) {
-      const result: FlatSource = {
-        kind: 'non-solidity',
-        name,
-        flat: '// NOTE: DIFFOVERY currently does not support non-solidity contracts',
-      }
+    const result = toFlatSource(await provider.getSource(address))
+    if (result.kind !== 'unverified') {
       this.cache.set(cacheKey, result)
-      return result
     }
-
-    const flat = flattenStartingFrom(
-      source.name,
-      source.rootFile,
-      input,
-      source.remappings,
-      { includeAll: true },
-    )
-    const result: FlatSource = {
-      kind: 'flat',
-      name,
-      flat,
-      constructorArguments: decodeConstructorArguments(source),
-    }
-    this.cache.set(cacheKey, result)
     return result
+  }
+
+  // For addresses discovery already knows are contracts. Skipping the bytecode
+  // check leaves only getSource, which the persistent cache answers.
+  async getContractFlat(address: ChainSpecificAddress): Promise<FlatSource> {
+    const provider = await this.getSourceProvider(
+      ChainSpecificAddress.chain(address),
+    )
+    return toFlatSource(await provider.getSource(address))
+  }
+
+  // A source does not depend on the block, so one provider serves every call.
+  private getSourceProvider(shortChain: string): Promise<IProvider> {
+    const cached = this.sourceProviders.get(shortChain)
+    if (cached !== undefined) {
+      return cached
+    }
+    const provider = this.getProvider(shortChain)
+    this.sourceProviders.set(shortChain, provider)
+    provider.catch(() => this.sourceProviders.delete(shortChain))
+    return provider
   }
 
   private async getProvider(shortChain: string): Promise<IProvider> {
     const chain = getChainFullName(shortChain)
     const blockNumber = await this.allProviders.getLatestBlockNumber(chain)
     return this.allProviders.getByBlockNumber(chain, blockNumber)
+  }
+}
+
+function toFlatSource(source: ContractSource): FlatSource {
+  const name = source.name.length > 0 ? source.name : 'Unknown'
+  if (!source.isVerified) {
+    return {
+      kind: 'unverified',
+      name,
+      flat: '// NOTE: Source code for this address has not been verified',
+    }
+  }
+
+  const input = Object.entries(source.files)
+    .map(([fileName, content]) => ({ path: fileName, content }))
+    .filter((e) => e.path.endsWith('.sol'))
+
+  if (input.length === 0) {
+    return {
+      kind: 'non-solidity',
+      name,
+      flat: '// NOTE: DIFFOVERY currently does not support non-solidity contracts',
+    }
+  }
+
+  const flat = flattenStartingFrom(
+    source.name,
+    source.rootFile,
+    input,
+    source.remappings,
+    { includeAll: true },
+  )
+  return {
+    kind: 'flat',
+    name,
+    flat,
+    constructorArguments: decodeConstructorArguments(source),
   }
 }
 

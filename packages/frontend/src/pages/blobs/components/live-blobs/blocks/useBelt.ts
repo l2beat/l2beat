@@ -8,8 +8,9 @@ import {
   useRef,
   useState,
 } from 'react'
+import { useAnimationFrame } from '~/hooks/useAnimationFrame'
 import { LIVE_LAG_SLOTS } from '~/server/features/data-availability/live-blobs/liveBlobsSlots'
-import { prepareCanvas, useAnimationFrame } from '../hooks'
+import { prepareCanvas } from '~/utils/prepareCanvas'
 import { GLIDE_SLOTS } from '../lookBack'
 import type { ChainBlock } from './beaconChain'
 import { livePosition, SLIDE_TIME } from './beltPosition'

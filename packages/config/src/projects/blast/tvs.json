@@ -54,7 +54,8 @@
         "decimals": 18,
         "sinceTimestamp": 1719446400,
         "address": "0xb1a5700fA2358173Fe465e6eA4Ff52E36e88E2ad",
-        "chain": "blast"
+        "chain": "blast",
+        "untilTimestamp": 1793999543
       },
       "category": "other",
       "source": "native",
@@ -72,7 +73,8 @@
         "address": "0xb5A86030b64AfAa75c42c0D28f8d5ce5f9f61401",
         "chain": "blast",
         "decimals": 18,
-        "sinceTimestamp": 1715703713
+        "sinceTimestamp": 1715703713,
+        "untilTimestamp": 1793999543
       },
       "category": "other",
       "source": "external",
@@ -113,12 +115,34 @@
       "name": "Ether",
       "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "native",
-        "chain": "ethereum",
-        "escrowAddress": "0x98078db053902644191f93988341E31289E1C8FE",
-        "decimals": 18,
-        "sinceTimestamp": 1708812935
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x98078db053902644191f93988341E31289E1C8FE",
+            "decimals": 18,
+            "sinceTimestamp": 1708812935
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x9D31771458B421C7EA8A06CB8D12663E91617869",
+            "decimals": 18,
+            "sinceTimestamp": 1793400635
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x23eA8c6ACEb5673BBd712137cE2Aa33db36CB513",
+            "decimals": 18,
+            "sinceTimestamp": 1793675279
+          }
+        ]
       },
       "category": "ether",
       "source": "custom-canonical",
@@ -143,7 +167,8 @@
         "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
         "chain": "blast",
         "decimals": 18,
-        "sinceTimestamp": 1710255749
+        "sinceTimestamp": 1710255749,
+        "untilTimestamp": 1793999543
       },
       "category": "ether",
       "source": "external",
@@ -209,7 +234,8 @@
         "decimals": 18,
         "sinceTimestamp": 1711584000,
         "address": "0x818a92bc81Aad0053d72ba753fb5Bc3d0C5C0923",
-        "chain": "blast"
+        "chain": "blast",
+        "untilTimestamp": 1793999543
       },
       "category": "other",
       "source": "native",
@@ -247,7 +273,8 @@
         "decimals": 18,
         "sinceTimestamp": 1711497600,
         "address": "0x5ffd9EbD27f2fcAB044c0f0a26A45Cb62fa29c06",
-        "chain": "blast"
+        "chain": "blast",
+        "untilTimestamp": 1793999543
       },
       "category": "other",
       "source": "native",
@@ -303,7 +330,8 @@
         "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
         "chain": "blast",
         "decimals": 18,
-        "sinceTimestamp": 1710823563
+        "sinceTimestamp": 1710823563,
+        "untilTimestamp": 1793999543
       },
       "category": "ether",
       "source": "external",
@@ -369,7 +397,8 @@
         "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
         "chain": "blast",
         "decimals": 18,
-        "sinceTimestamp": 1713651093
+        "sinceTimestamp": 1713651093,
+        "untilTimestamp": 1793999543
       },
       "category": "stablecoin",
       "source": "external",
@@ -434,7 +463,8 @@
         "address": "0x4300000000000000000000000000000000000003",
         "chain": "blast",
         "decimals": 18,
-        "sinceTimestamp": 1709251200
+        "sinceTimestamp": 1709251200,
+        "untilTimestamp": 1793999543
       },
       "category": "stablecoin",
       "source": "external",
@@ -478,7 +508,8 @@
         "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
         "chain": "blast",
         "decimals": 18,
-        "sinceTimestamp": 1713651041
+        "sinceTimestamp": 1713651041,
+        "untilTimestamp": 1793999543
       },
       "category": "stablecoin",
       "source": "external",
@@ -542,7 +573,8 @@
         "address": "0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A",
         "chain": "blast",
         "decimals": 18,
-        "sinceTimestamp": 1712897077
+        "sinceTimestamp": 1712897077,
+        "untilTimestamp": 1793999543
       },
       "category": "ether",
       "source": "external",

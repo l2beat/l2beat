@@ -1,6 +1,7 @@
 ## Funds can be stolen if
 1. the closed-source app is malicious or compromised and exfiltrates spending keys.
-2. the accepted ENS signer returns an attacker-controlled payment address for a Cloaked name.
+2. Cloaked's ENS signer or the owner of clkd.eth points a Cloaked name to an attacker's payment address.
+3. the email inbox or Web3Auth is compromised, which restores an email user's spending key.
 <br>
 ## Funds can be lost if
 1. a user loses the passkey and encrypted backup, or the wallet and PIN, needed to re-derive the spending key.
@@ -9,5 +10,7 @@
 ## Privacy can be lost if
 1. Cloaked, or anyone who obtains its records now or later, uses the viewing keys to link every account's addresses (see privileged insider).
 2. Cloaked's relayers and fee Safe mark every spend as a Cloaked user's (see chain analyst).
-3. Cloaked changes its closed-source app to send account data to third parties, which users cannot check (see network observer).
-4. a user relies on the Incognito balance, whose relay keeps the link between deposit and withdrawal (see privileged insider).
+3. Cloaked changes its closed-source app to send account data to third parties (see privileged insider).
+4. Cloaked's RPC providers, such as Alchemy, group each account's addresses from its servers' requests (see network observer).
+5. a payer looks up the user's name through a public RPC, which then sees the name and the new address (see network observer).
+6. a user relies on the Incognito balance, whose relay keeps the link between deposit and withdrawal (see privileged insider).

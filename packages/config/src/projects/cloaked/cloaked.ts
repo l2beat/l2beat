@@ -47,7 +47,43 @@ export const cloaked: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.stealthAddress,
+    referenceApp: {
+      name: 'Cloaked web app',
+      url: 'https://app.clkd.xyz',
+      since: '2026-09-16',
+      // Vercel deployment id of the served app (app.clkd.xyz/api/version),
+      // signing vault auth.clkd.xyz/v17.
+      build: 'dpl_Eh8jMZFr7gBpkKE4NDJzg1EyCzo5',
+      checked: '2026-10-30',
+      checkedApps: [
+        {
+          name: 'Cloaked browser extension',
+          icon: 'cloaked',
+          finding:
+            "Tells Cloaked's server each website that asks to connect, with the address it gets, and the server lists each address's websites after its first transaction.",
+          fix: 'Keep the list of connected websites on the device and leave the website out of API calls.',
+          source: 'https://clkd.xyz/docs/api-reference',
+          checked: '2026-10-27',
+        },
+        {
+          name: 'Cloaked agent skill',
+          icon: 'cloaked',
+          finding:
+            "Feeds every API response to the agent's AI provider, which sees each fresh address and transaction under the user's provider account.",
+          fix: 'Fetch addresses and history in a local tool and pass the model only what the user asks for.',
+          source:
+            'https://github.com/cloakedxyz/clkd-agent-skill/blob/6dbdff0fae94852011d5b45ada912d0dafcb2be7/references/receive.md#L5-L23',
+        },
+      ],
+    },
     trackedOn: ['ethereum'],
+    // Chains the app serves (api.clkd.xyz/v1/supported-chains).
+    runsOn: [
+      ProjectId('arbitrum'),
+      ProjectId('base'),
+      ProjectId('optimism'),
+      ProjectId('robinhood'),
+    ],
     // Cloaked balances live in arbitrary one-time EOAs and cannot be
     // attributed using public chain data. Its Privacy Pools integration uses
     // pools that L2BEAT tracks on the separate Privacy Pools project page.

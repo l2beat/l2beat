@@ -15,7 +15,7 @@
   ],
   "fields": {
     "dao": {
-      "description": "Aragon DAO whose queue roles control fees, cooldowns, withdrawals and upgrades."
+      "description": "Aragon governance contract whose queue roles control fees, cooldowns, withdrawals and upgrades."
     },
     "escrow": {
       "description": "VotingEscrow that creates and completes withdrawal requests."

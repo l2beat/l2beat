@@ -307,7 +307,11 @@ export class InteropFinancialsLoop extends TimeLoop {
         coingeckoId: tokenInfo.coingeckoId,
         priceTimestamp,
       })
-      return
+      return {
+        abstractTokenId: tokenInfo.abstractId,
+        symbol: tokenInfo.symbol,
+        amount,
+      }
     }
 
     if (price > this.maxTokenPriceUsd) {

@@ -253,12 +253,12 @@ export function StageSection({
                   {stage.principle && (
                     <div className="space-y-2">
                       <div className="flex items-center gap-1">
-                        <span className="font-bold text-brand text-label-value-14">
+                        <span className="font-bold text-brand-deep text-label-value-14">
                           Principle
                         </span>
                         <Tooltip>
-                          <TooltipTrigger>
-                            <InfoIcon className="size-3 fill-brand" />
+                          <TooltipTrigger aria-label="About principles">
+                            <InfoIcon className="size-3 fill-brand-deep" />
                           </TooltipTrigger>
                           <TooltipContent>
                             A Principle is the main requirement you need to

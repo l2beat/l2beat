@@ -7,7 +7,8 @@ const EDGE_FADE_WIDTH_PX = 6
 
 // Sticky cells are pulled 1px past the scrollport edge so that fractional
 // scroll offsets (touch scrolling, browser zoom) cannot leave a sub-pixel
-// sliver of scrolled content visible beside them.
+// sliver of scrolled content visible beside them. Tables start that far left
+// too (`getTableElementClassName`), so the cells stick where they rest.
 export const STICKY_OVERLAP_PX = 1
 
 /**

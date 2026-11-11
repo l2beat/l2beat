@@ -11,7 +11,7 @@ import { renderEthereumProjectMarkdown } from './renderEthereumProjectMarkdown'
 describe(renderEthereumProjectMarkdown.name, () => {
   it('links the HTML page', () => {
     expect(renderEthereumProjectMarkdown(ENTRY)).toMatchRegex(
-      /^# Ethereum\n\nMarkdown version of https:\/\/l2beat\.com\/projects\/ethereum\n\n/,
+      /^# Ethereum\n\nMarkdown version of https:\/\/ethbeat\.org\/projects\/ethereum\n\n/,
     )
   })
 
@@ -27,12 +27,11 @@ describe(renderEthereumProjectMarkdown.name, () => {
     expect(summary).toMatchRegex(/- Total Value Secured: \$40\.00 B \(Total/)
   })
 
-  it('explains the enshrined bridge instead of a risk rosette', () => {
+  it('explains the enshrined bridge in its tooltip, not a risk rosette', () => {
     const summary = getSection(renderEthereumProjectMarkdown(ENTRY), 'Summary')
 
     expect(summary).toInclude(
-      '- DA Bridge: Enshrined Bridge',
-      '### About\n\n**Enshrined Bridge:** Full nodes self-verify the data availability of each block.',
+      '- DA Bridge: Enshrined Bridge (Full nodes self-verify the data availability of each block.)',
     )
     expect(summary).not.toInclude('### Risks')
   })
@@ -41,7 +40,7 @@ describe(renderEthereumProjectMarkdown.name, () => {
     expect(
       getSection(renderEthereumProjectMarkdown(ENTRY), 'Activity'),
     ).toInclude(
-      '- [Activity chart (JSON)](https://l2beat.com/api/scaling/activity/ethereum)',
+      '- [Activity chart (JSON)](https://ethbeat.org/api/scaling/activity/ethereum)',
     )
   })
 })
@@ -87,11 +86,8 @@ const ENTRY: EthereumProjectPageEntry = {
       },
     ],
     bridgeName: 'Enshrined Bridge',
-    callout: {
-      title: 'Enshrined Bridge',
-      description:
-        'Full nodes self-verify the data availability of each block.',
-    },
+    bridgeTooltip:
+      'Full nodes self-verify the data availability of each block.',
     numberOfValidators: 1_050_000,
   },
   sections: [ACTIVITY_SECTION],

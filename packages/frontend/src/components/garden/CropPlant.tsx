@@ -1,6 +1,7 @@
 import type { ProjectCropStatus } from '@l2beat/config'
 import type { ComponentType, CSSProperties } from 'react'
 import { cn } from '~/utils/cn'
+import { getStableFraction } from '~/utils/getStableFraction'
 import { CROP_PLANT_COLOR } from './cropPalette'
 import type { CropSentiment } from './crops'
 
@@ -23,7 +24,41 @@ function getPlantKind(
   return GRADED_KIND[sentiment]
 }
 
-const PLANT: Record<PlantKind, ComponentType<{ delay: number }>> = {
+/**
+ * How a plant moves: `sway` grows in and then idles, as in the garden;
+ * `grow` grows in and stands still; `still` is drawn grown, for small
+ * scenery where the growing in would only distract.
+ */
+export type PlantMotion = 'sway' | 'grow' | 'still'
+
+interface PlantProps {
+  delay: number
+  motion: PlantMotion
+  jitter: Jitter
+}
+
+/** How far one plant strays from the drawn one, so a bed of them does not move as one. */
+interface Jitter {
+  /** Degrees off upright, about the foot of the stem. */
+  lean: number
+  /** Extra seconds before the idle starts; its keyframes leave from rest, so the phase can only shift this way. */
+  wait: number
+  /** Scales the idle's period, so plants that start together drift apart. */
+  rate: number
+}
+
+const NO_JITTER: Jitter = { lean: 0, wait: 0, rate: 1 }
+
+function getJitter(key: string): Jitter {
+  const fraction = (salt: string) => getStableFraction(`${salt}:${key}`)
+  return {
+    lean: (fraction('lean') * 2 - 1) * 3,
+    wait: fraction('wait') * 1.6,
+    rate: 0.88 + fraction('rate') * 0.24,
+  }
+}
+
+const PLANT: Record<PlantKind, ComponentType<PlantProps>> = {
   flower: Flower,
   bud: Bud,
   wilt: Wilt,
@@ -31,12 +66,18 @@ const PLANT: Record<PlantKind, ComponentType<{ delay: number }>> = {
   transparent: TransparentFlower,
 }
 
+/** Without the soil the box ends at the foot of the stem (its round cap included). */
+const NO_SOIL_HEIGHT = 35.2
+
 /** The plant at any size; height follows the 34:40 viewBox. */
 export function CropPlant({
   status,
   sentiment,
   delay,
   width = 46,
+  soil = true,
+  motion = 'sway',
+  jitterKey,
   label,
   className,
 }: {
@@ -44,11 +85,22 @@ export function CropPlant({
   sentiment: CropSentiment
   delay: number
   width?: number
+  /**
+   * Off where the plant stands on scenery rather than in a table cell.
+   * `plain` where it stands in drawn ground: a mound whatever the rating,
+   * since the outline and dashed soils mark the rating only in a cell.
+   */
+  soil?: boolean | 'plain'
+  motion?: PlantMotion
+  /** Leans the plant and shifts its sway by a fixed amount for this key. Off where the plant is a key to others. */
+  jitterKey?: string
   /** Read out instead of the art. */
   label?: string
   className?: string
 }) {
   const Plant = PLANT[getPlantKind(status, sentiment)]
+  const jitter = jitterKey ? getJitter(jitterKey) : NO_JITTER
+  const viewHeight = soil ? 40 : NO_SOIL_HEIGHT
   return (
     <span
       className={cn('flex items-end', CROP_PLANT_COLOR[sentiment], className)}
@@ -56,13 +108,15 @@ export function CropPlant({
     >
       <svg
         width={width}
-        height={(width * 40) / 34}
-        viewBox="0 0 34 40"
+        height={(width * viewHeight) / 34}
+        viewBox={`0 0 34 ${viewHeight}`}
         className="block overflow-visible"
         aria-hidden
       >
-        <Soil status={status} />
-        <Plant delay={delay} />
+        {soil && <Soil status={soil === 'plain' ? 'reviewed' : status} />}
+        <g transform={`rotate(${jitter.lean} 17 34)`}>
+          <Plant delay={delay} motion={motion} jitter={jitter} />
+        </g>
       </svg>
     </span>
   )
@@ -72,27 +126,32 @@ export function CropPlant({
 export const EASE_OUT_BACK = 'cubic-bezier(.34,1.56,.64,1)'
 
 /** The stem grows, the leaves unfold, the bloom pops, then the plant idles. */
-function timings(delay: number) {
+function timings(delay: number, motion: PlantMotion, jitter: Jitter) {
   const at = (origin: string, animation: string): CSSProperties => ({
     transformBox: 'fill-box',
     transformOrigin: origin,
-    animation,
+    animation: motion === 'still' ? undefined : animation,
   })
   return {
     grow: at(
       '50% 100%',
-      `garden-grow .5s cubic-bezier(.18,.7,.24,1) ${delay}s both`,
+      `garden-grow .5s cubic-bezier(.18,.7,.24,1) ${delay}s backwards`,
     ),
-    leafL: at('100% 100%', `garden-leaf .3s ease-out ${delay + 0.15}s both`),
-    leafR: at('0% 100%', `garden-leaf .3s ease-out ${delay + 0.19}s both`),
+    leafL: at(
+      '100% 100%',
+      `garden-leaf .3s ease-out ${delay + 0.15}s backwards`,
+    ),
+    leafR: at('0% 100%', `garden-leaf .3s ease-out ${delay + 0.19}s backwards`),
     bloom: at(
       '50% 100%',
-      `garden-bloom .4s ${EASE_OUT_BACK} ${delay + 0.28}s both`,
+      `garden-bloom .4s ${EASE_OUT_BACK} ${delay + 0.28}s backwards`,
     ),
-    idle: (name: string, duration: string) =>
+    idle: (name: string, period: number) =>
       at(
         '50% 100%',
-        `${name} ${duration} ease-in-out ${delay + 0.5}s infinite`,
+        motion === 'sway'
+          ? `${name} ${period * jitter.rate}s ease-in-out ${delay + 0.5 + jitter.wait}s infinite`
+          : '',
       ),
   }
 }
@@ -119,10 +178,10 @@ const FLOWER = {
     'M13.96 6.21 A3.2 3.2 0 1 1 20.04 6.21 A3.2 3.2 0 1 1 20.11 11.83 A3.2 3.2 0 1 1 13.89 11.83 A3.2 3.2 0 1 1 13.96 6.21 Z',
 }
 
-function Flower({ delay }: { delay: number }) {
-  const t = timings(delay)
+function Flower({ delay, motion, jitter }: PlantProps) {
+  const t = timings(delay, motion, jitter)
   return (
-    <g style={t.idle('garden-sway', '4.6s')}>
+    <g style={t.idle('garden-sway', 4.6)}>
       <g style={t.grow}>
         <path d={FLOWER.stem} {...STEM} />
         <path d={FLOWER.leafL} fill="currentColor" style={t.leafL} />
@@ -149,10 +208,10 @@ function Flower({ delay }: { delay: number }) {
   )
 }
 
-function Bud({ delay }: { delay: number }) {
-  const t = timings(delay)
+function Bud({ delay, motion, jitter }: PlantProps) {
+  const t = timings(delay, motion, jitter)
   return (
-    <g style={t.idle('garden-sway-s', '5.2s')}>
+    <g style={t.idle('garden-sway-s', 5.2)}>
       <g style={t.grow}>
         <path d="M17 34 C17 29 17 25 17 20" {...STEM} />
         <path
@@ -178,10 +237,10 @@ function Bud({ delay }: { delay: number }) {
   )
 }
 
-function Wilt({ delay }: { delay: number }) {
-  const t = timings(delay)
+function Wilt({ delay, motion, jitter }: PlantProps) {
+  const t = timings(delay, motion, jitter)
   return (
-    <g style={t.idle('garden-wilt', '5.6s')}>
+    <g style={t.idle('garden-wilt', 5.6)}>
       <g style={t.grow}>
         <path d="M17 34 C17 28 18.6 24 13.4 22" {...STEM} />
         <path
@@ -199,7 +258,7 @@ function Wilt({ delay }: { delay: number }) {
 }
 
 /** A dashed sprout that fades in and out: nothing has been looked at yet. */
-function Ghost() {
+function Ghost({ motion, jitter }: PlantProps) {
   const dashed = {
     stroke: 'currentColor',
     fill: 'none',
@@ -211,7 +270,12 @@ function Ghost() {
       style={{
         transformBox: 'fill-box',
         transformOrigin: '50% 100%',
-        animation: 'garden-ghost 3.6s ease-in-out infinite',
+        // Nothing grows in first, so the pulse runs from first paint and the
+        // wait becomes a head start; a later start would flash full opacity.
+        animation:
+          motion === 'sway'
+            ? `garden-ghost ${3.6 * jitter.rate}s ease-in-out ${-jitter.wait}s infinite`
+            : undefined,
       }}
     >
       <path d="M17 33 V27" strokeWidth="1.5" {...dashed} />
@@ -235,15 +299,15 @@ function Ghost() {
  * colour of the surface behind them, so where they overlap only the
  * silhouette reads as a line.
  */
-function TransparentFlower({ delay }: { delay: number }) {
-  const t = timings(delay)
+function TransparentFlower({ delay, motion, jitter }: PlantProps) {
+  const t = timings(delay, motion, jitter)
   const outline = {
     stroke: 'currentColor',
     strokeLinecap: 'round',
     strokeLinejoin: 'round',
   } as const
   return (
-    <g style={t.idle('garden-sway', '4.6s')} className="fill-surface-primary">
+    <g style={t.idle('garden-sway', 4.6)} className="fill-surface-primary">
       <g style={t.grow}>
         <path
           d="M17 31.5 C17 26 17 19.5 17 13"

@@ -1,10 +1,9 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { ActivityRecord } from '@l2beat/database'
 import type { SvmBlockProvider } from '@l2beat/shared'
-import { assert, type ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import range from 'lodash/range'
 import { withCoreFeatureRpcMetricsContext } from '../../../../tools/coreFeatureRpcMetrics'
-import { aggregatePerDay } from '../../utils/aggregatePerDay'
+import type { ActivityBlock } from './types'
 
 interface Dependencies {
   provider: SvmBlockProvider
@@ -19,13 +18,8 @@ export class SlotTxsCountService {
     this.logger = logger.for(this)
   }
 
-  async getTxsCount(
-    from: number,
-    to: number,
-  ): Promise<{
-    records: ActivityRecord[]
-    latestTimestamp: number
-  }> {
+  /** Empty slots are left out */
+  async getBlocks(from: number, to: number): Promise<ActivityBlock[]> {
     return await withCoreFeatureRpcMetricsContext(
       'activity.count',
       {
@@ -53,15 +47,7 @@ export class SlotTxsCountService {
         })
 
         const blocksInSlots = await Promise.all(queries)
-        const blocks = blocksInSlots.filter((x) => x !== undefined)
-
-        const latestTimestamp = blocks.at(-1)?.timestamp
-        assert(latestTimestamp, 'Latest timestamp is undefined')
-
-        return {
-          records: aggregatePerDay(this.$.projectId, blocks),
-          latestTimestamp,
-        }
+        return blocksInSlots.filter((x) => x !== undefined)
       },
     )
   }

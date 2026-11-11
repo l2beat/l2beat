@@ -96,6 +96,14 @@
     "eth:0xe5896783a2F463446E1f624e64Aa6836BE4C6f58": {
       "critical": { "untilTimestamp": 1739368811 }
     },
+    // pause path: EXECUTOR on the UpgradeExecutor since tx 0x30732bb7 (block
+    // 26105547), which also made the OspSoundnessGuard its pauser
+    "eth:0x30668ee252A28986EE6dc21b26E4018Ac0e339b9": {
+      "critical": { "sinceTimestamp": 1790955047 }
+    },
+    "eth:0x6DEf0F0Ffb4d77347785036ea4Cd2320a3f3A17c": {
+      "critical": { "sinceTimestamp": 1790955047 }
+    },
     "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827": {
       "fields": {
         // Seeds the ArbOS 61 transaction-filtering precompile (0x..74) as a

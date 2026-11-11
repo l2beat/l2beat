@@ -1,0 +1,558 @@
+// This file is duplicated in discoui and l2b!
+
+export type json =
+  | string
+  | number
+  | boolean
+  | null
+  | json[]
+  | { [key: string]: json }
+
+export type ApiProjectsResponse = ApiProjectEntry[]
+
+export type ApiProjectCategory =
+  | 'rollups'
+  | 'validiumsAndOptimiums'
+  | 'others'
+  | 'interop'
+  | 'privacy'
+  | 'defi'
+  | 'zkCatalog'
+  | 'sharedModules'
+  | 'unlisted'
+  | 'archived'
+
+export interface ApiProjectEntry {
+  name: string
+  category: ApiProjectCategory
+  addresses: string[]
+  contractNames: string[]
+}
+
+export interface ApiProjectResponse {
+  entries: ApiProjectChain[]
+}
+
+export interface ApiAddressUsageResponse {
+  sharedAddresses: Record<string, ApiAddressUsage[]>
+  moduleConsumers: Record<string, string[]>
+  entrypoints: Record<string, ApiEntrypointInfo>
+}
+
+export interface ApiAddressUsage {
+  project: string
+  name?: string
+  viaModule?: string
+}
+
+export interface ApiEntrypointInfo {
+  project: string
+  name?: string
+}
+
+export type ApiTvlResponse = ApiTvlEntry[]
+
+export interface ApiTvlEntry {
+  tvl: number
+  ticker: string
+  address: string
+  iconURL: string | undefined
+  balance: number
+  price: number | undefined
+}
+
+export interface ApiPreviewResponse {
+  permissionsPerChain: { chain: string; permissions: ApiPreviewPermissions }[]
+  contractsPerChain: { chain: string; contracts: ApiPreviewContract[] }[]
+}
+
+export interface ApiPreviewPermissions {
+  roles: ApiPreviewPermission[]
+  actors: ApiPreviewPermission[]
+}
+
+export interface ApiPreviewPermission {
+  addresses: AddressFieldValue[]
+  name: string
+  description: string
+  multisigParticipants: AddressFieldValue[] | undefined
+}
+
+export interface ApiPreviewContract {
+  addresses: AddressFieldValue[]
+  name: string
+  description: string
+  upgradableBy: UpgradeabilityActor[] | undefined
+}
+
+export interface ApiProjectChain {
+  project: string
+  initialContracts: ApiProjectContract[]
+  discoveredContracts: ApiProjectContract[]
+  eoas: ApiAddressEntry[]
+  blockNumbers: Record<string, number>
+}
+
+export type ApiListTemplatesResponse = string[]
+
+export interface ApiTemplateFileResponse {
+  template: string
+  shapes?: string
+  criteria?: string
+}
+
+export interface ApiConfigFileResponse {
+  config: string
+}
+
+export interface ApiProjectLayoutEntry {
+  name: string
+  description?: string
+}
+
+export type ApiProjectLayoutsResponse = ApiProjectLayoutEntry[]
+
+export interface ApiProjectLayoutResponse {
+  layout: unknown
+}
+
+export type ApiDiffHistorySectionKind =
+  | 'watched-changes'
+  | 'initial-discovery'
+  | 'source-code-changes'
+  | 'config-related-changes'
+
+export interface ApiDiffHistorySection {
+  kind: ApiDiffHistorySectionKind
+  body: string
+}
+
+export type ApiChainPoint =
+  | { kind: 'timestamp'; value: number }
+  | { kind: 'block'; value: number }
+
+export interface ApiDiffHistoryEntry {
+  date: string
+  current: ApiChainPoint | null
+  author: string | null
+  comparing: {
+    ref: string
+    commit: string
+    at: ApiChainPoint | null
+  } | null
+  discoveryHash: string | null
+  description: string
+  sections: ApiDiffHistorySection[]
+}
+
+export interface ApiDiffHistoryResponse {
+  total: number
+  entries: ApiDiffHistoryEntry[]
+}
+
+type RefreshReason =
+  | {
+      type: 'TEMPLATE_NO_LONGER_MATCHES'
+      contract: string
+      template: string
+    }
+  | {
+      type: 'TEMPLATE_MATCH_CHANGED'
+      contract: string
+      oldTemplate: string
+      newTemplates: string[]
+    }
+  | {
+      type: 'NEW_TEMPLATE_MATCH'
+      contract: string
+      newTemplates: string[]
+    }
+  | {
+      type: 'CONFIG_CHANGED'
+    }
+  | {
+      type: 'TEMPLATE_CONFIG_CHANGED'
+      templates: string[]
+    }
+
+export interface ApiConfigSyncStatusResponse {
+  reasons: RefreshReason[]
+}
+
+export type ApiCreateShapeResponse =
+  | {
+      success: true
+    }
+  | {
+      success: false
+      error: string
+    }
+
+export type ApiCreateConfigFileResponse =
+  | {
+      success: true
+    }
+  | {
+      success: false
+      error: string
+    }
+
+export interface ApiHandlersResponse {
+  handlers: {
+    type: string
+    schema: json
+    docs: string
+    examples: string[]
+  }[]
+}
+
+export type {
+  AnalyzerApiResponse,
+  AnalyzerResultApiResponse,
+} from '@l2beat/shared-pure'
+
+export type ApiAddressType =
+  | 'EOA'
+  | 'EOAPermissioned'
+  | 'Unverified'
+  | 'Token'
+  | 'Multisig'
+  | 'Diamond'
+  | 'Timelock'
+  | 'Untemplatized'
+  | 'Contract'
+  | 'Group'
+  | 'Unknown'
+
+export interface ApiAddressEntry {
+  name?: string
+  description?: string
+  roles: string[]
+  type: ApiAddressType
+  referencedBy: ApiAddressReference[]
+  address: string
+  chain: string
+  isReachable: boolean
+}
+
+export interface ApiAddressReference extends AddressFieldValue {
+  fieldNames: string[]
+}
+
+export interface Field {
+  name: string
+  value: FieldValue
+}
+
+export type FieldValue =
+  | AddressFieldValue
+  | HexFieldValue
+  | StringFieldValue
+  | NumberFieldValue
+  | BooleanFieldValue
+  | ArrayFieldValue
+  | ObjectFieldValue
+  | UnknownFieldValue
+  | ErrorFieldValue
+  | EmptyFieldValue
+
+export interface AddressFieldValue {
+  type: 'address'
+  name?: string
+  addressType: ApiAddressType
+  address: string
+}
+
+export interface HexFieldValue {
+  type: 'hex'
+  value: string
+}
+
+export interface StringFieldValue {
+  type: 'string'
+  value: string
+}
+
+export interface NumberFieldValue {
+  type: 'number'
+  value: string
+}
+
+export interface BooleanFieldValue {
+  type: 'boolean'
+  value: boolean
+}
+
+export interface ArrayFieldValue {
+  type: 'array'
+  values: FieldValue[]
+}
+
+export interface ObjectFieldValue {
+  type: 'object'
+  values: [FieldValue, FieldValue][]
+}
+
+export interface UnknownFieldValue {
+  type: 'unknown'
+  value: string
+}
+
+export interface ErrorFieldValue {
+  type: 'error'
+  error: string
+}
+
+export interface EmptyFieldValue {
+  type: 'empty'
+}
+
+export interface ApiProjectContract extends ApiAddressEntry {
+  template?: {
+    id: string
+    shape?: {
+      name: string
+      hasCriteria: boolean
+    }
+  }
+  proxyType?: string
+  fields: Field[]
+  abis: ApiAbi[]
+  implementationNames?: Record<string, string>
+}
+
+export interface ApiAbi {
+  address: string
+  entries: ApiAbiEntry[]
+}
+
+export interface ApiAbiEntry {
+  value: string
+  signature?: string
+  topic?: string
+}
+
+export interface ApiCodeSegment {
+  // `null` marks non-selectable text: the license/pragma/imports preamble and
+  // the whitespace between declarations. Joining every segment's `content` in
+  // order reproduces the original flattened source byte-for-byte.
+  name: string | null
+  content: string
+}
+
+export interface ApiCodeResponse {
+  entryName: string | undefined
+  sources: { name: string; declarations: ApiCodeSegment[] }[]
+}
+
+export interface ApiDefinition {
+  address: string
+  name: string
+  label: string
+  resolution: 'discovered-value' | 'abi-match' | 'in-file'
+  fileName: string
+  line: number
+  sourceIndex: number
+  offset: number
+  length: number
+  alsoIn: number
+  // Whole lines, from the comment above the declaration to its end.
+  declaration: { line: number; offset: number; text: string }
+}
+
+export interface ApiDefinitionResponse {
+  symbol: string
+  receiver: { address: string; name: string | undefined } | undefined
+  definitions: ApiDefinition[]
+}
+
+export interface ApiContractAtResponse {
+  symbol: string
+  address: string | undefined
+  name: string | undefined
+}
+
+export interface ApiReference {
+  address: string
+  name: string
+  fileName: string
+  line: number
+  sourceIndex: number
+  offset: number
+  length: number
+  resolution: ApiDefinition['resolution']
+  isCall: boolean
+  elsewhere: boolean
+  text: string
+  copies: number
+}
+
+export interface ApiReferencesResponse {
+  symbol: string
+  definitions: ApiDefinition[]
+  references: ApiReference[]
+}
+
+export interface ApiCodeSearchResponse {
+  matches: {
+    name: string | undefined
+    address: string
+    codeLocation: {
+      line: string
+      fileName: string
+      index: number
+      offset: number
+    }[]
+  }[]
+}
+
+export interface UpgradeabilityActor {
+  name: string
+  delay: string
+}
+
+// Config health report types
+export type ApiConfigHealthResponse = {
+  healthHints: ApiHealthHint[]
+  length: number
+}
+
+type ApiHealthHintBase = {
+  excess: {
+    ignoreInWatchMode?: string[]
+    ignoreMethods?: string[]
+    ignoreRelatives?: string[]
+  }
+}
+
+export type ApiHealthHint =
+  | (ApiHealthHintBase & {
+      source: 'config'
+      target: {
+        project: string
+        address: string
+        name?: string
+      }
+    })
+  | (ApiHealthHintBase & {
+      source: 'template'
+      target: {
+        templateId: string
+      }
+    })
+
+export type ApiAgentEvent =
+  | ApiAgentShowEvent
+  | { type: 'clear' }
+  // First on every stream; a new id means the server restarted.
+  | { type: 'connected'; serverId: string }
+  // The tab answers with an ApiAgentContext for this id.
+  | { type: 'context-request'; id: string }
+  // Only to the tab that owns the chat; a replay restarts its transcript.
+  | { type: 'chat'; event: ApiChatEvent }
+  | { type: 'chat-replay'; events: ApiChatEvent[] }
+  // A new board opens the board panel; a replay, sent on every connect, only
+  // restores the tab's board, or drops one the agent moved to another tab.
+  | { type: 'board'; board: ApiAgentBoard }
+  | { type: 'board-replay'; board: ApiAgentBoard | null }
+
+export interface ApiAgentShowEvent {
+  type: 'show'
+  id: string
+  project: string
+  steps: ApiAgentStep[]
+}
+
+export interface ApiAgentBoard {
+  id: string
+  project: string
+  title: string
+  blocks: ApiBoardBlock[]
+}
+
+export type ApiBoardBlock =
+  | { type: 'text'; text: string }
+  | {
+      type: 'table'
+      title?: string
+      columns: string[]
+      rows: ApiBoardCell[][]
+    }
+
+export type ApiBoardCell =
+  | { type: 'text'; text: string }
+  | { type: 'contract'; address: string; name?: string }
+
+export interface ApiAgentStep {
+  note: string
+  // The code contract first: the code panel shows the first selected one.
+  select: string[]
+  code?: {
+    address: string
+    sourceIndex: number
+    offset: number
+    length: number
+  }
+}
+
+// What the researcher looks at, in coordinates: the server reads names and
+// code itself.
+export interface ApiAgentContext {
+  project: string | undefined
+  selected: string[]
+  // The code panel's file and selection, offsets in the text it shows,
+  // which a SHA-256 of that text pins to the source the offsets are in.
+  code?: {
+    address: string
+    sourceName: string
+    sourceHash: string
+    from: number
+    to: number
+  }
+  // The step of the agent's show on screen, 0-based.
+  note?: { index: number; stepCount: number }
+}
+
+export type ApiChatProvider = 'claude' | 'codex'
+
+// What the chat panel draws, built from the agent's protocol messages on the
+// server.
+export type ApiChatEvent =
+  | {
+      type: 'status'
+      status: 'starting' | 'ready' | 'working' | 'failed' | 'closed'
+      provider: ApiChatProvider
+      error?: string
+    }
+  | { type: 'user'; text: string }
+  | { type: 'text'; text: string }
+  | {
+      type: 'tool'
+      id: string
+      title?: string
+      status?: 'pending' | 'in_progress' | 'completed' | 'failed'
+    }
+  | {
+      type: 'permission'
+      id: string
+      title: string
+      kind?: string
+      paths: string[]
+      // The tool's raw input, as JSON: the command or edit to approve.
+      input?: string
+      options: { id: string; name: string; kind: string }[]
+    }
+  | { type: 'permission-done'; id: string }
+  | { type: 'turn-end'; stopReason: string }
+  | { type: 'error'; message: string }
+  // What the researcher can switch for the chat, like the model; each
+  // replaces the earlier list.
+  | { type: 'config'; options: ApiChatConfigOption[] }
+
+export interface ApiChatConfigOption {
+  id: string
+  name: string
+  category: 'model' | 'thought_level'
+  currentValue: string
+  values: { value: string; name: string; description?: string }[]
+}

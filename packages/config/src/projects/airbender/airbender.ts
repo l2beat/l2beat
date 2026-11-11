@@ -54,10 +54,6 @@ export const airbender: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
         ...TRUSTED_SETUPS.AztecIgnition,
       },
-      {
-        proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
-        ...TRUSTED_SETUPS.AztecIgnition,
-      },
     ],
     projectsForTvs: [
       {

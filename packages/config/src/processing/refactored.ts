@@ -23,7 +23,6 @@ import { espressoprover } from '../projects/espressoprover/espressoprover'
 import { ethereum } from '../projects/ethereum/ethereum'
 import { etherfi } from '../projects/etherfi/etherfi'
 import { fluidkey } from '../projects/fluidkey/fluidkey'
-import { frankencoin } from '../projects/frankencoin/frankencoin'
 import { freetunnel } from '../projects/freetunnel/freetunnel'
 import { fusionplus } from '../projects/fusionplus/fusionplus'
 import { gaszip } from '../projects/gaszip/gaszip'
@@ -47,19 +46,23 @@ import { openvmprover } from '../projects/openvmprover/openvmprover'
 import { polymarket } from '../projects/polymarket/polymarket'
 import { privacyBoost } from '../projects/privacy-boost/privacy-boost'
 import { privacyPools } from '../projects/privacy-pools/privacy-pools'
+import { privacyPoolsV2 } from '../projects/privacy-pools-v2/privacy-pools-v2'
 import { railgun } from '../projects/railgun/railgun'
 import { relay } from '../projects/relay/relay'
 import { risc0 } from '../projects/risc0/risc0'
 import { rocketpool } from '../projects/rocketpool/rocketpool'
+import { safe } from '../projects/safe/safe'
 import { sp1hypercube } from '../projects/sp1hypercube/sp1hypercube'
 import { sp1turbo } from '../projects/sp1turbo/sp1turbo'
 import { stargate } from '../projects/stargate/stargate'
 import { stone } from '../projects/stone/stone'
 import { strk20 } from '../projects/strk20/strk20'
 import { stwo } from '../projects/stwo/stwo'
+import { tacitPay } from '../projects/tacit-pay/tacit-pay'
 import { tempo } from '../projects/tempo/tempo'
 import { tornadoCash } from '../projects/tornado-cash/tornado-cash'
 import { umbra } from '../projects/umbra/umbra'
+import { uniswapv2 } from '../projects/uniswapv2/uniswapv2'
 import { uniswapv3 } from '../projects/uniswapv3/uniswapv3'
 import { uniswapv4 } from '../projects/uniswapv4/uniswapv4'
 import { wbeth } from '../projects/wbeth/wbeth'
@@ -71,6 +74,7 @@ import { zcash } from '../projects/zcash/zcash'
 import { zcashNearIntents } from '../projects/zcash-near-intents/zcash-near-intents'
 import { zkapi } from '../projects/zkapi/zkapi'
 import { zkmoney } from '../projects/zkmoney/zkmoney'
+import { zkmoneyv6 } from '../projects/zkmoneyv6/zkmoneyv6'
 import { zkprover } from '../projects/zkprover/zkprover'
 import { zksyncprover } from '../projects/zksyncprover/zksyncprover'
 import type { BaseProject } from '../types'
@@ -132,9 +136,9 @@ export const refactored: BaseProject[] = [
   freetunnel,
   basesolbridge,
   // defi
-  frankencoin,
   liquityv2,
   chainlink,
+  uniswapv2,
   uniswapv3,
   lido,
   etherfi,
@@ -143,12 +147,15 @@ export const refactored: BaseProject[] = [
   cbeth,
   polymarket,
   rocketpool,
+  safe,
   // privacy
   cloaked,
   fluidkey,
   privacyPools,
+  privacyPoolsV2,
   railgun,
   strk20,
+  tacitPay,
   tornadoCash,
   umbra,
   zamaCw,
@@ -156,6 +163,7 @@ export const refactored: BaseProject[] = [
   zcashNearIntents,
   privacyBoost,
   zkmoney,
+  zkmoneyv6,
   zkapi,
   interfold,
 ]

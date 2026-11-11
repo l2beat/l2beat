@@ -296,6 +296,9 @@
         "isPermanentRollup": 0,
         "isPermanentRollupString": ".",
         "isPriorityQueueActive": false,
+        "priorityModeCanBeActivated": 0,
+        "priorityModeInfo": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "priorityModeTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "validators": ["eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186"]
       },
       "fieldMeta": {
@@ -312,6 +315,7 @@
           "description": "Settlement layer for this chain: the zero address while batches are committed, proven and executed on Ethereum, otherwise the Gateway diamond that settles this chain. Moving it relocates the complete proof-verification and message path of the chain."
         },
         "getAdmin": { "severity": "MEDIUM" },
+        "validators": { "severity": "MEDIUM" },
         "getTransactionFilterer": {
           "severity": "HIGH",
           "description": "This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2."
@@ -321,13 +325,25 @@
           "description": "zkPorter is a volition-like contruction and changes the zk proof input requirements."
         },
         "isPermanentRollup": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "true means that the DA mode cannot be changed to Validium in the future. compliant DAValidator pairs for the permanent rollup mode are defined/enforced by the RollupDAManager contract."
         },
-        "isPermanentRollupString": { "severity": "HIGH" },
+        "isPermanentRollupString": { "severity": "MEDIUM" },
+        "priorityModeCanBeActivated": {
+          "severity": "HIGH",
+          "description": "1 once the chain admin permanently allowed Priority Mode (ZKsync OS permanent rollups only). Then anyone can activate it as soon as the first unprocessed priority transaction is older than 4 days, after which only the shared PermissionlessValidator can settle batches (anyone can submit through it) and only the ChainTypeManager owner can deactivate it."
+        },
+        "priorityModeInfo": {
+          "severity": "MEDIUM",
+          "description": "Raw Priority Mode storage: last byte canBeActivated, byte before it activated, then the PermissionlessValidator address."
+        },
+        "priorityModeTransactionFilterer": {
+          "severity": "HIGH",
+          "description": "TransactionFilterer that replaces the chain's own filterer once Priority Mode is allowed. Set by the ChainTypeManager owner, zero means no filtering."
+        },
         "getDAValidatorPair": {
           "severity": "HIGH",
-          "description": "l1da, l2da"
+          "description": "l1da, l2da (before v31) or l1da, L2 DA commitment scheme (from v31)."
         },
         "getPubdataPricingMode": {
           "severity": "HIGH",
@@ -364,13 +380,14 @@
       "name": "ZKsyncOSChainTypeManager",
       "address": "eth:0x08A1D2962fC29AA46e869A1E7561112cc1026EfA",
       "type": "Contract",
-      "template": "adi/ChainTypeManager",
+      "template": "shared-zk-stack/ChainTypeManager",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0x6bc5b4d3a049af17ddd605f095ab123765781a3bad4f7a0e27a2b665b27c025e"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "[FORK] This contract is not the standard hub contract from the Elastic network but a local fork for ADI chain. Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,30,2.",
+      "description": "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,30,2.",
+      "critical": true,
       "deployerAddress": "eth:0xb63320480218fbC7Cc31c3f92C254D4732528985",
       "sinceTimestamp": 1764062063,
       "sinceBlock": 23874860,
@@ -404,6 +421,12 @@
         "validatorTimelock": "eth:0x0000000000000000000000000000000000000000",
         "validatorTimelockPostV29": "eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186"
       },
+      "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "admin": { "severity": "MEDIUM" },
+        "validatorTimelock": { "severity": "HIGH" },
+        "validatorTimelockPostV29": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x08A1D2962fC29AA46e869A1E7561112cc1026EfA": "TransparentUpgradeableProxy",
         "eth:0x721e27269ce348F71bdAAd7B7b033Afa60e404e0": "ZKsyncOSChainTypeManager"
@@ -417,7 +440,7 @@
       "template": "shared-zk-stack/L1NativeTokenVault",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0xeac1b0724c69c33183ce8e24a8f3ac28eb5adb9925dff647396c8d165f0ecae9"
+        "0xcacbab74b3abde440d2b92fb0b9499baa58dcaf51bc91222f687508934da689b"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Canonical central asset escrow for all ZK stack chains.",
@@ -2738,7 +2761,6 @@
     ]
   },
   "usedTemplates": {
-    "adi/ChainTypeManager": "0xbe2d88a172590cb3a629ad843086d648ed322c86eb23d4da6a7f43dfe04b8f0c",
     "adi/Governance": "0x46af5a5c4f79ce9ea6efb5ec445c6bb975a26e603abb09e50fe8a0e16f4e2e32",
     "adi/RollupDAManager": "0xf2275524272d21fe66f4b8c5eb42b74741a62235cc5e1db16e4ebaae56a9bcbb",
     "adi/ServerNotifier": "0x2d0a5ede7827c3fa5e2cb0e4568c676a952552562731371e4f9e101aebd288f2",
@@ -2749,9 +2771,10 @@
     "shared-zk-stack/BridgeHub": "0x85d84032c3f2eae0ff0e6a0d3e425dd5bf1ae3a31fc2ef68fea4aa5f442edbd9",
     "shared-zk-stack/ChainAdmin": "0x8be9e939e27d818ead1d430f9f603f4143a5f3d809e6f287aa3d463e5a8f5b8b",
     "shared-zk-stack/ChainAssetHandler": "0x8014df0d446cdb3c3b832daf6f52f4993f5315bacda2db187328db9c6a777312",
+    "shared-zk-stack/ChainTypeManager": "0x02d9f1f23d9ab85badca08caf6e170014e63af1bd7f8704f587cefdf0f1768cf",
     "shared-zk-stack/CTMDeploymentTracker": "0xeb9db9a349a757fe90088c401a5cf10b7da6a7dbd22abd4e0c21ad9a95292ef1",
-    "shared-zk-stack/Diamond": "0xf8ceb7cc4613a5afb74ab717732cca35ae7826aaa6ba9643d656020bdb3cec08",
-    "shared-zk-stack/L1AssetRouter": "0xb597793119e11f9fbaa496fc36287066fea595339e79f752b30faf484e03b720",
+    "shared-zk-stack/Diamond": "0xd2834698a75183a2a507735400ef998edd6d0efa0643b582577a0932c8c15866",
+    "shared-zk-stack/L1AssetRouter": "0xc1bb5a7fd2afe6899ca1e9385569467241167cd21964c21604e55e2864b76ab9",
     "shared-zk-stack/L1GenesisUpgrade": "0xeb9db9a349a757fe90088c401a5cf10b7da6a7dbd22abd4e0c21ad9a95292ef1",
     "shared-zk-stack/L1NativeTokenVault": "0xdbb34d948c77bf3d53fc312d8ad484a70d5bdc083eb97978bfb1dfcba4417627",
     "shared-zk-stack/L1Nullifier": "0x614d522d7f6aed93c6d04fda3957344b9cc6c94fd8060c2c5b760b2d49e0a84a",
@@ -2760,14 +2783,14 @@
     "shared-zk-stack/ValidatorTimelock_post29": "0xe85d88e60922135d7ddda6e3c8d3105129f43fe9e3cc4c4d689a891bfeb14c8e"
   },
   "usedBlockNumbers": { "ethereum": 26197265 },
-  "permissionsConfigHash": "0xe821763999e3186c038db416403f6edcd8c0acae97b6982d6d458d69ce337260",
+  "permissionsConfigHash": "0xa2cc86eca70c25c22483a4c4e080bc29f4ce5f4f90d7f45c32ecf5d939b0f633",
   "permissions": {
     "eth:0x0a8a2473cc5731575a94f58F470851Bc6695B5B8": {
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x0583Ef2B6416cb7B287406438B940E4d99680C5B",
-          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers and, from v31 while Priority Mode is not allowed, pause all new L1 --> L2 transactions including deposits (Chain Admin role).",
           "role": ".getAdmin"
         }
       ]
@@ -3045,7 +3068,7 @@
         {
           "permission": "interact",
           "from": "eth:0x0583Ef2B6416cb7B287406438B940E4d99680C5B",
-          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers and, from v31 while Priority Mode is not allowed, pause all new L1 --> L2 transactions including deposits (Chain Admin role).",
           "role": ".getAdmin",
           "via": [
             { "address": "eth:0x0a8a2473cc5731575a94f58F470851Bc6695B5B8" }

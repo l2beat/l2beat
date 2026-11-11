@@ -301,6 +301,38 @@ describeDatabase(TokenValueRepository.name, (db) => {
     })
   })
 
+  describe(TokenValueRepository.prototype.getAtOrBefore.name, () => {
+    beforeEach(async () => {
+      await repository.upsertMany([
+        tokenValue('a', 'ethereum', UnixTime(100), 1, 1000, 800, 500, 10),
+        tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500, 10),
+        tokenValue('a', 'ethereum', UnixTime(200), 7, 7000, 5600, 3500, 10),
+        tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000, 10),
+        tokenValue('d', 'arbitrum', UnixTime(200), 20, 20000, 16000, 10000, 10),
+        tokenValue('e', 'base', UnixTime(100), 1, 1, 1, 1, 1),
+      ])
+    })
+
+    it("returns each listed token's latest record at or before its timestamp", async () => {
+      const result = await repository.getAtOrBefore([
+        { projectId: 'ethereum', tokenId: 'a', timestamp: UnixTime(170) },
+        { projectId: 'ethereum', tokenId: 'b', timestamp: UnixTime(170) },
+        { projectId: 'arbitrum', tokenId: 'd', timestamp: UnixTime(250) },
+        { projectId: 'base', tokenId: 'e', timestamp: UnixTime(50) },
+      ])
+
+      expect(result).toEqualUnsorted([
+        tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500, 10),
+        tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000, 10),
+        tokenValue('d', 'arbitrum', UnixTime(200), 20, 20000, 16000, 10000, 10),
+      ])
+    })
+
+    it('returns nothing without targets', async () => {
+      expect(await repository.getAtOrBefore([])).toEqual([])
+    })
+  })
+
   describe(TokenValueRepository.prototype.getByProjectAtOrBefore.name, () => {
     beforeEach(async () => {
       await repository.upsertMany([
@@ -2354,6 +2386,83 @@ describeDatabase(TokenValueRepository.name, (db) => {
             },
           )
         expect(result.map((r) => r.project)).toEqual(['base'])
+      })
+    },
+  )
+
+  describe(
+    TokenValueRepository.prototype.getSummedByProjectAtResolution.name,
+    () => {
+      const metadataRepository = db.tvsTokenMetadata
+      const HOUR = UnixTime.HOUR
+      // Midnight UTC
+      const T = UnixTime(1_700_006_400)
+
+      beforeEach(async () => {
+        await metadataRepository.insertMany([
+          {
+            projectId: 'arbitrum',
+            tokenId: 'a',
+            source: 'canonical',
+            category: 'ether',
+            isAssociated: false,
+          },
+          {
+            projectId: 'arbitrum',
+            tokenId: 'b',
+            source: 'canonical',
+            category: 'rwaRestricted',
+            isAssociated: false,
+          },
+          {
+            projectId: 'base',
+            tokenId: 'c',
+            source: 'canonical',
+            category: 'ether',
+            isAssociated: false,
+          },
+        ])
+        await repository.upsertMany([
+          tokenValue('a', 'arbitrum', T - 6 * HOUR, 1, 1, 1, 1, 1),
+          tokenValue('a', 'arbitrum', T, 1, 10, 10, 10, 1),
+          tokenValue('b', 'arbitrum', T, 1, 5, 5, 5, 1),
+          tokenValue('a', 'arbitrum', T + HOUR, 1, 20, 20, 20, 1),
+          tokenValue('a', 'arbitrum', T + 2 * HOUR, 1, 30, 30, 30, 1),
+          tokenValue('a', 'arbitrum', T + 3 * HOUR, 1, 40, 40, 40, 1),
+          tokenValue('c', 'base', T, 1, 50, 50, 50, 1),
+        ])
+      })
+
+      afterEach(async () => {
+        await metadataRepository.deleteAll()
+      })
+
+      it('sums projects at resolution boundaries and every timestamp after the last one', async () => {
+        const result = await repository.getSummedByProjectAtResolution(
+          ['arbitrum'],
+          [null, T + 2 * HOUR],
+          'day',
+          { excludeRwaRestrictedTokens: false },
+        )
+
+        expect(result).toEqualUnsorted([
+          { projectId: 'arbitrum', timestamp: T, value: 15 },
+          { projectId: 'arbitrum', timestamp: T + HOUR, value: 20 },
+          { projectId: 'arbitrum', timestamp: T + 2 * HOUR, value: 30 },
+        ])
+      })
+
+      it('excludes RWA restricted tokens', async () => {
+        const result = await repository.getSummedByProjectAtResolution(
+          ['arbitrum'],
+          [T, T],
+          'day',
+          { excludeRwaRestrictedTokens: true },
+        )
+
+        expect(result).toEqual([
+          { projectId: 'arbitrum', timestamp: T, value: 10 },
+        ])
       })
     },
   )

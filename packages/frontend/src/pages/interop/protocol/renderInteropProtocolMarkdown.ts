@@ -50,7 +50,11 @@ export function renderInteropProtocolMarkdown({
       risks: [],
       description: entry.header.description,
     },
-    header: { links: entry.header.links, badges: entry.header.badges },
+    header: {
+      links: entry.header.links,
+      badges: entry.header.badges,
+      discoUiHref: entry.header.discoUiHref,
+    },
     sections: entry.sections,
     apiLinks: {},
   })

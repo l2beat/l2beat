@@ -4,5 +4,11 @@
     "address": "eth:0xe883686d9EC4E0430f2233A6BF12B2D226a39e19",
     "chain": "ethereum",
     "blockNumber": 26053936
+  },
+  "OperationExecutor_v6": {
+    "hash": "0x37951947292f98cb2e0d8e7f0ed54cfae10a62185fb2436fe251346ee75b6601",
+    "address": "eth:0x5ecE3b4EBE7137b1b6f92406dE17d9816D585c1c",
+    "chain": "ethereum",
+    "blockNumber": 26290653
   }
 }

@@ -1,6 +1,6 @@
 import type { Milestone, ProjectDaTrackingConfig } from '@l2beat/config'
 import { ProjectDataPostedChart } from '~/components/chart/data-posted/ProjectDataPostedChart'
-import type { ChartProject } from '~/components/core/chart/Chart'
+import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { CustomLink } from '~/components/link/CustomLink'
 import type { DaLayerInfo } from '~/utils/project/data-posted/getDaLayersInfo'
@@ -68,8 +68,11 @@ export function DataPostedSection({
 function DaLayerNames({ daLayers }: { daLayers: DaLayerInfo[] }) {
   return (
     <span>
-      {daLayers.map((daLayer) => (
-        <DaLayerName key={daLayer.name} daLayer={daLayer} />
+      {daLayers.map((daLayer, index) => (
+        <span key={daLayer.name}>
+          {index > 0 && ','}
+          <DaLayerName daLayer={daLayer} />
+        </span>
       ))}
     </span>
   )

@@ -5,6 +5,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
 
 const discovery = new ProjectDiscovery('butternetwork')
@@ -22,6 +23,7 @@ export const butternetwork: BaseProject = {
   name: 'Butter Network',
   shortName: 'Butter',
   addedAt: UnixTime(1785915246),
+  discoveryInfo: getDiscoveryInfo([discovery]),
   statuses: {
     yellowWarning:
       'The bridge is paused during a [routing infrastructure upgrade](https://x.com/ButterNetworkio/status/2110682522564825340).',

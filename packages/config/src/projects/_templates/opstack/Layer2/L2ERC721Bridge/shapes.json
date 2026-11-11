@@ -14,5 +14,11 @@
     "address": "ink:0x716eAd0Cf3e7FF86A02D4F8cb41a6D14922fA833",
     "chain": "ink",
     "blockNumber": 50178011
+  },
+  "L2ERC721Bridge_v1_10_0_base.sol": {
+    "hash": "0x1eaa11bf9caafca99c36bb0ddadf3fe4767ff9ec5dea2958964872280d7a66ef",
+    "address": "base:0x6cf5489360C17e648d9009c74019699aa716d60c",
+    "chain": "base",
+    "blockNumber": 53551478
   }
 }

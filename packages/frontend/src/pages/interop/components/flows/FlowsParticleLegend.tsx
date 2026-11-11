@@ -21,9 +21,10 @@ export function FlowsParticleLegend({
 
   const avgLine = (
     <>
-      Avg value per second ≈{' '}
-      <span className="font-bold text-brand">
-        {formatCurrency(avgValuePerSecond, 'usd')}
+      {/* Over the whole graph, unlike a chain's own stats beside it */}
+      Avg value per second, all flows shown ≈{' '}
+      <span className="font-bold text-brand-deep">
+        {formatCurrency(avgValuePerSecond, 'usd')}/s
       </span>
     </>
   )
@@ -31,7 +32,7 @@ export function FlowsParticleLegend({
   const particleLine = dollarsPerParticle ? (
     <>
       <span className="size-1.5 rounded-full bg-brand" />1 particle ≈{' '}
-      <span className="font-bold text-brand">
+      <span className="font-bold text-brand-deep">
         {formatCurrency(dollarsPerParticle, 'usd', {
           // sub-dollar values ($0.1, $0.5) need a decimal to not render as "<$1"
           decimals: dollarsPerParticle < 1 ? 1 : 0,
@@ -44,18 +45,13 @@ export function FlowsParticleLegend({
     return (
       <div
         className={cn(
-          'flex flex-wrap items-center gap-x-2 gap-y-1 font-medium text-label-value-11 text-secondary md:text-label-value-12',
+          'flex flex-wrap items-center gap-x-4 gap-y-1 font-medium text-label-value-11 text-secondary md:text-label-value-12',
           className,
         )}
       >
         <span>{avgLine}</span>
         {particleLine && (
-          <>
-            <span className="text-tertiary">|</span>
-            <span className="inline-flex items-center gap-1">
-              {particleLine}
-            </span>
-          </>
+          <span className="inline-flex items-center gap-1">{particleLine}</span>
         )}
       </div>
     )

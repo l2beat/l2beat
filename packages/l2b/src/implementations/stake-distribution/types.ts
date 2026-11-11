@@ -1,7 +1,7 @@
 import type { DuneQueryService } from '@l2beat/shared'
 
 export const STAKING_PROJECT_IDS = [
-  'aztecnetwork',
+  'aztecnetworkv6',
   'ethereum',
   'gnosis',
   'polygon-pos',

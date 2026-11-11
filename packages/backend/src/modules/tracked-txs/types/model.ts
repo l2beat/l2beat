@@ -23,6 +23,8 @@ export const DuneFunctionCallResult = v.object({
   blob_versioned_hashes: v.union([v.array(v.string()), v.null()]),
   data_length: v.number(),
   non_zero_bytes: v.number(),
+  is_self_transfer: v.boolean(),
+  has_value: v.boolean(),
   input: v.string(),
 })
 
@@ -59,6 +61,8 @@ export const DuneTransferResult = v.object({
   blob_versioned_hashes: v.union([v.array(v.string()), v.null()]),
   data_length: v.number(),
   non_zero_bytes: v.number(),
+  is_self_transfer: v.boolean(),
+  has_value: v.boolean(),
 })
 
 export type TrackedTxTransferResult = {

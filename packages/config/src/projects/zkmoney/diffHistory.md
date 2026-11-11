@@ -1,3 +1,174 @@
+Generated with discovered.json: 0x0984759de245d03587959621b3d1879ad08cf4ce
+
+# Diff at Fri, 30 Oct 2026 14:00:36 GMT:
+
+- id: e175eec5
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fbb4c5e1c17a319e598e10bff438f587f10fcbcb block: 1793012002
+- current timestamp: 1793367325
+
+## Description
+
+zk.money names move to Aztec v6: the NameRegistry, the ENS record and the resolver operator now point to zkmoneyv6 contracts, which this discovery no longer follows. The v5 Resolver and RegistrationController stay as seeds.
+
+## Watched changes
+
+```diff
+    contract Resolver (eth:0x3e9BcF7cCA4b94885aBEB9Bbf0005aA99DC6307F) [zkmoney/Resolver] {
+    +++ description: ENS resolver for zk.money names. It returns a deposit address derived from a resolver operator's answer, which must come with a zk proof that it matches the user's registered keys and L2 address in the AccountMetadataRegistry.
++++ description: Resolver set for zk.money in the ENS registry.
++++ severity: HIGH
+      values.ensResolver:
+-        "eth:0x3e9BcF7cCA4b94885aBEB9Bbf0005aA99DC6307F"
++        "eth:0xc329a74542688a3c4948B7d46F204d3d7e5Dd525"
+    }
+```
+
+```diff
+    contract NameRegistry (eth:0xa9863B8F573D62377d987ccb9AF6e0000f99D14a) [zkmoney/NameRegistry] {
+    +++ description: Registry of zk.money names. It points to the RegistrationController and the AccountMetadataRegistry, which together decide where payments to a zk.money name resolve to.
++++ severity: HIGH
+      values.registrationController:
+-        "eth:0x10EB6fecD2DCE6DA55d25C355374c970D5D11E23"
++        "eth:0x45F626E2a4D63232677C96B163ac46e20514a915"
++++ severity: HIGH
+      values.resolver:
+-        "eth:0x3e9BcF7cCA4b94885aBEB9Bbf0005aA99DC6307F"
++        "eth:0xc329a74542688a3c4948B7d46F204d3d7e5Dd525"
+    }
+```
+
+```diff
+    contract AccountMetadataRegistry (eth:0xDA79Bae4485c40291363D885Aae5B543d2D0Efa9) [zkmoney/AccountMetadataRegistry] {
+    +++ description: Stores user records (Aztec L2 address, keys, chosen resolver operator) and resolver operator entries. User records can be written by the user or by the RegistrationController. Anyone can register as a resolver operator.
+      values.resolverOperators.eth:0x4748f1359c4dFf0cfB7A36968C05cc314016b664.0.1:
+-        "112601459342247942869064749588970208967989742799476805946984122328994807074558"
++        "91380317572347884033234557058971661735677496832042332515746246346312091580181"
+      values.resolverOperators.eth:0x4748f1359c4dFf0cfB7A36968C05cc314016b664.0.0:
+-        "103084522734471857115051869841763019900578383836917791387182750820147840889585"
++        "78424701733732488215665087776877938889254215889323330557684387640730288987814"
+      values.resolverOperators.eth:0x4748f1359c4dFf0cfB7A36968C05cc314016b664.1:
+-        "0x07248288047b1945ad7453dc2ca9f73b2320b5ab4ba042875d1d11073131848e"
++        "0x1847cc9b9248ca3a57e3c90c91188c2c41262b860b6be229966d843956f00ae7"
+      values.resolverOperators.eth:0x4748f1359c4dFf0cfB7A36968C05cc314016b664.2:
+-        "https://d2yb6xtgmawdj1.cloudfront.net/{sender}/{data}.json"
++        "https://rop-v6.v6-prod.oxide.zk.money/{sender}/{data}.json"
+      values.resolverOperators.eth:0x4748f1359c4dFf0cfB7A36968C05cc314016b664.3:
+-        "eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449"
++        "eth:0xFf839a8Be7c90c804F42563f352324cEBcDfe41C"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793012002 (main branch discovery), not current.
+
+```diff
+    contract ZkMoneyPortal_sUSDS (eth:0xD7Ae00b91ba0B8e0240B22Cd75fE447d177C260f) [zkmoney/ZkMoneyPortal] {
+    +++ description: Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint.
+      sourceHashes.0:
+-        "0x7020e3729f66f6c8ddada17eeb82b33ae8b7f623c0ffb3bb6c921bf966a7f6a8"
++        "0xd99b45ced6473f41ba909b533b1096d83b7d9633cee20987ca077ce8eb389be6"
+    }
+```
+
+```diff
+    contract ZkMoneyPortal (eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449) [zkmoney/ZkMoneyPortal] {
+    +++ description: Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint.
+      sourceHashes.0:
+-        "0x4abb439f2218670904cdae29f2663f412a1ca4d63284a05120c764dc8eed141e"
++        "0x4d89fd312c737814de5e81632ef9671e232ec8faa7bbbfbba98e7c9c2787b25b"
+    }
+```
+
+Generated with discovered.json: 0x35faa6a92fd1b55e88b9830121b29f087bc1e5d7
+
+# Diff at Mon, 26 Oct 2026 10:54:45 GMT:
+
+- id: fd9d3a8d
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cd4121bcb1cad41e4416bc6b1306ac08500a8342 block: 1792748009
+- current timestamp: 1793012002
+
+## Description
+
+Both portals were frozen right after Aztec made its v6 rollup canonical, at proven v5 checkpoint 118925. Deposits revert, and only withdrawals proven by then still pay out. Funds leave through refunds that prove notes or deposits against the frozen state, need a registered enclave signature and publish their total. Payments on Aztec v5 after the freeze do not change who can refund a note. No zk.money deployment on Aztec v6 exists yet.
+
+## Watched changes
+
+```diff
+    contract ZkMoneyPortal_sUSDS (eth:0xD7Ae00b91ba0B8e0240B22Cd75fE447d177C260f) [zkmoney/ZkMoneyPortal] {
+    +++ description: Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint.
+      values._$freezeArchive:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x103a50a830507b89a1c34cafa4060a839d437f85df3c63e0e8e6b3f832c545d7"
+      values._$freezeCheckpointNumber:
+-        0
++        118925
+      values._$freezeEpochNumber:
+-        0
++        4426
++++ description: Whether the portal is permanently frozen. A frozen portal accepts no deposits. Withdrawals within the frozen checkpoint and epoch bounds remain available alongside refunds against the frozen state. L2 transfers are not disabled but do not change refundable ownership.
++++ severity: MEDIUM
+      values._$frozen:
+-        false
++        true
+    }
+```
+
+```diff
+    contract ZkMoneyPortal (eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449) [zkmoney/ZkMoneyPortal] {
+    +++ description: Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint.
+      values._$freezeArchive:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x103a50a830507b89a1c34cafa4060a839d437f85df3c63e0e8e6b3f832c545d7"
+      values._$freezeCheckpointNumber:
+-        0
++        118925
+      values._$freezeEpochNumber:
+-        0
++        4426
++++ description: Whether the portal is permanently frozen. A frozen portal accepts no deposits. Withdrawals within the frozen checkpoint and epoch bounds remain available alongside refunds against the frozen state. L2 transfers are not disabled but do not change refundable ownership.
++++ severity: MEDIUM
+      values._$frozen:
+-        false
++        true
+    }
+```
+
+Generated with discovered.json: 0x2520a5cf47f7053887d9726005bc8110bf5c02f9
+
+# Diff at Fri, 23 Oct 2026 09:46:47 GMT:
+
+- id: 4f297957
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ec8ba7d26cf94eabb922b46e6e4752a4e401124 block: 1791882651
+- current timestamp: 1792748009
+
+## Description
+
+Add SwapEscrowFactoryV2 and its SwapEscrowV2 implementation, which zk.money Desktop v0.5.0 uses for swap and fresh-address withdrawals.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791882651 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract SwapEscrowFactoryV2 (eth:0x3B5D8c731364902eAFa46Be327AFB044C10c5952) [zkmoney/SwapEscrowFactoryV2]
+    +++ description: Swap-on-withdraw: a withdrawal can pay DAI to a SwapEscrowV2 clone whose route, recipient, gas share and tip are fixed in its address. Anyone can deploy and execute a funded clone to pay USDC, USDT, ETH or DAI to the recipient.
+```
+
+```diff
++   Status: CREATED
+    contract SwapEscrowV2 (eth:0xcfAf1DFc22CE92cf3F2b534b3b5C1F116028FB95) [zkmoney/SwapEscrowV2]
+    +++ description: SwapEscrowV2 implementation. A clone swaps via the Curve 3pool (and Uniswap for ETH) with a slippage bound of 100 bps for stablecoins and 200 bps against the Chainlink ETH/USD price for ETH. It can first swap a capped share of the DAI to ETH for the recipient's gas. If the swap cannot execute, only the recovery key committed in the clone's address can move the funds.
+```
+
 Generated with discovered.json: 0xa5e9caca8cfba61c584e8443cc7108a4ceb25bfa
 
 # Diff at Fri, 16 Oct 2026 05:36:55 GMT:

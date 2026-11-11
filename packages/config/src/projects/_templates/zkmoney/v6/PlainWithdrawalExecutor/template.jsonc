@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PlainWithdrawalExecutor",
+  "critical": true,
+  "category": "core",
+  "description": "Default payout contract for withdrawals and refunds. Only the PORTAL can call it. It pays the recipient and relayer tip committed on Aztec. An ordinary withdrawal first pays FEE to BENEFICIARY, while refunds pay no fee.",
+  "ignoreRelatives": ["ASSET", "BENEFICIARY", "SUBSIDY"],
+  "fields": {
+    "FEE": {
+      "description": "Fee in ASSET (wei) taken from each ordinary withdrawal."
+    },
+    "SUBSIDY": {
+      "description": "Pays relayers of this executor's payouts from operator funds."
+    }
+  }
+}

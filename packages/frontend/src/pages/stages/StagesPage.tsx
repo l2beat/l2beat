@@ -2,7 +2,6 @@ import { CustomLink } from '~/components/link/CustomLink'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { Article } from '~/components/markdown/Article'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import type { CollectionEntry } from '~/content/getCollection'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -18,7 +17,7 @@ export function StagesPage({ content, lastUpdated, ...props }: Props) {
       <SideNavLayout>
         <MainPageHeader>Stages Framework</MainPageHeader>
         <PrimaryCard className="md:p-8">
-          <p className="text-brand text-subtitle-12 uppercase">
+          <p className="text-brand-deep text-subtitle-12 uppercase">
             Last updated on {lastUpdated}
           </p>
           <h1 className="mt-2 mb-4 text-heading-24 md:text-heading-32">
@@ -39,7 +38,6 @@ export function StagesPage({ content, lastUpdated, ...props }: Props) {
             </Article>
           </main>
         </PrimaryCard>
-        <ScrollToTopButton />
       </SideNavLayout>
     </AppLayout>
   )

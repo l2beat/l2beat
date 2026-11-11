@@ -48,33 +48,33 @@ describe(createLlmsTxtRouter.name, () => {
     expect(response.headers.get('vary')).toEqual('Accept')
   })
 
-  it('opens with the L2BEAT title and a one-paragraph summary', async () => {
+  it('opens with the ETHBEAT title, naming L2BEAT too, and a one-paragraph summary', async () => {
     const body = await getLlmsTxt()
 
-    expect(body).toMatchRegex(/^# L2BEAT\n\n> \S.+\n\n/)
+    expect(body).toMatchRegex(/^# ETHBEAT \(formerly L2BEAT\)\n\n> \S.+\n\n/)
   })
 
   it('links the main sections of the site', async () => {
     const urls = getAllLinks(await getLlmsTxt()).map((l) => l.url)
 
     expect(urls).toInclude(
-      'https://l2beat.com/layer2s/summary',
-      'https://l2beat.com/layer2s/risk',
-      'https://l2beat.com/layer2s/tvs',
-      'https://l2beat.com/layer2s/activity',
-      'https://l2beat.com/layer2s/liveness',
-      'https://l2beat.com/layer2s/costs',
-      'https://l2beat.com/stages',
-      'https://l2beat.com/interop/summary',
-      'https://l2beat.com/privacy/summary',
-      'https://l2beat.com/zk-catalog',
+      'https://ethbeat.org/layer2s/summary',
+      'https://ethbeat.org/layer2s/risk',
+      'https://ethbeat.org/layer2s/tvs',
+      'https://ethbeat.org/layer2s/activity',
+      'https://ethbeat.org/layer2s/liveness',
+      'https://ethbeat.org/layer2s/costs',
+      'https://ethbeat.org/stages',
+      'https://ethbeat.org/interop/summary',
+      'https://ethbeat.org/privacy/summary',
+      'https://ethbeat.org/zk-catalog',
       ...(env.CLIENT_SIDE_OSSIFICATION_ENABLED
-        ? ['https://l2beat.com/ossification']
+        ? ['https://ethbeat.org/ossification']
         : []),
-      'https://l2beat.com/governance',
-      'https://l2beat.com/glossary',
-      'https://l2beat.com/faq',
-      'https://l2beat.com/publications',
+      'https://ethbeat.org/governance',
+      'https://ethbeat.org/glossary',
+      'https://ethbeat.org/faq',
+      'https://ethbeat.org/publications',
       'https://github.com/l2beat/l2beat',
     )
   })
@@ -87,7 +87,7 @@ describe(createLlmsTxtRouter.name, () => {
     const registered = [
       ...LIST_PAGES_WITH_MARKDOWN,
       ...PROJECT_PAGES_WITH_MARKDOWN,
-    ].map((page) => `https://l2beat.com${toUrlTemplate(page)}.md`)
+    ].map((page) => `https://ethbeat.org${toUrlTemplate(page)}.md`)
     expect(urls.toSorted()).toEqual(registered.toSorted())
   })
 
@@ -97,14 +97,14 @@ describe(createLlmsTxtRouter.name, () => {
     )
 
     expect(urls).toEqual([
-      'https://l2beat.com/layer2s/projects/{slug}.md',
-      'https://l2beat.com/projects/ethereum.md',
-      'https://l2beat.com/privacy/projects/{slug}.md',
-      'https://l2beat.com/interop/protocols/{slug}.md',
-      'https://l2beat.com/zk-catalog/{slug}.md',
-      'https://l2beat.com/interop/tokens/{slug}.md',
+      'https://ethbeat.org/layer2s/projects/{slug}.md',
+      'https://ethbeat.org/projects/ethereum.md',
+      'https://ethbeat.org/privacy/projects/{slug}.md',
+      'https://ethbeat.org/interop/protocols/{slug}.md',
+      'https://ethbeat.org/zk-catalog/{slug}.md',
+      'https://ethbeat.org/tokens/{slug}.md',
       ...(env.CLIENT_SIDE_DEFI_ENABLED
-        ? ['https://l2beat.com/defi/projects/{slug}.md']
+        ? ['https://ethbeat.org/defi/projects/{slug}.md']
         : []),
     ])
   })
@@ -116,7 +116,7 @@ describe(createLlmsTxtRouter.name, () => {
     expect(body.length).toBeLessThan(12_000)
     expect(links.length).toBeLessThan(60)
     expect(links.map((l) => l.url)).not.toInclude(
-      'https://l2beat.com/layer2s/projects/arbitrum',
+      'https://ethbeat.org/layer2s/projects/arbitrum',
     )
   })
 
@@ -124,7 +124,7 @@ describe(createLlmsTxtRouter.name, () => {
     const body = await getLlmsTxt()
     const [notes] = body.split('\n## ')
 
-    expect(notes ?? '').toInclude('When to use L2BEAT:')
+    expect(notes ?? '').toInclude('When to use ETHBEAT:')
   })
 
   // The edge cache caveat applies to every page, not to one entry.
@@ -141,7 +141,7 @@ describe(createLlmsTxtRouter.name, () => {
 
     expect(urls).toInclude(
       'https://github.com/l2beat/l2beat',
-      'https://l2beat.com/terms-of-service',
+      'https://ethbeat.org/terms-of-service',
     )
   })
 
@@ -150,10 +150,10 @@ describe(createLlmsTxtRouter.name, () => {
     // routes, so only /api links are held to the router.
     const urls = getLinks(await getLlmsTxt(), 'Public API')
       .map((l) => l.url)
-      .filter((url) => url.startsWith('https://l2beat.com/api/'))
+      .filter((url) => url.startsWith('https://ethbeat.org/api/'))
 
     const registered = getRegisteredPaths(createPublicApiRouter()).map(
-      (path) => `https://l2beat.com${toUrlTemplate(path)}`,
+      (path) => `https://ethbeat.org${toUrlTemplate(path)}`,
     )
     expect(urls.toSorted()).toEqual(registered.toSorted())
   })

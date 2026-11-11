@@ -2,7 +2,7 @@
 
 ## Introduction
 
-L2BEAT is tracking TVS of L2 projects, you can take a look at [Value Locked Page](https://l2beat.com/scaling/tvs). You can also see more detailed breakdown when you click on one of the projects, e.g. [Arbitrum](https://l2beat.com/scaling/projects/arbitrum/tvs-breakdown)
+ETHBEAT is tracking TVS of L2 projects, you can take a look at [Value Locked Page](https://ethbeat.org/layer2s/tvs). You can also see more detailed breakdown when you click on one of the projects, e.g. [Arbitrum](https://ethbeat.org/layer2s/projects/arbitrum/tvs-breakdown)
 
 As you can see there are three types of value depending on the `source`:
 

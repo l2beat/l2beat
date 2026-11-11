@@ -1,7 +1,7 @@
 {
   "name": "lighter-robinhood",
   "timestamp": 1791898285,
-  "configHash": "0x464cb5e288b184494f7c7cd1cf081d6bdaaa5269f8a39a9f2c4946733a3cd925",
+  "configHash": "0xb264d2ca45a0b8e07c7a0c06d051c1de6464150b3d52c1ed62145fc348063919",
   "entries": [
     {
       "address": "robinhood:0x07B06B78C1A1908dD8e59322Fd45F78406d2241f",
@@ -191,6 +191,34 @@
           "robinhood:0x998ecf039Eb110b72F5F6C1Ea31C2fA41a458FAA",
           "robinhood:0x8E1aF081a30C5d632999b8ECA8438B911a4670EB"
         ],
+        "$pastUpgrades": [
+          [
+            "2026-06-26T12:42:27.000Z",
+            "0x56119cbe72da40648b646b402e71c66a174a4e0e62a10d3a90f9c3b0d8ecdad3",
+            ["robinhood:0x6C23703ba62a845893758ea35E5eD854639ef8BA"]
+          ],
+          [
+            "2026-07-17T05:23:48.000Z",
+            "0x5181eb1330f92fc9eac8a8c732c081403c2343a503a36f9861a320c7a69c0280",
+            ["robinhood:0xE470e41Cacc197EA07f879577765A8c81234ED7B"]
+          ],
+          [
+            "2026-08-21T14:54:41.000Z",
+            "0x9c6057cc94adc86e19803d3a40f879531829b2d921cb65f6e232d18bb85d1b0d",
+            ["robinhood:0x82DE5B1161C93afDFE21bA0D5343f01Cd7401d90"]
+          ],
+          [
+            "2026-10-08T10:58:45.000Z",
+            "0xfb3043dfd28378f1bfabd4c0b60ff2f9a54a2a4f393f27e3b25ad518139601c2",
+            ["robinhood:0xEaDfD60eb47C472e4021F3917C7c3a9a48cf36e1"]
+          ],
+          [
+            "2026-10-08T14:19:06.000Z",
+            "0x8ad402ee186907414bea85e0a3218e425e5ecf9d45c7c9bbfa86ff450d751de9",
+            ["robinhood:0x998ecf039Eb110b72F5F6C1Ea31C2fA41a458FAA"]
+          ]
+        ],
+        "$upgradeCount": 5,
         "additionalZkLighter": "robinhood:0x8E1aF081a30C5d632999b8ECA8438B911a4670EB",
         "assetConfigNative": {
           "tokenAddress": "robinhood:0x0000000000000000000000000000000000000000",
@@ -495,7 +523,7 @@
         "0x317a8c60bf36af0b293fad7aaf9ae5d178a0c2ea316b493b5c8b962d4daea6f6",
         "0x020d69201a7fde88b16a01da83de6719640fb7ad4524c577b001f4f446f1dcb2"
       ],
-      "proxyType": "EIP1967 proxy",
+      "proxyType": "UpgradeGatekeeper proxy",
       "description": "The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.",
       "critical": true,
       "deployerAddress": "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213",
@@ -504,8 +532,44 @@
       "values": {
         "$admin": "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716",
         "$implementation": "robinhood:0x7817a34136c56A6097C7042B3cAAe24b9eEd9fb4",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
+        "$pastUpgrades": [
+          [
+            "2026-06-26T12:42:27.000Z",
+            "0x56119cbe72da40648b646b402e71c66a174a4e0e62a10d3a90f9c3b0d8ecdad3",
+            ["robinhood:0x807973D47e4DA8eF312060c01eF24Ee3E4aFc1E1"]
+          ],
+          [
+            "2026-06-28T19:17:37.000Z",
+            "0x091b043b446536db90f58cf5e81f5baabf6f61f2c39da72192c2dca4004e1738",
+            ["robinhood:0x335dE9265A1F54296252acbAc2D05dd6E8CeD9cE"]
+          ],
+          [
+            "2026-06-30T16:55:12.000Z",
+            "0x1125517c448cb5f720bf12cfc61489ab74bd7391253318cec5fb7e439b558678",
+            ["robinhood:0xecC8482041F2a4969C8Cf570969d4016B8db36cD"]
+          ],
+          [
+            "2026-07-12T19:12:00.000Z",
+            "0x31e788341529a053186923dfdeefa3495042a5536f8f770e6df969d06dcf79ea",
+            ["robinhood:0xA3c70B197AcE329D9e09C753DA7874B78F1D00f4"]
+          ],
+          [
+            "2026-08-21T14:54:41.000Z",
+            "0x9c6057cc94adc86e19803d3a40f879531829b2d921cb65f6e232d18bb85d1b0d",
+            ["robinhood:0x61CA82e45F5a57d00E66b522Be72D8bA41e634Aa"]
+          ],
+          [
+            "2026-09-01T17:40:17.000Z",
+            "0xdb46f86078aeede8cf03c5e226424ea8a0e9251cc5a291ad12dbbf9b13e6f793",
+            ["robinhood:0xCBF92533F5816c6Ee0e4250F4E138b3f49962EF2"]
+          ],
+          [
+            "2026-10-08T14:19:06.000Z",
+            "0x8ad402ee186907414bea85e0a3218e425e5ecf9d45c7c9bbfa86ff450d751de9",
+            ["robinhood:0x7817a34136c56A6097C7042B3cAAe24b9eEd9fb4"]
+          ]
+        ],
+        "$upgradeCount": 7,
         "getMaster": "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716",
         "getTarget": "robinhood:0x7817a34136c56A6097C7042B3cAAe24b9eEd9fb4"
       },
@@ -523,7 +587,7 @@
         "0x317a8c60bf36af0b293fad7aaf9ae5d178a0c2ea316b493b5c8b962d4daea6f6",
         "0x8077a97b0121aacfd0e919d68968f559b6c979ab9357e7c5c61138d20d78166b"
       ],
-      "proxyType": "EIP1967 proxy",
+      "proxyType": "UpgradeGatekeeper proxy",
       "description": "Manages the list of validators and the network governor.",
       "critical": true,
       "deployerAddress": "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213",
@@ -532,8 +596,14 @@
       "values": {
         "$admin": "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716",
         "$implementation": "robinhood:0x3468Dcab5a2D81Af207B3e301DFA889321989a61",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
+        "$pastUpgrades": [
+          [
+            "2026-06-26T12:42:27.000Z",
+            "0x56119cbe72da40648b646b402e71c66a174a4e0e62a10d3a90f9c3b0d8ecdad3",
+            ["robinhood:0x3468Dcab5a2D81Af207B3e301DFA889321989a61"]
+          ]
+        ],
+        "$upgradeCount": 1,
         "getMaster": "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716",
         "getTarget": "robinhood:0x3468Dcab5a2D81Af207B3e301DFA889321989a61",
         "MAX_ACCOUNT_INDEX": 281474976710654,

@@ -28,6 +28,7 @@ import { getOpticsBeaconProxy } from './manual/OpticsBeaconProxy'
 import { getPolygonExtensionProxy } from './manual/PolygonExtensionProxy'
 import { getRailgunProxy } from './manual/RailgunProxy'
 import { gatTaikoForkProxy } from './manual/TaikoForkProxy'
+import { getUpgradeGatekeeperProxy } from './manual/UpgradeGatekeeperProxy'
 import { getZkLighterProxy } from './manual/ZkLighterProxy'
 import { getZkLinkProxy } from './manual/ZkLinkProxy'
 import { getZkSpaceProxy } from './manual/ZkSpaceProxy'
@@ -84,6 +85,7 @@ export const MANUAL_DETECTORS: Record<ManualProxyType, Detector> = {
   'TaikoFork proxy': gatTaikoForkProxy,
   'ZkLink proxy': getZkLinkProxy,
   'zkLighter proxy': getZkLighterProxy,
+  'UpgradeGatekeeper proxy': getUpgradeGatekeeperProxy,
   'NXV proxy': getNxvProxy,
   'Railgun proxy': getRailgunProxy,
   immutable: getImmutableProxy,

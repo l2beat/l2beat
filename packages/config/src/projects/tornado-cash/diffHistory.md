@@ -1,3 +1,148 @@
+Generated with discovered.json: 0xe201b8fb561dffc26b5d25105c0f01a11763a393
+
+# Diff at Thu, 05 Nov 2026 10:31:57 GMT:
+
+- id: 045be3d9
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ed3b78ee5d7973829dff175055ab7e54cc7df91 block: 1791619122
+- current timestamp: 1793874630
+
+## Description
+
+Proposal 73 is in voting: it pays 200 TORN to the proposer and pins a new app build on tornadocash.eth (contenthash e301017012...2a75). Voting ends 2026-11-10 06:49 UTC, execution is possible from 2026-11-12 after the 2-day delay. The source moves from tornado-dao/classic-ui to the fork torndao777-eng/classic-ui (account created 2026-09-20). Its two commits on top of the current pin 17c54dae only change relayer list loading in services/registry/index.js. The proposal contract matches its verified source and only does these two things. L2BEAT rebuilt the new CID bafybeiayu2srl6owm6tdbik6uabcpjlji4u32dtph4yrwakreklcfprkou from torndao777-eng/classic-ui 8af0abd with the DAO's recipe (tornado-dao/tornado-ipfs-ui d2aa401), and it matches. Once the proposal executes, REBUILT_APP_CID in tornado-cash.ts needs this CID.
+
+## Watched changes
+
+```diff
+    contract GovernanceProposalStateUpgrade (eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) [tornado-cash/GovernanceProposalStateUpgrade] {
+    +++ description: Upgradeable Tornado Cash governance contract that manages proposals, voting, execution, and treasury-connected governance modules. If you trust this contract, you trust its upgrade path and proposal rules to change protocol governance behavior.
+      values.proposalCount:
+-        72
++        73
+    }
+```
+
+Generated with discovered.json: 0x8f523afc15fbc31e7e1c5f4e3f18a8f169db93b4
+
+# Diff at Sat, 24 Oct 2026 16:41:09 GMT:
+
+- id: 55046262
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@466c0ed155939c67d1118322a0272a7923e178e7 block: 1791619122
+- current timestamp: 1791619122
+
+## Description
+
+`operatorRenounced` and `isMigrated` are MEDIUM: one-way locks.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791619122 (main branch discovery), not current.
+
+```diff
+    contract Pool_1000_USDT (eth:0x0836222F2B2B24A3F36f98668Ed8F0B38D1a872f) [tornado-cash/TornadoCash_erc20_v1] {
+    +++ description: Fixed-denomination Tornado Cash pool for 1000 USDT deposits.
+      fieldMeta.operatorRenounced.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Pool_0.1_ETH (eth:0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc) [tornado-cash/TornadoCash_Eth_01] {
+    +++ description: Fixed-denomination Tornado Cash pool for 0.1 ETH deposits.
+      fieldMeta.operatorRenounced.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isMigrated.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Pool_100_USDT (eth:0x169AD27A470D064DEDE56a2D3ff727986b15D52B) [tornado-cash/TornadoCash_erc20_v1] {
+    +++ description: Fixed-denomination Tornado Cash pool for 100 USDT deposits.
+      fieldMeta.operatorRenounced.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Pool_5K_cDAI (eth:0x22aaA7720ddd5388A3c0A3333430953C68f1849b) [tornado-cash/TornadoCash_erc20_v1] {
+    +++ description: Fixed-denomination Tornado Cash pool for 5K cDAI deposits.
+      fieldMeta.operatorRenounced.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Pool_1000_USDC (eth:0x4736dCf1b7A3d580672CcE6E7c65cd5cc9cFBa9D) [tornado-cash/TornadoCash_erc20_v1] {
+    +++ description: Fixed-denomination Tornado Cash pool for 1000 USDC deposits.
+      fieldMeta.operatorRenounced.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Pool_1_ETH (eth:0x47CE0C6eD5B0Ce3d3A51fdb1C52DC66a7c3c2936) [tornado-cash/TornadoCash_eth] {
+    +++ description: Fixed-denomination Tornado Cash pool for 1 ETH deposits.
+      fieldMeta.operatorRenounced.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Pool_10_ETH (eth:0x910Cbd523D972eb0a6f4cAe4618aD62622b39DbF) [tornado-cash/TornadoCash_eth] {
+    +++ description: Fixed-denomination Tornado Cash pool for 10 ETH deposits.
+      fieldMeta.operatorRenounced.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Pool_100_ETH (eth:0xA160cdAB225685dA1d56aa342Ad8841c3b53f291) [tornado-cash/TornadoCash_eth] {
+    +++ description: Fixed-denomination Tornado Cash pool for 100 ETH deposits.
+      fieldMeta.operatorRenounced.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Pool_100_DAI (eth:0xD4B88Df4D29F5CedD6857912842cff3b20C8Cfa3) [tornado-cash/TornadoCash_erc20_v1] {
+    +++ description: Fixed-denomination Tornado Cash pool for 100 DAI deposits.
+      fieldMeta.operatorRenounced.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Pool_100_USDC (eth:0xd96f2B1c14Db8458374d9Aca76E26c3D18364307) [tornado-cash/TornadoCash_erc20_v1] {
+    +++ description: Fixed-denomination Tornado Cash pool for 100 USDC deposits.
+      fieldMeta.operatorRenounced.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Pool_1000_DAI (eth:0xFD8610d20aA15b7B2E3Be39B396a1bC3516c7144) [tornado-cash/TornadoCash_erc20_v1] {
+    +++ description: Fixed-denomination Tornado Cash pool for 1000 DAI deposits.
+      fieldMeta.operatorRenounced.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0xca1bf7d0789c204503397c391eacf952af19f797
 
 # Diff at Fri, 16 Oct 2026 05:36:54 GMT:

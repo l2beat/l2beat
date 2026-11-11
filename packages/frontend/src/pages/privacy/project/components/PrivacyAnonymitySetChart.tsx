@@ -1,25 +1,21 @@
 import type { Milestone } from '@l2beat/config'
 import { formatInteger } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import { Line, LineChart } from 'recharts'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type {
   ChartMeta,
   ChartProject,
-  CustomChartTooltipProps,
-} from '~/components/core/chart/Chart'
+} from '~/components/core/chart/ChartContext'
 import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
+  ChartTooltipRow,
+  ChartTooltipRows,
   ChartTooltipWrapper,
-  useChart,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
-import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
+  getTooltipEntries,
+} from '~/components/core/chart/ChartTooltip'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import type { PrivacyAnonymitySetChartResponse } from '~/server/features/privacy/getPrivacyAnonymitySetChart'
-import { formatTimestamp } from '~/utils/dates'
+import { formatSnapshotTimestamp } from '~/utils/dates'
 
 const COLORS = [
   'var(--chart-emerald)',
@@ -43,6 +39,7 @@ type Props = {
   data: Point[] | undefined
   series: Series[] | undefined
   isLoading: boolean
+  isPlaceholderData: boolean
   project: ChartProject
 } & (
   | { type: 'history'; milestones: Milestone[]; syncedUntil?: number }
@@ -50,7 +47,7 @@ type Props = {
 )
 
 export function PrivacyAnonymitySetChart(props: Props) {
-  const { data, series = [], isLoading, project } = props
+  const { data, series = [], isLoading, isPlaceholderData, project } = props
   const meta = useMemo(() => getChartMeta(series), [series])
   const chartData = useMemo(
     () =>
@@ -66,59 +63,52 @@ export function PrivacyAnonymitySetChart(props: Props) {
   const { dataKeys, toggleDataKey } = useChartDataKeys(meta)
   const formatTooltipTitle =
     props.type === 'history'
-      ? (timestamp: number) =>
-          formatTimestamp(timestamp, { longMonthName: true })
+      ? (timestamp: number) => formatSnapshotTimestamp(timestamp, 'day')
       : (days: number) => `${days}-day ${props.durationLabel}`
 
   return (
     <ChartContainer
+      isPlaceholderData={isPlaceholderData}
       data={chartData}
       meta={meta}
       isLoading={isLoading}
       project={project}
       milestones={props.type === 'history' ? props.milestones : undefined}
       interactiveLegend={{ dataKeys, onItemClick: toggleDataKey }}
+      legend
     >
-      <LineChart responsive data={chartData} margin={{ top: 20, right: 1 }}>
-        <ChartLegend content={<ChartLegendContent />} />
-        {series.map((item) => (
-          <Line
-            key={item.id}
-            dataKey={item.id}
-            type="monotone"
-            stroke={meta[item.id]?.color}
-            strokeWidth={2}
-            dot={false}
-            hide={!dataKeys.includes(item.id)}
-            connectNulls
-            isAnimationActive={false}
+      <TimeSeriesChart
+        data={chartData}
+        ariaLabel="Anonymity set"
+        series={series.map((item) => ({
+          key: item.id,
+          curve: 'monotone',
+          stroke: meta[item.id]?.color,
+          strokeWidth: 2,
+        }))}
+        syncedUntil={props.type === 'history' ? props.syncedUntil : undefined}
+        yAxis={{
+          domain: 'zero',
+          integer: true,
+          format: formatInteger,
+        }}
+        xAxis={
+          props.type === 'holding-duration'
+            ? {
+                // No 7d: it sits on the plot's left edge and would overflow.
+                ticks: [30, 90, 180, 365],
+                format: (value) => `${value}d`,
+              }
+            : undefined
+        }
+        renderTooltip={(row, keys) => (
+          <AnonymitySetTooltip
+            row={row}
+            keys={keys}
+            formatTitle={formatTooltipTitle}
           />
-        ))}
-        <ChartTooltip
-          filterNull={false}
-          content={<AnonymitySetTooltip formatTitle={formatTooltipTitle} />}
-        />
-        <ChartCommonComponents
-          data={chartData}
-          isLoading={isLoading}
-          syncedUntil={props.type === 'history' ? props.syncedUntil : undefined}
-          yAxis={{
-            domain: [0, 'auto'],
-            allowDecimals: false,
-            tickFormatter: (value) => formatInteger(Number(value)),
-          }}
-          xAxis={
-            props.type === 'holding-duration'
-              ? {
-                  type: 'number',
-                  domain: ['dataMin', 'dataMax'],
-                  ticks: [7, 30, 90, 180, 365],
-                  tickFormatter: (value) => `${value}d`,
-                }
-              : undefined
-          }
-        />
-      </LineChart>
+        )}
+      />
     </ChartContainer>
   )
 }
@@ -137,69 +127,38 @@ function getChartMeta(series: Series[]): ChartMeta {
 }
 
 function AnonymitySetTooltip({
-  payload,
-  label,
+  row,
+  keys,
   formatTitle,
-}: CustomChartTooltipProps & {
+}: {
+  row: ChartPoint
+  keys: string[]
   formatTitle: (label: number) => string
 }) {
-  const { meta } = useChart()
-  if (!payload || typeof label !== 'number') return null
-
   return (
     <ChartTooltipWrapper>
       <div className="mb-2 font-medium text-label-value-14 text-secondary">
-        {formatTitle(label)}
+        {formatTitle(row.timestamp)}
       </div>
-      <div className="flex flex-col gap-2">
-        {sortAnonymitySetTooltipEntries(payload).map((entry) => {
-          if (
-            typeof entry.dataKey !== 'string' ||
-            entry.hide ||
-            entry.type === 'none'
-          ) {
-            return null
-          }
-          const item = meta[entry.dataKey]
-          if (!item) return null
-
-          return (
-            <div
-              key={entry.dataKey}
-              className="flex items-center justify-between gap-x-6"
-            >
-              <div className="flex items-center gap-1">
-                <ChartDataIndicator
-                  type={item.indicatorType}
-                  backgroundColor={item.color}
-                />
-                <span className="font-medium text-label-value-14">
-                  {item.label}
+      {/* Keyed by point, so each new point opens at its largest sets. */}
+      <ChartTooltipRows key={row.timestamp} className="flex flex-col gap-2">
+        {getTooltipEntries(row, keys, { skipNull: true })
+          .toSorted((a, b) => b.value - a.value)
+          .map((entry) => {
+            return (
+              <ChartTooltipRow
+                key={entry.name}
+                name={entry.name}
+                gap="gap-x-6"
+                wrapLabel={false}
+              >
+                <span className="font-medium text-label-value-15 tabular-nums">
+                  {formatInteger(entry.value)}
                 </span>
-              </div>
-              <span className="font-medium text-label-value-15 tabular-nums">
-                {formatInteger(Number(entry.value ?? 0))}
-              </span>
-            </div>
-          )
-        })}
-      </div>
+              </ChartTooltipRow>
+            )
+          })}
+      </ChartTooltipRows>
     </ChartTooltipWrapper>
   )
-}
-
-export function sortAnonymitySetTooltipEntries<T extends { value?: unknown }>(
-  entries: readonly T[],
-): T[] {
-  return entries.toSorted((a, b) => {
-    const aValue = toFiniteNumber(a.value)
-    const bValue = toFiniteNumber(b.value)
-
-    return bValue - aValue
-  })
-}
-
-function toFiniteNumber(value: unknown): number {
-  const numericValue = Number(value ?? 0)
-  return Number.isFinite(numericValue) ? numericValue : Number.NEGATIVE_INFINITY
 }

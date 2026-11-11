@@ -14,4 +14,4 @@ The holder already trusts the core governance and the asset's issuer. A party be
 
 ## The core
 
-The core is the messaging bridge, the state validation, their governance and the canonical escrows without additional trust assumptions. Every score is assigned to the core: the Stage, the risk view, the [ossification perimeter](./ossification.md#choosing-the-critical-perimeter) and the red warnings.
+The core is the messaging bridge, the state validation, their governance and the canonical escrows without additional trust assumptions. Every score is assigned to the core: the Stage, the risk view, the [ossification perimeter](./ossification.md#critical-perimeter) and the red warnings.

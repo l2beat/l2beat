@@ -1,0 +1,64 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SIPAFactory",
+  "critical": true,
+  "category": "core",
+  "description": "Deploys zk.money deposit addresses (SIPAs) as deterministic clones. A clone counts as blessed when its implementation was blessed and its ForwardingTable approved. Each clone's code and table are fixed in its address. New deposit addresses, from the wallet or the Resolver, clone the current implementation for their intent.",
+  "fields": {
+    "owner": {
+      "severity": "MEDIUM",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "bless deposit address implementations and approve ForwardingTables. A newly blessed implementation for an intent decides the code of every new deposit address for that intent. Earlier blessings are never revoked."
+        }
+      ]
+    },
+    // HIGH: the current implementation is the code that receives every new
+    // deposit, and the owner can replace it at any time.
+    "depositImplementation": {
+      "description": "Implementation cloned by new deposit addresses.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function implementationFor(uint8 intent) view returns (address)",
+        "args": [1]
+      }
+    },
+    "registrationImplementation": {
+      "description": "Implementation cloned by new name registration addresses.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function implementationFor(uint8 intent) view returns (address)",
+        "args": [2]
+      }
+    },
+    "userOpImplementation": {
+      "description": "Implementation cloned by new deposit addresses that run an ERC-4337 user operation.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function implementationFor(uint8 intent) view returns (address)",
+        "args": [3]
+      }
+    },
+    "blessedImplementations": {
+      "description": "Blessed implementations per intent (1 = Deposit, 2 = Registration, 3 = UserOp). Clones of any of them count as blessed.",
+      "handler": {
+        "type": "event",
+        "select": ["implementation", "intent"],
+        "add": { "event": "ImplementationBlessed" }
+      }
+    },
+    "approvedTables": {
+      "description": "ForwardingTables that blessed deposit addresses may use.",
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "event",
+        "select": "table",
+        "add": { "event": "TableBlessed" }
+      }
+    }
+  }
+}

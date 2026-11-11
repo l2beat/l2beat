@@ -9,9 +9,10 @@ import type {
   DiscoveryPaths,
 } from '@l2beat/discovery'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
-import type { CoingeckoId, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { createRemoteJWKSet } from 'jose'
 import type { DefiTvlConfig } from '../modules/defi-tvl/types'
+import type { LiquidStakingConfig } from '../modules/liquid-staking/types'
 import type { PrivacyConfig } from '../modules/privacy/types'
 import type {
   AmountConfig,
@@ -32,11 +33,13 @@ export interface Config {
   readonly notifications: NotificationsConfig | false
   readonly database: DatabaseConfig
   readonly coingeckoApiKey: string
+  readonly duneApiKey: string | undefined
   readonly coingeckoApiUrl: string | undefined
   readonly api: ApiConfig
   readonly health: HealthConfig
   readonly tvs: TvsConfig | false
   readonly defiTvl: DefiTvlConfig | false
+  readonly liquidStaking: LiquidStakingConfig | false
   readonly trackedTxsConfig: TrackedTxsConfig | false
   readonly activity: ActivityConfig | false
   readonly updateMonitor: UpdateMonitorConfig | false
@@ -46,7 +49,7 @@ export interface Config {
   readonly statusEnabled: boolean
   readonly chains: { name: string; chainId: number | undefined }[]
   readonly daBeat: DaBeatConfig | false
-  readonly ecosystems: EcosystemsConfig | false
+  readonly cropAttestations: CropAttestationsConfig | false
   readonly chainConfig: ChainApi[]
   readonly beaconApi: {
     readonly url: string | undefined
@@ -96,7 +99,10 @@ export interface ClockConfig {
 }
 
 export interface TvsConfig {
-  readonly projects: (ProjectTvsConfig & { amountSources: string[] })[]
+  readonly projects: (ProjectTvsConfig & {
+    amountSources: string[]
+    storeEscrowValues: boolean
+  })[]
   readonly amounts: AmountConfig[]
   readonly prices: PriceConfig[]
   readonly chains: string[]
@@ -116,7 +122,6 @@ export interface TrackedTxProject {
 
 export interface TrackedTxsConfig {
   readonly projects: TrackedTxProject[]
-  readonly duneApiKey: string
   readonly minTimestamp: UnixTime
   readonly uses: {
     readonly liveness: boolean
@@ -279,15 +284,6 @@ export interface DaBeatConfig {
   readonly coingeckoIds: string[]
 }
 
-export interface EcosystemTokenConfig {
-  readonly configurationId: string
-  readonly projectId: ProjectId
-  readonly coingeckoId: CoingeckoId
-}
-export interface EcosystemsConfig {
-  readonly tokens: EcosystemTokenConfig[]
-}
-
 type BlockLayerAsProjectDaTrackingConfig = {
   type: 'baseLayer'
   daLayer: string
@@ -338,4 +334,12 @@ export interface LiveBlobsTrackingConfig {
 export interface BlockSyncModuleConfig {
   delayFromTipInSeconds: number
   ethereumWsUrl?: string
+}
+
+export interface CropAttestationsConfig {
+  /**
+   * GitHub token allowed to run the crops-api deploy workflow. Set only where
+   * a change should republish the API, i.e. production.
+   */
+  readonly githubToken: string | undefined
 }

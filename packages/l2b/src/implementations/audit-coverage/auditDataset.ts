@@ -1,5 +1,6 @@
 import { assert } from '@l2beat/shared-pure'
 import { readFileSync } from 'fs'
+import { fetchGithub, getGithubRepository } from '../common/github'
 
 export interface AuditDatasetFiles {
   index: string
@@ -11,7 +12,6 @@ export interface AuditDatasetFiles {
 const INDEX_FILE = 'audit-index.json'
 const OBJECTS_FILE = 'audit-objects.json.zst'
 const BRANCH = 'main'
-const REQUEST_TIMEOUT_MS = 60_000
 
 export function readAuditDataset(
   repositoryUrl: string,
@@ -22,7 +22,7 @@ export function readAuditDataset(
   return {
     index: readFileSync(indexPath, 'utf8'),
     objects: readFileSync(objectsPath),
-    repository: githubRepository(repositoryUrl),
+    repository: getGithubRepository(repositoryUrl),
     commit,
   }
 }
@@ -30,8 +30,8 @@ export function readAuditDataset(
 export async function fetchAuditDataset(
   repositoryUrl: string,
 ): Promise<AuditDatasetFiles> {
-  const repository = githubRepository(repositoryUrl)
-  const head = await fetchOk(
+  const repository = getGithubRepository(repositoryUrl)
+  const head = await fetchGithub(
     `https://api.github.com/repos/${repository}/commits/${BRANCH}`,
     { Accept: 'application/vnd.github.sha' },
   )
@@ -40,32 +40,10 @@ export async function fetchAuditDataset(
   const rawUrl = (file: string) =>
     `https://raw.githubusercontent.com/${repository}/${commit}/${file}`
   const [index, objects] = await Promise.all([
-    fetchOk(rawUrl(INDEX_FILE), {}).then((response) => response.text()),
-    fetchOk(rawUrl(OBJECTS_FILE), {}).then((response) =>
+    fetchGithub(rawUrl(INDEX_FILE), {}).then((response) => response.text()),
+    fetchGithub(rawUrl(OBJECTS_FILE), {}).then((response) =>
       response.arrayBuffer(),
     ),
   ])
   return { index, objects: Buffer.from(objects), repository, commit }
-}
-
-function githubRepository(url: string): string {
-  const parsed = new URL(url)
-  assert(parsed.hostname === 'github.com', `Not a GitHub repository: ${url}`)
-  const segments = parsed.pathname.split('/').filter((s) => s.length > 0)
-  assert(segments.length === 2, `Not a GitHub repository: ${url}`)
-  return segments.join('/')
-}
-
-async function fetchOk(
-  url: string,
-  headers: Record<string, string>,
-): Promise<Response> {
-  const response = await fetch(url, {
-    headers,
-    signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
-  })
-  if (!response.ok) {
-    throw new Error(`GET ${url} failed: HTTP ${response.status}`)
-  }
-  return response
 }

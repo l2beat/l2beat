@@ -9,11 +9,10 @@ interface Props {
 }
 
 const VARIANT_CLASSES = {
-  controls:
-    'inline-flex h-8 w-fit rounded-md bg-linear-to-r from-purple-100 to-pink-100 px-3 text-white',
+  controls: 'inline-flex h-8 w-fit rounded-md bg-brand px-3 text-white',
   section: cn(
-    'flex w-full rounded-md border border-brand bg-transparent from-purple-100 to-pink-100 p-3 text-primary',
-    'md:w-fit md:border-0 md:bg-linear-to-r md:py-2 md:text-white',
+    'flex w-full rounded-md border border-brand bg-transparent p-3 text-primary',
+    'md:w-fit md:border-0 md:bg-brand md:py-2 md:text-white',
   ),
 }
 

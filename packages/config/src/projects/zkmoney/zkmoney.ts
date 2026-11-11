@@ -76,8 +76,13 @@ for (const name of ['ZkMoneyPortal', 'ZkMoneyPortal_sUSDS']) {
     { portal: name },
   )
   assert(
-    !discovery.getContractValue<boolean>(name, '_$frozen'),
-    'zk.money portal is frozen, review the exit and recovery descriptions',
+    discovery.getContractValue<boolean>(name, '_$frozen') &&
+      discovery.getContractValue<number>(name, '_$freezeCheckpointNumber') ===
+        discovery.getContractValue<number>(
+          'ZkMoneyPortal',
+          '_$freezeCheckpointNumber',
+        ),
+    'zk.money portals no longer share one freeze checkpoint, review the exit texts',
     { portal: name },
   )
 }
@@ -134,13 +139,13 @@ const attestationMaxAge = formatSeconds(
 // against the verified portal source, which includes OxideConstants.
 assert(
   portal.sourceHashes?.includes(
-    '0x4abb439f2218670904cdae29f2663f412a1ca4d63284a05120c764dc8eed141e',
+    '0x4d89fd312c737814de5e81632ef9671e232ec8faa7bbbfbba98e7c9c2787b25b',
   ),
   'ZkMoneyPortal source changed, recheck TX_AMOUNT_CAP',
 )
 assert(
   susdsPortal.sourceHashes?.includes(
-    '0x7020e3729f66f6c8ddada17eeb82b33ae8b7f623c0ffb3bb6c921bf966a7f6a8',
+    '0xd99b45ced6473f41ba909b533b1096d83b7d9633cee20987ca077ce8eb389be6',
   ),
   'ZkMoneyPortal_sUSDS source changed, recheck TX_AMOUNT_CAP',
 )
@@ -278,15 +283,17 @@ const privacyTokens: ProjectPrivacyToken[] = [
 export const zkmoney: BaseProject = {
   id: ProjectId('zkmoney'),
   slug: 'zkmoney',
-  name: 'zk.money',
+  name: 'zk.money v5',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2026-09-29')),
+  archivedAt: UnixTime(1793003519), // 2026-10-26T08:31:59Z, both portals frozen
   discoveryInfo: getDiscoveryInfo([discovery]),
   // The project starts with the portal. CertManager and NitroValidator were
   // deployed 37 days earlier.
   ossificationHistory: discovery.getOssificationHistory(PORTAL_SINCE),
   statuses: {
-    yellowWarning: undefined,
+    yellowWarning:
+      'Both portals are frozen since Aztec made its v6 rollup canonical, and deposits revert. Balances leave only through refunds. The current zk.money wallet refunds them into zk.money on Aztec v6 or to Ethereum.',
     redWarning: undefined,
     emergencyWarning: undefined,
     reviewStatus: undefined,
@@ -294,7 +301,7 @@ export const zkmoney: BaseProject = {
   },
   display: {
     description:
-      'A shielded ledger on Aztec Network for DAI payments and sUSDS savings, with funds escrowed on Ethereum.',
+      'A shielded ledger on Aztec v5 for DAI payments and sUSDS savings, frozen since Aztec made v6 canonical.',
     detailedDescription: readProjectMarkdown(
       'zkmoney',
       'detailedDescription',
@@ -320,6 +327,15 @@ export const zkmoney: BaseProject = {
         'Aztec Labs relaunches zk.money as a private DAI wallet on the Aztec network.',
       type: 'general',
     },
+    {
+      // Frozen event of the sUSDS portal in tx 0x9abf414e… two blocks later.
+      title: 'Portals freeze as Aztec v6 becomes canonical',
+      url: 'https://etherscan.io/tx/0x5b0143724130c6e28fe751fd0f3146cb224d936f2070b033c2fc84fab26b1249',
+      date: '2026-10-26T00:00:00Z',
+      description:
+        'Deposits stop for good, and balances leave only through refunds.',
+      type: 'general',
+    },
   ],
   escrows: [
     {
@@ -339,6 +355,18 @@ export const zkmoney: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
+    // Kept at the release the cells were rated on while the portals were live.
+    // Later releases run v5 only to refund it, see the Exits section.
+    referenceApp: {
+      name: 'zk.money Desktop',
+      url: 'https://github.com/aztec-labs-eng/zkmoney-public/releases/tag/desktop-v0.5.0',
+      since: '2026-10-05',
+      version: '0.5.0',
+      source: {
+        repository: 'https://github.com/aztec-labs-eng/zkmoney-public',
+        commit: '00e54087526d6d89f1755958eb027e077184cd9a',
+      },
+    },
     anonymitySet: { type: 'partially-attributed' },
     relayerTracking: {
       type: 'onchainEvents',
@@ -358,6 +386,7 @@ export const zkmoney: BaseProject = {
       ],
     },
     trackedOn: ['ethereum'],
+    runsOn: [ProjectId('aztecnetwork')],
     tokens: privacyTokens,
     zkCatalogId: ProjectId('barretenberg'),
     exitWindow: {
@@ -368,17 +397,16 @@ export const zkmoney: BaseProject = {
       walkawayTest: {
         passed: false,
         reason:
-          'Withdrawals and refunds need a live AWS Nitro enclave running the approved image. The approved sUSDS image is absent from the documented public downloads. The assessed DAI wallet requires modification to replace zk.money services.',
+          'Withdrawals and refunds need a live AWS Nitro enclave running the approved image. The approved sUSDS image is absent from the documented public downloads. The assessed wallet requires modification to replace zk.money services.',
       },
     },
-    // Hosted wallet boot commit on 2026-10-14:
-    // 9d00f197e392d3846e7bc2fa3aff037b93d76030. It remains unmatched to the
-    // public mirror at 835f7260. The DAI privacy reference stays Desktop v0.1.0.
+    // Hosted wallet build on 2026-10-30: ea3459dc, absent from the public
+    // mirror (main 8fd1984). The DAI privacy reference is Desktop v0.5.0.
     reproducibility: {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'The Ethereum contracts, desktop wallet, enclave and circuit sources are public. The refund and resolver verifiers match the published circuits. The complete enclave image build, resolver service and frozen-chain snapshot service are unpublished. The hosted wallet release is ahead of the to public source and thus unreproduced. Verification instructions cover the refund and resolver circuits and the DAI token pinned by its Ethereum portal.',
+        'The Ethereum contracts, desktop wallet, DAI enclave and circuit sources are public. The refund and resolver verifiers match the published circuits. The complete enclave image build, resolver service and frozen-chain snapshot service are unpublished, and so are the sUSDS enclave image and its source. The hosted wallet runs a build absent from the public source. Verification instructions cover the refund and resolver circuits and the DAI and sUSDS tokens pinned by their Ethereum portals.',
     },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,

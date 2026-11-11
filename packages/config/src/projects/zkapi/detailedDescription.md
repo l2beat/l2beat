@@ -1,6 +1,6 @@
 zkAPI lets the user prepay AI usage with ETH and chat without revealing which deposit pays for which request. Deposits and withdrawals are public, and the model provider can read the user's prompts.
 
-Users trust Open Anonymity, which runs the service and owns the vault, and the inference providers behind OpenRouter. The operator approves withdrawals and sees each request's time and budget. The owner can pause the vault, and expired deposits fall to its treasury. The user can leave without the operator through a {{challengePeriod}} escape, as long as their note has not expired.
+Users trust Open Anonymity, which runs the service and owns the vault, and the inference providers behind OpenRouter. The operator approves withdrawals and sees each request's time and budget tier. The owner can pause the vault, and expired deposits fall to its treasury. Without the operator, the user can start a {{challengePeriod}} escape while the vault is unpaused and the note active. The operator can cancel an escape from a balance the user already spent from by withholding a signed update.
 
 ### Architecture
 
@@ -8,7 +8,7 @@ Open Anonymity verifies request proofs before issuing API keys. Its signing keys
 
 The user's app keeps the exact balance locally. The operator receives a commitment to the user's deposit. Initially, the balance equals the deposit.
 
-The commitment is homomorphic: the operator can subtract a known charge without reading the balance. It signs the updated commitment. The local app checks the subtraction and signature, then stores the updated state.
+The commitment is homomorphic: the operator subtracts a known charge without reading the balance and signs the result. The app checks both and stores the new state.
 
 The operator also runs the indexer and a challenger that disputes escapes from outdated balances.
 
@@ -26,11 +26,11 @@ Losing the note secret and latest signed balance that are saved by the app loses
 
 ### App
 
-The ratings assume OA Chat, a hosted browser app with public source and local build instructions. It fetches the whole note tree and proves in the browser. It relays inference through a proxy at refraction.network by default, with a fallback to direct connections. The hosted build runs code beyond the public main branch, including analytics. zkapi-clientd is a local daemon with an OpenAI-compatible API. It asks the operator's indexer for the user's note path and reuses keys across requests, both of which can harm privacy.
+OA Chat is a hosted browser app with local build instructions. It fetches the whole note tree and proves in the browser. It relays inference and chain reads through a proxy at refraction.network by default, with a fallback to direct connections. The hosted build serves the [public source](https://github.com/OpenAnonymity/oa-chat/tree/a2623612c17bea09d5efaf8f41b500fe98fb1c8a) with a private layer for the sign-in pages, including Google sign-in, and Fathom analytics.
 
 ### Providers and verifier
 
-OpenRouter and the model provider can read prompts and responses and link requests under one key. Open Anonymity holds the OpenRouter accounts. A verifier running in an attestable Azure confidential container checks that OA's account has provider logging disabled. Its build reproduces from source and matches the attested measurement, see the verification steps. Both clients pin only the verifier's address, so the check only holds when the user verifies it personally.
+OpenRouter and the model provider can read prompts and responses and link requests under one key. Open Anonymity's stations hold the OpenRouter accounts. A verifier in an attestable Azure confidential container checks that each station's account disables provider logging. Its attested image rebuilds from [public source](https://github.com/OpenAnonymity/oa-verifier/tree/a2916c6af618ee46a851af28dee201606de895d8). A station whose settings it cannot read stays approved for up to seven days after its last pass. OA Chat pins only the verifier's address, so the user must check the attestation personally. When the verifier is unreachable, OA Chat still accepts a station-signed key and shows "Key not verified".
 
 ### Exits
 

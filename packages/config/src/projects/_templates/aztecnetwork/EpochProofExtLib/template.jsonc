@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
+  "description": "Library immutably linked into the Rollup for epoch proof verification, proven chain-tip advancement and Outbox root insertion. Its functions operate on the calling Rollup's storage through DELEGATECALL, so direct getter calls on the library are ignored.",
+  "category": "core",
+  "ignoreMethods": ["getEpochProofPublicInputs", "submitEpochRootProof"]
+}

@@ -1,0 +1,14 @@
+{
+  "MultiSendCallOnly.sol": {
+    "hash": "0x2bf4ab7067ef0db34d5b5858ea85ad953f684f77c215d3928acb932b2638bc15",
+    "address": "eth:0x9641d764fc13c8B624c04430C7356C1C7C8102e2",
+    "chain": "ethereum",
+    "blockNumber": 26175472
+  },
+  "MultiSendCallOnly_v1_5_0.sol": {
+    "hash": "0x56312fb7dfc38425d3b494cc1fe650824b5a9d4d04fc321a870b929acd249eb6",
+    "address": "eth:0xA83c336B20401Af773B6219BA5027174338D1836",
+    "chain": "ethereum",
+    "blockNumber": 26175472
+  }
+}

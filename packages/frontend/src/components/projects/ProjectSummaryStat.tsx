@@ -33,7 +33,7 @@ export function ProjectSummaryStat(props: ProjectSummaryStatProps) {
         props.className,
       )}
     >
-      <div className="flex flex-row gap-1.5">
+      <div className="flex flex-row items-center gap-1.5">
         {props.titleAsChild ? (
           <Slot className="text-nowrap font-medium text-paragraph-12 text-secondary">
             {props.title}
@@ -45,7 +45,7 @@ export function ProjectSummaryStat(props: ProjectSummaryStatProps) {
         )}
         {props.tooltip && (
           <Tooltip>
-            <TooltipTrigger className="size-3">
+            <TooltipTrigger className="size-3" aria-label="More info">
               <InfoIcon className="size-3" variant="gray" />
             </TooltipTrigger>
             <TooltipContent>{props.tooltip}</TooltipContent>

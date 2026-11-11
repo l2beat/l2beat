@@ -62,6 +62,50 @@ describe(BlockProvider.name, () => {
     })
   })
 
+  describe(BlockProvider.prototype.getBlockHeader.name, () => {
+    it('reads the header without transaction bodies', async () => {
+      const rpc = mockObject<RpcClient>({
+        getBlockHeader: async () => block(7),
+        getBlockWithTransactions: async () => block(7),
+      })
+      const provider = new BlockProvider('chain', [rpc])
+
+      const result = await provider.getBlockHeader('latest')
+
+      expect(rpc.getBlockHeader).toHaveBeenOnlyCalledWith('latest')
+      expect(rpc.getBlockWithTransactions).not.toHaveBeenCalled()
+      expect(result).toEqual({ number: 7, timestamp: 700 })
+    })
+
+    it('calls other client on errors and wrong block numbers', async () => {
+      const failing = mockObject<RpcClient>({
+        getBlockHeader: mockFn().rejectsWith(new Error()),
+      })
+      const wrong = mockObject<RpcClient>({
+        getBlockHeader: async () => block(6),
+      })
+      const working = mockObject<RpcClient>({
+        getBlockHeader: async () => block(7),
+      })
+      const provider = new BlockProvider('chain', [failing, wrong, working])
+
+      const result = await provider.getBlockHeader(7)
+
+      expect(result).toEqual({ number: 7, timestamp: 700 })
+    })
+
+    it('throws when ran out of fallbacks', async () => {
+      const rpc = mockObject<RpcClient>({
+        getBlockHeader: async () => block(6),
+      })
+      const provider = new BlockProvider('chain', [rpc])
+
+      await expect(() => provider.getBlockHeader(7)).toBeRejectedWith(
+        'Invalid response: unexpected block number',
+      )
+    })
+  })
+
   describe(BlockProvider.prototype.getTransactionReceipt.name, () => {
     const receipt = { blockHash: '0xb', logs: [] }
 
@@ -114,7 +158,7 @@ describe(BlockProvider.name, () => {
     it('finds the closest block number to given timestamp', async () => {
       const client = mockObject<BlockClient>({
         getLatestBlockNumber: async () => 1000,
-        getBlockWithTransactions: async (n: number) => block(n),
+        getBlockHeader: async (n: number) => block(n),
       })
 
       const provider = new BlockProvider('chain', [client])
@@ -130,12 +174,12 @@ describe(BlockProvider.name, () => {
     it('calls other client when there are errors', async () => {
       const client = mockObject<BlockClient>({
         getLatestBlockNumber: async () => 1000,
-        getBlockWithTransactions: mockFn().rejectsWith(new Error('error')),
+        getBlockHeader: mockFn().rejectsWith(new Error('error')),
       })
 
       const client2 = mockObject<BlockClient>({
         getLatestBlockNumber: async () => 1000,
-        getBlockWithTransactions: async (n: number) => block(n),
+        getBlockHeader: async (n: number) => block(n),
       })
 
       const provider = new BlockProvider('chain', [client, client2])
@@ -152,7 +196,7 @@ describe(BlockProvider.name, () => {
     it('falls back to 0 when start is above client latest', async () => {
       const client = mockObject<BlockClient>({
         getLatestBlockNumber: async () => 500,
-        getBlockWithTransactions: async (n: number) => block(n),
+        getBlockHeader: async (n: number) => block(n),
       })
 
       const provider = new BlockProvider('chain', [client])

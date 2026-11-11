@@ -11,6 +11,9 @@ import {
   RELAYER_STAT_COPY,
 } from './privacyProjectStatsCopy'
 
+/** On phones each stat is a row of the same height. */
+export const MOBILE_SUMMARY_ROWS = 'max-md:*:min-h-9 max-md:*:py-1'
+
 interface Props {
   totalValueLockedUsd: number | undefined
   totalValueLockedChange7d?: number
@@ -47,7 +50,7 @@ export function PrivacyProjectStats({
 
   if (!hasFlowTracking && !hasRelayerTracking && !hasTvl) {
     return (
-      <div className="grid gap-4 md:grid-cols-4">
+      <div className={cn('grid md:grid-cols-4 md:gap-4', MOBILE_SUMMARY_ROWS)}>
         <NotTrackedStat className="md:col-span-4" {...COPY.untrackedMetrics} />
       </div>
     )
@@ -57,7 +60,8 @@ export function PrivacyProjectStats({
     return (
       <div
         className={cn(
-          'grid gap-4',
+          'grid md:gap-4',
+          MOBILE_SUMMARY_ROWS,
           hasTvl && hasRelayerTracking ? 'md:grid-cols-3' : 'md:grid-cols-2',
         )}
       >
@@ -83,7 +87,8 @@ export function PrivacyProjectStats({
   return (
     <div
       className={cn(
-        'grid gap-4',
+        'grid md:gap-4',
+        MOBILE_SUMMARY_ROWS,
         hasRelayerTracking
           ? 'md:grid-cols-[repeat(5,minmax(max-content,1fr))]'
           : 'md:grid-cols-[repeat(4,minmax(max-content,1fr))]',

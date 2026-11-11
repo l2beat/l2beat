@@ -2,6 +2,7 @@ import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 import { defineConfig } from 'vite'
+import { smallSharedChunks } from './smallSharedChunks.mts'
 import {
   CLIENT_ASSETS_DIR,
   CLIENT_BASE_PATH,
@@ -26,6 +27,13 @@ export default defineConfig(({ command }) => {
       emptyOutDir: true,
       // Read by PagePreloads to emit modulepreload tags per page.
       manifest: true,
+      rolldownOptions: {
+        output: {
+          // A threshold of 8 kB of source cut a project page from 166 chunks
+          // to 50 and added at most 14 kB gzipped to any page measured
+          codeSplitting: { groups: [smallSharedChunks(8_000)] },
+        },
+      },
     },
     ssr: {
       // Externalize all dependencies (including linked workspace packages)

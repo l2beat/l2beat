@@ -1,6 +1,6 @@
+import { redactUrl } from '@l2beat/backend-tools'
 import type { json } from '@l2beat/shared-pure'
 import { type FetchInit, fetchWithTimeout } from './fetchWithTimeout'
-import { sanitizeUrl } from './sanitizeUrl'
 
 export class HttpClient {
   /**
@@ -16,7 +16,7 @@ export class HttpClient {
       await res.body?.cancel()
       throw new Error(`HTTP error: ${res.status} ${res.statusText}`, {
         cause: {
-          url: sanitizeUrl(url),
+          url: redactUrl(url),
         },
       })
     }

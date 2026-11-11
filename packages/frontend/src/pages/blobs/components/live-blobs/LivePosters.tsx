@@ -19,10 +19,12 @@ import {
 } from '~/components/table/utils/commonPinningStyles'
 import { getRowClassNamesWithoutOpacity } from '~/components/table/utils/rowType'
 import { useInterval } from '~/hooks/useInterval'
+import { useThemeTokens } from '~/hooks/useThemeTokens'
 import type { LiveBlobs } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
 import { BUCKET_SLOTS } from '~/server/features/data-availability/live-blobs/liveBlobsSlots'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
+import { readableColor } from '~/utils/color'
 import { Activity } from './Activity'
 import {
   BLOB_KIB,
@@ -31,8 +33,6 @@ import {
   formatWhole,
 } from './blocks/format'
 import { useChainClock } from './chainClock'
-import { readableColor } from './color'
-import { useThemeTokens } from './hooks'
 import { anyLanding, type Landing, useLandedTotal } from './landings'
 import {
   FLASH_CLASS_NAME,
@@ -350,12 +350,22 @@ function PosterName({
   poster: LivePoster
   className?: string
 }) {
+  // Unnamed chains share a stack name and differ only by a trailing id, so
+  // those truncate from the start. One element, as the table's rows are
+  // ratcheted by element count
+  const endsWithId = / \d+$/.test(poster.name)
   return (
     // a phone has room for the name or the numbers, so long names give way
     <span
-      className={cn('block truncate font-bold max-md:max-w-[7rem]', className)}
+      className={cn(
+        'block truncate font-bold max-md:max-w-[7rem]',
+        endsWithId && 'text-left [direction:rtl]',
+        className,
+      )}
+      title={poster.name}
     >
-      {poster.name}
+      {/* Marks keep the name left to right inside the rtl box */}
+      {endsWithId ? `\u200e${poster.name}\u200e` : poster.name}
     </span>
   )
 }

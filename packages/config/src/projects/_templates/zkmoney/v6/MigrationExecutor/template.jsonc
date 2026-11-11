@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "MigrationExecutor",
+  "category": "core",
+  "description": "Payout contract that moves refunds from the frozen SOURCE_PORTAL into DESTINATION_PORTAL. Only SOURCE_PORTAL can call it. It deposits the refund, minus the relayer tip committed in the refund, into DESTINATION_PORTAL for the recipient commitment the refund names.",
+  "ignoreRelatives": ["ASSET", "PAYOUT_TOKEN", "SOURCE_PORTAL", "SUBSIDY"],
+  "fields": {
+    "SUBSIDY": {
+      "description": "Pays relayers of migrations from operator funds."
+    }
+  }
+}

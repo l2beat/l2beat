@@ -13,7 +13,9 @@ import {
   ProjectNameInfoTooltip,
 } from '~/components/table/cells/ProjectNameCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
+import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
+import { withChangeSort } from '~/components/table/sorting/changeSortColumn'
 import {
   adjustTableValue,
   sortTableValues,
@@ -23,6 +25,7 @@ import { useTable } from '~/hooks/useTable'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
 import { getPrivacyAdversariesTableValue } from '../../adversaries/privacyAdversaryUi'
 import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
+import { PRIVACY_COLUMN_DESCRIPTIONS } from '../../privacySummaryColumns'
 import { PrivacyRosetteCell } from '../../rosette/PrivacyRosetteCell'
 import { toPrivacyProjectCellProject } from '../../toPrivacyProjectCellProject'
 import {
@@ -133,28 +136,40 @@ function getColumns(anonymitySetTooltip: string | undefined) {
         },
       },
     ),
-    columnHelper.accessor('totalValueLockedUsd', {
-      id: OPTIONAL_COLUMNS.tvl,
-      header: 'TVL',
-      cell: (ctx) => {
-        if (!ctx.row.original.hasTvl) {
-          return <NotApplicableBadge />
-        }
+    ...withChangeSort(
+      columnHelper,
+      columnHelper.accessor('totalValueLockedUsd', {
+        id: OPTIONAL_COLUMNS.tvl,
+        header: 'TVL',
+        cell: (ctx) => {
+          if (!ctx.row.original.hasTvl) {
+            return <NotApplicableBadge />
+          }
 
-        const value = ctx.getValue()
-        return (
-          <MetricCell>
-            {value === undefined ? undefined : formatCurrency(value, 'usd')}
-          </MetricCell>
-        )
-      },
-      sortUndefined: 'last',
-      meta: {
-        align: 'right',
-        tooltip:
-          'Total USD value currently held across all tracked assets for the protocol.',
-      },
-    }),
+          const value = ctx.getValue()
+          if (value === undefined) {
+            return <NoDataBadge />
+          }
+          return (
+            <ValueWithPercentageChange
+              change={ctx.row.original.totalValueLockedChange7d}
+              changePeriod="7D"
+              className="font-medium text-sm md:text-sm"
+              containerClassName="flex-nowrap justify-end"
+            >
+              {formatCurrency(value, 'usd')}
+            </ValueWithPercentageChange>
+          )
+        },
+        sortUndefined: 'last',
+        meta: {
+          align: 'right',
+          tooltip:
+            'Total USD value currently held across all tracked assets for the protocol, shown together with a percentage change compared to 7D ago.',
+        },
+      }),
+      (entry) => ({ change: entry.totalValueLockedChange7d, period: '7D' }),
+    ),
     columnHelper.accessor('totalValueDeposited30dUsd', {
       id: OPTIONAL_COLUMNS.volume30d,
       header: '30D vol.',
@@ -207,8 +222,7 @@ function getColumns(anonymitySetTooltip: string | undefined) {
           enableSorting: false,
           meta: {
             align: 'center',
-            tooltip:
-              "Trusted setup used by the project's proving system and its risk.",
+            tooltip: PRIVACY_COLUMN_DESCRIPTIONS.trustedSetup,
           },
         }),
         columnHelper.accessor((entry) => adjustTableValue(entry.exitWindow), {
@@ -226,8 +240,7 @@ function getColumns(anonymitySetTooltip: string | undefined) {
             sortTableValues(a.original.exitWindow, b.original.exitWindow),
           meta: {
             align: 'center',
-            tooltip:
-              'Time users have to withdraw before a malicious upgrade can take effect. The walkaway test says whether users can still fully use the protocol if every centralized participant disappears.',
+            tooltip: `${PRIVACY_COLUMN_DESCRIPTIONS.exitWindow} ${PRIVACY_COLUMN_DESCRIPTIONS.walkawayTest}`,
           },
         }),
         columnHelper.accessor(
@@ -247,8 +260,7 @@ function getColumns(anonymitySetTooltip: string | undefined) {
               ),
             meta: {
               align: 'center',
-              tooltip:
-                'Whether all source code needed to audit the protocol and participate in it is published and can be used locally.',
+              tooltip: PRIVACY_COLUMN_DESCRIPTIONS.reproducibility,
             },
           },
         ),

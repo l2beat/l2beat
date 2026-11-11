@@ -1,42 +1,84 @@
 import { Logger } from '@l2beat/backend-tools'
-import { expect, mockObject } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 import { withServer } from '../../test/withServer'
 import { HttpClient } from '../http/HttpClient'
 import { BeaconChainClient } from './BeaconChainClient'
 
 describe(BeaconChainClient.name, () => {
-  describe(BeaconChainClient.prototype.getBlockSidecar.name, async () => {
-    it('should call rpc and return result', async () => {
-      const kzg_commitment = 'commitment'
-      const blob = 'blob'
-      const expected = [
-        {
-          kzg_commitment,
-          blob,
-        },
-      ]
+  describe(BeaconChainClient.prototype.getBlobs.name, () => {
+    it('asks the beacon block for the hashes', async () => {
       const http = mockObject<HttpClient>({
         fetch: async () => ({
-          data: expected,
+          execution_optimistic: false,
+          finalized: true,
+          data: ['blob1', 'blob2'],
         }),
       })
+      const client = mockClient({ http, beaconApiUrl: 'example.com/' })
 
-      const client = mockClient({
-        http,
-        beaconApiUrl: 'example.com/',
-      })
-
-      const result = await client.getBlockSidecar('root')
+      const result = await client.getBlobs('root', ['0x01aa', '0x01bb'])
 
       expect(http.fetch.calls[0].args[0]).toEqual(
-        'example.com/eth/v1/beacon/blob_sidecars/root',
+        'example.com/eth/v1/beacon/blobs/root?versioned_hashes=0x01aa&versioned_hashes=0x01bb',
       )
-      expect(result).toEqual([
-        {
-          kzg_commitment,
-          data: blob,
-        },
-      ])
+      expect(result).toEqual([{ data: 'blob1' }, { data: 'blob2' }])
+    })
+
+    it('asks nothing for no hashes', async () => {
+      const http = mockObject<HttpClient>({ fetch: mockFn() })
+      const client = mockClient({ http })
+
+      const result = await client.getBlobs('root', [])
+
+      expect(result).toEqual([])
+      expect(http.fetch).not.toHaveBeenCalled()
+    })
+
+    it('asks once for a hash the tx repeats', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({ data: ['blob'] }),
+      })
+      const client = mockClient({ http, beaconApiUrl: 'example.com/' })
+
+      const result = await client.getBlobs('root', ['0x01aa', '0x01aa'])
+
+      expect(http.fetch.calls[0].args[0]).toEqual(
+        'example.com/eth/v1/beacon/blobs/root?versioned_hashes=0x01aa',
+      )
+      expect(result).toEqual([{ data: 'blob' }])
+    })
+
+    it('keeps a blob that two txs of the block posted', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({ data: ['blob', 'blob'] }),
+      })
+      const client = mockClient({ http })
+
+      const result = await client.getBlobs('root', ['0x01aa'])
+
+      expect(result).toEqual([{ data: 'blob' }, { data: 'blob' }])
+    })
+
+    it('throws when the node answers fewer blobs than asked for', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({ data: [] }),
+      })
+      const client = mockClient({ http })
+
+      await expect(client.getBlobs('root', ['0x01aa'])).toBeRejectedWith(
+        'Beacon node answered fewer blobs than asked for',
+      )
+    })
+
+    it('throws when a doubled blob stands in for a missing one', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({ data: ['blob', 'blob'] }),
+      })
+      const client = mockClient({ http })
+
+      await expect(
+        client.getBlobs('root', ['0x01aa', '0x01bb']),
+      ).toBeRejectedWith('Beacon node answered fewer blobs than asked for')
     })
   })
 
@@ -63,10 +105,7 @@ describe(BeaconChainClient.name, () => {
             http: new HttpClient(),
             beaconApiUrl: `${url}/`,
           })
-          return client.getValidatorsInfo({
-            stateId: 'head',
-            status: ['active'],
-          })
+          return client.getValidatorsInfo('head', ['active'])
         },
       )
 
@@ -74,6 +113,106 @@ describe(BeaconChainClient.name, () => {
         totalStake: 63_000_000_000_000_000_000n,
         numberOfValidators: 2,
       })
+    })
+  })
+
+  describe(BeaconChainClient.prototype.getTotalBalance.name, () => {
+    it('sums every balance at the slot in wei', async () => {
+      const body = JSON.stringify({
+        data: [
+          { index: '0', balance: '32000000000' },
+          { index: '1', balance: '0' },
+          { index: '2', balance: '2048000000000' },
+        ],
+      })
+
+      const result = await withServer(
+        (req, res) => {
+          expect(req.url).toEqual(
+            '/eth/v1/beacon/states/8103597/validator_balances',
+          )
+          res.setHeader('Content-Type', 'application/json')
+          res.end(body)
+        },
+        (url) =>
+          mockClient({
+            http: new HttpClient(),
+            beaconApiUrl: `${url}/`,
+          }).getTotalBalance(8103597),
+      )
+
+      expect(result).toEqual(2_080_000_000_000_000_000_000n)
+    })
+  })
+
+  describe(BeaconChainClient.prototype.getForkVersion.name, () => {
+    it('reads the current fork version of the state', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({
+          data: {
+            previous_version: '0x04000000',
+            current_version: '0x05000000',
+            epoch: '364032',
+          },
+        }),
+      })
+      const client = mockClient({ http, beaconApiUrl: 'example.com/' })
+
+      expect(await client.getForkVersion(11649024)).toEqual('0x05000000')
+      expect(http.fetch.calls[0]?.args[0]).toEqual(
+        'example.com/eth/v1/beacon/states/11649024/fork',
+      )
+    })
+  })
+
+  describe(BeaconChainClient.prototype.getDepositIndex.name, () => {
+    it('reads the counter without waiting for the rest of the state', async () => {
+      const result = await withServer(
+        (req, res) => {
+          expect(req.url).toEqual('/eth/v2/debug/beacon/states/8103597')
+          res.setHeader('Content-Type', 'application/json')
+          // The validators never arrive; the read must not wait for them.
+          res.write(
+            '{"data":{"slot":"8103597","fork":{"previous_version":"0x03000000","current_version":"0x03000000","epoch":"194048"},"eth1_deposit_index":"1639287",',
+          )
+          res.write('"validators":[')
+        },
+        (url) =>
+          mockClient({
+            http: new HttpClient(),
+            beaconApiUrl: `${url}/`,
+          }).getDepositIndex(8103597),
+      )
+
+      expect(result).toEqual(1639287)
+    })
+  })
+
+  describe(BeaconChainClient.prototype.getPendingDepositsAmount.name, () => {
+    it('sums the queued deposit amounts, in wei', async () => {
+      const body = JSON.stringify({
+        data: [
+          { pubkey: '0x01', amount: '32000000000', slot: '1' },
+          { pubkey: '0x02', amount: '1000000000', slot: '2' },
+        ],
+      })
+
+      const result = await withServer(
+        (req, res) => {
+          expect(req.url).toEqual(
+            '/eth/v1/beacon/states/11649024/pending_deposits',
+          )
+          res.setHeader('Content-Type', 'application/json')
+          res.end(body)
+        },
+        (url) =>
+          mockClient({
+            http: new HttpClient(),
+            beaconApiUrl: `${url}/`,
+          }).getPendingDepositsAmount(11649024),
+      )
+
+      expect(result).toEqual(33_000_000_000_000_000_000n)
     })
   })
 
