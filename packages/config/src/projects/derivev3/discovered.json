@@ -1,6 +1,6 @@
 {
   "name": "derivev3",
-  "timestamp": 1791902928,
+  "timestamp": 1794396778,
   "configHash": "0x993852e23cac6bc68424f957003b985b217afe4ac83ab038e2b735a18c6d1e54",
   "entries": [
     {
@@ -22,7 +22,7 @@
         "0xdd8ec07f87f722860fc7bc13d58cdf22e5a4c9f819dde1856586684b8e0ea9d5"
       ],
       "proxyType": "immutable",
-      "description": "A timelock with access control. The current minimum delay is 10m.",
+      "description": "A timelock with access control. The current minimum delay is 4h.",
       "deployerAddress": "eth:0xA82994cc5e9D94FED2916f762e03245FcBE79f23",
       "sinceTimestamp": 1790840771,
       "sinceBlock": 26096063,
@@ -78,15 +78,20 @@
           "eth:0x87327f19d857ae3530169acEa0EDd4ab1064229E"
         ],
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
-        "getMinDelay": 600,
-        "getMinDelayFormatted": "10m",
+        "getMinDelay": 14400,
+        "getMinDelayFormatted": "4h",
         "Proposer": ["eth:0x169a99B9958386a5D91E732Ed08B344946A92391"],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
       },
       "fieldMeta": {
         "getMinDelay": { "severity": "HIGH" },
+        "defaultAdminAC": { "severity": "MEDIUM" },
         "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "MEDIUM" },
+        "Proposer": { "severity": "MEDIUM" },
+        "Canceller": { "severity": "MEDIUM" },
         "Executor": {
+          "severity": "MEDIUM",
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
         }
       },
@@ -123,7 +128,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 132,
+        "nonce": 172,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -153,6 +158,7 @@
         "owner": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x2c53cbB96fb65e8711dAAe530c87473789a13781": "ProxyAdmin"
       }
@@ -235,6 +241,7 @@
         "owner": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x4EcBfaBF336a757FE82898e0e1083a6Cbb042C3D": "ProxyAdmin"
       }
@@ -323,7 +330,7 @@
         "domainSeparator": "0x2e9eb6561e5ec36b90ce48d58041a29bf70627c027020f7a28e1fc75865b3aa4",
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 7,
+        "nonce": 28,
         "VERSION": "1.5.0"
       },
       "implementationNames": {
@@ -361,7 +368,7 @@
         "domainSeparator": "0xfcd64e1db27f7d6e5172795dbedb048153220dc0ea32a4cdab13069538fe03c1",
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 7 (29%)",
-        "nonce": 10,
+        "nonce": 12,
         "VERSION": "1.5.0"
       },
       "implementationNames": {
@@ -465,6 +472,11 @@
       }
     },
     {
+      "address": "eth:0xB3A5e1E4c82a7C88BD13828e444e5Ad8E2279E3a",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "VerifiableApp",
       "address": "eth:0xd330145C17fB6EF2a21ACf1275Ce683A305F58BB",
       "type": "Contract",
@@ -507,22 +519,22 @@
         "$upgradeCount": 2,
         "ACTION_MANAGER": "eth:0xE366CcA474968e33b777E13905829A3b800CFAD3",
         "batchSubmitter": "eth:0x000000c88C2C8A7F8317783f2268eB2B9b41257E",
-        "celestiaLastCommitment": "0xa105724829eef345e8189b78d03ae1c52bc7fddcba50fbda30bdc2332e8637d6",
-        "celestiaTrustedHash": "0x6eb15e28be5d37a3e52c8b428dd058b72a83d32a48530a4ba39fa37599bd3d93",
-        "celestiaTrustedHeight": 14919516,
-        "consumedAdminAccIndex": 2,
-        "consumedPublicAccIndex": 1687,
+        "celestiaLastCommitment": "0x9cf580a95b6abc34d92fb9f484d9b782b53ef44a4ce003bc87ce13c4cf3cbba2",
+        "celestiaTrustedHash": "0x81622e399988a9697ed6fc8aed30c1c7ddbaf92d026f9b6076c43df25486506d",
+        "celestiaTrustedHeight": 15792781,
+        "consumedAdminAccIndex": 120,
+        "consumedPublicAccIndex": 6891,
         "getCelestiaAnchor": {
-          "height": 14919516,
-          "headerHash": "0x6eb15e28be5d37a3e52c8b428dd058b72a83d32a48530a4ba39fa37599bd3d93",
-          "lastCommitment": "0xa105724829eef345e8189b78d03ae1c52bc7fddcba50fbda30bdc2332e8637d6"
+          "height": 15792781,
+          "headerHash": "0x81622e399988a9697ed6fc8aed30c1c7ddbaf92d026f9b6076c43df25486506d",
+          "lastCommitment": "0x9cf580a95b6abc34d92fb9f484d9b782b53ef44a4ce003bc87ce13c4cf3cbba2"
         },
-        "lastOpTimestamp": 1791902078,
+        "lastOpTimestamp": 1794396057,
         "MAX_DA_HEADER_AGE": 172800,
         "owner": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "programVKey": "0x008dcff8e9d15e87916a63645d1075cb1d545b5bd1f40a3ba05b407f2ffa543b",
-        "stateRoot": "0x975783cbe0be8428ddc3190d749c59f20d3b02fa247241079a2b3137a52bbaf8",
+        "programVKey": "0x00bc954fe627a8c36173e608608795425e22b4134914c7da5bd233b4718c855b",
+        "stateRoot": "0x63771c01b89d5b72fb0062a89579b053b0df597499a188c37fa4319b758cd2d5",
         "submitterStallTimeout": 2419200,
         "verifier": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "WITHDRAWAL_OUTBOX": "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63"
@@ -557,6 +569,7 @@
         "owner": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xD773a38B81bBe7992209D6c4ef663c6A7F6cbfBd": "ProxyAdmin"
       }
@@ -604,16 +617,16 @@
         "$upgradeCount": 2,
         "ADMIN_ACTION_DOMAIN": "0xa5e61ed3383fa55751f8b780f03f78fffc10dbd49f13cebc809dc09cda953ec3",
         "ADMIN_ACTION_MIN_ID": 10000,
-        "adminActionsAcc": "0x53544a82772d190a1efbc02bfa3672d9f877521d6909aec3e2b893e0a4245c9c",
-        "adminHeadIndex": 2,
+        "adminActionsAcc": "0x72c3e82a890c1f04ef66db5b23a79d189506a27554ddb4bdd08c023bfabaa7ca",
+        "adminHeadIndex": 120,
         "DEPOSIT_TO_NEW_SUBACCOUNT_TYPE": 2,
         "DEPOSIT_TYPE": 1,
         "MAX_RESERVED_ACTION_ID": 50,
         "owner": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "PUBLIC_ACTION_DOMAIN": "0xe40f88659781022c735f391b4acc350fa0730948845bed98f660e46c61c3a256",
-        "publicActionsAcc": "0x3d8dcb1ff639b5541d04c59ad3775541112eddae0b4859ef2c11c03b2ea12d6b",
-        "publicHeadIndex": 1687,
+        "publicActionsAcc": "0x9482e035497b4aae9cd6088283d18c7674da1c6d1a12fb72921de0f438cb83d4",
+        "publicHeadIndex": 6891,
         "WITHDRAWAL_FEE": 2000000000000000,
         "WITHDRAWAL_OUTBOX": "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63",
         "WITHDRAWAL_TYPE": 3
@@ -640,6 +653,7 @@
         "owner": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xeB26aA88C73D3a03fE82be3C241B6ccd2D596811": "ProxyAdmin"
       }
@@ -665,7 +679,10 @@
       "values": {
         "$immutable": true,
         "ESCROW_IMPL": "eth:0xA20f87a5443E3Be4925109cA189134c825932560",
-        "keepers": ["eth:0x546caBdF948d1f0E9102B28Fc48E77F29Cb01E09"],
+        "keepers": [
+          "eth:0x546caBdF948d1f0E9102B28Fc48E77F29Cb01E09",
+          "eth:0xB3A5e1E4c82a7C88BD13828e444e5Ad8E2279E3a"
+        ],
         "NATIVE_ETH_TOKEN": "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
         "owner": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
@@ -1219,10 +1236,10 @@
     "global/TimelockController": "0xf7b496cbc7bea640fbf8eb44125f62bb1be686e7172cfd296168d642c8cea881",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 26184270 },
-  "permissionsConfigHash": "0x1851285ae950f7488ff0eb5e8d4b6639a308eb5519ab0fd6e788859f4acc2e22",
+  "usedBlockNumbers": { "ethereum": 26391403 },
+  "permissionsConfigHash": "0xbb62609efb6774af2a6565cf14a6669a8e1062908be5bb22586ecd618316ccae",
   "modelledAgainst": {
-    "shared-sp1": "0xed561151aa2d9072281a3657904e99ebbe79527c86fd4a127d2cf0581e691b66"
+    "shared-sp1": "0x2dc205a7a9fab0f4b2920f2ca38bd4030cf05d763d8ff9e332b9e53214bccb6b"
   },
   "permissions": {
     "eth:0x000000c88C2C8A7F8317783f2268eB2B9b41257E": {
@@ -1283,7 +1300,7 @@
           "via": [
             {
               "address": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
-              "delay": 600
+              "delay": 14400
             }
           ]
         },
@@ -1302,7 +1319,7 @@
             { "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7" },
             {
               "address": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
-              "delay": 600
+              "delay": 14400
             }
           ]
         },
@@ -1315,7 +1332,7 @@
             { "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7" },
             {
               "address": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
-              "delay": 600
+              "delay": 14400
             }
           ]
         },
@@ -1328,7 +1345,7 @@
             { "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7" },
             {
               "address": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
-              "delay": 600
+              "delay": 14400
             }
           ]
         },
@@ -1341,7 +1358,7 @@
             { "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7" },
             {
               "address": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
-              "delay": 600
+              "delay": 14400
             }
           ]
         },
@@ -1354,7 +1371,7 @@
             { "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7" },
             {
               "address": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
-              "delay": 600
+              "delay": 14400
             }
           ]
         },
@@ -1367,7 +1384,7 @@
             { "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7" },
             {
               "address": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
-              "delay": 600
+              "delay": 14400
             }
           ]
         },
@@ -1380,7 +1397,7 @@
             { "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7" },
             {
               "address": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
-              "delay": 600
+              "delay": 14400
             }
           ]
         },
@@ -1393,7 +1410,7 @@
             { "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7" },
             {
               "address": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
-              "delay": 600
+              "delay": 14400
             }
           ]
         },
@@ -1406,7 +1423,7 @@
             { "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7" },
             {
               "address": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
-              "delay": 600
+              "delay": 14400
             }
           ]
         }
@@ -1415,7 +1432,7 @@
         {
           "permission": "act",
           "from": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
-          "delay": 600,
+          "delay": 14400,
           "role": ".Proposer"
         }
       ]
@@ -1706,6 +1723,16 @@
           "from": "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63",
           "description": "pause all withdrawal payouts. Only the owner can unpause.",
           "role": ".pausers"
+        }
+      ]
+    },
+    "eth:0xB3A5e1E4c82a7C88BD13828e444e5Ad8E2279E3a": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xFec48bBC648bd2284520d862Ec67fc68F709915e",
+          "description": "bridge the balance of a withdraw escrow to its recipient on the configured destination chain.",
+          "role": ".keepers"
         }
       ]
     },

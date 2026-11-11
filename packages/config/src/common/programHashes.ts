@@ -783,7 +783,7 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       'common/programHashes/0x0022379400ea3157fae440ae7a8101e8bb01ca58e6a5f132c66751513aa58f08.md',
     ),
   },
-  '0x008dcff8e9d15e87916a63645d1075cb1d545b5bd1f40a3ba05b407f2ffa543b': {
+  '0x00bc954fe627a8c36173e608608795425e22b4134914c7da5bd233b4718c855b': {
     title: 'Derive V3 exchange program',
     description:
       'Proves batches of the Derive V3 exchange: margin, settlement, deposits and withdrawals, plus a Celestia light client step and the inclusion of the batch data on Celestia.',

@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x6d9fd7910046acf014af265dfd518ffc78a0f2c4
+Generated with discovered.json: 0x0ae9c453cde4614d2857129b33fa587e06ba2d8d
 
-# Diff at Tue, 13 Oct 2026 14:49:52 GMT:
+# Diff at Wed, 11 Nov 2026 11:34:07 GMT:
 
 - id: 710bc3f5
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- current timestamp: 1791902928
+- current timestamp: 1794396778
 
 ## Description
 
@@ -15,7 +15,7 @@ Initial discovery of Derive V3: VerifiableApp, OnchainActionManager, WithdrawalO
 ```diff
 +   Status: CREATED
     contract DeriveTimelock (eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78) [global/TimelockController]
-    +++ description: A timelock with access control. The current minimum delay is 10m.
+    +++ description: A timelock with access control. The current minimum delay is 4h.
 ```
 
 ```diff
