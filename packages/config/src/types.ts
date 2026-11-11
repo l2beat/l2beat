@@ -2000,6 +2000,11 @@ export type ProjectLiquidStakingContracts =
        */
       unwrapToken: ChainSpecificAddress
     }
+  | {
+      /** No onchain redemption: the rate is the only protocol read. */
+      type: 'cbeth'
+      cbETH: ChainSpecificAddress
+    }
 
 /** A pool selling the token for ETH or WETH. */
 export type ProjectLiquidStakingMarketQuote =
