@@ -70,7 +70,8 @@ export function getTimeTicks(xs: number[]) {
 
 /**
  * The ticks whose labels, centred on them, stay within a plot `plotWidth`
- * pixels wide that spans `domain`.
+ * pixels wide that spans `domain`. If none would fit, all of them are kept:
+ * a label past the edge is better than an axis with no labels at all.
  */
 export function fitXTicks(
   values: readonly number[],
@@ -82,11 +83,12 @@ export function fitXTicks(
   const [from, to] = domain
   const span = to - from
   if (span <= 0 || plotWidth <= 0) return []
-  return values.filter((value) => {
+  const fitting = values.filter((value) => {
     const x = ((value - from) / span) * plotWidth
     const half = estimateLabelWidth(format(value), fontSize) / 2
     return x - half >= 0 && x + half <= plotWidth
   })
+  return fitting.length > 0 ? fitting : [...values]
 }
 
 /**
