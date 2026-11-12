@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { getTickCondition, getTimeTicks } from './xAxisTicks'
+import { fitXTicks, getTickCondition, getTimeTicks } from './xAxisTicks'
 
 describe(getTickCondition.name, () => {
   // Labels are UTC, so ticks must land on UTC dates. West of UTC, a UTC
@@ -71,19 +71,19 @@ describe(getTickCondition.name, () => {
 })
 
 describe(getTimeTicks.name, () => {
-  it('leaves out ticks whose labels would be cut off at the plot edges', () => {
+  it('labels a month of daily rows by day', () => {
     const timestamps = dailyPoints('2026-06-15', '2026-07-14')
 
     const { values, format } = getTimeTicks(timestamps)
 
-    // 2026-06-15 is a tick day, but it is the first row.
     expect(values.map(toIsoDate)).toEqual([
+      '2026-06-15',
       '2026-06-22',
       '2026-06-29',
       '2026-07-06',
       '2026-07-13',
     ])
-    expect(format(values[0] ?? 0)).toEqual('22 Jun')
+    expect(format(values[1] ?? 0)).toEqual('22 Jun')
   })
 
   it('labels a day of hourly rows every 4 hours', () => {
@@ -107,6 +107,33 @@ describe(getTimeTicks.name, () => {
 
   it('has no ticks without rows', () => {
     expect(getTimeTicks([]).values).toEqual([])
+  })
+})
+
+describe(fitXTicks.name, () => {
+  it('leaves out ticks whose labels would cross either plot edge', () => {
+    const values = fitXTicks(
+      [5, 20, 50, 80, 95],
+      () => 'abcd',
+      [0, 100],
+      100,
+      10,
+    )
+
+    expect(values).toEqual([20, 50, 80])
+  })
+
+  it('labels the latest month when its label fits the plot', () => {
+    const timestamps = dailyPoints('2025-11-12', '2026-11-11')
+    const { values, format } = getTimeTicks(timestamps)
+    const domain = [timestamps[0] ?? 0, timestamps.at(-1) ?? 0] as const
+
+    const narrow = fitXTicks(values, format, domain, 343, 12)
+    const wide = fitXTicks(values, format, domain, 1500, 12)
+
+    // 1 Nov is 10 days before the end: 9 px from the edge of a 343 px plot.
+    expect(narrow.map(toIsoDate).at(-1)).toEqual('2026-09-01')
+    expect(wide.map(toIsoDate).at(-1)).toEqual('2026-11-01')
   })
 })
 
