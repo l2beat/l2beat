@@ -26,6 +26,7 @@ import {
   PRIVACY_ADVICE_TITLE,
   PRIVACY_IP_HIDING_ROUTES_ANCHOR,
   PRIVACY_REFERENCE_APP_ANCHOR,
+  PRIVACY_ROUTES_ANCHOR,
 } from './paths'
 import { FRAMEWORK_ADVERSARY_TEXT } from './privacyFrameworkText'
 
@@ -83,8 +84,8 @@ export function getPrivacyMethodologySections() {
         'One operator or hosting company holds both the entry and the exit of at most 1% of connections, at every location we test.',
         "Its client's source and node list are public.",
       ]),
-      'A route is decentralised when any two operators or hosting companies together hold the entry and the exit of at most 10% of connections. All routes below are, listed by the effort they take, each with its official download. Our steps name the lightest one that works with the app. Use Tor Browser for a website, and a route that carries all traffic for a native app.',
-      toolList('route'),
+      'A route is decentralised when any two operators or hosting companies together hold the entry and the exit of at most 10% of connections.',
+      `The routes that pass are listed under [Routes](#${PRIVACY_ROUTES_ANCHOR}).`,
     ]),
 
     // A raw heading, since markdown headings render without an id to link.
@@ -108,8 +109,12 @@ export function getPrivacyMethodologySections() {
       `An app that reads the chain through a hosted service tells it which addresses or notes you hold. A local [Ethereum node](#${PRIVACY_TOOLS.ethereumNode.anchor}) answers those reads without a third party. A transaction it sends shows its IP to the node's peers, so send transactions through an IP-hiding route, or run the node behind one. Set the node as the endpoint in the app, and in the depositing wallet if advised.`,
       heading(3, 'App delivery'),
       `A hosted website can serve different code at any time, to you alone. An onchain name, like an ENS record, serves whatever its owner or governance points it to. Load the [reviewed release](#${PRIVACY_REFERENCE_APP_ANCHOR}) by the hash or contract address the steps name. For an IPFS hash, use your own IPFS node, since a public gateway can serve other code. [IPFS Desktop](#${PRIVACY_TOOLS.ipfsDesktop.anchor}) serves it at http://localhost:8080/ipfs/ followed by the hash. Where the build reproduces, building it from the reviewed source we point at gives the same release without IPFS.`,
+      // A raw heading, since markdown headings render without an id to link.
+      `<h3 id="${PRIVACY_ROUTES_ANCHOR}">Routes</h3>`,
+      `These routes pass the [IP-hiding route checks](#${PRIVACY_IP_HIDING_ROUTES_ANCHOR}) and are decentralised, listed by the effort they take. Our steps name the lightest one that works with the app. Use Tor Browser for a website, and a route that carries all traffic for a native app.`,
+      toolList('route'),
       heading(3, 'Tools'),
-      `Our steps link every outside app they name to its entry, here or among the [IP-hiding routes](#${PRIVACY_IP_HIDING_ROUTES_ANCHOR}). Each entry has the official download and why we chose the app.`,
+      'Our steps link every outside app they name to its entry, here or among the routes above. Each entry has the official download and why we chose the app.',
       toolList('tool'),
     ]),
 
@@ -117,13 +122,13 @@ export function getPrivacyMethodologySections() {
       // A raw heading, since markdown headings render without an id to link.
       `<h2 id="${PRIVACY_REFERENCE_APP_ANCHOR}">Reference app</h2>`,
       'Each project names a reference app, the most private released app we found for the protocol. The ratings assume this app. Other apps we checked appear below it, each with one sourced finding that shows it leaks more.',
-      'Each reference app shows its delivery: how its code reaches the user and what the user can check, most checkable first.',
+      'Each reference app shows how its code reaches the user and what the user can check, most checkable first.',
       bulletList(
         Object.values(DELIVERY.kinds).map(
           (kind) => `**${kind.label}**: ${kind.description}`,
         ),
       ),
-      'A second word says whether the app comes from public source.',
+      'It also shows whether the app comes from public source.',
       bulletList(
         Object.values(DELIVERY.sources).map(
           (source) => `**${upperFirst(source.label)}**: ${source.description}`,

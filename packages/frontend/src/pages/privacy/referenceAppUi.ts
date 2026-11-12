@@ -66,7 +66,7 @@ export const DELIVERY = {
       label: 'closed',
       sentiment: 'bad',
       description:
-        "The source is closed, so our review rests on the app's observed behaviour.",
+        "The source is not public, so our review rests on the app's observed behaviour.",
     },
   },
 } as const

@@ -270,7 +270,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
         ),
       })
       expect(getSection(markdown, 'Privacy')).toInclude(
-        "(Reference): The ratings assume this app, since 2026-10-13 · Closed source, build 99da543, checked 2026-10-22 · Hosted: The website serves the code at each visit and can change it at any time, even for one user alone. · Closed: The source is closed, so our review rests on the app's observed behaviour.\n",
+        "(Reference): The ratings assume this app, since 2026-10-13 · Closed source, build 99da543, checked 2026-10-22 · Hosted: The website serves the code at each visit and can change it at any time, even for one user alone. · Closed: The source is not public, so our review rests on the app's observed behaviour.\n",
       )
     })
 
