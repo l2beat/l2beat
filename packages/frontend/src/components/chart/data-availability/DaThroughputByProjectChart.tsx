@@ -1,5 +1,5 @@
 import type { Milestone } from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
+import { formatBytes, type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import sum from 'lodash/sum'
 import uniq from 'lodash/uniq'
 import { useMemo } from 'react'
@@ -25,6 +25,10 @@ import { formatRange } from '~/utils/dates'
 import { generateAccessibleColors } from '~/utils/generateColors'
 import type { ChartResolution } from '~/utils/range/range'
 import { getDaDataParams } from './getDaDataParams'
+import {
+  getProjectChartMeta,
+  type ProjectChartDataWithConfiguredThroughput,
+} from './ProjectDaAbsoluteThroughputChart'
 
 interface Props {
   data: DaThroughputChartDataPoint[] | undefined
@@ -33,6 +37,12 @@ interface Props {
   isLoading: boolean
   isPlaceholderData: boolean
   customColors: Record<string, string> | undefined
+  /** Target and max capacity lines, drawn over the stacked projects */
+  capacity?: {
+    /** Whose capacity, for its line colors and labels */
+    projectId: ProjectId
+    data: ProjectChartDataWithConfiguredThroughput[] | undefined
+  }
   milestones: Milestone[]
   resolution: ChartResolution
   /** The hint's extra row would lift this chart's baseline above a hint-less chart beside it */
@@ -40,6 +50,8 @@ interface Props {
 }
 
 type ChartRow = { timestamp: number; [key: string]: number | null }
+
+const CAPACITY_KEYS = ['projectTarget', 'projectMax'] as const
 
 const colorsCache = new Map<string, string>()
 
@@ -50,10 +62,18 @@ export function DaThroughputByProjectChart({
   isLoading,
   isPlaceholderData,
   customColors,
+  capacity,
   milestones,
   resolution,
   disableLegendOnboarding,
 }: Props) {
+  const capacityProjectId = capacity?.projectId
+  const capacityData = capacity?.data
+  const capacityMeta = useMemo(() => {
+    if (!capacityProjectId) return undefined
+    const { projectTarget, projectMax } = getProjectChartMeta(capacityProjectId)
+    return { projectTarget, projectMax } satisfies ChartMeta
+  }, [capacityProjectId])
   const allProjects = useMemo(() => {
     // We want to get latest top projects.
     const result = data
@@ -81,7 +101,7 @@ export function DaThroughputByProjectChart({
   }, [allProjects])
   const chartMeta = useMemo(() => {
     let colorIndex = 0
-    return allProjects?.reduce((acc, project) => {
+    const projectsMeta = allProjects?.reduce((acc, project) => {
       if (!acc[project]) {
         let color: string
         const colorFromCache = colorsCache.get(project)
@@ -106,11 +126,28 @@ export function DaThroughputByProjectChart({
 
       return acc
     }, {} as ChartMeta)
-  }, [colors, customColors, allProjects])
+    // Empty until projects load: the legend picks its shown keys from the
+    // first non-empty meta, which would otherwise hide every project
+    if (allProjects.length === 0) return projectsMeta
+    // Capacity goes first, so its legend items lead
+    return { ...capacityMeta, ...projectsMeta } as ChartMeta
+  }, [colors, customColors, allProjects, capacityMeta])
 
   const hiddenDataKeys = useMemo(() => {
-    return allProjects.slice(5)
+    // Max capacity starts hidden, as on the total chart
+    return [...allProjects.slice(5), 'projectMax']
   }, [allProjects])
+
+  const capacityByTimestamp = useMemo(
+    () =>
+      new Map(
+        capacityData?.map(([timestamp, _, target, max]) => [
+          timestamp,
+          { projectTarget: target, projectMax: max },
+        ]),
+      ),
+    [capacityData],
+  )
 
   const { dataKeys, toggleDataKey, toggleAllDataKeys, showAllSelected } =
     useChartDataKeys(chartMeta, hiddenDataKeys)
@@ -126,9 +163,15 @@ export function DaThroughputByProjectChart({
               }),
             ),
           ),
+          ...[...capacityByTimestamp.values()].flatMap(
+            ({ projectTarget, projectMax }) => [
+              projectTarget ?? 0,
+              projectMax ?? 0,
+            ],
+          ),
         )
       : undefined
-  }, [data, allProjects])
+  }, [data, allProjects, capacityByTimestamp])
 
   const { denominator, unit } = useMemo(() => getDaDataParams(max), [max])
 
@@ -159,20 +202,41 @@ export function DaThroughputByProjectChart({
           }
         }
 
+        if (capacityMeta) {
+          const capacity = capacityByTimestamp.get(timestamp)
+          for (const key of CAPACITY_KEYS) {
+            const value = capacity?.[key]
+            result[key] = value != null ? value / denominator : null
+          }
+        }
+
         return result
       }) ?? []
     )
-  }, [data, allProjects, denominator])
+  }, [data, allProjects, denominator, capacityMeta, capacityByTimestamp])
 
-  const series: ChartSeries<string, ChartRow>[] = allProjects.map(
-    (project) => ({
-      key: project,
-      fill: chartMeta?.[project]?.color,
-      stack: true,
-      curve: 'step',
-      activeDot: false,
-    }),
-  )
+  const series: ChartSeries<string, ChartRow>[] = [
+    ...allProjects.map(
+      (project): ChartSeries<string, ChartRow> => ({
+        key: project,
+        fill: chartMeta?.[project]?.color,
+        stack: true,
+        curve: 'step',
+        activeDot: false,
+      }),
+    ),
+    // After the projects, so the lines are drawn over the stack
+    ...(capacityMeta
+      ? CAPACITY_KEYS.map(
+          (key): ChartSeries<string, ChartRow> => ({
+            key,
+            stroke: capacityMeta[key].color,
+            strokeDasharray: capacityMeta[key].indicatorType.strokeDasharray,
+            curve: 'stepAfter',
+          }),
+        )
+      : []),
+  ]
 
   return (
     <ChartContainer
@@ -227,11 +291,15 @@ function CustomTooltip({
 }) {
   const label = row.timestamp
   // Hidden series are not in `keys`.
-  const actualPayload = getTooltipEntries(row, keys).sort((a, b) => {
-    if (a.name === 'Unknown') return 1
-    if (b.name === 'Unknown') return -1
-    return (b.value ?? 0) - (a.value ?? 0)
-  })
+  const entries = getTooltipEntries(row, keys)
+  const capacityPayload = entries.filter((entry) => isCapacityKey(entry.name))
+  const actualPayload = entries
+    .filter((entry) => !isCapacityKey(entry.name))
+    .sort((a, b) => {
+      if (a.name === 'Unknown') return 1
+      if (b.name === 'Unknown') return -1
+      return (b.value ?? 0) - (a.value ?? 0)
+    })
 
   return (
     <ChartTooltipWrapper>
@@ -240,6 +308,23 @@ function CustomTooltip({
       </div>
       <HorizontalSeparator className="my-2" />
       <div className="flex flex-col gap-2">
+        {capacityPayload.map((entry) => (
+          <ChartTooltipRow
+            key={entry.name}
+            name={entry.name}
+            gap="gap-x-6"
+            wrapLabel={false}
+          >
+            <span className="font-medium text-label-value-15 text-primary tabular-nums">
+              {entry.value !== null
+                ? formatBytes(entry.value * mainDenominator)
+                : entry.name === 'projectMax'
+                  ? 'No cap'
+                  : formatBytes(0)}
+            </span>
+          </ChartTooltipRow>
+        ))}
+        {capacityPayload.length > 0 && <HorizontalSeparator />}
         {actualPayload.slice(0, 20).map((entry, index) => {
           const value = entry.value ?? 0
           const valueInBytes = value * mainDenominator
@@ -266,4 +351,8 @@ function CustomTooltip({
       </div>
     </ChartTooltipWrapper>
   )
+}
+
+function isCapacityKey(key: string): key is (typeof CAPACITY_KEYS)[number] {
+  return (CAPACITY_KEYS as readonly string[]).includes(key)
 }
