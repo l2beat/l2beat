@@ -1,5 +1,4 @@
 import { EM_DASH } from '~/consts/characters'
-import { TrendArrowDownIcon, TrendArrowUpIcon } from '~/icons/TrendArrow'
 import {
   COMPARED_TO_PERIOD,
   formatPercent,
@@ -36,33 +35,16 @@ export function PercentChange({
   period,
   disabledOnTouch,
 }: Props) {
-  const isMore = value > 0
-  const isLess = value < 0
-
   const content = (
     <span
       className={cn(
-        isMore && 'text-positive',
-        isLess && 'text-red-300',
-        'relative',
+        'inline-block min-w-[52px] whitespace-nowrap text-right text-xs tabular-nums',
+        getChangeColor(value),
         className,
+        textClassName,
       )}
     >
-      {isMore && (
-        <TrendArrowUpIcon className="-translate-y-1/2 absolute top-1/2 left-0.5" />
-      )}
-      {isLess && (
-        <TrendArrowDownIcon className="-translate-y-1/2 absolute top-1/2 left-0.5" />
-      )}
-      <span
-        className={cn(
-          'relative inline-block w-[52px] pl-3.5 text-right text-xs',
-          value === 0 && 'text-secondary',
-          textClassName,
-        )}
-      >
-        {Number.isNaN(value) ? EM_DASH : formatPercent(Math.abs(value))}
-      </span>
+      {formatSignedPercent(value)}
     </span>
   )
 
@@ -82,4 +64,25 @@ export function PercentChange({
       </TooltipPortal>
     </Tooltip>
   )
+}
+
+/**
+ * A change as signed text, like home: "+12.0%" or "−3.1%", with a true minus
+ * and no arrows. The sign follows the rounded figure, so a change that shows
+ * as 0.00% reads as neutral rather than as a gain or a loss.
+ */
+function formatSignedPercent(value: number) {
+  if (Number.isNaN(value)) return EM_DASH
+  const magnitude = formatPercent(Math.abs(value))
+  if (roundsToZero(value)) return magnitude
+  return `${value > 0 ? '+' : '−'}${magnitude}`
+}
+
+function getChangeColor(value: number) {
+  if (Number.isNaN(value) || roundsToZero(value)) return 'text-secondary'
+  return value > 0 ? 'text-positive' : 'text-negative'
+}
+
+function roundsToZero(value: number) {
+  return Number.parseFloat(formatPercent(Math.abs(value))) === 0
 }

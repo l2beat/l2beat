@@ -45,7 +45,7 @@ export function ProjectChartTimeRange({
   return (
     <p
       className={cn(
-        'flex h-8 items-center font-bold',
+        'flex h-8 items-center font-medium text-label-value-15 text-secondary tabular-nums',
         isPlaceholderData && previousChartDataClassName,
       )}
     >

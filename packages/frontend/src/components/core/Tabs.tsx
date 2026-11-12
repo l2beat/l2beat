@@ -60,7 +60,7 @@ function TabsTrigger({
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-1',
         'disabled:pointer-events-none disabled:opacity-50',
         'data-[state=active]:bg-pure-white data-[state=active]:text-primary dark:data-[state=active]:bg-black',
-        'group-data-[variant=highlighted]/tabs:data-[state=active]:bg-brand group-data-[variant=highlighted]/tabs:data-[state=active]:text-primary-invert',
+        'group-data-[variant=highlighted]/tabs:data-[state=active]:bg-primary group-data-[variant=highlighted]/tabs:data-[state=active]:text-primary-invert',
         className,
       )}
       {...props}
