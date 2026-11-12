@@ -106,7 +106,7 @@ export async function getHomePrivacyData(
 
   return {
     tvl: {
-      chart: { kind: 'daily', points: tvl },
+      chart: toWeeklySparkline(tvl, { perDay: false }),
       value: getLatestValue(tvl),
       change: computeSeriesChange(tvl),
     },

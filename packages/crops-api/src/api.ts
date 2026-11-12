@@ -15,7 +15,7 @@ import {
 // `meta({ description })` reaches the OpenAPI document.
 
 /** API responses link to production whatever host served them. */
-export const L2BEAT_ORIGIN = 'https://ethbeat.org'
+export const SITE_ORIGIN = 'https://ethbeat.org'
 
 const unixSeconds = () => v.number().meta({ description: 'Unix seconds.' })
 
@@ -243,7 +243,7 @@ export function resolveCropsProject(
     id: project.id,
     slug: project.slug,
     name: project.name,
-    href: path ? `${L2BEAT_ORIGIN}${path}` : null,
+    href: path ? `${SITE_ORIGIN}${path}` : null,
     crops,
     inGarden: listing === 'listed',
     attestation:

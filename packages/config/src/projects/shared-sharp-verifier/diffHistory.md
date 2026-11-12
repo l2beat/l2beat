@@ -1,3 +1,165 @@
+Generated with discovered.json: 0x116544875489a61f1dd1306f08ae359095b11770
+
+# Diff at Tue, 10 Nov 2026 14:27:08 GMT:
+
+- id: a0caccc7
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@28ea16426fac1900c2fffd1cec3ecc6b84981c76 block: 1788530147
+- current timestamp: 1794320603
+
+## Description
+
+The SHARP Multisig switched the default SHARP verifier to a new GpsStatementVerifier (2026_14), 10 days after adding it (8d upgrade delay respected): https://disco.l2beat.com/diff/eth:0x4956bda1d23F75B988644329c5B06BD1494a72b6/eth:0x91C57B64738b80f4494d83b485AD3f9C0f95E2A3
+- The verifier now forces a single bootloader config hash into the proof output instead of three words (simple bootloader list commitment, applicative bootloader hash, Cairo verifier list commitment).
+- New outer bootloader of 1182 felts (was 1166): https://disco.l2beat.com/diff/eth:0x24105e6697AdD9B4B1BDE04079a91BDFCCa24A47/eth:0x8ad2429Dbd77ECe844ED28222b26798A9449C2F3. Its Cairo program hash is 416945816847640482138159166670986616346304244502647016366644374949046452837.
+- The MemoryPageFactRegistry and the 8 CPU verifiers are reused.
+- Facts of the previous default verifier stay valid through the referral until 2026-11-28 (1795855307).
+
+Reproducibility: StarkWare published the sources in cairo-lang v0.14.4a0 (d435ed7) after the switch. L2BEAT reproduced the new outer bootloader and every part of the config hash from public source: simple bootloaders, circuit applicative bootloader, circuit verifier and circuit registry (proving e0035ff), and the 30 Cairo verifiers. The 9 Stwo Cairo verifiers build from the last public proving commit that contains them (e580a50), the frozen branch StarkWare names for them is not public.
+
+Config: shapes for the new verifier and bootloader, `getBootloaderConfigHash` field, previous verifier and bootloader renamed and critical until the referral expires.
+
+## Watched changes
+
+```diff
+    contract SHARPVerifierCallProxy (eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60) [shared-sharp-verifier/SHARPVerifierCallProxy] {
+    +++ description: Upgradeable call router through which Starknet and other applications access SHARP fact registries. It uses `call`, not `delegatecall`, so facts and immutable verifier configuration remain at each target registry. The explicit `isValid` entry point always queries the default target. Other calls handled by the fallback, principally proof submissions, can be routed per caller to a still-active registry in the default target's reference chain. The default target can be replaced by eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 after 8d.
+      values.$pastUpgrades.15:
++        ["2026-11-08T11:12:11.000Z","0x0c4c4de3d0697fcde16122a290a55d7415bf79bfae6fce9c168bcb9933018014",["eth:0x3597c5CBCbCB30079a0bD2A68cDE5f98272f9feb"]]
+      values.$upgradeCount:
+-        15
++        16
++++ description: Default SHARP fact registry called by the proxy and the only registry queried directly by its explicit `isValid` entry point. Replacing it changes the complete proof-verification trust chain: outer bootloader, bootloader commitments, recursive verifier allowlist, Solidity CPU verifiers, and temporary reference registries.
+      values.callProxyImplementation:
+-        "eth:0x4956bda1d23F75B988644329c5B06BD1494a72b6"
++        "eth:0x91C57B64738b80f4494d83b485AD3f9C0f95E2A3"
+      values.StarkWareProxy_callImplementation:
+-        "eth:0x4956bda1d23F75B988644329c5B06BD1494a72b6"
++        "eth:0x91C57B64738b80f4494d83b485AD3f9C0f95E2A3"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract CairoBootloaderProgram (eth:0x8ad2429Dbd77ECe844ED28222b26798A9449C2F3) [shared-sharp-verifier/CairoBootloaderProgram]
+    +++ description: Stores the complete compiled Cairo outer bootloader used as the top-level program of a SHARP proof. The SHARP verifier copies these words into public memory, pinning this exact executable onchain independently of the separately committed simple, applicative, and recursive-verifier programs.
+```
+
+```diff
++   Status: CREATED
+    contract SHARPVerifier (eth:0x91C57B64738b80f4494d83b485AD3f9C0f95E2A3) [shared-sharp-verifier/SHARPVerifier]
+    +++ description: Immutable GPS statement verifier shared by Starknet and other StarkWare systems. It verifies a STARK proof of the exact Cairo bootloader stored onchain, forces the bootloader configuration into public memory, and registers a fact for every bootloader task. A fact is also considered valid when it exists in the time-limited reference fact registry.
+```
+
+## Source code changes
+
+```diff
+.../.flat/CairoBootloaderProgram.sol               | 1198 ++++++++++
+ .../shared-sharp-verifier/.flat/SHARPVerifier.sol  | 2402 ++++++++++++++++++++
+ 2 files changed, 3600 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788530147 (main branch discovery), not current.
+
+```diff
+    contract SHARPVerifier_2025_11 (eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934) [shared-sharp-verifier/SHARPVerifier] {
+    +++ description: Immutable GPS statement verifier shared by Starknet and other StarkWare systems. It verifies a STARK proof of the exact Cairo bootloader stored onchain, forces the bootloader configuration into public memory, and registers a fact for every bootloader task. A fact is also considered valid when it exists in the time-limited reference fact registry.
+      fieldMeta.getBootloaderConfig.description:
+-        "The three bootloader configuration words forced into the proven program output. In modern versions they are (1) a Pedersen commitment to the ordered list of supported simple-bootloader program hashes, (2) the applicative-bootloader program hash, and (3) a Pedersen commitment to the ordered list of supported recursive Cairo-verifier program hashes. The 2024_10 verifier instead uses a direct Poseidon commitment for word 0. Reproducing a list commitment is insufficient unless its exact ordered preimage and every program behind the listed hashes are also published and reproducible. A malicious allowed program can make invalid nested tasks appear proven."
++        "The three bootloader configuration words forced into the proven program output (verifiers up to 2026_13). In modern versions they are (1) a Pedersen commitment to the ordered list of supported simple-bootloader program hashes, (2) the applicative-bootloader program hash, and (3) a Pedersen commitment to the ordered list of supported recursive Cairo-verifier program hashes. The 2024_10 verifier instead uses a direct Poseidon commitment for word 0. Reproducing a list commitment is insufficient unless its exact ordered preimage and every program behind the listed hashes are also published and reproducible. A malicious allowed program can make invalid nested tasks appear proven."
+      fieldMeta.getBootloaderConfigHash:
++        {"severity":"HIGH","description":"Single bootloader configuration hash forced into the proven program output (verifiers from 2026_14). It replaces the three configuration words of `getBootloaderConfig`: simple-bootloader allowlist, applicative-bootloader program hash and recursive Cairo-verifier allowlist. The hash alone reveals none of them, so the exact preimage and every program behind it must be published and reproducible. A malicious allowed program can make invalid nested tasks appear proven.","type":"CODE_CHANGE"}
+    }
+```
+
+```diff
+    contract CairoBootloaderProgram_2026_13 (eth:0x24105e6697AdD9B4B1BDE04079a91BDFCCa24A47) [shared-sharp-verifier/CairoBootloaderProgram] {
+    +++ description: Stores the complete compiled Cairo outer bootloader used as the top-level program of a SHARP proof. The SHARP verifier copies these words into public memory, pinning this exact executable onchain independently of the separately committed simple, applicative, and recursive-verifier programs.
+      name:
+-        "CairoBootloaderProgram"
++        "CairoBootloaderProgram_2026_13"
+      critical:
+-        true
++        {"untilTimestamp":1795855307}
+    }
+```
+
+```diff
+    contract SHARPVerifier_2026_13_4 (eth:0x4956bda1d23F75B988644329c5B06BD1494a72b6) [shared-sharp-verifier/SHARPVerifier] {
+    +++ description: Immutable GPS statement verifier shared by Starknet and other StarkWare systems. It verifies a STARK proof of the exact Cairo bootloader stored onchain, forces the bootloader configuration into public memory, and registers a fact for every bootloader task. A fact is also considered valid when it exists in the time-limited reference fact registry.
+      name:
+-        "SHARPVerifier"
++        "SHARPVerifier_2026_13_4"
+      critical:
+-        true
++        {"untilTimestamp":1795855307}
+      fieldMeta.getBootloaderConfig.description:
+-        "The three bootloader configuration words forced into the proven program output. In modern versions they are (1) a Pedersen commitment to the ordered list of supported simple-bootloader program hashes, (2) the applicative-bootloader program hash, and (3) a Pedersen commitment to the ordered list of supported recursive Cairo-verifier program hashes. The 2024_10 verifier instead uses a direct Poseidon commitment for word 0. Reproducing a list commitment is insufficient unless its exact ordered preimage and every program behind the listed hashes are also published and reproducible. A malicious allowed program can make invalid nested tasks appear proven."
++        "The three bootloader configuration words forced into the proven program output (verifiers up to 2026_13). In modern versions they are (1) a Pedersen commitment to the ordered list of supported simple-bootloader program hashes, (2) the applicative-bootloader program hash, and (3) a Pedersen commitment to the ordered list of supported recursive Cairo-verifier program hashes. The 2024_10 verifier instead uses a direct Poseidon commitment for word 0. Reproducing a list commitment is insufficient unless its exact ordered preimage and every program behind the listed hashes are also published and reproducible. A malicious allowed program can make invalid nested tasks appear proven."
+      fieldMeta.getBootloaderConfigHash:
++        {"severity":"HIGH","description":"Single bootloader configuration hash forced into the proven program output (verifiers from 2026_14). It replaces the three configuration words of `getBootloaderConfig`: simple-bootloader allowlist, applicative-bootloader program hash and recursive Cairo-verifier allowlist. The hash alone reveals none of them, so the exact preimage and every program behind it must be published and reproducible. A malicious allowed program can make invalid nested tasks appear proven.","type":"CODE_CHANGE"}
+    }
+```
+
+```diff
+    contract SHARPVerifier_2026_13_1 (eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe) [shared-sharp-verifier/SHARPVerifier] {
+    +++ description: Immutable GPS statement verifier shared by Starknet and other StarkWare systems. It verifies a STARK proof of the exact Cairo bootloader stored onchain, forces the bootloader configuration into public memory, and registers a fact for every bootloader task. A fact is also considered valid when it exists in the time-limited reference fact registry.
+      fieldMeta.getBootloaderConfig.description:
+-        "The three bootloader configuration words forced into the proven program output. In modern versions they are (1) a Pedersen commitment to the ordered list of supported simple-bootloader program hashes, (2) the applicative-bootloader program hash, and (3) a Pedersen commitment to the ordered list of supported recursive Cairo-verifier program hashes. The 2024_10 verifier instead uses a direct Poseidon commitment for word 0. Reproducing a list commitment is insufficient unless its exact ordered preimage and every program behind the listed hashes are also published and reproducible. A malicious allowed program can make invalid nested tasks appear proven."
++        "The three bootloader configuration words forced into the proven program output (verifiers up to 2026_13). In modern versions they are (1) a Pedersen commitment to the ordered list of supported simple-bootloader program hashes, (2) the applicative-bootloader program hash, and (3) a Pedersen commitment to the ordered list of supported recursive Cairo-verifier program hashes. The 2024_10 verifier instead uses a direct Poseidon commitment for word 0. Reproducing a list commitment is insufficient unless its exact ordered preimage and every program behind the listed hashes are also published and reproducible. A malicious allowed program can make invalid nested tasks appear proven."
+      fieldMeta.getBootloaderConfigHash:
++        {"severity":"HIGH","description":"Single bootloader configuration hash forced into the proven program output (verifiers from 2026_14). It replaces the three configuration words of `getBootloaderConfig`: simple-bootloader allowlist, applicative-bootloader program hash and recursive Cairo-verifier allowlist. The hash alone reveals none of them, so the exact preimage and every program behind it must be published and reproducible. A malicious allowed program can make invalid nested tasks appear proven.","type":"CODE_CHANGE"}
+    }
+```
+
+```diff
+    contract SHARPVerifier_2026_13_2 (eth:0x7Da1225C752ab37E610a242D9D8a0548262E3fF7) [shared-sharp-verifier/SHARPVerifier] {
+    +++ description: Immutable GPS statement verifier shared by Starknet and other StarkWare systems. It verifies a STARK proof of the exact Cairo bootloader stored onchain, forces the bootloader configuration into public memory, and registers a fact for every bootloader task. A fact is also considered valid when it exists in the time-limited reference fact registry.
+      fieldMeta.getBootloaderConfig.description:
+-        "The three bootloader configuration words forced into the proven program output. In modern versions they are (1) a Pedersen commitment to the ordered list of supported simple-bootloader program hashes, (2) the applicative-bootloader program hash, and (3) a Pedersen commitment to the ordered list of supported recursive Cairo-verifier program hashes. The 2024_10 verifier instead uses a direct Poseidon commitment for word 0. Reproducing a list commitment is insufficient unless its exact ordered preimage and every program behind the listed hashes are also published and reproducible. A malicious allowed program can make invalid nested tasks appear proven."
++        "The three bootloader configuration words forced into the proven program output (verifiers up to 2026_13). In modern versions they are (1) a Pedersen commitment to the ordered list of supported simple-bootloader program hashes, (2) the applicative-bootloader program hash, and (3) a Pedersen commitment to the ordered list of supported recursive Cairo-verifier program hashes. The 2024_10 verifier instead uses a direct Poseidon commitment for word 0. Reproducing a list commitment is insufficient unless its exact ordered preimage and every program behind the listed hashes are also published and reproducible. A malicious allowed program can make invalid nested tasks appear proven."
+      fieldMeta.getBootloaderConfigHash:
++        {"severity":"HIGH","description":"Single bootloader configuration hash forced into the proven program output (verifiers from 2026_14). It replaces the three configuration words of `getBootloaderConfig`: simple-bootloader allowlist, applicative-bootloader program hash and recursive Cairo-verifier allowlist. The hash alone reveals none of them, so the exact preimage and every program behind it must be published and reproducible. A malicious allowed program can make invalid nested tasks appear proven.","type":"CODE_CHANGE"}
+    }
+```
+
+```diff
+    contract SHARPVerifier_2024_10 (eth:0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942) [shared-sharp-verifier/SHARPVerifier] {
+    +++ description: Immutable GPS statement verifier shared by Starknet and other StarkWare systems. It verifies a STARK proof of the exact Cairo bootloader stored onchain, forces the bootloader configuration into public memory, and registers a fact for every bootloader task. A fact is also considered valid when it exists in the time-limited reference fact registry.
+      fieldMeta.getBootloaderConfig.description:
+-        "The three bootloader configuration words forced into the proven program output. In modern versions they are (1) a Pedersen commitment to the ordered list of supported simple-bootloader program hashes, (2) the applicative-bootloader program hash, and (3) a Pedersen commitment to the ordered list of supported recursive Cairo-verifier program hashes. The 2024_10 verifier instead uses a direct Poseidon commitment for word 0. Reproducing a list commitment is insufficient unless its exact ordered preimage and every program behind the listed hashes are also published and reproducible. A malicious allowed program can make invalid nested tasks appear proven."
++        "The three bootloader configuration words forced into the proven program output (verifiers up to 2026_13). In modern versions they are (1) a Pedersen commitment to the ordered list of supported simple-bootloader program hashes, (2) the applicative-bootloader program hash, and (3) a Pedersen commitment to the ordered list of supported recursive Cairo-verifier program hashes. The 2024_10 verifier instead uses a direct Poseidon commitment for word 0. Reproducing a list commitment is insufficient unless its exact ordered preimage and every program behind the listed hashes are also published and reproducible. A malicious allowed program can make invalid nested tasks appear proven."
+      fieldMeta.getBootloaderConfigHash:
++        {"severity":"HIGH","description":"Single bootloader configuration hash forced into the proven program output (verifiers from 2026_14). It replaces the three configuration words of `getBootloaderConfig`: simple-bootloader allowlist, applicative-bootloader program hash and recursive Cairo-verifier allowlist. The hash alone reveals none of them, so the exact preimage and every program behind it must be published and reproducible. A malicious allowed program can make invalid nested tasks appear proven.","type":"CODE_CHANGE"}
+    }
+```
+
+```diff
+    contract SHARPVerifier_2026_13_3 (eth:0xE67515a751291445B85b2F176c1eCdf08e86b406) [shared-sharp-verifier/SHARPVerifier] {
+    +++ description: Immutable GPS statement verifier shared by Starknet and other StarkWare systems. It verifies a STARK proof of the exact Cairo bootloader stored onchain, forces the bootloader configuration into public memory, and registers a fact for every bootloader task. A fact is also considered valid when it exists in the time-limited reference fact registry.
+      fieldMeta.getBootloaderConfig.description:
+-        "The three bootloader configuration words forced into the proven program output. In modern versions they are (1) a Pedersen commitment to the ordered list of supported simple-bootloader program hashes, (2) the applicative-bootloader program hash, and (3) a Pedersen commitment to the ordered list of supported recursive Cairo-verifier program hashes. The 2024_10 verifier instead uses a direct Poseidon commitment for word 0. Reproducing a list commitment is insufficient unless its exact ordered preimage and every program behind the listed hashes are also published and reproducible. A malicious allowed program can make invalid nested tasks appear proven."
++        "The three bootloader configuration words forced into the proven program output (verifiers up to 2026_13). In modern versions they are (1) a Pedersen commitment to the ordered list of supported simple-bootloader program hashes, (2) the applicative-bootloader program hash, and (3) a Pedersen commitment to the ordered list of supported recursive Cairo-verifier program hashes. The 2024_10 verifier instead uses a direct Poseidon commitment for word 0. Reproducing a list commitment is insufficient unless its exact ordered preimage and every program behind the listed hashes are also published and reproducible. A malicious allowed program can make invalid nested tasks appear proven."
+      fieldMeta.getBootloaderConfigHash:
++        {"severity":"HIGH","description":"Single bootloader configuration hash forced into the proven program output (verifiers from 2026_14). It replaces the three configuration words of `getBootloaderConfig`: simple-bootloader allowlist, applicative-bootloader program hash and recursive Cairo-verifier allowlist. The hash alone reveals none of them, so the exact preimage and every program behind it must be published and reproducible. A malicious allowed program can make invalid nested tasks appear proven.","type":"CODE_CHANGE"}
+    }
+```
+
+```diff
+    contract SHARPVerifier_2025_12 (eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066) [shared-sharp-verifier/SHARPVerifier] {
+    +++ description: Immutable GPS statement verifier shared by Starknet and other StarkWare systems. It verifies a STARK proof of the exact Cairo bootloader stored onchain, forces the bootloader configuration into public memory, and registers a fact for every bootloader task. A fact is also considered valid when it exists in the time-limited reference fact registry.
+      fieldMeta.getBootloaderConfig.description:
+-        "The three bootloader configuration words forced into the proven program output. In modern versions they are (1) a Pedersen commitment to the ordered list of supported simple-bootloader program hashes, (2) the applicative-bootloader program hash, and (3) a Pedersen commitment to the ordered list of supported recursive Cairo-verifier program hashes. The 2024_10 verifier instead uses a direct Poseidon commitment for word 0. Reproducing a list commitment is insufficient unless its exact ordered preimage and every program behind the listed hashes are also published and reproducible. A malicious allowed program can make invalid nested tasks appear proven."
++        "The three bootloader configuration words forced into the proven program output (verifiers up to 2026_13). In modern versions they are (1) a Pedersen commitment to the ordered list of supported simple-bootloader program hashes, (2) the applicative-bootloader program hash, and (3) a Pedersen commitment to the ordered list of supported recursive Cairo-verifier program hashes. The 2024_10 verifier instead uses a direct Poseidon commitment for word 0. Reproducing a list commitment is insufficient unless its exact ordered preimage and every program behind the listed hashes are also published and reproducible. A malicious allowed program can make invalid nested tasks appear proven."
+      fieldMeta.getBootloaderConfigHash:
++        {"severity":"HIGH","description":"Single bootloader configuration hash forced into the proven program output (verifiers from 2026_14). It replaces the three configuration words of `getBootloaderConfig`: simple-bootloader allowlist, applicative-bootloader program hash and recursive Cairo-verifier allowlist. The hash alone reveals none of them, so the exact preimage and every program behind it must be published and reproducible. A malicious allowed program can make invalid nested tasks appear proven.","type":"CODE_CHANGE"}
+    }
+```
+
 Generated with discovered.json: 0xb5f4f0be2f3ee3ab5f45ba7a0fd454411ba7a6f1
 
 # Diff at Fri, 16 Oct 2026 05:36:53 GMT:

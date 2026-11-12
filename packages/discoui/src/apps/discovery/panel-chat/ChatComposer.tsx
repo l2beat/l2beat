@@ -49,11 +49,7 @@ export function ChatComposer(props: { isWorking: boolean; send: Send }) {
           title="Enter sends, Shift+Enter adds a line"
           className="resize-none bg-transparent px-3 pt-2.5 pb-1 text-[13px] text-coffee-100 leading-relaxed placeholder:text-coffee-400 focus:outline-hidden"
           onChange={(event) => setText(event.target.value)}
-          // DiscoUI's shortcuts, like / for search, listen for keyup too.
-          onKeyUp={(event) => event.stopPropagation()}
           onKeyDown={(event) => {
-            // Keys typed here belong to the chat, not to DiscoUI's shortcuts.
-            event.stopPropagation()
             if (isSubmitKey(event)) {
               event.preventDefault()
               submit()

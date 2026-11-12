@@ -1,3 +1,109 @@
+Generated with discovered.json: 0x28d28eea05e1615ada9403420f726382f16be00c
+
+# Diff at Fri, 06 Nov 2026 16:33:01 GMT:
+
+- id: 738ca5ba
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@42d599abc7be8cc38122c72abc4da1c1dda6fbeb block: 1787239875
+- current timestamp: 1793982695
+
+## Description
+
+SOON paused its bridges on 2026-10-31 after an exploit causing abnormal withdrawals ([announcement](https://www.kucoin.com/news/flash/soon-foundation-suspends-two-cross-chain-bridges-after-abnormal-withdrawals)).
+- SuperchainConfig: the guardian paused it on 2026-10-31; it was unpaused on 2026-11-04.
+- OptimismPortal: the guardian froze 6 withdrawals.
+- L2OutputOracle: the challenger (SoonMultisig) deleted the 2 latest outputs and raised the finalization period from 3d to 7d.
+- Guardian: moved to a 1/2 Safe whose signers include the previous guardian EOA.
+
+## Watched changes
+
+```diff
+    contract L2OutputOracle (eth:0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448) [opstack/L2OutputOracle_soon] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
++++ severity: HIGH
+      values.deletedOutputs.0:
++        {"prevNextOutputIndex":1200,"newNextOutputIndex":1198}
++++ description: Challenge period (Number of seconds until a state root is finalized).
++++ severity: HIGH
+      values.FINALIZATION_PERIOD_SECONDS:
+-        259200
++        604800
+      values.finalizationPeriodSeconds:
+-        259200
++        604800
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07) [opstack/OptimismPortal_soon] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It disallows ERC20 token deposits and L1->L2 transactions that would create a contract. Withdrawals can be frozen / blacklisted by a permissioned actor. Has a MIN_BRIDGE_VALUE set to 0.001 ETH.
++++ description: Lists all frozen withdrawals.
+      values.frozenWithdrawals.0:
++        "0xbd3b5993b37edcd561be51ab4022df88631d4650c016293ae910dafacf2d325e"
++++ description: Lists all frozen withdrawals.
+      values.frozenWithdrawals.1:
++        "0xfc6fb240754bb03e416f6fcfa17598decc2caa070f1896051c735384cc4772c5"
++++ description: Lists all frozen withdrawals.
+      values.frozenWithdrawals.2:
++        "0x0d835f3f5f388931678e8373df8208f9d1a3bfe3a0f89b3bcc71cf1a16b6a943"
++++ description: Lists all frozen withdrawals.
+      values.frozenWithdrawals.3:
++        "0x1e8c60e4d74f38af78f53c17c1870b0f20cee8d16d390ad390d2636ac61e2bfe"
++++ description: Lists all frozen withdrawals.
+      values.frozenWithdrawals.4:
++        "0xd1113c38f110b747b015cf68975db42c149af415f4d91b36065c8f198d76b777"
++++ description: Lists all frozen withdrawals.
+      values.frozenWithdrawals.5:
++        "0x8d43f16f44bdd0be1b00bfd2e81f10a1b174587cd554eb0a06e6b1073616497c"
+      values.guardian:
+-        "eth:0xcb17B5F3Cf75eb40F0Addf97B0D457922f10B911"
++        "eth:0xc5B6f119823BA48C1366235cFc941aC0E2a6B306"
+    }
+```
+
+```diff
+    EOA (eth:0xcb17B5F3Cf75eb40F0Addf97B0D457922f10B911) {
+    +++ description: None
+      receivedPermissions.0.via:
++        [{"address":"eth:0xc5B6f119823BA48C1366235cFc941aC0E2a6B306"}]
+      receivedPermissions.1.via:
++        [{"address":"eth:0xc5B6f119823BA48C1366235cFc941aC0E2a6B306"}]
+      receivedPermissions.2.via:
++        [{"address":"eth:0xc5B6f119823BA48C1366235cFc941aC0E2a6B306"}]
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0xD02631b334FfDCD5674217e57fe524c44B341DD4) [opstack/SuperchainConfigFake] {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      values.guardian:
+-        "eth:0xcb17B5F3Cf75eb40F0Addf97B0D457922f10B911"
++        "eth:0xc5B6f119823BA48C1366235cFc941aC0E2a6B306"
+    }
+```
+
+```diff
+    EOA (eth:0xd1bc675f91C9E54C8eA5Adc7B22Cae4C6AD39BB8) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".guardian","via":[{"address":"eth:0xc5B6f119823BA48C1366235cFc941aC0E2a6B306"}]},{"permission":"interact","from":"eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07","description":"freeze specific withdrawals.","role":".guardian","via":[{"address":"eth:0xc5B6f119823BA48C1366235cFc941aC0E2a6B306"}]},{"permission":"interact","from":"eth:0xD02631b334FfDCD5674217e57fe524c44B341DD4","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".guardian","via":[{"address":"eth:0xc5B6f119823BA48C1366235cFc941aC0E2a6B306"}]}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0xc5B6f119823BA48C1366235cFc941aC0E2a6B306) [GnosisSafe]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../src/projects/soon/.flat/Safe/Safe.sol          | 1797 ++++++++++++++++++++
+ .../src/projects/soon/.flat/Safe/SafeProxy.p.sol   |   28 +
+ 2 files changed, 1825 insertions(+)
+```
+
 Generated with discovered.json: 0xf33ad0354c1e6a8f7c7b4f47c0e7d4eab1379159
 
 # Diff at Fri, 16 Oct 2026 09:37:50 GMT:

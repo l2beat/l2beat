@@ -9,17 +9,21 @@ import { HOME_ICON_CLASS, HOME_TEXT } from '../../homeStyles'
 
 /**
  * The interop page's general stats: volume, transfers and routes, then the
- * top chain and token. The busiest protocols get a list of their own; when
+ * top chain, token and route. The busiest protocols get a list of their own; when
  * there are none, a "Top protocol" slot with dashes stands in for it.
  */
 export function getInteropFigures(
   stats: InteropFlowsOverview['stats'],
   chains: InteropChainWithIcon[],
 ) {
-  const { topChain, topToken } = stats
+  const { topChain, topToken, topRoute } = stats
   const topChainWithIcon = topChain
     ? chains.find((c) => c.id === topChain.chainId)
     : undefined
+  const routeChains = topRoute && {
+    src: chains.find((c) => c.id === topRoute.srcChain),
+    dst: chains.find((c) => c.id === topRoute.dstChain),
+  }
   return {
     volume: (
       <Figure label="Volume" value={formatCurrency(stats.totalVolume, 'usd')} />
@@ -62,6 +66,28 @@ export function getInteropFigures(
         }
         value={topToken && formatCurrency(topToken.volume, 'usd')}
       />
+    ),
+    topRoute: (
+      <div className="flex min-w-0 flex-col gap-1.5">
+        <span className={cn('truncate', HOME_TEXT.meta)}>Top route</span>
+        {routeChains?.src && routeChains.dst ? (
+          <span className="flex min-w-0 items-center gap-2">
+            <RouteEnd chain={routeChains.src} />
+            <span
+              aria-label="to"
+              className={cn('shrink-0 leading-none', HOME_TEXT.meta)}
+            >
+              →
+            </span>
+            <RouteEnd chain={routeChains.dst} />
+          </span>
+        ) : (
+          EM_DASH
+        )}
+        <span className={cn('truncate', HOME_TEXT.meta)}>
+          {topRoute ? formatCurrency(topRoute.volume, 'usd') : EM_DASH}
+        </span>
+      </div>
     ),
     topProtocol:
       stats.topProtocols.length === 0 ? (
@@ -113,5 +139,14 @@ function Top({
       </Who>
       <span className={cn('truncate', HOME_TEXT.meta)}>{value ?? EM_DASH}</span>
     </div>
+  )
+}
+
+function RouteEnd({ chain }: { chain: InteropChainWithIcon }) {
+  return (
+    <span className="flex min-w-0 items-center gap-2">
+      <img src={chain.iconUrl} alt="" className={HOME_ICON_CLASS} />
+      <span className={cn('truncate', HOME_TEXT.row)}>{chain.name}</span>
+    </span>
   )
 }

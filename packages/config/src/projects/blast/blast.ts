@@ -13,6 +13,7 @@ const chainId = 81457
 
 export const blast: ScalingProject = opStackL2({
   addedAt: UnixTime(1700555008), // 2023-11-21T08:23:28Z
+  archivedAt: UnixTime(1793999543), // 2026-11-06T21:12:23Z, last batcher tx — chain wound down per 2026-10-02 announcement, L1BlastBridge deposits reverting since 2026-10-29, OptimismPortal paused 2026-11-04
   discovery,
   daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 19300387 })],
   display: {
@@ -94,6 +95,7 @@ export const blast: ScalingProject = opStackL2({
     chainId,
     explorerUrl: 'https://blastscan.io',
     sinceTimestamp: UnixTime.fromDate(new Date('2024-02-24T21:23:35Z')),
+    untilTimestamp: UnixTime(1793999543), // 2026-11-06T21:12:23Z
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
