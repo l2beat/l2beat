@@ -16,7 +16,7 @@ export function Category({ category }: CategoryProps) {
 
   return (
     <div>
-      <span className="block font-semibold text-heading-18 leading-6">
+      <span className="block font-semibold text-heading-16 leading-6 md:text-heading-18">
         {category.title}
       </span>
       {category.isIncomplete && <SectionIncompleteNote />}

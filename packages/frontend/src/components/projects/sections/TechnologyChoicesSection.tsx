@@ -4,6 +4,7 @@ import { HostChainRisksWarning } from '~/components/HostChainRisksWarning'
 import { Markdown } from '~/components/markdown/Markdown'
 import type { ProjectDetailsRelatedProjectBannerProps } from '~/components/ProjectDetailsRelatedProjectBanner'
 import { ProjectDetailsRelatedProjectBanner } from '~/components/ProjectDetailsRelatedProjectBanner'
+import { cn } from '~/utils/cn'
 import { UnderReviewCallout } from '../UnderReviewCallout'
 import { SectionIncompleteNote } from './contracts/SectionIncompleteNote'
 import { ProjectSection } from './ProjectSection'
@@ -38,12 +39,12 @@ export function TechnologyChoicesSection({
     <ProjectSection {...sectionProps}>
       {hostChainWarning && <HostChainRisksWarning {...hostChainWarning} />}
       {items.map((item, i) => (
-        <div className="mt-4 md:mt-6" key={i}>
+        <div className={cn(i > 0 && 'mt-8')} key={i}>
           <Subsection
             title={
               <SubsectionHeading
                 id={item.id}
-                className="font-semibold text-heading-18 leading-6"
+                className="font-semibold text-heading-16 leading-6 md:text-heading-18"
               >
                 <a href={`#${item.id}`}>{item.name}</a>
               </SubsectionHeading>

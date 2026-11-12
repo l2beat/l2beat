@@ -89,7 +89,7 @@ export function UpdatesSection({
       {updates.length > 0 && (
         <>
           {ossification && (
-            <SubsectionHeading className="mt-8 mb-3 font-semibold text-heading-18 leading-6">
+            <SubsectionHeading className="mt-8 mb-3 font-semibold text-heading-16 leading-6 md:text-heading-18">
               Discovery updates
             </SubsectionHeading>
           )}

@@ -94,9 +94,9 @@ export function TvsBreakdownSummaryBox({
         <ChartStatsItem
           label={
             <>
-              <span className="max-md:hidden">Canonically Bridged</span>
+              <span className="max-md:hidden">Canonically bridged</span>
               <span className="max-xs:hidden md:hidden">
-                Canonically Bridged Value
+                Canonically bridged value
               </span>
               <span className="xs:hidden">Canonical</span>
             </>
@@ -113,9 +113,9 @@ export function TvsBreakdownSummaryBox({
         <ChartStatsItem
           label={
             <>
-              <span className="max-md:hidden">Natively Minted</span>
+              <span className="max-md:hidden">Natively minted</span>
               <span className="max-xs:hidden md:hidden">
-                Natively Minted Tokens
+                Natively minted tokens
               </span>
               <span className="xs:hidden">Native</span>
             </>
@@ -132,9 +132,9 @@ export function TvsBreakdownSummaryBox({
         <ChartStatsItem
           label={
             <>
-              <span className="max-md:hidden">Externally Bridged</span>
+              <span className="max-md:hidden">Externally bridged</span>
               <span className="max-xs:hidden md:hidden">
-                Externally Bridged Value
+                Externally bridged value
               </span>
               <span className="xs:hidden">External</span>
             </>

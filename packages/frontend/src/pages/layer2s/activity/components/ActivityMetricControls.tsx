@@ -19,7 +19,8 @@ export function ActivityMetricControls<T extends string>({
       name="activityMetric"
       value={value}
       onValueChange={onValueChange}
-      variant="highlighted"
+      // Project charts use the plain switch, like LOG/LIN and the range.
+      variant={projectChart ? undefined : 'highlighted'}
       className={className}
     >
       <MetricSwitchElement metric="uops" projectChart={projectChart} />

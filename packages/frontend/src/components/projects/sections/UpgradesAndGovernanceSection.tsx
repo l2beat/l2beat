@@ -50,7 +50,7 @@ export function UpgradesAndGovernanceSection({
       {governanceInfo && <GovernanceInfo governanceInfo={governanceInfo} />}
       {pastUpgrades && (
         <div className={cn((diagram || content || governanceInfo) && 'mt-8')}>
-          <h3 className="font-semibold text-heading-18 leading-6">
+          <h3 className="font-semibold text-heading-16 leading-6 md:text-heading-18">
             Past upgrades
           </h3>
           <p className="mt-2 text-paragraph-15 md:text-paragraph-16">
@@ -78,7 +78,7 @@ function GovernanceInfo({
 
   return sections.map((section) => (
     <div key={section.key} className="mt-6 md:mt-8">
-      <h3 className="mb-3 font-semibold text-heading-18 leading-6">
+      <h3 className="mb-3 font-semibold text-heading-16 leading-6 md:text-heading-18">
         {section.title}
       </h3>
       {section.key === 'upgrades' ? (

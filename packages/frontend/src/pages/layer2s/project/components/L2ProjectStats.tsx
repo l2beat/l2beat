@@ -39,7 +39,7 @@ export function ProjectL2Stats({ project, className }: Props) {
       titleAsChild
       title={
         <div>
-          <span className="lg:max-xl:hidden">Total Value Secured</span>
+          <span className="lg:max-xl:hidden">Value secured</span>
           <span className="max-lg:hidden xl:hidden">TVS</span>
         </div>
       }

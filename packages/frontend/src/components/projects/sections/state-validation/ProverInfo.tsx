@@ -23,7 +23,7 @@ export function ProverInfo({ proverInfo }: { proverInfo: ProverInfoData }) {
           <div className="flex items-center gap-2">
             <a
               href={proverInfo.href}
-              className="font-bold text-label-value-18 text-link underline"
+              className="font-semibold text-label-value-16 text-link underline"
             >
               {proverInfo.name}
             </a>
