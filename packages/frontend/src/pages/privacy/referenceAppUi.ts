@@ -16,7 +16,6 @@ export const REFERENCE_APP = {
   referenceChip: 'Reference',
   checkedChip: 'Leaks more',
   fixLabel: 'Fix',
-  deliveryLabel: 'Delivery',
   rebuildLink: 'Build recipe',
   methodologyLink: 'How we pick the reference',
   methodologyHref: `${PRIVACY_METHODOLOGY_PATH}#${PRIVACY_REFERENCE_APP_ANCHOR}`,
@@ -25,22 +24,28 @@ export const REFERENCE_APP = {
 /**
  * How the app's code reaches the user, most checkable first, and how the app
  * relates to public source. The methodology page lists both under Reference
- * app, in these words.
+ * app, in these words. The sentiment follows each order and colours the
+ * symbol: it grades what a user can check, not the app's privacy. Public
+ * source earns its colour on the source symbol alone, so a hosted app is red
+ * with or without it.
  */
 export const DELIVERY = {
   kinds: {
     pinned: {
       label: 'Pinned',
+      sentiment: 'good',
       description:
         'Every user can get the build we reviewed and check its hash or contract address against ours.',
     },
     latestOnly: {
       label: 'Latest only',
+      sentiment: 'warning',
       description:
         'The store gives every user the same build per version but offers only the latest, so the reviewed one can disappear. Only the version can be checked.',
     },
     hosted: {
       label: 'Hosted',
+      sentiment: 'bad',
       description:
         'The website serves the code at each visit and can change it at any time, even for one user alone.',
     },
@@ -48,15 +53,18 @@ export const DELIVERY = {
   sources: {
     reproducible: {
       label: 'reproducible',
+      sentiment: 'good',
       description: 'A rebuild of the public source gives the same app.',
     },
     open: {
       label: 'open',
+      sentiment: 'warning',
       description:
         'The source is public, but no rebuild confirms the app comes from it.',
     },
     closed: {
       label: 'closed',
+      sentiment: 'bad',
       description:
         "The source is closed, so our review rests on the app's observed behaviour.",
     },
@@ -68,10 +76,12 @@ export function getReferenceAppLabel(app: PrivacyReferenceApp) {
   return app.version ? `${app.name} v${app.version}` : app.name
 }
 
-/** What the summary stat adds under the app's name. */
+/**
+ * What the summary stat adds under the app's name. The delivery sits next to
+ * the name, as symbols in the HTML and as words in the markdown.
+ */
 export function getReferenceAppNotes(app: PrivacyReferenceApp) {
   return [
-    getReferenceAppDelivery(app).label.toLowerCase(),
     ...(app.checkedApps.length > 0
       ? [`most private of ${app.checkedApps.length + 1} checked`]
       : []),
@@ -106,18 +116,20 @@ export function getReferenceAppSource(app: PrivacyReferenceApp) {
 }
 
 /**
- * The delivery line: a label like "Pinned, reproducible", what it means for
- * the user, and the pin or store version to check the app against.
+ * The delivery: how the code arrives (`kind`) and how the app relates to
+ * public source (`source`), a label of both like "Pinned, reproducible", and
+ * the pin or store version to check the app against.
  */
 export function getReferenceAppDelivery(app: PrivacyReferenceApp) {
   const delivery = app.delivery
   const rebuild = delivery.type === 'hosted' ? undefined : delivery.rebuild
-  const kind = DELIVERY.kinds[delivery.type]
-  const source =
-    DELIVERY.sources[rebuild ? 'reproducible' : app.source ? 'open' : 'closed']
+  const kind = { id: delivery.type, ...DELIVERY.kinds[delivery.type] }
+  const sourceId = rebuild ? 'reproducible' : app.source ? 'open' : 'closed'
+  const source = { id: sourceId, ...DELIVERY.sources[sourceId] } as const
   return {
+    kind,
+    source,
     label: `${kind.label}, ${source.label}`,
-    description: `${kind.description} ${source.description}`,
     check: getDeliveryCheck(app),
     rebuild,
   }

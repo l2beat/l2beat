@@ -84,14 +84,19 @@ describe('referenceAppUi', () => {
       const hosted = getReferenceAppDelivery(app({ source: SOURCE }))
       expect(hosted.label).toEqual('Hosted, open')
       expect(hosted.check).toEqual(undefined)
-      expect(hosted.description).toEqual(
-        'The website serves the code at each visit and can change it at any time, even for one user alone. The source is public, but no rebuild confirms the app comes from it.',
-      )
+      expect(hosted.kind.id).toEqual('hosted')
+      expect(hosted.source).toEqual({
+        id: 'open',
+        label: 'open',
+        sentiment: 'warning',
+        description:
+          'The source is public, but no rebuild confirms the app comes from it.',
+      })
     })
   })
 
   describe(getReferenceAppNotes.name, () => {
-    it('opens with the delivery, then counts the apps checked', () => {
+    it('counts the apps checked', () => {
       const checkedApp = {
         name: 'Other',
         iconUrl: '/icons/other.png',
@@ -99,7 +104,6 @@ describe('referenceAppUi', () => {
         source: 'https://other.example',
       }
       expect(getReferenceAppNotes(app({ checkedApps: [checkedApp] }))).toEqual([
-        'hosted, closed',
         'most private of 2 checked',
       ])
     })

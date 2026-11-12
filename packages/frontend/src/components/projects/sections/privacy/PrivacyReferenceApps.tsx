@@ -1,6 +1,9 @@
+import type { Sentiment } from '@l2beat/config'
+import upperFirst from 'lodash/upperFirst'
 import { Fragment, type ReactNode } from 'react'
 import { CustomLink } from '~/components/link/CustomLink'
 import { CustomLinkIcon } from '~/icons/Outlink'
+import type { SvgIconProps } from '~/icons/SvgIcon'
 import { PRIVACY_EXPOSURE_CHIP_CLASS_NAME } from '~/pages/privacy/adversaries/privacyAdversaryUi'
 import {
   getCheckedAppSourceLabel,
@@ -11,6 +14,11 @@ import {
 } from '~/pages/privacy/referenceAppUi'
 import type { PrivacyReferenceApp } from '~/server/features/privacy/utils/getPrivacyReferenceApp'
 import { cn } from '~/utils/cn'
+import {
+  DELIVERY_KIND_ICONS,
+  DELIVERY_SOURCE_ICONS,
+  deliveryIconColor,
+} from './PrivacyDeliveryIcons'
 
 const CHIPS = {
   // Neutral, since green would read as a privacy verdict the app may not earn.
@@ -66,11 +74,19 @@ export function PrivacyReferenceApps({ app }: { app: PrivacyReferenceApp }) {
               ),
             ]}
           />
-          <p className="text-paragraph-13 text-secondary md:text-paragraph-14">
-            <span className="font-medium text-primary">
-              {REFERENCE_APP.deliveryLabel}: {delivery.label}.
-            </span>{' '}
-            {delivery.description}
+          <DeliveryLine
+            icon={DELIVERY_KIND_ICONS[delivery.kind.id]}
+            sentiment={delivery.kind.sentiment}
+            label={delivery.kind.label}
+          >
+            {delivery.kind.description}
+          </DeliveryLine>
+          <DeliveryLine
+            icon={DELIVERY_SOURCE_ICONS[delivery.source.id]}
+            sentiment={delivery.source.sentiment}
+            label={upperFirst(delivery.source.label)}
+          >
+            {delivery.source.description}
             {delivery.rebuild && (
               <>
                 {' '}
@@ -82,7 +98,7 @@ export function PrivacyReferenceApps({ app }: { app: PrivacyReferenceApp }) {
                 </CustomLink>
               </>
             )}
-          </p>
+          </DeliveryLine>
           {delivery.check && (
             <p className="text-paragraph-13 text-secondary md:text-paragraph-14">
               {delivery.check.label}
@@ -181,6 +197,30 @@ function AppRow({
         {children}
       </div>
     </li>
+  )
+}
+
+/** One half of the delivery: its symbol, its word and what it means. */
+function DeliveryLine({
+  icon: Icon,
+  sentiment,
+  label,
+  children,
+}: {
+  icon: (props: SvgIconProps) => ReactNode
+  sentiment: Sentiment
+  label: string
+  children: ReactNode
+}) {
+  return (
+    <p className="flex gap-1.5 text-paragraph-13 text-secondary md:text-paragraph-14">
+      <Icon
+        className={cn('mt-0.5 size-4 shrink-0', deliveryIconColor(sentiment))}
+      />
+      <span>
+        <span className="font-medium text-primary">{label}:</span> {children}
+      </span>
+    </p>
   )
 }
 
