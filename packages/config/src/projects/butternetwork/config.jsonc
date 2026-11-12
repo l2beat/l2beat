@@ -26,7 +26,7 @@
           "permissions": [
             {
               "type": "interact",
-              "description": "change AuthorityManager permissions and execute restricted Bridge and FeeService management operations."
+              "description": "change AuthorityManager permissions and execute restricted Bridge and FeeService management operations without delay, including the withdrawal of all assets held by the Bridge."
             }
           ]
         }

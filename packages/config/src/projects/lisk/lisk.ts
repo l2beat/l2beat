@@ -6,6 +6,7 @@ import type { ScalingProject } from '../../internalTypes'
 import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('lisk')
+const archivedAt = UnixTime(1794250800) // 2026-11-09T19:00:00Z, last successfully indexed TVS hour
 
 export const lisk: ScalingProject = opStackL2({
   ecosystemInfo: {
@@ -13,6 +14,7 @@ export const lisk: ScalingProject = opStackL2({
     isPartOfSuperchain: true,
   },
   addedAt: UnixTime(1731369600), // 2024-11-12T00:00:00Z
+  archivedAt,
   discovery,
   daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 19788851 })],
   genesisTimestamp: UnixTime(1714728793),
@@ -75,6 +77,7 @@ export const lisk: ScalingProject = opStackL2({
     chainId: 1135,
     coingeckoPlatform: 'lisk',
     sinceTimestamp: UnixTime(1714746983),
+    untilTimestamp: archivedAt,
     apis: [
       {
         type: 'rpc',

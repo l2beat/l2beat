@@ -61,7 +61,7 @@ export function PercentChange({
           textClassName,
         )}
       >
-        {isNaN(value) ? EM_DASH : formatPercent(Math.abs(value))}
+        {Number.isNaN(value) ? EM_DASH : formatPercent(Math.abs(value))}
       </span>
     </span>
   )

@@ -36,7 +36,7 @@ const SECTIONS: Record<string, Breadcrumb> = {
   layer2s: { name: 'Layer 2s', path: '/layer2s/summary' },
   interop: { name: 'Interop', path: '/interop/summary' },
   privacy: { name: 'Privacy', path: '/privacy/summary' },
-  defi: { name: 'DeFi', path: '/defi/summary' },
+  defi: { name: 'DeFi', path: '/defi/liquid-staking' },
   blobs: { name: 'Blobs', path: '/blobs' },
   'zk-catalog': { name: 'ZK Catalog', path: '/zk-catalog' },
   publications: { name: 'Publications', path: '/publications' },

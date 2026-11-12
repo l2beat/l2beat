@@ -14,7 +14,6 @@ import {
   type InteropAbstractToken,
 } from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
 import {
-  getListedSections,
   PROJECT_PAGE_FIELDS,
   type ProjectPageEntry,
   selectProjectPages,
@@ -53,12 +52,14 @@ export async function buildSearchIndex(): Promise<SearchIndex> {
       .filter((token) => token.id !== UNKNOWN_ABSTRACT_TOKEN_ID)
       .sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0))
       .map(toSearchIndexToken),
+    versionGroups: getVersionGroups(projects),
   }
 }
 
 export const SEARCH_INDEX_PROJECT_KEYS = [
   ...PROJECT_PAGE_FIELDS,
   'aliases',
+  'versions',
 ] as const
 
 type SearchIndexSourceProject = Project<
@@ -85,19 +86,17 @@ export function toSearchIndexProject(
     ]
   }
   const { project } = entry
-  const kinds = getListedSections(entry).flatMap(
-    (section): SearchIndexProjectKind[] => {
-      switch (section) {
-        case 'layer2s':
-          return project.scalingInfo ? [project.scalingInfo.layer] : []
-        // Listed as a chain only when the page shows nothing else.
-        case 'chain':
-          return []
-        default:
-          return [section]
-      }
-    },
-  )
+  const kinds = entry.listed.flatMap((section): SearchIndexProjectKind[] => {
+    switch (section) {
+      case 'layer2s':
+        return project.scalingInfo ? [project.scalingInfo.layer] : []
+      // Listed as a chain only when the page shows nothing else.
+      case 'chain':
+        return []
+      default:
+        return [section]
+    }
+  })
   if (kinds.length === 0) return undefined
 
   return [
@@ -107,12 +106,34 @@ export function toSearchIndexProject(
     manifest.getUrl(`/icons/${project.slug}.png`),
     kinds,
     project.scalingInfo?.type ?? null,
-    [project.shortName, ...(project.aliases ?? [])].filter(
-      (tag): tag is string => !!tag,
-    ),
+    // The group name, so "privacy pools" matches v2 as directly as v1 (slug
+    // "privacy-pools"), instead of hiding it as a fuzzy match.
+    [
+      project.shortName,
+      ...(project.aliases ?? []),
+      project.versions?.group.name,
+    ].filter((tag): tag is string => !!tag),
     project.interopConfig?.name ?? null,
     project.interopConfig?.shortName ?? null,
   ]
+}
+
+/** Project ids of each version group, latest first, then newest first. */
+function getVersionGroups(projects: SearchIndexSourceProject[]): string[][] {
+  const groups = new Map<string, string[]>()
+  for (const { versions } of projects) {
+    if (!versions || groups.has(versions.group.id)) continue
+    // Siblings are in display order, oldest first.
+    const { siblings } = versions
+    groups.set(versions.group.id, [
+      ...siblings.filter((s) => s.isLatest).map((s) => s.id),
+      ...siblings
+        .filter((s) => !s.isLatest)
+        .reverse()
+        .map((s) => s.id),
+    ])
+  }
+  return [...groups.values()]
 }
 
 export function toSearchIndexToken(

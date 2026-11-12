@@ -10,8 +10,15 @@ export interface SparklinePoint {
  * or empty series). The domain is the series' own range: a sparkline shows
  * the shape, not the size. The high and low hairlines are the plot's top and
  * bottom; a flat series draws near the top, where a real series would peak.
+ *
+ * The domain reaches `inset` pixels (of a plot `plotHeight` tall) past the
+ * high and the low, so a thick line stays between their hairlines instead
+ * of straddling them.
  */
-export function getSparklineScale(points: SparklinePoint[]): {
+export function getSparklineScale(
+  points: SparklinePoint[],
+  { plotHeight, inset }: { plotHeight: number; inset: number },
+): {
   domain: [number, number]
   range: { min: number; max: number } | undefined
 } {
@@ -29,5 +36,7 @@ export function getSparklineScale(points: SparklinePoint[]): {
     const padding = Math.abs(min) || 1
     return { domain: [min - padding, max + padding * 0.1], range: undefined }
   }
-  return { domain: [min, max], range: { min, max } }
+  const drawn = plotHeight - 2 * inset
+  const padding = drawn > 0 ? (inset * (max - min)) / drawn : 0
+  return { domain: [min - padding, max + padding], range: { min, max } }
 }

@@ -1,5 +1,6 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { env } from '~/env'
 import { ps } from '~/server/projects'
 import {
   getProjectBreadcrumbs,
@@ -59,6 +60,27 @@ describe(selectProjectPages.name, () => {
     expect(page?.sections).toEqual(['ethereum'])
   })
 
+  // Other DeFi projects keep their page but are in no list.
+  it('lists a DeFi project only when its category has a page of its own', () => {
+    const originalDefiEnabled = env.CLIENT_SIDE_DEFI_ENABLED
+    env.CLIENT_SIDE_DEFI_ENABLED = true
+    try {
+      const pages = selectProjectPages([
+        project('lido', { defiInfo: { category: 'Liquid Staking' } }),
+        project('aave', { defiInfo: { category: 'Lending' } }),
+      ])
+
+      expect(
+        pages.map((page) => [page.slug, page.sections, page.listed]),
+      ).toEqual([
+        ['lido', ['defi'], ['defi']],
+        ['aave', ['defi'], []],
+      ])
+    } finally {
+      env.CLIENT_SIDE_DEFI_ENABLED = originalDefiEnabled
+    }
+  })
+
   it('has no page for a project without sections', () => {
     const pages = selectProjectPages([project('celestia', {})])
 
@@ -101,6 +123,7 @@ describe(getProjectBreadcrumbs.name, () => {
         slug: 'railgun',
         kind: 'privacy',
         sections: ['privacy', 'zkCatalog'],
+        listed: ['privacy', 'zkCatalog'],
       }),
     ).toEqual(['privacy', 'zkCatalog'])
   })
@@ -111,6 +134,7 @@ describe(getProjectBreadcrumbs.name, () => {
         slug: 'avalanche',
         kind: 'interop',
         sections: ['interop', 'chain'],
+        listed: ['interop', 'chain'],
       }),
     ).toEqual(['interop'])
   })
@@ -121,6 +145,7 @@ describe(getProjectBreadcrumbs.name, () => {
         slug: 'ethereum',
         kind: 'ethereum',
         sections: ['ethereum'],
+        listed: ['ethereum'],
       }),
     ).toEqual([])
   })

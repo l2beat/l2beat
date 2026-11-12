@@ -73,7 +73,7 @@ export const STATIC_PAGE_PATHS = [
 export async function getPages(): Promise<Page[]> {
   const paths: PagePath[] = [...STATIC_PAGE_PATHS, '/layer2s/compare']
   if (env.CLIENT_SIDE_DEFI_ENABLED) {
-    paths.push('/defi/summary')
+    paths.push('/defi/liquid-staking')
   }
   if (env.CLIENT_SIDE_TOKENS_PAGE) {
     paths.push('/tokens')
@@ -101,7 +101,7 @@ async function getDynamicPages(): Promise<Page[]> {
     const { project } = page
     // Archived scaling and privacy projects keep their page but leave the
     // sitemap, unless another section still lists them.
-    const listed = page.sections.filter(
+    const listed = page.listed.filter(
       (section) =>
         !project?.archivedAt ||
         (section !== 'layer2s' && section !== 'privacy'),

@@ -128,7 +128,7 @@ function ethereumEntry(
       maxThroughputPerSecond: undefined,
       usedIn: [],
       bridgeName: 'Enshrined bridge',
-      callout: { title: 'Callout', description: 'Callout description' },
+      bridgeTooltip: 'Bridge tooltip',
       numberOfValidators: undefined,
     },
     sections,

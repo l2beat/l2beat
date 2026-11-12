@@ -1,3 +1,4 @@
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
@@ -7,6 +8,7 @@ import {
   ProjectPage,
   type ProjectPageCommonProps,
 } from '../../project/ProjectPage'
+import { LiquidStakingProjectSummary } from './components/LiquidStakingProjectSummary'
 
 interface Props extends ProjectPageCommonProps {
   entry: ProjectDefiEntry
@@ -41,6 +43,12 @@ export function DefiProjectPage({ entry, ...props }: Props) {
           data-role="nav-section"
           className="scroll-mt-[100vh] border-divider max-md:rounded-none max-md:border-b max-md:pt-0"
         >
+          {entry.liquidStaking && (
+            <>
+              <LiquidStakingProjectSummary summary={entry.liquidStaking} />
+              <HorizontalSeparator className="my-4 max-md:hidden" />
+            </>
+          )}
           <div className="max-md:hidden">
             <div className="flex flex-col gap-4 px-4 max-md:mt-2 md:px-0 lg:flex-row lg:gap-8">
               {badges && <BadgesSection badges={badges} withDialog />}

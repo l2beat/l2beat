@@ -418,6 +418,14 @@ export const optimism: ScalingProject = opStackL2({
   },
   milestones: [
     {
+      title: 'Binance exploiter funds moved',
+      url: 'https://etherscan.io/tx/0xd80476b3ec56283723804cf7bc2d96f800c81d3ebd0fea843555396ffe94f28f',
+      date: '2026-10-31T00:00:00Z',
+      description:
+        'Security Council and Foundation move 44.2M OP out of the exploiter address via a temporary upgrade.',
+      type: 'incident',
+    },
+    {
       title: 'Upgrade 17 - Jovian Hardfork and Fusaka Readiness',
       url: 'https://vote.optimism.io/proposals/3118571676657709551286937570456546163542507117143005939043790253732885172699',
       date: '2025-11-25T00:00:00Z',
