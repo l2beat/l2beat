@@ -77,7 +77,7 @@ describe(fitTicks.name, () => {
   })
 
   it('drops labels closer than two lines to the one above', () => {
-    // 25px apart, under 2 × the 15px font.
-    expect(fitTicks(y, 50, {})).toEqual([0, 1300])
+    // 20px apart, under 2 × the 12px font.
+    expect(fitTicks(y, 40, {})).toEqual([0, 1300])
   })
 })

@@ -16,6 +16,7 @@ import {
 } from '~/components/core/chart/ChartTooltip'
 import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import { tinted } from '~/components/core/chart/tint'
+import { trimZeroDecimals } from '~/components/core/chart/utils/yAxisTicks'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
   type ActivityMetric,
@@ -69,6 +70,8 @@ interface Props {
     onItemClick: (dataKey: string) => void
   }
   scale?: ChartScale
+  /** Tick labels without the unit, where the header already names it. */
+  bareYAxis?: boolean
 }
 
 export function L2RecategorizedActivityChart({
@@ -77,6 +80,7 @@ export function L2RecategorizedActivityChart({
   isPlaceholderData,
   milestones,
   scale,
+  bareYAxis,
   chartMeta,
   interactiveLegend: { dataKeys, onItemClick },
 }: Props) {
@@ -141,7 +145,12 @@ export function L2RecategorizedActivityChart({
         yAxis={{
           scale: scale === 'symlog' ? scaleSymlog : undefined,
           domain: 'autoIfSingle',
-          unit: metric === 'uops' ? ' UOPS' : ' TPS',
+          ...(bareYAxis
+            ? {
+                format: (value: number) =>
+                  trimZeroDecimals(formatActivityCount(value)),
+              }
+            : { unit: metric === 'uops' ? ' UOPS' : ' TPS' }),
         }}
         syncedUntil={data?.syncedUntil}
         renderTooltip={(row, keys) => (

@@ -28,6 +28,7 @@ import {
 } from './utils/plotSeries'
 import { getTimeTicks } from './utils/xAxisTicks'
 import {
+  AXIS_LABEL_FONT_SIZE,
   fitTicks,
   getYAxisTicks,
   type YAxisTicks,
@@ -151,15 +152,17 @@ interface Props<T, K extends string> {
 }
 
 const SERIES_STROKE_WIDTH = 1.75
+const AXIS_LABEL_FONT_WEIGHT = 500
 const FADED_STROKE_OPACITY = 0.2
 const ISOLATED_DOT_RADIUS = 3
 const Y_SCALE = 'y'
 const RIGHT_SCALE = 'right-y'
 
 const chartClassNames = cn(
-  // The axis options have no per-axis label color, so the x labels are
-  // matched by their scene keys, which are not a documented API.
-  '[&_text[data-ts-key^="x-tick-label"]]:fill-secondary',
+  // The y labels sit inside the plot: a halo in the card's colour keeps the
+  // series from running through them. Matched by their scene keys, which are
+  // not a documented API.
+  '[&_text[data-ts-key*="y-tick-label"]]:[paint-order:stroke] [&_text[data-ts-key*="y-tick-label"]]:[stroke-linejoin:round] [&_text[data-ts-key*="y-tick-label"]]:[stroke-width:4px] [&_text[data-ts-key*="y-tick-label"]]:[stroke:var(--surface-primary)]',
   '[&_svg]:outline-none',
   // Only `highlight` changes a line's opacity.
   '[&_path]:transition-[stroke-opacity] [&_path]:duration-200 motion-reduce:[&_path]:transition-none',
@@ -531,7 +534,11 @@ export function TimeSeriesChart<T, K extends string>({
                   size: 0,
                   format: xTicks.format,
                 },
-                tickLabels: { fontSize: 10, fontWeight: 500, opacity: 1 },
+                tickLabels: {
+                  fontSize: AXIS_LABEL_FONT_SIZE,
+                  fontWeight: AXIS_LABEL_FONT_WEIGHT,
+                  opacity: 1,
+                },
               },
             },
             [Y_SCALE]: yScaleOptions(
@@ -555,8 +562,8 @@ export function TimeSeriesChart<T, K extends string>({
                 }
               : {}),
           },
-          // The theme's muted color paints all tick labels.
-          theme: { muted: 'var(--chart-tick-label)' },
+          // The theme's muted color paints all tick labels, on both axes.
+          theme: { muted: 'var(--secondary)' },
           margin: chartMargin,
           // Not clipped, so lines at the domain's ends keep their full width;
           // every domain contains its data.
@@ -689,8 +696,8 @@ function yScaleOptions(
         anchor: side === 'left' ? ('start' as const) : ('end' as const),
         dx: side === 'left' ? 8 : -8,
         dy: axis.dy ?? -10,
-        fontSize: axis.fontSize ?? 15,
-        fontWeight: axis.fontWeight,
+        fontSize: axis.fontSize ?? AXIS_LABEL_FONT_SIZE,
+        fontWeight: axis.fontWeight ?? AXIS_LABEL_FONT_WEIGHT,
         opacity: 1,
         thin: false,
       },
