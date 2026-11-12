@@ -48,7 +48,9 @@ export async function getPrivacyProjectMarkdown(
   cache: InMemoryCache,
 ): Promise<string | undefined> {
   const data = await getCachedPrivacyProjectPage(manifest, slug, cache)
-  return data && renderPrivacyProjectMarkdown(data.props.entry)
+  return (
+    data && renderPrivacyProjectMarkdown(data.props.entry, data.props.zkCatalog)
+  )
 }
 
 function getCachedPrivacyProjectPage(

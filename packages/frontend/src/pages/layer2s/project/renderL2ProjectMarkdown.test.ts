@@ -40,6 +40,21 @@ describe(renderL2ProjectMarkdown.name, () => {
     )
   })
 
+  it('adds what another section of the project gives the summary', () => {
+    const summary = getSection(
+      renderL2ProjectMarkdown(ENTRY, {
+        facts: [{ label: 'Tracked on', value: 'Ethereum' }],
+        risk: { name: 'Privacy', value: 'Link privacy.' },
+      }),
+      'Summary',
+    )
+
+    expect(summary).toInclude(
+      '- Tracked on: Ethereum',
+      '- Proposer failure: Self propose (sentiment: good)\n- Privacy: Link privacy.',
+    )
+  })
+
   it('gives TVS and activity headline numbers with their change', () => {
     const summary = getSection(renderL2ProjectMarkdown(ENTRY), 'Summary')
 
