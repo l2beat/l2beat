@@ -48,7 +48,7 @@ export function getPrivacyMethodologySections() {
         `**${VERDICT.warning}** (yellow): protection is limited, private use can be denied, or keeping the field hidden takes substantial effort beyond the app's options. A workaround must preserve ordinary use of the protocol.`,
         `**${VERDICT.bad}** (red): the field is exposed with no reasonable workaround, or no usable, verifiable app supports private use. A custodian who can require disclosure to release funds also earns red.`,
       ]),
-      'Substantial effort is what a non-developer cannot be expected to do, such as a second operating system, a build from source or a change to system files. Installing an app, like Tor Browser or a listed route, is not. A local Ethereum node is the only chain node we expect a careful user to run, and needing it together with a route is substantial.',
+      'Substantial effort is what a non-developer cannot be expected to do, such as a second operating system, a source build or a system-file change. Installing an app or verifying a release by hash is not. Reviewing the release is our work. A local Ethereum node is the only chain node we expect a careful user to run, and needing it together with a route is substantial.',
       "A closed app's delivery risk falls to the privileged insider. When the review reads and pins the code a closed web app or extension serves, the other cells rate that code like open code. A native closed app caps the network observer at yellow.",
       'When privacy depends on hiding among other users, the size of that group (anonymity set) affects the adversary who sees the later action. Until real use builds that group, ratings rest on what the design allows.',
     ]),
@@ -113,7 +113,6 @@ export function getPrivacyMethodologySections() {
       // A raw heading, since markdown headings render without an id to link.
       `<h2 id="${PRIVACY_REFERENCE_APP_ANCHOR}">Reference app</h2>`,
       'Each project names a reference app, the most private released app we found for the protocol. The ratings assume this app. Other apps we checked appear below it, each with one sourced finding that shows it leaks more.',
-      'An app takes the spot when it leaks less to the five adversaries. Only released builds count.',
       `App teams can propose their app in the ${link('Privacy adversaries framework', externalLinks.articles.privacyAdversariesFramework)} thread on the ETHBEAT forum.`,
     ]),
 
