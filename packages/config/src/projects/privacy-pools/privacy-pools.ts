@@ -191,6 +191,7 @@ export const privacyPools: BaseProject = {
       name: 'v1.privacypools.com',
       url: 'https://v1.privacypools.com',
       since: '2026-09-16',
+      delivery: { type: 'hosted' },
       source: {
         repository: 'https://github.com/0xbow-io/privacy-pools-website',
         commit: '7df411128f7a18a61a77f7a0371bf0b857969e2a',

@@ -4,6 +4,7 @@ import { CustomLinkIcon } from '~/icons/Outlink'
 import { PRIVACY_EXPOSURE_CHIP_CLASS_NAME } from '~/pages/privacy/adversaries/privacyAdversaryUi'
 import {
   getCheckedAppSourceLabel,
+  getReferenceAppDelivery,
   getReferenceAppSince,
   getReferenceAppSource,
   REFERENCE_APP,
@@ -27,6 +28,7 @@ const CHIPS = {
 /** The reference app first, then the other apps checked against it. */
 export function PrivacyReferenceApps({ app }: { app: PrivacyReferenceApp }) {
   const source = getReferenceAppSource(app)
+  const delivery = getReferenceAppDelivery(app)
 
   return (
     <div className="mt-4 flex flex-col gap-2">
@@ -64,6 +66,36 @@ export function PrivacyReferenceApps({ app }: { app: PrivacyReferenceApp }) {
               ),
             ]}
           />
+          <p className="text-paragraph-13 text-secondary md:text-paragraph-14">
+            <span className="font-medium text-primary">
+              {REFERENCE_APP.deliveryLabel}: {delivery.label}.
+            </span>{' '}
+            {delivery.description}
+            {delivery.rebuild && (
+              <>
+                {' '}
+                <CustomLink
+                  href={delivery.rebuild}
+                  className="whitespace-nowrap"
+                >
+                  {REFERENCE_APP.rebuildLink}
+                </CustomLink>
+              </>
+            )}
+          </p>
+          {delivery.check && (
+            <p className="text-paragraph-13 text-secondary md:text-paragraph-14">
+              {delivery.check.label}
+              {delivery.check.value && (
+                <>
+                  :{' '}
+                  <span className="break-all font-mono text-2xs md:text-xs">
+                    {delivery.check.value}
+                  </span>
+                </>
+              )}
+            </p>
+          )}
         </AppRow>
         {app.checkedApps.map((checkedApp) => (
           <AppRow

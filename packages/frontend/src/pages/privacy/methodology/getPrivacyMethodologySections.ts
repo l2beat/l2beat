@@ -3,6 +3,7 @@ import {
   PRIVACY_ADVERSARY_ORDER,
 } from '@l2beat/config/build/common/privacyAdversaries'
 import lowerFirst from 'lodash/lowerFirst'
+import upperFirst from 'lodash/upperFirst'
 import { externalLinks } from '~/consts/externalLinks'
 import { ANONYMITY_SET_TOOLTIPS } from '~/server/features/privacy/anonymity-set/anonymitySetTooltips'
 import { ANONYMITY_SET_WINDOW_DAYS } from '~/server/features/privacy/anonymity-set/calculateAnonymitySets'
@@ -15,6 +16,7 @@ import {
 import { TRUSTED_SETUP_FRAMEWORK_LINK } from '~/server/markdown/zkSectionBodies'
 import { PRIVACY_ADVERSARY_VERDICT as VERDICT } from '../adversaries/privacyAdversaryUi'
 import { PRIVACY_COLUMN_DESCRIPTIONS as COLUMNS } from '../privacySummaryColumns'
+import { DELIVERY } from '../referenceAppUi'
 import {
   PRIVACY_ADVICE_ANCHOR,
   PRIVACY_ADVICE_TITLE,
@@ -113,6 +115,18 @@ export function getPrivacyMethodologySections() {
       // A raw heading, since markdown headings render without an id to link.
       `<h2 id="${PRIVACY_REFERENCE_APP_ANCHOR}">Reference app</h2>`,
       'Each project names a reference app, the most private released app we found for the protocol. The ratings assume this app. Other apps we checked appear below it, each with one sourced finding that shows it leaks more.',
+      'Each reference app shows its delivery: how its code reaches the user and what the user can check, most checkable first.',
+      bulletList(
+        Object.values(DELIVERY.kinds).map(
+          (kind) => `**${kind.label}**: ${kind.description}`,
+        ),
+      ),
+      'A second word says whether the app comes from public source.',
+      bulletList(
+        Object.values(DELIVERY.sources).map(
+          (source) => `**${upperFirst(source.label)}**: ${source.description}`,
+        ),
+      ),
       `App teams can propose their app in the ${link('Privacy adversaries framework', externalLinks.articles.privacyAdversariesFramework)} thread on the ETHBEAT forum.`,
     ]),
 
