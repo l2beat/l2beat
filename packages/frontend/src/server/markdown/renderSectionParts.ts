@@ -64,6 +64,14 @@ export function formatUtcDateTime(timestamp: UnixTime) {
   return `${UnixTime.toYYYYMMDDHHMM(timestamp).replace('T', ' ')} UTC`
 }
 
+/** A daily value covers its whole UTC day, the others are as of a moment. */
+export function formatUtcDateOrDay(timestamp: number, coversDay: boolean) {
+  const start = UnixTime(timestamp)
+  return coversDay
+    ? `over ${formatUtcDateTime(start)} to ${formatUtcDateTime(UnixTime(start + UnixTime.DAY))}`
+    : `on ${formatUtcDateTime(start)}`
+}
+
 /** The stats the HTML shows above the "View past upgrades" dialog. */
 export function formatPastUpgradeStats({
   count,

@@ -25,6 +25,10 @@ const privacyPoolsV2ProcessorInterface = new utils.Interface([
   'event Executed(address indexed inputToken, address indexed outputToken, uint256 inputAmount, address feeRecipient, uint256 feeAmount)',
 ])
 
+const tacitPayInterface = new utils.Interface([
+  'event Transact(bytes32 indexed nf0, bytes32 indexed nf1, bytes32 outLeaf0, bytes32 outLeaf1, uint256 firstIndex, bytes32 newRoot, address recipient, int256 extAmount, address relayer, uint256 fee, bytes memo0, bytes memo1)',
+])
+
 const tornadoCashInterface = new utils.Interface([
   'event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee)',
 ])
@@ -47,6 +51,9 @@ describe(extractPrivacyRelayerActivity.name, () => {
     expect(
       getPrivacyRelayerExtractor({ extractor: 'tornadoCashWithdrawal' }).event,
     ).toEqual(tornadoCashInterface.getEventTopic('Withdrawal'))
+    expect(
+      getPrivacyRelayerExtractor({ extractor: 'tacitPayWithdrawal' }).event,
+    ).toEqual(tacitPayInterface.getEventTopic('Transact'))
   })
 
   it('derives the zk.money withdrawal topic hardcoded in the project config', () => {
@@ -166,6 +173,36 @@ describe(extractPrivacyRelayerActivity.name, () => {
     expect(await extractPrivacyPoolsV2Relayer(SENDER, [])).toEqual(undefined)
   })
 
+  it('extracts the Tacit Pay relayer a withdrawal pays', async () => {
+    const result = await extractPrivacyRelayerActivity(
+      config('tacitPayWithdrawal'),
+      tacitPayTransact(-1_000n, RELAYER, 10n),
+      context(),
+    )
+
+    expect(result).toEqual({ relayerAddress: RELAYER })
+  })
+
+  it('ignores a Tacit Pay withdrawal sent from the user wallet without a fee', async () => {
+    const result = await extractPrivacyRelayerActivity(
+      config('tacitPayWithdrawal'),
+      tacitPayTransact(-1_000n, EthereumAddress.ZERO, 0n),
+      context(),
+    )
+
+    expect(result).toEqual(undefined)
+  })
+
+  it('ignores a relayed Tacit Pay transfer, which is no exit', async () => {
+    const result = await extractPrivacyRelayerActivity(
+      config('tacitPayWithdrawal'),
+      tacitPayTransact(0n, RELAYER, 10n),
+      context(),
+    )
+
+    expect(result).toEqual(undefined)
+  })
+
   it('extracts Tornado Cash relayer', async () => {
     const log = encodeLog(tornadoCashInterface, 'Withdrawal', [
       RECIPIENT,
@@ -225,6 +262,7 @@ function config(
   extractor:
     | 'privacyPoolsWithdrawalRelayed'
     | 'privacyPoolsV2Withdrawal'
+    | 'tacitPayWithdrawal'
     | 'tornadoCashWithdrawal',
 ): PrivacyRelayerActivityIndexerConfig {
   return {
@@ -318,4 +356,25 @@ function processorLog(eventName: string, args: unknown[]): ReceiptLog {
     args,
   )
   return { address: PROCESSOR.toString(), ...encoded, logIndex: 0 }
+}
+
+function tacitPayTransact(
+  extAmount: bigint,
+  relayer: EthereumAddress,
+  fee: bigint,
+): Log {
+  return encodeLog(tacitPayInterface, 'Transact', [
+    `0x${'11'.repeat(32)}`,
+    `0x${'00'.repeat(32)}`,
+    `0x${'22'.repeat(32)}`,
+    `0x${'33'.repeat(32)}`,
+    10n,
+    `0x${'44'.repeat(32)}`,
+    RECIPIENT,
+    extAmount,
+    relayer,
+    fee,
+    '0x',
+    '0x',
+  ])
 }

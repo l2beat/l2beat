@@ -6,7 +6,7 @@ import {
   WEEK_DAYS,
 } from '~/server/features/home/homeSeries'
 import { cn } from '~/utils/cn'
-import { formatRange, formatSnapshotTimestamp } from '~/utils/dates'
+import { formatRange } from '~/utils/dates'
 import type { SparklinePoint } from './sparklineScale'
 
 /**
@@ -29,28 +29,22 @@ export function SparklineTooltip({
   side: 'above' | 'below'
 }) {
   const label = point.timestamp
-  const weekly = series.kind === 'weekly'
-  const partLabels = series.kind === 'daily' ? series.partLabels : undefined
   const format = (value: unknown) =>
     typeof value === 'number' ? formatValue(value) : 'No data'
   return (
     <PointTooltip anchorX={anchorX} side={side}>
       <div className="whitespace-nowrap text-label-value-13 text-secondary">
-        {weekly
-          ? formatRange(label, label + WEEK_DAYS * UnixTime.DAY)
-          : formatSnapshotTimestamp(label, 'day')}
+        {formatRange(label, label + WEEK_DAYS * UnixTime.DAY)}
       </div>
       <div className="flex items-baseline gap-1.5 whitespace-nowrap">
         <span className="font-semibold text-label-value-15 tabular-nums">
           {format(point.value)}
         </span>
-        {weekly && (
-          <span className="text-label-value-13 text-secondary">
-            daily average
-          </span>
-        )}
+        <span className="text-label-value-13 text-secondary">
+          daily average
+        </span>
       </div>
-      {partLabels?.map((partLabel, index) => (
+      {series.partLabels?.map((partLabel, index) => (
         <div
           key={partLabel}
           className="flex justify-between gap-3 whitespace-nowrap text-label-value-13"

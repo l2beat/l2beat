@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xedc88ab19eee546f97478dc068f63c01eddb9bd0
+
+# Diff at Tue, 10 Nov 2026 14:25:57 GMT:
+
+- id: 33038a8c
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@28ea16426fac1900c2fffd1cec3ecc6b84981c76 block: 1793874312
+- current timestamp: 1794319619
+
+## Description
+
+The batch with the v31 L2 upgrade transaction (519628) was executed, which clears the pending upgrade fields. Batch execution resumed after the upgrade.
+
+## Watched changes
+
+```diff
+    contract Diamond (eth:0x32400084C286CF3E17e7B677ea9583e60a000324) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      values.getL2SystemContractsUpgradeBatchNumber:
+-        519628
++        0
+      values.getL2SystemContractsUpgradeBlockNumber:
+-        519628
++        0
+      values.getL2SystemContractsUpgradeTxHash:
+-        "0xc9bc86933136c8f253f62d311671d8200009eec661d00f6543ea63040cb1d939"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x06e1ecdb38633c63129c06c7afec01a664f0625c
 
 # Diff at Thu, 05 Nov 2026 15:35:30 GMT:

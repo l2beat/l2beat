@@ -124,7 +124,7 @@ export function formatAverageDuration(duration: AverageDuration) {
   }
 }
 
-/** Protocols L2BEAT has no page for are named without a link. */
+/** Protocols ETHBEAT has no page for are named without a link. */
 export function linkInteropProtocol(protocol: {
   name: string
   slug: string | undefined

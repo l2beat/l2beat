@@ -43,7 +43,7 @@ export const HOME_UNDERLINE_CLASS =
  * underlines and the card's drawing answers the hover instead. Less padded
  * than the cards under it, so the banners stay a strip above the data.
  */
-export const HOME_BANNER_CLASS = 'group relative block overflow-hidden md:py-5'
+export const HOME_BANNER_CLASS = 'group relative block overflow-hidden md:py-4'
 export const HOME_BANNER_TITLE_CLASS =
   'underline-offset-4 group-hover:underline'
 
@@ -51,7 +51,7 @@ export const HOME_BANNER_TITLE_CLASS =
  * Every KPI chart on the page, so the Layer 2s, Privacy and Ethereum pairs
  * match; shorter where the KPIs stack as rows and each chart is wide.
  */
-export const HOME_CHART_HEIGHT_CLASS = 'h-36 kpi-rows:h-24'
+export const HOME_CHART_HEIGHT_CLASS = 'h-28 kpi-rows:h-24'
 
 /** Every list and ranking row on the page, so they all match. */
 export const HOME_ROW_CLASS = 'h-10'
