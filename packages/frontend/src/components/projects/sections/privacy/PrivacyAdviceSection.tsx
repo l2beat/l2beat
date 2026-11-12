@@ -10,6 +10,7 @@ import { getPrivacyAdversaryBlockId } from '~/pages/privacy/adversaries/privacyA
 import {
   ADVICE,
   getAdviceStepId,
+  getStepAdversaries,
   getUncoveredAdversaries,
 } from '~/pages/privacy/adviceUi'
 import { PrivacySentimentDot } from '~/pages/privacy/PrivacySentimentDot'
@@ -70,20 +71,13 @@ export function PrivacyAdviceSection({
               </span>
               <div className="order-last flex flex-wrap items-center gap-x-3 gap-y-1 text-paragraph-13 md:order-none">
                 <span className="text-secondary">{ADVICE.againstLabel}:</span>
-                {adversaries
-                  .filter((adversary) => step.against.includes(adversary.id))
-                  .map((adversary) => (
-                    <CustomLink
-                      key={adversary.id}
-                      href={`#${getPrivacyAdversaryBlockId(adversary.id)}`}
-                      className="inline-flex items-center gap-1"
-                    >
-                      <PrivacySentimentDot
-                        sentiment={sentiments[adversary.id]}
-                      />
-                      {adversary.label.toLowerCase()}
-                    </CustomLink>
-                  ))}
+                {getStepAdversaries(step, adversaries).map((adversary) => (
+                  <AdversaryLink
+                    key={adversary.id}
+                    adversary={adversary}
+                    sentiment={sentiments[adversary.id]}
+                  />
+                ))}
               </div>
               <div className="wrap-anywhere text-paragraph-15 md:col-span-2 md:text-paragraph-16">
                 <Markdown inline>{step.text}</Markdown>
@@ -99,17 +93,33 @@ export function PrivacyAdviceSection({
         <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 border-divider border-t pt-4 text-paragraph-15 md:text-paragraph-16">
           <span className="font-medium">{ADVICE.uncoveredLabel}:</span>
           {uncovered.map((adversary) => (
-            <CustomLink
+            <AdversaryLink
               key={adversary.id}
-              href={`#${getPrivacyAdversaryBlockId(adversary.id)}`}
-              className="inline-flex items-center gap-1"
-            >
-              <PrivacySentimentDot sentiment={sentiments[adversary.id]} />
-              {adversary.label.toLowerCase()}
-            </CustomLink>
+              adversary={adversary}
+              sentiment={sentiments[adversary.id]}
+            />
           ))}
         </div>
       )}
     </ProjectSection>
+  )
+}
+
+/** Jumps to the adversary's block, coloured like its rosette slice. */
+function AdversaryLink({
+  adversary,
+  sentiment,
+}: {
+  adversary: PrivacyAdversary
+  sentiment: PrivacyAdversarySentiment
+}) {
+  return (
+    <CustomLink
+      href={`#${getPrivacyAdversaryBlockId(adversary.id)}`}
+      className="inline-flex items-center gap-1"
+    >
+      <PrivacySentimentDot sentiment={sentiment} />
+      {adversary.label.toLowerCase()}
+    </CustomLink>
   )
 }
