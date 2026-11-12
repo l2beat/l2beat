@@ -14,9 +14,12 @@ import {
 } from '~/server/markdown/markdown'
 import {
   getProjectStatusWarnings,
+  type ProjectFact,
   renderProjectMarkdown,
 } from '~/server/markdown/renderProjectMarkdown'
 import { getProjectPath } from '~/utils/project/getProjectPath'
+import type { ZkCatalogSummary } from '../../zk-catalog/v2/project/components/header/ZkCatalogProjectSummary'
+import { getProvingStackFacts } from '../../zk-catalog/v2/project/renderZkCatalogProjectMarkdown'
 import { PRIVACY_ASSESSMENT } from '../privacyAssessment'
 import { PRIVACY_WALKAWAY_TEST_TOOLTIPS } from '../privacyWalkawayTest'
 import {
@@ -32,6 +35,8 @@ import {
 /** The markdown alternate of the privacy project page, from the entry the HTML page renders. */
 export function renderPrivacyProjectMarkdown(
   entry: ProjectPrivacyEntry,
+  /** For a privacy protocol that is also in the ZK Catalog. */
+  zkCatalog?: { creator?: string; header: ZkCatalogSummary },
 ): string {
   return renderProjectMarkdown({
     name: entry.name,
@@ -47,7 +52,10 @@ export function renderPrivacyProjectMarkdown(
           entry.warnings.yellow,
         ]),
       ],
-      facts: getFacts(entry),
+      facts: [
+        ...getFacts(entry),
+        ...(zkCatalog ? getZkCatalogFacts(entry, zkCatalog) : []),
+      ],
       risks: getRiskProfile(entry),
       description: entry.description,
     },
@@ -100,6 +108,34 @@ function getFacts(entry: ProjectPrivacyEntry) {
       label: RELAYER_STAT_COPY[relayerStat.kind].title,
       value: formatCount(relayerStat.value),
     },
+    ...getProtocolFacts(entry),
+  ])
+}
+
+/**
+ * What the summary of a scaling project that is also a privacy protocol adds
+ * to the scaling one: its row of privacy stats and its privacy rosette.
+ */
+export function getPrivacySummaryMarkdown(
+  entry: Pick<
+    ProjectPrivacyEntry,
+    'trackedOn' | 'scalingProjects' | 'attributes' | 'referenceApp' | 'sections'
+  >,
+): { facts: ProjectFact[]; risk: RosetteValue } {
+  return {
+    facts: getProtocolFacts(entry),
+    risk: privacyRisk(getPrivacyAdversariesSummary(entry.sections)),
+  }
+}
+
+/** What the protocol is, apart from its numbers. */
+function getProtocolFacts(
+  entry: Pick<
+    ProjectPrivacyEntry,
+    'trackedOn' | 'scalingProjects' | 'attributes' | 'referenceApp'
+  >,
+) {
+  return compact([
     entry.trackedOn.length > 0 && {
       label: 'Tracked on',
       value: entry.trackedOn.map((chain) => chain.name).join(', '),
@@ -116,6 +152,22 @@ function getFacts(entry: ProjectPrivacyEntry) {
       label: REFERENCE_APP.title,
       value: formatReferenceApp(entry.referenceApp),
     },
+  ])
+}
+
+/** What the HTML page takes from the ZK Catalog: the creator under the name, the proving stack in the summary. */
+function getZkCatalogFacts(
+  entry: ProjectPrivacyEntry,
+  zkCatalog: { creator?: string; header: ZkCatalogSummary },
+) {
+  return compact([
+    // "Railgun by Railgun" says nothing
+    zkCatalog.creator !== undefined &&
+      zkCatalog.creator !== entry.name && {
+        label: 'Creator',
+        value: zkCatalog.creator,
+      },
+    ...getProvingStackFacts(zkCatalog.header),
   ])
 }
 
