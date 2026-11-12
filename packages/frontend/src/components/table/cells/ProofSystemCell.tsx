@@ -44,9 +44,7 @@ export function ProofSystemCell({
       }
     >
       <TwoRowCell>
-        <TwoRowCell.First
-          className={compact ? 'md:text-label-value-15' : undefined}
-        >
+        <TwoRowCell.First>
           {hideType && proofSystem?.name ? (
             <TypeInfo stacks={stacks} compact={compact}>
               {proofSystem.name}

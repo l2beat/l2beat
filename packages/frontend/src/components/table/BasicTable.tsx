@@ -17,6 +17,7 @@ import {
   getPersistedTableAttributes,
   getPrePaintHideScript,
 } from './persistedColumnVisibility'
+import { QuietTableContext } from './QuietTableContext'
 import {
   getHeaderAriaSort,
   ValueAndChangeSortingHeader,
@@ -31,7 +32,6 @@ import {
   TableRow,
 } from './Table'
 import { TableEmptyState } from './TableEmptyState'
-import { CompactTableContext } from './TableLink'
 import { stickyTableColumnRowProps } from './useStickyTableHeader'
 import { applyBasicTableRowSorting } from './utils/applyBasicTableRowSorting'
 import {
@@ -87,9 +87,13 @@ export interface BasicTableProps<T extends BasicTableRow> {
    */
   stickyHeader?: boolean
   /**
-   * The home page's density: 40px rows under quiet sentence-case headers, and
-   * full-height square hover backgrounds on the cells' links. For single-line
-   * cells only.
+   * The home page's look: quiet sentence-case headers over a 1px rule, and
+   * the cells' look from `QuietTableContext`. Rows keep their height.
+   */
+  quiet?: boolean
+  /**
+   * Quiet, at the home page's density too: 40px rows. For single-line cells
+   * only (see the cells' `compact` props).
    */
   compact?: boolean
 }
@@ -123,6 +127,7 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
     props.rowSortingFn,
   )
 
+  const quiet = props.quiet || props.compact
   const persistedColumns = props.table.options.meta?.persistedColumns
   const header = (
     <>
@@ -133,9 +138,10 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
         )}
         <BasicTableActualHeaderRow
           actualHeader={actualHeader}
+          quiet={quiet}
           compact={props.compact}
         />
-        <BasicTableHeaderDividerRow compact={props.compact} />
+        <BasicTableHeaderDividerRow quiet={quiet} />
       </TableHeader>
     </>
   )
@@ -156,11 +162,11 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
         {...getPersistedTableAttributes(props.table)}
       >
         <TableBody>
-          <CompactTableContext value={!!props.compact}>
+          <QuietTableContext value={!!quiet}>
             {rows.map((row) => (
               <BasicTableRow row={row} key={row.id} {...props} />
             ))}
-          </CompactTableContext>
+          </QuietTableContext>
           {rows.length === 0 &&
             props.isLoading &&
             range(props.skeletonCount ?? 10).map((i) => {
@@ -227,9 +233,11 @@ function BasicTableGroupedHeaderRow<T>({
 
 function BasicTableActualHeaderRow<T>({
   actualHeader,
+  quiet,
   compact,
 }: {
   actualHeader: HeaderGroup<T>
+  quiet: boolean | undefined
   compact: boolean | undefined
 }) {
   return (
@@ -246,11 +254,11 @@ function BasicTableActualHeaderRow<T>({
                   groupParams,
                   isPinned: header.column.getIsPinned() !== false,
                   headClassName: header.column.columnDef.meta?.headClassName,
-                  compact,
+                  quiet,
                 })}
                 align={header.column.columnDef.meta?.align}
                 tooltip={header.column.columnDef.meta?.tooltip}
-                compact={compact}
+                quiet={quiet}
                 aria-sort={
                   header.isPlaceholder ? undefined : getHeaderAriaSort(header)
                 }
@@ -276,10 +284,10 @@ function BasicTableActualHeaderRow<T>({
 }
 
 export function BasicTableHeaderDividerRow({
-  compact,
+  quiet,
 }: {
   /** A 1px rule, like the rules between the rows. */
-  compact?: boolean
+  quiet?: boolean
 }) {
   return (
     <TableHeaderRow>
@@ -287,7 +295,7 @@ export function BasicTableHeaderDividerRow({
         colSpan={100}
         className={cn(
           'mx-0.5 h-0.5 rounded-full bg-divider',
-          compact && 'h-px rounded-none',
+          quiet && 'h-px rounded-none',
         )}
       />
     </TableHeaderRow>

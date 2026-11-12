@@ -9,33 +9,18 @@ interface CommonProjectColumnsEntry {
 
 export interface CommonProjectColumnsOptions {
   ignoreUnderReviewIcon?: boolean
-  /**
-   * For a compact table: names on one line (see `ProjectNameCell`), ranks as
-   * small print.
-   */
+  /** For a compact table: names on one line (see `ProjectNameCell`). */
   compact?: boolean
 }
 
 export function getCommonProjectColumns<T extends CommonProjectColumnsEntry>(
   columnHelper: ColumnHelper<T>,
   getHref: (row: T) => string | undefined,
-  opts?: CommonProjectColumnsOptions,
 ) {
   return [
     columnHelper.accessor((_, index) => index + 1, {
       header: '#',
-      cell: (ctx) => (
-        <IndexCell
-          // As the home rankings' rank: small print.
-          className={
-            opts?.compact
-              ? 'font-normal text-label-value-13 text-secondary dark:text-secondary'
-              : undefined
-          }
-        >
-          {ctx.row.index + 1}
-        </IndexCell>
-      ),
+      cell: (ctx) => <IndexCell>{ctx.row.index + 1}</IndexCell>,
       sortDescFirst: false,
       meta: {
         headClassName: 'w-0',
