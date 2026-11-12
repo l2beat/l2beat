@@ -1,5 +1,6 @@
 import {
   createTrackedTxId,
+  getPrivacyBucketAddress,
   type TrackedTxConfigEntry,
   type TrackedTxFunctionCallConfig,
   type TrackedTxTransferConfig,
@@ -16,6 +17,7 @@ import chalk from 'chalk'
 import { expect } from 'earl'
 import { existsSync } from 'fs'
 import uniq from 'lodash/uniq'
+import { getEscrowBalances } from '../common/tvsEscrowBalances'
 import { asArray } from '../templates/utils'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from '../test/constants'
 import { isRiskCorrectlyFormatted } from '../test/helpers'
@@ -416,6 +418,19 @@ describe('getProjects', () => {
     const privacyProjects = projects.flatMap((p) =>
       p.privacyInfo ? [{ project: p, privacyInfo: p.privacyInfo }] : [],
     )
+    // The project's own assessment, then the ones of its other chains.
+    const privacyAssessments = privacyProjects.flatMap(
+      ({ project, privacyInfo }) => [
+        { project, name: project.id as string, assessment: privacyInfo },
+        ...Object.entries(privacyInfo.chainAssessments ?? {}).map(
+          ([chain, assessment]) => ({
+            project,
+            name: `${project.id} on ${chain}`,
+            assessment,
+          }),
+        ),
+      ],
+    )
 
     it('every project has valid trackedOn chains', () => {
       const problems: string[] = []
@@ -430,6 +445,50 @@ describe('getProjects', () => {
         for (const chain of trackedOn) {
           if (!chainNames.has(chain)) {
             problems.push(`${project.id}: no chainConfig named ${chain}`)
+          }
+        }
+      }
+      expect(problems).toEqual([])
+    })
+
+    // A page shows the buckets on its chain, so a bucket elsewhere would show nowhere.
+    it('every bucket is on a tracked chain', () => {
+      const problems: string[] = []
+      for (const { project, privacyInfo } of privacyProjects) {
+        for (const token of privacyInfo.tokens ?? []) {
+          for (const bucket of token.buckets) {
+            const { chain } = getPrivacyBucketAddress(bucket.address)
+            if (!privacyInfo.trackedOn.includes(chain)) {
+              problems.push(`${project.id} ${bucket.id}: ${chain}`)
+            }
+          }
+        }
+      }
+      expect(problems).toEqual([])
+    })
+
+    // Privacy pages give each chain and pool its share of the value, so every
+    // token has to be the escrows it is read from, valued by them alone.
+    it('every TVS token is one escrow balance or a sum of them', () => {
+      const problems: string[] = []
+      for (const { project } of privacyProjects) {
+        for (const token of project.tvsConfig ?? []) {
+          if (!getEscrowBalances(token) || token.valueForProject) {
+            problems.push(`${project.id}: ${token.id}`)
+          }
+        }
+      }
+      expect(problems).toEqual([])
+    })
+
+    // The project's own assessment is the first chain's, so that chain can't have another.
+    it('every chain assessment is of a tracked chain other than the first', () => {
+      const problems: string[] = []
+      for (const { project, privacyInfo } of privacyProjects) {
+        const others = privacyInfo.trackedOn.slice(1)
+        for (const chain of Object.keys(privacyInfo.chainAssessments ?? {})) {
+          if (!others.includes(chain)) {
+            problems.push(`${project.id}: ${chain}`)
           }
         }
       }
@@ -467,7 +526,7 @@ describe('getProjects', () => {
       for (const { project, privacyInfo } of privacyProjects) {
         const trackedBucketIds = new Set<string>()
         const seriesIds = new Set<string>()
-        let configuredBuckets = 0
+        const configuredBuckets = new Map<string, number>()
 
         for (const token of privacyInfo.tokens ?? []) {
           for (const bucket of token.buckets) {
@@ -482,7 +541,11 @@ describe('getProjects', () => {
             }
             trackedBucketIds.add(bucket.id)
 
-            configuredBuckets++
+            const { chain } = getPrivacyBucketAddress(bucket.address)
+            configuredBuckets.set(
+              chain,
+              (configuredBuckets.get(chain) ?? 0) + 1,
+            )
             for (const amount of amounts) {
               if (!/^[1-9]\d*$/.test(amount)) {
                 problems.push(`${project.id} ${bucket.id}: invalid ${amount}`)
@@ -498,15 +561,45 @@ describe('getProjects', () => {
 
         // Partially attributed sets are tracked through buckets. Every other
         // state replaces them: key registrations are tracked through a
-        // registry, and the remaining states are not tracked at all.
-        const anonymitySet = privacyInfo.anonymitySet
-        if (anonymitySet?.type === 'partially-attributed') {
-          if (configuredBuckets === 0) {
-            problems.push(`${project.id}: ${anonymitySet.type} without buckets`)
+        // registry, and the remaining states are not tracked at all. A chain
+        // with its own assessment answers for its own buckets, the project
+        // for the rest.
+        const chainAssessments = Object.entries(
+          privacyInfo.chainAssessments ?? {},
+        )
+        const sum = (counts: number[]) => counts.reduce((a, b) => a + b, 0)
+        const onOwnChains = sum(
+          chainAssessments.map(([chain]) => configuredBuckets.get(chain) ?? 0),
+        )
+        const states = [
+          {
+            name: project.id as string,
+            state: privacyInfo.anonymitySet,
+            buckets: sum([...configuredBuckets.values()]) - onOwnChains,
+          },
+          ...chainAssessments.map(([chain, assessment]) => ({
+            name: `${project.id} on ${chain}`,
+            state: assessment.anonymitySet,
+            buckets: configuredBuckets.get(chain) ?? 0,
+          })),
+        ]
+        for (const { name, state, buckets } of states) {
+          if (state?.type === 'partially-attributed') {
+            if (buckets === 0) {
+              problems.push(`${name}: ${state.type} without buckets`)
+            }
+          } else if (state !== undefined && buckets !== 0) {
+            problems.push(`${name}: ${state.type} with buckets`)
           }
-        } else if (anonymitySet !== undefined && configuredBuckets !== 0) {
-          problems.push(`${project.id}: ${anonymitySet.type} with buckets`)
         }
+        // The backend indexes the registry of the project's first chain only.
+        for (const [chain, assessment] of chainAssessments) {
+          if (assessment.anonymitySet?.type === 'key-registrations') {
+            problems.push(`${project.id} on ${chain}: key registrations`)
+          }
+        }
+
+        const anonymitySet = privacyInfo.anonymitySet
 
         if (anonymitySet?.type === 'key-registrations') {
           const contracts = Object.values(project.contracts?.addresses ?? {})
@@ -525,8 +618,8 @@ describe('getProjects', () => {
 
     it('every adversary cell is consistent with the baseline and contracts', () => {
       const problems: string[] = []
-      for (const { project, privacyInfo } of privacyProjects) {
-        const adversaries = privacyInfo.adversaries
+      for (const { project, name, assessment } of privacyAssessments) {
+        const adversaries = assessment.adversaries
         if (!adversaries) continue
         const baseline = adversaries.cells.publicObserver
         const contractNames = new Set(
@@ -540,14 +633,14 @@ describe('getProjects', () => {
             (baseline.interior !== undefined)
           ) {
             problems.push(
-              `${project.id} ${adversaryId}: interior map differs from baseline`,
+              `${name} ${adversaryId}: interior map differs from baseline`,
             )
           }
           for (const source of cell.sources ?? []) {
             if (!('contract' in source)) continue
             if (!contractNames.has(source.contract)) {
               problems.push(
-                `${project.id} ${adversaryId}: unknown contract ${source.contract}`,
+                `${name} ${adversaryId}: unknown contract ${source.contract}`,
               )
             }
           }
@@ -580,59 +673,59 @@ describe('getProjects', () => {
         'verifiers',
       ]
       const problems: string[] = []
-      for (const { project, privacyInfo } of privacyProjects) {
-        const summary = privacyInfo.riskSummary
+      for (const { project, name, assessment } of privacyAssessments) {
+        const summary = assessment.riskSummary
         if (!summary) continue
 
         const found = [...summary.matchAll(/^## (.+)$/gm)].map((m) => m[1])
         const order = found.map((heading) => headings.indexOf(heading))
         if (order.some((i, k) => i === -1 || (k > 0 && i <= order[k - 1]))) {
-          problems.push(`${project.id}: headings ${found.join(' > ')}`)
+          problems.push(`${name}: headings ${found.join(' > ')}`)
         }
         if (/^## .*\n[ \t]*\n/m.test(summary)) {
-          problems.push(`${project.id}: blank line after a heading`)
+          problems.push(`${name}: blank line after a heading`)
         }
 
         const pointed = new Set<string>()
         for (const [, item] of summary.matchAll(/^\d+\. (.+)$/gm)) {
           if (!item.endsWith('.')) {
-            problems.push(`${project.id}: no final dot: ${item}`)
+            problems.push(`${name}: no final dot: ${item}`)
           }
           const words = item
             .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
             .split(/\s+/).length
           if (words > 25) {
-            problems.push(`${project.id}: ${words} words: ${item}`)
+            problems.push(`${name}: ${words} words: ${item}`)
           }
           const see = item.match(/\(see (.+)\)\.$/)?.[1]
           if (!see) continue
           const link = see.match(/^\[[^\]]+\]\(#([a-z-]+)\)$/)
           if (link) {
             if (!sections.includes(link[1])) {
-              problems.push(`${project.id}: link to missing section ${see}`)
+              problems.push(`${name}: link to missing section ${see}`)
             }
             continue
           }
-          for (const name of see.split(' and ')) {
-            if (!Object.values(cellNames).includes(name)) {
-              problems.push(`${project.id}: unknown pointer ${name}`)
+          for (const pointer of see.split(' and ')) {
+            if (!Object.values(cellNames).includes(pointer)) {
+              problems.push(`${name}: unknown pointer ${pointer}`)
             }
-            pointed.add(name)
+            pointed.add(pointer)
           }
         }
 
         for (const [id, cell] of Object.entries(
-          privacyInfo.adversaries?.cells ?? {},
+          assessment.adversaries?.cells ?? {},
         )) {
           if (cell.sentiment !== 'good' && !pointed.has(cellNames[id])) {
-            problems.push(`${project.id}: no item points at ${cellNames[id]}`)
+            problems.push(`${name}: no item points at ${cellNames[id]}`)
           }
         }
         if (
           (project.zkCatalogInfo?.trustedSetups?.length ?? 0) > 0 &&
           !summary.includes('](#trusted-setups)')
         ) {
-          problems.push(`${project.id}: trusted setup not linked`)
+          problems.push(`${name}: trusted setup not linked`)
         }
       }
       expect(problems).toEqual([])
@@ -641,11 +734,11 @@ describe('getProjects', () => {
     // The tooltip shows the short description alone, so a second sentence would read as cut off.
     it('every adversary short description is one sentence', () => {
       const problems: string[] = []
-      for (const { project, privacyInfo } of privacyProjects) {
-        const cells = Object.entries(privacyInfo.adversaries?.cells ?? {})
+      for (const { name, assessment } of privacyAssessments) {
+        const cells = Object.entries(assessment.adversaries?.cells ?? {})
         for (const [adversaryId, cell] of cells) {
           if (/[.!?]\s/.test(cell.exposureShort)) {
-            problems.push(`${project.id} ${adversaryId}`)
+            problems.push(`${name} ${adversaryId}`)
           }
         }
       }

@@ -4,11 +4,14 @@ import { HighlightablePrimaryCard } from '~/components/primary-card/Highlightabl
 import { CompareProjectsLink } from '~/pages/layer2s/compare/components/CompareProjectsLink'
 import { cn } from '~/utils/cn'
 import { UnderReviewCallout } from '../UnderReviewCallout'
+import { type SectionChain, SectionChainBadge } from './SectionChainBadge'
 import type { ProjectSectionId } from './types'
 
 export interface ExtendedProjectSectionProps {
   title: string
   headerAccessory?: ReactNode
+  /** Named in the header, unless the section sets its own `headerAccessory`. */
+  chain?: SectionChain
   /**
    * Link to the compare page seeded with this project and the section's
    * metric. Rendered next to the title on desktop and below the content on
@@ -27,6 +30,9 @@ export interface ExtendedProjectSectionProps {
 
 export function ProjectSection(props: ExtendedProjectSectionProps) {
   const Component = props.as ?? 'section'
+  const headerAccessory =
+    props.headerAccessory ??
+    (props.chain && <SectionChainBadge chain={props.chain} />)
   const content = (
     <ParentHeadingLevelProvider value={sectionHeadingLevel(props.nested)}>
       {props.children}
@@ -66,10 +72,10 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
                 <CompareProjectsLink variant="section" href={props.compareUrl}>
                   Compare
                 </CompareProjectsLink>
-                {props.headerAccessory}
+                {headerAccessory}
               </div>
             ) : (
-              props.headerAccessory
+              headerAccessory
             )
           }
           className="mb-4"

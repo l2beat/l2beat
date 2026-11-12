@@ -14,6 +14,7 @@ import type { StateValidationProgramHashData } from '../program-hashes/ProgramHa
 import { ProgramHashesTable } from '../program-hashes/table/ProgramHashesTable'
 import type { TechnologyRisk } from '../RiskList'
 import { RiskList } from '../RiskList'
+import type { SectionChain } from '../SectionChainBadge'
 import { Subsection, SubsectionHeading } from '../Subsection'
 import { DEPLOYMENT_RISKS_INTRO } from '../sectionCopy'
 import type { ProjectSectionId } from '../types'
@@ -24,6 +25,7 @@ export interface ContractsSectionProps {
   title: string
   sectionOrder: string
   nested?: boolean
+  chain?: SectionChain
   contracts: Record<string, TechnologyContract[]>
   escrows: TechnologyContract[]
   risks: TechnologyRisk[]
@@ -63,6 +65,7 @@ export function ContractsSection(props: ContractsSectionProps) {
       nested={props.nested}
       sectionOrder={props.sectionOrder}
       isUnderReview={props.isUnderReview}
+      chain={props.chain}
     >
       {props.discoUi && (
         <DiscoUiBanner

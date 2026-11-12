@@ -43,15 +43,16 @@ export type PrivacyAnonymitySetSummary =
   | { status: 'syncing' }
   | { status: 'unavailable' }
 
+/**
+ * Keyed by the project passed in, not by its id: the summary table passes a
+ * project once per tracked chain, each with that chain's buckets.
+ */
 export async function getPrivacyAnonymitySetSummaries(
   projects: PrivacyProject[],
   currentDay: UnixTime,
-): Promise<Map<string, PrivacyAnonymitySetSummary>> {
+): Promise<Map<PrivacyProject, PrivacyAnonymitySetSummary>> {
   const seriesByProject = new Map(
-    projects.map((project) => [
-      project.id,
-      getPrivacyAnonymitySetSeries(project),
-    ]),
+    projects.map((project) => [project, getPrivacyAnonymitySetSeries(project)]),
   )
   if (env.MOCK) return getMockSummaries(projects, seriesByProject)
 
@@ -72,14 +73,14 @@ export async function getPrivacyAnonymitySetSummaries(
 
   return new Map(
     projects.map((project) => [
-      project.id,
+      project,
       getPrivacyAnonymitySetSummary(
         project,
-        seriesByProject.get(project.id) ?? [],
+        seriesByProject.get(project) ?? [],
         configurations,
         rows,
         currentDay,
-        coverageByProject.get(project.id),
+        coverageByProject.get(project),
       ),
     ]),
   )
@@ -128,12 +129,12 @@ async function getCoverageByProject(
   db: Database,
   projects: PrivacyProject[],
   currentDay: UnixTime,
-): Promise<Map<string, PrivacyAnonymitySetCoverage | undefined>> {
+): Promise<Map<PrivacyProject, PrivacyAnonymitySetCoverage | undefined>> {
   const entries = await Promise.all(
     projects.map(
       async (project) =>
         [
-          project.id,
+          project,
           await getPrivacyAnonymitySetCoverage(db, project, currentDay),
         ] as const,
     ),
@@ -161,24 +162,24 @@ function pickLargestSeries(
 
 function getMockSummaries(
   projects: PrivacyProject[],
-  seriesByProject: Map<string, PrivacyAnonymitySetSeries[]>,
-): Map<string, PrivacyAnonymitySetSummary> {
+  seriesByProject: Map<PrivacyProject, PrivacyAnonymitySetSeries[]>,
+): Map<PrivacyProject, PrivacyAnonymitySetSummary> {
   return new Map(
-    projects.map((project): [string, PrivacyAnonymitySetSummary] => {
+    projects.map((project): [PrivacyProject, PrivacyAnonymitySetSummary] => {
       const state = project.privacyInfo.anonymitySet
       if (state?.type === 'not-applicable') {
         return [
-          project.id,
+          project,
           { status: 'not-applicable', description: state.description },
         ]
       }
       if (state?.type === 'too-small') {
-        return [project.id, { status: 'too-small' }]
+        return [project, { status: 'too-small' }]
       }
-      const series = seriesByProject.get(project.id)?.[0]
+      const series = seriesByProject.get(project)?.[0]
       if (series) {
         return [
-          project.id,
+          project,
           {
             status: 'available',
             value: Math.round(Math.random() * 1_000),
@@ -190,7 +191,7 @@ function getMockSummaries(
           },
         ]
       }
-      return [project.id, { status: 'unavailable' }]
+      return [project, { status: 'unavailable' }]
     }),
   )
 }

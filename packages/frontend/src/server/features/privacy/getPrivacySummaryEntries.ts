@@ -4,8 +4,9 @@ import type {
   PrivacySummaryValue,
   ProjectRedWarning,
 } from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
+import { UnixTime, unique } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
+import type { SectionChain } from '~/components/projects/sections/SectionChainBadge'
 import { sortTableValues } from '~/components/table/sorting/sortTableValues'
 import {
   getRowBackgroundColor,
@@ -14,13 +15,26 @@ import {
 import { env } from '~/env'
 import { getPrivacyAdversariesTableValue } from '~/pages/privacy/adversaries/privacyAdversaryUi'
 import { getDb } from '~/server/database'
+import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
+import { PROJECT_PAGE_METADATA_FIELDS } from '~/utils/project/getProjectUrl'
 import { get7dTvsBreakdown } from '../layer2s/tvs/get7dTvsBreakdown'
 import {
   getPrivacyAnonymitySetSummaries,
   type PrivacyAnonymitySetSummary,
 } from './anonymity-set/getPrivacyAnonymitySetSummaries'
+import {
+  getPrivacyChainValues,
+  hasPrivacyValueLocked,
+} from './getPrivacyValueLockedChart'
 import type { PrivacyAdversariesSummary, PrivacyProject } from './types'
+import { getPrivacyFlowBuckets } from './utils/getPrivacyFlowSync'
+import {
+  getPrivacyProjectPages,
+  getPrivacyProjectPath,
+  type PrivacyProjectPage,
+} from './utils/getPrivacyProjectPages'
+import { getPrivacyTrackedChains } from './utils/getPrivacyTrackedChains'
 import {
   getPrivacyTrustedSetup,
   type PrivacyTrustedSetup,
@@ -28,8 +42,11 @@ import {
 import { toPrivacyAdversariesSummary } from './utils/toPrivacyAdversariesSummary'
 
 export interface PrivacySummaryEntry {
+  /** The project's id. A project with a page per chain has an entry per chain. */
   id: string
   slug: string
+  /** The chain the entry is about, for a project with a page per chain. */
+  chain?: SectionChain
   name: string
   shortName?: string
   icon: string
@@ -68,13 +85,53 @@ type PrivacySummaryBaseEntry = Omit<
   keyof PrivacySummaryTrackingMetrics
 >
 
+/**
+ * @param entryPer `page` gives a project with a page per chain an entry per
+ *   chain. `project` gives it one, with the figures of all its chains.
+ */
 export async function getPrivacySummaryEntries(
   projects: PrivacyProject[],
+  entryPer: 'page' | 'project' = 'page',
 ): Promise<PrivacySummaryEntry[]> {
   const currentDay = UnixTime.toStartOf(UnixTime.now(), 'day')
+  const pages =
+    entryPer === 'page'
+      ? projects.flatMap(getPrivacyProjectPages)
+      : projects.map(
+          (project): PrivacyProjectPage<PrivacyProject> => ({
+            project,
+            path: getPrivacyProjectPath(project.slug),
+          }),
+        )
+  const pageProjects = pages.map((page) => page.project)
+  const chains = await getPageChains(pages)
 
   if (env.MOCK) {
-    return getMockPrivacySummaryEntries(projects, currentDay)
+    const anonymitySets = await getPrivacyAnonymitySetSummaries(
+      pageProjects,
+      currentDay,
+    )
+    return pages
+      .map((page): PrivacySummaryEntry => {
+        const base = getPrivacySummaryBaseEntry(page, chains)
+        return {
+          ...base,
+          ...getTrackingMetrics({
+            poolsTracked: getPoolsTracked(page.project),
+            totalValueLockedUsd: base.hasTvl
+              ? Math.random() * 1_000_000_000
+              : undefined,
+            totalValueLockedChange7d: base.hasTvl
+              ? Math.random() * 0.4 - 0.2
+              : undefined,
+            totalValueDeposited30dUsd: Math.random() * 100_000_000,
+            anonymitySet: anonymitySets.get(page.project) ?? {
+              status: 'unavailable',
+            },
+          }),
+        }
+      })
+      .sort(comparePrivacySummaryEntries)
   }
 
   const db = getDb()
@@ -85,7 +142,7 @@ export async function getPrivacySummaryEntries(
 
   const last30dCutoff = currentDay - 30 * UnixTime.DAY
 
-  const [daily30d, tvl, anonymitySets] = await Promise.all([
+  const [daily30d, tvl, anonymitySets, chainValues] = await Promise.all([
     db.privacyFlowEvent.getBucketedByProjectIds(
       projectIds,
       last30dCutoff,
@@ -93,28 +150,38 @@ export async function getPrivacySummaryEntries(
       'day',
     ),
     get7dTvsBreakdown({ type: 'projects', projectIds: tvlProjectIds }),
-    getPrivacyAnonymitySetSummaries(projects, currentDay),
+    getPrivacyAnonymitySetSummaries(pageProjects, currentDay),
+    getChainValuesByProject(pages),
   ])
 
   const dailyByProject = groupBy(daily30d, (d) => d.projectId)
 
-  const entries = projects.map((project): PrivacySummaryEntry => {
+  const entries = pages.map((page): PrivacySummaryEntry => {
+    const { project, chain } = page
     const projectId = project.id
-    const projectDaily = dailyByProject[projectId] ?? []
-    const projectTvl = tvl.projects[projectId]
-    const totalValueDeposited30dUsd = projectDaily.reduce(
-      (sum, row) => sum + row.depositValueUsd,
-      0,
+    // A chain's page counts the deposits into its own buckets.
+    const bucketIds = new Set(
+      getPrivacyFlowBuckets([project]).map((bucket) => bucket.id),
     )
+    const totalValueDeposited30dUsd = (dailyByProject[projectId] ?? [])
+      .filter((row) => chain === undefined || bucketIds.has(row.bucketId))
+      .reduce((sum, row) => sum + row.depositValueUsd, 0)
+    const value =
+      chain === undefined
+        ? {
+            value: tvl.projects[projectId]?.breakdown.total,
+            change7d: tvl.projects[projectId]?.change.total,
+          }
+        : chainValues.get(projectId)?.get(chain)
 
     return {
-      ...getPrivacySummaryBaseEntry(project),
+      ...getPrivacySummaryBaseEntry(page, chains),
       ...getTrackingMetrics({
         poolsTracked: getPoolsTracked(project),
-        totalValueLockedUsd: projectTvl?.breakdown.total,
-        totalValueLockedChange7d: projectTvl?.change.total,
+        totalValueLockedUsd: value?.value,
+        totalValueLockedChange7d: value?.change7d,
         totalValueDeposited30dUsd,
-        anonymitySet: anonymitySets.get(projectId) ?? {
+        anonymitySet: anonymitySets.get(project) ?? {
           status: 'unavailable',
         },
       }),
@@ -124,51 +191,61 @@ export async function getPrivacySummaryEntries(
   return entries.sort(comparePrivacySummaryEntries)
 }
 
-async function getMockPrivacySummaryEntries(
-  projects: PrivacyProject[],
-  currentDay: UnixTime,
-): Promise<PrivacySummaryEntry[]> {
-  const anonymitySets = await getPrivacyAnonymitySetSummaries(
-    projects,
-    currentDay,
+/** Name and icon of every chain that has a page of its own. */
+async function getPageChains(
+  pages: PrivacyProjectPage<PrivacyProject>[],
+): Promise<Map<string, SectionChain>> {
+  const names = unique(pages.flatMap((page) => page.chain ?? []))
+  if (names.length === 0) return new Map()
+  const chainProjects = await ps.getProjects({
+    select: ['chainConfig'],
+    optional: [...PROJECT_PAGE_METADATA_FIELDS],
+  })
+  return new Map(
+    getPrivacyTrackedChains(names, chainProjects).map(
+      ({ id, name, iconUrl }) => [id, { id, name, iconUrl }],
+    ),
   )
+}
 
-  return projects
-    .map((project): PrivacySummaryEntry => {
-      return {
-        ...getPrivacySummaryBaseEntry(project),
-        ...getTrackingMetrics({
-          poolsTracked: getPoolsTracked(project),
-          totalValueLockedUsd:
-            project.tvsConfig === undefined
-              ? undefined
-              : Math.random() * 1_000_000_000,
-          totalValueLockedChange7d:
-            project.tvsConfig === undefined
-              ? undefined
-              : Math.random() * 0.4 - 0.2,
-          totalValueDeposited30dUsd: Math.random() * 100_000_000,
-          anonymitySet: anonymitySets.get(project.id) ?? {
-            status: 'unavailable',
-          },
-        }),
-      }
-    })
-    .sort(comparePrivacySummaryEntries)
+/** The value locked on each chain of the projects that have a page per chain. */
+async function getChainValuesByProject(
+  pages: PrivacyProjectPage<PrivacyProject>[],
+) {
+  const chainsByProject = groupBy(
+    pages.filter((page) => page.chain !== undefined),
+    (page) => page.project.id,
+  )
+  const entries = await Promise.all(
+    Object.entries(chainsByProject).map(
+      async ([projectId, projectPages]) =>
+        [
+          projectId,
+          await getPrivacyChainValues(
+            projectId,
+            projectPages[0]?.project.tvsConfig ?? [],
+            projectPages.flatMap((page) => page.chain ?? []),
+          ),
+        ] as const,
+    ),
+  )
+  return new Map(entries)
 }
 
 function getPrivacySummaryBaseEntry(
-  project: PrivacyProject,
+  { project, chain, path }: PrivacyProjectPage<PrivacyProject>,
+  chains: Map<string, SectionChain>,
 ): PrivacySummaryBaseEntry {
   return {
     id: project.id,
     slug: project.slug,
+    chain: chain === undefined ? undefined : chains.get(chain),
     name: project.name,
     shortName: project.shortName,
     icon: manifest.getUrl(`/icons/${project.slug}.png`),
-    href: `/privacy/projects/${project.slug}`,
+    href: path,
     description: project.display.description,
-    hasTvl: project.tvsConfig !== undefined,
+    hasTvl: hasPrivacyValueLocked(project.tvsConfig, chain),
     isUnderReview: !!project.statuses.reviewStatus,
     redWarning: project.statuses.redWarning,
     backgroundColor: getRowBackgroundColor({

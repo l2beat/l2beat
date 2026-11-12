@@ -61,18 +61,23 @@ export class PrivacyRelayerActivityRepository extends BaseRepository {
     return rows.length
   }
 
+  /** Counts the project's relayers on every chain, or only on `chain`. */
   async getActiveRelayerCount(
     projectId: string,
     fromInclusive: UnixTime,
     toExclusive: UnixTime,
+    chain?: string,
   ): Promise<number> {
-    const row = await this.db
+    let query = this.db
       .selectFrom('PrivacyRelayerActivity')
       .select(sql<number>`COUNT(DISTINCT "relayerAddress")`.as('relayerCount'))
       .where('projectId', '=', projectId)
       .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
       .where('timestamp', '<', UnixTime.toDate(toExclusive))
-      .executeTakeFirstOrThrow()
+    if (chain !== undefined) {
+      query = query.where('chain', '=', chain)
+    }
+    const row = await query.executeTakeFirstOrThrow()
 
     return Number(row.relayerCount)
   }

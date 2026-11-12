@@ -29,6 +29,7 @@ import type { PrivacyAdversariesSectionProps } from './privacy/PrivacyAdversarie
 import type { PrivacyAnonymitySetSectionProps } from './privacy/PrivacyAnonymitySetSection'
 import type { PrivacyAssetsBreakdownSectionProps } from './privacy/PrivacyAssetsBreakdownSection'
 import type { PrivacyFlowsSectionProps } from './privacy/PrivacyFlowsSection'
+import type { PrivacyValueLockedSectionProps } from './privacy/PrivacyValueLockedSection'
 import type { ProgramHashesSectionProps } from './program-hashes/ProgramHashesSection'
 import type { RiskAnalysisSectionProps } from './RiskAnalysisSection'
 import type { RiskSummarySectionProps } from './RiskSummarySection'
@@ -291,6 +292,11 @@ interface ProjectDetailsTvsValueSection {
   props: ProjectDetailsProps<TvsValueSectionProps>
 }
 
+interface ProjectDetailsPrivacyValueLockedSection {
+  type: 'PrivacyValueLockedSection'
+  props: ProjectDetailsProps<PrivacyValueLockedSectionProps>
+}
+
 interface ProjectDetailsDefiTvlSection {
   type: 'DefiTvlSection'
   props: ProjectDetailsProps<DefiTvlSectionProps>
@@ -373,6 +379,7 @@ export type ProjectDetailsSection = {
   | ProjectDetailsUpgradesAndGovernanceSection
   | ProjectDetailsUpdatesSection
   | ProjectDetailsTvsValueSection
+  | ProjectDetailsPrivacyValueLockedSection
   | ProjectDetailsDefiTvlSection
   | ProjectDetailsDefiTokensSection
   | ProjectDetailsLiquidStakingSection

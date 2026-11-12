@@ -16,10 +16,13 @@ import {
   getPrivacyFlowSync,
   type PrivacyFlowSync,
 } from './utils/getPrivacyFlowSync'
+import { getPrivacyProjectOnChain } from './utils/getPrivacyProjectPages'
 
 export const PrivacyFlowsChartParams = v.object({
   projectIds: v.array(v.string()),
   range: ChartRange,
+  /** Limits the flows to the buckets on this chain. */
+  chain: v.string().optional(),
 })
 
 export type PrivacyFlowsChartParams = v.infer<typeof PrivacyFlowsChartParams>
@@ -50,10 +53,15 @@ export async function getPrivacyFlowsChart(
   }
 
   const db = getDb()
-  const projects = await ps.getProjects({
+  const tracked = await ps.getProjects({
     ids: params.projectIds.map(ProjectId),
     select: ['privacyInfo'],
   })
+  const { chain } = params
+  const projects =
+    chain === undefined
+      ? tracked
+      : tracked.map((project) => getPrivacyProjectOnChain(project, chain))
   const buckets = getPrivacyFlowBuckets(projects)
   const records = await db.syncMetadata.getByFeatureAndIds(
     'privacy',
@@ -67,7 +75,7 @@ export async function getPrivacyFlowsChart(
   )
   const step = UnixTime.periodToSeconds(resolution)
 
-  const [rows, firstTimestamp] = await Promise.all([
+  const [projectRows, firstTimestamp] = await Promise.all([
     db.privacyFlowEvent.getBucketedByProjectIds(
       params.projectIds,
       from,
@@ -76,6 +84,11 @@ export async function getPrivacyFlowsChart(
     ),
     db.privacyFlowEvent.getFirstTimestampByProjectIds(params.projectIds),
   ])
+  const bucketIds = new Set(buckets.map((bucket) => bucket.id))
+  const rows =
+    chain === undefined
+      ? projectRows
+      : projectRows.filter((row) => bucketIds.has(row.bucketId))
 
   if (rows.length === 0) {
     if (from === null || to - step < from) {
@@ -91,7 +104,12 @@ export async function getPrivacyFlowsChart(
 
   const start = getChartStartTimestamp({
     rangeStart: from,
-    firstProjectTimestamp: firstTimestamp,
+    // A chain's chart starts with its own buckets, not with the project's
+    // first event on any chain.
+    firstProjectTimestamp:
+      chain === undefined
+        ? firstTimestamp
+        : Math.min(...buckets.map((bucket) => bucket.sinceTimestamp)),
     dataStart: Math.min(...rows.map((row) => row.timestamp)),
     resolution,
   })

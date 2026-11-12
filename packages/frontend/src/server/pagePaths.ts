@@ -9,6 +9,7 @@ import {
 } from '~/pages/garden/paths'
 import { getChainProjects } from './features/chains/getChainProjects'
 import { isListedDefiProject } from './features/defi/isListedDefiProject'
+import { getPrivacyProjectPages } from './features/privacy/utils/getPrivacyProjectPages'
 import { ps } from './projects'
 
 type PagePath = `/${string}`
@@ -98,7 +99,7 @@ async function getDynamicPages(): Promise<Page[]> {
       optional: ['tvsConfig'],
     }),
     ps.getProjects({ select: ['zkCatalogInfo'] }),
-    ps.getProjects({ where: ['privacyInfo'], whereNot: ['archivedAt'] }),
+    ps.getProjects({ select: ['privacyInfo'], whereNot: ['archivedAt'] }),
     env.CLIENT_SIDE_DEFI_ENABLED
       ? ps
           .getProjects({ select: ['defiInfo'] })
@@ -117,7 +118,9 @@ async function getDynamicPages(): Promise<Page[]> {
       .filter((project) => project.tvsConfig)
       .map(projectPage('/layer2s/projects', '/tvs-breakdown')),
     ...zkCatalogProjects.map(projectPage('/zk-catalog')),
-    ...privacyProjects.map(projectPage('/privacy/projects')),
+    ...privacyProjects.flatMap((project) =>
+      getPrivacyProjectPages(project).map(({ path }) => ({ path })),
+    ),
     ...defiProjects.map(projectPage('/defi/projects')),
     ...interopProtocols.map(projectPage('/interop/protocols')),
     ...chainProjects.map(projectPage('/projects')),

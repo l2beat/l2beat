@@ -1166,13 +1166,53 @@ export type ProjectExternalDependency =
 
 // #region privacy data
 
-export interface ProjectPrivacyInfo {
+/**
+ * What we rate about one deployment of a privacy protocol. A protocol
+ * deployed on several chains can be rated differently on each: other admins,
+ * another exit window, an anonymity set that changes a verdict.
+ */
+export interface ProjectPrivacyAssessment {
+  exitWindow: PrivacyExitWindow
+  /** Per-adversary privacy assessment. Author with definePrivacyAdversaries. */
+  adversaries: ProjectPrivacyAdversaries
+  riskSummary?: string
+  upgradesAndGovernance?: ProjectUpgradesAndGovernance
+  /**
+   * How the anonymity set on this chain is known, when it is not counted
+   * from the chain's buckets. Each chain's set is its own: a note on one
+   * chain can't hide among deposits on another.
+   */
+  anonymitySet?:
+    | {
+        type: 'not-applicable'
+        description: string
+      }
+    /**
+     * Depositors are traced through intermediate deposit addresses. Deposits
+     * that cannot be traced are left out, so the frontend reports coverage.
+     */
+    | { type: 'partially-attributed' }
+    /** Too few users to matter, so exact tracking is not set up. */
+    | { type: 'too-small' }
+    | ProjectPrivacyKeyRegistrationsAnonymitySet
+}
+
+/** Its own assessment rates the deployment on the first `trackedOn` chain. */
+export interface ProjectPrivacyInfo extends ProjectPrivacyAssessment {
   /**
    * Chains on which L2BEAT tracks this protocol's deployment, mostly through
    * project discovery. Each chain needs a project with a matching chainConfig
-   * for its icon.
+   * for its icon. A project with buckets or assessments on several chains is
+   * shown one chain at a time, with a tab per chain in this order, so list
+   * the main deployment first.
    */
   trackedOn: string[]
+  /**
+   * Assessments of the other tracked chains, by chain name. Each replaces the
+   * project's own as a whole, so a field left out is unset for that chain. A
+   * chain left out shares the project's own assessment.
+   */
+  chainAssessments?: Record<string, ProjectPrivacyAssessment>
   /**
    * Scaling projects the protocol runs on besides its trackedOn chains:
    * zk.money is tracked on Ethereum but runs on Aztec.
@@ -1198,36 +1238,18 @@ export interface ProjectPrivacyInfo {
   referenceApp?: ProjectPrivacyReferenceApp
   /** The deployed mechanism. Decides the promised field, not the grade. */
   category: PrivacyCategory
-  anonymitySet?:
-    | {
-        type: 'not-applicable'
-        description: string
-      }
-    /**
-     * Depositors are traced through intermediate deposit addresses. Deposits
-     * that cannot be traced are left out, so the frontend reports coverage.
-     */
-    | { type: 'partially-attributed' }
-    /** Too few users to matter, so exact tracking is not set up. */
-    | { type: 'too-small' }
-    | ProjectPrivacyKeyRegistrationsAnonymitySet
   /**
    * Privacy-specific detailed description shown on the privacy project page.
    * Falls back to display.detailedDescription when not set.
    */
   detailedDescription?: string
-  exitWindow: PrivacyExitWindow
   reproducibility: PrivacySummaryValue
   attributes?: PrivacyAttribute[]
-  /** Per-adversary privacy assessment. Author with definePrivacyAdversaries. */
-  adversaries: ProjectPrivacyAdversaries
   /**
    * Privacy-specific quantum-resistance flag. Distinct in meaning from
    * ProjectZkCatalogInfo.quantumResistant
    */
   quantumResistant?: true
-  riskSummary?: string
-  upgradesAndGovernance?: ProjectUpgradesAndGovernance
   /** ZK catalog project whose trusted setups are shown when this project has no own zkCatalogInfo. */
   zkCatalogId?: ProjectId
 }

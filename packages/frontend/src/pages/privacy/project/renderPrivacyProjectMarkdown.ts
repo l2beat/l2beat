@@ -1,6 +1,7 @@
 import type { PrivacySummaryValue, PrivacyWalkawayTest } from '@l2beat/config'
 import compact from 'lodash/compact'
 import type { RosetteValue } from '~/components/rosette/types'
+import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 import type { PrivacyReferenceApp } from '~/server/features/privacy/utils/getPrivacyReferenceApp'
@@ -34,7 +35,7 @@ export function renderPrivacyProjectMarkdown(
 ): string {
   return renderProjectMarkdown({
     name: entry.name,
-    pagePath: `/privacy/projects/${entry.slug}`,
+    pagePath: entry.href,
     summary: {
       warnings: [
         ...getProjectStatusWarnings({
@@ -103,6 +104,7 @@ function getFacts(entry: ProjectPrivacyEntry) {
       label: 'Tracked on',
       value: entry.trackedOn.map((chain) => chain.name).join(', '),
     },
+    ...getChainFacts(entry),
     entry.scalingProjects.length > 0 && {
       label: 'Runs on',
       value: entry.scalingProjects.map((project) => project.name).join(', '),
@@ -114,6 +116,26 @@ function getFacts(entry: ProjectPrivacyEntry) {
     entry.referenceApp && {
       label: REFERENCE_APP.title,
       value: formatReferenceApp(entry.referenceApp),
+    },
+  ])
+}
+
+/** For a project with a page per chain: which one this is, and where the others are. */
+function getChainFacts({ chainView, hasTvl }: ProjectPrivacyEntry) {
+  if (!chainView) return []
+  return compact([
+    { label: 'Chain on this page', value: chainView.selected.name },
+    hasTvl &&
+      chainView.allChainsValueLockedUsd !== undefined && {
+        label: `Value locked on ${chainView.chains.length} chains`,
+        value: formatUsd(chainView.allChainsValueLockedUsd),
+      },
+    {
+      label: 'Pages of other chains',
+      value: chainView.chains
+        .filter((chain) => chain.id !== chainView.selected.id)
+        .map((chain) => `[${chain.name}](${PRODUCTION_ORIGIN}${chain.href}.md)`)
+        .join(', '),
     },
   ])
 }

@@ -4,6 +4,7 @@ import { sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { DB } from '../kysely'
 import type { TokenValue } from '../kysely/generated/types'
+import { atResolutionSteps } from '../utils/atResolutionSteps'
 import {
   type CleanDateRange,
   deleteHourlyUntil,
@@ -792,11 +793,8 @@ export class TokenValueRepository extends BaseRepository {
   }
 
   /**
-   * Sums `valueForProject` per project at each `resolution` step in the range,
-   * and at every timestamp after the last step, so a chart can end on the
-   * latest hour. It skips the rows in between, which a chart would drop: a
-   * daily chart would otherwise sum 90 days of six-hourly and 7 days of hourly
-   * rows too.
+   * Sums `valueForProject` per project at the rows a chart of this
+   * `resolution` draws, see `atResolutionSteps`.
    */
   async getSummedByProjectAtResolution(
     projectIds: string[],
@@ -808,7 +806,6 @@ export class TokenValueRepository extends BaseRepository {
       return []
     }
 
-    const step = UnixTime.periodToSeconds(resolution)
     let query = this.db
       .selectFrom('TokenValue')
       .innerJoin('TokenMetadata', 'TokenValue.tokenId', 'TokenMetadata.tokenId')
@@ -819,20 +816,7 @@ export class TokenValueRepository extends BaseRepository {
       ])
       .where('TokenValue.projectId', 'in', projectIds)
       .where('TokenValue.timestamp', '<=', UnixTime.toDate(to))
-      .where((eb) =>
-        eb.or([
-          eb(
-            sql`extract(epoch from "TokenValue"."timestamp")::bigint % ${step}`,
-            '=',
-            0,
-          ),
-          eb(
-            'TokenValue.timestamp',
-            '>',
-            UnixTime.toDate(UnixTime.toStartOf(to, resolution)),
-          ),
-        ]),
-      )
+      .where(atResolutionSteps('TokenValue.timestamp', to, resolution))
       .groupBy(['TokenValue.timestamp', 'TokenValue.projectId'])
 
     if (from) {
@@ -847,6 +831,44 @@ export class TokenValueRepository extends BaseRepository {
 
     return rows.map((row) => ({
       projectId: row.projectId,
+      timestamp: UnixTime.fromDate(row.timestamp),
+      value: Number(row.value),
+    }))
+  }
+
+  /**
+   * As `getSummedByProjectAtResolution`, for some of a project's tokens: the
+   * ones it holds on one chain, say.
+   */
+  async getSummedByTokensAtResolution(
+    projectId: string,
+    tokenIds: string[],
+    [from, to]: [UnixTime | null, UnixTime],
+    resolution: 'hour' | 'six hours' | 'day',
+  ): Promise<{ timestamp: UnixTime; value: number }[]> {
+    if (tokenIds.length === 0) {
+      return []
+    }
+
+    let query = this.db
+      .selectFrom('TokenValue')
+      .select((eb) => [
+        'timestamp',
+        eb.cast(eb.fn.sum('valueForProject'), 'double precision').as('value'),
+      ])
+      .where('projectId', '=', projectId)
+      .where('tokenId', 'in', tokenIds)
+      .where('timestamp', '<=', UnixTime.toDate(to))
+      .where(atResolutionSteps('timestamp', to, resolution))
+      .groupBy('timestamp')
+
+    if (from) {
+      query = query.where('timestamp', '>=', UnixTime.toDate(from))
+    }
+
+    const rows = await query.execute()
+
+    return rows.map((row) => ({
       timestamp: UnixTime.fromDate(row.timestamp),
       value: Number(row.value),
     }))

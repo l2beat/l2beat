@@ -100,6 +100,8 @@ function getColumns(anonymitySetTooltip: string | undefined) {
                 </TwoRowCell.First>
                 <TwoRowCell.Second>
                   {ctx.row.original.category.label}
+                  {ctx.row.original.chain &&
+                    ` on ${ctx.row.original.chain.name}`}
                 </TwoRowCell.Second>
               </TwoRowCell>
             </TableLink>

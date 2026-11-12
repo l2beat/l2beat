@@ -27,10 +27,13 @@ import {
   HOLDING_DURATIONS,
   loadAnonymitySetCharts,
 } from './anonymity-set/loadAnonymitySetCharts'
+import { getPrivacyProjectOnChain } from './utils/getPrivacyProjectPages'
 
 export const PrivacyAnonymitySetChartParams = v.object({
   projectId: v.string(),
   range: ChartRange,
+  /** Limits the chart to the anonymity sets and the coverage on this chain. */
+  chain: v.string().optional(),
 })
 
 export type PrivacyAnonymitySetChartParams = v.infer<
@@ -52,11 +55,15 @@ const cache = new FrontendInMemoryCache('getPrivacyAnonymitySetChart')
 export async function getPrivacyAnonymitySetChart(
   params: PrivacyAnonymitySetChartParams,
 ): Promise<PrivacyAnonymitySetChartResponse> {
-  const project = await ps.getProject({
+  const tracked = await ps.getProject({
     id: ProjectId(params.projectId),
     select: ['privacyInfo'],
   })
-  if (!project) return emptyResponse()
+  if (!tracked) return emptyResponse()
+  const project =
+    params.chain === undefined
+      ? tracked
+      : getPrivacyProjectOnChain(tracked, params.chain)
 
   const series = getPrivacyAnonymitySetSeries(project)
   if (series.length === 0) return emptyResponse()
@@ -69,6 +76,7 @@ export async function getPrivacyAnonymitySetChart(
           key: [
             'privacy-anonymity-set-chart',
             project.id,
+            params.chain ?? 'all',
             currentDay.toString(),
           ],
           ttl: 10 * UnixTime.MINUTE,
