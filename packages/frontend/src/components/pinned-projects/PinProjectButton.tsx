@@ -52,7 +52,7 @@ export function PinProjectButton({
       }}
       aria-pressed={isPinned}
       className={cn(
-        'flex h-6 items-center justify-center gap-1.5 rounded border px-2 font-medium text-2xs uppercase leading-none',
+        'flex h-6 items-center justify-center gap-1.5 rounded border px-2 font-medium text-2xs leading-none',
         isPinned
           ? 'border-brand text-brand-deep'
           : 'border-divider text-secondary hover:text-primary',
