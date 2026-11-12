@@ -1,3 +1,90 @@
+Generated with discovered.json: 0x53051bd603c4a411a8667ed7b63c9d6236dcdf48
+
+# Diff at Tue, 10 Nov 2026 17:10:28 GMT:
+
+- id: 95eda926
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e7f80c2eb530702e907f902d428416a31e27855 block: 1793874658
+- current timestamp: 1794320084
+
+## Description
+
+The Butter Bridge on Base, still paused, was upgraded by the 2/3 Safe base:0xAAAaEE7549a61282F2B4Ca1766f46249D9e71aaA through the AuthorityManager: https://disco.l2beat.com/diff/base:0x862761D6D52E9e812A8c22E6e6A39E186e59a33d/base:0xa2bd213E4e5655125A8c18D716184b6b11F45F25. The only code change is a new `emergencyWithdraw(token, to, amount)`: ADMIN_ROLE members of the AuthorityManager (both Safes, no delay) can send any asset held by the Bridge to any address, also while it is paused.
+
+The same Safe then used it to move all USDC (94,176) and WETH (22.27) held by the Bridge to the 3/5 Safe base:0x9987463102993e177b107e0cE97a0420428D1999: https://basescan.org/tx/0x92f287eec13a8d25e9eb10d1d45c6b16e050e515ae09865e5940cbe58fd0c57c and https://basescan.org/tx/0x9e89a766ce74e84a25cc5c12084afbff1dcd37ecfc5baec200c4ccaf5d826e14. The Base bridge now holds no USDC or WETH to fill inbound transfers (other tokens not checked).
+
+Message validation is unchanged: LightNode, VerifyTool, FeeService and relay are the same. The admins could already move the funds through an instant upgrade, so the trust assumption is the same with a more direct path.
+
+Config: new Bridge shape, the admin permission names the withdrawal.
+
+## Watched changes
+
+```diff
+    contract Butter Bridge (base:0x0000317Bec33Af037b5fAb2028f52d14658F6A56) [butternetwork/Bridge] {
+    +++ description: Butter's Base bridge endpoint. Outbound transfers lock or burn assets and emit messages for the MAP relay chain; inbound transfers execute only after a LightNode-validated receipt proof for the configured MAP relay contract. The bridge can mint configured mintable tokens, release escrowed assets, and invoke receiver callbacks, so compromise of validation, relay configuration, or management authority can lead to loss of bridged funds.
+      sourceHashes.1:
+-        "0x4fbfa6dffeb7b0631c9754128ce823ee45e589dc9d6a230e444db8381a124cd6"
++        "0xcdcece1862e16da26424ca2364fc88c7dc2ac699b0bb37e0540a885a07c6b585"
++++ description: Current implementation of the upgradeable Butter Bridge proxy.
++++ severity: HIGH
+      values.$implementation:
+-        "base:0x862761D6D52E9e812A8c22E6e6A39E186e59a33d"
++        "base:0xa2bd213E4e5655125A8c18D716184b6b11F45F25"
+      values.$pastUpgrades.5:
++        ["2026-11-10T07:53:20.000Z","0xb5a59a8d60bdfefe215aa6b7baeb1b676f9342aec11ef978b05d1a75049a039e",["base:0xa2bd213E4e5655125A8c18D716184b6b11F45F25"]]
+      values.$upgradeCount:
+-        5
++        6
+      values.getImplementation:
+-        "base:0x862761D6D52E9e812A8c22E6e6A39E186e59a33d"
++        "base:0xa2bd213E4e5655125A8c18D716184b6b11F45F25"
+      implementationNames.base:0x862761D6D52E9e812A8c22E6e6A39E186e59a33d:
+-        "Bridge"
+      implementationNames.base:0xa2bd213E4e5655125A8c18D716184b6b11F45F25:
++        "Bridge"
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@1793874658 => .flat}/Butter Bridge/Bridge.sol   | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793874658 (main branch discovery), not current.
+
+```diff
+    contract Butter Bridge (base:0x0000317Bec33Af037b5fAb2028f52d14658F6A56) [butternetwork/Bridge] {
+    +++ description: Butter's Base bridge endpoint. Outbound transfers lock or burn assets and emit messages for the MAP relay chain; inbound transfers execute only after a LightNode-validated receipt proof for the configured MAP relay contract. The bridge can mint configured mintable tokens, release escrowed assets, and invoke receiver callbacks, so compromise of validation, relay configuration, or management authority can lead to loss of bridged funds.
+      fieldMeta.authority.description:
+-        "Authority contract consulted by all Bridge management functions marked restricted. Its role members can pause the bridge, change supported tokens and service contracts, change the relay, configure trust-list entries, and upgrade the Bridge implementation."
++        "Authority contract consulted by all Bridge management functions marked restricted. Its role members can pause the bridge, change supported tokens and service contracts, change the relay, configure trust-list entries, upgrade the Bridge implementation and, in implementations that have `emergencyWithdraw()`, withdraw any asset held by the Bridge."
+    }
+```
+
+```diff
+    contract SafeL2 (base:0x9987463102993e177b107e0cE97a0420428D1999) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "change AuthorityManager permissions and execute restricted Bridge and FeeService management operations."
++        "change AuthorityManager permissions and execute restricted Bridge and FeeService management operations without delay, including the withdrawal of all assets held by the Bridge."
+    }
+```
+
+```diff
+    contract SafeL2 (base:0xAAAaEE7549a61282F2B4Ca1766f46249D9e71aaA) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "change AuthorityManager permissions and execute restricted Bridge and FeeService management operations."
++        "change AuthorityManager permissions and execute restricted Bridge and FeeService management operations without delay, including the withdrawal of all assets held by the Bridge."
+    }
+```
+
 Generated with discovered.json: 0x555fc5b4a07e392070b5b1bd3a236f2392d178ed
 
 # Diff at Thu, 05 Nov 2026 10:43:20 GMT:

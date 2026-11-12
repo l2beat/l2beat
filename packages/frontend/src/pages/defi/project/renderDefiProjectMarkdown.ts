@@ -1,14 +1,12 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import type { ProjectDefiEntry } from '~/server/features/defi/project/getDefiProjectEntry'
 import { formatUsd } from '~/server/markdown/markdown'
 import { renderProjectMarkdown } from '~/server/markdown/renderProjectMarkdown'
-import { formatUtcDateTime } from '~/server/markdown/renderSectionParts'
+import { formatUtcDateOrDay } from '~/server/markdown/renderSectionParts'
 import { getUnderReviewText } from '~/utils/project/underReview'
 import {
   formatLatestValue,
   LIQUID_STAKING_METRICS,
-  type LiquidStakingMetric,
 } from '../liquid-staking/liquidStakingMetrics'
 import { LIQUID_STAKING_RISKS } from '../liquid-staking/liquidStakingRisks'
 
@@ -62,14 +60,6 @@ function getFacts(
   ])
 }
 
-/** A daily value covers its whole UTC day, the others are as of a moment. */
-function formatLatestDate(metric: LiquidStakingMetric, timestamp: number) {
-  const start = UnixTime(timestamp)
-  return metric.dailyBuckets
-    ? `over ${formatUtcDateTime(start)} to ${formatUtcDateTime(UnixTime(start + UnixTime.DAY))}`
-    : `on ${formatUtcDateTime(start)}`
-}
-
 /** The stats block of a liquid staking project page. */
 function getLiquidStakingFacts(summary: ProjectDefiEntry['liquidStaking']) {
   if (!summary) return []
@@ -79,7 +69,7 @@ function getLiquidStakingFacts(summary: ProjectDefiEntry['liquidStaking']) {
       return (
         latest && {
           label: metric.title,
-          value: `${formatLatestValue(metric, latest)} (${formatLatestDate(metric, latest.timestamp)}). ${metric.tooltip}`,
+          value: `${formatLatestValue(metric, latest)} (${formatUtcDateOrDay(latest.timestamp, metric.dailyBuckets)}). ${metric.tooltip}`,
         }
       )
     }),

@@ -2335,6 +2335,99 @@ describeDatabase(InteropTransferRepository.name, (db) => {
     },
   )
 
+  describe(
+    InteropTransferRepository.prototype.getUnidentifiedTokensSince.name,
+    () => {
+      it('returns distinct tokens of recent processed sides without an abstract token id', async () => {
+        await repository.insertMany([
+          unidentifiedTransfer('msg1', 'src', { srcTokenAddress: '0xaaaa' }),
+          unidentifiedTransfer('msg2', 'src', { srcTokenAddress: '0xaaaa' }),
+          unidentifiedTransfer('msg3', 'dst', {
+            dstChain: 'arbitrum',
+            dstTokenAddress: '0xbbbb',
+          }),
+          unidentifiedTransfer('msg4', 'src', { isProcessed: false }),
+          unidentifiedTransfer('msg5', 'src', { timestamp: UnixTime(50) }),
+          unidentifiedTransfer('msg6', 'src', { srcRawAmount: undefined }),
+          unidentifiedTransfer('msg7', 'src', { srcTokenAddress: undefined }),
+          financialTransfer('msg8', {
+            isProcessed: true,
+            timestamp: UnixTime(200),
+          }),
+        ])
+
+        const result = await repository.getUnidentifiedTokensSince(
+          UnixTime(100),
+        )
+
+        expect(result).toEqualUnsorted([
+          { chain: 'ethereum', address: '0xaaaa' },
+          { chain: 'arbitrum', address: '0xbbbb' },
+        ])
+      })
+    },
+  )
+
+  describe(
+    InteropTransferRepository.prototype.markUnidentifiedAsUnprocessed.name,
+    () => {
+      it('marks recent processed transfers whose unidentified side has one of the tokens', async () => {
+        await repository.insertMany([
+          unidentifiedTransfer('msg1', 'src', { srcTokenAddress: '0xaaaa' }),
+          unidentifiedTransfer('msg2', 'dst', {
+            dstChain: 'ethereum',
+            dstTokenAddress: '0xaaaa',
+          }),
+          unidentifiedTransfer('msg3', 'src', {
+            srcChain: 'base',
+            srcTokenAddress: '0xcccc',
+          }),
+          unidentifiedTransfer('msg4', 'dst', { dstTokenAddress: '0xaaaa' }),
+          financialTransfer('msg5', {
+            isProcessed: true,
+            timestamp: UnixTime(200),
+            srcTokenAddress: '0xaaaa',
+          }),
+          unidentifiedTransfer('msg6', 'src', {
+            srcTokenAddress: '0xaaaa',
+            timestamp: UnixTime(50),
+          }),
+          unidentifiedTransfer('msg7', 'src', {
+            srcTokenAddress: '0xaaaa',
+            srcRawAmount: undefined,
+          }),
+        ])
+
+        const updated = await repository.markUnidentifiedAsUnprocessed(
+          [
+            { chain: 'ethereum', address: '0xaaaa' },
+            { chain: 'base', address: '0xcccc' },
+          ],
+          UnixTime(100),
+        )
+
+        expect(updated).toEqual(3)
+        const unprocessed = await repository.getUnprocessed()
+        expect(unprocessed.map((r) => r.transferId)).toEqualUnsorted([
+          'msg1',
+          'msg2',
+          'msg3',
+        ])
+      })
+
+      it('returns 0 without tokens', async () => {
+        await repository.insertMany([unidentifiedTransfer('msg1', 'src')])
+
+        const updated = await repository.markUnidentifiedAsUnprocessed(
+          [],
+          UnixTime(100),
+        )
+
+        expect(updated).toEqual(0)
+      })
+    },
+  )
+
   afterEach(async () => {
     await repository.deleteAll()
   })
@@ -2409,6 +2502,19 @@ function financialTransfer(
     dstTokenAddress: '0x2222',
     ...overrides,
   }
+}
+
+function unidentifiedTransfer(
+  transferId: string,
+  side: 'src' | 'dst',
+  overrides: Partial<InteropTransferRecord> = {},
+): InteropTransferRecord {
+  return financialTransfer(transferId, {
+    isProcessed: true,
+    timestamp: UnixTime(200),
+    [`${side}AbstractTokenId`]: undefined,
+    ...overrides,
+  })
 }
 
 function transfer(
