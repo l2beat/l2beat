@@ -16,7 +16,7 @@ export interface ExtendedProjectSectionProps {
    */
   compareUrl?: string
   id: ProjectSectionId
-  /** Ids this section also answers to, for links from before a page merge. */
+  /** Ids this section also answers to, for links to a section it stands in for. */
   aliasIds?: string[]
   nested?: boolean
   sectionOrder: string | undefined

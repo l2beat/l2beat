@@ -8,6 +8,7 @@ import { projectDetailsToNavigationSections } from '~/components/projects/naviga
 import { ProjectDetails } from '~/components/projects/ProjectDetails'
 import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
+import type { ProjectSection } from '~/components/projects/projectSections'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
 import { StickyMobileSectionNavigation } from '~/components/section-navigation/StickyMobileSectionNavigation'
@@ -16,7 +17,6 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ZkCatalogSummary } from '~/pages/zk-catalog/v2/project/components/header/ZkCatalogProjectSummary'
 import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
-import type { ProjectSection } from '~/server/features/projects/getProjectSections'
 import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 import { PrivacyProjectSummaryCard } from './components/PrivacyProjectSummaryCard'
 
@@ -67,8 +67,7 @@ export function PrivacyProjectPage({
                 <div className="pt-6 max-md:px-4 lg:pt-4">
                   <ProjectHeader
                     project={entry}
-                    section="privacy"
-                    projectSections={projectSections}
+                    sections={projectSections}
                     versions={versionLinks}
                     recentUpdatesCount={entry.recentUpdatesCount}
                     secondLine={

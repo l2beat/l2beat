@@ -2,7 +2,10 @@ import type { InMemoryCache } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getDefiProjectEntry } from '~/server/features/defi/project/getDefiProjectEntry'
 import { getDefiProjectTotalValueLocked } from '~/server/features/defi/project/getDefiProjectTotalValueLocked'
-import { getProjectSections } from '~/server/features/projects/getProjectSections'
+import {
+  getProjectBreadcrumbs,
+  type ProjectPage,
+} from '~/server/features/projects/getProjectPage'
 import { getProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getProjectMetadataDescription } from '~/ssr/head/projectMetaDescriptions'
@@ -16,12 +19,12 @@ import {
 import { renderDefiProjectMarkdown } from './renderDefiProjectMarkdown'
 
 export async function getDefiProjectData(
-  slug: string,
+  page: ProjectPage,
   manifest: Manifest,
   cache: InMemoryCache,
   selectedUpdateId?: string,
 ): Promise<RenderData | undefined> {
-  const data = await getCachedDefiProjectPage(slug, manifest, cache)
+  const data = await getCachedDefiProjectPage(page, manifest, cache)
   if (!data) return undefined
 
   return {
@@ -42,13 +45,13 @@ export async function getDefiProjectData(
  * browser, so its render should not pay for the query.
  */
 export async function getDefiProjectMarkdown(
-  slug: string,
+  page: ProjectPage,
   manifest: Manifest,
   cache: InMemoryCache,
 ): Promise<string | undefined> {
   const [data, totalValueLockedUsd] = await Promise.all([
-    getCachedDefiProjectPage(slug, manifest, cache),
-    getCachedTotalValueLocked(slug, cache),
+    getCachedDefiProjectPage(page, manifest, cache),
+    getCachedTotalValueLocked(page.slug, cache),
   ])
   return (
     data && renderDefiProjectMarkdown(data.props.entry, totalValueLockedUsd)
@@ -56,17 +59,17 @@ export async function getDefiProjectMarkdown(
 }
 
 function getCachedDefiProjectPage(
-  slug: string,
+  page: ProjectPage,
   manifest: Manifest,
   cache: InMemoryCache,
 ) {
   return cache.get(
     {
-      key: ['defi', 'projects', slug],
+      key: ['defi', 'projects', page.slug],
       ttl: 5 * 60,
       staleWhileRevalidate: 25 * 60,
     },
-    () => loadDefiProjectPage(manifest, slug),
+    () => loadDefiProjectPage(manifest, page),
   )
 }
 
@@ -81,15 +84,13 @@ function getCachedTotalValueLocked(slug: string, cache: InMemoryCache) {
   )
 }
 
-async function loadDefiProjectPage(manifest: Manifest, slug: string) {
+async function loadDefiProjectPage(manifest: Manifest, page: ProjectPage) {
   const helpers = getSsrHelpers()
-  const [appLayoutProps, entry, projectSections, versionLinks] =
-    await Promise.all([
-      getAppLayoutProps(),
-      getDefiProjectEntry(slug, helpers),
-      getProjectSections(slug),
-      getProjectVersionLinks(slug),
-    ])
+  const [appLayoutProps, entry, versionLinks] = await Promise.all([
+    getAppLayoutProps(),
+    getDefiProjectEntry(page.slug, helpers),
+    getProjectVersionLinks(page.slug),
+  ])
 
   if (!entry) {
     return undefined
@@ -113,7 +114,7 @@ async function loadDefiProjectPage(manifest: Manifest, slug: string) {
     props: {
       ...appLayoutProps,
       entry,
-      projectSections,
+      projectSections: getProjectBreadcrumbs(page),
       versionLinks,
       queryState: helpers.dehydrate(),
     },

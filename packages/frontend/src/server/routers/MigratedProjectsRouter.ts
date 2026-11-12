@@ -1,19 +1,24 @@
 import express from 'express'
-import { getProjectPath } from '~/utils/project/getProjectPath'
+import {
+  getProjectPath,
+  getProjectTvsBreakdownPath,
+} from '~/utils/project/getProjectPath'
+import { redirectToProjectPage } from './redirectToProjectPage'
 
 export function createMigratedProjectsRouter() {
   const router = express.Router()
 
   for (const [from, to] of Object.entries(RENAMED_SCALING_SLUGS)) {
-    const newPath = getProjectPath(to)
     // The L2 URL it had, and the one under /projects it has since redirected from.
     for (const oldPath of [`/layer2s/projects/${from}`, getProjectPath(from)]) {
-      router.get(oldPath, (_, res) => res.redirect(301, newPath))
-      router.get(`${oldPath}.md`, (_, res) =>
-        res.redirect(301, `${newPath}.md`),
+      router.get(oldPath, (req, res) =>
+        redirectToProjectPage(req, res, getProjectPath(to)),
       )
-      router.get(`${oldPath}/tvs-breakdown`, (_, res) =>
-        res.redirect(301, `${newPath}/tvs-breakdown`),
+      router.get(`${oldPath}.md`, (req, res) =>
+        redirectToProjectPage(req, res, `${getProjectPath(to)}.md`),
+      )
+      router.get(`${oldPath}/tvs-breakdown`, (req, res) =>
+        redirectToProjectPage(req, res, getProjectTvsBreakdownPath(to)),
       )
     }
   }

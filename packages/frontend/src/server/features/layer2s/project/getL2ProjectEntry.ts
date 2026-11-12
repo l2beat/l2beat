@@ -20,7 +20,18 @@ import { env } from '~/env'
 import type { CompareMetricId } from '~/pages/layer2s/compare/utils/compareChartState'
 import { getCompareEntryUrl } from '~/pages/layer2s/compare/utils/getCompareEntryUrl'
 import { getGardenCropsSection } from '~/server/features/garden/getGardenCropsSection'
+import type { PrivacyProjectDetails } from '~/server/features/privacy/getPrivacyProjectDetails'
+import {
+  getPrivacyAdversariesSection,
+  getPrivacyAnonymitySetSection,
+  getPrivacyAssetsBreakdownSection,
+  getPrivacyDescriptionSection,
+  getPrivacyFlowsSection,
+  getPrivacyTrustedSetupsSection,
+} from '~/server/features/privacy/project/privacySections'
+import { parsePrivacyRiskSummary } from '~/server/features/privacy/utils/parsePrivacyRiskSummary'
 import { getUpdatesSection } from '~/server/features/projects/discovery-updates/getUpdatesSection'
+import { mergeRiskGroups } from '~/server/features/projects/mergeRiskGroups'
 import { getProjectOssification } from '~/server/features/projects/ossification/getProjectOssification'
 import { countRecentDiscoveryUpdates } from '~/server/features/projects/recent-changes/discoveryUpdates'
 import { ps } from '~/server/projects'
@@ -43,7 +54,6 @@ import { getBadgeWithParamsAndLink } from '~/utils/project/getBadgeWithParams'
 import { getDiagramParams } from '~/utils/project/getDiagramParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { getProjectTvsBreakdownPath } from '~/utils/project/getProjectPath'
-import { PROJECT_PAGE_METADATA_FIELDS } from '~/utils/project/getProjectUrl'
 import { getLivenessSection } from '~/utils/project/liveness/getLivenessSection'
 import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
 import { getL2RiskSummarySection } from '~/utils/project/risk-summary/getL2RiskSummary'
@@ -175,6 +185,8 @@ export async function getL2ProjectEntry(
     | 'ossificationHistory'
   >,
   helpers: SsrHelpers,
+  /** For a scaling project that is also a privacy protocol. */
+  privacy?: PrivacyProjectDetails,
 ): Promise<ProjectL2Entry> {
   const daSolutions = await getL2DaSolutions(project)
   const [
@@ -212,7 +224,7 @@ export async function getL2ProjectEntry(
     }),
     ps.getProjects({
       select: ['display'],
-      optional: [...PROJECT_PAGE_METADATA_FIELDS],
+      optional: ['privacyInfo', 'daBridge', 'daLayer'],
     }),
     getL2ProjectInteropData(project.id, helpers),
     getProjectOssification(project),
@@ -405,6 +417,8 @@ export async function getL2ProjectEntry(
         tvsInfo: project.tvsInfo,
         project: chartProject,
         ...l2TvsSection,
+        // The privacy page's Value Locked has the same TVS config.
+        ...(privacy && { aliasIds: ['privacy-tvl'] }),
       },
     })
   }
@@ -549,6 +563,12 @@ export async function getL2ProjectEntry(
     projectVerificationWarnings,
     unverifiedContracts,
   )
+  if (privacy?.riskSummary) {
+    riskSummary.riskGroups = mergeRiskGroups(
+      riskSummary.riskGroups,
+      parsePrivacyRiskSummary(privacy.riskSummary),
+    )
+  }
   if (riskSummary.riskGroups.length > 0) {
     sections.push({
       type: 'RiskSummarySection',
@@ -560,6 +580,26 @@ export async function getL2ProjectEntry(
         isUnderReview: !!project.statuses.reviewStatus,
       },
     })
+  }
+
+  // The sections only a privacy protocol has. Its adversaries are filled in
+  // once every other section exists, as their sources link to them.
+  let privacyAdversariesIndex = sections.length
+  if (privacy) {
+    // The page has one description: its own if it has one.
+    const description = getPrivacyDescriptionSection(privacy)
+    if (description && !project.scalingTechnology.detailedDescription) {
+      sections.push(description)
+    }
+    privacyAdversariesIndex = sections.length
+    sections.push(
+      ...compact([
+        getPrivacyAnonymitySetSection(privacy),
+        getPrivacyFlowsSection(privacy),
+        getPrivacyAssetsBreakdownSection(privacy),
+        getPrivacyTrustedSetupsSection(privacy),
+      ]),
+    )
   }
 
   if (hostChain && common.rosette.host) {
@@ -783,6 +823,14 @@ export async function getL2ProjectEntry(
         discoUi,
       },
     })
+  }
+
+  if (privacy) {
+    sections.splice(
+      privacyAdversariesIndex,
+      0,
+      getPrivacyAdversariesSection(privacy, sections),
+    )
   }
 
   return { ...common, sections }

@@ -1,19 +1,17 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
-import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { getL2ProjectEntry } from '~/server/features/layer2s/project/getL2ProjectEntry'
 import { getPrivacyProjectDetails } from '~/server/features/privacy/getPrivacyProjectDetails'
-import { getPrivacyProjectEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
-import { getProjectSections } from '~/server/features/projects/getProjectSections'
+import { getPrivacySummary } from '~/server/features/privacy/project/getPrivacyProjectEntry'
+import {
+  getProjectBreadcrumbs,
+  type ProjectPage,
+} from '~/server/features/projects/getProjectPage'
 import { getProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
-import { mergeProjectSections } from '~/server/features/projects/mergeProjectSections'
-import { mergeRiskGroups } from '~/server/features/projects/mergeRiskGroups'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getScalingMetadataDescription } from '~/ssr/head/projectMetaDescriptions'
 import type { RenderData } from '~/ssr/types'
-import type { SsrHelpers } from '~/trpc/server'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 import {
@@ -24,21 +22,21 @@ import { getL2ProjectStructuredData } from './getL2ProjectStructuredData'
 import { renderL2ProjectMarkdown } from './renderL2ProjectMarkdown'
 
 export async function getL2ProjectData(
-  req: Request<{ slug: string }, unknown, unknown, { update?: string }>,
+  page: ProjectPage,
   manifest: Manifest,
   cache: InMemoryCache,
+  selectedUpdateId?: string,
 ): Promise<RenderData | undefined> {
-  const data = await getCachedL2ProjectPage(req.params.slug, manifest, cache)
+  const data = await getCachedL2ProjectPage(page, manifest, cache)
   if (!data) return undefined
 
-  const { privacyEntry, ...props } = data.props
-  const selectedUpdateId = req.query.update
+  const { privacy, ...props } = data.props
   return {
     head: data.head,
-    ssr: privacyEntry
+    ssr: privacy
       ? {
           page: 'L2PrivacyProjectPage',
-          props: { ...props, privacyEntry, selectedUpdateId },
+          props: { ...props, privacy, selectedUpdateId },
         }
       : { page: 'L2ProjectPage', props: { ...props, selectedUpdateId } },
   }
@@ -46,30 +44,31 @@ export async function getL2ProjectData(
 
 /** The markdown alternate of the page, built from the same cached entry as the HTML. */
 export async function getL2ProjectMarkdown(
-  slug: string,
+  page: ProjectPage,
   manifest: Manifest,
   cache: InMemoryCache,
 ): Promise<string | undefined> {
-  const data = await getCachedL2ProjectPage(slug, manifest, cache)
+  const data = await getCachedL2ProjectPage(page, manifest, cache)
   return data && renderL2ProjectMarkdown(data.props.projectEntry)
 }
 
 function getCachedL2ProjectPage(
-  slug: string,
+  page: ProjectPage,
   manifest: Manifest,
   cache: InMemoryCache,
 ) {
   return cache.get(
     {
-      key: ['layer2s', 'projects', slug],
+      key: ['layer2s', 'projects', page.slug],
       ttl: 5 * 60,
       staleWhileRevalidate: 25 * 60,
     },
-    () => loadL2ProjectPage(manifest, slug),
+    () => loadL2ProjectPage(manifest, page),
   )
 }
 
-async function loadL2ProjectPage(manifest: Manifest, slug: string) {
+async function loadL2ProjectPage(manifest: Manifest, page: ProjectPage) {
+  const { slug } = page
   const helpers = getSsrHelpers()
   const project = await ps.getProject({
     slug,
@@ -102,47 +101,18 @@ async function loadL2ProjectPage(manifest: Manifest, slug: string) {
       'activityConfig',
       'garden',
       'ossificationHistory',
-      'privacyInfo',
     ],
   })
   if (!project) return undefined
 
-  const [appLayoutProps, projectEntry, projectSections, versionLinks, privacy] =
-    await Promise.all([
-      getAppLayoutProps(),
-      getL2ProjectEntry(project, helpers),
-      getProjectSections(slug),
-      getProjectVersionLinks(slug),
-      project.privacyInfo ? getPrivacyEntry(slug, helpers) : undefined,
-    ])
-  if (privacy) {
-    projectEntry.sections = mergeProjectSections(
-      projectEntry.sections,
-      privacy.sections,
-      {
-        insertAfterId: 'risk-summary',
-        // The same TVS config as Value Secured.
-        drop: ['privacy-tvl'],
-      },
-    )
-    for (const section of projectEntry.sections) {
-      // Links to the privacy page's Value Locked land on Value Secured.
-      if (section.type === 'L2TvsSection') {
-        section.props.aliasIds = ['privacy-tvl']
-      }
-      if (section.type === 'RiskSummarySection') {
-        section.props.riskGroups = mergeRiskGroups(
-          section.props.riskGroups,
-          getRiskSummaryMarkdown(privacy.sections),
-          // Privacy risks name an adversary; the rest come from the description.
-          (group) =>
-            group === 'Privacy can be lost if'
-              ? 'privacy-adversaries'
-              : 'detailed-description',
-        )
-      }
-    }
-  }
+  const privacy = page.sections.includes('privacy')
+    ? await getPrivacyProjectDetails(slug)
+    : undefined
+  const [appLayoutProps, projectEntry, versionLinks] = await Promise.all([
+    getAppLayoutProps(),
+    getL2ProjectEntry(project, helpers, privacy),
+    getProjectVersionLinks(slug),
+  ])
   return {
     head: {
       manifest,
@@ -176,29 +146,10 @@ async function loadL2ProjectPage(manifest: Manifest, slug: string) {
     props: {
       ...appLayoutProps,
       projectEntry,
-      // Only what its summary card reads: its sections are in projectEntry.
-      privacyEntry: privacy && {
-        ...privacy,
-        sections: privacy.sections.filter(
-          (section) => section.type === 'PrivacyAdversariesSection',
-        ),
-      },
-      projectSections,
+      privacy: privacy && getPrivacySummary(privacy),
+      projectSections: getProjectBreadcrumbs(page),
       versionLinks,
       queryState: helpers.dehydrate(),
     },
   }
-}
-
-/** The privacy page of a scaling project that is also a privacy protocol. */
-async function getPrivacyEntry(slug: string, helpers: SsrHelpers) {
-  const details = await getPrivacyProjectDetails(slug)
-  return details && getPrivacyProjectEntry(details, helpers)
-}
-
-function getRiskSummaryMarkdown(sections: ProjectDetailsSection[]) {
-  const summary = sections.find(
-    (section) => section.props.id === 'risk-summary',
-  )
-  return summary?.type === 'MarkdownSection' ? summary.props.content : undefined
 }

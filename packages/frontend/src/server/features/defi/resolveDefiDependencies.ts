@@ -1,7 +1,7 @@
 import type { ProjectExternalDependency } from '@l2beat/config'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
-import { getProjectUrl, PROJECT_PAGE_METADATA_FIELDS } from '~/utils/project/getProjectUrl'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 
 export interface DefiDependencyProject {
@@ -35,7 +35,6 @@ export async function getDefiDependencyProjectsById(
 
   const projects = await ps.getProjects({
     ids: trackedIds,
-    optional: [...PROJECT_PAGE_METADATA_FIELDS],
   })
 
   return new Map(
@@ -44,7 +43,7 @@ export async function getDefiDependencyProjectsById(
       {
         name: project.name,
         slug: project.slug,
-        href: getProjectUrl(project),
+        href: getProjectPath(project.slug),
       },
     ]),
   )

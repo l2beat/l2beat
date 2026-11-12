@@ -13,7 +13,6 @@ import {
   type ContractUtils,
   getContractUtils,
 } from '~/utils/project/contracts-and-permissions/getContractUtils'
-import { PROJECT_PAGE_METADATA_FIELDS, type ProjectWithPageMetadata } from '~/utils/project/getProjectUrl'
 import {
   getTrustedSetupsWithVerifiersAndAttesters,
   type TrustedSetupsByProofSystem,
@@ -46,7 +45,7 @@ export async function getZkCatalogEntries(): Promise<ZkCatalogEntry[]> {
         whereNot: ['archivedAt'],
       }),
       ps.getProjects({
-        optional: ['display', ...PROJECT_PAGE_METADATA_FIELDS],
+        optional: ['display', 'scalingInfo', 'daBridge', 'daLayer'],
       }),
       get7dTvsBreakdown({ type: 'all' }),
       getContractUtils(),
@@ -61,7 +60,7 @@ export async function getZkCatalogEntries(): Promise<ZkCatalogEntry[]> {
 
 function getZkCatalogEntry(
   project: Project<'zkCatalogInfo' | 'display' | 'statuses'>,
-  allProjects: ProjectWithPageMetadata[],
+  allProjects: Project<never, 'daBridge' | 'daLayer' | 'scalingInfo'>[],
   tvs: SevenDayTvsBreakdown,
   contractUtils: ContractUtils,
 ): ZkCatalogEntry {

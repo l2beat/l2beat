@@ -1,6 +1,9 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getProjectSections } from '~/server/features/projects/getProjectSections'
+import {
+  getProjectBreadcrumbs,
+  type ProjectPage,
+} from '~/server/features/projects/getProjectPage'
 import { getProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 import { getZkCatalogProjectEntry } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
 import { ps } from '~/server/projects'
@@ -16,11 +19,11 @@ import {
 import { renderZkCatalogProjectMarkdown } from './renderZkCatalogProjectMarkdown'
 
 export async function getZkCatalogProjectData(
+  page: ProjectPage,
   manifest: Manifest,
-  slug: string,
   cache: InMemoryCache,
 ): Promise<RenderData | undefined> {
-  const data = await getCachedZkCatalogProjectPage(manifest, slug, cache)
+  const data = await getCachedZkCatalogProjectPage(page, manifest, cache)
   if (!data) return undefined
 
   return {
@@ -34,45 +37,43 @@ export async function getZkCatalogProjectData(
 
 /** The markdown alternate of the page, built from the same cached entry as the HTML. */
 export async function getZkCatalogProjectMarkdown(
+  page: ProjectPage,
   manifest: Manifest,
-  slug: string,
   cache: InMemoryCache,
 ): Promise<string | undefined> {
-  const data = await getCachedZkCatalogProjectPage(manifest, slug, cache)
+  const data = await getCachedZkCatalogProjectPage(page, manifest, cache)
   return data && renderZkCatalogProjectMarkdown(data.props.projectEntry)
 }
 
 function getCachedZkCatalogProjectPage(
+  page: ProjectPage,
   manifest: Manifest,
-  slug: string,
   cache: InMemoryCache,
 ) {
   return cache.get(
     {
-      key: ['zk-catalog', 'v2', 'projects', slug],
+      key: ['zk-catalog', 'v2', 'projects', page.slug],
       ttl: 5 * 60,
       staleWhileRevalidate: 25 * 60,
     },
-    () => loadZkCatalogProjectPage(manifest, slug),
+    () => loadZkCatalogProjectPage(manifest, page),
   )
 }
 
-async function loadZkCatalogProjectPage(manifest: Manifest, slug: string) {
+async function loadZkCatalogProjectPage(manifest: Manifest, page: ProjectPage) {
   const helpers = getSsrHelpers()
   const project = await ps.getProject({
-    slug,
+    slug: page.slug,
     select: ['zkCatalogInfo', 'display', 'statuses'],
     optional: ['archivedAt', 'milestones', 'tvsInfo'],
   })
   if (!project) return undefined
 
-  const [appLayoutProps, projectEntry, projectSections, versionLinks] =
-    await Promise.all([
-      getAppLayoutProps(),
-      getZkCatalogProjectEntry(project),
-      getProjectSections(slug),
-      getProjectVersionLinks(slug),
-    ])
+  const [appLayoutProps, projectEntry, versionLinks] = await Promise.all([
+    getAppLayoutProps(),
+    getZkCatalogProjectEntry(project),
+    getProjectVersionLinks(page.slug),
+  ])
 
   return {
     head: {
@@ -96,7 +97,7 @@ async function loadZkCatalogProjectPage(manifest: Manifest, slug: string) {
     props: {
       ...appLayoutProps,
       projectEntry,
-      projectSections,
+      projectSections: getProjectBreadcrumbs(page),
       versionLinks,
       queryState: helpers.dehydrate(),
     },

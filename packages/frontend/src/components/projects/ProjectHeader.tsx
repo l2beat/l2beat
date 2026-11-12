@@ -1,13 +1,12 @@
 import { Fragment, type ReactNode } from 'react'
 import { ChevronIcon } from '~/icons/Chevron'
-import type { ProjectSection } from '~/server/features/projects/getProjectSections'
 import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 import { cn } from '~/utils/cn'
 import { LiveIndicator } from '../LiveIndicator'
 import { PinProjectButton } from '../pinned-projects/PinProjectButton'
 import { SearchBarButton } from '../search-bar/SearchBarButton'
 import { ProjectVersionSwitcher } from './ProjectVersionSwitcher'
-import { PROJECT_SECTIONS } from './projectSections'
+import { PROJECT_SECTIONS, type ProjectSection } from './projectSections'
 
 interface Project {
   name: string
@@ -19,10 +18,8 @@ interface Project {
 
 interface Props {
   project: Project
-  /** The section this page belongs to, shown as a breadcrumb above the name */
-  section?: ProjectSection
-  /** Every section the project is in; all show as breadcrumbs, as the page merges them */
-  projectSections?: ProjectSection[]
+  /** The site sections that list the project, shown as breadcrumbs above the name: the page's own first */
+  sections?: ProjectSection[]
   /** Shows the group name as the title, with the version as a switcher */
   versions?: ProjectVersionLinks
   ongoingAnomaly?: 'single' | 'multiple'
@@ -34,8 +31,7 @@ interface Props {
 
 export function ProjectHeader({
   project,
-  section,
-  projectSections,
+  sections,
   versions,
   ongoingAnomaly,
   recentUpdatesCount,
@@ -48,13 +44,8 @@ export function ProjectHeader({
       className={cn('mb-6 flex items-start justify-between gap-4', className)}
     >
       <div className="mt-1 flex w-full min-w-0 flex-col gap-2">
-        {section && (
-          <ProjectSectionBreadcrumb
-            sections={[
-              section,
-              ...(projectSections ?? []).filter((other) => other !== section),
-            ]}
-          />
+        {sections && sections.length > 0 && (
+          <ProjectSectionBreadcrumb sections={sections} />
         )}
         <div
           className={cn(

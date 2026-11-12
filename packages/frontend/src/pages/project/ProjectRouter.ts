@@ -1,20 +1,24 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import express, { type Request, type Response } from 'express'
+import express, { type Response } from 'express'
 import {
   getProjectPage,
+  hasMarkdown,
+  type ProjectPage,
   type ProjectPageSection,
+  type ProjectPageWithMarkdown,
 } from '~/server/features/projects/getProjectPage'
 import {
   LLMS_TXT_LINK,
   serveMarkdown,
   serveMarkdownIfPreferred,
 } from '~/server/markdown/markdownAlternate'
-import { ps } from '~/server/projects'
 import type { RenderData, RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
-import { getProjectPath } from '~/utils/project/getProjectPath'
-import { PROJECT_REDIRECT_CACHE_CONTROL } from '~/utils/project/getProjectUrl'
+import {
+  getProjectPath,
+  getProjectTvsBreakdownPath,
+} from '~/utils/project/getProjectPath'
 import { validateRoute } from '~/utils/validateRoute'
 import { getChainProjectData } from '../chain/getChainProjectData'
 import {
@@ -44,16 +48,9 @@ import {
   getZkCatalogProjectMarkdown,
 } from '../zk-catalog/v2/project/getZkCatalogProjectData'
 
-type PageRequest = Request<
-  { slug: string },
-  unknown,
-  unknown,
-  { update?: string }
->
-
 /**
  * Every project's page, at `/projects/{slug}`. The sections the project is in
- * pick the page builder; the builder merges in the other sections' content.
+ * pick the page builder, which lists what each of them adds to the page.
  */
 export function createProjectRouter(
   manifest: Manifest,
@@ -62,52 +59,53 @@ export function createProjectRouter(
 ) {
   const router = express.Router()
 
-  const html: Record<
-    ProjectPageSection,
-    (req: PageRequest) => Promise<RenderData | undefined>
-  > = {
-    ethereum: () => getEthereumProjectData(manifest, cache),
-    layer2s: (req) => getL2ProjectData(req, manifest, cache),
-    interop: (req) => getInteropProtocolPageData(req, manifest, cache),
-    chain: (req) => getChainProjectData(manifest, req.params.slug, cache),
-    zkCatalog: (req) =>
-      getZkCatalogProjectData(manifest, req.params.slug, cache),
-    privacy: (req) =>
-      getPrivacyProjectData(manifest, req.params.slug, cache, req.query.update),
-    defi: (req) =>
-      getDefiProjectData(req.params.slug, manifest, cache, req.query.update),
+  type Html = (
+    page: ProjectPage,
+    manifest: Manifest,
+    cache: InMemoryCache,
+    selectedUpdateId?: string,
+  ) => Promise<RenderData | undefined>
+  const html: Record<ProjectPageSection, Html> = {
+    ethereum: (_, manifest, cache) => getEthereumProjectData(manifest, cache),
+    layer2s: getL2ProjectData,
+    interop: getInteropProtocolPageData,
+    chain: getChainProjectData,
+    zkCatalog: getZkCatalogProjectData,
+    privacy: getPrivacyProjectData,
+    defi: getDefiProjectData,
   }
 
-  const markdown: Record<
-    ProjectPageSection,
-    ((slug: string) => Promise<string | undefined>) | undefined
-  > = {
-    ethereum: () => getEthereumProjectMarkdown(manifest, cache),
-    layer2s: (slug) => getL2ProjectMarkdown(slug, manifest, cache),
-    interop: (slug) => getInteropProtocolMarkdown(slug, manifest, cache),
-    // Chain pages show only interop flows, which have no markdown version.
-    chain: undefined,
-    zkCatalog: (slug) => getZkCatalogProjectMarkdown(manifest, slug, cache),
-    privacy: (slug) => getPrivacyProjectMarkdown(manifest, slug, cache),
-    defi: (slug) => getDefiProjectMarkdown(slug, manifest, cache),
+  type Markdown = (
+    page: ProjectPage,
+    manifest: Manifest,
+    cache: InMemoryCache,
+  ) => Promise<string | undefined>
+  const markdown: Record<ProjectPageWithMarkdown['kind'], Markdown> = {
+    ethereum: (_, manifest, cache) =>
+      getEthereumProjectMarkdown(manifest, cache),
+    layer2s: getL2ProjectMarkdown,
+    interop: getInteropProtocolMarkdown,
+    zkCatalog: getZkCatalogProjectMarkdown,
+    privacy: getPrivacyProjectMarkdown,
+    defi: getDefiProjectMarkdown,
   }
 
-  const getMarkdown = async (req: Request<{ slug: string }>) => {
-    const page = await getProjectPage(req.params.slug)
-    return page && markdown[page]?.(req.params.slug)
-  }
-
-  const negotiateMarkdown = serveMarkdownIfPreferred(getMarkdown)
+  const getMarkdown = async (page: ProjectPage | undefined) =>
+    page && hasMarkdown(page)
+      ? markdown[page.kind](page, manifest, cache)
+      : undefined
 
   // Before `:slug`, which would otherwise take "arbitrum.md" as the slug.
   router.get(
-    '/projects/:slug.md',
+    `${getProjectPath(':slug')}.md`,
     validateRoute({ params: v.object({ slug: v.string() }) }),
-    serveMarkdown(getMarkdown),
+    serveMarkdown(async (req) =>
+      getMarkdown(await getProjectPage(req.params.slug)),
+    ),
   )
 
   router.get(
-    '/projects/:slug',
+    getProjectPath(':slug'),
     validateRoute({
       params: v.object({ slug: v.string() }),
       query: v.object({ update: v.string().optional() }),
@@ -115,23 +113,29 @@ export function createProjectRouter(
     async (req, res, next) => {
       const page = await getProjectPage(req.params.slug)
       res.locals.page = page
-      if (page && !markdown[page]) {
-        // No markdown version: HTML for every Accept, and no alternate.
+      if (page && !hasMarkdown(page)) {
+        // HTML for every Accept, and without the `.md` alternate that
+        // LlmsLinkHeaderMiddleware derived from the URL.
         res.setHeader('Link', LLMS_TXT_LINK)
         next()
         return
       }
-      await negotiateMarkdown(req, res, next)
+      await serveMarkdownIfPreferred(() => getMarkdown(page))(req, res, next)
     },
     // A handler of its own, so Express catches what rendering throws.
     async (req, res) => {
-      const page: ProjectPageSection | undefined = res.locals.page
-      await send(res, req.originalUrl, page && (await html[page](req)))
+      const page: ProjectPage | undefined = res.locals.page
+      await send(
+        res,
+        req.originalUrl,
+        page &&
+          (await html[page.kind](page, manifest, cache, req.query.update)),
+      )
     },
   )
 
   router.get(
-    '/projects/:slug/tvs-breakdown',
+    getProjectTvsBreakdownPath(':slug'),
     validateRoute({ params: v.object({ slug: v.string() }) }),
     async (req, res) => {
       const { slug } = req.params
@@ -141,12 +145,7 @@ export function createProjectRouter(
           ttl: 5 * 60,
           staleWhileRevalidate: 25 * 60,
         },
-        () =>
-          getL2ProjectTvsBreakdownData(
-            manifest,
-            slug,
-            `${getProjectPath(slug)}/tvs-breakdown`,
-          ),
+        () => getL2ProjectTvsBreakdownData(manifest, slug),
       )
       await send(res, req.originalUrl, data)
     },
@@ -162,80 +161,6 @@ export function createProjectRouter(
       return
     }
     res.status(200).send(await render(data, url))
-  }
-
-  return router
-}
-
-/**
- * The section URLs projects had before `/projects/{slug}`, moved there with
- * the query string kept.
- *
- * Browsers hold a permanent redirect from `/projects/{slug}` to
- * `/layer2s/projects/{slug}` that this site sent for years, for every slug.
- * Sending them back to `/projects/{slug}` would loop, so the L2 URLs go to
- * `?migration=1`, a URL no browser has cached. The page drops the marker from
- * the address bar without navigating.
- */
-export function createProjectRedirectsRouter() {
-  const router = express.Router()
-
-  const redirect =
-    (options: { suffix?: string; migration?: boolean } = {}) =>
-    async (req: Request<{ slug: string }>, res: Response, next: () => void) => {
-      const { slug } = req.params
-      if (!(await getProjectPage(slug))) {
-        next()
-        return
-      }
-      const search = new URL(req.originalUrl, 'http://x').searchParams
-      if (options.migration) search.set('migration', '1')
-      const query = search.size > 0 ? `?${search}` : ''
-      res.setHeader('Cache-Control', PROJECT_REDIRECT_CACHE_CONTROL)
-      res.redirect(
-        301,
-        `${getProjectPath(slug)}${options.suffix ?? ''}${query}`,
-      )
-    }
-
-  router.get(
-    '/layer2s/projects/:slug.md',
-    redirect({ suffix: '.md', migration: true }),
-  )
-  router.get('/layer2s/projects/:slug', redirect({ migration: true }))
-  router.get(
-    '/layer2s/projects/:slug/tvs-breakdown',
-    redirect({ suffix: '/tvs-breakdown' }),
-  )
-
-  // Scaling projects with a canonical bridge show its flows on their page.
-  router.get(
-    '/interop/protocols/:slug',
-    async (req: Request<{ slug: string }>, res, next) => {
-      const project = await ps.getProject({
-        slug: req.params.slug,
-        optional: ['scalingInfo', 'interopConfig'],
-      })
-      if (project?.scalingInfo && project.interopConfig) {
-        res.setHeader('Cache-Control', PROJECT_REDIRECT_CACHE_CONTROL)
-        res.redirect(
-          301,
-          `${getProjectPath(project.slug)}?protocols=${project.id}#interop-flows`,
-        )
-        return
-      }
-      next()
-    },
-  )
-
-  for (const prefix of [
-    '/privacy/projects',
-    '/zk-catalog',
-    '/interop/protocols',
-    '/defi/projects',
-  ]) {
-    router.get(`${prefix}/:slug.md`, redirect({ suffix: '.md' }))
-    router.get(`${prefix}/:slug`, redirect())
   }
 
   return router

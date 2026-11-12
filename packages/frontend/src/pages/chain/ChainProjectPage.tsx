@@ -6,11 +6,11 @@ import { projectDetailsToNavigationSections } from '~/components/projects/naviga
 import { ProjectDetails } from '~/components/projects/ProjectDetails'
 import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { ProjectInteropMetrics } from '~/components/projects/ProjectInteropMetrics'
+import type { ProjectSection } from '~/components/projects/projectSections'
 import { StickyMobileSectionNavigation } from '~/components/section-navigation/StickyMobileSectionNavigation'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ChainProjectPageEntry } from '~/server/features/chains/getChainProjectEntry'
-import type { ProjectSection } from '~/server/features/projects/getProjectSections'
 
 interface Props extends AppLayoutProps {
   entry: ChainProjectPageEntry
@@ -41,11 +41,7 @@ export function ChainProjectPage({
             <div className="relative z-0 max-md:bg-surface-primary">
               <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">
                 <div className="pt-6 max-md:px-4 lg:pt-4">
-                  <ProjectHeader
-                    project={entry}
-                    section="interop"
-                    projectSections={projectSections}
-                  />
+                  <ProjectHeader project={entry} sections={projectSections} />
                 </div>
                 <div className="row-start-2 w-full">
                   <section

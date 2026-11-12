@@ -7,14 +7,14 @@ import {
   INTEGRATE_CROPS_PATH,
   SUBMIT_PROTOCOL_PATH,
 } from '~/pages/garden/paths'
-import { getProjectPath } from '~/utils/project/getProjectPath'
-import { getChainProjects } from './features/chains/getChainProjects'
-import { hasDefiProjectPage } from './features/defi/project/hasDefiProjectPage'
 import {
-  getProjectPageKind,
-  getProjectPageSections,
-  PROJECT_PAGE_SECTION_FIELDS,
-  type ProjectPageSection,
+  getProjectPath,
+  getProjectTvsBreakdownPath,
+} from '~/utils/project/getProjectPath'
+import {
+  hasMarkdown,
+  PROJECT_PAGE_FIELDS,
+  selectProjectPages,
 } from './features/projects/getProjectPage'
 import { ps } from './projects'
 
@@ -53,7 +53,6 @@ export const STATIC_PAGE_PATHS = [
   '/interop/intent-bridges',
   '/privacy/summary',
   '/privacy/archived',
-  '/projects/ethereum',
   '/zk-catalog',
   '/governance',
   '/governance/ethereum-connect',
@@ -93,53 +92,27 @@ export async function getPages(): Promise<Page[]> {
 }
 
 async function getDynamicPages(): Promise<Page[]> {
-  const [projects, chainProjects] = await Promise.all([
-    ps.getProjects({
-      optional: [
-        ...PROJECT_PAGE_SECTION_FIELDS,
-        'tvsConfig',
-        'archivedAt',
-        'ossificationHistory',
-      ],
-    }),
-    getChainProjects(),
-  ])
-  const chainSlugs = new Set(chainProjects.map((chain) => chain.slug))
+  const projects = await ps.getProjects({
+    optional: [...PROJECT_PAGE_FIELDS, 'tvsConfig', 'archivedAt'],
+  })
 
   const pages: Page[] = []
-  for (const project of projects) {
-    const sections = getProjectPageSections(project, {
-      hasChainPage: chainSlugs.has(project.slug),
-      // The DeFi page builder 404s on the rest.
-      defiEnabled: hasDefiProjectPage(project),
-    })
-    // Listed in its own place, among the static pages.
-    if (sections.includes('ethereum')) continue
+  for (const page of selectProjectPages(projects)) {
+    const { project } = page
     // Archived scaling and privacy projects keep their page but leave the
     // sitemap, unless another section still lists them.
-    const listed = sections.filter(
+    const listed = page.sections.filter(
       (section) =>
-        !project.archivedAt || (section !== 'layer2s' && section !== 'privacy'),
+        !project?.archivedAt ||
+        (section !== 'layer2s' && section !== 'privacy'),
     )
     if (listed.length === 0) continue
-    let kind: ProjectPageSection | undefined
-    try {
-      kind = getProjectPageKind(sections)
-    } catch (error) {
-      // The page itself throws; the sitemap of every other page stays up.
-      console.error(error)
-      continue
-    }
-    if (!kind) continue
-    const path = getProjectPath(project.slug)
-    pages.push({ path, hasMarkdown: kind !== 'chain' })
-    if (listed.includes('layer2s') && project.tvsConfig) {
-      pages.push({ path: `${path}/tvs-breakdown` })
-    }
-  }
-  for (const slug of chainSlugs) {
-    if (!projects.some((project) => project.slug === slug)) {
-      pages.push({ path: getProjectPath(slug), hasMarkdown: false })
+    pages.push({
+      path: getProjectPath(page.slug),
+      hasMarkdown: hasMarkdown(page),
+    })
+    if (listed.includes('layer2s') && project?.tvsConfig) {
+      pages.push({ path: getProjectTvsBreakdownPath(page.slug) })
     }
   }
 

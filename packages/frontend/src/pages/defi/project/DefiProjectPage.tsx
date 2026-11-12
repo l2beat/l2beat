@@ -9,15 +9,14 @@ import { projectDetailsToNavigationSections } from '~/components/projects/naviga
 import { ProjectDetails } from '~/components/projects/ProjectDetails'
 import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
+import type { ProjectSection } from '~/components/projects/projectSections'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
 import { StickyMobileSectionNavigation } from '~/components/section-navigation/StickyMobileSectionNavigation'
-import { env } from '~/env'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProjectDefiEntry } from '~/server/features/defi/project/getDefiProjectEntry'
-import type { ProjectSection } from '~/server/features/projects/getProjectSections'
 import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 
 interface Props extends AppLayoutProps {
@@ -61,10 +60,7 @@ export function DefiProjectPage({
                 <div className="pt-6 max-md:px-4 lg:pt-4">
                   <ProjectHeader
                     project={entry}
-                    // Ossification keeps DeFi project pages up without the
-                    // DeFi section, so there is no index to link to
-                    section={env.CLIENT_SIDE_DEFI_ENABLED ? 'defi' : undefined}
-                    projectSections={projectSections}
+                    sections={projectSections}
                     versions={versionLinks}
                   />
                   <ProjectSummaryBars

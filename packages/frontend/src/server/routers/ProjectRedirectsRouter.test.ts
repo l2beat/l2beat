@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 import { fetchFromRouter } from '~/test/fetchFromRouter'
-import { createProjectRedirectsRouter } from './ProjectRouter'
+import { createProjectRedirectsRouter } from './ProjectRedirectsRouter'
 
 // Method: request the section URLs project pages had, without following
 // redirects, and check where the permanent redirect sends them. Which slugs
@@ -25,6 +25,7 @@ describe(createProjectRedirectsRouter.name, () => {
     ['/privacy/projects/railgun.md', '/projects/railgun.md'],
     ['/zk-catalog/sp1turbo', '/projects/sp1turbo'],
     ['/interop/protocols/across?update=abc', '/projects/across?update=abc'],
+    ['/interop/protocols/arbitrum.md', '/projects/arbitrum.md'],
     // A scaling project's canonical bridge shows on its page.
     [
       '/interop/protocols/arbitrum',

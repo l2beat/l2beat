@@ -1,11 +1,16 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import { manifest } from '~/utils/Manifest'
-import { getProjectUrl, type ProjectPageMetadata } from '~/utils/project/getProjectUrl'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 
-interface ChainProject extends ProjectPageMetadata {
+interface ChainProject {
+  id: ProjectId
+  slug: string
   name: string
   chainConfig: { name: string }
+  scalingInfo?: object
+  privacyInfo?: object
+  defiInfo?: object
 }
 
 export function getPrivacyTrackedChains(
@@ -25,7 +30,7 @@ export function getPrivacyTrackedChains(
         id: chainName,
         name: project.name,
         iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-        href: hasPage ? getProjectUrl(project) : undefined,
+        href: hasPage ? getProjectPath(project.slug) : undefined,
       },
     ]
   })

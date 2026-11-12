@@ -15,7 +15,7 @@ import uniqBy from 'lodash/uniqBy'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import { manifest } from '~/utils/Manifest'
 import type { ContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
-import { getProjectUrl, type ProjectWithPageMetadata } from '~/utils/project/getProjectUrl'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import type { SevenDayTvsBreakdown } from '../../layer2s/tvs/get7dTvsBreakdown'
 import type { TrustedSetupVerifierData } from '../getZkCatalogEntries'
 import { getZkCatalogLogo } from '../getZkCatalogLogo'
@@ -74,7 +74,7 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
   project: Project<'zkCatalogInfo'>,
   contractUtils: ContractUtils,
   tvs: SevenDayTvsBreakdown,
-  allProjects: ProjectWithPageMetadata[],
+  allProjects: Project<never, 'daBridge' | 'daLayer'>[],
   targetProject?: TargetProject,
 ): TrustedSetupsByProofSystem {
   const grouped = groupBy(
@@ -153,7 +153,7 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
 
 function uniqAndSortProjectsUsedIn(
   usedIn: UsedInProjectWithIcon[] | undefined,
-  allProjects: ProjectWithPageMetadata[],
+  allProjects: Project<never, 'daBridge' | 'daLayer'>[],
   tvs: SevenDayTvsBreakdown,
 ) {
   if (!usedIn) return undefined
@@ -167,7 +167,7 @@ function getVerifiersWithProcessedUsedIn(
   project: Project<'zkCatalogInfo'>,
   key: string,
   contractUtils: ContractUtils,
-  allProjects: ProjectWithPageMetadata[],
+  allProjects: Project<never, 'daBridge' | 'daLayer'>[],
 ) {
   return project.zkCatalogInfo.verifierHashes
     .filter((v) => key === `${v.proofSystem.type}-${v.proofSystem.id}`)
@@ -299,7 +299,7 @@ function getVerifierStatuses(
 
 export function getProjectsUsedIn(
   projectIds: ProjectId[],
-  allProjects: ProjectWithPageMetadata[],
+  allProjects: Project<never, 'daBridge' | 'daLayer'>[],
 ): UsedInProjectWithIcon[] {
   return projectIds
     .map((projectId) => {
@@ -311,7 +311,7 @@ export function getProjectsUsedIn(
         name: project.name,
         slug: project.slug,
         icon: manifest.getUrl(`/icons/${project.slug}.png`),
-        url: getProjectUrl(project),
+        url: getProjectPath(project.slug),
       }
     })
     .filter(notUndefined)
