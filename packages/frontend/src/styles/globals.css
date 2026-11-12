@@ -121,7 +121,6 @@
   /* Chart colors */
   /* Chart grid lines and axis tick labels. */
   --chart-grid: color-mix(in oklab, var(--primary) 25%, transparent);
-  --chart-tick-label: color-mix(in oklab, var(--primary) 50%, transparent);
   --chart-ethereum: #2a5bd8;
   --chart-ethereum-secondary: #53a3ff;
   --chart-pink: #ff3776;
@@ -176,7 +175,6 @@
 
   /* Chart colors */
   --chart-grid: color-mix(in oklab, var(--primary) 40%, transparent);
-  --chart-tick-label: color-mix(in oklab, var(--primary) 70%, transparent);
   --chart-ethereum: #3387ff;
   --chart-ethereum-secondary: #5d82cf;
   --chart-cyan: #40cbe3;
