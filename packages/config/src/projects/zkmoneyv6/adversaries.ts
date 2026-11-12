@@ -1,6 +1,7 @@
 import {
+  ADVICE_SNIPPETS as A,
+  adviceLink,
   definePrivacyAdversaries,
-  PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
 import type { PrivacyExposureMap } from '../../types'
 
@@ -38,8 +39,6 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
       exposureShort: 'Private payments publish encrypted notes.',
       exposureContinued:
         'Claiming a name ties it, its Aztec address and its registration deposit address to the wallet that funds the claim. The first payment to a new contact reveals the recipient through a handshake. L2 logs mark every transaction of the shared token contract.',
-      advice:
-        'Claim the name from a wallet without a public link to the user. Fund each deposit address once and let it be swept.',
       interior: INTERIOR,
       sources: [
         {
@@ -67,7 +66,6 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
         "A DAI withdrawal hides among the DAI portal's depositors, an sUSDS one among the sUSDS portal's.",
       exposureContinued:
         "Each payment shows the payee the payer's Aztec address, and with it any name the payer claimed. The anonymity set is still small.",
-      advice: `${S.commonAmounts} ${S.freshExit}`,
       interior: {
         ...INTERIOR,
         amount: {
@@ -102,8 +100,6 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
         "Alchemy, called under Aztec Labs' key, sees an account's deposit addresses and withdrawals in one session unless the user sets their own Ethereum node.",
       exposureContinued:
         'Desktop has no Tor setting, and Chrome sends WalletConnect traffic over UDP. Tor carries no UDP, so a Tor route must block UDP or that traffic bypasses it.',
-      advice:
-        "Set the user's own Ethereum node as the L1 endpoint. Send all of the computer's traffic through an IP-hiding route that carries UDP, or through Tor with UDP blocked, as Whonix does.",
       interior: {
         ...INTERIOR,
         sender: {
@@ -116,7 +112,6 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
         },
       },
       sources: [
-        S.ipHidingRoutes,
         {
           title:
             'Endpoint settings: Aztec node, old-network node, L1 RPC and enclave',
@@ -196,4 +191,33 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
       ],
     },
   },
+  advice: [
+    {
+      name: 'Set up',
+      text: `Set your own Ethereum node as the L1 endpoint. Send all traffic through NymVPN with the Random profile, an ${adviceLink('IP-hiding route', 'ipHidingRoutes')} that carries UDP, under which contacts and payment requests fail. A system on Tor with UDP blocked, like Whonix, keeps them but must reach your node.`,
+      against: ['networkObserver'],
+      outside: true,
+    },
+    {
+      name: 'Register',
+      text: 'Claim your name from a wallet without a public link to you.',
+      against: ['publicObserver'],
+    },
+    {
+      name: 'Deposit',
+      text: 'Fund each deposit address once and let it be swept.',
+      against: ['publicObserver'],
+    },
+    {
+      name: 'Wait',
+      text: A.wait,
+      against: ['chainAnalyst'],
+      randomWait: true,
+    },
+    {
+      name: 'Withdraw',
+      text: `${A.commonAmounts} ${A.freshAddress}`,
+      against: ['chainAnalyst'],
+    },
+  ],
 })
