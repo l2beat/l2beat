@@ -21,7 +21,7 @@ export interface Point {
   y: number
 }
 
-interface Size {
+export interface Size {
   width: number
   height: number
 }
@@ -461,7 +461,7 @@ export function fitWidthCamera(
 export function fitContainCamera(
   content: Size,
   viewport: Size,
-  padding = FIT_PADDING,
+  padding: number,
 ): Camera {
   const innerWidth = viewport.width - padding * 2
   const innerHeight = viewport.height - padding * 2

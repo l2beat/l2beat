@@ -133,7 +133,11 @@ describe(revealCamera.name, () => {
 describe(fitContainCamera.name, () => {
   it('keeps a positive scale when the frame has no room inside the padding', () => {
     expect(
-      fitContainCamera({ width: 800, height: 600 }, { width: 400, height: 50 }),
+      fitContainCamera(
+        { width: 800, height: 600 },
+        { width: 400, height: 50 },
+        32,
+      ),
     ).toEqual({ x: 0, y: 0, k: 1 })
   })
 })

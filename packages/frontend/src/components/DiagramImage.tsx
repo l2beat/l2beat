@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react'
+import { useCallback, useMemo } from 'react'
 import {
   Dialog,
   DialogClose,
@@ -6,15 +6,18 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '~/components/core/Dialog'
-import { CameraWorld } from '~/components/pan-zoom/CameraWorld'
-import { fitContainCamera, useCamera } from '~/components/pan-zoom/camera'
-import { useDragToPan } from '~/components/pan-zoom/useDragToPan'
+import {
+  type Camera,
+  fitContainCamera,
+  type Size,
+} from '~/components/pan-zoom/camera'
+import { CameraWorld, PanZoomFrame } from '~/components/pan-zoom/PanZoomFrame'
+import { usePanZoom } from '~/components/pan-zoom/usePanZoom'
 import {
   EXPAND_GLYPH,
   Glyph,
   ZoomControls,
 } from '~/components/pan-zoom/ZoomControls'
-import { useResizeObserver } from '~/hooks/useResizeObserver'
 import { cn } from '~/utils/cn'
 import type { DiagramParams } from '~/utils/project/getDiagramParams'
 
@@ -22,6 +25,11 @@ import type { DiagramParams } from '~/utils/project/getDiagramParams'
 const MAX_SCALE = 2
 /** The frame's border already sets the diagram apart, and phones have little room to spare. */
 const FIT_PADDING = 16
+
+/** Zoomed out, it never gets smaller than it fits. */
+function diagramScale(fitted: Camera) {
+  return { min: fitted.k, max: MAX_SCALE }
+}
 
 export function DiagramImage({ diagram }: { diagram: DiagramParams }) {
   return (
@@ -53,48 +61,24 @@ export function DiagramImage({ diagram }: { diagram: DiagramParams }) {
 }
 
 function ZoomableDiagram({ diagram }: { diagram: DiagramParams }) {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const size = useResizeObserver({ ref: containerRef })
-  // Mounted with the dialog, so the window is a close guess until measured.
-  const viewportWidth = size.width ?? window.innerWidth
-  const viewportHeight = size.height ?? window.innerHeight
-  const viewport = { width: viewportWidth, height: viewportHeight }
   const { width, height } = diagram.src.light
   const content = useMemo(() => ({ width, height }), [width, height])
-
-  const fitted = useMemo(
-    () =>
-      fitContainCamera(
-        content,
-        { width: viewportWidth, height: viewportHeight },
-        FIT_PADDING,
-      ),
-    [content, viewportWidth, viewportHeight],
+  const fitTo = useCallback(
+    (viewport: Size) => fitContainCamera(content, viewport, FIT_PADDING),
+    [content],
   )
-  const scale = useMemo(
-    () => ({ min: fitted.k, max: Math.max(MAX_SCALE, fitted.k) }),
-    [fitted.k],
-  )
-  const { camera, worldRef, drawingRef, initialStyles } = useCamera(
+  const panZoom = usePanZoom({
     content,
-    fitted,
-    viewport,
-    containerRef,
-    { wheelPans: true, scale },
-  )
-  const pan = useDragToPan(camera, containerRef, true)
+    fitTo,
+    scale: diagramScale,
+    fillsView: true,
+    // Mounted with the dialog, so the window is a close guess until measured.
+    initialViewport: { width: window.innerWidth, height: window.innerHeight },
+  })
 
   return (
-    <div
-      ref={containerRef}
-      className="relative min-h-0 flex-1 touch-none select-none overflow-hidden rounded-lg border border-divider bg-background"
-      {...pan.handlers}
-    >
-      <CameraWorld
-        worldRef={worldRef}
-        drawingRef={drawingRef}
-        initialStyles={initialStyles}
-      >
+    <PanZoomFrame panZoom={panZoom} className="min-h-0 flex-1">
+      <CameraWorld panZoom={panZoom}>
         {/* Events go to the frame: an image would start a native drag. */}
         <DiagramPictures
           diagram={diagram}
@@ -102,8 +86,8 @@ function ZoomableDiagram({ diagram }: { diagram: DiagramParams }) {
           style={content}
         />
       </CameraWorld>
-      <ZoomControls camera={camera} />
-    </div>
+      <ZoomControls camera={panZoom.camera} />
+    </PanZoomFrame>
   )
 }
 

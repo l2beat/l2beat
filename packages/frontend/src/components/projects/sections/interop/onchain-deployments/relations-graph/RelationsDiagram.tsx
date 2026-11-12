@@ -1,21 +1,19 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { CameraWorld } from '~/components/pan-zoom/CameraWorld'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   centerCamera,
   fitWidthCamera,
   revealCamera,
-  useCamera,
+  type Size,
 } from '~/components/pan-zoom/camera'
-import { useDragToPan } from '~/components/pan-zoom/useDragToPan'
+import { CameraWorld, PanZoomFrame } from '~/components/pan-zoom/PanZoomFrame'
+import { usePanZoom } from '~/components/pan-zoom/usePanZoom'
 import {
   ControlButton,
   EXPAND_GLYPH,
   Glyph,
   ZoomControls,
 } from '~/components/pan-zoom/ZoomControls'
-import { useResizeObserver } from '~/hooks/useResizeObserver'
 import type { InteropTokenRelationsGraph } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
-import { cn } from '~/utils/cn'
 import { DiagramWatermark } from './DiagramWatermark'
 import { edgeKey, getActiveBacking } from './graphSelectors'
 import { layoutRelationsGraph } from './layoutRelationsGraph'
@@ -30,6 +28,7 @@ import { routeRelationsEdges } from './routeRelationsEdges'
 
 /** Space kept between a revealed node and the edge it was moved clear of. */
 const REVEAL_MARGIN = 24
+const INITIAL_VIEWPORT = { width: 960, height: 520 }
 
 interface Props {
   graph: InteropTokenRelationsGraph
@@ -60,12 +59,6 @@ export function RelationsDiagram({
   coveredRight = 0,
   className,
 }: Props) {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const size = useResizeObserver({ ref: containerRef })
-  const viewportWidth = size.width ?? 960
-  const viewportHeight = size.height ?? 520
-  const viewport = { width: viewportWidth, height: viewportHeight }
-
   const layout = useMemo(() => {
     const items = graph.nodes.map((node) => ({
       id: node.id,
@@ -91,22 +84,18 @@ export function RelationsDiagram({
     const box = top && layout.boxes.get(top.id)
     return box ? box.x + box.width / 2 : undefined
   }, [graph.nodes, layout])
-  const fitted = useMemo(
-    () =>
-      fitWidthCamera(
-        layout,
-        { width: viewportWidth, height: viewportHeight },
-        focusX,
-      ),
-    [layout, viewportWidth, viewportHeight, focusX],
+  const fitTo = useCallback(
+    (viewport: Size) => fitWidthCamera(layout, viewport, focusX),
+    [layout, focusX],
   )
-  const { camera, worldRef, drawingRef, gridRef, initialStyles } = useCamera(
-    layout,
-    fitted,
-    viewport,
-    containerRef,
-    { wheelPans: fillsView },
-  )
+  const panZoom = usePanZoom({
+    content: layout,
+    fitTo,
+    fillsView,
+    initialViewport: INITIAL_VIEWPORT,
+  })
+  const { camera } = panZoom
+  const { width: viewportWidth, height: viewportHeight } = panZoom.viewport
   // Brings a newly selected node into view. Re-runs once the viewport
   // settles, so it lands right in the diagram's final size.
   useEffect(() => {
@@ -138,7 +127,6 @@ export function RelationsDiagram({
     viewportWidth,
     viewportHeight,
   ])
-  const pan = useDragToPan(camera, containerRef, fillsView)
 
   const [hoveredId, setHoveredId] = useState<string>()
   const activeId = hoveredId ?? selectedNodeId
@@ -154,36 +142,27 @@ export function RelationsDiagram({
   }, [graph.edges])
 
   return (
-    <div
-      ref={containerRef}
-      className={cn(
-        'relative select-none overflow-hidden rounded-lg border border-divider bg-background',
-        fillsView ? 'touch-none' : 'touch-pan-y',
-        className,
-      )}
-      {...pan.handlers}
+    <PanZoomFrame
+      panZoom={panZoom}
+      className={className}
       onClick={() => {
-        if (!pan.consumeSuppressedClick()) onSelectNode(undefined)
+        if (!panZoom.consumeSuppressedClick()) onSelectNode(undefined)
       }}
     >
       {/* The camera moves the grid and the world by writing their transforms,
           so React never re-renders the diagram for a pan or a pinch. */}
       <div
-        ref={gridRef}
+        ref={panZoom.gridRef}
         className="pointer-events-none absolute will-change-transform"
         style={{
           backgroundImage:
             'radial-gradient(var(--color-divider) 1px, transparent 1px)',
-          ...initialStyles.grid,
+          ...panZoom.initialStyles.grid,
         }}
         aria-hidden
       />
       <DiagramWatermark />
-      <CameraWorld
-        worldRef={worldRef}
-        drawingRef={drawingRef}
-        initialStyles={initialStyles}
-      >
+      <CameraWorld panZoom={panZoom}>
         <svg
           width={layout.width}
           height={layout.height}
@@ -229,7 +208,7 @@ export function RelationsDiagram({
               isSource={sourceIds.has(node.id)}
               // A touch drag that starts on a node may still end in a click on it.
               onSelect={(id) => {
-                if (!pan.consumeSuppressedClick()) onSelectNode(id)
+                if (!panZoom.consumeSuppressedClick()) onSelectNode(id)
               }}
               onHover={setHoveredId}
             />
@@ -273,6 +252,6 @@ export function RelationsDiagram({
           </ControlButton>
         )}
       </ZoomControls>
-    </div>
+    </PanZoomFrame>
   )
 }
