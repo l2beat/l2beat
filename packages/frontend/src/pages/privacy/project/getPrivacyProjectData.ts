@@ -2,11 +2,9 @@ import type { InMemoryCache } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getPrivacyProjectDetails } from '~/server/features/privacy/getPrivacyProjectDetails'
 import { getPrivacyProjectEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
-import { resolvePrivacySources } from '~/server/features/privacy/utils/resolvePrivacySources'
 import { getProjectSections } from '~/server/features/projects/getProjectSections'
 import { getProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
-import { mergeProjectSections } from '~/server/features/projects/mergeProjectSections'
-import { getZkCatalogProjectEntry } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
+import { getZkCatalogProject } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getPrivacyMetadataDescription } from '~/ssr/head/projectMetaDescriptions'
@@ -80,32 +78,12 @@ async function loadPrivacyProjectPage(manifest: Manifest, slug: string) {
     return undefined
   }
 
-  const [projectEntry, zkCatalog] = await Promise.all([
-    getPrivacyProjectEntry(details, helpers),
-    getZkCatalogEntry(slug),
-  ])
-  if (zkCatalog) {
-    projectEntry.sections = mergeProjectSections(
-      projectEntry.sections,
-      zkCatalog.sections,
-      {
-        insertAfterId: 'upgrades-and-governance',
-        // The same value as Value Locked. TODO: decide which to show.
-        drop: ['tvs'],
-      },
-    )
-    for (const section of projectEntry.sections) {
-      // Links to the ZK Catalog page's Value Secured land on Value Locked.
-      if (section.type === 'TvsValueSection') section.props.aliasIds = ['tvs']
-      // Sources may cite sections the catalog adds, like trusted setups.
-      if (section.type === 'PrivacyAdversariesSection') {
-        section.props.adversaries = resolvePrivacySources(
-          details.adversaries,
-          projectEntry.sections,
-        )
-      }
-    }
-  }
+  const zkCatalog = await getZkCatalog(slug)
+  const projectEntry = await getPrivacyProjectEntry(
+    details,
+    helpers,
+    zkCatalog?.sections,
+  )
 
   return {
     head: {
@@ -151,12 +129,12 @@ async function loadPrivacyProjectPage(manifest: Manifest, slug: string) {
   }
 }
 
-/** The ZK Catalog page of a privacy protocol that is also in the catalog. */
-async function getZkCatalogEntry(slug: string) {
+/** The ZK Catalog's part of a privacy protocol that is in the catalog. */
+async function getZkCatalog(slug: string) {
   const project = await ps.getProject({
     slug,
     select: ['zkCatalogInfo', 'display', 'statuses'],
     optional: ['archivedAt', 'milestones', 'tvsInfo'],
   })
-  return project && getZkCatalogProjectEntry(project)
+  return project && getZkCatalogProject(project)
 }

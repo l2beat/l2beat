@@ -54,6 +54,8 @@ export async function getInteropProtocolEntry(
   interopChains: InteropChainWithIcon[],
   data: InteropProtocolDashboardData,
   helpers: SsrHelpers,
+  /** For a protocol that is also a chain, e.g. Avalanche. */
+  chainFlows?: Extract<ProjectDetailsSection, { type: 'InteropFlowsSection' }>,
 ): Promise<InteropProtocolEntry> {
   const isUnderReview = !!project.statuses?.reviewStatus
   const discoveryUpdates = project.discoveryUpdates ?? []
@@ -84,13 +86,22 @@ export async function getInteropProtocolEntry(
 
   const sections: ProjectDetailsSection[] = []
 
+  if (chainFlows) {
+    // The chain's flows cover every protocol, this one included (its
+    // canonical bridge button picks it), so they stand in for its own volume.
+    sections.push({
+      ...chainFlows,
+      props: { ...chainFlows.props, aliasIds: ['interop-volume'] },
+    })
+  }
+
   if (data?.entry) {
     const sortedChains = sortChainsByFlowVolume(interopChains, data.flows)
     const defaultSelectedChains = sortedChains
       .slice(0, MAX_SELECTED_CHAINS)
       .map((chain) => chain.id)
 
-    if (data.flows.length > 0) {
+    if (!chainFlows && data.flows.length > 0) {
       sections.push({
         type: 'InteropVolumeSection',
         props: {

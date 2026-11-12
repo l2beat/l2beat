@@ -1,14 +1,12 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import type { ProjectDetailsSection } from '~/components/projects/sections/types'
-import { getChainProjectEntry } from '~/server/features/chains/getChainProjectEntry'
+import { getChainFlowsSection } from '~/server/features/chains/getChainProjectEntry'
 import { getInteropProtocolData } from '~/server/features/layer2s/interop/getInteropProtocolData'
 import { getInteropProtocolEntry } from '~/server/features/layer2s/interop/protocol/getInteropProtocolEntry'
 import { getInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
 import { getProjectSections } from '~/server/features/projects/getProjectSections'
 import { getProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
-import { mergeProjectSections } from '~/server/features/projects/mergeProjectSections'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getInteropMetadataDescription } from '~/ssr/head/projectMetaDescriptions'
@@ -113,39 +111,16 @@ async function loadInteropProtocolPage(slug: string, manifest: Manifest) {
     getProjectVersionLinks(slug),
   ])
 
-  const [projectEntry, chainEntry] = await Promise.all([
-    getInteropProtocolEntry(
-      project,
-      apiSelection,
-      interopChainsWithIcons,
-      protocolData,
-      helpers,
-    ),
-    // A protocol that is also a chain with a page of its own, e.g. Avalanche.
-    getChainProjectEntry(slug, helpers),
-  ])
-  if (chainEntry) {
-    // The chain's flows cover every protocol, this one included (its
-    // canonical bridge button picks it), so they replace the protocol's own.
-    projectEntry.sections = mergeProjectSections(
-      projectEntry.sections,
-      chainEntry.sections.flatMap((section): ProjectDetailsSection[] =>
-        section.type === 'InteropFlowsSection'
-          ? [
-              {
-                ...section,
-                props: {
-                  ...section.props,
-                  title: 'Volume and flows',
-                  aliasIds: ['interop-volume'],
-                },
-              },
-            ]
-          : [],
-      ),
-      { insertAfterId: 'interop-volume' },
-    ).filter((section) => section.props.id !== 'interop-volume')
-  }
+  // A protocol that is also a chain, e.g. Avalanche.
+  const chainFlows = await getChainFlowsSection(slug, helpers)
+  const projectEntry = await getInteropProtocolEntry(
+    project,
+    apiSelection,
+    interopChainsWithIcons,
+    protocolData,
+    helpers,
+    chainFlows,
+  )
 
   return {
     project: {

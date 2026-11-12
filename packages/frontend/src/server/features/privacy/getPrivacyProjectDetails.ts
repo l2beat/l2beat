@@ -69,7 +69,6 @@ export interface PrivacyProjectDetails {
   discoveryUpdates?: ProjectDiscoveryUpdate[]
   ossification?: ProjectOssificationView
   statuses: ProjectStatuses
-  zkCatalogInfo?: ProjectZkCatalogInfo
   garden?: ProjectGarden
   /** Picks which `garden` verdict applies, see `ProjectGarden`. */
   ossificationHistory?: OssificationHistory
@@ -298,7 +297,6 @@ export async function getPrivacyProjectDetails(
     discoveryUpdates: project.discoveryUpdates,
     ossification,
     statuses: project.statuses,
-    zkCatalogInfo: project.zkCatalogInfo,
     garden: project.garden,
     ossificationHistory: project.ossificationHistory,
     trustedSetups: project.trustedSetups,

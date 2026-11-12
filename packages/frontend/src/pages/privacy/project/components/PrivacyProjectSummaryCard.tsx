@@ -14,6 +14,7 @@ import {
   type ZkCatalogSummary,
 } from '~/pages/zk-catalog/v2/project/components/header/ZkCatalogProjectSummary'
 import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
+import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 import { getPrivacyAdversariesSummary } from '~/server/features/privacy/utils/toPrivacyAdversariesSummary'
 import { cn } from '~/utils/cn'
 import {
@@ -32,6 +33,7 @@ interface Props {
 
 /** Stats, risk profile and adversary rosette at the top of a privacy page. */
 export function PrivacyProjectSummaryCard({ entry, zkCatalog }: Props) {
+  const adversaries = getPrivacyAdversariesSummary(entry.sections)
   return (
     <PrimaryCard
       id="summary"
@@ -50,7 +52,25 @@ export function PrivacyProjectSummaryCard({ entry, zkCatalog }: Props) {
             relayerStat={entry.summary.relayerStat}
           />
 
-          <PrivacyProjectRiskProfileRow entry={entry} zkCatalog={zkCatalog} />
+          <HorizontalSeparator className="max-md:my-2 md:mt-4" />
+          <PrivacyProjectRiskProfile
+            trustedSetup={entry.trustedSetup}
+            exitWindow={entry.exitWindow}
+            adversaries={adversaries}
+            href={entry.href}
+            isUnderReview={entry.isUnderReview}
+            reproducibility={entry.reproducibility}
+            trustedSetupDetails={
+              zkCatalog && (
+                <ProofSystemsWithVerifiers
+                  trustedSetupsByProofSystem={
+                    zkCatalog.trustedSetupsByProofSystem
+                  }
+                />
+              )
+            }
+            className="md:mt-4"
+          />
           <HorizontalSeparator className="max-md:my-2 md:mt-4" />
           <div
             className={cn(
@@ -62,8 +82,9 @@ export function PrivacyProjectSummaryCard({ entry, zkCatalog }: Props) {
           </div>
         </div>
         <VerticalSeparator className="mr-8 ml-12 h-[unset] self-stretch max-xl:hidden" />
-        <PrivacyProjectRosette
-          entry={entry}
+        <PrivacySummaryRosette
+          adversaries={adversaries}
+          isUnderReview={entry.isUnderReview}
           className="my-auto max-xl:hidden"
         />
       </div>
@@ -83,43 +104,15 @@ export function PrivacyProjectSummaryCard({ entry, zkCatalog }: Props) {
   )
 }
 
-/** Privacy, trusted setup, exit window and reproducibility, under a rule. */
-export function PrivacyProjectRiskProfileRow({
-  entry,
-  zkCatalog,
-}: {
-  entry: ProjectPrivacyEntry
-  zkCatalog?: ZkCatalogSummary
-}) {
-  return (
-    <>
-      <HorizontalSeparator className="max-md:my-2 md:mt-4" />
-      <PrivacyProjectRiskProfile
-        trustedSetup={entry.trustedSetup}
-        exitWindow={entry.exitWindow}
-        adversaries={getPrivacyAdversariesSummary(entry.sections)}
-        href={entry.href}
-        isUnderReview={entry.isUnderReview}
-        reproducibility={entry.reproducibility}
-        trustedSetupDetails={
-          zkCatalog && (
-            <ProofSystemsWithVerifiers
-              trustedSetupsByProofSystem={zkCatalog.trustedSetupsByProofSystem}
-            />
-          )
-        }
-        className="md:mt-4"
-      />
-    </>
-  )
-}
-
 /**
  * Where the protocol runs, its attributes, zkVM (from the ZK Catalog's tech
  * stack) and reference app.
  */
 export function getPrivacySummaryStats(
-  entry: ProjectPrivacyEntry,
+  entry: Pick<
+    ProjectPrivacyEntry,
+    'name' | 'trackedOn' | 'scalingProjects' | 'attributes' | 'referenceApp'
+  >,
   options: { techStack?: ZkCatalogSummary['techStack'] } = {},
 ) {
   const trackedOn = (
@@ -172,19 +165,20 @@ export function getPrivacySummaryStats(
   return compact([trackedOn, runsOn, attributes, zkVm, referenceApp])
 }
 
-export function PrivacyProjectRosette({
-  entry,
+/** The adversaries as a rosette, beside the summary. */
+export function PrivacySummaryRosette({
+  adversaries,
+  isUnderReview,
   className,
 }: {
-  entry: ProjectPrivacyEntry
+  adversaries: PrivacyAdversariesSummary
+  isUnderReview: boolean
   className?: string
 }) {
   return (
     <BigPizzaRosette
-      values={getPrivacyAdversaryRosetteValues(
-        getPrivacyAdversariesSummary(entry.sections),
-      )}
-      isUnderReview={entry.isUnderReview}
+      values={getPrivacyAdversaryRosetteValues(adversaries)}
+      isUnderReview={isUnderReview}
       size="small"
       className={className}
     />
