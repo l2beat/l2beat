@@ -15,6 +15,7 @@ import { createDefiRouter } from './defi/DefiRouter'
 import { createDevRouter } from './dev/DevRouter'
 import { createDonateRouter } from './donate/DonateRouter'
 import { createEthereumProjectRouter } from './ethereum/EthereumProjectRouter'
+import { createEthereumPageRouter } from './ethereum-page/EthereumPageRouter'
 import { createFaqRouter } from './faq/FaqRouter'
 import { createGardenRouter } from './garden/GardenRouter'
 import { createGlossaryRouter } from './glossary/GlossaryRouter'
@@ -65,6 +66,7 @@ export function createServerPageRouter(
     // After Ethereum's router: it owns /projects/ethereum.
     createChainProjectRouter,
     createBlobsRouter,
+    createEthereumPageRouter,
     createZkCatalogRouter,
     createGovernanceRouter,
     createNativeRollupsRouter,

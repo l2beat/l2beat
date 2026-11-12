@@ -79,7 +79,8 @@ async function loadEthereumProjectPage(manifest: Manifest) {
   }
 }
 
-async function getEntry(helpers: SsrHelpers) {
+/** Shared with the /ethereum page, which renders the same risk and technology sections */
+export async function getEntry(helpers: SsrHelpers) {
   const project = await ps.getProject({
     id: ProjectId.ETHEREUM,
     select: ['daLayer', 'daBridge', 'display', 'statuses'],

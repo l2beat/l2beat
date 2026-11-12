@@ -114,6 +114,16 @@ export const searchBarPages = withIndex([
         },
       ]
     : []),
+  ...(env.CLIENT_SIDE_ETHEREUM_PAGE
+    ? [
+        {
+          category: 'other' as const,
+          name: 'Ethereum',
+          href: '/ethereum',
+          tags: ['pages', 'ethereum', 'l1', 'live', 'blocks', 'fees'],
+        },
+      ]
+    : []),
   ...(env.CLIENT_SIDE_BLOBS_PAGE
     ? [
         {
