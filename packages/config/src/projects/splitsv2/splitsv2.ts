@@ -83,6 +83,10 @@ export const splitsv2: BaseProject = {
         title: "Don't send Mainnet USDT to Immutable V2.1 Splits",
         url: 'https://splits.org/blog/dont-send-mainnet-usdt-to-immutable-v2-1-splits/',
       },
+      {
+        title: 'USDT paid out from a v2.1 pull split without an owner',
+        url: 'https://etherscan.io/tx/0x111748c9c5f5cbcb1429aabd5ab4a95cf65807258131db33c9c6cb00b3a8c3ac',
+      },
     ],
     badges: [],
   },
@@ -106,7 +110,8 @@ export const splitsv2: BaseProject = {
       ],
       additionalConsiderations: [
         'In a push split, a token that refuses to pay one recipient pays none of them. A token issuer can cause this by blacklisting a single recipient.',
-        'A recipient contract of a push split can block the ETH payouts of all its recipients.',
+        'A token issuer that blacklists the Warehouse freezes that token for every recipient.',
+        'In a push split of up to about ten recipients, a recipient contract can block all ETH payouts.',
         "A split's owner, where its creator set one, can pause its payouts.",
       ],
     },
@@ -115,13 +120,13 @@ export const splitsv2: BaseProject = {
       license: 'GPL-3.0',
       points: [
         'The contracts and the Splits Lite interface are published under the GPL, and the SDK under the MIT license.',
-        'The contracts are verified onchain.',
-        'Splits Lite builds and runs locally. It reads splits from the chain and needs no Splits server.',
+        'The contracts are verified onchain, and a local build of the tagged source reproduces the deployed code.',
+        'Splits Lite builds and runs locally. It reads splits from the chain and contacts no Splits server.',
       ],
       additionalConsiderations: [
-        'Splits Lite creates push splits only. Creating a pull split takes the SDK or a direct contract call.',
+        'As published, Splits Lite reads the chain through Alchemy. Running it takes an Alchemy key and a WalletConnect project ID.',
+        'Splits Lite creates push splits only and withdraws from the Warehouse only as part of a payout. A pull split, or a withdrawal on its own, takes the SDK or a direct contract call.',
       ],
-      notReviewed: ['A local build of the contracts.'],
     },
     privacy: {
       status: 'fullyTransparent',
