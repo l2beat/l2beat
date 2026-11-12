@@ -7,7 +7,6 @@ import type {
 } from '@l2beat/config'
 import compact from 'lodash/compact'
 import isEqual from 'lodash/isEqual'
-import upperFirst from 'lodash/upperFirst'
 import type { PrivacyAdversariesSectionProps } from '~/components/projects/sections/privacy/PrivacyAdversariesSection'
 import type { PrivacyAdviceSectionProps } from '~/components/projects/sections/privacy/PrivacyAdviceSection'
 import type { PrivacyAssetsBreakdownSectionProps } from '~/components/projects/sections/privacy/PrivacyAssetsBreakdownSection'
@@ -97,7 +96,7 @@ function renderReferenceApps(app: PrivacyReferenceApp) {
       : delivery.check.label)
   const deliveryMeta = [
     `${delivery.kind.label}: ${delivery.kind.description}`,
-    `${upperFirst(delivery.source.label)}: ${delivery.source.description}`,
+    `${delivery.source.label}: ${delivery.source.description}`,
     delivery.rebuild && link(REFERENCE_APP.rebuildLink, delivery.rebuild),
     check,
   ]

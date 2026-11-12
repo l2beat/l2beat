@@ -3,7 +3,6 @@ import {
   PRIVACY_ADVERSARY_ORDER,
 } from '@l2beat/config/build/common/privacyAdversaries'
 import lowerFirst from 'lodash/lowerFirst'
-import upperFirst from 'lodash/upperFirst'
 import { externalLinks } from '~/consts/externalLinks'
 import { ANONYMITY_SET_TOOLTIPS } from '~/server/features/privacy/anonymity-set/anonymitySetTooltips'
 import { ANONYMITY_SET_WINDOW_DAYS } from '~/server/features/privacy/anonymity-set/calculateAnonymitySets'
@@ -124,7 +123,7 @@ export function getPrivacyMethodologySections() {
       'A second word says whether the app comes from public source.',
       bulletList(
         Object.values(DELIVERY.sources).map(
-          (source) => `**${upperFirst(source.label)}**: ${source.description}`,
+          (source) => `**${source.label}**: ${source.description}`,
         ),
       ),
       `App teams can propose their app in the ${link('Privacy adversaries framework', externalLinks.articles.privacyAdversariesFramework)} thread on the ETHBEAT forum.`,

@@ -156,8 +156,7 @@ export function PrivacyProjectPage({
                           <HorizontalSeparator className="max-md:my-2 md:mt-4" />
                           <div
                             className={cn(
-                              // A stat that does not fit starts a new row, so none is squeezed.
-                              'flex flex-col md:mt-4 md:flex-row md:flex-wrap md:gap-x-8 md:gap-y-4',
+                              'flex flex-col md:mt-4 md:flex-row md:gap-8',
                               MOBILE_SUMMARY_ROWS,
                             )}
                           >

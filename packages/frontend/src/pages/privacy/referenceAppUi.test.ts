@@ -87,7 +87,7 @@ describe('referenceAppUi', () => {
       expect(hosted.kind.id).toEqual('hosted')
       expect(hosted.source).toEqual({
         id: 'open',
-        label: 'open',
+        label: 'Open',
         sentiment: 'warning',
         description:
           'The source is public, but no rebuild confirms the app comes from it.',

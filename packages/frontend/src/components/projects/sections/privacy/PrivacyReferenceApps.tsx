@@ -1,9 +1,6 @@
-import type { Sentiment } from '@l2beat/config'
-import upperFirst from 'lodash/upperFirst'
 import { Fragment, type ReactNode } from 'react'
 import { CustomLink } from '~/components/link/CustomLink'
 import { CustomLinkIcon } from '~/icons/Outlink'
-import type { SvgIconProps } from '~/icons/SvgIcon'
 import { PRIVACY_EXPOSURE_CHIP_CLASS_NAME } from '~/pages/privacy/adversaries/privacyAdversaryUi'
 import {
   getCheckedAppSourceLabel,
@@ -14,11 +11,7 @@ import {
 } from '~/pages/privacy/referenceAppUi'
 import type { PrivacyReferenceApp } from '~/server/features/privacy/utils/getPrivacyReferenceApp'
 import { cn } from '~/utils/cn'
-import {
-  DELIVERY_KIND_ICONS,
-  DELIVERY_SOURCE_ICONS,
-  deliveryIconColor,
-} from './PrivacyDeliveryIcons'
+import { DeliveryIcon, type DeliveryPart } from './PrivacyDelivery'
 
 const CHIPS = {
   // Neutral, since green would read as a privacy verdict the app may not earn.
@@ -74,18 +67,10 @@ export function PrivacyReferenceApps({ app }: { app: PrivacyReferenceApp }) {
               ),
             ]}
           />
-          <DeliveryLine
-            icon={DELIVERY_KIND_ICONS[delivery.kind.id]}
-            sentiment={delivery.kind.sentiment}
-            label={delivery.kind.label}
-          >
+          <DeliveryLine part={delivery.kind}>
             {delivery.kind.description}
           </DeliveryLine>
-          <DeliveryLine
-            icon={DELIVERY_SOURCE_ICONS[delivery.source.id]}
-            sentiment={delivery.source.sentiment}
-            label={upperFirst(delivery.source.label)}
-          >
+          <DeliveryLine part={delivery.source}>
             {delivery.source.description}
             {delivery.rebuild && (
               <>
@@ -202,23 +187,18 @@ function AppRow({
 
 /** One half of the delivery: its symbol, its word and what it means. */
 function DeliveryLine({
-  icon: Icon,
-  sentiment,
-  label,
+  part,
   children,
 }: {
-  icon: (props: SvgIconProps) => ReactNode
-  sentiment: Sentiment
-  label: string
+  part: DeliveryPart
   children: ReactNode
 }) {
   return (
     <p className="flex gap-1.5 text-paragraph-13 text-secondary md:text-paragraph-14">
-      <Icon
-        className={cn('mt-0.5 size-4 shrink-0', deliveryIconColor(sentiment))}
-      />
+      <DeliveryIcon part={part} className="mt-0.5 size-4" />
       <span>
-        <span className="font-medium text-primary">{label}:</span> {children}
+        <span className="font-medium text-primary">{part.label}:</span>{' '}
+        {children}
       </span>
     </p>
   )

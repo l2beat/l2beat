@@ -1,4 +1,5 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import lowerFirst from 'lodash/lowerFirst'
 import type {
   PrivacyCheckedApp,
   PrivacyReferenceApp,
@@ -52,18 +53,18 @@ export const DELIVERY = {
   },
   sources: {
     reproducible: {
-      label: 'reproducible',
+      label: 'Reproducible',
       sentiment: 'good',
       description: 'A rebuild of the public source gives the same app.',
     },
     open: {
-      label: 'open',
+      label: 'Open',
       sentiment: 'warning',
       description:
         'The source is public, but no rebuild confirms the app comes from it.',
     },
     closed: {
-      label: 'closed',
+      label: 'Closed',
       sentiment: 'bad',
       description:
         "The source is closed, so our review rests on the app's observed behaviour.",
@@ -129,7 +130,7 @@ export function getReferenceAppDelivery(app: PrivacyReferenceApp) {
   return {
     kind,
     source,
-    label: `${kind.label}, ${source.label}`,
+    label: `${kind.label}, ${lowerFirst(source.label)}`,
     check: getDeliveryCheck(app),
     rebuild,
   }
