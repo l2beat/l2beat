@@ -11,6 +11,7 @@ import { EM_DASH } from '~/consts/characters'
 import { InfoIcon } from '~/icons/Info'
 import type { InteropTokenDashboardData } from '~/server/features/layer2s/interop/getInteropTokenData'
 import { cn } from '~/utils/cn'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { InteropNoDataBadge } from '../../components/InteropNoDataBadge'
 import { buildInteropUrl } from '../../utils/buildInteropUrl'
 import type { InteropSelection } from '../../utils/types'
@@ -133,7 +134,7 @@ function TopProtocolIdentity({
   isLoading: boolean
 }) {
   const href = topProtocol
-    ? buildInteropUrl(`/projects/${topProtocol.slug}`, apiSelection)
+    ? buildInteropUrl(getProjectPath(topProtocol.slug), apiSelection)
     : undefined
   const content = isLoading ? (
     <Skeleton className="h-8 w-28" />

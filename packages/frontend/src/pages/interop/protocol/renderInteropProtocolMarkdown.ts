@@ -10,7 +10,6 @@ import {
   formatAverageDuration,
   formatTopPath,
   formatTransferCount,
-  interopProtocolUrl,
   linkInteropToken,
   listTopItems,
 } from '~/server/markdown/interopMarkdown'
@@ -19,6 +18,7 @@ import {
   getProjectStatusWarnings,
   renderProjectMarkdown,
 } from '~/server/markdown/renderProjectMarkdown'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { TRANSFER_TYPE_DISPLAY } from '../utils/display'
 import { getBridgeTypeVolumes } from '../utils/getBridgeTypeVolumes'
 import { getTransferSizeBreakdown } from '../utils/transferSizeBuckets'
@@ -36,7 +36,7 @@ export function renderInteropProtocolMarkdown({
 }: InteropProtocolPageContent): string {
   return renderProjectMarkdown({
     name: entry.name,
-    pagePath: interopProtocolUrl(entry.slug),
+    pagePath: getProjectPath(entry.slug),
     summary: {
       warnings: [
         ...getProjectStatusWarnings(entry),

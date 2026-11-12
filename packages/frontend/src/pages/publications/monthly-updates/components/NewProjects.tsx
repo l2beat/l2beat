@@ -2,6 +2,7 @@ import { formatCurrency, formatNumber } from '@l2beat/shared-pure'
 import { StageBadge } from '~/components/badge/StageBadge'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
 import type { EcosystemMonthlyUpdateEntry } from '~/server/features/monthly-reports/getEcosystemEntries'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 
 interface Props {
   newProjects: EcosystemMonthlyUpdateEntry['newProjects']
@@ -37,7 +38,7 @@ function NewProject({
         <div className="grid grid-cols-5 items-center text-sm">
           <a
             className="flex w-fit items-center gap-2 rounded-[4px] p-1 hover:bg-primary/10"
-            href={`/projects/${project.slug}`}
+            href={getProjectPath(project.slug)}
           >
             <img
               src={project.iconUrl}

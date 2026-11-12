@@ -18,6 +18,7 @@ import type {
   ProtocolEntry,
 } from '~/server/features/layer2s/interop/types'
 import { cn } from '~/utils/cn'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import type { InteropSelection } from '../../utils/types'
 import { InteropNoDataBadge } from '../InteropNoDataBadge'
 import { TopTokensCell } from '../tokens/TopTokensCell'
@@ -66,7 +67,7 @@ function makeNameColumn<T extends CompactProtocolEntry>(opts?: {
           description={ctx.row.original.description}
         >
           <TableLink
-            href={`/projects/${ctx.row.original.slug}`}
+            href={getProjectPath(ctx.row.original.slug)}
             className="w-auto"
           >
             <TwoRowCell>

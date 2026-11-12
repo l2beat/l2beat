@@ -16,6 +16,7 @@ import {
   getProjectStatusWarnings,
   renderProjectMarkdown,
 } from '~/server/markdown/renderProjectMarkdown'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { PRIVACY_ASSESSMENT } from '../privacyAssessment'
 import { PRIVACY_WALKAWAY_TEST_TOOLTIPS } from '../privacyWalkawayTest'
 import {
@@ -34,7 +35,7 @@ export function renderPrivacyProjectMarkdown(
 ): string {
   return renderProjectMarkdown({
     name: entry.name,
-    pagePath: `/projects/${entry.slug}`,
+    pagePath: getProjectPath(entry.slug),
     summary: {
       warnings: [
         ...getProjectStatusWarnings({

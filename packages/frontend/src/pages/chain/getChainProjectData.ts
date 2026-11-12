@@ -6,8 +6,10 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
-import { getProjectOgImagePath } from '~/utils/project/getProjectUrl'
-import { getChainProjectPath } from './paths'
+import {
+  getProjectOgImagePath,
+  getProjectPath,
+} from '~/utils/project/getProjectPath'
 
 export async function getChainProjectData(
   manifest: Manifest,
@@ -47,7 +49,7 @@ async function loadChainProjectPage(manifest: Manifest, slug: string) {
       metadata: getMetadata(manifest, {
         name: entry.name,
         description: `Cross-chain volume and flows of ${entry.name}: the interop protocols and tokens moving value between ${entry.name} and other chains.`,
-        url: getChainProjectPath(entry.slug),
+        url: getProjectPath(entry.slug),
         // Chain pages show only interop flows, which have no markdown version.
         hasMarkdown: false,
         openGraph: {

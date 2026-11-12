@@ -10,6 +10,7 @@ import { ProofSystemCell } from '~/components/table/cells/ProofSystemCell'
 import { getL2CommonProjectColumns } from '~/components/table/common-project-columns/L2CommonProjectColumns'
 import { env } from '~/env'
 import { InfoIcon } from '~/icons/Info'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { AnomalyIndicator } from '../AnomalyIndicator'
 import { IntervalsHeader } from './IntervalsHeader'
 import { LivenessIntervalCell } from './LivenessIntervalCell'
@@ -21,7 +22,7 @@ export function getL2LivenessColumns(hideProofSystem?: boolean) {
   return compact([
     ...getL2CommonProjectColumns(
       columnHelper,
-      (row) => `/projects/${row.slug}#liveness`,
+      (row) => `${getProjectPath(row.slug)}#liveness`,
     ),
     columnHelper.group({
       id: 'data',
@@ -102,7 +103,7 @@ export function getL2LivenessColumns(hideProofSystem?: boolean) {
         return (
           <AnomalyIndicator
             anomalies={entry.anomalies}
-            href={`/projects/${entry.slug}#liveness`}
+            href={`${getProjectPath(entry.slug)}#liveness`}
           />
         )
       },

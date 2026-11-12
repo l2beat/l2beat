@@ -7,7 +7,7 @@ import {
   INTEGRATE_CROPS_PATH,
   SUBMIT_PROTOCOL_PATH,
 } from '~/pages/garden/paths'
-import { getProjectPath } from '~/utils/project/getProjectUrl'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { getChainProjects } from './features/chains/getChainProjects'
 import { hasDefiProjectPage } from './features/defi/project/hasDefiProjectPage'
 import {

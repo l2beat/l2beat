@@ -1,6 +1,7 @@
 import { Breadcrumbs } from '~/components/Breadcrumbs'
 import { UtcDateTime } from '~/components/core/UtcDateTime'
 import { SearchBarButton } from '~/components/search-bar/SearchBarButton'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 
 interface Props {
   title: string
@@ -32,7 +33,7 @@ export function TvsBreakdownPageHeader({
                   <span className="leading-none">{title}</span>
                 </div>
               ),
-              href: `/projects/${slug}`,
+              href: getProjectPath(slug),
             },
             {
               content: 'TVS Breakdown',

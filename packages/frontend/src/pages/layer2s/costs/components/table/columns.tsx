@@ -7,6 +7,7 @@ import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import { getL2CommonProjectColumns } from '~/components/table/common-project-columns/L2CommonProjectColumns'
 import { TableLink } from '~/components/table/TableLink'
 import type { L2CostsEntry } from '~/server/features/layer2s/costs/getL2CostsEntries'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { getColumnHeaderUnderline } from '~/utils/table/getColumnHeaderUnderline'
 import { CostsBreakdownValueCell } from '../CostsBreakdownValueCell'
 import type { CostsMetric } from '../CostsMetricContext'
@@ -41,7 +42,7 @@ export function getL2CostsColumns(metric: CostsMetric) {
   return [
     ...getL2CommonProjectColumns(
       columnHelper,
-      (row) => `/projects/${row.slug}#onchain-costs`,
+      (row) => `${getProjectPath(row.slug)}#onchain-costs`,
     ),
     columnHelper.group({
       id: 'total-cost-group',

@@ -4,7 +4,10 @@ import { getL2ProjectTvsBreakdown } from '~/server/features/layer2s/project/getL
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
-import { getProjectOgImagePath } from '~/utils/project/getProjectUrl'
+import {
+  getProjectOgImagePath,
+  getProjectPath,
+} from '~/utils/project/getProjectPath'
 import { optionToRange } from '~/utils/range/range'
 
 export async function getL2ProjectTvsBreakdownData(
@@ -39,7 +42,7 @@ export async function getL2ProjectTvsBreakdownData(
         breadcrumbParents: [
           {
             name: tvsBreakdownData.project.name,
-            path: `/projects/${tvsBreakdownData.project.slug}`,
+            path: getProjectPath(tvsBreakdownData.project.slug),
           },
         ],
         structuredData: (page) => [

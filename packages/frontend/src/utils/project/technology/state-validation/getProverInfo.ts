@@ -4,6 +4,7 @@ import type { ProverInfoData } from '~/components/projects/sections/state-valida
 import type { SevenDayTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
 import { getTrustedSetupsWithVerifiersAndAttesters } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
 import { manifest } from '~/utils/Manifest'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import type { ContractUtils } from '../../contracts-and-permissions/getContractUtils'
 import type { ProjectWithPageMetadata } from '../../getProjectUrl'
 import { getUsedZkCatalogProjects } from '../../getUsedZkCatalogProjects'
@@ -36,7 +37,7 @@ export function getProverInfos(
     return {
       name: zkCatalogProject.name,
       icon: manifest.getUrl(`/icons/${zkCatalogProject.slug}.png`),
-      href: `/projects/${zkCatalogProject.slug}`,
+      href: getProjectPath(zkCatalogProject.slug),
       quantumResistant: zkCatalogProject.zkCatalogInfo.quantumResistant,
       trustedSetups,
     }

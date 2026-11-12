@@ -1,6 +1,7 @@
 import { formatCurrency } from '@l2beat/shared-pure'
 import type { FlowProtocol } from '~/server/features/layer2s/interop/getInteropFlows'
 import { cn } from '~/utils/cn'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import {
   HOME_ICON_CLASS,
   HOME_ROW_LINK_CLASS,
@@ -64,7 +65,7 @@ export function InteropCornerFigures({
               {protocols.map(({ slug, name, iconUrl, volume }) => (
                 <li key={slug} className="col-span-3 grid grid-cols-subgrid">
                   <a
-                    href={`/projects/${slug}`}
+                    href={getProjectPath(slug)}
                     title={name}
                     className="group col-span-3 grid grid-cols-subgrid items-center"
                   >

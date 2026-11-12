@@ -42,6 +42,7 @@ import { getDataPostedSection } from '~/utils/project/data-posted/getDataPostedS
 import { getBadgeWithParamsAndLink } from '~/utils/project/getBadgeWithParams'
 import { getDiagramParams } from '~/utils/project/getDiagramParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
+import { getProjectTvsBreakdownPath } from '~/utils/project/getProjectPath'
 import { PROJECT_PAGE_METADATA_FIELDS } from '~/utils/project/getProjectUrl'
 import { getLivenessSection } from '~/utils/project/liveness/getLivenessSection'
 import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
@@ -397,7 +398,7 @@ export async function getL2ProjectEntry(
       props: {
         id: 'tvs',
         title: 'Value Secured',
-        tvsBreakdownUrl: `/projects/${project.slug}/tvs-breakdown`,
+        tvsBreakdownUrl: getProjectTvsBreakdownPath(project.slug),
         compareUrl: getProjectCompareUrl(project, 'tvs'),
         milestones: sortedMilestones,
         tokens,

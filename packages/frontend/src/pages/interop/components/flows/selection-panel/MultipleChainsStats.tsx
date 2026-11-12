@@ -11,6 +11,7 @@ import {
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import type { AverageDuration } from '~/server/features/layer2s/interop/types'
 import { useTRPC } from '~/trpc/React'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { getInteropTokenUrl } from '../../../utils/getInteropTokenUrl'
 import { getPairFlowStats } from '../utils/flowStats'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
@@ -86,7 +87,7 @@ export function MultipleChainsStats({
           items={pairData.topProtocols.map((p) => ({
             ...p,
             title: p.name,
-            href: linkTopProtocols ? `/projects/${p.slug}` : undefined,
+            href: linkTopProtocols ? getProjectPath(p.slug) : undefined,
           }))}
         />
       )}

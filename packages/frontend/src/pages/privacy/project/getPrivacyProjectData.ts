@@ -14,7 +14,10 @@ import { getWebPageStructuredData } from '~/ssr/head/structured-data/getWebPageS
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
-import { getProjectOgImagePath } from '~/utils/project/getProjectUrl'
+import {
+  getProjectOgImagePath,
+  getProjectPath,
+} from '~/utils/project/getProjectPath'
 import { renderPrivacyProjectMarkdown } from './renderPrivacyProjectMarkdown'
 
 export async function getPrivacyProjectData(
@@ -118,7 +121,7 @@ async function loadPrivacyProjectPage(manifest: Manifest, slug: string) {
         }),
         // Derived from the slug, not the request URL: the cache entry is
         // shared by every request for the project, including the .md one.
-        url: `/projects/${details.slug}`,
+        url: getProjectPath(details.slug),
         openGraph: {
           image: getProjectOgImagePath(details.slug),
         },

@@ -2,7 +2,7 @@ import { existsSync } from 'fs'
 import partition from 'lodash/partition'
 import path from 'path'
 import { getCollection } from '~/content/getCollection'
-import { getProjectOgImagePath } from '~/utils/project/getProjectUrl'
+import { getProjectOgImagePath } from '~/utils/project/getProjectPath'
 import { getProjectOgImagePages } from './projects/generateProjectOgImages'
 
 describe('opengraph images', () => {

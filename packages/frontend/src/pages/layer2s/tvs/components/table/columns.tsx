@@ -9,6 +9,10 @@ import { getFilterSearchParams } from '~/components/table/filters/utils/getFilte
 import { withChangeSort } from '~/components/table/sorting/changeSortColumn'
 import { categoryToLabel } from '~/pages/layer2s/project/tvs-breakdown/components/tables/categoryToLabel'
 import { sourceToLabel } from '~/server/features/layer2s/tvs/utils/sourceToLabel'
+import {
+  getProjectPath,
+  getProjectTvsBreakdownPath,
+} from '~/utils/project/getProjectPath'
 import { getColumnHeaderUnderline } from '~/utils/table/getColumnHeaderUnderline'
 import { TableLink } from '../../../../../components/table/TableLink'
 import type { L2TvsTableRow } from '../../utils/toTableRows'
@@ -26,7 +30,7 @@ export const getL2TvsColumns = (
 ) => [
   ...getL2CommonProjectColumns(
     columnHelper,
-    (row) => `/projects/${row.slug}#tvs`,
+    (row) => `${getProjectPath(row.slug)}#tvs`,
     opts,
   ),
   columnHelper.group({
@@ -65,7 +69,7 @@ export const getL2TvsColumns = (
             }
             return (
               <TotalValueSecuredCell
-                href={`/projects/${ctx.row.original.slug}/tvs-breakdown`}
+                href={getProjectTvsBreakdownPath(ctx.row.original.slug)}
                 tvsWarnings={ctx.row.original.tvs.warnings}
                 total={data.breakdown.total}
                 breakdown={
@@ -327,7 +331,7 @@ function BreakdownCell(
     <TableLink
       href={
         data.breakdown[props.dataKey] > 0
-          ? `/projects/${props.row.slug}/tvs-breakdown?filters=${filters}#tvs-breakdown-token-table`
+          ? `${getProjectTvsBreakdownPath(props.row.slug)}?filters=${filters}#tvs-breakdown-token-table`
           : undefined
       }
     >

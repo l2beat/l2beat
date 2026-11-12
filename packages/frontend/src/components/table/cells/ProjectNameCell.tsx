@@ -31,6 +31,7 @@ import { UnderReviewIcon } from '~/icons/UnderReview'
 import { UnverifiedIcon } from '~/icons/Unverified'
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
 import { cn } from '~/utils/cn'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { getUnderReviewText } from '~/utils/project/underReview'
 import { PrimaryValueCell } from './PrimaryValueCell'
 
@@ -54,7 +55,7 @@ interface ProjectCellProps {
 function redWarningDetailHref(project: ProjectCellProject): string | undefined {
   const anchor = project.statuses?.redWarning?.detailAnchor
   if (!anchor) return undefined
-  const detailsHref = project.detailsHref ?? `/projects/${project.slug}`
+  const detailsHref = project.detailsHref ?? getProjectPath(project.slug)
   return `${detailsHref}#${anchor}`
 }
 
@@ -168,7 +169,7 @@ export function ProjectNameMobileStatusIcons({
               <>
                 <p>{project.statuses.verificationWarnings.contracts}</p>
                 <CustomLink
-                  href={`/projects/${project.slug}#contracts`}
+                  href={`${getProjectPath(project.slug)}#contracts`}
                   className="inline-block text-label-value-13"
                 >
                   View details
@@ -188,7 +189,7 @@ export function ProjectNameMobileStatusIcons({
                   </Markdown>
                 )}
                 <CustomLink
-                  href={`/projects/${project.slug}#program-hashes`}
+                  href={`${getProjectPath(project.slug)}#program-hashes`}
                   className="inline-block text-label-value-13"
                 >
                   View details
@@ -255,7 +256,7 @@ export function ProjectNameMobileStatusIcons({
             information.
           </p>
           <CustomLink
-            href={`/projects/${project.slug}#liveness`}
+            href={`${getProjectPath(project.slug)}#liveness`}
             className="inline-block text-label-value-13"
           >
             View details
@@ -439,7 +440,7 @@ function getTooltipSections(project: ProjectCellProject) {
     sections.push({
       id: 'contracts',
       text: project.statuses.verificationWarnings.contracts,
-      href: `/projects/${project.slug}#contracts`,
+      href: `${getProjectPath(project.slug)}#contracts`,
       variant: 'negative',
       icon: <UnverifiedIcon className="size-4" />,
     })
@@ -451,7 +452,7 @@ function getTooltipSections(project: ProjectCellProject) {
       text: project.statuses.verificationWarnings.programHashes,
       textDetail:
         project.statuses.verificationWarnings.programHashesDescription,
-      href: `/projects/${project.slug}#program-hashes`,
+      href: `${getProjectPath(project.slug)}#program-hashes`,
       variant: 'negative',
       icon: <UnverifiedIcon className="size-4" />,
     })
@@ -500,7 +501,7 @@ function getTooltipSections(project: ProjectCellProject) {
     sections.push({
       id: 'ongoing-anomaly',
       text: "There's an ongoing anomaly. Check detailed page for more information.",
-      href: `/projects/${project.slug}#liveness`,
+      href: `${getProjectPath(project.slug)}#liveness`,
       variant: 'negative',
       icon: (
         <span className="flex h-4 shrink-0 items-center pb-px">

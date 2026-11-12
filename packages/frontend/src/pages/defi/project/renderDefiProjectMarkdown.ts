@@ -2,6 +2,7 @@ import compact from 'lodash/compact'
 import type { ProjectDefiEntry } from '~/server/features/defi/project/getDefiProjectEntry'
 import { formatUsd } from '~/server/markdown/markdown'
 import { renderProjectMarkdown } from '~/server/markdown/renderProjectMarkdown'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { getUnderReviewText } from '~/utils/project/underReview'
 
 /**
@@ -14,7 +15,7 @@ export function renderDefiProjectMarkdown(
 ): string {
   return renderProjectMarkdown({
     name: entry.name,
-    pagePath: `/projects/${entry.slug}`,
+    pagePath: getProjectPath(entry.slug),
     summary: {
       warnings: compact([
         entry.isUnderReview && getUnderReviewText('config'),

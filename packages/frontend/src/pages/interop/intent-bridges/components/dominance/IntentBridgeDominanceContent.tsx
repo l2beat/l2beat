@@ -1,5 +1,6 @@
 import { formatInteger } from '@l2beat/shared-pure'
 import type { IntentBridgesData } from '~/server/features/layer2s/interop/getIntentBridgesData'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import {
   type DominanceMetric,
   type DominanceRow,
@@ -96,7 +97,7 @@ function toDominanceRow(item: ActiveIntentBridgeRow): DominanceRow {
 function BridgeHeader({ bridge }: { bridge: InteropIntentBridge }) {
   return (
     <a
-      href={`/projects/${bridge.slug}`}
+      href={getProjectPath(bridge.slug)}
       className="-mx-2 inline-flex min-w-0 items-center gap-2 rounded px-2 py-1 transition-colors hover:bg-pure-black/5 dark:hover:bg-pure-white/10"
     >
       <img

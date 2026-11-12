@@ -18,7 +18,7 @@ import type { Manifest } from '~/utils/Manifest'
 import {
   getProjectOgImagePath,
   getProjectPath,
-} from '~/utils/project/getProjectUrl'
+} from '~/utils/project/getProjectPath'
 import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
 import { renderInteropProtocolMarkdown } from './renderInteropProtocolMarkdown'
 

@@ -29,6 +29,7 @@ import { BadgesSection } from '~/components/projects/sections/BadgesSection'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import type { ProjectL2Entry } from '~/server/features/layer2s/project/getL2ProjectEntry'
 import { cn } from '~/utils/cn'
+import { getProjectTvsBreakdownPath } from '~/utils/project/getProjectPath'
 import { ProjectL2Rosette } from './L2ProjectRosette'
 import { ProjectL2Stats } from './L2ProjectStats'
 
@@ -94,7 +95,7 @@ export function ProjectL2Summary({ project, merged }: Props) {
                     }
                     href={
                       project.header.tvs
-                        ? `/projects/${project.slug}/tvs-breakdown`
+                        ? getProjectTvsBreakdownPath(project.slug)
                         : undefined
                     }
                   >
@@ -162,7 +163,7 @@ export function ProjectL2Summary({ project, merged }: Props) {
                   <ConditionalLink
                     href={
                       project.header.tvs
-                        ? `/projects/${project.slug}/tvs-breakdown`
+                        ? getProjectTvsBreakdownPath(project.slug)
                         : undefined
                     }
                   >
@@ -221,7 +222,7 @@ export function ProjectL2Summary({ project, merged }: Props) {
                 </TooltipContent>
               </Tooltip>
               <CustomLink
-                href={`/projects/${project.slug}/tvs-breakdown`}
+                href={getProjectTvsBreakdownPath(project.slug)}
                 className="mt-2 font-medium text-label-value-13 md:hidden"
               >
                 View TVS breakdown

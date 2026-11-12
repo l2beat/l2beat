@@ -1,5 +1,5 @@
 import express from 'express'
-import { getProjectPath } from '~/utils/project/getProjectUrl'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 
 export function createMigratedProjectsRouter() {
   const router = express.Router()

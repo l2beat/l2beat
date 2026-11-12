@@ -1,5 +1,6 @@
 import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import type { ProtocolDisplayable } from '~/server/features/layer2s/interop/types'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 
 export function toProtocolItems(
   protocols: ProtocolDisplayable[],
@@ -8,6 +9,6 @@ export function toProtocolItems(
     id: protocol.slug,
     name: protocol.name,
     iconUrl: protocol.iconUrl,
-    href: `/projects/${protocol.slug}`,
+    href: getProjectPath(protocol.slug),
   }))
 }

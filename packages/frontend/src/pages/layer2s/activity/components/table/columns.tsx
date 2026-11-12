@@ -22,6 +22,7 @@ import { ETHEREUM_PROJECT_PATH } from '~/pages/ethereum/paths'
 import type { L2ActivityEntry } from '~/server/features/layer2s/activity/getL2ActivityEntries'
 import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { formatTimestamp } from '~/utils/dates'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import type { ActivityMetric } from '../ActivityMetricContext'
 import { MaxCountCell } from './MaxCountCell'
 
@@ -63,7 +64,7 @@ export const getL2ActivityColumns = (
       (row) =>
         row.id === ProjectId.ETHEREUM
           ? `${ETHEREUM_PROJECT_PATH}#activity`
-          : `/projects/${row.slug}#activity`,
+          : `${getProjectPath(row.slug)}#activity`,
       opts,
     ),
     columnHelper.accessor('type', {

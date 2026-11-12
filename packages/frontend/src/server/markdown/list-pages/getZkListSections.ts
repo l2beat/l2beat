@@ -4,6 +4,7 @@ import groupBy from 'lodash/groupBy'
 import mapValues from 'lodash/mapValues'
 import uniqBy from 'lodash/uniqBy'
 import { ps } from '~/server/projects'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import {
   firstSentence,
   type LinkListSection,
@@ -45,7 +46,7 @@ function zkLink(project: {
   const info = project.zkCatalogInfo
   return {
     name: project.name,
-    path: `/projects/${project.slug}`,
+    path: getProjectPath(project.slug),
     description: withFacts(firstSentence(project.display?.description ?? ''), [
       info.creator && `by ${info.creator}`,
       info.quantumResistant && 'quantum resistant',

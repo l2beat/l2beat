@@ -1,4 +1,5 @@
 import { ps } from '~/server/projects'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import {
   firstSentence,
   type LinkListSection,
@@ -41,7 +42,7 @@ function privacyLink(project: {
 }): MarkdownLink {
   return {
     name: project.name,
-    path: `/projects/${project.slug}`,
+    path: getProjectPath(project.slug),
     description: withFacts(firstSentence(project.display?.description ?? ''), [
       project.privacyInfo.category.label,
       `exit window: ${project.privacyInfo.exitWindow.value}`,
