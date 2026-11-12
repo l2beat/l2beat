@@ -1,5 +1,4 @@
-import { useCallback, useState } from 'react'
-import { ChartRangeControls } from '~/components/core/chart/ChartRangeControls'
+import { useState } from 'react'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { rangeToOption } from '~/components/core/chart/utils/rangeToOption'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
@@ -13,21 +12,17 @@ import {
   isGasMetric,
 } from '~/server/features/gas-fees/types'
 import { useTRPC } from '~/trpc/React'
-import { cn } from '~/utils/cn'
 import { type ChartRange, optionToRange } from '~/utils/range/range'
-import { GasFeesChart } from './GasFeesChart'
-import { GasFeesComparedL2s, GasFeesStats } from './GasFeesStats'
-import { GasFeesTable } from './GasFeesTable'
-import { GasFeesTipping } from './GasFeesTipping'
-import { GasFeesUpgrades } from './GasFeesUpgrades'
 import {
   DEFAULT_GAS_FEES_GAS_METRIC,
   DEFAULT_GAS_FEES_METRIC,
   GAS_FEES_RANGE_OPTIONS,
   getPeriodLabel,
 } from './metrics'
-import { SPLIT } from './parts'
 import type { GasFeesChain } from './types'
+import { MiddleD2 } from './variants/middle/MiddleD2'
+import { TableB2 } from './variants/table/TableB2'
+import { TopCardB2D } from './variants/top/TopCardB2D'
 
 export type GasFeesScale = 'log' | 'lin'
 
@@ -80,87 +75,46 @@ export function GasFeesView({
   const tableSummary = useChartQuery(trpc.gasFees.summary, {
     range: tableRange,
   })
-  const showWholeHistory = useCallback(() => setRange(optionToRange('max')), [])
-  const shownMetric = chart.shownInput.metric
-
-  const rangeControls = (
-    <ChartRangeControls
-      name="gasFeesRange"
-      value={range}
-      setValue={setRange}
-      options={GAS_FEES_RANGE_OPTIONS.map((value) => ({
-        value,
-        label: RANGE_LABELS[value],
-      }))}
-    />
-  )
 
   return (
     // On mobile the sections run edge to edge, split by a line
     <div className="flex flex-col md:gap-4 [&_.primary-card]:max-md:border-divider [&_.primary-card]:max-md:border-b">
       <PrimaryCard>
-        <GasFeesTipping />
-      </PrimaryCard>
-      {/* The split, the fee history and the upgrades behind it, as one section */}
-      <PrimaryCard>
-        <div className="@container flex flex-col gap-6">
-          <div className="flex flex-col gap-1">
-            <div className="flex items-center gap-2.5">
-              <h2 className="font-bold text-xl md:text-2xl">Ethereum vs L2s</h2>
-              <GasFeesComparedL2s chains={chains} summary={summary.data} />
-            </div>
-            <p className="mt-1 text-secondary text-sm">
-              Where transactions happen and who collects the fees, what fees
-              have cost over time, and the Ethereum upgrades that brought them
-              down.
-            </p>
-          </div>
-          <GasFeesStats
-            summary={summary.data}
-            range={summary.shownInput.range}
-            isLoading={summary.isLoading}
-          />
-          {/* The upgrades sit beside the chart, cut to its height, in the
-              same columns as the stats above */}
-          <div className={cn(SPLIT.grid, 'border-divider border-t pt-6')}>
-            <div className={SPLIT.main}>
-              <GasFeesChart
-                chains={chains}
-                upgrades={upgrades}
-                data={chart.data}
-                isLoading={chart.isLoading}
-                isPlaceholderData={chart.isPlaceholderData}
-                shownMetric={shownMetric}
-                metric={metric}
-                setMetric={setMetric}
-                scale={scale}
-                setScale={setScale}
-                highlightedChainId={highlightedChainId}
-                highlightedUpgradeId={highlightedUpgradeId}
-                selectedUpgradeId={selectedUpgradeId}
-                unit={unit}
-                setUnit={setUnit}
-                rangeControl={rangeControls}
-              />
-            </div>
-            <div className={cn(SPLIT.side, 'relative @max-3xl:h-[480px]')}>
-              <div className={cn(SPLIT.sidePad, 'absolute inset-0')}>
-                <GasFeesUpgrades
-                  upgrades={upgrades}
-                  range={chart.shownInput.range}
-                  highlightedUpgradeId={highlightedUpgradeId}
-                  setHighlightedUpgradeId={setHighlightedUpgradeId}
-                  selectedUpgradeId={selectedUpgradeId}
-                  setSelectedUpgradeId={setSelectedUpgradeId}
-                  showWholeHistory={showWholeHistory}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+        <TopCardB2D />
       </PrimaryCard>
       <PrimaryCard>
-        <GasFeesTable
+        <MiddleD2
+          chains={chains}
+          upgrades={upgrades}
+          summary={{
+            data: summary.data,
+            isLoading: summary.isLoading,
+            range: summary.shownInput.range,
+          }}
+          chart={{
+            data: chart.data,
+            isLoading: chart.isLoading,
+            isPlaceholderData: chart.isPlaceholderData,
+            range: chart.shownInput.range,
+            metric: chart.shownInput.metric,
+          }}
+          range={range}
+          setRange={setRange}
+          unit={unit}
+          setUnit={setUnit}
+          metric={metric}
+          setMetric={setMetric}
+          scale={scale}
+          setScale={setScale}
+          highlightedChainId={highlightedChainId}
+          highlightedUpgradeId={highlightedUpgradeId}
+          setHighlightedUpgradeId={setHighlightedUpgradeId}
+          selectedUpgradeId={selectedUpgradeId}
+          setSelectedUpgradeId={setSelectedUpgradeId}
+        />
+      </PrimaryCard>
+      <PrimaryCard>
+        <TableB2
           chains={chains}
           summary={tableSummary.data}
           isLoading={tableSummary.isLoading}
