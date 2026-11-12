@@ -58,10 +58,10 @@ export function RiskBanner({
         <div className="flex flex-1 flex-col items-start justify-center gap-1 p-4">
           <div
             className={cn(
-              'text-left uppercase',
-              size === 'regular' && 'text-subtitle-10',
+              'text-left',
+              size === 'regular' && 'font-medium text-label-value-12',
               size === 'large' &&
-                'font-semibold text-3xs uppercase md:text-2xs',
+                'font-semibold text-label-value-12 md:text-label-value-13',
             )}
           >
             {name}

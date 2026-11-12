@@ -129,7 +129,7 @@ export function ContractsSection(props: ContractsSectionProps) {
           >
             <ProgramHashesTable entries={props.programHashes} />
             {props.programHashesDescription && (
-              <Markdown className="text-paragraph-15 md:text-paragraph-16">
+              <Markdown className="max-w-[72ch] text-paragraph-15 md:text-paragraph-16">
                 {props.programHashesDescription}
               </Markdown>
             )}

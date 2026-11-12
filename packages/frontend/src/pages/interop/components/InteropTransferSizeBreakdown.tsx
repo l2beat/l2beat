@@ -26,7 +26,9 @@ export function InteropTransferSizeBreakdown({
 
   return (
     <div>
-      <span className="text-label-value-13 leading-4">Transfer size</span>
+      <span className="font-semibold text-label-value-13 leading-4">
+        Transfer size
+      </span>
       <Tooltip>
         <TooltipTrigger asChild>
           <div className="cursor-pointer">

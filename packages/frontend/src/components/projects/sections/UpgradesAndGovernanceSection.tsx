@@ -55,7 +55,7 @@ export function UpgradesAndGovernanceSection({
           <h3 className="font-semibold text-heading-18 leading-6">
             Past upgrades
           </h3>
-          <p className="mt-2 max-w-[72ch] text-paragraph-14 md:text-paragraph-15">
+          <p className="mt-2 max-w-[72ch] text-paragraph-15 md:text-paragraph-16">
             {PAST_UPGRADES_DESCRIPTION}
           </p>
           <PastUpgradesDialog
@@ -102,7 +102,9 @@ function GovernanceInfoList({ entries }: { entries: [string, string][] }) {
           key={name}
           className="grid gap-1 border-divider border-b py-3 md:grid-cols-[180px_1fr] md:gap-4"
         >
-          <dt className="font-medium text-label-value-14 md:pt-1">{name}</dt>
+          <dt className="font-medium text-label-value-14 leading-5 md:pt-1">
+            {name}
+          </dt>
           <dd>
             <Markdown className="text-paragraph-14 md:text-paragraph-15">
               {description}

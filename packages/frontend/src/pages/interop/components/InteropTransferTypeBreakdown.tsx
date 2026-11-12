@@ -32,7 +32,7 @@ export function InteropTransferTypeBreakdown({
 
   return (
     <div>
-      <span className="text-label-value-13 leading-4">
+      <span className="font-semibold text-label-value-13 leading-4">
         Transfer type distribution
       </span>
       <Tooltip>

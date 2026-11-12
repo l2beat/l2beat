@@ -19,7 +19,7 @@ export function SpecSheet({ title, rows }: Props) {
           <tr>
             <th
               colSpan={2}
-              className="bg-surface-secondary px-4 py-3 text-left font-bold text-heading-16 md:text-heading-18"
+              className="bg-surface-secondary px-4 py-3 text-left font-semibold text-heading-16"
             >
               {title}
             </th>
@@ -56,7 +56,7 @@ function SpecValue({ value }: { value?: TableReadyValue }) {
         sentiment={value.sentiment ?? 'neutral'}
         description={value.description}
         vibrant
-        className="font-medium"
+        className="text-left font-medium"
       >
         {value.value}
       </SentimentText>
