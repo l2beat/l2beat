@@ -53,8 +53,11 @@ export function AdvicePathCard({
       {/* Announced on every pick, so a screen reader hears the path change. */}
       <h2
         aria-live="polite"
-        className="font-bold text-heading-20 md:text-heading-24"
+        className="flex items-center gap-2.5 font-bold text-heading-18 md:text-heading-20"
       >
+        <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-surface-tertiary text-label-12">
+          3
+        </span>
         {STAY_PRIVATE.pathTitle}: {protocol.name}, {goal.label.toLowerCase()}
       </h2>
       <div className="mt-3 flex flex-col gap-2">

@@ -20,7 +20,13 @@ const PROTOCOL: PrivacyAdviceProtocol = {
   name: 'Pool',
   icon: '/icons/pool.png',
   href: '/privacy/projects/pool',
-  category: 'Pool',
+  categoryId: 'pool',
+  categoryLabel: 'Pool',
+  promise: 'Hides which deposit funds which withdrawal.',
+  holdings: [{ symbol: 'ETH', chain: 'ethereum' }],
+  anonymitySetSize: undefined,
+  exitWindowSentiment: 'good',
+  tvsUsd: undefined,
   steps: [
     {
       name: 'Wait',
@@ -48,6 +54,7 @@ describe(renderStayPrivateMarkdown.name, () => {
     protocols: [PROTOCOL],
     adversaries: ADVERSARIES,
     waitWindowDays: 30,
+    options: { kinds: [], assets: [], chains: [] },
   })
 
   it('lists the steps with how to draw the wait', () => {
@@ -58,6 +65,15 @@ describe(renderStayPrivateMarkdown.name, () => {
   it('says what the fastest goal leaves out and which rating it stops claiming', () => {
     expect(markdown).toInclude('| Fastest | 1 | Wait | chain analyst |')
     expect(markdown).toInclude('| Most private | 2 | - | - |')
+  })
+
+  it('ranks every protocol per goal, with the values that place it', () => {
+    expect(markdown).toInclude(
+      'Ranked by: Fewest red ratings, then most green ratings, then largest anonymity set.',
+    )
+    expect(markdown).toInclude(
+      '| 1 | Pool | Pool | 0 red | 5 green | no anonymity set count | No anonymity set count |',
+    )
   })
 
   it('says when data is missing or the review is being updated', () => {

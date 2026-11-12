@@ -90,6 +90,7 @@ const ADVICE_DATA: PrivacyAdviceData = {
   protocols: [],
   adversaries: [],
   waitWindowDays: 30,
+  options: { kinds: [], assets: [], chains: [] },
 }
 
 const RISK = { value: 'Value', sentiment: 'good', description: '' } as const

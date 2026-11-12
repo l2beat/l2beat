@@ -19,13 +19,21 @@ import { PRIVACY_STAY_PRIVATE_PATH } from '../methodology/paths'
 import {
   ADVICE_GOAL_IDS,
   ADVICE_GOALS,
+  type AdviceGoalId,
   compareAdviceGoals,
 } from './advicePaths'
-import { STAY_PRIVATE } from './stayPrivateCopy'
+import { CRITERIA, rankProtocols } from './rankProtocols'
+import {
+  formatCriterionValue,
+  formatTradeOff,
+  getRankedByText,
+  STAY_PRIVATE,
+} from './stayPrivateCopy'
 
 /**
- * The guide as one document: an agent cannot click, so every protocol's full
- * path is listed, with a table of what each goal leaves out of it.
+ * The guide as one document: an agent cannot click, so it gives the ranking
+ * rules, the ranking for each goal without filters, and every protocol's
+ * full path with a table of what each goal leaves out of it.
  */
 export function renderStayPrivateMarkdown(data: PrivacyAdviceData): string {
   const pageUrl = PRODUCTION_ORIGIN + PRIVACY_STAY_PRIVATE_PATH
@@ -34,16 +42,38 @@ export function renderStayPrivateMarkdown(data: PrivacyAdviceData): string {
     `Markdown version of ${pageUrl}`,
     `${STAY_PRIVATE.description} ${STAY_PRIVATE.ratingsNote} ${link(ADVICE.methodologyLink, ADVICE.methodologyHref)}`,
     STAY_PRIVATE.notAnAudit,
-    heading(2, 'Goals'),
-    bulletList(
-      ADVICE_GOAL_IDS.map((id) => {
-        const goal = ADVICE_GOALS[id]
-        return `**${goal.label}** (\`?${STAY_PRIVATE.goalParam}=${id}\`): ${goal.description}`
-      }),
-    ),
+    heading(2, 'How we rank'),
+    bulletList([...STAY_PRIVATE.rankingNotes]),
+    ...ADVICE_GOAL_IDS.map((id) => renderGoalRanking(id, data)),
     ...data.protocols.map((protocol) => renderProtocol(protocol, data)),
   ])
   return `${absolutizeLinks(markdown, pageUrl)}\n`
+}
+
+/** One goal's ranking of every protocol, as the page shows it without filters. */
+function renderGoalRanking(id: AdviceGoalId, data: PrivacyAdviceData) {
+  const goal = ADVICE_GOALS[id]
+  const ranking = rankProtocols(data.protocols, { goal: id })
+  return joinBlocks([
+    heading(3, `${goal.label} (\`?${STAY_PRIVATE.goalParam}=${id}\`)`),
+    `${goal.description} ${STAY_PRIVATE.rankedBy}: ${getRankedByText(ranking.order)}`,
+    table(
+      [
+        'Rank',
+        'Protocol',
+        'Kind',
+        ...ranking.order.map((c) => CRITERIA[c].label),
+        STAY_PRIVATE.tradeOffsLabel,
+      ],
+      ranking.ranked.map(({ protocol, rank, tradeOffs }) => [
+        String(rank),
+        protocol.name,
+        protocol.categoryLabel,
+        ...ranking.order.map((c) => formatCriterionValue(c, protocol)),
+        tradeOffs.map(formatTradeOff).join('; ') || '-',
+      ]),
+    ),
+  ])
 }
 
 function renderProtocol(
@@ -60,7 +90,8 @@ function renderProtocol(
     protocol.isUnderReview ? warning(STAY_PRIVATE.underReview) : '',
     protocol.redWarning ? warning(protocol.redWarning) : '',
     bulletList([
-      `Category: ${protocol.category}`,
+      `Kind: ${protocol.categoryLabel}`,
+      `Promise: ${protocol.promise}`,
       ...(protocol.referenceApp
         ? [
             `${STAY_PRIVATE.referenceAppLabel}: ${link(protocol.referenceApp.label, protocol.referenceApp.url)}, since ${protocol.referenceApp.since}`,

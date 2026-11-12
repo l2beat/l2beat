@@ -5,18 +5,18 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { PRIVACY_STAY_PRIVATE_PATH } from '../methodology/paths'
-import {
-  type AdviceGoalId,
-  DEFAULT_ADVICE_GOAL,
-  isAdviceGoalId,
-} from './advicePaths'
+import { DEFAULT_ADVICE_GOAL, isAdviceGoalId } from './advicePaths'
+import type { RankingCriteria } from './rankProtocols'
 import { renderStayPrivateMarkdown } from './renderStayPrivateMarkdown'
 import { STAY_PRIVATE } from './stayPrivateCopy'
 
 /** What a shared link asks for. Unknown values fall back instead of failing. */
 export interface StayPrivateQuery {
-  protocol?: string
   goal?: string
+  kind?: string
+  asset?: string
+  chain?: string
+  protocol?: string
 }
 
 export async function getPrivacyStayPrivateData(
@@ -29,9 +29,13 @@ export async function getPrivacyStayPrivateData(
     getCachedAdviceData(cache),
   ])
   const protocol = data.protocols.find((p) => p.slug === query.protocol)
-  const goal: AdviceGoalId = isAdviceGoalId(query.goal)
-    ? query.goal
-    : DEFAULT_ADVICE_GOAL
+  const { kinds, assets, chains } = data.options
+  const initialCriteria: RankingCriteria = {
+    goal: isAdviceGoalId(query.goal) ? query.goal : DEFAULT_ADVICE_GOAL,
+    kind: kinds.some((k) => k.id === query.kind) ? query.kind : undefined,
+    asset: oneOf(query.asset, assets),
+    chain: oneOf(query.chain, chains),
+  }
 
   return {
     head: {
@@ -52,8 +56,8 @@ export async function getPrivacyStayPrivateData(
       props: {
         ...appLayoutProps,
         ...data,
+        initialCriteria,
         initialProtocol: protocol?.slug,
-        initialGoal: goal,
       },
     },
   }
@@ -72,4 +76,8 @@ function getCachedAdviceData(cache: InMemoryCache) {
     },
     getPrivacyAdviceData,
   )
+}
+
+function oneOf(value: string | undefined, allowed: string[]) {
+  return value !== undefined && allowed.includes(value) ? value : undefined
 }

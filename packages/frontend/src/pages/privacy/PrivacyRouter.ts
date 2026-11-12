@@ -62,8 +62,11 @@ export function createPrivacyRouter(
     PRIVACY_STAY_PRIVATE_PATH,
     validateRoute({
       query: v.object({
-        protocol: v.string().optional(),
         goal: v.string().optional(),
+        kind: v.string().optional(),
+        asset: v.string().optional(),
+        chain: v.string().optional(),
+        protocol: v.string().optional(),
       }),
     }),
     serveMarkdownIfPreferred(getStayPrivateMarkdown),

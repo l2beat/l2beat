@@ -32,13 +32,14 @@ export const ADVICE_GOALS: Record<AdviceGoalId, AdviceGoal> = {
   private: {
     id: 'private',
     label: 'Most private',
-    description: 'Every step, in order. Our ratings assume all of them.',
+    description:
+      'The best adversary ratings, then the largest anonymity set. Every step.',
   },
   fast: {
     id: 'fast',
     label: 'Fastest',
     description:
-      'Leaves out the random wait, so you exit as soon as you are ready.',
+      'Protocols whose advice has no random wait first. Elsewhere the steps leave the wait out.',
     shortcut: {
       skips: (step) => step.randomWait === true,
       cost: 'Exiting soon after depositing lets timing narrow down which deposit is yours.',
@@ -48,7 +49,7 @@ export const ADVICE_GOALS: Record<AdviceGoalId, AdviceGoal> = {
     id: 'light',
     label: 'Least setup',
     description:
-      'Leaves out the steps that need something the reference app does not ship.',
+      'The fewest steps outside the app first. The steps leave those out.',
     shortcut: {
       skips: (step) => step.outside === true,
       cost: 'Without them you rely on the defaults of the app and of your network.',
@@ -58,7 +59,7 @@ export const ADVICE_GOALS: Record<AdviceGoalId, AdviceGoal> = {
     id: 'operator',
     label: 'Least trust in the operator',
     description:
-      'Every step, with what the operator can see or change put first.',
+      'The best privileged insider rating, then the best exit window. Every step.',
     focus: 'privilegedInsider',
   },
 }
