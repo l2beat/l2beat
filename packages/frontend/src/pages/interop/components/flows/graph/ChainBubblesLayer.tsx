@@ -67,7 +67,7 @@ function ChainBubble({
   const { x, y, radius } = layout
   const iconSize = radius * 1.1
   const nameLines = getChainNameLines(chain.name, isSmallScreen)
-  const nameLineHeight = isSmallScreen ? 11 : 12
+  const nameLineHeight = isSmallScreen ? 15 : 16
   const nameY = y + radius + 16
   const netFlowY = nameY + (nameLines.length - 1) * nameLineHeight + 14
 
@@ -121,7 +121,7 @@ function ChainBubble({
           netFlow > 0 ? 'fill-positive' : 'fill-negative',
         )}
       >
-        {`${netFlow > 0 ? '+' : ''}${formatCurrency(netFlow, 'usd')}`}
+        {`${netFlow > 0 ? '+' : netFlow < 0 ? '−' : ''}${formatCurrency(Math.abs(netFlow), 'usd')}`}
       </text>
     </g>
   )
