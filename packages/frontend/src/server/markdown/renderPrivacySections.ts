@@ -20,6 +20,7 @@ import {
 } from '~/pages/privacy/adversaries/privacyAdversaryUi'
 import {
   ADVICE,
+  getStepAdversaries,
   getStepsAgainst,
   getUncoveredAdversaries,
   getWaitInstruction,
@@ -155,9 +156,9 @@ export function renderPrivacyAdvice({
     `${ADVICE.intro} ${link(ADVICE.methodologyLink, ADVICE.methodologyHref)}`,
     numberedList(
       steps.map((step) => {
-        const against = adversaries
-          .filter((adversary) => step.against.includes(adversary.id))
-          .map((adversary) => adversary.label.toLowerCase())
+        const against = getStepAdversaries(step, adversaries).map((adversary) =>
+          adversary.label.toLowerCase(),
+        )
         const name = step.outside
           ? `${step.name}, ${ADVICE.outsideLabel}`
           : step.name

@@ -47,6 +47,14 @@ export function getUncoveredAdversaries(
   )
 }
 
+/** The adversaries one step defends, in rosette order. */
+export function getStepAdversaries(
+  step: PrivacyAdviceStep,
+  adversaries: PrivacyAdversary[],
+): PrivacyAdversary[] {
+  return adversaries.filter((adversary) => step.against.includes(adversary.id))
+}
+
 /** Anchor of one step on the project page, which adversary blocks link. */
 export function getAdviceStepId(index: number): string {
   return `${ADVICE.sectionId}-${index + 1}`

@@ -225,11 +225,10 @@ export function definePrivacyAdversaries(
 export const PRIVACY_METHODOLOGY_URL = '/publications/privacy-methodology'
 
 /**
- * Anchors in the methodology, rendered by the frontend. The project page links
- * the How to stay private section once, so steps link only the route list.
+ * Anchors in the methodology, rendered by the frontend. Steps link only the
+ * route list: the project page links the How to stay private section once.
  */
 export const ADVICE_ANCHORS = {
-  section: 'stay-private',
   ipHidingRoutes: 'ip-hiding-routes',
 } as const
 
