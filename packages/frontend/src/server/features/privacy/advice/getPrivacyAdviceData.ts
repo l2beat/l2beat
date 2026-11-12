@@ -1,19 +1,27 @@
 import type {
   PrivacyAdversary,
-  PrivacyAdversarySentiment,
+  PrivacyAdviceStep,
   PrivacyExitWindow,
+  PrivacyNeed,
 } from '@l2beat/config'
+import { PRIVACY_NEEDS } from '@l2beat/config/build/common/privacyCategories'
+import {
+  PRIVACY_TOOLS,
+  type PrivacyTool,
+} from '@l2beat/config/build/common/privacyTools'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import countBy from 'lodash/countBy'
 import mapValues from 'lodash/mapValues'
-import uniq from 'lodash/uniq'
 import uniqBy from 'lodash/uniqBy'
 import { anonymitySetCoverageNote } from '~/components/projects/sections/sectionCopy'
+import {
+  PRIVACY_METHODOLOGY_PATH,
+  PRIVACY_ROUTES_ANCHOR,
+} from '~/pages/privacy/methodology/paths'
 import { getReferenceAppLabel } from '~/pages/privacy/referenceAppUi'
 import type {
   Holding,
-  RankableProtocol,
-} from '~/pages/privacy/stay-private/rankProtocols'
+  MatchableProtocol,
+} from '~/pages/privacy/stay-private/matchProtocols'
 import { getAnonymitySetSyncingNote } from '~/pages/privacy/summary/components/anonymitySetTooltip'
 import { manifest } from '~/utils/Manifest'
 import { ANONYMITY_SET_WINDOW_DAYS } from '../anonymity-set/calculateAnonymitySets'
@@ -26,13 +34,15 @@ import {
 import type { PrivacyProject } from '../types'
 import { getPrivacyReferenceApp } from '../utils/getPrivacyReferenceApp'
 
-/** One protocol the guide can rank and walk, with only what the guide shows. */
-export interface PrivacyAdviceProtocol extends RankableProtocol {
+/** One protocol the guide can match and walk, with only what the guide shows. */
+export interface PrivacyAdviceProtocol extends MatchableProtocol {
+  steps: PrivacyAdviceGuideStep[]
   icon: string
   href: string
+  categoryLabel: string
   /** The field the ratings grade, e.g. "Hides which deposit funds which withdrawal." */
   promise: string
-  /** Shown for context, never ranked: value is not privacy. */
+  /** Shown for context, never compared: value is not privacy. */
   tvsUsd: number | undefined
   /** What the operator can see or change, from the privileged insider cell. */
   insider: string
@@ -42,6 +52,20 @@ export interface PrivacyAdviceProtocol extends RankableProtocol {
   referenceApp?: { label: string; url: string; iconUrl: string; since: string }
   isUnderReview: boolean
   redWarning?: string
+}
+
+/** A step with the outside tools its text links, so a setup can list them. */
+export interface PrivacyAdviceGuideStep extends PrivacyAdviceStep {
+  tools: PrivacyAdviceTool[]
+}
+
+export interface PrivacyAdviceTool {
+  /** As the step calls it, e.g. "Whonix" for the Tor systems entry. */
+  name: string
+  /** Its entry on the methodology page, which holds the download. */
+  href: string
+  /** What getting it takes, e.g. "a paid install". Absent for a route of the user's choice. */
+  effort?: string
 }
 
 /** The count the wait draws its window from, with every caveat as text. */
@@ -58,23 +82,18 @@ export type PrivacyAdviceAnonymitySet =
 export interface PrivacyAdviceData {
   protocols: PrivacyAdviceProtocol[]
   adversaries: PrivacyAdversary[]
+  /** The needs that some protocol serves, in the order the guide offers them. */
+  needs: PrivacyNeed[]
   waitWindowDays: number
-  /** The filters' choices, from what the protocols hold. */
-  options: {
-    kinds: { id: string; label: string }[]
-    assets: string[]
-    chains: string[]
-  }
 }
 
 /**
- * Active privacy protocols with advice, by name; the page ranks them per
- * visitor. Protocols without advice have no step that changes a cell.
+ * Every active privacy protocol, by name. The page matches them per visitor.
+ * A protocol without advice stays in: no step changes its ratings, which is
+ * what a visitor comparing it needs to see.
  */
 export async function getPrivacyAdviceData(): Promise<PrivacyAdviceData> {
-  const projects = (await getPrivacyProjects()).filter(
-    (project) => project.privacyInfo.adversaries.advice !== undefined,
-  )
+  const projects = await getPrivacyProjects()
   const entries = new Map(
     (await getPrivacySummaryEntries(projects)).map((e) => [e.id, e]),
   )
@@ -84,8 +103,10 @@ export async function getPrivacyAdviceData(): Promise<PrivacyAdviceData> {
   return {
     protocols,
     adversaries: projects[0]?.privacyInfo.adversaries.adversaries ?? [],
+    needs: Object.values(PRIVACY_NEEDS).filter((need) =>
+      protocols.some((p) => p.needId === need.id),
+    ),
     waitWindowDays: ANONYMITY_SET_WINDOW_DAYS,
-    options: getFilterOptions(protocols),
   }
 }
 
@@ -105,10 +126,13 @@ function toAdviceProtocol(
     name: project.name,
     icon,
     href: `/privacy/projects/${project.slug}`,
-    categoryId: privacyInfo.category.id,
+    needId: privacyInfo.category.need,
     categoryLabel: privacyInfo.category.label,
     promise: adversaries.promise.text,
-    steps: adversaries.advice ?? [],
+    steps: (adversaries.advice ?? []).map((step) => ({
+      ...step,
+      tools: getStepTools(step.text),
+    })),
     sentiments: mapValues(adversaries.cells, (cell) => cell.sentiment),
     insider: adversaries.cells.privilegedInsider.exposureShort,
     exitWindow: {
@@ -119,7 +143,6 @@ function toAdviceProtocol(
     anonymitySet: toAdviceAnonymitySet(anonymitySet),
     anonymitySetSize:
       anonymitySet.status === 'available' ? anonymitySet.value : undefined,
-    exitWindowSentiment: toAdversarySentiment(privacyInfo.exitWindow.sentiment),
     holdings: getHoldings(project),
     tvsUsd: entry?.totalValueLockedUsd,
     referenceApp: app && {
@@ -131,6 +154,41 @@ function toAdviceProtocol(
     isUnderReview: !!statuses.reviewStatus,
     redWarning: statuses.redWarning?.text,
   }
+}
+
+const TOOLS: PrivacyTool[] = Object.values(PRIVACY_TOOLS)
+const MARKDOWN_LINK = /\[([^\]]+)\]\(([^)\s]+)\)/g
+
+/**
+ * The tools a step links on the methodology page: registry entries by their
+ * anchor, and the list of routes where the step leaves the route to the user.
+ * A config test makes every step link the tools it names, so none is missed.
+ */
+export function getStepTools(text: string): PrivacyAdviceTool[] {
+  const tools = [...text.matchAll(MARKDOWN_LINK)].flatMap(
+    ([, label = '', href = '']): PrivacyAdviceTool[] => {
+      const [path, anchor] = href.split('#')
+      if (path !== PRIVACY_METHODOLOGY_PATH) return []
+      if (anchor === PRIVACY_ROUTES_ANCHOR) {
+        return [{ name: 'IP-hiding route', href }]
+      }
+      const tool = TOOLS.find((t) => t.anchor === anchor)
+      if (!tool) return []
+      return [
+        {
+          name: tool.names.find((name) => label.includes(name)) ?? label,
+          href,
+          effort: getToolEffort(tool),
+        },
+      ]
+    },
+  )
+  return uniqBy(tools, (tool) => tool.name)
+}
+
+/** An entry's text opens with the effort it takes, as its first sentence. */
+function getToolEffort(tool: PrivacyTool) {
+  return tool.text.split('. ')[0]?.replace(/\.$/, '')
 }
 
 function toAdviceAnonymitySet(
@@ -162,15 +220,6 @@ function toAdviceAnonymitySet(
   }
 }
 
-/** Exit windows can be neutral or under review, which rank as no data. */
-function toAdversarySentiment(
-  sentiment: PrivacyExitWindow['sentiment'],
-): PrivacyAdversarySentiment | undefined {
-  return sentiment === 'good' || sentiment === 'warning' || sentiment === 'bad'
-    ? sentiment
-    : undefined
-}
-
 function getHoldings(project: PrivacyProject): Holding[] {
   const holdings = project.privacyInfo.tokens.flatMap((token) =>
     token.buckets.map((bucket) => ({
@@ -182,25 +231,4 @@ function getHoldings(project: PrivacyProject): Holding[] {
     })),
   )
   return uniqBy(holdings, (h) => `${h.symbol}@${h.chain}`)
-}
-
-/** Assets listed by how many protocols hold them, so common ones come first. */
-function getFilterOptions(protocols: PrivacyAdviceProtocol[]) {
-  const holders = (pick: (h: Holding) => string) =>
-    countBy(
-      protocols.flatMap((p) => uniq(p.holdings.map(pick))),
-      (value) => value,
-    )
-  const byHolders = (counts: Record<string, number>) =>
-    Object.keys(counts).sort(
-      (a, b) => (counts[b] ?? 0) - (counts[a] ?? 0) || a.localeCompare(b),
-    )
-  return {
-    kinds: uniqBy(
-      protocols.map((p) => ({ id: p.categoryId, label: p.categoryLabel })),
-      (kind) => kind.id,
-    ).sort((a, b) => a.label.localeCompare(b.label)),
-    assets: byHolders(holders((h) => h.symbol)),
-    chains: byHolders(holders((h) => h.chain)),
-  }
 }

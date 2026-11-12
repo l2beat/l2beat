@@ -2,8 +2,8 @@ import type { ReactNode } from 'react'
 import { cn } from '~/utils/cn'
 
 /**
- * A numbered question answered by one of its options. Native radios, so arrow
- * keys move between options and screen readers announce the group.
+ * A numbered question answered by its options. Native inputs, so arrow keys
+ * move between radios and screen readers announce the group.
  */
 export function PickerQuestion({
   number,
@@ -34,7 +34,9 @@ export function PickerQuestion({
   )
 }
 
+/** One option: a radio where one answer is taken, a checkbox where several are. */
 export function PickerOption({
+  type = 'radio',
   name,
   value,
   checked,
@@ -42,28 +44,34 @@ export function PickerOption({
   className,
   children,
 }: {
+  type?: 'radio' | 'checkbox'
   name: string
   value: string
   checked: boolean
-  onChange: () => void
+  onChange: (checked: boolean) => void
   className?: string
   children: ReactNode
 }) {
   return (
     <label
       className={cn(
-        'cursor-pointer rounded-lg border border-divider px-3 py-2.5 transition-colors hover:bg-surface-secondary',
+        'relative cursor-pointer rounded-lg border border-divider px-3 py-2.5 transition-colors hover:bg-surface-secondary',
         'has-checked:border-brand has-checked:bg-brand/10 has-focus-visible:outline-2 has-focus-visible:outline-brand',
+        type === 'checkbox' && 'pl-9',
         className,
       )}
     >
       <input
-        type="radio"
+        type={type}
         name={name}
         value={value}
         checked={checked}
-        onChange={onChange}
-        className="sr-only"
+        onChange={(e) => onChange(e.target.checked)}
+        className={
+          type === 'checkbox'
+            ? 'absolute top-3 left-3 size-4 accent-brand'
+            : 'sr-only'
+        }
       />
       {children}
     </label>

@@ -52,7 +52,7 @@ describe(createPrivacyRouter.name, () => {
   it('serves the guide as markdown on its page URL when Accept prefers it', async () => {
     const response = await fetchFromRouter(
       createRouter(),
-      '/privacy/stay-private?protocol=tornado-cash&goal=fast',
+      '/privacy/stay-private?protocol=tornado-cash&without=wait',
       { headers: { Accept: 'text/markdown' } },
     )
 
@@ -89,8 +89,8 @@ function createRouter() {
 const ADVICE_DATA: PrivacyAdviceData = {
   protocols: [],
   adversaries: [],
+  needs: [],
   waitWindowDays: 30,
-  options: { kinds: [], assets: [], chains: [] },
 }
 
 const RISK = { value: 'Value', sentiment: 'good', description: '' } as const

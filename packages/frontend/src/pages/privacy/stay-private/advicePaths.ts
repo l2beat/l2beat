@@ -6,73 +6,53 @@ import type {
 } from '@l2beat/config'
 
 /**
- * What a user can ask the guide for. Each goal only leaves steps out of the
+ * The efforts a user can refuse. A refusal only leaves steps out of the
  * project's advice, chosen by a flag the step already carries, so a path never
- * says anything the advice does not. The ratings assume every step, so a goal
- * that leaves one out is never presented as rated.
+ * says anything the advice does not. The ratings assume every step, so a path
+ * that leaves one out never shows the rating that step defended.
  */
-export const ADVICE_GOAL_IDS = ['private', 'fast', 'light', 'operator'] as const
-export type AdviceGoalId = (typeof ADVICE_GOAL_IDS)[number]
+export const ADVICE_EFFORT_IDS = ['wait', 'outside'] as const
+export type AdviceEffortId = (typeof ADVICE_EFFORT_IDS)[number]
 
-export interface AdviceGoal {
-  id: AdviceGoalId
-  label: string
+export interface AdviceEffort {
+  id: AdviceEffortId
+  label: (windowDays: number) => string
   description: string
-  /** Absent for goals that keep every step. */
-  shortcut?: {
-    skips: (step: PrivacyAdviceStep) => boolean
-    /** What leaving those steps out gives up. */
-    cost: string
-  }
-  /** The adversary the goal is about, shown first. */
-  focus?: PrivacyAdversaryId
+  /** The steps a user who refuses the effort leaves out. */
+  skips: (step: PrivacyAdviceStep) => boolean
+  /** What leaving those steps out gives up. */
+  cost: string
 }
 
-export const ADVICE_GOALS: Record<AdviceGoalId, AdviceGoal> = {
-  private: {
-    id: 'private',
-    label: 'Most private',
-    description:
-      'The best adversary ratings, then the largest anonymity set. Every step.',
+export const ADVICE_EFFORTS: Record<AdviceEffortId, AdviceEffort> = {
+  wait: {
+    id: 'wait',
+    label: (windowDays) => `Wait up to ${windowDays} days`,
+    description: 'Let a random time pass between entry and exit.',
+    skips: (step) => step.randomWait === true,
+    cost: 'Exiting soon after entering lets timing pair the two.',
   },
-  fast: {
-    id: 'fast',
-    label: 'Fastest',
-    description:
-      'Protocols whose advice has no random wait first. Elsewhere the steps leave the wait out.',
-    shortcut: {
-      skips: (step) => step.randomWait === true,
-      cost: 'Exiting soon after depositing lets timing narrow down which deposit is yours.',
-    },
-  },
-  light: {
-    id: 'light',
-    label: 'Least setup',
-    description:
-      'The fewest steps outside the app first. The steps leave those out.',
-    shortcut: {
-      skips: (step) => step.outside === true,
-      cost: 'Without them you rely on the defaults of the app and of your network.',
-    },
-  },
-  operator: {
-    id: 'operator',
-    label: 'Least trust in the operator',
-    description:
-      'The best privileged insider rating, then the best exit window. Every step.',
-    focus: 'privilegedInsider',
+  outside: {
+    id: 'outside',
+    label: () => 'Set up tools outside the app',
+    description: 'Install another program or run a node.',
+    skips: (step) => step.outside === true,
+    cost: 'Without them you rely on the defaults of the app and of your network.',
   },
 }
 
-export const DEFAULT_ADVICE_GOAL: AdviceGoalId = 'private'
+/** Which efforts the user accepts. All of them gives the full advice. */
+export type AdviceAccepts = Record<AdviceEffortId, boolean>
 
-export function isAdviceGoalId(value: unknown): value is AdviceGoalId {
-  return ADVICE_GOAL_IDS.includes(value as AdviceGoalId)
+export const ACCEPT_ALL: AdviceAccepts = { wait: true, outside: true }
+
+export function isAdviceEffortId(value: unknown): value is AdviceEffortId {
+  return ADVICE_EFFORT_IDS.includes(value as AdviceEffortId)
 }
 
-export interface AdvicePath {
-  taken: PrivacyAdviceStep[]
-  skipped: PrivacyAdviceStep[]
+export interface AdvicePath<S extends PrivacyAdviceStep = PrivacyAdviceStep> {
+  taken: S[]
+  skipped: S[]
   /** One row per adversary, in rosette order. */
   adversaries: AdvicePathAdversary[]
 }
@@ -99,72 +79,74 @@ export type AdvicePathAdversary = {
     }
 )
 
-export function getAdvicePath(
-  steps: PrivacyAdviceStep[],
-  goal: AdviceGoal,
+export function getAdvicePath<S extends PrivacyAdviceStep>(
+  steps: S[],
+  accepts: AdviceAccepts,
   adversaries: PrivacyAdversary[],
   sentiments: Record<PrivacyAdversaryId, PrivacyAdversarySentiment>,
-): AdvicePath {
-  const skips = goal.shortcut?.skips ?? (() => false)
+): AdvicePath<S> {
+  const skips = (step: S) =>
+    ADVICE_EFFORT_IDS.some(
+      (id) => !accepts[id] && ADVICE_EFFORTS[id].skips(step),
+    )
   const taken = steps.filter((step) => !skips(step))
   const skipped = steps.filter(skips)
   return {
     taken,
     skipped,
-    adversaries: orderByFocus(adversaries, goal.focus).map(
-      (adversary): AdvicePathAdversary => {
-        const sentiment = sentiments[adversary.id]
-        const skippedNames = namesAgainst(skipped, adversary.id)
-        if (skippedNames.length > 0) {
-          return {
-            adversary,
-            sentiment,
-            status: 'unrated',
-            skipped: skippedNames,
-          }
+    adversaries: adversaries.map((adversary): AdvicePathAdversary => {
+      const sentiment = sentiments[adversary.id]
+      const skippedNames = namesAgainst(skipped, adversary.id)
+      if (skippedNames.length > 0) {
+        return {
+          adversary,
+          sentiment,
+          status: 'unrated',
+          skipped: skippedNames,
         }
-        const onPath = taken
-          .map((step, i) => (step.against.includes(adversary.id) ? i + 1 : 0))
-          .filter((position) => position > 0)
-        return onPath.length > 0
-          ? { adversary, sentiment, status: 'rated', steps: onPath }
-          : { adversary, sentiment, status: 'no-step' }
-      },
-    ),
+      }
+      const onPath = taken
+        .map((step, i) => (step.against.includes(adversary.id) ? i + 1 : 0))
+        .filter((position) => position > 0)
+      return onPath.length > 0
+        ? { adversary, sentiment, status: 'rated', steps: onPath }
+        : { adversary, sentiment, status: 'no-step' }
+    }),
   }
 }
 
 /**
- * The trade-offs between goals for one protocol: what each leaves out and
- * which ratings stop holding. Goals that leave out nothing match the full path.
+ * What refusing each effort alone costs one protocol: the steps left out and
+ * the ratings that stop holding. Efforts the advice never asks for are absent.
  */
-export interface AdviceGoalComparison {
-  goal: AdviceGoal
-  stepCount: number
+export interface AdviceEffortCost {
+  effort: AdviceEffort
   skipped: string[]
-  waits: boolean
-  outsideCount: number
   unrated: PrivacyAdversary[]
 }
 
-export function compareAdviceGoals(
+export function getAdviceEffortCosts(
   steps: PrivacyAdviceStep[],
   adversaries: PrivacyAdversary[],
   sentiments: Record<PrivacyAdversaryId, PrivacyAdversarySentiment>,
-): AdviceGoalComparison[] {
-  return ADVICE_GOAL_IDS.map((id) => {
-    const goal = ADVICE_GOALS[id]
-    const path = getAdvicePath(steps, goal, adversaries, sentiments)
-    return {
-      goal,
-      stepCount: path.taken.length,
-      skipped: path.skipped.map((step) => step.name),
-      waits: path.taken.some((step) => step.randomWait),
-      outsideCount: path.taken.filter((step) => step.outside).length,
-      unrated: path.adversaries
-        .filter((row) => row.status === 'unrated')
-        .map((row) => row.adversary),
-    }
+): AdviceEffortCost[] {
+  return ADVICE_EFFORT_IDS.flatMap((id) => {
+    const path = getAdvicePath(
+      steps,
+      { ...ACCEPT_ALL, [id]: false },
+      adversaries,
+      sentiments,
+    )
+    if (path.skipped.length === 0) return []
+    return [
+      {
+        effort: ADVICE_EFFORTS[id],
+        skipped: path.skipped.map((step) => step.name),
+        unrated: path.adversaries
+          .filter((row) => row.status === 'unrated')
+          .map((row) => row.adversary),
+      },
+    ]
   })
 }
 
@@ -172,15 +154,4 @@ function namesAgainst(steps: PrivacyAdviceStep[], id: PrivacyAdversaryId) {
   return steps
     .filter((step) => step.against.includes(id))
     .map((step) => step.name)
-}
-
-function orderByFocus(
-  adversaries: PrivacyAdversary[],
-  focus: PrivacyAdversaryId | undefined,
-) {
-  if (focus === undefined) return adversaries
-  return [
-    ...adversaries.filter((a) => a.id === focus),
-    ...adversaries.filter((a) => a.id !== focus),
-  ]
 }

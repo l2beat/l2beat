@@ -1,11 +1,12 @@
-import type { PrivacyAdversary } from '@l2beat/config'
+import type { PrivacyAdversary, PrivacyNeed } from '@l2beat/config'
 import { expect } from 'earl'
 import type { PrivacyAdviceProtocol } from '~/server/features/privacy/advice/getPrivacyAdviceData'
 import { renderStayPrivateMarkdown } from './renderStayPrivateMarkdown'
 
-// Method: render one protocol whose advice has a random wait, and check the
-// lines an agent relies on: the steps in order, and the table saying what the
-// fastest goal leaves out and which rating it stops claiming.
+// Method: render one protocol whose advice has an outside step and a random
+// wait, and check the lines an agent relies on: the need's table with every
+// rating, the tools, the steps in order, and the table saying which ratings
+// stop holding without an effort.
 
 const ADVERSARIES = (['publicObserver', 'chainAnalyst'] as const).map(
   (id) =>
@@ -15,30 +16,48 @@ const ADVERSARIES = (['publicObserver', 'chainAnalyst'] as const).map(
     }) as PrivacyAdversary,
 )
 
+const NEED: PrivacyNeed = {
+  id: 'moveFunds',
+  label: 'Move funds without a link',
+  description: 'Funds leave to an unlinked address.',
+}
+
 const PROTOCOL: PrivacyAdviceProtocol = {
   slug: 'pool',
   name: 'Pool',
   icon: '/icons/pool.png',
   href: '/privacy/projects/pool',
-  categoryId: 'pool',
+  needId: 'moveFunds',
   categoryLabel: 'Pool',
   promise: 'Hides which deposit funds which withdrawal.',
   holdings: [{ symbol: 'ETH', chain: 'ethereum' }],
   anonymitySetSize: undefined,
-  exitWindowSentiment: 'good',
   tvsUsd: undefined,
   steps: [
+    {
+      name: 'Set up',
+      text: 'Open the app in Tor Browser.',
+      against: ['publicObserver'],
+      outside: true,
+      tools: [
+        {
+          name: 'Tor Browser',
+          href: '/publications/privacy-methodology#tool-tor-browser',
+          effort: 'a free install',
+        },
+      ],
+    },
     {
       name: 'Wait',
       text: 'Wait.',
       against: ['chainAnalyst'],
       randomWait: true,
+      tools: [],
     },
-    { name: 'Exit', text: 'Exit.', against: ['publicObserver'] },
   ],
   sentiments: {
     publicObserver: 'good',
-    chainAnalyst: 'good',
+    chainAnalyst: 'warning',
     networkObserver: 'good',
     privilegedInsider: 'good',
     futureAdversary: 'good',
@@ -53,26 +72,34 @@ describe(renderStayPrivateMarkdown.name, () => {
   const markdown = renderStayPrivateMarkdown({
     protocols: [PROTOCOL],
     adversaries: ADVERSARIES,
+    needs: [NEED],
     waitWindowDays: 30,
-    options: { kinds: [], assets: [], chains: [] },
+  })
+
+  it('lists each need with every rating, the tools and the wait of its protocols', () => {
+    expect(markdown).toInclude(
+      '## Move funds without a link (`?need=moveFunds`)',
+    )
+    expect(markdown).toInclude(
+      '| Pool | Pool | Private | At risk | no count | Tor Browser | yes |',
+    )
+  })
+
+  it('lists the tools of a setup with the effort each takes', () => {
+    expect(markdown).toInclude(
+      'What you need: [Tor Browser](https://ethbeat.org/publications/privacy-methodology#tool-tor-browser) (a free install)',
+    )
   })
 
   it('lists the steps with how to draw the wait', () => {
-    expect(markdown).toInclude('1. **Wait.** Wait. Draw the wait once')
-    expect(markdown).toInclude('2. **Exit.** Exit. Against: public observer.')
+    expect(markdown).toInclude('1. **Set up, outside the app.**')
+    expect(markdown).toInclude('2. **Wait.** Wait. Draw the wait once')
   })
 
-  it('says what the fastest goal leaves out and which rating it stops claiming', () => {
-    expect(markdown).toInclude('| Fastest | 1 | Wait | chain analyst |')
-    expect(markdown).toInclude('| Most private | 2 | - | - |')
-  })
-
-  it('ranks every protocol per goal, with the values that place it', () => {
+  it('says which steps go and which ratings stop holding without an effort', () => {
+    expect(markdown).toInclude('| Wait up to 30 days | Wait | chain analyst |')
     expect(markdown).toInclude(
-      'Ranked by: Fewest red ratings, then most green ratings, then largest anonymity set.',
-    )
-    expect(markdown).toInclude(
-      '| 1 | Pool | Pool | 0 red | 5 green | no anonymity set count | No anonymity set count |',
+      '| Set up tools outside the app | Set up | public observer |',
     )
   })
 

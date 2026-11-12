@@ -6,15 +6,16 @@ import type {
 } from '@l2beat/config'
 import { expect } from 'earl'
 import {
-  ADVICE_GOALS,
-  compareAdviceGoals,
+  ACCEPT_ALL,
+  type AdviceAccepts,
+  getAdviceEffortCosts,
   getAdvicePath,
-  isAdviceGoalId,
 } from './advicePaths'
 
 // Method: one pool-shaped advice with a setup step outside the app, a random
-// wait and an exit, checked against each goal. The assertions are on what a
-// path keeps, which positions it shows and which ratings it stops claiming.
+// wait and an exit, walked with each effort refused. The assertions are on
+// what a path keeps, which positions it shows and which ratings it stops
+// claiming.
 
 const ADVERSARIES = (
   [
@@ -46,20 +47,25 @@ const STEPS: PrivacyAdviceStep[] = [
   { name: 'Exit', text: '', against: ['publicObserver', 'chainAnalyst'] },
 ]
 
-function path(goal: keyof typeof ADVICE_GOALS, steps = STEPS) {
-  return getAdvicePath(steps, ADVICE_GOALS[goal], ADVERSARIES, SENTIMENTS)
+function path(accepts: Partial<AdviceAccepts> = {}, steps = STEPS) {
+  return getAdvicePath(
+    steps,
+    { ...ACCEPT_ALL, ...accepts },
+    ADVERSARIES,
+    SENTIMENTS,
+  )
 }
 
-function statuses(goal: keyof typeof ADVICE_GOALS, steps = STEPS) {
+function statuses(accepts: Partial<AdviceAccepts> = {}) {
   return Object.fromEntries(
-    path(goal, steps).adversaries.map((row) => [row.adversary.id, row.status]),
+    path(accepts).adversaries.map((row) => [row.adversary.id, row.status]),
   )
 }
 
 describe('advicePaths', () => {
   describe(getAdvicePath.name, () => {
-    it('keeps every step for the most private path, and every rating holds', () => {
-      const result = path('private')
+    it('keeps every step when every effort is accepted, and every rating holds', () => {
+      const result = path()
       expect(result.taken.map((step) => step.name)).toEqual([
         'Set up',
         'Deposit',
@@ -67,7 +73,7 @@ describe('advicePaths', () => {
         'Exit',
       ])
       expect(result.skipped).toEqual([])
-      expect(statuses('private')).toEqual({
+      expect(statuses()).toEqual({
         publicObserver: 'rated',
         chainAnalyst: 'rated',
         networkObserver: 'rated',
@@ -76,26 +82,17 @@ describe('advicePaths', () => {
       })
     })
 
-    it('leaves out the random wait for the fastest path, and stops claiming what it defended', () => {
-      const result = path('fast')
+    it('leaves the wait out for a user who cannot wait, and stops rating the chain analyst', () => {
+      const result = path({ wait: false })
       expect(result.skipped.map((step) => step.name)).toEqual(['Wait'])
-      // Deposit and Exit still name the chain analyst, but its rating assumed the wait too.
-      const analyst = result.adversaries.find(
-        (row) => row.adversary.id === 'chainAnalyst',
-      )
-      expect(analyst).toEqual({
-        adversary: ADVERSARIES[1]!,
-        sentiment: 'good',
-        status: 'unrated',
-        skipped: ['Wait'],
-      })
-      expect(statuses('fast').networkObserver).toEqual('rated')
+      expect(statuses({ wait: false }).chainAnalyst).toEqual('unrated')
+      expect(statuses({ wait: false }).networkObserver).toEqual('rated')
     })
 
-    it('leaves out the steps outside the app for the least setup path', () => {
-      const result = path('light')
+    it('leaves the outside steps out for a user who sets up nothing, and stops rating what they defended', () => {
+      const result = path({ outside: false })
       expect(result.skipped.map((step) => step.name)).toEqual(['Set up'])
-      expect(statuses('light')).toEqual({
+      expect(statuses({ outside: false })).toEqual({
         publicObserver: 'rated',
         chainAnalyst: 'rated',
         networkObserver: 'unrated',
@@ -104,93 +101,58 @@ describe('advicePaths', () => {
       })
     })
 
-    it('numbers the steps that defend an adversary by their place on the path', () => {
-      const result = path('light')
-      const publicObserver = result.adversaries.find(
-        (row) => row.adversary.id === 'publicObserver',
-      )
+    it('leaves both out when both efforts are refused', () => {
+      const result = path({ wait: false, outside: false })
+      expect(result.taken.map((step) => step.name)).toEqual(['Deposit', 'Exit'])
+    })
+
+    it('numbers the steps of the path, not of the full advice', () => {
+      const publicObserver = path({ outside: false }).adversaries[0]
       expect(publicObserver).toEqual({
-        adversary: ADVERSARIES[0]!,
+        adversary: ADVERSARIES[0] as PrivacyAdversary,
         sentiment: 'good',
         status: 'rated',
         steps: [3],
       })
     })
 
-    it('puts the operator first for the least trust path, without leaving steps out', () => {
-      const result = path('operator')
-      expect(result.skipped).toEqual([])
-      expect(result.adversaries[0]?.adversary.id).toEqual('privilegedInsider')
-      expect(
-        result.adversaries.map((row) => row.adversary.id).slice(1),
-      ).toEqual([
-        'publicObserver',
-        'chainAnalyst',
-        'networkObserver',
-        'futureAdversary',
-      ])
-    })
-
-    it('matches the full path when the advice has nothing the goal leaves out', () => {
-      const noWait = STEPS.filter((step) => !step.randomWait)
-      expect(path('fast', noWait)).toEqual(path('private', noWait))
+    it('names the skipped steps a rating assumes', () => {
+      const chainAnalyst = path({ wait: false }).adversaries[1]
+      expect(chainAnalyst).toEqual({
+        adversary: ADVERSARIES[1] as PrivacyAdversary,
+        sentiment: 'good',
+        status: 'unrated',
+        skipped: ['Wait'],
+      })
     })
   })
 
-  describe(compareAdviceGoals.name, () => {
-    it('says for each goal what it leaves out and which ratings stop holding', () => {
-      const rows = compareAdviceGoals(STEPS, ADVERSARIES, SENTIMENTS).map(
-        (row) => ({
-          goal: row.goal.id,
-          stepCount: row.stepCount,
-          skipped: row.skipped,
-          waits: row.waits,
-          outsideCount: row.outsideCount,
-          unrated: row.unrated.map((a) => a.id),
-        }),
-      )
-      expect(rows).toEqual([
+  describe(getAdviceEffortCosts.name, () => {
+    it('says for each effort which steps go and which ratings stop holding', () => {
+      const costs = getAdviceEffortCosts(STEPS, ADVERSARIES, SENTIMENTS)
+      expect(
+        costs.map((cost) => ({
+          effort: cost.effort.id,
+          skipped: cost.skipped,
+          unrated: cost.unrated.map((a) => a.id),
+        })),
+      ).toEqual([
+        { effort: 'wait', skipped: ['Wait'], unrated: ['chainAnalyst'] },
         {
-          goal: 'private',
-          stepCount: 4,
-          skipped: [],
-          waits: true,
-          outsideCount: 1,
-          unrated: [],
-        },
-        {
-          goal: 'fast',
-          stepCount: 3,
-          skipped: ['Wait'],
-          waits: false,
-          outsideCount: 1,
-          unrated: ['chainAnalyst'],
-        },
-        {
-          goal: 'light',
-          stepCount: 3,
+          effort: 'outside',
           skipped: ['Set up'],
-          waits: true,
-          outsideCount: 0,
           unrated: ['networkObserver', 'privilegedInsider'],
         },
-        {
-          goal: 'operator',
-          stepCount: 4,
-          skipped: [],
-          waits: true,
-          outsideCount: 1,
-          unrated: [],
-        },
       ])
     })
-  })
 
-  describe(isAdviceGoalId.name, () => {
-    it('accepts only known goals, so a stale link falls back to the default', () => {
-      expect(isAdviceGoalId('fast')).toEqual(true)
-      expect(isAdviceGoalId('cheapest')).toEqual(false)
-      expect(isAdviceGoalId(undefined)).toEqual(false)
+    it('omits an effort the advice never asks for', () => {
+      const costs = getAdviceEffortCosts(
+        STEPS.filter((step) => !step.randomWait),
+        ADVERSARIES,
+        SENTIMENTS,
+      )
+      expect(costs.map((cost) => cost.effort.id)).toEqual(['outside'])
     })
   })
 })

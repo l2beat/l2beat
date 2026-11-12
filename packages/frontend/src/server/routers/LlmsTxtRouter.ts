@@ -242,7 +242,7 @@ const PAGE_SECTIONS: LinkListSection[] = [
         name: 'How to stay private',
         path: '/privacy/stay-private.md',
         description:
-          "Privacy protocols ranked per goal by our published data, with what each trades off, and each one's advised steps in order.",
+          "Privacy protocols grouped by what a user wants to do, with our rating against each adversary, the tools each needs and each one's advised steps in order.",
       },
       {
         name: 'Archived protocols',

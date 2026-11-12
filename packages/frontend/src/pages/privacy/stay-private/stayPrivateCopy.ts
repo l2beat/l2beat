@@ -1,48 +1,70 @@
 import type { PrivacyAdversarySentiment } from '@l2beat/config'
-import { formatInteger } from '@l2beat/shared-pure'
-import type { PrivacyAdviceProtocol } from '~/server/features/privacy/advice/getPrivacyAdviceData'
 import { PRIVACY_ADVICE_TITLE } from '../methodology/paths'
 import type { AdvicePathAdversary } from './advicePaths'
-import { CRITERIA, type CriterionId, type TradeOff } from './rankProtocols'
+import type { MatchGroupId } from './matchProtocols'
 
 /** Copy shared by the guide and its markdown alternate. */
 export const STAY_PRIVATE = {
   title: PRIVACY_ADVICE_TITLE,
   description:
-    'Say what matters to you. We compare the privacy protocols we review on our published data, list every one that fits with what it trades off, and give the steps for the one you choose.',
-  goalQuestion: 'What matters to you?',
+    'Say what you want to do, who should not find out and what effort you accept. We show which protocols we review keep it private, and the setup for the one you choose.',
+  needQuestion: 'What do you want to do?',
+  fromQuestion: 'Who should not find out?',
+  fromNote:
+    'Our five adversaries. Each is a capability, and one party can hold several.',
+  fromEmpty: 'Choose at least one adversary.',
+  effortQuestion: 'What can you do?',
+  effortNote:
+    'Our ratings assume every step of our advice. Without an effort, the steps that need it are left out and the ratings they defend are not shown.',
   filtersLabel: 'Narrow down',
   anyOption: 'Any',
-  kindLabel: 'Kind',
   assetLabel: 'Asset',
   chainLabel: 'Chain',
   filtersNote:
     'Assets and chains are those we track deposits of, by token symbol. A protocol may support more.',
-  rankingQuestion: 'Protocols by your criteria',
-  rankedBy: 'Ranked by',
-  rankingNotes: [
-    'Each criterion only breaks ties of the one before. Nothing is weighted, and missing data always ranks below data.',
-    "Ratings grade each protocol's own promise, which differs between kinds, and anonymity sets count different things per kind. Narrow down by kind to compare like with like.",
-    'Value secured is shown for context and never ranked: it does not measure privacy.',
+  matchesTitle: 'Protocols for your choices',
+  matchNotes: [
+    "The dots are our ratings of each protocol's own promise against the adversaries you chose. Promises differ, so read each one.",
+    'An empty ring means the rating assumes a step you ruled out.',
+    'Within a group, protocols with fewer red and yellow ratings come first, then the larger anonymity set.',
   ],
-  bestFit: 'Fits your criteria best by our data',
-  tradeOffsLabel: 'Trade-offs',
-  noTradeOffs: 'None against the others listed',
-  seeSteps: 'See the steps',
-  stepsShown: 'Steps shown below',
+  groups: {
+    private: {
+      title: 'Private from everyone you chose',
+      empty:
+        'No protocol we review keeps this private from everyone you chose.',
+    },
+    atRisk: {
+      title: 'At risk from someone you chose',
+      note: 'A rating is yellow, or it assumes a step you ruled out.',
+    },
+    exposed: {
+      title: 'Exposed to someone you chose',
+      note: 'A rating is red: no step keeps the promise from that adversary.',
+    },
+  } satisfies Record<
+    MatchGroupId,
+    { title: string; note?: string; empty?: string }
+  >,
+  notChosenLabel: 'Not chosen',
+  needsLabel: 'needs',
+  /** Leads what a path asks for beyond the app: tools, and outside steps that link none. */
+  outsideLabel: 'Outside the app',
+  nothingOutside: 'nothing',
+  seeSetup: 'See the setup',
+  setupShown: 'Setup shown below',
   excludedTitle: 'Ruled out by your filters',
   uncheckedTitle: 'Not checked: we lack the data',
-  noneQualify: 'No protocol we review fits these filters by our data.',
-  pathTitle: 'Steps',
-  pickProtocol: 'Choose a protocol above to see the steps from our review.',
-  ratingsNote:
-    'The ratings in each review assume every step. A path that leaves a step out is not rated, so the adversaries that step defended show an empty ring.',
-  sameAsFull:
-    "This protocol's advice has no step that this goal leaves out, so the path is the full one.",
+  setupTitle: 'Setup',
+  pickProtocol: 'Choose a protocol above to see its setup from our review.',
+  toolsTitle: 'What you need',
+  stepsTitle: 'Steps',
+  noSteps:
+    'Our review has no advice for this protocol, since no step changes a rating.',
   skippedLabel: 'Left out',
   defendsTitle: 'Adversaries',
-  compareTitle: 'Goals compared',
-  compareHeaders: ['Goal', 'Steps', 'Left out', 'No longer rated'],
+  costsTitle: 'What leaving an effort out costs',
+  costsHeaders: ['Without', 'Steps left out', 'No longer rated'],
   referenceAppLabel: 'Steps assume',
   anonymitySetLabel: 'Anonymity set',
   exitWindowLabel: 'Exit window',
@@ -52,11 +74,6 @@ export const STAY_PRIVATE = {
   fullReview: 'Full review',
   notAnAudit:
     'Our reading of public code, onchain data and the apps we traced. Not an audit and not an endorsement.',
-  protocolParam: 'protocol',
-  goalParam: 'goal',
-  kindParam: 'kind',
-  assetParam: 'asset',
-  chainParam: 'chain',
 } as const
 
 /** One row of the adversaries table, in words. */
@@ -80,60 +97,7 @@ export function getWaitWindowNote(windowDays: number) {
   return `The random wait is drawn from the same ${windowDays}-day window this count covers.`
 }
 
-/** "Fewest red ratings, then most green ratings, then largest anonymity set." */
-export function getRankedByText(order: CriterionId[]): string {
-  const labels = order.map((id, i) =>
-    i === 0 ? CRITERIA[id].label : CRITERIA[id].label.toLowerCase(),
-  )
-  return `${labels.join(', then ')}.`
-}
-
-/** A protocol's value for one criterion, as the ranking reads it. */
-export function formatCriterionValue(
-  id: CriterionId,
-  p: PrivacyAdviceProtocol,
-): string {
-  switch (id) {
-    case 'fewerRed':
-      return `${countRatings(p, 'bad')} red`
-    case 'moreGreen':
-      return `${countRatings(p, 'good')} green`
-    case 'anonymitySet':
-      return p.anonymitySetSize === undefined
-        ? 'no anonymity set count'
-        : `anonymity set ${formatInteger(p.anonymitySetSize)}`
-    case 'noWait':
-      return p.steps.some((s) => s.randomWait) ? 'random wait' : 'no wait'
-    case 'fewerOutside': {
-      const n = p.steps.filter((s) => s.outside).length
-      return `${n} outside the app`
-    }
-    case 'fewerSteps':
-      return `${p.steps.length} ${p.steps.length === 1 ? 'step' : 'steps'}`
-    case 'insider':
-      return `insider ${SENTIMENT_WORD[p.sentiments.privilegedInsider]}`
-    case 'exitWindow':
-      return `exit window ${p.exitWindow.value}`
-  }
-}
-
-/** A trade-off in words, e.g. "Smaller anonymity set". */
-export function formatTradeOff(tradeOff: TradeOff): string {
-  const criterion = CRITERIA[tradeOff.criterion]
-  return tradeOff.kind === 'worse'
-    ? criterion.worse
-    : (criterion.noData ?? criterion.worse)
-}
-
-const SENTIMENT_WORD: Record<PrivacyAdversarySentiment, string> = {
-  good: 'green',
-  warning: 'yellow',
-  bad: 'red',
-}
-
-function countRatings(
-  p: PrivacyAdviceProtocol,
-  sentiment: PrivacyAdversarySentiment,
-) {
-  return Object.values(p.sentiments).filter((s) => s === sentiment).length
+/** A row's line for a protocol whose taken steps include a random wait. */
+export function getWaitText(windowDays: number) {
+  return `random wait, up to ${windowDays} days`
 }

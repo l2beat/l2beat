@@ -1463,6 +1463,26 @@ export interface PrivacyCategory {
   id: PrivacyCategoryId
   label: string
   description: string
+  /** What a user comes to do with it. Protocols are compared within one need. */
+  need: PrivacyNeedId
+}
+
+/**
+ * What a user wants to do, in their words. Categories name mechanisms, which
+ * a user does not know, and several categories can serve one need.
+ */
+export type PrivacyNeedId =
+  | 'moveFunds'
+  | 'getPaid'
+  | 'hideAmounts'
+  | 'useService'
+  | 'vote'
+
+export interface PrivacyNeed {
+  id: PrivacyNeedId
+  /** Imperative, e.g. "Move funds without a link". */
+  label: string
+  description: string
 }
 
 // #region privacy adversaries
@@ -1624,9 +1644,11 @@ export interface PrivacyAdviceStep {
    */
   outside?: boolean
   /**
-   * True on the wait step of a pool. The page draws a waiting time at random
-   * within the window the anonymity set counts, since a fixed wait is a
-   * pattern and people pick random numbers badly.
+   * True on the step where time must pass between entry and exit. The page
+   * draws a waiting time at random within the window the anonymity set counts,
+   * since a fixed wait is a pattern and people pick random numbers badly. The
+   * guide drops the step for a user who cannot wait, so every such step
+   * carries the flag.
    */
   randomWait?: boolean
 }

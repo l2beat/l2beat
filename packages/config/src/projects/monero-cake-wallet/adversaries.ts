@@ -184,8 +184,9 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
     },
     {
       name: 'Wait',
-      text: 'Hold the XMR for days, and exit at a different time of day than you deposited.',
+      text: A.wait,
       against: ['chainAnalyst'],
+      randomWait: true,
     },
     {
       name: 'Exit',

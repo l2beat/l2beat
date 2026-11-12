@@ -1,46 +1,57 @@
-import type { PrivacyAdversary } from '@l2beat/config'
+import type { PrivacyAdversary, PrivacyNeed } from '@l2beat/config'
 import { useMemo, useRef, useState } from 'react'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import type {
-  PrivacyAdviceData,
-  PrivacyAdviceProtocol,
-} from '~/server/features/privacy/advice/getPrivacyAdviceData'
-import { AdviceCriteriaPicker } from './components/AdviceCriteriaPicker'
-import { AdvicePathCard } from './components/AdvicePathCard'
-import { ProtocolRankingCard } from './components/ProtocolRankingCard'
-import { type RankingCriteria, rankProtocols } from './rankProtocols'
+import type { PrivacyAdviceProtocol } from '~/server/features/privacy/advice/getPrivacyAdviceData'
+import { ChoicesPicker } from './components/ChoicesPicker'
+import { ProtocolMatchesCard } from './components/ProtocolMatchesCard'
+import { SetupCard } from './components/SetupCard'
+import { type MatchChoices, matchProtocols } from './matchProtocols'
 import { STAY_PRIVATE } from './stayPrivateCopy'
+import { toStayPrivateQuery } from './stayPrivateQuery'
 
 interface Props extends AppLayoutProps {
   protocols: PrivacyAdviceProtocol[]
   adversaries: PrivacyAdversary[]
+  needs: PrivacyNeed[]
   waitWindowDays: number
-  options: PrivacyAdviceData['options']
-  initialCriteria: RankingCriteria
+  initialChoices: MatchChoices
   initialProtocol: string | undefined
 }
 
 export function PrivacyStayPrivatePage({
   protocols,
   adversaries,
+  needs,
   waitWindowDays,
-  options,
-  initialCriteria,
+  initialChoices,
   initialProtocol,
   ...props
 }: Props) {
-  const [criteria, setCriteria] = useState(initialCriteria)
+  const [choices, setChoices] = useState(initialChoices)
   const [slug, setSlug] = useState(initialProtocol)
-  const pathRef = useRef<HTMLDivElement>(null)
-  const ranking = useMemo(
-    () => rankProtocols(protocols, criteria),
-    [protocols, criteria],
+  const setupRef = useRef<HTMLDivElement>(null)
+  const matches = useMemo(
+    () => matchProtocols(protocols, adversaries, choices),
+    [protocols, adversaries, choices],
   )
   const protocol = protocols.find((p) => p.slug === slug)
+
+  /** Keeps the choices and the chosen protocol in the URL, so a link reopens them. */
+  const update = (next: MatchChoices, nextSlug: string | undefined) => {
+    setChoices(next)
+    setSlug(nextSlug)
+    const query = toStayPrivateQuery(next, nextSlug, adversaries)
+    // Replaces rather than pushes, so trying choices does not fill the back button.
+    window.history.replaceState(
+      null,
+      '',
+      `?${new URLSearchParams({ ...query }).toString()}`,
+    )
+  }
 
   return (
     <AppLayout {...props}>
@@ -50,32 +61,36 @@ export function PrivacyStayPrivatePage({
         </MainPageHeader>
         <div className="flex flex-col gap-4">
           <PrimaryCard>
-            <AdviceCriteriaPicker
-              criteria={criteria}
-              options={options}
-              onChange={(next) => {
-                setCriteria(next)
-                replaceQuery(next, slug)
-              }}
+            <ChoicesPicker
+              choices={choices}
+              needs={needs}
+              adversaries={adversaries}
+              protocols={protocols}
+              waitWindowDays={waitWindowDays}
+              onChange={(next) =>
+                // A setup of another need answers a question no longer asked.
+                update(next, protocol?.needId === next.need ? slug : undefined)
+              }
             />
           </PrimaryCard>
-          <ProtocolRankingCard
-            ranking={ranking}
-            adversaries={adversaries}
+          <ProtocolMatchesCard
+            matches={matches}
+            from={choices.from}
+            waitWindowDays={waitWindowDays}
             selected={slug}
             onSelect={(next) => {
-              setSlug(next)
-              replaceQuery(criteria, next)
+              update(choices, next)
               requestAnimationFrame(() =>
-                pathRef.current?.scrollIntoView({ block: 'start' }),
+                setupRef.current?.scrollIntoView({ block: 'start' }),
               )
             }}
           />
-          <div ref={pathRef} className="scroll-mt-4">
+          <div ref={setupRef} className="scroll-mt-4">
             {protocol ? (
-              <AdvicePathCard
+              <SetupCard
                 protocol={protocol}
-                goal={criteria.goal}
+                accepts={choices.accepts}
+                from={choices.from}
                 adversaries={adversaries}
                 waitWindowDays={waitWindowDays}
               />
@@ -89,19 +104,4 @@ export function PrivacyStayPrivatePage({
       </SideNavLayout>
     </AppLayout>
   )
-}
-
-/**
- * Keeps the criteria and the chosen protocol in the URL, so a link reopens the
- * same comparison. Replaces rather than pushes, so trying criteria does not
- * fill the back button.
- */
-function replaceQuery(criteria: RankingCriteria, protocol: string | undefined) {
-  const params = new URLSearchParams()
-  params.set(STAY_PRIVATE.goalParam, criteria.goal)
-  if (criteria.kind) params.set(STAY_PRIVATE.kindParam, criteria.kind)
-  if (criteria.asset) params.set(STAY_PRIVATE.assetParam, criteria.asset)
-  if (criteria.chain) params.set(STAY_PRIVATE.chainParam, criteria.chain)
-  if (protocol) params.set(STAY_PRIVATE.protocolParam, protocol)
-  window.history.replaceState(null, '', `?${params.toString()}`)
 }

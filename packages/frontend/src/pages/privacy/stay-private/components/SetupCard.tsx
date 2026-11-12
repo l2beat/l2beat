@@ -13,52 +13,62 @@ import { PrivacySentimentDot } from '~/pages/privacy/PrivacySentimentDot'
 import type { PrivacyAdviceProtocol } from '~/server/features/privacy/advice/getPrivacyAdviceData'
 import { formatDate } from '~/utils/dates'
 import {
-  ADVICE_GOALS,
-  type AdviceGoalId,
-  compareAdviceGoals,
+  ADVICE_EFFORT_IDS,
+  ADVICE_EFFORTS,
+  type AdviceAccepts,
+  getAdviceEffortCosts,
   getAdvicePath,
 } from '../advicePaths'
+import { getPathTools } from '../setupTools'
 import {
   getAdversaryStatusText,
   getWaitWindowNote,
   STAY_PRIVATE,
 } from '../stayPrivateCopy'
 
-export function AdvicePathCard({
+/**
+ * One protocol's setup: the app the steps assume, the tools to get, the steps
+ * the user's efforts keep, and which ratings still hold on that path.
+ */
+export function SetupCard({
   protocol,
-  goal: goalId,
+  accepts,
+  from,
   adversaries,
   waitWindowDays,
 }: {
   protocol: PrivacyAdviceProtocol
-  goal: AdviceGoalId
+  accepts: AdviceAccepts
+  from: PrivacyAdversaryId[]
   adversaries: PrivacyAdversary[]
   waitWindowDays: number
 }) {
-  const goal = ADVICE_GOALS[goalId]
   const path = getAdvicePath(
     protocol.steps,
-    goal,
+    accepts,
     adversaries,
     protocol.sentiments,
   )
   const unrated = path.adversaries
     .filter((row) => row.status === 'unrated')
     .map((row) => row.adversary.id)
+  const tools = getPathTools(path.taken)
+  const costs = getAdviceEffortCosts(
+    protocol.steps,
+    adversaries,
+    protocol.sentiments,
+  )
   const getAdversaryHref = (id: PrivacyAdversaryId) =>
     `${protocol.href}#${getPrivacyAdversaryBlockId(id)}`
 
   return (
     <PrimaryCard>
-      {/* Announced on every pick, so a screen reader hears the path change. */}
+      {/* Announced on every pick, so a screen reader hears the setup change. */}
       <h2
         aria-live="polite"
-        className="flex items-center gap-2.5 font-bold text-heading-18 md:text-heading-20"
+        className="font-bold text-heading-18 md:text-heading-20"
       >
-        <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-surface-tertiary text-label-12">
-          3
-        </span>
-        {STAY_PRIVATE.pathTitle}: {protocol.name}, {goal.label.toLowerCase()}
+        {STAY_PRIVATE.setupTitle}: {protocol.name}
       </h2>
       <div className="mt-3 flex flex-col gap-2">
         {protocol.isUnderReview && (
@@ -68,8 +78,12 @@ export function AdvicePathCard({
           <WarningBar color="red" text={protocol.redWarning} />
         )}
       </div>
-      <ProtocolFacts protocol={protocol} waitWindowDays={waitWindowDays} />
-      {goal.focus === 'privilegedInsider' && (
+      <ProtocolFacts
+        protocol={protocol}
+        waits={path.taken.some((step) => step.randomWait)}
+        waitWindowDays={waitWindowDays}
+      />
+      {from.includes('privilegedInsider') && (
         <div className="mt-4 flex flex-col gap-1 rounded-lg bg-surface-secondary px-4 py-3 text-paragraph-15">
           <span className="font-bold">{STAY_PRIVATE.operatorTitle}</span>
           <span>{protocol.insider}</span>
@@ -79,29 +93,59 @@ export function AdvicePathCard({
           </span>
         </div>
       )}
-      {goal.shortcut && (
-        <SkippedNote
-          skipped={path.skipped.map((step) => step.name)}
-          cost={goal.shortcut.cost}
-        />
+
+      {tools.length > 0 && (
+        <>
+          <h3 className="mt-8 font-bold text-heading-18">
+            {STAY_PRIVATE.toolsTitle}
+          </h3>
+          <ul className="mt-2 flex flex-col gap-1 text-paragraph-15">
+            {tools.map((tool) => (
+              <li key={tool.name}>
+                <CustomLink href={tool.href}>{tool.name}</CustomLink>
+                {tool.effort && (
+                  <span className="text-secondary">: {tool.effort}</span>
+                )}
+              </li>
+            ))}
+          </ul>
+        </>
       )}
-      <div className="mt-6">
-        <PrivacyAdviceSteps
-          steps={path.taken}
-          adversaries={adversaries}
-          sentiments={protocol.sentiments}
-          waitWindowDays={waitWindowDays}
-          getAdversaryHref={getAdversaryHref}
-          unrated={unrated}
-        />
-      </div>
+
+      <h3 className="mt-8 font-bold text-heading-18">
+        {STAY_PRIVATE.stepsTitle}
+      </h3>
+      {path.skipped.length > 0 && (
+        <p className="mt-2 text-paragraph-15">
+          <span className="font-bold">{STAY_PRIVATE.skippedLabel}:</span>{' '}
+          {path.skipped.map((step) => step.name).join(', ')}.{' '}
+          {ADVICE_EFFORT_IDS.filter(
+            (id) => !accepts[id] && path.skipped.some(ADVICE_EFFORTS[id].skips),
+          )
+            .map((id) => ADVICE_EFFORTS[id].cost)
+            .join(' ')}
+        </p>
+      )}
+      {protocol.steps.length === 0 ? (
+        <p className="mt-2 text-paragraph-15 text-secondary">
+          {STAY_PRIVATE.noSteps}
+        </p>
+      ) : (
+        <div className="mt-4">
+          <PrivacyAdviceSteps
+            steps={path.taken}
+            adversaries={adversaries}
+            sentiments={protocol.sentiments}
+            waitWindowDays={waitWindowDays}
+            getAdversaryHref={getAdversaryHref}
+            unrated={unrated}
+          />
+        </div>
+      )}
 
       <h3 className="mt-8 font-bold text-heading-18">
         {STAY_PRIVATE.defendsTitle}
       </h3>
-      <p className="mt-1 text-paragraph-13 text-secondary">
-        {STAY_PRIVATE.ratingsNote}
-      </p>
       <ul className="mt-3 flex flex-col divide-y divide-divider">
         {path.adversaries.map((row) => (
           <li
@@ -121,11 +165,47 @@ export function AdvicePathCard({
         ))}
       </ul>
 
-      <GoalComparison
-        protocol={protocol}
-        adversaries={adversaries}
-        selected={goalId}
-      />
+      {costs.length > 0 && (
+        <>
+          <h3 className="mt-8 font-bold text-heading-18">
+            {STAY_PRIVATE.costsTitle}
+          </h3>
+          <div className="mt-3 overflow-x-auto">
+            <table className="w-full min-w-[480px] text-left text-paragraph-14">
+              <thead className="text-paragraph-13 text-secondary">
+                <tr className="border-divider border-b">
+                  {STAY_PRIVATE.costsHeaders.map((header) => (
+                    <th key={header} className="py-2 pr-4 font-normal">
+                      {header}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {costs.map((row) => (
+                  <tr
+                    key={row.effort.id}
+                    aria-current={accepts[row.effort.id] ? undefined : 'true'}
+                    className="border-divider border-b last:border-b-0 aria-[current]:bg-surface-secondary/60"
+                  >
+                    <td className="py-2 pr-4 pl-1 font-medium">
+                      {row.effort.label(waitWindowDays)}
+                    </td>
+                    <td className="py-2 pr-4">{row.skipped.join(', ')}</td>
+                    <td className="py-2 pr-4">
+                      {row.unrated.length > 0
+                        ? row.unrated
+                            .map((a) => a.label.toLowerCase())
+                            .join(', ')
+                        : '–'}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
+      )}
 
       <div className="mt-6 flex flex-col gap-1.5 border-divider border-t pt-4 text-paragraph-13">
         <div className="flex flex-wrap gap-x-4 gap-y-1">
@@ -145,13 +225,14 @@ export function AdvicePathCard({
 /** The context the steps assume: the app, how many you hide among, and how long you have to leave. */
 function ProtocolFacts({
   protocol,
+  waits,
   waitWindowDays,
 }: {
   protocol: PrivacyAdviceProtocol
+  waits: boolean
   waitWindowDays: number
 }) {
   const { anonymitySet, referenceApp, exitWindow } = protocol
-  const hasWait = protocol.steps.some((step) => step.randomWait)
   return (
     <dl className="mt-4 grid gap-x-6 gap-y-3 text-paragraph-15 sm:grid-cols-3">
       <Fact label={STAY_PRIVATE.referenceAppLabel}>
@@ -194,7 +275,7 @@ function ProtocolFacts({
               {[
                 anonymitySet.description,
                 ...anonymitySet.notes,
-                hasWait ? getWaitWindowNote(waitWindowDays) : '',
+                waits ? getWaitWindowNote(waitWindowDays) : '',
               ]
                 .filter(Boolean)
                 .join(' ')}
@@ -231,77 +312,5 @@ function Fact({
       <dt className="text-paragraph-13 text-secondary">{label}</dt>
       <dd className="flex flex-col gap-0.5">{children}</dd>
     </div>
-  )
-}
-
-/** What the shortcut leaves out, or that it leaves out nothing here. */
-function SkippedNote({ skipped, cost }: { skipped: string[]; cost: string }) {
-  if (skipped.length === 0) {
-    return (
-      <p className="mt-4 text-paragraph-15 text-secondary">
-        {STAY_PRIVATE.sameAsFull}
-      </p>
-    )
-  }
-  return (
-    <p className="mt-4 text-paragraph-15">
-      <span className="font-bold">{STAY_PRIVATE.skippedLabel}:</span>{' '}
-      {skipped.join(', ')}. {cost}
-    </p>
-  )
-}
-
-/** Every goal side by side for this protocol, so the cost of a shortcut is visible before picking it. */
-function GoalComparison({
-  protocol,
-  adversaries,
-  selected,
-}: {
-  protocol: PrivacyAdviceProtocol
-  adversaries: PrivacyAdversary[]
-  selected: AdviceGoalId
-}) {
-  const rows = compareAdviceGoals(
-    protocol.steps,
-    adversaries,
-    protocol.sentiments,
-  )
-  return (
-    <>
-      <h3 className="mt-8 font-bold text-heading-18">
-        {STAY_PRIVATE.compareTitle}
-      </h3>
-      <div className="mt-3 overflow-x-auto">
-        <table className="w-full min-w-[480px] text-left text-paragraph-14">
-          <thead className="text-paragraph-13 text-secondary">
-            <tr className="border-divider border-b">
-              {STAY_PRIVATE.compareHeaders.map((header) => (
-                <th key={header} className="py-2 pr-4 font-normal">
-                  {header}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((row) => (
-              <tr
-                key={row.goal.id}
-                aria-current={row.goal.id === selected ? 'true' : undefined}
-                className="border-divider border-b last:border-b-0 aria-[current]:bg-surface-secondary/60"
-              >
-                <td className="py-2 pr-4 pl-1 font-medium">{row.goal.label}</td>
-                <td className="py-2 pr-4">{row.stepCount}</td>
-                <td className="py-2 pr-4">{row.skipped.join(', ') || '–'}</td>
-                <td className="py-2 pr-4">
-                  {row.unrated.length > 0
-                    ? row.unrated.map((a) => a.label.toLowerCase()).join(', ')
-                    : '–'}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </>
   )
 }
