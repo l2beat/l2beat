@@ -24,7 +24,11 @@ export function getChainFlowStatItems(
     },
     { label: 'Volume in', value: formatCurrency(chainData.inflow, 'usd') },
     { label: 'Volume out', value: formatCurrency(chainData.outflow, 'usd') },
-    { label: 'Net flow', value: formatCurrency(chainData.netFlow, 'usd') },
+    // Signed like the graph's chain labels: a true minus, an explicit plus.
+    {
+      label: 'Net flow',
+      value: `${chainData.netFlow > 0 ? '+' : ''}${formatCurrency(chainData.netFlow, 'usd').replace('-', '\u2212')}`,
+    },
     { label: 'Total transfers', value: formatInteger(totalTransfers) },
     { label: 'Unique tokens', value: formatInteger(chainData.tokenCount) },
     { label: 'Transfers in', value: formatInteger(chainData.transfersIn) },
