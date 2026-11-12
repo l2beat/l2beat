@@ -9,7 +9,10 @@ import { getZkCatalogMetadataDescription } from '~/ssr/head/projectMetaDescripti
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
-import { getProjectOgImagePath } from '~/utils/project/getProjectUrl'
+import {
+  getProjectOgImagePath,
+  getProjectPath,
+} from '~/utils/project/getProjectPath'
 import { renderZkCatalogProjectMarkdown } from './renderZkCatalogProjectMarkdown'
 
 export async function getZkCatalogProjectData(
@@ -84,7 +87,7 @@ async function loadZkCatalogProjectPage(manifest: Manifest, slug: string) {
         }),
         // Derived from the slug, not the request URL: the cache entry is
         // shared by every request for the project, including the .md one.
-        url: `/projects/${project.slug}`,
+        url: getProjectPath(project.slug),
         openGraph: {
           image: getProjectOgImagePath(project.slug),
         },

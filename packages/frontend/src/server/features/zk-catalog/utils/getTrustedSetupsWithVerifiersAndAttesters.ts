@@ -15,10 +15,7 @@ import uniqBy from 'lodash/uniqBy'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import { manifest } from '~/utils/Manifest'
 import type { ContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
-import {
-  getProjectUrl,
-  type ProjectWithPageMetadata,
-} from '~/utils/project/getProjectUrl'
+import { getProjectUrl, type ProjectWithPageMetadata } from '~/utils/project/getProjectUrl'
 import type { SevenDayTvsBreakdown } from '../../layer2s/tvs/get7dTvsBreakdown'
 import type { TrustedSetupVerifierData } from '../getZkCatalogEntries'
 import { getZkCatalogLogo } from '../getZkCatalogLogo'

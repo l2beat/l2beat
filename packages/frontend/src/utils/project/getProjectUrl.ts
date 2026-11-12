@@ -1,6 +1,7 @@
 import type { Project } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 import { ETHEREUM_PROJECT_PATH } from '~/pages/ethereum/paths'
+import { getProjectPath } from './getProjectPath'
 
 /**
  * The fields that decide which kind of page a project has. Queries spread this
@@ -42,13 +43,3 @@ export function getProjectUrl(
  * without it indefinitely, which is what made `?migration=1` necessary.
  */
 export const PROJECT_REDIRECT_CACHE_CONTROL = 'public, max-age=86400'
-
-/** Every project's page, whichever sections it is in. */
-export function getProjectPath(slug: string): `/projects/${string}` {
-  return `/projects/${slug}`
-}
-
-/** The social preview image of a project's page, made by `pnpm og-images`. */
-export function getProjectOgImagePath(slug: string) {
-  return `/meta-images/projects/${slug}/opengraph-image.png`
-}

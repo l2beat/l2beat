@@ -1,10 +1,7 @@
 import type { ProjectExternalDependency } from '@l2beat/config'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
-import {
-  getProjectUrl,
-  PROJECT_PAGE_METADATA_FIELDS,
-} from '~/utils/project/getProjectUrl'
+import { getProjectUrl, PROJECT_PAGE_METADATA_FIELDS } from '~/utils/project/getProjectUrl'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 
 export interface DefiDependencyProject {

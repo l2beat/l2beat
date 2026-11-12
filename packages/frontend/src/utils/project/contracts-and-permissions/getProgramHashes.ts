@@ -6,6 +6,7 @@ import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import type { StateValidationProgramHashData } from '~/components/projects/sections/program-hashes/ProgramHashesSection'
 import type { SevenDayTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
 import { manifest } from '~/utils/Manifest'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 
 export function getProgramHashes(
   programHashes: ProjectScalingContractsProgramHash[] | undefined,
@@ -31,7 +32,7 @@ export function getProgramHashes(
         zkCatalogProject: zkCatalogProject
           ? {
               name: zkCatalogProject.name,
-              href: `/projects/${zkCatalogProject.slug}`,
+              href: getProjectPath(zkCatalogProject.slug),
               icon: manifest.getUrl(`/icons/${zkCatalogProject.slug}.png`),
             }
           : undefined,
@@ -55,6 +56,6 @@ export function toUsedInProjectWithIcon(
     name: project.name,
     slug: project.slug,
     icon: manifest.getUrl(`/icons/${project.slug}.png`),
-    url: `/projects/${project.slug}`,
+    url: getProjectPath(project.slug),
   }
 }

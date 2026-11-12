@@ -2,6 +2,7 @@ import type {
   ProjectScalingProofSystem,
   ProjectScalingStack,
 } from '@l2beat/config'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { TableLink } from '../TableLink'
 import { TwoRowCell } from './TwoRowCell'
 import { TypeInfo } from './TypeInfo'
@@ -37,7 +38,7 @@ export function ProofSystemCell({
           ? undefined
           : zkCatalogIds.length > 0
             ? `/zk-catalog?highlight=${zkCatalogIds.join(',')}`
-            : `/projects/${slug}#state-validation`
+            : `${getProjectPath(slug)}#state-validation`
       }
     >
       <TwoRowCell>

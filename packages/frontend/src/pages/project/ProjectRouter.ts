@@ -13,10 +13,8 @@ import {
 import { ps } from '~/server/projects'
 import type { RenderData, RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
-import {
-  getProjectPath,
-  PROJECT_REDIRECT_CACHE_CONTROL,
-} from '~/utils/project/getProjectUrl'
+import { getProjectPath } from '~/utils/project/getProjectPath'
+import { PROJECT_REDIRECT_CACHE_CONTROL } from '~/utils/project/getProjectUrl'
 import { validateRoute } from '~/utils/validateRoute'
 import { getChainProjectData } from '../chain/getChainProjectData'
 import {

@@ -6,6 +6,7 @@ import type {
 import { MANUAL_RELATION_PLUGIN, unique } from '@l2beat/shared-pure'
 import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import { manifest } from '~/utils/Manifest'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import type { InteropProjectResolver } from '../utils/createInteropProjectResolver'
 import {
   deploymentTransferKey,
@@ -188,7 +189,7 @@ function toInteropProjectIconListItems(
       id: project.id,
       name: project.interopConfig.name ?? project.name,
       iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-      href: `/projects/${project.slug}`,
+      href: getProjectPath(project.slug),
     }))
     .sort((a, b) => a.name.localeCompare(b.name))
 }

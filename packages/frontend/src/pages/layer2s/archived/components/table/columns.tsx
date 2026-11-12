@@ -7,11 +7,12 @@ import { TypeInfo } from '~/components/table/cells/TypeInfo'
 import { getL2CommonProjectColumns } from '~/components/table/common-project-columns/L2CommonProjectColumns'
 import { EM_DASH } from '~/consts/characters'
 import type { L2ArchivedEntry } from '~/server/features/layer2s/archived/getL2ArchivedEntries'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 
 const columnHelper = createColumnHelper<L2ArchivedEntry>()
 
 export const l2ArchivedColumns = [
-  ...getL2CommonProjectColumns(columnHelper, (row) => `/projects/${row.slug}`),
+  ...getL2CommonProjectColumns(columnHelper, (row) => getProjectPath(row.slug)),
   columnHelper.display({
     header: 'Risks',
     cell: (ctx) => {
@@ -23,7 +24,7 @@ export const l2ArchivedColumns = [
       return (
         <PizzaRosetteCell
           projectName={ctx.row.original.name}
-          href={`/projects/${ctx.row.original.slug}#risk-analysis`}
+          href={`${getProjectPath(ctx.row.original.slug)}#risk-analysis`}
           values={risks}
           isUnderReview={ctx.row.original.statuses?.underReview === 'config'}
         />

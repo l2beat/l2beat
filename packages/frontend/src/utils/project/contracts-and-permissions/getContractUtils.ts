@@ -2,10 +2,7 @@ import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
 import type { UsedInProject } from '~/components/projects/sections/permissions/UsedInProject'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
-import {
-  getProjectUrl,
-  PROJECT_PAGE_METADATA_FIELDS,
-} from '~/utils/project/getProjectUrl'
+import { getProjectUrl, PROJECT_PAGE_METADATA_FIELDS } from '~/utils/project/getProjectUrl'
 
 export interface ContractUtils {
   getChainName(chain: string): string

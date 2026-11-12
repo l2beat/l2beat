@@ -14,7 +14,6 @@ import type { ProtocolEntry } from '~/server/features/layer2s/interop/types'
 import {
   formatAverageDuration,
   formatTransferCount,
-  interopProtocolUrl,
 } from './interopMarkdown'
 import {
   bulletList,
@@ -25,6 +24,7 @@ import {
   subsection,
   table,
 } from './markdown'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 
 /** The deployments table, then the backing relations the HTML page draws as a diagram. */
 export function renderOnchainDeployments(
@@ -203,5 +203,5 @@ function renderProtocolName(entry: ProtocolEntry) {
     entry.subgroup && `using ${entry.subgroup.name}`,
   ].filter(Boolean)
   const suffix = notes.length > 0 ? ` (${notes.join(', ')})` : ''
-  return `${link(entry.name, interopProtocolUrl(entry.slug))}${suffix}`
+  return `${link(entry.name, getProjectPath(entry.slug))}${suffix}`
 }

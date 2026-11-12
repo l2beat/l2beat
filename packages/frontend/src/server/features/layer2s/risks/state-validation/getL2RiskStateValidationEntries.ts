@@ -27,10 +27,7 @@ import {
   type ContractUtils,
   getContractUtils,
 } from '~/utils/project/contracts-and-permissions/getContractUtils'
-import {
-  PROJECT_PAGE_METADATA_FIELDS,
-  type ProjectWithPageMetadata,
-} from '~/utils/project/getProjectUrl'
+import { PROJECT_PAGE_METADATA_FIELDS, type ProjectWithPageMetadata } from '~/utils/project/getProjectUrl'
 import { getProofSystemWithName } from '~/utils/project/getProofSystemWithName'
 import { getUsedZkCatalogProjects } from '~/utils/project/getUsedZkCatalogProjects'
 import { type CommonL2Entry, getCommonL2Entry } from '../../getCommonL2Entry'

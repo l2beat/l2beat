@@ -18,6 +18,7 @@ import { getL2CommonProjectColumns } from '~/components/table/common-project-col
 import { withChangeSort } from '~/components/table/sorting/changeSortColumn'
 import { sortStages } from '~/components/table/sorting/sortStages'
 import { TableLink } from '~/components/table/TableLink'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import type { L2SummaryTableRow } from '../../utils/toTableRows'
 import { TotalCellWithTvsBreakdown } from './TotalCellWithTvsBreakdown'
 
@@ -29,9 +30,8 @@ interface L2SummaryColumnsOpts {
 
 export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
   return [
-    ...getL2CommonProjectColumns(
-      columnHelper,
-      (row) => `/projects/${row.slug}`,
+    ...getL2CommonProjectColumns(columnHelper, (row) =>
+      getProjectPath(row.slug),
     ),
     columnHelper.display({
       header: 'Risks',
@@ -69,7 +69,7 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
         id: 'stage',
         cell: (ctx) => (
           <StageCell
-            href={`/projects/${ctx.row.original.slug}#stage`}
+            href={`${getProjectPath(ctx.row.original.slug)}#stage`}
             stageConfig={ctx.row.original.stage}
             isAppchain={ctx.row.original.capability === 'appchain'}
             emergencyWarning={ctx.row.original.statuses?.emergencyWarning}

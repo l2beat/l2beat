@@ -1,4 +1,5 @@
 import { ps } from '~/server/projects'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import {
   firstSentence,
   type LinkListSection,
@@ -15,7 +16,7 @@ export async function getDefiListSections(): Promise<LinkListSection[]> {
       heading: 'DeFi protocols (/projects/{slug})',
       links: projects.map((p) => ({
         name: p.name,
-        path: `/projects/${p.slug}`,
+        path: getProjectPath(p.slug),
         description: withFacts(firstSentence(p.display?.description ?? ''), [
           p.defiInfo.category,
         ]),

@@ -20,6 +20,7 @@ import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { InfoIcon } from '~/icons/Info'
 import type { ProtocolDisplayable } from '~/server/features/layer2s/interop/types'
 import { cn } from '~/utils/cn'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { MIN_SELECTED_PROTOCOLS } from './consts'
 import { useInteropFlows } from './utils/InteropFlowsContext'
 
@@ -216,7 +217,7 @@ function ProtocolRow({
           <span className={nameClassName}>{protocol.name}</span>
         ) : (
           <a
-            href={`/projects/${protocol.slug}`}
+            href={getProjectPath(protocol.slug)}
             className="group inline-flex items-center gap-1"
           >
             <span className={nameClassName}>{protocol.name}</span>

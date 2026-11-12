@@ -1,6 +1,7 @@
 import { formatCurrency } from '@l2beat/shared-pure'
 import type { FlowProtocol } from '~/server/features/layer2s/interop/getInteropFlows'
 import { cn } from '~/utils/cn'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import {
   HOME_ROW_CLASS,
   HOME_ROW_LINES_CLASS,
@@ -55,7 +56,7 @@ export function InteropTopProtocols({
             <HomeRank rank={index + 1} />
             <HomeRankedName
               name={name}
-              href={`/projects/${slug}`}
+              href={getProjectPath(slug)}
               iconUrl={iconUrl}
               className="flex-1"
             />

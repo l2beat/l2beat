@@ -1,5 +1,5 @@
 import { ps } from '~/server/projects'
-import { getProjectPath } from '~/utils/project/getProjectUrl'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 
 export interface ProjectVersionLinks {
   groupName: string

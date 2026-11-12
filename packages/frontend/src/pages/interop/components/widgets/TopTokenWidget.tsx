@@ -11,6 +11,7 @@ import { EM_DASH } from '~/consts/characters'
 import { InfoIcon } from '~/icons/Info'
 import type { InteropDashboardData } from '~/server/features/layer2s/interop/getInteropDashboardData'
 import { cn } from '~/utils/cn'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { getInteropTokenUrl } from '../../utils/getInteropTokenUrl'
 import { InteropSelectedChainsContext } from '../../utils/InteropSelectedChainsContext'
 import type { InteropSelection } from '../../utils/types'
@@ -191,7 +192,7 @@ function TopTokenStatCards({
           value={
             topToken?.topProtocol ? (
               <a
-                href={`/projects/${topToken.topProtocol.slug}`}
+                href={getProjectPath(topToken.topProtocol.slug)}
                 className="inline-flex items-center gap-1.5"
               >
                 <img
@@ -253,7 +254,7 @@ function TopTokenStatRows({
           value={
             topToken?.topProtocol ? (
               <a
-                href={`/projects/${topToken.topProtocol.slug}`}
+                href={getProjectPath(topToken.topProtocol.slug)}
                 className="inline-flex items-center gap-1.5"
               >
                 <img

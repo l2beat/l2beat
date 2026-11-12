@@ -8,6 +8,7 @@ import type { InteropVolumeSectionProps } from '~/components/projects/sections/i
 import { getInteropTokenUrl } from '~/pages/interop/utils/getInteropTokenUrl'
 import type { AverageDuration } from '~/server/features/layer2s/interop/types'
 import type { TopItems } from '~/server/features/layer2s/interop/utils/getTopItems'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import {
   bulletList,
   formatCount,
@@ -123,17 +124,13 @@ export function formatAverageDuration(duration: AverageDuration) {
   }
 }
 
-export function interopProtocolUrl(slug: string) {
-  return `/projects/${slug}` as const
-}
-
 /** Protocols L2BEAT has no page for are named without a link. */
 export function linkInteropProtocol(protocol: {
   name: string
   slug: string | undefined
 }) {
   return protocol.slug
-    ? link(protocol.name, interopProtocolUrl(protocol.slug))
+    ? link(protocol.name, getProjectPath(protocol.slug))
     : protocol.name
 }
 

@@ -3,6 +3,7 @@ import type {
   FrameworkDominanceEntry,
   TokenFrameworksData,
 } from '~/server/features/layer2s/interop/getTokenFrameworksData'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import {
   type DominanceRow,
   InteropDominanceContent,
@@ -106,7 +107,7 @@ function FrameworkHeader({ framework }: { framework: DisplayFramework }) {
   if (framework.slug) {
     return (
       <a
-        href={`/projects/${framework.slug}`}
+        href={getProjectPath(framework.slug)}
         className="-mx-2 inline-flex items-center gap-2 rounded px-2 py-1 transition-colors hover:bg-pure-black/5 dark:hover:bg-pure-white/10"
       >
         {content}

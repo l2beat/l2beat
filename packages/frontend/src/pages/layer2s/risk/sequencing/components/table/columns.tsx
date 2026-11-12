@@ -11,6 +11,7 @@ import { TableTooltip } from '~/components/table/TableTooltip'
 import { ETHEREUM_PROJECT_PATH } from '~/pages/ethereum/paths'
 import type { L2RiskSequencingEntry } from '~/server/features/layer2s/risks/sequencing/getL2RiskSequencingEntries'
 import { formatDate, formatTimestamp } from '~/utils/dates'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 
 const columnHelper = createColumnHelper<L2RiskSequencingEntry>()
 
@@ -18,7 +19,7 @@ function getSequencingHref(entry: L2RiskSequencingEntry) {
   if (entry.slug === 'ethereum') {
     return ETHEREUM_PROJECT_PATH
   }
-  return `/projects/${entry.slug}#sequencing`
+  return `${getProjectPath(entry.slug)}#sequencing`
 }
 
 function getStakeDistributionTooltip(

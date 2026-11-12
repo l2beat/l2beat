@@ -2,6 +2,7 @@ import type { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
 import { useState } from 'react'
 import type { TokenData } from '~/server/features/layer2s/interop/types'
 import type { TopItems } from '~/server/features/layer2s/interop/utils/getTopItems'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { getInteropTokenUrl } from '../../utils/getInteropTokenUrl'
 import type { AnchoredInteropSelection } from '../../utils/types'
 import { InteropTopItems } from '../top-items/TopItems'
@@ -54,7 +55,7 @@ export function TopTokensCell({
           title={
             <>
               <span>Top tokens & pairs by volume for </span>
-              <a href={`/projects/${protocol.slug}`}>
+              <a href={getProjectPath(protocol.slug)}>
                 <img
                   src={protocol.iconUrl}
                   alt={protocol.name}

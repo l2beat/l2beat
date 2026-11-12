@@ -6,6 +6,7 @@ import { ArrowRightIcon } from '~/icons/ArrowRight'
 import type { InteropFlowsData } from '~/server/features/layer2s/interop/getInteropFlows'
 import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { getInteropTokenUrl } from '../../../utils/getInteropTokenUrl'
 import { describeChainScope } from '../utils/describeChainScope'
 import { getChainFlowDerivedStats } from '../utils/flowStats'
@@ -71,7 +72,7 @@ export function SingleChainStats({
           items={chainData.topProtocols.map((p) => ({
             ...p,
             title: p.name,
-            href: linkTopProtocols ? `/projects/${p.slug}` : undefined,
+            href: linkTopProtocols ? getProjectPath(p.slug) : undefined,
           }))}
         />
       )}

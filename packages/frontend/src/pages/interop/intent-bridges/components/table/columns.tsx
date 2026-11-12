@@ -6,6 +6,7 @@ import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { TableLink } from '~/components/table/TableLink'
 import { EM_DASH } from '~/consts/characters'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import {
   type InteropTransferDefaults,
   InteropTransferTrigger,
@@ -55,7 +56,7 @@ export function getIntentBridgeColumns(transfer: InteropTransferDefaults) {
           projectName={ctx.row.original.bridge.name}
           description={ctx.row.original.bridge.description}
         >
-          <TableLink href={`/projects/${ctx.row.original.bridge.slug}`}>
+          <TableLink href={getProjectPath(ctx.row.original.bridge.slug)}>
             <TwoRowCell>
               <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
                 <div className="w-fit max-w-[112px] break-words font-bold text-label-value-15 md:leading-none">

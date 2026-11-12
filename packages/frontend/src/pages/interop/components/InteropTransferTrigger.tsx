@@ -1,5 +1,6 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import type { ReactNode } from 'react'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { InteropTransferDetailsTrigger } from './InteropTransferDetailsTrigger'
 
 export interface InteropTransferDefaults {
@@ -28,7 +29,7 @@ export function InteropTransferTrigger({
       title={
         <>
           <span>Transfers for </span>
-          <a href={`/projects/${protocol.slug}`}>
+          <a href={getProjectPath(protocol.slug)}>
             <img
               src={protocol.iconUrl}
               alt={protocol.name}

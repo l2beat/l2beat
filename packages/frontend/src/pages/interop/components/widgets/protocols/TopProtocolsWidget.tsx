@@ -5,6 +5,7 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
 import type { InteropDashboardData } from '~/server/features/layer2s/interop/getInteropDashboardData'
 import type { InteropProtocolData } from '~/server/features/layer2s/interop/utils/getTopProtocols'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { BetweenChainsInfo } from '../../BetweenChainsInfo'
 import { TopProtocolsByTransfersChart } from './TopProtocolsByTransfersChart'
 import { TopProtocolsByVolumeChart } from './TopProtocolsByVolumeChart'
@@ -74,7 +75,7 @@ export function TopProtocolsWidget({
                     />
                     <div className="leading-none">
                       {protocol.slug ? (
-                        <a href={`/projects/${protocol.slug}`}>
+                        <a href={getProjectPath(protocol.slug)}>
                           {protocol.name}
                         </a>
                       ) : protocol.name === 'Others' ? (

@@ -10,7 +10,6 @@ import {
   formatTopPath,
   formatTransferCount,
   interopChainName,
-  interopProtocolUrl,
   renderTopRoutes,
 } from '~/server/markdown/interopMarkdown'
 import { renderProtocolsTable } from '~/server/markdown/interopTokenMarkdown'
@@ -29,6 +28,7 @@ import {
   getTopProtocolBasis,
   UNRELIABLE_PRICE_NOTICE,
 } from './getInteropTokenNotices'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 
 export interface InteropTokenPage {
   token: InteropAbstractToken
@@ -117,7 +117,7 @@ function formatTopProtocol({
     volume && `volume ${formatUsd(volume.value)}`,
     formatTransferCount(transfers.value),
   ])
-  return `${link(name, interopProtocolUrl(slug))} (${stats.join(', ')})`
+  return `${link(name, getProjectPath(slug))} (${stats.join(', ')})`
 }
 
 /**

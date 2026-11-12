@@ -19,6 +19,7 @@ import type {
   TokenFlowData,
   TokensPairData,
 } from '~/server/features/layer2s/interop/types'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { getInteropTokenUrl } from '../../utils/getInteropTokenUrl'
 import type { InteropSelection } from '../../utils/types'
 import { InteropNoDataBadge } from '../InteropNoDataBadge'
@@ -55,7 +56,7 @@ function getCommonColumns<T extends CommonRow>(
 
           return (
             <a
-              href={`/projects/${topProtocol.slug}`}
+              href={getProjectPath(topProtocol.slug)}
               className="flex items-center gap-1.5 hover:underline"
             >
               <img

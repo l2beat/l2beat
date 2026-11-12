@@ -20,6 +20,7 @@ import { getContractUtils } from '~/utils/project/contracts-and-permissions/getC
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { getTrustedSetupsSectionFromTrustedSetups } from '~/utils/project/getTrustedSetupsSection'
 import { optionToRange } from '~/utils/range/range'
 import {
@@ -322,7 +323,7 @@ export async function getPrivacyProjectEntry(
   return {
     id: details.id,
     slug: details.slug,
-    href: `/projects/${details.slug}`,
+    href: getProjectPath(details.slug),
     name: details.name,
     shortName: details.shortName,
     icon,

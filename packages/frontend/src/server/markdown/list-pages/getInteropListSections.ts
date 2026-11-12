@@ -3,7 +3,7 @@ import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
 import uniq from 'lodash/uniq'
 import { ps } from '~/server/projects'
-import { interopProtocolUrl } from '../interopMarkdown'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import {
   firstSentence,
   type LinkListSection,
@@ -23,12 +23,12 @@ export async function getInteropListSections(): Promise<LinkListSection[]> {
   return [
     {
       heading: 'Protocols (/projects/{slug})',
-      links: protocols.map((p) => interopLink(p, interopProtocolUrl(p.slug))),
+      links: protocols.map((p) => interopLink(p, getProjectPath(p.slug))),
     },
     {
       heading: 'Canonical bridges of scaling projects (/projects/{slug})',
       description: 'Their interop data is on the scaling project page.',
-      links: scalingBridges.map((p) => interopLink(p, `/projects/${p.slug}`)),
+      links: scalingBridges.map((p) => interopLink(p, getProjectPath(p.slug))),
     },
   ]
 }

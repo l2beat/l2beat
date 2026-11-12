@@ -16,7 +16,10 @@ import type { RenderData } from '~/ssr/types'
 import type { SsrHelpers } from '~/trpc/server'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
-import { getProjectOgImagePath } from '~/utils/project/getProjectUrl'
+import {
+  getProjectOgImagePath,
+  getProjectPath,
+} from '~/utils/project/getProjectPath'
 import { getL2ProjectStructuredData } from './getL2ProjectStructuredData'
 import { renderL2ProjectMarkdown } from './renderL2ProjectMarkdown'
 
@@ -155,7 +158,7 @@ async function loadL2ProjectPage(manifest: Manifest, slug: string) {
         }),
         // Derived from the slug, not the request URL: the cache entry is
         // shared by every request for the project, including the .md one.
-        url: `/projects/${project.slug}`,
+        url: getProjectPath(project.slug),
         openGraph: {
           image: getProjectOgImagePath(project.slug),
         },

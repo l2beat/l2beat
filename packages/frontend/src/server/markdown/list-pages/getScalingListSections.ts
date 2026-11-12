@@ -1,4 +1,5 @@
 import { ps } from '~/server/projects'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import {
   firstSentence,
   type LinkListSection,
@@ -59,7 +60,7 @@ function scalingLink(project: {
   const info = project.scalingInfo
   return {
     name: project.name,
-    path: `/projects/${project.slug}`,
+    path: getProjectPath(project.slug),
     description: withFacts(firstSentence(project.display?.description ?? ''), [
       info.type ?? 'Other',
       info.stage !== 'Not applicable' && info.stage,

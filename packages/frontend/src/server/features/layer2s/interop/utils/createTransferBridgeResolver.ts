@@ -2,6 +2,7 @@ import type { Project } from '@l2beat/config'
 import type { InteropTransferRecord } from '@l2beat/database'
 import { InteropTransferClassifier } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import type { InteropTransferBridge } from '../types'
 import { createMatchingProjectsResolver } from './createInteropProjectResolver'
 
@@ -30,7 +31,7 @@ export function createTransferBridgeResolver(
 
     return {
       name: project.interopConfig.name ?? project.name,
-      href: `/projects/${project.slug}`,
+      href: getProjectPath(project.slug),
     }
   }
 }

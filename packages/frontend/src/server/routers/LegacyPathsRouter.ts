@@ -1,9 +1,7 @@
 import express from 'express'
 import { ETHEREUM_PROJECT_PATH } from '~/pages/ethereum/paths'
-import {
-  getProjectPath,
-  PROJECT_REDIRECT_CACHE_CONTROL,
-} from '~/utils/project/getProjectUrl'
+import { getProjectPath } from '~/utils/project/getProjectPath'
+import { PROJECT_REDIRECT_CACHE_CONTROL } from '~/utils/project/getProjectUrl'
 
 export function createLegacyPathsRouter() {
   const router = express.Router()

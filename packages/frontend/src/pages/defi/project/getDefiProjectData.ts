@@ -9,7 +9,10 @@ import { getProjectMetadataDescription } from '~/ssr/head/projectMetaDescription
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
-import { getProjectOgImagePath } from '~/utils/project/getProjectUrl'
+import {
+  getProjectOgImagePath,
+  getProjectPath,
+} from '~/utils/project/getProjectPath'
 import { renderDefiProjectMarkdown } from './renderDefiProjectMarkdown'
 
 export async function getDefiProjectData(
@@ -101,7 +104,7 @@ async function loadDefiProjectPage(manifest: Manifest, slug: string) {
         description: getProjectMetadataDescription(entry),
         // Derived from the slug, not the request URL: the cache entry is
         // shared by every request for the project, including the .md one.
-        url: `/projects/${entry.slug}`,
+        url: getProjectPath(entry.slug),
         openGraph: {
           image: getProjectOgImagePath(entry.slug),
         },

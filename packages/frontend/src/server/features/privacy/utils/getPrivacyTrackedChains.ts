@@ -1,10 +1,7 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import { manifest } from '~/utils/Manifest'
-import {
-  getProjectUrl,
-  type ProjectPageMetadata,
-} from '~/utils/project/getProjectUrl'
+import { getProjectUrl, type ProjectPageMetadata } from '~/utils/project/getProjectUrl'
 
 interface ChainProject extends ProjectPageMetadata {
   name: string

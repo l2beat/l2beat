@@ -7,7 +7,7 @@ import { getDaMetadataDescription } from '~/ssr/head/projectMetaDescriptions'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers, type SsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
-import { getProjectOgImagePath } from '~/utils/project/getProjectUrl'
+import { getProjectOgImagePath } from '~/utils/project/getProjectPath'
 import { ETHEREUM_PROJECT_PATH } from './paths'
 import { renderEthereumProjectMarkdown } from './renderEthereumProjectMarkdown'
 

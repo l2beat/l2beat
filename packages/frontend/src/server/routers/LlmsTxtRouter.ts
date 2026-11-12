@@ -17,6 +17,7 @@ import {
 } from '~/server/markdown/markdownAlternate'
 import type { STATIC_PAGE_PATHS } from '~/server/pagePaths'
 import { isServedAsMarkdown } from '~/utils/getMarkdownAlternatePath'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import type { MarkdownAlternatePath } from './MarkdownAlternatesRouter'
 
 /**
@@ -343,7 +344,7 @@ const MARKDOWN_PAGES_SECTION: LinkListSection = {
   links: [
     {
       name: 'Project',
-      path: '/projects/{slug}.md',
+      path: `${getProjectPath('{slug}')}.md`,
       description:
         'One project as markdown, with what each section it is in covers. A layer 2 or layer 3: stage and its requirements, risks with sentiments, TVS and activity, technology. A privacy protocol: what it promises to hide and how that holds against each adversary, trusted setup, exit window, deposits and value locked per asset, governance. An interop protocol: last 24h volume, transfers, top path, transfer time and top token, volume by chain. A ZK Catalog proving system: trusted setup risks, verifier IDs and deployments, program hashes. Ethereum (slug ethereum): economic security, validators, blob throughput as the data availability layer. Permissions and contracts for each.',
     },

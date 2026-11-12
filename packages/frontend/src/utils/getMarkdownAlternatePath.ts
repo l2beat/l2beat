@@ -1,5 +1,6 @@
 import { env } from '~/env'
 import type { STATIC_PAGE_PATHS } from '~/server/pagePaths'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 
 /**
  * The one place that knows which pages are also served as markdown, at the
@@ -46,7 +47,7 @@ export const LIST_PAGES_WITH_MARKDOWN = [
  */
 export const PROJECT_PAGES_WITH_MARKDOWN = [
   // Every project page but the chain-only ones, which opt out where they render.
-  '/projects/:slug',
+  getProjectPath(':slug'),
   '/tokens/:slug{/:issuer}{/:symbol}',
 ] as const
 

@@ -24,6 +24,7 @@ import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { useTable } from '~/hooks/useTable'
 import type { InteropScope } from '~/server/features/layer2s/interop/types'
 import { useTRPC } from '~/trpc/React'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { BetweenChainsInfo } from '../../BetweenChainsInfo'
 import { CarriedForwardNotice } from '../../CarriedForwardNotice'
@@ -72,7 +73,7 @@ export function TransferCountCell({
         title={
           <>
             <span>Transfers for </span>
-            <a href={`/projects/${protocol.slug}`}>
+            <a href={getProjectPath(protocol.slug)}>
               <img
                 src={protocol.iconUrl}
                 alt={protocol.name}

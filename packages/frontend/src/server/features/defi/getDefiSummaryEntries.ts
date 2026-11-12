@@ -3,6 +3,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { manifest } from '~/utils/Manifest'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { optionToRange } from '~/utils/range/range'
 import { getDefiTvlDataSource } from './getDefiTvlDataSource'
 import {
@@ -58,7 +59,7 @@ export function buildDefiSummaryEntries(
         name: project.name,
         shortName: project.shortName,
         icon: manifest.getUrl(`/icons/${project.slug}.png`),
-        href: `/projects/${project.slug}`,
+        href: getProjectPath(project.slug),
         description: project.display.description,
         category: project.defiInfo.category,
         totalValueLockedUsd: tvlByProject.get(project.id),

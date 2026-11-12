@@ -6,7 +6,7 @@ import type {
   SearchBarProjectEntry,
   SearchBarTokenEntry,
 } from '~/server/features/search-bar/types'
-import { getProjectPath } from '~/utils/project/getProjectUrl'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import type { SearchBarCategory } from './searchBarCategories'
 
 /*

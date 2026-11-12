@@ -13,10 +13,7 @@ import {
   type ContractUtils,
   getContractUtils,
 } from '~/utils/project/contracts-and-permissions/getContractUtils'
-import {
-  PROJECT_PAGE_METADATA_FIELDS,
-  type ProjectWithPageMetadata,
-} from '~/utils/project/getProjectUrl'
+import { PROJECT_PAGE_METADATA_FIELDS, type ProjectWithPageMetadata } from '~/utils/project/getProjectUrl'
 import {
   getTrustedSetupsWithVerifiersAndAttesters,
   type TrustedSetupsByProofSystem,

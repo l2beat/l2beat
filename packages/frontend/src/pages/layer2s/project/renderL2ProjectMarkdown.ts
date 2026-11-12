@@ -32,6 +32,7 @@ import {
   renderProjectMarkdown,
 } from '~/server/markdown/renderProjectMarkdown'
 import { formatPercent } from '~/utils/calculatePercentageChange'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { getL2ProjectApiUrls } from './getL2ProjectApiUrls'
 
 /** The markdown alternate of the scaling project page, from the entry the HTML page renders. */
@@ -40,7 +41,7 @@ export function renderL2ProjectMarkdown(entry: ProjectL2Entry): string {
   const summaryRisks = getSummaryRisks(entry)
   return renderProjectMarkdown({
     name: entry.name,
-    pagePath: `/projects/${entry.slug}`,
+    pagePath: getProjectPath(entry.slug),
     summary: {
       // Same order as the banners on the HTML page.
       warnings: compact([

@@ -10,6 +10,7 @@ import {
   UNDER_REVIEW_DESCRIPTION,
 } from '~/components/projects/sections/sectionCopy'
 import type { DiagramParams } from '~/utils/project/getDiagramParams'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import {
   bulletList,
   joinBlocks,
@@ -53,7 +54,7 @@ export function renderHostChainWarning(
   const { hostChainName, hostChainSlug, riskCount } = hostChainWarning
   return renderRelatedProjectBanner({
     text: hostChainRisksText(riskCount),
-    href: `/projects/${hostChainSlug}`,
+    href: getProjectPath(hostChainSlug),
     project: { name: hostChainName },
   })
 }

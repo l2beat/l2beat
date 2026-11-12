@@ -2,6 +2,7 @@ import { formatCurrency, formatNumber } from '@l2beat/shared-pure'
 import { PercentChange } from '~/components/PercentChange'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { EcosystemMonthlyUpdateEntry } from '~/server/features/monthly-reports/getEcosystemEntries'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 
 interface Props {
   tvsLeaderboard: EcosystemMonthlyUpdateEntry['tvsLeaderboard']
@@ -74,7 +75,7 @@ function LeaderboardTvsItem({
     <div className="grid grid-cols-4 items-center">
       <a
         className="col-span-2 flex w-fit items-center gap-1.5 rounded-[4px] p-1 hover:bg-primary/10"
-        href={`/projects/${item.slug}`}
+        href={getProjectPath(item.slug)}
       >
         <img
           src={item.iconUrl}
@@ -101,7 +102,7 @@ function LeaderboardActivityItem({
     <div className="grid grid-cols-4 items-center">
       <a
         className="col-span-2 flex w-fit items-center gap-1.5 rounded-[4px] p-1 hover:bg-primary/10"
-        href={`/projects/${item.slug}`}
+        href={getProjectPath(item.slug)}
       >
         <img
           src={item.iconUrl}

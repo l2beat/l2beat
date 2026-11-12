@@ -6,6 +6,7 @@ import { TableLink } from '~/components/table/TableLink'
 import { EM_DASH } from '~/consts/characters'
 import { TopTokensCell } from '~/pages/interop/components/tokens/TopTokensCell'
 import type { ProtocolEntry } from '~/server/features/layer2s/interop/types'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import type { AnchoredInteropSelection } from '../../../utils/types'
 import { BridgeTypeBadge } from '../../table/BridgeTypeBadge'
 import { TopRouteCell } from './TopRouteCell'
@@ -33,7 +34,7 @@ export function getProtocolsByVolumeColumns(
       id: 'logo',
       cell: (ctx) => {
         return (
-          <a href={`/projects/${ctx.row.original.slug}`}>
+          <a href={getProjectPath(ctx.row.original.slug)}>
             <img
               className="min-h-[20px] min-w-[20px]"
               src={ctx.row.original.icon}
@@ -56,7 +57,7 @@ export function getProtocolsByVolumeColumns(
       header: 'Name',
       cell: (ctx) => (
         <TableLink
-          href={`/projects/${ctx.row.original.slug}`}
+          href={getProjectPath(ctx.row.original.slug)}
           className="w-auto"
         >
           <span className="font-bold text-label-value-15">

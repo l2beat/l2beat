@@ -10,6 +10,7 @@ import {
   describeProofSystemTrustedSetups,
   formatTag,
 } from '~/server/markdown/zkSectionBodies'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 
 /** The markdown alternate of the ZK catalog project page, from the entry the HTML page renders. */
 export function renderZkCatalogProjectMarkdown(
@@ -17,7 +18,7 @@ export function renderZkCatalogProjectMarkdown(
 ): string {
   return renderProjectMarkdown({
     name: entry.name,
-    pagePath: `/projects/${entry.slug}`,
+    pagePath: getProjectPath(entry.slug),
     summary: {
       warnings: compact([
         ...getProjectStatusWarnings(entry),

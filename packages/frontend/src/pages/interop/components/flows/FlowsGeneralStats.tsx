@@ -7,6 +7,7 @@ import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { useTRPC } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { getInteropTokenUrl } from '../../utils/getInteropTokenUrl'
 import type { InteropChainWithIcon } from '../chain-selector/types'
 import { TokensDialog } from '../tokens/TokensDialog'
@@ -160,7 +161,7 @@ export function FlowsGeneralStats() {
               topProtocol ? (
                 <div className="flex flex-col items-center gap-0.5 text-heading-18">
                   <a
-                    href={`/projects/${topProtocol.slug}`}
+                    href={getProjectPath(topProtocol.slug)}
                     className="text-brand-deep hover:underline"
                   >
                     {topProtocol.name}

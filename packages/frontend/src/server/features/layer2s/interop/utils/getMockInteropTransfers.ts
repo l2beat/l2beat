@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { getInteropTokenUrl } from '~/pages/interop/utils/getInteropTokenUrl'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import type {
   InteropProtocolTransferDetailsItem,
   InteropProtocolTransfersResponse,
@@ -51,7 +52,7 @@ export function getMockInteropTransfers({
       valueUsd: 1_000,
       bridge: {
         name: 'Polygon PoS',
-        href: '/projects/polygon-pos',
+        href: getProjectPath('polygon-pos'),
       },
       duration: 60_000,
       srcChain: isTokenMock

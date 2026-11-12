@@ -10,7 +10,6 @@ import {
   formatAverageDuration,
   formatTopPath,
   formatTransferCount,
-  interopProtocolUrl,
   linkInteropToken,
   listTopItems,
 } from '~/server/markdown/interopMarkdown'
@@ -22,6 +21,7 @@ import {
 import { TRANSFER_TYPE_DISPLAY } from '../utils/display'
 import { getBridgeTypeVolumes } from '../utils/getBridgeTypeVolumes'
 import { getTransferSizeBreakdown } from '../utils/transferSizeBuckets'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 
 /** The page props the markdown needs: the headline numbers live next to the entry, not in it. */
 export interface InteropProtocolPageContent {
@@ -36,7 +36,7 @@ export function renderInteropProtocolMarkdown({
 }: InteropProtocolPageContent): string {
   return renderProjectMarkdown({
     name: entry.name,
-    pagePath: interopProtocolUrl(entry.slug),
+    pagePath: getProjectPath(entry.slug),
     summary: {
       warnings: [
         ...getProjectStatusWarnings(entry),
