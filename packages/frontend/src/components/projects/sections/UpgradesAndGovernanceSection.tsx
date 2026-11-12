@@ -41,10 +41,7 @@ export function UpgradesAndGovernanceSection({
       ) : null}
       {content && (
         <Markdown
-          className={cn(
-            mdClassName,
-            'max-w-[72ch] text-paragraph-15 md:text-paragraph-16',
-          )}
+          className={cn(mdClassName, 'text-paragraph-15 md:text-paragraph-16')}
         >
           {content}
         </Markdown>
@@ -55,7 +52,7 @@ export function UpgradesAndGovernanceSection({
           <h3 className="font-semibold text-heading-18 leading-6">
             Past upgrades
           </h3>
-          <p className="mt-2 max-w-[72ch] text-paragraph-15 md:text-paragraph-16">
+          <p className="mt-2 text-paragraph-15 md:text-paragraph-16">
             {PAST_UPGRADES_DESCRIPTION}
           </p>
           <PastUpgradesDialog

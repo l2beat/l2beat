@@ -32,7 +32,7 @@ export function DataPostedSection({
 }: DataPostedSectionProps) {
   return (
     <ProjectSection {...sectionProps}>
-      <p className="max-w-[72ch] text-paragraph-15 md:text-paragraph-16">
+      <p className="text-paragraph-15 md:text-paragraph-16">
         {DATA_POSTED_DESCRIPTION}{' '}
         {currentDaLayers.length > 0 ? (
           <>

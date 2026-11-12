@@ -48,7 +48,7 @@ export function Last30DayAnomalies({
       <SubsectionHeading className="font-semibold text-heading-18 leading-6">
         Last 30 day anomalies
       </SubsectionHeading>
-      <p className="mt-4 max-w-[72ch] text-paragraph-15 md:text-paragraph-16">
+      <p className="mt-4 text-paragraph-15 md:text-paragraph-16">
         {LAST_30_DAY_ANOMALIES_DESCRIPTION}
       </p>
       {hasTrackedContractsChanged && (

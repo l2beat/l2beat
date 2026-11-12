@@ -20,7 +20,7 @@ export function Category({ category }: CategoryProps) {
         {category.title}
       </span>
       {category.isIncomplete && <SectionIncompleteNote />}
-      <Markdown className="mt-2 max-w-[72ch] text-paragraph-15 md:text-paragraph-16">
+      <Markdown className="mt-2 text-paragraph-15 md:text-paragraph-16">
         {category.description}
       </Markdown>
       {risks && <RiskList risks={risks} />}

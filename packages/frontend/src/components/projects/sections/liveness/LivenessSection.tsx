@@ -57,7 +57,7 @@ export function LivenessSection({
   const ongoingAnomalies = anomalies.filter(isAnomalyOngoing)
   return (
     <ProjectSection {...sectionProps}>
-      <p className="mb-4 max-w-[72ch] text-paragraph-15 md:text-paragraph-16">
+      <p className="mb-4 text-paragraph-15 md:text-paragraph-16">
         {LIVENESS_DESCRIPTION}
       </p>
       {env.CLIENT_SIDE_TRACKED_TXS_OUTAGE && (

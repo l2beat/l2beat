@@ -34,7 +34,7 @@ function Item(props: { title: string; children: string }) {
       <span className="block font-semibold text-heading-18 leading-6">
         {props.title}
       </span>
-      <Markdown className="mt-2 max-w-[72ch] text-paragraph-15 md:text-paragraph-16">
+      <Markdown className="mt-2 text-paragraph-15 md:text-paragraph-16">
         {props.children}
       </Markdown>
     </div>
