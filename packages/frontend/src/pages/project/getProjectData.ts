@@ -8,7 +8,7 @@ import {
   hasMarkdown,
   type KindWithoutMarkdown,
   type ProjectPage,
-  type ProjectPageKind,
+  type ProjectPageSection,
   type ProjectPageWithMarkdown,
 } from '~/server/features/projects/getProjectPage'
 import {
@@ -32,10 +32,7 @@ import { getEthereumProjectContent } from '../ethereum/getEthereumProjectContent
 import { renderEthereumProjectMarkdown } from '../ethereum/renderEthereumProjectMarkdown'
 import { getInteropProtocolContent } from '../interop/protocol/getInteropProtocolContent'
 import { renderInteropProtocolMarkdown } from '../interop/protocol/renderInteropProtocolMarkdown'
-import {
-  getL2PrivacyProjectContent,
-  getL2ProjectContent,
-} from '../layer2s/project/getL2ProjectContent'
+import { getL2ProjectContent } from '../layer2s/project/getL2ProjectContent'
 import { renderL2ProjectMarkdown } from '../layer2s/project/renderL2ProjectMarkdown'
 import type { PageName, Pages, SsrData } from '../pageTypes'
 import { getPrivacyProjectContent } from '../privacy/project/getPrivacyProjectContent'
@@ -68,7 +65,9 @@ export async function getProjectMarkdown(
   cache: InMemoryCache,
 ): Promise<string | undefined> {
   const data = await getCachedProjectPage(page, manifest, cache)
-  return data && PROJECT_PAGES[page.kind].renderMarkdown(data.props, page, cache)
+  return (
+    data && PROJECT_PAGES[page.kind].renderMarkdown(data.props, page, cache)
+  )
 }
 
 /** What every project page gets, whatever its kind. */
@@ -170,9 +169,12 @@ function pageKind<Name extends PageName>(kind: {
   return kind as PageKindWithMarkdown
 }
 
-/** Each kind of project page: its component, and what only it knows. */
+/**
+ * For each section a page can be built on: its component, and what only it
+ * knows. It also shows what the page's other sections add.
+ */
 const PROJECT_PAGES: {
-  [Kind in ProjectPageKind]: Kind extends KindWithoutMarkdown
+  [Kind in ProjectPageSection]: Kind extends KindWithoutMarkdown
     ? PageKind
     : PageKindWithMarkdown
 } = {
@@ -184,11 +186,6 @@ const PROJECT_PAGES: {
   layer2s: pageKind({
     component: 'L2ProjectPage',
     getContent: getL2ProjectContent,
-    renderMarkdown: (props) => renderL2ProjectMarkdown(props.projectEntry),
-  }),
-  layer2sPrivacy: pageKind({
-    component: 'L2PrivacyProjectPage',
-    getContent: getL2PrivacyProjectContent,
     renderMarkdown: (props) => renderL2ProjectMarkdown(props.projectEntry),
   }),
   interop: pageKind({

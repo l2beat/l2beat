@@ -18,16 +18,15 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProjectL2Entry } from '~/server/features/layer2s/project/getL2ProjectEntry'
+import type { PrivacySummary } from '~/server/features/privacy/project/getPrivacyProjectEntry'
 import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
-import {
-  type MergedSummary,
-  ProjectL2Summary,
-} from './components/L2ProjectSummary'
+import { getPrivacyMergedSummary } from './components/getPrivacyMergedSummary'
+import { ProjectL2Summary } from './components/L2ProjectSummary'
 
 interface Props extends AppLayoutProps {
   projectEntry: ProjectL2Entry
-  /** Another section's summary, for a page that merges sections. */
-  mergedSummary?: MergedSummary
+  /** For a scaling project that is also a privacy protocol. */
+  privacy?: PrivacySummary
   projectSections: ProjectSection[]
   versionLinks?: ProjectVersionLinks
   queryState: DehydratedState
@@ -36,7 +35,7 @@ interface Props extends AppLayoutProps {
 
 export function L2ProjectPage({
   projectEntry,
-  mergedSummary,
+  privacy,
   projectSections,
   versionLinks,
   queryState,
@@ -102,7 +101,10 @@ export function L2ProjectPage({
                 <div className="row-start-2">
                   <ProjectL2Summary
                     project={projectEntry}
-                    merged={mergedSummary}
+                    merged={
+                      privacy &&
+                      getPrivacyMergedSummary(privacy, projectEntry.sections)
+                    }
                   />
 
                   {projectEntry.header.category === 'Other' &&

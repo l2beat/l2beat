@@ -20,43 +20,38 @@ export type ProjectPageSection =
   | 'privacy'
   | 'defi'
 
-/** A scaling project that is also a privacy protocol has a page of its own. */
-export type ProjectPageKind = ProjectPageSection | 'layer2sPrivacy'
-
 /**
- * Every kind of project page that is designed: the sections a project must be
- * in to get it, and the ones the page also shows when the project is in them.
- * A project in a set of sections that fits none has no page until someone
- * designs it.
+ * Every combination of sections a project page is designed for, with the
+ * section the page is built on first. A project in any other combination has
+ * no page until someone designs it.
  */
-const PAGE_KINDS: Record<ProjectPageKind, PageKind> = {
-  ethereum: { sections: ['ethereum'] },
-  layer2s: { sections: ['layer2s'] },
-  layer2sPrivacy: { sections: ['layer2s', 'privacy'] },
-  interop: { sections: ['interop'], alsoShows: ['chain'] },
-  chain: { sections: ['chain'] },
-  zkCatalog: { sections: ['zkCatalog'] },
-  privacy: { sections: ['privacy'], alsoShows: ['zkCatalog'] },
-  defi: { sections: ['defi'] },
-}
-
-interface PageKind {
-  sections: ProjectPageSection[]
-  alsoShows?: ProjectPageSection[]
-}
+const ALLOWED_SECTIONS: ProjectPageSection[][] = [
+  ['ethereum'],
+  ['layer2s'],
+  ['layer2s', 'privacy'],
+  ['interop'],
+  ['interop', 'chain'],
+  ['chain'],
+  ['zkCatalog'],
+  ['privacy'],
+  ['privacy', 'zkCatalog'],
+  ['defi'],
+]
 
 /** Chain pages show only interop flows, which have no markdown version. */
 export type KindWithoutMarkdown = 'chain'
 
-export interface ProjectPage<Kind extends ProjectPageKind = ProjectPageKind> {
+export interface ProjectPage<
+  Kind extends ProjectPageSection = ProjectPageSection,
+> {
   slug: string
+  /** The section the page is built on: the first of `sections`. */
   kind: Kind
-  /** Every section the page shows: the ones its kind needs first. */
   sections: ProjectPageSection[]
 }
 
 export type ProjectPageWithMarkdown = ProjectPage<
-  Exclude<ProjectPageKind, KindWithoutMarkdown>
+  Exclude<ProjectPageSection, KindWithoutMarkdown>
 >
 
 export function hasMarkdown(
@@ -99,10 +94,10 @@ export async function getProjectPage(
     hasChainPage: chainProjects.some((chain) => chain.slug === slug),
   })
   if (sections.length === 0) return undefined
-  const kind = getPageKind(sections)
+  const [kind, ...rest] = findAllowed(sections) ?? []
   // Loud, so that the page gets designed.
   if (!kind) throw unsupported(slug, sections)
-  return toProjectPage(slug, kind, sections)
+  return { slug, kind, sections: [kind, ...rest] }
 }
 
 type InteropChain = (typeof INTEROP_CHAINS)[number]
@@ -110,7 +105,7 @@ type InteropChain = (typeof INTEROP_CHAINS)[number]
 /** A page with what it is about: a project, or a chain no section lists. */
 export type ProjectPageEntry<P> =
   | (ProjectPage<'chain'> & { chain: InteropChain; project?: undefined })
-  | (ProjectPage<Exclude<ProjectPageKind, 'chain'>> & {
+  | (ProjectPage<Exclude<ProjectPageSection, 'chain'>> & {
       project: P
       /** The chain whose flows the page shows, if it has the chain section. */
       chain?: InteropChain
@@ -152,14 +147,15 @@ export function selectProjectPages<P extends PageProject>(
     if (sections.length === 1 && sections[0] === 'chain') continue
     chains.delete(project.slug)
     if (sections.length === 0) continue
-    const kind = getPageKind(sections)
+    const [kind, ...rest] = findAllowed(sections) ?? []
     if (!kind || kind === 'chain') {
       if (options.anyDeployment) throw unsupported(project.slug, sections)
       continue
     }
     entries.push({
-      ...toProjectPage(project.slug, kind, sections),
+      slug: project.slug,
       kind,
+      sections: [kind, ...rest],
       project,
       chain,
     })
@@ -170,36 +166,15 @@ export function selectProjectPages<P extends PageProject>(
   return entries
 }
 
-/** The kind of page designed for exactly these sections, if any. */
-function getPageKind(
+/** The allowed combination these sections are, if any. */
+function findAllowed(
   sections: ProjectPageSection[],
-): ProjectPageKind | undefined {
-  const kinds = Object.keys(PAGE_KINDS) as ProjectPageKind[]
-  return kinds.find((kind) => {
-    const { sections: needed, alsoShows = [] } = PAGE_KINDS[kind]
-    return (
-      needed.every((section) => sections.includes(section)) &&
-      sections.every(
-        (section) => needed.includes(section) || alsoShows.includes(section),
-      )
-    )
-  })
-}
-
-function toProjectPage(
-  slug: string,
-  kind: ProjectPageKind,
-  sections: ProjectPageSection[],
-): ProjectPage {
-  const needed = PAGE_KINDS[kind].sections
-  return {
-    slug,
-    kind,
-    sections: [
-      ...needed,
-      ...sections.filter((section) => !needed.includes(section)),
-    ],
-  }
+): ProjectPageSection[] | undefined {
+  return ALLOWED_SECTIONS.find(
+    (allowed) =>
+      allowed.length === sections.length &&
+      allowed.every((section) => sections.includes(section)),
+  )
 }
 
 function unsupported(slug: string, sections: ProjectPageSection[]) {

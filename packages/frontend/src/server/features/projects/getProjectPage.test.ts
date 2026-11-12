@@ -8,7 +8,7 @@ import {
 } from './getProjectPage'
 
 describe(selectProjectPages.name, () => {
-  it('gives a project in two sections one page, of the kind designed for them', () => {
+  it('gives a project in two sections one page, built on the first', () => {
     const pages = selectProjectPages(
       [
         project('railgun', { privacyInfo: {}, zkCatalogInfo: {} }),
@@ -28,7 +28,7 @@ describe(selectProjectPages.name, () => {
       ),
     ).toEqual({
       railgun: ['privacy', 'privacy+zkCatalog'],
-      payy: ['layer2sPrivacy', 'layer2s+privacy'],
+      payy: ['layer2s', 'layer2s+privacy'],
       avalanche: ['interop', 'interop+chain'],
       sp1: ['zkCatalog', 'zkCatalog'],
     })

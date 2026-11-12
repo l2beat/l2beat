@@ -34,9 +34,6 @@ export const pageLoaders = {
     (await import('./layer2s/archived/L2ArchivedPage')).L2ArchivedPage,
   L2ProjectPage: async () =>
     (await import('./layer2s/project/L2ProjectPage')).L2ProjectPage,
-  L2PrivacyProjectPage: async () =>
-    (await import('./layer2s/project/L2PrivacyProjectPage'))
-      .L2PrivacyProjectPage,
   L2ProjectTvsBreakdownPage: async () =>
     (await import('./layer2s/project/tvs-breakdown/L2ProjectTvsBreakdownPage'))
       .L2ProjectTvsBreakdownPage,

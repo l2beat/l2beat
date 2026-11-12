@@ -1,8 +1,5 @@
 import { getL2ProjectEntry } from '~/server/features/layer2s/project/getL2ProjectEntry'
-import {
-  getPrivacyProjectDetails,
-  type PrivacyProjectDetails,
-} from '~/server/features/privacy/getPrivacyProjectDetails'
+import { getPrivacyProjectDetails } from '~/server/features/privacy/getPrivacyProjectDetails'
 import { getPrivacySummary } from '~/server/features/privacy/project/getPrivacyProjectEntry'
 import type { ProjectPage } from '~/server/features/projects/getProjectPage'
 import { ps } from '~/server/projects'
@@ -13,33 +10,14 @@ import type {
 } from '../../project/getProjectData'
 import { getL2ProjectStructuredData } from './getL2ProjectStructuredData'
 
-export function getL2ProjectContent(
-  page: ProjectPage,
-  context: ProjectPageContext,
-): Promise<ProjectPageContent<'L2ProjectPage'> | undefined> {
-  return getContent(page, context)
-}
-
-/** For a scaling project that is also a privacy protocol. */
-export async function getL2PrivacyProjectContent(
-  page: ProjectPage,
-  context: ProjectPageContext,
-): Promise<ProjectPageContent<'L2PrivacyProjectPage'> | undefined> {
-  const privacy = await getPrivacyProjectDetails(page.slug)
-  const content = privacy && (await getContent(page, context, privacy))
-  return (
-    content && {
-      ...content,
-      props: { ...content.props, privacy: getPrivacySummary(privacy) },
-    }
-  )
-}
-
-async function getContent(
+export async function getL2ProjectContent(
   page: ProjectPage,
   { helpers }: ProjectPageContext,
-  privacy?: PrivacyProjectDetails,
-) {
+): Promise<ProjectPageContent<'L2ProjectPage'> | undefined> {
+  // A scaling project that is also a privacy protocol.
+  const privacy = page.sections.includes('privacy')
+    ? await getPrivacyProjectDetails(page.slug)
+    : undefined
   const project = await ps.getProject({
     slug: page.slug,
     select: [
@@ -77,7 +55,7 @@ async function getContent(
   const projectEntry = await getL2ProjectEntry(project, helpers, privacy)
 
   return {
-    props: { projectEntry },
+    props: { projectEntry, privacy: privacy && getPrivacySummary(privacy) },
     metadata: {
       name: project.name,
       description: getScalingMetadataDescription({
@@ -97,6 +75,6 @@ async function getContent(
           hasActivityApi: project.activityConfig !== undefined,
         }),
       ],
-    } satisfies ProjectPageContent<'L2ProjectPage'>['metadata'],
+    },
   }
 }
