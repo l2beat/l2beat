@@ -156,11 +156,13 @@ export function ChartContainer<T extends { timestamp: number }>({
         {shouldMountChart && size === 'regular' && project && (
           <ChartProjectLogo
             project={project}
+            // Beside the watermark (80px wide, 12px in) as one quiet mark,
+            // so the left edge carries only the y-axis labels.
             className={cn(
-              'pointer-events-none absolute left-3 opacity-50',
+              'pointer-events-none absolute right-[104px] h-8 opacity-50',
               keepsHintRoom
-                ? 'bottom-[68px] group-has-[.chart-legend]:bottom-[76px]'
-                : 'bottom-14 group-has-[.chart-legend]:bottom-16',
+                ? 'bottom-[60px] group-has-[.chart-legend]:bottom-[68px]'
+                : 'bottom-12 group-has-[.chart-legend]:bottom-14',
             )}
           />
         )}
