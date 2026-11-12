@@ -62,7 +62,7 @@ export interface SimulatedHead {
 }
 
 export function createSimulatedHead(posters: SimulatedPoster[]): SimulatedHead {
-  const weights = toWeights(posters)
+  const weights = posterWeights(posters)
   const listeners = new Set<() => void>()
   let speed = 1
   let timer: ReturnType<typeof setTimeout> | undefined
@@ -226,7 +226,8 @@ function finalizedFor(slot: number) {
   return (Math.floor(slot / SLOTS_PER_EPOCH) - 2) * SLOTS_PER_EPOCH
 }
 
-function toWeights(posters: SimulatedPoster[]) {
+/** Each poster's long-run share of blob space, the unattributed rest included */
+export function posterWeights(posters: SimulatedPoster[]) {
   const list = posters.map((p) => ({
     id: p.id,
     weight: KNOWN_SHARES[p.id] ?? 0.002,
@@ -236,7 +237,7 @@ function toWeights(posters: SimulatedPoster[]) {
   return list.map((p) => ({ ...p, weight: p.weight / total }))
 }
 
-type Weights = ReturnType<typeof toWeights>
+type Weights = ReturnType<typeof posterWeights>
 
 function makeBlock(
   slot: number,

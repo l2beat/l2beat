@@ -24,6 +24,8 @@ export interface DailyPoint {
   stakedEth: number
   ethPriceUsd: number
   missedSlots: number
+  /** Times the head was rewritten that day, at any depth */
+  reorgs: number
 }
 
 export interface Upgrade {
@@ -63,6 +65,8 @@ export function getSimulatedHistory(
   days = 3 * 365,
 ): DailyPoint[] {
   const random = seeded(42)
+  // its own sequence, so adding it left every other series as it was
+  const reorgRandom = seeded(7)
   const points: DailyPoint[] = []
   let supply = 120_180_000
   let staked = 33_400_000
@@ -109,6 +113,7 @@ export function getSimulatedHistory(
       stakedEth: staked,
       ethPriceUsd,
       missedSlots,
+      reorgs: Math.floor(reorgRandom() ** 2 * 6),
     })
   }
   return points

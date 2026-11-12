@@ -6,12 +6,10 @@ import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 import { todayStart } from './live/simulatedHistory'
-import type { VariantId } from './variants/registry'
 
 export async function getEthereumPageData(
   manifest: Manifest,
   url: string,
-  variant: VariantId,
   speed: number,
 ): Promise<RenderData> {
   const helpers = getSsrHelpers()
@@ -38,7 +36,6 @@ export async function getEthereumPageData(
       page: 'EthereumPage',
       props: {
         ...appLayoutProps,
-        variant,
         speed,
         entry,
         posters,

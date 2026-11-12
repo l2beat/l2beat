@@ -1,7 +1,7 @@
 /**
  * The shape the page reads Ethereum's head in. The prototype fills it from a
  * simulation; the real one will come from the single Ethereum head stream, so
- * variants must read only through these types.
+ * the page must read only through these types.
  */
 
 export interface HeadBlock {

@@ -2,20 +2,19 @@ import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
+import {
+  EthereumPageContent,
+  type EthereumPageContentProps,
+} from './EthereumPageContent'
 import { EthereumHeadProvider } from './live/EthereumHeadContext'
-import { VariantSwitcher } from './VariantSwitcher'
-import type { VariantId } from './variants/registry'
-import type { VariantProps } from './variants/types'
-import { Variant } from './variants/Variant'
+import { PrototypeControls } from './PrototypeControls'
 
-interface Props extends AppLayoutProps, VariantProps {
-  variant: VariantId
+interface Props extends AppLayoutProps, EthereumPageContentProps {
   speed: number
   queryState: DehydratedState
 }
 
 export function EthereumPage({
-  variant,
   speed,
   queryState,
   entry,
@@ -28,16 +27,15 @@ export function EthereumPage({
       <HydrationBoundary state={queryState}>
         <EthereumHeadProvider posters={posters} speed={speed}>
           <SideNavLayout>
-            <Variant
-              id={variant}
+            <EthereumPageContent
               entry={entry}
               posters={posters}
               historyEnd={historyEnd}
             />
-            {/* keeps the last section clear of the switcher */}
+            {/* keeps the last section clear of the prototype controls */}
             <div className="h-24" />
           </SideNavLayout>
-          <VariantSwitcher current={variant} speed={speed} />
+          <PrototypeControls speed={speed} />
         </EthereumHeadProvider>
       </HydrationBoundary>
     </AppLayout>
