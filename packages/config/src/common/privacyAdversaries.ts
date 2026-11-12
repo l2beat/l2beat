@@ -231,10 +231,11 @@ export const PRIVACY_METHODOLOGY_URL = '/publications/privacy-methodology'
 
 /**
  * Anchors in the methodology, rendered by the frontend. Steps link only the
- * route list: the project page links the How to stay private section once.
+ * list of routes and the tool entries: the project page links the How to stay
+ * private section once.
  */
 export const ADVICE_ANCHORS = {
-  ipHidingRoutes: 'ip-hiding-routes',
+  routes: 'routes',
 } as const
 
 /** A markdown link into the methodology, for a step's IP-hiding route. */
@@ -266,7 +267,7 @@ export const ADVICE_SNIPPETS = {
   torBrowser: `Open the app in ${toolLink('torBrowser')}.`,
   /** Native apps and anything else Tor Browser cannot run. */
   ipHidingRoute: (app: string) =>
-    `Run ${app} with all traffic through an ${adviceLink('IP-hiding route', 'ipHidingRoutes')}.`,
+    `Run ${app} with all traffic through an ${adviceLink('IP-hiding route', 'routes')}.`,
   /** Open clients served from a hosted frontend. */
   localBuild:
     'Build the app from the reviewed source and run it locally instead of the hosted website.',

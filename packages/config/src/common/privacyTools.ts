@@ -4,8 +4,8 @@
  */
 export interface PrivacyTool {
   /**
-   * `route` entries pass the IP-hiding route checks and list under them, the
-   * others list under Tools.
+   * `route` entries pass the IP-hiding route checks and list under Routes, the
+   * others under Tools.
    */
   kind: 'route' | 'tool'
   /** Id of the entry on the methodology page, which steps link. */
