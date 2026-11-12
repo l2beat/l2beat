@@ -17,6 +17,7 @@ import chalk from 'chalk'
 import { expect } from 'earl'
 import { existsSync } from 'fs'
 import uniq from 'lodash/uniq'
+import { getEscrowBalances } from '../common/tvsEscrowBalances'
 import { asArray } from '../templates/utils'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from '../test/constants'
 import { isRiskCorrectlyFormatted } from '../test/helpers'
@@ -466,13 +467,13 @@ describe('getProjects', () => {
       expect(problems).toEqual([])
     })
 
-    // Privacy pages split a calculated token by its escrow values, which the
-    // backend prices from the amount alone.
-    it('no token with a calculated amount has its own value for the project', () => {
+    // Privacy pages give each chain and pool its share of the value, so every
+    // token has to be the escrows it is read from, valued by them alone.
+    it('every TVS token is one escrow balance or a sum of them', () => {
       const problems: string[] = []
       for (const { project } of privacyProjects) {
         for (const token of project.tvsConfig ?? []) {
-          if (token.amount.type === 'calculation' && token.valueForProject) {
+          if (!getEscrowBalances(token) || token.valueForProject) {
             problems.push(`${project.id}: ${token.id}`)
           }
         }

@@ -4,6 +4,7 @@ import type {
   CalculationFormula,
   ValueFormula,
 } from '@l2beat/config'
+import { getSummedEscrowBalances } from '@l2beat/config/build/common/tvsEscrowBalances'
 import { assert, notUndefined, type UnixTime } from '@l2beat/shared-pure'
 import { BigIntWithDecimals } from '../tools/bigIntWithDecimals'
 import type { DataStorage } from '../tools/DataStorage'
@@ -11,7 +12,6 @@ import {
   createAmountConfig,
   createPriceConfigId,
 } from '../tools/extractPricesAndAmounts'
-import { getSummedEscrowBalances } from '../tools/getSummedEscrowBalances'
 import type { EscrowValue, ProjectTvsConfig, TokenValue } from '../types'
 
 export class ValueService {
