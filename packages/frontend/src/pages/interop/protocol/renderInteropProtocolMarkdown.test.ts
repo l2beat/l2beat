@@ -228,6 +228,45 @@ describe(renderInteropProtocolMarkdown.name, () => {
     )
   })
 
+  it("keeps the protocol's top chains and routes where the page shows the chain's flows", () => {
+    const page: InteropProtocolPageContent = {
+      projectEntry: {
+        ...ENTRY,
+        sections: [
+          {
+            type: 'InteropFlowsSection',
+            props: {
+              id: 'interop-flows',
+              title: 'Volume and flows',
+              aliasIds: ['interop-volume'],
+              interopChains: CHAINS,
+              protocols: [],
+              defaultSelectedChains: ['ethereum'],
+              defaultStatsChainId: 'ethereum',
+            },
+          },
+        ],
+      },
+      protocolData: {
+        ...PROTOCOL_DATA,
+        flows: [
+          { srcChain: 'ethereum', dstChain: 'arbitrum', volume: 700_000 },
+        ],
+      },
+    }
+
+    const volume = getSection(
+      renderInteropProtocolMarkdown(page),
+      'Volume and flows',
+    )
+
+    expect(volume).toInclude(
+      '### Top chains by volume (last 24h)',
+      '- Ethereum → Arbitrum One: $700.00 K',
+      'https://ethbeat.org/projects/across#interop-volume',
+    )
+  })
+
   it('carries the detailed description', () => {
     expect(
       getSection(renderInteropProtocolMarkdown(PAGE), 'Description'),

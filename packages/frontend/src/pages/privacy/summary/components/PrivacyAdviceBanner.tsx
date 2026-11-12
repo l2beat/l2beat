@@ -1,6 +1,10 @@
 import { CustomLink } from '~/components/link/CustomLink'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
+import {
+  PRIVACY_ADVICE_HREF,
+  PRIVACY_ADVICE_TITLE,
+} from '~/pages/privacy/methodology/paths'
 import { cn } from '~/utils/cn'
 
 interface Props {
@@ -8,10 +12,7 @@ interface Props {
   className?: string
 }
 
-export function PrivacyBestPracticesBanner({
-  backgroundImage,
-  className,
-}: Props) {
+export function PrivacyAdviceBanner({ backgroundImage, className }: Props) {
   return (
     <PrimaryCard
       asChild
@@ -20,7 +21,7 @@ export function PrivacyBestPracticesBanner({
       <CustomLink
         variant="plain"
         underline={false}
-        href="/publications/privacy-best-practices"
+        href={PRIVACY_ADVICE_HREF}
         className="group relative flex min-h-[128px] select-none overflow-hidden rounded-lg text-pure-white"
       >
         <div
@@ -34,7 +35,7 @@ export function PrivacyBestPracticesBanner({
               Ready for a new identity?
             </div>
             <div className="group-hover:-translate-y-2 origin-left text-balance font-bold text-2xl leading-tight! transition-[translate,scale] ease-in-out group-hover:translate-x-4 group-hover:scale-110 md:text-3xl">
-              Onchain privacy best practices
+              {PRIVACY_ADVICE_TITLE}
             </div>
           </div>
           <div className="grid size-10 shrink-0 place-items-center rounded-full bg-pure-white/15 backdrop-blur-sm transition-colors group-hover:bg-pure-white/25">
