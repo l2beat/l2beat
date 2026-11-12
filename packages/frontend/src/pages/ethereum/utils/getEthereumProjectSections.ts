@@ -2,6 +2,7 @@ import type { Project } from '@l2beat/config'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
 import { env } from '~/env'
+import { getLiquidStakingOverview } from '~/server/features/defi/liquid-staking/getLiquidStakingOverview'
 import { getGasFeesUpgrades } from '~/server/features/gas-fees/getGasFeesUpgrades'
 import type { ProjectInteropData } from '~/server/features/layer2s/interop/getProjectInteropData'
 import { getDiagramParams } from '~/utils/project/getDiagramParams'
@@ -36,7 +37,10 @@ export async function getEthereumProjectSections({
 
   const items: ProjectDetailsSection[] = []
 
-  const throughputSection = await getDaThroughputSection(ethereum)
+  const [throughputSection, liquidStakingSection] = await Promise.all([
+    getDaThroughputSection(ethereum),
+    getLiquidStakingSection(),
+  ])
 
   if (interopData) {
     items.push({
@@ -88,6 +92,10 @@ export async function getEthereumProjectSections({
     })
   }
 
+  if (liquidStakingSection) {
+    items.push(liquidStakingSection)
+  }
+
   if (
     riskSummarySection.layer.risks.concat(riskSummarySection.bridge.risks)
       .length > 0
@@ -134,4 +142,17 @@ export async function getEthereumProjectSections({
   })
 
   return items
+}
+
+async function getLiquidStakingSection(): Promise<
+  ProjectDetailsSection | undefined
+> {
+  // Its links lead to DeFi pages, so it follows their flag.
+  if (!env.CLIENT_SIDE_DEFI_ENABLED) return undefined
+  const overview = await getLiquidStakingOverview()
+  if (overview.entries.length === 0) return undefined
+  return {
+    type: 'LiquidStakingSection',
+    props: { id: 'liquid-staking', title: 'Liquid staking', ...overview },
+  }
 }

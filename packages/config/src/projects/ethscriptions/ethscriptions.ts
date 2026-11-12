@@ -47,6 +47,7 @@ export const ethscriptions: ScalingProject = {
   id: ProjectId('ethscriptions'),
   capability: 'appchain',
   addedAt: UnixTime(1736331600), // 2025-01-08
+  archivedAt: UnixTime(1792569959), // 2026-10-21T08:05:59Z, last submitProposal — hosted RPC/explorer shut down per ethscriptions.com banner
   badges: [
     BADGES.VM.AppChain,
     BADGES.Fork.FacetFork,
@@ -307,6 +308,7 @@ export const ethscriptions: ScalingProject = {
     chainId: 61166, // 0xeeee
     gasTokens: ['ETH'],
     explorerUrl: 'https://explorer.ethscriptions.com',
+    untilTimestamp: UnixTime(1792569959), // 2026-10-21T08:05:59Z
     apis: [
       {
         type: 'rpc',

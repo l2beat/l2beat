@@ -1,12 +1,12 @@
 import express from 'express'
 import { SITE_NAME_WITH_FORMER } from '~/consts/siteName'
 import {
-  DEFI_SUMMARY_DESCRIPTION,
+  LIQUID_STAKING_DESCRIPTION,
   PRIVACY_SUMMARY_DESCRIPTION,
   ZK_CATALOG_DESCRIPTION,
 } from '~/consts/summaryPageDescriptions'
-import { getDefiListSections } from '~/server/markdown/list-pages/getDefiListSections'
 import { getInteropListSections } from '~/server/markdown/list-pages/getInteropListSections'
+import { getLiquidStakingListSections } from '~/server/markdown/list-pages/getLiquidStakingListSections'
 import { getOssificationListSections } from '~/server/markdown/list-pages/getOssificationListSections'
 import { getPrivacyListSections } from '~/server/markdown/list-pages/getPrivacyListSections'
 import { getScalingListSections } from '~/server/markdown/list-pages/getScalingListSections'
@@ -105,11 +105,12 @@ const LIST_PAGE_DOCUMENTS: Record<
       'Token pages live at /tokens/{id}/{issuer}/{symbol}, where {id} is case-sensitive and alone identifies the token. Token ids come from the database, so they are not listed here: take them from the token links on the protocol pages.',
     getSections: getInteropListSections,
   },
-  '/defi/summary': {
-    title: `DeFi protocols on ${SITE_NAME_WITH_FORMER}`,
-    summary: 'DeFi protocols tracked by ETHBEAT, with their category.',
-    notes: DEFI_SUMMARY_DESCRIPTION,
-    getSections: getDefiListSections,
+  '/defi/liquid-staking': {
+    title: `Liquid staking protocols on ${SITE_NAME_WITH_FORMER}`,
+    summary:
+      'Ethereum liquid staking protocols tracked by ETHBEAT, with their minting, node operator, backing, oracle, exit and upgrade risks.',
+    notes: LIQUID_STAKING_DESCRIPTION,
+    getSections: getLiquidStakingListSections,
   },
   '/ossification': {
     title: `Ossification on ${SITE_NAME_WITH_FORMER}`,

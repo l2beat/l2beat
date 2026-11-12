@@ -134,11 +134,16 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
   {
     type: 'single',
     title: 'Liquid staking',
-    match: 'liquid-staking',
-    href: '/liquid-staking',
-    // Not built yet: shown so the domain is visible, but not a link.
-    disabled: true,
-    icon: <LiquidStakingIcon />,
+    match: 'defi',
+    href: '/defi/liquid-staking',
+    // Shown while the page is off, so the domain is visible, but not a link.
+    disabled: !env.CLIENT_SIDE_DEFI_ENABLED,
+    icon: (
+      <LiquidStakingIcon
+        className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active"
+        aria-hidden
+      />
+    ),
   },
   {
     type: 'multiple',
