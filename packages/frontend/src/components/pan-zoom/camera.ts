@@ -26,8 +26,12 @@ interface Size {
   height: number
 }
 
-const MIN_SCALE = 0.2
-const MAX_SCALE = 4
+export interface ScaleBounds {
+  min: number
+  max: number
+}
+
+const DEFAULT_SCALE_BOUNDS: ScaleBounds = { min: 0.2, max: 4 }
 const FIT_PADDING = 32
 /** Below this the node text stops being readable. */
 const READABLE_SCALE = 0.55
@@ -42,7 +46,7 @@ const MIN_DOT_SPACING = 16
  * How far the dot grid reaches past the frame on each side: the widest dot
  * spacing, so moving the grid by less than one spacing keeps the frame covered.
  */
-const DOT_GRID_OVERHANG = DOT_GRID_STEP * MAX_SCALE
+const DOT_GRID_OVERHANG = DOT_GRID_STEP * DEFAULT_SCALE_BOUNDS.max
 /**
  * How far a pinch may stretch or shrink the last drawing of the diagram
  * before it is drawn anew: further would blur it, or, zoomed out, give the
@@ -86,10 +90,12 @@ export interface CameraControls {
   fling: (velocity: Point) => void
   /** Glides to `camera`, at the zoom the camera already has. */
   glideTo: (camera: Camera) => void
+  scaleBounds: () => ScaleBounds
 }
 
 /**
- * Fits on mount and on resize; ctrl/meta + wheel over `containerRef` zooms.
+ * Shows `fitted` on mount, and again whenever it changes until the camera is
+ * moved by hand; ctrl/meta + wheel over `containerRef` zooms.
  * A bare wheel scrolls the page, or pans when `wheelPans` is set, for views
  * with no page left to scroll. A scroll of the container, as when a node out
  * of view takes focus, pans instead.
@@ -99,27 +105,24 @@ export interface CameraControls {
  * every frame of a gesture drops frames. `world` and `grid` get compositing
  * layers of their own, so a pan only moves them: nothing is laid out or
  * painted again. `drawing`, inside `world`, carries the zoom the diagram was
- * last drawn at, and `world` stretches it to the rest. `initialStyles` puts
- * the elements where the camera starts, before it can write to them.
+ * last drawn at, and `world` stretches it to the rest. The grid is optional.
+ * `initialStyles` puts the elements where the camera starts, before it can
+ * write to them.
+ *
+ * `content` is compared by identity: a new one (e.g. a new layout) drops a
+ * camera moved by hand and falls back to `fitted`.
  */
-export function useRelationsCamera(
+export function useCamera(
   content: Size,
+  fitted: Camera,
   viewport: Size,
-  focusX: number | undefined,
   containerRef: RefObject<HTMLElement | null>,
-  wheelPans = false,
+  {
+    wheelPans = false,
+    scale = DEFAULT_SCALE_BOUNDS,
+  }: { wheelPans?: boolean; scale?: ScaleBounds } = {},
 ) {
-  const { width: contentWidth, height: contentHeight } = content
   const { width: viewportWidth, height: viewportHeight } = viewport
-  const fitted = useMemo(
-    () =>
-      fitCamera(
-        { width: contentWidth, height: contentHeight },
-        { width: viewportWidth, height: viewportHeight },
-        focusX,
-      ),
-    [contentWidth, contentHeight, viewportWidth, viewportHeight, focusX],
-  )
   const worldRef = useRef<HTMLDivElement>(null)
   const drawingRef = useRef<HTMLDivElement>(null)
   const gridRef = useRef<HTMLDivElement>(null)
@@ -140,8 +143,14 @@ export function useRelationsCamera(
     glide?: Animation[]
   }>({ camera: fitted, drawnK: fitted.k, styles: initialStyles })
   // Read by the stable callbacks below.
-  const latest = useRef({ content, fitted, viewportWidth, viewportHeight })
-  latest.current = { content, fitted, viewportWidth, viewportHeight }
+  const latest = useRef({
+    content,
+    fitted,
+    viewportWidth,
+    viewportHeight,
+    scale,
+  })
+  latest.current = { content, fitted, viewportWidth, viewportHeight, scale }
 
   const show = useCallback((camera: Camera, live = false) => {
     const state = view.current
@@ -199,12 +208,23 @@ export function useRelationsCamera(
       const world = worldRef.current
       const grid = gridRef.current
       set(to)
-      if (!world || !grid || (dx === 0 && dy === 0) || prefersReducedMotion()) {
+      if (!world || (dx === 0 && dy === 0) || prefersReducedMotion()) {
         return
       }
       const state = view.current
       // From where it was, as the diagram is now drawn at the zoom it ends at.
       const fromStyles = getLayerStyles(from, state.drawnK)
+      const timing = { duration, easing, fill: 'forwards' } as const
+      const worldGlide = world.animate(
+        [fromStyles.world, { transform: state.styles.world.transform }],
+        timing,
+      )
+      const animations = [worldGlide]
+      state.glide = animations
+      worldGlide.onfinish = () => {
+        if (view.current.glide === animations) show(to)
+      }
+      if (!grid) return
       // The grid travels all the way, made longer by whole dot spacings on
       // the side it comes from so it covers the frame throughout.
       const spacing = dotGridSpacing(DOT_GRID_STEP, to.k)
@@ -215,23 +235,15 @@ export function useRelationsCamera(
       state.styles = { ...state.styles, grid: { ...state.styles.grid, inset } }
       const shiftX = gridShift(from.x, spacing)
       const shiftY = gridShift(from.y, spacing)
-      const timing = { duration, easing, fill: 'forwards' } as const
-      const worldGlide = world.animate(
-        [fromStyles.world, { transform: state.styles.world.transform }],
-        timing,
+      animations.push(
+        grid.animate(
+          [
+            { transform: `translate(${shiftX}px, ${shiftY}px)` },
+            { transform: `translate(${shiftX + dx}px, ${shiftY + dy}px)` },
+          ],
+          timing,
+        ),
       )
-      const gridGlide = grid.animate(
-        [
-          { transform: `translate(${shiftX}px, ${shiftY}px)` },
-          { transform: `translate(${shiftX + dx}px, ${shiftY + dy}px)` },
-        ],
-        timing,
-      )
-      const animations = [worldGlide, gridGlide]
-      state.glide = animations
-      worldGlide.onfinish = () => {
-        if (view.current.glide === animations) show(to)
-      }
     }
     return {
       get,
@@ -239,12 +251,13 @@ export function useRelationsCamera(
       update: (update) => set(update(get())),
       settle: () => show(get()),
       zoomBy: (factor, point) => {
-        const { viewportWidth, viewportHeight } = latest.current
+        const { viewportWidth, viewportHeight, scale } = latest.current
         set(
           zoomCamera(
             get(),
             factor,
             point ?? { x: viewportWidth / 2, y: viewportHeight / 2 },
+            scale,
           ),
         )
       },
@@ -269,6 +282,7 @@ export function useRelationsCamera(
         )
       },
       glideTo: (camera) => glide(camera, GLIDE_DURATION_MS, GLIDE_EASING),
+      scaleBounds: () => latest.current.scale,
     }
   }, [show])
 
@@ -298,6 +312,7 @@ export function useRelationsCamera(
           controls.get(),
           wheelZoomFactor(event),
           toLocalPoint(element, event),
+          controls.scaleBounds(),
         ),
         { live: true },
       )
@@ -415,14 +430,18 @@ export function wheelZoomFactor(
 }
 
 /** Fits the width and anchors the top: a tall graph is panned, not shrunk into a smudge. */
-function fitCamera(content: Size, viewport: Size, focusX?: number): Camera {
+export function fitWidthCamera(
+  content: Size,
+  viewport: Size,
+  focusX?: number,
+): Camera {
   if (content.width <= 0 || content.height <= 0) return { x: 0, y: 0, k: 1 }
   const innerWidth = viewport.width - FIT_PADDING * 2
   const innerHeight = viewport.height - FIT_PADDING * 2
   const k = clamp(
     Math.min(innerWidth / content.width, 1),
     READABLE_SCALE,
-    MAX_SCALE,
+    DEFAULT_SCALE_BOUNDS.max,
   )
   const width = content.width * k
   const height = content.height * k
@@ -438,6 +457,28 @@ function fitCamera(content: Size, viewport: Size, focusX?: number): Camera {
   }
 }
 
+/** Shows all of the content, centred, at no more than its own size. */
+export function fitContainCamera(
+  content: Size,
+  viewport: Size,
+  padding = FIT_PADDING,
+): Camera {
+  if (content.width <= 0 || content.height <= 0) return { x: 0, y: 0, k: 1 }
+  const k = Math.max(
+    Math.min(
+      (viewport.width - padding * 2) / content.width,
+      (viewport.height - padding * 2) / content.height,
+      1,
+    ),
+    0,
+  )
+  return {
+    k,
+    x: (viewport.width - content.width * k) / 2,
+    y: (viewport.height - content.height * k) / 2,
+  }
+}
+
 /**
  * The camera after pointers moved `from` → `to` (same pointers, same order):
  * their centroid pans and their spread zooms, keeping the world point under
@@ -447,12 +488,13 @@ export function gestureCamera(
   camera: Camera,
   from: Point[],
   to: Point[],
+  scale = DEFAULT_SCALE_BOUNDS,
 ): Camera {
   const start = centroid(from)
   const end = centroid(to)
   const startSpread = spread(from, start)
   const factor = startSpread > 0 ? spread(to, end) / startSpread : 1
-  const k = clamp(camera.k * factor, MIN_SCALE, MAX_SCALE)
+  const k = clamp(camera.k * factor, scale.min, scale.max)
   return {
     k,
     x: end.x - ((start.x - camera.x) / camera.k) * k,
@@ -539,8 +581,13 @@ export function dotGridSpacing(step: number, k: number): number {
 }
 
 /** Scales around `point` so the world point under it stays put. */
-function zoomCamera(camera: Camera, factor: number, point: Point): Camera {
-  const k = clamp(camera.k * factor, MIN_SCALE, MAX_SCALE)
+function zoomCamera(
+  camera: Camera,
+  factor: number,
+  point: Point,
+  scale: ScaleBounds,
+): Camera {
+  const k = clamp(camera.k * factor, scale.min, scale.max)
   const ratio = k / camera.k
   return {
     k,

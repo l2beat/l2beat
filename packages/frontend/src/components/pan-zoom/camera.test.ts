@@ -6,7 +6,7 @@ import {
   gridShift,
   revealCamera,
   wheelZoomFactor,
-} from './relationsCamera'
+} from './camera'
 
 describe(gestureCamera.name, () => {
   const camera = { x: 10, y: 20, k: 1 }
