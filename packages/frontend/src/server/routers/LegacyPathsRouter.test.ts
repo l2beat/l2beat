@@ -3,7 +3,7 @@ import { fetchFromRouter } from '~/test/fetchFromRouter'
 import { createLegacyPathsRouter } from './LegacyPathsRouter'
 
 // Method: request legacy URLs without following redirects and check the
-// permanent redirect target.
+// permanent redirect target, fragment included.
 describe(createLegacyPathsRouter.name, () => {
   for (const [from, to] of [
     ['/data-availability', '/blobs'],
@@ -31,8 +31,20 @@ describe(createLegacyPathsRouter.name, () => {
       '/tokens/9HN5PN/opengraph-image.png',
     ],
     ['/Interop/Tokens/9HN5PN', '/tokens/9HN5PN'],
+    [
+      '/meta-images/layer2s/projects/arbitrum/opengraph-image.png',
+      '/meta-images/projects/arbitrum/opengraph-image.png',
+    ],
+    [
+      '/meta-images/zk-catalog/projects/sp1/opengraph-image.png',
+      '/meta-images/projects/sp1/opengraph-image.png',
+    ],
     ['/ecosystems/superchain', '/layer2s/summary'],
     ['/ecosystems/agglayer.md', '/layer2s/summary'],
+    [
+      '/publications/privacy-best-practices',
+      '/publications/privacy-methodology#stay-private',
+    ],
   ] as const) {
     it(`redirects ${from} to ${to}`, async () => {
       const response = await fetchFromRouter(createLegacyPathsRouter(), from, {
@@ -40,9 +52,11 @@ describe(createLegacyPathsRouter.name, () => {
       })
 
       expect(response.status).toEqual(301)
-      expect(
-        new URL(response.headers.get('location') ?? '', 'http://x').pathname,
-      ).toEqual(to)
+      const location = new URL(
+        response.headers.get('location') ?? '',
+        'http://x',
+      )
+      expect(location.pathname + location.hash).toEqual(to)
     })
   }
 
