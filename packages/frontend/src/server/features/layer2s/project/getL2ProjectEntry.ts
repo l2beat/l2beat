@@ -23,6 +23,7 @@ import { getGardenCropsSection } from '~/server/features/garden/getGardenCropsSe
 import type { PrivacyProjectDetails } from '~/server/features/privacy/getPrivacyProjectDetails'
 import {
   getPrivacyAdversariesSection,
+  getPrivacyAdviceSection,
   getPrivacyAnonymitySetSection,
   getPrivacyAssetsBreakdownSection,
   getPrivacyDescriptionSection,
@@ -831,6 +832,8 @@ export async function getL2ProjectEntry(
   }
 
   if (privacy) {
+    const advice = getPrivacyAdviceSection(privacy)
+    if (advice) sections.splice(privacyAdversariesIndex, 0, advice)
     sections.splice(
       privacyAdversariesIndex,
       0,
