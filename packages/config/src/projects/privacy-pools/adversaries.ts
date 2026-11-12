@@ -1,4 +1,5 @@
 import {
+  ADVICE_SNIPPETS as A,
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
@@ -23,7 +24,6 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
         'A zero-knowledge proof hides which approved deposit a withdrawal spends.',
       exposureContinued:
         'Partial withdrawals leave a change note and look like full ones.',
-      advice: `${S.exitViaRelayer('relayer')} Ragequit only deposits the user never withdrew from, since ragequitting a change note reveals the withdrawal that left it.`,
       sources: [
         { contract: 'PrivacyPoolsEntrypoint' },
         { title: 'Withdrawal circuit', url: CIRCUITS + 'withdraw.circom' },
@@ -38,7 +38,6 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
       exposureShort:
         'A relayed withdrawal of a common amount hides among all approved deposits of its pool.',
       exposureContinued: `The approved list at any block is public. Any amount is allowed, so an unusual one pairs a deposit with its withdrawal. ${S.walletFingerprint('relayer')}`,
-      advice: `${S.largeAnonymitySet} ${S.commonAmounts} ${S.freshExit}`,
       sources: [
         {
           contract: 'PrivacyPoolsEntrypoint',
@@ -59,9 +58,7 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
       exposureShort:
         "The website works in Tor Browser and scans every pool whole, matching notes locally without revealing the user's deposits to third parties.",
       exposureContinued:
-        "Fast Relay receives amount and asset for a quote and the recipient once the user confirms, Cloaked Relay all three with the first quote. The website confirms a relayed withdrawal from bulk reads of new blocks, so no request names its hash. 0xbow's Google Analytics runs without a consent prompt and records the hash of any explorer link the user opens. On a quiet pool, the RPC can time a wallet sign-in against the withdrawal the same session waits for.",
-      advice:
-        "Withdraw in a new Tor Browser session, signed in with the user's recovery phrase so no wallet address is queried. Open no explorer links in that session.",
+        "Cloaked Relay receives amount, asset and recipient with the first quote. The website confirms a relayed withdrawal from bulk reads of new blocks, so no request names its hash. 0xbow's Google Analytics runs without a consent prompt and records the hash of any explorer link the user opens. On a quiet pool, the RPC can time a wallet sign-in against the withdrawal the same session waits for.",
       sources: [
         {
           title: 'Sign-in with a recovery phrase needs no wallet',
@@ -87,8 +84,7 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
       exposureShort:
         'The ASP postman can publish a new approved list at any time with no delay, and withdrawals must prove against the latest one.',
       exposureContinued:
-        "It can deny the user a private exit or publish a list containing only their deposit, reducing their anonymity set to one. The website counts the anonymity set it shows from 0xbow's own feed, not from the list the user's withdrawal proves against. 0xbow sees every session's IP at its website and ASP feeds, so it can pair a deposit session with a withdrawal session. It can also change the website at any time.",
-      advice: `Exit as the network observer advice says, after checking the size of the approved list that the latest RootUpdated event links on IPFS. ${S.localBuild}`,
+        "It can deny the user a private exit or publish a list containing only their deposit, reducing their anonymity set to one. The website counts the anonymity set it shows from 0xbow's own feed, not from the list the user's withdrawal proves against. 0xbow's website and ASP feeds see every session's IP and Fast Relay, its relayer, each recipient it relays, so 0xbow can pair deposit and exit sessions. It can also change the website at any time.",
       sources: [
         {
           contract: 'PrivacyPoolsEntrypoint',
@@ -103,8 +99,8 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
           url: WEBSITE + 'hooks/useASP.ts#L63-L75',
         },
         {
-          section: 'permissions',
-          title: 'Privacy Pools Multisig and ASP postman',
+          title: "0xbow's v2 app lists Fast Relay as its own relayer",
+          url: 'https://github.com/0xbow-io/privacy-pools-website-v2/blob/6fd83a092004ab7123613abff2b0ca319a2106ce/components/withdraw-modal-provider.tsx#L386-L389',
         },
       ],
     },
@@ -113,7 +109,6 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
       exposureShort:
         'Nothing encrypted is written onchain and commitments are Poseidon hashes, so whoever breaks elliptic-curve cryptography recovers nothing from the chain.',
       exposureContinued: S.walletSignatureAccounts(),
-      advice: S.notWalletSignature('from a recovery phrase'),
       sources: [
         {
           title: 'Commitment circuit (Poseidon)',
@@ -131,4 +126,39 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
       ],
     },
   },
+  advice: [
+    {
+      name: 'Deposit',
+      text: `${A.notWalletSignature('from a recovery phrase')} ${A.largestPool} Your usual browser and wallet will do, since the deposit is public.`,
+      against: ['futureAdversary', 'chainAnalyst'],
+    },
+    {
+      name: 'Wait',
+      text: A.wait,
+      against: ['chainAnalyst'],
+      randomWait: true,
+    },
+    {
+      name: 'Sign in',
+      text: `${A.torBrowser} Sign in with your recovery phrase, so no wallet address is queried. Open no explorer links in that session.`,
+      against: ['networkObserver'],
+      outside: true,
+    },
+    {
+      name: 'Check',
+      text: 'Before withdrawing, find the latest RootUpdated event of the Entrypoint contract and open the list it names on IPFS. Withdraw only if the list holds many deposits.',
+      against: ['privilegedInsider'],
+      outside: true,
+    },
+    {
+      name: 'Withdraw',
+      text: `${A.relayer('relayer')} ${A.commonAmounts} ${A.freshAddress}`,
+      against: ['publicObserver', 'chainAnalyst'],
+    },
+    {
+      name: 'Ragequit',
+      text: 'Ragequit only deposits you never withdrew from, since ragequitting a change note reveals the withdrawal that left it.',
+      against: ['publicObserver'],
+    },
+  ],
 })

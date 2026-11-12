@@ -1,7 +1,7 @@
 import { definePrivacyAdversaries } from '../../common/privacyAdversaries'
 
 const GOV =
-  'https://github.com/theinterfold/the-interfold-governance/blob/28b03a8b529dfa7491f01229724391665f06bd95/'
+  'https://github.com/theinterfold/the-interfold-governance/blob/870c40599fdb0e8dd73e225aa2dab44ac06477e5/'
 // Its two ballot verifiers compile byte for byte to the deployed ones (solc 0.8.28,
 // 1 optimizer run, paris), so a re-pin must keep that true.
 const CRISP =
@@ -54,7 +54,6 @@ export function interfoldAdversaries(
           'Voting power is public, so the totals per option can reveal how a voter with outsized weight voted.',
         exposureContinued:
           "A voter whose weight exceeds the totals of all but one option can only have chosen that one. The app's random weight blurs exact matches among smaller voters.",
-        advice: 'Keep the random weight on.',
         sources: [
           {
             title: 'Random weight against subset-sum matching',
@@ -122,5 +121,12 @@ export function interfoldAdversaries(
         ],
       },
     },
+    advice: [
+      {
+        name: 'Vote',
+        text: 'Keep the random weight on, which blurs your exact voting power in the totals.',
+        against: ['chainAnalyst'],
+      },
+    ],
   })
 }

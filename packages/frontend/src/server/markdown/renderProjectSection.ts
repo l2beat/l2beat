@@ -38,6 +38,7 @@ import {
 } from './renderContractsSections'
 import {
   renderPrivacyAdversaries,
+  renderPrivacyAdvice,
   renderPrivacyAssetsBreakdown,
 } from './renderPrivacySections'
 import {
@@ -327,6 +328,7 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<SectionProps<T>> } = {
   PrivacyAnonymitySetSection: renderPrivacyAnonymitySetSection,
   PrivacyAssetsBreakdownSection: renderPrivacyAssetsBreakdown,
   PrivacyFlowsSection: pointToHtmlPage('The interactive flows chart is shown'),
+  PrivacyAdviceSection: renderPrivacyAdvice,
   ProgramHashesSection: renderProgramHashes,
   ThroughputSection: renderThroughputSection,
   TrustedSetupSection: renderTrustedSetups,

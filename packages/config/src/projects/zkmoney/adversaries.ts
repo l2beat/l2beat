@@ -1,6 +1,7 @@
 import {
+  ADVICE_SNIPPETS as A,
+  adviceLink,
   definePrivacyAdversaries,
-  PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
 import type { PrivacyExposureMap } from '../../types'
 
@@ -48,8 +49,6 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
       exposureShort: 'Private payments publish encrypted notes.',
       exposureContinued:
         "Claiming a name ties it and its Aztec address to the wallet that funds the registration. The first payment to a new contact reveals the recipient through a handshake, and L2 logs mark every transaction of the shared token smart contract. The user's first sponsored transaction after registration is tied to their account, with the payment, deposit address or withdrawal it carries.",
-      advice:
-        "Claim the user's name from a wallet without a public link to them, then make the first transaction after registration a deposit from that wallet. Fund each deposit address once and let it be swept/relayed.",
       interior: INTERIOR,
       sources: [
         {
@@ -76,7 +75,6 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
         "In practice the anonymity set is zk.money's users on Aztec, although the L2 contract is permissionless.",
       exposureContinued:
         'The first payment to a name from outside zk.money is publicly tied to that name. A payee can tell which payments come from the same payer, since each pair shares one secret for tagging notes. Moving a whole savings position out republishes the share amount it went in with.',
-      advice: `Give outside payers a deposit address the user's wallet created. ${S.commonAmounts} ${S.freshExit}`,
       interior: {
         ...INTERIOR,
         amount: {
@@ -112,8 +110,6 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
         "Alchemy, called under Aztec Labs' key, sees an account's deposit addresses and withdrawals in one session unless the user sets their own Ethereum node.",
       exposureContinued:
         "Desktop has no Tor setting. Routing all of the computer's traffic through Tor works, but Chrome's QUIC traffic to WalletConnect bypasses Tor unless UDP is blocked.",
-      advice:
-        "Set the user's own Ethereum node as the L1 endpoint, and run Desktop on a system that sends all traffic through Tor and blocks UDP, such as Whonix.",
       interior: {
         ...INTERIOR,
         sender: {
@@ -142,8 +138,6 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
         'An AWS Nitro enclave reads payments, withdrawals and deposit claims inside.',
       exposureContinued:
         "The portal admits only enclaves whose attestation it verifies onchain and approved enclave images are immutable. The sUSDS portal's approved image is unpublished, as is its source. Aztec Labs' default Aztec node, like Alchemy under its key, sees an account's deposit addresses and withdrawals in one session. The resolver operator, Aztec Labs today, derives each deposit address paid through a name, so it knows the recipient.",
-      advice:
-        'Set your own Aztec node and Ethereum node in the endpoint settings, and keep funds out of savings.',
       interior: {
         ...INTERIOR,
         sender: {
@@ -207,4 +201,33 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
       ],
     },
   },
+  advice: [
+    {
+      name: 'Set up',
+      text: `Run Desktop on a system that sends ${adviceLink('all traffic through Tor', 'ipHidingRoutes')} and blocks UDP, such as Whonix. Set your own Aztec node and Ethereum node in the endpoint settings.`,
+      against: ['networkObserver', 'privilegedInsider'],
+      outside: true,
+    },
+    {
+      name: 'Register',
+      text: 'Claim your name from a wallet without a public link to you, then make the first transaction after registration a deposit from that wallet.',
+      against: ['publicObserver'],
+    },
+    {
+      name: 'Deposit',
+      text: 'Fund each deposit address once and let it be swept. Give outside payers a deposit address your wallet created, and keep funds out of savings.',
+      against: ['publicObserver', 'chainAnalyst', 'privilegedInsider'],
+    },
+    {
+      name: 'Wait',
+      text: A.wait,
+      against: ['chainAnalyst'],
+      randomWait: true,
+    },
+    {
+      name: 'Withdraw',
+      text: `${A.commonAmounts} ${A.freshAddress}`,
+      against: ['chainAnalyst'],
+    },
+  ],
 })

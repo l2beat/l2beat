@@ -27,6 +27,7 @@ import type { MilestonesAndIncidentsSectionProps } from './MilestonesAndIncident
 import type { ExtendedProjectSectionProps } from './ProjectSection'
 import type { PermissionsSectionProps } from './permissions/PermissionsSection'
 import type { PrivacyAdversariesSectionProps } from './privacy/PrivacyAdversariesSection'
+import type { PrivacyAdviceSectionProps } from './privacy/PrivacyAdviceSection'
 import type { PrivacyAnonymitySetSectionProps } from './privacy/PrivacyAnonymitySetSection'
 import type { PrivacyAssetsBreakdownSectionProps } from './privacy/PrivacyAssetsBreakdownSection'
 import type { PrivacyFlowsSectionProps } from './privacy/PrivacyFlowsSection'
@@ -87,6 +88,7 @@ export type SectionId =
   | 'privacy-flows'
   | 'privacy-assets-breakdown'
   | 'privacy-adversaries'
+  | 'stay-private'
   | 'external-dependencies'
   | 'defi-tokens'
   | 'liquid-staking'
@@ -328,6 +330,11 @@ interface ProjectDetailsPrivacyAdversariesSection {
   props: ProjectDetailsProps<PrivacyAdversariesSectionProps>
 }
 
+interface ProjectDetailsPrivacyAdviceSection {
+  type: 'PrivacyAdviceSection'
+  props: ProjectDetailsProps<PrivacyAdviceSectionProps>
+}
+
 interface ProjectDetailsPrivacyAssetsBreakdownSection {
   type: 'PrivacyAssetsBreakdownSection'
   props: ProjectDetailsProps<PrivacyAssetsBreakdownSectionProps>
@@ -388,5 +395,6 @@ export type ProjectDetailsSection = {
   | ProjectDetailsPrivacyAnonymitySetSection
   | ProjectDetailsPrivacyAssetsBreakdownSection
   | ProjectDetailsPrivacyAdversariesSection
+  | ProjectDetailsPrivacyAdviceSection
   | ProjectDetailsExternalDependenciesSection
 )

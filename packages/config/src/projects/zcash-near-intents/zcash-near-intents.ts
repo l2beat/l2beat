@@ -17,7 +17,7 @@ export const zcashNearIntents: BaseProject = {
   addedAt: UnixTime.fromDate(new Date('2026-09-15')),
   statuses: {
     yellowWarning:
-      'This route has no Ethereum contracts. Real-time monitoring is not supported.',
+      'This route has no Ethereum contracts. Real-time monitoring is not supported. The ratings cover Zodl 3.15.0. The App Store serves [3.20.0](https://apps.apple.com/us/app/zodl-zcash-wallet/id1672392439) since November 9, 2026, and its source is not public. It makes a new server mode called Private the default, which ETHBEAT has not reviewed.',
     redWarning: undefined,
     emergencyWarning: undefined,
     reviewStatus: undefined,
