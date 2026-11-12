@@ -84,7 +84,7 @@ const Table = ({
             }
           }}
         >
-          <ChevronIcon className="-rotate-90 size-3.5 text-zinc-500 dark:text-n-zinc-300" />
+          <ChevronIcon className="-rotate-90 size-3.5 text-secondary" />
         </button>
       </div>
     </div>
@@ -108,7 +108,7 @@ const TableHeader = ({
 }: React.HTMLAttributes<HTMLTableSectionElement>) => (
   <thead
     className={cn(
-      'group/header whitespace-pre py-2 align-bottom font-medium text-xs text-zinc-500 uppercase dark:text-n-zinc-300',
+      'group/header whitespace-pre py-2 align-bottom font-medium text-primary text-xs',
       className,
     )}
     {...props}
@@ -175,7 +175,7 @@ const TableHead = ({
 }) => (
   <th
     className={cn(
-      'h-10 py-2 text-left align-bottom font-medium text-[13px] uppercase',
+      'h-10 py-2 text-left align-bottom font-medium text-[13px]',
       'pr-3 first:pl-2 last:pr-2 md:pr-4',
       className,
     )}
