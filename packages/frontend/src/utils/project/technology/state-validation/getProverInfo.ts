@@ -6,7 +6,6 @@ import { getTrustedSetupsWithVerifiersAndAttesters } from '~/server/features/zk-
 import { manifest } from '~/utils/Manifest'
 import { getProjectPath } from '~/utils/project/getProjectPath'
 import type { ContractUtils } from '../../contracts-and-permissions/getContractUtils'
-import type { ProjectWithPageMetadata } from '../../getProjectUrl'
 import { getUsedZkCatalogProjects } from '../../getUsedZkCatalogProjects'
 
 export function getProverInfos(
@@ -14,7 +13,7 @@ export function getProverInfos(
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
   contractUtils: ContractUtils,
   tvs: SevenDayTvsBreakdown,
-  allProjects: ProjectWithPageMetadata[],
+  allProjects: Project<never, 'daBridge' | 'daLayer'>[],
 ): ProverInfoData[] {
   const usedZkCatalogProjects = getUsedZkCatalogProjects(
     project.scalingInfo.proofSystem,

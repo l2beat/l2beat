@@ -12,7 +12,6 @@ import { manifest } from '~/utils/Manifest'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getProgramHashesSection } from '~/utils/project/getProgramHashesSection'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
-import { PROJECT_PAGE_METADATA_FIELDS } from '~/utils/project/getProjectUrl'
 import { getTrustedSetupsSection } from '~/utils/project/getTrustedSetupsSection'
 import { getVerifiersSection } from '~/utils/project/getVerifiersSection'
 import {
@@ -62,7 +61,7 @@ export async function getZkCatalogProjectEntry(
   const [allProjects, allProjectsWithContracts, tvs, contractUtils] =
     await Promise.all([
       ps.getProjects({
-        optional: ['display', ...PROJECT_PAGE_METADATA_FIELDS],
+        optional: ['display', 'scalingInfo', 'daBridge', 'daLayer'],
       }),
       ps.getProjects({
         select: ['contracts'],

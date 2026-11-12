@@ -33,7 +33,6 @@ import {
 import { ps } from '~/server/projects'
 import { getLogger } from '~/server/utils/logger'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
-import { PROJECT_PAGE_METADATA_FIELDS } from '~/utils/project/getProjectUrl'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import {
   getPrivacyAnonymitySetType,
@@ -354,7 +353,7 @@ async function getTrackedOn(
 ): Promise<ProjectIconListItem[]> {
   const chainProjects = await ps.getProjects({
     select: ['chainConfig'],
-    optional: [...PROJECT_PAGE_METADATA_FIELDS],
+    optional: ['scalingInfo', 'privacyInfo', 'defiInfo'],
   })
   return getPrivacyTrackedChains(project.privacyInfo.trackedOn, chainProjects)
 }
@@ -367,7 +366,7 @@ async function getScalingProjects(
   const scalingProjects = await ps.getProjects({
     ids,
     select: ['scalingInfo'],
-    optional: ['scalingStage', ...PROJECT_PAGE_METADATA_FIELDS],
+    optional: ['scalingStage'],
   })
   return getScalingProjectItems(ids, scalingProjects)
 }
