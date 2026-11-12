@@ -273,7 +273,8 @@ const LABEL_HEIGHT = 18
 /** Between a label and its hairline. */
 const LABEL_GAP = 5
 
-const LABEL_FONT_SIZE = 13
+/** The site's axis label size (see TimeSeriesChart). */
+const LABEL_FONT_SIZE = 12
 
 const LINE_WIDTH = 2
 

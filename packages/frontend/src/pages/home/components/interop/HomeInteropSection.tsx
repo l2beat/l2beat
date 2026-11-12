@@ -111,8 +111,10 @@ function Content({ className }: { className?: string }) {
             // span the width the graph or the list under them takes. Over the
             // list, the last column also aligns right, on its values' edge.
             // Beside the graph the top route takes the top token's place:
-            // the token list under them already starts with it.
-            <div className="home-wide:col-start-2 home-wide:row-start-1 grid interop-corners:hidden grid-cols-[repeat(3,minmax(0,max-content))] justify-between gap-x-3 gap-y-6 sm:gap-x-6 home-wide:[&>:nth-child(3)]:items-end home-wide:[&>:nth-child(3)]:text-right home-wide:[&>:nth-child(n+6)]:hidden">
+            // the token list under them already starts with it. On the
+            // narrowest phones three 32px figures don't fit one row, so the
+            // volume takes a row of its own.
+            <div className="home-wide:col-start-2 home-wide:row-start-1 grid interop-corners:hidden grid-cols-[repeat(3,minmax(0,max-content))] max-[380px]:grid-cols-2 max-[380px]:[&>:first-child]:col-span-2 justify-between gap-x-3 gap-y-6 sm:gap-x-6 home-wide:[&>:nth-child(3)]:items-end home-wide:[&>:nth-child(3)]:text-right home-wide:[&>:nth-child(n+6)]:hidden">
               {figures.volume}
               {figures.transfers}
               {figures.activeRoutes}
