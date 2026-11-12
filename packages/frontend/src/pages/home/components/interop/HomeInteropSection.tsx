@@ -114,7 +114,7 @@ function Content({ className }: { className?: string }) {
             // the token list under them already starts with it. On the
             // narrowest phones three 32px figures don't fit one row, so the
             // volume takes a row of its own.
-            <div className="home-wide:col-start-2 home-wide:row-start-1 grid interop-corners:hidden grid-cols-[repeat(3,minmax(0,max-content))] max-[380px]:grid-cols-2 max-[380px]:[&>:first-child]:col-span-2 justify-between gap-x-3 gap-y-6 sm:gap-x-6 home-wide:[&>:nth-child(3)]:items-end home-wide:[&>:nth-child(3)]:text-right home-wide:[&>:nth-child(n+6)]:hidden">
+            <div className="home-wide:col-start-2 home-wide:row-start-1 grid interop-corners:hidden grid-cols-[repeat(3,minmax(0,max-content))] justify-between gap-x-3 gap-y-6 max-[380px]:grid-cols-2 sm:gap-x-6 max-[380px]:[&>:first-child]:col-span-2 home-wide:[&>:nth-child(3)]:items-end home-wide:[&>:nth-child(3)]:text-right home-wide:[&>:nth-child(n+6)]:hidden">
               {figures.volume}
               {figures.transfers}
               {figures.activeRoutes}
