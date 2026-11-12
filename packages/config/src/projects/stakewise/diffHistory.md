@@ -1,8 +1,8 @@
-Generated with discovered.json: 0x7a398029144a20183630f1135b2a89d675eb8195
+Generated with discovered.json: 0x0dbfbb15957a71e061e071349e2bea7c834a3664
 
-# Diff at Thu, 12 Nov 2026 11:21:10 GMT:
+# Diff at Thu, 12 Nov 2026 11:58:15 GMT:
 
-- id: 9e7c689f
+- id: 8df4016b
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - current timestamp: 1793883886
 
@@ -123,7 +123,7 @@ Initial discovery of StakeWise V3 (osETH): the vault registry, the Keeper and it
 ```diff
 +   Status: CREATED
     contract EthPrivVault_47fD (eth:0x47fd7ac6C6bc73F2D419a18D0692F37Df3f48034) [stakewise/EthPrivVault]
-    +++ description: Staking vault that only whitelisted accounts can deposit into. Its validators withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.
+    +++ description: Staking vault that only whitelisted accounts can deposit into. Validators it registers withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after any claim delay set by its implementation.
 ```
 
 ```diff
@@ -135,7 +135,7 @@ Initial discovery of StakeWise V3 (osETH): the vault registry, the Keeper and it
 ```diff
 +   Status: CREATED
     contract EthVault_4aAf (eth:0x4AafdB911085dd7703e57951279744DD713f744d) [stakewise/EthVault]
-    +++ description: Staking vault with open deposits. Its validators withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.
+    +++ description: Staking vault with open deposits. Validators it registers withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.
 ```
 
 ```diff
@@ -165,7 +165,7 @@ Initial discovery of StakeWise V3 (osETH): the vault registry, the Keeper and it
 ```diff
 +   Status: CREATED
     contract EthPrivVault_663a (eth:0x663a8C9e88c5cdc565Cc4bF0b2BEC8d862D744a6) [stakewise/EthPrivVault]
-    +++ description: Staking vault that only whitelisted accounts can deposit into. Its validators withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.
+    +++ description: Staking vault that only whitelisted accounts can deposit into. Validators it registers withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after any claim delay set by its implementation.
 ```
 
 ```diff
@@ -249,13 +249,13 @@ Initial discovery of StakeWise V3 (osETH): the vault registry, the Keeper and it
 ```diff
 +   Status: CREATED
     contract EthVault_A8cB (eth:0xA8cB2e35F594b308726b242136f0a8995BF19E97) [stakewise/EthVault]
-    +++ description: Staking vault with open deposits. Its validators withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.
+    +++ description: Staking vault with open deposits. Validators it registers withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.
 ```
 
 ```diff
 +   Status: CREATED
     contract GenesisVault (eth:0xAC0F906E433d58FA868F936E8A43230473652885) [stakewise/EthGenesisVault]
-    +++ description: Staking vault with open deposits that absorbed the StakeWise V2 pool: V2 reward-token holders migrate by burning their tokens for shares, and the V2 pool escrow that still receives the legacy stakes' withdrawals is owned by the vault and counted in its assets. Its validators withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.
+    +++ description: Staking vault with open deposits that absorbed the StakeWise V2 pool: V2 reward-token holders migrate by burning their tokens for shares, and the V2 pool escrow that still receives the legacy stakes' withdrawals is owned by the vault and counted in its assets. Validators it registers withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.
 ```
 
 ```diff
@@ -267,13 +267,13 @@ Initial discovery of StakeWise V3 (osETH): the vault registry, the Keeper and it
 ```diff
 +   Status: CREATED
     contract EthPrivErc20Vault_ccmETH (eth:0xB144B3b2D2a7d82e53BC70659Be03Bcd21CD94e8) [stakewise/EthPrivErc20Vault]
-    +++ description: Staking vault with ERC20 shares (ccmETH) that only whitelisted accounts can deposit, send or receive. Its validators withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.
+    +++ description: Staking vault with ERC20 shares (ccmETH) that only whitelisted accounts can deposit, send or receive. Validators it registers withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after any claim delay set by its implementation.
 ```
 
 ```diff
 +   Status: CREATED
     contract EthPrivVault_B266 (eth:0xB266274F55e784689e97b7E363B0666d92e6305B) [stakewise/EthPrivVault]
-    +++ description: Staking vault that only whitelisted accounts can deposit into. Its validators withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.
+    +++ description: Staking vault that only whitelisted accounts can deposit into. Validators it registers withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after any claim delay set by its implementation.
 ```
 
 ```diff
@@ -303,7 +303,7 @@ Initial discovery of StakeWise V3 (osETH): the vault registry, the Keeper and it
 ```diff
 +   Status: CREATED
     contract EthVault_e6d8 (eth:0xe6d8d8aC54461b1C5eD15740EEe322043F696C08) [stakewise/EthVault]
-    +++ description: Staking vault with open deposits. Its validators withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.
+    +++ description: Staking vault with open deposits. Validators it registers withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.
 ```
 
 ```diff

@@ -871,7 +871,7 @@
         "0xbaba151d72eba765e9bc1cbbb7d340ac9e39006df19a04c99fb8ae2ad29a6a09"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Staking vault that only whitelisted accounts can deposit into. Its validators withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.",
+      "description": "Staking vault that only whitelisted accounts can deposit into. Validators it registers withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after any claim delay set by its implementation.",
       "ignoreInWatchMode": [
         "totalAssets",
         "totalShares",
@@ -963,7 +963,7 @@
         "0xc5866674597add5381d45fa4099e0d58c8c3bc82c9395468a5fd1f015713e424"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Staking vault with open deposits. Its validators withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.",
+      "description": "Staking vault with open deposits. Validators it registers withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.",
       "ignoreInWatchMode": [
         "totalAssets",
         "totalShares",
@@ -1177,7 +1177,7 @@
         "0xbaba151d72eba765e9bc1cbbb7d340ac9e39006df19a04c99fb8ae2ad29a6a09"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Staking vault that only whitelisted accounts can deposit into. Its validators withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.",
+      "description": "Staking vault that only whitelisted accounts can deposit into. Validators it registers withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after any claim delay set by its implementation.",
       "ignoreInWatchMode": [
         "totalAssets",
         "totalShares",
@@ -1782,7 +1782,7 @@
         "0xc5866674597add5381d45fa4099e0d58c8c3bc82c9395468a5fd1f015713e424"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Staking vault with open deposits. Its validators withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.",
+      "description": "Staking vault with open deposits. Validators it registers withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.",
       "ignoreInWatchMode": [
         "totalAssets",
         "totalShares",
@@ -1873,7 +1873,7 @@
         "0xb43f498adba2c5f21ad1203ee178eb326cc91f488ed621a00f65159ec8f094bf"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Staking vault with open deposits that absorbed the StakeWise V2 pool: V2 reward-token holders migrate by burning their tokens for shares, and the V2 pool escrow that still receives the legacy stakes' withdrawals is owned by the vault and counted in its assets. Its validators withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.",
+      "description": "Staking vault with open deposits that absorbed the StakeWise V2 pool: V2 reward-token holders migrate by burning their tokens for shares, and the V2 pool escrow that still receives the legacy stakes' withdrawals is owned by the vault and counted in its assets. Validators it registers withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.",
       "ignoreInWatchMode": [
         "totalAssets",
         "totalShares",
@@ -1988,7 +1988,7 @@
         "0x5d9a3ec17bc18b3c7fad330a84261b55ee23ed65517e5ef47b9633891eee885f"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Staking vault with ERC20 shares (ccmETH) that only whitelisted accounts can deposit, send or receive. Its validators withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.",
+      "description": "Staking vault with ERC20 shares (ccmETH) that only whitelisted accounts can deposit, send or receive. Validators it registers withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after any claim delay set by its implementation.",
       "ignoreInWatchMode": [
         "totalAssets",
         "totalShares",
@@ -2054,7 +2054,7 @@
         "0x331b9b0d766fc4f50ca4776a9a9c1f73634f5a1cd5ebc61fca29ce6666a993bb"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Staking vault that only whitelisted accounts can deposit into. Its validators withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.",
+      "description": "Staking vault that only whitelisted accounts can deposit into. Validators it registers withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after any claim delay set by its implementation.",
       "ignoreInWatchMode": [
         "totalAssets",
         "totalShares",
@@ -2313,7 +2313,7 @@
         "0xc5866674597add5381d45fa4099e0d58c8c3bc82c9395468a5fd1f015713e424"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Staking vault with open deposits. Its validators withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.",
+      "description": "Staking vault with open deposits. Validators it registers withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.",
       "ignoreInWatchMode": [
         "totalAssets",
         "totalShares",
@@ -4508,7 +4508,7 @@
     "stakewise/VaultsRegistry": "0x0dc5166eb04e9bd6c2575f359c35d5f5c75e4c33510f55c7361d7dc23a75e74a"
   },
   "usedBlockNumbers": { "ethereum": 26348814 },
-  "permissionsConfigHash": "0xa85e86fcd350e4f801ccfd99851ef35ef9a8f8771647dc02502d0cbeb7ee92e3",
+  "permissionsConfigHash": "0xf1734b51f449d336db00a23581a394635adf9de6cfce52de8f6b893555549d92",
   "permissions": {
     "eth:0x0a95D62429399b08841f5dCDC5579Ca8f7794E96": {
       "receivedPermissions": [
@@ -4549,7 +4549,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "add and remove oracles, which can also halt every update and with it every exit queue by removing them below a threshold, set both signature thresholds down to one, and replace the off-chain oracle configuration, with no delay.",
+          "description": "add and remove oracles, which can also halt every update and with it every vault exit queue by removing them below a threshold, set both signature thresholds down to one, and replace the off-chain oracle configuration, with no delay.",
           "role": ".owner"
         },
         {
@@ -4927,7 +4927,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5",
-          "description": "add and remove oracles, which can also halt every update and with it every exit queue by removing them below a threshold, set both signature thresholds down to one, and replace the off-chain oracle configuration, with no delay.",
+          "description": "add and remove oracles, which can also halt every update and with it every vault exit queue by removing them below a threshold, set both signature thresholds down to one, and replace the off-chain oracle configuration, with no delay.",
           "role": ".owner",
           "via": [
             { "address": "eth:0x144a98cb1CdBb23610501fE6108858D9B7D24934" }
@@ -5035,7 +5035,7 @@
         {
           "permission": "interact",
           "from": "eth:0x9Fc8C7F3C1ff6d0DF39EcB5870884d59777Ea2Bb",
-          "description": "redeem any osToken position listed in the current root at the protocol rate, burning the holder's osToken and moving ETH from the vault into the redemption queue.",
+          "description": "redeem any osToken position listed in the current root at the protocol rate, burning queued osToken against the position's debt and moving the matching ETH from the vault into the redemption queue.",
           "role": ".positionsManager"
         }
       ]

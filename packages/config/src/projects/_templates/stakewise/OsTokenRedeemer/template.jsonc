@@ -47,7 +47,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "redeem any osToken position listed in the current root at the protocol rate, burning the holder's osToken and moving ETH from the vault into the redemption queue."
+          "description": "redeem any osToken position listed in the current root at the protocol rate, burning queued osToken against the position's debt and moving the matching ETH from the vault into the redemption queue."
         }
       ]
     },

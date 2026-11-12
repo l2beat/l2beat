@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "category": "core",
-  "description": "Staking vault with open deposits that absorbed the StakeWise V2 pool: V2 reward-token holders migrate by burning their tokens for shares, and the V2 pool escrow that still receives the legacy stakes' withdrawals is owned by the vault and counted in its assets. Its validators withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.",
+  "description": "Staking vault with open deposits that absorbed the StakeWise V2 pool: V2 reward-token holders migrate by burning their tokens for shares, and the V2 pool escrow that still receives the legacy stakes' withdrawals is owned by the vault and counted in its assets. Validators it registers withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.",
   "ignoreMethods": [
     "convertToAssets",
     "convertToShares",

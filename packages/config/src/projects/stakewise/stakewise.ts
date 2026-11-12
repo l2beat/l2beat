@@ -114,6 +114,28 @@ const voteDelay = duration(
 const bond = `${Math.round(
   wad(value('StakeWise DAO RealityModule', 'minimumBond')),
 ).toLocaleString('en-US')} SWISE`
+const questionTimeout = duration(
+  number('StakeWise DAO RealityModule', 'questionTimeout'),
+)
+const questionCooldown = duration(
+  number('StakeWise DAO RealityModule', 'questionCooldown'),
+)
+// Only an arbitrator contract that calls the oracle's arbitration functions
+// can rule. A Reality.eth instance never does, so with one as the arbitrator
+// a dispute ends only when no one outbids the last bond.
+const arbitrator = value(
+  'StakeWise DAO RealityModule',
+  'questionArbitrator',
+).toLowerCase()
+const arbitration = ['RealityETH', 'RealityETH_ERC20'].some(
+  (name) => discovery.getContract(name).address.toLowerCase() === arbitrator,
+)
+  ? 'No arbitrator can rule, so disputes are settled only by outbidding the bond.'
+  : 'An arbitrator contract can settle disputes.'
+
+// osETH redemption fee, taken when a holder enters the queue.
+const redeemFee = bps('OsTokenRedeemer', 'redemptionFeePercent')
+const maxRedeemFee = bps('OsTokenRedeemer', 'maxRedemptionFeePercent')
 
 export const stakewise: BaseProject = {
   id: ProjectId('stakewise'),
@@ -130,7 +152,7 @@ export const stakewise: BaseProject = {
     unverifiedContracts: [],
   },
   display: {
-    description: `StakeWise is a marketplace of staking vaults with one liquid token, ${osETH}, minted against vault shares. Vaults are permissionless and hold their own ETH, but an oracle committee reports every vault's balance and the ${osETH} reward rate, and a DAO multisig can change the collateral rules, the oracle set and the approved vault code without delay.`,
+    description: `StakeWise is a marketplace of staking vaults with one liquid token, ${osETH}, minted against vault shares. Vaults are permissionless and hold their own ETH, but an oracle committee reports every vault's balance and the ${osETH} reward rate, and a DAO multisig can change the collateral rules, the oracle set and the approved vault code, and register any contract as a vault, without delay.`,
     detailedDescription: readProjectMarkdown(
       'stakewise',
       'detailedDescription',
@@ -149,9 +171,12 @@ export const stakewise: BaseProject = {
         maxLtv,
         approvedImplCount,
         redeemInterval,
+        redeemFee,
+        maxRedeemFee,
         daoSafe,
         opsSafe,
-        voteDelay,
+        questionTimeout,
+        questionCooldown,
         bond,
       },
     ),
@@ -207,9 +232,9 @@ export const stakewise: BaseProject = {
     risks: {
       minting: {
         value: 'Permissionless',
-        secondLine: `≤${defaultLtv} LTV`,
+        secondLine: `≤${maxLtv} LTV`,
         sentiment: 'good',
-        description: `Anyone can deposit ETH into a vault and mint ${osETH} against the shares, up to ${defaultLtv} of their value by default. The ETH stays in the vault until ${validatorThreshold} of ${oracleCount} oracles approve its staking keys.`,
+        description: `Anyone can deposit ETH into a vault and mint ${osETH} against the shares, up to ${defaultLtv} of their value by default and ${maxLtv} in the ${noLiqVaultCount} vaults the DAO exempts from liquidation. The ETH stays in the vault until ${validatorThreshold} of ${oracleCount} oracles approve its staking keys.`,
       },
       operators: {
         value: 'Permissionless',
@@ -221,26 +246,25 @@ export const stakewise: BaseProject = {
         value: 'Vault contracts',
         secondLine: 'creds: vault',
         sentiment: 'good',
-        description:
-          "Each vault's stake withdraws to the vault itself, so ETH can only return to the vault that funded it.",
+        description: `Validators a vault registers withdraw to the vault. Consolidating stake into a validator the vault does not track needs the vault's manager and ${validatorThreshold} of ${oracleCount} oracles, and the contracts do not check where that validator withdraws.`,
       },
       oracle: {
         value: oracleThreshold,
         secondLine: `${formatSeconds(rewardsDelaySeconds)} · ≤${rateCapYear}/yr`,
         sentiment: 'warning',
-        description: `${oracleThreshold} oracles report at most once every ${rewardsInterval}. The ${osETH} rate is capped at ${rateCapYear} a year and never falls, but each vault's reported balance has no cap. If the oracles stop, vault exit queues stop while the rate keeps growing.`,
+        description: `${oracleThreshold} oracles report at most once every ${rewardsInterval}. The ${osETH} rate never falls and is capped at ${rateCapYear} a year unless the DAO multisig replaces the Keeper, but each vault's reported balance has no cap. If the oracles stop, vault exit queues stop while the rate keeps growing.`,
       },
       exit: {
         value: 'Redemption queue',
         secondLine: `${formatSeconds(number('OsTokenRedeemer', 'exitQueueUpdateDelay'))} batches · no pause`,
         sentiment: 'warning',
-        description: `${osETH} holders queue in the redeemer, paid in batches at least ${redeemInterval} apart by redeeming staker positions that a ${opsSafe} multisig selects. The queue moves only when positions are redeemed or someone buys queued ${osETH}.`,
+        description: `${osETH} holders queue in the redeemer, paid in batches at least ${redeemInterval} apart by redeeming staker positions that a ${opsSafe} multisig selects. The queue moves only when positions are redeemed or someone buys queued ${osETH}. The DAO multisig can set a fee of up to ${maxRedeemFee} and replace the redeemer.`,
       },
       upgrades: {
         value: `${daoSafe} multisig`,
         secondLine: 'no delay · no veto',
         sentiment: 'bad',
-        description: `Core contracts cannot be upgraded, but the ${daoSafe} DAO multisig changes oracles, collateral rules and approved vault code with no delay. SWISE votes can also execute through SafeSnap after ${voteDelay}. Holders have no veto.`,
+        description: `Core contracts cannot be upgraded, but the ${daoSafe} DAO multisig changes oracles, collateral rules and approved vault code, and can register any contract as a vault, with no delay. SWISE votes can also execute through SafeSnap after ${voteDelay}. Holders have no veto.`,
       },
     },
   },
@@ -249,7 +273,7 @@ export const stakewise: BaseProject = {
       type: 'not-tracked',
       name: 'Reality.eth',
       icon: 'reality',
-      description: `The DAO's SafeSnap module executes Snapshot votes through Reality.eth's bonded answer oracle: an answer that goes unchallenged for ${voteDelay} can push any transaction through the DAO multisig, and the Reality.eth arbitrator settles disputes.`,
+      description: `The DAO's SafeSnap module executes proposals through Reality.eth's bonded answer oracle: an answer backed by at least ${bond} that no one outbids for ${questionTimeout} can push any transaction through the DAO multisig ${questionCooldown} later, unless the DAO multisig invalidates it first. ${arbitration}`,
     },
   ],
   permissions: discovery.getDiscoveredPermissions(),
@@ -258,7 +282,7 @@ export const stakewise: BaseProject = {
     risks: [
       {
         category: 'Funds can be stolen if',
-        text: `the oracle quorum reports false vault balances, or the DAO multisig changes the oracle set or collateral rules, so unbacked ${osETH} is minted.`,
+        text: `the oracle quorum reports false vault balances, or the DAO multisig changes the oracle set, replaces the Keeper or registers its own contract as a vault, which can mint unbacked ${osETH} and burn anyone's.`,
         isCritical: true,
       },
       {
@@ -267,7 +291,7 @@ export const stakewise: BaseProject = {
       },
       {
         category: 'Funds can be frozen if',
-        text: `the oracles stop signing, since vault exit queues only advance with their updates, and the ${osETH} redemption queue finds no positions to redeem or buyers.`,
+        text: `the oracles stop signing, since vault exit queues only advance with their updates, or the ${opsSafe} multisig publishes no positions to redeem and nobody buys queued ${osETH}.`,
       },
     ],
   },
