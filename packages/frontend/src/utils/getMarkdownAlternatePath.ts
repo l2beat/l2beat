@@ -62,9 +62,13 @@ type ListPagePath =
   | '/defi/liquid-staking'
   | '/ossification'
 
+/** Pages that are neither a list nor a project, with their own markdown. */
+export const GUIDE_PAGES_WITH_MARKDOWN = ['/privacy/stay-private'] as const
+
 const PAGES_WITH_MARKDOWN: readonly string[] = [
   ...LIST_PAGES_WITH_MARKDOWN,
   ...PROJECT_PAGES_WITH_MARKDOWN,
+  ...GUIDE_PAGES_WITH_MARKDOWN,
 ]
 
 /** A loop, not `/\/+$/`: the regex is quadratic on a request path of many slashes, and every page request goes through here. */

@@ -2,8 +2,8 @@ import { CustomLink } from '~/components/link/CustomLink'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import {
-  PRIVACY_ADVICE_HREF,
   PRIVACY_ADVICE_TITLE,
+  PRIVACY_STAY_PRIVATE_PATH,
 } from '~/pages/privacy/methodology/paths'
 import { cn } from '~/utils/cn'
 
@@ -21,7 +21,7 @@ export function PrivacyAdviceBanner({ backgroundImage, className }: Props) {
       <CustomLink
         variant="plain"
         underline={false}
-        href={PRIVACY_ADVICE_HREF}
+        href={PRIVACY_STAY_PRIVATE_PATH}
         className="group relative flex min-h-[128px] select-none overflow-hidden rounded-lg text-pure-white"
       >
         <div

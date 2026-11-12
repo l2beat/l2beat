@@ -20,3 +20,8 @@ export const PRIVACY_ADVICE_HREF = `${PRIVACY_METHODOLOGY_PATH}#${PRIVACY_ADVICE
 export const PRIVACY_IP_HIDING_ROUTES_ANCHOR = 'ip-hiding-routes'
 /** The section project pages link from their app list. */
 export const PRIVACY_REFERENCE_APP_ANCHOR = 'reference-app'
+/**
+ * The guide that walks one protocol's advice by goal. The URL is cited and
+ * linked from outside, so it stays as it is.
+ */
+export const PRIVACY_STAY_PRIVATE_PATH = '/privacy/stay-private'

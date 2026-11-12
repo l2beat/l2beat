@@ -9,6 +9,12 @@ export const searchBarPages = withIndex([
     tags: ['pages'],
   },
   {
+    category: 'privacy',
+    name: 'How to stay private',
+    tags: ['pages', 'privacy', 'advice', 'guide'],
+    href: '/privacy/stay-private',
+  },
+  {
     category: 'l2',
     name: 'Summary',
     tags: ['pages', 'scaling'],

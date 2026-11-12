@@ -3,6 +3,7 @@ import type express from 'express'
 import { env } from '~/env'
 import { fetchFromRouter } from '~/test/fetchFromRouter'
 import {
+  GUIDE_PAGES_WITH_MARKDOWN,
   LIST_PAGES_WITH_MARKDOWN,
   PROJECT_PAGES_WITH_MARKDOWN,
 } from '~/utils/getMarkdownAlternatePath'
@@ -87,6 +88,7 @@ describe(createLlmsTxtRouter.name, () => {
     const registered = [
       ...LIST_PAGES_WITH_MARKDOWN,
       ...PROJECT_PAGES_WITH_MARKDOWN,
+      ...GUIDE_PAGES_WITH_MARKDOWN,
     ].map((page) => `https://ethbeat.org${toUrlTemplate(page)}.md`)
     expect(urls.toSorted()).toEqual(registered.toSorted())
   })

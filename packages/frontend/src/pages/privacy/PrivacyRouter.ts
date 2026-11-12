@@ -10,10 +10,15 @@ import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
 import { sendNotFoundPage } from '../not-found/sendNotFoundPage'
 import { getPrivacyArchivedData } from './archived/getPrivacyArchivedData'
+import { PRIVACY_STAY_PRIVATE_PATH } from './methodology/paths'
 import {
   getPrivacyProjectData,
   getPrivacyProjectMarkdown,
 } from './project/getPrivacyProjectData'
+import {
+  getPrivacyStayPrivateData,
+  getPrivacyStayPrivateMarkdown,
+} from './stay-private/getPrivacyStayPrivateData'
 import { getPrivacySummaryData } from './summary/getPrivacySummaryData'
 
 export function createPrivacyRouter(
@@ -45,6 +50,29 @@ export function createPrivacyRouter(
     const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })
+
+  const getStayPrivateMarkdown = () => getPrivacyStayPrivateMarkdown(cache)
+
+  router.get(
+    `${PRIVACY_STAY_PRIVATE_PATH}.md`,
+    serveMarkdown(getStayPrivateMarkdown),
+  )
+
+  router.get(
+    PRIVACY_STAY_PRIVATE_PATH,
+    validateRoute({
+      query: v.object({
+        protocol: v.string().optional(),
+        goal: v.string().optional(),
+      }),
+    }),
+    serveMarkdownIfPreferred(getStayPrivateMarkdown),
+    async (req, res) => {
+      const data = await getPrivacyStayPrivateData(manifest, req.query, cache)
+      const html = await render(data, req.originalUrl)
+      res.status(200).send(html)
+    },
+  )
 
   const getProjectMarkdown = (req: Request<{ slug: string }>) =>
     getPrivacyProjectMarkdown(manifest, req.params.slug, cache)

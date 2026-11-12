@@ -1,6 +1,6 @@
 import { expect, mockObject } from 'earl'
 import type express from 'express'
-import { PROJECT_PAGES_WITH_MARKDOWN } from '~/utils/getMarkdownAlternatePath'
+import { GUIDE_PAGES_WITH_MARKDOWN, PROJECT_PAGES_WITH_MARKDOWN } from '~/utils/getMarkdownAlternatePath'
 import type { Manifest } from '~/utils/Manifest'
 import { createServerPageRouter } from './ServerPageRouter'
 
@@ -10,14 +10,17 @@ import { createServerPageRouter } from './ServerPageRouter'
 // registered is served but never advertised, a registered pattern without a
 // route advertises a 404.
 describe(createServerPageRouter.name, () => {
-  it('serves markdown for exactly the project pages registered as having it', () => {
+  it('serves markdown for exactly the project and guide pages registered as having it', () => {
     const router = createServerPageRouter(
       mockObject<Manifest>({}),
       async () => '<html />',
     )
 
     const served = getRoutePaths(router).filter((path) => path.endsWith('.md'))
-    const registered = PROJECT_PAGES_WITH_MARKDOWN.map((page) => `${page}.md`)
+    const registered = [
+      ...PROJECT_PAGES_WITH_MARKDOWN,
+      ...GUIDE_PAGES_WITH_MARKDOWN,
+    ].map((page) => `${page}.md`)
 
     expect(served.toSorted()).toEqual(registered.toSorted())
   })
