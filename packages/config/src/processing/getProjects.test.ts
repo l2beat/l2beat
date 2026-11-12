@@ -16,7 +16,11 @@ import chalk from 'chalk'
 import { expect } from 'earl'
 import { existsSync } from 'fs'
 import uniq from 'lodash/uniq'
-import { ADVICE_SNIPPETS } from '../common/privacyAdversaries'
+import {
+  ADVICE_SNIPPETS,
+  PRIVACY_METHODOLOGY_URL,
+} from '../common/privacyAdversaries'
+import { PRIVACY_TOOLS, type PrivacyTool } from '../common/privacyTools'
 import { asArray } from '../templates/utils'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from '../test/constants'
 import { isRiskCorrectlyFormatted } from '../test/helpers'
@@ -583,6 +587,46 @@ describe('getProjects', () => {
           for (const id of step.against) {
             if (adversaries.cells[id].sentiment === 'bad') {
               problems.push(`${project.id} ${step.name}: defends red ${id}`)
+            }
+          }
+        }
+      }
+      expect(problems).toEqual([])
+    })
+
+    // The entry holds the download and why we chose the app, so a step
+    // links it, never the vendor.
+    it('every advice step links the tools it names to their entries', () => {
+      const tools: PrivacyTool[] = Object.values(PRIVACY_TOOLS)
+      const downloads = tools.flatMap((tool) =>
+        [...`${tool.head} ${tool.text}`.matchAll(/\]\((https:[^)]+)\)/g)].map(
+          (match) => match[1],
+        ),
+      )
+      const problems: string[] = []
+      for (const { project, privacyInfo } of privacyProjects) {
+        for (const step of privacyInfo.adversaries?.advice ?? []) {
+          const links = [...step.text.matchAll(/\[([^\]]+)\]\(([^)]+)\)/g)]
+          const unlinked = step.text.replace(/\[[^\]]+\]\([^)]+\)/g, '')
+          for (const tool of tools) {
+            const href = `${PRIVACY_METHODOLOGY_URL}#${tool.anchor}`
+            for (const name of tool.names) {
+              if (unlinked.includes(name)) {
+                problems.push(`${project.id} ${step.name}: ${name} unlinked`)
+              }
+            }
+            for (const [, text, target] of links) {
+              const named = tool.names.some((name) => text.includes(name))
+              if (named !== (target === href)) {
+                problems.push(`${project.id} ${step.name}: link ${text}`)
+              }
+            }
+          }
+          for (const [, text, target] of links) {
+            if (downloads.includes(target)) {
+              problems.push(
+                `${project.id} ${step.name}: ${text} links a download`,
+              )
             }
           }
         }
