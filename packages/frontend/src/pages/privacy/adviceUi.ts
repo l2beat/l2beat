@@ -1,14 +1,9 @@
-import type {
-  PrivacyAdversary,
-  PrivacyAdversaryId,
-  PrivacyAdversarySentiment,
-  PrivacyAdviceStep,
-} from '@l2beat/config'
+import type { PrivacyAdversary, PrivacyAdviceStep } from '@l2beat/config'
 import { PRIVACY_ADVICE_HREF, PRIVACY_ADVICE_TITLE } from './methodology/paths'
 
 /**
- * Copy shared by the project page and its markdown alternate. Only project
- * pages import this on the client, which keeps it in their chunk.
+ * Copy shared by the project page, the How to stay private guide and their
+ * markdown alternates. Only those pages import this on the client.
  */
 export const ADVICE = {
   sectionId: 'stay-private',
@@ -31,22 +26,6 @@ export const ADVICE = {
   methodologyHref: PRIVACY_ADVICE_HREF,
 } as const
 
-/**
- * The adversaries the steps leave the promised field exposed or at risk to:
- * a cell that is not green and that no step defends. In rosette order.
- */
-export function getUncoveredAdversaries(
-  steps: PrivacyAdviceStep[],
-  adversaries: PrivacyAdversary[],
-  sentiments: Record<PrivacyAdversaryId, PrivacyAdversarySentiment>,
-): PrivacyAdversary[] {
-  return adversaries.filter(
-    (adversary) =>
-      sentiments[adversary.id] !== 'good' &&
-      !steps.some((step) => step.against.includes(adversary.id)),
-  )
-}
-
 /** The adversaries one step defends, in rosette order. */
 export function getStepAdversaries(
   step: PrivacyAdviceStep,
@@ -55,29 +34,9 @@ export function getStepAdversaries(
   return adversaries.filter((adversary) => step.against.includes(adversary.id))
 }
 
-/** Anchor of one step on the project page, which adversary blocks link. */
-export function getAdviceStepId(index: number): string {
-  return `${ADVICE.sectionId}-${index + 1}`
-}
-
-/** The steps that defend one adversary, with their position in the list. */
-export function getStepsAgainst(
-  steps: PrivacyAdviceStep[] | undefined,
-  id: PrivacyAdversaryId,
-): { step: PrivacyAdviceStep; index: number }[] {
-  return (steps ?? [])
-    .map((step, index) => ({ step, index }))
-    .filter(({ step }) => step.against.includes(id))
-}
-
 /** Under the draw button: the range the wait comes from. */
 export function getWaitNote(windowDays: number): string {
   return `Random between 0 and ${windowDays} days, the anonymity set's window.`
-}
-
-/** The markdown alternate cannot draw, so it says how to. */
-export function getWaitInstruction(windowDays: number): string {
-  return `Draw the wait once, at random between 0 and ${windowDays} days, the window the anonymity set counts.`
 }
 
 /** "12 days 7 hours", "7 hours", and minutes only under an hour: "42 minutes". */

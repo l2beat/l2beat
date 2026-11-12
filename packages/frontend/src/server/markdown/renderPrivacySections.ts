@@ -18,18 +18,17 @@ import {
   PRIVACY_EXPOSURE_LABEL,
   PRIVACY_INTERIOR_LABEL,
 } from '~/pages/privacy/adversaries/privacyAdversaryUi'
-import {
-  ADVICE,
-  getStepAdversaries,
-  getStepsAgainst,
-  getUncoveredAdversaries,
-  getWaitInstruction,
-} from '~/pages/privacy/adviceUi'
+import { ADVICE, getStepAdversaries } from '~/pages/privacy/adviceUi'
 import {
   formatBucketLabel,
   getPrivacyAssetsTotals,
   PRIVACY_ASSETS_BREAKDOWN_HEADERS as HEADERS,
 } from '~/pages/privacy/project/components/assets-breakdown/privacyAssetsBreakdown'
+import {
+  getStepsAgainst,
+  getUncoveredAdversaries,
+  getWaitInstruction,
+} from '~/pages/privacy/projectAdvice'
 import {
   getCheckedAppSourceLabel,
   getReferenceAppSince,
@@ -142,7 +141,20 @@ function renderAdversary(
 }
 
 /** The steps in order, each with the adversaries it defends, like the HTML. */
-export function renderPrivacyAdvice({
+export function renderPrivacyAdvice(
+  props: Pick<
+    PrivacyAdviceSectionProps,
+    'steps' | 'adversaries' | 'sentiments' | 'waitWindowDays'
+  >,
+) {
+  return joinBlocks([
+    `${ADVICE.intro} ${link(ADVICE.methodologyLink, ADVICE.methodologyHref)}`,
+    renderPrivacyAdviceSteps(props),
+  ])
+}
+
+/** The numbered steps and what no step helps against, without the intro. */
+export function renderPrivacyAdviceSteps({
   steps,
   adversaries,
   sentiments,
@@ -153,7 +165,6 @@ export function renderPrivacyAdvice({
 >) {
   const uncovered = getUncoveredAdversaries(steps, adversaries, sentiments)
   return joinBlocks([
-    `${ADVICE.intro} ${link(ADVICE.methodologyLink, ADVICE.methodologyHref)}`,
     numberedList(
       steps.map((step) => {
         const against = getStepAdversaries(step, adversaries).map((adversary) =>
