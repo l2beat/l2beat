@@ -1,4 +1,5 @@
 import { useCallback, useSyncExternalStore } from 'react'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 
 // The visitor's own projects, kept in their browser only: the ones they pin
 // and the ones they opened last. Each is stored with what the nav draws, so
@@ -85,7 +86,9 @@ function toProjects(value: unknown): SavedProject[] {
     )
     .map((project) => ({
       ...project,
-      href: project.href.replace(MOVED_PROJECT_PATH, '/projects/$1'),
+      href: project.href.replace(MOVED_PROJECT_PATH, (_, slug: string) =>
+        getProjectPath(slug),
+      ),
     }))
   // A project saved from two sections is one page now.
   return projects.filter(
