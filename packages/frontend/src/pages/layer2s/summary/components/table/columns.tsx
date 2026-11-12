@@ -88,7 +88,7 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
         },
         {
           id: 'total',
-          header: 'Total value secured',
+          header: 'Value secured',
           cell: (ctx) => {
             if (opts?.isTvsLoading) {
               return (
@@ -116,7 +116,9 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
           },
           meta: {
             align: 'right',
-            cellClassName: 'pl-3',
+            // Its right-aligned figures need no lead; the stage column's
+            // right padding keeps them apart, so the table fits at 1280.
+            cellClassName: 'pl-0',
             tooltip:
               'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens, shown together with a percentage change compared to 7D ago.',
           },
@@ -131,7 +133,7 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
       columnHelper,
       columnHelper.accessor((row) => row.activity?.pastDayUops, {
         id: 'pastDayUops',
-        header: 'Past day UOPS',
+        header: 'UOPS',
         cell: (ctx) => {
           const data = ctx.row.original.activity
           if (!data) {

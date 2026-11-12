@@ -34,7 +34,7 @@ export function L2SummaryChartHeader({
         </h2>
         <a
           href={link.href}
-          className="shrink-0 whitespace-nowrap font-medium text-label-value-13 text-secondary underline decoration-divider underline-offset-[0.3em] transition-colors hover:text-primary hover:decoration-current"
+          className="-my-1.5 shrink-0 whitespace-nowrap py-1.5 font-medium text-label-value-13 text-secondary underline decoration-divider underline-offset-[0.3em] transition-colors hover:text-primary hover:decoration-current"
         >
           {link.label}
         </a>
