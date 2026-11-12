@@ -77,7 +77,6 @@ export function InteropDominanceContent({
         value={metric}
         onValueChange={(value) => setMetric(value as DominanceMetric)}
         className={cn('mt-4', tabsClassName)}
-        variant="highlighted"
       >
         <TabsList className="h-6 w-fit gap-1 bg-transparent p-0">
           <TabsTrigger

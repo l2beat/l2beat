@@ -58,7 +58,6 @@ export function InteropTopTokensWidget({
         value={activeTab}
         onValueChange={setActiveTab}
         className="mt-4 gap-1"
-        variant="highlighted"
       >
         <TabsList className="-mr-1 -mb-1 block h-auto text-balance rounded-none bg-transparent p-0 leading-none">
           <TabsTrigger
