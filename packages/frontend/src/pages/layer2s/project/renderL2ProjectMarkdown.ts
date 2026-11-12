@@ -35,7 +35,11 @@ import { formatPercent } from '~/utils/calculatePercentageChange'
 import { getL2ProjectApiUrls } from './getL2ProjectApiUrls'
 
 /** The markdown alternate of the scaling project page, from the entry the HTML page renders. */
-export function renderL2ProjectMarkdown(entry: ProjectL2Entry): string {
+export function renderL2ProjectMarkdown(
+  entry: ProjectL2Entry,
+  /** What another section of the project adds to the summary, e.g. privacy. */
+  merged?: { facts: ProjectFact[]; risk: RosetteValue },
+): string {
   const api = getL2ProjectApiUrls(entry)
   const summaryRisks = getSummaryRisks(entry)
   return renderProjectMarkdown({
@@ -54,8 +58,10 @@ export function renderL2ProjectMarkdown(entry: ProjectL2Entry): string {
         ...getFacts(entry),
         ...getInteropFacts(entry),
         ...(summaryRisks.fact ? [summaryRisks.fact] : []),
+        ...(merged?.facts ?? []),
       ],
-      risks: summaryRisks.risks,
+      // The HTML summary switches between the two rosettes.
+      risks: [...summaryRisks.risks, ...(merged ? [merged.risk] : [])],
       description: entry.header.description,
     },
     header: {
