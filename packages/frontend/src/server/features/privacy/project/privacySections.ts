@@ -1,5 +1,8 @@
+import mapValues from 'lodash/mapValues'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { PRIVACY_ADVERSARIES_SECTION_ID } from '~/pages/privacy/adversaries/privacyAdversaryUi'
+import { ADVICE } from '~/pages/privacy/adviceUi'
+import { ANONYMITY_SET_WINDOW_DAYS } from '~/server/features/privacy/anonymity-set/calculateAnonymitySets'
 import { manifest } from '~/utils/Manifest'
 import { getTrustedSetupsSectionFromTrustedSetups } from '~/utils/project/getTrustedSetupsSection'
 import { optionToRange } from '~/utils/range/range'
@@ -47,6 +50,28 @@ export function getPrivacyAdversariesSection(
       isUnderReview: !!details.statuses.reviewStatus,
       adversaries: resolvePrivacySources(details.adversaries, pageSections),
       referenceApp: getReferenceApp(details),
+    },
+  }
+}
+
+/** Our advice for the reference app, when a step changes what an adversary learns. */
+export function getPrivacyAdviceSection(
+  details: PrivacyProjectDetails,
+): Section<'PrivacyAdviceSection'> | undefined {
+  const advice = details.adversaries.advice
+  if (!advice) return undefined
+  return {
+    type: 'PrivacyAdviceSection',
+    props: {
+      id: ADVICE.sectionId,
+      title: ADVICE.title,
+      steps: advice,
+      adversaries: details.adversaries.adversaries,
+      sentiments: mapValues(
+        details.adversaries.cells,
+        (cell) => cell.sentiment,
+      ),
+      waitWindowDays: ANONYMITY_SET_WINDOW_DAYS,
     },
   }
 }

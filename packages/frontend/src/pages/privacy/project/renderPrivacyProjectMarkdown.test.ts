@@ -11,7 +11,10 @@ import type { ProjectDetailsSection } from '~/components/projects/sections/types
 import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
 import type { PrivacyAsset } from '~/server/features/privacy/types'
 import type { PrivacyReferenceApp } from '~/server/features/privacy/utils/getPrivacyReferenceApp'
-import { renderPrivacyProjectMarkdown } from './renderPrivacyProjectMarkdown'
+import {
+  getPrivacySummaryMarkdown,
+  renderPrivacyProjectMarkdown,
+} from './renderPrivacyProjectMarkdown'
 
 // Method: render one hand-built privacy project entry (the same shape the
 // HTML page receives) and read the markdown the way an agent would: split it
@@ -122,6 +125,44 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     )
   })
 
+  it('adds the creator and the proving stack of a protocol that is also in the ZK Catalog', () => {
+    const summary = getSection(
+      renderPrivacyProjectMarkdown(ENTRY, {
+        creator: 'Tornado Cash DAO',
+        header: {
+          trustedSetupsByProofSystem: {},
+          techStack: {
+            finalWrap: [
+              {
+                id: 'snarkjs',
+                type: 'Groth16',
+                name: 'snarkjs',
+                description: 'A JavaScript implementation of Groth16.',
+              },
+            ],
+          },
+        },
+      }),
+      'Summary',
+    )
+
+    expect(summary).toInclude(
+      '- Creator: Tornado Cash DAO',
+      '- Final wrap: snarkjs (Groth16)',
+    )
+  })
+
+  it('gives the summary of a scaling project its privacy stats and rosette', () => {
+    const merged = getPrivacySummaryMarkdown(ENTRY, ENTRY.sections)
+
+    expect(merged.facts.map((fact) => fact.label)).toEqual([
+      'Tracked on',
+      'Attributes',
+      'Reference app',
+    ])
+    expect(merged.risk.name).toEqual('Privacy')
+  })
+
   it('keeps a multi-paragraph risk explanation inside its list item', () => {
     const summary = getSection(
       renderPrivacyProjectMarkdown({
@@ -191,6 +232,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     expect(headings).toEqual([
       '## Summary',
       '## Privacy',
+      '## How to stay private',
       '## Value Locked',
       '## Anonymity sets',
       '## Flows',
@@ -274,8 +316,30 @@ describe(renderPrivacyProjectMarkdown.name, () => {
 
     it('grades the promise against each adversary and says why', () => {
       expect(privacy()).toInclude(
-        '### Chain analyst\n\nLink at risk (sentiment: warning)\n\n**Who:** Correlates all public data. Examples: Chain analytics firms.\n\nTiming narrows the anonymity set.\n\n**Advice:** Wait before withdrawing.',
+        '### Chain analyst\n\nLink at risk (sentiment: warning)\n\n**Who:** Correlates all public data. Examples: Chain analytics firms.\n\nTiming narrows the anonymity set.',
       )
+    })
+
+    it('links the advice once, which lists each step with the adversaries it defends', () => {
+      expect(privacy()).toInclude(
+        '**Advice:** How to stay private, the next section.',
+      )
+      expect(privacy()).not.toInclude('**Advice:** Wait')
+      expect(
+        getSection(renderPrivacyProjectMarkdown(ENTRY), 'How to stay private'),
+      ).toInclude(
+        '1. **Wait.** Wait before withdrawing. Draw the wait once, at random between 0 and 30 days, the window the anonymity set counts. Against: chain analyst.',
+      )
+    })
+
+    it('links each adversary to the steps that defend it', () => {
+      expect(privacy()).toInclude('**Advice:** step 1 (Wait).')
+    })
+
+    it('names the adversaries no step helps against', () => {
+      expect(
+        getSection(renderPrivacyProjectMarkdown(ENTRY), 'How to stay private'),
+      ).toInclude('**No step helps against:** future adversary.')
     })
 
     it('lists every inside field for the public observer, with notes', () => {
@@ -452,7 +516,6 @@ const ADVERSARIES: ProjectPrivacyAdversaries = {
       'warning',
       'Timing narrows the anonymity set.',
       {
-        advice: 'Wait before withdrawing.',
         interior: { ...PUBLIC_OBSERVER_INTERIOR, linkage: 'exposed' },
       },
     ),
@@ -475,6 +538,14 @@ const ADVERSARIES: ProjectPrivacyAdversaries = {
       'A quantum computer could break the commitments.',
     ),
   },
+  advice: [
+    {
+      name: 'Wait',
+      text: 'Wait before withdrawing.',
+      against: ['chainAnalyst'],
+      randomWait: true,
+    },
+  ],
 }
 
 function chartSection(
@@ -560,6 +631,23 @@ const SECTIONS: ProjectDetailsSection[] = [
       title: 'Privacy',
       adversaries: ADVERSARIES,
       referenceApp: REFERENCE_APP,
+    },
+  },
+  {
+    type: 'PrivacyAdviceSection',
+    props: {
+      id: 'stay-private',
+      title: 'How to stay private',
+      steps: ADVERSARIES.advice ?? [],
+      adversaries: ADVERSARIES.adversaries,
+      waitWindowDays: 30,
+      sentiments: {
+        publicObserver: 'good',
+        chainAnalyst: 'warning',
+        networkObserver: 'good',
+        privilegedInsider: 'good',
+        futureAdversary: 'bad',
+      },
     },
   },
   chartSection('TvsValueSection', 'privacy-tvl', 'Value Locked'),

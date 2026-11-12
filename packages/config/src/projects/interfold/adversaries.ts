@@ -54,7 +54,6 @@ export function interfoldAdversaries(
           'Voting power is public, so the totals per option can reveal how a voter with outsized weight voted.',
         exposureContinued:
           "A voter whose weight exceeds the totals of all but one option can only have chosen that one. The app's random weight blurs exact matches among smaller voters.",
-        advice: 'Keep the random weight on.',
         sources: [
           {
             title: 'Random weight against subset-sum matching',
@@ -122,5 +121,12 @@ export function interfoldAdversaries(
         ],
       },
     },
+    advice: [
+      {
+        name: 'Vote',
+        text: 'Keep the random weight on, which blurs your exact voting power in the totals.',
+        against: ['chainAnalyst'],
+      },
+    ],
   })
 }

@@ -38,6 +38,7 @@ import {
 import {
   getChartProject,
   getPrivacyAdversariesSection,
+  getPrivacyAdviceSection,
   getPrivacyAnonymitySetSection,
   getPrivacyAssetsBreakdownSection,
   getPrivacyDescriptionSection,
@@ -294,6 +295,8 @@ export async function getPrivacyProjectEntry(
     })
   }
 
+  const advice = getPrivacyAdviceSection(details)
+  if (advice) sections.splice(adversariesSectionIndex, 0, advice)
   sections.splice(
     adversariesSectionIndex,
     0,
