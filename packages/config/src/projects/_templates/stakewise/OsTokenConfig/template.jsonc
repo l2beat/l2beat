@@ -2,7 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "OsTokenConfig",
   "category": "core",
-  "description": "Collateral parameters for minting osToken against vault shares (loan-to-value, liquidation threshold and bonus, 1e18 = 100%), as a default and per-vault overrides; a threshold of 2^64-1 disables liquidations for that vault. Also names the redeemer allowed to burn osToken positions.",
+  "description": "Collateral parameters for minting osToken against vault shares (loan-to-value, liquidation threshold and bonus, 1e18 = 100%), as a default and per-vault overrides. A threshold of 2^64-1 disables liquidations for that vault. Also names the redeemer allowed to burn osToken positions.",
   "fields": {
     "defaultConfig": {
       "severity": "HIGH",
@@ -28,7 +28,7 @@
           "event": "OsTokenConfigUpdated"
         }
       },
-      "description": "Vault-specific overrides as last set by the owner; the zero address is the default."
+      "description": "Vault-specific overrides as last set by the owner. The zero address is the default."
     },
     "owner": {
       "severity": "HIGH",

@@ -1,23 +1,35 @@
-StakeWise is a marketplace of staking vaults with one liquid token on top. Anyone can open a vault and stake for it; stakers deposit ETH into the vault of their choice and can mint {{osETH}} against their vault shares. {{osETH}} is backed by positions in many vaults rather than by one pool, and its ETH value follows a single reward rate that an oracle committee reports. Only the ETH that stakers choose to borrow against becomes {{osETH}}; the rest of the ETH staked through the vaults is not tokenised, so the token's supply is smaller than the protocol's stake, and the value tracked on this page is the token, not the marketplace.
+StakeWise is a marketplace of staking vaults with one liquid token on top. Anyone can open a vault and stake for it. Stakers deposit ETH into the vault of their choice and can mint {{osETH}} against their shares, so {{osETH}} is backed by positions in many vaults rather than by one pool. Its ETH value follows a single reward rate that an oracle committee reports. Only the ETH that stakers mint against is tokenised as {{osETH}}. The rest of the stake is not, so this page tracks the token, not the whole marketplace.
 
 ### Deposits and staking
 
-A depositor sends ETH to a vault and receives its shares. The vault's key manager, appointed by the vault admin, decides which staking keys are funded; every registration also needs {{validatorThreshold}} of {{oracleCount}} oracle signatures over the exact keys, and withdrawal credentials always point at the vault, so the ETH can only come back there. Anyone can create a vault through the factories on code the DAO has approved ({{approvedImplCount}} implementations to date); whoever runs a vault posts no bond that the contracts enforce, and a loss is borne by that vault's shares; {{osETH}} holders are exposed to it only through the collateral rules below.
+1. A depositor sends ETH to a vault and receives its shares.
+2. The vault's key manager, appointed by the vault admin, picks the staking keys to fund. Each registration needs {{validatorThreshold}} of {{oracleCount}} oracle signatures over the exact keys. Withdrawal credentials always point at the vault, so the ETH can only come back there.
+3. A shareholder can mint {{osETH}} against the shares up to the vault's loan-to-value, {{defaultLtv}} by default, with liquidation above {{defaultLiqThreshold}}.
 
-Any shareholder can mint {{osETH}} against their shares up to the vault's loan-to-value, {{defaultLtv}} by default with liquidation above {{defaultLiqThreshold}}. The DAO sets exceptions per vault: {{noLiqVaultCount}} vaults may mint up to {{maxLtv}} and are never liquidated, so a loss in one of them lowers {{osETH}}'s backing directly. Minting is limited to vaults running approved code and to a total capacity set by the DAO.
+Vaults are created through factories, on code the DAO has approved ({{approvedImplCount}} implementations). The contracts require no bond from whoever runs a vault, and a vault's losses fall on its own shares. {{osETH}} holders are exposed to them only through the collateral rules, which the DAO can set per vault: {{noLiqVaultCount}} vaults may mint up to {{maxLtv}} and are never liquidated, so a loss in one of them lowers {{osETH}}'s backing directly. Only vaults on approved code can mint, up to a total capacity set by the DAO.
 
 ![StakeWise deposits](/images/architecture/stakewise-deposits.png#center)
 
 ### Exchange rate
 
-{{osETH}}'s ETH value grows at a reward rate written by the Keeper. At most once every {{rewardsInterval}}, {{oracleThreshold}} oracles sign a Merkle root of each vault's cumulative rewards together with a new rate; the Keeper checks the signatures and caps the rate at {{rateCapYear}} a year, about {{rateCapInterval}} every {{rewardsInterval}}. The rate accrues continuously, between updates and also when they stop, and {{osETH}}'s value can never fall. {{osFee}} of the rewards are minted to the DAO treasury as {{osETH}}. The per-vault rewards in the root are not bounded: the same quorum sets what every vault is worth, which is what the loan-to-value is measured against. Nothing in the system can be paused.
+{{osETH}}'s ETH value grows at a reward rate written by the Keeper. At most once every {{rewardsInterval}}, {{oracleThreshold}} oracles sign a new rate together with a Merkle root of each vault's cumulative rewards. The Keeper checks the signatures and caps the rate at {{rateCapYear}} a year, about {{rateCapInterval}} every {{rewardsInterval}}. The rate accrues continuously and {{osETH}}'s value can never fall. {{osFee}} of the rewards is minted to the DAO treasury as {{osETH}}. The per-vault rewards in the root have no cap. Through them the same quorum decides what each vault is worth, and so how much {{osETH}} can be minted against it.
 
 ### Withdrawals
 
-A vault shareholder burns shares into the vault's exit queue. The queue is filled from the vault's spare ETH on each harvest, and a request becomes claimable after a delay fixed per vault type at deployment. If the vault's key manager does not exit stakes within a day, the oracles, who hold pre-signed exit messages, exit them. Nobody can pause the queue, but it only moves with oracle updates. An {{osETH}} holder who did not mint it uses the redeemer's queue, processed every {{redeemInterval}}: the redeemer's owner publishes a list of {{osETH}} positions and its positions manager redeems them at the protocol rate, so queued holders are paid with ETH taken from other stakers' vaults, whose debt is burned in exchange.{{retiredRedeemerNote}}
+A vault shareholder exits through the vault's queue:
+
+1. The shareholder burns shares into the queue.
+2. The vault pays the queue from its spare ETH, but only after an oracle update. If the key manager does not exit validators within a day, the oracles exit them with pre-signed exit messages.
+3. The request becomes claimable after a delay fixed per vault type.
+
+An {{osETH}} holder who did not mint it exits through the redeemer:
+
+1. The holder queues {{osETH}} in the redeemer.
+2. The redeemer's owner, a {{opsSafe}} multisig, publishes a list of {{osETH}} positions, and its positions manager redeems them at the protocol rate. Those stakers' vaults pay out ETH and their {{osETH}} debt is burned.
+3. The queue is paid in batches at least {{redeemInterval}} apart. Anyone can also buy queued {{osETH}} with ETH, which pays the queue directly.
 
 ![StakeWise withdrawals](/images/architecture/stakewise-withdrawals.png#center)
 
 ### Governance
 
-The core contracts are not upgradeable. The {{daoSafe}} DAO multisig owns them and can, without delay, change the oracle set and thresholds, replace the Keeper and with it the rate ceiling, set the {{osETH}} fee, loan-to-value and liquidation rules, approve vault code and appoint the redeemer. SWISE holders reach the same powers through a SafeSnap module: a Snapshot vote is confirmed on Reality.eth with a {{bond}} bond and executes after {{voteDelay}} unless challenged. The same multisig owns the vote-execution module and can invalidate a proposal before it executes. A vault upgrade needs both an approved implementation and the vault admin's call. The redeemer is administered by a separate {{opsSafe}} multisig. Until December 2025 the DAO also owned the {{osETH}} token itself and used that once, in November 2025, to burn an exploiter's {{osETH}} after the Balancer hack and re-mint it to the treasury; that role has since been renounced, and only the vault controller and the flash-loan contract can mint or burn.
+The core contracts cannot be upgraded and have no pause function. The {{daoSafe}} DAO multisig owns them and can, without delay, change the oracle set and thresholds, replace the Keeper and with it the rate cap, set the {{osETH}} fee and the collateral rules, approve vault code in the vaults registry and appoint the redeemer. A vault admin can only upgrade to the next approved version of the vault's code. SWISE holders reach the same powers through a SafeSnap module: a Snapshot vote is confirmed on Reality.eth with a {{bond}} bond and executes after {{voteDelay}} unless challenged. The DAO multisig, which owns the module, can invalidate a proposal before it executes. The {{osETH}} token has no owner, so its minters are fixed: the vault controller and the flash-loan contract.

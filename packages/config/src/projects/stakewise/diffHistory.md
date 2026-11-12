@@ -1,8 +1,8 @@
-Generated with discovered.json: 0x26f13f6bc8aa09c13419dac1398ae3e2e6d4bf8c
+Generated with discovered.json: 0x4d5d9ee819a849f95d7b34221d7cba190cf78612
 
-# Diff at Wed, 11 Nov 2026 15:37:45 GMT:
+# Diff at Thu, 12 Nov 2026 09:57:21 GMT:
 
-- id: 85e27b87
+- id: 1ad51058
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - current timestamp: 1793883886
 
@@ -15,13 +15,13 @@ Initial discovery of StakeWise V3 (osETH): the vault registry, the Keeper and it
 ```diff
 +   Status: CREATED
     contract OsTokenVaultEscrow (eth:0x09e84205DF7c68907e619D07aFD90143c5763605) [stakewise/OsTokenVaultEscrow]
-    +++ description: Holds the osToken position of a staker who leaves a vault's exit queue with osToken still minted, until the exited assets are claimed; escrowed positions can be liquidated above the escrow's own threshold or redeemed by the redeemer.
+    +++ description: Holds the osToken position of a staker who enters a vault's exit queue with osToken still minted, until the exited assets are claimed. Escrowed positions can be liquidated above the escrow's own threshold or redeemed by the redeemer.
 ```
 
 ```diff
 +   Status: CREATED
     contract SubVaultsRegistry_3428 (eth:0x1376D0233E70E021ecFFdcB2254519a66b8680E7) [stakewise/SubVaultsRegistry]
-    +++ description: Per-meta-vault list of sub-vaults and the curator that allocates among them; only the meta vault's admin changes either, and adding a meta vault as a sub-vault needs the vault registry owner's acceptance.
+    +++ description: Per-meta-vault list of sub-vaults and the curator that allocates among them. Only the meta vault's admin changes either, and adding a meta vault as a sub-vault needs the vault registry owner's acceptance.
 ```
 
 ```diff
@@ -51,7 +51,7 @@ Initial discovery of StakeWise V3 (osETH): the vault registry, the Keeper and it
 ```diff
 +   Status: CREATED
     contract OwnMevEscrow (eth:0x1d80A09B60f4A65dfb8Dd3035b1812DCa95FFfe4) [stakewise/OwnMevEscrow]
-    +++ description: Execution-layer reward receiver of a single vault; only that vault can harvest the balance.
+    +++ description: Execution-layer reward receiver of a single vault. Only that vault can harvest the balance.
 ```
 
 ```diff
@@ -63,7 +63,7 @@ Initial discovery of StakeWise V3 (osETH): the vault registry, the Keeper and it
 ```diff
 +   Status: CREATED
     contract OwnMevEscrow (eth:0x2577609ab927EF4a2Cee449e36cFe156c5aA43B8) [stakewise/OwnMevEscrow]
-    +++ description: Execution-layer reward receiver of a single vault; only that vault can harvest the balance.
+    +++ description: Execution-layer reward receiver of a single vault. Only that vault can harvest the balance.
 ```
 
 ```diff
@@ -81,19 +81,19 @@ Initial discovery of StakeWise V3 (osETH): the vault registry, the Keeper and it
 ```diff
 +   Status: CREATED
     contract OsTokenConfig (eth:0x287d1e2A8dE183A8bf8f2b09Fa1340fBd766eb59) [stakewise/OsTokenConfig]
-    +++ description: Collateral parameters for minting osToken against vault shares (loan-to-value, liquidation threshold and bonus, 1e18 = 100%), as a default and per-vault overrides; a threshold of 2^64-1 disables liquidations for that vault. Also names the redeemer allowed to burn osToken positions.
+    +++ description: Collateral parameters for minting osToken against vault shares (loan-to-value, liquidation threshold and bonus, 1e18 = 100%), as a default and per-vault overrides. A threshold of 2^64-1 disables liquidations for that vault. Also names the redeemer allowed to burn osToken positions.
 ```
 
 ```diff
 +   Status: CREATED
     contract SubVaultsRegistry_1563 (eth:0x29626C6b7F09cc2B6164e48683f453223FFA8ae4) [stakewise/SubVaultsRegistry]
-    +++ description: Per-meta-vault list of sub-vaults and the curator that allocates among them; only the meta vault's admin changes either, and adding a meta vault as a sub-vault needs the vault registry owner's acceptance.
+    +++ description: Per-meta-vault list of sub-vaults and the curator that allocates among them. Only the meta vault's admin changes either, and adding a meta vault as a sub-vault needs the vault registry owner's acceptance.
 ```
 
 ```diff
 +   Status: CREATED
     contract OsTokenVaultController (eth:0x2A261e60FB14586B474C208b1B7AC6D0f5000306) [stakewise/OsTokenVaultController]
-    +++ description: Share accounting behind the osToken: registered vaults on an approved implementation mint and registered vaults burn; total assets grow at the reward rate written by the keeper, 500 basis points of each increment go to the treasury, and the exchange rate is total assets over total shares, with minting capped at 20,000,000 units of total assets.
+    +++ description: Share accounting behind the osToken. Registered vaults on an approved implementation mint, and registered vaults burn. Total assets grow at the reward rate written by the keeper, 500 basis points of each increment go to the treasury, and the exchange rate is total assets over total shares. Minting is capped at 20,000,000 units of total assets.
 ```
 
 ```diff
@@ -111,7 +111,7 @@ Initial discovery of StakeWise V3 (osETH): the vault registry, the Keeper and it
 ```diff
 +   Status: CREATED
     contract VaultsRegistry (eth:0x3a0008a588772446f6e656133C2D5029CC4FC20E) [stakewise/VaultsRegistry]
-    +++ description: List of vaults, approved vault implementations and factories. Registered factories add the vaults they create; a vault admin can only upgrade to an approved implementation of the next version, and only vaults on an approved implementation can mint osToken.
+    +++ description: List of vaults, approved vault implementations and factories. Registered factories add the vaults they create. A vault admin can only upgrade to an approved implementation of the next version, and only vaults on an approved implementation can mint osToken.
 ```
 
 ```diff
@@ -123,7 +123,7 @@ Initial discovery of StakeWise V3 (osETH): the vault registry, the Keeper and it
 ```diff
 +   Status: CREATED
     contract EthPrivVault_47fD (eth:0x47fd7ac6C6bc73F2D419a18D0692F37Df3f48034) [stakewise/EthPrivVault]
-    +++ description: Staking vault with a deposit whitelist. Deposits are open; the key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper; every harvest applies the vault's reward or loss from the keeper's root, mints 300 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment; shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.
+    +++ description: Staking vault where only whitelisted accounts can deposit. The key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper. Every harvest applies the vault's reward or loss from the keeper's root, mints 300 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment. Shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.
 ```
 
 ```diff
@@ -135,7 +135,7 @@ Initial discovery of StakeWise V3 (osETH): the vault registry, the Keeper and it
 ```diff
 +   Status: CREATED
     contract EthVault_4aAf (eth:0x4AafdB911085dd7703e57951279744DD713f744d) [stakewise/EthVault]
-    +++ description: Staking vault. Deposits are open; the key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper; every harvest applies the vault's reward or loss from the keeper's root, mints 800 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment; shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.
+    +++ description: Staking vault with open deposits. The key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper. Every harvest applies the vault's reward or loss from the keeper's root, mints 800 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment. Shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.
 ```
 
 ```diff
@@ -153,7 +153,7 @@ Initial discovery of StakeWise V3 (osETH): the vault registry, the Keeper and it
 ```diff
 +   Status: CREATED
     contract RealityETH (eth:0x5b7dD1E86623548AF054A4985F7fc8Ccbb554E2c) [stakewise/RealityETH]
-    +++ description: Reality.eth v3 crowd-sourced oracle: anyone answers a question by posting a bond at least double the previous one; an answer stands once the timeout passes without a higher bond, or when the arbitrator rules.
+    +++ description: Reality.eth v3 crowd-sourced oracle. Anyone answers a question by posting a bond at least double the previous one, and an answer stands once the timeout passes without a higher bond, or when the arbitrator rules.
 ```
 
 ```diff
@@ -165,7 +165,7 @@ Initial discovery of StakeWise V3 (osETH): the vault registry, the Keeper and it
 ```diff
 +   Status: CREATED
     contract EthPrivVault_663a (eth:0x663a8C9e88c5cdc565Cc4bF0b2BEC8d862D744a6) [stakewise/EthPrivVault]
-    +++ description: Staking vault with a deposit whitelist. Deposits are open; the key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper; every harvest applies the vault's reward or loss from the keeper's root, mints 100 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment; shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.
+    +++ description: Staking vault where only whitelisted accounts can deposit. The key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper. Every harvest applies the vault's reward or loss from the keeper's root, mints 100 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment. Shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.
 ```
 
 ```diff
@@ -189,7 +189,7 @@ Initial discovery of StakeWise V3 (osETH): the vault registry, the Keeper and it
 ```diff
 +   Status: CREATED
     contract PriceFeed (eth:0x8023518b2192FB5384DAdc596765B3dD1cdFe471) [stakewise/PriceFeed]
-    +++ description: Chainlink-compatible osETH/ETH feed returning the vault controller's exchange rate; no admin and no staleness check.
+    +++ description: Chainlink-compatible osETH/ETH feed returning the vault controller's exchange rate, with no admin and no staleness check.
 ```
 
 ```diff
@@ -201,7 +201,7 @@ Initial discovery of StakeWise V3 (osETH): the vault registry, the Keeper and it
 ```diff
 +   Status: CREATED
     contract RealityETH_ERC20 (eth:0x867092A32bC16816F12Fb326EfF7A2865E1ec138) [stakewise/RealityETH]
-    +++ description: Reality.eth v3 crowd-sourced oracle: anyone answers a question by posting a bond at least double the previous one; an answer stands once the timeout passes without a higher bond, or when the arbitrator rules.
+    +++ description: Reality.eth v3 crowd-sourced oracle. Anyone answers a question by posting a bond at least double the previous one, and an answer stands once the timeout passes without a higher bond, or when the arbitrator rules.
 ```
 
 ```diff
@@ -237,7 +237,7 @@ Initial discovery of StakeWise V3 (osETH): the vault registry, the Keeper and it
 ```diff
 +   Status: CREATED
     contract OsTokenRedeemer (eth:0x9Fc8C7F3C1ff6d0DF39EcB5870884d59777Ea2Bb) [stakewise/OsTokenRedeemer]
-    +++ description: Exit queue for osToken holders, processed in batches at least 12h apart and funded by redeeming osToken positions listed in a Merkle root the owner publishes; anyone can also buy queued osToken with the underlying asset at the protocol rate. Where a redemption fee exists, the vault controller's owner sets it within the deployed ceiling.
+    +++ description: Exit queue for osToken holders, processed in batches at least 12h apart and funded by redeeming osToken positions listed in a Merkle root the owner publishes. Anyone can also buy queued osToken with the underlying asset at the protocol rate. Where a redemption fee exists, the vault controller's owner sets it within the deployed ceiling.
 ```
 
 ```diff
@@ -249,31 +249,31 @@ Initial discovery of StakeWise V3 (osETH): the vault registry, the Keeper and it
 ```diff
 +   Status: CREATED
     contract EthVault_A8cB (eth:0xA8cB2e35F594b308726b242136f0a8995BF19E97) [stakewise/EthVault]
-    +++ description: Staking vault. Deposits are open; the key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper; every harvest applies the vault's reward or loss from the keeper's root, mints 500 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment; shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.
+    +++ description: Staking vault with open deposits. The key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper. Every harvest applies the vault's reward or loss from the keeper's root, mints 500 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment. Shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.
 ```
 
 ```diff
 +   Status: CREATED
     contract GenesisVault (eth:0xAC0F906E433d58FA868F936E8A43230473652885) [stakewise/EthGenesisVault]
-    +++ description: Staking vault that absorbed the StakeWise V2 pool: V2 reward-token holders migrate by burning their tokens for shares, and the V2 pool escrow that still receives the legacy stakes' withdrawals is owned by and counted into this vault. Deposits are open; the key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper; every harvest applies the vault's reward or loss from the keeper's root, mints 500 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment; shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.
+    +++ description: Staking vault that absorbed the StakeWise V2 pool. V2 reward-token holders migrate by burning their tokens for shares, and the V2 pool escrow, which still receives the legacy stakes' withdrawals, belongs to this vault and counts toward its assets. Deposits are open. The key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper. Every harvest applies the vault's reward or loss from the keeper's root, mints 500 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment. Shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.
 ```
 
 ```diff
 +   Status: CREATED
     contract OwnMevEscrow (eth:0xB013b4F660108E16514245543f52eA6398202507) [stakewise/OwnMevEscrow]
-    +++ description: Execution-layer reward receiver of a single vault; only that vault can harvest the balance.
+    +++ description: Execution-layer reward receiver of a single vault. Only that vault can harvest the balance.
 ```
 
 ```diff
 +   Status: CREATED
     contract EthPrivErc20Vault_ccmETH (eth:0xB144B3b2D2a7d82e53BC70659Be03Bcd21CD94e8) [stakewise/EthPrivErc20Vault]
-    +++ description: Staking vault with a deposit whitelist and transferable ERC20 shares (ccmETH). Deposits are open; the key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper; every harvest applies the vault's reward or loss from the keeper's root, mints 0 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment; shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.
+    +++ description: Staking vault with ERC20 shares (ccmETH). Only whitelisted accounts can deposit, send or receive shares. The key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper. Every harvest applies the vault's reward or loss from the keeper's root, mints 0 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment. Shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.
 ```
 
 ```diff
 +   Status: CREATED
     contract EthPrivVault_B266 (eth:0xB266274F55e784689e97b7E363B0666d92e6305B) [stakewise/EthPrivVault]
-    +++ description: Staking vault with a deposit whitelist. Deposits are open; the key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper; every harvest applies the vault's reward or loss from the keeper's root, mints 500 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment; shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.
+    +++ description: Staking vault where only whitelisted accounts can deposit. The key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper. Every harvest applies the vault's reward or loss from the keeper's root, mints 500 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment. Shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.
 ```
 
 ```diff
@@ -285,7 +285,7 @@ Initial discovery of StakeWise V3 (osETH): the vault registry, the Keeper and it
 ```diff
 +   Status: CREATED
     contract RetiredOsTokenRedeemer (eth:0xc43A7b16A7a167c0318390Cba16787C11e9e1FD0) [stakewise/OsTokenRedeemer]
-    +++ description: Previous osToken redeemer. Vaults accept redemptions only from the redeemer named in the collateral config, so this contract can no longer redeem positions; osToken still queued in it is paid out only when someone buys it with the underlying asset.
+    +++ description: Previous osToken redeemer. Vaults accept redemptions only from the redeemer named in the collateral config, so this contract can no longer redeem positions. Any osToken still queued in it is paid out only when someone buys it with the underlying asset.
 ```
 
 ```diff
@@ -303,7 +303,7 @@ Initial discovery of StakeWise V3 (osETH): the vault registry, the Keeper and it
 ```diff
 +   Status: CREATED
     contract EthVault_e6d8 (eth:0xe6d8d8aC54461b1C5eD15740EEe322043F696C08) [stakewise/EthVault]
-    +++ description: Staking vault. Deposits are open; the key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper; every harvest applies the vault's reward or loss from the keeper's root, mints 500 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment; shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.
+    +++ description: Staking vault with open deposits. The key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper. Every harvest applies the vault's reward or loss from the keeper's root, mints 500 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment. Shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.
 ```
 
 ```diff
@@ -315,7 +315,7 @@ Initial discovery of StakeWise V3 (osETH): the vault registry, the Keeper and it
 ```diff
 +   Status: CREATED
     contract osETH (eth:0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38) [stakewise/OsToken]
-    +++ description: ERC20 liquid staking token (osETH). Minted and burned by the vault controller and by the registered controllers; ownership is renounced, so that set is frozen, and there is no pause, blacklist or upgrade.
+    +++ description: ERC20 liquid staking token (osETH). Minted and burned by the vault controller and by the registered controllers. Ownership is renounced, so that set is frozen, and there is no pause, blacklist or upgrade.
 ```
 
 ```diff

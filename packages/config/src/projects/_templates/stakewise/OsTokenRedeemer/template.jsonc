@@ -2,7 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "OsTokenRedeemer",
   "category": "core",
-  "description": "Exit queue for osToken holders, processed in batches at least {{exitQueueUpdateDelayFormatted}} apart and funded by redeeming osToken positions listed in a Merkle root the owner publishes; anyone can also buy queued osToken with the underlying asset at the protocol rate. Where a redemption fee exists, the vault controller's owner sets it within the deployed ceiling.",
+  "description": "Exit queue for osToken holders, processed in batches at least {{exitQueueUpdateDelayFormatted}} apart and funded by redeeming osToken positions listed in a Merkle root the owner publishes. Anyone can also buy queued osToken with the underlying asset at the protocol rate. Where a redemption fee exists, the vault controller's owner sets it within the deployed ceiling.",
   "ignoreMethods": [
     "getExitQueueIndex",
     "getExitQueueMissingAssets",

@@ -12,7 +12,7 @@
         "0x5b1c7121826072504c934211cc22e537a57af8a71a8e948c58d99d0ad77fbb6b"
       ],
       "proxyType": "immutable",
-      "description": "Holds the osToken position of a staker who leaves a vault's exit queue with osToken still minted, until the exited assets are claimed; escrowed positions can be liquidated above the escrow's own threshold or redeemed by the redeemer.",
+      "description": "Holds the osToken position of a staker who enters a vault's exit queue with osToken still minted, until the exited assets are claimed. Escrowed positions can be liquidated above the escrow's own threshold or redeemed by the redeemer.",
       "deployerAddress": "eth:0x229f53eF905545Aa53a721D82DBfE4cEd7AFf65d",
       "sinceTimestamp": 1729761479,
       "sinceBlock": 21034509,
@@ -49,7 +49,7 @@
         "0xb0a8d6c00b218a33a0b611725f11205b97a90afe5045bef9d6033c2be8f99e13"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Per-meta-vault list of sub-vaults and the curator that allocates among them; only the meta vault's admin changes either, and adding a meta vault as a sub-vault needs the vault registry owner's acceptance.",
+      "description": "Per-meta-vault list of sub-vaults and the curator that allocates among them. Only the meta vault's admin changes either, and adding a meta vault as a sub-vault needs the vault registry owner's acceptance.",
       "ignoreInWatchMode": [
         "subVaultsTotalAssets",
         "subVaultsRewardsNonce",
@@ -280,7 +280,7 @@
         "0xb95e6f9d338f7ef1a543137ffb10b93157e948bac8b831da947ae12dfb1a6974"
       ],
       "proxyType": "immutable",
-      "description": "Execution-layer reward receiver of a single vault; only that vault can harvest the balance.",
+      "description": "Execution-layer reward receiver of a single vault. Only that vault can harvest the balance.",
       "deployerAddress": "eth:0xA54fBd150518B6131E15B1514466d89d08bdd54c",
       "sinceTimestamp": 1700813123,
       "sinceBlock": 18640259,
@@ -350,7 +350,7 @@
         "0xb95e6f9d338f7ef1a543137ffb10b93157e948bac8b831da947ae12dfb1a6974"
       ],
       "proxyType": "immutable",
-      "description": "Execution-layer reward receiver of a single vault; only that vault can harvest the balance.",
+      "description": "Execution-layer reward receiver of a single vault. Only that vault can harvest the balance.",
       "deployerAddress": "eth:0xC6898694f85A096b3e10E3de86136f06D158Bc11",
       "sinceTimestamp": 1713891695,
       "sinceBlock": 19719449,
@@ -447,7 +447,7 @@
         "0x174cc25e3a537130d0e1bc7cadb0eaf78326296dae1fa996a475116813c44d37"
       ],
       "proxyType": "immutable",
-      "description": "Collateral parameters for minting osToken against vault shares (loan-to-value, liquidation threshold and bonus, 1e18 = 100%), as a default and per-vault overrides; a threshold of 2^64-1 disables liquidations for that vault. Also names the redeemer allowed to burn osToken positions.",
+      "description": "Collateral parameters for minting osToken against vault shares (loan-to-value, liquidation threshold and bonus, 1e18 = 100%), as a default and per-vault overrides. A threshold of 2^64-1 disables liquidations for that vault. Also names the redeemer allowed to burn osToken positions.",
       "deployerAddress": "eth:0x229f53eF905545Aa53a721D82DBfE4cEd7AFf65d",
       "sinceTimestamp": 1720133111,
       "sinceBlock": 20236209,
@@ -507,7 +507,7 @@
         },
         "vaultConfigs": {
           "severity": "HIGH",
-          "description": "Vault-specific overrides as last set by the owner; the zero address is the default."
+          "description": "Vault-specific overrides as last set by the owner. The zero address is the default."
         },
         "owner": { "severity": "HIGH" },
         "redeemer": { "severity": "HIGH" }
@@ -527,7 +527,7 @@
         "0xb0a8d6c00b218a33a0b611725f11205b97a90afe5045bef9d6033c2be8f99e13"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Per-meta-vault list of sub-vaults and the curator that allocates among them; only the meta vault's admin changes either, and adding a meta vault as a sub-vault needs the vault registry owner's acceptance.",
+      "description": "Per-meta-vault list of sub-vaults and the curator that allocates among them. Only the meta vault's admin changes either, and adding a meta vault as a sub-vault needs the vault registry owner's acceptance.",
       "ignoreInWatchMode": [
         "subVaultsTotalAssets",
         "subVaultsRewardsNonce",
@@ -591,7 +591,7 @@
         "0xff1daef19dd9c88804e6d951f59590da7faf7494c8233690c421bcaef52b23f5"
       ],
       "proxyType": "immutable",
-      "description": "Share accounting behind the osToken: registered vaults on an approved implementation mint and registered vaults burn; total assets grow at the reward rate written by the keeper, 500 basis points of each increment go to the treasury, and the exchange rate is total assets over total shares, with minting capped at 20,000,000 units of total assets.",
+      "description": "Share accounting behind the osToken. Registered vaults on an approved implementation mint, and registered vaults burn. Total assets grow at the reward rate written by the keeper, 500 basis points of each increment go to the treasury, and the exchange rate is total assets over total shares. Minting is capped at 20,000,000 units of total assets.",
       "ignoreInWatchMode": [
         "avgRewardPerSecond",
         "totalAssets",
@@ -747,7 +747,7 @@
         "0x1b9a875ae5895d95c345f56358e7445cfb7f326d19cf1e88e0372de0d007768e"
       ],
       "proxyType": "immutable",
-      "description": "List of vaults, approved vault implementations and factories. Registered factories add the vaults they create; a vault admin can only upgrade to an approved implementation of the next version, and only vaults on an approved implementation can mint osToken.",
+      "description": "List of vaults, approved vault implementations and factories. Registered factories add the vaults they create. A vault admin can only upgrade to an approved implementation of the next version, and only vaults on an approved implementation can mint osToken.",
       "deployerAddress": "eth:0x229f53eF905545Aa53a721D82DBfE4cEd7AFf65d",
       "sinceTimestamp": 1698754931,
       "sinceBlock": 18470079,
@@ -871,7 +871,7 @@
         "0xbaba151d72eba765e9bc1cbbb7d340ac9e39006df19a04c99fb8ae2ad29a6a09"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Staking vault with a deposit whitelist. Deposits are open; the key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper; every harvest applies the vault's reward or loss from the keeper's root, mints 300 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment; shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
+      "description": "Staking vault where only whitelisted accounts can deposit. The key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper. Every harvest applies the vault's reward or loss from the keeper's root, mints 300 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment. Shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
       "ignoreInWatchMode": [
         "totalAssets",
         "totalShares",
@@ -963,7 +963,7 @@
         "0xc5866674597add5381d45fa4099e0d58c8c3bc82c9395468a5fd1f015713e424"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Staking vault. Deposits are open; the key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper; every harvest applies the vault's reward or loss from the keeper's root, mints 800 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment; shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
+      "description": "Staking vault with open deposits. The key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper. Every harvest applies the vault's reward or loss from the keeper's root, mints 800 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment. Shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
       "ignoreInWatchMode": [
         "totalAssets",
         "totalShares",
@@ -1090,7 +1090,7 @@
       "fieldMeta": {
         "admin": { "severity": "HIGH" },
         "feePercent": {
-          "description": "Share of rewards minted to the fee recipient, in basis points; fixed at creation."
+          "description": "Share of rewards minted to the fee recipient, in basis points, fixed at creation."
         },
         "feeRecipient": {
           "description": "Receiver of the vault's fee shares."
@@ -1114,7 +1114,7 @@
         "0x39be250d45631b170d2f1729762c31bad56f13b1f92198c0b4307ea31eb73d79"
       ],
       "proxyType": "immutable",
-      "description": "Reality.eth v3 crowd-sourced oracle: anyone answers a question by posting a bond at least double the previous one; an answer stands once the timeout passes without a higher bond, or when the arbitrator rules.",
+      "description": "Reality.eth v3 crowd-sourced oracle. Anyone answers a question by posting a bond at least double the previous one, and an answer stands once the timeout passes without a higher bond, or when the arbitrator rules.",
       "deployerAddress": "eth:0x82deE48926513Afc0D7fC21BB4Baa443fcCbc288",
       "sinceTimestamp": 1631231889,
       "sinceBlock": 13194676,
@@ -1177,7 +1177,7 @@
         "0xbaba151d72eba765e9bc1cbbb7d340ac9e39006df19a04c99fb8ae2ad29a6a09"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Staking vault with a deposit whitelist. Deposits are open; the key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper; every harvest applies the vault's reward or loss from the keeper's root, mints 100 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment; shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
+      "description": "Staking vault where only whitelisted accounts can deposit. The key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper. Every harvest applies the vault's reward or loss from the keeper's root, mints 100 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment. Shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
       "ignoreInWatchMode": [
         "totalAssets",
         "totalShares",
@@ -1389,7 +1389,7 @@
         "0x541bbc0854dbd946491b56cb1939a1b9b61ad5e06df414e1133671fa6b72c653"
       ],
       "proxyType": "immutable",
-      "description": "Chainlink-compatible osETH/ETH feed returning the vault controller's exchange rate; no admin and no staleness check.",
+      "description": "Chainlink-compatible osETH/ETH feed returning the vault controller's exchange rate, with no admin and no staleness check.",
       "ignoreInWatchMode": [
         "getRate",
         "latestAnswer",
@@ -1464,7 +1464,7 @@
         "0xdc924285b02bddd9bfab78648cc8bc1938f3d1745dccaf5853f744ac887e87b6"
       ],
       "proxyType": "immutable",
-      "description": "Reality.eth v3 crowd-sourced oracle: anyone answers a question by posting a bond at least double the previous one; an answer stands once the timeout passes without a higher bond, or when the arbitrator rules.",
+      "description": "Reality.eth v3 crowd-sourced oracle. Anyone answers a question by posting a bond at least double the previous one, and an answer stands once the timeout passes without a higher bond, or when the arbitrator rules.",
       "deployerAddress": "eth:0x82deE48926513Afc0D7fC21BB4Baa443fcCbc288",
       "sinceTimestamp": 1648616416,
       "sinceBlock": 14485576,
@@ -1676,7 +1676,7 @@
         "0xae5afabaeeb6c8132cf54d016257550d536b9d4aedb3defd56874bd98ae47b0b"
       ],
       "proxyType": "immutable",
-      "description": "Exit queue for osToken holders, processed in batches at least 12h apart and funded by redeeming osToken positions listed in a Merkle root the owner publishes; anyone can also buy queued osToken with the underlying asset at the protocol rate. Where a redemption fee exists, the vault controller's owner sets it within the deployed ceiling.",
+      "description": "Exit queue for osToken holders, processed in batches at least 12h apart and funded by redeeming osToken positions listed in a Merkle root the owner publishes. Anyone can also buy queued osToken with the underlying asset at the protocol rate. Where a redemption fee exists, the vault controller's owner sets it within the deployed ceiling.",
       "ignoreInWatchMode": [
         "getExitQueueData",
         "getExitQueueCumulativeTickets",
@@ -1782,7 +1782,7 @@
         "0xc5866674597add5381d45fa4099e0d58c8c3bc82c9395468a5fd1f015713e424"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Staking vault. Deposits are open; the key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper; every harvest applies the vault's reward or loss from the keeper's root, mints 500 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment; shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
+      "description": "Staking vault with open deposits. The key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper. Every harvest applies the vault's reward or loss from the keeper's root, mints 500 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment. Shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
       "ignoreInWatchMode": [
         "totalAssets",
         "totalShares",
@@ -1873,7 +1873,7 @@
         "0xb43f498adba2c5f21ad1203ee178eb326cc91f488ed621a00f65159ec8f094bf"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Staking vault that absorbed the StakeWise V2 pool: V2 reward-token holders migrate by burning their tokens for shares, and the V2 pool escrow that still receives the legacy stakes' withdrawals is owned by and counted into this vault. Deposits are open; the key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper; every harvest applies the vault's reward or loss from the keeper's root, mints 500 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment; shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
+      "description": "Staking vault that absorbed the StakeWise V2 pool. V2 reward-token holders migrate by burning their tokens for shares, and the V2 pool escrow, which still receives the legacy stakes' withdrawals, belongs to this vault and counts toward its assets. Deposits are open. The key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper. Every harvest applies the vault's reward or loss from the keeper's root, mints 500 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment. Shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
       "ignoreInWatchMode": [
         "totalAssets",
         "totalShares",
@@ -1957,7 +1957,7 @@
         "0xb95e6f9d338f7ef1a543137ffb10b93157e948bac8b831da947ae12dfb1a6974"
       ],
       "proxyType": "immutable",
-      "description": "Execution-layer reward receiver of a single vault; only that vault can harvest the balance.",
+      "description": "Execution-layer reward receiver of a single vault. Only that vault can harvest the balance.",
       "deployerAddress": "eth:0x9934cE3D368F320EFdC26c8eCe543B8C7FEF026e",
       "sinceTimestamp": 1716152219,
       "sinceBlock": 19906510,
@@ -1988,7 +1988,7 @@
         "0x5d9a3ec17bc18b3c7fad330a84261b55ee23ed65517e5ef47b9633891eee885f"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Staking vault with a deposit whitelist and transferable ERC20 shares (ccmETH). Deposits are open; the key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper; every harvest applies the vault's reward or loss from the keeper's root, mints 0 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment; shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
+      "description": "Staking vault with ERC20 shares (ccmETH). Only whitelisted accounts can deposit, send or receive shares. The key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper. Every harvest applies the vault's reward or loss from the keeper's root, mints 0 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment. Shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
       "ignoreInWatchMode": [
         "totalAssets",
         "totalShares",
@@ -2054,7 +2054,7 @@
         "0x331b9b0d766fc4f50ca4776a9a9c1f73634f5a1cd5ebc61fca29ce6666a993bb"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Staking vault with a deposit whitelist. Deposits are open; the key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper; every harvest applies the vault's reward or loss from the keeper's root, mints 500 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment; shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
+      "description": "Staking vault where only whitelisted accounts can deposit. The key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper. Every harvest applies the vault's reward or loss from the keeper's root, mints 500 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment. Shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
       "ignoreInWatchMode": [
         "totalAssets",
         "totalShares",
@@ -2187,7 +2187,7 @@
         "0x4856e1b74e2012827b5d8a5c978f20262eb707c1b6b90c0bdb3e92dd58430844"
       ],
       "proxyType": "immutable",
-      "description": "Previous osToken redeemer. Vaults accept redemptions only from the redeemer named in the collateral config, so this contract can no longer redeem positions; osToken still queued in it is paid out only when someone buys it with the underlying asset.",
+      "description": "Previous osToken redeemer. Vaults accept redemptions only from the redeemer named in the collateral config, so this contract can no longer redeem positions. Any osToken still queued in it is paid out only when someone buys it with the underlying asset.",
       "ignoreInWatchMode": [
         "getExitQueueData",
         "getExitQueueCumulativeTickets",
@@ -2313,7 +2313,7 @@
         "0xc5866674597add5381d45fa4099e0d58c8c3bc82c9395468a5fd1f015713e424"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Staking vault. Deposits are open; the key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper; every harvest applies the vault's reward or loss from the keeper's root, mints 500 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment; shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
+      "description": "Staking vault with open deposits. The key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper. Every harvest applies the vault's reward or loss from the keeper's root, mints 500 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment. Shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
       "ignoreInWatchMode": [
         "totalAssets",
         "totalShares",
@@ -2427,7 +2427,7 @@
         "0x82cc05a1a2791bcbc0e1d6cb0f4b89ca3402e4ad57d47f516ac7fac9cead2359"
       ],
       "proxyType": "immutable",
-      "description": "ERC20 liquid staking token (osETH). Minted and burned by the vault controller and by the registered controllers; ownership is renounced, so that set is frozen, and there is no pause, blacklist or upgrade.",
+      "description": "ERC20 liquid staking token (osETH). Minted and burned by the vault controller and by the registered controllers. Ownership is renounced, so that set is frozen, and there is no pause, blacklist or upgrade.",
       "ignoreInWatchMode": ["totalSupply"],
       "deployerAddress": "eth:0x229f53eF905545Aa53a721D82DBfE4cEd7AFf65d",
       "sinceTimestamp": 1698755027,

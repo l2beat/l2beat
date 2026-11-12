@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "category": "gov",
-  "description": "Reality.eth v3 crowd-sourced oracle: anyone answers a question by posting a bond at least double the previous one; an answer stands once the timeout passes without a higher bond, or when the arbitrator rules.",
+  "description": "Reality.eth v3 crowd-sourced oracle. Anyone answers a question by posting a bond at least double the previous one, and an answer stands once the timeout passes without a higher bond, or when the arbitrator rules.",
   "ignoreMethods": ["templates", "template_hashes"]
 }

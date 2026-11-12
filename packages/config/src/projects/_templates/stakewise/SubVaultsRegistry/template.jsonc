@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "category": "core",
-  "description": "Per-meta-vault list of sub-vaults and the curator that allocates among them; only the meta vault's admin changes either, and adding a meta vault as a sub-vault needs the vault registry owner's acceptance.",
+  "description": "Per-meta-vault list of sub-vaults and the curator that allocates among them. Only the meta vault's admin changes either, and adding a meta vault as a sub-vault needs the vault registry owner's acceptance.",
   "ignoreMethods": [
     "calculateSubVaultsRedemptions",
     "proxiableUUID",

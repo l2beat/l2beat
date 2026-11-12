@@ -40,7 +40,7 @@
       ]
     },
     "feePercent": {
-      "description": "Share of rewards minted to the fee recipient, in basis points; fixed at creation."
+      "description": "Share of rewards minted to the fee recipient, in basis points, fixed at creation."
     },
     "feeRecipient": {
       "description": "Receiver of the vault's fee shares."

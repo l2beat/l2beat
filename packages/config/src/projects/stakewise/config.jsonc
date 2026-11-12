@@ -109,7 +109,7 @@
     // redeemer named in OsTokenConfig, so its owner and positions manager no longer
     // hold any power over user funds; it stays in scope for the osETH still queued in it.
     "eth:0xc43A7b16A7a167c0318390Cba16787C11e9e1FD0": {
-      "description": "Previous osToken redeemer. Vaults accept redemptions only from the redeemer named in the collateral config, so this contract can no longer redeem positions; osToken still queued in it is paid out only when someone buys it with the underlying asset.",
+      "description": "Previous osToken redeemer. Vaults accept redemptions only from the redeemer named in the collateral config, so this contract can no longer redeem positions. Any osToken still queued in it is paid out only when someone buys it with the underlying asset.",
       "fields": {
         "owner": { "permissions": [] },
         "positionsManager": { "permissions": [] }

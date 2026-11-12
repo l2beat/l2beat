@@ -99,14 +99,6 @@ const approvedImplCount = discovery.getContractValue<string[]>(
   'vaultImpls',
 ).length
 
-// A redeemer the DAO replaced keeps the osETH queued in it, but vaults only
-// honour the current redeemer, so that queue is paid only through swaps.
-const retiredQueued = BigInt(value('RetiredOsTokenRedeemer', 'queuedShares'))
-const retiredRedeemerNote =
-  retiredQueued > 0n
-    ? ` A redeemer the DAO has since replaced still holds ${osETH} queued before the switch; it can no longer redeem positions, so that queue is paid out only when someone buys the queued ${osETH} with ETH.`
-    : ''
-
 const redeemInterval = duration(
   number('OsTokenRedeemer', 'exitQueueUpdateDelay'),
 )
@@ -138,7 +130,7 @@ export const stakewise: BaseProject = {
     unverifiedContracts: [],
   },
   display: {
-    description: `StakeWise is a marketplace of staking vaults with one liquid token, ${osETH}, minted against shares of any vault. Vaults are permissionless and hold their own ETH, but an oracle committee reports every vault's balance and the ${osETH} reward rate, and a DAO multisig can change the collateral rules, the oracle set and the approved vault code without delay.`,
+    description: `StakeWise is a marketplace of staking vaults with one liquid token, ${osETH}, minted against vault shares. Vaults are permissionless and hold their own ETH, but an oracle committee reports every vault's balance and the ${osETH} reward rate, and a DAO multisig can change the collateral rules, the oracle set and the approved vault code without delay.`,
     detailedDescription: readProjectMarkdown(
       'stakewise',
       'detailedDescription',
@@ -150,7 +142,6 @@ export const stakewise: BaseProject = {
         rewardsInterval,
         rateCapYear,
         rateCapInterval,
-        retiredRedeemerNote,
         osFee,
         defaultLtv,
         defaultLiqThreshold,
@@ -224,7 +215,7 @@ export const stakewise: BaseProject = {
         value: 'Permissionless',
         secondLine: 'no bond',
         sentiment: 'warning',
-        description: `Anyone can open a vault and choose who stakes for it, with no bond. A vault's losses fall on its own stakers; ${osETH} is exposed through the collateral rules, and ${noLiqVaultCount} vaults mint up to ${maxLtv} with no liquidation.`,
+        description: `Anyone can open a vault and choose who stakes for it, with no bond. A vault's losses fall on its own stakers. ${osETH} is exposed through the collateral rules: ${noLiqVaultCount} vaults mint up to ${maxLtv} with no liquidation.`,
       },
       backing: {
         value: 'Vault contracts',
@@ -237,19 +228,19 @@ export const stakewise: BaseProject = {
         value: oracleThreshold,
         secondLine: `${formatSeconds(rewardsDelaySeconds)} · ≤${rateCapYear}/yr`,
         sentiment: 'warning',
-        description: `${oracleThreshold} oracles report at most once every ${rewardsInterval}. The ${osETH} rate grows at a slope capped at ${rateCapYear} a year and never falls, but each vault's reported balance is unbounded. If the oracles stop, vault exit queues stop while the rate keeps growing.`,
+        description: `${oracleThreshold} oracles report at most once every ${rewardsInterval}. The ${osETH} rate is capped at ${rateCapYear} a year and never falls, but each vault's reported balance has no cap. If the oracles stop, vault exit queues stop while the rate keeps growing.`,
       },
       exit: {
         value: 'Redemption queue',
         secondLine: `${formatSeconds(number('OsTokenRedeemer', 'exitQueueUpdateDelay'))} batches · no pause`,
         sentiment: 'warning',
-        description: `${osETH} holders queue in the redeemer, paid in batches at least ${redeemInterval} apart by redeeming staker positions that a ${opsSafe} multisig selects. Nothing can pause the queue, but it moves only when positions are redeemed or someone buys queued ${osETH}.`,
+        description: `${osETH} holders queue in the redeemer, paid in batches at least ${redeemInterval} apart by redeeming staker positions that a ${opsSafe} multisig selects. The queue moves only when positions are redeemed or someone buys queued ${osETH}.`,
       },
       upgrades: {
         value: `${daoSafe} multisig`,
         secondLine: 'no delay · no veto',
         sentiment: 'bad',
-        description: `Core contracts cannot be upgraded, but the ${daoSafe} DAO multisig changes oracles, collateral rules and approved vault code with no delay. SWISE votes can also execute through SafeSnap after ${voteDelay}; holders have no veto.`,
+        description: `Core contracts cannot be upgraded, but the ${daoSafe} DAO multisig changes oracles, collateral rules and approved vault code with no delay. SWISE votes can also execute through SafeSnap after ${voteDelay}. Holders have no veto.`,
       },
     },
   },

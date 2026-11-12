@@ -2,7 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "VaultsRegistry",
   "category": "gov",
-  "description": "List of vaults, approved vault implementations and factories. Registered factories add the vaults they create; a vault admin can only upgrade to an approved implementation of the next version, and only vaults on an approved implementation can mint osToken.",
+  "description": "List of vaults, approved vault implementations and factories. Registered factories add the vaults they create. A vault admin can only upgrade to an approved implementation of the next version, and only vaults on an approved implementation can mint osToken.",
   "fields": {
     "owner": {
       "severity": "HIGH",

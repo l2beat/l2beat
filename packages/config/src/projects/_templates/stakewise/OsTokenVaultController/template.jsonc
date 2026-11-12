@@ -2,7 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "OsTokenVaultController",
   "category": "core",
-  "description": "Share accounting behind the osToken: registered vaults on an approved implementation mint and registered vaults burn; total assets grow at the reward rate written by the keeper, {{feePercent}} basis points of each increment go to the treasury, and the exchange rate is total assets over total shares, with minting capped at {{capacityFormatted}} units of total assets.",
+  "description": "Share accounting behind the osToken. Registered vaults on an approved implementation mint, and registered vaults burn. Total assets grow at the reward rate written by the keeper, {{feePercent}} basis points of each increment go to the treasury, and the exchange rate is total assets over total shares. Minting is capped at {{capacityFormatted}} units of total assets.",
   "ignoreMethods": ["convertToAssets", "convertToShares"],
   "ignoreInWatchMode": [
     "avgRewardPerSecond",
