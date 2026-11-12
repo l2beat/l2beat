@@ -48,7 +48,7 @@ export function StateValidationSection({
       <div className="flex flex-col gap-6">
         {stateValidation.description && (
           <>
-            <Markdown className="text-paragraph-15 md:text-paragraph-16">
+            <Markdown className="max-w-[72ch] text-paragraph-15 md:text-paragraph-16">
               {stateValidation.description}
             </Markdown>
             <HorizontalSeparator />
@@ -69,7 +69,7 @@ export function StateValidationSection({
           </div>
           <ProgramHashesTable entries={programHashes} />
           {programHashesDescription && (
-            <Markdown className="text-paragraph-15 md:text-paragraph-16">
+            <Markdown className="max-w-[72ch] text-paragraph-15 md:text-paragraph-16">
               {programHashesDescription}
             </Markdown>
           )}

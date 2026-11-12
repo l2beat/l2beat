@@ -126,9 +126,9 @@ function CriticalContracts({
 }) {
   return (
     <Collapsible className="mt-4 rounded-lg border border-divider">
-      <CollapsibleTrigger className="flex w-full items-center justify-between px-4 py-3 font-bold text-sm">
+      <CollapsibleTrigger className="flex w-full items-center justify-between px-4 py-3 font-semibold text-label-value-16 md:px-6">
         Critical contracts ({contracts.length})
-        <ChevronIcon className="group-data-[state=open]/Collapsible:-rotate-180 size-3 fill-current transition-transform duration-200" />
+        <ChevronIcon className="group-data-[state=open]/Collapsible:-rotate-180 size-4 fill-secondary transition-transform duration-200" />
       </CollapsibleTrigger>
       <CollapsibleContent>
         <div className="overflow-x-auto border-divider border-t">

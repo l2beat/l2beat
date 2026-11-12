@@ -91,7 +91,12 @@ export function ContractEntry({
   const entries = [...contract.addresses, ...contract.admins]
   return (
     <Callout
-      className={cn(color === undefined ? 'px-4' : 'p-4', className)}
+      className={cn(
+        // An uncoloured entry has no box to pad: on phones its text starts at
+        // the list's bullet, so deep permission trees keep a readable width.
+        color === undefined ? 'max-md:gap-0 md:px-4' : 'p-4',
+        className,
+      )}
       color={color}
       icon={icon}
       body={

@@ -63,7 +63,10 @@ export function SequencingSection({
         }
       >
         <Markdown
-          className={cn(mdClassName, 'text-paragraph-15 md:text-paragraph-16')}
+          className={cn(
+            mdClassName,
+            'max-w-[72ch] text-paragraph-15 md:text-paragraph-16',
+          )}
         >
           {content}
         </Markdown>
@@ -83,7 +86,7 @@ export function SequencingSection({
               <Markdown
                 className={cn(
                   mdClassName,
-                  'text-paragraph-15 md:text-paragraph-16',
+                  'max-w-[72ch] text-paragraph-15 md:text-paragraph-16',
                 )}
               >
                 {inclusionDelayChartDescription}
@@ -103,7 +106,7 @@ export function SequencingSection({
               <Markdown
                 className={cn(
                   mdClassName,
-                  'sequencing-censorship-resistance text-paragraph-15 md:text-paragraph-16',
+                  'sequencing-censorship-resistance max-w-[72ch] text-paragraph-15 md:text-paragraph-16',
                 )}
               >
                 {censorshipResistance}

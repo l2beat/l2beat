@@ -54,7 +54,7 @@ export function TechnologyChoicesSection({
               <UnderReviewCallout />
             ) : (
               <>
-                <Markdown className="mt-2 text-paragraph-15 md:text-paragraph-16">
+                <Markdown className="mt-2 max-w-[72ch] text-paragraph-15 md:text-paragraph-16">
                   {item.description}
                 </Markdown>
                 <RiskList risks={item.risks} />

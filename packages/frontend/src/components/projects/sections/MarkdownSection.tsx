@@ -38,7 +38,7 @@ export function MarkdownSection({
       <Markdown
         className={cn(
           mdClassName,
-          'break-words text-paragraph-15 md:text-paragraph-16',
+          'break-words max-w-[72ch] text-paragraph-15 md:text-paragraph-16',
         )}
       >
         {content}

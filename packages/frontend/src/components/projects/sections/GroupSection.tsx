@@ -19,7 +19,7 @@ export function GroupSection({
     <ProjectSection {...sectionProps} as={as}>
       <div className="flex flex-1 flex-col gap-2 lg:min-w-[400px]">
         {description && (
-          <Markdown className="text-paragraph-15 md:text-paragraph-16">
+          <Markdown className="max-w-[72ch] text-paragraph-15 md:text-paragraph-16">
             {description}
           </Markdown>
         )}

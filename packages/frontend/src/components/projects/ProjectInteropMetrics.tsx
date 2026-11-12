@@ -28,7 +28,7 @@ export function ProjectInteropMetrics({
             href="#interop-flows"
             className="group flex max-md:items-center max-md:justify-between md:flex-col md:gap-1.5"
           >
-            <span className="font-medium text-label-value-12 text-secondary">
+            <span className="text-label-value-13 leading-4 text-primary">
               {stat.label}
             </span>
             <span className="font-bold text-label-value-16 group-hover:underline">
@@ -93,7 +93,7 @@ function InteropMetric({
 
   return (
     <a href={href} className="group block">
-      <p className="mb-2 font-medium text-label-value-12 text-secondary group-hover:underline">
+      <p className="mb-2 text-label-value-13 leading-4 text-primary group-hover:underline">
         {title}
       </p>
       <InteropTopItems topItems={items} hideDialog />

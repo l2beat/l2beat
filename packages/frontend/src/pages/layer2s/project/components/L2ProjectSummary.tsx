@@ -54,7 +54,7 @@ export function ProjectL2Summary({ project }: Props) {
     <section
       id="summary"
       data-role="nav-section"
-      className="w-full scroll-mt-[100vh] border-divider px-4 max-md:border-b md:rounded-lg md:bg-surface-primary md:p-6"
+      className="w-full scroll-mt-[100vh] border-divider px-4 max-md:border-b md:rounded-xl md:bg-surface-primary md:px-6 md:py-5"
     >
       <div className="flex">
         <div className="w-full">
@@ -69,7 +69,7 @@ export function ProjectL2Summary({ project }: Props) {
             <div>
               <p
                 className={cn(
-                  'font-medium text-label-value-12 text-secondary',
+                  'text-label-value-13 leading-4 text-primary',
                   !hasTokenWarnings && 'mb-2',
                 )}
               >
@@ -144,7 +144,7 @@ export function ProjectL2Summary({ project }: Props) {
               </Tooltip>
             </div>
             <div>
-              <p className="mb-2 font-medium text-label-value-12 text-secondary">
+              <p className="mb-2 text-label-value-13 leading-4 text-primary">
                 Value secured breakdown
               </p>
               <Tooltip>

@@ -31,11 +31,11 @@ export function DataPostedTrackedTransactions({
 
   return (
     <Collapsible className="group rounded-lg border border-divider">
-      <CollapsibleTrigger className="flex w-full items-center justify-between px-6 py-3 font-bold">
+      <CollapsibleTrigger className="flex w-full items-center justify-between px-4 py-3 font-semibold text-label-value-16 md:px-6">
         Tracked transactions
-        <ChevronIcon className="group-data-[state=open]:-rotate-180 size-4 transition-transform duration-300" />
+        <ChevronIcon className="group-data-[state=open]:-rotate-180 size-4 fill-secondary transition-transform duration-300" />
       </CollapsibleTrigger>
-      <CollapsibleContent className="px-6">
+      <CollapsibleContent className="px-4 md:px-6">
         {hasHistoricalTransactions && (
           <Checkbox
             name="show-historical-transactions"

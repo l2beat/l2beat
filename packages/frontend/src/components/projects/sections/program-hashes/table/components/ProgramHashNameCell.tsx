@@ -23,7 +23,7 @@ export function ProgramHashNameCell({
     const checkOverflow = () => {
       if (titleRef.current) {
         const isOverflowing =
-          titleRef.current.scrollWidth > titleRef.current.clientWidth
+          titleRef.current.scrollHeight > titleRef.current.clientHeight
         setIsOverflowing(isOverflowing)
       }
     }
@@ -40,7 +40,7 @@ export function ProgramHashNameCell({
         <TooltipTrigger disabled={!isOverflowing && !description}>
           <div
             ref={titleRef}
-            className="min-w-0 max-w-60 overflow-hidden text-ellipsis whitespace-nowrap font-bold text-label-value-14 leading-normal"
+            className="line-clamp-2 min-w-0 max-w-72 text-pretty font-bold text-label-value-14 leading-normal"
           >
             {title}
           </div>

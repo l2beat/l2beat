@@ -41,7 +41,10 @@ export function UpgradesAndGovernanceSection({
       ) : null}
       {content && (
         <Markdown
-          className={cn(mdClassName, 'text-paragraph-15 md:text-paragraph-16')}
+          className={cn(
+            mdClassName,
+            'max-w-[72ch] text-paragraph-15 md:text-paragraph-16',
+          )}
         >
           {content}
         </Markdown>
@@ -95,9 +98,7 @@ function GovernanceInfoList({ entries }: { entries: [string, string][] }) {
           key={name}
           className="grid gap-1 border-divider border-b py-3 md:grid-cols-[180px_1fr] md:gap-4"
         >
-          <dt className="font-medium text-label-value-14 text-secondary md:pt-1">
-            {name}
-          </dt>
+          <dt className="font-medium text-label-value-14 md:pt-1">{name}</dt>
           <dd>
             <Markdown className="text-paragraph-14 md:text-paragraph-15">
               {description}

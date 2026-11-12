@@ -23,6 +23,10 @@ import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import type { ProjectL2Entry } from '~/server/features/layer2s/project/getL2ProjectEntry'
 import { cn } from '~/utils/cn'
 
+/** TVS and UOPS lead the summary: a step above the descriptive fields. */
+const HEADLINE_FIGURE_CLASS =
+  'text-nowrap font-semibold text-label-value-20! leading-6! tabular-nums'
+
 interface Props {
   project: ProjectL2Entry
   className?: string
@@ -58,7 +62,7 @@ export function ProjectL2Stats({ project, className }: Props) {
             )}
             <ValueWithPercentageChange
               containerClassName="flex-nowrap"
-              className="!text-base !leading-[100%] text-nowrap"
+              className={HEADLINE_FIGURE_CLASS}
               changeClassName="text-label-value-14 font-bold"
               change={project.header.tvs.breakdown.totalChange}
               changePeriod={project.header.tvs.breakdown.totalChangePeriod}
@@ -98,7 +102,7 @@ export function ProjectL2Stats({ project, className }: Props) {
               containerClassName="flex-nowrap"
               change={project.header.activity.uopsWeeklyChange}
               changePeriod={project.header.activity.uopsWeeklyChangePeriod}
-              className="text-nowrap text-base! leading-[100%]!"
+              className={HEADLINE_FIGURE_CLASS}
               changeClassName="text-label-value-14 font-bold"
             >
               {formatActivityCount(project.header.activity.lastDayUops)}
