@@ -72,7 +72,7 @@ function Change({ value }: { value: number }) {
   return (
     <span
       className={cn(
-        'tabular-nums',
+        'whitespace-nowrap tabular-nums',
         value > 0 && 'text-positive',
         value < 0 && 'text-negative',
         value === 0 && 'text-secondary',
