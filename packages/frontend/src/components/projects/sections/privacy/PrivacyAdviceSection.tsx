@@ -69,7 +69,7 @@ export function PrivacyAdviceSection({
                   </span>
                 )}
               </span>
-              <div className="mt-2 max-w-[72ch] text-paragraph-15 md:text-paragraph-16 [&_code]:box-decoration-clone [&_code]:text-[0.875em] [&_code]:[overflow-wrap:anywhere]">
+              <div className="mt-2 text-paragraph-15 md:text-paragraph-16 [&_code]:box-decoration-clone [&_code]:text-[0.875em] [&_code]:[overflow-wrap:anywhere]">
                 <Markdown inline>{step.text}</Markdown>
                 {step.randomWait && (
                   <PrivacyWaitDraw windowDays={waitWindowDays} />
