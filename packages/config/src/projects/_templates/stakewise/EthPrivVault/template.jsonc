@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "category": "core",
-  "description": "Staking vault where only whitelisted accounts can deposit. The key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper. Every harvest applies the vault's reward or loss from the keeper's root, mints {{feePercent}} basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment. Shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
+  "description": "Staking vault that only whitelisted accounts can deposit into. Its validators withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.",
   "ignoreMethods": [
     "convertToAssets",
     "convertToShares",

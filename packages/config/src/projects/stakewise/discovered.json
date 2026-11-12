@@ -871,7 +871,7 @@
         "0xbaba151d72eba765e9bc1cbbb7d340ac9e39006df19a04c99fb8ae2ad29a6a09"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Staking vault where only whitelisted accounts can deposit. The key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper. Every harvest applies the vault's reward or loss from the keeper's root, mints 300 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment. Shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
+      "description": "Staking vault that only whitelisted accounts can deposit into. Its validators withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.",
       "ignoreInWatchMode": [
         "totalAssets",
         "totalShares",
@@ -963,7 +963,7 @@
         "0xc5866674597add5381d45fa4099e0d58c8c3bc82c9395468a5fd1f015713e424"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Staking vault with open deposits. The key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper. Every harvest applies the vault's reward or loss from the keeper's root, mints 800 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment. Shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
+      "description": "Staking vault with open deposits. Its validators withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.",
       "ignoreInWatchMode": [
         "totalAssets",
         "totalShares",
@@ -1177,7 +1177,7 @@
         "0xbaba151d72eba765e9bc1cbbb7d340ac9e39006df19a04c99fb8ae2ad29a6a09"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Staking vault where only whitelisted accounts can deposit. The key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper. Every harvest applies the vault's reward or loss from the keeper's root, mints 100 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment. Shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
+      "description": "Staking vault that only whitelisted accounts can deposit into. Its validators withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.",
       "ignoreInWatchMode": [
         "totalAssets",
         "totalShares",
@@ -1782,7 +1782,7 @@
         "0xc5866674597add5381d45fa4099e0d58c8c3bc82c9395468a5fd1f015713e424"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Staking vault with open deposits. The key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper. Every harvest applies the vault's reward or loss from the keeper's root, mints 500 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment. Shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
+      "description": "Staking vault with open deposits. Its validators withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.",
       "ignoreInWatchMode": [
         "totalAssets",
         "totalShares",
@@ -1873,7 +1873,7 @@
         "0xb43f498adba2c5f21ad1203ee178eb326cc91f488ed621a00f65159ec8f094bf"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Staking vault that absorbed the StakeWise V2 pool. V2 reward-token holders migrate by burning their tokens for shares, and the V2 pool escrow, which still receives the legacy stakes' withdrawals, belongs to this vault and counts toward its assets. Deposits are open. The key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper. Every harvest applies the vault's reward or loss from the keeper's root, mints 500 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment. Shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
+      "description": "Staking vault with open deposits that absorbed the StakeWise V2 pool: V2 reward-token holders migrate by burning their tokens for shares, and the V2 pool escrow that still receives the legacy stakes' withdrawals is owned by the vault and counted in its assets. Its validators withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.",
       "ignoreInWatchMode": [
         "totalAssets",
         "totalShares",
@@ -1988,7 +1988,7 @@
         "0x5d9a3ec17bc18b3c7fad330a84261b55ee23ed65517e5ef47b9633891eee885f"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Staking vault with ERC20 shares (ccmETH). Only whitelisted accounts can deposit, send or receive shares. The key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper. Every harvest applies the vault's reward or loss from the keeper's root, mints 0 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment. Shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
+      "description": "Staking vault with ERC20 shares (ccmETH) that only whitelisted accounts can deposit, send or receive. Its validators withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.",
       "ignoreInWatchMode": [
         "totalAssets",
         "totalShares",
@@ -2054,7 +2054,7 @@
         "0x331b9b0d766fc4f50ca4776a9a9c1f73634f5a1cd5ebc61fca29ce6666a993bb"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Staking vault where only whitelisted accounts can deposit. The key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper. Every harvest applies the vault's reward or loss from the keeper's root, mints 500 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment. Shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
+      "description": "Staking vault that only whitelisted accounts can deposit into. Its validators withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.",
       "ignoreInWatchMode": [
         "totalAssets",
         "totalShares",
@@ -2313,7 +2313,7 @@
         "0xc5866674597add5381d45fa4099e0d58c8c3bc82c9395468a5fd1f015713e424"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Staking vault with open deposits. The key manager registers staking keys that withdraw to the vault, each registration approved by the oracle quorum in the keeper. Every harvest applies the vault's reward or loss from the keeper's root, mints 500 basis points of gains to the fee recipient and pays the exit queue from spare assets, claimable after a delay fixed at deployment. Shares collateralise osToken up to the vault's loan-to-value. Upgrades need the admin and a registry-approved implementation of the next version.",
+      "description": "Staking vault with open deposits. Its validators withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.",
       "ignoreInWatchMode": [
         "totalAssets",
         "totalShares",

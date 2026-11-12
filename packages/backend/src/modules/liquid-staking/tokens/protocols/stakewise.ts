@@ -7,7 +7,9 @@ import { EMPTY_EXIT, type ProtocolReads, protocolReads } from './types'
 
 const abi = new utils.Interface([
   'function convertToAssets(uint256 shares) view returns (uint256)',
-  'function getExitQueueData() view returns (uint256 queuedShares, uint256 exitedAssets, uint256 totalTickets)',
+  'function getExitQueueData() view returns (uint256 queuedShares, uint256 unclaimedAssets, uint256 totalTickets)',
+  'function redeemedShares() view returns (uint128)',
+  'function swappedShares() view returns (uint128)',
 ])
 
 /**
@@ -28,8 +30,9 @@ const TICKET_UNIT = UNIT / 1000n
 
 /**
  * The rate, and the counters of osETH's exit queue: tickets entered and
- * tickets processed. A queue's processed tickets are its third value, and
- * the entered ones add the shares still queued.
+ * tickets processed. A queue's third value also counts the shares redeemed or
+ * bought since its last checkpoint, which holders can only claim after the
+ * next one, so those are entered but not yet processed.
  */
 export function getStakeWiseReads(
   contracts: Extract<ProjectLiquidStakingContracts, { type: 'stakewise' }>,
@@ -56,6 +59,8 @@ export function getStakeWiseReads(
   const calls: Record<string, CallParameters> = { rate }
   queues.forEach((queue, i) => {
     calls[`queue${i}`] = encodeCall(abi, queue, 'getExitQueueData')
+    calls[`redeemed${i}`] = encodeCall(abi, queue, 'redeemedShares')
+    calls[`swapped${i}`] = encodeCall(abi, queue, 'swappedShares')
   })
   return protocolReads<string>({
     ...token,
@@ -65,11 +70,19 @@ export function getStakeWiseReads(
       let processed = 0n
       for (let i = 0; i < queues.length; i++) {
         const data = r[`queue${i}`]
-        if (data === undefined) throw new Error('Missing exit queue read')
+        const redeemed = r[`redeemed${i}`]
+        const swapped = r[`swapped${i}`]
+        if (
+          data === undefined ||
+          redeemed === undefined ||
+          swapped === undefined
+        ) {
+          throw new Error('Missing exit queue read')
+        }
         const queued = word(data, 0)
-        const total = word(data, 2)
-        entered += total + queued
-        processed += total
+        const tickets = word(data, 2)
+        entered += tickets + queued
+        processed += tickets - uint(redeemed) - uint(swapped)
       }
       return {
         ...EMPTY_EXIT,

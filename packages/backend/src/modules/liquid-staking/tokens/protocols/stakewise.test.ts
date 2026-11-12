@@ -48,13 +48,15 @@ describe('getStakeWiseReads', () => {
 
   it('counts the first queue in thousandths of an osETH', () => {
     const { calls, toState } = getLiquidStakingReads(stakewise, 26_000_000)
-    expect(calls.length).toEqual(3)
+    expect(calls.length).toEqual(5)
     expect(calls[1]?.to).toEqual(ChainSpecificAddress.address(PREVIOUS))
 
     const state = toState(
       [
         ok(RATE),
         queue((29_227n * ETH) / 1000n, (723_523n * ETH) / 1000n),
+        ok(0n),
+        ok(0n),
         FAILED,
       ],
       TIMESTAMP,
@@ -65,20 +67,44 @@ describe('getStakeWiseReads', () => {
 
   it('adds both queues after the swap, so the counters keep growing', () => {
     const { calls, toState } = getLiquidStakingReads(stakewise, 26_400_000)
-    expect(calls.length).toEqual(4)
-    expect(calls[2]?.to).toEqual(ChainSpecificAddress.address(REDEEMER))
+    expect(calls.length).toEqual(8)
+    expect(calls[4]?.to).toEqual(ChainSpecificAddress.address(REDEEMER))
 
     const state = toState(
       [
         ok(RATE),
         queue(29n * ETH, 723n * ETH),
+        ok(0n),
+        ok(0n),
         queue(5n * ETH, 10n * ETH),
+        ok(0n),
+        ok(0n),
         FAILED,
       ],
       TIMESTAMP,
     )
     expect(state.lastRequestId).toEqual(767_000)
     expect(state.lastFinalizedRequestId).toEqual(733_000)
+  })
+
+  it('finalizes redeemed and bought shares only at the next checkpoint', () => {
+    const { toState } = getLiquidStakingReads(stakewise, 26_400_000)
+
+    const state = toState(
+      [
+        ok(RATE),
+        queue(29n * ETH, 723n * ETH),
+        ok(0n),
+        ok(0n),
+        queue(5n * ETH, 10n * ETH),
+        ok(3n * ETH),
+        ok(2n * ETH),
+        FAILED,
+      ],
+      TIMESTAMP,
+    )
+    expect(state.lastRequestId).toEqual(767_000)
+    expect(state.lastFinalizedRequestId).toEqual(728_000)
   })
 })
 
@@ -89,13 +115,13 @@ function ok(value: bigint): MulticallV3Response {
   }
 }
 
-function queue(queued: bigint, processed: bigint): MulticallV3Response {
+function queue(queued: bigint, tickets: bigint): MulticallV3Response {
   return {
     success: true,
     data: Bytes.fromHex(
       utils.defaultAbiCoder.encode(
         ['uint256', 'uint256', 'uint256'],
-        [queued, 0n, processed],
+        [queued, 0n, tickets],
       ),
     ),
   }
