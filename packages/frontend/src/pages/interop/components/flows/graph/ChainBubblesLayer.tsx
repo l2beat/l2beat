@@ -121,7 +121,7 @@ function ChainBubble({
           netFlow > 0 ? 'fill-positive' : 'fill-negative',
         )}
       >
-        {`${netFlow > 0 ? '+' : netFlow < 0 ? '−' : ''}${formatCurrency(Math.abs(netFlow), 'usd')}`}
+        {`${netFlow > 0 ? '+' : ''}${formatCurrency(netFlow, 'usd').replace('-', '−')}`}
       </text>
     </g>
   )
