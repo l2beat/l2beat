@@ -100,9 +100,7 @@ function Figure({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex min-w-0 flex-col gap-1">
       <span className={cn('truncate', HOME_TEXT.label)}>{label}</span>
-      <span className={cn('truncate', HOME_TEXT.number)}>
-        {value}
-      </span>
+      <span className={cn('truncate', HOME_TEXT.number)}>{value}</span>
     </div>
   )
 }

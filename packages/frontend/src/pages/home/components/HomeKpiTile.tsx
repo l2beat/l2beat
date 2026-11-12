@@ -56,9 +56,7 @@ export function HomeKpiTile({
         </span>
         <span className="mt-2 flex min-w-0 kpi-rows:flex-col kpi-rows:items-start items-baseline gap-x-2 gap-y-1 whitespace-nowrap">
           <span className="flex items-baseline gap-x-1.5">
-            <span className={HOME_TEXT.number}>
-              {value ?? EM_DASH}
-            </span>
+            <span className={HOME_TEXT.number}>{value ?? EM_DASH}</span>
             {value !== undefined && unit && (
               <span className="font-medium text-label-value-20 text-secondary">
                 {unit}
