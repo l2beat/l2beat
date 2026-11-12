@@ -9,8 +9,8 @@ import { LiveIndicator } from '~/components/LiveIndicator'
 import { TrackedTxsOutageNotice } from '~/components/TrackedTxsOutageNotice'
 import { env } from '~/env'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
-import { VerifiedIcon } from '~/icons/Verified'
 import { AnomalyText } from '~/pages/layer2s/liveness/components/AnomalyText'
+import { NoAnomaliesState } from '~/pages/layer2s/liveness/components/NoRecentAnomaliesState'
 import type { LivenessAnomaly } from '~/server/features/layer2s/liveness/types'
 import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
 import type { TrackedTransactionsByType } from '~/utils/project/tracked-txs/getTrackedTransactions'
@@ -63,8 +63,7 @@ export function LivenessSection({
       {env.CLIENT_SIDE_TRACKED_TXS_OUTAGE && (
         <TrackedTxsOutageNotice type="section" />
       )}
-      {/* Ongoing anomalies lead the section; "none" waits under the stats. */}
-      {!isArchived && ongoingAnomalies.length > 0 && (
+      {!isArchived && (
         <OngoingAnomalies
           anomalies={ongoingAnomalies}
           hasTrackedContractsChanged={hasTrackedContractsChanged}
@@ -81,14 +80,6 @@ export function LivenessSection({
         isArchived={isArchived}
         hideSubtypeSwitch={hideSubtypeSwitch}
       />
-      {!isArchived && ongoingAnomalies.length === 0 && (
-        <div className="mt-4">
-          <OngoingAnomalies
-            anomalies={ongoingAnomalies}
-            hasTrackedContractsChanged={hasTrackedContractsChanged}
-          />
-        </div>
-      )}
       <HorizontalSeparator className="my-4" />
       <TrackedTransactions
         {...trackedTransactions}
@@ -115,13 +106,7 @@ function OngoingAnomalies({
   hasTrackedContractsChanged: boolean
 }) {
   if (anomalies.length === 0) {
-    // A status line under the stats, not a second card.
-    return (
-      <p className="flex items-center gap-1.5 font-semibold text-label-value-14 text-positive">
-        <VerifiedIcon className="size-4 [&>path:first-child]:fill-positive" />
-        No ongoing anomalies detected
-      </p>
-    )
+    return <NoAnomaliesState className="rounded-lg!" type="ongoing" />
   }
 
   const approvedAnomalies = anomalies.filter((anomaly) => anomaly.isApproved)
