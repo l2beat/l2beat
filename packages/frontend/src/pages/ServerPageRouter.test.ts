@@ -1,6 +1,9 @@
 import { expect, mockObject } from 'earl'
 import type express from 'express'
-import { GUIDE_PAGES_WITH_MARKDOWN, PROJECT_PAGES_WITH_MARKDOWN } from '~/utils/getMarkdownAlternatePath'
+import {
+  GUIDE_PAGES_WITH_MARKDOWN,
+  PROJECT_PAGES_WITH_MARKDOWN,
+} from '~/utils/getMarkdownAlternatePath'
 import type { Manifest } from '~/utils/Manifest'
 import { createServerPageRouter } from './ServerPageRouter'
 

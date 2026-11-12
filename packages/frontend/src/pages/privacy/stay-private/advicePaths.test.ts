@@ -121,14 +121,14 @@ describe('advicePaths', () => {
       const result = path('operator')
       expect(result.skipped).toEqual([])
       expect(result.adversaries[0]?.adversary.id).toEqual('privilegedInsider')
-      expect(result.adversaries.map((row) => row.adversary.id).slice(1)).toEqual(
-        [
-          'publicObserver',
-          'chainAnalyst',
-          'networkObserver',
-          'futureAdversary',
-        ],
-      )
+      expect(
+        result.adversaries.map((row) => row.adversary.id).slice(1),
+      ).toEqual([
+        'publicObserver',
+        'chainAnalyst',
+        'networkObserver',
+        'futureAdversary',
+      ])
     })
 
     it('matches the full path when the advice has nothing the goal leaves out', () => {

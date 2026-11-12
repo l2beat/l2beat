@@ -1,4 +1,8 @@
-import { ADVICE_GOAL_IDS, ADVICE_GOALS, type AdviceGoalId } from '../advicePaths'
+import {
+  ADVICE_GOAL_IDS,
+  ADVICE_GOALS,
+  type AdviceGoalId,
+} from '../advicePaths'
 import { STAY_PRIVATE } from '../stayPrivateCopy'
 import { PickerOption, PickerQuestion } from './Picker'
 

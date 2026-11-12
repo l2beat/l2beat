@@ -8,7 +8,11 @@ import { renderStayPrivateMarkdown } from './renderStayPrivateMarkdown'
 // fastest goal leaves out and which rating it stops claiming.
 
 const ADVERSARIES = (['publicObserver', 'chainAnalyst'] as const).map(
-  (id) => ({ id, label: id === 'chainAnalyst' ? 'Chain analyst' : 'Public observer' }) as PrivacyAdversary,
+  (id) =>
+    ({
+      id,
+      label: id === 'chainAnalyst' ? 'Chain analyst' : 'Public observer',
+    }) as PrivacyAdversary,
 )
 
 const PROTOCOL: PrivacyAdviceProtocol = {
@@ -18,7 +22,12 @@ const PROTOCOL: PrivacyAdviceProtocol = {
   href: '/privacy/projects/pool',
   category: 'Pool',
   steps: [
-    { name: 'Wait', text: 'Wait.', against: ['chainAnalyst'], randomWait: true },
+    {
+      name: 'Wait',
+      text: 'Wait.',
+      against: ['chainAnalyst'],
+      randomWait: true,
+    },
     { name: 'Exit', text: 'Exit.', against: ['publicObserver'] },
   ],
   sentiments: {

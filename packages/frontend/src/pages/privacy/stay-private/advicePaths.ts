@@ -11,12 +11,7 @@ import type {
  * says anything the advice does not. The ratings assume every step, so a goal
  * that leaves one out is never presented as rated.
  */
-export const ADVICE_GOAL_IDS = [
-  'private',
-  'fast',
-  'light',
-  'operator',
-] as const
+export const ADVICE_GOAL_IDS = ['private', 'fast', 'light', 'operator'] as const
 export type AdviceGoalId = (typeof ADVICE_GOAL_IDS)[number]
 
 export interface AdviceGoal {

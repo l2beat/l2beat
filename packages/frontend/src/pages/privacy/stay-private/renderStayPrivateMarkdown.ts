@@ -16,7 +16,11 @@ import {
 import { renderPrivacyAdviceSteps } from '~/server/markdown/renderPrivacySections'
 import { ADVICE } from '../adviceUi'
 import { PRIVACY_STAY_PRIVATE_PATH } from '../methodology/paths'
-import { ADVICE_GOAL_IDS, ADVICE_GOALS, compareAdviceGoals } from './advicePaths'
+import {
+  ADVICE_GOAL_IDS,
+  ADVICE_GOALS,
+  compareAdviceGoals,
+} from './advicePaths'
 import { STAY_PRIVATE } from './stayPrivateCopy'
 
 /**

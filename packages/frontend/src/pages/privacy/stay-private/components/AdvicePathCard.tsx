@@ -51,7 +51,10 @@ export function AdvicePathCard({
   return (
     <PrimaryCard>
       {/* Announced on every pick, so a screen reader hears the path change. */}
-      <h2 aria-live="polite" className="font-bold text-heading-20 md:text-heading-24">
+      <h2
+        aria-live="polite"
+        className="font-bold text-heading-20 md:text-heading-24"
+      >
         {STAY_PRIVATE.pathTitle}: {protocol.name}, {goal.label.toLowerCase()}
       </h2>
       <div className="mt-3 flex flex-col gap-2">
@@ -108,7 +111,9 @@ export function AdvicePathCard({
               sentiment={row.status === 'unrated' ? undefined : row.sentiment}
               className="font-medium first-letter:uppercase"
             />
-            <span className="text-secondary">{getAdversaryStatusText(row)}</span>
+            <span className="text-secondary">
+              {getAdversaryStatusText(row)}
+            </span>
           </li>
         ))}
       </ul>
@@ -149,7 +154,10 @@ function ProtocolFacts({
       <Fact label={STAY_PRIVATE.referenceAppLabel}>
         {referenceApp ? (
           <>
-            <CustomLink href={referenceApp.url} className="inline-flex items-center gap-1.5">
+            <CustomLink
+              href={referenceApp.url}
+              className="inline-flex items-center gap-1.5"
+            >
               <img
                 src={referenceApp.iconUrl}
                 alt=""
