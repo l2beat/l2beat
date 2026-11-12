@@ -9,7 +9,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '~/components/core/Drawer'
-import { selectTriggerClassnames } from '~/components/core/Select'
+import { selectTriggerClassnames } from '~/components/core/selectTriggerClassnames'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { useIsClient } from '~/hooks/useIsClient'
 import { useTracking } from '~/hooks/useTracking'

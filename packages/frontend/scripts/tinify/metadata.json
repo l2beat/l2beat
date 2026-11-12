@@ -1510,7 +1510,6 @@
   "static/meta-images/defi/projects/chainlink/opengraph-image.png": "26edd304a3574db3d58b36945aacab2e",
   "static/meta-images/defi/projects/liquityv2/opengraph-image.png": "c0249cea88aa90fd07131844ed7ff389",
   "static/meta-images/defi/projects/uniswapv3/opengraph-image.png": "3b97b791397b27f5a675cb0a902ca543",
-  "static/meta-images/defi/summary/opengraph-image.png": "aa83e2364101312cc29a797393e92a74",
   "static/meta-images/defi/projects/uniswapv4/opengraph-image.png": "653f09bb85f169c1625b52dcfe1c7c82",
   "static/icons/privacy-boost.png": "556d9480cba16abc6fe7fe04a0dce9bc",
   "static/meta-images/privacy/projects/privacy-boost/opengraph-image.png": "02ac97ad3f4da9d87c83c5e2ab938d2a",
@@ -1610,9 +1609,16 @@
   "static/meta-images/integrate-crops/opengraph-image.png": "528391b09f4a3cc450a148b9a9ff5b23",
   "static/meta-images/layer2s/projects/doma/opengraph-image.png": "1e91a795e9bb1a986b5f1ab63637b9ec",
   "static/icons/doma.png": "8631818edd9dc2c58ce786c7c970bd3c",
+  "static/meta-images/defi/liquid-staking/opengraph-image.png": "b9bebfcdce66853512f2a019a809853c",
   "static/meta-images/privacy/archived/opengraph-image.png": "23c8eb0c3c02ff1dc02ad44d67ed5842",
   "static/icons/tacit-pay.png": "dee61fd764a20a4c81d75d2659312d4d",
   "static/icons/tacit-finance.png": "a1cba05396511d6a74dfef79b8f29794",
   "static/meta-images/privacy/projects/tacit-pay/opengraph-image.png": "c9bb5cbcb0ddfaa38e6350fa4272a32c",
-  "static/meta-images/zk-catalog/projects/tacit-pay/opengraph-image.png": "3e8ef48acf9bb6211b4313e310dd1e79"
+  "static/meta-images/zk-catalog/projects/tacit-pay/opengraph-image.png": "3e8ef48acf9bb6211b4313e310dd1e79",
+  "static/icons/cbeth.png": "c03ed7961869da2921bbb055e5290dce",
+  "static/images/architecture/cbeth-deposits.png": "2449c9187e42580058c5c8bd8c836f52",
+  "static/images/architecture/cbeth-withdrawals.png": "bd5269357316bc8a7f7e7f11c9247d57",
+  "static/meta-images/defi/projects/cbeth/opengraph-image.png": "bfd6412c137d981fbbc4e180546e7f46",
+  "static/icons/splitsv2.png": "8dfdb3e25a231e29bf075e58a2c2a065",
+  "static/meta-images/defi/projects/splitsv2/opengraph-image.png": "47769947c1470939ace76561a9b53072"
 }

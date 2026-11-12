@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SplitsWarehouse",
+  "critical": true,
+  "description": "Holds ETH and ERC-20 tokens for their owners as ERC-6909 balances, one token id per asset. Pull splits distribute by moving balances inside it, and push splits deposit a recipient's ETH here when the direct send fails. Anyone can deposit for any address, and anyone can trigger a withdrawal, which always pays the balance owner. Immutable, with no owner.",
+  // ERC-7528 placeholder address for the native token, not a contract.
+  "ignoreRelatives": ["NATIVE_TOKEN"]
+}

@@ -4,6 +4,7 @@ import type { CostsSectionProps } from './costs/CostsSection'
 import type { DaRiskSummarySectionProps } from './DaRiskSummarySection'
 import type { DetailedDescriptionSectionProps } from './DetailedDescriptionSection'
 import type { DataPostedSectionProps } from './data-posted/DataPostedSection'
+import type { DefiTokensSectionProps } from './defi/DefiTokensSection'
 import type { DefiTvlSectionProps } from './defi/DefiTvlSection'
 import type { ExternalDependenciesSectionProps } from './ExternalDependenciesSection'
 import type { GardenCropsSectionProps } from './GardenCropsSection'
@@ -86,6 +87,7 @@ export type SectionId =
   | 'privacy-adversaries'
   | 'stay-private'
   | 'external-dependencies'
+  | 'defi-tokens'
   | 'crops'
 
 type GroupId = 'da-layer'
@@ -294,6 +296,11 @@ interface ProjectDetailsDefiTvlSection {
   props: ProjectDetailsProps<DefiTvlSectionProps>
 }
 
+interface ProjectDetailsDefiTokensSection {
+  type: 'DefiTokensSection'
+  props: ProjectDetailsProps<DefiTokensSectionProps>
+}
+
 interface ProjectDetailsPrivacyFlowsSection {
   type: 'PrivacyFlowsSection'
   props: ProjectDetailsProps<PrivacyFlowsSectionProps>
@@ -367,6 +374,7 @@ export type ProjectDetailsSection = {
   | ProjectDetailsUpdatesSection
   | ProjectDetailsTvsValueSection
   | ProjectDetailsDefiTvlSection
+  | ProjectDetailsDefiTokensSection
   | ProjectDetailsPrivacyFlowsSection
   | ProjectDetailsPrivacyAnonymitySetSection
   | ProjectDetailsPrivacyAssetsBreakdownSection

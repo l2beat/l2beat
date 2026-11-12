@@ -10,6 +10,7 @@ import {
 } from '~/components/search-bar/searchIndex'
 import { env } from '~/env'
 import { selectChainProjects } from '~/server/features/chains/getChainProjects'
+import { isListedDefiProject } from '~/server/features/defi/isListedDefiProject'
 import { UNKNOWN_ABSTRACT_TOKEN_ID } from '~/server/features/layer2s/interop/consts'
 import {
   getActiveInteropAbstractTokens,
@@ -135,7 +136,9 @@ function getProjectKinds(
   if (project.interopConfig && !project.scalingInfo) kinds.push('interop')
   if (project.zkCatalogInfo) kinds.push('zkCatalog')
   if (project.privacyInfo) kinds.push('privacy')
-  if (env.CLIENT_SIDE_DEFI_ENABLED && project.defiInfo) kinds.push('defi')
+  if (env.CLIENT_SIDE_DEFI_ENABLED && isListedDefiProject(project.defiInfo)) {
+    kinds.push('defi')
+  }
   return kinds
 }
 
