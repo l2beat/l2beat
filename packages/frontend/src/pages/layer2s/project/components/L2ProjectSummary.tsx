@@ -225,7 +225,7 @@ export function ProjectL2Summary({ project }: Props) {
             </>
           )}
         </div>
-        <VerticalSeparator className="mr-8 ml-12 h-[unset] self-stretch max-lg:hidden" />
+        <VerticalSeparator className="mx-6 h-[unset] self-stretch max-lg:hidden" />
 
         <ProjectL2Rosette project={project} size="small" />
       </div>
