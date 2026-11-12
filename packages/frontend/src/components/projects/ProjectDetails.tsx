@@ -59,27 +59,38 @@ export function ProjectDetails(props: ProjectDetailsProps) {
   return (
     <div className="@container/details">
       <div className="@min-[1200px]/details:grid @min-[1200px]/details:grid-cols-2 @min-[1200px]/details:gap-x-4">
-        {props.items.map((item, index) => (
-          <LazyHydrate
-            key={item.props.id}
-            className={cn(
-              'max-md:border-divider max-md:border-b max-md:last:border-none',
-              !props.nested && isPaired(props.items, index)
-                ? // Both cards as tall as the row; each keeps its top margin.
-                  '@min-[1200px]/details:[&>*]:h-[calc(100%-1rem)]'
-                : '@min-[1200px]/details:col-span-2',
-              // Text and diagrams keep a reading measure in the wide cards.
-              !WIDE_CONTENT.has(item.type) &&
-                '@min-[1200px]/details:[&>*>*]:max-w-[62rem]',
-            )}
-            eager={
-              props.nested ||
-              (item.type === 'UpdatesSection' && !!props.selectedUpdateId)
-            }
-          >
-            {renderSection(props, item, index)}
-          </LazyHydrate>
-        ))}
+        {props.items.map((item, index) => {
+          const side = props.nested ? undefined : pairSide(props.items, index)
+          return (
+            <LazyHydrate
+              key={item.props.id}
+              className={cn(
+                'max-md:border-divider max-md:border-b max-md:last:border-none',
+                side === undefined
+                  ? '@min-[1200px]/details:col-span-2'
+                  : // Both cards as tall as the row (each keeps its top
+                    // margin), until either opens something, e.g. Tracked
+                    // transactions: the other then keeps its own height
+                    // instead of stretching into an empty box.
+                    [
+                      '[&:has([data-state=open])>*]:h-auto! @min-[1200px]/details:[&>*]:h-[calc(100%-1rem)]',
+                      side === 'left'
+                        ? '[&:has(+*_[data-state=open])>*]:h-auto!'
+                        : '[*:has([data-state=open])+&>*]:h-auto!',
+                    ],
+                // Text and diagrams keep a reading measure in the wide cards.
+                !WIDE_CONTENT.has(item.type) &&
+                  '@min-[1200px]/details:[&>*>*]:max-w-[62rem]',
+              )}
+              eager={
+                props.nested ||
+                (item.type === 'UpdatesSection' && !!props.selectedUpdateId)
+              }
+            >
+              {renderSection(props, item, index)}
+            </LazyHydrate>
+          )
+        })}
       </div>
     </div>
   )
@@ -115,15 +126,19 @@ const SIDE_BY_SIDE: [
   ['DataPostedSection', 'LivenessSection'],
 ]
 
-function isPaired(items: ProjectDetailsSection[], index: number) {
+/** Which side of a side-by-side pair the section sits on, if any. */
+function pairSide(
+  items: ProjectDetailsSection[],
+  index: number,
+): 'left' | 'right' | undefined {
   const type = items[index]?.type
   const next = items[index + 1]?.type
   const previous = items[index - 1]?.type
-  return SIDE_BY_SIDE.some(
-    ([left, right]) =>
-      (type === left && next === right) ||
-      (type === right && previous === left),
-  )
+  for (const [left, right] of SIDE_BY_SIDE) {
+    if (type === left && next === right) return 'left'
+    if (type === right && previous === left) return 'right'
+  }
+  return undefined
 }
 
 function renderSection(

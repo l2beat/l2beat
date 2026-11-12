@@ -60,7 +60,9 @@ export function ChartInsight({
           <p className="font-medium text-label-value-12 text-secondary uppercase tracking-[0.04em]">
             {eyebrow}
           </p>
-          <p className="text-balance font-semibold text-heading-20 leading-tight tracking-[-0.01em] md:text-heading-24 [&_strong]:font-bold">
+          {/* Two lines' room beside another insight on a wide page, so the bars
+            and charts under both start level whichever sentence wraps. */}
+          <p className="@min-[1200px]/details:min-h-[2lh] text-balance font-semibold text-heading-20 leading-tight tracking-[-0.01em] md:text-heading-24 [&_strong]:font-bold">
             {headline}
           </p>
         </div>
@@ -83,16 +85,18 @@ export function ChartInsight({
                   backgroundColor: part.color,
                 }}
               >
-                {/* The name goes first when the part is narrow, then the share. */}
-                <span
-                  className={cn(
-                    'absolute inset-y-0 right-2 left-3 flex @max-[44px]:hidden items-center font-semibold text-label-value-14',
-                    part.textClassName ?? 'text-black',
-                  )}
-                >
-                  <span className="truncate">
-                    <span className="@max-[88px]:hidden">{part.label} </span>
-                    {formatShare(share)}
+                {/* One line: the share, and the name before it while both
+                  fit. A name that doesn't fit wraps onto a second, clipped
+                  line, so it drops whole instead of truncating. */}
+                <span className="absolute inset-y-0 right-2 left-3 flex @max-[44px]:hidden items-center">
+                  <span
+                    className={cn(
+                      'flex h-[1lh] flex-row-reverse flex-wrap justify-end gap-x-1 overflow-hidden font-semibold text-label-value-14 leading-tight',
+                      part.textClassName ?? 'text-black',
+                    )}
+                  >
+                    <span>{formatShare(share)}</span>
+                    <span className="whitespace-nowrap">{part.label}</span>
                   </span>
                 </span>
               </div>

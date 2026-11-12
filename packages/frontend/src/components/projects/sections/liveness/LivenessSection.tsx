@@ -12,6 +12,7 @@ import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { AnomalyText } from '~/pages/layer2s/liveness/components/AnomalyText'
 import { NoAnomaliesState } from '~/pages/layer2s/liveness/components/NoRecentAnomaliesState'
 import type { LivenessAnomaly } from '~/server/features/layer2s/liveness/types'
+import { cn } from '~/utils/cn'
 import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
 import type { TrackedTransactionsByType } from '~/utils/project/tracked-txs/getTrackedTransactions'
 import type { ChartRange } from '~/utils/range/range'
@@ -55,8 +56,22 @@ export function LivenessSection({
   ...sectionProps
 }: LivenessSectionProps) {
   const ongoingAnomalies = anomalies.filter(isAnomalyOngoing)
+  const showsNoAnomalies = !isArchived && ongoingAnomalies.length === 0
   return (
-    <ProjectSection {...sectionProps}>
+    <ProjectSection
+      {...sectionProps}
+      // Beside Data posted on a wide page the all-clear moves into the
+      // header row, still the first thing in the section, so the two
+      // cards' charts start level. Ongoing anomalies keep their block.
+      headerAccessory={
+        showsNoAnomalies && (
+          <NoAnomaliesState
+            type="ongoing"
+            className="@min-[1200px]/details:flex hidden rounded-lg! md:px-4 md:py-2"
+          />
+        )
+      }
+    >
       <p className="mb-4 text-paragraph-15 md:text-paragraph-16">
         {LIVENESS_DESCRIPTION}
       </p>
@@ -64,10 +79,12 @@ export function LivenessSection({
         <TrackedTxsOutageNotice type="section" />
       )}
       {!isArchived && (
-        <OngoingAnomalies
-          anomalies={ongoingAnomalies}
-          hasTrackedContractsChanged={hasTrackedContractsChanged}
-        />
+        <div className={cn(showsNoAnomalies && '@min-[1200px]/details:hidden')}>
+          <OngoingAnomalies
+            anomalies={ongoingAnomalies}
+            hasTrackedContractsChanged={hasTrackedContractsChanged}
+          />
+        </div>
       )}
 
       <HorizontalSeparator className="my-4" />
