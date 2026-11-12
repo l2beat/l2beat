@@ -57,7 +57,7 @@ export function InteropCornerFigures({
               'max-w-[220px] items-end gap-1.5 text-right',
             )}
           >
-            <span className={HOME_TEXT.meta}>Top protocols</span>
+            <span className={HOME_TEXT.label}>Top protocols</span>
             {/* Shared columns line the icons and names up like a table; the
                 figures stand clear of the longest name, as in the tables. */}
             <ol className="grid max-w-full grid-cols-[auto_minmax(0,1fr)_auto] gap-x-2 gap-y-2 text-left">

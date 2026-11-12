@@ -73,7 +73,7 @@ function NewProjects({ projects }: { projects: HomeRecentProject[] }) {
             >
               {project.name}
             </span>
-            <span className={cn('shrink-0 pl-1', HOME_TEXT.meta)}>
+            <span className={cn('shrink-0 pl-1', HOME_TEXT.label)}>
               {project.label}
             </span>
           </a>

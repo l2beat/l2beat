@@ -22,7 +22,7 @@ export function HomeMandateBanner({ className }: { className?: string }) {
       // Deeper at the bottom, so the rule runs clear of the text.
       className={cn(
         HOME_BANNER_CLASS,
-        'bg-brand pb-7 text-pure-white [--charter-w:6rem] md:pb-8 lg:[--charter-w:7rem] xl:[--charter-w:8rem]',
+        'bg-brand pb-7 text-pure-white [--charter-w:6rem] md:pb-8 md:max-lg:[--charter-w:5rem] lg:[--charter-w:7rem] xl:[--charter-w:8rem]',
         className,
       )}
     >
@@ -47,7 +47,7 @@ export function HomeMandateBanner({ className }: { className?: string }) {
           {/* Medium weight: regular white reads thin on the pink. */}
           <p
             className={cn(
-              'max-w-[68%]',
+              'max-w-[68%] md:max-lg:max-w-[80%]',
               HOME_TEXT.body,
               'text-balance font-medium text-pure-white',
             )}

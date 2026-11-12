@@ -104,7 +104,7 @@ export function HomeRankedTable<T extends HomeRankedTableRow>({
               key={column.id}
               className={cn(
                 'flex whitespace-nowrap',
-                HOME_TEXT.meta,
+                HOME_TEXT.label,
                 alignClass(column.align),
                 column.minTableWidth && HIDE_BELOW[column.minTableWidth],
               )}

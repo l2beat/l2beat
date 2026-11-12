@@ -8,8 +8,8 @@ import { HomeChange } from './HomeChange'
 /**
  * One headline figure with its change, e.g. "1.39 TiB +4.89% 1y", and a
  * sparkline underneath. Where a `HomeKpiRow` stacks its KPIs (`kpi-rows`),
- * the figure goes smaller, with the change under it, centered beside the
- * sparkline in the row's columns.
+ * the change goes under the figure, both centered beside the sparkline in
+ * the row's columns. The figure keeps its size, as in every other card.
  */
 export function HomeKpiTile({
   label,
@@ -40,7 +40,7 @@ export function HomeKpiTile({
         <span
           className={cn(
             'flex min-w-0 items-baseline gap-x-1.5',
-            HOME_TEXT.meta,
+            HOME_TEXT.label,
           )}
         >
           <span className="truncate">{label}</span>
@@ -48,7 +48,7 @@ export function HomeKpiTile({
               it hangs under the change, out of the flow, so this figure
               centres on the chart like the figures beside it. */}
           {labelAccessory && (
-            <span className="flex kpi-rows:hidden shrink-0 gap-x-1.5 tabular-nums">
+            <span className="flex kpi-rows:hidden shrink-0 gap-x-1.5 text-secondary tabular-nums">
               <span aria-hidden>·</span>
               {labelAccessory}
             </span>
@@ -56,11 +56,11 @@ export function HomeKpiTile({
         </span>
         <span className="mt-2 flex min-w-0 kpi-rows:flex-col kpi-rows:items-start items-baseline gap-x-2 gap-y-1 whitespace-nowrap">
           <span className="flex items-baseline gap-x-1.5">
-            <span className={cn(HOME_TEXT.number, 'kpi-rows:text-heading-24')}>
+            <span className={HOME_TEXT.number}>
               {value ?? EM_DASH}
             </span>
             {value !== undefined && unit && (
-              <span className="font-medium kpi-rows:text-label-value-15 text-label-value-20 text-secondary">
+              <span className="font-medium text-label-value-20 text-secondary">
                 {unit}
               </span>
             )}
