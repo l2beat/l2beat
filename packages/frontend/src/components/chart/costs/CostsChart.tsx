@@ -122,6 +122,8 @@ export function CostsChart({
   ])
 
   const resolution = rangeToResolution(range)
+  const showsDataPosted =
+    !!chartMeta.ethereum && dataKeys.includes(DATA_POSTED_KEY)
 
   const series: ChartSeries<SeriesKey, CostsChartDataPoint>[] = [
     ...COST_KEYS_BOTTOM_UP.filter((key) => chartMeta[key]).map((key) => ({
@@ -151,7 +153,9 @@ export function CostsChart({
         dataKeys,
         onItemClick: toggleDataKey,
       }}
-      project={project}
+      // The data-posted axis puts its top label where the project's name
+      // goes, so the name steps aside while that series is shown.
+      project={showsDataPosted ? undefined : project}
       legend
     >
       <TimeSeriesChart

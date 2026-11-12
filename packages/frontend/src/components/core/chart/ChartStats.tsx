@@ -77,12 +77,12 @@ export function ChartStatsItem({
   return (
     <div
       className={cn(
-        'flex flex-col items-start max-md:flex-row max-md:items-center max-md:justify-between',
+        'flex flex-col items-start max-md:min-h-7 max-md:flex-row max-md:items-center max-md:justify-between',
         className,
       )}
     >
-      <div className="flex items-center gap-1.5 md:mb-1">
-        <span className="whitespace-nowrap font-medium text-secondary text-xs">
+      <div className="flex items-center gap-1.5 md:mb-2">
+        <span className="whitespace-nowrap font-medium text-label-value-13 text-secondary">
           {label}
         </span>
         {tooltip && (
@@ -98,7 +98,7 @@ export function ChartStatsItem({
         <Skeleton className="h-[22px] xs:h-7 w-20 xs:w-24" />
       ) : children ? (
         <SyncStatusWrapper isSynced={isSynced}>
-          <span className="font-medium text-primary text-sm xs:text-lg md:font-bold">
+          <span className="font-semibold text-label-value-16 text-primary tabular-nums md:text-heading-24">
             {children}
           </span>
         </SyncStatusWrapper>

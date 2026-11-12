@@ -59,8 +59,8 @@ export function ActivityChartStatsPanel({ stats, metric, isLoading }: Props) {
           <ValueWithPercentageChange
             change={metricStats.pastDayChange}
             changePeriod={metricStats.pastDayChangePeriod}
-            className="text-sm xs:text-lg md:text-lg"
-            changeClassName="text-xs"
+            className="font-semibold md:text-heading-24!"
+            changeClassName="text-label-value-13 font-medium"
           >
             {formatActivityCount(metricStats.pastDayCount)}
           </ValueWithPercentageChange>
@@ -87,7 +87,7 @@ export function ActivityChartStatsPanel({ stats, metric, isLoading }: Props) {
           {totalCount ? (
             <div className="flex gap-1 max-md:flex-row-reverse max-md:items-baseline md:flex-col">
               <div>{formatInteger(totalCount.value)}</div>
-              <div className="font-medium text-label-value-14 text-secondary">
+              <div className="font-normal text-label-value-13 text-secondary">
                 since {formatTimestamp(totalCount.sinceTimestamp)}
               </div>
             </div>
@@ -105,7 +105,7 @@ export function ActivityChartStatsPanel({ stats, metric, isLoading }: Props) {
         {metricStats?.maxCount !== undefined ? (
           <div className="flex gap-1 max-md:flex-row-reverse max-md:items-baseline md:flex-col">
             <div>{formatActivityCount(metricStats.maxCount.value)}</div>
-            <div className="font-medium text-label-value-14 text-secondary">
+            <div className="font-normal text-label-value-13 text-secondary">
               {formatTimestamp(metricStats.maxCount.timestamp)}
             </div>
           </div>

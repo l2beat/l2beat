@@ -23,6 +23,14 @@ import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import type { ProjectL2Entry } from '~/server/features/layer2s/project/getL2ProjectEntry'
 import { cn } from '~/utils/cn'
 
+/**
+ * TVS and UOPS are the summary's headline figures, so they take home's
+ * headline step (`HOME_TEXT.number`) over the 16px of the other stats.
+ */
+const HEADLINE_FIGURE_CLASS =
+  'text-nowrap font-semibold text-heading-20! md:text-heading-28! xl:text-heading-32! leading-none! tracking-[-0.025em] tabular-nums'
+const HEADLINE_CHANGE_CLASS = 'text-label-value-13 font-medium'
+
 interface Props {
   project: ProjectL2Entry
   className?: string
@@ -57,9 +65,9 @@ export function ProjectL2Stats({ project, className }: Props) {
               </Tooltip>
             )}
             <ValueWithPercentageChange
-              containerClassName="flex-nowrap"
-              className="!text-base !leading-[100%] text-nowrap"
-              changeClassName="text-label-value-14 font-bold"
+              containerClassName="flex-nowrap items-baseline"
+              className={HEADLINE_FIGURE_CLASS}
+              changeClassName={HEADLINE_CHANGE_CLASS}
               change={project.header.tvs.breakdown.totalChange}
               changePeriod={project.header.tvs.breakdown.totalChangePeriod}
             >
@@ -95,11 +103,11 @@ export function ProjectL2Stats({ project, className }: Props) {
               </Tooltip>
             )}
             <ValueWithPercentageChange
-              containerClassName="flex-nowrap"
+              containerClassName="flex-nowrap items-baseline"
               change={project.header.activity.uopsWeeklyChange}
               changePeriod={project.header.activity.uopsWeeklyChangePeriod}
-              className="text-nowrap text-base! leading-[100%]!"
-              changeClassName="text-label-value-14 font-bold"
+              className={HEADLINE_FIGURE_CLASS}
+              changeClassName={HEADLINE_CHANGE_CLASS}
             >
               {formatActivityCount(project.header.activity.lastDayUops)}
             </ValueWithPercentageChange>
