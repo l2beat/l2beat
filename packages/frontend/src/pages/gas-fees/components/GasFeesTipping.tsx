@@ -26,7 +26,7 @@ export function GasFeesTipping() {
           network sets.
         </p>
       </div>
-      <GasFeesLive action={<GasFeesMethodology />} />
+      <GasFeesLive estimateAction={<GasFeesMethodology />} />
       <div className="grid grid-cols-1 gap-x-10 gap-y-6 border-divider border-t pt-6 lg:grid-cols-2">
         <GasFeesTipsSummary />
         <div className="border-divider max-lg:border-t max-lg:pt-6 lg:border-l lg:pl-10">

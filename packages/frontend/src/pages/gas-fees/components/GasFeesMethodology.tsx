@@ -40,12 +40,15 @@ const TIERS = [
   },
 ]
 
-/** The estimator's methodology, kept out of the way behind a button */
+/**
+ * The estimator's methodology, kept out of the way behind a quiet link beside
+ * the estimate's column heading
+ */
 export function GasFeesMethodology() {
   return (
     <Dialog>
-      <DialogTrigger className="flex items-center gap-1.5 rounded-lg border border-divider px-2.5 py-1 font-medium text-xs hover:bg-surface-secondary">
-        <InfoIcon className="size-3.5 fill-current" />
+      <DialogTrigger className="flex items-center gap-1 whitespace-nowrap rounded font-medium text-secondary text-xs underline decoration-dotted underline-offset-2 hover:text-primary">
+        <InfoIcon className="size-3 fill-current" />
         How we estimate
       </DialogTrigger>
       <DialogContent className="primary-card flex max-h-[90dvh] w-[640px] flex-col gap-0 overflow-hidden bg-surface-primary p-0">

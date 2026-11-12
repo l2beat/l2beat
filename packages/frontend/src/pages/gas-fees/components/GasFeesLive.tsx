@@ -51,10 +51,11 @@ const multiple = (value: number) =>
 
 /** Our three tips next to what wallets suggest, as blocks come in */
 export function GasFeesLive({
-  action,
+  estimateAction,
   showBlocks,
 }: {
-  action?: React.ReactNode
+  /** Shown beside our estimate's column heading, e.g. how we make it */
+  estimateAction?: React.ReactNode
   /** Adds each new block's gas split by tip under the table */
   showBlocks?: boolean
 }) {
@@ -88,10 +89,13 @@ export function GasFeesLive({
             <span className="invisible text-sm">Next block in 12s</span>
           )}
         </div>
-        {action}
       </div>
       <div className="overflow-x-auto">
-        <TipsNow live={live} pending={isPending} />
+        <TipsNow
+          live={live}
+          pending={isPending}
+          estimateAction={estimateAction}
+        />
       </div>
       {showBlocks && (live || isPending) && (
         <div className="mt-4">
@@ -116,9 +120,11 @@ function TextSkeleton({ sizedAs }: { sizedAs: string }) {
 function TipsNow({
   live,
   pending,
+  estimateAction,
 }: {
   live: GasFeesLiveTips | null | undefined
   pending: boolean
+  estimateAction?: React.ReactNode
 }) {
   // Every wallet keeps its column, so a fee service that is down or rate
   // limits us shows a dash instead of reshaping the table
@@ -129,9 +135,12 @@ function TipsNow({
         <tr className="text-left text-secondary text-xs">
           <th className="w-[16%] pb-1.5 font-medium">Speed, gwei</th>
           <th className="w-[24%] pb-1.5 font-medium">
-            <span className="flex items-center gap-1.5 text-primary">
-              <Logo className="block h-5 w-auto" animated={false} />
-              estimate
+            <span className="flex flex-wrap items-center gap-x-3 gap-y-0.5">
+              <span className="flex items-center gap-1.5 text-primary">
+                <Logo className="block h-5 w-auto" animated={false} />
+                estimate
+              </span>
+              {estimateAction}
             </span>
           </th>
           {shown.map((wallet, i) => (

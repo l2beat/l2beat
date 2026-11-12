@@ -48,7 +48,7 @@ export function GasFeesEthereum({ ethereum, upgrades }: Props) {
     <div className="flex flex-col gap-6">
       <FeeHistory ethereum={ethereum} upgrades={upgrades} />
       <Divided>
-        <GasFeesLive action={<GasFeesMethodology />} showBlocks />
+        <GasFeesLive estimateAction={<GasFeesMethodology />} showBlocks />
       </Divided>
       <Divided>
         <div className="grid grid-cols-1 gap-x-10 gap-y-6 lg:grid-cols-2">
