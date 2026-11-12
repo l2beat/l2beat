@@ -39,13 +39,13 @@ export function PrivacyAdviceSection({
   const uncovered = getUncoveredAdversaries(steps, adversaries, sentiments)
   return (
     <ProjectSection {...sectionProps}>
-      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+      <div className="flex flex-col items-start gap-y-1.5">
         <p className="text-paragraph-15 md:text-paragraph-16">{ADVICE.intro}</p>
         <CustomLink href={ADVICE.methodologyHref} className="text-paragraph-13">
           {ADVICE.methodologyLink}
         </CustomLink>
       </div>
-      <ol className="mt-4 flex flex-col">
+      <ol className="mt-6 flex flex-col">
         {steps.map((step, i) => (
           <li
             key={step.name}
@@ -57,33 +57,35 @@ export function PrivacyAdviceSection({
               <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-surface-tertiary font-bold text-label-12">
                 {i + 1}
               </span>
-              <span className="mt-1 w-px grow bg-divider group-last:hidden" />
+              <span className="mt-1 w-0.5 grow rounded-full bg-surface-tertiary group-last:hidden" />
             </div>
-            {/* Desktop: name and adversaries share a row. Mobile: adversaries follow the text. */}
-            <div className="flex min-w-0 grow flex-col gap-1 pb-5 group-last:pb-0 md:grid md:grid-cols-[1fr_auto] md:items-baseline md:gap-x-4">
-              <span className="flex flex-wrap items-center gap-x-2 font-bold text-paragraph-15 md:text-paragraph-16">
+            {/* Name, then the advice, then whom it defends against: the same order at every width. */}
+            <div className="flex min-w-0 grow flex-col pb-7 group-last:pb-0">
+              <span className="flex min-h-6 flex-wrap items-center gap-x-2 font-bold text-label-value-16 md:text-label-value-18">
                 {step.name}
                 {step.outside && (
-                  <span className="rounded-sm border border-divider px-1.5 py-0.5 font-normal text-2xs text-secondary leading-none">
+                  <span className="rounded-sm border border-divider px-1.5 py-0.5 font-normal text-2xs text-secondary leading-none dark:border-secondary/40">
                     {ADVICE.outsideLabel}
                   </span>
                 )}
               </span>
-              <div className="order-last flex flex-wrap items-center gap-x-3 gap-y-1 text-paragraph-13 md:order-none">
-                <span className="text-secondary">{ADVICE.againstLabel}:</span>
-                {getStepAdversaries(step, adversaries).map((adversary) => (
-                  <AdversaryLink
-                    key={adversary.id}
-                    adversary={adversary}
-                    sentiment={sentiments[adversary.id]}
-                  />
-                ))}
-              </div>
-              <div className="wrap-anywhere text-paragraph-15 md:col-span-2 md:text-paragraph-16">
+              <div className="mt-2 max-w-[72ch] text-paragraph-15 md:text-paragraph-16 [&_code]:box-decoration-clone [&_code]:text-[0.875em] [&_code]:[overflow-wrap:anywhere]">
                 <Markdown inline>{step.text}</Markdown>
                 {step.randomWait && (
                   <PrivacyWaitDraw windowDays={waitWindowDays} />
                 )}
+              </div>
+              <div className="mt-2.5 grid grid-cols-[auto_minmax(0,1fr)] gap-x-2 text-paragraph-13">
+                <span className="text-secondary">{ADVICE.againstLabel}:</span>
+                <div className="flex flex-wrap gap-x-4 gap-y-1">
+                  {getStepAdversaries(step, adversaries).map((adversary) => (
+                    <AdversaryLink
+                      key={adversary.id}
+                      adversary={adversary}
+                      sentiment={sentiments[adversary.id]}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           </li>
@@ -116,9 +118,11 @@ function AdversaryLink({
   return (
     <CustomLink
       href={`#${getPrivacyAdversaryBlockId(adversary.id)}`}
-      className="inline-flex items-center gap-1"
+      // Repeated metadata: underlining every name is noise, colour says link.
+      underline={false}
+      className="inline-flex items-center gap-1.5 hover:underline focus-visible:underline"
     >
-      <PrivacySentimentDot sentiment={sentiment} />
+      <PrivacySentimentDot sentiment={sentiment} className="size-2.5!" />
       {adversary.label.toLowerCase()}
     </CustomLink>
   )

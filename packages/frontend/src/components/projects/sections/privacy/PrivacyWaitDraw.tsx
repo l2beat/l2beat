@@ -13,7 +13,7 @@ import { ADVICE, formatWait, getWaitNote } from '~/pages/privacy/adviceUi'
 export function PrivacyWaitDraw({ windowDays }: { windowDays: number }) {
   const [minutes, setMinutes] = useState<number>()
   return (
-    <div className="mt-1 flex flex-col items-start gap-1">
+    <div className="mt-3 flex flex-col items-start gap-1.5">
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
         <Button
           variant="outline"
@@ -35,7 +35,7 @@ export function PrivacyWaitDraw({ windowDays }: { windowDays: number }) {
           )}
         </span>
       </div>
-      <span className="text-paragraph-13 text-secondary">
+      <span className="text-pretty text-paragraph-13 text-secondary">
         {minutes === undefined
           ? getWaitNote(windowDays)
           : ADVICE.redrawWaitNote}
