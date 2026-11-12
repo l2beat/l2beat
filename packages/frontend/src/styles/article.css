@@ -33,6 +33,12 @@
   text-wrap: balance;
 }
 
+/* Links to a section land with room above the heading, not on the viewport's
+   edge. No page that renders an article has a sticky bar to clear. */
+.article [id] {
+  @apply scroll-mt-6;
+}
+
 .article h2 {
   @apply text-2xl leading-[1.25] tracking-[-0.02em] md:text-[28px];
 }
