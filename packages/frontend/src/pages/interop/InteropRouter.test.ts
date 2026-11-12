@@ -5,12 +5,10 @@ import {
   MARKDOWN_CONTENT_TYPE,
   NEGOTIATED_MARKDOWN_CONTENT_TYPE,
 } from '~/server/markdown/markdownAlternate'
+import { createProjectRedirectsRouter } from '~/server/routers/ProjectRedirectsRouter'
 import { fetchFromRouter } from '~/test/fetchFromRouter'
 import type { Manifest } from '~/utils/Manifest'
-import {
-  createProjectRedirectsRouter,
-  createProjectRouter,
-} from '../project/ProjectRouter'
+import { createProjectRouter } from '../project/ProjectRouter'
 import { createInteropRouter } from './InteropRouter'
 import type { InteropTokenPage } from './token/renderInteropTokenMarkdown'
 

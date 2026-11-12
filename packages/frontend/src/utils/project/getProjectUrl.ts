@@ -37,9 +37,3 @@ export function getProjectUrl(
   }
   return getProjectPath(project.slug)
 }
-
-/**
- * For redirects to project pages. A day, not forever: browsers keep a 301
- * without it indefinitely, which is what made `?migration=1` necessary.
- */
-export const PROJECT_REDIRECT_CACHE_CONTROL = 'public, max-age=86400'

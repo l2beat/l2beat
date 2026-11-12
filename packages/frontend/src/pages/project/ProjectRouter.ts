@@ -10,11 +10,9 @@ import {
   serveMarkdown,
   serveMarkdownIfPreferred,
 } from '~/server/markdown/markdownAlternate'
-import { ps } from '~/server/projects'
 import type { RenderData, RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { getProjectPath } from '~/utils/project/getProjectPath'
-import { PROJECT_REDIRECT_CACHE_CONTROL } from '~/utils/project/getProjectUrl'
 import { validateRoute } from '~/utils/validateRoute'
 import { getChainProjectData } from '../chain/getChainProjectData'
 import {
@@ -162,80 +160,6 @@ export function createProjectRouter(
       return
     }
     res.status(200).send(await render(data, url))
-  }
-
-  return router
-}
-
-/**
- * The section URLs projects had before `/projects/{slug}`, moved there with
- * the query string kept.
- *
- * Browsers hold a permanent redirect from `/projects/{slug}` to
- * `/layer2s/projects/{slug}` that this site sent for years, for every slug.
- * Sending them back to `/projects/{slug}` would loop, so the L2 URLs go to
- * `?migration=1`, a URL no browser has cached. The page drops the marker from
- * the address bar without navigating.
- */
-export function createProjectRedirectsRouter() {
-  const router = express.Router()
-
-  const redirect =
-    (options: { suffix?: string; migration?: boolean } = {}) =>
-    async (req: Request<{ slug: string }>, res: Response, next: () => void) => {
-      const { slug } = req.params
-      if (!(await getProjectPage(slug))) {
-        next()
-        return
-      }
-      const search = new URL(req.originalUrl, 'http://x').searchParams
-      if (options.migration) search.set('migration', '1')
-      const query = search.size > 0 ? `?${search}` : ''
-      res.setHeader('Cache-Control', PROJECT_REDIRECT_CACHE_CONTROL)
-      res.redirect(
-        301,
-        `${getProjectPath(slug)}${options.suffix ?? ''}${query}`,
-      )
-    }
-
-  router.get(
-    '/layer2s/projects/:slug.md',
-    redirect({ suffix: '.md', migration: true }),
-  )
-  router.get('/layer2s/projects/:slug', redirect({ migration: true }))
-  router.get(
-    '/layer2s/projects/:slug/tvs-breakdown',
-    redirect({ suffix: '/tvs-breakdown' }),
-  )
-
-  // Scaling projects with a canonical bridge show its flows on their page.
-  router.get(
-    '/interop/protocols/:slug',
-    async (req: Request<{ slug: string }>, res, next) => {
-      const project = await ps.getProject({
-        slug: req.params.slug,
-        optional: ['scalingInfo', 'interopConfig'],
-      })
-      if (project?.scalingInfo && project.interopConfig) {
-        res.setHeader('Cache-Control', PROJECT_REDIRECT_CACHE_CONTROL)
-        res.redirect(
-          301,
-          `${getProjectPath(project.slug)}?protocols=${project.id}#interop-flows`,
-        )
-        return
-      }
-      next()
-    },
-  )
-
-  for (const prefix of [
-    '/privacy/projects',
-    '/zk-catalog',
-    '/interop/protocols',
-    '/defi/projects',
-  ]) {
-    router.get(`${prefix}/:slug.md`, redirect({ suffix: '.md' }))
-    router.get(`${prefix}/:slug`, redirect())
   }
 
   return router
