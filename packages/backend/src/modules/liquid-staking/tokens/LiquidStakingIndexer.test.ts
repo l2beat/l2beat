@@ -125,7 +125,7 @@ function createIndexer(
       db: mockDatabase({ liquidStakingSnapshot: snapshots }),
       rpc,
       // The block number stands in for the timestamp it was looked up for.
-      blockTimestampProvider: {
+      blockFinder: {
         getBlockNumberAtOrBefore: mockFn(async (timestamp: UnixTime) =>
           Number(timestamp),
         ),

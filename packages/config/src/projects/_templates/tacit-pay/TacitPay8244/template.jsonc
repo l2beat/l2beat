@@ -1,0 +1,18 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TacitPay8244",
+  "category": "non-critical",
+  "description": "One version of the anon.wei web app stored as contract code (ERC-8244). html() returns the page from immutable chunk contracts and checks it against PAGE_HASH. The steward can append one successor version, which latest() follows.",
+  "ignoreMethods": ["html", "request", "chunkAt"],
+  "ignoreRelatives": ["PREVIOUS"],
+  "fields": {
+    "steward": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "append the successor version of the app, which latest() then returns."
+        }
+      ]
+    }
+  }
+}

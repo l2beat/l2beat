@@ -20,6 +20,7 @@ import {
   hideUnreachable,
   layout,
   setPreferences,
+  setSpacePressed,
   setTool,
   showHidden,
 } from './actions/other'
@@ -103,6 +104,7 @@ export const useStore = create<StoreState>()(
       registerViewportContainer: wrapAction(set, registerViewportContainer),
       setPreferences: wrapAction(set, setPreferences),
       setTool: wrapAction(set, setTool),
+      setSpacePressed: wrapAction(set, setSpacePressed),
 
       onKeyDown: wrapUndoableAction(set, onKeyDown),
       onKeyUp: wrapAction(set, onKeyUp),

@@ -1,6 +1,6 @@
 {
   "name": "lisk",
-  "timestamp": 1792587967,
+  "timestamp": 1793982680,
   "configHash": "0x052c9c4173389b6cb0e5199bb21edc38e38de1bc0491c78cfb7ea9912d69ab73",
   "entries": [
     {
@@ -37,6 +37,11 @@
       "implementationNames": {
         "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": "LivenessModule"
       }
+    },
+    {
+      "address": "eth:0x046Fe535054da90DABd9031eC5C9707629460367",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "SystemConfig",
@@ -329,7 +334,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 1847,
+        "gameCount": 1911,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x095102Ec7bea1c5f25090705b196a6EA2e6b64f6",
@@ -343,7 +348,7 @@
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45",
         "permissionedGameArgs": "EXPECT_REVERT",
-        "permissionedGamesTotal": 1847,
+        "permissionedGamesTotal": 1911,
         "proposerFromDGF": "UNRESOLVED",
         "version": "1.0.0",
         "wethFromDGF": "UNRESOLVED"
@@ -367,6 +372,11 @@
         { "typeCaster": "SliceAddress", "arg": { "offset": 72 } }
       ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0x144E423Af54870cFc72726e30523CaDC9fe01e25",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "LivenessGuard",
@@ -470,8 +480,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 490798,
-          "prevBlockNum": 26239399
+          "prevBoughtGas": 100000,
+          "prevBlockNum": 26344476
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -584,7 +594,7 @@
         ],
         "$upgradeCount": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292641612",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292641628",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -743,6 +753,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x57DEE96e7c8806b387E6B1777400a5889B6Be2a6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SuperchainProxyAdminOwner",
       "address": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
       "type": "Contract",
@@ -768,7 +783,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 44,
+        "nonce": 48,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -975,7 +990,7 @@
           "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
         ],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 74,
+        "nonce": 79,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -985,6 +1000,11 @@
     },
     {
       "address": "eth:0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x8CFd96F35D7d0e99D1A9501a450B0D2886657769",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1231,7 +1251,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 60,
+        "nonce": 62,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1322,7 +1342,7 @@
           "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748"
         ],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 71,
+        "nonce": 75,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1339,6 +1359,42 @@
       "address": "eth:0xcbC7dCeb857F0b25523618cCa0A03c419a6d7eA6",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "Safe",
+      "address": "eth:0xD2D7535e099F26EbfbA26d96bD1a661d3531d0e9",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xb66849da6643e8cd188f73efe4edb32704a1540eda5b1aef77a2217ad2d81f78"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x046Fe535054da90DABd9031eC5C9707629460367",
+      "sinceTimestamp": 1715684555,
+      "sinceBlock": 19867821,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b",
+        "$members": [
+          "eth:0x57DEE96e7c8806b387E6B1777400a5889B6Be2a6",
+          "eth:0xe0A9603cB2372b140C710b1F57D7a5A31dc77E62",
+          "eth:0x144E423Af54870cFc72726e30523CaDC9fe01e25",
+          "eth:0x046Fe535054da90DABd9031eC5C9707629460367",
+          "eth:0x8CFd96F35D7d0e99D1A9501a450B0D2886657769"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0x04c94122cb441c79630545fcc28dbc97c0231ec934014e77c1ba7c84a1b89f3c",
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 10,
+        "VERSION": "1.5.0"
+      },
+      "implementationNames": {
+        "eth:0xD2D7535e099F26EbfbA26d96bD1a661d3531d0e9": "GnosisSafeProxy",
+        "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b": "Safe"
+      }
     },
     {
       "address": "eth:0xd5b735b676A043a53946C3b6F6BE28c1ECE6aC90",
@@ -1372,6 +1428,11 @@
         "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": "Lib_AddressManager"
       },
       "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "address": "eth:0xe0A9603cB2372b140C710b1F57D7a5A31dc77E62",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "L1OpUSDCBridgeAdapter",
@@ -1516,13 +1577,13 @@
       "values": {
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": ["eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"],
+        "$members": ["eth:0xD2D7535e099F26EbfbA26d96bD1a661d3531d0e9"],
         "$threshold": 1,
         "domainSeparator": "0xbfe3444f912520bcc5fe7e088aab063f311d4b2af5167cb98fcb13c2cb5722ec",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 18,
+        "nonce": 19,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2462,6 +2523,9 @@
       "function revokeRole(bytes32 role, address account)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)"
     ],
+    "eth:0xD2D7535e099F26EbfbA26d96bD1a661d3531d0e9": [
+      "constructor(address _singleton)"
+    ],
     "eth:0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65": [
       "constructor()",
       "event FailedRelayedMessage(bytes32 indexed msgHash)",
@@ -2653,6 +2717,56 @@
     ],
     "eth:0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45": [
       "constructor(address _singleton)"
+    ],
+    "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b": [
+      "constructor()",
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedModuleGuard(address indexed moduleGuard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkNSignatures(address executor, bytes32 dataHash, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function checkSignatures(address executor, bytes32 dataHash, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32 txHash)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setModuleGuard(address moduleGuard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ]
   },
   "usedTemplates": {
@@ -2680,8 +2794,8 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7"
   },
-  "usedBlockNumbers": { "ethereum": 26241156 },
-  "permissionsConfigHash": "0xf4d552f4a861f34cd0394174fe89c6b2363314df53be9467d2c443b16b4ad143",
+  "usedBlockNumbers": { "ethereum": 26357020 },
+  "permissionsConfigHash": "0xc4109bbc5b068d287a8f7d3003dfae73c56e019644b6b4eb3734ffd2dc40e957",
   "permissions": {
     "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": {
       "directlyReceivedPermissions": [
@@ -2865,7 +2979,11 @@
           "from": "eth:0x095102Ec7bea1c5f25090705b196a6EA2e6b64f6",
           "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challenger"
-        },
+        }
+      ]
+    },
+    "eth:0xD2D7535e099F26EbfbA26d96bD1a661d3531d0e9": {
+      "receivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x0CF7D3706a27CCE2017aEB11E8a9c8b5388c282C",
@@ -2974,6 +3092,16 @@
             { "address": "eth:0xeC432c4F1d0E12737f3a42a459B84848Af979b2d" },
             { "address": "eth:0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45" }
           ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xE3622468Ea7dD804702B56ca2a4f88C0936995e6",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xEb99c8c87c5e0C2dCb01E2A1E35AA01f5889F677",
+          "role": "admin"
         }
       ]
     },

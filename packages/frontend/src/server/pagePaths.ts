@@ -9,6 +9,7 @@ import {
 } from '~/pages/garden/paths'
 import { getProjectPath } from '~/utils/project/getProjectPath'
 import { getChainProjects } from './features/chains/getChainProjects'
+import { isListedDefiProject } from './features/defi/isListedDefiProject'
 import { hasDefiProjectPage } from './features/defi/project/hasDefiProjectPage'
 import {
   getProjectPageKind,
@@ -74,7 +75,7 @@ export const STATIC_PAGE_PATHS = [
 export async function getPages(): Promise<Page[]> {
   const paths: PagePath[] = [...STATIC_PAGE_PATHS, '/layer2s/compare']
   if (env.CLIENT_SIDE_DEFI_ENABLED) {
-    paths.push('/defi/summary')
+    paths.push('/defi/liquid-staking')
   }
   if (env.CLIENT_SIDE_TOKENS_PAGE) {
     paths.push('/tokens')
@@ -116,11 +117,18 @@ async function getDynamicPages(): Promise<Page[]> {
     // Listed in its own place, among the static pages.
     if (sections.includes('ethereum')) continue
     // Archived scaling and privacy projects keep their page but leave the
-    // sitemap, unless another section still lists them.
-    const listed = sections.filter(
-      (section) =>
-        !project.archivedAt || (section !== 'layer2s' && section !== 'privacy'),
-    )
+    // sitemap, unless another section still lists them. So do DeFi projects
+    // whose category has no page of its own.
+    const listed = sections.filter((section) => {
+      if (section === 'defi') {
+        return (
+          env.CLIENT_SIDE_DEFI_ENABLED && isListedDefiProject(project.defiInfo)
+        )
+      }
+      return (
+        !project.archivedAt || (section !== 'layer2s' && section !== 'privacy')
+      )
+    })
     if (listed.length === 0) continue
     let kind: ProjectPageSection | undefined
     try {

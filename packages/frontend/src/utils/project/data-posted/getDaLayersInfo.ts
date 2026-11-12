@@ -73,7 +73,7 @@ const UNTRACKED_DA_LAYER_ICONS: Record<string, string> = {
 }
 
 /**
- * L2BEAT does not track the data posted to these layers, so only the DA label
+ * ETHBEAT does not track the data posted to these layers, so only the DA label
  * says a project posts to them.
  */
 function getUntrackedDaLayers(scalingDa: ProjectScalingDa[]): DaLayerInfo[] {
