@@ -1,6 +1,7 @@
 import {
+  ADVICE_SNIPPETS as A,
+  adviceLink,
   definePrivacyAdversaries,
-  PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
 
 // app.umbra.cash serves 120c335c, whose diff from this pin adds a contact form
@@ -23,8 +24,6 @@ export function umbraAdversaries(registrants: number) {
           "Each payment goes to a fresh stealth address, and only the recipient's viewing key shows whose it is.",
         exposureContinued:
           'The registry lists every recipient who could be behind it, with their key history.',
-        advice:
-          'Withdraw to a fresh address that is not registered and has no public link to the user.',
         sources: [
           {
             contract: 'Umbra',
@@ -46,7 +45,6 @@ export function umbraAdversaries(registrants: number) {
         exposureShort: `Any of the ${registrants.toLocaleString('en-US')} registered recipients could be behind a stealth address.`,
         exposureContinued:
           'Registrations are rare and public, so a payment that lands minutes after one points to that registrant. Several payments withdrawn to one address share a recipient.',
-        advice: `Register long before anyone pays the user, and withdraw each payment to its own address. ${S.exitViaRelayer('relayer for tokens')}`,
         sources: [
           {
             contract: 'StealthKeyRegistry',
@@ -70,8 +68,6 @@ export function umbraAdversaries(registrants: number) {
           "The hosted app checks the payee's address with its Alchemy RPC seconds before each payment, so timing ties the payee to the payment.",
         exposureContinued:
           "The same RPC gets the payee's wallet on connect, the sender of every matched payment on each scan, and the withdrawal address. The wallet's own RPC receives the wallet address together with the matched stealth addresses. On connect, the wallet library also sends the wallet address to Cloudflare's RPC to look up its ENS name.",
-        advice:
-          "Pay and withdraw from a local build with all RPC URLs and the user's wallet pointed at their own node, and block cloudflare-eth.com.",
         sources: [
           {
             title:
@@ -101,7 +97,6 @@ export function umbraAdversaries(registrants: number) {
           "The hosted app gives the operator the user's wallet address on every scan and withdrawal address in the same session.",
         exposureContinued:
           'Token withdrawals also hand its relayer the stealth address. The operator serves the app and can change it at any time. The contracts are immutable, and only the user holds their viewing key.',
-        advice: `${S.localBuild} Leave its indexer URL empty, so it reads payments from the user's node.`,
         sources: [
           {
             title:
@@ -149,5 +144,23 @@ export function umbraAdversaries(registrants: number) {
         ],
       },
     },
+    advice: [
+      {
+        name: 'Set up',
+        text: `${A.localBuild} Leave its indexer URL empty, point all RPC URLs and your wallet at your own Ethereum node, and block cloudflare-eth.com with [uBlock Origin](https://addons.mozilla.org/firefox/addon/ublock-origin/). Send all traffic, the node's included, through an ${adviceLink('IP-hiding route', 'ipHidingRoutes')}, so neither the relayer nor the node's peers see your IP.`,
+        against: ['networkObserver', 'privilegedInsider'],
+        outside: true,
+      },
+      {
+        name: 'Register',
+        text: 'Register long before anyone pays you.',
+        against: ['chainAnalyst'],
+      },
+      {
+        name: 'Withdraw',
+        text: 'Withdraw each payment to its own fresh address that is not registered and has no public link to you. For tokens, use the relayer, so no wallet of yours pays gas for the receiving address.',
+        against: ['publicObserver', 'chainAnalyst'],
+      },
+    ],
   })
 }

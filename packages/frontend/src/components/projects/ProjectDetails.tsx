@@ -27,6 +27,7 @@ import { MarkdownSection } from './sections/MarkdownSection'
 import { MilestonesAndIncidentsSection } from './sections/MilestonesAndIncidentsSection'
 import { PermissionsSection } from './sections/permissions/PermissionsSection'
 import { PrivacyAdversariesSection } from './sections/privacy/PrivacyAdversariesSection'
+import { PrivacyAdviceSection } from './sections/privacy/PrivacyAdviceSection'
 import { PrivacyAnonymitySetSection } from './sections/privacy/PrivacyAnonymitySetSection'
 import { PrivacyAssetsBreakdownSection } from './sections/privacy/PrivacyAssetsBreakdownSection'
 import { PrivacyFlowsSection } from './sections/privacy/PrivacyFlowsSection'
@@ -433,6 +434,14 @@ function renderSection(
     case 'PrivacyAdversariesSection':
       return (
         <PrivacyAdversariesSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'PrivacyAdviceSection':
+      return (
+        <PrivacyAdviceSection
           key={item.props.id}
           {...{ nested, sectionOrder }}
           {...item.props}
