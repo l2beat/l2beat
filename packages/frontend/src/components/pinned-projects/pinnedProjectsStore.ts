@@ -25,6 +25,14 @@ const CHANGE_EVENT = 'l2beat-pinned-projects-change'
 const MAX_RECENT = 8
 const EMPTY: PinnedProjects = { pinned: [], recent: [], hasPinned: false }
 
+/**
+ * Where project pages were before they moved to `/projects/{slug}`. A project
+ * saved back then is the same project, so it takes the new path: its page
+ * would not recognise it otherwise.
+ */
+const MOVED_PROJECT_PATH =
+  /^\/(?:layer2s\/projects|privacy\/projects|defi\/projects|interop\/protocols|zk-catalog)\/([^/]+)$/
+
 let cachedRaw: string | null | undefined
 let cached: PinnedProjects = EMPTY
 
@@ -47,7 +55,7 @@ function read(): PinnedProjects {
 }
 
 /** Whatever is stored, written by an older version or edited by hand. */
-function parsePinnedProjects(raw: string | null): PinnedProjects {
+export function parsePinnedProjects(raw: string | null): PinnedProjects {
   if (!raw) return EMPTY
   try {
     const value: unknown = JSON.parse(raw)
@@ -66,13 +74,22 @@ function parsePinnedProjects(raw: string | null): PinnedProjects {
 
 function toProjects(value: unknown): SavedProject[] {
   if (!Array.isArray(value)) return []
-  return value.filter(
-    (item): item is SavedProject =>
-      typeof item === 'object' &&
-      item !== null &&
-      typeof item.href === 'string' &&
-      typeof item.name === 'string' &&
-      typeof item.iconUrl === 'string',
+  const projects = value
+    .filter(
+      (item): item is SavedProject =>
+        typeof item === 'object' &&
+        item !== null &&
+        typeof item.href === 'string' &&
+        typeof item.name === 'string' &&
+        typeof item.iconUrl === 'string',
+    )
+    .map((project) => ({
+      ...project,
+      href: project.href.replace(MOVED_PROJECT_PATH, '/projects/$1'),
+    }))
+  // A project saved from two sections is one page now.
+  return projects.filter(
+    (project, i) => projects.findIndex((p) => p.href === project.href) === i,
   )
 }
 
