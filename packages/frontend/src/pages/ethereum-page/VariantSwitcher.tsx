@@ -37,16 +37,29 @@ export function VariantSwitcher({
           {s}×
         </a>
       ))}
-      <button
-        type="button"
-        onClick={reorg}
-        className="rounded-lg px-2 py-1.5 font-medium text-secondary hover:text-primary"
-      >
-        ⟲ Reorg
-      </button>
+      {REORG_BUTTONS.map(({ label, depth, title }) => (
+        <button
+          key={label}
+          type="button"
+          title={title}
+          onClick={() => reorg(depth)}
+          className="rounded-lg px-2 py-1.5 font-medium text-secondary hover:text-primary"
+        >
+          {label}
+        </button>
+      ))}
     </div>
   )
 }
+
+const REORG_BUTTONS = [
+  {
+    label: '⟲ Reorg',
+    depth: undefined,
+    title: 'A typical reorg: usually 1 slot, sometimes a few',
+  },
+  { label: '⟲ 5 deep', depth: 5, title: 'Rewrites the newest 5 slots' },
+]
 
 function toHref(variant: VariantId, speed: number) {
   const params = new URLSearchParams({ variant })

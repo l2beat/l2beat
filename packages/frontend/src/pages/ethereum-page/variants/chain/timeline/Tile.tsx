@@ -4,13 +4,11 @@ import { cn } from '~/utils/cn'
 import type { HeadBlock } from '../../../live/types'
 import { LAND } from '../ui/spring'
 
-/** The replacement waits for the orphan to lift off its spot */
-const REPLACEMENT_DELAY_MS = 1300
-
 /**
  * One slot of the chain. The top half fills with gas used out of the limit,
  * the bottom half with blobs out of the max (who posted them is in the
- * inspector, where there's room to name them); a missed slot is an empty dashed frame the chain line runs through.
+ * inspector, where there's room to name them); a missed slot is an empty
+ * dashed frame the chain line runs through.
  */
 export const Tile = memo(function Tile({
   block,
@@ -25,19 +23,21 @@ export const Tile = memo(function Tile({
   maxBlobs: number
   isHead: boolean
   isSelected: boolean
-  /** Set on the render a tile first appears in: a fresh head, or a reorg's replacement */
-  enter: 'new' | 'replacement' | undefined
+  /**
+   * Set on the render a tile first appears in: a fresh head, or a block of a
+   * reorg's winning branch, which waits `delay` ms for its turn to land
+   */
+  enter: { kind: 'new' } | { kind: 'replacement'; delay: number } | undefined
 }) {
   const bodyRef = useRef<HTMLDivElement>(null)
   const reducedMotion = usePrefersReducedMotion()
-  const hash = block.hash
 
   // before paint, so a replacement never flashes in place before its entrance
-  // biome-ignore lint/correctness/useExhaustiveDependencies: a new hash is a new block in this slot
+  // biome-ignore lint/correctness/useExhaustiveDependencies: a new block object in this slot is what enters
   useLayoutEffect(() => {
     const body = bodyRef.current
     if (!body || !enter || reducedMotion) return
-    if (enter === 'replacement') {
+    if (enter.kind === 'replacement') {
       body.animate(
         [
           {
@@ -50,7 +50,7 @@ export const Tile = memo(function Tile({
         {
           duration: LAND.duration,
           easing: LAND.easing,
-          delay: REPLACEMENT_DELAY_MS,
+          delay: enter.delay,
           fill: 'backwards',
         },
       )
@@ -63,11 +63,12 @@ export const Tile = memo(function Tile({
       ],
       { duration: LAND.duration, easing: LAND.easing },
     )
-  }, [hash])
+  }, [block])
 
   if (block.status === 'missed') {
     return (
       <div
+        ref={bodyRef}
         style={{ gridColumn: column + 1 }}
         className="h-(--tile-h) rounded-[3px] border border-divider border-dashed"
       />

@@ -56,6 +56,7 @@ export function Deck({
             blocks={head.blocks}
             limits={head.limits}
             rewind={rewind}
+            lastReorg={head.lastReorg}
             log={log}
             posterColors={posterColors}
             className="md:col-span-7 md:row-span-2"

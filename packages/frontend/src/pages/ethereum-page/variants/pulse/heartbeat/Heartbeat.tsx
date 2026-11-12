@@ -14,11 +14,15 @@ import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { EASE_OUT_QUINT } from '~/utils/easing'
 import type { BlockLimits, HeadBlock, Reorg } from '../../../live/types'
-import { REWIND, REWIND_MS, type Rewind } from '../useRewind'
+import {
+  type Rewind,
+  type RewindPlan,
+  reorgRange,
+  replacedAt,
+} from '../useRewind'
 import type { SlotClock } from '../useSlotClock'
 import { BeatTooltip } from './BeatTooltip'
 import {
-  BEAT_END,
   beatPaths,
   PEN_LEAD,
   type TraceGeometry,
@@ -31,12 +35,8 @@ const PEN_AT = 0.86
 /** A minute of slots, so grid lines fall a minute apart */
 const GRID_SLOTS = 5
 const DRAW_MS = 520
-/** Of the width, where a rewind stops to replace a beat */
-const CUE_AT = 0.6
-/** The spike, as a fraction into its slot */
-const BEAT_CENTER = 0.15
-
-type Entrance = 'none' | 'live' | 'replacement'
+/** Of the width, where a rewind centres the slots it replaces */
+const CUE_AT = 0.58
 
 /**
  * The page's heartbeat: a monitor trace that writes one beat per block and
@@ -106,13 +106,15 @@ export function Heartbeat({
       const reorg = rewind.playing
       const reading = clock.read(Date.now())
       if (!reorg || !reading) return 0
-      // cues the replaced beat up left of centre, clear of the pen and the
-      // card's edge on a phone, wherever it was when the reorg came
-      const beatX =
-        penX -
-        (reading.position + PEN_LEAD - reorg.slot - BEAT_CENTER) * g.slotWidth
-      return width * CUE_AT - beatX
+      // cues the rewritten slots up around the middle, clear of the pen and
+      // of the card's edge on a phone, wherever they were when it came
+      const { first, last } = reorgRange(reorg)
+      const middle = (first + last + 1) / 2
+      const middleX =
+        penX - (reading.position + PEN_LEAD - middle) * g.slotWidth
+      return width * CUE_AT - middleX
     },
+    plan: rewind.plan,
     overshoot: g.slotWidth * 3.5,
   })
 
@@ -130,14 +132,20 @@ export function Heartbeat({
   const playing = rewind.playing
   const gridSlots = visible.filter((b) => b.slot % GRID_SLOTS === 0)
 
-  const entranceOf = (block: HeadBlock): Entrance => {
-    if (playing?.slot === block.slot && playing.by.hash === block.hash) {
-      return 'replacement'
+  const plan = rewind.plan
+  /** When a beat is drawn rather than simply shown: as it arrives, or in its turn during a rewind */
+  const drawOf = (block: HeadBlock) => {
+    if (playing && plan) {
+      const i = playing.by.findIndex(
+        (b) => b.slot === block.slot && b.hash === block.hash,
+      )
+      const draw = plan.draws[i]
+      if (draw) return draw
     }
     if (block === head && block.slot > (firstHead.current ?? head.slot)) {
-      return 'live'
+      return { delay: 0, duration: DRAW_MS }
     }
-    return 'none'
+    return undefined
   }
 
   const onPointerMove = (event: PointerEvent<SVGSVGElement>) => {
@@ -201,17 +209,31 @@ export function Heartbeat({
               {gridSlots.map((b) => (
                 <GridLine key={b.slot} block={b} x={xOf(b.slot)} g={g} />
               ))}
-              {visible.map((block) => (
-                <Beat
-                  key={`${block.slot}-${block.hash ?? 'missed'}`}
-                  block={block}
-                  x={xOf(block.slot)}
+              {playing && plan && (
+                <OldBranch
+                  key={playing.seenAt}
+                  reorg={playing}
+                  plan={plan}
+                  xOf={xOf}
                   g={g}
                   limits={limits}
-                  entrance={entranceOf(block)}
-                  hovered={hover?.block.slot === block.slot}
                 />
-              ))}
+              )}
+              {visible.map((block) => {
+                const draw = drawOf(block)
+                return (
+                  <Beat
+                    key={`${block.slot}-${block.hash ?? 'missed'}`}
+                    block={block}
+                    x={xOf(block.slot)}
+                    g={g}
+                    limits={limits}
+                    drawDelay={draw?.delay}
+                    drawDuration={draw?.duration}
+                    hovered={hover?.block.slot === block.slot}
+                  />
+                )
+              })}
               {/* the pen keeps drawing flat line while a block is late;
                   a rewind shows the tape unclipped, where it would dangle */}
               {!playing && (
@@ -220,15 +242,6 @@ export function Heartbeat({
                   className="fill-none stroke-brand"
                   strokeWidth={2}
                   strokeLinecap="round"
-                />
-              )}
-              {playing && (
-                <FlatliningBeat
-                  key={playing.seenAt}
-                  reorg={playing}
-                  x={xOf(playing.slot)}
-                  g={g}
-                  limits={limits}
                 />
               )}
             </g>
@@ -244,16 +257,16 @@ export function Heartbeat({
         <circle cx={penX} cy={g.baseline} r={3.5} className="fill-brand" />
       </svg>
       <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-linear-to-r from-surface-primary to-transparent md:w-28" />
-      {playing && <VhsOverlay key={playing.seenAt} reorg={playing} />}
+      {playing && plan && (
+        <VhsOverlay key={playing.seenAt} reorg={playing} plan={plan} />
+      )}
       {hover && (
         <BeatTooltip
           block={hover.block}
           limits={limits}
           x={hover.x}
           width={width}
-          replacedBy={
-            rewind.notice?.slot === hover.block.slot ? rewind.notice : undefined
-          }
+          replaced={replacedAt(rewind.notice, hover.block.slot)}
         />
       )}
     </div>
@@ -265,14 +278,17 @@ const Beat = memo(function Beat({
   x,
   g,
   limits,
-  entrance,
+  drawDelay,
+  drawDuration,
   hovered,
 }: {
   block: HeadBlock
   x: number
   g: TraceGeometry
   limits: BlockLimits
-  entrance: Entrance
+  /** Milliseconds; the beat is shown as it is when undefined */
+  drawDelay: number | undefined
+  drawDuration: number | undefined
   hovered: boolean
 }) {
   const lineRef = useRef<SVGPathElement>(null)
@@ -280,15 +296,10 @@ const Beat = memo(function Beat({
   const paths = beatPaths(block, limits, g)
 
   useLayoutEffect(() => {
-    if (entrance === 'none') return
-    const replacing = entrance === 'replacement'
-    const delay = replacing ? REWIND_MS * REWIND.flatlined : 0
-    const duration = replacing
-      ? REWIND_MS * (REWIND.redrawn - REWIND.flatlined)
-      : DRAW_MS
+    if (drawDelay === undefined || drawDuration === undefined) return
     const draw = {
-      duration,
-      delay,
+      duration: drawDuration,
+      delay: drawDelay,
       easing: EASE_OUT_QUINT,
       fill: 'backwards' as const,
     }
@@ -300,7 +311,7 @@ const Beat = memo(function Beat({
       [{ opacity: 0 }, { opacity: 0, offset: 0.4 }, { opacity: 1 }],
       draw,
     )
-  }, [entrance])
+  }, [drawDelay, drawDuration])
 
   return (
     <g transform={`translate(${x} 0)`}>
@@ -317,25 +328,25 @@ const Beat = memo(function Beat({
         {paths.wave && (
           <path d={paths.wave} className="fill-chart-ethereum/25" />
         )}
+        {paths.waveLine && (
+          <path
+            d={paths.waveLine}
+            className="fill-none stroke-chart-ethereum"
+            strokeWidth={2}
+            strokeLinecap="round"
+          />
+        )}
       </g>
       <path
         ref={lineRef}
         d={paths.line}
         pathLength={1}
-        strokeDasharray={entrance === 'none' ? undefined : '1 1'}
+        strokeDasharray={drawDelay === undefined ? undefined : '1 1'}
         className="fill-none stroke-brand"
         strokeWidth={2}
         strokeLinejoin="round"
         strokeLinecap="round"
       />
-      {paths.waveLine && (
-        <path
-          d={paths.waveLine}
-          className="fill-none stroke-chart-ethereum"
-          strokeWidth={2}
-          strokeLinecap="round"
-        />
-      )}
       {block.status === 'missed' && (
         <circle
           cx={g.slotWidth * 0.15}
@@ -349,72 +360,126 @@ const Beat = memo(function Beat({
   )
 })
 
-/** The replaced block's beat, shown again only to be flattened */
-function FlatliningBeat({
+/**
+ * The branch the page had, drawn over the slots it lost: it turns red so it
+ * reads as what was, then every beat of it flatlines at once, under a band
+ * that marks the whole rewritten range.
+ */
+function OldBranch({
   reorg,
-  x,
+  plan,
+  xOf,
   g,
   limits,
 }: {
   reorg: Reorg
-  x: number
+  plan: RewindPlan
+  xOf: (slot: number) => number
   g: TraceGeometry
   limits: BlockLimits
 }) {
-  const ref = useRef<SVGGElement>(null)
-  const markRef = useRef<SVGRectElement>(null)
-  const paths = beatPaths(reorg.replaced, limits, g)
+  const bandRef = useRef<SVGGElement>(null)
+  const branchRef = useRef<SVGGElement>(null)
+  const { first, last } = reorgRange(reorg)
+  const at = (ms: number) => ms / plan.total
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: plays once per reorg, keyed by it
   useLayoutEffect(() => {
-    markRef.current?.animate(
+    const options = { duration: plan.total, fill: 'forwards' as const }
+    bandRef.current?.animate(
       [
         { opacity: 0 },
-        { opacity: 0, offset: REWIND.scrubbedBack - 0.04 },
-        { opacity: 1, offset: REWIND.scrubbedBack },
-        { opacity: 1, offset: REWIND.redrawn },
-        { opacity: 0, offset: 0.8 },
+        { opacity: 0, offset: at(plan.scrubbedBack * 0.8) },
+        { opacity: 1, offset: at(plan.scrubbedBack) },
+        { opacity: 1, offset: at(plan.redrawn) },
+        { opacity: 0, offset: at(plan.redrawn + 300) },
         { opacity: 0 },
       ],
-      { duration: REWIND_MS, fill: 'forwards' },
+      options,
     )
     const b = g.baseline
     const flat = `translateY(${b}px) scaleY(0.02) translateY(${-b}px)`
-    ref.current?.animate(
+    branchRef.current?.animate(
       [
-        { transform: 'none', opacity: 1 },
-        { transform: 'none', opacity: 1, offset: REWIND.scrubbedBack },
+        { transform: 'none', stroke: 'var(--brand)', opacity: 1 },
         {
-          transform: flat,
+          transform: 'none',
+          stroke: 'var(--brand)',
           opacity: 1,
-          offset: REWIND.flatlined,
+          offset: at(plan.scrubbedBack * 0.6),
+        },
+        {
+          transform: 'none',
+          stroke: 'var(--negative)',
+          opacity: 1,
+          offset: at(plan.scrubbedBack),
+        },
+        {
+          transform: 'none',
+          stroke: 'var(--negative)',
+          opacity: 1,
+          offset: at(plan.shownOld),
           easing: 'ease-in',
         },
-        { transform: flat, opacity: 0.6, offset: REWIND.redrawn },
-        { transform: flat, opacity: 0 },
+        {
+          transform: flat,
+          stroke: 'var(--negative)',
+          opacity: 0.55,
+          offset: at(plan.flatlined),
+        },
+        // the flatline stays under the redraw, so each new beat is written over it
+        {
+          transform: flat,
+          stroke: 'var(--negative)',
+          opacity: 0.55,
+          offset: at(plan.redrawn - 150),
+        },
+        {
+          transform: flat,
+          stroke: 'var(--negative)',
+          opacity: 0,
+          offset: at(plan.redrawn),
+        },
+        { transform: flat, stroke: 'var(--negative)', opacity: 0 },
       ],
-      { duration: REWIND_MS, fill: 'forwards' },
+      options,
     )
-  }, [g.baseline])
+  }, [])
+
+  const x0 = xOf(first)
+  const bandWidth = xOf(last + 1) - x0
   return (
-    <g transform={`translate(${x} 0)`}>
-      <rect
-        ref={markRef}
-        x={0}
-        y={4}
-        width={g.slotWidth * BEAT_END}
-        height={g.height - 24}
-        rx={4}
-        className="fill-brand/10 opacity-0"
-      />
-      <g ref={ref}>
-        {paths.wave && <path d={paths.wave} className="fill-negative/15" />}
-        <path
-          d={paths.line}
-          className="fill-none stroke-negative"
-          strokeWidth={2.5}
-          strokeLinejoin="round"
+    <>
+      <g ref={bandRef} className="opacity-0">
+        <rect
+          x={x0}
+          y={4}
+          width={bandWidth}
+          height={g.height - 24}
+          rx={6}
+          className="fill-brand/[0.04] stroke-brand/40"
+          strokeDasharray="4 4"
         />
       </g>
-    </g>
+      <g ref={branchRef} className="stroke-brand">
+        {reorg.replaced.map((block) => {
+          const paths = beatPaths(block, limits, g)
+          return (
+            <g key={block.slot} transform={`translate(${xOf(block.slot)} 0)`}>
+              {paths.wave && (
+                <path d={paths.wave} className="fill-negative/15 stroke-none" />
+              )}
+              <path
+                d={paths.line}
+                className="fill-none"
+                strokeWidth={2.5}
+                strokeLinejoin="round"
+              />
+            </g>
+          )
+        })}
+      </g>
+    </>
   )
 }
 
@@ -489,18 +554,23 @@ function useRewindScrub({
   svgRef,
   distance,
   overshoot,
+  plan,
 }: {
   playing: Reorg | undefined
   rewindRef: React.RefObject<SVGGElement | null>
   svgRef: React.RefObject<SVGSVGElement | null>
   distance: () => number
   overshoot: number
+  plan: RewindPlan | undefined
 }) {
   const seenAt = playing?.seenAt
   // biome-ignore lint/correctness/useExhaustiveDependencies: each reorg plays once, measured when it starts
   useLayoutEffect(() => {
-    if (seenAt === undefined) return
+    if (seenAt === undefined || !plan) return
     const d = distance()
+    const back = plan.scrubbedBack / plan.total
+    const hold = plan.redrawn / plan.total
+    const forward = (fraction: number) => hold + (1 - hold) * fraction
     // past the replaced beat and back, so it reads as scrubbing, not sliding
     const deepest = Math.max(d, 0) + overshoot
     const at = (offset: number, x: number, skew = 0, y = 0) => ({
@@ -510,34 +580,34 @@ function useRewindScrub({
     const tape = rewindRef.current?.animate(
       [
         at(0, 0),
-        at(0.05, deepest * 0.3, -4, 1),
-        at(0.1, deepest * 0.7, 3, -1),
-        at(0.15, deepest, -5, 2),
-        at(0.2, d + (deepest - d) * 0.35, 2, -1),
-        at(0.24, d - overshoot * 0.05, -1),
-        at(REWIND.scrubbedBack, d),
-        at(REWIND.redrawn, d),
-        at(0.78, d * 0.62, 2, 1),
-        at(0.86, d * 0.24, -2),
+        at(back * 0.18, deepest * 0.3, -4, 1),
+        at(back * 0.37, deepest * 0.7, 3, -1),
+        at(back * 0.55, deepest, -5, 2),
+        at(back * 0.74, d + (deepest - d) * 0.35, 2, -1),
+        at(back * 0.9, d - overshoot * 0.05, -1),
+        at(back, d),
+        at(hold, d),
+        at(forward(0.32), d * 0.62, 2, 1),
+        at(forward(0.58), d * 0.24, -2),
         at(1, 0),
       ],
-      { duration: REWIND_MS, easing: 'ease-in-out' },
+      { duration: plan.total, easing: 'ease-in-out' },
     )
     const split = (px: number) =>
       `drop-shadow(${px}px 0 0 rgb(0 214 255 / 0.7)) drop-shadow(${-px}px 0 0 rgb(255 0 92 / 0.7))`
     const glitch = svgRef.current?.animate(
       [
         { filter: split(0) },
-        { filter: split(3), offset: 0.04 },
-        { filter: split(1), offset: 0.12 },
-        { filter: split(4), offset: 0.2 },
-        { filter: split(0), offset: REWIND.scrubbedBack + 0.02 },
-        { filter: split(0), offset: REWIND.redrawn },
-        { filter: split(2), offset: 0.78 },
-        { filter: split(0), offset: 0.95 },
+        { filter: split(3), offset: back * 0.15 },
+        { filter: split(1), offset: back * 0.45 },
+        { filter: split(4), offset: back * 0.75 },
+        { filter: split(0), offset: back },
+        { filter: split(0), offset: hold },
+        { filter: split(2), offset: forward(0.32) },
+        { filter: split(0), offset: forward(0.85) },
         { filter: split(0) },
       ],
-      { duration: REWIND_MS },
+      { duration: plan.total },
     )
     return () => {
       tape?.cancel()

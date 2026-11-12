@@ -4,16 +4,19 @@ import { CloseIcon } from '~/icons/Close'
 import { EASE_OUT_QUINT } from '~/utils/easing'
 import type { Reorg } from '../../../live/types'
 import { formatInteger, shortHash } from '../format'
+import { reorgRange } from '../useRewind'
 
 /**
- * Names what the rewind replaced, calmly: one block at the tip changing is
- * how the chain settles races, not a failure, and finalized blocks never do.
+ * Names what the rewind replaced, calmly: blocks at the tip changing is how
+ * the chain settles races, not a failure, and finalized blocks never do.
  */
 export function ReorgNotice({
   reorg,
+  finalizedBlock,
   onDismiss,
 }: {
   reorg: Reorg
+  finalizedBlock: number | undefined
   onDismiss: () => void
 }) {
   const ref = useRef<HTMLDivElement>(null)
@@ -29,7 +32,14 @@ export function ReorgNotice({
     )
   }, [reducedMotion])
 
-  const number = reorg.by.number ?? reorg.replaced.number
+  const { first, last } = reorgRange(reorg)
+  const lostBlocks = reorg.replaced.filter((b) => b.status === 'proposed')
+  const oldHead = reorg.replaced.at(-1)
+  const newHead = reorg.by.at(-1)
+  const slots =
+    first === last
+      ? `slot ${formatInteger(first)}`
+      : `slots ${formatInteger(first)}–${formatInteger(last)}`
   return (
     <div
       ref={ref}
@@ -44,19 +54,29 @@ export function ReorgNotice({
       </span>
       <div className="text-paragraph-14 text-secondary">
         <p className="font-bold text-primary">
-          Block {number === undefined ? '' : formatInteger(number)} was replaced
+          {lostBlocks.length === 1 ? '1 block' : `${lostBlocks.length} blocks`}{' '}
+          replaced, {slots}
         </p>
         <p className="mt-1">
-          Slot {formatInteger(reorg.slot)} now holds{' '}
+          {reorg.depth > 1 &&
+            `The chain switched to another branch after slot ${formatInteger(reorg.forkSlot)}. `}
+          The newest block is now{' '}
           <span className="text-primary tabular-nums">
-            {shortHash(reorg.by.hash)}
-          </span>{' '}
-          instead of{' '}
-          <span className="tabular-nums line-through">
-            {shortHash(reorg.replaced.hash)}
+            {shortHash(newHead?.hash)}
           </span>
-          . Only the newest blocks can change like this; finalized ones never
-          do.
+          {oldHead?.hash && (
+            <>
+              {' '}
+              instead of{' '}
+              <span className="tabular-nums line-through">
+                {shortHash(oldHead.hash)}
+              </span>
+            </>
+          )}
+          . Only blocks that are not final yet can change like this
+          {finalizedBlock === undefined
+            ? '.'
+            : `; blocks up to ${formatInteger(finalizedBlock)} never will.`}
         </p>
       </div>
       <button

@@ -113,7 +113,11 @@ export function PulseHero({
           className="h-[156px] md:h-[220px]"
         />
         {rewind.notice && !rewind.playing && (
-          <ReorgNotice reorg={rewind.notice} onDismiss={rewind.dismiss} />
+          <ReorgNotice
+            reorg={rewind.notice}
+            finalizedBlock={live.finalizedBlock}
+            onDismiss={rewind.dismiss}
+          />
         )}
       </div>
       <Legend />
@@ -159,8 +163,8 @@ function LiveChip({ status }: { status: EthereumHead['status'] }) {
 }
 
 function Finality({ live }: { live: EthereumHead }) {
-  const { head, finalizedSlot } = live
-  if (!head || finalizedSlot === undefined) {
+  const { head, finalizedSlot, finalizedBlock } = live
+  if (!head || finalizedSlot === undefined || finalizedBlock === undefined) {
     return <Skeleton className="h-9 w-56" />
   }
   const behind = head.slot - finalizedSlot
@@ -171,10 +175,10 @@ function Finality({ live }: { live: EthereumHead }) {
         className="text-label-value-14 text-secondary"
         explainer="Once two thirds of staked ETH has voted for a checkpoint twice, every block up to it is final: changing one would cost validators billions in slashed stake. Newer blocks can still be replaced."
       >
-        Final up to slot
+        Final up to block
       </Explain>
       <div className="mt-1 font-medium text-label-value-16 text-primary tabular-nums">
-        {formatInteger(finalizedSlot)}
+        {formatInteger(finalizedBlock)}
         <span className="ml-2 font-normal text-secondary">
           {minutes} min, {Math.round(behind / SLOTS_PER_EPOCH)} epochs behind
         </span>

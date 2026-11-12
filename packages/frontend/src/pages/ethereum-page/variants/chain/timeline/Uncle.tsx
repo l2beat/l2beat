@@ -1,113 +1,160 @@
 import { useLayoutEffect, useRef } from 'react'
 import { usePrefersReducedMotion } from '~/hooks/usePrefersReducedMotion'
 import { cn } from '~/utils/cn'
-import type { Reorg } from '../../../live/types'
-import { formatBlockNumber, shortHash } from '../format'
+import type { HeadBlock, Reorg } from '../../../live/types'
+import { rewindTiming } from '../state/rewind'
 import { FLOAT } from '../ui/spring'
-import { columnLeft, columnsWidth } from './geometry'
+import { columnCenter, columnLeft, columnsWidth } from './geometry'
 
-/** The orphan waits for the rewind to reach its slot before it lifts */
-const PEEL_DELAY_MS = 760
-/** Small enough to sit in the lane above the chain */
-const REST_SCALE = 0.4
+/** Squashed to fit the lane above the chain, still one tile per slot so a deep branch stays readable */
+const REST =
+  'translate(calc(var(--gap) * 2), calc(-1 * var(--lane-h) + 3px)) scale(0.94, 0.38)'
 
 /**
- * A replaced block, peeled off the chain onto a short side branch from its
- * parent, where it stays for a while as an uncle. Spans two columns: the
- * parent it forked from and its own slot.
+ * The orphaned branch of a reorg: every slot the losing side had, peeled off
+ * the chain as one piece and hung in the lane above, forking from the last
+ * block both sides share. It stays there a while as a ghost, the uncles.
  */
-export function Uncle({
+export function UncleBranch({
   reorg,
-  column,
+  firstColumn,
+  forkColumn,
   maxBlobs,
   animate,
+  highlightSlot,
 }: {
   reorg: Reorg
+  /** Column of the first rewritten slot */
+  firstColumn: number
+  /** Column of the fork point; -1 once it has left the window */
+  forkColumn: number
   maxBlobs: number
-  /** The replaced slot's column */
-  column: number
-  /** True while the reorg is fresh: the orphan flies from its spot in the chain */
+  /** True while the reorg is fresh: the branch peels off its spot in the chain */
   animate: boolean
+  /** A replaced slot the reader is anchored to, outlined on the ghost */
+  highlightSlot: number | undefined
 }) {
-  const orphanRef = useRef<HTMLDivElement>(null)
-  const branchRef = useRef<SVGSVGElement>(null)
+  const branchRef = useRef<HTMLDivElement>(null)
+  const linkRef = useRef<HTMLDivElement>(null)
   const reducedMotion = usePrefersReducedMotion()
-  const block = reorg.replaced
-  const rest = `translate(18%, calc(-1 * var(--lane-h) + 3px)) rotate(-5deg) scale(${REST_SCALE})`
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: runs once per orphan, on mount
+  // biome-ignore lint/correctness/useExhaustiveDependencies: runs once per branch, on mount
   useLayoutEffect(() => {
-    const orphan = orphanRef.current
-    if (!orphan || !animate || reducedMotion) return
-    orphan.animate(
+    const branch = branchRef.current
+    if (!branch || !animate || reducedMotion) return
+    const { peel } = rewindTiming(reorg.depth)
+    branch.animate(
       [
         { transform: 'none', opacity: 1, filter: 'saturate(1)' },
         {
-          transform: 'translate(4%, -18%) rotate(-9deg) scale(0.86)',
+          transform: 'translate(1%, -30%) rotate(-3deg) scale(0.97, 0.8)',
           opacity: 0.95,
-          offset: 0.25,
+          offset: 0.3,
         },
-        { transform: rest, opacity: 0.6, filter: 'saturate(0.35)' },
+        { transform: REST, opacity: 0.7, filter: 'saturate(0.35)' },
       ],
       {
         duration: FLOAT.duration,
         easing: FLOAT.easing,
-        delay: PEEL_DELAY_MS,
+        delay: peel,
         fill: 'backwards',
       },
     )
-    branchRef.current?.animate([{ opacity: 0 }, { opacity: 1 }], {
-      duration: 500,
-      delay: PEEL_DELAY_MS + 450,
+    linkRef.current?.animate([{ opacity: 0 }, { opacity: 1 }], {
+      duration: 400,
+      delay: peel + 500,
       fill: 'backwards',
     })
   }, [])
 
-  const gasShare = Math.min(1, block.gasUsed / block.gasLimit)
   return (
-    <div
-      className="group/uncle pointer-events-none absolute top-0 h-[calc(var(--lane-h)+var(--tile-h))]"
-      style={{ left: columnLeft(column - 1), width: columnsWidth(2) }}
-      title={`Uncle: block ${formatBlockNumber(block.number ?? 0)} (${shortHash(block.hash)}) was replaced in slot ${reorg.slot}`}
-    >
-      <svg
+    <>
+      {forkColumn >= 0 && (
+        <div
+          ref={linkRef}
+          aria-hidden
+          className="pointer-events-none absolute top-[9px] h-[calc(var(--lane-h)-9px)]"
+          style={{
+            left: columnCenter(forkColumn),
+            width: `calc(${columnLeft(firstColumn)} - ${columnCenter(forkColumn)} + var(--gap) * 2)`,
+          }}
+        >
+          {/* up from the fork block's top and over to the branch's first slot */}
+          <svg
+            className="size-full overflow-visible"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M 0 100 C 0 30, 40 20, 100 20"
+              fill="none"
+              strokeWidth={1.5}
+              vectorEffect="non-scaling-stroke"
+              className="stroke-chart-ethereum"
+            />
+          </svg>
+        </div>
+      )}
+      <div
         ref={branchRef}
         aria-hidden
-        className="absolute inset-0 size-full overflow-visible"
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
+        className="pointer-events-none absolute top-(--lane-h) grid h-(--tile-h) origin-top-left gap-(--gap) opacity-70 saturate-[0.35]"
+        style={{
+          left: columnLeft(firstColumn),
+          width: columnsWidth(reorg.depth),
+          gridTemplateColumns: `repeat(${reorg.depth}, minmax(0, 1fr))`,
+          transform: REST,
+        }}
       >
-        {/* from the parent's top to the uncle's foot, in the lane above the chain */}
-        <path
-          d="M 25 30 C 25 14, 55 12, 80 16"
-          fill="none"
-          strokeWidth={1.5}
-          strokeDasharray="3 2"
-          vectorEffect="non-scaling-stroke"
-          className="stroke-chart-ethereum/70"
+        {reorg.replaced.map((b) => (
+          <GhostTile
+            key={b.slot}
+            block={b}
+            maxBlobs={maxBlobs}
+            highlight={b.slot === highlightSlot}
+          />
+        ))}
+      </div>
+    </>
+  )
+}
+
+function GhostTile({
+  block,
+  maxBlobs,
+  highlight,
+}: {
+  block: HeadBlock
+  maxBlobs: number
+  highlight: boolean
+}) {
+  if (block.status === 'missed') {
+    return (
+      <div className="rounded-[3px] border border-chart-ethereum/60 border-dashed" />
+    )
+  }
+  return (
+    <div
+      className={cn(
+        'relative rounded-[3px] bg-surface-secondary outline-dashed outline-[2.5px] outline-chart-ethereum',
+        highlight && 'outline-[4px] outline-solid',
+      )}
+    >
+      <div className="absolute inset-x-0 top-0 h-[calc(50%-1px)] overflow-hidden rounded-t-[3px]">
+        <div
+          className="absolute inset-x-0 bottom-0 bg-primary/60"
+          style={{
+            height: `${Math.min(1, block.gasUsed / block.gasLimit) * 100}%`,
+          }}
         />
-      </svg>
-      <div
-        ref={orphanRef}
-        className={cn(
-          'absolute top-(--lane-h) right-0 h-(--tile-h) w-[calc((100%-var(--gap))/2)] origin-top rounded-[3px] bg-surface-secondary opacity-60 outline-dashed outline-[2.5px] outline-chart-ethereum',
-        )}
-        style={{ transform: rest }}
-      >
-        <div className="absolute inset-x-0 top-0 h-[calc(50%-1px)] overflow-hidden rounded-t-[3px]">
-          <div
-            className="absolute inset-x-0 bottom-0 bg-primary/60"
-            style={{ height: `${gasShare * 100}%` }}
-          />
-        </div>
-        <div className="absolute inset-x-0 bottom-0 h-[calc(50%-1px)] overflow-hidden rounded-b-[3px]">
-          <div
-            className="absolute inset-x-0 top-0 bg-chart-teal"
-            style={{
-              height: `${Math.min(1, block.blobCount / maxBlobs) * 100}%`,
-            }}
-          />
-        </div>
+      </div>
+      <div className="absolute inset-x-0 bottom-0 h-[calc(50%-1px)] overflow-hidden rounded-b-[3px]">
+        <div
+          className="absolute inset-x-0 top-0 bg-chart-teal"
+          style={{
+            height: `${Math.min(1, block.blobCount / maxBlobs) * 100}%`,
+          }}
+        />
       </div>
     </div>
   )

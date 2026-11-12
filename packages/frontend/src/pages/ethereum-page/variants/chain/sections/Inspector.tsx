@@ -26,7 +26,7 @@ import { CadenceMark, Stat } from '../ui/Section'
  * how settled it is. The head while live; the picked block after a scrub.
  */
 export function Inspector({ verdicts }: { verdicts: RosetteValue[] }) {
-  const { head, block, isLive, slotsBehind } = useAnchor()
+  const { head, block, isLive, slotsBehind, orphaned } = useAnchor()
   const limits = head.limits
   const metrics = block && blockMetrics(block)
 
@@ -46,7 +46,9 @@ export function Inspector({ verdicts }: { verdicts: RosetteValue[] }) {
           >
             {isLive
               ? 'The head: the newest block'
-              : `${slotsBehind} ${slotsBehind === 1 ? 'slot' : 'slots'} (${formatSlotsAgo(slotsBehind)}) before the head`}
+              : orphaned
+                ? 'Orphaned: no longer on the chain'
+                : `${slotsBehind} ${slotsBehind === 1 ? 'slot' : 'slots'} (${formatSlotsAgo(slotsBehind)}) before the head`}
           </div>
           <div className="mt-2 font-bold text-[44px] leading-none tracking-[-0.02em] md:text-[64px]">
             <Rolling
@@ -178,11 +180,12 @@ function Meta({
 
 /** How far this block is from final: the question a reorg makes real */
 function Settledness({ block }: { block: HeadBlock | undefined }) {
-  const { head } = useAnchor()
+  const { head, orphaned } = useAnchor()
   const { finalizedSlot, justifiedSlot } = head
   if (!block || finalizedSlot === undefined || justifiedSlot === undefined) {
     return <div className="mt-6 h-[66px]" />
   }
+  if (orphaned) return <OrphanCallout block={block} />
   const state =
     block.slot <= finalizedSlot
       ? 'finalized'
@@ -210,13 +213,63 @@ function Settledness({ block }: { block: HeadBlock | undefined }) {
         </span>
       </div>
       <div className="mt-1.5 text-secondary leading-snug">
-        Finalized up to slot{' '}
+        Finalized up to{' '}
+        {head.finalizedBlock !== undefined && (
+          <>
+            block{' '}
+            <span className="text-primary tabular-nums">
+              {formatBlockNumber(head.finalizedBlock)}
+            </span>{' '}
+            in{' '}
+          </>
+        )}
+        slot{' '}
         <span className="text-primary tabular-nums">
           {formatInteger(finalizedSlot)}
         </span>
         , {formatSlotsAgo(headSlot - finalizedSlot)} behind the head. Reverting
         a finalized block would get at least a third of all staked ETH slashed.
       </div>
+    </div>
+  )
+}
+
+/**
+ * The reader picked this block, then a reorg rewrote its slot. The page stays
+ * on it, since that's what they were reading, and says what happened.
+ */
+function OrphanCallout({ block }: { block: HeadBlock }) {
+  const { orphaned, viewReplacement } = useAnchor()
+  if (!orphaned) return null
+  const { reorg, replacement } = orphaned
+  const missed = replacement?.status !== 'proposed'
+  return (
+    <div className="mt-6 rounded-lg border border-chart-ethereum/50 border-dashed bg-chart-ethereum/5 p-3 text-label-value-13">
+      <div className="font-bold">
+        Replaced by a reorg {reorg.depth} {reorg.depth === 1 ? 'slot' : 'slots'}{' '}
+        deep
+      </div>
+      <div className="mt-1.5 text-secondary leading-snug">
+        Slot {formatInteger(block.slot)} now{' '}
+        {missed ? (
+          'has no block on the winning branch: it was missed.'
+        ) : (
+          <>
+            holds{' '}
+            <span className="font-mono text-primary">
+              {shortHash(replacement?.hash)}
+            </span>{' '}
+            instead. The numbers below are still this orphaned block's.
+          </>
+        )}
+      </div>
+      <button
+        type="button"
+        onClick={viewReplacement}
+        className="mt-2.5 rounded-full bg-chart-ethereum px-3 py-1.5 font-bold text-label-value-13 text-white transition-transform hover:scale-[1.03] active:scale-95"
+      >
+        {missed ? 'Back to live' : 'View the replacement'}
+      </button>
     </div>
   )
 }

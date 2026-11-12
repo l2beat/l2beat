@@ -33,14 +33,11 @@ export function EconomicsSection({
     () => shown.map((d) => ({ t: d.timestamp, v: d.supplyEth })),
     [shown],
   )
-  // yesterday's close plus today's net change, so the partial day continues
-  // the line it ends rather than jumping to a differently sourced total
-  const lastClose = history.at(-1)?.supplyEth
   const todaySupply =
-    today && lastClose !== undefined
+    today && supplyEth !== undefined
       ? {
           t: today.startedAt,
-          v: lastClose + today.issuedEth - today.burnedEth,
+          v: supplyEth,
           until: today.startedAt + today.slots * SLOT_SECONDS,
         }
       : undefined

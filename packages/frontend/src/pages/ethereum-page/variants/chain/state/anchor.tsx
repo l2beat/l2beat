@@ -9,7 +9,12 @@ import {
   useState,
 } from 'react'
 import { useEthereumHead } from '../../../live/EthereumHeadContext'
-import type { EthereumHead, HeadBlock, TodaySoFar } from '../../../live/types'
+import type {
+  EthereumHead,
+  HeadBlock,
+  Reorg,
+  TodaySoFar,
+} from '../../../live/types'
 import { formatBlockNumber, formatInteger } from '../format'
 import { supplyAsOf, todayAsOf } from '../metrics'
 
@@ -35,6 +40,19 @@ export interface Anchor {
   /** Why the page went back to the head on its own, if it did */
   notice: string | undefined
   dismissNotice: () => void
+  /**
+   * Set when a reorg rewrote the slot the reader was anchored to. The page
+   * keeps showing the block they picked, now on the losing branch, until
+   * they choose to see what replaced it
+   */
+  orphaned: Orphaned | undefined
+  viewReplacement: () => void
+}
+
+export interface Orphaned {
+  reorg: Reorg
+  /** The slot on the winning branch: a block, or a missed slot */
+  replacement: HeadBlock | undefined
 }
 
 const AnchorContext = createContext<Anchor | undefined>(undefined)
@@ -46,10 +64,25 @@ export function AnchorProvider({ children }: { children: ReactNode }) {
   const [selectedSlot, setSelectedSlot] = useState<number>()
   const [requestedSlot, setRequestedSlot] = useState<number>()
   const [notice, setNotice] = useState<string>()
+  const [orphan, setOrphan] = useState<{ reorg: Reorg; block: HeadBlock }>()
+  const [seenReorg, setSeenReorg] = useState(head.lastReorg)
   const selectedNumber = useRef<number>(undefined)
+
+  // in render, so the page never shows the replacement for a frame before
+  // it switches back to the block the reader was looking at
+  if (head.lastReorg !== seenReorg) {
+    setSeenReorg(head.lastReorg)
+    const reorg = head.lastReorg
+    const was = reorg?.replaced.find((b) => b.slot === selectedSlot)
+    // a second reorg of the same slot leaves the block the reader picked alone
+    if (reorg && was && orphan?.block.slot !== selectedSlot) {
+      setOrphan({ reorg, block: was })
+    }
+  }
 
   const select = useCallback((slot: number | undefined) => {
     setSelectedSlot(slot)
+    setOrphan(undefined)
     setNotice(undefined)
     writeHash(slot)
   }, [])
@@ -80,10 +113,11 @@ export function AnchorProvider({ children }: { children: ReactNode }) {
     )
   }, [requestedSlot, head.blocks, head.head?.slot])
 
-  const block =
+  const onChain =
     selectedSlot === undefined
       ? head.head
       : head.blocks.find((b) => b.slot === selectedSlot)
+  const block = orphan?.block ?? onChain
   if (block?.number !== undefined) selectedNumber.current = block.number
 
   // a pinned block falls out of the window after 64 slots, about 13 minutes
@@ -92,6 +126,7 @@ export function AnchorProvider({ children }: { children: ReactNode }) {
     if (head.blocks.some((b) => b.slot === selectedSlot)) return
     const number = selectedNumber.current
     setSelectedSlot(undefined)
+    setOrphan(undefined)
     writeHash(undefined)
     setNotice(
       `Block ${number !== undefined ? formatBlockNumber(number) : ''} left the last 64 slots, so the page went back to the head.`,
@@ -100,22 +135,35 @@ export function AnchorProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo((): Anchor => {
     const anchored = block ?? head.head
+    // an orphan's totals are the winning chain's up to the fork, plus its
+    // own branch up to it
+    const forkSlot = orphan?.reorg.forkSlot
     const later = anchored
-      ? head.blocks.filter((b) => b.slot > anchored.slot)
+      ? head.blocks.filter((b) => b.slot > (forkSlot ?? anchored.slot))
       : []
+    const orphaned =
+      orphan && anchored
+        ? orphan.reorg.replaced.filter((b) => b.slot <= anchored.slot)
+        : []
+    const isLive = anchored === head.head && !orphan
     return {
       head,
       block: anchored,
-      selectedSlot: anchored === head.head ? undefined : selectedSlot,
-      isLive: anchored === head.head,
+      selectedSlot: isLive ? undefined : selectedSlot,
+      isLive,
       slotsBehind: anchored && head.head ? head.head.slot - anchored.slot : 0,
-      today: todayAsOf(head.today, later),
-      supplyEth: supplyAsOf(head.supplyEth, later),
+      today: todayAsOf(head.today, later, orphaned),
+      supplyEth: supplyAsOf(head.supplyEth, later, orphaned),
       select,
       notice,
       dismissNotice: () => setNotice(undefined),
+      orphaned: orphan && { reorg: orphan.reorg, replacement: onChain },
+      viewReplacement: () => {
+        if (onChain?.status === 'proposed') setOrphan(undefined)
+        else select(undefined)
+      },
     }
-  }, [head, block, selectedSlot, select, notice])
+  }, [head, block, onChain, orphan, selectedSlot, select, notice])
 
   return <AnchorContext value={value}>{children}</AnchorContext>
 }

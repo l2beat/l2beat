@@ -1,4 +1,5 @@
 import {
+  type ComponentProps,
   type KeyboardEvent,
   type PointerEvent,
   useEffect,
@@ -9,7 +10,7 @@ import {
 import { usePrefersReducedMotion } from '~/hooks/usePrefersReducedMotion'
 import { PointerTooltip } from '~/pages/blobs/components/live-blobs/PointerTooltip'
 import { cn } from '~/utils/cn'
-import type { HeadBlock } from '../../../live/types'
+import type { HeadBlock, Reorg } from '../../../live/types'
 import {
   formatBlockNumber,
   formatBlockTime,
@@ -21,7 +22,7 @@ import {
 } from '../format'
 import { epochOf, SLOTS_PER_EPOCH } from '../metrics'
 import { useAnchor } from '../state/anchor'
-import { useRewind } from '../state/rewind'
+import { rewindTiming, useRewind } from '../state/rewind'
 import { FOLLOW } from '../ui/spring'
 import { ForkLens } from './ForkLens'
 import {
@@ -38,7 +39,7 @@ import { Countdown, NextSlotTile } from './NextSlot'
 import { Notices } from './Notices'
 import { RewindGlyph, RewindSweep } from './RewindSweep'
 import { Tile } from './Tile'
-import { Uncle } from './Uncle'
+import { UncleBranch } from './Uncle'
 import { useChainMotion } from './useChainMotion'
 
 /**
@@ -47,7 +48,15 @@ import { useChainMotion } from './useChainMotion'
  * that block.
  */
 export function ChainTimeline() {
-  const { head, block, isLive, slotsBehind, select } = useAnchor()
+  const {
+    head,
+    block,
+    isLive,
+    slotsBehind,
+    select,
+    orphaned,
+    viewReplacement,
+  } = useAnchor()
   const { active } = useRewind()
   const stuck = useStuck()
 
@@ -66,6 +75,7 @@ export function ChainTimeline() {
             block={block}
             isLive={isLive}
             slotsBehind={slotsBehind}
+            orphaned={orphaned !== undefined}
           />
           {isLive ? (
             <div className="flex items-center gap-4 text-label-value-13 text-secondary">
@@ -80,14 +90,18 @@ export function ChainTimeline() {
               )}
             </div>
           ) : (
-            <button
-              type="button"
-              onClick={() => select(undefined)}
-              className="flex shrink-0 items-center gap-1.5 rounded-full bg-brand px-3 py-1.5 font-bold text-label-value-13 text-white shadow-sm transition-transform hover:scale-[1.03] active:scale-95"
-            >
-              <span className="size-1.5 rounded-full bg-white" />
-              Back to live
-            </button>
+            <div className="flex shrink-0 items-center gap-2">
+              {orphaned?.replacement?.status === 'proposed' && (
+                <button
+                  type="button"
+                  onClick={viewReplacement}
+                  className="rounded-full border border-chart-ethereum/50 px-3 py-1.5 font-bold text-chart-ethereum text-label-value-13 transition-colors hover:bg-chart-ethereum/10"
+                >
+                  <span className="max-sm:hidden">View the </span>replacement
+                </button>
+              )}
+              <BackToLive onClick={() => select(undefined)} />
+            </div>
           )}
         </div>
         <Track />
@@ -104,7 +118,7 @@ function Lens() {
   const { active } = useRewind()
   const reducedMotion = usePrefersReducedMotion()
   if (!active || reducedMotion) return null
-  if (!head.blocks.some((b) => b.slot === active.slot)) return null
+  if (!head.blocks.some((b) => b.slot === active.forkSlot + 1)) return null
   return (
     <ForkLens
       key={active.seenAt}
@@ -115,16 +129,31 @@ function Lens() {
   )
 }
 
+function BackToLive({ onClick }: { onClick: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="flex shrink-0 items-center gap-1.5 rounded-full bg-brand px-3 py-1.5 font-bold text-label-value-13 text-white shadow-sm transition-transform hover:scale-[1.03] active:scale-95"
+    >
+      <span className="size-1.5 rounded-full bg-white" />
+      <span className="max-sm:hidden">Back to </span>live
+    </button>
+  )
+}
+
 function StripStatus({
   status,
   block,
   isLive,
   slotsBehind,
+  orphaned,
 }: {
   status: string
   block: HeadBlock | undefined
   isLive: boolean
   slotsBehind: number
+  orphaned: boolean
 }) {
   if (status === 'connecting' || !block) {
     return (
@@ -154,6 +183,19 @@ function StripStatus({
       </div>
     )
   }
+  if (orphaned) {
+    return (
+      <div className="flex min-w-0 items-center gap-2 text-label-value-14">
+        <span className="size-3.5 shrink-0 rounded-[3px] border-[1.5px] border-chart-ethereum border-dashed" />
+        <span className="truncate">
+          <span className="font-bold tabular-nums">
+            {formatBlockNumber(block.number ?? 0)}
+          </span>
+          <span className="text-secondary"> was replaced by a reorg</span>
+        </span>
+      </div>
+    )
+  }
   return (
     <div className="flex min-w-0 items-center gap-2 text-label-value-14">
       <RewindGlyph className="size-3.5 shrink-0 text-chart-ethereum" />
@@ -171,7 +213,7 @@ function StripStatus({
 }
 
 function Track() {
-  const { head, block, selectedSlot, select } = useAnchor()
+  const { head, block, selectedSlot, select, orphaned } = useAnchor()
   const rewind = useRewind()
   const trackRef = useRef<HTMLDivElement>(null)
   const scrollerRef = useRef<HTMLDivElement>(null)
@@ -180,7 +222,12 @@ function Track() {
   const blocks = head.blocks
   const headSlot = head.head?.slot
   const limits = head.limits
-  const anchorColumn = block ? blocks.indexOf(block) : -1
+  // by slot, not block: an orphaned block on show isn't on the chain any more
+  const anchorSlot = block?.slot
+  const anchorColumn =
+    anchorSlot === undefined
+      ? -1
+      : blocks.findIndex((b) => b.slot === anchorSlot)
   const active = rewind.active
 
   const previousHead = useRef<number>(undefined)
@@ -190,7 +237,12 @@ function Track() {
 
   const markerMoved = useOwnMove(selectedSlot, anchorColumn)
 
-  useChainMotion(trackRef, headSlot, active?.seenAt)
+  useChainMotion(trackRef, headSlot, active)
+  // the reader's orphan keeps its ghost branch up for as long as they look at it
+  const uncles =
+    orphaned && !rewind.uncles.includes(orphaned.reorg)
+      ? [...rewind.uncles, orphaned.reorg]
+      : rewind.uncles
   useFollowHead(scrollerRef, headSlot, anchorColumn, selectedSlot)
 
   function pick(clientX: number) {
@@ -294,7 +346,7 @@ function Track() {
           TRACK_WIDTH,
         )}
       >
-        <Lane blocks={blocks} uncleSlots={rewind.uncles.map((r) => r.slot)} />
+        <Lane blocks={blocks} uncles={uncles} />
         {blocks.length === 0 ? (
           <SkeletonRow />
         ) : (
@@ -320,18 +372,11 @@ function Track() {
                   maxBlobs={limits.maxBlobs}
                   isHead={b.slot === headSlot}
                   isSelected={
-                    selectedSlot !== undefined && b.slot === selectedSlot
+                    selectedSlot !== undefined &&
+                    b.slot === selectedSlot &&
+                    !orphaned
                   }
-                  enter={
-                    active &&
-                    b.slot === active.slot &&
-                    b.hash === active.by.hash
-                      ? 'replacement'
-                      : previousHead.current !== undefined &&
-                          b.slot > previousHead.current
-                        ? 'new'
-                        : undefined
-                  }
+                  enter={enterOf(b, active, previousHead.current)}
                 />
               ))}
               <NextSlotTile
@@ -343,23 +388,26 @@ function Track() {
               targetBlobs={limits.targetBlobs}
               maxBlobs={limits.maxBlobs}
             />
-            {rewind.uncles.map((r) => {
-              const column = blocks.findIndex((b) => b.slot === r.slot)
-              if (column < 1) return null
+            {uncles.map((r) => {
+              const first = blocks.findIndex((b) => b.slot === r.forkSlot + 1)
+              // gone once its first slot leaves the window
+              if (first < 0) return null
               return (
-                <Uncle
+                <UncleBranch
                   key={r.seenAt}
                   reorg={r}
-                  column={column}
+                  firstColumn={first}
+                  forkColumn={first - 1}
                   maxBlobs={limits.maxBlobs}
                   animate={r === active}
+                  highlightSlot={orphaned?.reorg === r ? anchorSlot : undefined}
                 />
               )
             })}
             {active && (
               <RewindSweepAt
                 blocks={blocks}
-                slot={active.slot}
+                reorg={active}
                 key={active.seenAt}
               />
             )}
@@ -387,27 +435,42 @@ function Track() {
 
 function RewindSweepAt({
   blocks,
-  slot,
+  reorg,
 }: {
   blocks: HeadBlock[]
-  slot: number
+  reorg: Reorg
 }) {
-  const column = blocks.findIndex((b) => b.slot === slot)
-  if (column < 1) return null
-  return <RewindSweep forkColumn={column - 1} />
+  const forkColumn = blocks.findIndex((b) => b.slot === reorg.forkSlot)
+  if (forkColumn < 0) return null
+  return <RewindSweep forkColumn={forkColumn} depth={reorg.depth} />
+}
+
+/**
+ * How a tile enters: the blocks of a reorg's winning branch land one by one,
+ * oldest first; a fresh head grows out of the slot being built
+ */
+function enterOf(
+  block: HeadBlock,
+  active: Reorg | undefined,
+  previousHead: number | undefined,
+): ComponentProps<typeof Tile>['enter'] {
+  const i = active ? active.by.indexOf(block) : -1
+  if (active && i >= 0) {
+    return { kind: 'replacement', delay: rewindTiming(active.depth).landAt(i) }
+  }
+  if (previousHead !== undefined && block.slot > previousHead) {
+    return { kind: 'new' }
+  }
+  return undefined
 }
 
 /** The lane above the chain: epoch boundaries, and room for uncles */
-function Lane({
-  blocks,
-  uncleSlots,
-}: {
-  blocks: HeadBlock[]
-  /** An uncle takes the lane over its slot, so a label there steps aside */
-  uncleSlots: number[]
-}) {
+function Lane({ blocks, uncles }: { blocks: HeadBlock[]; uncles: Reorg[] }) {
+  // a ghost branch takes the lane over its slots, so labels there step aside
   const nearUncle = (slot: number) =>
-    uncleSlots.some((u) => slot > u - 10 && slot < u + 10)
+    uncles.some(
+      (u) => slot > u.forkSlot - 9 && slot <= u.forkSlot + u.depth + 2,
+    )
   return (
     <div className="relative h-(--lane-h)" aria-hidden>
       {blocks.map((b, i) =>

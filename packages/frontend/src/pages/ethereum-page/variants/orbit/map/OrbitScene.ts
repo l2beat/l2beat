@@ -16,6 +16,8 @@ export interface SceneBody {
 
 export interface SceneBlock {
   slot: number
+  /** Undefined for a missed slot */
+  number: number | undefined
   posters: { posterId: string; color: string; blobs: number }[]
   gasFraction: number
   missed: boolean
@@ -70,6 +72,15 @@ interface Segment {
   targetGrow: number
 }
 
+/** Which block of a reorg the map is on, for the core's readout */
+export interface RewindCursor {
+  phase: 'back' | 'forward'
+  block: SceneBlock
+  /** 1-based, in the order the map visits them */
+  step: number
+  depth: number
+}
+
 interface Ripple {
   start: number
   color: string
@@ -81,10 +92,18 @@ const INNER_PERIOD_MS = 150_000
 const PULSE_MS = 1050
 const PULSE_STAGGER_MS = 85
 const RIPPLE_MS = 750
-/** How long the orbit spins back before the replacement block comes in */
+/** How long the orbit spins back for a 1-block reorg; each slot deeper adds a step */
 const REWIND_MS = 1500
+const REWIND_STEP_MS = 380
+const REWIND_MAX_MS = 3600
+/** Radians the orbit turns back for a 1-block reorg; deeper ones turn further */
 const REWIND_TURN = -1.1
+const REWIND_TURN_STEP = -0.55
+/** Replayed blocks before the new head fall in faster, so a deep reorg is replayed within the slot */
+const REPLAY_PACE = 0.5
 const ARC_REWIND_SWING = -0.32
+/** The half-orbit has no back half to swing into, so deep reorgs swing only a little further */
+const ARC_SWING_MAX = 1.4
 const SEGMENT_GAP = 0.022
 const TAIL = 7
 
@@ -108,8 +127,12 @@ export class OrbitScene {
   private gasShown = 0
   private gasTarget = 0
   private clock: { start: number; end: number } | undefined
-  private rewind: { start: number; last: number } | undefined
+  private rewind:
+    | { start: number; last: number; duration: number; turn: number }
+    | undefined
   private hovered: string | undefined
+  /** Tells the core readout which block a rewind is on */
+  onCursor: (cursor: RewindCursor | undefined) => void = () => {}
   private maxBlobs = 21
   private targetBlobs = 14
   private gasTargetFraction = 0.5
@@ -208,10 +231,16 @@ export class OrbitScene {
   }
 
   /** A new head: its blobs fly in from the systems that posted them */
-  showBlock(block: SceneBlock, animate: boolean) {
+  showBlock(
+    block: SceneBlock,
+    animate: boolean,
+    options: { pace?: number; cursor?: RewindCursor } = {},
+  ) {
+    const pace = options.pace ?? 1
     const now = performance.now()
     const at = Math.max(now, this.busyUntil)
     this.schedule(at, () => {
+      this.onCursor(options.cursor)
       for (const segment of this.segments) segment.targetGrow = 0
       this.gasTarget = block.gasFraction
       if (!animate || this.reducedMotion) {
@@ -226,8 +255,8 @@ export class OrbitScene {
       block.posters.forEach((p, index) => {
         this.pulses.push({
           ...p,
-          start: at + index * PULSE_STAGGER_MS,
-          duration: pulseDuration(p.blobs),
+          start: at + index * PULSE_STAGGER_MS * pace,
+          duration: pulseDuration(p.blobs) * pace,
           inward: true,
           fallbackAngle: stableFraction(p.posterId) * TWO_PI,
           landed: false,
@@ -235,36 +264,64 @@ export class OrbitScene {
       })
     })
     if (animate && !this.reducedMotion) {
-      // a block right behind this one (a reorg's replacement and the next
-      // head) waits for these to land, so each block reads on its own
+      // a block right behind this one (a reorg's replay and the next head)
+      // waits for these to land, so each block reads on its own
       const last = block.posters.reduce(
         (end, p, index) =>
-          Math.max(end, index * PULSE_STAGGER_MS + pulseDuration(p.blobs)),
-        0,
+          Math.max(
+            end,
+            (index * PULSE_STAGGER_MS + pulseDuration(p.blobs)) * pace,
+          ),
+        // a missed slot still takes a beat, so the count does not skip it
+        PULSE_MS * pace * 0.5,
       )
       this.busyUntil = at + last
     }
   }
 
   /**
-   * The replaced block's blobs fly back out to their systems while the orbit
-   * spins backwards, then the replacement's come in
+   * A reorg: the orbit spins back, further the deeper it goes, while every
+   * replaced block's blobs fly back out to their systems, newest first. Then
+   * the winning branch falls in block by block, the new head last
    */
-  rewindBlock(replaced: SceneBlock, by: SceneBlock) {
+  rewindBranch(replaced: SceneBlock[], by: SceneBlock[]) {
+    const head = by.at(-1)
+    if (!head) return
     if (this.reducedMotion) {
-      this.showBlock(by, false)
+      this.onCursor(undefined)
+      this.showBlock(head, false)
       return
     }
+    const depth = by.length
+    const duration = Math.min(
+      REWIND_MAX_MS,
+      REWIND_MS + (depth - 1) * REWIND_STEP_MS,
+    )
+    const turn = REWIND_TURN + (depth - 1) * REWIND_TURN_STEP
     const now = performance.now()
     const at = Math.max(now, this.busyUntil)
+    // the newest block leaves first, and its pulses need time to fly out
+    const perBlock = (duration - PULSE_MS * 0.8) / depth
+    const newestFirst = [...replaced].reverse()
+
     this.schedule(at, () => {
-      // what was still on its way in belongs to the block being undone
+      // what was still on its way in belongs to a block being undone
       this.pulses = this.pulses.filter((p) => !p.inward || p.landed)
-      this.rewind = { start: at, last: at }
+      this.rewind = { start: at, last: at, duration, turn }
       this.gasTarget = 0
-      const outgoing = [...replaced.posters].reverse()
+    })
+    newestFirst.forEach((block, blockIndex) => {
+      const blockStart = at + blockIndex * perBlock
+      this.schedule(blockStart, () =>
+        this.onCursor({ phase: 'back', block, step: blockIndex + 1, depth }),
+      )
+      const outgoing = [...block.posters].reverse()
+      const stagger = Math.min(
+        PULSE_STAGGER_MS,
+        perBlock / Math.max(1, outgoing.length),
+      )
       outgoing.forEach((p, index) => {
-        const start = at + index * PULSE_STAGGER_MS
+        const start = blockStart + index * stagger
         this.schedule(start, () => {
           const segment = this.segments.find(
             (s) => s.posterId === p.posterId && s.targetGrow > 0,
@@ -276,15 +333,27 @@ export class OrbitScene {
         this.pulses.push({
           ...p,
           start,
-          duration: PULSE_MS,
+          duration: depth > 2 ? PULSE_MS * 0.8 : PULSE_MS,
           inward: false,
           fallbackAngle: stableFraction(p.posterId) * TWO_PI,
           landed: false,
         })
       })
     })
-    this.busyUntil = at + REWIND_MS
-    this.showBlock(by, true)
+    this.schedule(at + perBlock, () => {
+      for (const segment of this.segments) segment.targetGrow = 0
+    })
+
+    this.busyUntil = at + duration
+    by.forEach((block, index) => {
+      const isHead = index === by.length - 1
+      this.showBlock(block, true, {
+        pace: isHead ? 1 : REPLAY_PACE,
+        cursor: { phase: 'forward', block, step: index + 1, depth },
+      })
+    })
+    // the readout goes back to the head once the new head has landed
+    this.schedule(this.busyUntil, () => this.onCursor(undefined))
   }
 
   hitTest(x: number, y: number): string | undefined {
@@ -375,16 +444,15 @@ export class OrbitScene {
       }
     }
     if (this.rewind) {
-      const t = (time - this.rewind.start) / REWIND_MS
+      const { start, last, duration } = this.rewind
+      const t = (time - start) / duration
       if (t >= 1) {
         this.rewind = undefined
       } else if (g.mode === 'orbit') {
         const turn =
-          REWIND_TURN *
+          this.rewind.turn *
           (easeInOut(clamp01(t)) -
-            easeInOut(
-              clamp01((this.rewind.last - this.rewind.start) / REWIND_MS),
-            ))
+            easeInOut(clamp01((last - start) / duration)))
         for (let ring = 0; ring < 3; ring++) {
           this.phase[ring] = (this.phase[ring] ?? 0) + turn
         }
@@ -477,7 +545,10 @@ export class OrbitScene {
     if (g.mode === 'arc' && this.rewind) {
       angle +=
         ARC_REWIND_SWING *
-        Math.sin(Math.PI * clamp01((time - this.rewind.start) / REWIND_MS))
+        Math.min(ARC_SWING_MAX, this.rewind.turn / REWIND_TURN) *
+        Math.sin(
+          Math.PI * clamp01((time - this.rewind.start) / this.rewind.duration),
+        )
     }
     body.x = g.cx + rx * Math.cos(angle)
     body.y = g.cy + ry * Math.sin(angle)
@@ -737,11 +808,14 @@ export class OrbitScene {
 
     if (this.rewind && this.geometry.mode === 'orbit') {
       // echoes trailing the reverse spin: the visible "rewind"
-      const t = (time - this.rewind.start) / REWIND_MS
+      const t = (time - this.rewind.start) / this.rewind.duration
       const strength = Math.sin(Math.PI * clamp01(t))
+      // a deeper reorg spins faster, so its trail stretches further
+      const spin = Math.min(2.5, this.rewind.turn / REWIND_TURN)
       const g = this.geometry
       for (let i = 1; i <= 4; i++) {
-        const back = this.phaseOf(body.ring) + body.angle + i * 0.045 * strength
+        const back =
+          this.phaseOf(body.ring) + body.angle + i * 0.045 * strength * spin
         const rx = lerp(
           g.rx[Math.floor(body.ring)] ?? 0,
           g.rx[Math.ceil(body.ring)] ?? 0,

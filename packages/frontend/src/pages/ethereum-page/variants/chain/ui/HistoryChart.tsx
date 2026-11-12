@@ -19,7 +19,11 @@ export interface Metric {
   label: string
   pick: (p: DailyPoint) => number
   /** Today's partial value from the running totals, as of the anchored block */
-  today?: (t: TodaySoFar, block: HeadBlock) => number | undefined
+  today?: (
+    t: TodaySoFar,
+    block: HeadBlock,
+    totals: { supplyEth: number | undefined; stakedEth: number | undefined },
+  ) => number | undefined
   format: (value: number) => string
   kind: 'bucket' | 'snapshot'
   scale?: 'linear' | 'log'
@@ -44,7 +48,7 @@ export function HistoryChart({
   height?: number
 }) {
   const history = useHistory()
-  const { today, block } = useAnchor()
+  const { today, block, supplyEth, head } = useAnchor()
   const [metricId, setMetricId] = useState(metrics[0]?.id ?? '')
   const [range, setRange] = useState<Range>(defaultRange)
   const metric = metrics.find((m) => m.id === metricId) ?? metrics[0]
@@ -55,7 +59,10 @@ export function HistoryChart({
   )
   if (!metric) return null
 
-  const todayValue = today && block && metric.today?.(today, block)
+  const todayValue =
+    today &&
+    block &&
+    metric.today?.(today, block, { supplyEth, stakedEth: head.stakedEth })
   const todayPoint =
     today && todayValue !== undefined && Number.isFinite(todayValue)
       ? { t: today.startedAt, v: todayValue }

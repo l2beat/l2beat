@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { cn } from '~/utils/cn'
-import type { Reorg } from '../../../live/types'
+import type { HeadBlock, Reorg } from '../../../live/types'
 import { formatWhole, shortHash } from '../format'
 
 /** Long enough to read after the rewind, short enough not to linger as an alarm */
@@ -26,7 +26,6 @@ export function ReorgNotice({ reorg }: { reorg: Reorg | undefined }) {
     dismissed !== reorg.seenAt &&
     now - reorg.seenAt < SHOWN_MS
   if (!visible || !reorg) return null
-  const number = reorg.replaced.number ?? reorg.by.number
 
   return (
     <div
@@ -37,21 +36,13 @@ export function ReorgNotice({ reorg }: { reorg: Reorg | undefined }) {
       )}
     >
       <RewindIcon />
-      <p className="min-w-0 flex-1 text-paragraph-14 text-secondary">
-        <span className="font-medium text-primary">
-          Block {number !== undefined ? formatWhole(number) : ''} was replaced.
-        </span>{' '}
-        Slot {formatWhole(reorg.slot)} now holds{' '}
-        <code className="font-mono text-primary">
-          {shortHash(reorg.by.hash)}
-        </code>{' '}
-        instead of{' '}
-        <code className="font-mono line-through">
-          {shortHash(reorg.replaced.hash)}
-        </code>
-        , a {reorg.depth}-block reorg. Every number on this page now follows the
-        new block.
-      </p>
+      <div className="min-w-0 flex-1 text-paragraph-14 text-secondary">
+        {reorg.depth === 1 ? (
+          <SingleSlot reorg={reorg} />
+        ) : (
+          <SlotRange reorg={reorg} />
+        )}
+      </div>
       <button
         type="button"
         onClick={() => setDismissed(reorg.seenAt)}
@@ -60,6 +51,87 @@ export function ReorgNotice({ reorg }: { reorg: Reorg | undefined }) {
         Dismiss
       </button>
     </div>
+  )
+}
+
+function SingleSlot({ reorg }: { reorg: Reorg }) {
+  const replaced = reorg.replaced[0]
+  const by = reorg.by[0]
+  const number = replaced?.number ?? by?.number
+  return (
+    <p>
+      <span className="font-medium text-primary">
+        {number !== undefined
+          ? `Block ${formatWhole(number)} was replaced.`
+          : `Slot ${formatWhole(reorg.forkSlot + 1)} was rewritten.`}
+      </span>{' '}
+      Slot {formatWhole(reorg.forkSlot + 1)} now holds <BlockId block={by} />{' '}
+      instead of <BlockId block={replaced} struck />, a 1-slot reorg. Nothing
+      finalized changed, and every number on this page now follows the new
+      block.
+    </p>
+  )
+}
+
+function SlotRange({ reorg }: { reorg: Reorg }) {
+  const first = reorg.forkSlot + 1
+  const last = first + reorg.depth - 1
+  const flipped = reorg.replaced.filter(
+    (block, i) => block.status !== reorg.by[i]?.status,
+  ).length
+  return (
+    <>
+      <p>
+        <span className="font-medium text-primary">
+          A {reorg.depth}-slot reorg rewrote slots {formatWhole(first)} to{' '}
+          {formatWhole(last)}.
+        </span>{' '}
+        The chain forked after slot {formatWhole(reorg.forkSlot)} and the other
+        branch won
+        {flipped > 0 &&
+          `; ${flipped} ${flipped === 1 ? 'slot' : 'slots'} switched between missed and proposed`}
+        . Nothing finalized changed, and every number on this page now follows
+        the new branch.
+      </p>
+      <details className="mt-2">
+        <summary className="cursor-pointer font-medium text-label-value-13 text-primary">
+          The {reorg.depth} slots, before and after
+        </summary>
+        <ol className="mt-2 grid gap-1 text-label-value-13 tabular-nums">
+          {reorg.replaced.map((block, i) => (
+            <li
+              key={block.slot}
+              className="grid grid-cols-[auto_1fr] gap-x-3 sm:grid-cols-[120px_1fr]"
+            >
+              <span>Slot {formatWhole(block.slot)}</span>
+              <span>
+                <BlockId block={block} struck /> to{' '}
+                <BlockId block={reorg.by[i]} />
+              </span>
+            </li>
+          ))}
+        </ol>
+      </details>
+    </>
+  )
+}
+
+function BlockId({
+  block,
+  struck = false,
+}: {
+  block: HeadBlock | undefined
+  struck?: boolean
+}) {
+  if (!block || block.status === 'missed') {
+    return (
+      <span className={cn('italic', struck && 'line-through')}>missed</span>
+    )
+  }
+  return (
+    <code className={cn('font-mono', struck ? 'line-through' : 'text-primary')}>
+      {shortHash(block.hash)}
+    </code>
   )
 }
 

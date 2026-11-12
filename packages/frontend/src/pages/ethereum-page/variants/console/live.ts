@@ -1,29 +1,50 @@
 import { useEffect, useRef, useState } from 'react'
 import type { EthereumHead, HeadBlock, Reorg } from '../../live/types'
 import { epochOf } from './derive'
+import { fmtNumber } from './format'
 
 /**
- * The stages of a replayed reorg, in order. The tape scrolls back past the
- * replaced slot, the orphan rolls back into view and is struck out, it is
- * ejected, the replacement drops into its place, and the tape runs forward
- * to the head again
+ * The stages of a replayed reorg, in order. The tape scrolls back to the fork
+ * point, the orphaned rows roll back into view and are struck out, they are
+ * ejected, the winning rows drop in one by one, oldest first, and the tape
+ * runs forward to the head again
  */
 export type RewindPhase = 'rewind' | 'strike' | 'eject' | 'drop' | 'forward'
-
-const TIMELINE: [RewindPhase, number][] = [
-  ['rewind', 0],
-  ['strike', 700],
-  ['eject', 1550],
-  ['drop', 1950],
-  ['forward', 2650],
-]
-const DONE_AT = 3300
 
 export interface Rewind {
   reorg: Reorg
   phase: RewindPhase
+  /** Winning rows already dropped in, during `drop` */
+  dropped: number
   /** The tape as it was when the reorg arrived, newest first */
   snapshot: HeadBlock[]
+}
+
+/** Each orphan is struck and ejected a beat after the one above it, so a deep reorg reads row by row */
+export const REWIND_STAGGER_MS = 70
+const SCROLL_MS = 700
+const STRIKE_MS = 650
+const EJECT_MS = 420
+const DROP_EACH_MS = 280
+const FORWARD_MS = 650
+
+/** Every step of the replay with its start time; the stages stretch with depth so six rows stay readable */
+function timeline(depth: number) {
+  const stagger = (depth - 1) * REWIND_STAGGER_MS
+  const strike = SCROLL_MS
+  const eject = strike + STRIKE_MS + stagger
+  const drop = eject + EJECT_MS + stagger
+  const steps: { phase: RewindPhase; dropped: number; at: number }[] = [
+    { phase: 'rewind', dropped: 0, at: 0 },
+    { phase: 'strike', dropped: 0, at: strike },
+    { phase: 'eject', dropped: 0, at: eject },
+  ]
+  for (let i = 1; i <= depth; i++) {
+    steps.push({ phase: 'drop', dropped: i, at: drop + (i - 1) * DROP_EACH_MS })
+  }
+  const forward = drop + depth * DROP_EACH_MS + 250
+  steps.push({ phase: 'forward', dropped: depth, at: forward })
+  return { steps, doneAt: forward + FORWARD_MS }
 }
 
 /** Replays each new reorg once; with reduced motion the tape just updates and the log says what happened */
@@ -42,10 +63,14 @@ export function useRewind(
     seen.current = lastReorg.seenAt
     if (reducedMotion) return
     const snapshot = [...blocksRef.current].reverse()
-    const timers = TIMELINE.map(([phase, at]) =>
-      setTimeout(() => setRewind({ reorg: lastReorg, phase, snapshot }), at),
+    const { steps, doneAt } = timeline(lastReorg.by.length)
+    const timers = steps.map(({ phase, dropped, at }) =>
+      setTimeout(
+        () => setRewind({ reorg: lastReorg, phase, dropped, snapshot }),
+        at,
+      ),
     )
-    timers.push(setTimeout(() => setRewind(undefined), DONE_AT))
+    timers.push(setTimeout(() => setRewind(undefined), doneAt))
     return () => {
       for (const timer of timers) clearTimeout(timer)
       setRewind(undefined)
@@ -53,13 +78,14 @@ export function useRewind(
   }, [lastReorg, reducedMotion])
 
   // The render that brings the reorg already shows the rewind's first stage,
-  // so the replacement never flashes onto the tape before the replay starts
+  // so the winning rows never flash onto the tape before the replay starts
   const arriving =
     !reducedMotion && lastReorg && lastReorg.seenAt !== seen.current
   if (arriving && rewind?.reorg !== lastReorg) {
     return {
       reorg: lastReorg,
       phase: 'rewind',
+      dropped: 0,
       snapshot: [...blocks].reverse(),
     }
   }
@@ -101,9 +127,9 @@ export function useChainLog(head: EthereumHead): LogLine[] {
       const r = head.lastReorg
       added.push({
         id: `reorg-${r.seenAt}`,
-        timestamp: r.by.timestamp,
+        timestamp: r.by.at(-1)?.timestamp ?? block.timestamp,
         kind: 'reorg',
-        text: `slot ${r.slot.toLocaleString('en-US')} depth ${r.depth} · #${r.replaced.number?.toLocaleString('en-US') ?? '?'} ${r.replaced.hash?.slice(0, 10) ?? ''} replaced by ${r.by.hash?.slice(0, 10) ?? ''}`,
+        text: describeReorg(r),
       })
     }
     if (previous.slot !== undefined && block.slot !== previous.slot) {
@@ -182,4 +208,17 @@ export function usePauseKey(onToggle: () => void) {
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [])
+}
+
+/** "depth 3 · slots 101–103 · fork at 100 · 3 blocks orphaned, 2 won" */
+export function describeReorg(r: Reorg) {
+  const first = r.by[0]?.slot ?? r.forkSlot + 1
+  const last = r.by.at(-1)?.slot ?? first
+  const range =
+    first === last
+      ? `slot ${fmtNumber(first)}`
+      : `slots ${fmtNumber(first)}–${fmtNumber(last)}`
+  const orphaned = r.replaced.filter((b) => b.status === 'proposed').length
+  const won = r.by.filter((b) => b.status === 'proposed').length
+  return `depth ${r.depth} · ${range} · fork at ${fmtNumber(r.forkSlot)} · ${orphaned} ${orphaned === 1 ? 'block' : 'blocks'} orphaned, ${won} won`
 }

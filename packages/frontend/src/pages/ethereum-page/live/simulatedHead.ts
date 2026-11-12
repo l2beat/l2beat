@@ -4,7 +4,6 @@ import type {
   EthereumHead,
   HeadBlock,
   PosterBlobs,
-  Reorg,
   TodaySoFar,
 } from './types'
 
@@ -20,8 +19,10 @@ const GENESIS = 1606824023
 const SLOTS_PER_EPOCH = 32
 /** Block numbers ran ahead of slots before the merge, less the slots missed since */
 const SLOT_TO_BLOCK = 10_727_000
-/** One block in this many is replaced, far more often than on mainnet, so the rewind can be seen */
+/** One block in this many starts a reorg, far more often than on mainnet, so the rewind can be seen */
 const REORG_EVERY = 45
+/** Most reorgs rewrite one slot, a few go deeper; never past the finalized slot */
+const REORG_DEPTHS = [1, 1, 1, 1, 1, 1, 2, 2, 2, 3, 3, 4, 6]
 const MISS_EVERY = 40
 
 export const SIMULATED_LIMITS: BlockLimits = {
@@ -54,8 +55,8 @@ export interface SimulatedPoster {
 export interface SimulatedHead {
   get: () => EthereumHead
   subscribe: (listener: () => void) => () => void
-  /** Replaces the head block now, as a reorg would */
-  reorg: () => void
+  /** Rewrites the newest `depth` slots now, as a reorg would; a typical depth when omitted */
+  reorg: (depth?: number) => void
   /** 1 is real time */
   setSpeed: (speed: number) => void
 }
@@ -128,9 +129,7 @@ export function createSimulatedHead(posters: SimulatedPoster[]): SimulatedHead {
 
   function advance() {
     slot++
-    if (state.head?.status === 'proposed' && Math.random() < 1 / REORG_EVERY) {
-      replaceHead()
-    }
+    if (Math.random() < 1 / REORG_EVERY) reorg()
     const block = makeBlock(slot, weights)
     const blocks = [...state.blocks, block].slice(-HEAD_WINDOW)
     const crossedEpoch = slot % SLOTS_PER_EPOCH === 0
@@ -154,28 +153,46 @@ export function createSimulatedHead(posters: SimulatedPoster[]): SimulatedHead {
     schedule()
   }
 
-  function replaceHead() {
-    const replaced = state.head
-    if (!replaced || replaced.status !== 'proposed') return
-    const by = makeBlock(replaced.slot, weights, 'proposed')
-    const reorg: Reorg = {
-      slot: replaced.slot,
-      depth: 1,
-      replaced,
-      by,
-      seenAt: Date.now(),
+  function reorg(requested = randomDepth()) {
+    const { blocks, head } = state
+    if (!head || head.status !== 'proposed') return
+    const unfinalized = head.slot - (state.finalizedSlot ?? 0)
+    let depth = Math.max(1, Math.min(requested, unfinalized, blocks.length - 1))
+    // a fork starts from a block, so a missed slot can't be the fork point
+    while (
+      depth < blocks.length - 1 &&
+      blocks[blocks.length - 1 - depth]?.status === 'missed'
+    ) {
+      depth++
     }
-    const today = addToToday(removeFromToday(state.today, replaced), by)
+    const replaced = blocks.slice(-depth)
+    const by = replaced.map((b, i) =>
+      // the winning branch ends on a block, or there'd be no new head
+      makeBlock(b.slot, weights, i === depth - 1 ? 'proposed' : undefined),
+    )
+    let today = state.today
+    let supplyEth = state.supplyEth ?? 0
+    for (const b of replaced) {
+      today = removeFromToday(today, b)
+      supplyEth -= b.issuedEth - b.burnedEth
+    }
+    for (const b of by) {
+      today = addToToday(today, b)
+      supplyEth += b.issuedEth - b.burnedEth
+    }
     emit({
       ...state,
-      head: state.head === replaced ? by : state.head,
-      blocks: state.blocks.map((b) => (b === replaced ? by : b)),
-      lastReorg: reorg,
+      head: by.at(-1),
+      blocks: [...blocks.slice(0, -depth), ...by],
+      lastReorg: {
+        forkSlot: (replaced[0]?.slot ?? head.slot) - 1,
+        depth,
+        replaced,
+        by,
+        seenAt: Date.now(),
+      },
       today,
-      supplyEth:
-        (state.supplyEth ?? 0) -
-        (replaced.issuedEth - replaced.burnedEth) +
-        (by.issuedEth - by.burnedEth),
+      supplyEth,
     })
   }
 
@@ -189,7 +206,7 @@ export function createSimulatedHead(posters: SimulatedPoster[]): SimulatedHead {
         if (listeners.size === 0) clearTimeout(timer)
       }
     },
-    reorg: replaceHead,
+    reorg,
     setSpeed(next) {
       speed = next
       if (state.status === 'live') {
@@ -198,6 +215,10 @@ export function createSimulatedHead(posters: SimulatedPoster[]): SimulatedHead {
       }
     },
   }
+}
+
+function randomDepth() {
+  return REORG_DEPTHS[Math.floor(Math.random() * REORG_DEPTHS.length)] ?? 1
 }
 
 function finalizedFor(slot: number) {

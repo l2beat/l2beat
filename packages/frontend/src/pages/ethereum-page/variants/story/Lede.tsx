@@ -6,7 +6,7 @@ import { EASE_OUT_QUINT } from '~/utils/easing'
 import type { EthereumHead, HeadBlock } from '../../live/types'
 import { Ref, TYPE, ValueSlot } from './Article'
 import { CorrectionNote } from './CorrectionNote'
-import { getFinalized } from './facts'
+import { getFinalized, SLOT_SECONDS, sum } from './facts'
 import { formatEthAmount, formatInteger } from './format'
 import { type Rewrite, useRewrite } from './useRewrite'
 
@@ -17,16 +17,19 @@ type Token =
       id: string
       value: number
       format: (value: number) => string
-      /** The replaced block's value, struck through beside the new one */
+      /** The replaced branch's value, struck through beside the new one */
       old?: number
+      /** Scope, not a figure: set like the words around it */
+      plain?: boolean
     }
   | { kind: 'ref' }
 
 /**
  * The page's headline: one sentence about the newest block, with live
- * numbers that roll as blocks land. When a reorg replaces the block it was
+ * numbers that roll as blocks land. When a reorg rewrites the slots it was
  * about, the sentence rewinds to the first word that changed and retypes
- * itself, keeping the old values struck through, like a corrected proof.
+ * itself over the whole rewritten span ("in the last 60 seconds"), keeping
+ * the replaced branch's totals struck through, like a corrected proof.
  */
 export function Lede({ head }: { head: EthereumHead }) {
   const rewrite = useRewrite(head.lastReorg, head.head?.slot)
@@ -41,7 +44,7 @@ export function Lede({ head }: { head: EthereumHead }) {
         <RewritingLede rewrite={rewrite} finalTokens={finalTokens} />
       ) : (
         <p className={TYPE.lede}>
-          <LiveTokens tokens={sentence(head.head, finalTokens)} />
+          <LiveTokens tokens={sentence([head.head], finalTokens)} />
         </p>
       )}
       {head.lastReorg && (
@@ -61,8 +64,9 @@ function RewritingLede({
   rewrite: Rewrite
   finalTokens: Token[]
 }) {
-  const { reorg, phase } = rewrite
-  const before = sentence(reorg.replaced, finalTokens)
+  const { reorg, phase, eraseMs } = rewrite
+  const shownHead = reorg.replaced.at(-1)
+  const before = shownHead ? sentence([shownHead], finalTokens) : []
   const after = sentence(reorg.by, finalTokens, reorg.replaced)
   const from = firstChange(before, after)
   const ref = useRef<HTMLParagraphElement>(null)
@@ -79,9 +83,9 @@ function RewritingLede({
         { transform: 'translateX(-1px)', offset: 0.8 },
         { transform: 'none' },
       ],
-      { duration: 700, easing: EASE_OUT_QUINT },
+      { duration: eraseMs, easing: EASE_OUT_QUINT },
     )
-  }, [reducedMotion])
+  }, [reducedMotion, eraseMs])
 
   let tokens = after
   let cut: number | undefined
@@ -146,7 +150,7 @@ function CutTokens({ tokens, cut }: { tokens: Token[]; cut?: number }) {
           ...piece(' ', `sp${i}`),
         )
       }
-      nodes.push(...piece(text, `v${i}`, VALUE))
+      nodes.push(...piece(text, `v${i}`, token.plain ? undefined : VALUE))
     }
   })
   if (!caretPlaced) nodes.push(<Caret key="end" />)
@@ -159,6 +163,7 @@ function LiveTokens({ tokens }: { tokens: Token[] }) {
       {tokens.map((token, i) => {
         if (token.kind === 'text') return token.text
         if (token.kind === 'ref') return <Ref key={i} id="finality" />
+        if (token.plain) return token.format(token.value)
         return (
           <RollingNumber
             key={token.id}
@@ -197,48 +202,70 @@ function LedeSkeleton() {
   )
 }
 
+/**
+ * One sentence about a span of slots, oldest first: the head alone while
+ * live, the rewritten slots during a correction. `replaced` is the same span
+ * as the page had it, whose totals are struck through where they differ.
+ */
 function sentence(
-  block: HeadBlock,
+  blocks: HeadBlock[],
   finalTokens: Token[],
-  replaced?: HeadBlock,
+  replaced?: HeadBlock[],
 ): Token[] {
-  if (block.status === 'missed') {
+  const scope: Token = {
+    kind: 'value',
+    id: 'seconds',
+    value: blocks.length * SLOT_SECONDS,
+    format: formatInteger,
+    plain: true,
+  }
+  const proposed = blocks.filter((b) => b.status === 'proposed')
+  const first = blocks[0]
+  const last = blocks.at(-1)
+  if (proposed.length === 0 && first && last) {
     return [
-      text(
-        'In the last 12 seconds no block arrived: the validator chosen for slot ',
-      ),
-      value('slot', block.slot, formatInteger),
-      text(' missed its turn. Ethereum has '),
+      text('In the last '),
+      scope,
+      text(' seconds no block arrived: '),
+      ...(blocks.length === 1
+        ? [
+            text('the validator chosen for slot '),
+            value('slot', last.slot, formatInteger),
+            text(' missed its turn'),
+          ]
+        : [
+            text('slots '),
+            value('slot', first.slot, formatInteger),
+            text('–'),
+            value('slotTo', last.slot, formatInteger),
+            text(' were all missed'),
+          ]),
+      text('. Ethereum has '),
       ...finalTokens,
     ]
   }
-  const old = (pick: (b: HeadBlock) => number) =>
-    replaced?.status === 'proposed' ? pick(replaced) : undefined
+  const now = totals(blocks)
+  const was = replaced && totals(replaced)
   return [
-    text('In the last 12 seconds Ethereum settled '),
-    value(
-      'blobs',
-      block.blobCount,
-      formatInteger,
-      old((b) => b.blobCount),
-    ),
-    text(` blob${block.blobCount === 1 ? '' : 's'} of rollup data and `),
-    value(
-      'txs',
-      block.txCount,
-      formatInteger,
-      old((b) => b.txCount),
-    ),
+    text('In the last '),
+    scope,
+    text(' seconds Ethereum settled '),
+    value('blobs', now.blobs, formatInteger, was?.blobs),
+    text(` blob${now.blobs === 1 ? '' : 's'} of rollup data and `),
+    value('txs', now.txs, formatInteger, was?.txs),
     text(' transactions, burned '),
-    value(
-      'burned',
-      block.burnedEth,
-      formatEthAmount,
-      old((b) => b.burnedEth),
-    ),
+    value('burned', now.burned, formatEthAmount, was?.burned),
     text(' ETH, and '),
     ...finalTokens,
   ]
+}
+
+function totals(blocks: HeadBlock[]) {
+  return {
+    blobs: sum(blocks, (b) => b.blobCount),
+    txs: sum(blocks, (b) => b.txCount),
+    burned: sum(blocks, (b) => b.burnedEth),
+  }
 }
 
 function finalizedTokens(finalized: {

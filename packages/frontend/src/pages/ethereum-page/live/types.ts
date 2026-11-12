@@ -35,11 +35,19 @@ export interface PosterBlobs {
   blobs: number
 }
 
+/**
+ * Any slot after the finalized one can be rewritten, so a reorg replaces the
+ * newest `depth` slots at once, missed ones included
+ */
 export interface Reorg {
-  slot: number
+  /** The last slot both branches share */
+  forkSlot: number
+  /** Slots rewritten, from `forkSlot + 1` to the head */
   depth: number
-  replaced: HeadBlock
-  by: HeadBlock
+  /** Oldest first: the slots as the page had them */
+  replaced: HeadBlock[]
+  /** Oldest first: the same slots on the branch that won */
+  by: HeadBlock[]
   /** Unix ms when the page learned of it */
   seenAt: number
 }

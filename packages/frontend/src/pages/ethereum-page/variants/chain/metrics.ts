@@ -43,33 +43,46 @@ export function blobFeeEth(block: HeadBlock) {
 export function todayAsOf(
   today: TodaySoFar | undefined,
   later: HeadBlock[],
+  /** Blocks of a losing branch the reader is still looking at, added back */
+  orphaned: HeadBlock[] = [],
 ): TodaySoFar | undefined {
   if (!today) return undefined
   let result = today
-  for (const b of later) {
-    if (Math.floor(b.timestamp / 86_400) * 86_400 !== today.startedAt) continue
-    const proposed = b.status === 'proposed' ? 1 : 0
-    result = {
-      ...result,
-      slots: result.slots - 1,
-      blocks: result.blocks - proposed,
-      missed: result.missed - (1 - proposed),
-      blobs: result.blobs - b.blobCount,
-      txs: result.txs - b.txCount,
-      uops: result.uops - b.uopsCount,
-      gasUsed: result.gasUsed - b.gasUsed,
-      burnedEth: result.burnedEth - b.burnedEth,
-      issuedEth: result.issuedEth - b.issuedEth,
-      priorityFeesEth:
-        result.priorityFeesEth - (b.priorityFeeGwei * b.gasUsed) / 1e9,
-    }
-  }
+  for (const b of later) result = applyToToday(result, b, -1)
+  for (const b of orphaned) result = applyToToday(result, b, 1)
   return result
 }
 
-export function supplyAsOf(supply: number | undefined, later: HeadBlock[]) {
+function applyToToday(t: TodaySoFar, b: HeadBlock, sign: 1 | -1): TodaySoFar {
+  if (dayOf(b.timestamp) !== t.startedAt) return t
+  const proposed = b.status === 'proposed' ? 1 : 0
+  return {
+    ...t,
+    slots: t.slots + sign,
+    blocks: t.blocks + sign * proposed,
+    missed: t.missed + sign * (1 - proposed),
+    blobs: t.blobs + sign * b.blobCount,
+    txs: t.txs + sign * b.txCount,
+    uops: t.uops + sign * b.uopsCount,
+    gasUsed: t.gasUsed + sign * b.gasUsed,
+    burnedEth: t.burnedEth + sign * b.burnedEth,
+    issuedEth: t.issuedEth + sign * b.issuedEth,
+    priorityFeesEth:
+      t.priorityFeesEth + (sign * b.priorityFeeGwei * b.gasUsed) / 1e9,
+  }
+}
+
+export function supplyAsOf(
+  supply: number | undefined,
+  later: HeadBlock[],
+  orphaned: HeadBlock[] = [],
+) {
   if (supply === undefined) return undefined
-  return later.reduce((s, b) => s - (b.issuedEth - b.burnedEth), supply)
+  const net = (b: HeadBlock) => b.issuedEth - b.burnedEth
+  return (
+    later.reduce((s, b) => s - net(b), supply) +
+    orphaned.reduce((s, b) => s + net(b), 0)
+  )
 }
 
 export function epochOf(slot: number) {

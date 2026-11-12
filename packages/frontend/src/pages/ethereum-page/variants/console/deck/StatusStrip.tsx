@@ -2,8 +2,8 @@ import { useEffect, useRef } from 'react'
 import { writeText } from '~/pages/blobs/components/live-blobs/liveMotion'
 import { cn } from '~/utils/cn'
 import type { EthereumHead } from '../../../live/types'
-import { epochOf, SLOT_SECONDS } from '../derive'
-import { fmtDuration, fmtNumber } from '../format'
+import { epochOf } from '../derive'
+import { fmtNumber } from '../format'
 import { Ticker } from '../ui/Ticker'
 import { sentimentDotClass, type VerdictItem } from '../verdict'
 
@@ -22,10 +22,6 @@ export function StatusStrip({
   const latestNumber = head.blocks.findLast(
     (b) => b.number !== undefined,
   )?.number
-  const behind =
-    block && head.finalizedSlot !== undefined
-      ? block.slot - head.finalizedSlot
-      : undefined
   return (
     <div className="flex flex-wrap items-stretch bg-surface-primary text-[12px] md:col-span-12 md:flex-nowrap">
       <Cell className="max-md:w-full max-md:border-b">
@@ -59,7 +55,9 @@ export function StatusStrip({
           />
         </span>
         <span className="font-mono text-secondary tabular-nums max-xl:hidden">
-          {behind === undefined ? '' : `−${fmtDuration(behind * SLOT_SECONDS)}`}
+          {head.finalizedBlock === undefined
+            ? ''
+            : `#${fmtNumber(head.finalizedBlock)}`}
         </span>
       </Cell>
       <a

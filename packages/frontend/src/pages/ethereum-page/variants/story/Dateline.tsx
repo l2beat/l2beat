@@ -25,6 +25,8 @@ export function Dateline({ head }: { head: EthereumHead }) {
       : undefined
   const rewound =
     head.lastReorg !== undefined && now - head.lastReorg.seenAt < REWOUND_MS
+      ? head.lastReorg.depth
+      : undefined
   const behind =
     block && head.finalizedSlot !== undefined
       ? Math.round(((block.slot - head.finalizedSlot) * SLOT_SECONDS) / 60)
@@ -91,13 +93,14 @@ function Status({
   rewound,
 }: {
   status: EthereumHead['status']
-  rewound: boolean
+  /** Slots rewound, while the chip is up */
+  rewound: number | undefined
 }) {
-  if (rewound) {
+  if (rewound !== undefined) {
     return (
       <span className="flex shrink-0 items-center gap-1.5 rounded-full bg-brand px-2 py-0.5 font-semibold text-[12px] text-white">
         <RewindGlyph />
-        Rewound
+        Rewound {rewound} slot{rewound === 1 ? '' : 's'}
       </span>
     )
   }

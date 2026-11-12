@@ -3,7 +3,7 @@ import { usePrefersReducedMotion } from '~/hooks/usePrefersReducedMotion'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { EASE_OUT_QUINT } from '~/utils/easing'
-import type { Reorg } from '../../live/types'
+import type { HeadBlock, Reorg } from '../../live/types'
 import { formatInteger } from './format'
 
 /**
@@ -34,11 +34,6 @@ export function CorrectionNote({
     )
   }, [reorg.seenAt, reducedMotion])
 
-  const replaced = reorg.replaced
-  const name =
-    replaced.number !== undefined
-      ? `block ${formatInteger(replaced.number)}`
-      : `the block at slot ${formatInteger(reorg.slot)}`
   return (
     <p
       ref={ref}
@@ -50,11 +45,66 @@ export function CorrectionNote({
     >
       <span className="font-semibold not-italic">Correction</span>{' '}
       {formatTimestamp(Math.floor(reorg.seenAt / 1000), { mode: 'time' })}:{' '}
-      {name}
-      {replaced.hash && <Hash value={replaced.hash} />} was replaced by another
-      {reorg.by.hash && <Hash value={reorg.by.hash} />} at the same slot,{' '}
-      {reorg.depth} block{reorg.depth === 1 ? '' : 's'} deep. Figures updated.
+      <WhatChanged reorg={reorg} /> Figures updated.
     </p>
+  )
+}
+
+/**
+ * One block swapped for another at its slot names both hashes, so it can be
+ * checked on an explorer. A deeper rewrite names the range and the fork, and
+ * the depth in slots when missed slots make it differ from the block count.
+ */
+function WhatChanged({ reorg }: { reorg: Reorg }) {
+  const blocks = reorg.replaced.filter(
+    (b): b is HeadBlock & { number: number } => b.number !== undefined,
+  )
+  const first = blocks[0]
+  const last = blocks.at(-1)
+  const fork = <>forking at slot {formatInteger(reorg.forkSlot)}</>
+  const slots =
+    blocks.length !== reorg.depth
+      ? `, ${reorg.depth} slot${reorg.depth === 1 ? '' : 's'} deep`
+      : ''
+
+  if (!first || !last) {
+    const from = reorg.forkSlot + 1
+    const to = reorg.forkSlot + reorg.depth
+    return (
+      <>
+        {from === to
+          ? `slot ${formatInteger(from)}, empty on the branch we had, now holds a block`
+          : `slots ${formatInteger(from)}–${formatInteger(to)}, empty on the branch we had, now hold blocks`}{' '}
+        from another branch {fork}.
+      </>
+    )
+  }
+  const replacedOne = reorg.replaced[0]
+  const byOne = reorg.by[0]
+  if (reorg.depth === 1 && replacedOne?.hash && byOne?.hash) {
+    return (
+      <>
+        block {formatInteger(first.number)}
+        <Hash value={replacedOne.hash} /> was replaced by another
+        <Hash value={byOne.hash} /> at the same slot, 1 block deep.
+      </>
+    )
+  }
+  if (first === last) {
+    return (
+      <>
+        block {formatInteger(first.number)} was replaced by another branch{' '}
+        {fork}
+        {slots}.
+      </>
+    )
+  }
+  return (
+    <>
+      blocks {formatInteger(first.number)}–{formatInteger(last.number)} (
+      {blocks.length} blocks) were replaced by another branch {fork}
+      {slots}.
+    </>
   )
 }
 

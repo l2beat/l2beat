@@ -27,6 +27,8 @@ export function Finality({
     headSlot !== undefined && head.finalizedSlot !== undefined
       ? headSlot - head.finalizedSlot
       : undefined
+  const reorg = head.lastReorg
+  const rewritten = new Set(reorg?.by.map((b) => b.slot))
 
   return (
     <Panel
@@ -37,7 +39,7 @@ export function Finality({
         <span className="font-mono text-[10.5px] text-secondary tabular-nums">
           {behind === undefined
             ? '—'
-            : `${fmtNumber(behind)} slots · ${fmtDuration(behind * SLOT_SECONDS)} behind head`}
+            : `${head.finalizedBlock === undefined ? '' : `#${fmtNumber(head.finalizedBlock)} · `}${fmtDuration(behind * SLOT_SECONDS)} behind head`}
         </span>
       }
       bodyClassName="flex flex-col gap-1 px-3 py-2"
@@ -58,13 +60,18 @@ export function Finality({
                   <span
                     key={i}
                     title={
-                      slot !== undefined && missed.has(slot)
-                        ? `Slot ${fmtNumber(slot)} missed`
-                        : undefined
+                      slot === undefined
+                        ? undefined
+                        : slotTitle(slot, missed, reorg?.forkSlot, rewritten)
                     }
                     className={cn(
                       'flex-1 rounded-[1px]',
                       slotClass(slot, headSlot, head, missed),
+                      slot !== undefined &&
+                        rewritten.has(slot) &&
+                        'shadow-[inset_0_-3px_0_var(--negative)]',
+                      slot === reorg?.forkSlot &&
+                        'after:-top-[5px] after:-translate-x-1/2 relative ring-1 ring-negative after:absolute after:left-1/2 after:border-x-[3px] after:border-x-transparent after:border-t-[4px] after:border-t-negative after:content-[""]',
                       slot === headSlot &&
                         'ring-1 ring-brand motion-safe:animate-pulse',
                     )}
@@ -76,8 +83,32 @@ export function Finality({
           </div>
         )
       })}
+      {reorg && (
+        <div className="mt-0.5 flex items-center gap-1.5 truncate font-mono text-[10px] text-secondary">
+          <span className="size-1.5 shrink-0 rounded-full bg-negative" />
+          <span className="truncate">
+            last reorg: {reorg.depth} rewritten after fork{' '}
+            {fmtNumber(reorg.forkSlot)}
+            {head.finalizedSlot !== undefined &&
+              ` · ${fmtNumber(reorg.forkSlot - head.finalizedSlot)} past final`}
+          </span>
+        </div>
+      )}
     </Panel>
   )
+}
+
+function slotTitle(
+  slot: number,
+  missed: Set<number>,
+  forkSlot: number | undefined,
+  rewritten: Set<number>,
+) {
+  const parts = [`Slot ${fmtNumber(slot)}`]
+  if (missed.has(slot)) parts.push('missed')
+  if (slot === forkSlot) parts.push('fork point of the last reorg')
+  if (rewritten.has(slot)) parts.push('rewritten by the last reorg')
+  return parts.join(', ')
 }
 
 function slotClass(

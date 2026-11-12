@@ -37,7 +37,7 @@ export function useEthereumHead(): EthereumHead {
   return useSyncExternalStore(head.subscribe, head.get, head.get)
 }
 
-/** Prototype only: lets a variant show off the reorg rewind on demand */
+/** Prototype only: rewrites the newest slots on demand, to show off the rewind */
 export function useSimulateReorg() {
   return useHeadSource().reorg
 }

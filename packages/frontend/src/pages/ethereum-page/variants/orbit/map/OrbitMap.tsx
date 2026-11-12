@@ -9,7 +9,12 @@ import type { Poster, PosterRow } from '../model'
 import { CoreReadout } from './CoreReadout'
 import { type Geometry, getGeometry, type MapMode } from './geometry'
 import { HUD_WIDTH } from './hudLayout'
-import { OrbitScene, type SceneBlock, type SceneBody } from './OrbitScene'
+import {
+  OrbitScene,
+  type RewindCursor,
+  type SceneBlock,
+  type SceneBody,
+} from './OrbitScene'
 
 /** The innermost orbit, named on the map */
 const LABELED_ON_MAP = 4
@@ -33,6 +38,7 @@ export function OrbitMap({ live, rows, posters, children }: Props) {
   const sceneRef = useRef<OrbitScene>(undefined)
   const [geometry, setGeometry] = useState<Geometry>()
   const [focus, setFocus] = useState<{ id: string; pinned: boolean }>()
+  const [cursor, setCursor] = useState<RewindCursor>()
   const reducedMotion = usePrefersReducedMotion()
   const tokens = useThemeTokens()
 
@@ -42,6 +48,7 @@ export function OrbitMap({ live, rows, posters, children }: Props) {
     if (!canvas || !container) return
     const scene = new OrbitScene(canvas)
     sceneRef.current = scene
+    scene.onCursor = setCursor
     const wide = window.matchMedia('(min-width: 768px)')
     // the HUD sits over the map's sides from `lg`, matching its classes
     const hudBeside = window.matchMedia('(min-width: 1200px)')
@@ -187,7 +194,9 @@ export function OrbitMap({ live, rows, posters, children }: Props) {
           className="absolute inset-0 size-full"
         />
         <SkeletonOrbits visible={!geometry} />
-        {geometry && <CoreReadout geometry={geometry} live={live} />}
+        {geometry && (
+          <CoreReadout geometry={geometry} live={live} cursor={cursor} />
+        )}
         {focused && focusPosition && geometry && (
           <SystemTooltip
             row={focused}
@@ -275,8 +284,15 @@ function useBlockFeed(
     if (!previous) {
       scene.showBlock(toScene(head), false)
     } else if (lastReorg && lastReorg.seenAt !== previous.reorgSeenAt) {
-      scene.rewindBlock(toScene(lastReorg.replaced), toScene(lastReorg.by))
-      if (key !== blockKey(lastReorg.by)) scene.showBlock(toScene(head), true)
+      scene.rewindBranch(
+        lastReorg.replaced.map(toScene),
+        lastReorg.by.map(toScene),
+      )
+      const newHead = lastReorg.by.at(-1)
+      // the stream may have moved past the branch's head in the same update
+      if (!newHead || key !== blockKey(newHead)) {
+        scene.showBlock(toScene(head), true)
+      }
     } else if (key !== previous.key) {
       scene.showBlock(toScene(head), true)
     } else {
@@ -303,6 +319,7 @@ function toSceneBlock(
 ): SceneBlock {
   return {
     slot: block.slot,
+    number: block.number,
     missed: block.status === 'missed',
     gasFraction: block.gasLimit === 0 ? 0 : block.gasUsed / block.gasLimit,
     posters: block.blobs.map((b) => ({

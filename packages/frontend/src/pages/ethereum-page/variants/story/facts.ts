@@ -69,12 +69,15 @@ export function getWindowStats(blocks: HeadBlock[]): WindowStats | undefined {
 }
 
 /**
- * The stream gives the finalized slot only. Inside the window its block is
- * known; past it, the slot is all we can state without guessing at misses.
+ * The finalized block when the stream knows it. Otherwise the window may hold
+ * it; past the window, the slot is all we can state without guessing at misses.
  */
 export function getFinalized(
   head: EthereumHead,
 ): { kind: 'block' | 'slot'; value: number } | undefined {
+  if (head.finalizedBlock !== undefined) {
+    return { kind: 'block', value: head.finalizedBlock }
+  }
   const slot = head.finalizedSlot
   if (slot === undefined) return undefined
   const windowStart = head.blocks[0]?.slot

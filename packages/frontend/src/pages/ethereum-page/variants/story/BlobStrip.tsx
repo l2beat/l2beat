@@ -11,7 +11,7 @@ import { formatInteger } from './format'
 
 const UNKNOWN_COLOR = 'var(--surface-tertiary)'
 const SLIDE_MS = 700
-/** How long the replaced slot stays marked */
+/** How long rewritten slots stay marked */
 const REPLACED_MS = 12_000
 
 /**
@@ -30,10 +30,17 @@ export function BlobStrip({
   const reducedMotion = usePrefersReducedMotion()
   const { maxBlobs, targetBlobs } = head.limits
   const headSlot = head.head?.slot
-  const replacedSlot =
+  const reorg =
     head.lastReorg && Date.now() - head.lastReorg.seenAt < REPLACED_MS
-      ? head.lastReorg.slot
+      ? head.lastReorg
       : undefined
+  const rewritten = reorg
+    ? head.blocks.flatMap((b, i) =>
+        b.slot > reorg.forkSlot && b.slot <= reorg.forkSlot + reorg.depth
+          ? [i]
+          : [],
+      )
+    : []
 
   // the strip slides one column left as a block lands, like a ticker
   useLayoutEffect(() => {
@@ -54,13 +61,13 @@ export function BlobStrip({
           className="pointer-events-none absolute inset-x-0 z-[1] border-primary/50 border-t border-dashed"
           style={{ bottom: `${(targetBlobs / maxBlobs) * 100}%` }}
         >
-          <span className="absolute right-0 bottom-1 rounded-sm bg-surface-primary/85 px-1 text-[11px] text-secondary">
+          <span className="absolute bottom-1 left-0 rounded-sm bg-surface-primary/85 px-1 text-[11px] text-secondary">
             Target, {targetBlobs} blobs
           </span>
         </div>
         <div
           ref={stripRef}
-          className="flex h-full items-end gap-[2px]"
+          className="relative flex h-full items-end gap-[2px]"
           aria-label={`Blobs in each of the last ${head.blocks.length} slots`}
           role="img"
         >
@@ -77,9 +84,20 @@ export function BlobStrip({
                   block={block}
                   maxBlobs={maxBlobs}
                   posters={posters}
-                  replaced={block.slot === replacedSlot}
+                  replaced={
+                    reorg !== undefined &&
+                    block.slot > reorg.forkSlot &&
+                    block.slot <= reorg.forkSlot + reorg.depth
+                  }
                 />
               ))}
+          {rewritten.length > 0 && (
+            <RewrittenBand
+              from={rewritten[0] ?? 0}
+              count={rewritten.length}
+              of={head.blocks.length}
+            />
+          )}
         </div>
       </div>
       <div className={cn(TYPE.note, 'mt-2 flex justify-between')}>
@@ -90,6 +108,33 @@ export function BlobStrip({
         <span>Now</span>
       </div>
     </div>
+  )
+}
+
+/** Brackets the rewritten slots, so a deep reorg reads as one event, not several */
+function RewrittenBand({
+  from,
+  count,
+  of,
+}: {
+  from: number
+  count: number
+  of: number
+}) {
+  const column = `((100% + 2px) / ${of})`
+  return (
+    <span
+      aria-hidden
+      className="pointer-events-none absolute inset-y-0 rounded-[3px] bg-brand/10"
+      style={{
+        left: `calc(${from} * ${column} - 3px)`,
+        width: `calc(${count} * ${column} + 4px)`,
+      }}
+    >
+      <span className="absolute top-1 right-1 whitespace-nowrap rounded-sm bg-brand px-1 font-semibold text-[10px] text-white">
+        {count === 1 ? 'Replaced' : `${count} slots rewritten`}
+      </span>
+    </span>
   )
 }
 
@@ -117,7 +162,10 @@ function Column({
     return (
       <span
         title={title}
-        className="relative h-full flex-1 border-divider border-b-2 border-dotted"
+        className={cn(
+          'relative h-full flex-1 border-divider border-b-2 border-dotted',
+          replaced && 'border-brand',
+        )}
       />
     )
   }
@@ -126,7 +174,7 @@ function Column({
       title={title}
       className={cn(
         'relative flex flex-1 flex-col-reverse gap-px',
-        replaced && 'rounded-[2px] outline-2 outline-brand outline-offset-2',
+        replaced && 'rounded-[2px] outline-2 outline-brand outline-offset-1',
       )}
       style={{ height: `${(block.blobCount / maxBlobs) * 100}%` }}
     >

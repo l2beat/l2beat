@@ -3,9 +3,14 @@ import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { EASE_OUT_QUINT } from '~/utils/easing'
 import { UNKNOWN_POSTER_ID } from '../../../live/simulatedHead'
-import type { BlockLimits, HeadBlock } from '../../../live/types'
+import type { BlockLimits, HeadBlock, Reorg } from '../../../live/types'
 import { blobFeeUnit, fmtBlobFee, fmtEth, fmtGwei, fmtNumber } from '../format'
-import { type LogLine, type Rewind, usePauseKey } from '../live'
+import {
+  type LogLine,
+  REWIND_STAGGER_MS,
+  type Rewind,
+  usePauseKey,
+} from '../live'
 import { CadenceBadge } from '../ui/Panel'
 import { Ticker } from '../ui/Ticker'
 
@@ -22,6 +27,7 @@ export function BlockTape({
   blocks,
   limits,
   rewind,
+  lastReorg,
   log,
   posterColors,
   className,
@@ -29,6 +35,8 @@ export function BlockTape({
   blocks: HeadBlock[]
   limits: BlockLimits
   rewind: Rewind | undefined
+  /** Marks the fork point and the rewritten rows for as long as they are on the tape */
+  lastReorg: Reorg | undefined
   log: LogLine[]
   posterColors: Map<string, string>
   className?: string
@@ -41,6 +49,7 @@ export function BlockTape({
   const shown = paused ?? rewind?.snapshot ?? live
   const rows = layoutRows(shown, paused ? undefined : rewind)
   const waiting = paused ? live.findIndex((b) => b.slot === paused[0]?.slot) : 0
+  const rewritten = new Set(lastReorg?.by.map((b) => b.slot))
 
   return (
     <div
@@ -86,6 +95,9 @@ export function BlockTape({
             <TapeRow
               block={row.block}
               tone={row.tone}
+              order={row.order}
+              isFork={row.block.slot === lastReorg?.forkSlot}
+              rewritten={row.tone === 'live' && rewritten.has(row.block.slot)}
               enterFrom={row.enterFrom}
               limits={limits}
               posterColors={posterColors}
@@ -106,51 +118,55 @@ interface LaidOutRow {
   block: HeadBlock
   index: number
   tone: Tone
+  /** Top to bottom among the forked rows, for staggering their strike and eject */
+  order: number
   enterFrom?: HeadBlock
 }
 
-/** Where each row sits for a stage of the rewind; rows only ever move by transform */
+/**
+ * Where each row sits for a stage of the rewind; rows only ever move by
+ * transform. The forked rows are the `depth` slots after the fork point:
+ * the orphans are shown in their place until ejected, then the winners
+ */
 function layoutRows(
   newestFirst: HeadBlock[],
   rewind: Rewind | undefined,
 ): LaidOutRow[] {
-  const visible = newestFirst.slice(0, TAPE_ROWS + 1)
-  if (!rewind) {
-    return visible.map((block, index) => ({
-      key: keyOf(block),
-      block,
-      index,
-      tone: 'live',
-    }))
+  const live = (block: HeadBlock, index: number): LaidOutRow => ({
+    key: keyOf(block),
+    block,
+    index,
+    tone: 'live',
+    order: 0,
+  })
+  const newestForked = rewind?.reorg.by.at(-1)?.slot
+  const at = newestFirst.findIndex((b) => b.slot === newestForked)
+  if (!rewind || at === -1) {
+    return newestFirst.slice(0, TAPE_ROWS + 1).map(live)
   }
-  const { reorg, phase } = rewind
-  const at = newestFirst.findIndex((b) => b.slot === reorg.slot)
-  if (at === -1) {
-    return visible.map((block, index) => ({
-      key: keyOf(block),
-      block,
-      index,
-      tone: 'live',
-    }))
-  }
-  // Rewinding goes one row past the replaced slot, so the orphan can roll
-  // back into view; until the run forward, everything newer is off the top
-  const shift = phase === 'forward' ? 0 : phase === 'rewind' ? at + 1 : at
+  const { reorg, phase, dropped } = rewind
+  const depth = reorg.by.length
+  // Scrolled back to the fork point: its row on top, the orphans waiting
+  // above it to roll back in. Until the run forward, newer rows stay off the top
+  const shift = phase === 'forward' ? 0 : phase === 'rewind' ? at + depth : at
   const rows: LaidOutRow[] = []
   newestFirst.slice(0, TAPE_ROWS + 1 + shift).forEach((block, i) => {
-    if (i !== at) {
+    const order = i - at
+    if (order < 0 || order >= depth) {
       rows.push({
-        key: keyOf(block),
-        block,
-        index: i - shift,
-        tone: i < at && phase !== 'forward' ? 'above' : 'live',
+        ...live(block, i - shift),
+        tone: order < 0 && phase !== 'forward' ? 'above' : 'live',
       })
       return
     }
+    const orphan = reorg.replaced[depth - 1 - order]
+    const winner = reorg.by[depth - 1 - order]
+    if (!orphan || !winner) return
     if (phase === 'rewind' || phase === 'strike' || phase === 'eject') {
       rows.push({
-        key: keyOf(reorg.replaced),
-        block: reorg.replaced,
+        // keyed apart from the winner: a slot missed on both branches is still two rows
+        key: `orphan:${keyOf(orphan)}`,
+        block: orphan,
         index: i - shift,
         tone:
           phase === 'rewind'
@@ -158,15 +174,19 @@ function layoutRows(
             : phase === 'strike'
               ? 'struck'
               : 'ejected',
+        order,
       })
       return
     }
+    // winners land oldest first: the bottom forked row drops in first
+    if (phase === 'drop' && depth - order > dropped) return
     rows.push({
-      key: keyOf(reorg.by),
-      block: reorg.by,
+      key: keyOf(winner),
+      block: winner,
       index: i - shift,
       tone: 'replacement',
-      enterFrom: reorg.replaced,
+      order,
+      enterFrom: orphan.status === 'proposed' ? orphan : undefined,
     })
   })
   return rows
@@ -229,12 +249,18 @@ function TapeHeader() {
 const TapeRow = memo(function TapeRow({
   block,
   tone,
+  order,
+  isFork,
+  rewritten,
   enterFrom,
   limits,
   posterColors,
 }: {
   block: HeadBlock
   tone: Tone
+  order: number
+  isFork: boolean
+  rewritten: boolean
   enterFrom: HeadBlock | undefined
   limits: BlockLimits
   posterColors: Map<string, string>
@@ -278,6 +304,11 @@ const TapeRow = memo(function TapeRow({
     <div
       ref={ref}
       title={block.hash ? `${block.hash}` : 'Missed slot: no block proposed'}
+      style={
+        tone === 'ejected'
+          ? { transitionDelay: `${order * REWIND_STAGGER_MS}ms` }
+          : undefined
+      }
       className={cn(
         COLUMNS,
         'relative border-divider/35 border-b font-mono text-[11.5px] text-primary tabular-nums transition-[opacity,transform,background-color] duration-[400ms]',
@@ -290,8 +321,11 @@ const TapeRow = memo(function TapeRow({
           '-translate-x-full bg-[color-mix(in_oklab,var(--negative)_12%,transparent)] opacity-0',
         tone === 'replacement' &&
           'bg-[color-mix(in_oklab,var(--positive)_10%,transparent)]',
+        rewritten &&
+          'shadow-[inset_2px_0_0_color-mix(in_oklab,var(--negative)_55%,transparent)]',
       )}
     >
+      {isFork && <ForkMark />}
       <span className="text-secondary">{fmtNumber(block.slot)}</span>
       <span className={cn(tone === 'replacement' && 'text-positive')}>
         {missed ? (
@@ -355,7 +389,9 @@ const TapeRow = memo(function TapeRow({
           />
         )}
       </span>
-      {(tone === 'struck' || tone === 'ejected') && <StrikeLine />}
+      {(tone === 'struck' || tone === 'ejected') && (
+        <StrikeLine delay={order * REWIND_STAGGER_MS} />
+      )}
     </div>
   )
 })
@@ -453,14 +489,20 @@ export function colorOf(posterId: string, posterColors: Map<string, string>) {
   return posterColors.get(posterId) ?? 'var(--surface-tertiary)'
 }
 
-function StrikeLine() {
+function StrikeLine({ delay }: { delay: number }) {
   const ref = useRef<HTMLSpanElement>(null)
   useLayoutEffect(() => {
     ref.current?.animate(
       [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }],
-      { duration: 380, easing: EASE_OUT_QUINT, fill: 'both' },
+      // after the row has rolled back into view, one row after another
+      {
+        duration: 380,
+        delay: 320 + delay,
+        easing: EASE_OUT_QUINT,
+        fill: 'both',
+      },
     )
-  }, [])
+  }, [delay])
   return (
     <span
       ref={ref}
@@ -470,15 +512,34 @@ function StrikeLine() {
   )
 }
 
+/**
+ * The last slot both branches share: a dashed rule along its top edge, where
+ * the rewritten rows begin, and a notch in the gutter
+ */
+function ForkMark() {
+  return (
+    <span aria-hidden className="pointer-events-none absolute inset-x-0 top-0">
+      <span className="absolute inset-x-0 top-0 border-negative/70 border-t border-dashed" />
+      <span className="-translate-y-1/2 absolute top-0 left-0 size-0 border-y-[5px] border-y-transparent border-l-[6px] border-l-negative" />
+      <span className="-translate-y-1/2 absolute top-0 right-2 rounded-[3px] bg-surface-primary px-1 font-mono text-[9px] text-negative leading-3">
+        fork
+      </span>
+    </span>
+  )
+}
+
 function RewindLabel({ rewind }: { rewind: Rewind | undefined }) {
   if (!rewind || rewind.phase === 'forward') return null
+  const { depth, forkSlot } = rewind.reorg
   return (
-    <span className="flex items-center gap-1.5 font-mono text-[11px] text-negative">
+    <span className="flex min-w-0 items-center gap-1.5 truncate font-mono text-[11px] text-negative">
       <span className="inline-block [animation-direction:reverse] [animation-duration:900ms] motion-safe:animate-spin">
         ⟲
       </span>
-      <span className="max-sm:hidden">rewinding to</span> slot{' '}
-      {fmtNumber(rewind.reorg.slot)}
+      <span className="truncate">
+        <span className="max-sm:hidden">rewinding </span>
+        {depth} {depth === 1 ? 'slot' : 'slots'} to fork {fmtNumber(forkSlot)}
+      </span>
     </span>
   )
 }

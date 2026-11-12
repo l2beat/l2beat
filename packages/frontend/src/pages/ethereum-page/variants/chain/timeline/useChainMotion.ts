@@ -1,6 +1,7 @@
 import { type RefObject, useLayoutEffect, useRef } from 'react'
 import { usePrefersReducedMotion } from '~/hooks/usePrefersReducedMotion'
-import { REWIND_MS } from '../state/rewind'
+import type { Reorg } from '../../../live/types'
+import { rewindTiming } from '../state/rewind'
 import { SLIDE } from '../ui/spring'
 import { columnStep } from './geometry'
 
@@ -16,7 +17,7 @@ const MAX_SLIDE_SLOTS = 6
 export function useChainMotion(
   trackRef: RefObject<HTMLElement | null>,
   headSlot: number | undefined,
-  rewindAt: number | undefined,
+  rewind: Reorg | undefined,
 ) {
   const reducedMotion = usePrefersReducedMotion()
   const previousHead = useRef<number>(undefined)
@@ -36,22 +37,36 @@ export function useChainMotion(
     )
   }, [trackRef, headSlot, reducedMotion])
 
+  const rewindAt = rewind?.seenAt
+  const depth = rewind?.depth ?? 1
   useLayoutEffect(() => {
     const track = trackRef.current
     if (!track || rewindAt === undefined || reducedMotion) return
-    const jolt = columnStep(track) * 0.7
+    const timing = rewindTiming(depth)
+    const at = (ms: number) => ms / timing.total
+    // pulled back towards the fork as the tape rewinds, more for a deeper one
+    const jolt = columnStep(track) * Math.min(1.6, 0.5 + depth * 0.2)
     track.animate(
       [
-        { transform: 'none', easing: 'cubic-bezier(0.5, 0, 0.75, 0)' },
-        { transform: `translateX(${jolt}px)`, offset: 0.2, easing: 'ease-out' },
+        { transform: 'none', offset: 0 },
+        {
+          transform: 'none',
+          offset: at(timing.rewindStart),
+          easing: 'cubic-bezier(0.5, 0, 0.75, 0)',
+        },
+        {
+          transform: `translateX(${jolt}px)`,
+          offset: at(timing.rewindEnd),
+          easing: 'ease-out',
+        },
         {
           transform: `translateX(${jolt * 0.85}px)`,
-          offset: 0.55,
+          offset: at(timing.forward),
           easing: SLIDE.easing,
         },
         { transform: 'none' },
       ],
-      { duration: REWIND_MS, composite: 'add' },
+      { duration: timing.total, composite: 'add' },
     )
-  }, [trackRef, rewindAt, reducedMotion])
+  }, [trackRef, rewindAt, depth, reducedMotion])
 }

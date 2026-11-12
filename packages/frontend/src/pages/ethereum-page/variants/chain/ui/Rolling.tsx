@@ -2,7 +2,7 @@ import { useLayoutEffect, useRef } from 'react'
 import { usePrefersReducedMotion } from '~/hooks/usePrefersReducedMotion'
 import { writeText } from '~/pages/blobs/components/live-blobs/liveMotion'
 import { cn } from '~/utils/cn'
-import { REWIND_HOLD_MS, useRewind } from '../state/rewind'
+import { rewindTiming, useRewind } from '../state/rewind'
 
 const ROLL_MS = 650
 const REWIND_ROLL_MS = 1100
@@ -54,6 +54,7 @@ function Counter({
   const reducedMotion = usePrefersReducedMotion()
   const { active } = useRewind()
   const rewindAt = active?.seenAt
+  const holdMs = active ? rewindTiming(active.depth).hold : 0
 
   useLayoutEffect(() => {
     const element = ref.current
@@ -69,9 +70,7 @@ function Counter({
       return
     }
     const hold =
-      rewindAt === undefined
-        ? 0
-        : Math.max(0, rewindAt + REWIND_HOLD_MS - Date.now())
+      rewindAt === undefined ? 0 : Math.max(0, rewindAt + holdMs - Date.now())
     const rewinding = rewindAt !== undefined
     const duration = rewinding ? REWIND_ROLL_MS : ROLL_MS
     if (rewinding) {
@@ -93,7 +92,7 @@ function Counter({
       if (t < 1) frame = requestAnimationFrame(step)
     })
     return () => cancelAnimationFrame(frame)
-  }, [value, format, reducedMotion, rewindAt])
+  }, [value, format, reducedMotion, rewindAt, holdMs])
 
   return <span ref={ref} className={cn('tabular-nums', className)} />
 }

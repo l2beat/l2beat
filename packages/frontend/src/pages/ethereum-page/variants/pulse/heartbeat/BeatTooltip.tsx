@@ -1,5 +1,5 @@
 import { formatTimestamp } from '~/utils/dates'
-import type { BlockLimits, HeadBlock, Reorg } from '../../../live/types'
+import type { BlockLimits, HeadBlock } from '../../../live/types'
 import {
   formatGas,
   formatInteger,
@@ -17,13 +17,14 @@ export function BeatTooltip({
   limits,
   x,
   width,
-  replacedBy,
+  replaced,
 }: {
   block: HeadBlock
   limits: BlockLimits
   x: number
   width: number
-  replacedBy: Reorg | undefined
+  /** What the slot held before a recent reorg rewrote it */
+  replaced: HeadBlock | undefined
 }) {
   const left = Math.min(
     Math.max(0, x - TOOLTIP_WIDTH / 2),
@@ -73,11 +74,11 @@ export function BeatTooltip({
           <Row label="Blob fee" value={formatWei(block.blobBaseFeeWei)} />
         </dl>
       )}
-      {replacedBy && (
+      {replaced && (
         <p className="mt-2 border-divider border-t pt-2 text-secondary">
-          Replaced {shortHash(replacedBy.replaced.hash)}, which had{' '}
-          {replacedBy.replaced.blobCount} blobs and{' '}
-          {formatInteger(replacedBy.replaced.txCount)} transactions.
+          {replaced.status === 'missed'
+            ? 'A reorg filled this slot, which had no block before.'
+            : `Replaced ${shortHash(replaced.hash)}, which had ${replaced.blobCount} blobs and ${formatInteger(replaced.txCount)} transactions.`}
         </p>
       )}
     </div>

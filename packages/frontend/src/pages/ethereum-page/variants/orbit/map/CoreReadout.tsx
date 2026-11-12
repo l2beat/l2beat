@@ -1,22 +1,31 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { writeText } from '~/pages/blobs/components/live-blobs/liveMotion'
 import { cn } from '~/utils/cn'
 import type { EthereumHead } from '../../../live/types'
 import { formatWhole } from '../format'
 import type { Geometry } from './geometry'
+import type { RewindCursor } from './OrbitScene'
 
-/** The head block, written into the core the canvas draws: HTML stays crisp and selectable */
+/**
+ * The head block, written into the core the canvas draws: HTML stays crisp
+ * and selectable. During a reorg it follows the map instead, counting back
+ * through the replaced blocks and forward through the winning branch
+ */
 export function CoreReadout({
   geometry,
   live,
+  cursor,
 }: {
   geometry: Geometry
   live: EthereumHead
+  cursor: RewindCursor | undefined
 }) {
   const { head } = live
-  const rewinding = useRewinding(live.lastReorg?.seenAt)
   const small = geometry.mode === 'arc'
   const size = geometry.core * 2
+  const shown = cursor
+    ? { slot: cursor.block.slot, number: cursor.block.number }
+    : head && { slot: head.slot, number: head.number }
   return (
     <div
       className="pointer-events-none absolute flex flex-col items-center justify-center text-center"
@@ -27,7 +36,7 @@ export function CoreReadout({
         height: size,
       }}
     >
-      {head === undefined ? (
+      {shown === undefined ? (
         <span className="text-label-value-12 text-secondary">
           {live.status === 'connecting' ? 'Connecting' : 'Reconnecting'}
         </span>
@@ -35,30 +44,26 @@ export function CoreReadout({
         <>
           <span
             className={cn(
-              'text-secondary',
+              cursor ? 'font-medium text-primary' : 'text-secondary',
               small ? 'text-[10px] leading-3' : 'text-label-value-12',
             )}
           >
-            {rewinding
-              ? 'Block replaced'
-              : head.status === 'missed'
-                ? 'Slot missed'
-                : 'Head block'}
+            {describe(cursor, shown.number === undefined)}
           </span>
           <span
             className={cn(
               'mt-1 font-bold tabular-nums leading-none tracking-tight',
               small ? 'text-[15px]' : 'text-[22px]',
-              head.status === 'missed' && 'text-secondary',
+              (shown.number === undefined || cursor?.phase === 'back') &&
+                'text-secondary',
+              cursor?.phase === 'back' && 'line-through decoration-2',
             )}
           >
-            {head.number !== undefined
-              ? formatWhole(head.number)
-              : formatWhole(head.slot)}
+            {formatWhole(shown.number ?? shown.slot)}
           </span>
           {!small && (
             <span className="mt-1 text-label-value-12 text-secondary tabular-nums">
-              slot {formatWhole(head.slot)}
+              slot {formatWhole(shown.slot)}
             </span>
           )}
           <Countdown
@@ -74,20 +79,13 @@ export function CoreReadout({
   )
 }
 
-/** As long as the map spins back, so the core says why it runs backwards */
-const REWIND_LABEL_MS = 1600
-
-function useRewinding(seenAt: number | undefined) {
-  const [rewinding, setRewinding] = useState(false)
-  const first = useRef(seenAt)
-  useEffect(() => {
-    // a reorg already in the stream when the page opened is not replayed
-    if (seenAt === undefined || seenAt === first.current) return
-    setRewinding(true)
-    const timer = setTimeout(() => setRewinding(false), REWIND_LABEL_MS)
-    return () => clearTimeout(timer)
-  }, [seenAt])
-  return rewinding
+function describe(cursor: RewindCursor | undefined, missed: boolean) {
+  if (!cursor) return missed ? 'Slot missed' : 'Head block'
+  const { phase, step, depth } = cursor
+  if (depth === 1) return phase === 'back' ? 'Block replaced' : 'Replacement'
+  const count = `${step} of ${depth}`
+  if (phase === 'back') return `Undoing ${count}`
+  return missed ? `Replaying ${count}, missed` : `Replaying ${count}`
 }
 
 /** Writes its own text a few times a second, so the page does not re-render to count down */

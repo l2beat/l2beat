@@ -10,10 +10,33 @@ import {
 import type { Reorg } from '../../../live/types'
 import { useAnchor } from './anchor'
 
-/** The whole choreography: rewind, peel, replace, play forward again */
-export const REWIND_MS = 3600
-/** Numbers hold the replaced block's values until the replacement lands, then roll back */
-export const REWIND_HOLD_MS = 1300
+/**
+ * When each beat of a reorg's replay happens, in ms from when the page learns
+ * of it. A deeper reorg rewinds further and lands more blocks, so it runs
+ * longer, but the landings share a budget so six slots don't drag.
+ */
+export function rewindTiming(depth: number) {
+  const slots = Math.max(1, Math.min(depth, 8))
+  const rewindStart = 260
+  const rewindEnd = rewindStart + 380 + 60 * slots
+  const peel = rewindEnd + 100
+  const land = peel + 520
+  const stagger = slots > 1 ? Math.min(160, 700 / (slots - 1)) : 0
+  const lastLand = land + stagger * (slots - 1)
+  const forward = lastLand + 900
+  const total = forward + 1300
+  return {
+    rewindStart,
+    rewindEnd,
+    peel,
+    /** When the i-th rewritten slot (oldest first) gets its winning block */
+    landAt: (i: number) => land + stagger * Math.min(i, slots - 1),
+    /** Numbers hold the replaced values until the new head lands, then roll back */
+    hold: lastLand,
+    forward,
+    total,
+  }
+}
 /** The orphan stays on its side branch this long, as an uncle */
 const UNCLE_MS = 3 * 60_000
 const NOTICE_MS = 30_000
@@ -21,7 +44,7 @@ const NOTICE_MS = 30_000
 export interface Rewind {
   /** The reorg being animated right now */
   active: Reorg | undefined
-  /** Replaced blocks still drawn on a side branch */
+  /** Replaced branches still drawn above the chain */
   uncles: Reorg[]
   /** The reorg the notice names, until it times out or is dismissed */
   notice: Reorg | undefined
@@ -53,7 +76,7 @@ export function RewindProvider({ children }: { children: ReactNode }) {
     const now = Date.now()
     const deadlines = seen
       .flatMap((r) => [
-        r.seenAt + REWIND_MS,
+        r.seenAt + rewindTiming(r.depth).total,
         r.seenAt + NOTICE_MS,
         r.seenAt + UNCLE_MS,
       ])
@@ -65,7 +88,10 @@ export function RewindProvider({ children }: { children: ReactNode }) {
 
   const now = Date.now()
   const latest = seen.at(-1)
-  const active = latest && now - latest.seenAt < REWIND_MS ? latest : undefined
+  const active =
+    latest && now - latest.seenAt < rewindTiming(latest.depth).total
+      ? latest
+      : undefined
   const notice =
     latest && now - latest.seenAt < NOTICE_MS && dismissed !== latest.seenAt
       ? latest

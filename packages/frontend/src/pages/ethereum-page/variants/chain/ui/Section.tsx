@@ -56,7 +56,7 @@ export function Section({
 
 /** Says which block a section's numbers are from, and that it's not the head */
 export function AnchorBadge({ className }: { className?: string }) {
-  const { block, isLive } = useAnchor()
+  const { block, isLive, orphaned } = useAnchor()
   if (!block || isLive) return null
   return (
     <span
@@ -66,7 +66,8 @@ export function AnchorBadge({ className }: { className?: string }) {
       )}
     >
       <RewindGlyph className="size-3 text-chart-ethereum" />
-      At block {formatBlockNumber(block.number ?? 0)}
+      {orphaned ? 'At orphaned block' : 'At block'}{' '}
+      {formatBlockNumber(block.number ?? 0)}
     </span>
   )
 }

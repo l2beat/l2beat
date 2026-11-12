@@ -132,11 +132,11 @@ export function Hud({
         />
         <HudItem
           className="order-6"
-          label="Finalized slot"
+          label="Finalized block"
           cadence="per epoch"
-          ready={ready && live.finalizedSlot !== undefined}
+          ready={ready && live.finalizedBlock !== undefined}
           value={
-            <RollingNumber value={live.finalizedSlot ?? 0} format={whole} />
+            <RollingNumber value={live.finalizedBlock ?? 0} format={whole} />
           }
           detail={
             behind !== undefined

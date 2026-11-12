@@ -2,14 +2,12 @@ import { useEffect, useRef, useState } from 'react'
 import { usePrefersReducedMotion } from '~/hooks/usePrefersReducedMotion'
 import type { Reorg } from '../../live/types'
 
-/** The old sentence unwinds back to its first changed word */
-export const ERASE_MS = 700
-/** Then the corrected one types itself out */
-export const TYPE_MS = 1300
 /** The struck-through values stay up at least this long to be read */
 const HOLD_MS = 6000
 /** A reorg found when the tab comes back is news, not a moment to replay */
 const STALE_MS = 15_000
+/** Past this many slots a deeper rewind runs no longer */
+const SLOWEST_DEPTH = 6
 
 export type RewritePhase =
   | { kind: 'erase'; progress: number }
@@ -19,12 +17,24 @@ export type RewritePhase =
 export interface Rewrite {
   reorg: Reorg
   phase: RewritePhase
+  /** How long the erase runs, for effects that follow it */
+  eraseMs: number
+}
+
+/**
+ * The old sentence unwinds back to its first changed word, then the
+ * corrected one types itself out. A deeper reorg rewinds a little longer, so
+ * five slots feel heavier than one without keeping the reader waiting.
+ */
+export function rewriteTiming(depth: number) {
+  const extra = Math.min(Math.max(depth, 1), SLOWEST_DEPTH) - 1
+  return { eraseMs: 700 + extra * 110, typeMs: 1300 + extra * 120 }
 }
 
 /**
  * Plays a reorg as a correction to the lede: erase, retype, then hold the
  * corrected sentence until the hold is over and the chain has moved past the
- * replaced slot. Ticks per frame only during the two short animated phases.
+ * rewritten slots. Ticks per frame only during the two short animated phases.
  */
 export function useRewrite(
   reorg: Reorg | undefined,
@@ -43,9 +53,11 @@ export function useRewrite(
     setElapsed(0)
   }, [reorg])
 
+  const timing = rewriteTiming(active?.reorg.depth ?? 1)
+  const animated = timing.eraseMs + timing.typeMs
+
   useEffect(() => {
     if (!active) return
-    const animated = ERASE_MS + TYPE_MS
     let frame = 0
     if (reducedMotion) {
       setElapsed(animated)
@@ -64,27 +76,35 @@ export function useRewrite(
       cancelAnimationFrame(frame)
       clearTimeout(hold)
     }
-  }, [active, reducedMotion])
+  }, [active, animated, reducedMotion])
 
+  const rewrittenHead = active?.reorg.by.at(-1)?.slot
   const finished =
     active !== undefined &&
-    elapsed >= ERASE_MS + TYPE_MS + HOLD_MS &&
-    headSlot !== undefined &&
-    headSlot > active.reorg.slot
+    elapsed >= animated + HOLD_MS &&
+    (rewrittenHead === undefined ||
+      (headSlot !== undefined && headSlot > rewrittenHead))
   useEffect(() => {
     if (finished) setActive(undefined)
   }, [finished])
 
   if (!active) return undefined
-  return { reorg: active.reorg, phase: toPhase(elapsed) }
+  return {
+    reorg: active.reorg,
+    phase: toPhase(elapsed, timing),
+    eraseMs: timing.eraseMs,
+  }
 }
 
-function toPhase(elapsed: number): RewritePhase {
-  if (elapsed < ERASE_MS) {
-    return { kind: 'erase', progress: elapsed / ERASE_MS }
+function toPhase(
+  elapsed: number,
+  { eraseMs, typeMs }: ReturnType<typeof rewriteTiming>,
+): RewritePhase {
+  if (elapsed < eraseMs) {
+    return { kind: 'erase', progress: elapsed / eraseMs }
   }
-  if (elapsed < ERASE_MS + TYPE_MS) {
-    return { kind: 'type', progress: (elapsed - ERASE_MS) / TYPE_MS }
+  if (elapsed < eraseMs + typeMs) {
+    return { kind: 'type', progress: (elapsed - eraseMs) / typeMs }
   }
   return { kind: 'hold' }
 }
