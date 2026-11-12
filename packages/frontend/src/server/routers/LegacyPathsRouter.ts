@@ -1,6 +1,6 @@
 import express from 'express'
 import { ETHEREUM_PROJECT_PATH } from '~/pages/ethereum/paths'
-import { ADVICE } from '~/pages/privacy/adviceUi'
+import { PRIVACY_ADVICE_HREF } from '~/pages/privacy/methodology/paths'
 import { isChainProjectSlug } from '~/server/features/chains/getChainProjects'
 
 export function createLegacyPathsRouter() {
@@ -70,7 +70,7 @@ export function createLegacyPathsRouter() {
 
   // Merged into the methodology's How to stay private section.
   router.get('/publications/privacy-best-practices', (_, res) => {
-    res.redirect(301, ADVICE.methodologyHref)
+    res.redirect(301, PRIVACY_ADVICE_HREF)
   })
 
   router.get('/governance/publications/:id', (req, res) => {

@@ -3,7 +3,7 @@ import { fetchFromRouter } from '~/test/fetchFromRouter'
 import { createLegacyPathsRouter } from './LegacyPathsRouter'
 
 // Method: request legacy URLs without following redirects and check the
-// permanent redirect target.
+// permanent redirect target, fragment included.
 describe(createLegacyPathsRouter.name, () => {
   for (const [from, to] of [
     ['/data-availability', '/blobs'],
@@ -32,7 +32,7 @@ describe(createLegacyPathsRouter.name, () => {
     ['/ecosystems/agglayer.md', '/layer2s/summary'],
     [
       '/publications/privacy-best-practices',
-      '/publications/privacy-methodology',
+      '/publications/privacy-methodology#stay-private',
     ],
   ] as const) {
     it(`redirects ${from} to ${to}`, async () => {
@@ -41,9 +41,11 @@ describe(createLegacyPathsRouter.name, () => {
       })
 
       expect(response.status).toEqual(301)
-      expect(
-        new URL(response.headers.get('location') ?? '', 'http://x').pathname,
-      ).toEqual(to)
+      const location = new URL(
+        response.headers.get('location') ?? '',
+        'http://x',
+      )
+      expect(location.pathname + location.hash).toEqual(to)
     })
   }
 
