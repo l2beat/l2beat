@@ -20,6 +20,7 @@ export const zkCatalogColumns = [
   ...getCommonProjectColumns(columnHelper, (p) => `/zk-catalog/${p.slug}`),
   columnHelper.accessor((row) => row.name, {
     id: 'name',
+    header: 'Name',
     cell: (ctx) => {
       const project = {
         ...ctx.row.original,
