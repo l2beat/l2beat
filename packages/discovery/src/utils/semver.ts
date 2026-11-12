@@ -11,7 +11,7 @@ export function parseSemver(version: string): Semver {
 
   assert(numbers.length === 3, 'Invalid semantic version string')
   assert(
-    numbers.every((n) => !isNaN(n)),
+    numbers.every((n) => !Number.isNaN(n)),
     'Invalid semantic version string',
   )
 

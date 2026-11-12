@@ -33,14 +33,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <input
         ref={ref}
-        onKeyUp={(e) => {
-          e.stopPropagation()
-          props.onKeyUp?.(e)
-        }}
-        onKeyDown={(e) => {
-          e.stopPropagation()
-          props.onKeyDown?.(e)
-        }}
         className={cn(inputVariants({ variant, size }), className)}
         {...props}
       />

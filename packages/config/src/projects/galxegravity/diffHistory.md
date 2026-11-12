@@ -1,3 +1,43 @@
+Generated with discovered.json: 0xe47bf95681c98ed3c3f0ade69017b0431617e0d8
+
+# Diff at Fri, 06 Nov 2026 16:35:52 GMT:
+
+- id: ec8f5579
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@42d599abc7be8cc38122c72abc4da1c1dda6fbeb block: 1787668976
+- current timestamp: 1793982887
+
+## Description
+
+UpgradeExecutor: the TokenOwnerMultisig (3/6) was added as a second executor and can now upgrade the system. It was previously excluded from discovery.
+
+## Watched changes
+
+```diff
+    contract UpgradeExecutor (eth:0xa5D23c69894241825dAffB570c3c742C0F52df96) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.accessControl.EXECUTOR_ROLE.members.1:
++        "eth:0xbD6e434dB90FD8AD4E28d85C133AD34cA6fbfB6D"
++++ severity: MEDIUM
+      values.executors.1:
++        "eth:0xbD6e434dB90FD8AD4E28d85C133AD34cA6fbfB6D"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract TokenOwnerMultisig (eth:0xbD6e434dB90FD8AD4E28d85C133AD34cA6fbfB6D) [GnosisSafe]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.flat/TokenOwnerMultisig/GnosisSafe.sol        | 1026 ++++++++++++++++++++
+ .../.flat/TokenOwnerMultisig/GnosisSafeProxy.p.sol |   38 +
+ 2 files changed, 1064 insertions(+)
+```
+
 Generated with discovered.json: 0x88b24b9b1c0eb383db5233254093853d001cff60
 
 # Diff at Fri, 16 Oct 2026 09:37:46 GMT:

@@ -20,9 +20,14 @@ import { EMPTY_TVS_BREAKDOWN } from '../../layer2s/tvs/get7dTvsBreakdown'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { getDefiTvlDataSource } from '../getDefiTvlDataSource'
 import {
+  getLiquidStakingSummary,
+  type LiquidStakingSummary,
+} from '../liquid-staking/getLiquidStakingSummary'
+import {
   getDefiDependencyProjectsById,
   resolveDefiDependencies,
 } from '../resolveDefiDependencies'
+import { getDefiTokens } from './getDefiTokens'
 
 export interface ProjectDefiEntry {
   id: ProjectId
@@ -43,6 +48,8 @@ export interface ProjectDefiEntry {
     }
   }
   isUnderReview: boolean
+  /** The project's row of the liquid staking page. */
+  liquidStaking?: LiquidStakingSummary
   warnings: {
     yellow?: string
     red?: ProjectRedWarning
@@ -66,6 +73,7 @@ export async function getDefiProjectEntry(
       'discoveryUpdates',
       'ossificationHistory',
       'garden',
+      'liquidStaking',
     ],
   })
 
@@ -80,11 +88,17 @@ export async function getDefiProjectEntry(
     projectsChangeReport,
     dependencyProjectsById,
     ossification,
+    tokens,
+    liquidStaking,
   ] = await Promise.all([
     getContractUtils(),
     getProjectsChangeReport(),
     getDefiDependencyProjectsById(project.externalDependencies),
     getProjectOssification(project),
+    getDefiTokens(project.defiInfo.tokens ?? []),
+    project.liquidStaking
+      ? getLiquidStakingSummary(project, project.liquidStaking.risks)
+      : undefined,
   ])
   // DeFi pages get the Updates section together with ossification.
   const discoveryUpdates = env.CLIENT_SIDE_OSSIFICATION_ENABLED
@@ -145,6 +159,17 @@ export async function getDefiProjectEntry(
         description: undefined,
         detailedDescription: project.display.detailedDescription,
         references: project.display.references,
+      },
+    })
+  }
+
+  if (tokens.length > 0) {
+    sections.push({
+      type: 'DefiTokensSection',
+      props: {
+        id: 'defi-tokens',
+        title: 'Tokens',
+        tokens,
       },
     })
   }
@@ -232,6 +257,7 @@ export async function getDefiProjectEntry(
       contractsSection || permissionsSection ? discoUi.href : undefined,
     discoUi,
     isUnderReview,
+    liquidStaking,
     warnings: {
       yellow: project.statuses.yellowWarning,
       red: project.statuses.redWarning,

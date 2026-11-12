@@ -193,7 +193,7 @@ function ProjectDaThroughputCustomTooltip({
   )
 }
 
-function getProjectChartMeta(projectId: ProjectId) {
+export function getProjectChartMeta(projectId: ProjectId) {
   switch (projectId) {
     case 'ethereum':
       return {

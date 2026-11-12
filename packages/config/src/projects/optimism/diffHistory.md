@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x9a16aaf3a3b8fa51105adcaca0119f08a6c3c7eb
+
+# Diff at Fri, 06 Nov 2026 22:40:30 GMT:
+
+- id: 92f86b95
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@42d599abc7be8cc38122c72abc4da1c1dda6fbeb block: 1792587967
+- current timestamp: 1793984419
+
+## Description
+
+OptimismPortal2: the SuperchainProxyAdminOwner upgraded it to a temporary implementation and back to the previous one in a single [transaction](https://etherscan.io/tx/0xd80476b3ec56283723804cf7bc2d96f800c81d3ebd0fea843555396ffe94f28f) on 2026-10-31. The temporary implementation is unverified. Its bytecode hardcodes one forced deposit, run once during the upgrade (`forceDeposit()`): an L2 transaction from the Binance exploiter address calling `transfer` on the OP token, which moved 44,231,858.7 OP to the L2 alias of the SuperchainProxyAdminOwner.
+
+## Watched changes
+
+```diff
+    contract OptimismPortal2 (eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the SuperFaultDisputeGame.
+      values.$pastUpgrades.19:
++        ["2026-10-31T00:10:59.000Z","0xd80476b3ec56283723804cf7bc2d96f800c81d3ebd0fea843555396ffe94f28f",["eth:0x6d971B07cea5FebAea8aEfb827032f6A0538c9BB"]]
+      values.$pastUpgrades.20:
++        ["2026-10-31T00:10:59.000Z","0xd80476b3ec56283723804cf7bc2d96f800c81d3ebd0fea843555396ffe94f28f",["eth:0x1005217ad392DC64CEf501FA1777A27D42166748"]]
+      values.$upgradeCount:
+-        19
++        21
+    }
+```
+
 Generated with discovered.json: 0x302f7046eea49768ce285c1b19a98442e95c1378
 
 # Diff at Thu, 05 Nov 2026 07:13:48 GMT:

@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TacitEvmPoolZap",
+  "category": "core",
+  "description": "Swaps the caller's token for ETH through zRouter and deposits it into the pool with the caller's proof, in one transaction. It holds nothing between transactions.",
+  "ignoreRelatives": ["PERMIT2", "ZROUTER"]
+}

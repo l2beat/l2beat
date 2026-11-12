@@ -7,6 +7,7 @@ import {
   getChainProjectSlug,
   getChainProjects,
 } from '../chains/getChainProjects'
+import { isListedDefiProject } from '../defi/isListedDefiProject'
 import { hasDefiProjectPage } from '../defi/project/hasDefiProjectPage'
 import { getActiveInteropChains } from '../layer2s/interop/utils/getInteropChains'
 
@@ -48,6 +49,8 @@ export interface ProjectPage<
   /** The section the page is built on: the first of `sections`. */
   kind: Kind
   sections: ProjectPageSection[]
+  /** The sections the site lists the project in: search, sitemap, breadcrumbs. */
+  listed: ProjectPageSection[]
 }
 
 export type ProjectPageWithMarkdown = ProjectPage<
@@ -97,7 +100,7 @@ export async function getProjectPage(
   const [kind, ...rest] = findAllowed(sections) ?? []
   // Loud, so that the page gets designed.
   if (!kind) throw unsupported(slug, sections)
-  return { slug, kind, sections: [kind, ...rest] }
+  return toProjectPage(slug, [kind, ...rest], project)
 }
 
 type InteropChain = (typeof INTEROP_CHAINS)[number]
@@ -153,15 +156,18 @@ export function selectProjectPages<P extends PageProject>(
       continue
     }
     entries.push({
-      slug: project.slug,
+      ...toProjectPage(project.slug, [kind, ...rest], project),
       kind,
-      sections: [kind, ...rest],
       project,
       chain,
     })
   }
   for (const [slug, chain] of chains) {
-    entries.push({ slug, kind: 'chain', sections: ['chain'], chain })
+    entries.push({
+      ...toProjectPage(slug, ['chain'], undefined),
+      kind: 'chain',
+      chain,
+    })
   }
   return entries
 }
@@ -175,6 +181,26 @@ function findAllowed(
       allowed.length === sections.length &&
       allowed.every((section) => sections.includes(section)),
   )
+}
+
+function toProjectPage(
+  slug: string,
+  sections: [ProjectPageSection, ...ProjectPageSection[]],
+  project: PageProject | undefined,
+): ProjectPage {
+  return {
+    slug,
+    kind: sections[0],
+    sections,
+    // DeFi lists only the categories that have a page of their own, and
+    // Ossification keeps DeFi project pages up without the DeFi section.
+    listed: sections.filter(
+      (section) =>
+        section !== 'defi' ||
+        (env.CLIENT_SIDE_DEFI_ENABLED &&
+          isListedDefiProject(project?.defiInfo)),
+    ),
+  }
 }
 
 function unsupported(slug: string, sections: ProjectPageSection[]) {
@@ -203,21 +229,11 @@ function getSections(
 }
 
 /**
- * The page's sections that the site lists somewhere. Ossification keeps DeFi
- * project pages up without the DeFi section.
- */
-export function getListedSections(page: ProjectPage): ProjectPageSection[] {
-  return page.sections.filter(
-    (section) => section !== 'defi' || env.CLIENT_SIDE_DEFI_ENABLED,
-  )
-}
-
-/**
  * The site sections that list the page's project, for its breadcrumbs: the
  * page's own first.
  */
 export function getProjectBreadcrumbs(page: ProjectPage): ProjectSection[] {
-  const breadcrumbs = getListedSections(page).flatMap((section) => {
+  const breadcrumbs = page.listed.flatMap((section) => {
     switch (section) {
       case 'ethereum':
         return []

@@ -1,20 +1,48 @@
 import * as RadixTabs from '@radix-ui/react-tabs'
 import { type ReactNode, useState } from 'react'
 import { Dialog } from '../../../../components/Dialog'
+import { IS_READONLY } from '../../../../config/readonly'
 import { IconGear } from '../../../../icons/IconGear'
+import { IconInfoCircle } from '../../../../icons/IconInfoCircle'
+import { IconKeyboard } from '../../../../icons/IconKeyboard'
 import { IconNodes } from '../../../../icons/IconNodes'
+import { IconTick } from '../../../../icons/IconTick'
+import { AboutSettingsTab } from './AboutSettingsTab'
 import { GlobalSettingsTab } from './GlobalSettingsTab'
+import { KeybindingsSettingsTab } from './KeybindingsSettingsTab'
 import { NodesSettingsTab } from './NodesSettingsTab'
+import { StatusSettingsTab } from './StatusSettingsTab'
 
-export type SettingsTabId = 'global' | 'nodes'
+export type SettingsTabId =
+  | 'global'
+  | 'nodes'
+  | 'keybindings'
+  | 'status'
+  | 'about'
 
-const SETTINGS_TABS: {
+interface SettingsTab {
   id: SettingsTabId
   label: string
   icon: ReactNode
   description: string
   Content: () => ReactNode
-}[] = [
+}
+
+// The read-only build has no local files to sync, so it has no status.
+const STATUS_TABS: SettingsTab[] = IS_READONLY
+  ? []
+  : [
+      {
+        id: 'status',
+        label: 'Status',
+        icon: <IconTick className="size-3.5" />,
+        description:
+          'Check whether your edits reached the files and the outputs match them.',
+        Content: StatusSettingsTab,
+      },
+    ]
+
+const SETTINGS_TABS: SettingsTab[] = [
   {
     id: 'global',
     label: 'Global',
@@ -29,6 +57,22 @@ const SETTINGS_TABS: {
     description: 'Change how nodes are displayed in every nodes panel.',
     Content: NodesSettingsTab,
   },
+  {
+    id: 'keybindings',
+    label: 'Keybindings',
+    icon: <IconKeyboard className="size-3.5" />,
+    description:
+      'Change the keyboard shortcuts. Click a shortcut, then press the new one.',
+    Content: KeybindingsSettingsTab,
+  },
+  ...STATUS_TABS,
+  {
+    id: 'about',
+    label: 'About',
+    icon: <IconInfoCircle className="size-3.5" />,
+    description: 'What this tool is, where its code lives and who makes it.',
+    Content: AboutSettingsTab,
+  },
 ]
 
 export function SettingsDialog(props: {
@@ -38,9 +82,20 @@ export function SettingsDialog(props: {
   const [tabId, setTabId] = useState<SettingsTabId>(props.defaultTabId)
 
   return (
-    <Dialog.Root>
+    <Dialog.Root
+      // The trigger can point at a tab that needs attention, so every opening
+      // starts there instead of on the tab left open last time.
+      onOpenChange={(open) => {
+        if (open) setTabId(props.defaultTabId)
+      }}
+    >
       <Dialog.Trigger asChild>{props.trigger}</Dialog.Trigger>
-      <Dialog.Body className="flex h-[min(640px,85vh)] max-w-[820px] flex-col overflow-hidden p-0">
+      <Dialog.Body
+        className="flex h-[min(640px,85vh)] max-w-[820px] flex-col overflow-hidden p-0"
+        // Keys pressed in the settings stay there, so typing a search or
+        // trying a key never runs a shortcut on the page behind.
+        onKeyDown={(event) => event.stopPropagation()}
+      >
         <RadixTabs.Root
           value={tabId}
           onValueChange={(value) => setTabId(parseSettingsTabId(value))}
@@ -75,7 +130,7 @@ function SettingsNavigation() {
   return (
     <RadixTabs.List
       aria-label="Settings sections"
-      className="flex w-40 shrink-0 flex-col gap-0.5 border-coffee-700 border-r bg-coffee-800/50 p-2 max-sm:w-auto max-sm:flex-row max-sm:border-r-0 max-sm:border-b"
+      className="flex w-40 shrink-0 flex-col gap-0.5 border-coffee-700 border-r bg-coffee-800/50 p-2 max-sm:w-auto max-sm:flex-row max-sm:overflow-x-auto max-sm:border-r-0 max-sm:border-b"
     >
       {SETTINGS_TABS.map((tab) => (
         <RadixTabs.Trigger

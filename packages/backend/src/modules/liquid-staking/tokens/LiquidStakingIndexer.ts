@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database, LiquidStakingSnapshotRecord } from '@l2beat/database'
-import type { BlockTimestampProvider, IRpcClient } from '@l2beat/shared'
+import type { IRpcClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
@@ -12,7 +12,7 @@ import type {
   TrimRemovalConfiguration,
   WipeRemovalConfiguration,
 } from '../../../tools/uif/multi/types'
-import type { LiquidStakingProjectConfig } from '../types'
+import type { EthereumBlockFinder, LiquidStakingProjectConfig } from '../types'
 import { getLiquidStakingReads } from './liquidStakingReads'
 
 /** Hours per update, so a long backfill saves its progress as it goes. */
@@ -22,10 +22,7 @@ interface LiquidStakingIndexerDeps
   extends Omit<ManagedMultiIndexerOptions<LiquidStakingProjectConfig>, 'name'> {
   db: Database
   rpc: Pick<IRpcClient, 'multicall'>
-  blockTimestampProvider: Pick<
-    BlockTimestampProvider,
-    'getBlockNumberAtOrBefore'
-  >
+  blockFinder: EthereumBlockFinder
 }
 
 /**
@@ -88,10 +85,7 @@ export class LiquidStakingIndexer extends ManagedMultiIndexer<LiquidStakingProje
     configuration: Configuration<LiquidStakingProjectConfig>,
   ): Promise<LiquidStakingSnapshotRecord> {
     const blockNumber =
-      await this.$.blockTimestampProvider.getBlockNumberAtOrBefore(
-        timestamp,
-        'ethereum',
-      )
+      await this.$.blockFinder.getBlockNumberAtOrBefore(timestamp)
     const { calls, toState } = getLiquidStakingReads(
       configuration.properties,
       blockNumber,

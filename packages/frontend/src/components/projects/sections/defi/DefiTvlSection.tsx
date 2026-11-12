@@ -16,7 +16,7 @@ import type { ProjectSectionProps } from '../types'
 export interface DefiTvlSectionProps extends ProjectSectionProps {
   defaultRange: ChartRange
   project: ChartProject
-  /** External provider attribution, absent when the data is L2BEAT's own. */
+  /** External provider attribution, absent when the data is our own. */
   dataSource?: {
     name: string
     url?: string
