@@ -10,9 +10,9 @@ const WRAPPER =
   'https://github.com/zama-ai/protocol-apps/blob/85eef95c797da20875fe7eeae7f8d212d760486f/contracts/confidential-wrapper/contracts/ConfidentialWrapper.sol'
 const FHEVM =
   'https://github.com/zama-ai/fhevm/blob/e3a7d1e263655f2b0dbd6230c3b00a7693fb8609/'
-// @zama-fhe/sdk v3.6.0, the release line the app bundles.
+// @zama-fhe/sdk v3.7.1, the version the app bundles.
 const SDK =
-  'https://github.com/zama-ai/sdk/blob/464764577777367e869c47ae53e6ba0de35e3f93/packages/sdk/src/'
+  'https://github.com/zama-ai/sdk/blob/cc1d5589a242987ceb1ca083bb0b4523b08e3d21/packages/sdk/src/'
 
 const INTERIOR: PrivacyExposureMap = {
   sender: 'exposed',
@@ -107,7 +107,7 @@ export function zamaCwAdversaries(
         exposureShort:
           'No third party sees a transfer amount, since the app encrypts amounts on the device and reads balances under a key only the device holds.',
         exposureContinued:
-          "A swap quote sends the cleartext amount to Zama's server, which can pass it to LI.FI.",
+          "A swap quote sends the cleartext amount to Zama's server, which can pass it to LI.FI. Each wallet connection sends the address to Dynamic, a third party, which sees it with the user's IP.",
         interior: {
           ...INTERIOR,
           amount: {
@@ -118,7 +118,7 @@ export function zamaCwAdversaries(
         sources: [
           {
             title:
-              'Served app, deployment dpl_HkkjtLU1mXu9VT5nadJciMGnnY1t (checked 2026-10-30)',
+              'Served app, deployment dpl_8nxK5TFwZggVq61MJ5AzJorbdsYe (checked 2026-11-11)',
             url: 'https://app.zama.org',
           },
           {

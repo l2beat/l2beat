@@ -6,19 +6,20 @@ import {
 } from '../../common/privacyAdversaries'
 import type { ProjectPrivacyReferenceApp } from '../../types'
 
-// main after v1.2.1 of the web app. privacypools.com serves v1.3.0 (555d19f),
-// whose diff from this pin adds an Aave notice and touches no network code.
+// v1.5.0 of the web app, which privacypools.com serves.
 export const REFERENCE_APP = {
   name: 'privacypools.com',
   url: 'https://privacypools.com',
   since: '2026-10-23',
   source: {
     repository: 'https://github.com/0xbow-io/privacy-pools-website-v2',
-    commit: '6c292b47a977cd86d506994f1b9a0fc51b9a79db',
+    commit: '6fd83a092004ab7123613abff2b0ca319a2106ce',
   },
 } satisfies ProjectPrivacyReferenceApp
 const WEBSITE = `${REFERENCE_APP.source.repository}/blob/${REFERENCE_APP.source.commit}/`
-// v1.0.2 of the monorepo: the circuits behind the live verifiers and the SDK the app vendors.
+// v1.0.2 of the monorepo: the circuits behind the live verifiers. The app
+// vendors SDK 1.0.3-prerelease.00f84368, which the monorepo lacks. Its source
+// maps differ from 1.0.2 only in the LI.FI quote provider.
 export const MONOREPO_REPOSITORY =
   'https://github.com/0xbow-io/privacy-pools-v2-monorepo'
 export const MONOREPO_COMMIT = '61fac03acd1fc306164ddc234f7fac4147d04493'
@@ -105,9 +106,9 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'warning',
       exposureShort:
-        "The default RPCs, led by Alchemy under 0xbow's key, see the account at sign-in and can time it against the withdrawal.",
+        "When 0xbow's registry feeds fail, the default RPCs, led by Alchemy under 0xbow's key, receive the account right before its withdrawal.",
       exposureContinued:
-        "An IP-hiding route does not hide that timing, a local node does. Tor Browser and the app's Tor option cannot reach a local node, so the route must carry all traffic.",
+        "A connected wallet's address reaches Alchemy's token API whatever the endpoint, and Alchemy sees when that session withdraws. A local node set in the app receives the account reads instead.",
       interior: {
         sender: 'private',
         recipient: 'private',
@@ -115,21 +116,26 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
         asset: 'private',
         linkage: {
           verdict: 'atRisk',
-          note: 'Private only with a local node and all traffic through an IP-hiding route.',
+          note: 'Private only with a local node, an IP-hiding route and a private window that never connected a wallet.',
         },
       },
       sources: [
+        {
+          title:
+            'Own-account reads ask the RPC when the feeds have no current data',
+          url: WEBSITE + 'services/keystore-registry-reads.ts#L9-L18',
+        },
         {
           title: 'Alchemy first, public node last',
           url: WEBSITE + 'config/rpc-order.ts#L55-L70',
         },
         {
-          title: 'Sign-in reads the account from the Keystore',
-          url: WEBSITE + 'components/sdk-provider.tsx#L679-L711',
+          title: "A connected wallet's tokens are read from Alchemy by address",
+          url: WEBSITE + 'services/wallet-tokens.ts#L182-L190',
         },
         {
-          title: 'Allowlist refuses per-note reads and topic filters',
-          url: WEBSITE + 'services/egress-policy.ts#L447-L520',
+          title: 'A custom endpoint replaces the defaults, with no fallback',
+          url: WEBSITE + 'config/custom-rpc.ts#L17-L20',
         },
       ],
     },
@@ -138,7 +144,7 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
       exposureShort:
         'The ASP postman can publish a new approved list at any time with no delay, and every private spend must prove against the latest one.',
       exposureContinued:
-        "A list without a deposit's label freezes every note descending from it, and a list with few labels narrows the set to them. 0xbow's ASP feeds see every session's IP and its relayer every exit's IP and recipient, so 0xbow can pair deposit and exit sessions. The request logs of its Alchemy key show it the account each sign-in looks up, which it can time against the withdrawals its relayer submits. 0xbow can change the hosted app at any time, and a multisig can upgrade the four core contracts without delay.",
+        "A list without a deposit's label freezes every note descending from it, and a list with few labels narrows the set to them. 0xbow's ASP feeds see every session's IP and its relayer every exit's IP and recipient, so 0xbow can pair deposit and exit sessions. 0xbow can change the hosted app at any time, and a multisig can upgrade the four core contracts without delay.",
       interior: {
         sender: 'private',
         recipient: {
@@ -149,7 +155,7 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
         asset: 'private',
         linkage: {
           verdict: 'atRisk',
-          note: 'The ASP can narrow the approved list, and 0xbow can pair sessions across ASP, relayer and its Alchemy logs.',
+          note: 'The ASP can narrow the approved list, and 0xbow can pair sessions across its ASP and relayer.',
         },
       },
       sources: [
@@ -165,10 +171,6 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
           title:
             'What the relayer receives, the IP included (checked 2026-10-30)',
           url: DOCS + 'introduction/threat-model',
-        },
-        {
-          title: 'Alchemy request logs show the key owner each payload',
-          url: 'https://www.alchemy.com/docs/alchemy-request-logs',
         },
       ],
     },
@@ -208,7 +210,7 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
   advice: [
     {
       name: 'Set up',
-      text: `Send all traffic through an ${adviceLink('IP-hiding route', 'ipHidingRoutes')}. In the app's settings, set a local Ethereum node as the endpoint before signing in. Let the node accept requests from the app's origin.`,
+      text: `Turn on NymVPN with the Random profile, an ${adviceLink('IP-hiding route', 'ipHidingRoutes')} for all of the computer's traffic, and reconnect it before each session. In the app's settings, set a local Ethereum node as the endpoint before signing in. 0xbow's relayer refuses Tor exits on the app's default settings.`,
       against: ['networkObserver', 'privilegedInsider'],
       outside: true,
     },
@@ -236,7 +238,7 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
     },
     {
       name: 'Withdraw',
-      text: `Sign in with the account key instead of a wallet, and withdraw common amounts rather than everything at once. ${A.relayer('relayer')} ${A.freshAddress}`,
+      text: `Sign in with the account key in a private window instead of with a wallet, and withdraw common amounts rather than everything at once. ${A.relayer('relayer')} ${A.freshAddress}`,
       against: ['publicObserver', 'chainAnalyst', 'networkObserver'],
     },
     {

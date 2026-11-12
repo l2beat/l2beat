@@ -148,10 +148,10 @@ export const strk20: BaseProject = {
       icon: 'bramble',
       url: 'https://chromewebstore.google.com/detail/jcfafpefcpcejehepoednnollpeenpop',
       since: '2026-10-27',
-      version: '0.10.7',
+      version: '0.10.10',
       source: {
         repository: 'https://github.com/starknet-innovation/bramble',
-        commit: 'd90222a2653c997a5cf8d8c6433df5ea10c16112',
+        commit: 'a01b240c77db7e847091127975f927f1a1956cb2',
       },
       checkedApps: [
         {

@@ -4,11 +4,9 @@ import {
   definePrivacyAdversaries,
 } from '../../common/privacyAdversaries'
 
-// app.umbra.cash serves 120c335c, whose diff from this pin adds a contact form
-// with Cloudflare Turnstile, logos from app.umbra.cash and block timestamps
-// from the wallet RPC.
+// app.umbra.cash serves this commit and shows it in its footer.
 const UMBRA =
-  'https://github.com/ScopeLift/umbra-protocol/blob/947c4f3b9b89f6cf5d69b2d43d3cffec673da655/'
+  'https://github.com/ScopeLift/umbra-protocol/blob/685f710e4e846db3b88f8138e6f78ee82482a391/'
 const ANALYSIS = 'https://arxiv.org/html/2308.01703v2'
 
 export function umbraAdversaries(registrants: number) {
@@ -36,7 +34,7 @@ export function umbraAdversaries(registrants: number) {
           {
             title:
               'Matching decrypts the secret with the viewing key and checks the stealth address',
-            url: UMBRA + 'umbra-js/src/classes/Umbra.ts#L707-L721',
+            url: UMBRA + 'umbra-js/src/classes/Umbra.ts#L701-L715',
           },
         ],
       },
@@ -58,7 +56,7 @@ export function umbraAdversaries(registrants: number) {
           {
             title:
               'The app warns about registered, named and sender destinations, and lets the user proceed',
-            url: UMBRA + 'frontend/src/utils/address.ts#L146-L241',
+            url: UMBRA + 'frontend/src/utils/address.ts#L146-L234',
           },
         ],
       },
@@ -76,18 +74,18 @@ export function umbraAdversaries(registrants: number) {
           },
           {
             title: 'Connecting checks the wallet address through the same RPC',
-            url: UMBRA + 'frontend/src/store/wallet.ts#L273',
+            url: UMBRA + 'frontend/src/store/wallet.ts#L280',
           },
           {
             title: 'Withdrawing checks the destination through the same RPC',
-            url: UMBRA + 'frontend/src/components/AccountReceiveTable.vue#L736',
+            url: UMBRA + 'frontend/src/components/AccountReceiveTable.vue#L788',
           },
           {
             title:
               'Matched stealth addresses go to the wallet RPC in one balance call',
             url:
               UMBRA +
-              'frontend/src/components/AccountReceiveTable.vue#L606-L625',
+              'frontend/src/components/AccountReceiveTable.vue#L658-L677',
           },
         ],
       },
@@ -106,18 +104,18 @@ export function umbraAdversaries(registrants: number) {
           {
             title:
               'The registry read stores no block, so the lookup repeats on every scan',
-            url: UMBRA + 'frontend/src/store/wallet.ts#L605-L615',
+            url: UMBRA + 'frontend/src/store/wallet.ts#L612-L622',
           },
           {
             title:
               "Every withdrawal sends the destination to the operator's API",
-            url: UMBRA + 'frontend/src/utils/address.ts#L201-L214',
+            url: UMBRA + 'frontend/src/utils/address.ts#L195-L207',
           },
           {
             title: 'Token withdrawals send the stealth address to the relayer',
             url:
               UMBRA +
-              'frontend/src/components/AccountReceiveTable.vue#L767-L768',
+              'frontend/src/components/AccountReceiveTable.vue#L819-L820',
           },
         ],
       },

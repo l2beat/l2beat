@@ -255,10 +255,10 @@ export const railgun: BaseProject = {
       icon: 'railoxide',
       url: 'https://github.com/triamazikamno/railoxide',
       since: '2026-10-08',
-      version: '0.2.0-beta.10',
+      version: '0.3.0-rc.2',
       source: {
         repository: 'https://github.com/triamazikamno/railoxide',
-        commit: '7981f35afe8fe5a198a450e0cad66d37f159556e',
+        commit: 'd9e244c059d01fb52c21b878cb596971f8c1208c',
       },
       checkedApps: [
         {
@@ -274,11 +274,11 @@ export const railgun: BaseProject = {
           name: 'Anon Wallet',
           icon: 'anon-wallet',
           finding:
-            "Sends the user's public and 0zk addresses to Anon's server at setup, even without a username, so Anon can link them.",
-          fix: "Create wallets without registering the user's addresses with Anon's server.",
+            "Asks Anon's server for each stealth account's balance under the user's login, so Anon can link them to each other and to the user's addresses.",
+          fix: "Read stealth account balances from the user's RPC only, without the login token.",
           source:
             'https://chromewebstore.google.com/detail/anon-wallet-private-evm-w/gnkbgepgknkbhnnbaihklcfkjhbclajk',
-          checked: '2026-10-30',
+          checked: '2026-11-11',
         },
         {
           name: 'Terminal Wallet',
@@ -301,7 +301,7 @@ export const railgun: BaseProject = {
       ],
     },
     trackedOn: ['ethereum'],
-    // Chains RailOxide v0.2.0-beta.10 serves (railgun-rust crates/core/src/deployment.rs).
+    // Chains RailOxide v0.3.0-rc.2 serves (railgun-rust crates/core/src/deployment.rs).
     runsOn: [
       ProjectId('arbitrum'),
       ProjectId('base'),

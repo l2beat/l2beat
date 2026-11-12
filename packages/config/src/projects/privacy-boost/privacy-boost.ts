@@ -21,8 +21,9 @@ import { privacyBoostAdversaries } from './adversaries'
 
 const discovery = new ProjectDiscovery('privacy-boost')
 
-// PrivacyBoost measures exit delays and auth-root staleness in blocks.
-const BASE_BLOCK_TIME = 2
+// PrivacyBoost measures exit delays and auth-root staleness in blocks. Base
+// produces a block every 200 ms since block 53556130 (2026-11-05).
+const BASE_BLOCKS_PER_SECOND = 5
 const BASE_CHAIN_ID = 8453
 
 const pool = discovery.getContract('PrivacyBoost')
@@ -30,13 +31,13 @@ const adminMultisigStats = discovery.getMultisigStats('AdminMultisig')
 const PRIVACY_BOOST_SINCE_TIMESTAMP = UnixTime(pool.sinceTimestamp ?? 0)
 
 const forcedWithdrawalDelay =
-  discovery.getContractValue<number>('PrivacyBoost', 'forcedWithdrawalDelay') *
-  BASE_BLOCK_TIME
+  discovery.getContractValue<number>('PrivacyBoost', 'forcedWithdrawalDelay') /
+  BASE_BLOCKS_PER_SECOND
 const epochAuthStaleness =
   discovery.getContractValue<number>(
     'PrivacyBoost',
     'maxEpochAuthStalenessBlocks',
-  ) * BASE_BLOCK_TIME
+  ) / BASE_BLOCKS_PER_SECOND
 const maxForcedInputs = discovery.getContractValue<number>(
   'PrivacyBoost',
   'maxForcedInputs',
@@ -366,8 +367,8 @@ export const privacyBoost: BaseProject = {
       name: 'Privacy Boost wallet',
       url: 'https://app.privacyboost.io',
       since: '2026-10-13',
-      build: 'dpl_GoQKQWZv8oxvnAMMf5RVDPBhoipo',
-      checked: '2026-10-30',
+      build: 'dpl_7w49MD3u2ryAMcgmgGH2L9TusV1R',
+      checked: '2026-11-11',
     },
     tokens: privacyTokens,
     trackedOn: ['base'],

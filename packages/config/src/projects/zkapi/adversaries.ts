@@ -7,7 +7,7 @@ import type { PrivacyExposureMap } from '../../types'
 const SRC =
   'https://github.com/ethereum/zkapi/blob/045b444ea1b52538d1b40273c7cb6ed09468a052/'
 const OA_CHAT =
-  'https://github.com/OpenAnonymity/oa-chat/blob/a2623612c17bea09d5efaf8f41b500fe98fb1c8a/'
+  'https://github.com/OpenAnonymity/oa-chat/blob/6c6046141f8b2cf4e4ba9e6967a7fa4dfcff716d/'
 
 // Linkage here is deposit-to-request. Deposits and withdrawals of one note are
 // publicly linked by note id, which the promise says.
@@ -89,7 +89,7 @@ export const zkApiAdversaries = definePrivacyAdversaries({
           url: `${OA_CHAT}chat/services/networkProxy.js#L7-L10`,
         },
         {
-          title: 'Hosted app loads Fathom Analytics (checked 2026-10-30)',
+          title: 'Hosted app loads Fathom Analytics (checked 2026-11-11)',
           url: 'https://chat.openanonymity.ai',
         },
       ],
