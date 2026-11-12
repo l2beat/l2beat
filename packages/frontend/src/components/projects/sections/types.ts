@@ -6,6 +6,7 @@ import type { DetailedDescriptionSectionProps } from './DetailedDescriptionSecti
 import type { DataPostedSectionProps } from './data-posted/DataPostedSection'
 import type { DefiTokensSectionProps } from './defi/DefiTokensSection'
 import type { DefiTvlSectionProps } from './defi/DefiTvlSection'
+import type { LiquidStakingSectionProps } from './defi/LiquidStakingSection'
 import type { ExternalDependenciesSectionProps } from './ExternalDependenciesSection'
 import type { GardenCropsSectionProps } from './GardenCropsSection'
 import type { GrissiniRiskAnalysisSectionProps } from './GrissiniRiskAnalysisSection'
@@ -86,6 +87,7 @@ export type SectionId =
   | 'privacy-adversaries'
   | 'external-dependencies'
   | 'defi-tokens'
+  | 'liquid-staking'
   | 'crops'
 
 type GroupId = 'da-layer'
@@ -299,6 +301,11 @@ interface ProjectDetailsDefiTokensSection {
   props: ProjectDetailsProps<DefiTokensSectionProps>
 }
 
+interface ProjectDetailsLiquidStakingSection {
+  type: 'LiquidStakingSection'
+  props: ProjectDetailsProps<LiquidStakingSectionProps>
+}
+
 interface ProjectDetailsPrivacyFlowsSection {
   type: 'PrivacyFlowsSection'
   props: ProjectDetailsProps<PrivacyFlowsSectionProps>
@@ -368,6 +375,7 @@ export type ProjectDetailsSection = {
   | ProjectDetailsTvsValueSection
   | ProjectDetailsDefiTvlSection
   | ProjectDetailsDefiTokensSection
+  | ProjectDetailsLiquidStakingSection
   | ProjectDetailsPrivacyFlowsSection
   | ProjectDetailsPrivacyAnonymitySetSection
   | ProjectDetailsPrivacyAssetsBreakdownSection

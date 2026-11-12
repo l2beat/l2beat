@@ -1,10 +1,9 @@
 import type { Project, ProjectLiquidStakingRisks } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
-import { optionToRange } from '~/utils/range/range'
+import { type ChartRange, optionToRange } from '~/utils/range/range'
 import { getTotalValueLockedByProject } from '../getDefiTotalValueLocked'
 import {
-  getLiquidStakingCostOfExitChart,
-  getLiquidStakingYieldChart,
+  getLiquidStakingCharts,
   type LiquidStakingChartPoint,
   type LiquidStakingCharts,
 } from './getLiquidStakingCharts'
@@ -29,23 +28,25 @@ export interface LiquidStakingLatestValue {
  */
 const LATEST_VALUE_MAX_AGE_DAYS = 30
 
+/** The shortest chart range that holds every latest value. */
+export function getLatestValuesRange(): ChartRange {
+  return optionToRange('30d')
+}
+
 /** The project's row of the liquid staking page, with the latest chart values. */
 export async function getLiquidStakingSummary(
   project: Pick<Project<'defiInfo'>, 'id' | 'defiInfo'>,
   risks: ProjectLiquidStakingRisks,
 ): Promise<LiquidStakingSummary> {
-  // As far back as a latest value may be.
-  const range = optionToRange('30d')
-  const [tvlByProject, yieldChart, costOfExit] = await Promise.all([
+  const [tvlByProject, charts] = await Promise.all([
     getTotalValueLockedByProject([project]),
-    getLiquidStakingYieldChart({ range }),
-    getLiquidStakingCostOfExitChart({ range }),
+    getLiquidStakingCharts({ range: getLatestValuesRange() }),
   ])
   return buildLiquidStakingSummary(
     project.id,
     risks,
     tvlByProject.get(project.id),
-    { yield: yieldChart, costOfExit },
+    charts,
   )
 }
 
