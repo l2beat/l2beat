@@ -69,9 +69,7 @@ export function BridgeFlowStats({
 
   return (
     <div className="rounded-lg border border-divider bg-surface-primary px-4 py-3">
-      <div className="mb-1.5 font-bold text-label-value-12 uppercase">
-        Stats
-      </div>
+      <div className="mb-1.5 font-semibold text-label-value-13">Stats</div>
       <div className="grid grid-cols-1 gap-x-12 md:grid-cols-2">
         {columns.map((column, i) => (
           <div key={i} className="flex flex-col gap-1.5">
@@ -88,9 +86,7 @@ export function BridgeFlowStats({
 function StatRow({ item }: { item: StatItem }) {
   const content = (
     <>
-      <span className="font-medium text-secondary leading-none">
-        {item.label}
-      </span>
+      <span className="font-normal leading-none">{item.label}</span>
       <div className="font-semibold leading-[1.15]">{item.value}</div>
     </>
   )

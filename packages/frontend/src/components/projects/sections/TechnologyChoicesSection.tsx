@@ -43,7 +43,7 @@ export function TechnologyChoicesSection({
             title={
               <SubsectionHeading
                 id={item.id}
-                className="font-bold text-lg md:text-xl"
+                className="font-semibold text-heading-18 leading-6"
               >
                 <a href={`#${item.id}`}>{item.name}</a>
               </SubsectionHeading>

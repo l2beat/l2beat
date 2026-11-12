@@ -1,6 +1,5 @@
 import type { Milestone } from '@l2beat/config'
 import { useState } from 'react'
-import { Button } from '~/components/core/Button'
 import {
   Collapsible,
   CollapsibleContent,
@@ -43,15 +42,15 @@ export function MilestonesAndIncidentsSection({
             <MilestonesBase milestones={milestonesWithNext.slice(2)} />
           </CollapsibleContent>
           <CollapsibleTrigger asChild>
-            <Button
-              className="group mx-auto mt-1 flex w-min justify-between gap-2.5"
-              variant="outline"
+            <button
+              type="button"
+              className="group mx-auto mt-1 flex w-min items-center justify-between gap-2.5 rounded-md border border-divider px-3 py-1.5 font-medium text-label-value-13 text-primary leading-4 transition-colors hover:bg-surface-secondary"
             >
-              <span className="w-[76px] whitespace-pre text-left font-bold text-sm">
+              <span className="w-[62px] whitespace-pre text-left">
                 {isOpen ? 'Show less' : 'Show more'}
               </span>
-              <ChevronIcon className="transition-transform duration-300 group-data-[state=open]:rotate-180" />
-            </Button>
+              <ChevronIcon className="size-3 fill-current transition-transform duration-300 group-data-[state=open]:rotate-180" />
+            </button>
           </CollapsibleTrigger>
         </Collapsible>
       )}

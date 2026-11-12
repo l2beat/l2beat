@@ -52,8 +52,10 @@ export function UpgradesAndGovernanceSection({
       {governanceInfo && <GovernanceInfo governanceInfo={governanceInfo} />}
       {pastUpgrades && (
         <div className="mt-8">
-          <h3 className="font-bold text-heading-20">Past upgrades</h3>
-          <p className="mt-2 text-paragraph-14 md:text-paragraph-15">
+          <h3 className="font-semibold text-heading-18 leading-6">
+            Past upgrades
+          </h3>
+          <p className="mt-2 max-w-[72ch] text-paragraph-14 md:text-paragraph-15">
             {PAST_UPGRADES_DESCRIPTION}
           </p>
           <PastUpgradesDialog
@@ -78,7 +80,9 @@ function GovernanceInfo({
 
   return sections.map((section) => (
     <div key={section.key} className="mt-6 md:mt-8">
-      <h3 className="mb-3 text-heading-18">{section.title}</h3>
+      <h3 className="mb-3 font-semibold text-heading-18 leading-6">
+        {section.title}
+      </h3>
       {section.key === 'upgrades' ? (
         <UpgradesInfo upgrades={governanceInfo.upgrades ?? {}} />
       ) : (
@@ -137,9 +141,7 @@ function UpgradePathTimeline({
 }) {
   return (
     <div>
-      <p className="mb-2.5 font-medium text-label-value-14 text-secondary">
-        {name}
-      </p>
+      <p className="mb-2.5 font-semibold text-label-value-14">{name}</p>
       <ol>
         {path.steps.map((step, i) => (
           <li
@@ -192,9 +194,7 @@ function UpgradeCallout({
         isEmergency ? 'border-negative' : 'border-brand',
       )}
     >
-      <p className="mb-0.5 font-medium text-label-value-14 text-secondary">
-        {name}
-      </p>
+      <p className="mb-0.5 font-semibold text-label-value-14">{name}</p>
       <Markdown className="text-paragraph-14 md:text-paragraph-15">
         {description}
       </Markdown>

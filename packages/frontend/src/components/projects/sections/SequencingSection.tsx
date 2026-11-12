@@ -56,7 +56,7 @@ export function SequencingSection({
         title={
           <SubsectionHeading
             id={name}
-            className="mb-2 font-bold text-lg md:text-xl"
+            className="mb-2 font-semibold text-heading-18 leading-6"
           >
             <a href={`#${name}`}>{name}</a>
           </SubsectionHeading>
@@ -98,7 +98,7 @@ export function SequencingSection({
           <div className="mt-6">
             <Subsection
               title={
-                <SubsectionHeading className="mb-3 font-bold text-heading-20">
+                <SubsectionHeading className="mb-3 font-semibold text-heading-18 leading-6">
                   Censorship resistance
                 </SubsectionHeading>
               }

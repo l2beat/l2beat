@@ -35,11 +35,11 @@ export function ProjectSummaryStat(props: ProjectSummaryStatProps) {
     >
       <div className="flex flex-row items-center gap-1.5">
         {props.titleAsChild ? (
-          <Slot className="text-nowrap font-normal text-label-value-13 leading-4 text-primary">
+          <Slot className="text-nowrap font-normal text-label-value-13 text-primary leading-4">
             {props.title}
           </Slot>
         ) : (
-          <span className="text-nowrap font-normal text-label-value-13 leading-4 text-primary">
+          <span className="text-nowrap font-normal text-label-value-13 text-primary leading-4">
             {props.title}
           </span>
         )}

@@ -35,12 +35,15 @@ export function ProgramHashNameCell({
   }, [])
 
   return (
-    <div className="flex items-center gap-1">
+    <div className="flex items-start gap-1">
       <Tooltip>
-        <TooltipTrigger disabled={!isOverflowing && !description}>
+        <TooltipTrigger
+          disabled={!isOverflowing && !description}
+          className="text-left"
+        >
           <div
             ref={titleRef}
-            className="line-clamp-2 min-w-0 max-w-72 text-pretty font-bold text-label-value-14 leading-normal"
+            className="line-clamp-2 min-w-40 max-w-60 text-pretty font-bold text-label-value-14 leading-normal [overflow-wrap:anywhere] 2xl:max-w-72"
           >
             {title}
           </div>

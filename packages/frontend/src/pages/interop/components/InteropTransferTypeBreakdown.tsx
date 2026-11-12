@@ -32,7 +32,7 @@ export function InteropTransferTypeBreakdown({
 
   return (
     <div>
-      <span className="font-medium text-paragraph-12 text-secondary">
+      <span className="text-label-value-13 leading-4">
         Transfer type distribution
       </span>
       <Tooltip>
@@ -48,7 +48,7 @@ export function InteropTransferTypeBreakdown({
                     className="flex items-center gap-[3px]"
                   >
                     <div className={`size-3.5 rounded-xs ${value.className}`} />
-                    <span className="font-medium text-label-value-12 text-secondary leading-none">
+                    <span className="font-medium text-label-value-12 leading-none">
                       {value.label}
                     </span>
                   </div>

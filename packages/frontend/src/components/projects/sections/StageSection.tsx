@@ -217,32 +217,28 @@ export function StageSection({
               key={stage.stage}
               className="group rounded-lg border border-divider"
             >
-              <CollapsibleTrigger className="flex w-full items-center justify-between px-4 py-3 font-bold md:px-6">
-                <div className="flex select-none items-center justify-start gap-4 max-md:text-base">
+              <CollapsibleTrigger className="flex w-full items-center justify-between px-4 py-3 font-semibold text-label-value-16 md:px-6">
+                <div className="flex select-none items-center justify-start gap-4">
                   <StageBadge stage={stage.stage} isAppchain={false} />
                   {forLabel.missing.length === 0 ? (
                     <div className="flex flex-col gap-3 md:flex-row">
-                      <div className="flex items-center gap-2 font-bold">
+                      <div className="flex items-center gap-2">
                         <SatisfiedIcon className="-mt-0.5 size-4 shrink-0 fill-positive" />
-                        <span className="text-label-value-16 md:text-label-value-18">
-                          {requirementsMetText(forLabel.met.length)}
-                        </span>
+                        <span>{requirementsMetText(forLabel.met.length)}</span>
                       </div>
                       {forLabel.underReview.length > 0 && (
                         <div className="flex items-center gap-2">
                           <UnderReviewIcon className="size-4 shrink-0" />
-                          <span className="text-label-value-16 md:text-label-value-18">
+                          <span>
                             {forLabel.underReview.length} under review
                           </span>
                         </div>
                       )}
                     </div>
                   ) : (
-                    <div className="flex items-center gap-2 font-bold">
+                    <div className="flex items-center gap-2">
                       <MissingIcon className="-mt-0.5 size-4 shrink-0 fill-negative" />
-                      <span className="text-label-value-16 md:text-label-value-18">
-                        {issuesToFixText(forLabel.missing.length)}
-                      </span>
+                      <span>{issuesToFixText(forLabel.missing.length)}</span>
                     </div>
                   )}
                 </div>

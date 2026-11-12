@@ -120,7 +120,7 @@ export function ContractsSection(props: ContractsSectionProps) {
           <Subsection
             title={
               <div className="flex items-baseline gap-3">
-                <SubsectionHeading className="whitespace-pre text-heading-20">
+                <SubsectionHeading className="whitespace-pre font-semibold text-heading-18 leading-6">
                   Program Hashes
                 </SubsectionHeading>
                 <div className="w-full border-divider border-b-2" />
@@ -143,7 +143,7 @@ export function ContractsSection(props: ContractsSectionProps) {
 export function ChainNameHeader(props: { children: React.ReactNode }) {
   return (
     <div className="flex items-baseline gap-3">
-      <SubsectionHeading className="whitespace-pre text-heading-20">
+      <SubsectionHeading className="whitespace-pre font-semibold text-heading-18 leading-6">
         {props.children}
       </SubsectionHeading>
       <div className="w-full border-divider border-b-2" />

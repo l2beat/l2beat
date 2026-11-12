@@ -36,10 +36,10 @@ export function OssificationDetails({
 }) {
   return (
     <div id="ossification" className="scroll-mt-section-nav-card">
-      <SubsectionHeading className="mb-3 font-bold text-heading-20">
+      <SubsectionHeading className="mb-3 font-semibold text-heading-18 leading-6">
         Ossification
       </SubsectionHeading>
-      <p className="mb-4 text-paragraph-15 md:text-paragraph-16">
+      <p className="mb-4 max-w-[72ch] text-paragraph-15 md:text-paragraph-16">
         Contracts our research team classifies as critical form the project's
         critical perimeter. Its clock starts at the ossification genesis, and
         every critical change resets it (changes within 24 hours count as one).

@@ -58,7 +58,7 @@ export function PermissionsSection({
                   <div className="mt-3">
                     <Subsection
                       title={
-                        <SubsectionHeading className="text-heading-18">
+                        <SubsectionHeading className="font-semibold text-heading-18 leading-6">
                           Roles:
                         </SubsectionHeading>
                       }
@@ -83,7 +83,7 @@ export function PermissionsSection({
                   <div className="mt-3">
                     <Subsection
                       title={
-                        <SubsectionHeading className="text-heading-18">
+                        <SubsectionHeading className="font-semibold text-heading-18 leading-6">
                           Actors:
                         </SubsectionHeading>
                       }

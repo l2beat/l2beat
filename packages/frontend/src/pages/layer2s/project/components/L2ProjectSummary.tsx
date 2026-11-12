@@ -69,7 +69,7 @@ export function ProjectL2Summary({ project }: Props) {
             <div>
               <p
                 className={cn(
-                  'text-label-value-13 leading-4 text-primary',
+                  'text-label-value-13 text-primary leading-4',
                   !hasTokenWarnings && 'mb-2',
                 )}
               >
@@ -144,7 +144,7 @@ export function ProjectL2Summary({ project }: Props) {
               </Tooltip>
             </div>
             <div>
-              <p className="mb-2 text-label-value-13 leading-4 text-primary">
+              <p className="mb-2 text-label-value-13 text-primary leading-4">
                 Value secured breakdown
               </p>
               <Tooltip>

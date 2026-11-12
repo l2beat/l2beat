@@ -31,7 +31,9 @@ export function StateDerivationSection({
 function Item(props: { title: string; children: string }) {
   return (
     <div>
-      <span className="text-heading-20">{props.title}</span>
+      <span className="block font-semibold text-heading-18 leading-6">
+        {props.title}
+      </span>
       <Markdown className="mt-2 max-w-[72ch] text-paragraph-15 md:text-paragraph-16">
         {props.children}
       </Markdown>
