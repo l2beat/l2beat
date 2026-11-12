@@ -1,30 +1,16 @@
-import { useMemo } from 'react'
-import { formatTimestamp } from '~/utils/dates'
-import { type DailyPoint, UPGRADES } from '../../../live/simulatedHistory'
 import {
-  formatBlobsPerBlock,
   formatEth,
   formatGwei,
   formatInteger,
   formatUsd,
   formatWei,
 } from '../format'
-import {
-  ACTIONS,
-  actionCostEth,
-  BLOB_BYTES,
-  blobFeeEth,
-  median,
-} from '../metrics'
+import { ACTIONS, actionCostEth, BLOB_BYTES, blobFeeEth } from '../metrics'
 import { useAnchor } from '../state/anchor'
-import { useHistory } from '../state/history'
 import { HistoryChart, type Metric } from '../ui/HistoryChart'
 import { Rolling } from '../ui/Rolling'
-import { CadenceMark, Part, Section, Stat } from '../ui/Section'
-
-const DAY = 86_400
-/** Long enough to smooth out a busy day, short enough to stay near the upgrade */
-const COMPARE_DAYS = 30
+import { Part, Section, Stat } from '../ui/Section'
+import { UpgradeTimeline } from './UpgradeTimeline'
 
 const FEE_METRICS: Metric[] = [
   {
@@ -177,116 +163,11 @@ export function Cost({ order }: { order: number }) {
           withUpgrades
           height={240}
         />
-        <UpgradeTable />
+      </Part>
+
+      <Part title="The upgrades, fork by fork" className="mt-12">
+        <UpgradeTimeline />
       </Part>
     </Section>
   )
-}
-
-/**
- * Each upgrade's effect as medians of the 30 complete days either side:
- * long enough that one busy day doesn't make the case
- */
-function UpgradeTable() {
-  const history = useHistory()
-  const rows = useMemo(
-    () => UPGRADES.map((u) => compare(history, u.timestamp)),
-    [history],
-  )
-  return (
-    <div className="-mx-4 mt-8 overflow-x-auto px-4 md:mx-0 md:px-0">
-      <table className="w-full min-w-[560px] text-label-value-14">
-        <thead>
-          <tr className="border-divider border-b text-left text-label-value-12 text-secondary">
-            <th className="pb-2 font-medium">Upgrade</th>
-            <th className="pb-2 font-medium">What changed</th>
-            <th className="pb-2 text-right font-medium">
-              <span className="inline-flex items-center gap-2">
-                Sending ETH <CadenceMark cadence="day" />
-              </span>
-            </th>
-            <th className="pb-2 text-right font-medium">Blobs per block</th>
-          </tr>
-        </thead>
-        <tbody>
-          {UPGRADES.map((u, i) => {
-            const row = rows[i]
-            return (
-              <tr
-                key={u.name}
-                className="border-divider border-b align-top last:border-0"
-              >
-                <td className="py-3 pr-4">
-                  <div className="font-bold">{u.name}</div>
-                  <div className="text-label-value-12 text-secondary">
-                    {formatTimestamp(u.timestamp)}
-                  </div>
-                </td>
-                <td className="py-3 pr-4 text-paragraph-14 text-secondary">
-                  {u.summary}
-                </td>
-                <td className="py-3 text-right tabular-nums">
-                  <BeforeAfter row={row?.transfer} format={formatUsd} />
-                </td>
-                <td className="py-3 text-right tabular-nums">
-                  <BeforeAfter row={row?.blobs} format={formatBlobsPerBlock} />
-                </td>
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>
-      <p className="mt-3 text-label-value-12 text-secondary">
-        Medians of the {COMPARE_DAYS} complete days before and after each
-        upgrade.
-      </p>
-    </div>
-  )
-}
-
-function BeforeAfter({
-  row,
-  format,
-}: {
-  row: { before: number | undefined; after: number | undefined } | undefined
-  format: (v: number) => string
-}) {
-  if (!row || row.before === undefined || row.after === undefined) {
-    return <span className="text-secondary">Not enough days yet</span>
-  }
-  return (
-    <span className="whitespace-nowrap">
-      <span className="text-secondary">{format(row.before)}</span>
-      <span className="px-1.5 text-secondary">to</span>
-      <span className="font-bold">{format(row.after)}</span>
-    </span>
-  )
-}
-
-function compare(history: DailyPoint[], at: number) {
-  const before = history.filter(
-    (p) => p.timestamp < at && p.timestamp >= at - COMPARE_DAYS * DAY,
-  )
-  const after = history.filter(
-    (p) => p.timestamp >= at && p.timestamp < at + COMPARE_DAYS * DAY,
-  )
-  const enough = (days: DailyPoint[]) => days.length >= COMPARE_DAYS * 0.8
-  return {
-    transfer: {
-      before: enough(before)
-        ? median(before.map((p) => p.transferCostUsd))
-        : undefined,
-      after: enough(after)
-        ? median(after.map((p) => p.transferCostUsd))
-        : undefined,
-    },
-    blobs: {
-      before: enough(before)
-        ? median(before.map((p) => p.avgBlobsPerBlock))
-        : undefined,
-      after: enough(after)
-        ? median(after.map((p) => p.avgBlobsPerBlock))
-        : undefined,
-    },
-  }
 }

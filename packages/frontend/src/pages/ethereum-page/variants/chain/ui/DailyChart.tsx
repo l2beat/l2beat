@@ -1,8 +1,11 @@
 import { type PointerEvent, useId, useMemo, useRef, useState } from 'react'
 import { getTimeTicks } from '~/components/core/chart/utils/xAxisTicks'
 import { useElementSize } from '~/hooks/useElementSize'
+import { cn } from '~/utils/cn'
 import { formatRange, formatTimestamp } from '~/utils/dates'
 import type { Upgrade } from '../../../live/simulatedHistory'
+import { useUpgradeFocus } from '../state/upgradeFocus'
+import { WINDOW_DAYS } from '../upgradeStory'
 
 export interface DailyValue {
   /** Unix seconds, 00:00 UTC */
@@ -276,6 +279,7 @@ function Upgrades({
   to: number
   height: number
 }) {
+  const { focused } = useUpgradeFocus()
   let lastX = Number.NEGATIVE_INFINITY
   let row = 0
   return (
@@ -287,19 +291,48 @@ function Upgrades({
           row = ux - lastX < 64 ? (row + 1) % 2 : 0
           lastX = ux
           return (
-            <g key={u.name}>
+            <g
+              key={u.name}
+              className={cn(
+                'transition-opacity duration-200',
+                focused && focused !== u.name && 'opacity-30',
+              )}
+            >
+              {/* the timeline stop being pointed at, widened into its 60-day window */}
+              {focused === u.name && (
+                <rect
+                  x={x(u.timestamp - WINDOW_DAYS * DAY)}
+                  width={
+                    x(u.timestamp + WINDOW_DAYS * DAY) -
+                    x(u.timestamp - WINDOW_DAYS * DAY)
+                  }
+                  y={TOP - 4}
+                  height={height - BOTTOM - TOP + 4}
+                  className="fill-chart-ethereum/10"
+                />
+              )}
               <line
                 x1={ux}
                 x2={ux}
                 y1={4 + row * 12}
                 y2={height - BOTTOM}
-                strokeDasharray="2 2"
-                className="stroke-primary/45"
+                strokeDasharray={focused === u.name ? undefined : '2 2'}
+                strokeWidth={focused === u.name ? 2 : 1}
+                className={
+                  focused === u.name
+                    ? 'stroke-chart-ethereum'
+                    : 'stroke-primary/45'
+                }
               />
               <text
                 x={ux + 4}
                 y={11 + row * 12}
-                className="fill-primary font-medium text-[11px]"
+                className={cn(
+                  'font-medium text-[11px]',
+                  focused === u.name
+                    ? 'fill-chart-ethereum font-bold'
+                    : 'fill-primary',
+                )}
               >
                 {u.name}
               </text>
