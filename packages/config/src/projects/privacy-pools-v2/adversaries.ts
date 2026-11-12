@@ -1,8 +1,8 @@
 import {
   ADVICE_SNIPPETS as A,
-  adviceLink,
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
+  toolLink,
 } from '../../common/privacyAdversaries'
 import type { ProjectPrivacyReferenceApp } from '../../types'
 
@@ -211,7 +211,7 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
   advice: [
     {
       name: 'Set up',
-      text: `Turn on NymVPN with the Random profile, an ${adviceLink('IP-hiding route', 'ipHidingRoutes')} for all of the computer's traffic, and reconnect it before each session. In the app's settings, set a local Ethereum node as the endpoint before signing in. 0xbow's relayer refuses Tor exits on the app's default settings.`,
+      text: `Turn on ${toolLink('nymVpn')} with the Random profile, an IP-hiding route for all of the computer's traffic, and reconnect it before each session. In the app's settings, set a ${toolLink('ethereumNode', 'local Ethereum node')} as the endpoint before signing in. 0xbow's relayer refuses Tor exits on the app's default settings.`,
       against: ['networkObserver', 'privilegedInsider'],
       outside: true,
     },
