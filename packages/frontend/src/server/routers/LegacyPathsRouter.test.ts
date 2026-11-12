@@ -31,6 +31,14 @@ describe(createLegacyPathsRouter.name, () => {
       '/tokens/9HN5PN/opengraph-image.png',
     ],
     ['/Interop/Tokens/9HN5PN', '/tokens/9HN5PN'],
+    [
+      '/meta-images/layer2s/projects/arbitrum/opengraph-image.png',
+      '/meta-images/projects/arbitrum/opengraph-image.png',
+    ],
+    [
+      '/meta-images/zk-catalog/projects/sp1/opengraph-image.png',
+      '/meta-images/projects/sp1/opengraph-image.png',
+    ],
     ['/ecosystems/superchain', '/layer2s/summary'],
     ['/ecosystems/agglayer.md', '/layer2s/summary'],
     [

@@ -2,6 +2,7 @@ import express from 'express'
 import { ETHEREUM_PROJECT_PATH } from '~/pages/ethereum/paths'
 import { PRIVACY_ADVICE_HREF } from '~/pages/privacy/methodology/paths'
 import {
+  getProjectOgImagePath,
   getProjectPath,
   PROJECT_REDIRECT_CACHE_CONTROL,
 } from '~/utils/project/getProjectUrl'
@@ -70,6 +71,23 @@ export function createLegacyPathsRouter() {
   router.get('/publications/privacy-best-practices', (_, res) => {
     res.redirect(301, PRIVACY_ADVICE_HREF)
   })
+
+  // A project has one social image now. Pages shared before that still name
+  // the image of a section.
+  for (const section of [
+    'layer2s',
+    'interop',
+    'zk-catalog',
+    'privacy',
+    'defi',
+  ]) {
+    router.get(
+      `/meta-images/${section}/projects/:slug/opengraph-image.png`,
+      (req, res) => {
+        res.redirect(301, getProjectOgImagePath(req.params.slug))
+      },
+    )
+  }
 
   router.get('/governance/publications/:id', (req, res) => {
     res.redirect(301, `/publications/${req.params.id}`)
