@@ -59,7 +59,7 @@ export function PrivacyAdviceSection({
               </span>
               <span className="mt-1 w-0.5 grow rounded-full bg-surface-tertiary group-last:hidden" />
             </div>
-            {/* Name, then the advice, then whom it defends against: the same order at every width. */}
+            {/* The adversaries qualify the advice, so they follow it rather than compete with the step name. */}
             <div className="flex min-w-0 grow flex-col pb-7 group-last:pb-0">
               <span className="flex min-h-6 flex-wrap items-center gap-x-2 font-bold text-label-value-16 md:text-label-value-18">
                 {step.name}
