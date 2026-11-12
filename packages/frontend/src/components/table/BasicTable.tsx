@@ -31,6 +31,7 @@ import {
   TableRow,
 } from './Table'
 import { TableEmptyState } from './TableEmptyState'
+import { CompactTableContext } from './TableLink'
 import { stickyTableColumnRowProps } from './useStickyTableHeader'
 import { applyBasicTableRowSorting } from './utils/applyBasicTableRowSorting'
 import {
@@ -86,8 +87,9 @@ export interface BasicTableProps<T extends BasicTableRow> {
    */
   stickyHeader?: boolean
   /**
-   * The home page's density: 40px rows under quiet sentence-case headers. For
-   * single-line cells only.
+   * The home page's density: 40px rows under quiet sentence-case headers, and
+   * full-height square hover backgrounds on the cells' links. For single-line
+   * cells only.
    */
   compact?: boolean
 }
@@ -154,9 +156,11 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
         {...getPersistedTableAttributes(props.table)}
       >
         <TableBody>
-          {rows.map((row) => (
-            <BasicTableRow row={row} key={row.id} {...props} />
-          ))}
+          <CompactTableContext value={!!props.compact}>
+            {rows.map((row) => (
+              <BasicTableRow row={row} key={row.id} {...props} />
+            ))}
+          </CompactTableContext>
           {rows.length === 0 &&
             props.isLoading &&
             range(props.skeletonCount ?? 10).map((i) => {
