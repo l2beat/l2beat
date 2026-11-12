@@ -11,6 +11,7 @@ import {
   formatTag,
 } from '~/server/markdown/zkSectionBodies'
 import { getProjectPath } from '~/utils/project/getProjectPath'
+import type { ZkCatalogSummary } from './components/header/ZkCatalogProjectSummary'
 
 /** The markdown alternate of the ZK catalog project page, from the entry the HTML page renders. */
 export function renderZkCatalogProjectMarkdown(
@@ -39,15 +40,25 @@ export function renderZkCatalogProjectMarkdown(
 
 /** Labels follow the header and the summary block at the top of the HTML page. */
 function getFacts({ creator, header }: ProjectZkCatalogEntry) {
-  const { zkVM = [], snark = [], finalWrap = [] } = header.techStack
-  const zkVMTags = [...zkVM, ...snark]
   return compact([
     creator && { label: 'Creator', value: creator },
     header.tvs.value > 0 && {
       label: 'Total Value Secured',
       value: `${formatUsd(header.tvs.value)} (${formatChange(header.tvs.change, header.tvs.changePeriod)})`,
     },
-    ...Object.values(header.trustedSetupsByProofSystem).map((proofSystem) =>
+    ...getProvingStackFacts(header),
+  ])
+}
+
+/** The trusted setups of each proof system, then the proving stack's tags. */
+export function getProvingStackFacts({
+  trustedSetupsByProofSystem,
+  techStack,
+}: ZkCatalogSummary) {
+  const { zkVM = [], snark = [], finalWrap = [] } = techStack
+  const zkVMTags = [...zkVM, ...snark]
+  return compact([
+    ...Object.values(trustedSetupsByProofSystem).map((proofSystem) =>
       getTrustedSetupsFact(proofSystem),
     ),
     zkVMTags.length > 0 && {
