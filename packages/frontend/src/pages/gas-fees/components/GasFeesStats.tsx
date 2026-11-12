@@ -6,7 +6,7 @@ import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import type { ChartRange } from '~/utils/range/range'
 import { formatFee, formatTimes, getPeriodLabel } from './metrics'
-import { ETH, L1, L2, Label, percent, SPLIT, usd } from './parts'
+import { ETH, L2, Label, percent, SPLIT, usd } from './parts'
 import { TxFeesBreakdown } from './TxFeesBreakdown'
 import type { GasFeesChain } from './types'
 
@@ -17,8 +17,8 @@ interface Props {
 }
 
 /**
- * The headline over the transactions-to-fees split, with three smaller
- * figures stacked beside it: transfer cost, L1 fee, gas token
+ * The headline over the transactions-to-fees split on the left, with the
+ * transfer cost beside the headline and the gas token beside the split
  */
 export function GasFeesStats({ summary, range, isLoading }: Props) {
   if (isLoading || !summary) {
@@ -32,63 +32,53 @@ export function GasFeesStats({ summary, range, isLoading }: Props) {
   }
   const f = getFigures(summary.stats, getPeriodLabel(range))
   return (
-    <div className="flex flex-col gap-6">
-      <Headline f={f} />
-      {/* The split on the left stretches to the height of the three figures
-          stacked on the right, so both columns start and end level */}
-      <div className={cn(SPLIT.grid, 'border-divider border-t pt-6')}>
-        <div className={cn(SPLIT.main, '@3xl:h-auto h-72')}>
-          <TxFeesBreakdown
-            split={{
-              tx: { l2s: f.l2s.txCount, ethereum: f.ethereum.txCount },
-              fees: { l2s: f.l2s.fees, ethereum: f.ethereum.fees },
-            }}
+    // Two rows on wide cards: the headline beside the transfer cost, then
+    // the split beside the gas token, each pair starting level
+    <div className={cn(SPLIT.grid, '@3xl:grid-rows-[auto_1fr]')}>
+      <div className={cn(SPLIT.main, '@3xl:col-start-1 @3xl:row-start-1')}>
+        <Headline f={f} />
+      </div>
+      <div
+        className={cn(
+          SPLIT.main,
+          '@3xl:col-start-1 @3xl:row-start-2 @3xl:h-auto h-72 @3xl:min-h-64 @3xl:pt-6',
+        )}
+      >
+        <TxFeesBreakdown
+          split={{
+            tx: { l2s: f.l2s.txCount, ethereum: f.ethereum.txCount },
+            fees: { l2s: f.l2s.fees, ethereum: f.ethereum.fees },
+          }}
+        />
+      </div>
+      <div
+        className={cn(
+          SPLIT.side,
+          SPLIT.sidePad,
+          '@3xl:col-start-2 @3xl:row-start-1 flex flex-col gap-2 @3xl:pb-6',
+        )}
+      >
+        <TransferCost f={f} />
+      </div>
+      <div
+        className={cn(
+          SPLIT.side,
+          SPLIT.sidePad,
+          '@3xl:col-start-2 @3xl:row-start-2',
+        )}
+      >
+        <div className="flex flex-col gap-2 border-divider @3xl:border-t @3xl:pt-6">
+          <Label>L2 fees paid in ETH · {f.period}</Label>
+          <Headed value={percent(f.ethShare)} />
+          <KeyedBar
+            parts={f.l2s.feesByToken.map((t) => ({
+              label: `${t.token} ${usd(t.fees)}`,
+              value: t.fees,
+              color: t.token === 'ETH' ? ETH : 'var(--chart-stacked-pink)',
+            }))}
           />
         </div>
-        <div
-          className={cn(
-            SPLIT.side,
-            SPLIT.sidePad,
-            'grid grid-cols-1 divide-y divide-divider',
-          )}
-        >
-          <Tile>
-            <TransferCost f={f} />
-          </Tile>
-          <Tile>
-            <Label>L1 fee in L2 fees · {f.period}</Label>
-            <Headed
-              value={usd(f.l2s.l1DataFees)}
-              note={`${percent(f.l1Share)} of L2 fees`}
-            />
-            <KeyedBar
-              parts={[
-                { label: 'L1 fee', value: f.l2s.l1DataFees, color: L1 },
-                { label: 'L2 execution', value: f.execution, color: L2 },
-              ]}
-            />
-          </Tile>
-          <Tile>
-            <Label>L2 fees paid in ETH · {f.period}</Label>
-            <Headed value={percent(f.ethShare)} />
-            <KeyedBar
-              parts={f.l2s.feesByToken.map((t) => ({
-                label: `${t.token} ${usd(t.fees)}`,
-                value: t.fees,
-                color: t.token === 'ETH' ? ETH : 'var(--chart-stacked-pink)',
-              }))}
-            />
-          </Tile>
-        </div>
       </div>
-    </div>
-  )
-}
-
-function Tile({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="flex flex-col gap-2 py-5 first:pt-0 last:pb-0">
-      {children}
     </div>
   )
 }
@@ -106,8 +96,6 @@ function getFigures(stats: GasFeesSummary['stats'], period: string) {
     l2s,
     txShare: txCount > 0 ? l2s.txCount / txCount : 0,
     feeShare: fees > 0 ? l2s.fees / fees : 0,
-    l1Share: l2s.fees > 0 ? l2s.l1DataFees / l2s.fees : 0,
-    execution: l2s.fees - l2s.l1DataFees,
     ethShare: l2s.fees > 0 ? ethFees / l2s.fees : 0,
     avgFee: {
       ethereum: ethereum.txCount > 0 ? ethereum.fees / ethereum.txCount : 0,

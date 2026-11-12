@@ -3,7 +3,6 @@ import { cn } from '~/utils/cn'
 
 export const ETH = 'var(--chart-ethereum)'
 export const L2 = 'var(--chart-ethereum-secondary)'
-export const L1 = 'var(--chart-stacked-yellow)'
 
 /**
  * The Ethereum vs L2s section's two-column split, used by the stats and by
