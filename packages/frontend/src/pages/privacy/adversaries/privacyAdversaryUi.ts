@@ -1,11 +1,13 @@
 import type {
   PrivacyAdversary,
   PrivacyAdversaryCell,
+  PrivacyAdversaryId,
   PrivacyAdversarySentiment,
   PrivacyExposure,
   PrivacyFieldExposure,
   TableReadyValue,
 } from '@l2beat/config'
+import kebabCase from 'lodash/kebabCase'
 import type { RosetteValue } from '~/components/rosette/types'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 
@@ -123,6 +125,11 @@ function toPrivacyRosetteValue(
 }
 
 export const PRIVACY_ADVERSARIES_SECTION_ID = 'privacy-adversaries'
+
+/** Anchor of one adversary's block on the project page, which advice steps link. */
+export function getPrivacyAdversaryBlockId(id: PrivacyAdversaryId): string {
+  return `${PRIVACY_ADVERSARIES_SECTION_ID}-${kebabCase(id)}`
+}
 
 export function getPrivacyAdversariesSectionHref(projectHref: string): string {
   return `${projectHref}#${PRIVACY_ADVERSARIES_SECTION_ID}`

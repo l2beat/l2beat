@@ -26,7 +26,6 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
       sentiment: 'good',
       exposureShort: 'Transfers inside publish only encrypted notes.',
       exposureContinued: `${S.entryExitPublic()} Each epoch pairs every exit with the nullifiers and note shape of the transfer that funded it. Forced withdrawals publish the spent notes and the account, public gift exits the destination.`,
-      advice: "Exit through the operator's relay.",
       interior: {
         ...INTERIOR,
         linkage: { verdict: 'atRisk', note: 'Exposed in a forced withdrawal.' },
@@ -147,4 +146,11 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
       ],
     },
   },
+  advice: [
+    {
+      name: 'Withdraw',
+      text: "Withdraw through the operator's relay, since a forced withdrawal publishes your account and the notes it spends.",
+      against: ['publicObserver'],
+    },
+  ],
 })
