@@ -75,6 +75,8 @@ export interface EthereumHead {
   /** Oldest first, the last `HEAD_WINDOW` slots */
   blocks: HeadBlock[]
   finalizedSlot: number | undefined
+  /** Execution block number of the finalized slot */
+  finalizedBlock: number | undefined
   justifiedSlot: number | undefined
   lastReorg: Reorg | undefined
   today: TodaySoFar | undefined

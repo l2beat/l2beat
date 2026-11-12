@@ -1,3 +1,4 @@
+import { getSimulatedHistory, todayStart } from './simulatedHistory'
 import type {
   BlockLimits,
   EthereumHead,
@@ -17,8 +18,8 @@ export const HEAD_WINDOW = 64
 const SLOT_SECONDS = 12
 const GENESIS = 1606824023
 const SLOTS_PER_EPOCH = 32
-/** Execution block numbers lag slots by the slots missed since the merge */
-const BLOCK_NUMBER_OFFSET = 9_251_000
+/** Block numbers ran ahead of slots before the merge, less the slots missed since */
+const SLOT_TO_BLOCK = 10_727_000
 /** One block in this many is replaced, far more often than on mainnet, so the rewind can be seen */
 const REORG_EVERY = 45
 const MISS_EVERY = 40
@@ -30,18 +31,18 @@ export const SIMULATED_LIMITS: BlockLimits = {
   gasTarget: 30_000_000,
 }
 
-/** Rough shares of blob space, by poster name, so the mix looks like mainnet */
+/** Rough shares of blob space, by project id, so the mix looks like mainnet */
 const KNOWN_SHARES: Record<string, number> = {
-  Base: 0.3,
-  Arbitrum: 0.16,
-  'OP Mainnet': 0.08,
-  Taiko: 0.07,
-  Scroll: 0.06,
-  Linea: 0.06,
-  'World Chain': 0.05,
-  Soneium: 0.04,
-  Ink: 0.03,
-  Unichain: 0.03,
+  base: 0.3,
+  arbitrum: 0.16,
+  optimism: 0.08,
+  taiko: 0.07,
+  scroll: 0.06,
+  linea: 0.06,
+  worldchain: 0.05,
+  soneium: 0.04,
+  ink: 0.03,
+  unichain: 0.03,
 }
 export const UNKNOWN_POSTER_ID = 'unknown'
 
@@ -69,6 +70,7 @@ export function createSimulatedHead(posters: SimulatedPoster[]): SimulatedHead {
     head: undefined,
     blocks: [],
     finalizedSlot: undefined,
+    finalizedBlock: undefined,
     justifiedSlot: undefined,
     lastReorg: undefined,
     today: undefined,
@@ -88,6 +90,7 @@ export function createSimulatedHead(posters: SimulatedPoster[]): SimulatedHead {
   function start() {
     const now = Date.now() / 1000
     slot = Math.floor((now - GENESIS) / SLOT_SECONDS)
+    const lastDay = getSimulatedHistory(todayStart()).at(-1)
     const blocks: HeadBlock[] = []
     for (let s = slot - HEAD_WINDOW + 1; s <= slot; s++) {
       blocks.push(makeBlock(s, weights))
@@ -98,10 +101,12 @@ export function createSimulatedHead(posters: SimulatedPoster[]): SimulatedHead {
       head: blocks.at(-1),
       blocks,
       finalizedSlot: finalizedFor(slot),
+      finalizedBlock: finalizedFor(slot) + SLOT_TO_BLOCK,
       justifiedSlot: finalizedFor(slot) + SLOTS_PER_EPOCH,
       today: seedToday(slot, weights),
-      supplyEth: 120_712_394 + (slot % 10_000) * 0.01,
-      stakedEth: 35_912_404,
+      // picks up where the daily history ends, so today's point joins the line
+      supplyEth: lastDay?.supplyEth,
+      stakedEth: lastDay?.stakedEth,
       activeValidators: 1_104_212,
       nextSlotAt: nextSlotAt(),
     })
@@ -134,6 +139,7 @@ export function createSimulatedHead(posters: SimulatedPoster[]): SimulatedHead {
       head: block,
       blocks,
       finalizedSlot: finalizedFor(slot),
+      finalizedBlock: finalizedFor(slot) + SLOT_TO_BLOCK,
       justifiedSlot: finalizedFor(slot) + SLOTS_PER_EPOCH,
       today: addToToday(state.today, block),
       supplyEth: (state.supplyEth ?? 0) + block.issuedEth - block.burnedEth,
@@ -202,7 +208,7 @@ function finalizedFor(slot: number) {
 function toWeights(posters: SimulatedPoster[]) {
   const list = posters.map((p) => ({
     id: p.id,
-    weight: KNOWN_SHARES[p.name] ?? 0.004,
+    weight: KNOWN_SHARES[p.id] ?? 0.002,
   }))
   list.push({ id: UNKNOWN_POSTER_ID, weight: 0.08 })
   const total = list.reduce((sum, p) => sum + p.weight, 0)
@@ -264,7 +270,7 @@ function makeBlock(
     slot,
     timestamp,
     status: 'proposed',
-    number: slot - BLOCK_NUMBER_OFFSET,
+    number: slot + SLOT_TO_BLOCK,
     hash: randomHash(),
     proposerIndex: randomInt(0, 1_100_000),
     gasUsed,
@@ -277,7 +283,8 @@ function makeBlock(
     blobCount,
     blobBaseFeeWei,
     burnedEth,
-    issuedEth: 0.0025 + Math.random() * 0.0004,
+    // about 2,700 ETH a day across 7,200 slots
+    issuedEth: 0.36 + Math.random() * 0.03,
     ethPriceUsd,
   }
 }

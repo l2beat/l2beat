@@ -10,9 +10,8 @@ export function VariantSwitcher({
   speed: number
 }) {
   const reorg = useSimulateReorg()
-  const pitch = VARIANTS.find((v) => v.id === current)?.pitch
   return (
-    <div className="fixed inset-x-2 bottom-2 z-[60] mx-auto flex max-w-fit flex-wrap items-center gap-1 rounded-xl border border-divider bg-surface-primary/95 p-1.5 text-xs shadow-lg backdrop-blur md:bottom-4">
+    <div className="fixed inset-x-2 bottom-2 z-[60] mx-auto flex max-w-fit items-center gap-1 overflow-x-auto whitespace-nowrap rounded-xl border border-divider bg-surface-primary/95 p-1.5 text-xs shadow-lg backdrop-blur max-md:mr-16 md:bottom-4">
       <span className="px-2 font-bold text-secondary uppercase tracking-wide max-md:hidden">
         Prototype
       </span>
@@ -45,11 +44,6 @@ export function VariantSwitcher({
       >
         ⟲ Reorg
       </button>
-      {pitch && (
-        <span className="basis-full px-2 pt-0.5 text-[11px] text-secondary md:hidden">
-          {pitch}
-        </span>
-      )}
     </div>
   )
 }
