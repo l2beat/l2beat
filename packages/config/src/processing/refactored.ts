@@ -9,6 +9,7 @@ import { basesolbridge } from '../projects/basesolbridge/basesolbridge'
 import { boojum } from '../projects/boojum/boojum'
 import { bsc } from '../projects/bsc/bsc'
 import { butternetwork } from '../projects/butternetwork/butternetwork'
+import { cbeth } from '../projects/cbeth/cbeth'
 import { cbridge } from '../projects/cbridge/cbridge'
 import { ccip } from '../projects/ccip/ccip'
 import { cctpv1 } from '../projects/cctpv1/cctpv1'
@@ -53,6 +54,7 @@ import { rocketpool } from '../projects/rocketpool/rocketpool'
 import { safe } from '../projects/safe/safe'
 import { sp1hypercube } from '../projects/sp1hypercube/sp1hypercube'
 import { sp1turbo } from '../projects/sp1turbo/sp1turbo'
+import { splitsv2 } from '../projects/splitsv2/splitsv2'
 import { stargate } from '../projects/stargate/stargate'
 import { stone } from '../projects/stone/stone'
 import { strk20 } from '../projects/strk20/strk20'
@@ -143,9 +145,11 @@ export const refactored: BaseProject[] = [
   etherfi,
   uniswapv4,
   wbeth,
+  cbeth,
   polymarket,
   rocketpool,
   safe,
+  splitsv2,
   // privacy
   cloaked,
   fluidkey,

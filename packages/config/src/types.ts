@@ -1070,6 +1070,7 @@ export type ProjectDefiCategory =
   | 'Stablecoin'
   | 'Prediction market'
   | 'Multisig'
+  | 'Payments'
 
 export interface ProjectDefiInfo {
   /** Short category label shown on the project page, e.g. "Stablecoin". */
@@ -1999,6 +2000,11 @@ export type ProjectLiquidStakingContracts =
        * for an onchain redemption.
        */
       unwrapToken: ChainSpecificAddress
+    }
+  | {
+      /** No onchain redemption: the rate is the only protocol read. */
+      type: 'cbeth'
+      cbETH: ChainSpecificAddress
     }
 
 /** A pool selling the token for ETH or WETH. */
