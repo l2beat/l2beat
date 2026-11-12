@@ -45,6 +45,29 @@ export const NO_PRIORITY_FEE_NOTES: Partial<Record<GasFeesChainId, string>> = {
     'Abstract has no priority fees: the sequencer orders transactions first come, first served.',
 }
 
+export type FeeSplitPartKey = 'base' | 'priority' | 'l1Data'
+
+/**
+ * How each part of a fee works on the chain, under its value in the table's
+ * split tooltip. A chain or part without a note shows the value alone.
+ */
+export const FEE_SPLIT_NOTES: Partial<
+  Record<GasFeesChainId, Partial<Record<FeeSplitPartKey, string>>>
+> = {
+  ethereum: {
+    base: 'Set by the protocol for each block, up or down with how full the last block was, and burned.',
+    priority:
+      'A tip to the block builder on top of the base fee. When blocks are full, a higher tip gets a transaction in sooner.',
+  },
+  optimism: {
+    base: "OP Mainnet's own execution fee. Set like Ethereum's, from how full recent blocks were, but paid to the chain instead of burned.",
+    priority:
+      'A tip to the sequencer, which puts higher tips first when blocks are full.',
+    l1Data:
+      "The cost of posting the transaction's data to Ethereum: its compressed size times Ethereum's blob and base fees, scaled by the chain's settings.",
+  },
+}
+
 /** What a priority fee buys on each chain */
 export const TIP_ROLES: Record<GasFeesChainId, string> = {
   ethereum: 'Sets position',

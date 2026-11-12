@@ -12,6 +12,7 @@ interface Props extends AppLayoutProps {
   chains: GasFeesChain[]
   upgrades: GasFeesUpgrade[]
   initialRange: ChartRange
+  statsRange: ChartRange
   queryState: DehydratedState
 }
 
@@ -19,6 +20,7 @@ export function GasFeesPage({
   chains,
   upgrades,
   initialRange,
+  statsRange,
   queryState,
   ...props
 }: Props) {
@@ -31,6 +33,7 @@ export function GasFeesPage({
             chains={chains}
             upgrades={upgrades}
             initialRange={initialRange}
+            statsRange={statsRange}
           />
         </SideNavLayout>
       </HydrationBoundary>

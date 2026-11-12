@@ -1,9 +1,10 @@
 import { GasFeesLive } from './GasFeesLive'
 import { GasFeesMethodology } from './GasFeesMethodology'
 import { GasFeesPriceOfSpeed } from './GasFeesPriceOfSpeed'
-import { Colored, Label } from './GasFeesStats'
+import { Colored } from './GasFeesStats'
 import { GasFeesTipPayers } from './GasFeesTipPayers'
 import mock from './pageMock.json'
+import { Label } from './parts'
 
 const FAST = 'var(--chart-stacked-blue)'
 const OVER = 'var(--chart-stacked-pink)'

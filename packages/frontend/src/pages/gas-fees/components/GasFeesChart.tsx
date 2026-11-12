@@ -69,6 +69,8 @@ interface Props {
   setScale: (scale: GasFeesScale) => void
   highlightedChainId: string | undefined
   highlightedUpgradeId: string | undefined
+  /** Clicked in the upgrades list: marked with a band around it as well */
+  selectedUpgradeId?: string
   unit: GasFeesUnit
   setUnit: (unit: GasFeesUnit) => void
   rangeControl: React.ReactNode
@@ -91,6 +93,7 @@ export function GasFeesChart({
   setScale,
   highlightedChainId,
   highlightedUpgradeId,
+  selectedUpgradeId,
   unit,
   setUnit,
   rangeControl,
@@ -155,30 +158,31 @@ export function GasFeesChart({
   )
 
   const yAxis = getYAxis(points, shownKeys, scale, isGas)
-  // Upgrades sit under the chart as milestones; the one hovered in the list
-  // also gets a bar
-  const markers = getUpgradeMarker(
+  // Upgrades sit under the chart as milestones. The one hovered in the list
+  // also gets a line, and the one clicked a line with a band around it.
+  const markers = getUpgradeMarkers(
     points,
-    upgrades.find((u) => u.id === highlightedUpgradeId),
+    upgrades.find((u) => u.id === selectedUpgradeId),
+    upgrades.find(
+      (u) => u.id === highlightedUpgradeId && u.id !== selectedUpgradeId,
+    ),
     yAxis.top,
   )
   const milestones = useMemo(() => toMilestones(upgrades), [upgrades])
   const timeRange = useMemo(() => getChartTimeRangeFromData(points), [points])
-  const Heading = ethereumOnly ? 'h3' : 'h2'
 
   return (
     <div className="flex flex-col gap-3">
       <ChartControlsWrapper className="flex-wrap items-start">
         <div>
-          <Heading
-            className={ethereumOnly ? 'font-bold text-lg' : 'font-bold text-xl'}
-          >
+          {/* Always under a section heading: Ethereum vs L2s, or the Ethereum page's */}
+          <h3 className="font-bold text-lg">
             {GAS_FEES_METRIC_LABELS[shownMetric].title}
             {ethereumOnly && ' on Ethereum'}
             {isGas && (
               <span className="font-normal text-secondary"> · gwei</span>
             )}
-          </Heading>
+          </h3>
           <ChartTimeRange
             isPlaceholderData={isPlaceholderData}
             timeRange={timeRange}
@@ -308,15 +312,38 @@ function getYAxis(
   }
 }
 
+interface UpgradeMarkers {
+  areas: ChartReferenceArea[]
+  labels: ChartReferenceDot[]
+}
+
+/** The clicked upgrade first, so the hovered one's line draws over its band */
+function getUpgradeMarkers(
+  points: Point[] | undefined,
+  selected: GasFeesUpgrade | undefined,
+  hovered: GasFeesUpgrade | undefined,
+  top: number | undefined,
+): UpgradeMarkers {
+  const a = getUpgradeMarker(points, selected, top, true)
+  const b = getUpgradeMarker(points, hovered, top, false)
+  return {
+    areas: [...a.areas, ...b.areas],
+    // One name above the plot: two would overlap when the upgrades are close
+    labels: b.labels.length > 0 ? b.labels : a.labels,
+  }
+}
+
 /**
- * A bar at the selected upgrade, named above the plot, where no line
- * crosses the label
+ * A line at the upgrade, named above the plot, where no line crosses the
+ * label. A clicked upgrade also gets a light band around it, so it stays
+ * easy to find while the pointer is on the lines.
  */
 function getUpgradeMarker(
   points: Point[] | undefined,
   upgrade: GasFeesUpgrade | undefined,
   top: number | undefined,
-): { areas: ChartReferenceArea[]; labels: ChartReferenceDot[] } {
+  withBand: boolean,
+): UpgradeMarkers {
   const first = points?.[0]?.timestamp
   const last = points?.at(-1)?.timestamp
   const at = upgrade?.timestamp
@@ -332,8 +359,21 @@ function getUpgradeMarker(
     return { areas: [], labels: [] }
   }
   const width = Math.max(UnixTime.DAY, (last - first) / 200)
+  const pad = Math.max(UnixTime.DAY * 3, (last - first) / 30)
+  const line: ChartReferenceArea = {
+    x1: at,
+    x2: at + width,
+    fill: 'var(--brand)',
+    fillOpacity: 0.9,
+  }
+  const band: ChartReferenceArea = {
+    x1: Math.max(first, at - pad),
+    x2: Math.min(last, at + width + pad),
+    fill: 'var(--brand)',
+    fillOpacity: 0.12,
+  }
   return {
-    areas: [{ x1: at, x2: at + width, fill: 'var(--brand)', fillOpacity: 0.9 }],
+    areas: withBand ? [band, line] : [line],
     labels:
       top === undefined
         ? []

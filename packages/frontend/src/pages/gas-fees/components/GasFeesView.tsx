@@ -13,9 +13,10 @@ import {
   isGasMetric,
 } from '~/server/features/gas-fees/types'
 import { useTRPC } from '~/trpc/React'
+import { cn } from '~/utils/cn'
 import { type ChartRange, optionToRange } from '~/utils/range/range'
 import { GasFeesChart } from './GasFeesChart'
-import { GasFeesStats } from './GasFeesStats'
+import { GasFeesComparedL2s, GasFeesStats } from './GasFeesStats'
 import { GasFeesTable } from './GasFeesTable'
 import { GasFeesTipping } from './GasFeesTipping'
 import { GasFeesUpgrades } from './GasFeesUpgrades'
@@ -25,6 +26,7 @@ import {
   GAS_FEES_RANGE_OPTIONS,
   getPeriodLabel,
 } from './metrics'
+import { SPLIT } from './parts'
 import type { GasFeesChain } from './types'
 
 export type GasFeesScale = 'log' | 'lin'
@@ -41,13 +43,20 @@ interface Props {
   chains: GasFeesChain[]
   upgrades: GasFeesUpgrade[]
   initialRange: ChartRange
+  /** The past year, fixed: the stats don't follow the chart's range */
+  statsRange: ChartRange
 }
 
-export function GasFeesView({ chains, upgrades, initialRange }: Props) {
+export function GasFeesView({
+  chains,
+  upgrades,
+  initialRange,
+  statsRange,
+}: Props) {
   const trpc = useTRPC()
   const [range, setRange] = useState(initialRange)
-  // The chart and the stats above it open on the whole history, the table
-  // on recent fees
+  // The chart opens on the whole history, the stats cover the past year and
+  // the table opens on recent fees
   const [tableRange, setTableRange] = useState(() => optionToRange('30d'))
   const [unit, setUnit] = useState<GasFeesUnit>('usd')
   // Each unit keeps its own metric, so switching back restores it
@@ -64,9 +73,10 @@ export function GasFeesView({ chains, upgrades, initialRange }: Props) {
   // The chain hovered in the table is highlighted on the chart
   const [highlightedChainId, setHighlightedChainId] = useState<string>()
   const [highlightedUpgradeId, setHighlightedUpgradeId] = useState<string>()
+  const [selectedUpgradeId, setSelectedUpgradeId] = useState<string>()
 
   const chart = useChartQuery(trpc.gasFees.chart, { range, metric })
-  const summary = useChartQuery(trpc.gasFees.summary, { range })
+  const summary = useChartQuery(trpc.gasFees.summary, { range: statsRange })
   const tableSummary = useChartQuery(trpc.gasFees.summary, {
     range: tableRange,
   })
@@ -91,47 +101,64 @@ export function GasFeesView({ chains, upgrades, initialRange }: Props) {
       <PrimaryCard>
         <GasFeesTipping />
       </PrimaryCard>
+      {/* The split, the fee history and the upgrades behind it, as one section */}
       <PrimaryCard>
-        <GasFeesStats
-          stats={summary.data?.stats}
-          range={summary.shownInput.range}
-          isLoading={summary.isLoading}
-        />
-      </PrimaryCard>
-      {/* The upgrades sit beside the chart, cut to its height */}
-      <div className="grid grid-cols-1 md:gap-4 lg:grid-cols-[minmax(0,1fr)_340px]">
-        <PrimaryCard>
-          <GasFeesChart
-            chains={chains}
-            upgrades={upgrades}
-            data={chart.data}
-            isLoading={chart.isLoading}
-            isPlaceholderData={chart.isPlaceholderData}
-            shownMetric={shownMetric}
-            metric={metric}
-            setMetric={setMetric}
-            scale={scale}
-            setScale={setScale}
-            highlightedChainId={highlightedChainId}
-            highlightedUpgradeId={highlightedUpgradeId}
-            unit={unit}
-            setUnit={setUnit}
-            rangeControl={rangeControls}
-          />
-        </PrimaryCard>
-        <PrimaryCard className="relative max-lg:h-[480px]">
-          <div className="absolute inset-0 p-4 md:px-6 md:py-5">
-            <GasFeesUpgrades
-              upgrades={upgrades}
-              metric={isGasMetric(shownMetric) ? undefined : shownMetric}
-              range={chart.shownInput.range}
-              highlightedUpgradeId={highlightedUpgradeId}
-              setHighlightedUpgradeId={setHighlightedUpgradeId}
-              showWholeHistory={showWholeHistory}
-            />
+        <div className="@container flex flex-col gap-6">
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center gap-2.5">
+              <h2 className="font-bold text-xl md:text-2xl">Ethereum vs L2s</h2>
+              <GasFeesComparedL2s chains={chains} summary={summary.data} />
+            </div>
+            <p className="mt-1 text-secondary text-sm">
+              Where transactions happen and who collects the fees, what fees
+              have cost over time, and the Ethereum upgrades that brought them
+              down.
+            </p>
           </div>
-        </PrimaryCard>
-      </div>
+          <GasFeesStats
+            summary={summary.data}
+            range={summary.shownInput.range}
+            isLoading={summary.isLoading}
+          />
+          {/* The upgrades sit beside the chart, cut to its height, in the
+              same columns as the stats above */}
+          <div className={cn(SPLIT.grid, 'border-divider border-t pt-6')}>
+            <div className={SPLIT.main}>
+              <GasFeesChart
+                chains={chains}
+                upgrades={upgrades}
+                data={chart.data}
+                isLoading={chart.isLoading}
+                isPlaceholderData={chart.isPlaceholderData}
+                shownMetric={shownMetric}
+                metric={metric}
+                setMetric={setMetric}
+                scale={scale}
+                setScale={setScale}
+                highlightedChainId={highlightedChainId}
+                highlightedUpgradeId={highlightedUpgradeId}
+                selectedUpgradeId={selectedUpgradeId}
+                unit={unit}
+                setUnit={setUnit}
+                rangeControl={rangeControls}
+              />
+            </div>
+            <div className={cn(SPLIT.side, 'relative @max-3xl:h-[480px]')}>
+              <div className={cn(SPLIT.sidePad, 'absolute inset-0')}>
+                <GasFeesUpgrades
+                  upgrades={upgrades}
+                  range={chart.shownInput.range}
+                  highlightedUpgradeId={highlightedUpgradeId}
+                  setHighlightedUpgradeId={setHighlightedUpgradeId}
+                  selectedUpgradeId={selectedUpgradeId}
+                  setSelectedUpgradeId={setSelectedUpgradeId}
+                  showWholeHistory={showWholeHistory}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </PrimaryCard>
       <PrimaryCard>
         <GasFeesTable
           chains={chains}

@@ -1,6 +1,7 @@
 import { assert, type InMemoryCache, ProjectId } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import {
+  FEE_SPLIT_NOTES,
   GAS_FEES_CHAINS,
   NO_PRIORITY_FEE_NOTES,
   TIP_ROLES,
@@ -61,6 +62,8 @@ async function getCachedData(manifest: Manifest) {
   const helpers = getSsrHelpers()
   // Opens on the whole history: the point is how far fees have fallen
   const initialRange = optionToRange('max')
+  // The Ethereum vs L2s headline is about today's split, not the history
+  const statsRange = optionToRange('1y')
 
   const [projects] = await Promise.all([
     ps.getProjects({
@@ -74,7 +77,7 @@ async function getCachedData(manifest: Manifest) {
       }),
     ),
     helpers.queryClient.prefetchQuery(
-      helpers.trpc.gasFees.summary.queryOptions({ range: initialRange }),
+      helpers.trpc.gasFees.summary.queryOptions({ range: statsRange }),
     ),
   ])
 
@@ -95,6 +98,7 @@ async function getCachedData(manifest: Manifest) {
           ? 'var(--chart-ethereum)'
           : (l2Colors[i - 1] ?? 'var(--secondary)'),
       noPriorityFeeNote: NO_PRIORITY_FEE_NOTES[chain.id],
+      feeSplitNotes: FEE_SPLIT_NOTES[chain.id] ?? {},
       tipRole: TIP_ROLES[chain.id],
     }
   })
@@ -103,6 +107,7 @@ async function getCachedData(manifest: Manifest) {
     chains,
     upgrades: getGasFeesUpgrades(),
     initialRange,
+    statsRange,
     queryState: helpers.dehydrate(),
   }
 }

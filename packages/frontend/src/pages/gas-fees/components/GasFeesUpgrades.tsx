@@ -1,27 +1,27 @@
 import type { GasFeesUpgrade } from '~/server/features/gas-fees/getGasFeesUpgrades'
-import type { GasFeesUsdMetric } from '~/server/features/gas-fees/types'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import type { ChartRange } from '~/utils/range/range'
-import { formatFee, GAS_FEES_METRIC_LABELS } from './metrics'
 
 interface Props {
   upgrades: GasFeesUpgrade[]
-  /** undefined when the page shows gas prices, which Dencun didn't move */
-  metric: GasFeesUsdMetric | undefined
   /** The chart's range: upgrades outside it are dimmed */
   range: ChartRange
   highlightedUpgradeId: string | undefined
   setHighlightedUpgradeId: (id: string | undefined) => void
+  /** Clicked in the list: marked on the chart until clicked again */
+  selectedUpgradeId: string | undefined
+  setSelectedUpgradeId: (id: string | undefined) => void
   showWholeHistory: () => void
 }
 
 export function GasFeesUpgrades({
   upgrades,
-  metric,
   range,
   highlightedUpgradeId,
   setHighlightedUpgradeId,
+  selectedUpgradeId,
+  setSelectedUpgradeId,
   showWholeHistory,
 }: Props) {
   const [from, to] = range
@@ -32,10 +32,15 @@ export function GasFeesUpgrades({
 
   return (
     <div className="flex h-full flex-col">
-      <h2 className="font-bold text-xl">Ethereum upgrades</h2>
-      <ol className="-mx-2 mt-2 min-h-0 flex-1 overflow-y-auto border-divider border-t px-2 py-2">
+      <h3 className="border-divider border-b pb-3 font-bold text-lg">
+        Ethereum upgrades
+      </h3>
+      {/* Wider than the column by each item's padding, so the dots and dates
+          line up with the column's edges and the figures above */}
+      <ol className="-mx-2 min-h-0 flex-1 overflow-y-auto py-2">
         {upgrades.map((upgrade) => {
           const inRange = isInRange(upgrade)
+          const isSelected = selectedUpgradeId === upgrade.id
           return (
             <li key={upgrade.id}>
               <button
@@ -44,6 +49,9 @@ export function GasFeesUpgrades({
                   'relative w-full rounded-lg py-2 pr-2 pl-6 text-left transition-colors',
                   'hover:bg-surface-secondary',
                   highlightedUpgradeId === upgrade.id && 'bg-surface-secondary',
+                  isSelected &&
+                    'bg-brand/10 ring-1 ring-brand/40 ring-inset hover:bg-brand/15',
+                  upgrade.timestamp === null && 'cursor-default',
                   upgrade.kind === 'next' &&
                     'mb-2 border border-divider border-dashed',
                   upgrade.kind !== 'next' && !inRange && 'opacity-50',
@@ -52,8 +60,18 @@ export function GasFeesUpgrades({
                 onMouseLeave={() => setHighlightedUpgradeId(undefined)}
                 onFocus={() => setHighlightedUpgradeId(upgrade.id)}
                 onBlur={() => setHighlightedUpgradeId(undefined)}
+                aria-pressed={
+                  upgrade.timestamp === null ? undefined : isSelected
+                }
                 onClick={() => {
-                  if (upgrade.timestamp !== null && !inRange) showWholeHistory()
+                  // Not out yet: nothing to mark on the chart
+                  if (upgrade.timestamp === null) return
+                  if (isSelected) {
+                    setSelectedUpgradeId(undefined)
+                    return
+                  }
+                  setSelectedUpgradeId(upgrade.id)
+                  if (!inRange) showWholeHistory()
                 }}
               >
                 <TimelineDot kind={upgrade.kind} />
@@ -84,12 +102,6 @@ export function GasFeesUpgrades({
                     No date set yet
                   </p>
                 )}
-                {upgrade.l2Median && metric && (
-                  <Change
-                    label={`L2 median ${GAS_FEES_METRIC_LABELS[metric].short.toLowerCase()}, 30 days before → after`}
-                    {...upgrade.l2Median[metric]}
-                  />
-                )}
               </button>
             </li>
           )
@@ -110,36 +122,5 @@ function TimelineDot({ kind }: { kind: GasFeesUpgrade['kind'] }) {
         kind === 'next' && 'border border-brand border-dashed',
       )}
     />
-  )
-}
-
-function Change({
-  label,
-  before,
-  after,
-}: {
-  label: string
-  before: number
-  after: number
-}) {
-  const change = after / before - 1
-  return (
-    <div className="mt-1 flex flex-col gap-0.5 text-xs tabular-nums">
-      <span className="text-2xs text-secondary">{label}</span>
-      <span className="flex items-baseline justify-between gap-2">
-        <span className="text-secondary">
-          {formatFee(before)} →{' '}
-          <span className="text-primary">{formatFee(after)}</span>
-        </span>
-        <span
-          className={cn(
-            'w-14 text-right font-medium',
-            change < 0 ? 'text-positive' : 'text-negative',
-          )}
-        >
-          {change < 0 ? '▼' : '▲'} {Math.abs(Math.round(change * 100))}%
-        </span>
-      </span>
-    </div>
   )
 }

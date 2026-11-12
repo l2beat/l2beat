@@ -1,28 +1,27 @@
-import { formatCurrency, formatNumber } from '@l2beat/shared-pure'
+import { Fragment } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
+import { ProjectIconList } from '~/components/ProjectIconList'
 import type { GasFeesSummary } from '~/server/features/gas-fees/getGasFeesSummary'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import type { ChartRange } from '~/utils/range/range'
 import { formatFee, formatTimes, getPeriodLabel } from './metrics'
+import { ETH, L1, L2, Label, percent, SPLIT, usd } from './parts'
+import { TxFeesBreakdown } from './TxFeesBreakdown'
+import type { GasFeesChain } from './types'
 
 interface Props {
-  stats: GasFeesSummary['stats'] | undefined
+  summary: GasFeesSummary | undefined
   range: ChartRange
   isLoading: boolean
 }
 
-const ETH = 'var(--chart-ethereum)'
-const L2 = 'var(--chart-ethereum-secondary)'
-const L1 = 'var(--chart-stacked-yellow)'
-
 /**
- * The headline with its two bars top left, the transfer cost as a tall
- * column on the right, and the L1 fee and gas token figures under the
- * headline
+ * The headline over the transactions-to-fees split, with three smaller
+ * figures stacked beside it: transfer cost, L1 fee, gas token
  */
-export function GasFeesStats({ stats, range, isLoading }: Props) {
-  if (isLoading || !stats) {
+export function GasFeesStats({ summary, range, isLoading }: Props) {
+  if (isLoading || !summary) {
     return (
       <div className="flex flex-col gap-3">
         <Skeleton className="h-8 w-2/3" />
@@ -31,39 +30,65 @@ export function GasFeesStats({ stats, range, isLoading }: Props) {
       </div>
     )
   }
-  const f = getFigures(stats, getPeriodLabel(range))
+  const f = getFigures(summary.stats, getPeriodLabel(range))
   return (
-    <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_240px] lg:gap-0">
-      <div className="flex flex-col gap-5 md:col-span-2 lg:pr-6 lg:pb-5">
-        <Headline f={f} />
+    <div className="flex flex-col gap-6">
+      <Headline f={f} />
+      {/* The split on the left stretches to the height of the three figures
+          stacked on the right, so both columns start and end level */}
+      <div className={cn(SPLIT.grid, 'border-divider border-t pt-6')}>
+        <div className={cn(SPLIT.main, '@3xl:h-auto h-72')}>
+          <TxFeesBreakdown
+            split={{
+              tx: { l2s: f.l2s.txCount, ethereum: f.ethereum.txCount },
+              fees: { l2s: f.l2s.fees, ethereum: f.ethereum.fees },
+            }}
+          />
+        </div>
+        <div
+          className={cn(
+            SPLIT.side,
+            SPLIT.sidePad,
+            'grid grid-cols-1 divide-y divide-divider',
+          )}
+        >
+          <Tile>
+            <TransferCost f={f} />
+          </Tile>
+          <Tile>
+            <Label>L1 fee in L2 fees · {f.period}</Label>
+            <Headed
+              value={usd(f.l2s.l1DataFees)}
+              note={`${percent(f.l1Share)} of L2 fees`}
+            />
+            <KeyedBar
+              parts={[
+                { label: 'L1 fee', value: f.l2s.l1DataFees, color: L1 },
+                { label: 'L2 execution', value: f.execution, color: L2 },
+              ]}
+            />
+          </Tile>
+          <Tile>
+            <Label>L2 fees paid in ETH · {f.period}</Label>
+            <Headed value={percent(f.ethShare)} />
+            <KeyedBar
+              parts={f.l2s.feesByToken.map((t) => ({
+                label: `${t.token} ${usd(t.fees)}`,
+                value: t.fees,
+                color: t.token === 'ETH' ? ETH : 'var(--chart-stacked-pink)',
+              }))}
+            />
+          </Tile>
+        </div>
       </div>
-      <div className="flex flex-col gap-2 border-divider max-lg:order-last max-lg:border-t max-lg:pt-5 md:col-span-2 lg:col-span-1 lg:col-start-3 lg:row-span-2 lg:row-start-1 lg:border-l lg:pl-6">
-        <TransferCost f={f} />
-      </div>
-      <div className="flex flex-col gap-2 border-divider border-t pt-5 lg:pr-6">
-        <Label>L1 fee in L2 fees · {f.period}</Label>
-        <Headed
-          value={usd(f.l2s.l1DataFees)}
-          note={`${percent(f.l1Share)} of L2 fees`}
-        />
-        <KeyedBar
-          parts={[
-            { label: 'L1 fee', value: f.l2s.l1DataFees, color: L1 },
-            { label: 'L2 execution', value: f.execution, color: L2 },
-          ]}
-        />
-      </div>
-      <div className="flex flex-col gap-2 border-divider border-t pt-5 md:border-l md:pl-6 lg:pr-6">
-        <Label>L2 fees paid in ETH · {f.period}</Label>
-        <Headed value={percent(f.ethShare)} />
-        <KeyedBar
-          parts={f.l2s.feesByToken.map((t) => ({
-            label: `${t.token} ${usd(t.fees)}`,
-            value: t.fees,
-            color: t.token === 'ETH' ? ETH : 'var(--chart-stacked-pink)',
-          }))}
-        />
-      </div>
+    </div>
+  )
+}
+
+function Tile({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex flex-col gap-2 py-5 first:pt-0 last:pb-0">
+      {children}
     </div>
   )
 }
@@ -84,6 +109,10 @@ function getFigures(stats: GasFeesSummary['stats'], period: string) {
     l1Share: l2s.fees > 0 ? l2s.l1DataFees / l2s.fees : 0,
     execution: l2s.fees - l2s.l1DataFees,
     ethShare: l2s.fees > 0 ? ethFees / l2s.fees : 0,
+    avgFee: {
+      ethereum: ethereum.txCount > 0 ? ethereum.fees / ethereum.txCount : 0,
+      l2s: l2s.txCount > 0 ? l2s.fees / l2s.txCount : 0,
+    },
     erc20: latestErc20,
     erc20Date: formatTimestamp(latestErc20.timestamp),
     timesCheaper:
@@ -91,111 +120,88 @@ function getFigures(stats: GasFeesSummary['stats'], period: string) {
   }
 }
 
+function avgFeeRatio(f: Figures) {
+  return f.avgFee.l2s > 0 ? f.avgFee.ethereum / f.avgFee.l2s : 0
+}
+
 function Headline({ f }: { f: Figures }) {
   return (
-    <>
-      <div className="flex flex-col gap-2">
-        <Label>Ethereum vs L2s · {f.period}</Label>
-        <p className="font-bold text-2xl leading-tight tracking-tight md:text-3xl">
-          L2s process <Colored color={L2}>{percent(f.txShare)}</Colored> of
-          transactions
-          <br className="max-md:hidden" /> and earn{' '}
-          <Colored color={ETH}>{percent(f.feeShare)}</Colored> of fees.
-        </p>
-      </div>
-      <div className="grid grid-cols-[88px_minmax(0,1fr)] items-center gap-x-4 gap-y-3">
-        <Label>Transactions</Label>
-        <BigBar
-          parts={[
-            {
-              value: f.l2s.txCount,
-              color: L2,
-              label: `L2s ${formatNumber(f.l2s.txCount, 1)}`,
-            },
-            {
-              value: f.ethereum.txCount,
-              color: ETH,
-              label: `Ethereum ${formatNumber(f.ethereum.txCount, 1)}`,
-            },
-          ]}
-        />
-        <Label>Fees</Label>
-        <div className="flex flex-col gap-1">
-          <BigBar
-            parts={[
-              { value: f.l2s.fees, color: L2 },
-              {
-                value: f.ethereum.fees,
-                color: ETH,
-                label: `Ethereum ${usd(f.ethereum.fees)}`,
-              },
-            ]}
-          />
-          <span className="text-2xs text-secondary tabular-nums">
-            ↑ L2s {usd(f.l2s.fees)}
-          </span>
-        </div>
-      </div>
-    </>
+    <div className="flex flex-col gap-2">
+      <Label>{f.period}</Label>
+      <p className="font-bold text-2xl leading-tight tracking-tight md:text-3xl">
+        L2s process <Colored color={L2}>{percent(f.txShare)}</Colored> of
+        transactions
+        <br className="max-md:hidden" /> and collect{' '}
+        <Colored color={ETH}>{percent(f.feeShare)}</Colored> of the total fees
+        paid by users.
+      </p>
+      <p className="text-secondary text-sm">
+        An L2 transaction pays {formatTimes(avgFeeRatio(f))} less on average, so
+        Ethereum still collects most of the fees.
+      </p>
+    </div>
   )
 }
 
-/** The two costs as columns to scale, the gap between them as the headline */
+/** The L2s the section compares, beside its title, with the full list behind "+N" */
+export function GasFeesComparedL2s({
+  chains,
+  summary,
+}: {
+  chains: GasFeesChain[]
+  summary: GasFeesSummary | undefined
+}) {
+  if (!summary) return <Skeleton className="h-5 w-24" />
+  // Only the L2s with fees in the range count towards the totals
+  const l2s = summary.rows
+    .filter((row) => row.id !== 'ethereum')
+    .map((row) => chains.find((c) => c.id === row.id))
+    .filter((chain) => chain !== undefined)
+  return (
+    <ProjectIconList
+      title="L2s compared with Ethereum"
+      projects={l2s.map((chain) => ({
+        id: chain.id,
+        name: chain.name,
+        iconUrl: chain.iconUrl,
+        href: chain.href,
+        description: chain.type,
+      }))}
+    />
+  )
+}
+
+/** The two costs as bars to scale, the gap between them as the figure */
 function TransferCost({ f }: { f: Figures }) {
   const max = Math.max(f.erc20.ethereum, f.erc20.l2s)
-  const columns = [
+  const rows = [
     { label: 'Ethereum', value: f.erc20.ethereum, color: ETH },
     { label: 'Median L2', value: f.erc20.l2s, color: L2 },
   ]
   return (
     <>
       <Label>ERC-20 transfer · {f.erc20Date}</Label>
-      <span className="flex items-baseline gap-2">
-        <span className="font-bold text-4xl tabular-nums tracking-tight">
-          {formatTimes(f.timesCheaper)}
-        </span>
-        <span className="text-secondary text-xs">cheaper on L2s</span>
-      </span>
-      <div className="flex min-h-40 flex-1 items-end gap-4 pt-4">
-        {columns.map((column) => (
-          <div
-            key={column.label}
-            className="flex h-full flex-1 flex-col justify-end gap-1.5"
-          >
-            <span className="font-bold text-base tabular-nums">
-              {formatFee(column.value)}
+      <Headed value={formatTimes(f.timesCheaper)} note="cheaper on L2s" />
+      <div className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-2 gap-y-1.5 text-xs">
+        {rows.map((row) => (
+          <Fragment key={row.label}>
+            <span className="text-secondary">{row.label}</span>
+            <span className="h-2.5">
+              <span
+                className="block h-full rounded-sm"
+                style={{
+                  width: `max(3px, ${(row.value / max) * 100}%)`,
+                  backgroundColor: row.color,
+                }}
+              />
             </span>
-            <span
-              className="w-full rounded-t-lg"
-              style={{
-                height: `${Math.max(3, (column.value / max) * 100)}%`,
-                backgroundColor: column.color,
-              }}
-            />
-            <span className="text-secondary text-xs">{column.label}</span>
-          </div>
+            <span className="text-right font-medium tabular-nums">
+              {formatFee(row.value)}
+            </span>
+          </Fragment>
         ))}
       </div>
     </>
-  )
-}
-
-export function Label({
-  children,
-  className,
-}: {
-  children: React.ReactNode
-  className?: string
-}) {
-  return (
-    <span
-      className={cn(
-        'font-semibold text-2xs text-secondary uppercase tracking-wider',
-        className,
-      )}
-    >
-      {children}
-    </span>
   )
 }
 
@@ -212,40 +218,11 @@ export function Colored({
 export function Headed({ value, note }: { value: string; note?: string }) {
   return (
     <span className="flex items-baseline gap-2">
-      <span className="font-bold text-2xl tabular-nums tracking-tight">
+      <span className="whitespace-nowrap font-bold text-2xl tabular-nums tracking-tight">
         {value}
       </span>
       {note && <span className="text-secondary text-xs">{note}</span>}
     </span>
-  )
-}
-
-/** Parts of a whole, labelled inside when they fit */
-export function BigBar({
-  parts,
-}: {
-  parts: { value: number; color: string; label?: string }[]
-}) {
-  const total = parts.reduce((sum, p) => sum + p.value, 0)
-  return (
-    <div className="flex h-11 gap-[3px] overflow-hidden rounded-lg font-semibold text-sm text-white">
-      {parts.map((p, i) => {
-        const share = total > 0 ? p.value / total : 0
-        return (
-          <span
-            key={i}
-            className="flex items-center overflow-hidden whitespace-nowrap px-3"
-            style={{
-              width: `${share * 100}%`,
-              backgroundColor: p.color,
-              paddingInline: share < 0.08 ? 0 : undefined,
-            }}
-          >
-            {share >= 0.08 && p.label}
-          </span>
-        )
-      })}
-    </div>
   )
 }
 
@@ -269,7 +246,7 @@ export function KeyedBar({
           />
         ))}
       </div>
-      <div className="flex justify-between gap-3 text-xs">
+      <div className="flex flex-wrap justify-between gap-x-3 gap-y-0.5 text-xs">
         {parts.map((p) => (
           <span
             key={p.label}
@@ -288,12 +265,4 @@ export function KeyedBar({
       </div>
     </div>
   )
-}
-
-function usd(value: number) {
-  return formatCurrency(value, 'usd', { decimals: 1 })
-}
-
-function percent(share: number) {
-  return `${share >= 0.1 || share === 0 ? Math.round(share * 100) : (share * 100).toFixed(1)}%`
 }

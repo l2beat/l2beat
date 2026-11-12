@@ -1,6 +1,7 @@
 import type { Project } from '@l2beat/config'
 import type { GasFeesChain } from '~/pages/gas-fees/components/types'
 import {
+  FEE_SPLIT_NOTES,
   NO_PRIORITY_FEE_NOTES,
   TIP_ROLES,
 } from '~/server/features/gas-fees/chains'
@@ -19,6 +20,7 @@ export function getEthereumGasFeesChain(
     iconUrl: manifest.getUrl(`/icons/${ethereum.slug}.png`),
     color: 'var(--chart-ethereum)',
     noPriorityFeeNote: NO_PRIORITY_FEE_NOTES.ethereum,
+    feeSplitNotes: FEE_SPLIT_NOTES.ethereum ?? {},
     tipRole: TIP_ROLES.ethereum,
   }
 }
