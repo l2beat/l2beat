@@ -25,12 +25,15 @@ export function PrivacyWaitDraw({ windowDays }: { windowDays: number }) {
             ? ADVICE.drawWaitLabel
             : ADVICE.redrawWaitLabel}
         </Button>
-        {minutes !== undefined && (
-          <span className="text-paragraph-15 md:text-paragraph-16">
-            <span className="font-bold">{formatWait(minutes)}</span>{' '}
-            {ADVICE.waitAfterDeposit}
-          </span>
-        )}
+        {/* Mounted before the first draw, so screen readers announce each result. */}
+        <span role="status" className="text-paragraph-15 md:text-paragraph-16">
+          {minutes !== undefined && (
+            <>
+              <span className="font-bold">{formatWait(minutes)}</span>{' '}
+              {ADVICE.waitAfterDeposit}
+            </>
+          )}
+        </span>
       </div>
       <span className="text-paragraph-13 text-secondary">
         {minutes === undefined
