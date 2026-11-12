@@ -102,7 +102,7 @@ function GovernanceInfoList({ entries }: { entries: [string, string][] }) {
           key={name}
           className="grid gap-1 border-divider border-b py-3 md:grid-cols-[180px_1fr] md:gap-4"
         >
-          <dt className="font-medium text-label-value-14 leading-5 md:pt-1">
+          <dt className="font-medium text-label-value-14 leading-5 md:pt-0.5">
             {name}
           </dt>
           <dd>

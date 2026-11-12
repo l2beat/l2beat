@@ -43,7 +43,7 @@ export function ProgramHashNameCell({
         >
           <div
             ref={titleRef}
-            className="line-clamp-4 w-40 shrink-0 text-pretty font-bold text-label-value-14 leading-normal [overflow-wrap:anywhere] md:w-60 2xl:w-72"
+            className="line-clamp-5 w-40 shrink-0 text-pretty font-bold text-label-value-14 leading-normal [overflow-wrap:anywhere] md:line-clamp-4 md:w-60 2xl:w-72"
           >
             {withVersionBreaks(title)}
           </div>
