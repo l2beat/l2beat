@@ -92,15 +92,13 @@ function SparklineChart({
   // The scrub area maps points to pixels with the last rendered scales. It
   // is a sibling, so scrubbing does not render the chart again.
   const [sceneRef] = useState(() => new ChartSceneStore())
-  // A weekly series has few enough points to show its corners.
-  const curve = series.kind === 'weekly' ? 'monotone' : 'linear'
-  const perDay = series.kind === 'weekly' && series.perDay
+  const { perDay } = series
   const definition = useMemo(
     () =>
-      getDefinition(data, curve, (value) =>
+      getDefinition(data, (value) =>
         perDay ? `${formatValue(value)}/day` : formatValue(value),
       ),
-    [data, curve, formatValue, perDay],
+    [data, formatValue, perDay],
   )
 
   return (
@@ -277,13 +275,36 @@ const LABEL_GAP = 5
 
 const LABEL_FONT_SIZE = 12
 
+const LINE_WIDTH = 2
+
+/**
+ * How far the line's centre stays inside the high and low hairlines: half
+ * the line and half the 1px hairline, so the line rests on them.
+ */
+const LINE_INSET = LINE_WIDTH / 2 + 0.5
+
+/** Weeks are few enough points to round off their corners. */
+const CURVE = d3Curve(curveMonotoneX)
+
 function getDefinition(
   data: SparklinePoint[],
-  curveType: 'monotone' | 'linear',
   formatLabel: (value: number) => string,
 ) {
-  const { domain, range } = getSparklineScale(data)
-  const curve = curveType === 'monotone' ? d3Curve(curveMonotoneX) : undefined
+  // Built per size: the line's inset is in pixels, the domain in values.
+  return defineChart(({ height }) =>
+    getSpec(data, formatLabel, height - 2 * LABEL_HEIGHT),
+  )
+}
+
+function getSpec(
+  data: SparklinePoint[],
+  formatLabel: (value: number) => string,
+  plotHeight: number,
+) {
+  const { domain, range } = getSparklineScale(data, {
+    plotHeight,
+    inset: LINE_INSET,
+  })
   const getX = (d: SparklinePoint) => d.timestamp
   const getY = (d: SparklinePoint) => d.value
   const first = data[0]
@@ -293,15 +314,16 @@ function getDefinition(
     data.at(-1)?.timestamp ?? 1,
   ]
 
+  // The hairlines mark the plot's edges, the line rests just inside them.
   const extremes = range
     ? [
         // The low is the plot's baseline, the high a gridline.
-        { key: 'max', value: range.max, stroke: 'var(--chart-grid)' },
-        { key: 'min', value: range.min, stroke: 'var(--chart-baseline)' },
+        { key: 'max', value: domain[1], stroke: 'var(--chart-grid)' },
+        { key: 'min', value: domain[0], stroke: 'var(--chart-baseline)' },
       ]
     : []
 
-  return defineChart({
+  return {
     marks: [
       // Guide lines go under the series, not across it.
       ...extremes.map((e) =>
@@ -323,7 +345,7 @@ function getDefinition(
           y2: getY,
           fill: STROKE,
           fillOpacity: AREA_FILL_OPACITY,
-          curve,
+          curve: CURVE,
         }),
       ),
       decorative(
@@ -332,8 +354,8 @@ function getDefinition(
           x: getX,
           y: getY,
           stroke: STROKE,
-          strokeWidth: 2,
-          curve,
+          strokeWidth: LINE_WIDTH,
+          curve: CURVE,
         }),
       ),
       // The high above the right end of its line, the low below the left
@@ -342,7 +364,7 @@ function getDefinition(
       ...(range
         ? [
             decorative(
-              text([{ x: xDomain[1], y: range.max }], {
+              text([{ x: xDomain[1], y: domain[1] }], {
                 id: 'label-max',
                 x: 'x',
                 y: 'y',
@@ -354,7 +376,7 @@ function getDefinition(
               }),
             ),
             decorative(
-              text([{ x: xDomain[0], y: range.min }], {
+              text([{ x: xDomain[0], y: domain[0] }], {
                 id: 'label-min',
                 x: 'x',
                 y: 'y',
@@ -394,7 +416,8 @@ function getDefinition(
     focus: false,
     pointer: false,
     keyboard: false,
-  })
+    // Keeps `axis: false` literal for the build function's spec type.
+  } as const
 }
 
 /** Index of the point closest to `x`; points are sorted by time. */

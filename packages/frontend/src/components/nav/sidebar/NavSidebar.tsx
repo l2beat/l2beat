@@ -184,18 +184,28 @@ function NavCollapsibleItem({
 
   const [open, setOpen] = useState(isAnyLinkActive)
 
-  if (allGroupLinks.length === 0) return null
+  const titleHref = allGroupLinks.find((link) => !link.disabled)?.href
+  if (!titleHref) return null
 
   return (
     <Collapsible className="flex flex-col" open={open} onOpenChange={setOpen}>
-      <CollapsibleTrigger
+      {/* The title opens the group's first page, usually its summary; only the
+          chevron folds the list, so it can be browsed without leaving. In the
+          mobile menu the chevron is too small to aim at, so its hit area
+          covers the whole row. */}
+      <div
         className={cn(
-          'group flex items-center gap-1.5 p-1.5',
+          'group flex items-center gap-0.5 p-1.5 max-lg:relative',
           small && 'h-6 py-1 max-lg:h-8',
         )}
         data-active={isGroupActive}
+        data-state={open ? 'open' : 'closed'}
       >
-        <div className="flex items-center gap-2">
+        <a
+          href={titleHref}
+          onClick={closeMobileSidebar}
+          className="flex items-center gap-2"
+        >
           {!small && <div>{group.icon}</div>}
           <span
             className={cn(
@@ -205,14 +215,19 @@ function NavCollapsibleItem({
           >
             {group.title}
           </span>
-        </div>
-        <ChevronIcon
-          className={cn(
-            '-rotate-90 size-3 fill-primary transition-[rotate,color,fill] duration-300 group-data-[state=open]:rotate-0 group-data-[active=true]:fill-nav-active',
-            small && 'size-2.5',
-          )}
-        />
-      </CollapsibleTrigger>
+        </a>
+        <CollapsibleTrigger
+          aria-label={`${open ? 'Hide' : 'Show'} ${group.title} pages`}
+          className="flex size-6 items-center justify-center max-lg:size-8 max-lg:after:absolute max-lg:after:inset-0"
+        >
+          <ChevronIcon
+            className={cn(
+              '-rotate-90 size-3 fill-primary transition-[rotate,color,fill] duration-300 group-data-[state=open]:rotate-0 group-data-[active=true]:fill-nav-active',
+              small && 'size-2.5',
+            )}
+          />
+        </CollapsibleTrigger>
+      </div>
       <CollapsibleContent>
         <SidebarGroupSub>
           {group.links.map((section, index) => (

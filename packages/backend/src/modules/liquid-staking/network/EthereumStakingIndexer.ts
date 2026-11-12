@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database, EthereumStakingDailyRecord } from '@l2beat/database'
-import type { BeaconChainClient, BlockTimestampProvider } from '@l2beat/shared'
+import type { BeaconChainClient } from '@l2beat/shared'
 import { slotAt, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
@@ -10,6 +10,7 @@ import {
   type ManagedChildIndexerOptions,
 } from '../../../tools/uif/ManagedChildIndexer'
 import { ELECTRA_SLOT, SUPPORTED_FORK_VERSIONS } from '../ethereumForks'
+import type { EthereumBlockFinder } from '../types'
 import { type DepositsRpc, readCreditedDeposits } from './creditedDeposits'
 import type { ExecutionDay } from './dune/readExecutionDay'
 
@@ -52,10 +53,7 @@ interface EthereumStakingIndexerDeps
     | 'getForkVersion'
     | 'getDepositIndex'
   >
-  blockTimestampProvider: Pick<
-    BlockTimestampProvider,
-    'getBlockNumberAtOrBefore'
-  >
+  blockFinder: EthereumBlockFinder
 }
 
 /**
@@ -153,12 +151,7 @@ export class EthereumStakingIndexer extends ManagedChildIndexer {
   }
 
   private async firstBlockAtOrAfter(timestamp: UnixTime): Promise<number> {
-    return (
-      (await this.$.blockTimestampProvider.getBlockNumberAtOrBefore(
-        timestamp,
-        'ethereum',
-      )) + 1
-    )
+    return (await this.$.blockFinder.getBlockNumberAtOrBefore(timestamp)) + 1
   }
 
   override async invalidate(targetHeight: number): Promise<number> {

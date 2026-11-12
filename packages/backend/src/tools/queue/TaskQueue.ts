@@ -161,7 +161,7 @@ export class TaskQueue<T> {
   }
 
   private earliestScheduledExecution() {
-    return this.queue.map((j) => j.executeAt).sort()[0]
+    return this.queue.map((j) => j.executeAt).sort((a, b) => a - b)[0]
   }
 
   private async executeUnchecked() {

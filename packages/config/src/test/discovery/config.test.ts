@@ -331,22 +331,6 @@ describe('discovery config.jsonc', () => {
     })
   })
 
-  // TODO(radomski): We have to skip this test because we have to duplicate
-  // names for different chains, we don't have a catch-all chain
-  it.skip('every name in config.jsonc is unique', () => {
-    for (const c of configs ?? []) {
-      if (c.color.names === undefined) {
-        continue
-      }
-
-      assert(
-        new Set(Object.values(c.color.names)).size ===
-          Object.values(c.color.names).length,
-        `names field in ${c.name} configuration includes duplicate names`,
-      )
-    }
-  })
-
   it('discovered.json hash matches the one stored in diffHistory.md', () => {
     for (const c of configs ?? []) {
       const currentHash = configReader.readDiscoveryHash(c.name)
