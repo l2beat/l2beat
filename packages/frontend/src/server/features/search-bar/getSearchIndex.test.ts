@@ -30,6 +30,11 @@ describe('search bar search', () => {
   const originalGetProjects = ps.getProjects.bind(ps)
   const originalMock = env.MOCK
   const originalInteropChains = env.INTEROP_CHAINS
+  const originalFlags = {
+    defi: env.CLIENT_SIDE_DEFI_ENABLED,
+    garden: env.CLIENT_SIDE_GARDEN_ENABLED,
+    ossification: env.CLIENT_SIDE_OSSIFICATION_ENABLED,
+  }
 
   beforeEach(() => {
     env.MOCK = true
@@ -39,6 +44,9 @@ describe('search bar search', () => {
     ps.getProjects = originalGetProjects
     env.MOCK = originalMock
     env.INTEROP_CHAINS = originalInteropChains
+    env.CLIENT_SIDE_DEFI_ENABLED = originalFlags.defi
+    env.CLIENT_SIDE_GARDEN_ENABLED = originalFlags.garden
+    env.CLIENT_SIDE_OSSIFICATION_ENABLED = originalFlags.ossification
   })
 
   it('keeps only direct project matches when they exist', async () => {
@@ -266,6 +274,25 @@ describe('search bar search', () => {
     ])
   })
 
+  // DeFi pages are off, but those the ossification table measures exist.
+  it('finds DeFi projects reviewed in CROPS', async () => {
+    env.CLIENT_SIDE_DEFI_ENABLED = false
+    env.CLIENT_SIDE_GARDEN_ENABLED = true
+    env.CLIENT_SIDE_OSSIFICATION_ENABLED = true
+    ps.getProjects = async () =>
+      [
+        defiProject('safe', 'Safe', { garden: {}, ossificationHistory: {} }),
+        defiProject('safeswap', 'Safeswap', { ossificationHistory: {} }),
+        defiProject('safelend', 'Safelend', { garden: {} }),
+      ] as never
+
+    const result = await getSearchBarEntries('safe')
+
+    expect(
+      result.map(({ name, href, category }) => ({ name, href, category })),
+    ).toEqual([{ name: 'Safe', href: '/defi/projects/safe', category: 'defi' }])
+  })
+
   it('names an interop protocol by its interop name and finds it by alias', async () => {
     ps.getProjects = async () =>
       [
@@ -351,6 +378,16 @@ function l2ProjectWithContract(slug: string, name: string, address: string) {
         ],
       },
     },
+  }
+}
+
+function defiProject(slug: string, name: string, rest: object) {
+  return {
+    id: ProjectId(slug),
+    slug,
+    name,
+    defiInfo: { category: 'Multisig' },
+    ...rest,
   }
 }
 

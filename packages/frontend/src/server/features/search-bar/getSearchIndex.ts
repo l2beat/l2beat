@@ -11,6 +11,7 @@ import {
 import { env } from '~/env'
 import { selectChainProjects } from '~/server/features/chains/getChainProjects'
 import { isListedDefiProject } from '~/server/features/defi/isListedDefiProject'
+import { hasDefiProjectPage } from '~/server/features/defi/project/hasDefiProjectPage'
 import { UNKNOWN_ABSTRACT_TOKEN_ID } from '~/server/features/layer2s/interop/consts'
 import {
   getActiveInteropAbstractTokens,
@@ -67,6 +68,8 @@ type SearchIndexProjectKey =
   | 'zkCatalogInfo'
   | 'privacyInfo'
   | 'defiInfo'
+  | 'garden'
+  | 'ossificationHistory'
   | 'aliases'
   | 'versions'
 
@@ -76,6 +79,8 @@ export const SEARCH_INDEX_PROJECT_KEYS: SearchIndexProjectKey[] = [
   'zkCatalogInfo',
   'privacyInfo',
   'defiInfo',
+  'garden',
+  'ossificationHistory',
   'aliases',
   'versions',
 ]
@@ -136,10 +141,21 @@ function getProjectKinds(
   if (project.interopConfig && !project.scalingInfo) kinds.push('interop')
   if (project.zkCatalogInfo) kinds.push('zkCatalog')
   if (project.privacyInfo) kinds.push('privacy')
-  if (env.CLIENT_SIDE_DEFI_ENABLED && isListedDefiProject(project.defiInfo)) {
-    kinds.push('defi')
-  }
+  if (isSearchableDefiProject(project)) kinds.push('defi')
   return kinds
+}
+
+/** A DeFi project outside a listed category is found once CROPS reviews it. */
+function isSearchableDefiProject(project: SearchIndexSourceProject): boolean {
+  if (!project.defiInfo) return false
+  if (env.CLIENT_SIDE_DEFI_ENABLED && isListedDefiProject(project.defiInfo)) {
+    return true
+  }
+  return (
+    env.CLIENT_SIDE_GARDEN_ENABLED &&
+    project.garden !== undefined &&
+    hasDefiProjectPage(project)
+  )
 }
 
 function toSearchIndexChain(
