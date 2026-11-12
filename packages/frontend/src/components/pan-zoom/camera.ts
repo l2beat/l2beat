@@ -463,14 +463,21 @@ export function fitContainCamera(
   viewport: Size,
   padding = FIT_PADDING,
 ): Camera {
-  if (content.width <= 0 || content.height <= 0) return { x: 0, y: 0, k: 1 }
-  const k = Math.max(
-    Math.min(
-      (viewport.width - padding * 2) / content.width,
-      (viewport.height - padding * 2) / content.height,
-      1,
-    ),
-    0,
+  const innerWidth = viewport.width - padding * 2
+  const innerHeight = viewport.height - padding * 2
+  // A zero scale would freeze `dotGridSpacing`, and nothing fits anyway.
+  if (
+    content.width <= 0 ||
+    content.height <= 0 ||
+    innerWidth <= 0 ||
+    innerHeight <= 0
+  ) {
+    return { x: 0, y: 0, k: 1 }
+  }
+  const k = Math.min(
+    innerWidth / content.width,
+    innerHeight / content.height,
+    1,
   )
   return {
     k,
