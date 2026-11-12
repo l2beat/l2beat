@@ -88,7 +88,11 @@ export function BlobsThroughputChart({
           customColors={customColors}
           capacity={{
             projectId: project.id,
-            data: dataWithConfiguredThroughputs,
+            data: getDataWithConfiguredThroughputs(
+              byProject.data?.totalChart.data,
+              configuredThroughputs,
+              resolution,
+            ),
           }}
           milestones={milestones}
           resolution={resolution}
