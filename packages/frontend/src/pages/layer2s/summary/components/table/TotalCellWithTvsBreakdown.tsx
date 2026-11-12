@@ -44,9 +44,9 @@ interface TotalCellProps {
   changePeriod?: PercentageChangePeriod
   tvsWarnings?: WarningWithSentiment[]
   /**
-   * For a compact table: only the value and its change, as in the home rows. The
-   * breakdown and the share with additional trust assumptions stay in the
-   * tooltip.
+   * For a compact table, on one line: the breakdown as a short bar, then the
+   * value and its change as in the home rows. The breakdown's numbers and the
+   * share with additional trust assumptions are in the tooltip.
    */
   compact?: boolean
 }
@@ -111,10 +111,24 @@ export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
             <div className="flex flex-col items-end max-md:py-1">
               <div className="flex items-center">
                 {icon}
+                {props.compact && (
+                  // The breakdown as a short bar of its own, so the row stays
+                  // one line: the bars line up down the column, as the value
+                  // beside them keeps a fixed width.
+                  <ValueSecuredBreakdown
+                    canonical={props.breakdown.canonical}
+                    external={props.breakdown.external}
+                    native={props.breakdown.native}
+                    className="mr-3 h-1.5 w-12 overflow-hidden rounded-full opacity-100"
+                  />
+                )}
                 <ValueWithPercentageChange
                   change={props.change}
                   changePeriod={props.changePeriod}
                   compact={props.compact}
+                  className={
+                    props.compact ? 'min-w-[76px] text-right' : undefined
+                  }
                 >
                   {formatDollarValueNumber(totalTvs)}
                 </ValueWithPercentageChange>
