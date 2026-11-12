@@ -1,0 +1,3 @@
+The TacitEvmPool, its router, zap and verifier are immutable and have no owner, pause or admin function. A new circuit or rule needs a new pool at a new address, and users move by withdrawing and depositing again.
+
+The anon.wei app is a chain of immutable page contracts. Tacit's app owner, a single key, appends new versions and owns the name anon.wei, which it can point at any contract. It also owns two registries the app reads every six hours. Through these it can add RPC nodes, replace the relay host and add proving-key mirrors, all without delay. An RPC node or relay the user sets in the app takes precedence.

@@ -13,7 +13,7 @@ const PRODUCTION_RULES = [
 ]
 
 /**
- * Content Signals (contentsignals.org): L2BEAT is a public good, so search,
+ * Content Signals (contentsignals.org): ETHBEAT is a public good, so search,
  * AI answers and AI training are all welcome to use the content.
  */
 const CONTENT_SIGNAL = 'Content-Signal: ai-train=yes, search=yes, ai-input=yes'

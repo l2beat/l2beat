@@ -1,3 +1,56 @@
+Generated with discovered.json: 0x5f1f84e9ee1684da75d880cc964b94f9a4e0c25b
+
+# Diff at Tue, 10 Nov 2026 17:10:23 GMT:
+
+- id: 21d6d469
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e7f80c2eb530702e907f902d428416a31e27855 block: 1791379304
+- current timestamp: 1794319734
+
+## Description
+
+The SeizureRegistry address manager allowlisted a second recipient, the EOA eth:0xd1E1fa2056096499aF88F2Ebbf1b15Df81b271B4. The secondary market burner then recorded the balances of the blocklisted address 0x290b6eBBdCA04EE984fB8617E1B92DeEA23052e3 on five CCTP domains (Ethereum, Avalanche, Arbitrum, Base, Polygon PoS) and minted 4,180,098.5 USDC on Ethereum to that recipient. Nothing is burned: on Ethereum the blocklisted address still holds its 4,103,255.55 USDC, frozen. The recorded balances are not verified onchain.
+
+Config: the SeizureRegistry description says that the blocklisted balance stays frozen instead of calling it written off.
+
+## Watched changes
+
+```diff
+    contract SeizureRegistry (eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd) [N/A] {
+    +++ description: USDC minter that re-mints seized balances: the secondary market burner records the balance of a blocklisted address once per address and CCTP domain and mints the same amount of USDC on Ethereum to an allowlisted recipient. The blocklisted balance stays frozen and is not burned, and the recorded amount is not verified onchain.
++++ description: Recipients that re-minted USDC can be sent to, managed by the address manager.
+      values.allowedRecipients.1:
++        "eth:0xd1E1fa2056096499aF88F2Ebbf1b15Df81b271B4"
+      values.totalSecondaryMarketBurnedAmount:
+-        381235000000
++        4561333500000
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791379304 (main branch discovery), not current.
+
+```diff
+    EOA (eth:0x0837EDBb99E3e8Fc740337014f690F92102a0038) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "record the written-off balance of a blocklisted address and mint the same amount of USDC to an allowlisted recipient, within the minter allowance."
++        "record the frozen balance of a blocklisted address and mint the same amount of USDC to an allowlisted recipient, within the minter allowance."
+    }
+```
+
+```diff
+    contract SeizureRegistry (eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd) [N/A] {
+    +++ description: USDC minter that re-mints seized balances: the secondary market burner records the balance of a blocklisted address once per address and CCTP domain and mints the same amount of USDC on Ethereum to an allowlisted recipient. The blocklisted balance stays frozen and is not burned, and the recorded amount is not verified onchain.
+      description:
+-        "USDC minter that re-mints seized balances. When the balance of a blocklisted address on any CCTP domain is written off, the secondary market burner records it once per address and domain and mints the same amount of USDC on Ethereum to an allowlisted recipient. The written-off balance is not verified onchain, so minting is bounded only by the allowance the MasterMinter controllers grant this contract."
++        "USDC minter that re-mints seized balances: the secondary market burner records the balance of a blocklisted address once per address and CCTP domain and mints the same amount of USDC on Ethereum to an allowlisted recipient. The blocklisted balance stays frozen and is not burned, and the recorded amount is not verified onchain."
+    }
+```
+
 Generated with discovered.json: 0x7e7a0c98e032cfcd6c0e4488e1e55c2d08759802
 
 # Diff at Wed, 07 Oct 2026 13:25:53 GMT:

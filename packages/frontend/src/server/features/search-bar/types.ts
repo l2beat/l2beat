@@ -11,6 +11,9 @@ export type SearchBarProjectEntry = SearchBarEntry & {
   /** The other sections the project's page merges, shown next to `kind` */
   otherKinds?: SearchIndexProjectKind[]
   l2Category?: ProjectScalingCategory
+  /** For a project with several versions, each with its own page. Rank 0 is
+   *  the latest, then newest first. */
+  version?: { group: string; rank: number }
 }
 
 export type SearchBarTokenEntry = SearchBarEntry & {

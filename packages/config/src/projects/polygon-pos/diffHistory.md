@@ -1,3 +1,94 @@
+Generated with discovered.json: 0x49a3b25e66fa11a28b631b577ea581fed2e83546
+
+# Diff at Tue, 10 Nov 2026 14:29:54 GMT:
+
+- id: 3029b595
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@28ea16426fac1900c2fffd1cec3ecc6b84981c76 block: 1793874843
+- current timestamp: 1794320161
+
+## Description
+
+StakeManager upgraded by the PolygonMultisig through the Timelock (no delay): https://disco.l2beat.com/diff/eth:0x428D1067b33B2bCa826cF66344dbEcBd5AA6506e/eth:0x1D9eE26F794676acF56baC9A479F766403D0f5cC
+- The StakeManagerExtension logic (commission rates, checkpoint reward params) is folded into the StakeManager, which no longer delegatecalls it.
+- The same transaction called the new one-off `reinitializeValidatorState()`: the total stake that checkpoint signatures are measured against was recomputed from the validator records and rose by 21.48M POL (0.58%). The old value had drifted below the sum of the records (a double subtraction before 2022, per the source comment), so the 2/3+1 threshold was slightly too low.
+- Governance lost `setCurrentEpoch()`. The EventsHub is now read from the Registry on every use. The Heimdall fee of a new validator is credited to its signer instead of the NFT owner.
+- Unchanged: validator entry is still gated by the ValidatorPass registered in the Registry.
+
+Config: added the new StakeManager shape, removed the StakeManagerExtension template and name.
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) [polygon-pos/StakeManager] {
+    +++ description: Manages the validator set, stakes and rewards. The RootChain uses it to check that each checkpoint is signed by more than 2/3 of the stake.
+      sourceHashes.1:
+-        "0x8d3d310e7641961f0013dcc2f82e93a2956413df438a44b49c3f084f0167a0d9"
++        "0xf47b38d50a3c5613a4080d9d7b86dc0c42e1682871d547eb64fd07fe6907f4e4"
+      values.$implementation:
+-        "eth:0x428D1067b33B2bCa826cF66344dbEcBd5AA6506e"
++        "eth:0x1D9eE26F794676acF56baC9A479F766403D0f5cC"
+      values.$pastUpgrades.10:
++        ["2026-11-05T17:02:23.000Z","0xbabf3846d7fd3022d55d1d5d86f41ecfa7466d8b4110e990b97fd5c28103fdb0",["eth:0x1D9eE26F794676acF56baC9A479F766403D0f5cC"]]
+      values.$upgradeCount:
+-        10
++        11
+      values.extensionCode:
+-        "eth:0xef49Ea6996073752b6840CDA34773FFA78F78166"
+      values.implementation:
+-        "eth:0x428D1067b33B2bCa826cF66344dbEcBd5AA6506e"
++        "eth:0x1D9eE26F794676acF56baC9A479F766403D0f5cC"
+      implementationNames.eth:0x428D1067b33B2bCa826cF66344dbEcBd5AA6506e:
+-        "StakeManager"
+      implementationNames.eth:0x1D9eE26F794676acF56baC9A479F766403D0f5cC:
++        "StakeManager"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract StakeManagerExtension (eth:0xef49Ea6996073752b6840CDA34773FFA78F78166) [N/A]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../StakeManager/StakeManager.sol                  |  235 +-
+ .../StakeManagerExtension.sol => /dev/null         | 2883 --------------------
+ 2 files changed, 106 insertions(+), 3012 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793874843 (main branch discovery), not current.
+
+```diff
+    contract StakeManagerExtension (eth:0xef49Ea6996073752b6840CDA34773FFA78F78166) [N/A] {
+    +++ description: None
+      template:
+-        "polygon-pos/StakeManagerExtension"
+      description:
+-        "Logic that the StakeManager delegatecalls to update checkpoint reward parameters and commission rates and to migrate validator data. Its own storage is unused."
+      values.latestSignerUpdateEpoch:
++        [0,0,0,0,0]
+      values.signers:
++        []
+      values.validatorAuction:
++        [[0,0,"eth:0x0000000000000000000000000000000000000000",false,"0x"],[0,0,"eth:0x0000000000000000000000000000000000000000",false,"0x"],[0,0,"eth:0x0000000000000000000000000000000000000000",false,"0x"],[0,0,"eth:0x0000000000000000000000000000000000000000",false,"0x"],[0,0,"eth:0x0000000000000000000000000000000000000000",false,"0x"]]
+      values.validators:
++        [[0,0,0,0,0,"eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000",0,0,0,0,0,0],[0,0,0,0,0,"eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000",0,0,0,0,0,0],[0,0,0,0,0,"eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000",0,0,0,0,0,0],[0,0,0,0,0,"eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000",0,0,0,0,0,0],[0,0,0,0,0,"eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000",0,0,0,0,0,0]]
+      values.validatorStateChanges:
++        [[0,0],[0,0],[0,0],[0,0],[0,0]]
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+      errors:
++        {"latestSignerUpdateEpoch":"Processing error occurred.","validatorAuction":"Processing error occurred.","validators":"Processing error occurred.","validatorStateChanges":"Processing error occurred."}
+    }
+```
+
 Generated with discovered.json: 0x591ad21d2343f4417db26bbc4868aa204c6c9a62
 
 # Diff at Thu, 05 Nov 2026 10:35:30 GMT:

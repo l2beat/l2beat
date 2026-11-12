@@ -1,5 +1,6 @@
 import { env } from '~/env'
 import { ps } from '~/server/projects'
+import { isListedDefiProject } from '../defi/isListedDefiProject'
 import {
   getProjectPageSections,
   PROJECT_PAGE_SECTION_FIELDS,
@@ -22,8 +23,16 @@ export async function getProjectSections(
     optional: [...PROJECT_PAGE_SECTION_FIELDS],
   })
   if (!project) return []
-  return getProjectPageSections(project, {
-    hasChainPage: false,
-    defiEnabled: env.CLIENT_SIDE_DEFI_ENABLED,
-  }).filter((section) => section !== 'ethereum' && section !== 'chain')
+  return (
+    getProjectPageSections(project, {
+      hasChainPage: false,
+      defiEnabled: env.CLIENT_SIDE_DEFI_ENABLED,
+    })
+      .filter((section) => section !== 'ethereum' && section !== 'chain')
+      // DeFi lists only the categories that have a page of their own.
+      .filter(
+        (section) =>
+          section !== 'defi' || isListedDefiProject(project.defiInfo),
+      )
+  )
 }

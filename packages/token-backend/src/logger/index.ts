@@ -48,5 +48,6 @@ export function getLogger(): Logger {
   const metricsEnabled = env.boolean('CLIENT_METRICS_ENABLED', esEnabled)
   MetricsAggregator.setMetricsEnabled(metricsEnabled)
 
-  return new Logger(options)
+  logger = new Logger(options)
+  return logger
 }

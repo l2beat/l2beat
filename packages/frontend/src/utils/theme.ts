@@ -89,6 +89,6 @@ function withoutTransitions(change: () => void) {
   document.head.appendChild(style)
   change()
   // Restyles now, while the rule still applies.
-  getComputedStyle(document.body).opacity
+  void getComputedStyle(document.body).opacity
   setTimeout(() => style.remove(), 1)
 }

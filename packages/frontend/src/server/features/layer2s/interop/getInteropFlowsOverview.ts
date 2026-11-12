@@ -43,8 +43,8 @@ export async function getInteropFlowsOverview(
   )
 }
 
-/** The home page lists as many protocols as its interop card has room for. */
-const OVERVIEW_TOP_PROTOCOLS_COUNT = 15
+/** The home page ranks five protocols, like every ranking on it. */
+const OVERVIEW_TOP_PROTOCOLS_COUNT = 5
 
 export function toInteropFlowsOverview(
   data: InteropFlowsData,

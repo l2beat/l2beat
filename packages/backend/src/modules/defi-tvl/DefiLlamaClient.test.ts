@@ -23,7 +23,7 @@ describe(DefiLlamaClient.name, () => {
     expect(httpClient.fetch).toHaveBeenCalledWith(
       'https://api.llama.fi/protocol/uniswap-v3',
       {
-        headers: { 'user-agent': 'L2BEAT DeFi TVL indexer' },
+        headers: { 'user-agent': 'ETHBEAT DeFi TVL indexer' },
         timeout: 30_000,
       },
     )

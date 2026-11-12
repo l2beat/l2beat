@@ -11,13 +11,14 @@ import {
   InteropFlowsProvider,
   useInteropFlows,
 } from '~/pages/interop/components/flows/utils/InteropFlowsContext'
+import { getInteropTokenUrl } from '~/pages/interop/utils/getInteropTokenUrl'
 import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import { HomeCard } from '../HomeCard'
 import { HomeCardHeader } from '../HomeCardHeader'
 import { InteropCornerFigures } from './InteropCornerFigures'
 import { getInteropFigures } from './InteropFigures'
-import { InteropTopProtocols } from './InteropTopProtocols'
+import { InteropTopList } from './InteropTopList'
 
 /**
  * Interop as on the interop page: the same default chains (the top ones by
@@ -92,30 +93,36 @@ function Content({ className }: { className?: string }) {
           the ring where the body is about as wide as tall. Clearly taller than
           wide, or too narrow for the corners, it stacks as on phones: the
           figures, the graph as a square (smaller when the height runs out, so
-          nothing spills), then as many top protocols as the height left holds.
+          nothing spills), then up to five top protocols, as many as the height left holds.
           Below md it stacks too, the graph a fixed-size square.
           In the page's three columns (`home-wide`) the card is about twice as
-          wide as tall, so it splits in two instead: the graph as a square as
-          tall as the body less its labels' 24px, and beside it the figures
-          over the top protocols, as many as fit. The body is 568px tall there (648px over 1700px), so the
-          research list beside the card ends on a whole row. */}
-      <div className="relative flex home-wide:@min-[1700px]/home:min-h-[648px] home-wide:min-h-[568px] min-w-0 flex-col gap-5 md:max-lg:h-[480px] lg:min-h-[480px] lg:flex-1 lg:basis-0 md:[container:interop-body/size]">
-        <div className="home-wide:absolute home-wide:inset-0 home-wide:grid contents home-wide:grid-cols-[calc(100cqh-24px)_minmax(0,1fr)] home-wide:grid-rows-[auto_minmax(0,1fr)] home-wide:gap-x-12 home-wide:gap-y-12">
+          wide as tall, so it splits in two instead: the graph, as large a
+          square as the body holds, and beside it a 440px panel. The panel shows
+          the totals, with the top protocols and tokens at its foot. The body is
+          648px tall there (728px over 1700px), so the research list beside
+          the card ends on a whole row. */}
+      <div className="relative flex home-wide:@min-[1700px]/home:min-h-[728px] home-wide:min-h-[648px] min-w-0 flex-col gap-5 md:max-lg:h-[480px] lg:min-h-[480px] lg:flex-1 lg:basis-0 md:[container:interop-body/size]">
+        <div className="home-wide:absolute home-wide:inset-0 home-wide:grid contents home-wide:grid-cols-[minmax(0,1fr)_27.5rem] home-wide:grid-rows-[auto_minmax(0,1fr)_auto] home-wide:gap-x-12 home-wide:gap-y-8">
           {figures && (
             // Two rows of three on shared tracks, spread from edge to edge: the
             // first column flush left, the last flush right, so the figures
             // span the width the graph or the list under them takes. Over the
             // list, the last column also aligns right, on its values' edge.
-            <div className="home-wide:col-start-2 home-wide:row-start-1 grid interop-corners:hidden grid-cols-[repeat(3,minmax(0,max-content))] justify-between gap-x-3 gap-y-6 sm:gap-x-6 home-wide:[&>:nth-child(3)]:items-end home-wide:[&>:nth-child(3)]:text-right">
+            // Beside the graph the top route takes the top token's place:
+            // the token list under them already starts with it.
+            <div className="home-wide:col-start-2 home-wide:row-start-1 grid interop-corners:hidden grid-cols-[repeat(3,minmax(0,max-content))] justify-between gap-x-3 gap-y-6 sm:gap-x-6 home-wide:[&>:nth-child(3)]:items-end home-wide:[&>:nth-child(3)]:text-right home-wide:[&>:nth-child(n+6)]:hidden">
               {figures.volume}
               {figures.transfers}
               {figures.activeRoutes}
               {figures.topChain}
+              <div className="home-wide:col-span-2 home-wide:flex hidden min-w-0">
+                {figures.topRoute}
+              </div>
               {figures.topToken}
               {figures.topProtocol}
             </div>
           )}
-          <div className="pointer-events-none interop-corners:absolute interop-corners:inset-x-12 interop-corners:inset-y-0 home-wide:col-start-1 home-wide:row-span-2 home-wide:row-start-1 flex interop-stacked:aspect-square home-wide:min-h-0 interop-corners:min-h-0 interop-stacked:min-h-0 min-h-[360px] interop-stacked:w-full min-w-0 interop-stacked:shrink flex-col items-center [&_text]:stroke-[4px] [&_text]:stroke-surface-primary [&_text]:[paint-order:stroke] [&_text]:[stroke-linejoin:round]">
+          <div className="pointer-events-none interop-corners:absolute interop-corners:inset-x-12 interop-corners:inset-y-0 home-wide:col-start-1 home-wide:row-span-3 home-wide:row-start-1 flex interop-stacked:aspect-square home-wide:min-h-0 interop-corners:min-h-0 interop-stacked:min-h-0 min-h-[360px] interop-stacked:w-full min-w-0 interop-stacked:shrink flex-col items-center [&_text]:stroke-[4px] [&_text]:stroke-surface-primary [&_text]:[paint-order:stroke] [&_text]:[stroke-linejoin:round]">
             <FlowsGraphPanel
               activeChains={graphChains}
               data={data}
@@ -129,7 +136,30 @@ function Content({ className }: { className?: string }) {
             />
           </div>
           {data && figures && (
-            <InteropTopProtocols protocols={data.stats.topProtocols} />
+            <>
+              <InteropTopList
+                title="Top protocols"
+                rows={data.stats.topProtocols.map((p) => ({
+                  id: p.slug,
+                  name: p.name,
+                  href: `/projects/${p.slug}`,
+                  iconUrl: p.iconUrl,
+                  volume: p.volume,
+                }))}
+                className="home-wide:col-start-2 home-wide:row-start-2 home-wide:self-end"
+              />
+              <InteropTopList
+                title="Top tokens"
+                rows={data.stats.topTokens.items.map((t) => ({
+                  id: t.id,
+                  name: t.symbol,
+                  href: getInteropTokenUrl(t),
+                  iconUrl: t.iconUrl,
+                  volume: t.volume,
+                }))}
+                className="home-wide:col-start-2 home-wide:row-start-3 home-wide:flex hidden"
+              />
+            </>
           )}
         </div>
         {data && figures && (

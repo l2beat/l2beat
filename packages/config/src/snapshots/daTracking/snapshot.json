@@ -737,6 +737,21 @@
       }
     }
   ],
+  "lens": [
+    {
+      "id": "afdbbfe89a91",
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+        "sequencers": [
+          "0xBf02Dc815BA63140Bfc170cFcF97987B504d36Bc",
+          "0x9971903268BAED330DA9DD533D97924c725AB593"
+        ],
+        "sinceBlock": 26384574
+      }
+    }
+  ],
   "lighter": [
     {
       "id": "87b58a09f9ee",
@@ -1370,6 +1385,21 @@
           "0xae0Fbdd7CEC6036F3364000eE6d2a60BdAbb10c6",
           "0x267576444F8504B23B98F2b3C0e31bB32eB6Eb7a"
         ]
+      }
+    }
+  ],
+  "sophon": [
+    {
+      "id": "c3d925f9c504",
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+        "sequencers": [
+          "0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B",
+          "0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3"
+        ],
+        "sinceBlock": 26362912
       }
     }
   ],
