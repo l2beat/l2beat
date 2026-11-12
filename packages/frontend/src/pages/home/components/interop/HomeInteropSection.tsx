@@ -122,13 +122,14 @@ function Content({ className }: { className?: string }) {
               {figures.topProtocol}
             </div>
           )}
-          <div className="pointer-events-none interop-corners:absolute interop-corners:inset-x-12 interop-corners:inset-y-0 home-wide:col-start-1 home-wide:row-span-3 home-wide:row-start-1 flex interop-stacked:aspect-square home-wide:min-h-0 interop-corners:min-h-0 interop-stacked:min-h-0 min-h-[360px] interop-stacked:w-full min-w-0 interop-stacked:shrink flex-col items-center [&_text]:stroke-[4px] [&_text]:stroke-surface-primary [&_text]:[paint-order:stroke] [&_text]:[stroke-linejoin:round]">
+          <div className="pointer-events-none interop-corners:absolute interop-corners:inset-x-12 interop-corners:inset-y-0 home-wide:col-start-1 home-wide:row-span-3 home-wide:row-start-1 flex interop-stacked:aspect-square home-wide:min-h-0 interop-corners:min-h-0 interop-stacked:min-h-0 min-h-[360px] interop-stacked:w-full min-w-0 interop-stacked:shrink flex-col items-center [&_a]:pointer-events-auto [&_text]:stroke-[4px] [&_text]:stroke-surface-primary [&_text]:[paint-order:stroke] [&_text]:[stroke-linejoin:round]">
             <FlowsGraphPanel
               activeChains={graphChains}
               data={data}
               hasEnoughChains={hasEnoughChains}
               hasEnoughProtocols={hasEnoughProtocols}
               isLoading={isLoading}
+              linkChains
               // Chain labels hang below the bubbles; pb keeps them in the
               // section, and on phones px keeps the outer ones off its edges.
               className="pb-6 max-sm:px-2 max-lg:order-none"
