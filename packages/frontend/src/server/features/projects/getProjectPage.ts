@@ -49,7 +49,7 @@ export interface ProjectPage<
   /** The section the page is built on: the first of `sections`. */
   kind: Kind
   sections: ProjectPageSection[]
-  /** The sections the site lists the project in: search, sitemap, breadcrumbs. */
+  /** The sections whose lists show the project: for search and the sitemap. */
   listed: ProjectPageSection[]
 }
 
@@ -192,8 +192,7 @@ function toProjectPage(
     slug,
     kind: sections[0],
     sections,
-    // DeFi lists only the categories that have a page of their own, and
-    // Ossification keeps DeFi project pages up without the DeFi section.
+    // DeFi lists only the categories that have a page of their own.
     listed: sections.filter(
       (section) =>
         section !== 'defi' ||
@@ -233,13 +232,16 @@ function getSections(
  * page's own first.
  */
 export function getProjectBreadcrumbs(page: ProjectPage): ProjectSection[] {
-  const breadcrumbs = page.listed.flatMap((section) => {
+  const breadcrumbs = page.sections.flatMap((section) => {
     switch (section) {
       case 'ethereum':
         return []
       // Chain pages show interop flows.
       case 'chain':
         return ['interop' as const]
+      // Ossification keeps DeFi project pages up without the DeFi section.
+      case 'defi':
+        return env.CLIENT_SIDE_DEFI_ENABLED ? [section] : []
       default:
         return [section]
     }

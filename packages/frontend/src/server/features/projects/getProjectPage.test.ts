@@ -139,6 +139,23 @@ describe(getProjectBreadcrumbs.name, () => {
     ).toEqual(['interop'])
   })
 
+  it('shows DeFi on the page of a project no DeFi list shows', () => {
+    const originalDefiEnabled = env.CLIENT_SIDE_DEFI_ENABLED
+    env.CLIENT_SIDE_DEFI_ENABLED = true
+    try {
+      expect(
+        getProjectBreadcrumbs({
+          slug: 'aave',
+          kind: 'defi',
+          sections: ['defi'],
+          listed: [],
+        }),
+      ).toEqual(['defi'])
+    } finally {
+      env.CLIENT_SIDE_DEFI_ENABLED = originalDefiEnabled
+    }
+  })
+
   it('has none for Ethereum, which no section lists', () => {
     expect(
       getProjectBreadcrumbs({
