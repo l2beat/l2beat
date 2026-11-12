@@ -1488,7 +1488,7 @@ export interface PrivacyAdversaryAssessment {
    * reference client?": good = yes, warning = only outside supported options
    * or by accepting a leak to another adversary, bad = no. It judges the
    * promised field only; other leaks are a derived marker. User
-   * hygiene never lowers the sentiment (it goes into `advice` and `atRisk`
+   * hygiene never lowers the sentiment (it goes into the advice steps and `atRisk`
    * notes); facts about the deployment do, such as an anonymity set too small
    * for care to matter or a structural leak the adversary exploits. Network
    * observer baseline: Tor, and an own node where the client has an RPC
@@ -1511,13 +1511,6 @@ export interface PrivacyAdversaryAssessment {
    * says it all.
    */
   exposureContinued?: string
-  /**
-   * How a user keeps it private, when that is conditional (the cell is at
-   * risk, or a field is). Omit when nothing the user does changes the result.
-   * Positive instructions only (say what to do), and only what this adversary
-   * adds over the public observer: advice is not repeated across cells.
-   */
-  advice?: string
   /**
    * Actions taken while shielded (private transfers, in-pool DeFi). Present
    * for all adversaries of a project or for none. Entry and exit are public
@@ -1558,11 +1551,42 @@ export interface PrivacyPromise {
   text: string
 }
 
+/**
+ * One step of our advice for the reference app, shown under How to stay
+ * private. The steps run in the order the user takes them and are the single
+ * home of the advice. Each adversary block links the steps that defend it.
+ */
+export interface PrivacyAdviceStep {
+  /** One or two words, e.g. "Exit". Unique within the project. */
+  name: string
+  /** What the user does, imperative markdown, three sentences at most. */
+  text: string
+  /**
+   * The adversaries this step keeps the promised field from, or a field their
+   * cell marks at risk. Never a red cell.
+   */
+  against: PrivacyAdversaryId[]
+  /**
+   * True when the step needs something the reference app does not ship:
+   * another program, a node, a build from source or a system setting. The page
+   * marks it, so the effort the ratings assume is visible.
+   */
+  outside?: boolean
+  /**
+   * True on the wait step of a pool. The page draws a waiting time at random
+   * within the window the anonymity set counts, since a fixed wait is a
+   * pattern and people pick random numbers badly.
+   */
+  randomWait?: boolean
+}
+
 export interface PrivacyAdversariesConfig {
   promise: PrivacyPromise
   /** Overrides the default field description for this project, e.g. when linkage means something other than a transfer link. */
   fieldDescriptions?: Partial<Record<PrivacyField, string>>
   cells: Record<PrivacyAdversaryId, PrivacyAdversaryAssessment>
+  /** Our advice as ordered steps. Absent when no step changes a cell, e.g. every cell is red. */
+  advice?: PrivacyAdviceStep[]
 }
 
 /** A field this adversary learns more about than the public observer. */
@@ -1593,6 +1617,7 @@ export interface ProjectPrivacyAdversaries {
   adversaries: PrivacyAdversary[]
   fields: PrivacyFieldInfo[]
   cells: Record<PrivacyAdversaryId, PrivacyAdversaryCell>
+  advice?: PrivacyAdviceStep[]
 }
 
 // #endregion
