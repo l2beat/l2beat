@@ -11,7 +11,10 @@ import type { ProjectDetailsSection } from '~/components/projects/sections/types
 import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
 import type { PrivacyAsset } from '~/server/features/privacy/types'
 import type { PrivacyReferenceApp } from '~/server/features/privacy/utils/getPrivacyReferenceApp'
-import { renderPrivacyProjectMarkdown } from './renderPrivacyProjectMarkdown'
+import {
+  getPrivacySummaryMarkdown,
+  renderPrivacyProjectMarkdown,
+} from './renderPrivacyProjectMarkdown'
 
 // Method: render one hand-built privacy project entry (the same shape the
 // HTML page receives) and read the markdown the way an agent would: split it
@@ -120,6 +123,44 @@ describe(renderPrivacyProjectMarkdown.name, () => {
       '- Exit window: Infinite (sentiment: good). The pools are immutable. This protocol passes the walkaway test: users can still fully use it if every centralized participant disappears.',
       '- Reproducibility: Reproducible (sentiment: good). The client can be built locally.',
     )
+  })
+
+  it('adds the creator and the proving stack of a protocol that is also in the ZK Catalog', () => {
+    const summary = getSection(
+      renderPrivacyProjectMarkdown(ENTRY, {
+        creator: 'Tornado Cash DAO',
+        header: {
+          trustedSetupsByProofSystem: {},
+          techStack: {
+            finalWrap: [
+              {
+                id: 'snarkjs',
+                type: 'Groth16',
+                name: 'snarkjs',
+                description: 'A JavaScript implementation of Groth16.',
+              },
+            ],
+          },
+        },
+      }),
+      'Summary',
+    )
+
+    expect(summary).toInclude(
+      '- Creator: Tornado Cash DAO',
+      '- Final wrap: snarkjs (Groth16)',
+    )
+  })
+
+  it('gives the summary of a scaling project its privacy stats and rosette', () => {
+    const merged = getPrivacySummaryMarkdown(ENTRY, ENTRY.sections)
+
+    expect(merged.facts.map((fact) => fact.label)).toEqual([
+      'Tracked on',
+      'Attributes',
+      'Reference app',
+    ])
+    expect(merged.risk.name).toEqual('Privacy')
   })
 
   it('keeps a multi-paragraph risk explanation inside its list item', () => {

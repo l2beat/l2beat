@@ -36,7 +36,10 @@ import { getL2ProjectContent } from '../layer2s/project/getL2ProjectContent'
 import { renderL2ProjectMarkdown } from '../layer2s/project/renderL2ProjectMarkdown'
 import type { PageName, Pages, SsrData } from '../pageTypes'
 import { getPrivacyProjectContent } from '../privacy/project/getPrivacyProjectContent'
-import { renderPrivacyProjectMarkdown } from '../privacy/project/renderPrivacyProjectMarkdown'
+import {
+  getPrivacySummaryMarkdown,
+  renderPrivacyProjectMarkdown,
+} from '../privacy/project/renderPrivacyProjectMarkdown'
 import { getZkCatalogProjectContent } from '../zk-catalog/v2/project/getZkCatalogProjectContent'
 import { renderZkCatalogProjectMarkdown } from '../zk-catalog/v2/project/renderZkCatalogProjectMarkdown'
 
@@ -186,7 +189,11 @@ const PROJECT_PAGES: {
   layer2s: pageKind({
     component: 'L2ProjectPage',
     getContent: getL2ProjectContent,
-    renderMarkdown: (props) => renderL2ProjectMarkdown(props.projectEntry),
+    renderMarkdown: ({ projectEntry, privacy }) =>
+      renderL2ProjectMarkdown(
+        projectEntry,
+        privacy && getPrivacySummaryMarkdown(privacy, projectEntry.sections),
+      ),
   }),
   interop: pageKind({
     component: 'InteropProtocolPage',
@@ -206,7 +213,8 @@ const PROJECT_PAGES: {
   privacy: pageKind({
     component: 'PrivacyProjectPage',
     getContent: getPrivacyProjectContent,
-    renderMarkdown: (props) => renderPrivacyProjectMarkdown(props.entry),
+    renderMarkdown: (props) =>
+      renderPrivacyProjectMarkdown(props.entry, props.zkCatalog),
   }),
   defi: pageKind({
     component: 'DefiProjectPage',
