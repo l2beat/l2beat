@@ -13,7 +13,9 @@ export async function getRecentlyAddedProjects(): Promise<SearchBarProject[]> {
   return projects
     .sort((a, b) => b.addedAt - a.addedAt)
     .flatMap((p) => {
-      const row = toSearchIndexProject(p)
+      // No attestation query on every page: projects found only through
+      // CROPS show up in search, not here.
+      const row = toSearchIndexProject(p, new Set())
       return row ? decodeSearchIndexProject(row) : []
     })
     .slice(0, 15)

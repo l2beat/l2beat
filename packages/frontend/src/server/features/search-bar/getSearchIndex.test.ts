@@ -279,12 +279,23 @@ describe('search bar search', () => {
     env.CLIENT_SIDE_DEFI_ENABLED = false
     env.CLIENT_SIDE_GARDEN_ENABLED = true
     env.CLIENT_SIDE_OSSIFICATION_ENABLED = true
-    ps.getProjects = async () =>
-      [
-        defiProject('safe', 'Safe', { garden: {}, ossificationHistory: {} }),
-        defiProject('safeswap', 'Safeswap', { ossificationHistory: {} }),
-        defiProject('safelend', 'Safelend', { garden: {} }),
-      ] as never
+    const safe = defiProject('safe', 'Safe', {
+      garden: {},
+      ossificationHistory: {},
+    })
+    const projects = [
+      safe,
+      defiProject('safeswap', 'Safeswap', { ossificationHistory: {} }),
+      defiProject('safelend', 'Safelend', { garden: {} }),
+      // Evaluated in config, but not yet attested.
+      defiProject('safebox', 'Safebox', {
+        garden: {},
+        ossificationHistory: {},
+      }),
+    ]
+    // In mock mode the attestation names what this query returns.
+    ps.getProjects = (async (query?: { where?: string[] }) =>
+      query?.where?.includes('crops') ? [safe] : projects) as never
 
     const result = await getSearchBarEntries('safe')
 

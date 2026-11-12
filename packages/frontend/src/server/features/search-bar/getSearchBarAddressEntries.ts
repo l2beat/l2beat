@@ -4,6 +4,7 @@ import {
   decodeSearchIndexProject,
   decodeSearchIndexToken,
 } from '~/components/search-bar/searchIndex'
+import { getAttestationsMeta } from '~/server/features/garden/getAttestationsMeta'
 import { UNKNOWN_ABSTRACT_TOKEN_ID } from '~/server/features/layer2s/interop/consts'
 import { ps } from '~/server/projects'
 import { getLogger } from '../../utils/logger'
@@ -22,7 +23,7 @@ import { toSearchBarProject } from './utils/toSearchBarProject'
 export async function getSearchBarAddressEntries(search: string) {
   const address = EthereumAddress(search.trim())
 
-  const [tokens, projects] = await Promise.all([
+  const [tokens, projects, attestation] = await Promise.all([
     getAbstractTokensByAddress(address),
     // Reading projects blocks the event loop, so it waits a turn to let the
     // token query reach the database first and overlap its round trip.
@@ -31,7 +32,9 @@ export async function getSearchBarAddressEntries(search: string) {
         optional: [...SEARCH_INDEX_PROJECT_KEYS, 'contracts', 'permissions'],
       }),
     ),
+    getAttestationsMeta(),
   ])
+  const cropsAttested = new Set(attestation.current?.projectIds)
 
   // Tokens first: a bridge escrow lists the token contracts it holds, but
   // whoever pastes a token address is most likely looking for the token.
@@ -45,7 +48,7 @@ export async function getSearchBarAddressEntries(search: string) {
       ),
     )
     .flatMap((project) => {
-      const row = toSearchIndexProject(project)
+      const row = toSearchIndexProject(project, cropsAttested)
       return row ? decodeSearchIndexProject(row).map(toSearchBarProject) : []
     })
 
