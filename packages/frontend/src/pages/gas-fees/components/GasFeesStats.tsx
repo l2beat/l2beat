@@ -41,7 +41,7 @@ export function GasFeesStats({ summary, range, isLoading }: Props) {
       <div
         className={cn(
           SPLIT.main,
-          '@3xl:col-start-1 @3xl:row-start-2 @3xl:h-auto h-72 @3xl:min-h-64 @3xl:pt-6',
+          '@3xl:col-start-1 @3xl:row-start-2 @3xl:h-auto h-72 @3xl:min-h-52 @3xl:pt-6',
         )}
       >
         <TxFeesBreakdown
@@ -116,7 +116,7 @@ function Headline({ f }: { f: Figures }) {
   return (
     <div className="flex flex-col gap-2">
       <Label>{f.period}</Label>
-      <p className="font-bold text-2xl leading-tight tracking-tight md:text-3xl">
+      <p className="font-bold text-xl leading-tight tracking-tight md:text-2xl">
         L2s process <Colored color={L2}>{percent(f.txShare)}</Colored> of
         transactions
         <br className="max-md:hidden" /> and collect{' '}
