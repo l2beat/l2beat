@@ -92,6 +92,7 @@ function renderPage(): string {
             },
           },
         ]),
+        projectSections: [],
         queryState: { mutations: [], queries: [] },
         recentlyAddedProjects: [],
         whatsNewItem: undefined,

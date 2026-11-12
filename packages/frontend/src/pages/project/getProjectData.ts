@@ -1,8 +1,5 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
-import type { DehydratedState } from '@tanstack/react-query'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import type { ProjectSection } from '~/components/projects/projectSections'
-import type { AppLayoutProps } from '~/layouts/AppLayout'
 import {
   getProjectBreadcrumbs,
   hasMarkdown,
@@ -11,10 +8,7 @@ import {
   type ProjectPageSection,
   type ProjectPageWithMarkdown,
 } from '~/server/features/projects/getProjectPage'
-import {
-  getProjectVersionLinks,
-  type ProjectVersionLinks,
-} from '~/server/features/projects/getProjectVersionLinks'
+import { getProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers, type SsrHelpers } from '~/trpc/server'
@@ -39,6 +33,7 @@ import { getPrivacyProjectContent } from '../privacy/project/getPrivacyProjectCo
 import { renderPrivacyProjectMarkdown } from '../privacy/project/renderPrivacyProjectMarkdown'
 import { getZkCatalogProjectContent } from '../zk-catalog/v2/project/getZkCatalogProjectContent'
 import { renderZkCatalogProjectMarkdown } from '../zk-catalog/v2/project/renderZkCatalogProjectMarkdown'
+import type { ProjectPageCommonProps } from './ProjectPage'
 
 /** The page at `/projects/{slug}`, or undefined when it has nothing to show. */
 export async function getProjectData(
@@ -70,17 +65,9 @@ export async function getProjectMarkdown(
   )
 }
 
-/** What every project page gets, whatever its kind. */
-interface CommonProps extends AppLayoutProps {
-  projectSections: ProjectSection[]
-  versionLinks?: ProjectVersionLinks
-  queryState: DehydratedState
-  selectedUpdateId?: string
-}
-
 /** What one kind of project page adds to that: its own props and metadata. */
 export interface ProjectPageContent<Name extends PageName> {
-  props: Omit<Parameters<Pages[Name]>[0], keyof CommonProps>
+  props: Omit<Parameters<Pages[Name]>[0], keyof ProjectPageCommonProps>
   metadata: Pick<
     Parameters<typeof getMetadata>[1],
     'name' | 'title' | 'description' | 'structuredData'
@@ -112,7 +99,7 @@ function getCachedProjectPage(
       ])
       if (!content) return undefined
 
-      const props: CommonProps = {
+      const props: ProjectPageCommonProps = {
         ...appLayoutProps,
         ...content.props,
         projectSections: getProjectBreadcrumbs(page),
