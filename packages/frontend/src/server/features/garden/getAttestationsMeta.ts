@@ -5,6 +5,7 @@ import {
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
+import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 
 export type { CropsAttestationsMeta }
 
@@ -41,4 +42,14 @@ async function getMockAttestationsMeta(): Promise<CropsAttestationsMeta> {
 export async function isCropsAttested(projectId: string): Promise<boolean> {
   const meta = await getAttestationsMeta()
   return meta.current?.projectIds.includes(projectId) ?? false
+}
+
+const attestedIdsCache = new FrontendInMemoryCache('getCropsAttestedIds')
+
+/** Ids the current attestation names, cached: search reads them per page. */
+export function getCropsAttestedIds(): Promise<ReadonlySet<string>> {
+  return attestedIdsCache.get(
+    { key: ['crops-attested-ids'], ttl: 60, staleWhileRevalidate: 60 * 15 },
+    async () => new Set((await getAttestationsMeta()).current?.projectIds),
+  )
 }

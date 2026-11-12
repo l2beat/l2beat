@@ -1,6 +1,8 @@
 import { decodeSearchIndexProject } from '~/components/search-bar/searchIndex'
+import { getCropsAttestedIds } from '~/server/features/garden/getAttestationsMeta'
 import type { SearchBarProject } from '~/server/features/search-bar/types'
 import { ps } from '~/server/projects'
+import { getLogger } from '~/server/utils/logger'
 import {
   SEARCH_INDEX_PROJECT_KEYS,
   toSearchIndexProject,
@@ -8,14 +10,22 @@ import {
 import { toSearchBarProject } from './utils/toSearchBarProject'
 
 export async function getRecentlyAddedProjects(): Promise<SearchBarProject[]> {
-  const projects = await ps.getProjects({ optional: SEARCH_INDEX_PROJECT_KEYS })
+  const [projects, cropsAttested] = await Promise.all([
+    ps.getProjects({ optional: SEARCH_INDEX_PROJECT_KEYS }),
+    // Every page's layout reads this list, so a failed read leaves out the
+    // projects found only through CROPS instead of failing the page.
+    getCropsAttestedIds().catch((error) => {
+      getLogger()
+        .for('getRecentlyAddedProjects')
+        .error('Failed to read CROPS attestation', { error })
+      return new Set<string>()
+    }),
+  ])
 
   return projects
     .sort((a, b) => b.addedAt - a.addedAt)
     .flatMap((p) => {
-      // No attestation query on every page: projects found only through
-      // CROPS show up in search, not here.
-      const row = toSearchIndexProject(p, new Set())
+      const row = toSearchIndexProject(p, cropsAttested)
       return row ? decodeSearchIndexProject(row) : []
     })
     .slice(0, 15)
