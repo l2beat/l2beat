@@ -156,9 +156,12 @@ export function ChartContainer<T extends { timestamp: number }>({
         {shouldMountChart && size === 'regular' && project && (
           <ChartProjectLogo
             project={project}
-            // In the margin above the plot, level with the top y label: no
-            // series runs there, and the y labels keep the left edge.
-            className="pointer-events-none absolute top-0 right-0"
+            className={cn(
+              'pointer-events-none absolute left-3 opacity-50',
+              keepsHintRoom
+                ? 'bottom-[68px] group-has-[.chart-legend]:bottom-[76px]'
+                : 'bottom-14 group-has-[.chart-legend]:bottom-16',
+            )}
           />
         )}
         {!isLoading && milestones && (

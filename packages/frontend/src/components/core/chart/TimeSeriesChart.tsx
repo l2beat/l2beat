@@ -161,12 +161,13 @@ const AXIS_LABEL_FONT_SIZE = 12
 const AXIS_LABEL_FONT_WEIGHT = 400
 
 const chartClassNames = cn(
-  // The axis options have no label colour or stroke, so the tick labels are
-  // matched by their scene keys, which are not a documented API. The y
-  // labels (left and right) sit inside the plot, so a halo in the card's
-  // colour keeps them legible over fills and lines.
-  '[&_text[data-ts-key*="-tick-label"]]:fill-secondary',
-  '[&_text[data-ts-key*="y-tick-label"]]:stroke-surface-primary [&_text[data-ts-key*="y-tick-label"]]:[paint-order:stroke] [&_text[data-ts-key*="y-tick-label"]]:[stroke-linejoin:round] [&_text[data-ts-key*="y-tick-label"]]:[stroke-width:3px]',
+  // The axis options have no per-axis label colour, so the tick labels are
+  // matched by their scene keys, which are not a documented API. Both axes
+  // take a translucent ink: an opaque grey can match a stacked fill and
+  // vanish, a translucent one shades it. In light mode it is denser than
+  // `--chart-tick-label`, to keep 12px labels at AA on the card.
+  '[&_text[data-ts-key*="-tick-label"]]:fill-[color-mix(in_oklab,var(--primary)_62%,transparent)]',
+  'dark:[&_text[data-ts-key*="-tick-label"]]:fill-(--chart-tick-label)',
   '[&_svg]:outline-none',
   // Only `highlight` changes a line's opacity.
   '[&_path]:transition-[stroke-opacity] [&_path]:duration-200 motion-reduce:[&_path]:transition-none',
@@ -542,6 +543,8 @@ export function TimeSeriesChart<T, K extends string>({
                   fontSize: AXIS_LABEL_FONT_SIZE,
                   fontWeight: AXIS_LABEL_FONT_WEIGHT,
                   opacity: 1,
+                  // Clear of the milestone diamonds on the axis line.
+                  dy: 7,
                 },
               },
             },

@@ -8,13 +8,14 @@ import { navGroups } from '~/consts/navGroups'
 import { navSecondaryLinks } from '~/consts/navSecondaryLinks'
 import { cn } from '~/utils/cn'
 
-export type SideNavLayoutVariant = 'default' | 'wide' | 'home'
+export type SideNavLayoutVariant = 'default' | 'wide' | 'project' | 'home'
 
 const topBannerVariants = cva('lg:rounded-b-xl 2xl:rounded-br-none', {
   variants: {
     variant: {
       default: undefined,
       wide: undefined,
+      project: undefined,
       home: 'lg:mr-0',
     },
   },
@@ -25,6 +26,7 @@ const bannerWrapperVariants = cva('hidden lg:block 2xl:mr-0', {
     variant: {
       default: 'lg:mr-3',
       wide: 'lg:mr-3',
+      project: 'lg:mr-3',
       home: 'lg:mr-0',
     },
   },
@@ -37,6 +39,7 @@ const contentWrapperVariants = cva(
       variant: {
         default: 'lg:ml-3',
         wide: 'lg:ml-3',
+        project: 'lg:ml-3',
         home: 'lg:ml-0',
       },
     },
@@ -49,6 +52,9 @@ const columnVariants = cva('mx-auto w-full min-w-0', {
     variant: {
       default: 'max-w-(--breakpoint-lg) md:px-5 lg:pl-0',
       wide: 'max-w-412 md:px-5 lg:pl-0',
+      // Widens from the window home turns three-column at, where the project
+      // page pairs its chart sections (`ProjectDetails`).
+      project: 'max-w-(--breakpoint-lg) md:px-5 lg:pl-0 min-[1880px]:max-w-412',
       // The padding sits outside the home's size container, so it cannot
       // ask the container's `home-wide` (1560px, home.css): 1880px is the
       // window that variant starts at.
@@ -62,6 +68,7 @@ const footerVariants = cva(undefined, {
     variant: {
       default: undefined,
       wide: undefined,
+      project: undefined,
       home: 'max-md:border-t-0 lg:pt-12',
     },
   },

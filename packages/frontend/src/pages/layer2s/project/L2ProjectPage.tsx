@@ -44,7 +44,7 @@ export function L2ProjectPage({
   return (
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
-        <SideNavLayout childrenWrapperClassName="md:pt-0">
+        <SideNavLayout variant="project" childrenWrapperClassName="md:pt-0">
           <div
             className="smooth-scroll group/section-wrapper relative z-0 max-md:bg-surface-primary"
             data-project-page

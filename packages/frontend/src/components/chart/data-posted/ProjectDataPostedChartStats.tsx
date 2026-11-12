@@ -10,7 +10,7 @@ export function ProjectDataPostedChartStats({
   data: L2ProjectDaThroughputChart['stats'] | undefined
 }) {
   return (
-    <ChartStats className="lg:grid-cols-3">
+    <ChartStats className="md:grid-cols-3 lg:grid-cols-3">
       <ChartStatsItem
         label="Data posted"
         tooltip="The total amount of data posted to project's respective Data Availability (DA) layer(s)."

@@ -1,5 +1,5 @@
 import type { Milestone, ProjectScalingCategory } from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
+import { formatNumber, UnixTime } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
@@ -12,8 +12,10 @@ import type { ChartRange } from '~/utils/range/range'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { ProjectChartTimeRange } from '../../core/chart/ChartTimeRange'
 import { getChartTimeRangeFromData } from '../../core/chart/utils/getChartTimeRangeFromData'
+import { ChartInsight } from '../ChartInsight'
+import { tvsRangeToReadable } from '../tvs/tvsRangeToReadable'
 import type { ChartScale } from '../types'
-import { ActivityChart } from './ActivityChart'
+import { ActivityChart, typeToColor } from './ActivityChart'
 import { ActivityChartStatsPanel } from './ActivityChartStatsPanel'
 import { ActivityRatioChart } from './ActivityRatioChart'
 import { getChartType } from './utils/getChartType'
@@ -40,6 +42,7 @@ export function ProjectActivityChart({
     data: chart,
     isLoading,
     isPlaceholderData,
+    shownInput,
   } = useChartQuery(trpc.activity.chart, {
     range,
     filter: {
@@ -82,8 +85,64 @@ export function ProjectActivityChart({
   }, [chart?.data])
 
   const timeRange = getChartTimeRangeFromData(chartData, { bucket: resolution })
+  const syncedUntil = chart?.syncedUntil
+  const totals = useMemo(() => {
+    let project = 0
+    let ethereum = 0
+    // Only days both counts cover, so a project behind on syncing isn't
+    // compared with Ethereum days it has no data for.
+    for (const [
+      timestamp,
+      projectsTx,
+      ethereumTx,
+      projectsUops,
+      ethereumUops,
+    ] of chart?.data ?? []) {
+      const projectCount = metric === 'tps' ? projectsTx : projectsUops
+      const ethereumCount = metric === 'tps' ? ethereumTx : ethereumUops
+      if (projectCount === null || ethereumCount === null) continue
+      if (syncedUntil !== undefined && timestamp > syncedUntil) continue
+      project += projectCount
+      ethereum += ethereumCount
+    }
+    return { project, ethereum }
+  }, [chart?.data, metric, syncedUntil])
+  const projectName = project.shortName ?? project.name
+  const countUnit = metric === 'tps' ? 'txs' : 'ops'
   return (
     <div className="flex flex-col">
+      {(isLoading || totals.ethereum > 0) && (
+        <ChartInsight
+          className="mb-5"
+          eyebrow={`${projectName} vs Ethereum · ${tvsRangeToReadable(shownInput.range)}`}
+          isLoading={isLoading}
+          isPlaceholderData={isPlaceholderData}
+          headline={
+            totals.ethereum > 0 &&
+            activityHeadline(
+              projectName,
+              totals.project / totals.ethereum,
+              metric === 'tps' ? 'transactions' : 'user operations',
+            )
+          }
+          parts={[
+            {
+              label: projectName,
+              value: totals.project,
+              formattedValue: `${formatNumber(totals.project)} ${countUnit}`,
+              color: typeToColor(type),
+            },
+            {
+              label: 'Ethereum',
+              value: totals.ethereum,
+              formattedValue: `${formatNumber(totals.ethereum)} ${countUnit}`,
+              color: 'var(--chart-ethereum)',
+              // The light mode's Ethereum blue is too dark for black text.
+              textClassName: 'text-white dark:text-black',
+            },
+          ]}
+        />
+      )}
       <ChartControlsWrapper>
         <ProjectChartTimeRange
           isPlaceholderData={isPlaceholderData}
@@ -142,4 +201,30 @@ export function ProjectActivityChart({
       />
     </div>
   )
+}
+
+/** The larger of the two counts over the period, as a multiple of the other. */
+function activityHeadline(name: string, ratio: number, noun: string) {
+  if (ratio >= 1.1) {
+    return (
+      <>
+        {name} processed <strong>{formatRatio(ratio)}×</strong> as many {noun}{' '}
+        as Ethereum
+      </>
+    )
+  }
+  if (ratio <= 1 / 1.1) {
+    return (
+      <>
+        Ethereum processed <strong>{formatRatio(1 / ratio)}×</strong> as many{' '}
+        {noun} as {name}
+      </>
+    )
+  }
+  return `${name} processed about as many ${noun} as Ethereum`
+}
+
+function formatRatio(ratio: number) {
+  if (ratio >= 1000) return formatNumber(ratio)
+  return ratio >= 10 ? Math.round(ratio).toString() : ratio.toFixed(1)
 }

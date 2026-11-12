@@ -28,7 +28,7 @@ import { cn } from '~/utils/cn'
  * headline step (`HOME_TEXT.number`) over the 16px of the other stats.
  */
 const HEADLINE_FIGURE_CLASS =
-  'text-nowrap font-semibold text-heading-20! md:text-heading-28! xl:text-heading-32! leading-none! tracking-[-0.025em] tabular-nums'
+  'text-nowrap font-semibold text-heading-24! md:text-heading-28! xl:text-heading-32! leading-none! tracking-[-0.025em] tabular-nums'
 const HEADLINE_CHANGE_CLASS = 'text-label-value-13 font-medium'
 
 interface Props {
