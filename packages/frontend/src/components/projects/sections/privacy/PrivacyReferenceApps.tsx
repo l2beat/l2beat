@@ -67,36 +67,36 @@ export function PrivacyReferenceApps({ app }: { app: PrivacyReferenceApp }) {
               ),
             ]}
           />
-          <DeliveryLine part={delivery.kind}>
-            {delivery.kind.description}
-          </DeliveryLine>
-          <DeliveryLine part={delivery.source}>
-            {delivery.source.description}
-            {delivery.rebuild && (
-              <>
-                {' '}
-                <CustomLink
-                  href={delivery.rebuild}
-                  className="whitespace-nowrap"
-                >
-                  {REFERENCE_APP.rebuildLink}
-                </CustomLink>
-              </>
-            )}
-          </DeliveryLine>
-          {delivery.check && (
-            <p className="text-paragraph-13 text-secondary md:text-paragraph-14">
-              {delivery.check.label}
-              {delivery.check.value && (
+          <dl className="mt-2 grid grid-cols-1 gap-y-2 text-paragraph-13 sm:grid-cols-[auto_1fr] sm:gap-x-4 sm:gap-y-1.5 md:text-paragraph-14">
+            <DeliveryLine part={delivery.kind}>
+              {delivery.kind.description}
+            </DeliveryLine>
+            <DeliveryLine part={delivery.source}>
+              {delivery.source.description}
+              {delivery.rebuild && (
                 <>
-                  :{' '}
-                  <span className="break-all font-mono text-2xs md:text-xs">
-                    {delivery.check.value}
-                  </span>
+                  {' '}
+                  <CustomLink
+                    href={delivery.rebuild}
+                    className="whitespace-nowrap"
+                  >
+                    {REFERENCE_APP.rebuildLink}
+                  </CustomLink>
                 </>
               )}
-            </p>
-          )}
+            </DeliveryLine>
+            {delivery.check && (
+              <div className="pl-5.5 text-secondary sm:col-span-2">
+                <dt className="inline">{delivery.check.label}</dt>
+                {delivery.check.value && (
+                  <dd className="inline break-all font-mono text-2xs text-primary md:text-xs">
+                    {' '}
+                    {delivery.check.value}
+                  </dd>
+                )}
+              </div>
+            )}
+          </dl>
         </AppRow>
         {app.checkedApps.map((checkedApp) => (
           <AppRow
@@ -194,13 +194,13 @@ function DeliveryLine({
   children: ReactNode
 }) {
   return (
-    <p className="flex gap-1.5 text-paragraph-13 text-secondary md:text-paragraph-14">
-      <DeliveryIcon part={part} className="mt-0.5 size-4" />
-      <span>
-        <span className="font-medium text-primary">{part.label}:</span>{' '}
-        {children}
-      </span>
-    </p>
+    <div className="flex flex-col gap-0.5 sm:contents">
+      <dt className="flex items-start gap-1.5 font-bold text-primary sm:whitespace-nowrap">
+        <DeliveryIcon part={part} className="mt-[0.15em] size-4" />
+        {part.label}
+      </dt>
+      <dd className="text-secondary max-sm:pl-5.5">{children}</dd>
+    </div>
   )
 }
 
