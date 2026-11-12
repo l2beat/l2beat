@@ -32,7 +32,7 @@ export function PointerTooltip({
     <div
       ref={ref}
       className={cn(
-        'absolute z-10 w-max max-w-[260px] rounded-lg bg-surface-primary p-3 text-left font-medium text-paragraph-13 text-primary starting:opacity-0 shadow-popover transition-opacity duration-150 ease-out dark:bg-header-secondary',
+        'absolute z-10 w-max max-w-[260px] rounded-lg border border-divider bg-surface-primary p-3 text-left font-medium text-paragraph-13 text-primary starting:opacity-0 transition-opacity duration-150 ease-out dark:bg-header-secondary',
         !interactive && 'pointer-events-none',
       )}
       style={{ left: besidePointer(x, width, containerWidth), top: y + GAP }}

@@ -155,6 +155,8 @@ const FADED_STROKE_OPACITY = 0.2
 const ISOLATED_DOT_RADIUS = 3
 const Y_SCALE = 'y'
 const RIGHT_SCALE = 'right-y'
+/** Both axes' labels, one size so dates and values read as one system. */
+const AXIS_LABEL_FONT_SIZE = 12
 
 const chartClassNames = cn(
   // The axis options have no per-axis label color, so the x labels are
@@ -531,7 +533,11 @@ export function TimeSeriesChart<T, K extends string>({
                   size: 0,
                   format: xTicks.format,
                 },
-                tickLabels: { fontSize: 10, fontWeight: 500, opacity: 1 },
+                tickLabels: {
+                  fontSize: AXIS_LABEL_FONT_SIZE,
+                  fontWeight: 500,
+                  opacity: 1,
+                },
               },
             },
             [Y_SCALE]: yScaleOptions(
@@ -555,8 +561,9 @@ export function TimeSeriesChart<T, K extends string>({
                 }
               : {}),
           },
-          // The theme's muted color paints all tick labels.
-          theme: { muted: 'var(--chart-tick-label)' },
+          // The theme's muted color paints all tick labels, the same
+          // secondary text colour as the x labels.
+          theme: { muted: 'var(--secondary)' },
           margin: chartMargin,
           // Not clipped, so lines at the domain's ends keep their full width;
           // every domain contains its data.
@@ -689,8 +696,8 @@ function yScaleOptions(
         anchor: side === 'left' ? ('start' as const) : ('end' as const),
         dx: side === 'left' ? 8 : -8,
         dy: axis.dy ?? -10,
-        fontSize: axis.fontSize ?? 15,
-        fontWeight: axis.fontWeight,
+        fontSize: axis.fontSize ?? AXIS_LABEL_FONT_SIZE,
+        fontWeight: axis.fontWeight ?? 500,
         opacity: 1,
         thin: false,
       },
