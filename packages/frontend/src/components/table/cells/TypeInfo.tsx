@@ -12,6 +12,7 @@ import { StarkWareIcon } from '~/icons/providers/StarkwareIcon'
 import { TaikoIcon } from '~/icons/providers/TaikoIcon'
 import { ZKStackIcon } from '~/icons/providers/ZkstackIcon'
 import { ZkSyncLiteIcon } from '~/icons/providers/ZksyncLiteIcon'
+import { cn } from '~/utils/cn'
 import {
   Tooltip,
   TooltipContent,
@@ -21,11 +22,17 @@ import {
 interface TypeInfoProps {
   children: React.ReactNode | undefined
   stacks?: ProjectScalingStack[]
+  /**
+   * For a compact table: the stack icons centred on the type, not raised as
+   * a superscript. Inline blocks there would deepen the line box and push the
+   * type below the row's other text.
+   */
+  compact?: boolean
 }
 
-export function TypeInfo({ stacks, children }: TypeInfoProps) {
+export function TypeInfo({ stacks, children, compact }: TypeInfoProps) {
   return (
-    <span>
+    <span className={cn(compact && 'inline-flex items-center')}>
       {children ?? EM_DASH}
       {stacks &&
         stacks.map((stack) => {
@@ -34,6 +41,7 @@ export function TypeInfo({ stacks, children }: TypeInfoProps) {
           return (
             <TypeTooltip
               key={stack}
+              compact={compact}
               Icon={providerProps.Icon}
               text={
                 providerProps.text ??
@@ -101,14 +109,20 @@ const providerMap: Record<ProjectScalingStack, ProviderProps | undefined> = {
 interface TypeTooltipProps {
   Icon: (props: { className: string }) => JSX.Element
   text: string
+  compact?: boolean
 }
 
-function TypeTooltip({ Icon, text }: TypeTooltipProps) {
+function TypeTooltip({ Icon, text, compact }: TypeTooltipProps) {
   return (
     <Tooltip contentInHtml>
       <TooltipTrigger aria-label={text}>
         <div className="relative ml-1 inline-block size-4">
-          <Icon className="-top-0.5 absolute left-0 size-4" />
+          <Icon
+            className={cn(
+              'absolute left-0 size-4',
+              compact ? 'top-0' : '-top-0.5',
+            )}
+          />
         </div>
       </TooltipTrigger>
       <TooltipContent>{text}</TooltipContent>

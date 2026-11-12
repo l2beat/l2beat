@@ -22,6 +22,8 @@ interface Props {
   href?: string
   emptyMode?: 'em-dash' | 'no-info' | 'n/a' | 'no-data'
   secondLineClassName?: string
+  /** For a compact table: the second line follows the value in grey. */
+  compact?: boolean
 }
 
 export function TableValueCell({
@@ -29,6 +31,7 @@ export function TableValueCell({
   href,
   emptyMode = 'no-info',
   secondLineClassName,
+  compact,
 }: Props) {
   if (!value) {
     if (emptyMode === 'em-dash') {
@@ -54,13 +57,31 @@ export function TableValueCell({
   const trigger = (
     <TableLink href={href}>
       <TwoRowCell>
-        <TwoRowCell.First className="flex items-center gap-1">
-          <SentimentText
-            sentiment={value.sentiment ?? 'neutral'}
-            className="font-medium"
-          >
-            {value.value}
-          </SentimentText>
+        <TwoRowCell.First
+          className={cn(
+            'flex items-center gap-1',
+            compact && 'md:text-label-value-15',
+          )}
+        >
+          {/* Inline, so the grey second line shares the value's baseline. */}
+          <span>
+            <SentimentText
+              sentiment={value.sentiment ?? 'neutral'}
+              className="font-medium"
+            >
+              {value.value}
+            </SentimentText>
+            {compact && value.secondLine && (
+              <span
+                className={cn(
+                  'ml-1.5 font-normal text-label-value-13 text-secondary',
+                  secondLineClassName,
+                )}
+              >
+                {value.secondLine}
+              </span>
+            )}
+          </span>
           {value.warning && (
             <RoundedWarningIcon
               className={cn(
@@ -70,7 +91,7 @@ export function TableValueCell({
             />
           )}
         </TwoRowCell.First>
-        {value.secondLine && (
+        {!compact && value.secondLine && (
           <TwoRowCell.Second className={secondLineClassName}>
             {value.secondLine}
           </TwoRowCell.Second>
@@ -82,7 +103,12 @@ export function TableValueCell({
   if (value.description) {
     return (
       <Tooltip contentInHtml>
-        <TooltipTrigger disabledOnTouch className="h-[inherit] min-h-fit">
+        <TooltipTrigger
+          disabledOnTouch
+          // `inherit` takes the cell's own height, which then leaves no room
+          // for the row's rule; in the compact table's 40px that adds a pixel.
+          className={compact ? 'h-full' : 'h-[inherit] min-h-fit'}
+        >
           {trigger}
         </TooltipTrigger>
         <TooltipContent>

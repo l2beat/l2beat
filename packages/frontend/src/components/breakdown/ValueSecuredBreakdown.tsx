@@ -23,6 +23,8 @@ interface ValueSecuredBreakdownTooltipContentProps
   tvsWarnings?: WarningWithSentiment[]
   syncWarning: string | undefined
   change?: number
+  /** The change as in a compact table's row (see `PercentChange`). */
+  compact?: boolean
 }
 
 export function ValueSecuredBreakdown(props: ValueSecuredBreakdownProps) {
@@ -53,6 +55,7 @@ export function ValueSecuredBreakdownTooltipContent({
   change,
   tvsWarnings,
   syncWarning,
+  compact,
 }: ValueSecuredBreakdownTooltipContentProps) {
   const total = canonical + external + native
 
@@ -82,7 +85,13 @@ export function ValueSecuredBreakdownTooltipContent({
       <div>
         <div className="flex items-center justify-between gap-4">
           <span className="text-heading-16">TVS</span>
-          <ValueWithPercentageChange change={change}>
+          <ValueWithPercentageChange
+            change={change}
+            compact={compact}
+            // Only the change follows the compact row; the total stays as
+            // heavy as the parts under it.
+            className="font-bold md:text-base"
+          >
             {formatCurrency(total, 'usd')}
           </ValueWithPercentageChange>
         </div>

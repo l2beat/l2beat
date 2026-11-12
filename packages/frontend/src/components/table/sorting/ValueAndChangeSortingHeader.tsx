@@ -1,12 +1,20 @@
 import { assert } from '@l2beat/shared-pure'
 import type { Header, SortDirection } from '@tanstack/react-table'
 import { flexRender } from '@tanstack/react-table'
+import { cn } from '~/utils/cn'
 import { SortingArrows } from './SortingArrows'
 
 export function ValueAndChangeSortingHeader<TData>({
   header,
+  compact,
 }: {
   header: Header<TData, unknown>
+  /**
+   * For a compact table: the change's label in the 52px box of the change
+   * below it (`PercentChange` `compact`), after the cell's 4px gap, so both
+   * labels end where their figures end.
+   */
+  compact?: boolean
 }) {
   const valueHeader = flexRender(
     header.column.columnDef.header,
@@ -66,16 +74,18 @@ export function ValueAndChangeSortingHeader<TData>({
       : undefined
 
   return (
-    <div className="flex items-end gap-2">
+    <div className={cn('flex items-end', compact ? 'gap-1' : 'gap-2')}>
       {valueSortingArrows}
-      <SortingArrows
-        direction={changeColumn.getIsSorted()}
-        nextDirection={changeColumn.getNextSortingOrder()}
-        onClick={changeColumn.getToggleSortingHandler()}
-        aria-label={changeLabel}
-      >
-        {changeHeader}
-      </SortingArrows>
+      <span className={cn(compact && 'inline-flex w-[52px] justify-end')}>
+        <SortingArrows
+          direction={changeColumn.getIsSorted()}
+          nextDirection={changeColumn.getNextSortingOrder()}
+          onClick={changeColumn.getToggleSortingHandler()}
+          aria-label={changeLabel}
+        >
+          {changeHeader}
+        </SortingArrows>
+      </span>
     </div>
   )
 }

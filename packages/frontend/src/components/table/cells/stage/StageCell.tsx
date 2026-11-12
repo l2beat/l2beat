@@ -1,6 +1,6 @@
 import type { ProjectScalingStage } from '@l2beat/config'
 
-import { StageBadge } from '~/components/badge/StageBadge'
+import { SmallStageBadge, StageBadge } from '~/components/badge/StageBadge'
 import {
   Tooltip,
   TooltipContent,
@@ -12,6 +12,7 @@ import { EmergencyIcon } from '~/icons/Emergency'
 import { StopwatchIcon } from '~/icons/Stopwatch'
 import { WalkAwayNotPassedIcon } from '~/icons/WalkAwayNotPassed'
 import { WalkAwayPassedIcon } from '~/icons/WalkAwayPassed'
+import { cn } from '~/utils/cn'
 import { StageTooltip } from './StageTooltip'
 
 interface StageCellProps {
@@ -20,6 +21,11 @@ interface StageCellProps {
   href?: string
   emergencyWarning?: string
   walkAway?: 'passed' | 'not-passed'
+  /**
+   * For a compact table: the small badge, on one line. The tooltip says
+   * whether it is an appchain.
+   */
+  compact?: boolean
 }
 
 export function StageCell({
@@ -28,24 +34,37 @@ export function StageCell({
   href,
   emergencyWarning,
   walkAway,
+  compact,
 }: StageCellProps) {
+  // Beside the small badge the icons centre on it; beside the tall one they
+  // sit level with its first line.
+  const iconClassName = compact ? undefined : 'mt-px md:mt-[3px]'
+  const walkAwayClassName = compact ? 'size-5' : '-mt-px size-5 md:size-6'
   const content = (
-    <div className="flex gap-1">
-      <StageBadge
-        stage={stageConfig.stage}
-        isAppchain={isAppchain}
-        className="flex flex-col gap-px"
-      />
+    <div className={cn('flex gap-1', compact && 'items-center')}>
+      {compact ? (
+        <SmallStageBadge stage={stageConfig.stage} />
+      ) : (
+        <StageBadge
+          stage={stageConfig.stage}
+          isAppchain={isAppchain}
+          className="flex flex-col gap-px"
+        />
+      )}
       {stageConfig.stage !== 'NotApplicable' &&
         stageConfig.stage !== 'UnderReview' &&
         stageConfig.downgradePending &&
-        !emergencyWarning && <StopwatchIcon className="mt-px md:mt-[3px]" />}
-      {emergencyWarning && <EmergencyIcon className="mt-px md:mt-[3px]" />}
+        !emergencyWarning && <StopwatchIcon className={iconClassName} />}
+      {emergencyWarning && <EmergencyIcon className={iconClassName} />}
       {walkAway === 'passed' && (
-        <WalkAwayPassedIcon className="-mt-px size-5 fill-positive md:size-6" />
+        <WalkAwayPassedIcon
+          className={cn(walkAwayClassName, 'fill-positive')}
+        />
       )}
       {walkAway === 'not-passed' && (
-        <WalkAwayNotPassedIcon className="-mt-px size-5 fill-negative md:size-6" />
+        <WalkAwayNotPassedIcon
+          className={cn(walkAwayClassName, 'fill-negative')}
+        />
       )}
     </div>
   )
@@ -65,6 +84,7 @@ export function StageCell({
           isAppchain={isAppchain}
           emergencyWarning={emergencyWarning}
           walkAway={walkAway}
+          compact={compact}
         />
         <TooltipVisualOnly>
           <p className="mt-3 text-label-value-13 text-secondary">

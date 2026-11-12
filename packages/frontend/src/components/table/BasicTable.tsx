@@ -86,8 +86,8 @@ export interface BasicTableProps<T extends BasicTableRow> {
    */
   stickyHeader?: boolean
   /**
-   * Trims the row and header heights. For tables shown alongside other content
-   * rather than as a page's main subject.
+   * The home page's density: 40px rows under quiet sentence-case headers. For
+   * single-line cells only.
    */
   compact?: boolean
 }
@@ -133,7 +133,7 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
           actualHeader={actualHeader}
           compact={props.compact}
         />
-        <BasicTableHeaderDividerRow />
+        <BasicTableHeaderDividerRow compact={props.compact} />
       </TableHeader>
     </>
   )
@@ -246,6 +246,7 @@ function BasicTableActualHeaderRow<T>({
                 })}
                 align={header.column.columnDef.meta?.align}
                 tooltip={header.column.columnDef.meta?.tooltip}
+                compact={compact}
                 aria-sort={
                   header.isPlaceholder ? undefined : getHeaderAriaSort(header)
                 }
@@ -253,7 +254,10 @@ function BasicTableActualHeaderRow<T>({
                 {...getPersistedColumnAttributes(header.column)}
               >
                 {header.isPlaceholder ? null : (
-                  <ValueAndChangeSortingHeader header={header} />
+                  <ValueAndChangeSortingHeader
+                    header={header}
+                    compact={compact}
+                  />
                 )}
               </TableHead>
               {groupParams?.isLastInGroup && !isLast && (
@@ -267,10 +271,21 @@ function BasicTableActualHeaderRow<T>({
   )
 }
 
-export function BasicTableHeaderDividerRow() {
+export function BasicTableHeaderDividerRow({
+  compact,
+}: {
+  /** A 1px rule, like the rules between the rows. */
+  compact?: boolean
+}) {
   return (
     <TableHeaderRow>
-      <th colSpan={100} className="mx-0.5 h-0.5 rounded-full bg-divider" />
+      <th
+        colSpan={100}
+        className={cn(
+          'mx-0.5 h-0.5 rounded-full bg-divider',
+          compact && 'h-px rounded-none',
+        )}
+      />
     </TableHeaderRow>
   )
 }
