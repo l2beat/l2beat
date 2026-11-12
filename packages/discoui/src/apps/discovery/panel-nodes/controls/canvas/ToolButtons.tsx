@@ -1,50 +1,62 @@
 import type { ReactNode } from 'react'
 import { IconCursor } from '../../../../../icons/IconCursor'
 import { IconHand } from '../../../../../icons/IconHand'
+import type { CommandId } from '../../../keybindings/commands'
+import { useCommandShortcut } from '../../../keybindings/useCommandShortcut'
 import type { Tool } from '../../store/State'
 import { useStore } from '../../store/store'
-import { HAND_TOOL_KEY, SELECT_TOOL_KEY } from '../../store/utils/constants'
 import { effectiveTool } from '../../store/utils/tool'
 import { ToolbarButton } from '../ToolbarButton'
 
 const TOOLS: {
   tool: Tool
-  shortcut: string
+  command: CommandId
   label: string
-  description?: string
   icon: ReactNode
 }[] = [
   {
     tool: 'select',
-    shortcut: SELECT_TOOL_KEY.toUpperCase(),
+    command: 'tool.select',
     label: 'Selection tool',
     icon: <IconCursor />,
   },
   {
     tool: 'hand',
-    shortcut: HAND_TOOL_KEY.toUpperCase(),
+    command: 'tool.hand',
     label: 'Hand tool',
-    description:
-      'Drag to move the view. Space + drag or middle mouse drag also pans.',
     icon: <IconHand />,
   },
 ]
 
 export function ToolButtons() {
+  return TOOLS.map((tool) => <ToolButton key={tool.tool} {...tool} />)
+}
+
+function ToolButton(props: (typeof TOOLS)[number]) {
   // Holding space borrows the hand tool, so highlight it while the key is down.
   const active = useStore(effectiveTool)
   const setTool = useStore((state) => state.setTool)
+  const shortcut = useCommandShortcut(props.command)
+  const holdShortcut = useCommandShortcut('tool.handHold')
+  const description =
+    props.tool === 'hand' ? handToolDescription(holdShortcut) : undefined
 
-  return TOOLS.map(({ tool, shortcut, label, description, icon }) => (
+  return (
     <ToolbarButton
-      key={tool}
-      label={label}
+      label={props.label}
       description={description}
-      shortcut={[shortcut]}
-      active={active === tool}
-      onClick={() => setTool(tool)}
+      shortcut={shortcut}
+      active={active === props.tool}
+      onClick={() => setTool(props.tool)}
     >
-      {icon}
+      {props.icon}
     </ToolbarButton>
-  ))
+  )
+}
+
+function handToolDescription(holdShortcut: string[] | undefined): string {
+  if (holdShortcut === undefined) {
+    return 'Drag to move the view. Middle mouse drag also pans.'
+  }
+  return `Drag to move the view. ${holdShortcut.join('+')} + drag or middle mouse drag also pans.`
 }

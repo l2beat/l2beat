@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TransactVerifier",
+  "category": "shared",
+  "critical": true,
+  "description": "Groth16 verifier for the transact circuit, with the verification key of its trusted setup hard-coded."
+}

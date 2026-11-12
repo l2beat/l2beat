@@ -19,7 +19,8 @@ import type { SearchBarCategory } from './searchBarCategories'
 /**
  * Versioned, so a page never reads rows in a layout it doesn't know. Bump it
  * on any change to the schemas below, new enum values included: open tabs
- * parse strictly, so one they don't know would fail their search.
+ * parse strictly, so one they don't know would fail their search. A new
+ * optional key on `SearchIndex` needs no bump, as open tabs ignore it.
  */
 export const SEARCH_INDEX_PATH = '/api/search-index/v1'
 
@@ -75,6 +76,9 @@ export type SearchIndexToken = v.infer<typeof SearchIndexToken>
 export const SearchIndex = v.object({
   projects: v.array(SearchIndexProject),
   tokens: v.array(SearchIndexToken),
+  // Project ids of each version group, latest first. Optional, because a
+  // browser may still hold an index cached before the key existed.
+  versionGroups: v.array(v.array(v.string())).optional(),
 })
 export type SearchIndex = v.infer<typeof SearchIndex>
 
@@ -84,10 +88,18 @@ export interface DecodedSearchIndex {
 }
 
 export function decodeSearchIndex(index: SearchIndex): DecodedSearchIndex {
-  return {
-    projects: index.projects.flatMap(decodeSearchIndexProject),
-    tokens: index.tokens.map(decodeSearchIndexToken),
+  const versions = new Map<string, SearchBarProjectEntry['version']>()
+  for (const ids of index.versionGroups ?? []) {
+    for (const [rank, id] of ids.entries()) {
+      versions.set(id, { group: ids[0] ?? id, rank })
+    }
   }
+  const projects = index.projects.flatMap(decodeSearchIndexProject)
+  for (const project of projects) {
+    const version = versions.get(project.id)
+    if (version) project.version = version
+  }
+  return { projects, tokens: index.tokens.map(decodeSearchIndexToken) }
 }
 
 const KIND_CATEGORIES: Record<SearchIndexProjectKind, SearchBarCategory> = {

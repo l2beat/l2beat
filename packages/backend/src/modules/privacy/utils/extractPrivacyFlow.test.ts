@@ -39,6 +39,10 @@ const zkMoneyInterface = new utils.Interface([
   'event WithdrawalOrRefund(uint8 indexed flow, bytes32 indexed nullifier, address indexed executor, uint256 executionAmount)',
 ])
 
+const tacitPayInterface = new utils.Interface([
+  'event Transact(bytes32 indexed nf0, bytes32 indexed nf1, bytes32 outLeaf0, bytes32 outLeaf1, uint256 firstIndex, bytes32 newRoot, address recipient, int256 extAmount, address relayer, uint256 fee, bytes memo0, bytes memo1)',
+])
+
 const ADDRESS = EthereumAddress.random()
 const TOKEN_ADDRESS = EthereumAddress(
   '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
@@ -404,6 +408,41 @@ describe(extractPrivacyFlow.name, () => {
     })
   })
 
+  describe('tacitPay', () => {
+    const deposit = { extractor: 'tacitPayDeposit', params: {} } as const
+    const withdrawal = { extractor: 'tacitPayWithdrawal', params: {} } as const
+
+    it('counts a positive extAmount as a deposit only', () => {
+      const log = tacitPayTransact(500n, 0n)
+      expect(
+        extractPrivacyFlow({ event: log.topics[0]!, ...deposit }, log),
+      ).toEqual({ count: 1, amount: 500n })
+      expect(
+        extractPrivacyFlow({ event: log.topics[0]!, ...withdrawal }, log),
+      ).toEqual(undefined)
+    })
+
+    it('counts a negative extAmount as a withdrawal, without the relayer fee', () => {
+      const log = tacitPayTransact(-700n, 30n)
+      expect(
+        extractPrivacyFlow({ event: log.topics[0]!, ...withdrawal }, log),
+      ).toEqual({ count: 1, amount: 700n })
+      expect(
+        extractPrivacyFlow({ event: log.topics[0]!, ...deposit }, log),
+      ).toEqual(undefined)
+    })
+
+    it('ignores a private transfer, which crosses no boundary', () => {
+      const log = tacitPayTransact(0n, 30n)
+      expect(
+        extractPrivacyFlow({ event: log.topics[0]!, ...deposit }, log),
+      ).toEqual(undefined)
+      expect(
+        extractPrivacyFlow({ event: log.topics[0]!, ...withdrawal }, log),
+      ).toEqual(undefined)
+    })
+  })
+
   describe('railgunShield', () => {
     const config: PrivacyFlowIndexerConfig = {
       ...baseFlowConfig,
@@ -715,6 +754,16 @@ describe(extractPrivacyAnonymitySetMember.name, () => {
     ).toEqual({ amount: 500n, origin: { type: 'transaction' } })
   })
 
+  it('requests the transaction sender for Tacit Pay deposits', () => {
+    const log = tacitPayTransact(500n, 0n)
+    expect(
+      extractPrivacyAnonymitySetMember(
+        { event: log.topics[0]!, extractor: 'tacitPayDeposit', params: {} },
+        log,
+      ),
+    ).toEqual({ amount: 500n, origin: { type: 'transaction' } })
+  })
+
   it('requests the transaction sender for fixed deposits', () => {
     const source = {
       event: 'Deposit',
@@ -784,3 +833,20 @@ describe(extractPrivacyAnonymitySetMember.name, () => {
     )
   })
 })
+
+function tacitPayTransact(extAmount: bigint, fee: bigint): PrivacyRpcLog {
+  return encodeLog(tacitPayInterface, 'Transact', [
+    `0x${'11'.repeat(32)}`,
+    `0x${'00'.repeat(32)}`,
+    `0x${'22'.repeat(32)}`,
+    `0x${'33'.repeat(32)}`,
+    10n,
+    `0x${'44'.repeat(32)}`,
+    extAmount < 0n ? ADDRESS : EthereumAddress.ZERO,
+    extAmount,
+    fee === 0n ? EthereumAddress.ZERO : ADDRESS,
+    fee,
+    '0x',
+    '0x',
+  ])
+}

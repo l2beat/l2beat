@@ -89,7 +89,7 @@
     "@types/react-dom": "19.0.4",
     "@vitejs/plugin-react": "^6.1.1",
     "mockdate": "^3.0.5",
-    "playwright": "^1.60.0",
+    "playwright": "^1.64.1",
     "tailwindcss": "^4.3.3",
     "tailwindcss-animate": "^1.0.7",
     "tinify": "^1.7.1",

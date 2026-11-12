@@ -2,7 +2,7 @@ import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ResolvedCrops } from '~/components/garden/crops'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { getTotalValueLockedByProject } from '~/server/features/defi/getDefiSummaryEntries'
+import { getTotalValueLockedByProject } from '~/server/features/defi/getDefiTotalValueLocked'
 import { describeOssification } from '~/server/features/garden/describeOssification'
 import {
   type GardenProject,
@@ -117,7 +117,7 @@ async function getTotalDepositCounts(
   return counts
 }
 
-// Value secured where tracked, by L2BEAT or, for DeFi, the TVL source the
+// Value secured where tracked, by ETHBEAT or, for DeFi, the TVL source the
 // DeFi pages use; otherwise the deposit count, for a privacy protocol whose
 // payments are forwarded rather than escrowed.
 function getMetric(

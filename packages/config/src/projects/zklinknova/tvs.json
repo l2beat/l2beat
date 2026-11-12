@@ -561,7 +561,8 @@
             "chain": "blast",
             "escrowAddress": "0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD",
             "decimals": 18,
-            "sinceTimestamp": 1710417729
+            "sinceTimestamp": 1710417729,
+            "untilTimestamp": 1793999543
           },
           {
             "type": "balanceOfEscrow",
@@ -569,7 +570,8 @@
             "chain": "blast",
             "escrowAddress": "0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b",
             "decimals": 18,
-            "sinceTimestamp": 1710427013
+            "sinceTimestamp": 1710427013,
+            "untilTimestamp": 1793999543
           }
         ]
       },
@@ -583,7 +585,8 @@
               "type": "const",
               "value": "0",
               "decimals": 0,
-              "sinceTimestamp": 1710417729
+              "sinceTimestamp": 1710417729,
+              "untilTimestamp": 1793999543
             },
             "priceId": "ethereum"
           },
@@ -593,7 +596,8 @@
               "type": "const",
               "value": "0",
               "decimals": 0,
-              "sinceTimestamp": 1710427013
+              "sinceTimestamp": 1710427013,
+              "untilTimestamp": 1793999543
             },
             "priceId": "ethereum"
           }
@@ -824,7 +828,8 @@
         "chain": "blast",
         "escrowAddress": "0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b",
         "decimals": 18,
-        "sinceTimestamp": 1710427013
+        "sinceTimestamp": 1710427013,
+        "untilTimestamp": 1793999543
       },
       "valueForSummary": {
         "type": "value",

@@ -2,7 +2,10 @@ import { useMemo } from 'react'
 import { useNavigate } from 'react-router'
 import { useCodeStore } from '../../../components/editor/store'
 import { IS_READONLY } from '../../../config/readonly'
-import { useIsomorphicKeys } from '../hooks/useIsomorphicKeys'
+import { type CommandId, LAYOUT_COMMANDS } from '../keybindings/commands'
+import { findCommandShortcut } from '../keybindings/resolve'
+import { PLATFORM, shortcutLabels } from '../keybindings/shortcut'
+import { selectKeybindings, useKeybindingsStore } from '../keybindings/store'
 import { isAllowedPanel, PANEL_IDS } from '../multi-view/config'
 import { addPanel, useDockingStore } from '../multi-view/store'
 import { useDiscoveryCommand } from '../panel-terminal/useDiscoveryCommand'
@@ -11,11 +14,24 @@ import type { CommandDefinition, SearchCommand, SearchItem } from './items'
 import { useSearchStore } from './store'
 
 export function useSearchCommands(): CommandDefinition[] {
-  const { altKey } = useIsomorphicKeys()
-  return useMemo(() => buildCommands(altKey), [altKey])
+  const keybindings = useKeybindingsStore(selectKeybindings)
+  return useMemo(
+    () =>
+      buildCommands((command) => {
+        const shortcut = findCommandShortcut(keybindings, command)
+        return shortcut === undefined
+          ? ''
+          : shortcutLabels(shortcut, PLATFORM).join('+')
+      }),
+    [keybindings],
+  )
 }
 
-function buildCommands(altKey: string): CommandDefinition[] {
+// Shortcuts come from the keybindings, so a rebind shows here too. An empty
+// label means the command has no shortcut.
+function buildCommands(
+  shortcutLabel: (command: CommandId) => string,
+): CommandDefinition[] {
   const commands: CommandDefinition[] = PANEL_IDS.filter(isAllowedPanel).map(
     (panel) => ({
       command: { type: 'openPanel', panel },
@@ -27,31 +43,31 @@ function buildCommands(altKey: string): CommandDefinition[] {
     {
       command: { type: 'addPanel' },
       title: 'Add panel',
-      shortcut: `${altKey}+Enter`,
+      shortcut: shortcutLabel('panel.add'),
     },
     {
       command: { type: 'closePanel' },
       title: 'Close panel',
-      shortcut: `${altKey}+Q`,
+      shortcut: shortcutLabel('panel.close'),
     },
     {
       command: { type: 'toggleFullScreen' },
       title: 'Toggle full screen panel',
-      shortcut: `${altKey}+F`,
+      shortcut: shortcutLabel('panel.toggleFullScreen'),
     },
   )
-  for (let index = 0; index < 6; index++) {
+  for (const [index, layoutCommand] of LAYOUT_COMMANDS.entries()) {
     commands.push({
       command: { type: 'loadLayout', index },
       title: `Switch to layout ${index + 1}`,
-      shortcut: `${altKey}+${index + 1}`,
+      shortcut: shortcutLabel(layoutCommand),
     })
   }
   if (!IS_READONLY) {
     commands.push({
       command: { type: 'discover' },
       title: 'Run discovery',
-      shortcut: `${altKey}+R`,
+      shortcut: shortcutLabel('discovery.run'),
     })
   }
   commands.push({

@@ -4,7 +4,6 @@ import { renderOpengraphPng } from '~/components/opengraph-image/heartbeat/rende
 import type { MainPage } from '~/components/opengraph-image/MainPage'
 import { MainPageOpengraphImage } from '~/components/opengraph-image/MainPage'
 import { RENAME_ANNOUNCEMENT_PATH } from '~/consts/siteName'
-import { DEFI_SUMMARY_DESCRIPTION } from '~/consts/summaryPageDescriptions'
 import { writeIfMissing } from './writeIfMissing'
 
 // Labels name the page's section, and only when the title doesn't already.
@@ -116,9 +115,11 @@ export const mainPages: MainPage[] = [
       'Privacy protocols on Ethereum, rated by what they hide from each adversary.',
   },
   {
-    path: 'defi/summary',
-    title: 'DeFi protocols',
-    description: DEFI_SUMMARY_DESCRIPTION,
+    path: 'defi/liquid-staking',
+    label: 'DeFi',
+    title: 'Liquid staking',
+    description:
+      'Ethereum liquid staking protocols compared by risk, alongside what each token yields and what an exit costs.',
   },
   {
     path: 'zk-catalog',

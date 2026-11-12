@@ -7,8 +7,8 @@ import { IconFolder } from '../../../icons/IconFolder'
 import { IconSearch } from '../../../icons/IconSearch'
 import { IconSigma } from '../../../icons/IconSigma'
 import { cn } from '../../../utils/cn'
-import { Keys } from '../multi-view/BottomBar/Keys'
 import type { SearchItem } from './items'
+import { Keys } from './Keys'
 import { highlightSegments } from './rank'
 
 export function SearchResultRow(props: {

@@ -1,3 +1,66 @@
+Generated with discovered.json: 0xfe51b3dfa47050b5aaebdae5d4ec0d722709a3bf
+
+# Diff at Tue, 10 Nov 2026 17:10:27 GMT:
+
+- id: 41f72c23
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e7f80c2eb530702e907f902d428416a31e27855 block: 1793715716
+- current timestamp: 1794319575
+
+## Description
+
+Three linked proposals that dissolve the ZKsync Guardians passed their votes and were queued. No L1 contract or timelock role has changed yet.
+- ZIP-19 (https://www.tally.xyz/gov/zksync/proposal/50493255232415902362620838873379866057752952721482013941205421986273471752436?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f) was executed on ZKsync Era, which sends the upgrade to L1. It is not started in the ProtocolUpgradeHandler yet and cannot execute before 2026-11-15 (1d batch execution delay, 3d legal veto period, Security Council approval, 1d upgrade delay). It would:
+  - upgrade the ProtocolUpgradeHandler to eth:0xaD417a02cD56e535703404DEd7C8c5BaFE088DEE, where the Guardians role becomes a ZK Foundation role: the ZK Foundation Multisig eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c gets the powers to extend the legal veto period to 7d and to approve an upgrade in place of the Security Council. That approval must come within the 30d waiting period, otherwise the upgrade expires, and the upgrade executes only after the full 30d plus the 1d upgrade delay.
+  - install a new EmergencyUpgradeBoard eth:0x3DBD9c38cc4A0D380fE9E32ACE0D2b147aD29FF1 that needs only the Security Council and the ZK Foundation Multisig for an immediate upgrade, 2 parties instead of 3.
+- TPP-20 and GAP-7 are queued in the Token and GovOps timelocks and executable on 2026-11-13. They move the proposer, canceller and executor roles to a redeployed ZkTokenGovernor (zksync:0x1C52A302314d78f0dC2aEEbF89851564d81DcaFf) and ZkGovOpsGovernor (zksync:0xB99860AD8B1de3376d8b4c5f4D52Efa46e413A8c). Their veto guardian is the ZK Foundation Safe on ZKsync Era (zksync:0xF197677d63BF6E2841F5108b8dFd2FD6eCEff74B) instead of the Guardians.
+
+Config: the ZkGovOpsGovernor description says that GAPs execute through the GovOps timelock.
+
+## Watched changes
+
+```diff
+    contract ZkProtocolGovernor (zksync:0x76705327e682F2d96943280D99464Ab61219e34f) [shared-zk-stack/ZkGovernor] {
+    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalQueuedCount:
+-        18
++        19
+    }
+```
+
+```diff
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) [shared-zk-stack/ZkGovernor] {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalQueuedCount:
+-        17
++        18
+    }
+```
+
+```diff
+    contract ZkGovOpsGovernor (zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160) [shared-zk-stack/ZkGovernor] {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs), which are advisory and execute through the GovOpsTimelockController. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalQueuedCount:
+-        4
++        5
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793715716 (main branch discovery), not current.
+
+```diff
+    contract ZkGovOpsGovernor (zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160) [shared-zk-stack/ZkGovernor] {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs), which are advisory and execute through the GovOpsTimelockController. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      description:
+-        "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed."
++        "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs), which are advisory and execute through the GovOpsTimelockController. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed."
+    }
+```
+
 Generated with discovered.json: 0x63629757e75d35d8c5683cc7f333c1dac145429e
 
 # Diff at Thu, 05 Nov 2026 15:33:50 GMT:
