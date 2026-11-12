@@ -76,8 +76,8 @@ export const PRIVACY_TOOLS = {
     kind: 'tool',
     anchor: 'tool-ethereum-node',
     names: ['Ethereum node'],
-    head: '[Ethereum node](https://ethereum.org/run-a-node/)',
-    text: "requires a computer with 16 GB of memory and a 4 TB SSD. It answers an app's reads from its own verified copy of the chain. A light client like Helios verifies answers but still fetches them from a provider, which sees every address looked up.",
+    head: '[Ethereum node](https://ethereum.org/developers/docs/nodes-and-clients/run-a-node/#automatized-setup)',
+    text: "requires a computer with 16 GB of memory and a 2 TB SSD. A guided setup like EthPillar or the BuidlGuidl Client starts one with a single command. It answers an app's reads from its own verified copy of the chain. A light client like Helios verifies answers but still fetches them from a provider, which sees every address looked up.",
   },
   aztecNode: {
     kind: 'tool',
