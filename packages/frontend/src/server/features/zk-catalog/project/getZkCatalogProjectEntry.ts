@@ -1,10 +1,10 @@
-import compact from 'lodash/compact'
 import type {
   Project,
   ProjectRedWarning,
   ProjectZkCatalogInfo,
 } from '@l2beat/config'
 import type { UnixTime } from '@l2beat/shared-pure'
+import compact from 'lodash/compact'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { ps } from '~/server/projects'

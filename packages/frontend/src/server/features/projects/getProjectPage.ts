@@ -20,36 +20,43 @@ export type ProjectPageSection =
   | 'privacy'
   | 'defi'
 
+/** A scaling project that is also a privacy protocol has a page of its own. */
+export type ProjectPageKind = ProjectPageSection | 'layer2sPrivacy'
+
 /**
- * For each section's page builder, the other sections its page can also
- * show. A project in a set of sections that no builder covers has no page
- * until someone designs it.
+ * Every kind of project page that is designed: the sections a project must be
+ * in to get it, and the ones the page also shows when the project is in them.
+ * A project in a set of sections that fits none has no page until someone
+ * designs it.
  */
-const ALSO_SHOWN: Record<ProjectPageSection, ProjectPageSection[]> = {
-  ethereum: [],
-  layer2s: ['privacy'],
-  interop: ['chain'],
-  chain: [],
-  zkCatalog: [],
-  privacy: ['zkCatalog'],
-  defi: [],
+const PAGE_KINDS: Record<ProjectPageKind, PageKind> = {
+  ethereum: { sections: ['ethereum'] },
+  layer2s: { sections: ['layer2s'] },
+  layer2sPrivacy: { sections: ['layer2s', 'privacy'] },
+  interop: { sections: ['interop'], alsoShows: ['chain'] },
+  chain: { sections: ['chain'] },
+  zkCatalog: { sections: ['zkCatalog'] },
+  privacy: { sections: ['privacy'], alsoShows: ['zkCatalog'] },
+  defi: { sections: ['defi'] },
+}
+
+interface PageKind {
+  sections: ProjectPageSection[]
+  alsoShows?: ProjectPageSection[]
 }
 
 /** Chain pages show only interop flows, which have no markdown version. */
-type KindWithoutMarkdown = 'chain'
+export type KindWithoutMarkdown = 'chain'
 
-export interface ProjectPage<
-  Kind extends ProjectPageSection = ProjectPageSection,
-> {
+export interface ProjectPage<Kind extends ProjectPageKind = ProjectPageKind> {
   slug: string
-  /** The section whose page builder renders the page. */
   kind: Kind
-  /** `kind`, then the other sections the page shows. */
+  /** Every section the page shows: the ones its kind needs first. */
   sections: ProjectPageSection[]
 }
 
 export type ProjectPageWithMarkdown = ProjectPage<
-  Exclude<ProjectPageSection, KindWithoutMarkdown>
+  Exclude<ProjectPageKind, KindWithoutMarkdown>
 >
 
 export function hasMarkdown(
@@ -103,7 +110,7 @@ type InteropChain = (typeof INTEROP_CHAINS)[number]
 /** A page with what it is about: a project, or a chain no section lists. */
 export type ProjectPageEntry<P> =
   | (ProjectPage<'chain'> & { chain: InteropChain; project?: undefined })
-  | (ProjectPage<Exclude<ProjectPageSection, 'chain'>> & {
+  | (ProjectPage<Exclude<ProjectPageKind, 'chain'>> & {
       project: P
       /** The chain whose flows the page shows, if it has the chain section. */
       chain?: InteropChain
@@ -163,26 +170,35 @@ export function selectProjectPages<P extends PageProject>(
   return entries
 }
 
-/** The section whose builder covers them all, if the page is designed. */
+/** The kind of page designed for exactly these sections, if any. */
 function getPageKind(
   sections: ProjectPageSection[],
-): ProjectPageSection | undefined {
-  return sections.find((kind) =>
-    sections.every(
-      (section) => section === kind || ALSO_SHOWN[kind].includes(section),
-    ),
-  )
+): ProjectPageKind | undefined {
+  const kinds = Object.keys(PAGE_KINDS) as ProjectPageKind[]
+  return kinds.find((kind) => {
+    const { sections: needed, alsoShows = [] } = PAGE_KINDS[kind]
+    return (
+      needed.every((section) => sections.includes(section)) &&
+      sections.every(
+        (section) => needed.includes(section) || alsoShows.includes(section),
+      )
+    )
+  })
 }
 
 function toProjectPage(
   slug: string,
-  kind: ProjectPageSection,
+  kind: ProjectPageKind,
   sections: ProjectPageSection[],
 ): ProjectPage {
+  const needed = PAGE_KINDS[kind].sections
   return {
     slug,
     kind,
-    sections: [kind, ...sections.filter((section) => section !== kind)],
+    sections: [
+      ...needed,
+      ...sections.filter((section) => !needed.includes(section)),
+    ],
   }
 }
 

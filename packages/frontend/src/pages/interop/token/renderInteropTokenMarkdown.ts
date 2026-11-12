@@ -22,13 +22,13 @@ import {
 import { renderProjectMarkdown } from '~/server/markdown/renderProjectMarkdown'
 import type { SectionBodyOverrides } from '~/server/markdown/renderProjectSection'
 import { htmlPagePointer } from '~/server/markdown/renderSectionParts'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { getInteropTokenPagePath } from '../utils/getInteropTokenUrl'
 import {
   getInteropTokenNotices,
   getTopProtocolBasis,
   UNRELIABLE_PRICE_NOTICE,
 } from './getInteropTokenNotices'
-import { getProjectPath } from '~/utils/project/getProjectPath'
 
 export interface InteropTokenPage {
   token: InteropAbstractToken

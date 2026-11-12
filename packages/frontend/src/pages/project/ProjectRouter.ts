@@ -5,8 +5,6 @@ import {
   getProjectPage,
   hasMarkdown,
   type ProjectPage,
-  type ProjectPageSection,
-  type ProjectPageWithMarkdown,
 } from '~/server/features/projects/getProjectPage'
 import {
   LLMS_TXT_LINK,
@@ -20,37 +18,13 @@ import {
   getProjectTvsBreakdownPath,
 } from '~/utils/project/getProjectPath'
 import { validateRoute } from '~/utils/validateRoute'
-import { getChainProjectData } from '../chain/getChainProjectData'
-import {
-  getDefiProjectData,
-  getDefiProjectMarkdown,
-} from '../defi/project/getDefiProjectData'
-import {
-  getEthereumProjectData,
-  getEthereumProjectMarkdown,
-} from '../ethereum/getEthereumProjectData'
-import {
-  getInteropProtocolMarkdown,
-  getInteropProtocolPageData,
-} from '../interop/protocol/getInteropProtocolPageData'
-import {
-  getL2ProjectData,
-  getL2ProjectMarkdown,
-} from '../layer2s/project/getL2ProjectData'
 import { getL2ProjectTvsBreakdownData } from '../layer2s/project/tvs-breakdown/getL2ProjectTvsBreakdownData'
 import { sendNotFoundPage } from '../not-found/sendNotFoundPage'
-import {
-  getPrivacyProjectData,
-  getPrivacyProjectMarkdown,
-} from '../privacy/project/getPrivacyProjectData'
-import {
-  getZkCatalogProjectData,
-  getZkCatalogProjectMarkdown,
-} from '../zk-catalog/v2/project/getZkCatalogProjectData'
+import { getProjectData, getProjectMarkdown } from './getProjectData'
 
 /**
  * Every project's page, at `/projects/{slug}`. The sections the project is in
- * pick the page builder, which lists what each of them adds to the page.
+ * pick the kind of page it gets.
  */
 export function createProjectRouter(
   manifest: Manifest,
@@ -59,40 +33,9 @@ export function createProjectRouter(
 ) {
   const router = express.Router()
 
-  type Html = (
-    page: ProjectPage,
-    manifest: Manifest,
-    cache: InMemoryCache,
-    selectedUpdateId?: string,
-  ) => Promise<RenderData | undefined>
-  const html: Record<ProjectPageSection, Html> = {
-    ethereum: (_, manifest, cache) => getEthereumProjectData(manifest, cache),
-    layer2s: getL2ProjectData,
-    interop: getInteropProtocolPageData,
-    chain: getChainProjectData,
-    zkCatalog: getZkCatalogProjectData,
-    privacy: getPrivacyProjectData,
-    defi: getDefiProjectData,
-  }
-
-  type Markdown = (
-    page: ProjectPage,
-    manifest: Manifest,
-    cache: InMemoryCache,
-  ) => Promise<string | undefined>
-  const markdown: Record<ProjectPageWithMarkdown['kind'], Markdown> = {
-    ethereum: (_, manifest, cache) =>
-      getEthereumProjectMarkdown(manifest, cache),
-    layer2s: getL2ProjectMarkdown,
-    interop: getInteropProtocolMarkdown,
-    zkCatalog: getZkCatalogProjectMarkdown,
-    privacy: getPrivacyProjectMarkdown,
-    defi: getDefiProjectMarkdown,
-  }
-
   const getMarkdown = async (page: ProjectPage | undefined) =>
     page && hasMarkdown(page)
-      ? markdown[page.kind](page, manifest, cache)
+      ? getProjectMarkdown(page, manifest, cache)
       : undefined
 
   // Before `:slug`, which would otherwise take "arbitrum.md" as the slug.
@@ -128,8 +71,7 @@ export function createProjectRouter(
       await send(
         res,
         req.originalUrl,
-        page &&
-          (await html[page.kind](page, manifest, cache, req.query.update)),
+        page && (await getProjectData(page, manifest, cache, req.query.update)),
       )
     },
   )

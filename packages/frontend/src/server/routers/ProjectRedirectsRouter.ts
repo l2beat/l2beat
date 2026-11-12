@@ -1,7 +1,10 @@
 import express, { type Request, type Response } from 'express'
 import { getProjectPage } from '~/server/features/projects/getProjectPage'
 import { ps } from '~/server/projects'
-import { getProjectPath, getProjectTvsBreakdownPath } from '~/utils/project/getProjectPath'
+import {
+  getProjectPath,
+  getProjectTvsBreakdownPath,
+} from '~/utils/project/getProjectPath'
 import { redirectToProjectPage } from './redirectToProjectPage'
 
 /**

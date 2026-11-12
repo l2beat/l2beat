@@ -14,7 +14,9 @@ export async function getRecentlyAddedProjects(): Promise<SearchBarProject[]> {
   })
 
   return selectProjectPages(projects)
-    .flatMap((entry) => (entry.project ? [{ entry, addedAt: entry.project.addedAt }] : []))
+    .flatMap((entry) =>
+      entry.project ? [{ entry, addedAt: entry.project.addedAt }] : [],
+    )
     .sort((a, b) => b.addedAt - a.addedAt)
     .flatMap(({ entry }) => {
       const row = toSearchIndexProject(entry)

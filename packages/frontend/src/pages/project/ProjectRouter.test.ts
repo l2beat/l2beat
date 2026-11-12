@@ -99,8 +99,16 @@ describe(createProjectRouter.name, () => {
 
   // One slug per kind of page: each has a builder of its own.
   for (const [slug, getPage, heading] of [
-    ['tornado-cash', () => ({ props: { entry: PRIVACY_ENTRY } }), '# Tornado Cash'],
-    ['sp1turbo', () => ({ props: { projectEntry: ZK_CATALOG_ENTRY } }), '# SP1 Turbo'],
+    [
+      'tornado-cash',
+      () => ({ props: { entry: PRIVACY_ENTRY } }),
+      '# Tornado Cash',
+    ],
+    [
+      'sp1turbo',
+      () => ({ props: { projectEntry: ZK_CATALOG_ENTRY } }),
+      '# SP1 Turbo',
+    ],
     ['across', () => INTEROP_PAGE, '# Across'],
     ['lido', () => ({ props: { entry: DEFI_ENTRY } }), '# Lido'],
   ] as const) {
@@ -211,7 +219,11 @@ const L2_ENTRY: ProjectL2Entry = {
 
 const L2_PAGE = { props: { projectEntry: L2_ENTRY } }
 
-const PRIVACY_RISK = { value: 'Value', sentiment: 'good', description: '' } as const
+const PRIVACY_RISK = {
+  value: 'Value',
+  sentiment: 'good',
+  description: '',
+} as const
 
 const PRIVACY_ENTRY: ProjectPrivacyEntry = {
   id: ProjectId('tornado-cash'),
@@ -306,15 +318,14 @@ const PROTOCOL_ENTRY: InteropProtocolEntry = {
 }
 
 const INTEROP_PAGE = {
-  project: { name: 'Across', slug: 'across', description: undefined },
-  projectEntry: PROTOCOL_ENTRY,
-  protocolData: {
-    entry: undefined,
-    flows: [],
-    topPath: undefined,
-    transferSize: undefined,
-    topToken: undefined,
+  props: {
+    projectEntry: PROTOCOL_ENTRY,
+    protocolData: {
+      entry: undefined,
+      flows: [],
+      topPath: undefined,
+      transferSize: undefined,
+      topToken: undefined,
+    },
   },
-  apiSelection: { from: [], to: [] },
-  queryState: { mutations: [], queries: [] },
 }

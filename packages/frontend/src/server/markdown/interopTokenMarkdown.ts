@@ -11,10 +11,8 @@ import type {
   InteropTokenRelationsNode,
 } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
 import type { ProtocolEntry } from '~/server/features/layer2s/interop/types'
-import {
-  formatAverageDuration,
-  formatTransferCount,
-} from './interopMarkdown'
+import { getProjectPath } from '~/utils/project/getProjectPath'
+import { formatAverageDuration, formatTransferCount } from './interopMarkdown'
 import {
   bulletList,
   formatUsd,
@@ -24,7 +22,6 @@ import {
   subsection,
   table,
 } from './markdown'
-import { getProjectPath } from '~/utils/project/getProjectPath'
 
 /** The deployments table, then the backing relations the HTML page draws as a diagram. */
 export function renderOnchainDeployments(

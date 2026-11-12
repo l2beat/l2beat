@@ -28,7 +28,11 @@ describe('sections of a project in two site sections', function () {
     const sections = await getSections('payy')
     const ids = sections.map((section) => section.props.id)
 
-    expect(ids).toInclude('privacy-adversaries', 'trusted-setups', 'risk-analysis')
+    expect(ids).toInclude(
+      'privacy-adversaries',
+      'trusted-setups',
+      'risk-analysis',
+    )
     // One value section: the privacy page's is the same TVS config.
     expect(ids).not.toInclude('privacy-tvl')
     expect(aliasIdsOf(sections, 'tvs')).toEqual(['privacy-tvl'])

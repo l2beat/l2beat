@@ -8,7 +8,7 @@ import {
 } from './getProjectPage'
 
 describe(selectProjectPages.name, () => {
-  it('gives a project in two sections one page, its builder first', () => {
+  it('gives a project in two sections one page, of the kind designed for them', () => {
     const pages = selectProjectPages(
       [
         project('railgun', { privacyInfo: {}, zkCatalogInfo: {} }),
@@ -24,13 +24,13 @@ describe(selectProjectPages.name, () => {
       Object.fromEntries(
         pages
           .filter((page) => page.project)
-          .map((page) => [page.slug, page.sections]),
+          .map((page) => [page.slug, [page.kind, page.sections.join('+')]]),
       ),
     ).toEqual({
-      railgun: ['privacy', 'zkCatalog'],
-      payy: ['layer2s', 'privacy'],
-      avalanche: ['interop', 'chain'],
-      sp1: ['zkCatalog'],
+      railgun: ['privacy', 'privacy+zkCatalog'],
+      payy: ['layer2sPrivacy', 'layer2s+privacy'],
+      avalanche: ['interop', 'interop+chain'],
+      sp1: ['zkCatalog', 'zkCatalog'],
     })
   })
 
