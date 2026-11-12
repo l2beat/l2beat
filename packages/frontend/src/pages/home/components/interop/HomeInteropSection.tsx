@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
+import { BridgesIcon } from '~/icons/pages/Bridges'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import {
   MIN_SELECTED_CHAINS,
@@ -81,6 +82,7 @@ function Content({ className }: { className?: string }) {
     <HomeCard className={cn('flex flex-col gap-5', className)}>
       <HomeCardHeader
         title="Interop"
+        icon={<BridgesIcon aria-hidden />}
         subtitle="Last 24h"
         link={{ href: '/interop/summary', label: 'Dashboard' }}
       />

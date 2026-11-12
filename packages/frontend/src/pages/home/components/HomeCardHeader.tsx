@@ -9,10 +9,13 @@ import { HOME_TEXT, HOME_UNDERLINE_CLASS } from '../homeStyles'
  */
 export function HomeCardHeader({
   title,
+  icon,
   subtitle,
   link,
 }: {
   title: string
+  /** The section's icon from the side nav, before the title. */
+  icon?: ReactNode
   subtitle?: ReactNode
   /** Named for what it opens, e.g. "All 14 projects". */
   link?: { href: string; label: string }
@@ -20,7 +23,16 @@ export function HomeCardHeader({
   return (
     <div className="flex min-w-0 items-baseline justify-between gap-x-4">
       <div className="flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-1">
-        <h2 className={cn('shrink-0', HOME_TEXT.title)}>{title}</h2>
+        <h2 className={cn('shrink-0', HOME_TEXT.title)}>
+          {/* Inline, so the title keeps its baseline for the subtitle; 2px
+            down in the 24px line centres the 20px icon on it. */}
+          {icon && (
+            <span className="mt-0.5 mr-2 inline-block size-5 align-top [&>svg]:size-5">
+              {icon}
+            </span>
+          )}
+          {title}
+        </h2>
         {subtitle && <span className={HOME_TEXT.subtitle}>{subtitle}</span>}
       </div>
       {link && (
