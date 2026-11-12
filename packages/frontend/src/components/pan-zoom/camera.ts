@@ -501,7 +501,7 @@ export function gestureCamera(
   const end = centroid(to)
   const startSpread = spread(from, start)
   const factor = startSpread > 0 ? spread(to, end) / startSpread : 1
-  const k = clamp(camera.k * factor, scale.min, scale.max)
+  const k = zoomScale(camera.k, factor, scale)
   return {
     k,
     x: end.x - ((start.x - camera.x) / camera.k) * k,
@@ -594,13 +594,21 @@ function zoomCamera(
   point: Point,
   scale: ScaleBounds,
 ): Camera {
-  const k = clamp(camera.k * factor, scale.min, scale.max)
+  const k = zoomScale(camera.k, factor, scale)
   const ratio = k / camera.k
   return {
     k,
     x: point.x - (point.x - camera.x) * ratio,
     y: point.y - (point.y - camera.y) * ratio,
   }
+}
+
+/**
+ * `k` zoomed by `factor` within `scale`. A camera left outside the bounds
+ * (kept by hand while the fit changed) moves toward them, never away.
+ */
+function zoomScale(k: number, factor: number, scale: ScaleBounds): number {
+  return clamp(k * factor, Math.min(scale.min, k), Math.max(scale.max, k))
 }
 
 function clamp(value: number, min: number, max: number): number {

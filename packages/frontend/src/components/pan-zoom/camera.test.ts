@@ -67,6 +67,23 @@ describe(gestureCamera.name, () => {
 
     expect(next.k).toEqual(4)
   })
+
+  it('does not zoom in when pinching out below the minimum scale', () => {
+    const next = gestureCamera(
+      { x: 0, y: 0, k: 0.4 },
+      [
+        { x: 80, y: 100 },
+        { x: 120, y: 100 },
+      ],
+      [
+        { x: 90, y: 100 },
+        { x: 110, y: 100 },
+      ],
+      { min: 0.6, max: 4 },
+    )
+
+    expect(next.k).toEqual(0.4)
+  })
 })
 
 describe(centerCamera.name, () => {
