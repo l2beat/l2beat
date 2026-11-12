@@ -85,18 +85,20 @@ export function PrivacyReferenceApps({ app }: { app: PrivacyReferenceApp }) {
                 </>
               )}
             </DeliveryLine>
-            {delivery.check && (
-              <div className="pl-5.5 text-secondary sm:col-span-2">
-                <dt className="inline">{delivery.check.label}</dt>
-                {delivery.check.value && (
-                  <dd className="inline break-all font-mono text-2xs text-primary md:text-xs">
-                    {' '}
-                    {delivery.check.value}
-                  </dd>
-                )}
-              </div>
-            )}
           </dl>
+          {delivery.check && (
+            <p className="mt-1 pl-5.5 text-paragraph-13 text-secondary md:text-paragraph-14">
+              {delivery.check.label}
+              {delivery.check.value && (
+                <>
+                  {' '}
+                  <span className="break-all font-mono text-2xs text-primary md:text-xs">
+                    {delivery.check.value}
+                  </span>
+                </>
+              )}
+            </p>
+          )}
         </AppRow>
         {app.checkedApps.map((checkedApp) => (
           <AppRow
