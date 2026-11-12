@@ -1,67 +1,11 @@
-import { type InMemoryCache, ProjectId } from '@l2beat/shared-pure'
+import type { InMemoryCache } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { env } from '~/env'
-import type { ProjectDefiEntry } from '~/server/features/defi/project/getDefiProjectEntry'
-import { fetchFromRouter } from '~/test/fetchFromRouter'
 import type { Manifest } from '~/utils/Manifest'
-import { createProjectRouter } from '../project/ProjectRouter'
 import { createDefiRouter } from './DefiRouter'
 
-// Method: turn the DeFi feature flag on, mount the real DeFi router with a
-// page cache that already holds one project entry (so no data is fetched) and
-// a render function that marks HTML, then request the project page the ways
-// browsers and agents do. This pins the route order: `:slug` registered first
-// would swallow "lido.md".
-describe(createDefiRouter.name, () => {
-  const originalDefiEnabled = env.CLIENT_SIDE_DEFI_ENABLED
-
-  before(() => {
-    env.CLIENT_SIDE_DEFI_ENABLED = true
-  })
-
-  after(() => {
-    env.CLIENT_SIDE_DEFI_ENABLED = originalDefiEnabled
-  })
-
-  it('serves the project page as markdown on the .md URL', async () => {
-    const response = await fetchFromRouter(
-      createPageRouter(),
-      '/projects/lido.md',
-    )
-
-    expect(response.status).toEqual(200)
-    expect(response.headers.get('content-type')).toEqual(
-      'text/plain; charset=utf-8',
-    )
-    expect(await response.text()).toMatchRegex(/^# Lido\n/)
-  })
-
-  it('serves markdown on the page URL when Accept prefers it', async () => {
-    const response = await fetchFromRouter(
-      createPageRouter(),
-      '/projects/lido',
-      { headers: { Accept: 'text/markdown' } },
-    )
-
-    expect(response.headers.get('content-type')).toEqual(
-      'text/markdown; charset=utf-8',
-    )
-    expect(await response.text()).toMatchRegex(/^# Lido\n/)
-  })
-
-  it('serves HTML on the page URL to browsers', async () => {
-    const response = await fetchFromRouter(
-      createPageRouter(),
-      '/projects/lido',
-      { headers: { Accept: 'text/html,*/*;q=0.8' } },
-    )
-
-    expect(await response.text()).toEqual('<html />')
-  })
-})
-
-// Method: as above, but with the flags production runs: DeFi off and
-// Ossification on. Unmatched routes fall through to Express' default 404.
+// The flags production runs: DeFi off and Ossification on. Ossification
+// links to DeFi project pages, which the project router serves.
 describe(`${createDefiRouter.name} with only Ossification enabled`, () => {
   const original = {
     defi: env.CLIENT_SIDE_DEFI_ENABLED,
@@ -78,58 +22,13 @@ describe(`${createDefiRouter.name} with only Ossification enabled`, () => {
     env.CLIENT_SIDE_OSSIFICATION_ENABLED = original.ossification
   })
 
-  it('serves project pages, so Ossification can link to them', async () => {
-    const response = await fetchFromRouter(
-      createPageRouter(),
-      '/projects/uniswapv3',
+  it('serves nothing of the DeFi section', () => {
+    const router = createDefiRouter(
+      mockObject<Manifest>({}),
+      async () => '<html />',
+      mockObject<InMemoryCache>({}),
     )
 
-    expect(await response.text()).toEqual('<html />')
-  })
-
-  it('does not serve the DeFi summary', async () => {
-    const router = createRouter()
-
-    expect((await fetchFromRouter(router, '/defi/summary')).status).toEqual(404)
-    expect((await fetchFromRouter(router, '/defi')).status).toEqual(404)
+    expect(router).toEqual(null)
   })
 })
-
-/** The project pages, which live under /projects since they merged. */
-function createPageRouter() {
-  const manifest = mockObject<Manifest>({})
-  const cachedPage = { head: {}, props: { entry: ENTRY } }
-  const cache = mockObject<InMemoryCache>({
-    get: (async () => cachedPage) as InMemoryCache['get'],
-  })
-  return createProjectRouter(manifest, async () => '<html />', cache)
-}
-
-function createRouter() {
-  const manifest = mockObject<Manifest>({})
-  const cachedPage = { head: {}, props: { entry: ENTRY } }
-  const cache = mockObject<InMemoryCache>({
-    get: (async () => cachedPage) as InMemoryCache['get'],
-  })
-  const router = createDefiRouter(manifest, async () => '<html />', cache)
-  if (!router) throw new Error('DeFi router is disabled')
-  return router
-}
-
-/** Only the name is asserted: the renderer's own test covers the content. */
-const ENTRY: ProjectDefiEntry = {
-  id: ProjectId('lido'),
-  slug: 'lido',
-  name: 'Lido',
-  icon: '/icons/lido.png',
-  description: 'Lido is a liquid staking protocol.',
-  badges: [],
-  projectLinks: [],
-  discoUi: {
-    href: 'https://disco.ethbeat.org/ui/p/lido',
-    images: { desktop: '/desktop.png', mobile: '/mobile.png' },
-  },
-  isUnderReview: false,
-  warnings: {},
-  sections: [],
-}

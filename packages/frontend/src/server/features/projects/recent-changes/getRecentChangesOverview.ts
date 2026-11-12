@@ -78,16 +78,9 @@ export async function getRecentChangesOverview(): Promise<RecentChangesOverview>
 function getProjectUpdatesHref(
   project: Project<never, 'scalingInfo' | 'interopConfig' | 'privacyInfo'>,
 ): string | undefined {
-  if (project.scalingInfo) {
-    return getProjectPath(project.slug)
-  }
-  if (project.interopConfig) {
-    return getProjectPath(project.slug)
-  }
-  if (project.privacyInfo) {
-    return getProjectPath(project.slug)
-  }
-  return undefined
+  return project.scalingInfo || project.interopConfig || project.privacyInfo
+    ? getProjectPath(project.slug)
+    : undefined
 }
 
 function projectTvs(

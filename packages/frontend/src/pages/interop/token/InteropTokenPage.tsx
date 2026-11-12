@@ -125,7 +125,7 @@ function Content({
           // Reachable by id alone too; one pin per token, not per URL.
           href: getInteropTokenPagePath(token),
         }}
-        section="tokens"
+        sections={['tokens']}
         secondLine={
           token.issuer ? (
             <>

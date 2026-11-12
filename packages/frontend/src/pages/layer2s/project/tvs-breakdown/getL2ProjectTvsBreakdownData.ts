@@ -7,13 +7,13 @@ import type { Manifest } from '~/utils/Manifest'
 import {
   getProjectOgImagePath,
   getProjectPath,
+  getProjectTvsBreakdownPath,
 } from '~/utils/project/getProjectPath'
 import { optionToRange } from '~/utils/range/range'
 
 export async function getL2ProjectTvsBreakdownData(
   manifest: Manifest,
   slug: string,
-  url: string,
 ): Promise<RenderData | undefined> {
   const [appLayoutProps, tvsBreakdownData] = await Promise.all([
     getAppLayoutProps(),
@@ -35,7 +35,7 @@ export async function getL2ProjectTvsBreakdownData(
         name: 'TVS Breakdown',
         title: `${tvsBreakdownData.project.name} | TVS Breakdown - ETHBEAT`,
         description: `See a detailed breakdown of ${tvsBreakdownData.project.name}'s TVS on ETHBEAT.`,
-        url,
+        url: getProjectTvsBreakdownPath(slug),
         openGraph: {
           image: getProjectOgImagePath(tvsBreakdownData.project.slug),
         },

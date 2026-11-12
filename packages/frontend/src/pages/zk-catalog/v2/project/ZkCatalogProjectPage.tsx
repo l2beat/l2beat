@@ -8,12 +8,12 @@ import { projectDetailsToNavigationSections } from '~/components/projects/naviga
 import { ProjectDetails } from '~/components/projects/ProjectDetails'
 import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
+import type { ProjectSection } from '~/components/projects/projectSections'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { StickyMobileSectionNavigation } from '~/components/section-navigation/StickyMobileSectionNavigation'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import type { ProjectSection } from '~/server/features/projects/getProjectSections'
 import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 import type { ProjectZkCatalogEntry } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
 import { ProjectZkCatalogSummary } from './components/header/ZkCatalogProjectSummary'
@@ -58,8 +58,7 @@ export function ZkCatalogProjectPage({
                 <div className="pt-6 max-md:px-4 lg:pt-4">
                   <ProjectHeader
                     project={projectEntry}
-                    section="zkCatalog"
-                    projectSections={projectSections}
+                    sections={projectSections}
                     versions={versionLinks}
                     secondLine={projectEntry.creator}
                   />

@@ -7,12 +7,12 @@ import { projectDetailsToNavigationSections } from '~/components/projects/naviga
 import { ProjectDetails } from '~/components/projects/ProjectDetails'
 import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
+import type { ProjectSection } from '~/components/projects/projectSections'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import type { InteropProtocolDashboardData } from '~/server/features/layer2s/interop/getInteropProtocolData'
 import type { InteropProtocolEntry } from '~/server/features/layer2s/interop/protocol/getInteropProtocolEntry'
-import type { ProjectSection } from '~/server/features/projects/getProjectSections'
 import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 import { InteropEntityPageLayout } from '../components/InteropEntityPageLayout'
 import { TopTokenWidget } from '../components/widgets/TopTokenWidget'
@@ -89,8 +89,7 @@ function Content({
         <>
           <ProjectHeader
             project={projectEntry}
-            section="interop"
-            projectSections={projectSections}
+            sections={projectSections}
             versions={versionLinks}
             recentUpdatesCount={projectEntry.header.recentUpdatesCount}
           />

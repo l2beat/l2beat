@@ -10,6 +10,7 @@ import { projectDetailsToNavigationSections } from '~/components/projects/naviga
 import { ProjectDetails } from '~/components/projects/ProjectDetails'
 import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
+import type { ProjectSection } from '~/components/projects/projectSections'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
 import { StickyMobileSectionNavigation } from '~/components/section-navigation/StickyMobileSectionNavigation'
@@ -17,17 +18,15 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProjectL2Entry } from '~/server/features/layer2s/project/getL2ProjectEntry'
-import type { ProjectSection } from '~/server/features/projects/getProjectSections'
+import type { PrivacySummary } from '~/server/features/privacy/project/getPrivacyProjectEntry'
 import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
-import {
-  type MergedSummary,
-  ProjectL2Summary,
-} from './components/L2ProjectSummary'
+import { getPrivacyMergedSummary } from './components/getPrivacyMergedSummary'
+import { ProjectL2Summary } from './components/L2ProjectSummary'
 
 interface Props extends AppLayoutProps {
   projectEntry: ProjectL2Entry
-  /** Another section's summary, for a page that merges sections. */
-  mergedSummary?: MergedSummary
+  /** For a scaling project that is also a privacy protocol. */
+  privacy?: PrivacySummary
   projectSections: ProjectSection[]
   versionLinks?: ProjectVersionLinks
   queryState: DehydratedState
@@ -36,7 +35,7 @@ interface Props extends AppLayoutProps {
 
 export function L2ProjectPage({
   projectEntry,
-  mergedSummary,
+  privacy,
   projectSections,
   versionLinks,
   queryState,
@@ -69,8 +68,7 @@ export function L2ProjectPage({
                 <div className="pt-6 max-md:px-4 lg:pt-4">
                   <ProjectHeader
                     project={projectEntry}
-                    section="layer2s"
-                    projectSections={projectSections}
+                    sections={projectSections}
                     versions={versionLinks}
                     ongoingAnomaly={projectEntry.header.ongoingAnomaly}
                     recentUpdatesCount={projectEntry.header.recentUpdatesCount}
@@ -103,7 +101,10 @@ export function L2ProjectPage({
                 <div className="row-start-2">
                   <ProjectL2Summary
                     project={projectEntry}
-                    merged={mergedSummary}
+                    merged={
+                      privacy &&
+                      getPrivacyMergedSummary(privacy, projectEntry.sections)
+                    }
                   />
 
                   {projectEntry.header.category === 'Other' &&

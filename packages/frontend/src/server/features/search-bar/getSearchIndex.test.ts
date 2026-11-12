@@ -210,13 +210,13 @@ describe('search bar search', () => {
     ps.getProjects = async () =>
       [
         {
-          ...l2Project('scroll', 'Scroll', 'ZK Rollup'),
-          zkCatalogInfo: {},
-          interopConfig: { name: 'Scroll Canonical' },
+          ...l2Project('payy', 'Payy', 'ZK Rollup'),
+          privacyInfo: {},
+          interopConfig: { name: 'Payy Canonical' },
         },
       ] as never
 
-    const result = await getSearchBarEntries('scroll')
+    const result = await getSearchBarEntries('payy')
 
     expect(
       result.map((entry) => ({
@@ -227,10 +227,10 @@ describe('search bar search', () => {
       })),
     ).toEqual([
       {
-        href: '/projects/scroll',
+        href: '/projects/payy',
         category: 'l2',
         l2Category: 'ZK Rollup',
-        otherKinds: ['zkCatalog'],
+        otherKinds: ['privacy'],
       },
     ])
   })
