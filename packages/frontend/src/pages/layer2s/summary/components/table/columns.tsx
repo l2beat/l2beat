@@ -67,6 +67,7 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
       },
       {
         id: 'stage',
+        header: 'Stage',
         cell: (ctx) => (
           <StageCell
             href={`/layer2s/projects/${ctx.row.original.slug}#stage`}
@@ -177,7 +178,7 @@ export function getL2SummaryValidiumAndOptimiumsColumns(
   return [
     ...getL2SummaryColumns(opts).slice(0, 6),
     columnHelper.display({
-      header: 'DA Layer',
+      header: 'DA layer',
       cell: (ctx) => {
         const latestValue = ctx.row.original.dataAvailability?.[0]
         if (!latestValue) {
