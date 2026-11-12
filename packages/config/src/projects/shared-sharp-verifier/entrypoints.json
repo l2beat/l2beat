@@ -66,7 +66,7 @@
       "project": "shared-sharp-verifier"
     },
     "eth:0x4956bda1d23F75B988644329c5B06BD1494a72b6": {
-      "name": "SHARPVerifier",
+      "name": "SHARPVerifier_2026_13_4",
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },
@@ -117,6 +117,11 @@
     },
     "eth:0x8055948c530dbBc19cc350d53473EEe3a1e3d22B": {
       "name": "Level2CpuFrilessVerifier",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x91C57B64738b80f4494d83b485AD3f9C0f95E2A3": {
+      "name": "SHARPVerifier",
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },

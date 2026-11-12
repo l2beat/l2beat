@@ -8,6 +8,7 @@ import {
   SUBMIT_PROTOCOL_PATH,
 } from '~/pages/garden/paths'
 import { getChainProjects } from './features/chains/getChainProjects'
+import { isListedDefiProject } from './features/defi/isListedDefiProject'
 import { getPrivacyProjectPages } from './features/privacy/utils/getPrivacyProjectPages'
 import { ps } from './projects'
 
@@ -65,7 +66,7 @@ export const STATIC_PAGE_PATHS = [
 export async function getPages(): Promise<Page[]> {
   const paths: PagePath[] = [...STATIC_PAGE_PATHS, '/layer2s/compare']
   if (env.CLIENT_SIDE_DEFI_ENABLED) {
-    paths.push('/defi/summary')
+    paths.push('/defi/liquid-staking')
   }
   if (env.CLIENT_SIDE_TOKENS_PAGE) {
     paths.push('/tokens')
@@ -100,7 +101,11 @@ async function getDynamicPages(): Promise<Page[]> {
     ps.getProjects({ select: ['zkCatalogInfo'] }),
     ps.getProjects({ select: ['privacyInfo'], whereNot: ['archivedAt'] }),
     env.CLIENT_SIDE_DEFI_ENABLED
-      ? ps.getProjects({ where: ['defiInfo'] })
+      ? ps
+          .getProjects({ select: ['defiInfo'] })
+          .then((projects) =>
+            projects.filter((p) => isListedDefiProject(p.defiInfo)),
+          )
       : Promise.resolve([]),
     // Protocols that are also scaling projects redirect to the scaling page.
     ps.getProjects({ where: ['interopConfig'], whereNot: ['scalingInfo'] }),

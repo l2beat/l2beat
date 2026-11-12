@@ -1,3 +1,54 @@
+Generated with discovered.json: 0x3346044de93922f7473bd27c47d898329451a495
+
+# Diff at Tue, 10 Nov 2026 14:25:43 GMT:
+
+- id: 25bdee61
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@28ea16426fac1900c2fffd1cec3ecc6b84981c76 block: 1793982680
+- current timestamp: 1794320593
+
+## Description
+
+The RISC Zero EOA added route 0xe71e6620 on the RiscZeroVerifierRouter to a second RiscZeroGroth16Verifier v3.1.0 (other control root, same verifying key that matches no published RISC Zero setup). BOB's retired Kailua path no longer uses the router, so discovery ignores the new route.
+
+## Watched changes
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
+      values.callsExecuted.22:
++        {"id":"0xf40a937e65e41f9adb997f8f4b5a1b39d83bb01cdb8b9e4f7e63c6bdb80d2d12","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af30e71e6620000000000000000000000000000000000000000000000000000000000000000000000000000000005144a37e65fd032f628663cb21e16490378a8630"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter] {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
++++ severity: MEDIUM
+      values.verifier_e71e6620:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x5144A37e65fd032F628663Cb21E16490378a8630"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793982680 (main branch discovery), not current.
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter] {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
++++ severity: MEDIUM
+      values.verifier_e71e6620:
++        "eth:0x0000000000000000000000000000000000000000"
+      fieldMeta.verifier_e71e6620:
++        {"severity":"MEDIUM"}
+    }
+```
+
 Generated with discovered.json: 0x37fc8ad42797a5416195bab03dbad6fa667c658b
 
 # Diff at Fri, 06 Nov 2026 16:32:33 GMT:

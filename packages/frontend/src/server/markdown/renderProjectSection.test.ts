@@ -513,6 +513,48 @@ describe(renderProjectSection.name, () => {
     )
   })
 
+  it('lists the liquid staking protocols with their latest numbers, marking missing ones and protocols under review', () => {
+    const markdown = render({
+      type: 'LiquidStakingSection',
+      props: {
+        id: 'liquid-staking',
+        title: 'Liquid staking',
+        ethStaked: { value: 35_400_000, timestamp: UnixTime(1762646400) },
+        entries: [
+          {
+            id: 'lido',
+            slug: 'lido',
+            name: 'Lido',
+            icon: '/icons/lido.png',
+            href: '/defi/projects/lido',
+            description: 'Lido description',
+            isUnderReview: false,
+            tokens: ['stETH', 'wstETH'],
+            totalValueLockedUsd: 30_000_000_000,
+            yield: { value: 0.0275, timestamp: 1762646400, estimated: false },
+            costOfExit: { value: 2.5, timestamp: 1762646400, estimated: true },
+          },
+          {
+            id: 'wbeth',
+            slug: 'wbeth',
+            name: 'Binance Staked ETH',
+            icon: '/icons/wbeth.png',
+            href: '/defi/projects/wbeth',
+            description: 'wBETH description',
+            isUnderReview: true,
+            tokens: ['wBETH'],
+          },
+        ],
+      },
+    })
+
+    expect(markdown).toInclude(
+      'ETH staked: 35.40 M ETH (as of 2025-11-09 00:00 UTC)',
+      '| [Lido](https://ethbeat.org/defi/projects/lido) | stETH, wstETH | $30.00 B | 2.75% (on 2025-11-09 00:00 UTC) | ~2.5 days (over 2025-11-09 00:00 UTC to 2025-11-10 00:00 UTC) |',
+      '| [Binance Staked ETH](https://ethbeat.org/defi/projects/wbeth) (under review) | wBETH | No data | No data | No data |',
+    )
+  })
+
   describe('under review', () => {
     it('adds the HTML callout to any section flagged under review', () => {
       const markdown = render({
