@@ -12,6 +12,11 @@ import type {
   PrivacyFieldInfo,
   ProjectPrivacyAdversaries,
 } from '../types'
+import {
+  PRIVACY_TOOLS,
+  type PrivacyTool,
+  type PrivacyToolId,
+} from './privacyTools'
 
 /**
  * Each cell carries one judgment, its sentiment (see PrivacyAdversaryAssessment).
@@ -226,15 +231,25 @@ export const PRIVACY_METHODOLOGY_URL = '/publications/privacy-methodology'
 
 /**
  * Anchors in the methodology, rendered by the frontend. Steps link only the
- * route list: the project page links the How to stay private section once.
+ * list of routes and the tool entries: the project page links the How to stay
+ * private section once.
  */
 export const ADVICE_ANCHORS = {
-  ipHidingRoutes: 'ip-hiding-routes',
+  routes: 'routes',
 } as const
 
 /** A markdown link into the methodology, for a step's IP-hiding route. */
 export function adviceLink(text: string, anchor: keyof typeof ADVICE_ANCHORS) {
   return `[${text}](${PRIVACY_METHODOLOGY_URL}#${ADVICE_ANCHORS[anchor]})`
+}
+/**
+ * Markdown link from a step to a tool's methodology entry, which holds its
+ * download. `text` defaults to the tool's first name and must contain one of
+ * its names, e.g. "local Ethereum node".
+ */
+export function toolLink(id: PrivacyToolId, text?: string) {
+  const tool: PrivacyTool = PRIVACY_TOOLS[id]
+  return `[${text ?? tool.names[0]}](${PRIVACY_METHODOLOGY_URL}#${tool.anchor})`
 }
 
 /** Imperative sentences for `advice` steps. */
@@ -249,10 +264,10 @@ export const ADVICE_SNIPPETS = {
   freshAddress:
     'Send each exit to a fresh address and spend from it with a separate wallet.',
   /** Hosted web apps that work in Tor Browser. */
-  torBrowser: `Open the app in ${adviceLink('Tor Browser', 'ipHidingRoutes')}.`,
+  torBrowser: `Open the app in ${toolLink('torBrowser')}.`,
   /** Native apps and anything else Tor Browser cannot run. */
   ipHidingRoute: (app: string) =>
-    `Run ${app} with all traffic through an ${adviceLink('IP-hiding route', 'ipHidingRoutes')}.`,
+    `Run ${app} with all traffic through an ${adviceLink('IP-hiding route', 'routes')}.`,
   /** Open clients served from a hosted frontend. */
   localBuild:
     'Build the app from the reviewed source and run it locally instead of the hosted website.',

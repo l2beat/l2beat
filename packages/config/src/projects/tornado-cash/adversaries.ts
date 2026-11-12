@@ -1,15 +1,15 @@
 import {
   ADVICE_SNIPPETS as A,
-  adviceLink,
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
+  toolLink,
 } from '../../common/privacyAdversaries'
 
 // v2.1, the circuits behind the verified verifier.
 const CIRCUITS =
   'https://github.com/tornadocash/tornado-core/blob/a533ad9ffb62163a42d4fa9a09984c5dd4e5c41d/circuits/'
 // The DAO's Docker recipe that rebuilds the pinned app to its IPFS hash.
-const RECIPE =
+export const RECIPE =
   'https://github.com/tornado-dao/tornado-ipfs-ui/tree/d2aa401746e1b1195ff692a051636b8c5c43d2e5'
 // The commit governance pinned on tornadocash.eth (proposal 68).
 const APP =
@@ -114,7 +114,7 @@ export function tornadoCashAdversaries(upgradeDelay: string, appCid: string) {
     advice: [
       {
         name: 'Load',
-        text: `Turn on NymVPN with the Random profile, an ${adviceLink('IP-hiding route', 'ipHidingRoutes')} for all of the computer's traffic. Install IPFS Desktop and open the reviewed release at \`http://localhost:8080/ipfs/${appCid}\`. A [rebuild](${RECIPE}) from the reviewed source gives the same hash.`,
+        text: `Turn on ${toolLink('nymVpn')} with the Random profile, an IP-hiding route for all of the computer's traffic. Install ${toolLink('ipfsDesktop')} and open the reviewed release at \`http://localhost:8080/ipfs/${appCid}\`. A [rebuild](${RECIPE}) from the reviewed source gives the same hash.`,
         against: ['networkObserver', 'privilegedInsider'],
         outside: true,
       },

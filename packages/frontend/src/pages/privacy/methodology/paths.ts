@@ -16,8 +16,10 @@ export const PRIVACY_ADVICE_ANCHOR = 'stay-private'
  */
 export const PRIVACY_ADVICE_TITLE = 'How to stay private'
 export const PRIVACY_ADVICE_HREF = `${PRIVACY_METHODOLOGY_PATH}#${PRIVACY_ADVICE_ANCHOR}`
-/** The route list, which advice steps link. */
+/** The framework section that defines an IP-hiding route and its checks. */
 export const PRIVACY_IP_HIDING_ROUTES_ANCHOR = 'ip-hiding-routes'
+/** The list of routes under How to stay private, which advice steps link. */
+export const PRIVACY_ROUTES_ANCHOR = 'routes'
 /** The section project pages link from their app list. */
 export const PRIVACY_REFERENCE_APP_ANCHOR = 'reference-app'
 /**

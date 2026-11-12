@@ -7,6 +7,7 @@ import type {
 } from '@l2beat/config'
 import compact from 'lodash/compact'
 import isEqual from 'lodash/isEqual'
+import upperFirst from 'lodash/upperFirst'
 import type { PrivacyAdversariesSectionProps } from '~/components/projects/sections/privacy/PrivacyAdversariesSection'
 import type { PrivacyAdviceSectionProps } from '~/components/projects/sections/privacy/PrivacyAdviceSection'
 import type { PrivacyAssetsBreakdownSectionProps } from '~/components/projects/sections/privacy/PrivacyAssetsBreakdownSection'
@@ -31,6 +32,7 @@ import {
 } from '~/pages/privacy/projectAdvice'
 import {
   getCheckedAppSourceLabel,
+  getReferenceAppDelivery,
   getReferenceAppSince,
   getReferenceAppSource,
   REFERENCE_APP,
@@ -86,10 +88,22 @@ function renderReferenceApps(app: PrivacyReferenceApp) {
       ? `${source.label} ${link(source.commit.label, source.commit.href)}`
       : source.label,
   ]
+  const delivery = getReferenceAppDelivery(app)
+  const check =
+    delivery.check &&
+    (delivery.check.value
+      ? `${delivery.check.label}: ${delivery.check.value}`
+      : delivery.check.label)
+  const deliveryMeta = [
+    `${delivery.kind.label}: ${delivery.kind.description}`,
+    `${upperFirst(delivery.source.label)}: ${delivery.source.description}`,
+    delivery.rebuild && link(REFERENCE_APP.rebuildLink, delivery.rebuild),
+    check,
+  ]
   return joinBlocks([
     `**${REFERENCE_APP.listTitle}**`,
     bulletList([
-      `**${link(app.name, app.url)}**${version} (${REFERENCE_APP.referenceChip}): ${joinMeta(meta)}`,
+      `**${link(app.name, app.url)}**${version} (${REFERENCE_APP.referenceChip}): ${joinMeta([...meta, ...deliveryMeta])}`,
       ...app.checkedApps.map((checkedApp) => {
         const meta = [
           checkedApp.fix && `${REFERENCE_APP.fixLabel}: ${checkedApp.fix}`,
