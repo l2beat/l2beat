@@ -27,7 +27,7 @@ export function CostsSection({
 }: CostsSectionProps) {
   return (
     <ProjectSection {...sectionProps}>
-      <p className="text-paragraph-15 md:text-paragraph-16">
+      <p className="max-w-[72ch] text-paragraph-15 md:text-paragraph-16">
         {COSTS_DESCRIPTION}
       </p>
       {env.CLIENT_SIDE_TRACKED_TXS_OUTAGE && (

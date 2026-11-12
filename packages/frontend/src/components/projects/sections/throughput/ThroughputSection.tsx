@@ -48,7 +48,7 @@ export function ThroughputSection({
             </span>
           </div>
         )}
-        <p className="text-paragraph-15 md:text-paragraph-16">
+        <p className="max-w-[72ch] text-paragraph-15 md:text-paragraph-16">
           {THROUGHPUT_DESCRIPTION}
         </p>
         <HorizontalSeparator className="my-4" />

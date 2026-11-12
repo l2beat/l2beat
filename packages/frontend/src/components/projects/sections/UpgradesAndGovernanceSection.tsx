@@ -161,7 +161,7 @@ function UpgradePathTimeline({
                   'size-2.5 rounded-full',
                   step.isWait
                     ? 'border-2 border-secondary bg-surface-primary'
-                    : 'bg-brand',
+                    : 'bg-primary',
                 )}
               />
             </span>
@@ -193,7 +193,7 @@ function UpgradeCallout({
     <div
       className={cn(
         'border-l-[3px] py-1 pl-3.5',
-        isEmergency ? 'border-negative' : 'border-brand',
+        isEmergency ? 'border-negative' : 'border-divider',
       )}
     >
       <p className="mb-0.5 font-semibold text-label-value-14">{name}</p>
