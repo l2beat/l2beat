@@ -16,6 +16,7 @@ import type { RenderData } from '~/ssr/types'
 import type { SsrHelpers } from '~/trpc/server'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
+import { getPrivacySummaryMarkdown } from '../../privacy/project/renderPrivacyProjectMarkdown'
 import { getL2ProjectStructuredData } from './getL2ProjectStructuredData'
 import { renderL2ProjectMarkdown } from './renderL2ProjectMarkdown'
 
@@ -47,7 +48,12 @@ export async function getL2ProjectMarkdown(
   cache: InMemoryCache,
 ): Promise<string | undefined> {
   const data = await getCachedL2ProjectPage(slug, manifest, cache)
-  return data && renderL2ProjectMarkdown(data.props.projectEntry)
+  if (!data) return undefined
+  const { projectEntry, privacyEntry } = data.props
+  return renderL2ProjectMarkdown(
+    projectEntry,
+    privacyEntry && getPrivacySummaryMarkdown(privacyEntry),
+  )
 }
 
 function getCachedL2ProjectPage(
