@@ -114,13 +114,20 @@ assert(
     discovery.isEOA(risc0TimelockProposers[0]),
   'RISC Zero timelock proposer changed, update the governance research.',
 )
-// RISC0 route 0x8b38038c: Groth16 v3.1.0 whose verifying key matches no published RISC Zero setup
+// RISC0 routes 0x8b38038c and 0xe71e6620: Groth16 v3.1.0 whose verifying key matches no published RISC Zero setup
 assert(
   discovery.getContractValue<ChainSpecificAddress>(
     'RiscZeroVerifierRouter',
     'verifier_8b38038c',
   ) === 'eth:0x9660bD6dCDf455DCFb30c07c642Ab22E7Cb89F50',
   'RISC0 route 0x8b38038c changed, update the state validation research.',
+)
+assert(
+  discovery.getContractValue<ChainSpecificAddress>(
+    'RiscZeroVerifierRouter',
+    'verifier_e71e6620',
+  ) === 'eth:0x5144A37e65fd032F628663Cb21E16490378a8630',
+  'RISC0 route 0xe71e6620 changed, update the state validation research.',
 )
 const risc0TimelockDelay = formatSeconds(
   discovery.getContractValue<number>(
