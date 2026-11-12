@@ -115,8 +115,8 @@ export function AnonymitySetCell({ anonymitySet }: Props) {
                 </ol>
               </div>
               <p className="border-purple-450/30 border-t pt-2">
-                Network, browser and RPC choices matter too. See the onchain
-                privacy best practices.
+                Network, browser and RPC choices matter too. Each project page
+                gives its advice under How to stay private.
               </p>
             </div>
           }

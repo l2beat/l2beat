@@ -1,6 +1,9 @@
 import compact from 'lodash/compact'
 import type { InteropProtocolDashboardData } from '~/server/features/layer2s/interop/getInteropProtocolData'
-import type { InteropProtocolEntry } from '~/server/features/layer2s/interop/protocol/getInteropProtocolEntry'
+import {
+  getInteropVolumeSection,
+  type InteropProtocolEntry,
+} from '~/server/features/layer2s/interop/protocol/getInteropProtocolEntry'
 import type {
   ByBridgeTypeData,
   TokenData,
@@ -55,7 +58,15 @@ export function renderInteropProtocolMarkdown({
       badges: entry.header.badges,
       discoUiHref: entry.header.discoUiHref,
     },
-    sections: entry.sections,
+    sections: entry.sections.map((section) =>
+      // A protocol that is also a chain shows the chain's flows in place of
+      // its own volume. Those are an interactive graph, so the markdown keeps
+      // the protocol's top chains and routes, as for any other protocol.
+      section.type === 'InteropFlowsSection'
+        ? (getInteropVolumeSection(protocolData, section.props.interopChains) ??
+          section)
+        : section,
+    ),
     apiLinks: {},
   })
 }

@@ -1,6 +1,6 @@
 import {
+  ADVICE_SNIPPETS as A,
   definePrivacyAdversaries,
-  PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
 import type { PrivacyExposureMap } from '../../types'
 
@@ -76,17 +76,14 @@ export const zkApiAdversaries = definePrivacyAdversaries({
         'The app works in Tor Browser, and no third party sees both a deposit and a request.',
       exposureContinued:
         "The deposit reaches the wallet's RPC, or the app's public RPC when the user funds an address the app shows. A relay at refraction.network carries requests to OpenRouter and chain reads by default and sees their timing, and Fathom counts feature use.",
-      advice:
-        'Use the app in Tor Browser, and send the deposit through an IP-hiding route too.',
       interior: {
         ...PUBLIC_INTERIOR,
         linkage: {
           verdict: 'atRisk',
-          note: "Private only when IP-hiding routes keep the user's IP out of both the deposit and the requests.",
+          note: 'Private only when the requests go through Tor Browser and no prompt names the user.',
         },
       },
       sources: [
-        S.ipHidingRoutes,
         {
           title: 'App relay on by default, direct fallback',
           url: `${OA_CHAT}chat/services/networkProxy.js#L7-L10`,
@@ -152,4 +149,22 @@ export const zkApiAdversaries = definePrivacyAdversaries({
       ],
     },
   },
+  advice: [
+    {
+      name: 'Set up',
+      text: A.torBrowser,
+      against: ['networkObserver'],
+      outside: true,
+    },
+    {
+      name: 'Deposit',
+      text: 'Fund the address the app shows from any wallet, so no wallet connects to the session that sends your requests.',
+      against: ['networkObserver'],
+    },
+    {
+      name: 'Chat',
+      text: 'Leave your name, addresses and other identifying details out of prompts, since the provider reads them.',
+      against: ['networkObserver'],
+    },
+  ],
 })

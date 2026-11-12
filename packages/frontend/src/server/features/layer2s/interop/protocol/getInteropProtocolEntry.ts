@@ -86,25 +86,9 @@ export async function getInteropProtocolEntry(
 
   if (data?.entry) {
     const sortedChains = sortChainsByFlowVolume(interopChains, data.flows)
-    const defaultSelectedChains = sortedChains
-      .slice(0, MAX_SELECTED_CHAINS)
-      .map((chain) => chain.id)
 
-    if (data.flows.length > 0) {
-      sections.push({
-        type: 'InteropVolumeSection',
-        props: {
-          id: 'interop-volume',
-          title: 'Volume and flows',
-          entry: data.entry,
-          interopChains: sortedChains,
-          defaultSelectedChains,
-          topRoutes: data.flows
-            .filter((flow) => flow.volume > 0)
-            .slice(0, MAX_TOP_ROUTES),
-        },
-      })
-    }
+    const volumeSection = getInteropVolumeSection(data, interopChains)
+    if (volumeSection) sections.push(volumeSection)
 
     if (header.detailedDescription) {
       sections.push({
@@ -243,6 +227,32 @@ export async function getInteropProtocolEntry(
 }
 
 /** Capped because the routes travel to the browser with the section props. */
+/** The protocol's volume by chain and route, if it has any flow. */
+export function getInteropVolumeSection(
+  data: InteropProtocolDashboardData,
+  interopChains: InteropChainWithIcon[],
+):
+  | Extract<ProjectDetailsSection, { type: 'InteropVolumeSection' }>
+  | undefined {
+  if (!data?.entry || data.flows.length === 0) return undefined
+  const sortedChains = sortChainsByFlowVolume(interopChains, data.flows)
+  return {
+    type: 'InteropVolumeSection',
+    props: {
+      id: 'interop-volume',
+      title: 'Volume and flows',
+      entry: data.entry,
+      interopChains: sortedChains,
+      defaultSelectedChains: sortedChains
+        .slice(0, MAX_SELECTED_CHAINS)
+        .map((chain) => chain.id),
+      topRoutes: data.flows
+        .filter((flow) => flow.volume > 0)
+        .slice(0, MAX_TOP_ROUTES),
+    },
+  }
+}
+
 const MAX_TOP_ROUTES = 10
 
 function sortChainsByFlowVolume(
