@@ -10,6 +10,7 @@ import type { Manifest } from '~/utils/Manifest'
 import { getBadgeLookup } from '~/utils/project/getBadgeWithParams'
 import { optionToRange } from '~/utils/range/range'
 import {
+  getSummaryActivityFetchRange,
   SCALING_SUMMARY_ACTIVITY_CHART_RANGE_ARGS,
   SCALING_SUMMARY_TVS_CHART_RANGE_ARGS,
 } from './l2SummaryConstants'
@@ -71,7 +72,7 @@ async function getCachedData() {
     ),
     helpers.queryClient.prefetchQuery(
       helpers.trpc.activity.recategorisedChart.queryOptions({
-        range: activityChartRange,
+        range: getSummaryActivityFetchRange(activityChartRange),
         filter: { type: 'all' },
       }),
     ),

@@ -45,11 +45,13 @@ const TICK_COUNT = 3
 export const AXIS_LABEL_FONT_SIZE = 12
 
 /**
- * "$25B" for "$25.00B", "6K" for "6.00K": ticks are round numbers, so the
- * zeros say nothing. Other decimals stay, so "$12.50B" is still exact.
+ * "$25B" for "$25.00B", "2.5K" for "2.50K": the trailing zeros of a tick say
+ * nothing. Only the last number in the label is trimmed.
  */
 export function trimZeroDecimals(label: string) {
-  return label.replace(/\.00(?=[^0-9]*$)/, '')
+  return label.replace(/\.(\d*?)0+(?=[^0-9]*$)/, (_, kept: string) =>
+    kept ? `.${kept}` : '',
+  )
 }
 
 /**

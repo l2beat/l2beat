@@ -133,6 +133,9 @@
   --chart-teal: #2ec4b6;
   --chart-orange: #f98a24;
   --chart-yellow-lime: #d6db5b;
+  /* Layer 2 categories beside the pink rollups (L2_CATEGORY_COLORS). */
+  --chart-violet: #7c5fd6;
+  --chart-slate: #8a93a8;
 
   --chart-stacked-pink: #ff8fb0;
   --chart-stacked-yellow: #ffc300;
@@ -183,6 +186,8 @@
   --chart-fuchsia: #a65ec4;
   --chart-lime: #61ff12;
   --chart-sky: #66ccff;
+  --chart-violet: #a58cf5;
+  --chart-slate: #7d869c;
 
   --chart-stacked-pink: #ff8fb0;
   --chart-stacked-yellow: #ffc300;

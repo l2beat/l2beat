@@ -10,7 +10,6 @@ import { HOME_TEXT } from '~/pages/home/homeStyles'
  */
 export function L2SummaryChartHeader({
   title,
-  subtitle,
   link,
   value,
   unit,
@@ -18,8 +17,6 @@ export function L2SummaryChartHeader({
   period,
 }: {
   title: string
-  /** What the figure covers, e.g. "All Layer 2s". */
-  subtitle?: string
   link: { href: string; label: string }
   /** Undefined while loading. */
   value: string | undefined
@@ -33,7 +30,7 @@ export function L2SummaryChartHeader({
   const hasChange = change !== undefined && Number.isFinite(change)
   return (
     <div className="flex flex-col gap-3">
-      <HomeCardHeader title={title} subtitle={subtitle} link={link} />
+      <HomeCardHeader title={title} link={link} />
       {value === undefined ? (
         <Skeleton className="h-8 w-48" />
       ) : (
@@ -56,25 +53,4 @@ export function L2SummaryChartHeader({
       )}
     </div>
   )
-}
-
-const CATEGORY_LABELS = {
-  rollups: 'Rollups',
-  validiumsAndOptimiums: 'Validiums & Optimiums',
-  others: 'Others',
-} as const
-
-/**
- * Which categories a summary figure sums, as its subtitle: the legend hides
- * and shows them, and the two charts start with different ones shown.
- */
-export function getCoverageLabel(visible: string[]) {
-  const shown = (
-    Object.keys(CATEGORY_LABELS) as (keyof typeof CATEGORY_LABELS)[]
-  ).filter((key) => visible.includes(key))
-  // As "Incl.", not "All": home's Layer 2s figure, which links here,
-  // leaves Others out.
-  if (shown.length === 3) return 'Incl. Others'
-  if (shown.length === 2 && !shown.includes('others')) return 'Excl. Others'
-  return shown.map((key) => CATEGORY_LABELS[key]).join(', ')
 }

@@ -1,12 +1,7 @@
 import { formatCurrency } from '@l2beat/shared-pure'
-import { getStageBadgeClassName } from '~/components/badge/StageBadge'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { HomeCardHeader } from '~/pages/home/components/HomeCardHeader'
-import {
-  HOME_ROW_CLASS,
-  HOME_ROW_LINES_CLASS,
-  HOME_TEXT,
-} from '~/pages/home/homeStyles'
+import { HOME_ROW_LINES_CLASS, HOME_TEXT } from '~/pages/home/homeStyles'
 import type {
   L2StageShareKey,
   L2StageTvsShares,
@@ -48,39 +43,42 @@ export function L2SummaryStageShare({
       <div className="flex flex-col gap-3">
         <HomeCardHeader
           title="Value secured by stage"
-          subtitle="Incl. Others"
           link={{ href: '/stages', label: 'About stages' }}
         />
-        <p className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-          <span className={HOME_TEXT.number}>
-            {formatShare(atLeastStage1 / shares.total)}
-          </span>
-          <span className="text-label-value-15 text-secondary">
-            of value secured is at Stage 1 or above
-          </span>
-        </p>
+        <div className="flex items-baseline justify-between gap-x-6">
+          <p className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+            <span className={HOME_TEXT.number}>
+              {formatShare(atLeastStage1 / shares.total)}
+            </span>
+            <span className="text-label-value-15 text-secondary">
+              of value secured is at Stage 1 or above
+            </span>
+          </p>
+          {/* Across the page, beside the headline, where it costs no row. */}
+          <Caption
+            shares={shares}
+            className="@min-[760px]/stages:block hidden shrink-0"
+          />
+        </div>
       </div>
-      <div className="mt-4 flex flex-col gap-6">
+      <div className="mt-4 flex flex-1 flex-col gap-4">
         <div className="flex min-w-0 flex-col gap-2">
           <StageBar shares={shares} />
-          {/* The total and date, so the shares can be checked against the
-            Value secured chart. */}
-          <p className={HOME_TEXT.meta}>
-            Of {formatCurrency(shares.total, 'usd')} ·{' '}
-            {formatSnapshotTimestamp(shares.timestamp, shares.resolution)}
-          </p>
+          <Caption shares={shares} className="@min-[760px]/stages:hidden" />
         </div>
         <ul
           className={cn(
             'flex flex-col',
             HOME_ROW_LINES_CLASS,
-            '@min-[760px]/stages:hidden',
+            '@min-[760px]/stages:hidden flex-1',
           )}
         >
           {shares.stages.map((s) => (
             <li
               key={s.stage}
-              className={cn('flex items-center gap-3', HOME_ROW_CLASS)}
+              // At least a home row; beside the charts the rows share the
+              // card's height, so the last ends level with their legends.
+              className="flex min-h-10 flex-1 items-center gap-3"
             >
               <StageSwatch stage={s.stage} />
               <span className={cn('min-w-0 truncate', HOME_TEXT.row)}>
@@ -113,7 +111,7 @@ export function L2SummaryStageShare({
           ))}
         </ul>
         {/* Across the page, a legend under the bar: one column a stage. */}
-        <ul className="@min-[760px]/stages:grid hidden auto-cols-max grid-flow-col justify-between gap-x-8">
+        <ul className="@min-[760px]/stages:grid hidden auto-cols-fr grid-flow-col gap-x-8">
           {shares.stages.map((s) => (
             <li key={s.stage} className="flex min-w-0 flex-col gap-1.5">
               <span className="flex min-w-0 items-center gap-2">
@@ -121,12 +119,20 @@ export function L2SummaryStageShare({
                 <span className={cn('truncate', HOME_TEXT.row)}>
                   {STAGE_LABELS[s.stage]}
                 </span>
-                <span className={cn('shrink-0', HOME_TEXT.meta)}>
+                {/* Dropped where a quarter of the card can't fit it beside
+                  the longest label. */}
+                <span
+                  className={cn(
+                    '@max-[1000px]/stages:hidden shrink-0',
+                    HOME_TEXT.meta,
+                  )}
+                >
                   {formatProjectCount(s.projectCount)}
                 </span>
               </span>
-              {/* Value, then share, as in the rows. */}
-              <span className="flex items-baseline gap-2 pl-5">
+              {/* Value, then share, as in the rows; under the label, past the
+                10px swatch and its 8px gap. */}
+              <span className="flex items-baseline gap-3 pl-[18px]">
                 <span className={HOME_TEXT.value}>
                   {formatCurrency(s.value, 'usd')}
                 </span>
@@ -156,16 +162,15 @@ function StageBar({ shares }: { shares: L2StageTvsShares }) {
             `${STAGE_LABELS[s.stage]} ${formatShare(s.value / shares.total)}`,
         )
         .join(', ')}
-      className="flex h-8 w-full gap-0.5 overflow-hidden rounded-md"
+      // A thin rule rather than a block: the numbers carry the card, the bar
+      // only shows their proportions.
+      className="flex h-2 w-full gap-0.5 overflow-hidden rounded-full"
     >
       {shares.stages.map((s) =>
         s.value / shares.total >= 0.002 ? (
           <div
             key={s.stage}
-            className={cn(
-              'h-full rounded-[3px]',
-              getStageColorClassName(s.stage),
-            )}
+            className={cn('h-full', STAGE_FILLS[s.stage])}
             style={{ flexGrow: s.value, flexBasis: 0 }}
           />
         ) : null,
@@ -174,13 +179,29 @@ function StageBar({ shares }: { shares: L2StageTvsShares }) {
   )
 }
 
+/** The total and date, so the shares can be checked against the chart. */
+function Caption({
+  shares,
+  className,
+}: {
+  shares: L2StageTvsShares
+  className?: string
+}) {
+  return (
+    <p className={cn(HOME_TEXT.meta, className)}>
+      Of {formatCurrency(shares.total, 'usd')} ·{' '}
+      {formatSnapshotTimestamp(shares.timestamp, shares.resolution)}
+    </p>
+  )
+}
+
 function StageSwatch({ stage }: { stage: L2StageShareKey }) {
   return (
     <span
       aria-hidden
       className={cn(
-        'size-3 shrink-0 rounded-[3px] dark:ring-1 dark:ring-white/10',
-        getStageColorClassName(stage),
+        'size-2.5 shrink-0 rounded-[2px] dark:ring-1 dark:ring-white/10',
+        STAGE_FILLS[stage],
       )}
     />
   )
@@ -191,15 +212,17 @@ function formatProjectCount(count: number) {
 }
 
 /**
- * The stage badges' colours, except where a dark badge fill is nearly the
- * card's colour, which a badge's text makes up for and a swatch cannot.
+ * The stage badges' fills (see `getStageBadgeClassName`), without their
+ * borders. In the dark, Stage 2 is lighter than its badge: a badge's text sets
+ * it apart from the card, a bare swatch has only its colour.
  */
-function getStageColorClassName(stage: L2StageShareKey) {
-  if (stage === 'NotApplicable') return 'bg-[#B4C7D5] dark:bg-[#6B7194]'
-  // Its badge's dark green is too close to the dark card for a bare swatch.
-  if (stage === 'Stage 2')
-    return cn(getStageBadgeClassName(stage), 'dark:bg-[#1f8a2a]')
-  return getStageBadgeClassName(stage)
+const STAGE_FILLS: Record<L2StageShareKey, string> = {
+  'Stage 2': 'bg-green-900 dark:bg-[#1f8a2a]',
+  'Stage 1': 'bg-[#FFC61B]',
+  'Stage 0': 'bg-orange-600 dark:bg-[#E03109]',
+  UnderReview: 'bg-n-yellow-700/40 dark:bg-yellow-200/40',
+  // The charts' colour for Others, which are the projects without a stage.
+  NotApplicable: 'bg-(--chart-slate)',
 }
 
 /** Whole percents, one decimal under 10%, and "<0.1%" for slivers. */

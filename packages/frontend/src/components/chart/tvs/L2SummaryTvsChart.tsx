@@ -2,6 +2,7 @@ import { formatCurrency } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import compact from 'lodash/compact'
 import { useMemo } from 'react'
+import { L2_CATEGORY_COLORS } from '~/components/chart/l2CategoryColors'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import {
@@ -16,10 +17,7 @@ import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import { tinted } from '~/components/core/chart/tint'
 import { trimZeroDecimals } from '~/components/core/chart/utils/yAxisTicks'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import {
-  getCoverageLabel,
-  L2SummaryChartHeader,
-} from '~/pages/layer2s/summary/components/L2SummaryChartHeader'
+import { L2SummaryChartHeader } from '~/pages/layer2s/summary/components/L2SummaryChartHeader'
 import { useTRPC } from '~/trpc/React'
 import { formatSnapshotTimestamp } from '~/utils/dates'
 import {
@@ -32,21 +30,21 @@ import type { ChartUnit } from '../types'
 const chartMeta = {
   rollups: {
     label: 'Rollups',
-    color: 'var(--chart-pink)',
+    color: L2_CATEGORY_COLORS.rollups,
     indicatorType: {
       shape: 'line',
     },
   },
   validiumsAndOptimiums: {
     label: 'Validiums & Optimiums',
-    color: 'var(--chart-cyan)',
+    color: L2_CATEGORY_COLORS.validiumsAndOptimiums,
     indicatorType: {
       shape: 'line',
     },
   },
   others: {
     label: 'Others',
-    color: 'var(--chart-yellow)',
+    color: L2_CATEGORY_COLORS.others,
     indicatorType: {
       shape: 'line',
     },
@@ -81,7 +79,6 @@ export function L2SummaryTvsChart({
     <div className="flex flex-col gap-4">
       <L2SummaryChartHeader
         title="Value secured"
-        subtitle={getCoverageLabel(dataKeys)}
         link={{ href: '/layer2s/tvs', label: 'Details' }}
         value={
           stats?.total !== undefined
@@ -125,6 +122,7 @@ export function L2SummaryTvsChart({
             format: (value: number) =>
               trimZeroDecimals(formatCurrency(value, unit)),
           }}
+          yLabelHalo
           syncedUntil={data?.syncedUntil}
           renderTooltip={(row, keys) => (
             <CustomTooltip
@@ -155,7 +153,7 @@ function CustomTooltip({
   const total = sumEntries(payload)
   return (
     <ChartTooltipWrapper>
-      <div className="flex w-[180px]! flex-col [@media(min-width:600px)]:w-60!">
+      <div className="flex w-[180px]! flex-col [@media(min-width:600px)]:w-64!">
         <div className="font-medium text-label-value-14 text-secondary">
           {formatSnapshotTimestamp(label, resolution)}
         </div>
