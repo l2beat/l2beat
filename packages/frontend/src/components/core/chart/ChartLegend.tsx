@@ -94,7 +94,7 @@ export function ChartLegend({
                   />
                   <span
                     className={cn(
-                      'text-nowrap font-medium text-2xs text-secondary leading-none tracking-[-0.2px] transition-opacity',
+                      'text-nowrap font-medium text-2xs text-primary leading-none tracking-[-0.2px] transition-opacity',
                       !isHidden &&
                         interactiveLegend &&
                         'group-hover/legend-item:opacity-50',
