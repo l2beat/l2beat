@@ -73,6 +73,9 @@ export async function getPages(): Promise<Page[]> {
   if (env.CLIENT_SIDE_BLOBS_PAGE) {
     paths.push('/blobs')
   }
+  if (env.CLIENT_SIDE_ETHEREUM_PAGE) {
+    paths.push('/ethereum')
+  }
   if (env.CLIENT_SIDE_OSSIFICATION_ENABLED) {
     paths.push('/ossification')
   }

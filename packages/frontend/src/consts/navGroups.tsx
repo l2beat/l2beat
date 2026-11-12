@@ -4,6 +4,7 @@ import { env } from '~/env'
 import { BlobsIcon } from '~/icons/pages/Blobs'
 import { BridgesIcon } from '~/icons/pages/Bridges'
 import { CropsIcon } from '~/icons/pages/Crops'
+import { EthereumIcon } from '~/icons/pages/Ethereum'
 import { HomeIcon } from '~/icons/pages/Home'
 import { L2Icon } from '~/icons/pages/L2'
 import { LiquidStakingIcon } from '~/icons/pages/LiquidStaking'
@@ -20,6 +21,18 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
     href: '/',
     icon: (
       <HomeIcon className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active" />
+    ),
+  },
+  env.CLIENT_SIDE_ETHEREUM_PAGE && {
+    type: 'single',
+    title: 'Ethereum',
+    match: 'ethereum',
+    href: '/ethereum',
+    icon: (
+      <EthereumIcon
+        className="transition-colors duration-300 group-data-[active=true]:fill-nav-active"
+        aria-hidden
+      />
     ),
   },
   env.CLIENT_SIDE_GARDEN_ENABLED && {
