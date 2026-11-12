@@ -42,7 +42,7 @@ export function ChartStatsPrimaryItem({
       )}
     >
       <div className="mb-2 flex items-center gap-1.5">
-        <span className="font-medium text-label-value-14 text-secondary">
+        <span className="font-normal text-label-value-14 text-primary">
           {label}
         </span>
         {tooltip && (
@@ -82,7 +82,7 @@ export function ChartStatsItem({
       )}
     >
       <div className="flex items-center gap-1.5 md:mb-1">
-        <span className="whitespace-nowrap font-medium text-secondary text-xs">
+        <span className="whitespace-nowrap font-normal text-label-value-13 text-primary">
           {label}
         </span>
         {tooltip && (
