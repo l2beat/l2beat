@@ -49,7 +49,7 @@ export function DataPostedTrackedTransactions({
           </Checkbox>
         )}
         <div className="mb-6">
-          <SubsectionHeading className="font-medium text-base text-secondary">
+          <SubsectionHeading className="mb-3 font-semibold text-label-value-15">
             Blob submissions
           </SubsectionHeading>
           {transactions.map((transaction, index) => (
@@ -91,20 +91,23 @@ function TransactionDetails({
       </div>
 
       <div className="border-divider border-l-2 pl-3">
-        <p className="mb-1 text-secondary text-sm">
-          DA layer: {transaction.daLayerName}
+        <p className="mb-1 text-sm">
+          <span className="font-medium">DA layer: </span>
+          {transaction.daLayerName}
         </p>
-        <p className="mb-1 text-secondary text-sm">
-          From: {transaction.sinceBlock} block - To:{' '}
-          {transaction.untilBlock ?? 'Now'}
+        <p className="mb-1 text-sm">
+          <span className="font-medium">Blocks: </span>
+          {transaction.untilBlock
+            ? `${transaction.sinceBlock} – ${transaction.untilBlock}`
+            : `from ${transaction.sinceBlock}`}
         </p>
         <div className="mb-1 text-sm">
-          <span className="text-secondary">Inbox: </span>
+          <span className="font-medium">Inbox: </span>
           <EtherscanLink address={transaction.inbox} />
         </div>
         {transaction.sequencers && transaction.sequencers.length > 0 && (
           <div className="mb-1 text-sm">
-            <span className="text-secondary">Sequencers: </span>
+            <span className="font-medium">Sequencers: </span>
             <div className="inline-flex gap-2">
               {transaction.sequencers?.map((sequencer) => (
                 <EtherscanLink
@@ -118,7 +121,7 @@ function TransactionDetails({
         )}
         {transaction.topics && transaction.topics.length > 0 && (
           <div className="mb-1 text-sm">
-            <span className="text-secondary">Topics: </span>
+            <span className="font-medium">Topics: </span>
             <div>
               {transaction.topics?.map((topic) => (
                 <span key={topic}>{topic}</span>

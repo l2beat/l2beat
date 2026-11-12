@@ -92,7 +92,7 @@ export function ContractsSection(props: ContractsSectionProps) {
                       <ContractEntry
                         key={technologyContractKey(contract)}
                         contract={contract}
-                        className="my-4"
+                        className="my-6"
                       />
                     ))}
                     {changedContracts.length > 0 && (
@@ -121,9 +121,9 @@ export function ContractsSection(props: ContractsSectionProps) {
             title={
               <div className="flex items-baseline gap-3">
                 <SubsectionHeading className="whitespace-pre font-semibold text-heading-18 leading-6">
-                  Program Hashes
+                  Program hashes
                 </SubsectionHeading>
-                <div className="w-full border-divider border-b-2" />
+                <div className="w-full border-divider border-b" />
               </div>
             }
           >
@@ -146,7 +146,7 @@ export function ChainNameHeader(props: { children: React.ReactNode }) {
       <SubsectionHeading className="whitespace-pre font-semibold text-heading-18 leading-6">
         {props.children}
       </SubsectionHeading>
-      <div className="w-full border-divider border-b-2" />
+      <div className="w-full border-divider border-b" />
     </div>
   )
 }

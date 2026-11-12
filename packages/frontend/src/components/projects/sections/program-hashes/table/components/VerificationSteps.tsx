@@ -21,11 +21,7 @@ export function VerificationSteps({
   verificationSteps?: string
 }) {
   if (!verificationSteps) {
-    return (
-      <span className="mt-px font-medium text-label-value-13 text-secondary opacity-50">
-        None
-      </span>
-    )
+    return <span className="mt-px font-medium text-label-value-13">None</span>
   }
 
   const trigger = (

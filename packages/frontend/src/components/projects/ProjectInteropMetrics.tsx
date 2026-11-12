@@ -15,7 +15,10 @@ export function ProjectInteropMetrics({
     },
     {
       label: 'Last 24h cross-chain transfers',
-      value: formatActivityCount(interop.transferCount),
+      // A count of transfers: whole numbers below 1K ("55", not "55.00").
+      value: formatActivityCount(interop.transferCount, {
+        decimals: interop.transferCount < 1000 ? 0 : 2,
+      }),
     },
   ]
 

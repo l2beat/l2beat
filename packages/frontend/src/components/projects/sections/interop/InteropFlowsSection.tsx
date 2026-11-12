@@ -163,18 +163,22 @@ function Content({
           />
         )}
         {(isLoading || showInactiveChainsInfo) && (
-          <div className="mt-10 flex min-h-6 w-full items-center justify-center gap-1 max-lg:order-2">
+          <div className="mt-4 flex min-h-6 w-full items-center justify-center gap-1.5 max-lg:order-2">
             {isLoading ? (
               <Skeleton className="h-4 w-40 md:h-5" />
             ) : (
               <>
-                <span className="font-normal text-secondary text-xs leading-none md:text-base">
+                <span className="text-label-value-13 text-secondary">
                   No transfers detected for
+                  {inactiveChains.length <= 3 &&
+                    ` ${inactiveChains.map((chain) => chain.name).join(', ')}`}
                 </span>
-                <ProjectIconList
-                  projects={inactiveChains}
-                  title="Chains without transfers"
-                />
+                {inactiveChains.length > 3 && (
+                  <ProjectIconList
+                    projects={inactiveChains}
+                    title="Chains without transfers"
+                  />
+                )}
               </>
             )}
           </div>

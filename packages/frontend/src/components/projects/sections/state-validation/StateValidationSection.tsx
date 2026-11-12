@@ -65,9 +65,9 @@ export function StateValidationSection({
         <div className="mt-4 space-y-2 md:mt-6">
           <div className="flex items-baseline gap-3">
             <h3 className="whitespace-pre font-semibold text-heading-18 leading-6">
-              Program Hashes
+              Program hashes
             </h3>
-            <div className="w-full border-divider border-b-2" />
+            <div className="w-full border-divider border-b" />
           </div>
           <ProgramHashesTable entries={programHashes} />
           {programHashesDescription && (

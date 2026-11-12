@@ -246,7 +246,7 @@ export function UpdateCard({
                 type="error"
                 size="extraSmall"
                 padding="small"
-                className="shrink-0 uppercase"
+                className="shrink-0"
               >
                 {criticalChangeType
                   ? CRITICAL_CHANGE_LABELS[criticalChangeType]
@@ -308,9 +308,7 @@ export function UpdateCard({
           return (
             <div key={index} className="flex min-w-0 flex-col gap-2">
               {title && (
-                <h4 className="font-bold text-secondary text-xs uppercase">
-                  {title}
-                </h4>
+                <h4 className="font-semibold text-label-value-13">{title}</h4>
               )}
               <DiffBody body={section.body} />
             </div>

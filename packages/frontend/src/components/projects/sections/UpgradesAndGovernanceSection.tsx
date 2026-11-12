@@ -3,6 +3,7 @@ import { DiagramImage } from '~/components/DiagramImage'
 import { cn } from '~/utils/cn'
 import type { DiagramParams } from '~/utils/project/getDiagramParams'
 import { Markdown } from '../../markdown/Markdown'
+import { DefinitionList } from './DefinitionList'
 import { GOVERNANCE_INFO_SECTIONS } from './governanceInfoSections'
 import {
   type PastUpgradesData,
@@ -48,7 +49,7 @@ export function UpgradesAndGovernanceSection({
       )}
       {governanceInfo && <GovernanceInfo governanceInfo={governanceInfo} />}
       {pastUpgrades && (
-        <div className="mt-8">
+        <div className={cn((diagram || content || governanceInfo) && 'mt-8')}>
           <h3 className="font-semibold text-heading-18 leading-6">
             Past upgrades
           </h3>
@@ -83,34 +84,12 @@ function GovernanceInfo({
       {section.key === 'upgrades' ? (
         <UpgradesInfo upgrades={governanceInfo.upgrades ?? {}} />
       ) : (
-        <GovernanceInfoList
+        <DefinitionList
           entries={Object.entries(governanceInfo[section.key] ?? {})}
         />
       )}
     </div>
   ))
-}
-
-function GovernanceInfoList({ entries }: { entries: [string, string][] }) {
-  return (
-    <dl className="border-divider border-t">
-      {entries.map(([name, description]) => (
-        <div
-          key={name}
-          className="grid gap-1 border-divider border-b py-3 md:grid-cols-[180px_1fr] md:gap-4"
-        >
-          <dt className="font-medium text-label-value-14 leading-5 md:pt-0.5">
-            {name}
-          </dt>
-          <dd>
-            <Markdown className="text-paragraph-14 md:text-paragraph-15">
-              {description}
-            </Markdown>
-          </dd>
-        </div>
-      ))}
-    </dl>
-  )
 }
 
 function UpgradesInfo({
@@ -162,9 +141,7 @@ function UpgradePathTimeline({
                 )}
               />
             </span>
-            <Markdown inline className={cn(step.isWait && 'text-secondary')}>
-              {step.description}
-            </Markdown>
+            <Markdown inline>{step.description}</Markdown>
           </li>
         ))}
       </ol>

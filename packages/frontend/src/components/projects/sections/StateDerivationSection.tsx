@@ -1,5 +1,5 @@
 import type { ProjectScalingStateDerivation } from '@l2beat/config'
-import { Markdown } from '../../markdown/Markdown'
+import { DefinitionList } from './DefinitionList'
 import { ProjectSection } from './ProjectSection'
 import type { ProjectSectionProps } from './types'
 
@@ -14,29 +14,17 @@ export function StateDerivationSection({
   dataFormat,
   ...sectionProps
 }: StateDerivationSectionProps) {
+  const entries: [string, string][] = [
+    ['Node software', nodeSoftware],
+    ...(compressionScheme
+      ? [['Compression scheme', compressionScheme] as [string, string]]
+      : []),
+    ['Genesis state', genesisState],
+    ['Data format', dataFormat],
+  ]
   return (
     <ProjectSection {...sectionProps}>
-      <div className="flex flex-col gap-6">
-        <Item title="Node software">{nodeSoftware}</Item>
-        {compressionScheme && (
-          <Item title="Compression scheme">{compressionScheme}</Item>
-        )}
-        <Item title="Genesis state">{genesisState}</Item>
-        <Item title="Data format">{dataFormat}</Item>
-      </div>
+      <DefinitionList entries={entries} />
     </ProjectSection>
-  )
-}
-
-function Item(props: { title: string; children: string }) {
-  return (
-    <div>
-      <span className="block font-semibold text-heading-18 leading-6">
-        {props.title}
-      </span>
-      <Markdown className="mt-2 text-paragraph-15 md:text-paragraph-16">
-        {props.children}
-      </Markdown>
-    </div>
   )
 }

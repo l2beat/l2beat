@@ -70,7 +70,8 @@ export function RiskBanner({
             className={cn(
               'text-left',
               size === 'regular' && 'font-bold text-label-value-14',
-              size === 'large' && 'font-bold text-sm leading-none! md:text-lg',
+              size === 'large' &&
+                'font-bold text-base leading-none! md:text-lg',
               sentimentToTextColor(adjSentiment, { vibrant: true }),
             )}
           >
@@ -86,6 +87,29 @@ export function RiskBanner({
           </div>
         </div>
       </div>
+      {regular && description && info === 'full' && (
+        // The description explains the emergency path, so it sits in that
+        // block, above the regular path rather than under it.
+        <div className="relative">
+          <GrissiniStick
+            className={cn(
+              'absolute inset-y-0 left-0 h-full shrink-0 rounded-none max-md:w-1',
+              className,
+            )}
+            sentiment={adjSentiment}
+          />
+          <div
+            className={cn(
+              'px-4 pb-4 pl-5 md:pl-6',
+              sentimentToTransparentBgColor(adjSentiment),
+            )}
+          >
+            <Markdown className="font-normal text-paragraph-15 md:text-paragraph-16">
+              {description}
+            </Markdown>
+          </div>
+        </div>
+      )}
       {regular && info === 'full' && (
         <div className="relative">
           <GrissiniStick
@@ -103,7 +127,7 @@ export function RiskBanner({
           >
             <div
               className={cn(
-                'mb-1 font-bold text-sm md:text-lg',
+                'mb-1 font-bold text-base md:text-lg',
                 sentimentToTextColor(regular.sentiment ?? 'neutral', {
                   vibrant: true,
                 }),
@@ -137,7 +161,7 @@ export function RiskBanner({
           />
         </div>
       )}
-      {description && info === 'full' && (
+      {description && !regular && info === 'full' && (
         <Markdown className="mt-2 font-normal text-paragraph-15 md:text-paragraph-16">
           {description}
         </Markdown>

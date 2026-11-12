@@ -45,15 +45,13 @@ export const programHashesColumns = [
               href={programUrl}
               className="font-medium text-label-value-13"
             >
-              Github
+              GitHub
             </CustomLink>
           </div>
         )
       }
       return (
-        <span className="font-medium text-label-value-13 text-secondary opacity-50">
-          Code unknown
-        </span>
+        <span className="font-medium text-label-value-13">Code unknown</span>
       )
     },
   }),
