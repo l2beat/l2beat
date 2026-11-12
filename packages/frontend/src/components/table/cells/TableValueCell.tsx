@@ -57,12 +57,7 @@ export function TableValueCell({
   const trigger = (
     <TableLink href={href}>
       <TwoRowCell>
-        <TwoRowCell.First
-          className={cn(
-            'flex items-center gap-1',
-            compact && 'md:text-label-value-15',
-          )}
-        >
+        <TwoRowCell.First className="flex items-center gap-1">
           {/* Inline, so the grey second line shares the value's baseline. */}
           <span>
             <SentimentText

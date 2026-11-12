@@ -168,16 +168,16 @@ const TableHead = ({
   children,
   tooltip,
   align,
-  compact,
+  quiet,
   ...props
 }: React.ThHTMLAttributes<HTMLTableCellElement> & {
   tooltip?: React.ReactNode
   align?: 'right' | 'center'
   /**
-   * In a compact table a right-aligned header puts its info icon first, so
-   * the label ends over the right edge of its figures.
+   * In a quiet table a right-aligned header puts its info icon first, so the
+   * label ends over the right edge of its figures.
    */
-  compact?: boolean
+  quiet?: boolean
 }) => (
   <th
     className={cn(
@@ -192,7 +192,7 @@ const TableHead = ({
         'flex items-end gap-1.5 leading-none',
         align === 'center' && 'justify-center',
         align === 'right' && 'justify-end',
-        compact && align === 'right' && 'flex-row-reverse justify-start',
+        quiet && align === 'right' && 'flex-row-reverse justify-start',
       )}
     >
       {children}

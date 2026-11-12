@@ -14,7 +14,7 @@ export function getL2CommonProjectColumns<T extends CommonProjectEntry>(
   opts?: CommonProjectColumnsOptions,
 ) {
   return [
-    ...getCommonProjectColumns(columnHelper, getHref, opts),
+    ...getCommonProjectColumns(columnHelper, getHref),
     columnHelper.accessor((row) => row.name, {
       id: 'name',
       header: 'Name',

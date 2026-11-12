@@ -4,6 +4,7 @@ import type {
   ProjectScalingPurpose,
 } from '@l2beat/config'
 import type React from 'react'
+import { use } from 'react'
 import {
   Tooltip,
   TooltipContent,
@@ -32,6 +33,7 @@ import { UnverifiedIcon } from '~/icons/Unverified'
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
 import { cn } from '~/utils/cn'
 import { getUnderReviewText } from '~/utils/project/underReview'
+import { QuietTableContext } from '../QuietTableContext'
 import { PrimaryValueCell } from './PrimaryValueCell'
 
 export type ProjectCellProject = Omit<CommonProjectEntry, 'href' | 'id'> & {
@@ -50,9 +52,8 @@ interface ProjectCellProps {
   withInfoTooltip?: boolean
   ignoreUnderReviewIcon?: boolean
   /**
-   * For a compact table: the name at the home rows' size and weight, on one
-   * line. Its second line follows it in grey; an appchain's purposes are left
-   * out.
+   * For a compact table: one line. The name's second line follows it in grey;
+   * an appchain's purposes are left out.
    */
   compact?: boolean
 }
@@ -310,13 +311,14 @@ function DesktopProjectNameContent({
   compact?: boolean
 }) {
   const projectName = project.shortName ?? project.name
+  const quiet = use(QuietTableContext)
 
   return (
     <div className="max-md:hidden">
       <div className="flex items-center">
         <PrimaryValueCell
           className={cn(
-            compact ? 'font-medium md:text-label-value-15' : 'font-bold',
+            quiet ? 'font-medium md:text-label-value-15' : 'font-bold',
             'leading-none!',
           )}
         >
@@ -344,6 +346,7 @@ function MobileProjectNameContent({
   compact?: boolean
 }) {
   const projectName = project.shortName ?? project.name
+  const quiet = use(QuietTableContext)
 
   return (
     <div className="md:hidden">
@@ -351,7 +354,7 @@ function MobileProjectNameContent({
         <div className="flex items-center gap-1.5">
           <PrimaryValueCell
             className={cn(
-              compact ? 'font-medium md:text-label-value-15' : 'font-bold',
+              quiet ? 'font-medium md:text-label-value-15' : 'font-bold',
               'leading-none!',
             )}
           >

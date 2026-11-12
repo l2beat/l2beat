@@ -42,12 +42,11 @@ export function getBasicTableGroupedHeaderCellClassName(params: {
 }
 
 /**
- * The compact variant has the home page's row height and column headers: 40px
- * rows, and quiet 13px headers in sentence case. The last header keeps the
- * cells' right inset, so it ends over its figures. Its cells keep to one line
- * (see the cells' `compact` props).
+ * A quiet table has the home page's column headers: 13px, regular and in
+ * sentence case. The last header keeps the cells' right inset, so it ends over
+ * its figures. A compact table is quiet with home's 40px rows too.
  */
-const COMPACT_HEADER_CELL =
+const QUIET_HEADER_CELL =
   'h-8 font-normal text-label-value-13 text-secondary normal-case last:pr-3'
 const COMPACT_BODY_CELL = 'md:h-10'
 
@@ -55,9 +54,9 @@ export function getBasicTableHeaderCellClassName(params: {
   groupParams: BasicTableGroupParams | undefined
   isPinned: boolean
   headClassName: string | undefined
-  compact?: boolean
+  quiet?: boolean
 }) {
-  const { groupParams, isPinned, headClassName, compact } = params
+  const { groupParams, isPinned, headClassName, quiet } = params
   return cn(
     groupParams && [
       groupParams.isFirstInGroup && 'pl-6',
@@ -66,7 +65,7 @@ export function getBasicTableHeaderCellClassName(params: {
       !groupParams.headerTitle && groupParams.isLastInGroup && 'rounded-tr-lg',
     ],
     isPinned && getRowClassNamesWithoutOpacity(null),
-    compact && COMPACT_HEADER_CELL,
+    quiet && QUIET_HEADER_CELL,
     headClassName,
   )
 }
