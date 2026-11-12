@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xefef7ac32962c6c79d48ab3b9b980cd40c343593
+
+# Diff at Tue, 10 Nov 2026 14:26:46 GMT:
+
+- id: 2dfe03d8
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@28ea16426fac1900c2fffd1cec3ecc6b84981c76 block: 1787832680
+- current timestamp: 1794319727
+
+## Description
+
+The Safe that owns the resolver credit contract removed one signer (eth:0xa535D703561516F32d72218e0F8372Ef38798b58). It is now a 3/4 multisig, the threshold of 3 is unchanged.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (eth:0x9F8102b1bB05785BaD2874f2C7B1aaea4c6D976a) [GnosisSafe] {
+    +++ description: None
+      values.$members.4:
+-        "eth:0xa535D703561516F32d72218e0F8372Ef38798b58"
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "3 of 4 (75%)"
+    }
+```
+
 Generated with discovered.json: 0x0af30841e023cfa9461c3b27f29018160d5c4081
 
 # Diff at Tue, 25 Aug 2026 08:51:19 GMT:

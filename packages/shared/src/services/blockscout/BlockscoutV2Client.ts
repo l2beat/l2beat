@@ -1,4 +1,4 @@
-import { Logger, RateLimiter } from '@l2beat/backend-tools'
+import { RateLimiter } from '@l2beat/backend-tools'
 import type { EthereumAddress } from '@l2beat/shared-pure'
 import type { HttpClient } from '../../clients'
 import {
@@ -15,10 +15,8 @@ export class BlockscoutV2Client {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly url: string,
-    private readonly logger = Logger.SILENT,
   ) {
     this.call = this.rateLimiter.wrap(this.call.bind(this))
-    this.logger = logger.for(this)
   }
 
   async getInternalTransactions(

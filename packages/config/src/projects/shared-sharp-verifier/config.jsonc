@@ -5,13 +5,15 @@
   "maxAddresses": 300,
   "initialAddresses": ["eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"],
   "names": {
-    "eth:0x24105e6697AdD9B4B1BDE04079a91BDFCCa24A47": "CairoBootloaderProgram",
+    "eth:0x8ad2429Dbd77ECe844ED28222b26798A9449C2F3": "CairoBootloaderProgram",
+    "eth:0x24105e6697AdD9B4B1BDE04079a91BDFCCa24A47": "CairoBootloaderProgram_2026_13",
     "eth:0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942": "SHARPVerifier_2024_10",
     "eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934": "SHARPVerifier_2025_11",
     "eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066": "SHARPVerifier_2025_12",
     "eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe": "SHARPVerifier_2026_13_1",
     "eth:0x7Da1225C752ab37E610a242D9D8a0548262E3fF7": "SHARPVerifier_2026_13_2",
     "eth:0xE67515a751291445B85b2F176c1eCdf08e86b406": "SHARPVerifier_2026_13_3",
+    "eth:0x4956bda1d23F75B988644329c5B06BD1494a72b6": "SHARPVerifier_2026_13_4",
     "eth:0x30F3AB988Cb00fe3Fb5ab891F50c13684770419b": "CpuVerifierSmall_2026_13",
     "eth:0x0cD0cDf0132c566db61B691BCEEBA2c4D8cA5CdC": "CpuVerifierDex_2026_13",
     "eth:0xFFC7974cd74b95f631f454cd787AAc28F0476b44": "CpuVerifierPerpetual_2026_13",
@@ -36,12 +38,20 @@
     // Active default SHARP verification path used by Starknet. The helpers are immutable but executable parts of the verifier.
     // The set is exactly the CallProxy, the default SHARPVerifier and what its constructor pins: bootloader, memory-page
     // registry, the 8 CPU verifiers and their constructorArgs (OODS, constraint polys, periodic columns, Merkle/FRI
-    // statement contracts). Older verifier sets are not critical: the referral of the default to SHARPVerifier_2026_13_3
-    // expired at 1785589607, so isValid no longer reaches them, and each switch of the default is already a
-    // $pastUpgrades code change of the CallProxy. When the default changes, move the overrides to the new set.
+    // statement contracts). The default refers to SHARPVerifier_2026_13_4 until 1795855307, so that verifier and its
+    // bootloader stay critical until then (everything else it pins is shared with the default). Older verifier sets are
+    // not critical: the referral of SHARPVerifier_2026_13_4 to SHARPVerifier_2026_13_3 expired at 1785589607, and each
+    // switch of the default is already a $pastUpgrades code change of the CallProxy. When the default changes, move
+    // the overrides to the new set.
     "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": { "critical": true },
-    "eth:0x4956bda1d23F75B988644329c5B06BD1494a72b6": { "critical": true },
-    "eth:0x24105e6697AdD9B4B1BDE04079a91BDFCCa24A47": { "critical": true },
+    "eth:0x91C57B64738b80f4494d83b485AD3f9C0f95E2A3": { "critical": true },
+    "eth:0x8ad2429Dbd77ECe844ED28222b26798A9449C2F3": { "critical": true },
+    "eth:0x4956bda1d23F75B988644329c5B06BD1494a72b6": {
+      "critical": { "untilTimestamp": 1795855307 }
+    },
+    "eth:0x24105e6697AdD9B4B1BDE04079a91BDFCCa24A47": {
+      "critical": { "untilTimestamp": 1795855307 }
+    },
     "eth:0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460": { "critical": true },
     "eth:0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400": { "critical": true },
     "eth:0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd": { "critical": true },

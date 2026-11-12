@@ -1,7 +1,7 @@
 import { ps } from '~/server/projects'
-import { getTotalValueLockedByProject } from '../getDefiSummaryEntries'
+import { getTotalValueLockedByProject } from '../getDefiTotalValueLocked'
 
-/** The latest value, as the DeFi summary table shows it; undefined when the project's value is not tracked. */
+/** The latest value; undefined when the project's value is not tracked. */
 export async function getDefiProjectTotalValueLocked(
   slug: string,
 ): Promise<number | undefined> {

@@ -1,3 +1,153 @@
+Generated with discovered.json: 0x1c38a6fb1ca1ca779616eabd3f78226fdd060b6a
+
+# Diff at Fri, 06 Nov 2026 16:34:57 GMT:
+
+- id: cc3e4f65
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@42d599abc7be8cc38122c72abc4da1c1dda6fbeb block: 1793196526
+- current timestamp: 1793982767
+
+## Description
+
+Governance handover:
+- UpgradeExecutor: all three executors (a 3/8 Safe and two EOAs) replaced by a single new 3/5 Safe.
+- ArbOS chain owners on the L3: two EOAs replaced by an L3 UpgradeExecutor and the same 3/5 Safe (both unverified on the L3).
+- RollupProxy: fast confirmer moved to a new 1/1 Safe, `loserStakeEscrow` changed to a new EOA, and one validator removed.
+- SequencerInbox: one batch poster removed.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (arb1:0x0D9cCeB5Cd108CC9B0b7Ac3aACe3d85c28243c9e) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
++++ severity: HIGH
+      values.anyTrustFastConfirmer:
+-        "arb1:0x42124A2E725E6458701b8Ef46B78Db55827fA836"
++        "arb1:0xA9595BEB8A32467C9d2083AafD75883DC0825cF0"
++++ severity: LOW
+      values.getValidators.0:
+-        "arb1:0x3f90c4913621e6758eB8767EA934FCa59ae5Dee8"
++++ severity: HIGH
+      values.loserStakeEscrow:
+-        "arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28"
++        "arb1:0x13d4d9C70888Ee78A26d58F0A0717b6B93614fD7"
+      values.stakerCount:
+-        1
++        2
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafeL2 (arb1:0x42124A2E725E6458701b8Ef46B78Db55827fA836) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+    EOA (arb1:0x4F12e3d982C3308039761298E4582a91Fd9C4209) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"arb1:0x0D9cCeB5Cd108CC9B0b7Ac3aACe3d85c28243c9e","description":"Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.","role":".anyTrustFastConfirmer","via":[{"address":"arb1:0xA9595BEB8A32467C9d2083AafD75883DC0825cF0"}]}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SafeL2 (arb1:0x871e290d5447b958131F6d44f915F10032436ee6) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+    contract UpgradeExecutor (arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "arb1:0x871e290d5447b958131F6d44f915F10032436ee6"
+      values.accessControl.EXECUTOR_ROLE.members.1:
+-        "arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28"
+      values.accessControl.EXECUTOR_ROLE.members.2:
+-        "arb1:0x967e4fa8876b4aB87E793E954a47b34794c1E1a7"
++        "arb1:0xD11411b0486B344D868752d44f5B871Dd3623d31"
++++ severity: MEDIUM
+      values.executors.0:
+-        "arb1:0x871e290d5447b958131F6d44f915F10032436ee6"
++++ severity: MEDIUM
+      values.executors.1:
+-        "arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28"
++++ severity: MEDIUM
+      values.executors.2:
+-        "arb1:0x967e4fa8876b4aB87E793E954a47b34794c1E1a7"
++        "arb1:0xD11411b0486B344D868752d44f5B871Dd3623d31"
+    }
+```
+
+```diff
+    EOA (arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"arb1:0x0D9cCeB5Cd108CC9B0b7Ac3aACe3d85c28243c9e","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.","role":".owner","via":[{"address":"arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf"}]},{"permission":"upgrade","from":"arb1:0x0D9cCeB5Cd108CC9B0b7Ac3aACe3d85c28243c9e","role":"admin","via":[{"address":"arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf"}]},{"permission":"upgrade","from":"arb1:0x107695630130919cb040B095b9b20511D6e211bB","role":"admin","via":[{"address":"arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6"},{"address":"arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf"}]},{"permission":"upgrade","from":"arb1:0x3616995dF5D07B28f2B186F1386cace9EB9Bbd20","role":"admin","via":[{"address":"arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6"},{"address":"arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf"}]},{"permission":"upgrade","from":"arb1:0x6F4836aFD5e21EDcee9b838C5a4125829EC198d0","role":"admin","via":[{"address":"arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6"},{"address":"arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf"}]},{"permission":"upgrade","from":"arb1:0x9f427c80C4DF962726808d4c876fc2c55474a764","role":"admin","via":[{"address":"arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6"},{"address":"arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf"}]},{"permission":"upgrade","from":"arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf","role":"admin","via":[{"address":"arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6"},{"address":"arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf"}]},{"permission":"upgrade","from":"arb1:0xdA3102d2f80CaD9571a9Eb3656e808e973620dBD","role":"admin","via":[{"address":"arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6"},{"address":"arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf"}]},{"permission":"upgrade","from":"arb1:0xe44B83D8a3A86994043C809E29B723a44FAEE479","role":"admin","via":[{"address":"arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6"},{"address":"arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf"}]},{"permission":"upgrade","from":"arb1:0xeB88b89e085D6B747Dd6b9CEaf2716bdd89F1E7c","role":"admin","via":[{"address":"arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6"},{"address":"arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf"}]},{"permission":"upgrade","from":"arb1:0xedC476079a899382ff54790e943315bcBb3de7f7","role":"admin","via":[{"address":"arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6"},{"address":"arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf"}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf","role":".executors"}]
+      eoaWithUpgradePermissions:
+-        true
+    }
+```
+
+```diff
+    contract SequencerInbox (arb1:0xe44B83D8a3A86994043C809E29B723a44FAEE479) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
++++ severity: LOW
+      values.batchPosters.1:
+-        "arb1:0x9f787F6e07469BBA84f0BE488c42eDC4c766cC83"
+      values.setIsBatchPosterCount:
+-        2
++        3
+    }
+```
+
+```diff
+    contract ArbFilteredTransactionsManager (edge:0x0000000000000000000000000000000000000074) [orbitstack/ArbFilteredTransactionsManager] {
+    +++ description: ArbOS transaction-filtering precompile (0x..74), available from ArbOS 60. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay. With no filterers set, no transaction hashes can be added or removed; hashes added earlier stay filtered.
++++ severity: HIGH
+      values.chainOwners.0:
+-        "edge:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28"
++        "edge:0x5205da9C507cfb1F9d333f05b609B4E5B26B32a9"
++++ severity: HIGH
+      values.chainOwners.1:
+-        "edge:0x967e4fa8876b4aB87E793E954a47b34794c1E1a7"
++        "edge:0xD11411b0486B344D868752d44f5B871Dd3623d31"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (arb1:0xA9595BEB8A32467C9d2083AafD75883DC0825cF0) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (arb1:0xD11411b0486B344D868752d44f5B871Dd3623d31) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (edge:0x5205da9C507cfb1F9d333f05b609B4E5B26B32a9) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (edge:0x9bf1C25C42c8Dd3d8229053df037cF2871047443) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (edge:0xD11411b0486B344D868752d44f5B871Dd3623d31) [N/A]
+    +++ description: None
+```
+
 Generated with discovered.json: 0x8407d35cdb839401259b10f4ddd2f9466a3a66f2
 
 # Diff at Wed, 28 Oct 2026 14:12:25 GMT:

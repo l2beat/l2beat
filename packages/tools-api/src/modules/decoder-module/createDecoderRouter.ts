@@ -113,6 +113,6 @@ function parseQuery(data: unknown): ApiQuery {
     hash: query.hash as `0x${string}`,
     data: query.data,
     to: query.to as `0x${string}`,
-    chainId: query.chainId ? Number.parseInt(query.chainId) : undefined,
+    chainId: query.chainId ? Number.parseInt(query.chainId, 10) : undefined,
   }
 }

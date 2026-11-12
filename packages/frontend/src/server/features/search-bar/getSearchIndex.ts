@@ -10,6 +10,7 @@ import {
 } from '~/components/search-bar/searchIndex'
 import { env } from '~/env'
 import { selectChainProjects } from '~/server/features/chains/getChainProjects'
+import { isListedDefiProject } from '~/server/features/defi/isListedDefiProject'
 import { UNKNOWN_ABSTRACT_TOKEN_ID } from '~/server/features/layer2s/interop/consts'
 import {
   getActiveInteropAbstractTokens,
@@ -61,6 +62,7 @@ export async function buildSearchIndex(): Promise<SearchIndex> {
       .filter((token) => token.id !== UNKNOWN_ABSTRACT_TOKEN_ID)
       .sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0))
       .map(toSearchIndexToken),
+    versionGroups: getVersionGroups(projects),
   }
 }
 
@@ -71,6 +73,7 @@ type SearchIndexProjectKey =
   | 'privacyInfo'
   | 'defiInfo'
   | 'aliases'
+  | 'versions'
 
 export const SEARCH_INDEX_PROJECT_KEYS: SearchIndexProjectKey[] = [
   'scalingInfo',
@@ -79,6 +82,7 @@ export const SEARCH_INDEX_PROJECT_KEYS: SearchIndexProjectKey[] = [
   'privacyInfo',
   'defiInfo',
   'aliases',
+  'versions',
 ]
 
 type SearchIndexSourceProject = Project<never, SearchIndexProjectKey>
@@ -97,12 +101,34 @@ export function toSearchIndexProject(
     manifest.getUrl(`/icons/${project.slug}.png`),
     kinds,
     project.scalingInfo?.type ?? null,
-    [project.shortName, ...(project.aliases ?? [])].filter(
-      (tag): tag is string => !!tag,
-    ),
+    // The group name, so "privacy pools" matches v2 as directly as v1 (slug
+    // "privacy-pools"), instead of hiding it as a fuzzy match.
+    [
+      project.shortName,
+      ...(project.aliases ?? []),
+      project.versions?.group.name,
+    ].filter((tag): tag is string => !!tag),
     project.interopConfig?.name ?? null,
     project.interopConfig?.shortName ?? null,
   ]
+}
+
+/** Project ids of each version group, latest first, then newest first. */
+function getVersionGroups(projects: SearchIndexSourceProject[]): string[][] {
+  const groups = new Map<string, string[]>()
+  for (const { versions } of projects) {
+    if (!versions || groups.has(versions.group.id)) continue
+    // Siblings are in display order, oldest first.
+    const { siblings } = versions
+    groups.set(versions.group.id, [
+      ...siblings.filter((s) => s.isLatest).map((s) => s.id),
+      ...siblings
+        .filter((s) => !s.isLatest)
+        .reverse()
+        .map((s) => s.id),
+    ])
+  }
+  return [...groups.values()]
 }
 
 function getProjectKinds(
@@ -116,7 +142,9 @@ function getProjectKinds(
   // Privacy before the ZK Catalog: the merged page is built on the privacy one.
   if (project.privacyInfo) kinds.push('privacy')
   if (project.zkCatalogInfo) kinds.push('zkCatalog')
-  if (env.CLIENT_SIDE_DEFI_ENABLED && project.defiInfo) kinds.push('defi')
+  if (env.CLIENT_SIDE_DEFI_ENABLED && isListedDefiProject(project.defiInfo)) {
+    kinds.push('defi')
+  }
   return kinds
 }
 

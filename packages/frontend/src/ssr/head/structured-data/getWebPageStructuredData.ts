@@ -1,4 +1,4 @@
-import { L2BEAT_ORGANIZATION } from './getOrganizationStructuredData'
+import { SITE_ORGANIZATION } from './getOrganizationStructuredData'
 import type { StructuredDataPage } from './StructuredData'
 
 /**
@@ -16,6 +16,6 @@ export function getWebPageStructuredData(
     name: webPage.name,
     description: page.description,
     about: { '@type': 'Thing', name: webPage.about },
-    publisher: L2BEAT_ORGANIZATION,
+    publisher: SITE_ORGANIZATION,
   }
 }
