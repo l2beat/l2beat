@@ -1,5 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { TvsToken } from '@l2beat/config'
+import { getSummedEscrowBalances } from '@l2beat/config/build/common/tvsEscrowBalances'
 import type { TokenValueRecord, TvsEscrowValueRecord } from '@l2beat/database'
 import { assert } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
@@ -19,7 +20,6 @@ import {
   extractPricesAndAmounts,
   generateConfigurationId,
 } from '../tools/extractPricesAndAmounts'
-import { getSummedEscrowBalances } from '../tools/getSummedEscrowBalances'
 import type { SyncOptimizer } from '../tools/SyncOptimizer'
 
 interface TokenValueIndexerDeps

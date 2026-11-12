@@ -1,4 +1,5 @@
-import type { Formula, TvsToken } from '@l2beat/config'
+import type { TvsToken } from '@l2beat/config'
+import { getEscrowBalances } from '@l2beat/config/build/common/tvsEscrowBalances'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
@@ -77,7 +78,7 @@ export interface PrivacyChainValue {
 
 /**
  * Whether the project's value locked is tracked: on the chain, when the page
- * is about one, which takes a TVS token that reads an amount there.
+ * is about one, which takes a TVS token with an escrow there.
  */
 export function hasPrivacyValueLocked(
   tvsConfig: TvsToken[] | undefined,
@@ -86,17 +87,9 @@ export function hasPrivacyValueLocked(
   if (tvsConfig === undefined || chain === undefined) {
     return tvsConfig !== undefined
   }
-  return tvsConfig.some((token) => getChains(token.amount).includes(chain))
-}
-
-function getChains(formula: Formula): string[] {
-  if (formula.type === 'calculation') {
-    return formula.arguments.flatMap(getChains)
-  }
-  if (formula.type === 'value') {
-    return getChains(formula.amount)
-  }
-  return 'chain' in formula ? [formula.chain] : []
+  return tvsConfig.some((token) =>
+    getEscrowBalances(token)?.some((escrow) => escrow.chain === chain),
+  )
 }
 
 /** What each of the chains holds now, with its change over seven days. */
@@ -151,10 +144,9 @@ export function getCurrentChainValue(
 }
 
 /**
- * A chain's value over time, oldest first. A token whose amount is read from
- * one chain counts for that chain as a whole. A token calculated from several
- * escrows counts by the escrow values the backend stores for it. Other
- * tokens count for no chain.
+ * A chain's value over time, oldest first. A token of one escrow counts for
+ * its chain as a whole. A token of several counts by the escrow values the
+ * backend stores for it.
  */
 async function getChainValueHistory(
   projectId: string,
@@ -175,12 +167,12 @@ async function getChainValueHistory(
   const [tokenRows, escrowRows] = await Promise.all([
     db.tvsTokenValue.getSummedByTokensAtResolution(
       projectId,
-      // Only an amount read from one chain names its chain.
-      tvsConfig.flatMap((token) =>
-        'chain' in token.amount && token.amount.chain === chain
+      tvsConfig.flatMap((token) => {
+        const escrows = getEscrowBalances(token)
+        return escrows?.length === 1 && escrows[0]?.chain === chain
           ? [token.id]
-          : [],
-      ),
+          : []
+      }),
       dbRange,
       resolution,
     ),
