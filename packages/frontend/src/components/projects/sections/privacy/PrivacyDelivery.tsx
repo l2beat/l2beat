@@ -15,9 +15,8 @@ import { cn } from '~/utils/cn'
 import { sentimentToTextColor } from '~/utils/sentiment'
 
 /** How the code arrives, or how the app relates to public source. */
-export type DeliveryPart = ReturnType<
-  typeof getReferenceAppDelivery
->['kind' | 'source']
+export type DeliveryPart = Delivery['kind'] | Delivery['source']
+type Delivery = ReturnType<typeof getReferenceAppDelivery>
 
 /**
  * The delivery in the summary: each part's symbol and word, on a line of its
