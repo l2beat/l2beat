@@ -85,10 +85,7 @@ export function ChoicesPicker({
             checked={need.id === choices.need}
             onChange={() => setNeed(need.id)}
             label={need.label}
-            // Only the chosen need explains itself, which keeps the panel short.
-            description={
-              need.id === choices.need ? need.description : undefined
-            }
+            description={need.description}
             trailing={
               <CountBadge
                 count={protocols.filter((p) => p.needId === need.id).length}
