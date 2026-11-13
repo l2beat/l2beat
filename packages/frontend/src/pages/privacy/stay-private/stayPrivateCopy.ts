@@ -12,7 +12,6 @@ export const STAY_PRIVATE = {
   fromQuestion: 'Who should not find out?',
   fromNote:
     'Our five adversaries. Each is a capability, and one party can hold several.',
-  fromEmpty: 'Choose at least one adversary.',
   effortQuestion: 'What can you do?',
   effortNote:
     'Our ratings assume every step of our advice. Without an effort, the steps that need it are left out and the ratings they defend are not shown.',
@@ -22,17 +21,40 @@ export const STAY_PRIVATE = {
   chainLabel: 'Chain',
   filtersNote:
     'Assets and chains are those we track deposits of, by token symbol. A protocol may support more.',
+  choicesTitle: 'Your choices',
+  resetChoices: 'Reset',
   matchesTitle: 'Protocols for your choices',
-  matchNotes: [
-    "The dots are our ratings of each protocol's own promise against the adversaries you chose. Promises differ, so read each one.",
-    'An empty ring means the rating assumes a step you ruled out.',
-    'Within a group, protocols with fewer red and yellow ratings come first, then the larger anonymity set.',
-  ],
+  legend: {
+    good: 'Private',
+    warning: 'At risk',
+    bad: 'Exposed',
+    unrated: 'Not rated: assumes a step you ruled out',
+    notChosen: 'Faded: not chosen',
+  },
+  noAdversary: {
+    title: 'Choose who should not find out',
+    body: 'We rate each protocol against each adversary, so with none chosen there is nothing to match.',
+    action: 'Choose all but the future adversary',
+  },
+  noProtocols: 'We review no protocol for this yet.',
+  allFiltered: {
+    body: 'A protocol may hold more than we track. The protocols we left out are listed below with the reason.',
+    action: 'Clear the asset and chain',
+  },
+  noFullMatch: {
+    title: 'No protocol keeps this private from everyone you chose',
+    withRelaxations:
+      'Every protocol below is at risk from or exposed to at least one of them. One change to your choices would give a full match:',
+    withoutRelaxations:
+      'Every protocol below is at risk from or exposed to at least one of them, and no single change to your choices gives a full match.',
+  },
+  hideSetup: 'Hide the setup',
+  /** Under the legend: what the dots grade, and the order inside a group. */
+  matchNote:
+    "The dots are our ratings of each protocol's own promise, and promises differ, so read each one. Within a group, fewer red and yellow ratings come first, then the larger anonymity set.",
   groups: {
     private: {
       title: 'Private from everyone you chose',
-      empty:
-        'No protocol we review keeps this private from everyone you chose.',
     },
     atRisk: {
       title: 'At risk from someone you chose',
@@ -42,21 +64,16 @@ export const STAY_PRIVATE = {
       title: 'Exposed to someone you chose',
       note: 'A rating is red: no step keeps the promise from that adversary.',
     },
-  } satisfies Record<
-    MatchGroupId,
-    { title: string; note?: string; empty?: string }
-  >,
+  } satisfies Record<MatchGroupId, { title: string; note?: string }>,
   notChosenLabel: 'Not chosen',
   needsLabel: 'needs',
   /** Leads what a path asks for beyond the app: tools, and outside steps that link none. */
   outsideLabel: 'Outside the app',
   nothingOutside: 'nothing',
   seeSetup: 'See the setup',
-  setupShown: 'Setup shown below',
   excludedTitle: 'Ruled out by your filters',
   uncheckedTitle: 'Not checked: we lack the data',
   setupTitle: 'Setup',
-  pickProtocol: 'Choose a protocol above to see its setup from our review.',
   toolsTitle: 'What you need',
   stepsTitle: 'Steps',
   noSteps:
@@ -75,6 +92,48 @@ export const STAY_PRIVATE = {
   notAnAudit:
     'Our reading of public code, onchain data and the apps we traced. Not an audit and not an endorsement.',
 } as const
+
+/** The line above the groups: how many protocols hold up, out of how many. */
+export function getMatchSummary(
+  privateCount: number,
+  total: number,
+  fromCount: number,
+) {
+  const whom =
+    fromCount === 1
+      ? 'the adversary you chose'
+      : `all ${fromCount} adversaries you chose`
+  const protocols = total === 1 ? 'protocol' : 'protocols'
+  return `${privateCount} of ${total} ${protocols} keep${privateCount === 1 ? 's' : ''} this private from ${whom}.`
+}
+
+/** Why every protocol of a need is ruled out, from the filters set. */
+export function getAllFilteredTitle(
+  asset: string | undefined,
+  chain: string | undefined,
+) {
+  const what = asset ?? 'anything'
+  const where = chain === undefined ? '' : ` on ${capitalize(chain)}`
+  return `We track no protocol for this that holds ${what}${where}`
+}
+
+export function capitalize(text: string) {
+  return text.charAt(0).toUpperCase() + text.slice(1)
+}
+
+/** Names the adversaries no protocol for the need is private from. */
+export function getUncoveredText(labels: string[]) {
+  const names = labels.map((l) => `the ${l}`)
+  const list =
+    names.length < 2
+      ? names.join('')
+      : `${names.slice(0, -1).join(', ')} or ${names.at(-1)}`
+  return `No protocol we review for this keeps it private from ${list}.`
+}
+
+export function getMatchCountText(matches: number) {
+  return `${matches} ${matches === 1 ? 'match' : 'matches'}`
+}
 
 /** One row of the adversaries table, in words. */
 export function getAdversaryStatusText(row: AdvicePathAdversary): string {

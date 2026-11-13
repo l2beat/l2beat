@@ -133,7 +133,7 @@ function getGroup(chosen: AdvicePathAdversary[]): MatchGroupId {
   return chosen.every(isPrivate) ? 'private' : 'atRisk'
 }
 
-function isPrivate(row: AdvicePathAdversary) {
+export function isPrivate(row: AdvicePathAdversary) {
   return row.sentiment === 'good' && row.status !== 'unrated'
 }
 

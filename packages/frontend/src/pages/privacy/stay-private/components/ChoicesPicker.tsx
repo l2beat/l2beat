@@ -4,19 +4,27 @@ import type {
   PrivacyNeed,
 } from '@l2beat/config'
 import type { PrivacyAdviceProtocol } from '~/server/features/privacy/advice/getPrivacyAdviceData'
+import { cn } from '~/utils/cn'
 import {
   ADVICE_EFFORT_IDS,
   ADVICE_EFFORTS,
   type AdviceEffortId,
 } from '../advicePaths'
-import { getHoldingOptions, type MatchChoices } from '../matchProtocols'
-import { STAY_PRIVATE } from '../stayPrivateCopy'
+import {
+  getDefaultFrom,
+  getHoldingOptions,
+  type MatchChoices,
+} from '../matchProtocols'
+import { capitalize, STAY_PRIVATE } from '../stayPrivateCopy'
 import { PickerOption, PickerQuestion } from './Picker'
 
 /**
  * The three questions: what the user wants to do, who should not find out and
  * which efforts they accept. Efforts and filters are offered only where a
  * protocol of the need has a step or a tracked asset they apply to.
+ *
+ * Laid out as one column, so it fits the sidebar beside the results on wide
+ * screens; on narrow ones the options of a question share a row.
  */
 export function ChoicesPicker({
   choices,
@@ -38,6 +46,8 @@ export function ChoicesPicker({
     ofNeed.some((p) => p.steps.some(ADVICE_EFFORTS[id].skips)),
   )
   const options = getHoldingOptions(protocols, choices.need)
+  const defaultFrom = getDefaultFrom(adversaries)
+  const isDefaultFrom = choices.from.join() === defaultFrom.join()
 
   const setNeed = (need: string) => {
     const next = getHoldingOptions(protocols, need)
@@ -59,12 +69,13 @@ export function ChoicesPicker({
   const setAccepts = (id: AdviceEffortId, checked: boolean) =>
     onChange({ ...choices, accepts: { ...choices.accepts, [id]: checked } })
 
+  let number = 0
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-5">
       <PickerQuestion
-        number={1}
+        number={++number}
         question={STAY_PRIVATE.needQuestion}
-        className="grid-cols-1 sm:grid-cols-2 xl:grid-cols-3"
+        className={WIDE_GRID}
       >
         {needs.map((need) => (
           <PickerOption
@@ -73,18 +84,36 @@ export function ChoicesPicker({
             value={need.id}
             checked={need.id === choices.need}
             onChange={() => setNeed(need.id)}
-            className="flex flex-col gap-1"
-          >
-            <OptionText label={need.label} description={need.description} />
-          </PickerOption>
+            label={need.label}
+            // Only the chosen need explains itself, which keeps the panel short.
+            description={
+              need.id === choices.need ? need.description : undefined
+            }
+            trailing={
+              <CountBadge
+                count={protocols.filter((p) => p.needId === need.id).length}
+              />
+            }
+          />
         ))}
       </PickerQuestion>
 
       <PickerQuestion
-        number={2}
+        number={++number}
         question={STAY_PRIVATE.fromQuestion}
         note={STAY_PRIVATE.fromNote}
-        className="grid-cols-1 sm:grid-cols-2 xl:grid-cols-3"
+        className={WIDE_GRID}
+        action={
+          !isDefaultFrom && (
+            <button
+              type="button"
+              onClick={() => onChange({ ...choices, from: defaultFrom })}
+              className="font-medium text-brand text-label-value-13 hover:underline"
+            >
+              {STAY_PRIVATE.resetChoices}
+            </button>
+          )
+        }
       >
         {adversaries.map((adversary) => (
           <PickerOption
@@ -94,22 +123,18 @@ export function ChoicesPicker({
             value={adversary.id}
             checked={choices.from.includes(adversary.id)}
             onChange={(checked) => setFrom(adversary.id, checked)}
-            className="flex flex-col gap-1"
-          >
-            <OptionText
-              label={adversary.label}
-              description={adversary.examples}
-            />
-          </PickerOption>
+            label={adversary.label}
+            description={adversary.examples}
+          />
         ))}
       </PickerQuestion>
 
       {efforts.length > 0 && (
         <PickerQuestion
-          number={3}
+          number={++number}
           question={STAY_PRIVATE.effortQuestion}
           note={STAY_PRIVATE.effortNote}
-          className="grid-cols-1 sm:grid-cols-2"
+          className={NARROW_GRID}
         >
           {efforts.map((id) => (
             <PickerOption
@@ -119,23 +144,19 @@ export function ChoicesPicker({
               value={id}
               checked={choices.accepts[id]}
               onChange={(checked) => setAccepts(id, checked)}
-              className="flex flex-col gap-1"
-            >
-              <OptionText
-                label={ADVICE_EFFORTS[id].label(waitWindowDays)}
-                description={ADVICE_EFFORTS[id].description}
-              />
-            </PickerOption>
+              label={ADVICE_EFFORTS[id].label(waitWindowDays)}
+              description={ADVICE_EFFORTS[id].description}
+            />
           ))}
         </PickerQuestion>
       )}
 
       {(options.assets.length > 0 || options.chains.length > 0) && (
-        <fieldset>
-          <legend className="font-bold text-label-value-15">
+        <fieldset className="min-w-0">
+          <legend className="font-bold text-heading-16">
             {STAY_PRIVATE.filtersLabel}
           </legend>
-          <div className="mt-2 grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <div className="mt-2 grid grid-cols-2 gap-2">
             <FilterSelect
               label={STAY_PRIVATE.assetLabel}
               value={choices.asset}
@@ -152,7 +173,7 @@ export function ChoicesPicker({
               onChange={(chain) => onChange({ ...choices, chain })}
             />
           </div>
-          <p className="mt-2 text-paragraph-13 text-secondary">
+          <p className="mt-1.5 text-paragraph-12 text-secondary">
             {STAY_PRIVATE.filtersNote}
           </p>
         </fieldset>
@@ -161,18 +182,21 @@ export function ChoicesPicker({
   )
 }
 
-function OptionText({
-  label,
-  description,
-}: {
-  label: string
-  description: string
-}) {
+/** Options share a row below the sidebar breakpoint, and stack inside it. */
+const WIDE_GRID = 'grid-cols-1 md:grid-cols-2 xl:grid-cols-1'
+const NARROW_GRID = 'grid-cols-1 sm:grid-cols-2 xl:grid-cols-1'
+
+function CountBadge({ count }: { count: number }) {
   return (
-    <>
-      <span className="font-bold text-label-value-15">{label}</span>
-      <span className="text-paragraph-13 text-secondary">{description}</span>
-    </>
+    <span
+      className={cn(
+        'mt-px shrink-0 rounded-full bg-surface-secondary px-1.5 py-0.5 font-medium text-2xs text-secondary tabular-nums leading-none',
+        count === 0 && 'opacity-60',
+      )}
+      title={`${count} ${count === 1 ? 'protocol' : 'protocols'} reviewed`}
+    >
+      {count}
+    </span>
   )
 }
 
@@ -188,12 +212,15 @@ function FilterSelect({
   onChange: (value: string | undefined) => void
 }) {
   return (
-    <label className="flex flex-col gap-1 text-paragraph-13 text-secondary">
+    <label className="flex min-w-0 flex-col gap-1 text-paragraph-12 text-secondary">
       {label}
       <select
         value={value ?? ''}
         onChange={(e) => onChange(e.target.value || undefined)}
-        className="h-9 rounded-lg border border-divider bg-surface-primary px-2 text-paragraph-15 text-primary"
+        className={cn(
+          'h-9 w-full min-w-0 rounded-lg border border-divider bg-surface-primary px-2 text-paragraph-14 text-primary',
+          value !== undefined && 'border-brand',
+        )}
       >
         <option value="">{STAY_PRIVATE.anyOption}</option>
         {options.map((option) => (
@@ -208,8 +235,4 @@ function FilterSelect({
 
 function keep(value: string | undefined, allowed: string[]) {
   return value !== undefined && allowed.includes(value) ? value : undefined
-}
-
-function capitalize(text: string) {
-  return text.charAt(0).toUpperCase() + text.slice(1)
 }

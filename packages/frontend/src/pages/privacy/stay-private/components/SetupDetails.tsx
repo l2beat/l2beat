@@ -1,7 +1,6 @@
 import type { PrivacyAdversary, PrivacyAdversaryId } from '@l2beat/config'
 import { formatInteger } from '@l2beat/shared-pure'
 import { CustomLink } from '~/components/link/CustomLink'
-import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import {
   PrivacyAdversaryLink,
   PrivacyAdviceSteps,
@@ -28,9 +27,10 @@ import {
 
 /**
  * One protocol's setup: the app the steps assume, the tools to get, the steps
- * the user's efforts keep, and which ratings still hold on that path.
+ * the user's efforts keep, and which ratings still hold on that path. Opens
+ * under the protocol's row, which already names it.
  */
-export function SetupCard({
+export function SetupDetails({
   protocol,
   accepts,
   from,
@@ -62,22 +62,14 @@ export function SetupCard({
     `${protocol.href}#${getPrivacyAdversaryBlockId(id)}`
 
   return (
-    <PrimaryCard>
-      {/* Announced on every pick, so a screen reader hears the setup change. */}
-      <h2
-        aria-live="polite"
-        className="font-bold text-heading-18 md:text-heading-20"
-      >
-        {STAY_PRIVATE.setupTitle}: {protocol.name}
-      </h2>
-      <div className="mt-3 flex flex-col gap-2">
-        {protocol.isUnderReview && (
-          <WarningBar color="yellow" text={STAY_PRIVATE.underReview} />
-        )}
-        {protocol.redWarning && (
-          <WarningBar color="red" text={protocol.redWarning} />
-        )}
-      </div>
+    <div>
+      {protocol.isUnderReview && (
+        <WarningBar
+          color="yellow"
+          text={STAY_PRIVATE.underReview}
+          className="mb-3"
+        />
+      )}
       <ProtocolFacts
         protocol={protocol}
         waits={path.taken.some((step) => step.randomWait)}
@@ -96,9 +88,9 @@ export function SetupCard({
 
       {tools.length > 0 && (
         <>
-          <h3 className="mt-8 font-bold text-heading-18">
+          <h4 className="mt-6 font-bold text-heading-16">
             {STAY_PRIVATE.toolsTitle}
-          </h3>
+          </h4>
           <ul className="mt-2 flex flex-col gap-1 text-paragraph-15">
             {tools.map((tool) => (
               <li key={tool.name}>
@@ -112,9 +104,9 @@ export function SetupCard({
         </>
       )}
 
-      <h3 className="mt-8 font-bold text-heading-18">
+      <h4 className="mt-6 font-bold text-heading-16">
         {STAY_PRIVATE.stepsTitle}
-      </h3>
+      </h4>
       {path.skipped.length > 0 && (
         <p className="mt-2 text-paragraph-15">
           <span className="font-bold">{STAY_PRIVATE.skippedLabel}:</span>{' '}
@@ -143,9 +135,9 @@ export function SetupCard({
         </div>
       )}
 
-      <h3 className="mt-8 font-bold text-heading-18">
+      <h4 className="mt-6 font-bold text-heading-16">
         {STAY_PRIVATE.defendsTitle}
-      </h3>
+      </h4>
       <ul className="mt-3 flex flex-col divide-y divide-divider">
         {path.adversaries.map((row) => (
           <li
@@ -167,9 +159,9 @@ export function SetupCard({
 
       {costs.length > 0 && (
         <>
-          <h3 className="mt-8 font-bold text-heading-18">
+          <h4 className="mt-6 font-bold text-heading-16">
             {STAY_PRIVATE.costsTitle}
-          </h3>
+          </h4>
           <div className="mt-3 overflow-x-auto">
             <table className="w-full min-w-[480px] text-left text-paragraph-14">
               <thead className="text-paragraph-13 text-secondary">
@@ -218,7 +210,7 @@ export function SetupCard({
         </div>
         <p className="text-secondary">{STAY_PRIVATE.notAnAudit}</p>
       </div>
-    </PrimaryCard>
+    </div>
   )
 }
 
@@ -234,7 +226,7 @@ function ProtocolFacts({
 }) {
   const { anonymitySet, referenceApp, exitWindow } = protocol
   return (
-    <dl className="mt-4 grid gap-x-6 gap-y-3 text-paragraph-15 sm:grid-cols-3">
+    <dl className="grid gap-x-6 gap-y-3 text-paragraph-15 sm:grid-cols-3">
       <Fact label={STAY_PRIVATE.referenceAppLabel}>
         {referenceApp ? (
           <>
