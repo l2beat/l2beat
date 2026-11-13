@@ -8,9 +8,9 @@ interface Props {
 }
 
 const VALUES: { value: TrackedTxsConfigSubtype; label: string }[] = [
-  { value: 'batchSubmissions', label: 'TX DATA' },
-  { value: 'proofSubmissions', label: 'PROOFS' },
-  { value: 'stateUpdates', label: 'STATE UPDATES' },
+  { value: 'batchSubmissions', label: 'Tx data' },
+  { value: 'proofSubmissions', label: 'Proofs' },
+  { value: 'stateUpdates', label: 'State updates' },
 ]
 
 export function LivenessChartSubtypeControls({

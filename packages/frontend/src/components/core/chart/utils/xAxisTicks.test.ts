@@ -111,6 +111,12 @@ describe(getTimeTicks.name, () => {
 })
 
 describe(fitXTicks.name, () => {
+  it('keeps every tick when none would fit, so the axis is never blank', () => {
+    const values = fitXTicks([0, 100], () => 'abcd', [0, 100], 400, 12)
+
+    expect(values).toEqual([0, 100])
+  })
+
   it('leaves out ticks whose labels would cross either plot edge', () => {
     const values = fitXTicks(
       [5, 20, 50, 80, 95],

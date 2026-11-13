@@ -5,12 +5,10 @@ import { cn } from '~/utils/cn'
 
 function Tabs({
   className,
-  variant,
   name,
   onValueChange,
   ...props
 }: React.ComponentProps<typeof TabsPrimitive.Root> & {
-  variant?: 'highlighted'
   name: string
 }) {
   const { track } = useTracking()
@@ -18,7 +16,6 @@ function Tabs({
   return (
     <TabsPrimitive.Root
       data-slot="tabs"
-      data-variant={variant}
       className={cn('group/tabs flex flex-col gap-2', className)}
       onValueChange={(val) => {
         onValueChange?.(val)
@@ -60,7 +57,6 @@ function TabsTrigger({
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-1',
         'disabled:pointer-events-none disabled:opacity-50',
         'data-[state=active]:bg-pure-white data-[state=active]:text-primary dark:data-[state=active]:bg-black',
-        'group-data-[variant=highlighted]/tabs:data-[state=active]:bg-primary group-data-[variant=highlighted]/tabs:data-[state=active]:text-primary-invert',
         className,
       )}
       {...props}
