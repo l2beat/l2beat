@@ -19,6 +19,7 @@ import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProjectDefiEntry } from '~/server/features/defi/project/getDefiProjectEntry'
 import type { ProjectSectionLink } from '~/server/features/projects/getProjectSectionLinks'
 import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
+import { cn } from '~/utils/cn'
 import { LiquidStakingProjectSummary } from './components/LiquidStakingProjectSummary'
 
 interface Props extends AppLayoutProps {
@@ -94,7 +95,14 @@ export function DefiProjectPage({
                       className="md:hidden"
                     />
                   )}
-                  <HorizontalSeparator className="my-4 md:hidden" />
+                  <HorizontalSeparator
+                    className={cn(
+                      'my-4 md:hidden',
+                      // With an empty summary card, the first section
+                      // starts right under this rule, like every later one.
+                      !entry.liquidStaking && 'mb-0',
+                    )}
+                  />
                   <div className="mb-3 max-md:hidden">
                     <DesktopProjectLinks
                       projectLinks={entry.projectLinks}
@@ -108,7 +116,13 @@ export function DefiProjectPage({
                     <PrimaryCard
                       id="summary"
                       data-role="nav-section"
-                      className="scroll-mt-[100vh] border-divider max-md:rounded-none max-md:border-b max-md:pt-0"
+                      className={cn(
+                        'scroll-mt-[100vh] border-divider max-md:rounded-none max-md:border-b max-md:pt-0',
+                        // On phones the badges and About sit above the card,
+                        // so without the staking summary it collapses to an
+                        // empty line that still anchors the Summary tab.
+                        !entry.liquidStaking && 'max-md:border-b-0 max-md:p-0',
+                      )}
                     >
                       {entry.liquidStaking && (
                         <>
