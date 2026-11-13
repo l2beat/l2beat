@@ -1,5 +1,6 @@
 import { WhyAmIHereNotice } from '~/components/countdowns/other-migration/WhyAmIHereNotice'
 import { StageOneRequirementsChangeNotice } from '~/components/countdowns/stage-one-requirements-change/StageOneRequirementsChangeNotice'
+import { MobileBadgesSection } from '~/components/projects/sections/BadgesSection'
 import type { ProjectL2Entry } from '~/server/features/layer2s/project/getL2ProjectEntry'
 import type { PrivacySummary } from '~/server/features/privacy/project/getPrivacyProjectEntry'
 import { ProjectIntro } from '../../project/ProjectIntro'
@@ -37,7 +38,9 @@ export function L2ProjectPage({ projectEntry, privacy, ...props }: Props) {
         <ProjectIntro
           status={projectEntry}
           versions={props.versionLinks}
-          badges={header.badges}
+          badges={
+            header.badges && <MobileBadgesSection badges={header.badges} />
+          }
           description={header.description}
           links={header.links}
           discoUiHref={projectEntry.discoUiHref}
