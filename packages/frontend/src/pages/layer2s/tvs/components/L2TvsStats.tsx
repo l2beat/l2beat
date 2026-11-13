@@ -128,9 +128,7 @@ function Stat({
               value={change}
               period={changePeriod}
             />
-            <span className="text-secondary">
-              {PERIOD_LABEL[changePeriod]}
-            </span>
+            <span className="text-secondary">{PERIOD_LABEL[changePeriod]}</span>
           </span>
         ) : null}
       </div>
