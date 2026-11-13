@@ -24,7 +24,7 @@ export async function getL2CostsData(
     getAppLayoutProps(),
     cache.get(
       {
-        key: ['layer2s', 'costs', 'data'],
+        key: ['layer2s', 'costs', 'data', req.query.tab],
         ttl: 5 * 60,
         staleWhileRevalidate: 25 * 60,
       },

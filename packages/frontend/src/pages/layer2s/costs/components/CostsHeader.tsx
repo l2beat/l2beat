@@ -5,7 +5,7 @@ import { env } from '~/env'
 export function CostsHeader() {
   return (
     <>
-      <MainPageHeader description="Onchain costs tracks the fees paid by L2s to Ethereum for posting transaction data, proofs, and state updates. These costs provide insights into the economic efficiency of different solutions. Note that these values represent the costs incurred by the L2 itself, not the fees paid directly by users.">
+      <MainPageHeader description="Onchain costs track the fees paid by L2s to Ethereum for posting transaction data, proofs, and state updates. These costs provide insights into the economic efficiency of different solutions. Note that these values represent the costs incurred by the L2 itself, not the fees paid directly by users.">
         Costs
       </MainPageHeader>
       {env.CLIENT_SIDE_TRACKED_TXS_OUTAGE && (

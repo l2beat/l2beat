@@ -1,5 +1,4 @@
 import { externalLinks } from '~/consts/externalLinks'
-import { HOME_BUTTON_CLASS } from '~/pages/home/homeStyles'
 
 export function RequestTokenBox() {
   return (
@@ -8,7 +7,7 @@ export function RequestTokenBox() {
         Can&apos;t find a token you&apos;re looking for?
       </p>
       <a
-        className={HOME_BUTTON_CLASS}
+        className="flex items-center gap-1.5 rounded-md border border-divider px-3 py-1.5 font-medium text-label-value-13 leading-4 transition-colors hover:bg-surface-secondary"
         href={externalLinks.tokenRequest}
         target="_blank"
         rel="noreferrer"
