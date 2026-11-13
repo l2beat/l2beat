@@ -2,7 +2,6 @@ import {
   Address32,
   ChainSpecificAddress,
   EthereumAddress,
-  UnixTime,
 } from '@l2beat/shared-pure'
 import { findBestTransferLogByExactAmount } from '../logScan'
 import {
@@ -15,6 +14,7 @@ import {
   type LogToCapture,
   type MatchResult,
   Result,
+  SLOW_WITHDRAWAL_TTL,
 } from '../types'
 import {
   MessagePassed,
@@ -53,7 +53,7 @@ const ERC20BridgeInitiated = createInteropEventType<{
   amount: bigint
   wasBurned?: boolean
 }>('opstack.ERC20BridgeInitiated', {
-  ttl: 30 * UnixTime.DAY,
+  ttl: SLOW_WITHDRAWAL_TTL,
 })
 
 const parseERC20BridgeInitiated = createEventParser(erc20BridgeInitiatedLog)
@@ -74,7 +74,7 @@ const ETHBridgeInitiatedL2 = createInteropEventType<{
   chain: string
   amount: bigint
 }>('opstack.ETHBridgeInitiatedL2', {
-  ttl: 30 * UnixTime.DAY,
+  ttl: SLOW_WITHDRAWAL_TTL,
 })
 
 // L1: ETH withdrawal finalized

@@ -2,7 +2,6 @@ import {
   Address32,
   ChainSpecificAddress,
   EthereumAddress,
-  UnixTime,
 } from '@l2beat/shared-pure'
 import {
   createEventParser,
@@ -15,6 +14,7 @@ import {
   type LogToCapture,
   type MatchResult,
   Result,
+  SLOW_WITHDRAWAL_TTL,
   type TxToCapture,
   txFromEvent,
 } from '../types'
@@ -38,7 +38,7 @@ export const MessagePassed = createInteropEventType<{
   chain: string
   withdrawalHash: string
   value: bigint
-}>('opstack.MessagePassed', { ttl: 30 * UnixTime.DAY }) // needs to go through the challenge period
+}>('opstack.MessagePassed', { ttl: SLOW_WITHDRAWAL_TTL }) // needs to go through the challenge period
 
 export const parseMessagePassed = createEventParser(messagePassedLog)
 

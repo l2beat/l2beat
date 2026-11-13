@@ -2,7 +2,6 @@ import {
   Address32,
   ChainSpecificAddress,
   EthereumAddress,
-  UnixTime,
 } from '@l2beat/shared-pure'
 import {
   MessagePassed,
@@ -20,6 +19,7 @@ import {
   type LogToCapture,
   type MatchResult,
   Result,
+  SLOW_WITHDRAWAL_TTL,
 } from './types'
 
 const initiateSynthTransferLog =
@@ -55,7 +55,7 @@ const FinalizeL2 = createInteropEventType<{
 const InitiateL2 = createInteropEventType<{
   amount: bigint
 }>('synthetix-bridge.InitiateL2', {
-  ttl: 30 * UnixTime.DAY,
+  ttl: SLOW_WITHDRAWAL_TTL,
 })
 
 const FinalizeL1 = createInteropEventType<{

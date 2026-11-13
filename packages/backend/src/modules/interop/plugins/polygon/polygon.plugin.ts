@@ -25,6 +25,7 @@ import {
   type LogToCapture,
   type MatchResult,
   Result,
+  SLOW_WITHDRAWAL_TTL,
 } from '../types'
 import { PolygonConfig } from './polygon.config'
 
@@ -86,7 +87,7 @@ const L2WithdrawalInitiated = createInteropEventType<{
   amount: bigint
 }>('polygon.WithdrawalInitiated', {
   direction: 'outgoing',
-  ttl: 30 * UnixTime.DAY,
+  ttl: SLOW_WITHDRAWAL_TTL,
 })
 
 const L1WithdrawalFinalized = createInteropEventType<{
