@@ -55,7 +55,14 @@ const columnHelper = createColumnHelper<L2ActivityTableEntry>()
 
 export const getL2ActivityColumns = (
   metric: ActivityMetric,
-  opts?: CommonProjectColumnsOptions,
+  opts?: CommonProjectColumnsOptions & {
+    /**
+     * Hides Type with CSS on phones, for the markup painted before the
+     * viewport is known. After that the table hides it through its column
+     * visibility, which the Columns menu can turn back on.
+     */
+    hideTypeOnPhones?: boolean
+  },
 ) =>
   compact([
     ...getL2CommonProjectColumns(
@@ -68,6 +75,9 @@ export const getL2ActivityColumns = (
     ),
     columnHelper.accessor('type', {
       header: 'Type',
+      meta: opts?.hideTypeOnPhones
+        ? { headClassName: 'max-md:hidden', cellClassName: 'max-md:hidden' }
+        : undefined,
       cell: (ctx) => {
         const { type, id, stacks } = ctx.row.original
 

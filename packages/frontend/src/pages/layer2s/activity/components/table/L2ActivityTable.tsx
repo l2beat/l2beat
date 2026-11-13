@@ -3,6 +3,7 @@ import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
 import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
+import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { useTable } from '~/hooks/useTable'
 import type { L2ActivityEntry } from '~/server/features/layer2s/activity/getL2ActivityEntries'
 import { compareActivityEntry } from '~/server/features/layer2s/activity/utils/compareActivityEntry'
@@ -25,7 +26,21 @@ export function L2ActivityTable({ entries }: Props) {
     return tableEntries ?? []
   }, [entries, metric])
 
-  const columns = useMemo(() => getL2ActivityColumns(metric), [metric])
+  // Phones start without Type, so the figure the table ranks by is in the
+  // first view. Undefined until mounted: the server can't know the viewport.
+  const breakpoint = useBreakpoint()
+  const isPhone = breakpoint === 'xs' || breakpoint === 'sm'
+  const columns = useMemo(
+    () =>
+      getL2ActivityColumns(metric, {
+        hideTypeOnPhones: breakpoint === undefined,
+      }),
+    [metric, breakpoint],
+  )
+  const defaultVisibility = useMemo(
+    () => (isPhone ? { type: false } : undefined),
+    [isPhone],
+  )
 
   const table = useTable('L2ActivityTable', {
     columns,
@@ -37,6 +52,7 @@ export function L2ActivityTable({ entries }: Props) {
     },
     onSortingChange: setSorting,
     initialState: {
+      columnVisibility: defaultVisibility,
       columnPinning: {
         left: ['#', 'logo'],
       },
