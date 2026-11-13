@@ -31,6 +31,7 @@ import { isApple, Kbd, SEARCH_TIPS_ID, SearchBarTips } from './SearchBarTips'
 import type { SearchBarCategory } from './searchBarCategories'
 import { searchBarCategories } from './searchBarCategories'
 import { getEmptyStateGroups } from './searchBarEmptyState'
+import type { SearchIndexProjectKind } from './searchIndex'
 import type { AnySearchBarEntry } from './types'
 import { useSearchBarResults } from './useSearchBarResults'
 
@@ -484,8 +485,11 @@ function entryToValue(entry: AnySearchBarEntry) {
 function entryToLabel(entry: AnySearchBarEntry) {
   if (entry.type === 'page') return 'Page'
   if (entry.type === 'token') return 'Token'
+  return [entry.kind, ...(entry.otherKinds ?? [])].map(kindToLabel).join(' · ')
+}
 
-  switch (entry.kind) {
+function kindToLabel(kind: SearchIndexProjectKind) {
+  switch (kind) {
     case 'ethereum':
       return 'Base layer'
     case 'chain':
@@ -503,7 +507,7 @@ function entryToLabel(entry: AnySearchBarEntry) {
     case 'defi':
       return 'DeFi'
     default:
-      assertUnreachable(entry.kind)
+      assertUnreachable(kind)
   }
 }
 

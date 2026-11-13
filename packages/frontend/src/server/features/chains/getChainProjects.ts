@@ -1,4 +1,3 @@
-import { INTEROP_CHAINS } from '@l2beat/config'
 import { chainToProjectId } from '@l2beat/config/build/global/chainMap'
 import { ProjectId } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
@@ -26,29 +25,10 @@ export function getChainProjectSlug(
 
 /** The chains that have a chain page in this deployment. */
 export async function getChainProjects() {
-  return selectChainProjects(await getL2ProjectIds())
-}
-
-/** `getChainProjects` for callers that already hold the scaling projects. */
-export function selectChainProjects(l2ProjectIds: Set<ProjectId>) {
+  const l2Projects = await ps.getProjects({ where: ['scalingInfo'] })
+  const l2ProjectIds = new Set(l2Projects.map((project) => project.id))
   return getActiveInteropChains().flatMap((chain) => {
     const slug = getChainProjectSlug(chain, l2ProjectIds)
     return slug ? [{ ...chain, slug }] : []
   })
-}
-
-/**
- * Whether the slug belongs to a chain page in some deployment, whichever
- * chains this one enables.
- */
-export async function isChainProjectSlug(slug: string) {
-  const l2ProjectIds = await getL2ProjectIds()
-  return INTEROP_CHAINS.some(
-    (chain) => getChainProjectSlug(chain, l2ProjectIds) === slug,
-  )
-}
-
-async function getL2ProjectIds() {
-  const l2Projects = await ps.getProjects({ where: ['scalingInfo'] })
-  return new Set(l2Projects.map((project) => project.id))
 }

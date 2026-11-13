@@ -6,12 +6,15 @@ import { createMigratedProjectsRouter } from './MigratedProjectsRouter'
 // permanent redirect target, for the HTML page and each of its variants.
 describe(createMigratedProjectsRouter.name, () => {
   for (const [from, to] of [
-    ['/layer2s/projects/zksync2', '/layer2s/projects/zksync-era'],
-    ['/layer2s/projects/zksync2.md', '/layer2s/projects/zksync-era.md'],
+    ['/layer2s/projects/zksync2', '/projects/zksync-era'],
+    ['/layer2s/projects/zksync2.md', '/projects/zksync-era.md'],
     [
       '/layer2s/projects/zksync2/tvs-breakdown',
-      '/layer2s/projects/zksync-era/tvs-breakdown',
+      '/projects/zksync-era/tvs-breakdown',
     ],
+    // Redirected to the L2 URL above for years, so browsers may hold that.
+    ['/projects/zksync2', '/projects/zksync-era'],
+    ['/projects/zksync2.md', '/projects/zksync-era.md'],
   ] as const) {
     it(`redirects ${from} to ${to}`, async () => {
       const response = await fetchFromRouter(

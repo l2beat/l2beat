@@ -38,8 +38,10 @@ ${urls}
 
 /** The page followed by its `.md` version, if the registry has one. */
 function withMarkdownAlternate(page: Page): SitemapEntry[] {
-  const markdownPath = getMarkdownAlternatePath(page.path)
-  return markdownPath ? [page, { ...page, path: markdownPath }] : [page]
+  const markdownPath =
+    page.hasMarkdown === false ? undefined : getMarkdownAlternatePath(page.path)
+  const entry = { path: page.path, lastModified: page.lastModified }
+  return markdownPath ? [entry, { ...entry, path: markdownPath }] : [entry]
 }
 
 function renderUrl(page: SitemapEntry) {

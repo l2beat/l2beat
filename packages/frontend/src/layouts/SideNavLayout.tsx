@@ -73,6 +73,8 @@ export interface SideNavLayoutProps {
   variant?: SideNavLayoutVariant
   /** Scenery behind the whole page, nav included - see `PageBackdrop`. */
   backdrop?: React.ReactNode
+  /** False for a page the markdown registry would wrongly give a `.md`. */
+  hasMarkdown?: boolean
 }
 
 export function SideNavLayout({
@@ -80,6 +82,7 @@ export function SideNavLayout({
   childrenWrapperClassName,
   variant = 'default',
   backdrop,
+  hasMarkdown,
 }: SideNavLayoutProps) {
   const topChildren = <TopBanner className={topBannerVariants({ variant })} />
 
@@ -117,6 +120,7 @@ export function SideNavLayout({
           <Footer
             className={footerVariants({ variant })}
             columnClassName={columnVariants({ variant })}
+            hasMarkdown={hasMarkdown}
           />
         </div>
       </div>

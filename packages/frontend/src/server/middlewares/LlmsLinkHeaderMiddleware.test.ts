@@ -14,13 +14,10 @@ describe(LlmsLinkHeaderMiddleware.name, () => {
   const LLMS_TXT_ONLY = '<https://ethbeat.org/llms.txt>; rel="describedby"'
 
   it('advertises the markdown alternate of a page that is served', async () => {
-    const response = await fetchFromRouter(
-      createRouter(),
-      '/layer2s/projects/200',
-    )
+    const response = await fetchFromRouter(createRouter(), '/projects/200')
 
     expect(response.headers.get('link')).toEqual(
-      `<https://ethbeat.org/layer2s/projects/200.md>; rel="alternate"; type="text/markdown", ${LLMS_TXT_ONLY}`,
+      `<https://ethbeat.org/projects/200.md>; rel="alternate"; type="text/markdown", ${LLMS_TXT_ONLY}`,
     )
   })
 
@@ -28,7 +25,7 @@ describe(LlmsLinkHeaderMiddleware.name, () => {
     for (const status of [404, 500]) {
       const response = await fetchFromRouter(
         createRouter(),
-        `/layer2s/projects/${status}`,
+        `/projects/${status}`,
       )
 
       expect(response.status).toEqual(status)
@@ -40,7 +37,7 @@ describe(LlmsLinkHeaderMiddleware.name, () => {
 function createRouter() {
   const router = express.Router()
   router.use(LlmsLinkHeaderMiddleware())
-  router.get('/layer2s/projects/:status', (req, res) => {
+  router.get('/projects/:status', (req, res) => {
     res.status(Number(req.params.status)).send('body')
   })
   return router
@@ -62,8 +59,8 @@ describe(getLinkHeader.name, () => {
   })
 
   it('adds the markdown alternate of project pages', () => {
-    expect(getLinkHeader('/layer2s/projects/arbitrum')).toEqual(
-      '<https://ethbeat.org/layer2s/projects/arbitrum.md>; rel="alternate"; type="text/markdown", <https://ethbeat.org/llms.txt>; rel="describedby"',
+    expect(getLinkHeader('/projects/arbitrum')).toEqual(
+      '<https://ethbeat.org/projects/arbitrum.md>; rel="alternate"; type="text/markdown", <https://ethbeat.org/llms.txt>; rel="describedby"',
     )
   })
 

@@ -45,7 +45,9 @@ describe(createSitemapRouter.name, () => {
     const pages: Page[] = [
       { path: '/layer2s/summary', lastModified },
       { path: '/layer2s/activity' },
-      { path: '/layer2s/projects/arbitrum' },
+      { path: '/projects/arbitrum' },
+      // A chain page: interop flows only, with no markdown version.
+      { path: '/projects/bsc', hasMarkdown: false },
     ]
 
     const entries = await getEntries(pages)
@@ -55,11 +57,9 @@ describe(createSitemapRouter.name, () => {
       { loc: 'https://ethbeat.org/layer2s/summary', lastmod: '2026-06-15' },
       { loc: 'https://ethbeat.org/layer2s/summary.md', lastmod: '2026-06-15' },
       { loc: 'https://ethbeat.org/layer2s/activity', lastmod: null },
-      { loc: 'https://ethbeat.org/layer2s/projects/arbitrum', lastmod: null },
-      {
-        loc: 'https://ethbeat.org/layer2s/projects/arbitrum.md',
-        lastmod: null,
-      },
+      { loc: 'https://ethbeat.org/projects/arbitrum', lastmod: null },
+      { loc: 'https://ethbeat.org/projects/arbitrum.md', lastmod: null },
+      { loc: 'https://ethbeat.org/projects/bsc', lastmod: null },
     ])
   })
 })

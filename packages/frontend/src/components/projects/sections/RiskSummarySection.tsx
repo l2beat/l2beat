@@ -25,7 +25,8 @@ export interface RiskSummarySectionProps extends ProjectSectionProps {
 
 export interface RiskGroup {
   start: number
-  name: ProjectRiskCategory
+  /** A risk category, or a hand-written one like "Privacy can be lost if" */
+  name: ProjectRiskCategory | (string & {})
   items: RiskItem[]
 }
 

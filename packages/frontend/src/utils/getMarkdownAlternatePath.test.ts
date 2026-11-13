@@ -13,11 +13,11 @@ describe(getMarkdownAlternatePath.name, () => {
   })
 
   it('resolves any project of a registered page kind', () => {
-    expect(getMarkdownAlternatePath('/layer2s/projects/arbitrum')).toEqual(
-      '/layer2s/projects/arbitrum.md',
+    expect(getMarkdownAlternatePath('/projects/arbitrum')).toEqual(
+      '/projects/arbitrum.md',
     )
-    expect(getMarkdownAlternatePath('/privacy/projects/railgun')).toEqual(
-      '/privacy/projects/railgun.md',
+    expect(getMarkdownAlternatePath('/projects/railgun')).toEqual(
+      '/projects/railgun.md',
     )
   })
 
@@ -49,7 +49,7 @@ describe(getMarkdownAlternatePath.name, () => {
     for (const path of [
       '/faq',
       '/layer2s/projects',
-      '/layer2s/projects/arbitrum/tvs-breakdown',
+      '/projects/arbitrum/tvs-breakdown',
       '/tokens/usdc01/circle/usdc/extra',
     ]) {
       expect(getMarkdownAlternatePath(path)).toEqual(undefined)
@@ -65,8 +65,6 @@ describe(getMarkdownAlternatePath.name, () => {
   })
 
   it('has no alternate for the markdown version itself', () => {
-    expect(getMarkdownAlternatePath('/layer2s/projects/arbitrum.md')).toEqual(
-      undefined,
-    )
+    expect(getMarkdownAlternatePath('/projects/arbitrum.md')).toEqual(undefined)
   })
 })

@@ -5,6 +5,7 @@ import {
   decodeSearchIndexToken,
 } from '~/components/search-bar/searchIndex'
 import { UNKNOWN_ABSTRACT_TOKEN_ID } from '~/server/features/layer2s/interop/consts'
+import { selectProjectPages } from '~/server/features/projects/getProjectPage'
 import { ps } from '~/server/projects'
 import { getLogger } from '../../utils/logger'
 import {
@@ -40,14 +41,17 @@ export async function getSearchBarAddressEntries(search: string) {
   const tokenMatches = tokens
     .filter((token) => token.id !== UNKNOWN_ABSTRACT_TOKEN_ID)
     .map((token) => decodeSearchIndexToken(toSearchIndexToken(token)))
-  const projectMatches = projects
-    .filter((project) =>
-      extractProjectAddresses(project.contracts, project.permissions).includes(
-        address,
-      ),
+  const projectMatches = selectProjectPages(projects)
+    .filter(
+      ({ project }) =>
+        project &&
+        extractProjectAddresses(
+          project.contracts,
+          project.permissions,
+        ).includes(address),
     )
-    .flatMap((project) => {
-      const row = toSearchIndexProject(project, cropsAttested)
+    .flatMap((entry) => {
+      const row = toSearchIndexProject(entry, cropsAttested)
       return row ? decodeSearchIndexProject(row).map(toSearchBarProject) : []
     })
 
