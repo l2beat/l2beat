@@ -50,13 +50,6 @@ export const l2ArchivedColumns = [
         'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront)',
     },
   }),
-  columnHelper.display({
-    header: 'Purpose',
-    cell: (ctx) => ctx.row.original.purposes.join(', '),
-    meta: {
-      cellClassName: 'lg:whitespace-normal',
-    },
-  }),
   columnHelper.accessor('totalTvs', {
     id: 'total',
     header: 'Value secured',
@@ -67,7 +60,7 @@ export const l2ArchivedColumns = [
       }
 
       return (
-        <span className="font-bold md:text-base">
+        <span className="font-medium md:text-label-value-15">
           {formatDollarValueNumber(value)}
         </span>
       )
@@ -86,7 +79,14 @@ export const l2ArchivedColumns = [
     meta: {
       align: 'right',
       tooltip:
-        'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens, shown together with a percentage change compared to 7D ago.',
+        'Value secured is the sum of canonically bridged tokens, externally bridged tokens, and native tokens.',
+    },
+  }),
+  columnHelper.display({
+    header: 'Purpose',
+    cell: (ctx) => ctx.row.original.purposes.join(', '),
+    meta: {
+      cellClassName: 'lg:whitespace-normal',
     },
   }),
 ]

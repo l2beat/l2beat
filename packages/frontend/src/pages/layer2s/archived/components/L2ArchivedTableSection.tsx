@@ -14,14 +14,14 @@ const WALK_AWAY_SECTIONS = [
     verdict: 'passed',
     title: 'Pass the walkaway test',
     description: 'Users can exit in the absence of operators.',
-    icon: <WalkAwayPassedIcon className="size-6 shrink-0 fill-positive" />,
+    icon: <WalkAwayPassedIcon className="size-5 shrink-0 fill-positive" />,
   },
   {
     verdict: 'not-passed',
     title: 'Do not pass the walkaway test',
     description:
       "Users cannot count on exiting in the absence of operators, or the project's contracts were exploited.",
-    icon: <WalkAwayNotPassedIcon className="size-6 shrink-0 fill-negative" />,
+    icon: <WalkAwayNotPassedIcon className="size-5 shrink-0 fill-negative" />,
   },
 ] as const
 
@@ -45,8 +45,8 @@ export function L2ArchivedTableSection(props: Props) {
         className="max-md:mt-4 max-md:px-4"
         entries={props.entries}
       />
-      {WALK_AWAY_SECTIONS.map(({ verdict, ...section }, i) => (
-        <PrimaryCard key={verdict} className={i === 0 ? 'mt-4' : 'mt-6'}>
+      {WALK_AWAY_SECTIONS.map(({ verdict, ...section }) => (
+        <PrimaryCard key={verdict} className="mt-4">
           <TableSortingProvider initialSort={initialSort}>
             <L2ArchivedTable
               {...section}
