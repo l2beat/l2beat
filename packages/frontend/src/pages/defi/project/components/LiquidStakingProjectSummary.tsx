@@ -33,7 +33,7 @@ export function LiquidStakingProjectSummary({
       tooltip: TVL_TOOLTIP,
       value:
         summary.totalValueLockedUsd !== undefined ? (
-          <span className="flex flex-col max-md:items-end">
+          <span className="flex flex-col items-end md:items-start">
             {formatCurrency(summary.totalValueLockedUsd, 'usd')}
             {summary.stakedEthShare && (
               <StakedEthShare

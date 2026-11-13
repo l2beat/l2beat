@@ -15,14 +15,17 @@ import {
 export function StakedEthShare({
   share,
   className,
+  disabledOnTouch,
 }: {
   share: LiquidStakingStakedEthShare
   className?: string
+  /** In a table row, a tap follows the row's link instead. */
+  disabledOnTouch?: boolean
 }) {
   return (
     <Tooltip>
       <TooltipTrigger
-        disabledOnTouch
+        disabledOnTouch={disabledOnTouch}
         className={cn('whitespace-nowrap text-secondary', className)}
       >
         ({formatStakedEthShare(share.value)})

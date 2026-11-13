@@ -35,7 +35,7 @@ export function getLiquidStakingStatColumns<T extends LiquidStakingStatsEntry>(
             <TwoRowCell.First>{formatCurrency(value, 'usd')}</TwoRowCell.First>
             {stakedEthShare && (
               <TwoRowCell.Second>
-                <StakedEthShare share={stakedEthShare} />
+                <StakedEthShare share={stakedEthShare} disabledOnTouch />
               </TwoRowCell.Second>
             )}
           </TwoRowCell>
