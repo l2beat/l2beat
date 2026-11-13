@@ -40,7 +40,7 @@ export function NativeProofVerificationDiagram({
       <circle cx="180" cy="36" r="11" fill="var(--accent)" />
       <path
         d="m174.5 36 4 4 7-8.5"
-        stroke="#fff"
+        className="stroke-primary-invert"
         strokeWidth="2.5"
         strokeLinecap="round"
         strokeLinejoin="round"

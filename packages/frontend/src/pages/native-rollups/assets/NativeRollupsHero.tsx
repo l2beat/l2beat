@@ -136,7 +136,7 @@ export function NativeRollupsHeroIllustration({
         x="245"
         y="33.5"
         textAnchor="middle"
-        fill="#fff"
+        className="fill-primary-invert"
         fontSize="10"
         fontWeight="700"
       >
@@ -205,17 +205,22 @@ export function NativeRollupsHeroIllustration({
         rx="7"
         fill="var(--accent)"
       />
-      <text x="160" y="104.5" fill="#fff" fontSize="11" fontWeight="700">
+      <text
+        x="160"
+        y="104.5"
+        className="fill-primary-invert"
+        fontSize="11"
+        fontWeight="700"
+      >
         Dependency
       </text>
       <text
         x="261"
         y="104.5"
         textAnchor="end"
-        fill="#fff"
+        className="fill-primary-invert"
         fontSize="11"
         fontWeight="600"
-        opacity="0.75"
       >
         1
       </text>
@@ -273,7 +278,7 @@ export function NativeRollupsHeroIllustration({
       <circle cx="360" cy="84" r="14" fill="var(--accent)" />
       <path
         d="m353 84 5 5 9-11"
-        stroke="#fff"
+        className="stroke-primary-invert"
         strokeWidth="2.5"
         strokeLinecap="round"
         strokeLinejoin="round"

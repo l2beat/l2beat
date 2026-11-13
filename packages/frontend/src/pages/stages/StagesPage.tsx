@@ -23,7 +23,7 @@ export function StagesPage({ content, lastUpdated, ...props }: Props) {
           <h1 className="mt-2 mb-4 font-semibold text-heading-32 tracking-[-0.01em] md:text-heading-40">
             The Stages Framework
           </h1>
-          <p className="mb-4 font-inter text-paragraph-18 md:text-xl md:leading-[1.6] dark:text-primary/88">
+          <p className="mb-4 font-inter text-paragraph-18 md:text-[22px] md:leading-[1.5] dark:text-primary/88">
             This page is to be considered an extended explainer for the latest
             version of the Stages Framework, whose precise specification can be
             found{' '}

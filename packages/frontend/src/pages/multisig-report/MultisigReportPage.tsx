@@ -1,4 +1,4 @@
-import { Logo } from '~/components/Logo'
+import { L2BeatLogo } from '~/pages/multisig-report/components/L2BeatLogo'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { PolygonLogo } from '~/icons/PolygonLogo'
@@ -61,7 +61,7 @@ export function MultisigReportPage({ multisigReportImage, ...props }: Props) {
               </p>
             </div>
             <div className="mt-6 flex items-center gap-4">
-              <Logo className="h-[26px] w-[64px]" />
+              <L2BeatLogo className="h-[26px] w-[64px]" />
               <PolygonLogo />
             </div>
             <ReportDownloadButton
