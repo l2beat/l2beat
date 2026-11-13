@@ -5,6 +5,7 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import {
+  isLiveFresh,
   LIVE_BUCKET_SECONDS,
   LIVE_BUFFER_SECONDS,
   LIVE_RANGES,
@@ -51,7 +52,7 @@ export interface ProjectLiveActivity {
     readFrom: UnixTime
     points: LiveActivityPoint[]
   }
-  /** Per second, over the minute up to the newest block */
+  /** Per second, over the minute up to the newest block, while it is recent */
   now: { tps: number; uops: number } | undefined
   /** Per second, in the hour the window ends in, on the days of the last week */
   usual: { tps: number; uops: number } | undefined
@@ -127,8 +128,22 @@ async function readProjectLiveActivity({
     oldest,
     overview: overview.map(toPoint),
     detail: { ...window, points: detail.map(toPoint) },
-    now: getLastMinuteRates(lastMinute, newest),
+    now: isLiveFresh(newest, now)
+      ? getLastMinuteRates(lastMinute, newest)
+      : undefined,
     usual: getUsualRates(hours, hour),
+  }
+}
+
+/** Whether the project's blocks are followed, so it has a live view */
+export async function hasLiveActivity(projectId: ProjectId): Promise<boolean> {
+  if (env.MOCK) return false
+  try {
+    const [newest] = await getDb().liveActivityBlock.getNewest(projectId, 1)
+    return isLiveFresh(newest?.timestamp, UnixTime.now())
+  } catch {
+    // the table is missing until its migration is deployed
+    return false
   }
 }
 

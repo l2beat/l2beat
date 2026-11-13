@@ -46,6 +46,7 @@ export function ActivitySection({
   const historyMetric: ActivityMetric = metric === 'gas' ? 'uops' : metric
   /** Where the live window ends, undefined while following the newest block */
   const [liveTo, setLiveTo] = useState<number>()
+  const [liveStale, setLiveStale] = useState(false)
   const openView = (next: 'history' | 'live') => {
     setViewParam(next)
     setLiveTo(undefined)
@@ -70,10 +71,12 @@ export function ActivitySection({
               onOpen={() => openView('live')}
             />
           ) : (
-            <LiveState
-              following={liveTo === undefined}
-              onFollow={() => setLiveTo(undefined)}
-            />
+            !liveStale && (
+              <LiveState
+                following={liveTo === undefined}
+                onFollow={() => setLiveTo(undefined)}
+              />
+            )
           )}
         </div>
       )}
@@ -85,6 +88,7 @@ export function ActivitySection({
           setMetric={setMetric}
           to={liveTo}
           setTo={setLiveTo}
+          onStale={setLiveStale}
         />
       ) : project.id === ProjectId.ETHEREUM ? (
         <EthereumActivityChart

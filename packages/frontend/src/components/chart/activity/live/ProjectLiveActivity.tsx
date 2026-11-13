@@ -4,6 +4,7 @@ import {
   formatInteger,
   formatNumber,
   ProjectId,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
@@ -24,13 +25,14 @@ import { HOME_TEXT } from '~/pages/home/homeStyles'
 import type { ProjectLiveActivity as ProjectLiveActivityData } from '~/server/features/layer2s/activity/live/getProjectLiveActivity'
 import {
   DEFAULT_LIVE_RANGE,
+  isLiveFresh,
   LIVE_BUCKET_SECONDS,
   LIVE_BUFFER_SECONDS,
   LIVE_RANGES,
   type LiveRange,
 } from '~/server/features/layer2s/activity/live/liveRanges'
 import { useTRPC } from '~/trpc/React'
-import { formatRange, parseTimestamp } from '~/utils/dates'
+import { formatRange, formatTimestamp, parseTimestamp } from '~/utils/dates'
 import { typeToColor } from '../ActivityChart'
 import { ActivityRatioChart } from '../ActivityRatioChart'
 import { ActivityStats } from '../ActivityStats'
@@ -68,6 +70,7 @@ export function ProjectLiveActivity({
   setMetric,
   to,
   setTo,
+  onStale,
 }: {
   project: ChartProject
   category: ProjectScalingCategory | undefined
@@ -76,6 +79,8 @@ export function ProjectLiveActivity({
   /** Where the window ends, undefined while following the newest block */
   to: number | undefined
   setTo: (to: number | undefined) => void
+  /** Told whether the chain's stored blocks stopped being followed */
+  onStale: (stale: boolean) => void
 }) {
   const trpc = useTRPC()
   const [range, setRange] = useState<LiveRange>(DEFAULT_LIVE_RANGE)
@@ -166,11 +171,23 @@ export function ProjectLiveActivity({
     domain,
   }
 
+  const stale = data !== undefined && !isLiveFresh(data.newest, UnixTime.now())
+  useEffect(() => onStale(stale), [stale, onStale])
+
   if (data && data.newest === undefined) {
     return (
       <p className="py-12 text-center text-secondary">
         No blocks of this chain are stored yet, so there is nothing live to
         show.
+      </p>
+    )
+  }
+  if (stale && data.newest !== undefined) {
+    return (
+      <p className="py-12 text-center text-secondary">
+        The newest stored block of this chain is from{' '}
+        {formatTimestamp(data.newest, { mode: 'datetime' })}, so live activity
+        is not updating.
       </p>
     )
   }

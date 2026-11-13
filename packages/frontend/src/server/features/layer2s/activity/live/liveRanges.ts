@@ -5,6 +5,15 @@ import { UnixTime } from '@l2beat/shared-pure'
 /** How long the backend keeps blocks, so how far back the live view reaches */
 export const LIVE_BUFFER_SECONDS = 4 * UnixTime.HOUR
 
+/**
+ * Whether the chain's newest stored block is recent enough to show as live.
+ * An older one means its blocks are no longer followed, or the follower is
+ * stuck. Longer than the head of chains the RPC proxy syncs from Envio lags
+ */
+export function isLiveFresh(newest: UnixTime | undefined, now: UnixTime) {
+  return newest !== undefined && newest >= now - 30 * UnixTime.MINUTE
+}
+
 export const LIVE_RANGES = {
   '5m': 5 * UnixTime.MINUTE,
   '15m': 15 * UnixTime.MINUTE,

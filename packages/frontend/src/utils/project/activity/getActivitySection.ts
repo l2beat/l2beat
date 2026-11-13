@@ -1,6 +1,7 @@
 import type { Project } from '@l2beat/config'
 import type { ActivitySectionProps } from '~/components/projects/sections/ActivitySection'
 import { env } from '~/env'
+import { hasLiveActivity } from '~/server/features/layer2s/activity/live/getProjectLiveActivity'
 import { checkIfActivityExists } from '~/server/features/layer2s/activity/utils/checkIfActivityExists'
 import { optionToRange } from '~/utils/range/range'
 
@@ -29,6 +30,7 @@ export async function getActivitySection(
     hasLive:
       env.CLIENT_SIDE_LIVE_ACTIVITY &&
       !project.archivedAt &&
-      project.activityConfig.type === 'block',
+      project.activityConfig.type === 'block' &&
+      (await hasLiveActivity(project.id)),
   }
 }

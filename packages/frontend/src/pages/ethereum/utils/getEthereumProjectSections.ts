@@ -3,6 +3,7 @@ import type { ProjectDetailsSection } from '~/components/projects/sections/types
 import type { RosetteValue } from '~/components/rosette/types'
 import { env } from '~/env'
 import { getLiquidStakingOverview } from '~/server/features/defi/liquid-staking/getLiquidStakingOverview'
+import { hasLiveActivity } from '~/server/features/layer2s/activity/live/getProjectLiveActivity'
 import type { ProjectInteropData } from '~/server/features/layer2s/interop/getProjectInteropData'
 import { getDiagramParams } from '~/utils/project/getDiagramParams'
 import { toTechnologyRisk } from '~/utils/project/risk-summary/toTechnologyRisk'
@@ -74,7 +75,8 @@ export async function getEthereumProjectSections({
       defaultRange: optionToRange('1y'),
       project: toChartProject(ethereum),
       milestones: ethereum.milestones ?? [],
-      hasLive: env.CLIENT_SIDE_LIVE_ACTIVITY,
+      hasLive:
+        env.CLIENT_SIDE_LIVE_ACTIVITY && (await hasLiveActivity(ethereum.id)),
     },
   })
 
