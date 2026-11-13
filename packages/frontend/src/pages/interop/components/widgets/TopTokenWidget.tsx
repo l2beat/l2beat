@@ -90,7 +90,7 @@ export function TopTokenWidget({
 function TopTokenHeading({ hideChainsInfo }: { hideChainsInfo?: boolean }) {
   return (
     <div className="min-w-0">
-      <h2 className="font-bold text-heading-16 md:text-heading-20">
+      <h2 className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
         Top token
       </h2>
       {!hideChainsInfo && (
@@ -286,11 +286,11 @@ function TokenStatCard({
 }) {
   return (
     <div className="flex h-14 flex-col justify-center rounded border border-divider px-4">
-      <div className="flex items-center justify-center text-center font-medium text-2xs text-secondary leading-none">
+      <div className="flex items-center justify-center text-center font-medium text-label-value-13 leading-none">
         {label}
         {tooltip ? <InfoTooltip>{tooltip}</InfoTooltip> : null}
       </div>
-      <div className="mt-1.5 text-center font-bold text-label-value-15 leading-none">
+      <div className="mt-1.5 text-center font-semibold text-label-value-15 tabular-nums leading-none">
         {isLoading ? <Skeleton className="mx-auto h-[15px] w-20" /> : value}
       </div>
     </div>
@@ -310,11 +310,11 @@ function TokenStatRow({
 }) {
   return (
     <div className="flex items-center justify-between gap-3">
-      <div className="flex items-center gap-1 font-medium text-label-value-14 text-secondary leading-none">
+      <div className="flex items-center gap-1 font-medium text-label-value-13 leading-none">
         {label}
         {tooltip ? <InfoTooltip>{tooltip}</InfoTooltip> : null}
       </div>
-      <div className="text-right font-bold text-label-value-15 leading-none">
+      <div className="text-right font-semibold text-label-value-15 tabular-nums leading-none">
         {isLoading ? <Skeleton className="h-4 w-20" /> : value}
       </div>
     </div>

@@ -12,7 +12,7 @@ export function TopProtocolsByTransfers({
   return (
     <TopProtocolsWidget
       metricType="transfers"
-      heading="Last 24 hours transfers"
+      heading="Transfers by protocol"
       topProtocols={topProtocols}
       isLoading={isLoading}
       formatValue={formatInteger}

@@ -22,39 +22,26 @@ export function BridgingTypeBreakdown({
           className: INTEROP_TYPE_TO_BG_COLOR[item.type],
         }))}
       />
-      <div className="flex flex-wrap gap-x-3 gap-y-1">
-        {items.map((item) => (
-          <div
-            key={item.type}
-            className="flex items-center gap-1 text-label-value-12 text-secondary"
-          >
-            <span
-              className={cn(
-                'size-2 rounded-full',
-                INTEROP_TYPE_TO_BG_COLOR[item.type],
-              )}
-            />
-            <span className="font-medium">
-              {TRANSFER_TYPE_DISPLAY[item.type].label}
-            </span>
-          </div>
-        ))}
-      </div>
+      {/* The rows below name each type beside its swatch: no legend row. */}
       <div className="flex flex-col gap-0.5">
         {items.map((item) => (
           <div
             key={item.type}
-            className="flex items-center justify-between gap-2 text-label-value-13"
+            className="flex items-start justify-between gap-2 text-label-value-13"
           >
-            <div className="flex min-w-0 items-center gap-1.5">
+            <div className="flex min-w-0 items-start gap-1.5">
               <span
                 className={cn(
-                  'size-2 shrink-0 rounded-full',
+                  'mt-1 size-2 shrink-0 rounded-full',
                   INTEROP_TYPE_TO_BG_COLOR[item.type],
                 )}
               />
-              <span className="truncate font-medium">
-                {TRANSFER_TYPE_DISPLAY[item.type].label}
+              <span className="whitespace-normal font-medium leading-4">
+                {/* "Lock" / "& Mint", not "Lock &" / "Mint", when it wraps */}
+                {TRANSFER_TYPE_DISPLAY[item.type].label.replace(
+                  '& ',
+                  '&\u00a0',
+                )}
               </span>
             </div>
             <RowStats volume={item.volume} transferCount={item.transferCount} />

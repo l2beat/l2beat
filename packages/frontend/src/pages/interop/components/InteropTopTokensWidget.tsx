@@ -46,9 +46,9 @@ export function InteropTopTokensWidget({
     <PrimaryCard
       className={cn('@container border-divider max-md:border-b', className)}
     >
-      <div className="flex items-center gap-2.5">
-        <h2 className="font-bold text-heading-18 md:text-heading-20">
-          Top Tokens by Volume
+      <div className="flex flex-wrap items-baseline gap-x-2">
+        <h2 className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
+          Top tokens by volume
         </h2>
         <Last24HoursBadge />
       </div>
@@ -59,10 +59,10 @@ export function InteropTopTokensWidget({
         onValueChange={setActiveTab}
         className="mt-4 gap-1"
       >
-        <TabsList className="-mr-1 -mb-1 block h-auto text-balance rounded-none bg-transparent p-0 leading-none">
+        <TabsList className="h-auto w-fit max-w-full flex-wrap justify-start gap-1 p-1">
           <TabsTrigger
             value="all"
-            className="mr-1 mb-1 size-auto gap-1 rounded-full bg-surface-secondary px-2.5 py-[3px] align-top font-bold text-sm leading-[1.15]"
+            className="h-7 w-auto flex-none gap-1 px-2.5 font-medium text-label-value-13"
           >
             All
           </TabsTrigger>
@@ -70,7 +70,7 @@ export function InteropTopTokensWidget({
             <TabsTrigger
               key={tab.id}
               value={tab.id}
-              className="mr-1 mb-1 size-auto gap-1 rounded-full bg-surface-secondary px-2.5 py-[3px] align-top font-bold text-sm leading-[1.15]"
+              className="h-7 w-auto flex-none gap-1 px-2.5 font-medium text-label-value-13"
             >
               <img
                 src={tab.iconUrl}
@@ -81,7 +81,7 @@ export function InteropTopTokensWidget({
             </TabsTrigger>
           ))}
         </TabsList>
-        <div className="mt-1 h-3.5 font-medium text-secondary text-xs leading-none">
+        <div className="mt-1 h-4 font-normal text-label-value-13 text-secondary leading-4">
           {activeCount.value
             ? `${formatInteger(activeCount.value)} ${activeCount.label}`
             : null}

@@ -22,7 +22,10 @@ import { useIsClient } from '~/hooks/useIsClient'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
 import type { TransferSizeDataPoint } from '~/server/features/layer2s/interop/utils/getTransferSizeChartData'
 import { cn } from '~/utils/cn'
-import { transferSizeBuckets } from '../../../utils/transferSizeBuckets'
+import {
+  TRANSFER_SIZE_COLORS_CLASS,
+  transferSizeBuckets,
+} from '../../../utils/transferSizeBuckets'
 
 interface Props {
   data: TransferSizeDataPoint[]
@@ -72,8 +75,10 @@ const BAR_SIZE = 10
 const MAX_BAR_SIZE = 24
 
 const gridClassName = 'stroke-(--chart-grid) [stroke-dasharray:5_5]'
-// The page's y tick overrides, which also restyled the category labels.
-const yTickClassName = 'fill-secondary font-bold! text-subtitle-11'
+// Category names are keys (ink); the percent ticks are axis labels. Both use
+// the site's 12px/500 axis type.
+const categoryTickClassName = 'fill-primary font-medium text-label-value-12'
+const percentTickClassName = 'fill-secondary font-medium text-label-value-12'
 
 export function TransferSizeChart({
   data,
@@ -92,7 +97,7 @@ export function TransferSizeChart({
   }
 
   return (
-    <div className="relative size-full">
+    <div className={cn('relative size-full', TRANSFER_SIZE_COLORS_CLASS)}>
       <ChartContext.Provider value={{ meta: chartMeta }}>
         <TransferSizeBars
           data={data}
@@ -147,7 +152,8 @@ function TransferSizeBars({
     ? // Right: half of the centred '100%' label.
       { top: 4, right: 16, bottom: 4, left: 4 }
     : { top: 20, right: 0, bottom: 0, left: 0 }
-  const plotLeft = margin.left + (horizontal ? categoryAxisWidth : 30)
+  // Room for "100%" at the 12px axis size
+  const plotLeft = margin.left + (horizontal ? categoryAxisWidth : 36)
   const plotTop = margin.top + (horizontal ? 0 : legendHeight)
   const plotRight = width - margin.right
   const plotBottom =
@@ -282,7 +288,7 @@ function TransferSizeBars({
                     y={plot.y + plot.height + TICK_OFFSET}
                     dy="0.71em"
                     textAnchor="middle"
-                    className="fill-secondary font-medium text-3xs leading-none"
+                    className={percentTickClassName}
                   >
                     {tick}%
                   </text>
@@ -306,7 +312,7 @@ function TransferSizeBars({
                     <text
                       x={22 - categoryAxisWidth}
                       dy="0.32em"
-                      className={yTickClassName}
+                      className={categoryTickClassName}
                     >
                       {point.name}
                     </text>
@@ -346,7 +352,7 @@ function TransferSizeBars({
                     dx={5}
                     dy="0.355em"
                     textAnchor="end"
-                    className={yTickClassName}
+                    className={percentTickClassName}
                   >
                     {tick}%
                   </text>

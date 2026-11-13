@@ -65,9 +65,9 @@ export function InteropDominanceContent({
 
   return (
     <div className={className}>
-      <div className="flex items-center gap-2.5">
-        <h2 className="font-bold text-heading-18 md:text-heading-20">
-          {title} {metric === 'volume' ? 'Volume' : 'Transfers'}
+      <div className="flex flex-wrap items-baseline gap-x-2">
+        <h2 className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
+          {title} {metric === 'volume' ? 'volume' : 'transfers'}
         </h2>
         <Last24HoursBadge />
       </div>
@@ -78,16 +78,16 @@ export function InteropDominanceContent({
         onValueChange={(value) => setMetric(value as DominanceMetric)}
         className={cn('mt-4', tabsClassName)}
       >
-        <TabsList className="h-6 w-fit gap-1 bg-transparent p-0">
+        <TabsList className="h-9 w-fit gap-1 p-1">
           <TabsTrigger
             value="volume"
-            className="rounded-full bg-surface-secondary px-2.5 py-[3px] font-bold text-sm leading-[1.15]"
+            className="h-7 w-auto flex-none px-2.5 font-medium text-label-value-13"
           >
             Volume
           </TabsTrigger>
           <TabsTrigger
             value="transfers"
-            className="rounded-full bg-surface-secondary px-2.5 py-[3px] font-bold text-sm leading-[1.15]"
+            className="h-7 w-auto flex-none px-2.5 font-medium text-label-value-13"
           >
             Transfers
           </TabsTrigger>
@@ -162,14 +162,14 @@ function DominanceRowItem({
       <div className="flex items-center justify-between gap-3">
         <div className="min-w-0">{row.header}</div>
         <div className="flex shrink-0 items-baseline gap-1 whitespace-nowrap">
-          <span className="font-bold text-label-value-16">
+          <span className="font-semibold text-label-value-15 tabular-nums">
             {metric === 'volume'
               ? formatCurrency(value, 'usd', { decimals: 2 })
               : formatInteger(value)}
           </span>
           {percentChange !== null && changePeriod !== undefined && (
             <PercentChange
-              className="font-medium text-label-value-16"
+              className="font-medium text-label-value-15"
               value={percentChange}
               period={changePeriod}
             />
@@ -223,11 +223,12 @@ function Stat({
 }) {
   return (
     <div
-      className={cn('flex flex-col gap-0.5', align === 'right' && 'items-end')}
+      className={cn(
+        'flex flex-col justify-between gap-0.5',
+        align === 'right' && 'items-end text-right',
+      )}
     >
-      <span className="font-medium text-[13px] text-secondary leading-none">
-        {label}
-      </span>
+      <span className="font-medium text-label-value-13 leading-4">{label}</span>
       <span className="font-medium text-label-value-15">{value}</span>
     </div>
   )

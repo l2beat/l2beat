@@ -11,17 +11,12 @@ export function Section({
 }) {
   return (
     <div className="flex flex-col gap-3">
-      <h3 className="font-semibold text-heading-18">{title}</h3>
-      <div className="flex flex-col gap-1">
-        <span className="font-medium text-secondary text-xs leading-none">
-          Last 24 hours
+      <h3 className="font-semibold text-label-value-15">{title}</h3>
+      {subtitle && (
+        <span className="-mt-2 font-normal text-label-value-13 text-secondary leading-4">
+          {subtitle}
         </span>
-        {subtitle && (
-          <span className="font-medium text-secondary text-xs leading-none">
-            {subtitle}
-          </span>
-        )}
-      </div>
+      )}
       {children}
     </div>
   )
