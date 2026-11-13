@@ -232,7 +232,10 @@ export const stakewise: BaseProject = {
     risks: {
       minting: {
         value: 'Permissionless',
-        secondLine: `≤${maxLtv} LTV`,
+        secondLine:
+          noLiqVaultCount > 0
+            ? `${defaultLtv} LTV · ${maxLtv}`
+            : `${defaultLtv} LTV`,
         sentiment: 'good',
         description: `Anyone can deposit ETH into a vault and mint ${osETH} against the shares, up to ${defaultLtv} of their value by default and ${maxLtv} in the ${noLiqVaultCount} vaults the DAO exempts from liquidation. The ETH stays in the vault until ${validatorThreshold} of ${oracleCount} oracles approve its staking keys.`,
       },
