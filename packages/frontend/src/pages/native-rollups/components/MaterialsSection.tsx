@@ -94,15 +94,15 @@ function MaterialCard({ material }: { material: Material }) {
         <div className="flex grow flex-col p-4 md:p-3.5">
           <div className="flex items-center gap-1.5">
             <Icon className="size-4 shrink-0 fill-(--accent)" />
-            <span className="truncate font-medium text-3xs text-secondary">
+            <span className="truncate font-medium text-label-value-12 text-secondary">
               {material.source}
             </span>
             <CustomLinkIcon className="ml-auto shrink-0 fill-secondary transition-colors group-hover:fill-primary" />
           </div>
-          <h4 className="mt-2.5 font-semibold text-label-value-15 md:text-label-value-16">
+          <h4 className="mt-2.5 font-semibold text-label-value-15 leading-[1.3] md:text-label-value-16">
             {material.label}
           </h4>
-          <p className="mt-1 grow text-2xs text-secondary leading-relaxed md:text-paragraph-14">
+          <p className="mt-1 grow text-paragraph-14 text-secondary">
             {material.description}
           </p>
         </div>

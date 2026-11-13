@@ -31,7 +31,7 @@ export function RoadmapSection() {
       />
       <PrimaryCard className="overflow-hidden p-0 md:p-0">
         {/* What the timeline depends on leads it, before any date */}
-        <div className="border-divider border-b p-5 md:p-6">
+        <div className="border-divider border-b p-4 md:p-6">
           <div className="flex items-start gap-2.5 rounded-lg bg-surface-info p-3.5 md:p-4">
             <InfoIcon className="mt-px size-5 shrink-0 fill-link" />
             <p className="text-paragraph-15 leading-relaxed">
@@ -56,7 +56,7 @@ export function RoadmapSection() {
                   'border-divider border-b',
               )}
             >
-              <div className="p-5 pb-0 md:border-divider md:border-r md:p-6 md:pb-6">
+              <div className="p-4 pb-0 md:border-divider md:border-r md:p-6 md:pb-6">
                 <span
                   className={cn(
                     'font-semibold text-heading-32 leading-none md:text-heading-40 lg:text-[56px]',
@@ -66,7 +66,7 @@ export function RoadmapSection() {
                   {group.year}
                 </span>
               </div>
-              <ol className="relative m-5 ml-8 md:m-6 md:ml-9">
+              <ol className="relative m-4 ml-7 md:m-6 md:ml-9">
                 {group.items.map((item, i) => {
                   const connector = connectorClassName(item, group.items[i + 1])
                   return (
@@ -111,7 +111,7 @@ export function RoadmapSection() {
                           {STATUS[item.status].label}
                         </span>
                       </div>
-                      <h3 className="mt-1 font-semibold text-label-value-16 md:text-label-value-18">
+                      <h3 className="mt-1 font-semibold text-label-value-16 leading-[1.3] md:text-label-value-18">
                         {item.title}
                       </h3>
                       <p className="mt-1.5 text-paragraph-15 text-secondary md:text-paragraph-16">

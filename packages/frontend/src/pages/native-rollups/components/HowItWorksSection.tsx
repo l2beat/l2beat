@@ -34,7 +34,7 @@ export function HowItWorksSection() {
       <PrimaryCard className="overflow-hidden p-0 md:p-0">
         <ol className="grid gap-px bg-divider md:grid-cols-2 xl:grid-cols-4">
           {STEPS.map((step, index) => (
-            <li key={step.title} className="bg-surface-primary p-5 md:p-6">
+            <li key={step.title} className="bg-surface-primary p-4 md:p-6">
               <span className="font-semibold text-brand text-heading-32">
                 <span className="sr-only">Step </span>
                 {String(index + 1).padStart(2, '0')}

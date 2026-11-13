@@ -47,13 +47,13 @@ export function FeaturesSection() {
             return (
               <article
                 key={feature.title}
-                className="bg-surface-primary p-5 md:p-6"
+                className="bg-surface-primary p-4 md:p-6"
               >
-                <div className="flex items-center gap-3">
+                <div className="flex items-start gap-3">
                   <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-(--accent)/10 text-(--accent)">
                     <Icon aria-hidden className="size-4" />
                   </div>
-                  <h3 className="font-semibold text-heading-16 md:text-label-value-18">
+                  <h3 className="pt-1 font-semibold text-heading-16 leading-[1.3] md:pt-0.5 md:text-label-value-18">
                     {feature.title}
                   </h3>
                 </div>

@@ -67,15 +67,16 @@ const COLUMNS: {
   label: string
   align?: 'right'
   tooltip?: string
-  /** Hides the column, header and cells, where the window is too narrow */
-  hidden?: string
+  /** On the header cell: where the column hides, or how its label lines up with the cells */
+  className?: string
 }[] = [
   { label: '#' },
   { label: '' },
-  { label: 'Name' },
+  // as far in as the names, which their hover boxes pad
+  { label: 'Name', className: 'md:pl-1.5' },
   {
     label: 'Activity',
-    hidden: ACTIVITY_HIDDEN,
+    className: ACTIVITY_HIDDEN,
     tooltip: `Blobs in every ${(BUCKET_SLOTS * SLOT_SECONDS) / 60} minutes of the window, newest on the right`,
   },
   { label: 'Blobs', align: 'right', tooltip: 'Blobs posted in the window' },
@@ -89,7 +90,7 @@ const COLUMNS: {
   {
     label: 'Per batch',
     align: 'right',
-    hidden: PER_BATCH_HIDDEN,
+    className: PER_BATCH_HIDDEN,
     tooltip: 'Blobs in a batch, on average',
   },
   { label: 'Share', align: 'right', tooltip: 'Of all blobs in the window' },
@@ -155,7 +156,7 @@ export function LivePosters({ live: data, totals }: Props) {
                       key={column.label}
                       align={column.align}
                       tooltip={column.tooltip}
-                      {...pinnedCellProps(index, column.hidden)}
+                      {...pinnedCellProps(index, column.className)}
                     >
                       {column.label}
                     </TableHead>

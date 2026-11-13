@@ -32,7 +32,9 @@ export function ContributorsSection({
             <p className="mt-4 font-semibold text-label-value-16 group-hover:underline md:text-label-value-18">
               {contributor.name}
             </p>
-            <p className="mt-0.5 text-2xs text-secondary">{contributor.org}</p>
+            <p className="mt-0.5 text-label-value-12 text-secondary">
+              {contributor.org}
+            </p>
           </a>
         ))}
       </div>

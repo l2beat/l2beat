@@ -221,7 +221,7 @@ function LiveHeading({
       <h2>
         <a
           href={ethereum.href}
-          className="group flex items-center gap-2 whitespace-nowrap font-bold text-heading-16"
+          className="group flex items-center gap-2 whitespace-nowrap font-semibold text-heading-16"
         >
           <LiveIndicator disabled={status !== 'live'} />
           <img src={ethereum.iconUrl} alt="" className="size-5" />
@@ -261,7 +261,9 @@ function useShares(totals: PosterTotals | undefined): PosterShare[] {
 }
 
 /**
- * The day's blobs as one strip, a stretch of it per poster. Stretches do not
+ * The day's blobs as one strip, a stretch of it per poster, each exactly as
+ * wide as its share: no gaps or minimum widths, which on a phone would give
+ * the long tail most of the strip. Stretches do not
  * ease to their new size: a block moves them by less than a pixel, and
  * easing `flex-grow` lays the whole strip out again on every frame
  */
@@ -276,7 +278,7 @@ function ShareStrip({
 }) {
   return (
     <div
-      className="mt-4 flex h-4 gap-[2px] overflow-hidden rounded-[3px] md:h-5"
+      className="mt-4 flex h-4 overflow-hidden rounded-[3px] md:h-5"
       role="img"
       aria-label={`${formatWhole(blobs)} blobs from ${projects} projects`}
     >
@@ -284,7 +286,7 @@ function ShareStrip({
         <div
           key={share.id}
           title={`${share.name} · ${formatPercent(share.share)}`}
-          className="h-full min-w-[2px] rounded-[2px]"
+          className="h-full"
           style={{
             flexGrow: share.share,
             flexBasis: 0,

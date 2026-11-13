@@ -58,7 +58,7 @@ export function NativeRollupsHeroIllustration({
         x="24"
         y="70"
         className="fill-primary"
-        fontSize="11"
+        fontSize="12"
         fontWeight="700"
       >
         L2 block
@@ -119,15 +119,15 @@ export function NativeRollupsHeroIllustration({
         x="151"
         y="34"
         className="fill-primary"
-        fontSize="11"
+        fontSize="12"
         fontWeight="700"
       >
         Frame tx
       </text>
       <rect
-        x="220"
+        x="216"
         y="23"
-        width="50"
+        width="58"
         height="15"
         rx="7.5"
         fill="var(--accent)"
@@ -137,7 +137,7 @@ export function NativeRollupsHeroIllustration({
         y="33.5"
         textAnchor="middle"
         fill="#fff"
-        fontSize="9.5"
+        fontSize="10"
         fontWeight="700"
       >
         EIP-8141
@@ -161,7 +161,7 @@ export function NativeRollupsHeroIllustration({
         x="191"
         y="52"
         className="fill-primary"
-        fontSize="10"
+        fontSize="11"
         fontWeight="600"
       >
         Blobs
@@ -181,7 +181,7 @@ export function NativeRollupsHeroIllustration({
         x="160"
         y="76.5"
         className="fill-primary"
-        fontSize="10"
+        fontSize="11"
         fontWeight="600"
       >
         Verify
@@ -191,7 +191,7 @@ export function NativeRollupsHeroIllustration({
         y="76.5"
         textAnchor="end"
         className="fill-secondary"
-        fontSize="9.5"
+        fontSize="11"
         fontWeight="600"
         opacity="0.6"
       >
@@ -206,7 +206,7 @@ export function NativeRollupsHeroIllustration({
         rx="7"
         fill="var(--accent)"
       />
-      <text x="160" y="104.5" fill="#fff" fontSize="10" fontWeight="700">
+      <text x="160" y="104.5" fill="#fff" fontSize="11" fontWeight="700">
         Dependency
       </text>
       <text
@@ -214,7 +214,7 @@ export function NativeRollupsHeroIllustration({
         y="104.5"
         textAnchor="end"
         fill="#fff"
-        fontSize="9.5"
+        fontSize="11"
         fontWeight="600"
         opacity="0.75"
       >
@@ -235,7 +235,7 @@ export function NativeRollupsHeroIllustration({
         x="160"
         y="132.5"
         className="fill-(--accent)"
-        fontSize="10"
+        fontSize="11"
         fontWeight="700"
         fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace"
       >
@@ -246,7 +246,7 @@ export function NativeRollupsHeroIllustration({
         y="132.5"
         textAnchor="end"
         className="fill-secondary"
-        fontSize="9.5"
+        fontSize="11"
         fontWeight="600"
         opacity="0.6"
       >
@@ -285,7 +285,7 @@ export function NativeRollupsHeroIllustration({
         y="117"
         textAnchor="middle"
         className="fill-primary"
-        fontSize="11"
+        fontSize="12"
         fontWeight="700"
       >
         EIP-8288
@@ -295,7 +295,7 @@ export function NativeRollupsHeroIllustration({
         y="131"
         textAnchor="middle"
         className="fill-secondary"
-        fontSize="9.5"
+        fontSize="11"
         fontWeight="600"
       >
         Aggregated
@@ -328,7 +328,7 @@ export function NativeRollupsHeroIllustration({
         y="240"
         textAnchor="middle"
         className="fill-(--accent)"
-        fontSize="9"
+        fontSize="10"
         fontWeight="700"
       >
         Key
@@ -338,7 +338,7 @@ export function NativeRollupsHeroIllustration({
         y="240"
         textAnchor="middle"
         className="fill-(--accent)"
-        fontSize="9"
+        fontSize="10"
         fontWeight="700"
       >
         Proof ✓
@@ -367,7 +367,7 @@ export function NativeRollupsHeroIllustration({
         x="49"
         y="223.5"
         className="fill-primary"
-        fontSize="11"
+        fontSize="12"
         fontWeight="700"
       >
         EIP-8357
@@ -376,7 +376,7 @@ export function NativeRollupsHeroIllustration({
         x="22"
         y="240"
         className="fill-secondary"
-        fontSize="9.5"
+        fontSize="11"
         fontWeight="600"
       >
         Key registry
@@ -423,7 +423,7 @@ export function NativeRollupsHeroIllustration({
         y="222"
         textAnchor="middle"
         className="fill-primary"
-        fontSize="11"
+        fontSize="12"
         fontWeight="700"
       >
         Rollup contract
@@ -443,7 +443,7 @@ export function NativeRollupsHeroIllustration({
         y="250.5"
         textAnchor="middle"
         className="fill-(--accent)"
-        fontSize="10"
+        fontSize="11"
         fontWeight="700"
       >
         Ethereum&apos;s EVM ✓
@@ -453,7 +453,7 @@ export function NativeRollupsHeroIllustration({
         y="280"
         textAnchor="middle"
         className="fill-secondary"
-        fontSize="9.5"
+        fontSize="11"
         fontWeight="600"
       >
         New state root

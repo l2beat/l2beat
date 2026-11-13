@@ -38,7 +38,7 @@ export function NativeProofVerificationSection() {
               <div
                 key={capability.title}
                 className={cn(
-                  'border-divider p-5 md:p-6',
+                  'border-divider p-4 md:p-6',
                   index < CAPABILITIES.length - 1 && 'border-b',
                 )}
               >
@@ -52,10 +52,10 @@ export function NativeProofVerificationSection() {
             ))}
           </div>
         </div>
-        <div className="border-divider border-t p-5 md:p-6">
+        <div className="border-divider border-t p-4 md:p-6">
           <h3 className="font-semibold text-heading-20">Native or custom?</h3>
           <dl className="mt-4 grid gap-3 md:grid-cols-2 md:gap-4">
-            <div className="rounded-lg bg-(--accent)/5 p-4">
+            <div className="rounded-lg bg-(--accent)/5 p-4 dark:bg-(--accent)/12">
               <dt className="font-semibold text-label-value-16">
                 Native EVM program
               </dt>
