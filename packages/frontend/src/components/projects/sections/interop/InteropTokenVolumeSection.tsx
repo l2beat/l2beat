@@ -138,7 +138,8 @@ function Content({
 
   return (
     <div className="flex flex-col gap-4">
-      <div>
+      {/* One control over a centred graph: it sits on the graph's axis. */}
+      <div className="mx-auto">
         <FlowsChainsSelector allChains={interopChains} />
       </div>
       <FlowsGraphPanel

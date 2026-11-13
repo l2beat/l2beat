@@ -4,10 +4,12 @@ import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { CustomLink } from '~/components/link/CustomLink'
 import { Markdown } from '~/components/markdown/Markdown'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
+import { TechStackTag } from '~/pages/zk-catalog/v2/components/TechStackTag'
 import {
   VERIFIER_ID_DEFAULT_DESCRIPTION,
   VERIFIERS_SECTION_INTRO,
 } from '~/pages/zk-catalog/v2/components/zkCatalogUi'
+import { cn } from '~/utils/cn'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 import { type KnownDeployment, KnownDeployments } from './KnownDeployments'
@@ -53,15 +55,23 @@ export function VerifiersSection({
           {VERIFIERS_SECTION_INTRO}
         </p>
       )}
-      {proofSystemVerifiers.map(({ proofSystem, verifierHashes }) => (
-        <div key={proofSystem.id + proofSystem.type}>
+      {proofSystemVerifiers.map(({ proofSystem, verifierHashes }, index) => (
+        <div
+          key={proofSystem.id + proofSystem.type}
+          // 32px between groups (24px from space-y-6 + 8px), so a new proof
+          // system reads as a new block.
+          className={cn(index > 0 && 'pt-2')}
+        >
           {isZkCatalog && (
             <>
-              {/* Each proof system heads its table, like "Program hashes". */}
-              <h3 className="font-semibold text-heading-16 leading-6 md:text-heading-18">
-                {proofSystem.type}: {proofSystem.name}
-              </h3>
-              <p className="mt-1 text-paragraph-14 text-secondary">
+              {/* The same badge marks this proof system in the summary,
+                  the trusted setups and the ZK catalog table. */}
+              <TechStackTag
+                className="mb-2 w-fit"
+                tag={proofSystem}
+                displayType="typeAndName"
+              />
+              <p className="text-paragraph-14 text-secondary">
                 {proofSystem.description ?? VERIFIER_ID_DEFAULT_DESCRIPTION}
               </p>
             </>
