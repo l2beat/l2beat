@@ -16,7 +16,7 @@ export function NotFoundPage(props: AppLayoutProps) {
             <h2 className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
               This page doesn't exist
             </h2>
-            <p className="text-label-value-15 text-secondary">
+            <p className="text-label-value-15 text-secondary leading-5.5">
               The page you are looking for was moved, removed or never existed.
             </p>
           </div>

@@ -83,7 +83,7 @@ export function ChangelogPage({ entries, ...props }: Props) {
                     className="relative flex scroll-mt-24 gap-4"
                     id={entry.id}
                   >
-                    <span className="mt-2 size-[15px] shrink-0 rounded-full border-2 border-surface-primary bg-brand" />
+                    <span className="mt-4 size-[15px] shrink-0 rounded-full border-2 border-surface-primary bg-brand md:mt-6" />
                     <article className="w-full rounded-lg border border-divider bg-surface-secondary p-4 md:p-6">
                       <div className="flex flex-wrap items-center gap-y-1">
                         <p className="text-label-value-13 text-secondary">

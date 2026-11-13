@@ -60,9 +60,9 @@ function LogoSection({
       <h2 className="mb-1 font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
         {title}
       </h2>
-      <div className="mb-4 text-secondary text-xs">
-        <p>{description}</p>
-      </div>
+      <p className="mb-5 text-pretty text-label-value-15 text-secondary leading-5.5">
+        {description}
+      </p>
       <div className="grid gap-6 md:grid-cols-2">
         <LogoPreviewCard
           background="dark"

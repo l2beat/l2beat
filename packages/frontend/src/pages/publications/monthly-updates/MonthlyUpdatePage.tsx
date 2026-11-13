@@ -51,7 +51,7 @@ export function MonthlyUpdatePage({ entry, ...props }: Props) {
                   Published on {entry.publishedOn}
                 </span>
               </p>
-              <h1 className="mt-3 font-semibold text-heading-24 tracking-[-0.02em] md:text-heading-32">
+              <h1 className="mt-3 font-semibold text-[28px] leading-[1.15] tracking-[-0.02em] md:text-[36px]">
                 {entry.title}
               </h1>
             </div>

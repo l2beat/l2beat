@@ -27,11 +27,11 @@ export function PublicationHeader<
           {publication.publishedOn}
         </span>
       </p>
-      <h1 className="mt-3 font-semibold text-heading-24 tracking-[-0.02em] md:text-heading-32">
+      <h1 className="mt-3 font-semibold text-[28px] leading-[1.15] tracking-[-0.02em] md:text-[36px]">
         {publication.title}
       </h1>
       {publication.description && (
-        <p className="mt-3 font-inter text-xl leading-[1.6] opacity-80">
+        <p className="mt-3 font-inter text-[17px] leading-[1.55] opacity-80 md:text-xl md:leading-[1.6]">
           {publication.description}
         </p>
       )}

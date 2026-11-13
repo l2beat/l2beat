@@ -55,7 +55,7 @@ function Header() {
       <h2 className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
         Hi! We are glad you&apos;ve made it to FAQs!
       </h2>
-      <p>
+      <p className="text-base leading-7">
         Below, you will find answers to the most frequently asked questions to
         help you better understand our website.
       </p>

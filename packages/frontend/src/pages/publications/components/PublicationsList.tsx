@@ -13,6 +13,8 @@ import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { externalLinks } from '~/consts/externalLinks'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { CustomLinkIcon } from '~/icons/Outlink'
+import { HOME_BUTTON_CLASS } from '~/pages/home/homeStyles'
+import { cn } from '~/utils/cn'
 import { formatPublicationDate } from '~/utils/dates'
 import { isExternalUrl } from '~/utils/isExternalUrl'
 import type { PublicationEntry } from '../utils/getPublicationEntry'
@@ -68,9 +70,9 @@ function PublicationsGrid({
     <div className="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-3">
       {/* A flat ink block, like the mandate band on the rename page. */}
       <div className="home-theme col-span-full row-start-2">
-        <div className="home-inverted flex w-full items-center justify-center gap-6 rounded-lg bg-surface-primary px-6 py-5 text-primary max-md:flex-col">
+        <div className="home-inverted flex w-full items-center justify-between gap-6 rounded-lg bg-surface-primary px-6 py-5 text-primary max-md:flex-col max-md:items-start">
           <div className="space-y-2">
-            <div className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
+            <div className="text-balance font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
               Want to get notified about new publications?
             </div>
             <div className="text-label-value-15 text-secondary leading-5.5">
@@ -80,11 +82,12 @@ function PublicationsGrid({
             </div>
           </div>
           <a
-            className="flex h-fit items-center justify-center whitespace-nowrap rounded-sm bg-pure-white px-6 py-4 font-bold text-label-value-16 text-neutral-900 max-md:w-full"
+            className={cn(HOME_BUTTON_CLASS, 'shrink-0 whitespace-nowrap')}
             href={externalLinks.substackSubscribe}
             target="_blank"
           >
             Subscribe to our newsletter
+            <CustomLinkIcon className="size-3 fill-current" />
           </a>
         </div>
       </div>
@@ -109,7 +112,7 @@ function PublicationCard({ publication }: { publication: PublicationEntry }) {
         />
       </div>
       <div className="flex-1 px-4 pt-4">
-        <p className="text-balance font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
+        <p className="text-pretty font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
           {publication.shortTitle ?? publication.title}
         </p>
         {publication.description && (
