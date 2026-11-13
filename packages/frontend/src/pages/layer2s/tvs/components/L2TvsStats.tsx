@@ -121,10 +121,10 @@ function Stat({
           {value !== undefined ? formatCurrency(value, 'usd') : 'No data'}
         </div>
         {change !== undefined && changePeriod !== undefined ? (
-          <span className="flex items-baseline gap-1 whitespace-nowrap font-medium text-label-value-13 md:text-label-value-15">
+          <span className="flex items-baseline gap-1 whitespace-nowrap font-medium text-label-value-13">
             <PercentChange
               className="min-w-0 cursor-default text-left"
-              textClassName="text-label-value-13 md:text-label-value-15"
+              textClassName="text-label-value-13"
               value={change}
               period={changePeriod}
             />
