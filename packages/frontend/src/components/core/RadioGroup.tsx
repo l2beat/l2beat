@@ -18,7 +18,9 @@ const RadioGroup = ({
       name={name}
       className={cn(
         'group/radio-group inline-flex h-8 w-max items-center gap-1 rounded-lg p-1 font-medium',
-        'bg-surface-primary primary-card:bg-surface-secondary',
+        // Off a card the page is already --surface-secondary, so the track
+        // steps one darker and keeps the white pill used inside cards
+        'bg-surface-tertiary primary-card:bg-surface-secondary dark:bg-surface-secondary',
         className,
       )}
       {...props}
@@ -46,7 +48,7 @@ const RadioGroupItem = ({
       className={cn(
         'h-full rounded-md px-2 text-xs disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1 focus-visible:ring-offset-transparent',
-        'data-[state=checked]:bg-surface-tertiary primary-card:data-[state=checked]:bg-pure-white dark:primary-card:data-[state=checked]:bg-black',
+        'data-[state=checked]:bg-pure-white dark:data-[state=checked]:bg-black',
         className,
       )}
       {...props}

@@ -62,12 +62,12 @@ export function ChartCardHeader({
       <div className="flex flex-col gap-1">
         <div
           className={cn(
-            'flex min-w-0 justify-between gap-x-4',
+            'flex min-w-0 flex-wrap justify-between gap-x-4 gap-y-2',
             accessory ? 'items-center' : 'items-baseline',
           )}
         >
           {subtitle ? (
-            <div className="flex min-w-0 items-baseline gap-x-2">
+            <div className="flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-1">
               {heading}
               <span className="whitespace-nowrap font-normal text-label-value-13 text-secondary">
                 {subtitle}
