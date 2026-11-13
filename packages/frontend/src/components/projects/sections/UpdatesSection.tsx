@@ -345,8 +345,19 @@ function plainText(markdown: string): string {
 function linkBareUrls(markdown: string) {
   return markdown.replace(
     /(^|[\s(])(https?:\/\/[^\s)<>\]]+?)([.,;:]?)(?=\s|$|\))/g,
-    (match, before: string, url: string, trailing: string) => {
+    (
+      match,
+      before: string,
+      url: string,
+      trailing: string,
+      offset: number,
+      text: string,
+    ) => {
       if (before === '(') return match
+      // A reference definition ("[diff]: https://…") must keep its bare URL.
+      const lineStart = text.lastIndexOf('\n', offset) + 1
+      const lead = text.slice(lineStart, offset + before.length)
+      if (/^ {0,3}\[[^\]]+\]:\s*$/.test(lead)) return match
       return `${before}[${urlLabel(url)}](${url})${trailing}`
     },
   )

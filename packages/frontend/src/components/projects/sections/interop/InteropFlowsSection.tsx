@@ -124,6 +124,8 @@ function Content({
     EMBEDDED_FLOWS_DOLLARS_PER_PARTICLE,
   )
   const statsChainA = visibleHighlightedChains[0] ?? defaultStatsChainId
+  // Graph selections are always active chains: their details still show.
+  const showOwnChainEmpty = ownChainInactive && !hasGraphSelection
   const statsChainB = visibleHighlightedChains[1]
   const hasRouteSelection = hasGraphSelection && !!statsChainB
 
@@ -199,14 +201,15 @@ function Content({
           </div>
         )}
       </div>
-      {ownChainInactive ? (
+      {showOwnChainEmpty ? (
         <div className="flex flex-col items-center justify-center gap-1 rounded-lg bg-surface-secondary px-4 py-6 text-center">
           <span className="font-medium text-label-value-15">
             No transfers to show
           </span>
           <span className="text-label-value-13 text-secondary">
             Stats, bridges, tokens and transfers appear here once{' '}
-            {ownChain.name} has cross-chain transfers in the last 24 hours.
+            {ownChain.name} has cross-chain transfers in the last 24 hours, or
+            when you select another chain in the graph.
           </span>
         </div>
       ) : (
