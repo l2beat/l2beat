@@ -3,6 +3,7 @@ import type { ProjectDefiEntry } from '~/server/features/defi/project/getDefiPro
 import { formatUsd } from '~/server/markdown/markdown'
 import { renderProjectMarkdown } from '~/server/markdown/renderProjectMarkdown'
 import { formatUtcDateOrDay } from '~/server/markdown/renderSectionParts'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { getUnderReviewText } from '~/utils/project/underReview'
 import {
   formatLatestValue,
@@ -20,7 +21,7 @@ export function renderDefiProjectMarkdown(
 ): string {
   return renderProjectMarkdown({
     name: entry.name,
-    pagePath: `/defi/projects/${entry.slug}`,
+    pagePath: getProjectPath(entry.slug),
     summary: {
       warnings: compact([
         entry.isUnderReview && getUnderReviewText('config'),

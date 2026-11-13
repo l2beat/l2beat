@@ -14,7 +14,7 @@ describe(renderDefiProjectMarkdown.name, () => {
     const markdown = renderDefiProjectMarkdown(ENTRY, TOTAL_VALUE_LOCKED_USD)
 
     expect(markdown).toMatchRegex(
-      /^# Lido\n\nMarkdown version of https:\/\/ethbeat\.org\/defi\/projects\/lido\n\n/,
+      /^# Lido\n\nMarkdown version of https:\/\/ethbeat\.org\/projects\/lido\n\n/,
     )
   })
 
@@ -148,7 +148,7 @@ describe(renderDefiProjectMarkdown.name, () => {
         renderDefiProjectMarkdown(ENTRY, TOTAL_VALUE_LOCKED_USD),
         'Value Locked',
       ),
-    ).toInclude('https://ethbeat.org/defi/projects/lido#tvs')
+    ).toInclude('https://ethbeat.org/projects/lido#tvs')
   })
 
   it('lists external dependencies with absolute links and review status', () => {
@@ -159,7 +159,7 @@ describe(renderDefiProjectMarkdown.name, () => {
 
     expect(dependencies).toInclude(
       [
-        '- [Chainlink](https://ethbeat.org/defi/projects/chainlink): Provides the ETH/USD price.',
+        '- [Chainlink](https://ethbeat.org/projects/chainlink): Provides the ETH/USD price.',
         '- Obol (not reviewed): Runs distributed validators.',
       ].join('\n'),
     )
@@ -280,7 +280,7 @@ const SECTIONS: ProjectDetailsSection[] = [
       name: 'Chainlink',
       icon: '/icons/chainlink.png',
       description: 'Provides the ETH/USD price.',
-      href: '/defi/projects/chainlink',
+      href: '/projects/chainlink',
       reviewed: true,
     },
     {

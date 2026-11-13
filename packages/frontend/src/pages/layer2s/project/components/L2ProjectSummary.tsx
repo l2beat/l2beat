@@ -1,4 +1,4 @@
-import type { HTMLAttributes } from 'react'
+import { type HTMLAttributes, type ReactNode, useState } from 'react'
 import {
   AdditionalTrustAssumptionsBanner,
   AdditionalTrustAssumptionsText,
@@ -12,6 +12,7 @@ import {
   ValueSecuredBreakdownTooltipContent,
 } from '~/components/breakdown/ValueSecuredBreakdown'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import {
   Tooltip,
   TooltipContent,
@@ -28,14 +29,24 @@ import { BadgesSection } from '~/components/projects/sections/BadgesSection'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import type { ProjectL2Entry } from '~/server/features/layer2s/project/getL2ProjectEntry'
 import { cn } from '~/utils/cn'
+import { getProjectTvsBreakdownPath } from '~/utils/project/getProjectPath'
 import { ProjectL2Rosette } from './L2ProjectRosette'
 import { ProjectL2Stats } from './L2ProjectStats'
 
 interface Props {
   project: ProjectL2Entry
+  /** Another section's rows and rosette, for a page that merges sections. */
+  merged?: MergedSummary
 }
 
-export function ProjectL2Summary({ project }: Props) {
+export interface MergedSummary {
+  label: string
+  /** Go after the L2 rows, so each section's fields stay together. */
+  rows: ReactNode
+  rosette: ReactNode
+}
+
+export function ProjectL2Summary({ project, merged }: Props) {
   const hasTokenWarnings =
     project.header.tvs && project.header.tvs?.tokens.warnings?.length > 0
 
@@ -58,7 +69,7 @@ export function ProjectL2Summary({ project }: Props) {
     >
       <div className="flex">
         <div className="w-full">
-          <ProjectL2Stats project={project} />
+          <ProjectL2Stats project={project} columns={merged && 4} />
           <HorizontalSeparator className="mt-5 mb-4" />
           <div
             className={cn(
@@ -84,7 +95,7 @@ export function ProjectL2Summary({ project }: Props) {
                     }
                     href={
                       project.header.tvs
-                        ? `/layer2s/projects/${project.slug}/tvs-breakdown`
+                        ? getProjectTvsBreakdownPath(project.slug)
                         : undefined
                     }
                   >
@@ -152,7 +163,7 @@ export function ProjectL2Summary({ project }: Props) {
                   <ConditionalLink
                     href={
                       project.header.tvs
-                        ? `/layer2s/projects/${project.slug}/tvs-breakdown`
+                        ? getProjectTvsBreakdownPath(project.slug)
                         : undefined
                     }
                   >
@@ -211,7 +222,7 @@ export function ProjectL2Summary({ project }: Props) {
                 </TooltipContent>
               </Tooltip>
               <CustomLink
-                href={`/layer2s/projects/${project.slug}/tvs-breakdown`}
+                href={getProjectTvsBreakdownPath(project.slug)}
                 className="mt-2 font-medium text-label-value-13 md:hidden"
               >
                 View TVS breakdown
@@ -224,10 +235,23 @@ export function ProjectL2Summary({ project }: Props) {
               <ProjectInteropMetrics interop={project.header.interop} />
             </>
           )}
+          {merged?.rows}
         </div>
         <VerticalSeparator className="mr-8 ml-12 h-[unset] self-stretch max-lg:hidden" />
 
-        <ProjectL2Rosette project={project} size="small" />
+        {merged ? (
+          <RosetteSwitch
+            views={[
+              {
+                label: 'Scaling',
+                rosette: <ProjectL2Rosette project={project} size="small" />,
+              },
+              { label: merged.label, rosette: merged.rosette },
+            ]}
+          />
+        ) : (
+          <ProjectL2Rosette project={project} size="small" />
+        )}
       </div>
 
       {project.discoUiHref && (
@@ -260,6 +284,31 @@ export function ProjectL2Summary({ project }: Props) {
         </div>
       </div>
     </section>
+  )
+}
+
+/** One rosette at a time, for a page that merges sections with one each. */
+function RosetteSwitch({
+  views,
+}: {
+  views: { label: string; rosette: ReactNode }[]
+}) {
+  const [selected, setSelected] = useState(views[0]?.label)
+  return (
+    <div className="my-auto flex flex-col items-center gap-3 max-lg:hidden">
+      <RadioGroup
+        name="summaryRosette"
+        value={selected}
+        onValueChange={setSelected}
+      >
+        {views.map((view) => (
+          <RadioGroupItem key={view.label} value={view.label}>
+            {view.label}
+          </RadioGroupItem>
+        ))}
+      </RadioGroup>
+      {views.find((view) => view.label === selected)?.rosette}
+    </div>
   )
 }
 

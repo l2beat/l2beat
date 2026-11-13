@@ -25,10 +25,12 @@ import { cn } from '~/utils/cn'
 
 interface Props {
   project: ProjectL2Entry
+  /** Overrides the column count, which otherwise follows the number of stats */
+  columns?: 3 | 4
   className?: string
 }
 
-export function ProjectL2Stats({ project, className }: Props) {
+export function ProjectL2Stats({ project, columns, className }: Props) {
   const stats = compact([
     <ProjectSummaryStat
       key="tvs"
@@ -181,7 +183,7 @@ export function ProjectL2Stats({ project, className }: Props) {
     ) : undefined,
   ])
 
-  const groups = stats.length > 4 ? 4 : 3
+  const groups = columns ?? (stats.length > 4 ? 4 : 3)
   const partitioned = chunk(stats, groups)
 
   return (

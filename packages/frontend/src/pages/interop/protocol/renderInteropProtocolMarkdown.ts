@@ -1,6 +1,9 @@
 import compact from 'lodash/compact'
 import type { InteropProtocolDashboardData } from '~/server/features/layer2s/interop/getInteropProtocolData'
-import type { InteropProtocolEntry } from '~/server/features/layer2s/interop/protocol/getInteropProtocolEntry'
+import {
+  getInteropVolumeSection,
+  type InteropProtocolEntry,
+} from '~/server/features/layer2s/interop/protocol/getInteropProtocolEntry'
 import type {
   ByBridgeTypeData,
   TokenData,
@@ -10,7 +13,6 @@ import {
   formatAverageDuration,
   formatTopPath,
   formatTransferCount,
-  interopProtocolUrl,
   linkInteropToken,
   listTopItems,
 } from '~/server/markdown/interopMarkdown'
@@ -19,6 +21,7 @@ import {
   getProjectStatusWarnings,
   renderProjectMarkdown,
 } from '~/server/markdown/renderProjectMarkdown'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { TRANSFER_TYPE_DISPLAY } from '../utils/display'
 import { getBridgeTypeVolumes } from '../utils/getBridgeTypeVolumes'
 import { getTransferSizeBreakdown } from '../utils/transferSizeBuckets'
@@ -36,7 +39,7 @@ export function renderInteropProtocolMarkdown({
 }: InteropProtocolPageContent): string {
   return renderProjectMarkdown({
     name: entry.name,
-    pagePath: interopProtocolUrl(entry.slug),
+    pagePath: getProjectPath(entry.slug),
     summary: {
       warnings: [
         ...getProjectStatusWarnings(entry),
@@ -55,7 +58,15 @@ export function renderInteropProtocolMarkdown({
       badges: entry.header.badges,
       discoUiHref: entry.header.discoUiHref,
     },
-    sections: entry.sections,
+    sections: entry.sections.map((section) =>
+      // A protocol that is also a chain shows the chain's flows in place of
+      // its own volume. Those are an interactive graph, so the markdown keeps
+      // the protocol's top chains and routes, as for any other protocol.
+      section.type === 'InteropFlowsSection'
+        ? (getInteropVolumeSection(protocolData, section.props.interopChains) ??
+          section)
+        : section,
+    ),
     apiLinks: {},
   })
 }

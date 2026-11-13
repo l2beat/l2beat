@@ -35,6 +35,7 @@ import { createLegacyPathsRouter } from './routers/LegacyPathsRouter'
 import { createLlmsTxtRouter } from './routers/LlmsTxtRouter'
 import { createMarkdownAlternatesRouter } from './routers/MarkdownAlternatesRouter'
 import { createMigratedProjectsRouter } from './routers/MigratedProjectsRouter'
+import { createProjectRedirectsRouter } from './routers/ProjectRedirectsRouter'
 import { createRobotsRouter } from './routers/RobotsRouter'
 import { createSitemapRouter } from './routers/SitemapRouter'
 import { createSupersededBadgeRouter } from './routers/SupersededBadgeRouter'
@@ -119,6 +120,7 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
   app.use('/', createMarkdownAlternatesRouter())
   app.use('/', createMigratedProjectsRouter())
   app.use('/', createLegacyPathsRouter())
+  app.use('/', createProjectRedirectsRouter())
   app.use('/api/trpc', createTrpcRouter())
 
   app.use('/', createApiRouter())

@@ -16,7 +16,7 @@ describe(renderZkCatalogProjectMarkdown.name, () => {
     const markdown = renderZkCatalogProjectMarkdown(ENTRY)
 
     expect(markdown).toMatchRegex(
-      /^# SP1 Turbo\n\nMarkdown version of https:\/\/ethbeat\.org\/zk-catalog\/sp1turbo\n\n/,
+      /^# SP1 Turbo\n\nMarkdown version of https:\/\/ethbeat\.org\/projects\/sp1turbo\n\n/,
     )
   })
 
@@ -39,7 +39,7 @@ describe(renderZkCatalogProjectMarkdown.name, () => {
       [
         '- Trusted setups for Gnark (Groth16):',
         '  - SP1 Groth16 setup, risk red (highest risk) per the [Trusted Setups Risk Framework](https://forum.l2beat.com/t/the-trusted-setups-framework-for-zk-catalog/381): Run among 7 contributors.',
-        '  - Used in: [Katana](https://ethbeat.org/layer2s/projects/katana)',
+        '  - Used in: [Katana](https://ethbeat.org/projects/katana)',
         '  - Verifiers: 2 successful (verified by [ETHBEAT](https://ethbeat.org)), 1 not verified',
       ].join('\n'),
     )
@@ -165,7 +165,7 @@ describe(renderZkCatalogProjectMarkdown.name, () => {
   it('points the TVS chart to the HTML page', () => {
     expect(
       getSection(renderZkCatalogProjectMarkdown(ENTRY), 'Value Secured'),
-    ).toInclude('https://ethbeat.org/zk-catalog/sp1turbo#tvs')
+    ).toInclude('https://ethbeat.org/projects/sp1turbo#tvs')
   })
 
   it('describes each trusted setup with its risk and proof systems', () => {
@@ -198,8 +198,8 @@ describe(renderZkCatalogProjectMarkdown.name, () => {
 
     expect(verifiers).toInclude(
       '### Groth16: Gnark\n\nConsensys implementation of Groth16.',
-      '#### SP1 Groth16 v5\n\nWraps the STARK proof.\n\n- Verifier ID: `0xa4594c59`\n- Source: https://github.com/succinctlabs/sp1\n- Verification: successful (verified by [ETHBEAT](https://ethbeat.org))\n- Used in: [Katana](https://ethbeat.org/layer2s/projects/katana)',
-      '**Known deployments**\n\n- [0x1111111111111111111111111111111111111111](https://etherscan.io/address/0x1111111111111111111111111111111111111111#code) on Ethereum, used in: [Katana](https://ethbeat.org/layer2s/projects/katana)\n- 0x2222222222222222222222222222222222222222 on Arbitrum One, used in: none',
+      '#### SP1 Groth16 v5\n\nWraps the STARK proof.\n\n- Verifier ID: `0xa4594c59`\n- Source: https://github.com/succinctlabs/sp1\n- Verification: successful (verified by [ETHBEAT](https://ethbeat.org))\n- Used in: [Katana](https://ethbeat.org/projects/katana)',
+      '**Known deployments**\n\n- [0x1111111111111111111111111111111111111111](https://etherscan.io/address/0x1111111111111111111111111111111111111111#code) on Ethereum, used in: [Katana](https://ethbeat.org/projects/katana)\n- 0x2222222222222222222222222222222222222222 on Arbitrum One, used in: none',
       '##### Verification steps\n\nRun `make build-circuits`.',
     )
   })
@@ -211,7 +211,7 @@ describe(renderZkCatalogProjectMarkdown.name, () => {
     )
 
     expect(programHashes).toInclude(
-      '### Range program of OP Succinct\n\nProves an L2 block range.\n\n- Hash: `0x00aa`\n- Repository: https://github.com/succinctlabs/op-succinct\n- Verification: not verified\n- Used in: [Katana](https://ethbeat.org/layer2s/projects/katana)\n\n#### Verification steps\n\nRebuild the ELF.',
+      '### Range program of OP Succinct\n\nProves an L2 block range.\n\n- Hash: `0x00aa`\n- Repository: https://github.com/succinctlabs/op-succinct\n- Verification: not verified\n- Used in: [Katana](https://ethbeat.org/projects/katana)\n\n#### Verification steps\n\nRebuild the ELF.',
       '### Unknown program\n\n- Hash: `0x00bb`\n- Repository: code unknown\n- Verification: unsuccessful\n- Used in: none',
     )
   })
@@ -240,7 +240,7 @@ const KATANA: UsedInProjectWithIcon = {
   name: 'Katana',
   slug: 'katana',
   icon: '/icons/katana.png',
-  url: '/layer2s/projects/katana',
+  url: '/projects/katana',
 }
 
 const L2BEAT_ATTESTER = {

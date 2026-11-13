@@ -4,6 +4,7 @@ import type {
   ProjectZkCatalogInfo,
 } from '@l2beat/config'
 import type { UnixTime } from '@l2beat/shared-pure'
+import compact from 'lodash/compact'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { ps } from '~/server/projects'
@@ -12,7 +13,6 @@ import { manifest } from '~/utils/Manifest'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getProgramHashesSection } from '~/utils/project/getProgramHashesSection'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
-import { PROJECT_PAGE_METADATA_FIELDS } from '~/utils/project/getProjectUrl'
 import { getTrustedSetupsSection } from '~/utils/project/getTrustedSetupsSection'
 import { getVerifiersSection } from '~/utils/project/getVerifiersSection'
 import {
@@ -53,16 +53,54 @@ export interface ProjectZkCatalogEntry {
   sections: ProjectDetailsSection[]
 }
 
+type Section<Type extends ProjectDetailsSection['type']> = Extract<
+  ProjectDetailsSection,
+  { type: Type }
+>
+
+/** The sections of a ZK Catalog project, each declared once. */
+export interface ZkCatalogSections {
+  tvs?: Section<'ZkCatalogTvsSection'>
+  proofSystem?: Section<'MarkdownSection'>
+  milestones?: Section<'MilestonesAndIncidentsSection'>
+  trustedSetups: Section<'TrustedSetupSection'>
+  verifiers?: Section<'VerifiersSection'>
+  programHashes?: Section<'ProgramHashesSection'>
+}
+
+type ZkCatalogProject = Project<
+  'display' | 'zkCatalogInfo' | 'statuses',
+  'archivedAt' | 'milestones' | 'tvsInfo'
+>
+
+/** The ZK Catalog page: every section of the project, in the page's order. */
 export async function getZkCatalogProjectEntry(
-  project: Project<
-    'display' | 'zkCatalogInfo' | 'statuses',
-    'archivedAt' | 'milestones' | 'tvsInfo'
-  >,
+  project: ZkCatalogProject,
 ): Promise<ProjectZkCatalogEntry> {
+  const { sections, ...entry } = await getZkCatalogProject(project)
+  return {
+    ...entry,
+    sections: compact([
+      sections.tvs,
+      sections.proofSystem,
+      sections.milestones,
+      sections.trustedSetups,
+      sections.verifiers,
+      sections.programHashes,
+    ]),
+  }
+}
+
+/** For a page that lists the project's ZK Catalog sections among its own. */
+export async function getZkCatalogProject(
+  project: ZkCatalogProject,
+): Promise<
+  Omit<ProjectZkCatalogEntry, 'sections'> & { sections: ZkCatalogSections }
+> {
   const [allProjects, allProjectsWithContracts, tvs, contractUtils] =
     await Promise.all([
       ps.getProjects({
-        optional: ['display', ...PROJECT_PAGE_METADATA_FIELDS],
+        optional: ['display', 'scalingInfo', 'daBridge', 'daLayer'],
       }),
       ps.getProjects({
         select: ['contracts'],
@@ -118,85 +156,77 @@ export async function getZkCatalogProjectEntry(
     header,
   }
 
-  const sections: ProjectDetailsSection[] = []
-
   const zkCatalogTvsSection = getZkCatalogTvsSection(project, allProjects)
-  if (zkCatalogTvsSection) {
-    sections.push({
-      type: 'ZkCatalogTvsSection',
-      props: {
-        id: 'tvs',
-        title: 'Value Secured',
-        ...zkCatalogTvsSection,
-      },
-    })
-  }
-
-  if (project.zkCatalogInfo.proofSystemInfo) {
-    sections.push({
-      type: 'MarkdownSection',
-      props: {
-        id: 'proof-system',
-        title: 'Proof System',
-        content: project.zkCatalogInfo.proofSystemInfo,
-      },
-    })
-  }
-
-  if (project.milestones && project.milestones.length > 0) {
-    sections.push({
-      type: 'MilestonesAndIncidentsSection',
-      props: {
-        id: 'milestones-and-incidents',
-        title: 'Milestones & Incidents',
-        milestones: sortedMilestones,
-      },
-    })
-  }
-
-  const trustedSetupsSection = getTrustedSetupsSection(project)
-  sections.push({
-    type: 'TrustedSetupSection',
-    props: {
-      id: 'trusted-setups',
-      title: 'Trusted Setups',
-      ...trustedSetupsSection,
-    },
-  })
-
-  if (project.zkCatalogInfo.verifierHashes.length > 0) {
-    const verifiersSection = await getVerifiersSection(
-      project.zkCatalogInfo.verifierHashes,
-      contractUtils,
-      allProjects,
-      tvs,
-    )
-    sections.push({
-      type: 'VerifiersSection',
-      props: {
-        id: 'verifiers',
-        title: 'Verifier IDs',
-        variant: 'zkCatalog',
-        ...verifiersSection,
-      },
-    })
-  }
-
   const programHashesSection = await getProgramHashesSection(
     project,
     allProjectsWithContracts,
     allProjects,
     tvs,
   )
-  if (programHashesSection) {
-    sections.push({
+
+  const sections: ZkCatalogSections = {
+    tvs: zkCatalogTvsSection && {
+      type: 'ZkCatalogTvsSection',
+      props: {
+        id: 'tvs',
+        title: 'Value Secured',
+        ...zkCatalogTvsSection,
+      },
+    },
+    proofSystem: project.zkCatalogInfo.proofSystemInfo
+      ? {
+          type: 'MarkdownSection',
+          props: {
+            id: 'proof-system',
+            title: 'Proof System',
+            content: project.zkCatalogInfo.proofSystemInfo,
+          },
+        }
+      : undefined,
+    milestones:
+      project.milestones && project.milestones.length > 0
+        ? {
+            type: 'MilestonesAndIncidentsSection',
+            props: {
+              id: 'milestones-and-incidents',
+              title: 'Milestones & Incidents',
+              milestones: sortedMilestones,
+            },
+          }
+        : undefined,
+    trustedSetups: {
+      type: 'TrustedSetupSection',
+      props: {
+        id: 'trusted-setups',
+        title: 'Trusted Setups',
+        ...getTrustedSetupsSection(project),
+      },
+    },
+    verifiers:
+      project.zkCatalogInfo.verifierHashes.length > 0
+        ? {
+            type: 'VerifiersSection',
+            props: {
+              id: 'verifiers',
+              title: 'Verifier IDs',
+              variant: 'zkCatalog',
+              ...(await getVerifiersSection(
+                project.zkCatalogInfo.verifierHashes,
+                contractUtils,
+                allProjects,
+                tvs,
+              )),
+            },
+          }
+        : undefined,
+    programHashes: programHashesSection && {
       type: 'ProgramHashesSection',
       props: {
         id: 'program-hashes',
         title: 'Program Hashes',
         ...programHashesSection,
       },
-    })
+    },
   }
 
   return { ...common, sections }

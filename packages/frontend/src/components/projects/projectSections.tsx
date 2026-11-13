@@ -6,7 +6,15 @@ import { PrivacyIcon } from '~/icons/pages/Privacy'
 import { TokensIcon } from '~/icons/pages/Tokens'
 import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
 import type { SvgIconProps } from '~/icons/SvgIcon'
-import type { ProjectSection } from '~/server/features/projects/getProjectSectionLinks'
+
+/** A site section that lists projects. */
+export type ProjectSection =
+  | 'layer2s'
+  | 'interop'
+  | 'zkCatalog'
+  | 'privacy'
+  | 'defi'
+  | 'tokens'
 
 export const PROJECT_SECTIONS: Record<
   ProjectSection,

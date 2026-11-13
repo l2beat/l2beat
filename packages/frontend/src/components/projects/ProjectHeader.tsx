@@ -1,16 +1,12 @@
-import type { ReactNode } from 'react'
+import { Fragment, type ReactNode } from 'react'
 import { ChevronIcon } from '~/icons/Chevron'
-import type {
-  ProjectSection,
-  ProjectSectionLink,
-} from '~/server/features/projects/getProjectSectionLinks'
 import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 import { cn } from '~/utils/cn'
 import { LiveIndicator } from '../LiveIndicator'
 import { PinProjectButton } from '../pinned-projects/PinProjectButton'
 import { SearchBarButton } from '../search-bar/SearchBarButton'
 import { ProjectVersionSwitcher } from './ProjectVersionSwitcher'
-import { PROJECT_SECTIONS } from './projectSections'
+import { PROJECT_SECTIONS, type ProjectSection } from './projectSections'
 
 interface Project {
   name: string
@@ -22,10 +18,8 @@ interface Project {
 
 interface Props {
   project: Project
-  /** The section this page belongs to, shown as a breadcrumb above the name */
-  section?: ProjectSection
-  /** The project's page in each section; the ones besides `section` show as "Also in" links */
-  sectionLinks?: ProjectSectionLink[]
+  /** The site sections that list the project, shown as breadcrumbs above the name: the page's own first */
+  sections?: ProjectSection[]
   /** Shows the group name as the title, with the version as a switcher */
   versions?: ProjectVersionLinks
   ongoingAnomaly?: 'single' | 'multiple'
@@ -37,8 +31,7 @@ interface Props {
 
 export function ProjectHeader({
   project,
-  section,
-  sectionLinks,
+  sections,
   versions,
   ongoingAnomaly,
   recentUpdatesCount,
@@ -51,13 +44,8 @@ export function ProjectHeader({
       className={cn('mb-6 flex items-start justify-between gap-4', className)}
     >
       <div className="mt-1 flex w-full min-w-0 flex-col gap-2">
-        {section && (
-          <ProjectSectionBreadcrumb
-            section={section}
-            otherSections={sectionLinks?.filter(
-              (link) => link.section !== section,
-            )}
-          />
+        {sections && sections.length > 0 && (
+          <ProjectSectionBreadcrumb sections={sections} />
         )}
         <div
           className={cn(
@@ -137,35 +125,31 @@ export function ProjectHeader({
 }
 
 function ProjectSectionBreadcrumb({
-  section,
-  otherSections,
+  sections,
 }: {
-  section: ProjectSection
-  otherSections?: ProjectSectionLink[]
+  sections: ProjectSection[]
 }) {
-  const { label, href, icon: Icon } = PROJECT_SECTIONS[section]
   return (
     <nav
       aria-label="Breadcrumb"
-      className="flex flex-wrap items-center gap-x-4 gap-y-1 font-bold text-2xs uppercase leading-none tracking-wide"
+      className="flex flex-wrap items-center gap-x-2 gap-y-1 font-bold text-2xs text-brand-deep uppercase leading-none tracking-wide"
     >
-      <a
-        href={href}
-        className="flex items-center gap-1.5 text-brand-deep hover:underline"
-      >
-        <Icon className="size-3.5 stroke-brand-deep" />
-        {label}
-      </a>
-      {otherSections?.map((link) => (
-        <a
-          key={link.section}
-          href={link.href}
-          className="flex items-center gap-1.5 text-secondary hover:text-primary"
-        >
-          Also in {PROJECT_SECTIONS[link.section].label}
-          <ChevronIcon className="-rotate-90 size-2 fill-current" />
-        </a>
-      ))}
+      {sections.map((section, i) => {
+        const { label, href, icon: Icon } = PROJECT_SECTIONS[section]
+        // One icon, the page's own section: the rest read as one label.
+        return (
+          <Fragment key={section}>
+            {i > 0 && <span aria-hidden>·</span>}
+            <a
+              href={href}
+              className="flex items-center gap-1.5 hover:underline"
+            >
+              {i === 0 && <Icon className="size-3.5 stroke-brand-deep" />}
+              {label}
+            </a>
+          </Fragment>
+        )
+      })}
     </nav>
   )
 }

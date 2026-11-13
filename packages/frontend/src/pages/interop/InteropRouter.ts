@@ -1,25 +1,16 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import express, {
-  type NextFunction,
-  type Request,
-  type Response,
-} from 'express'
+import express, { type Request } from 'express'
 import {
   serveMarkdown,
   serveMarkdownIfPreferred,
 } from '~/server/markdown/markdownAlternate'
-import { ps } from '~/server/projects'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
 import { sendNotFoundPage } from '../not-found/sendNotFoundPage'
 import { getInteropTransferTypeData } from './getInteropTransferTypeData'
 import { getInteropIntentBridgesData } from './intent-bridges/getInteropIntentBridgesData'
-import {
-  getInteropProtocolMarkdown,
-  getInteropProtocolPageData,
-} from './protocol/getInteropProtocolPageData'
 import { getInteropSummaryData } from './summary/getInteropSummaryData'
 import { getInteropTokenOgImage } from './token/getInteropTokenOgImage'
 import {
@@ -128,41 +119,6 @@ export function createInteropRouter(
     res.status(200).send(html)
   })
 
-  const getProtocolMarkdown = (req: Request<{ slug: string }>) =>
-    getInteropProtocolMarkdown(req.params.slug, manifest, cache)
-
-  // Before `:slug`, which would otherwise take "across.md" as the slug.
-  router.get(
-    '/interop/protocols/:slug.md',
-    validateRoute({ params: v.object({ slug: v.string() }) }),
-    redirectScalingProjects(
-      (project) => `/layer2s/projects/${project.slug}.md`,
-    ),
-    serveMarkdown(getProtocolMarkdown),
-  )
-
-  router.get(
-    '/interop/protocols/:slug',
-    validateRoute({
-      params: v.object({ slug: v.string() }),
-      query: v.object({ update: v.string().optional() }),
-    }),
-    redirectScalingProjects(
-      (project) =>
-        `/layer2s/projects/${project.slug}?protocols=${project.id}#interop-flows`,
-    ),
-    serveMarkdownIfPreferred(getProtocolMarkdown),
-    async (req, res) => {
-      const data = await getInteropProtocolPageData(req, manifest, cache)
-      if (!data) {
-        await sendNotFoundPage(manifest, render, req.originalUrl, res)
-        return
-      }
-      const html = await render(data, req.originalUrl)
-      res.status(200).send(html)
-    },
-  )
-
   router.get(
     '/tokens/:slug/opengraph-image.png',
     validateRoute({
@@ -215,22 +171,3 @@ export function createInteropRouter(
 }
 
 /** Protocols that are also scaling projects show their interop data on the scaling page. */
-function redirectScalingProjects(
-  getTarget: (project: { id: string; slug: string }) => string,
-) {
-  return async (
-    req: Request<{ slug: string }>,
-    res: Response,
-    next: NextFunction,
-  ) => {
-    const project = await ps.getProject({
-      slug: req.params.slug,
-      optional: ['scalingInfo', 'interopConfig'],
-    })
-    if (project?.scalingInfo && project.interopConfig) {
-      res.redirect(302, getTarget(project))
-      return
-    }
-    next()
-  }
-}

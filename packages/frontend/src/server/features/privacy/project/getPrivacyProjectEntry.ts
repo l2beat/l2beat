@@ -5,18 +5,14 @@ import type {
   ProjectRedWarning,
 } from '@l2beat/config'
 import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import mapValues from 'lodash/mapValues'
 import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
-import { PRIVACY_ADVERSARIES_SECTION_ID } from '~/pages/privacy/adversaries/privacyAdversaryUi'
-import { ADVICE } from '~/pages/privacy/adviceUi'
 import { getGardenCropsSection } from '~/server/features/garden/getGardenCropsSection'
-import { ANONYMITY_SET_WINDOW_DAYS } from '~/server/features/privacy/anonymity-set/calculateAnonymitySets'
 import { getUpdatesSection } from '~/server/features/projects/discovery-updates/getUpdatesSection'
 import { countRecentDiscoveryUpdates } from '~/server/features/projects/recent-changes/discoveryUpdates'
-import { ps } from '~/server/projects'
+import type { ZkCatalogSections } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
 import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
@@ -24,9 +20,7 @@ import { getContractUtils } from '~/utils/project/contracts-and-permissions/getC
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
-import { PROJECT_PAGE_METADATA_FIELDS } from '~/utils/project/getProjectUrl'
-import { getTrustedSetupsSectionFromTrustedSetups } from '~/utils/project/getTrustedSetupsSection'
-import { getVerifiersSection } from '~/utils/project/getVerifiersSection'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { optionToRange } from '~/utils/range/range'
 import {
   EMPTY_TVS_BREAKDOWN,
@@ -35,16 +29,23 @@ import {
 import { EMPTY_PROJECTS_CHANGE_REPORT } from '../../projects-change-report/getProjectsChangeReport'
 import type { PrivacyProjectDetails } from '../getPrivacyProjectDetails'
 import type { PrivacyRelayerStat } from '../types'
-import {
-  getPrivacyReferenceApp,
-  type PrivacyReferenceApp,
-} from '../utils/getPrivacyReferenceApp'
+import type { PrivacyReferenceApp } from '../utils/getPrivacyReferenceApp'
 import {
   getPrivacyTrustedSetup,
   type PrivacyTrustedSetupSummary,
   toTrustedSetupSummaryValue,
 } from '../utils/getPrivacyTrustedSetup'
-import { resolvePrivacySources } from '../utils/resolvePrivacySources'
+import {
+  getChartProject,
+  getPrivacyAdversariesSection,
+  getPrivacyAdviceSection,
+  getPrivacyAnonymitySetSection,
+  getPrivacyAssetsBreakdownSection,
+  getPrivacyDescriptionSection,
+  getPrivacyFlowsSection,
+  getPrivacyTrustedSetupsSection,
+  getReferenceApp,
+} from './privacySections'
 
 export interface ProjectPrivacyEntry {
   id: ProjectId
@@ -96,16 +97,43 @@ export interface ProjectPrivacyEntry {
   sections: ProjectDetailsSection[]
 }
 
+/**
+ * What the summary of a page built on another section shows of a privacy
+ * protocol.
+ */
+export type PrivacySummary = Pick<
+  ProjectPrivacyEntry,
+  | 'name'
+  | 'href'
+  | 'isUnderReview'
+  | 'attributes'
+  | 'trackedOn'
+  | 'scalingProjects'
+  | 'referenceApp'
+>
+
+export function getPrivacySummary(
+  details: PrivacyProjectDetails,
+): PrivacySummary {
+  return {
+    name: details.name,
+    href: getProjectPath(details.slug),
+    isUnderReview: !!details.statuses.reviewStatus,
+    attributes: details.attributes,
+    trackedOn: details.trackedOn,
+    scalingProjects: details.scalingProjects,
+    referenceApp: getReferenceApp(details),
+  }
+}
+
 export async function getPrivacyProjectEntry(
   details: PrivacyProjectDetails,
   helpers: SsrHelpers,
+  /** For a protocol that is also in the ZK Catalog: its page shows both. */
+  zkCatalog?: ZkCatalogSections,
 ): Promise<ProjectPrivacyEntry> {
-  const defaultChartRange = optionToRange('1y')
-  const [contractUtils, allProjects, tvs] = await Promise.all([
+  const [contractUtils, tvs] = await Promise.all([
     getContractUtils(),
-    ps.getProjects({
-      optional: ['display', ...PROJECT_PAGE_METADATA_FIELDS],
-    }),
     get7dTvsBreakdown({ type: 'all' }),
   ])
 
@@ -142,14 +170,14 @@ export async function getPrivacyProjectEntry(
     },
   }
   const icon = manifest.getUrl(`/icons/${details.slug}.png`)
-  const referenceApp =
-    details.referenceApp && getPrivacyReferenceApp(details.referenceApp, icon)
-  const hasTrackedAssets = details.assets.length > 0
   const discoveryHref =
     contractsSection || permissionsSection ? discoUi.href : undefined
   const discoveryUpdates = details.discoveryUpdates ?? []
 
   const sections: ProjectDetailsSection[] = []
+  const push = (section: ProjectDetailsSection | undefined) => {
+    if (section) sections.push(section)
+  }
 
   const gardenCropsSection = await getGardenCropsSection(
     details,
@@ -159,28 +187,11 @@ export async function getPrivacyProjectEntry(
     sections.push(gardenCropsSection)
   }
 
-  if (details.detailedDescription) {
-    sections.push({
-      type: 'DetailedDescriptionSection',
-      props: {
-        id: 'detailed-description',
-        title: 'Protocol description',
-        description: undefined,
-        detailedDescription: details.detailedDescription,
-      },
-    })
-  }
+  push(getPrivacyDescriptionSection(details))
 
   // Filled in once every other section exists, so that its source links can
   // point only at sections this page renders.
   const adversariesSectionIndex = sections.length
-
-  const chartProject = {
-    id: details.id,
-    name: details.name,
-    shortName: details.shortName,
-    iconUrl: icon,
-  }
 
   if (details.hasTvl) {
     sections.push({
@@ -188,50 +199,20 @@ export async function getPrivacyProjectEntry(
       props: {
         id: 'privacy-tvl',
         title: 'Value Locked',
-        defaultRange: defaultChartRange,
+        defaultRange: optionToRange('1y'),
         rangeControls: 'privacy',
-        project: chartProject,
+        project: getChartProject(details),
         milestones: details.milestones,
+        // The ZK Catalog's Value Secured is the same value. TODO: decide
+        // which to show.
+        ...(zkCatalog && { aliasIds: ['tvs'] }),
       },
     })
   }
 
-  if (details.anonymitySetType !== undefined) {
-    sections.push({
-      type: 'PrivacyAnonymitySetSection',
-      props: {
-        id: 'privacy-anonymity-set',
-        title: 'Anonymity sets',
-        defaultRange: defaultChartRange,
-        project: chartProject,
-        milestones: details.milestones,
-        anonymitySetType: details.anonymitySetType,
-      },
-    })
-  }
-
-  if (hasTrackedAssets) {
-    sections.push({
-      type: 'PrivacyFlowsSection',
-      props: {
-        id: 'privacy-flows',
-        title: 'Flows',
-        defaultRange: defaultChartRange,
-        project: chartProject,
-        milestones: details.milestones,
-      },
-    })
-
-    sections.push({
-      type: 'PrivacyAssetsBreakdownSection',
-      props: {
-        id: 'privacy-assets-breakdown',
-        title: 'Assets Breakdown',
-        assets: details.assets,
-        showTvl: details.hasTvl,
-      },
-    })
-  }
+  push(getPrivacyAnonymitySetSection(details))
+  push(getPrivacyFlowsSection(details))
+  push(getPrivacyAssetsBreakdownSection(details))
 
   if (details.milestones.length > 0) {
     sections.push({
@@ -270,37 +251,14 @@ export async function getPrivacyProjectEntry(
     })
   }
 
-  if (details.trustedSetups.length > 0) {
-    sections.push({
-      type: 'TrustedSetupSection',
-      props: {
-        id: 'trusted-setups',
-        title: 'Trusted setup',
-        ...getTrustedSetupsSectionFromTrustedSetups(details.trustedSetups),
-      },
-    })
-  }
-
-  if (
-    details.zkCatalogInfo?.verifierHashes &&
-    details.zkCatalogInfo.verifierHashes.length > 0
-  ) {
-    const verifiersSection = await getVerifiersSection(
-      details.zkCatalogInfo.verifierHashes,
-      contractUtils,
-      allProjects,
-      tvs,
-    )
-
-    sections.push({
-      type: 'VerifiersSection',
-      props: {
-        id: 'verifiers',
-        title: 'Verifier IDs',
-        variant: 'privacy',
-        ...verifiersSection,
-      },
-    })
+  if (zkCatalog) {
+    // The catalog's trusted setups say more than the privacy page's own.
+    push(zkCatalog.proofSystem)
+    push(zkCatalog.trustedSetups)
+    push(zkCatalog.verifiers)
+    push(zkCatalog.programHashes)
+  } else {
+    push(getPrivacyTrustedSetupsSection(details))
   }
 
   const updatesSection = await getUpdatesSection(
@@ -337,40 +295,18 @@ export async function getPrivacyProjectEntry(
     })
   }
 
-  const advice = details.adversaries.advice
-  if (advice) {
-    sections.splice(adversariesSectionIndex, 0, {
-      type: 'PrivacyAdviceSection',
-      props: {
-        id: ADVICE.sectionId,
-        title: ADVICE.title,
-        steps: advice,
-        adversaries: details.adversaries.adversaries,
-        sentiments: mapValues(
-          details.adversaries.cells,
-          (cell) => cell.sentiment,
-        ),
-        waitWindowDays: ANONYMITY_SET_WINDOW_DAYS,
-      },
-    })
-  }
-
-  sections.splice(adversariesSectionIndex, 0, {
-    type: 'PrivacyAdversariesSection',
-    props: {
-      id: PRIVACY_ADVERSARIES_SECTION_ID,
-      title: 'Privacy',
-      isUnderReview: !!details.statuses.reviewStatus,
-      adversaries: resolvePrivacySources(details.adversaries, sections),
-      referenceApp,
-    },
-  })
+  const advice = getPrivacyAdviceSection(details)
+  if (advice) sections.splice(adversariesSectionIndex, 0, advice)
+  sections.splice(
+    adversariesSectionIndex,
+    0,
+    getPrivacyAdversariesSection(details, sections),
+  )
 
   return {
+    ...getPrivacySummary(details),
     id: details.id,
     slug: details.slug,
-    href: `/privacy/projects/${details.slug}`,
-    name: details.name,
     shortName: details.shortName,
     icon,
     description: details.display.description,
@@ -384,15 +320,11 @@ export async function getPrivacyProjectEntry(
     bucketCount: details.summary.bucketCount,
     assetsCount: details.assets.length,
     hasTvl: details.hasTvl,
-    attributes: details.attributes,
-    trackedOn: details.trackedOn,
-    scalingProjects: details.scalingProjects,
     exitWindow: details.exitWindow,
     trustedSetup: toTrustedSetupSummaryValue(
       getPrivacyTrustedSetup(details.trustedSetups),
     ),
     reproducibility: details.reproducibility,
-    referenceApp,
     summary: {
       totalValueLockedUsd: details.hasTvl
         ? tvs.projects[details.id]?.breakdown.total
@@ -404,7 +336,6 @@ export async function getPrivacyProjectEntry(
       relayerStat: details.summary.relayerStat,
     },
     archivedAt: details.archivedAt,
-    isUnderReview: !!details.statuses.reviewStatus,
     recentUpdatesCount: countRecentDiscoveryUpdates(discoveryUpdates),
     warnings: {
       yellow: details.statuses.yellowWarning,

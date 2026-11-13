@@ -1,5 +1,6 @@
 import { env } from '~/env'
 import type { STATIC_PAGE_PATHS } from '~/server/pagePaths'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 
 /**
  * The one place that knows which pages are also served as markdown, at the
@@ -16,7 +17,7 @@ export function getMarkdownAlternatePath(pagePath: string): string | undefined {
 }
 
 /**
- * For links to markdown documents, e.g. `/defi/projects/{slug}.md`, where a
+ * For links to markdown documents, e.g. `/projects/{slug}.md`, where a
  * `{name}` placeholder stands for a path segment: false while the page is
  * switched off, as the registry then leaves it out.
  */
@@ -45,13 +46,9 @@ export const LIST_PAGES_WITH_MARKDOWN = [
  * `{...}` for a part the URL may leave out.
  */
 export const PROJECT_PAGES_WITH_MARKDOWN = [
-  '/layer2s/projects/:slug',
-  '/projects/ethereum',
-  '/privacy/projects/:slug',
-  '/interop/protocols/:slug',
-  '/zk-catalog/:slug',
+  // Every project page but the chain-only ones, which opt out where they render.
+  getProjectPath(':slug'),
   '/tokens/:slug{/:issuer}{/:symbol}',
-  ...(env.CLIENT_SIDE_DEFI_ENABLED ? (['/defi/projects/:slug'] as const) : []),
 ] as const
 
 export type ListPageWithMarkdown = (typeof LIST_PAGES_WITH_MARKDOWN)[number]
