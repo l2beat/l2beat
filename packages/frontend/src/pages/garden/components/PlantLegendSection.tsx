@@ -59,7 +59,7 @@ export function PlantLegendSection() {
         description="The shape and color of each icon show how a project does on a property."
         size="md"
       />
-      <PrimaryCard className="max-md:mx-4 max-md:rounded-xl md:p-8">
+      <PrimaryCard className="max-md:mx-4 max-md:rounded-xl">
         <div className="grid gap-6 sm:grid-cols-2 min-[1024px]:grid-cols-5">
           {PLANTS.map((plant, index) => (
             <article

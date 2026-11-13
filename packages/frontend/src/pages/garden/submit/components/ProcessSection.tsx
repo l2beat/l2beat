@@ -7,7 +7,7 @@ export function ProcessSection() {
     <section className="mt-8 md:mt-12">
       <SectionHeading title="How a review works" size="md" />
       <PrimaryCard className="overflow-hidden p-0 max-md:mx-4 max-md:rounded-xl md:p-0">
-        <div className="border-divider border-b bg-surface-secondary/40 p-4 md:p-8">
+        <div className="border-divider border-b bg-surface-secondary/40 p-4 md:px-6 md:py-5">
           <h3 className="font-bold text-heading-18 md:text-heading-20">
             Before a review can start
           </h3>
@@ -27,7 +27,7 @@ export function ProcessSection() {
             ))}
           </ul>
         </div>
-        <ol className="relative p-4 md:p-8">
+        <ol className="relative p-4 md:px-6 md:py-5">
           {PROCESS_STEPS.map((step, index) => (
             <li
               key={step.title}
@@ -43,7 +43,7 @@ export function ProcessSection() {
                 {index + 1}
               </span>
               {/* Centred on the 32 / 36 px step number. */}
-              <h3 className="text-balance pt-1.5 font-bold text-heading-18 md:text-heading-20">
+              <h3 className="text-balance pt-1.5 font-bold text-heading-16 md:pt-2 md:text-heading-18">
                 {step.title}
               </h3>
               <p className="mt-1.5 text-pretty text-paragraph-14 text-secondary md:text-paragraph-15">
