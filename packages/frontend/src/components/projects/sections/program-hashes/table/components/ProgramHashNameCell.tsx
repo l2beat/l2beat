@@ -12,10 +12,13 @@ export function ProgramHashNameCell({
   title,
   zkCatalogProject,
   description,
+  reserveIcon,
 }: {
   title: ProgramHashRow['title']
   description?: ProgramHashRow['description']
   zkCatalogProject?: ProgramHashRow['zkCatalogProject']
+  /** Another row has an icon: keep its slot so every name starts at one x. */
+  reserveIcon?: boolean
 }) {
   const titleRef = useRef<HTMLDivElement>(null)
   const [isOverflowing, setIsOverflowing] = useState(false)
@@ -36,9 +39,13 @@ export function ProgramHashNameCell({
   }, [])
 
   return (
-    // The project icon leads, so every row's icon sits at one x.
+    // The project icon leads, so every row's icon and name sit at one x.
     <div className="flex items-center gap-2 py-2">
-      {zkCatalogProject && <ZkProjectTooltip zkProject={zkCatalogProject} />}
+      {zkCatalogProject ? (
+        <ZkProjectTooltip zkProject={zkCatalogProject} />
+      ) : (
+        reserveIcon && <span aria-hidden className="size-5 shrink-0" />
+      )}
       <Tooltip>
         <TooltipTrigger
           disabled={!isOverflowing && !description}
