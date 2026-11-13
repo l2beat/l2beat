@@ -1,7 +1,7 @@
 {
   "name": "zkmoneyv6",
   "timestamp": 1794571906,
-  "configHash": "0xf161cf3242714adc643900aa93ca32b2208c40a688034e50d8b2480371ddf05a",
+  "configHash": "0x9f01ac5d48f7a5b24909bbef360ba98dfe95858459546f897bfbdfc2b90ee26a",
   "entries": [
     {
       "address": "eth:0x04Ffc6aD66934937737DD5Fea303bd0903B7625e",
@@ -29,6 +29,41 @@
       },
       "implementationNames": {
         "eth:0x0dfaF0E5521CB1aEFfcA4458888e39374095eF93": "RegistrationSIPA"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "StablecoinWithdrawalExecutor_sUSDS",
+      "address": "eth:0x0E577Df99C43f258D38460b68326B002178B8369",
+      "type": "Contract",
+      "template": "zkmoney/v6/StablecoinWithdrawalExecutor",
+      "sourceHashes": [
+        "0x555ba4da47b09e95d431afc282a6e44f675dce5a3219350277df3d4ea8bf612b"
+      ],
+      "proxyType": "immutable",
+      "description": "Optional payout contract for withdrawals and refunds. Only the PORTAL can call it. An ordinary withdrawal first pays FEE to BENEFICIARY. It pays the recipient committed on Aztec in ASSET, or swapped to USDC or USDT for at least a committed minimum, and can first swap up to MAX_DAI_FOR_GAS DAI to ETH within 2% of PRICE_FEED. The recovery account committed on Aztec can redirect a payout that fails.",
+      "deployerAddress": "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4",
+      "sinceTimestamp": 1794503639,
+      "sinceBlock": 26400287,
+      "values": {
+        "$immutable": true,
+        "ASSET": "eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
+        "BENEFICIARY": "eth:0x4A311A8DAC3ab9553722e615472F70459B09dE27",
+        "FEE": "100000000000000000",
+        "MAX_DAI_FOR_GAS": "50000000000000000000",
+        "PORTAL": "eth:0x2EbFEE284bABf94869FAC44BC85eDb3C34e536D8",
+        "PRICE_FEED": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+        "ROUTE_DAI": 2,
+        "ROUTE_USDC": 0,
+        "ROUTE_USDT": 1
+      },
+      "fieldMeta": {
+        "FEE": {
+          "description": "Fee in ASSET (wei) taken from each ordinary withdrawal."
+        }
+      },
+      "implementationNames": {
+        "eth:0x0E577Df99C43f258D38460b68326B002178B8369": "StablecoinWithdrawalExecutor"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -590,6 +625,41 @@
       "proxyType": "EOA"
     },
     {
+      "name": "StablecoinWithdrawalExecutor",
+      "address": "eth:0x7929694e5353ebE5908305aD680Dd600B08a99Ff",
+      "type": "Contract",
+      "template": "zkmoney/v6/StablecoinWithdrawalExecutor",
+      "sourceHashes": [
+        "0x555ba4da47b09e95d431afc282a6e44f675dce5a3219350277df3d4ea8bf612b"
+      ],
+      "proxyType": "immutable",
+      "description": "Optional payout contract for withdrawals and refunds. Only the PORTAL can call it. An ordinary withdrawal first pays FEE to BENEFICIARY. It pays the recipient committed on Aztec in ASSET, or swapped to USDC or USDT for at least a committed minimum, and can first swap up to MAX_DAI_FOR_GAS DAI to ETH within 2% of PRICE_FEED. The recovery account committed on Aztec can redirect a payout that fails.",
+      "deployerAddress": "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4",
+      "sinceTimestamp": 1794498551,
+      "sinceBlock": 26399864,
+      "values": {
+        "$immutable": true,
+        "ASSET": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "BENEFICIARY": "eth:0x88ef976262BF715a3B0D24146fC3bb1B18464e61",
+        "FEE": "100000000000000000",
+        "MAX_DAI_FOR_GAS": "50000000000000000000",
+        "PORTAL": "eth:0xCB99C58Fe81Ae6b2cB4835e46F7b703745879042",
+        "PRICE_FEED": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+        "ROUTE_DAI": 2,
+        "ROUTE_USDC": 0,
+        "ROUTE_USDT": 1
+      },
+      "fieldMeta": {
+        "FEE": {
+          "description": "Fee in ASSET (wei) taken from each ordinary withdrawal."
+        }
+      },
+      "implementationNames": {
+        "eth:0x7929694e5353ebE5908305aD680Dd600B08a99Ff": "StablecoinWithdrawalExecutor"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
       "name": "PlainWithdrawalExecutor",
       "address": "eth:0x7C8c2147d1BB8B83e0a0501097372de170eE702a",
       "type": "Contract",
@@ -837,6 +907,41 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "name": "StablecoinWithdrawalExecutor_steakUSDC",
+      "address": "eth:0xA72bdcBE8901101f26D764698Ae120D0aE580d67",
+      "type": "Contract",
+      "template": "zkmoney/v6/StablecoinWithdrawalExecutor",
+      "sourceHashes": [
+        "0x555ba4da47b09e95d431afc282a6e44f675dce5a3219350277df3d4ea8bf612b"
+      ],
+      "proxyType": "immutable",
+      "description": "Optional payout contract for withdrawals and refunds. Only the PORTAL can call it. An ordinary withdrawal first pays FEE to BENEFICIARY. It pays the recipient committed on Aztec in ASSET, or swapped to USDC or USDT for at least a committed minimum, and can first swap up to MAX_DAI_FOR_GAS DAI to ETH within 2% of PRICE_FEED. The recovery account committed on Aztec can redirect a payout that fails.",
+      "deployerAddress": "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4",
+      "sinceTimestamp": 1794499043,
+      "sinceBlock": 26399905,
+      "values": {
+        "$immutable": true,
+        "ASSET": "eth:0xbeef088055857739C12CD3765F20b7679Def0f51",
+        "BENEFICIARY": "eth:0x6D8F09A38578fDF69244E5207735c458f3A640BB",
+        "FEE": "100000000000000000",
+        "MAX_DAI_FOR_GAS": "50000000000000000000",
+        "PORTAL": "eth:0x4a29C4b0ED569621f0B38Aa2EF7633A950207bDf",
+        "PRICE_FEED": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+        "ROUTE_DAI": 2,
+        "ROUTE_USDC": 0,
+        "ROUTE_USDT": 1
+      },
+      "fieldMeta": {
+        "FEE": {
+          "description": "Fee in ASSET (wei) taken from each ordinary withdrawal."
+        }
+      },
+      "implementationNames": {
+        "eth:0xA72bdcBE8901101f26D764698Ae120D0aE580d67": "StablecoinWithdrawalExecutor"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
       "name": "NameRegistry",
       "address": "eth:0xa9863B8F573D62377d987ccb9AF6e0000f99D14a",
       "type": "Contract",
@@ -928,6 +1033,41 @@
       "values": { "$immutable": true, "INTENT": 1 },
       "implementationNames": {
         "eth:0xBFe3dE3C4466cbC5803A756847208c69B3BAe401": "DepositSIPA"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "PlainWithdrawalExecutor_steakUSDC",
+      "address": "eth:0xc1Db06e5B9096ab71dF8F461D3DD08CD8438f698",
+      "type": "Contract",
+      "template": "zkmoney/v6/PlainWithdrawalExecutor",
+      "sourceHashes": [
+        "0x557fd23f0fa02460a25d8aaf0bf6c04e809f799d3defe2fae4ddd084dee51e2a"
+      ],
+      "proxyType": "immutable",
+      "description": "Default payout contract for withdrawals and refunds. Only the PORTAL can call it. It pays the recipient and relayer tip committed on Aztec. An ordinary withdrawal first pays FEE to BENEFICIARY, while refunds pay no fee.",
+      "critical": true,
+      "deployerAddress": "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4",
+      "sinceTimestamp": 1794499043,
+      "sinceBlock": 26399905,
+      "values": {
+        "$immutable": true,
+        "ASSET": "eth:0xbeef088055857739C12CD3765F20b7679Def0f51",
+        "BENEFICIARY": "eth:0x6D8F09A38578fDF69244E5207735c458f3A640BB",
+        "FEE": "100000000000000000",
+        "PORTAL": "eth:0x4a29C4b0ED569621f0B38Aa2EF7633A950207bDf",
+        "SUBSIDY": "eth:0xDDda492a076Cc719ce17D6bC03d01a00Abd042a3"
+      },
+      "fieldMeta": {
+        "FEE": {
+          "description": "Fee in ASSET (wei) taken from each ordinary withdrawal."
+        },
+        "SUBSIDY": {
+          "description": "Pays relayers of this executor's payouts from operator funds."
+        }
+      },
+      "implementationNames": {
+        "eth:0xc1Db06e5B9096ab71dF8F461D3DD08CD8438f698": "PlainWithdrawalExecutor"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -1501,6 +1641,46 @@
       "function swept() view returns (bool)",
       "function usedNonces(bytes32 nonce) view returns (bool used)"
     ],
+    "eth:0x0E577Df99C43f258D38460b68326B002178B8369": [
+      "constructor(address _portal, uint256 _fee, address _feeBeneficiary, address _priceFeed)",
+      "error EthUsdMinOut__InvalidPrice(int256 answer)",
+      "error EthUsdMinOut__StalePrice(uint256 updatedAt)",
+      "error FeeChargingExecutorBase__AmountNotAboveFee()",
+      "error FeeChargingExecutorBase__InvalidPortal()",
+      "error FeeChargingExecutorBase__UnauthorizedCaller()",
+      "error FeeChargingExecutorBase__ZeroBeneficiary()",
+      "error InvalidReserves()",
+      "error RecoveryAuthLib__InvalidSignature()",
+      "error RecoveryAuthLib__RecoveryCommitmentMismatch()",
+      "error RecoveryAuthLib__RecoveryExpired(uint256 deadline)",
+      "error SafeERC20FailedOperation(address token)",
+      "error StablecoinWithdrawalExecutor__DaiForGasExceedsAmountAfterTip()",
+      "error StablecoinWithdrawalExecutor__DaiForGasExceedsMax(uint256 daiForGas)",
+      "error StablecoinWithdrawalExecutor__EthNotFromWeth()",
+      "error StablecoinWithdrawalExecutor__EthTransferFailed()",
+      "error StablecoinWithdrawalExecutor__InsufficientOutput(uint256 amountOut, uint256 minOut)",
+      "error StablecoinWithdrawalExecutor__InvalidRelayerPayload()",
+      "error StablecoinWithdrawalExecutor__InvalidUserPayload()",
+      "error StablecoinWithdrawalExecutor__NotThisExecutor()",
+      "error StablecoinWithdrawalExecutor__RelayerTipExceedsAmount()",
+      "error StablecoinWithdrawalExecutor__SwapOffMainnet()",
+      "error StablecoinWithdrawalExecutor__UnknownRoute(uint8 route)",
+      "error StablecoinWithdrawalExecutor__ZeroRecipient()",
+      "error StablecoinWithdrawalExecutor__ZeroRecoveryRecipient()",
+      "error StablecoinWithdrawalExecutor__ZeroTipRecipient()",
+      "event Recovered(bytes32 indexed withdrawalId, address indexed recipient, uint256 amount)",
+      "function ASSET() view returns (address)",
+      "function BENEFICIARY() view returns (address)",
+      "function FEE() view returns (uint256)",
+      "function MAX_DAI_FOR_GAS() view returns (uint256)",
+      "function PORTAL() view returns (address)",
+      "function PRICE_FEED() view returns (address)",
+      "function ROUTE_DAI() view returns (uint8)",
+      "function ROUTE_USDC() view returns (uint8)",
+      "function ROUTE_USDT() view returns (uint8)",
+      "function execute(uint8 _flow, uint256 _amount, bytes _userPayload, bytes _relayerPayload)",
+      "function recover(tuple(tuple(address executor, bytes32 userPayloadHash, uint256 amount, uint256 proverTip, uint256 randomness) content, bytes userPayload, bytes relayerPayload, uint256 epochNumber, uint256 numCheckpointsInEpoch, uint256 leafIndex, bytes32[] path, uint256 checkpointNumber, bytes32 withdrawalId, bytes teeSignature) _args, bytes32 _recoverySalt, address _account, bytes _signature, address _recipient, uint256 _deadline)"
+    ],
     "eth:0x13114c5C847a414D20755DBc2eCbe00cc98039DF": [
       "constructor(address _certManager)",
       "event AttestationHashStaged(bytes32 indexed attestationTbsKeccak)",
@@ -1947,6 +2127,46 @@
       "function SUBSIDY() view returns (address)",
       "function execute(uint8 _flow, uint256 _amount, bytes _userPayload, bytes _relayerPayload)"
     ],
+    "eth:0x7929694e5353ebE5908305aD680Dd600B08a99Ff": [
+      "constructor(address _portal, uint256 _fee, address _feeBeneficiary, address _priceFeed)",
+      "error EthUsdMinOut__InvalidPrice(int256 answer)",
+      "error EthUsdMinOut__StalePrice(uint256 updatedAt)",
+      "error FeeChargingExecutorBase__AmountNotAboveFee()",
+      "error FeeChargingExecutorBase__InvalidPortal()",
+      "error FeeChargingExecutorBase__UnauthorizedCaller()",
+      "error FeeChargingExecutorBase__ZeroBeneficiary()",
+      "error InvalidReserves()",
+      "error RecoveryAuthLib__InvalidSignature()",
+      "error RecoveryAuthLib__RecoveryCommitmentMismatch()",
+      "error RecoveryAuthLib__RecoveryExpired(uint256 deadline)",
+      "error SafeERC20FailedOperation(address token)",
+      "error StablecoinWithdrawalExecutor__DaiForGasExceedsAmountAfterTip()",
+      "error StablecoinWithdrawalExecutor__DaiForGasExceedsMax(uint256 daiForGas)",
+      "error StablecoinWithdrawalExecutor__EthNotFromWeth()",
+      "error StablecoinWithdrawalExecutor__EthTransferFailed()",
+      "error StablecoinWithdrawalExecutor__InsufficientOutput(uint256 amountOut, uint256 minOut)",
+      "error StablecoinWithdrawalExecutor__InvalidRelayerPayload()",
+      "error StablecoinWithdrawalExecutor__InvalidUserPayload()",
+      "error StablecoinWithdrawalExecutor__NotThisExecutor()",
+      "error StablecoinWithdrawalExecutor__RelayerTipExceedsAmount()",
+      "error StablecoinWithdrawalExecutor__SwapOffMainnet()",
+      "error StablecoinWithdrawalExecutor__UnknownRoute(uint8 route)",
+      "error StablecoinWithdrawalExecutor__ZeroRecipient()",
+      "error StablecoinWithdrawalExecutor__ZeroRecoveryRecipient()",
+      "error StablecoinWithdrawalExecutor__ZeroTipRecipient()",
+      "event Recovered(bytes32 indexed withdrawalId, address indexed recipient, uint256 amount)",
+      "function ASSET() view returns (address)",
+      "function BENEFICIARY() view returns (address)",
+      "function FEE() view returns (uint256)",
+      "function MAX_DAI_FOR_GAS() view returns (uint256)",
+      "function PORTAL() view returns (address)",
+      "function PRICE_FEED() view returns (address)",
+      "function ROUTE_DAI() view returns (uint8)",
+      "function ROUTE_USDC() view returns (uint8)",
+      "function ROUTE_USDT() view returns (uint8)",
+      "function execute(uint8 _flow, uint256 _amount, bytes _userPayload, bytes _relayerPayload)",
+      "function recover(tuple(tuple(address executor, bytes32 userPayloadHash, uint256 amount, uint256 proverTip, uint256 randomness) content, bytes userPayload, bytes relayerPayload, uint256 epochNumber, uint256 numCheckpointsInEpoch, uint256 leafIndex, bytes32[] path, uint256 checkpointNumber, bytes32 withdrawalId, bytes teeSignature) _args, bytes32 _recoverySalt, address _account, bytes _signature, address _recipient, uint256 _deadline)"
+    ],
     "eth:0x7C8c2147d1BB8B83e0a0501097372de170eE702a": [
       "constructor(address _portal, uint256 _fee, address _feeBeneficiary, address _subsidyOwner, address _priceFeed)",
       "error FeeChargingExecutorBase__AmountNotAboveFee()",
@@ -2096,6 +2316,46 @@
       "constructor()",
       "function verify(bytes, bytes32[]) view returns (bool)"
     ],
+    "eth:0xA72bdcBE8901101f26D764698Ae120D0aE580d67": [
+      "constructor(address _portal, uint256 _fee, address _feeBeneficiary, address _priceFeed)",
+      "error EthUsdMinOut__InvalidPrice(int256 answer)",
+      "error EthUsdMinOut__StalePrice(uint256 updatedAt)",
+      "error FeeChargingExecutorBase__AmountNotAboveFee()",
+      "error FeeChargingExecutorBase__InvalidPortal()",
+      "error FeeChargingExecutorBase__UnauthorizedCaller()",
+      "error FeeChargingExecutorBase__ZeroBeneficiary()",
+      "error InvalidReserves()",
+      "error RecoveryAuthLib__InvalidSignature()",
+      "error RecoveryAuthLib__RecoveryCommitmentMismatch()",
+      "error RecoveryAuthLib__RecoveryExpired(uint256 deadline)",
+      "error SafeERC20FailedOperation(address token)",
+      "error StablecoinWithdrawalExecutor__DaiForGasExceedsAmountAfterTip()",
+      "error StablecoinWithdrawalExecutor__DaiForGasExceedsMax(uint256 daiForGas)",
+      "error StablecoinWithdrawalExecutor__EthNotFromWeth()",
+      "error StablecoinWithdrawalExecutor__EthTransferFailed()",
+      "error StablecoinWithdrawalExecutor__InsufficientOutput(uint256 amountOut, uint256 minOut)",
+      "error StablecoinWithdrawalExecutor__InvalidRelayerPayload()",
+      "error StablecoinWithdrawalExecutor__InvalidUserPayload()",
+      "error StablecoinWithdrawalExecutor__NotThisExecutor()",
+      "error StablecoinWithdrawalExecutor__RelayerTipExceedsAmount()",
+      "error StablecoinWithdrawalExecutor__SwapOffMainnet()",
+      "error StablecoinWithdrawalExecutor__UnknownRoute(uint8 route)",
+      "error StablecoinWithdrawalExecutor__ZeroRecipient()",
+      "error StablecoinWithdrawalExecutor__ZeroRecoveryRecipient()",
+      "error StablecoinWithdrawalExecutor__ZeroTipRecipient()",
+      "event Recovered(bytes32 indexed withdrawalId, address indexed recipient, uint256 amount)",
+      "function ASSET() view returns (address)",
+      "function BENEFICIARY() view returns (address)",
+      "function FEE() view returns (uint256)",
+      "function MAX_DAI_FOR_GAS() view returns (uint256)",
+      "function PORTAL() view returns (address)",
+      "function PRICE_FEED() view returns (address)",
+      "function ROUTE_DAI() view returns (uint8)",
+      "function ROUTE_USDC() view returns (uint8)",
+      "function ROUTE_USDT() view returns (uint8)",
+      "function execute(uint8 _flow, uint256 _amount, bytes _userPayload, bytes _relayerPayload)",
+      "function recover(tuple(tuple(address executor, bytes32 userPayloadHash, uint256 amount, uint256 proverTip, uint256 randomness) content, bytes userPayload, bytes relayerPayload, uint256 epochNumber, uint256 numCheckpointsInEpoch, uint256 leafIndex, bytes32[] path, uint256 checkpointNumber, bytes32 withdrawalId, bytes teeSignature) _args, bytes32 _recoverySalt, address _account, bytes _signature, address _recipient, uint256 _deadline)"
+    ],
     "eth:0xa9863B8F573D62377d987ccb9AF6e0000f99D14a": [
       "constructor(address _owner, address _domainOwner)",
       "error ECDSAInvalidSignature()",
@@ -2217,6 +2477,25 @@
       "function sweep(address token, address relayer, bytes intentData, bytes proofs)",
       "function swept() view returns (bool)",
       "function usedNonces(bytes32 nonce) view returns (bool used)"
+    ],
+    "eth:0xc1Db06e5B9096ab71dF8F461D3DD08CD8438f698": [
+      "constructor(address _portal, uint256 _fee, address _feeBeneficiary, address _subsidyOwner, address _priceFeed)",
+      "error FeeChargingExecutorBase__AmountNotAboveFee()",
+      "error FeeChargingExecutorBase__InvalidPortal()",
+      "error FeeChargingExecutorBase__UnauthorizedCaller()",
+      "error FeeChargingExecutorBase__ZeroBeneficiary()",
+      "error PlainWithdrawalExecutor__InvalidRelayerPayload()",
+      "error PlainWithdrawalExecutor__InvalidUserPayload()",
+      "error PlainWithdrawalExecutor__RelayerTipExceedsAmount()",
+      "error PlainWithdrawalExecutor__ZeroRecipient()",
+      "error PlainWithdrawalExecutor__ZeroTipRecipient()",
+      "error SafeERC20FailedOperation(address token)",
+      "function ASSET() view returns (address)",
+      "function BENEFICIARY() view returns (address)",
+      "function FEE() view returns (uint256)",
+      "function PORTAL() view returns (address)",
+      "function SUBSIDY() view returns (address)",
+      "function execute(uint8 _flow, uint256 _amount, bytes _userPayload, bytes _relayerPayload)"
     ],
     "eth:0xC4b631c02Aa134D83237D798aF501B3389e0ebAe": [
       "error ValueGeFieldOrder()",
@@ -2669,12 +2948,13 @@
     "zkmoney/v6/RegistrationSIPA": "0x3fd8e9865b619085d7554a73acb4bca89e060fcbfe1bf56bc749b9db7d07100b",
     "zkmoney/v6/ResolverVerifier": "0xccb5dc01ed678aced2fde148961ca1688b05f0cd8f4dd92bf3f62a7b508df33b",
     "zkmoney/v6/SIPAFactory": "0xebda1673374d3383969e223b1834be7e5113768b694cd3ac3a7ccfff5cbc64bf",
+    "zkmoney/v6/StablecoinWithdrawalExecutor": "0x1c7cc4ffedbf9bd0ad79ac735e3c08ab0cf976aaa367419a8ba31e2f4ee845bd",
     "zkmoney/v6/TeeRegistry": "0x7a011be8cd8665b8d86a9a45dfc4363db3e336b5738889d0dc670a8cd3abe3cc",
     "zkmoney/v6/UnprocessedDepositRefundVerifier": "0x7597d2213cb07f1cfca0eab680b611acc813f6c9e7849accbff64abd84fd7f0d",
     "zkmoney/v6/UserOpSIPA": "0xd2c68e7858153cdb3b7db447ee96d8da53d3eb8e68e1f66fb3a24eb53d6cc67c"
   },
   "usedBlockNumbers": { "ethereum": 26405957 },
-  "permissionsConfigHash": "0xbc8d0f699d1c5187fce088d62b3fea7618753d2cc1608092c84fbd884032d21b",
+  "permissionsConfigHash": "0x00b80ea990116cbf6af68663678fd520e876eec95461ef715a68a3b5df152a93",
   "permissions": {
     "eth:0x04Ffc6aD66934937737DD5Fea303bd0903B7625e": {
       "receivedPermissions": [

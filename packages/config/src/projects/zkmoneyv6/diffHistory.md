@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x412b57365ea8922c27537332533ad54b12a6f636
+Generated with discovered.json: 0x5796a44233159119c008175ca8847d9250630a0c
 
-# Diff at Fri, 13 Nov 2026 13:04:25 GMT:
+# Diff at Fri, 13 Nov 2026 13:14:40 GMT:
 
 - id: b1d59c14
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
@@ -22,11 +22,43 @@ The risks stay the same. The only code change is an open uint8 intent instead of
 
 New intent 4, AddPasskeySIPA (compare UserOpSIPA: https://disco.l2beat.com/diff/eth:0x5180f0659D021368CDF5c4499967B9A329C775A0/eth:0x1890474918e04447b0ab718ffe60df749d953dc4). Sweeping a funded clone runs the account operation fixed in its address, signed by the account's current keys: add a passkey, set the user record, announce the account on Aztec. It then deposits the rest. The new factory blesses no open-ended UserOp intent.
 
-New OxidePortal_steakUSDC (eth:0x4a29C4b0ED569621f0B38Aa2EF7633A950207bDf) for Steakhouse Prime USDC on Morpho, with the same verified portal code, TeeRegistry and refund verifiers. It holds about 31 USDC. Moving funds in routes DAI through a MultiStepExecutor, Maker's PSM, the vault and a PortalDepositAdapter, all verified and outside discovery. Three DepositSubsidy contracts can pay sweep relayers from their own balance and cannot change routing. Six later withdrawal executors and subsidies are unverified and unused so far.
+New OxidePortal_steakUSDC (eth:0x4a29C4b0ED569621f0B38Aa2EF7633A950207bDf) for Steakhouse Prime USDC on Morpho, with the same verified portal code, TeeRegistry and refund verifiers. It holds about 31 USDC. Moving funds in routes DAI through a MultiStepExecutor, Maker's PSM, the vault and a PortalDepositAdapter, all verified and outside discovery. The Oxide manifest also lists the steakUSDC portal's PlainWithdrawalExecutor (eth:0xc1Db06e5B9096ab71dF8F461D3DD08CD8438f698) and one StablecoinWithdrawalExecutor per portal, an optional payout route to USDC or USDT that no withdrawal has used yet. Their subsidy contracts pay relayers from their own balance and cannot change routing.
 
-Config: shapes for the new contracts in the zkmoney templates, new AddPasskeySIPA and v6 ResolverVerifier templates. SIPAFactory reads the current implementation per intent from its events. The replaced SIPAFactory stays as LegacySIPAFactory with its table and implementations. PortalFactory lists its portals. ensNode moved into the Resolver template. Ossification event for the switch. The zk catalog lists the v6 resolver verifier with its verification steps.
+Config: shapes for the new contracts in the zkmoney templates, new AddPasskeySIPA and v6 ResolverVerifier templates. SIPAFactory reads the current implementation per intent from its events. The replaced SIPAFactory stays as LegacySIPAFactory with its table and implementations. PortalFactory lists its portals. ensNode moved into the Resolver template. Ossification event for the switch. The zk catalog lists the v6 resolver verifier with its verification steps. The payout contracts of the manifest are discovered, the StablecoinWithdrawalExecutor with a template that is not critical, since it is an optional route that holds funds only in transit.
 
 ## Watched changes
+
+```diff
+    contract StablecoinWithdrawalExecutor_sUSDS (eth:0x0E577Df99C43f258D38460b68326B002178B8369) [zkmoney/v6/StablecoinWithdrawalExecutor] {
+    +++ description: Optional payout contract for withdrawals and refunds. Only the PORTAL can call it. An ordinary withdrawal first pays FEE to BENEFICIARY. It pays the recipient committed on Aztec in ASSET, or swapped to USDC or USDT for at least a committed minimum, and can first swap up to MAX_DAI_FOR_GAS DAI to ETH within 2% of PRICE_FEED. The recovery account committed on Aztec can redirect a payout that fails.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "immutable"
+      template:
++        "zkmoney/v6/StablecoinWithdrawalExecutor"
+      sourceHashes:
++        ["0x555ba4da47b09e95d431afc282a6e44f675dce5a3219350277df3d4ea8bf612b"]
+      description:
++        "Optional payout contract for withdrawals and refunds. Only the PORTAL can call it. An ordinary withdrawal first pays FEE to BENEFICIARY. It pays the recipient committed on Aztec in ASSET, or swapped to USDC or USDT for at least a committed minimum, and can first swap up to MAX_DAI_FOR_GAS DAI to ETH within 2% of PRICE_FEED. The recovery account committed on Aztec can redirect a payout that fails."
+      deployerAddress:
++        "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4"
+      sinceTimestamp:
++        1794503639
+      sinceBlock:
++        26400287
+      values:
++        {"$immutable":true,"ASSET":"eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD","BENEFICIARY":"eth:0x4A311A8DAC3ab9553722e615472F70459B09dE27","FEE":"100000000000000000","MAX_DAI_FOR_GAS":"50000000000000000000","PORTAL":"eth:0x2EbFEE284bABf94869FAC44BC85eDb3C34e536D8","PRICE_FEED":"eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419","ROUTE_DAI":2,"ROUTE_USDC":0,"ROUTE_USDT":1}
+      fieldMeta:
++        {"FEE":{"description":"Fee in ASSET (wei) taken from each ordinary withdrawal."}}
+      implementationNames:
++        {"eth:0x0E577Df99C43f258D38460b68326B002178B8369":"StablecoinWithdrawalExecutor"}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
 
 ```diff
 -   Status: DELETED
@@ -47,6 +79,40 @@ Config: shapes for the new contracts in the zkmoney templates, new AddPasskeySIP
 ```
 
 ```diff
+    contract StablecoinWithdrawalExecutor (eth:0x7929694e5353ebE5908305aD680Dd600B08a99Ff) [zkmoney/v6/StablecoinWithdrawalExecutor] {
+    +++ description: Optional payout contract for withdrawals and refunds. Only the PORTAL can call it. An ordinary withdrawal first pays FEE to BENEFICIARY. It pays the recipient committed on Aztec in ASSET, or swapped to USDC or USDT for at least a committed minimum, and can first swap up to MAX_DAI_FOR_GAS DAI to ETH within 2% of PRICE_FEED. The recovery account committed on Aztec can redirect a payout that fails.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "immutable"
+      name:
++        "StablecoinWithdrawalExecutor"
+      template:
++        "zkmoney/v6/StablecoinWithdrawalExecutor"
+      sourceHashes:
++        ["0x555ba4da47b09e95d431afc282a6e44f675dce5a3219350277df3d4ea8bf612b"]
+      description:
++        "Optional payout contract for withdrawals and refunds. Only the PORTAL can call it. An ordinary withdrawal first pays FEE to BENEFICIARY. It pays the recipient committed on Aztec in ASSET, or swapped to USDC or USDT for at least a committed minimum, and can first swap up to MAX_DAI_FOR_GAS DAI to ETH within 2% of PRICE_FEED. The recovery account committed on Aztec can redirect a payout that fails."
+      deployerAddress:
++        "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4"
+      sinceTimestamp:
++        1794498551
+      sinceBlock:
++        26399864
+      values:
++        {"$immutable":true,"ASSET":"eth:0x6B175474E89094C44Da98b954EedeAC495271d0F","BENEFICIARY":"eth:0x88ef976262BF715a3B0D24146fC3bb1B18464e61","FEE":"100000000000000000","MAX_DAI_FOR_GAS":"50000000000000000000","PORTAL":"eth:0xCB99C58Fe81Ae6b2cB4835e46F7b703745879042","PRICE_FEED":"eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419","ROUTE_DAI":2,"ROUTE_USDC":0,"ROUTE_USDT":1}
+      fieldMeta:
++        {"FEE":{"description":"Fee in ASSET (wei) taken from each ordinary withdrawal."}}
+      implementationNames:
++        {"eth:0x7929694e5353ebE5908305aD680Dd600B08a99Ff":"StablecoinWithdrawalExecutor"}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
     EOA (eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601) {
     +++ description: None
       receivedPermissions.1:
@@ -61,6 +127,38 @@ Config: shapes for the new contracts in the zkmoney templates, new AddPasskeySIP
 ```
 
 ```diff
+    contract StablecoinWithdrawalExecutor_steakUSDC (eth:0xA72bdcBE8901101f26D764698Ae120D0aE580d67) [zkmoney/v6/StablecoinWithdrawalExecutor] {
+    +++ description: Optional payout contract for withdrawals and refunds. Only the PORTAL can call it. An ordinary withdrawal first pays FEE to BENEFICIARY. It pays the recipient committed on Aztec in ASSET, or swapped to USDC or USDT for at least a committed minimum, and can first swap up to MAX_DAI_FOR_GAS DAI to ETH within 2% of PRICE_FEED. The recovery account committed on Aztec can redirect a payout that fails.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "immutable"
+      template:
++        "zkmoney/v6/StablecoinWithdrawalExecutor"
+      sourceHashes:
++        ["0x555ba4da47b09e95d431afc282a6e44f675dce5a3219350277df3d4ea8bf612b"]
+      description:
++        "Optional payout contract for withdrawals and refunds. Only the PORTAL can call it. An ordinary withdrawal first pays FEE to BENEFICIARY. It pays the recipient committed on Aztec in ASSET, or swapped to USDC or USDT for at least a committed minimum, and can first swap up to MAX_DAI_FOR_GAS DAI to ETH within 2% of PRICE_FEED. The recovery account committed on Aztec can redirect a payout that fails."
+      deployerAddress:
++        "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4"
+      sinceTimestamp:
++        1794499043
+      sinceBlock:
++        26399905
+      values:
++        {"$immutable":true,"ASSET":"eth:0xbeef088055857739C12CD3765F20b7679Def0f51","BENEFICIARY":"eth:0x6D8F09A38578fDF69244E5207735c458f3A640BB","FEE":"100000000000000000","MAX_DAI_FOR_GAS":"50000000000000000000","PORTAL":"eth:0x4a29C4b0ED569621f0B38Aa2EF7633A950207bDf","PRICE_FEED":"eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419","ROUTE_DAI":2,"ROUTE_USDC":0,"ROUTE_USDT":1}
+      fieldMeta:
++        {"FEE":{"description":"Fee in ASSET (wei) taken from each ordinary withdrawal."}}
+      implementationNames:
++        {"eth:0xA72bdcBE8901101f26D764698Ae120D0aE580d67":"StablecoinWithdrawalExecutor"}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
     contract NameRegistry (eth:0xa9863B8F573D62377d987ccb9AF6e0000f99D14a) [zkmoney/NameRegistry] {
     +++ description: Registry of zk.money names. It points to the RegistrationController and the AccountMetadataRegistry, which together decide where payments to a zk.money name resolve to.
 +++ severity: HIGH
@@ -71,6 +169,40 @@ Config: shapes for the new contracts in the zkmoney templates, new AddPasskeySIP
       values.resolver:
 -        "eth:0xc329a74542688a3c4948B7d46F204d3d7e5Dd525"
 +        "eth:0x3dc71762063D7b87b3F79b3B98E03F0051b00A6e"
+    }
+```
+
+```diff
+    contract PlainWithdrawalExecutor_steakUSDC (eth:0xc1Db06e5B9096ab71dF8F461D3DD08CD8438f698) [zkmoney/v6/PlainWithdrawalExecutor] {
+    +++ description: Default payout contract for withdrawals and refunds. Only the PORTAL can call it. It pays the recipient and relayer tip committed on Aztec. An ordinary withdrawal first pays FEE to BENEFICIARY, while refunds pay no fee.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "immutable"
+      template:
++        "zkmoney/v6/PlainWithdrawalExecutor"
+      sourceHashes:
++        ["0x557fd23f0fa02460a25d8aaf0bf6c04e809f799d3defe2fae4ddd084dee51e2a"]
+      description:
++        "Default payout contract for withdrawals and refunds. Only the PORTAL can call it. It pays the recipient and relayer tip committed on Aztec. An ordinary withdrawal first pays FEE to BENEFICIARY, while refunds pay no fee."
+      critical:
++        true
+      deployerAddress:
++        "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4"
+      sinceTimestamp:
++        1794499043
+      sinceBlock:
++        26399905
+      values:
++        {"$immutable":true,"ASSET":"eth:0xbeef088055857739C12CD3765F20b7679Def0f51","BENEFICIARY":"eth:0x6D8F09A38578fDF69244E5207735c458f3A640BB","FEE":"100000000000000000","PORTAL":"eth:0x4a29C4b0ED569621f0B38Aa2EF7633A950207bDf","SUBSIDY":"eth:0xDDda492a076Cc719ce17D6bC03d01a00Abd042a3"}
+      fieldMeta:
++        {"FEE":{"description":"Fee in ASSET (wei) taken from each ordinary withdrawal."},"SUBSIDY":{"description":"Pays relayers of this executor's payouts from operator funds."}}
+      implementationNames:
++        {"eth:0xc1Db06e5B9096ab71dF8F461D3DD08CD8438f698":"PlainWithdrawalExecutor"}
+      category:
++        {"name":"Local Infrastructure","priority":5}
     }
 ```
 
@@ -177,14 +309,18 @@ Config: shapes for the new contracts in the zkmoney templates, new AddPasskeySIP
  .../src/projects/zkmoneyv6/.flat/DepositSIPA.sol   |  3342 ++++++
  .../projects/zkmoneyv6/.flat/ForwardingTable.sol   |  2209 ++++
  .../zkmoneyv6/.flat/OxidePortal_steakUSDC.sol      |  4873 ++++++++
+ .../.flat/PlainWithdrawalExecutor_steakUSDC.sol    |  4458 ++++++++
  .../RegistrationController.sol                     |   545 +-
  .../projects/zkmoneyv6/.flat/RegistrationSIPA.sol  |  3381 ++++++
  .../{.flat@1793614694 => .flat}/RelationsLib.sol   |    56 +-
  .../{.flat@1793614694 => .flat}/Resolver.sol       |   115 +-
  .../ResolverVerifier.sol                           |   181 +-
  .../src/projects/zkmoneyv6/.flat/SIPAFactory.sol   |  2773 +++++
+ .../.flat/StablecoinWithdrawalExecutor.sol         |  8263 +++++++++++++
+ .../.flat/StablecoinWithdrawalExecutor_sUSDS.sol   |  8263 +++++++++++++
+ .../StablecoinWithdrawalExecutor_steakUSDC.sol     |  8263 +++++++++++++
  .../ZKTranscriptLib.sol                            |    50 +-
- 11 files changed, 28586 insertions(+), 397 deletions(-)
+ 15 files changed, 57833 insertions(+), 397 deletions(-)
 ```
 
 ## Config/verification related changes

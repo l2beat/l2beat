@@ -14,7 +14,13 @@
     "eth:0xa9863B8F573D62377d987ccb9AF6e0000f99D14a",
     // Deposit addresses it created keep their code and table and can still be
     // swept. The backend traces deposit funders through it.
-    "eth:0x186C20F0F294378E1DecA7419c667e44c73E992C"
+    "eth:0x186C20F0F294378E1DecA7419c667e44c73E992C",
+    // Payout contracts that the Oxide manifest lists per portal: the default
+    // one of the steakUSDC portal and the optional stablecoin ones.
+    "eth:0xc1db06e5b9096ab71df8f461d3dd08cd8438f698",
+    "eth:0x7929694e5353ebe5908305ad680dd600b08a99ff",
+    "eth:0x0e577df99c43f258d38460b68326b002178b8369",
+    "eth:0xa72bdcbe8901101f26d764698ae120d0ae580d67"
   ],
   "names": {
     "eth:0x8F4105a55C457D796Adab90d5D9E649861E81625": "SwapEscrowFactory",
@@ -22,6 +28,9 @@
     "eth:0x2EbFEE284bABf94869FAC44BC85eDb3C34e536D8": "OxidePortal_sUSDS",
     "eth:0x4a29C4b0ED569621f0B38Aa2EF7633A950207bDf": "OxidePortal_steakUSDC",
     "eth:0xd0D8E5C5B128ea7e5f2d461Afd6C669BC0877dF8": "PlainWithdrawalExecutor_sUSDS",
+    "eth:0xc1db06e5b9096ab71df8f461d3dd08cd8438f698": "PlainWithdrawalExecutor_steakUSDC",
+    "eth:0x0e577df99c43f258d38460b68326b002178b8369": "StablecoinWithdrawalExecutor_sUSDS",
+    "eth:0xa72bdcbe8901101f26d764698ae120d0ae580d67": "StablecoinWithdrawalExecutor_steakUSDC",
     "eth:0x92270578f3A311B3ced0019a4E15701e7405b4AE": "MigrationExecutor_sUSDS",
     // replaced stack, distinct from the templates' names
     "eth:0x186C20F0F294378E1DecA7419c667e44c73E992C": "LegacySIPAFactory",
