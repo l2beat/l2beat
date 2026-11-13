@@ -109,7 +109,7 @@ export const getL2ActivityColumns = (
                 change={data.pastDayCount.change}
                 changePeriod={data.pastDayCount.changePeriod}
                 className="font-medium md:text-label-value-15"
-                containerClassName="justify-end"
+                containerClassName="flex-nowrap justify-end"
               >
                 {formatActivityCount(data.pastDayCount.value)}
               </ValueWithPercentageChange>
@@ -119,7 +119,6 @@ export const getL2ActivityColumns = (
         sortUndefined: 'last',
         meta: {
           align: 'right',
-          headClassName: 'max-w-[110px]',
           tooltip: `${metric === 'uops' ? 'User operations' : 'Transactions'} per second averaged over the past day, shown together with a percentage change compared to 7 days ago.`,
           colSpan: (ctx) => (ctx.row.original.data ? 1 : 100),
         },
@@ -181,6 +180,7 @@ export const getL2ActivityColumns = (
         meta: {
           align: 'right',
           hideIfNull: true,
+          tooltip: `${metric === 'uops' ? 'User operations' : 'Transactions'} over the last 30 days, shown together with a percentage change compared to the previous 30 days.`,
         },
       }),
       (row) => ({
