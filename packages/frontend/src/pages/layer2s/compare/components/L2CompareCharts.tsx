@@ -129,9 +129,9 @@ export function L2CompareCharts({
     )
 
   return (
-    <section className="flex flex-col gap-2 max-md:mt-4 md:mt-2">
+    <section className="flex flex-col gap-4 max-md:mt-4 md:mt-2">
       <CompareSeriesProvider projects={selectedProjects}>
-        <div className="flex flex-col gap-3 max-md:px-4 lg:px-2">
+        <div className="flex flex-col gap-3 max-md:px-4">
           <CompareProjectPicker
             allProjects={allProjects}
             metrics={displayedMetrics}
@@ -164,7 +164,7 @@ export function L2CompareCharts({
             />
           </div>
         </div>
-        <div className="flex flex-col md:gap-2">
+        <div className="flex flex-col gap-4">
           {state.charts.map((config, index) => (
             <CompareChartCard
               // Charts carry no identity of their own in the URL, so the
