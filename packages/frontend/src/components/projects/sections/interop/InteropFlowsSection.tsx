@@ -107,23 +107,7 @@ function Content({
     activeIds.has(chainId),
   )
   const hasGraphSelection = visibleHighlightedChains.length > 0
-  // The page's own chain had no transfers: say so first, and don't fill the
-  // section with zero rows and empty tables that read as its own activity.
-  const ownChain = inactiveChains.find(
-    (chain) => chain.id === defaultStatsChainId,
-  )
-  // Transfers of unknown value add no volume but still count: only a chain
-  // with no transfers at all gets the empty state.
-  const ownChainData = data?.chainData.find(
-    (chain) => chain.chainId === defaultStatsChainId,
-  )
-  const ownChainHasTransfers =
-    (ownChainData?.transfersIn ?? 0) + (ownChainData?.transfersOut ?? 0) > 0
-  const ownChainInactive = !!data && !!ownChain && !ownChainHasTransfers
-  const otherInactiveChains = inactiveChains.filter(
-    (chain) => chain.id !== defaultStatsChainId,
-  )
-  const showInactiveChainsInfo = !!data && otherInactiveChains.length > 0
+  const showInactiveChainsInfo = !!data && inactiveChains.length > 0
   const { dollarsPerParticle } = useScaledParticleCounts(
     selectedChains,
     data?.chainData,
@@ -131,8 +115,6 @@ function Content({
     EMBEDDED_FLOWS_DOLLARS_PER_PARTICLE,
   )
   const statsChainA = visibleHighlightedChains[0] ?? defaultStatsChainId
-  // Graph selections are always active chains: their details still show.
-  const showOwnChainEmpty = ownChainInactive && !hasGraphSelection
   const statsChainB = visibleHighlightedChains[1]
   const hasRouteSelection = hasGraphSelection && !!statsChainB
 
@@ -161,12 +143,6 @@ function Content({
           />
         )}
       </div>
-      {ownChainInactive && (
-        <p className="rounded-lg bg-surface-secondary px-4 py-3 font-medium text-label-value-15 leading-5">
-          No transfers detected for {ownChain.name} in the last 24 hours. The
-          graph shows flows between the other selected chains.
-        </p>
-      )}
       <div className="flex h-full min-w-0 flex-col">
         <div className="group/flows flex h-full w-full min-w-0 flex-col items-center gap-10 pb-4">
           <FlowsGraphPanel
@@ -194,12 +170,12 @@ function Content({
               <>
                 <span className="text-label-value-13 text-secondary">
                   No transfers in the last 24 hours for
-                  {otherInactiveChains.length <= 3 &&
-                    ` ${otherInactiveChains.map((chain) => chain.name).join(', ')}`}
+                  {inactiveChains.length <= 3 &&
+                    ` ${inactiveChains.map((chain) => chain.name).join(', ')}`}
                 </span>
-                {otherInactiveChains.length > 3 && (
+                {inactiveChains.length > 3 && (
                   <ProjectIconList
-                    projects={otherInactiveChains}
+                    projects={inactiveChains}
                     title="Chains without transfers"
                   />
                 )}
@@ -208,34 +184,19 @@ function Content({
           </div>
         )}
       </div>
-      {showOwnChainEmpty ? (
-        <div className="flex flex-col items-center justify-center gap-1 rounded-lg bg-surface-secondary px-4 py-6 text-center">
-          <span className="font-medium text-label-value-15">
-            No transfers to show
-          </span>
-          <span className="text-label-value-13 text-secondary">
-            Stats, bridges, tokens and transfers appear here once{' '}
-            {ownChain.name} has cross-chain transfers in the last 24 hours, or
-            when you select another chain in the graph.
-          </span>
-        </div>
-      ) : (
-        <>
-          <FlowsStatsPanel
-            data={data}
-            protocols={protocols}
-            canonicalProtocolId={canonicalProtocolId}
-            statsChainA={statsChainA}
-            statsChainB={statsChainB}
-            hasRouteSelection={hasRouteSelection}
-          />
-          <InteropBridgeSubsections
-            protocolIds={selectedProtocols}
-            chains={detailChains}
-            anchorChain={statsChainA}
-          />
-        </>
-      )}
+      <FlowsStatsPanel
+        data={data}
+        protocols={protocols}
+        canonicalProtocolId={canonicalProtocolId}
+        statsChainA={statsChainA}
+        statsChainB={statsChainB}
+        hasRouteSelection={hasRouteSelection}
+      />
+      <InteropBridgeSubsections
+        protocolIds={selectedProtocols}
+        chains={detailChains}
+        anchorChain={statsChainA}
+      />
     </div>
   )
 }
