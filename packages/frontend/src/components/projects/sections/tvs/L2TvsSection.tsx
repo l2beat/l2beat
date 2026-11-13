@@ -50,14 +50,17 @@ export function L2TvsSection({
         <TvsChartControlsContextProvider defaultRange={defaultRange}>
           <SelectedTokenContextProvider>
             <ChartControls projectId={project.id} />
-            <ProjectBridgeTypeTvsChart
-              project={project}
-              milestones={milestones}
-            />
-            <ProjectAssetCategoryTvsChart
-              project={project}
-              milestones={milestones}
-            />
+            {/* Side by side once the page is wide (`ProjectDetails`). */}
+            <div className="@min-[1200px]/details:grid @min-[1200px]/details:grid-cols-2 @min-[1200px]/details:gap-x-6">
+              <ProjectBridgeTypeTvsChart
+                project={project}
+                milestones={milestones}
+              />
+              <ProjectAssetCategoryTvsChart
+                project={project}
+                milestones={milestones}
+              />
+            </div>
             <div>
               <TokensControls tokens={tokens} />
               <TokenChart project={project} milestones={milestones} />

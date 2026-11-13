@@ -27,18 +27,19 @@ export function CostsSection({
 }: CostsSectionProps) {
   return (
     <ProjectSection {...sectionProps}>
-      <p className="text-paragraph-15 md:text-paragraph-16">
-        {COSTS_DESCRIPTION}
-      </p>
       {env.CLIENT_SIDE_TRACKED_TXS_OUTAGE && (
-        <TrackedTxsOutageNotice type="section" className="mb-0" />
+        <TrackedTxsOutageNotice type="section" className="mt-0 mb-4" />
       )}
-      <HorizontalSeparator className="my-4" />
+      {/* Opens on the chart's own finding, like Activity beside it; what the
+        section measures follows the numbers. */}
       <ProjectCostsChart
         milestones={milestones}
         project={project}
         defaultRange={defaultRange}
       />
+      <p className="mt-4 text-paragraph-15 md:text-paragraph-16">
+        {COSTS_DESCRIPTION}
+      </p>
       <HorizontalSeparator className="my-4" />
       <TrackedTransactions {...trackedTransactions} />
     </ProjectSection>

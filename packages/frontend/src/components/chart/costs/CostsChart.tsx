@@ -44,6 +44,18 @@ const COST_KEYS_BOTTOM_UP = [
 ] as const
 type SeriesKey = (typeof COST_KEYS_BOTTOM_UP)[number] | typeof DATA_POSTED_KEY
 
+/** The cost types in the chart's colours and legend order. */
+export const COST_PARTS = [
+  { key: 'calldata', label: 'Calldata', color: 'var(--chart-stacked-blue)' },
+  { key: 'blobs', label: 'Blobs', color: 'var(--chart-stacked-yellow)' },
+  { key: 'compute', label: 'Compute', color: 'var(--chart-stacked-pink)' },
+  { key: 'overhead', label: 'Overhead', color: 'var(--chart-stacked-purple)' },
+] as const satisfies {
+  key: (typeof COST_KEYS_BOTTOM_UP)[number]
+  label: string
+  color: string
+}[]
+
 interface CostsChartDataPoint {
   timestamp: number
   calldata: number | null

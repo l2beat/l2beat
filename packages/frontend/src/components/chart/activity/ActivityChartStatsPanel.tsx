@@ -47,81 +47,87 @@ export function ActivityChartStatsPanel({ stats, metric, isLoading }: Props) {
     metricUi.showTotalWithoutData || totalCount !== undefined
 
   return (
-    <ChartStats className="mt-4 md:grid-cols-2 lg:grid-cols-4">
-      <ChartStatsItem
-        label={`Past Day ${metricUi.rateLabel}`}
-        className="max-md:h-7"
-        tooltip={`${metricUi.subject} per second averaged over the past day, shown together with a percentage change compared to 7D ago.`}
-        isLoading={isLoading}
-      >
-        {metricStats?.pastDayCount !== undefined &&
-        metricStats.pastDayCount !== null ? (
-          <ValueWithPercentageChange
-            change={metricStats.pastDayChange}
-            changePeriod={metricStats.pastDayChangePeriod}
-            className="text-sm xs:text-lg md:text-lg"
-            changeClassName="text-xs"
-          >
-            {formatActivityCount(metricStats.pastDayCount)}
-          </ValueWithPercentageChange>
-        ) : (
-          'No data'
-        )}
-      </ChartStatsItem>
-      <ChartStatsItem
-        label={`Past Day ${metricUi.countLabel} count`}
-        className="max-md:h-7"
-        isLoading={isLoading}
-      >
-        {metricStats?.pastDaySum !== undefined &&
-        metricStats.pastDaySum !== null
-          ? formatInteger(metricStats.pastDaySum)
-          : 'No data'}
-      </ChartStatsItem>
-      {showTotalCount && (
+    // Four columns by the panel's own width: beside Costs on a wide page
+    // the card is half as wide as the window suggests.
+    <div className="@container">
+      <ChartStats className="mt-4 @min-[760px]:grid-cols-4! md:grid-cols-2 lg:grid-cols-2">
         <ChartStatsItem
-          label={`Total ${metricUi.countLabel}`}
+          label={`Past Day ${metricUi.rateLabel}`}
+          className="max-md:h-7"
+          tooltip={`${metricUi.subject} per second averaged over the past day, shown together with a percentage change compared to 7D ago.`}
+          isLoading={isLoading}
+        >
+          {metricStats?.pastDayCount !== undefined &&
+          metricStats.pastDayCount !== null ? (
+            <ValueWithPercentageChange
+              change={metricStats.pastDayChange}
+              changePeriod={metricStats.pastDayChangePeriod}
+              className="font-semibold md:text-heading-24!"
+              changeClassName="text-label-value-13 font-medium"
+            >
+              {formatActivityCount(metricStats.pastDayCount)}
+            </ValueWithPercentageChange>
+          ) : (
+            'No data'
+          )}
+        </ChartStatsItem>
+        <ChartStatsItem
+          label={`Past Day ${metricUi.countLabel} count`}
           className="max-md:h-7"
           isLoading={isLoading}
         >
-          {totalCount ? (
+          {metricStats?.pastDaySum !== undefined &&
+          metricStats.pastDaySum !== null
+            ? formatInteger(metricStats.pastDaySum)
+            : 'No data'}
+        </ChartStatsItem>
+        {showTotalCount && (
+          <ChartStatsItem
+            label={`Total ${metricUi.countLabel}`}
+            className="max-md:h-7"
+            isLoading={isLoading}
+          >
+            {totalCount ? (
+              <div className="flex gap-1 max-md:flex-row-reverse max-md:items-baseline md:flex-col">
+                <div>{formatInteger(totalCount.value)}</div>
+                <div className="font-normal text-label-value-13 text-secondary">
+                  since {formatTimestamp(totalCount.sinceTimestamp)}
+                </div>
+              </div>
+            ) : (
+              'No data'
+            )}
+          </ChartStatsItem>
+        )}
+        <ChartStatsItem
+          label={`Max. ${metricUi.rateLabel}`}
+          tooltip={`Shows the maximum sustained ${metricUi.rateLabel}, calculated as an average over the count for a day.`}
+          className="max-md:h-7"
+          isLoading={isLoading}
+        >
+          {metricStats?.maxCount !== undefined ? (
             <div className="flex gap-1 max-md:flex-row-reverse max-md:items-baseline md:flex-col">
-              <div>{formatInteger(totalCount.value)}</div>
-              <div className="font-medium text-label-value-14 text-secondary">
-                since {formatTimestamp(totalCount.sinceTimestamp)}
+              <div>{formatActivityCount(metricStats.maxCount.value)}</div>
+              <div className="font-normal text-label-value-13 text-secondary">
+                {formatTimestamp(metricStats.maxCount.timestamp)}
               </div>
             </div>
           ) : (
             'No data'
           )}
         </ChartStatsItem>
-      )}
-      <ChartStatsItem
-        label={`Max. ${metricUi.rateLabel}`}
-        tooltip={`Shows the maximum sustained ${metricUi.rateLabel}, calculated as an average over the count for a day.`}
-        className="max-md:h-7"
-        isLoading={isLoading}
-      >
-        {metricStats?.maxCount !== undefined ? (
-          <div className="flex gap-1 max-md:flex-row-reverse max-md:items-baseline md:flex-col">
-            <div>{formatActivityCount(metricStats.maxCount.value)}</div>
-            <div className="font-medium text-label-value-14 text-secondary">
-              {formatTimestamp(metricStats.maxCount.timestamp)}
-            </div>
-          </div>
-        ) : (
-          'No data'
-        )}
-      </ChartStatsItem>
-      <ChartStatsItem
-        label="Past day UOPS/TPS Ratio"
-        className="max-md:h-7"
-        tooltip="The ratio of user operations to transactions over the past day. A high ratio indicates that for some transactions multiple individual user operations are bundled in a single transaction."
-        isLoading={isLoading}
-      >
-        {pastDayRatio !== undefined ? formatUopsRatio(pastDayRatio) : 'No data'}
-      </ChartStatsItem>
-    </ChartStats>
+        <ChartStatsItem
+          label="Past day UOPS/TPS Ratio"
+          className="max-md:h-7"
+          tooltip="The ratio of user operations to transactions over the past day. A high ratio indicates that for some transactions multiple individual user operations are bundled in a single transaction."
+          isLoading={isLoading}
+        >
+          {pastDayRatio !== undefined
+            ? formatUopsRatio(pastDayRatio)
+            : 'No data'}
+        </ChartStatsItem>
+      </ChartStats>
+    </div>
   )
 }
 

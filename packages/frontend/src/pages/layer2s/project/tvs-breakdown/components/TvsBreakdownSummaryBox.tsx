@@ -66,8 +66,8 @@ export function TvsBreakdownSummaryBox({
           <ValueWithPercentageChange
             change={tvsData?.change.total}
             changePeriod={tvsData?.changePeriod}
-            className="font-bold text-heading-24! text-primary leading-none lg:mr-0"
-            changeClassName="text-label-value-16"
+            className="font-semibold text-heading-32! text-primary tabular-nums leading-none tracking-[-0.025em] lg:mr-0"
+            changeClassName="text-label-value-13 font-medium"
             containerClassName="lg:flex-col max-lg:items-baseline"
             changeContainerClassName="leading-none"
           >
@@ -90,7 +90,7 @@ export function TvsBreakdownSummaryBox({
           </ValueWithPercentageChange>
         )}
       </ChartStatsPrimaryItem>
-      <div className="grid gap-2 max-md:mt-3 md:col-span-3 md:grid-cols-3 md:gap-3">
+      <div className="grid gap-0 max-md:mt-3 md:col-span-3 md:grid-cols-3 md:gap-3">
         <ChartStatsItem
           label={
             <>
@@ -204,7 +204,8 @@ function StatItemContent(props: StatsItemProps) {
         change={props.change}
         changePeriod={props.changePeriod}
         changeContainerClassName="leading-none!"
-        className="font-bold text-primary leading-none! md:text-lg"
+        className="font-semibold text-primary tabular-nums leading-none! md:text-heading-24!"
+        changeClassName="text-label-value-13 font-medium"
       >
         {formatCurrency(props.value, 'usd')}
       </ValueWithPercentageChange>

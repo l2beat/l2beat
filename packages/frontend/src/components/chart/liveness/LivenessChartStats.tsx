@@ -65,7 +65,7 @@ export function LivenessChartStats({
         'mt-4',
         elements.length === 1 && 'lg:grid-cols-1',
         elements.length === 2 && 'lg:grid-cols-2',
-        elements.length === 3 && 'lg:grid-cols-3',
+        elements.length === 3 && 'md:grid-cols-3 lg:grid-cols-3',
         elements.length === 4 && 'lg:grid-cols-4',
       )}
     >

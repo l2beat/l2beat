@@ -10,7 +10,6 @@ import { LivenessChartRangeControls } from '~/pages/layer2s/liveness/components/
 import { LivenessChartSubtypeControls } from '~/pages/layer2s/liveness/components/LivenessChartSubtypeControls'
 import type { LivenessAnomaly } from '~/server/features/layer2s/liveness/types'
 import { useTRPC } from '~/trpc/React'
-import { cn } from '~/utils/cn'
 import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
 import { type ChartRange, rangeToResolution } from '~/utils/range/range'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
@@ -84,27 +83,15 @@ export function ProjectLivenessChart({
 
   return (
     <div className="flex flex-col">
-      <div
-        className={cn(
-          'flex flex-col gap-1',
-          hideSubtypeSwitch && 'flex-row justify-between',
-        )}
-      >
+      {/* Range above the plot and the metric switch under it, as in Activity
+        and Costs. */}
+      <ChartControlsWrapper>
         <ProjectChartTimeRange
           isPlaceholderData={isPlaceholderData}
           timeRange={timeRange}
         />
-        <ChartControlsWrapper className="flex-wrap-reverse">
-          {!hideSubtypeSwitch && (
-            <LivenessChartSubtypeControls
-              subtype={subtype}
-              setSubtype={setSubtype}
-              configuredSubtypes={configuredSubtypes}
-            />
-          )}
-          <LivenessChartRangeControls range={range} setRange={setRange} />
-        </ChartControlsWrapper>
-      </div>
+        <LivenessChartRangeControls range={range} setRange={setRange} />
+      </ChartControlsWrapper>
       <div className="mt-4 mb-3">
         <LivenessChart
           isPlaceholderData={isPlaceholderData}
@@ -119,6 +106,13 @@ export function ProjectLivenessChart({
           tickCount={4}
         />
       </div>
+      {!hideSubtypeSwitch && (
+        <LivenessChartSubtypeControls
+          subtype={subtype}
+          setSubtype={setSubtype}
+          configuredSubtypes={configuredSubtypes}
+        />
+      )}
       <ChartPreviousDataDim isPlaceholderData={isPlaceholderData}>
         <LivenessChartStats
           isLoading={isLoading}
