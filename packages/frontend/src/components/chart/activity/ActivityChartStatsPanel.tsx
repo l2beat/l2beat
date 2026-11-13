@@ -47,7 +47,7 @@ export function ActivityChartStatsPanel({ stats, metric, isLoading }: Props) {
     metricUi.showTotalWithoutData || totalCount !== undefined
 
   return (
-    <ChartStats className="mt-4 md:grid-cols-2 lg:grid-cols-4">
+    <ChartStats className="mt-4 max-md:gap-y-2.5 md:grid-cols-2 lg:grid-cols-4">
       <ChartStatsItem
         label={`Past day ${metricUi.rateLabel}`}
         className="max-md:h-7"
@@ -81,6 +81,8 @@ export function ActivityChartStatsPanel({ stats, metric, isLoading }: Props) {
       {showTotalCount && (
         <ChartStatsItem
           label={`Total ${metricUi.countLabel}`}
+          // A figure with a date under it: the label aligns with the figure.
+          className="max-md:items-start"
           isLoading={isLoading}
         >
           {totalCount ? (
@@ -98,6 +100,7 @@ export function ActivityChartStatsPanel({ stats, metric, isLoading }: Props) {
       <ChartStatsItem
         label={`Max ${metricUi.rateLabel}`}
         tooltip={`Shows the maximum sustained ${metricUi.rateLabel}, calculated as an average over the count for a day.`}
+        className="max-md:items-start"
         isLoading={isLoading}
       >
         {metricStats?.maxCount !== undefined ? (

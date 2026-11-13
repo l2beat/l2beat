@@ -55,7 +55,7 @@ export function LivenessChartStats({
       </ChartStatsItem>
     ),
     !isArchived && (
-      <ChartStatsItem key="anomalies" label="Past 30 days anomalies">
+      <ChartStatsItem key="anomalies" label="Anomalies in the past 30 days">
         {env.CLIENT_SIDE_TRACKED_TXS_OUTAGE ? (
           <NoDataBadge />
         ) : (

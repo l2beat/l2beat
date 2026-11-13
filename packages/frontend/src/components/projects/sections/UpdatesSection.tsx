@@ -286,9 +286,11 @@ export function UpdateCard({
                 '[&_p:last-child]:mb-0 [&_p]:mb-2',
                 '[&_li]:marker:text-secondary [&_ol]:mb-2 [&_ul]:mb-2',
                 '[&_a]:break-all [&_a]:text-link',
+                // Code chips stand off the grey panel.
+                '[&_code]:bg-surface-primary dark:[&_code]:bg-surface-secondary',
               )}
             >
-              {update.description}
+              {linkBareUrls(update.description)}
             </Markdown>
           </div>
         )}
@@ -334,4 +336,27 @@ function plainText(markdown: string): string {
     .replace(/[*_`#>|]+/g, ' ')
     .replace(/\s+/g, ' ')
     .trim()
+}
+
+/**
+ * Descriptions paste raw diff URLs that run across several lines on phones;
+ * a bare URL becomes a short link named after what it points to.
+ */
+function linkBareUrls(markdown: string) {
+  return markdown.replace(
+    /(^|[\s(])(https?:\/\/[^\s)<>\]]+?)([.,;:]?)(?=\s|$|\))/g,
+    (match, before: string, url: string, trailing: string) => {
+      if (before === '(') return match
+      return `${before}[${urlLabel(url)}](${url})${trailing}`
+    },
+  )
+}
+
+function urlLabel(url: string) {
+  if (/\/(compare|commit|pull)\//.test(url)) return 'diff'
+  try {
+    return new URL(url).hostname.replace(/^www\./, '')
+  } catch {
+    return url
+  }
 }

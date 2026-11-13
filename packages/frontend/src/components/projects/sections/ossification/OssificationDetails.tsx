@@ -136,11 +136,13 @@ function CriticalContracts({
             <thead className="font-medium text-label-value-13">
               <tr>
                 <th className="px-4 py-2 font-medium md:px-6">Contract</th>
-                <th className="px-4 py-2 font-medium md:px-6">Unchanged for</th>
-                <th className="px-4 py-2 text-right font-medium md:px-6">
+                <th className="whitespace-nowrap px-4 py-2 font-medium md:px-6">
+                  Unchanged for
+                </th>
+                <th className="whitespace-nowrap px-4 py-2 text-right font-medium md:px-6">
                   Code changes
                 </th>
-                <th className="px-4 py-2 text-right font-medium md:px-6">
+                <th className="whitespace-nowrap px-4 py-2 text-right font-medium md:px-6">
                   State changes
                 </th>
               </tr>
@@ -150,8 +152,8 @@ function CriticalContracts({
                 <tr key={contract.address} className="border-divider border-t">
                   <td className="px-4 py-2 md:px-6">
                     <div className="flex items-center gap-2">
-                      <span className="font-medium [overflow-wrap:anywhere] max-md:max-w-44">
-                        {contract.name}
+                      <span className="font-medium max-md:max-w-44">
+                        {withIdentifierBreaks(contract.name)}
                       </span>
                       {!contract.isVerified && <OssificationUnverifiedBadge />}
                     </div>
@@ -162,7 +164,7 @@ function CriticalContracts({
                       )}
                     </span>
                   </td>
-                  <td className="px-4 py-2 tabular-nums md:px-6">
+                  <td className="w-px whitespace-nowrap px-4 py-2 tabular-nums md:px-6">
                     {formatSeconds(contract.ageSeconds)}
                   </td>
                   <td className="px-4 py-2 text-right tabular-nums md:px-6">
@@ -179,4 +181,14 @@ function CriticalContracts({
       </CollapsibleContent>
     </Collapsible>
   )
+}
+
+/**
+ * Contract names are CamelCase identifiers ("L2CrossDomainMessenger"); on
+ * phones they may only break between words, never mid-word.
+ */
+function withIdentifierBreaks(name: string) {
+  return name
+    .split(/(?<=[a-z0-9])(?=[A-Z])|(?<=_)|(?<=[A-Za-z])(?=\d)/)
+    .flatMap((part, i) => (i === 0 ? [part] : [<wbr key={i} />, part]))
 }
