@@ -153,7 +153,7 @@ function Content({
         )}
       </div>
       {ownChainInactive && (
-        <p className="rounded-lg bg-surface-secondary px-4 py-3 font-medium text-label-value-15">
+        <p className="rounded-lg bg-surface-secondary px-4 py-3 font-medium text-label-value-15 leading-5">
           No transfers detected for {ownChain.name} in the last 24 hours. The
           graph shows flows between the other selected chains.
         </p>
