@@ -128,6 +128,7 @@ describe(renderDefiProjectMarkdown.name, () => {
       '## Summary',
       '## Protocol description',
       '## Value Locked',
+      '## Yield and exit',
       '## External dependencies',
       '## Permissions',
       '## Smart contracts',
@@ -153,6 +154,15 @@ describe(renderDefiProjectMarkdown.name, () => {
         'Value Locked',
       ),
     ).toInclude('https://ethbeat.org/defi/projects/lido#tvs')
+  })
+
+  it('points the yield and exit charts to the HTML page', () => {
+    expect(
+      getSection(
+        renderDefiProjectMarkdown(ENTRY, TOTAL_VALUE_LOCKED_USD),
+        'Yield and exit',
+      ),
+    ).toInclude('https://ethbeat.org/defi/projects/lido#yield-and-exit')
   })
 
   it('lists external dependencies with absolute links and review status', () => {
@@ -278,6 +288,10 @@ const SECTIONS: ProjectDetailsSection[] = [
   {
     type: 'TvsValueSection',
     props: { id: 'tvs', title: 'Value Locked' },
+  } as ProjectDetailsSection,
+  {
+    type: 'LiquidStakingYieldAndExitSection',
+    props: { id: 'yield-and-exit', title: 'Yield and exit' },
   } as ProjectDetailsSection,
   externalDependencies([
     {
