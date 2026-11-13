@@ -242,5 +242,6 @@ function block(x: number) {
     parentHash: '0x' + (x - 1).toString(),
     logsBloom: `0x${'0'.repeat(512)}`,
     timestamp: x * 100,
+    gasUsed: 21000,
   }
 }

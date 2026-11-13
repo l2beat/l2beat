@@ -147,6 +147,8 @@ export interface ActivityConfigProject {
   id: ProjectId
   chainName: string
   activityConfig: ProjectActivityConfig
+  /** Stores the blocks at the head of its EVM chain as they come, for live views */
+  followHead: boolean
 }
 
 export interface MetricsAuthConfig {
