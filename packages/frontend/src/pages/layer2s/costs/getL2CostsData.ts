@@ -11,7 +11,12 @@ import { getBadgeLookup } from '~/utils/project/getBadgeWithParams'
 import { optionToRange } from '~/utils/range/range'
 
 export async function getL2CostsData(
-  req: Request<unknown, unknown, unknown, { tab: 'rollups' | 'others' }>,
+  req: Request<
+    unknown,
+    unknown,
+    unknown,
+    { tab: 'rollups' | 'validiumsAndOptimiums' | 'others' }
+  >,
   manifest: Manifest,
   cache: InMemoryCache,
 ): Promise<RenderData> {
@@ -52,7 +57,10 @@ export async function getL2CostsData(
   }
 }
 
-async function getCachedData(cache: InMemoryCache, tab: 'rollups' | 'others') {
+async function getCachedData(
+  cache: InMemoryCache,
+  tab: 'rollups' | 'validiumsAndOptimiums' | 'others',
+) {
   const helpers = getSsrHelpers()
   const [entries, queryState] = await Promise.all([
     getL2CostsEntries(helpers),
@@ -72,7 +80,9 @@ async function getCachedData(cache: InMemoryCache, tab: 'rollups' | 'others') {
   }
 }
 
-async function getQueryState(tab: 'rollups' | 'others') {
+async function getQueryState(
+  tab: 'rollups' | 'validiumsAndOptimiums' | 'others',
+) {
   const helpers = getSsrHelpers()
 
   await helpers.queryClient.prefetchQuery(

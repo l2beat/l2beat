@@ -45,13 +45,33 @@ describe(createL2Router.name, () => {
 
     expect(await response.text()).toEqual('<html />')
   })
+
+  // The costs page has a validiums & optimiums tab, which writes this value
+  // to the URL; a reload or a shared link must open it, not return a 400.
+  it('serves the costs page on every tab the page links to', async () => {
+    const router = createRouter({
+      entries: { rollups: [], validiumsAndOptimiums: [], others: [] },
+      queryState: {},
+    })
+
+    for (const tab of ['rollups', 'validiumsAndOptimiums', 'others']) {
+      const response = await fetchFromRouter(
+        router,
+        `/layer2s/costs?tab=${tab}`,
+      )
+
+      expect(response.status).toEqual(200)
+      expect(await response.text()).toEqual('<html />')
+    }
+  })
 })
 
-function createRouter() {
-  const manifest = mockObject<Manifest>({})
-  const cachedPage = { head: {}, props: { projectEntry: ENTRY } }
+function createRouter(
+  cachedValue: unknown = { head: {}, props: { projectEntry: ENTRY } },
+) {
+  const manifest = mockObject<Manifest>({ getUrl: (path: string) => path })
   const cache = mockObject<InMemoryCache>({
-    get: (async () => cachedPage) as InMemoryCache['get'],
+    get: (async () => cachedValue) as InMemoryCache['get'],
   })
   return createL2Router(manifest, async () => '<html />', cache)
 }
