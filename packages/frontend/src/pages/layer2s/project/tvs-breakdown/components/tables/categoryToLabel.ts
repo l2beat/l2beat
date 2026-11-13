@@ -10,7 +10,7 @@ export function categoryToLabel(category: TvsToken['category']) {
     case 'stablecoin':
       return 'Stablecoins'
     case 'other':
-      return 'Others'
+      return 'Other'
     case 'rwaPublic':
       return 'Public RWAs'
     case 'rwaRestricted':

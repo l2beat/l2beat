@@ -42,7 +42,7 @@ export function CostsTotalCell({ data, warning }: CellProps) {
 
   return (
     <div>
-      <div className="flex flex-col items-end">
+      <div className="flex flex-col items-end max-md:items-start">
         <div className="flex items-center gap-1">
           {warning && <Warning warning={warning} />}
           <PrimaryValueCell>
@@ -63,7 +63,7 @@ export function CostsTotalCell({ data, warning }: CellProps) {
 function Warning({ warning }: { warning: WarningWithSentiment }) {
   return (
     <Tooltip>
-      <TooltipTrigger aria-label="Costs warning">
+      <TooltipTrigger aria-label="Costs warning" className="max-md:order-last">
         <RoundedWarningIcon
           className="size-4"
           sentiment={warning.sentiment}
