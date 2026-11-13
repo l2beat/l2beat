@@ -100,7 +100,7 @@ export const getL2TvsColumns = (
           sortUndefined: 'last',
           meta: {
             cellClassName: 'w-[240px] min-w-[240px]',
-            align: 'center',
+            align: 'right',
             tooltip: 'Total = Canonical + External + Native',
           },
         },
