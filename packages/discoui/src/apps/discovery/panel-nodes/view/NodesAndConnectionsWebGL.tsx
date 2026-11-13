@@ -388,7 +388,8 @@ void main() {
 
 const TEXT_FS = `#version 300 es
 precision mediump float;
-in vec2 v_uv;
+// fp16 mediump cannot address single texels across a 1000+ px wide atlas.
+in highp vec2 v_uv;
 in vec4 v_color;
 flat in vec4 v_channelMask;
 uniform sampler2D u_atlas;
@@ -3439,6 +3440,8 @@ export function NodesAndConnectionsWebGL() {
           return
         }
         rendererRef.current = renderer
+        // A zoom that settled while the icons loaded found no renderer.
+        renderer.rasterizeTextFor(useStore.getState().transform.scale)
         setFailure(null)
         scheduleDraw.current()
       })
