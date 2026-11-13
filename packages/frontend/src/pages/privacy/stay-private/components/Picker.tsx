@@ -1,6 +1,10 @@
 import type { ReactNode } from 'react'
 import { cn } from '~/utils/cn'
 
+/** One focus ring for every control on the page, in the brand colour at 3:1 or better. */
+export const FOCUS_RING =
+  'focus-visible:outline-2 focus-visible:outline-brand focus-visible:outline-offset-2'
+
 /**
  * A numbered question answered by its options. Native inputs, so arrow keys
  * move between radios and screen readers announce the group.
@@ -49,7 +53,6 @@ export function PickerOption({
   label,
   description,
   trailing,
-  disabled = false,
 }: {
   type?: 'radio' | 'checkbox'
   name: string
@@ -60,14 +63,12 @@ export function PickerOption({
   description?: ReactNode
   /** Right-aligned, e.g. how many protocols an answer leads to. */
   trailing?: ReactNode
-  disabled?: boolean
 }) {
   return (
     <label
       className={cn(
         'flex cursor-pointer items-start gap-2.5 rounded-lg border border-transparent px-2.5 py-2 transition-colors hover:bg-surface-secondary',
-        'has-checked:bg-brand/8 has-focus-visible:outline-2 has-focus-visible:outline-brand',
-        disabled && 'cursor-not-allowed opacity-50 hover:bg-transparent',
+        'active:bg-brand/15 has-checked:bg-brand/8 has-focus-visible:outline-2 has-focus-visible:outline-brand',
       )}
     >
       <input
@@ -75,7 +76,6 @@ export function PickerOption({
         name={name}
         value={value}
         checked={checked}
-        disabled={disabled}
         onChange={(e) => onChange(e.target.checked)}
         className="mt-px size-4 shrink-0 accent-brand"
       />

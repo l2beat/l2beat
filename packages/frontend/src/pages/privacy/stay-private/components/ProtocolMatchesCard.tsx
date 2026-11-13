@@ -33,6 +33,7 @@ import {
   getWaitText,
   STAY_PRIVATE,
 } from '../stayPrivateCopy'
+import { FOCUS_RING } from './Picker'
 import { SetupDetails } from './SetupDetails'
 
 const GROUP_SENTIMENT = {
@@ -234,7 +235,8 @@ function ActionButton({
       type="button"
       onClick={onClick}
       className={cn(
-        'inline-flex items-center gap-2 rounded-lg border border-brand px-3 py-1.5 font-bold text-brand text-label-value-13 transition-colors hover:bg-brand/10',
+        'inline-flex h-8 items-center gap-2 rounded-lg border border-brand px-3 font-bold text-label-value-13 text-primary transition-colors hover:bg-brand/10 active:bg-brand/20',
+        FOCUS_RING,
         className,
       )}
     >
@@ -416,16 +418,18 @@ function ProtocolRow({
             aria-controls={setupId}
             onClick={() => onSelect(isOpen ? undefined : protocol.slug)}
             className={cn(
-              'inline-flex shrink-0 items-center gap-1.5 rounded-lg border px-2.5 py-1.5 font-bold text-label-value-13 transition-colors',
+              'inline-flex h-8 shrink-0 items-center gap-1.5 rounded-lg border px-2.5 font-bold text-label-value-13 transition-colors active:bg-brand/20',
+              FOCUS_RING,
+              // Text stays primary when open: on the brand fill it was under 4.5:1.
               isOpen
-                ? 'border-brand bg-brand text-primary-invert'
-                : 'border-divider hover:border-brand hover:text-brand',
+                ? 'border-brand bg-brand/10'
+                : 'border-divider hover:border-brand',
             )}
           >
             {isOpen ? STAY_PRIVATE.hideSetup : STAY_PRIVATE.seeSetup}
             <ChevronIcon
               className={cn(
-                'size-3 fill-current transition-transform',
+                'size-3 fill-current transition-transform motion-reduce:transition-none',
                 isOpen && 'rotate-180',
               )}
             />
@@ -580,12 +584,12 @@ function FilteredList({
       open={defaultOpen || holdsSelected || undefined}
       className="group rounded-xl border border-divider"
     >
-      <summary className="flex cursor-pointer list-none items-center justify-between gap-2 px-4 py-3 font-bold text-label-value-14 [&::-webkit-details-marker]:hidden">
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-2 rounded-xl px-4 py-3 font-bold text-label-value-14 focus-visible:outline-2 focus-visible:outline-brand [&::-webkit-details-marker]:hidden">
         <span>
           {title}{' '}
           <span className="font-medium text-secondary">({items.length})</span>
         </span>
-        <ChevronIcon className="size-3 fill-current transition-transform group-open:rotate-180" />
+        <ChevronIcon className="size-3 fill-current transition-transform group-open:rotate-180 motion-reduce:transition-none" />
       </summary>
       <ul className="flex flex-col gap-2 px-3 pb-3">
         {items.map(({ protocol, reason }) => (

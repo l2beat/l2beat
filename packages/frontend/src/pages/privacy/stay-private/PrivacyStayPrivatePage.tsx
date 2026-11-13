@@ -76,6 +76,8 @@ export function PrivacyStayPrivatePage({
               waitWindowDays={waitWindowDays}
               onChange={changeChoices}
             />
+            {/* Fades the panel's bottom edge while it scrolls, so cut-off questions read as more to come. */}
+            <div className="-mx-6 -mb-5 pointer-events-none sticky bottom-[-1.25rem] hidden h-10 bg-linear-to-t from-surface-primary xl:block" />
           </PrimaryCard>
           <ProtocolMatchesCard
             matches={matches}

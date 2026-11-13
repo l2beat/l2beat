@@ -16,7 +16,7 @@ import {
   type MatchChoices,
 } from '../matchProtocols'
 import { capitalize, STAY_PRIVATE } from '../stayPrivateCopy'
-import { PickerOption, PickerQuestion } from './Picker'
+import { FOCUS_RING, PickerOption, PickerQuestion } from './Picker'
 
 /**
  * The three questions: what the user wants to do, who should not find out and
@@ -105,7 +105,10 @@ export function ChoicesPicker({
             <button
               type="button"
               onClick={() => onChange({ ...choices, from: defaultFrom })}
-              className="font-medium text-brand text-label-value-13 hover:underline"
+              className={cn(
+                'rounded-sm font-medium text-label-value-13 text-secondary underline hover:text-primary active:text-brand',
+                FOCUS_RING,
+              )}
             >
               {STAY_PRIVATE.resetChoices}
             </button>
@@ -215,7 +218,8 @@ function FilterSelect({
         value={value ?? ''}
         onChange={(e) => onChange(e.target.value || undefined)}
         className={cn(
-          'h-9 w-full min-w-0 rounded-lg border border-divider bg-surface-primary px-2 text-paragraph-14 text-primary',
+          'h-9 w-full min-w-0 rounded-lg border border-secondary bg-surface-primary px-2 text-paragraph-14 text-primary',
+          FOCUS_RING,
           value !== undefined && 'border-brand',
         )}
       >

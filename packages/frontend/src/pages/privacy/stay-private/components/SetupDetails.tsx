@@ -163,7 +163,7 @@ export function SetupDetails({
             {STAY_PRIVATE.costsTitle}
           </h4>
           <div className="mt-3 overflow-x-auto">
-            <table className="w-full min-w-[480px] text-left text-paragraph-14">
+            <table className="w-full text-left text-paragraph-14">
               <thead className="text-paragraph-13 text-secondary">
                 <tr className="border-divider border-b">
                   {STAY_PRIVATE.costsHeaders.map((header) => (
