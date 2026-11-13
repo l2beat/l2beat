@@ -11,6 +11,7 @@ import { DefiTvlSection } from './sections/defi/DefiTvlSection'
 import { LiquidStakingSection } from './sections/defi/LiquidStakingSection'
 import { ExternalDependenciesSection } from './sections/ExternalDependenciesSection'
 import { GardenCropsSection } from './sections/GardenCropsSection'
+import { GasFeesSection } from './sections/GasFeesSection'
 import { GrissiniRiskAnalysisSection } from './sections/GrissiniRiskAnalysisSection'
 import { GroupSection } from './sections/GroupSection'
 import { InteropFlowsSection } from './sections/interop/InteropFlowsSection'
@@ -105,6 +106,14 @@ function renderSection(
     case 'ActivitySection':
       return (
         <ActivitySection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'GasFeesSection':
+      return (
+        <GasFeesSection
           key={item.props.id}
           {...{ nested, sectionOrder }}
           {...item.props}
