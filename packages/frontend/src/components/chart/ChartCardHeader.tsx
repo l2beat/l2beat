@@ -127,7 +127,7 @@ export function ChartCardHeader({
                       className="min-w-0 text-left text-label-value-13"
                     />
                     {rangeLabel && (
-                      <span className="text-secondary">{rangeLabel}</span>
+                      <span className="text-secondary">/ {rangeLabel}</span>
                     )}
                   </span>
                 )}
