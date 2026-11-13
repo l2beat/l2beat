@@ -108,7 +108,7 @@
 }
 
 .mdc a[data-link-role="glossary"] {
-  @apply underline decoration-dotted md:underline-offset-2 decoration-link;
+  @apply underline decoration-dotted underline-offset-2 decoration-link;
 }
 
 .mdc img {
