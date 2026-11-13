@@ -294,7 +294,8 @@ function Label({
   anchor?: 'start' | 'middle' | 'end'
 }) {
   return (
-    <text x={x} y={y} textAnchor={anchor} fontSize={8} fill={GREY}>
+    // Participants are keys, so they are in ink.
+    <text x={x} y={y} textAnchor={anchor} fontSize={9.5} fill="var(--primary)">
       {children}
     </text>
   )

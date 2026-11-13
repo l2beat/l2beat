@@ -31,13 +31,13 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     const summary = getSection(renderPrivacyProjectMarkdown(ENTRY), 'Summary')
 
     expect(summary).toInclude(
-      '- Total Value Locked: $412.00 M (+1.50% compared to seven days ago)',
+      '- Value locked: $412.00 M (+1.50% compared to seven days ago)',
       '- Assets tracked: 1',
       '- Buckets tracked: 2',
-      '- Deposits 7D: 120 (-3.00% compared to the previous seven days)',
-      '- Deposits 30D: 540',
-      '- Deposits Total: 98.00 K',
-      '- Active Relayers 30D: 7',
+      '- Deposits 7d: 120 (-3.00% compared to the previous seven days)',
+      '- Deposits 30d: 540',
+      '- Deposits total: 98.00 K',
+      '- Active relayers 30d: 7',
       '- Tracked on: Ethereum, BNB Smart Chain',
       '- Attributes: ZK, Fixed amounts',
       '- Reference app: Classic app (most private of 2 checked)',
@@ -80,7 +80,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     expect(summary).toInclude(
       '- Metrics: Not tracked. Data tracking is not available for this project.',
     )
-    expect(summary).not.toInclude('Total Value Locked')
+    expect(summary).not.toInclude('Value locked')
     expect(summary).not.toInclude('Deposits')
   })
 
@@ -90,10 +90,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
       'Summary',
     )
 
-    expect(summary).toInclude(
-      '- Total Value Locked: N/A',
-      '- Deposits 30D: 540',
-    )
+    expect(summary).toInclude('- Value locked: N/A', '- Deposits 30d: 540')
   })
 
   it('leads the warnings with the under review banner', () => {
@@ -179,7 +176,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
       '**Warning:** The relayer list is curated.',
     )
     expect(summary.indexOf('**Warning:**')).toBeLessThan(
-      summary.indexOf('- Total Value Locked:'),
+      summary.indexOf('- Value locked:'),
     )
   })
 
@@ -287,7 +284,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
       expect(
         getSection(renderPrivacyProjectMarkdown(ENTRY), 'How to stay private'),
       ).toInclude(
-        '1. **Wait.** Wait before withdrawing. Draw the wait once, at random between 0 and 30 days, the window the anonymity set counts. Against: chain analyst.',
+        '1. **Wait.** Wait before withdrawing. Draw the wait once, at random between 0 and 30 days, the window the anonymity set counts. Against: Chain analyst.',
       )
     })
 
@@ -298,7 +295,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     it('names the adversaries no step helps against', () => {
       expect(
         getSection(renderPrivacyProjectMarkdown(ENTRY), 'How to stay private'),
-      ).toInclude('**No step helps against:** future adversary.')
+      ).toInclude('**No step helps against:** Future adversary.')
     })
 
     it('lists every inside field for the public observer, with notes', () => {
@@ -331,7 +328,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
 
     expect(breakdown).toInclude(
       [
-        '| Asset | Buckets | Deposits 7D | Deposits 30D | Deposits Total | Value Locked |',
+        '| Asset | Buckets | Deposits 7d | Deposits 30d | Deposits total | Value locked |',
         '| --- | --- | --- | --- | --- | --- |',
         '| ETH | 2 | 120 ($300.00 K) | 540 ($1.35 M) | 98.00 K ($245.00 M) | $412.00 M |',
         '| ETH: 1 ETH bucket |  | 20 ($50.00 K) | 40 ($100.00 K) | 8.00 K ($20.00 M) | $12.00 M |',

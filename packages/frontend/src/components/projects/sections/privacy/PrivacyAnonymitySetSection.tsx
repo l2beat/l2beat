@@ -64,7 +64,7 @@ export function PrivacyAnonymitySetSection({
       ) : (
         <>
           <h3 className="mb-2 font-bold text-heading-20">
-            {ANONYMITY_SET_WINDOW_DAYS} day historic anonymity set
+            {ANONYMITY_SET_WINDOW_DAYS}-day historic anonymity set
           </h3>
           <p className="mb-4 text-paragraph-15 text-secondary">
             {copy.historicDescription}
@@ -104,7 +104,7 @@ export function PrivacyAnonymitySetSection({
             {copy.looksBackwardsNote}
           </p>
 
-          <h3 className="mt-4 mb-2 font-bold text-heading-20">
+          <h3 className="mt-8 mb-2 font-bold text-heading-20">
             {copy.durationTitle}
           </h3>
           <p className="mb-4 text-paragraph-15 text-secondary">

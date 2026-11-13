@@ -7,42 +7,33 @@ import {
 } from '~/pages/privacy/methodology/paths'
 import { cn } from '~/utils/cn'
 
-interface Props {
-  backgroundImage: string
-  className?: string
-}
-
-export function PrivacyAdviceBanner({ backgroundImage, className }: Props) {
+/**
+ * A flat inverted block, like the question card on home and the mandate's
+ * closing block: ink in light mode, a step up from the page in dark.
+ */
+export function PrivacyAdviceBanner({ className }: { className?: string }) {
   return (
-    <PrimaryCard
-      asChild
-      className={cn('mt-4 overflow-hidden rounded-lg! p-0 md:p-0', className)}
-    >
-      <CustomLink
-        variant="plain"
-        underline={false}
-        href={PRIVACY_ADVICE_HREF}
-        className="group relative flex min-h-[128px] select-none overflow-hidden rounded-lg text-pure-white"
-      >
-        <div
-          className="absolute inset-0 origin-left bg-center bg-cover transition-[scale] ease-in-out group-hover:scale-110"
-          style={{ backgroundImage: `url(${backgroundImage})` }}
-        />
-        <div className="absolute inset-0 bg-pure-black/35" />
-        <div className="relative flex w-full items-center justify-between gap-4 p-5 md:p-6">
-          <div>
-            <div className="font-medium text-2xs uppercase transition-opacity group-hover:opacity-0">
+    <div className={cn('home-theme mt-4', className)}>
+      <PrimaryCard asChild className="home-inverted text-primary">
+        <CustomLink
+          variant="plain"
+          underline={false}
+          href={PRIVACY_ADVICE_HREF}
+          className="group flex items-center justify-between gap-4"
+        >
+          <span className="flex flex-col gap-1">
+            <span className="font-medium text-label-value-13 text-secondary">
               Ready for a new identity?
-            </div>
-            <div className="group-hover:-translate-y-2 origin-left text-balance font-bold text-2xl leading-tight! transition-[translate,scale] ease-in-out group-hover:translate-x-4 group-hover:scale-110 md:text-3xl">
+            </span>
+            <span className="font-semibold text-heading-20 underline-offset-4 group-hover:underline md:text-heading-24">
               {PRIVACY_ADVICE_TITLE}
-            </div>
-          </div>
-          <div className="grid size-10 shrink-0 place-items-center rounded-full bg-pure-white/15 backdrop-blur-sm transition-colors group-hover:bg-pure-white/25">
-            <ArrowRightIcon className="size-4" />
-          </div>
-        </div>
-      </CustomLink>
-    </PrimaryCard>
+            </span>
+          </span>
+          <span className="grid size-10 shrink-0 place-items-center rounded-full bg-surface-secondary transition-colors group-hover:bg-divider">
+            <ArrowRightIcon className="size-4 fill-current" />
+          </span>
+        </CustomLink>
+      </PrimaryCard>
+    </div>
   )
 }
