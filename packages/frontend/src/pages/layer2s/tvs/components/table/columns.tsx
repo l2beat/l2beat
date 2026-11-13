@@ -99,7 +99,10 @@ export const getL2TvsColumns = (
           },
           sortUndefined: 'last',
           meta: {
-            cellClassName: 'w-[240px] min-w-[240px]',
+            // Phones scroll the table sideways: starting the column at its left
+            // edge keeps the total in the first view, as on costs.
+            headClassName: 'max-md:[&>div]:justify-start',
+            cellClassName: 'w-[240px] min-w-[240px] max-md:text-left',
             align: 'right',
             tooltip: 'Total = Canonical + External + Native',
           },
