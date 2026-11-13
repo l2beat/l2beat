@@ -10,9 +10,9 @@ export function ClosingSection() {
   return (
     <section className="mt-4 md:mt-6">
       {/* The garden callout tone: a flat tint over the solid card. */}
-      <PrimaryCard className="relative overflow-hidden border border-garden-border max-md:mx-4 max-md:rounded-xl md:p-8">
+      <PrimaryCard className="relative overflow-hidden border border-garden-border max-md:mx-4 max-md:rounded-xl">
         <span aria-hidden className="absolute inset-0 bg-garden-tint" />
-        <div className="relative max-w-2xl">
+        <div className="relative">
           <h2 className="text-balance font-bold text-heading-18 md:text-heading-20">
             Ready to submit?
           </h2>

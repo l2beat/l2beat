@@ -37,7 +37,7 @@ export function CalloutCard({
     <div
       className={cn(
         // A solid backdrop under the tint keeps the hills from showing through.
-        'relative flex flex-col overflow-hidden rounded-xl border bg-surface-primary p-4 md:p-8',
+        'relative flex flex-col overflow-hidden rounded-xl border bg-surface-primary p-4 md:px-6 md:py-5',
         style.border,
       )}
     >
