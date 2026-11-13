@@ -1,5 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
-import type { Database, LiveActivityBlockRecord } from '@l2beat/database'
+import type {
+  Database,
+  IndexerStateRecord,
+  LiveActivityBlockRecord,
+} from '@l2beat/database'
 import { NotFoundOnRpcError } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
@@ -9,9 +13,47 @@ import { HeadFollower, type LinkedBlock } from './HeadFollower'
 import { LIVE_BLOCKS_KEPT_FOR } from './LiveActivityCleaner'
 
 const PROJECT = ProjectId('base')
+const CONFIG_HASH = 'current'
 const GENESIS = UnixTime.now() - UnixTime.HOUR
 
 describe(HeadFollower.name, () => {
+  describe(HeadFollower.prototype.initialize.name, () => {
+    it('deletes the stored blocks counted under another config', async () => {
+      const chain = new FakeChain(100)
+      const store = new FakeStore([chain.block(99), chain.block(100)])
+      store.configHash = 'old'
+
+      await follower(chain, store).initialize()
+
+      expect(store.numbers()).toEqual([])
+      expect(store.configHash).toEqual(CONFIG_HASH)
+    })
+
+    it('keeps the stored blocks counted under the same config', async () => {
+      const chain = new FakeChain(100)
+      const store = new FakeStore([chain.block(99), chain.block(100)])
+      store.configHash = CONFIG_HASH
+
+      await follower(chain, store).initialize()
+
+      expect(store.numbers()).toEqual([99, 100])
+      expect(store.indexerState.upsert).not.toHaveBeenCalled()
+    })
+
+    it('saves the config only once the blocks are deleted', async () => {
+      const chain = new FakeChain(100)
+      const store = new FakeStore([chain.block(100)])
+      store.configHash = 'old'
+      store.repository.deleteByProject.rejectsWithOnce(new Error('timeout'))
+
+      await expect(follower(chain, store).initialize()).toBeRejectedWith(
+        'timeout',
+      )
+
+      expect(store.configHash).toEqual('old')
+    })
+  })
+
   describe(HeadFollower.prototype.follow.name, () => {
     it('starts at the latest block when nothing is stored', async () => {
       const chain = new FakeChain(100)
@@ -194,7 +236,13 @@ describe(HeadFollower.name, () => {
 
 function follower(chain: FakeChain, store: FakeStore, batchSize = 100) {
   return new HeadFollower(
-    { projectId: PROJECT, batchSize, fetcher: chain, db: store.db },
+    {
+      projectId: PROJECT,
+      batchSize,
+      configHash: CONFIG_HASH,
+      fetcher: chain,
+      db: store.db,
+    },
     Logger.SILENT,
   )
 }
@@ -257,6 +305,16 @@ class FakeChain {
 
 class FakeStore {
   rows: LiveActivityBlockRecord[]
+  configHash: string | undefined
+  readonly indexerState = mockObject<Database['indexerState']>({
+    findByIndexerId: async (indexerId) =>
+      this.configHash === undefined
+        ? undefined
+        : { indexerId, safeHeight: 0, configHash: this.configHash },
+    upsert: async (record: IndexerStateRecord) => {
+      this.configHash = record.configHash
+    },
+  })
   readonly repository = mockObject<Database['liveActivityBlock']>({
     getNewest: async (_, limit) => this.rows.slice(-limit),
     upsertMany: async (records) => {
@@ -272,7 +330,10 @@ class FakeStore {
       this.keep((r) => r.number <= number),
     deleteByProject: async () => this.keep(() => false),
   })
-  readonly db = mockDatabase({ liveActivityBlock: this.repository })
+  readonly db = mockDatabase({
+    liveActivityBlock: this.repository,
+    indexerState: this.indexerState,
+  })
 
   constructor(blocks: LinkedBlock[] = []) {
     this.rows = blocks.map((block) => ({
