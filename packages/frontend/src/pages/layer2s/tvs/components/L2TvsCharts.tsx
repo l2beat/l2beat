@@ -56,7 +56,7 @@ export function L2TvsCharts({ entries, milestones }: Props) {
       timestamp,
     })),
   )
-  const stats = getStats(data?.chart)
+  const stats = getStats(data?.chart, unit)
   const shownRangeLabel = getRangeLabel(shownInput.range)
 
   const byBridgeTypeChart = (
@@ -149,6 +149,7 @@ function getStats(
         number | null,
       ][]
     | undefined,
+  unit: ChartUnit,
 ) {
   const pointsWithData = data?.filter(
     ([
@@ -198,8 +199,15 @@ function getStats(
     oldestDataPoint[2] + oldestDataPoint[3] + oldestDataPoint[4]
   const change = (oldestTotal === 0 ? 0 : total / oldestTotal) - 1
 
-  return {
-    total,
-    change,
+  if (unit === 'eth') {
+    // The chart rows are in USD; the stacked charts divide by each row's
+    // ETH price, so the headline does the same with the newest one.
+    const ethPrice = newestDataPoint[1]
+    if (!ethPrice) {
+      return undefined
+    }
+    return { total: total / ethPrice, change }
   }
+
+  return { total, change }
 }
