@@ -90,13 +90,12 @@ export function getBasicTableBodyCellClassName(params: {
     compact,
   } = params
   return cn(
-    groupParams?.isFirstInGroup && 'pl-6!',
+    // A sortable, left-aligned cell starts under its header's label, past the
+    // sort icon; first in a group, past the group's 24px inset too.
+    groupParams?.isFirstInGroup &&
+      (isSortable && align === undefined ? 'pl-10!' : 'pl-6!'),
     groupParams?.isLastInGroup && 'pr-6!',
-    isSortable && align === undefined
-      ? groupParams?.isFirstInGroup
-        ? 'pl-10'
-        : 'pl-4'
-      : undefined,
+    isSortable && align === undefined && !groupParams?.isFirstInGroup && 'pl-4',
     isPinned && getRowClassNamesWithoutOpacity(rowBackgroundColor),
     isPinned && isHighlighted && 'animate-row-highlight-no-opacity',
     compact && COMPACT_BODY_CELL,
