@@ -7,7 +7,10 @@ import {
   ChartTooltipValue,
   ChartTooltipWrapper,
 } from '~/components/core/chart/ChartTooltip'
-import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
+import {
+  type ChartXAxis,
+  TimeSeriesChart,
+} from '~/components/core/chart/TimeSeriesChart'
 import { tinted } from '~/components/core/chart/tint'
 import type { ActivityResolution } from '~/server/features/layer2s/activity/utils/getActivityResolution'
 import { formatRange } from '~/utils/dates'
@@ -26,6 +29,9 @@ interface Props {
   isPlaceholderData: boolean
   /** Of the newest block, when the last period is under way */
   liveUntil?: number
+  xAxis?: ChartXAxis
+  /** The period a point covers, by default the resolution's */
+  formatPeriod?: (timestamp: number) => string
 }
 
 export function ActivityRatioChart({
@@ -35,6 +41,8 @@ export function ActivityRatioChart({
   syncedUntil,
   resolution = 'day',
   liveUntil,
+  xAxis,
+  formatPeriod,
 }: Props) {
   const chartMeta = {
     ratio: {
@@ -69,12 +77,14 @@ export function ActivityRatioChart({
           domain: [1, 'auto'],
           headroom: 0.1,
         }}
+        xAxis={xAxis}
         syncedUntil={syncedUntil}
         renderTooltip={(row) => (
           <ActivityCustomTooltip
             row={row}
             resolution={resolution}
             liveUntil={liveUntil}
+            formatPeriod={formatPeriod}
           />
         )}
       />
@@ -86,10 +96,12 @@ function ActivityCustomTooltip({
   row,
   resolution,
   liveUntil,
+  formatPeriod,
 }: {
   row: ActivityRatioChartDataPoint
   resolution: ActivityResolution
   liveUntil: number | undefined
+  formatPeriod: ((timestamp: number) => string) | undefined
 }) {
   const timestamp = row.timestamp
   const seconds = getActivityPeriodSeconds(timestamp, resolution, liveUntil)
@@ -98,8 +110,14 @@ function ActivityCustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
-          {formatRange(timestamp, timestamp + seconds)}
-          {seconds < UnixTime.periodToSeconds(resolution) && ' so far'}
+          {formatPeriod ? (
+            formatPeriod(timestamp)
+          ) : (
+            <>
+              {formatRange(timestamp, timestamp + seconds)}
+              {seconds < UnixTime.periodToSeconds(resolution) && ' so far'}
+            </>
+          )}
         </div>
         <div className="flex flex-col gap-2">
           <ChartTooltipRow name="ratio">

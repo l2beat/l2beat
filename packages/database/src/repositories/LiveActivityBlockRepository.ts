@@ -14,6 +14,17 @@ export interface LiveActivityBlockRecord {
   gasUsed: number
 }
 
+/** A project's blocks of one bucket of seconds, summed */
+export interface LiveActivityBucketRecord {
+  /** Of the bucket's first second */
+  timestamp: UnixTime
+  blocks: number
+  count: number
+  /** The transaction count of blocks with no user operations counted */
+  uopsCount: number
+  gasUsed: number
+}
+
 /** The blocks of one hour of a project's chain, summed */
 export interface LiveActivityHourRecord {
   timestamp: UnixTime
@@ -82,6 +93,20 @@ export class LiveActivityBlockRepository extends BaseRepository {
     return rows.map(toRecord).reverse()
   }
 
+  /** Of the project's oldest stored block */
+  async getOldestTimestamp(
+    projectId: ProjectId,
+  ): Promise<UnixTime | undefined> {
+    const row = await this.db
+      .selectFrom('LiveActivityBlock')
+      .select('timestamp')
+      .where('projectId', '=', projectId.toString())
+      .orderBy('number', 'asc')
+      .limit(1)
+      .executeTakeFirst()
+    return row && UnixTime.fromDate(row.timestamp)
+  }
+
   /** Both ends included, oldest first */
   async getByProjectNumberRange(
     projectId: ProjectId,
@@ -97,6 +122,46 @@ export class LiveActivityBlockRepository extends BaseRepository {
       .orderBy('number')
       .execute()
     return rows.map(toRecord)
+  }
+
+  /**
+   * The project's blocks from `from` to `to`, both included, summed in
+   * buckets of `seconds` counted from the epoch, oldest first. Buckets with
+   * no block are left out
+   */
+  async getProjectBuckets(
+    projectId: ProjectId,
+    from: UnixTime,
+    to: UnixTime,
+    seconds: number,
+  ): Promise<LiveActivityBucketRecord[]> {
+    const { rows } = await sql<{
+      timestamp: string
+      blocks: string
+      count: string
+      uopsCount: string
+      gasUsed: string
+    }>`
+      SELECT
+        floor(extract(epoch FROM "timestamp") / ${seconds}) * ${seconds} AS "timestamp",
+        count(*) AS "blocks",
+        sum("count") AS "count",
+        sum(coalesce("uopsCount", "count")) AS "uopsCount",
+        sum("gasUsed") AS "gasUsed"
+      FROM "LiveActivityBlock"
+      WHERE "projectId" = ${projectId.toString()}
+        AND "timestamp" >= ${UnixTime.toDate(from)}
+        AND "timestamp" <= ${UnixTime.toDate(to)}
+      GROUP BY 1
+      ORDER BY 1
+    `.execute(this.db)
+    return rows.map((row) => ({
+      timestamp: UnixTime(Number(row.timestamp)),
+      blocks: Number(row.blocks),
+      count: Number(row.count),
+      uopsCount: Number(row.uopsCount),
+      gasUsed: Number(row.gasUsed),
+    }))
   }
 
   /** The project's blocks above the number, oldest hour first */
