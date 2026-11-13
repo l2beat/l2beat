@@ -20,13 +20,13 @@ export function AttestationsSection({
         size="md"
         description={ATTESTATION_DESCRIPTION}
       />
-      <PrimaryCard className="max-md:mx-4 max-md:rounded-xl md:p-8">
+      <PrimaryCard className="max-md:mx-4 max-md:rounded-xl">
         <dl className="grid gap-x-8 gap-y-1 md:grid-cols-[auto_1fr] md:gap-y-3">
           <Constant label="Network">
             {attestations.network} (chain id {attestations.chainId})
           </Constant>
           <Constant label="EAS contract">{attestations.eas}</Constant>
-          <Constant label="Schema uid">{attestations.schemaUid}</Constant>
+          <Constant label="Schema UID">{attestations.schemaUid}</Constant>
           <Constant label="Attester">
             {attestations.attester ?? 'not set yet'}
           </Constant>
@@ -55,7 +55,7 @@ export function AttestationsSection({
         </dl>
         <CodeSnippet
           className="mt-4"
-          label="schema"
+          label="Schema"
           copy={attestations.schema}
           copyText="Copy schema"
           wrap
@@ -67,7 +67,7 @@ export function AttestationsSection({
           {VERIFY_STEPS.map((step, index) => (
             <li
               key={step}
-              className="flex gap-2.5 text-pretty text-paragraph-14 text-secondary md:text-paragraph-16"
+              className="flex gap-2.5 text-pretty text-paragraph-14 text-secondary md:text-paragraph-15"
             >
               {/* The 16 px marker slot of the sprout lists, so every list shares one indent. */}
               <span className="w-4 shrink-0 font-semibold text-primary tabular-nums">
@@ -91,7 +91,7 @@ const ATTESTATION_DESCRIPTION =
 function Constant({ label, children }: { label: string; children: ReactNode }) {
   return (
     <>
-      <dt className="font-semibold text-secondary text-subtitle-12 uppercase tracking-wider md:pt-0.5">
+      <dt className="font-semibold text-label-value-13 text-primary md:pt-0.5">
         {label}
       </dt>
       {/* On phone each value stacks under its label: 4 px inside a pair, 12 px between pairs. */}

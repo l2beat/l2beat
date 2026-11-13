@@ -87,7 +87,7 @@ export function BadgeSection({
         size="md"
         description="If your project is in the attested set, the badge is yours to use. Download the SVG, or copy it as markup that links to the garden."
       />
-      <PrimaryCard className="max-md:mx-4 max-md:rounded-xl md:p-8">
+      <PrimaryCard className="max-md:mx-4 max-md:rounded-xl">
         <div className="flex flex-col divide-y divide-divider">
           {KINDS.map((kind) => (
             <div key={kind.kind} className="py-6 first:pt-0">
@@ -128,7 +128,7 @@ export function BadgeSection({
             {BADGE_RULES.map((rule) => (
               <li
                 key={rule}
-                className="flex gap-2.5 text-pretty text-paragraph-14 text-secondary md:text-paragraph-16"
+                className="flex gap-2.5 text-pretty text-paragraph-14 text-secondary md:text-paragraph-15"
               >
                 <SproutIcon className="mt-1 size-4 shrink-0 text-garden-accent" />
                 <span>
@@ -137,7 +137,7 @@ export function BadgeSection({
               </li>
             ))}
           </ul>
-          <p className="mt-4 text-paragraph-14 md:text-paragraph-16">
+          <p className="mt-4 text-paragraph-14 md:text-paragraph-15">
             <a
               href={CROPS_API_DOCS_URL}
               target="_blank"
@@ -188,17 +188,17 @@ function BadgeTile({
         />
       </div>
       <div className="flex items-center justify-between gap-2 border-divider border-t bg-surface-secondary py-1.5 pr-1.5 pl-2.5 lg:pl-3">
-        <span className="truncate font-semibold text-secondary text-subtitle-12 uppercase tracking-wide lg:tracking-wider">
+        <span className="truncate font-semibold text-label-value-13 text-primary">
           <span className={cn(shortLabel && 'max-sm:hidden')}>{label}</span>
           {shortLabel && <span className="sm:hidden">{shortLabel}</span>}
         </span>
-        <div className="flex shrink-0 items-center gap-0.5 lg:gap-0">
+        <div className="flex shrink-0 items-center gap-1 lg:gap-0.5">
           <a
             href={asset.url}
             download={asset.fileName}
             title="Download SVG"
             aria-label={`Download ${asset.fileName}`}
-            className="rounded-md p-1 hover:bg-surface-tertiary lg:p-1.5"
+            className="rounded-md p-1.5 hover:bg-surface-tertiary"
           >
             <DownloadArrowIcon className="size-4 fill-current" />
           </a>
@@ -252,7 +252,7 @@ function CopyMarkupButton({
       onClick={() => void onClick()}
       title="Copy SVG markup"
       aria-label="Copy SVG markup"
-      className="rounded-md p-1 hover:bg-surface-tertiary lg:p-1.5"
+      className="rounded-md p-1.5 hover:bg-surface-tertiary"
     >
       {copied ? (
         <SatisfiedIcon className="size-4 fill-green-700 dark:fill-green-450" />

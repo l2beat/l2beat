@@ -44,7 +44,7 @@ export function CodeSnippet({
           )}
         >
           {header ?? (
-            <span className="font-semibold text-secondary text-subtitle-12 uppercase tracking-wider">
+            <span className="font-semibold text-label-value-13 text-primary">
               {label}
             </span>
           )}
@@ -78,7 +78,7 @@ export function RequestHeader({ url }: { url: string }) {
   const segments = url.split('/')
   return (
     <span className="flex min-w-0 items-center gap-2.5 max-md:items-start">
-      <span className="shrink-0 rounded bg-garden-accent/15 px-1.5 py-0.5 font-bold text-[11px] text-garden-accent uppercase tracking-wider">
+      <span className="shrink-0 rounded bg-garden-accent px-1.5 py-0.5 font-bold text-[11px] text-pure-white uppercase tracking-wider dark:bg-garden-border">
         get
       </span>
       <code className="min-w-0 overflow-x-auto whitespace-nowrap font-mono text-paragraph-13 max-md:whitespace-normal max-md:break-words">
