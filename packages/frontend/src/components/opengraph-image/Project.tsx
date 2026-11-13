@@ -4,8 +4,11 @@ import { fitTitle, MainPageOpengraphImage, titleFit } from './MainPage'
 
 interface Props {
   measure: TextMeasure
-  /** The project's type: Layer 2, Privacy, DeFi... Never a stage or a number, so the image can't go stale. */
-  label: string
+  /**
+   * Above the name. Project pages have none: a project has one page whatever
+   * sections it is in, and an image with nothing that changes never goes stale.
+   */
+  label?: string
   name: string
   /** Shown instead of a name that would fall under 58 px. */
   shortName?: string
@@ -15,7 +18,7 @@ interface Props {
 
 const MIN_FULL_NAME_SIZE = 58
 
-/** The project's name under its type, beside its logo. */
+/** A name, under its label if any, beside its logo. */
 export function ProjectOpengraphImage({
   measure,
   label,

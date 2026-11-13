@@ -10,7 +10,10 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
-import { getProjectPath } from '~/utils/project/getProjectPath'
+import {
+  getProjectOgImagePath,
+  getProjectPath,
+} from '~/utils/project/getProjectPath'
 import { chainProjectPage } from '../chain/getChainProjectContent'
 import { defiProjectPage } from '../defi/project/getDefiProjectContent'
 import { ethereumProjectPage } from '../ethereum/getEthereumProjectContent'
@@ -94,31 +97,13 @@ function getCachedProjectPage(
             // From the slug, not the request URL: the cache entry is shared
             // by every request for the project, the .md one included.
             url: getProjectPath(page.slug),
-            openGraph: { image: getOgImagePath(page) },
+            openGraph: { image: getProjectOgImagePath(page.slug) },
           }),
         },
         props,
       }
     },
   )
-}
-
-/**
- * Each section has its own image of the project: the page shows the one of
- * the section it is built on.
- */
-function getOgImagePath(page: ProjectPage) {
-  const section = page.sections[0]
-  switch (section) {
-    case 'ethereum':
-      return '/meta-images/projects/ethereum/opengraph-image.png'
-    case 'chain':
-      return '/meta-images/interop/summary/opengraph-image.png'
-    case 'zkCatalog':
-      return `/meta-images/zk-catalog/projects/${page.slug}/opengraph-image.png`
-    default:
-      return `/meta-images/${section}/projects/${page.slug}/opengraph-image.png`
-  }
 }
 
 /** The page of every kind in `PROJECT_PAGE_KINDS`. */

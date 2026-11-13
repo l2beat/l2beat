@@ -97,7 +97,7 @@ export function titleFit(
     left:
       ink === undefined
         ? () => MARGIN
-        : (size) => textLeftBesideLogo(measure, size, withLabel, ink),
+        : (size) => textLeftBesideLogo(measure, size, ink),
   }
 }
 

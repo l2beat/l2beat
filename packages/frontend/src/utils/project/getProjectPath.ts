@@ -21,3 +21,8 @@ export const OLD_PROJECT_PATH_PREFIXES = {
 export function getProjectTvsBreakdownPath(slug: string) {
   return `${getProjectPath(slug)}/tvs-breakdown` as const
 }
+
+/** The social preview image of a project's page, made by `pnpm og-images`. */
+export function getProjectOgImagePath(slug: string) {
+  return `/meta-images/projects/${slug}/opengraph-image.png`
+}

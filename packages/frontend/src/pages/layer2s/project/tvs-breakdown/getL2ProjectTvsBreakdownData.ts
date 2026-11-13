@@ -5,6 +5,7 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import {
+  getProjectOgImagePath,
   getProjectPath,
   getProjectTvsBreakdownPath,
 } from '~/utils/project/getProjectPath'
@@ -36,7 +37,7 @@ export async function getL2ProjectTvsBreakdownData(
         description: `See a detailed breakdown of ${tvsBreakdownData.project.name}'s TVS on ETHBEAT.`,
         url: getProjectTvsBreakdownPath(slug),
         openGraph: {
-          image: `/meta-images/layer2s/projects/${tvsBreakdownData.project.slug}/opengraph-image.png`,
+          image: getProjectOgImagePath(tvsBreakdownData.project.slug),
         },
         breadcrumbParents: [
           {
