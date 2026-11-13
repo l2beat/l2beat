@@ -189,6 +189,7 @@ export async function getDefiProjectEntry(
           iconUrl: icon,
         },
         dataSource: getDefiTvlDataSource(project.defiInfo.tvl),
+        ethStakedToggle: !!project.liquidStaking,
       },
     })
   }

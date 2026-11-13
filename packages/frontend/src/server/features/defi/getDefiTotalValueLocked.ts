@@ -4,10 +4,25 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { optionToRange } from '~/utils/range/range'
 
+export interface LatestTotalValueLocked {
+  valueUsd: number
+  timestamp: number
+}
+
 /** The latest TVL of each project with a TVL source, in USD. */
 export async function getTotalValueLockedByProject(
   projects: Pick<Project<'defiInfo'>, 'id' | 'defiInfo'>[],
 ): Promise<Map<string, number>> {
+  const latest = await getLatestTotalValueLocked(projects)
+  return new Map(
+    [...latest].map(([projectId, { valueUsd }]) => [projectId, valueUsd]),
+  )
+}
+
+/** The latest TVL of each project with a TVL source, with its time. */
+export async function getLatestTotalValueLocked(
+  projects: Pick<Project<'defiInfo'>, 'id' | 'defiInfo'>[],
+): Promise<Map<string, LatestTotalValueLocked>> {
   const l2beatIds = projects
     .filter((project) => project.defiInfo.tvl?.source === 'l2beat')
     .map((project) => project.id)
@@ -29,10 +44,11 @@ export async function getTotalValueLockedByProject(
   }
 
   if (env.MOCK) {
+    const timestamp = UnixTime.toStartOf(UnixTime.now(), 'hour')
     return new Map(
       trackedIds.map((projectId) => [
         projectId,
-        Math.random() * 1_000_000_000 + 1,
+        { valueUsd: Math.random() * 1_000_000_000 + 1, timestamp },
       ]),
     )
   }
@@ -49,9 +65,13 @@ export async function getTotalValueLockedByProject(
     getDb().defiTvl.getLatestByProjects(externalIds),
   ])
 
-  const tvlByProject = new Map<string, number>()
+  const tvlByProject = new Map<string, LatestTotalValueLocked>()
+  // Oldest first, so each project ends on its latest value
   for (const row of l2beatValues) {
-    tvlByProject.set(row.project, row.value)
+    tvlByProject.set(row.project, {
+      valueUsd: row.value,
+      timestamp: row.timestamp,
+    })
   }
   const freshnessCutoff = UnixTime.now() - 3 * UnixTime.DAY
   for (const row of externalValues) {
@@ -59,7 +79,10 @@ export async function getTotalValueLockedByProject(
       row.timestamp >= freshnessCutoff &&
       row.chainCount === externalChainCountByProject.get(row.projectId)
     ) {
-      tvlByProject.set(row.projectId, row.valueUsd)
+      tvlByProject.set(row.projectId, {
+        valueUsd: row.valueUsd,
+        timestamp: row.timestamp,
+      })
     }
   }
   return tvlByProject

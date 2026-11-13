@@ -6,6 +6,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import type { LiquidStakingStatsEntry } from '~/server/features/defi/liquid-staking/getLiquidStakingEntries'
 import {
   formatLatestValue,
@@ -13,6 +14,7 @@ import {
   LIQUID_STAKING_METRICS,
   TVL_TOOLTIP,
 } from '../liquidStakingMetrics'
+import { StakedEthShare } from './StakedEthShare'
 
 export const TVL_COLUMN_ID = 'totalValueLockedUsd'
 
@@ -25,13 +27,18 @@ export function getLiquidStakingStatColumns<T extends LiquidStakingStatsEntry>(
       id: TVL_COLUMN_ID,
       header: 'TVL',
       cell: (ctx) => {
-        const value = ctx.row.original.totalValueLockedUsd
+        const { totalValueLockedUsd: value, stakedEthShare } = ctx.row.original
         return value === undefined ? (
           <NoDataBadge />
         ) : (
-          <span className="font-medium text-sm">
-            {formatCurrency(value, 'usd')}
-          </span>
+          <TwoRowCell className="text-right">
+            <TwoRowCell.First>{formatCurrency(value, 'usd')}</TwoRowCell.First>
+            {stakedEthShare && (
+              <TwoRowCell.Second>
+                <StakedEthShare share={stakedEthShare} />
+              </TwoRowCell.Second>
+            )}
+          </TwoRowCell>
         )
       },
       sortUndefined: 'last',

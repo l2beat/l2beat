@@ -415,6 +415,6 @@ function median(values: number[]): number | undefined {
 }
 
 /** Wei, or an 18-decimal rate, as a number of ETH. */
-function toEth(value: bigint): number {
+export function toEth(value: bigint): number {
   return Number(value / 10n ** 9n) / 1e9
 }
