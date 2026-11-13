@@ -26,7 +26,7 @@ describe(renderZkCatalogProjectMarkdown.name, () => {
     expect(summary).toInclude(
       '- Creator: Succinct',
       '- Total Value Secured: $1.50 B (+2.50% compared to seven days ago)',
-      '- zkVM: Plonky3 (STARK), RISC-V (ISA)',
+      '- Main prover: Plonky3 (STARK), RISC-V (ISA)',
       '- Final wrap: Gnark (Groth16)',
       '### About\n\nSP1 Turbo is a zkVM for RISC-V programs.',
     )

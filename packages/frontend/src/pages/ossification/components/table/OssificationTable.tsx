@@ -85,7 +85,7 @@ const columns = [
   }),
   columnHelper.display({
     id: 'timeline',
-    header: 'TVS &\nchanges (1Y)',
+    header: 'TVS &\nchanges (1y)',
     cell: (ctx) => (
       <OssificationTimelineChart
         timeline={ctx.row.original.timeline}
@@ -120,7 +120,7 @@ const columns = [
         <TwoRowCell.First>
           {formatCriticalChangesPerYear(ctx.row.original)}
         </TwoRowCell.First>
-        <TwoRowCell.Second>
+        <TwoRowCell.Second className="whitespace-nowrap">
           {formatContractCount(ctx.row.original.contractCount)}
         </TwoRowCell.Second>
       </TwoRowCell>

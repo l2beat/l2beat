@@ -13,6 +13,7 @@ import { ProjectsUsedInByStatus } from '../components/ProjectsUsedInByStatus'
 import { TechStackCell } from '../components/TechStackCell'
 import { TrustedSetupCell } from '../components/TrustedSetupCell'
 import { VerifiedCountWithDetails } from '../components/VerifiedCountWithDetails'
+import { getCreatorLine } from '../components/zkCatalogUi'
 
 const columnHelper = createColumnHelper<ZkCatalogEntry>()
 
@@ -24,7 +25,7 @@ export const zkCatalogColumns = [
     cell: (ctx) => {
       const project = {
         ...ctx.row.original,
-        nameSecondLine: ctx.row.original.creator,
+        nameSecondLine: getCreatorLine(ctx.row.original),
         quantumResistance: ctx.row.original.quantumResistant
           ? ('prover' as const)
           : undefined,
@@ -79,7 +80,7 @@ export const zkCatalogColumns = [
         meta: {
           tooltip:
             'Shows the trusted setups used within the proving stack and their risks.',
-          cellClassName: 'px-6 pt-4 pb-3',
+          cellClassName: 'px-4 pt-4 pb-3',
 
           additionalRows: (ctx) => {
             return Object.entries(ctx.row.original.trustedSetupsByProofSystem)
