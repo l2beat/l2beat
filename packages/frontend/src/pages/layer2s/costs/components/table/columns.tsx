@@ -65,7 +65,11 @@ export function getL2CostsColumns(metric: CostsMetric) {
           ),
           sortUndefined: 'last',
           meta: {
-            align: 'center',
+            align: 'right',
+            // Phones scroll the table sideways: starting the figures at the
+            // column's left edge keeps them whole in the first view.
+            headClassName: 'max-md:[&>div]:justify-start',
+            cellClassName: 'max-md:text-left',
             tooltip: `The ${metric === 'total' ? 'total cost' : 'average cost per L2 user operation'} that is a sum of the costs for calldata, computation, blobs, and overhead.`,
           },
         }),
