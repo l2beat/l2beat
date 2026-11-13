@@ -519,7 +519,11 @@ describe(renderProjectSection.name, () => {
       props: {
         id: 'liquid-staking',
         title: 'Liquid staking',
-        ethStaked: { value: 35_400_000, timestamp: UnixTime(1762646400) },
+        ethStaked: {
+          value: 35_400_000,
+          valueUsd: 120_000_000_000,
+          timestamp: UnixTime(1762646400),
+        },
         entries: [
           {
             id: 'lido',
@@ -549,7 +553,7 @@ describe(renderProjectSection.name, () => {
     })
 
     expect(markdown).toInclude(
-      'ETH staked: 35.40 M ETH (as of 2025-11-09 00:00 UTC)',
+      'ETH staked: 35.40 M ETH ($120.00 B) (as of 2025-11-09 00:00 UTC)',
       '| [Lido](https://ethbeat.org/defi/projects/lido) | stETH, wstETH | $30.00 B | 2.75% (on 2025-11-09 00:00 UTC) | ~2.5 days (over 2025-11-09 00:00 UTC to 2025-11-10 00:00 UTC) |',
       '| [Binance Staked ETH](https://ethbeat.org/defi/projects/wbeth) (under review) | wBETH | No data | No data | No data |',
     )

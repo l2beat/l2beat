@@ -14,7 +14,7 @@ describe(buildLiquidStakingSummary.name, () => {
       undefined,
       {
         yield: [point(stale, { lido: 0.03 }), point(today, { lido: null })].map(
-          (p) => ({ ...p, network: null, ethStaked: null }),
+          (p) => ({ ...p, network: null, ethStaked: null, ethStakedUsd: null }),
         ),
         costOfExit: [
           { ...point(stale, { lido: 1 }), estimated: [] },

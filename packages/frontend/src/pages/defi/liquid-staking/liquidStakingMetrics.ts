@@ -1,4 +1,4 @@
-import { formatNumber, UnixTime } from '@l2beat/shared-pure'
+import { formatCurrency, formatNumber, UnixTime } from '@l2beat/shared-pure'
 import type {
   LiquidStakingLatestValue,
   LiquidStakingSummary,
@@ -65,4 +65,13 @@ export const ETH_STAKED_TOOLTIP = 'Balance of all active Ethereum validators.'
 
 export function formatEthStaked(value: number): string {
   return `${formatNumber(value)} ETH`
+}
+
+/** The ETH staked, with its USD value in brackets when there is one. */
+export function formatEthStakedWithUsd(
+  value: number,
+  valueUsd: number | null,
+): string {
+  const usd = valueUsd !== null ? ` (${formatCurrency(valueUsd, 'usd')})` : ''
+  return `${formatEthStaked(value)}${usd}`
 }
