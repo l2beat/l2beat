@@ -67,7 +67,9 @@ function getTvsColumns<T extends CommonL2Entry & { tvs: TvsData }>(
   )
 }
 
-const WRAP_ON_DESKTOP = 'lg:whitespace-normal lg:max-w-[150px]'
+// The cell link is `w-max`, so it must be released for the text to wrap.
+const WRAP_ON_DESKTOP =
+  'lg:whitespace-normal lg:min-w-[140px] lg:max-w-[150px] lg:[&_a]:w-auto'
 
 const validityColumnHelper =
   createColumnHelper<L2RiskStateValidationValidityEntry>()
