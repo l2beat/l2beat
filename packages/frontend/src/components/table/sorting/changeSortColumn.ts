@@ -3,11 +3,11 @@ import type { ColumnDef, ColumnHelper } from '@tanstack/react-table'
 import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 
 const CHANGE_SORT_HEADERS: Record<PercentageChangePeriod, string> = {
-  '1D': '1D%',
-  '7D': '7D%',
-  last24h: '24H%',
-  last7d: '7D%',
-  last30d: '30D%',
+  '1D': '1d',
+  '7D': '7d',
+  last24h: '24h',
+  last7d: '7d',
+  last30d: '30d',
 }
 
 /**
