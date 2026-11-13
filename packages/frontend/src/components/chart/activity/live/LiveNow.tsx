@@ -1,9 +1,13 @@
-import { formatActivityCount } from '@l2beat/shared-pure'
+import { formatActivityCount, UnixTime } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
+import { useEffect } from 'react'
 import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { RollingNumber } from '~/pages/blobs/components/live-blobs/liveMotion'
 import type { ActivityMetric } from '~/pages/layer2s/activity/components/ActivityMetricContext'
-import { DEFAULT_LIVE_RANGE } from '~/server/features/layer2s/activity/live/liveRanges'
+import {
+  DEFAULT_LIVE_RANGE,
+  isLiveFresh,
+} from '~/server/features/layer2s/activity/live/liveRanges'
 import { useTRPC } from '~/trpc/React'
 import { LiveDot } from './LiveDot'
 
@@ -15,10 +19,13 @@ export function LiveNow({
   project,
   metric,
   onOpen,
+  onAvailable,
 }: {
   project: ChartProject
   metric: ActivityMetric
   onOpen: () => void
+  /** Told whether the chain's blocks are stored as they come */
+  onAvailable: (available: boolean) => void
 }) {
   const trpc = useTRPC()
   const { data } = useQuery({
@@ -28,6 +35,10 @@ export function LiveNow({
     }),
     refetchInterval: 10_000,
   })
+  const available = data && isLiveFresh(data.newest, UnixTime.now())
+  useEffect(() => {
+    if (available !== undefined) onAvailable(available)
+  }, [available, onAvailable])
   const now = data?.now
   if (!now) return null
 

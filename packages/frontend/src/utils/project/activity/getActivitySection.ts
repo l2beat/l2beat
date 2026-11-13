@@ -8,11 +8,18 @@ import { optionToRange } from '~/utils/range/range'
 export async function getActivitySection(
   project: Project<never, 'archivedAt' | 'activityConfig'>,
 ): Promise<
-  | Pick<ActivitySectionProps, 'defaultRange' | 'dataSource' | 'hasLive'>
+  | Pick<
+      ActivitySectionProps,
+      'defaultRange' | 'dataSource' | 'hasLive' | 'liveAvailable'
+    >
   | undefined
 > {
   if (!project.activityConfig) return undefined
 
+  const hasLive =
+    env.CLIENT_SIDE_LIVE_ACTIVITY &&
+    !project.archivedAt &&
+    project.activityConfig.type === 'block'
   const rangeOption = project.archivedAt ? 'max' : '1y'
   const range = optionToRange(rangeOption)
   const hasData = await checkIfActivityExists(project.id, range[0] ?? undefined)
@@ -27,10 +34,7 @@ export async function getActivitySection(
       project.activityConfig.type === 'hour'
         ? project.activityConfig.dataSource
         : undefined,
-    hasLive:
-      env.CLIENT_SIDE_LIVE_ACTIVITY &&
-      !project.archivedAt &&
-      project.activityConfig.type === 'block' &&
-      (await hasLiveActivity(project.id)),
+    hasLive,
+    liveAvailable: hasLive && (await hasLiveActivity(project.id)),
   }
 }

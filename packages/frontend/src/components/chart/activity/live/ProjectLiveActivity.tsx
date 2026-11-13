@@ -32,7 +32,7 @@ import {
   type LiveRange,
 } from '~/server/features/layer2s/activity/live/liveRanges'
 import { useTRPC } from '~/trpc/React'
-import { formatRange, formatTimestamp, parseTimestamp } from '~/utils/dates'
+import { formatRange, parseTimestamp } from '~/utils/dates'
 import { typeToColor } from '../ActivityChart'
 import { ActivityRatioChart } from '../ActivityRatioChart'
 import { ActivityStats } from '../ActivityStats'
@@ -70,7 +70,7 @@ export function ProjectLiveActivity({
   setMetric,
   to,
   setTo,
-  onStale,
+  onAvailable,
 }: {
   project: ChartProject
   category: ProjectScalingCategory | undefined
@@ -79,8 +79,8 @@ export function ProjectLiveActivity({
   /** Where the window ends, undefined while following the newest block */
   to: number | undefined
   setTo: (to: number | undefined) => void
-  /** Told whether the chain's stored blocks stopped being followed */
-  onStale: (stale: boolean) => void
+  /** Told whether the chain's blocks are stored as they come */
+  onAvailable: (available: boolean) => void
 }) {
   const trpc = useTRPC()
   const [range, setRange] = useState<LiveRange>(DEFAULT_LIVE_RANGE)
@@ -171,26 +171,12 @@ export function ProjectLiveActivity({
     domain,
   }
 
-  const stale = data !== undefined && !isLiveFresh(data.newest, UnixTime.now())
-  useEffect(() => onStale(stale), [stale, onStale])
+  // without recent blocks the section goes back to the history
+  const available = data && isLiveFresh(data.newest, UnixTime.now())
+  useEffect(() => {
+    if (available !== undefined) onAvailable(available)
+  }, [available, onAvailable])
 
-  if (data && data.newest === undefined) {
-    return (
-      <p className="py-12 text-center text-secondary">
-        No blocks of this chain are stored yet, so there is nothing live to
-        show.
-      </p>
-    )
-  }
-  if (stale && data.newest !== undefined) {
-    return (
-      <p className="py-12 text-center text-secondary">
-        The newest stored block of this chain is from{' '}
-        {formatTimestamp(data.newest, { mode: 'datetime' })}, so live activity
-        is not updating.
-      </p>
-    )
-  }
   if (!data && query.isError) {
     return (
       <p className="py-12 text-center text-secondary">
