@@ -376,6 +376,13 @@ function CustomTooltip({
       }
       return (b.value ?? 0) - (a.value ?? 0)
     })
+  // The row limit applies to projects only, so Unknown and Others always show
+  const isGroup = (name: string) => name === OTHERS_KEY || name === UNKNOWN_KEY
+  const projectRows = actualPayload.filter((entry) => !isGroup(entry.name))
+  const rows = [
+    ...projectRows.slice(0, 20),
+    ...actualPayload.filter((entry) => isGroup(entry.name)),
+  ]
   const othersCount = othersProjects.filter(
     (project) => (row[project] ?? 0) > 0,
   ).length
@@ -404,7 +411,7 @@ function CustomTooltip({
           </ChartTooltipRow>
         ))}
         {capacityPayload.length > 0 && <HorizontalSeparator />}
-        {actualPayload.slice(0, 20).map((entry, index) => {
+        {rows.map((entry, index) => {
           const value = entry.value ?? 0
           const valueInBytes = value * mainDenominator
           const { unit, denominator } = getDaDataParams(valueInBytes)
@@ -428,9 +435,9 @@ function CustomTooltip({
             </ChartTooltipRow>
           )
         })}
-        {actualPayload.length > 20 && (
+        {projectRows.length > 20 && (
           <div className="font-medium text-label-value-14 text-secondary">
-            + {actualPayload.length - 20} more
+            + {projectRows.length - 20} more
           </div>
         )}
       </div>
