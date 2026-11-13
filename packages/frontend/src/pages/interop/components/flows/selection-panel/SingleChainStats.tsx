@@ -101,7 +101,7 @@ function Stats({
   return (
     <div className="rounded-lg border border-divider bg-surface-primary px-4 py-3">
       <div className="mb-1.5 flex items-baseline justify-between gap-2">
-        <span className="font-bold text-label-value-12 uppercase">Stats</span>
+        <span className="font-semibold text-label-value-13">Stats</span>
         <span className="font-medium text-label-value-12 text-secondary">
           Last 24h · {describeChainScope(selectedChainCount, chainCount)}
         </span>
@@ -112,6 +112,7 @@ function Stats({
             key={item.label}
             label={item.label}
             value={item.value}
+            valueClassName={item.valueClassName}
             isLoading={isLoading}
           />
         ))}
@@ -159,9 +160,7 @@ function TopRoutes({
 
   return (
     <div className="rounded-lg border border-divider bg-surface-primary px-4 py-3">
-      <div className="mb-1.5 font-bold text-label-value-12 uppercase">
-        Top routes
-      </div>
+      <div className="mb-1.5 font-semibold text-label-value-13">Top routes</div>
       <div className="space-y-1">
         {flows.map((flow) => {
           const srcChain = allChains.find((c) => c.id === flow.srcChain)
@@ -204,11 +203,13 @@ function TopRoutes({
 function StatRow({
   label,
   value,
+  valueClassName,
   isLoading,
   onClick,
 }: {
   label: ReactNode
   value: ReactNode
+  valueClassName?: string
   isLoading: boolean
   onClick?: () => void
 }) {
@@ -216,13 +217,20 @@ function StatRow({
     'flex w-full items-start justify-between gap-2 text-[13px]'
   const content = (
     <>
-      <span className="whitespace-nowrap font-medium text-secondary leading-none">
+      <span className="whitespace-nowrap font-normal leading-none">
         {label}
       </span>
       {isLoading ? (
         <Skeleton className="h-4 w-16" />
       ) : (
-        <div className="text-right font-semibold leading-[1.15]">{value}</div>
+        <div
+          className={cn(
+            'text-right font-semibold leading-[1.15]',
+            valueClassName,
+          )}
+        >
+          {value}
+        </div>
       )}
     </>
   )

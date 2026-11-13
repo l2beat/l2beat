@@ -9,6 +9,7 @@ import {
   VERIFIER_ID_DEFAULT_DESCRIPTION,
   VERIFIERS_SECTION_INTRO,
 } from '~/pages/zk-catalog/v2/components/zkCatalogUi'
+import { cn } from '~/utils/cn'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 import { type KnownDeployment, KnownDeployments } from './KnownDeployments'
@@ -54,10 +55,17 @@ export function VerifiersSection({
           {VERIFIERS_SECTION_INTRO}
         </p>
       )}
-      {proofSystemVerifiers.map(({ proofSystem, verifierHashes }) => (
-        <div key={proofSystem.id + proofSystem.type}>
+      {proofSystemVerifiers.map(({ proofSystem, verifierHashes }, index) => (
+        <div
+          key={proofSystem.id + proofSystem.type}
+          // 32px between groups (24px from space-y-6 + 8px), so a new proof
+          // system reads as a new block.
+          className={cn(index > 0 && 'pt-2')}
+        >
           {isZkCatalog && (
             <>
+              {/* The same badge marks this proof system in the summary,
+                  the trusted setups and the ZK catalog table. */}
               <TechStackTag
                 className="mb-2 w-fit"
                 tag={proofSystem}
@@ -92,14 +100,14 @@ export function VerifierRowDetails({
       <div className="space-y-3 px-3 md:px-4">
         {verifierHash.description && (
           <div className="space-y-2">
-            <div className="font-bold text-label-value-16">Description</div>
+            <div className="font-semibold text-label-value-16">Description</div>
             <p className="text-paragraph-14 text-secondary md:text-paragraph-15">
               {verifierHash.description}
             </p>
           </div>
         )}
         <div className="flex min-w-0 items-start gap-1">
-          <span className="shrink-0 font-medium text-label-value-14 text-secondary">
+          <span className="shrink-0 font-medium text-label-value-14 text-primary">
             Verifier ID:
           </span>
           <code className="wrap-anywhere min-w-0 text-label-value-14">
@@ -108,7 +116,7 @@ export function VerifierRowDetails({
         </div>
         {verifierHash.sourceLink && (
           <div className="flex min-w-0 items-start gap-1">
-            <span className="shrink-0 font-medium text-label-value-14 text-secondary">
+            <span className="shrink-0 font-medium text-label-value-14 text-primary">
               Source:
             </span>
             <CustomLink
@@ -133,10 +141,13 @@ export function VerifierRowDetails({
         )}
       {verifierHash.verificationSteps && (
         <div className="space-y-3 px-3 md:px-4">
-          <div className="font-bold text-label-value-16">
+          <div className="font-semibold text-label-value-16">
             Verification steps
           </div>
-          <Markdown className="min-w-0 text-paragraph-15 md:text-paragraph-16">
+          <Markdown
+            // Commands wrap instead of clipping at the card edge.
+            className="[&_pre]:wrap-anywhere min-w-0 text-paragraph-15 md:text-paragraph-16 [&_pre]:whitespace-pre-wrap"
+          >
             {verifierHash.verificationSteps}
           </Markdown>
         </div>

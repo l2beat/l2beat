@@ -10,7 +10,6 @@ import { UtcDateTime } from '~/components/core/UtcDateTime'
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { EM_DASH } from '~/consts/characters'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
-import { CustomLinkIcon } from '~/icons/Outlink'
 import { InteropNoDataBadge } from '~/pages/interop/components/InteropNoDataBadge'
 import type { InteropSelection } from '~/pages/interop/utils/types'
 import type { InteropProtocolTransferDetailsItem } from '~/server/features/layer2s/interop/types'
@@ -20,13 +19,22 @@ export type TransferRow = InteropProtocolTransferDetailsItem & BasicTableRow
 
 const columnHelper = createColumnHelper<TransferRow>()
 
-export function getTransferColumns(selectedChains?: InteropSelection) {
-  return [
+export function getTransferColumns(
+  selectedChains?: InteropSelection,
+  {
+    hideBridge = false,
+  }: {
+    /** A single protocol's page: every row would name the same bridge. */
+    hideBridge?: boolean
+  } = {},
+) {
+  const columns = [
     columnHelper.accessor('timestamp', {
       header: 'Timestamp',
       enableSorting: false,
       cell: (ctx) => (
-        <span className="font-medium text-label-value-14 text-primary">
+        // When it happened is meta: the amounts and chains are the row.
+        <span className="font-normal text-label-value-13 text-secondary tabular-nums">
           <UtcDateTime timestamp={ctx.row.original.timestamp} />
         </span>
       ),
@@ -99,6 +107,7 @@ export function getTransferColumns(selectedChains?: InteropSelection) {
       },
     }),
     columnHelper.accessor('bridge', {
+      id: 'bridge',
       header: 'Bridge',
       enableSorting: false,
       cell: (ctx) => {
@@ -152,18 +161,26 @@ export function getTransferColumns(selectedChains?: InteropSelection) {
         } = ctx.row.original
 
         return (
-          <div className="flex w-max items-center gap-2 whitespace-nowrap">
-            <ChainCell
-              chain={srcChain}
-              iconUrl={srcChainIconUrl}
-              href={srcTxHashHref}
-            />
-            <ArrowRightIcon className="size-3.5 shrink-0 fill-brand" />
-            <ChainCell
-              chain={dstChain}
-              iconUrl={dstChainIconUrl}
-              href={dstTxHashHref}
-            />
+          // Source over destination: side by side the pair overran the
+          // column at 1280 and the destination was cut without a cue.
+          <div className="flex w-max flex-col items-start gap-0.5 whitespace-nowrap">
+            {/* Indented by the arrow and its gap, so both icons and both
+                names start at one x. */}
+            <div className="pl-[18px]">
+              <ChainCell
+                chain={srcChain}
+                iconUrl={srcChainIconUrl}
+                href={srcTxHashHref}
+              />
+            </div>
+            <div className="flex items-center gap-1">
+              <ArrowRightIcon className="size-3.5 shrink-0 fill-brand" />
+              <ChainCell
+                chain={dstChain}
+                iconUrl={dstChainIconUrl}
+                href={dstTxHashHref}
+              />
+            </div>
           </div>
         )
       },
@@ -174,6 +191,9 @@ export function getTransferColumns(selectedChains?: InteropSelection) {
       },
     }),
   ]
+  return hideBridge
+    ? columns.filter((column) => column.id !== 'bridge')
+    : columns
 }
 
 function TokenAmount({
@@ -244,13 +264,12 @@ function ChainCell({
         <img src={iconUrl} alt={chain} className="size-4 shrink-0" />
       ) : null}
       <span>{chain}</span>
-      {href ? <CustomLinkIcon className="size-3.5 shrink-0" /> : null}
     </>
   )
 
   if (!href) {
     return (
-      <span className="inline-flex items-center gap-1.5 font-medium text-label-value-14">
+      <span className="flex items-center gap-1.5 font-medium text-label-value-13">
         {content}
       </span>
     )
@@ -261,7 +280,7 @@ function ChainCell({
       href={href}
       target="_blank"
       rel="noreferrer noopener"
-      className="flex items-center gap-1.5 font-medium text-label-value-14 text-link hover:underline"
+      className="flex items-center gap-1.5 font-medium text-label-value-13 text-link hover:underline"
     >
       {content}
     </a>

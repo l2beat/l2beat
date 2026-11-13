@@ -64,17 +64,33 @@ export function ContractsSection(props: ContractsSectionProps) {
       sectionOrder={props.sectionOrder}
       isUnderReview={props.isUnderReview}
     >
-      {props.discoUi && (
-        <DiscoUiBanner
-          href={props.discoUi.href}
-          images={props.discoUi.images}
-        />
+      {hasContractsChanged && (
+        <div className="mb-6">
+          <ContractsUpdated />
+        </div>
       )}
-      {hasContractsChanged && <ContractsUpdated />}
+      {/* Status leads: the risks come before the Disco banner and the
+          ~50 entries, where nobody reached them. */}
+      {props.risks.length > 0 && (
+        <div className="mb-8 [&>ul]:mt-3">
+          <p className="text-pretty text-paragraph-15 md:text-paragraph-16">
+            {DEPLOYMENT_RISKS_INTRO}
+          </p>
+          <RiskList risks={props.risks} />
+        </div>
+      )}
+      {props.discoUi && (
+        <div className="mb-6">
+          <DiscoUiBanner
+            href={props.discoUi.href}
+            images={props.discoUi.images}
+          />
+        </div>
+      )}
       {props.diagram && (
         <figure className="mt-4 mb-8 text-center">
           <DiagramImage diagram={props.diagram} />
-          <figcaption className="text-secondary text-xs">
+          <figcaption className="text-label-value-13 text-secondary">
             {props.diagram.caption}
           </figcaption>
         </figure>
@@ -92,7 +108,7 @@ export function ContractsSection(props: ContractsSectionProps) {
                       <ContractEntry
                         key={technologyContractKey(contract)}
                         contract={contract}
-                        className="my-4"
+                        className="my-6"
                       />
                     ))}
                     {changedContracts.length > 0 && (
@@ -107,23 +123,15 @@ export function ContractsSection(props: ContractsSectionProps) {
             )
           },
         )}
-      {props.risks.length > 0 && (
-        <>
-          <p className="text-paragraph-15 md:text-paragraph-16">
-            {DEPLOYMENT_RISKS_INTRO}
-          </p>
-          <RiskList risks={props.risks} />
-        </>
-      )}
       {props.programHashes && props.programHashes.length > 0 && (
         <div id="program-hashes" className="mt-4 space-y-2 md:mt-6">
           <Subsection
             title={
               <div className="flex items-baseline gap-3">
-                <SubsectionHeading className="whitespace-pre text-heading-20">
-                  Program Hashes
+                <SubsectionHeading className="whitespace-pre font-semibold text-heading-16 leading-6 md:text-heading-18">
+                  Program hashes
                 </SubsectionHeading>
-                <div className="w-full border-divider border-b-2" />
+                <div className="w-full border-divider border-b" />
               </div>
             }
           >
@@ -143,10 +151,10 @@ export function ContractsSection(props: ContractsSectionProps) {
 export function ChainNameHeader(props: { children: React.ReactNode }) {
   return (
     <div className="flex items-baseline gap-3">
-      <SubsectionHeading className="whitespace-pre text-heading-20">
+      <SubsectionHeading className="whitespace-pre font-semibold text-heading-16 leading-6 md:text-heading-18">
         {props.children}
       </SubsectionHeading>
-      <div className="w-full border-divider border-b-2" />
+      <div className="w-full border-divider border-b" />
     </div>
   )
 }

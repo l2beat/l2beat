@@ -27,6 +27,7 @@ import type {
   ProjectOssificationView,
 } from '~/server/features/projects/ossification/getProjectOssification'
 import { formatTimestamp } from '~/utils/dates'
+import { withIdentifierBreaks } from '../identifierBreaks'
 import { SubsectionHeading } from '../Subsection'
 
 export function OssificationDetails({
@@ -36,7 +37,7 @@ export function OssificationDetails({
 }) {
   return (
     <div id="ossification" className="scroll-mt-section-nav-card">
-      <SubsectionHeading className="mb-3 font-bold text-heading-20">
+      <SubsectionHeading className="mb-3 font-semibold text-heading-16 leading-6 md:text-heading-18">
         Ossification
       </SubsectionHeading>
       <p className="mb-4 text-paragraph-15 md:text-paragraph-16">
@@ -126,21 +127,23 @@ function CriticalContracts({
 }) {
   return (
     <Collapsible className="mt-4 rounded-lg border border-divider">
-      <CollapsibleTrigger className="flex w-full items-center justify-between px-4 py-3 font-bold text-sm">
+      <CollapsibleTrigger className="flex w-full items-center justify-between px-4 py-3 font-semibold text-label-value-16 md:px-6">
         Critical contracts ({contracts.length})
-        <ChevronIcon className="group-data-[state=open]/Collapsible:-rotate-180 size-3 fill-current transition-transform duration-200" />
+        <ChevronIcon className="group-data-[state=open]/Collapsible:-rotate-180 size-4 fill-secondary transition-transform duration-200" />
       </CollapsibleTrigger>
       <CollapsibleContent>
         <div className="overflow-x-auto border-divider border-t">
           <table className="w-full min-w-[480px] border-collapse text-left text-xs md:text-sm">
-            <thead className="text-2xs text-secondary uppercase">
+            <thead className="font-medium text-label-value-13">
               <tr>
-                <th className="px-4 py-2 font-medium">Contract</th>
-                <th className="px-4 py-2 font-medium">Unchanged for</th>
-                <th className="px-4 py-2 text-right font-medium">
+                <th className="px-4 py-2 font-medium md:px-6">Contract</th>
+                <th className="px-4 py-2 font-medium md:whitespace-nowrap md:px-6">
+                  Unchanged for
+                </th>
+                <th className="px-4 py-2 text-right font-medium md:whitespace-nowrap md:px-6">
                   Code changes
                 </th>
-                <th className="px-4 py-2 text-right font-medium">
+                <th className="px-4 py-2 text-right font-medium md:whitespace-nowrap md:px-6">
                   State changes
                 </th>
               </tr>
@@ -148,9 +151,15 @@ function CriticalContracts({
             <tbody>
               {contracts.map((contract) => (
                 <tr key={contract.address} className="border-divider border-t">
-                  <td className="px-4 py-2">
+                  <td className="px-4 py-2 md:px-6">
                     <div className="flex items-center gap-2">
-                      <span className="font-medium">{contract.name}</span>
+                      <span className="font-medium">
+                        {withIdentifierBreaks(contract.name, {
+                          // Short names stay whole; long ones (Starknet's
+                          // 38-character Poseidon keys) still need breaks.
+                          atCapitals: contract.name.length > 24,
+                        })}
+                      </span>
                       {!contract.isVerified && <OssificationUnverifiedBadge />}
                     </div>
                     {/* Names repeat within a perimeter, the address tells them apart. */}
@@ -160,13 +169,13 @@ function CriticalContracts({
                       )}
                     </span>
                   </td>
-                  <td className="px-4 py-2">
+                  <td className="w-px whitespace-nowrap px-4 py-2 tabular-nums md:px-6">
                     {formatSeconds(contract.ageSeconds)}
                   </td>
-                  <td className="px-4 py-2 text-right tabular-nums">
+                  <td className="px-4 py-2 text-right tabular-nums md:px-6">
                     {contract.codeChangeCount}
                   </td>
-                  <td className="px-4 py-2 text-right tabular-nums">
+                  <td className="px-4 py-2 text-right tabular-nums md:px-6">
                     {contract.stateChangeCount}
                   </td>
                 </tr>

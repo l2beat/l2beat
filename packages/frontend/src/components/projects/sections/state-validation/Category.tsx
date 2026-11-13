@@ -16,7 +16,9 @@ export function Category({ category }: CategoryProps) {
 
   return (
     <div>
-      <span className="font-bold text-lg md:text-xl">{category.title}</span>
+      <span className="block font-semibold text-heading-16 leading-6 md:text-heading-18">
+        {category.title}
+      </span>
       {category.isIncomplete && <SectionIncompleteNote />}
       <Markdown className="mt-2 text-paragraph-15 md:text-paragraph-16">
         {category.description}

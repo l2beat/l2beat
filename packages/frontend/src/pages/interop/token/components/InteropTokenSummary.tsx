@@ -61,8 +61,8 @@ export function InteropTokenSummary({
           value={token ? formatInteger(token.transferCount) : EM_DASH}
         />
       </div>
-      <HorizontalSeparator className="col-span-3 my-4 max-md:hidden" />
-      <div className="grid grid-cols-1 gap-x-3 max-md:mt-3 max-md:gap-y-3 md:grid-cols-3">
+      <HorizontalSeparator className="my-4" />
+      <div className="grid grid-cols-1 gap-x-3 max-md:gap-y-3 md:grid-cols-3">
         <StatsItem
           title="Last 24h avg. transfer time"
           isLoading={isLoading}
@@ -105,8 +105,8 @@ export function InteropTokenSummary({
           }
         />
       </div>
-      <HorizontalSeparator className="col-span-3 my-4 max-md:hidden" />
-      <div className="grid grid-cols-1 gap-x-3 max-md:mt-3 max-md:gap-y-3 md:grid-cols-3">
+      <HorizontalSeparator className="my-4" />
+      <div className="grid grid-cols-1 gap-x-3 max-md:gap-y-3 md:grid-cols-3">
         <StatsItem
           title="Protocols used"
           href="#interop-protocols"
@@ -114,7 +114,7 @@ export function InteropTokenSummary({
           unavailableReason={unavailableReason}
           value={
             data?.entries?.length ? (
-              <TopProtocolsCell protocols={data.entries} />
+              <TopProtocolsCell protocols={data.entries} itemsType="default" />
             ) : (
               EM_DASH
             )
@@ -151,7 +151,7 @@ function StatsItem({
   const link = unavailableReason ? undefined : href
   const content = (
     <>
-      <span className="shrink-0 font-medium text-paragraph-12 text-secondary">
+      <span className="shrink-0 font-normal text-label-value-13 text-primary leading-4">
         {title}
       </span>
       <div className="min-w-0 text-right font-bold text-label-value-16 leading-none group-hover:underline md:text-left">
@@ -166,7 +166,7 @@ function StatsItem({
     </>
   )
   const className =
-    'flex gap-3 max-md:items-start max-md:justify-between md:flex-col md:gap-1.5'
+    'flex gap-4 max-md:items-center max-md:justify-between md:flex-col md:gap-3'
 
   return link ? (
     <a href={link} className={`group ${className}`}>
@@ -182,11 +182,12 @@ function CategoryBadge({ category }: { category: string | null }) {
 
   return (
     <Badge
-      className="bg-blue-700 font-bold text-white uppercase"
+      className="self-start bg-blue-700 font-medium text-white leading-4"
       size="small"
       padding="small"
     >
-      {category}
+      {/* The category comes as a lowercase slug ("stablecoin"). */}
+      {category.charAt(0).toUpperCase() + category.slice(1)}
     </Badge>
   )
 }

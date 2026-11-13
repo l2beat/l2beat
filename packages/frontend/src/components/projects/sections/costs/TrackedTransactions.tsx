@@ -65,11 +65,11 @@ export function TrackedTransactions({
 
   return (
     <Collapsible className="group rounded-lg border border-divider">
-      <CollapsibleTrigger className="flex w-full items-center justify-between px-6 py-3 font-bold">
+      <CollapsibleTrigger className="flex w-full items-center justify-between px-4 py-3 font-semibold text-label-value-16 md:px-6">
         Tracked transactions
-        <ChevronIcon className="group-data-[state=open]:-rotate-180 size-4 transition-transform duration-300" />
+        <ChevronIcon className="group-data-[state=open]:-rotate-180 size-4 fill-secondary transition-transform duration-300" />
       </CollapsibleTrigger>
-      <CollapsibleContent className="px-6">
+      <CollapsibleContent className="px-4 md:px-6">
         {hasHistoricalTransactions && (
           <Checkbox
             name="show-historical-transactions"
@@ -121,7 +121,7 @@ function TransactionGroup({
 }) {
   return (
     <div className="mb-6">
-      <SubsectionHeading className="mb-3 font-medium text-base text-secondary">
+      <SubsectionHeading className="mb-3 font-semibold text-label-value-15">
         {title}
       </SubsectionHeading>
       {transactions.map((transaction, index) => (
@@ -171,14 +171,14 @@ function TransactionDetails({
                 Historical
               </Badge>
             ) : (
-              <Badge type="pink" size="small">
+              <Badge type="gray" size="small">
                 Currently used
               </Badge>
             )
           ) : null}
         </div>
         <p className="text-2xs text-secondary max-md:mt-0.5 md:text-xs">
-          <UtcDateTime timestamp={transaction.sinceTimestamp} /> -{' '}
+          <UtcDateTime timestamp={transaction.sinceTimestamp} /> —{' '}
           {transaction.untilTimestamp ? (
             <UtcDateTime timestamp={transaction.untilTimestamp} />
           ) : (
@@ -191,15 +191,17 @@ function TransactionDetails({
         {transaction.params.formula === 'functionCall' && (
           <>
             <div className="mb-1 text-sm">
-              <span className="text-secondary">Address: </span>
+              <span className="font-medium">Address: </span>
               <EtherscanLink address={transaction.params.address} />
             </div>
             <div className="mb-1 text-sm">
-              <span className="text-secondary">Selector: </span>
+              <span className="font-medium">Selector: </span>
               <span>{transaction.params.selector}</span>
             </div>
             <div className="rounded bg-surface-secondary p-2 text-xs">
-              <code className="break-all">{transaction.params.signature}</code>
+              <code className="[overflow-wrap:anywhere]">
+                {transaction.params.signature}
+              </code>
             </div>
           </>
         )}
@@ -208,12 +210,12 @@ function TransactionDetails({
           <>
             {transaction.params.from && (
               <div className="mb-1 text-sm">
-                <span className="text-secondary">From: </span>
+                <span className="font-medium">From: </span>
                 <EtherscanLink address={transaction.params.from} />
               </div>
             )}
             <div className="mb-1 text-sm">
-              <span className="text-secondary">To: </span>
+              <span className="font-medium">To: </span>
               <EtherscanLink address={transaction.params.to} />
             </div>
           </>
@@ -222,14 +224,14 @@ function TransactionDetails({
         {transaction.params.formula === 'sharpSubmission' && (
           <div>
             <div className="mb-1 text-sm">
-              <span className="text-secondary">Address: </span>
+              <span className="font-medium">Address: </span>
               <EtherscanLink address={transaction.params.address} />
             </div>
             <div className="mb-1 text-sm">
-              <span className="text-secondary">Selector: </span>
+              <span className="font-medium">Selector: </span>
               <span>{transaction.params.selector}</span>
             </div>
-            <div className="mb-1 text-secondary text-sm">Program Hashes:</div>
+            <div className="mb-1 font-medium text-sm">Program hashes:</div>
             {transaction.params.programHashes.map((hash, index) => (
               <div
                 key={index}
@@ -244,15 +246,17 @@ function TransactionDetails({
         {transaction.params.formula === 'sharedBridge' && (
           <>
             <div className="mb-1 text-sm">
-              <span className="text-secondary">Address: </span>
+              <span className="font-medium">Address: </span>
               <EtherscanLink address={transaction.params.address} />
             </div>
             <div className="mb-1 text-sm">
-              <span className="text-secondary">Selector: </span>
+              <span className="font-medium">Selector: </span>
               <span>{transaction.params.selector}</span>
             </div>
             <div className="rounded bg-surface-secondary p-2 text-xs">
-              <code className="break-all">{transaction.params.signature}</code>
+              <code className="[overflow-wrap:anywhere]">
+                {transaction.params.signature}
+              </code>
             </div>
           </>
         )}
@@ -260,7 +264,7 @@ function TransactionDetails({
         {transaction.costMultiplier && (
           <div className="mt-1 flex items-center gap-0.5 text-sm">
             <div>
-              <span className="text-secondary">Multiplier: </span>
+              <span className="font-medium">Multiplier: </span>
               <span>{transaction.costMultiplier}</span>
             </div>
             <Tooltip>

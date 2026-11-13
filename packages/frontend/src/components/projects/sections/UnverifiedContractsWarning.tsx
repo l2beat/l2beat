@@ -30,7 +30,7 @@ export function UnverifiedContractsWarning({ entries, className }: Props) {
             {entries.length}{' '}
             {entries.length === 1 ? 'address has' : 'addresses have'} unverified
             source code.
-            <span className="text-red-300"> (CRITICAL)</span>
+            <strong className="text-primary"> (CRITICAL)</strong>
           </span>
           <span className="flex shrink-0 items-center gap-1 font-medium text-link text-xs md:text-sm">
             View details

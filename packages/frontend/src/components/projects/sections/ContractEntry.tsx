@@ -1,4 +1,5 @@
 import type { ProjectUpgradeableActor, ReferenceLink } from '@l2beat/config'
+import { Fragment } from 'react'
 import { Badge } from '~/components/badge/Badge'
 import { Callout } from '~/components/Callout'
 import {
@@ -88,10 +89,18 @@ export function ContractEntry({
 
   const { color, icon } = getCalloutProps(contract)
 
-  const entries = [...contract.addresses, ...contract.admins]
+  const entries = numberRepeatedNames([
+    ...contract.addresses,
+    ...contract.admins,
+  ])
   return (
     <Callout
-      className={cn(color === undefined ? 'px-4' : 'p-4', className)}
+      className={cn(
+        // An uncoloured entry has no box to pad: on phones its text starts at
+        // the list's bullet, so deep permission trees keep a readable width.
+        color === undefined ? 'max-md:gap-0 md:px-4' : 'p-4',
+        className,
+      )}
       color={color}
       icon={icon}
       body={
@@ -99,7 +108,7 @@ export function ContractEntry({
           <div className="flex flex-wrap items-center gap-x-2 text-paragraph-15 md:text-paragraph-16">
             <strong
               id={contract.id}
-              className="word-break-word relative scroll-mt-section-nav"
+              className="word-break-word relative scroll-mt-section-nav font-semibold"
             >
               {contract.additionalAnchorIds?.map((anchorId) => (
                 <span
@@ -159,42 +168,36 @@ export function ContractEntry({
               <PastUpgradesDialog pastUpgrades={contract.pastUpgrades} />
             )}
           {contract.description && (
-            <Markdown className="word-break-word mt-2 text-paragraph-15 md:text-paragraph-16">
+            <Markdown className="word-break-word mt-2 text-paragraph-15 md:text-paragraph-16 [&>ul>li+li]:mt-2">
               {contract.description}
             </Markdown>
           )}
           {contract.escrow && <EscrowDetailsEntry escrow={contract.escrow} />}
           {contract.upgradeableBy && contract.upgradeableBy.length > 0 && (
-            <div className="mt-2 flex flex-wrap text-paragraph-15 md:text-paragraph-16">
-              <strong className="text-primary">Can be upgraded by:</strong>
-              <div className="ml-1.5 flex flex-wrap gap-1.5">
-                {contract.upgradeableBy.map((entry) =>
-                  entry.unreachable ? (
-                    <span
-                      key={entry.name}
-                      className={linkVariants({
-                        variant: 'plain',
-                        underline: false,
-                      })}
-                    >
-                      {`${entry.name} with ${entry.delay} delay`}
-                    </span>
+            // One flat run, so the first upgrader stays on the key's line and
+            // the rest wrap after it; commas sit outside the links.
+            <p className="mt-2 text-paragraph-15 md:text-paragraph-16">
+              <span className="font-medium">Can be upgraded by:</span>{' '}
+              {contract.upgradeableBy.map((entry, i, all) => (
+                <Fragment key={entry.name}>
+                  {entry.unreachable ? (
+                    <span>{`${entry.name} with ${entry.delay} delay`}</span>
                   ) : (
                     <a
-                      key={entry.name}
                       className={linkVariants()}
                       href={`#${entry.id ?? entry.name}`}
                     >
                       {`${entry.name} with ${entry.delay} delay`}
                     </a>
-                  ),
-                )}
-              </div>
-            </div>
+                  )}
+                  {i < all.length - 1 && ', '}
+                </Fragment>
+              ))}
+            </p>
           )}
           {contract.upgradeDelay && (
             <p className="mt-2 text-paragraph-15 md:text-paragraph-16">
-              <strong className="text-primary">Upgrade delay:</strong>{' '}
+              <span className="font-medium">Upgrade delay:</span>{' '}
               {contract.upgradeDelay}
             </p>
           )}
@@ -234,13 +237,10 @@ export function ContractEntry({
 }
 
 function EscrowBadge({ isCustom }: { isCustom?: boolean }) {
+  // A category tag like "8 instances", not a status: neutral, not brand pink.
   return (
-    <Badge
-      type="pink"
-      padding="regular"
-      className="text-[13px] uppercase leading-none"
-    >
-      {isCustom ? 'Custom Escrow' : 'Escrow'}
+    <Badge type="gray" size="small">
+      {isCustom ? 'Custom escrow' : 'Escrow'}
     </Badge>
   )
 }
@@ -249,15 +249,18 @@ function EscrowDetailsEntry({ escrow }: { escrow: TechnologyContractEscrow }) {
   if (escrow.tokens === '*') {
     return (
       <p className="mt-2 text-paragraph-15 md:text-paragraph-16">
-        <strong className="text-primary">{ESCROW_ALL_TOKENS_INCLUDED}</strong>
+        <span className="font-medium">{ESCROW_ALL_TOKENS_INCLUDED}</span>
       </p>
     )
   }
 
   return (
     <div className="mt-2 flex flex-wrap items-center text-paragraph-15 md:text-paragraph-16">
-      <strong className="text-primary">{ESCROW_TOKENS_INCLUDED}</strong>
-      <div className="ml-1.5 flex flex-wrap items-center gap-1.5">
+      <span className="mr-1.5 font-medium">{ESCROW_TOKENS_INCLUDED}</span>
+      {escrow.tokenIcons.length === 0 && (
+        <span className="text-secondary">none tracked</span>
+      )}
+      <div className="flex flex-wrap items-center gap-1.5">
         {escrow.tokenIcons.map((token) => (
           <Tooltip key={token.symbol}>
             <TooltipTrigger asChild>
@@ -344,4 +347,20 @@ export function ContractsWithImpactfulChanges(props: {
       ))}
     </div>
   )
+}
+
+/**
+ * Two links both called "Admin" can't be told apart without hovering, so
+ * repeated names get a number: "Admin 1", "Admin 2".
+ */
+function numberRepeatedNames<T extends { name: string }>(entries: T[]): T[] {
+  const totals = new Map<string, number>()
+  for (const e of entries) totals.set(e.name, (totals.get(e.name) ?? 0) + 1)
+  const seen = new Map<string, number>()
+  return entries.map((e) => {
+    if ((totals.get(e.name) ?? 0) < 2) return e
+    const n = (seen.get(e.name) ?? 0) + 1
+    seen.set(e.name, n)
+    return { ...e, name: `${e.name} ${n}` }
+  })
 }

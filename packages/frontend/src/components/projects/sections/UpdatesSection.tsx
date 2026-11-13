@@ -6,7 +6,6 @@ import type { OssificationChangeType } from '@l2beat/shared/frontend'
 import type { ProjectId } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { type MouseEvent, useState } from 'react'
-import { Badge } from '~/components/badge/Badge'
 import { CopyButton } from '~/components/CopyButton'
 import { Skeleton } from '~/components/core/Skeleton'
 import { UtcDateTime } from '~/components/core/UtcDateTime'
@@ -89,7 +88,7 @@ export function UpdatesSection({
       {updates.length > 0 && (
         <>
           {ossification && (
-            <SubsectionHeading className="mt-8 mb-3 font-bold text-heading-20">
+            <SubsectionHeading className="mt-8 mb-3 font-semibold text-heading-16 leading-6 md:text-heading-18">
               Discovery updates
             </SubsectionHeading>
           )}
@@ -242,16 +241,11 @@ export function UpdateCard({
               />
             </div>
             {(criticalChangeType || update.isHighSeverity) && (
-              <Badge
-                type="error"
-                size="extraSmall"
-                padding="small"
-                className="shrink-0 uppercase"
-              >
+              <span className="inline-flex h-5 shrink-0 items-center rounded border border-negative bg-surface-primary px-1.5 font-medium text-label-value-12 text-negative leading-none">
                 {criticalChangeType
                   ? CRITICAL_CHANGE_LABELS[criticalChangeType]
                   : 'High severity'}
-              </Badge>
+              </span>
             )}
           </div>
           <div className="flex shrink-0 items-center gap-2">
@@ -281,20 +275,22 @@ export function UpdateCard({
       <div className="flex min-w-0 flex-col gap-4 border-divider border-t px-4 py-4">
         {update.description.trim().length > 0 && (
           <div
-            className="min-w-0 max-w-full rounded-lg border border-divider bg-surface-secondary px-4 py-3.5 dark:bg-surface-primary"
+            className="min-w-0 max-w-full rounded-lg border border-divider bg-surface-secondary px-4 py-3.5"
             role="region"
             aria-label="Update description"
           >
             <Markdown
               ignoreGlossary
               className={cn(
-                'min-w-0 max-w-full text-primary text-sm leading-relaxed [overflow-wrap:anywhere]',
+                'min-w-0 max-w-full break-words text-primary text-sm leading-relaxed',
                 '[&_p:last-child]:mb-0 [&_p]:mb-2',
                 '[&_li]:marker:text-secondary [&_ol]:mb-2 [&_ul]:mb-2',
-                '[&_a]:break-all [&_a]:text-link',
+                '[&_a]:text-link',
+                // Code chips stand off the grey panel.
+                '[&_code]:bg-surface-primary',
               )}
             >
-              {update.description}
+              {linkBareUrls(update.description)}
             </Markdown>
           </div>
         )}
@@ -308,9 +304,7 @@ export function UpdateCard({
           return (
             <div key={index} className="flex min-w-0 flex-col gap-2">
               {title && (
-                <h4 className="font-bold text-secondary text-xs uppercase">
-                  {title}
-                </h4>
+                <h4 className="font-semibold text-label-value-13">{title}</h4>
               )}
               <DiffBody body={section.body} />
             </div>
@@ -342,4 +336,38 @@ function plainText(markdown: string): string {
     .replace(/[*_`#>|]+/g, ' ')
     .replace(/\s+/g, ' ')
     .trim()
+}
+
+/**
+ * Descriptions paste raw diff URLs that run across several lines on phones;
+ * a bare URL becomes a short link named after what it points to.
+ */
+function linkBareUrls(markdown: string) {
+  return markdown.replace(
+    /(^|[\s(])(https?:\/\/[^\s)<>\]]+?)([.,;:]?)(?=\s|$|\))/g,
+    (
+      match,
+      before: string,
+      url: string,
+      trailing: string,
+      offset: number,
+      text: string,
+    ) => {
+      if (before === '(') return match
+      // A reference definition ("[diff]: https://…") must keep its bare URL.
+      const lineStart = text.lastIndexOf('\n', offset) + 1
+      const lead = text.slice(lineStart, offset + before.length)
+      if (/^ {0,3}\[[^\]]+\]:\s*$/.test(lead)) return match
+      return `${before}[${urlLabel(url)}](${url})${trailing}`
+    },
+  )
+}
+
+function urlLabel(url: string) {
+  if (/\/(compare|commit|pull|diff)\//.test(url)) return 'diff'
+  try {
+    return new URL(url).hostname.replace(/^www\./, '')
+  } catch {
+    return url
+  }
 }

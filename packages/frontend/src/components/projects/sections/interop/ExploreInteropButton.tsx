@@ -5,8 +5,8 @@ export function ExploreInteropButton({ className }: { className?: string }) {
     <a
       href="/interop/summary"
       className={cn(
-        'font-bold text-primary text-xs leading-none md:text-white',
-        'flex w-full justify-center rounded-md border border-brand bg-transparent p-3 md:mt-0 md:w-fit md:border-0 md:bg-brand md:py-2',
+        'flex w-full justify-center rounded-md border border-divider p-3 font-medium text-label-value-13 text-primary leading-4',
+        'transition-colors hover:bg-surface-secondary md:mt-0 md:w-fit md:px-3 md:py-1.5',
         'ring-brand ring-offset-1 ring-offset-background focus-visible:outline-none focus-visible:ring-2',
         className,
       )}

@@ -245,7 +245,7 @@ describe(renderProjectSection.name, () => {
     expect(markdown).toInclude(
       '![A diagram](https://ethbeat.org/images/diagram.png)',
       '### Prover: [SP1](https://ethbeat.org/zk-catalog/sp1)\n\n#### Trusted setups\n\n- Groth16 (Groth16):\n  - Aztec Ignition, risk green (lowest risk) per the [Trusted Setups Risk Framework](https://forum.l2beat.com/t/the-trusted-setups-framework-for-zk-catalog/381): Large ceremony.\n  - Used in: none\n  - Verifiers: 2 successful',
-      '### Program Hashes\n\n#### Aggregation program',
+      '### Program hashes\n\n#### Aggregation program',
       'Hashes are checked onchain.',
     )
     expect(markdown).not.toInclude('List of known guest zkVM programs')
@@ -418,7 +418,7 @@ describe(renderProjectSection.name, () => {
       '### Ongoing anomaly\n\n- No state updates have been performed for the past 2h (since 2026-08-29 10:40 UTC). These typically occur every 1h on average.',
       'The interactive liveness chart is shown on [the HTML page](https://ethbeat.org/layer2s/projects/arbitrum#liveness).',
       '#### State updates\n\n- functionCall: 2023-11-14 22:13 UTC - now; currently used; address: [0x1111111111111111111111111111111111111111](https://etherscan.io/address/0x1111111111111111111111111111111111111111); selector: 0x12345678; signature: `function update()`',
-      '### Last 30 day anomalies',
+      '### Anomalies in the past 30 days',
     )
   })
 

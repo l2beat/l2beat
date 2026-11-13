@@ -47,8 +47,7 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
       data-role="nav-section"
       nested={props.nested}
       className={cn(
-        'scroll-mt-section-nav-card px-4 py-8 md:mt-4 md:p-6',
-        'md:rounded-lg',
+        'scroll-mt-section-nav-card px-4 py-8 md:mt-4 md:px-6 md:py-5',
         props.nested && 'mt-10 p-0 md:p-0',
         props.className,
       )}
@@ -109,15 +108,12 @@ function ProjectDetailsSectionHeader(props: ProjectDetailsSectionHeaderProps) {
         props.className,
       )}
     >
-      <a
-        href={`#${props.id}`}
-        className={cn('flex items-center gap-4', props.nested && 'gap-3')}
-      >
+      <a href={`#${props.id}`} className="flex items-center gap-3">
         {props.sectionOrder && (
           <div
             className={cn(
-              'hidden size-10 items-center justify-center rounded bg-surface-secondary font-bold text-label-value-24 text-secondary tabular-nums md:flex',
-              props.nested && 'h-8 w-12 text-label-value-18',
+              'hidden size-8 items-center justify-center rounded bg-surface-secondary font-semibold text-label-value-20 text-secondary tabular-nums md:flex',
+              props.nested && 'h-7 w-10 text-label-value-16',
             )}
           >
             {props.sectionOrder}
@@ -125,8 +121,8 @@ function ProjectDetailsSectionHeader(props: ProjectDetailsSectionHeaderProps) {
         )}
         <Heading
           className={cn(
-            'text-heading-28',
-            props.nested && 'text-heading-24 leading-none!',
+            'font-semibold text-heading-24 leading-7 tracking-[-0.01em]',
+            props.nested && 'text-heading-20 leading-6',
           )}
         >
           {props.title}

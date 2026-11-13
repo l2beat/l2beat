@@ -13,7 +13,14 @@ const columnHelper = createColumnHelper<ProgramHashRow>()
 export const programHashesColumns = [
   columnHelper.accessor('title', {
     header: 'Name',
-    cell: (ctx) => <ProgramHashNameCell {...ctx.row.original} />,
+    cell: (ctx) => (
+      <ProgramHashNameCell
+        {...ctx.row.original}
+        reserveIcon={ctx.table
+          .getCoreRowModel()
+          .rows.some((row) => row.original.zkCatalogProject)}
+      />
+    ),
   }),
   columnHelper.display({
     id: 'hash',
@@ -45,15 +52,13 @@ export const programHashesColumns = [
               href={programUrl}
               className="font-medium text-label-value-13"
             >
-              Github
+              GitHub
             </CustomLink>
           </div>
         )
       }
       return (
-        <span className="font-medium text-label-value-13 text-secondary opacity-50">
-          Code unknown
-        </span>
+        <span className="font-medium text-label-value-13">Code unknown</span>
       )
     },
   }),

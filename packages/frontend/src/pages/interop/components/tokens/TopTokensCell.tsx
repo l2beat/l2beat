@@ -14,6 +14,7 @@ export function TopTokensCell({
   apiSelection,
   hideDialog,
   showNetMintedValueColumn,
+  itemsType = 'cell',
 }: {
   topItems: TopItems<TokenData>
   type: KnownInteropBridgeType | undefined
@@ -27,6 +28,8 @@ export function TopTokensCell({
   apiSelection: AnchoredInteropSelection
   hideDialog?: boolean
   showNetMintedValueColumn?: boolean
+  /** "default" matches the L2 summary's ringed 28px icons. */
+  itemsType?: 'cell' | 'default'
 }) {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -41,7 +44,7 @@ export function TopTokensCell({
           })),
           remainingCount: topItems.remainingCount,
         }}
-        type="cell"
+        type={itemsType}
         {...(hideDialog
           ? { hideDialog: true as const }
           : { hideDialog: false as const, setIsOpen })}

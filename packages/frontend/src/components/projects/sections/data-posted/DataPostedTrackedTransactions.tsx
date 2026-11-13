@@ -31,11 +31,11 @@ export function DataPostedTrackedTransactions({
 
   return (
     <Collapsible className="group rounded-lg border border-divider">
-      <CollapsibleTrigger className="flex w-full items-center justify-between px-6 py-3 font-bold">
+      <CollapsibleTrigger className="flex w-full items-center justify-between px-4 py-3 font-semibold text-label-value-16 md:px-6">
         Tracked transactions
-        <ChevronIcon className="group-data-[state=open]:-rotate-180 size-4 transition-transform duration-300" />
+        <ChevronIcon className="group-data-[state=open]:-rotate-180 size-4 fill-secondary transition-transform duration-300" />
       </CollapsibleTrigger>
-      <CollapsibleContent className="px-6">
+      <CollapsibleContent className="px-4 md:px-6">
         {hasHistoricalTransactions && (
           <Checkbox
             name="show-historical-transactions"
@@ -49,7 +49,7 @@ export function DataPostedTrackedTransactions({
           </Checkbox>
         )}
         <div className="mb-6">
-          <SubsectionHeading className="font-medium text-base text-secondary">
+          <SubsectionHeading className="mb-3 font-semibold text-label-value-15">
             Blob submissions
           </SubsectionHeading>
           {transactions.map((transaction, index) => (
@@ -74,51 +74,45 @@ function TransactionDetails({
 }) {
   return (
     <div className="mb-4">
-      <div className="mb-2 flex justify-between max-lg:flex-col lg:gap-2">
-        <div className="flex items-center gap-2">
-          {showHistoricalTransactions ? (
-            transaction.untilBlock ? (
-              <Badge type="gray" size="small">
-                Historical
-              </Badge>
-            ) : (
-              <Badge type="pink" size="small">
-                Currently used
-              </Badge>
-            )
-          ) : null}
+      {showHistoricalTransactions && (
+        <div className="mb-2 flex items-center gap-2">
+          <Badge type="gray" size="small">
+            {transaction.untilBlock ? 'Historical' : 'Currently used'}
+          </Badge>
         </div>
-      </div>
+      )}
 
       <div className="border-divider border-l-2 pl-3">
-        <p className="mb-1 text-secondary text-sm">
-          DA layer: {transaction.daLayerName}
+        <p className="mb-1 text-sm">
+          <span className="font-medium">DA layer: </span>
+          {transaction.daLayerName}
         </p>
-        <p className="mb-1 text-secondary text-sm">
-          From: {transaction.sinceBlock} block - To:{' '}
-          {transaction.untilBlock ?? 'Now'}
+        <p className="mb-1 text-sm">
+          <span className="font-medium">Blocks: </span>
+          {transaction.untilBlock
+            ? `${transaction.sinceBlock} – ${transaction.untilBlock}`
+            : `from ${transaction.sinceBlock}`}
         </p>
         <div className="mb-1 text-sm">
-          <span className="text-secondary">Inbox: </span>
+          <span className="font-medium">Inbox: </span>
           <EtherscanLink address={transaction.inbox} />
         </div>
         {transaction.sequencers && transaction.sequencers.length > 0 && (
           <div className="mb-1 text-sm">
-            <span className="text-secondary">Sequencers: </span>
-            <div className="inline-flex gap-2">
-              {transaction.sequencers?.map((sequencer) => (
-                <EtherscanLink
-                  key={sequencer}
-                  address={sequencer}
-                  className="whitespace-nowrap"
-                />
+            <span className="font-medium">Sequencers: </span>
+            <div className="inline-flex flex-wrap gap-x-1.5">
+              {transaction.sequencers?.map((sequencer, i, all) => (
+                <span key={sequencer} className="whitespace-nowrap">
+                  <EtherscanLink address={sequencer} />
+                  {i < all.length - 1 && ','}
+                </span>
               ))}
             </div>
           </div>
         )}
         {transaction.topics && transaction.topics.length > 0 && (
           <div className="mb-1 text-sm">
-            <span className="text-secondary">Topics: </span>
+            <span className="font-medium">Topics: </span>
             <div>
               {transaction.topics?.map((topic) => (
                 <span key={topic}>{topic}</span>

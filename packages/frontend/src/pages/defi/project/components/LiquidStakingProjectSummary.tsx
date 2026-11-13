@@ -50,18 +50,28 @@ export function LiquidStakingProjectSummary({
       key,
       title,
       tooltip,
-      value: <TableValueCell value={summary.risks[key]} />,
+      // On phones the two-line value sits flush right, like the stats above.
+      valueClassName:
+        'max-md:[&_div]:text-right max-md:[&_div.flex]:justify-end',
+      value: (
+        <TableValueCell
+          value={summary.risks[key]}
+          secondLineClassName="font-normal md:text-label-value-13 md:leading-4"
+        />
+      ),
     })),
   ]
 
   return (
+    // Figures first (TVL, yield, cost of exit), then the six risks in two
+    // rows of three, so every column lines up.
     <div>
-      <ul className="grid gap-4 md:grid-cols-5">
-        {stats.slice(0, 5).map(renderStat)}
+      <ul className="grid gap-4 md:grid-cols-3">
+        {stats.slice(0, 3).map(renderStat)}
       </ul>
-      <HorizontalSeparator className="my-4 max-md:hidden" />
-      <ul className="grid gap-4 max-md:mt-4 md:grid-cols-4">
-        {stats.slice(5).map(renderStat)}
+      <HorizontalSeparator className="my-4" />
+      <ul className="grid gap-4 md:grid-cols-3">
+        {stats.slice(3).map(renderStat)}
       </ul>
     </div>
   )
