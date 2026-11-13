@@ -28,7 +28,7 @@ export function getL2ProjectTvsBreakdownStructuredData(
   page: StructuredDataPage,
   project: L2Project,
 ) {
-  const name = `${project.name} TVS Breakdown`
+  const name = `${project.name} TVS breakdown`
   return getDatasetStructuredData(page, {
     name,
     distribution: [

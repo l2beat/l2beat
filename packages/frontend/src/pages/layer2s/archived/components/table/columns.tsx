@@ -59,7 +59,7 @@ export const l2ArchivedColumns = [
   }),
   columnHelper.accessor('totalTvs', {
     id: 'total',
-    header: 'Total value secured',
+    header: 'Value secured',
     cell: (ctx) => {
       const value = ctx.getValue()
       if (value === undefined) {

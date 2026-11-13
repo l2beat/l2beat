@@ -108,7 +108,7 @@ export const getL2ActivityColumns = (
               <ValueWithPercentageChange
                 change={data.pastDayCount.change}
                 changePeriod={data.pastDayCount.changePeriod}
-                className="font-medium"
+                className="font-medium md:text-label-value-15"
                 containerClassName="justify-end"
               >
                 {formatActivityCount(data.pastDayCount.value)}
@@ -158,7 +158,7 @@ export const getL2ActivityColumns = (
       columnHelper,
       columnHelper.accessor((row) => row.data?.summedCount.value, {
         id: 'summedCount',
-        header: '30D Count',
+        header: '30d count',
         cell: (ctx) => {
           const data = ctx.row.original.data
           if (!data) {
@@ -169,7 +169,7 @@ export const getL2ActivityColumns = (
               <ValueWithPercentageChange
                 change={data.summedCount.change}
                 changePeriod={data.summedCount.changePeriod}
-                className="font-medium"
+                className="font-medium md:text-label-value-15"
                 containerClassName="justify-end"
               >
                 {formatInteger(data.summedCount.value)}
@@ -217,7 +217,7 @@ export const getL2ActivityColumns = (
       }),
     columnHelper.accessor((row) => row.data?.ratio, {
       id: 'data_ratio',
-      header: 'UOPS/TPS RATIO',
+      header: 'UOPS/TPS ratio',
       sortUndefined: 'last',
       cell: (ctx) => {
         const data = ctx.row.original.data

@@ -35,7 +35,7 @@ function getTvsColumns<T extends CommonL2Entry & { tvs: TvsData }>(
     columnHelper,
     columnHelper.accessor((e) => e.tvs?.breakdown?.total ?? 0, {
       id: 'total',
-      header: 'Total value secured',
+      header: 'Value secured',
       cell: (ctx) => {
         const value = ctx.row.original.tvs
         return (

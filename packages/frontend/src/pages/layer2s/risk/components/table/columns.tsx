@@ -17,7 +17,9 @@ export const l2RiskColumns = [
     (row) => `/layer2s/projects/${row.slug}#risk-analysis`,
   ),
   columnHelper.accessor((e) => adjustTableValue(e.risks.stateValidation), {
-    header: 'State\nValidation',
+    // Ids keep the old header text: saved column visibility is keyed by it.
+    id: 'State\nValidation',
+    header: 'State\nvalidation',
     meta: {
       tooltip: 'How is the validity of the system state checked?',
     },
@@ -40,7 +42,8 @@ export const l2RiskColumns = [
       ),
   }),
   columnHelper.accessor((e) => adjustTableValue(e.risks.dataAvailability), {
-    header: 'Data\nAvailability',
+    id: 'Data\nAvailability',
+    header: 'Data\navailability',
     meta: {
       tooltip: 'Is the data needed to reconstruct the state available?',
     },
@@ -63,7 +66,8 @@ export const l2RiskColumns = [
       ),
   }),
   columnHelper.accessor((e) => adjustTableValue(e.risks.exitWindow), {
-    header: 'Exit\nWindow',
+    id: 'Exit\nWindow',
+    header: 'Exit\nwindow',
     meta: {
       tooltip:
         'How much time do users have to exit the system in case of an unwanted upgrade?',
@@ -84,7 +88,8 @@ export const l2RiskColumns = [
       sortTableValues(a.original.risks.exitWindow, b.original.risks.exitWindow),
   }),
   columnHelper.accessor((e) => adjustTableValue(e.risks.sequencerFailure), {
-    header: 'Sequencer\nFailure',
+    id: 'Sequencer\nFailure',
+    header: 'Sequencer\nfailure',
     meta: {
       tooltip:
         "Sequencer is an entity responsible for constructing blocks and deciding on the ordering of user's transactions. What happens if it is offline or censors individual user?",
@@ -108,7 +113,8 @@ export const l2RiskColumns = [
       ),
   }),
   columnHelper.accessor((e) => adjustTableValue(e.risks.proposerFailure), {
-    header: 'Proposer\nFailure',
+    id: 'Proposer\nFailure',
+    header: 'Proposer\nfailure',
     meta: {
       tooltip:
         'Proposer is an entity responsible for submitting state commitments to Ethereum (optionally, along with the zkProof). What happens if it is offline?',

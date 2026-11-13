@@ -56,7 +56,7 @@ export function L2RiskStateValidationTabs({
             Optimistic <CountBadge>{filteredOptimistic.length}</CountBadge>
           </DirectoryTabsTrigger>
           <DirectoryTabsTrigger value="noProofs">
-            No Proofs <CountBadge>{filteredNoProofs.length}</CountBadge>
+            No proofs <CountBadge>{filteredNoProofs.length}</CountBadge>
           </DirectoryTabsTrigger>
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>

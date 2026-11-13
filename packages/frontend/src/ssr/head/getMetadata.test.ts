@@ -84,8 +84,8 @@ describe(getMetadata.name, () => {
 
     it('names the page and its parents when the caller provides them', () => {
       const metadata = getMetadata(manifest, {
-        name: 'TVS Breakdown',
-        title: 'Arbitrum One | TVS Breakdown - ETHBEAT',
+        name: 'TVS breakdown',
+        title: 'Arbitrum One | TVS breakdown - ETHBEAT',
         url: '/layer2s/projects/arbitrum/tvs-breakdown',
         openGraph,
         breadcrumbParents: [
@@ -103,7 +103,7 @@ describe(getMetadata.name, () => {
         ),
         crumb(
           4,
-          'TVS Breakdown',
+          'TVS breakdown',
           'https://ethbeat.org/layer2s/projects/arbitrum/tvs-breakdown',
         ),
       ])

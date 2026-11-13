@@ -36,7 +36,7 @@ export async function getL2TvsData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        name: 'Total Value Secured',
+        name: 'Total value secured',
         description:
           'Track total value secured across Ethereum scaling solutions.',
         url: req.originalUrl,
