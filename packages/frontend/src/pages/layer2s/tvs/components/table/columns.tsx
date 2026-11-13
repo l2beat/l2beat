@@ -178,7 +178,7 @@ function getTokenBridgeTypeColumns(opts: { isTvsLoading?: boolean }) {
         cellClassName: 'w-1/3',
         align: 'right',
         tooltip:
-          'These tokens use L1 Ethereum as their main ledger and are bridged to L2 via a canonical bridge locking tokens in L1 escrow and minting on L2 an IOU representation of that token. The value is displayed together with a percentage change compared to 7D ago.',
+          'These tokens use L1 Ethereum as their main ledger and are bridged to L2 via a canonical bridge locking tokens in L1 escrow and minting on L2 an IOU representation of that token. The value is displayed together with a percentage change compared to 7 days ago.',
         headClassName: getColumnHeaderUnderline(
           'before:bg-chart-stacked-purple',
         ),
@@ -194,7 +194,7 @@ function getTokenBridgeTypeColumns(opts: { isTvsLoading?: boolean }) {
         cellClassName: 'w-1/3',
         align: 'right',
         tooltip:
-          'These tokens are using L2 as their ledger and are minted directly on L2. Note that for some tokens (omnichain tokens) their ledger is distributed across many blockchains and they can be moved to L2 via a burn-mint bridge. The value is displayed together with a percentage change compared to 7D ago.',
+          'These tokens are using L2 as their ledger and are minted directly on L2. Note that for some tokens (omnichain tokens) their ledger is distributed across many blockchains and they can be moved to L2 via a burn-mint bridge. The value is displayed together with a percentage change compared to 7 days ago.',
         headClassName: getColumnHeaderUnderline('before:bg-chart-stacked-pink'),
       },
     }),
@@ -208,7 +208,7 @@ function getTokenBridgeTypeColumns(opts: { isTvsLoading?: boolean }) {
         cellClassName: 'w-1/3',
         align: 'right',
         tooltip:
-          'These tokens use some external blockchain as their main ledger and are bridged to L2 via a non-canonical bridge. Tokens are locked on their native ledger and the bridge is minting on L2 an IOU representation of that token. The value is displayed together with a percentage change compared to 7D ago.',
+          'These tokens use some external blockchain as their main ledger and are bridged to L2 via a non-canonical bridge. Tokens are locked on their native ledger and the bridge is minting on L2 an IOU representation of that token. The value is displayed together with a percentage change compared to 7 days ago.',
         headClassName: getColumnHeaderUnderline(
           'before:bg-chart-stacked-yellow last:pr-3',
         ),

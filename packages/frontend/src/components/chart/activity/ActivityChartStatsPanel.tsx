@@ -51,7 +51,7 @@ export function ActivityChartStatsPanel({ stats, metric, isLoading }: Props) {
       <ChartStatsItem
         label={`Past Day ${metricUi.rateLabel}`}
         className="max-md:h-7"
-        tooltip={`${metricUi.subject} per second averaged over the past day, shown together with a percentage change compared to 7D ago.`}
+        tooltip={`${metricUi.subject} per second averaged over the past day, shown together with a percentage change compared to 7 days ago.`}
         isLoading={isLoading}
       >
         {metricStats?.pastDayCount !== undefined &&
