@@ -6,16 +6,10 @@ import { PercentChange } from '~/components/PercentChange'
 import { useTvsDisplayControlsContext } from '~/components/table/display/contexts/TvsDisplayControlsContext'
 import type { L2TvsEntry } from '~/server/features/layer2s/tvs/getL2TvsEntries'
 import { useTRPC } from '~/trpc/React'
-import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
-
-/** Written after a tile's change, like the "1y" after the chart head's. */
-const PERIOD_LABEL: Record<PercentageChangePeriod, string> = {
-  '1D': '1d',
-  '7D': '7d',
-  last24h: '24h',
-  last7d: '7d',
-  last30d: '30d',
-}
+import {
+  PERIOD_LABEL,
+  type PercentageChangePeriod,
+} from '~/utils/calculatePercentageChange'
 
 type StatType = 'total' | 'rollups' | 'validiumsAndOptimiums' | 'others'
 const statsMeta: Record<StatType, { label: string; color: string }> = {
