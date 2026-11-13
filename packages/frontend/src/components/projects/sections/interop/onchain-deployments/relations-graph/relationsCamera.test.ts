@@ -2,6 +2,7 @@ import { expect } from 'earl'
 import {
   centerCamera,
   dotGridSpacing,
+  fitCamera,
   gestureCamera,
   gridShift,
   revealCamera,
@@ -154,5 +155,23 @@ describe(wheelZoomFactor.name, () => {
   it('zooms a mouse wheel notch by one step', () => {
     expect(inPixels(100)).toEqual(1 / 1.15)
     expect(wheelZoomFactor({ deltaY: -3, deltaMode: 1 })).toEqual(1.15)
+  })
+})
+
+describe(fitCamera.name, () => {
+  // 2000 wide at the readable scale 0.8 is 1600 on screen, wider than 1000.
+  const content = { width: 2000, height: 400 }
+  const viewport = { width: 1000, height: 600 }
+
+  it('centres the focus when the graph extends past both edges', () => {
+    expect(fitCamera(content, viewport, 1000).x).toEqual(500 - 1000 * 0.8)
+  })
+
+  it('keeps the left edge in view when the focus is near it', () => {
+    expect(fitCamera(content, viewport, 100).x).toEqual(32)
+  })
+
+  it('keeps the right edge in view when the focus is near it', () => {
+    expect(fitCamera(content, viewport, 1950).x).toEqual(1000 - 32 - 1600)
   })
 })
