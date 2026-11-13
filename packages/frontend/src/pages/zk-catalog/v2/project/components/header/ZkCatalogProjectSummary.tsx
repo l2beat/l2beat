@@ -179,8 +179,8 @@ function MobileTrustedSetupsDetails({
   return (
     <div className="flex flex-wrap items-start gap-x-8 gap-y-4">
       <OnchainVerifierBlock onchainVerifiers={onchainVerifiers} mobile />
-      <UsedInBlock projectsUsedIn={projectsUsedIn} mobile />
       <VerifierStatusBlock verifiers={verifiers} mobile />
+      <UsedInBlock projectsUsedIn={projectsUsedIn} mobile />
     </div>
   )
 }
@@ -222,10 +222,10 @@ function DesktopTrustedSetupsCells({
         ) : null}
       </td>
       <td className="pr-10">
-        <UsedInBlock projectsUsedIn={projectsUsedIn} />
+        <VerifierStatusBlock verifiers={verifiers} />
       </td>
       <td>
-        <VerifierStatusBlock verifiers={verifiers} />
+        <UsedInBlock projectsUsedIn={projectsUsedIn} />
       </td>
     </>
   )
@@ -272,12 +272,15 @@ function UsedInBlock({
       }
     >
       <p className="text-label-value-13 leading-4">Used in</p>
-      {/* On phones the icon list is a 44px tap target; the negative margin
-          lays it out at icon height so it lines up with the verifier row. */}
-      <ProjectsUsedIn
-        usedIn={projectsUsedIn}
-        className={mobile && !stacked ? '-my-3' : undefined}
-      />
+      {mobile && !stacked ? (
+        // A 20px line like the verifier figures. On touch the icon list is a
+        // 44px tap target, which centres in it and overflows both ways.
+        <div className="flex h-5 items-center">
+          <ProjectsUsedIn usedIn={projectsUsedIn} />
+        </div>
+      ) : (
+        <ProjectsUsedIn usedIn={projectsUsedIn} />
+      )}
     </div>
   )
 }

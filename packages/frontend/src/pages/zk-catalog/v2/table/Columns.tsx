@@ -116,14 +116,9 @@ export const zkCatalogColumns = [
       columnHelper.display({
         id: 'used-in',
         header: 'Used in',
-        cell: (ctx) => {
-          const first = Object.values(
-            ctx.row.original.trustedSetupsByProofSystem,
-          )[0]
-          if (!first) return null
-          return <ProjectsUsedInByStatus data={first.projectsUsedInByStatus} />
-        },
         meta: {
+          tooltip:
+            'Projects that use this proof system, on the same line as the verifiers they rely on.',
           additionalRows: (ctx) => {
             return Object.entries(ctx.row.original.trustedSetupsByProofSystem)
               .slice(1)
@@ -134,6 +129,13 @@ export const zkCatalogColumns = [
                 />
               ))
           },
+        },
+        cell: (ctx) => {
+          const first = Object.values(
+            ctx.row.original.trustedSetupsByProofSystem,
+          )[0]
+          if (!first) return null
+          return <ProjectsUsedInByStatus data={first.projectsUsedInByStatus} />
         },
       }),
     ],
