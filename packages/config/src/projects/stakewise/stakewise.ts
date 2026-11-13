@@ -249,7 +249,7 @@ export const stakewise: BaseProject = {
         value: 'Vault contracts',
         secondLine: 'creds: vault',
         sentiment: 'good',
-        description: `Validators a vault registers withdraw to the vault. Consolidating stake into a validator the vault does not track needs the vault's manager and ${validatorThreshold} of ${oracleCount} oracles, and the contracts do not check where that validator withdraws.`,
+        description: 'Validators a vault registers withdraw to that vault.',
       },
       oracle: {
         value: oracleThreshold,

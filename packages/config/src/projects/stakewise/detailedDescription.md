@@ -3,7 +3,7 @@ StakeWise is a marketplace of staking vaults with one liquid token on top. Anyon
 ### Deposits and staking
 
 1. A depositor sends ETH to a vault and receives its shares.
-2. The vault's key manager, appointed by the vault admin, picks the staking keys to fund. Each registration needs {{validatorThreshold}} of {{oracleCount}} oracle signatures over the exact keys and makes the vault the withdrawal address. Consolidating stake into a validator the vault does not track also needs the oracles, and the contracts do not check where that validator withdraws.
+2. The vault's key manager, appointed by the vault admin, picks the staking keys to fund. Each registration needs {{validatorThreshold}} of {{oracleCount}} oracle signatures over the exact keys and makes the vault the withdrawal address.
 3. A shareholder can mint {{osETH}} against the shares up to the vault's loan-to-value, {{defaultLtv}} by default, with liquidation above {{defaultLiqThreshold}}.
 
 Vaults are created through factories on code the DAO has approved ({{approvedImplCount}} implementations), or registered directly by the DAO multisig. The contracts require no bond from whoever runs a vault, and a vault's losses fall on its own shares. {{osETH}} holders are exposed to them only through the collateral rules, which the DAO can set per vault: {{noLiqVaultCount}} vaults may mint up to {{maxLtv}} and are never liquidated, so a loss in one of them lowers {{osETH}}'s backing directly. Only registered vaults that report approved code can mint, up to a total capacity set by the DAO.
