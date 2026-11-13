@@ -1,3 +1,4 @@
+import { Badge } from '~/components/badge/Badge'
 import { CustomLink } from '~/components/link/CustomLink'
 import type { DefiDependency } from '~/server/features/defi/resolveDefiDependencies'
 import { ProjectSection } from './ProjectSection'
@@ -38,16 +39,16 @@ export function ExternalDependenciesSection({
             <div>
               <div className="flex items-center gap-2">
                 {dependency.href ? (
-                  <CustomLink href={dependency.href} className="font-bold">
+                  <CustomLink href={dependency.href} className="font-semibold">
                     {dependency.name}
                   </CustomLink>
                 ) : (
-                  <span className="font-bold">{dependency.name}</span>
+                  <span className="font-semibold">{dependency.name}</span>
                 )}
                 {!dependency.reviewed && (
-                  <span className="inline-block h-min rounded bg-zinc-200 px-1.5 py-[3px] font-medium text-2xs text-zinc-600 uppercase leading-none! dark:bg-zinc-700 dark:text-zinc-300">
+                  <Badge type="gray" size="small">
                     Not reviewed
-                  </span>
+                  </Badge>
                 )}
               </div>
               <p className="mt-0.5 text-paragraph-15 md:text-paragraph-16">

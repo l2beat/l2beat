@@ -29,14 +29,14 @@ export function LiquidStakingPage({
       <HydrationBoundary state={queryState}>
         <SideNavLayout>
           <MainPageHeader description={LIQUID_STAKING_DESCRIPTION}>
-            Liquid Staking
+            Liquid staking
           </MainPageHeader>
           <LiquidStakingCharts
             projects={entries}
             defaultRange={defaultChartRange}
           />
           <PrimaryCard className="mt-4">
-            <h2 className="mb-1 font-bold text-xl md:text-2xl">
+            <h2 className="mb-1 font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
               Risk comparison
             </h2>
             <TabInfoWithDrawer
