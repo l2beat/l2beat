@@ -108,6 +108,7 @@ export function getTransferColumns(
       },
     }),
     columnHelper.accessor('bridge', {
+      id: 'bridge',
       header: 'Bridge',
       enableSorting: false,
       cell: (ctx) => {
