@@ -95,10 +95,7 @@ export function getBasicTableBodyCellClassName(params: {
     groupParams?.isFirstInGroup &&
       (isSortable && align === undefined ? 'pl-10!' : 'pl-6!'),
     groupParams?.isLastInGroup && 'pr-6!',
-    isSortable &&
-      align === undefined &&
-      !groupParams?.isFirstInGroup &&
-      'pl-4',
+    isSortable && align === undefined && !groupParams?.isFirstInGroup && 'pl-4',
     isPinned && getRowClassNamesWithoutOpacity(rowBackgroundColor),
     isPinned && isHighlighted && 'animate-row-highlight-no-opacity',
     compact && COMPACT_BODY_CELL,
