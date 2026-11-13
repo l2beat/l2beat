@@ -97,7 +97,7 @@ export function L2ActivityChart({ milestones, entries }: Props) {
           onItemClick: toggleDataKey,
         }}
       />
-      <div className="mb-2">
+      <div className="mt-3 mb-2">
         <ActivityRatioChart
           isPlaceholderData={isPlaceholderData}
           data={ratioData}
