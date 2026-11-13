@@ -11,6 +11,10 @@ import { PrivacyIcon } from '~/icons/pages/Privacy'
 import { TokensIcon } from '~/icons/pages/Tokens'
 import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
 import { GARDEN_PATH } from '~/pages/garden/paths'
+import {
+  PRIVACY_ADVICE_TITLE,
+  PRIVACY_STAY_PRIVATE_PATH,
+} from '~/pages/privacy/methodology/paths'
 
 export const navGroups: NavGroup[] = compact<NavGroup>([
   {
@@ -50,6 +54,10 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
         {
           title: 'Summary',
           href: '/privacy/summary',
+        },
+        {
+          title: PRIVACY_ADVICE_TITLE,
+          href: PRIVACY_STAY_PRIVATE_PATH,
         },
       ],
       [

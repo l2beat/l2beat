@@ -211,9 +211,15 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
       outside: true,
     },
     {
-      name: 'Hold',
-      text: 'Hold the ZEC in the pool for days, and split or merge it with other shielded funds.',
+      name: 'Split',
+      text: 'Split the ZEC in the pool, or merge it with other shielded funds.',
       against: ['chainAnalyst'],
+    },
+    {
+      name: 'Wait',
+      text: A.wait,
+      against: ['chainAnalyst'],
+      randomWait: true,
     },
     {
       name: 'Swap back',

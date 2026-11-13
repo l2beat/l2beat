@@ -24,11 +24,8 @@ import {
   PRIVACY_EXPOSURE_LABEL,
   PRIVACY_INTERIOR_LABEL,
 } from '~/pages/privacy/adversaries/privacyAdversaryUi'
-import {
-  ADVICE,
-  getAdviceStepId,
-  getStepsAgainst,
-} from '~/pages/privacy/adviceUi'
+import { ADVICE } from '~/pages/privacy/adviceUi'
+import { getAdviceStepId, getStepsAgainst } from '~/pages/privacy/projectAdvice'
 import type { PrivacyReferenceApp } from '~/server/features/privacy/utils/getPrivacyReferenceApp'
 import { cn } from '~/utils/cn'
 import { RiskBanner } from '../../RiskBanner'

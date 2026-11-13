@@ -1277,12 +1277,66 @@ export interface ProjectPrivacyReferenceApp {
   build?: string
   /** Day the review traced the closed app, YYYY-MM-DD. Absent when untraced. */
   checked?: string
+  /** How the app's code reaches the user, and what the user can check of it. */
+  delivery: ProjectPrivacyAppDelivery
   /**
    * Other released apps for the protocol, checked but not rated. Each one
    * leaks more than the reference app, which its finding shows.
    */
   checkedApps?: ProjectPrivacyCheckedApp[]
 }
+
+/**
+ * How an app's code reaches the user, most checkable first. With `source`
+ * and `rebuild` it answers whether a user runs the code we reviewed.
+ */
+export type ProjectPrivacyAppDelivery =
+  | {
+      /**
+       * Every user can get the build we reviewed and compare its identifier
+       * with `pin`. A store or download page that keeps old versions with
+       * their hashes counts, such as F-Droid or an APK on a release page.
+       */
+      type: 'pinned'
+      /** The build we reviewed. */
+      pin: ProjectPrivacyAppPin
+      rebuild?: ProjectPrivacyAppRebuild
+    }
+  | {
+      /**
+       * One build per version for every user, but the store offers only its
+       * latest and updates the app on its own. The reviewed version can
+       * disappear, and a user can check the version, `version` of the app, and
+       * nothing else.
+       */
+      type: 'latestOnly'
+      /** The store's name, e.g. "Chrome Web Store". */
+      store: string
+      rebuild?: ProjectPrivacyAppRebuild
+    }
+  | {
+      /**
+       * Served at each visit. The server can change the code at any time, for
+       * one user alone, and the user has nothing to check.
+       */
+      type: 'hosted'
+    }
+
+/** What fixes the bytes of a pinned build. */
+export type ProjectPrivacyAppPin =
+  /** A base32 CIDv1. The user loads the build by it. */
+  | { type: 'ipfs'; cid: string }
+  /** A contract without an upgrade path that serves the build from its code. */
+  | { type: 'contract'; address: ChainSpecificAddress }
+  /** The SHA-256 of the release file we reviewed, as 64 hex characters. */
+  | { type: 'sha256'; file: string; hash: string }
+
+/**
+ * Public build recipe we followed from `source` to the same bytes as the
+ * build, apart from differences we can explain, such as build paths. Set only
+ * after such a rebuild, so it marks the app as reproducible.
+ */
+export type ProjectPrivacyAppRebuild = string
 
 export interface ProjectPrivacyCheckedApp {
   name: string
@@ -1407,6 +1461,26 @@ export type PrivacyCategoryId =
 
 export interface PrivacyCategory {
   id: PrivacyCategoryId
+  label: string
+  description: string
+  /** What a user comes to do with it. Protocols are compared within one need. */
+  need: PrivacyNeedId
+}
+
+/**
+ * What a user wants to do, in their words. Categories name mechanisms, which
+ * a user does not know, and several categories can serve one need.
+ */
+export type PrivacyNeedId =
+  | 'moveFunds'
+  | 'getPaid'
+  | 'hideAmounts'
+  | 'useService'
+  | 'vote'
+
+export interface PrivacyNeed {
+  id: PrivacyNeedId
+  /** Imperative, e.g. "Move funds without a link". */
   label: string
   description: string
 }
@@ -1570,9 +1644,11 @@ export interface PrivacyAdviceStep {
    */
   outside?: boolean
   /**
-   * True on the wait step of a pool. The page draws a waiting time at random
-   * within the window the anonymity set counts, since a fixed wait is a
-   * pattern and people pick random numbers badly.
+   * True on the step where time must pass between entry and exit. The page
+   * draws a waiting time at random within the window the anonymity set counts,
+   * since a fixed wait is a pattern and people pick random numbers badly. The
+   * guide drops the step for a user who cannot wait, so every such step
+   * carries the flag.
    */
   randomWait?: boolean
 }

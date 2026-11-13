@@ -7,6 +7,7 @@ import type {
 } from '@l2beat/config'
 import compact from 'lodash/compact'
 import isEqual from 'lodash/isEqual'
+import upperFirst from 'lodash/upperFirst'
 import type { PrivacyAdversariesSectionProps } from '~/components/projects/sections/privacy/PrivacyAdversariesSection'
 import type { PrivacyAdviceSectionProps } from '~/components/projects/sections/privacy/PrivacyAdviceSection'
 import type { PrivacyAssetsBreakdownSectionProps } from '~/components/projects/sections/privacy/PrivacyAssetsBreakdownSection'
@@ -18,20 +19,20 @@ import {
   PRIVACY_EXPOSURE_LABEL,
   PRIVACY_INTERIOR_LABEL,
 } from '~/pages/privacy/adversaries/privacyAdversaryUi'
-import {
-  ADVICE,
-  getStepAdversaries,
-  getStepsAgainst,
-  getUncoveredAdversaries,
-  getWaitInstruction,
-} from '~/pages/privacy/adviceUi'
+import { ADVICE, getStepAdversaries } from '~/pages/privacy/adviceUi'
 import {
   formatBucketLabel,
   getPrivacyAssetsTotals,
   PRIVACY_ASSETS_BREAKDOWN_HEADERS as HEADERS,
 } from '~/pages/privacy/project/components/assets-breakdown/privacyAssetsBreakdown'
 import {
+  getStepsAgainst,
+  getUncoveredAdversaries,
+  getWaitInstruction,
+} from '~/pages/privacy/projectAdvice'
+import {
   getCheckedAppSourceLabel,
+  getReferenceAppDelivery,
   getReferenceAppSince,
   getReferenceAppSource,
   REFERENCE_APP,
@@ -87,10 +88,22 @@ function renderReferenceApps(app: PrivacyReferenceApp) {
       ? `${source.label} ${link(source.commit.label, source.commit.href)}`
       : source.label,
   ]
+  const delivery = getReferenceAppDelivery(app)
+  const check =
+    delivery.check &&
+    (delivery.check.value
+      ? `${delivery.check.label}: ${delivery.check.value}`
+      : delivery.check.label)
+  const deliveryMeta = [
+    `${delivery.kind.label}: ${delivery.kind.description}`,
+    `${upperFirst(delivery.source.label)}: ${delivery.source.description}`,
+    delivery.rebuild && link(REFERENCE_APP.rebuildLink, delivery.rebuild),
+    check,
+  ]
   return joinBlocks([
     `**${REFERENCE_APP.listTitle}**`,
     bulletList([
-      `**${link(app.name, app.url)}**${version} (${REFERENCE_APP.referenceChip}): ${joinMeta(meta)}`,
+      `**${link(app.name, app.url)}**${version} (${REFERENCE_APP.referenceChip}): ${joinMeta([...meta, ...deliveryMeta])}`,
       ...app.checkedApps.map((checkedApp) => {
         const meta = [
           checkedApp.fix && `${REFERENCE_APP.fixLabel}: ${checkedApp.fix}`,
@@ -142,7 +155,20 @@ function renderAdversary(
 }
 
 /** The steps in order, each with the adversaries it defends, like the HTML. */
-export function renderPrivacyAdvice({
+export function renderPrivacyAdvice(
+  props: Pick<
+    PrivacyAdviceSectionProps,
+    'steps' | 'adversaries' | 'sentiments' | 'waitWindowDays'
+  >,
+) {
+  return joinBlocks([
+    `${ADVICE.intro} ${link(ADVICE.methodologyLink, ADVICE.methodologyHref)}`,
+    renderPrivacyAdviceSteps(props),
+  ])
+}
+
+/** The numbered steps and what no step helps against, without the intro. */
+export function renderPrivacyAdviceSteps({
   steps,
   adversaries,
   sentiments,
@@ -153,7 +179,6 @@ export function renderPrivacyAdvice({
 >) {
   const uncovered = getUncoveredAdversaries(steps, adversaries, sentiments)
   return joinBlocks([
-    `${ADVICE.intro} ${link(ADVICE.methodologyLink, ADVICE.methodologyHref)}`,
     numberedList(
       steps.map((step) => {
         const against = getStepAdversaries(step, adversaries).map((adversary) =>

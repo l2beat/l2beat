@@ -239,6 +239,12 @@ const PAGE_SECTIONS: LinkListSection[] = [
           'Reviews and comparison of privacy protocols on Ethereum and its layer 2s: what each one hides, anonymity set sizes and trust assumptions.',
       },
       {
+        name: 'How to stay private',
+        path: '/privacy/stay-private.md',
+        description:
+          "Privacy protocols grouped by what a user wants to do, with our rating against each adversary, the tools each needs and each one's advised steps in order.",
+      },
+      {
         name: 'Archived protocols',
         path: staticPagePath('/privacy/archived'),
         description:

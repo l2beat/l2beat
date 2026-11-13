@@ -72,6 +72,9 @@ export const pageLoaders = {
   PrivacyArchivedPage: async () =>
     (await import('./privacy/archived/PrivacyArchivedPage'))
       .PrivacyArchivedPage,
+  PrivacyStayPrivatePage: async () =>
+    (await import('./privacy/stay-private/PrivacyStayPrivatePage'))
+      .PrivacyStayPrivatePage,
   PrivacyProjectPage: async () =>
     (await import('./privacy/project/PrivacyProjectPage')).PrivacyProjectPage,
   TokensPage: async () => (await import('./tokens/TokensPage')).TokensPage,

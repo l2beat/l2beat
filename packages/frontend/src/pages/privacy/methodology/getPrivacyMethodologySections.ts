@@ -2,7 +2,12 @@ import {
   PRIVACY_ADVERSARIES,
   PRIVACY_ADVERSARY_ORDER,
 } from '@l2beat/config/build/common/privacyAdversaries'
+import {
+  PRIVACY_TOOLS,
+  type PrivacyTool,
+} from '@l2beat/config/build/common/privacyTools'
 import lowerFirst from 'lodash/lowerFirst'
+import upperFirst from 'lodash/upperFirst'
 import { externalLinks } from '~/consts/externalLinks'
 import { ANONYMITY_SET_TOOLTIPS } from '~/server/features/privacy/anonymity-set/anonymitySetTooltips'
 import { ANONYMITY_SET_WINDOW_DAYS } from '~/server/features/privacy/anonymity-set/calculateAnonymitySets'
@@ -15,11 +20,13 @@ import {
 import { TRUSTED_SETUP_FRAMEWORK_LINK } from '~/server/markdown/zkSectionBodies'
 import { PRIVACY_ADVERSARY_VERDICT as VERDICT } from '../adversaries/privacyAdversaryUi'
 import { PRIVACY_COLUMN_DESCRIPTIONS as COLUMNS } from '../privacySummaryColumns'
+import { DELIVERY } from '../referenceAppUi'
 import {
   PRIVACY_ADVICE_ANCHOR,
   PRIVACY_ADVICE_TITLE,
   PRIVACY_IP_HIDING_ROUTES_ANCHOR,
   PRIVACY_REFERENCE_APP_ANCHOR,
+  PRIVACY_ROUTES_ANCHOR,
 } from './paths'
 import { FRAMEWORK_ADVERSARY_TEXT } from './privacyFrameworkText'
 
@@ -77,13 +84,8 @@ export function getPrivacyMethodologySections() {
         'One operator or hosting company holds both the entry and the exit of at most 1% of connections, at every location we test.',
         "Its client's source and node list are public.",
       ]),
-      'A route is decentralised when any two operators or hosting companies together hold the entry and the exit of at most 10% of connections. All routes below are, listed by the effort they take, each with its official download. Our steps name the lightest one that works with the app. Use Tor Browser for a website, and a route that carries all traffic for a native app.',
-      bulletList([
-        '**[Tor Browser](https://www.torproject.org/download/)**: a free install. Websites, each site on its own circuit.',
-        '**[NymVPN](https://nym.com/download) with the Random profile**: a paid install. All traffic on desktop and mobile, UDP included. Its exits accept only listed ports. Its default and mixnet profiles pick gateways near the user, which fails the second check in some regions. It sends network statistics under a persistent id until Anonymous network stats is turned off in its settings.',
-        "**[Orbot](https://orbot.app/en/download/)'s VPN mode**: a free install on Android. All traffic through Tor, which carries no UDP.",
-        '**[Tails](https://tails.net/install/) or [Whonix](https://www.whonix.org/wiki/Download)**: a second operating system. All traffic through Tor. A local node must be reachable from inside it. [Qubes OS](https://www.qubes-os.org/downloads/) ships Whonix.',
-      ]),
+      'A route is decentralised when any two operators or hosting companies together hold the entry and the exit of at most 10% of connections.',
+      `The routes that pass are listed under [Routes](#${PRIVACY_ROUTES_ANCHOR}).`,
     ]),
 
     // A raw heading, since markdown headings render without an id to link.
@@ -104,15 +106,34 @@ export function getPrivacyMethodologySections() {
       heading(3, 'Wallet in Tor Browser'),
       "Tor Browser ships no wallet. A wallet extension installed in it, like MetaMask, sends all its traffic through Tor and keeps its accounts across restarts. Every site can see that a wallet is installed, which sets this browser apart from other Tor Browsers. Keep only the account a step needs in it, since the wallet's servers see every account it holds. A phone wallet joined through WalletConnect is the alternative, but it shows the phone's IP to the WalletConnect relay and to the wallet's own RPC, unless the phone runs a route too.",
       heading(3, 'Own node'),
-      "An app that reads the chain through a hosted service tells it which addresses or notes you hold. A local Ethereum node answers those reads without a third party. A transaction it sends shows its IP to the node's peers, so send transactions through an IP-hiding route, or run the node behind one. Set the node as the endpoint in the app, and in the depositing wallet if advised.",
+      `An app that reads the chain through a hosted service tells it which addresses or notes you hold. A local [Ethereum node](#${PRIVACY_TOOLS.ethereumNode.anchor}) answers those reads without a third party. A transaction it sends shows its IP to the node's peers, so send transactions through an IP-hiding route, or run the node behind one. Set the node as the endpoint in the app, and in the depositing wallet if advised.`,
       heading(3, 'App delivery'),
-      `A hosted website can serve different code at any time, to you alone. An onchain name, like an ENS record, serves whatever its owner or governance points it to. Load the [reviewed release](#${PRIVACY_REFERENCE_APP_ANCHOR}) by the hash or contract address the steps name. For an IPFS hash, use your own IPFS node, since a public gateway can serve other code. [IPFS Desktop](https://docs.ipfs.tech/install/ipfs-desktop/), an IPFS node in one install, serves it at http://localhost:8080/ipfs/ followed by the hash. Where the build reproduces, building it from the reviewed source we point at gives the same release without IPFS.`,
+      `A hosted website can serve different code at any time, to you alone. An onchain name, like an ENS record, serves whatever its owner or governance points it to. Load the [reviewed release](#${PRIVACY_REFERENCE_APP_ANCHOR}) by the hash or contract address the steps name. For an IPFS hash, use your own IPFS node, since a public gateway can serve other code. [IPFS Desktop](#${PRIVACY_TOOLS.ipfsDesktop.anchor}) serves it at http://localhost:8080/ipfs/ followed by the hash. Where the build reproduces, building it from the reviewed source we point at gives the same release without IPFS.`,
+      // A raw heading, since markdown headings render without an id to link.
+      `<h3 id="${PRIVACY_ROUTES_ANCHOR}">Routes</h3>`,
+      `These routes pass the [IP-hiding route checks](#${PRIVACY_IP_HIDING_ROUTES_ANCHOR}) and are decentralised, listed by the effort they take. Our steps name the lightest one that works with the app. Use Tor Browser for a website, and a route that carries all traffic for a native app.`,
+      toolList('route'),
+      heading(3, 'Tools'),
+      'Our steps link every outside app they name to its entry, here or among the routes above. Each entry has the official download and why we chose the app.',
+      toolList('tool'),
     ]),
 
     referenceApp: joinBlocks([
       // A raw heading, since markdown headings render without an id to link.
       `<h2 id="${PRIVACY_REFERENCE_APP_ANCHOR}">Reference app</h2>`,
       'Each project names a reference app, the most private released app we found for the protocol. The ratings assume this app. Other apps we checked appear below it, each with one sourced finding that shows it leaks more.',
+      'Each reference app shows how its code reaches the user and what the user can check, most checkable first.',
+      bulletList(
+        Object.values(DELIVERY.kinds).map(
+          (kind) => `**${kind.label}**: ${kind.description}`,
+        ),
+      ),
+      'It also shows whether the app comes from public source.',
+      bulletList(
+        Object.values(DELIVERY.sources).map(
+          (source) => `**${upperFirst(source.label)}**: ${source.description}`,
+        ),
+      ),
       `App teams can propose their app in the ${link('Privacy adversaries framework', externalLinks.articles.privacyAdversariesFramework)} thread on the ETHBEAT forum.`,
     ]),
 
@@ -134,4 +155,20 @@ export function getPrivacyMethodologySections() {
       `Feedback on the framework is welcome in the ${link('Privacy adversaries framework', externalLinks.articles.privacyAdversariesFramework)} thread on the ETHBEAT forum.`,
     ]),
   }
+}
+
+/**
+ * The registry's entries of one kind, each under the anchor steps link. The
+ * anchor is a raw span, since markdown list items render without an id.
+ */
+function toolList(kind: PrivacyTool['kind']) {
+  const tools: PrivacyTool[] = Object.values(PRIVACY_TOOLS)
+  return bulletList(
+    tools
+      .filter((tool) => tool.kind === kind)
+      .map(
+        (tool) =>
+          `<span id="${tool.anchor}"></span>**${tool.head}**: ${tool.text}`,
+      ),
+  )
 }

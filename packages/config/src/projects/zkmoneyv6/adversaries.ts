@@ -1,7 +1,7 @@
 import {
   ADVICE_SNIPPETS as A,
-  adviceLink,
   definePrivacyAdversaries,
+  toolLink,
 } from '../../common/privacyAdversaries'
 import type { PrivacyExposureMap } from '../../types'
 
@@ -207,13 +207,13 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
   advice: [
     {
       name: 'Set up',
-      text: `Set your own Ethereum node as the L1 endpoint. Send all traffic through NymVPN with the Random profile, an ${adviceLink('IP-hiding route', 'ipHidingRoutes')} that carries UDP, under which contacts and payment requests fail. A system on Tor with UDP blocked, like Whonix, keeps them but must reach your node.`,
+      text: `Set your own ${toolLink('ethereumNode')} as the L1 endpoint. Send all traffic through ${toolLink('nymVpn')} with the Random profile, an IP-hiding route that carries UDP, under which contacts and payment requests fail. A system on Tor with UDP blocked, like ${toolLink('torSystems', 'Whonix')}, keeps them but must reach your node.`,
       against: ['networkObserver', 'privilegedInsider'],
       outside: true,
     },
     {
       name: 'Run a node',
-      text: 'Set your own Aztec node in the endpoint settings.',
+      text: `Set your own ${toolLink('aztecNode')} in the endpoint settings.`,
       against: ['privilegedInsider'],
       outside: true,
     },
