@@ -57,7 +57,7 @@ function getTvsColumns<T extends CommonL2Entry & { tvs: TvsData }>(
         align: 'right' as const,
         cellClassName: 'pl-3',
         tooltip:
-          'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens, shown together with a percentage change compared to 7D ago.',
+          'Value secured is the sum of canonically bridged tokens, externally bridged tokens, and native tokens.',
       },
     }),
     (row) => ({
@@ -69,7 +69,7 @@ function getTvsColumns<T extends CommonL2Entry & { tvs: TvsData }>(
 
 // The cell link is `w-max`, so it must be released for the text to wrap.
 const WRAP_ON_DESKTOP =
-  'lg:whitespace-normal lg:min-w-[140px] lg:max-w-[150px] lg:[&_a]:w-auto'
+  'lg:whitespace-normal lg:min-w-[150px] lg:max-w-[150px] lg:[&_a]:w-auto'
 
 const validityColumnHelper =
   createColumnHelper<L2RiskStateValidationValidityEntry>()
