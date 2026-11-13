@@ -1,3 +1,4 @@
+import type { WarningWithSentiment } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import { ChartDataSourceInfo } from '~/components/chart/ChartDataSourceInfo'
 import { TvsChartRangeControls } from '~/components/chart/tvs/TvsChartRangeControls'
@@ -7,6 +8,7 @@ import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapp
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
+import { sentimentToWarningBarColor, WarningBar } from '~/components/WarningBar'
 import { useTRPC } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
 import type { ChartRange } from '~/utils/range/range'
@@ -22,12 +24,15 @@ export interface DefiTvlSectionProps extends ProjectSectionProps {
     url?: string
     scope?: string
   }
+  /** What the number leaves out or overcounts, shown above the chart. */
+  warnings: WarningWithSentiment[]
 }
 
 export function DefiTvlSection({
   defaultRange,
   project,
   dataSource,
+  warnings,
   ...projectSectionProps
 }: DefiTvlSectionProps) {
   const trpc = useTRPC()
@@ -58,6 +63,14 @@ export function DefiTvlSection({
 
   return (
     <ProjectSection {...projectSectionProps}>
+      {warnings.map((warning) => (
+        <WarningBar
+          key={warning.value}
+          text={warning.value}
+          color={sentimentToWarningBarColor(warning.sentiment)}
+          className="mb-3"
+        />
+      ))}
       {dataSource && (
         <div className="mb-3">
           <ChartDataSourceInfo
