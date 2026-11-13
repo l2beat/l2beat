@@ -2,6 +2,10 @@ import { type InteropBridgeType, UnixTime } from '@l2beat/shared-pure'
 import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { AggregatedInteropToken } from '../kysely/generated/types'
+import {
+  type AggregatedInteropHistoryFilter,
+  isEmptyFilter,
+} from './AggregatedInteropHistoryFilter'
 import type { InteropTransferTypeStatsMap } from './InteropTransferTypeStats'
 
 export interface AggregatedInteropTokenRecord {
@@ -21,6 +25,49 @@ export interface AggregatedInteropTokenRecord {
   mintedValueUsd: number | undefined
   burnedValueUsd: number | undefined
 }
+
+export interface AggregatedInteropProtocolVolumeRecord {
+  timestamp: UnixTime
+  id: string
+  volume: number
+}
+
+export interface AggregatedInteropChainVolumeRecord {
+  timestamp: UnixTime
+  chain: string
+  inflow: number
+  outflow: number
+}
+
+export interface AggregatedInteropLaneVolumeRecord {
+  timestamp: UnixTime
+  id: string
+  bridgeType: InteropBridgeType
+  srcChain: string
+  dstChain: string
+  volume: number
+}
+
+export interface AggregatedInteropLaneCandidateRecord
+  extends AggregatedInteropLaneVolumeRecord {
+  /** The token with the most volume on the lane. */
+  topAbstractTokenId: string
+}
+
+export interface AggregatedInteropTokenVolumeRecord {
+  timestamp: UnixTime
+  id: string
+  abstractTokenId: string
+  volume: number
+}
+
+export interface AggregatedInteropTokenLaneVolumeRecord
+  extends AggregatedInteropLaneVolumeRecord {
+  abstractTokenId: string
+}
+
+// `volume` is a real, and a sum of reals keeps only ~7 significant digits.
+const volumeSum = sql<number>`sum("volume"::double precision)`
 
 export function toRecord(
   row: Selectable<AggregatedInteropToken>,
@@ -249,5 +296,221 @@ export class AggregatedInteropTokenRepository extends BaseRepository {
       .execute()
 
     return rows.map(toRecord)
+  }
+
+  async getHistoryVolumeByProtocol(
+    filter: AggregatedInteropHistoryFilter,
+  ): Promise<AggregatedInteropProtocolVolumeRecord[]> {
+    if (isEmptyFilter(filter)) return []
+
+    const rows = await this.selectHistory(filter)
+      .select(['timestamp', 'id', volumeSum.as('volume')])
+      .groupBy(['timestamp', 'id'])
+      .execute()
+
+    return rows.map((row) => ({
+      timestamp: UnixTime.fromDate(row.timestamp),
+      id: row.id,
+      volume: Number(row.volume),
+    }))
+  }
+
+  async getHistoryVolumeByChain(
+    filter: AggregatedInteropHistoryFilter,
+  ): Promise<AggregatedInteropChainVolumeRecord[]> {
+    if (isEmptyFilter(filter)) return []
+
+    const [inflows, outflows] = await Promise.all([
+      this.selectHistory(filter)
+        .select(['timestamp', 'dstChain as chain', volumeSum.as('volume')])
+        .groupBy(['timestamp', 'dstChain'])
+        .execute(),
+      this.selectHistory(filter)
+        .select(['timestamp', 'srcChain as chain', volumeSum.as('volume')])
+        .groupBy(['timestamp', 'srcChain'])
+        .execute(),
+    ])
+
+    const records = new Map<string, AggregatedInteropChainVolumeRecord>()
+    const get = (timestamp: Date, chain: string) => {
+      const key = `${timestamp.getTime()}:${chain}`
+      let record = records.get(key)
+      if (!record) {
+        record = {
+          timestamp: UnixTime.fromDate(timestamp),
+          chain,
+          inflow: 0,
+          outflow: 0,
+        }
+        records.set(key, record)
+      }
+      return record
+    }
+    for (const row of inflows) {
+      get(row.timestamp, row.chain).inflow = Number(row.volume)
+    }
+    for (const row of outflows) {
+      get(row.timestamp, row.chain).outflow = Number(row.volume)
+    }
+    return [...records.values()]
+  }
+
+  /** Lanes of any chains whose volume in a snapshot is above `minVolume`. */
+  async getHistoryLanesAbove(
+    timestamps: UnixTime[],
+    minVolume: number,
+  ): Promise<AggregatedInteropLaneCandidateRecord[]> {
+    if (timestamps.length === 0) return []
+
+    const rows = await this.db
+      .selectFrom('AggregatedInteropToken')
+      .select([
+        'timestamp',
+        'id',
+        'bridgeType',
+        'srcChain',
+        'dstChain',
+        volumeSum.as('volume'),
+        sql<string>`(array_agg("abstractTokenId" order by "volume" desc))[1]`.as(
+          'top_token',
+        ),
+      ])
+      .where('timestamp', 'in', timestamps.map(UnixTime.toDate))
+      .whereRef('srcChain', '!=', 'dstChain')
+      .groupBy(['timestamp', 'id', 'bridgeType', 'srcChain', 'dstChain'])
+      .having(volumeSum, '>', minVolume)
+      .execute()
+
+    return rows.map((row) => ({
+      timestamp: UnixTime.fromDate(row.timestamp),
+      id: row.id,
+      bridgeType: row.bridgeType as InteropBridgeType,
+      srcChain: row.srcChain,
+      dstChain: row.dstChain,
+      volume: Number(row.volume),
+      topAbstractTokenId: row.top_token,
+    }))
+  }
+
+  /** A protocol's volume of a token, over all lanes, above `minVolume`. */
+  async getHistoryTokensAbove(
+    timestamps: UnixTime[],
+    minVolume: number,
+  ): Promise<AggregatedInteropTokenVolumeRecord[]> {
+    if (timestamps.length === 0) return []
+
+    const rows = await this.db
+      .selectFrom('AggregatedInteropToken')
+      .select(['timestamp', 'id', 'abstractTokenId', volumeSum.as('volume')])
+      .where('timestamp', 'in', timestamps.map(UnixTime.toDate))
+      .whereRef('srcChain', '!=', 'dstChain')
+      .groupBy(['timestamp', 'id', 'abstractTokenId'])
+      .having(volumeSum, '>', minVolume)
+      .execute()
+
+    return rows.map(toTokenVolumeRecord)
+  }
+
+  async getHistoryTokenSeries(
+    timestamps: UnixTime[],
+    pairs: { id: string; abstractTokenId: string }[],
+  ): Promise<AggregatedInteropTokenVolumeRecord[]> {
+    if (timestamps.length === 0 || pairs.length === 0) return []
+
+    const rows = await this.db
+      .selectFrom('AggregatedInteropToken')
+      .select(['timestamp', 'id', 'abstractTokenId', volumeSum.as('volume')])
+      .where('timestamp', 'in', timestamps.map(UnixTime.toDate))
+      .whereRef('srcChain', '!=', 'dstChain')
+      .where((eb) =>
+        eb.or(
+          pairs.map((pair) =>
+            eb.and([
+              eb('id', '=', pair.id),
+              eb('abstractTokenId', '=', pair.abstractTokenId),
+            ]),
+          ),
+        ),
+      )
+      .groupBy(['timestamp', 'id', 'abstractTokenId'])
+      .execute()
+
+    return rows.map(toTokenVolumeRecord)
+  }
+
+  async getHistoryTokenLanes(
+    keys: { timestamp: UnixTime; id: string; abstractTokenId: string }[],
+  ): Promise<AggregatedInteropTokenLaneVolumeRecord[]> {
+    if (keys.length === 0) return []
+
+    const rows = await this.db
+      .selectFrom('AggregatedInteropToken')
+      .select([
+        'timestamp',
+        'id',
+        'bridgeType',
+        'srcChain',
+        'dstChain',
+        'abstractTokenId',
+        volumeSum.as('volume'),
+      ])
+      .whereRef('srcChain', '!=', 'dstChain')
+      .where((eb) =>
+        eb.or(
+          keys.map((key) =>
+            eb.and([
+              eb('timestamp', '=', UnixTime.toDate(key.timestamp)),
+              eb('id', '=', key.id),
+              eb('abstractTokenId', '=', key.abstractTokenId),
+            ]),
+          ),
+        ),
+      )
+      .groupBy([
+        'timestamp',
+        'id',
+        'bridgeType',
+        'srcChain',
+        'dstChain',
+        'abstractTokenId',
+      ])
+      .execute()
+
+    return rows.map((row) => ({
+      timestamp: UnixTime.fromDate(row.timestamp),
+      id: row.id,
+      bridgeType: row.bridgeType as InteropBridgeType,
+      srcChain: row.srcChain,
+      dstChain: row.dstChain,
+      abstractTokenId: row.abstractTokenId,
+      volume: Number(row.volume),
+    }))
+  }
+
+  private selectHistory(filter: AggregatedInteropHistoryFilter) {
+    let query = this.db
+      .selectFrom('AggregatedInteropToken')
+      .where('timestamp', 'in', filter.timestamps.map(UnixTime.toDate))
+      .where('srcChain', 'in', filter.sourceChains)
+      .where('dstChain', 'in', filter.destinationChains)
+      .whereRef('srcChain', '!=', 'dstChain')
+    if (filter.protocolIds) {
+      query = query.where('id', 'in', filter.protocolIds)
+    }
+    return query
+  }
+}
+
+function toTokenVolumeRecord(row: {
+  timestamp: Date
+  id: string
+  abstractTokenId: string
+  volume: number
+}): AggregatedInteropTokenVolumeRecord {
+  return {
+    timestamp: UnixTime.fromDate(row.timestamp),
+    id: row.id,
+    abstractTokenId: row.abstractTokenId,
+    volume: Number(row.volume),
   }
 }

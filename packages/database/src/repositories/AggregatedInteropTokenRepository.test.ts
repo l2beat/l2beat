@@ -1008,6 +1008,195 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
       }
     },
   )
+
+  describe('history', () => {
+    const t1 = UnixTime(100)
+    const t2 = UnixTime(200)
+    const filter = {
+      timestamps: [t1, t2],
+      sourceChains: ['ethereum', 'arbitrum'],
+      destinationChains: ['ethereum', 'arbitrum', 'base'],
+    }
+
+    beforeEach(async () => {
+      await repository.insertMany([
+        record({
+          id: 'p1',
+          timestamp: t1,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          abstractTokenId: 'USDC',
+          volume: 100,
+        }),
+        record({
+          id: 'p1',
+          timestamp: t1,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          abstractTokenId: 'ETH',
+          volume: 50,
+        }),
+        record({
+          id: 'p1',
+          timestamp: t1,
+          srcChain: 'arbitrum',
+          dstChain: 'base',
+          abstractTokenId: 'USDC',
+          volume: 30,
+        }),
+        record({
+          id: 'p2',
+          timestamp: t1,
+          srcChain: 'ethereum',
+          dstChain: 'base',
+          abstractTokenId: 'USDC',
+          volume: 7,
+        }),
+        // Leaves the selection: a source chain outside it, a same-chain lane, another snapshot.
+        record({
+          id: 'p1',
+          timestamp: t1,
+          srcChain: 'base',
+          dstChain: 'ethereum',
+          abstractTokenId: 'USDC',
+          volume: 1000,
+        }),
+        record({
+          id: 'p1',
+          timestamp: t1,
+          srcChain: 'ethereum',
+          dstChain: 'ethereum',
+          abstractTokenId: 'USDC',
+          volume: 1000,
+        }),
+        record({
+          id: 'p1',
+          timestamp: UnixTime(300),
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          abstractTokenId: 'USDC',
+          volume: 1000,
+        }),
+        record({
+          id: 'p1',
+          timestamp: t2,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          abstractTokenId: 'USDC',
+          volume: 5,
+        }),
+      ])
+    })
+
+    it(
+      AggregatedInteropTokenRepository.prototype.getHistoryVolumeByProtocol
+        .name,
+      async () => {
+        const result = await repository.getHistoryVolumeByProtocol(filter)
+
+        expect(sortBy(result, (r) => `${r.timestamp}${r.id}`)).toEqual([
+          { timestamp: t1, id: 'p1', volume: 180 },
+          { timestamp: t1, id: 'p2', volume: 7 },
+          { timestamp: t2, id: 'p1', volume: 5 },
+        ])
+        expect(
+          await repository.getHistoryVolumeByProtocol({
+            ...filter,
+            protocolIds: ['p2'],
+          }),
+        ).toEqual([{ timestamp: t1, id: 'p2', volume: 7 }])
+      },
+    )
+
+    it(
+      AggregatedInteropTokenRepository.prototype.getHistoryVolumeByChain.name,
+      async () => {
+        const result = await repository.getHistoryVolumeByChain({
+          ...filter,
+          timestamps: [t1],
+        })
+
+        expect(sortBy(result, (r) => r.chain)).toEqual([
+          { timestamp: t1, chain: 'arbitrum', inflow: 150, outflow: 30 },
+          { timestamp: t1, chain: 'base', inflow: 37, outflow: 0 },
+          { timestamp: t1, chain: 'ethereum', inflow: 0, outflow: 157 },
+        ])
+      },
+    )
+
+    it(
+      AggregatedInteropTokenRepository.prototype.getHistoryLanesAbove.name,
+      async () => {
+        const result = await repository.getHistoryLanesAbove([t1, t2], 100)
+
+        expect(sortBy(result, (r) => r.srcChain)).toEqual([
+          {
+            timestamp: t1,
+            id: 'p1',
+            bridgeType: 'unknown',
+            srcChain: 'base',
+            dstChain: 'ethereum',
+            volume: 1000,
+            topAbstractTokenId: 'USDC',
+          },
+          {
+            timestamp: t1,
+            id: 'p1',
+            bridgeType: 'unknown',
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            volume: 150,
+            topAbstractTokenId: 'USDC',
+          },
+        ])
+      },
+    )
+
+    it(
+      AggregatedInteropTokenRepository.prototype.getHistoryTokensAbove.name,
+      async () => {
+        expect(await repository.getHistoryTokensAbove([t1], 1000)).toEqual([
+          { timestamp: t1, id: 'p1', abstractTokenId: 'USDC', volume: 1130 },
+        ])
+      },
+    )
+
+    it(
+      AggregatedInteropTokenRepository.prototype.getHistoryTokenSeries.name,
+      async () => {
+        const result = await repository.getHistoryTokenSeries(
+          [t1, t2],
+          [{ id: 'p1', abstractTokenId: 'USDC' }],
+        )
+
+        expect(sortBy(result, (r) => String(r.timestamp))).toEqual([
+          { timestamp: t1, id: 'p1', abstractTokenId: 'USDC', volume: 1130 },
+          { timestamp: t2, id: 'p1', abstractTokenId: 'USDC', volume: 5 },
+        ])
+      },
+    )
+
+    it(
+      AggregatedInteropTokenRepository.prototype.getHistoryTokenLanes.name,
+      async () => {
+        const result = await repository.getHistoryTokenLanes([
+          { timestamp: t1, id: 'p2', abstractTokenId: 'USDC' },
+        ])
+
+        expect(result).toEqual([
+          {
+            timestamp: t1,
+            id: 'p2',
+            bridgeType: 'unknown',
+            srcChain: 'ethereum',
+            dstChain: 'base',
+            abstractTokenId: 'USDC',
+            volume: 7,
+          },
+        ])
+      },
+    )
+  })
 })
 
 function record({
@@ -1060,4 +1249,8 @@ function record({
     mintedValueUsd,
     burnedValueUsd,
   }
+}
+
+function sortBy<T>(items: T[], key: (item: T) => string): T[] {
+  return [...items].sort((a, b) => key(a).localeCompare(key(b)))
 }

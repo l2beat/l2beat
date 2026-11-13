@@ -104,6 +104,16 @@ export const searchBarPages = withIndex([
     tags: ['pages', 'interop', 'interoperability', 'intent-bridges'],
     href: '/interop/intent-bridges',
   },
+  ...(env.CLIENT_SIDE_INTEROP_HISTORY_ENABLED
+    ? [
+        {
+          category: 'interop' as const,
+          name: 'Interop history',
+          tags: ['pages', 'interop', 'interoperability', 'history'],
+          href: '/interop/history',
+        },
+      ]
+    : []),
   ...(env.CLIENT_SIDE_TOKENS_PAGE
     ? [
         {

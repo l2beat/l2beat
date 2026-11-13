@@ -191,6 +191,9 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
           title: 'Intent bridges',
           href: '/interop/intent-bridges',
         },
+        ...(env.CLIENT_SIDE_INTEROP_HISTORY_ENABLED
+          ? [{ title: 'History', href: '/interop/history' }]
+          : []),
       ],
     ],
   },
