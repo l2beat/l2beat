@@ -2,8 +2,6 @@ import {
   areaY,
   type ChartCurve,
   type ChartMark,
-  type ChartTextMeasurer,
-  type ChartTextTypography,
   createMark,
   defineChart,
   dot,
@@ -30,7 +28,7 @@ import {
   type Plotted,
   plotRows,
 } from './utils/plotSeries'
-import { estimateLabelWidth, fitXTicks, getTimeTicks } from './utils/xAxisTicks'
+import { fitXTicks, getTimeTicks } from './utils/xAxisTicks'
 import {
   fitTicks,
   getYAxisTicks,
@@ -703,22 +701,16 @@ interface YTickLabels {
   getAxis: () => ChartYAxis
 }
 
-/** Chip padding around a y label, and its corner radius. */
-const CHIP_PADDING_X = 4
-const CHIP_PADDING_Y = 1
-const CHIP_RADIUS = 2
-
 /**
- * Y tick labels inside the plot, 8px in from its edge. Each sits on a chip of
- * the card's surface colour and is drawn over the series, so fills and lines
- * don't cover it.
+ * Y tick labels inside the plot, 8px in from its edge, drawn over the series
+ * so fills don't hide them. Plain text: no chip, halo or background behind
+ * axis labels (owner ruling).
  */
 function yTickLabels(axes: YTickLabels[]) {
   return createMark<never, number, number, 'x', string>(() => ({
     id: 'y-tick-labels',
     channels: {},
-    render: ({ chart, scales, layout }) => {
-      const chips: SceneNode[] = []
+    render: ({ chart, scales }) => {
       const labels: SceneNode[] = []
       for (const { scale, side, ticks, getAxis } of axes) {
         const y = scales[scale]
@@ -739,23 +731,6 @@ function yTickLabels(axes: YTickLabels[]) {
         for (const value of ticks) {
           const label = `${format ? format(value) : value}${unit}`
           const labelY = y.map(value) + dy
-          const width = measureLabel(
-            label,
-            { fontSize, fontWeight, anchor },
-            layout.measureText,
-            layout.typography,
-          )
-          const height = fontSize + 2 * CHIP_PADDING_Y
-          chips.push({
-            kind: 'rect',
-            key: `${prefix}-chip:${value}`,
-            x: (side === 'left' ? x : x - width) - CHIP_PADDING_X,
-            y: labelY - height / 2,
-            width: width + 2 * CHIP_PADDING_X,
-            height,
-            radius: CHIP_RADIUS,
-            style: { fill: 'var(--surface-primary)' },
-          })
           labels.push({
             kind: 'label',
             key: `${prefix}-label:${value}`,
@@ -770,31 +745,9 @@ function yTickLabels(axes: YTickLabels[]) {
           })
         }
       }
-      // All chips first, so no chip covers a neighbouring label.
-      return { nodes: [...chips, ...labels] }
+      return { nodes: labels }
     },
   }))
-}
-
-/** The label's width, measured in the browser and estimated on the server. */
-function measureLabel(
-  label: string,
-  style: { fontSize: number; fontWeight: number; anchor: 'start' | 'end' },
-  measureText: ChartTextMeasurer | undefined,
-  typography: ChartTextTypography = {},
-) {
-  if (!measureText) return estimateLabelWidth(label, style.fontSize)
-  return measureText(label, {
-    ...style,
-    fontFamily: typography.fontFamily ?? 'sans-serif',
-    fontStyle: typography.fontStyle ?? 'normal',
-    fontStretch: typography.fontStretch ?? 'normal',
-    letterSpacing: typography.letterSpacing ?? 0,
-    direction: typography.direction ?? 'inherit',
-    locale: typography.locale,
-    fontScale: typography.fontScale ?? 1,
-    baseline: 'middle',
-  }).width
 }
 
 const EMPTY: never[] = []
