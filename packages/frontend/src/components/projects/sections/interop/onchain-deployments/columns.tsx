@@ -7,7 +7,10 @@ import {
 import { createColumnHelper } from '@tanstack/react-table'
 import { CopyButton } from '~/components/CopyButton'
 import { CustomLink } from '~/components/link/CustomLink'
-import { ProjectIconList } from '~/components/ProjectIconList'
+import {
+  iconBackdropClasses,
+  ProjectIconList,
+} from '~/components/ProjectIconList'
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { IndexCell } from '~/components/table/cells/IndexCell'
 import { InteropNoDataBadge } from '~/pages/interop/components/InteropNoDataBadge'
@@ -43,7 +46,7 @@ export const interopTokenOnchainDeploymentsColumns = [
         <div className="flex w-max items-center gap-2 whitespace-nowrap font-bold">
           {chain.iconUrl && (
             <img
-              className="size-5 rounded-full bg-white shadow"
+              className={`size-5 rounded-full ${iconBackdropClasses}`}
               src={chain.iconUrl}
               width={20}
               height={20}

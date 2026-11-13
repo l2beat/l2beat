@@ -4,7 +4,6 @@ import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { CustomLink } from '~/components/link/CustomLink'
 import { Markdown } from '~/components/markdown/Markdown'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
-import { TechStackTag } from '~/pages/zk-catalog/v2/components/TechStackTag'
 import {
   VERIFIER_ID_DEFAULT_DESCRIPTION,
   VERIFIERS_SECTION_INTRO,
@@ -58,12 +57,11 @@ export function VerifiersSection({
         <div key={proofSystem.id + proofSystem.type}>
           {isZkCatalog && (
             <>
-              <TechStackTag
-                className="mb-2 w-fit"
-                tag={proofSystem}
-                displayType="typeAndName"
-              />
-              <p className="text-paragraph-14 text-secondary">
+              {/* Each proof system heads its table, like "Program hashes". */}
+              <h3 className="font-semibold text-heading-16 leading-6 md:text-heading-18">
+                {proofSystem.type}: {proofSystem.name}
+              </h3>
+              <p className="mt-1 text-paragraph-14 text-secondary">
                 {proofSystem.description ?? VERIFIER_ID_DEFAULT_DESCRIPTION}
               </p>
             </>
@@ -99,7 +97,7 @@ export function VerifierRowDetails({
           </div>
         )}
         <div className="flex min-w-0 items-start gap-1">
-          <span className="shrink-0 font-medium text-label-value-14 text-secondary">
+          <span className="shrink-0 font-medium text-label-value-14 text-primary">
             Verifier ID:
           </span>
           <code className="wrap-anywhere min-w-0 text-label-value-14">
@@ -108,7 +106,7 @@ export function VerifierRowDetails({
         </div>
         {verifierHash.sourceLink && (
           <div className="flex min-w-0 items-start gap-1">
-            <span className="shrink-0 font-medium text-label-value-14 text-secondary">
+            <span className="shrink-0 font-medium text-label-value-14 text-primary">
               Source:
             </span>
             <CustomLink

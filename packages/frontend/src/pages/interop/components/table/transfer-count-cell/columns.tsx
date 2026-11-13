@@ -20,13 +20,22 @@ export type TransferRow = InteropProtocolTransferDetailsItem & BasicTableRow
 
 const columnHelper = createColumnHelper<TransferRow>()
 
-export function getTransferColumns(selectedChains?: InteropSelection) {
-  return [
+export function getTransferColumns(
+  selectedChains?: InteropSelection,
+  {
+    hideBridge = false,
+  }: {
+    /** A single protocol's page: every row would name the same bridge. */
+    hideBridge?: boolean
+  } = {},
+) {
+  const columns = [
     columnHelper.accessor('timestamp', {
       header: 'Timestamp',
       enableSorting: false,
       cell: (ctx) => (
-        <span className="font-medium text-label-value-14 text-primary">
+        // When it happened is meta: the amounts and chains are the row.
+        <span className="font-normal text-label-value-13 text-secondary tabular-nums">
           <UtcDateTime timestamp={ctx.row.original.timestamp} />
         </span>
       ),
@@ -174,6 +183,9 @@ export function getTransferColumns(selectedChains?: InteropSelection) {
       },
     }),
   ]
+  return hideBridge
+    ? columns.filter((column) => column.id !== 'bridge')
+    : columns
 }
 
 function TokenAmount({

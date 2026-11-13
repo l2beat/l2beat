@@ -180,7 +180,7 @@ export async function getDefiProjectEntry(
       type: 'DefiTvlSection',
       props: {
         id: 'tvs',
-        title: 'Value Locked',
+        title: 'Value locked',
         defaultRange: defaultChartRange,
         project: {
           id: project.id,

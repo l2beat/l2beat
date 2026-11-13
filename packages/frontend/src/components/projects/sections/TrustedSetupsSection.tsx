@@ -56,7 +56,7 @@ export function TrustedSetupSection({
                   />
                 </div>
                 <div className="space-y-2">
-                  <h3 className="font-semibold text-secondary text-subtitle-12 uppercase">
+                  <h3 className="font-semibold text-label-value-14 text-primary">
                     Detailed description
                   </h3>
                   <Markdown className="word-break-word text-paragraph-15 md:text-paragraph-16">

@@ -236,7 +236,7 @@ export function Legend({
   hasUnconnected?: boolean
 }) {
   return (
-    <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-label-value-13 text-secondary">
+    <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-label-value-13 text-primary">
       <span className="flex items-center gap-2">
         <svg width="26" height="8" aria-hidden className="shrink-0">
           <line

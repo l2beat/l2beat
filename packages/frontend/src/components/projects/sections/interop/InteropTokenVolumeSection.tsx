@@ -138,15 +138,8 @@ function Content({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex min-h-5 flex-wrap items-center justify-between gap-x-4 gap-y-2">
+      <div>
         <FlowsChainsSelector allChains={interopChains} />
-        {!isLoading && data && (
-          <FlowsParticleLegend
-            layout="inline"
-            totalVolume={data.stats.totalVolume}
-            dollarsPerParticle={dollarsPerParticle}
-          />
-        )}
       </div>
       <FlowsGraphPanel
         activeChains={activeChains}
@@ -156,19 +149,31 @@ function Content({
         isLoading={isLoading}
         baseDollarsPerParticle={EMBEDDED_FLOWS_DOLLARS_PER_PARTICLE}
       />
+      {!isLoading && data && (
+        <FlowsParticleLegend
+          layout="inline"
+          className="justify-center text-center text-label-value-13 max-lg:order-3"
+          totalVolume={data.stats.totalVolume}
+          dollarsPerParticle={dollarsPerParticle}
+        />
+      )}
       {shouldShowInactiveChainsInfo && (
-        <div className="flex min-h-6 w-full items-center justify-center gap-1 max-lg:order-3">
+        <div className="flex min-h-6 w-full items-center justify-center gap-1.5 max-lg:order-3">
           {isLoading ? (
             <Skeleton className="h-4 w-40 md:h-5" />
           ) : (
             <>
-              <span className="font-normal text-secondary text-xs leading-none md:text-base">
-                No transfers detected for
+              <span className="text-label-value-13 text-secondary">
+                No transfers in the last 24 hours for
+                {inactiveChains.length <= 3 &&
+                  ` ${inactiveChains.map((chain) => chain.name).join(', ')}`}
               </span>
-              <ProjectIconList
-                projects={inactiveChains}
-                title="Chains without transfers"
-              />
+              {inactiveChains.length > 3 && (
+                <ProjectIconList
+                  projects={inactiveChains}
+                  title="Chains without transfers"
+                />
+              )}
             </>
           )}
         </div>

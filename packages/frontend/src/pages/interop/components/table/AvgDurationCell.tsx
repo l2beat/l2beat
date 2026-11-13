@@ -74,7 +74,7 @@ function DurationCellItem({
 }) {
   return (
     <div className={cn('flex items-center gap-1 whitespace-nowrap', className)}>
-      <span className="text-[13px] text-secondary leading-none">
+      <span className="text-label-value-13 text-primary leading-none">
         {split.label}:
       </span>
       {split.duration !== null ? (

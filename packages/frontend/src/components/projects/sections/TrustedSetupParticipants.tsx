@@ -25,7 +25,7 @@ export function TrustedSetupParticipants(
           {summary.phase && (
             <span
               aria-hidden
-              className="flex size-6 shrink-0 items-center justify-center rounded-full bg-surface-tertiary font-bold text-label-12"
+              className="flex size-6 shrink-0 items-center justify-center rounded-full bg-surface-tertiary font-bold text-label-value-12"
             >
               {summary.phase}
             </span>
@@ -35,7 +35,7 @@ export function TrustedSetupParticipants(
               <span className="font-semibold text-paragraph-15">
                 {summary.label}
                 {summary.phase && (
-                  <span className="font-normal text-secondary">
+                  <span className="font-normal">
                     {` · ${PHASE_KINDS[summary.phase]}`}
                   </span>
                 )}
@@ -45,7 +45,9 @@ export function TrustedSetupParticipants(
                   {summary.value}
                 </span>
                 {summary.unit && (
-                  <span className="text-paragraph-14">{summary.unit}</span>
+                  <span className="text-paragraph-14 text-secondary">
+                    {summary.unit}
+                  </span>
                 )}
               </span>
             </div>

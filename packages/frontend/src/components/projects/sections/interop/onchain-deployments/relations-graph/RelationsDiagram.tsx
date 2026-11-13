@@ -244,18 +244,19 @@ export function RelationsDiagram({
       </div>
 
       <div className="absolute bottom-3 left-3 flex flex-col items-start gap-1 text-label-value-12 text-secondary">
-        <p className="hidden rounded-md border border-divider bg-surface-primary px-2 py-1 [@media(pointer:coarse)]:block">
-          {fillsView
-            ? 'Drag to move, pinch to zoom'
-            : 'Use two fingers to move or zoom'}
-        </p>
-        <p className="rounded-md border border-divider bg-surface-primary px-2 py-1 [@media(pointer:coarse)]:hidden">
-          {fillsView
-            ? 'Scroll or drag to move the diagram'
-            : 'Drag to move the diagram, Ctrl + scroll to zoom'}
-        </p>
+        {/* One chip, so the hints cover as few nodes as possible. */}
         <p className="rounded-md border border-divider bg-surface-primary px-2 py-1">
-          Past 24h crosschain volume
+          Past 24h crosschain volume ·{' '}
+          <span className="[@media(pointer:coarse)]:hidden">
+            {fillsView
+              ? 'Scroll or drag to move the diagram'
+              : 'Drag to move, Ctrl + scroll to zoom'}
+          </span>
+          <span className="hidden [@media(pointer:coarse)]:inline">
+            {fillsView
+              ? 'Drag to move, pinch to zoom'
+              : 'Use two fingers to move or zoom'}
+          </span>
         </p>
       </div>
       {/* Drags don't start on the controls, so a touch that wanders off a

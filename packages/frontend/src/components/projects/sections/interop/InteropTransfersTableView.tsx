@@ -72,7 +72,13 @@ export function InteropTransfersTableView({
   const loadedPageCount = Math.max(1, fetchedPageCount)
   const pageCount = loadedPageCount + (hasNextPage ? 1 : 0)
 
-  const columns = useMemo(() => getTransferColumns({ from, to }), [from, to])
+  // A protocol's own page ("project" scope), or one picked protocol.
+  const singleProtocol =
+    scope.type === 'project' || scope.protocolIds.length === 1
+  const columns = useMemo(
+    () => getTransferColumns({ from, to }, { hideBridge: singleProtocol }),
+    [from, to, singleProtocol],
+  )
 
   const [pagination, setPagination] = useState({
     pageIndex: 0,

@@ -380,12 +380,12 @@ function TechStackSection({
 
   return (
     <div className="mt-3 flex flex-col gap-2">
-      <h2 className="font-semibold text-subtitle-12 uppercase">Tech Stack</h2>
+      <h2 className="font-semibold text-label-value-15">Tech stack</h2>
       <div className="flex gap-2 rounded-sm border-divider max-md:flex-col md:items-end md:border md:p-4">
         {leftSideEmpty && rightSideEmpty && <NoDataBadge />}
         {!leftSideEmpty && (
           <div className="flex flex-col">
-            <span className="font-medium text-label-value-12 text-secondary">
+            <span className="font-medium text-label-value-13 text-primary">
               zkVM
             </span>
             <TechStackCell
@@ -399,7 +399,7 @@ function TechStackSection({
         )}
         {!rightSideEmpty && (
           <div className="flex flex-col">
-            <span className="font-medium text-label-value-12 text-secondary">
+            <span className="font-medium text-label-value-13 text-primary">
               Final wrap
             </span>
             <TechStackCell
@@ -426,18 +426,14 @@ function TvsStat({
   return (
     <ProjectSummaryStat
       titleAsChild
-      title={
-        <div className="font-semibold text-subtitle-12">
-          <span className="md:hidden">Total Value Secured</span>
-          <span className="max-md:hidden">TVS</span>
-        </div>
-      }
+      title={<div>Value secured</div>}
       className="w-full md:gap-2"
       value={
         value ? (
           <span className="mb-0.5 flex items-center gap-2">
             <ValueWithPercentageChange
-              className="!text-base !leading-[100%] text-nowrap"
+              containerClassName="flex-nowrap"
+              className="text-nowrap font-semibold text-label-value-20! tabular-nums leading-6!"
               changeClassName="text-label-value-14 font-bold"
               change={change}
               changePeriod={changePeriod}

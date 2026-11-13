@@ -212,7 +212,7 @@ function BreakdownRow({
         {values.map((value) => (
           <div key={value.label} className="flex items-center gap-1">
             <div className={cn('size-3.5 rounded-xs', value.className)} />
-            <span className="font-medium text-label-value-12 text-secondary leading-none">
+            <span className="font-medium text-label-value-12 text-primary leading-none">
               {value.label}
             </span>
           </div>
