@@ -244,8 +244,9 @@ export function ContractEntry({
 }
 
 function EscrowBadge({ isCustom }: { isCustom?: boolean }) {
+  // A category tag like "8 instances", not a status: neutral, not brand pink.
   return (
-    <Badge type="pink" padding="regular" className="text-[13px] leading-none">
+    <Badge type="gray" size="small">
       {isCustom ? 'Custom escrow' : 'Escrow'}
     </Badge>
   )

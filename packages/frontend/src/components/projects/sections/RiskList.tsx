@@ -23,7 +23,7 @@ export function RiskList({ risks }: RiskList) {
             {risk.isCritical ? (
               <>
                 {risk.text.slice(0, -1)}{' '}
-                <strong className="text-negative">(CRITICAL)</strong>
+                <strong className="text-primary">(CRITICAL)</strong>
                 {risk.text.slice(-1)}
               </>
             ) : (

@@ -10,6 +10,7 @@ import { cn } from '~/utils/cn'
 interface StatItem {
   label: string
   value: ReactNode
+  valueClassName?: string
   onClick?: () => void
 }
 
@@ -87,7 +88,9 @@ function StatRow({ item }: { item: StatItem }) {
   const content = (
     <>
       <span className="font-normal leading-none">{item.label}</span>
-      <div className="font-semibold leading-[1.15]">{item.value}</div>
+      <div className={cn('font-semibold leading-[1.15]', item.valueClassName)}>
+        {item.value}
+      </div>
     </>
   )
   const className = 'flex items-center justify-between gap-2 text-[13px]'

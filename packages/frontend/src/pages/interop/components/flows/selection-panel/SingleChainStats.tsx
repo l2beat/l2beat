@@ -112,6 +112,7 @@ function Stats({
             key={item.label}
             label={item.label}
             value={item.value}
+            valueClassName={item.valueClassName}
             isLoading={isLoading}
           />
         ))}
@@ -202,11 +203,13 @@ function TopRoutes({
 function StatRow({
   label,
   value,
+  valueClassName,
   isLoading,
   onClick,
 }: {
   label: ReactNode
   value: ReactNode
+  valueClassName?: string
   isLoading: boolean
   onClick?: () => void
 }) {
@@ -220,7 +223,14 @@ function StatRow({
       {isLoading ? (
         <Skeleton className="h-4 w-16" />
       ) : (
-        <div className="text-right font-semibold leading-[1.15]">{value}</div>
+        <div
+          className={cn(
+            'text-right font-semibold leading-[1.15]',
+            valueClassName,
+          )}
+        >
+          {value}
+        </div>
       )}
     </>
   )

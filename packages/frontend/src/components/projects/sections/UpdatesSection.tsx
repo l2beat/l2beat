@@ -6,7 +6,6 @@ import type { OssificationChangeType } from '@l2beat/shared/frontend'
 import type { ProjectId } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { type MouseEvent, useState } from 'react'
-import { Badge } from '~/components/badge/Badge'
 import { CopyButton } from '~/components/CopyButton'
 import { Skeleton } from '~/components/core/Skeleton'
 import { UtcDateTime } from '~/components/core/UtcDateTime'
@@ -242,16 +241,11 @@ export function UpdateCard({
               />
             </div>
             {(criticalChangeType || update.isHighSeverity) && (
-              <Badge
-                type="error"
-                size="extraSmall"
-                padding="small"
-                className="shrink-0"
-              >
+              <span className="inline-flex h-5 shrink-0 items-center rounded border border-negative bg-surface-primary px-1.5 font-medium text-label-value-12 text-negative leading-none">
                 {criticalChangeType
                   ? CRITICAL_CHANGE_LABELS[criticalChangeType]
                   : 'High severity'}
-              </Badge>
+              </span>
             )}
           </div>
           <div className="flex shrink-0 items-center gap-2">

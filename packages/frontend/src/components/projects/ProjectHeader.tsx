@@ -108,7 +108,7 @@ export function ProjectHeader({
                 className="flex h-6 items-center justify-center gap-1.5 rounded border border-negative px-2"
               >
                 <LiveIndicator />
-                <span className="font-medium text-2xs text-negative uppercase leading-none">
+                <span className="font-medium text-label-value-12 text-negative leading-none">
                   {ongoingAnomaly === 'single'
                     ? 'Ongoing anomaly'
                     : 'Ongoing anomalies'}
@@ -121,7 +121,7 @@ export function ProjectHeader({
                 href="#updates"
                 className="flex h-6 items-center justify-center gap-1.5 rounded border border-divider bg-surface-primary px-2"
               >
-                <span className="font-medium text-2xs text-secondary uppercase leading-none">
+                <span className="font-medium text-label-value-12 text-secondary leading-none">
                   {recentUpdatesCount === 1
                     ? '1 recent update'
                     : `${recentUpdatesCount} recent updates`}
