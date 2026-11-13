@@ -59,7 +59,9 @@ export function getBasicTableHeaderCellClassName(params: {
   return cn(
     groupParams && [
       groupParams.isFirstInGroup && 'pl-6',
-      groupParams.isLastInGroup && 'pr-6',
+      // `md:` too, or TableHead's own `md:pr-4` wins from md up and the
+      // header ends 8px right of its group's values (body cells are `pr-6!`)
+      groupParams.isLastInGroup && 'pr-6 md:pr-6',
       !groupParams.headerTitle && groupParams.isFirstInGroup && 'rounded-tl-lg',
       !groupParams.headerTitle && groupParams.isLastInGroup && 'rounded-tr-lg',
     ],
