@@ -188,6 +188,9 @@ function createGlossaryLink(id: string, term: string, description: string) {
 function getIgnoredAndLinkOffsets(text: string) {
   const linkPattern = /\[([^\]]+)\]\(([^)]+)\)/g
   const backtickPattern = /`([^`]*)`/g
+  // ATX headings: a glossary link would turn part of a section title into
+  // a dotted, interactive term
+  const headingPattern = /^ {0,3}#{1,6}[ \t].*$/gm
   // What markdown-it renders as an autolink or inline HTML: URL and email
   // autolinks, open tags (quoted attributes may contain >), closing tags and
   // comments
@@ -213,6 +216,7 @@ function getIgnoredAndLinkOffsets(text: string) {
   return [
     ...getOffsets(text, linkPattern),
     ...getOffsets(text, backtickPattern),
+    ...getOffsets(text, headingPattern),
     ...getOffsets(withoutCode, angleBracketPattern),
   ]
 }
