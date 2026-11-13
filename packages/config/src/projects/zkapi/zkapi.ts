@@ -175,12 +175,13 @@ export const zkapi: BaseProject = {
       name: 'OA Chat',
       url: 'https://chat.openanonymity.ai',
       since: '2026-10-12',
-      // build.json of the served build OI3IE56B names oa-chat a2623612, and
-      // 415 served files match it. The landing and sign-in pages and the
+      delivery: { type: 'hosted' },
+      // build.json of the served build HW2ERHD3 names oa-chat 6c604614, and
+      // 420 served files match it. The landing and sign-in pages and the
       // Fathom loader come from a private repository, so the app counts as
-      // closed. Sources pin a2623612.
-      build: 'OI3IE56B',
-      checked: '2026-10-30',
+      // closed. Sources pin 6c604614.
+      build: 'HW2ERHD3',
+      checked: '2026-11-11',
       checkedApps: [
         {
           name: 'zkapi-clientd',

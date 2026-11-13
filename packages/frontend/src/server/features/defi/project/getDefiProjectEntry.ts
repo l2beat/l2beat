@@ -70,6 +70,7 @@ export async function getDefiProjectEntry(
       'contracts',
       'permissions',
       'tvsConfig',
+      'tvsInfo',
       'externalDependencies',
       'discoveryUpdates',
       'ossificationHistory',
@@ -189,6 +190,7 @@ export async function getDefiProjectEntry(
           iconUrl: icon,
         },
         dataSource: getDefiTvlDataSource(project.defiInfo.tvl),
+        warnings: project.tvsInfo?.warnings ?? [],
       },
     })
   }

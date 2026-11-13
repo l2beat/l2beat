@@ -10,11 +10,13 @@ import { HomeCardHeader } from './HomeCardHeader'
  */
 export function HomeDomainCard({
   title,
+  icon,
   link,
   className,
   children,
 }: {
   title: string
+  icon: ReactNode
   /**
    * Opposite the title, with the count, so the short ranking never reads as
    * everything we track.
@@ -32,7 +34,7 @@ export function HomeDomainCard({
         className,
       )}
     >
-      <HomeCardHeader title={title} link={link} />
+      <HomeCardHeader title={title} icon={icon} link={link} />
       {children}
     </HomeCard>
   )

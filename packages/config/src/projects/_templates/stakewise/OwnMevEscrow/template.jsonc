@@ -1,0 +1,11 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OwnMevEscrow",
+  "category": "core",
+  "description": "Execution-layer reward receiver of a single vault. Only that vault can harvest the balance.",
+  "fields": {
+    "vault": {
+      "description": "The vault allowed to harvest."
+    }
+  }
+}

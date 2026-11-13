@@ -274,8 +274,8 @@ export const morph: ScalingProject = {
     apis: [
       {
         type: 'rpc',
-        url: 'https://rpc.morphl2.io',
-        callsPerMinute: 600,
+        url: 'https://rpc-quicknode.morph.network',
+        callsPerMinute: 300,
       },
     ],
   },

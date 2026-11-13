@@ -4,6 +4,7 @@ import type { ActivitySectionProps } from '~/components/projects/sections/Activi
 import type { CostsSectionProps } from '~/components/projects/sections/costs/CostsSection'
 import { TRACKED_TXS_SUBTYPE_TITLES } from '~/components/projects/sections/costs/trackedTxsSubtypeTitles'
 import type { DataPostedSectionProps } from '~/components/projects/sections/data-posted/DataPostedSection'
+import type { DefiTvlSectionProps } from '~/components/projects/sections/defi/DefiTvlSection'
 import { anomalySubtypeToLabel } from '~/components/projects/sections/liveness/anomalySubtypeToLabel'
 import type { LivenessSectionProps } from '~/components/projects/sections/liveness/LivenessSection'
 import type { PrivacyAnonymitySetSectionProps } from '~/components/projects/sections/privacy/PrivacyAnonymitySetSection'
@@ -30,7 +31,11 @@ import type {
 } from '~/utils/project/tracked-txs/getTrackedTransactions'
 import { bulletList, joinBlocks, link, subsection, warning } from './markdown'
 import type { SectionBody } from './renderProjectSection'
-import { formatUtcDateTime, htmlPagePointer } from './renderSectionParts'
+import {
+  formatUtcDateTime,
+  htmlPagePointer,
+  renderWarnings,
+} from './renderSectionParts'
 
 /*
  * Sections built around a chart or a client-loaded widget. The data behind
@@ -62,6 +67,15 @@ export function renderL2TvsSection(
     props.tvsBreakdownUrl
       ? `Token by token: ${link('TVS breakdown', props.tvsBreakdownUrl)}.`
       : '',
+  ])
+}
+
+export function renderDefiTvlSection(
+  props: Pick<DefiTvlSectionProps, 'id' | 'warnings'>,
+) {
+  return joinBlocks([
+    renderWarnings(...props.warnings.map((w) => w.value)),
+    htmlPagePointer('The interactive TVL chart is shown', props.id),
   ])
 }
 

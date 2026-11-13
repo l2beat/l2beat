@@ -288,6 +288,13 @@ const OUTER_BOOTLOADER = (version: string) => ({
   proverSystemProject: ProjectId('stwo'),
 })
 
+const BOOTLOADER_CONFIG = (version: string) => ({
+  title: `Bootloader configuration commitment ${version}`,
+  description:
+    'Single hash that the SHARP verifier forces into every proof as the configuration of the outer bootloader. It is a Pedersen hash chain over four commitments: the supported simple bootloaders, the circuit applicative bootloader program, its circuit configuration and the supported recursive Cairo verifiers.',
+  proverSystemProject: ProjectId('stwo'),
+})
+
 const SUPPORTED_SIMPLE_BOOTLOADERS = (version: string) => ({
   title: `Supported simple bootloader programs commitment ${version}`,
   description:
@@ -1954,6 +1961,26 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       'common/programHashes/0x70909b25db0db00f1d4b4016aeb876f53568a3e5a8e6397cb562d79947a02cc9.md',
     ),
   },
+  '416945816847640482138159166670986616346304244502647016366644374949046452837':
+    {
+      ...OUTER_BOOTLOADER('StarkWare_GpsStatementVerifier_2026_14'),
+      programUrl:
+        'https://github.com/starkware-libs/cairo-lang/tree/d435ed7003919b3842a48fc07bbb06a08ed9bbad/src/starkware/cairo/bootloaders/bootloader',
+      verificationStatus: 'successful',
+      verificationSteps: readMarkdown(
+        'common/programHashes/416945816847640482138159166670986616346304244502647016366644374949046452837.md',
+      ),
+    },
+  '2806880238119746810536368140979050442273882135835972263431721318985365898844':
+    {
+      ...BOOTLOADER_CONFIG('StarkWare_GpsStatementVerifier_2026_14'),
+      programUrl:
+        'https://github.com/starkware-libs/cairo-lang/blob/d435ed7003919b3842a48fc07bbb06a08ed9bbad/src/starkware/cairo/bootloaders/bootloader/bootloader_config_hash.json',
+      verificationStatus: 'successful',
+      verificationSteps: readMarkdown(
+        'common/programHashes/2806880238119746810536368140979050442273882135835972263431721318985365898844.md',
+      ),
+    },
   '3427958597398434235135013788958741576989752718219267963615783564775551242024':
     {
       ...OUTER_BOOTLOADER('StarkWare_GpsStatementVerifier_2026_13'),

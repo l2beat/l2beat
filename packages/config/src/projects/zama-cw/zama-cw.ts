@@ -357,9 +357,10 @@ export const zamaCw: BaseProject = {
       name: 'Zama app',
       url: 'https://app.zama.org',
       since: '2026-10-09',
-      // Vercel deployment id of the served app, the data-dpl-id of its pages.
-      build: 'dpl_HkkjtLU1mXu9VT5nadJciMGnnY1t',
-      checked: '2026-10-30',
+      delivery: { type: 'hosted' },
+      // Vercel deployment id of the served app, the data-dpl-id of its served HTML.
+      build: 'dpl_8nxK5TFwZggVq61MJ5AzJorbdsYe',
+      checked: '2026-11-11',
       checkedApps: [
         {
           name: 'Zerion',
@@ -384,7 +385,7 @@ export const zamaCw: BaseProject = {
           name: 'cToken',
           icon: 'ctoken',
           finding:
-            "Reads the user's address through Alchemy and PublicNode straight from the browser, so both see it with the user's IP.",
+            "Reads the chain through Alchemy and PublicNode straight from the browser, so both see the user's address and IP on every read.",
           fix: "Read the chain through the app's own server, as the Zama app does.",
           source: 'https://ct-7984-chriswilder.netlify.app',
           checked: '2026-10-27',

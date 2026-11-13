@@ -1,13 +1,13 @@
 import {
+  ADVICE_SNIPPETS as A,
+  adviceLink,
   definePrivacyAdversaries,
-  PRIVACY_ADVERSARY_SNIPPETS as S,
+  toolLink,
 } from '../../common/privacyAdversaries'
 
-// app.umbra.cash serves 120c335c, whose diff from this pin adds a contact form
-// with Cloudflare Turnstile, logos from app.umbra.cash and block timestamps
-// from the wallet RPC.
+// app.umbra.cash serves this commit and shows it in its footer.
 const UMBRA =
-  'https://github.com/ScopeLift/umbra-protocol/blob/947c4f3b9b89f6cf5d69b2d43d3cffec673da655/'
+  'https://github.com/ScopeLift/umbra-protocol/blob/685f710e4e846db3b88f8138e6f78ee82482a391/'
 const ANALYSIS = 'https://arxiv.org/html/2308.01703v2'
 
 export function umbraAdversaries(registrants: number) {
@@ -23,8 +23,6 @@ export function umbraAdversaries(registrants: number) {
           "Each payment goes to a fresh stealth address, and only the recipient's viewing key shows whose it is.",
         exposureContinued:
           'The registry lists every recipient who could be behind it, with their key history.',
-        advice:
-          'Withdraw to a fresh address that is not registered and has no public link to the user.',
         sources: [
           {
             contract: 'Umbra',
@@ -37,7 +35,7 @@ export function umbraAdversaries(registrants: number) {
           {
             title:
               'Matching decrypts the secret with the viewing key and checks the stealth address',
-            url: UMBRA + 'umbra-js/src/classes/Umbra.ts#L707-L721',
+            url: UMBRA + 'umbra-js/src/classes/Umbra.ts#L701-L715',
           },
         ],
       },
@@ -46,7 +44,6 @@ export function umbraAdversaries(registrants: number) {
         exposureShort: `Any of the ${registrants.toLocaleString('en-US')} registered recipients could be behind a stealth address.`,
         exposureContinued:
           'Registrations are rare and public, so a payment that lands minutes after one points to that registrant. Several payments withdrawn to one address share a recipient.',
-        advice: `Register long before anyone pays the user, and withdraw each payment to its own address. ${S.exitViaRelayer('relayer for tokens')}`,
         sources: [
           {
             contract: 'StealthKeyRegistry',
@@ -60,7 +57,7 @@ export function umbraAdversaries(registrants: number) {
           {
             title:
               'The app warns about registered, named and sender destinations, and lets the user proceed',
-            url: UMBRA + 'frontend/src/utils/address.ts#L146-L241',
+            url: UMBRA + 'frontend/src/utils/address.ts#L146-L234',
           },
         ],
       },
@@ -70,8 +67,6 @@ export function umbraAdversaries(registrants: number) {
           "The hosted app checks the payee's address with its Alchemy RPC seconds before each payment, so timing ties the payee to the payment.",
         exposureContinued:
           "The same RPC gets the payee's wallet on connect, the sender of every matched payment on each scan, and the withdrawal address. The wallet's own RPC receives the wallet address together with the matched stealth addresses. On connect, the wallet library also sends the wallet address to Cloudflare's RPC to look up its ENS name.",
-        advice:
-          "Pay and withdraw from a local build with all RPC URLs and the user's wallet pointed at their own node, and block cloudflare-eth.com.",
         sources: [
           {
             title:
@@ -80,18 +75,18 @@ export function umbraAdversaries(registrants: number) {
           },
           {
             title: 'Connecting checks the wallet address through the same RPC',
-            url: UMBRA + 'frontend/src/store/wallet.ts#L273',
+            url: UMBRA + 'frontend/src/store/wallet.ts#L280',
           },
           {
             title: 'Withdrawing checks the destination through the same RPC',
-            url: UMBRA + 'frontend/src/components/AccountReceiveTable.vue#L736',
+            url: UMBRA + 'frontend/src/components/AccountReceiveTable.vue#L788',
           },
           {
             title:
               'Matched stealth addresses go to the wallet RPC in one balance call',
             url:
               UMBRA +
-              'frontend/src/components/AccountReceiveTable.vue#L606-L625',
+              'frontend/src/components/AccountReceiveTable.vue#L658-L677',
           },
         ],
       },
@@ -101,7 +96,6 @@ export function umbraAdversaries(registrants: number) {
           "The hosted app gives the operator the user's wallet address on every scan and withdrawal address in the same session.",
         exposureContinued:
           'Token withdrawals also hand its relayer the stealth address. The operator serves the app and can change it at any time. The contracts are immutable, and only the user holds their viewing key.',
-        advice: `${S.localBuild} Leave its indexer URL empty, so it reads payments from the user's node.`,
         sources: [
           {
             title:
@@ -111,18 +105,18 @@ export function umbraAdversaries(registrants: number) {
           {
             title:
               'The registry read stores no block, so the lookup repeats on every scan',
-            url: UMBRA + 'frontend/src/store/wallet.ts#L605-L615',
+            url: UMBRA + 'frontend/src/store/wallet.ts#L612-L622',
           },
           {
             title:
               "Every withdrawal sends the destination to the operator's API",
-            url: UMBRA + 'frontend/src/utils/address.ts#L201-L214',
+            url: UMBRA + 'frontend/src/utils/address.ts#L195-L207',
           },
           {
             title: 'Token withdrawals send the stealth address to the relayer',
             url:
               UMBRA +
-              'frontend/src/components/AccountReceiveTable.vue#L767-L768',
+              'frontend/src/components/AccountReceiveTable.vue#L819-L820',
           },
         ],
       },
@@ -149,5 +143,23 @@ export function umbraAdversaries(registrants: number) {
         ],
       },
     },
+    advice: [
+      {
+        name: 'Set up',
+        text: `${A.localBuild} Leave its indexer URL empty, point all RPC URLs and your wallet at your own ${toolLink('ethereumNode')}, and block cloudflare-eth.com with ${toolLink('ublockOrigin')}. Send all traffic, the node's included, through an ${adviceLink('IP-hiding route', 'routes')}, so neither the relayer nor the node's peers see your IP.`,
+        against: ['networkObserver', 'privilegedInsider'],
+        outside: true,
+      },
+      {
+        name: 'Register',
+        text: 'Register long before anyone pays you.',
+        against: ['chainAnalyst'],
+      },
+      {
+        name: 'Withdraw',
+        text: 'Withdraw each payment to its own fresh address that is not registered and has no public link to you. For tokens, use the relayer, so no wallet of yours pays gas for the receiving address.',
+        against: ['publicObserver', 'chainAnalyst'],
+      },
+    ],
   })
 }

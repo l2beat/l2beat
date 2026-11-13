@@ -1,0 +1,149 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "stakewise",
+  "import": ["../globalConfig.jsonc"],
+  "maxAddresses": 120,
+  "initialAddresses": [
+    "eth:0x3a0008a588772446f6e656133C2D5029CC4FC20E", // VaultsRegistry
+    "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5", // Keeper
+    "eth:0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38", // osETH
+    "eth:0x2A261e60FB14586B474C208b1B7AC6D0f5000306", // OsTokenVaultController
+    "eth:0x287d1e2A8dE183A8bf8f2b09Fa1340fBd766eb59", // OsTokenConfig
+    "eth:0x9Fc8C7F3C1ff6d0DF39EcB5870884d59777Ea2Bb", // OsTokenRedeemer (set in OsTokenConfig on 2026-11-05)
+    "eth:0xc43A7b16A7a167c0318390Cba16787C11e9e1FD0", // previous OsTokenRedeemer, osETH still queued in it
+    "eth:0x09e84205DF7c68907e619D07aFD90143c5763605", // OsTokenVaultEscrow
+    "eth:0x48319f97E5Da1233c21c48b80097c0FB7a20Ff86", // SharedMevEscrow
+    "eth:0x75AB6DdCe07556639333d3Df1eaa684F5735223e", // DepositDataRegistry
+    "eth:0x8023518b2192FB5384DAdc596765B3dD1cdFe471", // PriceFeed
+    "eth:0xa23F7c8d25f4503cA4cEd84d9CC2428e8745933C", // CuratorsRegistry
+    "eth:0x7A8cbBf690084E43De778173cfAcf7313c9122DD", // VaultFactory
+    "eth:0x97795DA27138BD8d79204D37F3A2e80fA4d30488", // Erc20VaultFactory
+    "eth:0x4C958642F1CD735F13aed02A4FB015153edDf8Fd", // PrivVaultFactory
+    "eth:0x1831834dC4Bf88B9d9183015e1285B105Ec2FdC9", // PrivErc20VaultFactory
+    "eth:0x608d8Ca6916b96edf63Dd429e62Fe1366ae6f3B5", // BlocklistVaultFactory
+    "eth:0x39c6eef5f955bcC280966504bc5c82F2394Fa368", // BlocklistErc20VaultFactory
+    "eth:0xE51eE4200510498d5964627B25FE7D4685CB858c", // MetaVaultFactory
+    "eth:0xCd191DfDF52ae7aa2B1AD7B4a6A9D4d4FFB837B5", // Erc20MetaVaultFactory
+    "eth:0x42427acFf6DdC93f73Fcb53d1a03AA26A292bA1A", // PrivMetaVaultFactory
+    "eth:0x8f347eb308707DC1FA1acCF3ea889CF554b6B8A5", // PrivErc20MetaVaultFactory
+    // Vaults holding at least 5,000 ETH on 2026-11-04 (9 of 237 staking vaults, 94.5% of
+    // the staked ETH) plus the two nested meta vaults the oracles use as osETH rate anchors.
+    "eth:0xAC0F906E433d58FA868F936E8A43230473652885", // GenesisVault
+    "eth:0x4FEF9D741011476750A243aC70b9789a63dd47Df", // FoxVault
+    "eth:0xe6d8d8aC54461b1C5eD15740EEe322043F696C08", // EthVault 0xe6d8
+    "eth:0xB266274F55e784689e97b7E363B0666d92e6305B", // EthPrivVault 0xB266
+    "eth:0x663a8C9e88c5cdc565Cc4bF0b2BEC8d862D744a6", // EthPrivVault 0x663a
+    "eth:0x4AafdB911085dd7703e57951279744DD713f744d", // EthVault 0x4aAf
+    "eth:0xB144B3b2D2a7d82e53BC70659Be03Bcd21CD94e8", // EthPrivErc20Vault ccmETH
+    "eth:0xA8cB2e35F594b308726b242136f0a8995BF19E97", // EthVault 0xA8cB
+    "eth:0x47fd7ac6C6bc73F2D419a18D0692F37Df3f48034", // EthPrivVault 0x47fD
+    "eth:0x15639E82d2072Fa510E5d2b5F0db361c823bCad3", // MetaVault 0x1563
+    "eth:0x34284C27A2304132aF751b0dEc5bBa2CF98eD039" // MetaVault 0x3428
+  ],
+  "names": {
+    "eth:0x3a0008a588772446f6e656133C2D5029CC4FC20E": "VaultsRegistry",
+    "eth:0x6B5815467da09DaA7DC83Db21c9239d98Bb487b5": "Keeper",
+    "eth:0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38": "osETH",
+    "eth:0x2A261e60FB14586B474C208b1B7AC6D0f5000306": "OsTokenVaultController",
+    "eth:0x287d1e2A8dE183A8bf8f2b09Fa1340fBd766eb59": "OsTokenConfig",
+    "eth:0x9Fc8C7F3C1ff6d0DF39EcB5870884d59777Ea2Bb": "OsTokenRedeemer",
+    "eth:0xc43A7b16A7a167c0318390Cba16787C11e9e1FD0": "RetiredOsTokenRedeemer",
+    "eth:0x09e84205DF7c68907e619D07aFD90143c5763605": "OsTokenVaultEscrow",
+    "eth:0x48319f97E5Da1233c21c48b80097c0FB7a20Ff86": "SharedMevEscrow",
+    "eth:0x75AB6DdCe07556639333d3Df1eaa684F5735223e": "DepositDataRegistry",
+    "eth:0x8023518b2192FB5384DAdc596765B3dD1cdFe471": "PriceFeed",
+    "eth:0xa23F7c8d25f4503cA4cEd84d9CC2428e8745933C": "CuratorsRegistry",
+    "eth:0x7A8cbBf690084E43De778173cfAcf7313c9122DD": "VaultFactory",
+    "eth:0x97795DA27138BD8d79204D37F3A2e80fA4d30488": "Erc20VaultFactory",
+    "eth:0x4C958642F1CD735F13aed02A4FB015153edDf8Fd": "PrivVaultFactory",
+    "eth:0x1831834dC4Bf88B9d9183015e1285B105Ec2FdC9": "PrivErc20VaultFactory",
+    "eth:0x608d8Ca6916b96edf63Dd429e62Fe1366ae6f3B5": "BlocklistVaultFactory",
+    "eth:0x39c6eef5f955bcC280966504bc5c82F2394Fa368": "BlocklistErc20VaultFactory",
+    "eth:0xE51eE4200510498d5964627B25FE7D4685CB858c": "MetaVaultFactory",
+    "eth:0xCd191DfDF52ae7aa2B1AD7B4a6A9D4d4FFB837B5": "Erc20MetaVaultFactory",
+    "eth:0x42427acFf6DdC93f73Fcb53d1a03AA26A292bA1A": "PrivMetaVaultFactory",
+    "eth:0x8f347eb308707DC1FA1acCF3ea889CF554b6B8A5": "PrivErc20MetaVaultFactory",
+    "eth:0xAC0F906E433d58FA868F936E8A43230473652885": "GenesisVault",
+    "eth:0x2296e122c1a20Fca3CAc3371357BdAd3be0dF079": "LegacyPoolEscrow",
+    "eth:0x20BC832ca081b91433ff6c17f85701B6e92486c5": "LegacyRewardToken",
+    "eth:0x4FEF9D741011476750A243aC70b9789a63dd47Df": "FoxVault",
+    "eth:0xe6d8d8aC54461b1C5eD15740EEe322043F696C08": "EthVault_e6d8",
+    "eth:0xB266274F55e784689e97b7E363B0666d92e6305B": "EthPrivVault_B266",
+    "eth:0x663a8C9e88c5cdc565Cc4bF0b2BEC8d862D744a6": "EthPrivVault_663a",
+    "eth:0x4AafdB911085dd7703e57951279744DD713f744d": "EthVault_4aAf",
+    "eth:0xB144B3b2D2a7d82e53BC70659Be03Bcd21CD94e8": "EthPrivErc20Vault_ccmETH",
+    "eth:0xA8cB2e35F594b308726b242136f0a8995BF19E97": "EthVault_A8cB",
+    "eth:0x47fd7ac6C6bc73F2D419a18D0692F37Df3f48034": "EthPrivVault_47fD",
+    "eth:0x15639E82d2072Fa510E5d2b5F0db361c823bCad3": "MetaVault_1563",
+    "eth:0x34284C27A2304132aF751b0dEc5bBa2CF98eD039": "MetaVault_3428",
+    "eth:0x29626C6b7F09cc2B6164e48683f453223FFA8ae4": "SubVaultsRegistry_1563",
+    "eth:0x1376D0233E70E021ecFFdcB2254519a66b8680E7": "SubVaultsRegistry_3428",
+    "eth:0x144a98cb1CdBb23610501fE6108858D9B7D24934": "StakeWise DAO Multisig",
+    "eth:0xB5cF5363c3e766e64B37b2fB9554bFE8D48ED1A0": "StakeWise DAO RealityModule",
+    "eth:0x867092A32bC16816F12Fb326EfF7A2865E1ec138": "RealityETH_ERC20",
+    "eth:0x5b7dD1E86623548AF054A4985F7fc8Ccbb554E2c": "RealityETH",
+    "eth:0x2685C0e39EEAAd383fB71ec3F493991d532A87ae": "StakeWise Operations Multisig",
+    "eth:0xf330b5fE72E91d1a3782E65eED876CF3624c7802": "Genesis Vault Admin Multisig",
+    "eth:0xFD8100AA60F851e0EB585C7c893B8Ef6A7F88788": "Fox Vault Admin Multisig",
+    // Oracle operators, from the Keeper's oracle configuration (IPFS QmeCywDfupWC7jz5EDHsU5yEb2unAhn8iSGWBUEdrMjdMc):
+    // each entry's endpoint domain names the operator behind the signing key.
+    "eth:0x6D403394848EaD12356C9Bb667ED27bCe1945914": "StakeWise Labs",
+    "eth:0xED5a1c366984215A28a95bE95A9a49d59a065e91": "P2P.org",
+    "eth:0x20B04EcB2bc5E44Ac5AaAd9c8DD3cd04d9Fb87c8": "Chorus One",
+    "eth:0x4E81bfde2eb1574bf0839aDEFb65cEA0D8B07EFC": "SenseiNode",
+    "eth:0x49F436341dbB3ffFce92C59fBcfcAEdaD22D0b0e": "DSRV",
+    "eth:0x624EC1141Eb0C3bE58b382737718852665c35Cf0": "T-Systems",
+    "eth:0x671D846eCd7D945011912a6fa42E6F3E39eD0569": "Gnosis",
+    "eth:0x3F77cC37b5F49561E84e36D87FAe1F032E1f771e": "Bitfly",
+    "eth:0xa9Ccb8ba942C45F6Fa786F936679812591dA012a": "Finoa",
+    "eth:0xb5dBd61DAb7138aF20A61614e0A4587566C2A15A": "Gateway.fm",
+    "eth:0x8Ce4f2800dE6476F42a070C79AfA58E0E209173e": "stakefish"
+  },
+  // Boundary cuts. The DAO Safe's Reality module is kept with its ERC20 Reality oracle; the
+  // SWISE bond token and the V2 proxy admin behind it are not part of the LST. The legacy V2
+  // reward token keeps only its migration edge into the Genesis vault, not V2's distributor
+  // and oracle set. Factories point at the approved vault implementations, which already
+  // appear as the implementation of each vault proxy. Meta vaults' curator is stateless.
+  "overrides": {
+    // Replaced as the redeemer on 2026-11-05. Vaults accept redemptions only from the
+    // redeemer named in OsTokenConfig, so its owner and positions manager no longer
+    // hold any power over user funds; it stays in scope for the osETH still queued in it.
+    "eth:0xc43A7b16A7a167c0318390Cba16787C11e9e1FD0": {
+      "description": "Previous osToken redeemer. Vaults accept redemptions only from the redeemer named in the collateral config, so this contract can no longer redeem positions. Any osToken still queued in it is paid out only when someone buys it with the underlying asset.",
+      "fields": {
+        "owner": { "permissions": [] },
+        "positionsManager": { "permissions": [] }
+      }
+    },
+    "eth:0x867092A32bC16816F12Fb326EfF7A2865E1ec138": {
+      "ignoreRelatives": ["token"]
+    },
+    "eth:0x20BC832ca081b91433ff6c17f85701B6e92486c5": {
+      "ignoreRelatives": ["merkleDistributor"]
+    },
+    "eth:0x09e84205DF7c68907e619D07aFD90143c5763605": {
+      "ignoreRelatives": ["authenticator"]
+    },
+    // Three vaults use unverified copies of OwnMevEscrow (same code family, `vault()` points back
+    // at the vault); they are left out so the page carries no unverified contract. One vault
+    // admin Safe runs a Safe Allowance module that is unrelated to the vault.
+    "eth:0x47fd7ac6C6bc73F2D419a18D0692F37Df3f48034": {
+      "ignoreRelatives": ["mevEscrow"]
+    },
+    "eth:0x663a8C9e88c5cdc565Cc4bF0b2BEC8d862D744a6": {
+      "ignoreRelatives": ["mevEscrow"]
+    },
+    "eth:0xB144B3b2D2a7d82e53BC70659Be03Bcd21CD94e8": {
+      "ignoreRelatives": ["mevEscrow"]
+    },
+    "eth:0x25854e2a49A6CDAeC7f0505b4179834509038549": {
+      "ignoreRelatives": ["GnosisSafe_modules"]
+    },
+    "eth:0x29626C6b7F09cc2B6164e48683f453223FFA8ae4": {
+      "ignoreRelatives": ["subVaultsCurator"]
+    },
+    "eth:0x1376D0233E70E021ecFFdcB2254519a66b8680E7": {
+      "ignoreRelatives": ["subVaultsCurator"]
+    }
+  }
+}

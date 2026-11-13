@@ -150,7 +150,7 @@ const items: { question: string; answer: string | string[] }[] = [
   {
     question: 'What is the ZK Catalog?',
     answer:
-      'The [ZK Catalog](/zk-catalog) is a community-driven resource offering detailed insights into the ZK technology used by various blockchain projects: which proving systems they use, how those systems are verified onchain, and which trusted setups they depend on. Trusted setups are assessed using our [trusted setups framework](https://forum.l2beat.com/t/the-trusted-setups-framework-for-zk-catalog/381).',
+      'The [ZK Catalog](/zk-catalog) is a community-driven resource offering detailed insights into the ZK technology used by various blockchain projects: which proving systems they use, how those systems are verified onchain, and which trusted setups they depend on. Trusted setups are assessed using our [trusted setups framework](https://forum.ethbeat.org/t/the-trusted-setups-framework-for-zk-catalog/381).',
   },
   // Methodology and contributing
   {
@@ -166,7 +166,7 @@ const items: { question: string; answer: string | string[] }[] = [
     question:
       'Where can I learn more about your methodology or ask questions about it?',
     answer: [
-      'Our risk frameworks, such as the [Stages framework](https://forum.l2beat.com/t/the-stages-framework/291), and the reasoning behind every change to them are published on the [ETHBEAT Forum](https://forum.l2beat.com/c/methodology-and-framework/5) in the Methodology & Framework category.',
+      'Our risk frameworks, such as the [Stages framework](https://forum.ethbeat.org/t/the-stages-framework/291), and the reasoning behind every change to them are published on the [ETHBEAT Forum](https://forum.ethbeat.org/c/methodology-and-framework/5) in the Methodology & Framework category.',
       'The forum is the best place to ask how we assess projects, challenge our reasoning or propose improvements to our frameworks.',
     ],
   },

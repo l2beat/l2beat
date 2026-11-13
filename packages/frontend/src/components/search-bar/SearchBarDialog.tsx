@@ -32,11 +32,7 @@ import { getEmptyStateGroups } from './searchBarEmptyState'
 import type { AnySearchBarEntry } from './types'
 import { useSearchBarResults } from './useSearchBarResults'
 
-interface Props {
-  recentlyAdded: SearchBarProject[]
-}
-
-export function SearchBarDialog({ recentlyAdded }: Props) {
+export function SearchBarDialog() {
   const inputRef = useRef<HTMLInputElement>(null)
   const { track } = useTracking()
   const [value, setValue] = useState('')
@@ -44,10 +40,6 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
   const { open, setOpen } = useSearchBarContext()
   const pinnedProjects = usePinnedProjects()
   const pathname = usePathname()
-  const emptyState = useMemo(
-    () => getEmptyStateGroups(pinnedProjects, recentlyAdded, pathname),
-    [pinnedProjects, recentlyAdded, pathname],
-  )
 
   useGlobalShortcut('/', () => setOpen((open) => !open))
 
@@ -57,7 +49,12 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
     isLoading,
     problem: searchProblem,
     retry,
+    recentlyAdded,
   } = useSearchBarResults({ value, debouncedValue, open })
+  const emptyState = useMemo(
+    () => getEmptyStateGroups(pinnedProjects, recentlyAdded ?? [], pathname),
+    [pinnedProjects, recentlyAdded, pathname],
+  )
 
   useEffect(() => {
     if (debouncedValue === '') return
@@ -158,12 +155,12 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
               />
             </>
           )}
-          {value === '' && (
+          {value === '' && emptyState.recentlyAdded.length > 0 && (
             <CommandGroup heading="Recently added projects">
               {emptyState.recentlyAdded.map((project) => {
                 return (
                   <SearchBarItem
-                    key={project.id}
+                    key={project.href}
                     href={project.href}
                     onFollow={(staysOnPage) =>
                       onItemFollow(project, staysOnPage)

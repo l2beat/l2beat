@@ -1,5 +1,6 @@
 import { formatActivityCount, formatCurrency } from '@l2beat/shared-pure'
 import { PizzaRosetteCell } from '~/components/rosette/pizza/PizzaRosetteCell'
+import { L2Icon } from '~/icons/pages/L2'
 import type { HomeL2Charts } from '~/server/features/home/getHomeL2Charts'
 import type { HomeTopL2Project } from '../getHomeData'
 import { HOME_CELL_LINK_CLASS } from '../homeStyles'
@@ -31,6 +32,7 @@ export function HomeL2Card({
   return (
     <HomeDomainCard
       title="Layer 2s"
+      icon={<L2Icon aria-hidden />}
       link={{
         href: '/layer2s/summary',
         label: `All ${projectCount} projects`,

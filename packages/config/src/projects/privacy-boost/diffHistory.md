@@ -1,3 +1,56 @@
+Generated with discovered.json: 0x545ff6ff78dfcede9600bfd88f72e33babab3041
+
+# Diff at Wed, 11 Nov 2026 08:53:11 GMT:
+
+- id: 47651579
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e7f80c2eb530702e907f902d428416a31e27855 block: 1790852159
+- current timestamp: 1794387097
+
+## Description
+
+Upgrade to an implementation with the same source. The four block-count delays grow tenfold, which restores their duration after Base moved to 200 ms blocks at block 53556130 (2026-11-05). Between the two dates each delay lasted a tenth as long.
+
+## Watched changes
+
+```diff
+    contract PrivacyBoost (base:0x71A0fD3C76E3E937d8275A3cb6a467b70123bD40) [privacy-boost/PrivacyBoost_v2] {
+    +++ description: Main contract of the PrivacyBoost pool. Escrows ERC-20 tokens and verifies relay-submitted private transfer, withdrawal, deposit, portal deposit and gift settlement proofs. Supports approved external gateway calls and permissionless exits through delayed forced withdrawals or public gift exits.
+      values.$implementation:
+-        "base:0x508798455053B0b8BF892454a2A73d88891d9fFd"
++        "base:0xde12DDBAC342Aaa4494aB65304B3D7717C411935"
+      values.$pastUpgrades.2:
++        ["2026-11-10T14:54:57.000Z","0x195f2ab9263ef05aa8e5a8bdf22e7f7d6ef8b9ccebd0d87ece220a0dc2bdf01c",["base:0xde12DDBAC342Aaa4494aB65304B3D7717C411935"]]
+      values.$upgradeCount:
+-        2
++        3
++++ description: Number of blocks after which an unprocessed deposit request can be cancelled and refunded by the depositor.
++++ severity: HIGH
+      values.cancelDelay:
+-        10800
++        108000
++++ description: Number of blocks between requesting and executing a forced withdrawal.
++++ severity: HIGH
+      values.forcedWithdrawalDelay:
+-        129600
++        1296000
++++ description: Maximum age in blocks of a superseded auth root accepted for epoch and private gift settlement proofs.
++++ severity: HIGH
+      values.maxEpochAuthStalenessBlocks:
+-        300
++        3000
++++ description: Maximum age in blocks of a superseded auth root accepted for public gift exits. Despite its legacy name, this does not govern forced withdrawals, which check the live auth record at request time.
++++ severity: HIGH
+      values.maxForcedWithdrawalAuthStalenessBlocks:
+-        500
++        5000
+      implementationNames.base:0x508798455053B0b8BF892454a2A73d88891d9fFd:
+-        "PrivacyBoost"
+      implementationNames.base:0xde12DDBAC342Aaa4494aB65304B3D7717C411935:
++        "PrivacyBoost"
+    }
+```
+
 Generated with discovered.json: 0x362a7dc44795b95f722fd65f5082ea11197bb2bc
 
 # Diff at Fri, 16 Oct 2026 05:36:52 GMT:

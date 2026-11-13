@@ -30,6 +30,11 @@ describe('search bar search', () => {
   const originalGetProjects = ps.getProjects.bind(ps)
   const originalMock = env.MOCK
   const originalInteropChains = env.INTEROP_CHAINS
+  const originalFlags = {
+    defi: env.CLIENT_SIDE_DEFI_ENABLED,
+    garden: env.CLIENT_SIDE_GARDEN_ENABLED,
+    ossification: env.CLIENT_SIDE_OSSIFICATION_ENABLED,
+  }
 
   beforeEach(() => {
     env.MOCK = true
@@ -39,6 +44,9 @@ describe('search bar search', () => {
     ps.getProjects = originalGetProjects
     env.MOCK = originalMock
     env.INTEROP_CHAINS = originalInteropChains
+    env.CLIENT_SIDE_DEFI_ENABLED = originalFlags.defi
+    env.CLIENT_SIDE_GARDEN_ENABLED = originalFlags.garden
+    env.CLIENT_SIDE_OSSIFICATION_ENABLED = originalFlags.ossification
   })
 
   it('keeps only direct project matches when they exist', async () => {
@@ -266,6 +274,74 @@ describe('search bar search', () => {
     ])
   })
 
+  // DeFi pages are off, but those the ossification table measures exist.
+  it('finds DeFi projects reviewed in CROPS', async () => {
+    env.CLIENT_SIDE_DEFI_ENABLED = false
+    env.CLIENT_SIDE_GARDEN_ENABLED = true
+    env.CLIENT_SIDE_OSSIFICATION_ENABLED = true
+    const safe = defiProject('safe', 'Safe', {
+      garden: {},
+      ossificationHistory: {},
+    })
+    const projects = [
+      safe,
+      defiProject('safeswap', 'Safeswap', { ossificationHistory: {} }),
+      defiProject('safelend', 'Safelend', { garden: {} }),
+      // Evaluated in config, but not yet attested.
+      defiProject('safebox', 'Safebox', {
+        garden: {},
+        ossificationHistory: {},
+      }),
+    ]
+    // In mock mode the attestation names what this query returns.
+    ps.getProjects = (async (query?: { where?: string[] }) =>
+      query?.where?.includes('crops') ? [safe] : projects) as never
+
+    const result = await getSearchBarEntries('safe')
+
+    expect(
+      result.map(({ name, href, category }) => ({ name, href, category })),
+    ).toEqual([{ name: 'Safe', href: '/defi/projects/safe', category: 'defi' }])
+  })
+
+  it('searches without CROPS projects when the attestation cannot be read', async () => {
+    env.CLIENT_SIDE_DEFI_ENABLED = false
+    env.CLIENT_SIDE_GARDEN_ENABLED = true
+    env.CLIENT_SIDE_OSSIFICATION_ENABLED = true
+    const projects = [
+      defiProject('safe', 'Safe', { garden: {}, ossificationHistory: {} }),
+      l2Project('safechain', 'Safechain'),
+    ]
+    // In mock mode this query stands in for the attestation read.
+    ps.getProjects = (async (query?: { where?: string[] }) => {
+      if (query?.where?.includes('crops')) throw new Error('Database down')
+      return projects
+    }) as never
+
+    const result = await getSearchBarEntries('safe')
+
+    expect(result.map((entry) => entry.name)).toEqual(['Safechain'])
+  })
+
+  it('lists recently added projects with a page, newest first', async () => {
+    env.CLIENT_SIDE_DEFI_ENABLED = false
+    ps.getProjects = async () =>
+      [
+        { ...l2Project('scroll', 'Scroll'), addedAt: 1, zkCatalogInfo: {} },
+        // No page the search bar links to.
+        { ...defiProject('aave', 'Aave', {}), addedAt: 3 },
+        { ...l2Project('base', 'Base'), addedAt: 2 },
+      ] as never
+
+    const index = decodeSearchIndex(await buildSearchIndex())
+
+    expect(index.recentlyAdded.map((entry) => entry.href)).toEqual([
+      '/layer2s/projects/base',
+      '/layer2s/projects/scroll',
+      '/zk-catalog/scroll',
+    ])
+  })
+
   it('names an interop protocol by its interop name and finds it by alias', async () => {
     ps.getProjects = async () =>
       [
@@ -351,6 +427,16 @@ function l2ProjectWithContract(slug: string, name: string, address: string) {
         ],
       },
     },
+  }
+}
+
+function defiProject(slug: string, name: string, rest: object) {
+  return {
+    id: ProjectId(slug),
+    slug,
+    name,
+    defiInfo: { category: 'Multisig' },
+    ...rest,
   }
 }
 

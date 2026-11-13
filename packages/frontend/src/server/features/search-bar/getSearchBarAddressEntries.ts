@@ -13,6 +13,7 @@ import {
   toSearchIndexToken,
 } from './getSearchIndex'
 import { getAbstractTokensByAddress } from './utils/getAbstractTokensByAddress'
+import { getCropsAttestedIds } from './utils/getCropsAttestedIds'
 import { toSearchBarProject } from './utils/toSearchBarProject'
 
 /**
@@ -22,7 +23,7 @@ import { toSearchBarProject } from './utils/toSearchBarProject'
 export async function getSearchBarAddressEntries(search: string) {
   const address = EthereumAddress(search.trim())
 
-  const [tokens, projects] = await Promise.all([
+  const [tokens, projects, cropsAttested] = await Promise.all([
     getAbstractTokensByAddress(address),
     // Reading projects blocks the event loop, so it waits a turn to let the
     // token query reach the database first and overlap its round trip.
@@ -31,6 +32,7 @@ export async function getSearchBarAddressEntries(search: string) {
         optional: [...SEARCH_INDEX_PROJECT_KEYS, 'contracts', 'permissions'],
       }),
     ),
+    getCropsAttestedIds(),
   ])
 
   // Tokens first: a bridge escrow lists the token contracts it holds, but
@@ -45,7 +47,7 @@ export async function getSearchBarAddressEntries(search: string) {
       ),
     )
     .flatMap((project) => {
-      const row = toSearchIndexProject(project)
+      const row = toSearchIndexProject(project, cropsAttested)
       return row ? decodeSearchIndexProject(row).map(toSearchBarProject) : []
     })
 
