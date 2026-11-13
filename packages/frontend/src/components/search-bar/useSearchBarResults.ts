@@ -72,6 +72,7 @@ export function useSearchBarResults(options: {
 
   return {
     groups,
+    recentlyAdded: index.data?.recentlyAdded,
     showsResults: value !== '' && isSettled,
     isLoading: value !== '' && !hasIndex && (!isSettled || source.isFetching),
     problem,
