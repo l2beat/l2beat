@@ -49,7 +49,7 @@ export function getL2CostsColumns(metric: CostsMetric) {
       columns: [
         columnHelper.accessor((row) => availableCosts(row)?.total, {
           id: 'total-cost',
-          header: metric === 'total' ? 'Total cost' : 'Avg PER L2 User op',
+          header: metric === 'total' ? 'Total cost' : 'Avg per L2 user op',
           cell: (ctx) => (
             <SyncStatusWrapper
               isSynced={
@@ -192,7 +192,7 @@ export function getL2CostsColumns(metric: CostsMetric) {
 
     columnHelper.accessor((row) => availableCosts(row)?.uopsCount, {
       id: 'data_uopsCount',
-      header: 'L2 User ops count',
+      header: 'L2 user ops count',
       cell: (ctx) => {
         const data = ctx.row.original.data
         if (data.type === 'available') {

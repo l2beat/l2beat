@@ -106,7 +106,9 @@ export function createL2Router(
     '/layer2s/costs',
     validateRoute({
       query: v.object({
-        tab: v.enum(['rollups', 'others']).default('rollups'),
+        tab: v
+          .enum(['rollups', 'validiumsAndOptimiums', 'others'])
+          .default('rollups'),
       }),
     }),
     async (req, res) => {

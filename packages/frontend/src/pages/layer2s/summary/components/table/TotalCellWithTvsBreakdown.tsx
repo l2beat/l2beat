@@ -99,6 +99,7 @@ export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
               <div className="flex items-center">
                 {icon}
                 <ValueWithPercentageChange
+                  className="font-medium md:text-label-value-15"
                   change={props.change}
                   changePeriod={props.changePeriod}
                 >

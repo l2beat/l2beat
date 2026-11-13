@@ -59,7 +59,7 @@ export const l2ArchivedColumns = [
   }),
   columnHelper.accessor('totalTvs', {
     id: 'total',
-    header: 'Total value secured',
+    header: 'Value secured',
     cell: (ctx) => {
       const value = ctx.getValue()
       if (value === undefined) {
@@ -86,7 +86,7 @@ export const l2ArchivedColumns = [
     meta: {
       align: 'right',
       tooltip:
-        'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens, shown together with a percentage change compared to 7D ago.',
+        'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens, shown together with a percentage change compared to 7 days ago.',
     },
   }),
 ]

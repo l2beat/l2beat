@@ -32,7 +32,7 @@ export function L2RiskStateValidationPage({
     <AppLayout {...props}>
       <BadgeLookupProvider lookup={badgeLookup}>
         <SideNavLayout>
-          <MainPageHeader>State Validation</MainPageHeader>
+          <MainPageHeader>State validation</MainPageHeader>
           <TableFilterContextProvider>
             <L2RiskStateValidationTabs
               validity={validity}

@@ -73,6 +73,7 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
                   />
                 ) : null}
                 <ValueWithPercentageChange
+                  className="font-medium md:text-label-value-15"
                   change={props.change}
                   changePeriod={props.changePeriod}
                 >

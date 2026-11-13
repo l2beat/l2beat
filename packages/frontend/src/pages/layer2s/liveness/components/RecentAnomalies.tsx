@@ -55,7 +55,9 @@ export function RecentAnomalies({ projectsWithAnomalies, className }: Props) {
 
   return (
     <PrimaryCard className={className}>
-      <h2 className="text-heading-18">Recent major anomalies</h2>
+      <h2 className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
+        Recent major anomalies
+      </h2>
       <div className="mt-4 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
         <div className="space-y-3">
           {firstColumns.map((projectWithAnomalies) => (
@@ -106,13 +108,13 @@ function AnomalyCollapsible({
             alt={projectWithAnomalies.name}
             className="size-5"
           />
-          <span className="text-left font-bold text-label-value-14 md:text-label-value-16">
+          <span className="text-left font-medium text-label-value-15">
             {projectWithAnomalies.name}
           </span>
         </div>
         <div className="flex items-center gap-4">
           {isAnyOngoing && <LiveIndicator />}
-          <ChevronIcon className="group-data-[state=open]:-rotate-180 size-3 fill-brand transition-transform duration-300" />
+          <ChevronIcon className="group-data-[state=open]:-rotate-180 size-3 fill-secondary transition-transform duration-300" />
         </div>
       </CollapsibleTrigger>
       <CollapsibleContent className="space-y-3 px-4 pb-3">
@@ -124,12 +126,12 @@ function AnomalyCollapsible({
                 {isAnomalyOngoing(anomaly) ? (
                   <div className="mb-1 flex items-center gap-1">
                     <LiveIndicator />
-                    <span className="subtitle-12 text-negative uppercase leading-none">
+                    <span className="font-medium text-label-value-13 text-negative leading-none">
                       Ongoing anomaly
                     </span>
                   </div>
                 ) : (
-                  <span className="subtitle-12 text-secondary uppercase leading-none">
+                  <span className="font-medium text-label-value-13 text-secondary leading-none">
                     Resolved
                   </span>
                 )}
@@ -174,7 +176,7 @@ function FailureMechanism({
   )
   return (
     <div className="mt-1 flex flex-wrap items-baseline gap-x-1.5">
-      <span className="text-secondary text-subtitle-10 uppercase leading-none">
+      <span className="text-label-value-13 text-primary leading-none">
         Failure mechanism
       </span>
       {failureMechanism.description ? (

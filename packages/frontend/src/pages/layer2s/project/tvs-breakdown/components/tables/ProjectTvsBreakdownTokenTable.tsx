@@ -71,7 +71,7 @@ export function ProjectTvsBreakdownTokenTable(props: Props) {
           table={table}
           renderSubComponent={renderFormulaSubComponent}
         />
-        <p className="mt-1 text-secondary text-subtitle-12 md:text-subtitle-14">
+        <p className="mt-1 font-normal text-label-value-13 text-secondary">
           Tokens with value below ${MIN_VALUE_FOR_PROJECT_TVS_BREAKDOWN} are not
           included in the list.
         </p>

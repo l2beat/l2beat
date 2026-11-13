@@ -21,7 +21,7 @@ export function L2RiskPage({ entries, badgeLookup, ...props }: Props) {
     <AppLayout {...props}>
       <BadgeLookupProvider lookup={badgeLookup}>
         <SideNavLayout>
-          <MainPageHeader>Risk Analysis</MainPageHeader>
+          <MainPageHeader>Risk analysis</MainPageHeader>
           <TableFilterContextProvider>
             <L2RiskTables {...entries} />
           </TableFilterContextProvider>

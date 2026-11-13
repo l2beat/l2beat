@@ -10,7 +10,7 @@ export function ActivityCompareControls({
 }: CompareMetricControlsProps) {
   const isClient = useIsClient()
   if (!isClient) {
-    return <Skeleton className="h-9 w-[104px]" />
+    return <Skeleton className="h-8 w-[104px]" />
   }
   return (
     <ActivityMetricControls<CompareActivityUnit>
@@ -19,7 +19,6 @@ export function ActivityCompareControls({
         setConfig((prev) => ({ ...prev, activity: { ...prev.activity, unit } }))
       }
       projectChart
-      className="h-9"
     />
   )
 }

@@ -28,8 +28,8 @@ export async function getL2ProjectTvsBreakdownData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        name: 'TVS Breakdown',
-        title: `${tvsBreakdownData.project.name} | TVS Breakdown - ETHBEAT`,
+        name: 'TVS breakdown',
+        title: `${tvsBreakdownData.project.name} | TVS breakdown - ETHBEAT`,
         description: `See a detailed breakdown of ${tvsBreakdownData.project.name}'s TVS on ETHBEAT.`,
         url,
         openGraph: {

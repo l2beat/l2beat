@@ -9,15 +9,14 @@ export function UopsExplorerLink() {
       target="_blank"
       rel="noreferrer"
       className={cn(
-        'flex w-fit items-center gap-1 rounded-lg bg-brand px-2 py-1 font-semibold text-sm text-white max-md:ml-4',
+        'inline-flex h-8 w-fit items-center whitespace-nowrap rounded-md border border-divider px-3 font-medium text-label-value-13 text-primary leading-4 transition-colors hover:bg-surface-secondary max-md:ml-4',
         'ring-brand ring-offset-1 ring-offset-background focus-visible:outline-none focus-visible:ring-2',
       )}
       onClick={() => {
         track('uopsExplorerSelected')
       }}
     >
-      <span>🔍</span>
-      <span>UOPS Explorer</span>
+      UOPS Explorer
     </a>
   )
 }

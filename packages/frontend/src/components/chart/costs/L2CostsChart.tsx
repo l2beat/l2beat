@@ -1,7 +1,7 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
+import { ChartCardHeader } from '~/components/chart/ChartCardHeader'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
-import type { ChartTimeRangeValue } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
 import { useTableFilterContext } from '~/components/table/filters/TableFilterContext'
@@ -123,7 +123,15 @@ export function L2CostsChart({ tab, milestones, entries }: Props) {
 
   return (
     <div>
-      <Header isPlaceholderData={isPlaceholderData} timeRange={timeRange} />
+      <ChartCardHeader
+        title="Onchain costs"
+        meta={
+          <ChartTimeRange
+            isPlaceholderData={isPlaceholderData}
+            timeRange={timeRange}
+          />
+        }
+      />
       <div className="mt-4 mb-3">
         <CostsChart
           isPlaceholderData={isPlaceholderData}
@@ -149,27 +157,6 @@ export function L2CostsChart({ tab, milestones, entries }: Props) {
         />
       </ChartControlsWrapper>
     </div>
-  )
-}
-
-function Header({
-  timeRange,
-  isPlaceholderData,
-}: {
-  timeRange: ChartTimeRangeValue
-  isPlaceholderData: boolean
-}) {
-  return (
-    <header>
-      <h2 className="font-bold text-xl md:text-2xl">
-        Onchain costs
-        <span className="max-md:hidden"> stacked by type</span>
-      </h2>
-      <ChartTimeRange
-        isPlaceholderData={isPlaceholderData}
-        timeRange={timeRange}
-      />
-    </header>
   )
 }
 

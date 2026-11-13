@@ -19,7 +19,7 @@ export function TokenAddressCell(props: Props) {
     <CustomLink href={props.url} className="inline-block leading-0">
       <span className="flex items-center gap-1 text-label-value-14">
         {label}
-        <CustomLinkIcon className="size-3.5 fill-blue-700 dark:fill-blue-500" />
+        <CustomLinkIcon className="size-3.5 fill-current" />
       </span>
     </CustomLink>
   )

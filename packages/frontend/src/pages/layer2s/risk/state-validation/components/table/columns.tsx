@@ -35,7 +35,7 @@ function getTvsColumns<T extends CommonL2Entry & { tvs: TvsData }>(
     columnHelper,
     columnHelper.accessor((e) => e.tvs?.breakdown?.total ?? 0, {
       id: 'total',
-      header: 'Total value secured',
+      header: 'Value secured',
       cell: (ctx) => {
         const value = ctx.row.original.tvs
         return (
@@ -57,7 +57,7 @@ function getTvsColumns<T extends CommonL2Entry & { tvs: TvsData }>(
         align: 'right' as const,
         cellClassName: 'pl-3',
         tooltip:
-          'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens, shown together with a percentage change compared to 7D ago.',
+          'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens, shown together with a percentage change compared to 7 days ago.',
       },
     }),
     (row) => ({

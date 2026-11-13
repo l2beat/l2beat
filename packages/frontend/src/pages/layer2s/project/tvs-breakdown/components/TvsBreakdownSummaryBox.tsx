@@ -55,7 +55,7 @@ export function TvsBreakdownSummaryBox({
       <ChartStatsPrimaryItem
         className="col-span-1 md:col-span-2 lg:col-span-1"
         label="Total"
-        tooltip="Total value secured displayed together with a percentage change compared to 7D ago."
+        tooltip="Total value secured displayed together with a percentage change compared to 7 days ago."
       >
         {isLoading ? (
           <div className="flex items-end gap-3.5 lg:flex-col lg:items-center lg:gap-0.5">
@@ -94,14 +94,14 @@ export function TvsBreakdownSummaryBox({
         <ChartStatsItem
           label={
             <>
-              <span className="max-md:hidden">Canonically Bridged</span>
+              <span className="max-md:hidden">Canonically bridged</span>
               <span className="max-xs:hidden md:hidden">
-                Canonically Bridged Value
+                Canonically bridged value
               </span>
               <span className="xs:hidden">Canonical</span>
             </>
           }
-          tooltip="Total value secured in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago."
+          tooltip="Total value secured in escrow contracts on Ethereum displayed together with a percentage change compared to 7 days ago."
         >
           <StatItemContent
             isLoading={isLoading}
@@ -113,14 +113,14 @@ export function TvsBreakdownSummaryBox({
         <ChartStatsItem
           label={
             <>
-              <span className="max-md:hidden">Natively Minted</span>
+              <span className="max-md:hidden">Natively minted</span>
               <span className="max-xs:hidden md:hidden">
-                Natively Minted Tokens
+                Natively minted tokens
               </span>
               <span className="xs:hidden">Native</span>
             </>
           }
-          tooltip="Total value of natively minted tokens displayed together with a percentage change compared to 7D ago."
+          tooltip="Total value of natively minted tokens displayed together with a percentage change compared to 7 days ago."
         >
           <StatItemContent
             isLoading={isLoading}
@@ -132,14 +132,14 @@ export function TvsBreakdownSummaryBox({
         <ChartStatsItem
           label={
             <>
-              <span className="max-md:hidden">Externally Bridged</span>
+              <span className="max-md:hidden">Externally bridged</span>
               <span className="max-xs:hidden md:hidden">
-                Externally Bridged Value
+                Externally bridged value
               </span>
               <span className="xs:hidden">External</span>
             </>
           }
-          tooltip="Total value of externally bridged tokens displayed together with a percentage change compared to 7D ago."
+          tooltip="Total value of externally bridged tokens displayed together with a percentage change compared to 7 days ago."
         >
           <StatItemContent
             isLoading={isLoading}

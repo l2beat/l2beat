@@ -2,6 +2,7 @@ import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { BasicTable } from '~/components/table/BasicTable'
 import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
+import { TableSectionHeader } from '~/components/table/TableSectionHeader'
 import { useTable } from '~/hooks/useTable'
 import type { L2RiskSequencingEntry } from '~/server/features/layer2s/risks/sequencing/getL2RiskSequencingEntries'
 import { l2SequencingColumns } from './columns'
@@ -30,12 +31,9 @@ export function L2RiskSequencingTable({ entries }: Props) {
 
   return (
     <>
-      <div className="mb-3 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-        <h2 className="font-bold text-heading-16 md:text-heading-20">
-          Decentralized Sequencing
-        </h2>
+      <TableSectionHeader title="Decentralized sequencing">
         <ColumnsControls columns={table.getAllColumns()} />
-      </div>
+      </TableSectionHeader>
       <BasicTable table={table} />
     </>
   )

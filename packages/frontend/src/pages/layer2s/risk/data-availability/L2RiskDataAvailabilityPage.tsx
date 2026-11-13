@@ -25,7 +25,7 @@ export function L2RiskDataAvailabilityPage({
     <AppLayout {...props}>
       <BadgeLookupProvider lookup={badgeLookup}>
         <SideNavLayout>
-          <MainPageHeader>Data Availability</MainPageHeader>
+          <MainPageHeader>Data availability</MainPageHeader>
           <TableFilterContextProvider>
             <L2RiskDaTables {...entries} />
           </TableFilterContextProvider>

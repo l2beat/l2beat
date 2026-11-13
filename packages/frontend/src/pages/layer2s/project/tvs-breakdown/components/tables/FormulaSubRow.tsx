@@ -83,7 +83,7 @@ function Operator({ operator }: { operator: CalculationFormula['operator'] }) {
     case 'diff':
       return (
         <div className="font-mono text-label-value-14 text-negative">
-          <span className="mr-4">-</span>
+          <span className="mr-4">−</span>
           <span className="inline-block w-[51px] text-center">deduct</span>
         </div>
       )

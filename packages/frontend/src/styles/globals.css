@@ -1046,7 +1046,7 @@ html:active-view-transition-type(pin) {
 :root {
   /* `-ink` is the same hue adjusted to read as text. */
   --crop-good: #1a9d4f;
-  --crop-good-ink: #16863f;
+  --crop-good-ink: #15803d;
   --crop-warning: #e0a52a;
   --crop-warning-ink: #b07d18;
   --crop-bad: #ef4d4d;

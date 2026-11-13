@@ -27,9 +27,9 @@ export function LivenessTimeRangeControls({
       onValueChange={setTimeRange}
       className={className}
     >
-      <RadioGroupItem value="30d">30D</RadioGroupItem>
-      <RadioGroupItem value="90d">90D</RadioGroupItem>
-      <RadioGroupItem value="max">MAX</RadioGroupItem>
+      <RadioGroupItem value="30d">30d</RadioGroupItem>
+      <RadioGroupItem value="90d">90d</RadioGroupItem>
+      <RadioGroupItem value="max">Max</RadioGroupItem>
     </RadioGroup>
   )
 }

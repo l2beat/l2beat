@@ -74,7 +74,7 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
           href: '/layer2s/summary',
         },
         {
-          title: 'Risk Analysis',
+          title: 'Risk analysis',
           shortTitle: 'Risks',
           href: '/layer2s/risk',
           subLinks: [
@@ -84,11 +84,11 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
               exactMatch: true,
             },
             {
-              title: 'State Validation',
+              title: 'State validation',
               href: '/layer2s/risk/state-validation',
             },
             {
-              title: 'Data Availability',
+              title: 'Data availability',
               shortTitle: 'DA',
               href: '/layer2s/risk/data-availability',
             },
@@ -99,7 +99,7 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
           ],
         },
         {
-          title: 'Value Secured',
+          title: 'Value secured',
           shortTitle: 'Value',
           href: '/layer2s/tvs',
         },
