@@ -15,8 +15,8 @@ import type {
 // page.html, the file the sources below cite.
 export const REFERENCE_PAGE = 'eth:0x0000000d42137547140b0812E1178F025e08bc49'
 // The link goes to html() of the pinned contract (F15 in Etherscan's ABI order),
-// not anon.wei.limo, whose name Tacit's app owner can point at another page
-// without delay.
+// not anon.wei.limo, whose name a Z DAO vote can point at another page after
+// 1 day.
 export const REFERENCE_APP = {
   name: 'anon.wei',
   url: `https://etherscan.io/address/${REFERENCE_PAGE.replace('eth:', '')}#readContract#F15`,
@@ -85,7 +85,7 @@ export const tacitPayAdversaries = definePrivacyAdversaries({
     chainAnalyst: {
       sentiment: 'bad',
       exposureShort:
-        'Fewer than 50 wallets deposited into the Ethereum pool, besides wallets that only cycle funds back, so timing and amounts can pair the two ends.',
+        'About 50 wallets deposited into the Ethereum pool, besides wallets that only cycle funds back, so timing and amounts can pair the two ends.',
       exposureContinued: `Any amount is allowed, so an unusual amount pairs the two ends. ${S.walletFingerprint('relay')}`,
       interior: {
         ...INTERIOR,
@@ -94,7 +94,7 @@ export const tacitPayAdversaries = definePrivacyAdversaries({
       sources: [
         {
           title:
-            'Pool deposits: 37 direct depositors and at most 12 more through deposit addresses and zaps, self-cycling wallets excluded (counted 2026-11-09)',
+            'Pool deposits: 44 direct depositors and at most 13 more through deposit addresses and zaps, self-cycling wallets excluded (counted 2026-11-13)',
           url: 'https://etherscan.io/address/0x000000c2A20657CE25f2Ba99737933D031AFBEE9',
         },
         {
@@ -138,7 +138,7 @@ export const tacitPayAdversaries = definePrivacyAdversaries({
     privilegedInsider: {
       sentiment: 'warning',
       exposureShort:
-        'Tacit holds no key to any note, but its app owner can change the page anon.wei serves, its relay host and RPC nodes without delay.',
+        'Tacit holds no key to any note, but a Z DAO vote can change the page anon.wei serves, its relay host and RPC nodes after 1 day.',
       exposureContinued:
         "The reviewed page version is an immutable contract, but running a saved copy of it takes command-line work. Tacit's relay sees the IP at sign-in, each exit's recipient with the IP that asked, and each deposit address the user views in the app.",
       interior: {
@@ -165,7 +165,7 @@ export const tacitPayAdversaries = definePrivacyAdversaries({
           title: 'Registry entries go ahead of the built-in relay host',
           url: PAGE + '#L3135-L3139',
         },
-        { contract: 'zEndpoints' },
+        { section: 'upgrades-and-governance' },
       ],
     },
     futureAdversary: {

@@ -1,3 +1,109 @@
+Generated with discovered.json: 0x1e1940d4ad17c0792828ce6dbb57bc0d20096cd4
+
+# Diff at Fri, 13 Nov 2026 08:29:06 GMT:
+
+- id: c96373cd
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d0e66842299d0524c385d4fd7d823b5d3ccf5cbc block: 1794391460
+- current timestamp: 1794558482
+
+## Description
+
+The Majeur DAO accepts the app's steward role and both registries, and the previous app owner transfers the name anon.wei to it. The name still resolves to the reviewed page. The DAO's proposals wait 1 day in its timelock. The previous app owner holds 20% of the votes against a 10% quorum and passed the handover as the only voter.
+
+## Watched changes
+
+```diff
+    contract TacitPay8244 (eth:0x0000000d42137547140b0812E1178F025e08bc49) [tacit-pay/TacitPay8244] {
+    +++ description: One version of the anon.wei web app stored as contract code (ERC-8244). html() returns the page from immutable chunk contracts and checks it against PAGE_HASH. The steward can append one successor version, which latest() follows.
++++ description: Owner of the name anon.wei in WNS.
+      values.anonWeiOwner:
+-        "eth:0x1C0Aa8cCD568d90d61659F060D1bFb1e6f855A20"
++        "eth:0x5E58BA0e06ED0F5558f83bE732a4b899a674053E"
+      values.pendingSteward:
+-        "eth:0x5E58BA0e06ED0F5558f83bE732a4b899a674053E"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.steward:
+-        "eth:0x1C0Aa8cCD568d90d61659F060D1bFb1e6f855A20"
++        "eth:0x5E58BA0e06ED0F5558f83bE732a4b899a674053E"
+    }
+```
+
+```diff
+    contract zEndpoints (eth:0x00000051F365d898132f4ebF345Cd3968e02F288) [tacit-pay/zEndpoints] {
+    +++ description: Owner-curated registry of service URLs per key and chain, which apps read at load to find their RPC nodes, relays and file mirrors.
+      values.owner:
+-        "eth:0x1C0Aa8cCD568d90d61659F060D1bFb1e6f855A20"
++        "eth:0x5E58BA0e06ED0F5558f83bE732a4b899a674053E"
+      values.pendingOwner:
+-        "eth:0x5E58BA0e06ED0F5558f83bE732a4b899a674053E"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+-   Status: DELETED
+    EOA (eth:0x1C0Aa8cCD568d90d61659F060D1bFb1e6f855A20)
+    +++ description: None
+```
+
+```diff
+    contract Moloch (eth:0x5E58BA0e06ED0F5558f83bE732a4b899a674053E) [majeur/Moloch] {
+    +++ description: DAO of the Majeur framework. Holders of its shares vote on arbitrary calls, which the contract executes after the timelock. A proposal passes as soon as the quorum has voted with more votes for than against. Members can burn shares or loot for a pro-rata part of the treasury while ragequit is on.
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x0000000d42137547140b0812E1178F025e08bc49","description":"append the successor version of the app, which latest() then returns.","role":".steward"},{"permission":"interact","from":"eth:0x0000000d42137547140b0812E1178F025e08bc49","description":"point the name anon.wei at any contract, which anon.wei.limo then serves.","role":".anonWeiOwner"},{"permission":"interact","from":"eth:0x00000051F365d898132f4ebF345Cd3968e02F288","description":"replace the URLs apps read from this registry, such as their RPC nodes, relay host and file mirrors, effective at their next read.","role":".owner"},{"permission":"interact","from":"eth:0x8C7348D039f58C4e9cfA936EF410eec759213b12","description":"replace the RPC URLs apps read from this list, effective at their next read.","role":".owner"}]
+    }
+```
+
+```diff
+    contract zRpcList (eth:0x8C7348D039f58C4e9cfA936EF410eec759213b12) [tacit-pay/zRpcList] {
+    +++ description: Owner-curated list of Ethereum RPC URLs that apps read at load.
+      values.owner:
+-        "eth:0x1C0Aa8cCD568d90d61659F060D1bFb1e6f855A20"
++        "eth:0x5E58BA0e06ED0F5558f83bE732a4b899a674053E"
+      values.pendingOwner:
+-        "eth:0x5E58BA0e06ED0F5558f83bE732a4b899a674053E"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1794391460 (main branch discovery), not current.
+
+```diff
+    contract Shares (eth:0x00a6bA94BBb5474725515De88fE04F854f2dCb12) [majeur/Shares] {
+    +++ description: Voting token of a Majeur DAO with delegation and vote snapshots.
+      fieldMeta:
++        {"previousAppOwnerVotes":{"description":"Votes of the account that held the anon.wei app's roles before the DAO."}}
+    }
+```
+
+```diff
+    EOA (eth:0x1C0Aa8cCD568d90d61659F060D1bFb1e6f855A20) {
+    +++ description: None
+      values.getSeq:
++        [0,0,0,0,0]
+      values.nonceSequenceNumber:
++        [0,0,0,0,0]
+      errors:
++        {"getSeq":"Processing error occurred.","nonceSequenceNumber":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract Moloch (eth:0x5E58BA0e06ED0F5558f83bE732a4b899a674053E) [majeur/Moloch] {
+    +++ description: DAO of the Majeur framework. Holders of its shares vote on arbitrary calls, which the contract executes after the timelock. A proposal passes as soon as the quorum has voted with more votes for than against. Members can burn shares or loot for a pro-rata part of the treasury while ragequit is on.
++++ description: Terms on which anyone mints shares by paying ZAMM: price per share, remaining cap (0 for none), minting, active, loot instead of shares.
+      values.zammSale:
++        {"pricePerShare":1,"cap":0,"minting":true,"active":true,"isLoot":false}
+      fieldMeta.zammSale:
++        {"description":"Terms on which anyone mints shares by paying ZAMM: price per share, remaining cap (0 for none), minting, active, loot instead of shares."}
+    }
+```
+
 Generated with discovered.json: 0xd42410eda11ae39436bd26f9cdd0e76e0de3cf74
 
 # Diff at Wed, 11 Nov 2026 10:05:27 GMT:

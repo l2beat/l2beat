@@ -1,7 +1,7 @@
 {
   "name": "tacit-pay",
-  "timestamp": 1794391460,
-  "configHash": "0xb1330e21d635cb6b114f97c7f58d5557d85916b2241271076a1a65087490e2a4",
+  "timestamp": 1794558482,
+  "configHash": "0xf6dfc5b06e55f6451b4660b5e72fe564e156a535db76f16a3b1e720f23e0865d",
   "entries": [
     {
       "name": "TacitPay8244",
@@ -18,7 +18,7 @@
       "sinceBlock": 26283018,
       "values": {
         "$immutable": true,
-        "anonWeiOwner": "eth:0x1C0Aa8cCD568d90d61659F060D1bFb1e6f855A20",
+        "anonWeiOwner": "eth:0x5E58BA0e06ED0F5558f83bE732a4b899a674053E",
         "anonWeiTarget": "eth:0x0000000d42137547140b0812E1178F025e08bc49",
         "chunkCount": 17,
         "generation": 6,
@@ -26,13 +26,13 @@
         "NAME": "anon.wei",
         "PAGE_HASH": "0xc38edd73acfcad5a4d5049669f6d7853c32b4687904d6b3d56ce9ccac0feea12",
         "PAGE_LENGTH": 415902,
-        "pendingSteward": "eth:0x5E58BA0e06ED0F5558f83bE732a4b899a674053E",
+        "pendingSteward": "eth:0x0000000000000000000000000000000000000000",
         "POOL": "eth:0x000000c2A20657CE25f2Ba99737933D031AFBEE9",
         "PREVIOUS": "eth:0x000000BC9db0D5091853bFBf6D062C1410Bc3745",
         "PROVING_KEY_SHA256": "0x40758061a0786fb0bdc5e5dec4c354bbf85fc106f7412716e25e781af4e79c4b",
         "resolveMode": "0x3532313900000000000000000000000000000000000000000000000000000000",
         "ROUTER": "eth:0x0000006C96Afa6f1cD4DF8FE19bc0d8B6A6Cd7B5",
-        "steward": "eth:0x1C0Aa8cCD568d90d61659F060D1bFb1e6f855A20",
+        "steward": "eth:0x5E58BA0e06ED0F5558f83bE732a4b899a674053E",
         "succeededAt": 0,
         "successor": "eth:0x0000000000000000000000000000000000000000",
         "VERIFIER": "eth:0x000000b1c0e84CEc8AdF8278B90c4d6400DfB153",
@@ -94,8 +94,8 @@
           "https://rpc.mevblocker.io",
           "https://ethereum-rpc.publicnode.com"
         ],
-        "owner": "eth:0x1C0Aa8cCD568d90d61659F060D1bFb1e6f855A20",
-        "pendingOwner": "eth:0x5E58BA0e06ED0F5558f83bE732a4b899a674053E",
+        "owner": "eth:0x5E58BA0e06ED0F5558f83bE732a4b899a674053E",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "provingKeyMirrors": [
           "https://tacit.finance/evm-pool/",
           "https://ipfs.filebase.io/ipfs/bafybeia4yvn2zoggvgpjwg5vpwpt6aivjbcm6tgzxoxsukao2nm5yyypfy/",
@@ -214,11 +214,11 @@
         "ASSET": "eth:0x0000000000000000000000000000000000000000",
         "ASSET_FIELD": "20910559077472597517501221369919085463831420959451892768500948119232265856393",
         "head": [
-          "0x2659e2bf9cad86de0eca282d87bbcf6999f023ce0061dde2c4837b021ece9033",
-          864
+          "0x2a19a86d5356e4a0bac831d50d532d21c360046f42479e4b4360981f835c1e91",
+          1036
         ],
-        "nextIndex": 864,
-        "root": "0x2659e2bf9cad86de0eca282d87bbcf6999f023ce0061dde2c4837b021ece9033",
+        "nextIndex": 1036,
+        "root": "0x2a19a86d5356e4a0bac831d50d532d21c360046f42479e4b4360981f835c1e91",
         "VERIFIER": "eth:0x000000b1c0e84CEc8AdF8278B90c4d6400DfB153"
       },
       "implementationNames": {
@@ -236,6 +236,7 @@
       ],
       "proxyType": "immutable",
       "description": "Voting token of a Majeur DAO with delegation and vote snapshots.",
+      "ignoreInWatchMode": ["totalSupply", "previousAppOwnerVotes"],
       "deployerAddress": "eth:0x1C0Aa8cCD568d90d61659F060D1bFb1e6f855A20",
       "sinceTimestamp": 1763481203,
       "sinceBlock": 23827015,
@@ -244,42 +245,20 @@
         "DAO": "eth:0x5E58BA0e06ED0F5558f83bE732a4b899a674053E",
         "decimals": 18,
         "name": "Z Shares",
+        "previousAppOwnerVotes": "1768984739737942752367609",
         "symbol": "Z",
-        "totalSupply": "8698458508655071304428665",
+        "totalSupply": "8792545274141212700684514",
         "transfersLocked": false
+      },
+      "fieldMeta": {
+        "previousAppOwnerVotes": {
+          "description": "Votes of the account that held the anon.wei app's roles before the DAO."
+        }
       },
       "implementationNames": {
         "eth:0x00a6bA94BBb5474725515De88fE04F854f2dCb12": "Shares"
       },
       "category": { "name": "Governance", "priority": 3 }
-    },
-    {
-      "address": "eth:0x1C0Aa8cCD568d90d61659F060D1bFb1e6f855A20",
-      "type": "EOA",
-      "sourceHashes": [
-        "0xdddaab1d0ccad17e0578e5dad9eab7bf81a90144cf89b5f4d5714c407dd2c9c5"
-      ],
-      "proxyType": "EIP7702 EOA",
-      "values": {
-        "$implementation": "eth:0x612373D7003d694220f7800EeaF8E3924c0951D3",
-        "CUSTOM_STORAGE_ROOT": "0x3b86514c5c56b21f08d8e56ab090292e07c2483b3e667a2a45849dcb71368600",
-        "domainBytes": "0xc7e4f5b2d381bdfacf8506a24542052ab4e951573cab4ce34bb1c9509c84cbbf06c015bd22b4c69690933c1058878ebdfef31f9aaae40bbe86d8a09fe1b2972c00000000000000000000000000000000000000000000000000000000000000010000000000000000000000001c0aa8ccd568d90d61659f060d1bfb1e6f855a20000000000000000000000000612373d7003d694220f7800eeaf8e3924c0951d3",
-        "domainSeparator": "0x1b4d3fcc2b0e4fbe1a406d71aa7a6a3e0c4adced98a616fb5643d1c44dbeef86",
-        "eip712Domain": {
-          "fields": "0x1f",
-          "name": "Calibur",
-          "version": "1.0.0",
-          "chainId": 1,
-          "verifyingContract": "eth:0x1C0Aa8cCD568d90d61659F060D1bFb1e6f855A20",
-          "salt": "0x000000000000000000000000612373d7003d694220f7800eeaf8e3924c0951d3",
-          "extensions": []
-        },
-        "ENTRY_POINT": "eth:0x4337084D9E255Ff0702461CF8895CE9E3b5Ff108",
-        "keyAt": [],
-        "keyCount": 0,
-        "keyHashes": 0,
-        "namespaceAndVersion": "Uniswap.Calibur.1.0.0"
-      }
     },
     {
       "name": "TacitBox",
@@ -351,7 +330,14 @@
         "renderer": "eth:0x000000000011C799980827F52d3137b4abD6E654",
         "rewardToken": "eth:0x0000000000000000000000000000000000000000",
         "shares": "eth:0x00a6bA94BBb5474725515De88fE04F854f2dCb12",
-        "timelockDelay": 86400
+        "timelockDelay": 86400,
+        "zammSale": {
+          "pricePerShare": 1,
+          "cap": 0,
+          "minting": true,
+          "active": true,
+          "isLoot": false
+        }
       },
       "fieldMeta": {
         "timelockDelay": {
@@ -365,6 +351,9 @@
         },
         "proposalThreshold": {
           "description": "Votes an account needs to open a proposal."
+        },
+        "zammSale": {
+          "description": "Terms on which anyone mints shares by paying ZAMM: price per share, remaining cap (0 for none), minting, active, loot instead of shares."
         }
       },
       "implementationNames": {
@@ -388,8 +377,8 @@
       "values": {
         "$immutable": true,
         "count": 6,
-        "owner": "eth:0x1C0Aa8cCD568d90d61659F060D1bFb1e6f855A20",
-        "pendingOwner": "eth:0x5E58BA0e06ED0F5558f83bE732a4b899a674053E",
+        "owner": "eth:0x5E58BA0e06ED0F5558f83bE732a4b899a674053E",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "rpcs": [
           "https://rpc.mevblocker.io",
           "https://ethereum.public.blockpi.network/v1/rpc/public",
@@ -730,73 +719,6 @@
       "function transferFrom(address sender, address receiver, uint256 id, uint256 amount) returns (bool)",
       "function voteWeight(uint256, address) view returns (uint96)"
     ],
-    "eth:0x612373D7003d694220f7800EeaF8E3924c0951D3": [
-      "error AllowanceExceeded()",
-      "error CallFailed(bytes reason)",
-      "error CannotRegisterRootKey()",
-      "error CannotUpdateRootKey()",
-      "error ExcessiveInvalidation()",
-      "error FnSelectorNotRecognized()",
-      "error IncorrectSender()",
-      "error IndexOutOfBounds()",
-      "error InvalidHookResponse()",
-      "error InvalidNonce()",
-      "error InvalidSignature()",
-      "error KeyDoesNotExist()",
-      "error KeyExpired(uint40 expiration)",
-      "error NotEntryPoint()",
-      "error OnlyAdminCanSelfCall()",
-      "error SignatureExpired()",
-      "error TransferNativeFailed()",
-      "error Unauthorized()",
-      "error UnsupportedExecutionMode()",
-      "event ApproveNative(address indexed owner, address indexed spender, uint256 value)",
-      "event ApproveNativeTransient(address indexed owner, address indexed spender, uint256 value)",
-      "event EIP712DomainChanged()",
-      "event EntryPointUpdated(address indexed newEntryPoint)",
-      "event KeySettingsUpdated(bytes32 indexed keyHash, uint256 settings)",
-      "event NativeAllowanceUpdated(address indexed spender, uint256 value)",
-      "event NonceInvalidated(uint256 nonce)",
-      "event Registered(bytes32 indexed keyHash, tuple(uint8 keyType, bytes publicKey) key)",
-      "event Revoked(bytes32 indexed keyHash)",
-      "event TransferFromNative(address indexed from, address indexed to, uint256 value)",
-      "event TransferFromNativeTransient(address indexed from, address indexed to, uint256 value)",
-      "function CUSTOM_STORAGE_ROOT() view returns (bytes32)",
-      "function ENTRY_POINT() view returns (address)",
-      "function approveNative(address spender, uint256 amount) returns (bool)",
-      "function approveNativeTransient(address spender, uint256 amount) returns (bool)",
-      "function domainBytes() view returns (bytes)",
-      "function domainSeparator() view returns (bytes32)",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function execute(tuple(tuple(address to, uint256 value, bytes data)[] calls, bool revertOnFailure) batchedCall) payable",
-      "function execute(tuple(tuple(tuple(address to, uint256 value, bytes data)[] calls, bool revertOnFailure) batchedCall, uint256 nonce, bytes32 keyHash, address executor, uint256 deadline) signedBatchedCall, bytes wrappedSignature) payable",
-      "function execute(bytes32 mode, bytes executionData) payable",
-      "function executeUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) userOp, bytes32)",
-      "function getKey(bytes32 keyHash) view returns (tuple(uint8 keyType, bytes publicKey))",
-      "function getKeySettings(bytes32 keyHash) view returns (uint256)",
-      "function getSeq(uint256 key) view returns (uint256 seq)",
-      "function hashTypedData(bytes32 hash) view returns (bytes32)",
-      "function invalidateNonce(uint256 newNonce)",
-      "function isRegistered(bytes32 keyHash) view returns (bool)",
-      "function isValidSignature(bytes32 digest, bytes wrappedSignature) view returns (bytes4)",
-      "function keyAt(uint256 i) view returns (tuple(uint8 keyType, bytes publicKey))",
-      "function keyCount() view returns (uint256)",
-      "function keyHashes() view returns (uint256 _spacer)",
-      "function multicall(bytes[] data) payable returns (bytes[] results)",
-      "function namespaceAndVersion() pure returns (string)",
-      "function nativeAllowance(address spender) view returns (uint256 allowance)",
-      "function nonceSequenceNumber(uint256 key) view returns (uint256 seq)",
-      "function register(tuple(uint8 keyType, bytes publicKey) key)",
-      "function revoke(bytes32 keyHash)",
-      "function supportsExecutionMode(bytes32 mode) pure returns (bool result)",
-      "function transferFromNative(address from, address recipient, uint256 amount) returns (bool)",
-      "function transferFromNativeTransient(address from, address recipient, uint256 amount) returns (bool)",
-      "function transientNativeAllowance(address spender) view returns (uint256)",
-      "function update(bytes32 keyHash, uint256 settings)",
-      "function updateEntryPoint(address entryPoint)",
-      "function updateSalt(uint96 prefix)",
-      "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) userOp, bytes32 userOpHash, uint256 missingAccountFunds) returns (uint256 validationData)"
-    ],
     "eth:0x8C7348D039f58C4e9cfA936EF410eec759213b12": [
       "constructor(string[] initial, address admin)",
       "error BadIndex()",
@@ -824,7 +746,7 @@
   },
   "usedTemplates": {
     "majeur/Moloch": "0x6339b40b1a1009df2e30bf80ad61e58bc24c88302653e373c117d63444555f6f",
-    "majeur/Shares": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "majeur/Shares": "0x9cb0edfecd174d91d81f651ad52d7c288ec44b877a0e2f8ad0ff293a553bfe30",
     "tacit-pay/PoseidonT5": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "tacit-pay/TacitBox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "tacit-pay/TacitEvmPool": "0x6bc3442ec7923a45edae742fc09763e222dace1b930c24f65a1b323a43675123",
@@ -835,10 +757,10 @@
     "tacit-pay/zEndpoints": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "tacit-pay/zRpcList": "0x21693ae1146189d0fe95030e477a775703255872295323ec1ef11bc44d5fa779"
   },
-  "usedBlockNumbers": { "ethereum": 26390963 },
-  "permissionsConfigHash": "0x4120daa3ce4832b9a95fb783c3a537d620e6d61c14f432b3d88a93303255032a",
+  "usedBlockNumbers": { "ethereum": 26404846 },
+  "permissionsConfigHash": "0x6b7a294843f82845c15d0af9c22ca1437718177d28b900f0b5ae6ec20c051001",
   "permissions": {
-    "eth:0x1C0Aa8cCD568d90d61659F060D1bFb1e6f855A20": {
+    "eth:0x5E58BA0e06ED0F5558f83bE732a4b899a674053E": {
       "receivedPermissions": [
         {
           "permission": "interact",
