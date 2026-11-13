@@ -51,7 +51,8 @@ export function LiquidStakingProjectSummary({
       title,
       tooltip,
       // On phones the two-line value sits flush right, like the stats above.
-      valueClassName: 'max-md:[&_div]:text-right max-md:[&_div.flex]:justify-end',
+      valueClassName:
+        'max-md:[&_div]:text-right max-md:[&_div.flex]:justify-end',
       value: (
         <TableValueCell
           value={summary.risks[key]}
