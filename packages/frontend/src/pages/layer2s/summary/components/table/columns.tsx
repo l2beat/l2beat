@@ -121,7 +121,7 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
             // right padding keeps them apart, so the table fits at 1280.
             cellClassName: 'pl-0',
             tooltip:
-              'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens, shown together with a percentage change compared to 7D ago.',
+              'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens, shown together with a percentage change compared to 7 days ago.',
           },
         },
       ),
@@ -162,7 +162,7 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
         meta: {
           align: 'right',
           tooltip:
-            'User operations per second averaged over the past day, shown together with a percentage change compared to 7D ago.',
+            'User operations per second averaged over the past day, shown together with a percentage change compared to 7 days ago.',
         },
       }),
       (row) => ({
