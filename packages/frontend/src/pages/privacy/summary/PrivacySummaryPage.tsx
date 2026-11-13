@@ -16,7 +16,6 @@ interface Props extends AppLayoutProps {
   groups: PrivacySummaryGroup[]
   chartProjects: PrivacyTvlBreakdownProject[]
   defaultChartRange: ChartRange
-  adviceBannerImageUrl: string
   queryState: DehydratedState
 }
 
@@ -24,7 +23,6 @@ export function PrivacySummaryPage({
   groups,
   chartProjects,
   defaultChartRange,
-  adviceBannerImageUrl,
   queryState,
   ...props
 }: Props) {
@@ -40,7 +38,7 @@ export function PrivacySummaryPage({
             defaultRange={defaultChartRange}
           />
           <PrivacySummaryTables groups={groups} />
-          <PrivacyAdviceBanner backgroundImage={adviceBannerImageUrl} />
+          <PrivacyAdviceBanner />
         </SideNavLayout>
       </HydrationBoundary>
     </AppLayout>

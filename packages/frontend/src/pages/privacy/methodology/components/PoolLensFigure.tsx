@@ -15,8 +15,8 @@ import { useThemeTokens } from '~/hooks/useThemeTokens'
 import { useTracking } from '~/hooks/useTracking'
 import { cn } from '~/utils/cn'
 import { prepareCanvas } from '~/utils/prepareCanvas'
+import { sentimentToOpaqueBgColor } from '~/utils/sentiment'
 import { PRIVACY_ADVERSARY_VERDICT } from '../../adversaries/privacyAdversaryUi'
-import { PrivacySentimentDot } from '../../PrivacySentimentDot'
 import type { PrivacyMethodologyFigureData } from '../getPrivacyMethodologyFigureData'
 import { MethodologyFigure } from './MethodologyFigure'
 import {
@@ -72,8 +72,10 @@ function cachedCaughtShare(traffic: number) {
 }
 
 function PoolLens({ data }: { data: PrivacyMethodologyFigureData }) {
-  const { step, pick, animate, reducedMotion, containerProps } =
-    useFigureAutoplay(data.adversaries.length, INTERVAL_MS)
+  const { step, pick, animate, containerProps } = useFigureAutoplay(
+    data.adversaries.length,
+    INTERVAL_MS,
+  )
   const { track } = useTracking()
   const adversary = data.adversaries[step] ?? data.adversaries[0]
 
@@ -93,19 +95,6 @@ function PoolLens({ data }: { data: PrivacyMethodologyFigureData }) {
   const [visited, setVisited] = useState<ReadonlySet<number>>(new Set([0]))
   if (!visited.has(step)) setVisited(new Set(visited).add(step))
 
-  const tabsRef = useRef<HTMLDivElement>(null)
-  // On phones the tabs scroll sideways; keep the current one in view without
-  // moving the page, which scrollIntoView would do.
-  useEffect(() => {
-    const list = tabsRef.current
-    const tab = list?.children[step]
-    if (!list || !(tab instanceof HTMLElement)) return
-    list.scrollTo({
-      left: tab.offsetLeft - (list.clientWidth - tab.offsetWidth) / 2,
-      behavior: reducedMotion ? 'instant' : 'smooth',
-    })
-  }, [step, reducedMotion])
-
   if (!adversary) return null
   const verdict = verdicts[adversary.id]
 
@@ -123,10 +112,9 @@ function PoolLens({ data }: { data: PrivacyMethodologyFigureData }) {
         track('tabsChanged', { name: 'privacyPoolAdversary', value: id })
       }}
     >
-      <Tabs.List
-        ref={tabsRef}
-        className="scrollbar-hide -mx-4 relative flex gap-1.5 overflow-x-auto px-4 sm:mx-0 sm:flex-wrap sm:px-0"
-      >
+      {/* The segmented control's track and pill, as elsewhere on the site.
+          It wraps on phones, so every adversary stays in view. */}
+      <Tabs.List className="flex w-max max-w-full flex-wrap gap-1 rounded-lg bg-surface-tertiary p-1">
         {data.adversaries.map(({ id, label }, i) => {
           const current = i === step
           return (
@@ -137,16 +125,22 @@ function PoolLens({ data }: { data: PrivacyMethodologyFigureData }) {
               // stops the autoplay.
               onClick={() => pick(i)}
               className={cn(
-                'flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border py-1 pr-3 pl-1.5 font-semibold text-label-value-13',
+                'flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-md py-1 pr-3 pl-2.5 font-medium text-label-value-13 text-primary',
                 current
-                  ? 'border-brand bg-brand text-primary-invert'
-                  : 'border-divider bg-surface-primary text-secondary hover:border-brand/50 hover:text-primary',
+                  ? 'bg-pure-white dark:bg-black'
+                  : 'hover:bg-pure-white/50 dark:hover:bg-black/40',
               )}
             >
+              {/* The rosette's colours, like the dots in the project pages' advice. */}
               {visited.has(i) ? (
-                <PrivacySentimentDot sentiment={verdicts[id].sentiment} />
+                <span
+                  className={cn(
+                    'size-2.5 shrink-0 rounded-full',
+                    sentimentToOpaqueBgColor(verdicts[id].sentiment),
+                  )}
+                />
               ) : (
-                <span className="size-5 shrink-0 rounded-full border-2 border-current opacity-40" />
+                <span className="size-2.5 shrink-0 rounded-full border border-current opacity-40" />
               )}
               {label}
             </Tabs.Trigger>
@@ -246,7 +240,7 @@ function DesignControl({
           <span className="font-semibold text-label-value-13">
             Pool traffic
           </span>
-          <span className="flex min-w-48 flex-1 items-center gap-2 text-label-value-12 text-secondary">
+          <span className="flex min-w-48 flex-1 items-center gap-2 text-label-value-12">
             Quiet
             <input
               type="range"

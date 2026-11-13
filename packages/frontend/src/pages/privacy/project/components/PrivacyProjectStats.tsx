@@ -119,7 +119,7 @@ export function PrivacyProjectStats({
       />
       <ProjectSummaryStat
         className="md:hidden"
-        title="TVL"
+        title="Value locked"
         value={
           hasTvl ? (
             <TvlValue

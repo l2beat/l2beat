@@ -4,16 +4,21 @@ import type {
   PrivacyAdversarySentiment,
   PrivacyAdviceStep,
 } from '@l2beat/config'
+import upperFirst from 'lodash/upperFirst'
 import { CustomLink } from '~/components/link/CustomLink'
 import { Markdown } from '~/components/markdown/Markdown'
-import { getPrivacyAdversaryBlockId } from '~/pages/privacy/adversaries/privacyAdversaryUi'
+import {
+  getPrivacyAdversaryBlockId,
+  PRIVACY_CHIP_CLASS_NAME,
+} from '~/pages/privacy/adversaries/privacyAdversaryUi'
 import {
   ADVICE,
   getAdviceStepId,
   getStepAdversaries,
   getUncoveredAdversaries,
 } from '~/pages/privacy/adviceUi'
-import { PrivacySentimentDot } from '~/pages/privacy/PrivacySentimentDot'
+import { cn } from '~/utils/cn'
+import { sentimentToOpaqueBgColor } from '~/utils/sentiment'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 import { PrivacyWaitDraw } from './PrivacyWaitDraw'
@@ -64,8 +69,8 @@ export function PrivacyAdviceSection({
               <span className="flex min-h-6 flex-wrap items-center gap-x-2 font-bold text-label-value-16 md:text-label-value-18">
                 {step.name}
                 {step.outside && (
-                  <span className="rounded-sm border border-divider px-1.5 py-0.5 font-normal text-2xs text-secondary leading-none dark:border-secondary/40">
-                    {ADVICE.outsideLabel}
+                  <span className={cn(PRIVACY_CHIP_CLASS_NAME, 'font-normal')}>
+                    {upperFirst(ADVICE.outsideLabel)}
                   </span>
                 )}
               </span>
@@ -76,7 +81,7 @@ export function PrivacyAdviceSection({
                 )}
               </div>
               <div className="mt-2.5 grid grid-cols-[auto_minmax(0,1fr)] gap-x-2 text-paragraph-13">
-                <span className="text-secondary">{ADVICE.againstLabel}:</span>
+                <span>{ADVICE.againstLabel}:</span>
                 <div className="flex flex-wrap gap-x-4 gap-y-1">
                   {getStepAdversaries(step, adversaries).map((adversary) => (
                     <AdversaryLink
@@ -92,15 +97,17 @@ export function PrivacyAdviceSection({
         ))}
       </ol>
       {uncovered.length > 0 && (
-        <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 border-divider border-t pt-4 text-paragraph-15 md:text-paragraph-16">
-          <span className="font-medium">{ADVICE.uncoveredLabel}:</span>
-          {uncovered.map((adversary) => (
-            <AdversaryLink
-              key={adversary.id}
-              adversary={adversary}
-              sentiment={sentiments[adversary.id]}
-            />
-          ))}
+        <div className="mt-4 grid grid-cols-[auto_minmax(0,1fr)] gap-x-2 border-divider border-t pt-4 text-paragraph-13">
+          <span>{ADVICE.uncoveredLabel}:</span>
+          <div className="flex flex-wrap gap-x-4 gap-y-1">
+            {uncovered.map((adversary) => (
+              <AdversaryLink
+                key={adversary.id}
+                adversary={adversary}
+                sentiment={sentiments[adversary.id]}
+              />
+            ))}
+          </div>
         </div>
       )}
     </ProjectSection>
@@ -122,8 +129,13 @@ function AdversaryLink({
       underline={false}
       className="inline-flex items-center gap-1.5 hover:underline focus-visible:underline"
     >
-      <PrivacySentimentDot sentiment={sentiment} className="size-2.5!" />
-      {adversary.label.toLowerCase()}
+      <span
+        className={cn(
+          'size-2 shrink-0 rounded-full',
+          sentimentToOpaqueBgColor(sentiment),
+        )}
+      />
+      {adversary.label}
     </CustomLink>
   )
 }

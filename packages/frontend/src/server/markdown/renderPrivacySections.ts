@@ -156,8 +156,8 @@ export function renderPrivacyAdvice({
     `${ADVICE.intro} ${link(ADVICE.methodologyLink, ADVICE.methodologyHref)}`,
     numberedList(
       steps.map((step) => {
-        const against = getStepAdversaries(step, adversaries).map((adversary) =>
-          adversary.label.toLowerCase(),
+        const against = getStepAdversaries(step, adversaries).map(
+          (adversary) => adversary.label,
         )
         const name = step.outside
           ? `${step.name}, ${ADVICE.outsideLabel}`
@@ -169,7 +169,7 @@ export function renderPrivacyAdvice({
       }),
     ),
     uncovered.length > 0
-      ? `**${ADVICE.uncoveredLabel}:** ${uncovered.map((adversary) => adversary.label.toLowerCase()).join(', ')}.`
+      ? `**${ADVICE.uncoveredLabel}:** ${uncovered.map((adversary) => adversary.label).join(', ')}.`
       : '',
   ])
 }

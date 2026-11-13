@@ -124,7 +124,7 @@ export function CrowdFigure() {
         </div>
         <div className="mt-4 grid items-end gap-4 sm:grid-cols-[auto_1fr_auto]">
           <div className="min-w-40">
-            <p className="font-medium text-label-value-13 text-secondary">
+            <p className="font-medium text-label-value-13">
               {result !== undefined
                 ? 'Your withdrawal hides among'
                 : shown === 0
@@ -144,7 +144,7 @@ export function CrowdFigure() {
             </p>
           </div>
           <label className="block">
-            <span className="flex justify-between font-medium text-label-value-12 text-secondary">
+            <span className="flex justify-between font-medium text-label-value-12">
               <span>Quiet pool</span>
               <span>Busy pool</span>
             </span>
@@ -183,7 +183,7 @@ export function CrowdFigure() {
                 }
               }}
               // Wide enough for either label, so the slider keeps its width.
-              className="min-w-36 rounded-full bg-brand px-4 py-2 font-bold text-label-value-14 text-primary-invert transition-[scale,opacity] duration-150 ease-out hover:opacity-90 active:scale-[0.97]"
+              className="min-w-36 rounded-full bg-primary px-4 py-2 font-bold text-label-value-14 text-primary-invert transition-[scale,opacity] duration-150 ease-out hover:opacity-90 active:scale-[0.97]"
             >
               {mine === undefined ? 'Make a deposit' : 'Withdraw it'}
             </button>
