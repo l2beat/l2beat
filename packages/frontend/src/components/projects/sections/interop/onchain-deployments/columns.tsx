@@ -33,6 +33,7 @@ export const interopTokenOnchainDeploymentsColumns = [
     cell: (ctx) => <IndexCell>{ctx.row.index + 1}</IndexCell>,
     sortDescFirst: false,
     meta: {
+      align: 'right',
       headClassName: 'w-0',
     },
     size: 44,

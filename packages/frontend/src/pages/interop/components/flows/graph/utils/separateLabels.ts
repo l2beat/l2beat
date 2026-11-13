@@ -38,6 +38,13 @@ const MIN_DISTANCE = 0.12
 /** A chain may turn this share of its slot either way around the ring */
 const MAX_TURN = 0.45
 /**
+ * How far past its slot a chain may move outward on small screens, as a share
+ * of its distance from the centre. Phones have room at the edge of the square
+ * but none inward, where the logo and the larger chains' labels sit. Large
+ * screens keep every chain on or inside the ring.
+ */
+const SMALL_SCREEN_MAX_OUTWARD = 0.15
+/**
  * Overlap in px that one px of moving off the ring is worth. Small, so
  * chains leave the ring only to clear an overlap.
  */
@@ -51,7 +58,8 @@ const STALL_ITERATIONS = 20
  * Moves bubbles until no chain's bubble or label overlaps another chain's,
  * or the logo in the middle. Chains that already fit stay where they are.
  *
- * 1. A search moves crowded chains inward and a little around the ring, but
+ * 1. A search moves crowded chains inward (on small screens also a little
+ *    outward, where phones have room) and a little around the ring, but
  *    never past half-way to a neighbour's slot, so the ring keeps its order.
  *    Each px a chain leaves its slot costs a little, so chains move only to
  *    clear an overlap. It's seeded, so the same data gives the same layout.
@@ -60,8 +68,10 @@ const STALL_ITERATIONS = 20
  *
  * If chains still overlap, the net-flow line of the smallest overlapping
  * bubble is left out and both steps run again from there, one line at a
- * time and only under bubbles up to DROPPABLE_RADIUS. Names are never left
- * out.
+ * time and only under bubbles up to DROPPABLE_RADIUS. On small screens, once
+ * no such bubble is left, a net-flow line that still collides with another
+ * chain or the logo is left out, smallest bubble first, so no figure is drawn
+ * over or under something else. Names are never left out.
  */
 export function separateLabels(
   nodes: LabelledNode[],
@@ -86,15 +96,22 @@ export function separateLabels(
       // Later rounds only touch up the last layout
       steps: SEARCH_STEPS_PER_CHAIN * nodes.length * (round === 0 ? 1 : 0.3),
       startTemperature: round === 0 ? 8 : 2,
+      maxOutward: isSmallScreen ? SMALL_SCREEN_MAX_OUTWARD : 0,
     })
     const solved = solve(positions, shapes, limits, logo)
     positions = solved.positions
-    const toDrop = bySize.find(
-      ({ index, radius }) =>
-        radius <= DROPPABLE_RADIUS &&
-        solved.overlapping.has(index) &&
-        showNetFlow[index],
-    )
+    const toDrop =
+      bySize.find(
+        ({ index, radius }) =>
+          radius <= DROPPABLE_RADIUS &&
+          solved.overlapping.has(index) &&
+          showNetFlow[index],
+      ) ??
+      (isSmallScreen
+        ? bySize.find(({ index }) =>
+            netFlowCollides(index, positions, shapes, logo),
+          )
+        : undefined)
     if (!toDrop) {
       return positions.map((p, i) => ({
         ...p,
@@ -104,6 +121,35 @@ export function separateLabels(
     }
     showNetFlow[toDrop.index] = false
   }
+}
+
+/**
+ * Whether chain `i`'s net-flow line overlaps another chain's bubble or label,
+ * or the logo. Checked without GAP: only a real collision counts.
+ */
+function netFlowCollides(
+  i: number,
+  positions: Point[],
+  shapes: Shape[],
+  logo: Rect,
+): boolean {
+  const shape = shapes[i] as Shape
+  const line = shape.rects[1]
+  if (!line) return false
+  const box = offset(line, positions[i] as Point)
+  const touches = (a: Rect, b: Rect) =>
+    a.x0 < b.x1 && b.x0 < a.x1 && a.y0 < b.y1 && b.y0 < a.y1
+  if (touches(box, logo)) return true
+  for (let j = 0; j < positions.length; j++) {
+    if (j === i) continue
+    const p = positions[j] as Point
+    const other = shapes[j] as Shape
+    const nearestX = clamp(p.x, box.x0, box.x1)
+    const nearestY = clamp(p.y, box.y0, box.y1)
+    if (Math.hypot(p.x - nearestX, p.y - nearestY) < other.radius) return true
+    if (other.rects.some((rect) => touches(box, offset(rect, p)))) return true
+  }
+  return false
 }
 
 interface Limits {
@@ -142,7 +188,12 @@ function search(
   limits: Limits[],
   size: number,
   logo: Rect,
-  options: { random: () => number; steps: number; startTemperature: number },
+  options: {
+    random: () => number
+    steps: number
+    startTemperature: number
+    maxOutward: number
+  },
 ): Point[] {
   const c = size / 2
   const slot = (2 * Math.PI) / nodes.length
@@ -168,7 +219,7 @@ function search(
   const moveCostOf = (i: number, angle: number, distance: number) => {
     const h = home[i] as (typeof home)[number]
     const turn = Math.abs(angleBetween(angle, h.angle))
-    return MOVE_COST * (h.distance - distance + h.distance * turn)
+    return MOVE_COST * (Math.abs(h.distance - distance) + h.distance * turn)
   }
 
   let overlap = 0
@@ -203,7 +254,7 @@ function search(
     const distance = clamp(
       current.distance + (options.random() - 0.5) * 0.2 * size * reach,
       Math.min(MIN_DISTANCE * size, h.distance),
-      h.distance,
+      h.distance * (1 + options.maxOutward),
     )
     const next = {
       x: c + distance * Math.cos(angle),

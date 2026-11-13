@@ -6,6 +6,7 @@ import { useResizeObserver } from '~/hooks/useResizeObserver'
 import type { InteropDashboardData } from '~/server/features/layer2s/interop/getInteropDashboardData'
 import type { InteropProtocolData } from '~/server/features/layer2s/interop/utils/getTopProtocols'
 import { BetweenChainsInfo } from '../../BetweenChainsInfo'
+import { Last24HoursBadge } from '../../Last24HoursBadge'
 import { TopProtocolsByTransfersChart } from './TopProtocolsByTransfersChart'
 import { TopProtocolsByVolumeChart } from './TopProtocolsByVolumeChart'
 import { useProtocolColorMap } from './useProtocolColorMap'
@@ -49,9 +50,12 @@ export function TopProtocolsWidget({
       ref={containerRef}
     >
       <div>
-        <h2 className="font-bold text-heading-16 md:text-heading-20">
-          {heading}
-        </h2>
+        <div className="flex flex-wrap items-baseline gap-x-2">
+          <h2 className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
+            {heading}
+          </h2>
+          <Last24HoursBadge />
+        </div>
         <BetweenChainsInfo className="mt-0.5" />
         <table className="mt-2 w-fit border-separate border-spacing-y-1 pr-1">
           <tbody>
@@ -67,7 +71,7 @@ export function TopProtocolsWidget({
             {protocolsWithOthers.length > 0 &&
               protocolsWithOthers.map((protocol) => (
                 <tr key={protocol.name}>
-                  <td className="flex items-center gap-1 font-medium text-2xs">
+                  <td className="flex items-center gap-1.5 font-medium text-label-value-13">
                     <div
                       className="size-3 min-w-3 rounded-xs"
                       style={{ backgroundColor: protocol.color }}
@@ -84,10 +88,10 @@ export function TopProtocolsWidget({
                       )}
                     </div>
                   </td>
-                  <td className="@max-[373px]:hidden w-10 text-right font-medium text-2xs text-secondary">
-                    {protocol[metricType].share.toFixed(1)}%
+                  <td className="@max-[373px]:hidden w-12 pl-2 text-right font-normal text-label-value-13 text-secondary tabular-nums">
+                    {formatShare(protocol[metricType].share)}
                   </td>
-                  <td className="w-12.5 whitespace-nowrap pl-1 text-right font-medium text-2xs">
+                  <td className="w-12.5 whitespace-nowrap pl-2 text-right font-medium text-label-value-13 tabular-nums">
                     {formatValue(protocol[metricType].value)}
                   </td>
                 </tr>
@@ -110,4 +114,10 @@ export function TopProtocolsWidget({
       )}
     </PrimaryCard>
   )
+}
+
+/** A share that rounds to 0.0% but isn't zero reads "<0.1%". */
+function formatShare(share: number) {
+  if (share > 0 && share < 0.05) return '<0.1%'
+  return `${share.toFixed(1)}%`
 }

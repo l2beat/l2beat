@@ -13,6 +13,7 @@ import { IndexCell } from '~/components/table/cells/IndexCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { TableLink } from '~/components/table/TableLink'
 import { EM_DASH } from '~/consts/characters'
+import { formatNetFlow } from '~/pages/interop/components/flows/graph/utils/chainLabel'
 import type {
   CompactProtocolEntry,
   ProtocolEntry,
@@ -93,7 +94,10 @@ function makeNameColumn<T extends CompactProtocolEntry>(opts?: {
   })
 }
 
-function makeCategoryColumn<T extends CompactProtocolEntry>() {
+function makeCategoryColumn<T extends CompactProtocolEntry>(opts?: {
+  /** Hides it with CSS below md. See `hideCollapsedColumnsBeforeMount`. */
+  hideOnPhones?: boolean
+}) {
   return createColumnHelper<T>().accessor((row) => row.type, {
     id: 'type',
     header: 'Category',
@@ -103,7 +107,8 @@ function makeCategoryColumn<T extends CompactProtocolEntry>() {
       </div>
     ),
     meta: {
-      headClassName: 'text-2xs',
+      headClassName: cn('text-2xs', opts?.hideOnPhones && 'max-md:hidden'),
+      cellClassName: opts?.hideOnPhones ? 'max-md:hidden' : undefined,
     },
   })
 }
@@ -133,7 +138,12 @@ function makeLast24hVolumeColumn<T extends CompactProtocolEntry>(
 
 const commonColumns = [
   makeLogoColumn<ProtocolEntry>(),
-  makeNameColumn<ProtocolEntry>(),
+  // 8px from the logo, like the summary's protocols table; one line from md,
+  // where the table scrolls sideways rather than wrap names.
+  makeNameColumn<ProtocolEntry>({
+    cellClassName: 'md:pl-2! md:whitespace-nowrap',
+    headClassName: 'md:pl-2!',
+  }),
 ]
 const categoryColumn = makeCategoryColumn<ProtocolEntry>()
 const last24hVolumeColumn = makeLast24hVolumeColumn<ProtocolEntry>()
@@ -204,7 +214,6 @@ function makeTokensColumn(opts: {
   return columnHelper.accessor('tokens', {
     header: 'Tokens\nby volume',
     meta: {
-      cellClassName: '!pr-0',
       headClassName: 'text-2xs',
       tooltip:
         'Tokens involved in transfers over the past 24 hours, ranked by total transfer volume. For each transfer, value is counted towards both the source and the destination token.',
@@ -262,6 +271,13 @@ export function getAllProtocolsColumns(
   showNetMintedValueColumn?: boolean,
   hideTokensColumn?: boolean,
   tokenId?: string,
+  /**
+   * Hides Category and Transfer types below md with CSS, for the
+   * markup painted before the viewport is known. After that the table hides
+   * them through its column visibility, which the Columns menu can turn back
+   * on. See `AllProtocolsTable`.
+   */
+  hideCollapsedColumnsBeforeMount?: boolean,
 ) {
   return compact([
     columnHelper.accessor((_, index) => index + 1, {
@@ -275,14 +291,21 @@ export function getAllProtocolsColumns(
       size: 44,
     }),
     ...commonColumns,
-    categoryColumn,
+    hideCollapsedColumnsBeforeMount
+      ? makeCategoryColumn<ProtocolEntry>({ hideOnPhones: true })
+      : categoryColumn,
     !hideTypeColumn &&
       columnHelper.accessor('bridgeTypes', {
         header: 'Transfer types',
         enableSorting: false,
         cell: (ctx) => {
           return (
-            <div className="flex items-center gap-1" key={ctx.row.original.id}>
+            // One badge per line, so the column stays narrow and the figures
+            // after it stay in view; side by side from 2xl, where there's room.
+            <div
+              className="flex flex-col items-start gap-1 py-1.5 2xl:flex-row 2xl:items-center"
+              key={ctx.row.original.id}
+            >
               {ctx.row.original.bridgeTypes.map((bridgeType) => (
                 <BridgeTypeBadge
                   size="extraSmall"
@@ -294,12 +317,18 @@ export function getAllProtocolsColumns(
           )
         },
         meta: {
-          headClassName: 'text-2xs',
+          headClassName: cn(
+            'text-2xs',
+            hideCollapsedColumnsBeforeMount && 'max-md:hidden',
+          ),
+          cellClassName: hideCollapsedColumnsBeforeMount
+            ? 'max-md:hidden'
+            : undefined,
         },
       }),
     last24hVolumeColumn,
     columnHelper.accessor((row) => row.transferCount, {
-      header: 'Last 24h\ntransfer count',
+      header: 'Last 24h\ntransfers',
       cell: (ctx) => (
         <TransferCountCell
           transferCount={ctx.row.original.transferCount}
@@ -369,7 +398,7 @@ export function getAllProtocolsColumns(
             return <InteropNoDataBadge />
           return (
             <span className="font-medium text-label-value-15">
-              {formatCurrency(ctx.row.original.netMintedValue, 'usd')}
+              {formatNetFlow(ctx.row.original.netMintedValue)}
             </span>
           )
         },

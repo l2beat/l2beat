@@ -34,8 +34,10 @@ export function FrameworksTable({
   )
 
   return (
-    <PrimaryCard className="rounded-none! p-0 md:px-0 md:py-0">
-      <div className="overflow-x-auto">
+    <PrimaryCard className="table-scroll-root overflow-clip p-0 md:px-0 md:py-0">
+      {/* Scrolls sideways like a table, with the tables' edge fade while
+          more frameworks lie beyond the card. */}
+      <div className="table-scroller overflow-x-auto">
         <div className="flex min-w-fit">
           {sortedFrameworks.map((framework, i) => (
             <FrameworkColumn
@@ -49,6 +51,7 @@ export function FrameworksTable({
           ))}
         </div>
       </div>
+      <div aria-hidden className="table-edge-fade" />
     </PrimaryCard>
   )
 }

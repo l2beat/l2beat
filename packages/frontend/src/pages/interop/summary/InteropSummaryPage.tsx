@@ -121,7 +121,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
 
   return (
     <div
-      className="grid grid-cols-1 md:mt-5 md:grid-cols-2 min-[1600px]:grid-cols-3 min-md:gap-5"
+      className="grid grid-cols-1 md:mt-4 md:grid-cols-2 min-[1600px]:grid-cols-3 min-md:gap-4"
       data-hide-overflow-x
     >
       <div className="z-10">
@@ -146,7 +146,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
         isLoading={isLoading}
       />
       <TopTokenWidget topToken={data?.topToken} isLoading={isLoading} />
-      <div className="col-span-full grid grid-cols-1 min-[1024px]:grid-cols-[minmax(0,7fr)_minmax(0,3fr)] min-md:gap-5">
+      <div className="col-span-full grid grid-cols-1 min-[1024px]:grid-cols-[minmax(0,7fr)_minmax(0,3fr)] min-md:gap-4">
         <BreakdownByTransferType isLoading={isLoading} breakdown={breakdown} />
         <TokenCount
           isLoading={isLoading}
@@ -154,7 +154,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
           topItems={data?.topTokens}
         />
       </div>
-      <div className="col-span-full grid grid-cols-1 min-[1024px]:grid-cols-2 min-md:gap-5">
+      <div className="col-span-full grid grid-cols-1 min-[1024px]:grid-cols-2 min-md:gap-4">
         <NonMintingCard entries={nonMinting} isLoading={isLoading} />
         <LockAndMintCard entries={lockAndMint} isLoading={isLoading} />
         <BurnAndMintCard entries={burnAndMint} isLoading={isLoading} />

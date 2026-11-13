@@ -21,30 +21,32 @@ export function InteropTotalCard({
   return (
     <PrimaryCard
       className={cn(
-        'flex flex-col gap-2 px-5! py-4!',
+        'flex flex-col gap-2',
         mobile && 'rounded-lg! bg-surface-secondary! p-4!',
         className,
       )}
     >
-      <div className="flex items-center gap-2">
-        <h3 className="font-medium text-[11px] leading-[1.15] max-md:text-secondary max-md:uppercase md:font-bold md:text-heading-18 md:leading-none">
+      {/* Stacked in the narrow phone tiles, so both figures share a line
+          whether or not the period would wrap */}
+      <div
+        className={cn(
+          'flex',
+          mobile ? 'flex-col' : 'flex-wrap items-baseline gap-x-2',
+        )}
+      >
+        <h3 className="font-medium text-label-value-13 md:text-label-value-15">
           {title}
         </h3>
-        <Last24HoursBadge className="max-md:hidden" />
+        <Last24HoursBadge />
       </div>
       {isLoading ? (
         <Skeleton className="h-8 w-32" />
       ) : (
-        <span
-          className={cn(
-            'font-bold text-heading-20 md:text-heading-24',
-            mobile ? 'text-primary' : 'text-brand-deep',
-          )}
-        >
+        <span className="font-semibold text-heading-20 tabular-nums leading-none tracking-[-0.025em] md:text-heading-32">
           {value}
         </span>
       )}
-      <span className="font-medium text-label-value-15 text-secondary">
+      <span className="font-normal text-label-value-13 text-secondary">
         {description}
       </span>
     </PrimaryCard>

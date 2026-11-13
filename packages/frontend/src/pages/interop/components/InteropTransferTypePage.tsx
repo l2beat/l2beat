@@ -83,7 +83,7 @@ function Content({
   if (selectedChains.from.length === 0 && selectedChains.to.length === 0) {
     return (
       <>
-        <div className="max-md:hidden">
+        <div className="max-md:border-divider max-md:border-b max-md:bg-surface-primary max-md:pb-4">
           <HeaderWithDescription type={type} />
         </div>
         <InitialChainSelector
@@ -96,13 +96,11 @@ function Content({
 
   return (
     <>
-      <div className="max-md:hidden">
+      {/* Above the selector at every width, as in the picker state */}
+      <div className="max-md:bg-surface-primary max-md:pb-4">
         <HeaderWithDescription type={type} />
       </div>
       <MultiChainSelector chains={interopChains} protocols={protocols} />
-      <div className="max-md:bg-surface-primary md:hidden">
-        <HeaderWithDescription type={type} />
-      </div>
       <Widgets type={type} interopChains={interopChains} />
     </>
   )
@@ -130,7 +128,7 @@ function Widgets({
 
   return (
     <div
-      className="grid grid-cols-1 md:mt-5 md:grid-cols-2 min-[1600px]:grid-cols-3 min-md:gap-5"
+      className="grid grid-cols-1 md:mt-4 md:grid-cols-2 min-[1600px]:grid-cols-3 min-md:gap-4"
       data-hide-overflow-x
     >
       <div className="z-10">
@@ -170,9 +168,15 @@ function Widgets({
 
 function HeaderWithDescription({ type }: { type: KnownInteropBridgeType }) {
   const display = TRANSFER_TYPE_DISPLAY[type]
+  const title = `${display.label} protocols`
   return (
-    <MainPageHeader description={display.description}>
-      {`${display.label} Protocols`}
-    </MainPageHeader>
+    <>
+      {/* MainPageHeader shows its title from lg only, and these pages have no
+          phone tabs that would name them, so below lg the title is here. */}
+      <h1 className="px-4 pt-4 font-semibold text-heading-20 leading-6 tracking-[-0.01em] md:px-0 lg:hidden">
+        {title}
+      </h1>
+      <MainPageHeader description={display.description}>{title}</MainPageHeader>
+    </>
   )
 }

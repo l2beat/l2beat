@@ -12,6 +12,7 @@ import type { BasicTableRow } from '~/components/table/BasicTable'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { EM_DASH } from '~/consts/characters'
 import { BidirectionalArrowIcon } from '~/icons/BidirectionalArrow'
+import { formatNetFlow } from '~/pages/interop/components/flows/graph/utils/chainLabel'
 import type {
   AverageDuration,
   ProtocolDisplayable,
@@ -95,7 +96,7 @@ function getCommonColumns<T extends CommonRow>(
     }),
     columnHelper.accessor((row) => row.transferCount, {
       id: 'transferCount',
-      header: 'Last 24h\ntransfer count',
+      header: 'Last 24h\ntransfers',
       cell: (ctx) => (
         <div className="font-medium text-label-value-15">
           {formatInteger(ctx.row.original.transferCount)}
@@ -309,7 +310,7 @@ export const getTopTokensColumns = ({
             return <InteropNoDataBadge />
           return (
             <span className="font-medium text-label-value-15">
-              {formatCurrency(ctx.row.original.netMintedValue, 'usd')}
+              {formatNetFlow(ctx.row.original.netMintedValue)}
             </span>
           )
         },

@@ -54,13 +54,15 @@ export function ProtocolsPieChart({
           'aspect-square h-41 min-h-41',
           showSmallerChart && 'h-[128px] min-h-[128px]',
         )}
-        innerRadius={showSmallerChart ? 42 : 54}
+        innerRadius={showSmallerChart ? 46 : 60}
         outerRadius={showSmallerChart ? 64 : 82}
         formatValue={formatValue}
         centerLabel={{
           lines: [center.label],
           value: center.value,
-          compact: !!showSmallerChart,
+          // Long figures like "$230.85M" take the compact size so they
+          // stay inside the hole.
+          compact: !!showSmallerChart || String(center.value).length > 7,
         }}
       />
     </div>
