@@ -19,14 +19,15 @@ export function PublicationHeader<
 >({ publication }: { publication: T }) {
   return (
     <div>
-      <div className="flex items-center gap-2">
+      <p className="flex flex-wrap items-baseline gap-x-1 text-label-value-13">
         <PublicationTag tag={publication.tag} />
-        <p className="text-brand-deep text-subtitle-12 uppercase">
-          {publication.readTimeInMinutes} min read • Published on{' '}
+        <span className="text-secondary">·</span>
+        <span className="text-secondary">
+          {publication.readTimeInMinutes} min read · Published on{' '}
           {publication.publishedOn}
-        </p>
-      </div>
-      <h1 className="mt-2 text-heading-24 md:text-heading-32">
+        </span>
+      </p>
+      <h1 className="mt-3 font-semibold text-heading-24 tracking-[-0.02em] md:text-heading-32">
         {publication.title}
       </h1>
       {publication.description && (
@@ -41,11 +42,11 @@ export function PublicationHeader<
           className="mr-2 size-10 rounded-full"
         />
         <div>
-          <p className="font-bold text-label-value-16">
+          <p className="font-semibold text-label-value-15">
             {publication.author.firstName} {publication.author.lastName}
           </p>
           {publication.author.role && (
-            <p className="mt-1 font-bold text-label-value-12 text-zinc-500 dark:text-gray-50">
+            <p className="mt-1 text-label-value-13 text-secondary">
               {publication.author.role}
             </p>
           )}

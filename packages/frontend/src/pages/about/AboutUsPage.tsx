@@ -103,7 +103,7 @@ function MoreAboutUs() {
           className="group flex items-center gap-4 rounded-lg border border-divider p-4 transition-colors hover:bg-surface-secondary/50"
         >
           <span className="flex min-w-0 flex-1 flex-col gap-1">
-            <span className="font-bold text-lg group-hover:text-link">
+            <span className="font-semibold text-base group-hover:text-link">
               {item.title}
             </span>
             <span className="text-secondary text-sm">{item.description}</span>

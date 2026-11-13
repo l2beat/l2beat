@@ -16,11 +16,11 @@ export function GlossaryItem(props: Props) {
       <div className="group flex items-center gap-2 pb-2 text-primary">
         <a
           href={`#${props.entry.id}`}
-          className="flex items-center gap-2 font-bold text-2xl leading-[115%] no-underline"
+          className="flex items-center gap-2 font-semibold text-heading-20 leading-6 tracking-[-0.01em] no-underline"
         >
           {props.entry.data.term}
           {props.entry.data.isSpicy && (
-            <ChiliIcon className="size-6 shrink-0" />
+            <ChiliIcon className="size-5 shrink-0" />
           )}
         </a>
         <CopyButton
@@ -31,7 +31,7 @@ export function GlossaryItem(props: Props) {
         />
       </div>
 
-      <p className="font-normal text-base text-secondary leading-[170%] tracking-[-0.16px]">
+      <p className="font-normal text-base text-primary leading-[170%] tracking-[-0.16px]">
         {props.entry.data.definition}
       </p>
     </section>

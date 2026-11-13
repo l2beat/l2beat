@@ -26,10 +26,10 @@ export function LinkWithThumbnail(props: LinkWithThumbnailProps) {
         height={props.height}
         width={props.width}
       />
-      <div className="self-center py-[15px] transition-transform group-hover:translate-x-0.5">
+      <div className="self-center py-[15px] pr-4 transition-transform group-hover:translate-x-0.5">
         <div>
           {props.topAccessory && <div>{props.topAccessory}</div>}
-          <p className="text-balance text-heading-16 md:text-heading-18">
+          <p className="text-balance font-semibold text-heading-16 md:text-heading-18">
             {props.title}
           </p>
           {props.description && (

@@ -63,8 +63,10 @@
   margin-block: 1.4em 0.4em;
 }
 
+/* A subheading right under its heading still needs a visible step, about
+   twice the gap to its own text, or the two read as one block. */
 .article:not(.changelog) > :is(h2, h3, h4) + :is(h3, h4) {
-  margin-top: 0.6em;
+  margin-top: 0.9em;
 }
 
 .article:not(.changelog) > :first-child {

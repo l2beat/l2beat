@@ -86,11 +86,11 @@ export function ChangelogPage({ entries, ...props }: Props) {
                     <span className="mt-2 size-[15px] shrink-0 rounded-full border-2 border-surface-primary bg-brand" />
                     <article className="w-full rounded-lg border border-divider bg-surface-secondary p-4 md:p-6">
                       <div className="flex flex-wrap items-center gap-y-1">
-                        <p className="font-semibold text-brand-deep text-subtitle-12 uppercase">
+                        <p className="text-label-value-13 text-secondary">
                           {entry.publishedOn}
                         </p>
                       </div>
-                      <h2 className="mt-2 font-bold text-heading-24 text-primary leading-tight">
+                      <h2 className="mt-2 font-semibold text-heading-20 text-primary leading-6 tracking-[-0.01em]">
                         {entry.title}
                       </h2>
                       {entry.summary && (

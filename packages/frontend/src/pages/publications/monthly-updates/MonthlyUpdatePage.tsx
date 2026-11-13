@@ -44,13 +44,14 @@ export function MonthlyUpdatePage({ entry, ...props }: Props) {
           <MainPageHeader>Publication</MainPageHeader>
           <PrimaryCard className="row-start-2 md:p-8">
             <div>
-              <div className="flex items-baseline gap-2">
+              <p className="flex flex-wrap items-baseline gap-x-1 text-label-value-13">
                 <PublicationTag tag="monthly-update" />
-                <p className="text-brand-deep text-subtitle-12 uppercase">
+                <span className="text-secondary">·</span>
+                <span className="text-secondary">
                   Published on {entry.publishedOn}
-                </p>
-              </div>
-              <h1 className="mt-2 text-heading-24 md:text-heading-32">
+                </span>
+              </p>
+              <h1 className="mt-3 font-semibold text-heading-24 tracking-[-0.02em] md:text-heading-32">
                 {entry.title}
               </h1>
             </div>

@@ -10,11 +10,13 @@ export function NotFoundPage(props: AppLayoutProps) {
     <AppLayout {...props}>
       <SideNavLayout>
         <MainPageHeader>Page not found</MainPageHeader>
-        <PrimaryCard className="flex grow flex-col items-center justify-center gap-6 py-16 text-center max-md:bg-transparent">
+        <PrimaryCard className="flex grow flex-col items-center justify-center gap-6 py-16 text-center">
           <p className="font-bold text-[80px] text-brand leading-none">404</p>
           <div className="flex flex-col gap-2">
-            <h2 className="font-bold text-2xl">This page doesn't exist</h2>
-            <p className="text-secondary text-sm">
+            <h2 className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
+              This page doesn't exist
+            </h2>
+            <p className="text-label-value-15 text-secondary">
               The page you are looking for was moved, removed or never existed.
             </p>
           </div>

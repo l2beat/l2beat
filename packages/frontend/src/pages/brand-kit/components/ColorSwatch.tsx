@@ -56,7 +56,9 @@ export function ColorSwatch({
           {copied ? 'Copied!' : 'Copy color'}
         </TooltipContent>
       </Tooltip>
-      <span className="text-secondary text-xs">{label}</span>
+      <span className="font-medium text-label-value-13 text-primary">
+        {label}
+      </span>
     </div>
   )
 }

@@ -16,13 +16,13 @@ export function LogoPreviewCard({
       <div
         className={cn(
           'flex items-center justify-center rounded-lg border border-divider p-8',
-          background === 'dark' ? 'bg-black' : 'bg-white',
+          background === 'dark' ? 'bg-[#0D0C0C]' : 'bg-pure-white',
         )}
       >
         {children}
       </div>
-      <div className="flex items-center gap-1">
-        <span className="mr-1 text-secondary text-xs">
+      <div className="flex items-center gap-3">
+        <span className="font-medium text-label-value-13 text-primary">
           {background === 'dark' ? 'Light' : 'Dark'}
         </span>
         <DownloadButton href={svgHref}>SVG</DownloadButton>
@@ -43,7 +43,7 @@ function DownloadButton({
     <a
       href={href}
       download
-      className="flex items-center gap-1.5 font-medium text-primary text-xs underline decoration-dotted underline-offset-2 hover:text-brand-deep"
+      className="flex items-center gap-1.5 text-label-value-13 text-primary underline decoration-divider underline-offset-[0.3em] transition-colors hover:decoration-current"
     >
       {children}
     </a>

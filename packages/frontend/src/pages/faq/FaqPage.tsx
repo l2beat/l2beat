@@ -32,11 +32,11 @@ export function FaqPage(props: AppLayoutProps) {
               >
                 <a
                   href={`#${item.id}`}
-                  className="mb-4 block font-bold text-2xl text-primary leading-[115%] no-underline"
+                  className="mb-3 block font-semibold text-heading-20 text-primary leading-6 tracking-[-0.01em] no-underline"
                 >
                   {item.question}
                 </a>
-                <Markdown className="font-normal text-base text-secondary leading-7">
+                <Markdown className="font-normal text-base text-primary leading-7">
                   {item.answer}
                 </Markdown>
               </section>
@@ -51,10 +51,10 @@ export function FaqPage(props: AppLayoutProps) {
 
 function Header() {
   return (
-    <PrimaryCard className="flex flex-col">
-      <p className="font-bold text-lg">
+    <PrimaryCard className="flex flex-col gap-2">
+      <h2 className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
         Hi! We are glad you&apos;ve made it to FAQs!
-      </p>
+      </h2>
       <p>
         Below, you will find answers to the most frequently asked questions to
         help you better understand our website.

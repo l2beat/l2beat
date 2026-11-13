@@ -20,10 +20,8 @@ import { getPublicationTagLabel } from './PublicationTag'
 
 export function PublicationsList({
   publications,
-  newsletterBgUrl,
 }: {
   publications: PublicationEntry[]
-  newsletterBgUrl: string
 }) {
   const filterPublications = useFilterEntries()
 
@@ -51,16 +49,10 @@ export function PublicationsList({
           </DirectoryTabsTrigger>
         </DirectoryTabsList>
         <DirectoryTabsContent value="research" className="md:p-8">
-          <PublicationsGrid
-            publications={research}
-            newsletterBgUrl={newsletterBgUrl}
-          />
+          <PublicationsGrid publications={research} />
         </DirectoryTabsContent>
         <DirectoryTabsContent value="updates" className="md:p-8">
-          <PublicationsGrid
-            publications={updates}
-            newsletterBgUrl={newsletterBgUrl}
-          />
+          <PublicationsGrid publications={updates} />
         </DirectoryTabsContent>
       </DirectoryTabs>
     </>
@@ -69,34 +61,32 @@ export function PublicationsList({
 
 function PublicationsGrid({
   publications,
-  newsletterBgUrl,
 }: {
   publications: PublicationEntry[]
-  newsletterBgUrl: string
 }) {
   return (
     <div className="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-3">
-      <div
-        className="col-span-full row-start-2 flex w-full items-center justify-center gap-6 rounded-lg bg-center bg-cover py-5 pr-8 pl-6 text-white max-md:flex-col"
-        style={{ backgroundImage: `url(${newsletterBgUrl})` }}
-      >
-        <div className="space-y-3">
-          <div className="font-bold text-heading-24">
-            Want to get notified about new publications?
+      {/* A flat ink block, like the mandate band on the rename page. */}
+      <div className="home-theme col-span-full row-start-2">
+        <div className="home-inverted flex w-full items-center justify-center gap-6 rounded-lg bg-surface-primary px-6 py-5 text-primary max-md:flex-col">
+          <div className="space-y-2">
+            <div className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
+              Want to get notified about new publications?
+            </div>
+            <div className="text-label-value-15 text-secondary leading-5.5">
+              Get the latest insights - covering Ethereum Layer 2 ecosystem
+              updates, in-depth research and transparency reports, governance
+              proposals, and more.
+            </div>
           </div>
-          <div className="font-normal text-paragraph-14">
-            Get the latest insights - covering Ethereum Layer 2 ecosystem
-            updates, in-depth research and transparency reports, governance
-            proposals, and more.
-          </div>
+          <a
+            className="flex h-fit items-center justify-center whitespace-nowrap rounded-sm bg-pure-white px-6 py-4 font-bold text-label-value-16 text-neutral-900 max-md:w-full"
+            href={externalLinks.substackSubscribe}
+            target="_blank"
+          >
+            Subscribe to our newsletter
+          </a>
         </div>
-        <a
-          className="flex h-fit items-center justify-center whitespace-nowrap rounded-sm bg-white px-6 py-4 font-bold text-label-value-16 text-neutral-900 max-md:w-full"
-          href={externalLinks.substackSubscribe}
-          target="_blank"
-        >
-          Subscribe to our newsletter
-        </a>
       </div>
       {publications.map((publication) => (
         <PublicationCard publication={publication} key={publication.id} />
@@ -119,20 +109,20 @@ function PublicationCard({ publication }: { publication: PublicationEntry }) {
         />
       </div>
       <div className="flex-1 px-4 pt-4">
-        <p className="text-balance text-heading-18">
+        <p className="text-balance font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
           {publication.shortTitle ?? publication.title}
         </p>
         {publication.description && (
-          <p className="mt-2 line-clamp-3 text-paragraph-14 text-secondary">
+          <p className="mt-2 line-clamp-3 text-label-value-15 text-secondary leading-5.5">
             {publication.description}
           </p>
         )}
       </div>
       <div className="mx-4 mt-4 flex items-center gap-2 border-divider border-t py-3">
-        <span className="font-bold text-brand-deep text-label-value-12 uppercase">
+        <span className="font-medium text-label-value-13 text-primary">
           {getPublicationTagLabel(publication.tag)}
         </span>
-        <span className="text-label-value-12 text-secondary">
+        <span className="text-label-value-13 text-secondary">
           {formatPublicationDate(UnixTime.toDate(publication.publishedOn))}
         </span>
         <span className="ml-auto grid size-7 place-items-center rounded-full text-secondary transition-colors group-hover:bg-brand group-hover:text-pure-white">

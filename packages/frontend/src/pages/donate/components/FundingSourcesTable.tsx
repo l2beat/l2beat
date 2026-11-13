@@ -26,7 +26,7 @@ export function FundingSourcesTable() {
               <td className="whitespace-nowrap py-2 align-top md:px-4 md:align-middle">
                 {item.tier}
               </td>
-              <td className="max-md:hidden md:px-4">{item.description}</td>
+              <td className="py-2 max-md:hidden md:px-4">{item.description}</td>
             </tr>
           ))}
         </tbody>

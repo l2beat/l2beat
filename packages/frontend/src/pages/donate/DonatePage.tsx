@@ -83,10 +83,10 @@ function Header({ networks, qrCodeUrl }: HeaderProps) {
 function DonationDescription() {
   return (
     <div className="space-y-4 text-primary">
-      <p className="font-bold text-xl">
+      <h2 className="font-semibold text-xl">
         Thank you for supporting ETHBEAT&apos;s mission to bring education and
         transparency to the blockchain space.
-      </p>
+      </h2>
       <p className="font-normal text-base">
         We&apos;re committed to delivering accurate and reliable information. We
         strive to be an impartial and independent watchdog that acts in the best
@@ -105,7 +105,7 @@ function DonationDescription() {
 function DonationNetworks({ networks }: { networks: HeaderProps['networks'] }) {
   return (
     <div className="z-10 mt-4">
-      <span className="font-medium text-brand-deep text-xs uppercase">
+      <span className="font-medium text-label-value-13 text-primary">
         Donate through
       </span>
       <div className="mt-2 flex flex-col gap-2 md:flex-row md:flex-wrap">
@@ -215,9 +215,13 @@ export const fundingSources = [
     tier: 'Medium',
     description: (
       <span>
-        Live at <a href="https://dydx.l2beat.com">dydx.l2beat.com</a>, view the
-        code <a href="https://github.com/l2beat/starkex-explorer">here</a>.
-        Funded by StarkWare and dYdX
+        Live at{' '}
+        <CustomLink href="https://dydx.l2beat.com">dydx.l2beat.com</CustomLink>,
+        view the code{' '}
+        <CustomLink href="https://github.com/l2beat/starkex-explorer">
+          here
+        </CustomLink>
+        . Funded by StarkWare and dYdX
       </span>
     ),
   },
