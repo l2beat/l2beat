@@ -18,7 +18,7 @@ export function TableSectionHeader({
   children,
 }: Props) {
   return (
-    <div className="mb-3 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div className="mb-3 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
       <div className="min-w-0 md:flex-1">
         <div className="flex items-center gap-1.5">
           {icon}
@@ -37,7 +37,9 @@ export function TableSectionHeader({
           </p>
         )}
       </div>
-      {children}
+      {/* Pulled up 4px so a 32px control centres on the 24px title line,
+          whether or not a description follows. */}
+      {children && <div className="md:-my-1 md:shrink-0">{children}</div>}
     </div>
   )
 }
