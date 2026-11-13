@@ -25,7 +25,7 @@ export function TrustedSetupParticipants(
           {summary.phase && (
             <span
               aria-hidden
-              className="flex size-6 shrink-0 items-center justify-center rounded-full bg-surface-tertiary font-bold text-label-value-13"
+              className="flex size-6 shrink-0 items-center justify-center rounded-full bg-surface-tertiary font-semibold text-label-value-13"
             >
               {summary.phase}
             </span>

@@ -32,7 +32,7 @@ export function InteropTransferSizeBreakdown({
     <div>
       <span
         className={cn(
-          'text-label-value-13 leading-4',
+          'block text-label-value-13 leading-4',
           inSummary ? 'font-normal' : 'font-semibold',
         )}
       >

@@ -72,7 +72,7 @@ export function TrustedSetupsByProofSystemSection({
     <div className="flex flex-col gap-2 md:gap-3">
       <h2 className="font-semibold text-label-value-15">Trusted setups</h2>
       {/* Mobile */}
-      <div className="space-y-4 md:hidden">
+      <div className="space-y-6 md:hidden">
         {Object.entries(trustedSetupsByProofSystem).map(
           ([
             key,
@@ -379,7 +379,7 @@ function TechStackSection({
   const rightSideEmpty = !finalWrap?.length
 
   return (
-    <div className="mt-3 flex flex-col gap-2">
+    <div className="mt-3 flex flex-col gap-2 md:gap-3">
       <h2 className="font-semibold text-label-value-15">Tech stack</h2>
       <div className="flex gap-2 rounded-sm border-divider max-md:flex-col md:items-end md:border md:p-4">
         {leftSideEmpty && rightSideEmpty && <NoDataBadge />}

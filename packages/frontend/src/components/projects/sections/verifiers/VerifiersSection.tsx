@@ -90,7 +90,7 @@ export function VerifierRowDetails({
       <div className="space-y-3 px-3 md:px-4">
         {verifierHash.description && (
           <div className="space-y-2">
-            <div className="font-bold text-label-value-16">Description</div>
+            <div className="font-semibold text-label-value-16">Description</div>
             <p className="text-paragraph-14 text-secondary md:text-paragraph-15">
               {verifierHash.description}
             </p>
@@ -131,12 +131,12 @@ export function VerifierRowDetails({
         )}
       {verifierHash.verificationSteps && (
         <div className="space-y-3 px-3 md:px-4">
-          <div className="font-bold text-label-value-16">
+          <div className="font-semibold text-label-value-16">
             Verification steps
           </div>
           <Markdown
-            // Commands wrap on phones instead of clipping at the card edge.
-            className="min-w-0 text-paragraph-15 md:text-paragraph-16 max-md:[&_pre]:whitespace-pre-wrap max-md:[&_pre]:break-all"
+            // Commands wrap instead of clipping at the card edge.
+            className="[&_pre]:wrap-anywhere min-w-0 text-paragraph-15 md:text-paragraph-16 [&_pre]:whitespace-pre-wrap"
           >
             {verifierHash.verificationSteps}
           </Markdown>

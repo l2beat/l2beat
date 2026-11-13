@@ -98,7 +98,7 @@ export function L3RiskAnalysisSection({
         </RosetteTile>
         <RosetteTile>
           <span className="font-medium text-label-value-15 text-primary">
-            L3 {combined ? 'combined' : 'individual'} risks
+            {combined ? 'Combined (L2 + L3)' : 'L3 individual risks'}
           </span>
           <div className="flex items-center justify-between">
             <BigPizzaRosette
@@ -192,12 +192,15 @@ function CombinedRiskTable(props: {
                 </div>
               </HeaderCell>
               {props.combined
-                ? props.combined.map((risk) => (
+                ? props.combined.map((risk, i, all) => (
                     <RiskCell
                       key={risk.name}
                       {...risk}
                       backgroundFill
-                      className="border-t-divider"
+                      className={cn(
+                        'border-t-divider',
+                        i === all.length - 1 && 'rounded-br',
+                      )}
                     />
                   ))
                 : Array.from({ length: 5 }).map((_, i) => (

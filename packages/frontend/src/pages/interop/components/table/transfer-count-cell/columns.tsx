@@ -164,11 +164,15 @@ export function getTransferColumns(
           // Source over destination: side by side the pair overran the
           // column at 1280 and the destination was cut without a cue.
           <div className="flex w-max flex-col items-start gap-0.5 whitespace-nowrap">
-            <ChainCell
-              chain={srcChain}
-              iconUrl={srcChainIconUrl}
-              href={srcTxHashHref}
-            />
+            {/* Indented by the arrow and its gap, so both icons and both
+                names start at one x. */}
+            <div className="pl-[18px]">
+              <ChainCell
+                chain={srcChain}
+                iconUrl={srcChainIconUrl}
+                href={srcTxHashHref}
+              />
+            </div>
             <div className="flex items-center gap-1">
               <ArrowRightIcon className="size-3.5 shrink-0 fill-brand" />
               <ChainCell

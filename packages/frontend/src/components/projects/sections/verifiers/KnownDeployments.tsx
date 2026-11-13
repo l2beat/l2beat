@@ -31,7 +31,7 @@ export function KnownDeployments({
 }) {
   return (
     <div className="space-y-3 px-3 md:px-4">
-      <div className="flex items-center gap-1.5 font-bold text-label-value-16">
+      <div className="flex items-center gap-1.5 font-semibold text-label-value-16">
         Known deployments
         <span className="rounded bg-surface-secondary px-1.5 py-0.5 font-medium text-label-value-12 text-secondary tabular-nums">
           {deployments.length}

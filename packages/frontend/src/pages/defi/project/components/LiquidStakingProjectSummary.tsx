@@ -56,7 +56,7 @@ export function LiquidStakingProjectSummary({
       value: (
         <TableValueCell
           value={summary.risks[key]}
-          secondLineClassName="font-normal"
+          secondLineClassName="font-normal md:text-label-value-13 md:leading-4"
         />
       ),
     })),
