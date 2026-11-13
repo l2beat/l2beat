@@ -13,7 +13,6 @@ import { env } from '~/env'
 import { selectChainProjects } from '~/server/features/chains/getChainProjects'
 import { isListedDefiProject } from '~/server/features/defi/isListedDefiProject'
 import { hasDefiProjectPage } from '~/server/features/defi/project/hasDefiProjectPage'
-import { getAttestationsMeta } from '~/server/features/garden/getAttestationsMeta'
 import { UNKNOWN_ABSTRACT_TOKEN_ID } from '~/server/features/layer2s/interop/consts'
 import {
   getActiveInteropAbstractTokens,
@@ -23,6 +22,7 @@ import { ps } from '~/server/projects'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import { manifest } from '~/utils/Manifest'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
+import { getCropsAttestedIds } from './utils/getCropsAttestedIds'
 
 const searchIndexCache = new FrontendInMemoryCache('getSearchIndex')
 
@@ -37,12 +37,11 @@ export function getSearchIndexJson(): Promise<string> {
 }
 
 export async function buildSearchIndex(): Promise<SearchIndex> {
-  const [tokens, projects, attestation] = await Promise.all([
+  const [tokens, projects, cropsAttested] = await Promise.all([
     getActiveInteropAbstractTokens(),
     ps.getProjects({ optional: SEARCH_INDEX_PROJECT_KEYS }),
-    getAttestationsMeta(),
+    getCropsAttestedIds(),
   ])
-  const cropsAttested = new Set(attestation.current?.projectIds)
 
   // Rows are arrays themselves, so they are wrapped to survive flatMap.
   const projectRows = projects.flatMap((p) => {

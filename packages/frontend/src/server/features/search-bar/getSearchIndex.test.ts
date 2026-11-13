@@ -304,6 +304,25 @@ describe('search bar search', () => {
     ).toEqual([{ name: 'Safe', href: '/defi/projects/safe', category: 'defi' }])
   })
 
+  it('searches without CROPS projects when the attestation cannot be read', async () => {
+    env.CLIENT_SIDE_DEFI_ENABLED = false
+    env.CLIENT_SIDE_GARDEN_ENABLED = true
+    env.CLIENT_SIDE_OSSIFICATION_ENABLED = true
+    const projects = [
+      defiProject('safe', 'Safe', { garden: {}, ossificationHistory: {} }),
+      l2Project('safechain', 'Safechain'),
+    ]
+    // In mock mode this query stands in for the attestation read.
+    ps.getProjects = (async (query?: { where?: string[] }) => {
+      if (query?.where?.includes('crops')) throw new Error('Database down')
+      return projects
+    }) as never
+
+    const result = await getSearchBarEntries('safe')
+
+    expect(result.map((entry) => entry.name)).toEqual(['Safechain'])
+  })
+
   it('lists recently added projects with a page, newest first', async () => {
     env.CLIENT_SIDE_DEFI_ENABLED = false
     ps.getProjects = async () =>
