@@ -385,7 +385,7 @@ function TechStackSection({
         {leftSideEmpty && rightSideEmpty && <NoDataBadge />}
         {!leftSideEmpty && (
           <div className="flex flex-col">
-            <span className="font-medium text-label-value-13 text-primary">
+            <span className="font-normal text-label-value-13 text-primary">
               zkVM
             </span>
             <TechStackCell
@@ -399,7 +399,7 @@ function TechStackSection({
         )}
         {!rightSideEmpty && (
           <div className="flex flex-col">
-            <span className="font-medium text-label-value-13 text-primary">
+            <span className="font-normal text-label-value-13 text-primary">
               Final wrap
             </span>
             <TechStackCell

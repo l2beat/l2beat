@@ -32,7 +32,7 @@ export function TrustedSetupSection({
           return (
             <React.Fragment key={trustedSetup.name}>
               <div className="space-y-3">
-                <h3 className="font-bold text-heading-16">
+                <h3 className="font-semibold text-heading-16 leading-6 md:text-heading-18">
                   {trustedSetup.name}
                 </h3>
                 <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:gap-8">

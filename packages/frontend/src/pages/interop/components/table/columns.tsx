@@ -109,7 +109,7 @@ function makeCategoryColumn<T extends CompactProtocolEntry>() {
 }
 
 function makeLast24hVolumeColumn<T extends CompactProtocolEntry>(
-  header = 'Last 24h\nVolume',
+  header = 'Last 24h\nvolume',
 ) {
   return createColumnHelper<T>().accessor((row) => row.volume, {
     id: 'volume',

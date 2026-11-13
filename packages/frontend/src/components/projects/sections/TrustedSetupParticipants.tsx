@@ -25,13 +25,14 @@ export function TrustedSetupParticipants(
           {summary.phase && (
             <span
               aria-hidden
-              className="flex size-6 shrink-0 items-center justify-center rounded-full bg-surface-tertiary font-bold text-label-value-12"
+              className="flex size-6 shrink-0 items-center justify-center rounded-full bg-surface-tertiary font-bold text-label-value-13"
             >
               {summary.phase}
             </span>
           )}
           <div className="min-w-0">
-            <div className="flex flex-wrap items-baseline gap-x-3">
+            {/* Phases share a label track, so their counts start at one x. */}
+            <div className="flex flex-wrap items-baseline gap-x-3 md:grid md:grid-cols-[200px_auto]">
               <span className="font-semibold text-paragraph-15">
                 {summary.label}
                 {summary.phase && (
@@ -41,7 +42,7 @@ export function TrustedSetupParticipants(
                 )}
               </span>
               <span className="flex flex-wrap items-baseline gap-x-1.5">
-                <span className="font-bold text-heading-20 tabular-nums">
+                <span className="font-semibold text-heading-20 tabular-nums">
                   {summary.value}
                 </span>
                 {summary.unit && (

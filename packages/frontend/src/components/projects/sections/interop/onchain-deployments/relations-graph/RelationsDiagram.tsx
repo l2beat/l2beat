@@ -243,10 +243,10 @@ export function RelationsDiagram({
         </div>
       </div>
 
-      <div className="absolute bottom-3 left-3 flex flex-col items-start gap-1 text-label-value-12 text-secondary">
+      <div className="absolute right-14 bottom-3 left-3 flex flex-col items-start gap-1 text-label-value-12 text-secondary">
         {/* One chip, so the hints cover as few nodes as possible. */}
         <p className="rounded-md border border-divider bg-surface-primary px-2 py-1">
-          Past 24h crosschain volume ·{' '}
+          Past 24h cross-chain volume ·{' '}
           <span className="[@media(pointer:coarse)]:hidden">
             {fillsView
               ? 'Scroll or drag to move the diagram'

@@ -9,12 +9,16 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { EM_DASH } from '~/consts/characters'
 import type { TransferSizeDistribution } from '~/server/features/layer2s/interop/utils/getTransferSizeChartData'
+import { cn } from '~/utils/cn'
 import { getTransferSizeBreakdown } from '../utils/transferSizeBuckets'
 
 export function InteropTransferSizeBreakdown({
   transferSize,
+  inSummary = false,
 }: {
   transferSize: TransferSizeDistribution | undefined
+  /** In a summary card the title is a key like the stats beside it. */
+  inSummary?: boolean
 }) {
   const breakdownValues = getTransferSizeBreakdown(transferSize).map(
     (bucket) => ({
@@ -26,7 +30,12 @@ export function InteropTransferSizeBreakdown({
 
   return (
     <div>
-      <span className="font-semibold text-label-value-13 leading-4">
+      <span
+        className={cn(
+          'text-label-value-13 leading-4',
+          inSummary ? 'font-normal' : 'font-semibold',
+        )}
+      >
         Transfer size
       </span>
       <Tooltip>
@@ -34,7 +43,7 @@ export function InteropTransferSizeBreakdown({
           <div className="cursor-pointer">
             <Breakdown
               values={breakdownValues}
-              className="mt-2! h-1.5 w-full"
+              className={cn('h-1.5 w-full', inSummary ? 'mt-3!' : 'mt-2!')}
             />
             <div className="mt-2 flex flex-wrap gap-2">
               {breakdownValues.map((value) => (

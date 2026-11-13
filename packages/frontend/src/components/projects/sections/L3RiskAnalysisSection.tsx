@@ -93,12 +93,12 @@ export function L3RiskAnalysisSection({
             <BigIndividualRosette className="mx-auto my-6" l2={l2} l3={l3} />
           </div>
           <span className="text-center text-label-value-13 text-secondary">
-            Inner ring: {l2.name} (L2) · Outer ring: {l3.name} (L3)
+            Inner ring: {l2.name} (L2) • Outer ring: {l3.name} (L3)
           </span>
         </RosetteTile>
         <RosetteTile>
           <span className="font-medium text-label-value-15 text-primary">
-            L3 combined risks
+            L3 {combined ? 'combined' : 'individual'} risks
           </span>
           <div className="flex items-center justify-between">
             <BigPizzaRosette
@@ -185,7 +185,7 @@ function CombinedRiskTable(props: {
               ))}
             </tr>
             <tr className="[&>td:not(:last-child)]:border-r-0 [&>td]:border-t-2">
-              <HeaderCell className="rounded-bl border-t-secondary">
+              <HeaderCell className="rounded-bl border-t-divider">
                 <span>{props.l3.name}</span>
                 <div className="whitespace-nowrap font-normal text-label-value-13 text-secondary leading-none">
                   L3 • Combined
@@ -197,7 +197,7 @@ function CombinedRiskTable(props: {
                       key={risk.name}
                       {...risk}
                       backgroundFill
-                      className="border-t-secondary"
+                      className="border-t-divider"
                     />
                   ))
                 : Array.from({ length: 5 }).map((_, i) => (
@@ -205,7 +205,7 @@ function CombinedRiskTable(props: {
                       key={i}
                       value={EM_DASH}
                       sentiment="UnderReview"
-                      className="border-t-secondary"
+                      className="border-t-divider"
                     />
                   ))}
             </tr>

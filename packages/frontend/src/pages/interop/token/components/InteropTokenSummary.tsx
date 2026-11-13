@@ -182,11 +182,12 @@ function CategoryBadge({ category }: { category: string | null }) {
 
   return (
     <Badge
-      className="bg-blue-700 font-medium text-white"
+      className="self-start bg-blue-700 font-medium text-white leading-4"
       size="small"
       padding="small"
     >
-      {category}
+      {/* The category comes as a lowercase slug ("stablecoin"). */}
+      {category.charAt(0).toUpperCase() + category.slice(1)}
     </Badge>
   )
 }

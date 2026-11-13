@@ -134,7 +134,10 @@ export function VerifierRowDetails({
           <div className="font-bold text-label-value-16">
             Verification steps
           </div>
-          <Markdown className="min-w-0 text-paragraph-15 md:text-paragraph-16">
+          <Markdown
+            // Commands wrap on phones instead of clipping at the card edge.
+            className="min-w-0 text-paragraph-15 md:text-paragraph-16 max-md:[&_pre]:whitespace-pre-wrap max-md:[&_pre]:break-all"
+          >
             {verifierHash.verificationSteps}
           </Markdown>
         </div>

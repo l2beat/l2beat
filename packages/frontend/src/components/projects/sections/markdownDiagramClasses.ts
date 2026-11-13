@@ -9,6 +9,8 @@ export const MARKDOWN_DIAGRAM_CLASSES = [
   'max-md:[&_p:has(>img)]:-mx-4 max-md:[&_p:has(>img)]:overflow-x-auto max-md:[&_p:has(>img)]:px-4',
   'max-md:[&_p:has(>img)]:text-left max-md:[&_img]:w-[720px] max-md:[&_img]:max-w-none',
   "max-md:[&_p:has(>img)]:before:block max-md:[&_p:has(>img)]:before:text-label-value-13 max-md:[&_p:has(>img)]:before:text-secondary max-md:[&_p:has(>img)]:before:content-['Scroll_sideways_to_see_the_whole_diagram.']",
+  // The hint stays in view while the diagram scrolls under it.
+  'max-md:[&_p:has(>img)]:before:sticky max-md:[&_p:has(>img)]:before:left-0 max-md:[&_p:has(>img)_img]:mt-2',
 ].join(' ')
 
 /**

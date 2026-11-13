@@ -106,7 +106,7 @@ export const interopTokenOnchainDeploymentsColumns = [
     },
   }),
   columnHelper.accessor('volume', {
-    header: 'Last 24h\nVolume',
+    header: 'Last 24h\nvolume',
     cell: (ctx) => {
       if (ctx.row.original.volume === null)
         return <InteropNoDataBadge tooltip={noDataTooltip(ctx.row.original)} />
@@ -118,6 +118,7 @@ export const interopTokenOnchainDeploymentsColumns = [
     },
     meta: {
       align: 'right',
+      headClassName: 'text-2xs',
       tooltip:
         'The total USD value of all transfers involving this deployment in the past 24 hours.',
     },
@@ -135,6 +136,7 @@ export const interopTokenOnchainDeploymentsColumns = [
     },
     meta: {
       align: 'right',
+      headClassName: 'text-2xs',
       tooltip:
         'The total number of transfers involving this deployment in the past 24 hours.',
     },
@@ -161,6 +163,7 @@ export const interopTokenOnchainDeploymentsColumns = [
     },
     meta: {
       align: 'right',
+      headClassName: 'text-2xs',
       tooltip:
         'The average time it takes for a transfer involving this deployment to be received on the destination chain, measured over the past 24 hours.',
     },

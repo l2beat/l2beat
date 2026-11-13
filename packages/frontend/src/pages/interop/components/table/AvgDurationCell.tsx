@@ -75,12 +75,12 @@ function DurationCellItem({
   return (
     <div className={cn('flex items-center gap-1 whitespace-nowrap', className)}>
       <span className="text-label-value-13 text-primary leading-none">
-        {split.label}:
+        {split.label.replace('->', '→')}:
       </span>
       {split.duration !== null ? (
         <span className="leading-none">{formatSeconds(split.duration)}</span>
       ) : (
-        <Badge type="gray" size="extraSmall">
+        <Badge type="gray" size="small">
           N/A
         </Badge>
       )}

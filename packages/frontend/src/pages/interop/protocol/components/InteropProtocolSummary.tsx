@@ -98,9 +98,13 @@ export function InteropProtocolSummary({
         />
       </div>
       <HorizontalSeparator className="my-4" />
-      <InteropTransferSizeBreakdown transferSize={protocolData.transferSize} />
+      <InteropTransferSizeBreakdown
+        transferSize={protocolData.transferSize}
+        inSummary
+      />
       <HorizontalSeparator className="my-4" />
       <InteropTransferTypeBreakdown
+        inSummary
         byType={getBridgeTypeVolumes(protocolData?.entry?.byBridgeType)}
       />
       {protocol.header.description && (

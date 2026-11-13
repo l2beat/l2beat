@@ -4,7 +4,6 @@ import {
   getSortedRowModel,
 } from '@tanstack/react-table'
 import { useMemo } from 'react'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
   getPaginationItems,
   Pagination,
@@ -69,7 +68,7 @@ export function InteropTokenOnchainDeploymentsSection({
       {hasTokenRelations(graph) && (
         <>
           <TokenRelationsGraphView graph={graph} />
-          <HorizontalSeparator className="my-4" />
+          <div className="h-4" />
         </>
       )}
       <BasicTable table={table} tableWrapperClassName="pb-0" />
