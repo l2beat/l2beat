@@ -19,14 +19,14 @@ export function ChartTabs({ charts, className }: Props) {
             aria-label="Value secured chart"
             className="group w-full py-2.5"
           >
-            <div className="my-auto h-2 w-full rounded-full bg-surface-tertiary group-data-[state=active]:bg-brand" />
+            <div className="my-auto h-2 w-full rounded-full bg-surface-tertiary group-data-[state=active]:bg-primary" />
           </Tabs.Trigger>
           <Tabs.Trigger
             value="activity"
             aria-label="Activity chart"
             className="group w-full py-2.5"
           >
-            <div className="my-auto h-2 w-full rounded-full bg-surface-tertiary group-data-[state=active]:bg-brand" />
+            <div className="my-auto h-2 w-full rounded-full bg-surface-tertiary group-data-[state=active]:bg-primary" />
           </Tabs.Trigger>
         </Tabs.List>
       </Tabs.Root>
