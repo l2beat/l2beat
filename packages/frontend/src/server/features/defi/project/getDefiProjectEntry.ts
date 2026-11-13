@@ -98,7 +98,10 @@ export async function getDefiProjectEntry(
     getProjectOssification(project),
     getDefiTokens(project.defiInfo.tokens ?? []),
     project.liquidStaking
-      ? getLiquidStakingSummary(project, project.liquidStaking.risks)
+      ? getLiquidStakingSummary({
+          ...project,
+          liquidStaking: project.liquidStaking,
+        })
       : undefined,
   ])
   // DeFi pages get the Updates section together with ossification.

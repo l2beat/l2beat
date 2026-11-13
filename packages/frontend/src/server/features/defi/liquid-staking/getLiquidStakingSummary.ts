@@ -2,18 +2,18 @@ import type { Project, ProjectLiquidStakingRisks } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { type ChartRange, optionToRange } from '~/utils/range/range'
 import { getLatestTotalValueLocked } from '../getDefiTotalValueLocked'
-import { getEthPricesAt } from './getEthPricesAt'
 import {
   getLiquidStakingCharts,
   type LiquidStakingChartPoint,
   type LiquidStakingCharts,
   type LiquidStakingYieldPoint,
 } from './getLiquidStakingCharts'
+import { getTvlInEthAt, type TvlInEthProject } from './getTvlInEthAt'
 
 export interface LiquidStakingSummary {
   risks: ProjectLiquidStakingRisks
   totalValueLockedUsd?: number
-  /** The TVL in ETH, as a fraction of the ETH staked network-wide. */
+  /** The TVL in ETH at the protocol's rate, as a fraction of the ETH staked network-wide. */
   stakedEthShare?: LiquidStakingStakedEthShare
   yield?: LiquidStakingLatestValue
   costOfExit?: LiquidStakingLatestValue
@@ -32,11 +32,14 @@ export interface LiquidStakingStakedEthShare {
   timestamp: number
 }
 
-/** A project's latest TVL, also in ETH at that hour's ETH price. */
+/** A project's latest TVL, also in ETH at the protocol's rate. */
 export interface LiquidStakingTvl {
   valueUsd: number
   valueEth?: number
 }
+
+type LiquidStakingTvlProject = TvlInEthProject &
+  Pick<Project<'defiInfo'>, 'defiInfo'>
 
 /**
  * A value older than this shows as no data. Every page applies it, whatever
@@ -51,8 +54,7 @@ export function getLatestValuesRange(): ChartRange {
 
 /** The project's row of the liquid staking page, with the latest chart values. */
 export async function getLiquidStakingSummary(
-  project: Pick<Project<'defiInfo'>, 'id' | 'defiInfo'>,
-  risks: ProjectLiquidStakingRisks,
+  project: LiquidStakingTvlProject,
 ): Promise<LiquidStakingSummary> {
   const [tvlByProject, charts] = await Promise.all([
     getLiquidStakingTvl([project]),
@@ -60,7 +62,7 @@ export async function getLiquidStakingSummary(
   ])
   return buildLiquidStakingSummary(
     project.id,
-    risks,
+    project.liquidStaking.risks,
     tvlByProject.get(project.id),
     charts,
   )
@@ -68,21 +70,22 @@ export async function getLiquidStakingSummary(
 
 /** The latest TVL of each project, in USD and in ETH. */
 export async function getLiquidStakingTvl(
-  projects: Pick<Project<'defiInfo'>, 'id' | 'defiInfo'>[],
+  projects: LiquidStakingTvlProject[],
 ): Promise<Map<string, LiquidStakingTvl>> {
-  const latest = [...(await getLatestTotalValueLocked(projects))]
-  const ethPrices = await getEthPricesAt(latest.map(([, tvl]) => tvl.timestamp))
+  const latest = await getLatestTotalValueLocked(projects)
   return new Map(
-    latest.map(([projectId, tvl], i) => {
-      const ethPrice = ethPrices[i]
-      return [
-        projectId,
-        {
-          valueUsd: tvl.valueUsd,
-          valueEth: ethPrice ? tvl.valueUsd / ethPrice : undefined,
-        },
-      ]
-    }),
+    await Promise.all(
+      projects.flatMap((project) => {
+        const tvl = latest.get(project.id)
+        if (!tvl) return []
+        return getTvlInEthAt(project, [tvl.timestamp]).then(
+          ([valueEth]): [string, LiquidStakingTvl] => [
+            project.id,
+            { valueUsd: tvl.valueUsd, valueEth: valueEth ?? undefined },
+          ],
+        )
+      }),
+    ),
   )
 }
 

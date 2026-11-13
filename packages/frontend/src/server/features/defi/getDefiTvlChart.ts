@@ -9,12 +9,17 @@ import {
   rangeToResolution,
 } from '~/utils/range/range'
 import { getTvsChartByProjects } from '../tvs/getTvsChartByProjects'
-import { getEthStakedUsdAt } from './liquid-staking/getEthStakedUsdAt'
+import { getEthPricesAt } from './liquid-staking/getEthPricesAt'
+import { getEthStakedAt } from './liquid-staking/getEthStakedAt'
+import { getTvlInEthAt } from './liquid-staking/getTvlInEthAt'
 
 export const DefiTvlChartParams = v.object({
   projectId: v.string(),
   range: ChartRange,
-  /** Adds the USD value of the ETH staked network-wide to each point. */
+  /**
+   * Adds the USD value of the ETH staked network-wide to each point, and the
+   * TVL's share of it at the protocol's rate.
+   */
   withEthStaked: v.boolean().optional(),
 })
 
@@ -25,6 +30,7 @@ export interface DefiTvlChartResponse {
     timestamp: number,
     valueUsd: number | null,
     ethStakedUsd?: number | null,
+    stakedEthShare?: number | null,
   ][]
   resolution: ChartResolution
   syncedUntil: number | undefined
@@ -37,16 +43,29 @@ export async function getDefiTvlChart(
   const response = await getTvlChart(params)
   if (!params.withEthStaked) return response
 
-  const ethStakedUsd = await getEthStakedUsdAt(
-    response.chart.map(([timestamp]) => timestamp),
-  )
+  const timestamps = response.chart.map(([timestamp]) => timestamp)
+  const project = await ps.getProject({
+    id: ProjectId(params.projectId),
+    select: ['liquidStaking'],
+  })
+  const [ethStaked, ethPrices, tvlEth] = await Promise.all([
+    getEthStakedAt(timestamps),
+    getEthPricesAt(timestamps),
+    project ? getTvlInEthAt(project, timestamps) : [],
+  ])
   return {
     ...response,
-    chart: response.chart.map(([timestamp, valueUsd], i) => [
-      timestamp,
-      valueUsd,
-      ethStakedUsd[i] ?? null,
-    ]),
+    chart: response.chart.map(([timestamp, valueUsd], i) => {
+      const stake = ethStaked[i]
+      const price = ethPrices[i]
+      const tvl = tvlEth[i]
+      return [
+        timestamp,
+        valueUsd,
+        stake != null && price != null ? stake * price : null,
+        stake && tvl != null ? tvl / stake : null,
+      ]
+    }),
   }
 }
 

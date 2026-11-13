@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { getLatestAtOrBefore } from './getEthStakedUsdAt'
+import { getLatestAtOrBefore } from './getEthStakedAt'
 
 describe(getLatestAtOrBefore.name, () => {
   it('takes the latest point at or before each timestamp, within the max age', () => {

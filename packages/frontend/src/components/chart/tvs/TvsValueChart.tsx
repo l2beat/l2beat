@@ -22,6 +22,8 @@ interface TvsValueChartDataPoint {
   value: number | null
   /** USD value of the ETH staked network-wide, drawn behind the TVL. */
   ethStaked?: number | null
+  /** The TVL at the protocol's rate, as a fraction of the ETH staked. */
+  stakedEthShare?: number | null
 }
 
 interface Props {
@@ -108,10 +110,7 @@ function TvsValueChartTooltip({
 }) {
   // The TVL first, then the total it is a part of
   const payload = getTooltipEntries(row, keys).reverse()
-  const share =
-    keys.includes('ethStaked') && row.value != null && row.ethStaked
-      ? row.value / row.ethStaked
-      : undefined
+  const share = keys.includes('ethStaked') ? row.stakedEthShare : undefined
 
   return (
     <ChartTooltipWrapper>
@@ -131,12 +130,14 @@ function TvsValueChartTooltip({
               {entry.value === null
                 ? 'No data'
                 : formatCurrency(entry.value, 'usd')}
-              {entry.name === 'value' && share !== undefined && (
-                <span className="text-secondary">
-                  {' '}
-                  ({formatPercent(share)})
-                </span>
-              )}
+              {entry.name === 'value' &&
+                entry.value !== null &&
+                share != null && (
+                  <span className="text-secondary">
+                    {' '}
+                    ({formatPercent(share)})
+                  </span>
+                )}
             </span>
           </ChartTooltipRow>
         ))}

@@ -2,35 +2,16 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { toEth } from './computeLiquidStakingCharts'
-import { getEthPricesAt } from './getEthPricesAt'
 
 /** A day's stake stands for the two days after it starts, so a late indexer leaves no gap. */
 const MAX_STAKE_AGE = 2 * UnixTime.DAY
 const MOCK_ETH_STAKED = 34_000_000
 
-/**
- * The USD value of the ETH staked network-wide at each timestamp: the stake
- * as the day started, at the ETH price TVS used then. Null when either is
- * missing.
- */
-export async function getEthStakedUsdAt(
+/** The ETH staked network-wide at each timestamp, as the day started; null when missing. */
+export async function getEthStakedAt(
   timestamps: number[],
 ): Promise<(number | null)[]> {
   if (timestamps.length === 0) return []
-  const [ethStaked, ethPrices] = await Promise.all([
-    getEthStakedAt(timestamps),
-    getEthPricesAt(timestamps),
-  ])
-  return timestamps.map((_, i) => {
-    const stake = ethStaked[i]
-    const price = ethPrices[i]
-    return stake != null && price != null ? stake * price : null
-  })
-}
-
-async function getEthStakedAt(
-  timestamps: number[],
-): Promise<(number | null)[]> {
   if (env.MOCK) return timestamps.map(() => MOCK_ETH_STAKED)
   const records = await getDb().ethereumStakingDaily.getInRange(
     UnixTime(Math.min(...timestamps) - MAX_STAKE_AGE),

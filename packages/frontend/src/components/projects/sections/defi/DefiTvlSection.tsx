@@ -44,10 +44,11 @@ export function DefiTvlSection({
 
   const chartData = useMemo(
     () =>
-      data?.chart.map(([timestamp, value, ethStaked]) => ({
+      data?.chart.map(([timestamp, value, ethStaked, stakedEthShare]) => ({
         timestamp,
         value,
         ethStaked,
+        stakedEthShare,
       })),
     [data],
   )
