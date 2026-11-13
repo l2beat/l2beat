@@ -133,10 +133,10 @@ export const derivev3: ScalingProject = {
       orderHint: submitterStallTimeout,
     },
     proposerFailure: {
-      value: 'Self propose',
+      value: 'Cannot withdraw',
       description: `If an L1 action stays unprocessed for ${formatSeconds(submitterStallTimeout)}, anyone can remove the batch submitter and submit batches. However, the zkVM program is not public, so independent proving is not possible from published artifacts.`,
       sentiment: 'bad',
-      orderHint: submitterStallTimeout,
+      orderHint: Number.NEGATIVE_INFINITY,
     },
   },
   stage: getAltDaStage({
