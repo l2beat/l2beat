@@ -6,6 +6,7 @@ import type {
 import { notUndefined, ProjectId } from '@l2beat/shared-pure'
 import { ETHEREUM_PROJECT_PATH } from '~/pages/ethereum/paths'
 import { ps } from '~/server/projects'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 
 type Common = {
   layerName: string
@@ -68,7 +69,7 @@ export async function getL2DaSolutions(
             daLayer.id === ProjectId.ETHEREUM
               ? ETHEREUM_PROJECT_PATH
               : daLayer.scalingInfo
-                ? `/layer2s/projects/${daLayer.slug}`
+                ? getProjectPath(daLayer.slug)
                 : undefined,
           bridgeName: daBridge?.name ?? 'No bridge',
           hostChainName: project.scalingInfo.hostChain.name,

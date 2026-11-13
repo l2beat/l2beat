@@ -1,4 +1,5 @@
 import { ps } from '~/server/projects'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import {
   firstSentence,
   type LinkListSection,
@@ -16,13 +17,13 @@ export async function getScalingListSections(): Promise<LinkListSection[]> {
   const archived = scaling.filter((p) => p.archivedAt)
   const archivedSections = [
     {
-      heading: 'Archived Layer 2s (/layer2s/projects/{slug})',
+      heading: 'Archived Layer 2s (/projects/{slug})',
       links: archived
         .filter((p) => p.scalingInfo.layer === 'layer2')
         .map(scalingLink),
     },
     {
-      heading: 'Archived Layer 3s (/layer2s/projects/{slug})',
+      heading: 'Archived Layer 3s (/projects/{slug})',
       links: archived
         .filter((p) => p.scalingInfo.layer === 'layer3')
         .map(scalingLink),
@@ -30,13 +31,13 @@ export async function getScalingListSections(): Promise<LinkListSection[]> {
   ].filter((section) => section.links.length > 0)
   return [
     {
-      heading: 'Layer 2s (/layer2s/projects/{slug})',
+      heading: 'Layer 2s (/projects/{slug})',
       links: active
         .filter((p) => p.scalingInfo.layer === 'layer2')
         .map(scalingLink),
     },
     {
-      heading: 'Layer 3s (/layer2s/projects/{slug})',
+      heading: 'Layer 3s (/projects/{slug})',
       links: active
         .filter((p) => p.scalingInfo.layer === 'layer3')
         .map(scalingLink),
@@ -59,7 +60,7 @@ function scalingLink(project: {
   const info = project.scalingInfo
   return {
     name: project.name,
-    path: `/layer2s/projects/${project.slug}`,
+    path: getProjectPath(project.slug),
     description: withFacts(firstSentence(project.display?.description ?? ''), [
       info.type ?? 'Other',
       info.stage !== 'Not applicable' && info.stage,

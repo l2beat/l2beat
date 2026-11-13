@@ -24,12 +24,12 @@ describe(createMarkdownAlternatesRouter.name, () => {
     getSections: () =>
       Promise.resolve([
         {
-          heading: 'Layer 2s (/layer2s/projects/{slug})',
+          heading: 'Layer 2s (/projects/{slug})',
           description: 'What the section lists.',
           links: [
             {
               name: 'Arbitrum One',
-              path: '/layer2s/projects/arbitrum',
+              path: '/projects/arbitrum',
               description:
                 'Optimistic Rollup, Stage 1. A general-purpose rollup.',
             },
@@ -59,11 +59,11 @@ describe(createMarkdownAlternatesRouter.name, () => {
         '',
         'Intro shown above the table.',
         '',
-        '## Layer 2s (/layer2s/projects/{slug})',
+        '## Layer 2s (/projects/{slug})',
         '',
         'What the section lists.',
         '',
-        '- [Arbitrum One](https://ethbeat.org/layer2s/projects/arbitrum): Optimistic Rollup, Stage 1. A general-purpose rollup.',
+        '- [Arbitrum One](https://ethbeat.org/projects/arbitrum): Optimistic Rollup, Stage 1. A general-purpose rollup.',
         '',
       ].join('\n'),
     )
@@ -113,15 +113,15 @@ describe(createMarkdownAlternatesRouter.name, () => {
     const pathsOf = (archived: boolean) =>
       projects
         .filter((p) => !!p.archivedAt === archived)
-        .map((p) => `/zk-catalog/${p.slug}`)
+        .map((p) => `/projects/${p.slug}`)
         .toSorted()
 
     const sections = await getSectionPaths('/zk-catalog.md')
 
     expect(pathsOf(true).length).toBeGreaterThan(0)
     expect(sections).toEqual({
-      'Proving systems (/zk-catalog/{slug})': pathsOf(false),
-      'Archived proving systems (/zk-catalog/{slug})': pathsOf(true),
+      'Proving systems (/projects/{slug})': pathsOf(false),
+      'Archived proving systems (/projects/{slug})': pathsOf(true),
     })
   })
 
@@ -137,7 +137,7 @@ describe(createMarkdownAlternatesRouter.name, () => {
         .filter(
           (p) => p.scalingInfo.layer === layer && !!p.archivedAt === archived,
         )
-        .map((p) => `/layer2s/projects/${p.slug}`)
+        .map((p) => `/projects/${p.slug}`)
         .toSorted()
 
     const sections = await getSectionPaths('/layer2s/summary.md')
@@ -145,10 +145,10 @@ describe(createMarkdownAlternatesRouter.name, () => {
     expect(pathsOf('layer2', true).length).toBeGreaterThan(0)
     expect(pathsOf('layer3', true).length).toBeGreaterThan(0)
     expect(sections).toEqual({
-      'Layer 2s (/layer2s/projects/{slug})': pathsOf('layer2', false),
-      'Layer 3s (/layer2s/projects/{slug})': pathsOf('layer3', false),
-      'Archived Layer 2s (/layer2s/projects/{slug})': pathsOf('layer2', true),
-      'Archived Layer 3s (/layer2s/projects/{slug})': pathsOf('layer3', true),
+      'Layer 2s (/projects/{slug})': pathsOf('layer2', false),
+      'Layer 3s (/projects/{slug})': pathsOf('layer3', false),
+      'Archived Layer 2s (/projects/{slug})': pathsOf('layer2', true),
+      'Archived Layer 3s (/projects/{slug})': pathsOf('layer3', true),
     })
   })
 
@@ -174,11 +174,11 @@ describe(createMarkdownAlternatesRouter.name, () => {
       })
       const expected = projects.flatMap((p) =>
         p.scalingInfo
-          ? [`/layer2s/projects/${p.slug}`]
+          ? [`/projects/${p.slug}`]
           : p.privacyInfo
-            ? [`/privacy/projects/${p.slug}`]
+            ? [`/projects/${p.slug}`]
             : p.defiInfo
-              ? [`/defi/projects/${p.slug}`]
+              ? [`/projects/${p.slug}`]
               : [],
       )
 

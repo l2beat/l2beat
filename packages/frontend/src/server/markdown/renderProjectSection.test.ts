@@ -43,7 +43,7 @@ describe(renderProjectSection.name, () => {
     it('words summary risks the same way, with warnings nested under them', () => {
       const markdown = renderProjectMarkdown({
         name: 'Arbitrum One',
-        pagePath: '/layer2s/projects/arbitrum',
+        pagePath: '/projects/arbitrum',
         summary: {
           warnings: [],
           facts: [],
@@ -211,7 +211,7 @@ describe(renderProjectSection.name, () => {
           {
             name: 'SP1',
             icon: '/icons/sp1.png',
-            href: '/zk-catalog/sp1',
+            href: '/projects/sp1',
             trustedSetups: {
               'Groth16-bn254': {
                 trustedSetups: [
@@ -244,7 +244,7 @@ describe(renderProjectSection.name, () => {
 
     expect(markdown).toInclude(
       '![A diagram](https://ethbeat.org/images/diagram.png)',
-      '### Prover: [SP1](https://ethbeat.org/zk-catalog/sp1)\n\n#### Trusted setups\n\n- Groth16 (Groth16):\n  - Aztec Ignition, risk green (lowest risk) per the [Trusted Setups Risk Framework](https://forum.l2beat.com/t/the-trusted-setups-framework-for-zk-catalog/381): Large ceremony.\n  - Used in: none\n  - Verifiers: 2 successful',
+      '### Prover: [SP1](https://ethbeat.org/projects/sp1)\n\n#### Trusted setups\n\n- Groth16 (Groth16):\n  - Aztec Ignition, risk green (lowest risk) per the [Trusted Setups Risk Framework](https://forum.l2beat.com/t/the-trusted-setups-framework-for-zk-catalog/381): Large ceremony.\n  - Used in: none\n  - Verifiers: 2 successful',
       '### Program Hashes\n\n#### Aggregation program',
       'Hashes are checked onchain.',
     )
@@ -324,7 +324,7 @@ describe(renderProjectSection.name, () => {
             references: [],
             relatedProjectBanner: {
               text: 'Learn more about the DA layer here:',
-              href: '/layer2s/projects/celestia',
+              href: '/projects/celestia',
               project: { name: 'Celestia', icon: '/icons/celestia.png' },
             },
           },
@@ -333,11 +333,11 @@ describe(renderProjectSection.name, () => {
     })
 
     expect(riskSummary).toInclude(
-      'There are 3 additional risks coming from the host chain [Arbitrum One](https://ethbeat.org/layer2s/projects/arbitrum)',
+      'There are 3 additional risks coming from the host chain [Arbitrum One](https://ethbeat.org/projects/arbitrum)',
     )
     expect(technology).toInclude(
-      'The section considers only the L3 properties. For more details please refer to [Arbitrum One](https://ethbeat.org/layer2s/projects/arbitrum)',
-      'Blobs go to Celestia.\n\nLearn more about the DA layer here: [Celestia](https://ethbeat.org/layer2s/projects/celestia)',
+      'The section considers only the L3 properties. For more details please refer to [Arbitrum One](https://ethbeat.org/projects/arbitrum)',
+      'Blobs go to Celestia.\n\nLearn more about the DA layer here: [Celestia](https://ethbeat.org/projects/celestia)',
     )
   })
 
@@ -362,7 +362,7 @@ describe(renderProjectSection.name, () => {
     })
 
     expect(markdown).toInclude(
-      '### [2026-08-29 10:40 UTC](https://ethbeat.org/layer2s/projects/arbitrum?update=update-1) (high severity, 3 changes)\n\nUpgraded the bridge.',
+      '### [2026-08-29 10:40 UTC](https://ethbeat.org/projects/arbitrum?update=update-1) (high severity, 3 changes)\n\nUpgraded the bridge.',
     )
   })
 
@@ -416,7 +416,7 @@ describe(renderProjectSection.name, () => {
 
     expect(markdown).toInclude(
       '### Ongoing anomaly\n\n- No state updates have been performed for the past 2h (since 2026-08-29 10:40 UTC). These typically occur every 1h on average.',
-      'The interactive liveness chart is shown on [the HTML page](https://ethbeat.org/layer2s/projects/arbitrum#liveness).',
+      'The interactive liveness chart is shown on [the HTML page](https://ethbeat.org/projects/arbitrum#liveness).',
       '#### State updates\n\n- functionCall: 2023-11-14 22:13 UTC - now; currently used; address: [0x1111111111111111111111111111111111111111](https://etherscan.io/address/0x1111111111111111111111111111111111111111); selector: 0x12345678; signature: `function update()`',
       '### Last 30 day anomalies',
     )
@@ -509,7 +509,7 @@ describe(renderProjectSection.name, () => {
     })
 
     expect(markdown).toInclude(
-      'The interactive tokens table is shown on [the HTML page](https://ethbeat.org/layer2s/projects/arbitrum#interop-tokens).',
+      'The interactive tokens table is shown on [the HTML page](https://ethbeat.org/projects/arbitrum#interop-tokens).',
     )
   })
 
@@ -609,7 +609,7 @@ describe(renderProjectSection.name, () => {
   })
 })
 
-const PAGE_URL = 'https://ethbeat.org/layer2s/projects/arbitrum'
+const PAGE_URL = 'https://ethbeat.org/projects/arbitrum'
 
 /** Links resolve against the page once the whole document is assembled, as `renderProjectMarkdown` does. */
 function render(section: ProjectDetailsSection) {

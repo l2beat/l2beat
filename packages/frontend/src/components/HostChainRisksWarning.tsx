@@ -1,3 +1,4 @@
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { ProjectDetailsRelatedProjectBanner } from './ProjectDetailsRelatedProjectBanner'
 import { hostChainRisksText } from './projects/sections/sectionCopy'
 
@@ -21,7 +22,7 @@ export function HostChainRisksWarning({
         name: hostChainName,
         icon: hostChainIcon,
       }}
-      href={`/layer2s/projects/${hostChainSlug}`}
+      href={getProjectPath(hostChainSlug)}
     />
   )
 }

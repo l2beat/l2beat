@@ -4,6 +4,7 @@ import groupBy from 'lodash/groupBy'
 import mapValues from 'lodash/mapValues'
 import uniqBy from 'lodash/uniqBy'
 import { ps } from '~/server/projects'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import {
   firstSentence,
   type LinkListSection,
@@ -22,13 +23,13 @@ export async function getZkListSections(): Promise<LinkListSection[]> {
   const archived = projects.filter((p) => p.archivedAt)
   return [
     {
-      heading: 'Proving systems (/zk-catalog/{slug})',
+      heading: 'Proving systems (/projects/{slug})',
       links: active.map(zkLink),
     },
     ...(archived.length > 0
       ? [
           {
-            heading: 'Archived proving systems (/zk-catalog/{slug})',
+            heading: 'Archived proving systems (/projects/{slug})',
             links: archived.map(zkLink),
           },
         ]
@@ -45,7 +46,7 @@ function zkLink(project: {
   const info = project.zkCatalogInfo
   return {
     name: project.name,
-    path: `/zk-catalog/${project.slug}`,
+    path: getProjectPath(project.slug),
     description: withFacts(firstSentence(project.display?.description ?? ''), [
       info.creator && `by ${info.creator}`,
       info.quantumResistant && 'quantum resistant',
