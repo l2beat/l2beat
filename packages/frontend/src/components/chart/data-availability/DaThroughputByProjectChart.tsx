@@ -2,7 +2,7 @@ import type { Milestone } from '@l2beat/config'
 import { formatBytes, type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import sum from 'lodash/sum'
 import uniq from 'lodash/uniq'
-import { useMemo } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type {
   ChartMeta,
@@ -55,6 +55,15 @@ const CAPACITY_KEYS = ['projectTarget', 'projectMax'] as const
 
 const colorsCache = new Map<string, string>()
 
+/**
+ * Sums every project whose legend item is off, so the stack always adds up
+ * to the total chart. Turning a project on breaks it out of this band.
+ */
+const OTHERS_KEY = '__others'
+const UNKNOWN_KEY = 'Unknown'
+/** Projects broken out of Others when the chart loads */
+const SHOWN_PROJECTS = 5
+
 export function DaThroughputByProjectChart({
   data,
   project,
@@ -82,8 +91,8 @@ export function DaThroughputByProjectChart({
             .reverse()
             .flatMap(([_, values]) => Object.keys(values ?? {}))
             .sort((a, b) => {
-              if (a === 'Unknown') return 1
-              if (b === 'Unknown') return -1
+              if (a === UNKNOWN_KEY) return 1
+              if (b === UNKNOWN_KEY) return -1
               return 0
             }),
         )
@@ -107,7 +116,7 @@ export function DaThroughputByProjectChart({
         const colorFromCache = colorsCache.get(project)
         if (colorFromCache) {
           color = colorFromCache
-        } else if (project === 'Unknown') {
+        } else if (project === UNKNOWN_KEY) {
           color = 'var(--secondary)'
         } else if (customColors?.[project]) {
           color = customColors[project]
@@ -129,14 +138,35 @@ export function DaThroughputByProjectChart({
     // Empty until projects load: the legend picks its shown keys from the
     // first non-empty meta, which would otherwise hide every project
     if (allProjects.length === 0) return projectsMeta
-    // Capacity goes first, so its legend items lead
-    return { ...capacityMeta, ...projectsMeta } as ChartMeta
+    const { [UNKNOWN_KEY]: unknownMeta, ...namedMeta } = projectsMeta
+    const named = Object.entries(namedMeta)
+    // Capacity leads the legend, then the shown projects, Unknown and
+    // Others, so the tail of off projects comes last
+    return {
+      ...capacityMeta,
+      ...Object.fromEntries(named.slice(0, SHOWN_PROJECTS)),
+      ...(unknownMeta && { [UNKNOWN_KEY]: unknownMeta }),
+      [OTHERS_KEY]: {
+        label: 'Others',
+        color:
+          'color-mix(in oklab, var(--secondary) 40%, var(--surface-primary))',
+        indicatorType: { shape: 'square' },
+      },
+      ...Object.fromEntries(named.slice(SHOWN_PROJECTS)),
+    } as ChartMeta
   }, [colors, customColors, allProjects, capacityMeta])
 
-  const hiddenDataKeys = useMemo(() => {
-    // Max capacity starts hidden, as on the total chart
-    return [...allProjects.slice(5), 'projectMax']
-  }, [allProjects])
+  const hiddenDataKeys = useMemo(
+    () => [
+      // Off projects are drawn inside Others
+      ...allProjects
+        .filter((project) => project !== UNKNOWN_KEY)
+        .slice(SHOWN_PROJECTS),
+      // Max capacity starts hidden, as on the total chart
+      'projectMax',
+    ],
+    [allProjects],
+  )
 
   const capacityByTimestamp = useMemo(
     () =>
@@ -151,6 +181,26 @@ export function DaThroughputByProjectChart({
 
   const { dataKeys, toggleDataKey, toggleAllDataKeys, showAllSelected } =
     useChartDataKeys(chartMeta, hiddenDataKeys)
+
+  // The legend keeps its keys from the first data. A project that appears
+  // later (another range, or non-L2 posters) gets the same default as on
+  // load: broken out if it is Unknown or a top project, else in Others.
+  const seenProjects = useRef(new Set<string>())
+  useEffect(() => {
+    const seen = seenProjects.current
+    const isFirstData = seen.size === 0
+    for (const project of allProjects) {
+      if (seen.has(project)) continue
+      seen.add(project)
+      if (
+        !isFirstData &&
+        !hiddenDataKeys.includes(project) &&
+        !dataKeys.includes(project)
+      ) {
+        toggleDataKey(project)
+      }
+    }
+  }, [allProjects, hiddenDataKeys, dataKeys, toggleDataKey])
 
   const max = useMemo(() => {
     return data
@@ -174,6 +224,11 @@ export function DaThroughputByProjectChart({
   }, [data, allProjects, capacityByTimestamp])
 
   const { denominator, unit } = useMemo(() => getDaDataParams(max), [max])
+
+  const othersProjects = useMemo(
+    () => allProjects.filter((project) => !dataKeys.includes(project)),
+    [allProjects, dataKeys],
+  )
 
   const chartData = useMemo(() => {
     if (allProjects.length === 0) {
@@ -202,6 +257,13 @@ export function DaThroughputByProjectChart({
           }
         }
 
+        let others: number | null = isSynced ? 0 : null
+        for (const project of othersProjects) {
+          const value = values?.[project]
+          if (value !== undefined) others = (others ?? 0) + value / denominator
+        }
+        result[OTHERS_KEY] = others
+
         if (capacityMeta) {
           const capacity = capacityByTimestamp.get(timestamp)
           for (const key of CAPACITY_KEYS) {
@@ -213,10 +275,18 @@ export function DaThroughputByProjectChart({
         return result
       }) ?? []
     )
-  }, [data, allProjects, denominator, capacityMeta, capacityByTimestamp])
+  }, [
+    data,
+    allProjects,
+    othersProjects,
+    denominator,
+    capacityMeta,
+    capacityByTimestamp,
+  ])
 
   const series: ChartSeries<string, ChartRow>[] = [
-    ...allProjects.map(
+    // Others last, so its band tops the stack
+    ...[...allProjects, OTHERS_KEY].map(
       (project): ChartSeries<string, ChartRow> => ({
         key: project,
         fill: chartMeta?.[project]?.color,
@@ -271,6 +341,7 @@ export function DaThroughputByProjectChart({
             keys={keys}
             denominator={denominator}
             resolution={resolution}
+            othersProjects={othersProjects}
           />
         )}
       />
@@ -283,11 +354,13 @@ function CustomTooltip({
   keys,
   denominator: mainDenominator,
   resolution,
+  othersProjects,
 }: {
   row: ChartRow
   keys: string[]
   denominator: number
   resolution: ChartResolution
+  othersProjects: string[]
 }) {
   const label = row.timestamp
   // Hidden series are not in `keys`.
@@ -296,10 +369,16 @@ function CustomTooltip({
   const actualPayload = entries
     .filter((entry) => !isCapacityKey(entry.name))
     .sort((a, b) => {
-      if (a.name === 'Unknown') return 1
-      if (b.name === 'Unknown') return -1
+      // Unknown, then Others, close the list
+      for (const key of [OTHERS_KEY, UNKNOWN_KEY]) {
+        if (a.name === key) return 1
+        if (b.name === key) return -1
+      }
       return (b.value ?? 0) - (a.value ?? 0)
     })
+  const othersCount = othersProjects.filter(
+    (project) => (row[project] ?? 0) > 0,
+  ).length
 
   return (
     <ChartTooltipWrapper>
@@ -338,6 +417,12 @@ function CustomTooltip({
               wrapLabel={false}
             >
               <span className="font-medium text-label-value-15 text-primary tabular-nums">
+                {entry.name === OTHERS_KEY && othersCount > 0 && (
+                  <span className="text-secondary">
+                    {othersCount} {othersCount === 1 ? 'project' : 'projects'}
+                    {' · '}
+                  </span>
+                )}
                 {entry.value !== null ? `${formattedValue} ${unit}` : 'No data'}
               </span>
             </ChartTooltipRow>
