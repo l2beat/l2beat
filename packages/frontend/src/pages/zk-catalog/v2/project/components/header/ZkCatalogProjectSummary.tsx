@@ -390,7 +390,7 @@ function TechStackSection({
             </span>
             <TechStackCell
               tags={[...(techStack.zkVM ?? []), ...(techStack.snark ?? [])]}
-              className="flex-wrap md:min-w-fit"
+              className="flex-wrap pb-0 md:min-w-fit"
             />
           </div>
         )}
@@ -404,7 +404,7 @@ function TechStackSection({
             </span>
             <TechStackCell
               tags={techStack.finalWrap ?? []}
-              className="flex-wrap"
+              className="flex-wrap pb-0"
               emptyText="No final wrap"
             />
           </div>

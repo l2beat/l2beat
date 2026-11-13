@@ -51,11 +51,15 @@ export function TrustedSetupSection({
                       ))}
                     </div>
                   </div>
-                  <TrustedSetupParticipants
-                    participantCount={trustedSetup.participantCount}
-                    contributionCount={trustedSetup.contributionCount}
-                    phases={trustedSetup.phases}
-                  />
+                  {/* 4px down, so the first phase disc centres on the 32px
+                      risk dot beside it. */}
+                  <div className="lg:pt-1">
+                    <TrustedSetupParticipants
+                      participantCount={trustedSetup.participantCount}
+                      contributionCount={trustedSetup.contributionCount}
+                      phases={trustedSetup.phases}
+                    />
+                  </div>
                 </div>
                 <div className="space-y-2">
                   <h3 className="font-semibold text-label-value-14 text-primary">

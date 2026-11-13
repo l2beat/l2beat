@@ -43,7 +43,7 @@ export function InteropTransferSizeBreakdown({
           <div className="cursor-pointer">
             <Breakdown
               values={breakdownValues}
-              className={cn('h-1.5 w-full', inSummary ? 'mt-3!' : 'mt-2!')}
+              className="mt-2! h-1.5 w-full"
             />
             <div className="mt-2 flex flex-wrap gap-2">
               {breakdownValues.map((value) => (

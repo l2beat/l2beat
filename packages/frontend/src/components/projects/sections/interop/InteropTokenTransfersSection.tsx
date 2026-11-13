@@ -165,7 +165,9 @@ export function InteropTokenTransfersSection({
         <BasicTable
           skeletonCount={TRANSFERS_PER_PAGE}
           table={table}
-          tableWrapperClassName="pb-0"
+          // 12px column gaps, like the deployments table, so the chain
+          // pairs fit at 1280.
+          tableWrapperClassName="pb-0 md:[&_td]:pr-3 md:[&_th]:pr-3"
           isLoading={isInitialLoading}
         />
       )}

@@ -47,10 +47,7 @@ export function InteropTransferTypeBreakdown({
       <Tooltip>
         <TooltipTrigger asChild>
           <div className="cursor-pointer">
-            <Breakdown
-              values={values}
-              className={cn('h-1.5 w-full', inSummary ? 'mt-3!' : 'mt-2!')}
-            />
+            <Breakdown values={values} className="mt-2! h-1.5 w-full" />
             <div className="mt-2 flex flex-wrap gap-2">
               {values
                 .filter((value) => value.value > 0)

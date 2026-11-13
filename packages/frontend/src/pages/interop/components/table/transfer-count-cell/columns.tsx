@@ -269,7 +269,7 @@ function ChainCell({
 
   if (!href) {
     return (
-      <span className="inline-flex items-center gap-1.5 font-medium text-label-value-13">
+      <span className="flex items-center gap-1.5 font-medium text-label-value-13">
         {content}
       </span>
     )
