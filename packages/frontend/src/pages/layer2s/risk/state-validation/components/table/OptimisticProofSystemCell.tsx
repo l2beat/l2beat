@@ -53,7 +53,8 @@ export function OptimisticProofSystemCell({
                         ? 'border-divider! bg-surface-secondary! text-primary'
                         : hasUnsuccessful
                           ? 'border border-negative'
-                          : null,
+                          : // The fill and check carry the colour; the name is a key.
+                            'text-primary dark:text-primary',
                     )}
                   >
                     {zkCatalog.name}

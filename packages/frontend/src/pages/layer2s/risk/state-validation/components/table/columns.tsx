@@ -67,6 +67,8 @@ function getTvsColumns<T extends CommonL2Entry & { tvs: TvsData }>(
   )
 }
 
+const WRAP_ON_DESKTOP = 'lg:whitespace-normal lg:max-w-[150px]'
+
 const validityColumnHelper =
   createColumnHelper<L2RiskStateValidationValidityEntry>()
 
@@ -79,6 +81,9 @@ export const l2RiskStateValidationValidityColumns = [
     header: 'Proof system',
     cell: (ctx) => <ProofSystemCell {...ctx.row.original} hideType />,
     meta: {
+      // Dual-prover pairs ("SP1 Hypercube / RISC Zero") wrap, so the value
+      // column stays in view on desktop.
+      cellClassName: WRAP_ON_DESKTOP,
       tooltip:
         'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront)',
     },
@@ -144,6 +149,7 @@ export const l2RiskStateValidationValidityColumns = [
       />
     ),
     meta: {
+      cellClassName: WRAP_ON_DESKTOP,
       tooltip:
         'Instruction Set Architecture (ISA) specifies the virtual machine or computational model that the proof system targets when generating proofs.',
     },
