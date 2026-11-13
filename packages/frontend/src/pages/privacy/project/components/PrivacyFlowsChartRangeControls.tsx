@@ -13,11 +13,11 @@ export function PrivacyFlowsChartRangeControls({ range, setRange }: Props) {
       value={range}
       setValue={setRange}
       options={[
-        { value: '7d', label: '7D' },
-        { value: '30d', label: '30D' },
-        { value: '90d', label: '90D' },
-        { value: '1y', label: '1Y' },
-        { value: 'max', label: 'MAX' },
+        { value: '7d', label: '7d' },
+        { value: '30d', label: '30d' },
+        { value: '90d', label: '90d' },
+        { value: '1y', label: '1y' },
+        { value: 'max', label: 'Max' },
       ]}
     />
   )

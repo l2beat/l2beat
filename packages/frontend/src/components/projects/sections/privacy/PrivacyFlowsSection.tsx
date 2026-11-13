@@ -84,7 +84,7 @@ export function PrivacyFlowsSection({
               value={metric}
               onValueChange={(value) => setMetric(value as FlowsMetric)}
             >
-              <RadioGroupItem value="count">COUNT</RadioGroupItem>
+              <RadioGroupItem value="count">Count</RadioGroupItem>
               <RadioGroupItem value="value">USD</RadioGroupItem>
             </RadioGroup>
             <RadioGroup
@@ -92,8 +92,8 @@ export function PrivacyFlowsSection({
               value={scale}
               onValueChange={(value) => setScale(value as ChartScale)}
             >
-              <RadioGroupItem value="symlog">LOG</RadioGroupItem>
               <RadioGroupItem value="linear">LIN</RadioGroupItem>
+              <RadioGroupItem value="symlog">LOG</RadioGroupItem>
             </RadioGroup>
           </>
         )}

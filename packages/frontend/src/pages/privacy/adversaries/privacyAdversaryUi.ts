@@ -21,14 +21,23 @@ export const PRIVACY_EXPOSURE_LABEL: Record<PrivacyExposure, string> = {
   unverifiable: 'unverifiable',
 }
 
-/** Chip colours of the interior field verdicts. */
-export const PRIVACY_EXPOSURE_CHIP_CLASS_NAME: Record<PrivacyExposure, string> =
-  {
-    private: 'text-[#17452A] bg-[#C8F2D7] border-[#4FB875]',
-    atRisk: 'text-[#5C3B00] bg-[#FFE8A3] border-[#D9A31A]',
-    exposed: 'text-[#5D1111] bg-[#FFC9C9] border-[#E06565]',
-    unverifiable: 'text-[#3A3F4B] bg-[#E3E6EC] border-[#9AA1AE]',
-  }
+/** The dot colour of each interior field verdict, as on the rosette. */
+export const PRIVACY_EXPOSURE_SENTIMENT: Record<
+  PrivacyExposure,
+  'good' | 'warning' | 'bad' | 'neutral'
+> = {
+  private: 'good',
+  atRisk: 'warning',
+  exposed: 'bad',
+  unverifiable: 'neutral',
+}
+
+/**
+ * Chips on privacy pages are neutral in both modes: colour stays with the
+ * verdicts (rosette, dots, banners), so a chip never reads as one.
+ */
+export const PRIVACY_CHIP_CLASS_NAME =
+  'inline-flex select-none items-center gap-1.5 rounded border border-divider bg-surface-secondary px-1.5 py-0.5 font-medium text-label-value-12 text-primary'
 
 /** Title of the interior field chips; entry and exit are public and have none. */
 export const PRIVACY_INTERIOR_LABEL = 'Inside'

@@ -187,7 +187,7 @@ export async function getPrivacyProjectEntry(
       type: 'TvsValueSection',
       props: {
         id: 'privacy-tvl',
-        title: 'Value Locked',
+        title: 'Value locked',
         defaultRange: defaultChartRange,
         rangeControls: 'privacy',
         project: chartProject,
@@ -226,7 +226,7 @@ export async function getPrivacyProjectEntry(
       type: 'PrivacyAssetsBreakdownSection',
       props: {
         id: 'privacy-assets-breakdown',
-        title: 'Assets Breakdown',
+        title: 'Assets breakdown',
         assets: details.assets,
         showTvl: details.hasTvl,
       },
