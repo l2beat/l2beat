@@ -706,7 +706,7 @@
         "seconds": 32
       },
       {
-        "name": "Our fast tip",
+        "name": "Our estimated fast tip",
         "ours": true,
         "usd": 0.0371,
         "cost": 0.037,

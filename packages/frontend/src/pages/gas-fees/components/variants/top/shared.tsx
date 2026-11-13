@@ -130,6 +130,7 @@ export function useTips() {
     ref,
     rows,
     status,
+    fastMin: fastMultiples.length > 0 ? Math.min(...fastMultiples) : undefined,
     fastMax: fastMultiples.length > 0 ? Math.max(...fastMultiples) : undefined,
   }
 }

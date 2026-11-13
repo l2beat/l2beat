@@ -89,7 +89,7 @@ export function SpeedCurve({
           onPointerMove={onMove}
           onPointerLeave={() => setHovered(undefined)}
           role="img"
-          aria-label="Seconds until you can be 99% sure you're in, against the cost of an ERC-20 transfer: it falls quickly up to our fast tip, then barely moves"
+          aria-label="Seconds until you can be 99% sure you're in, against the cost of an ERC-20 transfer: it falls quickly up to our estimated fast tip, then barely moves"
         >
           {Y_TICKS.map((value) => (
             <div
@@ -170,7 +170,7 @@ export function SpeedCurve({
                         : '-translate-x-1/2',
                   )}
                 >
-                  {mark.ours ? 'Our fast tip' : mark.name}
+                  {mark.ours ? 'Our estimated fast tip' : mark.name}
                   {detail && (
                     <span className="font-normal text-secondary max-md:hidden">
                       {' '}

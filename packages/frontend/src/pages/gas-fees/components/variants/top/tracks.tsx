@@ -98,22 +98,23 @@ function place(
 export function Track({
   row,
   height = 76,
+  className,
 }: {
   row: TierRow
   /** In pixels */
   height?: number
+  className?: string
 }) {
   const [ref, width] = useWidth<HTMLDivElement>()
   const ours = row.gwei
   const chipHeight = 24
-  const chipWidth = (w: { multiple?: number }) =>
-    38 + (w.multiple ? multiple(w.multiple) : '').length * 7.5
+  const chipWidth = (w: { gwei: number }) => 30 + gwei(w.gwei).length * 7
   const placed = width > 0 ? place(row, width, chipWidth) : []
   const top = placed[0]
   const mid = height / 2
 
   return (
-    <div ref={ref} className="relative" style={{ height }}>
+    <div ref={ref} className={cn('relative', className)} style={{ height }}>
       {DECADES.map((p) => (
         <span
           key={p}
@@ -176,7 +177,7 @@ export function Track({
             style={{ left: w.center }}
           >
             <WalletIcon icon={w.icon} className="rounded-full" />
-            {w.multiple ? multiple(w.multiple) : ''}
+            <Gwei value={w.gwei} zerosClassName="opacity-50" />
           </TooltipTrigger>
           <TooltipContent className="flex flex-col gap-0.5 text-xs">
             <span className="font-bold">
@@ -188,7 +189,8 @@ export function Track({
             </span>
             {w.multiple && (
               <span className="text-secondary tabular-nums">
-                {multiple(w.multiple)} our {row.name.toLowerCase()} tip
+                {multiple(w.multiple)} our estimated {row.name.toLowerCase()}{' '}
+                tip
               </span>
             )}
           </TooltipContent>
@@ -215,7 +217,7 @@ export function TrackLegend({ className }: { className?: string }) {
     >
       <span className="flex items-center gap-1.5">
         <span className="size-2.5 rounded-full" style={{ background: OURS }} />
-        Ours
+        Our estimated tip
       </span>
       {WALLETS.map((wallet) => (
         <span key={wallet.name} className="flex items-center gap-1.5">
@@ -228,7 +230,7 @@ export function TrackLegend({ className }: { className?: string }) {
           className="h-1.5 w-5 rounded-full"
           style={{ background: `linear-gradient(90deg, transparent, ${OVER})` }}
         />
-        Above ours
+        Above our estimate
       </span>
     </div>
   )

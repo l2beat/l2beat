@@ -28,7 +28,7 @@ import {
 /**
  * B2D · chart-led: the price of speed takes two thirds of the width and
  * grows taller, and overtipping and who pays stack beside it as compact
- * number + bar blocks. Pink means "above our fast tip" in all three, and
+ * number + bar blocks. Pink means "above our estimated fast tip" in all three, and
  * the band colours run through the curve's marks, its floor and the bars
  */
 export function TopCardB2D() {
@@ -46,7 +46,7 @@ export function TopCardB2D() {
             value={`+${formatFee(SPEED.extra)}`}
             note={
               <>
-                a transfer for 2 gwei over our fast tip gets you in{' '}
+                a transfer for 2 gwei over our estimated fast tip gets you in{' '}
                 <b className="text-primary">
                   {SPEED.fromSure - SPEED.toSure}s sooner
                 </b>
@@ -67,14 +67,14 @@ export function TopCardB2D() {
               </>
             }
             value={usdM(OVERTIP)}
-            note={`of ${usdM(TIPS.ordinaryUsd)} ordinary tips went above our fast tip`}
+            note={`of ${usdM(TIPS.ordinaryUsd)} ordinary tips went above our estimated fast tip`}
           >
             <ThickBar
               height="h-9"
               parts={[
                 {
                   key: 'fit',
-                  label: 'Up to our tip',
+                  label: 'Up to our estimated tip',
                   value: TIPS.atFastUsd,
                   color: FIT,
                   inside: usdM(TIPS.atFastUsd),
@@ -182,7 +182,7 @@ function Plot() {
               className="absolute top-2 left-3 font-semibold text-2xs uppercase tracking-wider"
               style={{ color: OVER_TEXT }}
             >
-              Above our fast tip
+              Above our estimated fast tip
             </span>
           </div>
         )
@@ -231,7 +231,7 @@ function Plot() {
                         : '-translate-x-1/2 items-center',
                   )}
                 >
-                  <b>{mark.ours ? 'Our fast tip' : mark.name}</b>
+                  <b>{mark.ours ? 'Our estimated fast tip' : mark.name}</b>
                   <span className="text-2xs text-secondary max-md:hidden">
                     {formatFee(mark.cost)} · {mark.seconds}s
                   </span>

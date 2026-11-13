@@ -108,37 +108,36 @@ export function AxisGrid({
   ))
 }
 
-/** Ethereum's cost, a line through every row */
-export function EthLine({ at }: { at: number }) {
+/**
+ * Cheap is green, Ethereum's cost is yellow: a cost's colour from where it
+ * sits between the axis start and Ethereum, and yellow past it
+ */
+const CHEAP = 'var(--chart-emerald)'
+const DEAR = 'var(--chart-stacked-yellow)'
+export const COST_GRADIENT = `linear-gradient(90deg, ${CHEAP}, ${DEAR})`
+export const costColor = (at: number, ethAt: number) => {
+  const share = ethAt > 0 ? Math.min(1, at / ethAt) : 1
+  return `color-mix(in oklab, ${DEAR} ${Math.round(share * 100)}%, ${CHEAP})`
+}
+
+/** The whole axis as a faint green to yellow rail, behind each row's dot */
+export function CostRail({ ethAt }: { ethAt: number }) {
   return (
     <span
-      className="-ml-px absolute inset-y-0 w-0.5 bg-chart-ethereum/70"
-      style={{ left: pct(at) }}
+      className="-translate-y-1/2 absolute inset-x-0 top-1/2 h-1.5 rounded-full opacity-25"
+      style={{
+        background: `linear-gradient(90deg, ${CHEAP}, ${DEAR} ${ethAt * 100}%, ${DEAR})`,
+      }}
     />
   )
 }
 
-export function Connector({
-  from,
-  to,
-  className,
-}: {
-  from: number
-  to: number
-  className?: string
-}) {
+/** Ethereum's cost, a dashed reference through every row */
+export function EthLine({ at }: { at: number }) {
   return (
     <span
-      className={cn(
-        '-translate-y-1/2 absolute top-1/2 h-1.5 rounded-full',
-        className,
-      )}
-      style={{
-        left: pct(from),
-        width: pct(Math.max(0, to - from)),
-        background:
-          'linear-gradient(to right, color-mix(in oklab, var(--chart-ethereum) 55%, transparent), color-mix(in oklab, var(--chart-ethereum) 8%, transparent))',
-      }}
+      className="absolute inset-y-0 border-secondary/50 border-l border-dashed"
+      style={{ left: pct(at) }}
     />
   )
 }
@@ -148,7 +147,7 @@ export function SameDaysTick({ at, ethAt }: { at: number; ethAt: number }) {
   if (Math.abs(at - ethAt) <= 0.01) return null
   return (
     <span
-      className="-translate-x-1/2 -translate-y-1/2 absolute top-1/2 h-3.5 w-0.5 rounded-full bg-chart-ethereum"
+      className="-translate-x-1/2 -translate-y-1/2 absolute top-1/2 h-3.5 w-0.5 rounded-full bg-secondary/70"
       style={{ left: pct(at) }}
     />
   )
@@ -156,12 +155,12 @@ export function SameDaysTick({ at, ethAt }: { at: number; ethAt: number }) {
 
 export function CostDot({
   at,
-  isEthereum,
+  ethAt,
   isHighlighted,
   className,
 }: {
   at: number
-  isEthereum: boolean
+  ethAt: number
   isHighlighted: boolean
   /** e.g. the ring's colour, to match a tinted background */
   className?: string
@@ -170,11 +169,10 @@ export function CostDot({
     <span
       className={cn(
         '-translate-x-1/2 -translate-y-1/2 absolute top-1/2 rounded-full ring-2 ring-surface-primary transition-[width,height]',
-        isEthereum ? 'bg-chart-ethereum' : 'bg-primary',
-        isHighlighted ? 'size-3.5 bg-brand' : 'size-2.5',
+        isHighlighted ? 'size-4' : 'size-3',
         className,
       )}
-      style={{ left: pct(at) }}
+      style={{ left: pct(at), background: costColor(at, ethAt) }}
     />
   )
 }
@@ -234,19 +232,19 @@ export function AxisLegend({ hasYoung }: { hasYoung: boolean }) {
   return (
     <>
       <span className="flex items-center gap-1.5">
-        <span className="h-3 w-0.5 bg-chart-ethereum/70" />
+        Cheaper
+        <span
+          className="h-1.5 w-10 rounded-full"
+          style={{ background: COST_GRADIENT }}
+        />
         Ethereum's cost
       </span>
       {hasYoung && (
         <span className="flex items-center gap-1.5">
-          <span className="h-2.5 w-0.5 rounded-full bg-chart-ethereum" />
+          <span className="h-2.5 w-0.5 rounded-full bg-secondary/70" />
           Ethereum over a newer chain's days
         </span>
       )}
-      <span className="flex items-center gap-1.5">
-        <span className="size-2 rounded-full bg-primary" />
-        L2's cost
-      </span>
     </>
   )
 }

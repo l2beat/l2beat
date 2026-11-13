@@ -27,7 +27,7 @@ export const OVERTIP = TIPS.ordinaryUsd - TIPS.atFastUsd
 /** The footnotes of the blocks below the tracks, the same in every spin */
 export const NOTES = {
   ordinary:
-    'Ordinary means a tip under 2.5 gwei. Higher tips buy a place near the front of the block, which our fast tip doesn’t aim for, so they don’t count.',
+    'Ordinary means a tip under 2.5 gwei. Higher tips buy a place near the front of the block, which our estimated fast tip doesn’t aim for, so they don’t count.',
   speed:
     'Seconds until you can be 99% sure you’re in, against the cost of an ERC-20 transfer.',
   curve:
@@ -50,19 +50,30 @@ export function B2Frame({ children }: { children: React.ReactNode }) {
           <LiveStatus status={tips.status} />
         </div>
         <p className="font-bold text-2xl leading-tight tracking-tight md:text-3xl">
-          {tips.fastMax ? (
+          {tips.fastMax && tips.fastMax > 1 ? (
             <>
-              For the next block, wallets suggest up to{' '}
-              <span style={{ color: OVER_TEXT }}>{multiple(tips.fastMax)}</span>{' '}
-              our tip.
+              You can pay up to{' '}
+              <span style={{ color: OVER_TEXT }}>
+                {multiple(tips.fastMax)} less
+              </span>{' '}
+              by using our estimated tip.
             </>
           ) : (
-            <>Our fast tip gets you into the next block.</>
+            <>Our estimated fast tip gets you into the next block.</>
           )}{' '}
           <br className="max-md:hidden" />
           Over the year, ordinary transactions tipped{' '}
           <span style={{ color: OVER_TEXT }}>{usdM(OVERTIP)}</span> above it.
         </p>
+        {tips.fastMax && tips.fastMax > 1 && tips.fastMin && (
+          <p className="text-secondary text-sm">
+            Fast, for the next block: wallets suggest{' '}
+            {tips.fastMin === tips.fastMax
+              ? multiple(tips.fastMax)
+              : `${multiple(tips.fastMin)} to ${multiple(tips.fastMax)}`}{' '}
+            our estimated tip right now.
+          </p>
+        )}
       </header>
 
       <Tracks rows={tips.rows} />
@@ -94,31 +105,38 @@ export function Info({
   )
 }
 
+/** Label, then the track, then how far above ours the wallets sit; on phones the track goes under */
+const ROW_GRID =
+  'grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-6 md:grid-cols-[180px_minmax(0,1fr)_120px]'
+
 function Tracks({ rows }: { rows: TierRow[] }) {
   return (
     <div className="flex flex-col">
-      <div className="grid grid-cols-1 items-center gap-x-6 gap-y-2 pb-2 md:grid-cols-[180px_minmax(0,1fr)]">
+      <div className={cn(ROW_GRID, 'gap-y-2 pb-2')}>
         <span className="whitespace-nowrap text-secondary text-xs">
-          Our tip · $ per transfer
+          Tier · gwei · $ per transfer
         </span>
-        <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-1">
+        <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-1 max-md:order-3 max-md:col-span-2">
           <TrackLegend />
           <GasFeesMethodology />
         </div>
+        <span className="text-right text-secondary text-xs">
+          Wallets suggest
+        </span>
       </div>
       {rows.map((row) => (
         <div
           key={row.key}
-          className="grid grid-cols-1 items-center gap-x-6 border-divider border-t py-2 md:grid-cols-[180px_minmax(0,1fr)]"
+          className={cn(ROW_GRID, 'border-divider border-t py-2')}
         >
-          <div className="flex items-end justify-between gap-3 max-md:pt-1 md:flex-col md:items-start md:gap-1">
+          <div className="flex flex-col items-start gap-1 max-md:pt-1">
             <span className="flex flex-col">
               <span className="font-bold text-sm leading-tight">
                 {row.name}
               </span>
               <span className="text-2xs text-secondary">{row.promise}</span>
             </span>
-            <span className="flex items-baseline gap-2">
+            <span className="flex flex-col items-start gap-1">
               <span className="font-bold text-2xl leading-none tracking-tight">
                 {row.gwei === undefined ? (
                   <TextSkeleton sizedAs="0.0000" />
@@ -135,15 +153,53 @@ function Tracks({ rows }: { rows: TierRow[] }) {
               </span>
             </span>
           </div>
-          <Track row={row} height={72} />
+          <Track
+            row={row}
+            height={72}
+            className="max-md:order-3 max-md:col-span-2"
+          />
+          <Above row={row} />
         </div>
       ))}
-      <div className="grid grid-cols-1 gap-x-6 border-divider border-t pt-1 md:grid-cols-[180px_minmax(0,1fr)]">
+      <div className="grid grid-cols-1 gap-x-6 border-divider border-t pt-1 md:grid-cols-[180px_minmax(0,1fr)_120px]">
         <span className="text-2xs text-secondary max-md:hidden">
           gwei, log scale
         </span>
         <TrackAxis />
       </div>
+    </div>
+  )
+}
+
+/**
+ * The highest wallet suggestion as a multiple of our estimated tip, and what
+ * it adds to a transfer. Fast is pink, as it is the headline's number
+ */
+function Above({ row }: { row: TierRow }) {
+  const top = row.wallets
+    .filter((w) => w.multiple !== undefined && w.gwei !== undefined)
+    .sort((a, b) => (b.multiple ?? 0) - (a.multiple ?? 0))[0]
+  const extra =
+    top?.gwei !== undefined && row.gwei && row.usd !== undefined
+      ? ((top.gwei - row.gwei) / row.gwei) * row.usd
+      : undefined
+  return (
+    <div className="flex flex-col items-end gap-0.5 text-right">
+      {top?.multiple === undefined ? (
+        <TextSkeleton sizedAs="up to 00×" className="text-lg" />
+      ) : (
+        <span className="whitespace-nowrap font-bold text-lg tabular-nums leading-none tracking-tight">
+          <span className="font-normal text-secondary text-xs">up to </span>
+          <span style={row.key === 'fast' ? { color: OVER_TEXT } : undefined}>
+            {multiple(top.multiple)}
+          </span>
+        </span>
+      )}
+      {extra !== undefined && extra > 0 && (
+        <span className="whitespace-nowrap text-2xs text-secondary tabular-nums">
+          +{formatFee(extra)} per transfer
+        </span>
+      )}
     </div>
   )
 }

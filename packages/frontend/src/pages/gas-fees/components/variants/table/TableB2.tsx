@@ -17,9 +17,9 @@ import { formatFee, formatTimes, GAS_FEES_METRIC_LABELS } from '../../metrics'
 import {
   AxisGrid,
   AxisLegend,
-  Connector,
   type CostAxis,
   CostDot,
+  CostRail,
   EthLine,
   getCostAxis,
   LabelledSplit,
@@ -163,17 +163,15 @@ export function TableB2({
                     </TableCell>
                     <TableCell className={ROW}>
                       <div className={cn('relative mx-3', ROW)}>
-                        <AxisGrid ticks={axis.ticks} />
+                        <AxisGrid ticks={axis.ticks} className="opacity-60" />
+                        <CostRail ethAt={axis.ethAt} />
                         <EthLine at={axis.ethAt} />
                         {!isEthereum && (
-                          <>
-                            <Connector from={at} to={sameDaysAt} />
-                            <SameDaysTick at={sameDaysAt} ethAt={axis.ethAt} />
-                          </>
+                          <SameDaysTick at={sameDaysAt} ethAt={axis.ethAt} />
                         )}
                         <CostDot
                           at={at}
-                          isEthereum={isEthereum}
+                          ethAt={axis.ethAt}
                           isHighlighted={isHighlighted}
                         />
                       </div>
@@ -244,10 +242,20 @@ export function TableB2({
   )
 }
 
-/** The ticks, one every 10× */
+/** The ticks, one every 10×, and Ethereum's line named above them */
 function AxisHead({ axis }: { axis: CostAxis }) {
+  const nearEnd = axis.ethAt > 0.85
   return (
-    <div className="relative mx-3 h-10 flex-1">
+    <div className="relative mx-3 h-12 flex-1">
+      <span
+        className={cn(
+          'absolute top-1 whitespace-nowrap font-medium text-[11px] text-secondary normal-case',
+          nearEnd ? '-translate-x-full pr-1' : '-translate-x-1/2',
+        )}
+        style={{ left: pct(axis.ethAt) }}
+      >
+        Ethereum
+      </span>
       {axis.ticks.map((t) => (
         <span
           key={t.exponent}
