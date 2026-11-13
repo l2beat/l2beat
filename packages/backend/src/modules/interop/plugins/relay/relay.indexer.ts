@@ -177,6 +177,8 @@ export class RelayIndexer extends ManagedChildIndexer {
 
       // An API that hands back a cursor it already returned, or a cursor with
       // nothing behind it, would otherwise keep this loop running forever.
+      // Unlike a malformed record these cannot be skipped: the rest of the
+      // window is only reachable through the cursor, so the window is retried.
       if (res.continuation && seenCursors.has(res.continuation)) {
         throw new Error(
           `Relay API returned a repeated continuation cursor for window ${from}-${to}`,
