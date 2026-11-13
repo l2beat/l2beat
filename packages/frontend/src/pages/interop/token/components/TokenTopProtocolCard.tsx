@@ -116,7 +116,7 @@ function TopProtocolHeading({
       <h2 className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
         Top protocol
       </h2>
-      <p className="mt-1 font-medium text-paragraph-12 text-secondary">
+      <p className="mt-1 font-normal text-label-value-13 text-secondary leading-5">
         Based on {getTopProtocolBasis(isPriceUnreliable)}
       </p>
     </div>

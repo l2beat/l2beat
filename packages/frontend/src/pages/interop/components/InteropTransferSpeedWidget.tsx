@@ -60,7 +60,7 @@ export function InteropTransferSpeedWidget({
       <h2 className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
         Transfer speed
       </h2>
-      <p className="mt-1 font-medium text-paragraph-14 text-secondary">
+      <p className="mt-1 font-normal text-label-value-13 text-secondary leading-5">
         {description}
       </p>
 

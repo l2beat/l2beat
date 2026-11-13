@@ -2,6 +2,7 @@ import { formatInteger } from '@l2beat/shared-pure'
 import type { FrameworkTableEntry } from '~/server/features/layer2s/interop/getTokenFrameworksData'
 import { cn } from '~/utils/cn'
 import type { InteropTransferDefaults } from '../../../components/InteropTransferTrigger'
+import { Last24HoursBadge } from '../../../components/Last24HoursBadge'
 import { getInteropTokenUrl } from '../../../utils/getInteropTokenUrl'
 import type { InteropTokenFramework } from '../../getInteropTokenFrameworksData'
 import { BridgingTypeBreakdown } from './BridgingTypeBreakdown'
@@ -29,17 +30,22 @@ export function FrameworkColumn({
         !isFirst && 'border-divider border-l',
       )}
     >
-      <a
-        href={`/interop/protocols/${framework.slug}`}
-        className="-mx-2 inline-flex w-fit items-center gap-2 rounded px-2 py-1 transition-colors hover:bg-pure-black/5 dark:hover:bg-pure-white/10"
-      >
-        <img
-          src={framework.iconUrl}
-          alt={framework.name}
-          className="size-7 rounded-xs"
-        />
-        <span className="font-medium text-heading-24">{framework.label}</span>
-      </a>
+      <div className="flex flex-wrap items-center gap-x-2">
+        <a
+          href={`/interop/protocols/${framework.slug}`}
+          className="-mx-2 inline-flex w-fit items-center gap-2 rounded px-2 py-1 transition-colors hover:bg-pure-black/5 dark:hover:bg-pure-white/10"
+        >
+          <img
+            src={framework.iconUrl}
+            alt={framework.name}
+            className="size-6 rounded-xs"
+          />
+          <span className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
+            {framework.label}
+          </span>
+        </a>
+        <Last24HoursBadge />
+      </div>
 
       <div className="mt-5 space-y-8">
         <Section

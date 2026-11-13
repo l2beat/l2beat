@@ -31,7 +31,7 @@ export function BreakdownByTransferType({ isLoading, breakdown }: Props) {
           Breakdown by transfer type
         </h2>
       </div>
-      <div className="mt-1 font-medium text-label-value-12 text-secondary md:text-label-value-14">
+      <div className="mt-1 font-normal text-label-value-13 text-secondary leading-5">
         Volume and count of transfers per transfer type{' '}
         <BetweenChainsInfo className="inline-flex lowercase" />
       </div>

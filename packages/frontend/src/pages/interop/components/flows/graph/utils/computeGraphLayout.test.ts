@@ -25,11 +25,39 @@ const SUMMARY_CHAINS: [name: string, volume: number, netFlow: number][] = [
   ['Tempo', 0.01, 594.01e3],
 ]
 
+// The same page on 2026-11-13: BNB Smart Chain's bubble sat on Ethereum's
+// net flow, and three small chains lost theirs
+const SUMMARY_CHAINS_NOV_13: [name: string, volume: number, netFlow: number][] =
+  [
+    ['Ethereum', 1, -76.34e6],
+    ['Arbitrum One', 0.6288, 108.52e6],
+    ['Base', 0.4295, 83.2e6],
+    ['Hyperliquid', 0.3235, -193.11e6],
+    ['HyperEVM', 0.1925, 119.79e6],
+    ['Solana', 0.144, -42.11e6],
+    ['Monad', 0.105, -11.64e6],
+    ['Polygon PoS', 0.0948, -4.53e6],
+    ['BNB Smart Chain', 0.0781, -16.16e6],
+    ['Ink', 0.0576, 33.96e6],
+    ['Avalanche', 0.0472, -467.41e3],
+    ['Lighter', 0.0417, -10.99e6],
+    ['OP Mainnet', 0.0342, 8.25e6],
+    ['Unichain', 0.004, 1.46e6],
+    ['World Chain', 0.0034, 171.68e3],
+  ]
+
 describe(computeGraphLayout.name, () => {
   it('keeps every bubble and label clear of other chains and the logo', () => {
     const layout = layoutFor(SUMMARY_CHAINS, 343, true)
 
     expect(findOverlaps(layout, 343, true)).toEqual([])
+  })
+
+  it('moves crowded phone chains outward rather than dropping net flows', () => {
+    const layout = layoutFor(SUMMARY_CHAINS_NOV_13, 343, true)
+
+    expect(findOverlaps(layout, 343, true)).toEqual([])
+    for (const node of layout.values()) expect(node.showNetFlow).toEqual(true)
   })
 
   it('leaves chains on the ring when their labels already fit', () => {
@@ -52,19 +80,8 @@ describe(computeGraphLayout.name, () => {
     }
   })
 
-  it('drops net flows only under small bubbles, and never a name', () => {
-    // More chains than a phone-sized graph can label in full
-    const crowded = [
-      ...SUMMARY_CHAINS,
-      ...SUMMARY_CHAINS.slice(4).map(
-        ([name, volume, netFlow]): [string, number, number] => [
-          `${name} Testnet`,
-          volume / 2,
-          netFlow,
-        ],
-      ),
-    ]
-    const layout = layoutFor(crowded, 343, true)
+  it('drops net flows only under small bubbles on large screens, and never a name', () => {
+    const layout = layoutFor(CROWDED_CHAINS, 343, false)
     const dropped = [...layout.values()].filter((node) => !node.showNetFlow)
 
     expect(dropped.length).toBeGreaterThan(0)
@@ -73,7 +90,43 @@ describe(computeGraphLayout.name, () => {
       expect(node.labelBoxes.length).toEqual(node.showNetFlow ? 2 : 1)
     }
   })
+
+  it('on phones, drops any net flow that still collides, and never a name', () => {
+    const layout = layoutFor(CROWDED_CHAINS, 343, true)
+    const nodes = [...layout.entries()]
+
+    // Every figure left on the graph is clear of other chains and the logo
+    for (const [name, node] of nodes) {
+      const line = node.showNetFlow ? node.labelBoxes[1] : undefined
+      if (!line) continue
+      expect(boxesOverlap(line, logoBox(343, true))).toEqual(false)
+      for (const [otherName, other] of nodes) {
+        if (otherName === name) continue
+        expect(circleOverlapsBox(other, line)).toEqual(false)
+        for (const box of other.labelBoxes) {
+          expect(boxesOverlap(line, box)).toEqual(false)
+        }
+      }
+    }
+    // The largest chain keeps its figure; names always stay
+    expect(layout.get('Ethereum')?.showNetFlow).toEqual(true)
+    for (const [, node] of nodes) {
+      expect(node.labelBoxes.length).toEqual(node.showNetFlow ? 2 : 1)
+    }
+  })
 })
+
+// More chains than a phone-sized graph can label in full
+const CROWDED_CHAINS: [name: string, volume: number, netFlow: number][] = [
+  ...SUMMARY_CHAINS,
+  ...SUMMARY_CHAINS.slice(4).map(
+    ([name, volume, netFlow]): [string, number, number] => [
+      `${name} Testnet`,
+      volume / 2,
+      netFlow,
+    ],
+  ),
+]
 
 function layoutFor(
   chains: [name: string, volume: number, netFlow: number][],
@@ -107,14 +160,7 @@ function findOverlaps(
   size: number,
   isSmallScreen: boolean,
 ) {
-  // FlowsLogo: 88×36, scaled 1.5× on small screens and 2× otherwise
-  const scale = isSmallScreen ? 1.5 : 2
-  const logo: Box = {
-    x0: size / 2 - 44 * scale,
-    y0: size / 2 - 18 * scale,
-    x1: size / 2 + 44 * scale,
-    y1: size / 2 + 18 * scale,
-  }
+  const logo = logoBox(size, isSmallScreen)
   const nodes = [...layout.entries()]
   const overlaps: string[] = []
   for (const [name, node] of nodes) {
@@ -143,6 +189,17 @@ function findOverlaps(
     }
   }
   return overlaps
+}
+
+/** FlowsLogo: 88×36, scaled 1.5× on small screens and 2× otherwise */
+function logoBox(size: number, isSmallScreen: boolean): Box {
+  const scale = isSmallScreen ? 1.5 : 2
+  return {
+    x0: size / 2 - 44 * scale,
+    y0: size / 2 - 18 * scale,
+    x1: size / 2 + 44 * scale,
+    y1: size / 2 + 18 * scale,
+  }
 }
 
 function boxesOverlap(a: Box, b: Box) {

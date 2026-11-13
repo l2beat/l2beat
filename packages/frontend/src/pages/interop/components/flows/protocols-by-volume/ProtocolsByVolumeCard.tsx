@@ -40,7 +40,7 @@ export function ProtocolsByVolumeCard({ isEnabled }: { isEnabled: boolean }) {
             Protocols by volume
           </h2>
           <div className="mt-1 font-normal text-label-value-13 text-secondary leading-4">
-            Last 24 hours ·{' '}
+            Last 24h ·{' '}
             {describeChainScope(selectedChains.length, allChains.length)}
           </div>
         </div>

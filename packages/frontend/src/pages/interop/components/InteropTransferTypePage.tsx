@@ -83,9 +83,7 @@ function Content({
   if (selectedChains.from.length === 0 && selectedChains.to.length === 0) {
     return (
       <>
-        <div className="max-md:hidden">
-          <HeaderWithDescription type={type} />
-        </div>
+        <HeaderWithDescription type={type} />
         <InitialChainSelector
           interopChains={onboardingInteropChains}
           type={type}
@@ -170,9 +168,15 @@ function Widgets({
 
 function HeaderWithDescription({ type }: { type: KnownInteropBridgeType }) {
   const display = TRANSFER_TYPE_DISPLAY[type]
+  const title = `${display.label} protocols`
   return (
-    <MainPageHeader description={display.description}>
-      {`${display.label} protocols`}
-    </MainPageHeader>
+    <>
+      {/* MainPageHeader shows its title from lg only, and these pages have no
+          phone tabs that would name them, so below lg the title is here. */}
+      <h1 className="px-4 pt-4 font-semibold text-heading-20 leading-6 tracking-[-0.01em] md:px-0 lg:hidden">
+        {title}
+      </h1>
+      <MainPageHeader description={display.description}>{title}</MainPageHeader>
+    </>
   )
 }

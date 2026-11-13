@@ -308,7 +308,12 @@ export function getAllProtocolsColumns(
         enableSorting: false,
         cell: (ctx) => {
           return (
-            <div className="flex items-center gap-1" key={ctx.row.original.id}>
+            // One badge per line on phones, so the volume after it stays in
+            // view; up to two per line from md, so names stay on one line.
+            <div
+              className="flex flex-col items-start gap-1 py-1.5 md:max-w-40 md:flex-row md:flex-wrap md:items-center 2xl:max-w-none"
+              key={ctx.row.original.id}
+            >
               {ctx.row.original.bridgeTypes.map((bridgeType) => (
                 <BridgeTypeBadge
                   size="extraSmall"

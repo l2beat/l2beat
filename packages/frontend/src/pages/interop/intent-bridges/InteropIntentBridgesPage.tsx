@@ -105,7 +105,7 @@ function IntentBridgesContent({
           onDeselectAll={deselectAll}
         />
       </div>
-      <div className="grid grid-cols-2 gap-2 border-divider border-b bg-surface-primary p-4 md:hidden">
+      <div className="grid grid-cols-2 gap-4 border-divider border-b bg-surface-primary p-4 md:hidden">
         <InteropTotalVolumeWidget
           totalVolume={data?.activity.totalVolume}
           isLoading={isLoading}

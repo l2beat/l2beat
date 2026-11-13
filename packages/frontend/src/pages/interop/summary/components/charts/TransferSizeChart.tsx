@@ -22,7 +22,10 @@ import { useIsClient } from '~/hooks/useIsClient'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
 import type { TransferSizeDataPoint } from '~/server/features/layer2s/interop/utils/getTransferSizeChartData'
 import { cn } from '~/utils/cn'
-import { transferSizeBuckets } from '../../../utils/transferSizeBuckets'
+import {
+  TRANSFER_SIZE_COLORS_CLASS,
+  transferSizeBuckets,
+} from '../../../utils/transferSizeBuckets'
 
 interface Props {
   data: TransferSizeDataPoint[]
@@ -94,7 +97,7 @@ export function TransferSizeChart({
   }
 
   return (
-    <div className="relative size-full">
+    <div className={cn('relative size-full', TRANSFER_SIZE_COLORS_CLASS)}>
       <ChartContext.Provider value={{ meta: chartMeta }}>
         <TransferSizeBars
           data={data}

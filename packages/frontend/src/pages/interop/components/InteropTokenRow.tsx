@@ -85,7 +85,10 @@ export function InteropTokenRow({
         )}
         {token.topRoute && (
           <div className="flex items-center gap-1 text-label-value-12 text-secondary">
-            <span className="font-medium">Top path</span>
+            {/* The icons and arrow say it on narrow cards, where the words wrap */}
+            <span className="@max-[450px]:hidden whitespace-nowrap font-medium">
+              Top path
+            </span>
             <ChainIcon
               iconUrl={token.topRoute.src.iconUrl}
               alt={token.topRoute.src.id}

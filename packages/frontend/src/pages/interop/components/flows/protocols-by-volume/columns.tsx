@@ -31,6 +31,7 @@ export function getProtocolsByVolumeColumns(
       cell: (ctx) => <IndexCell>{ctx.row.index + 1}</IndexCell>,
       sortDescFirst: false,
       meta: {
+        align: 'right',
         headClassName: 'w-0',
       },
       size: 40,
@@ -94,7 +95,7 @@ export function getProtocolsByVolumeColumns(
       cell: (ctx) => {
         return (
           <div
-            className="flex max-w-40 flex-wrap items-center gap-1 2xl:max-w-none"
+            className="flex flex-col items-start gap-1 py-1.5 md:max-w-40 md:flex-row md:flex-wrap md:items-center 2xl:max-w-none"
             key={ctx.row.original.id}
           >
             {ctx.row.original.bridgeTypes.map((bridgeType) => (

@@ -36,7 +36,7 @@ export function BurnAndMintCard({
         </a>
       </div>
       <BetweenChainsInfo className="mt-1" />
-      <div className="mt-2.5 text-paragraph-12 text-secondary md:text-paragraph-13">
+      <div className="mt-2.5 font-normal text-label-value-13 text-secondary leading-5">
         {TRANSFER_TYPE_DISPLAY.burnAndMint.description}
       </div>
       {isLoading ? (

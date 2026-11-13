@@ -21,7 +21,7 @@ export function InteropTotalCard({
   return (
     <PrimaryCard
       className={cn(
-        'flex flex-col gap-2 px-5! py-4!',
+        'flex flex-col gap-2',
         mobile && 'rounded-lg! bg-surface-secondary! p-4!',
         className,
       )}
@@ -30,7 +30,7 @@ export function InteropTotalCard({
         <h3 className="font-medium text-label-value-13 md:text-label-value-15">
           {title}
         </h3>
-        <Last24HoursBadge className="max-md:hidden" />
+        <Last24HoursBadge />
       </div>
       {isLoading ? (
         <Skeleton className="h-8 w-32" />

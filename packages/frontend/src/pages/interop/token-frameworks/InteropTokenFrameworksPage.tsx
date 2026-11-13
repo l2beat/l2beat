@@ -106,7 +106,7 @@ function TokenFrameworksContent({
         />
       </div>
       <div className="grid md:mt-4 md:grid-cols-2 md:gap-4 lg:grid-cols-4 lg:grid-rows-12">
-        <div className="grid grid-cols-2 gap-2 border-divider border-b bg-surface-primary p-4 md:hidden">
+        <div className="grid grid-cols-2 gap-4 border-divider border-b bg-surface-primary p-4 md:hidden">
           <InteropTotalVolumeWidget
             totalVolume={data?.frameworkDominance.volume.total}
             isLoading={isLoading}

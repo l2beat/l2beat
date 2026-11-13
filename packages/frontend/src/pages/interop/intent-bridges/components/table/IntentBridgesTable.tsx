@@ -53,17 +53,17 @@ export function IntentBridgesTable({
     // `clip`, not `hidden`: a hidden overflow is a scroll container, which
     // would hold the table's sticky header instead of the page.
     <PrimaryCard className="overflow-clip p-0 md:px-0 md:py-0">
-      <div className="flex flex-wrap items-baseline gap-x-2 px-4 pt-4 md:px-5 md:pt-5">
+      <div className="flex flex-wrap items-baseline gap-x-2 px-4 pt-4 md:px-6 md:pt-5">
         <h2 className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
           Intent bridge comparison
         </h2>
         <Last24HoursBadge />
       </div>
-      <p className="px-4 pt-1 pb-3 font-medium text-secondary text-xs leading-[1.2] md:px-5">
+      <p className="px-4 pt-1 pb-3 font-normal text-label-value-13 text-secondary leading-5 md:px-6">
         Activity metrics come from indexed transfers. Intent mechanics are
         curated protocol properties.
       </p>
-      <div className="px-4 md:px-5">
+      <div className="px-4 md:px-6">
         <BasicTable
           table={table}
           isLoading={isLoading}
