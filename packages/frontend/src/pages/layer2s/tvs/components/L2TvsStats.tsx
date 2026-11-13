@@ -8,6 +8,15 @@ import type { L2TvsEntry } from '~/server/features/layer2s/tvs/getL2TvsEntries'
 import { useTRPC } from '~/trpc/React'
 import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 
+/** Written after a tile's change, like the "1y" after the chart head's. */
+const PERIOD_LABEL: Record<PercentageChangePeriod, string> = {
+  '1D': '1d',
+  '7D': '7d',
+  last24h: '24h',
+  last7d: '7d',
+  last30d: '30d',
+}
+
 type StatType = 'total' | 'rollups' | 'validiumsAndOptimiums' | 'others'
 const statsMeta: Record<StatType, { label: string; color: string }> = {
   total: {
@@ -107,16 +116,22 @@ function Stat({
 
   return (
     <StatCard color={meta.color} title={meta.label} isLoading={isLoading}>
-      <div className="flex min-h-6 items-center gap-1 md:min-h-7">
+      <div className="flex min-h-6 flex-wrap items-baseline justify-center gap-x-1.5 md:min-h-7">
         <div className="whitespace-nowrap font-semibold text-heading-18 tabular-nums tracking-[-0.02em] md:text-heading-24">
           {value !== undefined ? formatCurrency(value, 'usd') : 'No data'}
         </div>
         {change !== undefined && changePeriod !== undefined ? (
-          <PercentChange
-            textClassName="cursor-default md:text-heading-20 w-full text-heading-16"
-            value={change}
-            period={changePeriod}
-          />
+          <span className="flex items-baseline gap-1 whitespace-nowrap font-medium text-label-value-13 md:text-label-value-15">
+            <PercentChange
+              className="min-w-0 cursor-default text-left"
+              textClassName="text-label-value-13 md:text-label-value-15"
+              value={change}
+              period={changePeriod}
+            />
+            <span className="text-secondary">
+              {PERIOD_LABEL[changePeriod]}
+            </span>
+          </span>
         ) : null}
       </div>
     </StatCard>
