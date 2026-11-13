@@ -19,38 +19,6 @@ export function NativeRollupsHeroIllustration({
       aria-label="An L2 block is posted in an EIP-8141 frame transaction. Its dependency frame declares the proof, which EIP-8288 aggregates, and its advance call reaches the rollup contract, which checks the proof's verification key against the EIP-8357 registry."
     >
       <defs>
-        <linearGradient
-          id="nr-brand"
-          x1="60"
-          y1="40"
-          x2="360"
-          y2="260"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="var(--color-brand-deep)" />
-          <stop offset="1" stopColor="var(--color-brand)" />
-        </linearGradient>
-        <linearGradient
-          id="nr-brand-soft"
-          x1="60"
-          y1="40"
-          x2="360"
-          y2="260"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="var(--color-brand-deep)" stopOpacity="0.18" />
-          <stop offset="1" stopColor="var(--color-brand)" stopOpacity="0.18" />
-        </linearGradient>
-        <radialGradient
-          id="nr-glow"
-          cx="210"
-          cy="150"
-          r="190"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="var(--color-brand-deep)" stopOpacity="0.14" />
-          <stop offset="1" stopColor="var(--color-brand)" stopOpacity="0" />
-        </radialGradient>
         <marker
           id="nr-arrow"
           markerUnits="userSpaceOnUse"
@@ -64,8 +32,6 @@ export function NativeRollupsHeroIllustration({
         </marker>
       </defs>
 
-      <ellipse cx="210" cy="150" rx="210" ry="150" fill="url(#nr-glow)" />
-
       {/* The L2 block, on top of the chain before it. */}
       <rect
         x="16"
@@ -73,18 +39,10 @@ export function NativeRollupsHeroIllustration({
         width="96"
         height="88"
         rx="12"
-        fill="url(#nr-brand-soft)"
-        stroke="url(#nr-brand)"
+        className="fill-(--accent)/10"
+        stroke="var(--accent)"
         strokeOpacity="0.35"
         strokeWidth="1.5"
-      />
-      <rect
-        x="13"
-        y="50"
-        width="96"
-        height="88"
-        rx="12"
-        className="fill-(--accent)/10"
       />
       <rect
         x="10"
@@ -93,18 +51,17 @@ export function NativeRollupsHeroIllustration({
         height="88"
         rx="12"
         className="fill-pure-white dark:fill-zinc-900"
-        stroke="url(#nr-brand)"
+        stroke="var(--accent)"
         strokeWidth="2"
       />
       <text
         x="24"
         y="70"
-        className="fill-secondary dark:fill-primary"
-        fontSize="10"
+        className="fill-primary"
+        fontSize="11"
         fontWeight="700"
-        letterSpacing="1.2"
       >
-        L2 BLOCK
+        L2 block
       </text>
       <rect
         x="24"
@@ -141,14 +98,6 @@ export function NativeRollupsHeroIllustration({
 
       {/* The frame transaction that posts it, with its blobs and frames. */}
       <rect
-        x="141"
-        y="18"
-        width="144"
-        height="140"
-        rx="14"
-        className="fill-(--accent)/10"
-      />
-      <rect
         x="138"
         y="14"
         width="144"
@@ -162,19 +111,18 @@ export function NativeRollupsHeroIllustration({
         width="144"
         height="140"
         rx="14"
-        fill="url(#nr-brand-soft)"
-        stroke="url(#nr-brand)"
+        className="fill-(--accent)/10"
+        stroke="var(--accent)"
         strokeWidth="2"
       />
       <text
         x="151"
         y="34"
-        className="fill-secondary dark:fill-primary"
-        fontSize="9.5"
+        className="fill-primary"
+        fontSize="11"
         fontWeight="700"
-        letterSpacing="1"
       >
-        FRAME TX
+        Frame tx
       </text>
       <rect
         x="220"
@@ -182,43 +130,41 @@ export function NativeRollupsHeroIllustration({
         width="50"
         height="15"
         rx="7.5"
-        fill="url(#nr-brand)"
+        fill="var(--accent)"
       />
       <text
         x="245"
         y="33.5"
         textAnchor="middle"
         fill="#fff"
-        fontSize="7.5"
+        fontSize="9.5"
         fontWeight="700"
-        letterSpacing="0.4"
       >
         EIP-8141
       </text>
-      <circle cx="156" cy="49" r="4.5" fill="url(#nr-brand)" />
+      <circle cx="156" cy="49" r="4.5" fill="var(--accent)" />
       <circle
         cx="168"
         cy="49"
         r="4.5"
-        fill="url(#nr-brand)"
+        fill="var(--accent)"
         fillOpacity="0.65"
       />
       <circle
         cx="180"
         cy="49"
         r="4.5"
-        fill="url(#nr-brand)"
+        fill="var(--accent)"
         fillOpacity="0.35"
       />
       <text
         x="191"
         y="52"
-        className="fill-secondary dark:fill-primary"
-        fontSize="8"
+        className="fill-primary"
+        fontSize="10"
         fontWeight="600"
-        letterSpacing="0.8"
       >
-        BLOBS
+        Blobs
       </text>
 
       <rect
@@ -234,19 +180,18 @@ export function NativeRollupsHeroIllustration({
       <text
         x="160"
         y="76.5"
-        className="fill-secondary dark:fill-primary"
-        fontSize="8.5"
+        className="fill-primary"
+        fontSize="10"
         fontWeight="600"
-        letterSpacing="0.6"
       >
-        VERIFY
+        Verify
       </text>
       <text
         x="261"
         y="76.5"
         textAnchor="end"
         className="fill-secondary"
-        fontSize="7.5"
+        fontSize="9.5"
         fontWeight="600"
         opacity="0.6"
       >
@@ -259,24 +204,17 @@ export function NativeRollupsHeroIllustration({
         width="120"
         height="22"
         rx="7"
-        fill="url(#nr-brand)"
+        fill="var(--accent)"
       />
-      <text
-        x="160"
-        y="104.5"
-        fill="#fff"
-        fontSize="8.5"
-        fontWeight="700"
-        letterSpacing="0.6"
-      >
-        DEPENDENCY
+      <text x="160" y="104.5" fill="#fff" fontSize="10" fontWeight="700">
+        Dependency
       </text>
       <text
         x="261"
         y="104.5"
         textAnchor="end"
         fill="#fff"
-        fontSize="7.5"
+        fontSize="9.5"
         fontWeight="600"
         opacity="0.75"
       >
@@ -297,7 +235,7 @@ export function NativeRollupsHeroIllustration({
         x="160"
         y="132.5"
         className="fill-(--accent)"
-        fontSize="8.5"
+        fontSize="10"
         fontWeight="700"
         fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace"
       >
@@ -308,7 +246,7 @@ export function NativeRollupsHeroIllustration({
         y="132.5"
         textAnchor="end"
         className="fill-secondary"
-        fontSize="7.5"
+        fontSize="9.5"
         fontWeight="600"
         opacity="0.6"
       >
@@ -325,24 +263,16 @@ export function NativeRollupsHeroIllustration({
 
       {/* EIP-8288, which aggregates the declared proof. */}
       <rect
-        x="313"
-        y="56"
-        width="100"
-        height="98"
-        rx="14"
-        className="fill-(--accent)/10"
-      />
-      <rect
         x="310"
         y="52"
         width="100"
         height="98"
         rx="14"
         className="fill-pure-white dark:fill-zinc-900"
-        stroke="url(#nr-brand)"
+        stroke="var(--accent)"
         strokeWidth="2"
       />
-      <circle cx="360" cy="84" r="14" fill="url(#nr-brand)" />
+      <circle cx="360" cy="84" r="14" fill="var(--accent)" />
       <path
         d="m353 84 5 5 9-11"
         stroke="#fff"
@@ -354,10 +284,9 @@ export function NativeRollupsHeroIllustration({
         x="360"
         y="117"
         textAnchor="middle"
-        className="fill-secondary dark:fill-primary"
-        fontSize="9.5"
+        className="fill-primary"
+        fontSize="11"
         fontWeight="700"
-        letterSpacing="0.8"
       >
         EIP-8288
       </text>
@@ -366,11 +295,10 @@ export function NativeRollupsHeroIllustration({
         y="131"
         textAnchor="middle"
         className="fill-secondary"
-        fontSize="7.5"
+        fontSize="9.5"
         fontWeight="600"
-        letterSpacing="0.8"
       >
-        AGGREGATED
+        Aggregated
       </text>
 
       <path
@@ -400,33 +328,23 @@ export function NativeRollupsHeroIllustration({
         y="240"
         textAnchor="middle"
         className="fill-(--accent)"
-        fontSize="7"
+        fontSize="9"
         fontWeight="700"
-        letterSpacing="0.6"
       >
-        KEY
+        Key
       </text>
       <text
         x="322"
         y="240"
         textAnchor="middle"
         className="fill-(--accent)"
-        fontSize="7"
+        fontSize="9"
         fontWeight="700"
-        letterSpacing="0.6"
       >
-        PROOF ✓
+        Proof ✓
       </text>
 
       {/* EIP-8357, which holds the EVM program's key for each fork. */}
-      <rect
-        x="13"
-        y="202"
-        width="104"
-        height="98"
-        rx="14"
-        className="fill-(--accent)/10"
-      />
       <rect
         x="10"
         y="198"
@@ -434,19 +352,13 @@ export function NativeRollupsHeroIllustration({
         height="98"
         rx="14"
         className="fill-pure-white dark:fill-zinc-900"
-        stroke="url(#nr-brand)"
+        stroke="var(--accent)"
         strokeWidth="2"
       />
-      <circle
-        cx="27"
-        cy="220"
-        r="5"
-        stroke="url(#nr-brand)"
-        strokeWidth="2.2"
-      />
+      <circle cx="27" cy="220" r="5" stroke="var(--accent)" strokeWidth="2.2" />
       <path
         d="M32 220h11m-4 0v4m4-4v3"
-        stroke="url(#nr-brand)"
+        stroke="var(--accent)"
         strokeWidth="2.2"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -454,10 +366,9 @@ export function NativeRollupsHeroIllustration({
       <text
         x="49"
         y="223.5"
-        className="fill-secondary dark:fill-primary"
-        fontSize="9.5"
+        className="fill-primary"
+        fontSize="11"
         fontWeight="700"
-        letterSpacing="0.8"
       >
         EIP-8357
       </text>
@@ -465,11 +376,10 @@ export function NativeRollupsHeroIllustration({
         x="22"
         y="240"
         className="fill-secondary"
-        fontSize="7.5"
+        fontSize="9.5"
         fontWeight="600"
-        letterSpacing="0.8"
       >
-        KEY REGISTRY
+        Key registry
       </text>
       <rect
         x="22"
@@ -493,19 +403,11 @@ export function NativeRollupsHeroIllustration({
         width="66"
         height="7"
         rx="3.5"
-        fill="url(#nr-brand)"
+        fill="var(--accent)"
       />
       <path d="M100 279.5l-6 3.5v-7z" fill="var(--accent)" />
 
       {/* The rollup contract, which takes the block once both checks pass. */}
-      <rect
-        x="143"
-        y="202"
-        width="140"
-        height="98"
-        rx="14"
-        className="fill-(--accent)/10"
-      />
       <rect
         x="140"
         y="198"
@@ -513,19 +415,18 @@ export function NativeRollupsHeroIllustration({
         height="98"
         rx="14"
         className="fill-pure-white dark:fill-zinc-900"
-        stroke="url(#nr-brand)"
+        stroke="var(--accent)"
         strokeWidth="2"
       />
       <text
         x="210"
         y="222"
         textAnchor="middle"
-        className="fill-secondary dark:fill-primary"
-        fontSize="9.5"
+        className="fill-primary"
+        fontSize="11"
         fontWeight="700"
-        letterSpacing="1"
       >
-        ROLLUP CONTRACT
+        Rollup contract
       </text>
       <rect
         x="153"
@@ -533,8 +434,8 @@ export function NativeRollupsHeroIllustration({
         width="114"
         height="22"
         rx="11"
-        fill="url(#nr-brand-soft)"
-        stroke="url(#nr-brand)"
+        className="fill-(--accent)/10"
+        stroke="var(--accent)"
         strokeOpacity="0.5"
       />
       <text
@@ -542,22 +443,20 @@ export function NativeRollupsHeroIllustration({
         y="250.5"
         textAnchor="middle"
         className="fill-(--accent)"
-        fontSize="8.5"
+        fontSize="10"
         fontWeight="700"
-        letterSpacing="0.4"
       >
-        ETHEREUM&apos;S EVM ✓
+        Ethereum&apos;s EVM ✓
       </text>
       <text
         x="210"
         y="280"
         textAnchor="middle"
         className="fill-secondary"
-        fontSize="7.5"
+        fontSize="9.5"
         fontWeight="600"
-        letterSpacing="0.8"
       >
-        NEW STATE ROOT
+        New state root
       </text>
     </svg>
   )

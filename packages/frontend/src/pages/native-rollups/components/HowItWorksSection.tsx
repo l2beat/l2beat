@@ -35,11 +35,13 @@ export function HowItWorksSection() {
         <ol className="grid gap-px bg-divider md:grid-cols-2 xl:grid-cols-4">
           {STEPS.map((step, index) => (
             <li key={step.title} className="bg-surface-primary p-5 md:p-6">
-              <span className="font-bold text-brand text-heading-32">
+              <span className="font-semibold text-brand text-heading-32">
                 <span className="sr-only">Step </span>
                 {String(index + 1).padStart(2, '0')}
               </span>
-              <h3 className="mt-4 font-bold text-heading-18">{step.title}</h3>
+              <h3 className="mt-4 font-semibold text-heading-18">
+                {step.title}
+              </h3>
               <p className="mt-2 text-paragraph-15 text-secondary">
                 {step.description}
               </p>

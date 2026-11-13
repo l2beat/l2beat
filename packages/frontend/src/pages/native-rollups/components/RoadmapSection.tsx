@@ -30,6 +30,19 @@ export function RoadmapSection() {
         description="The research has moved from the original EXECUTE proposal to proofs declared through EIP-8288 and checked against the EIP-8357 registry. What comes next depends on L1, so it has no dates."
       />
       <PrimaryCard className="overflow-hidden p-0 md:p-0">
+        {/* What the timeline depends on leads it, before any date */}
+        <div className="border-divider border-b p-5 md:p-6">
+          <div className="flex items-start gap-2.5 rounded-lg bg-surface-info p-3.5 md:p-4">
+            <InfoIcon className="mt-px size-5 shrink-0 fill-link" />
+            <p className="text-paragraph-15 leading-relaxed">
+              Native rollups are{' '}
+              <strong>not part of any scheduled Ethereum hard fork</strong>.
+              EIP-8288 and EIP-8357 are drafts, optional execution proofs
+              (EIP-8025) are proposed for Hegotá, and the mandatory proofs
+              native rollups need are expected in K* at the earliest.
+            </p>
+          </div>
+        </div>
         {ROADMAP_YEARS.map((group, groupIndex) => {
           const isCurrentYear = group.items.some(
             (item) => item.status === 'inProgress',
@@ -46,8 +59,8 @@ export function RoadmapSection() {
               <div className="p-5 pb-0 md:border-divider md:border-r md:p-6 md:pb-6">
                 <span
                   className={cn(
-                    'font-bold text-heading-32 leading-none md:text-heading-40 lg:text-[56px]',
-                    isCurrentYear ? 'text-(--accent)' : 'text-secondary/25',
+                    'font-semibold text-heading-32 leading-none md:text-heading-40 lg:text-[56px]',
+                    isCurrentYear ? 'text-(--accent)' : 'text-primary',
                   )}
                 >
                   {group.year}
@@ -98,7 +111,7 @@ export function RoadmapSection() {
                           {STATUS[item.status].label}
                         </span>
                       </div>
-                      <h3 className="mt-1 font-bold text-label-value-16 md:text-label-value-18">
+                      <h3 className="mt-1 font-semibold text-label-value-16 md:text-label-value-18">
                         {item.title}
                       </h3>
                       <p className="mt-1.5 text-paragraph-15 text-secondary md:text-paragraph-16">
@@ -122,18 +135,6 @@ export function RoadmapSection() {
             </div>
           )
         })}
-        <div className="border-divider border-t p-5 md:p-6">
-          <div className="flex items-start gap-2.5 rounded-lg bg-surface-info p-3.5 md:p-4">
-            <InfoIcon className="mt-px size-5 shrink-0 fill-link" />
-            <p className="text-paragraph-15 leading-relaxed">
-              Native rollups are{' '}
-              <strong>not part of any scheduled Ethereum hard fork</strong>.
-              EIP-8288 and EIP-8357 are drafts, optional execution proofs
-              (EIP-8025) are proposed for Hegotá, and the mandatory proofs
-              native rollups need are expected in K* at the earliest.
-            </p>
-          </div>
-        </div>
       </PrimaryCard>
     </section>
   )

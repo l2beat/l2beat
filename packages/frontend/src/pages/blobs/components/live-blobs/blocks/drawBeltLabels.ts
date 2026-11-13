@@ -50,7 +50,7 @@ export function drawBlockNumbers(
   ctx.save()
   ctx.textAlign = 'center'
   ctx.textBaseline = 'alphabetic'
-  ctx.font = `500 ${layout.compact ? 10 : 11}px ${FONT}`
+  ctx.font = `500 ${layout.compact ? 11 : 12}px ${FONT}`
 
   for (let slot = belt.first; slot <= belt.last; slot++) {
     const middle = rackLeft(belt, layout, slot) + layout.rackWidth / 2
@@ -63,9 +63,7 @@ export function drawBlockNumbers(
       ctx.fillStyle =
         light > 0
           ? mixColors(palette.textSecondary, palette.text, light)
-          : count === 0
-            ? palette.textFaint
-            : palette.textSecondary
+          : palette.textSecondary
       ctx.fillText(
         status === 'missed' ? '–' : String(count),
         middle,
@@ -76,7 +74,7 @@ export function drawBlockNumbers(
       const text = formatWhole(slot)
       const half = ctx.measureText(text).width / 2
       ctx.globalAlpha = presenceAtEnds(layout, middle - half, middle + half)
-      ctx.fillStyle = palette.textFaint
+      ctx.fillStyle = palette.textSecondary
       ctx.fillText(text, middle, layout.slotNumberY)
     }
   }
@@ -177,14 +175,14 @@ function drawArrivalLabel(
   ctx.textBaseline = 'middle'
 
   const size = layout.compact ? 11 : 12
-  ctx.font = `700 ${size}px ${FONT}`
+  ctx.font = `600 ${size}px ${FONT}`
   const amountWidth = ctx.measureText(amount).width
   fillTextOnSurface(ctx, palette, amount, x, y, palette.text)
 
   ctx.font = `500 ${size}px ${FONT}`
   const nameX = x + amountWidth + 4
   const shortName = fitText(ctx, name, layout.width - nameX - 2)
-  fillTextOnSurface(ctx, palette, shortName, nameX, y, palette.textSecondary)
+  fillTextOnSurface(ctx, palette, shortName, nameX, y, palette.text)
   const right = nameX + ctx.measureText(shortName).width
   ctx.restore()
   return {
@@ -219,7 +217,7 @@ export function drawBayCaption(
   const y = layout.bayCaptionY
 
   ctx.font = wordFont
-  ctx.fillStyle = palette.textSecondary
+  ctx.fillStyle = palette.text
   ctx.fillText(word, x, y)
 
   ctx.font = numberFont
@@ -283,17 +281,17 @@ export function drawLimitLabels(
   // what the hatching between them means
   const meaning = 'Blob fee rises'
   ctx.save()
-  ctx.font = `500 11px ${FONT}`
+  ctx.font = `500 12px ${FONT}`
   ctx.textAlign = 'right'
   ctx.textBaseline = 'middle'
   const middle = (layout.maxY + layout.targetY) / 2
   ctx.globalAlpha = giveWay({
     left: right - ctx.measureText(meaning).width - RIM,
     right: right + RIM,
-    top: middle - 5.5 - RIM,
-    bottom: middle + 5.5 + RIM,
+    top: middle - 6 - RIM,
+    bottom: middle + 6 + RIM,
   })
-  fillTextOnSurface(ctx, palette, meaning, right, middle, palette.textFaint)
+  fillTextOnSurface(ctx, palette, meaning, right, middle, palette.textSecondary)
   ctx.restore()
 }
 
@@ -312,22 +310,22 @@ function drawRuleLabel(
   ctx.textAlign = 'right'
   ctx.textBaseline = 'alphabetic'
 
-  ctx.font = `700 11px ${FONT}`
+  ctx.font = `600 12px ${FONT}`
   const valueWidth = ctx.measureText(valueText).width
-  ctx.font = `500 11px ${FONT}`
+  ctx.font = `500 12px ${FONT}`
   const wordRight = right - valueWidth - 3
-  // from the cap height above the baseline to the descenders under it, at 11 px
+  // from the cap height above the baseline to the descenders under it, at 12 px
   ctx.globalAlpha = giveWay({
     left: wordRight - ctx.measureText(word).width - RIM,
     right: right + RIM,
-    top: y - 8 - RIM,
+    top: y - 9 - RIM,
     bottom: y + 3 + RIM,
   })
 
-  ctx.font = `700 11px ${FONT}`
+  ctx.font = `600 12px ${FONT}`
   fillTextOnSurface(ctx, palette, valueText, right, y, palette.text)
-  ctx.font = `500 11px ${FONT}`
-  fillTextOnSurface(ctx, palette, word, wordRight, y, palette.textSecondary)
+  ctx.font = `500 12px ${FONT}`
+  fillTextOnSurface(ctx, palette, word, wordRight, y, palette.text)
   ctx.restore()
 }
 

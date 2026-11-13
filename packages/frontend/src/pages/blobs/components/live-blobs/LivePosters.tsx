@@ -58,16 +58,24 @@ const PINNED_COLUMNS = 2
 /** Where the logo sticks until the sticky header measures the # column */
 const RANK_WIDTH = 32
 
+/** A phone shows the blobs instead, the number the table is about */
+const ACTIVITY_HIDDEN = 'max-md:hidden'
+/** Blobs over batches, both shown, so it gives way first */
+const PER_BATCH_HIDDEN = 'max-2xl:hidden'
+
 const COLUMNS: {
   label: string
   align?: 'right'
   tooltip?: string
+  /** Hides the column, header and cells, where the window is too narrow */
+  hidden?: string
 }[] = [
   { label: '#' },
   { label: '' },
   { label: 'Name' },
   {
     label: 'Activity',
+    hidden: ACTIVITY_HIDDEN,
     tooltip: `Blobs in every ${(BUCKET_SLOTS * SLOT_SECONDS) / 60} minutes of the window, newest on the right`,
   },
   { label: 'Blobs', align: 'right', tooltip: 'Blobs posted in the window' },
@@ -81,6 +89,7 @@ const COLUMNS: {
   {
     label: 'Per batch',
     align: 'right',
+    hidden: PER_BATCH_HIDDEN,
     tooltip: 'Blobs in a batch, on average',
   },
   { label: 'Share', align: 'right', tooltip: 'Of all blobs in the window' },
@@ -146,7 +155,7 @@ export function LivePosters({ live: data, totals }: Props) {
                       key={column.label}
                       align={column.align}
                       tooltip={column.tooltip}
-                      {...pinnedCellProps(index)}
+                      {...pinnedCellProps(index, column.hidden)}
                     >
                       {column.label}
                     </TableHead>
@@ -259,7 +268,7 @@ const PosterRow = memo(function PosterRow({
           <PosterName poster={row.poster} className="md:pl-1.5" />
         )}
       </TableCell>
-      <TableCell>
+      <TableCell className={ACTIVITY_HIDDEN}>
         <TableLink
           href={row.poster.href && `${row.poster.href}#data-posted`}
           aria-label={`${row.poster.name} data posted`}
@@ -288,7 +297,7 @@ const PosterRow = memo(function PosterRow({
       <TableCell align="right">
         <RollingNumber value={batches} format={formatWhole} />
       </TableCell>
-      <TableCell align="right">
+      <TableCell align="right" className={PER_BATCH_HIDDEN}>
         <RollingNumber value={blobs / batches} format={formatAverage} />
       </TableCell>
       <TableCell align="right">

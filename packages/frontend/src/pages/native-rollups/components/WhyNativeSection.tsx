@@ -26,7 +26,7 @@ export function WhyNativeSection() {
               key={feature.title}
               className="border-divider p-5 first:border-b md:p-8 md:first:border-r md:first:border-b-0"
             >
-              <h3 className="font-bold text-heading-20 md:text-heading-24">
+              <h3 className="font-semibold text-heading-20 md:text-heading-24">
                 {feature.title}
               </h3>
               <p className="mt-3 text-paragraph-15 text-secondary md:text-paragraph-16">

@@ -1,4 +1,4 @@
-import { CustomLink } from '~/components/link/CustomLink'
+import { Button } from '~/components/core/Button'
 import { DownloadArrowIcon } from '~/icons/DownloadArrow'
 import { cn } from '~/utils/cn'
 
@@ -12,15 +12,15 @@ export function ReportDownloadButton({
   className,
 }: ReportDownloadButtonProps) {
   return (
-    <CustomLink
-      className={cn(
-        'flex items-center justify-center rounded-md bg-brand py-4 text-white no-underline transition-colors hover:text-white hover:brightness-90 md:w-1/3 md:py-5 dark:text-white dark:hover:text-white',
-        className,
-      )}
-      href={fileUrl}
+    <Button
+      asChild
+      variant="fill"
+      className={cn('w-full gap-2 sm:w-max', className)}
     >
-      <DownloadArrowIcon className="mr-3 fill-pure-white" />
-      Download the report
-    </CustomLink>
+      <a href={fileUrl} target="_blank" rel="noreferrer noopener">
+        <DownloadArrowIcon className="fill-current" />
+        Download the report
+      </a>
+    </Button>
   )
 }

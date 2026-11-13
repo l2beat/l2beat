@@ -25,11 +25,11 @@ export function ContributorsSection({
                 alt={contributor.name}
                 className="size-28 rounded-full border border-divider object-cover md:size-36"
               />
-              <span className="absolute right-1 bottom-1 flex size-8 items-center justify-center rounded-full border border-divider bg-surface-primary text-primary shadow-sm md:right-2 md:bottom-2">
+              <span className="absolute right-1 bottom-1 flex size-8 items-center justify-center rounded-full border border-divider bg-surface-primary text-primary md:right-2 md:bottom-2">
                 <XIcon className="size-3.5 fill-current" />
               </span>
             </div>
-            <p className="mt-4 font-bold text-label-value-16 group-hover:underline md:text-label-value-18">
+            <p className="mt-4 font-semibold text-label-value-16 group-hover:underline md:text-label-value-18">
               {contributor.name}
             </p>
             <p className="mt-0.5 text-2xs text-secondary">{contributor.org}</p>

@@ -6,15 +6,10 @@ import { NATIVE_ROLLUPS_BOOK_URL, NATIVE_ROLLUPS_DEMO_URL } from '../links'
 
 export function Hero() {
   return (
-    <PrimaryCard className="relative overflow-hidden md:p-8">
-      <div className="pointer-events-none absolute inset-0 bg-linear-to-br from-brand/10 via-transparent to-brand/5" />
-      <div
-        aria-hidden
-        className="-top-24 -right-24 pointer-events-none absolute size-72 rounded-full bg-radial from-brand/20 to-transparent blur-2xl"
-      />
-      <div className="relative grid w-full items-center gap-4 lg:grid-cols-[minmax(0,1fr)_420px] lg:gap-x-8 lg:gap-y-6">
-        <div className="mx-auto flex w-full max-w-2xl flex-col items-center gap-6 text-center lg:mx-0 lg:items-start lg:text-left">
-          <h2 className="text-balance font-bold text-heading-32 md:text-heading-40">
+    <PrimaryCard className="md:p-8">
+      <div className="grid w-full items-center gap-4 lg:grid-cols-[minmax(0,1fr)_420px] lg:gap-x-8 lg:gap-y-6">
+        <div className="mx-auto flex w-full flex-col items-center gap-6 text-center lg:mx-0 lg:items-start lg:text-left">
+          <h2 className="text-balance font-semibold text-heading-32 md:text-heading-40">
             The easiest and most secure way to deploy your own EVM chain.
           </h2>
           <p className="text-pretty text-paragraph-16 text-secondary md:text-paragraph-18">
@@ -33,7 +28,7 @@ export function Hero() {
               target="_blank"
               rel="noreferrer noopener"
             >
-              Explore the Book
+              Explore the book
               <CustomLinkIcon className="fill-current" />
             </a>
           </Button>
@@ -41,7 +36,7 @@ export function Hero() {
             href={NATIVE_ROLLUPS_DEMO_URL}
             target="_blank"
             rel="noreferrer noopener"
-            className="inline-flex w-full items-center justify-center gap-1 rounded-lg border border-divider px-6 py-2 font-bold text-primary transition-colors sm:w-max lg:rounded-none lg:border-0 lg:p-0 lg:font-medium lg:text-label-value-15 lg:text-link lg:hover:text-(--accent)"
+            className="inline-flex w-full items-center justify-center gap-1 rounded-lg border border-divider px-6 py-2 font-semibold text-primary transition-colors sm:w-max lg:rounded-none lg:border-0 lg:p-0 lg:font-medium lg:text-label-value-15 lg:text-link lg:hover:text-(--accent)"
           >
             See it running on a devnet
             <CustomLinkIcon className="size-3.5 fill-current" />

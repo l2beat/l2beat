@@ -42,7 +42,7 @@ export function NativeProofVerificationSection() {
                   index < CAPABILITIES.length - 1 && 'border-b',
                 )}
               >
-                <h3 className="font-bold text-label-value-16">
+                <h3 className="font-semibold text-label-value-16">
                   {capability.title}
                 </h3>
                 <p className="mt-1.5 text-paragraph-15 text-secondary">
@@ -53,10 +53,10 @@ export function NativeProofVerificationSection() {
           </div>
         </div>
         <div className="border-divider border-t p-5 md:p-6">
-          <h3 className="font-bold text-heading-20">Native or custom?</h3>
+          <h3 className="font-semibold text-heading-20">Native or custom?</h3>
           <dl className="mt-4 grid gap-3 md:grid-cols-2 md:gap-4">
             <div className="rounded-lg bg-(--accent)/5 p-4">
-              <dt className="font-bold text-(--accent) text-label-value-16">
+              <dt className="font-semibold text-label-value-16">
                 Native EVM program
               </dt>
               <dd className="mt-1 text-paragraph-15 text-secondary">
@@ -66,7 +66,7 @@ export function NativeProofVerificationSection() {
               </dd>
             </div>
             <div className="rounded-lg bg-surface-secondary p-4">
-              <dt className="font-bold text-label-value-16">
+              <dt className="font-semibold text-label-value-16">
                 Custom guest program
               </dt>
               <dd className="mt-1 text-paragraph-15 text-secondary">

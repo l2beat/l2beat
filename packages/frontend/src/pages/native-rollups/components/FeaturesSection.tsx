@@ -53,7 +53,7 @@ export function FeaturesSection() {
                   <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-(--accent)/10 text-(--accent)">
                     <Icon aria-hidden className="size-4" />
                   </div>
-                  <h3 className="font-bold text-heading-16 md:text-label-value-18">
+                  <h3 className="font-semibold text-heading-16 md:text-label-value-18">
                     {feature.title}
                   </h3>
                 </div>
