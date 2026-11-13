@@ -3,19 +3,12 @@ import type {
   CalculationFormula,
   Formula,
   TvsToken,
-  ValueFormula,
 } from '@l2beat/config'
 import { EthereumAddress, TokenId } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { extractAddressesFromTokenConfig } from './extractAddressesFromTokenConfig'
 
 describe(extractAddressesFromTokenConfig.name, () => {
-  it('returns empty array if no amount', () => {
-    const token = mockToken()
-    const result = extractAddressesFromTokenConfig(token)
-    expect(result).toEqual([])
-  })
-
   it('should handle calculation', () => {
     const add1 = EthereumAddress.random()
     const add2 = EthereumAddress.random()
@@ -49,7 +42,6 @@ describe(extractAddressesFromTokenConfig.name, () => {
             escrowAddress: add3,
             chain: '1',
           }),
-          mockValueFormula(),
         ]),
       ],
     })
@@ -90,7 +82,6 @@ describe(extractAddressesFromTokenConfig.name, () => {
               chain: '1',
             }),
           ]),
-          mockValueFormula(),
         ]),
       ],
     })
@@ -146,7 +137,6 @@ describe(extractAddressesFromTokenConfig.name, () => {
           mockAmountFormula({
             type: 'const',
           }),
-          mockValueFormula(),
         ]),
       ],
     })
@@ -154,13 +144,6 @@ describe(extractAddressesFromTokenConfig.name, () => {
     expect(result).toEqual([])
   })
 })
-
-function mockValueFormula(): ValueFormula {
-  return mockObject<ValueFormula>({
-    type: 'value',
-    priceId: '1',
-  })
-}
 
 function mockAmountFormula(amount: Partial<AmountFormula>): AmountFormula {
   return mockObject<AmountFormula>({
@@ -177,7 +160,7 @@ function mockCalculationFormula(args: Formula[]): CalculationFormula {
   })
 }
 
-function mockToken(amount?: CalculationFormula | AmountFormula): TvsToken {
+function mockToken(amount: CalculationFormula | AmountFormula): TvsToken {
   return mockObject<TvsToken>({
     mode: 'auto',
     id: TokenId('1'),
