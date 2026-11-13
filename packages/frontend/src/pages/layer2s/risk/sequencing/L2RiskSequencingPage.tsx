@@ -59,7 +59,7 @@ export function L2RiskSequencingPage({
             color="blue"
             body="A system combining decentralized sequencing for real-time censorship resistance with deterministic L1 inclusion for eventual censorship resistance would provide the strongest overall protection. No live system shown here offers that combination yet."
             icon={<InfoIcon className="size-5" variant="blue" />}
-            className="mt-4 p-4 font-medium text-paragraph-15 max-md:rounded-none md:px-6"
+            className="p-4 font-medium text-paragraph-15 max-md:rounded-none md:mt-4 md:px-6"
           />
         </SideNavLayout>
       </BadgeLookupProvider>
