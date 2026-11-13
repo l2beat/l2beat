@@ -111,7 +111,7 @@ function Stat({
   return (
     <StatCard
       color={statsMeta[type].color}
-      title={`${statsMeta[type].label} past day ${metric.toUpperCase()}`}
+      title={statsMeta[type].label}
       isLoading={isLoading}
       footer={
         type !== 'rollups' ? undefined : isLoading ? (

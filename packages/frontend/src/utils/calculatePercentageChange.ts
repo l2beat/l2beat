@@ -13,6 +13,15 @@ export const COMPARED_TO_PERIOD: Record<PercentageChangePeriod, string> = {
   last30d: 'the previous 30 days',
 }
 
+/** Written after a change, as in "−5.65% / 7d". */
+export const PERIOD_LABEL: Record<PercentageChangePeriod, string> = {
+  '1D': '1d',
+  '7D': '7d',
+  last24h: '24h',
+  last7d: '7d',
+  last30d: '30d',
+}
+
 export function calculatePercentageChange(now: number, then: number) {
   if (now === then || then === 0 || now < 0.01) {
     return 0

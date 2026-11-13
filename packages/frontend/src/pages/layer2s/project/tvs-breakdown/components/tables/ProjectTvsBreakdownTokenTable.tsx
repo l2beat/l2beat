@@ -14,6 +14,7 @@ import { MIN_VALUE_FOR_PROJECT_TVS_BREAKDOWN } from '~/server/features/layer2s/p
 import type { ProjectTvsBreakdownTokenEntry } from '~/server/features/layer2s/tvs/breakdown/getProjectTokensEntries'
 import { columns } from './columns'
 import { renderFormulaSubComponent } from './FormulaSubRow'
+import { useLegacyCategoryFilter } from './useLegacyCategoryFilter'
 
 interface Props {
   entries: TokenRow[]
@@ -22,6 +23,7 @@ interface Props {
 export type TokenRow = ProjectTvsBreakdownTokenEntry & BasicTableRow
 
 export function ProjectTvsBreakdownTokenTable(props: Props) {
+  useLegacyCategoryFilter()
   const filterEntries = useFilterEntries()
   const { excludeRwaRestrictedTokens } = useL2RwaRestrictedTokensContext()
 
