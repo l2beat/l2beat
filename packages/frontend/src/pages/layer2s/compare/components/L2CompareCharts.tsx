@@ -159,7 +159,7 @@ export function L2CompareCharts({
               }
               options={COMPARE_RANGE_OPTIONS.map((value) => ({
                 value,
-                label: value.toUpperCase(),
+                label: value === 'max' ? 'Max' : value,
               }))}
             />
           </div>
@@ -260,7 +260,7 @@ function MetricSwitcher({
 }) {
   const isClient = useIsClient()
   if (!isClient) {
-    return <Skeleton className="h-9 w-[300px] md:w-[340px]" />
+    return <Skeleton className="h-8 w-[300px] md:w-[340px]" />
   }
   return (
     <OverflowWrapper className="min-w-0">
@@ -269,7 +269,6 @@ function MetricSwitcher({
         aria-label="Chart metric"
         value={value}
         onValueChange={(value) => onValueChange(value as CompareMetricId)}
-        className="h-9"
       >
         {Object.values(COMPARE_METRICS).map((metric) => (
           <RadioGroupItem
@@ -353,7 +352,7 @@ function CopyLinkButton({ getShareUrl }: { getShareUrl: () => string }) {
       )}
     >
       {copied ? (
-        <CheckIcon className="size-4 stroke-green-700 dark:stroke-green-450" />
+        <CheckIcon className="size-4 stroke-positive" />
       ) : (
         <CopyIcon className="size-4 fill-current" />
       )}

@@ -31,7 +31,7 @@ export async function getL2CompareData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        name: 'Compare Projects',
+        name: 'Compare projects',
         description:
           'Compare Ethereum scaling projects across metrics like value secured and activity, on one or more charts.',
         url: req.originalUrl,

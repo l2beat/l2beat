@@ -15,7 +15,7 @@ import type { CompareMetricDef, CompareUrlFields } from '../types'
 
 export const tvsCompareMetric: CompareMetricDef = {
   id: 'tvs',
-  label: 'Value Secured',
+  label: 'Value secured',
   hasData: hasTvsData,
   noDataLabel: 'No TVS data',
   urlControls: {
