@@ -16,6 +16,7 @@ import {
   FIELD_HEIGHT,
   HEADER_HEIGHT,
   HIDDEN_FIELDS_FOOTER_HEIGHT,
+  MAX_ZOOM,
 } from '../store/utils/constants'
 import {
   buildRenderGraph,
@@ -76,6 +77,15 @@ export function drawsNodeDetail(scale: number): boolean {
   return scale >= NODE_DETAIL_MIN_SCALE
 }
 
+// Below the detail zoom no text is drawn, so the atlases stay at its size.
+function textZoomFor(scale: number): number {
+  assert(scale > 0, 'Zoom must be positive')
+  assert(scale <= MAX_ZOOM, 'Zoom must not exceed the maximum')
+  return Math.max(scale, NODE_DETAIL_MIN_SCALE)
+}
+
+const TEXT_RASTER_SETTLE_MS = 150
+
 const HEADER_FONT: FontSpec = {
   weight: 500,
   size: 14,
@@ -111,7 +121,7 @@ const PERIMETER_SAMPLES_PER_CORNER = 8
 
 // Floats per instance for each pipeline.
 const QUAD_STRIDE_F = 14 // pos.xy, size.xy, color.rgba, radii.xyzw, border, z
-const TEXT_STRIDE_F = 13 // pos.xy, size.xy, uv.xyzw, color.rgba, z
+const TEXT_STRIDE_F = 14 // pos.xy, size.xy, uv.xyzw, color.rgba, z, channel
 const LINE_STRIDE_F = 6 // pos.xy, color.rgba
 const CONNECTION_STRIDE_F = 12 // from.xy, to.xy, controlX.xy, color.rgba, width, dashed
 const CONNECTION_WIDTH = 1.5
@@ -188,19 +198,29 @@ interface AtlasGlyph {
 
 // Texture has a static ASCII slab and an LRU slab for runtime glyphs.
 interface FontAtlas {
-  texture: WebGLTexture
   refSize: number
   cellW: number
   cellH: number
-  baselineOffset: number
+  sampling: TextSampling
   // Font ascent and descent in world units, for placing text in a CSS line box.
   ascent: number
   descent: number
   getGlyph: (ch: string) => AtlasGlyph
+  kerning: (left: string, right: string) => number
+  // Which of the atlas's four coverage masks Chrome would use for a color.
+  coverageChannel: (color: RGBA) => number
+}
+
+// How the text shader finds a glyph's raster in an atlas, see TEXT_VS.
+interface TextSampling {
+  texture: WebGLTexture
+  subpixelSteps: number
+  subpixelStepU: number
+  cellPen: [number, number]
 }
 
 interface IconAtlas {
-  texture: WebGLTexture
+  sampling: TextSampling
   cells: Map<IconAtlasId, { u0: number; v0: number; u1: number; v1: number }>
 }
 
@@ -335,31 +355,46 @@ layout(location = 2) in vec2 i_size;
 layout(location = 3) in vec4 i_uv;
 layout(location = 4) in vec4 i_color;
 layout(location = 5) in float i_z;
+layout(location = 6) in float i_channel;
 uniform vec2 u_offset;
 uniform float u_scale;
 uniform vec2 u_resolution;
 uniform float u_dpr;
+// Glyph atlases hold each glyph at u_subpixelSteps offsets, u_subpixelStepU
+// apart, with the pen at u_cellPen (world units) in the cell. Icons use 1, 0
+// and (0, 0).
+uniform float u_subpixelSteps;
+uniform float u_subpixelStepU;
+uniform vec2 u_cellPen;
 out vec2 v_uv;
 out vec4 v_color;
+flat out vec4 v_channelMask;
 void main() {
-  // Glyphs start on a device pixel so the atlas maps texel to pixel at full
-  // zoom instead of being smeared across two pixels.
-  vec2 origin = round((i_pos * u_scale + u_offset) * u_dpr) / u_dpr;
-  vec2 screen = origin + a_corner * i_size * u_scale;
+  // Like Chrome: the pen snaps to a fraction of a device pixel across and to a
+  // whole one down, so the atlas maps texel to pixel instead of smearing.
+  vec2 penPx = (i_pos * u_scale + u_offset) * u_dpr;
+  float stepsX = floor(penPx.x * u_subpixelSteps + 0.5);
+  float wholeX = floor(stepsX / u_subpixelSteps);
+  float subpixelStep = stepsX - wholeX * u_subpixelSteps;
+  // Scaled like the cell, so text stays put while the atlas is for another zoom.
+  vec2 cellPx = vec2(wholeX, floor(penPx.y + 0.5)) - u_cellPen * u_scale * u_dpr;
+  vec2 screen = cellPx / u_dpr + a_corner * i_size * u_scale;
   vec2 ndc = (screen / u_resolution * 2.0 - 1.0) * vec2(1.0, -1.0);
   gl_Position = vec4(ndc, i_z, 1.0);
-  v_uv = mix(i_uv.xy, i_uv.zw, a_corner);
+  v_uv = mix(i_uv.xy, i_uv.zw, a_corner) + vec2(subpixelStep * u_subpixelStepU, 0.0);
   v_color = i_color;
+  v_channelMask = vec4(equal(ivec4(int(i_channel)), ivec4(0, 1, 2, 3)));
 }`
 
 const TEXT_FS = `#version 300 es
 precision mediump float;
 in vec2 v_uv;
 in vec4 v_color;
+flat in vec4 v_channelMask;
 uniform sampler2D u_atlas;
 out vec4 fragColor;
 void main() {
-  float a = texture(u_atlas, v_uv).a;
+  float a = dot(texture(u_atlas, v_uv), v_channelMask);
   fragColor = vec4(v_color.rgb, v_color.a * a);
 }`
 
@@ -615,77 +650,122 @@ function fontString(f: FontSpec, sizePx: number): string {
 // Glyph atlas
 // ============================================================================
 
-const ATLAS_COLS = 16
-const ATLAS_STATIC_ROWS = 6 // 95 ASCII glyphs + 1 fallback fit in 96 cells
-const ATLAS_DYNAMIC_ROWS = 6
+const ATLAS_SLOT_COLUMNS = 8
+const ATLAS_STATIC_ROWS = 12 // 95 ASCII glyphs + 1 fallback fit in 96 slots
+const ATLAS_DYNAMIC_ROWS = 12
 const ATLAS_FALLBACK_CH = '�'
+const ATLAS_CELL_PADDING_PX = 2
+// A slot holds its glyph at this many offsets within a device pixel, so every
+// quad starts on a device pixel and the text still keeps its true advances.
+const GLYPH_SUBPIXEL_STEPS = 4
+
+interface AtlasGeometry {
+  pixelsPerUnit: number
+  cellPxW: number
+  cellPxH: number
+  slotPxW: number
+  atlasPxW: number
+  atlasPxH: number
+  baselinePxY: number
+}
 
 function buildFontAtlas(
   gl: WebGL2RenderingContext,
   font: FontSpec,
-  dpr: number,
+  pixelsPerUnit: number,
 ): FontAtlas {
-  const refSize = font.size
-  const padding = 2
-  const cellPxW = Math.ceil(refSize * dpr + padding * 2)
-  const cellPxH = Math.ceil(refSize * dpr * 1.6 + padding * 2)
-  const atlasPxW = cellPxW * ATLAS_COLS
-  const atlasPxH = cellPxH * (ATLAS_STATIC_ROWS + ATLAS_DYNAMIC_ROWS)
+  // One extra pixel for the largest subpixel offset.
+  const cellPxW = Math.ceil(
+    font.size * pixelsPerUnit + ATLAS_CELL_PADDING_PX * 2 + 1,
+  )
+  const cellPxH = Math.ceil(
+    font.size * pixelsPerUnit * 1.6 + ATLAS_CELL_PADDING_PX * 2,
+  )
+  const slotPxW = cellPxW * GLYPH_SUBPIXEL_STEPS
+  const atlasPxW = slotPxW * ATLAS_SLOT_COLUMNS
+  const staticPxH = cellPxH * ATLAS_STATIC_ROWS
+  const atlasPxH = staticPxH + cellPxH * ATLAS_DYNAMIC_ROWS
 
-  const initCanvas = newFontCanvas(font, dpr, atlasPxW, atlasPxH)
+  const initCanvas = newFontCanvas(font, pixelsPerUnit, atlasPxW, staticPxH)
   const initCtx = initCanvas.getContext('2d') as CanvasRenderingContext2D
   // The font's ascent rather than one glyph's, so taller glyphs like "$" or
   // "[" stay inside their cell instead of bleeding into the one above.
-  const ascentPx = initCtx.measureText('Mg').fontBoundingBoxAscent
-  const descentPx = initCtx.measureText('Mg').fontBoundingBoxDescent
-  const baselinePxY = ascentPx + padding
+  const metrics = initCtx.measureText('Mg')
+  const ascentPx = metrics.fontBoundingBoxAscent * pixelsPerUnit
+  const descentPx = metrics.fontBoundingBoxDescent * pixelsPerUnit
+  // A whole row, as the shader puts the baseline on a whole device pixel.
+  const baselinePxY = Math.ceil(ascentPx) + ATLAS_CELL_PADDING_PX
   if (baselinePxY + descentPx > cellPxH) {
     throw new Error('Font does not fit its atlas cell', { cause: font })
   }
+  const geometry: AtlasGeometry = {
+    pixelsPerUnit,
+    cellPxW,
+    cellPxH,
+    slotPxW,
+    atlasPxW,
+    atlasPxH,
+    baselinePxY,
+  }
 
   const glyphs = new Map<string, AtlasGlyph>()
-  const rasterize = (ch: string, pxX: number, pxY: number): AtlasGlyph => {
-    initCtx.save()
-    initCtx.beginPath()
-    initCtx.rect(pxX, pxY, cellPxW, cellPxH)
-    initCtx.clip()
-    initCtx.fillText(ch, pxX + padding, pxY + baselinePxY)
-    initCtx.restore()
-    return {
-      u0: pxX / atlasPxW,
-      v0: pxY / atlasPxH,
-      u1: (pxX + cellPxW) / atlasPxW,
-      v1: (pxY + cellPxH) / atlasPxH,
-      advance: initCtx.measureText(ch).width / dpr,
+  const coverage = rasterizeCoverage(initCtx, atlasPxW, staticPxH, () => {
+    for (let i = 0; i < ATLAS_SLOT_COLUMNS * ATLAS_STATIC_ROWS; i++) {
+      const ch = i < 95 ? String.fromCharCode(32 + i) : ATLAS_FALLBACK_CH
+      const slotPxX = (i % ATLAS_SLOT_COLUMNS) * slotPxW
+      const slotPxY = Math.floor(i / ATLAS_SLOT_COLUMNS) * cellPxH
+      rasterizeSlot(initCtx, ch, slotPxX, slotPxY, geometry)
+      const advance = initCtx.measureText(ch).width
+      glyphs.set(ch, slotGlyph(slotPxX, slotPxY, advance, geometry))
     }
-  }
-  const staticCell = (i: number): [number, number] => [
-    (i % ATLAS_COLS) * cellPxW,
-    Math.floor(i / ATLAS_COLS) * cellPxH,
-  ]
-  for (let i = 0; i < 95; i++) {
-    const ch = String.fromCharCode(32 + i)
-    const [x, y] = staticCell(i)
-    glyphs.set(ch, rasterize(ch, x, y))
-  }
-  const [fx, fy] = staticCell(95)
-  const fallback = rasterize(ATLAS_FALLBACK_CH, fx, fy)
-  glyphs.set(ATLAS_FALLBACK_CH, fallback)
-  const texture = uploadCanvasTexture(gl, initCanvas)
+  })
+  assert(glyphs.size === 96, 'Static atlas slab must hold 96 glyphs')
+  const texture = createCoverageTexture(gl, atlasPxW, atlasPxH, coverage)
+  const scratchCanvas = newFontCanvas(font, pixelsPerUnit, slotPxW, cellPxH)
+  const scratchCtx = scratchCanvas.getContext('2d') as CanvasRenderingContext2D
 
-  // Map iteration order = LRU order; oldest is `keys().next()`, newest is
-  // the last `set`. Touching = delete + reinsert.
+  return {
+    refSize: font.size,
+    cellW: cellPxW / pixelsPerUnit,
+    cellH: cellPxH / pixelsPerUnit,
+    sampling: {
+      texture,
+      subpixelSteps: GLYPH_SUBPIXEL_STEPS,
+      subpixelStepU: cellPxW / atlasPxW,
+      cellPen: [
+        ATLAS_CELL_PADDING_PX / pixelsPerUnit,
+        baselinePxY / pixelsPerUnit,
+      ],
+    },
+    ascent: ascentPx / pixelsPerUnit,
+    descent: descentPx / pixelsPerUnit,
+    getGlyph: createGlyphCache(gl, texture, scratchCtx, geometry, glyphs),
+    kerning: createKerning(scratchCtx),
+    coverageChannel: createCoverageChannelLookup(scratchCtx, geometry),
+  }
+}
+
+// Map iteration order = LRU order; oldest is `keys().next()`, newest is the
+// last `set`. Touching = delete + reinsert.
+function createGlyphCache(
+  gl: WebGL2RenderingContext,
+  texture: WebGLTexture,
+  scratchCtx: CanvasRenderingContext2D,
+  geometry: AtlasGeometry,
+  glyphs: Map<string, AtlasGlyph>,
+): (ch: string) => AtlasGlyph {
+  const fallback = glyphs.get(ATLAS_FALLBACK_CH) as AtlasGlyph
   const freeSlots: [number, number][] = []
   for (let r = ATLAS_DYNAMIC_ROWS - 1; r >= 0; r--) {
-    for (let c = ATLAS_COLS - 1; c >= 0; c--) {
-      freeSlots.push([c * cellPxW, (ATLAS_STATIC_ROWS + r) * cellPxH])
+    for (let c = ATLAS_SLOT_COLUMNS - 1; c >= 0; c--) {
+      const slotPxY = (ATLAS_STATIC_ROWS + r) * geometry.cellPxH
+      freeSlots.push([c * geometry.slotPxW, slotPxY])
     }
   }
   const occupiedSlots = new Map<string, [number, number]>()
-  const scratchCanvas = newFontCanvas(font, dpr, cellPxW, cellPxH)
-  const scratchCtx = scratchCanvas.getContext('2d') as CanvasRenderingContext2D
+  const { slotPxW, cellPxH } = geometry
 
-  const getGlyph = (ch: string): AtlasGlyph => {
+  return (ch: string): AtlasGlyph => {
     const cached = glyphs.get(ch)
     if (cached) {
       const slot = occupiedSlots.get(ch)
@@ -695,8 +775,8 @@ function buildFontAtlas(
       }
       return cached
     }
-    const advancePx = scratchCtx.measureText(ch).width
-    if (advancePx === 0) {
+    const advance = scratchCtx.measureText(ch).width
+    if (advance === 0) {
       glyphs.set(ch, fallback)
       return fallback
     }
@@ -708,42 +788,183 @@ function buildFontAtlas(
       glyphs.delete(lruKey)
     }
     occupiedSlots.set(ch, slot)
-    const [pxX, pxY] = slot
-    scratchCtx.clearRect(0, 0, cellPxW, cellPxH)
-    scratchCtx.fillText(ch, padding, baselinePxY)
+    const [slotPxX, slotPxY] = slot
+    const coverage = rasterizeCoverage(scratchCtx, slotPxW, cellPxH, () =>
+      rasterizeSlot(scratchCtx, ch, 0, 0, geometry),
+    )
     gl.activeTexture(gl.TEXTURE0)
     gl.bindTexture(gl.TEXTURE_2D, texture)
+    gl.pixelStorei(gl.UNPACK_ALIGNMENT, 1)
     gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false)
-    gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false)
     gl.texSubImage2D(
       gl.TEXTURE_2D,
       0,
-      pxX,
-      pxY,
+      slotPxX,
+      slotPxY,
+      slotPxW,
+      cellPxH,
       gl.RGBA,
       gl.UNSIGNED_BYTE,
-      scratchCanvas,
+      coverage,
     )
-    const glyph: AtlasGlyph = {
-      u0: pxX / atlasPxW,
-      v0: pxY / atlasPxH,
-      u1: (pxX + cellPxW) / atlasPxW,
-      v1: (pxY + cellPxH) / atlasPxH,
-      advance: advancePx / dpr,
-    }
+    const glyph = slotGlyph(slotPxX, slotPxY, advance, geometry)
     glyphs.set(ch, glyph)
     return glyph
   }
+}
 
+// Kerning is what a pair measures beyond its two advances. Drawing glyph by
+// glyph loses it, which shows most in pairs like "To" and "Tr".
+function createKerning(
+  ctx: CanvasRenderingContext2D,
+): (left: string, right: string) => number {
+  const pairs = new Map<string, number>()
+  return (left: string, right: string): number => {
+    const pair = left + right
+    const cached = pairs.get(pair)
+    if (cached !== undefined) return cached
+    const kerning =
+      ctx.measureText(pair).width -
+      ctx.measureText(left).width -
+      ctx.measureText(right).width
+    pairs.set(pair, kerning)
+    return kerning
+  }
+}
+
+// Chrome rasterizes a glyph thinner the darker its color, in four luminance
+// buckets, so a glyph drawn white and tinted black comes out ~10% too heavy.
+// Each glyph is drawn once per bucket into one RGBA channel each.
+const COVERAGE_FILLS = ['#000000', '#606060', '#a0a0a0', '#ffffff']
+
+function rasterizeCoverage(
+  ctx: CanvasRenderingContext2D,
+  pxW: number,
+  pxH: number,
+  draw: () => void,
+): Uint8Array {
+  const masks = COVERAGE_FILLS.map((fill) => {
+    ctx.fillStyle = fill
+    draw()
+    const mask = ctx.getImageData(0, 0, pxW, pxH)
+    clearCanvas(ctx, pxW, pxH)
+    return mask
+  })
+  return packCoverage(masks)
+}
+
+// Which bucket a color falls in is the rasterizer's own luminance formula, so
+// it is measured: a probe drawn in the color matches one bucket's probe.
+function createCoverageChannelLookup(
+  ctx: CanvasRenderingContext2D,
+  geometry: AtlasGeometry,
+): (color: RGBA) => number {
+  const probe = (fill: string): Uint8ClampedArray => {
+    ctx.fillStyle = fill
+    ctx.fillText('Mg', 0, geometry.baselinePxY / geometry.pixelsPerUnit)
+    const mask = ctx.getImageData(0, 0, geometry.slotPxW, geometry.cellPxH)
+    clearCanvas(ctx, geometry.slotPxW, geometry.cellPxH)
+    return mask.data
+  }
+  const references = COVERAGE_FILLS.map(probe)
+  const channels = new Map<string, number>()
+  return (color: RGBA): number => {
+    const fill = `rgb(${color[0] * 255}, ${color[1] * 255}, ${color[2] * 255})`
+    const cached = channels.get(fill)
+    if (cached !== undefined) return cached
+    const mask = probe(fill)
+    let channel = 0
+    let distanceMin = Number.POSITIVE_INFINITY
+    for (let c = 0; c < references.length; c++) {
+      const distance = alphaDistance(mask, references[c] as Uint8ClampedArray)
+      if (distance < distanceMin) {
+        distanceMin = distance
+        channel = c
+      }
+    }
+    channels.set(fill, channel)
+    return channel
+  }
+}
+
+function alphaDistance(a: Uint8ClampedArray, b: Uint8ClampedArray): number {
+  assert(a.length === b.length, 'Probes must have the same size')
+  let distance = 0
+  for (let i = 3; i < a.length; i += 4) {
+    distance += Math.abs((a[i] as number) - (b[i] as number))
+  }
+  return distance
+}
+
+function clearCanvas(ctx: CanvasRenderingContext2D, pxW: number, pxH: number) {
+  ctx.save()
+  ctx.setTransform(1, 0, 0, 1, 0, 0)
+  ctx.clearRect(0, 0, pxW, pxH)
+  ctx.restore()
+}
+
+// Whole pixels as little-endian words, so alpha is the top byte.
+function packCoverage(masks: readonly ImageData[]): Uint8Array {
+  assert(masks.length === 4, 'Coverage packs one mask per RGBA channel')
+  assert(new Uint8Array(new Uint32Array([1]).buffer)[0] === 1, 'Little-endian')
+  const pixelCount = (masks[0] as ImageData).data.length / 4
+  const [mask0, mask1, mask2, mask3] = masks.map((mask) => {
+    assert(mask.data.length === pixelCount * 4, 'Coverage masks must match')
+    return new Uint32Array(mask.data.buffer, mask.data.byteOffset, pixelCount)
+  }) as [Uint32Array, Uint32Array, Uint32Array, Uint32Array]
+  const coverage = new Uint32Array(pixelCount)
+  for (let i = 0; i < pixelCount; i++) {
+    coverage[i] =
+      ((mask0[i] as number) >>> 24) |
+      (((mask1[i] as number) >>> 24) << 8) |
+      (((mask2[i] as number) >>> 24) << 16) |
+      (((mask3[i] as number) >>> 24) << 24)
+  }
+  return new Uint8Array(coverage.buffer)
+}
+
+function rasterizeSlot(
+  ctx: CanvasRenderingContext2D,
+  ch: string,
+  slotPxX: number,
+  slotPxY: number,
+  geometry: AtlasGeometry,
+): void {
+  const { pixelsPerUnit, cellPxW, cellPxH } = geometry
+  for (let step = 0; step < GLYPH_SUBPIXEL_STEPS; step++) {
+    const cellPxX = slotPxX + step * cellPxW
+    const penPxX = cellPxX + ATLAS_CELL_PADDING_PX + step / GLYPH_SUBPIXEL_STEPS
+    ctx.save()
+    ctx.beginPath()
+    ctx.rect(
+      cellPxX / pixelsPerUnit,
+      slotPxY / pixelsPerUnit,
+      cellPxW / pixelsPerUnit,
+      cellPxH / pixelsPerUnit,
+    )
+    ctx.clip()
+    ctx.fillText(
+      ch,
+      penPxX / pixelsPerUnit,
+      (slotPxY + geometry.baselinePxY) / pixelsPerUnit,
+    )
+    ctx.restore()
+  }
+}
+
+function slotGlyph(
+  slotPxX: number,
+  slotPxY: number,
+  advance: number,
+  geometry: AtlasGeometry,
+): AtlasGlyph {
+  const { cellPxW, cellPxH, atlasPxW, atlasPxH } = geometry
   return {
-    texture,
-    refSize,
-    cellW: cellPxW / dpr,
-    cellH: cellPxH / dpr,
-    baselineOffset: baselinePxY / dpr,
-    ascent: ascentPx / dpr,
-    descent: descentPx / dpr,
-    getGlyph,
+    u0: slotPxX / atlasPxW,
+    v0: slotPxY / atlasPxH,
+    u1: (slotPxX + cellPxW) / atlasPxW,
+    v1: (slotPxY + cellPxH) / atlasPxH,
+    advance,
   }
 }
 
@@ -759,20 +980,23 @@ function lineBoxBaseline(
   )
 }
 
+// The font is set at its CSS size under a device-pixel transform, not at the
+// device size, because SF picks its optical size from the font size: at 28px
+// it switches to the tighter Display cut, unlike the DOM at 14px.
 function newFontCanvas(
   font: FontSpec,
-  dpr: number,
+  pixelsPerUnit: number,
   w: number,
   h: number,
 ): HTMLCanvasElement {
   const canvas = document.createElement('canvas')
   canvas.width = w
   canvas.height = h
-  const ctx = canvas.getContext('2d')
+  const ctx = canvas.getContext('2d', { willReadFrequently: true })
   if (!ctx) throw new Error('failed to get 2d context')
-  ctx.font = fontString(font, font.size * dpr)
+  ctx.setTransform(pixelsPerUnit, 0, 0, pixelsPerUnit, 0, 0)
+  ctx.font = fontString(font, font.size)
   ctx.textBaseline = 'alphabetic'
-  ctx.fillStyle = 'white'
   return canvas
 }
 
@@ -820,7 +1044,7 @@ async function buildIconAtlas(
   const canvas = document.createElement('canvas')
   canvas.width = atlasPxW
   canvas.height = atlasPxH
-  const ctx = canvas.getContext('2d')
+  const ctx = canvas.getContext('2d', { willReadFrequently: true })
   if (!ctx) throw new Error('failed to get icon atlas 2d context')
 
   const cells = new Map<
@@ -845,8 +1069,16 @@ async function buildIconAtlas(
     })
   }
 
-  const texture = uploadCanvasTexture(gl, canvas)
-  return { texture, cells }
+  const image = ctx.getImageData(0, 0, atlasPxW, atlasPxH)
+  const coverage = packCoverage([image, image, image, image])
+  const texture = createCoverageTexture(gl, atlasPxW, atlasPxH, coverage)
+  const sampling: TextSampling = {
+    texture,
+    subpixelSteps: 1,
+    subpixelStepU: 0,
+    cellPen: [0, 0],
+  }
+  return { sampling, cells }
 }
 
 function renderWhiteIconSvg(
@@ -873,17 +1105,34 @@ function loadSvgImage(svg: string): Promise<HTMLImageElement> {
   })
 }
 
-function uploadCanvasTexture(
+// The coverage fills the top rows; WebGL zeroes the rest.
+function createCoverageTexture(
   gl: WebGL2RenderingContext,
-  canvas: HTMLCanvasElement,
+  pxW: number,
+  pxH: number,
+  coverage: Uint8Array,
 ): WebGLTexture {
+  const coveragePxH = coverage.length / 4 / pxW
+  assert(Number.isInteger(coveragePxH), 'Coverage must be whole RGBA rows')
+  assert(coveragePxH <= pxH, 'Coverage must fit the texture')
   const texture = gl.createTexture()
   if (!texture) throw new Error('createTexture failed')
   gl.activeTexture(gl.TEXTURE0)
   gl.bindTexture(gl.TEXTURE_2D, texture)
+  gl.texStorage2D(gl.TEXTURE_2D, 1, gl.RGBA8, pxW, pxH)
+  gl.pixelStorei(gl.UNPACK_ALIGNMENT, 1)
   gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false)
-  gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false)
-  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, canvas)
+  gl.texSubImage2D(
+    gl.TEXTURE_2D,
+    0,
+    0,
+    0,
+    pxW,
+    coveragePxH,
+    gl.RGBA,
+    gl.UNSIGNED_BYTE,
+    coverage,
+  )
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
@@ -928,6 +1177,9 @@ interface Uniforms {
     resolution: WebGLUniformLocation
     dpr: WebGLUniformLocation
     atlas: WebGLUniformLocation
+    subpixelSteps: WebGLUniformLocation
+    subpixelStepU: WebGLUniformLocation
+    cellPen: WebGLUniformLocation
   }
   line: {
     offset: WebGLUniformLocation
@@ -965,10 +1217,10 @@ const ROUND_ATTRIBUTES: InstanceAttributes = {
   strideF: QUAD_STRIDE_F,
   sizes: [2, 2, 4, 4, 1, 1],
 }
-// pos.xy, size.xy, uv.xyzw, color.rgba, z
+// pos.xy, size.xy, uv.xyzw, color.rgba, z, channel
 const TEXT_ATTRIBUTES: InstanceAttributes = {
   strideF: TEXT_STRIDE_F,
-  sizes: [2, 2, 4, 4, 1],
+  sizes: [2, 2, 4, 4, 1, 1],
 }
 
 function pointInstances(
@@ -1136,6 +1388,7 @@ class WebGLRenderer {
   private fieldAtlas: FontAtlas
   private footerAtlas: FontAtlas
   private iconAtlas: IconAtlas
+  private textZoom: number
 
   // Cache: the data ref that the GPU buffers currently describe. When the
   // next render() arrives with a different ref, all buffers are rebuilt.
@@ -1163,14 +1416,16 @@ class WebGLRenderer {
   static async create(
     gl: WebGL2RenderingContext,
     dpr: number,
+    scale: number,
   ): Promise<WebGLRenderer> {
     const iconAtlas = await buildIconAtlas(gl, dpr)
-    return new WebGLRenderer(gl, dpr, iconAtlas)
+    return new WebGLRenderer(gl, dpr, scale, iconAtlas)
   }
 
   private constructor(
     gl: WebGL2RenderingContext,
     dpr: number,
+    scale: number,
     iconAtlas: IconAtlas,
   ) {
     this.gl = gl
@@ -1207,6 +1462,17 @@ class WebGLRenderer {
         resolution: requireUniform(gl, this.programs.text, 'u_resolution'),
         dpr: requireUniform(gl, this.programs.text, 'u_dpr'),
         atlas: requireUniform(gl, this.programs.text, 'u_atlas'),
+        subpixelSteps: requireUniform(
+          gl,
+          this.programs.text,
+          'u_subpixelSteps',
+        ),
+        subpixelStepU: requireUniform(
+          gl,
+          this.programs.text,
+          'u_subpixelStepU',
+        ),
+        cellPen: requireUniform(gl, this.programs.text, 'u_cellPen'),
       },
       line: {
         offset: requireUniform(gl, this.programs.line, 'u_offset'),
@@ -1224,9 +1490,11 @@ class WebGLRenderer {
         dpr: requireUniform(gl, this.programs.connection, 'u_dpr'),
       },
     }
-    this.headerAtlas = buildFontAtlas(gl, HEADER_FONT, dpr)
-    this.fieldAtlas = buildFontAtlas(gl, FIELD_FONT, dpr)
-    this.footerAtlas = buildFontAtlas(gl, FOOTER_FONT, dpr)
+    this.textZoom = textZoomFor(scale)
+    const pixelsPerUnit = dpr * this.textZoom
+    this.headerAtlas = buildFontAtlas(gl, HEADER_FONT, pixelsPerUnit)
+    this.fieldAtlas = buildFontAtlas(gl, FIELD_FONT, pixelsPerUnit)
+    this.footerAtlas = buildFontAtlas(gl, FOOTER_FONT, pixelsPerUnit)
     this.iconAtlas = iconAtlas
     this.buffers = this.createBuffers()
 
@@ -1340,6 +1608,25 @@ class WebGLRenderer {
     gl.enableVertexAttribArray(1)
     gl.vertexAttribPointer(1, 4, gl.FLOAT, false, stride, 8)
     return { data, vao }
+  }
+
+  // Glyphs rasterized for the zoom they are shown at match DOM text; scaled
+  // from another zoom they blur or alias. Called once zooming settles, as a
+  // rebuild per frame of a zoom gesture would stall it.
+  rasterizeTextFor(scale: number) {
+    if (!drawsNodeDetail(scale)) return
+    const textZoom = textZoomFor(scale)
+    if (textZoom === this.textZoom) return
+    const gl = this.gl
+    gl.deleteTexture(this.headerAtlas.sampling.texture)
+    gl.deleteTexture(this.fieldAtlas.sampling.texture)
+    gl.deleteTexture(this.footerAtlas.sampling.texture)
+    const pixelsPerUnit = this.dpr * textZoom
+    this.headerAtlas = buildFontAtlas(gl, HEADER_FONT, pixelsPerUnit)
+    this.fieldAtlas = buildFontAtlas(gl, FIELD_FONT, pixelsPerUnit)
+    this.footerAtlas = buildFontAtlas(gl, FOOTER_FONT, pixelsPerUnit)
+    this.textZoom = textZoom
+    this.cachedData = null
   }
 
   render(
@@ -1796,6 +2083,7 @@ class WebGLRenderer {
       cell.v1,
       color,
       z,
+      0,
     )
     return 1
   }
@@ -2075,7 +2363,7 @@ class WebGLRenderer {
     this.drawRoundPass(range, transform, res)
     this.drawTextPass(
       this.buffers.arrowHead,
-      this.iconAtlas.texture,
+      this.iconAtlas.sampling,
       this.counts.arrowHead,
       range,
       transform,
@@ -2084,7 +2372,7 @@ class WebGLRenderer {
     if (!drawsNodeDetail(transform.scale)) return
     this.drawTextPass(
       this.buffers.icon,
-      this.iconAtlas.texture,
+      this.iconAtlas.sampling,
       this.counts.icon,
       range,
       transform,
@@ -2092,7 +2380,7 @@ class WebGLRenderer {
     )
     this.drawTextPass(
       this.buffers.headerText,
-      this.headerAtlas.texture,
+      this.headerAtlas.sampling,
       this.counts.headerText,
       range,
       transform,
@@ -2100,7 +2388,7 @@ class WebGLRenderer {
     )
     this.drawTextPass(
       this.buffers.fieldText,
-      this.fieldAtlas.texture,
+      this.fieldAtlas.sampling,
       this.counts.fieldText,
       range,
       transform,
@@ -2108,7 +2396,7 @@ class WebGLRenderer {
     )
     this.drawTextPass(
       this.buffers.footerText,
-      this.footerAtlas.texture,
+      this.footerAtlas.sampling,
       this.counts.footerText,
       range,
       transform,
@@ -2186,7 +2474,7 @@ class WebGLRenderer {
 
   private drawTextPass(
     pass: InstancedPassBuffer,
-    texture: WebGLTexture,
+    sampling: TextSampling,
     layout: PassLayout,
     range: DrawRange,
     transform: { offsetX: number; offsetY: number; scale: number },
@@ -2205,8 +2493,15 @@ class WebGLRenderer {
     gl.uniform2f(this.uniforms.text.resolution, res[0], res[1])
     gl.uniform1f(this.uniforms.text.dpr, this.dpr)
     gl.activeTexture(gl.TEXTURE0)
-    gl.bindTexture(gl.TEXTURE_2D, texture)
+    gl.bindTexture(gl.TEXTURE_2D, sampling.texture)
     gl.uniform1i(this.uniforms.text.atlas, 0)
+    gl.uniform1f(this.uniforms.text.subpixelSteps, sampling.subpixelSteps)
+    gl.uniform1f(this.uniforms.text.subpixelStepU, sampling.subpixelStepU)
+    gl.uniform2f(
+      this.uniforms.text.cellPen,
+      sampling.cellPen[0],
+      sampling.cellPen[1],
+    )
     pointInstances(gl, pass, rangeStart(layout, range))
     gl.drawArraysInstanced(gl.TRIANGLE_STRIP, 0, 4, count)
   }
@@ -2309,10 +2604,10 @@ class WebGLRenderer {
       gl.deleteBuffer(pass.data)
       gl.deleteVertexArray(pass.vao)
     }
-    gl.deleteTexture(this.headerAtlas.texture)
-    gl.deleteTexture(this.fieldAtlas.texture)
-    gl.deleteTexture(this.footerAtlas.texture)
-    gl.deleteTexture(this.iconAtlas.texture)
+    gl.deleteTexture(this.headerAtlas.sampling.texture)
+    gl.deleteTexture(this.fieldAtlas.sampling.texture)
+    gl.deleteTexture(this.footerAtlas.sampling.texture)
+    gl.deleteTexture(this.iconAtlas.sampling.texture)
   }
 }
 
@@ -2542,6 +2837,7 @@ function writeTextQuad(
   v1: number,
   color: RGBA,
   z: number,
+  channel: number,
 ) {
   const base = i * TEXT_STRIDE_F
   out[base] = x
@@ -2557,6 +2853,7 @@ function writeTextQuad(
   out[base + 10] = color[2]
   out[base + 11] = color[3]
   out[base + 12] = z
+  out[base + 13] = channel
 }
 
 // Field paths share their start (`accessControl.`) and differ at the end
@@ -2571,7 +2868,10 @@ function ellipsizeStart(text: string, atlas: FontAtlas, width: number): string {
   let used = 0
   let tail = chars.length
   while (tail > 0) {
-    const advance = atlas.getGlyph(chars[tail - 1] as string).advance
+    const ch = chars[tail - 1] as string
+    const next = chars[tail]
+    const kerning = next === undefined ? 0 : atlas.kerning(ch, next)
+    const advance = atlas.getGlyph(ch).advance + kerning
     if (used + advance > budget) break
     used += advance
     tail--
@@ -2619,59 +2919,90 @@ function writeStringInstances(
   // Truncates with "…" when the string doesn't fit in [cursorX, maxX], like
   // CSS text-overflow: ellipsis.
   const ellipsis = atlas.getGlyph('…')
-  let totalWidth = 0
-  for (const ch of text) totalWidth += atlas.getGlyph(ch).advance
-  const fits = cursorX + totalWidth <= maxX
-  const prefixLimit = fits ? maxX : maxX - ellipsis.advance
+  const fits = cursorX + measureString(text, atlas) <= maxX
+  const penLimit = (fits ? maxX : maxX - ellipsis.advance) - cursorX
+  const paint: GlyphPaint = { color, channel: atlas.coverageChannel(color), z }
 
-  let x = cursorX
+  let penX = 0
   let written = 0
-  const quadY = baselineY - atlas.baselineOffset
+  let previous: string | undefined
   for (const ch of text) {
-    const g = atlas.getGlyph(ch)
-    if (x + g.advance > prefixLimit) break
-    writeTextQuad(
+    const glyph = atlas.getGlyph(ch)
+    const glyphX =
+      previous === undefined ? penX : penX + atlas.kerning(previous, ch)
+    if (glyphX + glyph.advance > penLimit) break
+    const at = startInstance + written
+    writeGlyphInstance(
       out,
-      startInstance + written,
-      x,
-      quadY,
-      atlas.cellW,
-      atlas.cellH,
-      g.u0,
-      g.v0,
-      g.u1,
-      g.v1,
-      color,
-      z,
+      at,
+      atlas,
+      glyph,
+      cursorX + glyphX,
+      baselineY,
+      paint,
     )
     written++
-    x += g.advance
+    penX = glyphX + glyph.advance
+    previous = ch
   }
 
-  if (!fits && x + ellipsis.advance <= maxX) {
-    writeTextQuad(
+  if (!fits && cursorX + penX + ellipsis.advance <= maxX) {
+    const at = startInstance + written
+    writeGlyphInstance(
       out,
-      startInstance + written,
-      x,
-      quadY,
-      atlas.cellW,
-      atlas.cellH,
-      ellipsis.u0,
-      ellipsis.v0,
-      ellipsis.u1,
-      ellipsis.v1,
-      color,
-      z,
+      at,
+      atlas,
+      ellipsis,
+      cursorX + penX,
+      baselineY,
+      paint,
     )
     written++
   }
   return written
 }
 
+interface GlyphPaint {
+  color: RGBA
+  channel: number
+  z: number
+}
+
+function writeGlyphInstance(
+  out: Float32Array,
+  instance: number,
+  atlas: FontAtlas,
+  glyph: AtlasGlyph,
+  penX: number,
+  baselineY: number,
+  paint: GlyphPaint,
+): void {
+  writeTextQuad(
+    out,
+    instance,
+    penX,
+    baselineY,
+    atlas.cellW,
+    atlas.cellH,
+    glyph.u0,
+    glyph.v0,
+    glyph.u1,
+    glyph.v1,
+    paint.color,
+    paint.z,
+    paint.channel,
+  )
+}
+
 function measureString(text: string, atlas: FontAtlas): number {
-  let w = 0
-  for (const ch of text) w += atlas.getGlyph(ch).advance
-  return w
+  let width = 0
+  let previous: string | undefined
+  for (const ch of text) {
+    if (previous !== undefined) width += atlas.kerning(previous, ch)
+    width += atlas.getGlyph(ch).advance
+    previous = ch
+  }
+  return width
 }
 
 // ============================================================================
@@ -3101,7 +3432,7 @@ export function NodesAndConnectionsWebGL() {
       return
     }
     const dpr = window.devicePixelRatio || 1
-    WebGLRenderer.create(gl, dpr)
+    WebGLRenderer.create(gl, dpr, useStore.getState().transform.scale)
       .then((renderer) => {
         if (cancelled) {
           renderer.dispose()
@@ -3163,10 +3494,27 @@ export function NodesAndConnectionsWebGL() {
   }, [data])
 
   // Redraw on any store change (covers pan/zoom without going through React).
+  // Text is rasterized again for a new zoom once it has not changed for a
+  // while, see rasterizeTextFor.
   useEffect(() => {
-    const unsub = useStore.subscribe(() => scheduleDraw.current())
+    let scale = useStore.getState().transform.scale
+    let settleTimer: ReturnType<typeof setTimeout> | null = null
+    const rasterizeText = () => {
+      settleTimer = null
+      rendererRef.current?.rasterizeTextFor(useStore.getState().transform.scale)
+      scheduleDraw.current()
+    }
+    const unsub = useStore.subscribe((state) => {
+      if (state.transform.scale !== scale) {
+        scale = state.transform.scale
+        if (settleTimer !== null) clearTimeout(settleTimer)
+        settleTimer = setTimeout(rasterizeText, TEXT_RASTER_SETTLE_MS)
+      }
+      scheduleDraw.current()
+    })
     return () => {
       unsub()
+      if (settleTimer !== null) clearTimeout(settleTimer)
       if (rafRef.current !== null) {
         cancelAnimationFrame(rafRef.current)
         rafRef.current = null
