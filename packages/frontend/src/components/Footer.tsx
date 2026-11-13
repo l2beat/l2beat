@@ -13,7 +13,7 @@ const FOOTER_LINKS = [
   { title: 'FAQ', href: '/faq' },
   { title: 'Forum', href: externalLinks.forum },
   { title: 'Glossary', href: '/glossary' },
-  { title: 'Native Rollups', href: '/native-rollups' },
+  { title: 'Native rollups', href: '/native-rollups' },
   { title: 'Publications', href: '/publications' },
   { title: 'Terms of Service', href: '/terms-of-service' },
   { title: 'Tools', href: externalLinks.tools },
