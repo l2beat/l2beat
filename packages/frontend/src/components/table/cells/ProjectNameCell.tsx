@@ -277,7 +277,7 @@ function CellBottomContent({ project }: { project: ProjectCellProject }) {
       {project.capability === 'appchain' &&
         project.purposes &&
         project.purposes?.length > 0 && (
-          <div className="text-[13px] text-secondary leading-[14px] md:text-xs md:leading-[15px]">
+          <div className="text-label-value-13 text-secondary leading-4">
             {project.purposes.join(', ')}
           </div>
         )}

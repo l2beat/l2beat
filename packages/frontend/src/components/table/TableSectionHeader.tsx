@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 
 interface Props {
   title: string
-  description: ReactNode
+  description?: ReactNode
   icon?: ReactNode
   count?: number
   /** Table controls, aligned to the right on wider screens. */
@@ -22,18 +22,20 @@ export function TableSectionHeader({
       <div className="min-w-0 md:flex-1">
         <div className="flex items-center gap-1.5">
           {icon}
-          <h2 className="font-bold text-heading-16 md:text-heading-20">
+          <h2 className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
             {title}
           </h2>
           {count !== undefined && (
-            <span className="ml-0.5 font-medium text-label-value-14 text-secondary md:text-label-value-15">
+            <span className="ml-0.5 font-normal text-label-value-13 text-secondary leading-4">
               {count}
             </span>
           )}
         </div>
-        <p className="mt-1 text-paragraph-14 text-secondary md:text-paragraph-15">
-          {description}
-        </p>
+        {description && (
+          <p className="mt-1 text-pretty text-label-value-15 text-secondary leading-5.5">
+            {description}
+          </p>
+        )}
       </div>
       {children}
     </div>

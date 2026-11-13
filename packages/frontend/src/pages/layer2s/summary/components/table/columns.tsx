@@ -147,6 +147,7 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
             >
               <SyncStatusWrapper isSynced={data.isSynced}>
                 <ValueWithPercentageChange
+                  className="font-medium md:text-label-value-15"
                   change={data?.change}
                   changePeriod={data.changePeriod}
                   disabledOnTouch

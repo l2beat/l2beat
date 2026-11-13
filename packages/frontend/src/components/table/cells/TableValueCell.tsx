@@ -32,11 +32,7 @@ export function TableValueCell({
 }: Props) {
   if (!value) {
     if (emptyMode === 'em-dash') {
-      return (
-        <div className="text-gray-500 text-xs dark:text-gray-400">
-          {EM_DASH}
-        </div>
-      )
+      return <div className="text-secondary text-xs">{EM_DASH}</div>
     }
     if (emptyMode === 'n/a') {
       return <NotApplicableBadge />

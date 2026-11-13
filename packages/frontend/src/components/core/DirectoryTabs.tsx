@@ -70,9 +70,9 @@ const DirectoryTabsTrigger = ({
     ref={ref}
     className={cn(
       'flex h-8 shrink-0 items-center justify-center gap-1.5 rounded-t-md max-md:px-6 md:h-10 md:min-w-60 md:rounded-t-xl',
-      'whitespace-nowrap font-bold text-xs md:text-sm',
+      'whitespace-nowrap font-semibold text-xs md:text-sm',
       'ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset',
-      'data-[state=inactive]:bg-surface-tertiary dark:data-[state=inactive]:bg-linear-to-t dark:data-[state=inactive]:bg-transparent dark:data-[state=inactive]:from-surface-secondary dark:data-[state=inactive]:to-surface-primary-hover',
+      'data-[state=inactive]:bg-surface-tertiary dark:data-[state=inactive]:bg-surface-secondary',
       'data-[state=active]:bg-surface-primary',
       className,
     )}

@@ -29,7 +29,7 @@ export function DisplayControls<K extends DisplayOptionsKey>({
   const checkedCount = providedEntries.filter(([_, value]) => value).length
 
   const trigger = (
-    <div className="flex h-8 w-fit items-center gap-1.5 rounded-lg bg-surface-primary! p-2 font-semibold text-base">
+    <div className="flex h-8 w-fit items-center gap-1.5 rounded-lg bg-surface-primary! p-2 font-medium">
       <SlidersIcon className="size-4 fill-secondary" />
       <span className="text-label-value-14 md:text-label-value-15">
         Display

@@ -27,7 +27,7 @@ export function ColumnsControls<T>({ columns }: Props<T>) {
   const hiddenColumns = pickerColumns.filter((column) => !column.getIsVisible())
 
   const trigger = (
-    <div className="mb-1 flex h-8 w-fit items-center rounded-lg bg-surface-secondary font-semibold text-base">
+    <div className="mb-1 flex h-8 w-fit items-center rounded-lg bg-surface-secondary font-medium">
       <div className="flex h-full items-center gap-1.5 px-2">
         <SlidersIcon className="size-4 fill-secondary" />
         <span className="text-label-value-14 md:text-label-value-15">
@@ -54,9 +54,7 @@ export function ColumnsControls<T>({ columns }: Props<T>) {
           align="start"
           side="bottom"
         >
-          <span className="text-secondary text-subtitle-11 uppercase">
-            Columns
-          </span>
+          <span className="text-label-value-13 text-secondary">Columns</span>
           <div className="flex flex-wrap gap-1">
             {pickerColumns.map((column) => (
               <ColumnControl key={column.id} column={column} />

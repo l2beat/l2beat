@@ -108,7 +108,7 @@ function Stat({
   return (
     <StatCard color={meta.color} title={meta.label} isLoading={isLoading}>
       <div className="flex min-h-6 items-center gap-1 md:min-h-7">
-        <div className="whitespace-nowrap font-bold text-heading-18 md:text-heading-24">
+        <div className="whitespace-nowrap font-semibold text-heading-18 tabular-nums tracking-[-0.02em] md:text-heading-24">
           {value !== undefined ? formatCurrency(value, 'usd') : 'No data'}
         </div>
         {change !== undefined && changePeriod !== undefined ? (
