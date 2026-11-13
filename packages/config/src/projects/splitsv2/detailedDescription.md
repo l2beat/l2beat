@@ -17,7 +17,7 @@ An owner who sets a withdrawal reward for a pull split itself exposes its funds.
 ### How a split gets stuck
 
 - **A token refuses one push split recipient.** A push split pays all recipients in one transaction, with no fallback for ERC-20 transfers. If a token's issuer blacklists one recipient, none of them gets that token.
-- **A recipient contract blocks a push split's ETH** by calling the split again while being paid.
+- **A recipient contract blocks a push split's ETH** by calling the split again while being paid. This works in splits of up to about ten recipients.
 - **A split has too many recipients** to pay out within a transaction's gas limit. There is no cap.
 
 The owner of a stuck split can replace its recipients or move its funds. A split without an owner has no way out.
@@ -30,10 +30,10 @@ Pull splits rely on tokens that transfer the exact amount. A token that charges 
 
 Three versions are live, each with its own factories and implementations: v2.0 from {{v20Date}}, v2.1 from {{v21Date}} and v2.2 from {{v22Date}}. All use the same Warehouse, and a split stays on the version that created it.
 
-On Ethereum, a v2.0 pull split cannot pay out USDT, because USDT's approval function returns no value. A v2.1 pull split can, but its first USDT payout uses almost a full transaction's gas limit. v2.2 pays out USDT normally.
+On Ethereum, a v2.0 pull split cannot pay out USDT, because USDT's approval function returns no value. A v2.1 pull split can, but its first USDT deposit into the Warehouse burns about 97% of its gas and needs at least 2.6 million. Beyond about 16 recipients, that deposit and the payout no longer fit in one transaction and take two. v2.2 pays out USDT normally.
 
 ### Interfaces
 
-Splits Lite is an open-source interface that creates v2.2 push splits and triggers payouts of existing splits. It reads splits from the chain through an RPC and needs no Splits server. The Splits team also runs an explorer at explorer.splits.org, whose source is not among its public repositories.
+Splits Lite is an open-source interface that creates v2.2 push splits and triggers payouts of existing splits, in ETH and eleven listed tokens. It reads a split's recipients from event logs through Alchemy and contacts no Splits server. For a pull split, the payout also withdraws every recipient's share from the Warehouse. The Splits team also runs an explorer at explorer.splits.org, whose source is not among its public repositories.
 
 The same contracts are deployed at the same addresses on other chains. This page covers Ethereum.
