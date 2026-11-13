@@ -114,13 +114,14 @@ assert(
     discovery.isEOA(risc0TimelockProposers[0]),
   'RISC Zero timelock proposer changed, update the governance research.',
 )
-// RISC0 routes 0x8b38038c and 0xe71e6620: Groth16 v3.1.0 whose verifying key matches no published RISC Zero setup
+// RISC0 route 0xe71e6620: Groth16 v3.1.0 whose verifying key matches no published RISC Zero setup.
+// Route 0x8b38038c, with the same verifying key, is estopped.
 assert(
-  discovery.getContractValue<ChainSpecificAddress>(
-    'RiscZeroVerifierRouter',
-    'verifier_8b38038c',
-  ) === 'eth:0x9660bD6dCDf455DCFb30c07c642Ab22E7Cb89F50',
-  'RISC0 route 0x8b38038c changed, update the state validation research.',
+  discovery.getContractValue<boolean>(
+    'eth:0x9660bD6dCDf455DCFb30c07c642Ab22E7Cb89F50',
+    'paused',
+  ),
+  'RISC0 route 0x8b38038c is live again, update the state validation research.',
 )
 assert(
   discovery.getContractValue<ChainSpecificAddress>(
@@ -592,7 +593,7 @@ export const taiko: ScalingProject = {
           {
             title:
               'RiscZeroGroth16Verifier.sol v3.1.0 - Etherscan source code, verifying key',
-            url: 'https://etherscan.io/address/0x953814e6dfC46d007557B511Dc4F2954dAaf2c9e#code',
+            url: 'https://etherscan.io/address/0x8c915b5071206C6E328BC18529586c513408aB3b#code',
           },
           {
             title: 'Groth16Verifier.sol - RISC Zero published verifying key',

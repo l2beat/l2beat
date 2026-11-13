@@ -1,3 +1,42 @@
+Generated with discovered.json: 0x7314c028a9e70f6f38541e856413162c327a0e0f
+
+# Diff at Fri, 13 Nov 2026 13:04:08 GMT:
+
+- id: c7307c41
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ced572b97485e6dc1fc02f958ee2a731593430e block: 1793024667
+- current timestamp: 1794568065
+
+## Description
+
+The EOA owner of RelaySwaps transferred ownership to the 2/4 Safe eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6, which already holds every AccessRouter admin role. Approving swap routers and zaps and rescuing tokens now takes 2 of 4 signers instead of one key.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    EOA (eth:0x0967755AfA2016866D12EefB820705026842dCe8)
+    +++ description: None
+```
+
+```diff
+    contract RelaySwaps (eth:0xd0395c08DD8eA7671a7A65bDca8E473e8E8260a8) [privacy-pools-v2/RelaySwaps] {
+    +++ description: Withdrawal processor that swaps the withdrawn asset through an approved aggregator router, unwrapping yield shares through an approved zap first where needed, with the swap calldata bound into the proof.
++++ severity: HIGH
+      values.owner:
+-        "eth:0x0967755AfA2016866D12EefB820705026842dCe8"
++        "eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6"
+    }
+```
+
+```diff
+    contract SafeL2 (eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.9:
++        {"permission":"interact","from":"eth:0xd0395c08DD8eA7671a7A65bDca8E473e8E8260a8","description":"approve the aggregator routers and yield zaps that RelaySwaps sends withdrawn funds through, and rescue any token it holds, such as bridge refunds.","role":".owner"}
+    }
+```
+
 Generated with discovered.json: 0xd07b7d499fcdc84534e3de731a65ff864d91a2ba
 
 # Diff at Mon, 26 Oct 2026 14:25:49 GMT:

@@ -4,5 +4,11 @@
     "address": "eth:0x186C20F0F294378E1DecA7419c667e44c73E992C",
     "chain": "ethereum",
     "blockNumber": 26290653
+  },
+  "SIPAFactory_2": {
+    "hash": "0x8523d8afd68a9445be271f85ed0d22bbe3b455821d489fa5b2254b040722d2dd",
+    "address": "eth:0x532eDc4A4113602c18029d80d9770d959c52AEd7",
+    "chain": "ethereum",
+    "blockNumber": 26405958
   }
 }

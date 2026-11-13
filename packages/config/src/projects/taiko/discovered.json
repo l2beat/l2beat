@@ -1,6 +1,6 @@
 {
   "name": "taiko",
-  "timestamp": 1794320550,
+  "timestamp": 1794569384,
   "configHash": "0xcfd16f890685a9936edce243ac633fd8a183a5fe99edf0ceed09079392f12bab",
   "entries": [
     {
@@ -794,7 +794,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "clock": 1794320543,
+        "clock": 1794569375,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -1149,7 +1149,10 @@
       ],
       "proxyType": "immutable",
       "description": "Set verifier contract for RISC Zero proofs (version 0.9.0). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root.",
-      "critical": { "sinceTimestamp": 1772638115 },
+      "critical": {
+        "sinceTimestamp": 1772638115,
+        "untilTimestamp": 1794363191
+      },
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1756842743,
       "sinceBlock": 23277627,
@@ -1334,12 +1337,12 @@
           "permissionlessInclusionMultiplier": 160
         },
         "getCoreState": {
-          "nextProposalId": 48137,
-          "lastProposalBlockId": 26385064,
-          "lastFinalizedProposalId": 48134,
-          "lastFinalizedTimestamp": 1794320015,
-          "lastCheckpointTimestamp": 1794320015,
-          "lastFinalizedBlockHash": "0x050f55bf2db99684427fafe6aa38e09d498990f6563befed18a1de31e61e5884"
+          "nextProposalId": 48785,
+          "lastProposalBlockId": 26405736,
+          "lastFinalizedProposalId": 48779,
+          "lastFinalizedTimestamp": 1794567647,
+          "lastCheckpointTimestamp": 1794567647,
+          "lastFinalizedBlockHash": "0x1101dc0fb0ded5f54f3db878d32dc843b02d85f72f2dc4f9255f5493c83005e6"
         },
         "getCurrentForcedInclusionFee": 1000000,
         "getForcedInclusionState": { "head_": 4, "tail_": 4 },
@@ -1525,14 +1528,17 @@
       ],
       "proxyType": "immutable",
       "description": "A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.",
-      "critical": { "sinceTimestamp": 1772638115 },
+      "critical": {
+        "sinceTimestamp": 1772638115,
+        "untilTimestamp": 1794363191
+      },
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1756842755,
       "sinceBlock": 23277628,
       "values": {
         "$immutable": true,
         "owner": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
-        "paused": false,
+        "paused": true,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "verifier": "eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85"
       },
@@ -1874,7 +1880,10 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for RISC Zero Groth16 proofs (version 3.1.0).",
-      "critical": { "sinceTimestamp": 1793127383 },
+      "critical": {
+        "sinceTimestamp": 1793127383,
+        "untilTimestamp": 1794362951
+      },
       "deployerAddress": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
       "sinceTimestamp": 1792796939,
       "sinceBlock": 26258520,
@@ -1901,14 +1910,17 @@
       ],
       "proxyType": "immutable",
       "description": "A verifier wrapper for the eth:0x953814e6dfC46d007557B511Dc4F2954dAaf2c9e that allows pausing (emergency stop) the verifier by its owner.",
-      "critical": { "sinceTimestamp": 1793127383 },
+      "critical": {
+        "sinceTimestamp": 1793127383,
+        "untilTimestamp": 1794362951
+      },
       "deployerAddress": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
       "sinceTimestamp": 1792796963,
       "sinceBlock": 26258522,
       "values": {
         "$immutable": true,
         "owner": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
-        "paused": false,
+        "paused": true,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "verifier": "eth:0x953814e6dfC46d007557B511Dc4F2954dAaf2c9e"
       },
@@ -2956,7 +2968,7 @@
         "GAS_RESERVE": 800000,
         "impl": "eth:0xe6BF63dCc936063caD2300f32DaA67d9eE5c57b6",
         "inNonReentrant": false,
-        "nextMessageId": 40624,
+        "nextMessageId": 40628,
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pauser": "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
@@ -3454,7 +3466,7 @@
         "GAS_RESERVE": 800000,
         "impl": "taiko:0xF372Db3F06AcaB3347697866d2047a54D1BA8eB3",
         "inNonReentrant": false,
-        "nextMessageId": 10821,
+        "nextMessageId": 10849,
         "owner": "taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C",
         "paused": false,
         "pauser": "taiko:0x0000000000000000000000000000000000000000",
@@ -3815,8 +3827,8 @@
         "ANCHOR_GAS_LIMIT": 1000000,
         "checkpointStore": "taiko:0x1670000000000000000000000000000000000005",
         "getBlockState": {
-          "anchorBlockNumber": 26385059,
-          "ancestorsHash": "0xe15fd89b7175dfd2f159818aeccf9faae28514637da357770ce59ea5989c11e4"
+          "anchorBlockNumber": 26405731,
+          "ancestorsHash": "0x1c103b10e2858cebc5aee5329cded292bc75ea3d85ce404d0703f266d2c3c792"
         },
         "GOLDEN_TOUCH_ADDRESS": "taiko:0x0000777735367b36bC9B61C50022d9D0700dB4Ec",
         "impl": "taiko:0x7e83Af941FDcf90EB44ED7dc8754a201B156E0BA",
@@ -6334,7 +6346,7 @@
     "taiko/TaikoToken": "0x2928a873325e7669bf5aac6837ff54be716e1cb4bbdb4b6edca642762b9d3fff",
     "taiko/ZkRequiredVerifier": "0x215cf223af5b47bf8dab2909a0722a0465a0fc6dc7d60fffd22c4ec5e9018c67"
   },
-  "usedBlockNumbers": { "ethereum": 26385078, "taiko": 13838277 },
+  "usedBlockNumbers": { "ethereum": 26405749, "taiko": 13962693 },
   "permissionsConfigHash": "0x9537cfe990d95ba2fc795a7f19598ebda68d2f93b55eb9381b21e98e89cb2356",
   "modelledAgainst": {
     "shared-sp1": "0x2dc205a7a9fab0f4b2920f2ca38bd4030cf05d763d8ff9e332b9e53214bccb6b"

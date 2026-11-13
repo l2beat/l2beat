@@ -4,5 +4,11 @@
     "address": "eth:0xFf839a8Be7c90c804F42563f352324cEBcDfe41C",
     "chain": "ethereum",
     "blockNumber": 26290653
+  },
+  "ForwardingTable_2": {
+    "hash": "0x3823af46465c76282deec6a5bfac1eda56f2ac2a0f6b84d2beb64fe75b0bd087",
+    "address": "eth:0x4cb0082B40d3CeE3Cf5237282d34B51129FF49Bd",
+    "chain": "ethereum",
+    "blockNumber": 26405958
   }
 }

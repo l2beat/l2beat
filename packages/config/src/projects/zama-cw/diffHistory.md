@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xa973615d964b963bd4ad7f8c4dfc26c0c2041bc6
+
+# Diff at Fri, 13 Nov 2026 13:04:21 GMT:
+
+- id: a71e72dd
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ced572b97485e6dc1fc02f958ee2a731593430e block: 1792687253
+- current timestamp: 1794568091
+
+## Description
+
+Conduit Multisig 1 removed a member and is 4 of 10.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      values.$members.8:
+-        "eth:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+      values.multisigThreshold:
+-        "4 of 11 (36%)"
++        "4 of 10 (40%)"
+    }
+```
+
 Generated with discovered.json: 0x05dc3e97c24bb85006220864b1255c20bd66beee
 
 # Diff at Fri, 23 Oct 2026 12:07:37 GMT:

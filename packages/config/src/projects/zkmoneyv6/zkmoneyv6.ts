@@ -53,8 +53,21 @@ const susdsUnderlying = getTokenByAddress(
     ),
   ).toString(),
 )
+const steakUsdcPortal = discovery.getContract('OxidePortal_steakUSDC')
+const steakUsdcUnderlying = getTokenByAddress(
+  ChainSpecificAddress.address(
+    discovery.getContractValue<ChainSpecificAddress>(
+      'OxidePortal_steakUSDC',
+      'UNDERLYING',
+    ),
+  ).toString(),
+)
 
-for (const name of ['OxidePortal', 'OxidePortal_sUSDS']) {
+for (const name of [
+  'OxidePortal',
+  'OxidePortal_sUSDS',
+  'OxidePortal_steakUSDC',
+]) {
   assert(
     !discovery.getContractValue<boolean>(name, '_$frozen'),
     'zk.money v6 portal froze, review the exit and refund texts',
@@ -77,25 +90,45 @@ assert(
   'Resolver operators changed, review the operator trust assumptions',
 )
 
-const depositSipa = discovery.getContract('DepositSIPA')
-const registrationSipa = discovery.getContract('RegistrationSIPA')
+// Current implementation per intent: 1 Deposit, 2 Registration, 4 AddPasskey.
+function implementations(factory: string) {
+  return discovery.getContractValue<Record<string, ChainSpecificAddress>>(
+    factory,
+    'implementations',
+  )
+}
+const current = implementations('SIPAFactory')
 assert(
-  discovery.getContractValue<ChainSpecificAddress>(
-    'SIPAFactory',
-    'depositImplementation',
-  ) === depositSipa.address &&
-    discovery.getContractValue<ChainSpecificAddress>(
-      'SIPAFactory',
-      'registrationImplementation',
-    ) === registrationSipa.address,
-  'SIPAFactory blessed a new deposit address implementation, review the deposit texts and funding attribution',
+  Object.keys(current).length === 3 &&
+    current['1'] === discovery.getContract('DepositSIPA').address &&
+    current['2'] === discovery.getContract('RegistrationSIPA').address &&
+    current['4'] === discovery.getContract('AddPasskeySIPA').address,
+  'SIPAFactory blessed a new deposit address implementation, review the deposit texts',
 )
-// Hardcoded in the verified sources, which the hashes below pin.
+
+// Funding tracing takes one factory, so it follows the legacy one. Deposits
+// through the current deposit addresses count each address as its own funder.
+const legacyDepositSipa = discovery.getContract('LegacyDepositSIPA')
+const legacyRegistrationSipa = discovery.getContract('LegacyRegistrationSIPA')
+const legacy = implementations('LegacySIPAFactory')
+assert(
+  legacy['1'] === legacyDepositSipa.address &&
+    legacy['2'] === legacyRegistrationSipa.address,
+  'LegacySIPAFactory blessed a new deposit address implementation, review the funding attribution',
+)
+// The deposit texts and the funding and relayer attribution rest on these
+// verified sources and the addresses hardcoded in them.
 const SOURCE_HASHES: Record<string, string> = {
-  DepositSIPA:
+  LegacyDepositSIPA:
     '0x53b4469d59472a86285da196c2e9315df903b89c1ade8e0bef2a811f291b7283',
-  RegistrationSIPA:
+  LegacyRegistrationSIPA:
     '0x81098092c2a870fb7e6279307b64c9f0ab5f0825fe4836220f45fd386897180f',
+  DepositSIPA:
+    '0x42aa511846ad1d9686f81b9f8018cdf2256cee954942846bf028f3db910ca0a3',
+  RegistrationSIPA:
+    '0x3b83c9f605bdfe979740118d41dc1311237d61bd872034b727a34a395314ee14',
+  AddPasskeySIPA:
+    '0xcd6664b1f038002bf81cc662f4d45b9a6566b2f543c177761df78407e5695723',
   OperationExecutor:
     '0x37951947292f98cb2e0d8e7f0ed54cfae10a62185fb2436fe251346ee75b6601',
   PlainWithdrawalExecutor:
@@ -209,8 +242,8 @@ const governanceValues = {
   ).length,
 }
 
-const factory = discovery.getContract('SIPAFactory')
-assert(factory.sinceBlock !== undefined, 'SIPAFactory needs sinceBlock')
+const factory = discovery.getContract('LegacySIPAFactory')
+assert(factory.sinceBlock !== undefined, 'LegacySIPAFactory needs sinceBlock')
 // Hardcoded in the verified SIPA sources, which the hashes above pin.
 const USDC = EthereumAddress('0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48')
 const USDT = EthereumAddress('0xdAC17F958D2ee523a2206206994597C13D831ec7')
@@ -225,9 +258,11 @@ const depositLocation: ZkMoneyDepositParams = {
   tokenAddress: underlyingAddress,
   fundingCut: '0',
   factoryAddress: ChainSpecificAddress.address(factory.address),
-  depositImplementation: ChainSpecificAddress.address(depositSipa.address),
+  depositImplementation: ChainSpecificAddress.address(
+    legacyDepositSipa.address,
+  ),
   registrationImplementation: ChainSpecificAddress.address(
-    registrationSipa.address,
+    legacyRegistrationSipa.address,
   ),
 }
 const funderTracing: ZkMoneyFundingParams = {
@@ -341,6 +376,10 @@ export const zkmoneyv6: BaseProject = {
       address: susdsPortal.address,
       tokens: [susdsUnderlying.symbol],
     }),
+    discovery.getEscrowDetails({
+      address: steakUsdcPortal.address,
+      tokens: [steakUsdcUnderlying.symbol],
+    }),
   ],
   tvsInfo: {
     associatedTokens: [],
@@ -350,12 +389,12 @@ export const zkmoneyv6: BaseProject = {
     category: PRIVACY_CATEGORIES.shieldedLedger,
     referenceApp: {
       name: 'zk.money Desktop',
-      url: 'https://github.com/aztec-labs-eng/zkmoney-public/releases/tag/desktop-v0.10.0',
+      url: 'https://github.com/aztec-labs-eng/zkmoney-public/releases/tag/desktop-v0.12.0',
       since: '2026-10-28',
-      version: '0.10.0',
+      version: '0.12.0',
       source: {
         repository: 'https://github.com/aztec-labs-eng/zkmoney-public',
-        commit: 'f90b3f24ad4dbe936070c6abc38bffea047006ba',
+        commit: 'c055ea1ca641d64256855d03802c927b0b1d3ad1',
       },
       checkedApps: [
         {
@@ -440,7 +479,6 @@ export const zkmoneyv6: BaseProject = {
       discovery.getContract('FrozenNotesRefundVerifier').address,
       discovery.getContract('FrozenDepositsRefundVerifier').address,
       discovery.getContract('UnprocessedDepositRefundVerifier').address,
-      discovery.getContract('ResolverVerifier').address,
     ],
   },
 }

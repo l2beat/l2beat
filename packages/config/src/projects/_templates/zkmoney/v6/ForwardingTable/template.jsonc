@@ -22,7 +22,7 @@
     // Not HIGH, as SIPAFactory blessings: a listed token's row can never change,
     // so a new row only routes a token that no deposit address could sweep before.
     "rows": {
-      "description": "Listed tokens with the portal their deposits sweep into and the fees per intent (1 = Deposit, 2 = Registration, 3 = UserOp).",
+      "description": "Listed tokens with the portal their deposits sweep into and the fees per intent (1 = Deposit, 2 = Registration, 3 = UserOp, 4 = AddPasskey).",
       "severity": "MEDIUM",
       "handler": {
         "type": "event",

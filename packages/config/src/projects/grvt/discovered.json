@@ -1,12 +1,34 @@
 {
   "name": "grvt",
-  "timestamp": 1794319593,
+  "timestamp": 1794568877,
   "configHash": "0x2084c1e51035868baf0c9a414d9ff9295ca19404533437794a0eacdebaec6748",
   "entries": [
     {
       "address": "eth:0x0000000000000000000000000000000000000001",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "eth:0x0516f36192d16D8EaeEED4a541810f50218E97f4",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "eth:0x4738eDE7Fb2d3E5596867cf60c668779de7CE8C4",
+      "sinceTimestamp": 1794547991,
+      "sinceBlock": 26403974,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x736258fdd7dc998A1180333AFec1C045868EAcdf",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
+      "implementationNames": {
+        "eth:0x0516f36192d16D8EaeEED4a541810f50218E97f4": "ProxyAdmin"
+      }
     },
     {
       "address": "eth:0x0AaBB14Da51F3c2ddB678A73f71239760fc9e952",
@@ -141,13 +163,8 @@
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "positionBreakdown": [
           {
-            "token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-            "amount": 1106524,
-            "kind": 1
-          },
-          {
             "token": "eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
-            "amount": "2459475778333685907659843",
+            "amount": "1897112440350685907659843",
             "kind": 0
           },
           {
@@ -180,8 +197,8 @@
           "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d"
         ],
         "swapsPaused": false,
-        "totalExposure": 19349595444222,
-        "totalExposureStrict": 19349595444222,
+        "totalExposure": 18707883420268,
+        "totalExposureStrict": 18707883420268,
         "tvlTokens": [
           "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
           "eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
@@ -190,7 +207,7 @@
         "vault": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
         "vaultToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "vaultTokenDecimals": 6,
-        "withdrawableExposure": 1106524
+        "withdrawableExposure": 0
       },
       "fieldMeta": {
         "pauser": { "severity": "MEDIUM" },
@@ -437,7 +454,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 92,
+        "nonce": 93,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -659,12 +676,15 @@
         },
         "bootstrap": "eth:0x68b7e779b0219401ec1959067a30597b34E0de56",
         "bridgeProxy": "eth:0xE17aeD2fC55f4A876315376ffA49FE6358113a65",
-        "compartmentCount": 1,
+        "compartmentCount": 2,
         "compartmentCreator": [
           "eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"
         ],
         "compartmentInitCodeHash": "0x415513bda57e4332d02e1e57495828204c497f77ffbb953ca2a68db7144dd55c",
-        "compartments": ["eth:0xD3A975f7dca47D7bDfA426BB7cD64F4145CcEc44"],
+        "compartments": [
+          "eth:0xD3A975f7dca47D7bDfA426BB7cD64F4145CcEc44",
+          "eth:0xa9e3AE58880702e02513225BC911d51781C60938"
+        ],
         "configAdmin": ["eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"],
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdmin": ["eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"],
@@ -822,19 +842,19 @@
         "positionBreakdown": [
           {
             "token": "eth:0x23878914EFE38d27C4D67Ab83ed1b93A74D4086a",
-            "amount": 49624396,
+            "amount": 49638181,
             "kind": 0
           }
         ],
-        "totalExposure": 49624396,
-        "totalExposureStrict": 49624396,
+        "totalExposure": 49638181,
+        "totalExposureStrict": 49638181,
         "tvlTokens": [
           "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
           "eth:0x23878914EFE38d27C4D67Ab83ed1b93A74D4086a"
         ],
         "vault": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
         "vaultToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "withdrawableExposure": 49624396
+        "withdrawableExposure": 49638181
       },
       "implementationNames": {
         "eth:0x646123424BEcBF14a7542bc44340AdB241BA32b3": "BeaconProxy",
@@ -1024,18 +1044,18 @@
         "positionBreakdown": [
           {
             "token": "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d",
-            "amount": "9816181931110753858690290",
+            "amount": "10700856744215151716697624",
             "kind": 0
           },
           {
             "token": "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
-            "amount": 901000000000,
+            "amount": 10000000000,
             "kind": 1
           }
         ],
         "sGhoToken": "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d",
-        "totalExposure": 10026364266419,
-        "totalExposureStrict": 10026364266419,
+        "totalExposure": 10933870261628,
+        "totalExposureStrict": 10933870261628,
         "tvlTokens": [
           "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
           "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
@@ -1045,7 +1065,7 @@
         "vault": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
         "vaultToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
         "vaultTokenDecimals": 6,
-        "withdrawableExposure": 10026364266419
+        "withdrawableExposure": 10933870261628
       },
       "implementationNames": {
         "eth:0x89D76f493AECaEe10caBbC1a67dbdC92E947b85E": "BeaconProxy",
@@ -1081,6 +1101,79 @@
       "address": "eth:0x9A4484BBDae765A84c802Cf0A4777D8b16AB1270",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "AxcessCompartment",
+      "address": "eth:0xa9e3AE58880702e02513225BC911d51781C60938",
+      "type": "Contract",
+      "template": "grvt/AxcessCompartment",
+      "sourceHashes": [
+        "0x5602ef2b7c3f0923390230bb9b68b465168c9832cef744e3db0274a74d44014a",
+        "0xa1cf2f96a20cf8bf91db8000fb7189b729d4fad2f9e4a9131c10494181028723"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Compartment of a GRVT vault. It holds vault capital withdrawn from GRVT and deploys it into listed Axcess loan vaults. Proceeds of venue exits always return to the compartment, and funds can only leave it to a listed venue or to the vault's deposit proxy on GRVT through the GRVTBridgeProxy. Venues are listed by the REGISTRY_ADMIN_ROLE of the CompartmentRegistry.",
+      "deployerAddress": "eth:0x4738eDE7Fb2d3E5596867cf60c668779de7CE8C4",
+      "sinceTimestamp": 1794547991,
+      "sinceBlock": 26403974,
+      "values": {
+        "$admin": "eth:0x0516f36192d16D8EaeEED4a541810f50218E97f4",
+        "$implementation": "eth:0x414f3BD3B2F6eE7bbCc9692D5Eed06BAEdE10946",
+        "$pastUpgrades": [
+          [
+            "2026-11-13T05:33:11.000Z",
+            "0x6d9d63d1f025b197315af776eed42d3813d42667bad3902aadb9ea162e697c5e",
+            ["eth:0x68b7e779b0219401ec1959067a30597b34E0de56"]
+          ],
+          [
+            "2026-11-13T05:33:11.000Z",
+            "0x6d9d63d1f025b197315af776eed42d3813d42667bad3902aadb9ea162e697c5e",
+            ["eth:0x414f3BD3B2F6eE7bbCc9692D5Eed06BAEdE10946"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "PAUSER_ROLE": {
+            "adminRole": "0xe0e65c783ac33ff1c5ccf4399c9185066773921d6f8d050bf80781603021f097",
+            "members": []
+          },
+          "OPERATOR_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x0AaBB14Da51F3c2ddB678A73f71239760fc9e952"]
+          },
+          "REBALANCER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x0AaBB14Da51F3c2ddB678A73f71239760fc9e952"]
+          }
+        },
+        "axcessVaultList": ["eth:0x3Ad29b602a7AB3A15b9D7C74324C83Fe9e705b11"],
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "initialized": true,
+        "operator": ["eth:0x0AaBB14Da51F3c2ddB678A73f71239760fc9e952"],
+        "paused": false,
+        "pauser": [],
+        "rebalancer": ["eth:0x0AaBB14Da51F3c2ddB678A73f71239760fc9e952"],
+        "registry": "eth:0x55e271ae274BE015Fc46cdf43a2C7C96eF1dFB89"
+      },
+      "fieldMeta": {
+        "pauser": { "severity": "MEDIUM" },
+        "axcessVaultList": {
+          "severity": "HIGH",
+          "description": "Axcess loan vaults (institutional credit) that the compartment can deposit into."
+        },
+        "paused": {
+          "severity": "MEDIUM",
+          "description": "Stops deposits into yield venues. Withdrawals from venues and bridging back to GRVT stay available."
+        }
+      },
+      "implementationNames": {
+        "eth:0xa9e3AE58880702e02513225BC911d51781C60938": "TransparentUpgradeableProxy",
+        "eth:0x414f3BD3B2F6eE7bbCc9692D5Eed06BAEdE10946": "AxcessCompartment"
+      }
     },
     {
       "name": "Governance",
@@ -1308,40 +1401,35 @@
           ],
           "statuses": [
             {
-              "idle": 30664774,
-              "strategy": 0,
-              "total": 30664774,
+              "idle": 914705999,
+              "strategy": 1302837281,
+              "total": 2217543280,
               "skippedStrategies": 0
             },
             {
               "idle": 0,
-              "strategy": 49671472,
-              "total": 49671472,
+              "strategy": 49685270,
+              "total": 49685270,
               "skippedStrategies": 0
             },
             {
               "idle": 0,
-              "strategy": 901000000000,
-              "total": 901000000000,
+              "strategy": 10000000000,
+              "total": 10000000000,
               "skippedStrategies": 0
             },
             {
               "idle": 0,
-              "strategy": "25984601059317505626917762",
-              "total": "25984601059317505626917762",
+              "strategy": "26869275872421903484925096",
+              "total": "26869275872421903484925096",
               "skippedStrategies": 0
             },
             { "idle": 0, "strategy": 0, "total": 0, "skippedStrategies": 0 },
+            { "idle": 0, "strategy": 0, "total": 0, "skippedStrategies": 0 },
             {
               "idle": 0,
-              "strategy": 1106524,
-              "total": 1106524,
-              "skippedStrategies": 0
-            },
-            {
-              "idle": 0,
-              "strategy": "2508781959264167750796532",
-              "total": "2508781959264167750796532",
+              "strategy": "3038261117982385079838515",
+              "total": "3038261117982385079838515",
               "skippedStrategies": 0
             }
           ]
@@ -1951,7 +2039,7 @@
           "eth:0x907b30407249949521Bf0c89A43558dae200146A",
           "eth:0xFa30EAe30351A83809657299F6Cad9557c232e8C"
         ],
-        "getFirstUnprocessedPriorityTx": 5259,
+        "getFirstUnprocessedPriorityTx": 5278,
         "getL2BootloaderBytecodeHash": "0x01000911c4db4fe62c98e180cfa7e9b3a22fb15f505905d4bf36192f481551e6",
         "getL2DefaultAccountBytecodeHash": "0x010005f73e7c299ed73db937843643bdc276cbc2cc8596287e1e0cf3afc60252",
         "getL2EvmEmulatorBytecodeHash": "0x01000d8bae37b82f311186426184866498b357f41d7a02ced11f3e3fbfbacd63",
@@ -1960,7 +2048,7 @@
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
         "getPriorityQueueSize": 2,
-        "getPriorityTreeRoot": "0x9d1b725b1bd7e64064238526bdaa32f0805a4545598d9ee5a439add8a301146e",
+        "getPriorityTreeRoot": "0xe9a53dc21b09eef705d6db6077de06b7c32fbf9dfee64ba614f5607028893461",
         "getPriorityTreeStartIndex": 440,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 128849018881,
@@ -1968,13 +2056,13 @@
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
         "getSemverProtocolVersion": [0, 30, 1],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 130610,
-        "getTotalBatchesExecuted": 130568,
-        "getTotalBatchesVerified": 130597,
-        "getTotalBlocksCommitted": 130610,
-        "getTotalBlocksExecuted": 130568,
-        "getTotalBlocksVerified": 130597,
-        "getTotalPriorityTxs": 5261,
+        "getTotalBatchesCommitted": 131675,
+        "getTotalBatchesExecuted": 131633,
+        "getTotalBatchesVerified": 131665,
+        "getTotalBlocksCommitted": 131675,
+        "getTotalBlocksExecuted": 131633,
+        "getTotalBlocksVerified": 131665,
+        "getTotalPriorityTxs": 5280,
         "getTransactionFilterer": "eth:0x3Cd52B238Ac856600b22756133eEb31ECb25109a",
         "getVerifier": "eth:0xCeF0218c0C6dB0768e48debeE26E41B8DAdE7081",
         "getVerifierParams": {
@@ -2155,8 +2243,13 @@
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "positionBreakdown": [
           {
+            "token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+            "amount": 1302837281,
+            "kind": 1
+          },
+          {
             "token": "eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
-            "amount": "49306180930481843136689",
+            "amount": "1141148677631699172178672",
             "kind": 0
           },
           {
@@ -2189,8 +2282,8 @@
           "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d"
         ],
         "swapsPaused": false,
-        "totalExposure": 56834075525,
-        "totalExposureStrict": 56834075525,
+        "totalExposure": 1317060949100,
+        "totalExposureStrict": 1317060949100,
         "tvlTokens": [
           "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
           "eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
@@ -2199,7 +2292,7 @@
         "vault": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
         "vaultToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
         "vaultTokenDecimals": 6,
-        "withdrawableExposure": 0
+        "withdrawableExposure": 1302837281
       },
       "fieldMeta": {
         "pauser": { "severity": "MEDIUM" },
@@ -2278,6 +2371,17 @@
     }
   ],
   "abis": {
+    "eth:0x0516f36192d16D8EaeEED4a541810f50218E97f4": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
     "eth:0x0597CaA8A823A699d7CD9E62B5E5d4153FF82691": [
       "constructor(uint256 _l1ChainId)",
       "error BatchHashMismatch(bytes32 expected, bytes32 actual)",
@@ -2922,6 +3026,75 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
+    "eth:0x414f3BD3B2F6eE7bbCc9692D5Eed06BAEdE10946": [
+      "constructor(address registry_)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error CompartmentPaused()",
+      "error InvalidInitialization()",
+      "error InvalidVenue(address venue)",
+      "error NotAuthorized(bytes32 role, address account)",
+      "error NotInitializing()",
+      "error NotPauser(address account)",
+      "error NotProxyAdmin(address caller, address expected)",
+      "error NotRegisteredCompartment(address self)",
+      "error NotWildcatV2Market(address market)",
+      "error ReceivedBelowMinimum(uint256 received, uint256 minReceived)",
+      "error ReentrancyGuardReentrantCall()",
+      "error RoleNotGrantable(bytes32 role)",
+      "error RoleNotRevocable(bytes32 role)",
+      "error SafeERC20FailedOperation(address token)",
+      "error TooManyOpenRequests(address venue)",
+      "error UnknownBatch(address venue, uint32 expiry)",
+      "error VenueAssetChanged(address venue, address expected, address actual)",
+      "error VenueListFull()",
+      "error VenueNotEnabled(address venue)",
+      "error VenueNotListed(address venue)",
+      "error VenueStillHeld(address venue, uint256 exposure)",
+      "error ZeroAddress()",
+      "error ZeroMinimum()",
+      "event BridgedToL2(address indexed token, uint256 amount, bytes32 l2TxHash)",
+      "event ExitCancelled(address indexed venue, uint256 released, uint256 remaining)",
+      "event ExitClaimed(address indexed venue, address indexed asset, uint256 expected, uint256 received)",
+      "event ExitRequested(address indexed venue, uint256 amount, uint256 key)",
+      "event Initialized(uint64 version)",
+      "event Paused(address indexed by)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event Unpaused(address indexed by)",
+      "event VenueDeposited(address indexed venue, address indexed asset, uint256 assets, uint256 received)",
+      "event VenueListed(address indexed venue, bool enabled, address asset)",
+      "event VenueRemoved(address indexed venue)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function axcessClaimRecovery(address vault) returns (uint256 received)",
+      "function axcessDeposit(address vault, uint256 assets, uint256 minShares) returns (uint256 shares)",
+      "function axcessFundRedemptions(address vault)",
+      "function axcessMint(address vault, uint256 shares, uint256 maxAssets) returns (uint256 received)",
+      "function axcessOpenRequests(address vault) view returns (uint256[] ids, uint256[] shares)",
+      "function axcessRedeem(address vault) returns (uint256 received)",
+      "function axcessRequestRedeem(address vault, uint256 shares) returns (uint256 requestId)",
+      "function axcessTerms(address vault) view returns (bool enabled, address asset)",
+      "function axcessVaultList() view returns (address[])",
+      "function bridgeToL2(address token, uint256 amount)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
+      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
+      "function getRoleMembers(bytes32 role) view returns (address[])",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(tuple(address operator, address[] rebalancers, address[] pausers, tuple(address vault, bool enabled)[] axcessVaults) p)",
+      "function initialized() view returns (bool)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function registry() view returns (address)",
+      "function removeAxcessVault(address vault)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function setAxcessVault(address vault, bool enabled)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function unpause()"
+    ],
     "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
       "event AddedOwner(address indexed owner)",
@@ -3274,6 +3447,17 @@
     "eth:0x907b30407249949521Bf0c89A43558dae200146A": [
       "error ValL1DAWrongInputLength(uint256 inputLength, uint256 expectedLength)",
       "function checkDA(uint256, uint256, bytes32, bytes _operatorDAInput, uint256 maxBlobsSupported) returns (tuple(bytes32 stateDiffHash, bytes32[] blobsLinearHashes, bytes32[] blobsOpeningCommitments) output)"
+    ],
+    "eth:0xa9e3AE58880702e02513225BC911d51781C60938": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
     ],
     "eth:0xac2b5c60Fc27fB47333f0416F8F2dAe600Ee50fb": [
       "constructor()",
@@ -3727,6 +3911,7 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "grvt/AaveV3Strategy": "0x7aea28e84ebe42f8b0f6740ff6afa7c23b139e35239b2f9bdee1f859423bac16",
     "grvt/AaveV3StrategyV2": "0x865aaa939bff4f128f20d1a366131713dc4160a4c637393e2e20efc0fd61bce8",
+    "grvt/AxcessCompartment": "0x1f89b61414f5a22c9a07056c926f147938e68858a427e4c3ce20652662c73ab7",
     "grvt/Bootstrap": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "grvt/CompartmentRegistry": "0xcba1e7e3a77c959d542d7bc0a056465a76f3c5128e47e8d69c46783b9f351d4b",
     "grvt/GenericSwapStrategy": "0xe47ef7b0d67d7da0403d07756cbffd0dde72492bc8d1ad55c2b15739efdd92f0",
@@ -3745,14 +3930,35 @@
     "shared-zk-stack/ValidatorTimelock_v31": "0xc571d18f4183eb072d6806cece41853993e1559b69d2a903b1d707b05ad8385f",
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 26385000 },
-  "permissionsConfigHash": "0x42c678ab5a391a957e645ee0ae4e63e103d9c37f6c6bcf29dfc20124067e629d",
+  "usedBlockNumbers": { "ethereum": 26405708 },
+  "permissionsConfigHash": "0x64815b98e48f24a0f4f7db4a8c6f4b29dc3d5d843ade5684f745cba03787ef25",
   "modelledAgainst": {
     "shared-zk-stack": "0x1edc9a85104e4cb1087b172da8c224b9375c175a0b977b71c27aba5aed671567"
   },
   "permissions": {
+    "eth:0x0516f36192d16D8EaeEED4a541810f50218E97f4": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xa9e3AE58880702e02513225BC911d51781C60938",
+          "role": "admin"
+        }
+      ]
+    },
     "eth:0x0AaBB14Da51F3c2ddB678A73f71239760fc9e952": {
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xa9e3AE58880702e02513225BC911d51781C60938",
+          "description": "bridge the compartment's funds to its vault on GRVT.",
+          "role": ".rebalancer"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xa9e3AE58880702e02513225BC911d51781C60938",
+          "description": "deposit the compartment's funds into its listed Axcess loan vaults and withdraw them back to the compartment.",
+          "role": ".operator"
+        },
         {
           "permission": "interact",
           "from": "eth:0xD3A975f7dca47D7bDfA426BB7cD64F4145CcEc44",
@@ -4339,6 +4545,14 @@
         },
         {
           "permission": "upgrade",
+          "from": "eth:0xa9e3AE58880702e02513225BC911d51781C60938",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x0516f36192d16D8EaeEED4a541810f50218E97f4" }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0xD3A975f7dca47D7bDfA426BB7cD64F4145CcEc44",
           "role": "admin",
           "via": [
@@ -4347,6 +4561,11 @@
         }
       ],
       "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x0516f36192d16D8EaeEED4a541810f50218E97f4",
+          "role": ".owner"
+        },
         {
           "permission": "act",
           "from": "eth:0x8196Df3c158E67963021e869e972d2c2254Ed485",
