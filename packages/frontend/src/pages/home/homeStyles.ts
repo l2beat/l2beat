@@ -18,7 +18,12 @@ export const HOME_TEXT = {
   value: 'font-medium text-label-value-15 tabular-nums',
   /** Descriptions. */
   body: 'text-label-value-15 text-secondary text-pretty leading-5.5',
-  /** Labels and other small print. */
+  /**
+   * What a figure or column is, e.g. "Value locked", "TVL" or a category:
+   * a key, so in the text's own colour (the site keeps keys out of grey).
+   */
+  label: 'font-normal text-label-value-13 text-primary',
+  /** Small print: dates, periods, units, counts beside a title. */
   meta: 'font-normal text-label-value-13 text-secondary',
   /**
    * Beside a card title, e.g. "Last 24h". A 16px line, so the title and the

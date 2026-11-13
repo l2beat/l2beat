@@ -104,7 +104,7 @@ export function HomeRankedTable<T extends HomeRankedTableRow>({
               key={column.id}
               className={cn(
                 'flex whitespace-nowrap',
-                HOME_TEXT.meta,
+                HOME_TEXT.label,
                 alignClass(column.align),
                 column.minTableWidth && HIDE_BELOW[column.minTableWidth],
               )}
@@ -235,7 +235,7 @@ export function HomeRankedValue({
  */
 function ChangePeriodHeader() {
   return (
-    <span className="@min-[400px]:ml-1.5 flex @max-[360px]:hidden @min-[400px]:min-w-11 @min-[400px]:justify-end">
+    <span className="@min-[400px]:ml-1.5 flex @max-[360px]:hidden @min-[400px]:min-w-11 @min-[400px]:justify-end text-secondary">
       <span className="@min-[400px]:hidden px-1" aria-hidden>
         ·
       </span>

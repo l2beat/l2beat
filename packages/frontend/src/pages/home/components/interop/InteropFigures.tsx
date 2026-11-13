@@ -69,7 +69,7 @@ export function getInteropFigures(
     ),
     topRoute: (
       <div className="flex min-w-0 flex-col gap-1.5">
-        <span className={cn('truncate', HOME_TEXT.meta)}>Top route</span>
+        <span className={cn('truncate', HOME_TEXT.label)}>Top route</span>
         {routeChains?.src && routeChains.dst ? (
           <span className="flex min-w-0 items-center gap-2">
             <RouteEnd chain={routeChains.src} />
@@ -99,13 +99,8 @@ export function getInteropFigures(
 function Figure({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex min-w-0 flex-col gap-1">
-      <span className={cn('truncate', HOME_TEXT.meta)}>{label}</span>
-      {/* On phones, the size the other cards' stacked KPIs take. */}
-      <span
-        className={cn('truncate', HOME_TEXT.number, 'max-sm:text-heading-24')}
-      >
-        {value}
-      </span>
+      <span className={cn('truncate', HOME_TEXT.label)}>{label}</span>
+      <span className={cn('truncate', HOME_TEXT.number)}>{value}</span>
     </div>
   )
 }
@@ -123,7 +118,7 @@ function Top({
   const Who = item?.href ? 'a' : 'span'
   return (
     <div className="flex min-w-0 flex-col gap-1.5">
-      <span className={cn('truncate', HOME_TEXT.meta)}>{label}</span>
+      <span className={cn('truncate', HOME_TEXT.label)}>{label}</span>
       <Who
         href={item?.href}
         className="flex min-w-0 items-center gap-2 underline-offset-2 hover:underline"

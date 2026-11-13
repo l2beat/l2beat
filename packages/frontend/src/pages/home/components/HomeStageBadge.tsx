@@ -22,7 +22,7 @@ export function HomeStageBadge({
     <TableLink href={`${projectHref}#stage`} className={HOME_CELL_LINK_CLASS}>
       <span
         className={cn(
-          'inline-flex h-5 items-center whitespace-nowrap rounded-sm px-1.5 font-medium text-label-value-12',
+          'inline-flex h-5 items-center whitespace-nowrap rounded-sm px-1.5 font-medium text-label-value-13',
           getStageBadgeClassName(stage),
         )}
       >
