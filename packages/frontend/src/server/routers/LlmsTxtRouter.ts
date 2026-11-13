@@ -265,7 +265,7 @@ const PAGE_SECTIONS: LinkListSection[] = [
         name: 'All liquid staking protocols',
         path: markdownAlternate('/defi/liquid-staking.md'),
         description:
-          'Markdown list of every tracked liquid staking protocol with its risks and page URL; the HTML page adds value locked, yield and cost of exit.',
+          'Markdown list of every tracked liquid staking protocol with its risks and page URL; the HTML page adds value locked, share of staked ETH, yield and cost of exit.',
       },
       ...(env.CLIENT_SIDE_OSSIFICATION_ENABLED
         ? [

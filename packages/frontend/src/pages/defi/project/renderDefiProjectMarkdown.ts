@@ -6,7 +6,9 @@ import { formatUtcDateOrDay } from '~/server/markdown/renderSectionParts'
 import { getUnderReviewText } from '~/utils/project/underReview'
 import {
   formatLatestValue,
+  formatStakedEthShare,
   LIQUID_STAKING_METRICS,
+  STAKED_ETH_SHARE_TOOLTIP,
 } from '../liquid-staking/liquidStakingMetrics'
 import { LIQUID_STAKING_RISKS } from '../liquid-staking/liquidStakingRisks'
 
@@ -63,7 +65,12 @@ function getFacts(
 /** The stats block of a liquid staking project page. */
 function getLiquidStakingFacts(summary: ProjectDefiEntry['liquidStaking']) {
   if (!summary) return []
+  const share = summary.stakedEthShare
   return compact([
+    share && {
+      label: 'Share of staked ETH',
+      value: `${formatStakedEthShare(share.value)} (ETH staked ${formatUtcDateOrDay(share.timestamp, false)}). ${STAKED_ETH_SHARE_TOOLTIP}`,
+    },
     ...LIQUID_STAKING_METRICS.map((metric) => {
       const latest = summary[metric.key]
       return (

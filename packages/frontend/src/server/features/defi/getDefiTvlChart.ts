@@ -9,22 +9,48 @@ import {
   rangeToResolution,
 } from '~/utils/range/range'
 import { getTvsChartByProjects } from '../tvs/getTvsChartByProjects'
+import { getEthStakedUsdAt } from './liquid-staking/getEthStakedUsdAt'
 
 export const DefiTvlChartParams = v.object({
   projectId: v.string(),
   range: ChartRange,
+  /** Adds the USD value of the ETH staked network-wide to each point. */
+  withEthStaked: v.boolean().optional(),
 })
 
 export type DefiTvlChartParams = v.infer<typeof DefiTvlChartParams>
 
 export interface DefiTvlChartResponse {
-  chart: [timestamp: number, valueUsd: number | null][]
+  chart: [
+    timestamp: number,
+    valueUsd: number | null,
+    ethStakedUsd?: number | null,
+  ][]
   resolution: ChartResolution
   syncedUntil: number | undefined
   sourceTimestamp: number | undefined
 }
 
 export async function getDefiTvlChart(
+  params: DefiTvlChartParams,
+): Promise<DefiTvlChartResponse> {
+  const response = await getTvlChart(params)
+  if (!params.withEthStaked) return response
+
+  const ethStakedUsd = await getEthStakedUsdAt(
+    response.chart.map(([timestamp]) => timestamp),
+  )
+  return {
+    ...response,
+    chart: response.chart.map(([timestamp, valueUsd], i) => [
+      timestamp,
+      valueUsd,
+      ethStakedUsd[i] ?? null,
+    ]),
+  }
+}
+
+async function getTvlChart(
   params: DefiTvlChartParams,
 ): Promise<DefiTvlChartResponse> {
   const projectId = ProjectId(params.projectId)

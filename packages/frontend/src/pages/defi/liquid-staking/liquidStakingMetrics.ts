@@ -3,11 +3,20 @@ import type {
   LiquidStakingLatestValue,
   LiquidStakingSummary,
 } from '~/server/features/defi/liquid-staking/getLiquidStakingSummary'
+import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatRange, formatTimestamp } from '~/utils/dates'
 import { formatDays, formatYield } from './formatLiquidStaking'
 
 /** Shown next to the metrics, in the table and on project pages. */
 export const TVL_TOOLTIP = 'Total USD value of assets locked in the protocol.'
+
+export const STAKED_ETH_SHARE_TOOLTIP =
+  'The TVL in ETH, at the ETH price of the same hour, as a share of the balance of all active Ethereum validators.'
+
+/** E.g. "24.1% of staked ETH". */
+export function formatStakedEthShare(share: number): string {
+  return `${formatPercent(share)} of staked ETH`
+}
 
 export interface LiquidStakingMetric {
   key: keyof Pick<LiquidStakingSummary, 'yield' | 'costOfExit'>

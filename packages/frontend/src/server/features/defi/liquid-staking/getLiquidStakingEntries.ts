@@ -1,5 +1,4 @@
 import { manifest } from '~/utils/Manifest'
-import { getTotalValueLockedByProject } from '../getDefiTotalValueLocked'
 import type { LiquidStakingCharts } from './getLiquidStakingCharts'
 import {
   getLiquidStakingProjects,
@@ -7,7 +6,9 @@ import {
 } from './getLiquidStakingProjects'
 import {
   buildLiquidStakingSummary,
+  getLiquidStakingTvl,
   type LiquidStakingSummary,
+  type LiquidStakingTvl,
 } from './getLiquidStakingSummary'
 
 export interface LiquidStakingEntry extends LiquidStakingSummary {
@@ -38,7 +39,7 @@ export async function loadLiquidStakingEntries(
 ): Promise<{ entries: LiquidStakingEntry[]; charts: LiquidStakingCharts }> {
   const projects = await getLiquidStakingProjects()
   const [tvlByProject, charts] = await Promise.all([
-    getTotalValueLockedByProject(projects),
+    getLiquidStakingTvl(projects),
     loadCharts(),
   ])
   return { entries: getEntries(projects, tvlByProject, charts), charts }
@@ -47,7 +48,7 @@ export async function loadLiquidStakingEntries(
 /** Sorted by TVL, the projects without one last. */
 function getEntries(
   projects: LiquidStakingProject[],
-  tvlByProject: Map<string, number>,
+  tvlByProject: Map<string, LiquidStakingTvl>,
   charts: LiquidStakingCharts,
 ): LiquidStakingEntry[] {
   return projects

@@ -3,6 +3,7 @@ import {
   ETH_STAKED_TITLE,
   formatEthStaked,
   formatLatestValue,
+  formatStakedEthShare,
   LIQUID_STAKING_METRICS,
 } from '~/pages/defi/liquid-staking/liquidStakingMetrics'
 import {
@@ -35,7 +36,7 @@ export function renderLiquidStakingSection({
         `${link(entry.name, entry.href)}${entry.isUnderReview ? ' (under review)' : ''}`,
         entry.tokens.join(', '),
         entry.totalValueLockedUsd !== undefined
-          ? formatUsd(entry.totalValueLockedUsd)
+          ? `${formatUsd(entry.totalValueLockedUsd)}${entry.stakedEthShare ? ` (${formatStakedEthShare(entry.stakedEthShare.value)})` : ''}`
           : NO_DATA,
         ...LIQUID_STAKING_METRICS.map((metric) => {
           const latest = entry[metric.key]

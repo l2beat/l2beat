@@ -10,6 +10,7 @@ import type {
   LiquidStakingLatestValue,
   LiquidStakingSummary,
 } from '~/server/features/defi/liquid-staking/getLiquidStakingSummary'
+import { StakedEthShare } from '../../liquid-staking/components/StakedEthShare'
 import {
   formatLatestValue,
   formatMetricDate,
@@ -32,7 +33,15 @@ export function LiquidStakingProjectSummary({
       tooltip: TVL_TOOLTIP,
       value:
         summary.totalValueLockedUsd !== undefined ? (
-          formatCurrency(summary.totalValueLockedUsd, 'usd')
+          <span className="flex flex-col max-md:items-end">
+            {formatCurrency(summary.totalValueLockedUsd, 'usd')}
+            {summary.stakedEthShare && (
+              <StakedEthShare
+                share={summary.stakedEthShare}
+                className="font-medium text-label-value-13"
+              />
+            )}
+          </span>
         ) : (
           <NoDataBadge />
         ),

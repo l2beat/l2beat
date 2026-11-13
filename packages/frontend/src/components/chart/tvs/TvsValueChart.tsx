@@ -13,12 +13,15 @@ import {
 import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import { tinted } from '~/components/core/chart/tint'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatSnapshotTimestamp } from '~/utils/dates'
 import type { ChartResolution } from '~/utils/range/range'
 
 interface TvsValueChartDataPoint {
   timestamp: number
   value: number | null
+  /** USD value of the ETH staked network-wide, drawn behind the TVL. */
+  ethStaked?: number | null
 }
 
 interface Props {
@@ -29,14 +32,27 @@ interface Props {
   resolution: ChartResolution
   project?: ChartProject
   milestones?: Milestone[]
+  /** Draws `ethStaked`, which the TVL is a part of. */
+  withEthStaked?: boolean
 }
 
-const chartMeta = {
+type Key = 'value' | 'ethStaked'
+
+const valueMeta = {
   value: {
     label: 'TVL',
     color: 'var(--chart-pink)',
     indicatorType: { shape: 'line' },
   },
+} satisfies ChartMeta
+
+const withEthStakedMeta = {
+  ethStaked: {
+    label: 'Total ETH staked',
+    color: 'var(--chart-ethereum-secondary)',
+    indicatorType: { shape: 'line' },
+  },
+  ...valueMeta,
 } satisfies ChartMeta
 
 export function TvsValueChart({
@@ -47,12 +63,15 @@ export function TvsValueChart({
   resolution,
   project,
   milestones,
+  withEthStaked,
 }: Props) {
+  const keys: Key[] = withEthStaked ? ['ethStaked', 'value'] : ['value']
+  const meta = withEthStaked ? withEthStakedMeta : valueMeta
   return (
     <ChartContainer
       isPlaceholderData={isPlaceholderData}
       data={data}
-      meta={chartMeta}
+      meta={meta}
       isLoading={isLoading}
       project={project}
       milestones={milestones}
@@ -61,12 +80,10 @@ export function TvsValueChart({
       <TimeSeriesChart
         data={data}
         ariaLabel="Value secured"
-        series={[
-          {
-            key: 'value',
-            ...tinted(chartMeta.value.color),
-          },
-        ]}
+        series={keys.map((key) => ({
+          key,
+          ...tinted(withEthStakedMeta[key].color),
+        }))}
         yAxis={{
           tickCount: 4,
           format: (value) => formatCurrency(value, 'usd'),
@@ -86,10 +103,15 @@ function TvsValueChartTooltip({
   resolution,
 }: {
   row: TvsValueChartDataPoint
-  keys: 'value'[]
+  keys: Key[]
   resolution: ChartResolution
 }) {
-  const payload = getTooltipEntries(row, keys)
+  // The TVL first, then the total it is a part of
+  const payload = getTooltipEntries(row, keys).reverse()
+  const share =
+    keys.includes('ethStaked') && row.value != null && row.ethStaked
+      ? row.value / row.ethStaked
+      : undefined
 
   return (
     <ChartTooltipWrapper>
@@ -98,22 +120,26 @@ function TvsValueChartTooltip({
       </div>
       <HorizontalSeparator className="my-2" />
       <div className="flex flex-col gap-2">
-        {payload.map((entry) => {
-          return (
-            <ChartTooltipRow
-              key={entry.name}
-              name={entry.name}
-              gap="gap-x-6"
-              wrapLabel={false}
-            >
-              <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                {entry.value === null
-                  ? 'No data'
-                  : formatCurrency(entry.value, 'usd')}
-              </span>
-            </ChartTooltipRow>
-          )
-        })}
+        {payload.map((entry) => (
+          <ChartTooltipRow
+            key={entry.name}
+            name={entry.name}
+            gap="gap-x-6"
+            wrapLabel={false}
+          >
+            <span className="font-medium text-label-value-15 text-primary tabular-nums">
+              {entry.value === null
+                ? 'No data'
+                : formatCurrency(entry.value, 'usd')}
+              {entry.name === 'value' && share !== undefined && (
+                <span className="text-secondary">
+                  {' '}
+                  ({formatPercent(share)})
+                </span>
+              )}
+            </span>
+          </ChartTooltipRow>
+        ))}
       </div>
     </ChartTooltipWrapper>
   )

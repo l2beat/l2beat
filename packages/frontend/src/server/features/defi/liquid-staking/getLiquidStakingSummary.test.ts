@@ -31,6 +31,53 @@ describe(buildLiquidStakingSummary.name, () => {
       estimated: true,
     })
   })
+
+  it('divides the TVL in ETH by the latest ETH staked', () => {
+    const today = UnixTime.toStartOf(UnixTime.now(), 'day')
+    const yesterday = today - UnixTime.DAY
+
+    const summary = buildLiquidStakingSummary(
+      'lido',
+      {} as ProjectLiquidStakingRisks,
+      { valueUsd: 30_000_000_000, valueEth: 8_000_000 },
+      {
+        yield: [
+          { ...point(yesterday, {}), network: null, ethStaked: 32_000_000 },
+          { ...point(today, {}), network: null, ethStaked: null },
+        ],
+        costOfExit: [],
+      },
+    )
+
+    expect(summary.totalValueLockedUsd).toEqual(30_000_000_000)
+    expect(summary.stakedEthShare).toEqual({
+      value: 0.25,
+      timestamp: yesterday,
+    })
+  })
+
+  it('has no share without the TVL in ETH or a recent ETH staked', () => {
+    const today = UnixTime.toStartOf(UnixTime.now(), 'day')
+    const yieldChart = (timestamp: number) => [
+      { ...point(timestamp, {}), network: null, ethStaked: 32_000_000 },
+    ]
+
+    const withoutEth = buildLiquidStakingSummary(
+      'lido',
+      {} as ProjectLiquidStakingRisks,
+      { valueUsd: 30_000_000_000 },
+      { yield: yieldChart(today), costOfExit: [] },
+    )
+    const stale = buildLiquidStakingSummary(
+      'lido',
+      {} as ProjectLiquidStakingRisks,
+      { valueUsd: 30_000_000_000, valueEth: 8_000_000 },
+      { yield: yieldChart(today - 40 * UnixTime.DAY), costOfExit: [] },
+    )
+
+    expect(withoutEth.stakedEthShare).toEqual(undefined)
+    expect(stale.stakedEthShare).toEqual(undefined)
+  })
 })
 
 function point(timestamp: number, projects: Record<string, number | null>) {
