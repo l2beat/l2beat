@@ -213,12 +213,14 @@ function BlobPulse({
           </span>
         )}
         {view === undefined ? (
-          <span className="justify-self-end whitespace-nowrap">Now</span>
+          <span className="col-start-3 justify-self-end whitespace-nowrap">
+            Now
+          </span>
         ) : (
           <button
             type="button"
             onClick={() => brush.onView(undefined)}
-            className="justify-self-end whitespace-nowrap font-medium text-primary underline decoration-divider underline-offset-[0.3em] transition-colors hover:decoration-current"
+            className="col-start-3 justify-self-end whitespace-nowrap font-medium text-primary underline decoration-divider underline-offset-[0.3em] transition-colors hover:decoration-current"
           >
             Back to live
           </button>

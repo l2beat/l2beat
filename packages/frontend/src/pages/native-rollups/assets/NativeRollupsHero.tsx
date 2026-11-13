@@ -193,7 +193,6 @@ export function NativeRollupsHeroIllustration({
         className="fill-secondary"
         fontSize="11"
         fontWeight="600"
-        opacity="0.6"
       >
         0
       </text>
@@ -248,7 +247,6 @@ export function NativeRollupsHeroIllustration({
         className="fill-secondary"
         fontSize="11"
         fontWeight="600"
-        opacity="0.6"
       >
         2
       </text>

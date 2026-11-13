@@ -33,7 +33,7 @@ export function StagesPage({ content, lastUpdated, ...props }: Props) {
             .
           </p>
           <main>
-            <Article className="[&>h2:first-child]:mt-8">
+            <Article className="[&>*:last-child]:mb-0 [&>h2:first-child]:mt-[2em]">
               {content.content}
             </Article>
           </main>
