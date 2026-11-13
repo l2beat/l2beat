@@ -15,6 +15,7 @@ import { env } from '~/env'
 import { getPrivacyAdversariesTableValue } from '~/pages/privacy/adversaries/privacyAdversaryUi'
 import { getDb } from '~/server/database'
 import { manifest } from '~/utils/Manifest'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { get7dTvsBreakdown } from '../layer2s/tvs/get7dTvsBreakdown'
 import {
   getPrivacyAnonymitySetSummaries,
@@ -166,7 +167,7 @@ function getPrivacySummaryBaseEntry(
     name: project.name,
     shortName: project.shortName,
     icon: manifest.getUrl(`/icons/${project.slug}.png`),
-    href: `/privacy/projects/${project.slug}`,
+    href: getProjectPath(project.slug),
     description: project.display.description,
     hasTvl: project.tvsConfig !== undefined,
     isUnderReview: !!project.statuses.reviewStatus,

@@ -24,6 +24,7 @@ import { useDevice } from '~/hooks/useDevice'
 import type { RouterOutputs } from '~/trpc/React'
 import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 
 type BadgeDialogData = NonNullable<RouterOutputs['projects']['badgesDialog']>
 
@@ -258,7 +259,7 @@ function BadgesDialogBody({
           {data.projects.map((project) => (
             <CustomLink
               key={project.slug}
-              href={`/layer2s/projects/${project.slug}`}
+              href={getProjectPath(project.slug)}
               underline={false}
               className="flex min-h-32 flex-col items-center justify-center rounded-lg border-1 border-divider p-2 text-center text-primary transition-colors hover:bg-surface-secondary hover:text-primary"
             >

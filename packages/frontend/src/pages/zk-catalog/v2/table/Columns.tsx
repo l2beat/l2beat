@@ -8,6 +8,7 @@ import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
 import { TableLink } from '~/components/table/TableLink'
 import { FilledArrowIcon } from '~/icons/FilledArrow'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import type { ZkCatalogEntry } from '../../../../server/features/zk-catalog/getZkCatalogEntries'
 import { ProjectsUsedInByStatus } from '../components/ProjectsUsedInByStatus'
 import { TechStackCell } from '../components/TechStackCell'
@@ -18,7 +19,7 @@ import { getCreatorLine } from '../components/zkCatalogUi'
 const columnHelper = createColumnHelper<ZkCatalogEntry>()
 
 export const zkCatalogColumns = [
-  ...getCommonProjectColumns(columnHelper, (p) => `/zk-catalog/${p.slug}`),
+  ...getCommonProjectColumns(columnHelper, (p) => getProjectPath(p.slug)),
   columnHelper.accessor((row) => row.name, {
     id: 'name',
     header: 'Name',
@@ -33,7 +34,7 @@ export const zkCatalogColumns = [
       return (
         <div className="flex h-full items-center">
           <ProjectNameInfoTooltip project={project}>
-            <TableLink href={`/zk-catalog/${ctx.row.original.slug}`}>
+            <TableLink href={getProjectPath(ctx.row.original.slug)}>
               <ProjectNameCell project={project} withInfoTooltip />
             </TableLink>
           </ProjectNameInfoTooltip>

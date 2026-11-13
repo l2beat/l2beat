@@ -7,6 +7,7 @@ import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjec
 import { ps } from '~/server/projects'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import { manifest } from '~/utils/Manifest'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { getUnderReviewStatus } from '~/utils/project/underReview'
 import {
   getOssificationStats,
@@ -107,20 +108,20 @@ function getPlacement(
   if (project.scalingInfo) {
     return {
       category: project.scalingInfo.layer === 'layer2' ? 'Layer 2' : 'Layer 3',
-      href: `/layer2s/projects/${project.slug}`,
+      href: getProjectPath(project.slug),
     }
   }
   if (project.privacyInfo) {
     return {
       category: 'Privacy',
-      href: `/privacy/projects/${project.slug}`,
+      href: getProjectPath(project.slug),
     }
   }
   if (project.defiInfo) {
     return {
       category: 'DeFi',
       ...(hasDefiProjectPage(project) && {
-        href: `/defi/projects/${project.slug}`,
+        href: getProjectPath(project.slug),
       }),
     }
   }

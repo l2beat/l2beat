@@ -2,6 +2,7 @@ import { INTEROP_CHAINS } from '@l2beat/config'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 
 export interface BlobPoster {
   id: string
@@ -32,7 +33,7 @@ export async function getBlobPosters(): Promise<BlobPoster[]> {
         name: p.shortName ?? p.name,
         iconUrl: manifest.getUrl(`/icons/${p.slug}.png`),
         color: getColor(p),
-        href: `/layer2s/projects/${p.slug}`,
+        href: getProjectPath(p.slug),
       })),
     ...sovereign
       .filter((p) => p.daTrackingConfig.some((c) => c.type === 'ethereum'))
