@@ -12,6 +12,11 @@ interface Props {
   changeContainerClassName?: string
   changePeriod?: PercentageChangePeriod
   disabledOnTouch?: boolean
+  /**
+   * For a compact table: the home rows' 15px medium value and their signed
+   * change, on one baseline.
+   */
+  compact?: boolean
 }
 
 export function ValueWithPercentageChange({
@@ -23,10 +28,23 @@ export function ValueWithPercentageChange({
   changeContainerClassName,
   changePeriod,
   disabledOnTouch,
+  compact,
 }: Props) {
   return (
-    <div className={cn('flex flex-wrap items-center', containerClassName)}>
-      <span className={cn('mr-1 font-bold md:text-base', className)}>
+    <div
+      className={cn(
+        'flex flex-wrap',
+        compact ? 'items-baseline' : 'items-center',
+        containerClassName,
+      )}
+    >
+      <span
+        className={cn(
+          'mr-1 font-bold md:text-base',
+          compact && 'font-medium md:text-label-value-15',
+          className,
+        )}
+      >
         {children}
       </span>
       {change !== undefined && (
@@ -36,6 +54,7 @@ export function ValueWithPercentageChange({
           textClassName={changeClassName}
           period={changePeriod}
           disabledOnTouch={disabledOnTouch}
+          compact={compact}
         />
       )}
     </div>

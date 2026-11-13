@@ -24,6 +24,7 @@ import { TableLink } from '~/components/table/TableLink'
 import { sentimentToWarningBarColor, WarningBar } from '~/components/WarningBar'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
+import { COMPACT_NO_DATA_CLASS_NAME } from './compactBadgeClassName'
 
 interface TotalCellProps {
   breakdown:
@@ -42,6 +43,12 @@ interface TotalCellProps {
   change?: number
   changePeriod?: PercentageChangePeriod
   tvsWarnings?: WarningWithSentiment[]
+  /**
+   * For a compact table, on one line: the breakdown as a short bar, then the
+   * value and its change as in the home rows. The breakdown's numbers and the
+   * share with additional trust assumptions are in the tooltip.
+   */
+  compact?: boolean
 }
 
 export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
@@ -63,7 +70,9 @@ export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
       <Tooltip>
         <TooltipTrigger className="inline-flex items-center">
           {icon}
-          <NoDataBadge />
+          <NoDataBadge
+            className={props.compact ? COMPACT_NO_DATA_CLASS_NAME : undefined}
+          />
         </TooltipTrigger>
         <TooltipContent className="space-y-2">
           <span>Data is not available for this project.</span>
@@ -85,7 +94,11 @@ export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
   }
 
   if (props.breakdown?.total === undefined) {
-    return <NoDataBadge />
+    return (
+      <NoDataBadge
+        className={props.compact ? COMPACT_NO_DATA_CLASS_NAME : undefined}
+      />
+    )
   }
 
   const totalTvs = props.breakdown.total
@@ -98,25 +111,42 @@ export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
             <div className="flex flex-col items-end max-md:py-1">
               <div className="flex items-center">
                 {icon}
+                {props.compact && (
+                  // The breakdown as a short bar of its own, so the row stays
+                  // one line: the bars line up down the column, as the value
+                  // beside them keeps a fixed width.
+                  <ValueSecuredBreakdown
+                    canonical={props.breakdown.canonical}
+                    external={props.breakdown.external}
+                    native={props.breakdown.native}
+                    className="mr-3 h-1.5 w-12 overflow-hidden rounded-full opacity-100"
+                  />
+                )}
                 <ValueWithPercentageChange
                   change={props.change}
                   changePeriod={props.changePeriod}
+                  compact={props.compact}
+                  className={
+                    props.compact ? 'min-w-[76px] text-right' : undefined
+                  }
                 >
                   {formatDollarValueNumber(totalTvs)}
                 </ValueWithPercentageChange>
               </div>
-              <div className="inline-flex flex-col items-end gap-1">
-                <ValueSecuredBreakdown
-                  canonical={props.breakdown.canonical}
-                  external={props.breakdown.external}
-                  native={props.breakdown.native}
-                />
-                {props.additionalTrustAssumptionsPercentage !== undefined && (
-                  <AdditionalTrustAssumptionsText
-                    percentage={props.additionalTrustAssumptionsPercentage}
+              {!props.compact && (
+                <div className="inline-flex flex-col items-end gap-1">
+                  <ValueSecuredBreakdown
+                    canonical={props.breakdown.canonical}
+                    external={props.breakdown.external}
+                    native={props.breakdown.native}
                   />
-                )}
-              </div>
+                  {props.additionalTrustAssumptionsPercentage !== undefined && (
+                    <AdditionalTrustAssumptionsText
+                      percentage={props.additionalTrustAssumptionsPercentage}
+                    />
+                  )}
+                </div>
+              )}
             </div>
           </SyncStatusWrapper>
         </TableLink>
@@ -127,6 +157,7 @@ export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
           external={props.breakdown.external}
           native={props.breakdown.native}
           change={props.change}
+          compact={props.compact}
           tvsWarnings={tvsWarnings}
           syncWarning={props.syncWarning}
         />

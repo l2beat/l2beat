@@ -42,12 +42,14 @@ export function getBasicTableGroupedHeaderCellClassName(params: {
 }
 
 /**
- * The compact variant trims the row and header heights. Everything else — type
- * scale, insets, the divider — is shared with the default table, so a compact
- * table still reads as the same component.
+ * The compact variant has the home page's row height and column headers: 40px
+ * rows, and quiet 13px headers in sentence case. The last header keeps the
+ * cells' right inset, so it ends over its figures. Its cells keep to one line
+ * (see the cells' `compact` props).
  */
-const COMPACT_HEADER_CELL = 'h-8'
-const COMPACT_BODY_CELL = 'md:h-12'
+const COMPACT_HEADER_CELL =
+  'h-8 font-normal text-label-value-13 text-secondary normal-case last:pr-3'
+const COMPACT_BODY_CELL = 'md:h-10'
 
 export function getBasicTableHeaderCellClassName(params: {
   groupParams: BasicTableGroupParams | undefined

@@ -27,6 +27,11 @@ interface Props {
   textClassName?: string
   period?: PercentageChangePeriod
   disabledOnTouch?: boolean
+  /**
+   * The home page's change (see `HomeChange`): signed, 13px, no arrow. Still
+   * in a fixed box, so the values beside it line up down a column.
+   */
+  compact?: boolean
 }
 
 export function PercentChange({
@@ -35,11 +40,32 @@ export function PercentChange({
   textClassName,
   period,
   disabledOnTouch,
+  compact,
 }: Props) {
   const isMore = value > 0
   const isLess = value < 0
 
-  const content = (
+  const content = compact ? (
+    <span
+      className={cn(
+        'inline-block w-[52px] whitespace-nowrap text-right font-medium text-label-value-13 tabular-nums',
+        isMore && 'text-positive',
+        isLess && 'text-negative',
+        !isMore && !isLess && 'text-secondary',
+        className,
+        textClassName,
+      )}
+    >
+      {Number.isNaN(value) ? (
+        EM_DASH
+      ) : (
+        <>
+          {isMore ? '+' : isLess ? '−' : ''}
+          {formatPercent(Math.abs(value))}
+        </>
+      )}
+    </span>
+  ) : (
     <span
       className={cn(
         isMore && 'text-positive',

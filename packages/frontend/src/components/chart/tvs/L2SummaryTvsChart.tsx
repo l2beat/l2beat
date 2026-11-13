@@ -2,6 +2,7 @@ import { formatCurrency } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import compact from 'lodash/compact'
 import { useMemo } from 'react'
+import { L2_CATEGORY_COLORS } from '~/components/chart/l2CategoryColors'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import {
@@ -14,11 +15,9 @@ import {
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import { tinted } from '~/components/core/chart/tint'
+import { trimZeroDecimals } from '~/components/core/chart/utils/yAxisTicks'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { Skeleton } from '~/components/core/Skeleton'
-import { CustomLink } from '~/components/link/CustomLink'
-import { PercentChange } from '~/components/PercentChange'
-import { ChevronIcon } from '~/icons/Chevron'
+import { L2SummaryChartHeader } from '~/pages/layer2s/summary/components/L2SummaryChartHeader'
 import { useTRPC } from '~/trpc/React'
 import { formatSnapshotTimestamp } from '~/utils/dates'
 import {
@@ -27,26 +26,25 @@ import {
   rangeToResolution,
 } from '~/utils/range/range'
 import type { ChartUnit } from '../types'
-import { tvsRangeToReadable } from './tvsRangeToReadable'
 
 const chartMeta = {
   rollups: {
     label: 'Rollups',
-    color: 'var(--chart-pink)',
+    color: L2_CATEGORY_COLORS.rollups,
     indicatorType: {
       shape: 'line',
     },
   },
   validiumsAndOptimiums: {
     label: 'Validiums & Optimiums',
-    color: 'var(--chart-cyan)',
+    color: L2_CATEGORY_COLORS.validiumsAndOptimiums,
     indicatorType: {
       shape: 'line',
     },
   },
   others: {
     label: 'Others',
-    color: 'var(--chart-yellow)',
+    color: L2_CATEGORY_COLORS.others,
     indicatorType: {
       shape: 'line',
     },
@@ -56,9 +54,12 @@ const chartMeta = {
 export function L2SummaryTvsChart({
   unit,
   range,
+  period,
 }: {
   unit: ChartUnit
   range: ChartRange
+  /** The range as written after the change, e.g. "1y". */
+  period: string
 }) {
   const trpc = useTRPC()
   const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
@@ -76,11 +77,16 @@ export function L2SummaryTvsChart({
 
   return (
     <div className="flex flex-col gap-4">
-      <Header
-        total={stats?.total}
+      <L2SummaryChartHeader
+        title="Value secured"
+        link={{ href: '/layer2s/tvs', label: 'Details' }}
+        value={
+          stats?.total !== undefined
+            ? formatCurrency(stats.total, unit)
+            : undefined
+        }
         change={stats?.change}
-        unit={unit}
-        range={range}
+        period={period}
       />
       <ChartContainer
         isPlaceholderData={false}
@@ -113,8 +119,10 @@ export function L2SummaryTvsChart({
           ]}
           yAxis={{
             domain: 'autoIfSingle',
-            format: (value: number) => formatCurrency(value, unit),
+            format: (value: number) =>
+              trimZeroDecimals(formatCurrency(value, unit)),
           }}
+          yLabelHalo
           syncedUntil={data?.syncedUntil}
           renderTooltip={(row, keys) => (
             <CustomTooltip
@@ -145,7 +153,7 @@ function CustomTooltip({
   const total = sumEntries(payload)
   return (
     <ChartTooltipWrapper>
-      <div className="flex w-[180px]! flex-col [@media(min-width:600px)]:w-60!">
+      <div className="flex w-[180px]! flex-col [@media(min-width:600px)]:w-64!">
         <div className="font-medium text-label-value-14 text-secondary">
           {formatSnapshotTimestamp(label, resolution)}
         </div>
@@ -190,60 +198,6 @@ function toChartData(
       validiumsAndOptimiums,
       others,
     }),
-  )
-}
-
-interface Props {
-  total: number | undefined
-  change: number | undefined
-  unit: ChartUnit
-  range: ChartRange
-}
-
-function Header({ total, unit, change, range }: Props) {
-  return (
-    <div className="flex items-start justify-between">
-      <div>
-        <div className="flex items-center gap-3">
-          <span className="font-bold text-xl">Value Secured</span>
-          <a
-            className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-link-stroke px-3 py-2 font-bold text-[13px] text-link leading-none max-md:hidden"
-            href="/layer2s/tvs"
-          >
-            View details
-            <ChevronIcon className="-rotate-90 size-2.5 fill-current" />
-          </a>
-        </div>
-        <CustomLink
-          href="/layer2s/tvs"
-          className="flex items-center gap-1 text-xs leading-[1.15] md:hidden"
-          underline={false}
-        >
-          Details
-          <ChevronIcon className="-rotate-90 size-2 fill-current" />
-        </CustomLink>
-      </div>
-      <div className="flex flex-col items-end">
-        <div className="whitespace-nowrap text-right font-bold text-xl">
-          {total === undefined ? (
-            <Skeleton className="my-[5px] h-5 w-32" />
-          ) : (
-            formatCurrency(total, unit)
-          )}
-        </div>
-        {change === undefined ? (
-          <Skeleton className="my-0.5 h-4 w-40" />
-        ) : (
-          <p className="whitespace-nowrap text-right text-xs">
-            <PercentChange value={change} />
-            <span className="text-secondary">
-              {' '}
-              / {tvsRangeToReadable(range)}
-            </span>
-          </p>
-        )}
-      </div>
-    </div>
   )
 }
 

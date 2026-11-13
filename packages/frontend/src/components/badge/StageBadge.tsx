@@ -50,6 +50,37 @@ export function StageBadge({
   )
 }
 
+/**
+ * The badge at the size of row text, in sentence case, for the home page's
+ * rows and compact tables: it stays calm next to the row's figures.
+ */
+export function SmallStageBadge({
+  stage,
+  className,
+}: {
+  stage: Stage | 'UnderReview' | 'NotApplicable'
+  className?: string
+}) {
+  return (
+    <span
+      className={cn(
+        'inline-flex h-5 items-center whitespace-nowrap rounded-sm px-1.5 font-medium text-label-value-12',
+        getStageBadgeClassName(stage),
+        className,
+      )}
+    >
+      {SMALL_STAGE_LABEL[stage] ?? stage}
+    </span>
+  )
+}
+
+const SMALL_STAGE_LABEL: Partial<
+  Record<Stage | 'UnderReview' | 'NotApplicable', string>
+> = {
+  UnderReview: 'In review',
+  NotApplicable: 'n/a',
+}
+
 export function getStageBadgeClassName(
   stage: Stage | 'UnderReview' | 'NotApplicable',
 ): string {

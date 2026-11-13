@@ -12,6 +12,8 @@ interface ProofSystemCellProps {
   stacks?: ProjectScalingStack[]
   hideType?: boolean
   permissioned?: boolean
+  /** For a compact table: only the type; the project page names the system. */
+  compact?: boolean
 }
 
 export function ProofSystemCell({
@@ -20,6 +22,7 @@ export function ProofSystemCell({
   stacks,
   hideType,
   permissioned,
+  compact,
 }: ProofSystemCellProps) {
   const secondLine =
     permissioned !== undefined
@@ -41,14 +44,22 @@ export function ProofSystemCell({
       }
     >
       <TwoRowCell>
-        <TwoRowCell.First>
+        <TwoRowCell.First
+          className={compact ? 'md:text-label-value-15' : undefined}
+        >
           {hideType && proofSystem?.name ? (
-            <TypeInfo stacks={stacks}>{proofSystem.name}</TypeInfo>
+            <TypeInfo stacks={stacks} compact={compact}>
+              {proofSystem.name}
+            </TypeInfo>
           ) : (
-            <TypeInfo stacks={stacks}>{proofSystem?.type ?? 'None'}</TypeInfo>
+            <TypeInfo stacks={stacks} compact={compact}>
+              {proofSystem?.type ?? 'None'}
+            </TypeInfo>
           )}
         </TwoRowCell.First>
-        {secondLine && <TwoRowCell.Second>{secondLine}</TwoRowCell.Second>}
+        {secondLine && !compact && (
+          <TwoRowCell.Second>{secondLine}</TwoRowCell.Second>
+        )}
       </TwoRowCell>
     </TableLink>
   )

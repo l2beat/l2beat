@@ -66,13 +66,19 @@ export function L2SummaryTables(props: Props) {
           </DirectoryTabsTrigger>
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="rollups">
+          <DirectoryTabsContent
+            value="rollups"
+            className={TABLE_PANEL_CLASS_NAME}
+          >
             <RollupsInfo />
             <L2SummaryRollupsTable entries={entries.rollups} />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="validiumsAndOptimiums">
+          <DirectoryTabsContent
+            value="validiumsAndOptimiums"
+            className={TABLE_PANEL_CLASS_NAME}
+          >
             <ValidiumsAndOptimiumsInfo />
             <L2SummaryValidiumsAndOptimiumsTable
               entries={entries.validiumsAndOptimiums}
@@ -80,7 +86,10 @@ export function L2SummaryTables(props: Props) {
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="others">
+          <DirectoryTabsContent
+            value="others"
+            className={TABLE_PANEL_CLASS_NAME}
+          >
             <OthersInfo />
             <L2SummaryOthersTable entries={entries.others} />
           </DirectoryTabsContent>
@@ -89,3 +98,9 @@ export function L2SummaryTables(props: Props) {
     </>
   )
 }
+
+/**
+ * The compact table already ends on its scrollbar's 12px, so the panel's
+ * bottom matches the cards' 24px with less of its own.
+ */
+const TABLE_PANEL_CLASS_NAME = 'md:pb-3'

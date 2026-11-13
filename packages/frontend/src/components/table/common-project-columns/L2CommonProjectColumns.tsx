@@ -14,9 +14,10 @@ export function getL2CommonProjectColumns<T extends CommonProjectEntry>(
   opts?: CommonProjectColumnsOptions,
 ) {
   return [
-    ...getCommonProjectColumns(columnHelper, getHref),
+    ...getCommonProjectColumns(columnHelper, getHref, opts),
     columnHelper.accessor((row) => row.name, {
       id: 'name',
+      header: 'Name',
       cell: (ctx) => (
         <div className="flex h-full items-center">
           <ProjectNameInfoTooltip project={ctx.row.original}>
@@ -25,6 +26,7 @@ export function getL2CommonProjectColumns<T extends CommonProjectEntry>(
                 project={ctx.row.original}
                 withInfoTooltip
                 ignoreUnderReviewIcon={opts?.ignoreUnderReviewIcon}
+                compact={opts?.compact}
               />
             </TableLink>
           </ProjectNameInfoTooltip>

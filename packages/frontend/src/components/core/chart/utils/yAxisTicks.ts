@@ -39,6 +39,22 @@ export interface YAxisTicks {
 const TICK_COUNT = 3
 
 /**
+ * Both axes' labels, so the dates under a chart match the values on it. Small
+ * enough for six dates across a phone.
+ */
+export const AXIS_LABEL_FONT_SIZE = 12
+
+/**
+ * "$25B" for "$25.00B", "2.5K" for "2.50K": the trailing zeros of a tick say
+ * nothing. Only the last number in the label is trimmed.
+ */
+export function trimZeroDecimals(label: string) {
+  return label.replace(/\.(\d*?)0+(?=[^0-9]*$)/, (_, kept: string) =>
+    kept ? `.${kept}` : '',
+  )
+}
+
+/**
  * The axis' domain and ticks for values spanning `extent`. A fixed domain
  * keeps its bounds; the others grow to nice ticks. No values, no ticks.
  */
@@ -95,7 +111,7 @@ export function fitTicks(
   const scale = (axis.scale ?? scaleLinear)()
     .domain(y.domain)
     .range([plotHeight, 0])
-  const minGap = (axis.fontSize ?? 15) * 2
+  const minGap = (axis.fontSize ?? AXIS_LABEL_FONT_SIZE) * 2
   const inside = y.ticks.filter((t) => t >= lo && t <= hi)
   const kept: number[] = []
   for (const tick of [...inside].reverse()) {

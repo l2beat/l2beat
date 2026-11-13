@@ -8,6 +8,7 @@ import {
 } from '@l2beat/shared-pure'
 import { scaleSymlog } from 'd3-scale'
 import { useMemo } from 'react'
+import { L2_CATEGORY_COLORS } from '~/components/chart/l2CategoryColors'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type {
   ChartMeta,
@@ -220,11 +221,11 @@ export function ActivityCustomTooltip<
 function typeToColor(type: ActivityChartType) {
   switch (type) {
     case 'Rollups':
-      return 'var(--chart-pink)'
+      return L2_CATEGORY_COLORS.rollups
     case 'ValidiumsAndOptimiums':
-      return 'var(--chart-cyan)'
+      return L2_CATEGORY_COLORS.validiumsAndOptimiums
     case 'Others':
-      return 'var(--chart-yellow)'
+      return L2_CATEGORY_COLORS.others
     default:
       assertUnreachable(type)
   }

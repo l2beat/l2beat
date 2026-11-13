@@ -6,6 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import { scaleSymlog } from 'd3-scale'
 import { useMemo } from 'react'
+import { L2_CATEGORY_COLORS } from '~/components/chart/l2CategoryColors'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import {
@@ -16,6 +17,7 @@ import {
 } from '~/components/core/chart/ChartTooltip'
 import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import { tinted } from '~/components/core/chart/tint'
+import { trimZeroDecimals } from '~/components/core/chart/utils/yAxisTicks'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
   type ActivityMetric,
@@ -28,21 +30,21 @@ import type { ChartScale } from '../types'
 export const RECATEGORISED_ACTIVITY_CHART_META = {
   rollups: {
     label: 'Rollups',
-    color: 'var(--chart-pink)',
+    color: L2_CATEGORY_COLORS.rollups,
     indicatorType: {
       shape: 'line',
     },
   },
   validiumsAndOptimiums: {
     label: 'Validiums & Optimiums',
-    color: 'var(--chart-cyan)',
+    color: L2_CATEGORY_COLORS.validiumsAndOptimiums,
     indicatorType: {
       shape: 'line',
     },
   },
   others: {
     label: 'Others',
-    color: 'var(--chart-yellow)',
+    color: L2_CATEGORY_COLORS.others,
     indicatorType: {
       shape: 'line',
     },
@@ -69,6 +71,16 @@ interface Props {
     onItemClick: (dataKey: string) => void
   }
   scale?: ChartScale
+  /**
+   * The summary page's compact chart: unit-less ticks, as its header names
+   * the unit, with a halo behind them.
+   */
+  compact?: boolean
+  /**
+   * Days each row sums, ending with its own, where the rows are totals over
+   * a trailing window rather than single days.
+   */
+  bucketDays?: number
 }
 
 export function L2RecategorizedActivityChart({
@@ -77,12 +89,15 @@ export function L2RecategorizedActivityChart({
   isPlaceholderData,
   milestones,
   scale,
+  compact,
+  bucketDays = 1,
   chartMeta,
   interactiveLegend: { dataKeys, onItemClick },
 }: Props) {
   const { metric } = useActivityMetricContext()
 
-  const resolutionSeconds = UnixTime.periodToSeconds(data?.resolution ?? 'day')
+  const rowSeconds = UnixTime.periodToSeconds(data?.resolution ?? 'day')
+  const resolutionSeconds = rowSeconds * bucketDays
   const chartData = useMemo(() => {
     const getDataPoint = (uops: number | null, tx: number | null) => {
       const count = metric === 'uops' ? uops : tx
@@ -141,8 +156,14 @@ export function L2RecategorizedActivityChart({
         yAxis={{
           scale: scale === 'symlog' ? scaleSymlog : undefined,
           domain: 'autoIfSingle',
-          unit: metric === 'uops' ? ' UOPS' : ' TPS',
+          ...(compact
+            ? {
+                format: (value: number) =>
+                  trimZeroDecimals(formatActivityCount(value)),
+              }
+            : { unit: metric === 'uops' ? ' UOPS' : ' TPS' }),
         }}
+        yLabelHalo={compact}
         syncedUntil={data?.syncedUntil}
         renderTooltip={(row, keys) => (
           <CustomTooltip
@@ -150,6 +171,7 @@ export function L2RecategorizedActivityChart({
             visibleKeys={keys}
             syncedUntil={data?.syncedUntil}
             resolutionSeconds={resolutionSeconds}
+            rowSeconds={rowSeconds}
             metric={metric}
           />
         )}
@@ -163,12 +185,14 @@ function CustomTooltip({
   visibleKeys,
   syncedUntil,
   resolutionSeconds,
+  rowSeconds,
   metric,
 }: {
   row: { timestamp: number } & Record<SeriesKey, number | null>
   visibleKeys: SeriesKey[]
   syncedUntil: number | undefined
   resolutionSeconds: number
+  rowSeconds: number
   metric: ActivityMetric
 }) {
   const label = row.timestamp
@@ -180,7 +204,11 @@ function CustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
-          {formatRange(label, label + resolutionSeconds)}
+          {/* The window the row sums, ending with the row's own period. */}
+          {formatRange(
+            label + rowSeconds - resolutionSeconds,
+            label + rowSeconds,
+          )}
         </div>
         <span className="text-heading-16">Average {metric.toUpperCase()}</span>
         <HorizontalSeparator className="mt-1.5" />

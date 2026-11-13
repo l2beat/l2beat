@@ -49,6 +49,12 @@ interface ProjectCellProps {
   className?: string
   withInfoTooltip?: boolean
   ignoreUnderReviewIcon?: boolean
+  /**
+   * For a compact table: the name at the home rows' size and weight, on one
+   * line. Its second line follows it in grey; an appchain's purposes are left
+   * out.
+   */
+  compact?: boolean
 }
 
 function redWarningDetailHref(project: ProjectCellProject): string | undefined {
@@ -285,20 +291,37 @@ function CellBottomContent({ project }: { project: ProjectCellProject }) {
   )
 }
 
+function InlineSecondLine({ project }: { project: ProjectCellProject }) {
+  if (!project.nameSecondLine || project.isLayer3) return null
+  return (
+    <span className="ml-1.5 font-normal text-label-value-13 text-secondary">
+      {project.nameSecondLine}
+    </span>
+  )
+}
+
 function DesktopProjectNameContent({
   project,
   ignoreUnderReviewIcon,
+  compact,
 }: {
   project: ProjectCellProject
   ignoreUnderReviewIcon?: boolean
+  compact?: boolean
 }) {
   const projectName = project.shortName ?? project.name
 
   return (
     <div className="max-md:hidden">
       <div className="flex items-center">
-        <PrimaryValueCell className="font-bold leading-none!">
+        <PrimaryValueCell
+          className={cn(
+            compact ? 'font-medium md:text-label-value-15' : 'font-bold',
+            'leading-none!',
+          )}
+        >
           {projectName}
+          {compact && <InlineSecondLine project={project} />}
         </PrimaryValueCell>
         <DesktopStatusIcons
           project={project}
@@ -306,7 +329,7 @@ function DesktopProjectNameContent({
           className="ml-1.5"
         />
       </div>
-      <CellBottomContent project={project} />
+      {!compact && <CellBottomContent project={project} />}
     </div>
   )
 }
@@ -314,9 +337,11 @@ function DesktopProjectNameContent({
 function MobileProjectNameContent({
   project,
   ignoreUnderReviewIcon,
+  compact,
 }: {
   project: ProjectCellProject
   ignoreUnderReviewIcon?: boolean
+  compact?: boolean
 }) {
   const projectName = project.shortName ?? project.name
 
@@ -324,8 +349,14 @@ function MobileProjectNameContent({
     <div className="md:hidden">
       <div className="min-w-0">
         <div className="flex items-center gap-1.5">
-          <PrimaryValueCell className="font-bold leading-none!">
+          <PrimaryValueCell
+            className={cn(
+              compact ? 'font-medium md:text-label-value-15' : 'font-bold',
+              'leading-none!',
+            )}
+          >
             {projectName}
+            {compact && <InlineSecondLine project={project} />}
           </PrimaryValueCell>
           <ProjectNameMobileStatusIcons
             className="shrink-0"
@@ -333,7 +364,7 @@ function MobileProjectNameContent({
             ignoreUnderReviewIcon={ignoreUnderReviewIcon}
           />
         </div>
-        <CellBottomContent project={project} />
+        {!compact && <CellBottomContent project={project} />}
       </div>
     </div>
   )
@@ -344,6 +375,7 @@ export function ProjectNameCell({
   className,
   withInfoTooltip,
   ignoreUnderReviewIcon,
+  compact,
 }: ProjectCellProps) {
   if (!withInfoTooltip) {
     return (
@@ -351,10 +383,12 @@ export function ProjectNameCell({
         <MobileProjectNameContent
           project={project}
           ignoreUnderReviewIcon={ignoreUnderReviewIcon}
+          compact={compact}
         />
         <DesktopProjectNameContent
           project={project}
           ignoreUnderReviewIcon={ignoreUnderReviewIcon}
+          compact={compact}
         />
       </div>
     )
@@ -365,10 +399,12 @@ export function ProjectNameCell({
       <DesktopProjectNameContent
         project={project}
         ignoreUnderReviewIcon={ignoreUnderReviewIcon}
+        compact={compact}
       />
       <MobileProjectNameContent
         project={project}
         ignoreUnderReviewIcon={ignoreUnderReviewIcon}
+        compact={compact}
       />
     </div>
   )

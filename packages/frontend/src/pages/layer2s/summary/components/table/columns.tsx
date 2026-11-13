@@ -19,6 +19,10 @@ import { withChangeSort } from '~/components/table/sorting/changeSortColumn'
 import { sortStages } from '~/components/table/sorting/sortStages'
 import { TableLink } from '~/components/table/TableLink'
 import type { L2SummaryTableRow } from '../../utils/toTableRows'
+import {
+  COMPACT_NO_DATA_CLASS_NAME,
+  COMPACT_REASON_BADGE_CLASS_NAME,
+} from './compactBadgeClassName'
 import { TotalCellWithTvsBreakdown } from './TotalCellWithTvsBreakdown'
 
 const columnHelper = createColumnHelper<L2SummaryTableRow>()
@@ -32,6 +36,7 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
     ...getL2CommonProjectColumns(
       columnHelper,
       (row) => `/layer2s/projects/${row.slug}`,
+      { compact: true },
     ),
     columnHelper.display({
       header: 'Risks',
@@ -41,6 +46,8 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
           href={`/layer2s/risk?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
           values={ctx.row.original.risks}
           isUnderReview={ctx.row.original.statuses?.underReview === 'config'}
+          // The home rankings' size, within the 40px rows.
+          iconClassName="md:size-6"
         />
       ),
       meta: {
@@ -49,7 +56,7 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
     }),
     columnHelper.accessor('proofSystem', {
       header: 'Proof system',
-      cell: (ctx) => <ProofSystemCell {...ctx.row.original} />,
+      cell: (ctx) => <ProofSystemCell {...ctx.row.original} compact />,
       meta: {
         tooltip:
           'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront)',
@@ -67,6 +74,7 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
       },
       {
         id: 'stage',
+        header: 'Stage',
         cell: (ctx) => (
           <StageCell
             href={`/layer2s/projects/${ctx.row.original.slug}#stage`}
@@ -74,6 +82,7 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
             isAppchain={ctx.row.original.capability === 'appchain'}
             emergencyWarning={ctx.row.original.statuses?.emergencyWarning}
             walkAway={ctx.row.original.walkAway}
+            compact
           />
         ),
         sortingFn: sortStages,
@@ -111,6 +120,7 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
                 change={value.change?.total}
                 changePeriod={value.changePeriod}
                 syncWarning={value.syncWarning}
+                compact
               />
             )
           },
@@ -135,7 +145,7 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
         cell: (ctx) => {
           const data = ctx.row.original.activity
           if (!data) {
-            return <NoDataBadge />
+            return <NoDataBadge className={COMPACT_NO_DATA_CLASS_NAME} />
           }
 
           return (
@@ -147,6 +157,7 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
                   change={data?.change}
                   changePeriod={data.changePeriod}
                   disabledOnTouch
+                  compact
                 >
                   {formatActivityCount(data.pastDayUops)}
                 </ValueWithPercentageChange>
@@ -175,11 +186,11 @@ export function getL2SummaryValidiumAndOptimiumsColumns(
   return [
     ...getL2SummaryColumns(opts).slice(0, 6),
     columnHelper.display({
-      header: 'DA Layer',
+      header: 'DA layer',
       cell: (ctx) => {
         const latestValue = ctx.row.original.dataAvailability?.[0]
         if (!latestValue) {
-          return <NoDataBadge />
+          return <NoDataBadge className={COMPACT_NO_DATA_CLASS_NAME} />
         }
         return (
           <TableValueCell
@@ -191,6 +202,8 @@ export function getL2SummaryValidiumAndOptimiumsColumns(
                   : latestValue.bridge.value,
             }}
             href={`/layer2s/risk/data-availability?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
+            // The bridge stays in view: "No bridge" is a risk.
+            compact
           />
         )
       },
@@ -206,6 +219,7 @@ export function getL2SummaryValidiumAndOptimiumsColumns(
                     da.bridge.value === 'None' ? 'No bridge' : da.bridge.value,
                 }}
                 href={`/layer2s/risk/data-availability?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
+                compact
               />
             )) ?? []
           )
@@ -225,14 +239,17 @@ export function getL2SummaryOthersColumns(opts?: L2SummaryColumnsOpts) {
       cell: (ctx) => {
         const reasons = ctx.row.original.reasonsForBeingOther
         if (!reasons) {
-          return <NoDataBadge />
+          return <NoDataBadge className={COMPACT_NO_DATA_CLASS_NAME} />
         }
         return (
           <div className="flex gap-1">
             {reasons.map((reason) => (
               <Tooltip key={reason.label}>
                 <TooltipTrigger>
-                  <Badge type="error" className="uppercase">
+                  <Badge
+                    type="error"
+                    className={COMPACT_REASON_BADGE_CLASS_NAME}
+                  >
                     {reason.label}
                   </Badge>
                 </TooltipTrigger>

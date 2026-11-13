@@ -1,6 +1,7 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { getL2StageTvsShares } from '~/server/features/layer2s/summary/getL2StageTvsShares'
 import { getL2SummaryEntries } from '~/server/features/layer2s/summary/getL2SummaryEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -9,6 +10,7 @@ import type { Manifest } from '~/utils/Manifest'
 import { getBadgeLookup } from '~/utils/project/getBadgeWithParams'
 import { optionToRange } from '~/utils/range/range'
 import {
+  getSummaryActivityFetchRange,
   SCALING_SUMMARY_ACTIVITY_CHART_RANGE_ARGS,
   SCALING_SUMMARY_TVS_CHART_RANGE_ARGS,
 } from './l2SummaryConstants'
@@ -70,7 +72,7 @@ async function getCachedData() {
     ),
     helpers.queryClient.prefetchQuery(
       helpers.trpc.activity.recategorisedChart.queryOptions({
-        range: activityChartRange,
+        range: getSummaryActivityFetchRange(activityChartRange),
         filter: { type: 'all' },
       }),
     ),
@@ -83,8 +85,14 @@ async function getCachedData() {
     ),
   ])
 
+  const stageShares = await getL2StageTvsShares(
+    [...entries.rollups, ...entries.validiumsAndOptimiums, ...entries.others],
+    tvsChartRange,
+  )
+
   return {
     entries,
+    stageShares,
     queryState: helpers.dehydrate(),
   }
 }

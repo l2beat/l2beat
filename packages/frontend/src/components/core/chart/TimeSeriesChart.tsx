@@ -28,6 +28,7 @@ import {
 } from './utils/plotSeries'
 import { getTimeTicks } from './utils/xAxisTicks'
 import {
+  AXIS_LABEL_FONT_SIZE,
   fitTicks,
   getYAxisTicks,
   type YAxisTicks,
@@ -147,23 +148,38 @@ interface Props<T, K extends string> {
   highlight?: K
   /** Radius of the hover dots; 4 px by default. */
   activeDotRadius?: number
+  /** A halo behind the y labels, for series drawn over tinted fills. */
+  yLabelHalo?: boolean
   renderTooltip: (row: T, visibleKeys: K[]) => ReactNode
 }
 
 const SERIES_STROKE_WIDTH = 1.75
+const AXIS_LABEL_FONT_WEIGHT = 500
 const FADED_STROKE_OPACITY = 0.2
 const ISOLATED_DOT_RADIUS = 3
 const Y_SCALE = 'y'
 const RIGHT_SCALE = 'right-y'
 
 const chartClassNames = cn(
-  // The axis options have no per-axis label color, so the x labels are
-  // matched by their scene keys, which are not a documented API.
-  '[&_text[data-ts-key^="x-tick-label"]]:fill-secondary',
   '[&_svg]:outline-none',
   // Only `highlight` changes a line's opacity.
   '[&_path]:transition-[stroke-opacity] [&_path]:duration-200 motion-reduce:[&_path]:transition-none',
 )
+
+/**
+ * The y labels sit inside the plot: a halo in the card's colour keeps a series
+ * from running through them. Only for tinted fills: on a solid one it would
+ * box the labels. Matched by scene keys, which are not a documented API.
+ */
+const Y_LABEL_HALO_CLASS =
+  '[&_text[data-ts-key*="y-tick-label"]]:[paint-order:stroke] [&_text[data-ts-key*="y-tick-label"]]:[stroke-linejoin:round] [&_text[data-ts-key*="y-tick-label"]]:[stroke-width:3px] [&_text[data-ts-key*="y-tick-label"]]:[stroke:var(--surface-primary)]'
+
+/**
+ * Without the halo, a y label can sit on a solid fill. In the dark the
+ * secondary grey is too weak there, so those labels stay brighter.
+ */
+const Y_LABEL_ON_FILL_CLASS =
+  'dark:[&_text[data-ts-key*="y-tick-label"]]:fill-[color-mix(in_oklab,var(--primary)_70%,transparent)]'
 
 const CURVES: Record<
   NonNullable<ChartSeries<string>['curve']>,
@@ -190,6 +206,7 @@ export function TimeSeriesChart<T, K extends string>({
   syncId,
   highlight,
   activeDotRadius,
+  yLabelHalo,
   renderTooltip,
 }: Props<T, K>) {
   const { meta, interactiveLegend } = useChart()
@@ -531,7 +548,11 @@ export function TimeSeriesChart<T, K extends string>({
                   size: 0,
                   format: xTicks.format,
                 },
-                tickLabels: { fontSize: 10, fontWeight: 500, opacity: 1 },
+                tickLabels: {
+                  fontSize: AXIS_LABEL_FONT_SIZE,
+                  fontWeight: AXIS_LABEL_FONT_WEIGHT,
+                  opacity: 1,
+                },
               },
             },
             [Y_SCALE]: yScaleOptions(
@@ -555,8 +576,8 @@ export function TimeSeriesChart<T, K extends string>({
                 }
               : {}),
           },
-          // The theme's muted color paints all tick labels.
-          theme: { muted: 'var(--chart-tick-label)' },
+          // The theme's muted color paints all tick labels, on both axes.
+          theme: { muted: 'var(--secondary)' },
           margin: chartMargin,
           // Not clipped, so lines at the domain's ends keep their full width;
           // every domain contains its data.
@@ -606,7 +627,10 @@ export function TimeSeriesChart<T, K extends string>({
       <Chart
         definition={definition}
         ariaLabel={ariaLabel}
-        className={chartClassNames}
+        className={cn(
+          chartClassNames,
+          yLabelHalo ? Y_LABEL_HALO_CLASS : Y_LABEL_ON_FILL_CLASS,
+        )}
         // Overrides the adapter's own size, so the chart fills the box.
         style={{
           position: 'absolute',
@@ -689,8 +713,8 @@ function yScaleOptions(
         anchor: side === 'left' ? ('start' as const) : ('end' as const),
         dx: side === 'left' ? 8 : -8,
         dy: axis.dy ?? -10,
-        fontSize: axis.fontSize ?? 15,
-        fontWeight: axis.fontWeight,
+        fontSize: axis.fontSize ?? AXIS_LABEL_FONT_SIZE,
+        fontWeight: axis.fontWeight ?? AXIS_LABEL_FONT_WEIGHT,
         opacity: 1,
         thin: false,
       },

@@ -1,6 +1,7 @@
 import type { ProjectScalingStage, Stage } from '@l2beat/config'
 import {
   getStageTextClassname,
+  SmallStageBadge,
   StageBadge,
 } from '~/components/badge/StageBadge'
 import { Callout } from '~/components/Callout'
@@ -22,12 +23,15 @@ interface StageTooltipProps {
   isAppchain: boolean
   emergencyWarning?: string
   walkAway?: 'passed' | 'not-passed'
+  /** The small badge of a compact table's row, so the two match. */
+  compact?: boolean
 }
 
 export function StageTooltip({
   stageConfig,
   isAppchain,
   emergencyWarning,
+  compact,
   walkAway,
 }: StageTooltipProps) {
   if (stageConfig.stage === 'NotApplicable') return null
@@ -43,13 +47,29 @@ export function StageTooltip({
       <div
         className={cn('flex gap-2', isAppchain ? 'flex-col' : 'items-baseline')}
       >
-        <StageBadge
-          stage={stageConfig.stage}
-          isAppchain={isAppchain}
-          className="font-medium"
-          appchainClassName="text-sm md:text-sm font-bold"
-          inline
-        />
+        {compact ? (
+          <span className="flex items-center gap-1.5">
+            <SmallStageBadge stage={stageConfig.stage} />
+            {isAppchain && (
+              <span
+                className={cn(
+                  'font-bold text-sm',
+                  getStageTextClassname(stageConfig.stage),
+                )}
+              >
+                Appchain
+              </span>
+            )}
+          </span>
+        ) : (
+          <StageBadge
+            stage={stageConfig.stage}
+            isAppchain={isAppchain}
+            className="font-medium"
+            appchainClassName="text-sm md:text-sm font-bold"
+            inline
+          />
+        )}
         <div className="inline-block text-heading-16">
           {getStageName(stageConfig.stage)}
         </div>

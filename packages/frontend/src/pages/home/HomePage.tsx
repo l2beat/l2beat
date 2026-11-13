@@ -1,6 +1,6 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
-import { type ComponentProps, useEffect } from 'react'
+import type { ComponentProps } from 'react'
 import { TooltipsInPortal } from '~/components/core/tooltip/Tooltip'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
@@ -22,6 +22,7 @@ import { HomeInteropSection } from './components/interop/HomeInteropSection'
 import type { HomeRecentProject, HomeTopL2Project } from './getHomeData'
 import type { HomeProjectCounts } from './getHomeProjectCounts'
 import type { HomeResearchItem } from './getHomeResearch'
+import { useHomeTheme } from './useHomeTheme'
 
 interface Props extends AppLayoutProps {
   queryState: DehydratedState
@@ -51,12 +52,7 @@ export function HomePage({
   research,
   ...props
 }: Props) {
-  // See .home-theme in globals.css: the wrapper below themes the first paint,
-  // <html> themes what portals to <body>.
-  useEffect(() => {
-    document.documentElement.classList.add('home-theme')
-    return () => document.documentElement.classList.remove('home-theme')
-  }, [])
+  useHomeTheme()
   const hasCrops = cropsProjects.length > 0
 
   return (

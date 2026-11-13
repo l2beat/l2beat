@@ -7,27 +7,28 @@ interface Props {
   className?: string
 }
 
+const TABS = [
+  { value: 'tvs', label: 'Value secured' },
+  { value: 'activity', label: 'Activity' },
+] as const
+
+/** Below lg, the summary's two charts in one card, switched by name. */
 export function ChartTabs({ charts, className }: Props) {
   return (
     <PrimaryCard className={cn(className, 'pb-1')}>
       <Tabs.Root defaultValue="tvs">
         <Tabs.Content value="tvs">{charts[0]}</Tabs.Content>
         <Tabs.Content value="activity">{charts[1]}</Tabs.Content>
-        <Tabs.List className="flex gap-1.5">
-          <Tabs.Trigger
-            value="tvs"
-            aria-label="Value secured chart"
-            className="group w-full py-2.5"
-          >
-            <div className="my-auto h-2 w-full rounded-full bg-surface-tertiary group-data-[state=active]:bg-brand" />
-          </Tabs.Trigger>
-          <Tabs.Trigger
-            value="activity"
-            aria-label="Activity chart"
-            className="group w-full py-2.5"
-          >
-            <div className="my-auto h-2 w-full rounded-full bg-surface-tertiary group-data-[state=active]:bg-brand" />
-          </Tabs.Trigger>
+        <Tabs.List className="mt-3 flex border-divider border-t">
+          {TABS.map((tab) => (
+            <Tabs.Trigger
+              key={tab.value}
+              value={tab.value}
+              className="-mt-px flex h-10 flex-1 items-center justify-center border-transparent border-t-2 font-medium text-label-value-13 text-secondary transition-colors hover:text-primary data-[state=active]:border-brand data-[state=active]:text-primary"
+            >
+              {tab.label}
+            </Tabs.Trigger>
+          ))}
         </Tabs.List>
       </Tabs.Root>
     </PrimaryCard>
