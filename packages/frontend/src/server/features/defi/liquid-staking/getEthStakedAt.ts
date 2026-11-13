@@ -3,8 +3,11 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { toEth } from './computeLiquidStakingCharts'
 
-/** A day's stake stands for the two days after it starts, so a late indexer leaves no gap. */
-const MAX_STAKE_AGE = 2 * UnixTime.DAY
+/**
+ * A day's stake is read as the day starts but indexed after it ends, so the
+ * latest is up to two days old; the third day covers a late indexer.
+ */
+export const MAX_STAKE_AGE = 3 * UnixTime.DAY
 const MOCK_ETH_STAKED = 34_000_000
 
 /** The ETH staked network-wide at each timestamp, as the day started; null when missing. */

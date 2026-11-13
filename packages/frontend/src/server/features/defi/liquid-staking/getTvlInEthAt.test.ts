@@ -32,6 +32,17 @@ describe(computeTvlInEth.name, () => {
     expect(result).toEqual([120, 120, null])
   })
 
+  it('treats a zero rate as a bad read', () => {
+    const result = computeTvlInEth(
+      [DAY],
+      { id: 'rocketpool-rETH', rebasing: false },
+      [{ timestamp: DAY, tokenId: 'rocketpool-rETH', amount: 100 }],
+      [{ timestamp: DAY, exchangeRate: 0n }],
+    )
+
+    expect(result).toEqual([null])
+  })
+
   it('gives null where the TVL counts another token', () => {
     const result = computeTvlInEth(
       [DAY, 2 * DAY],

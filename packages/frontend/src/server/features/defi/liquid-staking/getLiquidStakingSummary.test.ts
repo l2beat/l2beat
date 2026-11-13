@@ -32,18 +32,18 @@ describe(buildLiquidStakingSummary.name, () => {
     })
   })
 
-  it('divides the TVL in ETH by the latest ETH staked', () => {
+  it('divides the TVL in ETH by the latest ETH staked at or before it', () => {
     const today = UnixTime.toStartOf(UnixTime.now(), 'day')
     const yesterday = today - UnixTime.DAY
 
     const summary = buildLiquidStakingSummary(
       'lido',
       {} as ProjectLiquidStakingRisks,
-      { valueUsd: 30_000_000_000, valueEth: 8_000_000 },
+      { valueUsd: 30_000_000_000, valueEth: 8_000_000, timestamp: today - 1 },
       {
         yield: [
           { ...point(yesterday, {}), network: null, ethStaked: 32_000_000 },
-          { ...point(today, {}), network: null, ethStaked: null },
+          { ...point(today, {}), network: null, ethStaked: 40_000_000 },
         ],
         costOfExit: [],
       },
@@ -56,7 +56,7 @@ describe(buildLiquidStakingSummary.name, () => {
     })
   })
 
-  it('has no share without the TVL in ETH or a recent ETH staked', () => {
+  it('has no share without the TVL in ETH or a stake under 3 days older', () => {
     const today = UnixTime.toStartOf(UnixTime.now(), 'day')
     const yieldChart = (timestamp: number) => [
       { ...point(timestamp, {}), network: null, ethStaked: 32_000_000 },
@@ -65,14 +65,14 @@ describe(buildLiquidStakingSummary.name, () => {
     const withoutEth = buildLiquidStakingSummary(
       'lido',
       {} as ProjectLiquidStakingRisks,
-      { valueUsd: 30_000_000_000 },
+      { valueUsd: 30_000_000_000, timestamp: today },
       { yield: yieldChart(today), costOfExit: [] },
     )
     const stale = buildLiquidStakingSummary(
       'lido',
       {} as ProjectLiquidStakingRisks,
-      { valueUsd: 30_000_000_000, valueEth: 8_000_000 },
-      { yield: yieldChart(today - 40 * UnixTime.DAY), costOfExit: [] },
+      { valueUsd: 30_000_000_000, valueEth: 8_000_000, timestamp: today },
+      { yield: yieldChart(today - 4 * UnixTime.DAY), costOfExit: [] },
     )
 
     expect(withoutEth.stakedEthShare).toEqual(undefined)

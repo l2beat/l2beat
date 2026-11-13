@@ -101,6 +101,7 @@ export function computeTvlInEth(
   return timestamps.map((timestamp, i) => {
     const supply = supplyAt.get(timestamp)
     const rate = rates[i]
-    return supply != null && rate != null ? supply * rate : null
+    // A zero rate is a bad read, as in the yield chart.
+    return supply != null && rate != null && rate > 0 ? supply * rate : null
   })
 }

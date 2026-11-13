@@ -37,17 +37,17 @@ export function DefiTvlSection({
   const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
   const [showEthStaked, setShowEthStaked] = useState(false)
-  const { data, isLoading, isPlaceholderData } = useChartQuery(
+  const { data, isLoading, isPlaceholderData, shownInput } = useChartQuery(
     trpc.defi.tvlChart,
     { projectId: project.id, range, withEthStaked: showEthStaked },
   )
 
   const chartData = useMemo(
     () =>
-      data?.chart.map(([timestamp, value, ethStaked, stakedEthShare]) => ({
+      data?.chart.map(([timestamp, value, ethStakedUsd, stakedEthShare]) => ({
         timestamp,
         value,
-        ethStaked,
+        ethStakedUsd,
         stakedEthShare,
       })),
     [data],
@@ -92,7 +92,7 @@ export function DefiTvlSection({
         syncedUntil={data?.syncedUntil}
         isLoading={isLoading}
         project={project}
-        withEthStaked={showEthStaked}
+        withEthStaked={shownInput.withEthStaked}
       />
       {ethStakedToggle && (
         <div className="mt-2 flex justify-end">

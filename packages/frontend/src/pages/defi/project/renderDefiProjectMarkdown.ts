@@ -3,10 +3,10 @@ import type { ProjectDefiEntry } from '~/server/features/defi/project/getDefiPro
 import { formatUsd } from '~/server/markdown/markdown'
 import { renderProjectMarkdown } from '~/server/markdown/renderProjectMarkdown'
 import { formatUtcDateOrDay } from '~/server/markdown/renderSectionParts'
+import { formatPercent } from '~/utils/calculatePercentageChange'
 import { getUnderReviewText } from '~/utils/project/underReview'
 import {
   formatLatestValue,
-  formatStakedEthShare,
   LIQUID_STAKING_METRICS,
   STAKED_ETH_SHARE_TOOLTIP,
 } from '../liquid-staking/liquidStakingMetrics'
@@ -69,7 +69,7 @@ function getLiquidStakingFacts(summary: ProjectDefiEntry['liquidStaking']) {
   return compact([
     share && {
       label: 'Share of staked ETH',
-      value: `${formatStakedEthShare(share.value)} (ETH staked ${formatUtcDateOrDay(share.timestamp, false)}). ${STAKED_ETH_SHARE_TOOLTIP}`,
+      value: `${formatPercent(share.value)} (ETH staked ${formatUtcDateOrDay(share.timestamp, false)}). ${STAKED_ETH_SHARE_TOOLTIP}`,
     },
     ...LIQUID_STAKING_METRICS.map((metric) => {
       const latest = summary[metric.key]

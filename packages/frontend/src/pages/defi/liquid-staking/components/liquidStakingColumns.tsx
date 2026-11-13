@@ -32,7 +32,9 @@ export function getLiquidStakingStatColumns<T extends LiquidStakingStatsEntry>(
           <NoDataBadge />
         ) : (
           <TwoRowCell className="text-right">
-            <TwoRowCell.First>{formatCurrency(value, 'usd')}</TwoRowCell.First>
+            <TwoRowCell.First className="text-sm">
+              {formatCurrency(value, 'usd')}
+            </TwoRowCell.First>
             {stakedEthShare && (
               <TwoRowCell.Second>
                 <StakedEthShare share={stakedEthShare} disabledOnTouch />

@@ -13,7 +13,7 @@ import {
 import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import { tinted } from '~/components/core/chart/tint'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { formatPercent } from '~/utils/calculatePercentageChange'
+import { formatStakedEthShare } from '~/pages/defi/liquid-staking/liquidStakingMetrics'
 import { formatSnapshotTimestamp } from '~/utils/dates'
 import type { ChartResolution } from '~/utils/range/range'
 
@@ -21,7 +21,7 @@ interface TvsValueChartDataPoint {
   timestamp: number
   value: number | null
   /** USD value of the ETH staked network-wide, drawn behind the TVL. */
-  ethStaked?: number | null
+  ethStakedUsd?: number | null
   /** The TVL at the protocol's rate, as a fraction of the ETH staked. */
   stakedEthShare?: number | null
 }
@@ -34,11 +34,11 @@ interface Props {
   resolution: ChartResolution
   project?: ChartProject
   milestones?: Milestone[]
-  /** Draws `ethStaked`, which the TVL is a part of. */
+  /** Draws `ethStakedUsd`, which the TVL is a part of. */
   withEthStaked?: boolean
 }
 
-type Key = 'value' | 'ethStaked'
+type Key = 'value' | 'ethStakedUsd'
 
 const valueMeta = {
   value: {
@@ -49,12 +49,12 @@ const valueMeta = {
 } satisfies ChartMeta
 
 const withEthStakedMeta = {
-  ethStaked: {
+  ...valueMeta,
+  ethStakedUsd: {
     label: 'Total ETH staked',
     color: 'var(--chart-ethereum-secondary)',
     indicatorType: { shape: 'line' },
   },
-  ...valueMeta,
 } satisfies ChartMeta
 
 export function TvsValueChart({
@@ -67,7 +67,8 @@ export function TvsValueChart({
   milestones,
   withEthStaked,
 }: Props) {
-  const keys: Key[] = withEthStaked ? ['ethStaked', 'value'] : ['value']
+  // The total first, so the TVL is drawn over it
+  const keys: Key[] = withEthStaked ? ['ethStakedUsd', 'value'] : ['value']
   const meta = withEthStaked ? withEthStakedMeta : valueMeta
   return (
     <ChartContainer
@@ -110,7 +111,7 @@ function TvsValueChartTooltip({
 }) {
   // The TVL first, then the total it is a part of
   const payload = getTooltipEntries(row, keys).reverse()
-  const share = keys.includes('ethStaked') ? row.stakedEthShare : undefined
+  const share = keys.includes('ethStakedUsd') ? row.stakedEthShare : undefined
 
   return (
     <ChartTooltipWrapper>
@@ -135,7 +136,7 @@ function TvsValueChartTooltip({
                 share != null && (
                   <span className="text-secondary">
                     {' '}
-                    ({formatPercent(share)})
+                    ({formatStakedEthShare(share)})
                   </span>
                 )}
             </span>
