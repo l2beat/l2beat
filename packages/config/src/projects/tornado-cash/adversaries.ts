@@ -1,8 +1,8 @@
 import {
   ADVICE_SNIPPETS as A,
-  adviceLink,
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
+  toolLink,
 } from '../../common/privacyAdversaries'
 
 // v2.1, the circuits behind the verified verifier.
@@ -114,7 +114,7 @@ export function tornadoCashAdversaries(upgradeDelay: string, appCid: string) {
     advice: [
       {
         name: 'Load',
-        text: `Turn on NymVPN with the Random profile, an ${adviceLink('IP-hiding route', 'ipHidingRoutes')} for all of the computer's traffic. Install IPFS Desktop and open the reviewed release at \`http://localhost:8080/ipfs/${appCid}\`. A [rebuild](${RECIPE}) from the reviewed source gives the same hash.`,
+        text: `Turn on ${toolLink('nymVpn')} with the Random profile, an IP-hiding route for all of the computer's traffic. Install ${toolLink('ipfsDesktop')} and open the reviewed release at \`http://localhost:8080/ipfs/${appCid}\`. A [rebuild](${RECIPE}) from the reviewed source gives the same hash.`,
         against: ['networkObserver', 'privilegedInsider'],
         outside: true,
       },

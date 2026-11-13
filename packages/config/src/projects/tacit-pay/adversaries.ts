@@ -4,6 +4,7 @@ import {
   adviceLink,
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
+  toolLink,
 } from '../../common/privacyAdversaries'
 import type {
   PrivacyExposureMap,
@@ -213,7 +214,7 @@ export const tacitPayAdversaries = definePrivacyAdversaries({
     },
     {
       name: 'Sign in',
-      text: `Set your own Ethereum node under Endpoints and in your wallet before signing in. Send all other traffic through an ${adviceLink('IP-hiding route', 'ipHidingRoutes')}, so the relay sees no IP of yours.`,
+      text: `Set your own ${toolLink('ethereumNode')} under Endpoints and in your wallet before signing in. Send all other traffic through an ${adviceLink('IP-hiding route', 'routes')}, so the relay sees no IP of yours.`,
       against: ['networkObserver', 'privilegedInsider'],
       outside: true,
     },
