@@ -1,5 +1,6 @@
-import { formatNumber } from '@l2beat/shared-pure'
+import { formatNumber, formatNumberWithCommas } from '@l2beat/shared-pure'
 import { type ReactNode, useMemo, useState } from 'react'
+import { ChartCardHeader } from '~/components/chart/ChartCardHeader'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import {
   ChartRangeControls,
@@ -45,18 +46,18 @@ type ChartProject = Pick<
 const NETWORK_KEY = 'network'
 
 const RANGE_OPTIONS: { value: ChartRangeOptionValue; label: string }[] = [
-  { value: '30d', label: '30D' },
-  { value: '90d', label: '90D' },
-  { value: '180d', label: '180D' },
-  { value: '1y', label: '1Y' },
-  { value: 'max', label: 'MAX' },
+  { value: '30d', label: '30d' },
+  { value: '90d', label: '90d' },
+  { value: '180d', label: '180d' },
+  { value: '1y', label: '1y' },
+  { value: 'max', label: 'Max' },
 ]
 
 const ETH_STAKED: LiquidStakingChartBackground = {
   key: 'ethStaked',
   label: ETH_STAKED_TITLE,
   color: 'var(--chart-ethereum-secondary)',
-  formatAxisLabel: (value) => formatNumber(value),
+  formatAxisLabel: (value) => `${formatNumber(value, 0)} ETH`,
   formatTooltipValue: formatEthStaked,
 }
 
@@ -80,12 +81,14 @@ export function LiquidStakingCharts({
   }, [projects])
 
   return (
-    <>
+    // On phones the range bar drives two stacked cards, so it heads them
+    // instead of trailing the second one.
+    <div className="flex flex-col">
       <div className="grid gap-4 md:mt-4 lg:grid-cols-2">
         <YieldChart projectSeries={projectSeries} range={range} />
         <CostOfExitChart projectSeries={projectSeries} range={range} />
       </div>
-      <ChartControlsWrapper className="mt-4 justify-end max-md:pr-4">
+      <ChartControlsWrapper className="mt-4 justify-end max-md:order-first max-md:mt-0 max-md:mb-4 max-md:pr-4">
         <ChartRangeControls
           name="liquid-staking"
           value={range}
@@ -93,7 +96,7 @@ export function LiquidStakingCharts({
           options={RANGE_OPTIONS}
         />
       </ChartControlsWrapper>
-    </>
+    </div>
   )
 }
 
@@ -197,7 +200,9 @@ function CostOfExitChart({ projectSeries, range }: ChartProps) {
         isLoading={isLoading}
         isPlaceholderData={isPlaceholderData}
         ariaLabel="Cost of exit"
-        formatYAxisLabel={(value) => `${value.toFixed(0)}d`}
+        formatYAxisLabel={(value) =>
+          `${formatNumberWithCommas(value, { maximumFractionDigits: 0 })}d`
+        }
         // ~ marks a value that counts requests still queued.
         formatTooltipValue={(value, key, timestamp) =>
           `${estimated.get(timestamp)?.includes(key) ? '~' : ''}${formatDays(value)}`
@@ -224,26 +229,26 @@ function ChartCard({
   isPlaceholderData: boolean
   children: ReactNode
 }) {
-  // The date range changes width with the range and while loading, so its
-  // line has a fixed height to keep both cards the same size.
   return (
     <PrimaryCard>
-      <div className="flex items-center gap-2">
-        <h2 className="font-bold text-lg md:text-xl">{title}</h2>
-        <Tooltip>
-          <TooltipTrigger>
-            <InfoIcon className="size-3.5" />
-          </TooltipTrigger>
-          <TooltipContent>{info}</TooltipContent>
-        </Tooltip>
-      </div>
-      <div className="mt-1 mb-4 flex h-5 items-center lg:h-6">
-        <ChartTimeRange
-          timeRange={timeRange}
-          isPlaceholderData={isPlaceholderData}
-        />
-      </div>
-      {children}
+      <ChartCardHeader
+        title={title}
+        subtitle={
+          <Tooltip>
+            <TooltipTrigger className="translate-y-px">
+              <InfoIcon className="size-3.5" />
+            </TooltipTrigger>
+            <TooltipContent>{info}</TooltipContent>
+          </Tooltip>
+        }
+        meta={
+          <ChartTimeRange
+            timeRange={timeRange}
+            isPlaceholderData={isPlaceholderData}
+          />
+        }
+      />
+      <div className="mt-4">{children}</div>
     </PrimaryCard>
   )
 }
