@@ -42,7 +42,7 @@ export function TvsBreakdownPageHeader({
         <SearchBarButton className="max-lg:hidden" />
       </div>
 
-      <div className="flex flex-col items-start justify-between gap-[10px] md:mb-4 md:flex-row md:items-center">
+      <div className="flex flex-col items-start justify-between gap-[10px] md:mb-4 md:flex-row md:items-baseline">
         <h1 className="font-bold text-[26px]">TVS breakdown</h1>
         <p className="font-normal text-label-value-13 text-secondary">
           Data as of <UtcDateTime timestamp={tvsBreakdownTimestamp} />
