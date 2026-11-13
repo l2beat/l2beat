@@ -1,25 +1,26 @@
 import { getL2ProjectEntry } from '~/server/features/layer2s/project/getL2ProjectEntry'
-import { getPrivacyProjectDetails } from '~/server/features/privacy/getPrivacyProjectDetails'
-import { getPrivacySummary } from '~/server/features/privacy/project/getPrivacyProjectEntry'
-import type { ProjectPage } from '~/server/features/projects/getProjectPage'
 import { ps } from '~/server/projects'
 import { getScalingMetadataDescription } from '~/ssr/head/projectMetaDescriptions'
 import type {
   ProjectPageContent,
   ProjectPageContext,
-} from '../../project/getProjectData'
+  ProjectPageDefinition,
+} from '../../project/projectPageDefinition'
 import { getL2ProjectStructuredData } from './getL2ProjectStructuredData'
+import { renderL2ProjectMarkdown } from './renderL2ProjectMarkdown'
+
+export const l2ProjectPage: ProjectPageDefinition<'L2ProjectPage'> = {
+  component: 'L2ProjectPage',
+  getContent: getL2ProjectContent,
+  renderMarkdown: ({ projectEntry }) => renderL2ProjectMarkdown(projectEntry),
+}
 
 export async function getL2ProjectContent(
-  page: ProjectPage,
+  slug: string,
   { helpers }: ProjectPageContext,
 ): Promise<ProjectPageContent<'L2ProjectPage'> | undefined> {
-  // A scaling project that is also a privacy protocol.
-  const privacy = page.sections.includes('privacy')
-    ? await getPrivacyProjectDetails(page.slug)
-    : undefined
   const project = await ps.getProject({
-    slug: page.slug,
+    slug,
     select: [
       'display',
       'statuses',
@@ -51,10 +52,10 @@ export async function getL2ProjectContent(
     ],
   })
   if (!project) return undefined
-  const projectEntry = await getL2ProjectEntry(project, helpers, privacy)
+  const projectEntry = await getL2ProjectEntry(project, helpers)
 
   return {
-    props: { projectEntry, privacy: privacy && getPrivacySummary(privacy) },
+    props: { projectEntry },
     metadata: {
       name: project.name,
       description: getScalingMetadataDescription({
@@ -65,8 +66,8 @@ export async function getL2ProjectContent(
         tvs: projectEntry.header.tvs?.breakdown?.total,
         description: project.display.description,
       }),
-      structuredData: (page) => [
-        getL2ProjectStructuredData(page, {
+      structuredData: (webPage) => [
+        getL2ProjectStructuredData(webPage, {
           name: project.name,
           slug: project.slug,
           archivedAt: project.archivedAt,

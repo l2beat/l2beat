@@ -6,6 +6,18 @@ export function getProjectPath(slug: string): `/projects/${string}` {
   return `/projects/${slug}`
 }
 
+/**
+ * Where project pages were before they moved to `/projects/{slug}`: the old
+ * URLs redirect, and what a browser stored under them is read as the new one.
+ */
+export const OLD_PROJECT_PATH_PREFIXES = {
+  layer2s: '/layer2s/projects',
+  privacy: '/privacy/projects',
+  defi: '/defi/projects',
+  interop: '/interop/protocols',
+  zkCatalog: '/zk-catalog',
+} as const
+
 export function getProjectTvsBreakdownPath(slug: string) {
   return `${getProjectPath(slug)}/tvs-breakdown` as const
 }

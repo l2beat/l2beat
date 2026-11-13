@@ -9,6 +9,7 @@ import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
 import type { ProjectSection } from '~/components/projects/projectSections'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
+import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import type { InteropProtocolDashboardData } from '~/server/features/layer2s/interop/getInteropProtocolData'
@@ -21,6 +22,12 @@ import { InteropProtocolSummary } from './components/InteropProtocolSummary'
 
 interface Props extends AppLayoutProps {
   projectEntry: InteropProtocolEntry
+  /**
+   * For a protocol that is also a chain, like Avalanche: the chain's flows,
+   * shown in place of the protocol's own volume. They cover every protocol,
+   * this one included (its canonical bridge button picks it).
+   */
+  chainFlows?: Extract<ProjectDetailsSection, { type: 'InteropFlowsSection' }>
   projectSections: ProjectSection[]
   versionLinks?: ProjectVersionLinks
   protocolData: InteropProtocolDashboardData
@@ -31,6 +38,7 @@ interface Props extends AppLayoutProps {
 
 export function InteropProtocolPage({
   projectEntry,
+  chainFlows,
   projectSections,
   versionLinks,
   apiSelection,
@@ -43,7 +51,9 @@ export function InteropProtocolPage({
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
         <Content
-          projectEntry={projectEntry}
+          projectEntry={
+            chainFlows ? withChainFlows(projectEntry, chainFlows) : projectEntry
+          }
           projectSections={projectSections}
           versionLinks={versionLinks}
           apiSelection={apiSelection}
@@ -53,6 +63,21 @@ export function InteropProtocolPage({
       </HydrationBoundary>
     </AppLayout>
   )
+}
+
+function withChainFlows(
+  entry: InteropProtocolEntry,
+  chainFlows: NonNullable<Props['chainFlows']>,
+): InteropProtocolEntry {
+  return {
+    ...entry,
+    sections: [
+      chainFlows,
+      ...entry.sections.filter(
+        (section) => section.type !== 'InteropVolumeSection',
+      ),
+    ],
+  }
 }
 
 function Content({

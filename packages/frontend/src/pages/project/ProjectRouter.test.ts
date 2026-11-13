@@ -2,6 +2,7 @@ import type { ProjectPrivacyAdversaries } from '@l2beat/config'
 import { type InMemoryCache, ProjectId } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { env } from '~/env'
+import type { ChainProjectPageEntry } from '~/server/features/chains/getChainProjectEntry'
 import type { ProjectDefiEntry } from '~/server/features/defi/project/getDefiProjectEntry'
 import type { InteropProtocolEntry } from '~/server/features/layer2s/interop/protocol/getInteropProtocolEntry'
 import type { ProjectL2Entry } from '~/server/features/layer2s/project/getL2ProjectEntry'
@@ -101,7 +102,13 @@ describe(createProjectRouter.name, () => {
   for (const [slug, getPage, heading] of [
     [
       'tornado-cash',
-      () => ({ props: { entry: PRIVACY_ENTRY } }),
+      // Also in the ZK Catalog, so its page shows the catalog's summary.
+      () => ({
+        props: {
+          entry: PRIVACY_ENTRY,
+          zkCatalog: { trustedSetupsByProofSystem: {}, techStack: {} },
+        },
+      }),
       '# Tornado Cash',
     ],
     [
@@ -137,19 +144,20 @@ describe(createProjectRouter.name, () => {
     expect(response.status).toEqual(200)
   })
 
-  // Chain pages show only interop flows, which have no markdown version.
-  it('serves a chain page as HTML only', async () => {
+  // A chain no section lists has a page too, and so a markdown version.
+  it('serves the page of a chain as markdown', async () => {
     env.INTEROP_CHAINS = ['solana']
-    const router = createRouter({ props: {} })
 
-    const negotiated = await fetchFromRouter(router, '/projects/solana', {
-      headers: { Accept: 'text/markdown' },
-    })
-    const markdown = await fetchFromRouter(router, '/projects/solana.md')
+    const response = await fetchFromRouter(
+      createRouter({ props: { entry: CHAIN_ENTRY } }),
+      '/projects/solana.md',
+    )
 
-    expect(negotiated.status).toEqual(200)
-    expect(await negotiated.text()).toEqual('<html />')
-    expect(markdown.status).toEqual(404)
+    expect(response.status).toEqual(200)
+    expect(await response.text()).toInclude(
+      '# Solana\n',
+      '- Last 24h cross-chain volume: $1.20 M',
+    )
   })
 })
 
@@ -164,6 +172,19 @@ function createRouter(cachedPage: object) {
 
 // Of each entry only the name is asserted: the renderers' own tests cover the
 // content.
+
+const CHAIN_ENTRY: ChainProjectPageEntry = {
+  name: 'Solana',
+  slug: 'solana',
+  icon: '/icons/solana.png',
+  interop: {
+    volume: 1_200_000,
+    transferCount: 10,
+    protocols: { items: [], remainingCount: 0 },
+    tokens: { items: [], remainingCount: 0 },
+  },
+  sections: [],
+}
 
 const L2_RISK = { name: 'Risk', value: 'Value', sentiment: 'good' } as const
 

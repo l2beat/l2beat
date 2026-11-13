@@ -3,13 +3,15 @@ import { expect } from 'earl'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 import {
+  EVERY_DEPLOYMENT,
+  findUnsupportedProjectPages,
   getProjectBreadcrumbs,
   PROJECT_PAGE_FIELDS,
   selectProjectPages,
 } from './getProjectPage'
 
 describe(selectProjectPages.name, () => {
-  it('gives a project in two sections one page, built on the first', () => {
+  it('gives a project in two sections the page designed for both', () => {
     const pages = selectProjectPages(
       [
         project('railgun', { privacyInfo: {}, zkCatalogInfo: {} }),
@@ -18,7 +20,7 @@ describe(selectProjectPages.name, () => {
         project('avalanche', { interopConfig: {} }),
         project('sp1', { zkCatalogInfo: {} }),
       ],
-      { anyDeployment: true },
+      EVERY_DEPLOYMENT,
     )
 
     expect(
@@ -28,9 +30,9 @@ describe(selectProjectPages.name, () => {
           .map((page) => [page.slug, [page.kind, page.sections.join('+')]]),
       ),
     ).toEqual({
-      railgun: ['privacy', 'privacy+zkCatalog'],
-      payy: ['layer2s', 'layer2s+privacy'],
-      avalanche: ['interop', 'interop+chain'],
+      railgun: ['privacyZkCatalog', 'privacy+zkCatalog'],
+      payy: ['layer2sPrivacy', 'layer2s+privacy'],
+      avalanche: ['interopChain', 'interop+chain'],
       sp1: ['zkCatalog', 'zkCatalog'],
     })
   })
@@ -44,7 +46,7 @@ describe(selectProjectPages.name, () => {
   })
 
   it('gives a chain without a project a page of its own', () => {
-    const pages = selectProjectPages([], { anyDeployment: true })
+    const pages = selectProjectPages([], EVERY_DEPLOYMENT)
 
     const solana = pages.find((page) => page.slug === 'solana')
 
@@ -96,10 +98,10 @@ describe(selectProjectPages.name, () => {
       expect(pages.filter((page) => page.slug === 'both')).toEqual([])
     })
 
-    it('throws when checking every deployment', () => {
-      expect(() =>
-        selectProjectPages(projects, { anyDeployment: true }),
-      ).toThrow('Unsupported project page sections')
+    it('names the project and its sections', () => {
+      expect([
+        ...findUnsupportedProjectPages(projects, EVERY_DEPLOYMENT),
+      ]).toEqual([['both', ['layer2s', 'zkCatalog']]])
     })
   })
 
@@ -110,9 +112,9 @@ describe(selectProjectPages.name, () => {
       optional: [...PROJECT_PAGE_FIELDS],
     })
 
-    expect(() =>
-      selectProjectPages(projects, { anyDeployment: true }),
-    ).not.toThrow()
+    expect([
+      ...findUnsupportedProjectPages(projects, EVERY_DEPLOYMENT),
+    ]).toEqual([])
   })
 })
 
@@ -121,7 +123,7 @@ describe(getProjectBreadcrumbs.name, () => {
     expect(
       getProjectBreadcrumbs({
         slug: 'railgun',
-        kind: 'privacy',
+        kind: 'privacyZkCatalog',
         sections: ['privacy', 'zkCatalog'],
         listed: ['privacy', 'zkCatalog'],
       }),
@@ -132,7 +134,7 @@ describe(getProjectBreadcrumbs.name, () => {
     expect(
       getProjectBreadcrumbs({
         slug: 'avalanche',
-        kind: 'interop',
+        kind: 'interopChain',
         sections: ['interop', 'chain'],
         listed: ['interop', 'chain'],
       }),

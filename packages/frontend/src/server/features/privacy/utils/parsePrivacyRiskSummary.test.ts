@@ -50,4 +50,13 @@ describe(parsePrivacyRiskSummary.name, () => {
 
     expect(group?.items[0]?.referencedId).toEqual('privacy-adversaries')
   })
+
+  // A typo would otherwise make a group of its own next to the generated one.
+  it('rejects a heading that is not a privacy risk category', () => {
+    expect(() =>
+      parsePrivacyRiskSummary('## Funds can be stollen if\n1. a typo.', {
+        hasDescription: true,
+      }),
+    ).toThrow('Unknown privacy risk category')
+  })
 })

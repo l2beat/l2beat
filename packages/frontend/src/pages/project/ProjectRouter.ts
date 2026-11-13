@@ -1,13 +1,8 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import express, { type Response } from 'express'
+import express, { type Request, type Response } from 'express'
+import { getProjectPage } from '~/server/features/projects/getProjectPage'
 import {
-  getProjectPage,
-  hasMarkdown,
-  type ProjectPage,
-} from '~/server/features/projects/getProjectPage'
-import {
-  LLMS_TXT_LINK,
   serveMarkdown,
   serveMarkdownIfPreferred,
 } from '~/server/markdown/markdownAlternate'
@@ -33,18 +28,16 @@ export function createProjectRouter(
 ) {
   const router = express.Router()
 
-  const getMarkdown = async (page: ProjectPage | undefined) =>
-    page && hasMarkdown(page)
-      ? getProjectMarkdown(page, manifest, cache)
-      : undefined
+  const getMarkdown = async (req: Request<{ slug: string }>) => {
+    const page = await getProjectPage(req.params.slug)
+    return page && getProjectMarkdown(page, manifest, cache)
+  }
 
   // Before `:slug`, which would otherwise take "arbitrum.md" as the slug.
   router.get(
     `${getProjectPath(':slug')}.md`,
     validateRoute({ params: v.object({ slug: v.string() }) }),
-    serveMarkdown(async (req) =>
-      getMarkdown(await getProjectPage(req.params.slug)),
-    ),
+    serveMarkdown(getMarkdown),
   )
 
   router.get(
@@ -53,21 +46,9 @@ export function createProjectRouter(
       params: v.object({ slug: v.string() }),
       query: v.object({ update: v.string().optional() }),
     }),
-    async (req, res, next) => {
-      const page = await getProjectPage(req.params.slug)
-      res.locals.page = page
-      if (page && !hasMarkdown(page)) {
-        // HTML for every Accept, and without the `.md` alternate that
-        // LlmsLinkHeaderMiddleware derived from the URL.
-        res.setHeader('Link', LLMS_TXT_LINK)
-        next()
-        return
-      }
-      await serveMarkdownIfPreferred(() => getMarkdown(page))(req, res, next)
-    },
-    // A handler of its own, so Express catches what rendering throws.
+    serveMarkdownIfPreferred(getMarkdown),
     async (req, res) => {
-      const page: ProjectPage | undefined = res.locals.page
+      const page = await getProjectPage(req.params.slug)
       await send(
         res,
         req.originalUrl,

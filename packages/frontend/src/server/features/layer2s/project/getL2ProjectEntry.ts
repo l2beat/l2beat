@@ -20,19 +20,7 @@ import { env } from '~/env'
 import type { CompareMetricId } from '~/pages/layer2s/compare/utils/compareChartState'
 import { getCompareEntryUrl } from '~/pages/layer2s/compare/utils/getCompareEntryUrl'
 import { getGardenCropsSection } from '~/server/features/garden/getGardenCropsSection'
-import type { PrivacyProjectDetails } from '~/server/features/privacy/getPrivacyProjectDetails'
-import {
-  getPrivacyAdversariesSection,
-  getPrivacyAdviceSection,
-  getPrivacyAnonymitySetSection,
-  getPrivacyAssetsBreakdownSection,
-  getPrivacyDescriptionSection,
-  getPrivacyFlowsSection,
-  getPrivacyTrustedSetupsSection,
-} from '~/server/features/privacy/project/privacySections'
-import { parsePrivacyRiskSummary } from '~/server/features/privacy/utils/parsePrivacyRiskSummary'
 import { getUpdatesSection } from '~/server/features/projects/discovery-updates/getUpdatesSection'
-import { mergeRiskGroups } from '~/server/features/projects/mergeRiskGroups'
 import { getProjectOssification } from '~/server/features/projects/ossification/getProjectOssification'
 import { countRecentDiscoveryUpdates } from '~/server/features/projects/recent-changes/discoveryUpdates'
 import { ps } from '~/server/projects'
@@ -185,8 +173,6 @@ export async function getL2ProjectEntry(
     | 'ossificationHistory'
   >,
   helpers: SsrHelpers,
-  /** For a scaling project that is also a privacy protocol. */
-  privacy?: PrivacyProjectDetails,
 ): Promise<ProjectL2Entry> {
   const daSolutions = await getL2DaSolutions(project)
   const [
@@ -417,8 +403,6 @@ export async function getL2ProjectEntry(
         tvsInfo: project.tvsInfo,
         project: chartProject,
         ...l2TvsSection,
-        // The privacy page's Value Locked has the same TVS config.
-        ...(privacy && { aliasIds: ['privacy-tvl'] }),
       },
     })
   }
@@ -563,17 +547,6 @@ export async function getL2ProjectEntry(
     projectVerificationWarnings,
     unverifiedContracts,
   )
-  if (privacy?.riskSummary) {
-    riskSummary.riskGroups = mergeRiskGroups(
-      riskSummary.riskGroups,
-      parsePrivacyRiskSummary(privacy.riskSummary, {
-        hasDescription: !!(
-          project.scalingTechnology.detailedDescription ||
-          privacy.detailedDescription
-        ),
-      }),
-    )
-  }
   if (riskSummary.riskGroups.length > 0) {
     sections.push({
       type: 'RiskSummarySection',
@@ -585,26 +558,6 @@ export async function getL2ProjectEntry(
         isUnderReview: !!project.statuses.reviewStatus,
       },
     })
-  }
-
-  // The sections only a privacy protocol has. Its adversaries are filled in
-  // once every other section exists, as their sources link to them.
-  let privacyAdversariesIndex = sections.length
-  if (privacy) {
-    // The page has one description: its own if it has one.
-    const description = getPrivacyDescriptionSection(privacy)
-    if (description && !project.scalingTechnology.detailedDescription) {
-      sections.push(description)
-    }
-    privacyAdversariesIndex = sections.length
-    sections.push(
-      ...compact([
-        getPrivacyAnonymitySetSection(privacy),
-        getPrivacyFlowsSection(privacy),
-        getPrivacyAssetsBreakdownSection(privacy),
-        getPrivacyTrustedSetupsSection(privacy),
-      ]),
-    )
   }
 
   if (hostChain && common.rosette.host) {
@@ -828,16 +781,6 @@ export async function getL2ProjectEntry(
         discoUi,
       },
     })
-  }
-
-  if (privacy) {
-    const advice = getPrivacyAdviceSection(privacy)
-    if (advice) sections.splice(privacyAdversariesIndex, 0, advice)
-    sections.splice(
-      privacyAdversariesIndex,
-      0,
-      getPrivacyAdversariesSection(privacy, sections),
-    )
   }
 
   return { ...common, sections }

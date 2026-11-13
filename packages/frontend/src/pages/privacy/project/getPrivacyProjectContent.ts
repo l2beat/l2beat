@@ -1,43 +1,33 @@
-import { getPrivacyProjectDetails } from '~/server/features/privacy/getPrivacyProjectDetails'
+import {
+  getPrivacyProjectDetails,
+  type PrivacyProjectDetails,
+} from '~/server/features/privacy/getPrivacyProjectDetails'
 import { getPrivacyProjectEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
-import type { ProjectPage } from '~/server/features/projects/getProjectPage'
-import { getZkCatalogProject } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
-import { ps } from '~/server/projects'
 import { getPrivacyMetadataDescription } from '~/ssr/head/projectMetaDescriptions'
 import { getWebPageStructuredData } from '~/ssr/head/structured-data/getWebPageStructuredData'
 import type {
   ProjectPageContent,
   ProjectPageContext,
-} from '../../project/getProjectData'
+  ProjectPageDefinition,
+} from '../../project/projectPageDefinition'
+import { renderPrivacyProjectMarkdown } from './renderPrivacyProjectMarkdown'
 
+export const privacyProjectPage: ProjectPageDefinition<'PrivacyProjectPage'> = {
+  component: 'PrivacyProjectPage',
+  getContent: async (slug, context) => {
+    const details = await getPrivacyProjectDetails(slug)
+    return details && getPrivacyProjectContent(details, context)
+  },
+  renderMarkdown: ({ entry }) => renderPrivacyProjectMarkdown(entry),
+}
+
+/** Takes the details, as a page that adds to this one needs them too. */
 export async function getPrivacyProjectContent(
-  page: ProjectPage,
+  details: PrivacyProjectDetails,
   { helpers }: ProjectPageContext,
-): Promise<ProjectPageContent<'PrivacyProjectPage'> | undefined> {
-  const [details, zkCatalog] = await Promise.all([
-    getPrivacyProjectDetails(page.slug),
-    page.sections.includes('zkCatalog') ? getZkCatalog(page.slug) : undefined,
-  ])
-  if (!details) return undefined
-
-  const entry = await getPrivacyProjectEntry(
-    details,
-    helpers,
-    zkCatalog?.sections,
-  )
-
+): Promise<ProjectPageContent<'PrivacyProjectPage'>> {
   return {
-    props: {
-      entry,
-      zkCatalog: zkCatalog && {
-        creator: zkCatalog.creator,
-        header: {
-          trustedSetupsByProofSystem:
-            zkCatalog.header.trustedSetupsByProofSystem,
-          techStack: zkCatalog.header.techStack,
-        },
-      },
-    },
+    props: { entry: await getPrivacyProjectEntry(details, helpers) },
     metadata: {
       name: details.name,
       title: `${details.name} Privacy Review & Risks - ETHBEAT`,
@@ -47,22 +37,12 @@ export async function getPrivacyProjectContent(
         description: details.display.description,
         promise: details.adversaries.promise.text,
       }),
-      structuredData: (page) => [
-        getWebPageStructuredData(page, {
+      structuredData: (webPage) => [
+        getWebPageStructuredData(webPage, {
           name: `${details.name} privacy review`,
           about: details.name,
         }),
       ],
     },
   }
-}
-
-/** The ZK Catalog's part of a privacy protocol that is in the catalog. */
-async function getZkCatalog(slug: string) {
-  const project = await ps.getProject({
-    slug,
-    select: ['zkCatalogInfo', 'display', 'statuses'],
-    optional: ['archivedAt', 'milestones', 'tvsInfo'],
-  })
-  return project && getZkCatalogProject(project)
 }

@@ -1,15 +1,23 @@
 import { getChainProjectEntry } from '~/server/features/chains/getChainProjectEntry'
-import type { ProjectPage } from '~/server/features/projects/getProjectPage'
 import type {
   ProjectPageContent,
   ProjectPageContext,
-} from '../project/getProjectData'
+  ProjectPageDefinition,
+} from '../project/projectPageDefinition'
+import { renderChainProjectMarkdown } from './renderChainProjectMarkdown'
 
-export async function getChainProjectContent(
-  page: ProjectPage,
+/** The page of a chain no section lists, like Solana: its interop flows. */
+export const chainProjectPage: ProjectPageDefinition<'ChainProjectPage'> = {
+  component: 'ChainProjectPage',
+  getContent: getChainProjectContent,
+  renderMarkdown: ({ entry }) => renderChainProjectMarkdown(entry),
+}
+
+async function getChainProjectContent(
+  slug: string,
   { helpers }: ProjectPageContext,
 ): Promise<ProjectPageContent<'ChainProjectPage'> | undefined> {
-  const entry = await getChainProjectEntry(page.slug, helpers)
+  const entry = await getChainProjectEntry(slug, helpers)
   if (!entry) return undefined
 
   return {

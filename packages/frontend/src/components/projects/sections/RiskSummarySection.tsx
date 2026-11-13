@@ -1,4 +1,8 @@
-import type { ProjectRedWarning, ProjectRiskCategory } from '@l2beat/config'
+import type {
+  PrivacyRiskCategory,
+  ProjectRedWarning,
+  ProjectRiskCategory,
+} from '@l2beat/config'
 import type { HostChainRisksWarningProps } from '~/components/HostChainRisksWarning'
 import { HostChainRisksWarning } from '~/components/HostChainRisksWarning'
 import { WarningBar } from '~/components/WarningBar'
@@ -25,8 +29,8 @@ export interface RiskSummarySectionProps extends ProjectSectionProps {
 
 export interface RiskGroup {
   start: number
-  /** A risk category, or a hand-written one like "Privacy can be lost if" */
-  name: ProjectRiskCategory | (string & {})
+  /** Generated from the project's risks, or from a privacy risk summary */
+  name: ProjectRiskCategory | PrivacyRiskCategory
   items: RiskItem[]
 }
 

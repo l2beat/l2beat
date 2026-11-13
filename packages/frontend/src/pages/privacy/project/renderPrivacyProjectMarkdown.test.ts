@@ -11,6 +11,7 @@ import type { ProjectDetailsSection } from '~/components/projects/sections/types
 import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
 import type { PrivacyAsset } from '~/server/features/privacy/types'
 import type { PrivacyReferenceApp } from '~/server/features/privacy/utils/getPrivacyReferenceApp'
+import { getZkCatalogSummaryFacts } from '../../zk-catalog/v2/project/renderZkCatalogProjectMarkdown'
 import {
   getPrivacySummaryMarkdown,
   renderPrivacyProjectMarkdown,
@@ -128,8 +129,8 @@ describe(renderPrivacyProjectMarkdown.name, () => {
   it('adds the creator and the proving stack of a protocol that is also in the ZK Catalog', () => {
     const summary = getSection(
       renderPrivacyProjectMarkdown(ENTRY, {
-        creator: 'Tornado Cash DAO',
-        header: {
+        facts: getZkCatalogSummaryFacts({
+          creator: 'Tornado Cash DAO',
           trustedSetupsByProofSystem: {},
           techStack: {
             finalWrap: [
@@ -141,7 +142,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
               },
             ],
           },
-        },
+        }),
       }),
       'Summary',
     )

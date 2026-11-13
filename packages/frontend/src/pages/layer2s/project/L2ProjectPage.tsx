@@ -12,7 +12,11 @@ import { ProjectL2Summary } from './components/L2ProjectSummary'
 
 interface Props extends ProjectPageCommonProps {
   projectEntry: ProjectL2Entry
-  /** For a scaling project that is also a privacy protocol. */
+  /**
+   * For a scaling project that is also a privacy protocol. Its summary is
+   * part of this page, not a page of its own, as a second page component
+   * would split the chunks the two share (see `smallSharedChunks.mts`).
+   */
   privacy?: PrivacySummary
 }
 

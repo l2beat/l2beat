@@ -1,5 +1,8 @@
 import { useCallback, useSyncExternalStore } from 'react'
-import { getProjectPath } from '~/utils/project/getProjectPath'
+import {
+  getProjectPath,
+  OLD_PROJECT_PATH_PREFIXES,
+} from '~/utils/project/getProjectPath'
 
 // The visitor's own projects, kept in their browser only: the ones they pin
 // and the ones they opened last. Each is stored with what the nav draws, so
@@ -27,12 +30,13 @@ const MAX_RECENT = 8
 const EMPTY: PinnedProjects = { pinned: [], recent: [], hasPinned: false }
 
 /**
- * Where project pages were before they moved to `/projects/{slug}`. A project
- * saved back then is the same project, so it takes the new path: its page
- * would not recognise it otherwise.
+ * A project saved before its page moved to `/projects/{slug}` is the same
+ * project, so it takes the new path: its page would not recognise it
+ * otherwise.
  */
-const MOVED_PROJECT_PATH =
-  /^\/(?:layer2s\/projects|privacy\/projects|defi\/projects|interop\/protocols|zk-catalog)\/([^/]+)$/
+const MOVED_PROJECT_PATH = new RegExp(
+  `^(?:${Object.values(OLD_PROJECT_PATH_PREFIXES).join('|')})/([^/]+)$`,
+)
 
 let cachedRaw: string | null | undefined
 let cached: PinnedProjects = EMPTY

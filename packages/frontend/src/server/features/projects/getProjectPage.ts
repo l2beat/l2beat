@@ -1,11 +1,11 @@
-import { INTEROP_CHAINS, type Project } from '@l2beat/config'
+import { INTEROP_CHAINS, type InteropChain, type Project } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 import type { ProjectSection } from '~/components/projects/projectSections'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 import {
-  getChainProjectSlug,
   getChainProjects,
+  selectChainProjects,
 } from '../chains/getChainProjects'
 import { isListedDefiProject } from '../defi/isListedDefiProject'
 import { hasDefiProjectPage } from '../defi/project/hasDefiProjectPage'
@@ -22,45 +22,36 @@ export type ProjectPageSection =
   | 'defi'
 
 /**
- * Every combination of sections a project page is designed for, with the
- * section the page is built on first. A project in any other combination has
- * no page until someone designs it.
+ * Every page a project can have: the combination of sections it is designed
+ * for, with the section the page is built on first. A project in any other
+ * combination has no page until someone designs it, which means adding it
+ * here and to `PROJECT_PAGES`.
  */
-const ALLOWED_SECTIONS: ProjectPageSection[][] = [
-  ['ethereum'],
-  ['layer2s'],
-  ['layer2s', 'privacy'],
-  ['interop'],
-  ['interop', 'chain'],
-  ['chain'],
-  ['zkCatalog'],
-  ['privacy'],
-  ['privacy', 'zkCatalog'],
-  ['defi'],
-]
-
-/** Chain pages show only interop flows, which have no markdown version. */
-export type KindWithoutMarkdown = 'chain'
-
-export interface ProjectPage<
-  Kind extends ProjectPageSection = ProjectPageSection,
-> {
-  slug: string
-  /** The section the page is built on: the first of `sections`. */
-  kind: Kind
-  sections: ProjectPageSection[]
-  /** The sections whose lists show the project: for search and the sitemap. */
-  listed: ProjectPageSection[]
-}
-
-export type ProjectPageWithMarkdown = ProjectPage<
-  Exclude<ProjectPageSection, KindWithoutMarkdown>
+export const PROJECT_PAGE_KINDS = {
+  ethereum: ['ethereum'],
+  layer2s: ['layer2s'],
+  layer2sPrivacy: ['layer2s', 'privacy'],
+  interop: ['interop'],
+  interopChain: ['interop', 'chain'],
+  chain: ['chain'],
+  zkCatalog: ['zkCatalog'],
+  privacy: ['privacy'],
+  privacyZkCatalog: ['privacy', 'zkCatalog'],
+  defi: ['defi'],
+} as const satisfies Record<
+  string,
+  readonly [ProjectPageSection, ...ProjectPageSection[]]
 >
 
-export function hasMarkdown(
-  page: ProjectPage,
-): page is ProjectPageWithMarkdown {
-  return page.kind !== ('chain' satisfies KindWithoutMarkdown)
+export type ProjectPageKind = keyof typeof PROJECT_PAGE_KINDS
+
+export interface ProjectPage {
+  slug: string
+  kind: ProjectPageKind
+  /** The sections of the kind: the one the page is built on first. */
+  sections: readonly ProjectPageSection[]
+  /** The sections whose lists show the project: for search and the sitemap. */
+  listed: ProjectPageSection[]
 }
 
 /** What a query has to select for the project's page to be known. */
@@ -76,10 +67,24 @@ export const PROJECT_PAGE_FIELDS = [
 type PageField = (typeof PROJECT_PAGE_FIELDS)[number]
 type PageProject = Pick<Project<never, PageField>, 'id' | 'slug' | PageField>
 
-interface Deployment {
-  hasChainPage: boolean
-  /** Every flag on, for what must cover any deployment. */
-  anyDeployment?: boolean
+/** What decides which pages exist, apart from the projects themselves. */
+export interface Deployment {
+  /** The chains whose flows are shown. */
+  chains: readonly InteropChain[]
+  hasDefiPage(project: PageProject): boolean
+}
+
+function thisDeployment(): Deployment {
+  return { chains: getActiveInteropChains(), hasDefiPage: hasDefiProjectPage }
+}
+
+/**
+ * Every chain and every flag on: for what must cover any deployment, like the
+ * tests and `pnpm og-images`, which run before one exists.
+ */
+export const EVERY_DEPLOYMENT: Deployment = {
+  chains: INTEROP_CHAINS,
+  hasDefiPage: () => true,
 }
 
 /**
@@ -93,104 +98,119 @@ export async function getProjectPage(
     ps.getProject({ slug, optional: [...PROJECT_PAGE_FIELDS] }),
     getChainProjects(),
   ])
-  const sections = getSections(project, {
-    hasChainPage: chainProjects.some((chain) => chain.slug === slug),
-  })
+  const hasChainPage = chainProjects.some((chain) => chain.slug === slug)
+  const sections = getSections(project, hasChainPage, thisDeployment())
   if (sections.length === 0) return undefined
-  const [kind, ...rest] = findAllowed(sections) ?? []
+  const kind = findKind(sections)
   // Loud, so that the page gets designed.
-  if (!kind) throw unsupported(slug, sections)
-  return toProjectPage(slug, [kind, ...rest], project)
+  if (!kind) throw unsupportedError(slug, sections)
+  return toProjectPage(slug, kind, project)
 }
 
-type InteropChain = (typeof INTEROP_CHAINS)[number]
-
 /** A page with what it is about: a project, or a chain no section lists. */
-export type ProjectPageEntry<P> =
-  | (ProjectPage<'chain'> & { chain: InteropChain; project?: undefined })
-  | (ProjectPage<Exclude<ProjectPageSection, 'chain'>> & {
-      project: P
-      /** The chain whose flows the page shows, if it has the chain section. */
-      chain?: InteropChain
-    })
+export type ProjectPageEntry<P> = ProjectPage &
+  (
+    | { kind: 'chain'; chain: InteropChain; project?: undefined }
+    | {
+        kind: Exclude<ProjectPageKind, 'chain'>
+        project: P
+        /** The chain whose flows the page shows, if it has the chain section. */
+        chain?: InteropChain
+      }
+  )
 
 /**
- * Every project page in this deployment. Takes all projects, not a selection:
- * which chains get a page of their own depends on which are scaling projects.
+ * Every project page in a deployment, this one by default. Takes all
+ * projects, not a selection: which chains get a page of their own depends on
+ * which are scaling projects.
  *
  * A project in sections no page is designed for is left out, so that the
- * lists every page reads stay up; its own page throws. With `anyDeployment`
- * (every chain, every flag on) this throws for it instead: that is what the
- * tests and `pnpm og-images` run, before any deployment.
+ * lists every page reads stay up; its own page throws, and
+ * `findUnsupportedProjectPages` names it for the tests.
  */
 export function selectProjectPages<P extends PageProject>(
   projects: P[],
-  options: { anyDeployment?: boolean } = {},
+  deployment: Deployment = thisDeployment(),
 ): ProjectPageEntry<P>[] {
+  return resolveProjectPages(projects, deployment).pages
+}
+
+/** The projects in sections no page is designed for, with those sections. */
+export function findUnsupportedProjectPages(
+  projects: PageProject[],
+  deployment: Deployment,
+): Map<string, ProjectPageSection[]> {
+  return resolveProjectPages(projects, deployment).unsupported
+}
+
+function resolveProjectPages<P extends PageProject>(
+  projects: P[],
+  deployment: Deployment,
+) {
   const l2ProjectIds = new Set(
     projects.filter((p) => p.scalingInfo).map((p) => p.id),
   )
   const chains = new Map(
-    (options.anyDeployment ? INTEROP_CHAINS : getActiveInteropChains()).flatMap(
-      (chain) => {
-        const slug = getChainProjectSlug(chain, l2ProjectIds)
-        return slug ? [[slug, chain] as const] : []
-      },
+    selectChainProjects(deployment.chains, l2ProjectIds).map(
+      ({ slug, ...chain }): [string, InteropChain] => [slug, chain],
     ),
   )
 
-  const entries: ProjectPageEntry<P>[] = []
+  const pages: ProjectPageEntry<P>[] = []
+  const unsupported = new Map<string, ProjectPageSection[]>()
   for (const project of projects) {
     const chain = chains.get(project.slug)
-    const sections = getSections(project, {
-      hasChainPage: chain !== undefined,
-      anyDeployment: options.anyDeployment,
-    })
-    // The chain's own page, added below.
-    if (sections.length === 1 && sections[0] === 'chain') continue
+    const sections = getSections(project, chain !== undefined, deployment)
+    // Nothing but the chain's flows: the chain's own page, added below.
+    if (sections.length === 0 || isChainOnly(sections)) continue
     chains.delete(project.slug)
-    if (sections.length === 0) continue
-    const [kind, ...rest] = findAllowed(sections) ?? []
+    const kind = findKind(sections)
     if (!kind || kind === 'chain') {
-      if (options.anyDeployment) throw unsupported(project.slug, sections)
+      unsupported.set(project.slug, sections)
       continue
     }
-    entries.push({
-      ...toProjectPage(project.slug, [kind, ...rest], project),
+    pages.push({
+      ...toProjectPage(project.slug, kind, project),
       kind,
       project,
       chain,
     })
   }
   for (const [slug, chain] of chains) {
-    entries.push({
-      ...toProjectPage(slug, ['chain'], undefined),
+    pages.push({
+      ...toProjectPage(slug, 'chain', undefined),
       kind: 'chain',
       chain,
     })
   }
-  return entries
+  return { pages, unsupported }
 }
 
-/** The allowed combination these sections are, if any. */
-function findAllowed(
-  sections: ProjectPageSection[],
-): ProjectPageSection[] | undefined {
-  return ALLOWED_SECTIONS.find(
-    (allowed) =>
-      allowed.length === sections.length &&
-      allowed.every((section) => sections.includes(section)),
-  )
+function isChainOnly(sections: ProjectPageSection[]) {
+  return sections.length === 1 && sections[0] === 'chain'
+}
+
+/** The kind of page designed for exactly these sections, if any. */
+function findKind(sections: ProjectPageSection[]): ProjectPageKind | undefined {
+  const kinds = Object.keys(PROJECT_PAGE_KINDS) as ProjectPageKind[]
+  return kinds.find((kind) => {
+    const designed: readonly ProjectPageSection[] = PROJECT_PAGE_KINDS[kind]
+    return (
+      designed.length === sections.length &&
+      designed.every((section) => sections.includes(section))
+    )
+  })
 }
 
 function toProjectPage(
   slug: string,
-  sections: [ProjectPageSection, ...ProjectPageSection[]],
+  kind: ProjectPageKind,
   project: PageProject | undefined,
 ): ProjectPage {
+  const sections: readonly ProjectPageSection[] = PROJECT_PAGE_KINDS[kind]
   return {
     slug,
-    kind: sections[0],
+    kind,
     sections,
     // DeFi lists only the categories that have a page of their own.
     listed: sections.filter(
@@ -202,7 +222,7 @@ function toProjectPage(
   }
 }
 
-function unsupported(slug: string, sections: ProjectPageSection[]) {
+function unsupportedError(slug: string, sections: ProjectPageSection[]) {
   return new Error('Unsupported project page sections', {
     cause: { slug, sections },
   })
@@ -210,19 +230,18 @@ function unsupported(slug: string, sections: ProjectPageSection[]) {
 
 function getSections(
   project: PageProject | undefined,
-  { hasChainPage, anyDeployment }: Deployment,
+  hasChainPage: boolean,
+  deployment: Deployment,
 ): ProjectPageSection[] {
-  const sections: (ProjectPageSection | false | undefined)[] = [
+  const sections: (ProjectPageSection | false)[] = [
     project?.id === ProjectId.ETHEREUM && 'ethereum',
     !!project?.scalingInfo && 'layer2s',
     // A scaling project's bridge is shown on its scaling page.
-    !!project?.interopConfig && !project.scalingInfo && 'interop',
+    !!project?.interopConfig && !project?.scalingInfo && 'interop',
     hasChainPage && 'chain',
     !!project?.zkCatalogInfo && 'zkCatalog',
     !!project?.privacyInfo && 'privacy',
-    !!project?.defiInfo &&
-      (anyDeployment || hasDefiProjectPage(project)) &&
-      'defi',
+    !!project?.defiInfo && deployment.hasDefiPage(project) && 'defi',
   ]
   return sections.filter((section) => !!section)
 }

@@ -1,17 +1,26 @@
-import type { ProjectPage } from '~/server/features/projects/getProjectPage'
-import { getZkCatalogProjectEntry } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
-import { ps } from '~/server/projects'
+import {
+  findZkCatalogProject,
+  getZkCatalogProjectEntry,
+} from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
 import { getZkCatalogMetadataDescription } from '~/ssr/head/projectMetaDescriptions'
-import type { ProjectPageContent } from '../../../project/getProjectData'
+import type {
+  ProjectPageContent,
+  ProjectPageDefinition,
+} from '../../../project/projectPageDefinition'
+import { renderZkCatalogProjectMarkdown } from './renderZkCatalogProjectMarkdown'
 
-export async function getZkCatalogProjectContent(
-  page: ProjectPage,
+export const zkCatalogProjectPage: ProjectPageDefinition<'ZkCatalogProjectPage'> =
+  {
+    component: 'ZkCatalogProjectPage',
+    getContent: getZkCatalogProjectContent,
+    renderMarkdown: ({ projectEntry }) =>
+      renderZkCatalogProjectMarkdown(projectEntry),
+  }
+
+async function getZkCatalogProjectContent(
+  slug: string,
 ): Promise<ProjectPageContent<'ZkCatalogProjectPage'> | undefined> {
-  const project = await ps.getProject({
-    slug: page.slug,
-    select: ['zkCatalogInfo', 'display', 'statuses'],
-    optional: ['archivedAt', 'milestones', 'tvsInfo'],
-  })
+  const project = await findZkCatalogProject(slug)
   if (!project) return undefined
   const projectEntry = await getZkCatalogProjectEntry(project)
 

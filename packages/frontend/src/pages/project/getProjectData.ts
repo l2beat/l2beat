@@ -2,38 +2,28 @@ import type { InMemoryCache } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import {
   getProjectBreadcrumbs,
-  hasMarkdown,
-  type KindWithoutMarkdown,
   type ProjectPage,
-  type ProjectPageSection,
-  type ProjectPageWithMarkdown,
+  type ProjectPageKind,
 } from '~/server/features/projects/getProjectPage'
 import { getProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
-import { getSsrHelpers, type SsrHelpers } from '~/trpc/server'
+import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 import { getProjectPath } from '~/utils/project/getProjectPath'
-import { getChainProjectContent } from '../chain/getChainProjectContent'
-import {
-  getDefiProjectContent,
-  getDefiProjectMarkdown,
-} from '../defi/project/getDefiProjectContent'
-import { getEthereumProjectContent } from '../ethereum/getEthereumProjectContent'
-import { renderEthereumProjectMarkdown } from '../ethereum/renderEthereumProjectMarkdown'
-import { getInteropProtocolContent } from '../interop/protocol/getInteropProtocolContent'
-import { renderInteropProtocolMarkdown } from '../interop/protocol/renderInteropProtocolMarkdown'
-import { getL2ProjectContent } from '../layer2s/project/getL2ProjectContent'
-import { renderL2ProjectMarkdown } from '../layer2s/project/renderL2ProjectMarkdown'
-import type { PageName, Pages, SsrData } from '../pageTypes'
-import { getPrivacyProjectContent } from '../privacy/project/getPrivacyProjectContent'
-import {
-  getPrivacySummaryMarkdown,
-  renderPrivacyProjectMarkdown,
-} from '../privacy/project/renderPrivacyProjectMarkdown'
-import { getZkCatalogProjectContent } from '../zk-catalog/v2/project/getZkCatalogProjectContent'
-import { renderZkCatalogProjectMarkdown } from '../zk-catalog/v2/project/renderZkCatalogProjectMarkdown'
+import { chainProjectPage } from '../chain/getChainProjectContent'
+import { defiProjectPage } from '../defi/project/getDefiProjectContent'
+import { ethereumProjectPage } from '../ethereum/getEthereumProjectContent'
+import { interopChainProtocolPage } from '../interop/protocol/getInteropChainProtocolContent'
+import { interopProtocolPage } from '../interop/protocol/getInteropProtocolContent'
+import { l2PrivacyProjectPage } from '../layer2s/project/getL2PrivacyProjectContent'
+import { l2ProjectPage } from '../layer2s/project/getL2ProjectContent'
+import type { SsrData } from '../pageTypes'
+import { privacyProjectPage } from '../privacy/project/getPrivacyProjectContent'
+import { privacyZkCatalogProjectPage } from '../privacy/project/getPrivacyZkCatalogProjectContent'
+import { zkCatalogProjectPage } from '../zk-catalog/v2/project/getZkCatalogProjectContent'
 import type { ProjectPageCommonProps } from './ProjectPage'
+import type { ProjectPageDefinition } from './projectPageDefinition'
 
 /** The page at `/projects/{slug}`, or undefined when it has nothing to show. */
 export async function getProjectData(
@@ -55,28 +45,18 @@ export async function getProjectData(
 
 /** The markdown alternate of the page, from the same cached props as the HTML. */
 export async function getProjectMarkdown(
-  page: ProjectPageWithMarkdown,
+  page: ProjectPage,
   manifest: Manifest,
   cache: InMemoryCache,
 ): Promise<string | undefined> {
   const data = await getCachedProjectPage(page, manifest, cache)
   return (
-    data && PROJECT_PAGES[page.kind].renderMarkdown(data.props, page, cache)
+    data &&
+    PROJECT_PAGES[page.kind].renderMarkdown(data.props, {
+      slug: page.slug,
+      cache,
+    })
   )
-}
-
-/** What one kind of project page adds to that: its own props and metadata. */
-export interface ProjectPageContent<Name extends PageName> {
-  props: Omit<Parameters<Pages[Name]>[0], keyof ProjectPageCommonProps>
-  metadata: Pick<
-    Parameters<typeof getMetadata>[1],
-    'name' | 'title' | 'description' | 'structuredData'
-  >
-}
-
-export interface ProjectPageContext {
-  helpers: SsrHelpers
-  manifest: Manifest
 }
 
 function getCachedProjectPage(
@@ -95,7 +75,7 @@ function getCachedProjectPage(
       const [appLayoutProps, versionLinks, content] = await Promise.all([
         getAppLayoutProps(),
         getProjectVersionLinks(page.slug),
-        PROJECT_PAGES[page.kind].getContent(page, { helpers, manifest }),
+        PROJECT_PAGES[page.kind].getContent(page.slug, { helpers, manifest }),
       ])
       if (!content) return undefined
 
@@ -115,7 +95,6 @@ function getCachedProjectPage(
             // by every request for the project, the .md one included.
             url: getProjectPath(page.slug),
             openGraph: { image: getOgImagePath(page) },
-            hasMarkdown: hasMarkdown(page),
           }),
         },
         props,
@@ -124,9 +103,13 @@ function getCachedProjectPage(
   )
 }
 
-/** Each section has its own image of the project: the page shows its kind's. */
+/**
+ * Each section has its own image of the project: the page shows the one of
+ * the section it is built on.
+ */
 function getOgImagePath(page: ProjectPage) {
-  switch (page.kind) {
+  const section = page.sections[0]
+  switch (section) {
     case 'ethereum':
       return '/meta-images/projects/ethereum/opengraph-image.png'
     case 'chain':
@@ -134,89 +117,20 @@ function getOgImagePath(page: ProjectPage) {
     case 'zkCatalog':
       return `/meta-images/zk-catalog/projects/${page.slug}/opengraph-image.png`
     default:
-      return `/meta-images/${page.kind}/projects/${page.slug}/opengraph-image.png`
+      return `/meta-images/${section}/projects/${page.slug}/opengraph-image.png`
   }
 }
 
-interface PageKind {
-  component: PageName
-  getContent(
-    page: ProjectPage,
-    context: ProjectPageContext,
-  ): Promise<ProjectPageContent<PageName> | undefined>
-}
-
-interface PageKindWithMarkdown extends PageKind {
-  renderMarkdown(
-    props: object,
-    page: ProjectPage,
-    cache: InMemoryCache,
-  ): string | Promise<string>
-}
-
-/** Checks a kind's parts against its component's props, then forgets which. */
-function pageKind<Name extends PageName>(kind: {
-  component: Name
-  getContent(
-    page: ProjectPage,
-    context: ProjectPageContext,
-  ): Promise<ProjectPageContent<Name> | undefined>
-  renderMarkdown(
-    props: ProjectPageContent<Name>['props'],
-    page: ProjectPage,
-    cache: InMemoryCache,
-  ): string | Promise<string>
-}): PageKindWithMarkdown {
-  return kind as PageKindWithMarkdown
-}
-
-/**
- * For each section a page can be built on: its component, and what only it
- * knows. It also shows what the page's other sections add.
- */
-const PROJECT_PAGES: {
-  [Kind in ProjectPageSection]: Kind extends KindWithoutMarkdown
-    ? PageKind
-    : PageKindWithMarkdown
-} = {
-  ethereum: pageKind({
-    component: 'EthereumProjectPage',
-    getContent: getEthereumProjectContent,
-    renderMarkdown: (props) => renderEthereumProjectMarkdown(props.entry),
-  }),
-  layer2s: pageKind({
-    component: 'L2ProjectPage',
-    getContent: getL2ProjectContent,
-    renderMarkdown: ({ projectEntry, privacy }) =>
-      renderL2ProjectMarkdown(
-        projectEntry,
-        privacy && getPrivacySummaryMarkdown(privacy, projectEntry.sections),
-      ),
-  }),
-  interop: pageKind({
-    component: 'InteropProtocolPage',
-    getContent: getInteropProtocolContent,
-    renderMarkdown: renderInteropProtocolMarkdown,
-  }),
-  chain: {
-    component: 'ChainProjectPage',
-    getContent: getChainProjectContent,
-  },
-  zkCatalog: pageKind({
-    component: 'ZkCatalogProjectPage',
-    getContent: getZkCatalogProjectContent,
-    renderMarkdown: (props) =>
-      renderZkCatalogProjectMarkdown(props.projectEntry),
-  }),
-  privacy: pageKind({
-    component: 'PrivacyProjectPage',
-    getContent: getPrivacyProjectContent,
-    renderMarkdown: (props) =>
-      renderPrivacyProjectMarkdown(props.entry, props.zkCatalog),
-  }),
-  defi: pageKind({
-    component: 'DefiProjectPage',
-    getContent: getDefiProjectContent,
-    renderMarkdown: getDefiProjectMarkdown,
-  }),
+/** The page of every kind in `PROJECT_PAGE_KINDS`. */
+const PROJECT_PAGES: Record<ProjectPageKind, ProjectPageDefinition> = {
+  ethereum: ethereumProjectPage,
+  layer2s: l2ProjectPage,
+  layer2sPrivacy: l2PrivacyProjectPage,
+  interop: interopProtocolPage,
+  interopChain: interopChainProtocolPage,
+  chain: chainProjectPage,
+  zkCatalog: zkCatalogProjectPage,
+  privacy: privacyProjectPage,
+  privacyZkCatalog: privacyZkCatalogProjectPage,
+  defi: defiProjectPage,
 }

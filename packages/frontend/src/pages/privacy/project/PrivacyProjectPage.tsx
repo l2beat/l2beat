@@ -1,19 +1,20 @@
-import type { ZkCatalogSummary } from '~/pages/zk-catalog/v2/project/components/header/ZkCatalogProjectSummary'
 import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
 import { ProjectIntro } from '../../project/ProjectIntro'
 import {
   ProjectPage,
   type ProjectPageCommonProps,
 } from '../../project/ProjectPage'
+import type { ZkCatalogMergedSummary } from '../../zk-catalog/v2/project/components/header/ZkCatalogProjectSummary'
 import { PrivacyProjectSummaryCard } from './components/PrivacyProjectSummaryCard'
 
 interface Props extends ProjectPageCommonProps {
   entry: ProjectPrivacyEntry
-  /** For a privacy protocol that is also in the ZK Catalog. */
-  zkCatalog?: {
-    creator?: string
-    header: ZkCatalogSummary
-  }
+  /**
+   * For a privacy protocol that is also in the ZK Catalog. Its summary is
+   * part of this page, not a page of its own, as a second page component
+   * would split the chunks the two share (see `smallSharedChunks.mts`).
+   */
+  zkCatalog?: ZkCatalogMergedSummary
 }
 
 export function PrivacyProjectPage({ entry, zkCatalog, ...props }: Props) {
@@ -23,9 +24,7 @@ export function PrivacyProjectPage({ entry, zkCatalog, ...props }: Props) {
       project={entry}
       header={{
         recentUpdatesCount: entry.recentUpdatesCount,
-        // "Railgun by Railgun" says nothing
-        secondLine:
-          zkCatalog?.creator !== entry.name ? zkCatalog?.creator : undefined,
+        secondLine: zkCatalog?.creator,
       }}
       intro={
         <ProjectIntro
@@ -46,10 +45,7 @@ export function PrivacyProjectPage({ entry, zkCatalog, ...props }: Props) {
         />
       }
       summary={
-        <PrivacyProjectSummaryCard
-          entry={entry}
-          zkCatalog={zkCatalog?.header}
-        />
+        <PrivacyProjectSummaryCard entry={entry} zkCatalog={zkCatalog} />
       }
       sections={entry.sections}
     />

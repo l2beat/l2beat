@@ -12,7 +12,6 @@ import type { ProjectDetailsSection } from '~/components/projects/sections/types
 import { getGardenCropsSection } from '~/server/features/garden/getGardenCropsSection'
 import { getUpdatesSection } from '~/server/features/projects/discovery-updates/getUpdatesSection'
 import { countRecentDiscoveryUpdates } from '~/server/features/projects/recent-changes/discoveryUpdates'
-import type { ZkCatalogSections } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
 import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
@@ -45,6 +44,7 @@ import {
   getPrivacyFlowsSection,
   getPrivacyTrustedSetupsSection,
   getReferenceApp,
+  linkPrivacySources,
 } from './privacySections'
 
 export interface ProjectPrivacyEntry {
@@ -129,8 +129,6 @@ export function getPrivacySummary(
 export async function getPrivacyProjectEntry(
   details: PrivacyProjectDetails,
   helpers: SsrHelpers,
-  /** For a protocol that is also in the ZK Catalog: its page shows both. */
-  zkCatalog?: ZkCatalogSections,
 ): Promise<ProjectPrivacyEntry> {
   const [contractUtils, tvs] = await Promise.all([
     getContractUtils(),
@@ -188,10 +186,8 @@ export async function getPrivacyProjectEntry(
   }
 
   push(getPrivacyDescriptionSection(details))
-
-  // Filled in once every other section exists, so that its source links can
-  // point only at sections this page renders.
-  const adversariesSectionIndex = sections.length
+  push(getPrivacyAdversariesSection(details))
+  push(getPrivacyAdviceSection(details))
 
   if (details.hasTvl) {
     sections.push({
@@ -203,9 +199,6 @@ export async function getPrivacyProjectEntry(
         rangeControls: 'privacy',
         project: getChartProject(details),
         milestones: details.milestones,
-        // The ZK Catalog's Value Secured is the same value. TODO: decide
-        // which to show.
-        ...(zkCatalog && { aliasIds: ['tvs'] }),
       },
     })
   }
@@ -251,15 +244,7 @@ export async function getPrivacyProjectEntry(
     })
   }
 
-  if (zkCatalog) {
-    // The catalog's trusted setups say more than the privacy page's own.
-    push(zkCatalog.proofSystem)
-    push(zkCatalog.trustedSetups)
-    push(zkCatalog.verifiers)
-    push(zkCatalog.programHashes)
-  } else {
-    push(getPrivacyTrustedSetupsSection(details))
-  }
+  push(getPrivacyTrustedSetupsSection(details))
 
   const updatesSection = await getUpdatesSection(
     helpers,
@@ -294,14 +279,6 @@ export async function getPrivacyProjectEntry(
       },
     })
   }
-
-  const advice = getPrivacyAdviceSection(details)
-  if (advice) sections.splice(adversariesSectionIndex, 0, advice)
-  sections.splice(
-    adversariesSectionIndex,
-    0,
-    getPrivacyAdversariesSection(details, sections),
-  )
 
   return {
     ...getPrivacySummary(details),
@@ -342,6 +319,6 @@ export async function getPrivacyProjectEntry(
       red: details.statuses.redWarning,
       emergency: details.statuses.emergencyWarning,
     },
-    sections,
+    sections: linkPrivacySources(sections, details),
   }
 }

@@ -22,8 +22,6 @@ import {
   renderProjectMarkdown,
 } from '~/server/markdown/renderProjectMarkdown'
 import { getProjectPath } from '~/utils/project/getProjectPath'
-import type { ZkCatalogSummary } from '../../zk-catalog/v2/project/components/header/ZkCatalogProjectSummary'
-import { getProvingStackFacts } from '../../zk-catalog/v2/project/renderZkCatalogProjectMarkdown'
 import { PRIVACY_ASSESSMENT } from '../privacyAssessment'
 import { PRIVACY_WALKAWAY_TEST_TOOLTIPS } from '../privacyWalkawayTest'
 import {
@@ -39,8 +37,8 @@ import {
 /** The markdown alternate of the privacy project page, from the entry the HTML page renders. */
 export function renderPrivacyProjectMarkdown(
   entry: ProjectPrivacyEntry,
-  /** For a privacy protocol that is also in the ZK Catalog. */
-  zkCatalog?: { creator?: string; header: ZkCatalogSummary },
+  /** What another section of the project adds to the summary. */
+  merged?: { facts: ProjectFact[] },
 ): string {
   return renderProjectMarkdown({
     name: entry.name,
@@ -56,10 +54,7 @@ export function renderPrivacyProjectMarkdown(
           entry.warnings.yellow,
         ]),
       ],
-      facts: [
-        ...getFacts(entry),
-        ...(zkCatalog ? getZkCatalogFacts(entry, zkCatalog) : []),
-      ],
+      facts: [...getFacts(entry), ...(merged?.facts ?? [])],
       risks: getRiskProfile(entry),
       description: entry.description,
     },
@@ -155,22 +150,6 @@ function getProtocolFacts(
       label: REFERENCE_APP.title,
       value: formatReferenceApp(entry.referenceApp),
     },
-  ])
-}
-
-/** What the HTML page takes from the ZK Catalog: the creator under the name, the proving stack in the summary. */
-function getZkCatalogFacts(
-  entry: ProjectPrivacyEntry,
-  zkCatalog: { creator?: string; header: ZkCatalogSummary },
-) {
-  return compact([
-    // "Railgun by Railgun" says nothing
-    zkCatalog.creator !== undefined &&
-      zkCatalog.creator !== entry.name && {
-        label: 'Creator',
-        value: zkCatalog.creator,
-      },
-    ...getProvingStackFacts(zkCatalog.header),
   ])
 }
 

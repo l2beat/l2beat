@@ -208,6 +208,14 @@ export type ProjectRiskCategory =
   | 'Users can be censored if'
   | 'MEV can be extracted if'
   | 'Withdrawals can be delayed if'
+
+/** The headings a privacy risk summary may have, in their order. */
+export type PrivacyRiskCategory =
+  | 'Funds can be stolen if'
+  | 'Funds can be lost if'
+  | 'Funds can be frozen if'
+  | 'Use can be stopped if'
+  | 'Privacy can be lost if'
 // #endregion
 
 export type ProjectReviewStatus = 'inReview'

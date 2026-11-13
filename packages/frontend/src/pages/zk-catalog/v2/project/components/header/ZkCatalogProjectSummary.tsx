@@ -62,11 +62,16 @@ export function ProjectZkCatalogSummary({ project }: Props) {
   )
 }
 
-/** What a page built on another section shows of the ZK Catalog summary. */
 export type ZkCatalogSummary = Pick<
   ProjectZkCatalogEntry['header'],
   'trustedSetupsByProofSystem' | 'techStack'
 >
+
+/** What a page built on another section shows of the ZK Catalog summary. */
+export interface ZkCatalogMergedSummary extends ZkCatalogSummary {
+  /** Left out when the project is its own creator. */
+  creator?: string
+}
 
 /** Each proof system and its verifiers, small enough for a summary stat. */
 export function ProofSystemsWithVerifiers({

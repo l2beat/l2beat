@@ -11,7 +11,10 @@ import {
   formatTag,
 } from '~/server/markdown/zkSectionBodies'
 import { getProjectPath } from '~/utils/project/getProjectPath'
-import type { ZkCatalogSummary } from './components/header/ZkCatalogProjectSummary'
+import type {
+  ZkCatalogMergedSummary,
+  ZkCatalogSummary,
+} from './components/header/ZkCatalogProjectSummary'
 
 /** The markdown alternate of the ZK catalog project page, from the entry the HTML page renders. */
 export function renderZkCatalogProjectMarkdown(
@@ -50,8 +53,19 @@ function getFacts({ creator, header }: ProjectZkCatalogEntry) {
   ])
 }
 
+/** What the summary of a page built on another section shows of the project. */
+export function getZkCatalogSummaryFacts(zkCatalog: ZkCatalogMergedSummary) {
+  return compact([
+    zkCatalog.creator !== undefined && {
+      label: 'Creator',
+      value: zkCatalog.creator,
+    },
+    ...getProvingStackFacts(zkCatalog),
+  ])
+}
+
 /** The trusted setups of each proof system, then the proving stack's tags. */
-export function getProvingStackFacts({
+function getProvingStackFacts({
   trustedSetupsByProofSystem,
   techStack,
 }: ZkCatalogSummary) {

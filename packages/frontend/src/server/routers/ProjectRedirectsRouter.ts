@@ -4,6 +4,7 @@ import { ps } from '~/server/projects'
 import {
   getProjectPath,
   getProjectTvsBreakdownPath,
+  OLD_PROJECT_PATH_PREFIXES as OLD,
 } from '~/utils/project/getProjectPath'
 import { redirectToProjectPage } from './redirectToProjectPage'
 
@@ -39,23 +40,23 @@ export function createProjectRedirectsRouter() {
   const toMarkdown = (slug: string) => `${getProjectPath(slug)}.md`
 
   router.get(
-    '/layer2s/projects/:slug.md',
+    `${OLD.layer2s}/:slug.md`,
     redirect(toMarkdown, { migration: true }),
   )
-  router.get('/layer2s/projects/:slug', redirect(toPage, { migration: true }))
+  router.get(`${OLD.layer2s}/:slug`, redirect(toPage, { migration: true }))
   router.get(
-    '/layer2s/projects/:slug/tvs-breakdown',
+    `${OLD.layer2s}/:slug/tvs-breakdown`,
     redirect(getProjectTvsBreakdownPath),
   )
 
-  for (const prefix of ['/privacy/projects', '/zk-catalog', '/defi/projects']) {
+  for (const prefix of [OLD.privacy, OLD.zkCatalog, OLD.defi]) {
     router.get(`${prefix}/:slug.md`, redirect(toMarkdown))
     router.get(`${prefix}/:slug`, redirect(toPage))
   }
 
-  router.get('/interop/protocols/:slug.md', redirect(toMarkdown))
+  router.get(`${OLD.interop}/:slug.md`, redirect(toMarkdown))
   router.get(
-    '/interop/protocols/:slug',
+    `${OLD.interop}/:slug`,
     async (req: Request<{ slug: string }>, res, next) => {
       const project = await ps.getProject({
         slug: req.params.slug,

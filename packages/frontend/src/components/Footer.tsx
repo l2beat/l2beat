@@ -23,20 +23,11 @@ interface Props {
   className?: string
   /** The page's content column, so the footer's edges line up with it. */
   columnClassName?: string
-  /** False for a page the markdown registry would wrongly give a `.md`. */
-  hasMarkdown?: boolean
 }
 
-export function Footer({
-  className,
-  columnClassName,
-  hasMarkdown = true,
-}: Props) {
+export function Footer({ className, columnClassName }: Props) {
   const currentYear = new Date().getFullYear()
-  const pathname = usePathname()
-  const markdownHref = hasMarkdown
-    ? getMarkdownAlternatePath(pathname)
-    : undefined
+  const markdownHref = getMarkdownAlternatePath(usePathname())
 
   return (
     <footer
