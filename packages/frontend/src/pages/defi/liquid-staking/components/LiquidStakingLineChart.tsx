@@ -26,7 +26,7 @@ export interface LiquidStakingChartBackground {
   label: string
   color: string
   formatAxisLabel: (value: number) => string
-  formatTooltipValue: (value: number) => string
+  formatTooltipValue: (value: number, timestamp: number) => string
 }
 
 export type LiquidStakingChartData = ({ timestamp: number } & Record<
@@ -172,7 +172,7 @@ function CustomTooltip({
 
   return (
     <ChartTooltipWrapper>
-      <div className="flex w-[200px] flex-col [@media(min-width:600px)]:w-60">
+      <div className="flex min-w-[200px] flex-col [@media(min-width:600px)]:min-w-60">
         <div className="font-medium text-label-value-14 text-secondary">
           {formatDate(label)}
         </div>
@@ -187,7 +187,10 @@ function CustomTooltip({
           {background && backgroundEntry && (
             <TooltipRow
               name={background.key}
-              value={background.formatTooltipValue(backgroundEntry.value)}
+              value={background.formatTooltipValue(
+                backgroundEntry.value,
+                label,
+              )}
             />
           )}
         </div>

@@ -1,3 +1,4 @@
+import { formatCurrency } from '@l2beat/shared-pure'
 import {
   createColumnHelper,
   getCoreRowModel,
@@ -101,6 +102,11 @@ export function LiquidStakingSection({
             <span className="font-bold text-lg">
               {formatEthStaked(ethStaked.value)}
             </span>
+            {ethStaked.valueUsd !== null && (
+              <span className="font-medium text-secondary text-sm">
+                ({formatCurrency(ethStaked.valueUsd, 'usd')})
+              </span>
+            )}
             <span className="flex items-center gap-1.5 font-medium text-secondary text-xs">
               staked on Ethereum
               <Tooltip>

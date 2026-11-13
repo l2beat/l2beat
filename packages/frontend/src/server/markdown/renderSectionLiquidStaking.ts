@@ -1,7 +1,7 @@
 import type { LiquidStakingSectionProps } from '~/components/projects/sections/defi/LiquidStakingSection'
 import {
   ETH_STAKED_TITLE,
-  formatEthStaked,
+  formatEthStakedWithUsd,
   formatLatestValue,
   LIQUID_STAKING_METRICS,
 } from '~/pages/defi/liquid-staking/liquidStakingMetrics'
@@ -22,7 +22,7 @@ export function renderLiquidStakingSection({
 }: Pick<LiquidStakingSectionProps, 'entries' | 'ethStaked'>) {
   return joinBlocks([
     ethStaked
-      ? `${ETH_STAKED_TITLE}: ${withRegularSpaces(formatEthStaked(ethStaked.value))} (as of ${formatUtcDateTime(ethStaked.timestamp)})`
+      ? `${ETH_STAKED_TITLE}: ${withRegularSpaces(formatEthStakedWithUsd(ethStaked.value, ethStaked.valueUsd))} (as of ${formatUtcDateTime(ethStaked.timestamp)})`
       : '',
     table(
       [

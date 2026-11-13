@@ -26,7 +26,7 @@ import { formatDays, formatYield } from '../formatLiquidStaking'
 import {
   COST_OF_EXIT_METRIC,
   ETH_STAKED_TITLE,
-  formatEthStaked,
+  formatEthStakedWithUsd,
   formatMetricDate,
   YIELD_METRIC,
 } from '../liquidStakingMetrics'
@@ -43,6 +43,7 @@ type ChartProject = Pick<
 >
 
 const NETWORK_KEY = 'network'
+const ETH_STAKED_KEY = 'ethStaked'
 
 const RANGE_OPTIONS: { value: ChartRangeOptionValue; label: string }[] = [
   { value: '30d', label: '30D' },
@@ -51,14 +52,6 @@ const RANGE_OPTIONS: { value: ChartRangeOptionValue; label: string }[] = [
   { value: '1y', label: '1Y' },
   { value: 'max', label: 'MAX' },
 ]
-
-const ETH_STAKED: LiquidStakingChartBackground = {
-  key: 'ethStaked',
-  label: ETH_STAKED_TITLE,
-  color: 'var(--chart-ethereum-secondary)',
-  formatAxisLabel: (value) => formatNumber(value),
-  formatTooltipValue: formatEthStaked,
-}
 
 export function LiquidStakingCharts({
   projects,
@@ -127,10 +120,23 @@ function YieldChart({ projectSeries, range }: ChartProps) {
         timestamp: point.timestamp,
         ...point.projects,
         [NETWORK_KEY]: point.network,
-        [ETH_STAKED.key]: point.ethStaked,
+        [ETH_STAKED_KEY]: point.ethStaked,
       })),
     [data],
   )
+  const ethStaked = useMemo<LiquidStakingChartBackground>(() => {
+    const usd = new Map(
+      data?.map((point) => [point.timestamp, point.ethStakedUsd]),
+    )
+    return {
+      key: ETH_STAKED_KEY,
+      label: ETH_STAKED_TITLE,
+      color: 'var(--chart-ethereum-secondary)',
+      formatAxisLabel: (value) => formatNumber(value),
+      formatTooltipValue: (value, timestamp) =>
+        formatEthStakedWithUsd(value, usd.get(timestamp) ?? null),
+    }
+  }, [data])
 
   return (
     <ChartCard
@@ -154,7 +160,7 @@ function YieldChart({ projectSeries, range }: ChartProps) {
         formatTooltipDate={(timestamp) =>
           formatMetricDate(YIELD_METRIC, timestamp)
         }
-        background={ETH_STAKED}
+        background={ethStaked}
       />
     </ChartCard>
   )
