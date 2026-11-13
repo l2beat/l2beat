@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { ChartTimeRangeValue } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import type { ActivityResolution } from '~/server/features/layer2s/activity/utils/getActivityResolution'
 
 /**
@@ -18,9 +19,9 @@ export function getActivityPeriodSeconds(
 
 /** A chart's range, ending with the newest block when its last period is under way */
 export function capTimeRange(
-  range: [number, number] | undefined,
+  range: ChartTimeRangeValue,
   liveUntil: number | undefined,
-): [number, number] | undefined {
+): ChartTimeRangeValue {
   if (!range || liveUntil === undefined) return range
   return [range[0], Math.min(range[1], liveUntil + 1)]
 }
