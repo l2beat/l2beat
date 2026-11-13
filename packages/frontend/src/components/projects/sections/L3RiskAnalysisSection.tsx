@@ -84,7 +84,7 @@ export function L3RiskAnalysisSection({
       </div>
 
       <CombinedRiskTable l2={l2} l3={l3} combined={combined} />
-      <div className="mt-8 flex flex-col gap-6 md:flex-row">
+      <div className="mt-8 flex flex-col gap-10 md:flex-row md:gap-6">
         <RosetteTile>
           <span className="font-medium text-label-value-15 text-primary">
             L2 & L3 individual risks

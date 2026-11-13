@@ -147,14 +147,17 @@ export function InteropTransfersTableView({
 
   return (
     <>
-      <BasicTable
-        skeletonCount={TRANSFERS_PER_PAGE}
-        table={table}
-        // 12px column gaps, like the deployments table, so the chain
-        // pairs fit at 1280.
-        tableWrapperClassName="pb-0 md:[&_td]:pr-3 md:[&_th]:pr-3"
-        isLoading={isInitialLoading}
-      />
+      {/* 12px column gaps, like the deployments table, so the chain pairs
+          fit at 1280. On a wrapper: the sticky header copy sits beside the
+          table wrapper and must get the same gaps. */}
+      <div className="md:[&_td]:pr-3 md:[&_th]:pr-3">
+        <BasicTable
+          skeletonCount={TRANSFERS_PER_PAGE}
+          table={table}
+          tableWrapperClassName="pb-0"
+          isLoading={isInitialLoading}
+        />
+      </div>
       {fetchedItems.length > 0 && pageCount > 1 && (
         <div className="mt-4">
           <Pagination className="min-w-full px-1">

@@ -381,7 +381,7 @@ function TechStackSection({
   return (
     <div className="mt-3 flex flex-col gap-2 md:gap-3">
       <h2 className="font-semibold text-label-value-15">Tech stack</h2>
-      <div className="flex gap-2 rounded-sm border-divider max-md:flex-col md:items-end md:border md:p-4">
+      <div className="flex gap-2 rounded-sm border-divider max-md:flex-col max-md:gap-4 md:items-end md:border md:p-4">
         {leftSideEmpty && rightSideEmpty && <NoDataBadge />}
         {!leftSideEmpty && (
           <div className="flex flex-col">
@@ -395,7 +395,7 @@ function TechStackSection({
           </div>
         )}
         {!leftSideEmpty && !rightSideEmpty && (
-          <FilledArrowIcon className="mb-2.5 fill-secondary max-md:hidden" />
+          <FilledArrowIcon className="mb-px fill-secondary max-md:hidden" />
         )}
         {!rightSideEmpty && (
           <div className="flex flex-col">
