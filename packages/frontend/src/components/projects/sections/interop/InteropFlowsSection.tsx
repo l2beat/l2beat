@@ -112,7 +112,14 @@ function Content({
   const ownChain = inactiveChains.find(
     (chain) => chain.id === defaultStatsChainId,
   )
-  const ownChainInactive = !!data && !!ownChain
+  // Transfers of unknown value add no volume but still count: only a chain
+  // with no transfers at all gets the empty state.
+  const ownChainData = data?.chainData.find(
+    (chain) => chain.chainId === defaultStatsChainId,
+  )
+  const ownChainHasTransfers =
+    (ownChainData?.transfersIn ?? 0) + (ownChainData?.transfersOut ?? 0) > 0
+  const ownChainInactive = !!data && !!ownChain && !ownChainHasTransfers
   const otherInactiveChains = inactiveChains.filter(
     (chain) => chain.id !== defaultStatsChainId,
   )
