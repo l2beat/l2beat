@@ -6,7 +6,7 @@ import { HOME_TEXT } from '../homeStyles'
 import { HomeChange } from './HomeChange'
 
 /**
- * One headline figure with its change, e.g. "1.39 TiB +4.89% 1y", and a
+ * One headline figure with its change, e.g. "1.39 TiB +4.89% / 1y", and a
  * sparkline underneath. Where a `HomeKpiRow` stacks its KPIs (`kpi-rows`),
  * the change goes under the figure, both centered beside the sparkline in
  * the row's columns. The figure keeps its size, as in every other card.
@@ -66,7 +66,7 @@ export function HomeKpiTile({
           {value !== undefined && hasChange && (
             <span className="flex items-baseline gap-1 font-medium text-label-value-13">
               <HomeChange value={change} />
-              <span className="text-secondary">{HOME_CHART_RANGE}</span>
+              <span className="text-secondary">/ {HOME_CHART_RANGE}</span>
             </span>
           )}
         </span>
