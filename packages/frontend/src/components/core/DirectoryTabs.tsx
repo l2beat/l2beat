@@ -69,7 +69,7 @@ const DirectoryTabsTrigger = ({
   <TabsPrimitive.Trigger
     ref={ref}
     className={cn(
-      'flex h-8 shrink-0 items-center justify-center gap-1.5 rounded-t-md max-md:px-6 md:h-10 md:min-w-60 md:rounded-t-xl',
+      'flex h-8 shrink-0 items-center justify-center gap-1.5 rounded-t-md max-md:px-6 md:h-10 md:min-w-fit md:shrink md:basis-60 md:rounded-t-xl md:px-4',
       'whitespace-nowrap font-semibold text-xs md:text-sm',
       'ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset',
       'data-[state=inactive]:bg-surface-tertiary dark:data-[state=inactive]:bg-surface-secondary',
