@@ -30,7 +30,7 @@ export function BridgeTypeBadge({
         <Badge
           className={cn(
             INTEROP_TYPE_TO_BADGE_BG_COLOR[bridgeType],
-            'cursor-pointer whitespace-nowrap text-white uppercase',
+            'cursor-pointer whitespace-nowrap font-medium text-label-value-12 text-white',
             className,
           )}
           padding={padding}
