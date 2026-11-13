@@ -304,6 +304,25 @@ describe('search bar search', () => {
     ).toEqual([{ name: 'Safe', href: '/defi/projects/safe', category: 'defi' }])
   })
 
+  it('lists recently added projects with a page, newest first', async () => {
+    env.CLIENT_SIDE_DEFI_ENABLED = false
+    ps.getProjects = async () =>
+      [
+        { ...l2Project('scroll', 'Scroll'), addedAt: 1, zkCatalogInfo: {} },
+        // No page the search bar links to.
+        { ...defiProject('aave', 'Aave', {}), addedAt: 3 },
+        { ...l2Project('base', 'Base'), addedAt: 2 },
+      ] as never
+
+    const index = decodeSearchIndex(await buildSearchIndex())
+
+    expect(index.recentlyAdded.map((entry) => entry.href)).toEqual([
+      '/layer2s/projects/base',
+      '/layer2s/projects/scroll',
+      '/zk-catalog/scroll',
+    ])
+  })
+
   it('names an interop protocol by its interop name and finds it by alias', async () => {
     ps.getProjects = async () =>
       [

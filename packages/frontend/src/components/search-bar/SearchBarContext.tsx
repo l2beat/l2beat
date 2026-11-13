@@ -1,5 +1,4 @@
 import { createContext, useContext, useState } from 'react'
-import type { SearchBarProject } from '~/server/features/search-bar/types'
 import { SearchBarDialog } from './SearchBarDialog'
 
 type SearchBarContextValue = {
@@ -9,20 +8,16 @@ type SearchBarContextValue = {
 
 const SearchBarContext = createContext<SearchBarContextValue | null>(null)
 
-interface Props {
-  children: React.ReactNode
-  recentlyAddedProjects: SearchBarProject[]
-}
-
 export function SearchBarContextProvider({
   children,
-  recentlyAddedProjects,
-}: Props) {
+}: {
+  children: React.ReactNode
+}) {
   const [open, setOpen] = useState(false)
 
   return (
     <SearchBarContext.Provider value={{ open, setOpen }}>
-      <SearchBarDialog recentlyAdded={recentlyAddedProjects} />
+      <SearchBarDialog />
       {children}
     </SearchBarContext.Provider>
   )
