@@ -161,15 +161,10 @@ function UpgradeCallout({
   name: string
   description: string
 }) {
-  // Emergency paths skip the exit window, so they get the risk color.
-  const isEmergency = /emergency/i.test(name)
+  // Neutral for every path: the description states the risk, and a colour
+  // picked from the name ("emergency") contradicted paths it didn't match.
   return (
-    <div
-      className={cn(
-        'border-l-[3px] py-1 pl-3.5',
-        isEmergency ? 'border-negative' : 'border-divider',
-      )}
-    >
+    <div className="border-divider border-l-[3px] py-1 pl-3.5">
       <p className="mb-0.5 font-semibold text-label-value-14">{name}</p>
       <Markdown className="text-paragraph-14 md:text-paragraph-15">
         {description}

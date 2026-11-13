@@ -74,21 +74,13 @@ function TransactionDetails({
 }) {
   return (
     <div className="mb-4">
-      <div className="mb-2 flex justify-between max-lg:flex-col lg:gap-2">
-        <div className="flex items-center gap-2">
-          {showHistoricalTransactions ? (
-            transaction.untilBlock ? (
-              <Badge type="gray" size="small">
-                Historical
-              </Badge>
-            ) : (
-              <Badge type="pink" size="small">
-                Currently used
-              </Badge>
-            )
-          ) : null}
+      {showHistoricalTransactions && (
+        <div className="mb-2 flex items-center gap-2">
+          <Badge type="gray" size="small">
+            {transaction.untilBlock ? 'Historical' : 'Currently used'}
+          </Badge>
         </div>
-      </div>
+      )}
 
       <div className="border-divider border-l-2 pl-3">
         <p className="mb-1 text-sm">
@@ -108,13 +100,12 @@ function TransactionDetails({
         {transaction.sequencers && transaction.sequencers.length > 0 && (
           <div className="mb-1 text-sm">
             <span className="font-medium">Sequencers: </span>
-            <div className="inline-flex gap-2">
-              {transaction.sequencers?.map((sequencer) => (
-                <EtherscanLink
-                  key={sequencer}
-                  address={sequencer}
-                  className="whitespace-nowrap"
-                />
+            <div className="inline-flex flex-wrap gap-x-1.5">
+              {transaction.sequencers?.map((sequencer, i, all) => (
+                <span key={sequencer} className="whitespace-nowrap">
+                  <EtherscanLink address={sequencer} />
+                  {i < all.length - 1 && ','}
+                </span>
               ))}
             </div>
           </div>

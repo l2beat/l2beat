@@ -1,4 +1,5 @@
 import type { ProjectUpgradeableActor, ReferenceLink } from '@l2beat/config'
+import { Fragment } from 'react'
 import { Badge } from '~/components/badge/Badge'
 import { Callout } from '~/components/Callout'
 import {
@@ -167,40 +168,32 @@ export function ContractEntry({
               <PastUpgradesDialog pastUpgrades={contract.pastUpgrades} />
             )}
           {contract.description && (
-            <Markdown className="word-break-word mt-2 text-paragraph-15 md:text-paragraph-16">
+            <Markdown className="word-break-word mt-2 text-paragraph-15 md:text-paragraph-16 [&>ul>li+li]:mt-2">
               {contract.description}
             </Markdown>
           )}
           {contract.escrow && <EscrowDetailsEntry escrow={contract.escrow} />}
           {contract.upgradeableBy && contract.upgradeableBy.length > 0 && (
-            <div className="mt-2 flex flex-wrap text-paragraph-15 md:text-paragraph-16">
-              <span className="mr-1.5 font-medium">Can be upgraded by:</span>
-              <div className="flex flex-wrap gap-x-1.5">
-                {contract.upgradeableBy.map((entry, i, all) => {
-                  const separator = i < all.length - 1 ? ',' : ''
-                  return entry.unreachable ? (
-                    <span
-                      key={entry.name}
-                      className={linkVariants({
-                        variant: 'plain',
-                        underline: false,
-                      })}
-                    >
-                      {`${entry.name} with ${entry.delay} delay${separator}`}
-                    </span>
+            // One flat run, so the first upgrader stays on the key's line and
+            // the rest wrap after it; commas sit outside the links.
+            <p className="mt-2 text-paragraph-15 md:text-paragraph-16">
+              <span className="font-medium">Can be upgraded by:</span>{' '}
+              {contract.upgradeableBy.map((entry, i, all) => (
+                <Fragment key={entry.name}>
+                  {entry.unreachable ? (
+                    <span>{`${entry.name} with ${entry.delay} delay`}</span>
                   ) : (
                     <a
-                      key={entry.name}
                       className={linkVariants()}
                       href={`#${entry.id ?? entry.name}`}
                     >
                       {`${entry.name} with ${entry.delay} delay`}
-                      {separator}
                     </a>
-                  )
-                })}
-              </div>
-            </div>
+                  )}
+                  {i < all.length - 1 && ', '}
+                </Fragment>
+              ))}
+            </p>
           )}
           {contract.upgradeDelay && (
             <p className="mt-2 text-paragraph-15 md:text-paragraph-16">

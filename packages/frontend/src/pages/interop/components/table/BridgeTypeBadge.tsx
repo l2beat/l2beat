@@ -15,6 +15,8 @@ interface BridgeTypeBadgeProps extends Omit<BadgeProps, 'children'> {
   bridgeType: InteropBridgeType
 }
 
+const DARK_TEXT_TYPES = new Set<string>(['lockAndMint', 'burnAndMint'])
+
 export function BridgeTypeBadge({
   bridgeType,
   className,
@@ -30,7 +32,9 @@ export function BridgeTypeBadge({
         <Badge
           className={cn(
             INTEROP_TYPE_TO_BADGE_BG_COLOR[bridgeType],
-            'cursor-pointer whitespace-nowrap text-white uppercase',
+            // White on the yellow and teal fills was ~2.7:1; ink reads on both.
+            DARK_TEXT_TYPES.has(bridgeType) ? 'text-black' : 'text-white',
+            'cursor-pointer whitespace-nowrap font-medium text-label-value-12',
             className,
           )}
           padding={padding}

@@ -35,13 +35,16 @@ export function RiskBanner({
   info = 'full',
 }: RiskBannerProps) {
   const adjSentiment = sentiment ?? 'neutral'
+  // With both paths, the emergency explanation follows its value directly:
+  // no fixed height, 8px between value and text, like the regular half.
+  const describesEmergency = !!regular && !!description && info === 'full'
   const content = (
     <div>
       <div
         className={cn(
           'flex flex-row items-stretch rounded-lg',
-          size === 'regular' && 'h-16',
-          size === 'large' && 'h-20.5',
+          !describesEmergency && size === 'regular' && 'h-16',
+          !describesEmergency && size === 'large' && 'h-20.5',
           sentimentToTransparentBgColor(adjSentiment),
           (regular || warning) && info === 'full' && 'rounded-b-none',
           className,
@@ -55,7 +58,12 @@ export function RiskBanner({
             className,
           )}
         />
-        <div className="flex flex-1 flex-col items-start justify-center gap-1 p-4">
+        <div
+          className={cn(
+            'flex flex-1 flex-col items-start justify-center gap-1 p-4',
+            describesEmergency && 'pb-2',
+          )}
+        >
           <div
             className={cn(
               'text-left',
@@ -87,7 +95,7 @@ export function RiskBanner({
           </div>
         </div>
       </div>
-      {regular && description && info === 'full' && (
+      {describesEmergency && (
         // The description explains the emergency path, so it sits in that
         // block, above the regular path rather than under it.
         <div className="relative">
@@ -127,7 +135,7 @@ export function RiskBanner({
           >
             <div
               className={cn(
-                'mb-1 font-bold text-base md:text-lg',
+                'mb-2 font-bold text-base md:text-lg',
                 sentimentToTextColor(regular.sentiment ?? 'neutral', {
                   vibrant: true,
                 }),

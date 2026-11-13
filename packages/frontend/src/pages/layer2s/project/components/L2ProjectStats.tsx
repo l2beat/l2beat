@@ -37,12 +37,7 @@ export function ProjectL2Stats({ project, className }: Props) {
     <ProjectSummaryStat
       key="tvs"
       titleAsChild
-      title={
-        <div>
-          <span className="lg:max-xl:hidden">Value secured</span>
-          <span className="max-lg:hidden xl:hidden">TVS</span>
-        </div>
-      }
+      title={<div>Value secured</div>}
       value={
         project.header.tvs?.breakdown ? (
           <span className="mb-0.5 flex items-center gap-2">
@@ -78,12 +73,7 @@ export function ProjectL2Stats({ project, className }: Props) {
     <ProjectSummaryStat
       key="ops-count"
       titleAsChild
-      title={
-        <div>
-          <span className="lg:max-xl:hidden">Past day UOPS</span>
-          <span className="max-lg:hidden xl:hidden">Daily UOPS</span>
-        </div>
-      }
+      title={<div>Past day UOPS</div>}
       tooltip="User operations per second averaged over the past day displayed together with a percentage change compared to 7D ago."
       value={
         project.header.activity ? (

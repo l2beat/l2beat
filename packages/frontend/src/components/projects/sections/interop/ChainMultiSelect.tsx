@@ -49,7 +49,7 @@ export function ChainMultiSelect({ label, chains, selected, onChange }: Props) {
             key={chain.id}
             src={chain.iconUrl}
             alt={chain.name}
-            className="size-4 rounded-full bg-white shadow"
+            className="size-4 rounded-full bg-white"
             style={{ zIndex: selectedChains.length - i }}
           />
         ))}

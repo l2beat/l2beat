@@ -171,7 +171,7 @@ function TransactionDetails({
                 Historical
               </Badge>
             ) : (
-              <Badge type="pink" size="small">
+              <Badge type="gray" size="small">
                 Currently used
               </Badge>
             )
