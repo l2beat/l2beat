@@ -217,7 +217,7 @@ export const getL2ActivityColumns = (
       }),
     columnHelper.accessor((row) => row.data?.ratio, {
       id: 'data_ratio',
-      header: 'UOPS/TPS ratio',
+      header: 'UOPS/TPS\nratio',
       sortUndefined: 'last',
       cell: (ctx) => {
         const data = ctx.row.original.data
