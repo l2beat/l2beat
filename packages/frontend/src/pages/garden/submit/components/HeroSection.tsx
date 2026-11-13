@@ -45,7 +45,7 @@ export function HeroSection() {
           {/* A 1 px border around 38 px matches the 40 px fill button. */}
           <a
             href={GARDEN_PATH}
-            className="inline-flex w-full items-center justify-center gap-1 rounded-lg border border-divider px-6 py-[7px] font-bold text-base text-primary sm:w-max lg:rounded-none lg:border-0 lg:p-0 lg:font-medium lg:text-label-value-15 lg:text-link lg:hover:text-blue-550 lg:hover:underline"
+            className="inline-flex w-full items-center justify-center gap-1 rounded-lg border border-divider px-6 py-[7px] font-bold text-base text-primary hover:bg-surface-secondary sm:w-max"
           >
             See reviewed protocols
           </a>

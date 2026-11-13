@@ -42,7 +42,7 @@ const KINDS: {
   {
     kind: 'icon',
     label: 'Icon',
-    hint: 'Wallets and lists - works down to 20px',
+    hint: 'Wallets and lists – works down to 20px',
     frame: 'h-[120px]',
     width: 56,
   },
@@ -128,7 +128,7 @@ export function BadgeSection({
             {BADGE_RULES.map((rule) => (
               <li
                 key={rule}
-                className="flex gap-2.5 text-pretty text-paragraph-14 text-secondary md:text-paragraph-15"
+                className="flex gap-2.5 text-pretty text-paragraph-14 md:text-paragraph-15"
               >
                 <SproutIcon className="mt-1 size-4 shrink-0 text-garden-accent" />
                 <span>
@@ -192,7 +192,7 @@ function BadgeTile({
           <span className={cn(shortLabel && 'max-sm:hidden')}>{label}</span>
           {shortLabel && <span className="sm:hidden">{shortLabel}</span>}
         </span>
-        <div className="flex shrink-0 items-center gap-1 lg:gap-0.5">
+        <div className="flex shrink-0 items-center gap-1">
           <a
             href={asset.url}
             download={asset.fileName}

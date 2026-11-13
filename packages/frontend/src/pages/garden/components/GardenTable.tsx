@@ -33,7 +33,7 @@ export function GardenTable({ entries }: { entries: GardenEntry[] }) {
       <TableBody>
         {entries.map((entry, rowIndex) => (
           <TableRow key={entry.slug} highlightId={undefined}>
-            <TableCell className="whitespace-nowrap max-md:py-3">
+            <TableCell className="whitespace-nowrap max-md:py-3 max-md:pr-0">
               {/* On phones the row stacks, so all four plants show without a sideways scroll. */}
               <div className="flex items-center justify-between gap-3">
                 <ProjectCell entry={entry} />
@@ -76,8 +76,8 @@ function CropLettersHeader() {
       </colgroup>
       <TableHeader>
         <TableHeaderRow {...stickyTableColumnRowProps}>
-          {/* The body cell's start, so the letters sit over their plants. */}
-          <TableHead className="max-md:first:pl-3">
+          {/* The body cell's insets, so the letters sit over their plants. */}
+          <TableHead className="max-md:pr-0 max-md:first:pl-3">
             <CropLetters className={cn(PHONE_PLANTS_CLASS, 'md:hidden')} />
           </TableHead>
           <TableHead className="max-md:hidden">
@@ -210,7 +210,7 @@ function MetricCell({ metric }: { metric: GardenEntry['metric'] }) {
     <div className="inline-grid grid-cols-[auto_3.5rem] items-baseline gap-x-1 gap-y-px text-right">
       {metric ? (
         <>
-          <span className="font-medium text-[12px] text-primary">
+          <span className="font-medium text-label-value-13 text-primary">
             {metric.label}
           </span>
           <span className="row-start-2 font-semibold text-base text-primary tabular-nums">
@@ -231,7 +231,7 @@ function MetricCell({ metric }: { metric: GardenEntry['metric'] }) {
       ) : (
         <>
           {/* Holds the label's line, so the dash sits on the amounts' line. */}
-          <span aria-hidden className="text-[12px]">
+          <span aria-hidden className="text-label-value-13">
             &nbsp;
           </span>
           <span className="row-start-2 text-secondary">&mdash;</span>

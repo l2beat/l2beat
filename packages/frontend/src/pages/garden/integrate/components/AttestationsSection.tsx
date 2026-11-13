@@ -67,7 +67,7 @@ export function AttestationsSection({
           {VERIFY_STEPS.map((step, index) => (
             <li
               key={step}
-              className="flex gap-2.5 text-pretty text-paragraph-14 text-secondary md:text-paragraph-15"
+              className="flex gap-2.5 text-pretty text-paragraph-14 md:text-paragraph-15"
             >
               {/* The 16 px marker slot of the sprout lists, so every list shares one indent. */}
               <span className="w-4 shrink-0 font-semibold text-primary tabular-nums">

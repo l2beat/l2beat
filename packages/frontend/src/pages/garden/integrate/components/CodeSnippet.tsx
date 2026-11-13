@@ -62,7 +62,7 @@ export function CodeSnippet({
         // The height cuts a line in half, so a long body reads as scrollable.
         <pre
           className={cn(
-            'max-h-[30.75rem] overflow-auto p-4 font-mono text-paragraph-13 leading-relaxed',
+            'max-h-[30.75rem] overflow-auto p-4 font-mono text-paragraph-13 leading-relaxed max-md:max-h-[322px]',
             wrap && 'whitespace-pre-wrap break-words',
           )}
         >
@@ -78,7 +78,7 @@ export function RequestHeader({ url }: { url: string }) {
   const segments = url.split('/')
   return (
     <span className="flex min-w-0 items-center gap-2.5 max-md:items-start">
-      <span className="shrink-0 rounded bg-garden-accent px-1.5 py-0.5 font-bold text-[11px] text-pure-white uppercase tracking-wider dark:bg-garden-border">
+      <span className="shrink-0 rounded bg-garden-accent px-1.5 py-0.5 font-bold text-[11px] text-pure-white uppercase leading-4 tracking-wider dark:bg-garden-border">
         get
       </span>
       <code className="min-w-0 overflow-x-auto whitespace-nowrap font-mono text-paragraph-13 max-md:whitespace-normal max-md:break-words">

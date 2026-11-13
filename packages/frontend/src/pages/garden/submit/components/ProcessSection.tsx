@@ -43,7 +43,7 @@ export function ProcessSection() {
                 {index + 1}
               </span>
               {/* Centred on the 32 / 36 px step number. */}
-              <h3 className="text-balance pt-1.5 font-bold text-heading-18 md:text-heading-20">
+              <h3 className="text-balance pt-1.5 font-bold text-heading-16 md:pt-2 md:text-heading-18">
                 {step.title}
               </h3>
               <p className="mt-1.5 text-pretty text-paragraph-14 text-secondary md:text-paragraph-15">

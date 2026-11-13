@@ -53,7 +53,7 @@ function ApiNotes() {
         {API_NOTES.map((note) => (
           <li
             key={note}
-            className="flex gap-2.5 text-pretty text-paragraph-14 text-secondary md:text-paragraph-15"
+            className="flex gap-2.5 text-pretty text-paragraph-14 md:text-paragraph-15"
           >
             <SproutIcon className="mt-1 size-4 shrink-0 text-garden-accent" />
             <span>
@@ -62,7 +62,7 @@ function ApiNotes() {
           </li>
         ))}
       </ul>
-      <p className="mt-4 text-pretty text-paragraph-14 text-secondary md:text-paragraph-15">
+      <p className="mt-4 text-pretty text-paragraph-14 md:text-paragraph-15">
         Browse the{' '}
         <ExternalLink href={CROPS_API_DOCS_URL}>interactive docs</ExternalLink>{' '}
         or read the{' '}
