@@ -76,12 +76,25 @@ export function InclusionDelayComparisonChart({ comparison }: Props) {
   )
 }
 
+// Blues would read as Ethereum's dashed reference line; amber and vermilion
+// sit too close to the first series' orange on thin lines.
+const SKIPPED_PROJECT_COLORS = new Set([
+  '#56b4e9',
+  '#0072b2',
+  '#88ccee',
+  '#f5c710',
+  '#d55e00',
+])
+
 function getComparisonChartMeta(
   series: InclusionDelayComparisonSeries[],
 ): ChartMeta {
+  const projectCount = series.filter((entry) => entry.type === 'project').length
   const projectColors = generateAccessibleColors(
-    series.filter((entry) => entry.type === 'project').length,
+    projectCount + SKIPPED_PROJECT_COLORS.size,
   )
+    .filter((color) => !SKIPPED_PROJECT_COLORS.has(color))
+    .slice(0, projectCount)
 
   let projectIndex = 0
   return Object.fromEntries(

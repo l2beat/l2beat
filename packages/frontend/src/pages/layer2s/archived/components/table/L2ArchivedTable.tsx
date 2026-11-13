@@ -10,18 +10,19 @@ import { l2ArchivedColumns } from './columns'
 
 /**
  * On desktop both verdict tables are seen one above the other, so each shared
- * column gets the same width in both instead of sizing to its own rows. The
- * total column takes up the spare width. `min-width` too, because the header
- * divider row's colspan defeats `width`. Narrower screens scroll each table
- * on its own, so they keep content-sized columns.
+ * column gets the same width in both instead of sizing to its own rows.
+ * `min-width` too, because the header divider row's colspan defeats `width`.
+ * Purpose comes last and takes the spare width, so the value the tables sort
+ * by stays in view at 1280px. Narrower screens scroll each table on its own,
+ * so they keep content-sized columns.
  */
 const ALIGNED_COLUMN_WIDTHS = [
   'lg:[&_th:first-child]:w-[52px] lg:[&_th:first-child]:min-w-[52px]',
-  'lg:[&_th[data-column-id=name]]:w-[256px] lg:[&_th[data-column-id=name]]:min-w-[256px]',
+  'lg:[&_th[data-column-id=name]]:w-[240px] lg:[&_th[data-column-id=name]]:min-w-[240px]',
   'lg:[&_th[data-column-id=Risks]]:w-[64px] lg:[&_th[data-column-id=Risks]]:min-w-[64px]',
   'lg:[&_th[data-column-id=type]]:w-[168px] lg:[&_th[data-column-id=type]]:min-w-[168px]',
-  'lg:[&_th[data-column-id=proofSystem]]:w-[168px] lg:[&_th[data-column-id=proofSystem]]:min-w-[168px]',
-  'lg:[&_th[data-column-id=Purpose]]:w-[180px] lg:[&_th[data-column-id=Purpose]]:min-w-[180px]',
+  'lg:[&_th[data-column-id=proofSystem]]:w-[144px] lg:[&_th[data-column-id=proofSystem]]:min-w-[144px]',
+  'lg:[&_th[data-column-id=total]]:w-[132px] lg:[&_th[data-column-id=total]]:min-w-[132px]',
 ].join(' ')
 
 interface Props {

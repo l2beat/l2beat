@@ -52,7 +52,9 @@ export function getL2RiskDataAvailabilityColumns(hideProofSystem?: boolean) {
       }),
       (row) => ({
         change: row.dataPosted?.change,
-        period: row.dataPosted?.changePeriod,
+        // Data posted always compares to 7 days ago, so a tab with no data still
+        // labels its change column.
+        period: row.dataPosted?.changePeriod ?? '7D',
       }),
     ),
     !hideProofSystem &&
