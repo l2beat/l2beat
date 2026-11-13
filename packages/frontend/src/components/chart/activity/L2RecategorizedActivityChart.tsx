@@ -142,6 +142,9 @@ export function L2RecategorizedActivityChart({
           scale: scale === 'symlog' ? scaleSymlog : undefined,
           domain: 'autoIfSingle',
           unit: metric === 'uops' ? ' UOPS' : ' TPS',
+          // Abbreviated like the figure above it ("30.00K"), as tvs and
+          // costs axes are
+          format: (value) => formatActivityCount(value),
         }}
         syncedUntil={data?.syncedUntil}
         renderTooltip={(row, keys) => (
