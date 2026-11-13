@@ -27,16 +27,16 @@ export function BridgingTypeBreakdown({
         {items.map((item) => (
           <div
             key={item.type}
-            className="flex items-center justify-between gap-2 text-label-value-13"
+            className="flex items-start justify-between gap-2 text-label-value-13"
           >
-            <div className="flex min-w-0 items-center gap-1.5">
+            <div className="flex min-w-0 items-start gap-1.5">
               <span
                 className={cn(
-                  'size-2 shrink-0 rounded-full',
+                  'mt-1 size-2 shrink-0 rounded-full',
                   INTEROP_TYPE_TO_BG_COLOR[item.type],
                 )}
               />
-              <span className="truncate font-medium">
+              <span className="whitespace-normal font-medium leading-4">
                 {TRANSFER_TYPE_DISPLAY[item.type].label}
               </span>
             </div>

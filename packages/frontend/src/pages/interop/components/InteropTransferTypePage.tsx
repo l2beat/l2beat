@@ -94,13 +94,11 @@ function Content({
 
   return (
     <>
-      <div className="max-md:hidden">
+      {/* Above the selector at every width, as in the picker state */}
+      <div className="max-md:bg-surface-primary max-md:pb-4">
         <HeaderWithDescription type={type} />
       </div>
       <MultiChainSelector chains={interopChains} protocols={protocols} />
-      <div className="max-md:bg-surface-primary md:hidden">
-        <HeaderWithDescription type={type} />
-      </div>
       <Widgets type={type} interopChains={interopChains} />
     </>
   )

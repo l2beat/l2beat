@@ -94,14 +94,9 @@ function makeNameColumn<T extends CompactProtocolEntry>(opts?: {
   })
 }
 
-/** Hides a descriptive column with CSS below md. See `hideCategoryOnPhones`. */
-const PHONE_HIDDEN_META = {
-  headClassName: 'max-md:hidden',
-  cellClassName: 'max-md:hidden',
-}
-
 function makeCategoryColumn<T extends CompactProtocolEntry>(opts?: {
-  hideOnPhones?: boolean
+  /** Hides it with CSS below xl. See `hideCollapsedColumnsBeforeMount`. */
+  hideBelowXl?: boolean
 }) {
   return createColumnHelper<T>().accessor((row) => row.type, {
     id: 'type',
@@ -112,13 +107,8 @@ function makeCategoryColumn<T extends CompactProtocolEntry>(opts?: {
       </div>
     ),
     meta: {
-      headClassName: cn(
-        'text-2xs',
-        opts?.hideOnPhones && PHONE_HIDDEN_META.headClassName,
-      ),
-      cellClassName: opts?.hideOnPhones
-        ? PHONE_HIDDEN_META.cellClassName
-        : undefined,
+      headClassName: cn('text-2xs', opts?.hideBelowXl && 'max-xl:hidden'),
+      cellClassName: opts?.hideBelowXl ? 'max-xl:hidden' : undefined,
     },
   })
 }
@@ -148,9 +138,9 @@ function makeLast24hVolumeColumn<T extends CompactProtocolEntry>(
 
 const commonColumns = [
   makeLogoColumn<ProtocolEntry>(),
-  // 8px from the logo, like the summary's protocols table.
+  // 8px from the logo, like the summary's protocols table; one line from lg.
   makeNameColumn<ProtocolEntry>({
-    cellClassName: 'md:pl-2!',
+    cellClassName: 'md:pl-2! lg:whitespace-nowrap',
     headClassName: 'md:pl-2!',
   }),
 ]
@@ -281,11 +271,12 @@ export function getAllProtocolsColumns(
   hideTokensColumn?: boolean,
   tokenId?: string,
   /**
-   * Hides Category with CSS on phones, for the markup painted before the
-   * viewport is known. After that the table hides it through its column
-   * visibility, which the Columns menu can turn back on.
+   * Hides Category below xl and Transfer types below md with CSS, for the
+   * markup painted before the viewport is known. After that the table hides
+   * them through its column visibility, which the Columns menu can turn back
+   * on. See `AllProtocolsTable`.
    */
-  hideCategoryOnPhones?: boolean,
+  hideCollapsedColumnsBeforeMount?: boolean,
 ) {
   return compact([
     columnHelper.accessor((_, index) => index + 1, {
@@ -299,8 +290,8 @@ export function getAllProtocolsColumns(
       size: 44,
     }),
     ...commonColumns,
-    hideCategoryOnPhones
-      ? makeCategoryColumn<ProtocolEntry>({ hideOnPhones: true })
+    hideCollapsedColumnsBeforeMount
+      ? makeCategoryColumn<ProtocolEntry>({ hideBelowXl: true })
       : categoryColumn,
     !hideTypeColumn &&
       columnHelper.accessor('bridgeTypes', {
@@ -308,10 +299,10 @@ export function getAllProtocolsColumns(
         enableSorting: false,
         cell: (ctx) => {
           return (
-            // One badge per line on phones, so the volume after it stays in
-            // view; up to two per line from md, so names stay on one line.
+            // One badge per line, so the column stays narrow and the figures
+            // after it stay in view; side by side from 2xl, where there's room.
             <div
-              className="flex flex-col items-start gap-1 py-1.5 md:max-w-40 md:flex-row md:flex-wrap md:items-center 2xl:max-w-none"
+              className="flex flex-col items-start gap-1 py-1.5 2xl:flex-row 2xl:items-center"
               key={ctx.row.original.id}
             >
               {ctx.row.original.bridgeTypes.map((bridgeType) => (
@@ -325,7 +316,13 @@ export function getAllProtocolsColumns(
           )
         },
         meta: {
-          headClassName: 'text-2xs',
+          headClassName: cn(
+            'text-2xs',
+            hideCollapsedColumnsBeforeMount && 'max-md:hidden',
+          ),
+          cellClassName: hideCollapsedColumnsBeforeMount
+            ? 'max-md:hidden'
+            : undefined,
         },
       }),
     last24hVolumeColumn,

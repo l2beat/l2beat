@@ -27,13 +27,20 @@ export function AllProtocolsTable({
   tokenId?: string
 }) {
   const { selectedChains } = useInteropSelectedChains()
-  // Phones start without Category, so the volume the table ranks by is in the
-  // first view. Undefined until mounted: the server can't know the viewport.
+  // Descriptive columns start hidden where they'd crowd the figures: Category
+  // below xl, so names stay on one line, and on phones also Transfer types,
+  // so the volume the table ranks by is in the first view. The Columns menu
+  // brings them back. Undefined until mounted: the server can't know the
+  // viewport.
   const breakpoint = useBreakpoint()
+  const isWide = breakpoint === 'xl' || breakpoint === '2xl'
   const isPhone = breakpoint === 'xs' || breakpoint === 'sm'
   const defaultVisibility = useMemo(
-    () => (isPhone ? { type: false } : undefined),
-    [isPhone],
+    () =>
+      breakpoint === undefined || isWide
+        ? undefined
+        : { type: false, ...(isPhone ? { bridgeTypes: false } : {}) },
+    [breakpoint, isWide, isPhone],
   )
 
   const columns = useMemo(
@@ -82,11 +89,13 @@ export function AllProtocolsTable({
 
   return (
     <>
-      {/* Only phones hide a column by default, so only they need the menu,
-          and it offers just that column. */}
-      <div className="mt-3 md:hidden">
+      {/* Only narrower screens hide columns by default, so only they need
+          the menu, and it offers just those columns. */}
+      <div className="mt-3 xl:hidden">
         <ColumnsControls
-          columns={table.getAllColumns().filter((c) => c.id === 'type')}
+          columns={table
+            .getAllColumns()
+            .filter((c) => c.id === 'type' || c.id === 'bridgeTypes')}
         />
       </div>
       <BasicTable table={table} tableWrapperClassName="pb-0" />

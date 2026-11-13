@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { type ReactNode, useState } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
+import { EM_DASH } from '~/consts/characters'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { useTRPC } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
@@ -68,7 +69,7 @@ export function FlowsGeneralStats() {
         General stats
       </div>
       <div className="mt-1 font-normal text-label-value-13 text-secondary leading-4">
-        For past 24h between the selected chains and protocols
+        Last 24h · selected chains and protocols
       </div>
       <div className="mt-1.5 space-y-2">
         {/* Sized by the panel itself (container query) so it works both as
@@ -121,7 +122,7 @@ export function FlowsGeneralStats() {
                   <TopRouteIcons srcChain={srcChain} dstChain={dstChain} />
                 </button>
               ) : (
-                '-'
+                EM_DASH
               )
             }
           />
@@ -149,7 +150,7 @@ export function FlowsGeneralStats() {
                   </span>
                 </div>
               ) : (
-                '-'
+                EM_DASH
               )
             }
           />
@@ -172,7 +173,7 @@ export function FlowsGeneralStats() {
                   </span>
                 </div>
               ) : (
-                '-'
+                EM_DASH
               )
             }
           />
@@ -181,7 +182,7 @@ export function FlowsGeneralStats() {
             title="Top token"
             isLoading={isLoading}
             className="border-0 p-0!"
-            value={topToken ? <TopTokenValue topToken={topToken} /> : '-'}
+            value={topToken ? <TopTokenValue topToken={topToken} /> : EM_DASH}
           />
         </div>
       </div>

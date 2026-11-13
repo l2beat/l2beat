@@ -26,7 +26,14 @@ export function InteropTotalCard({
         className,
       )}
     >
-      <div className="flex flex-wrap items-baseline gap-x-2">
+      {/* Stacked in the narrow phone tiles, so both figures share a line
+          whether or not the period would wrap */}
+      <div
+        className={cn(
+          'flex',
+          mobile ? 'flex-col' : 'flex-wrap items-baseline gap-x-2',
+        )}
+      >
         <h3 className="font-medium text-label-value-13 md:text-label-value-15">
           {title}
         </h3>

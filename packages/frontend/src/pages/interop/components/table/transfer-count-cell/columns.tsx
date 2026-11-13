@@ -1,18 +1,19 @@
-import { formatCurrency, formatSeconds } from '@l2beat/shared-pure'
+import { formatCurrency, formatSeconds, UnixTime } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
+import { useEffect, useState } from 'react'
 import {
   Tooltip,
   TooltipContent,
   TooltipPortal,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import { UtcDateTime } from '~/components/core/UtcDateTime'
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { EM_DASH } from '~/consts/characters'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { InteropNoDataBadge } from '~/pages/interop/components/InteropNoDataBadge'
 import type { InteropSelection } from '~/pages/interop/utils/types'
 import type { InteropProtocolTransferDetailsItem } from '~/server/features/layer2s/interop/types'
+import { formatLocalDateTime, formatTimestamp } from '~/utils/dates'
 import { formatTokenAmount } from './formatTokenAmount'
 
 export type TransferRow = InteropProtocolTransferDetailsItem & BasicTableRow
@@ -34,9 +35,7 @@ export function getTransferColumns(
       enableSorting: false,
       cell: (ctx) => (
         // When it happened is meta: the amounts and chains are the row.
-        <span className="font-normal text-label-value-13 text-secondary tabular-nums">
-          <UtcDateTime timestamp={ctx.row.original.timestamp} />
-        </span>
+        <StackedUtcDateTime timestamp={ctx.row.original.timestamp} />
       ),
       meta: {
         headClassName: 'text-2xs',
@@ -284,5 +283,26 @@ function ChainCell({
     >
       {content}
     </a>
+  )
+}
+
+/**
+ * `UtcDateTime` on two lines, date over time, so the column takes the width
+ * of a date and the chain pair beside it fits at 1280. Same `<time>` value and
+ * local-time hover title.
+ */
+function StackedUtcDateTime({ timestamp }: { timestamp: number }) {
+  const [localTime, setLocalTime] = useState<string>()
+  useEffect(() => setLocalTime(formatLocalDateTime(timestamp)), [timestamp])
+
+  return (
+    <time
+      dateTime={UnixTime.toDate(UnixTime(timestamp)).toISOString()}
+      title={localTime && `Your time: ${localTime}`}
+      className="flex flex-col whitespace-nowrap font-normal text-label-value-13 text-secondary tabular-nums leading-4"
+    >
+      <span>{formatTimestamp(timestamp)}</span>
+      <span>{formatTimestamp(timestamp, { mode: 'time' })}</span>
+    </time>
   )
 }

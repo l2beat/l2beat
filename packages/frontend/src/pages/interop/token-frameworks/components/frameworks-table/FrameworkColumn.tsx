@@ -26,7 +26,7 @@ export function FrameworkColumn({
   return (
     <div
       className={cn(
-        'flex w-60 shrink-0 flex-col p-4 md:w-67.5 md:p-5',
+        'flex w-60 shrink-0 flex-col p-4 md:w-67.5 md:p-6',
         !isFirst && 'border-divider border-l',
       )}
     >

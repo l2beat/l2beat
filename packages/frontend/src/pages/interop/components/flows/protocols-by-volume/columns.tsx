@@ -95,7 +95,8 @@ export function getProtocolsByVolumeColumns(
       cell: (ctx) => {
         return (
           <div
-            className="flex flex-col items-start gap-1 py-1.5 md:max-w-40 md:flex-row md:flex-wrap md:items-center 2xl:max-w-none"
+            // One badge per line, side by side from 2xl, like All protocols
+            className="flex flex-col items-start gap-1 py-1.5 2xl:flex-row 2xl:items-center"
             key={ctx.row.original.id}
           >
             {ctx.row.original.bridgeTypes.map((bridgeType) => (
