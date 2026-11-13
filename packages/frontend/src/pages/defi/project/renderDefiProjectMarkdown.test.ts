@@ -33,30 +33,14 @@ describe(renderDefiProjectMarkdown.name, () => {
 
   it('dates a daily cost of exit by its day, and a yield by its moment', () => {
     const day = UnixTime.fromDate(new Date('2026-11-01T00:00:00Z'))
-    const risk = {
-      value: 'Value',
-      sentiment: 'warning',
-      description: 'Why.',
-    } as const
     const summary = getSection(
       renderDefiProjectMarkdown(
         {
           ...ENTRY,
           liquidStaking: {
-            risks: {
-              minting: risk,
-              operators: risk,
-              backing: risk,
-              oracle: risk,
-              exit: risk,
-              upgrades: risk,
-            },
+            ...LIQUID_STAKING,
             yield: { value: 0.028, timestamp: day, estimated: false },
             costOfExit: { value: 3, timestamp: day, estimated: false },
-            costOfExitDescription: {
-              tooltip: 'Only the routes Lido has.',
-              chart: 'Only the routes Lido has, measured.',
-            },
           },
         },
         TOTAL_VALUE_LOCKED_USD,
@@ -67,6 +51,21 @@ describe(renderDefiProjectMarkdown.name, () => {
     expect(summary).toInclude('(on 2026-11-01 00:00 UTC)')
     expect(summary).toInclude(
       '(over 2026-11-01 00:00 UTC to 2026-11-02 00:00 UTC). Only the routes Lido has.',
+    )
+  })
+
+  it('describes a yield and cost of exit with no recent value as no data', () => {
+    const summary = getSection(
+      renderDefiProjectMarkdown(
+        { ...ENTRY, liquidStaking: LIQUID_STAKING },
+        TOTAL_VALUE_LOCKED_USD,
+      ),
+      'Summary',
+    )
+
+    expect(summary).toInclude(
+      '- Yield: No data. ',
+      '- Cost of exit: No data. Only the routes Lido has.',
     )
   })
 
@@ -348,6 +347,27 @@ const SECTIONS: ProjectDetailsSection[] = [
     },
   },
 ]
+
+const RISK = {
+  value: 'Value',
+  sentiment: 'warning',
+  description: 'Why.',
+} as const
+
+const LIQUID_STAKING: NonNullable<ProjectDefiEntry['liquidStaking']> = {
+  risks: {
+    minting: RISK,
+    operators: RISK,
+    backing: RISK,
+    oracle: RISK,
+    exit: RISK,
+    upgrades: RISK,
+  },
+  costOfExitDescription: {
+    tooltip: 'Only the routes Lido has.',
+    chart: 'Only the routes Lido has, measured.',
+  },
+}
 
 const TOTAL_VALUE_LOCKED_USD = 26_530_000_000
 

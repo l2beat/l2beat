@@ -67,12 +67,13 @@ function getLiquidStakingFacts(summary: ProjectDefiEntry['liquidStaking']) {
   return compact([
     ...LIQUID_STAKING_METRICS.map((metric) => {
       const latest = summary[metric.key]
-      return (
-        latest && {
-          label: metric.title,
-          value: `${formatLatestValue(metric, latest)} (${formatUtcDateOrDay(latest.timestamp, metric.dailyBuckets)}). ${getProjectMetricTooltip(metric, summary.costOfExitDescription)}`,
-        }
-      )
+      const value = latest
+        ? `${formatLatestValue(metric, latest)} (${formatUtcDateOrDay(latest.timestamp, metric.dailyBuckets)})`
+        : 'No data'
+      return {
+        label: metric.title,
+        value: `${value}. ${getProjectMetricTooltip(metric, summary.costOfExitDescription)}`,
+      }
     }),
     ...LIQUID_STAKING_RISKS.map(({ key, title }) => {
       const risk = summary.risks[key]

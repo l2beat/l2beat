@@ -153,13 +153,16 @@ export function YieldChart({
   )
   const chartData = useMemo<LiquidStakingChartData | undefined>(
     () =>
-      data?.map((point) => ({
-        timestamp: point.timestamp,
-        ...point.projects,
-        [NETWORK_KEY]: point.network,
-        [ETH_STAKED.key]: point.ethStaked,
-      })),
-    [data],
+      withProjectValues(
+        data?.map((point) => ({
+          timestamp: point.timestamp,
+          ...point.projects,
+          [NETWORK_KEY]: point.network,
+          [ETH_STAKED.key]: point.ethStaked,
+        })),
+        projectSeries,
+      ),
+    [data, projectSeries],
   )
 
   return frame({
@@ -207,11 +210,14 @@ export function CostOfExitChart({
 
   const chartData = useMemo<LiquidStakingChartData | undefined>(
     () =>
-      data?.map((point) => ({
-        timestamp: point.timestamp,
-        ...point.projects,
-      })),
-    [data],
+      withProjectValues(
+        data?.map((point) => ({
+          timestamp: point.timestamp,
+          ...point.projects,
+        })),
+        projectSeries,
+      ),
+    [data, projectSeries],
   )
   const estimated = useMemo(
     () => new Map(data?.map((point) => [point.timestamp, point.estimated])),
@@ -249,6 +255,21 @@ export function CostOfExitChart({
       />
     ),
   })
+}
+
+/**
+ * Empty when no project has a value in the range, so the chart shows its
+ * no-data state instead of empty axes (the API returns a row per day anyway).
+ */
+function withProjectValues(
+  data: LiquidStakingChartData | undefined,
+  projectSeries: LiquidStakingChartSeries[],
+): LiquidStakingChartData | undefined {
+  if (!data) return
+  const hasValue = data.some((point) =>
+    projectSeries.some((series) => point[series.key] != null),
+  )
+  return hasValue ? data : []
 }
 
 function ChartCard({
