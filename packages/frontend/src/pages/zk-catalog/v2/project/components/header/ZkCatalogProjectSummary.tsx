@@ -70,9 +70,7 @@ export function TrustedSetupsByProofSystemSection({
 }) {
   return (
     <div className="flex flex-col gap-2 md:gap-3">
-      <h2 className="font-semibold text-subtitle-12 uppercase">
-        Trusted Setups
-      </h2>
+      <h2 className="font-semibold text-label-value-15">Trusted setups</h2>
       {/* Mobile */}
       <div className="space-y-4 md:hidden">
         {Object.entries(trustedSetupsByProofSystem).map(
@@ -233,9 +231,7 @@ function OnchainVerifierBlock({
     <div
       className={mobile ? 'flex flex-col gap-1.5' : 'flex items-center gap-2'}
     >
-      <p className="font-medium text-label-value-12 text-secondary">
-        Onchain verifier
-      </p>
+      <p className="text-label-value-13 leading-4">Onchain verifier</p>
       <OnchainVerifiers onchainVerifiers={onchainVerifiers} />
     </div>
   )
@@ -258,7 +254,7 @@ function UsedInBlock({
         mobile || stacked ? 'flex flex-col gap-2' : 'flex items-center gap-1.5'
       }
     >
-      <p className="font-medium text-label-value-12 text-secondary">Used in</p>
+      <p className="text-label-value-13 leading-4">Used in</p>
       <ProjectsUsedIn usedIn={projectsUsedIn} />
     </div>
   )
@@ -275,9 +271,7 @@ function VerifierStatusBlock({
     <div
       className={mobile ? 'flex flex-col gap-1.5' : 'flex items-center gap-2'}
     >
-      <p className="font-medium text-label-value-12 text-secondary">
-        Verifiers
-      </p>
+      <p className="text-label-value-13 leading-4">Verifiers</p>
       <VerifiedCountWithDetails data={verifiers} horizontal />
     </div>
   )
@@ -312,9 +306,7 @@ function MergedOnchainVerifierBlock({
   return (
     <div className="flex min-w-0 flex-col gap-1.5">
       <div className="flex items-center gap-1">
-        <p className="font-medium text-label-value-12 text-secondary">
-          {title}
-        </p>
+        <p className="text-label-value-13 leading-4">{title}</p>
         <Tooltip>
           <TooltipTrigger
             type="button"

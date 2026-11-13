@@ -20,9 +20,7 @@ export function TopItemsList({
 
   return (
     <div className="rounded-lg border border-divider bg-surface-primary px-4 py-3">
-      <div className="mb-1.5 font-bold text-label-value-12 uppercase">
-        {label}
-      </div>
+      <div className="mb-1.5 font-semibold text-label-value-13">{label}</div>
       <div className="space-y-1">
         {items.map((item) => (
           <TopItemRow key={item.title} item={item} />
@@ -38,7 +36,7 @@ function TopItemRow({ item }: { item: TopItem }) {
   if (item.href) {
     return (
       <a href={item.href} className={`${className} group`}>
-        <span className="flex min-w-0 items-center gap-1 font-medium text-secondary leading-none">
+        <span className="flex min-w-0 items-center gap-1 font-normal leading-none">
           <img
             src={item.iconUrl}
             alt={item.title}
@@ -55,7 +53,7 @@ function TopItemRow({ item }: { item: TopItem }) {
 
   return (
     <div className={className}>
-      <span className="flex min-w-0 items-center gap-1 font-medium text-secondary leading-none">
+      <span className="flex min-w-0 items-center gap-1 font-normal leading-none">
         <img src={item.iconUrl} alt={item.title} className="size-4 shrink-0" />
         <span className="truncate">{item.title}</span>
       </span>

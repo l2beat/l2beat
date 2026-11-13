@@ -10,9 +10,11 @@ interface Props {
 
 const VARIANT_CLASSES = {
   controls: 'inline-flex h-8 w-fit rounded-md bg-brand px-3 text-white',
+  // The project page's neutral button (home's HOME_BUTTON_CLASS): a section's
+  // links add no colour beside its chart.
   section: cn(
-    'flex w-full rounded-md border border-brand bg-transparent p-3 text-primary',
-    'md:w-fit md:border-0 md:bg-brand md:py-2 md:text-white',
+    'flex w-full rounded-md border border-divider p-3 font-medium text-label-value-13 text-primary leading-4',
+    'transition-colors hover:bg-surface-secondary md:w-fit md:px-3 md:py-1.5',
   ),
 }
 

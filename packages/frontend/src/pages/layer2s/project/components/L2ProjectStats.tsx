@@ -23,6 +23,10 @@ import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import type { ProjectL2Entry } from '~/server/features/layer2s/project/getL2ProjectEntry'
 import { cn } from '~/utils/cn'
 
+/** TVS and UOPS lead the summary: a step above the descriptive fields. */
+const HEADLINE_FIGURE_CLASS =
+  'text-nowrap font-semibold text-label-value-20! leading-6! tabular-nums'
+
 interface Props {
   project: ProjectL2Entry
   className?: string
@@ -33,12 +37,7 @@ export function ProjectL2Stats({ project, className }: Props) {
     <ProjectSummaryStat
       key="tvs"
       titleAsChild
-      title={
-        <div>
-          <span className="lg:max-xl:hidden">Total Value Secured</span>
-          <span className="max-lg:hidden xl:hidden">TVS</span>
-        </div>
-      }
+      title={<div>Value secured</div>}
       value={
         project.header.tvs?.breakdown ? (
           <span className="mb-0.5 flex items-center gap-2">
@@ -58,7 +57,7 @@ export function ProjectL2Stats({ project, className }: Props) {
             )}
             <ValueWithPercentageChange
               containerClassName="flex-nowrap"
-              className="!text-base !leading-[100%] text-nowrap"
+              className={HEADLINE_FIGURE_CLASS}
               changeClassName="text-label-value-14 font-bold"
               change={project.header.tvs.breakdown.totalChange}
               changePeriod={project.header.tvs.breakdown.totalChangePeriod}
@@ -74,12 +73,7 @@ export function ProjectL2Stats({ project, className }: Props) {
     <ProjectSummaryStat
       key="ops-count"
       titleAsChild
-      title={
-        <div>
-          <span className="lg:max-xl:hidden">Past day UOPS</span>
-          <span className="max-lg:hidden xl:hidden">Daily UOPS</span>
-        </div>
-      }
+      title={<div>Past day UOPS</div>}
       tooltip="User operations per second averaged over the past day displayed together with a percentage change compared to 7D ago."
       value={
         project.header.activity ? (
@@ -98,7 +92,7 @@ export function ProjectL2Stats({ project, className }: Props) {
               containerClassName="flex-nowrap"
               change={project.header.activity.uopsWeeklyChange}
               changePeriod={project.header.activity.uopsWeeklyChangePeriod}
-              className="text-nowrap text-base! leading-[100%]!"
+              className={HEADLINE_FIGURE_CLASS}
               changeClassName="text-label-value-14 font-bold"
             >
               {formatActivityCount(project.header.activity.lastDayUops)}
@@ -131,7 +125,11 @@ export function ProjectL2Stats({ project, className }: Props) {
       <ProjectSummaryStat
         key="gas-tokens"
         title={`Gas ${pluralize(project.header.gasTokens.length, 'token')}`}
-        value={project.header.gasTokens.join(', ')}
+        value={
+          <span className="whitespace-nowrap">
+            {project.header.gasTokens.join(', ')}
+          </span>
+        }
       />
     ) : undefined,
     project.header.category ? (

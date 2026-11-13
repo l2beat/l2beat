@@ -14,17 +14,19 @@ export function ParticipantsEntry({
   return (
     <div className="mt-2 flex flex-row flex-wrap items-center gap-x-1.5 text-paragraph-15 md:text-paragraph-16">
       <p>
-        <strong className="text-primary">{`Participants (${participants.length}): `}</strong>
+        <span className="font-medium">{`Participants (${participants.length}): `}</span>
       </p>
       {participants.map((address, i) => (
-        <HighlightableLink
-          key={i}
-          href={address.href}
-          address={address.address}
-          className="flex items-center gap-0.5"
-        >
-          {address.name}
-        </HighlightableLink>
+        <span key={i} className="flex items-center">
+          <HighlightableLink
+            href={address.href}
+            address={address.address}
+            className="flex items-center gap-0.5"
+          >
+            {address.name}
+          </HighlightableLink>
+          {i < participants.length - 1 && ','}
+        </span>
       ))}
     </div>
   )

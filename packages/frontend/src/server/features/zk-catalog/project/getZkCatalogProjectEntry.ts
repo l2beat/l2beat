@@ -126,7 +126,7 @@ export async function getZkCatalogProjectEntry(
       type: 'ZkCatalogTvsSection',
       props: {
         id: 'tvs',
-        title: 'Value Secured',
+        title: 'Value secured',
         ...zkCatalogTvsSection,
       },
     })
@@ -148,7 +148,7 @@ export async function getZkCatalogProjectEntry(
       type: 'MilestonesAndIncidentsSection',
       props: {
         id: 'milestones-and-incidents',
-        title: 'Milestones & Incidents',
+        title: 'Milestones & incidents',
         milestones: sortedMilestones,
       },
     })

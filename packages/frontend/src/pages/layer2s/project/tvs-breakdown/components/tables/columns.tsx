@@ -61,7 +61,7 @@ export const columns = [
   }),
   columnHelper.display({
     id: 'bridgingType',
-    header: 'Bridging Type',
+    header: 'Bridging type',
     cell: (ctx) => {
       return (
         <TwoRowCell>
@@ -86,7 +86,7 @@ export const columns = [
   }),
   columnHelper.display({
     id: 'contract',
-    header: 'Token Contract',
+    header: 'Token contract',
     cell: (ctx) => {
       const { address } = ctx.row.original
       if (!address) return <div className="font-medium text-xs">Native</div>

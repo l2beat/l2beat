@@ -28,28 +28,34 @@ export function LivenessChartStats({
 }) {
   const elements = compact([
     configuredSubtypes.includes('batchSubmissions') && (
-      <ChartStatsItem isLoading={isLoading} label="Avg. tx data subs. interval">
+      <ChartStatsItem
+        isLoading={isLoading}
+        label="Avg tx data submission interval"
+      >
         {stats?.batchSubmissions && (
           <DurationCell durationInSeconds={stats?.batchSubmissions} />
         )}
       </ChartStatsItem>
     ),
     configuredSubtypes.includes('proofSubmissions') && (
-      <ChartStatsItem isLoading={isLoading} label="Avg. proof subs. interval">
+      <ChartStatsItem
+        isLoading={isLoading}
+        label="Avg proof submission interval"
+      >
         {stats?.proofSubmissions && (
           <DurationCell durationInSeconds={stats?.proofSubmissions} />
         )}
       </ChartStatsItem>
     ),
     configuredSubtypes.includes('stateUpdates') && (
-      <ChartStatsItem isLoading={isLoading} label="Avg. state updates interval">
+      <ChartStatsItem isLoading={isLoading} label="Avg state update interval">
         {stats?.stateUpdates && (
           <DurationCell durationInSeconds={stats?.stateUpdates} />
         )}
       </ChartStatsItem>
     ),
     !isArchived && (
-      <ChartStatsItem key="anomalies" label="Past 30 days anomalies">
+      <ChartStatsItem key="anomalies" label="Anomalies in the past 30 days">
         {env.CLIENT_SIDE_TRACKED_TXS_OUTAGE ? (
           <NoDataBadge />
         ) : (

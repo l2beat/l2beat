@@ -10,9 +10,7 @@ export function AboutSection({
 }) {
   return (
     <div className={cn('flex flex-1 flex-col gap-2 text-base', className)}>
-      <h2 className="text-secondary text-subtitle-12 uppercase max-md:hidden">
-        About
-      </h2>
+      <h2 className="font-semibold text-label-value-15 max-md:hidden">About</h2>
       <p className="text-paragraph-14">
         <ReadMore onlyOnMobile>{description}</ReadMore>
       </p>

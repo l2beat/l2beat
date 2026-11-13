@@ -112,7 +112,7 @@ export function StageSection({
           color="yellow"
           body={emergencyWarning}
           icon={<EmergencyIcon className="mt-px size-5" />}
-          className="mb-2 p-3 font-medium text-paragraph-14 md:p-4 md:text-paragraph-16"
+          className="mb-2 p-3 text-paragraph-14 md:p-4 md:text-paragraph-16"
         />
       )}
       <span className="mb-2 flex w-full items-center rounded-lg bg-surface-secondary p-4 font-bold text-label-value-16 md:px-6 md:text-label-value-18">
@@ -145,7 +145,7 @@ export function StageSection({
             </>
           }
           icon={<WalkAwayPassedIcon className="mt-px size-5 fill-positive" />}
-          className="mb-2 p-3 font-medium text-paragraph-14 md:p-4 md:text-paragraph-16"
+          className="mb-2 p-3 text-paragraph-14 md:p-4 md:text-paragraph-16"
         />
       )}
       {walkAway === 'not-passed' && (
@@ -160,7 +160,7 @@ export function StageSection({
           icon={
             <WalkAwayNotPassedIcon className="mt-0.5 size-5 fill-negative" />
           }
-          className="mb-2 p-3 font-medium text-paragraph-14 md:p-4 md:text-paragraph-16"
+          className="mb-2 p-3 text-paragraph-14 md:p-4 md:text-paragraph-16"
         />
       )}
       {scopeOfAssessment && (
@@ -200,7 +200,7 @@ export function StageSection({
           color="yellow"
           icon={warningBarIcon}
           text={stageConfig.message.text}
-          className="font-medium text-paragraph-14 md:text-paragraph-16"
+          className="text-paragraph-14 md:text-paragraph-16"
         />
       )}
       <HorizontalSeparator className="my-4" />
@@ -217,32 +217,28 @@ export function StageSection({
               key={stage.stage}
               className="group rounded-lg border border-divider"
             >
-              <CollapsibleTrigger className="flex w-full items-center justify-between px-4 py-3 font-bold md:px-6">
-                <div className="flex select-none items-center justify-start gap-4 max-md:text-base">
+              <CollapsibleTrigger className="flex w-full items-center justify-between px-4 py-3 font-semibold text-label-value-16 md:px-6">
+                <div className="flex select-none items-center justify-start gap-4">
                   <StageBadge stage={stage.stage} isAppchain={false} />
                   {forLabel.missing.length === 0 ? (
                     <div className="flex flex-col gap-3 md:flex-row">
-                      <div className="flex items-center gap-2 font-bold">
+                      <div className="flex items-center gap-2">
                         <SatisfiedIcon className="-mt-0.5 size-4 shrink-0 fill-positive" />
-                        <span className="text-label-value-16 md:text-label-value-18">
-                          {requirementsMetText(forLabel.met.length)}
-                        </span>
+                        <span>{requirementsMetText(forLabel.met.length)}</span>
                       </div>
                       {forLabel.underReview.length > 0 && (
                         <div className="flex items-center gap-2">
                           <UnderReviewIcon className="size-4 shrink-0" />
-                          <span className="text-label-value-16 md:text-label-value-18">
+                          <span>
                             {forLabel.underReview.length} under review
                           </span>
                         </div>
                       )}
                     </div>
                   ) : (
-                    <div className="flex items-center gap-2 font-bold">
+                    <div className="flex items-center gap-2">
                       <MissingIcon className="-mt-0.5 size-4 shrink-0 fill-negative" />
-                      <span className="text-label-value-16 md:text-label-value-18">
-                        {issuesToFixText(forLabel.missing.length)}
-                      </span>
+                      <span>{issuesToFixText(forLabel.missing.length)}</span>
                     </div>
                   )}
                 </div>
@@ -253,12 +249,12 @@ export function StageSection({
                   {stage.principle && (
                     <div className="space-y-2">
                       <div className="flex items-center gap-1">
-                        <span className="font-bold text-brand-deep text-label-value-14">
+                        <span className="font-semibold text-label-value-14">
                           Principle
                         </span>
                         <Tooltip>
                           <TooltipTrigger aria-label="About principles">
-                            <InfoIcon className="size-3 fill-brand-deep" />
+                            <InfoIcon className="size-3 fill-secondary" />
                           </TooltipTrigger>
                           <TooltipContent>
                             A Principle is the main requirement you need to
@@ -268,7 +264,7 @@ export function StageSection({
                           </TooltipContent>
                         </Tooltip>
                       </div>
-                      <div className="rounded-lg border border-brand px-[15px] py-2.5">
+                      <div className="-mx-4 md:-mx-6 bg-surface-secondary px-4 py-3 md:px-6">
                         <div className="flex">
                           {stage.principle.satisfied === 'UnderReview' ? (
                             <UnderReviewIcon className="mt-0.5 size-4 shrink-0" />
@@ -277,12 +273,12 @@ export function StageSection({
                           ) : (
                             <MissingIcon className="mt-0.5 size-4 shrink-0 fill-negative" />
                           )}
-                          <Markdown className="ml-2 font-medium text-paragraph-14 md:text-paragraph-16">
+                          <Markdown className="ml-2 text-paragraph-14 md:text-paragraph-16">
                             {stage.principle.description}
                           </Markdown>
                         </div>
                         {stageConfig.stage1PrincipleDescription && (
-                          <p className="mt-2 pl-6 font-medium text-paragraph-14 text-secondary">
+                          <p className="mt-2 pl-6 text-paragraph-14 md:text-paragraph-16">
                             {stageConfig.stage1PrincipleDescription}
                           </p>
                         )}
@@ -291,7 +287,7 @@ export function StageSection({
                   )}
 
                   {stage.principle && (
-                    <p className="font-bold text-label-value-14 text-secondary">
+                    <p className="font-semibold text-label-value-14">
                       Guidelines
                     </p>
                   )}
@@ -299,7 +295,7 @@ export function StageSection({
                     {effective.met.map((req, i) => (
                       <li key={i} className="flex">
                         <SatisfiedIcon className="relative top-0.5 size-4 shrink-0 fill-positive md:top-[3px]" />
-                        <Markdown className="ml-2 font-medium text-paragraph-14 md:text-paragraph-16">
+                        <Markdown className="ml-2 text-paragraph-14 md:text-paragraph-16">
                           {req.description}
                         </Markdown>
                       </li>
@@ -307,7 +303,7 @@ export function StageSection({
                     {effective.underReview.map((req, i) => (
                       <li key={i} className="flex">
                         <UnderReviewIcon className="relative top-0.5 size-4 shrink-0 md:top-[3px]" />
-                        <Markdown className="ml-2 font-medium text-paragraph-14 md:text-paragraph-16">
+                        <Markdown className="ml-2 text-paragraph-14 md:text-paragraph-16">
                           {req.description}
                         </Markdown>
                       </li>
@@ -315,7 +311,7 @@ export function StageSection({
                     {effective.missing.map((req, i) => (
                       <li key={i} className="flex">
                         <MissingIcon className="relative top-0.5 size-4 shrink-0 fill-negative md:top-[3px]" />
-                        <Markdown className="ml-2 font-medium text-paragraph-14 md:text-paragraph-16">
+                        <Markdown className="ml-2 text-paragraph-14 md:text-paragraph-16">
                           {req.description}
                         </Markdown>
                       </li>
@@ -323,8 +319,8 @@ export function StageSection({
                   </ul>
                   {showUpcomingGuidelines &&
                     upcomingRequirements.length > 0 && (
-                      <div className="mt-3 rounded-lg bg-brand/20 p-4">
-                        <p className="mb-2 font-bold text-label-value-14 text-secondary">
+                      <div className="mt-3 rounded-lg bg-surface-secondary p-4">
+                        <p className="mb-2 font-semibold text-label-value-14">
                           Upcoming guidelines
                         </p>
                         <ul className="space-y-1 md:space-y-2">
@@ -337,7 +333,7 @@ export function StageSection({
                               ) : (
                                 <MissingIcon className="relative top-0.5 size-4 shrink-0 fill-negative md:top-[3px]" />
                               )}
-                              <Markdown className="ml-2 font-medium text-paragraph-14 md:text-paragraph-16">
+                              <Markdown className="ml-2 text-paragraph-14 md:text-paragraph-16">
                                 {req.description}
                               </Markdown>
                             </li>
@@ -360,7 +356,7 @@ export function StageSection({
         icon={
           <InfoIcon className="size-4 max-md:mt-0.5 md:size-5" variant="blue" />
         }
-        className="mt-6 p-4 font-medium text-paragraph-15 md:text-paragraph-16"
+        className="mt-6 p-4 text-paragraph-15 md:text-paragraph-16"
       />
     </ProjectSection>
   )

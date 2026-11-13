@@ -22,19 +22,21 @@ export function InteropCollapsibleSubsection({
     <Collapsible
       id={id}
       defaultOpen={defaultOpen}
-      className="scroll-mt-section-nav rounded-lg border border-divider p-4"
+      className="scroll-mt-section-nav rounded-lg border border-divider"
     >
       <Subsection
         title={
-          <SubsectionHeading className="text-heading-24 leading-none!">
-            <CollapsibleTrigger className="flex w-full cursor-pointer items-center justify-between gap-3">
+          <SubsectionHeading className="font-semibold text-label-value-16">
+            <CollapsibleTrigger className="flex w-full cursor-pointer items-center justify-between gap-3 px-4 py-3 md:px-6">
               {title}
-              <ChevronIcon className="size-3 shrink-0 transition-transform group-data-[state=open]/Collapsible:rotate-180" />
+              <ChevronIcon className="size-4 shrink-0 fill-secondary transition-transform group-data-[state=open]/Collapsible:rotate-180" />
             </CollapsibleTrigger>
           </SubsectionHeading>
         }
       >
-        <CollapsibleContent className="mt-4">{children}</CollapsibleContent>
+        <CollapsibleContent className="px-4 pb-4 md:px-6">
+          {children}
+        </CollapsibleContent>
       </Subsection>
     </Collapsible>
   )

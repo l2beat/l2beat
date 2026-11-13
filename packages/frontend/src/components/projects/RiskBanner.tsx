@@ -35,13 +35,16 @@ export function RiskBanner({
   info = 'full',
 }: RiskBannerProps) {
   const adjSentiment = sentiment ?? 'neutral'
+  // With both paths, the emergency explanation follows its value directly:
+  // no fixed height, 8px between value and text, like the regular half.
+  const describesEmergency = !!regular && !!description && info === 'full'
   const content = (
     <div>
       <div
         className={cn(
           'flex flex-row items-stretch rounded-lg',
-          size === 'regular' && 'h-16',
-          size === 'large' && 'h-20.5',
+          !describesEmergency && size === 'regular' && 'h-16',
+          !describesEmergency && size === 'large' && 'h-20.5',
           sentimentToTransparentBgColor(adjSentiment),
           (regular || warning) && info === 'full' && 'rounded-b-none',
           className,
@@ -50,18 +53,27 @@ export function RiskBanner({
         <GrissiniStick
           sentiment={adjSentiment}
           className={cn(
-            'h-full shrink-0 max-md:w-1',
+            // Without a fixed height, h-full resolves to nothing: stretch.
+            // GrissiniStick sets its own height; auto lets it stretch.
+            describesEmergency ? 'h-auto self-stretch' : 'h-full',
+            'shrink-0 max-md:w-1',
             (regular || warning) && info === 'full' && 'rounded-b-none',
             className,
           )}
         />
-        <div className="flex flex-1 flex-col items-start justify-center gap-1 p-4">
+        <div
+          className={cn(
+            'flex flex-1 flex-col items-start justify-center gap-1 p-4',
+            // Label at the same height as the fixed-height siblings.
+            describesEmergency && 'pt-6 pb-2',
+          )}
+        >
           <div
             className={cn(
-              'text-left uppercase',
-              size === 'regular' && 'text-subtitle-10',
+              'text-left',
+              size === 'regular' && 'font-medium text-label-value-12',
               size === 'large' &&
-                'font-semibold text-3xs uppercase md:text-2xs',
+                'font-semibold text-label-value-12 md:text-label-value-13',
             )}
           >
             {name}
@@ -70,7 +82,8 @@ export function RiskBanner({
             className={cn(
               'text-left',
               size === 'regular' && 'font-bold text-label-value-14',
-              size === 'large' && 'font-bold text-sm leading-none! md:text-lg',
+              size === 'large' &&
+                'font-bold text-base leading-none! md:text-lg',
               sentimentToTextColor(adjSentiment, { vibrant: true }),
             )}
           >
@@ -86,6 +99,29 @@ export function RiskBanner({
           </div>
         </div>
       </div>
+      {describesEmergency && (
+        // The description explains the emergency path, so it sits in that
+        // block, above the regular path rather than under it.
+        <div className="relative">
+          <GrissiniStick
+            className={cn(
+              'absolute inset-y-0 left-0 h-full shrink-0 rounded-none max-md:w-1',
+              className,
+            )}
+            sentiment={adjSentiment}
+          />
+          <div
+            className={cn(
+              'px-4 pb-4 pl-5 md:pl-6',
+              sentimentToTransparentBgColor(adjSentiment),
+            )}
+          >
+            <Markdown className="font-normal text-paragraph-15 md:text-paragraph-16">
+              {description}
+            </Markdown>
+          </div>
+        </div>
+      )}
       {regular && info === 'full' && (
         <div className="relative">
           <GrissiniStick
@@ -103,7 +139,7 @@ export function RiskBanner({
           >
             <div
               className={cn(
-                'mb-1 font-bold text-sm md:text-lg',
+                'mb-2 font-bold text-base leading-none! md:text-lg',
                 sentimentToTextColor(regular.sentiment ?? 'neutral', {
                   vibrant: true,
                 }),
@@ -137,7 +173,7 @@ export function RiskBanner({
           />
         </div>
       )}
-      {description && info === 'full' && (
+      {description && !regular && info === 'full' && (
         <Markdown className="mt-2 font-normal text-paragraph-15 md:text-paragraph-16">
           {description}
         </Markdown>

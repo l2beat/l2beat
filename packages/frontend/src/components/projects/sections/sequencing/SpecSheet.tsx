@@ -19,7 +19,7 @@ export function SpecSheet({ title, rows }: Props) {
           <tr>
             <th
               colSpan={2}
-              className="bg-surface-secondary px-4 py-3 text-left font-bold text-heading-16 md:text-heading-18"
+              className="bg-surface-secondary px-4 py-3 text-left font-semibold text-heading-16"
             >
               {title}
             </th>
@@ -27,14 +27,19 @@ export function SpecSheet({ title, rows }: Props) {
         </thead>
         <tbody>
           {rows.map((row) => (
-            <tr key={row.label} className="border-divider border-t">
+            // The definition grid's shape: medium term in a 180px column,
+            // regular value; stacked on phones.
+            <tr
+              key={row.label}
+              className="border-divider border-t max-md:flex max-md:flex-col"
+            >
               <th
                 scope="row"
-                className="px-4 py-3 text-left align-top font-bold text-label-value-13 text-secondary md:w-[42%] md:min-w-[220px]"
+                className="px-4 py-3 text-left align-top font-medium text-label-value-14 leading-5 max-md:pb-1 md:w-[212px]"
               >
                 {row.label}
               </th>
-              <td className="px-4 py-3 align-top font-medium text-label-value-14">
+              <td className="px-4 py-3 align-top text-paragraph-14 max-md:pt-0 md:text-paragraph-15">
                 <SpecValue value={row.value} />
               </td>
             </tr>
@@ -56,12 +61,14 @@ function SpecValue({ value }: { value?: TableReadyValue }) {
         sentiment={value.sentiment ?? 'neutral'}
         description={value.description}
         vibrant
-        className="font-medium"
+        className="text-left"
       >
         {value.value}
       </SentimentText>
       {value.secondLine && (
-        <div className="mt-0.5 text-secondary">{value.secondLine}</div>
+        <div className="mt-0.5 text-label-value-13 text-secondary">
+          {value.secondLine}
+        </div>
       )}
     </>
   )

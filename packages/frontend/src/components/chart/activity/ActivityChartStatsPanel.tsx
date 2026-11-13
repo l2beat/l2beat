@@ -47,9 +47,9 @@ export function ActivityChartStatsPanel({ stats, metric, isLoading }: Props) {
     metricUi.showTotalWithoutData || totalCount !== undefined
 
   return (
-    <ChartStats className="mt-4 md:grid-cols-2 lg:grid-cols-4">
+    <ChartStats className="mt-4 max-md:gap-y-2.5 md:grid-cols-2 lg:grid-cols-4">
       <ChartStatsItem
-        label={`Past Day ${metricUi.rateLabel}`}
+        label={`Past day ${metricUi.rateLabel}`}
         className="max-md:h-7"
         tooltip={`${metricUi.subject} per second averaged over the past day, shown together with a percentage change compared to 7D ago.`}
         isLoading={isLoading}
@@ -69,7 +69,7 @@ export function ActivityChartStatsPanel({ stats, metric, isLoading }: Props) {
         )}
       </ChartStatsItem>
       <ChartStatsItem
-        label={`Past Day ${metricUi.countLabel} count`}
+        label={`Past day ${metricUi.countLabel} count`}
         className="max-md:h-7"
         isLoading={isLoading}
       >
@@ -81,11 +81,12 @@ export function ActivityChartStatsPanel({ stats, metric, isLoading }: Props) {
       {showTotalCount && (
         <ChartStatsItem
           label={`Total ${metricUi.countLabel}`}
-          className="max-md:h-7"
+          // A figure with a date under it: the label aligns with the figure.
+          className="max-md:items-start"
           isLoading={isLoading}
         >
           {totalCount ? (
-            <div className="flex gap-1 max-md:flex-row-reverse max-md:items-baseline md:flex-col">
+            <div className="flex flex-col gap-1 max-md:items-end">
               <div>{formatInteger(totalCount.value)}</div>
               <div className="font-medium text-label-value-14 text-secondary">
                 since {formatTimestamp(totalCount.sinceTimestamp)}
@@ -97,13 +98,13 @@ export function ActivityChartStatsPanel({ stats, metric, isLoading }: Props) {
         </ChartStatsItem>
       )}
       <ChartStatsItem
-        label={`Max. ${metricUi.rateLabel}`}
+        label={`Max ${metricUi.rateLabel}`}
         tooltip={`Shows the maximum sustained ${metricUi.rateLabel}, calculated as an average over the count for a day.`}
-        className="max-md:h-7"
+        className="max-md:items-start"
         isLoading={isLoading}
       >
         {metricStats?.maxCount !== undefined ? (
-          <div className="flex gap-1 max-md:flex-row-reverse max-md:items-baseline md:flex-col">
+          <div className="flex flex-col gap-1 max-md:items-end">
             <div>{formatActivityCount(metricStats.maxCount.value)}</div>
             <div className="font-medium text-label-value-14 text-secondary">
               {formatTimestamp(metricStats.maxCount.timestamp)}

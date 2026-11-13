@@ -26,7 +26,7 @@ export function InteropTransferSizeBreakdown({
 
   return (
     <div>
-      <span className="font-medium text-paragraph-12 text-secondary">
+      <span className="font-semibold text-label-value-13 leading-4">
         Transfer size
       </span>
       <Tooltip>
@@ -40,7 +40,7 @@ export function InteropTransferSizeBreakdown({
               {breakdownValues.map((value) => (
                 <div key={value.label} className="flex items-center gap-[3px]">
                   <div className="size-3.5 rounded-xs" style={value.style} />
-                  <span className="font-medium text-label-value-12 text-secondary leading-none">
+                  <span className="font-medium text-label-value-12 leading-none">
                     {value.label}
                   </span>
                 </div>

@@ -28,7 +28,7 @@ function getDurationColorClassName(durationInSeconds: number) {
     return ''
   }
   if (durationInSeconds < 60 * 60 * 24) {
-    return 'text-yellow-700 dark:text-yellow-100'
+    return 'text-warning'
   }
   return 'text-orange-600 dark:text-orange-500'
 }

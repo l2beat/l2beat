@@ -33,7 +33,7 @@ export function BadgesSection({
         )}
       >
         {!hideTitle && (
-          <h2 className="text-secondary text-subtitle-12 uppercase max-md:hidden">
+          <h2 className="font-semibold text-label-value-15 max-md:hidden">
             Badges
           </h2>
         )}
