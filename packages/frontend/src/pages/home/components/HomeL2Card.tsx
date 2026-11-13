@@ -42,8 +42,6 @@ export function HomeL2Card({
       <HomeKpiRow>
         <HomeKpiTile
           label="Value secured"
-          // The summary's headline adds Others; this one leaves them out.
-          labelAccessory="excl. Others"
           value={
             tvs.value !== undefined
               ? formatCurrency(tvs.value, 'usd')
