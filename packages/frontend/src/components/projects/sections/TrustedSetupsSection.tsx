@@ -32,11 +32,13 @@ export function TrustedSetupSection({
           return (
             <React.Fragment key={trustedSetup.name}>
               <div className="space-y-3">
-                <h3 className="font-bold text-heading-16">
+                <h3 className="font-semibold text-heading-16 leading-6 md:text-heading-18">
                   {trustedSetup.name}
                 </h3>
                 <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:gap-8">
-                  <div className="flex shrink-0 items-center gap-2">
+                  {/* One width for the dot and tags, so every setup's phases
+                      start at the same x. */}
+                  <div className="flex shrink-0 items-center gap-2 lg:w-48">
                     <TrustedSetupRiskDot risk={trustedSetup.risk} size="lg" />
                     <div className="flex flex-wrap gap-1">
                       {trustedSetup.proofSystems.map((proofSystem) => (
@@ -49,14 +51,18 @@ export function TrustedSetupSection({
                       ))}
                     </div>
                   </div>
-                  <TrustedSetupParticipants
-                    participantCount={trustedSetup.participantCount}
-                    contributionCount={trustedSetup.contributionCount}
-                    phases={trustedSetup.phases}
-                  />
+                  {/* 4px down, so the first phase disc centres on the 32px
+                      risk dot beside it. */}
+                  <div className="lg:pt-1">
+                    <TrustedSetupParticipants
+                      participantCount={trustedSetup.participantCount}
+                      contributionCount={trustedSetup.contributionCount}
+                      phases={trustedSetup.phases}
+                    />
+                  </div>
                 </div>
                 <div className="space-y-2">
-                  <h3 className="font-semibold text-secondary text-subtitle-12 uppercase">
+                  <h3 className="font-semibold text-label-value-14 text-primary">
                     Detailed description
                   </h3>
                   <Markdown className="word-break-word text-paragraph-15 md:text-paragraph-16">

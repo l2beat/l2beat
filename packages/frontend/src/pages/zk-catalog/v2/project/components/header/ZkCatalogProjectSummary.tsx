@@ -72,7 +72,7 @@ export function TrustedSetupsByProofSystemSection({
     <div className="flex flex-col gap-2 md:gap-3">
       <h2 className="font-semibold text-label-value-15">Trusted setups</h2>
       {/* Mobile */}
-      <div className="space-y-4 md:hidden">
+      <div className="space-y-6 md:hidden">
         {Object.entries(trustedSetupsByProofSystem).map(
           ([
             key,
@@ -379,32 +379,32 @@ function TechStackSection({
   const rightSideEmpty = !finalWrap?.length
 
   return (
-    <div className="mt-3 flex flex-col gap-2">
-      <h2 className="font-semibold text-subtitle-12 uppercase">Tech Stack</h2>
-      <div className="flex gap-2 rounded-sm border-divider max-md:flex-col md:items-end md:border md:p-4">
+    <div className="mt-3 flex flex-col gap-2 md:gap-3">
+      <h2 className="font-semibold text-label-value-15">Tech stack</h2>
+      <div className="flex gap-2 rounded-sm border-divider max-md:flex-col max-md:gap-4 md:items-end md:border md:p-4">
         {leftSideEmpty && rightSideEmpty && <NoDataBadge />}
         {!leftSideEmpty && (
           <div className="flex flex-col">
-            <span className="font-medium text-label-value-12 text-secondary">
+            <span className="font-normal text-label-value-13 text-primary">
               zkVM
             </span>
             <TechStackCell
               tags={[...(techStack.zkVM ?? []), ...(techStack.snark ?? [])]}
-              className="flex-wrap md:min-w-fit"
+              className="flex-wrap pb-0 md:min-w-fit"
             />
           </div>
         )}
         {!leftSideEmpty && !rightSideEmpty && (
-          <FilledArrowIcon className="mb-2.5 fill-secondary max-md:hidden" />
+          <FilledArrowIcon className="mb-px fill-secondary max-md:hidden" />
         )}
         {!rightSideEmpty && (
           <div className="flex flex-col">
-            <span className="font-medium text-label-value-12 text-secondary">
+            <span className="font-normal text-label-value-13 text-primary">
               Final wrap
             </span>
             <TechStackCell
               tags={techStack.finalWrap ?? []}
-              className="flex-wrap"
+              className="flex-wrap pb-0"
               emptyText="No final wrap"
             />
           </div>
@@ -426,18 +426,14 @@ function TvsStat({
   return (
     <ProjectSummaryStat
       titleAsChild
-      title={
-        <div className="font-semibold text-subtitle-12">
-          <span className="md:hidden">Total Value Secured</span>
-          <span className="max-md:hidden">TVS</span>
-        </div>
-      }
+      title={<div>Value secured</div>}
       className="w-full md:gap-2"
       value={
         value ? (
           <span className="mb-0.5 flex items-center gap-2">
             <ValueWithPercentageChange
-              className="!text-base !leading-[100%] text-nowrap"
+              containerClassName="flex-nowrap"
+              className="text-nowrap font-semibold text-label-value-20! tabular-nums leading-6!"
               changeClassName="text-label-value-14 font-bold"
               change={change}
               changePeriod={changePeriod}
