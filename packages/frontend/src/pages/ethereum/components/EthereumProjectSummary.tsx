@@ -25,7 +25,7 @@ export function EthereumProjectSummary({ project }: Props) {
       value: (
         <ProjectsUsedIn
           usedIn={project.header.usedIn}
-          className="max-md:-my-1 flex-wrap justify-start"
+          className="max-md:-my-3.5 flex-wrap justify-start"
         />
       ),
     },

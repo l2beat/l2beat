@@ -67,7 +67,7 @@ export function ThroughputSectionChart({
   return (
     <div>
       <div className="mt-2 space-y-3">
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+        <div className="flex flex-wrap items-center gap-3">
           <EthereumProjectsOnlyCheckbox
             name="projectThroughputIncludeL2Only"
             checked={includeL2Only}
@@ -98,32 +98,35 @@ export function ThroughputSectionChart({
           />
         </div>
       </div>
-      {view === 'total' ? (
-        <ProjectDaAbsoluteThroughputChart
-          isPlaceholderData={isPlaceholderData}
-          project={project}
-          dataWithConfiguredThroughputs={dataWithConfiguredThroughputs}
-          isLoading={isLoading}
-          milestones={milestones}
-          syncedUntil={data?.syncedUntil}
-          resolution={resolution}
-        />
-      ) : (
-        <DaThroughputByProjectChart
-          isPlaceholderData={isPlaceholderData}
-          data={data?.byProjectChart.data}
-          project={project}
-          syncedUntil={data?.syncedUntil}
-          isLoading={isLoading}
-          customColors={customColors}
-          capacity={{
-            projectId: project.id,
-            data: dataWithConfiguredThroughputs,
-          }}
-          milestones={milestones}
-          resolution={resolution}
-        />
-      )}
+      {/* 16px under the controls, like the Activity chart below it */}
+      <div className="mt-4">
+        {view === 'total' ? (
+          <ProjectDaAbsoluteThroughputChart
+            isPlaceholderData={isPlaceholderData}
+            project={project}
+            dataWithConfiguredThroughputs={dataWithConfiguredThroughputs}
+            isLoading={isLoading}
+            milestones={milestones}
+            syncedUntil={data?.syncedUntil}
+            resolution={resolution}
+          />
+        ) : (
+          <DaThroughputByProjectChart
+            isPlaceholderData={isPlaceholderData}
+            data={data?.byProjectChart.data}
+            project={project}
+            syncedUntil={data?.syncedUntil}
+            isLoading={isLoading}
+            customColors={customColors}
+            capacity={{
+              projectId: project.id,
+              data: dataWithConfiguredThroughputs,
+            }}
+            milestones={milestones}
+            resolution={resolution}
+          />
+        )}
+      </div>
     </div>
   )
 }
