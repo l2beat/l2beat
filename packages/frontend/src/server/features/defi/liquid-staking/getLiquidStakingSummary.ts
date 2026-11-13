@@ -40,7 +40,10 @@ export async function getLiquidStakingSummary(
 ): Promise<LiquidStakingSummary> {
   const [tvlByProject, charts] = await Promise.all([
     getTotalValueLockedByProject([project]),
-    getLiquidStakingCharts({ range: getLatestValuesRange() }),
+    getLiquidStakingCharts({
+      range: getLatestValuesRange(),
+      projectId: project.id,
+    }),
   ])
   return buildLiquidStakingSummary(
     project.id,

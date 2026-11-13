@@ -14,6 +14,8 @@ import { getLiquidStakingProjects } from './getLiquidStakingProjects'
 
 export const LiquidStakingChartsParams = v.object({
   range: ChartRange,
+  /** Only this project's line, for its own page. */
+  projectId: v.string().optional(),
 })
 
 export type LiquidStakingChartsParams = v.infer<
@@ -66,8 +68,7 @@ export async function getLiquidStakingCharts(
 export async function getLiquidStakingYieldChart(
   params: LiquidStakingChartsParams,
 ): Promise<LiquidStakingYieldPoint[]> {
-  const projects = await getLiquidStakingProjects()
-  const projectIds = projects.map((project) => project.id)
+  const projectIds = await getProjectIds(params)
   if (env.MOCK) {
     const days = getDays(params, 'started').days
     const yields = projectIds.map(() => randomWalk(days.length, 0.03, 0.4))
@@ -102,8 +103,7 @@ export async function getLiquidStakingYieldChart(
 export async function getLiquidStakingCostOfExitChart(
   params: LiquidStakingChartsParams,
 ): Promise<LiquidStakingCostOfExitPoint[]> {
-  const projects = await getLiquidStakingProjects()
-  const projectIds = projects.map((project) => project.id)
+  const projectIds = await getProjectIds(params)
   if (env.MOCK) {
     const days = getDays(params, 'ended').days
     const costOfExit = projectIds.map(() => randomWalk(days.length, 3, 1))
@@ -123,6 +123,15 @@ export async function getLiquidStakingCostOfExitChart(
     UnixTime.now(),
   )
   return computeCostOfExitChart({ days, projectIds, snapshots })
+}
+
+async function getProjectIds(
+  params: LiquidStakingChartsParams,
+): Promise<string[]> {
+  const projects = await getLiquidStakingProjects()
+  return projects
+    .map((project) => project.id)
+    .filter((id) => params.projectId === undefined || id === params.projectId)
 }
 
 /**

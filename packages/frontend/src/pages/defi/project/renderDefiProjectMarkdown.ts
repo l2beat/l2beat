@@ -6,6 +6,7 @@ import { formatUtcDateOrDay } from '~/server/markdown/renderSectionParts'
 import { getUnderReviewText } from '~/utils/project/underReview'
 import {
   formatLatestValue,
+  getProjectMetricTooltip,
   LIQUID_STAKING_METRICS,
 } from '../liquid-staking/liquidStakingMetrics'
 import { LIQUID_STAKING_RISKS } from '../liquid-staking/liquidStakingRisks'
@@ -69,7 +70,7 @@ function getLiquidStakingFacts(summary: ProjectDefiEntry['liquidStaking']) {
       return (
         latest && {
           label: metric.title,
-          value: `${formatLatestValue(metric, latest)} (${formatUtcDateOrDay(latest.timestamp, metric.dailyBuckets)}). ${metric.tooltip}`,
+          value: `${formatLatestValue(metric, latest)} (${formatUtcDateOrDay(latest.timestamp, metric.dailyBuckets)}). ${getProjectMetricTooltip(metric, summary.costOfExitDescription)}`,
         }
       )
     }),

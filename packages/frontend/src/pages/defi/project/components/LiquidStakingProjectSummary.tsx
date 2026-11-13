@@ -6,13 +6,12 @@ import {
   type ProjectSummaryStatProps,
 } from '~/components/projects/ProjectSummaryStat'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
-import type {
-  LiquidStakingLatestValue,
-  LiquidStakingSummary,
-} from '~/server/features/defi/liquid-staking/getLiquidStakingSummary'
+import type { LiquidStakingLatestValue } from '~/server/features/defi/liquid-staking/getLiquidStakingSummary'
+import type { ProjectLiquidStakingSummary } from '~/server/features/defi/project/getDefiProjectEntry'
 import {
   formatLatestValue,
   formatMetricDate,
+  getProjectMetricTooltip,
   LIQUID_STAKING_METRICS,
   type LiquidStakingMetric,
   TVL_TOOLTIP,
@@ -23,7 +22,7 @@ import { LIQUID_STAKING_RISKS } from '../../liquid-staking/liquidStakingRisks'
 export function LiquidStakingProjectSummary({
   summary,
 }: {
-  summary: LiquidStakingSummary
+  summary: ProjectLiquidStakingSummary
 }) {
   const stats: (ProjectSummaryStatProps & { key: string })[] = [
     {
@@ -42,8 +41,18 @@ export function LiquidStakingProjectSummary({
       return {
         key: metric.key,
         title: metric.title,
-        tooltip: withDate(metric, latest),
-        value: latest ? formatLatestValue(metric, latest) : <NoDataBadge />,
+        tooltip: withDate(
+          metric,
+          getProjectMetricTooltip(metric, summary.costOfExitDescription),
+          latest,
+        ),
+        value: latest ? (
+          <a href="#yield-and-exit" className="hover:underline">
+            {formatLatestValue(metric, latest)}
+          </a>
+        ) : (
+          <NoDataBadge />
+        ),
       }
     }),
     ...LIQUID_STAKING_RISKS.map(({ key, title, tooltip }) => ({
@@ -76,8 +85,9 @@ function renderStat({
 
 function withDate(
   metric: LiquidStakingMetric,
+  tooltip: string,
   latest: LiquidStakingLatestValue | undefined,
 ) {
-  if (!latest) return metric.tooltip
-  return `${metric.tooltip} Latest value from ${formatMetricDate(metric, latest.timestamp)}.`
+  if (!latest) return tooltip
+  return `${tooltip} Latest value from ${formatMetricDate(metric, latest.timestamp)}.`
 }

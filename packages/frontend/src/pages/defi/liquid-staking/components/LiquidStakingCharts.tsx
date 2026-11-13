@@ -22,6 +22,7 @@ import type { LiquidStakingEntry } from '~/server/features/defi/liquid-staking/g
 import { useTRPC } from '~/trpc/React'
 import { generateAccessibleColors } from '~/utils/generateColors'
 import type { ChartRange } from '~/utils/range/range'
+import { INSTANT_NOTE, MARKET_NOTE } from '../costOfExitDescription'
 import { formatDays, formatYield } from '../formatLiquidStaking'
 import {
   COST_OF_EXIT_METRIC,
@@ -37,14 +38,17 @@ import {
   LiquidStakingLineChart,
 } from './LiquidStakingLineChart'
 
-type ChartProject = Pick<
+export type LiquidStakingChartProject = Pick<
   LiquidStakingEntry,
   'id' | 'name' | 'shortName' | 'icon'
 >
 
 const NETWORK_KEY = 'network'
 
-const RANGE_OPTIONS: { value: ChartRangeOptionValue; label: string }[] = [
+export const LIQUID_STAKING_RANGE_OPTIONS: {
+  value: ChartRangeOptionValue
+  label: string
+}[] = [
   { value: '30d', label: '30D' },
   { value: '90d', label: '90D' },
   { value: '180d', label: '180D' },
@@ -64,7 +68,7 @@ export function LiquidStakingCharts({
   projects,
   defaultRange,
 }: {
-  projects: ChartProject[]
+  projects: LiquidStakingChartProject[]
   defaultRange: ChartRange
 }) {
   const [range, setRange] = useState<ChartRange>(defaultRange)
@@ -82,31 +86,57 @@ export function LiquidStakingCharts({
   return (
     <>
       <div className="grid gap-4 md:mt-4 lg:grid-cols-2">
-        <YieldChart projectSeries={projectSeries} range={range} />
-        <CostOfExitChart projectSeries={projectSeries} range={range} />
+        <YieldChart
+          projectSeries={projectSeries}
+          range={range}
+          frame={ChartCard}
+        />
+        <CostOfExitChart
+          projectSeries={projectSeries}
+          range={range}
+          frame={ChartCard}
+        />
       </div>
       <ChartControlsWrapper className="mt-4 justify-end max-md:pr-4">
         <ChartRangeControls
           name="liquid-staking"
           value={range}
           setValue={setRange}
-          options={RANGE_OPTIONS}
+          options={LIQUID_STAKING_RANGE_OPTIONS}
         />
       </ChartControlsWrapper>
     </>
   )
 }
 
+export interface LiquidStakingChartFrameProps {
+  title: string
+  /** What the chart measures and where the data comes from. */
+  description: string
+  timeRange: ChartTimeRangeValue
+  isPlaceholderData: boolean
+  children: ReactNode
+}
+
 interface ChartProps {
   projectSeries: LiquidStakingChartSeries[]
   range: ChartRange
+  /** Only this project's line, for its own page. */
+  projectId?: string
+  /** Lays out the title, description and time range around the chart. */
+  frame: (props: LiquidStakingChartFrameProps) => ReactNode
 }
 
-function YieldChart({ projectSeries, range }: ChartProps) {
+export function YieldChart({
+  projectSeries,
+  range,
+  projectId,
+  frame,
+}: ChartProps) {
   const trpc = useTRPC()
   const { data, isLoading, isPlaceholderData } = useChartQuery(
     trpc.defi.liquidStakingYieldChart,
-    { range },
+    { range, projectId },
   )
 
   const series = useMemo(
@@ -132,17 +162,16 @@ function YieldChart({ projectSeries, range }: ChartProps) {
     [data],
   )
 
-  return (
-    <ChartCard
-      title="Rate-implied yield"
-      info={[
-        YIELD_METRIC.tooltip,
-        'Network average is the return of active Ethereum validators before any protocol fee: consensus rewards plus what proposers earn from blocks, over their balance, for the same 30 days. Validators waiting to enter, or exited and not yet withdrawn, earn nothing and are left out.',
-        'The shaded area is the ETH held by active validators (right axis): rewards per validator shrink as the square root of the total stake, so the yield falls as the stake grows.',
-      ].join(' ')}
-      timeRange={getChartTimeRangeFromData(chartData)}
-      isPlaceholderData={isPlaceholderData}
-    >
+  return frame({
+    title: 'Rate-implied yield',
+    description: [
+      YIELD_METRIC.tooltip,
+      'Network average is the return of active Ethereum validators before any protocol fee: consensus rewards plus what proposers earn from blocks, over their balance, for the same 30 days. Validators waiting to enter, or exited and not yet withdrawn, earn nothing and are left out.',
+      'The shaded area is the ETH held by active validators (right axis): rewards per validator shrink as the square root of the total stake, so the yield falls as the stake grows.',
+    ].join(' '),
+    timeRange: getChartTimeRangeFromData(chartData),
+    isPlaceholderData,
+    children: (
       <LiquidStakingLineChart
         series={series}
         data={chartData}
@@ -156,15 +185,24 @@ function YieldChart({ projectSeries, range }: ChartProps) {
         }
         background={ETH_STAKED}
       />
-    </ChartCard>
-  )
+    ),
+  })
 }
 
-function CostOfExitChart({ projectSeries, range }: ChartProps) {
+export function CostOfExitChart({
+  projectSeries,
+  range,
+  projectId,
+  description,
+  frame,
+}: ChartProps & {
+  /** One protocol's routes, in place of every protocol's. */
+  description?: string
+}) {
   const trpc = useTRPC()
   const { data, isLoading, isPlaceholderData } = useChartQuery(
     trpc.defi.liquidStakingCostOfExitChart,
-    { range },
+    { range, projectId },
   )
 
   const chartData = useMemo<LiquidStakingChartData | undefined>(
@@ -180,17 +218,20 @@ function CostOfExitChart({ projectSeries, range }: ChartProps) {
     [data],
   )
 
-  return (
-    <ChartCard
-      title="Cost of exit"
-      info={[
+  return frame({
+    title: 'Cost of exit',
+    description:
+      description ??
+      [
         COST_OF_EXIT_METRIC.tooltip,
-        "The discount is the day's median of hourly quotes for selling 100 tokens on the deepest pools, on days they could fill the sale for most hours. An instant exit counts on days it could pay out 100 ETH for most hours. wBETH unwraps wait for Binance to allocate ETH, and at least the operator-set lock time; its pools are too thin to quote.",
-      ].join(' ')}
-      // A point is a day, so the range runs to the end of the last one.
-      timeRange={getChartTimeRangeFromData(chartData, { bucket: 'day' })}
-      isPlaceholderData={isPlaceholderData}
-    >
+        MARKET_NOTE,
+        INSTANT_NOTE,
+        'wBETH unwraps wait for Binance to allocate ETH, and at least the operator-set lock time; its pools are too thin to quote.',
+      ].join(' '),
+    // A point is a day, so the range runs to the end of the last one.
+    timeRange: getChartTimeRangeFromData(chartData, { bucket: 'day' }),
+    isPlaceholderData,
+    children: (
       <LiquidStakingLineChart
         series={projectSeries}
         data={chartData}
@@ -206,24 +247,17 @@ function CostOfExitChart({ projectSeries, range }: ChartProps) {
           formatMetricDate(COST_OF_EXIT_METRIC, timestamp)
         }
       />
-    </ChartCard>
-  )
+    ),
+  })
 }
 
 function ChartCard({
   title,
-  info,
+  description,
   timeRange,
   isPlaceholderData,
   children,
-}: {
-  title: string
-  /** What the chart measures and where the data comes from. */
-  info: string
-  timeRange: ChartTimeRangeValue
-  isPlaceholderData: boolean
-  children: ReactNode
-}) {
+}: LiquidStakingChartFrameProps) {
   // The date range changes width with the range and while loading, so its
   // line has a fixed height to keep both cards the same size.
   return (
@@ -234,7 +268,7 @@ function ChartCard({
           <TooltipTrigger>
             <InfoIcon className="size-3.5" />
           </TooltipTrigger>
-          <TooltipContent>{info}</TooltipContent>
+          <TooltipContent>{description}</TooltipContent>
         </Tooltip>
       </div>
       <div className="mt-1 mb-4 flex h-5 items-center lg:h-6">
@@ -248,7 +282,11 @@ function ChartCard({
   )
 }
 
-function ProjectLabel({ project }: { project: ChartProject }) {
+export function ProjectLabel({
+  project,
+}: {
+  project: LiquidStakingChartProject
+}) {
   return (
     <span className="inline-flex items-center gap-1">
       <img

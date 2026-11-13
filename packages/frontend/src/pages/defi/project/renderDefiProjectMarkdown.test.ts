@@ -53,6 +53,10 @@ describe(renderDefiProjectMarkdown.name, () => {
             },
             yield: { value: 0.028, timestamp: day, estimated: false },
             costOfExit: { value: 3, timestamp: day, estimated: false },
+            costOfExitDescription: {
+              tooltip: 'Only the routes Lido has.',
+              chart: 'Only the routes Lido has, measured.',
+            },
           },
         },
         TOTAL_VALUE_LOCKED_USD,
@@ -62,7 +66,7 @@ describe(renderDefiProjectMarkdown.name, () => {
 
     expect(summary).toInclude('(on 2026-11-01 00:00 UTC)')
     expect(summary).toInclude(
-      '(over 2026-11-01 00:00 UTC to 2026-11-02 00:00 UTC)',
+      '(over 2026-11-01 00:00 UTC to 2026-11-02 00:00 UTC). Only the routes Lido has.',
     )
   })
 
