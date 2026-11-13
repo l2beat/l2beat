@@ -305,7 +305,7 @@ function getCalloutProps(contract: TechnologyContract) {
     return {
       color: undefined,
       icon: (
-        <ShieldIcon className="size-5 fill-yellow-700 dark:fill-yellow-300" />
+        <ShieldIcon className="size-5 fill-warning" />
       ),
     }
   }
