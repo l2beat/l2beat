@@ -426,7 +426,8 @@ function CustomTooltip({
               <span className="font-medium text-label-value-15 text-primary tabular-nums">
                 {entry.name === OTHERS_KEY && othersCount > 0 && (
                   <span className="text-secondary">
-                    {othersCount} {othersCount === 1 ? 'project' : 'projects'}
+                    {othersCount}{' '}
+                    {othersCount === 1 ? 'hidden project' : 'hidden projects'}
                     {' · '}
                   </span>
                 )}
