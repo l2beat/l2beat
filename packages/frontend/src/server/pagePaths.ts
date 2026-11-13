@@ -12,7 +12,6 @@ import {
   getProjectTvsBreakdownPath,
 } from '~/utils/project/getProjectPath'
 import {
-  hasMarkdown,
   PROJECT_PAGE_FIELDS,
   selectProjectPages,
 } from './features/projects/getProjectPage'
@@ -29,8 +28,6 @@ export interface Page {
    * ignored by crawlers.
    */
   lastModified?: UnixTime
-  /** False for pages the markdown registry would wrongly give a `.md`. */
-  hasMarkdown?: boolean
 }
 
 export const STATIC_PAGE_PATHS = [
@@ -107,10 +104,7 @@ async function getDynamicPages(): Promise<Page[]> {
         (section !== 'layer2s' && section !== 'privacy'),
     )
     if (listed.length === 0) continue
-    pages.push({
-      path: getProjectPath(page.slug),
-      hasMarkdown: hasMarkdown(page),
-    })
+    pages.push({ path: getProjectPath(page.slug) })
     if (listed.includes('layer2s') && project?.tvsConfig) {
       pages.push({ path: getProjectTvsBreakdownPath(page.slug) })
     }

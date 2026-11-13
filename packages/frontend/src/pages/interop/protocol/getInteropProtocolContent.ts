@@ -1,21 +1,27 @@
-import { getChainFlowsSection } from '~/server/features/chains/getChainProjectEntry'
 import { getInteropProtocolData } from '~/server/features/layer2s/interop/getInteropProtocolData'
 import { getInteropProtocolEntry } from '~/server/features/layer2s/interop/protocol/getInteropProtocolEntry'
 import { getInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
-import type { ProjectPage } from '~/server/features/projects/getProjectPage'
 import { ps } from '~/server/projects'
 import { getInteropMetadataDescription } from '~/ssr/head/projectMetaDescriptions'
 import type {
   ProjectPageContent,
   ProjectPageContext,
-} from '../../project/getProjectData'
+  ProjectPageDefinition,
+} from '../../project/projectPageDefinition'
 import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
+import { renderInteropProtocolMarkdown } from './renderInteropProtocolMarkdown'
+
+export const interopProtocolPage: ProjectPageDefinition<'InteropProtocolPage'> =
+  {
+    component: 'InteropProtocolPage',
+    getContent: getInteropProtocolContent,
+    renderMarkdown: renderInteropProtocolMarkdown,
+  }
 
 export async function getInteropProtocolContent(
-  page: ProjectPage,
+  slug: string,
   { helpers, manifest }: ProjectPageContext,
 ): Promise<ProjectPageContent<'InteropProtocolPage'> | undefined> {
-  const { slug } = page
   const interopChains = getInteropChains()
   const liveChainIds = interopChains
     .filter((chain) => !chain.isUpcoming)
@@ -34,12 +40,10 @@ export async function getInteropProtocolContent(
     interopChains.filter((chain) => !chain.isUpcoming),
   )
 
-  const [protocolData, chainFlows] = await Promise.all([
-    getInteropProtocolData({ id: project.id, ...apiSelection }),
-    page.sections.includes('chain')
-      ? getChainFlowsSection(slug, helpers)
-      : undefined,
-  ])
+  const protocolData = await getInteropProtocolData({
+    id: project.id,
+    ...apiSelection,
+  })
 
   const projectEntry = await getInteropProtocolEntry(
     project,
@@ -47,7 +51,6 @@ export async function getInteropProtocolContent(
     interopChainsWithIcons,
     protocolData,
     helpers,
-    chainFlows,
   )
 
   return {

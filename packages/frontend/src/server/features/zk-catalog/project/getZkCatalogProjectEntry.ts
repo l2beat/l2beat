@@ -73,6 +73,16 @@ type ZkCatalogProject = Project<
   'archivedAt' | 'milestones' | 'tvsInfo'
 >
 
+export function findZkCatalogProject(
+  slug: string,
+): Promise<ZkCatalogProject | undefined> {
+  return ps.getProject({
+    slug,
+    select: ['zkCatalogInfo', 'display', 'statuses'],
+    optional: ['archivedAt', 'milestones', 'tvsInfo'],
+  })
+}
+
 /** The ZK Catalog page: every section of the project, in the page's order. */
 export async function getZkCatalogProjectEntry(
   project: ZkCatalogProject,

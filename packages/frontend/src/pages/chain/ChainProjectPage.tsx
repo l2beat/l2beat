@@ -24,8 +24,6 @@ export function ChainProjectPage({ entry, ...props }: Props) {
         </section>
       }
       sections={entry.sections}
-      // Chain pages show only interop flows, which have no markdown version.
-      hasMarkdown={false}
     />
   )
 }

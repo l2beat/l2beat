@@ -69,18 +69,22 @@ describe('sections of a project in two site sections', function () {
     expectUnique(ids)
   })
 
-  it('shows the flows of the chain on the page of a protocol that is a chain', async () => {
-    const sections = await getSections('avalanche')
-    const ids = sections.map((section) => section.props.id)
+  // The page swaps the protocol's own volume section for them, and the
+  // markdown keeps it: top chains and routes read fine as lists.
+  it('hands the flows of the chain to the page of a protocol that is a chain', async () => {
+    const props = await getProps('avalanche')
 
-    expect(ids).toInclude('interop-flows')
-    expect(ids).not.toInclude('interop-volume')
-    expect(aliasIdsOf(sections, 'interop-flows')).toEqual(['interop-volume'])
-    expectUnique(ids)
+    expect(props.chainFlows.props.id).toEqual('interop-flows')
+    expect(props.chainFlows.props.aliasIds).toEqual(['interop-volume'])
   })
 })
 
 async function getSections(slug: string): Promise<ProjectDetailsSection[]> {
+  const props = await getProps(slug)
+  return (props.projectEntry ?? props.entry).sections
+}
+
+async function getProps(slug: string) {
   const router = createProjectRouter(
     manifest,
     async (data) => JSON.stringify(data.ssr.props),
@@ -90,8 +94,7 @@ async function getSections(slug: string): Promise<ProjectDetailsSection[]> {
     headers: { Accept: 'text/html' },
   })
   expect(response.status).toEqual(200)
-  const props = await response.json()
-  return (props.projectEntry ?? props.entry).sections
+  return response.json()
 }
 
 function aliasIdsOf(sections: ProjectDetailsSection[], id: string) {

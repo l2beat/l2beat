@@ -24,7 +24,7 @@ import { PRIVACY_TOOLS, type PrivacyTool } from '../common/privacyTools'
 import { asArray } from '../templates/utils'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from '../test/constants'
 import { isRiskCorrectlyFormatted } from '../test/helpers'
-import type { BaseProject } from '../types'
+import type { BaseProject, PrivacyRiskCategory } from '../types'
 import { ecosystems } from './ecosystems'
 import { hasEoaWithUpgradePermissions } from './getEoaRedWarning'
 import { getProjects } from './getProjects'
@@ -636,13 +636,13 @@ describe('getProjects', () => {
 
     // Risk summaries share one layout, so readers can compare projects item by item.
     it('every risk summary follows the shared layout', () => {
-      const headings = [
+      const headings: readonly string[] = [
         'Funds can be stolen if',
         'Funds can be lost if',
         'Funds can be frozen if',
         'Use can be stopped if',
         'Privacy can be lost if',
-      ]
+      ] satisfies PrivacyRiskCategory[]
       const cellNames: Record<string, string> = {
         publicObserver: 'public observer',
         chainAnalyst: 'chain analyst',

@@ -26,8 +26,17 @@ export function getChainProjectSlug(
 /** The chains that have a chain page in this deployment. */
 export async function getChainProjects() {
   const l2Projects = await ps.getProjects({ where: ['scalingInfo'] })
-  const l2ProjectIds = new Set(l2Projects.map((project) => project.id))
-  return getActiveInteropChains().flatMap((chain) => {
+  return selectChainProjects(
+    getActiveInteropChains(),
+    new Set(l2Projects.map((project) => project.id)),
+  )
+}
+
+/** `getChainProjects` for callers that already hold the chains and scaling projects. */
+export function selectChainProjects<
+  Chain extends { id: string; isUpcoming?: boolean },
+>(chains: readonly Chain[], l2ProjectIds: { has(id: ProjectId): boolean }) {
+  return chains.flatMap((chain) => {
     const slug = getChainProjectSlug(chain, l2ProjectIds)
     return slug ? [{ ...chain, slug }] : []
   })

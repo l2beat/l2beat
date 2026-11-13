@@ -40,8 +40,6 @@ interface Props extends ProjectPageCommonProps {
   summary: ReactNode
   sections: ProjectDetailsSection[]
   pageSections?: ComponentProps<typeof ProjectDetails>['pageSections']
-  /** False for a page the markdown registry would wrongly give a `.md`. */
-  hasMarkdown?: boolean
 }
 
 /**
@@ -55,7 +53,6 @@ export function ProjectPage({
   summary,
   sections,
   pageSections,
-  hasMarkdown,
   projectSections,
   versionLinks,
   queryState,
@@ -69,10 +66,7 @@ export function ProjectPage({
   return (
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
-        <SideNavLayout
-          childrenWrapperClassName="md:pt-0"
-          hasMarkdown={hasMarkdown}
-        >
+        <SideNavLayout childrenWrapperClassName="md:pt-0">
           <div
             className="smooth-scroll group/section-wrapper relative z-0 max-md:bg-surface-primary"
             data-project-page

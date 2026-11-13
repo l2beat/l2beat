@@ -35,12 +35,11 @@ export function getPrivacyDescriptionSection(
 }
 
 /**
- * Takes the page's other sections, so that its source links point only at
- * sections the page renders.
+ * Its sources name sections of the page, which `linkPrivacySources` turns
+ * into links once the page has all of them.
  */
 export function getPrivacyAdversariesSection(
   details: PrivacyProjectDetails,
-  pageSections: ProjectDetailsSection[],
 ): Section<'PrivacyAdversariesSection'> {
   return {
     type: 'PrivacyAdversariesSection',
@@ -48,10 +47,26 @@ export function getPrivacyAdversariesSection(
       id: PRIVACY_ADVERSARIES_SECTION_ID,
       title: 'Privacy',
       isUnderReview: !!details.statuses.reviewStatus,
-      adversaries: resolvePrivacySources(details.adversaries, pageSections),
+      adversaries: details.adversaries,
       referenceApp: getReferenceApp(details),
     },
   }
+}
+
+/**
+ * Points the adversaries' sources at the sections the page has, so that no
+ * link is dead. Run it last, and again after adding or removing a section.
+ */
+export function linkPrivacySources(
+  sections: ProjectDetailsSection[],
+  details: PrivacyProjectDetails,
+): ProjectDetailsSection[] {
+  const adversaries = resolvePrivacySources(details.adversaries, sections)
+  return sections.map((section) =>
+    section.type === 'PrivacyAdversariesSection'
+      ? { ...section, props: { ...section.props, adversaries } }
+      : section,
+  )
 }
 
 /** Our advice for the reference app, when a step changes what an adversary learns. */

@@ -1,15 +1,23 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import { getEthereumProjectEntry } from '~/server/features/data-availability/project/getEthereumProjectEntry'
-import type { ProjectPage } from '~/server/features/projects/getProjectPage'
 import { ps } from '~/server/projects'
 import { getDaMetadataDescription } from '~/ssr/head/projectMetaDescriptions'
 import type {
   ProjectPageContent,
   ProjectPageContext,
-} from '../project/getProjectData'
+  ProjectPageDefinition,
+} from '../project/projectPageDefinition'
+import { renderEthereumProjectMarkdown } from './renderEthereumProjectMarkdown'
 
-export async function getEthereumProjectContent(
-  _: ProjectPage,
+export const ethereumProjectPage: ProjectPageDefinition<'EthereumProjectPage'> =
+  {
+    component: 'EthereumProjectPage',
+    getContent: getEthereumProjectContent,
+    renderMarkdown: ({ entry }) => renderEthereumProjectMarkdown(entry),
+  }
+
+async function getEthereumProjectContent(
+  _slug: string,
   { helpers }: ProjectPageContext,
 ): Promise<ProjectPageContent<'EthereumProjectPage'>> {
   const project = await ps.getProject({

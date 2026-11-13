@@ -1,4 +1,5 @@
 import { expect } from 'earl'
+import type { RiskGroup } from '~/components/projects/sections/RiskSummarySection'
 import { mergeRiskGroups } from './mergeRiskGroups'
 
 describe(mergeRiskGroups.name, () => {
@@ -7,7 +8,7 @@ describe(mergeRiskGroups.name, () => {
     referencedId: 'section',
     isCritical: false,
   })
-  const own = [
+  const own: RiskGroup[] = [
     { start: 1, name: 'Funds can be stolen if', items: [item('own stolen')] },
     { start: 2, name: 'Funds can be frozen if', items: [item('own frozen')] },
   ]

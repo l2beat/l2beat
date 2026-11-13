@@ -13,14 +13,9 @@ import {
 import type { RosetteValue } from '~/components/rosette/types'
 import { externalLinks } from '~/consts/externalLinks'
 import type { ProjectL2Entry } from '~/server/features/layer2s/project/getL2ProjectEntry'
-import {
-  linkInteropProtocol,
-  linkInteropToken,
-  listTopItems,
-} from '~/server/markdown/interopMarkdown'
+import { getInteropSummaryFacts } from '~/server/markdown/interopMarkdown'
 import {
   formatChange,
-  formatCount,
   formatUsd,
   link,
   NO_DATA,
@@ -57,7 +52,9 @@ export function renderL2ProjectMarkdown(
       ]),
       facts: [
         ...getFacts(entry),
-        ...getInteropFacts(entry),
+        ...(entry.header.interop
+          ? getInteropSummaryFacts(entry.header.interop)
+          : []),
         ...(summaryRisks.fact ? [summaryRisks.fact] : []),
         ...(merged?.facts ?? []),
       ],
@@ -286,32 +283,3 @@ function getSummaryRisks({
 }
 
 /** The cross-chain block of the HTML summary; its volume and top lists cover the last 24 hours. */
-function getInteropFacts({ header }: ProjectL2Entry): ProjectFact[] {
-  const interop = header.interop
-  if (!interop) return []
-  return compact([
-    {
-      label: 'Last 24h cross-chain volume',
-      value: formatUsd(interop.volume),
-    },
-    {
-      label: 'Last 24h cross-chain transfers',
-      value: formatCount(interop.transferCount),
-    },
-    interop.protocols.items.length > 0 && {
-      label: 'Interop protocols used (last 24h volume)',
-      value: listTopItems(
-        interop.protocols,
-        (protocol) =>
-          `${linkInteropProtocol(protocol)} (${formatUsd(protocol.volume)})`,
-      ).join(', '),
-    },
-    interop.tokens.items.length > 0 && {
-      label: 'Tokens by volume (last 24h)',
-      value: listTopItems(
-        interop.tokens,
-        (token) => `${linkInteropToken(token)} (${formatUsd(token.volume)})`,
-      ).join(', '),
-    },
-  ])
-}

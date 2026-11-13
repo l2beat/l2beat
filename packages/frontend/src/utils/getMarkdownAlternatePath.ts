@@ -46,7 +46,6 @@ export const LIST_PAGES_WITH_MARKDOWN = [
  * `{...}` for a part the URL may leave out.
  */
 export const PROJECT_PAGES_WITH_MARKDOWN = [
-  // Every project page but the chain-only ones, which opt out where they render.
   getProjectPath(':slug'),
   '/tokens/:slug{/:issuer}{/:symbol}',
 ] as const
