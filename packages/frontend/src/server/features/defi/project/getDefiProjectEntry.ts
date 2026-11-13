@@ -1,18 +1,9 @@
-import type {
-  Project,
-  ProjectDefiCategory,
-  ProjectLiquidStaking,
-  ProjectRedWarning,
-} from '@l2beat/config'
+import type { ProjectDefiCategory, ProjectRedWarning } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { env } from '~/env'
-import {
-  type CostOfExitDescription,
-  getCostOfExitDescription,
-} from '~/pages/defi/liquid-staking/costOfExitDescription'
 import { getGardenCropsSection } from '~/server/features/garden/getGardenCropsSection'
 import { getUpdatesSection } from '~/server/features/projects/discovery-updates/getUpdatesSection'
 import { getProjectOssification } from '~/server/features/projects/ossification/getProjectOssification'
@@ -30,7 +21,7 @@ import { getProjectsChangeReport } from '../../projects-change-report/getProject
 import { getDefiTvlDataSource } from '../getDefiTvlDataSource'
 import {
   getLiquidStakingSummary,
-  type LiquidStakingSummary,
+  type ProjectLiquidStakingSummary,
 } from '../liquid-staking/getLiquidStakingSummary'
 import {
   getDefiDependencyProjectsById,
@@ -66,10 +57,6 @@ export interface ProjectDefiEntry {
     emergency?: string
   }
   sections: ProjectDetailsSection[]
-}
-
-export interface ProjectLiquidStakingSummary extends LiquidStakingSummary {
-  costOfExitDescription: CostOfExitDescription
 }
 
 export async function getDefiProjectEntry(
@@ -112,7 +99,7 @@ export async function getDefiProjectEntry(
     getProjectOssification(project),
     getDefiTokens(project.defiInfo.tokens ?? []),
     project.liquidStaking
-      ? getProjectLiquidStakingSummary(project, project.liquidStaking)
+      ? getLiquidStakingSummary(project, project.liquidStaking)
       : undefined,
   ])
   // DeFi pages get the Updates section together with ossification.
@@ -298,16 +285,5 @@ export async function getDefiProjectEntry(
       emergency: project.statuses.emergencyWarning,
     },
     sections,
-  }
-}
-
-async function getProjectLiquidStakingSummary(
-  project: Pick<Project<'defiInfo'>, 'id' | 'defiInfo'>,
-  liquidStaking: ProjectLiquidStaking,
-): Promise<ProjectLiquidStakingSummary> {
-  const summary = await getLiquidStakingSummary(project, liquidStaking.risks)
-  return {
-    ...summary,
-    costOfExitDescription: getCostOfExitDescription(liquidStaking),
   }
 }

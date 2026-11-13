@@ -4,16 +4,15 @@ import { ChartRangeControls } from '~/components/core/chart/ChartRangeControls'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import {
   CostOfExitChart,
+  getProjectSeries,
   LIQUID_STAKING_RANGE_OPTIONS,
   type LiquidStakingChartFrameProps,
   type LiquidStakingChartProject,
-  ProjectLabel,
   YieldChart,
 } from '~/pages/defi/liquid-staking/components/LiquidStakingCharts'
-import type { LiquidStakingChartSeries } from '~/pages/defi/liquid-staking/components/LiquidStakingLineChart'
-import { generateAccessibleColors } from '~/utils/generateColors'
 import type { ChartRange } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
+import { SubsectionHeading } from '../Subsection'
 import type { ProjectSectionProps } from '../types'
 
 export interface LiquidStakingYieldAndExitSectionProps
@@ -33,16 +32,7 @@ export function LiquidStakingYieldAndExitSection({
 }: LiquidStakingYieldAndExitSectionProps) {
   const [yieldRange, setYieldRange] = useState<ChartRange>(defaultRange)
   const [exitRange, setExitRange] = useState<ChartRange>(defaultRange)
-  const projectSeries = useMemo(
-    (): LiquidStakingChartSeries[] => [
-      {
-        key: project.id,
-        label: <ProjectLabel project={project} />,
-        color: generateAccessibleColors(1)[0] ?? 'var(--secondary)',
-      },
-    ],
-    [project],
-  )
+  const projectSeries = useMemo(() => getProjectSeries([project]), [project])
 
   return (
     <ProjectSection {...projectSectionProps}>
@@ -96,7 +86,9 @@ function ChartBlock({
 }) {
   return (
     <div className={className}>
-      <h3 className="mb-2 font-bold text-heading-20">{title}</h3>
+      <SubsectionHeading className="mb-2 font-bold text-heading-20">
+        {title}
+      </SubsectionHeading>
       <p className="mb-4 text-paragraph-15 text-secondary">{description}</p>
       <ChartControlsWrapper className="mb-4">
         <ProjectChartTimeRange

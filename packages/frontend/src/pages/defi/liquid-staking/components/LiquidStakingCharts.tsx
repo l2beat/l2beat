@@ -22,7 +22,7 @@ import type { LiquidStakingEntry } from '~/server/features/defi/liquid-staking/g
 import { useTRPC } from '~/trpc/React'
 import { generateAccessibleColors } from '~/utils/generateColors'
 import type { ChartRange } from '~/utils/range/range'
-import { INSTANT_NOTE, MARKET_NOTE } from '../costOfExitDescription'
+import { ALL_ROUTES_COST_OF_EXIT } from '../costOfExitDescription'
 import { formatDays, formatYield } from '../formatLiquidStaking'
 import {
   COST_OF_EXIT_METRIC,
@@ -72,16 +72,7 @@ export function LiquidStakingCharts({
   defaultRange: ChartRange
 }) {
   const [range, setRange] = useState<ChartRange>(defaultRange)
-  const projectSeries = useMemo(() => {
-    const colors = generateAccessibleColors(projects.length)
-    return projects.map(
-      (project, i): LiquidStakingChartSeries => ({
-        key: project.id,
-        label: <ProjectLabel project={project} />,
-        color: colors[i] ?? 'var(--secondary)',
-      }),
-    )
-  }, [projects])
+  const projectSeries = useMemo(() => getProjectSeries(projects), [projects])
 
   return (
     <>
@@ -94,6 +85,7 @@ export function LiquidStakingCharts({
         <CostOfExitChart
           projectSeries={projectSeries}
           range={range}
+          description={ALL_ROUTES_COST_OF_EXIT.chart}
           frame={ChartCard}
         />
       </div>
@@ -107,6 +99,18 @@ export function LiquidStakingCharts({
       </ChartControlsWrapper>
     </>
   )
+}
+
+/** A line per project, each in its own colour. */
+export function getProjectSeries(
+  projects: LiquidStakingChartProject[],
+): LiquidStakingChartSeries[] {
+  const colors = generateAccessibleColors(projects.length)
+  return projects.map((project, i) => ({
+    key: project.id,
+    label: <ProjectLabel project={project} />,
+    color: colors[i] ?? 'var(--secondary)',
+  }))
 }
 
 export interface LiquidStakingChartFrameProps {
@@ -198,10 +202,7 @@ export function CostOfExitChart({
   projectId,
   description,
   frame,
-}: ChartProps & {
-  /** One protocol's routes, in place of every protocol's. */
-  description?: string
-}) {
+}: ChartProps & { description: string }) {
   const trpc = useTRPC()
   const { data, isLoading, isPlaceholderData } = useChartQuery(
     trpc.defi.liquidStakingCostOfExitChart,
@@ -226,14 +227,7 @@ export function CostOfExitChart({
 
   return frame({
     title: 'Cost of exit',
-    description:
-      description ??
-      [
-        COST_OF_EXIT_METRIC.tooltip,
-        MARKET_NOTE,
-        INSTANT_NOTE,
-        'wBETH unwraps wait for Binance to allocate ETH, and at least the operator-set lock time; its pools are too thin to quote.',
-      ].join(' '),
+    description,
     // A point is a day, so the range runs to the end of the last one.
     timeRange: getChartTimeRangeFromData(chartData, { bucket: 'day' }),
     isPlaceholderData,
@@ -303,11 +297,7 @@ function ChartCard({
   )
 }
 
-export function ProjectLabel({
-  project,
-}: {
-  project: LiquidStakingChartProject
-}) {
+function ProjectLabel({ project }: { project: LiquidStakingChartProject }) {
   return (
     <span className="inline-flex items-center gap-1">
       <img

@@ -18,9 +18,9 @@ const INTRO =
   'How many days of staking yield a holder gives up to exit about 100 ETH'
 const ESTIMATE_NOTE =
   "~ marks an estimate: requests still queued are timed at the last 7 days' pace."
-export const MARKET_NOTE =
+const MARKET_NOTE =
   "The discount is the day's median of hourly quotes for selling 100 tokens on the deepest pools, on days they could fill the sale for most hours."
-export const INSTANT_NOTE =
+const INSTANT_NOTE =
   'An instant exit counts on days it could pay out 100 ETH for most hours.'
 
 const QUEUE: ExitRoute = {
@@ -35,8 +35,18 @@ const MARKET: ExitRoute = {
   note: MARKET_NOTE,
 }
 
+const ALL_ROUTES_TOOLTIP = `${describeRoutes([QUEUE, INSTANT, MARKET])} ${ESTIMATE_NOTE}`
+
 /** Every route any protocol has, for pages that compare them. */
-export const ALL_ROUTES_TOOLTIP = `${describeRoutes([QUEUE, INSTANT, MARKET])} ${ESTIMATE_NOTE}`
+export const ALL_ROUTES_COST_OF_EXIT: CostOfExitDescription = {
+  tooltip: ALL_ROUTES_TOOLTIP,
+  chart: [
+    ALL_ROUTES_TOOLTIP,
+    MARKET_NOTE,
+    INSTANT_NOTE,
+    'wBETH unwraps wait for Binance to allocate ETH, and at least the operator-set lock time; its pools are too thin to quote.',
+  ].join(' '),
+}
 
 /** The cost of exit of one protocol, naming only the routes it has. */
 export function getCostOfExitDescription(

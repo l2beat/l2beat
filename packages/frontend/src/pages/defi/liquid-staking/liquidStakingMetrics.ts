@@ -5,7 +5,7 @@ import type {
 } from '~/server/features/defi/liquid-staking/getLiquidStakingSummary'
 import { formatRange, formatTimestamp } from '~/utils/dates'
 import {
-  ALL_ROUTES_TOOLTIP,
+  ALL_ROUTES_COST_OF_EXIT,
   type CostOfExitDescription,
 } from './costOfExitDescription'
 import { formatDays, formatYield } from './formatLiquidStaking'
@@ -37,19 +37,9 @@ export const YIELD_METRIC: LiquidStakingMetric = {
 export const COST_OF_EXIT_METRIC: LiquidStakingMetric = {
   key: 'costOfExit',
   title: 'Cost of exit',
-  tooltip: ALL_ROUTES_TOOLTIP,
+  tooltip: ALL_ROUTES_COST_OF_EXIT.tooltip,
   format: formatDays,
   dailyBuckets: true,
-}
-
-/** On a project's page, the cost of exit names only the routes it has. */
-export function getProjectMetricTooltip(
-  metric: LiquidStakingMetric,
-  costOfExitDescription: CostOfExitDescription,
-): string {
-  return metric.key === 'costOfExit'
-    ? costOfExitDescription.tooltip
-    : metric.tooltip
 }
 
 /** A latest value, marked with ~ when it's an estimate. */
@@ -72,6 +62,13 @@ export function formatMetricDate(
 
 /** The chart values, also shown in the table and on project pages. */
 export const LIQUID_STAKING_METRICS = [YIELD_METRIC, COST_OF_EXIT_METRIC]
+
+/** On a project's page, the cost of exit names only the routes it has. */
+export function getProjectMetrics(
+  costOfExit: CostOfExitDescription,
+): LiquidStakingMetric[] {
+  return [YIELD_METRIC, { ...COST_OF_EXIT_METRIC, tooltip: costOfExit.tooltip }]
+}
 
 export const ETH_STAKED_TITLE = 'ETH staked'
 export const ETH_STAKED_TOOLTIP = 'Balance of all active Ethereum validators.'

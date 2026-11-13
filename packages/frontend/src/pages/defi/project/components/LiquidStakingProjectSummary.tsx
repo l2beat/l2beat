@@ -6,13 +6,14 @@ import {
   type ProjectSummaryStatProps,
 } from '~/components/projects/ProjectSummaryStat'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
-import type { LiquidStakingLatestValue } from '~/server/features/defi/liquid-staking/getLiquidStakingSummary'
-import type { ProjectLiquidStakingSummary } from '~/server/features/defi/project/getDefiProjectEntry'
+import type {
+  LiquidStakingLatestValue,
+  ProjectLiquidStakingSummary,
+} from '~/server/features/defi/liquid-staking/getLiquidStakingSummary'
 import {
   formatLatestValue,
   formatMetricDate,
-  getProjectMetricTooltip,
-  LIQUID_STAKING_METRICS,
+  getProjectMetrics,
   type LiquidStakingMetric,
   TVL_TOOLTIP,
 } from '../../liquid-staking/liquidStakingMetrics'
@@ -36,16 +37,12 @@ export function LiquidStakingProjectSummary({
           <NoDataBadge />
         ),
     },
-    ...LIQUID_STAKING_METRICS.map((metric) => {
+    ...getProjectMetrics(summary.costOfExitDescription).map((metric) => {
       const latest = summary[metric.key]
       return {
         key: metric.key,
         title: metric.title,
-        tooltip: withDate(
-          metric,
-          getProjectMetricTooltip(metric, summary.costOfExitDescription),
-          latest,
-        ),
+        tooltip: withDate(metric, latest),
         value: latest ? (
           <a href="#yield-and-exit" className="hover:underline">
             {formatLatestValue(metric, latest)}
@@ -85,9 +82,8 @@ function renderStat({
 
 function withDate(
   metric: LiquidStakingMetric,
-  tooltip: string,
   latest: LiquidStakingLatestValue | undefined,
 ) {
-  if (!latest) return tooltip
-  return `${tooltip} Latest value from ${formatMetricDate(metric, latest.timestamp)}.`
+  if (!latest) return metric.tooltip
+  return `${metric.tooltip} Latest value from ${formatMetricDate(metric, latest.timestamp)}.`
 }

@@ -426,14 +426,17 @@ function renderSection(
       )
     case 'LiquidStakingYieldAndExitSection': {
       const Section = props.pageSections?.LiquidStakingYieldAndExitSection
+      if (!Section) {
+        throw new Error('Page did not provide the section', {
+          cause: { type: item.type },
+        })
+      }
       return (
-        Section && (
-          <Section
-            key={item.props.id}
-            {...{ nested, sectionOrder }}
-            {...item.props}
-          />
-        )
+        <Section
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
       )
     }
     case 'PrivacyFlowsSection':
