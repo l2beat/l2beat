@@ -101,7 +101,6 @@ export function TokensDialog({
             name="tokens"
             value={activeTab}
             onValueChange={(v) => setActiveTab(v as ActiveTab)}
-            variant="highlighted"
           >
             <DrawerHeader className="mb-2">
               <DrawerTitle className="mb-0 text-xl">{title}</DrawerTitle>
@@ -125,7 +124,6 @@ export function TokensDialog({
           name="tokens"
           value={activeTab}
           onValueChange={(v) => setActiveTab(v as ActiveTab)}
-          variant="highlighted"
           className="flex min-h-0 flex-1 flex-col"
         >
           <DialogHeader className="fade-out-to-bottom-3 -mb-2 relative z-20 shrink-0 bg-surface-primary px-6 pt-6 pb-3">

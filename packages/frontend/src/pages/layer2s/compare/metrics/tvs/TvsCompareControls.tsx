@@ -49,7 +49,6 @@ export function TvsCompareControls({
             tvs: { ...prev.tvs, unit: value as CompareTvsUnit },
           }))
         }
-        variant="highlighted"
         className="h-9"
       >
         <RadioGroupItem value="usd" className="h-full px-2 text-sm">

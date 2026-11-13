@@ -10,8 +10,8 @@ export function ChartProjectLogo({
 }) {
   return (
     <div className={cn('flex items-center gap-1.5', className)}>
-      <img src={project.iconUrl} alt={project.name} className="size-[22px]" />
-      <span className="font-bold text-label-value-18">
+      <img src={project.iconUrl} alt={project.name} className="size-4" />
+      <span className="font-medium text-label-value-13">
         {project.shortName ?? project.name}
       </span>
     </div>

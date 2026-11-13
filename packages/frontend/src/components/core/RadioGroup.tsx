@@ -6,13 +6,11 @@ import { cn } from '~/utils/cn'
 const RadioGroup = ({
   ref,
   className,
-  variant,
   name,
   onValueChange,
   ...props
 }: React.ComponentProps<typeof RadioGroupPrimitive.Root> & {
   name: string
-  variant?: 'highlighted'
 }) => {
   const { track } = useTracking()
   return (
@@ -31,7 +29,6 @@ const RadioGroup = ({
           value: val,
         })
       }}
-      data-variant={variant}
       ref={ref}
     />
   )
@@ -49,7 +46,6 @@ const RadioGroupItem = ({
       className={cn(
         'h-full rounded-md px-2 text-xs disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1 focus-visible:ring-offset-transparent',
-        'group-data-[variant=highlighted]/radio-group:data-[state=checked]:bg-brand group-data-[variant=highlighted]/radio-group:data-[state=checked]:text-white',
         'data-[state=checked]:bg-surface-tertiary primary-card:data-[state=checked]:bg-pure-white dark:primary-card:data-[state=checked]:bg-black',
         className,
       )}

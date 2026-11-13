@@ -94,7 +94,7 @@ export function ChartLegend({
                   />
                   <span
                     className={cn(
-                      'text-nowrap font-medium text-2xs text-secondary leading-none tracking-[-0.2px] transition-opacity',
+                      'text-nowrap font-medium text-2xs text-primary leading-none tracking-[-0.2px] transition-opacity',
                       !isHidden &&
                         interactiveLegend &&
                         'group-hover/legend-item:opacity-50',
@@ -112,7 +112,7 @@ export function ChartLegend({
       {showsHint && (
         <div
           className={cn(
-            '-bottom-4 pointer-events-none absolute inset-x-0 min-w-44 rounded-xs text-center text-brand-deep text-label-value-12 italic transition-[opacity,scale] ease-out group-hover:scale-[1.15]',
+            '-bottom-4 pointer-events-none absolute inset-x-0 min-w-44 rounded-xs text-center text-label-value-12 text-secondary transition-[opacity,scale] ease-out group-hover:scale-[1.15]',
             legendOnboardingHintClassName,
           )}
           data-legend-onboarding-hint=""

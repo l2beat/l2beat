@@ -43,14 +43,18 @@ export function WarningBar({
   const textElement = ignoreMarkdown ? (
     <>
       {text}
-      {isCritical && <span className="text-red-300"> (CRITICAL)</span>}
+      {isCritical && (
+        <span className="font-bold text-primary"> (CRITICAL)</span>
+      )}
     </>
   ) : (
     <>
       <Markdown className="leading-snug" inline>
         {text}
       </Markdown>
-      {isCritical && <span className="text-red-300"> (CRITICAL)</span>}
+      {isCritical && (
+        <span className="font-bold text-primary"> (CRITICAL)</span>
+      )}
     </>
   )
   const Icon = icon ?? ShieldIcon

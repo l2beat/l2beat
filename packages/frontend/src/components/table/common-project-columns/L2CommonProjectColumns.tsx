@@ -17,6 +17,7 @@ export function getL2CommonProjectColumns<T extends CommonProjectEntry>(
     ...getCommonProjectColumns(columnHelper, getHref),
     columnHelper.accessor((row) => row.name, {
       id: 'name',
+      header: 'Name',
       cell: (ctx) => (
         <div className="flex h-full items-center">
           <ProjectNameInfoTooltip project={ctx.row.original}>

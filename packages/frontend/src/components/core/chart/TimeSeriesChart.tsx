@@ -2,11 +2,13 @@ import {
   areaY,
   type ChartCurve,
   type ChartMark,
+  createMark,
   defineChart,
   dot,
   lineY,
   rect,
   ruleY,
+  type SceneNode,
   text,
 } from '@tanstack/charts'
 import { d3Curve } from '@tanstack/charts/d3/shape'
@@ -26,7 +28,7 @@ import {
   type Plotted,
   plotRows,
 } from './utils/plotSeries'
-import { getTimeTicks } from './utils/xAxisTicks'
+import { fitXTicks, getTimeTicks } from './utils/xAxisTicks'
 import {
   fitTicks,
   getYAxisTicks,
@@ -155,6 +157,10 @@ const FADED_STROKE_OPACITY = 0.2
 const ISOLATED_DOT_RADIUS = 3
 const Y_SCALE = 'y'
 const RIGHT_SCALE = 'right-y'
+/** Both axes' labels, one size so dates and values read as one system. */
+const AXIS_LABEL_FONT_SIZE = 12
+/** Y labels sit inside the plot, this far in from its edge. */
+const Y_LABEL_INSET = 8
 
 const chartClassNames = cn(
   // The axis options have no per-axis label color, so the x labels are
@@ -482,8 +488,7 @@ export function TimeSeriesChart<T, K extends string>({
 
     const xTicks = xAxis
       ? {
-          // A label centred on the left edge would be cut off.
-          values: xAxis.ticks.filter((t) => t > xDomain[0]),
+          values: xAxis.ticks,
           format: (v: number) => axesRef.current.xAxis?.format(v) ?? String(v),
         }
       : getTimeTicks(rows.map((row) => xRef.current(row)))
@@ -494,12 +499,20 @@ export function TimeSeriesChart<T, K extends string>({
       height - chartMargin.top - chartMargin.bottom
 
     return defineChart({
-      // A function of the size, so the y ticks can fit the plot height.
-      chart: ({ height }) => {
+      // A function of the size, so the ticks can fit the plot.
+      chart: ({ width, height }) => {
         const leftTicks = fitTicks(left, plotHeight(height), yAxis)
         const rightTicks = right
           ? fitTicks(right, plotHeight(height), rightAxis ?? {})
           : undefined
+        // Labels that would cross the plot's edges are cut off.
+        const xTickValues = fitXTicks(
+          xTicks.values,
+          xTicks.format,
+          xDomain,
+          width - chartMargin.left - chartMargin.right,
+          AXIS_LABEL_FONT_SIZE,
+        )
         return {
           marks: [
             ...fills,
@@ -517,6 +530,24 @@ export function TimeSeriesChart<T, K extends string>({
               }),
             ),
             ...isolatedDots,
+            yTickLabels([
+              {
+                scale: Y_SCALE,
+                side: 'left',
+                ticks: leftTicks,
+                getAxis: () => axesRef.current.yAxis,
+              },
+              ...(rightTicks
+                ? [
+                    {
+                      scale: RIGHT_SCALE,
+                      side: 'right' as const,
+                      ticks: rightTicks,
+                      getAxis: () => axesRef.current.rightAxis ?? {},
+                    },
+                  ]
+                : []),
+            ]),
             ...dotMarks,
           ],
           // Scale instances, not factories: a factory's domain is inferred
@@ -527,36 +558,31 @@ export function TimeSeriesChart<T, K extends string>({
               axis: {
                 line: false,
                 ticks: {
-                  values: xTicks.values,
+                  values: xTickValues,
                   size: 0,
                   format: xTicks.format,
                 },
-                tickLabels: { fontSize: 10, fontWeight: 500, opacity: 1 },
+                tickLabels: {
+                  fontSize: AXIS_LABEL_FONT_SIZE,
+                  fontWeight: 500,
+                  opacity: 1,
+                },
               },
             },
-            [Y_SCALE]: yScaleOptions(
-              left,
-              leftTicks,
-              'left',
-              () => axesRef.current.yAxis,
-            ),
+            // The y labels are drawn by `yTickLabels`, over the series.
+            [Y_SCALE]: { scale: yScaleOf(left, yAxis), axis: false as const },
             ...(right && rightTicks
               ? {
                   [RIGHT_SCALE]: {
                     channel: 'y' as const,
-                    side: 'right' as const,
-                    ...yScaleOptions(
-                      right,
-                      rightTicks,
-                      'right',
-                      () => axesRef.current.rightAxis ?? {},
-                    ),
+                    scale: yScaleOf(right, rightAxis ?? {}),
+                    axis: false as const,
                   },
                 }
               : {}),
           },
-          // The theme's muted color paints all tick labels.
-          theme: { muted: 'var(--chart-tick-label)' },
+          // The theme's muted color paints the x tick labels.
+          theme: { muted: 'var(--secondary)' },
           margin: chartMargin,
           // Not clipped, so lines at the domain's ends keep their full width;
           // every domain contains its data.
@@ -664,38 +690,64 @@ function getTimestamp<T>(row: T) {
   return (row as { timestamp: number }).timestamp
 }
 
-function yScaleOptions(
-  y: YAxisTicks,
-  ticks: number[],
-  side: 'left' | 'right',
-  getAxis: () => ChartYAxis,
-) {
-  const axis = getAxis()
-  return {
-    scale: (axis.scale ?? scaleLinear)().domain(y.domain),
-    axis: {
-      line: false,
-      ticks: {
-        values: ticks,
-        size: 0,
-        padding: 0,
-        format: (value: number) => {
-          const { format, unit = '' } = getAxis()
-          return `${format ? format(value) : value}${unit}`
-        },
-      },
-      // Inside the plot, 8px in from its edge.
-      tickLabels: {
-        anchor: side === 'left' ? ('start' as const) : ('end' as const),
-        dx: side === 'left' ? 8 : -8,
-        dy: axis.dy ?? -10,
-        fontSize: axis.fontSize ?? 15,
-        fontWeight: axis.fontWeight,
-        opacity: 1,
-        thin: false,
-      },
+function yScaleOf(y: YAxisTicks, axis: ChartYAxis) {
+  return (axis.scale ?? scaleLinear)().domain(y.domain)
+}
+
+interface YTickLabels {
+  scale: string
+  side: 'left' | 'right'
+  ticks: number[]
+  getAxis: () => ChartYAxis
+}
+
+/**
+ * Y tick labels inside the plot, 8px in from its edge, drawn over the series
+ * so fills don't hide them. Plain text: no chip, halo or background behind
+ * axis labels (owner ruling).
+ */
+function yTickLabels(axes: YTickLabels[]) {
+  return createMark<never, number, number, 'x', string>(() => ({
+    id: 'y-tick-labels',
+    channels: {},
+    render: ({ chart, scales }) => {
+      const labels: SceneNode[] = []
+      for (const { scale, side, ticks, getAxis } of axes) {
+        const y = scales[scale]
+        if (!y) continue
+        const {
+          format,
+          unit = '',
+          dy = -10,
+          fontSize = AXIS_LABEL_FONT_SIZE,
+          fontWeight = 500,
+        } = getAxis()
+        const anchor = side === 'left' ? 'start' : 'end'
+        const x =
+          side === 'left'
+            ? chart.x + Y_LABEL_INSET
+            : chart.x + chart.width - Y_LABEL_INSET
+        const prefix = side === 'left' ? 'y-tick' : 'right-y-tick'
+        for (const value of ticks) {
+          const label = `${format ? format(value) : value}${unit}`
+          const labelY = y.map(value) + dy
+          labels.push({
+            kind: 'label',
+            key: `${prefix}-label:${value}`,
+            x,
+            y: labelY,
+            text: label,
+            anchor,
+            baseline: 'middle',
+            fontSize,
+            fontWeight,
+            style: { fill: 'var(--secondary)' },
+          })
+        }
+      }
+      return { nodes: labels }
     },
-  }
+  }))
 }
 
 const EMPTY: never[] = []

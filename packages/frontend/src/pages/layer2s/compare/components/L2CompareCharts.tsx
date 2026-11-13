@@ -269,7 +269,6 @@ function MetricSwitcher({
         aria-label="Chart metric"
         value={value}
         onValueChange={(value) => onValueChange(value as CompareMetricId)}
-        variant="highlighted"
         className="h-9"
       >
         {Object.values(COMPARE_METRICS).map((metric) => (

@@ -48,8 +48,9 @@ function getTickFormatter(actualRangeInDays: number) {
 }
 
 /**
- * Time-axis ticks for rows at `xs`, spaced for the range they span. Labels
- * near the plot edges would be cut off, so the outer 3% gets none.
+ * Time-axis ticks for rows at `xs`, spaced for the range they span. Ticks
+ * whose labels would cross the plot's edges are left out by `fitXTicks`,
+ * once the plot's width is known.
  */
 export function getTimeTicks(xs: number[]) {
   const first = xs[0]
@@ -61,10 +62,51 @@ export function getTimeTicks(xs: number[]) {
     (UnixTime.toStartOf(UnixTime(last), 'day') -
       UnixTime.toStartOf(UnixTime(first), 'day')) /
     UnixTime.DAY
-  const isTick = getTickCondition(rangeInDays)
-  const edge = (last - first) * 0.03
   return {
-    values: xs.filter((t) => isTick(t) && t > first + edge && t < last - edge),
+    values: xs.filter(getTickCondition(rangeInDays)),
     format: getTickFormatter(rangeInDays),
   }
+}
+
+/**
+ * The ticks whose labels, centred on them, stay within a plot `plotWidth`
+ * pixels wide that spans `domain`. If none would fit, all of them are kept:
+ * a label past the edge is better than an axis with no labels at all.
+ */
+export function fitXTicks(
+  values: readonly number[],
+  format: (value: number) => string,
+  domain: readonly [number, number],
+  plotWidth: number,
+  fontSize: number,
+) {
+  const [from, to] = domain
+  const span = to - from
+  if (span <= 0 || plotWidth <= 0) return []
+  const fitting = values.filter((value) => {
+    const x = ((value - from) / span) * plotWidth
+    const half = estimateLabelWidth(format(value), fontSize) / 2
+    return x - half >= 0 && x + half <= plotWidth
+  })
+  return fitting.length > 0 ? fitting : [...values]
+}
+
+/**
+ * The width of a label in the site's sans-serif at weight 500, from Roboto's
+ * advances; a little wide, so a label that fits really does.
+ */
+export function estimateLabelWidth(text: string, fontSize: number) {
+  let em = 0
+  for (const char of text) em += charWidth(char)
+  return em * fontSize
+}
+
+function charWidth(char: string) {
+  if (/\s/u.test(char)) return 0.26
+  // Tabular digits, all one width.
+  if (/[0-9$]/u.test(char)) return 0.57
+  if (/[.,:;'‘’|!ilIj]/u.test(char)) return 0.28
+  if (/[mwMW%]/u.test(char)) return 0.9
+  if (/[A-Z]/u.test(char)) return 0.67
+  return 0.56
 }
