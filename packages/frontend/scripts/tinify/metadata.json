@@ -1625,5 +1625,7 @@
   "static/images/architecture/stakewise-withdrawals.png": "8f0e6e7cfa89dba6dd960f67250a08b0",
   "static/meta-images/defi/projects/stakewise/opengraph-image.png": "90a425d15f88f4faa1f7d0c3dcd9fdbd",
   "static/icons/splitsv2.png": "8dfdb3e25a231e29bf075e58a2c2a065",
-  "static/meta-images/defi/projects/splitsv2/opengraph-image.png": "47769947c1470939ace76561a9b53072"
+  "static/meta-images/defi/projects/splitsv2/opengraph-image.png": "47769947c1470939ace76561a9b53072",
+  "static/icons/derivev3.png": "5f92f086afad4f89a19ff955627c6bc8",
+  "static/meta-images/layer2s/projects/derivev3/opengraph-image.png": "d07aa59a7c4e19a0073a80680f7fd089"
 }
