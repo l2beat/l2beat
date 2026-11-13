@@ -86,8 +86,25 @@ export const splitsv2: BaseProject = {
     ],
     badges: [],
   },
+  escrows: [
+    discovery.getEscrowDetails({
+      address: discovery.getContract('SplitsWarehouse').address,
+      tokens: '*',
+    }),
+  ],
+  tvsInfo: {
+    associatedTokens: [],
+    warnings: [
+      {
+        sentiment: 'warning',
+        value:
+          'Counts the Warehouse only. Tokens a split holds before its payout are left out.',
+      },
+    ],
+  },
   defiInfo: {
     category: 'Payments',
+    tvl: { source: 'l2beat' },
   },
   // Declared empty on purpose: splits and the Warehouse depend on no oracle,
   // bridge or other external contract. The tokens a split receives are chosen
