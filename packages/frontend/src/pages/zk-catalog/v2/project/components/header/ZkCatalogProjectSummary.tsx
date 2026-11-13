@@ -19,6 +19,7 @@ import type { ProjectZkCatalogEntry } from '~/server/features/zk-catalog/project
 import type { TrustedSetupsByProofSystem } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
 import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { TechStackCell } from '../../../components/TechStackCell'
+import { TechStackTag } from '../../../components/TechStackTag'
 import { TrustedSetupCell } from '../../../components/TrustedSetupCell'
 import { VerifiedCountWithDetails } from '../../../components/VerifiedCountWithDetails'
 
@@ -58,6 +59,62 @@ export function ProjectZkCatalogSummary({ project }: Props) {
         <MobileProjectLinks projectLinks={project.header.links} />
       </div>
     </section>
+  )
+}
+
+export type ZkCatalogSummary = Pick<
+  ProjectZkCatalogEntry['header'],
+  'trustedSetupsByProofSystem' | 'techStack'
+>
+
+/** What a page built on another section shows of the ZK Catalog summary. */
+export interface ZkCatalogMergedSummary extends ZkCatalogSummary {
+  /** Left out when the project is its own creator. */
+  creator?: string
+}
+
+/** Each proof system and its verifiers, small enough for a summary stat. */
+export function ProofSystemsWithVerifiers({
+  trustedSetupsByProofSystem,
+}: Pick<ZkCatalogSummary, 'trustedSetupsByProofSystem'>) {
+  return Object.entries(trustedSetupsByProofSystem).map(
+    ([key, { trustedSetups, verifiers }]) => {
+      const proofSystem = trustedSetups[0]?.proofSystem
+      if (!proofSystem) return null
+      return (
+        <span
+          key={key}
+          className="flex flex-wrap items-center gap-x-2 gap-y-1 font-medium text-label-value-12 text-secondary"
+        >
+          <TechStackTag tag={proofSystem} displayType="type" />
+          <span className="flex items-center gap-2 whitespace-nowrap">
+            Verifiers
+            <VerifiedCountWithDetails data={verifiers} horizontal />
+          </span>
+        </span>
+      )
+    },
+  )
+}
+
+/** The zkVM and SNARK tags, then the final wrap's, in one line. */
+export function TechStackTags({
+  techStack,
+}: Pick<ZkCatalogSummary, 'techStack'>) {
+  const tags = [...(techStack.zkVM ?? []), ...(techStack.snark ?? [])]
+  const finalWrap = techStack.finalWrap ?? []
+  return (
+    <span className="flex flex-wrap items-center gap-1 max-md:justify-end">
+      {tags.map((tag, i) => (
+        <TechStackTag key={`${tag.name}-${i}`} tag={tag} />
+      ))}
+      {tags.length > 0 && finalWrap.length > 0 && (
+        <FilledArrowIcon className="fill-secondary" />
+      )}
+      {finalWrap.map((tag, i) => (
+        <TechStackTag key={`${tag.name}-${i}`} tag={tag} />
+      ))}
+    </span>
   )
 }
 

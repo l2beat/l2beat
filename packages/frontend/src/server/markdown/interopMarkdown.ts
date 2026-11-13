@@ -4,10 +4,13 @@ import {
   formatSeconds,
   pluralize,
 } from '@l2beat/shared-pure'
+import compact from 'lodash/compact'
 import type { InteropVolumeSectionProps } from '~/components/projects/sections/interop/InteropVolumeSection'
 import { getInteropTokenUrl } from '~/pages/interop/utils/getInteropTokenUrl'
+import type { ProjectInteropData } from '~/server/features/layer2s/interop/getProjectInteropData'
 import type { AverageDuration } from '~/server/features/layer2s/interop/types'
 import type { TopItems } from '~/server/features/layer2s/interop/utils/getTopItems'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import {
   bulletList,
   formatCount,
@@ -16,6 +19,7 @@ import {
   link,
   subsection,
 } from './markdown'
+import type { ProjectFact } from './renderProjectMarkdown'
 import { htmlPagePointer } from './renderSectionParts'
 
 /**
@@ -123,17 +127,13 @@ export function formatAverageDuration(duration: AverageDuration) {
   }
 }
 
-export function interopProtocolUrl(slug: string) {
-  return `/interop/protocols/${slug}` as const
-}
-
 /** Protocols ETHBEAT has no page for are named without a link. */
 export function linkInteropProtocol(protocol: {
   name: string
   slug: string | undefined
 }) {
   return protocol.slug
-    ? link(protocol.name, interopProtocolUrl(protocol.slug))
+    ? link(protocol.name, getProjectPath(protocol.slug))
     : protocol.name
 }
 
@@ -146,4 +146,38 @@ export function linkInteropToken(token: {
 }) {
   const url = getInteropTokenUrl({ ...token, issuer: token.issuer ?? null })
   return url ? link(token.symbol, url) : token.symbol
+}
+
+/**
+ * A project's or chain's last day across every interop protocol. Labels and
+ * order follow `ProjectInteropMetrics` on the HTML page.
+ */
+export function getInteropSummaryFacts(
+  interop: ProjectInteropData['summary'],
+): ProjectFact[] {
+  return compact([
+    {
+      label: 'Last 24h cross-chain volume',
+      value: formatUsd(interop.volume),
+    },
+    {
+      label: 'Last 24h cross-chain transfers',
+      value: formatCount(interop.transferCount),
+    },
+    interop.protocols.items.length > 0 && {
+      label: 'Interop protocols used (last 24h volume)',
+      value: listTopItems(
+        interop.protocols,
+        (protocol) =>
+          `${linkInteropProtocol(protocol)} (${formatUsd(protocol.volume)})`,
+      ).join(', '),
+    },
+    interop.tokens.items.length > 0 && {
+      label: 'Tokens by volume (last 24h)',
+      value: listTopItems(
+        interop.tokens,
+        (token) => `${linkInteropToken(token)} (${formatUsd(token.volume)})`,
+      ).join(', '),
+    },
+  ])
 }

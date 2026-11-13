@@ -1,14 +1,17 @@
-import type { ProjectScalingInfo, ProjectScalingStage } from '@l2beat/config'
+import type {
+  ProjectPrivacyInfo,
+  ProjectScalingInfo,
+  ProjectScalingStage,
+} from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import { manifest } from '~/utils/Manifest'
-import {
-  getProjectUrl,
-  type ProjectPageMetadata,
-} from '~/utils/project/getProjectUrl'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { isAssignedStage } from '~/utils/project/isAssignedStage'
 
-interface LinkedProject extends ProjectPageMetadata {
+interface LinkedProject {
+  id: ProjectId
+  slug: string
   name: string
 }
 
@@ -39,7 +42,7 @@ export function getScalingProjectItems(
 /** The privacy projects that run on a scaling project. */
 export function getPrivacyProjectsRunningOn(
   scalingProjectId: ProjectId,
-  projects: LinkedProject[],
+  projects: (LinkedProject & { privacyInfo?: ProjectPrivacyInfo })[],
 ): ProjectIconListItem[] {
   return projects.flatMap((p) =>
     p.privacyInfo?.scalingProjects?.includes(scalingProjectId)
@@ -53,6 +56,6 @@ function toItem(project: LinkedProject): ProjectIconListItem {
     id: project.id,
     name: project.name,
     iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-    href: getProjectUrl(project),
+    href: getProjectPath(project.slug),
   }
 }

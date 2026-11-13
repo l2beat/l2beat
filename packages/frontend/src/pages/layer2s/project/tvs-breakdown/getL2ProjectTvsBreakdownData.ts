@@ -4,12 +4,15 @@ import { getL2ProjectTvsBreakdown } from '~/server/features/layer2s/project/getL
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
+import {
+  getProjectPath,
+  getProjectTvsBreakdownPath,
+} from '~/utils/project/getProjectPath'
 import { optionToRange } from '~/utils/range/range'
 
 export async function getL2ProjectTvsBreakdownData(
   manifest: Manifest,
   slug: string,
-  url: string,
 ): Promise<RenderData | undefined> {
   const [appLayoutProps, tvsBreakdownData] = await Promise.all([
     getAppLayoutProps(),
@@ -31,14 +34,14 @@ export async function getL2ProjectTvsBreakdownData(
         name: 'TVS Breakdown',
         title: `${tvsBreakdownData.project.name} | TVS Breakdown - ETHBEAT`,
         description: `See a detailed breakdown of ${tvsBreakdownData.project.name}'s TVS on ETHBEAT.`,
-        url,
+        url: getProjectTvsBreakdownPath(slug),
         openGraph: {
           image: `/meta-images/layer2s/projects/${tvsBreakdownData.project.slug}/opengraph-image.png`,
         },
         breadcrumbParents: [
           {
             name: tvsBreakdownData.project.name,
-            path: `/layer2s/projects/${tvsBreakdownData.project.slug}`,
+            path: getProjectPath(tvsBreakdownData.project.slug),
           },
         ],
         structuredData: (page) => [

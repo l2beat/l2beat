@@ -11,7 +11,11 @@ import type { ProjectDetailsSection } from '~/components/projects/sections/types
 import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
 import type { PrivacyAsset } from '~/server/features/privacy/types'
 import type { PrivacyReferenceApp } from '~/server/features/privacy/utils/getPrivacyReferenceApp'
-import { renderPrivacyProjectMarkdown } from './renderPrivacyProjectMarkdown'
+import { getZkCatalogSummaryFacts } from '../../zk-catalog/v2/project/renderZkCatalogProjectMarkdown'
+import {
+  getPrivacySummaryMarkdown,
+  renderPrivacyProjectMarkdown,
+} from './renderPrivacyProjectMarkdown'
 
 // Method: render one hand-built privacy project entry (the same shape the
 // HTML page receives) and read the markdown the way an agent would: split it
@@ -23,7 +27,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     const markdown = renderPrivacyProjectMarkdown(ENTRY)
 
     expect(markdown).toMatchRegex(
-      /^# Tornado Cash\n\nMarkdown version of https:\/\/ethbeat\.org\/privacy\/projects\/tornado-cash\n\n/,
+      /^# Tornado Cash\n\nMarkdown version of https:\/\/ethbeat\.org\/projects\/tornado-cash\n\n/,
     )
   })
 
@@ -122,6 +126,44 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     )
   })
 
+  it('adds the creator and the proving stack of a protocol that is also in the ZK Catalog', () => {
+    const summary = getSection(
+      renderPrivacyProjectMarkdown(ENTRY, {
+        facts: getZkCatalogSummaryFacts({
+          creator: 'Tornado Cash DAO',
+          trustedSetupsByProofSystem: {},
+          techStack: {
+            finalWrap: [
+              {
+                id: 'snarkjs',
+                type: 'Groth16',
+                name: 'snarkjs',
+                description: 'A JavaScript implementation of Groth16.',
+              },
+            ],
+          },
+        }),
+      }),
+      'Summary',
+    )
+
+    expect(summary).toInclude(
+      '- Creator: Tornado Cash DAO',
+      '- Final wrap: snarkjs (Groth16)',
+    )
+  })
+
+  it('gives the summary of a scaling project its privacy stats and rosette', () => {
+    const merged = getPrivacySummaryMarkdown(ENTRY, ENTRY.sections)
+
+    expect(merged.facts.map((fact) => fact.label)).toEqual([
+      'Tracked on',
+      'Attributes',
+      'Reference app',
+    ])
+    expect(merged.risk.name).toEqual('Privacy')
+  })
+
   it('keeps a multi-paragraph risk explanation inside its list item', () => {
     const summary = getSection(
       renderPrivacyProjectMarkdown({
@@ -204,10 +246,10 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     const markdown = renderPrivacyProjectMarkdown(ENTRY)
 
     expect(getSection(markdown, 'Anonymity sets')).toInclude(
-      'https://ethbeat.org/privacy/projects/tornado-cash#privacy-anonymity-set',
+      'https://ethbeat.org/projects/tornado-cash#privacy-anonymity-set',
     )
     expect(getSection(markdown, 'Flows')).toInclude(
-      'https://ethbeat.org/privacy/projects/tornado-cash#privacy-flows',
+      'https://ethbeat.org/projects/tornado-cash#privacy-flows',
     )
   })
 
@@ -318,7 +360,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
 
     it('resolves sources pointing into the page against the HTML page', () => {
       expect(privacy()).toInclude(
-        '**Sources**\n\n- [1 ETH pool](https://ethbeat.org/privacy/projects/tornado-cash#Pool_1_ETH)\n- [Withdrawal circuit](https://github.com/tornadocash/tornado-core/blob/master/circuits/withdraw.circom)',
+        '**Sources**\n\n- [1 ETH pool](https://ethbeat.org/projects/tornado-cash#Pool_1_ETH)\n- [Withdrawal circuit](https://github.com/tornadocash/tornado-core/blob/master/circuits/withdraw.circom)',
       )
     })
   })
@@ -639,7 +681,7 @@ const SECTIONS: ProjectDetailsSection[] = [
 const ENTRY: ProjectPrivacyEntry = {
   id: ProjectId('tornado-cash'),
   slug: 'tornado-cash',
-  href: '/privacy/projects/tornado-cash',
+  href: '/projects/tornado-cash',
   name: 'Tornado Cash',
   icon: '/icons/tornado-cash.png',
   description: 'Tornado Cash is a non-custodial mixer.',

@@ -1,13 +1,12 @@
 import type { ProjectScalingCategory } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import { getChainProjectPath } from '~/pages/chain/paths'
-import { ETHEREUM_PROJECT_PATH } from '~/pages/ethereum/paths'
 import { getInteropTokenUrl } from '~/pages/interop/utils/getInteropTokenUrl'
 import type {
   SearchBarProjectEntry,
   SearchBarTokenEntry,
 } from '~/server/features/search-bar/types'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import type { SearchBarCategory } from './searchBarCategories'
 
 /*
@@ -49,7 +48,10 @@ const SCALING_CATEGORIES = [
 const _everyScalingCategoryListed: (typeof SCALING_CATEGORIES)[number] =
   '' as ProjectScalingCategory
 
-/** One row per project, listing every page it has, so it is sent once. */
+/**
+ * One row per project page, listing the sections it covers in the order of
+ * the page's labels: the first is the section the page is built on.
+ */
 export const SearchIndexProject = v.tuple([
   v.string(), // id
   v.string(), // slug
@@ -100,52 +102,49 @@ export function decodeSearchIndex(index: SearchIndex): DecodedSearchIndex {
   return { projects, tokens: index.tokens.map(decodeSearchIndexToken) }
 }
 
-const PROJECT_PAGES: Record<
-  SearchIndexProjectKind,
-  { category: SearchBarCategory; getHref: (slug: string) => string }
-> = {
-  ethereum: { category: 'other', getHref: () => ETHEREUM_PROJECT_PATH },
-  layer2: { category: 'l2', getHref: (s) => `/layer2s/projects/${s}` },
-  layer3: { category: 'l2', getHref: (s) => `/layer2s/projects/${s}` },
-  interop: { category: 'interop', getHref: (s) => `/interop/protocols/${s}` },
-  zkCatalog: { category: 'zkCatalog', getHref: (s) => `/zk-catalog/${s}` },
-  privacy: { category: 'privacy', getHref: (s) => `/privacy/projects/${s}` },
-  defi: { category: 'defi', getHref: (s) => `/defi/projects/${s}` },
-  chain: { category: 'interop', getHref: getChainProjectPath },
+const KIND_CATEGORIES: Record<SearchIndexProjectKind, SearchBarCategory> = {
+  ethereum: 'other',
+  layer2: 'l2',
+  layer3: 'l2',
+  interop: 'interop',
+  zkCatalog: 'zkCatalog',
+  privacy: 'privacy',
+  defi: 'defi',
+  chain: 'interop',
 }
 
-/** One entry per page of the project, in the order of its kinds. */
+/** One entry per project page, under the section it is built on. */
 export function decodeSearchIndexProject(
   row: SearchIndexProject,
 ): SearchBarProjectEntry[] {
   const [id, slug, name, iconUrl, kinds, l2Category, tags, ...interop] = row
   const [interopName, interopShortName] = interop
-  assert(kinds.length > 0, 'Search index project without a page')
+  const [kind, ...otherKinds] = kinds
+  assert(kind, 'Search index project without a page')
 
-  const commonTags = unique([slug, name, ...tags])
-  const interopTags = unique([...commonTags, interopName, interopShortName])
-  return kinds.map((kind) => {
-    const page = PROJECT_PAGES[kind]
-    const entry: SearchBarProjectEntry = {
-      type: 'project',
-      id,
+  const hasInterop = kinds.some(
+    (k) => k === 'layer2' || k === 'layer3' || k === 'interop',
+  )
+  const entry: SearchBarProjectEntry = {
+    type: 'project',
+    id,
+    // An interop protocol's page shows the protocol's name.
+    name: kind === 'interop' ? (interopName ?? name) : name,
+    iconUrl,
+    href: getProjectPath(slug),
+    category: KIND_CATEGORIES[kind],
+    kind,
+    tags: unique([
+      slug,
       name,
-      iconUrl,
-      href: page.getHref(slug),
-      category: page.category,
-      kind,
-      tags: commonTags,
-    }
-    if (kind === 'layer2' || kind === 'layer3') {
-      entry.tags = interopTags
-      if (l2Category !== null) entry.l2Category = l2Category
-    }
-    if (kind === 'interop') {
-      entry.name = interopName ?? name
-      entry.tags = unique([...interopTags, 'interop'])
-    }
-    return entry
-  })
+      ...tags,
+      ...(hasInterop ? [interopName, interopShortName] : []),
+      ...(kinds.includes('interop') ? ['interop'] : []),
+    ]),
+  }
+  if (otherKinds.length > 0) entry.otherKinds = otherKinds
+  if (l2Category !== null) entry.l2Category = l2Category
+  return [entry]
 }
 
 export function decodeSearchIndexToken(

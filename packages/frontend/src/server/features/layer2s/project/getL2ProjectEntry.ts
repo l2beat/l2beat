@@ -42,7 +42,7 @@ import { getDataPostedSection } from '~/utils/project/data-posted/getDataPostedS
 import { getBadgeWithParamsAndLink } from '~/utils/project/getBadgeWithParams'
 import { getDiagramParams } from '~/utils/project/getDiagramParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
-import { PROJECT_PAGE_METADATA_FIELDS } from '~/utils/project/getProjectUrl'
+import { getProjectTvsBreakdownPath } from '~/utils/project/getProjectPath'
 import { getLivenessSection } from '~/utils/project/liveness/getLivenessSection'
 import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
 import { getL2RiskSummarySection } from '~/utils/project/risk-summary/getL2RiskSummary'
@@ -210,7 +210,7 @@ export async function getL2ProjectEntry(
     }),
     ps.getProjects({
       select: ['display'],
-      optional: [...PROJECT_PAGE_METADATA_FIELDS],
+      optional: ['privacyInfo', 'daBridge', 'daLayer'],
     }),
     getL2ProjectInteropData(project.id, helpers),
     getProjectOssification(project),
@@ -396,7 +396,7 @@ export async function getL2ProjectEntry(
       props: {
         id: 'tvs',
         title: 'Value Secured',
-        tvsBreakdownUrl: `/layer2s/projects/${project.slug}/tvs-breakdown`,
+        tvsBreakdownUrl: getProjectTvsBreakdownPath(project.slug),
         compareUrl: getProjectCompareUrl(project, 'tvs'),
         milestones: sortedMilestones,
         tokens,

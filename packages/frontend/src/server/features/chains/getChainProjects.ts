@@ -1,4 +1,3 @@
-import { INTEROP_CHAINS } from '@l2beat/config'
 import { chainToProjectId } from '@l2beat/config/build/global/chainMap'
 import { ProjectId } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
@@ -26,29 +25,19 @@ export function getChainProjectSlug(
 
 /** The chains that have a chain page in this deployment. */
 export async function getChainProjects() {
-  return selectChainProjects(await getL2ProjectIds())
-}
-
-/** `getChainProjects` for callers that already hold the scaling projects. */
-export function selectChainProjects(l2ProjectIds: Set<ProjectId>) {
-  return getActiveInteropChains().flatMap((chain) => {
-    const slug = getChainProjectSlug(chain, l2ProjectIds)
-    return slug ? [{ ...chain, slug }] : []
-  })
-}
-
-/**
- * Whether the slug belongs to a chain page in some deployment, whichever
- * chains this one enables.
- */
-export async function isChainProjectSlug(slug: string) {
-  const l2ProjectIds = await getL2ProjectIds()
-  return INTEROP_CHAINS.some(
-    (chain) => getChainProjectSlug(chain, l2ProjectIds) === slug,
+  const l2Projects = await ps.getProjects({ where: ['scalingInfo'] })
+  return selectChainProjects(
+    getActiveInteropChains(),
+    new Set(l2Projects.map((project) => project.id)),
   )
 }
 
-async function getL2ProjectIds() {
-  const l2Projects = await ps.getProjects({ where: ['scalingInfo'] })
-  return new Set(l2Projects.map((project) => project.id))
+/** `getChainProjects` for callers that already hold the chains and scaling projects. */
+export function selectChainProjects<
+  Chain extends { id: string; isUpcoming?: boolean },
+>(chains: readonly Chain[], l2ProjectIds: { has(id: ProjectId): boolean }) {
+  return chains.flatMap((chain) => {
+    const slug = getChainProjectSlug(chain, l2ProjectIds)
+    return slug ? [{ ...chain, slug }] : []
+  })
 }

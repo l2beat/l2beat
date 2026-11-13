@@ -1,7 +1,11 @@
 import type { PrivacySummaryValue, PrivacyWalkawayTest } from '@l2beat/config'
 import compact from 'lodash/compact'
+import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
-import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
+import type {
+  PrivacySummary,
+  ProjectPrivacyEntry,
+} from '~/server/features/privacy/project/getPrivacyProjectEntry'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 import type { PrivacyReferenceApp } from '~/server/features/privacy/utils/getPrivacyReferenceApp'
 import { getPrivacyAdversariesSummary } from '~/server/features/privacy/utils/toPrivacyAdversariesSummary'
@@ -14,8 +18,10 @@ import {
 } from '~/server/markdown/markdown'
 import {
   getProjectStatusWarnings,
+  type ProjectFact,
   renderProjectMarkdown,
 } from '~/server/markdown/renderProjectMarkdown'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { PRIVACY_ASSESSMENT } from '../privacyAssessment'
 import { PRIVACY_WALKAWAY_TEST_TOOLTIPS } from '../privacyWalkawayTest'
 import {
@@ -31,10 +37,12 @@ import {
 /** The markdown alternate of the privacy project page, from the entry the HTML page renders. */
 export function renderPrivacyProjectMarkdown(
   entry: ProjectPrivacyEntry,
+  /** What another section of the project adds to the summary. */
+  merged?: { facts: ProjectFact[] },
 ): string {
   return renderProjectMarkdown({
     name: entry.name,
-    pagePath: `/privacy/projects/${entry.slug}`,
+    pagePath: getProjectPath(entry.slug),
     summary: {
       warnings: [
         ...getProjectStatusWarnings({
@@ -46,7 +54,7 @@ export function renderPrivacyProjectMarkdown(
           entry.warnings.yellow,
         ]),
       ],
-      facts: getFacts(entry),
+      facts: [...getFacts(entry), ...(merged?.facts ?? [])],
       risks: getRiskProfile(entry),
       description: entry.description,
     },
@@ -99,6 +107,33 @@ function getFacts(entry: ProjectPrivacyEntry) {
       label: RELAYER_STAT_COPY[relayerStat.kind].title,
       value: formatCount(relayerStat.value),
     },
+    ...getProtocolFacts(entry),
+  ])
+}
+
+/**
+ * What the summary of a scaling project that is also a privacy protocol adds
+ * to the scaling one: its row of privacy stats and its privacy rosette.
+ */
+export function getPrivacySummaryMarkdown(
+  privacy: PrivacySummary,
+  /** The page's own: the adversaries are among them. */
+  sections: ProjectDetailsSection[],
+): { facts: ProjectFact[]; risk: RosetteValue } {
+  return {
+    facts: getProtocolFacts(privacy),
+    risk: privacyRisk(getPrivacyAdversariesSummary(sections)),
+  }
+}
+
+/** What the protocol is, apart from its numbers. */
+function getProtocolFacts(
+  entry: Pick<
+    ProjectPrivacyEntry,
+    'trackedOn' | 'scalingProjects' | 'attributes' | 'referenceApp'
+  >,
+) {
+  return compact([
     entry.trackedOn.length > 0 && {
       label: 'Tracked on',
       value: entry.trackedOn.map((chain) => chain.name).join(', '),

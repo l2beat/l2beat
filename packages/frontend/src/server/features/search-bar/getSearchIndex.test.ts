@@ -95,8 +95,34 @@ describe('search bar search', () => {
 
     const result = await getSearchBarEntries('arbitrum')
 
-    expect(result.map((entry) => entry.href)).toEqual([
-      '/layer2s/projects/arbitrum',
+    expect(result.map((entry) => entry.href)).toEqual(['/projects/arbitrum'])
+  })
+
+  it('lists a chain that is also a project once, as the project', async () => {
+    env.INTEROP_CHAINS = ['avalanche']
+    ps.getProjects = async () =>
+      [
+        {
+          ...l2Project('avalanche', 'Avalanche'),
+          scalingInfo: undefined,
+          interopConfig: { name: 'Avalanche' },
+        },
+      ] as never
+
+    const result = await getSearchBarEntries('avalanche')
+
+    expect(
+      result.map((entry) => ({
+        href: entry.href,
+        category: entry.category,
+        otherKinds: entry.type === 'project' ? entry.otherKinds : undefined,
+      })),
+    ).toEqual([
+      {
+        href: '/projects/avalanche',
+        category: 'interop',
+        otherKinds: undefined,
+      },
     ])
   })
 
@@ -234,34 +260,31 @@ describe('search bar search', () => {
     expect(result.map((entry) => entry.name)).toEqual(['USDC'])
   })
 
-  it('lists a project once per page it has', async () => {
+  it('lists a project once, labelled with every section of its page', async () => {
     ps.getProjects = async () =>
       [
         {
-          ...l2Project('scroll', 'Scroll', 'ZK Rollup'),
-          zkCatalogInfo: {},
-          interopConfig: { name: 'Scroll Canonical' },
+          ...l2Project('payy', 'Payy', 'ZK Rollup'),
+          privacyInfo: {},
+          interopConfig: { name: 'Payy Canonical' },
         },
       ] as never
 
-    const result = await getSearchBarEntries('scroll')
+    const result = await getSearchBarEntries('payy')
 
     expect(
       result.map((entry) => ({
         href: entry.href,
         category: entry.category,
         l2Category: entry.type === 'project' ? entry.l2Category : undefined,
+        otherKinds: entry.type === 'project' ? entry.otherKinds : undefined,
       })),
     ).toEqual([
       {
-        href: '/layer2s/projects/scroll',
+        href: '/projects/payy',
         category: 'l2',
         l2Category: 'ZK Rollup',
-      },
-      {
-        href: '/zk-catalog/scroll',
-        category: 'zkCatalog',
-        l2Category: undefined,
+        otherKinds: ['privacy'],
       },
     ])
   })
@@ -281,7 +304,7 @@ describe('search bar search', () => {
     const result = await getSearchBarEntries('layerzero')
 
     expect(result.map(({ name, href }) => ({ name, href }))).toEqual([
-      { name: 'Stargate', href: '/interop/protocols/stargate' },
+      { name: 'Stargate', href: '/projects/stargate' },
     ])
   })
 })

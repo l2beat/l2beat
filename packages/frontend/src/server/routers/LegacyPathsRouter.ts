@@ -1,27 +1,17 @@
 import express from 'express'
 import { ETHEREUM_PROJECT_PATH } from '~/pages/ethereum/paths'
 import { PRIVACY_ADVICE_HREF } from '~/pages/privacy/methodology/paths'
-import { isChainProjectSlug } from '~/server/features/chains/getChainProjects'
+import {
+  getProjectPath,
+  getProjectTvsBreakdownPath,
+} from '~/utils/project/getProjectPath'
+import { redirectToProjectPage } from './redirectToProjectPage'
 
 export function createLegacyPathsRouter() {
   const router = express.Router()
 
   router.get('/project/:name', (req, res) => {
-    res.redirect(301, `/layer2s/projects/${req.params.name}`)
-  })
-
-  // A live page, not a legacy path: skip the rest of this router.
-  router.get(
-    [ETHEREUM_PROJECT_PATH, `${ETHEREUM_PROJECT_PATH}.md`],
-    (_req, _res, next) => next('router'),
-  )
-
-  router.get('/projects/:name', async (req, res, next) => {
-    if (await isChainProjectSlug(req.params.name)) {
-      next('router')
-      return
-    }
-    res.redirect(301, `/layer2s/projects/${req.params.name}`)
+    redirectToProjectPage(req, res, getProjectPath(req.params.name))
   })
 
   router.get('/scaling/tvl', (_, res) => {
@@ -37,23 +27,26 @@ export function createLegacyPathsRouter() {
   })
 
   router.get('/scaling/projects/:name/tvl-breakdown', (req, res) => {
-    res.redirect(301, `/layer2s/projects/${req.params.name}/tvs-breakdown`)
+    redirectToProjectPage(req, res, getProjectTvsBreakdownPath(req.params.name))
+  })
+
+  // Straight to the page, not through /layer2s/projects/{name}. Also takes
+  // "{name}.md".
+  router.get('/scaling/projects/:name', (req, res) => {
+    redirectToProjectPage(req, res, getProjectPath(req.params.name))
   })
 
   router.get('/data-availability/projects/:name/dac', (req, res) => {
-    res.redirect(301, `/layer2s/projects/${req.params.name}`)
+    redirectToProjectPage(req, res, getProjectPath(req.params.name))
   })
 
   // Before the catch-all below: Ethereum's page outlived the other DA pages.
-  router.get('/data-availability/projects/ethereum/ethereum', (_req, res) => {
-    res.redirect(301, ETHEREUM_PROJECT_PATH)
+  router.get('/data-availability/projects/ethereum/ethereum', (req, res) => {
+    redirectToProjectPage(req, res, ETHEREUM_PROJECT_PATH)
   })
-  router.get(
-    '/data-availability/projects/ethereum/ethereum.md',
-    (_req, res) => {
-      res.redirect(301, `${ETHEREUM_PROJECT_PATH}.md`)
-    },
-  )
+  router.get('/data-availability/projects/ethereum/ethereum.md', (req, res) => {
+    redirectToProjectPage(req, res, `${ETHEREUM_PROJECT_PATH}.md`)
+  })
 
   // Blobs replaced the data availability pages.
   router.get(

@@ -13,14 +13,9 @@ import {
 import type { RosetteValue } from '~/components/rosette/types'
 import { externalLinks } from '~/consts/externalLinks'
 import type { ProjectL2Entry } from '~/server/features/layer2s/project/getL2ProjectEntry'
-import {
-  linkInteropProtocol,
-  linkInteropToken,
-  listTopItems,
-} from '~/server/markdown/interopMarkdown'
+import { getInteropSummaryFacts } from '~/server/markdown/interopMarkdown'
 import {
   formatChange,
-  formatCount,
   formatUsd,
   link,
   NO_DATA,
@@ -32,15 +27,20 @@ import {
   renderProjectMarkdown,
 } from '~/server/markdown/renderProjectMarkdown'
 import { formatPercent } from '~/utils/calculatePercentageChange'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { getL2ProjectApiUrls } from './getL2ProjectApiUrls'
 
 /** The markdown alternate of the scaling project page, from the entry the HTML page renders. */
-export function renderL2ProjectMarkdown(entry: ProjectL2Entry): string {
+export function renderL2ProjectMarkdown(
+  entry: ProjectL2Entry,
+  /** What another section of the project adds to the summary, e.g. privacy. */
+  merged?: { facts: ProjectFact[]; risk: RosetteValue },
+): string {
   const api = getL2ProjectApiUrls(entry)
   const summaryRisks = getSummaryRisks(entry)
   return renderProjectMarkdown({
     name: entry.name,
-    pagePath: `/layer2s/projects/${entry.slug}`,
+    pagePath: getProjectPath(entry.slug),
     summary: {
       // Same order as the banners on the HTML page.
       warnings: compact([
@@ -52,10 +52,14 @@ export function renderL2ProjectMarkdown(entry: ProjectL2Entry): string {
       ]),
       facts: [
         ...getFacts(entry),
-        ...getInteropFacts(entry),
+        ...(entry.header.interop
+          ? getInteropSummaryFacts(entry.header.interop)
+          : []),
         ...(summaryRisks.fact ? [summaryRisks.fact] : []),
+        ...(merged?.facts ?? []),
       ],
-      risks: summaryRisks.risks,
+      // The HTML summary switches between the two rosettes.
+      risks: [...summaryRisks.risks, ...(merged ? [merged.risk] : [])],
       description: entry.header.description,
     },
     header: {
@@ -279,32 +283,3 @@ function getSummaryRisks({
 }
 
 /** The cross-chain block of the HTML summary; its volume and top lists cover the last 24 hours. */
-function getInteropFacts({ header }: ProjectL2Entry): ProjectFact[] {
-  const interop = header.interop
-  if (!interop) return []
-  return compact([
-    {
-      label: 'Last 24h cross-chain volume',
-      value: formatUsd(interop.volume),
-    },
-    {
-      label: 'Last 24h cross-chain transfers',
-      value: formatCount(interop.transferCount),
-    },
-    interop.protocols.items.length > 0 && {
-      label: 'Interop protocols used (last 24h volume)',
-      value: listTopItems(
-        interop.protocols,
-        (protocol) =>
-          `${linkInteropProtocol(protocol)} (${formatUsd(protocol.volume)})`,
-      ).join(', '),
-    },
-    interop.tokens.items.length > 0 && {
-      label: 'Tokens by volume (last 24h)',
-      value: listTopItems(
-        interop.tokens,
-        (token) => `${linkInteropToken(token)} (${formatUsd(token.volume)})`,
-      ).join(', '),
-    },
-  ])
-}

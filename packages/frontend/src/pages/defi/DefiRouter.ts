@@ -1,87 +1,38 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
-import { v } from '@l2beat/validate'
-import express, { type Request } from 'express'
+import express from 'express'
 import { env } from '~/env'
-import {
-  serveMarkdown,
-  serveMarkdownIfPreferred,
-} from '~/server/markdown/markdownAlternate'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
-import { validateRoute } from '~/utils/validateRoute'
-import { sendNotFoundPage } from '../not-found/sendNotFoundPage'
 import { getLiquidStakingData } from './liquid-staking/getLiquidStakingData'
-import {
-  getDefiProjectData,
-  getDefiProjectMarkdown,
-} from './project/getDefiProjectData'
 
 export function createDefiRouter(
   manifest: Manifest,
   render: RenderFunction,
   cache: InMemoryCache,
 ) {
-  // Ossification links to the project pages of the DeFi projects it tracks.
-  if (!env.CLIENT_SIDE_DEFI_ENABLED && !env.CLIENT_SIDE_OSSIFICATION_ENABLED) {
+  if (!env.CLIENT_SIDE_DEFI_ENABLED) {
     return null
   }
 
   const router = express.Router()
 
-  if (env.CLIENT_SIDE_DEFI_ENABLED) {
-    // Liquid staking is the only DeFi category with a page so far.
-    router.get('/defi', (_req, res) => {
-      res.redirect(301, '/defi/liquid-staking')
-    })
+  // Liquid staking is the only DeFi category with a page so far.
+  router.get('/defi', (_req, res) => {
+    res.redirect(301, '/defi/liquid-staking')
+  })
 
-    router.get('/defi/liquid-staking', async (req, res) => {
-      const data = await cache.get(
-        {
-          key: ['defi', 'liquid-staking', req.originalUrl],
-          ttl: 5 * 60,
-          staleWhileRevalidate: 25 * 60,
-        },
-        () => getLiquidStakingData(manifest, req.originalUrl, cache),
-      )
-      const html = await render(data, req.originalUrl)
-      res.status(200).send(html)
-    })
-  }
-
-  const getProjectMarkdown = (req: Request<{ slug: string }>) =>
-    getDefiProjectMarkdown(req.params.slug, manifest, cache)
-
-  // Before `:slug`, which would otherwise take "aave.md" as the slug.
-  router.get(
-    '/defi/projects/:slug.md',
-    validateRoute({ params: v.object({ slug: v.string() }) }),
-    serveMarkdown(getProjectMarkdown),
-  )
-
-  router.get(
-    '/defi/projects/:slug',
-    validateRoute({
-      params: v.object({ slug: v.string() }),
-      query: v.object({ update: v.string().optional() }),
-    }),
-    serveMarkdownIfPreferred(getProjectMarkdown),
-    async (req, res) => {
-      const data = await getDefiProjectData(
-        req.params.slug,
-        manifest,
-        cache,
-        req.query.update,
-      )
-
-      if (!data) {
-        await sendNotFoundPage(manifest, render, req.originalUrl, res)
-        return
-      }
-
-      const html = await render(data, req.originalUrl)
-      res.status(200).send(html)
-    },
-  )
+  router.get('/defi/liquid-staking', async (req, res) => {
+    const data = await cache.get(
+      {
+        key: ['defi', 'liquid-staking', req.originalUrl],
+        ttl: 5 * 60,
+        staleWhileRevalidate: 25 * 60,
+      },
+      () => getLiquidStakingData(manifest, req.originalUrl, cache),
+    )
+    const html = await render(data, req.originalUrl)
+    res.status(200).send(html)
+  })
 
   return router
 }
