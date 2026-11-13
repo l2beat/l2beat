@@ -6,6 +6,7 @@ import { TableLink } from '~/components/table/TableLink'
 import { EM_DASH } from '~/consts/characters'
 import { TopTokensCell } from '~/pages/interop/components/tokens/TopTokensCell'
 import type { ProtocolEntry } from '~/server/features/layer2s/interop/types'
+import { cn } from '~/utils/cn'
 import type { AnchoredInteropSelection } from '../../../utils/types'
 import { BridgeTypeBadge } from '../../table/BridgeTypeBadge'
 import { TopRouteCell } from './TopRouteCell'
@@ -17,6 +18,12 @@ const columnHelper = createColumnHelper<ProtocolByVolumeRow>()
 
 export function getProtocolsByVolumeColumns(
   apiSelection: AnchoredInteropSelection,
+  /**
+   * Hides Category with CSS on phones, for the markup painted before the
+   * viewport is known. After that the table hides it through its column
+   * visibility, which the Columns menu can turn back on.
+   */
+  hideCategoryOnPhones?: boolean,
 ) {
   return [
     columnHelper.accessor((_, index) => index + 1, {
@@ -77,7 +84,8 @@ export function getProtocolsByVolumeColumns(
         </div>
       ),
       meta: {
-        headClassName: 'text-2xs',
+        headClassName: cn('text-2xs', hideCategoryOnPhones && 'max-md:hidden'),
+        cellClassName: hideCategoryOnPhones ? 'max-md:hidden' : undefined,
       },
     }),
     columnHelper.accessor('bridgeTypes', {

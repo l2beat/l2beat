@@ -36,7 +36,7 @@ export function TopRoutesWidget({
       )}
     >
       <div className="flex h-full flex-col">
-        <h2 className="font-bold text-heading-16 md:text-heading-20">
+        <h2 className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
           {subtitle}
         </h2>
         <div className="mt-1 font-medium text-label-value-12 text-secondary md:text-label-value-14">
@@ -143,12 +143,10 @@ function RouteCard({
           isLarge && 'mt-3 gap-0.5',
         )}
       >
-        <span className="font-medium text-label-value-12 text-secondary md:text-label-value-14">
-          Volume
-        </span>
+        <span className="font-medium text-label-value-13">Volume</span>
         <div
           className={cn(
-            'font-bold',
+            'font-semibold tabular-nums tracking-[-0.025em]',
             isLarge ? 'text-heading-32' : 'text-heading-20 md:text-heading-24',
           )}
         >

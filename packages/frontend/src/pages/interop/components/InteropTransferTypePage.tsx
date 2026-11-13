@@ -130,7 +130,7 @@ function Widgets({
 
   return (
     <div
-      className="grid grid-cols-1 md:mt-5 md:grid-cols-2 min-[1600px]:grid-cols-3 min-md:gap-5"
+      className="grid grid-cols-1 md:mt-4 md:grid-cols-2 min-[1600px]:grid-cols-3 min-md:gap-4"
       data-hide-overflow-x
     >
       <div className="z-10">
@@ -172,7 +172,7 @@ function HeaderWithDescription({ type }: { type: KnownInteropBridgeType }) {
   const display = TRANSFER_TYPE_DISPLAY[type]
   return (
     <MainPageHeader description={display.description}>
-      {`${display.label} Protocols`}
+      {`${display.label} protocols`}
     </MainPageHeader>
   )
 }

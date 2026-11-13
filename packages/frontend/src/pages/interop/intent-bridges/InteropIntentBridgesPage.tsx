@@ -4,7 +4,6 @@ import {
   useQuery,
 } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
@@ -124,7 +123,7 @@ function IntentBridgesContent({
         <div className="flex flex-col md:col-span-2 md:gap-4">
           <InteropDominanceCompareCard
             name="intentBridgesMode"
-            dominanceLabel="Bridge Dominance"
+            dominanceLabel="Bridge dominance"
             className="border-divider max-md:border-b"
             dominanceClassName="mt-2 lg:h-188 lg:flex-none"
             compareClassName="mt-2 lg:h-188 lg:flex-none"
@@ -185,14 +184,14 @@ function IntentBridgesContent({
           />
         </div>
       </div>
-      <HorizontalSeparator className="md:my-4" />
+      <div aria-hidden className="border-divider max-md:border-t md:h-4" />
       <InteropTransferSizeCard
         data={data?.transferSizeChartData}
         isLoading={isLoading}
         className="h-75"
         categoryAxisWidth={130}
       />
-      <HorizontalSeparator className="md:my-4" />
+      <div aria-hidden className="border-divider max-md:border-t md:h-4" />
       <IntentBridgesTable
         intentBridges={intentBridges}
         data={data}

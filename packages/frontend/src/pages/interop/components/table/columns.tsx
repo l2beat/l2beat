@@ -13,6 +13,7 @@ import { IndexCell } from '~/components/table/cells/IndexCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { TableLink } from '~/components/table/TableLink'
 import { EM_DASH } from '~/consts/characters'
+import { formatNetFlow } from '~/pages/interop/components/flows/graph/utils/chainLabel'
 import type {
   CompactProtocolEntry,
   ProtocolEntry,
@@ -93,7 +94,15 @@ function makeNameColumn<T extends CompactProtocolEntry>(opts?: {
   })
 }
 
-function makeCategoryColumn<T extends CompactProtocolEntry>() {
+/** Hides a descriptive column with CSS below md. See `hideCategoryOnPhones`. */
+const PHONE_HIDDEN_META = {
+  headClassName: 'max-md:hidden',
+  cellClassName: 'max-md:hidden',
+}
+
+function makeCategoryColumn<T extends CompactProtocolEntry>(opts?: {
+  hideOnPhones?: boolean
+}) {
   return createColumnHelper<T>().accessor((row) => row.type, {
     id: 'type',
     header: 'Category',
@@ -103,7 +112,13 @@ function makeCategoryColumn<T extends CompactProtocolEntry>() {
       </div>
     ),
     meta: {
-      headClassName: 'text-2xs',
+      headClassName: cn(
+        'text-2xs',
+        opts?.hideOnPhones && PHONE_HIDDEN_META.headClassName,
+      ),
+      cellClassName: opts?.hideOnPhones
+        ? PHONE_HIDDEN_META.cellClassName
+        : undefined,
     },
   })
 }
@@ -133,7 +148,11 @@ function makeLast24hVolumeColumn<T extends CompactProtocolEntry>(
 
 const commonColumns = [
   makeLogoColumn<ProtocolEntry>(),
-  makeNameColumn<ProtocolEntry>(),
+  // 8px from the logo, like the summary's protocols table.
+  makeNameColumn<ProtocolEntry>({
+    cellClassName: 'md:pl-2!',
+    headClassName: 'md:pl-2!',
+  }),
 ]
 const categoryColumn = makeCategoryColumn<ProtocolEntry>()
 const last24hVolumeColumn = makeLast24hVolumeColumn<ProtocolEntry>()
@@ -204,7 +223,6 @@ function makeTokensColumn(opts: {
   return columnHelper.accessor('tokens', {
     header: 'Tokens\nby volume',
     meta: {
-      cellClassName: '!pr-0',
       headClassName: 'text-2xs',
       tooltip:
         'Tokens involved in transfers over the past 24 hours, ranked by total transfer volume. For each transfer, value is counted towards both the source and the destination token.',
@@ -262,6 +280,12 @@ export function getAllProtocolsColumns(
   showNetMintedValueColumn?: boolean,
   hideTokensColumn?: boolean,
   tokenId?: string,
+  /**
+   * Hides Category with CSS on phones, for the markup painted before the
+   * viewport is known. After that the table hides it through its column
+   * visibility, which the Columns menu can turn back on.
+   */
+  hideCategoryOnPhones?: boolean,
 ) {
   return compact([
     columnHelper.accessor((_, index) => index + 1, {
@@ -275,7 +299,9 @@ export function getAllProtocolsColumns(
       size: 44,
     }),
     ...commonColumns,
-    categoryColumn,
+    hideCategoryOnPhones
+      ? makeCategoryColumn<ProtocolEntry>({ hideOnPhones: true })
+      : categoryColumn,
     !hideTypeColumn &&
       columnHelper.accessor('bridgeTypes', {
         header: 'Transfer types',
@@ -299,7 +325,7 @@ export function getAllProtocolsColumns(
       }),
     last24hVolumeColumn,
     columnHelper.accessor((row) => row.transferCount, {
-      header: 'Last 24h\ntransfer count',
+      header: 'Last 24h\ntransfers',
       cell: (ctx) => (
         <TransferCountCell
           transferCount={ctx.row.original.transferCount}
@@ -369,7 +395,7 @@ export function getAllProtocolsColumns(
             return <InteropNoDataBadge />
           return (
             <span className="font-medium text-label-value-15">
-              {formatCurrency(ctx.row.original.netMintedValue, 'usd')}
+              {formatNetFlow(ctx.row.original.netMintedValue)}
             </span>
           )
         },

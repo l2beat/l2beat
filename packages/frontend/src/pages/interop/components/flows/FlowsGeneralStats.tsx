@@ -64,8 +64,10 @@ export function FlowsGeneralStats() {
 
   return (
     <div className="@container flex h-full flex-col rounded-lg bg-surface-secondary p-4 dark:bg-header-secondary">
-      <div className="font-bold text-heading-20">General stats</div>
-      <div className="mt-1 font-medium text-label-value-14 text-secondary">
+      <div className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
+        General stats
+      </div>
+      <div className="mt-1 font-normal text-label-value-13 text-secondary leading-4">
         For past 24h between the selected chains and protocols
       </div>
       <div className="mt-1.5 space-y-2">
@@ -130,16 +132,16 @@ export function FlowsGeneralStats() {
             className="border-0 p-0!"
             value={
               topChain && topChainData ? (
-                <div className="flex flex-col items-center gap-0.5 text-heading-18">
+                <div className="flex flex-col items-center gap-0.5 font-semibold text-heading-18">
                   {topChainData.href ? (
                     <a
                       href={topChainData.href}
-                      className="text-brand-deep hover:underline"
+                      className="underline decoration-divider underline-offset-[0.3em] transition-colors hover:decoration-current"
                     >
                       {topChainData.name}
                     </a>
                   ) : (
-                    <span className="text-brand-deep">{topChainData.name}</span>
+                    <span>{topChainData.name}</span>
                   )}
                   <span className="text-center font-medium text-label-value-13 text-secondary leading-tight">
                     {formatPercent(topChainVolumeShare)} of volume (
@@ -158,10 +160,10 @@ export function FlowsGeneralStats() {
             className="border-0 p-0!"
             value={
               topProtocol ? (
-                <div className="flex flex-col items-center gap-0.5 text-heading-18">
+                <div className="flex flex-col items-center gap-0.5 font-semibold text-heading-18">
                   <a
                     href={`/interop/protocols/${topProtocol.slug}`}
-                    className="text-brand-deep hover:underline"
+                    className="underline decoration-divider underline-offset-[0.3em] transition-colors hover:decoration-current"
                   >
                     {topProtocol.name}
                   </a>
@@ -230,8 +232,8 @@ function TopTokenValue({
   const content = (
     <>
       <img src={topToken.iconUrl} alt={topToken.symbol} className="size-5" />
-      <span className="font-bold text-heading-20">{topToken.symbol}</span>
-      <span className="font-medium text-label-value-14 text-secondary">
+      <span className="font-semibold text-heading-18">{topToken.symbol}</span>
+      <span className="font-medium text-label-value-13 text-secondary">
         {formatCurrency(topToken.volume, 'usd')}
       </span>
     </>
@@ -331,13 +333,13 @@ function Card({
         className,
       )}
     >
-      <span className="font-medium text-label-value-14 text-secondary">
-        {title}
-      </span>
+      <span className="font-medium text-label-value-13">{title}</span>
       {isLoading ? (
         <Skeleton className="h-6 w-20" />
       ) : (
-        <div className="font-bold text-heading-20">{value}</div>
+        <div className="font-semibold text-heading-20 tabular-nums">
+          {value}
+        </div>
       )}
       {footer}
     </div>

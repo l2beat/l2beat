@@ -26,7 +26,7 @@ export function BridgingTypeBreakdown({
         {items.map((item) => (
           <div
             key={item.type}
-            className="flex items-center gap-1 text-label-value-12 text-secondary"
+            className="flex items-center gap-1 text-label-value-12"
           >
             <span
               className={cn(

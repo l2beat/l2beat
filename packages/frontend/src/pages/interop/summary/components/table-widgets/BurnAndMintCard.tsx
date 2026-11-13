@@ -1,4 +1,3 @@
-import { Button } from '~/components/core/Button'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { BetweenChainsInfo } from '~/pages/interop/components/BetweenChainsInfo'
@@ -23,20 +22,17 @@ export function BurnAndMintCard({
   return (
     <PrimaryCard className="flex flex-col border-t-burn-and-mint max-md:border-b max-md:border-b-divider md:border-t-4">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <h2 className="font-bold text-heading-20 decoration-burn-and-mint underline-offset-6 max-md:underline md:text-heading-24">
+        <div className="flex flex-wrap items-baseline gap-x-2">
+          <h2 className="font-semibold text-heading-20 leading-6 tracking-[-0.01em] decoration-burn-and-mint underline-offset-6 max-md:underline">
             Burn & Mint
           </h2>
           <TopNBadge n={5} />
         </div>
-        <a href={viewAllUrl}>
-          <Button
-            variant="outline"
-            size="sm"
-            className="px-4 py-[9px] leading-none"
-          >
-            View all
-          </Button>
+        <a
+          href={viewAllUrl}
+          className="shrink-0 whitespace-nowrap font-medium text-label-value-13 text-secondary underline decoration-divider underline-offset-[0.3em] transition-colors hover:text-primary hover:decoration-current"
+        >
+          View all
         </a>
       </div>
       <BetweenChainsInfo className="mt-1" />
