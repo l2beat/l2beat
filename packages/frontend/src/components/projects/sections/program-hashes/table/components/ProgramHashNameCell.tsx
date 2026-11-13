@@ -36,7 +36,9 @@ export function ProgramHashNameCell({
   }, [])
 
   return (
-    <div className="flex items-center gap-1 py-2">
+    // The project icon leads, so every row's icon sits at one x.
+    <div className="flex items-center gap-2 py-2">
+      {zkCatalogProject && <ZkProjectTooltip zkProject={zkCatalogProject} />}
       <Tooltip>
         <TooltipTrigger
           disabled={!isOverflowing && !description}
@@ -44,9 +46,9 @@ export function ProgramHashNameCell({
         >
           <div
             ref={titleRef}
-            className="line-clamp-6 w-fit max-w-44 text-pretty break-words font-bold text-label-value-14 leading-normal md:line-clamp-4 md:max-w-60 2xl:max-w-72"
+            className="line-clamp-6 w-max max-w-44 text-pretty break-words font-bold text-label-value-14 leading-normal md:line-clamp-4 md:max-w-60 2xl:max-w-72"
           >
-            {withIdentifierBreaks(title)}
+            {withIdentifierBreaks(title, { atCapitals: false })}
           </div>
         </TooltipTrigger>
         <TooltipContent>
@@ -56,7 +58,6 @@ export function ProgramHashNameCell({
           )}
         </TooltipContent>
       </Tooltip>
-      {zkCatalogProject && <ZkProjectTooltip zkProject={zkCatalogProject} />}
     </div>
   )
 }

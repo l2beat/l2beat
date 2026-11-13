@@ -64,7 +64,11 @@ export function ContractsSection(props: ContractsSectionProps) {
       sectionOrder={props.sectionOrder}
       isUnderReview={props.isUnderReview}
     >
-      {hasContractsChanged && <ContractsUpdated />}
+      {hasContractsChanged && (
+        <div className="mb-6">
+          <ContractsUpdated />
+        </div>
+      )}
       {/* Status leads: the risks come before the Disco banner and the
           ~50 entries, where nobody reached them. */}
       {props.risks.length > 0 && (

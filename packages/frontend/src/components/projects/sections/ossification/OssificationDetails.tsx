@@ -155,7 +155,9 @@ function CriticalContracts({
                     <div className="flex items-center gap-2">
                       <span className="font-medium">
                         {withIdentifierBreaks(contract.name, {
-                          atCapitals: false,
+                          // Short names stay whole; long ones (Starknet's
+                          // 38-character Poseidon keys) still need breaks.
+                          atCapitals: contract.name.length > 24,
                         })}
                       </span>
                       {!contract.isVerified && <OssificationUnverifiedBadge />}
