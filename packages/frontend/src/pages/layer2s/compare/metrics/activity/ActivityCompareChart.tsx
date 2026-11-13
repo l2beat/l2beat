@@ -43,7 +43,9 @@ export function ActivityCompareChart({
       data={chartData}
       isLoading={isLoading}
       syncedUntil={data?.syncedUntil}
-      formatYAxisLabel={(value) => formatActivityCount(value)}
+      formatYAxisLabel={(value) =>
+        `${formatActivityCount(value, { decimals: value >= 10 ? 0 : 2 })} ${unit.toUpperCase()}`
+      }
       formatTooltipValue={(value) =>
         `${formatActivityCount(value)} ${unit.toUpperCase()}`
       }

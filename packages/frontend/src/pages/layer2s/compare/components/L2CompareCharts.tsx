@@ -224,7 +224,7 @@ function CompareChartCard({
             type="button"
             aria-label="Remove chart"
             onClick={onRemove}
-            className="flex size-7 shrink-0 cursor-pointer items-center justify-center rounded-lg hover:bg-surface-secondary primary-card:hover:bg-surface-tertiary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+            className="flex size-6 shrink-0 cursor-pointer items-center justify-center rounded-lg hover:bg-surface-secondary primary-card:hover:bg-surface-tertiary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand md:size-7"
           >
             <CloseIcon className="size-2.5 fill-secondary" aria-hidden />
           </button>
@@ -267,6 +267,8 @@ function MetricSwitcher({
       <RadioGroup
         name={name}
         aria-label="Chart metric"
+        // Tight on phones so all four metrics fit beside the close button.
+        className="max-md:gap-0.5"
         value={value}
         onValueChange={(value) => onValueChange(value as CompareMetricId)}
       >
@@ -274,7 +276,7 @@ function MetricSwitcher({
           <RadioGroupItem
             key={metric.id}
             value={metric.id}
-            className="h-full whitespace-nowrap px-1.5 text-xs md:px-2 md:text-sm"
+            className="h-full whitespace-nowrap px-1 text-xs md:px-2 md:text-sm"
           >
             {metric.label}
           </RadioGroupItem>
