@@ -54,7 +54,8 @@ export function RiskBanner({
           sentiment={adjSentiment}
           className={cn(
             // Without a fixed height, h-full resolves to nothing: stretch.
-            describesEmergency ? 'self-stretch' : 'h-full',
+            // GrissiniStick sets its own height; auto lets it stretch.
+            describesEmergency ? 'h-auto self-stretch' : 'h-full',
             'shrink-0 max-md:w-1',
             (regular || warning) && info === 'full' && 'rounded-b-none',
             className,
@@ -137,7 +138,7 @@ export function RiskBanner({
           >
             <div
               className={cn(
-                'mb-2 font-bold text-base md:text-lg',
+                'mb-2 font-bold text-base leading-none! md:text-lg',
                 sentimentToTextColor(regular.sentiment ?? 'neutral', {
                   vibrant: true,
                 }),

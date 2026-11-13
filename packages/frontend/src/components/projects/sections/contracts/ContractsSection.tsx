@@ -71,6 +71,15 @@ export function ContractsSection(props: ContractsSectionProps) {
         />
       )}
       {hasContractsChanged && <ContractsUpdated />}
+      {/* Risks lead the section; after ~50 entries nobody reached them. */}
+      {props.risks.length > 0 && (
+        <div className="mb-8">
+          <p className="text-paragraph-15 md:text-paragraph-16">
+            {DEPLOYMENT_RISKS_INTRO}
+          </p>
+          <RiskList risks={props.risks} />
+        </div>
+      )}
       {props.diagram && (
         <figure className="mt-4 mb-8 text-center">
           <DiagramImage diagram={props.diagram} />
@@ -107,14 +116,6 @@ export function ContractsSection(props: ContractsSectionProps) {
             )
           },
         )}
-      {props.risks.length > 0 && (
-        <>
-          <p className="text-paragraph-15 md:text-paragraph-16">
-            {DEPLOYMENT_RISKS_INTRO}
-          </p>
-          <RiskList risks={props.risks} />
-        </>
-      )}
       {props.programHashes && props.programHashes.length > 0 && (
         <div id="program-hashes" className="mt-4 space-y-2 md:mt-6">
           <Subsection

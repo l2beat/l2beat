@@ -282,7 +282,7 @@ export function UpdateCard({
             <Markdown
               ignoreGlossary
               className={cn(
-                'min-w-0 max-w-full text-primary text-sm leading-relaxed [overflow-wrap:anywhere]',
+                'min-w-0 max-w-full break-words text-primary text-sm leading-relaxed',
                 '[&_p:last-child]:mb-0 [&_p]:mb-2',
                 '[&_li]:marker:text-secondary [&_ol]:mb-2 [&_ul]:mb-2',
                 '[&_a]:text-link',

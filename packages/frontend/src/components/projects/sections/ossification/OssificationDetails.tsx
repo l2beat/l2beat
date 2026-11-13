@@ -137,9 +137,7 @@ function CriticalContracts({
             <thead className="font-medium text-label-value-13">
               <tr>
                 <th className="px-4 py-2 font-medium md:px-6">Contract</th>
-                <th className="whitespace-nowrap px-4 py-2 font-medium md:px-6">
-                  Unchanged for
-                </th>
+                <th className="px-4 py-2 font-medium md:px-6">Unchanged for</th>
                 <th className="whitespace-nowrap px-4 py-2 text-right font-medium md:px-6">
                   Code changes
                 </th>
