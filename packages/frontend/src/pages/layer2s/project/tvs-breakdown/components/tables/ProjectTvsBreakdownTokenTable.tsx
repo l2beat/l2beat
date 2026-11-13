@@ -9,11 +9,9 @@ import { BasicTable, type BasicTableRow } from '~/components/table/BasicTable'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { useTable } from '~/hooks/useTable'
-import { HOME_TEXT } from '~/pages/home/homeStyles'
 import { useL2RwaRestrictedTokensContext } from '~/pages/layer2s/components/L2RwaRestrictedTokensContext'
 import { MIN_VALUE_FOR_PROJECT_TVS_BREAKDOWN } from '~/server/features/layer2s/project/const'
 import type { ProjectTvsBreakdownTokenEntry } from '~/server/features/layer2s/tvs/breakdown/getProjectTokensEntries'
-import { cn } from '~/utils/cn'
 import { columns } from './columns'
 import { renderFormulaSubComponent } from './FormulaSubRow'
 
@@ -73,7 +71,7 @@ export function ProjectTvsBreakdownTokenTable(props: Props) {
           table={table}
           renderSubComponent={renderFormulaSubComponent}
         />
-        <p className={cn('mt-1', HOME_TEXT.meta)}>
+        <p className="mt-1 font-normal text-label-value-13 text-secondary">
           Tokens with value below ${MIN_VALUE_FOR_PROJECT_TVS_BREAKDOWN} are not
           included in the list.
         </p>
