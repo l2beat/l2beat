@@ -5,10 +5,10 @@ import { v } from '@l2beat/validate'
 import { router } from '../../../../../../trpc/init'
 import { protectedProcedure } from '../../../../../../trpc/procedures'
 import {
-  MINIMUM_SIDE_VALUE_USD_THRESHOLD,
+  EXTREME_VALUE_RATIO_THRESHOLD,
+  MINIMUM_LARGER_SIDE_VALUE_USD_THRESHOLD,
   SIDE_MISMATCH_DIFF_PERCENT,
   SIDE_MISMATCH_MIN_VOLUME_USD,
-  VALUE_DIFF_THRESHOLD_PERCENT,
 } from '../../activity/constants'
 import { explore } from '../../stats'
 import {
@@ -127,20 +127,18 @@ export function createActivityRouter() {
       .input(InteropTransferDataRangeRequest)
       .query(async ({ ctx, input }) => {
         const transfers =
-          await ctx.db.interopTransfer.getValueMismatchTransfers(
-            VALUE_DIFF_THRESHOLD_PERCENT,
-            {
-              minimumSideValueUsdThreshold: MINIMUM_SIDE_VALUE_USD_THRESHOLD,
-              timeRange: await resolveInteropTransferTimeRange(
-                ctx.db,
-                input.range,
-              ),
-            },
-          )
+          await ctx.db.interopTransfer.getValueMismatchTransfers({
+            minimumLargerSideValueUsd: MINIMUM_LARGER_SIDE_VALUE_USD_THRESHOLD,
+            minimumValueRatio: EXTREME_VALUE_RATIO_THRESHOLD,
+            timeRange: await resolveInteropTransferTimeRange(
+              ctx.db,
+              input.range,
+            ),
+          })
 
         return {
-          valueDiffThresholdPercent: VALUE_DIFF_THRESHOLD_PERCENT,
-          minimumSideValueUsdThreshold: MINIMUM_SIDE_VALUE_USD_THRESHOLD,
+          minimumLargerSideValueUsd: MINIMUM_LARGER_SIDE_VALUE_USD_THRESHOLD,
+          minimumValueRatio: EXTREME_VALUE_RATIO_THRESHOLD,
           items: transfers.map(toSuspiciousTransferDto),
         }
       }),
