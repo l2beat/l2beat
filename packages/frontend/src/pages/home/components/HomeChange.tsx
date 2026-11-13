@@ -10,18 +10,22 @@ export function HomeChange({
   value: number
   className?: string
 }) {
+  const shown = formatPercent(Math.abs(value))
+  // Sign and colour follow what is printed: a change that rounds to 0.00%
+  // must not read as a gain or a loss.
+  const sign = shown === formatPercent(0) ? 0 : Math.sign(value)
   return (
     <span
       className={cn(
         'whitespace-nowrap tabular-nums',
-        value > 0 && 'text-positive',
-        value < 0 && 'text-negative',
-        value === 0 && 'text-secondary',
+        sign > 0 && 'text-positive',
+        sign < 0 && 'text-negative',
+        sign === 0 && 'text-secondary',
         className,
       )}
     >
-      {value > 0 ? '+' : value < 0 ? '−' : ''}
-      {formatPercent(Math.abs(value))}
+      {sign > 0 ? '+' : sign < 0 ? '−' : ''}
+      {shown}
     </span>
   )
 }
