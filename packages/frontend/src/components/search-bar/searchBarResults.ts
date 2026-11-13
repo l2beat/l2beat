@@ -1,9 +1,15 @@
+import { ProjectId } from '@l2beat/shared-pure'
 import fuzzysort from 'fuzzysort'
+import type {
+  SearchBarProjectEntry,
+  SearchBarTokenEntry,
+} from '~/server/features/search-bar/types'
 import {
   type SearchBarCategory,
   type SearchBarCategoryConfig,
   searchBarCategories,
 } from './searchBarCategories'
+import type { DecodedSearchIndex } from './searchIndex'
 import type { SearchBarEntry } from './types'
 
 type SearchableSearchBarEntry = SearchBarEntry & {
@@ -49,6 +55,72 @@ export function searchEntries<T extends SearchableSearchBarEntry>(
     })
 
   return rankSearchResults(searched, options?.limit)
+}
+
+// Limited per type so that dozens of short token symbols (e.g. ROBA, ROBO for
+// "rob") can't outscore and push out a project like "Robinhood Chain".
+const PROJECT_RESULTS_LIMIT = 15
+const TOKEN_RESULTS_LIMIT = 5
+
+export function searchProjectsAndTokens(
+  query: string,
+  index: DecodedSearchIndex,
+) {
+  // Searched together so that direct matches of either type still hide fuzzy ones.
+  const matches = searchEntries<SearchBarProjectEntry | SearchBarTokenEntry>(
+    query,
+    [...index.projects, ...index.tokens],
+    {
+      scoreMultiplier: (entry) => (entry.category === 'zkCatalog' ? 0.9 : 1),
+    },
+  )
+  rankVersionsTogether(matches)
+  if (isEthereumPrefix(query)) {
+    // Ranked first, so "eth" or "ethere" never shows Ethereal above it.
+    for (const entry of matches) {
+      if (entry.type === 'project' && entry.id === ProjectId.ETHEREUM) {
+        entry.searchScore = Number.POSITIVE_INFINITY
+      }
+    }
+  }
+  const ranked = rankSearchResults(matches)
+  return [
+    ...ranked
+      .filter((entry) => entry.type !== 'token')
+      .slice(0, PROJECT_RESULTS_LIMIT),
+    ...ranked
+      .filter((entry) => entry.type === 'token')
+      .slice(0, TOKEN_RESULTS_LIMIT),
+  ]
+}
+
+// Far below the gap between any two fuzzysort scores.
+const VERSION_SCORE_STEP = 1e-9
+
+/**
+ * Versions of a project score as their best match and list the latest first.
+ * Otherwise an older version with a shorter slug outscores the latest one.
+ */
+function rankVersionsTogether(
+  matches: SearchResult<SearchBarProjectEntry | SearchBarTokenEntry>[],
+) {
+  const bestScores = new Map<string, number>()
+  const versioned = matches.flatMap((entry) => {
+    if (entry.type !== 'project' || !entry.version) return []
+    const key = `${entry.category}:${entry.version.group}`
+    const best = bestScores.get(key) ?? Number.NEGATIVE_INFINITY
+    bestScores.set(key, Math.max(best, entry.searchScore))
+    return [{ entry, key, rank: entry.version.rank }]
+  })
+  for (const { entry, key, rank } of versioned) {
+    const best = bestScores.get(key) ?? entry.searchScore
+    entry.searchScore = best - rank * VERSION_SCORE_STEP
+  }
+}
+
+function isEthereumPrefix(query: string): boolean {
+  const normalized = normalize(query)
+  return normalized !== '' && ProjectId.ETHEREUM.startsWith(normalized)
 }
 
 function rankSearchResults<T extends SearchableSearchBarEntry>(

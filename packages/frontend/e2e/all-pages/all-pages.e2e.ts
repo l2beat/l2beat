@@ -31,7 +31,7 @@ for (let shardIndex = 0; shardIndex < PAGE_SHARD_COUNT; shardIndex++) {
 
         const contentLength = response.headers()['content-length']
         expect(
-          contentLength === undefined || Number.parseInt(contentLength) > 0,
+          contentLength === undefined || Number.parseInt(contentLength, 10) > 0,
           `Empty response received from ${response.url()}`,
         ).toBe(true)
       })
@@ -40,7 +40,7 @@ for (let shardIndex = 0; shardIndex < PAGE_SHARD_COUNT; shardIndex++) {
 }
 
 function getPageShardCount() {
-  const parsed = Number.parseInt(process.env.ALL_PAGES_SHARDS ?? '16')
+  const parsed = Number.parseInt(process.env.ALL_PAGES_SHARDS ?? '16', 10)
 
   return Number.isSafeInteger(parsed) && parsed > 0 ? parsed : 16
 }

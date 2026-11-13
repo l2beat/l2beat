@@ -255,10 +255,10 @@ export const railgun: BaseProject = {
       icon: 'railoxide',
       url: 'https://github.com/triamazikamno/railoxide',
       since: '2026-10-08',
-      version: '0.2.0-beta.10',
+      version: '0.3.0-rc.2',
       source: {
         repository: 'https://github.com/triamazikamno/railoxide',
-        commit: '7981f35afe8fe5a198a450e0cad66d37f159556e',
+        commit: 'd9e244c059d01fb52c21b878cb596971f8c1208c',
       },
       checkedApps: [
         {
@@ -274,11 +274,11 @@ export const railgun: BaseProject = {
           name: 'Anon Wallet',
           icon: 'anon-wallet',
           finding:
-            "Sends the user's public and 0zk addresses to Anon's server at setup, even without a username, so Anon can link them.",
-          fix: "Create wallets without registering the user's addresses with Anon's server.",
+            "Asks Anon's server for each stealth account's balance under the user's login, so Anon can link them to each other and to the user's addresses.",
+          fix: "Read stealth account balances from the user's RPC only, without the login token.",
           source:
             'https://chromewebstore.google.com/detail/anon-wallet-private-evm-w/gnkbgepgknkbhnnbaihklcfkjhbclajk',
-          checked: '2026-10-30',
+          checked: '2026-11-11',
         },
         {
           name: 'Terminal Wallet',
@@ -301,6 +301,12 @@ export const railgun: BaseProject = {
       ],
     },
     trackedOn: ['ethereum'],
+    // Chains RailOxide v0.3.0-rc.2 serves (railgun-rust crates/core/src/deployment.rs).
+    runsOn: [
+      ProjectId('arbitrum'),
+      ProjectId('base'),
+      ProjectId('polygon-pos'),
+    ],
     tokens: privacyTokens,
     relayerTracking: {
       type: 'railgunWaku',
@@ -372,7 +378,7 @@ export const railgun: BaseProject = {
           'Governance token': `\`RAIL\` 1 token = 1 vote, delegated. Total supply: **${formatNumber(Number(railTotalSupply / 10n ** 18n))} RAIL**, DAO-owned treasury (unavailable for voting): **${formatNumber(railTreasuryBalance)} RAIL**, staked for voting: **${formatNumber(railStaked)} RAIL**, the rest is circulating supply.`,
           'Stake lock': `Unstaking has **${formatSeconds(stakeLocktime)}** delay.`,
           'Voting venue':
-            '[Voting contract](https://etherscan.io/address/0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) on Ethereum. Proposal text is distributed over IPFS, its CID is available as a parameter of `createPropsal()` call on the voting contract.',
+            '[Voting contract](https://etherscan.io/address/0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) on Ethereum, used through the community-run [stakerail.fi](https://stakerail.fi/) or [railstaker.io](https://railstaker.io/) portals. Proposal text is distributed over IPFS, its CID is available as a parameter of `createPropsal()` call on the voting contract.',
           'Proposal threshold': `**No threshold to create a proposal.** A proposal must receive sponsorship from **${formatNumber(Number(proposalSponsorThreshold / 10n ** 18n))} RAIL** stake within ${formatSeconds(sponsorWindow)}.`,
           Quorum: `**${formatNumber(Number(quorum / 10n ** 18n))} RAIL**, with a simple majority required for acceptance.`,
           'Execution model': `**Onchain calldata · Permissionless execution through the Delegator.** A passed proposal waits ${formatSeconds(executionStartOffset)}, after which anyone can execute it through the [Delegator contract](https://etherscan.io/address/0xB6d513f6222Ee92Fff975E901bd792E2513fB53B) within ${formatSeconds(executionEndOffset)}.`,

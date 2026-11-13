@@ -9,6 +9,7 @@ import {
   type HeadingLevelEnv,
   headingLevelPlugin,
 } from '~/utils/markdown/headingLevelPlugin'
+import { identifierBreaksPlugin } from '~/utils/markdown/identifierBreaksPlugin'
 import { outLinksPlugin } from '~/utils/markdown/outlinksPlugin'
 import { useGlossaryContext } from './GlossaryContext'
 import { GlossaryTooltipWrapper } from './GlossaryTooltipWrapper'
@@ -25,6 +26,7 @@ const markdown = createMarkdown()
   .use(outLinksPlugin)
   .use(glossaryPlugin)
   .use(headingLevelPlugin)
+  .use(identifierBreaksPlugin)
 
 export function Markdown(props: MarkdownProps) {
   const linkTerms = useGlossaryContext()

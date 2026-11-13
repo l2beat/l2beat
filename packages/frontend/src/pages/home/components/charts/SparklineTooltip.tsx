@@ -1,12 +1,12 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { type ReactNode, useLayoutEffect, useRef } from 'react'
-import { tooltipContentVariants } from '~/components/core/tooltip/Tooltip'
+import { tooltipSurfaceClassName } from '~/components/core/tooltip/Tooltip'
 import {
   type HomeSparklineSeries,
   WEEK_DAYS,
 } from '~/server/features/home/homeSeries'
 import { cn } from '~/utils/cn'
-import { formatRange, formatSnapshotTimestamp } from '~/utils/dates'
+import { formatRange } from '~/utils/dates'
 import type { SparklinePoint } from './sparklineScale'
 
 /**
@@ -29,28 +29,22 @@ export function SparklineTooltip({
   side: 'above' | 'below'
 }) {
   const label = point.timestamp
-  const weekly = series.kind === 'weekly'
-  const partLabels = series.kind === 'daily' ? series.partLabels : undefined
   const format = (value: unknown) =>
     typeof value === 'number' ? formatValue(value) : 'No data'
   return (
     <PointTooltip anchorX={anchorX} side={side}>
       <div className="whitespace-nowrap text-label-value-13 text-secondary">
-        {weekly
-          ? formatRange(label, label + WEEK_DAYS * UnixTime.DAY)
-          : formatSnapshotTimestamp(label, 'day')}
+        {formatRange(label, label + WEEK_DAYS * UnixTime.DAY)}
       </div>
       <div className="flex items-baseline gap-1.5 whitespace-nowrap">
         <span className="font-semibold text-label-value-15 tabular-nums">
           {format(point.value)}
         </span>
-        {weekly && (
-          <span className="text-label-value-13 text-secondary">
-            daily average
-          </span>
-        )}
+        <span className="text-label-value-13 text-secondary">
+          daily average
+        </span>
       </div>
-      {partLabels?.map((partLabel, index) => (
+      {series.partLabels?.map((partLabel, index) => (
         <div
           key={partLabel}
           className="flex justify-between gap-3 whitespace-nowrap text-label-value-13"
@@ -111,17 +105,24 @@ function PointTooltip({
         : !fits(roomBelow) && (fits(roomAbove) || roomAbove > roomBelow)
     const top = above ? -GAP - height : chart.clientHeight + GAP
     box.style.transform = `translate(${left}px, ${top}px)`
+    // It opens from the active point's edge of the tooltip.
+    box.style.setProperty(
+      '--chart-tooltip-origin',
+      `${anchorX - left}px ${above ? height : 0}px`,
+    )
   })
   return (
-    <div
-      ref={ref}
-      className={cn(
-        tooltipContentVariants({ fitContent: true }),
-        // Above the cards beside the chart.
-        'pointer-events-none absolute top-0 left-0 z-110 flex flex-col gap-1 px-3 py-2',
-      )}
-    >
-      {children}
+    // Placed by its transform, above the cards beside the chart; the box
+    // inside animates.
+    <div ref={ref} className="pointer-events-none absolute top-0 left-0 z-110">
+      <div
+        className={cn(
+          tooltipSurfaceClassName,
+          'chart-tooltip-enter flex flex-col gap-1 px-3 py-2',
+        )}
+      >
+        {children}
+      </div>
     </div>
   )
 }

@@ -17,6 +17,7 @@ import {
 } from '~/components/core/chart/ChartTooltip'
 import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import { tinted } from '~/components/core/chart/tint'
+import type { ChartTimeRangeValue } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
@@ -109,7 +110,7 @@ function Header({
   timeRange,
   stats,
 }: {
-  timeRange: [number, number] | undefined
+  timeRange: ChartTimeRangeValue
   stats: { latestUops: number; marketShare: number } | undefined
 }) {
   return (

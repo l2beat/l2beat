@@ -1,0 +1,773 @@
+{
+  "name": "splitsv2",
+  "timestamp": 1794316571,
+  "configHash": "0x428754a00791b28ea61c255fc18190a35278e8fe9e63e01673e43ebc72a5ac41",
+  "entries": [
+    {
+      "name": "PushSplit_v2_0",
+      "address": "eth:0x0285B37453F73f8dE94De0cAEf8108bC8431BE34",
+      "type": "Contract",
+      "template": "splits/PushSplit",
+      "sourceHashes": [
+        "0x7316c15cce80dd405da66d67c30a48f3bd56c23f8bfd15c9ce5bf708efcd37e1"
+      ],
+      "proxyType": "immutable",
+      "description": "Implementation that every push split of its version delegates to. A push split collects ETH and ERC-20 tokens. Anyone can distribute them, which sends each recipient's share straight to its address. ETH that a recipient does not accept is deposited for it in the SplitsWarehouse. A split created with an owner lets that owner change the recipients, pause distributions and execute any call from the split.",
+      "critical": true,
+      "deployerAddress": "eth:0x60C65c9a8674DA22e89C7d09e839908B9f0ecC3a",
+      "sinceTimestamp": 1710646991,
+      "sinceBlock": 19451970,
+      "values": {
+        "$immutable": true,
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "splitWallet",
+          "version": "2",
+          "chainId": 1,
+          "verifyingContract": "eth:0x0285B37453F73f8dE94De0cAEf8108bC8431BE34",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "FACTORY": "eth:0xaDC87646f736d6A82e9a6539cddC488b2aA07f38",
+        "NATIVE_TOKEN": "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+        "owner": "eth:0x0000000000000000000000000000000000000000",
+        "paused": false,
+        "splitHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "SPLITS_WAREHOUSE": "eth:0x8fb66F38cF86A3d5e8768f8F1754A24A6c661Fb8"
+      },
+      "implementationNames": {
+        "eth:0x0285B37453F73f8dE94De0cAEf8108bC8431BE34": "PushSplit"
+      }
+    },
+    {
+      "name": "PushSplit_v2_2",
+      "address": "eth:0x1e2086A7e84a32482ac03000D56925F607CCB708",
+      "type": "Contract",
+      "template": "splits/PushSplit",
+      "sourceHashes": [
+        "0xc2c60ceaa525f7f9859fd182512da85014b94e30f0642b55af68908fb9f5b641"
+      ],
+      "proxyType": "immutable",
+      "description": "Implementation that every push split of its version delegates to. A push split collects ETH and ERC-20 tokens. Anyone can distribute them, which sends each recipient's share straight to its address. ETH that a recipient does not accept is deposited for it in the SplitsWarehouse. A split created with an owner lets that owner change the recipients, pause distributions and execute any call from the split.",
+      "critical": true,
+      "deployerAddress": "eth:0x60C65c9a8674DA22e89C7d09e839908B9f0ecC3a",
+      "sinceTimestamp": 1751929523,
+      "sinceBlock": 22870483,
+      "values": {
+        "$immutable": true,
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "PushSplit",
+          "version": "2.2",
+          "chainId": 1,
+          "verifyingContract": "eth:0x1e2086A7e84a32482ac03000D56925F607CCB708",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "FACTORY": "eth:0x8E8eB0cC6AE34A38B67D5Cf91ACa38f60bc3Ecf4",
+        "NATIVE_TOKEN": "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+        "owner": "eth:0x0000000000000000000000000000000000000000",
+        "paused": false,
+        "splitHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "SPLITS_WAREHOUSE": "eth:0x8fb66F38cF86A3d5e8768f8F1754A24A6c661Fb8",
+        "updateBlockNumber": 0
+      },
+      "implementationNames": {
+        "eth:0x1e2086A7e84a32482ac03000D56925F607CCB708": "PushSplit"
+      }
+    },
+    {
+      "name": "PushSplit_v2_1",
+      "address": "eth:0x3f81D81e0884abD8Cc4583a704a9397972623214",
+      "type": "Contract",
+      "template": "splits/PushSplit",
+      "sourceHashes": [
+        "0x08195ccd83167e623cde2acc98cdb6289e7dcba45c81b3cf3145123a0ed1e662"
+      ],
+      "proxyType": "immutable",
+      "description": "Implementation that every push split of its version delegates to. A push split collects ETH and ERC-20 tokens. Anyone can distribute them, which sends each recipient's share straight to its address. ETH that a recipient does not accept is deposited for it in the SplitsWarehouse. A split created with an owner lets that owner change the recipients, pause distributions and execute any call from the split.",
+      "critical": true,
+      "deployerAddress": "eth:0x60C65c9a8674DA22e89C7d09e839908B9f0ecC3a",
+      "sinceTimestamp": 1734955691,
+      "sinceBlock": 21465085,
+      "values": {
+        "$immutable": true,
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "splitWallet",
+          "version": "2.1",
+          "chainId": 1,
+          "verifyingContract": "eth:0x3f81D81e0884abD8Cc4583a704a9397972623214",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "FACTORY": "eth:0xDc6259E13ec0621e6F19026b2e49D846525548Ed",
+        "NATIVE_TOKEN": "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+        "owner": "eth:0x0000000000000000000000000000000000000000",
+        "paused": false,
+        "splitHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "SPLITS_WAREHOUSE": "eth:0x8fb66F38cF86A3d5e8768f8F1754A24A6c661Fb8",
+        "updateBlockNumber": 0
+      },
+      "implementationNames": {
+        "eth:0x3f81D81e0884abD8Cc4583a704a9397972623214": "PushSplit"
+      }
+    },
+    {
+      "name": "PullSplitFactory_v2_1",
+      "address": "eth:0x5cbA88D55Cec83caD5A105Ad40C8c9aF20bE21d1",
+      "type": "Contract",
+      "template": "splits/SplitFactoryV2",
+      "sourceHashes": [
+        "0xf1d1c5a997804944ad61368530291d44ad9d7804a1836006ed85859b9999aee2"
+      ],
+      "proxyType": "immutable",
+      "description": "Deploys splits of one type and version as minimal proxies of its split implementation. Anyone can create a split, with or without an owner, at an address fixed by its recipients, owner and salt. Immutable, with no owner.",
+      "critical": true,
+      "deployerAddress": "eth:0x60C65c9a8674DA22e89C7d09e839908B9f0ecC3a",
+      "sinceTimestamp": 1734955691,
+      "sinceBlock": 21465085,
+      "values": {
+        "$immutable": true,
+        "SPLIT_WALLET_IMPLEMENTATION": "eth:0xF9C25250523Df26343222fC46de932355B850c97"
+      },
+      "implementationNames": {
+        "eth:0x5cbA88D55Cec83caD5A105Ad40C8c9aF20bE21d1": "PullSplitFactory"
+      }
+    },
+    {
+      "name": "PullSplit_v2_0",
+      "address": "eth:0x6291497D1206618fC810900d2e7e9AF6Aa1F1b99",
+      "type": "Contract",
+      "template": "splits/PullSplit",
+      "sourceHashes": [
+        "0xd4c30a1b37571422d07ee07944076fa0b966920762104ca3b36c565c4ab95275"
+      ],
+      "proxyType": "immutable",
+      "description": "Implementation that every pull split of its version delegates to. A pull split collects ETH and ERC-20 tokens. Anyone can distribute them, which credits each recipient's share as a balance in the SplitsWarehouse for the recipient to withdraw. A split created with an owner lets that owner change the recipients, pause distributions and execute any call from the split.",
+      "critical": true,
+      "deployerAddress": "eth:0x60C65c9a8674DA22e89C7d09e839908B9f0ecC3a",
+      "sinceTimestamp": 1710646991,
+      "sinceBlock": 19451970,
+      "values": {
+        "$immutable": true,
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "splitWallet",
+          "version": "2",
+          "chainId": 1,
+          "verifyingContract": "eth:0x6291497D1206618fC810900d2e7e9AF6Aa1F1b99",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "FACTORY": "eth:0x80f1B766817D04870f115fEBbcCADF8DBF75E017",
+        "NATIVE_TOKEN": "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+        "owner": "eth:0x0000000000000000000000000000000000000000",
+        "paused": false,
+        "splitHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "SPLITS_WAREHOUSE": "eth:0x8fb66F38cF86A3d5e8768f8F1754A24A6c661Fb8"
+      },
+      "implementationNames": {
+        "eth:0x6291497D1206618fC810900d2e7e9AF6Aa1F1b99": "PullSplit"
+      }
+    },
+    {
+      "name": "PullSplitFactory_v2_2",
+      "address": "eth:0x6B9118074aB15142d7524E8c4ea8f62A3Bdb98f1",
+      "type": "Contract",
+      "template": "splits/SplitFactoryV2",
+      "sourceHashes": [
+        "0x34c109948e0875b681f5948d9c61205438862a21d3682f18fd63a0c7384774ae"
+      ],
+      "proxyType": "immutable",
+      "description": "Deploys splits of one type and version as minimal proxies of its split implementation. Anyone can create a split, with or without an owner, at an address fixed by its recipients, owner and salt. Immutable, with no owner.",
+      "critical": true,
+      "deployerAddress": "eth:0x60C65c9a8674DA22e89C7d09e839908B9f0ecC3a",
+      "sinceTimestamp": 1751929511,
+      "sinceBlock": 22870482,
+      "values": {
+        "$immutable": true,
+        "SPLIT_WALLET_IMPLEMENTATION": "eth:0x98254AeDb6B2c30b70483064367f0BA24ca86244"
+      },
+      "implementationNames": {
+        "eth:0x6B9118074aB15142d7524E8c4ea8f62A3Bdb98f1": "PullSplitFactory"
+      }
+    },
+    {
+      "name": "PullSplitFactory_v2_0",
+      "address": "eth:0x80f1B766817D04870f115fEBbcCADF8DBF75E017",
+      "type": "Contract",
+      "template": "splits/SplitFactoryV2",
+      "sourceHashes": [
+        "0x681050c3ffc39b3cae9a724f95cff212f13d0d78da932b13ce319d5a30943241"
+      ],
+      "proxyType": "immutable",
+      "description": "Deploys splits of one type and version as minimal proxies of its split implementation. Anyone can create a split, with or without an owner, at an address fixed by its recipients, owner and salt. Immutable, with no owner.",
+      "critical": true,
+      "deployerAddress": "eth:0x60C65c9a8674DA22e89C7d09e839908B9f0ecC3a",
+      "sinceTimestamp": 1710646991,
+      "sinceBlock": 19451970,
+      "values": {
+        "$immutable": true,
+        "SPLIT_WALLET_IMPLEMENTATION": "eth:0x6291497D1206618fC810900d2e7e9AF6Aa1F1b99"
+      },
+      "implementationNames": {
+        "eth:0x80f1B766817D04870f115fEBbcCADF8DBF75E017": "PullSplitFactory"
+      }
+    },
+    {
+      "name": "PushSplitFactory_v2_2",
+      "address": "eth:0x8E8eB0cC6AE34A38B67D5Cf91ACa38f60bc3Ecf4",
+      "type": "Contract",
+      "template": "splits/SplitFactoryV2",
+      "sourceHashes": [
+        "0x7948ea60bee8082c9cb860ddd99d66d3a9ff90a240c4575c54bfb79882124c7f"
+      ],
+      "proxyType": "immutable",
+      "description": "Deploys splits of one type and version as minimal proxies of its split implementation. Anyone can create a split, with or without an owner, at an address fixed by its recipients, owner and salt. Immutable, with no owner.",
+      "critical": true,
+      "deployerAddress": "eth:0x60C65c9a8674DA22e89C7d09e839908B9f0ecC3a",
+      "sinceTimestamp": 1751929523,
+      "sinceBlock": 22870483,
+      "values": {
+        "$immutable": true,
+        "SPLIT_WALLET_IMPLEMENTATION": "eth:0x1e2086A7e84a32482ac03000D56925F607CCB708"
+      },
+      "implementationNames": {
+        "eth:0x8E8eB0cC6AE34A38B67D5Cf91ACa38f60bc3Ecf4": "PushSplitFactory"
+      }
+    },
+    {
+      "name": "SplitsWarehouse",
+      "address": "eth:0x8fb66F38cF86A3d5e8768f8F1754A24A6c661Fb8",
+      "type": "Contract",
+      "template": "splits/SplitsWarehouse",
+      "sourceHashes": [
+        "0xa6e56659a09c6b61168aa4de181b8c3dd0ff5fbde3c40e94e013209ed3105dda"
+      ],
+      "proxyType": "immutable",
+      "description": "Holds ETH and ERC-20 tokens for their owners as ERC-6909 balances, one token id per asset. Pull splits distribute by moving balances inside it, and push splits deposit a recipient's ETH here when the direct send fails. Anyone can deposit for any address, and anyone can trigger a withdrawal, which always pays the balance owner. Immutable, with no owner.",
+      "critical": true,
+      "deployerAddress": "eth:0x60C65c9a8674DA22e89C7d09e839908B9f0ecC3a",
+      "sinceTimestamp": 1710646775,
+      "sinceBlock": 19451952,
+      "values": {
+        "$immutable": true,
+        "APPROVE_AND_CALL_TYPE_HASH": "0x01eb7e05a16709b6f764150593b828b1110ce9fbd8830ba01c079956b1c9cd7f",
+        "decimals": [],
+        "DOMAIN_SEPARATOR": "0xa7f1fb37e43df53d046b5c571c7f37732ddb2103e9202d1cb664de8e0567d5e9",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "SplitsWarehouse",
+          "version": "v1",
+          "chainId": 1,
+          "verifyingContract": "eth:0x8fb66F38cF86A3d5e8768f8F1754A24A6c661Fb8",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "name": [],
+        "NATIVE_TOKEN": "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+        "NATIVE_TOKEN_ID": "1364068194842176056990105843868530818345537040110",
+        "PERCENTAGE_SCALE": 1000000,
+        "symbol": []
+      },
+      "implementationNames": {
+        "eth:0x8fb66F38cF86A3d5e8768f8F1754A24A6c661Fb8": "SplitsWarehouse"
+      }
+    },
+    {
+      "name": "PullSplit_v2_2",
+      "address": "eth:0x98254AeDb6B2c30b70483064367f0BA24ca86244",
+      "type": "Contract",
+      "template": "splits/PullSplit",
+      "sourceHashes": [
+        "0x95368ba6eaffbec46ed4099415cf2d5136203c9ca85c647f6c49e2d99e781b09"
+      ],
+      "proxyType": "immutable",
+      "description": "Implementation that every pull split of its version delegates to. A pull split collects ETH and ERC-20 tokens. Anyone can distribute them, which credits each recipient's share as a balance in the SplitsWarehouse for the recipient to withdraw. A split created with an owner lets that owner change the recipients, pause distributions and execute any call from the split.",
+      "critical": true,
+      "deployerAddress": "eth:0x60C65c9a8674DA22e89C7d09e839908B9f0ecC3a",
+      "sinceTimestamp": 1751929511,
+      "sinceBlock": 22870482,
+      "values": {
+        "$immutable": true,
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "PullSplit",
+          "version": "2.2",
+          "chainId": 1,
+          "verifyingContract": "eth:0x98254AeDb6B2c30b70483064367f0BA24ca86244",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "FACTORY": "eth:0x6B9118074aB15142d7524E8c4ea8f62A3Bdb98f1",
+        "NATIVE_TOKEN": "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+        "owner": "eth:0x0000000000000000000000000000000000000000",
+        "paused": false,
+        "splitHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "SPLITS_WAREHOUSE": "eth:0x8fb66F38cF86A3d5e8768f8F1754A24A6c661Fb8",
+        "updateBlockNumber": 0
+      },
+      "implementationNames": {
+        "eth:0x98254AeDb6B2c30b70483064367f0BA24ca86244": "PullSplit"
+      }
+    },
+    {
+      "name": "PushSplitFactory_v2_0",
+      "address": "eth:0xaDC87646f736d6A82e9a6539cddC488b2aA07f38",
+      "type": "Contract",
+      "template": "splits/SplitFactoryV2",
+      "sourceHashes": [
+        "0x945c4742ab521ca02966dbda255b04241aef2d33a1145467647fc23c94941945"
+      ],
+      "proxyType": "immutable",
+      "description": "Deploys splits of one type and version as minimal proxies of its split implementation. Anyone can create a split, with or without an owner, at an address fixed by its recipients, owner and salt. Immutable, with no owner.",
+      "critical": true,
+      "deployerAddress": "eth:0x60C65c9a8674DA22e89C7d09e839908B9f0ecC3a",
+      "sinceTimestamp": 1710646991,
+      "sinceBlock": 19451970,
+      "values": {
+        "$immutable": true,
+        "SPLIT_WALLET_IMPLEMENTATION": "eth:0x0285B37453F73f8dE94De0cAEf8108bC8431BE34"
+      },
+      "implementationNames": {
+        "eth:0xaDC87646f736d6A82e9a6539cddC488b2aA07f38": "PushSplitFactory"
+      }
+    },
+    {
+      "name": "PushSplitFactory_v2_1",
+      "address": "eth:0xDc6259E13ec0621e6F19026b2e49D846525548Ed",
+      "type": "Contract",
+      "template": "splits/SplitFactoryV2",
+      "sourceHashes": [
+        "0x2529db5bdf89a6c1c83520aaba0d0f9befffde77c7dd2e90fd334d85eb8e1736"
+      ],
+      "proxyType": "immutable",
+      "description": "Deploys splits of one type and version as minimal proxies of its split implementation. Anyone can create a split, with or without an owner, at an address fixed by its recipients, owner and salt. Immutable, with no owner.",
+      "critical": true,
+      "deployerAddress": "eth:0x60C65c9a8674DA22e89C7d09e839908B9f0ecC3a",
+      "sinceTimestamp": 1734955691,
+      "sinceBlock": 21465085,
+      "values": {
+        "$immutable": true,
+        "SPLIT_WALLET_IMPLEMENTATION": "eth:0x3f81D81e0884abD8Cc4583a704a9397972623214"
+      },
+      "implementationNames": {
+        "eth:0xDc6259E13ec0621e6F19026b2e49D846525548Ed": "PushSplitFactory"
+      }
+    },
+    {
+      "name": "PullSplit_v2_1",
+      "address": "eth:0xF9C25250523Df26343222fC46de932355B850c97",
+      "type": "Contract",
+      "template": "splits/PullSplit",
+      "sourceHashes": [
+        "0xf17adbba5c5d5aad081ecfb2a78cbddeafa2354572c33c6d0f1b453830277781"
+      ],
+      "proxyType": "immutable",
+      "description": "Implementation that every pull split of its version delegates to. A pull split collects ETH and ERC-20 tokens. Anyone can distribute them, which credits each recipient's share as a balance in the SplitsWarehouse for the recipient to withdraw. A split created with an owner lets that owner change the recipients, pause distributions and execute any call from the split.",
+      "critical": true,
+      "deployerAddress": "eth:0x60C65c9a8674DA22e89C7d09e839908B9f0ecC3a",
+      "sinceTimestamp": 1734955691,
+      "sinceBlock": 21465085,
+      "values": {
+        "$immutable": true,
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "splitWallet",
+          "version": "2.1",
+          "chainId": 1,
+          "verifyingContract": "eth:0xF9C25250523Df26343222fC46de932355B850c97",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "FACTORY": "eth:0x5cbA88D55Cec83caD5A105Ad40C8c9aF20bE21d1",
+        "NATIVE_TOKEN": "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+        "owner": "eth:0x0000000000000000000000000000000000000000",
+        "paused": false,
+        "splitHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "SPLITS_WAREHOUSE": "eth:0x8fb66F38cF86A3d5e8768f8F1754A24A6c661Fb8",
+        "updateBlockNumber": 0
+      },
+      "implementationNames": {
+        "eth:0xF9C25250523Df26343222fC46de932355B850c97": "PullSplit"
+      }
+    }
+  ],
+  "abis": {
+    "eth:0x0285B37453F73f8dE94De0cAEf8108bC8431BE34": [
+      "constructor(address _splitWarehouse)",
+      "error InvalidCalldataForEOA(tuple(address to, uint256 value, bytes data) call)",
+      "error InvalidShortString()",
+      "error InvalidSplit()",
+      "error InvalidSplit_LengthMismatch()",
+      "error InvalidSplit_TotalAllocationMismatch()",
+      "error Paused()",
+      "error StringTooLong(string str)",
+      "error Unauthorized()",
+      "error UnauthorizedInitializer()",
+      "event EIP712DomainChanged()",
+      "event ExecCalls(tuple(address to, uint256 value, bytes data)[] calls)",
+      "event OwnershipTransferred(address indexed oldOwner, address indexed newOwner)",
+      "event SetPaused(bool paused)",
+      "event SplitDistributed(address indexed token, address indexed distributor, uint256 amount)",
+      "event SplitUpdated(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _split)",
+      "function FACTORY() view returns (address)",
+      "function NATIVE_TOKEN() view returns (address)",
+      "function SPLITS_WAREHOUSE() view returns (address)",
+      "function distribute(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _split, address _token, address _distributor)",
+      "function distribute(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _split, address _token, uint256 _distributeAmount, bool _performWarehouseTransfer, address _distributor)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function execCalls(tuple(address to, uint256 value, bytes data)[] _calls) payable returns (uint256 blockNumber, bytes[] returnData)",
+      "function getSplitBalance(address _token) view returns (uint256 splitBalance, uint256 warehouseBalance)",
+      "function initialize(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _split, address _owner)",
+      "function isValidSignature(bytes32 hash, bytes signature) view returns (bytes4 result)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function owner() view returns (address)",
+      "function paused() view returns (bool)",
+      "function replaySafeHash(bytes32 hash) view returns (bytes32)",
+      "function setPaused(bool _paused)",
+      "function splitHash() view returns (bytes32)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function transferOwnership(address _owner)",
+      "function updateSplit(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _split)",
+      "function withdrawFromWarehouse(address _token)"
+    ],
+    "eth:0x1e2086A7e84a32482ac03000D56925F607CCB708": [
+      "constructor(address _splitWarehouse)",
+      "error InvalidCalldataForEOA(tuple(address to, uint256 value, bytes data) call)",
+      "error InvalidShortString()",
+      "error InvalidSplit()",
+      "error InvalidSplit_LengthMismatch()",
+      "error InvalidSplit_TotalAllocationMismatch()",
+      "error Paused()",
+      "error StringTooLong(string str)",
+      "error Unauthorized()",
+      "error UnauthorizedInitializer()",
+      "event EIP712DomainChanged()",
+      "event ExecCalls(tuple(address to, uint256 value, bytes data)[] calls)",
+      "event OwnershipTransferred(address indexed oldOwner, address indexed newOwner)",
+      "event SetPaused(bool paused)",
+      "event SplitDistributed(address indexed token, address indexed distributor, uint256 amount)",
+      "event SplitUpdated(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _split)",
+      "function FACTORY() view returns (address)",
+      "function NATIVE_TOKEN() view returns (address)",
+      "function SPLITS_WAREHOUSE() view returns (address)",
+      "function distribute(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _split, address _token, address _distributor)",
+      "function distribute(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _split, address _token, uint256 _distributeAmount, bool _performWarehouseTransfer, address _distributor)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function execCalls(tuple(address to, uint256 value, bytes data)[] _calls) payable returns (uint256 blockNumber, bytes[] returnData)",
+      "function getSplitBalance(address _token) view returns (uint256 splitBalance, uint256 warehouseBalance)",
+      "function initialize(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _split, address _owner)",
+      "function isValidSignature(bytes32 hash, bytes signature) view returns (bytes4 result)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function owner() view returns (address)",
+      "function paused() view returns (bool)",
+      "function replaySafeHash(bytes32 hash) view returns (bytes32)",
+      "function setPaused(bool _paused)",
+      "function splitHash() view returns (bytes32)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function transferOwnership(address _owner)",
+      "function updateBlockNumber() view returns (uint256)",
+      "function updateSplit(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _split)",
+      "function withdrawFromWarehouse(address _token)"
+    ],
+    "eth:0x3f81D81e0884abD8Cc4583a704a9397972623214": [
+      "constructor(address _splitWarehouse)",
+      "error InvalidCalldataForEOA(tuple(address to, uint256 value, bytes data) call)",
+      "error InvalidShortString()",
+      "error InvalidSplit()",
+      "error InvalidSplit_LengthMismatch()",
+      "error InvalidSplit_TotalAllocationMismatch()",
+      "error Paused()",
+      "error StringTooLong(string str)",
+      "error Unauthorized()",
+      "error UnauthorizedInitializer()",
+      "event EIP712DomainChanged()",
+      "event ExecCalls(tuple(address to, uint256 value, bytes data)[] calls)",
+      "event OwnershipTransferred(address indexed oldOwner, address indexed newOwner)",
+      "event SetPaused(bool paused)",
+      "event SplitDistributed(address indexed token, address indexed distributor, uint256 amount)",
+      "event SplitUpdated(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _split)",
+      "function FACTORY() view returns (address)",
+      "function NATIVE_TOKEN() view returns (address)",
+      "function SPLITS_WAREHOUSE() view returns (address)",
+      "function distribute(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _split, address _token, address _distributor)",
+      "function distribute(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _split, address _token, uint256 _distributeAmount, bool _performWarehouseTransfer, address _distributor)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function execCalls(tuple(address to, uint256 value, bytes data)[] _calls) payable returns (uint256 blockNumber, bytes[] returnData)",
+      "function getSplitBalance(address _token) view returns (uint256 splitBalance, uint256 warehouseBalance)",
+      "function initialize(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _split, address _owner)",
+      "function isValidSignature(bytes32 hash, bytes signature) view returns (bytes4 result)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function owner() view returns (address)",
+      "function paused() view returns (bool)",
+      "function replaySafeHash(bytes32 hash) view returns (bytes32)",
+      "function setPaused(bool _paused)",
+      "function splitHash() view returns (bytes32)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function transferOwnership(address _owner)",
+      "function updateBlockNumber() view returns (uint256)",
+      "function updateSplit(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _split)",
+      "function withdrawFromWarehouse(address _token)"
+    ],
+    "eth:0x5cbA88D55Cec83caD5A105Ad40C8c9aF20bE21d1": [
+      "constructor(address _splitsWarehouse)",
+      "event SplitCreated(address indexed split, tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) splitParams, address owner, address creator, bytes32 salt)",
+      "event SplitCreated(address indexed split, tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) splitParams, address owner, address creator)",
+      "function SPLIT_WALLET_IMPLEMENTATION() view returns (address)",
+      "function createSplit(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _splitParams, address _owner, address _creator) returns (address split)",
+      "function createSplitDeterministic(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _splitParams, address _owner, address _creator, bytes32 _salt) returns (address split)",
+      "function isDeployed(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _splitParams, address _owner, bytes32 _salt) view returns (address split, bool exists)",
+      "function nonces(bytes32 _hash) view returns (uint256)",
+      "function predictDeterministicAddress(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _splitParams, address _owner) view returns (address)",
+      "function predictDeterministicAddress(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _splitParams, address _owner, bytes32 _salt) view returns (address)"
+    ],
+    "eth:0x6291497D1206618fC810900d2e7e9AF6Aa1F1b99": [
+      "constructor(address _splitWarehouse)",
+      "error InvalidCalldataForEOA(tuple(address to, uint256 value, bytes data) call)",
+      "error InvalidShortString()",
+      "error InvalidSplit()",
+      "error InvalidSplit_LengthMismatch()",
+      "error InvalidSplit_TotalAllocationMismatch()",
+      "error Paused()",
+      "error StringTooLong(string str)",
+      "error Unauthorized()",
+      "error UnauthorizedInitializer()",
+      "event EIP712DomainChanged()",
+      "event ExecCalls(tuple(address to, uint256 value, bytes data)[] calls)",
+      "event OwnershipTransferred(address indexed oldOwner, address indexed newOwner)",
+      "event SetPaused(bool paused)",
+      "event SplitDistributed(address indexed token, address indexed distributor, uint256 amount)",
+      "event SplitUpdated(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _split)",
+      "function FACTORY() view returns (address)",
+      "function NATIVE_TOKEN() view returns (address)",
+      "function SPLITS_WAREHOUSE() view returns (address)",
+      "function depositToWarehouse(address _token, uint256 _amount)",
+      "function distribute(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _split, address _token, address _distributor)",
+      "function distribute(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _split, address _token, uint256 _distributeAmount, bool _performWarehouseTransfer, address _distributor)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function execCalls(tuple(address to, uint256 value, bytes data)[] _calls) payable returns (uint256 blockNumber, bytes[] returnData)",
+      "function getSplitBalance(address _token) view returns (uint256 splitBalance, uint256 warehouseBalance)",
+      "function initialize(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _split, address _owner)",
+      "function isValidSignature(bytes32 hash, bytes signature) view returns (bytes4 result)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function owner() view returns (address)",
+      "function paused() view returns (bool)",
+      "function replaySafeHash(bytes32 hash) view returns (bytes32)",
+      "function setPaused(bool _paused)",
+      "function splitHash() view returns (bytes32)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function transferOwnership(address _owner)",
+      "function updateSplit(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _split)"
+    ],
+    "eth:0x6B9118074aB15142d7524E8c4ea8f62A3Bdb98f1": [
+      "constructor(address _splitsWarehouse)",
+      "event SplitCreated(address indexed split, tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) splitParams, address owner, address creator, bytes32 salt)",
+      "event SplitCreated(address indexed split, tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) splitParams, address owner, address creator, uint256 nonce)",
+      "function SPLIT_WALLET_IMPLEMENTATION() view returns (address)",
+      "function createSplit(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _splitParams, address _owner, address _creator) returns (address split)",
+      "function createSplitDeterministic(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _splitParams, address _owner, address _creator, bytes32 _salt) returns (address split)",
+      "function isDeployed(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _splitParams, address _owner, bytes32 _salt) view returns (address split, bool exists)",
+      "function nonces(bytes32 _hash) view returns (uint256)",
+      "function predictDeterministicAddress(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _splitParams, address _owner) view returns (address)",
+      "function predictDeterministicAddress(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _splitParams, address _owner, bytes32 _salt) view returns (address)"
+    ],
+    "eth:0x80f1B766817D04870f115fEBbcCADF8DBF75E017": [
+      "constructor(address _splitsWarehouse)",
+      "event SplitCreated(address indexed split, tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) splitParams, address owner, address creator)",
+      "function SPLIT_WALLET_IMPLEMENTATION() view returns (address)",
+      "function createSplit(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _splitParams, address _owner, address _creator) returns (address split)",
+      "function createSplitDeterministic(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _splitParams, address _owner, address _creator, bytes32 _salt) returns (address split)",
+      "function isDeployed(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _splitParams, address _owner, bytes32 _salt) view returns (address split, bool exists)",
+      "function nonces(bytes32 _hash) view returns (uint256)",
+      "function predictDeterministicAddress(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _splitParams, address _owner) view returns (address)",
+      "function predictDeterministicAddress(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _splitParams, address _owner, bytes32 _salt) view returns (address)"
+    ],
+    "eth:0x8E8eB0cC6AE34A38B67D5Cf91ACa38f60bc3Ecf4": [
+      "constructor(address _splitsWarehouse)",
+      "event SplitCreated(address indexed split, tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) splitParams, address owner, address creator, bytes32 salt)",
+      "event SplitCreated(address indexed split, tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) splitParams, address owner, address creator, uint256 nonce)",
+      "function SPLIT_WALLET_IMPLEMENTATION() view returns (address)",
+      "function createSplit(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _splitParams, address _owner, address _creator) returns (address split)",
+      "function createSplitDeterministic(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _splitParams, address _owner, address _creator, bytes32 _salt) returns (address split)",
+      "function isDeployed(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _splitParams, address _owner, bytes32 _salt) view returns (address split, bool exists)",
+      "function nonces(bytes32 _hash) view returns (uint256)",
+      "function predictDeterministicAddress(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _splitParams, address _owner) view returns (address)",
+      "function predictDeterministicAddress(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _splitParams, address _owner, bytes32 _salt) view returns (address)"
+    ],
+    "eth:0x8fb66F38cF86A3d5e8768f8F1754A24A6c661Fb8": [
+      "constructor(string _native_token_name, string _native_token_symbol)",
+      "error ExpiredSignature(uint48 deadline)",
+      "error InvalidAck()",
+      "error InvalidAmount()",
+      "error InvalidNonce()",
+      "error InvalidPermitParams()",
+      "error InvalidShortString()",
+      "error InvalidSigner()",
+      "error LengthMismatch()",
+      "error Overflow()",
+      "error StringTooLong(string str)",
+      "error WithdrawalPaused(address owner)",
+      "error ZeroOwner()",
+      "event Approval(address indexed owner, address indexed spender, uint256 indexed id, uint256 amount)",
+      "event EIP712DomainChanged()",
+      "event NonceInvalidation(address indexed owner, uint256 indexed nonce)",
+      "event OperatorSet(address indexed owner, address indexed spender, bool approved)",
+      "event Transfer(address caller, address indexed sender, address indexed receiver, uint256 indexed id, uint256 amount)",
+      "event Withdraw(address indexed owner, address indexed token, address indexed withdrawer, uint256 amount, uint256 reward)",
+      "event WithdrawConfigUpdated(address indexed owner, tuple(uint16 incentive, bool paused) config)",
+      "function APPROVE_AND_CALL_TYPE_HASH() view returns (bytes32)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function NATIVE_TOKEN() view returns (address)",
+      "function NATIVE_TOKEN_ID() view returns (uint256)",
+      "function PERCENTAGE_SCALE() view returns (uint256)",
+      "function allowance(address owner, address spender, uint256 tokenId) view returns (uint256 amount)",
+      "function approve(address _spender, uint256 _id, uint256 _amount) returns (bool)",
+      "function approveBySig(address _owner, address _spender, bool _operator, uint256 _id, uint256 _amount, uint256 _nonce, uint48 _deadline, bytes _signature) returns (bool)",
+      "function balanceOf(address owner, uint256 id) view returns (uint256 amount)",
+      "function batchDeposit(address[] _receivers, address _token, uint256[] _amounts) payable",
+      "function batchTransfer(address[] _receivers, address _token, uint256[] _amounts)",
+      "function decimals(uint256 id) view returns (uint8)",
+      "function deposit(address _receiver, address _token, uint256 _amount) payable",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function invalidateNonce(uint256 _nonce)",
+      "function isOperator(address owner, address operator) view returns (bool approved)",
+      "function isValidNonce(address _from, uint256 _nonce) view returns (bool)",
+      "function name(uint256 id) view returns (string)",
+      "function nonceBitMap(address account, uint256 word) view returns (uint256 bitMap)",
+      "function setOperator(address _operator, bool _approved) returns (bool)",
+      "function setWithdrawConfig(tuple(uint16 incentive, bool paused) _config)",
+      "function supportsInterface(bytes4 _interfaceId) view returns (bool supported)",
+      "function symbol(uint256 id) view returns (string)",
+      "function temporaryApproveAndCall(address _spender, bool _operator, uint256 _id, uint256 _amount, address _target, bytes _data) returns (bool)",
+      "function temporaryApproveAndCallBySig(address _owner, address _spender, bool _operator, uint256 _id, uint256 _amount, address _target, bytes _data, uint256 _nonce, uint48 _deadline, bytes _signature) returns (bool)",
+      "function transfer(address _receiver, uint256 _id, uint256 _amount) returns (bool)",
+      "function transferFrom(address _sender, address _receiver, uint256 _id, uint256 _amount) returns (bool)",
+      "function withdraw(address _owner, address[] _tokens, uint256[] _amounts, address _withdrawer)",
+      "function withdraw(address _owner, address _token)",
+      "function withdrawConfig(address owner) view returns (uint16 incentive, bool paused)"
+    ],
+    "eth:0x98254AeDb6B2c30b70483064367f0BA24ca86244": [
+      "constructor(address _splitWarehouse)",
+      "error InvalidCalldataForEOA(tuple(address to, uint256 value, bytes data) call)",
+      "error InvalidShortString()",
+      "error InvalidSplit()",
+      "error InvalidSplit_LengthMismatch()",
+      "error InvalidSplit_TotalAllocationMismatch()",
+      "error Paused()",
+      "error StringTooLong(string str)",
+      "error Unauthorized()",
+      "error UnauthorizedInitializer()",
+      "event EIP712DomainChanged()",
+      "event ExecCalls(tuple(address to, uint256 value, bytes data)[] calls)",
+      "event OwnershipTransferred(address indexed oldOwner, address indexed newOwner)",
+      "event SetPaused(bool paused)",
+      "event SplitDistributed(address indexed token, address indexed distributor, uint256 amount)",
+      "event SplitUpdated(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _split)",
+      "function FACTORY() view returns (address)",
+      "function NATIVE_TOKEN() view returns (address)",
+      "function SPLITS_WAREHOUSE() view returns (address)",
+      "function depositToWarehouse(address _token, uint256 _amount)",
+      "function distribute(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _split, address _token, address _distributor)",
+      "function distribute(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _split, address _token, uint256 _distributeAmount, bool _performWarehouseTransfer, address _distributor)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function execCalls(tuple(address to, uint256 value, bytes data)[] _calls) payable returns (uint256 blockNumber, bytes[] returnData)",
+      "function getSplitBalance(address _token) view returns (uint256 splitBalance, uint256 warehouseBalance)",
+      "function initialize(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _split, address _owner)",
+      "function isValidSignature(bytes32 hash, bytes signature) view returns (bytes4 result)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function owner() view returns (address)",
+      "function paused() view returns (bool)",
+      "function replaySafeHash(bytes32 hash) view returns (bytes32)",
+      "function setPaused(bool _paused)",
+      "function splitHash() view returns (bytes32)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function transferOwnership(address _owner)",
+      "function updateBlockNumber() view returns (uint256)",
+      "function updateSplit(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _split)"
+    ],
+    "eth:0xaDC87646f736d6A82e9a6539cddC488b2aA07f38": [
+      "constructor(address _splitsWarehouse)",
+      "event SplitCreated(address indexed split, tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) splitParams, address owner, address creator)",
+      "function SPLIT_WALLET_IMPLEMENTATION() view returns (address)",
+      "function createSplit(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _splitParams, address _owner, address _creator) returns (address split)",
+      "function createSplitDeterministic(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _splitParams, address _owner, address _creator, bytes32 _salt) returns (address split)",
+      "function isDeployed(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _splitParams, address _owner, bytes32 _salt) view returns (address split, bool exists)",
+      "function nonces(bytes32 _hash) view returns (uint256)",
+      "function predictDeterministicAddress(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _splitParams, address _owner) view returns (address)",
+      "function predictDeterministicAddress(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _splitParams, address _owner, bytes32 _salt) view returns (address)"
+    ],
+    "eth:0xDc6259E13ec0621e6F19026b2e49D846525548Ed": [
+      "constructor(address _splitsWarehouse)",
+      "event SplitCreated(address indexed split, tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) splitParams, address owner, address creator, bytes32 salt)",
+      "event SplitCreated(address indexed split, tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) splitParams, address owner, address creator)",
+      "function SPLIT_WALLET_IMPLEMENTATION() view returns (address)",
+      "function createSplit(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _splitParams, address _owner, address _creator) returns (address split)",
+      "function createSplitDeterministic(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _splitParams, address _owner, address _creator, bytes32 _salt) returns (address split)",
+      "function isDeployed(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _splitParams, address _owner, bytes32 _salt) view returns (address split, bool exists)",
+      "function nonces(bytes32 _hash) view returns (uint256)",
+      "function predictDeterministicAddress(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _splitParams, address _owner) view returns (address)",
+      "function predictDeterministicAddress(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _splitParams, address _owner, bytes32 _salt) view returns (address)"
+    ],
+    "eth:0xF9C25250523Df26343222fC46de932355B850c97": [
+      "constructor(address _splitWarehouse)",
+      "error InvalidCalldataForEOA(tuple(address to, uint256 value, bytes data) call)",
+      "error InvalidShortString()",
+      "error InvalidSplit()",
+      "error InvalidSplit_LengthMismatch()",
+      "error InvalidSplit_TotalAllocationMismatch()",
+      "error Paused()",
+      "error StringTooLong(string str)",
+      "error Unauthorized()",
+      "error UnauthorizedInitializer()",
+      "event EIP712DomainChanged()",
+      "event ExecCalls(tuple(address to, uint256 value, bytes data)[] calls)",
+      "event OwnershipTransferred(address indexed oldOwner, address indexed newOwner)",
+      "event SetPaused(bool paused)",
+      "event SplitDistributed(address indexed token, address indexed distributor, uint256 amount)",
+      "event SplitUpdated(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _split)",
+      "function FACTORY() view returns (address)",
+      "function NATIVE_TOKEN() view returns (address)",
+      "function SPLITS_WAREHOUSE() view returns (address)",
+      "function depositToWarehouse(address _token, uint256 _amount)",
+      "function distribute(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _split, address _token, address _distributor)",
+      "function distribute(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _split, address _token, uint256 _distributeAmount, bool _performWarehouseTransfer, address _distributor)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function execCalls(tuple(address to, uint256 value, bytes data)[] _calls) payable returns (uint256 blockNumber, bytes[] returnData)",
+      "function getSplitBalance(address _token) view returns (uint256 splitBalance, uint256 warehouseBalance)",
+      "function initialize(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _split, address _owner)",
+      "function isValidSignature(bytes32 hash, bytes signature) view returns (bytes4 result)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function owner() view returns (address)",
+      "function paused() view returns (bool)",
+      "function replaySafeHash(bytes32 hash) view returns (bytes32)",
+      "function setPaused(bool _paused)",
+      "function splitHash() view returns (bytes32)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function transferOwnership(address _owner)",
+      "function updateBlockNumber() view returns (uint256)",
+      "function updateSplit(tuple(address[] recipients, uint256[] allocations, uint256 totalAllocation, uint16 distributionIncentive) _split)"
+    ]
+  },
+  "usedTemplates": {
+    "splits/PullSplit": "0x285e9eadf2f33177d8c2e21c1079b9dd2af8de104bcbf0a7f4ba1363d08de8d4",
+    "splits/PushSplit": "0x285e9eadf2f33177d8c2e21c1079b9dd2af8de104bcbf0a7f4ba1363d08de8d4",
+    "splits/SplitFactoryV2": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "splits/SplitsWarehouse": "0x285e9eadf2f33177d8c2e21c1079b9dd2af8de104bcbf0a7f4ba1363d08de8d4"
+  },
+  "usedBlockNumbers": { "ethereum": 26384750 },
+  "permissionsConfigHash": "0x80c3067348f5a263f3e5127b97a615b8ddd616d4aa400733d951c21eb6ad70d5"
+}

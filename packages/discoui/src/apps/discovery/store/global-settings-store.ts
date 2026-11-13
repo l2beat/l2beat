@@ -25,7 +25,7 @@ interface Actions {
   setUserSettings: (userSettings: Partial<State>) => void
 }
 
-const INITIAL_STATE: State = {
+export const DEFAULT_GLOBAL_SETTINGS: State = {
   markUnreachableEntries: true,
   maxReachableDepth: null,
   peekDefinitions: false,
@@ -35,7 +35,7 @@ const INITIAL_STATE: State = {
 export const useGlobalSettingsStore = create<State & Actions>()(
   persist(
     (set, get) => ({
-      ...INITIAL_STATE,
+      ...DEFAULT_GLOBAL_SETTINGS,
       setUserSettings: (userSettings) =>
         set(() => ({
           ...get(),

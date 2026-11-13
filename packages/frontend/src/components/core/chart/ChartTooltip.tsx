@@ -2,7 +2,7 @@ import type { ReactNode, SyntheticEvent } from 'react'
 import { ScrollWithGradient } from '~/components/ScrollWithGradient'
 import { useCanHover } from '~/hooks/useCanHover'
 import { cn } from '~/utils/cn'
-import { tooltipContentVariants } from '../tooltip/Tooltip'
+import { tooltipSurfaceClassName } from '../tooltip/Tooltip'
 import { useChart } from './ChartContext'
 import { ChartDataIndicator } from './ChartDataIndicator'
 import { toNumber } from './utils/toNumber'
@@ -12,8 +12,18 @@ export interface TooltipEntry<K extends string = string> {
   value: number | null
 }
 
+/** A chart tooltip's box; it opens from the hovered point. */
 export function ChartTooltipWrapper({ children }: { children: ReactNode }) {
-  return <div className={tooltipContentVariants()}>{children}</div>
+  return (
+    <div
+      className={cn(
+        tooltipSurfaceClassName,
+        'chart-tooltip-enter max-w-[380px] text-wrap',
+      )}
+    >
+      {children}
+    </div>
+  )
 }
 
 /**

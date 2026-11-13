@@ -18,6 +18,8 @@ interface FlowsGraphPanelProps {
   isLoading: boolean
   baseDollarsPerParticle?: number
   topChainId?: string
+  /** Chain bubbles link to their chain page instead of highlighting flows. */
+  linkChains?: boolean
   className?: string
   maxSizeClassName?: string
 }
@@ -30,6 +32,7 @@ export function FlowsGraphPanel({
   isLoading,
   baseDollarsPerParticle,
   topChainId,
+  linkChains,
   className,
   maxSizeClassName = 'max-w-[max(min(70svh,calc(100svh-20rem)),30rem)]',
 }: FlowsGraphPanelProps) {
@@ -77,6 +80,7 @@ export function FlowsGraphPanel({
               isSmallScreen={isSmallScreen}
               baseDollarsPerParticle={baseDollarsPerParticle}
               topChainId={topChainId}
+              linkChains={linkChains}
             />
           )}
         </div>
@@ -97,7 +101,7 @@ function SelectionOverlay({ message }: { message: string }) {
       />
       <div className="pointer-events-none flex items-center justify-center pb-6">
         <div className="flex items-center gap-1.5 rounded-lg border border-divider bg-surface-primary px-3 py-2">
-          <CursorClickIcon className="size-3.5 shrink-0 fill-brand" />
+          <CursorClickIcon className="size-3.5 shrink-0 fill-brand-deep" />
           <p className="font-medium text-brand-deep text-label-value-14 leading-none">
             {message}
           </p>

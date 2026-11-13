@@ -225,7 +225,6 @@ export interface BaseProject {
   statuses?: ProjectStatuses
   display?: ProjectDisplay
   colors?: ProjectCustomColors
-  ecosystemColors?: ProjectCustomColors
   milestones?: Milestone[]
   chainConfig?: ChainConfig
   escrows?: ProjectEscrow[]
@@ -255,6 +254,8 @@ export interface BaseProject {
 
   // defi data
   defiInfo?: ProjectDefiInfo
+  /** Only on projects whose DeFi category is "Liquid Staking". */
+  liquidStaking?: ProjectLiquidStaking
 
   // external dependency data
   externalDependencies?: ProjectExternalDependency[]
@@ -1069,11 +1070,55 @@ export type ProjectDefiCategory =
   | 'Stablecoin'
   | 'Prediction market'
   | 'Multisig'
+  | 'Payments'
 
 export interface ProjectDefiInfo {
-  /** Short category label shown in the DeFi table, e.g. "Stablecoin". */
+  /** Short category label shown on the project page, e.g. "Stablecoin". */
   category: ProjectDefiCategory
   tvl?: ProjectDefiTvlConfig
+  /** Listed in the Tokens section of the project page. */
+  tokens?: ProjectDefiToken[]
+}
+
+export interface ProjectDefiToken {
+  /** Linked to its token page when the token database has it. */
+  address: ChainSpecificAddress
+  /** The ticker as the contract reports it, e.g. "stETH". */
+  symbol: string
+  name: string
+  /** One or two sentences: what the token is and how its value moves. */
+  description: string
+}
+
+export interface ProjectDefiRiskValue extends TableReadyValue {
+  description: string
+}
+
+export interface ProjectLiquidStaking {
+  /** What the liquid staking indexer reads. */
+  contracts: ProjectLiquidStakingContracts
+  /**
+   * Pools quoted for selling 100 tokens (stETH for Lido); the best quote is
+   * the market exit. A pool that doesn't exist yet gives no quote.
+   */
+  marketQuotes: ProjectLiquidStakingMarketQuote[]
+  /** The row of the liquid staking risk comparison. */
+  risks: ProjectLiquidStakingRisks
+}
+
+export interface ProjectLiquidStakingRisks {
+  /** Who can mint, what caps apply, and who routes deposited ETH to validators. */
+  minting: ProjectDefiRiskValue
+  /** Who runs validators, whether they post a bond, and who absorbs slashing. */
+  operators: ProjectDefiRiskValue
+  /** Where the backing ETH sits and who controls withdrawal credentials. */
+  backing: ProjectDefiRiskValue
+  /** Who writes the exchange rate, on what quorum and bounds, and what silence does. */
+  oracle: ProjectDefiRiskValue
+  /** The exit path, what gates it, how long it takes, and whether it can be paused. */
+  exit: ProjectDefiRiskValue
+  /** Who can change code, the minimum delay, and whether holders have a veto. */
+  upgrades: ProjectDefiRiskValue
 }
 
 export type ProjectDefiTvlConfig =
@@ -1273,6 +1318,8 @@ export type PrivacyRelayerExtractorConfig =
         // Privacy Pools v2, from the vault: the fee recipient of a paid
         // processor's payout, or the sender of a withdrawal without one.
         | 'privacyPoolsV2Withdrawal'
+        // Tacit Pay, from the pool: the relayer a withdrawal pays a fee.
+        | 'tacitPayWithdrawal'
         | 'tornadoCashWithdrawal'
     }
   | {
@@ -1438,7 +1485,7 @@ export interface PrivacyAdversaryAssessment {
    * reference client?": good = yes, warning = only outside supported options
    * or by accepting a leak to another adversary, bad = no. It judges the
    * promised field only; other leaks are a derived marker. User
-   * hygiene never lowers the sentiment (it goes into `advice` and `atRisk`
+   * hygiene never lowers the sentiment (it goes into the advice steps and `atRisk`
    * notes); facts about the deployment do, such as an anonymity set too small
    * for care to matter or a structural leak the adversary exploits. Network
    * observer baseline: Tor, and an own node where the client has an RPC
@@ -1461,13 +1508,6 @@ export interface PrivacyAdversaryAssessment {
    * says it all.
    */
   exposureContinued?: string
-  /**
-   * How a user keeps it private, when that is conditional (the cell is at
-   * risk, or a field is). Omit when nothing the user does changes the result.
-   * Positive instructions only (say what to do), and only what this adversary
-   * adds over the public observer: advice is not repeated across cells.
-   */
-  advice?: string
   /**
    * Actions taken while shielded (private transfers, in-pool DeFi). Present
    * for all adversaries of a project or for none. Entry and exit are public
@@ -1508,11 +1548,42 @@ export interface PrivacyPromise {
   text: string
 }
 
+/**
+ * One step of our advice for the reference app, shown under How to stay
+ * private. The steps run in the order the user takes them and are the single
+ * home of the advice. Each adversary block links the steps that defend it.
+ */
+export interface PrivacyAdviceStep {
+  /** One or two words, e.g. "Exit". Unique within the project. */
+  name: string
+  /** What the user does, imperative markdown, three sentences at most. */
+  text: string
+  /**
+   * The adversaries this step keeps the promised field from, or a field their
+   * cell marks at risk. Never a red cell.
+   */
+  against: PrivacyAdversaryId[]
+  /**
+   * True when the step needs something the reference app does not ship:
+   * another program, a node, a build from source or a system setting. The page
+   * marks it, so the effort the ratings assume is visible.
+   */
+  outside?: boolean
+  /**
+   * True on the wait step of a pool. The page draws a waiting time at random
+   * within the window the anonymity set counts, since a fixed wait is a
+   * pattern and people pick random numbers badly.
+   */
+  randomWait?: boolean
+}
+
 export interface PrivacyAdversariesConfig {
   promise: PrivacyPromise
   /** Overrides the default field description for this project, e.g. when linkage means something other than a transfer link. */
   fieldDescriptions?: Partial<Record<PrivacyField, string>>
   cells: Record<PrivacyAdversaryId, PrivacyAdversaryAssessment>
+  /** Our advice as ordered steps. Absent when no step changes a cell, e.g. every cell is red. */
+  advice?: PrivacyAdviceStep[]
 }
 
 /** A field this adversary learns more about than the public observer. */
@@ -1543,6 +1614,7 @@ export interface ProjectPrivacyAdversaries {
   adversaries: PrivacyAdversary[]
   fields: PrivacyFieldInfo[]
   cells: Record<PrivacyAdversaryId, PrivacyAdversaryCell>
+  advice?: PrivacyAdviceStep[]
 }
 
 // #endregion
@@ -1614,6 +1686,7 @@ export type PrivacyAnonymitySetDepositSource = {
       | 'privacyPoolsV2Value'
       | 'railgunShield'
       | 'strk20Deposit'
+      | 'tacitPayDeposit'
       | 'zkMoneyDeposit'
   }
 >
@@ -1694,6 +1767,19 @@ export type PrivacyFlowExtractorConfig =
       params: {
         tokenAddress: string
       }
+    }
+  | {
+      /** Tacit Pay's Transact with a positive extAmount: the deposited value. */
+      extractor: 'tacitPayDeposit'
+      params: Record<string, never>
+    }
+  | {
+      /**
+       * Tacit Pay's Transact with a negative extAmount: the value paid to the
+       * recipient. The relayer's fee is paid on top and not counted.
+       */
+      extractor: 'tacitPayWithdrawal'
+      params: Record<string, never>
     }
   | {
       /** Credited DAI amount, after the portal's fee sponsorship cut. */
@@ -1882,6 +1968,11 @@ export interface SlotActivityConfig {
 export type AdjustCount =
   | { type: 'SubtractOne' }
   | { type: 'SubtractOneSinceBlock'; blockNumber: number }
+  /** Subtracts the `count` of the last step whose `blockNumber` is at or below the block. */
+  | {
+      type: 'SubtractSinceBlocks'
+      steps: { blockNumber: number; count: number }[]
+    }
 
 export interface DayActivityConfig {
   type: 'day'
@@ -1901,6 +1992,72 @@ export interface HourActivityConfig {
 }
 
 export type LivenessOverwriteMode = 'no-data'
+
+/**
+ * The contracts the liquid staking indexer reads every hour: the token's
+ * exchange rate, plus whatever decides how fast a holder can exit.
+ */
+export type ProjectLiquidStakingContracts =
+  | {
+      type: 'lido'
+      stETH: ChainSpecificAddress
+      /** Its request counters give the queue wait. */
+      withdrawalQueue: ChainSpecificAddress
+    }
+  | {
+      type: 'rocketpool'
+      /** Its collateral is the ETH that burning rETH can pay out at once. */
+      rETH: ChainSpecificAddress
+    }
+  | {
+      type: 'etherfi'
+      weETH: ChainSpecificAddress
+      /** Its request counters give the queue wait. */
+      withdrawRequestNft: ChainSpecificAddress
+      /** Pays out at once, for a fee, up to a rate-limited amount. */
+      redemptionManager: ChainSpecificAddress
+    }
+  | {
+      type: 'wbeth'
+      wBETH: ChainSpecificAddress
+      /**
+       * Its lock time, and its request and allocation counters, give the wait
+       * for an onchain redemption.
+       */
+      unwrapToken: ChainSpecificAddress
+    }
+  | {
+      /** No onchain redemption: the rate is the only protocol read. */
+      type: 'cbeth'
+      cbETH: ChainSpecificAddress
+    }
+
+/** A pool selling the token for ETH or WETH. */
+export type ProjectLiquidStakingMarketQuote =
+  | {
+      type: 'curve'
+      pool: ChainSpecificAddress
+      /** Coin indexes of the token sold and of ETH or WETH. */
+      i: number
+      j: number
+    }
+  | {
+      /** Quoted by Uniswap's QuoterV2, against WETH. */
+      type: 'uniswapV3'
+      /** The pool's fee tier, in hundredths of a basis point. */
+      fee: number
+    }
+  | {
+      /** Quoted by BalancerQueries, against WETH. */
+      type: 'balancerV2'
+      poolId: string
+    }
+  | {
+      type: 'fluid'
+      pool: ChainSpecificAddress
+      /** Whether the token sold is the pool's token0. */
+      swap0to1: boolean
+    }
 
 export interface ProjectLivenessInfo {
   explanation?: string

@@ -33,10 +33,12 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
     data: flowsData,
     isLoading: isFlowsLoading,
     isPlaceholderData: isFlowsPlaceholderData,
+    shownInput: flowsShownInput,
   } = useChartQuery(trpc.privacy.flowsChart, {
     projectIds,
     range,
   })
+  const flowsResolution = rangeToResolution(flowsShownInput.range)
   const {
     data: tvlData,
     isLoading: isTvlLoading,
@@ -51,9 +53,9 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
     () =>
       getChartTimeRangeFromData(
         flowsData?.chart.map(([timestamp]) => ({ timestamp })),
-        { bucket: 'day' },
+        { bucket: flowsResolution },
       ),
-    [flowsData],
+    [flowsData, flowsResolution],
   )
 
   const tvlChartTimeRange = useMemo(
@@ -81,6 +83,7 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
         syncedUntil={flowsData?.syncedUntil}
         isLoading={isFlowsLoading}
         metric={'count'}
+        resolution={flowsResolution}
       />
     </div>
   )

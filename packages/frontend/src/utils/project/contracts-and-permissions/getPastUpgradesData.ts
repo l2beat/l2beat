@@ -120,7 +120,7 @@ function getImplementations(
   return implementations.map((implementation, index) => {
     const previousImplementation = pastUpgrade?.implementations[index]
     const diffUrl = previousImplementation
-      ? `https://disco.l2beat.com/diff/${previousImplementation}/${implementation}`
+      ? `https://disco.ethbeat.org/diff/${previousImplementation}/${implementation}`
       : undefined
 
     return {

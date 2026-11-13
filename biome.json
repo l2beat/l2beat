@@ -57,6 +57,7 @@
         "noEmptyCharacterClassInRegex": "error",
         "noEmptyPattern": "error",
         "noGlobalObjectCalls": "error",
+        "noNestedComponentDefinitions": "error",
         "noInnerDeclarations": "error",
         "noInvalidConstructorSuper": "error",
         "noNonoctalDecimalEscape": "error",
@@ -70,12 +71,17 @@
         "noUnsafeFinally": "error",
         "noUnsafeOptionalChaining": "error",
         "noUnusedLabels": "error",
+        "noUnusedPrivateClassMembers": "error",
         "noUnusedVariables": "error",
         "useIsNan": "error",
+        "useParseIntRadix": "error",
         "useValidForDirection": "error",
         "useYield": "error",
         "noInvalidBuiltinInstantiation": "error",
-        "useValidTypeof": "error"
+        "useValidTypeof": "error",
+        "noInvalidUseBeforeDeclaration": "error",
+        "noConstructorReturn": "error",
+        "noStringCaseMismatch": "error"
       },
       "style": {
         "useForOf": "error",
@@ -113,6 +119,8 @@
       },
       "nursery": {
         "noFloatingPromises": "error",
+        "noMisusedPromises": "error",
+        "noUnusedExpressions": "error",
         "useSortedClasses": {
           "level": "error",
           "fix": "safe",
@@ -141,20 +149,33 @@
         "noExtraNonNullAssertion": "error",
         "noFallthroughSwitchClause": "error",
         "noFocusedTests": "error",
+        "noSkippedTests": "error",
         "noFunctionAssign": "error",
         "noGlobalAssign": "error",
+        "noGlobalIsFinite": "error",
+        "noGlobalIsNan": "error",
         "noImportAssign": "error",
         "noMisleadingCharacterClass": "error",
         "noMisleadingInstantiator": "error",
+        "noTsIgnore": "error",
         "noPrototypeBuiltins": "error",
         "noRedeclare": "error",
         "noShadowRestrictedNames": "error",
+        "noUnassignedVariables": "error",
         "noUnsafeDeclarationMerging": "error",
         "noUnsafeNegation": "error",
         "useAwait": "error",
         "useGetterReturn": "error",
         "noWith": "error",
-        "noDuplicateElseIf": "error"
+        "noDuplicateElseIf": "error",
+        "noConstantBinaryExpressions": "error",
+        "noSelfCompare": "error",
+        "noMisrefactoredShorthandAssign": "error",
+        "noMisplacedAssertion": "error",
+        "noIrregularWhitespace": "error"
+      },
+      "security": {
+        "noGlobalEval": "error"
       }
     }
   },

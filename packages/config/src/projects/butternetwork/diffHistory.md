@@ -1,3 +1,142 @@
+Generated with discovered.json: 0x53051bd603c4a411a8667ed7b63c9d6236dcdf48
+
+# Diff at Tue, 10 Nov 2026 17:10:28 GMT:
+
+- id: 95eda926
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e7f80c2eb530702e907f902d428416a31e27855 block: 1793874658
+- current timestamp: 1794320084
+
+## Description
+
+The Butter Bridge on Base, still paused, was upgraded by the 2/3 Safe base:0xAAAaEE7549a61282F2B4Ca1766f46249D9e71aaA through the AuthorityManager: https://disco.l2beat.com/diff/base:0x862761D6D52E9e812A8c22E6e6A39E186e59a33d/base:0xa2bd213E4e5655125A8c18D716184b6b11F45F25. The only code change is a new `emergencyWithdraw(token, to, amount)`: ADMIN_ROLE members of the AuthorityManager (both Safes, no delay) can send any asset held by the Bridge to any address, also while it is paused.
+
+The same Safe then used it to move all USDC (94,176) and WETH (22.27) held by the Bridge to the 3/5 Safe base:0x9987463102993e177b107e0cE97a0420428D1999: https://basescan.org/tx/0x92f287eec13a8d25e9eb10d1d45c6b16e050e515ae09865e5940cbe58fd0c57c and https://basescan.org/tx/0x9e89a766ce74e84a25cc5c12084afbff1dcd37ecfc5baec200c4ccaf5d826e14. The Base bridge now holds no USDC or WETH to fill inbound transfers (other tokens not checked).
+
+Message validation is unchanged: LightNode, VerifyTool, FeeService and relay are the same. The admins could already move the funds through an instant upgrade, so the trust assumption is the same with a more direct path.
+
+Config: new Bridge shape, the admin permission names the withdrawal.
+
+## Watched changes
+
+```diff
+    contract Butter Bridge (base:0x0000317Bec33Af037b5fAb2028f52d14658F6A56) [butternetwork/Bridge] {
+    +++ description: Butter's Base bridge endpoint. Outbound transfers lock or burn assets and emit messages for the MAP relay chain; inbound transfers execute only after a LightNode-validated receipt proof for the configured MAP relay contract. The bridge can mint configured mintable tokens, release escrowed assets, and invoke receiver callbacks, so compromise of validation, relay configuration, or management authority can lead to loss of bridged funds.
+      sourceHashes.1:
+-        "0x4fbfa6dffeb7b0631c9754128ce823ee45e589dc9d6a230e444db8381a124cd6"
++        "0xcdcece1862e16da26424ca2364fc88c7dc2ac699b0bb37e0540a885a07c6b585"
++++ description: Current implementation of the upgradeable Butter Bridge proxy.
++++ severity: HIGH
+      values.$implementation:
+-        "base:0x862761D6D52E9e812A8c22E6e6A39E186e59a33d"
++        "base:0xa2bd213E4e5655125A8c18D716184b6b11F45F25"
+      values.$pastUpgrades.5:
++        ["2026-11-10T07:53:20.000Z","0xb5a59a8d60bdfefe215aa6b7baeb1b676f9342aec11ef978b05d1a75049a039e",["base:0xa2bd213E4e5655125A8c18D716184b6b11F45F25"]]
+      values.$upgradeCount:
+-        5
++        6
+      values.getImplementation:
+-        "base:0x862761D6D52E9e812A8c22E6e6A39E186e59a33d"
++        "base:0xa2bd213E4e5655125A8c18D716184b6b11F45F25"
+      implementationNames.base:0x862761D6D52E9e812A8c22E6e6A39E186e59a33d:
+-        "Bridge"
+      implementationNames.base:0xa2bd213E4e5655125A8c18D716184b6b11F45F25:
++        "Bridge"
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@1793874658 => .flat}/Butter Bridge/Bridge.sol   | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793874658 (main branch discovery), not current.
+
+```diff
+    contract Butter Bridge (base:0x0000317Bec33Af037b5fAb2028f52d14658F6A56) [butternetwork/Bridge] {
+    +++ description: Butter's Base bridge endpoint. Outbound transfers lock or burn assets and emit messages for the MAP relay chain; inbound transfers execute only after a LightNode-validated receipt proof for the configured MAP relay contract. The bridge can mint configured mintable tokens, release escrowed assets, and invoke receiver callbacks, so compromise of validation, relay configuration, or management authority can lead to loss of bridged funds.
+      fieldMeta.authority.description:
+-        "Authority contract consulted by all Bridge management functions marked restricted. Its role members can pause the bridge, change supported tokens and service contracts, change the relay, configure trust-list entries, and upgrade the Bridge implementation."
++        "Authority contract consulted by all Bridge management functions marked restricted. Its role members can pause the bridge, change supported tokens and service contracts, change the relay, configure trust-list entries, upgrade the Bridge implementation and, in implementations that have `emergencyWithdraw()`, withdraw any asset held by the Bridge."
+    }
+```
+
+```diff
+    contract SafeL2 (base:0x9987463102993e177b107e0cE97a0420428D1999) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "change AuthorityManager permissions and execute restricted Bridge and FeeService management operations."
++        "change AuthorityManager permissions and execute restricted Bridge and FeeService management operations without delay, including the withdrawal of all assets held by the Bridge."
+    }
+```
+
+```diff
+    contract SafeL2 (base:0xAAAaEE7549a61282F2B4Ca1766f46249D9e71aaA) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "change AuthorityManager permissions and execute restricted Bridge and FeeService management operations."
++        "change AuthorityManager permissions and execute restricted Bridge and FeeService management operations without delay, including the withdrawal of all assets held by the Bridge."
+    }
+```
+
+Generated with discovered.json: 0x555fc5b4a07e392070b5b1bd3a236f2392d178ed
+
+# Diff at Thu, 05 Nov 2026 10:43:20 GMT:
+
+- id: d6529c54
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ed3b78ee5d7973829dff175055ab7e54cc7df91 block: 1792144328
+- current timestamp: 1793874658
+
+## Description
+
+The Safe member base:0x386ce1a1 revoked its EIP-7702 delegation to a SmartWallet contract and is a plain EOA again. Its key signs for the Safe as before, so the signer set is unchanged. Removed the override that silenced the SmartWallet getters.
+
+## Watched changes
+
+```diff
+    EOA (base:0x386ce1a187eC7329CFb8E467EB02FB07c698256A) {
+    +++ description: None
+      sourceHashes:
+-        ["0x75edcc789e2feb6dd3863127fde1296f7df029e9ba2e9a8aa0ea96c257bc9432"]
+      proxyType:
+-        "EIP7702 EOA"
++        "EOA"
+      values:
+-        {"$implementation":"base:0xe40ccB2D94975c51bff0C004eFDfd9B3a5796fA4","CUSTOM_STORAGE_ROOT":"0x653ff6dcbda533c3c7d8ffb646da3e510d0de40f237170c4da3f874472aecb00","eip712Domain":{"fields":"0x0f","name":"SmartWallet","version":"1.1.0","chainId":8453,"verifyingContract":"base:0x386ce1a187eC7329CFb8E467EB02FB07c698256A","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"entryPoint":"base:0x0000000071727De22E5E9d8BAf0edAc6f37da032","getExpiration":[0,0,0,0,0],"getHook":["base:0x0000000000000000000000000000000000000000","base:0x0000000000000000000000000000000000000001","base:0x0000000000000000000000000000000000000002","base:0x0000000000000000000000000000000000000003","base:0x0000000000000000000000000000000000000004"],"getOwnerKeys":[],"IMPLEMENTATION":"base:0xe40ccB2D94975c51bff0C004eFDfd9B3a5796fA4","isAdmin":[false,false,false,false,false],"isSettingsExpired":[false,false,false,false,false],"namespace":"SmartWallet.ERC7201.CustomStorage","ownerAt":[],"ownerCount":0}
+      errors:
+-        {"getExpiration":"Processing error occurred.","getHook":"Processing error occurred.","getImmutableFactory":"Processing error occurred.","isAdmin":"Processing error occurred.","isSettingsExpired":"Processing error occurred.","proxiableUUID":"Processing error occurred."}
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792144328 (main branch discovery), not current.
+
+```diff
+    EOA (base:0x386ce1a187eC7329CFb8E467EB02FB07c698256A) {
+    +++ description: None
+      values.getExpiration:
++        [0,0,0,0,0]
+      values.getHook:
++        ["base:0x0000000000000000000000000000000000000000","base:0x0000000000000000000000000000000000000001","base:0x0000000000000000000000000000000000000002","base:0x0000000000000000000000000000000000000003","base:0x0000000000000000000000000000000000000004"]
+      values.isAdmin:
++        [false,false,false,false,false]
+      values.isSettingsExpired:
++        [false,false,false,false,false]
+      errors:
++        {"getExpiration":"Processing error occurred.","getHook":"Processing error occurred.","getImmutableFactory":"Processing error occurred.","isAdmin":"Processing error occurred.","isSettingsExpired":"Processing error occurred.","proxiableUUID":"Processing error occurred."}
+    }
+```
+
 Generated with discovered.json: 0x5eca13bdc7be918527718ed40b80568e73556faa
 
 # Diff at Fri, 16 Oct 2026 10:13:24 GMT:

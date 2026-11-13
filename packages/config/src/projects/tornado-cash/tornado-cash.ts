@@ -84,8 +84,9 @@ const stakeLockPeriod = formatSeconds(
 // tornado-dao/classic-ui 17c54dae with the DAO's Docker recipe
 // (tornado-dao/tornado-ipfs-ui d2aa401) on 2026-10-10. Two download fixes, not
 // build inputs: apt from archive.debian.org (Debian 11 is end of life) and kubo
-// v0.29.0 from GitHub with its sha512. A new pin fails this assert until the
-// new release is rebuilt and the reproducibility text is checked.
+// v0.29.0 from GitHub with its sha512, both proposed upstream. With them the
+// recipe reproduced it again on 2026-11-09. A new pin fails this assert until
+// the new release is rebuilt and the reproducibility text is checked.
 const REBUILT_APP_CID =
   'bafybeigduniojgqrz7e4vntsgmovdli3oi7a2pnzzvz2gfxlvj3yqwk75a'
 const appCid = contenthashToCid(
@@ -304,6 +305,13 @@ export const tornadoCash: BaseProject = {
       ],
     },
     trackedOn: ['ethereum'],
+    // Chains the pinned classic-ui serves (networkConfig.js).
+    runsOn: [
+      ProjectId('arbitrum'),
+      ProjectId('gnosis'),
+      ProjectId('optimism'),
+      ProjectId('polygon-pos'),
+    ],
     tokens: getPrivacyTokens(),
     relayerTracking: {
       type: 'onchainEvents',
@@ -328,7 +336,7 @@ export const tornadoCash: BaseProject = {
         'The circuits, contracts, app and relayer are open source. Each app release names its commit and a build recipe for its IPFS hash, and rebuilding the current release reproduces it.',
     },
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.fixedAmounts],
-    adversaries: tornadoCashAdversaries(upgradeDelay),
+    adversaries: tornadoCashAdversaries(upgradeDelay, REBUILT_APP_CID),
     riskSummary: readProjectMarkdown('tornado-cash', 'riskSummary', {
       upgradeDelay,
     }),
@@ -371,7 +379,7 @@ export const tornadoCash: BaseProject = {
           'Governance token': `\`TORN\`, 1 token = 1 vote, delegated. Total supply: **${formatNumber(Number(tornTotalSupply / 10n ** 18n))} TORN**, DAO-owned TORN (unavailable for voting): **${formatNumber(Number(tornTreasury / 10n ** 18n))} TORN**, staked for voting: **${formatNumber(Number(tornStaked / 10n ** 18n))} TORN**, the rest is circulating supply.`,
           'Stake lock': `After voting or proposing, staked tokens are locked for **${stakeLockPeriod}** after proposal ends, preventing governance hopping.`,
           'Voting venue':
-            '[Governance contract](https://etherscan.io/address/0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) on Ethereum. Proposals are viewable on the governance page of the app, see the App section above.',
+            '[Governance contract](https://etherscan.io/address/0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) on Ethereum. Proposals are viewable on the [governance page](https://tornadocash.eth.limo/governance) of the app, see the App section above.',
           'Proposal threshold': `**${formatNumber(Number(proposalThreshold / 10n ** 18n))} TORN** locked in governance.`,
           Quorum: `**${formatNumber(Number(quorumVotes / 10n ** 18n))} TORN**, with a simple majority required for acceptance.`,
           'Execution model': `**Permissionless execution after an onchain vote and timelock.** An accepted proposal waits ${formatSeconds(executionDelay)} and can then be executed by anyone within ${formatSeconds(executionExpiration)}. Proposal executable payload is committed in the \`propose()\` transaction.`,

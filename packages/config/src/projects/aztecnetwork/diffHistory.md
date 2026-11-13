@@ -1,3 +1,97 @@
+Generated with discovered.json: 0xf34803478d22042f65439c6c02fbced3ac5381d4
+
+# Diff at Tue, 10 Nov 2026 14:26:40 GMT:
+
+- id: 040e6135
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@28ea16426fac1900c2fffd1cec3ecc6b84981c76 block: 1793006682
+- current timestamp: 1794319775
+
+## Description
+
+New governance proposal 6 (payload `ZeroRegistryRewardsPayload` eth:0x8e1ae43beC950Ea0E02F2Ed43101797c5A8dbfCD), in voting. It only targets the v6 Rollup (see aztecnetworkv6): a reward calculator that pays no sequencer reward to stakers of two token position registries. If the vote passes, it is executable from 2026-11-18.
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e) [aztecnetwork/Governance] {
+    +++ description: DAO contract used for proposals and token voting. Heavily interdependent with the GSE for voting power snapshots.
+      values.proposalCount:
+-        6
++        7
+    }
+```
+
+Generated with discovered.json: 0x936ba82e222c5ee6edc95b621fa421a92142f0fa
+
+# Diff at Thu, 05 Nov 2026 08:58:36 GMT:
+
+- id: 78b485f2
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@92a563dab6932b2cedd6791c3571d1d33fc43c20 block: 1793006682
+- current timestamp: 1793006682
+
+## Description
+
+`getSlasher` is HIGH, `getPendingSlasher` and `latestStakingQueueConfigUpdate` MEDIUM: a slasher swap counts when it takes effect, and the entry queue is a rate limit.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793006682 (main branch discovery), not current.
+
+```diff
+    contract Rollup (eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34) [aztecnetwork/Rollup] {
+    +++ description: Core rollup logic contract. It processes checkpoint proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.
+      fieldMeta.latestStakingQueueConfigUpdate.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.getSlasher.severity:
++        "HIGH"
+      fieldMeta.getPendingSlasher.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+Generated with discovered.json: 0x805b100ad39c721abd5684be8e467b879b8b8c7d
+
+# Diff at Tue, 03 Nov 2026 11:25:00 GMT:
+
+- id: 273a2dc6
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@fc159c853c5f8d531c99eea56f0d0e8595b6625f block: 1793006682
+- current timestamp: 1793006682
+
+## Description
+
+Flattener now keeps file-level using-for directives whose target type is defined in another file. Only source hashes and flat files change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793006682 (main branch discovery), not current.
+
+```diff
+    contract ZkMoneyPortal_sUSDS (eth:0xD7Ae00b91ba0B8e0240B22Cd75fE447d177C260f) [zkmoney/ZkMoneyPortal] {
+    +++ description: Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint.
+      sourceHashes.0:
+-        "0x7020e3729f66f6c8ddada17eeb82b33ae8b7f623c0ffb3bb6c921bf966a7f6a8"
++        "0xd99b45ced6473f41ba909b533b1096d83b7d9633cee20987ca077ce8eb389be6"
+    }
+```
+
+```diff
+    contract ZkMoneyPortal (eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449) [zkmoney/ZkMoneyPortal] {
+    +++ description: Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint.
+      sourceHashes.0:
+-        "0x4abb439f2218670904cdae29f2663f412a1ca4d63284a05120c764dc8eed141e"
++        "0x4d89fd312c737814de5e81632ef9671e232ec8faa7bbbfbba98e7c9c2787b25b"
+    }
+```
+
 Generated with discovered.json: 0xae53b505b049b6d4a68d34331c7975f406638de9
 
 # Diff at Mon, 26 Oct 2026 13:58:20 GMT:

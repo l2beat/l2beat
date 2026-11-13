@@ -1,4 +1,8 @@
-import type { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
+import {
+  formatInteger,
+  type KnownInteropBridgeType,
+  type ProjectId,
+} from '@l2beat/shared-pure'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { getCoreRowModel } from '@tanstack/react-table'
 import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
@@ -61,7 +65,7 @@ export function TransferCountCell({
         className="cursor-pointer font-medium text-label-value-15 text-primary hover:underline"
         onClick={() => setIsOpen(true)}
       >
-        {transferCount}
+        {formatInteger(transferCount)}
       </button>
       <TransferDetailsDialog
         scope={{ type: 'project', projectId: protocol.id }}

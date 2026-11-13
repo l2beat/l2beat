@@ -94,7 +94,11 @@ const FOOTER_FONT: FontSpec = {
   family: 'ui-sans-serif, system-ui, sans-serif',
 }
 
-const CONNECTION_SEGMENTS = 32
+// Each curve gets the fewest segments that keep its chords within the
+// tolerance of the true curve on screen (Wang's formula), up to the strip's
+// length. Long edges at full zoom need ~100; short ones need a handful.
+const CONNECTION_SEGMENTS_MAX = 128
+const CONNECTION_CHORD_TOLERANCE_DEVICE_PX = 0.25
 const GRID_DOT_RADIUS_PER_CELL = 0.05
 // Control points sit half the horizontal gap out, so a long edge leaves and
 // reaches its nodes level instead of bending sharply at the arrowhead.
@@ -359,11 +363,13 @@ void main() {
   fragColor = vec4(v_color.rgb, v_color.a * a);
 }`
 
-// One instance per connection. The strip's vertices carry only (t, side), the
-// curve is evaluated here, so moving a node rewrites a few floats per
-// connection instead of re-tessellating every curve on the CPU.
+// One instance per connection. The strip's vertices carry only (sample, side),
+// the curve is evaluated here, so moving a node rewrites a few floats per
+// connection instead of re-tessellating every curve on the CPU. Samples past
+// the curve's own segment count collapse onto its end, so the rasterizer drops
+// their triangles.
 const CONNECTION_VS = `#version 300 es
-layout(location = 0) in vec2 a_vertex; // t, side
+layout(location = 0) in vec2 a_vertex; // sample, side
 layout(location = 1) in vec2 i_from;
 layout(location = 2) in vec2 i_to;
 layout(location = 3) in vec2 i_controlX;
@@ -372,30 +378,95 @@ layout(location = 5) in vec2 i_stroke; // width, dashed
 uniform vec2 u_offset;
 uniform float u_scale;
 uniform vec2 u_resolution;
+uniform float u_dpr;
 out vec4 v_color;
 out float v_arc;
 out float v_across;
 flat out float v_capRadius;
 flat out float v_dashed;
-const float SEGMENTS = ${CONNECTION_SEGMENTS}.0;
+const float SEGMENTS_MAX = ${CONNECTION_SEGMENTS_MAX}.0;
+const float CHORD_TOLERANCE_PX = ${CONNECTION_CHORD_TOLERANCE_DEVICE_PX};
+// 8-point Gauss-Legendre: nodes +-x on [-1, 1] and their weights.
+const float GAUSS_NODES[4] = float[4](
+  0.1834346424956498, 0.5255324099163290, 0.7966664774136267,
+  0.9602898564975363);
+const float GAUSS_WEIGHTS[4] = float[4](
+  0.3626837833783620, 0.3137066458778873, 0.2223810344533745,
+  0.1012285362903763);
 const float MIN_STROKE_PX = ${CONNECTION_MIN_STROKE_PX}.0;
 const float MIN_INK_RATIO = ${CONNECTION_MIN_INK_RATIO};
+vec2 control1() { return vec2(i_controlX.x, i_from.y); }
+vec2 control2() { return vec2(i_controlX.y, i_to.y); }
 vec2 bezier(float t) {
   float mt = 1.0 - t;
-  vec2 p1 = vec2(i_controlX.x, i_from.y);
-  vec2 p2 = vec2(i_controlX.y, i_to.y);
+  vec2 p1 = control1();
+  vec2 p2 = control2();
   return mt * mt * mt * i_from + 3.0 * mt * mt * t * p1 +
     3.0 * mt * t * t * p2 + t * t * t * i_to;
 }
 vec2 bezierTangent(float t) {
   float mt = 1.0 - t;
-  vec2 p1 = vec2(i_controlX.x, i_from.y);
-  vec2 p2 = vec2(i_controlX.y, i_to.y);
+  vec2 p1 = control1();
+  vec2 p2 = control2();
   return 3.0 * mt * mt * (p1 - i_from) + 6.0 * mt * t * (p2 - p1) +
     3.0 * t * t * (i_to - p2);
 }
+// Wang's formula: a cubic split into n equal-t chords strays at most
+// 3/4 * M / n^2 from the curve, M being its largest second difference.
+float segmentCount() {
+  vec2 p1 = control1();
+  vec2 p2 = control2();
+  float secondDifference = max(
+    length(i_from - 2.0 * p1 + p2), length(p1 - 2.0 * p2 + i_to));
+  float secondDifferencePx = secondDifference * u_scale * u_dpr;
+  float n = ceil(sqrt(0.75 * secondDifferencePx / CHORD_TOLERANCE_PX));
+  return clamp(n, 1.0, SEGMENTS_MAX);
+}
+float gaussArcLength(float start, float end) {
+  float center = 0.5 * (start + end);
+  float halfWidth = 0.5 * (end - start);
+  float sum = 0.0;
+  for (int k = 0; k < 4; k++) {
+    float offset = halfWidth * GAUSS_NODES[k];
+    sum += GAUSS_WEIGHTS[k] * (
+      length(bezierTangent(center + offset)) +
+      length(bezierTangent(center - offset)));
+  }
+  return halfWidth * sum;
+}
+// Where x'(t), a quadratic, is zero inside (0, 1), sorted; -1 marks no root.
+// y'(t) has none there, since each control point shares its endpoint's y.
+vec2 tangentXRoots() {
+  float d0 = i_controlX.x - i_from.x;
+  float d1 = i_controlX.y - i_controlX.x;
+  float d2 = i_to.x - i_controlX.y;
+  float a = d0 - 2.0 * d1 + d2;
+  float b = 2.0 * (d1 - d0);
+  vec2 roots = vec2(-1.0);
+  float discriminant = b * b - 4.0 * a * d0;
+  if (discriminant >= 0.0) {
+    // Stable form: no cancellation in 32-bit floats when a is tiny, and a
+    // linear x'(t) (a = 0) still yields its one root.
+    float q = -0.5 * (b + (b < 0.0 ? -1.0 : 1.0) * sqrt(discriminant));
+    if (q != 0.0) roots.x = d0 / q;
+    if (a != 0.0) roots.y = q / a;
+  }
+  return vec2(min(roots.x, roots.y), max(roots.x, roots.y));
+}
+// Constant cost per vertex, and independent of the segment count, so dashes
+// stay put while zooming changes the tessellation. Curves between close
+// nodes reverse, and |B'| dips sharply there, which one Gauss rule across
+// the dip mis-measures; splitting at the reversals keeps each piece smooth.
+float arcLength(float t) {
+  vec2 roots = tangentXRoots();
+  float first = clamp(roots.x, 0.0, t);
+  float second = clamp(roots.y, 0.0, t);
+  return gaussArcLength(0.0, first) + gaussArcLength(first, second) +
+    gaussArcLength(second, t);
+}
 void main() {
-  float t = a_vertex.x;
+  float segments = segmentCount();
+  float t = min(a_vertex.x, segments) / segments;
   vec2 tangent = bezierTangent(t);
   float tangentLength = length(tangent);
   vec2 normal = tangentLength > 1e-6
@@ -415,16 +486,9 @@ void main() {
   v_capRadius = i_stroke.x * 0.5;
   v_across = strokeWidth * 0.5 * a_vertex.y;
   v_dashed = i_stroke.y;
-  v_arc = 0.0;
-  if (i_stroke.y > 0.5) {
-    int steps = int(t * SEGMENTS + 0.5);
-    vec2 previous = i_from;
-    for (int k = 1; k <= steps; k++) {
-      vec2 next = bezier(float(k) / SEGMENTS);
-      v_arc += distance(previous, next);
-      previous = next;
-    }
-  }
+  // Collapsed samples only form zero-area triangles, so skip their arc.
+  bool collapsed = a_vertex.x > segments;
+  v_arc = i_stroke.y > 0.5 && !collapsed ? arcLength(t) : 0.0;
 }`
 
 // Dashes get round caps that reach into the gaps, like SVG's round linecap.
@@ -874,6 +938,7 @@ interface Uniforms {
     offset: WebGLUniformLocation
     scale: WebGLUniformLocation
     resolution: WebGLUniformLocation
+    dpr: WebGLUniformLocation
   }
 }
 
@@ -1156,6 +1221,7 @@ class WebGLRenderer {
           this.programs.connection,
           'u_resolution',
         ),
+        dpr: requireUniform(gl, this.programs.connection, 'u_dpr'),
       },
     }
     this.headerAtlas = buildFontAtlas(gl, HEADER_FONT, dpr)
@@ -2180,11 +2246,12 @@ class WebGLRenderer {
     )
     gl.uniform1f(this.uniforms.connection.scale, transform.scale)
     gl.uniform2f(this.uniforms.connection.resolution, res[0], res[1])
+    gl.uniform1f(this.uniforms.connection.dpr, this.dpr)
     gl.bindVertexArray(this.buffers.connections.vao)
     gl.drawArraysInstanced(
       gl.TRIANGLE_STRIP,
       0,
-      (CONNECTION_SEGMENTS + 1) * 2,
+      (CONNECTION_SEGMENTS_MAX + 1) * 2,
       n,
     )
   }
@@ -2414,15 +2481,15 @@ function controlOffset(gap: number): number {
   )
 }
 
-// (t, side) pairs along the curve, two per sample, for a triangle strip.
+// (sample, side) pairs along the curve, two per sample, for a triangle strip.
+// The shader turns a sample into t once it knows the curve's segment count.
 function createConnectionStrip(gl: WebGL2RenderingContext): WebGLBuffer {
-  const vertices = new Float32Array((CONNECTION_SEGMENTS + 1) * 4)
-  for (let i = 0; i <= CONNECTION_SEGMENTS; i++) {
-    const t = i / CONNECTION_SEGMENTS
-    vertices[i * 4] = t
-    vertices[i * 4 + 1] = 1
-    vertices[i * 4 + 2] = t
-    vertices[i * 4 + 3] = -1
+  const vertices = new Float32Array((CONNECTION_SEGMENTS_MAX + 1) * 4)
+  for (let sample = 0; sample <= CONNECTION_SEGMENTS_MAX; sample++) {
+    vertices[sample * 4] = sample
+    vertices[sample * 4 + 1] = 1
+    vertices[sample * 4 + 2] = sample
+    vertices[sample * 4 + 3] = -1
   }
   const strip = mustCreateBuffer(gl)
   gl.bindBuffer(gl.ARRAY_BUFFER, strip)

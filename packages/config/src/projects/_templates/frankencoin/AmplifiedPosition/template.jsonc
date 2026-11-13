@@ -1,4 +1,0 @@
-{
-  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Position template for ZCHF USDT uniswap amplified positions."
-}

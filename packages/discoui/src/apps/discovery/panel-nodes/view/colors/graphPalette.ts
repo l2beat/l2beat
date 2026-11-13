@@ -28,7 +28,7 @@ export const DARK_GRAPH_PALETTE: GraphPalette = {
   nodeBody: rgbaFromHex('#120f0e', 1),
   nodeBorder: rgbaFromHex('#f0d8bd', 0.16),
   text: rgbaFromHex('#f0d8bd', 1),
-  footerText: rgbaFromHex('#f0d8bd', 0.4),
+  footerText: rgbaFromHex('#f0d8bd', 0.55),
   dot: rgbaFromHex('#a98763', 1),
   containerBar: rgbaFromHex('#594c43', 1),
   gridDot: rgbaFromHex('#3c332d', 0.6),
@@ -44,21 +44,21 @@ export const DARK_GRAPH_PALETTE: GraphPalette = {
 }
 
 export const LIGHT_GRAPH_PALETTE: GraphPalette = {
-  canvas: rgbaFromHex('#f5eee5', 1),
+  canvas: rgbaFromHex('#f2eee8', 1),
   nodeBody: rgbaFromHex('#ffffff', 1),
-  nodeBorder: rgbaFromHex('#412e18', 0.16),
-  text: rgbaFromHex('#412e18', 1),
-  footerText: rgbaFromHex('#412e18', 0.5),
-  dot: rgbaFromHex('#856441', 1),
-  containerBar: rgbaFromHex('#baafa2', 1),
-  gridDot: rgbaFromHex('#ded6cc', 0.6),
-  accent: rgbaFromHex('#5f6f00', 1),
+  nodeBorder: rgbaFromHex('#2f2721', 0.22),
+  text: rgbaFromHex('#2f2721', 1),
+  footerText: rgbaFromHex('#2f2721', 0.75),
+  dot: rgbaFromHex('#6c5d52', 1),
+  containerBar: rgbaFromHex('#bcb2aa', 1),
+  gridDot: rgbaFromHex('#e1d9d1', 0.6),
+  accent: rgbaFromHex('#556300', 1),
   accentFill: rgbaFromHex('#bad80a', 1),
   highlightedRowFill: rgbaFromHex('#bad80a', 0.35),
   highlightedRowText: rgbaFromHex('#4a5600', 1),
-  connection: rgbaFromHex('#856441', 0.72),
-  connectionDimmed: rgbaFromHex('#856441', 0.18),
-  connectionGrayed: rgbaFromHex('#412e18', 0.1),
+  connection: rgbaFromHex('#6c5d52', 0.72),
+  connectionDimmed: rgbaFromHex('#6c5d52', 0.18),
+  connectionGrayed: rgbaFromHex('#2f2721', 0.1),
   grayedAlpha: 0.28,
   dimmedAlpha: 0.55,
 }
@@ -67,7 +67,7 @@ export const LIGHT_GRAPH_PALETTE: GraphPalette = {
 // them does too.
 export const HEADER_TEXT_ON_DARK = rgbaFromHex('#f0d8bd', 1)
 export const HEADER_TEXT_ON_LIGHT = rgbaFromHex('#000000', 1)
-export const HEADER_UNVERIFIED = rgbaFromHex('#fb4a35', 1)
+export const HEADER_UNVERIFIED = rgbaFromHex('#ff5540', 1)
 export const HEADER_INITIAL = rgbaFromHex('#9dde6c', 1)
 export const HEADER_TEMPLATE = rgbaFromHex('#fe8019', 1)
 export const TEXT_ON_ACCENT = rgbaFromHex('#000000', 1)

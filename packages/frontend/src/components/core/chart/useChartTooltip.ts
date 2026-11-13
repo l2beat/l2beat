@@ -72,7 +72,11 @@ export function useChartTooltip({
     placeRef.current = place
   })
 
-  function placeTooltip(anchor: Anchor) {
+  /**
+   * `setOrigin` also grows the opening animation from the anchor. Only a new
+   * item needs it; on moves within one it would restyle the tooltip.
+   */
+  function placeTooltip(anchor: Anchor, setOrigin = false) {
     const tooltip = tooltipRef.current
     const root = rootRef.current
     if (!tooltip || !root) return
@@ -89,13 +93,19 @@ export function useChartTooltip({
       left = TOOLTIP_WINDOW_MARGIN - rootLeft
     }
     tooltip.style.transform = `translate(${left}px, ${top}px)`
+    if (setOrigin) {
+      tooltip.style.setProperty(
+        '--chart-tooltip-origin',
+        `${anchor.x - left}px ${anchor.y - top}px`,
+      )
+    }
   }
 
   // New content is measured and placed after React renders it, before the
   // frame is painted.
   // biome-ignore lint/correctness/useExhaustiveDependencies: placeTooltip reads refs
   useLayoutEffect(() => {
-    if (active) placeTooltip(active)
+    if (active) placeTooltip(active, true)
   }, [active])
 
   /** Inside this chart or one it shows its hover with. */

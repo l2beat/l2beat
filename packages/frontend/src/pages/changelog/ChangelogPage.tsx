@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { Article } from '~/components/markdown/Article'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { useLocalStorage } from '~/hooks/useLocalStorage'
 import { ArrowIcon } from '~/icons/Arrow'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
@@ -70,7 +69,7 @@ export function ChangelogPage({ entries, ...props }: Props) {
                         className="relative flex scroll-mt-24 gap-4"
                         id={entry.id}
                       >
-                        <ArrowIcon className="size-[15px] shrink-0 fill-brand text-brand-deep" />
+                        <ArrowIcon className="size-[15px] shrink-0 fill-brand-deep" />
                         <div className="mx-2 flex w-full items-center gap-3">
                           <span className="h-px flex-1 bg-brand" />
                           <span className="font-semibold text-brand-deep text-subtitle-12 uppercase leading-none">
@@ -111,7 +110,6 @@ export function ChangelogPage({ entries, ...props }: Props) {
             </ol>
           )}
         </PrimaryCard>
-        <ScrollToTopButton />
       </SideNavLayout>
     </AppLayout>
   )

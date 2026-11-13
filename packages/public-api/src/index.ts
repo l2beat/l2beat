@@ -100,10 +100,10 @@ function main() {
             trackScreenViews: true,
             trackOutgoingLinks: true,
             trackAttributes: true,
-            apiUrl: 'https://opapi.l2beat.com',
+            apiUrl: 'https://opapi.ethbeat.org',
           });
           var s = document.createElement('script');
-          s.src = 'https://analytics.l2beat.com/op1.js';
+          s.src = 'https://analytics.ethbeat.org/op1.js';
           s.defer = true;
           s.async = true;
           document.head.appendChild(s);

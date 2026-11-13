@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x03bb1e716239929bb12b9a199e167bb2af021de9
+
+# Diff at Thu, 05 Nov 2026 10:34:13 GMT:
+
+- id: 0b402e5a
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ed3b78ee5d7973829dff175055ab7e54cc7df91 block: 1792144369
+- current timestamp: 1793874781
+
+## Description
+
+The LayerZero Multisig (OneSig) added an eighth signer, 0xD144dad1. The threshold stays at 5, now 5 of 8.
+
+## Watched changes
+
+```diff
+    contract LayerZero Multisig (eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478) [layerzero/OneSigMultisig] {
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+      values.$members.7:
++        "eth:0xD144dad189f060Bf6fda615CcA60479329Dd9e35"
+      values.totalSigners:
+-        7
++        8
+    }
+```
+
 Generated with discovered.json: 0xb67f4678a980616c3571f22148767fe09f4a09ab
 
 # Diff at Tue, 27 Oct 2026 11:31:32 GMT:

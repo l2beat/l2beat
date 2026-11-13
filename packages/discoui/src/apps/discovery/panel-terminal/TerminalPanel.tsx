@@ -55,7 +55,7 @@ export function TerminalPanel() {
           <button
             onClick={() => killCommand()}
             disabled={!command.inFlight}
-            className="bg-aux-red px-4 py-1 text-white disabled:opacity-50"
+            className="bg-aux-red px-4 py-1 text-white disabled:opacity-50 dark:text-black"
           >
             Terminate
           </button>

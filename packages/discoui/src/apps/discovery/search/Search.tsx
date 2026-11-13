@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { useParams } from 'react-router'
 import { Dialog } from '../../../components/Dialog'
 import { ClosedSearch } from './ClosedSearch'
@@ -13,17 +12,6 @@ export function Search() {
   if (!project) {
     throw new Error('Cannot use component outside of project page!')
   }
-
-  useEffect(() => {
-    function onKeyDown(e: KeyboardEvent) {
-      if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault()
-        setOpen(!useSearchStore.getState().opened)
-      }
-    }
-    window.addEventListener('keydown', onKeyDown)
-    return () => window.removeEventListener('keydown', onKeyDown)
-  }, [setOpen])
 
   return (
     <Dialog.Root

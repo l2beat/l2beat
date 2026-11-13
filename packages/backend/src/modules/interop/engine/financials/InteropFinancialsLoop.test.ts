@@ -628,6 +628,87 @@ describe(InteropFinancialsLoop.name, () => {
       ])
     })
 
+    it('keeps token identity and amount when the price is missing', async () => {
+      const srcToken = DeployedTokenId.from(
+        'ethereum',
+        EthereumAddress.random(),
+      )
+
+      const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
+        getClosestPricesAtOrBefore: mockPrices(new Map()),
+      })
+      const interopTransfer = mockObject<Database['interopTransfer']>({
+        getUnprocessed: mockFn().resolvesTo([
+          {
+            transferId: 'msg1',
+            timestamp: UnixTime(100),
+            srcChain: 'ethereum',
+            srcTokenAddress: Address32.from(DeployedTokenId.address(srcToken)),
+            srcRawAmount: BigInt('1000000000000000000'),
+            dstChain: 'arbitrum',
+          },
+        ]),
+        updateManyFinancials: mockFn().resolvesTo(undefined),
+      })
+      const db = mockObject<Database>({
+        interopRecentPrices,
+        interopTransfer,
+      })
+
+      const tokenDb = mockObject<TokenDbClient>({
+        deployedTokens: {
+          getByChainAndAddress: {
+            query: mockFn().resolvesTo([
+              {
+                deployedToken: {
+                  chain: 'ethereum',
+                  address: DeployedTokenId.address(srcToken),
+                  symbol: 'TOK',
+                  decimals: 18,
+                },
+                abstractToken: {
+                  id: 'src-abstract-id',
+                  coingeckoId: 'token',
+                  isPriceUnreliable: false,
+                },
+              },
+            ]),
+          },
+        },
+      } as any)
+
+      const service = new InteropFinancialsLoop(
+        [
+          { id: 'ethereum', type: 'evm' as const },
+          { id: 'arbitrum', type: 'evm' as const },
+        ],
+        db,
+        tokenDb,
+        Logger.SILENT,
+        { intervalMs: 1000 },
+      )
+
+      await service.run()
+
+      expect(interopTransfer.updateManyFinancials).toHaveBeenCalledWith([
+        {
+          id: 'msg1',
+          update: {
+            srcAbstractTokenId: 'src-abstract-id',
+            srcSymbol: 'TOK',
+            srcPrice: null,
+            srcAmount: 1,
+            srcValueUsd: null,
+            dstAbstractTokenId: null,
+            dstSymbol: null,
+            dstPrice: null,
+            dstAmount: null,
+            dstValueUsd: null,
+          },
+        },
+      ])
+    })
+
     it('skips valuation and notifies when price exceeds the configured threshold', async () => {
       const srcToken = DeployedTokenId.from(
         'ethereum',

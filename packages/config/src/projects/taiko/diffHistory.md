@@ -1,3 +1,139 @@
+Generated with discovered.json: 0x4a2f8f3890f9954e1fb3b38a6b9f114e5fdd065a
+
+# Diff at Tue, 10 Nov 2026 14:25:41 GMT:
+
+- id: 4d8c7614
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@28ea16426fac1900c2fffd1cec3ecc6b84981c76 block: 1793874822
+- current timestamp: 1794320550
+
+## Description
+
+The RISC Zero EOA 0xF616…d412 executed the scheduled `addVerifier(0xe71e6620, 0x5144…)` through the timelock, after the 3d delay. Taiko's RISC0 proofs can now also route through the estop 0x5144… to a second RiscZeroGroth16Verifier v3.1.0 (eth:0x8c915b5071206C6E328BC18529586c513408aB3b). Its code and Groth16 verifying key equal the v3.1.0 verifier of route 0x8b38038c, only the control root differs (0xe6feef13…551d). The control root fixes which zkVM recursion circuits the verifier accepts. The verifying key, control root and BN254 control ID appear in no public RISC Zero release or published trusted setup. This time the contract is verified.
+https://disco.l2beat.com/diff/eth:0x953814e6dfC46d007557B511Dc4F2954dAaf2c9e/eth:0x8c915b5071206C6E328BC18529586c513408aB3b
+
+Config: the RiscZeroVerifierRouter template reads the new selector, the new estop and verifier are critical, and the ZK catalog lists the verifier as not verified.
+
+## Watched changes
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+      values.callsExecuted.22:
++        {"id":"0xf40a937e65e41f9adb997f8f4b5a1b39d83bb01cdb8b9e4f7e63c6bdb80d2d12","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af30e71e6620000000000000000000000000000000000000000000000000000000000000000000000000000000005144a37e65fd032f628663cb21e16490378a8630"}
+      values.callsScheduled.25:
++        {"id":"0xf40a937e65e41f9adb997f8f4b5a1b39d83bb01cdb8b9e4f7e63c6bdb80d2d12","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af30e71e6620000000000000000000000000000000000000000000000000000000000000000000000000000000005144a37e65fd032f628663cb21e16490378a8630","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter] {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
++++ severity: MEDIUM
+      values.verifier_e71e6620:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x5144A37e65fd032F628663Cb21E16490378a8630"
+    }
+```
+
+```diff
+    EOA (eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412) {
+    +++ description: None
+      receivedPermissions.6:
++        {"permission":"interact","from":"eth:0x5144A37e65fd032F628663Cb21E16490378a8630","description":"pause the verifier.","role":".owner"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x5144A37e65fd032F628663Cb21E16490378a8630) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0x8c915b5071206C6E328BC18529586c513408aB3b that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0x8c915b5071206C6E328BC18529586c513408aB3b) [taiko/RiscZeroGroth16Verifier]
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 3.1.0).
+```
+
+## Source code changes
+
+```diff
+...:0x8c915b5071206C6E328BC18529586c513408aB3b.sol | 1780 ++++++++++++++++++++
+ ...:0x5144A37e65fd032F628663Cb21E16490378a8630.sol |  366 ++++
+ 2 files changed, 2146 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793874822 (main branch discovery), not current.
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter] {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
++++ severity: MEDIUM
+      values.verifier_e71e6620:
++        "eth:0x0000000000000000000000000000000000000000"
+      fieldMeta.verifier_e71e6620:
++        {"severity":"MEDIUM"}
+    }
+```
+
+Generated with discovered.json: 0x639f61273610bd8740b564e6f2b158ccbd95a741
+
+# Diff at Thu, 05 Nov 2026 15:34:00 GMT:
+
+- id: f057488a
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@181c6b3e2aefdcafd6dd1dd7151c810ad0e792a6 block: 1793195421
+- current timestamp: 1793874822
+
+## Description
+
+The ejecter 0x45D44033 removed the preconfirmation operator 0x5F62d006 from the PreconfWhitelist and re-added it, twice. The whitelist still holds the same two operators, in swapped order.
+
+## Watched changes
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) [taiko/PreconfWhitelist] {
+    +++ description: Contains the whitelist of addresses eligible to propose batches on L1 and issue preconfirmations. It dynamically selects a single active operator for each epoch using a delayed Ethereum beacon block root as randomness. There is no fallback proposer path in this contract: non-selected operators cannot propose for the current epoch.
+      values.operatorMapping.0:
+-        "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
+      values.operatorMapping.1:
++        "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
+    }
+```
+
+Generated with discovered.json: 0xba844d002275169ec5fdb3b2016bec1d8918f83c
+
+# Diff at Thu, 05 Nov 2026 08:58:41 GMT:
+
+- id: e35cebda
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@92a563dab6932b2cedd6791c3571d1d33fc43c20 block: 1793195421
+- current timestamp: 1793195421
+
+## Description
+
+`permsRevoked` is MEDIUM: a revocation alone removes a path, and grants are counted by `permsGranted`.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793195421 (main branch discovery), not current.
+
+```diff
+    contract DAO (eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261) [taiko/DAO] {
+    +++ description: The main contract and entrypoint of the Aragon-based DAO governance framework. Fine-grained DAO permissions, proposals, voting and thresholds are configured here.
+      fieldMeta.permsRevoked.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0x0593d09b29f0fd6daa486c7301ddfe287b9b1aa2
 
 # Diff at Wed, 28 Oct 2026 13:54:39 GMT:

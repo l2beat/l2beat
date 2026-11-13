@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x42aeb2a13363e4fdd524558211913dd36bffbddf
+
+# Diff at Tue, 10 Nov 2026 14:26:49 GMT:
+
+- id: b062d935
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@28ea16426fac1900c2fffd1cec3ecc6b84981c76 block: 1793874630
+- current timestamp: 1794319707
+
+## Description
+
+Proposal 74 is in voting, with no votes yet. It pays 500 TORN to its proposer (eth:0xE90D1518e517453C6d6df4b251082216CeF3EFBb, not the proposer of 73) and pins another app build on tornadocash.eth (contenthash e30101701220ff5f...85e8, CID bafybeih7l55bvm33s2svdk65hxdirbtws2mteif6a6y3akurjljbgpuf5a). Voting ends 2026-11-14 14:23 UTC, execution is possible from 2026-11-16 after the 2-day delay. The verified proposal contract only does these two things.
+
+The build is the pin of proposal 73 plus one source change (jack-dev-crypto/classic-ui 3ed76ef): the app reads relayer data from a new Aggregator (eth:0x660b51d7487AdED069EdE885895c17E4877664B1) that takes ENS names instead of namehashes. The proposer deployed it. It is verified, immutable and ownerless, reads the same RelayerRegistry, and resolves owners through the ENSv2 UniversalHelper first and the ENSv1 registry second. The app still only lists a relayer whose ENS owner is its registered address.
+
+L2BEAT rebuilt the pinned CID exactly, but not with the recipe the proposer published. That recipe (jack-dev-crypto/tornado-ipfs-ui 7eb1835) names the parent commit 9481e80 and gives bafybeihjxlzmbk2cqv6yjvu6lrkp3szuvlm2y5xo7bk7drgogxr4ywnxku. The pin matches commit 3ed76ef built with CHAINNODES_KEY=0x1234, WC_BRIDGE=0x1234, STORE_NAME=tornado and APP_ENS_NAME=tornadocash.eth, added to IPFS with CIDv0 defaults and hidden files, and with one chunk under another file name (69d78b5.js, same bytes as the rebuilt 701328a.js). All 242 files are otherwise byte-identical.
+
+Proposal 73 passed and is executable from 2026-11-12. If both execute, the pin of 74 replaces the pin of 73. After either executes, REBUILT_APP_CID and the source links in tornado-cash.ts need the new pin.
+
+## Watched changes
+
+```diff
+    contract GovernanceProposalStateUpgrade (eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) [tornado-cash/GovernanceProposalStateUpgrade] {
+    +++ description: Upgradeable Tornado Cash governance contract that manages proposals, voting, execution, and treasury-connected governance modules. If you trust this contract, you trust its upgrade path and proposal rules to change protocol governance behavior.
+      values.proposalCount:
+-        73
++        74
+    }
+```
+
+Generated with discovered.json: 0xe201b8fb561dffc26b5d25105c0f01a11763a393
+
+# Diff at Thu, 05 Nov 2026 10:31:57 GMT:
+
+- id: 045be3d9
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ed3b78ee5d7973829dff175055ab7e54cc7df91 block: 1791619122
+- current timestamp: 1793874630
+
+## Description
+
+Proposal 73 is in voting: it pays 200 TORN to the proposer and pins a new app build on tornadocash.eth (contenthash e301017012...2a75). Voting ends 2026-11-10 06:49 UTC, execution is possible from 2026-11-12 after the 2-day delay. The source moves from tornado-dao/classic-ui to the fork torndao777-eng/classic-ui (account created 2026-09-20). Its two commits on top of the current pin 17c54dae only change relayer list loading in services/registry/index.js. The proposal contract matches its verified source and only does these two things. L2BEAT rebuilt the new CID bafybeiayu2srl6owm6tdbik6uabcpjlji4u32dtph4yrwakreklcfprkou from torndao777-eng/classic-ui 8af0abd with the DAO's recipe (tornado-dao/tornado-ipfs-ui d2aa401), and it matches. Once the proposal executes, REBUILT_APP_CID in tornado-cash.ts needs this CID.
+
+## Watched changes
+
+```diff
+    contract GovernanceProposalStateUpgrade (eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) [tornado-cash/GovernanceProposalStateUpgrade] {
+    +++ description: Upgradeable Tornado Cash governance contract that manages proposals, voting, execution, and treasury-connected governance modules. If you trust this contract, you trust its upgrade path and proposal rules to change protocol governance behavior.
+      values.proposalCount:
+-        72
++        73
+    }
+```
+
 Generated with discovered.json: 0x8f523afc15fbc31e7e1c5f4e3f18a8f169db93b4
 
 # Diff at Sat, 24 Oct 2026 16:41:09 GMT:

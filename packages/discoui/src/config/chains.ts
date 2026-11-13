@@ -156,5 +156,5 @@ export function getChain(shortName: string): Chain {
 }
 
 export function getChainIconUrl(chain: Chain): string {
-  return `https://l2beat.com/icons/${chain.iconSlug ?? chain.name}.png`
+  return `https://ethbeat.org/icons/${chain.iconSlug ?? chain.name}.png`
 }

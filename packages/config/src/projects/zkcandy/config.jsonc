@@ -11,6 +11,28 @@
     "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock2"
   },
   "overrides": {
+    "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776": {
+      "fields": {
+        "executionDelayZkCandy": {
+          // effective delay for zkCandy: max(executionDelay, chainExecutionDelay(zkCandy diamond))
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "getExecutionDelay",
+            "args": ["0xF2704433d11842d15aa76BBF0E00407267a99C92"]
+          }
+        },
+        "executionDelayZkCandy_fmt": {
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "getExecutionDelay",
+            "args": ["0xF2704433d11842d15aa76BBF0E00407267a99C92"]
+          },
+          "edit": ["format", "FormatSeconds"]
+        }
+      }
+    },
     "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": {
       "fields": {
         "validatorsVTL": {

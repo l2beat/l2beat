@@ -87,14 +87,12 @@
   --secondary: #5f6470;
   --positive: #007408;
   --warning: #ab8000;
-  /* --warning stays bright for icons and tints (3:1); text needs 4.5:1 on --background (WCAG AA). */
-  --warning-text: #806000;
-  /* Dark enough for 4.5:1 on --background, since it also colours text. */
-  --negative: #c40000;
+  --negative: #d70000;
   --brand: #ff3776;
   /* Text in the brand colour: #FF3776 is too light to read as small text, so
-     a shade that keeps 4.5:1 on every surface, the grey ones included. */
-  --brand-deep: #c2104a;
+     a shade of the same hue that keeps 4.5:1 on every surface, the grey ones
+     included. Any lighter drops below 4.5:1 on --background. */
+  --brand-deep: #ca0055;
   /* A lighter brand pink, e.g. for the chart loader's second ball. */
   --brand-light: #ff8fb0;
   --selection-brand-share: 30%;
@@ -149,9 +147,9 @@
   --secondary: #abb1c1;
   --positive: #12d660;
   --warning: #ffc107;
-  --warning-text: #ffc107;
   --negative: #ff3d3d;
-  --brand-deep: #ff7aa5;
+  /* The same hue, as vivid as it gets while keeping 4.5:1 on --surface-secondary. */
+  --brand-deep: #ff7493;
   --brand-light: #ffa3c0;
   --selection-brand-share: 50%;
   --background: #07080c;
@@ -506,7 +504,6 @@
   --color-secondary: var(--secondary);
   --color-positive: var(--positive);
   --color-warning: var(--warning);
-  --color-warning-text: var(--warning-text);
   --color-negative: var(--negative);
   --color-brand: var(--brand);
   --color-brand-deep: var(--brand-deep);
@@ -694,6 +691,40 @@
   scrollbar-gutter: stable;
 }
 
+/* OverflowWrapper's edges: each side's fade grows from nothing when that
+   side has more to scroll to, as its arrow fades in. */
+@property --overflow-fade-left {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --overflow-fade-right {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@utility overflow-fade {
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    black var(--overflow-fade-left),
+    black calc(100% - var(--overflow-fade-right)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    black var(--overflow-fade-left),
+    black calc(100% - var(--overflow-fade-right)),
+    transparent 100%
+  );
+  transition:
+    --overflow-fade-left 150ms ease-out,
+    --overflow-fade-right 150ms ease-out;
+}
+
 @utility fade-out-to-left-* {
   --fade-size: calc(var(--spacing, 0.25rem) * --value(integer));
   --fade-size: --value([length]);
@@ -825,6 +856,31 @@
   );
 }
 
+/* A chart tooltip grows out of the hovered point, which its placement sets
+   as --chart-tooltip-origin, so it reads as coming from there. Moves
+   between points keep it mounted and do not replay this. */
+@utility chart-tooltip-enter {
+  transform-origin: var(--chart-tooltip-origin, 0 0);
+  animation: chart-tooltip-enter 150ms var(--ease-out-quint);
+
+  @media (prefers-reduced-motion: reduce) {
+    animation-name: chart-tooltip-fade-in;
+  }
+}
+
+@keyframes chart-tooltip-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+@keyframes chart-tooltip-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
 @utility word-break-word {
   word-break: break-word;
 }
@@ -835,6 +891,103 @@
   }
   -ms-overflow-style: none !important; /* IE and Edge */
   scrollbar-width: none !important; /* Firefox */
+}
+
+/* The page swaps at once, as without a transition; only the named parts
+   move. This also undoes the theme toggle's reveal, below. */
+html:active-view-transition-type(pin),
+html:active-view-transition-type(chips) {
+  &::view-transition-old(root),
+  &::view-transition-new(root) {
+    animation: none;
+  }
+}
+
+/* The others close the gap a removed chip leaves; it shrinks away. */
+html:active-view-transition-type(chips) {
+  &::view-transition-group(*.filter-chip) {
+    animation-duration: 250ms;
+    animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  &::view-transition-old(*.filter-chip),
+  &::view-transition-new(*.filter-chip) {
+    animation: none;
+  }
+  &::view-transition-old(*.filter-chip):only-child {
+    animation: 150ms cubic-bezier(0.23, 1, 0.32, 1) both vt-shrink-out;
+  }
+  /* One that only now appears, e.g. compare's Reset, waits for the chips
+     sliding over its place to clear it. */
+  &::view-transition-new(*.filter-chip):only-child {
+    animation: 150ms 100ms cubic-bezier(0.23, 1, 0.32, 1) both vt-appear;
+  }
+}
+
+@keyframes vt-appear {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes vt-shrink-out {
+  to {
+    opacity: 0;
+    scale: 0.9;
+  }
+}
+
+/* A pin pressed in: it comes down on its point, tilting upright, and fills
+   as it lands, while its row flies to the nav. Slow enough at the start to
+   be seen; it lands within the row's flight. */
+.pin-drive {
+  transform-origin: 50% 92%;
+  animation: pin-drive 300ms ease-out both;
+}
+
+@keyframes pin-drive {
+  from {
+    translate: 0 -3px;
+    rotate: -18deg;
+    fill-opacity: 0;
+  }
+  50% {
+    translate: 0 1px;
+    rotate: 0deg;
+    fill-opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pin-drive {
+    animation: none;
+  }
+}
+
+/* Rows slide to their new places; their contents crossfade. Rows are
+   opaque and pass over the group labels, and the project that moves passes
+   over the other rows, so no two labels are ever drawn over each other. */
+html:active-view-transition-type(pin) {
+  & [data-pin-row] {
+    background: var(--color-background);
+  }
+  &::view-transition-group(*.pin-row),
+  &::view-transition-group(*.pin-label) {
+    animation-duration: 250ms;
+    animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  &::view-transition-group(*.pin-label) {
+    z-index: 1;
+  }
+  &::view-transition-group(*.pin-row) {
+    z-index: 2;
+  }
+  &::view-transition-group(*.pin-lift) {
+    z-index: 3;
+  }
+  &::view-transition-old(*.pin-row),
+  &::view-transition-new(*.pin-row) {
+    animation-duration: 150ms;
+  }
 }
 
 /* Theme toggle view transition */

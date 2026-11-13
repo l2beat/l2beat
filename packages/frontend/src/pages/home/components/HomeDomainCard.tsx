@@ -10,11 +10,13 @@ import { HomeCardHeader } from './HomeCardHeader'
  */
 export function HomeDomainCard({
   title,
+  icon,
   link,
   className,
   children,
 }: {
   title: string
+  icon: ReactNode
   /**
    * Opposite the title, with the count, so the short ranking never reads as
    * everything we track.
@@ -24,15 +26,15 @@ export function HomeDomainCard({
   children: ReactNode
 }) {
   return (
-    // 24px between the parts, 32px above the ranking: it is a block of its
+    // 20px between the parts, 24px above the ranking: it is a block of its
     // own, not a caption to the charts.
     <HomeCard
       className={cn(
-        'row-span-3 grid min-w-0 grid-rows-subgrid gap-6 [&>:nth-child(3)]:mt-2',
+        'row-span-3 grid min-w-0 grid-rows-subgrid gap-5 [&>:nth-child(3)]:mt-1',
         className,
       )}
     >
-      <HomeCardHeader title={title} link={link} />
+      <HomeCardHeader title={title} icon={icon} link={link} />
       {children}
     </HomeCard>
   )

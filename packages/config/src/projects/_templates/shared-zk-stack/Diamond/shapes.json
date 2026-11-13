@@ -48,5 +48,18 @@
       "eth:0x56767eB2E3197A1dfa030faaD4A65cF38E807c81"
     ],
     "blockNumber": 24275768
+  },
+  "ZKsync_v31": {
+    "hash": "0xc45d6e459ec289cf5e28239e8811fdb636e9948b65d9cc8e6df90783ddb8ba95",
+    "address": [
+      "eth:0x9Cfa4daEDbF2CDAbDBfF3776Ddd741e48380e6f2",
+      "eth:0x218366567dBe28941889E17F7b029874731895f0",
+      "eth:0x7eD1e478dA92B3Fd33f7C566512f4a0b958cBBa8",
+      "eth:0x826729003e0b35c5343eb5Bd19277B86BA2E7710",
+      "eth:0xC4fe5Fa76325F4C1014e0b11DdBD8aA441Db2af4",
+      "eth:0xc188e345d448770750f0b40Cde84E9eCF327430A"
+    ],
+    "chain": "ethereum",
+    "blockNumber": 26348018
   }
 }

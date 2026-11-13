@@ -197,6 +197,23 @@ export const risc0: BaseProject = {
           'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of `control_root` and bytes32 value of `bn254_control_id` of contract constructor values. The contract code equals v3.0.0. Its Groth16 verifying key, `control_root` and `bn254_control_id` appear in no public RISC Zero release. No trusted setup ceremony for this verifying key is published.',
       },
       {
+        hash: '0x88492a617f432f3c03449951b7cdaf0db75b27058a52ef935ac06c01d5d4b384',
+        name: 'RiscZero v3.1.0 (control root 0xe6feef13)',
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0x8c915b5071206C6E328BC18529586c513408aB3b',
+            ),
+            overrideUsedIn: [ProjectId('taiko')],
+          },
+        ],
+        verificationStatus: 'notVerified',
+        description:
+          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of `control_root` and bytes32 value of `bn254_control_id` of contract constructor values. The contract code and Groth16 verifying key equal those of the other v3.1.0 verifier, the `control_root` differs. The verifying key, `control_root` and `bn254_control_id` appear in no public RISC Zero release. No trusted setup ceremony for this verifying key is published.',
+      },
+      {
         hash: '0x79325d9dc09af1afcea4dbf04db9fada7a71846045ad56daa1996bbebf9468d8',
         name: 'RiscZero v1.0.0',
         sourceLink: 'https://github.com/risc0/risc0/tree/v1.0.0/risc0',

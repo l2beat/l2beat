@@ -191,6 +191,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     expect(headings).toEqual([
       '## Summary',
       '## Privacy',
+      '## How to stay private',
       '## Value Locked',
       '## Anonymity sets',
       '## Flows',
@@ -274,8 +275,30 @@ describe(renderPrivacyProjectMarkdown.name, () => {
 
     it('grades the promise against each adversary and says why', () => {
       expect(privacy()).toInclude(
-        '### Chain analyst\n\nLink at risk (sentiment: warning)\n\n**Who:** Correlates all public data. Examples: Chain analytics firms.\n\nTiming narrows the anonymity set.\n\n**Advice:** Wait before withdrawing.',
+        '### Chain analyst\n\nLink at risk (sentiment: warning)\n\n**Who:** Correlates all public data. Examples: Chain analytics firms.\n\nTiming narrows the anonymity set.',
       )
+    })
+
+    it('links the advice once, which lists each step with the adversaries it defends', () => {
+      expect(privacy()).toInclude(
+        '**Advice:** How to stay private, the next section.',
+      )
+      expect(privacy()).not.toInclude('**Advice:** Wait')
+      expect(
+        getSection(renderPrivacyProjectMarkdown(ENTRY), 'How to stay private'),
+      ).toInclude(
+        '1. **Wait.** Wait before withdrawing. Draw the wait once, at random between 0 and 30 days, the window the anonymity set counts. Against: chain analyst.',
+      )
+    })
+
+    it('links each adversary to the steps that defend it', () => {
+      expect(privacy()).toInclude('**Advice:** step 1 (Wait).')
+    })
+
+    it('names the adversaries no step helps against', () => {
+      expect(
+        getSection(renderPrivacyProjectMarkdown(ENTRY), 'How to stay private'),
+      ).toInclude('**No step helps against:** future adversary.')
     })
 
     it('lists every inside field for the public observer, with notes', () => {
@@ -452,7 +475,6 @@ const ADVERSARIES: ProjectPrivacyAdversaries = {
       'warning',
       'Timing narrows the anonymity set.',
       {
-        advice: 'Wait before withdrawing.',
         interior: { ...PUBLIC_OBSERVER_INTERIOR, linkage: 'exposed' },
       },
     ),
@@ -475,6 +497,14 @@ const ADVERSARIES: ProjectPrivacyAdversaries = {
       'A quantum computer could break the commitments.',
     ),
   },
+  advice: [
+    {
+      name: 'Wait',
+      text: 'Wait before withdrawing.',
+      against: ['chainAnalyst'],
+      randomWait: true,
+    },
+  ],
 }
 
 function chartSection(
@@ -562,6 +592,23 @@ const SECTIONS: ProjectDetailsSection[] = [
       referenceApp: REFERENCE_APP,
     },
   },
+  {
+    type: 'PrivacyAdviceSection',
+    props: {
+      id: 'stay-private',
+      title: 'How to stay private',
+      steps: ADVERSARIES.advice ?? [],
+      adversaries: ADVERSARIES.adversaries,
+      waitWindowDays: 30,
+      sentiments: {
+        publicObserver: 'good',
+        chainAnalyst: 'warning',
+        networkObserver: 'good',
+        privilegedInsider: 'good',
+        futureAdversary: 'bad',
+      },
+    },
+  },
   chartSection('TvsValueSection', 'privacy-tvl', 'Value Locked'),
   chartSection(
     'PrivacyAnonymitySetSection',
@@ -599,7 +646,7 @@ const ENTRY: ProjectPrivacyEntry = {
   badges: [],
   projectLinks: [],
   discoUi: {
-    href: 'https://disco.l2beat.com/ui/p/tornado-cash',
+    href: 'https://disco.ethbeat.org/ui/p/tornado-cash',
     images: { desktop: '/desktop.png', mobile: '/mobile.png' },
   },
   bucketCount: 2,

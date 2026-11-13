@@ -6,7 +6,9 @@ import { CostsSection } from './sections/costs/CostsSection'
 import { DaRiskSummarySection } from './sections/DaRiskSummarySection'
 import { DetailedDescriptionSection } from './sections/DetailedDescriptionSection'
 import { DataPostedSection } from './sections/data-posted/DataPostedSection'
+import { DefiTokensSection } from './sections/defi/DefiTokensSection'
 import { DefiTvlSection } from './sections/defi/DefiTvlSection'
+import { LiquidStakingSection } from './sections/defi/LiquidStakingSection'
 import { ExternalDependenciesSection } from './sections/ExternalDependenciesSection'
 import { GardenCropsSection } from './sections/GardenCropsSection'
 import { GrissiniRiskAnalysisSection } from './sections/GrissiniRiskAnalysisSection'
@@ -25,6 +27,7 @@ import { MarkdownSection } from './sections/MarkdownSection'
 import { MilestonesAndIncidentsSection } from './sections/MilestonesAndIncidentsSection'
 import { PermissionsSection } from './sections/permissions/PermissionsSection'
 import { PrivacyAdversariesSection } from './sections/privacy/PrivacyAdversariesSection'
+import { PrivacyAdviceSection } from './sections/privacy/PrivacyAdviceSection'
 import { PrivacyAnonymitySetSection } from './sections/privacy/PrivacyAnonymitySetSection'
 import { PrivacyAssetsBreakdownSection } from './sections/privacy/PrivacyAssetsBreakdownSection'
 import { PrivacyFlowsSection } from './sections/privacy/PrivacyFlowsSection'
@@ -396,6 +399,22 @@ function renderSection(
           {...item.props}
         />
       )
+    case 'DefiTokensSection':
+      return (
+        <DefiTokensSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'LiquidStakingSection':
+      return (
+        <LiquidStakingSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
     case 'PrivacyFlowsSection':
       return (
         <PrivacyFlowsSection
@@ -415,6 +434,14 @@ function renderSection(
     case 'PrivacyAdversariesSection':
       return (
         <PrivacyAdversariesSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'PrivacyAdviceSection':
+      return (
+        <PrivacyAdviceSection
           key={item.props.id}
           {...{ nested, sectionOrder }}
           {...item.props}

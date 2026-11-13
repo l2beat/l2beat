@@ -1,4 +1,4 @@
-Generated with discovered.json: 0x725fd7ec41c94d9276a82f73099ef9622674ad19
+Generated with discovered.json: 0x0984759de245d03587959621b3d1879ad08cf4ce
 
 # Diff at Fri, 30 Oct 2026 14:00:36 GMT:
 
@@ -56,6 +56,30 @@ zk.money names move to Aztec v6: the NameRegistry, the ENS record and the resolv
       values.resolverOperators.eth:0x4748f1359c4dFf0cfB7A36968C05cc314016b664.3:
 -        "eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449"
 +        "eth:0xFf839a8Be7c90c804F42563f352324cEBcDfe41C"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793012002 (main branch discovery), not current.
+
+```diff
+    contract ZkMoneyPortal_sUSDS (eth:0xD7Ae00b91ba0B8e0240B22Cd75fE447d177C260f) [zkmoney/ZkMoneyPortal] {
+    +++ description: Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint.
+      sourceHashes.0:
+-        "0x7020e3729f66f6c8ddada17eeb82b33ae8b7f623c0ffb3bb6c921bf966a7f6a8"
++        "0xd99b45ced6473f41ba909b533b1096d83b7d9633cee20987ca077ce8eb389be6"
+    }
+```
+
+```diff
+    contract ZkMoneyPortal (eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449) [zkmoney/ZkMoneyPortal] {
+    +++ description: Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint.
+      sourceHashes.0:
+-        "0x4abb439f2218670904cdae29f2663f412a1ca4d63284a05120c764dc8eed141e"
++        "0x4d89fd312c737814de5e81632ef9671e232ec8faa7bbbfbba98e7c9c2787b25b"
     }
 ```
 

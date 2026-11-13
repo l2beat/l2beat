@@ -293,9 +293,10 @@ function mockIndexer($: {
     get: mockFn().resolvesTo($.blobs ?? []),
   })
 
+  const configurations = $.configurations ?? [config('project-a')]
   const indexer = new DaIndexer(
     {
-      configurations: ($.configurations ?? [config('project-a')]).map((c) => ({
+      configurations: configurations.map((c) => ({
         id: c.configurationId,
         minHeight: c.sinceBlock,
         maxHeight: c.untilBlock ?? null,
@@ -304,6 +305,7 @@ function mockIndexer($: {
       daProvider,
       daService,
       daLayer: DA_LAYER,
+      projectIds: configurations.map((c) => c.projectId),
       batchSize: $.batchSize ?? 100,
       parents: [],
       indexerService,

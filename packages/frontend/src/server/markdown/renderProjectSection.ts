@@ -38,6 +38,7 @@ import {
 } from './renderContractsSections'
 import {
   renderPrivacyAdversaries,
+  renderPrivacyAdvice,
   renderPrivacyAssetsBreakdown,
 } from './renderPrivacySections'
 import {
@@ -52,6 +53,7 @@ import {
 } from './renderSectionCharts'
 import { renderGardenCropsSection } from './renderSectionCrops'
 import { renderUpgradesAndGovernance } from './renderSectionGovernance'
+import { renderLiquidStakingSection } from './renderSectionLiquidStaking'
 import {
   INCOMPLETE_NOTE,
   renderDiagram,
@@ -290,6 +292,14 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<SectionProps<T>> } = {
   CostsSection: renderCostsSection,
   DataPostedSection: renderDataPostedSection,
   DefiTvlSection: pointToHtmlPage('The interactive TVL chart is shown'),
+  DefiTokensSection: ({ tokens }) =>
+    bulletList(
+      tokens.map(
+        (token) =>
+          `${token.href ? link(token.symbol, token.href) : token.symbol} (${token.name}): ${token.description}`,
+      ),
+    ),
+  LiquidStakingSection: renderLiquidStakingSection,
   GardenCropsSection: renderGardenCropsSection,
   InteropFlowsSection: pointToHtmlPage('The interactive flows chart is shown'),
   InteropTokenOnchainDeploymentsSection: renderOnchainDeployments,
@@ -315,6 +325,7 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<SectionProps<T>> } = {
   PrivacyAnonymitySetSection: renderPrivacyAnonymitySetSection,
   PrivacyAssetsBreakdownSection: renderPrivacyAssetsBreakdown,
   PrivacyFlowsSection: pointToHtmlPage('The interactive flows chart is shown'),
+  PrivacyAdviceSection: renderPrivacyAdvice,
   ProgramHashesSection: renderProgramHashes,
   ThroughputSection: renderThroughputSection,
   TrustedSetupSection: renderTrustedSetups,

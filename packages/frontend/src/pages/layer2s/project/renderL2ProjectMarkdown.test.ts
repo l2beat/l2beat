@@ -290,13 +290,13 @@ describe(renderL2ProjectMarkdown.name, () => {
             },
           ],
         },
-        discoUiHref: 'https://disco.l2beat.com/ui/p/arbitrum',
+        discoUiHref: 'https://disco.ethbeat.org/ui/p/arbitrum',
       }),
       'Summary',
     )
 
     expect(summary).toInclude(
-      '### Links\n\n- Website: https://arbitrum.io\n- Contracts explorer (Disco): https://disco.l2beat.com/ui/p/arbitrum',
+      '### Links\n\n- Website: https://arbitrum.io\n- Contracts explorer (Disco): https://disco.ethbeat.org/ui/p/arbitrum',
       '### Badges\n\n- Built on Arbitrum Orbit: The project is built on Arbitrum Orbit.',
     )
   })
@@ -354,6 +354,27 @@ describe(renderL2ProjectMarkdown.name, () => {
         '  - **Warning:** The ARB token associated with Arbitrum One accounts for 40% of the TVS. (sentiment: bad)',
         '- Past day UOPS:',
       ].join('\n'),
+    )
+  })
+
+  it('qualifies a stale past day UOPS with its sync warning', () => {
+    const activity = ENTRY.header.activity
+    const summary = getSection(
+      renderL2ProjectMarkdown({
+        ...ENTRY,
+        header: {
+          ...ENTRY.header,
+          activity: activity && {
+            ...activity,
+            syncWarning: 'No activity data since 21 Jun 2026, 06:00 UTC.',
+          },
+        },
+      }),
+      'Summary',
+    )
+
+    expect(summary).toInclude(
+      '  - **Warning:** No activity data since 21 Jun 2026, 06:00 UTC. (sentiment: warning)\n',
     )
   })
 
@@ -1072,7 +1093,6 @@ const ENTRY: ProjectL2Entry = {
   icon: '/icons/arbitrum.png',
   archivedAt: undefined,
   isAppchain: false,
-  colors: undefined,
   underReviewStatus: undefined,
   header: {
     description: 'Arbitrum One is a general-purpose optimistic rollup.',
@@ -1099,6 +1119,7 @@ const ENTRY: ProjectL2Entry = {
       lastDayUops: 25.3,
       uopsWeeklyChange: -0.021,
       uopsWeeklyChangePeriod: '7D',
+      syncWarning: undefined,
     },
   },
   rosette: { self: ROSETTE },

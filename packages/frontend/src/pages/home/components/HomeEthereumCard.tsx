@@ -1,6 +1,7 @@
 import { formatActivityCount, formatBytes } from '@l2beat/shared-pure'
 import { LiveIndicator } from '~/components/LiveIndicator'
 import { env } from '~/env'
+import { EthereumIcon } from '~/icons/pages/Ethereum'
 import { ETHEREUM_PROJECT_PATH } from '~/pages/ethereum/paths'
 import type { HomeEthereumCharts } from '~/server/features/home/getHomeEthereumCharts'
 import { formatPercent } from '~/utils/calculatePercentageChange'
@@ -27,12 +28,13 @@ export function HomeEthereumCard({
     // foot of their rankings.
     <HomeCard
       className={cn(
-        'home-wide:row-span-3 flex home-wide:grid min-w-0 home-wide:grid-rows-subgrid flex-col gap-5 home-wide:gap-6 home-wide:[&>:nth-child(2)]:row-span-2',
+        'home-wide:row-span-3 flex home-wide:grid min-w-0 home-wide:grid-rows-subgrid flex-col gap-5 home-wide:[&>:nth-child(2)]:row-span-2',
         className,
       )}
     >
       <HomeCardHeader
         title="Ethereum"
+        icon={<EthereumIcon aria-hidden />}
         subtitle={env.CLIENT_SIDE_BLOBS_PAGE && <LiveBlobsLink />}
         link={{ href: ETHEREUM_PROJECT_PATH, label: 'Project page' }}
       />

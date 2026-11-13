@@ -361,7 +361,7 @@ const useStore = create<State & Actions>((set) => ({
     set((state) => ({ tooltipId: state.tooltipId !== id ? id : '' })),
 }))
 
-// @ts-ignore
+// @ts-expect-error
 window.useStore = useStore
 
 function useDebouncedValue<T>(value: T, delay: number): T {

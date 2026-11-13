@@ -63,4 +63,4 @@ In the final stage of rollup development, the power of the Security Council, if 
 
 ## Open questions
 
-A number of edge cases have been identified for the Stages Framework, and we are actively working on clarifying them. Requirements for certain edge cases will be added as soon as some projects are discovered that fit them. The list of open questions can be found [here](https://docs.l2beat.com/l2b_specs/stages_edgecases.html).
+A number of edge cases have been identified for the Stages Framework, and we are actively working on clarifying them. Requirements for certain edge cases will be added as soon as some projects are discovered that fit them. The list of open questions can be found [here](https://docs.ethbeat.org/l2b_specs/stages_edgecases.html).

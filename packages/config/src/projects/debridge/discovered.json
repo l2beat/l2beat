@@ -1,6 +1,6 @@
 {
   "name": "debridge",
-  "timestamp": 1791789484,
+  "timestamp": 1793874763,
   "configHash": "0x0faff601e3b63eca9fa1f7cbeda9c498555b2264179f2575a214e113c406901d",
   "entries": [
     {
@@ -92,7 +92,7 @@
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["eth:0xbda458dfc28021dEbD72060671Fc350fA5CB39e5"]
+            "members": ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"]
           },
           "INTENT_MANAGER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -104,7 +104,7 @@
           }
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "defaultAdminAC": ["eth:0xbda458dfc28021dEbD72060671Fc350fA5CB39e5"],
+        "defaultAdminAC": ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"],
         "INTENT_MANAGER_ROLE": "0xa9b1eae7c8b7c72093bc47a90b3ed7fc095a355afd9f411e17e6cb1325a3d571"
       },
       "implementationNames": {
@@ -189,7 +189,7 @@
         "GOVMONITORING_ROLE": "0x2b36fa99e118fa8485d488becf749a974743fbeb6a7aa57e663893bf5d69a3c1",
         "govMonitoringAC": ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"],
         "lockedClaim": 1,
-        "nonce": 183509,
+        "nonce": 185025,
         "paused": false,
         "signatureVerifier": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
         "SUBMISSION_PREFIX": 1,
@@ -567,7 +567,7 @@
       "template": "debridge/DeBridgeTokenDeployer",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
-        "0xff2a8bb5572e1959e22acdc6818bcb1da107807340ef1416129cae0cf740d02a"
+        "0xa9992178cce17f92c934ff2617b67a393fb5ec068d6219bde6c62fa46ce32540"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Deploys deBridge-wrapped token (deToken) contracts when an asset is bridged to this chain for the first time (callable only by the DeBridgeGate). All deTokens are beacon proxies whose beacon is this contract itself, so its tokenImplementation applies to every deToken on this chain at once.",
@@ -741,7 +741,7 @@
           }
         },
         "confirmationThreshold": 3,
-        "currentBlock": 26174768,
+        "currentBlock": 26347843,
         "debridgeAddress": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"],
@@ -908,11 +908,6 @@
     },
     {
       "address": "eth:0xbCF516826eD7F3b0E487C7ca6A87b3b4EccDD4DC",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xbda458dfc28021dEbD72060671Fc350fA5CB39e5",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -2945,8 +2940,8 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 26174843 },
-  "permissionsConfigHash": "0xff748a23d9358ff09fb201a4b0862558b132b73f0347cb4b85c2c971d4ab13b3",
+  "usedBlockNumbers": { "ethereum": 26348055 },
+  "permissionsConfigHash": "0x638d8af2df52d75ba40cf0e41307fef433dd9a6580d1aa44cf25a62c4017444b",
   "permissions": {
     "eth:0x0746e7e4d15F30885616B4ac3D274393354E80c0": {
       "receivedPermissions": [
@@ -3061,6 +3056,12 @@
     },
     "eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5": {
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x4247c6f71407359E4C8D29787E98D752F264CD4b",
+          "description": "grant and revoke the INTENT_MANAGER_ROLE that allows creating DLN orders with custom or zero protocol fees.",
+          "role": ".defaultAdminAC"
+        },
         {
           "permission": "interact",
           "from": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
@@ -3400,16 +3401,6 @@
           "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
           "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
           "role": ".oracleAddresses"
-        }
-      ]
-    },
-    "eth:0xbda458dfc28021dEbD72060671Fc350fA5CB39e5": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x4247c6f71407359E4C8D29787E98D752F264CD4b",
-          "description": "grant and revoke the INTENT_MANAGER_ROLE that allows creating DLN orders with custom or zero protocol fees.",
-          "role": ".defaultAdminAC"
         }
       ]
     },

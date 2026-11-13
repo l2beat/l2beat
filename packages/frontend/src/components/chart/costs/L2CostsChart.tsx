@@ -1,6 +1,7 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
+import type { ChartTimeRangeValue } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
 import { useTableFilterContext } from '~/components/table/filters/TableFilterContext'
@@ -155,7 +156,7 @@ function Header({
   timeRange,
   isPlaceholderData,
 }: {
-  timeRange: [number, number] | undefined
+  timeRange: ChartTimeRangeValue
   isPlaceholderData: boolean
 }) {
   return (

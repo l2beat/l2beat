@@ -5,12 +5,15 @@ import type {
   ProjectRedWarning,
 } from '@l2beat/config'
 import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import mapValues from 'lodash/mapValues'
 import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { PRIVACY_ADVERSARIES_SECTION_ID } from '~/pages/privacy/adversaries/privacyAdversaryUi'
+import { ADVICE } from '~/pages/privacy/adviceUi'
 import { getGardenCropsSection } from '~/server/features/garden/getGardenCropsSection'
+import { ANONYMITY_SET_WINDOW_DAYS } from '~/server/features/privacy/anonymity-set/calculateAnonymitySets'
 import { getUpdatesSection } from '~/server/features/projects/discovery-updates/getUpdatesSection'
 import { countRecentDiscoveryUpdates } from '~/server/features/projects/recent-changes/discoveryUpdates'
 import { ps } from '~/server/projects'
@@ -132,7 +135,7 @@ export async function getPrivacyProjectEntry(
   )
 
   const discoUi = {
-    href: `https://disco.l2beat.com/ui/p/${details.id}`,
+    href: `https://disco.ethbeat.org/ui/p/${details.id}`,
     images: {
       desktop: manifest.getUrl('/images/disco-ui-desktop.png'),
       mobile: manifest.getUrl('/images/disco-ui-mobile.png'),
@@ -330,6 +333,24 @@ export async function getPrivacyProjectEntry(
         id: 'contracts',
         title: 'Smart contracts',
         discoUi,
+      },
+    })
+  }
+
+  const advice = details.adversaries.advice
+  if (advice) {
+    sections.splice(adversariesSectionIndex, 0, {
+      type: 'PrivacyAdviceSection',
+      props: {
+        id: ADVICE.sectionId,
+        title: ADVICE.title,
+        steps: advice,
+        adversaries: details.adversaries.adversaries,
+        sentiments: mapValues(
+          details.adversaries.cells,
+          (cell) => cell.sentiment,
+        ),
+        waitWindowDays: ANONYMITY_SET_WINDOW_DAYS,
       },
     })
   }

@@ -6,6 +6,9 @@
     "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213", // BridgeHub
     "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
     "eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119",
+    // rollup DA contracts of the v31 diamond cut, used by the chains that applied it
+    "eth:0xc16161C7f704388285fE58db287F6216a350dAFA",
+    "eth:0x1c715018c5565eaCC758236D4A9A760162a84Cbd",
     // MultisigCommitter: shared ValidatorTimelock of the ZKsync OS ChainTypeManager, owned by the ProtocolUpgradeHandler since v31.
     // The ChainTypeManager template ignores validatorTimelockPostV29 (normally configured per chain) and no project tracks the ZKsync OS chains.
     "eth:0x18cC381705761aa2d2e8ea62888a4029A0fAd3aB",
@@ -20,7 +23,24 @@
     // replaced in the ProtocolUpgradeHandler by v31, but still the VETO_GUARDIAN of ZkTokenGovernor and ZkGovOpsGovernor
     "eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8": "LegacyGuardians",
     "eth:0xBfaa733261500101996A10A231794263567d52ab": "ZKsyncOSServerNotifier",
-    "eth:0x2bf9B0B72573af5471c4f035271616139392Acd8": "ZKsyncOSL1GenesisUpgrade",
+    "eth:0x871faE53b5db4989023936f46e2b1aE161B20E15": "ZKsyncOSL1GenesisUpgrade",
+    "eth:0x853bEB619c14d6435b770c35642862B8e91a3d08": "L1GenesisUpgrade",
+    // v31: per-chain escrow balances moved out of the L1NativeTokenVault
+    "eth:0x7fd8B995fc27aD7de97853e65B17CaCfc0a573Cc": "L1AssetTracker",
+    "eth:0x419A453e690CEac6E57C7798a375cbB2454dd919": "ChainRegistrationSender",
+    // Priority Mode validators of the two ChainTypeManagers
+    "eth:0xE220059BBA4684BF2Cf0B9E6E5A9DF94D9fb90E9": "EraPermissionlessValidator",
+    "eth:0x8509eA34177B051110826A36621C1C52C9752CAA": "ZKsyncOSPermissionlessValidator",
+    // verifiers registered in the ChainTypeManagers for the current protocol versions. Versioned names: the chain
+    // projects still discover their current (older) verifiers under the unversioned names and look them up by name.
+    "eth:0x5d5d33b16d9e79d9d9b8196ec760e70a31a44711": "EraDualVerifier_v33",
+    "eth:0xc16161C7f704388285fE58db287F6216a350dAFA": "RollupDAManager_v31",
+    "eth:0x1c715018c5565eaCC758236D4A9A760162a84Cbd": "RollupL1DAValidator_v31",
+    "eth:0x870C0A2bd4f253dd867b2239a0d8d86f87D64128": "EraVerifierFflonk_v33",
+    "eth:0x71ef07eB0BaFE5342f7d9513Fe7A544Dc90B8001": "EraVerifierPlonk_v33",
+    "eth:0x433b6ff15824806c8c14ece4a6fe1f1909f7da2f": "ZKsyncOSDualVerifier_v31",
+    "eth:0x77EE31260Bed9e6879ffBb66e8ABB3EBCE0B2aBF": "ZKsyncOSVerifierFflonk_v31",
+    "eth:0x47a250D4Eb7F1bf9B4De89c31228DB0E938FF415": "ZKsyncOSVerifierPlonk_v31",
 
     "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E": "ZkToken",
     "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC": "ZkTokenProxyAdmin",
@@ -154,7 +174,7 @@
       "critical": true
     },
     "zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160": {
-      "description": "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least {{proposalThreshold_MTokens}}M ZK tokens are necessary to start a proposal and a {{currentQuorum_MTokens}}M quorum of voted tokens must be met to succeed.",
+      "description": "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs), which are advisory and execute through the GovOpsTimelockController. At least {{proposalThreshold_MTokens}}M ZK tokens are necessary to start a proposal and a {{currentQuorum_MTokens}}M quorum of voted tokens must be met to succeed.",
       "fields": {
         "VETO_GUARDIAN": {
           "permissions": [

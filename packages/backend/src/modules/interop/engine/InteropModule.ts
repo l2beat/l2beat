@@ -16,6 +16,7 @@ import {
   createInteropPlugins,
   flattenClusters,
   pluginsAsClusters,
+  supportsOneSidedChains,
 } from '../plugins'
 import { RelayApiClient } from '../plugins/relay/RelayApiClient'
 import { RelayIndexer, RelayRootIndexer } from '../plugins/relay/relay.indexer'
@@ -37,6 +38,7 @@ import {
   type InteropTrpcRouter,
 } from './dashboard/trpc/router'
 import { InteropFinancialsLoop } from './financials/InteropFinancialsLoop'
+import { InteropFinancialsReprocessLoop } from './financials/InteropFinancialsReprocessLoop'
 import { InteropRecentPricesIndexer } from './financials/InteropRecentPricesIndexer'
 import { InteropTransferAnalyzer } from './InteropTransferAnalyzer'
 import { InteropMatchingLoop } from './match/InteropMatchingLoop'
@@ -175,6 +177,10 @@ export function createInteropModule({
     financialsEnabled: config.interop.financials.enabled,
     matchingEnabled: config.interop.matching,
     oneSidedChains: config.interop.oneSidedChains,
+    maxTransferValueUsd: config.interop.financials.maxTransferValueUsd,
+    oneSidedPlugins: eventPlugins
+      .filter(supportsOneSidedChains)
+      .map((plugin) => plugin.name),
     tokenDbClient,
   })
 
@@ -215,6 +221,12 @@ export function createInteropModule({
       maxTransferValueUsd: config.interop.financials.maxTransferValueUsd,
       batchSize: config.interop.financials.batchSize,
     },
+  )
+  const financialsReprocessLoop = new InteropFinancialsReprocessLoop(
+    config.interop.capture.chains,
+    db,
+    tokenDbClient,
+    logger,
   )
 
   let relayIndexers: { root: RelayRootIndexer; child: RelayIndexer } | undefined
@@ -275,6 +287,8 @@ export function createInteropModule({
     logger = logger.for('InteropModule')
     logger.info('Starting')
 
+    // Read even with config loops disabled: capture depends on stored configs
+    await configStore.start()
     await eventStore.start()
 
     if (config.interop && config.interop.matching) {
@@ -302,9 +316,9 @@ export function createInteropModule({
     if (config.interop && config.interop.financials.enabled) {
       await recentPricesIndexer.start()
       financialsService.start()
+      financialsReprocessLoop.start()
     }
     if (config.interop && config.interop.config.enabled) {
-      await configStore.start()
       for (const configLoop of configLoops) {
         configLoop.start()
       }

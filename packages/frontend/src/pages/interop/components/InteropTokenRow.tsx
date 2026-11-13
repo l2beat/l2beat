@@ -1,4 +1,4 @@
-import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
+import { formatCount, formatCurrency } from '@l2beat/shared-pure'
 import {
   Tooltip,
   TooltipContent,
@@ -38,7 +38,7 @@ export function InteropTokenRow({
   token: InteropTokenRowData
   transfer: InteropTransferDefaults
 }) {
-  const txsLabel = `${formatInteger(token.transferCount)} txs`
+  const txsLabel = formatCount(token.transferCount, 'tx')
   const identity = (
     <>
       <img

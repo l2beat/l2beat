@@ -41,7 +41,7 @@ export function parseEtherscanTimestamp(input: string) {
     .trim()
 
   const date = new Date(cleaned)
-  if (isNaN(date.getTime())) {
+  if (Number.isNaN(date.getTime())) {
     return
   }
   return date
@@ -54,12 +54,12 @@ export function parseUnixTimestampInSeconds(input: string): Date | undefined {
   }
 
   const timestamp = Number(input)
-  if (isNaN(timestamp)) {
+  if (Number.isNaN(timestamp)) {
     return
   }
 
   const date = new Date(timestamp * 1000)
-  if (isNaN(date.getTime())) {
+  if (Number.isNaN(date.getTime())) {
     return
   }
   return date
@@ -74,12 +74,12 @@ export function parseUnixTimestampInMilliseconds(
   }
 
   const timestamp = Number(input)
-  if (isNaN(timestamp)) {
+  if (Number.isNaN(timestamp)) {
     return
   }
 
   const date = new Date(timestamp)
-  if (isNaN(date.getTime())) {
+  if (Number.isNaN(date.getTime())) {
     return
   }
   return date
