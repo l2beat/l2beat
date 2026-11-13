@@ -1,3 +1,4 @@
+import { MobileBadgesSection } from '~/components/projects/sections/BadgesSection'
 import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
 import { ProjectIntro } from '../../project/ProjectIntro'
 import {
@@ -38,7 +39,11 @@ export function PrivacyProjectPage({ entry, zkCatalog, ...props }: Props) {
             },
           }}
           versions={props.versionLinks}
-          badges={entry.badges.length > 0 ? entry.badges : undefined}
+          badges={
+            entry.badges.length > 0 && (
+              <MobileBadgesSection badges={entry.badges} />
+            )
+          }
           description={entry.description}
           links={entry.projectLinks}
           discoUiHref={entry.discoveryHref}

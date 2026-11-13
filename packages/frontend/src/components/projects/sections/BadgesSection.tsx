@@ -7,6 +7,11 @@ import type { BadgeWithParams } from '../ProjectBadge'
 import { ProjectBadge } from '../ProjectBadge'
 import { BadgesDialog } from './BadgesDialog'
 
+/** The badges under a project's title, for phones only. */
+export function MobileBadgesSection({ badges }: { badges: BadgeWithParams[] }) {
+  return <BadgesSection badges={badges} className="mb-4 md:hidden" withDialog />
+}
+
 interface BadgesSectionProps {
   badges: BadgeWithParams[]
   hideTitle?: boolean

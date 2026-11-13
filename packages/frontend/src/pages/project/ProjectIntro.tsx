@@ -1,18 +1,21 @@
-import type { ComponentProps } from 'react'
+import type { ComponentProps, ReactNode } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import type { ProjectLink } from '~/components/projects/links/types'
-import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
-import { BadgesSection } from '~/components/projects/sections/BadgesSection'
 import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 
 interface Props {
   /** Archived, under review and warning bars. */
   status: ComponentProps<typeof ProjectSummaryBars>['project']
   versions?: ProjectVersionLinks
-  badges?: BadgeWithParams[]
+  /**
+   * A `MobileBadgesSection`, made by the page. Importing `BadgesSection`
+   * here would give this component a chunk of its own on every project page,
+   * as the monthly updates load that one too (see `smallSharedChunks.mts`).
+   */
+  badges?: ReactNode
   description?: string
   links: ProjectLink[]
   discoUiHref?: string
@@ -33,9 +36,7 @@ export function ProjectIntro({
   return (
     <>
       <ProjectSummaryBars project={status} versions={versions} />
-      {badges && (
-        <BadgesSection badges={badges} className="mb-4 md:hidden" withDialog />
-      )}
+      {badges}
       {description && (
         <AboutSection description={description} className="md:hidden" />
       )}

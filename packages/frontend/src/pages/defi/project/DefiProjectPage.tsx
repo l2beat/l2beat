@@ -1,7 +1,10 @@
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
-import { BadgesSection } from '~/components/projects/sections/BadgesSection'
+import {
+  BadgesSection,
+  MobileBadgesSection,
+} from '~/components/projects/sections/BadgesSection'
 import type { ProjectDefiEntry } from '~/server/features/defi/project/getDefiProjectEntry'
 import { ProjectIntro } from '../../project/ProjectIntro'
 import {
@@ -31,7 +34,7 @@ export function DefiProjectPage({ entry, ...props }: Props) {
             },
           }}
           versions={props.versionLinks}
-          badges={badges}
+          badges={badges && <MobileBadgesSection badges={badges} />}
           description={entry.description}
           links={entry.projectLinks}
           discoUiHref={entry.discoveryHref}
