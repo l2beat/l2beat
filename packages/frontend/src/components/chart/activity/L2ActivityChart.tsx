@@ -1,5 +1,8 @@
 import type { Milestone } from '@l2beat/config'
+import { formatActivityCount } from '@l2beat/shared-pure'
+import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
+import { ChartCardHeader } from '~/components/chart/ChartCardHeader'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
@@ -13,18 +16,21 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { useIsClient } from '~/hooks/useIsClient'
+import { InfoIcon } from '~/icons/Info'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { useActivityChartRangeContext } from '~/pages/layer2s/activity/components/ActivityChartRangeContext'
 import { ActivityChartRangeControls } from '~/pages/layer2s/activity/components/ActivityChartRangeControls'
+import { useActivityMetricContext } from '~/pages/layer2s/activity/components/ActivityMetricContext'
+import { ActivityMetricControls } from '~/pages/layer2s/activity/components/ActivityMetricControls'
 import { CompareProjectsLink } from '~/pages/layer2s/compare/components/CompareProjectsLink'
 import { getCompareEntryUrl } from '~/pages/layer2s/compare/utils/getCompareEntryUrl'
 import type { L2ActivityEntry } from '~/server/features/layer2s/activity/getL2ActivityEntries'
 import type { RecategorisedActivityChartData } from '~/server/features/layer2s/activity/getRecategorisedActivityChart'
+import type { ActivityResolution } from '~/server/features/layer2s/activity/utils/getActivityResolution'
 import { useTRPC } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
 import type { ChartRange } from '~/utils/range/range'
 import type { ChartScale } from '../types'
-import { ActivityChartHeader } from './ActivityChartHeader'
 import { ActivityRatioChart } from './ActivityRatioChart'
 import {
   L2RecategorizedActivityChart,
@@ -70,7 +76,7 @@ export function L2ActivityChart({ milestones, entries }: Props) {
 
   return (
     <div className="flex flex-col">
-      <ActivityChartHeader resolution={data?.resolution ?? 'day'} />
+      <Header resolution={data?.resolution ?? 'day'} entries={entries} />
       <L2RecategorizedActivityStats entries={entries} />
       <div className="mt-1 mb-2 flex items-center gap-2">
         <ChartTimeRange
@@ -107,6 +113,67 @@ export function L2ActivityChart({ milestones, entries }: Props) {
         setRange={setRange}
       />
     </div>
+  )
+}
+
+function Header({
+  resolution,
+  entries,
+}: {
+  resolution: ActivityResolution
+  entries: L2ActivityEntry[]
+}) {
+  const trpc = useTRPC()
+  const { metric, setMetric } = useActivityMetricContext()
+  // The same query, with the same input, as the stat tiles under the head
+  // (L2RecategorizedActivityStats), so both read one cached response.
+  const { data: stats, isLoading } = useQuery(
+    trpc.activity.chartStats.queryOptions({
+      filter: {
+        type: 'projects',
+        projectIds: entries.map((entry) => entry.id),
+      },
+    }),
+  )
+  const pastDay = stats?.[metric]
+
+  return (
+    <ChartCardHeader
+      title="Activity"
+      subtitle={resolution === 'hour' ? 'Hourly average' : 'Daily average'}
+      accessory={
+        <>
+          <ActivityMetricControls value={metric} onValueChange={setMetric} />
+          <SwitchInfoTooltip />
+        </>
+      }
+      value={
+        pastDay !== undefined
+          ? formatActivityCount(
+              pastDay.rollups + pastDay.validiumsAndOptimiums + pastDay.others,
+            )
+          : undefined
+      }
+      unit={metric === 'uops' ? 'UOPS' : 'TPS'}
+      valueLabel="past day"
+      isLoading={isLoading}
+    />
+  )
+}
+
+function SwitchInfoTooltip() {
+  return (
+    <Tooltip>
+      <TooltipTrigger aria-label="About UOPS and TPS">
+        <InfoIcon className="size-3.5" />
+      </TooltipTrigger>
+      <TooltipContent>
+        User Operations Per Second (UOPS) takes into account the user
+        operations, including regular transactions and actions bundled into a
+        single transaction. Transactions Per Second (TPS) takes into account the
+        regular transactions only.
+      </TooltipContent>
+    </Tooltip>
   )
 }
 

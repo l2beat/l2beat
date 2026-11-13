@@ -26,16 +26,16 @@ export function ActivityChartRangeControls({
         ...(hourlyRanges
           ? (['1d', '7d'] as const).map((value) => ({
               value,
-              label: value.toUpperCase(),
+              label: value,
               disabled: hourlyDisabled,
               disabledReason: 'This project reports its activity per day only',
             }))
           : []),
-        { value: '30d', label: '30D' },
-        { value: '90d', label: '90D' },
-        { value: '180d', label: '180D' },
-        { value: '1y', label: '1Y' },
-        { value: 'max', label: 'MAX' },
+        { value: '30d', label: '30d' },
+        { value: '90d', label: '90d' },
+        { value: '180d', label: '180d' },
+        { value: '1y', label: '1y' },
+        { value: 'max', label: 'Max' },
       ]}
     />
   )
