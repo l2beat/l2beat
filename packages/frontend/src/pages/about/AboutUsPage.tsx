@@ -11,11 +11,11 @@ export function AboutUsPage(props: AppLayoutProps) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
-        <MainPageHeader>About Us</MainPageHeader>
+        <MainPageHeader>About us</MainPageHeader>
         <PrimaryCard>
-          <p className="mb-6 font-bold text-xl">
+          <h2 className="mb-6 font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
             Learn about ETHBEAT and its mission
-          </p>
+          </h2>
           <Details />
           <MoreAboutUs />
         </PrimaryCard>

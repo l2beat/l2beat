@@ -14,10 +14,10 @@ export function BrandKitPage(props: AppLayoutProps) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
-        <MainPageHeader>Brand Kit</MainPageHeader>
+        <MainPageHeader>Brand kit</MainPageHeader>
         <div className="flex flex-col md:gap-6">
           <LogoSection
-            title="Full Logo"
+            title="Full logo"
             description='The logo is hand-lettered: always use the files as provided, with both the heart and "BEAT", and never retype the name in a font. Please do not change the placement of the pieces or the colors. Always use the full logo when space allows.'
             lightSvgHref="/brand-kit/logo-light.svg"
             darkSvgHref="/brand-kit/logo-dark.svg"
@@ -57,7 +57,9 @@ function LogoSection({
 }) {
   return (
     <PrimaryCard className="border-divider max-md:not-first:border-t">
-      <h2 className="mb-1 font-bold text-xl">{title}</h2>
+      <h2 className="mb-1 font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
+        {title}
+      </h2>
       <div className="mb-4 text-secondary text-xs">
         <p>{description}</p>
       </div>
@@ -94,7 +96,9 @@ function LogoSection({
 function ColorsSection() {
   return (
     <PrimaryCard className="border-divider max-md:border-t">
-      <h2 className="mb-4 font-bold text-xl">Colors</h2>
+      <h2 className="mb-4 font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
+        Colors
+      </h2>
       <div className="grid gap-6 md:grid-cols-2">
         <div>
           <h3 className="mb-3 font-medium text-sm">Logo</h3>
@@ -118,7 +122,9 @@ function ColorsSection() {
 function NameSection() {
   return (
     <PrimaryCard className="border-divider max-md:border-t">
-      <h2 className="mb-2 font-bold text-xl">Name</h2>
+      <h2 className="mb-2 font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
+        Name
+      </h2>
       <div className="text-paragraph-15 md:text-paragraph-16">
         <p>
           The name should always be written in uppercase as{' '}

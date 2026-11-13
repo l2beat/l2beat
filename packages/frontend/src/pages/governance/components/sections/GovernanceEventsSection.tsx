@@ -59,11 +59,11 @@ function Event({ event }: { event: GovernanceEventEntry }) {
         <div>
           <p
             className={cn(
-              'text-secondary text-subtitle-12',
+              'font-medium text-label-value-13',
               event.highlighted && 'text-white',
             )}
           >
-            DATE
+            Date
           </p>
           <p className="whitespace-pre-line text-sm">{event.displayDate}</p>
         </div>
@@ -71,11 +71,11 @@ function Event({ event }: { event: GovernanceEventEntry }) {
           <div>
             <p
               className={cn(
-                'text-secondary text-subtitle-12',
+                'font-medium text-label-value-13',
                 event.highlighted && 'text-white',
               )}
             >
-              PLACE
+              Place
             </p>
             <p className="whitespace-pre-line text-sm">{event.location}</p>
           </div>

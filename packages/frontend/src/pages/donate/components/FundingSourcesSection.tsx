@@ -5,7 +5,9 @@ import { FundingSourcesTable } from './FundingSourcesTable'
 export function FundingSourcesSection() {
   return (
     <PrimaryCard className="border-divider border-t md:mt-6 md:border-t-0">
-      <h2 className="font-bold text-xl">Funding sources</h2>
+      <h2 className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
+        Funding sources
+      </h2>
       <p className="mt-4 text-base leading-5">
         As a public goods company, ETHBEAT is financed in the open by the
         community. For transparency, we are providing ETHBEAT&apos;s funding

@@ -109,7 +109,7 @@ function PublicationCard({ publication }: { publication: PublicationEntry }) {
   return (
     <PlainLink
       href={publication.url}
-      className="group flex flex-col overflow-hidden rounded-lg border border-divider bg-pure-white transition-[border-color,box-shadow] hover:border-brand/40 hover:shadow-[0_6px_20px_-10px] hover:shadow-brand/40 dark:bg-surface-secondary"
+      className="group flex flex-col overflow-hidden rounded-lg border border-divider bg-pure-white transition-colors hover:border-brand/40 dark:bg-surface-secondary"
     >
       <div className="overflow-hidden border-divider border-b">
         <img
