@@ -4,6 +4,10 @@ import type {
   LiquidStakingSummary,
 } from '~/server/features/defi/liquid-staking/getLiquidStakingSummary'
 import { formatRange, formatTimestamp } from '~/utils/dates'
+import {
+  ALL_ROUTES_COST_OF_EXIT,
+  type CostOfExitDescription,
+} from './costOfExitDescription'
 import { formatDays, formatYield } from './formatLiquidStaking'
 
 /** Shown next to the metrics, in the table and on project pages. */
@@ -33,8 +37,7 @@ export const YIELD_METRIC: LiquidStakingMetric = {
 export const COST_OF_EXIT_METRIC: LiquidStakingMetric = {
   key: 'costOfExit',
   title: 'Cost of exit',
-  tooltip:
-    "How many days of staking yield a holder gives up to exit about 100 ETH, by the cheapest route: the protocol's withdrawal queue, which earns nothing while it waits; the protocol's instant exit, for its fee; or selling on the best onchain pool, for its discount. ~ marks an estimate: requests still queued are timed at the last 7 days' pace.",
+  tooltip: ALL_ROUTES_COST_OF_EXIT.tooltip,
   format: formatDays,
   dailyBuckets: true,
 }
@@ -59,6 +62,13 @@ export function formatMetricDate(
 
 /** The chart values, also shown in the table and on project pages. */
 export const LIQUID_STAKING_METRICS = [YIELD_METRIC, COST_OF_EXIT_METRIC]
+
+/** On a project's page, the cost of exit names only the routes it has. */
+export function getProjectMetrics(
+  costOfExit: CostOfExitDescription,
+): LiquidStakingMetric[] {
+  return [YIELD_METRIC, { ...COST_OF_EXIT_METRIC, tooltip: costOfExit.tooltip }]
+}
 
 export const ETH_STAKED_TITLE = 'ETH staked'
 export const ETH_STAKED_TOOLTIP = 'Balance of all active Ethereum validators.'

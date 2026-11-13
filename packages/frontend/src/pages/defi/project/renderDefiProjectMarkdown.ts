@@ -6,7 +6,7 @@ import { formatUtcDateOrDay } from '~/server/markdown/renderSectionParts'
 import { getUnderReviewText } from '~/utils/project/underReview'
 import {
   formatLatestValue,
-  LIQUID_STAKING_METRICS,
+  getProjectMetrics,
 } from '../liquid-staking/liquidStakingMetrics'
 import { LIQUID_STAKING_RISKS } from '../liquid-staking/liquidStakingRisks'
 
@@ -64,14 +64,15 @@ function getFacts(
 function getLiquidStakingFacts(summary: ProjectDefiEntry['liquidStaking']) {
   if (!summary) return []
   return compact([
-    ...LIQUID_STAKING_METRICS.map((metric) => {
+    ...getProjectMetrics(summary.costOfExitDescription).map((metric) => {
       const latest = summary[metric.key]
-      return (
-        latest && {
-          label: metric.title,
-          value: `${formatLatestValue(metric, latest)} (${formatUtcDateOrDay(latest.timestamp, metric.dailyBuckets)}). ${metric.tooltip}`,
-        }
-      )
+      const value = latest
+        ? `${formatLatestValue(metric, latest)} (${formatUtcDateOrDay(latest.timestamp, metric.dailyBuckets)})`
+        : 'No data'
+      return {
+        label: metric.title,
+        value: `${value}. ${metric.tooltip}`,
+      }
     }),
     ...LIQUID_STAKING_RISKS.map(({ key, title }) => {
       const risk = summary.risks[key]

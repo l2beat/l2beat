@@ -1,5 +1,13 @@
-import type { Project, ProjectLiquidStakingRisks } from '@l2beat/config'
+import type {
+  Project,
+  ProjectLiquidStaking,
+  ProjectLiquidStakingRisks,
+} from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
+import {
+  type CostOfExitDescription,
+  getCostOfExitDescription,
+} from '~/pages/defi/liquid-staking/costOfExitDescription'
 import { type ChartRange, optionToRange } from '~/utils/range/range'
 import { getTotalValueLockedByProject } from '../getDefiTotalValueLocked'
 import {
@@ -13,6 +21,10 @@ export interface LiquidStakingSummary {
   totalValueLockedUsd?: number
   yield?: LiquidStakingLatestValue
   costOfExit?: LiquidStakingLatestValue
+}
+
+export interface ProjectLiquidStakingSummary extends LiquidStakingSummary {
+  costOfExitDescription: CostOfExitDescription
 }
 
 export interface LiquidStakingLatestValue {
@@ -36,18 +48,24 @@ export function getLatestValuesRange(): ChartRange {
 /** The project's row of the liquid staking page, with the latest chart values. */
 export async function getLiquidStakingSummary(
   project: Pick<Project<'defiInfo'>, 'id' | 'defiInfo'>,
-  risks: ProjectLiquidStakingRisks,
-): Promise<LiquidStakingSummary> {
+  liquidStaking: ProjectLiquidStaking,
+): Promise<ProjectLiquidStakingSummary> {
   const [tvlByProject, charts] = await Promise.all([
     getTotalValueLockedByProject([project]),
-    getLiquidStakingCharts({ range: getLatestValuesRange() }),
+    getLiquidStakingCharts({
+      range: getLatestValuesRange(),
+      projectId: project.id,
+    }),
   ])
-  return buildLiquidStakingSummary(
-    project.id,
-    risks,
-    tvlByProject.get(project.id),
-    charts,
-  )
+  return {
+    ...buildLiquidStakingSummary(
+      project.id,
+      liquidStaking.risks,
+      tvlByProject.get(project.id),
+      charts,
+    ),
+    costOfExitDescription: getCostOfExitDescription(liquidStaking),
+  }
 }
 
 /** A project's risks and TVL, with its latest values from the charts. */
