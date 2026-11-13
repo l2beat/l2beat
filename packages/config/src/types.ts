@@ -234,6 +234,8 @@ export interface BaseProject {
   display?: ProjectDisplay
   colors?: ProjectCustomColors
   milestones?: Milestone[]
+  /** How the project is upgraded and governed, on every page it has. */
+  upgradesAndGovernance?: ProjectUpgradesAndGovernance
   chainConfig?: ChainConfig
   escrows?: ProjectEscrow[]
 
@@ -787,7 +789,6 @@ export interface ProjectScalingTechnology {
   exitMechanisms?: ProjectTechnologyChoice[]
   massExit?: ProjectTechnologyChoice
   otherConsiderations?: ProjectTechnologyChoice[]
-  upgradesAndGovernance?: ProjectUpgradesAndGovernance
   stateDerivation?: ProjectScalingStateDerivation
   stateValidation?: ProjectScalingStateValidation
   stateValidationImage?: string
@@ -1009,11 +1010,14 @@ export interface ProjectZkCatalogInfo {
     finalWrap?: ZkCatalogTag[]
     snark?: ZkCatalogTag[]
   }
-  proofSystemInfo: string
+  proofSystemInfo?: string
   trustedSetups: (TrustedSetup & {
     proofSystem: ZkCatalogTag
   })[]
-  /** Projects that are used in the TVS calculations. */
+  /**
+   * Projects that are used in the TVS calculations. A project with escrows of
+   * its own gets itself, from its first escrow, when this is not set.
+   */
   projectsForTvs?: {
     projectId: ProjectId
     sinceTimestamp: UnixTime
@@ -1235,7 +1239,6 @@ export interface ProjectPrivacyInfo {
    */
   quantumResistant?: true
   riskSummary?: string
-  upgradesAndGovernance?: ProjectUpgradesAndGovernance
   /** ZK catalog project whose trusted setups are shown when this project has no own zkCatalogInfo. */
   zkCatalogId?: ProjectId
 }

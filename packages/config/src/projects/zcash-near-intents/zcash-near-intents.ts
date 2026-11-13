@@ -61,6 +61,9 @@ export const zcashNearIntents: BaseProject = {
     },
     badges: [],
   },
+  upgradesAndGovernance: {
+    content: readProjectMarkdown('zcash-near-intents', 'upgradesAndGovernance'),
+  },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
     referenceApp: {
@@ -159,11 +162,5 @@ export const zcashNearIntents: BaseProject = {
     ],
     adversaries: zcashNearIntentsAdversaries,
     riskSummary: readProjectMarkdown('zcash-near-intents', 'riskSummary'),
-    upgradesAndGovernance: {
-      content: readProjectMarkdown(
-        'zcash-near-intents',
-        'upgradesAndGovernance',
-      ),
-    },
   },
 }

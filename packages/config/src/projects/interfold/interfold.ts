@@ -169,6 +169,15 @@ export const interfold: BaseProject = {
       type: 'general',
     },
   ],
+  upgradesAndGovernance: {
+    content: readProjectMarkdown('interfold', 'upgradesAndGovernance', {
+      safeAStats: discovery.getMultisigStats('InterfoldSafeA'),
+      safeBStats: discovery.getMultisigStats('InterfoldSafeB'),
+      voteDuration: formatSeconds(ippStages[0][3], { fullUnit: true }),
+      approvalWindow: formatSeconds(ippStages[1][1], { fullUnit: true }),
+      veMultisigStats,
+    }),
+  },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.secretBallot,
     referenceApp: {
@@ -217,15 +226,6 @@ export const interfold: BaseProject = {
       committeeMembers: voteCommittee.members,
       decryptionThreshold: voteCommittee.decryptionThreshold,
     }),
-    upgradesAndGovernance: {
-      content: readProjectMarkdown('interfold', 'upgradesAndGovernance', {
-        safeAStats: discovery.getMultisigStats('InterfoldSafeA'),
-        safeBStats: discovery.getMultisigStats('InterfoldSafeB'),
-        voteDuration: formatSeconds(ippStages[0][3], { fullUnit: true }),
-        approvalWindow: formatSeconds(ippStages[1][1], { fullUnit: true }),
-        veMultisigStats,
-      }),
-    },
   },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {

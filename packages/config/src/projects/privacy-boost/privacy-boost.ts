@@ -244,12 +244,6 @@ export const privacyBoost: BaseProject = {
         ...TRUSTED_SETUPS.PrivacyBoostv3,
       },
     ],
-    projectsForTvs: [
-      {
-        projectId: ProjectId('privacy-boost'),
-        sinceTimestamp: PRIVACY_BOOST_SINCE_TIMESTAMP,
-      },
-    ],
     verifierHashes: [
       {
         hash: 'Privacy Boost epoch verifier 23.09.2026',
@@ -261,9 +255,7 @@ export const privacyBoost: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
         knownDeployments: [
           {
-            address: ChainSpecificAddress(
-              'base:0xB144eb785E2CCe17681395Cd475093C01AEeb11e',
-            ),
+            address: verifier('epochVerifier'),
           },
         ],
         verificationStatus: 'successful',
@@ -282,9 +274,7 @@ export const privacyBoost: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
         knownDeployments: [
           {
-            address: ChainSpecificAddress(
-              'base:0xac60252EF8dbC139e0da63cE7F2a13D25a5B627d',
-            ),
+            address: verifier('depositVerifier'),
           },
         ],
         verificationStatus: 'successful',
@@ -303,9 +293,7 @@ export const privacyBoost: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
         knownDeployments: [
           {
-            address: ChainSpecificAddress(
-              'base:0x40e93d3357A5A3d249437717Da936f6141ba85cE',
-            ),
+            address: verifier('forcedVerifier'),
           },
         ],
         verificationStatus: 'successful',
@@ -325,9 +313,7 @@ export const privacyBoost: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
         knownDeployments: [
           {
-            address: ChainSpecificAddress(
-              'base:0x0c8bb018a3d8DF4c5fC86518ca57F8E1445BCF63',
-            ),
+            address: verifier('portalDepositVerifier'),
           },
         ],
         verificationStatus: 'successful',
@@ -347,9 +333,7 @@ export const privacyBoost: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
         knownDeployments: [
           {
-            address: ChainSpecificAddress(
-              'base:0x8f394a08A7544daf39aF38FEA5B2E348180bDC05',
-            ),
+            address: verifier('giftClaimVerifier'),
           },
         ],
         verificationStatus: 'successful',
@@ -360,6 +344,11 @@ export const privacyBoost: BaseProject = {
         ),
       },
     ],
+  },
+  upgradesAndGovernance: {
+    content: readProjectMarkdown('privacy-boost', 'upgradesAndGovernance', {
+      adminMultisigStats,
+    }),
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
@@ -402,41 +391,15 @@ export const privacyBoost: BaseProject = {
     ],
     adversaries: privacyBoostAdversaries,
     riskSummary: readProjectMarkdown('privacy-boost', 'riskSummary'),
-    upgradesAndGovernance: {
-      content: readProjectMarkdown('privacy-boost', 'upgradesAndGovernance', {
-        adminMultisigStats,
-      }),
-    },
   },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [],
-    zkVerifiers: getPrivacyBoostVerifiers(),
   },
 }
 
-function getPrivacyBoostVerifiers(): ChainSpecificAddress[] {
-  return [
-    discovery.getContractValue<ChainSpecificAddress>(
-      'PrivacyBoost',
-      'depositVerifier',
-    ),
-    discovery.getContractValue<ChainSpecificAddress>(
-      'PrivacyBoost',
-      'epochVerifier',
-    ),
-    discovery.getContractValue<ChainSpecificAddress>(
-      'PrivacyBoost',
-      'forcedVerifier',
-    ),
-    discovery.getContractValue<ChainSpecificAddress>(
-      'PrivacyBoost',
-      'portalDepositVerifier',
-    ),
-    discovery.getContractValue<ChainSpecificAddress>(
-      'PrivacyBoost',
-      'giftClaimVerifier',
-    ),
-  ]
+/** A verifier contract PrivacyBoost points at, as discovered. */
+function verifier(field: string): ChainSpecificAddress {
+  return discovery.getContractValue<ChainSpecificAddress>('PrivacyBoost', field)
 }

@@ -142,10 +142,6 @@ interface TornadoBucket {
 }
 
 const BUCKETS = getTornadoBuckets()
-const TORNADO_CASH_SINCE_TIMESTAMP = UnixTime(
-  Math.min(...BUCKETS.map((bucket) => bucket.sinceTimestamp)),
-)
-
 export const tornadoCash: BaseProject = {
   id: ProjectId('tornado-cash'),
   slug: 'tornado-cash',
@@ -245,19 +241,15 @@ export const tornadoCash: BaseProject = {
     techStack: {
       zkVM: [ZK_CATALOG_TAGS.curve.BN254, ZK_CATALOG_TAGS.Groth16.websnark],
     },
-    proofSystemInfo: '',
     trustedSetups: [
       {
         proofSystem: ZK_CATALOG_TAGS.Groth16.websnark,
         ...TRUSTED_SETUPS.TornadoCash,
       },
     ],
-    projectsForTvs: [
-      {
-        projectId: ProjectId('tornado-cash'),
-        sinceTimestamp: TORNADO_CASH_SINCE_TIMESTAMP,
-      },
-    ],
+    // TODO(research): discovery also finds BatchTreeUpdateVerifier,
+    // TreeUpdateVerifier, RewardVerifier and WithdrawVerifier, which no
+    // verifier hash lists yet.
     verifierHashes: [
       {
         hash: 'Tornado Cash verifier 03.07.2026',
@@ -267,10 +259,7 @@ export const tornadoCash: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Groth16.websnark,
         knownDeployments: [
           {
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0xce172ce1F20EC0B3728c9965470eaf994A03557A',
-            ),
+            address: discovery.getContract('Verifier').address,
           },
         ],
         verificationStatus: 'successful',
@@ -281,6 +270,52 @@ export const tornadoCash: BaseProject = {
         ),
       },
     ],
+  },
+  upgradesAndGovernance: {
+    content: readProjectMarkdown('tornado-cash', 'upgradesAndGovernance'),
+    governanceInfo: {
+      upgrades: {
+        'Normal upgrade path': {
+          steps: [
+            {
+              description:
+                'Lock and optionally delegate TORN in the [Governance contract](https://etherscan.io/address/0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce)',
+            },
+            {
+              description: `Submit a proposal with at least **${formatNumber(Number(proposalThreshold / 10n ** 18n))} TORN**`,
+            },
+            {
+              description: `Wait ${formatSeconds(votingDelay)}`,
+              isWait: true,
+            },
+            {
+              description: `Vote for ${formatSeconds(votingPeriod)} (extended by ${formatSeconds(voteExtendTime)} if the outcome changes during the last ${formatSeconds(closingPeriod)})`,
+            },
+            {
+              description: `Pass with a simple majority and **${formatNumber(Number(quorumVotes / 10n ** 18n))} TORN** quorum`,
+            },
+            {
+              description: `Wait ${formatSeconds(executionDelay)}`,
+              isWait: true,
+            },
+            {
+              description: `Permissionless execution within ${formatSeconds(executionExpiration)}`,
+            },
+          ],
+          note: 'The DAO controls protocol and periphery components, but cannot upgrade or modify existing pools.',
+        },
+        'Exit window': `**${formatSeconds(executionDelay)}** for DAO-controlled changes — an accepted proposal remains timelocked for this period before it can be executed. Existing Tornado Cash pools are immutable and cannot be upgraded by the DAO.`,
+      },
+      tokenGovernance: {
+        'Governance token': `\`TORN\`, 1 token = 1 vote, delegated. Total supply: **${formatNumber(Number(tornTotalSupply / 10n ** 18n))} TORN**, DAO-owned TORN (unavailable for voting): **${formatNumber(Number(tornTreasury / 10n ** 18n))} TORN**, staked for voting: **${formatNumber(Number(tornStaked / 10n ** 18n))} TORN**, the rest is circulating supply.`,
+        'Stake lock': `After voting or proposing, staked tokens are locked for **${stakeLockPeriod}** after proposal ends, preventing governance hopping.`,
+        'Voting venue':
+          '[Governance contract](https://etherscan.io/address/0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) on Ethereum. Proposals are viewable on the [governance page](https://tornadocash.eth.limo/governance) of the app, see the App section above.',
+        'Proposal threshold': `**${formatNumber(Number(proposalThreshold / 10n ** 18n))} TORN** locked in governance.`,
+        Quorum: `**${formatNumber(Number(quorumVotes / 10n ** 18n))} TORN**, with a simple majority required for acceptance.`,
+        'Execution model': `**Permissionless execution after an onchain vote and timelock.** An accepted proposal waits ${formatSeconds(executionDelay)} and can then be executed by anyone within ${formatSeconds(executionExpiration)}. Proposal executable payload is committed in the \`propose()\` transaction.`,
+      },
+    },
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.pool,
@@ -340,52 +375,6 @@ export const tornadoCash: BaseProject = {
     riskSummary: readProjectMarkdown('tornado-cash', 'riskSummary', {
       upgradeDelay,
     }),
-    upgradesAndGovernance: {
-      content: readProjectMarkdown('tornado-cash', 'upgradesAndGovernance'),
-      governanceInfo: {
-        upgrades: {
-          'Normal upgrade path': {
-            steps: [
-              {
-                description:
-                  'Lock and optionally delegate TORN in the [Governance contract](https://etherscan.io/address/0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce)',
-              },
-              {
-                description: `Submit a proposal with at least **${formatNumber(Number(proposalThreshold / 10n ** 18n))} TORN**`,
-              },
-              {
-                description: `Wait ${formatSeconds(votingDelay)}`,
-                isWait: true,
-              },
-              {
-                description: `Vote for ${formatSeconds(votingPeriod)} (extended by ${formatSeconds(voteExtendTime)} if the outcome changes during the last ${formatSeconds(closingPeriod)})`,
-              },
-              {
-                description: `Pass with a simple majority and **${formatNumber(Number(quorumVotes / 10n ** 18n))} TORN** quorum`,
-              },
-              {
-                description: `Wait ${formatSeconds(executionDelay)}`,
-                isWait: true,
-              },
-              {
-                description: `Permissionless execution within ${formatSeconds(executionExpiration)}`,
-              },
-            ],
-            note: 'The DAO controls protocol and periphery components, but cannot upgrade or modify existing pools.',
-          },
-          'Exit window': `**${formatSeconds(executionDelay)}** for DAO-controlled changes — an accepted proposal remains timelocked for this period before it can be executed. Existing Tornado Cash pools are immutable and cannot be upgraded by the DAO.`,
-        },
-        tokenGovernance: {
-          'Governance token': `\`TORN\`, 1 token = 1 vote, delegated. Total supply: **${formatNumber(Number(tornTotalSupply / 10n ** 18n))} TORN**, DAO-owned TORN (unavailable for voting): **${formatNumber(Number(tornTreasury / 10n ** 18n))} TORN**, staked for voting: **${formatNumber(Number(tornStaked / 10n ** 18n))} TORN**, the rest is circulating supply.`,
-          'Stake lock': `After voting or proposing, staked tokens are locked for **${stakeLockPeriod}** after proposal ends, preventing governance hopping.`,
-          'Voting venue':
-            '[Governance contract](https://etherscan.io/address/0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) on Ethereum. Proposals are viewable on the [governance page](https://tornadocash.eth.limo/governance) of the app, see the App section above.',
-          'Proposal threshold': `**${formatNumber(Number(proposalThreshold / 10n ** 18n))} TORN** locked in governance.`,
-          Quorum: `**${formatNumber(Number(quorumVotes / 10n ** 18n))} TORN**, with a simple majority required for acceptance.`,
-          'Execution model': `**Permissionless execution after an onchain vote and timelock.** An accepted proposal waits ${formatSeconds(executionDelay)} and can then be executed by anyone within ${formatSeconds(executionExpiration)}. Proposal executable payload is committed in the \`propose()\` transaction.`,
-        },
-      },
-    },
   },
   crops: {
     censorshipResistance: {
@@ -424,13 +413,6 @@ export const tornadoCash: BaseProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [],
-    zkVerifiers: [
-      discovery.getContract('Verifier').address,
-      discovery.getContract('BatchTreeUpdateVerifier').address,
-      discovery.getContract('TreeUpdateVerifier').address,
-      discovery.getContract('RewardVerifier').address,
-      discovery.getContract('WithdrawVerifier').address,
-    ],
   },
 }
 

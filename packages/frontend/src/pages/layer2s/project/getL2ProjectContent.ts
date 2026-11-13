@@ -40,6 +40,7 @@ export async function getL2ProjectContent(
       'customDa',
       'archivedAt',
       'milestones',
+      'upgradesAndGovernance',
       'trackedTxsConfig',
       'tvsConfig',
       'discoveryInfo',
