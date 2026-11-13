@@ -385,6 +385,13 @@ export const zkmoneyv6: BaseProject = {
     associatedTokens: [],
     warnings: [],
   },
+  upgradesAndGovernance: {
+    content: readProjectMarkdown(
+      'zkmoneyv6',
+      'upgradesAndGovernance',
+      governanceValues,
+    ),
+  },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
     referenceApp: {
@@ -473,13 +480,6 @@ export const zkmoneyv6: BaseProject = {
     ],
     adversaries: zkMoneyV6Adversaries,
     riskSummary: readProjectMarkdown('zkmoneyv6', 'riskSummary'),
-    upgradesAndGovernance: {
-      content: readProjectMarkdown(
-        'zkmoneyv6',
-        'upgradesAndGovernance',
-        governanceValues,
-      ),
-    },
   },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {

@@ -311,7 +311,7 @@ export async function getPrivacyProjectDetails(
       project.privacyInfo.detailedDescription ??
       project.display.detailedDescription,
     riskSummary: project.privacyInfo.riskSummary,
-    upgradesAndGovernance: project.privacyInfo.upgradesAndGovernance,
+    upgradesAndGovernance: project.upgradesAndGovernance,
     attributes: project.privacyInfo.attributes ?? [],
     milestones: [...(project.milestones ?? [])].sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
