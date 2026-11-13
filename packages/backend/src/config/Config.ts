@@ -140,8 +140,6 @@ export interface HealthConfig {
 
 export interface ActivityConfig {
   readonly voyagerApiKey: string | undefined
-  /** Stores the blocks at the heads of EVM chains as they come, for live views */
-  readonly followHeads: boolean
   readonly projects: ActivityConfigProject[]
 }
 
@@ -149,6 +147,8 @@ export interface ActivityConfigProject {
   id: ProjectId
   chainName: string
   activityConfig: ProjectActivityConfig
+  /** Stores the blocks at the head of its EVM chain as they come, for live views */
+  followHead: boolean
 }
 
 export interface MetricsAuthConfig {

@@ -3,6 +3,10 @@ import type { Database } from '@l2beat/database'
 import { NotFoundOnRpcError } from '@l2beat/shared'
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { TimeLoop } from '../../../tools/TimeLoop'
+import {
+  createIndexerId,
+  INDEXER_NAMES,
+} from '../../../tools/uif/indexerIdentity'
 import type { ActivityBlock } from '../services/txs/types'
 import { LIVE_BLOCKS_KEPT_FOR } from './LiveActivityCleaner'
 
@@ -44,6 +48,8 @@ export class HeadFollower extends TimeLoop {
     private readonly $: {
       projectId: ProjectId
       batchSize: number
+      /** Of what the counts depend on: blocks stored under another one are deleted */
+      configHash: string
       fetcher: BlockFetcher
       db: Database
     },
@@ -53,6 +59,27 @@ export class HeadFollower extends TimeLoop {
     this.logger = logger
       .for(this)
       .tag({ tag: $.projectId, project: $.projectId })
+  }
+
+  /** Must finish before anything reads the stored blocks */
+  async initialize(): Promise<void> {
+    const indexerId = createIndexerId(
+      INDEXER_NAMES.LIVE_ACTIVITY,
+      this.$.projectId,
+    )
+    const state = await this.$.db.indexerState.findByIndexerId(indexerId)
+    if (state?.configHash === this.$.configHash) return
+
+    // deleted before the hash is saved, so a failed delete is tried again
+    const deleted = await this.$.db.liveActivityBlock.deleteByProject(
+      this.$.projectId,
+    )
+    await this.$.db.indexerState.upsert({
+      indexerId,
+      safeHeight: 0,
+      configHash: this.$.configHash,
+    })
+    this.logger.info('Config changed, deleted stored blocks', { deleted })
   }
 
   async run(): Promise<void> {

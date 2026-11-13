@@ -28,4 +28,5 @@ export const INDEXER_NAMES = {
   PRIVACY_BUCKET_VALUE: 'privacy_bucket_value_indexer',
   ETHEREUM_BLOB_NOTIFIER: 'ethereum_blob_notifier',
   LIVE_BLOBS: 'live_blobs_indexer',
+  LIVE_ACTIVITY: 'live_activity',
 }

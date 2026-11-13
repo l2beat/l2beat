@@ -1,3 +1,4 @@
+import { hashJson } from '@l2beat/shared'
 import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import { instrumentCoreFeatureRpcMetricsRun } from '../../tools/coreFeatureRpcMetrics'
 import { IndexerService } from '../../tools/uif/IndexerService'
@@ -65,7 +66,7 @@ export function initActivityModule({
           logger,
         )
 
-        const rpc = config.activity.followHeads
+        const rpc = project.followHead
           ? providers.clients.rpcClients.find(
               (client) => client.chain === project.chainName,
             )
@@ -84,6 +85,9 @@ export function initActivityModule({
               {
                 projectId: project.id,
                 batchSize: project.activityConfig.batchSize ?? 100,
+                configHash: hashJson(
+                  project.activityConfig.adjustCount ?? null,
+                ),
                 fetcher,
                 db: database,
               },
@@ -209,6 +213,7 @@ export function initActivityModule({
 
   return {
     start: async () => {
+      await Promise.all(headFollowers.map((follower) => follower.initialize()))
       await Promise.all(
         indexers.map(async (indexer) => {
           await indexer.start()
