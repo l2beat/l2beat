@@ -103,6 +103,8 @@ describe('classNames', () => {
       })
 
       expect(leftAlignedClassName.includes('pl-10')).toEqual(true)
+      // The group inset must not override the sort-icon indent
+      expect(leftAlignedClassName.includes('pl-6')).toEqual(false)
       expect(rightAlignedClassName.includes('pl-10')).toEqual(false)
       expect(rightAlignedClassName.includes('pl-4')).toEqual(false)
     })
