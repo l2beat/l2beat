@@ -104,6 +104,7 @@ export const columns = [
       header: 'Price',
       meta: {
         align: 'right',
+        tooltip: 'Token price. Percentage change compared to 7 days ago.',
       },
       cell: (ctx) => {
         const { priceUsd } = ctx.row.original
