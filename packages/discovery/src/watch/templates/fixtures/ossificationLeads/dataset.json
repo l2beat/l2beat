@@ -1,0 +1,62 @@
+{
+  "incidents/1/0x0599c7769da0df6e75cc9441372b30937ceb742378485d26605fdb27d2e4642e.json": {
+    "protocol": "Spiral",
+    "name": "SpiralHookV2 spot-price borrow with tx.origin same-block guard",
+    "refs": [
+      "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/8d8c5db24bf7a74af3d9a4c1f8e1452cd839e8b1/src/test/2026-09/SpiralHookV2_exp.sol",
+      "eip155:1:0x84f2f1d061b187d3c2096281b8a52805185604468e4f005580a9150d36379925"
+    ]
+  },
+  "incidents/1/0x0016745693d68d734faa408b94cdf2d6c95f511b50f47b03909dc599c1dd9ff6.json": {
+    "protocol": "Cream Finance",
+    "name": "Cream Finance (AMP reentrancy)",
+    "refs": [
+      "https://medium.com/cream-finance/c-r-e-a-m-finance-post-mortem-amp-exploit-6ceb20a630c5",
+      "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/b3719ce7fb93ee6f743853ede9471e1a8bed1de0/src/test/2021-08/Cream_exp.sol",
+      "eip155:1:0xe19cf88e613750175390d370f4e3cd1443831de7c06abea2f9cbff1df6be3b18"
+    ]
+  },
+  "research/queue.json": {
+    "dfhl:src/test/2018-04/BEC_exp.sol": {
+      "name": "BEC",
+      "refs": [
+        "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/b3719ce7fb93ee6f743853ede9471e1a8bed1de0/src/test/2018-04/BEC_exp.sol"
+      ],
+      "missing": ["no record yet"]
+    },
+    "dfhl:src/test/2026-03/VTSwapHook_exp.sol": {
+      "name": "VTSwapHook",
+      "refs": [
+        "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/b3719ce7fb93ee6f743853ede9471e1a8bed1de0/src/test/2026-03/VTSwapHook_exp.sol"
+      ],
+      "missing": ["no record yet"]
+    },
+    "eip155:10:0xb0a8a3cc76fb17bf965ab1dee3b76b62f79ca72def31e12f8ad8b1711625df08": {
+      "name": "Perpetual Protocol OrderBook funding-growth poisoning",
+      "refs": [
+        "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/ad353ba25fbb897c56d64c28ce92ee10ac68cad2/src/test/2026-07/PerpetualProtocol_exp.sol"
+      ],
+      "draft": {
+        "protocol": "Perpetual Protocol",
+        "summary": "OrderBook.updateFundingGrowthAndLiquidityCoefficientInFundingPayment omitted its clearing-house-only guard, so a direct call poisoned cached funding growth and converted fabricated PnL into withdrawals from two deployments.",
+        "targets": ["0x4e26b6815d82baa6b8c15fe4ffb646dfb4b474c7"],
+        "lossUsd": 3062.213107
+      },
+      "missing": ["full review of a seed import"]
+    }
+  },
+  "research/excluded.json": {
+    "dfhl:src/test/2026-04/SaturnProtocol_exp.sol": {
+      "name": "SaturnProtocol",
+      "rule": "no-exploit",
+      "refs": [
+        "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/b3719ce7fb93ee6f743853ede9471e1a8bed1de0/src/test/2026-04/SaturnProtocol_exp.sol"
+      ]
+    },
+    "0g:2025-12-11:0g-reward-contract-leaked-key-emergencywithdraw": {
+      "name": "0G reward contract leaked-key emergencyWithdraw",
+      "date": "2025-12-11",
+      "rule": "keys"
+    }
+  }
+}
