@@ -36,7 +36,7 @@ export function ProgramHashNameCell({
   }, [])
 
   return (
-    <div className="flex items-start gap-1 py-2">
+    <div className="flex items-center gap-1 py-2">
       <Tooltip>
         <TooltipTrigger
           disabled={!isOverflowing && !description}
@@ -44,7 +44,7 @@ export function ProgramHashNameCell({
         >
           <div
             ref={titleRef}
-            className="line-clamp-5 w-44 shrink-0 text-pretty font-bold text-label-value-14 leading-normal [overflow-wrap:anywhere] md:line-clamp-4 md:w-60 2xl:w-72"
+            className="line-clamp-6 w-fit max-w-44 text-pretty break-words font-bold text-label-value-14 leading-normal md:line-clamp-4 md:max-w-60 2xl:max-w-72"
           >
             {withIdentifierBreaks(title)}
           </div>

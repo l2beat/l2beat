@@ -64,20 +64,23 @@ export function ContractsSection(props: ContractsSectionProps) {
       sectionOrder={props.sectionOrder}
       isUnderReview={props.isUnderReview}
     >
-      {props.discoUi && (
-        <DiscoUiBanner
-          href={props.discoUi.href}
-          images={props.discoUi.images}
-        />
-      )}
       {hasContractsChanged && <ContractsUpdated />}
-      {/* Risks lead the section; after ~50 entries nobody reached them. */}
+      {/* Status leads: the risks come before the Disco banner and the
+          ~50 entries, where nobody reached them. */}
       {props.risks.length > 0 && (
-        <div className="mb-8">
-          <p className="text-paragraph-15 md:text-paragraph-16">
+        <div className="mb-8 [&>ul]:mt-3">
+          <p className="text-pretty text-paragraph-15 md:text-paragraph-16">
             {DEPLOYMENT_RISKS_INTRO}
           </p>
           <RiskList risks={props.risks} />
+        </div>
+      )}
+      {props.discoUi && (
+        <div className="mb-6">
+          <DiscoUiBanner
+            href={props.discoUi.href}
+            images={props.discoUi.images}
+          />
         </div>
       )}
       {props.diagram && (

@@ -108,7 +108,10 @@ export function EnumeratedRisks({ risks }: { risks: RiskGroup[] }) {
               {item.isCritical ? (
                 <>
                   {item.text.slice(0, -1)}{' '}
-                  <span className="text-negative"> (CRITICAL)</span>
+                  <span className="font-semibold text-negative">
+                    {' '}
+                    (CRITICAL)
+                  </span>
                   {item.text.slice(-1)}
                 </>
               ) : (

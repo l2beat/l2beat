@@ -59,8 +59,10 @@ export function renderContractsSection(
     hasImpactfulChanges(Object.values(props.contracts).flat())
       ? note(CONTRACTS_UPDATED_NOTE)
       : '',
-    renderDiagram(props.diagram),
+    // Same order as the page: status before the banner and the entries.
+    renderRisks(props.risks, DEPLOYMENT_RISKS_INTRO),
     renderDiscoUi(props.discoUi),
+    renderDiagram(props.diagram),
     ...Object.entries(props.contracts).map(([chain, contracts]) =>
       subsection(
         level,
@@ -68,7 +70,6 @@ export function renderContractsSection(
         renderContractList(contracts, 'contracts', level + 1),
       ),
     ),
-    renderRisks(props.risks, DEPLOYMENT_RISKS_INTRO),
     renderProgramHashesSubsection(props, level),
   ])
 }

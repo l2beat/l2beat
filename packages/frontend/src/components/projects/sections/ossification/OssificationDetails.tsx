@@ -137,11 +137,13 @@ function CriticalContracts({
             <thead className="font-medium text-label-value-13">
               <tr>
                 <th className="px-4 py-2 font-medium md:px-6">Contract</th>
-                <th className="px-4 py-2 font-medium md:px-6">Unchanged for</th>
-                <th className="whitespace-nowrap px-4 py-2 text-right font-medium md:px-6">
+                <th className="px-4 py-2 font-medium md:whitespace-nowrap md:px-6">
+                  Unchanged for
+                </th>
+                <th className="px-4 py-2 text-right font-medium md:whitespace-nowrap md:px-6">
                   Code changes
                 </th>
-                <th className="whitespace-nowrap px-4 py-2 text-right font-medium md:px-6">
+                <th className="px-4 py-2 text-right font-medium md:whitespace-nowrap md:px-6">
                   State changes
                 </th>
               </tr>
@@ -152,7 +154,9 @@ function CriticalContracts({
                   <td className="px-4 py-2 md:px-6">
                     <div className="flex items-center gap-2">
                       <span className="font-medium">
-                        {withIdentifierBreaks(contract.name)}
+                        {withIdentifierBreaks(contract.name, {
+                          atCapitals: false,
+                        })}
                       </span>
                       {!contract.isVerified && <OssificationUnverifiedBadge />}
                     </div>

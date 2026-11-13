@@ -64,7 +64,8 @@ export function RiskBanner({
         <div
           className={cn(
             'flex flex-1 flex-col items-start justify-center gap-1 p-4',
-            describesEmergency && 'pb-2',
+            // Label at the same height as the fixed-height siblings.
+            describesEmergency && 'pt-6 pb-2',
           )}
         >
           <div
