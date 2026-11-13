@@ -4,6 +4,7 @@ import { TableFilterContextProvider } from '~/components/table/filters/TableFilt
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { externalLinks } from '~/consts/externalLinks'
 import { useTracking } from '~/hooks/useTracking'
+import { CustomLinkIcon } from '~/icons/Outlink'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { cn } from '~/utils/cn'
@@ -50,15 +51,15 @@ function TrustedSetupFrameworkLink() {
       target="_blank"
       rel="noreferrer"
       className={cn(
-        'flex items-center gap-1 rounded-lg bg-brand font-semibold text-sm text-white',
-        'h-8 w-fit px-2 py-1',
-        'ring-brand ring-offset-1 ring-offset-background focus-visible:outline-none focus-visible:ring-2',
+        'flex h-8 w-fit items-center gap-1.5 whitespace-nowrap rounded-lg bg-surface-primary px-3 font-medium text-primary text-xs leading-none transition-colors hover:bg-surface-secondary md:text-sm',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset',
       )}
       onClick={() => {
         track('trustedSetupFrameworkSelected')
       }}
     >
-      Trusted Setups Risk Framework
+      Trusted setups risk framework
+      <CustomLinkIcon className="size-3.5 shrink-0 fill-secondary" />
     </a>
   )
 }

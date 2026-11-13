@@ -37,9 +37,13 @@ export function TrustedSetupParticipants(
               <span className="font-semibold text-paragraph-15">
                 {summary.label}
                 {summary.phase && (
-                  <span className="font-normal">
-                    {` · ${PHASE_KINDS[summary.phase]}`}
-                  </span>
+                  <>
+                    {/* The only break is before the middot, so a kind like
+                        "Circuit-specific" moves to the next line whole. */}{' '}
+                    <span className="whitespace-nowrap font-normal">
+                      · {PHASE_KINDS[summary.phase]}
+                    </span>
+                  </>
                 )}
               </span>
               <span className="flex flex-wrap items-baseline gap-x-1.5">

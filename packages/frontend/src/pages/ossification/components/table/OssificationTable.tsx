@@ -120,7 +120,7 @@ const columns = [
         <TwoRowCell.First>
           {formatCriticalChangesPerYear(ctx.row.original)}
         </TwoRowCell.First>
-        <TwoRowCell.Second>
+        <TwoRowCell.Second className="whitespace-nowrap">
           {formatContractCount(ctx.row.original.contractCount)}
         </TwoRowCell.Second>
       </TwoRowCell>

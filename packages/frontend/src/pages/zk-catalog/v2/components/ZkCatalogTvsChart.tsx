@@ -1,6 +1,7 @@
 import { formatCurrency } from '@l2beat/shared-pure'
 import round from 'lodash/round'
 import { useMemo, useState } from 'react'
+import { ChartCardHeader } from '~/components/chart/ChartCardHeader'
 import { TvsChartRangeControls } from '~/components/chart/tvs/TvsChartRangeControls'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
@@ -107,26 +108,25 @@ export function ZkCatalogTvsChart({ provers, defaultRange }: Props) {
 
   return (
     <PrimaryCard className="mb-4">
-      <div className="mb-3">
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-          <h2 className="font-bold text-lg md:text-xl">Prover adoption</h2>
-          <RadioGroup
-            name="zkCatalogProverMetric"
-            value={metric}
-            onValueChange={(value) => setMetric(value as Metric)}
-            className="h-9"
-          >
-            <RadioGroupItem value="value" className="md:text-base">
-              Value secured
-            </RadioGroupItem>
-            <RadioGroupItem value="projects" className="md:text-base">
-              Projects
-            </RadioGroupItem>
-          </RadioGroup>
-        </div>
-        <ChartTimeRange
-          isPlaceholderData={isPlaceholderData}
-          timeRange={timeRange}
+      <div className="mb-4">
+        <ChartCardHeader
+          title="Prover adoption"
+          accessory={
+            <RadioGroup
+              name="zkCatalogProverMetric"
+              value={metric}
+              onValueChange={(value) => setMetric(value as Metric)}
+            >
+              <RadioGroupItem value="value">Value secured</RadioGroupItem>
+              <RadioGroupItem value="projects">Projects</RadioGroupItem>
+            </RadioGroup>
+          }
+          meta={
+            <ChartTimeRange
+              isPlaceholderData={isPlaceholderData}
+              timeRange={timeRange}
+            />
+          }
         />
       </div>
       <ChartContainer
@@ -230,7 +230,7 @@ function CustomTooltip({
 
   return (
     <ChartTooltipWrapper>
-      <div className="flex w-[200px] flex-col [@media(min-width:600px)]:w-60">
+      <div className="flex min-w-[200px] flex-col [@media(min-width:600px)]:min-w-60">
         <div className="font-medium text-label-value-14 text-secondary">
           {formatSnapshotTimestamp(label, resolution)}
         </div>
