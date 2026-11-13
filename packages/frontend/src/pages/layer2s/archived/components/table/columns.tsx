@@ -86,7 +86,9 @@ export const l2ArchivedColumns = [
     header: 'Purpose',
     cell: (ctx) => ctx.row.original.purposes.join(', '),
     meta: {
-      cellClassName: 'lg:whitespace-normal',
+      // Room after the right-aligned value so the two don't read as one phrase.
+      headClassName: 'pl-6',
+      cellClassName: 'pl-6 lg:whitespace-normal',
     },
   }),
 ]
