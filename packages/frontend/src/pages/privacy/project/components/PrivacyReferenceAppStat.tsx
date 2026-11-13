@@ -1,4 +1,5 @@
 import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
+import { PrivacyDeliverySummary } from '~/components/projects/sections/privacy/PrivacyDelivery'
 import type { PrivacyReferenceApp } from '~/server/features/privacy/utils/getPrivacyReferenceApp'
 import {
   getReferenceAppLabel,
@@ -30,6 +31,7 @@ export function PrivacyReferenceAppStat({ app, href }: Props) {
             />
             {getReferenceAppLabel(app)}
           </a>
+          <PrivacyDeliverySummary app={app} />
           {notes.length > 0 && (
             <span className="font-medium text-paragraph-12 text-secondary">
               {notes.join(', ')}

@@ -9,7 +9,7 @@ import {
 const CIRCUITS =
   'https://github.com/tornadocash/tornado-core/blob/a533ad9ffb62163a42d4fa9a09984c5dd4e5c41d/circuits/'
 // The DAO's Docker recipe that rebuilds the pinned app to its IPFS hash.
-const RECIPE =
+export const RECIPE =
   'https://github.com/tornado-dao/tornado-ipfs-ui/tree/d2aa401746e1b1195ff692a051636b8c5c43d2e5'
 // The commit governance pinned on tornadocash.eth (proposal 68).
 const APP =

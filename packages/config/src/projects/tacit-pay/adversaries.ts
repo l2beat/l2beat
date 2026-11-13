@@ -1,3 +1,4 @@
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import {
   ADVICE_SNIPPETS as A,
   adviceLink,
@@ -21,6 +22,12 @@ export const REFERENCE_APP = {
   name: 'anon.wei',
   url: `https://etherscan.io/address/${REFERENCE_PAGE.replace('eth:', '')}#readContract#F15`,
   since: '2026-11-09',
+  delivery: {
+    type: 'pinned',
+    pin: { type: 'contract', address: ChainSpecificAddress(REFERENCE_PAGE) },
+    rebuild:
+      'https://github.com/ERC8244/dapps/blob/bf39cc0b4d8c5eabdcd76f8b0672ec97b645a986/tacit-pay/deploy/repin.sh',
+  },
   source: {
     repository: 'https://github.com/ERC8244/dapps',
     commit: 'bf39cc0b4d8c5eabdcd76f8b0672ec97b645a986',

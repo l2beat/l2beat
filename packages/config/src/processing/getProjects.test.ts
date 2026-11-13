@@ -720,6 +720,51 @@ describe('getProjects', () => {
       }
       expect(problems).toEqual([])
     })
+
+    // The page prints the pin for users to compare, and words the delivery
+    // from these fields.
+    it('every reference app delivery fits its release and source', () => {
+      const problems: string[] = []
+      for (const { project, privacyInfo } of privacyProjects) {
+        const app = privacyInfo.referenceApp
+        if (!app) continue
+        const delivery = app.delivery
+        if (delivery.type === 'hosted') {
+          if (app.version !== undefined) {
+            problems.push(`${project.id}: a hosted app has no release version`)
+          }
+          continue
+        }
+        if (delivery.rebuild !== undefined) {
+          if (!app.source) {
+            problems.push(`${project.id}: a rebuild needs public source`)
+          }
+          if (!delivery.rebuild.startsWith('https://')) {
+            problems.push(`${project.id}: rebuild ${delivery.rebuild}`)
+          }
+        }
+        if (delivery.type === 'latestOnly') {
+          if (delivery.store.trim().length === 0) {
+            problems.push(`${project.id}: store name`)
+          }
+          continue
+        }
+        const pin = delivery.pin
+        if (pin.type === 'sha256') {
+          if (!/^[0-9a-f]{64}$/.test(pin.hash)) {
+            problems.push(`${project.id}: sha256 ${pin.hash}`)
+          }
+          if (pin.file.trim().length === 0 || app.version === undefined) {
+            problems.push(`${project.id}: a pinned file names its release`)
+          }
+        }
+        // Base32 CIDv1, the form IPFS Desktop serves under /ipfs/.
+        if (pin.type === 'ipfs' && !/^b[a-z2-7]{58}$/.test(pin.cid)) {
+          problems.push(`${project.id}: cid ${pin.cid}`)
+        }
+      }
+      expect(problems).toEqual([])
+    })
   })
 
   describe('contracts', () => {

@@ -367,6 +367,7 @@ export const privacyBoost: BaseProject = {
       name: 'Privacy Boost wallet',
       url: 'https://app.privacyboost.io',
       since: '2026-10-13',
+      delivery: { type: 'hosted' },
       build: 'dpl_7w49MD3u2ryAMcgmgGH2L9TusV1R',
       checked: '2026-11-11',
     },

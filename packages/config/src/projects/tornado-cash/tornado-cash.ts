@@ -20,7 +20,7 @@ import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { getTokenByAddress } from '../../tokens/getTokenByAddress'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
-import { tornadoCashAdversaries } from './adversaries'
+import { RECIPE, tornadoCashAdversaries } from './adversaries'
 
 const discovery = new ProjectDiscovery('tornado-cash')
 
@@ -288,6 +288,11 @@ export const tornadoCash: BaseProject = {
       name: 'Tornado Cash classic app',
       url: 'https://explorer.ens.domains/tornadocash.eth/records',
       since: '2026-10-13',
+      delivery: {
+        type: 'pinned',
+        pin: { type: 'ipfs', cid: appCid },
+        rebuild: RECIPE,
+      },
       source: {
         repository: 'https://github.com/tornado-dao/classic-ui',
         commit: '17c54dae9ad91bb3c6d62a7860df6cd365ab76d4',

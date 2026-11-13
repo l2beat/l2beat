@@ -11,6 +11,7 @@ export const REFERENCE_APP = {
   name: 'privacypools.com',
   url: 'https://privacypools.com',
   since: '2026-10-23',
+  delivery: { type: 'hosted' },
   source: {
     repository: 'https://github.com/0xbow-io/privacy-pools-website-v2',
     commit: '6fd83a092004ab7123613abff2b0ca319a2106ce',
