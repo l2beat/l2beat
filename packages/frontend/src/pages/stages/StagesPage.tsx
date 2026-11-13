@@ -27,7 +27,7 @@ export function StagesPage({ content, lastUpdated, ...props }: Props) {
             This page is to be considered an extended explainer for the latest
             version of the Stages Framework, whose precise specification can be
             found{' '}
-            <CustomLink href="https://forum.l2beat.com/t/the-stages-framework/291">
+            <CustomLink href="https://forum.ethbeat.org/t/the-stages-framework/291">
               here
             </CustomLink>
             .
