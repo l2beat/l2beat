@@ -1,0 +1,23 @@
+{
+  "$schema": "../tvs-config-schema.json",
+  "projectId": "stakewise",
+  "tokens": [
+    {
+      "mode": "custom",
+      "id": "stakewise-osETH",
+      "priceId": "stakewise-v3-oseth",
+      "symbol": "osETH",
+      "name": "StakeWise Staked ETH",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38",
+        "chain": "ethereum",
+        "decimals": 18,
+        "sinceTimestamp": 1698755027
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

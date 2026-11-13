@@ -1,0 +1,63 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OsTokenRedeemer",
+  "category": "core",
+  "description": "Exit queue for osToken holders, processed in batches at least {{exitQueueUpdateDelayFormatted}} apart and funded by redeeming osToken positions listed in a Merkle root the owner publishes. Anyone can also buy queued osToken with the underlying asset at the protocol rate. Where a redemption fee exists, the vault controller's owner sets it within the deployed ceiling.",
+  "ignoreMethods": [
+    "getExitQueueIndex",
+    "getExitQueueMissingAssets",
+    "calculateExitedAssets",
+    "eip712Domain"
+  ],
+  "ignoreInWatchMode": [
+    "getExitQueueData",
+    "getExitQueueCumulativeTickets",
+    "exitQueueTimestamp",
+    "canProcessExitQueue",
+    "queuedShares",
+    "unclaimedAssets",
+    "redeemedAssets",
+    "redeemedShares",
+    "swappedAssets",
+    "swappedShares",
+    "redeemablePositions",
+    "nonce",
+    "accumulatedFees"
+  ],
+  "fields": {
+    "exitQueueUpdateDelayFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "function exitQueueUpdateDelay() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "owner": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "publish the Merkle root of osToken positions open to forced redemption and appoint the positions manager, with no delay."
+        }
+      ]
+    },
+    "positionsManager": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "redeem any osToken position listed in the current root at the protocol rate, burning queued osToken against the position's debt and moving the matching ETH from the vault into the redemption queue."
+        }
+      ]
+    },
+    "redemptionFeePercent": {
+      "severity": "MEDIUM",
+      "description": "Fee on redemptions, in basis points."
+    },
+    "maxRedemptionFeePercent": {
+      "description": "Ceiling of the redemption fee, in basis points."
+    }
+  },
+  "canActIndependently": false
+}
