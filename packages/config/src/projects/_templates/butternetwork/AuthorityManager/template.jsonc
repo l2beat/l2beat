@@ -4,6 +4,17 @@
   "category": "gov",
   "description": "OpenZeppelin AccessManager-derived authority for the restricted functions of the Butter contracts that name it. Its role configuration controls who can change their validation, token and fee settings, pause them and upgrade them.",
   "fields": {
+    "targetFunctionRoles": {
+      "description": "Role id that may call each restricted function, per target contract and function selector.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": ["selector", "roleId"],
+        "add": { "event": "TargetFunctionRoleUpdated" },
+        "dedupBy": "selector",
+        "groupBy": "target"
+      }
+    },
     "adminRole": {
       "description": "Members of ADMIN_ROLE can reconfigure the AuthorityManager itself, including role membership and the function-to-role mappings that govern attached Butter contracts.",
       "severity": "HIGH",

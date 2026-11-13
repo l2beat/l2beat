@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x6e70849a34cc5e41e3480a79c87439885c0d4a36
+Generated with discovered.json: 0x19fd9633fcd1c083500d93a7fda9fd286b5a91ef
 
-# Diff at Fri, 13 Nov 2026 13:03:56 GMT:
+# Diff at Fri, 13 Nov 2026 13:41:51 GMT:
 
 - id: 5aa16a25
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
@@ -12,12 +12,12 @@ Generated with discovered.json: 0x6e70849a34cc5e41e3480a79c87439885c0d4a36
 The 2/3 Safe base:0xAAAaEE7549a61282F2B4Ca1766f46249D9e71aaA upgraded the Butter Bridge on Base through the AuthorityManager, re-initialized and unpaused it: https://disco.l2beat.com/diff/base:0xa2bd213E4e5655125A8c18D716184b6b11F45F25/base:0x23fF8a1bB41FAa8A491aacF8e466AdeF2051200F. The Ethereum bridge at the same address runs the same code. The new code is a rewrite:
 - Inbound messages from the MAP relay chain (22776) need a proof that a new verifier accepts, base:0xC1eFc08ab7481a9303D1670e8f955ABb38Cd69D4. Its implementation is unverified and its getters show a signer set of 2 of 3 EOAs, governed by the same AuthorityManager. The bridge no longer uses the MAP LightNode and VerifyTool, so the trust moves from MAP's validator set to these 3 keys and the bridge admins.
 - An accepted message becomes a pending payment. After the releaseDelay of 300 s it is released from a new reserve, base:0xf95f0359704A66DB38d159e5A99721F069f30D9c, with release signatures that the reserve checks. The reserve is unverified, has releaseThreshold 2 and its own AuthorityManager (admins: the 2/3 Safe and the 3/5 Safe base:0xfF0d780312BE250abA9Ef3Ba85166D3F7807CFFF). It holds no USDC or WETH yet.
-- Roles in the bridge AuthorityManager, all without delay: 4 relayer EOAs submit messages and release payments. 2 guardian EOAs can pause, freeze payments, extend the delay and lower limits. The two admin Safes can upgrade, replace the verifier and reserve, shorten the delay and unfreeze.
+- Roles in the bridge AuthorityManager, all without delay: 4 relayer EOAs submit messages and release payments. 2 guardian EOAs can pause, freeze payments, extend the delay, lower limits, close routes, disable tokens and sweep stray balances to the reserve. The two admin Safes can upgrade, replace the verifier and reserve, shorten the delay and unfreeze.
 - retryMessageIn and emergencyWithdraw are gone. rescue moves only tokens the bridge never listed, sweep moves stray balances to the reserve. A payout that fails to reach the recipient goes to failedReceiver, the 2/3 Safe.
 
 ETHBEAT verified the bridge implementation on Basescan from an exact Sourcify match, and the two verifier proxies (plain ERC1967Proxy) on Etherscan. No public source exists for the verifier implementations and the reserve.
 
-Config: Bridge template for the new code, relayer and guardian roles of the AuthorityManager, full-ABI fields for the unverified verifier and reserve. The LightNode and VerifyTool templates match nothing anymore and are removed. The GnosisSafe template gets the Safe 1.5.0 L2 shape.
+Config: Bridge template for the new code, relayer and guardian roles of the AuthorityManager, which now tracks the role of each restricted function, full-ABI fields for the unverified verifier and reserve. The LightNode and VerifyTool templates match nothing anymore and are removed. The GnosisSafe template gets the Safe 1.5.0 L2 shape.
 
 ## Watched changes
 
@@ -125,6 +125,10 @@ Config: Bridge template for the new code, relayer and guardian roles of the Auth
 +        "base:0xBb0D81cadF3A905a12E4f4238eA354BB703C22d0"
       values.relayers.3:
 +        "base:0x369CE683d79bEE60806fb1D06eC5eAb536Befd2c"
+      values.targetFunctionRoles.base:0x0000317Bec33Af037b5fAb2028f52d14658F6A56:
++        [{"selector":"0xb0052121","roleId":1},{"selector":"0xff1d8a56","roleId":1},{"selector":"0x23e27a64","roleId":1},{"selector":"0x8456cb59","roleId":1},{"selector":"0xec13cc7b","roleId":1},{"selector":"0x3582c451","roleId":1},{"selector":"0xef9654f7","roleId":1},{"selector":"0x01681a62","roleId":1},{"selector":"0x8d66016a","roleId":1},{"selector":"0xad914bd6","roleId":1},{"selector":"0xe6443600","roleId":3},{"selector":"0x1da886be","roleId":3},{"selector":"0x70e160e3","roleId":3}]
+      values.targetFunctionRoles.base:0xC1eFc08ab7481a9303D1670e8f955ABb38Cd69D4:
++        [{"selector":"0x3bad5426","roleId":1},{"selector":"0xb13289e4","roleId":1}]
       directlyReceivedPermissions.0:
 +        {"permission":"act","from":"base:0x0000317Bec33Af037b5fAb2028f52d14658F6A56","role":".authority"}
       directlyReceivedPermissions.1:
@@ -275,9 +279,15 @@ discovery. Values are for block 1794320084 (main branch discovery), not current.
 +        []
       values.relayers:
 +        []
++++ description: Role id that may call each restricted function, per target contract and function selector.
++++ severity: HIGH
+      values.targetFunctionRoles:
++        {}
       fieldMeta.adminRole.description:
 -        "Current ADMIN_ROLE members of the AuthorityManager. They control the role and target-function configuration used to authorize Butter Bridge and FeeService management calls."
 +        "Members of ADMIN_ROLE can reconfigure the AuthorityManager itself, including role membership and the function-to-role mappings that govern attached Butter contracts."
+      fieldMeta.targetFunctionRoles:
++        {"severity":"HIGH","description":"Role id that may call each restricted function, per target contract and function selector."}
       directlyReceivedPermissions.0:
 -        {"permission":"act","from":"base:0x0000317Bec33Af037b5fAb2028f52d14658F6A56","role":".authority"}
     }

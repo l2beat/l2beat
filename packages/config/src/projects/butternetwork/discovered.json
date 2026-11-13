@@ -252,9 +252,34 @@
           "base:0x5C32207180259DA36B698E30Bc08cc62efA46d57",
           "base:0xBb0D81cadF3A905a12E4f4238eA354BB703C22d0",
           "base:0x369CE683d79bEE60806fb1D06eC5eAb536Befd2c"
-        ]
+        ],
+        "targetFunctionRoles": {
+          "base:0x0000317Bec33Af037b5fAb2028f52d14658F6A56": [
+            { "selector": "0xb0052121", "roleId": 1 },
+            { "selector": "0xff1d8a56", "roleId": 1 },
+            { "selector": "0x23e27a64", "roleId": 1 },
+            { "selector": "0x8456cb59", "roleId": 1 },
+            { "selector": "0xec13cc7b", "roleId": 1 },
+            { "selector": "0x3582c451", "roleId": 1 },
+            { "selector": "0xef9654f7", "roleId": 1 },
+            { "selector": "0x01681a62", "roleId": 1 },
+            { "selector": "0x8d66016a", "roleId": 1 },
+            { "selector": "0xad914bd6", "roleId": 1 },
+            { "selector": "0xe6443600", "roleId": 3 },
+            { "selector": "0x1da886be", "roleId": 3 },
+            { "selector": "0x70e160e3", "roleId": 3 }
+          ],
+          "base:0xC1eFc08ab7481a9303D1670e8f955ABb38Cd69D4": [
+            { "selector": "0x3bad5426", "roleId": 1 },
+            { "selector": "0xb13289e4", "roleId": 1 }
+          ]
+        }
       },
       "fieldMeta": {
+        "targetFunctionRoles": {
+          "severity": "HIGH",
+          "description": "Role id that may call each restricted function, per target contract and function selector."
+        },
         "adminRole": {
           "severity": "HIGH",
           "description": "Members of ADMIN_ROLE can reconfigure the AuthorityManager itself, including role membership and the function-to-role mappings that govern attached Butter contracts.",
@@ -333,9 +358,22 @@
         ],
         "expiration": 604800,
         "minSetback": 432000,
-        "PUBLIC_ROLE": "18446744073709551615"
+        "PUBLIC_ROLE": "18446744073709551615",
+        "targetFunctionRoles": {
+          "base:0xf95f0359704A66DB38d159e5A99721F069f30D9c": [
+            { "selector": "0xd40d6a91", "roleId": 1 },
+            { "selector": "0x23e27a64", "roleId": 1 },
+            { "selector": "0x8456cb59", "roleId": 1 },
+            { "selector": "0x53446f19", "roleId": 1 },
+            { "selector": "0x5415ba0a", "roleId": 1 }
+          ]
+        }
       },
       "fieldMeta": {
+        "targetFunctionRoles": {
+          "severity": "HIGH",
+          "description": "Role id that may call each restricted function, per target contract and function selector."
+        },
         "adminRole": {
           "severity": "HIGH",
           "description": "Members of ADMIN_ROLE can reconfigure the AuthorityManager itself, including role membership and the function-to-role mappings that govern attached Butter contracts.",
@@ -912,13 +950,13 @@
     ]
   },
   "usedTemplates": {
-    "butternetwork/AuthorityManager": "0xa4c470ba2f3262d908355b674e1d56033f18be227db78211a73ad371610ed19b",
+    "butternetwork/AuthorityManager": "0x66d5f1655b737e3d8f9338c652cd1caf55dcec9ee2c27b8364fb425a1d4ef15c",
     "butternetwork/Bridge": "0xc02b73a37d1a235325f61578ab4fd944b9a7dc98565473fb72f24db93e514446",
     "butternetwork/FeeService": "0x59bc080e41feb8a5a9cb198f05d18a1246b160883c5a7b58f8978eaa6577ba7e",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "base": 56909400 },
-  "permissionsConfigHash": "0x1e4a04903de6ab57116940800cb2fcb6f648fcfaa5ac64d23bca05e410269149",
+  "permissionsConfigHash": "0x172092e724cb8896908bdaa64d9d36a36c45cc23044d2d05c0dcbe9c84c2aec5",
   "permissions": {
     "base:0x369CE683d79bEE60806fb1D06eC5eAb536Befd2c": {
       "receivedPermissions": [
@@ -945,7 +983,7 @@
         {
           "permission": "interact",
           "from": "base:0xACC31A6756B60304C03d6626fc98c062E4539CCA",
-          "description": "pause the Butter Bridge, freeze pending payments, extend the release delay and lower outbound limits.",
+          "description": "pause the Butter Bridge, freeze pending payments, extend the release delay, lower limits, close routes, disable tokens, revoke trusted addresses and sweep stray balances into the reserve.",
           "role": ".guardians"
         }
       ]
@@ -1040,7 +1078,7 @@
         {
           "permission": "interact",
           "from": "base:0xACC31A6756B60304C03d6626fc98c062E4539CCA",
-          "description": "pause the Butter Bridge, freeze pending payments, extend the release delay and lower outbound limits.",
+          "description": "pause the Butter Bridge, freeze pending payments, extend the release delay, lower limits, close routes, disable tokens, revoke trusted addresses and sweep stray balances into the reserve.",
           "role": ".guardians"
         }
       ]

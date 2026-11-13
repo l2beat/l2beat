@@ -11,7 +11,7 @@
     "base:0xf95f0359704A66DB38d159e5A99721F069f30D9c": "Butter Reserve"
   },
   "overrides": {
-    // Bridge AuthorityManager: role ids of its target function mapping
+    // Bridge AuthorityManager: role ids from its targetFunctionRoles mapping of the Bridge
     "base:0xACC31A6756B60304C03d6626fc98c062E4539CCA": {
       "fields": {
         "guardians": {
@@ -23,7 +23,7 @@
           "permissions": [
             {
               "type": "interact",
-              "description": "pause the Butter Bridge, freeze pending payments, extend the release delay and lower outbound limits."
+              "description": "pause the Butter Bridge, freeze pending payments, extend the release delay, lower limits, close routes, disable tokens, revoke trusted addresses and sweep stray balances into the reserve."
             }
           ]
         },

@@ -32,15 +32,74 @@
       // validatorTimelock
       "fields": {
         "validatorVTL": {
-          // assuming the executor has all the roles, change if not the case
+          // all roles of the ADI Diamond, the fields below give each role its permission
+          "handler": {
+            "type": "crossChainAccessControl",
+            "pickChainAddress": "eth:0x0583Ef2B6416cb7B287406438B940E4d99680C5B"
+          }
+        },
+        "precommitterVTL": {
           "handler": {
             "type": "crossChainAccessControl",
             "pickChainAddress": "eth:0x0583Ef2B6416cb7B287406438B940E4d99680C5B"
           },
+          "edit": ["get", "PRECOMMITTER_ROLE", "members"],
           "permissions": [
             {
               "type": "interact",
-              "description": "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the ADI Diamond contract."
+              "description": "precommit L2 blocks through the ValidatorTimelock in the ADI Diamond contract."
+            }
+          ]
+        },
+        "committerVTL": {
+          "handler": {
+            "type": "crossChainAccessControl",
+            "pickChainAddress": "eth:0x0583Ef2B6416cb7B287406438B940E4d99680C5B"
+          },
+          "edit": ["get", "COMMITTER_ROLE", "members"],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "commit L2 batches through the ValidatorTimelock in the ADI Diamond contract."
+            }
+          ]
+        },
+        "proverVTL": {
+          "handler": {
+            "type": "crossChainAccessControl",
+            "pickChainAddress": "eth:0x0583Ef2B6416cb7B287406438B940E4d99680C5B"
+          },
+          "edit": ["get", "PROVER_ROLE", "members"],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "prove L2 batches through the ValidatorTimelock in the ADI Diamond contract."
+            }
+          ]
+        },
+        "executorVTL": {
+          "handler": {
+            "type": "crossChainAccessControl",
+            "pickChainAddress": "eth:0x0583Ef2B6416cb7B287406438B940E4d99680C5B"
+          },
+          "edit": ["get", "EXECUTOR_ROLE", "members"],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "execute L2 batches through the ValidatorTimelock in the ADI Diamond contract."
+            }
+          ]
+        },
+        "reverterVTL": {
+          "handler": {
+            "type": "crossChainAccessControl",
+            "pickChainAddress": "eth:0x0583Ef2B6416cb7B287406438B940E4d99680C5B"
+          },
+          "edit": ["get", "REVERTER_ROLE", "members"],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "revert L2 batches through the ValidatorTimelock in the ADI Diamond contract."
             }
           ]
         }
