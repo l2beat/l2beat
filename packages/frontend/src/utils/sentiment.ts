@@ -52,7 +52,7 @@ export function sentimentToTextColor(
     case 'warning':
       return 'text-warning dark:text-yellow-200'
     case 'good':
-      return opts?.vibrant ? 'text-green-700 dark:text-green-450' : ''
+      return opts?.vibrant ? 'text-positive' : ''
     case 'neutral':
     case 'UnderReview':
       return ''
