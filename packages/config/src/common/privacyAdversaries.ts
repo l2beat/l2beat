@@ -230,26 +230,43 @@ export function definePrivacyAdversaries(
 export const PRIVACY_METHODOLOGY_URL = '/publications/privacy-methodology'
 
 /**
- * Anchors in the methodology, rendered by the frontend. Steps link only the
- * list of routes and the tool entries: the project page links the How to stay
- * private section once.
+ * Anchors in the methodology, rendered by the frontend. Project texts link
+ * only the list of routes and the tool entries: the project page links the
+ * How to stay private section once.
  */
 export const ADVICE_ANCHORS = {
   routes: 'routes',
 } as const
 
-/** A markdown link into the methodology, for a step's IP-hiding route. */
+type MethodologyLinkId = PrivacyToolId | keyof typeof ADVICE_ANCHORS
+
+function methodologyHref(id: MethodologyLinkId) {
+  const anchor =
+    id === 'routes' ? ADVICE_ANCHORS.routes : PRIVACY_TOOLS[id].anchor
+  return `${PRIVACY_METHODOLOGY_URL}#${anchor}`
+}
+
+/** A markdown link into the methodology, for an IP-hiding route. */
 export function adviceLink(text: string, anchor: keyof typeof ADVICE_ANCHORS) {
-  return `[${text}](${PRIVACY_METHODOLOGY_URL}#${ADVICE_ANCHORS[anchor]})`
+  return `[${text}](${methodologyHref(anchor)})`
 }
 /**
- * Markdown link from a step to a tool's methodology entry, which holds its
- * download. `text` defaults to the tool's first name and must contain one of
- * its names, e.g. "local Ethereum node".
+ * Markdown link to a tool's methodology entry, which holds its download.
+ * `text` defaults to the tool's first name and must contain one of its names,
+ * e.g. "local Ethereum node".
  */
 export function toolLink(id: PrivacyToolId, text?: string) {
   const tool: PrivacyTool = PRIVACY_TOOLS[id]
-  return `[${text ?? tool.names[0]}](${PRIVACY_METHODOLOGY_URL}#${tool.anchor})`
+  return `[${text ?? tool.names[0]}](${methodologyHref(id)})`
+}
+/**
+ * Values for a privacy project's markdown files, which link the methodology
+ * as `[Tor Browser]({{torBrowser}})` or `[IP-hiding route]({{routes}})`.
+ */
+export function methodologyHrefs(
+  ...ids: MethodologyLinkId[]
+): Record<string, string> {
+  return Object.fromEntries(ids.map((id) => [id, methodologyHref(id)]))
 }
 
 /** Imperative sentences for `advice` steps. */

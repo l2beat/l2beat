@@ -1,4 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { methodologyHrefs } from '../../common/privacyAdversaries'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -27,7 +28,11 @@ export const fluidkey: BaseProject = {
   display: {
     description:
       'A stealth-address wallet that receives every payment on a fresh Safe, with optional yield and bank transfers.',
-    detailedDescription: readProjectMarkdown('fluidkey', 'detailedDescription'),
+    detailedDescription: readProjectMarkdown(
+      'fluidkey',
+      'detailedDescription',
+      methodologyHrefs('routes'),
+    ),
     links: {
       websites: ['https://app.fluidkey.com'],
       documentation: [

@@ -9,6 +9,7 @@ import {
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { CROP_NOTES } from '../../common/crops'
+import { methodologyHrefs } from '../../common/privacyAdversaries'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
@@ -167,7 +168,7 @@ export const tornadoCash: BaseProject = {
     detailedDescription: readProjectMarkdown(
       'tornado-cash',
       'detailedDescription',
-      { appCid },
+      { appCid, ...methodologyHrefs('ipfsDesktop', 'torBrowser', 'nymVpn') },
     ),
     links: {
       websites: ['https://app.ens.domains/tornadocash.eth?tab=records'],

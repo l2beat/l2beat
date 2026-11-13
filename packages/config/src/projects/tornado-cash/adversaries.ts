@@ -1,5 +1,6 @@
 import {
   ADVICE_SNIPPETS as A,
+  adviceLink,
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
   toolLink,
@@ -54,8 +55,7 @@ export function tornadoCashAdversaries(upgradeDelay: string, appCid: string) {
       },
       networkObserver: {
         sentiment: 'good',
-        exposureShort:
-          "The app downloads every deposit of a pool, so over an IP-hiding route its services learn the pool but not the user's note.",
+        exposureShort: `The app downloads every deposit of a pool, so over an ${adviceLink('IP-hiding route', 'routes')} its services learn the pool but not the user's note.`,
         exposureContinued:
           "The Graph learns whether the note is newer than the app's event cache. Every listed relayer gets a status request, and the chosen one receives the finished withdrawal.",
         sources: [

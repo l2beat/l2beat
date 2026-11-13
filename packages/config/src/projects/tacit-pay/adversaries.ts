@@ -113,8 +113,7 @@ export const tacitPayAdversaries = definePrivacyAdversaries({
     },
     networkObserver: {
       sentiment: 'good',
-      exposureShort:
-        "The user's own Ethereum node can take every read that names a deposit address or the recipient, leaving third parties only pool-wide logs.",
+      exposureShort: `The user's own ${toolLink('ethereumNode')} can take every read that names a deposit address or the recipient, leaving third parties only pool-wide logs.`,
       exposureContinued:
         'By default, Tenderly and dRPC receive the deposit addresses and the withdrawal recipient in one session, so either can tie both sides. Base and Robinhood Chain nodes still receive the deposit addresses, which are the same on every chain.',
       interior: {

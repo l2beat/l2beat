@@ -6,6 +6,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { formatBasisPoints } from '../../common/formatBasisPoints'
+import { methodologyHrefs } from '../../common/privacyAdversaries'
 import { PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS } from '../../common/privacyAnonymitySets'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
@@ -84,7 +85,11 @@ export const privacyPools: BaseProject = {
     detailedDescription: readProjectMarkdown(
       'privacy-pools',
       'detailedDescription',
-      { multisigStats, feeSummary },
+      {
+        multisigStats,
+        feeSummary,
+        ...methodologyHrefs('torBrowser', 'routes', 'nymVpn'),
+      },
     ),
     links: {
       websites: ['https://v1.privacypools.com'],

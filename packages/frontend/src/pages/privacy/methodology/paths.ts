@@ -2,7 +2,7 @@
 export const PRIVACY_METHODOLOGY_ID = 'privacy-methodology'
 /**
  * Client code reads the path and anchors from here. Config repeats them for
- * the links in its advice steps (`PRIVACY_METHODOLOGY_URL`, `ADVICE_ANCHORS`),
+ * the links in its project texts (`PRIVACY_METHODOLOGY_URL`, `ADVICE_ANCHORS`),
  * and `paths.test.ts` keeps the two equal. Importing config's build into
  * client code breaks hydration.
  */
@@ -18,7 +18,7 @@ export const PRIVACY_ADVICE_TITLE = 'How to stay private'
 export const PRIVACY_ADVICE_HREF = `${PRIVACY_METHODOLOGY_PATH}#${PRIVACY_ADVICE_ANCHOR}`
 /** The framework section that defines an IP-hiding route and its checks. */
 export const PRIVACY_IP_HIDING_ROUTES_ANCHOR = 'ip-hiding-routes'
-/** The list of routes under How to stay private, which advice steps link. */
+/** The list of routes under How to stay private, which project texts link. */
 export const PRIVACY_ROUTES_ANCHOR = 'routes'
 /** The section project pages link from their app list. */
 export const PRIVACY_REFERENCE_APP_ANCHOR = 'reference-app'

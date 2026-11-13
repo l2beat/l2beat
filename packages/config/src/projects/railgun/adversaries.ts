@@ -61,8 +61,7 @@ export function railgunAdversaries(upgradeDelay: string) {
       },
       networkObserver: {
         sentiment: 'good',
-        exposureShort:
-          'With a local node as direct endpoint for reads, RailOxide keeps Ethereum reads local and sends the rest over built-in Tor.',
+        exposureShort: `With a ${toolLink('ethereumNode', 'local Ethereum node')} as direct endpoint for reads, RailOxide keeps Ethereum reads local and sends the rest over built-in Tor.`,
         exposureContinued:
           'By default public RPCs get the reads that name the user, each over its own Tor circuit, so only timing ties them.',
         interior: {

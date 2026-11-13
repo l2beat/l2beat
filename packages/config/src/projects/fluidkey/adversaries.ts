@@ -1,5 +1,6 @@
 import {
   ADVICE_SNIPPETS as A,
+  adviceLink,
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
@@ -81,8 +82,7 @@ export function fluidkeyAdversaries(accounts: number) {
         sentiment: 'warning',
         exposureShort:
           "Alchemy, behind Fluidkey's proxy, receives the Safes the app shows and can group those of one account.",
-        exposureContinued:
-          "Without Tor, the proxy can also pass it the user's IP. A payer who looks up the user's name gives their RPC the name and the new Safe. A Google, Apple, email or Farcaster login hands the identity to Privy, whose code then creates the signature the user's keys come from.",
+        exposureContinued: `Without ${adviceLink('Tor', 'routes')}, the proxy can also pass it the user's IP. A payer who looks up the user's name gives their RPC the name and the new Safe. A Google, Apple, email or Farcaster login hands the identity to Privy, whose code then creates the signature the user's keys come from.`,
         sources: [
           {
             title: 'Served app, build entrypoint-4e96d22b (checked 2026-11-11)',

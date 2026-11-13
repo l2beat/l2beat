@@ -2,6 +2,7 @@ import {
   ADVICE_SNIPPETS as A,
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
+  toolLink,
 } from '../../common/privacyAdversaries'
 
 // PRIVACY-0.14.3-RC.8. The deployed pool and shadow account anonymizer rebuild from it.
@@ -86,8 +87,7 @@ export const strk20Adversaries = definePrivacyAdversaries({
       sentiment: 'good',
       exposureShort:
         "Every pool request goes through Starknet Holdings' gateway, so AVNU and StarkWare's discovery service see only the gateway.",
-      exposureContinued:
-        'The gateway answers over Tor, and Bramble runs only in Chromium, not in Tor Browser.',
+      exposureContinued: `The gateway answers over Tor, and Bramble runs only in Chromium, not in ${toolLink('torBrowser')}.`,
       interior: {
         sender: 'private',
         recipient: 'exposed',

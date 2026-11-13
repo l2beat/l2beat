@@ -594,9 +594,10 @@ describe('getProjects', () => {
       expect(problems).toEqual([])
     })
 
-    // The entry holds the download and why we chose the app, so a step
-    // links it, never the vendor.
-    it('every advice step links the tools it names to their entries', () => {
+    // The entry holds the download and why we chose the app, so every text
+    // that names a tool links it, never the vendor. Interior notes and
+    // checked-app findings render as plain text, so they carry no links.
+    it('every privacy text links the tools it names to their entries', () => {
       const tools: PrivacyTool[] = Object.values(PRIVACY_TOOLS)
       const downloads = tools.flatMap((tool) =>
         [...`${tool.head} ${tool.text}`.matchAll(/\]\((https:[^)]+)\)/g)].map(
@@ -605,28 +606,42 @@ describe('getProjects', () => {
       )
       const problems: string[] = []
       for (const { project, privacyInfo } of privacyProjects) {
-        for (const step of privacyInfo.adversaries?.advice ?? []) {
-          const links = [...step.text.matchAll(/\[([^\]]+)\]\(([^)]+)\)/g)]
-          const unlinked = step.text.replace(/\[[^\]]+\]\([^)]+\)/g, '')
+        const { advice = [], cells } = privacyInfo.adversaries
+        const texts: [string, string | undefined][] = [
+          ...advice.map((step): [string, string] => [step.name, step.text]),
+          ...Object.values(cells).map((cell): [string, string | undefined] => [
+            cell.id,
+            `${cell.exposureShort} ${cell.exposureContinued ?? ''}`,
+          ]),
+          [
+            'detailedDescription',
+            privacyInfo.detailedDescription ??
+              project.display?.detailedDescription,
+          ],
+          ['riskSummary', privacyInfo.riskSummary],
+          ['upgradesAndGovernance', privacyInfo.upgradesAndGovernance?.content],
+        ]
+        for (const [where, markdown] of texts) {
+          if (!markdown) continue
+          const links = [...markdown.matchAll(/\[([^\]]+)\]\(([^)]+)\)/g)]
+          const unlinked = markdown.replace(/\[[^\]]+\]\([^)]+\)/g, '')
           for (const tool of tools) {
             const href = `${PRIVACY_METHODOLOGY_URL}#${tool.anchor}`
             for (const name of tool.names) {
               if (unlinked.includes(name)) {
-                problems.push(`${project.id} ${step.name}: ${name} unlinked`)
+                problems.push(`${project.id} ${where}: ${name} unlinked`)
               }
             }
             for (const [, text, target] of links) {
               const named = tool.names.some((name) => text.includes(name))
               if (named !== (target === href)) {
-                problems.push(`${project.id} ${step.name}: link ${text}`)
+                problems.push(`${project.id} ${where}: link ${text}`)
               }
             }
           }
           for (const [, text, target] of links) {
             if (downloads.includes(target)) {
-              problems.push(
-                `${project.id} ${step.name}: ${text} links a download`,
-              )
+              problems.push(`${project.id} ${where}: ${text} links a download`)
             }
           }
         }

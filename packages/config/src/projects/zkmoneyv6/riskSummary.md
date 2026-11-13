@@ -14,6 +14,6 @@
 2. a user relies on today's anonymity set, which is still small (see chain analyst).
 3. a registered enclave or AWS Nitro is compromised, exposing what the enclave reads (see privileged insider).
 4. the resolver operator links deposits paid through a name to their recipients (see privileged insider).
-5. the default endpoints, Alchemy and Aztec Labs' Aztec nodes, see deposit addresses and withdrawals in one session (see network observer and privileged insider).
+5. the default endpoints, Alchemy and Aztec Labs' [Aztec nodes]({{aztecNode}}), see deposit addresses and withdrawals in one session (see network observer and privileged insider).
 6. a portal freezes, and refunds publish note or deposit amounts on Ethereum.
 7. elliptic-curve cryptography is broken, which decrypts notes and events and ties withdrawals to their accounts (see future adversary).

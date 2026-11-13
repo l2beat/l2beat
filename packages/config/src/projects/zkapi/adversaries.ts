@@ -1,6 +1,7 @@
 import {
   ADVICE_SNIPPETS as A,
   definePrivacyAdversaries,
+  toolLink,
 } from '../../common/privacyAdversaries'
 import type { PrivacyExposureMap } from '../../types'
 
@@ -72,8 +73,7 @@ export const zkApiAdversaries = definePrivacyAdversaries({
     },
     networkObserver: {
       sentiment: 'good',
-      exposureShort:
-        'The app works in Tor Browser, and no third party sees both a deposit and a request.',
+      exposureShort: `The app works in ${toolLink('torBrowser')}, and no third party sees both a deposit and a request.`,
       exposureContinued:
         "The deposit reaches the wallet's RPC, or the app's public RPC when the user funds an address the app shows. A relay at refraction.network carries requests to OpenRouter and chain reads by default and sees their timing, and Fathom counts feature use.",
       interior: {

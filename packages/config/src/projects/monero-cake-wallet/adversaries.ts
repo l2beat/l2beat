@@ -1,5 +1,6 @@
 import {
   ADVICE_SNIPPETS as A,
+  adviceLink,
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
@@ -71,8 +72,7 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
     },
     networkObserver: {
       sentiment: 'good',
-      exposureShort:
-        'Over an IP-hiding route, Moralis, Etherscan and PublicNode get each Ethereum wallet in its own session, so none of them sees both legs.',
+      exposureShort: `Over an ${adviceLink('IP-hiding route', 'routes')}, Moralis, Etherscan and PublicNode get each Ethereum wallet in its own session, so none of them sees both legs.`,
       exposureContinued:
         "Built-in Tor alone lets token logos out directly, and Cake shows priced tokens anyone sends, so Moralis can see the user's IP beside the wallet.",
       interior: {

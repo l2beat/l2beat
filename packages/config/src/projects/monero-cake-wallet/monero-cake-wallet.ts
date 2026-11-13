@@ -1,4 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { methodologyHrefs } from '../../common/privacyAdversaries'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
 import type { BaseProject } from '../../types'
@@ -25,6 +26,7 @@ export const moneroCakeWallet: BaseProject = {
     detailedDescription: readProjectMarkdown(
       'monero-cake-wallet',
       'detailedDescription',
+      methodologyHrefs('routes'),
     ),
     links: {
       websites: ['https://cakewallet.com', 'https://www.getmonero.org'],

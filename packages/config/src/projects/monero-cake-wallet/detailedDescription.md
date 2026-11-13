@@ -22,7 +22,7 @@ An EVM wallet in Cake has one address. It is sent as refund address on entry, an
 
 ### Network
 
-[Built-in Tor](https://docs.cakewallet.com/features/privacy-and-security/built-in-tor) is off by default. Without it, the swap services, Blink, Etherscan, the nodes, Cake's price API and Moralis see the user's IP. A custom node replaces the defaults, PublicNode for Ethereum and Cake's own for Monero, but Moralis, Etherscan and the price API stay. With Tor on, every call shares one circuit for up to ten minutes, so each leg needs its own app session. Two requests skip it: the WalletConnect relay and token logos. An IP-hiding route that carries all of the app's traffic covers them too.
+[Built-in Tor](https://docs.cakewallet.com/features/privacy-and-security/built-in-tor) is off by default. Without it, the swap services, Blink, Etherscan, the nodes, Cake's price API and Moralis see the user's IP. A custom node replaces the defaults, PublicNode for Ethereum and Cake's own for Monero, but Moralis, Etherscan and the price API stay. With Tor on, every call shares one circuit for up to ten minutes, so each leg needs its own app session. Two requests skip it: the WalletConnect relay and token logos. An [IP-hiding route]({{routes}}) that carries all of the app's traffic covers them too.
 
 ### Swap services
 

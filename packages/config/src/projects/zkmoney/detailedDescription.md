@@ -17,7 +17,7 @@ Accounts sign with a passkey. The released wallet requires a registered name to 
 ### App
 The ratings cover DAI payments and sUSDS savings.
 
-The Desktop release runs local code. Its endpoint settings accept the user's own Aztec node, Ethereum endpoint and DAI enclave. The sUSDS enclave address is always fetched from Aztec Labs among other addresses in two unsigned contract lists. Replacing them can redirect future deposits and payments.
+The Desktop release runs local code. Its endpoint settings accept the user's own [Aztec node]({{aztecNode}}), Ethereum endpoint and DAI enclave. The sUSDS enclave address is always fetched from Aztec Labs among other addresses in two unsigned contract lists. Replacing them can redirect future deposits and payments.
 
 The hosted wallet reloads code on every visit. Its owner can read viewing keys and request harmful passkey signatures through misleading prompts.
 

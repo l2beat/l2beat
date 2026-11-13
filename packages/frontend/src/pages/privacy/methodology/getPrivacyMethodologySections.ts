@@ -113,7 +113,7 @@ export function getPrivacyMethodologySections() {
       `These routes pass the [IP-hiding route checks](#${PRIVACY_IP_HIDING_ROUTES_ANCHOR}) and are decentralised, listed by the effort they take. Our steps name the lightest one that works with the app. Use Tor Browser for a website, and a route that carries all traffic for a native app.`,
       toolList('route'),
       heading(3, 'Tools'),
-      'Our steps link every outside app they name to its entry, here or among the routes above. Each entry has the official download and why we chose the app.',
+      'Project pages link every outside app they name to its entry, here or among the routes above. Each entry has the official download and why we chose the app.',
       toolList('tool'),
     ]),
 
@@ -157,8 +157,9 @@ export function getPrivacyMethodologySections() {
 }
 
 /**
- * The registry's entries of one kind, each under the anchor steps link. The
- * anchor is a raw span, since markdown list items render without an id.
+ * The registry's entries of one kind, each under the anchor project pages
+ * link. The anchor is a raw span, since markdown list items render without an
+ * id.
  */
 function toolList(kind: PrivacyTool['kind']) {
   const tools: PrivacyTool[] = Object.values(PRIVACY_TOOLS)

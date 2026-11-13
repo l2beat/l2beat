@@ -6,6 +6,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { CROP_NOTES } from '../../common/crops'
+import { methodologyHrefs } from '../../common/privacyAdversaries'
 import { PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS } from '../../common/privacyAnonymitySets'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
@@ -81,6 +82,7 @@ export const tacitPay: BaseProject = {
     detailedDescription: readProjectMarkdown(
       'tacit-pay',
       'detailedDescription',
+      methodologyHrefs('ethereumNode'),
     ),
     links: {
       websites: ['https://tacit.finance'],

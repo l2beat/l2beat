@@ -1,6 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { formatEther } from 'ethers/lib/utils'
 import { CROP_NOTES } from '../../common/crops'
+import { methodologyHrefs } from '../../common/privacyAdversaries'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -95,6 +96,7 @@ export const umbra: BaseProject = {
     description:
       'A stealth-address payment protocol for an existing wallet: the user registers once, and anyone can pay them at a fresh address.',
     detailedDescription: readProjectMarkdown('umbra', 'detailedDescription', {
+      ...methodologyHrefs('ethereumNode'),
       toll: `${Number(formatEther(discovery.getContractValue<number>('Umbra', 'toll')))} ETH`,
     }),
     links: {

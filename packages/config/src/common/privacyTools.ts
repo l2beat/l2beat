@@ -8,11 +8,11 @@ export interface PrivacyTool {
    * others under Tools.
    */
   kind: 'route' | 'tool'
-  /** Id of the entry on the methodology page, which steps link. */
+  /** Id of the entry on the methodology page, which project texts link. */
   anchor: string
   /**
-   * The names steps use for it. A step that prints one links the entry, which
-   * a config test checks.
+   * The names project texts use for it. A step, cell, description or risk
+   * summary that prints one links the entry, which a config test checks.
    */
   names: string[]
   /** Markdown head of the entry, with the official download of each app. */
@@ -27,7 +27,8 @@ export interface PrivacyTool {
 /**
  * Every outside app our advice names, in the order the methodology lists
  * them: routes by the effort they take, then the other tools. An app joins
- * with the reason we chose it, and a step links its entry, never the vendor.
+ * with the reason we chose it, and project texts link its entry, never the
+ * vendor.
  */
 export const PRIVACY_TOOLS = {
   torBrowser: {

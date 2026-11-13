@@ -18,7 +18,7 @@ Accounts sign with a passkey. The released wallet creates it only in Apple's, Go
 
 ### App
 
-The ratings cover DAI payments and sUSDS savings in Desktop, which runs local code. Its endpoint settings replace the Aztec node, the frozen v5 network's node, the Ethereum endpoint and the enclave. Outside them, the wallet asks PublicNode's Optimism endpoint whether each withdrawal recipient is an ether.fi Cash account. Aztec Labs always serves the two unsigned contract lists, and replacing them can redirect future deposits and payments. Its account service learns which account is open on every launch.
+The ratings cover DAI payments and sUSDS savings in Desktop, which runs local code. Its endpoint settings replace the [Aztec node]({{aztecNode}}), the frozen v5 network's node, the Ethereum endpoint and the enclave. Outside them, the wallet asks PublicNode's Optimism endpoint whether each withdrawal recipient is an ether.fi Cash account. Aztec Labs always serves the two unsigned contract lists, and replacing them can redirect future deposits and payments. Its account service learns which account is open on every launch.
 
 The hosted wallet reloads code on every visit. Its owner can read viewing keys and request harmful passkey signatures through misleading prompts.
 

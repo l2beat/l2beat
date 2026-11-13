@@ -8,6 +8,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
+import { methodologyHrefs } from '../../common/privacyAdversaries'
 import { PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS } from '../../common/privacyAnonymitySets'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
@@ -309,7 +310,7 @@ export const zkmoneyv6: BaseProject = {
     detailedDescription: readProjectMarkdown(
       'zkmoneyv6',
       'detailedDescription',
-      descriptionValues,
+      { ...descriptionValues, ...methodologyHrefs('aztecNode') },
     ),
     links: {
       websites: ['https://zk.money'],
@@ -433,7 +434,11 @@ export const zkmoneyv6: BaseProject = {
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
     adversaries: zkMoneyV6Adversaries,
-    riskSummary: readProjectMarkdown('zkmoneyv6', 'riskSummary'),
+    riskSummary: readProjectMarkdown(
+      'zkmoneyv6',
+      'riskSummary',
+      methodologyHrefs('aztecNode'),
+    ),
     upgradesAndGovernance: {
       content: readProjectMarkdown(
         'zkmoneyv6',

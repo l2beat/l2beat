@@ -1,5 +1,6 @@
 import {
   ADVICE_SNIPPETS as A,
+  adviceLink,
   definePrivacyAdversaries,
   toolLink,
 } from '../../common/privacyAdversaries'
@@ -96,10 +97,8 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
     },
     networkObserver: {
       sentiment: 'warning',
-      exposureShort:
-        "Alchemy, called under Aztec Labs' key, sees an account's deposit addresses and withdrawals in one session unless the user sets their own Ethereum node.",
-      exposureContinued:
-        "PublicNode receives each withdrawal recipient as it is entered, through an Optimism endpoint the settings do not replace. Desktop has no Tor setting, and Chrome's WalletConnect traffic uses UDP, which bypasses a Tor route unless UDP is blocked.",
+      exposureShort: `Alchemy, called under Aztec Labs' key, sees an account's deposit addresses and withdrawals in one session unless the user sets their own ${toolLink('ethereumNode')}.`,
+      exposureContinued: `PublicNode receives each withdrawal recipient as it is entered, through an Optimism endpoint the settings do not replace. Desktop has no Tor setting, and Chrome's WalletConnect traffic uses UDP, which bypasses a ${adviceLink('Tor route', 'routes')} unless UDP is blocked.`,
       interior: {
         ...INTERIOR,
         sender: {
@@ -135,8 +134,7 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
       sentiment: 'warning',
       exposureShort:
         'An AWS Nitro enclave reads payments, withdrawals and deposit claims, and wallets accept only one registered with an attestation of the approved image.',
-      exposureContinued:
-        "Aztec Labs' unsigned contract lists name the portal, and a new portal can approve another image. Aztec Labs' default Aztec nodes, like Alchemy under its key, see an account's deposit addresses and withdrawals in one session. The resolver operator, Aztec Labs today, derives each deposit address paid through a name, so it knows the recipient.",
+      exposureContinued: `Aztec Labs' unsigned contract lists name the portal, and a new portal can approve another image. Aztec Labs' default ${toolLink('aztecNode', 'Aztec nodes')}, like Alchemy under its key, see an account's deposit addresses and withdrawals in one session. The resolver operator, Aztec Labs today, derives each deposit address paid through a name, so it knows the recipient.`,
       interior: {
         ...INTERIOR,
         sender: {

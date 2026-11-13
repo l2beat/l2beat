@@ -14,6 +14,6 @@
 2. a user's payments hide only among zk.money's users on Aztec (see chain analyst).
 3. the resolver operator links deposits paid through a name to their recipients, or an enclave or AWS Nitro is compromised (see privileged insider).
 4. the unpublished sUSDS enclave image is malicious (see privileged insider).
-5. the default endpoints, Alchemy and Aztec Labs' Aztec node, see deposit addresses and withdrawals in one session (see network observer and privileged insider).
+5. the default endpoints, Alchemy and Aztec Labs' [Aztec node]({{aztecNode}}), see deposit addresses and withdrawals in one session (see network observer and privileged insider).
 6. a user refunds, the only exit after the freeze, and the refund publishes its amount on Ethereum.
 7. elliptic-curve cryptography is broken, which decrypts data published to Ethereum (see future adversary).

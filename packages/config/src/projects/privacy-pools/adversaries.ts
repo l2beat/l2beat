@@ -2,6 +2,7 @@ import {
   ADVICE_SNIPPETS as A,
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
+  toolLink,
 } from '../../common/privacyAdversaries'
 
 // v1.privacypools.com serves main 8b3fbf0 (v2.17.0 and a Next.js bump), whose
@@ -55,8 +56,7 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
     },
     networkObserver: {
       sentiment: 'good',
-      exposureShort:
-        "The website works in Tor Browser and scans every pool whole, matching notes locally without revealing the user's deposits to third parties.",
+      exposureShort: `The website works in ${toolLink('torBrowser')} and scans every pool whole, matching notes locally without revealing the user's deposits to third parties.`,
       exposureContinued:
         "Cloaked Relay receives amount, asset and recipient with the first quote. The website confirms a relayed withdrawal from bulk reads of new blocks, so no request names its hash. 0xbow's Google Analytics runs without a consent prompt and records the hash of any explorer link the user opens. On a quiet pool, the RPC can time a wallet sign-in against the withdrawal the same session waits for.",
       sources: [

@@ -8,6 +8,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
+import { methodologyHrefs } from '../../common/privacyAdversaries'
 import { PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS } from '../../common/privacyAnonymitySets'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
@@ -302,11 +303,10 @@ export const zkmoney: BaseProject = {
   display: {
     description:
       'A shielded ledger on Aztec v5 for DAI payments and sUSDS savings, frozen since Aztec made v6 canonical.',
-    detailedDescription: readProjectMarkdown(
-      'zkmoney',
-      'detailedDescription',
-      descriptionValues,
-    ),
+    detailedDescription: readProjectMarkdown('zkmoney', 'detailedDescription', {
+      ...descriptionValues,
+      ...methodologyHrefs('aztecNode'),
+    }),
     links: {
       websites: ['https://zk.money'],
       documentation: ['https://docs.zk.money/docs'],
@@ -423,7 +423,11 @@ export const zkmoney: BaseProject = {
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
     adversaries: zkMoneyAdversaries,
-    riskSummary: readProjectMarkdown('zkmoney', 'riskSummary'),
+    riskSummary: readProjectMarkdown(
+      'zkmoney',
+      'riskSummary',
+      methodologyHrefs('aztecNode'),
+    ),
     upgradesAndGovernance: {
       content: readProjectMarkdown(
         'zkmoney',
