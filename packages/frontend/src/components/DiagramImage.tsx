@@ -13,6 +13,12 @@ export function DiagramImage({ diagram }: { diagram: DiagramParams }) {
   const phoneClassName = scrollsOnPhones && 'max-md:w-[720px] max-md:max-w-none'
   return (
     <>
+      {/* Above the image, so the caption stays directly under it. */}
+      {scrollsOnPhones && (
+        <p className="mb-2 text-left text-label-value-13 text-secondary md:hidden">
+          Scroll sideways to see the whole diagram, or tap to open it.
+        </p>
+      )}
       <div
         className={cn(
           scrollsOnPhones &&
@@ -47,11 +53,6 @@ export function DiagramImage({ diagram }: { diagram: DiagramParams }) {
           )}
         </a>
       </div>
-      {scrollsOnPhones && (
-        <p className="mt-2 text-label-value-13 text-secondary md:hidden">
-          Scroll sideways to see the whole diagram, or tap to open it.
-        </p>
-      )}
     </>
   )
 }

@@ -35,11 +35,11 @@ export function SpecSheet({ title, rows }: Props) {
             >
               <th
                 scope="row"
-                className="px-4 py-3 text-left align-top font-medium text-label-value-14 leading-5 max-md:pb-1 md:w-[180px]"
+                className="px-4 py-3 text-left align-top font-medium text-label-value-14 leading-5 max-md:pb-1 md:w-[212px]"
               >
                 {row.label}
               </th>
-              <td className="px-4 py-3 align-top text-label-value-14 leading-5 max-md:pt-0">
+              <td className="px-4 py-3 align-top text-paragraph-14 max-md:pt-0 md:text-paragraph-15">
                 <SpecValue value={row.value} />
               </td>
             </tr>

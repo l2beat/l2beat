@@ -17,14 +17,16 @@ export function ParticipantsEntry({
         <span className="font-medium">{`Participants (${participants.length}): `}</span>
       </p>
       {participants.map((address, i) => (
-        <HighlightableLink
-          key={i}
-          href={address.href}
-          address={address.address}
-          className="flex items-center gap-0.5"
-        >
-          {address.name}
-        </HighlightableLink>
+        <span key={i} className="flex items-center">
+          <HighlightableLink
+            href={address.href}
+            address={address.address}
+            className="flex items-center gap-0.5"
+          >
+            {address.name}
+          </HighlightableLink>
+          {i < participants.length - 1 && ','}
+        </span>
       ))}
     </div>
   )

@@ -53,7 +53,9 @@ export function RiskBanner({
         <GrissiniStick
           sentiment={adjSentiment}
           className={cn(
-            'h-full shrink-0 max-md:w-1',
+            // Without a fixed height, h-full resolves to nothing: stretch.
+            describesEmergency ? 'self-stretch' : 'h-full',
+            'shrink-0 max-md:w-1',
             (regular || warning) && info === 'full' && 'rounded-b-none',
             className,
           )}

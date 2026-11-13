@@ -92,15 +92,7 @@ export function TvsBreakdownSummaryBox({
       </ChartStatsPrimaryItem>
       <div className="grid gap-2 max-md:mt-3 md:col-span-3 md:grid-cols-3 md:gap-3">
         <ChartStatsItem
-          label={
-            <>
-              <span className="max-md:hidden">Canonically bridged</span>
-              <span className="max-xs:hidden md:hidden">
-                Canonically bridged value
-              </span>
-              <span className="xs:hidden">Canonical</span>
-            </>
-          }
+          label={'Canonically bridged'}
           tooltip="Total value secured in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago."
         >
           <StatItemContent
@@ -111,15 +103,7 @@ export function TvsBreakdownSummaryBox({
           />
         </ChartStatsItem>
         <ChartStatsItem
-          label={
-            <>
-              <span className="max-md:hidden">Natively minted</span>
-              <span className="max-xs:hidden md:hidden">
-                Natively minted tokens
-              </span>
-              <span className="xs:hidden">Native</span>
-            </>
-          }
+          label={'Natively minted'}
           tooltip="Total value of natively minted tokens displayed together with a percentage change compared to 7D ago."
         >
           <StatItemContent
@@ -130,15 +114,7 @@ export function TvsBreakdownSummaryBox({
           />
         </ChartStatsItem>
         <ChartStatsItem
-          label={
-            <>
-              <span className="max-md:hidden">Externally bridged</span>
-              <span className="max-xs:hidden md:hidden">
-                Externally bridged value
-              </span>
-              <span className="xs:hidden">External</span>
-            </>
-          }
+          label={'Externally bridged'}
           tooltip="Total value of externally bridged tokens displayed together with a percentage change compared to 7D ago."
         >
           <StatItemContent

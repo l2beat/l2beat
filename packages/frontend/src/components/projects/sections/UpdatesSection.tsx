@@ -275,7 +275,7 @@ export function UpdateCard({
       <div className="flex min-w-0 flex-col gap-4 border-divider border-t px-4 py-4">
         {update.description.trim().length > 0 && (
           <div
-            className="min-w-0 max-w-full rounded-lg border border-divider bg-surface-secondary px-4 py-3.5 dark:bg-surface-primary"
+            className="min-w-0 max-w-full rounded-lg border border-divider bg-surface-secondary px-4 py-3.5"
             role="region"
             aria-label="Update description"
           >
@@ -285,9 +285,9 @@ export function UpdateCard({
                 'min-w-0 max-w-full text-primary text-sm leading-relaxed [overflow-wrap:anywhere]',
                 '[&_p:last-child]:mb-0 [&_p]:mb-2',
                 '[&_li]:marker:text-secondary [&_ol]:mb-2 [&_ul]:mb-2',
-                '[&_a]:break-all [&_a]:text-link',
+                '[&_a]:text-link',
                 // Code chips stand off the grey panel.
-                '[&_code]:bg-surface-primary dark:[&_code]:bg-surface-secondary',
+                '[&_code]:bg-surface-primary',
               )}
             >
               {linkBareUrls(update.description)}
@@ -353,7 +353,7 @@ function linkBareUrls(markdown: string) {
 }
 
 function urlLabel(url: string) {
-  if (/\/(compare|commit|pull)\//.test(url)) return 'diff'
+  if (/\/(compare|commit|pull|diff)\//.test(url)) return 'diff'
   try {
     return new URL(url).hostname.replace(/^www\./, '')
   } catch {

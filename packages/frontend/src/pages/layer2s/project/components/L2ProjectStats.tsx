@@ -125,7 +125,11 @@ export function ProjectL2Stats({ project, className }: Props) {
       <ProjectSummaryStat
         key="gas-tokens"
         title={`Gas ${pluralize(project.header.gasTokens.length, 'token')}`}
-        value={project.header.gasTokens.join(', ')}
+        value={
+          <span className="whitespace-nowrap">
+            {project.header.gasTokens.join(', ')}
+          </span>
+        }
       />
     ) : undefined,
     project.header.category ? (

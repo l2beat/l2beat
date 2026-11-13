@@ -27,6 +27,7 @@ import type {
   ProjectOssificationView,
 } from '~/server/features/projects/ossification/getProjectOssification'
 import { formatTimestamp } from '~/utils/dates'
+import { withIdentifierBreaks } from '../identifierBreaks'
 import { SubsectionHeading } from '../Subsection'
 
 export function OssificationDetails({
@@ -152,7 +153,7 @@ function CriticalContracts({
                 <tr key={contract.address} className="border-divider border-t">
                   <td className="px-4 py-2 md:px-6">
                     <div className="flex items-center gap-2">
-                      <span className="font-medium max-md:max-w-44">
+                      <span className="font-medium">
                         {withIdentifierBreaks(contract.name)}
                       </span>
                       {!contract.isVerified && <OssificationUnverifiedBadge />}
@@ -181,14 +182,4 @@ function CriticalContracts({
       </CollapsibleContent>
     </Collapsible>
   )
-}
-
-/**
- * Contract names are CamelCase identifiers ("L2CrossDomainMessenger"); on
- * phones they may only break between words, never mid-word.
- */
-function withIdentifierBreaks(name: string) {
-  return name
-    .split(/(?<=[a-z0-9])(?=[A-Z])|(?<=_)|(?<=[A-Za-z])(?=\d)/)
-    .flatMap((part, i) => (i === 0 ? [part] : [<wbr key={i} />, part]))
 }

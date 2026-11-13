@@ -4,6 +4,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { withIdentifierBreaks } from '../../../identifierBreaks'
 import type { ProgramHashRow } from '../ProgramHashesTable'
 import { ZkProjectTooltip } from './ZkProjectTooltip'
 
@@ -45,7 +46,7 @@ export function ProgramHashNameCell({
             ref={titleRef}
             className="line-clamp-5 w-40 shrink-0 text-pretty font-bold text-label-value-14 leading-normal [overflow-wrap:anywhere] md:line-clamp-4 md:w-60 2xl:w-72"
           >
-            {withVersionBreaks(title)}
+            {withIdentifierBreaks(title)}
           </div>
         </TooltipTrigger>
         <TooltipContent>
@@ -58,15 +59,4 @@ export function ProgramHashNameCell({
       {zkCatalogProject && <ZkProjectTooltip zkProject={zkCatalogProject} />}
     </div>
   )
-}
-
-/**
- * Titles end in an identifier like "StarkWare_GpsStatementVerifier_2026_14",
- * and the version is what tells two rows apart. Offering a break before the
- * version keeps it whole on its own line instead of split mid-year.
- */
-function withVersionBreaks(title: string) {
-  return title
-    .split(/(?<=_)(?=\d)/)
-    .flatMap((part, i) => (i === 0 ? [part] : [<wbr key={i} />, part]))
 }

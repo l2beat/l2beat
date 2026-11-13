@@ -40,35 +40,41 @@ export function ProjectInteropMetrics({
           </a>
         ))}
       </div>
-      <HorizontalSeparator />
-      <div className="grid gap-x-10 gap-y-4 md:grid-cols-2">
-        <InteropMetric
-          title="Interop protocols used"
-          href="#interop-flows"
-          items={{
-            items: interop.protocols.items.map((protocol) => ({
-              id: protocol.id,
-              displayName: protocol.name,
-              iconUrl: protocol.iconUrl,
-              volume: protocol.volume,
-            })),
-            remainingCount: interop.protocols.remainingCount,
-          }}
-        />
-        <InteropMetric
-          title="Tokens by volume"
-          href="#interop-flows"
-          items={{
-            items: interop.tokens.items.map((token) => ({
-              id: token.id,
-              displayName: token.symbol,
-              iconUrl: token.iconUrl,
-              volume: token.volume,
-            })),
-            remainingCount: interop.tokens.remainingCount,
-          }}
-        />
-      </div>
+      {/* No protocols or tokens to list: no empty ruled band either. */}
+      {(interop.protocols.items.length > 0 ||
+        interop.tokens.items.length > 0) && (
+        <>
+          <HorizontalSeparator />
+          <div className="grid gap-x-10 gap-y-4 md:grid-cols-2">
+            <InteropMetric
+              title="Interop protocols used"
+              href="#interop-flows"
+              items={{
+                items: interop.protocols.items.map((protocol) => ({
+                  id: protocol.id,
+                  displayName: protocol.name,
+                  iconUrl: protocol.iconUrl,
+                  volume: protocol.volume,
+                })),
+                remainingCount: interop.protocols.remainingCount,
+              }}
+            />
+            <InteropMetric
+              title="Tokens by volume"
+              href="#interop-flows"
+              items={{
+                items: interop.tokens.items.map((token) => ({
+                  id: token.id,
+                  displayName: token.symbol,
+                  iconUrl: token.iconUrl,
+                  volume: token.volume,
+                })),
+                remainingCount: interop.tokens.remainingCount,
+              }}
+            />
+          </div>
+        </>
+      )}
     </div>
   )
 }
