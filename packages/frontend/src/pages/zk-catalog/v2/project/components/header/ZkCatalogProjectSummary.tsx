@@ -18,6 +18,7 @@ import { InfoIcon } from '~/icons/Info'
 import type { ProjectZkCatalogEntry } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
 import type { TrustedSetupsByProofSystem } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
 import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
+import { cn } from '~/utils/cn'
 import { TechStackCell } from '../../../components/TechStackCell'
 import { TrustedSetupCell } from '../../../components/TrustedSetupCell'
 import { VerifiedCountWithDetails } from '../../../components/VerifiedCountWithDetails'
@@ -101,7 +102,15 @@ export function TrustedSetupsByProofSystemSection({
       </div>
       {/* Desktop */}
       <div className="rounded-sm border border-divider px-4 max-md:hidden">
-        <table className="w-full border-separate border-spacing-y-4">
+        {/* The L2 variant spreads its two wide cells across the card. The ZK
+            catalog's short cells pack left, so they sit at the same x on
+            every project page. */}
+        <table
+          className={cn(
+            'border-separate border-spacing-y-4',
+            variant === 'l2' ? 'w-full' : 'w-auto',
+          )}
+        >
           <tbody>
             {Object.entries(trustedSetupsByProofSystem).map(
               ([
@@ -118,7 +127,7 @@ export function TrustedSetupsByProofSystemSection({
                       variant === 'l2' ? 'align-top' : 'h-8 align-middle'
                     }
                   >
-                    <td className={variant === 'l2' ? 'align-top' : undefined}>
+                    <td className={variant === 'l2' ? 'align-top' : 'pr-10'}>
                       <TrustedSetupCell
                         trustedSetups={trustedSetups}
                         dotSize="lg"
@@ -168,10 +177,10 @@ function MobileTrustedSetupsDetails({
   }
 
   return (
-    <div className="grid grid-cols-[200px_1fr] gap-1">
+    <div className="flex flex-wrap items-start gap-x-8 gap-y-4">
       <OnchainVerifierBlock onchainVerifiers={onchainVerifiers} mobile />
-      <UsedInBlock projectsUsedIn={projectsUsedIn} mobile />
       <VerifierStatusBlock verifiers={verifiers} mobile />
+      <UsedInBlock projectsUsedIn={projectsUsedIn} mobile />
     </div>
   )
 }
@@ -206,13 +215,17 @@ function DesktopTrustedSetupsCells({
   return (
     <>
       <td>
-        <OnchainVerifierBlock onchainVerifiers={onchainVerifiers} />
+        {onchainVerifiers?.length ? (
+          <div className="mr-10">
+            <OnchainVerifierBlock onchainVerifiers={onchainVerifiers} />
+          </div>
+        ) : null}
+      </td>
+      <td className="pr-10">
+        <VerifierStatusBlock verifiers={verifiers} />
       </td>
       <td>
         <UsedInBlock projectsUsedIn={projectsUsedIn} />
-      </td>
-      <td>
-        <VerifierStatusBlock verifiers={verifiers} />
       </td>
     </>
   )
@@ -251,11 +264,23 @@ function UsedInBlock({
   return (
     <div
       className={
-        mobile || stacked ? 'flex flex-col gap-2' : 'flex items-center gap-1.5'
+        stacked
+          ? 'flex flex-col gap-2'
+          : mobile
+            ? 'flex flex-col gap-1.5'
+            : 'flex items-center gap-1.5'
       }
     >
       <p className="text-label-value-13 leading-4">Used in</p>
-      <ProjectsUsedIn usedIn={projectsUsedIn} />
+      {mobile && !stacked ? (
+        // A 20px line like the verifier figures. On touch the icon list is a
+        // 44px tap target, which centres in it and overflows both ways.
+        <div className="flex h-5 items-center">
+          <ProjectsUsedIn usedIn={projectsUsedIn} />
+        </div>
+      ) : (
+        <ProjectsUsedIn usedIn={projectsUsedIn} />
+      )}
     </div>
   )
 }
@@ -386,7 +411,7 @@ function TechStackSection({
         {!leftSideEmpty && (
           <div className="flex flex-col">
             <span className="font-normal text-label-value-13 text-primary">
-              zkVM
+              Main prover
             </span>
             <TechStackCell
               tags={[...(techStack.zkVM ?? []), ...(techStack.snark ?? [])]}
