@@ -1,6 +1,7 @@
 import { Breadcrumbs } from '~/components/Breadcrumbs'
 import { UtcDateTime } from '~/components/core/UtcDateTime'
 import { SearchBarButton } from '~/components/search-bar/SearchBarButton'
+import { HOME_TEXT } from '~/pages/home/homeStyles'
 
 interface Props {
   title: string
@@ -35,7 +36,7 @@ export function TvsBreakdownPageHeader({
               href: `/layer2s/projects/${slug}`,
             },
             {
-              content: 'TVS Breakdown',
+              content: 'TVS breakdown',
             },
           ]}
         />
@@ -43,13 +44,10 @@ export function TvsBreakdownPageHeader({
       </div>
 
       <div className="flex flex-col items-start justify-between gap-[10px] md:mb-4 md:flex-row md:items-center">
-        <h2 className="font-bold text-[28px] md:text-3xl">TVS Breakdown</h2>
-        <div className="font-medium text-secondary text-xs">
-          Timestamp:&nbsp;
-          <span className="font-medium text-base text-primary">
-            <UtcDateTime timestamp={tvsBreakdownTimestamp} />
-          </span>
-        </div>
+        <h1 className="font-bold text-[26px]">TVS breakdown</h1>
+        <p className={HOME_TEXT.meta}>
+          Data as of <UtcDateTime timestamp={tvsBreakdownTimestamp} />
+        </p>
       </div>
     </div>
   )

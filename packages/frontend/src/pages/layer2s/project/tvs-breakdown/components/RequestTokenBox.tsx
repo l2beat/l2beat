@@ -1,13 +1,14 @@
 import { externalLinks } from '~/consts/externalLinks'
+import { HOME_BUTTON_CLASS } from '~/pages/home/homeStyles'
 
 export function RequestTokenBox() {
   return (
-    <div className="-mb-4 mt-16 flex flex-col items-center justify-between gap-2 bg-linear-to-r from-brand/40 via-brand/25 to-brand/10 px-10 py-6 text-lg md:mb-20 md:flex-row md:rounded-xl">
-      <div className="text-center font-medium">
+    <div className="mt-4 mb-4 flex flex-col items-start gap-3 bg-surface-primary px-4 py-5 md:mt-6 md:mb-20 md:flex-row md:items-center md:justify-between md:rounded-xl md:px-6">
+      <p className="font-medium text-label-value-15">
         Can&apos;t find a token you&apos;re looking for?
-      </div>
+      </p>
       <a
-        className="font-bold tracking-wide underline"
+        className={HOME_BUTTON_CLASS}
         href={externalLinks.tokenRequest}
         target="_blank"
         rel="noreferrer"
