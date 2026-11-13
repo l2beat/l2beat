@@ -51,6 +51,14 @@ export function ColumnsControls<T>({ columns }: Props<T>) {
         </PopoverTrigger>
         <PopoverContent
           className="!bg-surface-primary max-w-66 px-3.5 pb-3.5"
+          // Focus the panel, not its first chip: a mouse click would
+          // otherwise ring that chip. Tab still reaches every chip.
+          onOpenAutoFocus={(event) => {
+            event.preventDefault()
+            if (event.currentTarget instanceof HTMLElement) {
+              event.currentTarget.focus()
+            }
+          }}
           align="start"
           side="bottom"
         >
@@ -116,18 +124,29 @@ function HiddenColumnsSegment<T>({
 
 function ColumnControl<T>({ column }: { column: Column<T> }) {
   const isVisible = column.getIsVisible()
+  const header = column.columnDef.header
   return (
-    <div
+    <button
+      type="button"
       key={column.id}
+      aria-pressed={isVisible}
       className={cn(
-        'flex h-8 cursor-pointer select-none items-center rounded-sm border border-divider bg-surface-secondary px-2.5 py-2 font-medium text-label-value-16 capitalize transition-all md:h-6 md:px-2 md:py-1.5 md:text-label-value-13',
-        isVisible && 'border-brand bg-brand/15',
+        'flex h-8 cursor-pointer select-none items-center rounded-sm border border-divider bg-surface-secondary px-2.5 py-2 font-medium text-label-value-16 transition-colors md:h-6 md:px-2 md:py-1.5 md:text-label-value-13',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand',
+        // Shown columns take the site's one selected style: the white pill
+        // (black in dark), edged in ink. Pink is kept for the side nav,
+        // count badges and focus rings.
+        isVisible && 'border-primary bg-pure-white dark:bg-black',
       )}
       onClick={() => column.toggleVisibility(!isVisible)}
     >
-      {typeof column.columnDef.header === 'string'
-        ? column.columnDef.header
-        : column.id}
-    </div>
+      {typeof header === 'string' ? header : sentenceCase(column.id)}
+    </button>
   )
+}
+
+/** A fallback label from a column id, e.g. `pastDayUops` → "Past day uops". */
+function sentenceCase(id: string) {
+  const words = id.replace(/([a-z0-9])([A-Z])/g, '$1 $2').toLowerCase()
+  return words.charAt(0).toUpperCase() + words.slice(1)
 }
