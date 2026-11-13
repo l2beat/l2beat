@@ -6,7 +6,7 @@ import {
   frameOrigin,
   gestureCamera,
   type Point,
-} from './relationsCamera'
+} from './camera'
 
 /** Pointer travel below this still counts as a click. */
 const CLICK_SLOP = 4
@@ -109,7 +109,9 @@ export function useDragToPan(
     if (!event.currentTarget.hasPointerCapture(event.pointerId)) {
       event.currentTarget.setPointerCapture(event.pointerId)
     }
-    camera.set(gestureCamera(current.camera, from, to), { live: true })
+    camera.set(gestureCamera(current.camera, from, to, camera.scaleBounds()), {
+      live: true,
+    })
     const time = event.timeStamp
     trail.current = trail.current.filter(
       (sample) => time - sample.time <= FLING_SAMPLE_MS,
