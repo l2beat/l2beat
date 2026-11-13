@@ -56,7 +56,7 @@ export const DATA_POSTED_DESCRIPTION =
   'This section shows how much data the project publishes to Ethereum over time. It leaves out data posted to other data-availability (DA) layers.'
 
 export const THROUGHPUT_DESCRIPTION =
-  'The chart shows the actual size of data posted to the DA Layer per day for the selected time period, as well as the maximum possible throughput per day.'
+  'The chart shows the actual size of data posted to the DA layer per day for the selected time period, as well as the maximum possible throughput per day.'
 
 export const L3_RISKS_DESCRIPTION =
   'The L3 risks depend on the individual properties of L3 and those of the host chain combined.'
