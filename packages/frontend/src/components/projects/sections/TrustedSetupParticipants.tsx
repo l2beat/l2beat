@@ -30,9 +30,10 @@ export function TrustedSetupParticipants(
               {summary.phase}
             </span>
           )}
-          <div className="min-w-0">
-            {/* Phases share a label track, so their counts start at one x. */}
-            <div className="flex flex-wrap items-baseline gap-x-3 md:grid md:grid-cols-[200px_auto]">
+          <div className="min-w-0 flex-1 md:flex-none">
+            {/* Phases share a label track, so their counts start at one x
+                (on phones the counts sit flush right). */}
+            <div className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-3 md:grid-cols-[200px_auto]">
               <span className="font-semibold text-paragraph-15">
                 {summary.label}
                 {summary.phase && (
