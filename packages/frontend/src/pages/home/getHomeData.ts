@@ -30,6 +30,7 @@ import { getOrganizationStructuredData } from '~/ssr/head/structured-data/getOrg
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { optionToRange } from '~/utils/range/range'
 import {
   MIN_SELECTED_CHAINS,
@@ -276,7 +277,7 @@ function getTopL2Projects(
     return {
       id: entry.id.toString(),
       name: entry.name,
-      href: `/layer2s/projects/${entry.slug}`,
+      href: getProjectPath(entry.slug),
       iconUrl: entry.icon,
       stage: entry.stage.stage,
       tvs: tvs?.breakdown.total,
@@ -331,7 +332,7 @@ function getRecentProjectListing(
   if (scalingInfo) {
     return {
       name,
-      href: `/layer2s/projects/${slug}`,
+      href: getProjectPath(slug),
       label:
         scalingInfo.type === 'Other'
           ? `${scalingInfo.layer === 'layer3' ? 'Layer 3s' : 'Layer 2s'} - Other`
@@ -341,17 +342,17 @@ function getRecentProjectListing(
   // Privacy is checked before the ZK Catalog: projects listed in both
   // (e.g. Railgun, Tornado Cash) should surface as privacy projects.
   if (project.privacyInfo) {
-    return { name, href: `/privacy/projects/${slug}`, label: 'Privacy' }
+    return { name, href: getProjectPath(slug), label: 'Privacy' }
   }
   if (project.zkCatalogInfo) {
-    return { name, href: `/zk-catalog/${slug}`, label: 'ZK Catalog' }
+    return { name, href: getProjectPath(slug), label: 'ZK Catalog' }
   }
   // Scaling projects that are also interop protocols are handled by the
   // scaling branch, matching the redirect on /interop/protocols/:slug.
   if (project.interopConfig) {
     return {
       name: project.interopConfig.name ?? name,
-      href: `/interop/protocols/${slug}`,
+      href: getProjectPath(slug),
       label: 'Interoperability',
     }
   }

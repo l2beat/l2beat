@@ -1,3 +1,5 @@
+import { ETHEREUM_PROJECT_PATH } from '~/pages/ethereum/paths'
+
 // The rename announcement's wording, split into the parts the page lays out.
 // Edit the words here; NewNamePage decides how each part looks.
 
@@ -82,7 +84,7 @@ export const NEW_NAME = {
   coverage: {
     heading: 'What we cover today',
     areas: [
-      { label: 'Ethereum', href: '/projects/ethereum' },
+      { label: 'Ethereum', href: ETHEREUM_PROJECT_PATH },
       { label: 'Privacy', href: '/privacy/summary' },
       { label: 'ZK Catalog', href: '/zk-catalog' },
       { label: 'Interop', href: '/interop/summary' },

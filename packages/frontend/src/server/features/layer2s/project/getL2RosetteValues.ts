@@ -1,5 +1,6 @@
 import type { Project, ProjectRiskView } from '@l2beat/config'
 import type { RosetteValueTuple } from '~/components/rosette/individual/IndividualRosetteIcon'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 
 export interface L2Rosette {
   self: RosetteValueTuple
@@ -47,7 +48,7 @@ function getL2RosetteValues(
   sectionsInfo: SectionsInfo,
   projectSlug: string,
 ): RosetteValueTuple {
-  const baseUrl = `/layer2s/projects/${projectSlug}`
+  const baseUrl = getProjectPath(projectSlug)
   const fallbackHref = `${baseUrl}#risk-analysis`
   return [
     {

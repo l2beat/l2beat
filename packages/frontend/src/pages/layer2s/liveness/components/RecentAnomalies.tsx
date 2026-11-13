@@ -18,6 +18,7 @@ import { SentimentText } from '~/components/SentimentText'
 import { ChevronIcon } from '~/icons/Chevron'
 import type { LivenessAnomaly } from '~/server/features/layer2s/liveness/types'
 import { cn } from '~/utils/cn'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
 import { AnomalyText } from './AnomalyText'
 import { NoAnomaliesState } from './NoRecentAnomaliesState'
@@ -145,7 +146,7 @@ function AnomalyCollapsible({
           })}
         </div>
         <Button variant="outline" size="sm" className="w-full py-1" asChild>
-          <a href={`/layer2s/projects/${projectWithAnomalies.slug}#liveness`}>
+          <a href={`${getProjectPath(projectWithAnomalies.slug)}#liveness`}>
             See more details
           </a>
         </Button>
@@ -162,7 +163,7 @@ function FailureMechanism({
   slug: string
 }) {
   const link = (
-    <a href={`/layer2s/projects/${slug}#operator`}>
+    <a href={`${getProjectPath(slug)}#operator`}>
       <SentimentText
         sentiment={failureMechanism.sentiment ?? 'neutral'}
         vibrant
