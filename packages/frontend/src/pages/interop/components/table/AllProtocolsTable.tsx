@@ -27,20 +27,16 @@ export function AllProtocolsTable({
   tokenId?: string
 }) {
   const { selectedChains } = useInteropSelectedChains()
-  // Descriptive columns start hidden where they'd crowd the figures: Category
-  // below xl, so names stay on one line, and on phones also Transfer types,
-  // so the volume the table ranks by is in the first view. The Columns menu
-  // brings them back. Undefined until mounted: the server can't know the
-  // viewport.
+  // Phones start without the descriptive columns, Category and Transfer
+  // types, so the volume the table ranks by is in the first view (DESIGN.md
+  // "Tables"); the Columns menu brings them back. From md every column shows
+  // and the table scrolls sideways when it's wider than the card. Undefined
+  // until mounted: the server can't know the viewport.
   const breakpoint = useBreakpoint()
-  const isWide = breakpoint === 'xl' || breakpoint === '2xl'
   const isPhone = breakpoint === 'xs' || breakpoint === 'sm'
   const defaultVisibility = useMemo(
-    () =>
-      breakpoint === undefined || isWide
-        ? undefined
-        : { type: false, ...(isPhone ? { bridgeTypes: false } : {}) },
-    [breakpoint, isWide, isPhone],
+    () => (isPhone ? { type: false, bridgeTypes: false } : undefined),
+    [isPhone],
   )
 
   const columns = useMemo(
@@ -89,9 +85,9 @@ export function AllProtocolsTable({
 
   return (
     <>
-      {/* Only narrower screens hide columns by default, so only they need
-          the menu, and it offers just those columns. */}
-      <div className="mt-3 xl:hidden">
+      {/* Only phones hide columns by default, so only they need the menu,
+          and it offers just those columns. */}
+      <div className="mt-3 md:hidden">
         <ColumnsControls
           columns={table
             .getAllColumns()

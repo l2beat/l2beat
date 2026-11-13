@@ -46,7 +46,7 @@ export function InteropTokenRow({
         alt={token.symbol}
         className="size-6 shrink-0 rounded-full"
       />
-      <span className="font-bold text-heading-16">{token.symbol}</span>
+      <span className="font-semibold text-label-value-15">{token.symbol}</span>
     </>
   )
 
@@ -105,7 +105,7 @@ export function InteropTokenRow({
         {token.volume === null ? (
           <InteropNoDataBadge />
         ) : (
-          <span className="font-bold text-label-value-15 md:text-label-value-16">
+          <span className="font-semibold text-label-value-15 tabular-nums">
             {formatCurrency(token.volume, 'usd', { decimals: 2 })}
           </span>
         )}
@@ -126,7 +126,7 @@ export function InteropTokenRow({
             tokenId={token.tokenId}
             selection={transfer.selection}
             snapshotTimestamp={transfer.snapshotTimestamp}
-            className="cursor-pointer font-medium text-paragraph-14 text-secondary hover:underline md:text-paragraph-16"
+            className="cursor-pointer font-medium text-label-value-15 text-secondary tabular-nums hover:underline"
           >
             {txsLabel}
           </InteropTransferDetailsTrigger>
@@ -136,12 +136,12 @@ export function InteropTokenRow({
             tokenId={token.tokenId}
             selection={transfer.selection}
             snapshotTimestamp={transfer.snapshotTimestamp}
-            className="cursor-pointer font-medium text-paragraph-14 text-secondary hover:underline md:text-paragraph-16"
+            className="cursor-pointer font-medium text-label-value-15 text-secondary tabular-nums hover:underline"
           >
             {txsLabel}
           </InteropTransferTrigger>
         ) : (
-          <span className="font-medium text-paragraph-14 text-secondary md:text-paragraph-16">
+          <span className="font-medium text-label-value-15 text-secondary tabular-nums">
             {txsLabel}
           </span>
         )}

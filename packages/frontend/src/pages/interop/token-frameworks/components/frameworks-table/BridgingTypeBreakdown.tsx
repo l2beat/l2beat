@@ -37,7 +37,11 @@ export function BridgingTypeBreakdown({
                 )}
               />
               <span className="whitespace-normal font-medium leading-4">
-                {TRANSFER_TYPE_DISPLAY[item.type].label}
+                {/* "Lock" / "& Mint", not "Lock &" / "Mint", when it wraps */}
+                {TRANSFER_TYPE_DISPLAY[item.type].label.replace(
+                  '& ',
+                  '&\u00a0',
+                )}
               </span>
             </div>
             <RowStats volume={item.volume} transferCount={item.transferCount} />

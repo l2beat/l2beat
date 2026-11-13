@@ -83,7 +83,9 @@ function Content({
   if (selectedChains.from.length === 0 && selectedChains.to.length === 0) {
     return (
       <>
-        <HeaderWithDescription type={type} />
+        <div className="max-md:border-divider max-md:border-b max-md:bg-surface-primary max-md:pb-4">
+          <HeaderWithDescription type={type} />
+        </div>
         <InitialChainSelector
           interopChains={onboardingInteropChains}
           type={type}

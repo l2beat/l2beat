@@ -162,14 +162,14 @@ function DominanceRowItem({
       <div className="flex items-center justify-between gap-3">
         <div className="min-w-0">{row.header}</div>
         <div className="flex shrink-0 items-baseline gap-1 whitespace-nowrap">
-          <span className="font-bold text-label-value-16">
+          <span className="font-semibold text-label-value-15 tabular-nums">
             {metric === 'volume'
               ? formatCurrency(value, 'usd', { decimals: 2 })
               : formatInteger(value)}
           </span>
           {percentChange !== null && changePeriod !== undefined && (
             <PercentChange
-              className="font-medium text-label-value-16"
+              className="font-medium text-label-value-15"
               value={percentChange}
               period={changePeriod}
             />

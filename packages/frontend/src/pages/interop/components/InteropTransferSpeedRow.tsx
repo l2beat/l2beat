@@ -20,7 +20,7 @@ export function InteropTransferSpeedRow({
       <div className="flex items-center gap-2">
         <a
           href={`/interop/protocols/${slug}`}
-          className="inline-flex w-fit items-center gap-2 rounded px-2 py-1 transition-colors hover:bg-pure-black/5 dark:hover:bg-pure-white/10"
+          className="-mx-2 inline-flex w-fit items-center gap-2 rounded px-2 py-1 transition-colors hover:bg-pure-black/5 dark:hover:bg-pure-white/10"
         >
           <img src={iconUrl} alt="" className="size-6 rounded-sm" />
           <span className="font-semibold text-label-value-15">{label}</span>

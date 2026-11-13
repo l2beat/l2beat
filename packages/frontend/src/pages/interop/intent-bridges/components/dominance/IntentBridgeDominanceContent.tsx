@@ -104,7 +104,7 @@ function BridgeHeader({ bridge }: { bridge: InteropIntentBridge }) {
         alt={bridge.name}
         className="size-6 shrink-0 rounded-full"
       />
-      <span className="min-w-0 truncate font-bold text-heading-16">
+      <span className="min-w-0 truncate font-semibold text-label-value-15">
         {bridge.name}
       </span>
     </a>

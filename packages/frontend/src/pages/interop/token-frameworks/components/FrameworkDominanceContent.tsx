@@ -93,9 +93,11 @@ function FrameworkHeader({ framework }: { framework: DisplayFramework }) {
         />
       )}
       <div className="flex items-center gap-1">
-        <span className="font-bold text-heading-16">{framework.label}</span>
+        <span className="font-semibold text-label-value-15">
+          {framework.label}
+        </span>
         {framework.label !== framework.name && (
-          <span className="font-medium text-label-value-16 text-secondary">
+          <span className="font-medium text-label-value-15 text-secondary">
             {framework.name}
           </span>
         )}

@@ -68,7 +68,7 @@ export function FlowsGeneralStats() {
       <div className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
         General stats
       </div>
-      <div className="mt-1 font-normal text-label-value-13 text-secondary leading-4">
+      <div className="mt-1 text-pretty font-normal text-label-value-13 text-secondary leading-4">
         Last 24h · selected chains and protocols
       </div>
       <div className="mt-1.5 space-y-2">

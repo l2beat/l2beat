@@ -95,8 +95,8 @@ function makeNameColumn<T extends CompactProtocolEntry>(opts?: {
 }
 
 function makeCategoryColumn<T extends CompactProtocolEntry>(opts?: {
-  /** Hides it with CSS below xl. See `hideCollapsedColumnsBeforeMount`. */
-  hideBelowXl?: boolean
+  /** Hides it with CSS below md. See `hideCollapsedColumnsBeforeMount`. */
+  hideOnPhones?: boolean
 }) {
   return createColumnHelper<T>().accessor((row) => row.type, {
     id: 'type',
@@ -107,8 +107,8 @@ function makeCategoryColumn<T extends CompactProtocolEntry>(opts?: {
       </div>
     ),
     meta: {
-      headClassName: cn('text-2xs', opts?.hideBelowXl && 'max-xl:hidden'),
-      cellClassName: opts?.hideBelowXl ? 'max-xl:hidden' : undefined,
+      headClassName: cn('text-2xs', opts?.hideOnPhones && 'max-md:hidden'),
+      cellClassName: opts?.hideOnPhones ? 'max-md:hidden' : undefined,
     },
   })
 }
@@ -138,9 +138,10 @@ function makeLast24hVolumeColumn<T extends CompactProtocolEntry>(
 
 const commonColumns = [
   makeLogoColumn<ProtocolEntry>(),
-  // 8px from the logo, like the summary's protocols table; one line from lg.
+  // 8px from the logo, like the summary's protocols table; one line from md,
+  // where the table scrolls sideways rather than wrap names.
   makeNameColumn<ProtocolEntry>({
-    cellClassName: 'md:pl-2! lg:whitespace-nowrap',
+    cellClassName: 'md:pl-2! md:whitespace-nowrap',
     headClassName: 'md:pl-2!',
   }),
 ]
@@ -271,7 +272,7 @@ export function getAllProtocolsColumns(
   hideTokensColumn?: boolean,
   tokenId?: string,
   /**
-   * Hides Category below xl and Transfer types below md with CSS, for the
+   * Hides Category and Transfer types below md with CSS, for the
    * markup painted before the viewport is known. After that the table hides
    * them through its column visibility, which the Columns menu can turn back
    * on. See `AllProtocolsTable`.
@@ -291,7 +292,7 @@ export function getAllProtocolsColumns(
     }),
     ...commonColumns,
     hideCollapsedColumnsBeforeMount
-      ? makeCategoryColumn<ProtocolEntry>({ hideBelowXl: true })
+      ? makeCategoryColumn<ProtocolEntry>({ hideOnPhones: true })
       : categoryColumn,
     !hideTypeColumn &&
       columnHelper.accessor('bridgeTypes', {
