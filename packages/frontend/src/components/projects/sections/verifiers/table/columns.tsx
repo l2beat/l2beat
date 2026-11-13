@@ -15,7 +15,7 @@ const baseVerifiersColumns = [
     cell: (ctx) => (
       <div className="min-w-0">
         <span
-          className="block font-medium text-label-value-14 max-md:min-w-36 max-md:max-w-52 max-md:whitespace-normal md:text-label-value-15 max-md:[overflow-wrap:anywhere]"
+          className="block font-medium text-label-value-14 max-md:min-w-36 max-md:max-w-52 max-md:whitespace-normal max-md:leading-normal md:text-label-value-15 max-md:[overflow-wrap:anywhere]"
           title={ctx.row.original.name}
         >
           {ctx.row.original.name}

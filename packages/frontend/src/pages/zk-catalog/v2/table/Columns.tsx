@@ -118,7 +118,7 @@ export const zkCatalogColumns = [
         header: 'Used in',
         meta: {
           tooltip:
-            'Projects that use this proof system, on the same line as the verifiers they rely on.',
+            'Projects that use this proof system, grouped by the verification status of the verifiers they rely on.',
           additionalRows: (ctx) => {
             return Object.entries(ctx.row.original.trustedSetupsByProofSystem)
               .slice(1)
