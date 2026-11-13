@@ -15,6 +15,7 @@ interface FlowsGraphProps {
   isSmallScreen: boolean
   baseDollarsPerParticle?: number
   topChainId?: string
+  linkChains?: boolean
 }
 
 export function FlowsGraph({
@@ -25,6 +26,7 @@ export function FlowsGraph({
   isSmallScreen,
   baseDollarsPerParticle,
   topChainId,
+  linkChains,
 }: FlowsGraphProps) {
   const layout = useMemo(
     () =>
@@ -74,6 +76,7 @@ export function FlowsGraph({
         layout={layout}
         chainData={data.chainData}
         isSmallScreen={isSmallScreen}
+        linkChains={linkChains}
       />
     </svg>
   )
