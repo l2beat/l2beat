@@ -15,12 +15,11 @@ import {
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import type { TokenGraphTile } from '~/server/features/tokens/buildTokenGraphTiles'
 import { useTRPC } from '~/trpc/React'
-import { cn } from '~/utils/cn'
 
 // The graph fills the full-screen dialog; on mobile it shares the space with
 // the details panel below it.
 const FILL_CLASS_NAME = 'flex min-h-0 flex-1 flex-col'
-const DIAGRAM_CLASS_NAME = 'h-full'
+const DIAGRAM_CLASS_NAME = 'min-h-0 flex-1'
 
 export function TokenGraphDialog({
   tile,
@@ -69,7 +68,7 @@ export function TokenGraphDialog({
             <a
               href={tile.href}
               title={`Open the full ${tile.symbol} page`}
-              className="group flex items-center gap-1 rounded-full bg-brand/10 py-1 pr-2 pl-2.5 font-medium text-brand-deep text-label-value-12 transition-colors hover:bg-brand hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+              className="group flex items-center gap-1 font-medium text-label-value-13 text-primary underline decoration-divider underline-offset-[0.3em] transition-colors hover:decoration-current focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
             >
               Token page
               <ArrowRightIcon className="size-3 fill-current transition-transform group-hover:translate-x-0.5" />
@@ -86,7 +85,7 @@ export function TokenGraphDialog({
               <Legend />
             </div>
             <div className="min-h-0 flex-1">
-              <Skeleton className={cn(DIAGRAM_CLASS_NAME, 'rounded-lg')} />
+              <Skeleton className="h-full rounded-lg" />
             </div>
           </div>
         ) : isError ? (
