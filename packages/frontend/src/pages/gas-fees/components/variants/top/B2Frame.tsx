@@ -155,7 +155,7 @@ function Tracks({ rows }: { rows: TierRow[] }) {
           </div>
           <Track
             row={row}
-            height={72}
+            height={84}
             className="max-md:order-3 max-md:col-span-2"
           />
           <Above row={row} />

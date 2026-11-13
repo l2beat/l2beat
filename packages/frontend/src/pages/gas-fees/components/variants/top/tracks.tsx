@@ -19,9 +19,8 @@ import {
 } from './shared'
 
 /**
- * B's log scale tracks, reworked for its spins (B2–B4): chips are tied to
- * their dot by a leader line, so a chip pushed sideways still points at its
- * tip
+ * B's log scale tracks: each tip, ours and the wallets', has a chip with its
+ * gwei above or below the line, next to its dot
  */
 
 /** Seven powers of ten, from a millionth of a gwei to 10 */
@@ -50,6 +49,8 @@ interface Placed {
   lane: number
   center: number
   x: number
+  /** Our estimated tip, which gets its own chip in ink */
+  ours?: boolean
 }
 
 /**
@@ -60,25 +61,36 @@ interface Placed {
 function place(
   row: TierRow,
   width: number,
-  chipWidth: (w: { gwei: number; multiple?: number; usd?: number }) => number,
+  chipWidth: (w: { gwei: number; ours?: boolean }) => number,
 ): Placed[] {
   const usdPerGwei =
     row.usd !== undefined && row.gwei ? row.usd / row.gwei : undefined
-  const wallets = row.wallets
-    .flatMap((w) =>
-      w.gwei !== undefined
-        ? [
-            {
-              ...w,
-              gwei: w.gwei,
-              usd: usdPerGwei === undefined ? undefined : w.gwei * usdPerGwei,
-            },
-          ]
-        : [],
-    )
-    .sort((a, b) => b.gwei - a.gwei)
+  const wallets = row.wallets.flatMap((w) =>
+    w.gwei !== undefined
+      ? [
+          {
+            ...w,
+            gwei: w.gwei,
+            usd: usdPerGwei === undefined ? undefined : w.gwei * usdPerGwei,
+          },
+        ]
+      : [],
+  )
+  const chips: Omit<Placed, 'lane' | 'center' | 'x'>[] = [...wallets]
+  if (row.gwei !== undefined) {
+    chips.push({
+      name: 'ours',
+      icon: '',
+      option: undefined,
+      gwei: row.gwei,
+      multiple: undefined,
+      usd: row.usd,
+      ours: true,
+    })
+  }
+  chips.sort((a, b) => b.gwei - a.gwei)
   const starts = [Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY]
-  return wallets.map((w) => {
+  return chips.map((w) => {
     const chip = chipWidth(w)
     const x = (toX(w.gwei) / 100) * width
     const options = starts.map((start, lane) => {
@@ -107,11 +119,12 @@ export function Track({
 }) {
   const [ref, width] = useWidth<HTMLDivElement>()
   const ours = row.gwei
-  const chipHeight = 24
-  const chipWidth = (w: { gwei: number }) => 30 + gwei(w.gwei).length * 7
+  const chipWidth = (w: { gwei: number; ours?: boolean }) =>
+    // Padding, plus the icon for wallets, plus about 7.7px a digit, so the
+    // estimate is never short of the chip and a chip at the edge stays inside
+    (w.ours ? 18 : 36) + gwei(w.gwei).length * 7.7
   const placed = width > 0 ? place(row, width, chipWidth) : []
-  const top = placed[0]
-  const mid = height / 2
+  const top = placed.find((w) => !w.ours)
 
   return (
     <div ref={ref} className={cn('relative', className)} style={{ height }}>
@@ -140,62 +153,67 @@ export function Track({
           }}
         />
       )}
-      {/* Leader lines, from each wallet's dot to its chip */}
-      <svg
-        className="pointer-events-none absolute inset-0 size-full overflow-visible"
-        aria-hidden
-      >
-        {placed.map((w) => {
-          const y2 = w.lane === 0 ? 2 + chipHeight : height - 2 - chipHeight
-          return (
-            <line
-              key={w.name}
-              x1={w.x}
-              y1={mid}
-              x2={w.center}
-              y2={y2}
-              className="stroke-secondary/60"
-              strokeWidth={1}
-            />
-          )
-        })}
-      </svg>
-      {placed.map((w) => (
-        <span
-          key={w.name}
-          className="-translate-x-1/2 -translate-y-1/2 absolute top-1/2 size-2 rounded-full ring-2 ring-surface-primary"
-          style={{ left: w.x, background: OVER }}
-        />
-      ))}
-      {placed.map((w) => (
-        <Tooltip key={w.name}>
-          <TooltipTrigger
-            className={cn(
-              '-translate-x-1/2 absolute flex h-6 items-center gap-1 rounded-full border border-divider bg-surface-primary py-0.5 pr-2 pl-1 font-bold text-xs tabular-nums shadow-xs',
-              w.lane === 0 ? 'top-0.5' : 'bottom-0.5',
-            )}
-            style={{ left: w.center }}
-          >
-            <WalletIcon icon={w.icon} className="rounded-full" />
-            <Gwei value={w.gwei} zerosClassName="opacity-50" />
-          </TooltipTrigger>
-          <TooltipContent className="flex flex-col gap-0.5 text-xs">
-            <span className="font-bold">
-              {w.name} · “{w.option}”
-            </span>
-            <span className="tabular-nums">
-              {gwei(w.gwei)} gwei
-              {w.usd !== undefined && `, ${formatFee(w.usd)} per transfer`}
-            </span>
-            {w.multiple && (
-              <span className="text-secondary tabular-nums">
-                {multiple(w.multiple)} our estimated {row.name.toLowerCase()}{' '}
-                tip
+      {placed
+        .filter((w) => !w.ours)
+        .map((w) => (
+          <span
+            key={w.name}
+            className="-translate-x-1/2 -translate-y-1/2 absolute top-1/2 size-2 rounded-full ring-2 ring-surface-primary"
+            style={{ left: w.x, background: OVER }}
+          />
+        ))}
+      {placed.map((w) =>
+        w.ours ? (
+          <Tooltip key={w.name}>
+            <TooltipTrigger
+              className={cn(
+                '-translate-x-1/2 absolute flex h-6 items-center rounded-full bg-primary px-2 font-bold text-primary-invert text-xs tabular-nums shadow-xs',
+                w.lane === 0 ? 'top-0.5' : 'bottom-0.5',
+              )}
+              style={{ left: w.center }}
+            >
+              <Gwei value={w.gwei} zerosClassName="opacity-60" />
+            </TooltipTrigger>
+            <TooltipContent className="flex flex-col gap-0.5 text-xs">
+              <span className="font-bold">
+                Our estimated {row.name.toLowerCase()} tip
               </span>
-            )}
-          </TooltipContent>
-        </Tooltip>
-      ))}
+              <span className="tabular-nums">
+                {gwei(w.gwei)} gwei
+                {w.usd !== undefined && `, ${formatFee(w.usd)} per transfer`}
+              </span>
+            </TooltipContent>
+          </Tooltip>
+        ) : (
+          <Tooltip key={w.name}>
+            <TooltipTrigger
+              className={cn(
+                '-translate-x-1/2 absolute flex h-6 items-center gap-1 rounded-full border border-divider bg-surface-primary py-0.5 pr-2 pl-1 font-bold text-xs tabular-nums shadow-xs',
+                w.lane === 0 ? 'top-0.5' : 'bottom-0.5',
+              )}
+              style={{ left: w.center }}
+            >
+              <WalletIcon icon={w.icon} className="rounded-full" />
+              <Gwei value={w.gwei} zerosClassName="opacity-50" />
+            </TooltipTrigger>
+            <TooltipContent className="flex flex-col gap-0.5 text-xs">
+              <span className="font-bold">
+                {w.name} · “{w.option}”
+              </span>
+              <span className="tabular-nums">
+                {gwei(w.gwei)} gwei
+                {w.usd !== undefined && `, ${formatFee(w.usd)} per transfer`}
+              </span>
+              {w.multiple && (
+                <span className="text-secondary tabular-nums">
+                  {multiple(w.multiple)} our estimated {row.name.toLowerCase()}{' '}
+                  tip
+                </span>
+              )}
+            </TooltipContent>
+          </Tooltip>
+        ),
+      )}
       {ours !== undefined && (
         <span
           className="-translate-x-1/2 -translate-y-1/2 absolute top-1/2 size-4 rounded-full ring-[3px] ring-surface-primary transition-[left] duration-700 motion-reduce:transition-none"
