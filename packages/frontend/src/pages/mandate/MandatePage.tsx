@@ -11,6 +11,7 @@ import {
 import { Logo } from '~/components/Logo'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
+import { HOME_UNDERLINE_CLASS } from '~/pages/home/homeStyles'
 import { cn } from '~/utils/cn'
 import { MANDATE, type MandateSource } from './mandateText'
 
@@ -25,13 +26,15 @@ export function MandatePage(props: AppLayoutProps) {
   return (
     <DeclarationLayout {...props}>
       <Belief />
-      {/* From lg the sources sit beside the argument, in the room its
-          measure leaves; below it they close the sheet, so the verbs
-          follow the argument directly. */}
+      {/* From lg the sources sit beside the argument and the verbs' sentences
+          start on the same edge, one split for the whole sheet; below it they
+          close the sheet, so the verbs follow the argument directly. Below md
+          the sheet runs full bleed on the page's ground, so a hairline marks
+          where the opening ends, as between home's cards. */}
       <PrimaryCard
         className={cn(
           SHEET,
-          'flex flex-col lg:grid lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-x-16',
+          'flex flex-col max-md:border-divider max-md:border-t lg:grid lg:grid-cols-[minmax(0,11fr)_minmax(0,9fr)] lg:gap-x-16',
         )}
       >
         <Argument />
@@ -109,11 +112,12 @@ function Sources({ className }: { className?: string }) {
 
 function Citation({ from, to }: { from: number; to: number }) {
   return (
-    <sup className="ml-0.5">
+    // Never broken at its dash.
+    <sup className="ml-0.5 whitespace-nowrap">
       <a
         href={`#source-${from}`}
         aria-label={`Sources ${from} to ${to}`}
-        className="font-medium text-link hover:underline"
+        className="font-medium text-link underline-offset-2 hover:underline"
       >
         {from}–{to}
       </a>
@@ -137,13 +141,18 @@ function SourceList({
         <li
           key={source.href}
           id={`source-${first + i}`}
-          className="scroll-mt-6 text-pretty pl-1"
+          // The source a citation jumped to takes the link colour on its
+          // number and an ink underline, so the eye lands on it.
+          className="group/source scroll-mt-6 text-pretty pl-1 target:marker:text-link"
         >
           <a
             href={source.href}
             target="_blank"
             rel="noreferrer"
-            className="text-primary underline decoration-primary/30 underline-offset-[0.25em] transition-colors hover:decoration-current"
+            className={cn(
+              HOME_UNDERLINE_CLASS,
+              'text-primary hover:decoration-current group-target/source:decoration-current',
+            )}
           >
             {source.title}
           </a>
@@ -153,16 +162,23 @@ function SourceList({
   )
 }
 
-/** Each verb set large beside the sentence it begins, which keeps its bold. */
+/**
+ * Each verb set large beside the sentence it begins, which keeps its bold.
+ * From lg the rows take the sheet's columns, so every sentence starts on the
+ * sources' edge, and the same gap follows each sentence.
+ */
 function Verbs({ className }: { className?: string }) {
   return (
     <div
-      className={cn('mt-16 flex flex-col gap-10 md:mt-24 md:gap-14', className)}
+      className={cn(
+        'mt-16 flex flex-col gap-y-10 md:mt-24 md:gap-y-14 lg:grid lg:grid-cols-subgrid lg:gap-y-20',
+        className,
+      )}
     >
       {MANDATE.verbs.map((verb) => (
         <section
           key={verb.name}
-          className="grid gap-x-16 gap-y-3 lg:not-last:min-h-36 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-baseline"
+          className="grid gap-y-3 lg:col-span-2 lg:grid-cols-subgrid lg:items-baseline"
         >
           <h2 className={STATEMENT}>{verb.name}</h2>
           <p className={BODY}>
@@ -189,7 +205,12 @@ function Pledge() {
         <span className={cn(STATEMENT, 'block text-balance')}>
           {MANDATE.promise.pledge}
         </span>{' '}
-        <span className={cn(BODY, 'mt-6 block text-primary/80 md:mt-8')}>
+        <span
+          className={cn(
+            BODY,
+            'mt-6 block text-balance text-primary/80 md:mt-8',
+          )}
+        >
           {MANDATE.promise.terms}
         </span>
       </p>
