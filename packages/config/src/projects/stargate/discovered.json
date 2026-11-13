@@ -1,6 +1,6 @@
 {
   "name": "stargate",
-  "timestamp": 1793874793,
+  "timestamp": 1794568214,
   "configHash": "0x363c3969d8d4f73632c73e9fce9b1ba695bf1435d9336244b989e7c199962733",
   "entries": [
     {
@@ -94,14 +94,14 @@
         "owner": "arb1:0x184257d5b9e25A12D1dCafB697bFAaFE0F5CA150",
         "planner": "arb1:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "plannerFee": 0,
-        "poolBalance": "2934625099000000000000",
+        "poolBalance": "2755366780000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "arb1:0x0000000000000000000000000000000000000000",
         "treasurer": "arb1:0x146c8e409C113ED87C6183f4d25c50251DFfbb3a",
-        "treasuryFee": 130682230,
-        "tvl": "30820819000000000000"
+        "treasuryFee": 131895895,
+        "tvl": "27689323000000000000"
       },
       "implementationNames": {
         "arb1:0xA45B5130f36CDcA45667738e2a258AB09f4A5f7F": "StargatePoolNative"
@@ -153,14 +153,14 @@
         "owner": "arb1:0x184257d5b9e25A12D1dCafB697bFAaFE0F5CA150",
         "planner": "arb1:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "plannerFee": 0,
-        "poolBalance": 841712403710,
+        "poolBalance": 597536130146,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "arb1:0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
         "treasurer": "arb1:0x146c8e409C113ED87C6183f4d25c50251DFfbb3a",
-        "treasuryFee": 10296955980,
-        "tvl": 74288198313
+        "treasuryFee": 10738586830,
+        "tvl": 74267823591
       },
       "implementationNames": {
         "arb1:0xe8CDF27AcD73a434D661C84887215F7598e7d0d3": "StargatePoolUSDC"
@@ -207,14 +207,14 @@
         "owner": "base:0x7c20d58Cb9f3F3CF73b79a3fBDA3fFf412D7D82D",
         "planner": "base:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "plannerFee": 0,
-        "poolBalance": 851629477261,
+        "poolBalance": 777605594522,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "base:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
         "treasurer": "base:0xd47b03ee6d86Cf251ee7860FB2ACf9f91B9fD4d7",
-        "treasuryFee": 9332861993,
-        "tvl": 34045837248
+        "treasuryFee": 10397018401,
+        "tvl": 34241280313
       },
       "implementationNames": {
         "base:0x27a16dc786820B16E5c9028b75B99F6f604b5d26": "StargatePoolUSDC"
@@ -321,14 +321,14 @@
         "owner": "base:0x7c20d58Cb9f3F3CF73b79a3fBDA3fFf412D7D82D",
         "planner": "base:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "plannerFee": 0,
-        "poolBalance": "1190112998000000000000",
+        "poolBalance": "954762895000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "base:0x0000000000000000000000000000000000000000",
         "treasurer": "base:0xd47b03ee6d86Cf251ee7860FB2ACf9f91B9fD4d7",
-        "treasuryFee": 119678718,
-        "tvl": "94875118000000000000"
+        "treasuryFee": 119959651,
+        "tvl": "94522902000000000000"
       },
       "implementationNames": {
         "base:0xdc181Bd607330aeeBEF6ea62e03e5e1Fb4B6F7C7": "StargatePoolNative"
@@ -529,13 +529,13 @@
         "owner": "eth:0xBE634B030FEAaB661300667EaF82510a3a025413",
         "planner": "eth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "plannerFee": 0,
-        "poolBalance": "72544000000000000",
+        "poolBalance": "2833612000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "eth:0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa",
         "treasurer": "eth:0x1041D127b2d4BC700F0F563883bC689502606918",
-        "treasuryFee": 568477,
+        "treasuryFee": 570145,
         "tvl": 7299000000000000
       },
       "implementationNames": {
@@ -583,6 +583,11 @@
     },
     {
       "address": "eth:0x5bC6AA6ad117A8B50ABf9E1658971f5DA1968c5c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x67D4d42CEB2144C7CB92e820CA74000910563B23",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -766,14 +771,14 @@
         "owner": "eth:0xBE634B030FEAaB661300667EaF82510a3a025413",
         "planner": "eth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "plannerFee": 0,
-        "poolBalance": "3490896901000000000000",
+        "poolBalance": "3863241927000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "eth:0x0000000000000000000000000000000000000000",
         "treasurer": "eth:0x1041D127b2d4BC700F0F563883bC689502606918",
-        "treasuryFee": 73978456,
-        "tvl": "189962697000000000000"
+        "treasuryFee": 74671959,
+        "tvl": "189962302000000000000"
       },
       "implementationNames": {
         "eth:0x77b2043768d28E9C9aB44E1aBfC95944bcE57931": "StargatePoolNative"
@@ -821,7 +826,7 @@
         "owner": "eth:0xBE634B030FEAaB661300667EaF82510a3a025413",
         "planner": "eth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "plannerFee": 0,
-        "poolBalance": 1965373704925,
+        "poolBalance": 2068535254673,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
@@ -881,13 +886,13 @@
         "owner": "eth:0xBE634B030FEAaB661300667EaF82510a3a025413",
         "planner": "eth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "plannerFee": 0,
-        "poolBalance": 2060718401385,
+        "poolBalance": 2484615319562,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
         "treasurer": "eth:0x1041D127b2d4BC700F0F563883bC689502606918",
-        "treasuryFee": 297527993510,
+        "treasuryFee": 302749885502,
         "tvl": 1096819851760
       },
       "implementationNames": {
@@ -1139,17 +1144,18 @@
           "eth:0xe67DB04d7eFF4e9ec282eD929632D4FF058112d7",
           "eth:0xdFE4027209C795B84d39FfBfF86bf73572571BAd",
           "eth:0x2be094F1C9AaF76aD3A789EA4f047BBE7D1DB552",
-          "eth:0xD144dad189f060Bf6fda615CcA60479329Dd9e35"
+          "eth:0xD144dad189f060Bf6fda615CcA60479329Dd9e35",
+          "eth:0x67D4d42CEB2144C7CB92e820CA74000910563B23"
         ],
         "$threshold": 5,
         "executorRequired": true,
         "getExecutors": ["eth:0x39f86ECef62c5bcE23428d6b7c7050D9Ecb0e346"],
         "LEAF_ENCODING_VERSION": 1,
-        "nonce": 648,
+        "nonce": 650,
         "ONE_SIG_ID": 30101,
         "seed": "0xa8c6099081c03ac4c11ed511690f296077e94d44cf99bebc8c349cf972f87340",
         "totalExecutors": 1,
-        "totalSigners": 8,
+        "totalSigners": 9,
         "VERSION": "0.0.1"
       },
       "fieldMeta": {
@@ -1190,7 +1196,7 @@
         "executorRequired": true,
         "getExecutors": ["eth:0x39f86ECef62c5bcE23428d6b7c7050D9Ecb0e346"],
         "LEAF_ENCODING_VERSION": 1,
-        "nonce": 440,
+        "nonce": 441,
         "ONE_SIG_ID": 30101,
         "seed": "0x7fc77f9996dcec5457f6b2911fdeffc01f0fbc4e9ee1a4100979d004ea0709e6",
         "totalExecutors": 1,
@@ -1247,13 +1253,13 @@
         "owner": "eth:0xBE634B030FEAaB661300667EaF82510a3a025413",
         "planner": "eth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "plannerFee": 0,
-        "poolBalance": 35529376853085,
+        "poolBalance": 42150800594326,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "treasurer": "eth:0x1041D127b2d4BC700F0F563883bC689502606918",
-        "treasuryFee": 279588035874,
+        "treasuryFee": 298563689144,
         "tvl": 2094440056576
       },
       "implementationNames": {
@@ -1435,13 +1441,13 @@
         "owner": "oeth:0xec230013182261343F235B8c92b443f90A8A3c86",
         "planner": "oeth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "plannerFee": 0,
-        "poolBalance": 268826440195,
+        "poolBalance": 510978943343,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "oeth:0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
         "treasurer": "oeth:0x644abb1e17291b4403966119d15Ab081e4a487e9",
-        "treasuryFee": 3352115777,
+        "treasuryFee": 3606499016,
         "tvl": 1306791185224
       },
       "implementationNames": {
@@ -1493,14 +1499,14 @@
         "owner": "oeth:0xec230013182261343F235B8c92b443f90A8A3c86",
         "planner": "oeth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "plannerFee": 0,
-        "poolBalance": "122921672000000000000",
+        "poolBalance": "322777351000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "oeth:0x0000000000000000000000000000000000000000",
         "treasurer": "oeth:0x644abb1e17291b4403966119d15Ab081e4a487e9",
-        "treasuryFee": 56595045,
-        "tvl": "17398979000000000000"
+        "treasuryFee": 56635466,
+        "tvl": "17387891000000000000"
       },
       "implementationNames": {
         "oeth:0xe8CDF27AcD73a434D661C84887215F7598e7d0d3": "StargatePoolNative"
@@ -3757,12 +3763,12 @@
     "stargate/Treasurer": "0x893e4b5c910be84ccc45d870bef75de4b3fc748040df291137faab3705c83c24"
   },
   "usedBlockNumbers": {
-    "arbitrum": 521449927,
-    "base": 53542723,
-    "ethereum": 26348058,
-    "optimism": 159138008
+    "arbitrum": 523847346,
+    "base": 56889196,
+    "ethereum": 26405653,
+    "optimism": 159484718
   },
-  "permissionsConfigHash": "0x153010cd52deaef780efbd6987b04275c92fea4f47dd7a304317e4cde8de547b",
+  "permissionsConfigHash": "0x551c76bb4738abd6f801096afe747200067ff06e95fa1ab388c774f95cab3c3e",
   "permissions": {
     "arb1:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5": {
       "receivedPermissions": [

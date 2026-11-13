@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x946a43ba5ba56f4efae02675a470b2d5a11e0392
+
+# Diff at Fri, 13 Nov 2026 13:04:14 GMT:
+
+- id: 6d8a7175
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ced572b97485e6dc1fc02f958ee2a731593430e block: 1794319707
+- current timestamp: 1794568077
+
+## Description
+
+Proposal 73 was executed. tornadocash.eth pins bafybeiayu2srl6owm6tdbik6uabcpjlji4u32dtph4yrwakreklcfprkou, built from torndao777-eng/classic-ui 8af0abd: two commits on top of the previous pin that only change relayer list loading. ETHBEAT reproduced this CID with the DAO's recipe. Proposal 74, which pins another build, ends voting on 2026-11-14 and is executable from 2026-11-16.
+
+Config: the reproduced CID, the reference app source and the source links follow the new pin. ETHBEAT's rebuild recipe, verificationSteps-app.md (the DAO recipe with two download fixes, build offline), replaces the link to the DAO recipe.
+
+## Watched changes
+
+```diff
+    contract GovernanceProposalStateUpgrade (eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) [tornado-cash/GovernanceProposalStateUpgrade] {
+    +++ description: Upgradeable Tornado Cash governance contract that manages proposals, voting, execution, and treasury-connected governance modules. If you trust this contract, you trust its upgrade path and proposal rules to change protocol governance behavior.
++++ description: IPFS contenthash of tornadocash.eth, the app that governance pins.
++++ severity: HIGH
+      values.appContenthash:
+-        "0xe30101701220c3a350e49a11cfc9cab672331d51ad1b723e0d3db9cd73a316ebaa7788595fe8"
++        "0xe3010170122018a6a515f9d667a630a15ea00227a5694729bd0e6f3f311b0151229622be2a75"
+    }
+```
+
 Generated with discovered.json: 0x42aeb2a13363e4fdd524558211913dd36bffbddf
 
 # Diff at Tue, 10 Nov 2026 14:26:49 GMT:

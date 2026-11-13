@@ -52,6 +52,13 @@
       "category": "stablecoin"
     },
     {
+      // Steakhouse Prime USDC vault (Morpho), held by the zk.money v6 steakUSDC portal
+      "symbol": "steakUSDC",
+      "address": "0xbeef088055857739C12CD3765F20b7679Def0f51",
+      "coingeckoId": "steakhouse-usdc",
+      "category": "stablecoin"
+    },
+    {
       // Steakhouse Prime USDT vault (Morpho); not listed on CoinGecko, priced with its USDT underlying
       "symbol": "steakUSDT",
       "address": "0xbeef003C68896c7D2c3c60d363e8d71a49Ab2bf9",

@@ -1,13 +1,8 @@
 {
-  "Bridge": {
-    "hash": "0x4fbfa6dffeb7b0631c9754128ce823ee45e589dc9d6a230e444db8381a124cd6",
-    "address": "base:0x862761D6D52E9e812A8c22E6e6A39E186e59a33d",
-    "blockNumber": 21872169
-  },
-  "Bridge_emergencyWithdraw": {
-    "hash": "0xcdcece1862e16da26424ca2364fc88c7dc2ac699b0bb37e0540a885a07c6b585",
-    "address": "base:0xa2bd213E4e5655125A8c18D716184b6b11F45F25",
+  "Bridge.sol": {
+    "hash": "0xb4587cd94ae4de51e134b442a936b6f2cac4b01cc2c67aceefe5b7828d095993",
+    "address": "base:0x23fF8a1bB41FAa8A491aacF8e466AdeF2051200F",
     "chain": "base",
-    "blockNumber": 55534123
+    "blockNumber": 56903565
   }
 }

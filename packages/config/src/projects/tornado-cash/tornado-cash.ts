@@ -80,15 +80,13 @@ const stakeLockPeriod = formatSeconds(
   voteExtendTime + executionExpiration + executionDelay,
 )
 
-// The IPFS app pinned on tornadocash.eth. L2BEAT rebuilt this CID from
-// tornado-dao/classic-ui 17c54dae with the DAO's Docker recipe
-// (tornado-dao/tornado-ipfs-ui d2aa401) on 2026-10-10. Two download fixes, not
-// build inputs: apt from archive.debian.org (Debian 11 is end of life) and kubo
-// v0.29.0 from GitHub with its sha512, both proposed upstream. With them the
-// recipe reproduced it again on 2026-11-09. A new pin fails this assert until
-// the new release is rebuilt and the reproducibility text is checked.
+// The IPFS app pinned on tornadocash.eth by proposal 73. ETHBEAT rebuilt this
+// CID from torndao777-eng/classic-ui 8af0abd with verificationSteps-app.md
+// (the DAO's recipe with two download fixes) on 2026-11-13. A new pin fails
+// this assert until verificationSteps-app.md rebuilds it and the
+// reproducibility text is checked.
 const REBUILT_APP_CID =
-  'bafybeigduniojgqrz7e4vntsgmovdli3oi7a2pnzzvz2gfxlvj3yqwk75a'
+  'bafybeiayu2srl6owm6tdbik6uabcpjlji4u32dtph4yrwakreklcfprkou'
 const appCid = contenthashToCid(
   discovery.getContractValue<string>(
     'GovernanceProposalStateUpgrade',
@@ -173,7 +171,8 @@ export const tornadoCash: BaseProject = {
       websites: ['https://app.ens.domains/tornadocash.eth?tab=records'],
       repositories: [
         'https://github.com/tornadocash/tornado-core',
-        'https://github.com/tornado-dao/classic-ui',
+        // the fork that holds the pinned app's commit, linked at that commit
+        'https://github.com/torndao777-eng/classic-ui/tree/8af0abd14d7eeb734f943b968ce687cb5946eac6',
       ],
       socialMedia: ['https://t.me/TornadoCashOfficialDAO'],
     },
@@ -289,8 +288,8 @@ export const tornadoCash: BaseProject = {
       url: 'https://explorer.ens.domains/tornadocash.eth/records',
       since: '2026-10-13',
       source: {
-        repository: 'https://github.com/tornado-dao/classic-ui',
-        commit: '17c54dae9ad91bb3c6d62a7860df6cd365ab76d4',
+        repository: 'https://github.com/torndao777-eng/classic-ui',
+        commit: '8af0abd14d7eeb734f943b968ce687cb5946eac6',
       },
       checkedApps: [
         {

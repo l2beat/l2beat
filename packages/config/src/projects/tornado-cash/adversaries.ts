@@ -8,12 +8,13 @@ import {
 // v2.1, the circuits behind the verified verifier.
 const CIRCUITS =
   'https://github.com/tornadocash/tornado-core/blob/a533ad9ffb62163a42d4fa9a09984c5dd4e5c41d/circuits/'
-// The DAO's Docker recipe that rebuilds the pinned app to its IPFS hash.
+// ETHBEAT's recipe that rebuilds the pinned app to its IPFS hash: the DAO's
+// Docker recipe (tornado-dao/tornado-ipfs-ui d2aa401) with two download fixes.
 const RECIPE =
-  'https://github.com/tornado-dao/tornado-ipfs-ui/tree/d2aa401746e1b1195ff692a051636b8c5c43d2e5'
-// The commit governance pinned on tornadocash.eth (proposal 68).
+  'https://github.com/l2beat/l2beat/blob/main/packages/config/src/projects/tornado-cash/verificationSteps-app.md'
+// The commit governance pinned on tornadocash.eth (proposal 73).
 const APP =
-  'https://github.com/tornado-dao/classic-ui/blob/17c54dae9ad91bb3c6d62a7860df6cd365ab76d4/'
+  'https://github.com/torndao777-eng/classic-ui/blob/8af0abd14d7eeb734f943b968ce687cb5946eac6/'
 
 /** `appCid` is the reviewed release, which the steps load instead of the name. */
 export function tornadoCashAdversaries(upgradeDelay: string, appCid: string) {

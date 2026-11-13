@@ -1,0 +1,63 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Compartment of a GRVT vault. It holds vault capital withdrawn from GRVT and deploys it into listed Axcess loan vaults. Proceeds of venue exits always return to the compartment, and funds can only leave it to a listed venue or to the vault's deposit proxy on GRVT through the GRVTBridgeProxy. Venues are listed by the REGISTRY_ADMIN_ROLE of the CompartmentRegistry.",
+  // external lending protocol that the compartment deposits into
+  "ignoreRelatives": ["axcessVaultList"],
+  "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x97667070c54ef182b0f5858b034beac1b6f3089aa2d3188bb1e8929f4fa9b929": "OPERATOR_ROLE",
+          "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46": "REBALANCER_ROLE",
+          "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a": "PAUSER_ROLE"
+        }
+      }
+    },
+    "operator": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "0x97667070c54ef182b0f5858b034beac1b6f3089aa2d3188bb1e8929f4fa9b929" // OPERATOR_ROLE
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "deposit the compartment's funds into its listed Axcess loan vaults and withdraw them back to the compartment."
+        }
+      ]
+    },
+    "rebalancer": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46" // REBALANCER_ROLE
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "bridge the compartment's funds to its vault on GRVT."
+        }
+      ]
+    },
+    "pauser": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a" // PAUSER_ROLE
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause deposits of the compartment into its yield venues."
+        }
+      ]
+    },
+    "axcessVaultList": {
+      "description": "Axcess loan vaults (institutional credit) that the compartment can deposit into.",
+      "severity": "HIGH"
+    },
+    "paused": {
+      "description": "Stops deposits into yield venues. Withdrawals from venues and bridging back to GRVT stay available.",
+      "severity": "MEDIUM"
+    }
+  }
+}

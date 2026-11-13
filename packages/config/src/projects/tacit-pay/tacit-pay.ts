@@ -60,6 +60,57 @@ assert(
   'anon.wei must resolve to the reviewed page',
 )
 
+// The governance text and the privileged insider cell rest on the values below.
+const DAO = discovery.getContract('Moloch')
+for (const [contract, field] of [
+  ['TacitPay8244', 'steward'],
+  ['TacitPay8244', 'anonWeiOwner'],
+  ['zEndpoints', 'owner'],
+  ['zRpcList', 'owner'],
+] as const) {
+  assert(
+    discovery.getContractValue<string>(contract, field) === DAO.address,
+    'The DAO must hold every app role',
+    { contract, field },
+  )
+}
+const QUORUM_BPS = discovery.getContractValue<number>('Moloch', 'quorumBps')
+assert(
+  discovery.getContractValue<number>('Moloch', 'timelockDelay') === 86400 &&
+    discovery.getContractValue<number>('Moloch', 'proposalTTL') === 86400 &&
+    QUORUM_BPS === 1000 &&
+    discovery.getContractValue<number>('Moloch', 'quorumAbsolute') === 0 &&
+    discovery.getContractValue<number>('Moloch', 'minYesVotesAbsolute') === 0,
+  'The DAO must pass proposals at a 10% quorum with a 1 day timelock',
+)
+const ZAMM_SALE = discovery.getContractValue<{
+  pricePerShare: number
+  minting: boolean
+  active: boolean
+  isLoot: boolean
+}>('Moloch', 'zammSale')
+assert(
+  ZAMM_SALE.pricePerShare === 1 &&
+    ZAMM_SALE.minting &&
+    ZAMM_SALE.active &&
+    !ZAMM_SALE.isLoot,
+  'Anyone must be able to mint shares one for one with ZAMM',
+)
+// Votes of the previous app owner in basis points of the share supply. The
+// text says about a fifth, which passes a proposal alone.
+const PREVIOUS_OWNER_VOTES_BPS =
+  (BigInt(
+    discovery.getContractValue<string>('Shares', 'previousAppOwnerVotes'),
+  ) *
+    10_000n) /
+  BigInt(discovery.getContractValue<string>('Shares', 'totalSupply'))
+assert(
+  PREVIOUS_OWNER_VOTES_BPS >= 1_500n &&
+    PREVIOUS_OWNER_VOTES_BPS < 2_500n &&
+    PREVIOUS_OWNER_VOTES_BPS >= BigInt(QUORUM_BPS),
+  'The previous app owner must hold about a fifth of the votes, above the quorum',
+)
+
 export const tacitPay: BaseProject = {
   id: ProjectId('tacit-pay'),
   slug: 'tacit-pay',
@@ -90,6 +141,17 @@ export const tacitPay: BaseProject = {
     badges: [],
   },
   milestones: [
+    {
+      // Moloch 0x5E58BA0e…053E accepted the steward role and both registries
+      // in this transaction (2026-11-12 10:48 UTC). The name anon.wei followed
+      // in 0xaeb40bcc…f9f9 at 11:02 UTC.
+      title: 'App control moves to the Z DAO',
+      url: 'https://etherscan.io/tx/0xb9a83c8f9f4bb4b32963cbb8e454973bbd35e087aad24e09c9ee55748d668ee1',
+      date: '2026-11-12T00:00:00Z',
+      description:
+        'A token vote with a 1 day timelock takes the app, its name and endpoint registries.',
+      type: 'general',
+    },
     {
       // The anon.wei page went onchain as generation 1 (0x1e01D6…) on
       // 2026-10-03, ERC8244/dapps commit 66f517fa "the deployment is
@@ -233,7 +295,7 @@ export const tacitPay: BaseProject = {
         'Privacy is unconditional: nothing screens users, only the user holds viewing keys, and proofs are made on the device.',
       ],
       missing: [
-        'Fewer than 50 wallets have deposited, apart from wallets that only send funds back to themselves, so timing and amounts can pair the two ends.',
+        'About 50 wallets have deposited, apart from wallets that only send funds back to themselves, so timing and amounts can pair the two ends.',
         "Tacit's relay, the default, sees the recipient of every exit with the user's IP.",
       ],
     },
@@ -243,7 +305,7 @@ export const tacitPay: BaseProject = {
         'The pool, router and verifier are immutable and have no owner.',
       ],
       missing: [
-        'One party could have made all 176 trusted setup contributions, which allow repeats under self-made keys, and could then forge proofs to drain the pool.',
+        "One party could have made 175 of the 176 trusted setup contributions, since only one is tied to a public account. With that contributor's secret too, it could forge proofs and drain the pool.",
         'No audit covers the pool, its router or its circuit.',
         'No circuit breaker or limit caps what a forged proof could take.',
       ],
