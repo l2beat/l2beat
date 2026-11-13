@@ -10,7 +10,7 @@ import {
 import { HomeCard } from './HomeCard'
 import { HomeCardHeader } from './HomeCardHeader'
 
-/** New projects, under Ethereum beside the articles. */
+/** New projects, beside the articles. */
 export function HomeNewProjectsCard({
   projects,
   className,

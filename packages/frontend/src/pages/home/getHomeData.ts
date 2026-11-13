@@ -13,6 +13,10 @@ import {
   getHomeL2Charts,
 } from '~/server/features/home/getHomeL2Charts'
 import {
+  EMPTY_HOME_LIQUID_STAKING,
+  getHomeLiquidStaking,
+} from '~/server/features/home/getHomeLiquidStaking'
+import {
   EMPTY_HOME_PRIVACY_DATA,
   getHomePrivacyData,
 } from '~/server/features/home/getHomePrivacyData'
@@ -120,6 +124,7 @@ async function getCachedData(manifest: Manifest) {
     recentChanges,
     l2Charts,
     ethereumCharts,
+    liquidStaking,
     interop,
     privacy,
     cropsProjects,
@@ -146,6 +151,11 @@ async function getCachedData(manifest: Manifest) {
       getHomeEthereumCharts(chartRange),
       EMPTY_HOME_ETHEREUM_CHARTS,
     ),
+    orEmpty(
+      'liquidStaking',
+      getHomeLiquidStaking(chartRange),
+      EMPTY_HOME_LIQUID_STAKING,
+    ),
     getInteropFlowsForHome(manifest, helpers, orEmpty),
     orEmpty('privacy', getHomePrivacyData(chartRange), EMPTY_HOME_PRIVACY_DATA),
     orEmpty('cropsProjects', getHomeCropsProjects(manifest), []),
@@ -159,6 +169,7 @@ async function getCachedData(manifest: Manifest) {
     topL2Projects,
     privacy,
     ethereumCharts,
+    liquidStaking,
     interop,
     recentProjects,
     recentChanges: {

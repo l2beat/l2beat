@@ -3,15 +3,16 @@
 
 /* Three columns once the page is wide enough that two would stretch every
    card, each row split its own way: the garden over two thirds beside the
-   mandate, the domains 3 : 3 : 2 with a narrower Ethereum, then new research,
-   the articles and project changes, as narrow as Ethereum, beside interop
-   across the rest. The tracks run between every row's gutters, so each card
-   spans whole tracks; in units of the width less two gutters (--w), the
-   gutters fall at 1/4 (research), 2/3 (banners), 3/8 and 3/4 (domains). Each
-   card names its area (`home-wide:[grid-area:…]`). The research row is the
-   flexible one: interop's height beyond the other two cards' goes to it, and
-   it fills as many rows as fit. The home layout's padding steps down to 24px
-   at 1560px (1880px of window). */
+   mandate, the domains in halves, Ethereum across the page, then new
+   research, the articles and project changes beside interop across the rest.
+   The tracks run between every row's gutters, so each card spans whole
+   tracks; in units of the width less two gutters (--w), the gutters fall at
+   1/4 (research), 1/2 (domains) and 2/3 (banners); the halves are each half
+   a gutter wider, so they are even. Each card names its area
+   (`home-wide:[grid-area:…]`). The research row is the flexible one:
+   interop's height beyond the other two cards' goes to it, and it fills as
+   many rows as fit. The home layout's padding steps down to 24px at 1560px
+   (1880px of window). */
 @custom-variant home-wide {
   @container home (width >= 1560px) {
     @slot;
@@ -23,35 +24,39 @@
   column-gap: var(--gutter);
   grid-template-columns:
     calc(var(--w) / 4) calc(var(--w) / 12 - var(--gutter))
-    calc(var(--w) / 24 - var(--gutter)) calc(var(--w) * 7 / 24)
+    calc(var(--w) / 24 - var(--gutter))
+    calc(var(--w) / 8 - var(--gutter) / 2)
+    calc(var(--w) / 6 - var(--gutter) / 2)
     calc(var(--w) / 12 - var(--gutter)) calc(var(--w) / 4);
-  grid-template-rows: repeat(4, auto) 1fr repeat(3, auto);
+  grid-template-rows: repeat(5, auto) 1fr repeat(3, auto);
 }
 @utility home-areas {
   grid-template-areas:
-    "crops crops crops crops mandate mandate"
-    "privacy privacy privacy l2 l2 ethereum"
-    "privacy privacy privacy l2 l2 ethereum"
-    "privacy privacy privacy l2 l2 ethereum"
-    "research interop interop interop interop interop"
-    "articles interop interop interop interop interop"
-    "changes interop interop interop interop interop"
-    "question question question question question question";
+    "crops crops crops crops crops mandate mandate"
+    "privacy privacy privacy privacy l2 l2 l2"
+    "privacy privacy privacy privacy l2 l2 l2"
+    "privacy privacy privacy privacy l2 l2 l2"
+    "ethereum ethereum ethereum ethereum ethereum ethereum ethereum"
+    "research interop interop interop interop interop interop"
+    "articles interop interop interop interop interop interop"
+    "changes interop interop interop interop interop interop"
+    "question question question question question question question";
 }
 /* Without the garden (it is behind a flag) the mandate takes the row. */
 @utility home-areas-no-crops {
   grid-template-areas:
-    "mandate mandate mandate mandate mandate mandate"
-    "privacy privacy privacy l2 l2 ethereum"
-    "privacy privacy privacy l2 l2 ethereum"
-    "privacy privacy privacy l2 l2 ethereum"
-    "research interop interop interop interop interop"
-    "articles interop interop interop interop interop"
-    "changes interop interop interop interop interop"
-    "question question question question question question";
+    "mandate mandate mandate mandate mandate mandate mandate"
+    "privacy privacy privacy privacy l2 l2 l2"
+    "privacy privacy privacy privacy l2 l2 l2"
+    "privacy privacy privacy privacy l2 l2 l2"
+    "ethereum ethereum ethereum ethereum ethereum ethereum ethereum"
+    "research interop interop interop interop interop interop"
+    "articles interop interop interop interop interop interop"
+    "changes interop interop interop interop interop interop"
+    "question question question question question question question";
 }
 
-/* Two columns under Ethereum (HomeRecentColumn): articles over project
+/* Two columns beside interop (HomeRecentColumn): articles over project
    changes, new research beside them. */
 @custom-variant recent-cols {
   @container recent (width >= 560px) {
@@ -61,9 +66,8 @@
 
 /* A home KPI pair (HomeKpiRow) too narrow for two tiles of 230px: each KPI
    becomes a row, the figure beside a wider, shorter sparkline. In the page's
-   three columns (`home-wide`), where only Ethereum is that narrow, the two
-   tiles go one under the other instead (`kpi-column`), down beside the
-   domains' rankings. */
+   three columns (`home-wide`) a pair that narrow goes one under the other
+   instead (`kpi-column`). */
 @custom-variant kpi-rows {
   @container home (width < 1560px) {
     @container kpis (width < 496px) {

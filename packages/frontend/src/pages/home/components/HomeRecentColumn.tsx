@@ -6,7 +6,7 @@ import { HomeProjectChangesBanner } from './HomeProjectChangesBanner'
 import type { HomeStackedIcon } from './HomeStackedIcons'
 
 /**
- * Under Ethereum: two columns once wide enough (`recent-cols`), articles over
+ * Beside interop: two columns once wide enough (`recent-cols`), articles over
  * project changes, and new research filling the other column with as many
  * rows as fit. Stacked, the columns dissolve and project changes comes last.
  * In the page's three columns (`home-wide`) all of it dissolves and each card

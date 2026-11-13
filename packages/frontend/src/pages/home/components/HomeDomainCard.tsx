@@ -48,10 +48,22 @@ export function HomeDomainCard({
  * and at least 7.5rem in, wider than any figure, so they line up across the
  * cards too.
  */
-export function HomeKpiRow({ children }: { children: ReactNode }) {
+export function HomeKpiRow({
+  children,
+  className,
+}: {
+  children: ReactNode
+  /** E.g. a column count for a pair stacked by its card's own layout. */
+  className?: string
+}) {
   return (
     <div className="@container/kpis min-w-0">
-      <div className="grid grid-cols-2 kpi-column:grid-cols-1 kpi-rows:grid-cols-[minmax(7.5rem,auto)_minmax(0,1fr)] gap-6 lg:gap-x-8">
+      <div
+        className={cn(
+          'grid grid-cols-2 kpi-column:grid-cols-1 kpi-rows:grid-cols-[minmax(7.5rem,auto)_minmax(0,1fr)] gap-6 lg:gap-x-8',
+          className,
+        )}
+      >
         {children}
       </div>
     </div>
