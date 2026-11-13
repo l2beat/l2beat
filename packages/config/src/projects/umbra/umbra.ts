@@ -111,6 +111,9 @@ export const umbra: BaseProject = {
     },
     badges: [],
   },
+  upgradesAndGovernance: {
+    content: readProjectMarkdown('umbra', 'upgradesAndGovernance'),
+  },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.stealthAddress,
     referenceApp: {
@@ -163,9 +166,6 @@ export const umbra: BaseProject = {
       ),
     ),
     riskSummary: readProjectMarkdown('umbra', 'riskSummary'),
-    upgradesAndGovernance: {
-      content: readProjectMarkdown('umbra', 'upgradesAndGovernance'),
-    },
   },
   crops: {
     censorshipResistance: {

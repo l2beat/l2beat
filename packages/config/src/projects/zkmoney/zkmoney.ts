@@ -353,6 +353,13 @@ export const zkmoney: BaseProject = {
     associatedTokens: [],
     warnings: [],
   },
+  upgradesAndGovernance: {
+    content: readProjectMarkdown(
+      'zkmoney',
+      'upgradesAndGovernance',
+      governanceValues,
+    ),
+  },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
     // Kept at the release the cells were rated on while the portals were live.
@@ -416,13 +423,6 @@ export const zkmoney: BaseProject = {
     ],
     adversaries: zkMoneyAdversaries,
     riskSummary: readProjectMarkdown('zkmoney', 'riskSummary'),
-    upgradesAndGovernance: {
-      content: readProjectMarkdown(
-        'zkmoney',
-        'upgradesAndGovernance',
-        governanceValues,
-      ),
-    },
   },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {

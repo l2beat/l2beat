@@ -197,17 +197,10 @@ export const privacyPoolsV2: BaseProject = {
     techStack: {
       zkVM: [ZK_CATALOG_TAGS.curve.BN254, ZK_CATALOG_TAGS.Groth16.Snarkjs],
     },
-    proofSystemInfo: '',
     trustedSetups: [
       {
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
         ...TRUSTED_SETUPS.PrivacyPoolsV2,
-      },
-    ],
-    projectsForTvs: [
-      {
-        projectId: ProjectId('privacy-pools-v2'),
-        sinceTimestamp: SINCE_TIMESTAMP,
       },
     ],
     verifierHashes: [
@@ -225,6 +218,12 @@ export const privacyPoolsV2: BaseProject = {
         ),
       },
     ],
+  },
+  upgradesAndGovernance: {
+    content: readProjectMarkdown('privacy-pools-v2', 'upgradesAndGovernance', {
+      adminThreshold,
+      maxYieldFee,
+    }),
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
@@ -268,22 +267,11 @@ export const privacyPoolsV2: BaseProject = {
     ],
     adversaries: privacyPoolsV2Adversaries,
     riskSummary: readProjectMarkdown('privacy-pools-v2', 'riskSummary'),
-    upgradesAndGovernance: {
-      content: readProjectMarkdown(
-        'privacy-pools-v2',
-        'upgradesAndGovernance',
-        {
-          adminThreshold,
-          maxYieldFee,
-        },
-      ),
-    },
   },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [],
-    zkVerifiers: VERIFIERS,
   },
 }
 

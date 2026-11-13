@@ -154,7 +154,6 @@ export const zkapi: BaseProject = {
         longDescription: readProjectMarkdown('zkapi', 'trustedSetup'),
       },
     ],
-    projectsForTvs: [{ projectId: ProjectId('zkapi'), sinceTimestamp }],
     verifierHashes: [
       {
         name: 'zkapi note-bound request and withdrawal verifier',
@@ -168,6 +167,9 @@ export const zkapi: BaseProject = {
         verificationSteps: readProjectMarkdown('zkapi', 'verificationSteps'),
       },
     ],
+  },
+  upgradesAndGovernance: {
+    content: readProjectMarkdown('zkapi', 'upgradesAndGovernance'),
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.anonymousAccess,
@@ -266,9 +268,6 @@ export const zkapi: BaseProject = {
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.anyAmount],
     adversaries: zkApiAdversaries,
     riskSummary: readProjectMarkdown('zkapi', 'riskSummary'),
-    upgradesAndGovernance: {
-      content: readProjectMarkdown('zkapi', 'upgradesAndGovernance'),
-    },
   },
   milestones: [
     {
@@ -287,6 +286,5 @@ export const zkapi: BaseProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [],
-    zkVerifiers: [verifier.address],
   },
 }

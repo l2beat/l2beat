@@ -161,6 +161,7 @@ export async function getL2ProjectEntry(
     | 'chainConfig'
     | 'archivedAt'
     | 'milestones'
+    | 'upgradesAndGovernance'
     | 'trackedTxsConfig'
     | 'livenessInfo'
     | 'livenessConfig'
@@ -659,7 +660,7 @@ export async function getL2ProjectEntry(
   }
 
   const allPastUpgrades = getProjectPastUpgrades(project.contracts)
-  const upgradesAndGovernance = project.scalingTechnology.upgradesAndGovernance
+  const upgradesAndGovernance = project.upgradesAndGovernance
 
   if (
     upgradesAndGovernance?.content ||

@@ -7,7 +7,7 @@ import {
   type TrackedTxSharpSubmissionConfig,
   type TrackedTxTransferConfig,
 } from '@l2beat/shared'
-import { assert, ProjectId } from '@l2beat/shared-pure'
+import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { existsSync, readFileSync } from 'fs'
 import { join } from 'path'
 import { badgesCompareFn } from '../common/badges'
@@ -82,6 +82,7 @@ function buildProjects(): BaseProject[] {
     .map(withGarden)
     .map(withVersions)
     .map(withPrivacyScalingProjects)
+    .map(withOwnProjectsForTvs)
 }
 
 function withDiscoveryUpdates(project: BaseProject): BaseProject {
@@ -137,6 +138,29 @@ function withVersions(
       group: { id: group.id, name: group.name },
       label: own.label,
       siblings,
+    },
+  }
+}
+
+function withOwnProjectsForTvs(project: BaseProject): BaseProject {
+  const zkCatalogInfo = project.zkCatalogInfo
+  if (
+    !zkCatalogInfo ||
+    zkCatalogInfo.projectsForTvs ||
+    !project.escrows?.length
+  ) {
+    return project
+  }
+  const sinceTimestamp = Math.min(
+    ...project.escrows.map((escrow) => escrow.sinceTimestamp ?? 0),
+  )
+  return {
+    ...project,
+    zkCatalogInfo: {
+      ...zkCatalogInfo,
+      projectsForTvs: [
+        { projectId: project.id, sinceTimestamp: UnixTime(sinceTimestamp) },
+      ],
     },
   }
 }
@@ -243,11 +267,15 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
       stateDerivation: p.stateDerivation,
       stateValidation: p.stateValidation,
       stateValidationImage: p.display.stateValidationImage,
-      upgradesAndGovernance:
-        p.type === 'layer2' ? p.upgradesAndGovernance : undefined,
     },
+    upgradesAndGovernance:
+      p.type === 'layer2' ? p.upgradesAndGovernance : undefined,
     customDa: p.customDa,
-    privacyInfo: p.privacyInfo,
+    // A rollup's privacy page shows the trusted setups of its own proof system.
+    privacyInfo: p.privacyInfo && {
+      zkCatalogId: p.proofSystem?.zkCatalogIds?.[0],
+      ...p.privacyInfo,
+    },
     tvsInfo: {
       associatedTokens: associatedTokens ?? [],
       warnings: [p.display.tvsWarning].filter((x) => x !== undefined),

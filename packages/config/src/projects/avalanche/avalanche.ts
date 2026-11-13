@@ -16,6 +16,8 @@ export const avalanche: BaseProject = {
     unverifiedContracts: [],
   },
   display: {
+    // TODO: one description. The page shows interopConfig.description; this
+    // one says more and is shown nowhere.
     description:
       'Avalanche Bridge is an externally validated bridge. It uses a set of Wardens using secure SGX Enclave to sign transfers. On Ethereum side it uses periodically rotated EOA address for an Escrow. In the announcement, 3 out of 4 Warden signatures are required, however the exact number is impossible to verify for an external observer.',
     links: {},
