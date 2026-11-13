@@ -15,7 +15,7 @@ export function EthereumProjectSummary({ project }: Props) {
     ...getEthereumProjectStats(project),
     {
       key: 'da-bridge',
-      title: 'DA Bridge',
+      title: 'DA bridge',
       value: project.header.bridgeName,
       tooltip: project.header.bridgeTooltip,
     },
@@ -25,7 +25,7 @@ export function EthereumProjectSummary({ project }: Props) {
       value: (
         <ProjectsUsedIn
           usedIn={project.header.usedIn}
-          className="flex-wrap justify-start"
+          className="max-md:-my-1 flex-wrap justify-start"
         />
       ),
     },

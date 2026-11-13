@@ -66,8 +66,8 @@ export function ThroughputSectionChart({
 
   return (
     <div>
-      <div className="mt-2 space-y-1">
-        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
+      <div className="mt-2 space-y-3">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
           <EthereumProjectsOnlyCheckbox
             name="projectThroughputIncludeL2Only"
             checked={includeL2Only}
@@ -77,7 +77,6 @@ export function ThroughputSectionChart({
             name="projectThroughputView"
             value={view}
             onValueChange={(value) => setView(value as View)}
-            className="h-7"
           >
             <RadioGroupItem value="total">Total</RadioGroupItem>
             <RadioGroupItem value="per-project">Per project</RadioGroupItem>
@@ -94,7 +93,7 @@ export function ThroughputSectionChart({
             setValue={setRange}
             options={Object.values(DaThroughputTimeRangeValues).map((v) => ({
               value: v,
-              label: v.toUpperCase(),
+              label: v === 'max' ? 'Max' : v,
             }))}
           />
         </div>
