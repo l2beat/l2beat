@@ -301,6 +301,9 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<SectionProps<T>> } = {
     ),
   LiquidStakingSection: renderLiquidStakingSection,
   GardenCropsSection: renderGardenCropsSection,
+  GasFeesSection: pointToHtmlPage(
+    'The interactive gas fee charts and live tips are shown',
+  ),
   InteropFlowsSection: pointToHtmlPage('The interactive flows chart is shown'),
   InteropTokenOnchainDeploymentsSection: renderOnchainDeployments,
   InteropTokenProtocolsSection: pointToHtmlPage(

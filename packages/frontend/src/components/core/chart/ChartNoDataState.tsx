@@ -1,7 +1,11 @@
 import { EmptyStateIcon } from '~/icons/EmptyState'
 import { cn } from '~/utils/cn'
 
-export function ChartNoDataState({ size }: { size: 'regular' | 'small' }) {
+export function ChartNoDataState({
+  size,
+}: {
+  size: 'regular' | 'small' | 'large'
+}) {
   return (
     <div className="absolute inset-0 z-30 flex select-none flex-col items-center justify-center gap-4 text-center duration-200 dark:from-neutral-900">
       <EmptyStateIcon
