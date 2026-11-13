@@ -52,11 +52,16 @@ const COMPACT_BODY_CELL = 'md:h-12'
 export function getBasicTableHeaderCellClassName(params: {
   groupParams: BasicTableGroupParams | undefined
   isPinned: boolean
+  /** Without a sort icon to push it in, a first label starts where the values do */
+  isSortable?: boolean
+  align?: 'right' | 'center'
   headClassName: string | undefined
   compact?: boolean
 }) {
-  const { groupParams, isPinned, headClassName, compact } = params
+  const { groupParams, isPinned, headClassName, compact, isSortable, align } =
+    params
   return cn(
+    isSortable === false && align === undefined && 'first:pl-3',
     groupParams && [
       groupParams.isFirstInGroup && 'pl-6',
       // `md:` too, or TableHead's own `md:pr-4` wins from md up and the
