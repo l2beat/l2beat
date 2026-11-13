@@ -1,5 +1,4 @@
 import { formatActivityCount, UnixTime } from '@l2beat/shared-pure'
-import round from 'lodash/round'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import {
@@ -61,7 +60,8 @@ export function ActivityRatioChart({
           },
         ]}
         yAxis={{
-          format: (value) => `${round(value, 2)}x`,
+          // Two decimals at every tick ("1.00x"), like the other axes' "0.00"
+          format: (value) => `${value.toFixed(2)}x`,
           domain: [1, 'auto'],
           headroom: 0.1,
         }}
