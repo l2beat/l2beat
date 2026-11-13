@@ -80,7 +80,7 @@ export function ProjectL2Stats({ project, className }: Props) {
           <span className="max-lg:hidden xl:hidden">Daily UOPS</span>
         </div>
       }
-      tooltip="User operations per second averaged over the past day displayed together with a percentage change compared to 7D ago."
+      tooltip="User operations per second averaged over the past day displayed together with a percentage change compared to 7 days ago."
       value={
         project.header.activity ? (
           <span className="flex items-center gap-2">

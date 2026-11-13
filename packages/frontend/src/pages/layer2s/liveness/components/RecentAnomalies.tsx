@@ -16,7 +16,6 @@ import { Markdown } from '~/components/markdown/Markdown'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { SentimentText } from '~/components/SentimentText'
 import { ChevronIcon } from '~/icons/Chevron'
-import { HOME_TEXT } from '~/pages/home/homeStyles'
 import type { LivenessAnomaly } from '~/server/features/layer2s/liveness/types'
 import { cn } from '~/utils/cn'
 import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
@@ -56,7 +55,9 @@ export function RecentAnomalies({ projectsWithAnomalies, className }: Props) {
 
   return (
     <PrimaryCard className={className}>
-      <h2 className={HOME_TEXT.title}>Recent major anomalies</h2>
+      <h2 className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
+        Recent major anomalies
+      </h2>
       <div className="mt-4 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
         <div className="space-y-3">
           {firstColumns.map((projectWithAnomalies) => (
@@ -107,7 +108,7 @@ function AnomalyCollapsible({
             alt={projectWithAnomalies.name}
             className="size-5"
           />
-          <span className={cn('text-left', HOME_TEXT.row)}>
+          <span className="text-left font-medium text-label-value-15">
             {projectWithAnomalies.name}
           </span>
         </div>
