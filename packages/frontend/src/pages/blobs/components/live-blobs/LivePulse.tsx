@@ -198,27 +198,29 @@ function BlobPulse({
       </div>
       {/* One line, as tall as the skeleton before it: the ends stay whole,
           and where the middle runs long it is cut short */}
-      <div className="mt-1 flex items-center justify-between gap-4 font-medium text-label-value-12 text-secondary">
+      <div className="mt-1 grid grid-cols-[1fr_auto_1fr] items-center gap-4 font-medium text-label-value-12 text-secondary">
         <span className="shrink-0 whitespace-nowrap">24 hours ago</span>
         {view === undefined ? (
-          <span className="min-w-0 truncate max-md:hidden">
+          <span className="min-w-0 truncate text-center max-md:hidden">
             Average blobs per block every {BAR_MINUTES} minutes, against the
             target (dashed). Drag to look back
           </span>
         ) : (
           // on a phone, the time alone fits between the ends
-          <span>
+          <span className="text-center">
             <span className="text-primary tabular-nums">{viewTime}</span>
             <span className="max-md:hidden"> · {ago(view, head)}</span>
           </span>
         )}
         {view === undefined ? (
-          <span className="shrink-0 whitespace-nowrap">Now</span>
+          <span className="col-start-3 justify-self-end whitespace-nowrap">
+            Now
+          </span>
         ) : (
           <button
             type="button"
             onClick={() => brush.onView(undefined)}
-            className="shrink-0 whitespace-nowrap font-bold text-brand-deep"
+            className="col-start-3 justify-self-end whitespace-nowrap font-medium text-primary underline decoration-divider underline-offset-[0.3em] transition-colors hover:decoration-current"
           >
             Back to live
           </button>

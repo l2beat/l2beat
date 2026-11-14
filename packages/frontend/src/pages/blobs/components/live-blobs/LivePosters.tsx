@@ -58,16 +58,28 @@ const PINNED_COLUMNS = 2
 /** Where the logo sticks until the sticky header measures the # column */
 const RANK_WIDTH = 32
 
+/** Near-black brands would all but vanish as 1–2px bars on a dark card */
+const SPARKLINE_CONTRAST = 3
+
+/** A phone shows the blobs instead, the number the table is about */
+const ACTIVITY_HIDDEN = 'max-md:hidden'
+/** Blobs over batches, both shown, so it gives way first */
+const PER_BATCH_HIDDEN = 'max-2xl:hidden'
+
 const COLUMNS: {
   label: string
   align?: 'right'
   tooltip?: string
+  /** On the header cell: where the column hides, or how its label lines up with the cells */
+  className?: string
 }[] = [
   { label: '#' },
   { label: '' },
-  { label: 'Name' },
+  // as far in as the names, which their hover boxes pad
+  { label: 'Name', className: 'md:pl-1.5' },
   {
     label: 'Activity',
+    className: ACTIVITY_HIDDEN,
     tooltip: `Blobs in every ${(BUCKET_SLOTS * SLOT_SECONDS) / 60} minutes of the window, newest on the right`,
   },
   { label: 'Blobs', align: 'right', tooltip: 'Blobs posted in the window' },
@@ -81,6 +93,7 @@ const COLUMNS: {
   {
     label: 'Per batch',
     align: 'right',
+    className: PER_BATCH_HIDDEN,
     tooltip: 'Blobs in a batch, on average',
   },
   { label: 'Share', align: 'right', tooltip: 'Of all blobs in the window' },
@@ -146,7 +159,7 @@ export function LivePosters({ live: data, totals }: Props) {
                       key={column.label}
                       align={column.align}
                       tooltip={column.tooltip}
-                      {...pinnedCellProps(index)}
+                      {...pinnedCellProps(index, column.className)}
                     >
                       {column.label}
                     </TableHead>
@@ -162,7 +175,12 @@ export function LivePosters({ live: data, totals }: Props) {
               <PosterRow
                 key={row.poster.id}
                 row={row}
-                color={readableColor(row.poster.color, surface)}
+                // thin sparkline bars need more contrast than the belt's squares
+                color={readableColor(
+                  row.poster.color,
+                  surface,
+                  SPARKLINE_CONTRAST,
+                )}
                 rank={index + 1}
                 seconds={seconds}
                 totalBlobs={totalBlobs}
@@ -259,7 +277,7 @@ const PosterRow = memo(function PosterRow({
           <PosterName poster={row.poster} className="md:pl-1.5" />
         )}
       </TableCell>
-      <TableCell>
+      <TableCell className={ACTIVITY_HIDDEN}>
         <TableLink
           href={row.poster.href && `${row.poster.href}#data-posted`}
           aria-label={`${row.poster.name} data posted`}
@@ -288,13 +306,13 @@ const PosterRow = memo(function PosterRow({
       <TableCell align="right">
         <RollingNumber value={batches} format={formatWhole} />
       </TableCell>
-      <TableCell align="right">
+      <TableCell align="right" className={PER_BATCH_HIDDEN}>
         <RollingNumber value={blobs / batches} format={formatAverage} />
       </TableCell>
       <TableCell align="right">
         <RollingNumber
           value={blobs / Math.max(1, totalBlobs)}
-          format={formatPercent}
+          format={formatShare}
         />
       </TableCell>
       <TableCell align="right" className="tabular-nums">
@@ -407,6 +425,11 @@ function PostersSkeleton() {
       ))}
     </div>
   )
+}
+
+/** A share too small for two decimals still reads as more than nothing */
+function formatShare(share: number) {
+  return share > 0 && share < 0.0001 ? '<0.01%' : formatPercent(share)
 }
 
 function describeAgo(seconds: number) {

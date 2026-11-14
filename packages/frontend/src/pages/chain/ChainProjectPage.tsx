@@ -51,7 +51,7 @@ export function ChainProjectPage({
                   <section
                     id="summary"
                     data-role="nav-section"
-                    className="w-full scroll-mt-[100vh] border-divider bg-surface-primary px-4 max-md:border-b max-md:pb-4 md:rounded-lg md:p-6"
+                    className="w-full scroll-mt-[100vh] border-divider bg-surface-primary px-4 max-md:border-b max-md:pb-4 md:rounded-xl md:px-6 md:py-5"
                   >
                     <ProjectInteropMetrics interop={entry.interop} />
                   </section>

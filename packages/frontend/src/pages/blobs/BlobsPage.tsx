@@ -55,6 +55,7 @@ export function BlobsPage({
           <ChartTabs
             className="lg:hidden"
             charts={[throughputChart, tvsChart]}
+            labels={['Data posted chart', 'L2s value secured chart']}
           />
           <LiveBlobsCard
             projects={blobPosters}

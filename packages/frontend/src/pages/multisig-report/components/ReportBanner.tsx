@@ -1,21 +1,29 @@
+import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { ImageParams } from '~/utils/project/getImageParams'
+import { ReportDownloadButton } from './ReportDownloadButton'
 
-export function ReportBanner({ image }: { image: ImageParams }) {
+export function ReportBanner({
+  image,
+  fileUrl,
+}: {
+  image: ImageParams
+  fileUrl: string
+}) {
   return (
-    <div className="mt-8 mb-10 flex max-h-fit flex-col overflow-hidden rounded-md bg-transparent from-gray-250 to-gray-450 md:my-12 md:grid md:grid-cols-2 md:bg-linear-to-r">
-      <div className="mx-0 my-8 flex flex-col justify-center md:mx-12">
-        <div className="mb-2 font-medium text-gray-50 uppercase leading-5 md:text-[#4F4F4F] md:text-xl">
-          June 2023 snapshot
+    <PrimaryCard className="grid items-center gap-6 md:grid-cols-2 md:gap-8">
+      <div className="flex flex-col items-start gap-4">
+        <div>
+          <p className="font-medium text-label-value-13 text-secondary">
+            June 2023 snapshot
+          </p>
+          <h2 className="mt-2 text-balance font-semibold text-heading-28 tracking-[-0.01em] md:text-heading-40">
+            Upgradeability of Ethereum L2s
+          </h2>
         </div>
-        <div className="font-medium text-2xl text-primary leading-tight md:text-5xl md:text-black md:dark:text-black">
-          Upgradeability of Ethereum L2s
-        </div>
+        <ReportDownloadButton fileUrl={fileUrl} />
       </div>
-      <img
-        alt=""
-        {...image}
-        className="h-full max-h-[320px] rounded-md md:rounded-none"
-      />
-    </div>
+      {/* The report's cover on its own backdrop, framed as a photo */}
+      <img alt="" {...image} className="h-auto w-full rounded-lg" />
+    </PrimaryCard>
   )
 }

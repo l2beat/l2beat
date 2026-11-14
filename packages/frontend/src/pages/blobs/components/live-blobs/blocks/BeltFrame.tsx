@@ -31,15 +31,15 @@ export function BeltLegend() {
 function Legend({ items }: { items: ReactNode[] }) {
   return (
     <>
-      <div className="flex flex-wrap items-center justify-center gap-x-2 font-medium text-label-value-12 text-secondary max-md:hidden">
+      <div className="flex flex-wrap items-center justify-center gap-x-2 font-medium text-label-value-13 text-primary max-md:hidden">
         {items.map((item, i) => (
           <Fragment key={i}>
-            {i > 0 && <span className="text-tertiary">|</span>}
+            {i > 0 && <span className="text-divider">|</span>}
             <span>{item}</span>
           </Fragment>
         ))}
       </div>
-      <div className="space-y-1 text-center font-medium text-label-value-14 text-secondary md:hidden">
+      <div className="space-y-1 text-center font-medium text-label-value-13 text-primary md:hidden">
         {items.map((item, i) => (
           <div key={i}>{item}</div>
         ))}
@@ -49,5 +49,5 @@ function Legend({ items }: { items: ReactNode[] }) {
 }
 
 function LegendValue({ children }: { children: ReactNode }) {
-  return <span className="font-bold text-brand-deep">{children}</span>
+  return <span className="font-semibold">{children}</span>
 }
