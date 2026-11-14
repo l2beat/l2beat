@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { LiveIndicator } from '~/components/LiveIndicator'
 import { useThemeTokens } from '~/hooks/useThemeTokens'
@@ -6,7 +6,7 @@ import { ChevronIcon } from '~/icons/Chevron'
 import type { LiveBlobs } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
-import { mixColors, readableColor } from '~/utils/color'
+import { readableColor } from '~/utils/color'
 import {
   BLOB_KIB,
   describeWindow,
@@ -183,7 +183,7 @@ function Stat({
     <div className="min-w-0">
       {/* The pop rises off the label line, where nothing else is in its way,
           right after the label, so it reads as what this number just got */}
-      <dt className="font-medium text-label-value-13 text-secondary">
+      <dt className="font-medium text-label-value-13 text-primary">
         <span className="relative">
           {label}
           {arrival && (
@@ -196,7 +196,7 @@ function Stat({
         </span>
       </dt>
       <dd className="flex items-baseline gap-1.5">
-        <span className="font-bold text-heading-32 leading-none md:text-heading-36">
+        <span className="font-semibold text-heading-32 tabular-nums leading-none tracking-[-0.025em]">
           {children}
         </span>
         {note && (
@@ -221,7 +221,7 @@ function LiveHeading({
       <h2>
         <a
           href={ethereum.href}
-          className="group flex items-center gap-2 whitespace-nowrap font-bold text-heading-16"
+          className="group flex items-center gap-2 whitespace-nowrap font-semibold text-heading-16"
         >
           <LiveIndicator disabled={status !== 'live'} />
           <img src={ethereum.iconUrl} alt="" className="size-5" />
@@ -260,16 +260,10 @@ function useShares(totals: PosterTotals | undefined): PosterShare[] {
   }))
 }
 
-/** A tile like the belt's: its color, lit along the top edge like a gel */
-function gel(color: string): CSSProperties {
-  return {
-    backgroundColor: color,
-    boxShadow: `inset 0 1px 0 ${mixColors(color, '#ffffff', 0.45)}`,
-  }
-}
-
 /**
- * The day's blobs as one strip, a stretch of it per poster. Stretches do not
+ * The day's blobs as one strip, a stretch of it per poster, each exactly as
+ * wide as its share: no gaps or minimum widths, which on a phone would give
+ * the long tail most of the strip. Stretches do not
  * ease to their new size: a block moves them by less than a pixel, and
  * easing `flex-grow` lays the whole strip out again on every frame
  */
@@ -284,7 +278,7 @@ function ShareStrip({
 }) {
   return (
     <div
-      className="mt-4 flex h-4 gap-[2px] overflow-hidden rounded-[3px] md:h-5"
+      className="mt-4 flex h-4 overflow-hidden rounded-[3px] md:h-5"
       role="img"
       aria-label={`${formatWhole(blobs)} blobs from ${projects} projects`}
     >
@@ -292,8 +286,12 @@ function ShareStrip({
         <div
           key={share.id}
           title={`${share.name} · ${formatPercent(share.share)}`}
-          className="h-full min-w-[2px] rounded-[2px]"
-          style={{ flexGrow: share.share, flexBasis: 0, ...gel(share.color) }}
+          className="h-full"
+          style={{
+            flexGrow: share.share,
+            flexBasis: 0,
+            backgroundColor: share.color,
+          }}
         />
       ))}
     </div>
@@ -314,13 +312,16 @@ function ShareLegend({
     .filter((share) => share.id !== UNKNOWN_ID)
     .slice(0, NAMED_POSTERS)
   return (
-    <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 font-medium text-label-value-12 text-secondary">
-      <span className="font-bold text-primary">{title}</span>
+    <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 font-medium text-label-value-12 text-primary">
+      <span className="font-semibold">{title}</span>
       {named.map((share) => (
         <span key={share.id} className="flex items-center gap-1.5">
-          <span className="size-2.5 rounded-[2px]" style={gel(share.color)} />
+          <span
+            className="size-2.5 rounded-[2px]"
+            style={{ backgroundColor: share.color }}
+          />
           {share.name}
-          <span className="font-bold text-primary tabular-nums">
+          <span className="font-semibold tabular-nums">
             {formatPercent(share.share)}
           </span>
         </span>
@@ -328,7 +329,7 @@ function ShareLegend({
       {projects > named.length && (
         <a
           href={`#${LIVE_POSTERS_ID}`}
-          className="underline decoration-dotted underline-offset-2 hover:text-primary"
+          className="text-secondary underline decoration-divider underline-offset-[0.3em] transition-colors hover:text-primary hover:decoration-current"
         >
           +{projects - named.length} more
         </a>

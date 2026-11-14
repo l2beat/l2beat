@@ -1,4 +1,4 @@
-import { type BeltLayers, GLOW_REACH, traceRackBody } from './beltLayers'
+import { type BeltLayers, traceRackBody } from './beltLayers'
 import { type BeltLayout, tileBounds } from './beltLayout'
 import type { PosterInk } from './beltPalette'
 import {
@@ -12,7 +12,6 @@ import {
   type BeltFrame,
   type BeltScene,
   batchKey,
-  findBatch,
   type Playback,
 } from './beltScene'
 import {
@@ -24,7 +23,6 @@ import {
 } from './drawBeltLabels'
 import {
   DROP_STAGGER,
-  fallDuration,
   moveTile,
   restingMotion,
   revealed,
@@ -48,10 +46,10 @@ export function drawBelt(
   // Pass 1: the rules every block keeps to, under the belt
   drawRules(ctx, layout, scene.layers)
 
-  // Pass 2: the belt, with the bay's light between the racks and their tiles
+  // Pass 2: the belt, with the bay between the racks and their tiles
   drawRacks(ctx, scene, belt)
   drawMissedLabels(ctx, scene, belt, reveal)
-  drawBay(ctx, scene, belt, landingPulse(scene, playback, belt, now))
+  drawBay(ctx, scene, belt)
   drawTiles(ctx, scene, playback, belt, now, frame, reveal)
   drawBayRing(ctx, scene, belt)
   drawBlockNumbers(ctx, scene, belt, frame, reveal)
@@ -61,30 +59,6 @@ export function drawBelt(
   const arrivals = drawArrivalLabels(ctx, scene, playback, belt, now)
   drawBayCaption(ctx, scene, belt)
   drawLimitLabels(ctx, scene, arrivals)
-}
-
-/** Seconds */
-const PULSE_DECAY = 0.18
-
-/** 1 as a batch lands in the bay, then fading: the glow acknowledges every delivery */
-function landingPulse(
-  scene: BeltScene,
-  playback: Playback,
-  belt: BeltPosition,
-  now: number,
-) {
-  const { layout, blocks } = scene
-  let pulse = 0
-  for (const [key, arrivedAt] of playback.arrivals) {
-    const found = findBatch(blocks, key)
-    if (found?.slot !== belt.current) continue
-    const { top } = tileBounds(layout, found.batch.blobsBelow, 0, 1)
-    const sinceLanding = now - arrivedAt - fallDuration(top - layout.dropFromY)
-    if (sinceLanding >= 0) {
-      pulse = Math.max(pulse, Math.exp(-sinceLanding / PULSE_DECAY))
-    }
-  }
-  return pulse
 }
 
 function drawRacks(
@@ -122,22 +96,14 @@ function drawBay(
   ctx: CanvasRenderingContext2D,
   scene: BeltScene,
   belt: BeltPosition,
-  pulse: number,
 ) {
-  const { layout, palette, layers } = scene
+  const { layout, palette } = scene
   const left = belt.bayLeft
   drawChute(ctx, scene, left)
   ctx.beginPath()
   traceRackBody(ctx, layout, left)
   ctx.fillStyle = palette.bayFill
   ctx.fill()
-  drawLitOutline(ctx, layout, layers, left)
-  if (pulse > 0.02) {
-    // a second pass doubles the glow at its peak
-    ctx.globalAlpha = pulse
-    drawLitOutline(ctx, layout, layers, left)
-    ctx.globalAlpha = 1
-  }
 }
 
 /** Ties the caption's slot number to its rack, and shows where tiles come from */
@@ -148,10 +114,7 @@ function drawChute(
 ) {
   const { layout, palette } = scene
   const top = layout.dropFromY
-  const gradient = ctx.createLinearGradient(0, top, 0, layout.rackTop)
-  gradient.addColorStop(0, palette.chuteTop)
-  gradient.addColorStop(1, palette.chuteBottom)
-  ctx.fillStyle = gradient
+  ctx.fillStyle = palette.chute
   ctx.fillRect(
     left + layout.rackPadding,
     top,
@@ -161,8 +124,7 @@ function drawChute(
 }
 
 /**
- * The outline again, over the tiles, as racks sliding through would cover it.
- * The glow stays under, lighting the gaps rather than tinting the tiles
+ * The bay's outline, over the tiles, as racks sliding through would cover it
  */
 function drawBayRing(
   ctx: CanvasRenderingContext2D,
@@ -176,21 +138,6 @@ function drawBayRing(
     layout.rackTop,
     layout.rackWidth,
     layout.rackHeight,
-  )
-}
-
-function drawLitOutline(
-  ctx: CanvasRenderingContext2D,
-  layout: BeltLayout,
-  layers: BeltLayers,
-  left: number,
-) {
-  ctx.drawImage(
-    layers.litRack,
-    left - GLOW_REACH,
-    layout.rackTop - GLOW_REACH,
-    layout.rackWidth + 2 * GLOW_REACH,
-    layout.rackHeight + 2 * GLOW_REACH,
   )
 }
 
@@ -281,8 +228,6 @@ function drawTile(
   ctx.beginPath()
   ctx.roundRect(x, y, width, height, [top, top, bottom, bottom])
   ctx.fill()
-  ctx.fillStyle = ink.sheen
-  ctx.fillRect(x + top, y, width - 2 * top, 1)
   ctx.globalAlpha = alpha
 }
 

@@ -44,8 +44,8 @@ export function CoreProtocolSection() {
       <PrimaryCard className="overflow-hidden p-0 md:p-0">
         <ul className="grid gap-px bg-divider md:grid-cols-2">
           {NEEDS.map((need) => (
-            <li key={need.title} className="bg-surface-primary p-5 md:p-6">
-              <h3 className="font-bold text-label-value-16 md:text-label-value-18">
+            <li key={need.title} className="bg-surface-primary p-4 md:p-6">
+              <h3 className="font-semibold text-label-value-16 leading-[1.3] md:text-label-value-18">
                 {need.title}
               </h3>
               <p className="mt-1.5 text-paragraph-15 text-secondary md:text-paragraph-16">

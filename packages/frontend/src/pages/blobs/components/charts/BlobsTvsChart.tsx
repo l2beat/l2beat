@@ -1,7 +1,7 @@
 import { formatCurrency } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
-import { tvsRangeToReadable } from '~/components/chart/tvs/tvsRangeToReadable'
+import { ChartCardHeader } from '~/components/chart/ChartCardHeader'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import {
@@ -15,14 +15,10 @@ import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys
 import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import { tinted } from '~/components/core/chart/tint'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { Skeleton } from '~/components/core/Skeleton'
-import { PercentChange } from '~/components/PercentChange'
-import { ChevronIcon } from '~/icons/Chevron'
 import type { DaTvsProjectIds } from '~/server/features/data-availability/summary/getDaTvsProjectIds'
 import { useTRPC } from '~/trpc/React'
 import { formatSnapshotTimestamp } from '~/utils/dates'
 import {
-  type ChartRange,
   type ChartResolution,
   optionToRange,
   rangeToResolution,
@@ -88,7 +84,7 @@ export function BlobsTvsChart({ projectIds }: { projectIds: DaTvsProjectIds }) {
 
   return (
     <div className="flex flex-col gap-4 lg:contents">
-      <Header stats={stats} isLoading={isLoading} range={range} />
+      <Header stats={stats} isLoading={isLoading} />
       <ChartContainer
         isPlaceholderData={false}
         meta={chartMeta}
@@ -103,7 +99,7 @@ export function BlobsTvsChart({ projectIds }: { projectIds: DaTvsProjectIds }) {
       >
         <TimeSeriesChart
           data={chartData}
-          ariaLabel="L2s Value Secured"
+          ariaLabel="L2s value secured"
           series={[
             {
               key: 'fullData',
@@ -192,57 +188,22 @@ function CustomTooltip({
 function Header({
   stats,
   isLoading,
-  range,
 }: {
   stats: TvsSeriesStats | undefined
   isLoading: boolean
-  range: ChartRange
 }) {
   return (
-    <div className="flex items-start justify-between gap-2">
-      <a
-        href="/layer2s/tvs"
-        className="group flex items-center gap-1.5 whitespace-nowrap font-bold text-xl"
-      >
-        <span className="underline-offset-4 group-hover:underline">
-          L2s Value Secured
-        </span>
-        <ChevronIcon
-          aria-hidden
-          className="-rotate-90 size-3 fill-current transition-transform group-hover:translate-x-0.5"
-        />
-      </a>
-      <div className="flex flex-col items-end">
-        {isLoading ? (
-          // the total and its change, as tall as their lines, 30 and 14 px,
-          // and wrapping where they would, so the header keeps its height
-          // when the numbers come
-          <div className="flex flex-wrap items-baseline justify-end gap-x-1.5">
-            <Skeleton className="my-[5px] h-5 w-20" />
-            <Skeleton className="my-px h-3 w-24" />
-          </div>
-        ) : stats === undefined ? (
-          <span className="whitespace-nowrap font-bold text-xl">No data</span>
-        ) : (
-          // the change drops under the total where there is no room beside it,
-          // set tight there so the header grows no taller than its title
-          <div className="flex flex-wrap items-baseline justify-end gap-x-1.5">
-            <span className="whitespace-nowrap font-bold text-xl">
-              {formatCurrency(stats.total, 'usd')}
-            </span>
-            <span className="whitespace-nowrap text-xs leading-none">
-              <PercentChange
-                value={stats.change}
-                textClassName="leading-none"
-              />
-              <span className="text-secondary">
-                {' '}
-                / {tvsRangeToReadable(range)}
-              </span>
-            </span>
-          </div>
-        )}
-      </div>
-    </div>
+    <ChartCardHeader
+      title="L2s value secured"
+      link={{ href: '/layer2s/tvs', label: 'All projects' }}
+      isLoading={isLoading}
+      value={stats && formatCurrency(stats.total, 'usd')}
+      change={stats?.change}
+      rangeLabel="1y"
+      meta={
+        !isLoading &&
+        stats === undefined && <span className="text-secondary">No data</span>
+      }
+    />
   )
 }

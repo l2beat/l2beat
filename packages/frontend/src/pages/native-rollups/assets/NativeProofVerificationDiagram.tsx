@@ -15,28 +15,6 @@ export function NativeProofVerificationDiagram({
       aria-label="EIP-8288 verifies the proofs that native EVM rollups, custom VMs, and other ZK applications depend on"
     >
       <defs>
-        <linearGradient
-          id="npv-brand"
-          x1="30"
-          y1="20"
-          x2="330"
-          y2="190"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="var(--color-brand-deep)" />
-          <stop offset="1" stopColor="var(--color-brand)" />
-        </linearGradient>
-        <linearGradient
-          id="npv-brand-soft"
-          x1="30"
-          y1="20"
-          x2="330"
-          y2="190"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="var(--color-brand-deep)" stopOpacity="0.18" />
-          <stop offset="1" stopColor="var(--color-brand)" stopOpacity="0.18" />
-        </linearGradient>
         <marker
           id="npv-arrow"
           markerWidth="7"
@@ -55,14 +33,14 @@ export function NativeProofVerificationDiagram({
         width="150"
         height="58"
         rx="14"
-        fill="url(#npv-brand-soft)"
-        stroke="url(#npv-brand)"
+        className="fill-(--accent)/10"
+        stroke="var(--accent)"
         strokeWidth="2"
       />
-      <circle cx="180" cy="36" r="11" fill="url(#npv-brand)" />
+      <circle cx="180" cy="36" r="11" fill="var(--accent)" />
       <path
         d="m174.5 36 4 4 7-8.5"
-        stroke="#fff"
+        className="stroke-primary-invert"
         strokeWidth="2.5"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -71,10 +49,9 @@ export function NativeProofVerificationDiagram({
         x="180"
         y="63"
         textAnchor="middle"
-        className="fill-secondary dark:fill-primary"
-        fontSize="10"
+        className="fill-primary"
+        fontSize="14"
         fontWeight="600"
-        letterSpacing="0.8"
       >
         EIP-8288
       </text>
@@ -106,19 +83,18 @@ export function NativeProofVerificationDiagram({
         height="44"
         rx="12"
         className="fill-pure-white dark:fill-zinc-900"
-        stroke="url(#npv-brand)"
+        stroke="var(--accent)"
         strokeWidth="2"
       />
       <text
         x="64"
-        y="170"
+        y="171"
         textAnchor="middle"
-        className="fill-secondary dark:fill-primary"
-        fontSize="9.5"
+        className="fill-primary"
+        fontSize="14"
         fontWeight="600"
-        letterSpacing="0.6"
       >
-        NATIVE EVM
+        Native EVM
       </text>
 
       <rect
@@ -128,19 +104,18 @@ export function NativeProofVerificationDiagram({
         height="44"
         rx="12"
         className="fill-pure-white dark:fill-zinc-900"
-        stroke="url(#npv-brand)"
+        stroke="var(--accent)"
         strokeWidth="2"
       />
       <text
         x="180"
-        y="170"
+        y="171"
         textAnchor="middle"
-        className="fill-secondary dark:fill-primary"
-        fontSize="9.5"
+        className="fill-primary"
+        fontSize="14"
         fontWeight="600"
-        letterSpacing="0.6"
       >
-        CUSTOM VM
+        Custom VM
       </text>
 
       <rect
@@ -150,19 +125,18 @@ export function NativeProofVerificationDiagram({
         height="44"
         rx="12"
         className="fill-pure-white dark:fill-zinc-900"
-        stroke="url(#npv-brand)"
+        stroke="var(--accent)"
         strokeWidth="2"
       />
       <text
         x="296"
-        y="170"
+        y="171"
         textAnchor="middle"
-        className="fill-secondary dark:fill-primary"
-        fontSize="9.5"
+        className="fill-primary"
+        fontSize="14"
         fontWeight="600"
-        letterSpacing="0.6"
       >
-        ZK APP
+        ZK app
       </text>
     </svg>
   )
