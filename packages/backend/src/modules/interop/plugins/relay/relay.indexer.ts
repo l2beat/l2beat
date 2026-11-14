@@ -9,7 +9,11 @@ import { ManagedChildIndexer } from '../../../../tools/uif/ManagedChildIndexer'
 import type { InteropEventStore } from '../../engine/capture/InteropEventStore'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import { createInteropEventType, findChain, type InteropEvent } from '../types'
-import type { RelayApiClient, RelayRequest } from './RelayApiClient'
+import {
+  RELAY_PUBLISH_DELAY,
+  type RelayApiClient,
+  type RelayRequest,
+} from './RelayApiClient'
 import { buildRelayBootstrapChainNamesById, RelayConfig } from './relay.config'
 
 export interface RelayIndexerConfig {
@@ -34,7 +38,9 @@ export class RelayRootIndexer extends RootIndexer {
   }
 
   tick(): Promise<number> {
-    return Promise.resolve(UnixTime.now() - this.safeTimeOffset)
+    return Promise.resolve(
+      UnixTime.now() - RELAY_PUBLISH_DELAY - this.safeTimeOffset,
+    )
   }
 }
 
