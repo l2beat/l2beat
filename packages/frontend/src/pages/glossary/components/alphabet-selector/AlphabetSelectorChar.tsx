@@ -18,7 +18,7 @@ export function AlphabetSelectorChar({ char, href, selected, ref }: CharProps) {
         className={cn(
           'flex size-[34px] items-center justify-center rounded border transition ease-out lg:aspect-square lg:size-auto lg:w-full',
           'border-divider bg-pure-white dark:bg-surface-secondary',
-          selected && 'border-primary! bg-primary! text-primary-invert',
+          selected && 'border-brand! bg-brand/15!',
           href &&
             !selected &&
             'hover:bg-surface-secondary dark:hover:bg-surface-tertiary',

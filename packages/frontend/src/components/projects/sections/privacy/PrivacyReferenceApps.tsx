@@ -2,8 +2,8 @@ import { Fragment, type ReactNode } from 'react'
 import { CustomLink } from '~/components/link/CustomLink'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import {
-  PRIVACY_CHIP_CLASS_NAME,
-  PRIVACY_EXPOSURE_SENTIMENT,
+  PRIVACY_CHIP_BASE_CLASS_NAME,
+  PRIVACY_EXPOSURE_CHIP_CLASS_NAME,
 } from '~/pages/privacy/adversaries/privacyAdversaryUi'
 import {
   getCheckedAppSourceLabel,
@@ -14,17 +14,17 @@ import {
 import type { PrivacyReferenceApp } from '~/server/features/privacy/utils/getPrivacyReferenceApp'
 import { cn } from '~/utils/cn'
 import { formatDate } from '~/utils/dates'
-import { sentimentToOpaqueBgColor } from '~/utils/sentiment'
 
 const CHIPS = {
-  // No dot, since green would read as a privacy verdict the app may not earn.
+  // Blue-grey, since green would read as a privacy verdict the app may not earn.
   reference: {
     label: REFERENCE_APP.referenceChip,
-    sentiment: undefined,
+    className:
+      'border-[#CCDBFF] bg-[#D5E5F1] text-secondary dark:border-[#1B3C54] dark:bg-[#192E3C]',
   },
   checked: {
     label: REFERENCE_APP.checkedChip,
-    sentiment: PRIVACY_EXPOSURE_SENTIMENT.exposed,
+    className: PRIVACY_EXPOSURE_CHIP_CLASS_NAME.exposed,
   },
 } as const
 
@@ -35,7 +35,7 @@ export function PrivacyReferenceApps({ app }: { app: PrivacyReferenceApp }) {
   return (
     <div className="mt-4 flex flex-col gap-2">
       <div className="flex items-baseline justify-between gap-2">
-        <span className="font-medium text-label-value-13">
+        <span className="font-medium text-paragraph-12 uppercase tracking-wide">
           {REFERENCE_APP.listTitle}
         </span>
         <CustomLink
@@ -141,15 +141,13 @@ function AppRow({
           {version && (
             <span className="text-paragraph-13 text-secondary">v{version}</span>
           )}
-          <span className={PRIVACY_CHIP_CLASS_NAME}>
-            {CHIPS[chip].sentiment && (
-              <span
-                className={cn(
-                  'size-2 shrink-0 rounded-full',
-                  sentimentToOpaqueBgColor(CHIPS[chip].sentiment),
-                )}
-              />
+          <span
+            className={cn(
+              PRIVACY_CHIP_BASE_CLASS_NAME,
+              'uppercase',
+              CHIPS[chip].className,
             )}
+          >
             {CHIPS[chip].label}
           </span>
         </div>

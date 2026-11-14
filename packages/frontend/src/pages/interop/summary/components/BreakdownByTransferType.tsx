@@ -86,7 +86,7 @@ function BreakdownSection({
 
   return (
     <div>
-      <div className="font-medium text-label-value-13">{label}</div>
+      <div className="font-medium text-label-value-12 uppercase">{label}</div>
       <Breakdown className="mt-2! h-2 w-full" gap={0} values={values} />
       <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2">
         {values.map((value) => (

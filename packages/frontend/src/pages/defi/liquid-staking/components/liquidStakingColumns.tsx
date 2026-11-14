@@ -16,6 +16,15 @@ import {
 
 export const TVL_COLUMN_ID = 'totalValueLockedUsd'
 
+/**
+ * Phones scroll the table sideways: starting the figures at their column's
+ * left edge keeps them in the first view, as on the Layer 2s summary.
+ */
+const PHONE_LEFT_ALIGNED = {
+  headClassName: 'max-md:[&>div]:justify-start',
+  cellClassName: 'max-md:text-left',
+}
+
 /** TVL, then the latest yield and cost of exit. */
 export function getLiquidStakingStatColumns<T extends LiquidStakingStatsEntry>(
   columnHelper: ColumnHelper<T>,
@@ -37,6 +46,7 @@ export function getLiquidStakingStatColumns<T extends LiquidStakingStatsEntry>(
       sortUndefined: 'last',
       meta: {
         align: 'right',
+        ...PHONE_LEFT_ALIGNED,
         tooltip: TVL_TOOLTIP,
       },
     }),
@@ -60,7 +70,11 @@ export function getLiquidStakingStatColumns<T extends LiquidStakingStatsEntry>(
           )
         },
         sortUndefined: 'last',
-        meta: { align: 'right', tooltip: metric.tooltip },
+        meta: {
+          align: 'right',
+          ...PHONE_LEFT_ALIGNED,
+          tooltip: metric.tooltip,
+        },
       }),
     ),
   ]

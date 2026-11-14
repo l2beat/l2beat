@@ -241,7 +241,7 @@ export function UpdateCard({
               />
             </div>
             {(criticalChangeType || update.isHighSeverity) && (
-              <span className="inline-flex h-5 shrink-0 items-center rounded border border-negative bg-surface-primary px-1.5 font-medium text-label-value-12 text-negative leading-none">
+              <span className="inline-flex h-5 shrink-0 items-center rounded border border-negative bg-surface-primary px-1.5 font-medium text-3xs text-negative uppercase leading-none">
                 {criticalChangeType
                   ? CRITICAL_CHANGE_LABELS[criticalChangeType]
                   : 'High severity'}
@@ -304,7 +304,7 @@ export function UpdateCard({
           return (
             <div key={index} className="flex min-w-0 flex-col gap-2">
               {title && (
-                <h4 className="font-semibold text-label-value-13">{title}</h4>
+                <h4 className="font-bold text-xs uppercase">{title}</h4>
               )}
               <DiffBody body={section.body} />
             </div>

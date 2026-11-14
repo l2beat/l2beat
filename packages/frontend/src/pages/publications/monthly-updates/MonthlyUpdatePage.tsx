@@ -42,12 +42,11 @@ export function MonthlyUpdatePage({ entry, ...props }: Props) {
 
         <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">
           <MainPageHeader>Publication</MainPageHeader>
-          <PrimaryCard className="row-start-2 md:p-8">
+          <PrimaryCard className="row-start-2">
             <div>
-              <p className="flex flex-wrap items-baseline gap-x-1 text-label-value-13">
+              <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-label-value-13">
                 <PublicationTag tag="monthly-update" />
-                <span className="text-secondary">·</span>
-                <span className="text-secondary">
+                <span className="text-brand-deep text-subtitle-12 uppercase">
                   Published on {entry.publishedOn}
                 </span>
               </p>

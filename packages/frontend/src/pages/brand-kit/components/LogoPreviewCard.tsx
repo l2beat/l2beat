@@ -43,7 +43,7 @@ function DownloadButton({
     <a
       href={href}
       download
-      className="flex items-center gap-1.5 text-label-value-13 text-primary underline decoration-divider underline-offset-[0.3em] transition-colors hover:decoration-current"
+      className="flex items-center gap-1.5 text-label-value-13 text-primary underline decoration-divider underline-offset-[0.3em] transition-colors hover:text-brand-deep hover:decoration-current"
     >
       {children}
     </a>

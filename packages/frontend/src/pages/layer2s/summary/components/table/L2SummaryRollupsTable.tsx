@@ -5,11 +5,12 @@ import { BasicTable } from '~/components/table/BasicTable'
 import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { useTvsDisplayControlsContext } from '~/components/table/display/contexts/TvsDisplayControlsContext'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
+import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { useTable } from '~/hooks/useTable'
 import type { L2SummaryEntry } from '~/server/features/layer2s/summary/getL2SummaryEntries'
 import { useTRPC } from '~/trpc/React'
 import { toTableRows } from '../../utils/toTableRows'
-import { getL2SummaryColumns } from './columns'
+import { getL2SummaryColumns, getL2SummaryDefaultVisibility } from './columns'
 
 interface Props {
   entries: L2SummaryEntry[]
@@ -37,9 +38,15 @@ export function L2SummaryRollupsTable({ entries }: Props) {
     [entries, data],
   )
 
+  // Undefined until mounted: the server can't know the viewport.
+  const breakpoint = useBreakpoint()
   const columns = useMemo(
-    () => getL2SummaryColumns({ isTvsLoading: isLoading }),
-    [isLoading],
+    () =>
+      getL2SummaryColumns({
+        isTvsLoading: isLoading,
+        hideDescriptiveOnPhones: breakpoint === undefined,
+      }),
+    [isLoading, breakpoint],
   )
 
   const table = useTable('L2SummaryRollupsTable', {
@@ -53,6 +60,7 @@ export function L2SummaryRollupsTable({ entries }: Props) {
     },
     onSortingChange: setSorting,
     initialState: {
+      columnVisibility: getL2SummaryDefaultVisibility(breakpoint),
       columnPinning: {
         left: ['#', 'logo'],
       },

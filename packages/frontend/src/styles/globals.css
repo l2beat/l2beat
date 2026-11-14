@@ -86,8 +86,10 @@
   --primary-invert: #fafafa;
   --secondary: #5f6470;
   --positive: #007408;
-  --warning: #8a6700;
-  --negative: #d70000;
+  /* Sentiment text, like --brand-deep: the lightest shade of each hue that
+     keeps 4.5:1 on every surface, the grey stats panels included. */
+  --warning: #846300;
+  --negative: #d30000;
   --brand: #ff3776;
   /* Text in the brand colour: #FF3776 is too light to read as small text, so
      a shade of the same hue that keeps 4.5:1 on every surface, the grey ones
@@ -146,7 +148,8 @@
   --secondary: #abb1c1;
   --positive: #12d660;
   --warning: #ffc107;
-  --negative: #ff3d3d;
+  /* The same hue, light enough for 4.5:1 on --surface-secondary. */
+  --negative: #ff7777;
   /* The same hue, as vivid as it gets while keeping 4.5:1 on --surface-secondary. */
   --brand-deep: #ff7493;
   --brand-light: #ffa3c0;

@@ -40,7 +40,7 @@ export function LinkWithThumbnail(props: LinkWithThumbnailProps) {
             </div>
           )}
         </div>
-        <p className="mt-2 flex flex-wrap items-center gap-1 font-medium text-label-value-13 text-primary underline decoration-divider underline-offset-[0.3em] transition-colors group-hover:decoration-current">
+        <p className="mt-2 flex flex-wrap items-center gap-1 font-medium text-label-value-13 text-link underline underline-offset-[0.3em] transition-colors group-hover:text-blue-550">
           Read now
           <ArrowRightIcon className="fill-current" />
         </p>

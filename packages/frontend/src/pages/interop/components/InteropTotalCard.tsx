@@ -34,7 +34,7 @@ export function InteropTotalCard({
           mobile ? 'flex-col' : 'flex-wrap items-baseline gap-x-2',
         )}
       >
-        <h3 className="font-medium text-label-value-13 md:text-label-value-15">
+        <h3 className="font-medium text-[11px] leading-[1.15] max-md:uppercase md:text-label-value-15">
           {title}
         </h3>
         <Last24HoursBadge />
@@ -42,7 +42,12 @@ export function InteropTotalCard({
       {isLoading ? (
         <Skeleton className="h-8 w-32" />
       ) : (
-        <span className="font-semibold text-heading-20 tabular-nums leading-none tracking-[-0.025em] md:text-heading-32">
+        <span
+          className={cn(
+            'font-semibold text-heading-20 tabular-nums leading-none tracking-[-0.025em] md:text-heading-32',
+            !mobile && 'text-brand-deep',
+          )}
+        >
           {value}
         </span>
       )}

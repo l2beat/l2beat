@@ -62,7 +62,9 @@ export function ColumnsControls<T>({ columns }: Props<T>) {
           align="start"
           side="bottom"
         >
-          <span className="text-label-value-13 text-secondary">Columns</span>
+          <span className="text-secondary text-subtitle-11 uppercase">
+            Columns
+          </span>
           <div className="flex flex-wrap gap-1">
             {pickerColumns.map((column) => (
               <ColumnControl key={column.id} column={column} />
@@ -133,10 +135,7 @@ function ColumnControl<T>({ column }: { column: Column<T> }) {
       className={cn(
         'flex h-8 cursor-pointer select-none items-center rounded-sm border border-divider bg-surface-secondary px-2.5 py-2 font-medium text-label-value-16 transition-colors md:h-6 md:px-2 md:py-1.5 md:text-label-value-13',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand',
-        // Shown columns take the site's one selected style: the white pill
-        // (black in dark), edged in ink. Pink is kept for the side nav,
-        // count badges and focus rings.
-        isVisible && 'border-primary bg-pure-white dark:bg-black',
+        isVisible && 'border-brand bg-brand/10 text-primary',
       )}
       onClick={() => column.toggleVisibility(!isVisible)}
     >

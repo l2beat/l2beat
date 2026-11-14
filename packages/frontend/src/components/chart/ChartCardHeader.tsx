@@ -57,38 +57,47 @@ export function ChartCardHeader({
     </h2>
   )
 
+  const titleBlock = subtitle ? (
+    <div className="flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-1">
+      {heading}
+      <span className="whitespace-nowrap font-normal text-label-value-13 text-secondary">
+        {subtitle}
+      </span>
+    </div>
+  ) : (
+    heading
+  )
+  const controls = accessory && (
+    <div className="flex shrink-0 items-center gap-2">{accessory}</div>
+  )
+
+  // Without a figure, the meta belongs to the title: on phones the controls
+  // go under both rather than between them.
+  if (!hasFigure && !link && controls) {
+    return (
+      <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 gap-y-1 max-sm:grid-cols-1">
+        <div className="flex min-h-8 min-w-0 items-center">{titleBlock}</div>
+        <div className="max-sm:order-last max-sm:mt-2">{controls}</div>
+        {meta && <div className="col-span-full">{meta}</div>}
+      </div>
+    )
+  }
+
   return (
     <div className="flex flex-col gap-3">
       <div className="flex flex-col gap-1">
-        <div
-          className={cn(
-            'flex min-w-0 flex-wrap justify-between gap-x-4 gap-y-2',
-            accessory ? 'items-center' : 'items-baseline',
-          )}
-        >
-          {subtitle ? (
-            <div className="flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-1">
-              {heading}
-              <span className="whitespace-nowrap font-normal text-label-value-13 text-secondary">
-                {subtitle}
-              </span>
-            </div>
-          ) : (
-            heading
-          )}
+        {/* One height with a link or controls, so paired cards line up. */}
+        <div className="flex min-h-8 min-w-0 flex-wrap items-center justify-between gap-x-4 gap-y-2">
+          {titleBlock}
           {link ? (
             <a
               href={link.href}
-              className="-my-1.5 shrink-0 whitespace-nowrap py-1.5 font-medium text-label-value-13 text-secondary underline decoration-divider underline-offset-[0.3em] transition-colors hover:text-primary hover:decoration-current"
+              className="-my-1.5 shrink-0 whitespace-nowrap py-1.5 font-medium text-label-value-13 text-link underline underline-offset-[0.3em] transition-colors hover:text-blue-550"
             >
               {link.label}
             </a>
           ) : (
-            accessory && (
-              <div className="flex shrink-0 items-center gap-2">
-                {accessory}
-              </div>
-            )
+            controls
           )}
         </div>
         {!hasFigure && meta}

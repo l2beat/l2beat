@@ -199,7 +199,7 @@ function SwitchInfoTooltip() {
   return (
     <Tooltip>
       <TooltipTrigger aria-label="About UOPS and TPS">
-        <InfoIcon className="size-3.5" />
+        <InfoIcon className="size-3.5 fill-link" />
       </TooltipTrigger>
       <TooltipContent>
         User Operations Per Second (UOPS) takes into account the user

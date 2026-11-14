@@ -249,12 +249,12 @@ export function StageSection({
                   {stage.principle && (
                     <div className="space-y-2">
                       <div className="flex items-center gap-1">
-                        <span className="font-semibold text-label-value-14">
+                        <span className="font-semibold text-brand-deep text-label-value-14">
                           Principle
                         </span>
                         <Tooltip>
                           <TooltipTrigger aria-label="About principles">
-                            <InfoIcon className="size-3 fill-secondary" />
+                            <InfoIcon className="size-3 fill-brand-deep" />
                           </TooltipTrigger>
                           <TooltipContent>
                             A Principle is the main requirement you need to
@@ -264,7 +264,7 @@ export function StageSection({
                           </TooltipContent>
                         </Tooltip>
                       </div>
-                      <div className="-mx-4 md:-mx-6 bg-surface-secondary px-4 py-3 md:px-6">
+                      <div className="rounded-lg border border-brand px-4 py-3">
                         <div className="flex">
                           {stage.principle.satisfied === 'UnderReview' ? (
                             <UnderReviewIcon className="mt-0.5 size-4 shrink-0" />
@@ -319,7 +319,7 @@ export function StageSection({
                   </ul>
                   {showUpcomingGuidelines &&
                     upcomingRequirements.length > 0 && (
-                      <div className="mt-3 rounded-lg bg-surface-secondary p-4">
+                      <div className="mt-3 rounded-lg bg-brand/10 p-4">
                         <p className="mb-2 font-semibold text-label-value-14">
                           Upcoming guidelines
                         </p>

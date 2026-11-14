@@ -1,5 +1,5 @@
 import { formatActivityCount } from '@l2beat/shared-pure'
-import { createColumnHelper } from '@tanstack/react-table'
+import { createColumnHelper, type VisibilityState } from '@tanstack/react-table'
 import { Badge } from '~/components/badge/Badge'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { Skeleton } from '~/components/core/Skeleton'
@@ -18,6 +18,7 @@ import { getL2CommonProjectColumns } from '~/components/table/common-project-col
 import { withChangeSort } from '~/components/table/sorting/changeSortColumn'
 import { sortStages } from '~/components/table/sorting/sortStages'
 import { TableLink } from '~/components/table/TableLink'
+import type { Breakpoint } from '~/hooks/useBreakpoint'
 import type { L2SummaryTableRow } from '../../utils/toTableRows'
 import { TotalCellWithTvsBreakdown } from './TotalCellWithTvsBreakdown'
 
@@ -25,6 +26,37 @@ const columnHelper = createColumnHelper<L2SummaryTableRow>()
 
 interface L2SummaryColumnsOpts {
   isTvsLoading?: boolean
+  /**
+   * Hides the descriptive columns with CSS on phones, for the markup painted
+   * before the viewport is known. After that the table hides them through
+   * its column visibility, which the Columns menu can turn back on.
+   */
+  hideDescriptiveOnPhones?: boolean
+}
+
+/**
+ * Descriptive columns that sit between the name and Value secured. Phones
+ * start without them, so the figure the tables rank by is in the first view.
+ */
+const PHONE_HIDDEN_COLUMNS: VisibilityState = {
+  proofSystem: false,
+  stage: false,
+  'DA layer': false,
+  'why-am-i-here': false,
+}
+
+export function getL2SummaryDefaultVisibility(
+  breakpoint: Breakpoint | undefined,
+): VisibilityState | undefined {
+  return breakpoint === 'xs' || breakpoint === 'sm'
+    ? PHONE_HIDDEN_COLUMNS
+    : undefined
+}
+
+function phoneHiddenMeta(opts: L2SummaryColumnsOpts | undefined) {
+  return opts?.hideDescriptiveOnPhones
+    ? { headClassName: 'max-md:hidden', cellClassName: 'max-md:hidden' }
+    : undefined
 }
 
 export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
@@ -51,6 +83,7 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
       header: 'Proof system',
       cell: (ctx) => <ProofSystemCell {...ctx.row.original} />,
       meta: {
+        ...phoneHiddenMeta(opts),
         tooltip:
           'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront)',
       },
@@ -79,6 +112,7 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
         ),
         sortingFn: sortStages,
         sortUndefined: 'last',
+        meta: phoneHiddenMeta(opts),
       },
     ),
     ...withChangeSort(
@@ -119,7 +153,10 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
             align: 'right',
             // Its right-aligned figures need no lead; the stage column's
             // right padding keeps them apart, so the table fits at 1280.
-            cellClassName: 'pl-0',
+            // Phones scroll the table sideways: starting the column at its
+            // left edge keeps the total in the first view, as on the TVS page.
+            headClassName: 'max-md:[&>div]:justify-start',
+            cellClassName: 'pl-0 max-md:text-left',
             tooltip:
               'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens, shown together with a percentage change compared to 7 days ago.',
           },
@@ -199,6 +236,7 @@ export function getL2SummaryValidiumAndOptimiumsColumns(
         )
       },
       meta: {
+        ...phoneHiddenMeta(opts),
         additionalRows: (ctx) => {
           return (
             ctx.row.original.dataAvailability?.slice(1).map((da) => (
@@ -222,7 +260,7 @@ export function getL2SummaryValidiumAndOptimiumsColumns(
 
 export function getL2SummaryOthersColumns(opts?: L2SummaryColumnsOpts) {
   return [
-    ...getL2SummaryColumns().slice(0, 4),
+    ...getL2SummaryColumns(opts).slice(0, 4),
     columnHelper.display({
       id: 'why-am-i-here',
       header: 'Why am I here?',
@@ -251,6 +289,7 @@ export function getL2SummaryOthersColumns(opts?: L2SummaryColumnsOpts) {
           </div>
         )
       },
+      meta: phoneHiddenMeta(opts),
     }),
     ...getL2SummaryValidiumAndOptimiumsColumns(opts).slice(6),
   ]

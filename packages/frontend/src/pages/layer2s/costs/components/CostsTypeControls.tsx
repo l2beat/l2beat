@@ -16,6 +16,7 @@ export function CostsMetricControls<T extends string>({
       name="costsMetric"
       value={value}
       onValueChange={onValueChange}
+      variant="highlighted"
       className={className}
     >
       <RadioGroupItem value="per-l2-uop">Per L2 user op</RadioGroupItem>

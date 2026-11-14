@@ -119,7 +119,8 @@ function MilestonesBase(props: {
                 </Markdown>
               )}
               <CustomLink
-                className="mt-2 text-label-value-15 md:text-label-value-16"
+                variant="plain"
+                className="mt-2 text-label-value-15 decoration-divider underline-offset-[0.3em] hover:decoration-current md:text-label-value-16"
                 href={milestone.url}
               >
                 Learn more

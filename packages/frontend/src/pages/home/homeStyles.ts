@@ -86,6 +86,6 @@ export const HOME_ICON_CLASS = 'size-5 shrink-0 rounded-full'
 export const HOME_THUMBNAIL_CLASS =
   'aspect-video w-20 shrink-0 rounded-sm object-cover'
 
-/** The page's one button style; neutral, so it adds no colour. */
+/** The page's one button style: an outline, so the mandate banner stays the page's block of colour. */
 export const HOME_BUTTON_CLASS =
   'flex items-center gap-1.5 rounded-md border border-divider px-3 py-1.5 font-medium text-label-value-13 leading-4 transition-colors hover:bg-surface-secondary'

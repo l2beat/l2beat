@@ -1,6 +1,6 @@
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { cn } from '~/utils/cn'
-import { sentimentToFillColor } from '~/utils/sentiment'
+import { sentimentToIconFillColor } from '~/utils/sentiment'
 import { UnderReviewBadge } from '../badge/UnderReviewBadge'
 import { SentimentText } from '../SentimentText'
 import type { RosetteValue } from './types'
@@ -26,7 +26,7 @@ export function RiskValue(props: RosetteValue) {
             <RoundedWarningIcon
               className={cn(
                 'size-4',
-                sentimentToFillColor(props.warning.sentiment),
+                sentimentToIconFillColor(props.warning.sentiment),
               )}
             />
           )}

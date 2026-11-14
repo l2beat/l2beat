@@ -92,7 +92,7 @@ function DotElement({
       <div
         className={cn(
           'size-2 rounded-xs',
-          selected ? 'bg-primary' : 'bg-secondary',
+          selected ? 'bg-brand' : 'bg-secondary',
         )}
       />
     </div>

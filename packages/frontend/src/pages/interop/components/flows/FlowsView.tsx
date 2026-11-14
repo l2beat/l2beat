@@ -170,7 +170,7 @@ function SelectInfo({
       )}
     >
       <CursorClickIcon className="size-3 fill-brand-deep md:size-4" />
-      <p className="font-medium text-label-value-13 leading-none md:text-label-value-14">
+      <p className="font-medium text-brand-deep text-label-value-13 leading-none md:text-label-value-14">
         {text}
       </p>
     </div>

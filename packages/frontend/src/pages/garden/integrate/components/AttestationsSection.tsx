@@ -91,7 +91,7 @@ const ATTESTATION_DESCRIPTION =
 function Constant({ label, children }: { label: string; children: ReactNode }) {
   return (
     <>
-      <dt className="font-semibold text-label-value-13 text-primary md:pt-0.5">
+      <dt className="font-semibold text-primary text-subtitle-12 uppercase tracking-wider md:pt-0.5">
         {label}
       </dt>
       {/* On phone each value stacks under its label: 4 px inside a pair, 12 px between pairs. */}

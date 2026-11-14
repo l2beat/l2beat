@@ -100,7 +100,10 @@ export function getTransferColumns(
         )
       },
       meta: {
-        headClassName: 'text-2xs',
+        // On phones the value starts at the column's left edge, clear of the
+        // fade, as in the other sideways-scrolling tables.
+        headClassName: 'text-2xs max-md:[&>div]:justify-start',
+        cellClassName: 'max-md:text-left',
         align: 'right',
         tooltip: 'The USD value of the transfer.',
       },
@@ -114,7 +117,7 @@ export function getTransferColumns(
         return (
           <a
             href={bridge.href}
-            className="font-medium text-label-value-14 underline decoration-divider underline-offset-[0.3em] transition-colors hover:decoration-current"
+            className="font-medium text-label-value-14 text-link underline-offset-[0.3em] hover:underline"
           >
             {bridge.name}
           </a>
@@ -279,7 +282,7 @@ function ChainCell({
       href={href}
       target="_blank"
       rel="noreferrer noopener"
-      className="flex items-center gap-1.5 font-medium text-label-value-13 underline decoration-divider underline-offset-[0.3em] transition-colors hover:decoration-current"
+      className="flex items-center gap-1.5 font-medium text-label-value-13 text-link underline-offset-[0.3em] hover:underline"
     >
       {content}
     </a>

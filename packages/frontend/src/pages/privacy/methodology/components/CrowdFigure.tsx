@@ -183,7 +183,7 @@ export function CrowdFigure() {
                 }
               }}
               // Wide enough for either label, so the slider keeps its width.
-              className="min-w-36 rounded-full bg-primary px-4 py-2 font-bold text-label-value-14 text-primary-invert transition-[scale,opacity] duration-150 ease-out hover:opacity-90 active:scale-[0.97]"
+              className="min-w-36 rounded-full bg-brand px-4 py-2 font-bold text-label-value-14 text-primary-invert transition-[scale,opacity] duration-150 ease-out hover:opacity-90 active:scale-[0.97]"
             >
               {mine === undefined ? 'Make a deposit' : 'Withdraw it'}
             </button>

@@ -40,7 +40,9 @@ export function FlowsStatsPanel({
 
   return (
     <div className="rounded-lg bg-surface-secondary p-4 dark:bg-header-secondary">
-      <div className="mb-3 font-semibold text-label-value-13">{label}</div>
+      <div className="mb-3 font-bold text-label-value-12 uppercase">
+        {label}
+      </div>
       {singleProtocolId && !hasRouteSelection ? (
         data && <BridgeFlowStats data={data} chainId={statsChainA} />
       ) : (
