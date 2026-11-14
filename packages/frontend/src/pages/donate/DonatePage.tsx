@@ -66,7 +66,7 @@ function Header({ networks, qrCodeUrl }: HeaderProps) {
           <DonationDescription />
           <QrCodeSection
             mobile
-            className="my-12 md:hidden"
+            className="mt-8 mb-4 md:hidden"
             qrCodeUrl={qrCodeUrl}
           />
           <DonationNetworks networks={networks} />

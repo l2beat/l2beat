@@ -54,7 +54,7 @@ export function ChangelogPage({ entries, ...props }: Props) {
         >
           Changelog
         </MainPageHeader>
-        <PrimaryCard className="md:p-8">
+        <PrimaryCard>
           {entries.length === 0 ? (
             <p className="text-base text-secondary">
               No changelog entries yet.
@@ -94,7 +94,7 @@ export function ChangelogPage({ entries, ...props }: Props) {
                         {entry.title}
                       </h2>
                       {entry.summary && (
-                        <p className="mt-3 font-inter text-base text-secondary leading-7">
+                        <p className="mt-3 text-pretty font-inter text-base text-secondary leading-7">
                           {entry.summary}
                         </p>
                       )}

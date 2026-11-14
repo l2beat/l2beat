@@ -17,7 +17,7 @@ export function LinkWithThumbnail(props: LinkWithThumbnailProps) {
   return (
     <PlainLink
       href={props.href}
-      className="group flex gap-6 rounded-md bg-surface-primary transition-colors hover:bg-surface-secondary"
+      className="group flex gap-6 rounded-md bg-surface-primary transition-colors hover:bg-surface-secondary max-md:pl-3"
     >
       <img
         src={props.src}

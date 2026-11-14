@@ -20,7 +20,7 @@ export function TermsOfServicePage({ content, lastUpdated, ...props }: Props) {
             Last updated on {lastUpdated}
           </p>
           <main>
-            <Article className="[&>h2:first-child]:mt-8">
+            <Article className="[&>h2:first-child]:mt-8 md:[&_h2]:text-[22px] md:[&_h3]:text-lg">
               {content.content}
             </Article>
           </main>
