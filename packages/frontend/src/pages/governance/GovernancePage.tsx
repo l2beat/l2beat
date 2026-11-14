@@ -60,7 +60,7 @@ function Header({
   delegatedProjects: DelegatedProjectWithIcon[]
 }) {
   return (
-    <PrimaryCard className="md:p-8">
+    <PrimaryCard>
       <div className="flex w-full items-center justify-between gap-5">
         <div className="flex flex-col gap-6">
           <p className="text-paragraph-18">

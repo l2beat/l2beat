@@ -65,7 +65,9 @@ function Event({ event }: { event: GovernanceEventEntry }) {
           >
             Date
           </p>
-          <p className="whitespace-pre-line text-sm">{event.displayDate}</p>
+          <p className="whitespace-pre-line text-balance text-sm">
+            {event.displayDate}
+          </p>
         </div>
         {event.location && (
           <div>

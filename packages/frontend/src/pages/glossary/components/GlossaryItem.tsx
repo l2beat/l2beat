@@ -10,6 +10,7 @@ interface Props {
 export function GlossaryItem(props: Props) {
   return (
     <section
+      data-role="nav-section"
       className="mt-6 scroll-m-20 first:mt-0 md:scroll-mt-[115px]"
       id={props.entry.id}
     >

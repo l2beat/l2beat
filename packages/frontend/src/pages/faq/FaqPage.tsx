@@ -26,13 +26,14 @@ export function FaqPage(props: AppLayoutProps) {
           <PrimaryCard>
             {faqItemsWithId.map((item) => (
               <section
+                data-role="nav-section"
                 className="mt-6 scroll-mt-6 first:mt-0"
                 id={item.id}
                 key={item.id}
               >
                 <a
                   href={`#${item.id}`}
-                  className="mb-3 block font-semibold text-heading-20 text-primary leading-6 tracking-[-0.01em] no-underline"
+                  className="mb-3 block text-balance font-semibold text-heading-20 text-primary leading-6 tracking-[-0.01em] no-underline"
                 >
                   {item.question}
                 </a>
