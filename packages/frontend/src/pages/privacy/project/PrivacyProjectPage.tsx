@@ -225,11 +225,10 @@ export function PrivacyProjectPage({
                         </div>
                       </div>
                     </PrimaryCard>
-                    {entry.projectLinks.length > 0 && (
-                      <div className="border-divider border-b px-4 md:hidden">
-                        <MobileProjectLinks projectLinks={entry.projectLinks} />
-                      </div>
-                    )}
+                    <MobileProjectLinks
+                      className="border-divider border-b px-4 md:hidden"
+                      projectLinks={entry.projectLinks}
+                    />
 
                     <ProjectDetails
                       items={entry.sections}

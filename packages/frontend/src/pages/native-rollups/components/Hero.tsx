@@ -6,7 +6,7 @@ import { NATIVE_ROLLUPS_BOOK_URL, NATIVE_ROLLUPS_DEMO_URL } from '../links'
 
 export function Hero() {
   return (
-    <PrimaryCard className="md:p-8">
+    <PrimaryCard>
       <div className="grid w-full items-center gap-4 lg:grid-cols-[minmax(0,1fr)_420px] lg:gap-x-8 lg:gap-y-6">
         <div className="mx-auto flex w-full flex-col items-center gap-6 text-center lg:mx-0 lg:items-start lg:text-left">
           <h2 className="text-balance font-semibold text-heading-32 md:text-heading-40">

@@ -1,10 +1,5 @@
 import type { Milestone } from '@l2beat/config'
-import {
-  formatCurrency,
-  formatInteger,
-  formatNumber,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { formatCurrency, formatInteger, UnixTime } from '@l2beat/shared-pure'
 import { scaleSymlog } from 'd3-scale'
 import { useMemo } from 'react'
 import type { ChartScale } from '~/components/chart/types'
@@ -118,10 +113,12 @@ export function PrivacyFlowChart({
           scale: scale === 'linear' ? undefined : scaleSymlog,
           domain: 'autoIfSingle',
           tickCount: 4,
+          // Counts of deposits and withdrawals tick whole, like the tooltip;
+          // values keep the two decimals of every continuous axis.
+          integer: metric === 'count',
           format: (value) =>
-            // two decimals like every axis tick, "0.00" up to "2.50K"
             metric === 'count'
-              ? formatNumber(value, 2)
+              ? formatInteger(value)
               : formatCurrency(value, 'usd'),
         }}
         syncedUntil={syncedUntil}
