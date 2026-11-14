@@ -122,10 +122,10 @@ function PublicationCard({ publication }: { publication: PublicationEntry }) {
         )}
       </div>
       <div className="mx-4 mt-4 flex items-center gap-2 border-divider border-t py-3">
-        <span className="font-medium text-brand-deep text-label-value-13">
+        <span className="font-bold text-brand-deep text-label-value-12 uppercase">
           {getPublicationTagLabel(publication.tag)}
         </span>
-        <span className="text-label-value-13 text-secondary">
+        <span className="text-label-value-12 text-secondary">
           {formatPublicationDate(UnixTime.toDate(publication.publishedOn))}
         </span>
         <span className="ml-auto grid size-7 place-items-center rounded-full text-secondary transition-colors group-hover:bg-brand group-hover:text-pure-white">

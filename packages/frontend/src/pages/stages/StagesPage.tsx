@@ -17,7 +17,7 @@ export function StagesPage({ content, lastUpdated, ...props }: Props) {
       <SideNavLayout>
         <MainPageHeader>Stages Framework</MainPageHeader>
         <PrimaryCard>
-          <p className="font-medium text-brand-deep text-label-value-13">
+          <p className="text-brand-deep text-subtitle-12 uppercase">
             Last updated on {lastUpdated}
           </p>
           <h1 className="mt-2 mb-4 font-semibold text-heading-32 tracking-[-0.01em] md:text-heading-40">

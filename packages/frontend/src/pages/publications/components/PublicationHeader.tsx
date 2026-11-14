@@ -21,7 +21,7 @@ export function PublicationHeader<
     <div>
       <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-label-value-13">
         <PublicationTag tag={publication.tag} />
-        <span className="text-brand-deep">
+        <span className="text-brand-deep text-subtitle-12 uppercase">
           {publication.readTimeInMinutes} min read · Published on{' '}
           {publication.publishedOn}
         </span>

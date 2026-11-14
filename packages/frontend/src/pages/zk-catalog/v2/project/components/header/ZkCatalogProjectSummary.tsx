@@ -71,7 +71,9 @@ export function TrustedSetupsByProofSystemSection({
 }) {
   return (
     <div className="flex flex-col gap-2 md:gap-3">
-      <h2 className="font-semibold text-label-value-15">Trusted setups</h2>
+      <h2 className="font-semibold text-subtitle-12 uppercase">
+        Trusted setups
+      </h2>
       {/* Mobile */}
       <div className="space-y-6 md:hidden">
         {Object.entries(trustedSetupsByProofSystem).map(
@@ -405,7 +407,7 @@ function TechStackSection({
 
   return (
     <div className="mt-3 flex flex-col gap-2 md:gap-3">
-      <h2 className="font-semibold text-label-value-15">Tech stack</h2>
+      <h2 className="font-semibold text-subtitle-12 uppercase">Tech stack</h2>
       <div className="flex gap-2 rounded-sm border-divider max-md:flex-col max-md:gap-4 md:items-end md:border md:p-4">
         {leftSideEmpty && rightSideEmpty && <NoDataBadge />}
         {!leftSideEmpty && (

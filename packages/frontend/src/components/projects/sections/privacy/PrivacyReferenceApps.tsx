@@ -35,7 +35,7 @@ export function PrivacyReferenceApps({ app }: { app: PrivacyReferenceApp }) {
   return (
     <div className="mt-4 flex flex-col gap-2">
       <div className="flex items-baseline justify-between gap-2">
-        <span className="font-medium text-label-value-13">
+        <span className="font-medium text-paragraph-12 uppercase tracking-wide">
           {REFERENCE_APP.listTitle}
         </span>
         <CustomLink
@@ -142,7 +142,11 @@ function AppRow({
             <span className="text-paragraph-13 text-secondary">v{version}</span>
           )}
           <span
-            className={cn(PRIVACY_CHIP_BASE_CLASS_NAME, CHIPS[chip].className)}
+            className={cn(
+              PRIVACY_CHIP_BASE_CLASS_NAME,
+              'uppercase',
+              CHIPS[chip].className,
+            )}
           >
             {CHIPS[chip].label}
           </span>

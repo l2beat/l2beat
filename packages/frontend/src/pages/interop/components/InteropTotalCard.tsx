@@ -34,7 +34,7 @@ export function InteropTotalCard({
           mobile ? 'flex-col' : 'flex-wrap items-baseline gap-x-2',
         )}
       >
-        <h3 className="font-medium text-label-value-13 md:text-label-value-15">
+        <h3 className="font-medium text-[11px] leading-[1.15] max-md:uppercase md:text-label-value-15">
           {title}
         </h3>
         <Last24HoursBadge />

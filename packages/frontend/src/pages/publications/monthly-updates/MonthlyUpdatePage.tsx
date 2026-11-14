@@ -46,7 +46,7 @@ export function MonthlyUpdatePage({ entry, ...props }: Props) {
             <div>
               <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-label-value-13">
                 <PublicationTag tag="monthly-update" />
-                <span className="text-brand-deep">
+                <span className="text-brand-deep text-subtitle-12 uppercase">
                   Published on {entry.publishedOn}
                 </span>
               </p>

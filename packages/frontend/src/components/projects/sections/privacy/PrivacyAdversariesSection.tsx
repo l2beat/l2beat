@@ -209,7 +209,7 @@ function ExposureDiff({
 
   return (
     <>
-      <dt className="col-span-2 font-medium text-label-value-13">
+      <dt className="col-span-2 font-medium text-paragraph-12 uppercase tracking-wide">
         Compared with a public observer
       </dt>
       <ExposureRow map={interior} fields={changed} />

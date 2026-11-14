@@ -13,7 +13,7 @@ export function ReportBanner({
     <PrimaryCard className="grid items-center gap-6 md:grid-cols-2 md:gap-8">
       <div className="flex flex-col items-start gap-4">
         <div>
-          <p className="font-medium text-label-value-13 text-secondary">
+          <p className="font-medium text-secondary text-subtitle-12 uppercase">
             June 2023 snapshot
           </p>
           <h2 className="mt-2 text-balance font-semibold text-heading-28 tracking-[-0.01em] md:text-heading-40">

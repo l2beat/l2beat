@@ -72,7 +72,7 @@ export function ChangelogPage({ entries, ...props }: Props) {
                         <ArrowIcon className="size-[15px] shrink-0 fill-brand-deep" />
                         <div className="mx-2 flex w-full items-center gap-3">
                           <span className="h-px flex-1 bg-brand" />
-                          <span className="font-medium text-brand-deep text-label-value-13 leading-none">
+                          <span className="font-semibold text-brand-deep text-subtitle-12 uppercase leading-none">
                             Unread above
                           </span>
                           <span className="h-px flex-1 bg-brand" />
@@ -86,7 +86,7 @@ export function ChangelogPage({ entries, ...props }: Props) {
                     <span className="mt-4 size-[15px] shrink-0 rounded-full border-2 border-surface-primary bg-brand md:mt-6" />
                     <article className="w-full rounded-lg border border-divider bg-surface-secondary p-4 md:p-6">
                       <div className="flex flex-wrap items-center gap-y-1">
-                        <p className="font-medium text-brand-deep text-label-value-13">
+                        <p className="font-semibold text-brand-deep text-subtitle-12 uppercase">
                           {entry.publishedOn}
                         </p>
                       </div>

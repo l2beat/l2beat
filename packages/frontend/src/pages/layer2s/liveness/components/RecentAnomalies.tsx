@@ -126,12 +126,12 @@ function AnomalyCollapsible({
                 {isAnomalyOngoing(anomaly) ? (
                   <div className="mb-1 flex items-center gap-1">
                     <LiveIndicator />
-                    <span className="font-medium text-label-value-13 text-negative leading-none">
+                    <span className="text-negative text-subtitle-12 uppercase leading-none">
                       Ongoing anomaly
                     </span>
                   </div>
                 ) : (
-                  <span className="font-medium text-label-value-13 text-secondary leading-none">
+                  <span className="text-secondary text-subtitle-12 uppercase leading-none">
                     Resolved
                   </span>
                 )}
@@ -176,7 +176,7 @@ function FailureMechanism({
   )
   return (
     <div className="mt-1 flex flex-wrap items-baseline gap-x-1.5">
-      <span className="text-label-value-13 text-primary leading-none">
+      <span className="text-primary text-subtitle-10 uppercase leading-none">
         Failure mechanism
       </span>
       {failureMechanism.description ? (

@@ -37,7 +37,7 @@ function Event({ event }: { event: GovernanceEventEntry }) {
         {event.title && (
           <p
             className={cn(
-              'font-medium text-brand-deep text-label-value-13',
+              'text-brand-deep text-subtitle-12 uppercase',
               event.highlighted && 'text-white',
             )}
           >
@@ -59,7 +59,7 @@ function Event({ event }: { event: GovernanceEventEntry }) {
         <div>
           <p
             className={cn(
-              'font-medium text-label-value-13',
+              'text-secondary text-subtitle-12 uppercase',
               event.highlighted && 'text-white',
             )}
           >
@@ -73,7 +73,7 @@ function Event({ event }: { event: GovernanceEventEntry }) {
           <div>
             <p
               className={cn(
-                'font-medium text-label-value-13',
+                'text-secondary text-subtitle-12 uppercase',
                 event.highlighted && 'text-white',
               )}
             >

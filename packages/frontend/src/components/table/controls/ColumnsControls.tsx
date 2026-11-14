@@ -62,7 +62,9 @@ export function ColumnsControls<T>({ columns }: Props<T>) {
           align="start"
           side="bottom"
         >
-          <span className="text-label-value-13 text-secondary">Columns</span>
+          <span className="text-secondary text-subtitle-11 uppercase">
+            Columns
+          </span>
           <div className="flex flex-wrap gap-1">
             {pickerColumns.map((column) => (
               <ColumnControl key={column.id} column={column} />

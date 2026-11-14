@@ -238,7 +238,7 @@ export function ContractEntry({
 
 function EscrowBadge({ isCustom }: { isCustom?: boolean }) {
   return (
-    <Badge type="pink" size="small">
+    <Badge type="pink" size="small" className="uppercase">
       {isCustom ? 'Custom escrow' : 'Escrow'}
     </Badge>
   )

@@ -107,7 +107,7 @@ export function ProjectHeader({
                 className="flex h-6 items-center justify-center gap-1.5 rounded border border-negative px-2"
               >
                 <LiveIndicator />
-                <span className="font-medium text-label-value-12 text-negative leading-none">
+                <span className="font-medium text-2xs text-negative uppercase leading-none">
                   {ongoingAnomaly === 'single'
                     ? 'Ongoing anomaly'
                     : 'Ongoing anomalies'}
@@ -120,7 +120,7 @@ export function ProjectHeader({
                 href="#updates"
                 className="flex h-6 items-center justify-center gap-1.5 rounded border border-divider bg-surface-primary px-2"
               >
-                <span className="font-medium text-label-value-12 text-secondary leading-none">
+                <span className="font-medium text-2xs text-secondary uppercase leading-none">
                   {recentUpdatesCount === 1
                     ? '1 recent update'
                     : `${recentUpdatesCount} recent updates`}
@@ -147,13 +147,13 @@ function ProjectSectionBreadcrumb({
   return (
     <nav
       aria-label="Breadcrumb"
-      className="flex flex-wrap items-center gap-x-4 gap-y-1 font-medium text-label-value-13 leading-4"
+      className="flex flex-wrap items-center gap-x-4 gap-y-1 font-bold text-2xs uppercase leading-none tracking-wide"
     >
       <a
         href={href}
         className="flex items-center gap-1.5 text-brand-deep underline-offset-[0.3em] hover:underline"
       >
-        <Icon className="size-4 stroke-current" />
+        <Icon className="size-3.5 stroke-current" />
         {label}
       </a>
       {otherSections?.map((link) => (

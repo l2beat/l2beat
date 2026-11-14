@@ -188,7 +188,7 @@ function BadgeTile({
         />
       </div>
       <div className="flex items-center justify-between gap-2 border-divider border-t bg-surface-secondary py-1.5 pr-1.5 pl-2.5 lg:pl-3">
-        <span className="truncate font-semibold text-label-value-13 text-primary">
+        <span className="truncate font-semibold text-primary text-subtitle-12 uppercase tracking-wide lg:tracking-wider">
           <span className={cn(shortLabel && 'max-sm:hidden')}>{label}</span>
           {shortLabel && <span className="sm:hidden">{shortLabel}</span>}
         </span>
