@@ -86,9 +86,13 @@ function ChartMilestone({
   const { interactiveLegend } = useChart()
   const { keepsRoom: keepsHintRoom } = useLegendHint(interactiveLegend)
 
+  // On the x axis: above the legend, whose wrapped height ChartLegend sets
+  // as --chart-legend-height (unset, one 18px row), and the hint's 12px.
   const common = cn(
-    'absolute bottom-5 flex items-center justify-center group-has-[.chart-legend]:bottom-[34px] max-lg:scale-75',
-    keepsHintRoom && 'group-has-[.chart-legend]:bottom-[46px]',
+    'absolute bottom-5 flex items-center justify-center max-lg:scale-75',
+    keepsHintRoom
+      ? 'group-has-[.chart-legend]:bottom-[calc(28px_+_var(--chart-legend-height,18px))]'
+      : 'group-has-[.chart-legend]:bottom-[calc(16px_+_var(--chart-legend-height,18px))]',
   )
   // A tooltip needs hover, so touch gets the drawer at any width.
   if (canHover !== false) {

@@ -1,4 +1,4 @@
-import { formatNumber, formatNumberWithCommas } from '@l2beat/shared-pure'
+import { formatNumber } from '@l2beat/shared-pure'
 import { type ReactNode, useMemo, useState } from 'react'
 import { ChartCardHeader } from '~/components/chart/ChartCardHeader'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
@@ -57,7 +57,7 @@ const ETH_STAKED: LiquidStakingChartBackground = {
   key: 'ethStaked',
   label: ETH_STAKED_TITLE,
   color: 'var(--chart-ethereum-secondary)',
-  formatAxisLabel: (value) => `${formatNumber(value, 0)} ETH`,
+  formatAxisLabel: (value) => `${formatNumber(value, 2)} ETH`,
   formatTooltipValue: formatEthStaked,
 }
 
@@ -152,7 +152,7 @@ function YieldChart({ projectSeries, range }: ChartProps) {
         isLoading={isLoading}
         isPlaceholderData={isPlaceholderData}
         ariaLabel="Rate-implied yield"
-        formatYAxisLabel={(value) => formatYield(value, 1)}
+        formatYAxisLabel={(value) => formatYield(value, 2)}
         formatTooltipValue={(value) => formatYield(value, 2)}
         formatTooltipDate={(timestamp) =>
           formatMetricDate(YIELD_METRIC, timestamp)
@@ -200,9 +200,7 @@ function CostOfExitChart({ projectSeries, range }: ChartProps) {
         isLoading={isLoading}
         isPlaceholderData={isPlaceholderData}
         ariaLabel="Cost of exit"
-        formatYAxisLabel={(value) =>
-          `${formatNumberWithCommas(value, { maximumFractionDigits: 0 })}d`
-        }
+        formatYAxisLabel={(value) => `${formatNumber(value, 2)}d`}
         // ~ marks a value that counts requests still queued.
         formatTooltipValue={(value, key, timestamp) =>
           `${estimated.get(timestamp)?.includes(key) ? '~' : ''}${formatDays(value)}`

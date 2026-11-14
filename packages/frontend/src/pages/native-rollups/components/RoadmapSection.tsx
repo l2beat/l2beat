@@ -1,3 +1,4 @@
+import { CustomLink } from '~/components/link/CustomLink'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { InfoIcon } from '~/icons/Info'
 import { CustomLinkIcon } from '~/icons/Outlink'
@@ -118,15 +119,13 @@ export function RoadmapSection() {
                         {item.description}
                       </p>
                       {item.url && (
-                        <a
+                        <CustomLink
                           href={item.url}
-                          target="_blank"
-                          rel="noreferrer noopener"
-                          className="mt-2 inline-flex items-center gap-1 rounded-sm font-medium text-label-value-15 text-link outline-none ring-brand transition-colors hover:text-(--accent) focus-visible:ring-2"
+                          className="mt-2 inline-flex items-center gap-1 rounded-sm text-label-value-15 outline-none ring-brand focus-visible:ring-2"
                         >
                           Learn more
                           <CustomLinkIcon className="size-3.5 fill-current" />
-                        </a>
+                        </CustomLink>
                       )}
                     </li>
                   )

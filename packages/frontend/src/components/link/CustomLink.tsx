@@ -17,7 +17,7 @@ export const linkVariants = cva(
     variants: {
       variant: {
         primary: 'text-link hover:text-blue-550',
-        danger: 'text-red-300 hover:text-red-700',
+        danger: 'text-negative hover:text-red-800 dark:hover:text-red-300',
         plain: 'text-primary',
       },
       underline: {

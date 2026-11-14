@@ -105,12 +105,12 @@ export function TransferSizeChart({
           categoryAxisWidth={categoryAxisWidth}
         />
       </ChartContext.Provider>
-      <Logo
-        animated={false}
-        className={cn(
-          'pointer-events-none absolute right-3 bottom-10 h-8 w-20 opacity-50',
-        )}
-      />
+      {!horizontal && (
+        <Logo
+          animated={false}
+          className="pointer-events-none absolute right-3 bottom-10 h-8 w-20 opacity-50"
+        />
+      )}
     </div>
   )
 }
@@ -373,8 +373,20 @@ function TransferSizeBars({
       >
         <ChartLegend
           align={horizontal ? 'center' : 'start'}
-          className={cn('pt-0', !horizontal && 'pb-4 md:pb-8')}
+          className={cn(
+            'pt-0',
+            // The watermark sits beside the keys, clear of the bars' ends.
+            horizontal
+              ? 'flex min-h-8 flex-col justify-center pr-[88px]'
+              : 'pb-4 md:pb-8',
+          )}
         />
+        {horizontal && (
+          <Logo
+            animated={false}
+            className="pointer-events-none absolute right-0 bottom-0 h-8 w-20 opacity-50"
+          />
+        )}
       </div>
       <div {...tooltip.tooltipProps}>
         {row && <CustomTooltip row={row} horizontal={horizontal} />}
