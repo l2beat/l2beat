@@ -12,7 +12,7 @@ export function QrCodeSection({
 }) {
   return (
     <div className={cn('relative flex items-center justify-center', className)}>
-      <div className="z-10 flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center justify-center">
         <div
           className={cn(
             'size-[200px] rounded-xl border border-divider bg-white p-3',
@@ -32,14 +32,6 @@ export function QrCodeSection({
         <p className="mx-auto mt-4 inline-block w-[21ch] break-all font-mono font-normal text-lg">
           {DONATE_ADDRESS}
         </p>
-      </div>
-      <div className="absolute flex size-full items-center justify-center">
-        <div
-          className={cn(
-            'size-[300px] rounded-full bg-brand/25 blur-3xl dark:bg-brand/30',
-            mobile && 'size-[250px]',
-          )}
-        />
       </div>
     </div>
   )

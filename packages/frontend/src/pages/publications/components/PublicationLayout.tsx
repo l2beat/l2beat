@@ -26,12 +26,11 @@ export function PublicationLayout({
       <SideNavLayout>
         <MainPageHeader>Publication</MainPageHeader>
         <PrimaryCard className="md:p-8">
-          <PublicationHeader publication={publication} />
-          <div
-            className={
-              wide ? 'mt-8 md:pt-8' : 'mx-auto mt-8 max-w-[720px] md:pt-8'
-            }
-          >
+          {/* The header shares the body's column, so the page has one left edge. */}
+          <div className="mx-auto max-w-[720px]">
+            <PublicationHeader publication={publication} />
+          </div>
+          <div className={wide ? 'mt-8' : 'mx-auto mt-8 max-w-[720px]'}>
             <img
               {...publication.thumbnail}
               alt={`${publication.title} publication thumbnail`}

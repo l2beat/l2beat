@@ -14,13 +14,13 @@ export function TermsOfServicePage({ content, lastUpdated, ...props }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
-        <MainPageHeader>Terms of Service</MainPageHeader>
-        <PrimaryCard className="md:p-8">
-          <p className="font-medium text-2xs text-brand-deep uppercase">
+        <MainPageHeader>Terms of service</MainPageHeader>
+        <PrimaryCard>
+          <p className="text-label-value-13 text-secondary">
             Last updated on {lastUpdated}
           </p>
           <main>
-            <Article className="[&>h2:first-child]:mt-8">
+            <Article className="text-base leading-7 [&>h2:first-child]:mt-8 [&_h2]:text-[22px] [&_h3]:text-lg">
               {content.content}
             </Article>
           </main>

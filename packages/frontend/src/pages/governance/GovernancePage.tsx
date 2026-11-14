@@ -60,7 +60,7 @@ function Header({
   delegatedProjects: DelegatedProjectWithIcon[]
 }) {
   return (
-    <PrimaryCard className="md:p-8">
+    <PrimaryCard>
       <div className="flex w-full items-center justify-between gap-5">
         <div className="flex flex-col gap-6">
           <p className="text-paragraph-18">
@@ -70,14 +70,15 @@ function Header({
             ecosystem towards a safer, more secure decentralized future.
           </p>
           <div className="flex flex-col gap-2.5">
-            <span className="font-medium text-brand-deep text-xs uppercase tracking-[-0.14px]">
+            <span className="font-medium text-label-value-13 text-primary">
               Delegate your tokens
             </span>
             <div className="grid grid-cols-2 gap-2 md:flex md:flex-wrap">
               {delegatedProjects.map((delegatedProject) => (
                 <CustomLink
                   key={delegatedProject.id}
-                  className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-divider bg-surface-secondary p-2 text-xs tracking-[-0.14px] md:w-fit"
+                  variant="plain"
+                  className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-divider bg-surface-secondary p-2 text-label-value-13 md:w-fit"
                   href={delegatedProject.data.delegateTokensUrl}
                   underline={false}
                 >

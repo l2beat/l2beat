@@ -20,9 +20,9 @@ export function GlossarySideNav(props: Props) {
   )
 
   return (
-    <div className="sticky top-28 mt-5 hidden h-[calc(100vh-350px)] w-[246px] min-w-[246px] lg:block">
+    <div className="sticky top-28 mt-5 hidden max-h-[calc(100vh-136px)] w-[246px] min-w-[246px] flex-col lg:flex">
       <ul
-        className="flex h-full flex-col gap-4 overflow-y-scroll pr-6 pb-2"
+        className="flex min-h-0 flex-col gap-4 overflow-y-scroll pr-6 pb-2"
         ref={overflowContainer}
       >
         {props.entries.map((entry) => {
@@ -42,7 +42,6 @@ export function GlossarySideNav(props: Props) {
           )
         })}
       </ul>
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 mr-2 h-8 bg-linear-to-t from-background via-transparent" />
     </div>
   )
 }
