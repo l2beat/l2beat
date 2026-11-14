@@ -19,7 +19,7 @@ export function PublicationLayout({ publication, children, ...props }: Props) {
         <MainPageHeader>Publication</MainPageHeader>
         {/* Header and body span the card, so it has one left and
             one right edge, like the tables and figures on other cards. */}
-        <PrimaryCard className="md:p-8">
+        <PrimaryCard>
           <PublicationHeader publication={publication} />
           <div className="mt-8">
             <img

@@ -44,7 +44,7 @@ const columnHelper = createColumnHelper<PrivacySummaryEntry>()
  */
 const PHONE_LEFT_ALIGNED = {
   headClassName: 'max-md:[&>div]:justify-start',
-  cellClassName: 'max-md:text-left',
+  cellClassName: 'max-md:pl-0 max-md:text-left',
 }
 
 function MetricCell({ children }: { children: React.ReactNode }) {
@@ -105,7 +105,7 @@ function getColumns(anonymitySetTooltip: string | undefined) {
             <TableLink href={ctx.row.original.href}>
               {/* On phones a long name wraps instead of pushing TVL, the
                   figure after the rosette, out of the first view. */}
-              <TwoRowCell className="max-md:max-w-24 max-md:whitespace-normal">
+              <TwoRowCell className="max-md:max-w-[90px] max-md:whitespace-normal">
                 <TwoRowCell.First>
                   <ProjectNameCell project={project} withInfoTooltip />
                 </TwoRowCell.First>
@@ -143,6 +143,10 @@ function getColumns(anonymitySetTooltip: string | undefined) {
           ),
         meta: {
           align: 'center',
+          // On phones the rosette key card sits right above the table; the
+          // icon's width goes to TVL, which then ends clear of the edge fade.
+          headClassName:
+            "max-md:pr-1 max-md:[&_[aria-label='More_info']]:hidden",
           tooltip: PRIVACY_ASSESSMENT.tooltip,
         },
       },
@@ -165,7 +169,8 @@ function getColumns(anonymitySetTooltip: string | undefined) {
             <ValueWithPercentageChange
               change={ctx.row.original.totalValueLockedChange7d}
               changePeriod="7D"
-              className="font-medium text-sm md:text-sm"
+              // On phones the cell's 14px, as on the Layer 2s summary
+              className="font-medium md:text-sm"
               containerClassName="flex-nowrap justify-end max-md:justify-start"
             >
               {formatCurrency(value, 'usd')}

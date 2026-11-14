@@ -129,7 +129,11 @@ function makeLast24hVolumeColumn<T extends CompactProtocolEntry>(
     },
     meta: {
       align: 'right',
-      headClassName: 'text-2xs text-right',
+      // On phones the figure starts at the column's left edge, in the first
+      // view of the sideways-scrolling table, as on the Layer 2s summary.
+      headClassName:
+        'text-2xs text-right max-md:text-left max-md:[&>div]:justify-start',
+      cellClassName: 'max-md:text-left',
       tooltip:
         'The total USD value of all token transfers completed in the past 24 hours.',
     },

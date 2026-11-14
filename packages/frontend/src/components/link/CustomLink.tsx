@@ -17,7 +17,10 @@ export const linkVariants = cva(
     variants: {
       variant: {
         primary: 'text-link hover:text-blue-550',
-        danger: 'text-negative hover:text-red-800 dark:hover:text-red-300',
+        // Deeper in light: it sits on the red callout fill, where
+        // --negative is 3.7:1 and red-800 is 6.4:1.
+        danger:
+          'text-red-800 hover:text-red-900 dark:text-negative dark:hover:text-red-300',
         plain: 'text-primary',
       },
       underline: {

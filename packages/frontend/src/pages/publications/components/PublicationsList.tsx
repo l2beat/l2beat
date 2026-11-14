@@ -50,10 +50,10 @@ export function PublicationsList({
             Updates <CountBadge>{updates.length}</CountBadge>
           </DirectoryTabsTrigger>
         </DirectoryTabsList>
-        <DirectoryTabsContent value="research" className="md:p-8">
+        <DirectoryTabsContent value="research">
           <PublicationsGrid publications={research} />
         </DirectoryTabsContent>
-        <DirectoryTabsContent value="updates" className="md:p-8">
+        <DirectoryTabsContent value="updates">
           <PublicationsGrid publications={updates} />
         </DirectoryTabsContent>
       </DirectoryTabs>
