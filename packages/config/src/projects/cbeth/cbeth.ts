@@ -32,54 +32,48 @@ type CallerLimit = {
 
 const units = (raw: string | number): number => Number(BigInt(raw)) / 1e18
 
-const callerLimits = (contract: string): CallerLimit[] => {
-  const limits = discovery.getContractValue<CallerLimit[]>(
-    contract,
-    'callerLimits',
-  )
-  if (limits.length === 0) {
-    throw new Error('cbeth: a rate-limited relay has no configured caller')
-  }
-  return limits
-}
+// A relay whose owner has removed every caller is disabled: nothing can be
+// pushed through it, so the page says so instead of quoting a cap.
+const callerLimits = (contract: string): CallerLimit[] =>
+  discovery.getContractValue<CallerLimit[]>(contract, 'callerLimits')
 
-const largestBurst = (limits: CallerLimit[]): CallerLimit =>
-  limits.reduce((best, l) =>
-    BigInt(l.amount) > BigInt(best.amount) ? l : best,
+const largestBurst = (limits: CallerLimit[]): CallerLimit | undefined =>
+  limits.reduce<CallerLimit | undefined>(
+    (best, l) =>
+      best === undefined || BigInt(l.amount) > BigInt(best.amount) ? l : best,
+    undefined,
   )
 
 const fastestRefillPerDay = (limits: CallerLimit[]): number =>
   Math.max(...limits.map((l) => (units(l.amount) * 86400) / l.interval))
 
+const symbol = value('cbETH', 'symbol')
+
 // Exchange-rate relay: the cap is a cumulative absolute change in the
 // ETH-per-token rate. It is rendered in ETH per token and as a multiple of
 // the current rate, so the page says how binding it is.
-const rateCap = largestBurst(callerLimits('ExchangeRateUpdater'))
-const rateCapEth = `${Number.parseFloat(units(rateCap.amount).toFixed(4))}`
-const rateCapInterval = duration(rateCap.interval)
+const rateLimits = callerLimits('ExchangeRateUpdater')
+const rateCallerCount = rateLimits.length
+const rateCap = largestBurst(rateLimits)
 const exchangeRate = Number(value('cbETH', 'exchangeRate'))
-const rateCapMultiple = `${Number.parseFloat((units(rateCap.amount) / exchangeRate).toFixed(1))}×`
+const rateCapPercent =
+  rateCap && `${Number.parseFloat((units(rateCap.amount) * 100).toFixed(2))}%`
+const rateCapInterval = rateCap && duration(rateCap.interval)
+const rateCapIntervalShort =
+  rateCap && (rateCap.interval === 365 * 86400 ? 'yr' : rateCapInterval)
+const rateCapMultiple =
+  rateCap &&
+  `${Number.parseFloat((units(rateCap.amount) / exchangeRate).toFixed(1))}×`
+const rateSentence = rateCap
+  ? `A Coinbase key reports the ETH-per-${symbol} rate through a limiter that currently allows a cumulative move of ${Number.parseFloat(units(rateCap.amount).toFixed(4))} ETH per ${symbol} over ${rateCapInterval}, about ${rateCapMultiple} the current rate, so the limit does not bind in practice.`
+  : 'The rate relay has no callers, so the rate cannot change through it.'
 
 // Mint relay: the cap is an amount of tokens per interval.
 const mintLimits = callerLimits('MintForwarder')
 const mintCap = largestBurst(mintLimits)
-const maxMintAllowance = Math.round(units(mintCap.amount)).toLocaleString(
-  'en-US',
-)
-const maxMintInterval = duration(mintCap.interval)
-const maxMintPerDay = Math.round(
-  fastestRefillPerDay(mintLimits),
-).toLocaleString('en-US')
-const mintCallerCount = discovery.getContractValue<string[]>(
-  'MintForwarder',
-  'callers',
-).length
-// --- Liquid staking risk comparison ---
-const symbol = value('cbETH', 'symbol')
-const rateCallerCount = callerLimits('ExchangeRateUpdater').length
-const rateCapPercent = `${Number.parseFloat((units(rateCap.amount) * 100).toFixed(2))}%`
-const rateCapIntervalShort =
-  rateCap.interval === 365 * 86400 ? 'yr' : rateCapInterval
+const mintSentence = mintCap
+  ? `${mintLimits.length} Coinbase keys may mint through it, to any address: the largest single allowance is ${Math.round(units(mintCap.amount)).toLocaleString('en-US')} ${symbol} over ${duration(mintCap.interval)}, and the fastest-refilling key can sustain about ${Math.round(fastestRefillPerDay(mintLimits)).toLocaleString('en-US')} ${symbol} per day.`
+  : 'The relay has no callers, so nothing can be minted through it until its owner adds one.'
 
 const minterCount = discovery.getContractValue<string[]>(
   'cbETH',
@@ -104,14 +98,9 @@ export const cbeth: BaseProject = {
     description: `Coinbase Wrapped Staked ETH (${value('cbETH', 'symbol')}) is Coinbase's liquid staking token. It is minted and redeemed only through Coinbase, and no contract holds the ETH behind it. Coinbase sets the exchange rate and can mint, pause, blacklist or upgrade without delay.`,
     detailedDescription: readProjectMarkdown('cbeth', 'detailedDescription', {
       symbol: value('cbETH', 'symbol'),
-      rateCapEth,
-      rateCapInterval,
-      rateCapMultiple,
+      rateSentence,
       minterCount,
-      mintCallerCount,
-      maxMintAllowance,
-      maxMintInterval,
-      maxMintPerDay,
+      mintSentence,
     }),
     links: {
       websites: ['https://www.coinbase.com/cbeth'],
@@ -177,16 +166,24 @@ export const cbeth: BaseProject = {
         description:
           'No contract holds ETH. The backing is a Coinbase balance that cannot be checked onchain.',
       },
-      oracle: {
-        value: `${rateCallerCount} of ${rateCallerCount}`,
-        secondLine: `daily · ≤${rateCapPercent}/${rateCapIntervalShort}`,
-        sentiment: 'bad',
-        warning: {
-          value: `The cap is about ${rateCapMultiple} the current rate, so it does not bind.`,
-          sentiment: 'bad',
-        },
-        description: `One Coinbase key writes the rate, capped at ${rateCapPercent} of one ETH over ${rateCapInterval}. The owner can replace the oracle at once. No contract uses the rate.`,
-      },
+      oracle: rateCap
+        ? {
+            value: `${rateCallerCount} of ${rateCallerCount}`,
+            secondLine: `daily · ≤${rateCapPercent}/${rateCapIntervalShort}`,
+            sentiment: 'bad',
+            warning: {
+              value: `The cap is about ${rateCapMultiple} the current rate, so it does not bind.`,
+              sentiment: 'bad',
+            },
+            description: `One Coinbase key writes the rate, capped at ${rateCapPercent} of one ETH over ${rateCapInterval}. The owner can replace the oracle at once. No contract uses the rate.`,
+          }
+        : {
+            value: 'Frozen',
+            secondLine: 'relay has no callers',
+            sentiment: 'bad',
+            description:
+              'No key can write the rate through the relay. The owner can point the oracle at any address at once. No contract uses the rate.',
+          },
       exit: {
         value: 'Coinbase only',
         secondLine: 'no onchain redemption',
