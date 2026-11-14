@@ -24,7 +24,7 @@ export function WhyNativeSection() {
           {FEATURES.map((feature) => (
             <article
               key={feature.title}
-              className="border-divider p-4 first:border-b md:p-8 md:first:border-r md:first:border-b-0"
+              className="border-divider p-4 first:border-b md:px-6 md:py-5 md:first:border-r md:first:border-b-0"
             >
               <h3 className="font-semibold text-heading-20 md:text-heading-24">
                 {feature.title}

@@ -100,7 +100,10 @@ export function getTransferColumns(
         )
       },
       meta: {
-        headClassName: 'text-2xs',
+        // On phones the value starts at the column's left edge, clear of the
+        // fade, as in the other sideways-scrolling tables.
+        headClassName: 'text-2xs max-md:[&>div]:justify-start',
+        cellClassName: 'max-md:text-left',
         align: 'right',
         tooltip: 'The USD value of the transfer.',
       },

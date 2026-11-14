@@ -24,7 +24,7 @@ const iconVariants = cva('size-5', {
   variants: {
     color: {
       red: 'fill-red-300',
-      yellow: 'fill-yellow-700 dark:fill-yellow-300',
+      yellow: 'fill-warning dark:fill-yellow-300',
       gray: 'fill-gray-700 dark:fill-gray-300',
     },
   },

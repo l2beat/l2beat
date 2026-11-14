@@ -25,15 +25,25 @@ export function MobileProjectLinks({
   triggerClassName,
 }: Props) {
   const markdownHref = getMarkdownAlternatePath(usePathname())
+  const names = [
+    ...projectLinks.map(({ name }) => name),
+    ...(markdownHref ? ['Markdown'] : []),
+  ]
+  if (names.length === 0) return null
+  // Names what the row holds: "Markdown", "Website, Markdown",
+  // "Website, Docs, etc."
+  const summary =
+    names.length > 3
+      ? `${names.slice(0, 2).join(', ')}, etc.`
+      : names.join(', ')
+
   return (
     <Accordion type="single" collapsible={true} className={className}>
       <AccordionItem value="links">
         <AccordionTrigger className={cn('py-4', triggerClassName)}>
           <span className="font-bold">
             Links:{' '}
-            <span className="ml-2 font-medium text-secondary">
-              Website, Docs, etc.
-            </span>
+            <span className="ml-2 font-medium text-secondary">{summary}</span>
           </span>
         </AccordionTrigger>
         <AccordionContent className="py-2">

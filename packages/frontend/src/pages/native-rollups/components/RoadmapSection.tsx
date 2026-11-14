@@ -121,7 +121,8 @@ export function RoadmapSection() {
                       {item.url && (
                         <CustomLink
                           href={item.url}
-                          className="mt-2 inline-flex items-center gap-1 rounded-sm text-label-value-15 outline-none ring-brand focus-visible:ring-2"
+                          variant="plain"
+                          className="mt-2 inline-flex items-center gap-1 rounded-sm text-label-value-15 decoration-divider underline-offset-[0.3em] outline-none ring-brand hover:decoration-current focus-visible:ring-2"
                         >
                           Learn more
                           <CustomLinkIcon className="size-3.5 fill-current" />

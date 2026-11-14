@@ -57,7 +57,6 @@ export function ProjectL2Stats({ project, className }: Props) {
             )}
             <ValueWithPercentageChange
               showPeriod
-              containerClassName="flex-nowrap"
               className={HEADLINE_FIGURE_CLASS}
               changeClassName="text-label-value-14 font-bold"
               change={project.header.tvs.breakdown.totalChange}
@@ -91,7 +90,6 @@ export function ProjectL2Stats({ project, className }: Props) {
             )}
             <ValueWithPercentageChange
               showPeriod
-              containerClassName="flex-nowrap"
               change={project.header.activity.uopsWeeklyChange}
               changePeriod={project.header.activity.uopsWeeklyChangePeriod}
               className={HEADLINE_FIGURE_CLASS}
