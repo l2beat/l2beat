@@ -42,7 +42,7 @@ export function NativeProofVerificationSection() {
                   index < CAPABILITIES.length - 1 && 'border-b',
                 )}
               >
-                <h3 className="font-semibold text-label-value-16">
+                <h3 className="font-semibold text-label-value-16 leading-[1.3] md:text-label-value-18">
                   {capability.title}
                 </h3>
                 <p className="mt-1.5 text-paragraph-15 text-secondary">

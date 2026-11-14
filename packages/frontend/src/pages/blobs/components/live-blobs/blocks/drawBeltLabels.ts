@@ -291,7 +291,9 @@ export function drawLimitLabels(
     top: middle - 6 - RIM,
     bottom: middle + 6 + RIM,
   })
-  fillTextOnSurface(ctx, palette, meaning, right, middle, palette.textSecondary)
+  // plain text on the hatching, as chart axis labels are: no halo behind it
+  ctx.fillStyle = palette.textSecondary
+  ctx.fillText(meaning, right, middle)
   ctx.restore()
 }
 
@@ -323,9 +325,10 @@ function drawRuleLabel(
   })
 
   ctx.font = `600 12px ${FONT}`
-  fillTextOnSurface(ctx, palette, valueText, right, y, palette.text)
+  ctx.fillStyle = palette.text
+  ctx.fillText(valueText, right, y)
   ctx.font = `500 12px ${FONT}`
-  fillTextOnSurface(ctx, palette, word, wordRight, y, palette.text)
+  ctx.fillText(word, wordRight, y)
   ctx.restore()
 }
 

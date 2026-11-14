@@ -304,7 +304,7 @@ const PosterRow = memo(function PosterRow({
       <TableCell align="right">
         <RollingNumber
           value={blobs / Math.max(1, totalBlobs)}
-          format={formatPercent}
+          format={formatShare}
         />
       </TableCell>
       <TableCell align="right" className="tabular-nums">
@@ -417,6 +417,11 @@ function PostersSkeleton() {
       ))}
     </div>
   )
+}
+
+/** A share too small for two decimals still reads as more than nothing */
+function formatShare(share: number) {
+  return share > 0 && share < 0.0001 ? '<0.01%' : formatPercent(share)
 }
 
 function describeAgo(seconds: number) {
