@@ -95,7 +95,7 @@ export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
       <TooltipTrigger disabledOnTouch className="h-full" asChild>
         <TableLink href={props.href}>
           <SyncStatusWrapper isSynced={!props.syncWarning}>
-            <div className="flex flex-col items-end max-md:py-1">
+            <div className="flex flex-col items-end max-md:items-start max-md:py-1">
               <div className="flex items-center">
                 {icon}
                 <ValueWithPercentageChange
@@ -106,7 +106,7 @@ export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
                   {formatDollarValueNumber(totalTvs)}
                 </ValueWithPercentageChange>
               </div>
-              <div className="inline-flex flex-col items-end gap-1">
+              <div className="inline-flex flex-col items-end gap-1 max-md:items-start">
                 <ValueSecuredBreakdown
                   canonical={props.breakdown.canonical}
                   external={props.breakdown.external}

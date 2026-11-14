@@ -16,7 +16,7 @@ export function getDefiTvlDataSource(
       return undefined
     case 'defillama':
       return {
-        name: 'DeFiLlama',
+        name: 'DefiLlama',
         url: `https://defillama.com/protocol/${tvl.protocolSlug}`,
         scope: `Tracked chains: ${tvl.chains
           .map((chain) => chain.providerChain)

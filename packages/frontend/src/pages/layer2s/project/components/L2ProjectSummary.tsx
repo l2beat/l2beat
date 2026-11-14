@@ -238,7 +238,7 @@ export function ProjectL2Summary({ project }: Props) {
               className="text-link text-xs underline"
               href={project.discoUiHref}
             >
-              Explore more in Discovery UI
+              Explore in Disco
             </a>
             <DiscoUiLink href={project.discoUiHref} />
           </div>

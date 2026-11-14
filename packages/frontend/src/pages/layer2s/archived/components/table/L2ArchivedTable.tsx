@@ -1,12 +1,13 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import type { ReactNode } from 'react'
+import { type ReactNode, useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
 import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { TableSectionHeader } from '~/components/table/TableSectionHeader'
+import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { useTable } from '~/hooks/useTable'
 import type { L2ArchivedEntry } from '~/server/features/layer2s/archived/getL2ArchivedEntries'
-import { l2ArchivedColumns } from './columns'
+import { getL2ArchivedColumns, getL2ArchivedDefaultVisibility } from './columns'
 
 /**
  * On desktop both verdict tables are seen one above the other, so each shared
@@ -35,9 +36,16 @@ interface Props {
 export function L2ArchivedTable({ entries, title, description, icon }: Props) {
   const { sorting, setSorting } = useTableSorting()
 
+  // Undefined until mounted: the server can't know the viewport.
+  const breakpoint = useBreakpoint()
+  const columns = useMemo(
+    () => getL2ArchivedColumns(breakpoint === undefined),
+    [breakpoint],
+  )
+
   const table = useTable('L2ArchivedTable', {
     data: entries,
-    columns: l2ArchivedColumns,
+    columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
@@ -46,6 +54,7 @@ export function L2ArchivedTable({ entries, title, description, icon }: Props) {
     },
     onSortingChange: setSorting,
     initialState: {
+      columnVisibility: getL2ArchivedDefaultVisibility(breakpoint),
       columnPinning: {
         left: ['#', 'logo'],
       },

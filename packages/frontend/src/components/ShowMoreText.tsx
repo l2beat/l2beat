@@ -12,6 +12,10 @@ import {
   DrawerTrigger,
 } from './core/Drawer'
 
+/** Home's quiet text link: a divider-toned underline, current colour on hover. */
+const LINK_CLASS =
+  'underline decoration-divider underline-offset-[0.3em] transition-colors hover:decoration-current'
+
 interface ShowMoreTextProps {
   children: ReactNode
   pageTitle: string
@@ -54,7 +58,7 @@ export function ShowMoreText({
         <div className={textClassName}>
           {children}
           <button
-            className={cn('ml-1 cursor-pointer underline', textClassName)}
+            className={cn('ml-1 cursor-pointer', LINK_CLASS, textClassName)}
             onClick={() => setExpanded((s) => !s)}
           >
             Show less
@@ -80,7 +84,8 @@ export function ShowMoreText({
           {isOverflowing && (
             <button
               className={cn(
-                'shrink-0 cursor-pointer underline',
+                'shrink-0 cursor-pointer',
+                LINK_CLASS,
                 'hidden md:block',
                 textClassName,
               )}
@@ -95,7 +100,8 @@ export function ShowMoreText({
             <Drawer>
               <DrawerTrigger
                 className={cn(
-                  'cursor-pointer underline md:hidden',
+                  'cursor-pointer md:hidden',
+                  LINK_CLASS,
                   textClassName,
                 )}
               >

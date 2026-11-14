@@ -69,12 +69,13 @@ export function PercentChange({
 /**
  * A change as signed text, like home: "+12.0%" or "−3.1%", with a true minus
  * and no arrows. The sign follows the rounded figure, so a change that shows
- * as 0.00% reads as neutral rather than as a gain or a loss.
+ * as 0.00% reads as neutral rather than as a gain or a loss. A capped
+ * magnitude (">1K%") already reads as a comparison, so it gets no sign.
  */
 function formatSignedPercent(value: number) {
   if (Number.isNaN(value)) return EM_DASH
   const magnitude = formatPercent(Math.abs(value))
-  if (roundsToZero(value)) return magnitude
+  if (roundsToZero(value) || magnitude.startsWith('>')) return magnitude
   return `${value > 0 ? '+' : '−'}${magnitude}`
 }
 

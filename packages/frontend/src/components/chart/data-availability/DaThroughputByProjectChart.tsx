@@ -264,7 +264,11 @@ export function DaThroughputByProjectChart({
         series={series}
         ariaLabel="Data throughput by project"
         syncedUntil={syncedUntil}
-        yAxis={{ unit: ` ${unit}`, tickCount: 4 }}
+        yAxis={{
+          format: (value) => value.toFixed(2),
+          unit: ` ${unit}`,
+          tickCount: 4,
+        }}
         renderTooltip={(row, keys) => (
           <CustomTooltip
             row={row}

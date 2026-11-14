@@ -27,7 +27,7 @@ export function DiscoUiBanner({
               className="flex w-fit items-center gap-1.5 rounded bg-surface-primary px-4 py-2 font-medium text-link text-sm underline"
               rel="noreferrer"
             >
-              Go to Disco
+              Explore in Disco
               <CustomLinkIcon className="size-4 fill-link" />
             </a>
           </div>

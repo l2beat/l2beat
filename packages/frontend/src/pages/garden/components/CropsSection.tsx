@@ -1,5 +1,6 @@
 import { CropBadge } from '~/components/garden/CropBadge'
 import { CROP_COLUMNS, type CropDefinition } from '~/components/garden/crops'
+import { CustomLink } from '~/components/link/CustomLink'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import {
@@ -130,16 +131,12 @@ function Minimum({
   return (
     <>
       <Emphasis text={before} />
-      <a
-        href={reference.href}
-        {...(isExternal && { target: '_blank', rel: 'noreferrer noopener' })}
-        className="font-medium text-link"
-      >
+      <CustomLink href={reference.href}>
         {reference.label}
         {isExternal && (
           <CustomLinkIcon className="ml-1 inline-block fill-current align-baseline" />
         )}
-      </a>
+      </CustomLink>
       <Emphasis text={after} />
     </>
   )
