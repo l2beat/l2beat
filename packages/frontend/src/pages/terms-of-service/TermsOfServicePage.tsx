@@ -15,7 +15,7 @@ export function TermsOfServicePage({ content, lastUpdated, ...props }: Props) {
     <AppLayout {...props}>
       <SideNavLayout>
         <MainPageHeader>Terms of service</MainPageHeader>
-        <PrimaryCard className="md:p-8">
+        <PrimaryCard>
           <p className="text-label-value-13 text-secondary">
             Last updated on {lastUpdated}
           </p>

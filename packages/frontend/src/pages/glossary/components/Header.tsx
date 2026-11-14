@@ -24,7 +24,7 @@ export function Header<T extends { id: string }>({
         <div className="-bottom-2 absolute left-0 h-2 w-full bg-surface-primary" />
       </PrimaryCard>
       <div className="fixed top-0 z-1 hidden h-8 w-full bg-background md:block" />
-      <PrimaryCard className="sticky top-0 z-10 w-full border-divider border-b bg-surface-primary py-4 md:top-6 md:rounded-t-xl">
+      <PrimaryCard className="sticky top-0 z-10 w-full border-divider border-b bg-surface-primary py-4 md:top-6 md:rounded-t-xl md:rounded-b-none">
         <AlphabetSelector entries={glossaryEntries} />
       </PrimaryCard>
     </>

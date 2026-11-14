@@ -83,7 +83,7 @@ function Header({ networks, qrCodeUrl }: HeaderProps) {
 function DonationDescription() {
   return (
     <div className="space-y-4 text-primary">
-      <h2 className="font-semibold text-xl">
+      <h2 className="text-balance font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
         Thank you for supporting ETHBEAT&apos;s mission to bring education and
         transparency to the blockchain space.
       </h2>
@@ -112,7 +112,8 @@ function DonationNetworks({ networks }: { networks: HeaderProps['networks'] }) {
         {networks.map((network) => (
           <CustomLink
             key={network.name}
-            className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-divider bg-surface-secondary py-3 text-sm transition-colors duration-200 hover:bg-surface-secondary/50 md:w-max md:px-3 md:py-1"
+            variant="plain"
+            className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-divider bg-surface-secondary py-3 text-label-value-13 transition-colors duration-200 hover:bg-surface-secondary/50 md:w-max md:px-3 md:py-1.5"
             href={network.linkURL}
             underline={false}
           >

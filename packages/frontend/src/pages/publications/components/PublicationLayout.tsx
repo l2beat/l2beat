@@ -30,11 +30,7 @@ export function PublicationLayout({
           <div className="mx-auto max-w-[720px]">
             <PublicationHeader publication={publication} />
           </div>
-          <div
-            className={
-              wide ? 'mt-8 md:pt-8' : 'mx-auto mt-8 max-w-[720px] md:pt-8'
-            }
-          >
+          <div className={wide ? 'mt-8' : 'mx-auto mt-8 max-w-[720px]'}>
             <img
               {...publication.thumbnail}
               alt={`${publication.title} publication thumbnail`}

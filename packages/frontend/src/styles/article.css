@@ -85,8 +85,9 @@
   @apply mb-0;
 }
 
+/* Rules match every other divider on the site. */
 .article hr {
-  @apply opacity-80 dark:opacity-50;
+  @apply border-divider;
 }
 
 .article ul,

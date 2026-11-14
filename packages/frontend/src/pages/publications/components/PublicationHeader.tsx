@@ -27,7 +27,7 @@ export function PublicationHeader<
           {publication.publishedOn}
         </span>
       </p>
-      <h1 className="mt-3 font-semibold text-[28px] leading-[1.15] tracking-[-0.02em] md:text-[36px]">
+      <h1 className="mt-3 text-balance font-semibold text-[28px] leading-[1.15] tracking-[-0.02em] md:text-[36px]">
         {publication.title}
       </h1>
       {publication.description && (

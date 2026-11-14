@@ -130,12 +130,18 @@ function NameSection() {
           The name should always be written in uppercase as{' '}
           <strong>ETHBEAT</strong>.
         </p>
-        <div className="flex items-center gap-2">
-          <SatisfiedIcon className="size-5" /> ETHBEAT
+        <div className="flex items-start gap-2">
+          <SatisfiedIcon className="mt-0.5 size-5 shrink-0" /> ETHBEAT
         </div>
-        <div className="flex items-center gap-2">
-          <MissingIcon className="size-5" /> EthBeat, Ethbeat, Eth Beat, ETH
-          BEAT, ETH-BEAT, etc.
+        <div className="flex items-start gap-2">
+          <MissingIcon className="mt-0.5 size-5 shrink-0" />
+          <span>
+            <span className="whitespace-nowrap">EthBeat</span>,{' '}
+            <span className="whitespace-nowrap">Ethbeat</span>,{' '}
+            <span className="whitespace-nowrap">Eth Beat</span>,{' '}
+            <span className="whitespace-nowrap">ETH BEAT</span>,{' '}
+            <span className="whitespace-nowrap">ETH-BEAT</span>, etc.
+          </span>
         </div>
         <p className="mt-4">
           We used to be called L2BEAT. That name and its logo are retired:

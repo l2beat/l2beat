@@ -22,7 +22,7 @@ export function LinkWithThumbnail(props: LinkWithThumbnailProps) {
       <img
         src={props.src}
         alt={`Thumbnail of ${props.title}`}
-        className="aspect-video w-full max-w-36 rounded-md object-cover object-center transition-[scale] will-change-transform group-hover:scale-105 md:max-w-48"
+        className="aspect-video w-full max-w-36 self-center rounded-md object-cover object-center transition-[scale] will-change-transform group-hover:scale-105 md:max-w-48"
         height={props.height}
         width={props.width}
       />

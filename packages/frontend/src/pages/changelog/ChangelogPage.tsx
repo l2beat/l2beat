@@ -72,7 +72,7 @@ export function ChangelogPage({ entries, ...props }: Props) {
                         <ArrowIcon className="size-[15px] shrink-0 fill-brand-deep" />
                         <div className="mx-2 flex w-full items-center gap-3">
                           <span className="h-px flex-1 bg-brand" />
-                          <span className="font-semibold text-brand-deep text-subtitle-12 uppercase leading-none">
+                          <span className="font-medium text-brand-deep text-label-value-13 leading-none">
                             Unread above
                           </span>
                           <span className="h-px flex-1 bg-brand" />
@@ -90,11 +90,11 @@ export function ChangelogPage({ entries, ...props }: Props) {
                           {entry.publishedOn}
                         </p>
                       </div>
-                      <h2 className="mt-2 font-semibold text-heading-20 text-primary leading-6 tracking-[-0.01em]">
+                      <h2 className="mt-2 text-balance font-semibold text-heading-20 text-primary leading-6 tracking-[-0.01em]">
                         {entry.title}
                       </h2>
                       {entry.summary && (
-                        <p className="mt-3 text-base text-secondary leading-7">
+                        <p className="mt-3 font-inter text-base text-secondary leading-7">
                           {entry.summary}
                         </p>
                       )}
