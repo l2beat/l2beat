@@ -65,7 +65,7 @@ function Event({ event }: { event: GovernanceEventEntry }) {
           >
             Date
           </p>
-          <p className="whitespace-pre-line text-balance text-sm">
+          <p className="whitespace-pre-line text-sm">
             <EventDate date={event.displayDate} />
           </p>
         </div>
@@ -101,7 +101,7 @@ function EventDate({ date }: { date: string }) {
   if (comma === -1) return date
   return (
     <>
-      {date.slice(0, comma + 1)}{' '}
+      <span className="whitespace-nowrap">{date.slice(0, comma + 1)}</span>{' '}
       <span className="whitespace-nowrap">{date.slice(comma + 2)}</span>
     </>
   )
