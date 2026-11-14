@@ -1,3 +1,4 @@
+import { CRITICAL_TEXT_CLASS } from '~/components/WarningBar'
 import { ShieldIcon } from '~/icons/Shield'
 
 export interface RiskList {
@@ -23,7 +24,7 @@ export function RiskList({ risks }: RiskList) {
             {risk.isCritical ? (
               <>
                 {risk.text.slice(0, -1)}{' '}
-                <strong className="text-primary">(CRITICAL)</strong>
+                <strong className={CRITICAL_TEXT_CLASS}>(CRITICAL)</strong>
                 {risk.text.slice(-1)}
               </>
             ) : (

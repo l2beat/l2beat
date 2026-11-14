@@ -114,7 +114,7 @@ function AnomalyCollapsible({
         </div>
         <div className="flex items-center gap-4">
           {isAnyOngoing && <LiveIndicator />}
-          <ChevronIcon className="group-data-[state=open]:-rotate-180 size-3 fill-secondary transition-transform duration-300" />
+          <ChevronIcon className="group-data-[state=open]:-rotate-180 size-3 fill-brand transition-transform duration-300" />
         </div>
       </CollapsibleTrigger>
       <CollapsibleContent className="space-y-3 px-4 pb-3">

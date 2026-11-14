@@ -42,7 +42,12 @@ export function InteropTotalCard({
       {isLoading ? (
         <Skeleton className="h-8 w-32" />
       ) : (
-        <span className="font-semibold text-heading-20 tabular-nums leading-none tracking-[-0.025em] md:text-heading-32">
+        <span
+          className={cn(
+            'font-semibold text-heading-20 tabular-nums leading-none tracking-[-0.025em] md:text-heading-32',
+            !mobile && 'text-brand-deep',
+          )}
+        >
           {value}
         </span>
       )}

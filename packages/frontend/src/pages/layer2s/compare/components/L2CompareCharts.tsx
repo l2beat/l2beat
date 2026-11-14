@@ -271,6 +271,7 @@ function MetricSwitcher({
         className="max-md:gap-0.5"
         value={value}
         onValueChange={(value) => onValueChange(value as CompareMetricId)}
+        variant="highlighted"
       >
         {Object.values(COMPARE_METRICS).map((metric) => (
           <RadioGroupItem

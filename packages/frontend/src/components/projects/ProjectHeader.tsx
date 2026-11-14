@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react'
 import { ChevronIcon } from '~/icons/Chevron'
-import { HOME_UNDERLINE_CLASS } from '~/pages/home/homeStyles'
 import type {
   ProjectSection,
   ProjectSectionLink,
@@ -152,14 +151,10 @@ function ProjectSectionBreadcrumb({
     >
       <a
         href={href}
-        className="group flex items-center gap-1.5 text-secondary hover:text-primary"
+        className="flex items-center gap-1.5 text-brand-deep underline-offset-[0.3em] hover:underline"
       >
         <Icon className="size-4 stroke-current" />
-        <span
-          className={cn(HOME_UNDERLINE_CLASS, 'group-hover:decoration-current')}
-        >
-          {label}
-        </span>
+        {label}
       </a>
       {otherSections?.map((link) => (
         <a

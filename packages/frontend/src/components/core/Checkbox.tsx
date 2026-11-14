@@ -48,7 +48,7 @@ const Checkbox = ({
           })
         }}
       >
-        <CheckboxPrimitive.Indicator className="flex items-center justify-center rounded bg-primary text-current">
+        <CheckboxPrimitive.Indicator className="flex items-center justify-center rounded bg-brand text-current">
           <CheckIcon
             className={cn(
               'size-5 stroke-[1.8px]',

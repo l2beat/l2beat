@@ -6,7 +6,7 @@ export function TableEmptyState() {
   const reset = useTableFilterReset()
 
   return (
-    <div className="mt-2 flex flex-col items-center justify-center gap-1 rounded-lg bg-surface-secondary px-4 py-6 text-center">
+    <div className="mt-2 flex flex-col items-center justify-center gap-1 rounded-lg bg-blue-700/10 px-4 py-6 text-center">
       <span className="font-medium text-label-value-15">No results</span>
       <span className="text-label-value-13 text-secondary">
         There are no results meeting the criteria

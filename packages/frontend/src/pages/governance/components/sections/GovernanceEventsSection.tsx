@@ -37,7 +37,7 @@ function Event({ event }: { event: GovernanceEventEntry }) {
         {event.title && (
           <p
             className={cn(
-              'font-medium text-label-value-13 text-primary',
+              'font-medium text-brand-deep text-label-value-13',
               event.highlighted && 'text-white',
             )}
           >

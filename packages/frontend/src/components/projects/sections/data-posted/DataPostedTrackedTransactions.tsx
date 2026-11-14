@@ -76,7 +76,7 @@ function TransactionDetails({
     <div className="mb-4">
       {showHistoricalTransactions && (
         <div className="mb-2 flex items-center gap-2">
-          <Badge type="gray" size="small">
+          <Badge type={transaction.untilBlock ? 'gray' : 'pink'} size="small">
             {transaction.untilBlock ? 'Historical' : 'Currently used'}
           </Badge>
         </div>

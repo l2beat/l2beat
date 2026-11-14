@@ -137,7 +137,7 @@ function UpgradePathTimeline({
                   'size-2.5 rounded-full',
                   step.isWait
                     ? 'border-2 border-secondary bg-surface-primary'
-                    : 'bg-primary',
+                    : 'bg-brand',
                 )}
               />
             </span>
@@ -161,10 +161,15 @@ function UpgradeCallout({
   name: string
   description: string
 }) {
-  // Neutral for every path: the description states the risk, and a colour
-  // picked from the name ("emergency") contradicted paths it didn't match.
+  // Emergency paths skip the exit window, so they get the risk colour.
+  const isEmergency = /emergency/i.test(name)
   return (
-    <div className="border-divider border-l-[3px] py-1 pl-3.5">
+    <div
+      className={cn(
+        'border-l-[3px] py-1 pl-3.5',
+        isEmergency ? 'border-negative' : 'border-brand',
+      )}
+    >
       <p className="mb-0.5 font-semibold text-label-value-14">{name}</p>
       <Markdown className="text-paragraph-14 md:text-paragraph-15">
         {description}
