@@ -13,9 +13,9 @@ export function RecentPublicationsSection({ publications }: Props) {
   return (
     <GovernanceCard mobileFull className="flex flex-col gap-4 lg:col-span-5">
       <div className="flex flex-wrap justify-between gap-2">
-        <div className="text-heading-24 md:text-heading-32">
+        <h2 className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
           Recent publications
-        </div>
+        </h2>
         <ExploreAllButton className="hidden md:block" />
       </div>
       <div className="flex flex-col gap-4">
@@ -53,7 +53,7 @@ function Publication({ publication }: PublicationProps) {
       {...publication.thumbnail}
       href={`/publications/${publication.id}`}
       topAccessory={
-        <p className="text-brand-deep text-subtitle-11">
+        <p className="text-label-value-13 text-secondary">
           {publication.publishedOn}
         </p>
       }

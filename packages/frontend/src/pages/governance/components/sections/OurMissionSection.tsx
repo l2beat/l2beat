@@ -8,7 +8,9 @@ interface Props {
 export function OurMissionSection({ className }: Props) {
   return (
     <GovernanceCard mobileFull className={className}>
-      <div className="text-heading-24 md:text-heading-32">Our mission</div>
+      <h2 className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
+        Our mission
+      </h2>
       <div className="mt-6 text-paragraph-16 md:text-paragraph-15">
         At ETHBEAT we believe that crypto is the new infrastructure for the
         future financial system. As such, we believe that in order for it to be

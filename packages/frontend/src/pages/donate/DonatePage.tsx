@@ -66,7 +66,7 @@ function Header({ networks, qrCodeUrl }: HeaderProps) {
           <DonationDescription />
           <QrCodeSection
             mobile
-            className="my-12 md:hidden"
+            className="mt-8 mb-4 md:hidden"
             qrCodeUrl={qrCodeUrl}
           />
           <DonationNetworks networks={networks} />
@@ -83,10 +83,10 @@ function Header({ networks, qrCodeUrl }: HeaderProps) {
 function DonationDescription() {
   return (
     <div className="space-y-4 text-primary">
-      <p className="font-bold text-xl">
+      <h2 className="text-balance font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
         Thank you for supporting ETHBEAT&apos;s mission to bring education and
         transparency to the blockchain space.
-      </p>
+      </h2>
       <p className="font-normal text-base">
         We&apos;re committed to delivering accurate and reliable information. We
         strive to be an impartial and independent watchdog that acts in the best
@@ -105,14 +105,15 @@ function DonationDescription() {
 function DonationNetworks({ networks }: { networks: HeaderProps['networks'] }) {
   return (
     <div className="z-10 mt-4">
-      <span className="font-medium text-brand-deep text-xs uppercase">
+      <span className="font-medium text-label-value-13 text-primary">
         Donate through
       </span>
       <div className="mt-2 flex flex-col gap-2 md:flex-row md:flex-wrap">
         {networks.map((network) => (
           <CustomLink
             key={network.name}
-            className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-divider bg-surface-secondary py-3 text-sm transition-colors duration-200 hover:bg-surface-secondary/50 md:w-max md:px-3 md:py-1"
+            variant="plain"
+            className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-divider bg-surface-secondary py-3 text-label-value-13 transition-colors duration-200 hover:bg-surface-secondary/50 md:w-max md:px-3 md:py-1.5"
             href={network.linkURL}
             underline={false}
           >
@@ -215,9 +216,13 @@ export const fundingSources = [
     tier: 'Medium',
     description: (
       <span>
-        Live at <a href="https://dydx.l2beat.com">dydx.l2beat.com</a>, view the
-        code <a href="https://github.com/l2beat/starkex-explorer">here</a>.
-        Funded by StarkWare and dYdX
+        Live at{' '}
+        <CustomLink href="https://dydx.l2beat.com">dydx.l2beat.com</CustomLink>,
+        view the code{' '}
+        <CustomLink href="https://github.com/l2beat/starkex-explorer">
+          here
+        </CustomLink>
+        . Funded by StarkWare and dYdX
       </span>
     ),
   },

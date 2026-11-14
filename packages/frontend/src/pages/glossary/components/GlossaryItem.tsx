@@ -10,17 +10,18 @@ interface Props {
 export function GlossaryItem(props: Props) {
   return (
     <section
+      data-role="nav-section"
       className="mt-6 scroll-m-20 first:mt-0 md:scroll-mt-[115px]"
       id={props.entry.id}
     >
       <div className="group flex items-center gap-2 pb-2 text-primary">
         <a
           href={`#${props.entry.id}`}
-          className="flex items-center gap-2 font-bold text-2xl leading-[115%] no-underline"
+          className="flex items-center gap-2 font-semibold text-heading-20 leading-6 tracking-[-0.01em] no-underline"
         >
           {props.entry.data.term}
           {props.entry.data.isSpicy && (
-            <ChiliIcon className="size-6 shrink-0" />
+            <ChiliIcon className="size-5 shrink-0" />
           )}
         </a>
         <CopyButton
@@ -31,7 +32,7 @@ export function GlossaryItem(props: Props) {
         />
       </div>
 
-      <p className="font-normal text-base text-secondary leading-[170%] tracking-[-0.16px]">
+      <p className="font-normal text-base text-primary leading-[170%] tracking-[-0.16px]">
         {props.entry.data.definition}
       </p>
     </section>
