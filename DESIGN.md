@@ -29,6 +29,18 @@ Some rules have a check in `packages/frontend/src/designRules.test.ts`. That tes
   Why (*inferred*): one text colour stays readable in both themes.
   <!-- 2026-11-13: picked option A for the transfer-type badges -->
 
+## Type
+
+- **Short labels that tag or categorise are all caps, at a small caps size with tracking:**
+  - eyebrows, and dates or meta kickers;
+  - badges, pills and tags;
+  - section breadcrumbs;
+  - micro section labels ("ABOUT", "STATS").
+
+  Sentences, headings, buttons and long strings use sentence case. Never sweep uppercase out site-wide for consistency.
+  Why: short all-caps labels are part of ETHBEAT's look. The owner accepts sentence case for some labels, not a blanket sweep.
+  <!-- 2026-11-14: "you also remove all caps stuff - i do not know why, in some cases i get it, in some cases i dont. I like when some stuff on the page are all caps." -->
+
 ## Surfaces
 
 - **No bolt-on effects anywhere in the UI or in site graphics: no glow, blur, emboss, halftone, decorative textures, outlines or echo rings. Get emphasis from flat colour blocking and layout.**
