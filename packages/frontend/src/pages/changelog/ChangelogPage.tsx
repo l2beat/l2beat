@@ -99,7 +99,7 @@ export function ChangelogPage({ entries, ...props }: Props) {
                         </p>
                       )}
                       {entry.content && (
-                        <Article className="changelog mt-4 font-normal text-base text-primary leading-7">
+                        <Article className="changelog mt-4 font-normal text-base text-primary leading-7 [&_code]:bg-surface-tertiary">
                           {entry.content}
                         </Article>
                       )}

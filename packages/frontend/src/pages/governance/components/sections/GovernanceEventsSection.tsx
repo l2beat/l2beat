@@ -66,7 +66,7 @@ function Event({ event }: { event: GovernanceEventEntry }) {
             Date
           </p>
           <p className="whitespace-pre-line text-balance text-sm">
-            {event.displayDate}
+            <EventDate date={event.displayDate} />
           </p>
         </div>
         {event.location && (
@@ -92,5 +92,17 @@ function Event({ event }: { event: GovernanceEventEntry }) {
         <a href={event.link}>Join the event</a>
       </Button>
     </GovernanceCard>
+  )
+}
+
+/** A same-day date breaks after the day, never inside the time range. */
+function EventDate({ date }: { date: string }) {
+  const comma = date.indexOf(', ')
+  if (comma === -1) return date
+  return (
+    <>
+      {date.slice(0, comma + 1)}{' '}
+      <span className="whitespace-nowrap">{date.slice(comma + 2)}</span>
+    </>
   )
 }

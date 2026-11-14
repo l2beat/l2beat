@@ -1,4 +1,3 @@
-import { cn } from '~/utils/cn'
 import { GovernanceCard } from '../GovernanceCard'
 
 interface Props {
@@ -7,7 +6,7 @@ interface Props {
 
 export function OurApproachSection({ className }: Props) {
   return (
-    <GovernanceCard mobileFull className={cn(className, 'h-min')}>
+    <GovernanceCard mobileFull className={className}>
       <h2 className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
         Our approach
       </h2>
