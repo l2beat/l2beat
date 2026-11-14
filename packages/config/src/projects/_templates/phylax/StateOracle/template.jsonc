@@ -1,0 +1,157 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "StateOracle",
+  "description": "Records which assertions apply to each protected contract (assertion adopter). Assertions are rule contracts that enforcers run offchain. Each adopter has a manager, approved by a registered admin verifier, who adds and removes its assertions. Every addition or removal records an activation or deactivation block {{ ASSERTION_TIMELOCK_BLOCKS }} blocks ahead. An assertion is accepted only with a proof that a registered DA verifier checks against its ID.",
+  "ignoreMethods": [
+    "DEFAULT_ADMIN_ROLE",
+    "GOVERNANCE_ROLE",
+    "GUARDIAN_ADMIN_ROLE",
+    "GUARDIAN_ROLE",
+    "OPERATOR_ADMIN_ROLE",
+    "OPERATOR_ROLE"
+  ],
+  "fields": {
+    "owner": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant and revoke the governance, guardian admin and operator admin roles, and transfer ownership."
+        }
+      ]
+    },
+    "pendingOwner": {
+      "severity": "MEDIUM"
+    },
+    "governance": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "GOVERNANCE_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add and remove admin verifiers and DA verifiers, switch the registration allowlist on or off and set the maximum number of assertions per adopter."
+        }
+      ]
+    },
+    "guardianAdmins": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "GUARDIAN_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant and revoke the guardian role."
+        }
+      ]
+    },
+    "guardians": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "GUARDIAN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "remove any adopter's assertions and revoke the manager of any adopter."
+        }
+      ]
+    },
+    "operatorAdmins": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "OPERATOR_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant and revoke the operator role."
+        }
+      ]
+    },
+    "operators": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "OPERATOR_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add and remove accounts on the registration allowlist."
+        }
+      ]
+    },
+    "ASSERTION_TIMELOCK_BLOCKS": {
+      "severity": "MEDIUM"
+    },
+    "whitelistEnabled": {
+      "description": "When true, only accounts on the registration allowlist can register adopters and add assertions.",
+      "severity": "MEDIUM"
+    },
+    "registrationAllowlist": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "event",
+        "select": "account",
+        "add": { "event": "AddedToWhitelist" },
+        "remove": { "event": "RemovedFromWhitelist" },
+        "ignoreRelative": true
+      }
+    },
+    "adminVerifiers": {
+      "description": "Contracts that decide which account may become the manager of a given adopter.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": "adminVerifier",
+        "add": { "event": "AdminVerifierAdded" },
+        "remove": { "event": "AdminVerifierRemoved" }
+      }
+    },
+    "daVerifiers": {
+      "description": "Contracts that check the proof submitted with a new assertion.",
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "event",
+        "select": "daVerifier",
+        "add": { "event": "DAVerifierAdded" },
+        "remove": { "event": "DAVerifierRemoved" }
+      }
+    },
+    "adopterManagers": {
+      "description": "The current manager of each registered adopter. A zero address means the manager was revoked.",
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "event",
+        "groupBy": "contractAddress",
+        "set": [
+          { "event": "AssertionAdopterAdded" },
+          { "event": "ManagerTransferred" }
+        ]
+      },
+      // keep the manager of the latest registration or transfer of each adopter
+      "edit": [
+        "map_values",
+        [
+          "pipe",
+          ["pick", "manager", "newManager"],
+          ["to_entries"],
+          ["get", 0, 1]
+        ]
+      ],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add and remove the assertions of the adopters it manages and hand the manager role to another account."
+        }
+      ]
+    }
+  }
+}

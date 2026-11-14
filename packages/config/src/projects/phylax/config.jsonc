@@ -1,0 +1,54 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "phylax",
+  "import": ["../globalConfig.jsonc"],
+  // The Credible Registry and the production State Oracle. The staging oracle
+  // and the two July oracles are separate deployments that neither references,
+  // so they are not crawled.
+  "initialAddresses": [
+    "eth:0xbac71Fe7a8C78F49Eeb2D33b250988224796AF70",
+    "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D"
+  ],
+  "names": {
+    "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934": "PhylaxMultisig",
+    "eth:0x003C71246D92fae09ae3F3CAeFF234c8B8242F2E": "ProxyAdmin"
+  },
+  "overrides": {
+    // The CredibleRegistry's own timelock. The registry is its only proposer,
+    // canceller and executor and schedules only builder changes and delay
+    // updates, so it gets no "act" permission (the global template's
+    // executor permission would let it inherit the timelock's role admin).
+    "eth:0x9F66A1A08a3f9f9De7a95DfBAD572970bF1D9757": {
+      "fields": {
+        "Executor": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "execute transactions that are ready."
+            }
+          ]
+        }
+      }
+    },
+    // Created by the State Oracle proxy's constructor and unverified. Its
+    // runtime code appears verbatim in the proxy's deployment transaction, so
+    // the proxy's verified source (which contains ProxyAdmin) is linked and
+    // owner is read without an ABI.
+    "eth:0x003C71246D92fae09ae3F3CAeFF234c8B8242F2E": {
+      "manualSourcePaths": {
+        "eth:0x003C71246D92fae09ae3F3CAeFF234c8B8242F2E": "https://etherscan.io/address/0x14386aF70E91dFE12aC6243D4B5e087870d7f14D#code"
+      },
+      "fields": {
+        "owner": {
+          "severity": "MEDIUM",
+          "handler": {
+            "type": "call",
+            "method": "function owner() view returns (address)",
+            "args": []
+          },
+          "permissions": [{ "type": "act" }]
+        }
+      }
+    }
+  }
+}
