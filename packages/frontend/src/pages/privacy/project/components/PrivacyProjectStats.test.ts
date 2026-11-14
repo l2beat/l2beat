@@ -39,6 +39,17 @@ describe(PrivacyProjectStats.name, () => {
     expect(html).not.toInclude('N/A')
   })
 
+  it('writes the period after a change', () => {
+    const html = render(
+      createElement(PrivacyProjectStats, {
+        ...BASE_PROPS,
+        totalValueLockedChange7d: -0.05,
+      }),
+    )
+
+    expect(html).toInclude('/ 7d')
+  })
+
   it('shows the active relayer count when tracking is configured', () => {
     const html = render(
       createElement(PrivacyProjectStats, {

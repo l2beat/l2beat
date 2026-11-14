@@ -4,6 +4,7 @@ import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
+import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLinks'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
 import { ProjectDetails } from '~/components/projects/ProjectDetails'
@@ -143,6 +144,11 @@ export function DefiProjectPage({
                         </div>
                       </div>
                     </PrimaryCard>
+                    {entry.projectLinks.length > 0 && (
+                      <div className="border-divider border-b px-4 md:hidden">
+                        <MobileProjectLinks projectLinks={entry.projectLinks} />
+                      </div>
+                    )}
 
                     <ProjectDetails
                       items={entry.sections}
