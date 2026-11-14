@@ -1,7 +1,6 @@
 import { SLOT_SECONDS } from '@l2beat/shared-pure'
 import { mixColors } from '~/utils/color'
 import { tileBounds } from './beltLayout'
-import type { BeltPalette } from './beltPalette'
 import {
   type BeltPosition,
   bayLight,
@@ -20,7 +19,7 @@ import { labelPresence, smoothstep } from './motion'
 const FONT = 'Roboto, Arial, sans-serif'
 /** Fraction of the slot after which labels fade out */
 const LABELS_LEAVE = 0.9
-/** Half the rim `fillTextOnSurface` draws around text, which a box takes in */
+/** Room kept around a label, so labels that would touch give way to each other */
 const RIM = 1.5
 
 interface Box {
@@ -177,12 +176,14 @@ function drawArrivalLabel(
   const size = layout.compact ? 11 : 12
   ctx.font = `600 ${size}px ${FONT}`
   const amountWidth = ctx.measureText(amount).width
-  fillTextOnSurface(ctx, palette, amount, x, y, palette.text)
+  // plain text: it sits right of the bay, over racks still to come, which are empty
+  ctx.fillStyle = palette.text
+  ctx.fillText(amount, x, y)
 
   ctx.font = `500 ${size}px ${FONT}`
   const nameX = x + amountWidth + 4
   const shortName = fitText(ctx, name, layout.width - nameX - 2)
-  fillTextOnSurface(ctx, palette, shortName, nameX, y, palette.text)
+  ctx.fillText(shortName, nameX, y)
   const right = nameX + ctx.measureText(shortName).width
   ctx.restore()
   return {
@@ -339,22 +340,6 @@ function crosses(a: Box, b: Box) {
 }
 
 /** The rim keeps text readable over racks and hatching */
-function fillTextOnSurface(
-  ctx: CanvasRenderingContext2D,
-  palette: BeltPalette,
-  text: string,
-  x: number,
-  y: number,
-  color: string,
-) {
-  ctx.lineJoin = 'round'
-  ctx.lineWidth = 3
-  ctx.strokeStyle = palette.surface
-  ctx.strokeText(text, x, y)
-  ctx.fillStyle = color
-  ctx.fillText(text, x, y)
-}
-
 function fitText(ctx: CanvasRenderingContext2D, text: string, room: number) {
   if (ctx.measureText(text).width <= room) return text
   let end = text.length

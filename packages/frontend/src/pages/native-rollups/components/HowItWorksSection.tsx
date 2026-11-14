@@ -42,7 +42,7 @@ export function HowItWorksSection() {
               <h3 className="mt-4 font-semibold text-heading-18">
                 {step.title}
               </h3>
-              <p className="mt-2 text-paragraph-15 text-secondary">
+              <p className="mt-2 text-paragraph-15 text-secondary md:text-paragraph-16">
                 {step.description}
               </p>
             </li>

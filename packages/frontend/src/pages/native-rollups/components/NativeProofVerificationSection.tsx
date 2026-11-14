@@ -45,7 +45,7 @@ export function NativeProofVerificationSection() {
                 <h3 className="font-semibold text-label-value-16 leading-[1.3] md:text-label-value-18">
                   {capability.title}
                 </h3>
-                <p className="mt-1.5 text-paragraph-15 text-secondary">
+                <p className="mt-1.5 text-paragraph-15 text-secondary md:text-paragraph-16">
                   {capability.description}
                 </p>
               </div>

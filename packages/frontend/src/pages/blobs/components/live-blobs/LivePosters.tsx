@@ -58,6 +58,9 @@ const PINNED_COLUMNS = 2
 /** Where the logo sticks until the sticky header measures the # column */
 const RANK_WIDTH = 32
 
+/** Near-black brands would all but vanish as 1–2px bars on a dark card */
+const SPARKLINE_CONTRAST = 3
+
 /** A phone shows the blobs instead, the number the table is about */
 const ACTIVITY_HIDDEN = 'max-md:hidden'
 /** Blobs over batches, both shown, so it gives way first */
@@ -172,7 +175,12 @@ export function LivePosters({ live: data, totals }: Props) {
               <PosterRow
                 key={row.poster.id}
                 row={row}
-                color={readableColor(row.poster.color, surface)}
+                // thin sparkline bars need more contrast than the belt's squares
+                color={readableColor(
+                  row.poster.color,
+                  surface,
+                  SPARKLINE_CONTRAST,
+                )}
                 rank={index + 1}
                 seconds={seconds}
                 totalBlobs={totalBlobs}
