@@ -6,6 +6,17 @@ Some rules have a check in `packages/frontend/src/designRules.test.ts`. That tes
 
 ## Color
 
+- **Keep accent colour. Never neutralise an accent (pink, brand-deep, link blue, status, category palettes) to grey or ink for "consistency". Make its use consistent instead, one role per colour:**
+  - brand pink for primary actions and selected states;
+  - brand-deep for editorial meta (dates, tags, breadcrumbs, hints);
+  - link blue for links and info icons;
+  - positive, warning and negative for status;
+  - each category's own palette for identity tags.
+
+  If a colour use fails contrast or clashes, restyle it with the role's token instead of removing it.
+  Why: without its accents the site reads as grayscale and loses its identity. Reviewer models keep proposing "make it neutral", so this needs to be written down.
+  <!-- 2026-11-14: "You removed a lot of colors from the page. Basically every accent color you removed. I do not like it. Its bad and the page looks like a grayscale. I want you to bring back the colors (if you didnt like them then maybe in a new form? better form?)" -->
+
 - **Labels, keys and category names stay `text-primary`. Never grey them (`text-secondary`) to make values lead. Build hierarchy with size and weight.** Hints and footnotes that are already secondary can stay.
   Why (*inferred*): grey keys read washed out. Reviewer models keep proposing "Stripe-style" muted keys, so this needs to be written down.
   <!-- 2026-11-02: "I do not like the muted text change" (rosette tooltip, reverted) -->
