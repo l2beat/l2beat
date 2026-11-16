@@ -5,6 +5,7 @@ import {
   CollapsibleTrigger,
 } from '~/components/core/Collapsible'
 import { linkVariants } from '~/components/link/CustomLink'
+import { CRITICAL_TEXT_CLASS } from '~/components/WarningBar'
 import { ChevronIcon } from '~/icons/Chevron'
 import { UnverifiedIcon } from '~/icons/Unverified'
 import { cn } from '~/utils/cn'
@@ -30,7 +31,7 @@ export function UnverifiedContractsWarning({ entries, className }: Props) {
             {entries.length}{' '}
             {entries.length === 1 ? 'address has' : 'addresses have'} unverified
             source code.
-            <strong className="text-primary"> (CRITICAL)</strong>
+            <strong className={CRITICAL_TEXT_CLASS}> (CRITICAL)</strong>
           </span>
           <span className="flex shrink-0 items-center gap-1 font-medium text-link text-xs md:text-sm">
             View details

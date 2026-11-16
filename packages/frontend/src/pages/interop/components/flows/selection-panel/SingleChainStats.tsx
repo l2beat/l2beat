@@ -101,7 +101,7 @@ function Stats({
   return (
     <div className="rounded-lg border border-divider bg-surface-primary px-4 py-3">
       <div className="mb-1.5 flex items-baseline justify-between gap-2">
-        <span className="font-semibold text-label-value-13">Stats</span>
+        <span className="font-bold text-label-value-12 uppercase">Stats</span>
         <span className="font-medium text-label-value-12 text-secondary">
           Last 24h · {describeChainScope(selectedChainCount, chainCount)}
         </span>
@@ -160,7 +160,9 @@ function TopRoutes({
 
   return (
     <div className="rounded-lg border border-divider bg-surface-primary px-4 py-3">
-      <div className="mb-1.5 font-semibold text-label-value-13">Top routes</div>
+      <div className="mb-1.5 font-bold text-label-value-12 uppercase">
+        Top routes
+      </div>
       <div className="space-y-1">
         {flows.map((flow) => {
           const srcChain = allChains.find((c) => c.id === flow.srcChain)

@@ -108,7 +108,7 @@ const TableHeader = ({
 }: React.HTMLAttributes<HTMLTableSectionElement>) => (
   <thead
     className={cn(
-      'group/header whitespace-pre py-2 align-bottom font-medium text-primary text-xs',
+      'group/header whitespace-pre py-2 align-bottom font-medium text-primary text-xs uppercase',
       className,
     )}
     {...props}
@@ -175,7 +175,7 @@ const TableHead = ({
 }) => (
   <th
     className={cn(
-      'h-10 py-2 text-left align-bottom font-medium text-[13px]',
+      'h-10 py-2 text-left align-bottom font-medium text-[13px] uppercase',
       'pr-3 first:pl-2 last:pr-2 md:pr-4',
       className,
     )}
