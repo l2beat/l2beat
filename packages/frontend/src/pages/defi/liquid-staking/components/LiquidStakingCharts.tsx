@@ -84,7 +84,7 @@ export function LiquidStakingCharts({
     // On phones the range bar drives two stacked cards, so it heads them
     // instead of trailing the second one.
     <div className="flex flex-col">
-      <div className="grid gap-4 md:mt-4 lg:grid-cols-2">
+      <div className="grid max-md:divide-y max-md:divide-divider md:mt-4 md:gap-4 lg:grid-cols-2">
         <YieldChart projectSeries={projectSeries} range={range} />
         <CostOfExitChart projectSeries={projectSeries} range={range} />
       </div>
