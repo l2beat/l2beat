@@ -52,14 +52,21 @@ const COMPACT_BODY_CELL = 'md:h-12'
 export function getBasicTableHeaderCellClassName(params: {
   groupParams: BasicTableGroupParams | undefined
   isPinned: boolean
+  /** Without a sort icon to push it in, a first label starts where the values do */
+  isSortable?: boolean
+  align?: 'right' | 'center'
   headClassName: string | undefined
   compact?: boolean
 }) {
-  const { groupParams, isPinned, headClassName, compact } = params
+  const { groupParams, isPinned, headClassName, compact, isSortable, align } =
+    params
   return cn(
+    isSortable === false && align === undefined && 'first:pl-3',
     groupParams && [
       groupParams.isFirstInGroup && 'pl-6',
-      groupParams.isLastInGroup && 'pr-6',
+      // `md:` too, or TableHead's own `md:pr-4` wins from md up and the
+      // header ends 8px right of its group's values (body cells are `pr-6!`)
+      groupParams.isLastInGroup && 'pr-6 md:pr-6',
       !groupParams.headerTitle && groupParams.isFirstInGroup && 'rounded-tl-lg',
       !groupParams.headerTitle && groupParams.isLastInGroup && 'rounded-tr-lg',
     ],
@@ -90,13 +97,12 @@ export function getBasicTableBodyCellClassName(params: {
     compact,
   } = params
   return cn(
-    groupParams?.isFirstInGroup && 'pl-6!',
+    // A sortable, left-aligned cell starts under its header's label, past the
+    // sort icon; first in a group, past the group's 24px inset too.
+    groupParams?.isFirstInGroup &&
+      (isSortable && align === undefined ? 'pl-10!' : 'pl-6!'),
     groupParams?.isLastInGroup && 'pr-6!',
-    isSortable && align === undefined
-      ? groupParams?.isFirstInGroup
-        ? 'pl-10'
-        : 'pl-4'
-      : undefined,
+    isSortable && align === undefined && !groupParams?.isFirstInGroup && 'pl-4',
     isPinned && getRowClassNamesWithoutOpacity(rowBackgroundColor),
     isPinned && isHighlighted && 'animate-row-highlight-no-opacity',
     compact && COMPACT_BODY_CELL,

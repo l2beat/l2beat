@@ -127,8 +127,8 @@ export function ProjectActivityChart({
           value={scale}
           onValueChange={(value) => setScale(value as ChartScale)}
         >
-          <RadioGroupItem value="symlog">LOG</RadioGroupItem>
           <RadioGroupItem value="linear">LIN</RadioGroupItem>
+          <RadioGroupItem value="symlog">LOG</RadioGroupItem>
         </RadioGroup>
       </div>
       <ActivityChartStatsPanel

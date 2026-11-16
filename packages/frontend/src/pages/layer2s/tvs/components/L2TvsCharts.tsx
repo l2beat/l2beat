@@ -197,17 +197,24 @@ function getStats(
   const total = newestDataPoint[2] + newestDataPoint[3] + newestDataPoint[4]
   const oldestTotal =
     oldestDataPoint[2] + oldestDataPoint[3] + oldestDataPoint[4]
-  const change = (oldestTotal === 0 ? 0 : total / oldestTotal) - 1
 
   if (unit === 'eth') {
-    // The chart rows are in USD; the stacked charts divide by each row's
-    // ETH price, so the headline does the same with the newest one.
+    // The chart rows are in USD; the stacked charts divide each row by its
+    // own ETH price, so the headline and its change do the same.
     const ethPrice = newestDataPoint[1]
-    if (!ethPrice) {
+    const oldestEthPrice = oldestDataPoint[1]
+    if (!ethPrice || !oldestEthPrice) {
       return undefined
     }
-    return { total: total / ethPrice, change }
+    return {
+      total: total / ethPrice,
+      change: getChange(total / ethPrice, oldestTotal / oldestEthPrice),
+    }
   }
 
-  return { total, change }
+  return { total, change: getChange(total, oldestTotal) }
+}
+
+function getChange(newest: number, oldest: number) {
+  return (oldest === 0 ? 0 : newest / oldest) - 1
 }

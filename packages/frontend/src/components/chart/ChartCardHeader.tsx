@@ -79,7 +79,7 @@ export function ChartCardHeader({
           {link ? (
             <a
               href={link.href}
-              className="-my-1.5 shrink-0 whitespace-nowrap py-1.5 font-medium text-label-value-13 text-secondary underline decoration-divider underline-offset-[0.3em] transition-colors hover:text-primary hover:decoration-current"
+              className="-my-1.5 shrink-0 whitespace-nowrap py-1.5 font-medium text-label-value-13 text-link underline underline-offset-[0.3em] transition-colors hover:text-blue-550"
             >
               {link.label}
             </a>
@@ -127,7 +127,7 @@ export function ChartCardHeader({
                       className="min-w-0 text-left text-label-value-13"
                     />
                     {rangeLabel && (
-                      <span className="text-secondary">{rangeLabel}</span>
+                      <span className="text-secondary">/ {rangeLabel}</span>
                     )}
                   </span>
                 )}
