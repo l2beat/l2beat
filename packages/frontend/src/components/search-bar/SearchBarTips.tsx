@@ -26,7 +26,7 @@ const SEARCH_TIPS: SearchTip[] = [
   {
     kind: 'Pages',
     how: 'By topic',
-    examples: examples('tvs', 'blobs', 'liveness'),
+    examples: examples('tvs', 'activity', 'liveness'),
   },
   {
     kind: 'Addresses',
@@ -115,7 +115,7 @@ export function Kbd({
   return (
     <kbd
       className={cn(
-        'flex h-5 min-w-5 select-none items-center justify-center rounded bg-icon-secondary px-1 font-bold font-mono text-2xs text-primary-invert leading-none',
+        'flex h-[18px] min-w-[18px] select-none items-center justify-center rounded bg-surface-secondary px-1 font-medium text-2xs text-secondary leading-none [font-family:inherit]',
         className,
       )}
     >
