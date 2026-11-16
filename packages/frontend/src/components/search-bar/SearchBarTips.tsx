@@ -16,8 +16,8 @@ interface SearchTip {
 const SEARCH_TIPS: SearchTip[] = [
   {
     kind: 'Projects',
-    how: 'By name, team or ticker: chains, L2s, L3s, bridges, zkVMs, privacy and DeFi',
-    examples: examples('arb', 'Uniswap', 'SOL'),
+    how: 'By name, team, ticker or chain id: chains, L2s, L3s, bridges, zkVMs, privacy and DeFi',
+    examples: examples('arb', 'Uniswap', 'SOL', '42161'),
   },
   {
     kind: 'Tokens',
