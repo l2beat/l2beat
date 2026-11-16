@@ -302,6 +302,9 @@ const ACTIVITY_RANGE_OPTIONS = ['30d', '90d', '180d', '1y', 'max'] as const
  * The change over the shown range in the metric's daily count, summed across
  * the three categories the figure above counts, as weekly averages like the
  * summary and home so one quiet day doesn't set it.
+ *
+ * A category with no data in the whole range is left out rather than voiding
+ * every day: the project filter empties categories it excludes.
  */
 function getRangeChange(
   data: RecategorisedActivityChartData | undefined,
@@ -309,9 +312,12 @@ function getRangeChange(
 ) {
   if (!data || data.resolution !== 'day') return undefined
   const offset = metric === 'uops' ? 1 : 5
+  const categories = [offset, offset + 1, offset + 2].filter((index) =>
+    data.data.some((point) => point[index] !== null),
+  )
   return computeWeeklyAverageChange(
     data.data.map((point): HomeSeriesPoint => {
-      const counts = point.slice(offset, offset + 3)
+      const counts = categories.map((index) => point[index] ?? null)
       return [
         point[0],
         counts.some((count) => count === null)
