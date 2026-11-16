@@ -134,7 +134,7 @@ function CriticalContracts({
       <CollapsibleContent>
         <div className="overflow-x-auto border-divider border-t">
           <table className="w-full min-w-[480px] border-collapse text-left text-xs md:text-sm">
-            <thead className="font-medium text-label-value-13">
+            <thead className="font-medium text-label-value-13 uppercase">
               <tr>
                 <th className="px-4 py-2 font-medium md:px-6">Contract</th>
                 <th className="px-4 py-2 font-medium md:whitespace-nowrap md:px-6">
