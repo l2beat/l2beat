@@ -58,11 +58,12 @@ export function ValueAndChangeSortingHeader<TData>({
     'Expected change-sort header to render a string',
   )
 
-  // A table can have several change columns, all called e.g. "7d".
+  // Every change column reads e.g. "7D", so the name adds the value column
+  // and says it sorts by change.
   const valueHeaderDef = header.column.columnDef.header
   const changeLabel =
     typeof valueHeaderDef === 'string'
-      ? `${valueHeaderDef} ${changeHeader}`
+      ? `${valueHeaderDef} ${changeHeader} change`
       : undefined
 
   return (
