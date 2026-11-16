@@ -14,7 +14,7 @@ describe(buildLiquidStakingSummary.name, () => {
       undefined,
       {
         yield: [point(stale, { lido: 0.03 }), point(today, { lido: null })].map(
-          (p) => ({ ...p, network: null, ethStaked: null }),
+          (p) => ({ ...p, network: null, ethStaked: null, ethStakedUsd: null }),
         ),
         costOfExit: [
           { ...point(stale, { lido: 1 }), estimated: [] },
@@ -42,8 +42,18 @@ describe(buildLiquidStakingSummary.name, () => {
       { valueUsd: 30_000_000_000, valueEth: 8_000_000, timestamp: today - 1 },
       {
         yield: [
-          { ...point(yesterday, {}), network: null, ethStaked: 32_000_000 },
-          { ...point(today, {}), network: null, ethStaked: 40_000_000 },
+          {
+            ...point(yesterday, {}),
+            network: null,
+            ethStaked: 32_000_000,
+            ethStakedUsd: null,
+          },
+          {
+            ...point(today, {}),
+            network: null,
+            ethStaked: 40_000_000,
+            ethStakedUsd: null,
+          },
         ],
         costOfExit: [],
       },
@@ -59,7 +69,12 @@ describe(buildLiquidStakingSummary.name, () => {
   it('has no share without the TVL in ETH or a stake under 3 days older', () => {
     const today = UnixTime.toStartOf(UnixTime.now(), 'day')
     const yieldChart = (timestamp: number) => [
-      { ...point(timestamp, {}), network: null, ethStaked: 32_000_000 },
+      {
+        ...point(timestamp, {}),
+        network: null,
+        ethStaked: 32_000_000,
+        ethStakedUsd: null,
+      },
     ]
 
     const withoutEth = buildLiquidStakingSummary(
