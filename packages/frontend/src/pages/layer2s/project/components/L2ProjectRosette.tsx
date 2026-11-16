@@ -18,7 +18,7 @@ export function ProjectL2Rosette({ project, size }: Props) {
   if (project.type === 'layer2') {
     return (
       <BigPizzaRosette
-        className="my-auto max-lg:hidden"
+        className="my-auto shrink-0 max-lg:hidden"
         values={project.rosette.self}
         isUnderReview={project.underReviewStatus === 'config'}
         size={size}
@@ -111,7 +111,7 @@ function RosetteLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="my-auto flex flex-col gap-3 max-lg:hidden">
+    <div className="my-auto flex shrink-0 flex-col gap-3 max-lg:hidden">
       {selector}
       {children}
     </div>

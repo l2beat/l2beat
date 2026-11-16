@@ -116,11 +116,10 @@ function Content({
         apiSelection={apiSelection}
         protocolData={protocolData}
       />
-      {projectEntry.header.links && projectEntry.header.links?.length > 0 && (
-        <div className="border-divider border-b px-4 md:hidden">
-          <MobileProjectLinks projectLinks={projectEntry.header.links} />
-        </div>
-      )}
+      <MobileProjectLinks
+        className="border-divider border-b px-4 md:hidden"
+        projectLinks={projectEntry.header.links ?? []}
+      />
       <TopTokenWidget
         className="md:mt-4"
         topToken={protocolData.topToken}

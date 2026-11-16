@@ -113,6 +113,9 @@ export function PrivacyFlowChart({
           scale: scale === 'linear' ? undefined : scaleSymlog,
           domain: 'autoIfSingle',
           tickCount: 4,
+          // Counts of deposits and withdrawals tick whole, like the tooltip;
+          // values keep the two decimals of every continuous axis.
+          integer: metric === 'count',
           format: (value) =>
             metric === 'count'
               ? formatInteger(value)

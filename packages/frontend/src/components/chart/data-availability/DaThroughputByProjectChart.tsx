@@ -24,7 +24,7 @@ import type { DaThroughputChartDataPoint } from '~/server/features/data-availabi
 import { formatRange } from '~/utils/dates'
 import { generateAccessibleColors } from '~/utils/generateColors'
 import type { ChartResolution } from '~/utils/range/range'
-import { getDaDataParams } from './getDaDataParams'
+import { formatDaAxisTick, getDaDataParams } from './getDaDataParams'
 import {
   getProjectChartMeta,
   type ProjectChartDataWithConfiguredThroughput,
@@ -264,7 +264,11 @@ export function DaThroughputByProjectChart({
         series={series}
         ariaLabel="Data throughput by project"
         syncedUntil={syncedUntil}
-        yAxis={{ unit: ` ${unit}`, tickCount: 4 }}
+        yAxis={{
+          format: formatDaAxisTick,
+          unit: ` ${unit}`,
+          tickCount: 4,
+        }}
         renderTooltip={(row, keys) => (
           <CustomTooltip
             row={row}

@@ -115,7 +115,7 @@ function NavigationListIndex(props: { index: number }) {
       className={cn(
         'relative flex size-5 shrink-0 items-center justify-center overflow-hidden rounded-lg text-center text-label-value-12',
         'bg-surface-tertiary text-secondary transition-colors duration-150 group-hover:text-primary motion-reduce:transition-none',
-        'group-data-[selected=true]:text-white',
+        'group-data-[selected=true]:font-semibold group-data-[selected=true]:text-white',
       )}
     >
       <div

@@ -38,6 +38,15 @@ import { PrivacyTrustedSetupCell } from './PrivacyTrustedSetupCell'
 
 const columnHelper = createColumnHelper<PrivacySummaryEntry>()
 
+/**
+ * Phones scroll the table sideways: starting the main amount at its column's
+ * left edge keeps it in the first view, as on the Layer 2s TVS page.
+ */
+const PHONE_LEFT_ALIGNED = {
+  headClassName: 'max-md:[&>div]:justify-start',
+  cellClassName: 'max-md:pl-0 max-md:text-left',
+}
+
 function MetricCell({ children }: { children: React.ReactNode }) {
   if (children === undefined || children === null) {
     return <NoDataBadge />
@@ -93,8 +102,14 @@ function getColumns(anonymitySetTooltip: string | undefined) {
 
         return (
           <ProjectNameInfoTooltip project={project}>
-            <TableLink href={ctx.row.original.href}>
-              <TwoRowCell>
+            <TableLink
+              href={ctx.row.original.href}
+              className="max-md:max-h-none"
+            >
+              {/* On phones a long name wraps instead of pushing TVL, the
+                  figure after the rosette, out of the first view, so the
+                  link grows past the shared 52px cap. */}
+              <TwoRowCell className="max-md:max-w-[90px] max-md:whitespace-normal">
                 <TwoRowCell.First>
                   <ProjectNameCell project={project} withInfoTooltip />
                 </TwoRowCell.First>
@@ -132,6 +147,10 @@ function getColumns(anonymitySetTooltip: string | undefined) {
           ),
         meta: {
           align: 'center',
+          // On phones the rosette key card sits right above the table; the
+          // icon's width goes to TVL, which then ends clear of the edge fade.
+          headClassName:
+            "max-md:pr-1 max-md:[&_[aria-label='More_info']]:hidden",
           tooltip: PRIVACY_ASSESSMENT.tooltip,
         },
       },
@@ -154,8 +173,9 @@ function getColumns(anonymitySetTooltip: string | undefined) {
             <ValueWithPercentageChange
               change={ctx.row.original.totalValueLockedChange7d}
               changePeriod="7D"
-              className="font-medium text-sm md:text-sm"
-              containerClassName="flex-nowrap justify-end"
+              // On phones the cell's 14px, as on the Layer 2s summary
+              className="font-medium md:text-sm"
+              containerClassName="flex-nowrap justify-end max-md:justify-start"
             >
               {formatCurrency(value, 'usd')}
             </ValueWithPercentageChange>
@@ -164,6 +184,7 @@ function getColumns(anonymitySetTooltip: string | undefined) {
         sortUndefined: 'last',
         meta: {
           align: 'right',
+          ...PHONE_LEFT_ALIGNED,
           tooltip:
             'Total USD value currently held across all tracked assets for the protocol, shown together with a percentage change compared to 7 days ago.',
         },
@@ -184,6 +205,7 @@ function getColumns(anonymitySetTooltip: string | undefined) {
       sortUndefined: 'last',
       meta: {
         align: 'right',
+        ...PHONE_LEFT_ALIGNED,
         tooltip: 'Total USD value deposited over the last 30 days.',
       },
     }),

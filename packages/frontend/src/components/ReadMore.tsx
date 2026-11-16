@@ -64,7 +64,11 @@ function CustomReadMore({
       </span>
       <span className={cn(onlyOnMobile && 'md:hidden')}> </span>
       <button
-        className={cn('cursor-pointer underline', onlyOnMobile && 'md:hidden')}
+        className={cn(
+          // ShowMoreText's quiet link: a divider-toned underline
+          'cursor-pointer underline decoration-divider underline-offset-[0.3em] transition-colors hover:decoration-current',
+          onlyOnMobile && 'md:hidden',
+        )}
         onClick={() => setCollapsed((collapsed) => !collapsed)}
       >
         <span className="group-data-[collapsed=false]:hidden">Read more</span>

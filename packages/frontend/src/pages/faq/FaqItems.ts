@@ -30,7 +30,7 @@ const items: { question: string; answer: string | string[] }[] = [
   },
   {
     question:
-      'Why do you need ETHBEAT when you already have DeFiLlama, growthepie and other analytics platforms?',
+      'Why do you need ETHBEAT when you already have DefiLlama, growthepie and other analytics platforms?',
     answer:
       'While those platforms are great, they primarily focus on tracking value locked in DeFi projects and other performance metrics across various chains. In comparison, ETHBEAT focuses on the decentralization and trust assumptions of the projects we track, such as Ethereum scaling projects (L2s and L3s), interop protocols and privacy protocols, and reports not just TVS but also various metrics related to the liveness and security of these projects.',
   },

@@ -25,3 +25,14 @@ export function getDaDataParams(max: number | undefined) {
     unit: 'GiB',
   }
 }
+
+/**
+ * Two decimals, or two significant digits below 1. Hidden series still set
+ * the unit, so a small visible series can get GiB ticks that would all
+ * read "0.00" at a fixed two decimals.
+ */
+export function formatDaAxisTick(value: number) {
+  return value === 0 || Math.abs(value) >= 1
+    ? value.toFixed(2)
+    : value.toPrecision(2)
+}

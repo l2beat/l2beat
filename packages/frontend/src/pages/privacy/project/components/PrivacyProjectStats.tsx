@@ -4,7 +4,10 @@ import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { PercentChange } from '~/components/PercentChange'
 import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 import type { PrivacyRelayerStat } from '~/server/features/privacy/types'
-import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
+import {
+  PERIOD_LABEL,
+  type PercentageChangePeriod,
+} from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import {
   PRIVACY_PROJECT_STATS_COPY as COPY,
@@ -198,11 +201,17 @@ function SummaryValueWithChange({
     <div className="flex items-center gap-2 whitespace-nowrap">
       {value}
       {change !== undefined && (
-        <PercentChange
-          value={change}
-          period={period}
-          textClassName="leading-none"
-        />
+        <span className="flex items-baseline gap-1 text-xs leading-none">
+          <PercentChange
+            className="min-w-0 text-left"
+            value={change}
+            period={period}
+            textClassName="leading-none"
+          />
+          <span className="font-medium text-secondary">
+            / {PERIOD_LABEL[period]}
+          </span>
+        </span>
       )}
     </div>
   )

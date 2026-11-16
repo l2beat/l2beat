@@ -28,7 +28,7 @@ export function AttestationNotice({
         href={attestation.explorerUrl}
         target="_blank"
         rel="noreferrer"
-        className="shrink-0 font-semibold text-paragraph-14 underline underline-offset-2 hover:no-underline max-md:pl-7 md:text-paragraph-15"
+        className="shrink-0 font-medium text-paragraph-14 underline decoration-divider underline-offset-[0.3em] transition-colors hover:decoration-current max-md:pl-7 md:text-paragraph-15"
       >
         View the attestation
       </a>

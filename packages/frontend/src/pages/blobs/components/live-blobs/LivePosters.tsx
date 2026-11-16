@@ -63,6 +63,11 @@ const SPARKLINE_CONTRAST = 3
 
 /** A phone shows the blobs instead, the number the table is about */
 const ACTIVITY_HIDDEN = 'max-md:hidden'
+/**
+ * On phones the table scrolls sideways, so the blobs start at their column's
+ * left edge and stay in the first view, as on the Layer 2s summary
+ */
+const PHONE_LEFT_ALIGNED_HEAD = 'max-md:[&>div]:justify-start'
 /** Blobs over batches, both shown, so it gives way first */
 const PER_BATCH_HIDDEN = 'max-2xl:hidden'
 
@@ -82,7 +87,12 @@ const COLUMNS: {
     className: ACTIVITY_HIDDEN,
     tooltip: `Blobs in every ${(BUCKET_SLOTS * SLOT_SECONDS) / 60} minutes of the window, newest on the right`,
   },
-  { label: 'Blobs', align: 'right', tooltip: 'Blobs posted in the window' },
+  {
+    label: 'Blobs',
+    align: 'right',
+    className: PHONE_LEFT_ALIGNED_HEAD,
+    tooltip: 'Blobs posted in the window',
+  },
   {
     label: 'Posted',
     align: 'right',
@@ -289,14 +299,15 @@ const PosterRow = memo(function PosterRow({
           />
         </TableLink>
       </TableCell>
-      <TableCell align="right" className="font-bold">
+      <TableCell align="right" className="font-bold max-md:text-left">
         <span className="relative">
           <RollingNumber value={blobs} format={formatWhole} />
           {/* beside the number rather than above it, so it stays in its own
-              row and never rises under the header pinned over the first */}
+              row and never rises under the header pinned over the first;
+              on phones after it, clear of the name */}
           <Pop
             arrival={arrival}
-            className="absolute inset-y-0 right-full mr-1.5 flex items-center text-label-value-12"
+            className="absolute inset-y-0 right-full mr-1.5 flex items-center text-label-value-12 max-md:right-auto max-md:left-full max-md:mr-0 max-md:ml-1.5"
           />
         </span>
       </TableCell>

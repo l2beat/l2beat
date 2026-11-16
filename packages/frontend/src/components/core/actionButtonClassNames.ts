@@ -5,7 +5,7 @@ const ACTION_BUTTON_FOCUS =
 
 /** A primary action: the brand pink, like the selected state of toggles. */
 export const ACTION_BUTTON_CLASS = cn(
-  'inline-flex h-8 w-fit items-center justify-center gap-1.5 whitespace-nowrap rounded-md bg-brand px-3 font-medium text-label-value-13 text-white leading-4 transition-colors hover:bg-brand/90',
+  'inline-flex h-8 w-fit items-center justify-center gap-1.5 whitespace-nowrap rounded-md bg-brand px-3 font-semibold text-label-value-13 text-white leading-4 transition-colors hover:bg-brand/90',
   ACTION_BUTTON_FOCUS,
 )
 
@@ -15,7 +15,7 @@ export const ACTION_BUTTON_CLASS = cn(
  * an outline there and a fill from md.
  */
 export const SECTION_ACTION_BUTTON_CLASS = cn(
-  'flex w-full items-center justify-center whitespace-nowrap rounded-md border border-brand p-3 font-medium text-label-value-13 text-primary leading-4 transition-colors hover:bg-brand/10',
+  'flex w-full items-center justify-center whitespace-nowrap rounded-md border border-brand p-3 font-semibold text-label-value-13 text-primary leading-4 transition-colors hover:bg-brand/10',
   'md:h-8 md:w-fit md:border-0 md:bg-brand md:px-3 md:py-0 md:text-white md:hover:bg-brand/90',
   ACTION_BUTTON_FOCUS,
 )

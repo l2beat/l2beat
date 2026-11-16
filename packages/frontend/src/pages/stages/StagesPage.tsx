@@ -16,7 +16,7 @@ export function StagesPage({ content, lastUpdated, ...props }: Props) {
     <AppLayout {...props}>
       <SideNavLayout>
         <MainPageHeader>Stages Framework</MainPageHeader>
-        <PrimaryCard className="md:p-8">
+        <PrimaryCard>
           <p className="text-brand-deep text-subtitle-12 uppercase">
             Last updated on {lastUpdated}
           </p>

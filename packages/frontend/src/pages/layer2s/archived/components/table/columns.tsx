@@ -78,6 +78,10 @@ export const l2ArchivedColumns = [
     },
     meta: {
       align: 'right',
+      // Phones scroll the table sideways: the value starts at the column's
+      // left edge, where the eye lands, as on the TVS page.
+      headClassName: 'max-md:[&>div]:justify-start',
+      cellClassName: 'max-md:text-left',
       tooltip:
         'Value secured is the sum of canonically bridged tokens, externally bridged tokens, and native tokens.',
     },

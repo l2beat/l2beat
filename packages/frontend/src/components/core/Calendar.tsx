@@ -203,7 +203,7 @@ function CalendarDayButton({
       data-range-end={modifiers.range_end}
       data-range-middle={modifiers.range_middle}
       className={cn(
-        'flex size-full flex-col items-center justify-center gap-1 font-medium text-label-value-14 leading-none data-[range-end=true]:bg-brand data-[range-middle=true]:bg-surface-secondary data-[range-start=true]:bg-brand data-[selected-single=true]:bg-brand data-[range-end=true]:text-white data-[range-middle=true]:text-primary data-[range-start=true]:text-white data-[selected-single=true]:text-white group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 dark:hover:text-white [&>span]:text-xs [&>span]:opacity-70',
+        'flex size-full flex-col items-center justify-center gap-1 font-medium text-label-value-14 leading-none data-[range-end=true]:bg-brand data-[range-middle=true]:bg-surface-secondary data-[range-start=true]:bg-brand data-[selected-single=true]:bg-brand data-[range-end=true]:font-semibold data-[range-start=true]:font-semibold data-[selected-single=true]:font-semibold data-[range-end=true]:text-white data-[range-middle=true]:text-primary data-[range-start=true]:text-white data-[selected-single=true]:text-white group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 dark:hover:text-white [&>span]:text-xs [&>span]:opacity-70',
         // 'group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-[3px] group-data-[focused=true]/day:ring-ring/50',
         defaultClassNames.day,
         className,

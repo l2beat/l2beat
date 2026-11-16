@@ -27,14 +27,14 @@ export function InteropCollapsibleSubsection({
       <Subsection
         title={
           <SubsectionHeading className="font-semibold text-label-value-16">
-            <CollapsibleTrigger className="flex w-full cursor-pointer items-center justify-between gap-3 px-4 py-3 md:px-6">
+            <CollapsibleTrigger className="flex w-full cursor-pointer items-center justify-between gap-3 px-4 py-3">
               {title}
               <ChevronIcon className="size-4 shrink-0 fill-secondary transition-transform group-data-[state=open]/Collapsible:rotate-180" />
             </CollapsibleTrigger>
           </SubsectionHeading>
         }
       >
-        <CollapsibleContent className="px-4 pb-4 md:px-6">
+        <CollapsibleContent className="px-4 pb-4">
           {children}
         </CollapsibleContent>
       </Subsection>

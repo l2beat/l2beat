@@ -119,7 +119,10 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
             align: 'right',
             // Its right-aligned figures need no lead; the stage column's
             // right padding keeps them apart, so the table fits at 1280.
-            cellClassName: 'pl-0',
+            // Phones scroll the table sideways: the total starts at the
+            // column's left edge, where the eye lands, as on the TVS page.
+            headClassName: 'max-md:[&>div]:justify-start',
+            cellClassName: 'pl-0 max-md:text-left',
             tooltip:
               'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens, shown together with a percentage change compared to 7 days ago.',
           },

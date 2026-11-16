@@ -20,7 +20,6 @@ import {
 import { VerticalSeparator } from '~/components/core/VerticalSeparator'
 import { CustomLink } from '~/components/link/CustomLink'
 import { PercentageChangeTooltipContent } from '~/components/PercentChange'
-import { DiscoUiLink } from '~/components/projects/links/DiscoUiLink'
 import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLinks'
 import { ProjectInteropMetrics } from '~/components/projects/ProjectInteropMetrics'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
@@ -57,7 +56,7 @@ export function ProjectL2Summary({ project }: Props) {
       className="w-full scroll-mt-[100vh] border-divider px-4 max-md:border-b md:rounded-xl md:bg-surface-primary md:px-6 md:py-5"
     >
       <div className="flex">
-        <div className="w-full">
+        <div className="w-full min-w-0">
           <ProjectL2Stats project={project} />
           <HorizontalSeparator className="mt-5 mb-4" />
           <div
@@ -233,15 +232,14 @@ export function ProjectL2Summary({ project }: Props) {
       {project.discoUiHref && (
         <div className="md:hidden">
           <HorizontalSeparator className="max-md:-mx-4 mt-4 mb-2 max-md:w-[calc(100%+2rem)] md:hidden" />
-          <div className="flex items-center justify-between">
-            <a
-              className="text-link text-xs underline"
-              href={project.discoUiHref}
-            >
-              Explore more in Discovery UI
-            </a>
-            <DiscoUiLink href={project.discoUiHref} />
-          </div>
+          <a
+            className="text-link text-xs underline"
+            href={project.discoUiHref}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Explore in Disco
+          </a>
         </div>
       )}
 

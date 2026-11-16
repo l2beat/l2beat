@@ -85,7 +85,13 @@ export function ChartContainer<T extends { timestamp: number }>({
       <div
         ref={ref}
         data-chart-container
-        className={cn('group relative', size === 'fill' && 'h-full')}
+        className={cn(
+          'group relative',
+          // a wrapped legend's rows past the first: they add height under
+          // the chart instead of taking it from the plot
+          'pb-[calc(var(--chart-legend-height,18px)_-_18px)]',
+          size === 'fill' && 'h-full',
+        )}
         aria-busy={isPlaceholderData || undefined}
       >
         <ChartSettledSize
@@ -122,7 +128,16 @@ export function ChartContainer<T extends { timestamp: number }>({
             {legend &&
               shouldMountChart &&
               (hasData || isLoading || noDataSourcesSelected) && (
-                <ChartLegend leading={legendLeading} align={legendAlign} />
+                <ChartLegend
+                  leading={legendLeading}
+                  align={legendAlign}
+                  // lays out as one row, so the plot keeps its height
+                  className={
+                    keepsHintRoom
+                      ? 'mb-[calc(30px_-_var(--chart-legend-height,18px))]'
+                      : 'mb-[calc(18px_-_var(--chart-legend-height,18px))]'
+                  }
+                />
               )}
           </div>
         </ChartSettledSize>
@@ -148,10 +163,8 @@ export function ChartContainer<T extends { timestamp: number }>({
           <Logo
             animated={false}
             className={cn(
-              'pointer-events-none absolute right-3 bottom-12 h-8 w-20 opacity-50 group-has-[.chart-legend]:bottom-14',
-              keepsHintRoom
-                ? 'bottom-[60px] group-has-[.chart-legend]:bottom-[68px]'
-                : 'bottom-12 group-has-[.chart-legend]:bottom-14',
+              'pointer-events-none absolute right-3 h-8 w-20 opacity-50',
+              watermarkBottomClassName(keepsHintRoom),
               logoClassName,
             )}
           />
@@ -161,9 +174,10 @@ export function ChartContainer<T extends { timestamp: number }>({
             project={project}
             className={cn(
               'pointer-events-none absolute left-3 opacity-50',
+              // 8px above the watermark, which follows the legend's height
               keepsHintRoom
-                ? 'bottom-[68px] group-has-[.chart-legend]:bottom-[76px]'
-                : 'bottom-14 group-has-[.chart-legend]:bottom-16',
+                ? 'bottom-[68px] group-has-[.chart-legend]:bottom-[calc(58px_+_var(--chart-legend-height,18px))]'
+                : 'bottom-14 group-has-[.chart-legend]:bottom-[calc(46px_+_var(--chart-legend-height,18px))]',
             )}
           />
         )}
@@ -177,4 +191,15 @@ export function ChartContainer<T extends { timestamp: number }>({
       </div>
     </ChartContext.Provider>
   )
+}
+
+/**
+ * The watermark's offset: above the x labels and the
+ * legend, whose wrapped height ChartLegend sets as `--chart-legend-height`
+ * (unset, one 18px row). The onboarding hint below the legend adds 12px.
+ */
+function watermarkBottomClassName(keepsHintRoom: boolean) {
+  return keepsHintRoom
+    ? 'bottom-[60px] group-has-[.chart-legend]:bottom-[calc(50px_+_var(--chart-legend-height,18px))]'
+    : 'bottom-12 group-has-[.chart-legend]:bottom-[calc(38px_+_var(--chart-legend-height,18px))]'
 }

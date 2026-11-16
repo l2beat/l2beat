@@ -3,10 +3,9 @@ import {
   formatCurrency,
   pluralize,
 } from '@l2beat/shared-pure'
-import chunk from 'lodash/chunk'
 import compact from 'lodash/compact'
 import isEmpty from 'lodash/isEmpty'
-import { Fragment } from 'react'
+import type { ReactNode } from 'react'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
@@ -56,7 +55,6 @@ export function ProjectL2Stats({ project, className }: Props) {
               </Tooltip>
             )}
             <ValueWithPercentageChange
-              containerClassName="flex-nowrap"
               className={HEADLINE_FIGURE_CLASS}
               changeClassName="text-label-value-14 font-bold"
               changeContainerClassName="min-w-0"
@@ -90,7 +88,6 @@ export function ProjectL2Stats({ project, className }: Props) {
               </Tooltip>
             )}
             <ValueWithPercentageChange
-              containerClassName="flex-nowrap"
               change={project.header.activity.uopsWeeklyChange}
               changePeriod={project.header.activity.uopsWeeklyChangePeriod}
               className={HEADLINE_FIGURE_CLASS}
@@ -181,32 +178,46 @@ export function ProjectL2Stats({ project, className }: Props) {
     ) : undefined,
   ])
 
-  const groups = stats.length > 4 ? 4 : 3
-  const partitioned = chunk(stats, groups)
+  // Four to a row when they fit; a narrower card (1280px screens, beside the
+  // rosette) takes three, so no value wraps. A rule follows every full row of
+  // either count, and the container query shows the set that applies.
+  const fourPerRow = stats.length > 4
+  const cells: ReactNode[] = []
+  stats.forEach((stat, i) => {
+    cells.push(stat)
+    const count = i + 1
+    if (count === stats.length) return
+    if (count % 3 === 0) {
+      cells.push(
+        <HorizontalSeparator
+          key={`rule-3-${count}`}
+          className={cn(
+            'col-span-full my-1 max-md:hidden',
+            fourPerRow && 'md:@min-[600px]/stats:hidden',
+          )}
+        />,
+      )
+    }
+    if (fourPerRow && count % 4 === 0) {
+      cells.push(
+        <HorizontalSeparator
+          key={`rule-4-${count}`}
+          className="col-span-full my-1 hidden md:@min-[600px]/stats:block"
+        />,
+      )
+    }
+  })
 
   return (
-    <div
-      className={cn(
-        'grid h-fit grid-cols-1 gap-x-6 gap-y-3',
-        groups === 3 && 'md:grid-cols-[repeat(3,auto)]',
-        groups === 4 && 'md:grid-cols-[repeat(4,auto)]',
-        className,
-      )}
-    >
-      {partitioned.map((statGroup, i) => {
-        const isLastGroup = i === partitioned.length - 1
-
-        return (
-          <Fragment key={i}>
-            {statGroup.map((stat, j) => (
-              <Fragment key={`${i}-${j}`}>{stat}</Fragment>
-            ))}
-            {!isLastGroup && (
-              <HorizontalSeparator className="col-span-full my-1 max-md:hidden" />
-            )}
-          </Fragment>
-        )
-      })}
+    <div className={cn('@container/stats', className)}>
+      <div
+        className={cn(
+          'grid h-fit grid-cols-1 gap-x-6 gap-y-3 md:grid-cols-[repeat(3,auto)]',
+          fourPerRow && 'md:@min-[600px]/stats:grid-cols-[repeat(4,auto)]',
+        )}
+      >
+        {cells}
+      </div>
     </div>
   )
 }
