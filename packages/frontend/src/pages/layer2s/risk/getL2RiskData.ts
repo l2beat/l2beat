@@ -28,7 +28,7 @@ export async function getL2RiskData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        name: 'Risk Analysis',
+        name: 'Risk analysis',
         description:
           'Understand the risks of Ethereum scaling solutions using ETHBEAT’s assessments.',
         url: req.originalUrl,

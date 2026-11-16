@@ -28,8 +28,8 @@ export async function getL2RiskStateValidationData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        name: 'State Validation',
-        title: 'Risk Analysis - ETHBEAT',
+        name: 'State validation',
+        title: 'Risk analysis - ETHBEAT',
         description:
           'Understand the risks of Ethereum scaling solutions using ETHBEAT’s assessments.',
         url: req.originalUrl,

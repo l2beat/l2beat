@@ -140,6 +140,7 @@ export function ActivityChart({
           scale: scale === 'linear' ? undefined : scaleSymlog,
           domain: 'autoIfSingle',
           unit: metric === 'tps' ? ' TPS' : ' UOPS',
+          format: (value) => formatActivityCount(value),
           tickCount: tickCount ?? 3,
         }}
         syncedUntil={syncedUntil}

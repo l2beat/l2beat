@@ -44,7 +44,7 @@ export function InteropTopList({
           value's header over its column. */}
       <div className="flex items-baseline justify-between gap-4">
         <h3 className={HOME_TEXT.sectionTitle}>{title}</h3>
-        <span className={HOME_TEXT.meta}>Volume</span>
+        <span className={HOME_TEXT.label}>Volume</span>
       </div>
       {/* Stacked from lg, the list takes the height left and shows as many
           whole rows as fit. */}
