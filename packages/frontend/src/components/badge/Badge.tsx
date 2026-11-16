@@ -12,7 +12,7 @@ export const badgeVariants = cva('inline rounded text-center font-medium', {
   variants: {
     type: {
       error: 'bg-negative/20 text-negative',
-      gray: 'border border-divider bg-surface-secondary font-medium text-secondary',
+      gray: 'border border-[#CCDBFF] bg-[#D5E5F1] font-medium text-secondary dark:border-[#1B3C54] dark:bg-[#192E3C]',
       warning: 'bg-yellow-500 text-black',
       brightYellow: 'bg-yellow-200 text-purple-700',
       pink: 'bg-brand text-white',
