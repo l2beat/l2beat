@@ -70,7 +70,9 @@ export function TrustedSetupsByProofSystemSection({
 }) {
   return (
     <div className="flex flex-col gap-2 md:gap-3">
-      <h2 className="font-semibold text-label-value-15">Trusted setups</h2>
+      <h2 className="font-semibold text-subtitle-12 uppercase">
+        Trusted setups
+      </h2>
       {/* Mobile */}
       <div className="space-y-4 md:hidden">
         {Object.entries(trustedSetupsByProofSystem).map(

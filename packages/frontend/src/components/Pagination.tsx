@@ -52,10 +52,7 @@ function PaginationLink({
         'flex h-7 min-w-7 items-center justify-center rounded-md px-2',
         'font-medium text-label-value-12 transition-colors',
         'disabled:cursor-not-allowed disabled:opacity-40',
-        // The section's controls add no colour: the brand stays for data.
-        isActive
-          ? 'border-primary bg-primary text-primary-invert'
-          : 'border-divider text-primary hover:bg-surface-secondary',
+        !isActive && 'border-divider text-primary hover:bg-surface-secondary',
         className,
       )}
     >
