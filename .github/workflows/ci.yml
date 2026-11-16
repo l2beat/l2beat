@@ -275,9 +275,11 @@ jobs:
         with:
           packages: '@l2beat/frontend'
 
-      # WebKit's system libraries take ~20 s for dpkg to unpack, even from
-      # cache. They need nothing from pnpm, so they install alongside
-      # setup and the build instead of after them
+      # WebKit's system libraries need nothing from pnpm, so they install
+      # alongside setup and the build instead of after them. Main caches a
+      # snapshot of the installed files, which restores in seconds; dpkg
+      # takes 25-30 s even from cached .deb files, which stay as the
+      # fallback for a new runner image
       - name: Read runner image and Playwright version
         if: steps.affected.outputs.affected == 'true' && matrix.webkit
         id: image
@@ -286,8 +288,16 @@ jobs:
           echo "version=$ImageOS-$ImageVersion" >> "$GITHUB_OUTPUT"
           echo "playwright=$(grep -oP '^  playwright@\K[0-9.]+(?=:)' pnpm-lock.yaml | head -1)" >> "$GITHUB_OUTPUT"
 
-      - name: Restore WebKit's system packages
+      - name: Restore WebKit's system libraries
         if: steps.affected.outputs.affected == 'true' && matrix.webkit
+        id: webkit-snapshot
+        uses: actions/cache/restore@v6
+        with:
+          path: ~/.cache/webkit-libs
+          key: webkit-libs-v2-${{ steps.image.outputs.version }}-${{ steps.image.outputs.playwright }}
+
+      - name: Restore WebKit's system packages
+        if: steps.affected.outputs.affected == 'true' && matrix.webkit && steps.webkit-snapshot.outputs.cache-hit != 'true'
         id: webkit-packages
         uses: actions/cache/restore@v6
         with:
@@ -302,6 +312,7 @@ jobs:
         timeout-minutes: 3
         env:
           PLAYWRIGHT_VERSION: ${{ steps.image.outputs.playwright }}
+          SAVE_SNAPSHOT: ${{ github.ref == 'refs/heads/main' && steps.webkit-snapshot.outputs.cache-hit != 'true' }}
         run: .github/scripts/install-webkit-libs.sh
 
       - name: Set up pnpm and install dependencies
@@ -335,8 +346,15 @@ jobs:
       # Only main saves the cache, as with pnpm's. autoclean drops the
       # versions the mirror no longer serves, so a partial restore does not
       # pile them up
+      - name: Save WebKit's system libraries
+        if: steps.affected.outputs.affected == 'true' && matrix.webkit && github.ref == 'refs/heads/main' && steps.webkit-snapshot.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v6
+        with:
+          path: ~/.cache/webkit-libs
+          key: ${{ steps.webkit-snapshot.outputs.cache-primary-key }}
+
       - name: Collect WebKit's system packages
-        if: steps.affected.outputs.affected == 'true' && matrix.webkit && github.ref == 'refs/heads/main' && steps.webkit-packages.outputs.cache-hit != 'true'
+        if: steps.affected.outputs.affected == 'true' && matrix.webkit && github.ref == 'refs/heads/main' && steps.webkit-snapshot.outputs.cache-hit != 'true' && steps.webkit-packages.outputs.cache-hit != 'true'
         run: |
           sudo apt-get autoclean
           rm -rf ~/.cache/webkit-packages
@@ -344,7 +362,7 @@ jobs:
           cp /var/cache/apt/archives/*.deb ~/.cache/webkit-packages
 
       - name: Save WebKit's system packages
-        if: steps.affected.outputs.affected == 'true' && matrix.webkit && github.ref == 'refs/heads/main' && steps.webkit-packages.outputs.cache-hit != 'true'
+        if: steps.affected.outputs.affected == 'true' && matrix.webkit && github.ref == 'refs/heads/main' && steps.webkit-snapshot.outputs.cache-hit != 'true' && steps.webkit-packages.outputs.cache-hit != 'true'
         uses: actions/cache/save@v6
         with:
           path: ~/.cache/webkit-packages
