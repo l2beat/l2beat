@@ -28,7 +28,7 @@ export function StageBadge({
     <div className={cn(inline && 'flex items-center gap-1.5', className)}>
       <div
         className={cn(
-          'inline-flex h-[18px] w-[60px] items-center justify-center rounded text-center font-medium text-[13px] leading-none! md:h-[22px] md:w-[66px] md:text-xs',
+          'inline-flex h-[18px] w-[60px] items-center justify-center rounded text-center font-medium text-[13px] uppercase leading-none! md:h-[22px] md:w-[66px] md:text-xs',
           getStageBadgeClassName(stage),
         )}
       >
