@@ -34,7 +34,7 @@ describe('design rules (DESIGN.md)', () => {
   })
 
   it('does not cap the line length of research and markdown prose', () => {
-    const cap = /max-w-prose|max-w-\[\d+ch\]/
+    const cap = /max-w-prose|max-w-\[\d+(?:\.\d+)?ch\]/
     expect([
       ...filesMatching(join(SRC, 'components/markdown'), cap),
       ...filesMatching(join(SRC, 'components/projects'), cap),
