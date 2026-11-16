@@ -5,6 +5,10 @@
 # (PLAYWRIGHT_VERSION) through npx.
 set -euo pipefail
 
+# An empty version would make npx install the latest Playwright, whose
+# libraries may not match the browsers the tests run
+: "${PLAYWRIGHT_VERSION:?not found in pnpm-lock.yaml}"
+
 mkdir -p ~/.cache/webkit-packages
 find ~/.cache/webkit-packages -name '*.deb' -exec sudo cp -t /var/cache/apt/archives {} +
 

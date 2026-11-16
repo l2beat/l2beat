@@ -39,12 +39,12 @@ slowest one. That is about 1.5 min now.
 
 The current runners:
 
-| Runner            | Arguments                                     |
-| ----------------- | --------------------------------------------- |
-| Chromium 1/2, 2/2 | `--project chromium --shard N/2`              |
+| Runner            | Arguments                                          |
+| ----------------- | -------------------------------------------------- |
+| Chromium 1/2, 2/2 | `--project chromium --shard N/2`                   |
 | perf 1/2          | `--project perf --no-deps --grep-invert "$PERF_2"` |
-| perf 2/2          | `--project perf --no-deps --grep "$PERF_2"`   |
-| blobs perf        | `--project "blobs perf" --no-deps`            |
+| perf 2/2          | `--project perf --no-deps --grep "$PERF_2"`        |
+| blobs perf        | `--project "blobs perf" --no-deps`                 |
 
 `PERF_2` lists the perf folders the second perf runner takes
 (`token-graph-perf/|blobs-webkit-perf/`, about 50 s); the first takes every
