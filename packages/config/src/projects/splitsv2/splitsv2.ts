@@ -110,7 +110,7 @@ export const splitsv2: BaseProject = {
       ],
       additionalConsiderations: [
         'In a push split, a token that refuses to pay one recipient pays none of them. A token issuer can cause this by blacklisting a single recipient.',
-        'A token issuer that blacklists the Warehouse freezes that token for every recipient.',
+        'A token issuer that blacklists the Warehouse freezes every balance of that token held there.',
         'In a push split of up to about ten recipients, a recipient contract can block all ETH payouts.',
         "A split's owner, where its creator set one, can pause its payouts.",
       ],
@@ -125,7 +125,7 @@ export const splitsv2: BaseProject = {
       ],
       additionalConsiderations: [
         'As published, Splits Lite reads the chain through Alchemy. Running it takes an Alchemy key and a WalletConnect project ID.',
-        'Splits Lite creates push splits only and withdraws from the Warehouse only as part of a payout. A pull split, or a withdrawal on its own, takes the SDK or a direct contract call.',
+        'Splits Lite has no way to create a pull split or to withdraw from the Warehouse outside a payout. Both take the SDK or a direct contract call.',
       ],
     },
     privacy: {
