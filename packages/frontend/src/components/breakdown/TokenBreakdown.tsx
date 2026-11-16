@@ -3,8 +3,11 @@ import type {
   WarningWithSentiment,
 } from '@l2beat/config'
 import { formatCurrency } from '@l2beat/shared-pure'
+import {
+  TooltipRow,
+  TooltipShare,
+} from '~/components/core/tooltip/TooltipParts'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
-import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import { HorizontalSeparator } from '../core/HorizontalSeparator'
 import { Square } from '../Square'
@@ -92,70 +95,50 @@ export function TokenBreakdownTooltipContent({
   ]
 
   return (
-    <div className="space-y-2 max-md:max-w-xs">
+    <div className="flex flex-col gap-2 max-md:max-w-xs">
       {total === 0 ? (
         <span>No data</span>
       ) : (
         <>
-          <div className="flex flex-col gap-1">
-            {values.map(
-              (v, i) =>
-                v.value > 0 && (
-                  <div
-                    key={i}
-                    className="flex items-center justify-between gap-x-6"
-                  >
-                    <span className="flex items-center gap-1">
-                      <Square
-                        variant={v.variant}
-                        size="small"
-                        className="-top-px relative"
-                      />
-                      <span className="font-medium text-label-value-15">
-                        {v.title}
-                      </span>
-                    </span>
-                    <span>
-                      <span className="mr-1 font-bold text-label-value-15">
-                        {formatCurrency(v.value, 'usd')}
-                      </span>
-                      <span className="font-medium text-label-value-15 text-secondary">
-                        ({formatPercent(v.value / total)})
-                      </span>
-                    </span>
-                  </div>
-                ),
-            )}
-          </div>
+          {values.map(
+            (v) =>
+              v.value > 0 && (
+                <TooltipRow
+                  key={v.variant}
+                  gap="gap-x-6"
+                  indicator={<Square variant={v.variant} size="small" />}
+                  label={v.title}
+                >
+                  {formatCurrency(v.value, 'usd')}{' '}
+                  <TooltipShare value={v.value / total} />
+                </TooltipRow>
+              ),
+          )}
           {associated > 0 && (
             <>
               <HorizontalSeparator />
-              <div className="flex items-center justify-between gap-x-6">
-                {associatedTokens.map((t) => {
-                  return (
-                    <span className="flex items-center gap-1" key={t.symbol}>
-                      {t.icon && (
-                        <img
-                          src={t.icon}
-                          alt={t.symbol}
-                          className="size-4 rounded-full"
-                        />
-                      )}
-                      <span className="font-medium text-label-value-15 leading-0">
+              <TooltipRow
+                gap="gap-x-6"
+                label={
+                  <span className="flex items-center gap-1.5">
+                    {associatedTokens.map((t) => (
+                      <span className="flex items-center gap-1" key={t.symbol}>
+                        {t.icon && (
+                          <img
+                            src={t.icon}
+                            alt={t.symbol}
+                            className="size-4 rounded-full"
+                          />
+                        )}
                         {t.symbol}
                       </span>
-                    </span>
-                  )
-                })}
-                <span>
-                  <span className="mr-1 font-bold text-label-value-15">
-                    {formatCurrency(associated, 'usd')}
+                    ))}
                   </span>
-                  <span className="font-medium text-label-value-15 text-secondary">
-                    ({formatPercent(associated / total)})
-                  </span>
-                </span>
-              </div>
+                }
+              >
+                {formatCurrency(associated, 'usd')}{' '}
+                <TooltipShare value={associated / total} />
+              </TooltipRow>
             </>
           )}
         </>
@@ -163,6 +146,7 @@ export function TokenBreakdownTooltipContent({
       {tvsWarnings?.map((warning, i) => (
         <WarningBar
           key={`tvs-warning-${i}`}
+          compact
           icon={RoundedWarningIcon}
           text={warning.value}
           color={sentimentToWarningBarColor(warning.sentiment)}
