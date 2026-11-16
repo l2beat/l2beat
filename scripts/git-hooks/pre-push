@@ -42,6 +42,24 @@ base_for() {
   fi
 }
 
+# Paths one a line, unquoted: core.quotePath=false keeps non-ASCII names as
+# they are. Git still quotes a name with a quote, backslash or control
+# character; the repo has none, so such a name stops the push.
+diff_names() {
+  git -c core.quotePath=false diff --name-only "$@"
+}
+
+# Fills the array named $1 with the non-empty lines of $2, so paths with
+# spaces stay whole
+lines_to_array() {
+  eval "$1=()"
+  local line
+  while IFS= read -r line; do
+    [[ -n "$line" ]] && eval "$1+=(\"\$line\")"
+  done <<< "$2"
+  return 0
+}
+
 # Files in what the push adds, one list for Biome (the files that exist) and
 # one for picking packages to typecheck (deletions too: a deleted module can
 # break the files that import it)
@@ -51,14 +69,17 @@ touched=""
 while read -r _local_ref local_sha _remote_ref remote_sha; do
   [[ "$local_sha" == "$zero" ]] && continue # deleting a branch
   base=$(base_for "$local_sha" "$remote_sha")
-  existing+=$(git diff --name-only --diff-filter=ACMR "$base" "$local_sha")$'\n'
-  changed=$(git diff --name-only --diff-filter=ACMRD "$base" "$local_sha")
+  existing+=$(diff_names --diff-filter=ACMR "$base" "$local_sha")$'\n'
+  changed=$(diff_names --diff-filter=ACMRD "$base" "$local_sha")
   touched+="$changed"$'\n'
   pushed+=("$local_sha")
 done
 existing=$(sed '/^$/d' <<< "$existing" | sort -u)
 touched=$(sed '/^$/d' <<< "$touched" | sort -u)
 [[ -z "$touched" ]] && exit 0
+if grep -q '^"' <<< "$touched"; then
+  fail "can't check a file name git has to quote:"$'\n'"$(grep '^"' <<< "$touched")"
+fi
 
 packages=$(grep -E '^packages/[^/]+/.*\.(ts|tsx|mts|cts)$' <<< "$touched" |
   cut -d/ -f1,2 | sort -u || true)
@@ -68,14 +89,15 @@ for package in $packages; do
     typechecked+="$package"$'\n'
 done
 typechecked=$(sed '/^$/d' <<< "$typechecked")
+[[ -z "$existing" && -z "$typechecked" ]] && exit 0
 
 # What the checks read must be what is pushed: the changed files, and every
 # file of the packages they typecheck, tracked or not
-scope=$(printf '%s\n%s\n' "$existing" "$typechecked" | sed '/^$/d')
+lines_to_array scope "$(printf '%s\n%s\n' "$existing" "$typechecked")"
 while IFS= read -r sha; do
   dirty=$(
-    git diff --name-only "$sha" -- $scope
-    git ls-files --others --exclude-standard -- $scope
+    diff_names "$sha" -- "${scope[@]}"
+    git -c core.quotePath=false ls-files --others --exclude-standard -- "${scope[@]}"
   )
   if [[ -n "$dirty" ]]; then
     fail "the working tree differs from the pushed commit ${sha:0:10} in:"$'\n'"$dirty"$'\n'"commit or stash these, or check out the branch you push, then push again"
@@ -86,15 +108,14 @@ start=$(now)
 status=0
 
 if [[ -n "$existing" ]]; then
-  count=$(wc -l <<< "$existing" | tr -d ' ')
-  echo "pre-push: Biome on $count changed files"
-  flags="--no-errors-on-unmatched --files-ignore-unknown=true"
+  lines_to_array files "$existing"
+  echo "pre-push: Biome on ${#files[@]} changed files"
+  flags=(--no-errors-on-unmatched --files-ignore-unknown=true)
   # Formatting and import order, then lint. Biome 2.3 still prints lint
   # findings with the linter off, so lint runs only when the first step
   # passes, and a finding is not shown twice.
-  # shellcheck disable=SC2086 # file names in this repo have no spaces
-  pnpm exec biome check --linter-enabled=false $flags $existing &&
-    pnpm exec biome lint --skip=project $flags $existing || status=1
+  pnpm exec biome check --linter-enabled=false "${flags[@]}" "${files[@]}" &&
+    pnpm exec biome lint --skip=project "${flags[@]}" "${files[@]}" || status=1
 fi
 
 if command -v tsrs >/dev/null; then checker=tsrs; else checker="$root/node_modules/.bin/tsc"; fi
