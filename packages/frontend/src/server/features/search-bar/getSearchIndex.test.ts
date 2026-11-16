@@ -96,6 +96,53 @@ describe('search bar search', () => {
     ])
   })
 
+  it('finds a scaling project by its chain id', async () => {
+    ps.getProjects = async () =>
+      [
+        withChainId(l2Project('polygonzkevm', 'Polygon zkEVM'), 1101),
+        withChainId(l2Project('lisk', 'Lisk'), 1135),
+        l2Project('jetstreamchain', 'Jetstream'),
+      ] as never
+
+    const result = await getSearchBarEntries('1101')
+
+    expect(
+      result.map(({ name, searchMatchKind }) => ({ name, searchMatchKind })),
+    ).toEqual([{ name: 'Polygon zkEVM', searchMatchKind: 'direct' }])
+  })
+
+  it('lists an exact chain id above ids that start with it', async () => {
+    ps.getProjects = async () =>
+      [
+        withChainId(l2Project('alienx', 'AlienX'), 10241024),
+        withChainId(l2Project('optimism', 'OP Mainnet with a long name'), 10),
+      ] as never
+
+    const result = await getSearchBarEntries('10')
+
+    expect(result.map(({ name }) => name)).toEqual([
+      'OP Mainnet with a long name',
+      'AlienX',
+    ])
+  })
+
+  it('finds a chain page by its chain id', async () => {
+    env.INTEROP_CHAINS = ['bsc']
+    ps.getProjects = async () =>
+      [
+        {
+          id: ProjectId('bsc'),
+          slug: 'bsc',
+          name: 'BNB Smart Chain',
+          chainConfig: { name: 'bsc', chainId: 56 },
+        },
+      ] as never
+
+    const result = await getSearchBarEntries('56')
+
+    expect(result.map(({ href }) => href)).toEqual(['/projects/bsc'])
+  })
+
   it('links a scaling chain to its scaling page only', async () => {
     env.INTEROP_CHAINS = ['solana', 'arbitrum']
     ps.getProjects = async () =>
@@ -438,6 +485,10 @@ function defiProject(slug: string, name: string, rest: object) {
     defiInfo: { category: 'Multisig' },
     ...rest,
   }
+}
+
+function withChainId<T extends object>(project: T, chainId: number) {
+  return { ...project, chainConfig: { name: 'chain', chainId } }
 }
 
 function l2Project(
