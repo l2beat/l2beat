@@ -21,7 +21,7 @@ import { getProjectsChangeReport } from '../../projects-change-report/getProject
 import { getDefiTvlDataSource } from '../getDefiTvlDataSource'
 import {
   getLiquidStakingSummary,
-  type LiquidStakingSummary,
+  type ProjectLiquidStakingSummary,
 } from '../liquid-staking/getLiquidStakingSummary'
 import {
   getDefiDependencyProjectsById,
@@ -50,7 +50,7 @@ export interface ProjectDefiEntry {
   }
   isUnderReview: boolean
   /** The project's row of the liquid staking page. */
-  liquidStaking?: LiquidStakingSummary
+  liquidStaking?: ProjectLiquidStakingSummary
   warnings: {
     yellow?: string
     red?: ProjectRedWarning
@@ -195,6 +195,24 @@ export async function getDefiProjectEntry(
         dataSource: getDefiTvlDataSource(project.defiInfo.tvl),
         ethStakedToggle: !!project.liquidStaking,
         warnings: project.tvsInfo?.warnings ?? [],
+      },
+    })
+  }
+
+  if (liquidStaking) {
+    sections.push({
+      type: 'LiquidStakingYieldAndExitSection',
+      props: {
+        id: 'yield-and-exit',
+        title: 'Yield and exit',
+        defaultRange: defaultChartRange,
+        project: {
+          id: project.id,
+          name: project.name,
+          shortName: project.shortName,
+          icon,
+        },
+        costOfExitDescription: liquidStaking.costOfExitDescription.chart,
       },
     })
   }

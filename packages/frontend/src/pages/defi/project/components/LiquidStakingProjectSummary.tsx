@@ -8,13 +8,13 @@ import {
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import type {
   LiquidStakingLatestValue,
-  LiquidStakingSummary,
+  ProjectLiquidStakingSummary,
 } from '~/server/features/defi/liquid-staking/getLiquidStakingSummary'
 import { StakedEthShare } from '../../liquid-staking/components/StakedEthShare'
 import {
   formatLatestValue,
   formatMetricDate,
-  LIQUID_STAKING_METRICS,
+  getProjectMetrics,
   type LiquidStakingMetric,
   TVL_TOOLTIP,
 } from '../../liquid-staking/liquidStakingMetrics'
@@ -24,7 +24,7 @@ import { LIQUID_STAKING_RISKS } from '../../liquid-staking/liquidStakingRisks'
 export function LiquidStakingProjectSummary({
   summary,
 }: {
-  summary: LiquidStakingSummary
+  summary: ProjectLiquidStakingSummary
 }) {
   const stats: (ProjectSummaryStatProps & { key: string })[] = [
     {
@@ -46,13 +46,19 @@ export function LiquidStakingProjectSummary({
           <NoDataBadge />
         ),
     },
-    ...LIQUID_STAKING_METRICS.map((metric) => {
+    ...getProjectMetrics(summary.costOfExitDescription).map((metric) => {
       const latest = summary[metric.key]
       return {
         key: metric.key,
         title: metric.title,
         tooltip: withDate(metric, latest),
-        value: latest ? formatLatestValue(metric, latest) : <NoDataBadge />,
+        value: latest ? (
+          <a href="#yield-and-exit" className="hover:underline">
+            {formatLatestValue(metric, latest)}
+          </a>
+        ) : (
+          <NoDataBadge />
+        ),
       }
     }),
     ...LIQUID_STAKING_RISKS.map(({ key, title, tooltip }) => ({

@@ -7,7 +7,7 @@ import { formatPercent } from '~/utils/calculatePercentageChange'
 import { getUnderReviewText } from '~/utils/project/underReview'
 import {
   formatLatestValue,
-  LIQUID_STAKING_METRICS,
+  getProjectMetrics,
   STAKED_ETH_SHARE_TOOLTIP,
 } from '../liquid-staking/liquidStakingMetrics'
 import { LIQUID_STAKING_RISKS } from '../liquid-staking/liquidStakingRisks'
@@ -71,14 +71,15 @@ function getLiquidStakingFacts(summary: ProjectDefiEntry['liquidStaking']) {
       label: 'Share of staked ETH',
       value: `${formatPercent(share.value)} (ETH staked ${formatUtcDateOrDay(share.timestamp, false)}). ${STAKED_ETH_SHARE_TOOLTIP}`,
     },
-    ...LIQUID_STAKING_METRICS.map((metric) => {
+    ...getProjectMetrics(summary.costOfExitDescription).map((metric) => {
       const latest = summary[metric.key]
-      return (
-        latest && {
-          label: metric.title,
-          value: `${formatLatestValue(metric, latest)} (${formatUtcDateOrDay(latest.timestamp, metric.dailyBuckets)}). ${metric.tooltip}`,
-        }
-      )
+      const value = latest
+        ? `${formatLatestValue(metric, latest)} (${formatUtcDateOrDay(latest.timestamp, metric.dailyBuckets)})`
+        : 'No data'
+      return {
+        label: metric.title,
+        value: `${value}. ${metric.tooltip}`,
+      }
     }),
     ...LIQUID_STAKING_RISKS.map(({ key, title }) => {
       const risk = summary.risks[key]
