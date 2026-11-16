@@ -49,7 +49,7 @@ function SectionDivider({ id, label }: { id: string; label: string }) {
   return (
     <div id={id} className="mt-8 flex items-center gap-4 max-md:px-4 md:mt-12">
       <span className="h-px grow bg-divider" />
-      <span className="font-semibold text-label-value-13 text-primary">
+      <span className="font-semibold text-primary text-subtitle-12 uppercase tracking-[0.14em]">
         {label}
       </span>
       <span className="h-px grow bg-divider" />
