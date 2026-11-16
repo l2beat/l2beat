@@ -9,6 +9,9 @@
       "proxyType": "EOA"
     },
     {
+      "broken": true
+    },
+    {
       "address": "eth:0x00Ac874cB85069F152fD18294866B7C247f0A128",
       "type": "EOA",
       "proxyType": "EOA"
@@ -35,52 +38,72 @@
           [
             "2025-06-25T11:06:59.000Z",
             "0x63366bb4d9f073e6f0e1de8495baf47a7e1921c02049305253907db5ac6839ca",
-            ["eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7"]
+            [
+              "eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7"
+            ]
           ],
           [
             "2026-01-12T08:51:11.000Z",
             "0x00b0d87bdd24f6273dabd8cb118814977b0e80773f88cb5baabb50463252d744",
-            ["eth:0xCe28685EB204186b557133766eCA00334EB441E4"]
+            [
+              "eth:0xCe28685EB204186b557133766eCA00334EB441E4"
+            ]
           ],
           [
             "2026-01-12T08:51:11.000Z",
             "0x00b0d87bdd24f6273dabd8cb118814977b0e80773f88cb5baabb50463252d744",
-            ["eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"]
+            [
+              "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"
+            ]
           ],
           [
             "2026-07-17T11:30:11.000Z",
             "0x1f1d4768cc0d3f218a3f5aea7b6ceed0ae663498958e8194f208e88522c6404b",
-            ["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]
+            [
+              "eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"
+            ]
           ],
           [
             "2026-07-17T11:30:11.000Z",
             "0x1f1d4768cc0d3f218a3f5aea7b6ceed0ae663498958e8194f208e88522c6404b",
-            ["eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550"]
+            [
+              "eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550"
+            ]
           ],
           [
             "2026-08-04T13:59:35.000Z",
             "0xfb6124f237aaaccedd1f8d1298ae5f3b19871f7af18bd4c791a818487cc199de",
-            ["eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7"]
+            [
+              "eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7"
+            ]
           ],
           [
             "2026-08-04T14:11:35.000Z",
             "0xf7dd2207111f0f269b7cdfa8a7fa703b664585513bc113e0d2c8bc7ce9eb355f",
-            ["eth:0xCe28685EB204186b557133766eCA00334EB441E4"]
+            [
+              "eth:0xCe28685EB204186b557133766eCA00334EB441E4"
+            ]
           ],
           [
             "2026-08-04T14:16:11.000Z",
             "0xeb6b35d861c5b232c47bc0e604f0834975876f80181776e46cb486f7a398cf03",
-            ["eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"]
+            [
+              "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"
+            ]
           ],
           [
             "2026-08-13T13:32:47.000Z",
             "0x2c62c31e4108c24123b9f5b3c26a87e5ec6b4fc3b85163c7257edb523316f9db",
-            ["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]
+            [
+              "eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"
+            ]
           ],
           [
             "2026-08-13T13:32:47.000Z",
             "0x2c62c31e4108c24123b9f5b3c26a87e5ec6b4fc3b85163c7257edb523316f9db",
-            ["eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550"]
+            [
+              "eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550"
+            ]
           ]
         ],
         "$upgradeCount": 10,
@@ -94,14 +117,21 @@
         "version": "2.4.2"
       },
       "fieldMeta": {
-        "paused": { "severity": "MEDIUM" },
-        "guardian": { "severity": "MEDIUM" }
+        "paused": {
+          "severity": "MEDIUM"
+        },
+        "guardian": {
+          "severity": "MEDIUM"
+        }
       },
       "implementationNames": {
         "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC": "Proxy",
         "eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550": "SuperchainConfig"
       },
-      "category": { "name": "Shared Infrastructure", "priority": 4 }
+      "category": {
+        "name": "Shared Infrastructure",
+        "priority": 4
+      }
     },
     {
       "name": "DisputeGameFactory",
@@ -115,7 +145,10 @@
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.",
       "critical": true,
-      "ignoreInWatchMode": ["gameCount", "permissionedGamesTotal"],
+      "ignoreInWatchMode": [
+        "gameCount",
+        "permissionedGamesTotal"
+      ],
       "deployerAddress": "eth:0x0a1C5E42e423fab63746d375B84d3Fe4cAf9b513",
       "sinceTimestamp": 1753345835,
       "sinceBlock": 22987839,
@@ -126,37 +159,51 @@
           [
             "2025-07-24T08:32:59.000Z",
             "0xa44e7072097f993e1b1e03fd217ee2d174fdc5f934d5f7b5aae8674c1a7d8360",
-            ["eth:0xc641A33cab81C559F2bd4b21EA34C290E2440C2B"]
+            [
+              "eth:0xc641A33cab81C559F2bd4b21EA34C290E2440C2B"
+            ]
           ],
           [
             "2025-07-24T14:01:11.000Z",
             "0xd75f116a171758a602f7cfb27520a1cd3c741822834c3b23db0a29a879da04fc",
-            ["eth:0x4bbA758F006Ef09402eF31724203F316ab74e4a0"]
+            [
+              "eth:0x4bbA758F006Ef09402eF31724203F316ab74e4a0"
+            ]
           ],
           [
             "2026-01-20T15:52:59.000Z",
             "0x44ac46ef2bf2ff160cf482c6729a14a342623403c52709dfc58b933e4d2d53fd",
-            ["eth:0x33D1e8571a85a538ed3D5A4d88f46C112383439D"]
+            [
+              "eth:0x33D1e8571a85a538ed3D5A4d88f46C112383439D"
+            ]
           ],
           [
             "2026-01-20T15:52:59.000Z",
             "0x44ac46ef2bf2ff160cf482c6729a14a342623403c52709dfc58b933e4d2d53fd",
-            ["eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50"]
+            [
+              "eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50"
+            ]
           ],
           [
             "2026-08-13T15:22:47.000Z",
             "0x1330099c3563a77ae508685b7fbdd905521540991d096f11d9aaafd0bb4fd7ed",
-            ["eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c"]
+            [
+              "eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c"
+            ]
           ],
           [
             "2026-08-13T15:22:47.000Z",
             "0x1330099c3563a77ae508685b7fbdd905521540991d096f11d9aaafd0bb4fd7ed",
-            ["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]
+            [
+              "eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"
+            ]
           ],
           [
             "2026-08-13T15:22:47.000Z",
             "0x1330099c3563a77ae508685b7fbdd905521540991d096f11d9aaafd0bb4fd7ed",
-            ["eth:0x72B971717E088B59F26d4236BE222ADB6ACD393b"]
+            [
+              "eth:0x72B971717E088B59F26d4236BE222ADB6ACD393b"
+            ]
           ]
         ],
         "$upgradeCount": 7,
@@ -206,48 +253,149 @@
         "wethFromDGF": "eth:0x98B833fD1659aB20c0505e28221008a74e22D3ad"
       },
       "fieldMeta": {
-        "owner": { "severity": "MEDIUM" },
-        "game1337": { "severity": "HIGH" },
-        "game621": { "severity": "HIGH" },
-        "game42": { "severity": "HIGH" },
-        "game0": { "severity": "HIGH" },
-        "game1": { "severity": "HIGH" },
-        "game8": { "severity": "HIGH" },
-        "game9": { "severity": "HIGH" },
-        "game5": { "severity": "HIGH" },
-        "absolutePrestateFromDGF": { "severity": "HIGH" },
-        "vmFromDGF": { "severity": "HIGH" },
-        "game8AbsolutePrestate": { "severity": "HIGH" },
-        "game8Vm": { "severity": "HIGH" },
-        "game8AnchorStateRegistry": { "severity": "HIGH" },
-        "game8Weth": { "severity": "HIGH" },
-        "game8ChainId": { "severity": "HIGH" },
-        "game9AbsolutePrestate": { "severity": "HIGH" },
-        "game9Vm": { "severity": "HIGH" },
-        "game9AnchorStateRegistry": { "severity": "HIGH" },
-        "game9Weth": { "severity": "HIGH" },
-        "game5AnchorStateRegistry": { "severity": "HIGH" },
-        "wethFromDGF": { "severity": "HIGH" },
-        "anchorStateRegistryFromDGF": { "severity": "HIGH" },
-        "chainIdFromDGF": { "severity": "HIGH" }
+        "owner": {
+          "severity": "MEDIUM"
+        },
+        "game1337": {
+          "severity": "HIGH"
+        },
+        "game621": {
+          "severity": "HIGH"
+        },
+        "game42": {
+          "severity": "HIGH"
+        },
+        "game0": {
+          "severity": "HIGH"
+        },
+        "game1": {
+          "severity": "HIGH"
+        },
+        "game8": {
+          "severity": "HIGH"
+        },
+        "game9": {
+          "severity": "HIGH"
+        },
+        "game5": {
+          "severity": "HIGH"
+        },
+        "absolutePrestateFromDGF": {
+          "severity": "HIGH"
+        },
+        "vmFromDGF": {
+          "severity": "HIGH"
+        },
+        "game8AbsolutePrestate": {
+          "severity": "HIGH"
+        },
+        "game8Vm": {
+          "severity": "HIGH"
+        },
+        "game8AnchorStateRegistry": {
+          "severity": "HIGH"
+        },
+        "game8Weth": {
+          "severity": "HIGH"
+        },
+        "game8ChainId": {
+          "severity": "HIGH"
+        },
+        "game9AbsolutePrestate": {
+          "severity": "HIGH"
+        },
+        "game9Vm": {
+          "severity": "HIGH"
+        },
+        "game9AnchorStateRegistry": {
+          "severity": "HIGH"
+        },
+        "game9Weth": {
+          "severity": "HIGH"
+        },
+        "game5AnchorStateRegistry": {
+          "severity": "HIGH"
+        },
+        "wethFromDGF": {
+          "severity": "HIGH"
+        },
+        "anchorStateRegistryFromDGF": {
+          "severity": "HIGH"
+        },
+        "chainIdFromDGF": {
+          "severity": "HIGH"
+        }
       },
       "implementationNames": {
         "eth:0x0c0105334a50Db16B51B2911C9956539753A2CF8": "Proxy",
         "eth:0x72B971717E088B59F26d4236BE222ADB6ACD393b": "DisputeGameFactory"
       },
       "usedTypes": [
-        { "typeCaster": "SliceBytes32", "arg": { "offset": 0 } },
-        { "typeCaster": "SliceAddress", "arg": { "offset": 32 } },
-        { "typeCaster": "SliceAddress", "arg": { "offset": 32 } },
-        { "typeCaster": "SliceAddress", "arg": { "offset": 52 } },
-        { "typeCaster": "SliceAddress", "arg": { "offset": 72 } },
-        { "typeCaster": "SliceUint256", "arg": { "offset": 92 } },
-        { "typeCaster": "SliceAddress", "arg": { "offset": 0 } },
-        { "typeCaster": "SliceAddress", "arg": { "offset": 20 } },
-        { "typeCaster": "SliceAddress", "arg": { "offset": 124 } },
-        { "typeCaster": "SliceAddress", "arg": { "offset": 144 } }
+        {
+          "typeCaster": "SliceBytes32",
+          "arg": {
+            "offset": 0
+          }
+        },
+        {
+          "typeCaster": "SliceAddress",
+          "arg": {
+            "offset": 32
+          }
+        },
+        {
+          "typeCaster": "SliceAddress",
+          "arg": {
+            "offset": 32
+          }
+        },
+        {
+          "typeCaster": "SliceAddress",
+          "arg": {
+            "offset": 52
+          }
+        },
+        {
+          "typeCaster": "SliceAddress",
+          "arg": {
+            "offset": 72
+          }
+        },
+        {
+          "typeCaster": "SliceUint256",
+          "arg": {
+            "offset": 92
+          }
+        },
+        {
+          "typeCaster": "SliceAddress",
+          "arg": {
+            "offset": 0
+          }
+        },
+        {
+          "typeCaster": "SliceAddress",
+          "arg": {
+            "offset": 20
+          }
+        },
+        {
+          "typeCaster": "SliceAddress",
+          "arg": {
+            "offset": 124
+          }
+        },
+        {
+          "typeCaster": "SliceAddress",
+          "arg": {
+            "offset": 144
+          }
+        }
       ],
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
     },
     {
       "name": "L1CrossDomainMessenger",
@@ -261,7 +409,9 @@
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "critical": true,
-      "ignoreInWatchMode": ["messageNonce"],
+      "ignoreInWatchMode": [
+        "messageNonce"
+      ],
       "deployerAddress": "eth:0x8D3A410962b1BcEe613f4aA41718cCfe161E9756",
       "sinceTimestamp": 1679193095,
       "sinceBlock": 16858814,
@@ -273,87 +423,121 @@
           [
             "2023-03-19T02:37:11.000Z",
             "0x7abed0916f03770749ed56034cabc49ae8e403a7940bc4137493e439e431d609",
-            ["eth:0x0000000000000000000000000000000000000000"]
+            [
+              "eth:0x0000000000000000000000000000000000000000"
+            ]
           ],
           [
             "2023-03-19T02:38:11.000Z",
             "0x081ad9f0592ee5da39dceb73ea43b57f1442749d480a756e4938bf4999f0ee22",
-            ["eth:0xfA6aCD3c452ADE8910505cc61352274b4C6d526c"]
+            [
+              "eth:0xfA6aCD3c452ADE8910505cc61352274b4C6d526c"
+            ]
           ],
           [
             "2023-04-01T20:56:11.000Z",
             "0x2967e7dde9e9a7b2e1535c014117e73b29d0a5f486b533bbf2461c34c36a3ff6",
-            ["eth:0x8ea8000814b14884317dF94D2fD26553C3fFd976"]
+            [
+              "eth:0x8ea8000814b14884317dF94D2fD26553C3fFd976"
+            ]
           ],
           [
             "2023-04-01T20:58:11.000Z",
             "0x45f84133cdae2a8b259ab309ca0d499a0b175986c08a4e313ac25109b1dd858c",
-            ["eth:0x8ea8000814b14884317dF94D2fD26553C3fFd976"]
+            [
+              "eth:0x8ea8000814b14884317dF94D2fD26553C3fFd976"
+            ]
           ],
           [
             "2023-04-01T20:58:59.000Z",
             "0xd19ed55de296e03d3a00afdf5272d8ef73404602966de1682de751bc91e0f8e6",
-            ["eth:0x8ea8000814b14884317dF94D2fD26553C3fFd976"]
+            [
+              "eth:0x8ea8000814b14884317dF94D2fD26553C3fFd976"
+            ]
           ],
           [
             "2023-08-30T22:08:35.000Z",
             "0x60f1457bbf8e61f25203769ade47092100fb0d0f105d1b0a4734dbb052b0910d",
-            ["eth:0x8CfF5bDb1B428B979E3D87087dA8549A28065DDB"]
+            [
+              "eth:0x8CfF5bDb1B428B979E3D87087dA8549A28065DDB"
+            ]
           ],
           [
             "2025-07-21T13:22:47.000Z",
             "0xc875094b76d46a0955ad6d560e6154806538855e429feac498dbc03ec2c1af24",
-            ["eth:0x6322C2f2D6a4305Fc033754d486A5A067Ee5F9b1"]
+            [
+              "eth:0x6322C2f2D6a4305Fc033754d486A5A067Ee5F9b1"
+            ]
           ],
           [
             "2025-07-21T13:22:47.000Z",
             "0xc875094b76d46a0955ad6d560e6154806538855e429feac498dbc03ec2c1af24",
-            ["eth:0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65"]
+            [
+              "eth:0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65"
+            ]
           ],
           [
             "2025-07-21T14:46:11.000Z",
             "0x216d7eeeaafd2a8fec6f782d288e7c343d09ebed89cceddc1fa3aa3d8d2808b1",
-            ["eth:0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+            [
+              "eth:0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"
+            ]
           ],
           [
             "2025-07-21T14:46:11.000Z",
             "0x216d7eeeaafd2a8fec6f782d288e7c343d09ebed89cceddc1fa3aa3d8d2808b1",
-            ["eth:0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65"]
+            [
+              "eth:0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65"
+            ]
           ],
           [
             "2025-07-24T14:01:11.000Z",
             "0xd75f116a171758a602f7cfb27520a1cd3c741822834c3b23db0a29a879da04fc",
-            ["eth:0x3eA6084748ED1b2A9B5D4426181F1ad8C93F6231"]
+            [
+              "eth:0x3eA6084748ED1b2A9B5D4426181F1ad8C93F6231"
+            ]
           ],
           [
             "2025-07-24T14:01:11.000Z",
             "0xd75f116a171758a602f7cfb27520a1cd3c741822834c3b23db0a29a879da04fc",
-            ["eth:0x5D5a095665886119693F0B41d8DFeE78da033e8B"]
+            [
+              "eth:0x5D5a095665886119693F0B41d8DFeE78da033e8B"
+            ]
           ],
           [
             "2026-01-20T15:52:59.000Z",
             "0x44ac46ef2bf2ff160cf482c6729a14a342623403c52709dfc58b933e4d2d53fd",
-            ["eth:0x22D12E0FAebD62d429514A65EBAe32dd316c12D6"]
+            [
+              "eth:0x22D12E0FAebD62d429514A65EBAe32dd316c12D6"
+            ]
           ],
           [
             "2026-01-20T15:52:59.000Z",
             "0x44ac46ef2bf2ff160cf482c6729a14a342623403c52709dfc58b933e4d2d53fd",
-            ["eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0"]
+            [
+              "eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0"
+            ]
           ],
           [
             "2026-08-13T15:22:47.000Z",
             "0x1330099c3563a77ae508685b7fbdd905521540991d096f11d9aaafd0bb4fd7ed",
-            ["eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0"]
+            [
+              "eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0"
+            ]
           ],
           [
             "2026-08-13T15:22:47.000Z",
             "0x1330099c3563a77ae508685b7fbdd905521540991d096f11d9aaafd0bb4fd7ed",
-            ["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]
+            [
+              "eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"
+            ]
           ],
           [
             "2026-08-13T15:22:47.000Z",
             "0x1330099c3563a77ae508685b7fbdd905521540991d096f11d9aaafd0bb4fd7ed",
-            ["eth:0x59D497530b00062f40950ba8EaB88868bf7F86f0"]
+            [
+              "eth:0x59D497530b00062f40950ba8EaB88868bf7F86f0"
+            ]
           ]
         ],
         "$upgradeCount": 17,
@@ -383,12 +567,19 @@
         "TX_BASE_GAS": 21000,
         "version": "2.11.1"
       },
-      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
+      "fieldMeta": {
+        "paused": {
+          "severity": "MEDIUM"
+        }
+      },
       "implementationNames": {
         "eth:0x11dd2d9B5ec142dbAFBEFEA82a75985Eae4e12b0": "ResolvedDelegateProxy",
         "eth:0x59D497530b00062f40950ba8EaB88868bf7F86f0": "L1CrossDomainMessenger"
       },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+      "category": {
+        "name": "Canonical Bridges",
+        "priority": 2
+      }
     },
     {
       "address": "eth:0x2103c69696CB2D3779f5445393808239034E911c",
@@ -418,7 +609,11 @@
         "isUpgrading": false,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
       },
-      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
+      "fieldMeta": {
+        "owner": {
+          "severity": "MEDIUM"
+        }
+      },
       "implementationNames": {
         "eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019": "ProxyAdmin"
       }
@@ -444,72 +639,100 @@
           [
             "2023-03-19T02:38:11.000Z",
             "0x081ad9f0592ee5da39dceb73ea43b57f1442749d480a756e4938bf4999f0ee22",
-            ["eth:0xE4fC17A270edc7C59D9BcA502E8f9DA40d62381D"]
+            [
+              "eth:0xE4fC17A270edc7C59D9BcA502E8f9DA40d62381D"
+            ]
           ],
           [
             "2023-04-01T21:00:11.000Z",
             "0x3c3a0982220deb7adc960a36e01805209d092c1457257943dda9995a01f906a6",
-            ["eth:0xc408d756B3414b643705b7d2c677535b4633F7D9"]
+            [
+              "eth:0xc408d756B3414b643705b7d2c677535b4633F7D9"
+            ]
           ],
           [
             "2023-08-30T22:08:35.000Z",
             "0x60f1457bbf8e61f25203769ade47092100fb0d0f105d1b0a4734dbb052b0910d",
-            ["eth:0xd5f7A6e644621Bd7a1C95115C1A98f0e11947E8f"]
+            [
+              "eth:0xd5f7A6e644621Bd7a1C95115C1A98f0e11947E8f"
+            ]
           ],
           [
             "2025-07-21T13:22:47.000Z",
             "0xc875094b76d46a0955ad6d560e6154806538855e429feac498dbc03ec2c1af24",
-            ["eth:0x6322C2f2D6a4305Fc033754d486A5A067Ee5F9b1"]
+            [
+              "eth:0x6322C2f2D6a4305Fc033754d486A5A067Ee5F9b1"
+            ]
           ],
           [
             "2025-07-21T13:22:47.000Z",
             "0xc875094b76d46a0955ad6d560e6154806538855e429feac498dbc03ec2c1af24",
-            ["eth:0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d"]
+            [
+              "eth:0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d"
+            ]
           ],
           [
             "2025-07-21T14:46:11.000Z",
             "0x216d7eeeaafd2a8fec6f782d288e7c343d09ebed89cceddc1fa3aa3d8d2808b1",
-            ["eth:0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+            [
+              "eth:0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"
+            ]
           ],
           [
             "2025-07-21T14:46:11.000Z",
             "0x216d7eeeaafd2a8fec6f782d288e7c343d09ebed89cceddc1fa3aa3d8d2808b1",
-            ["eth:0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d"]
+            [
+              "eth:0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d"
+            ]
           ],
           [
             "2025-07-24T14:01:11.000Z",
             "0xd75f116a171758a602f7cfb27520a1cd3c741822834c3b23db0a29a879da04fc",
-            ["eth:0x276d3730f219f7ec22274f7263180b8452B46d47"]
+            [
+              "eth:0x276d3730f219f7ec22274f7263180b8452B46d47"
+            ]
           ],
           [
             "2025-07-24T14:01:11.000Z",
             "0xd75f116a171758a602f7cfb27520a1cd3c741822834c3b23db0a29a879da04fc",
-            ["eth:0x7aE1d3BD877a4C5CA257404ce26BE93A02C98013"]
+            [
+              "eth:0x7aE1d3BD877a4C5CA257404ce26BE93A02C98013"
+            ]
           ],
           [
             "2026-01-20T15:52:59.000Z",
             "0x44ac46ef2bf2ff160cf482c6729a14a342623403c52709dfc58b933e4d2d53fd",
-            ["eth:0x7f1d12fB2911EB095278085f721e644C1f675696"]
+            [
+              "eth:0x7f1d12fB2911EB095278085f721e644C1f675696"
+            ]
           ],
           [
             "2026-01-20T15:52:59.000Z",
             "0x44ac46ef2bf2ff160cf482c6729a14a342623403c52709dfc58b933e4d2d53fd",
-            ["eth:0x74f1aC50EB0BE98853805D381C884f5f9abDEcf9"]
+            [
+              "eth:0x74f1aC50EB0BE98853805D381C884f5f9abDEcf9"
+            ]
           ],
           [
             "2026-08-13T15:22:47.000Z",
             "0x1330099c3563a77ae508685b7fbdd905521540991d096f11d9aaafd0bb4fd7ed",
-            ["eth:0x74f1aC50EB0BE98853805D381C884f5f9abDEcf9"]
+            [
+              "eth:0x74f1aC50EB0BE98853805D381C884f5f9abDEcf9"
+            ]
           ],
           [
             "2026-08-13T15:22:47.000Z",
             "0x1330099c3563a77ae508685b7fbdd905521540991d096f11d9aaafd0bb4fd7ed",
-            ["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]
+            [
+              "eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"
+            ]
           ],
           [
             "2026-08-13T15:22:47.000Z",
             "0x1330099c3563a77ae508685b7fbdd905521540991d096f11d9aaafd0bb4fd7ed",
-            ["eth:0x9F164f1d02A81e06D639E55F65a87f0070E3Cb2e"]
+            [
+              "eth:0x9F164f1d02A81e06D639E55F65a87f0070E3Cb2e"
+            ]
           ]
         ],
         "$upgradeCount": 14,
@@ -529,7 +752,10 @@
         "eth:0x2e7d7B188D663F38c2E4fF9C59328458A2D676F0": "Proxy",
         "eth:0x9F164f1d02A81e06D639E55F65a87f0070E3Cb2e": "L1ERC721Bridge"
       },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+      "category": {
+        "name": "Canonical Bridges",
+        "priority": 2
+      }
     },
     {
       "name": "L1StandardBridge",
@@ -564,12 +790,19 @@
         "systemConfig": "eth:0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca",
         "version": "2.8.2"
       },
-      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
+      "fieldMeta": {
+        "paused": {
+          "severity": "MEDIUM"
+        }
+      },
       "implementationNames": {
         "eth:0x4082C9647c098a6493fb499EaE63b5ce3259c574": "L1ChugSplashProxy",
         "eth:0xB37a11AadF167B2F0b8dD85372De4bC66CD4A891": "L1StandardBridge"
       },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+      "category": {
+        "name": "Canonical Bridges",
+        "priority": 2
+      }
     },
     {
       "name": "Conduit Multisig 1",
@@ -581,7 +814,9 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
+      "ignoreInWatchMode": [
+        "nonce"
+      ],
       "deployerAddress": "eth:0x0954eC5B731501abf85766B5c6f5DE4C2B60BC44",
       "sinceTimestamp": 1680797639,
       "sinceBlock": 16990669,
@@ -640,57 +875,79 @@
           [
             "2023-03-19T02:38:11.000Z",
             "0x081ad9f0592ee5da39dceb73ea43b57f1442749d480a756e4938bf4999f0ee22",
-            ["eth:0x47FF07fb2903fC481F02223aD8ab4Bf0a276ceF9"]
+            [
+              "eth:0x47FF07fb2903fC481F02223aD8ab4Bf0a276ceF9"
+            ]
           ],
           [
             "2023-04-01T20:59:35.000Z",
             "0x4a57dfc33f0dc63de9d0f1613132f1c56b5af83ed52b4fe8bf0d5c654095005d",
-            ["eth:0x8E83b516C49807dC2E79528415330b41C89C1419"]
+            [
+              "eth:0x8E83b516C49807dC2E79528415330b41C89C1419"
+            ]
           ],
           [
             "2023-08-30T22:08:35.000Z",
             "0x60f1457bbf8e61f25203769ade47092100fb0d0f105d1b0a4734dbb052b0910d",
-            ["eth:0xD4cD8d08b281492c0Eb9d9B81c27bC62b07Dab65"]
+            [
+              "eth:0xD4cD8d08b281492c0Eb9d9B81c27bC62b07Dab65"
+            ]
           ],
           [
             "2025-07-21T13:22:47.000Z",
             "0xc875094b76d46a0955ad6d560e6154806538855e429feac498dbc03ec2c1af24",
-            ["eth:0x6322C2f2D6a4305Fc033754d486A5A067Ee5F9b1"]
+            [
+              "eth:0x6322C2f2D6a4305Fc033754d486A5A067Ee5F9b1"
+            ]
           ],
           [
             "2025-07-21T13:22:47.000Z",
             "0xc875094b76d46a0955ad6d560e6154806538855e429feac498dbc03ec2c1af24",
-            ["eth:0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846"]
+            [
+              "eth:0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846"
+            ]
           ],
           [
             "2025-07-21T14:46:11.000Z",
             "0x216d7eeeaafd2a8fec6f782d288e7c343d09ebed89cceddc1fa3aa3d8d2808b1",
-            ["eth:0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846"]
+            [
+              "eth:0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846"
+            ]
           ],
           [
             "2025-07-24T14:01:11.000Z",
             "0xd75f116a171758a602f7cfb27520a1cd3c741822834c3b23db0a29a879da04fc",
-            ["eth:0x5493f4677A186f64805fe7317D6993ba4863988F"]
+            [
+              "eth:0x5493f4677A186f64805fe7317D6993ba4863988F"
+            ]
           ],
           [
             "2026-01-20T15:52:59.000Z",
             "0x44ac46ef2bf2ff160cf482c6729a14a342623403c52709dfc58b933e4d2d53fd",
-            ["eth:0x8ee6fB13c6c9a7e401531168E196Fbf8b05cEabB"]
+            [
+              "eth:0x8ee6fB13c6c9a7e401531168E196Fbf8b05cEabB"
+            ]
           ],
           [
             "2026-08-13T15:22:47.000Z",
             "0x1330099c3563a77ae508685b7fbdd905521540991d096f11d9aaafd0bb4fd7ed",
-            ["eth:0x8ee6fB13c6c9a7e401531168E196Fbf8b05cEabB"]
+            [
+              "eth:0x8ee6fB13c6c9a7e401531168E196Fbf8b05cEabB"
+            ]
           ],
           [
             "2026-08-13T15:22:47.000Z",
             "0x1330099c3563a77ae508685b7fbdd905521540991d096f11d9aaafd0bb4fd7ed",
-            ["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]
+            [
+              "eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"
+            ]
           ],
           [
             "2026-08-13T15:22:47.000Z",
             "0x1330099c3563a77ae508685b7fbdd905521540991d096f11d9aaafd0bb4fd7ed",
-            ["eth:0xaAbEA75Da509fA518Fd8a91Eae4BE5813B829b12"]
+            [
+              "eth:0xaAbEA75Da509fA518Fd8a91Eae4BE5813B829b12"
+            ]
           ]
         ],
         "$upgradeCount": 11,
@@ -727,7 +984,10 @@
       "proxyType": "EIP1967 proxy",
       "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.",
       "critical": true,
-      "ignoreInWatchMode": ["params", "balance"],
+      "ignoreInWatchMode": [
+        "params",
+        "balance"
+      ],
       "deployerAddress": "eth:0x8D3A410962b1BcEe613f4aA41718cCfe161E9756",
       "sinceTimestamp": 1679193119,
       "sinceBlock": 16858815,
@@ -738,72 +998,100 @@
           [
             "2023-03-19T02:38:11.000Z",
             "0x081ad9f0592ee5da39dceb73ea43b57f1442749d480a756e4938bf4999f0ee22",
-            ["eth:0x9Cb22AF811cFF79b89d25570FAC31586af7b4a97"]
+            [
+              "eth:0x9Cb22AF811cFF79b89d25570FAC31586af7b4a97"
+            ]
           ],
           [
             "2023-04-01T20:59:47.000Z",
             "0x67627d33be7254318cea66122094bf3260d8dba551983dee907390414090503b",
-            ["eth:0xD45C7A59fca1b435ae805E8F6eF27418d92877AD"]
+            [
+              "eth:0xD45C7A59fca1b435ae805E8F6eF27418d92877AD"
+            ]
           ],
           [
             "2023-08-30T22:08:35.000Z",
             "0x60f1457bbf8e61f25203769ade47092100fb0d0f105d1b0a4734dbb052b0910d",
-            ["eth:0x098927F692C86fA1722115652b9d2d7BE8cBa6D3"]
+            [
+              "eth:0x098927F692C86fA1722115652b9d2d7BE8cBa6D3"
+            ]
           ],
           [
             "2025-07-21T13:22:47.000Z",
             "0xc875094b76d46a0955ad6d560e6154806538855e429feac498dbc03ec2c1af24",
-            ["eth:0x6322C2f2D6a4305Fc033754d486A5A067Ee5F9b1"]
+            [
+              "eth:0x6322C2f2D6a4305Fc033754d486A5A067Ee5F9b1"
+            ]
           ],
           [
             "2025-07-21T13:22:47.000Z",
             "0xc875094b76d46a0955ad6d560e6154806538855e429feac498dbc03ec2c1af24",
-            ["eth:0x2D778797049FE9259d947D1ED8e5442226dFB589"]
+            [
+              "eth:0x2D778797049FE9259d947D1ED8e5442226dFB589"
+            ]
           ],
           [
             "2025-07-24T14:01:11.000Z",
             "0xd75f116a171758a602f7cfb27520a1cd3c741822834c3b23db0a29a879da04fc",
-            ["eth:0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+            [
+              "eth:0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"
+            ]
           ],
           [
             "2025-07-24T14:01:11.000Z",
             "0xd75f116a171758a602f7cfb27520a1cd3c741822834c3b23db0a29a879da04fc",
-            ["eth:0xdc78882AB9F77C8821327D586547a80C2D712A24"]
+            [
+              "eth:0xdc78882AB9F77C8821327D586547a80C2D712A24"
+            ]
           ],
           [
             "2025-07-24T14:01:11.000Z",
             "0xd75f116a171758a602f7cfb27520a1cd3c741822834c3b23db0a29a879da04fc",
-            ["eth:0xdc78882AB9F77C8821327D586547a80C2D712A24"]
+            [
+              "eth:0xdc78882AB9F77C8821327D586547a80C2D712A24"
+            ]
           ],
           [
             "2025-07-24T14:01:11.000Z",
             "0xd75f116a171758a602f7cfb27520a1cd3c741822834c3b23db0a29a879da04fc",
-            ["eth:0xaa5b13609Fd0a48b3B20202B25494F58F3Ff89f4"]
+            [
+              "eth:0xaa5b13609Fd0a48b3B20202B25494F58F3Ff89f4"
+            ]
           ],
           [
             "2026-01-20T15:52:59.000Z",
             "0x44ac46ef2bf2ff160cf482c6729a14a342623403c52709dfc58b933e4d2d53fd",
-            ["eth:0xD2450cD624f5Cb6Ea9DB8c48298d484cA677F907"]
+            [
+              "eth:0xD2450cD624f5Cb6Ea9DB8c48298d484cA677F907"
+            ]
           ],
           [
             "2026-01-20T15:52:59.000Z",
             "0x44ac46ef2bf2ff160cf482c6729a14a342623403c52709dfc58b933e4d2d53fd",
-            ["eth:0x5cccbd8b1Da78F94dE12D84CaCC494931f1b1E04"]
+            [
+              "eth:0x5cccbd8b1Da78F94dE12D84CaCC494931f1b1E04"
+            ]
           ],
           [
             "2026-08-13T15:22:47.000Z",
             "0x1330099c3563a77ae508685b7fbdd905521540991d096f11d9aaafd0bb4fd7ed",
-            ["eth:0xD0E425e12DDAED1350e68cBe01193aed73e52FCd"]
+            [
+              "eth:0xD0E425e12DDAED1350e68cBe01193aed73e52FCd"
+            ]
           ],
           [
             "2026-08-13T15:22:47.000Z",
             "0x1330099c3563a77ae508685b7fbdd905521540991d096f11d9aaafd0bb4fd7ed",
-            ["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]
+            [
+              "eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"
+            ]
           ],
           [
             "2026-08-13T15:22:47.000Z",
             "0x1330099c3563a77ae508685b7fbdd905521540991d096f11d9aaafd0bb4fd7ed",
-            ["eth:0xBf3C31c8C0325Bf8E70D3A7D463A715D3CD114b7"]
+            [
+              "eth:0xBf3C31c8C0325Bf8E70D3A7D463A715D3CD114b7"
+            ]
           ]
         ],
         "$upgradeCount": 14,
@@ -831,8 +1119,12 @@
         "version": "5.6.1"
       },
       "fieldMeta": {
-        "anchorStateRegistry": { "severity": "HIGH" },
-        "ethLockbox": { "severity": "HIGH" },
+        "anchorStateRegistry": {
+          "severity": "HIGH"
+        },
+        "ethLockbox": {
+          "severity": "HIGH"
+        },
         "paused": {
           "severity": "MEDIUM",
           "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."
@@ -856,7 +1148,10 @@
           }
         }
       ],
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
     },
     {
       "name": "AddressManager",
@@ -876,11 +1171,18 @@
         "$immutable": true,
         "owner": "eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"
       },
-      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
+      "fieldMeta": {
+        "owner": {
+          "severity": "MEDIUM"
+        }
+      },
       "implementationNames": {
         "eth:0x7a616b25E7c96fc4d652966d7DDAbB51dE28eCc1": "AddressManager"
       },
-      "category": { "name": "Spam", "priority": -1 }
+      "category": {
+        "name": "Spam",
+        "priority": -1
+      }
     },
     {
       "address": "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
@@ -1014,7 +1316,9 @@
       "proxyType": "EIP1967 proxy",
       "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
       "critical": true,
-      "ignoreInWatchMode": ["totalSupply"],
+      "ignoreInWatchMode": [
+        "totalSupply"
+      ],
       "deployerAddress": "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
       "sinceTimestamp": 1786634567,
       "sinceBlock": 25746969,
@@ -1025,12 +1329,16 @@
           [
             "2026-08-13T15:22:47.000Z",
             "0x1330099c3563a77ae508685b7fbdd905521540991d096f11d9aaafd0bb4fd7ed",
-            ["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]
+            [
+              "eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"
+            ]
           ],
           [
             "2026-08-13T15:22:47.000Z",
             "0x1330099c3563a77ae508685b7fbdd905521540991d096f11d9aaafd0bb4fd7ed",
-            ["eth:0x0ff1df51BEecBF342CB0228bC3bed66C5fB8f1b2"]
+            [
+              "eth:0x0ff1df51BEecBF342CB0228bC3bed66C5fB8f1b2"
+            ]
           ]
         ],
         "$upgradeCount": 2,
@@ -1114,7 +1422,11 @@
         "isUpgrading": false,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
       },
-      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
+      "fieldMeta": {
+        "owner": {
+          "severity": "MEDIUM"
+        }
+      },
       "implementationNames": {
         "eth:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5": "ProxyAdmin"
       }
@@ -1175,7 +1487,10 @@
       "proxyType": "EIP1967 proxy",
       "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.",
       "critical": true,
-      "ignoreInWatchMode": ["anchorGame", "getAnchorRoot"],
+      "ignoreInWatchMode": [
+        "anchorGame",
+        "getAnchorRoot"
+      ],
       "deployerAddress": "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
       "sinceTimestamp": 1768924379,
       "sinceBlock": 24277009,
@@ -1186,22 +1501,30 @@
           [
             "2026-01-20T15:52:59.000Z",
             "0x44ac46ef2bf2ff160cf482c6729a14a342623403c52709dfc58b933e4d2d53fd",
-            ["eth:0x84eDae031Bfec21bDd076759349448B29f216030"]
+            [
+              "eth:0x84eDae031Bfec21bDd076759349448B29f216030"
+            ]
           ],
           [
             "2026-08-13T15:22:47.000Z",
             "0x1330099c3563a77ae508685b7fbdd905521540991d096f11d9aaafd0bb4fd7ed",
-            ["eth:0xaa40f9b2198a2790B9869e8F03AfDBdC4190727a"]
+            [
+              "eth:0xaa40f9b2198a2790B9869e8F03AfDBdC4190727a"
+            ]
           ],
           [
             "2026-08-13T15:22:47.000Z",
             "0x1330099c3563a77ae508685b7fbdd905521540991d096f11d9aaafd0bb4fd7ed",
-            ["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]
+            [
+              "eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"
+            ]
           ],
           [
             "2026-08-13T15:22:47.000Z",
             "0x1330099c3563a77ae508685b7fbdd905521540991d096f11d9aaafd0bb4fd7ed",
-            ["eth:0xAc5B87D822f6B2D405E5B05C0FB1E9F50384cCcb"]
+            [
+              "eth:0xAc5B87D822f6B2D405E5B05C0FB1E9F50384cCcb"
+            ]
           ]
         ],
         "$upgradeCount": 4,
@@ -1229,11 +1552,21 @@
         "version": "3.9.0"
       },
       "fieldMeta": {
-        "paused": { "severity": "MEDIUM" },
-        "respectedGameType": { "severity": "HIGH" },
-        "RespectedGameString": { "severity": "HIGH" },
-        "retirementTimestamp": { "severity": "MEDIUM" },
-        "blacklistedGames": { "severity": "MEDIUM" }
+        "paused": {
+          "severity": "MEDIUM"
+        },
+        "respectedGameType": {
+          "severity": "HIGH"
+        },
+        "RespectedGameString": {
+          "severity": "HIGH"
+        },
+        "retirementTimestamp": {
+          "severity": "MEDIUM"
+        },
+        "blacklistedGames": {
+          "severity": "MEDIUM"
+        }
       },
       "implementationNames": {
         "eth:0xF51b386B0391B022604B95cD97DFce58A5c0cFB1": "Proxy",
@@ -1266,7 +1599,10 @@
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "critical": true,
-      "ignoreInWatchMode": ["scalar", "overhead"],
+      "ignoreInWatchMode": [
+        "scalar",
+        "overhead"
+      ],
       "deployerAddress": "eth:0x8D3A410962b1BcEe613f4aA41718cCfe161E9756",
       "sinceTimestamp": 1679193155,
       "sinceBlock": 16858818,
@@ -1277,77 +1613,107 @@
           [
             "2023-03-19T02:36:59.000Z",
             "0xbef016225c40c0d75131bc4e8a5f6ce6f7a5c872e2449f267413c5bbc6afbf25",
-            ["eth:0x552FFBdDFB01B6F7f3A3C39E9d3D0A5Fa8436394"]
+            [
+              "eth:0x552FFBdDFB01B6F7f3A3C39E9d3D0A5Fa8436394"
+            ]
           ],
           [
             "2023-04-01T20:59:59.000Z",
             "0xdd0f719c148c6de4894f667a50f2b580ee92fbe7cd673e918aebe05c7b49266b",
-            ["eth:0x98F5f3455B71C297e4f7D7Cd1FAA80b5CDf4A542"]
+            [
+              "eth:0x98F5f3455B71C297e4f7D7Cd1FAA80b5CDf4A542"
+            ]
           ],
           [
             "2023-08-30T22:08:35.000Z",
             "0x60f1457bbf8e61f25203769ade47092100fb0d0f105d1b0a4734dbb052b0910d",
-            ["eth:0xA872bca05c9F8A97CC36D879e43B33dB8ed7b69E"]
+            [
+              "eth:0xA872bca05c9F8A97CC36D879e43B33dB8ed7b69E"
+            ]
           ],
           [
             "2025-07-21T13:22:47.000Z",
             "0xc875094b76d46a0955ad6d560e6154806538855e429feac498dbc03ec2c1af24",
-            ["eth:0x6322C2f2D6a4305Fc033754d486A5A067Ee5F9b1"]
+            [
+              "eth:0x6322C2f2D6a4305Fc033754d486A5A067Ee5F9b1"
+            ]
           ],
           [
             "2025-07-21T13:22:47.000Z",
             "0xc875094b76d46a0955ad6d560e6154806538855e429feac498dbc03ec2c1af24",
-            ["eth:0xba2492e52F45651B60B8B38d4Ea5E2390C64Ffb1"]
+            [
+              "eth:0xba2492e52F45651B60B8B38d4Ea5E2390C64Ffb1"
+            ]
           ],
           [
             "2025-07-21T14:46:11.000Z",
             "0x216d7eeeaafd2a8fec6f782d288e7c343d09ebed89cceddc1fa3aa3d8d2808b1",
-            ["eth:0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"]
+            [
+              "eth:0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"
+            ]
           ],
           [
             "2025-07-24T14:01:11.000Z",
             "0xd75f116a171758a602f7cfb27520a1cd3c741822834c3b23db0a29a879da04fc",
-            ["eth:0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+            [
+              "eth:0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"
+            ]
           ],
           [
             "2025-07-24T14:01:11.000Z",
             "0xd75f116a171758a602f7cfb27520a1cd3c741822834c3b23db0a29a879da04fc",
-            ["eth:0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"]
+            [
+              "eth:0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"
+            ]
           ],
           [
             "2025-07-24T14:01:11.000Z",
             "0xd75f116a171758a602f7cfb27520a1cd3c741822834c3b23db0a29a879da04fc",
-            ["eth:0x760C48C62A85045A6B69f07F4a9f22868659CbCc"]
+            [
+              "eth:0x760C48C62A85045A6B69f07F4a9f22868659CbCc"
+            ]
           ],
           [
             "2025-07-24T14:01:11.000Z",
             "0xd75f116a171758a602f7cfb27520a1cd3c741822834c3b23db0a29a879da04fc",
-            ["eth:0x340f923E5c7cbB2171146f64169EC9d5a9FfE647"]
+            [
+              "eth:0x340f923E5c7cbB2171146f64169EC9d5a9FfE647"
+            ]
           ],
           [
             "2026-01-20T15:52:59.000Z",
             "0x44ac46ef2bf2ff160cf482c6729a14a342623403c52709dfc58b933e4d2d53fd",
-            ["eth:0x2bFE4A5Bd5A41e9d848d843ebCDFa15954e9A557"]
+            [
+              "eth:0x2bFE4A5Bd5A41e9d848d843ebCDFa15954e9A557"
+            ]
           ],
           [
             "2026-01-20T15:52:59.000Z",
             "0x44ac46ef2bf2ff160cf482c6729a14a342623403c52709dfc58b933e4d2d53fd",
-            ["eth:0x2fA28989fc559836E9d66dFf3010C7F7f41c65ED"]
+            [
+              "eth:0x2fA28989fc559836E9d66dFf3010C7F7f41c65ED"
+            ]
           ],
           [
             "2026-08-13T15:22:47.000Z",
             "0x1330099c3563a77ae508685b7fbdd905521540991d096f11d9aaafd0bb4fd7ed",
-            ["eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2"]
+            [
+              "eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2"
+            ]
           ],
           [
             "2026-08-13T15:22:47.000Z",
             "0x1330099c3563a77ae508685b7fbdd905521540991d096f11d9aaafd0bb4fd7ed",
-            ["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]
+            [
+              "eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"
+            ]
           ],
           [
             "2026-08-13T15:22:47.000Z",
             "0x1330099c3563a77ae508685b7fbdd905521540991d096f11d9aaafd0bb4fd7ed",
-            ["eth:0x42Ad0173051225Ac784100e9acD43349707F4db9"]
+            [
+              "eth:0x42Ad0173051225Ac784100e9acD43349707F4db9"
+            ]
           ]
         ],
         "$upgradeCount": 15,
@@ -1424,13 +1790,19 @@
         "VERSION": 0
       },
       "fieldMeta": {
-        "batcherHash": { "severity": "LOW" },
+        "batcherHash": {
+          "severity": "LOW"
+        },
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
-        "owner": { "severity": "MEDIUM" },
-        "paused": { "severity": "MEDIUM" },
+        "owner": {
+          "severity": "MEDIUM"
+        },
+        "paused": {
+          "severity": "MEDIUM"
+        },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
         },
@@ -1438,13 +1810,18 @@
           "severity": "HIGH",
           "description": "Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."
         },
-        "isCustomGasToken": { "severity": "HIGH" }
+        "isCustomGasToken": {
+          "severity": "HIGH"
+        }
       },
       "implementationNames": {
         "eth:0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca": "Proxy",
         "eth:0x42Ad0173051225Ac784100e9acD43349707F4db9": "SystemConfig"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
     }
   ],
   "abis": {
@@ -2280,7 +2657,9 @@
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7"
   },
-  "usedBlockNumbers": { "ethereum": 25846594 },
+  "usedBlockNumbers": {
+    "ethereum": 25846594
+  },
   "permissionsConfigHash": "0xf137245ec7e08861b387eac22e4db9ef3dbbc221ecb02716b3c28687eab6037a",
   "permissions": {
     "eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019": {
@@ -2358,7 +2737,9 @@
           "description": "set and change address mappings.",
           "role": ".owner",
           "via": [
-            { "address": "eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019" }
+            {
+              "address": "eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"
+            }
           ]
         },
         {
@@ -2372,7 +2753,9 @@
           "from": "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC",
           "role": "admin",
           "via": [
-            { "address": "eth:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5" }
+            {
+              "address": "eth:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5"
+            }
           ]
         },
         {
@@ -2380,7 +2763,9 @@
           "from": "eth:0x0c0105334a50Db16B51B2911C9956539753A2CF8",
           "role": "admin",
           "via": [
-            { "address": "eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019" }
+            {
+              "address": "eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"
+            }
           ]
         },
         {
@@ -2388,7 +2773,9 @@
           "from": "eth:0x11dd2d9B5ec142dbAFBEFEA82a75985Eae4e12b0",
           "role": "admin",
           "via": [
-            { "address": "eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019" }
+            {
+              "address": "eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"
+            }
           ]
         },
         {
@@ -2396,7 +2783,9 @@
           "from": "eth:0x2e7d7B188D663F38c2E4fF9C59328458A2D676F0",
           "role": "admin",
           "via": [
-            { "address": "eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019" }
+            {
+              "address": "eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"
+            }
           ]
         },
         {
@@ -2404,7 +2793,9 @@
           "from": "eth:0x4082C9647c098a6493fb499EaE63b5ce3259c574",
           "role": "admin",
           "via": [
-            { "address": "eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019" }
+            {
+              "address": "eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"
+            }
           ]
         },
         {
@@ -2412,7 +2803,9 @@
           "from": "eth:0x5DbBa17eb2458A05AbBA79E650dF607F0681Cc6a",
           "role": "admin",
           "via": [
-            { "address": "eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019" }
+            {
+              "address": "eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"
+            }
           ]
         },
         {
@@ -2420,7 +2813,9 @@
           "from": "eth:0x787A0ACaB02437c60Aafb1a29167A3609801e320",
           "role": "admin",
           "via": [
-            { "address": "eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019" }
+            {
+              "address": "eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"
+            }
           ]
         },
         {
@@ -2428,7 +2823,9 @@
           "from": "eth:0x98B833fD1659aB20c0505e28221008a74e22D3ad",
           "role": "admin",
           "via": [
-            { "address": "eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019" }
+            {
+              "address": "eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"
+            }
           ]
         },
         {
@@ -2436,7 +2833,9 @@
           "from": "eth:0xF51b386B0391B022604B95cD97DFce58A5c0cFB1",
           "role": "admin",
           "via": [
-            { "address": "eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019" }
+            {
+              "address": "eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"
+            }
           ]
         },
         {
@@ -2444,7 +2843,9 @@
           "from": "eth:0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca",
           "role": "admin",
           "via": [
-            { "address": "eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019" }
+            {
+              "address": "eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"
+            }
           ]
         }
       ],
