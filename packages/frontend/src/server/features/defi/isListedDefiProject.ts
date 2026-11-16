@@ -2,7 +2,8 @@ import type { ProjectDefiInfo } from '@l2beat/config'
 
 /**
  * DeFi projects whose category has its own page are listed in search, the
- * sitemap and section links. The others keep only their project page.
+ * sitemap and section links. The others keep only their project page, which
+ * search lists once CROPS reviews the project.
  */
 export function isListedDefiProject(
   defiInfo: ProjectDefiInfo | undefined,

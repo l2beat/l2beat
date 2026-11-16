@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x2d2aeb6eaf3a7b6908955f2ffffac0565258c3dd
+
+# Diff at Fri, 13 Nov 2026 13:04:09 GMT:
+
+- id: 10752709
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ced572b97485e6dc1fc02f958ee2a731593430e block: 1794319734
+- current timestamp: 1794568206
+
+## Description
+
+The SeizureRegistry address manager allowlisted a third recipient, the EOA eth:0x2C09c8D14BEbC30eA924c97288aace9cc379f8A6. The secondary market burner then recorded the balance of the blocklisted address 0xcc47af4deb357882331e0776f0d7a7a495a40bfa on Arbitrum (domain 3) and minted 300,000 USDC on Ethereum to that recipient. On Arbitrum the address still holds its 300,000.006 USDC, frozen.
+
+## Watched changes
+
+```diff
+    contract SeizureRegistry (eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd) [N/A] {
+    +++ description: USDC minter that re-mints seized balances: the secondary market burner records the balance of a blocklisted address once per address and CCTP domain and mints the same amount of USDC on Ethereum to an allowlisted recipient. The blocklisted balance stays frozen and is not burned, and the recorded amount is not verified onchain.
++++ description: Recipients that re-minted USDC can be sent to, managed by the address manager.
+      values.allowedRecipients.2:
++        "eth:0x2C09c8D14BEbC30eA924c97288aace9cc379f8A6"
+      values.totalSecondaryMarketBurnedAmount:
+-        4561333500000
++        4861333500000
+    }
+```
+
 Generated with discovered.json: 0x5f1f84e9ee1684da75d880cc964b94f9a4e0c25b
 
 # Diff at Tue, 10 Nov 2026 17:10:23 GMT:

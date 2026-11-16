@@ -51,6 +51,7 @@ export const fluidkey: BaseProject = {
       name: 'Fluidkey web app',
       url: 'https://app.fluidkey.com',
       since: '2026-10-13',
+      delivery: { type: 'hosted' },
       // Expo web entry bundle of the served app, which shows version 1.79.0w.
       build: 'entrypoint-4e96d22bc2e1da30a73f944178391185',
       checked: '2026-11-11',

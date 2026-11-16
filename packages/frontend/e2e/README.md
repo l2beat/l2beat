@@ -25,8 +25,9 @@ slowest one. That is about 1.5 min now.
     token graph costs on a phone and check that a pinch leaves it sharp, and
     in `blobs-webkit-perf`, which runs in WebKit to catch what only Safari
     slows down on. Tests running beside them push those counts up, so they
-    run one at a time (`workers: 1`) after the rest. Its runner installs
-    WebKit (`webkit: true` in its matrix entry); locally, run
+    run one at a time (`workers: 1`) after the rest. CI splits them over
+    two runners by folder (see below); the second installs WebKit
+    (`webkit: true` in its matrix entry). Locally, run
     `pnpm exec playwright install webkit` once.
   - `blobs perf`: the ratchet in `blobs-perf`. It watches the chain for a few
     12 s slots, so it takes about 50 s however fast the machine is.
@@ -38,11 +39,19 @@ slowest one. That is about 1.5 min now.
 
 The current runners:
 
-| Runner            | Arguments                          |
-| ----------------- | ---------------------------------- |
-| Chromium 1/2, 2/2 | `--project chromium --shard N/2`   |
-| perf              | `--project perf --no-deps`         |
-| blobs perf        | `--project "blobs perf" --no-deps` |
+| Runner            | Arguments                                          |
+| ----------------- | -------------------------------------------------- |
+| Chromium 1/2, 2/2 | `--project chromium --shard N/2`                   |
+| perf 1/2          | `--project perf --no-deps --grep-invert "$PERF_2"` |
+| perf 2/2          | `--project perf --no-deps --grep "$PERF_2"`        |
+| blobs perf        | `--project "blobs perf" --no-deps`                 |
+
+`PERF_2` lists the perf folders the second perf runner takes
+(`token-graph-perf/|blobs-webkit-perf/`, about 50 s); the first takes every
+other perf folder (`hydration-perf`, `nav-perf`, `resize-perf`, also about
+50 s). The perf tests run one at a time, so `--shard` would split them by
+count, not time; the folders were split by their measured times instead. A
+new perf folder lands on perf 1/2, so check the two still finish together.
 
 The perf runners pass `--no-deps` because locally the perf projects wait for
 `chromium` to finish, and on CI those tests already run on other runners.
@@ -99,7 +108,7 @@ bars: 31 ms a change, 3 ms fixed; boxes under a percent height, 68 and 0).
   `Chromium 3/3` entry and change the others to `--shard N/3`.
 - **A long test of its own**: give its file `mode: 'parallel'` if its tests
   do not depend on each other, so the shards can spread them.
-- **A resize ceiling**: it joins `perf`. That job has room for a few more.
+- **A resize ceiling**: it joins `perf 1/2`. That job has room for a few more.
 - **A blobs ceiling** (a key in `blobs-perf/ceilings.json`): it adds a 50 s
   test to `blobs perf`, which holds one. Give it a runner of its own: add
   `blobs perf N/M` entries with `--shard N/M` and set

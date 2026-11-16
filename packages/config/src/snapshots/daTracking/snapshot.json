@@ -48,11 +48,22 @@
   ],
   "adi": [
     {
+      "id": "02bbdc37f3f9",
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 26396861,
+        "inbox": "0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186",
+        "sequencers": ["0x76e8D4618fc6a05368CcDAAf7357E1F20e493053"]
+      }
+    },
+    {
       "id": "a8d364734186",
       "config": {
         "type": "ethereum",
         "daLayer": "ethereum",
         "sinceBlock": 23874833,
+        "untilBlock": 26396861,
         "inbox": "0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186",
         "sequencers": [
           "0xF8fF3e62E94807a5C687f418Fe36942dD3a24524",

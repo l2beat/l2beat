@@ -44,16 +44,16 @@ describe(collectActiveLeaves.name, () => {
     ])
   })
 
-  it('skips formulas that are not active yet or anymore', () => {
-    const active = supply('base', L1_USDC, { since: 100, until: 300 })
-    const expired = supply('base', ARB_USDC, { since: 100, until: 200 })
-    const future = supply('base', ARB_USDC_E, { since: 200 })
+  it('counts formulas from sinceTimestamp through untilTimestamp', () => {
+    const ended = supply('base', L1_USDC, { since: 100, until: 199 })
+    const endsNow = supply('base', ARB_USDC, { since: 100, until: 200 })
+    const startsNow = supply('base', ARB_USDC_E, { since: 200 })
 
     expect(
-      collectActiveLeaves(sum(active, expired, future), UnixTime(200)).map(
+      collectActiveLeaves(sum(ended, endsNow, startsNow), UnixTime(200)).map(
         (leaf) => leaf.address,
       ),
-    ).toEqual([L1_USDC])
+    ).toEqual([ARB_USDC, ARB_USDC_E])
   })
 
   it('counts the minuend of a diff, like the TVS runtime', () => {
@@ -79,6 +79,9 @@ describe(collectScheduledLeaves.name, () => {
         (leaf) => leaf.address,
       ),
     ).toEqual([L1_USDC])
+    expect(
+      collectScheduledLeaves(diff(counted, subtracted), UnixTime(300)),
+    ).toEqual([])
   })
 })
 

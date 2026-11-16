@@ -1,0 +1,67 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Keeper",
+  "category": "gov",
+  "description": "Entry point of the oracle committee: stores the Merkle root of per-vault cumulative rewards that vaults harvest and forwards the osToken reward rate to the vault controller, given {{rewardsMinOracles}} of {{totalOracles}} oracle signatures, at least {{rewardsDelayFormatted}} since the previous update and a rate at or below a ceiling fixed at deployment. Staking key registrations, exit signatures and consolidations need {{validatorsMinOracles}} oracle signatures over the exact keys.",
+  "ignoreMethods": ["eip712Domain"],
+  "ignoreInWatchMode": [
+    "rewardsRoot",
+    "prevRewardsRoot",
+    "lastRewardsTimestamp",
+    "rewardsNonce",
+    "canUpdateRewards"
+  ],
+  "fields": {
+    "rewardsDelayFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "function rewardsDelay() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "constructorArgs": {
+      "handler": {
+        "type": "constructorArgs",
+        "nameArgs": true
+      },
+      "description": "Deployment parameters, including the ceiling on the osToken reward rate (maxAvgRewardPerSecond, 1e18 = 100% of assets per second)."
+    },
+    "oracles": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": "oracle",
+        "add": {
+          "event": "OracleAdded"
+        },
+        "remove": {
+          "event": "OracleRemoved"
+        }
+      },
+      "description": "Addresses whose signatures count towards the oracle thresholds.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "sign, as part of the oracle quorum, the rewards root that sets every vault's balance and the osToken reward rate (capped by the keeper), staking key registrations, exit signatures and consolidations."
+        }
+      ]
+    },
+    "rewardsMinOracles": {
+      "severity": "HIGH"
+    },
+    "validatorsMinOracles": {
+      "severity": "HIGH"
+    },
+    "owner": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add and remove oracles, which can also halt every update and with it every vault exit queue by removing them below a threshold, set both signature thresholds down to one, and replace the off-chain oracle configuration, with no delay."
+        }
+      ]
+    }
+  },
+  "ignoreRelatives": ["constructorArgs"]
+}

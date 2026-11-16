@@ -5,7 +5,7 @@
     "test": {
       "env": ["TEST_DB_URL", "CI"],
       "dependsOn": ["^build", "db:generate-types"],
-      "inputs": ["**/*.ts", "**/*.test.ts", "**/*.json", "**/*.jsonc"]
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/scripts/test_db_schema.sh"]
     }
   }
 }

@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Compartment of a GRVT vault. It holds vault capital withdrawn from GRVT and deploys it into listed Axcess loan vaults, Nest vaults and Wildcat V2 markets. Proceeds of venue exits always return to the compartment, and funds can only leave it to a listed venue or to the vault's deposit proxy on GRVT through the GRVTBridgeProxy. Venues are listed by the REGISTRY_ADMIN_ROLE of the CompartmentRegistry.",
+  "description": "Compartment of a GRVT vault. It holds vault capital withdrawn from GRVT and deploys it into venues that the REGISTRY_ADMIN_ROLE of the CompartmentRegistry lists as Axcess loan vaults, Nest vaults or Wildcat V2 markets. Proceeds of venue exits return to the compartment. Apart from venue deposits, its code moves funds only to GRVT through the GRVTBridgeProxy, which derives the destination from the compartment's registered vault id and from parameters that the bridge owner sets.",
   // external lending protocols that the compartment deposits into
   "ignoreRelatives": [
     "axcessVaultList",

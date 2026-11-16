@@ -4,5 +4,11 @@
     "address": "eth:0x45F626E2a4D63232677C96B163ac46e20514a915",
     "chain": "ethereum",
     "blockNumber": 26290653
+  },
+  "RegistrationController_2": {
+    "hash": "0xcb0ffd641e34a18a9d794ccaa4488b2daa455bf22cc47821634f55ea10b044aa",
+    "address": "eth:0xeC4DDC3B27fFfc9593eE63085CbF05BfFAB6be37",
+    "chain": "ethereum",
+    "blockNumber": 26405958
   }
 }

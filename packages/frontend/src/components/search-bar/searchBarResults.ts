@@ -64,7 +64,7 @@ const TOKEN_RESULTS_LIMIT = 5
 
 export function searchProjectsAndTokens(
   query: string,
-  index: DecodedSearchIndex,
+  index: Pick<DecodedSearchIndex, 'projects' | 'tokens'>,
 ) {
   // Searched together so that direct matches of either type still hide fuzzy ones.
   const matches = searchEntries<SearchBarProjectEntry | SearchBarTokenEntry>(

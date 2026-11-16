@@ -93,7 +93,6 @@ function renderPage(): string {
           },
         ]),
         queryState: { mutations: [], queries: [] },
-        recentlyAddedProjects: [],
         whatsNewItem: undefined,
         countdowns: PROJECT_COUNTDOWNS,
       }),

@@ -4,6 +4,9 @@ import type {
   ApiAgentBoard,
   ApiAgentContext,
   ApiAgentEvent,
+  ApiAgentGraph,
+  ApiAgentLayout,
+  ApiAgentLayoutRequest,
   ApiAgentShowEvent,
 } from '../types'
 
@@ -32,6 +35,20 @@ export interface ActiveTab {
   project: string | undefined
 }
 
+// What a tab answers to each kind of request.
+interface TabAnswers {
+  context: ApiAgentContext
+  graph: ApiAgentGraph
+  layout: ApiAgentLayout
+}
+type RequestKind = keyof TabAnswers
+
+interface PendingRequest {
+  tab: string
+  kind: RequestKind
+  resolve: (answer: TabAnswers[RequestKind] | undefined) => void
+}
+
 // Each show goes to the one tab the researcher used last, so two open tabs
 // never walk through the same steps at once.
 export class AgentTabs {
@@ -43,10 +60,7 @@ export class AgentTabs {
   private board: { tab: string; board: ApiAgentBoard } | undefined
   private readonly connectListeners: ((id: string) => void)[] = []
   // Each removed when its tab answers or the wait times out.
-  private readonly contextRequests = new Map<
-    string,
-    { tab: string; resolve: (context: ApiAgentContext | undefined) => void }
-  >()
+  private readonly requests = new Map<string, PendingRequest>()
 
   // A tab that reconnects under its id replaces its old stream, whose close
   // may arrive after the new one opened.
@@ -167,33 +181,99 @@ export class AgentTabs {
     id: string,
     timeoutMs: number,
   ): Promise<ApiAgentContext | undefined> {
+    return this.ask(id, 'context', timeoutMs, (requestId) => ({
+      type: 'context-request',
+      id: requestId,
+    }))
+  }
+
+  answerContext(id: string, requestId: string, context: ApiAgentContext) {
+    return this.answer(id, requestId, 'context', context)
+  }
+
+  // Asks the tab for its node view as drawn, like askContext.
+  askGraph(
+    id: string,
+    project: string,
+    timeoutMs: number,
+  ): Promise<ApiAgentGraph | undefined> {
+    return this.ask(id, 'graph', timeoutMs, (requestId) => ({
+      type: 'graph-request',
+      id: requestId,
+      project,
+    }))
+  }
+
+  answerGraph(id: string, requestId: string, graph: ApiAgentGraph) {
+    return this.answer(id, requestId, 'graph', graph)
+  }
+
+  // Asks the tab to arrange its node view, and what it drew then.
+  askLayout(
+    id: string,
+    request: Omit<ApiAgentLayoutRequest, 'type' | 'id'>,
+    timeoutMs: number,
+  ): Promise<ApiAgentLayout | undefined> {
+    return this.ask(id, 'layout', timeoutMs, (requestId) => ({
+      type: 'layout-request',
+      id: requestId,
+      project: request.project,
+      lanes: request.lanes,
+      hideOthers: request.hideOthers,
+    }))
+  }
+
+  answerLayout(id: string, requestId: string, layout: ApiAgentLayout) {
+    return this.answer(id, requestId, 'layout', layout)
+  }
+
+  private ask<K extends RequestKind>(
+    id: string,
+    kind: K,
+    timeoutMs: number,
+    toEvent: (requestId: string) => ApiAgentEvent,
+  ): Promise<TabAnswers[K] | undefined> {
     const tab = this.tabs.get(id)
     assert(tab !== undefined, 'Asking a tab that is not connected')
     const requestId = randomUUID()
     return new Promise((resolve) => {
       const timeout = setTimeout(() => {
-        this.contextRequests.delete(requestId)
+        this.requests.delete(requestId)
         resolve(undefined)
       }, timeoutMs)
-      this.contextRequests.set(requestId, {
+      this.requests.set(requestId, {
         tab: id,
-        resolve: (context) => {
+        kind,
+        resolve: (answer) => {
           clearTimeout(timeout)
-          this.contextRequests.delete(requestId)
-          resolve(context)
+          this.requests.delete(requestId)
+          // answer() hands over only answers of this request's kind.
+          resolve(answer as TabAnswers[K] | undefined)
         },
       })
-      write(tab, { type: 'context-request', id: requestId })
+      write(tab, toEvent(requestId))
     })
   }
 
-  // Returns false for a request that timed out or that another tab got.
-  answerContext(id: string, requestId: string, context: ApiAgentContext) {
-    const request = this.contextRequests.get(requestId)
-    if (request === undefined || request.tab !== id) {
+  // Returns false for a request that timed out, that another tab got, or
+  // that waits for another kind of answer.
+  private answer<K extends RequestKind>(
+    id: string,
+    requestId: string,
+    kind: K,
+    answer: TabAnswers[K],
+  ): boolean {
+    const request = this.requests.get(requestId)
+    if (request === undefined) {
       return false
     }
-    request.resolve(context)
+    if (request.tab !== id) {
+      return false
+    }
+    if (request.kind !== kind) {
+      return false
+    }
+    request.resolve(answer)
     return true
   }
 

@@ -17,15 +17,10 @@ export interface DefiToken {
 export async function getDefiTokens(
   tokens: ProjectDefiToken[],
 ): Promise<DefiToken[]> {
-  const abstractTokens = await getAbstractTokens(tokens)
+  const findAbstractToken = await getAbstractTokenLookup(tokens)
 
   return tokens.map((token) => {
-    const abstractToken = abstractTokens.get(
-      tokenKey(
-        ChainSpecificAddress.longChain(token.address),
-        ChainSpecificAddress.address(token.address),
-      ),
-    )
+    const abstractToken = findAbstractToken(token)
     return {
       symbol: token.symbol,
       name: token.name,
@@ -34,6 +29,20 @@ export async function getDefiTokens(
       iconUrl: abstractToken?.iconUrl ?? undefined,
     }
   })
+}
+
+/** Reads the token database once for all the tokens. */
+export async function getAbstractTokenLookup(
+  tokens: ProjectDefiToken[],
+): Promise<(token: ProjectDefiToken) => AbstractTokenRecord | undefined> {
+  const abstractTokens = await getAbstractTokens(tokens)
+  return (token) =>
+    abstractTokens.get(
+      tokenKey(
+        ChainSpecificAddress.longChain(token.address),
+        ChainSpecificAddress.address(token.address),
+      ),
+    )
 }
 
 async function getAbstractTokens(

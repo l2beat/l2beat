@@ -2,6 +2,7 @@ import {
   ADVICE_SNIPPETS as A,
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
+  toolLink,
 } from '../../common/privacyAdversaries'
 import type { PrivacyExposureMap } from '../../types'
 
@@ -145,7 +146,7 @@ export function railgunAdversaries(upgradeDelay: string) {
     advice: [
       {
         name: 'Set up',
-        text: 'Before unlocking RailOxide, set a local Ethereum node as the direct endpoint for reads, and keep one public endpoint for submissions.',
+        text: `Before unlocking RailOxide, set a ${toolLink('ethereumNode', 'local Ethereum node')} as the direct endpoint for reads, and keep one public endpoint for submissions.`,
         against: ['networkObserver'],
         outside: true,
       },

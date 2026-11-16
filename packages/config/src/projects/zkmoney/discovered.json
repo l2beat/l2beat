@@ -1,7 +1,7 @@
 {
   "name": "zkmoney",
-  "timestamp": 1793367325,
-  "configHash": "0xe9fa6587b5a2a4aa8bcf605c9b6debeb2d88c763dcab1fba0927a47bc97aea98",
+  "timestamp": 1794572098,
+  "configHash": "0xecec7778b303e21fe15a35b3893d022506f3ecec150288e8b32e2b55644c5957",
   "entries": [
     {
       "name": "NitroValidator",
@@ -352,13 +352,13 @@
         "$immutable": true,
         "ensNode": "0xf605999a299a7229da9f2a3c65acf5cb829ae965cfe467f053e1b97c50b0eec2",
         "ensNodeOwner": "eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601",
-        "ensResolver": "eth:0xc329a74542688a3c4948B7d46F204d3d7e5Dd525",
+        "ensResolver": "eth:0x3dc71762063D7b87b3F79b3B98E03F0051b00A6e",
         "NAME_REGISTRY": "eth:0xa9863B8F573D62377d987ccb9AF6e0000f99D14a",
         "SIPA_FACTORY": "eth:0xc357E34D4C7520a83C9Ec0a242Ba52b4ecABa1Fc",
         "VERIFIER": "eth:0xbF058D54c5033F4cB45c6E1Eba103CaeF232E451"
       },
       "fieldMeta": {
-        "ensNode": { "description": "ENS node monitored for this deployment." },
+        "ensNode": { "description": "ENS node of zk.money." },
         "ensNodeOwner": {
           "severity": "MEDIUM",
           "description": "Owner of zk.money in the ENS registry. The DNS domain holder can reclaim this DNS name in ENS with a DNSSEC proof."
@@ -686,8 +686,8 @@
           "extensions": []
         },
         "owner": "eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601",
-        "registrationController": "eth:0x45F626E2a4D63232677C96B163ac46e20514a915",
-        "resolver": "eth:0xc329a74542688a3c4948B7d46F204d3d7e5Dd525"
+        "registrationController": "eth:0xeC4DDC3B27fFfc9593eE63085CbF05BfFAB6be37",
+        "resolver": "eth:0x3dc71762063D7b87b3F79b3B98E03F0051b00A6e"
       },
       "fieldMeta": {
         "owner": { "severity": "MEDIUM" },
@@ -1044,7 +1044,7 @@
             ],
             "0x1847cc9b9248ca3a57e3c90c91188c2c41262b860b6be229966d843956f00ae7",
             "https://rop-v6.v6-prod.oxide.zk.money/{sender}/{data}.json",
-            "eth:0xFf839a8Be7c90c804F42563f352324cEBcDfe41C"
+            "eth:0x4cb0082B40d3CeE3Cf5237282d34B51129FF49Bd"
           ]
         }
       },
@@ -2244,7 +2244,7 @@
     "zkmoney/RefundRelationsLib": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "zkmoney/RegistrationController": "0x7d40edff658ec51a29ba6a99b69f3a9ddc052d87d4f05e01e82ca620d0a9fd3a",
     "zkmoney/RegistrationSIPA": "0xb76ce03ef8d6ad2a449e7b71857fb89c06417c1a0ffea67b8bdb89a9019f0dca",
-    "zkmoney/Resolver": "0x6790115424b1b8c56fc5c61350379125aa65af648b7310613899444d807bd97c",
+    "zkmoney/Resolver": "0x73cd6de2414d485cb3dd6e3df142ed58b9d47c9a25228aaca491f23a3e274350",
     "zkmoney/ResolverVerifier": "0xcee04109bf45a1b2acf6cf24b80b2517a6493fa892389be1ea9b75f7ae20a7ca",
     "zkmoney/ResolverVerifierLibrary": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "zkmoney/SIPAFactory": "0x6015b0def645b353825fa1a4fe67b72d8b62ab9ffd99ace348dae0075d2dfd60",
@@ -2258,7 +2258,7 @@
     "zkmoney/UnprocessedDepositRefundVerifier": "0x973590db53f201980888f82d4c8ccc44430edb76a016489d94d133c448daaf8d",
     "zkmoney/ZkMoneyPortal": "0x4849cf15f068d591a1aa63a22d45dab667cc83726b39e596ca465b8c122c6383"
   },
-  "usedBlockNumbers": { "ethereum": 26305904 },
+  "usedBlockNumbers": { "ethereum": 26405973 },
   "permissionsConfigHash": "0x60d7677d3e8ec52df80ea33848cb8348b3af7871c21ffa59f693ad708cb59bfb",
   "permissions": {
     "eth:0x05406F53174EC1bFE5C94aF253CdD62A4adF2F29": {
