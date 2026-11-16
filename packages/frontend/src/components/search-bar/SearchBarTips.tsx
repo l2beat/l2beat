@@ -46,14 +46,23 @@ const SEARCH_TIPS: SearchTip[] = [
   },
 ]
 
+export const SEARCH_TIPS_ID = 'search-tips'
+
 export function SearchBarTips({
   onExample,
 }: {
   onExample: (query: string) => void
 }) {
   return (
-    <section className="px-4 pt-2.5 pb-3 text-sm">
-      <h2 className="mb-2 font-medium text-secondary text-xs">
+    <section
+      id={SEARCH_TIPS_ID}
+      aria-labelledby={`${SEARCH_TIPS_ID}-heading`}
+      className="px-4 pt-2.5 pb-3 text-sm"
+    >
+      <h2
+        id={`${SEARCH_TIPS_ID}-heading`}
+        className="mb-2 font-medium text-secondary text-xs"
+      >
         What you can search
       </h2>
       <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2">

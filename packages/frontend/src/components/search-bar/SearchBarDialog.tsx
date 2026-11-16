@@ -26,7 +26,13 @@ import {
 } from '../pinned-projects/pinnedProjectsStore'
 import { trackScrollFades } from '../ScrollWithGradient'
 import { useSearchBarContext } from './SearchBarContext'
-import { isApple, Kbd, keepEnterOnButton, SearchBarTips } from './SearchBarTips'
+import {
+  isApple,
+  Kbd,
+  keepEnterOnButton,
+  SEARCH_TIPS_ID,
+  SearchBarTips,
+} from './SearchBarTips'
 import type { SearchBarCategory } from './searchBarCategories'
 import { searchBarCategories } from './searchBarCategories'
 import { getEmptyStateGroups } from './searchBarEmptyState'
@@ -421,11 +427,12 @@ function SearchBarFooter({
       <button
         type="button"
         aria-expanded={tipsOpen}
+        aria-controls={SEARCH_TIPS_ID}
         onClick={onToggleTips}
         onKeyDown={keepEnterOnButton}
         // Underlined, as nothing else in grey says it can be clicked. On touch
         // it takes the footer's height, being the only thing in it.
-        className="pointer-coarse:-my-2 pointer-coarse:-ml-2 rounded-sm pointer-coarse:py-2 pointer-coarse:pr-4 pointer-coarse:pl-2 font-medium underline decoration-dotted underline-offset-2 transition-colors hover:text-primary focus-visible:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
+        className="pointer-coarse:-my-2 pointer-coarse:-ml-2 rounded-sm pointer-coarse:py-2 pointer-coarse:pr-4 pointer-coarse:pl-2 font-medium underline decoration-dotted underline-offset-[3px] transition-colors hover:text-primary focus-visible:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
       >
         {tipsOpen ? 'Hide search tips' : 'Search tips'}
       </button>
