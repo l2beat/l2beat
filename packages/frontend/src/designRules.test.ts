@@ -6,12 +6,14 @@ import { expect } from 'earl'
 // matching source text.
 
 const SRC = join(__dirname)
+const STATIC = join(__dirname, '../static')
 
 function sourceFiles(dir: string): string[] {
   return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
     const path = join(dir, entry.name)
     if (entry.isDirectory()) return sourceFiles(path)
-    return /\.(tsx?|css)$/.test(entry.name) && !entry.name.includes('.test.')
+    return /\.(tsx?|css|svg)$/.test(entry.name) &&
+      !entry.name.includes('.test.')
       ? [path]
       : []
   })
@@ -25,7 +27,10 @@ function filesMatching(dir: string, pattern: RegExp) {
 
 describe('design rules (DESIGN.md)', () => {
   it('uses the site palette, never the brand kit paper #F5F3EE', () => {
-    expect(filesMatching(SRC, /f5f3ee/i)).toEqual([])
+    expect([
+      ...filesMatching(SRC, /f5f3ee/i),
+      ...filesMatching(STATIC, /f5f3ee/i),
+    ]).toEqual([])
   })
 
   it('does not cap the line length of research and markdown prose', () => {

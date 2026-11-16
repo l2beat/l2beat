@@ -21,25 +21,30 @@ Some rules have a check in `packages/frontend/src/designRules.test.ts`. That tes
   Why (*inferred*): grey keys read washed out. Reviewer models keep proposing "Stripe-style" muted keys, so this needs to be written down.
   <!-- 2026-11-02: "I do not like the muted text change" (rosette tooltip, reverted) -->
 
-- **Images shown on the site use the site palette: `#FFFFFF`, `#E6E7EC` (`--surface-secondary`) and `#CCD0DA` (`--divider`). Never use the brand kit's paper `#F5F3EE` or warm beige tints.** Checked by `designRules.test.ts`.
+- **Images shown on the site use the site palette: `#FFFFFF`, `#E6E7EC` (`--surface-secondary`) and `#CCD0DA` (`--divider`). Never use the brand kit's paper `#F5F3EE` or warm beige tints.** Checked by `designRules.test.ts` in source files and the SVGs under `static`.
   Why: paper is used nowhere on the site.
   <!-- 2026-11-03: "where did you get that stupid paper background from?" -->
 
-- **Coloured badges use white text on a fill dark enough for 4.5:1 contrast (e.g. Lock & Mint `#8a6700`, Burn & Mint `#1b7f75`), not dark text on a bright fill.**
-  Why (*inferred*): one text colour stays readable in both themes.
-  <!-- 2026-11-13: picked option A for the transfer-type badges -->
+- **Coloured badges keep main's fills and size, with white all-caps text (e.g. transfer-type badges: Lock & Mint `bg-yellow-700`, Burn & Mint `bg-teal-500`). Don't darken a fill or shrink a label to chase a contrast ratio.**
+  Why: the owner found the darker fills and the smaller label worse than main's.
+  <!-- 2026-11-13: picked white text on darker fills (option A) -->
+  <!-- 2026-11-16: reverted the darker fills and the size: "got worse" -->
 
 ## Type
 
-- **Short labels that tag or categorise are all caps, at a small caps size with tracking:**
+- **Short labels that tag, categorise or name a period are all caps:**
   - eyebrows, and dates or meta kickers;
   - badges, pills and tags;
   - section breadcrumbs;
-  - micro section labels ("ABOUT", "STATS").
+  - micro section labels ("ABOUT", "STATS");
+  - table column headers;
+  - range buttons and period headers ("7D", "30D", "1Y", "MAX", "24H");
+  - node labels in diagrams ("L2 BLOCK", "KEY REGISTRY"), with their tracking.
 
-  Sentences, headings, buttons and long strings use sentence case. Never sweep uppercase out site-wide for consistency.
+  Sentences, headings, action buttons and long strings use sentence case. Toggle options keep main's case (e.g. "Per L2 User Op", "Tx Data"). Never sweep uppercase out site-wide for consistency, or into it: change case one label at a time.
   Why: short all-caps labels are part of ETHBEAT's look. The owner accepts sentence case for some labels, not a blanket sweep.
   <!-- 2026-11-14: "you also remove all caps stuff - i do not know why, in some cases i get it, in some cases i dont. I like when some stuff on the page are all caps." -->
+  <!-- 2026-11-16: owner's picks from the capitalisation review put range buttons, change headers, table headers and the native rollups diagram labels back in caps -->
 
 ## Surfaces
 
@@ -53,7 +58,7 @@ Some rules have a check in `packages/frontend/src/designRules.test.ts`. That tes
   Why: no one notices them below the chart.
   <!-- 2026-11-12: "ultra bad — no one is gonna notice this below the chart" -->
 
-- **Prose inside cards has no line-length cap: no `max-w-prose` and no `max-w-[<N>ch]` on research or markdown text. It spans the card.** Display headlines may still use `ch` caps. Checked by `designRules.test.ts` for `components/markdown` and `components/projects`.
+- **Prose inside cards has no line-length cap: no `max-w-prose` and no `max-w-[<N>ch]` on research or markdown text. It spans the card.** Display headlines outside those components may still use `ch` caps. Checked by `designRules.test.ts`, which flags any `ch` cap in `components/markdown` and `components/projects`.
   Why: text should span the card like the tables and diagrams beside it, so each card has one right edge.
   <!-- 2026-11-12: "text should span the card like the tables and diagrams beside it" -->
 
@@ -81,6 +86,6 @@ Some rules have a check in `packages/frontend/src/designRules.test.ts`. That tes
 
 ## Copy
 
-- **A change shown with its period always reads "−5.65% / 7d": the change, then "/ period" in `text-secondary`.** Table column headers like "Total 7d" are headings and stay as they are. Table cells give the period in a tooltip.
+- **A change shown with its period always reads "−5.65% / 7d": the change, then "/ period" in `text-secondary`.** Table column headers like "7D" are headings and stay as they are. Table cells give the period in a tooltip.
   Why: without the slash, "−5.65% 7d" reads as one unclear figure.
   <!-- 2026-11-13: "this is really unclear… a '/' between them would do the work" -->
