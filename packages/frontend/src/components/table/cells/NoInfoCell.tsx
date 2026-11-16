@@ -7,9 +7,7 @@ import {
 export function NoInfoCell() {
   return (
     <Tooltip contentInHtml>
-      <TooltipTrigger className="text-gray-550 dark:text-gray-500">
-        No info
-      </TooltipTrigger>
+      <TooltipTrigger className="text-secondary">No info</TooltipTrigger>
       <TooltipContent>This item is still under review.</TooltipContent>
     </Tooltip>
   )

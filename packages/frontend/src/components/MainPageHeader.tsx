@@ -41,7 +41,7 @@ export function MainPageHeader({
           {description && (
             <ShowMoreText
               pageTitle={typeof children === 'string' ? children : ''}
-              textClassName="text-xs font-normal text-secondary"
+              textClassName="font-normal text-label-value-15 text-secondary leading-5.5"
               className="px-4 pt-4 md:p-0"
             >
               {description}
