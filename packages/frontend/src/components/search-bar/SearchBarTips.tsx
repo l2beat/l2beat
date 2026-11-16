@@ -16,8 +16,8 @@ interface SearchTip {
 const SEARCH_TIPS: SearchTip[] = [
   {
     kind: 'Projects',
-    how: 'By name or team: L2s, bridges, zkVMs, privacy and DeFi',
-    examples: examples('arb', 'Uniswap', 'Circle'),
+    how: 'By name, team or ticker: chains, L2s, L3s, bridges, zkVMs, privacy and DeFi',
+    examples: examples('arb', 'Uniswap', 'SOL'),
   },
   {
     kind: 'Tokens',
@@ -31,7 +31,7 @@ const SEARCH_TIPS: SearchTip[] = [
   },
   {
     kind: 'Addresses',
-    how: 'Any contract or multisig: finds its project or token',
+    how: 'Any contract, multisig or admin: finds its project or token',
     examples: [
       // USDC on Ethereum
       {
@@ -58,12 +58,9 @@ export function SearchBarTips({
     <section
       id={SEARCH_TIPS_ID}
       aria-labelledby={`${SEARCH_TIPS_ID}-heading`}
-      className="px-4 pt-2.5 pb-3 text-sm"
+      className="px-4 py-3 text-sm"
     >
-      <h2
-        id={`${SEARCH_TIPS_ID}-heading`}
-        className="mb-2 font-medium text-secondary text-xs"
-      >
+      <h2 id={`${SEARCH_TIPS_ID}-heading`} className="sr-only">
         What you can search
       </h2>
       <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2">
