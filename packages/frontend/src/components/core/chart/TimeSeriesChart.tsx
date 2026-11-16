@@ -18,6 +18,7 @@ import { scaleLinear } from '@tanstack/charts/scales/linear'
 import { curveMonotoneX, curveStep, curveStepAfter } from 'd3-shape'
 import { type ReactNode, useId, useMemo, useRef, useState } from 'react'
 import { cn } from '~/utils/cn'
+import { trimTrailingZeros } from '~/utils/trimTrailingZeros'
 import { isSeriesSelected, useChart } from './ChartContext'
 import { ChartHoverOverlay, ChartSceneStore } from './ChartHoverOverlay'
 import { NoDataPatternDef } from './defs/NoDataPatternDef'
@@ -729,7 +730,9 @@ function yTickLabels(axes: YTickLabels[]) {
             : chart.x + chart.width - Y_LABEL_INSET
         const prefix = side === 'left' ? 'y-tick' : 'right-y-tick'
         for (const value of ticks) {
-          const label = `${format ? format(value) : value}${unit}`
+          // Formatters round to a fixed number of decimals; the padding
+          // zeros ("15.00 GiB", "$18.00B") tell no two ticks apart.
+          const label = `${trimTrailingZeros(format ? format(value) : String(value))}${unit}`
           const labelY = y.map(value) + dy
           labels.push({
             kind: 'label',

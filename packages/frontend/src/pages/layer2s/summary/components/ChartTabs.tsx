@@ -25,14 +25,14 @@ export function ChartTabs({
             aria-label={labels[0]}
             className="group w-full py-2.5"
           >
-            <div className="my-auto h-2 w-full rounded-full bg-surface-tertiary group-data-[state=active]:bg-primary" />
+            <div className="my-auto h-2 w-full rounded-full bg-surface-tertiary group-data-[state=active]:bg-brand" />
           </Tabs.Trigger>
           <Tabs.Trigger
             value="activity"
             aria-label={labels[1]}
             className="group w-full py-2.5"
           >
-            <div className="my-auto h-2 w-full rounded-full bg-surface-tertiary group-data-[state=active]:bg-primary" />
+            <div className="my-auto h-2 w-full rounded-full bg-surface-tertiary group-data-[state=active]:bg-brand" />
           </Tabs.Trigger>
         </Tabs.List>
       </Tabs.Root>

@@ -164,7 +164,7 @@ export const searchBarPages = withIndex([
   },
   {
     category: 'other',
-    name: 'Native Rollups',
+    name: 'Native rollups',
     href: '/native-rollups',
     tags: ['pages'],
   },
