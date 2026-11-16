@@ -1,0 +1,40 @@
+{
+  "about": "Ceilings in seconds for each CI job, checked by .github/scripts/check-ci-budgets.py after every run. Set about 10% above the slowest of 150 runs (2026-11-13 to 11-16), so a run goes red on a regression, not on a slow runner; targets says where each should end up. Lower a budget when a job gets faster; raise one only in the PR that makes the job slower, and say why.",
+  "targets": {
+    "setup": 30,
+    "Typecheck": 5,
+    "Test": 60,
+    "pull request, median": 120,
+    "pull request, p95": 180
+  },
+  "setupSteps": [
+    "Set up job",
+    "Check out code",
+    "Check whether the change reaches this job",
+    "Set up pnpm and install dependencies",
+    "Set up Playwright",
+    "Setup Biome CLI",
+    "Setup yq",
+    "Set up Docker.io mirror"
+  ],
+  "setup": {
+    "E2E tests (perf*": 115,
+    "*": 60
+  },
+  "job": {
+    "Build backend container image": 115,
+    "Build token-backend container image": 105,
+    "Build discoui": 110,
+    "Build frontend": 60,
+    "Build tools": 60,
+    "DiscoUI E2E tests *": 160,
+    "E2E tests (perf*": 290,
+    "E2E tests (*": 130,
+    "E2E tests": 15,
+    "Lint & Format": 40,
+    "Test": 110,
+    "Test if all GH Action jobs have timeout defined": 30,
+    "Typecheck": 80,
+    "*": 120
+  }
+}

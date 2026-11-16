@@ -459,3 +459,36 @@ jobs:
             echo "${failed_files[@]}"
             exit 1
           fi
+
+  # Fails when a job took longer than its ceiling in .github/ci-budgets.json,
+  # not counting the wait for a runner
+  budgets:
+    name: CI budgets
+    needs:
+      - build-backend
+      - build-frontend
+      - build-discoui
+      - build-tools
+      - build-token-backend
+      - typecheck
+      - test
+      - test-e2e
+      - test-e2e-discoui
+      - biome
+      - test-gha-timeouts
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: read
+      contents: read
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v6
+        with:
+          sparse-checkout: .github
+
+      - name: Check each job against its budget
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 .github/scripts/check-ci-budgets.py
