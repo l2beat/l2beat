@@ -47,7 +47,7 @@ describe(PrivacyProjectStats.name, () => {
       }),
     )
 
-    expect(html).toInclude('Active Relayers 30D')
+    expect(html).toInclude('Active relayers 30d')
     expect(html).toInclude('>12</span>')
   })
 
@@ -59,7 +59,7 @@ describe(PrivacyProjectStats.name, () => {
       }),
     )
 
-    expect(html).toInclude('Active Relayers 30D')
+    expect(html).toInclude('Active relayers 30d')
   })
 
   it('shows the average daily relayer count for sampled tracking', () => {
@@ -70,15 +70,15 @@ describe(PrivacyProjectStats.name, () => {
       }),
     )
 
-    expect(html).toInclude('Avg. Relayers 30D')
+    expect(html).toInclude('Avg. relayers 30d')
     expect(html).toInclude('>46</span>')
-    expect(html).not.toInclude('Active Relayers 30D')
+    expect(html).not.toInclude('Active relayers 30d')
   })
 
   it('hides the metric when relayer tracking is not configured', () => {
     const html = render(createElement(PrivacyProjectStats, BASE_PROPS))
 
-    expect(html).not.toInclude('Active Relayers 30D')
+    expect(html).not.toInclude('Active relayers 30d')
   })
 
   it('shows relayers when flow tracking is not configured', () => {
@@ -93,7 +93,7 @@ describe(PrivacyProjectStats.name, () => {
 
     expect(html).toInclude('Live asset metrics')
     expect(html).toInclude('Not tracked')
-    expect(html).toInclude('Active Relayers 30D')
+    expect(html).toInclude('Active relayers 30d')
     expect(html).toInclude('>3</span>')
   })
 })

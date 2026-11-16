@@ -71,8 +71,9 @@ export function InteropTokenOnchainDeploymentsSection({
           <div className="h-4" />
         </>
       )}
-      {/* 12px between columns and one compact header size, so all eight
-          columns fit the card at 1280 (the last one was cut). */}
+      {/* 12px between columns, so every column fits the card at 1280, and
+          12px headers like the page's other tables. The figures come right
+          after the chain, so phones see them unscrolled. */}
       <div className="md:[&_td]:pr-3 [&_th]:text-2xs md:[&_th]:pr-3">
         <BasicTable table={table} tableWrapperClassName="pb-0" />
       </div>

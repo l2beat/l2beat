@@ -21,7 +21,10 @@ export const PRIVACY_EXPOSURE_LABEL: Record<PrivacyExposure, string> = {
   unverifiable: 'unverifiable',
 }
 
-/** Chip colours of the interior field verdicts. */
+/**
+ * Chip colours of the interior field verdicts: pastel fills with dark text,
+ * the same in both modes.
+ */
 export const PRIVACY_EXPOSURE_CHIP_CLASS_NAME: Record<PrivacyExposure, string> =
   {
     private: 'text-[#17452A] bg-[#C8F2D7] border-[#4FB875]',
@@ -29,6 +32,13 @@ export const PRIVACY_EXPOSURE_CHIP_CLASS_NAME: Record<PrivacyExposure, string> =
     exposed: 'text-[#5D1111] bg-[#FFC9C9] border-[#E06565]',
     unverifiable: 'text-[#3A3F4B] bg-[#E3E6EC] border-[#9AA1AE]',
   }
+
+/** The shape of every chip on privacy pages. */
+export const PRIVACY_CHIP_BASE_CLASS_NAME =
+  'inline-flex select-none items-center gap-1.5 rounded border px-1.5 py-0.5 font-medium text-label-value-12'
+
+/** A chip that labels rather than grades, like "Outside the app". */
+export const PRIVACY_CHIP_CLASS_NAME = `${PRIVACY_CHIP_BASE_CLASS_NAME} border-divider bg-surface-secondary text-primary`
 
 /** Title of the interior field chips; entry and exit are public and have none. */
 export const PRIVACY_INTERIOR_LABEL = 'Inside'
