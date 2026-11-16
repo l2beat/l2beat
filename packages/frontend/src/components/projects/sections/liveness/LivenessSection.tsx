@@ -86,7 +86,7 @@ export function LivenessSection({
           duplicateData={duplicateData}
         />
       </div>
-      {!isArchived && (
+      {!isArchived && anomalies.length > 0 && (
         <>
           <HorizontalSeparator className="my-6" />
           <Last30DayAnomalies

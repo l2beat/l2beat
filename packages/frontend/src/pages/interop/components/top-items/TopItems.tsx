@@ -58,8 +58,8 @@ const remainingCountVariants = cva('font-bold', {
 const iconVariants = cva(`rounded-full ${iconBackdropClasses}`, {
   variants: {
     type: {
-      default: 'size-7 min-w-7 border border-divider shadow-sm',
-      cell: 'hover:-translate-y-0.5 relative size-5 min-w-5 shadow transition-transform hover:z-10!',
+      default: 'size-7 min-w-7 border border-divider',
+      cell: 'hover:-translate-y-0.5 relative size-5 min-w-5 transition-transform hover:z-10!',
     },
   },
 })

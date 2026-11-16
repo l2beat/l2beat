@@ -15,7 +15,7 @@ const baseVerifiersColumns = [
     cell: (ctx) => (
       <div className="min-w-0">
         <span
-          className="block max-w-48 truncate font-medium text-label-value-14 sm:max-w-96 md:max-w-max md:text-label-value-15"
+          className="block font-medium text-label-value-14 max-md:min-w-36 md:text-label-value-15"
           title={ctx.row.original.name}
         >
           {ctx.row.original.name}
@@ -80,7 +80,9 @@ const baseVerifiersColumns = [
           {extraCount > 0 &&
             // Once the row is open, the full list is right below.
             (row.getIsExpanded() ? (
-              <span className="text-label-muted-12">+{extraCount} more</span>
+              <span className="text-label-value-13 text-secondary">
+                +{extraCount} more
+              </span>
             ) : (
               <button
                 type="button"

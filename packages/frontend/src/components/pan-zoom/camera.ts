@@ -33,8 +33,8 @@ export interface ScaleBounds {
 
 const DEFAULT_SCALE_BOUNDS: ScaleBounds = { min: 0.2, max: 4 }
 const FIT_PADDING = 32
-/** Below this the node text stops being readable. */
-const READABLE_SCALE = 0.55
+/** Below this the node text stops being readable (11–12px node titles). */
+const READABLE_SCALE = 0.8
 /** The most one wheel event zooms by: a mouse wheel's notch. */
 const WHEEL_ZOOM_STEP = 1.15
 /** A wheel zoom draws the diagram anew once the wheel has rested this long. */

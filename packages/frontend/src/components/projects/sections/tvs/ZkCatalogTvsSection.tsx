@@ -69,7 +69,7 @@ export function ZkCatalogTvsSection({
               projectsForTvs={projectsForTvs}
             />
           </div>
-          <div className="flex justify-end">
+          <div className="flex md:justify-end">
             <ExcludeRwaRestrictedTokensCheckbox />
           </div>
           <TvsProjectStats tvsInfo={tvsInfo} projectsForTvs={projectsForTvs} />
@@ -206,13 +206,13 @@ function BreakdownRow({
 }) {
   return (
     <div>
-      <h3 className="font-bold text-heading-16 leading-[115%]">{title}</h3>
+      <h3 className="font-semibold text-heading-16 leading-6">{title}</h3>
       <Breakdown className="mt-2! h-2 w-full" gap={0} values={values} />
-      <div className="mt-3 flex flex-wrap justify-center gap-2">
+      <div className="mt-3 flex flex-wrap gap-2">
         {values.map((value) => (
           <div key={value.label} className="flex items-center gap-1">
             <div className={cn('size-3.5 rounded-xs', value.className)} />
-            <span className="font-medium text-label-value-12 text-secondary leading-none">
+            <span className="font-medium text-label-value-12 text-primary leading-none">
               {value.label}
             </span>
           </div>

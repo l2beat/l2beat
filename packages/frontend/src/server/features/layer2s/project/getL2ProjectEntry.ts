@@ -395,7 +395,7 @@ export async function getL2ProjectEntry(
       type: 'L2TvsSection',
       props: {
         id: 'tvs',
-        title: 'Value Secured',
+        title: 'Value secured',
         tvsBreakdownUrl: `/layer2s/projects/${project.slug}/tvs-breakdown`,
         compareUrl: getProjectCompareUrl(project, 'tvs'),
         milestones: sortedMilestones,
@@ -488,7 +488,7 @@ export async function getL2ProjectEntry(
       type: 'MilestonesAndIncidentsSection',
       props: {
         id: 'milestones-and-incidents',
-        title: 'Milestones & Incidents',
+        title: 'Milestones & incidents',
         milestones: sortedMilestones,
       },
     })
@@ -670,7 +670,7 @@ export async function getL2ProjectEntry(
       type: 'UpgradesAndGovernanceSection',
       props: {
         id: 'upgrades-and-governance',
-        title: 'Upgrades & Governance',
+        title: 'Upgrades & governance',
         content: upgradesAndGovernance?.content
           ? linkAddresses(
               upgradesAndGovernance.content,

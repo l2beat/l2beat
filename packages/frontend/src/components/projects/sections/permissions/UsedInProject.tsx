@@ -20,7 +20,7 @@ export function UsedInProjectEntry({
 }) {
   return (
     <div className="mt-2 flex flex-row flex-wrap items-center gap-x-2 gap-y-1 text-paragraph-15 md:text-paragraph-16">
-      <strong className="whitespace-nowrap text-primary">{label}:</strong>
+      <span className="whitespace-nowrap font-medium">{label}:</span>
       <ProjectIconList
         projects={implementations.map((project, i) => ({
           id: `${i}:${project.id}:${project.targetName}`,

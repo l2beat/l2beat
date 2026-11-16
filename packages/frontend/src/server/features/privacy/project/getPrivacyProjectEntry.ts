@@ -238,7 +238,7 @@ export async function getPrivacyProjectEntry(
       type: 'MilestonesAndIncidentsSection',
       props: {
         id: 'milestones-and-incidents',
-        title: 'Milestones & Incidents',
+        title: 'Milestones & incidents',
         milestones: details.milestones,
       },
     })
@@ -263,7 +263,7 @@ export async function getPrivacyProjectEntry(
       type: 'UpgradesAndGovernanceSection',
       props: {
         id: 'upgrades-and-governance',
-        title: 'Upgrades & Governance',
+        title: 'Upgrades & governance',
         content: details.upgradesAndGovernance.content,
         governanceInfo: details.upgradesAndGovernance.governanceInfo,
       },

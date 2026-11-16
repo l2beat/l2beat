@@ -36,7 +36,7 @@ export const APPCHAIN_STAGES_NOTE =
   "We're still in the process of formalizing how to properly integrate appchains in the Stages framework."
 
 export const LIVENESS_DESCRIPTION =
-  'This section shows how "live" the project\'s operators are by displaying how frequently they submit transactions of the selected type. It also highlights anomalies - significant deviations from their typical schedule.'
+  'This section shows how "live" the project\'s operators are by displaying how frequently they submit transactions of the selected type. It also highlights anomalies — significant deviations from their typical schedule.'
 
 export const LAST_30_DAY_ANOMALIES_DESCRIPTION =
   'All liveness anomalies detected for this project in the last 30 days, helping you review recent downtime and availability issues.'

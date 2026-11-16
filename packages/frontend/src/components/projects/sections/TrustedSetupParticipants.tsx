@@ -25,27 +25,31 @@ export function TrustedSetupParticipants(
           {summary.phase && (
             <span
               aria-hidden
-              className="flex size-6 shrink-0 items-center justify-center rounded-full bg-surface-tertiary font-bold text-label-12"
+              className="flex size-6 shrink-0 items-center justify-center rounded-full bg-surface-tertiary font-semibold text-label-value-13"
             >
               {summary.phase}
             </span>
           )}
-          <div className="min-w-0">
-            <div className="flex flex-wrap items-baseline gap-x-3">
+          <div className="min-w-0 flex-1 md:flex-none">
+            {/* Phases share a label track, so their counts start at one x
+                (on phones the counts sit flush right). */}
+            <div className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-3 md:grid-cols-[200px_auto]">
               <span className="font-semibold text-paragraph-15">
                 {summary.label}
                 {summary.phase && (
-                  <span className="font-normal text-secondary">
+                  <span className="font-normal">
                     {` · ${PHASE_KINDS[summary.phase]}`}
                   </span>
                 )}
               </span>
               <span className="flex flex-wrap items-baseline gap-x-1.5">
-                <span className="font-bold text-heading-20 tabular-nums">
+                <span className="font-semibold text-heading-20 tabular-nums">
                   {summary.value}
                 </span>
                 {summary.unit && (
-                  <span className="text-paragraph-14">{summary.unit}</span>
+                  <span className="text-paragraph-14 text-secondary">
+                    {summary.unit}
+                  </span>
                 )}
               </span>
             </div>

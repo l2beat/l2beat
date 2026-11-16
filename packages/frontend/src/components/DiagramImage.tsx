@@ -31,18 +31,48 @@ function diagramScale(fitted: Camera) {
   return { min: fitted.k, max: MAX_SCALE }
 }
 
+/**
+ * Wide diagrams keep a readable 720px on phones and scroll inside their own
+ * box; shrunk to the screen their labels fell to 3–7px. The box runs to the
+ * screen edge and a hint says it scrolls, so the crop reads as continuation.
+ */
+const PHONE_READABLE_WIDTH = 720
+
 export function DiagramImage({ diagram }: { diagram: DiagramParams }) {
+  const scrollsOnPhones = diagram.src.light.width > PHONE_READABLE_WIDTH
   return (
     <Dialog>
-      <DialogTrigger
-        className="group relative inline-block max-w-full cursor-zoom-in rounded-sm align-[unset] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
-        title="Open in full screen"
+      {/* Above the image, so the caption stays directly under it. */}
+      {scrollsOnPhones && (
+        <p className="mb-2 text-left text-label-value-13 text-secondary md:hidden">
+          Scroll sideways to see the whole diagram, or tap to open it.
+        </p>
+      )}
+      <div
+        className={cn(
+          scrollsOnPhones &&
+            'max-md:-mx-4 max-md:overflow-x-auto max-md:px-4 max-md:text-left',
+        )}
       >
-        <DiagramPictures diagram={diagram} className="max-w-full" />
-        <span className="absolute top-2 right-2 flex size-7 items-center justify-center rounded-md border border-divider bg-surface-primary text-secondary opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 [@media(pointer:coarse)]:opacity-100">
-          <Glyph d={EXPAND_GLYPH} />
-        </span>
-      </DialogTrigger>
+        <DialogTrigger
+          className={cn(
+            'group relative inline-block max-w-full cursor-zoom-in rounded-sm align-[unset] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand',
+            scrollsOnPhones && 'max-md:max-w-none',
+          )}
+          title="Open in full screen"
+        >
+          <DiagramPictures
+            diagram={diagram}
+            className={cn(
+              'max-w-full',
+              scrollsOnPhones && 'max-md:w-[720px] max-md:max-w-none',
+            )}
+          />
+          <span className="absolute top-2 right-2 flex size-7 items-center justify-center rounded-md border border-divider bg-surface-primary text-secondary opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 [@media(pointer:coarse)]:opacity-100">
+            <Glyph d={EXPAND_GLYPH} />
+          </span>
+        </DialogTrigger>
+      </div>
       <DialogContent
         className="flex flex-col gap-3 bg-surface-primary p-4 max-md:pt-0"
         aria-describedby={undefined}
@@ -104,7 +134,8 @@ function DiagramPictures({
     <>
       <img
         className={cn(
-          'inline align-[unset] dark:invert',
+          // Inverting swaps red and green; rotating the hue puts them back.
+          'inline align-[unset] dark:hue-rotate-180 dark:invert',
           diagram.src.dark && 'dark:hidden',
           className,
         )}

@@ -18,6 +18,15 @@ export function LivenessChartSubtypeControls({
   setSubtype,
   configuredSubtypes,
 }: Props) {
+  const options = VALUES.filter((x) => configuredSubtypes.includes(x.value))
+  // One subtype has nothing to switch between: name it instead.
+  if (options.length === 1) {
+    return (
+      <span className="flex h-8 items-center font-medium text-label-value-14">
+        {options[0]?.label}
+      </span>
+    )
+  }
   return (
     <RadioGroup
       name="livenessChartSubtype"

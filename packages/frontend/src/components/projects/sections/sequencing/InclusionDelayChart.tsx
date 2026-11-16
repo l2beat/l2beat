@@ -91,7 +91,6 @@ export function InclusionDelayChart({
                 text: marker.label,
                 position: 'top',
                 fill: 'var(--primary)',
-                fontSize: 11,
                 fontWeight: 500,
                 offset: 8,
               }
@@ -110,7 +109,6 @@ export function InclusionDelayChart({
           text: marker.label,
           position: 'bottom',
           fill: DELAY_THRESHOLD_COLOR,
-          fontSize: 11,
           fontWeight: 500,
           offset: 8,
         },

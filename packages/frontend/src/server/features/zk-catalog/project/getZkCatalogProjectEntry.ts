@@ -126,7 +126,7 @@ export async function getZkCatalogProjectEntry(
       type: 'ZkCatalogTvsSection',
       props: {
         id: 'tvs',
-        title: 'Value Secured',
+        title: 'Value secured',
         ...zkCatalogTvsSection,
       },
     })
@@ -137,7 +137,7 @@ export async function getZkCatalogProjectEntry(
       type: 'MarkdownSection',
       props: {
         id: 'proof-system',
-        title: 'Proof System',
+        title: 'Proof system',
         content: project.zkCatalogInfo.proofSystemInfo,
       },
     })
@@ -148,7 +148,7 @@ export async function getZkCatalogProjectEntry(
       type: 'MilestonesAndIncidentsSection',
       props: {
         id: 'milestones-and-incidents',
-        title: 'Milestones & Incidents',
+        title: 'Milestones & incidents',
         milestones: sortedMilestones,
       },
     })
@@ -159,7 +159,7 @@ export async function getZkCatalogProjectEntry(
     type: 'TrustedSetupSection',
     props: {
       id: 'trusted-setups',
-      title: 'Trusted Setups',
+      title: 'Trusted setups',
       ...trustedSetupsSection,
     },
   })
@@ -193,7 +193,7 @@ export async function getZkCatalogProjectEntry(
       type: 'ProgramHashesSection',
       props: {
         id: 'program-hashes',
-        title: 'Program Hashes',
+        title: 'Program hashes',
         ...programHashesSection,
       },
     })
