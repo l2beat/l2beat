@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "eas",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "eth:0xA1207F3BBa224E2c9c3c6D5aF63D0eb1582Ce587" // EAS, leads to the SchemaRegistry
+  ]
+}
