@@ -71,7 +71,10 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
   )
 
   const tvlStats = useMemo(() => getTvlStats(tvlData?.chart), [tvlData])
-  const flowsTotal = useMemo(() => getFlowsTotal(flowsData?.chart), [flowsData])
+  const flowsTotal = useMemo(
+    () => getFlowsTotal(flowsData?.chart, flowsData?.syncedUntil),
+    [flowsData],
+  )
 
   const countsChart = (
     <div className="flex flex-col gap-4">
@@ -187,12 +190,19 @@ function findLatestCompleteRow(
   )
 }
 
-/** Deposits plus withdrawals over the range. */
+/**
+ * Deposits plus withdrawals over the range. Periods after `syncedUntil` are
+ * still being indexed, so counting them would understate the total.
+ */
 function getFlowsTotal(
   chart: [number, number | null, number | null, ...unknown[]][] | undefined,
+  syncedUntil: number | undefined,
 ) {
-  if (!chart || chart.length === 0) return undefined
-  return chart.reduce(
+  const synced = chart?.filter(
+    ([timestamp]) => syncedUntil === undefined || timestamp <= syncedUntil,
+  )
+  if (!synced || synced.length === 0) return undefined
+  return synced.reduce(
     (sum, [, deposits, withdrawals]) =>
       sum + (deposits ?? 0) + (withdrawals ?? 0),
     0,
