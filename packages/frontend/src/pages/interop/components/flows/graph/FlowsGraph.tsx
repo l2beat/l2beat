@@ -5,7 +5,6 @@ import { BackgroundRoads } from './BackgroundRoads'
 import { ChainBubblesLayer } from './ChainBubblesLayer'
 import { FlowsLogo } from './FlowsLogo'
 import { ParticleLayer } from './ParticleLayer'
-import { getChainLabel } from './utils/chainLabel'
 import { computeGraphLayout } from './utils/computeGraphLayout'
 
 interface FlowsGraphProps {
@@ -27,21 +26,6 @@ export function FlowsGraph({
   baseDollarsPerParticle,
   topChainId,
 }: FlowsGraphProps) {
-  const labels = useMemo(
-    () =>
-      new Map(
-        interopChains.map((chain) => [
-          chain.id,
-          getChainLabel(
-            chain.name,
-            data.chainData.find((c) => c.chainId === chain.id)?.netFlow ?? 0,
-            isSmallScreen,
-          ),
-        ]),
-      ),
-    [interopChains, data.chainData, isSmallScreen],
-  )
-
   const layout = useMemo(
     () =>
       computeGraphLayout(
@@ -50,9 +34,8 @@ export function FlowsGraph({
         size,
         isSmallScreen,
         topChainId,
-        labels,
       ),
-    [visibleChainIds, data.chainData, size, isSmallScreen, topChainId, labels],
+    [visibleChainIds, data.chainData, size, isSmallScreen, topChainId],
   )
 
   const center = size / 2
@@ -89,7 +72,7 @@ export function FlowsGraph({
       <ChainBubblesLayer
         interopChains={interopChains}
         layout={layout}
-        labels={labels}
+        chainData={data.chainData}
         isSmallScreen={isSmallScreen}
       />
     </svg>
