@@ -406,7 +406,7 @@ function BatchTooltipContent({
           href={etherscanTxUrl(batch.txHash)}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex w-max items-center gap-1 pt-1 font-medium text-label-value-13 text-primary underline decoration-divider underline-offset-[0.3em] transition-colors hover:decoration-current"
+          className="flex w-max items-center gap-1 pt-1 font-medium text-brand-deep text-label-value-13 underline-offset-[0.3em] hover:underline"
         >
           Open on Etherscan
           <CustomLinkIcon className="size-3.5 fill-current" />
