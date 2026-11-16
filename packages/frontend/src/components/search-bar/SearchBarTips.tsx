@@ -1,3 +1,4 @@
+import { keepEnterOnButton } from '~/components/core/Command'
 import { cn } from '~/utils/cn'
 
 interface SearchTip {
@@ -95,14 +96,6 @@ export function SearchBarTips({
 
 function examples(...queries: string[]) {
   return queries.map((query) => ({ label: query, query }))
-}
-
-/**
- * Enter on a focused button inside the dialog would otherwise reach cmdk,
- * which cancels it to open the highlighted result instead.
- */
-export function keepEnterOnButton(e: React.KeyboardEvent) {
-  if (e.key === 'Enter') e.stopPropagation()
 }
 
 export function Kbd({

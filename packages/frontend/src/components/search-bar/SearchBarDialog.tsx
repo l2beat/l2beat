@@ -10,6 +10,7 @@ import {
   CommandInputActionButton,
   CommandLinkItem,
   CommandList,
+  keepEnterOnButton,
 } from '~/components/core/Command'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { useDebouncedValue } from '~/hooks/useDebouncedValue'
@@ -26,13 +27,7 @@ import {
 } from '../pinned-projects/pinnedProjectsStore'
 import { trackScrollFades } from '../ScrollWithGradient'
 import { useSearchBarContext } from './SearchBarContext'
-import {
-  isApple,
-  Kbd,
-  keepEnterOnButton,
-  SEARCH_TIPS_ID,
-  SearchBarTips,
-} from './SearchBarTips'
+import { isApple, Kbd, SEARCH_TIPS_ID, SearchBarTips } from './SearchBarTips'
 import type { SearchBarCategory } from './searchBarCategories'
 import { searchBarCategories } from './searchBarCategories'
 import { getEmptyStateGroups } from './searchBarEmptyState'
