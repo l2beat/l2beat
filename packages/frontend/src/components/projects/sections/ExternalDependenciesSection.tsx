@@ -46,7 +46,7 @@ export function ExternalDependenciesSection({
                   <span className="font-semibold">{dependency.name}</span>
                 )}
                 {!dependency.reviewed && (
-                  <Badge type="gray" size="small">
+                  <Badge type="gray" size="small" className="uppercase">
                     Not reviewed
                   </Badge>
                 )}
