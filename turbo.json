@@ -5,6 +5,7 @@
     ".discovery.json"
   ],
   "ui": "tui",
+  "globalPassThroughEnv": ["MOCHA_SEED"],
   "tasks": {
     "build": {
       "dependsOn": ["^build", "db:generate-types"],

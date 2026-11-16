@@ -19,6 +19,7 @@ Researchers, builders and the projects we assess reuse and scrutinize our work, 
 
 ## Rules for working in this repo
 
+- Unit tests share one process per package and run in random order; a failure prints its seed, and `MOCHA_SEED=<seed>` replays that order. Keep each test self-contained: build mocks, caches and instances inside the test or a `beforeEach`; give back every `process.env` key you set, removing the ones that were unset with `Reflect.deleteProperty` (assigning `undefined` stores the string `"undefined"`); uninstall fake timers in `afterEach`. `scripts/mocha-random-order.cjs` fails a file that leaves env changes or fake timers behind.
 - When writing unit tests, for repository mocks, type `mockObject` as `Database['repo']` or `TokenDatabase['repo']`; do not export/import repository classes just for tests.
 - Do not split `eth_getLogs` requests by block range in calling code. `RpcClient` halves a range itself when the RPC reports a limit, and a fixed step multiplies requests on RPCs that have no block-range limit.
 - Keep error messages static and put dynamic values in `cause`: `new Error('HTTP error', { cause: { status } })`, not `` new Error(`HTTP error: ${status}`) ``. Why: a fixed message makes Elasticsearch queries easier, since one exact match finds every occurrence.
