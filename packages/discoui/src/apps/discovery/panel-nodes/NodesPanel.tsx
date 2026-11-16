@@ -164,6 +164,10 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
     }
     loadNodes(project, nodes, autoGroups)
   }, [project, data, clear, loadNodes])
+
+  // A closed panel draws nothing, so the store must not read as loaded: the
+  // agent would arrange a graph that the next mount clears and loads again.
+  useEffect(() => clear, [clear])
 }
 
 function sameIds(a: readonly string[], b: readonly string[]) {
