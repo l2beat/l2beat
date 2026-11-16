@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Entry point for L1 deposits and withdrawal requests. Every action is appended to an accumulator that batches consume in order.",
+  "critical": true,
   "ignoreMethods": [
     "publicAccHistory",
     "adminAccHistory",

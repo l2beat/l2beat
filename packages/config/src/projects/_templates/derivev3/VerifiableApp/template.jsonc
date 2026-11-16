@@ -39,7 +39,7 @@
     // batch moves them; these counters only move when the owner overrides them.
     "rootRotations": {
       "description": "Number of times the owner replaced the state root (RootRotated).",
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "eventCount",
         "topics": [
@@ -49,7 +49,7 @@
     },
     "celestiaAnchorResets": {
       "description": "Number of times the owner re-pointed the trusted Celestia anchor (CelestiaHeadBootstrapped).",
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "eventCount",
         "topics": [
