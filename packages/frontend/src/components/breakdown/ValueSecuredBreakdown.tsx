@@ -82,20 +82,7 @@ export function ValueSecuredBreakdownTooltipContent({
   ] as const
   return (
     <div className="flex flex-col gap-2">
-      <TooltipHeader
-        label="TVS"
-        value={
-          <>
-            {formatCurrency(total, 'usd')}
-            {change !== undefined && (
-              <PercentChange
-                value={change}
-                className="ml-1.5 min-w-0 font-medium text-label-value-14"
-              />
-            )}
-          </>
-        }
-      />
+      <TvsTooltipHeader total={total} change={change} />
       {syncWarning && <NoDataBanner content={syncWarning} />}
       {values.map(
         (v) =>
@@ -124,5 +111,31 @@ export function ValueSecuredBreakdownTooltipContent({
         />
       ))}
     </div>
+  )
+}
+
+/** "TVS", the total and its change: the lead of every TVS breakdown. */
+export function TvsTooltipHeader({
+  total,
+  change,
+}: {
+  total: number
+  change?: number
+}) {
+  return (
+    <TooltipHeader
+      label="TVS"
+      value={
+        <>
+          {formatCurrency(total, 'usd')}
+          {change !== undefined && (
+            <PercentChange
+              value={change}
+              className="ml-1.5 min-w-0 font-medium text-label-value-14"
+            />
+          )}
+        </>
+      }
+    />
   )
 }

@@ -14,6 +14,7 @@ import { Square } from '../Square'
 import { sentimentToWarningBarColor, WarningBar } from '../WarningBar'
 import { Breakdown } from './Breakdown'
 import { TVS_ASSET_CATEGORY_LABELS } from './tvsAssetCategories'
+import { TvsTooltipHeader } from './ValueSecuredBreakdown'
 
 interface TokenBreakdownProps {
   total: number
@@ -60,7 +61,11 @@ export function TokenBreakdownTooltipContent({
   rwaRestricted,
   associatedTokens,
   tvsWarnings,
-}: TokenBreakdownTooltipContentProps & { associated: number }) {
+  change,
+}: TokenBreakdownTooltipContentProps & {
+  associated: number
+  change?: number
+}) {
   const values = [
     {
       title: TVS_ASSET_CATEGORY_LABELS.ether,
@@ -100,6 +105,7 @@ export function TokenBreakdownTooltipContent({
         <span>No data</span>
       ) : (
         <>
+          <TvsTooltipHeader total={total} change={change} />
           {values.map(
             (v) =>
               v.value > 0 && (

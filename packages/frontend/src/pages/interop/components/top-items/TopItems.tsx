@@ -187,13 +187,13 @@ function ItemIconWithTooltip({
       </TooltipTrigger>
       <TooltipPortal>
         <TooltipContent>
-          <p className="font-bold text-label-value-15">{item.displayName}</p>
+          <p className="text-heading-16">{item.displayName}</p>
           {item.issuer && (
             <p className="text-label-value-13 text-secondary">
               Issued by <span className="capitalize">{item.issuer}</span>
             </p>
           )}
-          <p className="text-label-value-13 text-secondary">
+          <p className="mt-1 font-medium text-label-value-14 tabular-nums">
             {item.volume ? formatCurrency(item.volume, 'usd') : EM_DASH}
           </p>
         </TooltipContent>

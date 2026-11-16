@@ -136,6 +136,7 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
             rwaPublic={props.breakdown.rwaPublic}
             rwaRestricted={props.breakdown.rwaRestricted}
             associated={props.breakdown.associated}
+            change={props.change}
             tvsWarnings={tvsWarnings}
             associatedTokens={props.associatedTokens ?? []}
           />

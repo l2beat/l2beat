@@ -1,9 +1,11 @@
 import { formatSeconds } from '@l2beat/shared-pure'
 import { scaleLog } from 'd3-scale'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
-import { type ChartMeta, useChart } from '~/components/core/chart/ChartContext'
+import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import {
+  ChartTooltipRow,
+  ChartTooltipValue,
   ChartTooltipWrapper,
   getTooltipEntries,
 } from '~/components/core/chart/ChartTooltip'
@@ -180,40 +182,29 @@ function InclusionDelayTooltip({
   row: InclusionDelayChartDataPoint
   keys: string[]
 }) {
-  const { meta } = useChart()
   const { censoringFraction } = row
 
   return (
     <ChartTooltipWrapper>
-      <div className="flex w-64 flex-col gap-2 font-medium text-label-value-14">
+      <div className="flex w-64 flex-col gap-2">
         <div>
           {formatCensoringFraction(censoringFraction)} censoring would incur a
           transaction inclusion delay of
         </div>
-        <div className="flex flex-col gap-1">
-          {getTooltipEntries(row, keys).map((entry) => {
-            const dataKey = entry.name
-            const item = meta[dataKey]
-            if (!item) return null
-
-            return (
-              <div
-                key={dataKey}
-                className="flex items-center justify-between gap-3"
-              >
-                <div className="flex min-w-0 items-center gap-1.5">
-                  <ChartDataIndicator
-                    type={item.indicatorType}
-                    backgroundColor={item.color}
-                  />
-                  <span className="truncate">{item.label}</span>
-                </div>
-                <span className="shrink-0 text-primary">
-                  {formatTooltipDelay(entry.value)}
-                </span>
-              </div>
-            )
-          })}
+        <div className="flex flex-col gap-2">
+          {getTooltipEntries(row, keys).map((entry) => (
+            <ChartTooltipRow
+              key={entry.name}
+              name={entry.name}
+              gap="gap-x-3"
+              wrapLabel={false}
+            >
+              <ChartTooltipValue
+                value={entry.value}
+                format={formatTooltipDelay}
+              />
+            </ChartTooltipRow>
+          ))}
         </div>
       </div>
     </ChartTooltipWrapper>

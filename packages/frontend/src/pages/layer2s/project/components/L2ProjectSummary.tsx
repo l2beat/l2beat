@@ -203,11 +203,11 @@ export function ProjectL2Summary({ project }: Props) {
                     </TooltipFootnote>
                   )}
                   {project.header.tvs?.breakdown && (
-                    <p>
+                    <TooltipFootnote>
                       <PercentageChangeTooltipContent
                         period={project.header.tvs.breakdown.totalChangePeriod}
                       />
-                    </p>
+                    </TooltipFootnote>
                   )}
                 </TooltipContent>
               </Tooltip>
