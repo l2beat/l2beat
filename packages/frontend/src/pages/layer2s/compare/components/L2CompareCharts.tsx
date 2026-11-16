@@ -269,6 +269,7 @@ function MetricSwitcher({
         aria-label="Chart metric"
         value={value}
         onValueChange={(value) => onValueChange(value as CompareMetricId)}
+        variant="highlighted"
       >
         {Object.values(COMPARE_METRICS).map((metric) => (
           <RadioGroupItem
