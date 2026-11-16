@@ -83,6 +83,16 @@ export function searchProjectsAndTokens(
       }
     }
   }
+  const chainId = toChainIdQuery(query)
+  if (chainId !== undefined) {
+    // Ranked first, so "10" never shows chains whose ids only start with 10
+    // above OP Mainnet.
+    for (const entry of matches) {
+      if (entry.type === 'project' && entry.tags?.includes(chainId)) {
+        entry.searchScore = Number.POSITIVE_INFINITY
+      }
+    }
+  }
   const ranked = rankSearchResults(matches)
   return [
     ...ranked
@@ -116,6 +126,11 @@ function rankVersionsTogether(
     const best = bestScores.get(key) ?? entry.searchScore
     entry.searchScore = best - rank * VERSION_SCORE_STEP
   }
+}
+
+function toChainIdQuery(query: string): string | undefined {
+  const trimmed = query.trim()
+  return /^\d+$/.test(trimmed) ? trimmed : undefined
 }
 
 function isEthereumPrefix(query: string): boolean {
