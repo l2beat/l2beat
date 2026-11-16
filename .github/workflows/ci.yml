@@ -10,6 +10,11 @@ on:
       - main
   merge_group:
 
+# Turbo's remote cache: main runs every task fresh and saves the results, the
+# merge queue runs every task fresh too, so nothing reaches main on a cached
+# result, and pull requests replay the results of the tasks whose inputs
+# match main's. Only main can write, so a pull request cannot plant a result
+
 jobs:
   build-backend:
     name: Build backend container image
@@ -45,7 +50,8 @@ jobs:
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-      TURBO_API: ${{ secrets.TURBO_API_RO }}
+      TURBO_API: ${{ github.event_name == 'push' && secrets.TURBO_API_RW || secrets.TURBO_API_RO }}
+      TURBO_FORCE: ${{ github.event_name != 'pull_request' }}
     steps:
       - name: Check out code
         uses: actions/checkout@v6
@@ -74,7 +80,8 @@ jobs:
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-      TURBO_API: ${{ secrets.TURBO_API_RO }}
+      TURBO_API: ${{ github.event_name == 'push' && secrets.TURBO_API_RW || secrets.TURBO_API_RO }}
+      TURBO_FORCE: ${{ github.event_name != 'pull_request' }}
     steps:
       - name: Check out code
         uses: actions/checkout@v6
@@ -92,7 +99,8 @@ jobs:
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-      TURBO_API: ${{ secrets.TURBO_API_RO }}
+      TURBO_API: ${{ github.event_name == 'push' && secrets.TURBO_API_RW || secrets.TURBO_API_RO }}
+      TURBO_FORCE: ${{ github.event_name != 'pull_request' }}
     steps:
       - name: Check out code
         uses: actions/checkout@v6
@@ -137,7 +145,8 @@ jobs:
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-      TURBO_API: ${{ secrets.TURBO_API_RO }}
+      TURBO_API: ${{ github.event_name == 'push' && secrets.TURBO_API_RW || secrets.TURBO_API_RO }}
+      TURBO_FORCE: ${{ github.event_name != 'pull_request' }}
     steps:
       - name: Check out code
         uses: actions/checkout@v6
@@ -155,7 +164,8 @@ jobs:
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-      TURBO_API: ${{ secrets.TURBO_API_RO }}
+      TURBO_API: ${{ github.event_name == 'push' && secrets.TURBO_API_RW || secrets.TURBO_API_RO }}
+      TURBO_FORCE: ${{ github.event_name != 'pull_request' }}
       COINGECKO_API_KEY: ${{ secrets.COINGECKO_API_KEY }}
       TEST_DB_URL: postgresql://postgres:postgres@localhost:5432/postgres
       CONFIG_ALCHEMY_API_KEY: ${{ secrets.CONFIG_ALCHEMY_API_KEY }}
@@ -208,7 +218,8 @@ jobs:
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-      TURBO_API: ${{ secrets.TURBO_API_RO }}
+      TURBO_API: ${{ github.event_name == 'push' && secrets.TURBO_API_RW || secrets.TURBO_API_RO }}
+      TURBO_FORCE: ${{ github.event_name != 'pull_request' }}
     steps:
       - name: Check out code
         uses: actions/checkout@v6
@@ -256,7 +267,8 @@ jobs:
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-      TURBO_API: ${{ secrets.TURBO_API_RO }}
+      TURBO_API: ${{ github.event_name == 'push' && secrets.TURBO_API_RW || secrets.TURBO_API_RO }}
+      TURBO_FORCE: ${{ github.event_name != 'pull_request' }}
     steps:
       - name: Check out code
         uses: actions/checkout@v6
