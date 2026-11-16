@@ -26,8 +26,8 @@ export function GardenPage({ entries, attestation, ...props }: Props) {
             description="A curated list of distinguished projects that follow the CROPS values: censorship resistance, open source, privacy and security."
           />
           <main>
-            {/* The right padding makes room for the table's mobile bleed, which this inset card would otherwise clip, hiding the scroll hint. */}
-            <div className="mt-4 overflow-clip rounded-xl bg-surface-primary max-md:mx-4 max-md:pr-4 md:px-5">
+            {/* Inset on both sides on phones: the table's mobile bleed fills the right padding, so its row rules stop 16 px from either edge. */}
+            <div className="mt-4 overflow-clip rounded-xl bg-surface-primary max-md:mx-4 max-md:px-4 md:px-5">
               <GardenTable entries={entries} />
             </div>
             <AttestationNotice attestation={attestation} />

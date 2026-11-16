@@ -2,6 +2,7 @@ import { formatInteger } from '@l2beat/shared-pure'
 import type { FrameworkTableEntry } from '~/server/features/layer2s/interop/getTokenFrameworksData'
 import { cn } from '~/utils/cn'
 import type { InteropTransferDefaults } from '../../../components/InteropTransferTrigger'
+import { Last24HoursBadge } from '../../../components/Last24HoursBadge'
 import { getInteropTokenUrl } from '../../../utils/getInteropTokenUrl'
 import type { InteropTokenFramework } from '../../getInteropTokenFrameworksData'
 import { BridgingTypeBreakdown } from './BridgingTypeBreakdown'
@@ -25,25 +26,30 @@ export function FrameworkColumn({
   return (
     <div
       className={cn(
-        'flex w-60 shrink-0 flex-col p-4 md:w-67.5 md:p-5',
+        'flex w-60 shrink-0 flex-col p-4 md:w-67.5 md:p-6',
         !isFirst && 'border-divider border-l',
       )}
     >
-      <a
-        href={`/interop/protocols/${framework.slug}`}
-        className="-mx-2 inline-flex w-fit items-center gap-2 rounded px-2 py-1 transition-colors hover:bg-pure-black/5 dark:hover:bg-pure-white/10"
-      >
-        <img
-          src={framework.iconUrl}
-          alt={framework.name}
-          className="size-7 rounded-xs"
-        />
-        <span className="font-medium text-heading-24">{framework.label}</span>
-      </a>
+      <div className="flex flex-wrap items-center gap-x-2">
+        <a
+          href={`/interop/protocols/${framework.slug}`}
+          className="-mx-2 inline-flex w-fit items-center gap-2 rounded px-2 py-1 transition-colors hover:bg-pure-black/5 dark:hover:bg-pure-white/10"
+        >
+          <img
+            src={framework.iconUrl}
+            alt={framework.name}
+            className="size-6 rounded-xs"
+          />
+          <span className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
+            {framework.label}
+          </span>
+        </a>
+        <Last24HoursBadge />
+      </div>
 
       <div className="mt-5 space-y-8">
         <Section
-          title="Tokens by Volume"
+          title="Tokens by volume"
           subtitle={
             entry && entry.tokens.length > 0
               ? `${formatInteger(entry.tokens.length)} total tokens`
@@ -69,7 +75,7 @@ export function FrameworkColumn({
           </ScrollList>
         </Section>
 
-        <Section title="Chain Paths by Volume">
+        <Section title="Chain paths by volume">
           <ScrollList>
             {isLoading ? (
               <RowsSkeleton />
@@ -88,7 +94,7 @@ export function FrameworkColumn({
           </ScrollList>
         </Section>
 
-        <Section title="Bridging Type Breakdown">
+        <Section title="Bridging type breakdown">
           {isLoading ? (
             <BreakdownSkeleton />
           ) : !entry || entry.bridgingTypeBreakdown.length === 0 ? (

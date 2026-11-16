@@ -206,7 +206,7 @@ describe(renderContractsSection.name, () => {
     )
 
     expect(markdown).toInclude(
-      '### Program Hashes\n\n#### Aggregation program',
+      '### Program hashes\n\n#### Aggregation program',
       '- Hash: `0xabc`',
       'Hashes are checked by the verifier.',
     )

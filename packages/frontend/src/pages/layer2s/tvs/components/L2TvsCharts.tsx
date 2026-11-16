@@ -1,20 +1,25 @@
 import type { Milestone } from '@l2beat/config'
+import { formatCurrency } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
+import { ChartCardHeader } from '~/components/chart/ChartCardHeader'
 import { L2AssetCategoryTvsChart } from '~/components/chart/tvs/stacked/L2AssetCategoryTvsChart'
 import { L2BridgeTypeTvsChart } from '~/components/chart/tvs/stacked/L2BridgeTypeTvsChart'
-import { TvsChartHeader } from '~/components/chart/tvs/TvsChartHeader'
 import { TvsChartRangeControls } from '~/components/chart/tvs/TvsChartRangeControls'
 import { TvsChartUnitControls } from '~/components/chart/tvs/TvsChartUnitControls'
 import type { ChartUnit } from '~/components/chart/types'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
+import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
+import { rangeToOption } from '~/components/core/chart/utils/rangeToOption'
 import { useTvsDisplayControlsContext } from '~/components/table/display/contexts/TvsDisplayControlsContext'
 import { CompareProjectsLink } from '~/pages/layer2s/compare/components/CompareProjectsLink'
 import { getCompareEntryUrl } from '~/pages/layer2s/compare/utils/getCompareEntryUrl'
 import type { L2TvsEntry } from '~/server/features/layer2s/tvs/getL2TvsEntries'
 import type { TvsProjectFilter } from '~/server/features/layer2s/tvs/utils/projectFilterUtils'
 import { useTRPC } from '~/trpc/React'
+import type { ChartRange } from '~/utils/range/range'
+import { rangeToDays } from '~/utils/range/rangeToDays'
 import { ChartTabs } from '../../summary/components/ChartTabs'
 import { useL2TvsTimeRangeContext } from './L2TvsTimeRangeContext'
 
@@ -51,7 +56,8 @@ export function L2TvsCharts({ entries, milestones }: Props) {
       timestamp,
     })),
   )
-  const stats = getStats(data?.chart)
+  const stats = getStats(data?.chart, unit)
+  const shownRangeLabel = getRangeLabel(shownInput.range)
 
   const byBridgeTypeChart = (
     <L2BridgeTypeTvsChart
@@ -77,13 +83,21 @@ export function L2TvsCharts({ entries, milestones }: Props) {
 
   return (
     <div>
-      <TvsChartHeader
+      <ChartCardHeader
+        title="Value secured"
+        value={
+          stats !== undefined ? formatCurrency(stats.total, unit) : undefined
+        }
+        change={shownRangeLabel !== undefined ? stats?.change : undefined}
+        rangeLabel={shownRangeLabel}
+        isLoading={data === undefined}
         isPlaceholderData={isPlaceholderData}
-        unit={unit}
-        value={stats?.total}
-        change={stats?.change}
-        range={shownInput.range}
-        timeRange={timeRange}
+        meta={
+          <ChartTimeRange
+            timeRange={timeRange}
+            isPlaceholderData={isPlaceholderData}
+          />
+        }
       />
       <div className="mt-4 mb-3 grid grid-cols-2 gap-x-6 max-lg:hidden">
         {byBridgeTypeChart}
@@ -92,6 +106,7 @@ export function L2TvsCharts({ entries, milestones }: Props) {
       <ChartTabs
         className="-mx-4 md:-mx-6 pb-1! lg:hidden"
         charts={[byBridgeTypeChart, byAssetSourceChart]}
+        labels={['By bridge type', 'By asset category']}
       />
       <ChartControlsWrapper>
         <div className="flex flex-wrap items-center gap-2">
@@ -103,6 +118,20 @@ export function L2TvsCharts({ entries, milestones }: Props) {
     </div>
   )
 }
+
+/**
+ * Written after the change, e.g. "30d". Max has no start to compare against,
+ * so it has no label and the change is left out.
+ */
+function getRangeLabel(range: ChartRange) {
+  const option = rangeToOption(range, TVS_RANGE_OPTIONS)
+  if (option === 'max') return undefined
+  if (option !== 'custom') return option
+  const days = rangeToDays(range)
+  return days === null ? undefined : `${days}d`
+}
+
+const TVS_RANGE_OPTIONS = ['7d', '30d', '90d', '180d', '1y'] as const
 
 function getStats(
   data:
@@ -120,6 +149,7 @@ function getStats(
         number | null,
       ][]
     | undefined,
+  unit: ChartUnit,
 ) {
   const pointsWithData = data?.filter(
     ([
@@ -167,10 +197,24 @@ function getStats(
   const total = newestDataPoint[2] + newestDataPoint[3] + newestDataPoint[4]
   const oldestTotal =
     oldestDataPoint[2] + oldestDataPoint[3] + oldestDataPoint[4]
-  const change = (oldestTotal === 0 ? 0 : total / oldestTotal) - 1
 
-  return {
-    total,
-    change,
+  if (unit === 'eth') {
+    // The chart rows are in USD; the stacked charts divide each row by its
+    // own ETH price, so the headline and its change do the same.
+    const ethPrice = newestDataPoint[1]
+    const oldestEthPrice = oldestDataPoint[1]
+    if (!ethPrice || !oldestEthPrice) {
+      return undefined
+    }
+    return {
+      total: total / ethPrice,
+      change: getChange(total / ethPrice, oldestTotal / oldestEthPrice),
+    }
   }
+
+  return { total, change: getChange(total, oldestTotal) }
+}
+
+function getChange(newest: number, oldest: number) {
+  return (oldest === 0 ? 0 : newest / oldest) - 1
 }

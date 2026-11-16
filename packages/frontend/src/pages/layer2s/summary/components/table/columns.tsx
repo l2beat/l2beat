@@ -67,6 +67,7 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
       },
       {
         id: 'stage',
+        header: 'Stage',
         cell: (ctx) => (
           <StageCell
             href={`/layer2s/projects/${ctx.row.original.slug}#stage`}
@@ -88,7 +89,7 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
         },
         {
           id: 'total',
-          header: 'Total value secured',
+          header: 'Value secured',
           cell: (ctx) => {
             if (opts?.isTvsLoading) {
               return (
@@ -116,9 +117,11 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
           },
           meta: {
             align: 'right',
-            cellClassName: 'pl-3',
+            // Its right-aligned figures need no lead; the stage column's
+            // right padding keeps them apart, so the table fits at 1280.
+            cellClassName: 'pl-0',
             tooltip:
-              'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens, shown together with a percentage change compared to 7D ago.',
+              'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens, shown together with a percentage change compared to 7 days ago.',
           },
         },
       ),
@@ -131,7 +134,7 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
       columnHelper,
       columnHelper.accessor((row) => row.activity?.pastDayUops, {
         id: 'pastDayUops',
-        header: 'Past day UOPS',
+        header: 'UOPS',
         cell: (ctx) => {
           const data = ctx.row.original.activity
           if (!data) {
@@ -144,6 +147,7 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
             >
               <SyncStatusWrapper isSynced={data.isSynced}>
                 <ValueWithPercentageChange
+                  className="font-medium md:text-label-value-15"
                   change={data?.change}
                   changePeriod={data.changePeriod}
                   disabledOnTouch
@@ -158,7 +162,7 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
         meta: {
           align: 'right',
           tooltip:
-            'User operations per second averaged over the past day, shown together with a percentage change compared to 7D ago.',
+            'User operations per second averaged over the past day, shown together with a percentage change compared to 7 days ago.',
         },
       }),
       (row) => ({
@@ -175,7 +179,7 @@ export function getL2SummaryValidiumAndOptimiumsColumns(
   return [
     ...getL2SummaryColumns(opts).slice(0, 6),
     columnHelper.display({
-      header: 'DA Layer',
+      header: 'DA layer',
       cell: (ctx) => {
         const latestValue = ctx.row.original.dataAvailability?.[0]
         if (!latestValue) {

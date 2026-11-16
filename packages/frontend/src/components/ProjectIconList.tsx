@@ -158,7 +158,7 @@ function IconImage({ project }: { project: ProjectIconListItem }) {
       height={20}
       src={project.iconUrl}
       alt={`${project.name} logo`}
-      className={cn('size-5 min-w-5 rounded-full shadow', iconBackdropClasses)}
+      className={cn('size-5 min-w-5 rounded-full', iconBackdropClasses)}
     />
   )
 }

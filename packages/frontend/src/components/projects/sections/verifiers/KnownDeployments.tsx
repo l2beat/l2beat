@@ -31,7 +31,7 @@ export function KnownDeployments({
 }) {
   return (
     <div className="space-y-3 px-3 md:px-4">
-      <div className="flex items-center gap-1.5 font-bold text-label-value-16">
+      <div className="flex items-center gap-1.5 font-semibold text-label-value-16">
         Known deployments
         <span className="rounded bg-surface-secondary px-1.5 py-0.5 font-medium text-label-value-12 text-secondary tabular-nums">
           {deployments.length}
@@ -40,9 +40,7 @@ export function KnownDeployments({
       {groupDeployments(deployments).map((group) => (
         <div key={group.key} className="space-y-2">
           <div className="flex flex-wrap items-center gap-1 font-medium text-label-value-14">
-            {group.projectsUsedIn.length > 0 && (
-              <span className="text-secondary">Used in</span>
-            )}
+            {group.projectsUsedIn.length > 0 && <span>Used in</span>}
             <ProjectsUsedIn usedIn={group.projectsUsedIn} />
             {group.projectsUsedIn.length === 1 && (
               <span>{group.projectsUsedIn[0]?.name}</span>

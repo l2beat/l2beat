@@ -4,7 +4,6 @@ import {
   getSortedRowModel,
 } from '@tanstack/react-table'
 import { useMemo } from 'react'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
   getPaginationItems,
   Pagination,
@@ -69,10 +68,15 @@ export function InteropTokenOnchainDeploymentsSection({
       {hasTokenRelations(graph) && (
         <>
           <TokenRelationsGraphView graph={graph} />
-          <HorizontalSeparator className="my-4" />
+          <div className="h-4" />
         </>
       )}
-      <BasicTable table={table} tableWrapperClassName="pb-0" />
+      {/* 12px between columns, so every column fits the card at 1280, and
+          12px headers like the page's other tables. The figures come right
+          after the chain, so phones see them unscrolled. */}
+      <div className="md:[&_td]:pr-3 [&_th]:text-2xs md:[&_th]:pr-3">
+        <BasicTable table={table} tableWrapperClassName="pb-0" />
+      </div>
       {pageCount > 1 && (
         <div className="mt-4">
           <Pagination className="min-w-full px-1">

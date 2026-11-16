@@ -247,7 +247,7 @@ const TooltipTrigger = ({
 
 /** The tooltip's look, without its open and close animation. */
 const tooltipSurfaceClassName =
-  'z-110 rounded-lg bg-surface-primary p-3 text-left font-medium text-paragraph-13 text-primary normal-case shadow-popover max-sm:max-w-screen dark:bg-header-secondary'
+  'z-110 rounded-lg border border-divider bg-surface-primary p-3 text-left font-medium text-paragraph-13 text-primary normal-case max-sm:max-w-screen dark:bg-header-secondary'
 
 // A modal dialog turns off pointer events on the body, which the popup is
 // portaled into, so the popup turns them back on to stay hoverable.

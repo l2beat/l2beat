@@ -20,10 +20,10 @@ export function StagesPage({ content, lastUpdated, ...props }: Props) {
           <p className="text-brand-deep text-subtitle-12 uppercase">
             Last updated on {lastUpdated}
           </p>
-          <h1 className="mt-2 mb-4 text-heading-24 md:text-heading-32">
+          <h1 className="mt-2 mb-4 font-semibold text-heading-32 tracking-[-0.01em] md:text-heading-40">
             The Stages Framework
           </h1>
-          <p className="mb-4 font-inter text-xl leading-[1.6] opacity-80">
+          <p className="mb-4 font-inter text-paragraph-18 md:text-[22px] md:leading-[1.5] dark:text-primary/88">
             This page is to be considered an extended explainer for the latest
             version of the Stages Framework, whose precise specification can be
             found{' '}
@@ -33,7 +33,7 @@ export function StagesPage({ content, lastUpdated, ...props }: Props) {
             .
           </p>
           <main>
-            <Article className="[&>h2:first-child]:mt-8">
+            <Article className="[&>*:last-child]:mb-0 [&>h2:first-child]:mt-[2em]">
               {content.content}
             </Article>
           </main>

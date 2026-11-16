@@ -41,7 +41,7 @@ interface Props {
 
 const chartMeta = {
   range: {
-    label: 'Min&max submission interval',
+    label: 'Min & max submission interval',
     color: 'var(--chart-pink)',
     indicatorType: {
       shape: 'line',

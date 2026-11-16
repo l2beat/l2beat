@@ -79,8 +79,9 @@ function DaLayerNames({ daLayers }: { daLayers: DaLayerInfo[] }) {
 }
 
 function DaLayerName({ daLayer }: { daLayer: DaLayerInfo }) {
+  // One unit, so a line break never strands the logo away from its name.
   const content = (
-    <>
+    <span className="whitespace-nowrap">
       {daLayer.logo && (
         <img
           src={daLayer.logo}
@@ -89,13 +90,17 @@ function DaLayerName({ daLayer }: { daLayer: DaLayerInfo }) {
         />
       )}
       {daLayer.name}
-    </>
+    </span>
   )
-  return daLayer.href ? (
-    <CustomLink href={daLayer.href} className="ml-1">
-      {content}
-    </CustomLink>
-  ) : (
-    <span className="ml-1 font-medium">{content}</span>
+  // A real space, not a margin: it collapses when the name wraps to a new line.
+  return (
+    <>
+      {' '}
+      {daLayer.href ? (
+        <CustomLink href={daLayer.href}>{content}</CustomLink>
+      ) : (
+        <span className="font-medium">{content}</span>
+      )}
+    </>
   )
 }

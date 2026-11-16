@@ -49,7 +49,7 @@ export function getL2CostsColumns(metric: CostsMetric) {
       columns: [
         columnHelper.accessor((row) => availableCosts(row)?.total, {
           id: 'total-cost',
-          header: metric === 'total' ? 'Total cost' : 'Avg PER L2 User op',
+          header: metric === 'total' ? 'Total cost' : 'Avg per L2 user op',
           cell: (ctx) => (
             <SyncStatusWrapper
               isSynced={
@@ -65,7 +65,11 @@ export function getL2CostsColumns(metric: CostsMetric) {
           ),
           sortUndefined: 'last',
           meta: {
-            align: 'center',
+            align: 'right',
+            // Phones scroll the table sideways: starting the figures at the
+            // column's left edge keeps them whole in the first view.
+            headClassName: 'max-md:[&>div]:justify-start',
+            cellClassName: 'max-md:text-left',
             tooltip: `The ${metric === 'total' ? 'total cost' : 'average cost per L2 user operation'} that is a sum of the costs for calldata, computation, blobs, and overhead.`,
           },
         }),
@@ -192,7 +196,7 @@ export function getL2CostsColumns(metric: CostsMetric) {
 
     columnHelper.accessor((row) => availableCosts(row)?.uopsCount, {
       id: 'data_uopsCount',
-      header: 'L2 User ops count',
+      header: 'L2 user ops count',
       cell: (ctx) => {
         const data = ctx.row.original.data
         if (data.type === 'available') {

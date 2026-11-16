@@ -129,9 +129,9 @@ export function L2CompareCharts({
     )
 
   return (
-    <section className="flex flex-col gap-2 max-md:mt-4 md:mt-2">
+    <section className="flex flex-col gap-4 max-md:mt-4 md:mt-2">
       <CompareSeriesProvider projects={selectedProjects}>
-        <div className="flex flex-col gap-3 max-md:px-4 lg:px-2">
+        <div className="flex flex-col gap-3 max-md:px-4">
           <CompareProjectPicker
             allProjects={allProjects}
             metrics={displayedMetrics}
@@ -164,7 +164,7 @@ export function L2CompareCharts({
             />
           </div>
         </div>
-        <div className="flex flex-col md:gap-2">
+        <div className="flex flex-col max-md:divide-y max-md:divide-divider md:gap-4">
           {state.charts.map((config, index) => (
             <CompareChartCard
               // Charts carry no identity of their own in the URL, so the
@@ -224,7 +224,7 @@ function CompareChartCard({
             type="button"
             aria-label="Remove chart"
             onClick={onRemove}
-            className="flex size-7 shrink-0 cursor-pointer items-center justify-center rounded-lg hover:bg-surface-secondary primary-card:hover:bg-surface-tertiary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+            className="flex size-6 shrink-0 cursor-pointer items-center justify-center rounded-lg hover:bg-surface-secondary primary-card:hover:bg-surface-tertiary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand md:size-7"
           >
             <CloseIcon className="size-2.5 fill-secondary" aria-hidden />
           </button>
@@ -260,23 +260,24 @@ function MetricSwitcher({
 }) {
   const isClient = useIsClient()
   if (!isClient) {
-    return <Skeleton className="h-9 w-[300px] md:w-[340px]" />
+    return <Skeleton className="h-8 w-[300px] md:w-[340px]" />
   }
   return (
     <OverflowWrapper className="min-w-0">
       <RadioGroup
         name={name}
         aria-label="Chart metric"
+        // Tight on phones so all four metrics fit beside the close button.
+        className="max-md:gap-0.5"
         value={value}
         onValueChange={(value) => onValueChange(value as CompareMetricId)}
         variant="highlighted"
-        className="h-9"
       >
         {Object.values(COMPARE_METRICS).map((metric) => (
           <RadioGroupItem
             key={metric.id}
             value={metric.id}
-            className="h-full whitespace-nowrap px-1.5 text-xs md:px-2 md:text-sm"
+            className="h-full whitespace-nowrap px-1 text-xs md:px-2 md:text-sm"
           >
             {metric.label}
           </RadioGroupItem>
@@ -354,7 +355,7 @@ function CopyLinkButton({ getShareUrl }: { getShareUrl: () => string }) {
       )}
     >
       {copied ? (
-        <CheckIcon className="size-4 stroke-green-700 dark:stroke-green-450" />
+        <CheckIcon className="size-4 stroke-positive" />
       ) : (
         <CopyIcon className="size-4 fill-current" />
       )}

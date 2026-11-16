@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import {
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import {
   centerCamera,
   fitWidthCamera,
@@ -45,6 +51,8 @@ interface Props {
   centersSelection?: boolean
   /** Pixels of the right edge that a details panel covers; the selected node is kept clear of them. */
   coveredRight?: number
+  /** Drawn over the frame, outside its pan and click handling (e.g. a details panel). */
+  overlay?: ReactNode
   className?: string
 }
 
@@ -57,6 +65,7 @@ export function RelationsDiagram({
   fillsView = false,
   centersSelection = false,
   coveredRight = 0,
+  overlay,
   className,
 }: Props) {
   const layout = useMemo(() => {
@@ -142,116 +151,132 @@ export function RelationsDiagram({
   }, [graph.edges])
 
   return (
-    <PanZoomFrame
-      panZoom={panZoom}
-      className={className}
-      onClick={() => {
-        if (!panZoom.consumeSuppressedClick()) onSelectNode(undefined)
-      }}
-    >
-      {/* The camera moves the grid and the world by writing their transforms,
-          so React never re-renders the diagram for a pan or a pinch. */}
-      <div
-        ref={panZoom.gridRef}
-        className="pointer-events-none absolute will-change-transform"
-        style={{
-          backgroundImage:
-            'radial-gradient(var(--color-divider) 1px, transparent 1px)',
-          ...panZoom.initialStyles.grid,
-        }}
-        aria-hidden
-      />
-      <DiagramWatermark />
-      <CameraWorld panZoom={panZoom}>
-        <svg
-          width={layout.width}
-          height={layout.height}
-          className="absolute top-0 left-0 overflow-visible"
-          aria-hidden
+    // Fills a flex-column parent; a no-op in block flow.
+    <div className="flex min-h-0 flex-1 flex-col">
+      <div className="relative flex min-h-0 flex-1 flex-col">
+        <PanZoomFrame
+          panZoom={panZoom}
+          className={className}
+          onClick={() => {
+            if (!panZoom.consumeSuppressedClick()) onSelectNode(undefined)
+          }}
         >
-          <RelationsEdgeMarkers />
-          {layout.unconnectedDividerY !== undefined && (
-            <line
-              x1={0}
-              x2={layout.width}
-              y1={layout.unconnectedDividerY}
-              y2={layout.unconnectedDividerY}
-              className="stroke-divider"
-              strokeDasharray="2 6"
-            />
-          )}
-          {graph.edges.map((edge) => {
-            const path = paths.get(edgeKey(edge))
-            if (!path) return null
-            const isHighlighted = active?.edgeKeys.has(edgeKey(edge)) ?? false
-            return (
-              <RelationsEdgePath
-                key={edgeKey(edge)}
-                path={path}
-                isHighlighted={isHighlighted}
-                isDimmed={active !== undefined && !isHighlighted}
-              />
-            )
-          })}
-        </svg>
-        {graph.nodes.map((node) => {
-          const box = layout.boxes.get(node.id)
-          if (!box) return null
-          return (
-            <RelationsNode
-              key={node.id}
-              node={node}
-              box={box}
-              isSelected={selectedNodeId === node.id}
-              isDimmed={active !== undefined && !active.nodeIds.has(node.id)}
-              isUnconnected={unconnectedIds.has(node.id)}
-              isSource={sourceIds.has(node.id)}
-              // A touch drag that starts on a node may still end in a click on it.
-              onSelect={(id) => {
-                if (!panZoom.consumeSuppressedClick()) onSelectNode(id)
-              }}
-              onHover={setHoveredId}
-            />
-          )
-        })}
-        {graph.edges.map((edge) => {
-          const path = paths.get(edgeKey(edge))
-          if (!path) return null
-          return (
-            <RelationsEdgeBadge
-              key={edgeKey(edge)}
-              edge={edge}
-              position={path}
-              isDimmed={
-                active !== undefined && !active.edgeKeys.has(edgeKey(edge))
-              }
-            />
-          )
-        })}
-      </CameraWorld>
-
-      <div className="absolute bottom-3 left-3 flex flex-col items-start gap-1 text-label-value-12 text-secondary">
-        <p className="hidden rounded-md border border-divider bg-surface-primary px-2 py-1 [@media(pointer:coarse)]:block">
-          {fillsView
-            ? 'Drag to move, pinch to zoom'
-            : 'Use two fingers to move or zoom'}
-        </p>
-        <p className="rounded-md border border-divider bg-surface-primary px-2 py-1 [@media(pointer:coarse)]:hidden">
-          {fillsView
-            ? 'Scroll or drag to move the diagram'
-            : 'Drag to move the diagram, Ctrl + scroll to zoom'}
-        </p>
-        <p className="rounded-md border border-divider bg-surface-primary px-2 py-1">
-          Past 24h crosschain volume
-        </p>
+          {/* The camera moves the grid and the world by writing their transforms,
+              so React never re-renders the diagram for a pan or a pinch. */}
+          <div
+            ref={panZoom.gridRef}
+            className="pointer-events-none absolute will-change-transform"
+            style={{
+              backgroundImage:
+                'radial-gradient(var(--color-divider) 1px, transparent 1px)',
+              ...panZoom.initialStyles.grid,
+            }}
+            aria-hidden
+          />
+          <DiagramWatermark />
+          <CameraWorld panZoom={panZoom}>
+            <svg
+              width={layout.width}
+              height={layout.height}
+              className="absolute top-0 left-0 overflow-visible"
+              aria-hidden
+            >
+              <RelationsEdgeMarkers />
+              {layout.unconnectedDividerY !== undefined && (
+                <line
+                  x1={0}
+                  x2={layout.width}
+                  y1={layout.unconnectedDividerY}
+                  y2={layout.unconnectedDividerY}
+                  className="stroke-divider"
+                  strokeDasharray="2 6"
+                />
+              )}
+              {graph.edges.map((edge) => {
+                const path = paths.get(edgeKey(edge))
+                if (!path) return null
+                const isHighlighted =
+                  active?.edgeKeys.has(edgeKey(edge)) ?? false
+                return (
+                  <RelationsEdgePath
+                    key={edgeKey(edge)}
+                    path={path}
+                    isHighlighted={isHighlighted}
+                    isDimmed={active !== undefined && !isHighlighted}
+                  />
+                )
+              })}
+            </svg>
+            {graph.nodes.map((node) => {
+              const box = layout.boxes.get(node.id)
+              if (!box) return null
+              return (
+                <RelationsNode
+                  key={node.id}
+                  node={node}
+                  box={box}
+                  isSelected={selectedNodeId === node.id}
+                  isDimmed={
+                    active !== undefined && !active.nodeIds.has(node.id)
+                  }
+                  isUnconnected={unconnectedIds.has(node.id)}
+                  isSource={sourceIds.has(node.id)}
+                  // A touch drag that starts on a node may still end in a click on it.
+                  onSelect={(id) => {
+                    if (!panZoom.consumeSuppressedClick()) onSelectNode(id)
+                  }}
+                  onHover={setHoveredId}
+                />
+              )
+            })}
+            {graph.edges.map((edge) => {
+              const path = paths.get(edgeKey(edge))
+              if (!path) return null
+              return (
+                <RelationsEdgeBadge
+                  key={edgeKey(edge)}
+                  edge={edge}
+                  position={path}
+                  isDimmed={
+                    active !== undefined && !active.edgeKeys.has(edgeKey(edge))
+                  }
+                />
+              )
+            })}
+          </CameraWorld>
+        </PanZoomFrame>
+        {overlay}
       </div>
-      <ZoomControls camera={camera}>
-        {onExpand && (
-          <ControlButton label="Open larger view" onClick={onExpand}>
-            <Glyph d={EXPAND_GLYPH} />
-          </ControlButton>
-        )}
-      </ZoomControls>
-    </PanZoomFrame>
+      {/* Under the frame, not over it, so neither covers a node. */}
+      <div className="mt-2 flex items-center justify-between gap-3">
+        <DiagramCaption fillsView={fillsView} />
+        <ZoomControls camera={camera} className="static shrink-0 flex-row">
+          {onExpand && (
+            <ControlButton label="Open larger view" onClick={onExpand}>
+              <Glyph d={EXPAND_GLYPH} />
+            </ControlButton>
+          )}
+        </ZoomControls>
+      </div>
+    </div>
+  )
+}
+
+/** What the diagram measures and how to move it. */
+function DiagramCaption({ fillsView }: { fillsView: boolean }) {
+  return (
+    <p className="text-label-value-12 text-secondary leading-4">
+      Past 24h cross-chain volume ·{' '}
+      <span className="[@media(pointer:coarse)]:hidden">
+        {fillsView
+          ? 'Scroll or drag to move the diagram'
+          : 'Drag to move, Ctrl + scroll to zoom'}
+      </span>
+      <span className="hidden [@media(pointer:coarse)]:inline">
+        {fillsView
+          ? 'Drag to move, pinch to zoom'
+          : 'Use two fingers to move or zoom'}
+      </span>
+    </p>
   )
 }

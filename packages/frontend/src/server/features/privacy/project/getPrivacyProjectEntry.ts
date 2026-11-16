@@ -187,7 +187,7 @@ export async function getPrivacyProjectEntry(
       type: 'TvsValueSection',
       props: {
         id: 'privacy-tvl',
-        title: 'Value Locked',
+        title: 'Value locked',
         defaultRange: defaultChartRange,
         rangeControls: 'privacy',
         project: chartProject,
@@ -226,7 +226,7 @@ export async function getPrivacyProjectEntry(
       type: 'PrivacyAssetsBreakdownSection',
       props: {
         id: 'privacy-assets-breakdown',
-        title: 'Assets Breakdown',
+        title: 'Assets breakdown',
         assets: details.assets,
         showTvl: details.hasTvl,
       },
@@ -238,7 +238,7 @@ export async function getPrivacyProjectEntry(
       type: 'MilestonesAndIncidentsSection',
       props: {
         id: 'milestones-and-incidents',
-        title: 'Milestones & Incidents',
+        title: 'Milestones & incidents',
         milestones: details.milestones,
       },
     })
@@ -263,7 +263,7 @@ export async function getPrivacyProjectEntry(
       type: 'UpgradesAndGovernanceSection',
       props: {
         id: 'upgrades-and-governance',
-        title: 'Upgrades & Governance',
+        title: 'Upgrades & governance',
         content: details.upgradesAndGovernance.content,
         governanceInfo: details.upgradesAndGovernance.governanceInfo,
       },

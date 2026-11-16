@@ -275,7 +275,7 @@ function StatRow({
 }) {
   return (
     <div className="flex items-start justify-between gap-2 text-[13px]">
-      <span className="whitespace-nowrap font-medium text-secondary leading-none">
+      <span className="whitespace-nowrap font-normal leading-none">
         {label}
       </span>
       {isLoading ? (

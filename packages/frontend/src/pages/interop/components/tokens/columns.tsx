@@ -12,6 +12,7 @@ import type { BasicTableRow } from '~/components/table/BasicTable'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { EM_DASH } from '~/consts/characters'
 import { BidirectionalArrowIcon } from '~/icons/BidirectionalArrow'
+import { formatNetFlow } from '~/pages/interop/utils/formatNetFlow'
 import type {
   AverageDuration,
   ProtocolDisplayable,
@@ -78,7 +79,7 @@ function getCommonColumns<T extends CommonRow>(
       }),
     columnHelper.accessor((row) => row.volume, {
       id: 'volume',
-      header: 'Last 24h\nVolume',
+      header: 'Last 24h\nvolume',
       cell: (ctx) => {
         if (ctx.row.original.volume === null) return EM_DASH
         return (
@@ -95,7 +96,7 @@ function getCommonColumns<T extends CommonRow>(
     }),
     columnHelper.accessor((row) => row.transferCount, {
       id: 'transferCount',
-      header: 'Last 24h\ntransfer count',
+      header: 'Last 24h\ntransfers',
       cell: (ctx) => (
         <div className="font-medium text-label-value-15">
           {formatInteger(ctx.row.original.transferCount)}
@@ -194,6 +195,7 @@ function getCommonColumns<T extends CommonRow>(
         )
       },
       meta: {
+        align: 'right',
         tooltip:
           'The average USD value per token transfer completed in the past 24 hours.',
       },
@@ -236,7 +238,7 @@ export const getTopTokensColumns = ({
       id: 'icon',
       cell: (ctx) => (
         <img
-          className="min-h-[20px] min-w-[20px] rounded-full bg-white shadow"
+          className="min-h-[20px] min-w-[20px] rounded-full bg-white"
           src={ctx.row.original.iconUrl}
           width={20}
           height={20}
@@ -259,7 +261,8 @@ export const getTopTokensColumns = ({
               {ctx.row.original.symbol}
             </TwoRowCell.First>
             {ctx.row.original.issuer && (
-              <TwoRowCell.Second>
+              // One line on phones too: wrapped, it ran into the next row.
+              <TwoRowCell.Second className="whitespace-nowrap">
                 Issued by{' '}
                 <span className="capitalize">{ctx.row.original.issuer}</span>
               </TwoRowCell.Second>
@@ -284,7 +287,7 @@ export const getTopTokensColumns = ({
         )
       },
       meta: {
-        headClassName: 'pl-0!',
+        headClassName: 'pl-0! min-w-[140px]',
         cellClassName: 'pl-0!',
       },
     }),
@@ -307,7 +310,7 @@ export const getTopTokensColumns = ({
             return <InteropNoDataBadge />
           return (
             <span className="font-medium text-label-value-15">
-              {formatCurrency(ctx.row.original.netMintedValue, 'usd')}
+              {formatNetFlow(ctx.row.original.netMintedValue)}
             </span>
           )
         },

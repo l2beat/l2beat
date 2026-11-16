@@ -3,7 +3,7 @@ import type { BeltPalette } from './beltPalette'
 
 /**
  * Painted once per size and theme, then only copied: stroking the hatching and
- * blurring the glow each frame cost more than the rest of the belt.
+ * filling the rooms each frame cost more than the rest of the belt.
  */
 export interface BeltLayers {
   sealedRack: HTMLCanvasElement
@@ -12,15 +12,12 @@ export interface BeltLayers {
   futureRack: HTMLCanvasElement
   /** At screen density */
   rules: HTMLCanvasElement
-  litRack: HTMLCanvasElement
   bayRing: HTMLCanvasElement
 }
 
 const HATCH_SPACING = 6
 const TARGET_DASH = [4, 3]
 const FUTURE_DASH = [3, 3]
-const GLOW_BLUR = 14
-export const GLOW_REACH = 24
 
 export function paintLayers(
   layout: BeltLayout,
@@ -61,24 +58,12 @@ export function paintLayers(
     traceRackOutline(ctx, layout, 0)
     ctx.stroke()
   }
-  const litRack = paintRack(layout, density, GLOW_REACH, (ctx) => {
-    ctx.shadowColor = palette.glow
-    ctx.shadowBlur = GLOW_BLUR
-    strokeBay(ctx)
-  })
   const bayRing = paintRack(layout, density, 0, strokeBay)
   const rules = paintRules(layout, palette, density)
-  if (
-    !sealedRack ||
-    !missedRack ||
-    !futureRack ||
-    !litRack ||
-    !bayRing ||
-    !rules
-  ) {
+  if (!sealedRack || !missedRack || !futureRack || !bayRing || !rules) {
     return undefined
   }
-  return { sealedRack, missedRack, futureRack, rules, litRack, bayRing }
+  return { sealedRack, missedRack, futureRack, rules, bayRing }
 }
 
 function paintRack(

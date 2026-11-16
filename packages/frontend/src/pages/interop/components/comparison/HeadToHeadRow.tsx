@@ -33,17 +33,20 @@ export function HeadToHeadRow({
     <div className="flex flex-col gap-1.5">
       <div className="grid grid-cols-3 items-baseline gap-3">
         <span
-          className={cn('font-bold text-heading-16', !left && 'text-secondary')}
+          className={cn(
+            'font-semibold text-label-value-15 tabular-nums',
+            !left && 'text-secondary',
+          )}
           style={{ color: left?.color }}
         >
           {leftValue != null ? format(leftValue) : '—'}
         </span>
-        <span className="text-center font-semibold text-base text-secondary leading-none">
+        <span className="text-center font-medium text-label-value-13 leading-none">
           {label}
         </span>
         <span
           className={cn(
-            'text-right font-bold text-heading-16',
+            'text-right font-semibold text-label-value-15 tabular-nums',
             !right && 'text-secondary',
           )}
           style={{ color: right?.color }}
