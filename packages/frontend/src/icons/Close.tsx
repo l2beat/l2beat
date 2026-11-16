@@ -8,7 +8,6 @@ export function CloseIcon(props: SvgIconProps) {
       height="10"
       viewBox="0 0 10 10"
       fill="currentColor"
-      aria-label="Close icon"
       {...props}
     >
       <path

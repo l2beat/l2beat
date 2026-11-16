@@ -46,8 +46,8 @@ export function ChartLegendOnboardingProvider({
   }, [])
 
   // Done in the DOM rather than React state: a scroll-driven context value
-  // re-rendered every chart on the page, and each chart re-render makes
-  // recharts re-measure itself with forced layouts.
+  // re-rendered every chart on the page, and each chart re-render rebuilds
+  // its scene.
   useEffect(() => {
     if (hasFinishedOnboarding) return
     window.addEventListener('scroll', markHintClosestToViewportCenter, {
@@ -90,6 +90,23 @@ function markHintClosestToViewportCenter() {
 
   for (const hint of hints) {
     hint.toggleAttribute(CURRENT_ATTRIBUTE, hint === closest)
+  }
+}
+
+/**
+ * For a chart's interactive legend: whether its hint is shown, and whether
+ * room is kept for it, which stays as the page loaded it so nothing jumps
+ * when the hint goes.
+ */
+export function useLegendHint(
+  interactiveLegend: { disableOnboarding?: boolean } | undefined,
+) {
+  const { hasFinishedOnboarding, hasFinishedOnboardingInitial } =
+    useChartLegendOnboarding()
+  const enabled = !!interactiveLegend && !interactiveLegend.disableOnboarding
+  return {
+    showsHint: enabled && !hasFinishedOnboarding,
+    keepsRoom: enabled && !hasFinishedOnboardingInitial,
   }
 }
 

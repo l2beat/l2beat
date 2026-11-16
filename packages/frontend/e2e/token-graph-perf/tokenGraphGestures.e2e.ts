@@ -324,7 +324,7 @@ async function layerScales(page: Page, browser: Browser) {
   })
   await page.evaluate(DRAW_FRAMES)
   const snapshot = traceEvents(await browser.stopTracing())
-    .filter((event) => event.name === 'cc::LayerTreeHostImpl')
+    .filter((event) => event.name === 'LayerTreeHostImpl:snapshot')
     .map(
       (event) =>
         (event.args as { snapshot?: LayerTreeSnapshot } | undefined)?.snapshot,

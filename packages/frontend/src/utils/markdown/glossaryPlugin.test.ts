@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 import MarkdownIt from 'markdown-it'
-import type { GlossaryTerm } from '~/components/markdown/GlossaryContext'
+import type { GlossaryTerm } from './glossaryMatcher'
 import { glossaryPlugin, linkGlossaryTerms } from './glossaryPlugin'
 
 describe(linkGlossaryTerms.name, () => {
@@ -42,6 +42,15 @@ describe(linkGlossaryTerms.name, () => {
     )
   })
 
+  it('does not link terms inside markdown headings', () => {
+    const input = '## Data availability\n\nData availability is spicy.'
+    expect(linkTerms(input)).toEqual(
+      `## Data availability\n\n[Data availability](/glossary#da?description=${encodeURIComponent(
+        'DA description',
+      )}) is spicy.`,
+    )
+  })
+
   it('lets a longer term win over a shorter one that starts earlier', () => {
     const overlapping = linkGlossaryTerms([
       { id: 'ab', matches: ['alpha beta'], description: 'AB' },
@@ -62,6 +71,15 @@ describe(linkGlossaryTerms.name, () => {
     expect(output).toEqual(
       `See the [glossary](/glossary#glossary?description=${encodeURIComponent('G')}).`,
     )
+  })
+
+  it('links a term that starts with punctuation on every call', () => {
+    const committee = linkGlossaryTerms([
+      { id: 'dac', matches: ['(DAC)'], description: 'DAC' },
+    ])
+    const linked = `Run by a committee [(DAC)](/glossary#dac?description=${encodeURIComponent('DAC')}).`
+    expect(committee('Run by a committee (DAC).')).toEqual(linked)
+    expect(committee('Run by a committee (DAC).')).toEqual(linked)
   })
 
   it('should not replace terms within existing markdown links', () => {

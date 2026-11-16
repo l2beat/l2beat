@@ -14,7 +14,8 @@
         "address": "0xc314b8637B05A294Ae9D9C29300d5f667c748baD",
         "chain": "galxegravity",
         "decimals": 18,
-        "sinceTimestamp": 1732233600
+        "sinceTimestamp": 1732233600,
+        "untilTimestamp": 1793777507
       },
       "category": "ether",
       "source": "external",
@@ -58,7 +59,8 @@
         "address": "0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6",
         "chain": "galxegravity",
         "decimals": 6,
-        "sinceTimestamp": 1720481296
+        "sinceTimestamp": 1720481296,
+        "untilTimestamp": 1793777507
       },
       "category": "stablecoin",
       "source": "external",
@@ -84,7 +86,8 @@
         "address": "0x816E810f9F787d669FB71932DeabF6c83781Cd48",
         "chain": "galxegravity",
         "decimals": 6,
-        "sinceTimestamp": 1720481298
+        "sinceTimestamp": 1720481298,
+        "untilTimestamp": 1793777507
       },
       "category": "stablecoin",
       "source": "external",
@@ -110,7 +113,8 @@
         "address": "0xf6f832466Cd6C21967E0D954109403f36Bc8ceaA",
         "chain": "galxegravity",
         "decimals": 18,
-        "sinceTimestamp": 1720481294
+        "sinceTimestamp": 1720481294,
+        "untilTimestamp": 1793777507
       },
       "category": "ether",
       "source": "external",

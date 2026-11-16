@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "archived": true,
   "name": "galxegravity",
   "import": ["../globalConfig.jsonc"],
   "maxDepth": 34,
@@ -31,9 +32,6 @@
     },
     "eth:0x9C7BEBa8F6eF6643aBd725e45a4E8387eF260649": {
       "ignoreMethods": ["totalSupply"]
-    },
-    "eth:0xbD6e434dB90FD8AD4E28d85C133AD34cA6fbfB6D": {
-      "ignoreDiscovery": true
     }
   }
 }

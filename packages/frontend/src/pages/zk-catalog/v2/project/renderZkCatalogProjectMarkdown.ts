@@ -50,7 +50,7 @@ function getFacts({ creator, header }: ProjectZkCatalogEntry) {
       getTrustedSetupsFact(proofSystem),
     ),
     zkVMTags.length > 0 && {
-      label: 'zkVM',
+      label: 'Main prover',
       value: zkVMTags.map(formatTag).join(', '),
     },
     finalWrap.length > 0 && {

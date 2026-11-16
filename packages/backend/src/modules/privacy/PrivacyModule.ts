@@ -20,6 +20,7 @@ import type {
   StarknetPrivacyAnonymitySetIndexerConfig,
   StarknetPrivacyFlowIndexerConfig,
 } from './types'
+import { getPrivacyBucketIds } from './utils/getPrivacyBucketIds'
 
 export function createPrivacyModule({
   config,
@@ -37,7 +38,19 @@ export function createPrivacyModule({
   const indexerService = new IndexerService(db)
   const indexers: Indexer[] = []
 
-  const hourlyIndexer = new HourlyIndexer(logger, clock)
+  const bucketIds = getPrivacyBucketIds([
+    ...config.privacy.flowConfigs,
+    ...config.privacy.starknetFlowConfigs,
+  ])
+  const hourlyIndexer = new HourlyIndexer(logger, clock, {
+    // One row per bucket: the flow indexers write how far each is synced.
+    onTick: async (targetTimestamp) => {
+      await db.syncMetadata.setTargets(
+        'privacy',
+        bucketIds.map((id) => ({ id, target: targetTimestamp })),
+      )
+    },
+  })
   const dailyIndexer = new DailyIndexer(logger, clock)
   const priceIndexer =
     config.privacy.priceConfigs.length > 0

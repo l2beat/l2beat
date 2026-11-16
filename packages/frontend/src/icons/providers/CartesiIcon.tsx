@@ -9,7 +9,7 @@ export function CartesiIcon({ className, ...props }: SvgIconProps) {
       height="24"
       viewBox="0 0 128 128"
       fill="none"
-      aria-label="Cartesi icon"
+      aria-label="Cartesi logo"
       className={cn('fill-[#0090A8] dark:fill-[#00F6FF]', className)}
       {...props}
     >

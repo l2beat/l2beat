@@ -1,4 +1,5 @@
-import ansiHTML from 'ansi-html'
+import { useTheme } from '../../../theme'
+import { renderAnsi } from '../panel-terminal/renderAnsi'
 import { useTerminalStore } from '../panel-terminal/store'
 
 type Props = {
@@ -7,6 +8,7 @@ type Props = {
 
 export function DiscoveryLookup({ lines }: Props) {
   const { output, command } = useTerminalStore()
+  const theme = useTheme()
 
   if (!command.inFlight) {
     return
@@ -19,7 +21,10 @@ export function DiscoveryLookup({ lines }: Props) {
       </div>
       <pre
         dangerouslySetInnerHTML={{
-          __html: ansiHTML(output).split('\n').slice(-lines).join('\n'),
+          __html: renderAnsi(output, theme)
+            .split('\n')
+            .slice(-lines)
+            .join('\n'),
         }}
       />
     </div>

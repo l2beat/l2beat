@@ -253,6 +253,8 @@
       }
     },
     "unichain:0x420000000000000000000000000000000000001b": {
+      // OperatorFeeVault: withdrawalNetwork is L1, so the recipient is an Ethereum address
+      "ignoreRelatives": ["recipient", "RECIPIENT"],
       "fields": {
         "proxyAdminOwner": {
           "edit": [
@@ -260,7 +262,9 @@
             ["=", "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
             ["format", "UndoL2Alias"]
           ]
-        }
+        },
+        "recipient": { "edit": ["format", "EthereumAddress"] },
+        "RECIPIENT": { "edit": ["format", "EthereumAddress"] }
       }
     },
     "unichain:0x4200000000000000000000000000000000000018": {
@@ -277,16 +281,28 @@
     "unichain:0x4300c0d3c0d3c0D3c0d3C0D3c0d3C0D3C0D30003": {
       "fields": {
         "owner": {
+          // L2 aliases of Unichain Multisig 2 and the SuperchainProxyAdminOwner
           "edit": [
             "if",
             ["=", "unichain:0xa356d5D10aA8A842B31530dE71EA86c0760CB2C2"],
-            ["format", "UndoL2Alias"]
+            ["format", "UndoL2Alias"],
+            [
+              "if",
+              ["=", "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+              ["format", "UndoL2Alias"]
+            ]
           ]
         }
       }
     }
   },
   "types": {
+    "EthereumAddress": {
+      "typeCaster": "ChainPrefix",
+      "arg": {
+        "prefix": "eth"
+      }
+    },
     "UnichainAddress": {
       "typeCaster": "ChainPrefix",
       "arg": {

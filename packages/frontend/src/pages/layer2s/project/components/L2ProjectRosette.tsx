@@ -26,50 +26,39 @@ export function ProjectL2Rosette({ project, size }: Props) {
     )
   }
 
-  const Wrapper = ({
-    children,
-    hideSelector,
-  }: {
-    children: React.ReactNode
-    hideSelector?: boolean
-  }) => (
-    <div className="my-auto flex flex-col gap-3 max-lg:hidden">
-      {!hideSelector && (
-        <RosetteSelector
-          rosetteType={rosetteType}
-          setRosetteType={setRosetteType}
-          isDisabled={
-            project.underReviewStatus === 'config' || !project.rosette.host
-          }
-        />
-      )}
-      {children}
-    </div>
+  const selector = (
+    <RosetteSelector
+      rosetteType={rosetteType}
+      setRosetteType={setRosetteType}
+      isDisabled={
+        project.underReviewStatus === 'config' || !project.rosette.host
+      }
+    />
   )
 
   if (project.underReviewStatus === 'config') {
     return (
-      <Wrapper>
+      <RosetteLayout selector={selector}>
         <BigPizzaRosette
           values={project.rosette.self}
           isUnderReview={project.underReviewStatus === 'config'}
           size={size}
         />
-      </Wrapper>
+      </RosetteLayout>
     )
   }
 
   if (!project.rosette.host || !project.hostChainName) {
     return (
-      <Wrapper hideSelector>
+      <RosetteLayout>
         <BigPizzaRosette values={project.rosette.self} size={size} />
-      </Wrapper>
+      </RosetteLayout>
     )
   }
 
   if (project.rosette.stacked) {
     return (
-      <Wrapper>
+      <RosetteLayout selector={selector}>
         {rosetteType === 'individual' ? (
           <BigIndividualRosette
             l2={{
@@ -85,12 +74,12 @@ export function ProjectL2Rosette({ project, size }: Props) {
         ) : (
           <BigPizzaRosette values={project.rosette.stacked} size={size} />
         )}
-      </Wrapper>
+      </RosetteLayout>
     )
   }
 
   return (
-    <Wrapper>
+    <RosetteLayout selector={selector}>
       {rosetteType === 'individual' ? (
         <BigIndividualRosette
           l2={{
@@ -110,6 +99,21 @@ export function ProjectL2Rosette({ project, size }: Props) {
           size={size}
         />
       )}
-    </Wrapper>
+    </RosetteLayout>
+  )
+}
+
+function RosetteLayout({
+  selector,
+  children,
+}: {
+  selector?: React.ReactNode
+  children: React.ReactNode
+}) {
+  return (
+    <div className="my-auto flex flex-col gap-3 max-lg:hidden">
+      {selector}
+      {children}
+    </div>
   )
 }

@@ -1,3 +1,105 @@
+Generated with discovered.json: 0x8e9f915e2c78ee1a69278375cf085dca3e2613a5
+
+# Diff at Mon, 16 Nov 2026 11:43:34 GMT:
+
+- id: 802b7446
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@470153e37b9b4db6f9c1f929151e642b8c8f0012 block: 1792586696
+- current timestamp: 1794829337
+
+## Description
+
+OP Succinct programs upgraded to [mantle-v1.6.3](https://github.com/mantle-xyz/op-succinct/releases/tag/mantle-v1.6.3) (SP1 6.4.0 → 6.10.0 and a dependency security sweep). New vkeys are reproduced.
+
+## Watched changes
+
+```diff
+    contract OPSuccinctL2OutputOracle (eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) [succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
++++ description: Verification key of the SP1 aggregation program: defines which validity proofs are accepted to finalize proposed state roots.
++++ severity: HIGH
+      values.aggregationVkey:
+-        "0x00fa36417110bce994f3054a68baef78ca51dee1a38659c70e108da7eb3d6bbf"
++        "0x007ed65c7e2e8c98e61b66811a86adc05a182e444cee082fda55242fe9b4a56e"
++++ description: Commitment to the verification key of the SP1 range program that proves the block-range state transitions aggregated into a proposal.
++++ severity: HIGH
+      values.rangeVkeyCommitment:
+-        "0x1e2b863405480e5509bcae955f9e23e1170419ba26af2f271cd0199f1e228fdb"
++        "0x57b7251f39bcced01bb272042859b1511b1cb42d49ac5ebe45117b32570ad872"
+    }
+```
+
+Generated with discovered.json: 0x3df38be9af5c0c912db99012da1301f50f61e0c2
+
+# Diff at Thu, 05 Nov 2026 07:13:41 GMT:
+
+- id: 21fe5c0b
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@02f1e81176b548fbfa87cd86090398367c11dd2f block: 1792586696
+- current timestamp: 1792586696
+
+## Description
+
+Discover the L2 fee vaults (sequencer, base, L1 and operator fees), so upgrades to them show up in diffs.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792586696 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafeL2 (mantle:0x09734bB3980906Bb217305EA6Bd34256feEAB105) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"mantle:0x4200000000000000000000000000000000000011","role":"admin","via":[{"address":"mantle:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"mantle:0x4200000000000000000000000000000000000019","role":"admin","via":[{"address":"mantle:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"mantle:0x420000000000000000000000000000000000001A","role":"admin","via":[{"address":"mantle:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"mantle:0x420000000000000000000000000000000000001b","role":"admin","via":[{"address":"mantle:0x4200000000000000000000000000000000000018"}]}
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (mantle:0x4200000000000000000000000000000000000018) [N/A] {
+    +++ description: None
+      directlyReceivedPermissions.2:
++        {"permission":"upgrade","from":"mantle:0x4200000000000000000000000000000000000011","role":"admin"}
+      directlyReceivedPermissions.5:
++        {"permission":"upgrade","from":"mantle:0x4200000000000000000000000000000000000019","role":"admin"}
+      directlyReceivedPermissions.6:
++        {"permission":"upgrade","from":"mantle:0x420000000000000000000000000000000000001A","role":"admin"}
+      directlyReceivedPermissions.7:
++        {"permission":"upgrade","from":"mantle:0x420000000000000000000000000000000000001b","role":"admin"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SequencerFeeVault (mantle:0x4200000000000000000000000000000000000011) [opstack/Layer2/SequencerFeeVault_mantle]
+    +++ description: Collects the sequencer fees, which anyone can withdraw as MNT to the recipient on L1 once the minimum withdrawal amount is reached.
+```
+
+```diff
++   Status: CREATED
+    contract BaseFeeVault (mantle:0x4200000000000000000000000000000000000019) [opstack/Layer2/BaseFeeVault_mantle]
+    +++ description: Collects the EIP-1559 base fees, which anyone can withdraw as MNT to the recipient on L1 once the minimum withdrawal amount is reached.
+```
+
+```diff
++   Status: CREATED
+    contract L1FeeVault (mantle:0x420000000000000000000000000000000000001A) [opstack/Layer2/BaseFeeVault_mantle]
+    +++ description: Collects the L1 data portion of the L2 transaction fees, which anyone can withdraw as MNT to the recipient on L1 once the minimum withdrawal amount is reached.
+```
+
+```diff
++   Status: CREATED
+    contract OperatorFeeVault (mantle:0x420000000000000000000000000000000000001b) [opstack/Layer2/BaseFeeVault_mantle]
+    +++ description: Collects the operator fees, which anyone can withdraw as MNT to the recipient on L1 once the minimum withdrawal amount is reached.
+```
+
 Generated with discovered.json: 0xb976585f7f3e2190c736e05b1172702fbf3c77b7
 
 # Diff at Sat, 24 Oct 2026 16:41:06 GMT:

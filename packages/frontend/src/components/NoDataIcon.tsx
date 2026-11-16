@@ -9,8 +9,8 @@ interface Props {
 export function NoDataIcon({ content, className }: Props) {
   return (
     <Tooltip>
-      <TooltipTrigger className={className}>
-        <ClockIcon />
+      <TooltipTrigger className={className} aria-label={content}>
+        <ClockIcon aria-hidden />
       </TooltipTrigger>
       <TooltipContent>{content}</TooltipContent>
     </Tooltip>

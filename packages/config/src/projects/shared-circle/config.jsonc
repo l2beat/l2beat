@@ -11,7 +11,7 @@
   "overrides": {
     "eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd": {
       // not part of CCTP or Gateway; UUPS proxy registered as a USDC minter
-      "description": "USDC minter that re-mints seized balances. When the balance of a blocklisted address on any CCTP domain is written off, the secondary market burner records it once per address and domain and mints the same amount of USDC on Ethereum to an allowlisted recipient. The written-off balance is not verified onchain, so minting is bounded only by the allowance the MasterMinter controllers grant this contract.",
+      "description": "USDC minter that re-mints seized balances: the secondary market burner records the balance of a blocklisted address once per address and CCTP domain and mints the same amount of USDC on Ethereum to an allowlisted recipient. The blocklisted balance stays frozen and is not burned, and the recorded amount is not verified onchain.",
       "ignoreMethods": ["proxiableUUID"],
       "fields": {
         "allowedRecipients": {
@@ -39,7 +39,7 @@
           "permissions": [
             {
               "type": "interact",
-              "description": "record the written-off balance of a blocklisted address and mint the same amount of USDC to an allowlisted recipient, within the minter allowance."
+              "description": "record the frozen balance of a blocklisted address and mint the same amount of USDC to an allowlisted recipient, within the minter allowance."
             }
           ]
         },

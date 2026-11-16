@@ -127,7 +127,12 @@ function ChainList(props: {
           >
             <ChainIcon chain={chain} />
             <span className="flex-1 truncate">{chain.displayName}</span>
-            <span className="font-mono text-coffee-400 text-xs">
+            <span
+              className={cn(
+                'font-mono text-xs',
+                i === highlighted ? 'text-coffee-300' : 'text-coffee-400',
+              )}
+            >
               {chain.shortName}:
             </span>
             <IconChecked

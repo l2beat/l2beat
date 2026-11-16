@@ -1261,6 +1261,14 @@
       "updateId": "cf2226a4",
       "transaction": "0x5005dff6814f2bd9198599adcc94d375d4747c43e5249991f8c32cb9e0e49c13",
       "reason": "Added route 0x8b38038c to the estop 0x9660… wrapping RiscZeroGroth16Verifier v3.1.0, whose Groth16 verifying key matches no published RISC Zero setup (addVerifier via the timelock)."
+    },
+    {
+      "timestamp": 1794182867,
+      "type": "state",
+      "contract": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+      "updateId": "4d8c7614",
+      "transaction": "0xa61b5ba7378d1ef301e7a171ebf183a294a5e42e0cd56ed8c384f98092f3ab9e",
+      "reason": "Added route 0xe71e6620 to the estop 0x5144… wrapping a second RiscZeroGroth16Verifier v3.1.0 with another control root and the same Groth16 verifying key, which matches no published RISC Zero setup (addVerifier via the timelock)."
     }
   ]
 }

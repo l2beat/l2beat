@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x4aa2c77dbf87b98c03ab12efb179bdb82eb6aa1e
+
+# Diff at Fri, 06 Nov 2026 16:33:14 GMT:
+
+- id: d2177df9
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@42d599abc7be8cc38122c72abc4da1c1dda6fbeb block: 1790947041
+- current timestamp: 1793982694
+
+## Description
+
+OptimismPortal2: upgraded to an implementation with the same source, proof maturity delay 7d → 4.5d ([diff](https://disco.l2beat.com/diff/eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202/eth:0x1A8DbaFa5011E44013A8F4e18D48629bB4a13832)).
+
+## Watched changes
+
+```diff
+    contract OptimismPortal2 (eth:0xad92Fa18EB74E46Db844240623124BF46589db4C) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the 42.
+      values.$implementation:
+-        "eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202"
++        "eth:0x1A8DbaFa5011E44013A8F4e18D48629bB4a13832"
+      values.$pastUpgrades.1:
++        ["2026-11-04T05:57:11.000Z","0x4ea43e5d47064518569b0ecc63488f5f71c26b700ee763718debcdf0e14c1d1d",["eth:0x1A8DbaFa5011E44013A8F4e18D48629bB4a13832"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.proofMaturityDelaySeconds:
+-        604800
++        388800
+      implementationNames.eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202:
+-        "OptimismPortal2"
+      implementationNames.eth:0x1A8DbaFa5011E44013A8F4e18D48629bB4a13832:
++        "OptimismPortal2"
+    }
+```
+
 Generated with discovered.json: 0x20d74b5fbe94af99f6baa27f99a3d72b7e9a5586
 
 # Diff at Tue, 20 Oct 2026 08:59:34 GMT:

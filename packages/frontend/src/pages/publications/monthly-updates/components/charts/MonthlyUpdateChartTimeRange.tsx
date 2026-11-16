@@ -1,8 +1,9 @@
+import type { ChartTimeRangeValue } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { Skeleton } from '~/components/core/Skeleton'
 import { formatRange } from '~/utils/dates'
 
 interface Props {
-  timeRange: [number, number] | undefined
+  timeRange: ChartTimeRangeValue
 }
 
 export function MonthlyUpdateChartTimeRange({ timeRange }: Props) {

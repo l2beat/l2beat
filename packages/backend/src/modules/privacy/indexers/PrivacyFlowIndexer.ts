@@ -21,6 +21,7 @@ import type {
 import type { PrivacyFlowIndexerConfig } from '../types'
 import { extractPrivacyFlow } from '../utils/extractPrivacyFlow'
 import { adjustPrivacyPoolsV2Flow } from '../utils/extractPrivacyPoolsV2Event'
+import { getPrivacyBucketIds } from '../utils/getPrivacyBucketIds'
 import {
   extractPrivacyLogMatches,
   fetchPrivacyLogMatches,
@@ -83,6 +84,11 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
 
     return async () => {
       await this.$.db.privacyFlowEvent.upsertMany(records)
+      await this.$.db.syncMetadata.updateSyncedUntil(
+        'privacy',
+        getPrivacyBucketIds(configurations.map((c) => c.properties)),
+        adjustedTo,
+      )
 
       this.logger.info('Saved privacy flow events into DB', {
         from,

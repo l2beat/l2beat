@@ -24,6 +24,7 @@ export function AlignMenu() {
   return (
     <ToolbarMenu
       label="Align"
+      icon={<IconAlignLeft />}
       description="Line up or evenly space the selected nodes."
       disabled={selectedCount < MIN_NODES_TO_ALIGN}
       sections={[

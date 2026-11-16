@@ -15,6 +15,8 @@ interface Props {
 export function MobileSectionNavigation({ sections }: Props) {
   const selectedItem = useRef(null)
   const overflowContainer = useRef<HTMLDivElement>(null)
+  const row = useRef<HTMLDivElement>(null)
+  const line = useRef<HTMLSpanElement>(null)
 
   // Hidden from lg up, but scrolling a hidden list still forces a layout.
   const { isDesktop } = useDevice()
@@ -45,6 +47,29 @@ export function MobileSectionNavigation({ sections }: Props) {
     return () => afterLayout.disconnect()
   }, [scrollToItem, firstSelectedIndex, isDesktop])
 
+  // One underline under the selected sections, sliding as they change
+  // rather than hopping from item to item. Placed after layout, and only
+  // set to transition once placed, so it doesn't slide in on load.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: it reads the selection from the DOM, so `visibleIds` is what tells it to move
+  useEffect(() => {
+    if (isDesktop) return
+    const frame = requestAnimationFrame(() =>
+      placeUnderline(row.current, line.current),
+    )
+    return () => cancelAnimationFrame(frame)
+  }, [visibleIds, isDesktop])
+
+  // And again when the row's size changes, e.g. on rotating the phone.
+  useEffect(() => {
+    const items = row.current
+    if (isDesktop || !items) return
+    const resized = new ResizeObserver(() =>
+      placeUnderline(row.current, line.current),
+    )
+    resized.observe(items)
+    return () => resized.disconnect()
+  }, [isDesktop])
+
   if (sections.length === 0) return null
 
   return (
@@ -55,7 +80,7 @@ export function MobileSectionNavigation({ sections }: Props) {
       className="flex justify-center bg-header-primary shadow-[inset_0_-1px_0_var(--color-divider)]"
       childrenClassName="w-full"
     >
-      <div className="flex items-center justify-between">
+      <div ref={row} className="relative flex items-center justify-between">
         {sections.map((section, i) => {
           return (
             <Item
@@ -68,6 +93,11 @@ export function MobileSectionNavigation({ sections }: Props) {
             </Item>
           )
         })}
+        <span
+          ref={line}
+          aria-hidden
+          className="pointer-events-none absolute bottom-0 left-0 h-px w-px origin-left bg-brand-deep opacity-0 data-placed:transition-transform data-placed:duration-200 data-placed:ease-[cubic-bezier(0.32,0.72,0,1)] motion-reduce:transition-none!"
+        />
       </div>
     </OverflowWrapper>
   )
@@ -88,13 +118,31 @@ function Item({
     <a
       ref={ref}
       href={href}
+      data-selected={selected || undefined}
       className={cn(
         'flex h-(--section-nav-tabs-height) w-full items-center justify-center whitespace-nowrap border-transparent border-b px-4 text-center text-xs transition-colors duration-150 motion-reduce:transition-none',
-        selected &&
-          'border-current border-b text-brand group-data-[has-colors=true]/section-wrapper:text-branding-primary',
+        selected && 'text-brand-deep',
       )}
     >
       {children}
     </a>
   )
+}
+
+function placeUnderline(row: HTMLElement | null, line: HTMLElement | null) {
+  const selected = row?.querySelectorAll<HTMLElement>('[data-selected]')
+  if (!line || !selected) return
+  const first = selected[0]
+  const last = selected[selected.length - 1]
+  if (!first || !last) {
+    line.style.opacity = '0'
+    return
+  }
+  const left = first.offsetLeft
+  const width = last.offsetLeft + last.offsetWidth - left
+  line.style.transform = `translateX(${left}px) scaleX(${width})`
+  line.style.opacity = '1'
+  if (!line.hasAttribute('data-placed')) {
+    requestAnimationFrame(() => line.setAttribute('data-placed', ''))
+  }
 }

@@ -1,12 +1,16 @@
+import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
+import { ChartCardHeader } from '~/components/chart/ChartCardHeader'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
+import { rangeToOption } from '~/components/core/chart/utils/rangeToOption'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ChartTabs } from '~/pages/layer2s/summary/components/ChartTabs'
 import { useTRPC } from '~/trpc/React'
-import type { ChartRange } from '~/utils/range/range'
+import { type ChartRange, rangeToResolution } from '~/utils/range/range'
+import { rangeToDays } from '~/utils/range/rangeToDays'
 import { PrivacyFlowChart } from '../../project/components/PrivacyFlowChart'
 import { PrivacyFlowsChartRangeControls } from '../../project/components/PrivacyFlowsChartRangeControls'
 import type { PrivacyTvlBreakdownProject } from './PrivacyTvlBreakdownChart'
@@ -33,14 +37,17 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
     data: flowsData,
     isLoading: isFlowsLoading,
     isPlaceholderData: isFlowsPlaceholderData,
+    shownInput: flowsShownInput,
   } = useChartQuery(trpc.privacy.flowsChart, {
     projectIds,
     range,
   })
+  const flowsResolution = rangeToResolution(flowsShownInput.range)
   const {
     data: tvlData,
     isLoading: isTvlLoading,
     isPlaceholderData: isTvlPlaceholderData,
+    shownInput: tvlShownInput,
   } = useChartQuery(trpc.tvs.chartByProjects, {
     projectIds: tvlProjectIds,
     range,
@@ -50,9 +57,9 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
     () =>
       getChartTimeRangeFromData(
         flowsData?.chart.map(([timestamp]) => ({ timestamp })),
-        { bucket: 'day' },
+        { bucket: flowsResolution },
       ),
-    [flowsData],
+    [flowsData, flowsResolution],
   )
 
   const tvlChartTimeRange = useMemo(
@@ -63,37 +70,60 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
     [tvlData],
   )
 
+  const tvlStats = useMemo(() => getTvlStats(tvlData?.chart), [tvlData])
+  const flowsTotal = useMemo(
+    () => getFlowsTotal(flowsData?.chart, flowsData?.syncedUntil),
+    [flowsData],
+  )
+
   const countsChart = (
-    <div>
-      <div className="mb-3">
-        <h2 className="font-bold text-lg md:text-xl">
-          Total deposit and withdrawal counts
-        </h2>
-        <ChartTimeRange
-          isPlaceholderData={isFlowsPlaceholderData}
-          timeRange={flowChartTimeRange}
-        />
-      </div>
+    <div className="flex flex-col gap-4">
+      <ChartCardHeader
+        title="Deposits and withdrawals"
+        value={flowsTotal !== undefined ? formatInteger(flowsTotal) : undefined}
+        valueLabel={getRangeLabels(flowsShownInput.range).past}
+        isLoading={isFlowsLoading}
+        isPlaceholderData={isFlowsPlaceholderData}
+        meta={
+          <ChartTimeRange
+            isPlaceholderData={isFlowsPlaceholderData}
+            timeRange={flowChartTimeRange}
+          />
+        }
+      />
       <PrivacyFlowChart
         isPlaceholderData={isFlowsPlaceholderData}
         data={flowsData?.chart}
         syncedUntil={flowsData?.syncedUntil}
         isLoading={isFlowsLoading}
         metric={'count'}
+        resolution={flowsResolution}
       />
     </div>
   )
   const tvlChart = (
-    <div>
-      <div className="mb-3">
-        <h2 className="font-bold text-lg md:text-xl">Total value locked</h2>
-        <ChartTimeRange
-          isPlaceholderData={isTvlPlaceholderData}
-          timeRange={tvlChartTimeRange}
-        />
-      </div>
+    <div className="flex flex-col gap-4">
+      <ChartCardHeader
+        title="Value locked"
+        value={
+          tvlStats !== undefined
+            ? formatCurrency(tvlStats.total, 'usd')
+            : undefined
+        }
+        change={tvlStats?.change}
+        rangeLabel={getRangeLabels(tvlShownInput.range).change}
+        isLoading={isTvlLoading}
+        isPlaceholderData={isTvlPlaceholderData}
+        meta={
+          <ChartTimeRange
+            isPlaceholderData={isTvlPlaceholderData}
+            timeRange={tvlChartTimeRange}
+          />
+        }
+      />
       <PrivacyTvlBreakdownChart
         isPlaceholderData={isTvlPlaceholderData}
+        resolution={rangeToResolution(tvlShownInput.range)}
         data={tvlData?.chart}
         projects={tvlProjects}
         syncedUntil={tvlData?.syncedUntil}
@@ -104,17 +134,77 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
 
   return (
     <>
-      <div className="mb-4 grid grid-cols-2 gap-x-3 max-md:mt-2 max-lg:hidden">
+      {/* One range drives both charts, so it leads them. */}
+      <ChartControlsWrapper className="mb-4 justify-end max-md:mt-3 max-md:px-4">
+        <PrivacyFlowsChartRangeControls range={range} setRange={setRange} />
+      </ChartControlsWrapper>
+      <div className="grid grid-cols-2 gap-4 max-lg:hidden">
         <PrimaryCard>{tvlChart}</PrimaryCard>
         <PrimaryCard>{countsChart}</PrimaryCard>
       </div>
-      <ChartTabs
-        className="mt-2 mb-4 lg:hidden"
-        charts={[tvlChart, countsChart]}
-      />
-      <ChartControlsWrapper className="justify-end max-md:pr-4">
-        <PrivacyFlowsChartRangeControls range={range} setRange={setRange} />
-      </ChartControlsWrapper>
+      <ChartTabs className="lg:hidden" charts={[tvlChart, countsChart]} />
     </>
+  )
+}
+
+/** How the headline figures name the range, e.g. "1y" and "past 1y". */
+function getRangeLabels(range: ChartRange) {
+  const [from, to] = range
+  // rangeToOption calls a Max range "custom" once its end falls on yesterday.
+  if (from === null) return { change: 'all time', past: 'all time' }
+  const option = rangeToOption(range, ['7d', '30d', '90d', '1y'])
+  if (option !== 'custom' && option !== 'max') {
+    return { change: option, past: `past ${option}` }
+  }
+  const days = rangeToDays([from, to])
+  return { change: `${days}d`, past: `over ${days}d` }
+}
+
+/**
+ * The latest total across projects, and its change since the range's first
+ * point. Projects index at different times, and a missing value cannot be told
+ * apart from a zero balance, so both ends must hold every project with data:
+ * a partial closing row would read as a drop, a partial opening one as growth.
+ */
+function getTvlStats(
+  chart: [number, Record<string, number | null>][] | undefined,
+) {
+  if (!chart) return undefined
+  const projectsWithData = new Set(
+    chart.flatMap(([, values]) =>
+      Object.keys(values).filter((project) => values[project] !== null),
+    ),
+  )
+  const isComplete = (values: Record<string, number | null>) =>
+    [...projectsWithData].every((project) => values[project] !== null)
+  const sumRow = (values: Record<string, number | null>) =>
+    Object.values(values).reduce<number>((sum, value) => sum + (value ?? 0), 0)
+
+  const last = chart.findLast(([, values]) => isComplete(values))
+  if (projectsWithData.size === 0 || !last) return undefined
+  const total = sumRow(last[1])
+  const first = chart.find(([, values]) =>
+    Object.values(values).some((value) => value !== null),
+  )
+  const start = first && isComplete(first[1]) ? sumRow(first[1]) : 0
+  return { total, change: start > 0 ? total / start - 1 : undefined }
+}
+
+/**
+ * Deposits plus withdrawals over the range. Periods after `syncedUntil` are
+ * still being indexed, so counting them would understate the total.
+ */
+function getFlowsTotal(
+  chart: [number, number | null, number | null, ...unknown[]][] | undefined,
+  syncedUntil: number | undefined,
+) {
+  const synced = chart?.filter(
+    ([timestamp]) => syncedUntil === undefined || timestamp <= syncedUntil,
+  )
+  if (!synced || synced.length === 0) return undefined
+  return synced.reduce(
+    (sum, [, deposits, withdrawals]) =>
+      sum + (deposits ?? 0) + (withdrawals ?? 0),
+    0,
   )
 }

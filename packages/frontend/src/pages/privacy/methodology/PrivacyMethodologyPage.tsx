@@ -1,5 +1,4 @@
 import { Article } from '~/components/markdown/Article'
-import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { PublicationLayout } from '~/pages/publications/components/PublicationLayout'
 import type { OtherPublicationEntry } from '~/pages/publications/other-publications/utils/getOtherPublicationEntry'
@@ -35,7 +34,8 @@ export function PrivacyMethodologyPage({
       <Section>{sections.categories}</Section>
       <CategoryMachinesFigure data={figures} />
       <Section>{sections.columns}</Section>
-      <ScrollToTopButton />
+      {/* Not part of the framework: the habits project steps link. */}
+      <Section>{sections.advice}</Section>
     </PublicationLayout>
   )
 }

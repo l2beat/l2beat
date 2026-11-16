@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { Docking, findLeafByKey } from '../../../components/docking'
 import { useIsMobile } from '../../../hooks/useIsMobile'
-import { BottomBar } from './BottomBar/BottomBar'
+import { KeybindingDispatcher } from '../keybindings/KeybindingDispatcher'
 import { useDockingStore } from './store'
 import { TopBar } from './TopBar'
 
@@ -17,7 +17,7 @@ export function MultiView(props: MultiViewProps) {
       <div className="min-h-0 flex-1">
         <Docking useStore={useDockingStore} />
       </div>
-      <BottomBar />
+      <KeybindingDispatcher />
     </div>
   )
 }

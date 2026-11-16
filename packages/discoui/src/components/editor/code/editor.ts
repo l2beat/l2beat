@@ -80,6 +80,8 @@ export class Editor {
   // editor lives. Read-only files have nothing the view state cache misses.
   private readonly fileStates = new Map<string, EditorState>()
   private activeFileKey: string | undefined
+  // The EditorFile id of the file on screen.
+  activeFileId: string | undefined
   private readonly changeListeners = new Set<EditorContentCallback>()
   private readonly loadListeners = new Set<EditorContentCallback>()
   private saveCallback: ((content: string) => string) | null = null
@@ -135,6 +137,7 @@ export class Editor {
     if (key !== this.activeFileKey) {
       this.switchToFile(key, file)
     }
+    this.activeFileId = file.id
     if (this.view.state.readOnly !== file.readOnly) {
       this.view.dispatch({
         effects: this.readOnly.reconfigure(
@@ -173,6 +176,12 @@ export class Editor {
       effects: setSearchQuery.of(new SearchQuery({ search: searchString })),
     })
     findNext(this.view)
+  }
+
+  // The main selection, offsets in the text of the file on screen.
+  getSelection(): { from: number; to: number; text: string } {
+    const { from, to } = this.view.state.selection.main
+    return { from, to, text: this.view.state.doc.toString() }
   }
 
   revealAtTop(offset: number) {
@@ -329,7 +338,10 @@ function restoreViewState(view: EditorView, cached: FileViewState) {
 // as Monaco's setValue did, so undo never steps into text it did not record.
 const historyCompartment = new Compartment()
 
-function replaceContent(view: EditorView, content: string) {
+function replaceContent(view: EditorView, text: string) {
+  // The document keeps \n only, so text with \r\n would never match it and
+  // the diff below would split a \r\n into an extra line.
+  const content = text.replaceAll('\r\n', '\n').replaceAll('\r', '\n')
   const current = view.state.doc.toString()
   if (current === content) {
     return

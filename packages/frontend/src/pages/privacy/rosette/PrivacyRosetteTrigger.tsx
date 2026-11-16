@@ -9,6 +9,7 @@ import {
 import { PizzaRosetteTooltip } from '~/components/rosette/pizza/PizzaRosetteTooltip'
 import type { RosetteValue } from '~/components/rosette/types'
 import { TableLink } from '~/components/table/TableLink'
+import { cn } from '~/utils/cn'
 import { getPrivacyAdversariesSectionHref } from '../adversaries/privacyAdversaryUi'
 import {
   getPrivacyAssessmentLabel,
@@ -43,6 +44,7 @@ interface Props {
   /** The project page. */
   href: string
   placement: keyof typeof PLACEMENTS
+  linkClassName?: string
   children: ReactNode
 }
 
@@ -55,6 +57,7 @@ export function PrivacyRosetteTrigger({
   isUnderReview,
   href,
   placement,
+  linkClassName,
   children,
 }: Props) {
   const settings = PLACEMENTS[placement]
@@ -66,7 +69,7 @@ export function PrivacyRosetteTrigger({
         <Link
           href={getPrivacyAdversariesSectionHref(href)}
           aria-label={settings.label}
-          className={settings.linkClassName}
+          className={cn(settings.linkClassName, linkClassName)}
         >
           {children}
         </Link>

@@ -1,7 +1,7 @@
 import { type Parser, type Validator, v as z } from '@l2beat/validate'
 
 function nullish<T>(schema: Validator<T>): Validator<T | undefined | null>
-// @ts-ignore We allow this error for simplicity of use
+// @ts-expect-error We allow this error for simplicity of use
 function nullish<T>(schema: Parser<T>): Parser<T | undefined | null>
 function nullish<T>(schema: Validator<T>): Validator<T | undefined | null> {
   return z.union([z.undefined(), z.null(), schema])

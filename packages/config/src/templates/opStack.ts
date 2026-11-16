@@ -1328,15 +1328,17 @@ function getStateValidation(
           'AggregateVerifier',
           'FAST_FINALIZATION_DELAY',
         )
+      // AggregateVerifier keeps a slow (2 s blocks, before Denim) and a fast
+      // (200 ms blocks) interval pair. The fast pair is the live one.
       const blockInterval =
         templateVars.discovery.getContractValueOrUndefined<number>(
           'AggregateVerifier',
-          'BLOCK_INTERVAL',
+          'FAST_BLOCK_INTERVAL',
         )
       const intermediateBlockInterval =
         templateVars.discovery.getContractValueOrUndefined<number>(
           'AggregateVerifier',
-          'INTERMEDIATE_BLOCK_INTERVAL',
+          'FAST_INTERMEDIATE_BLOCK_INTERVAL',
         )
       const initBond =
         templateVars.discovery.getContractValueOrUndefined<number>(

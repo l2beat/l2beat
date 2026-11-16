@@ -17,7 +17,10 @@ import {
   getPersistedTableAttributes,
   getPrePaintHideScript,
 } from './persistedColumnVisibility'
-import { ValueAndChangeSortingHeader } from './sorting/ValueAndChangeSortingHeader'
+import {
+  getHeaderAriaSort,
+  ValueAndChangeSortingHeader,
+} from './sorting/ValueAndChangeSortingHeader'
 import {
   Table,
   TableBody,
@@ -240,9 +243,14 @@ function BasicTableActualHeaderRow<T>({
                   isPinned: header.column.getIsPinned() !== false,
                   headClassName: header.column.columnDef.meta?.headClassName,
                   compact,
+                  isSortable: header.column.getCanSort(),
+                  align: header.column.columnDef.meta?.align,
                 })}
                 align={header.column.columnDef.meta?.align}
                 tooltip={header.column.columnDef.meta?.tooltip}
+                aria-sort={
+                  header.isPlaceholder ? undefined : getHeaderAriaSort(header)
+                }
                 {...getPinnedHeaderCellProps(header.column)}
                 {...getPersistedColumnAttributes(header.column)}
               >

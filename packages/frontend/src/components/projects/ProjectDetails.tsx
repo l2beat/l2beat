@@ -1,4 +1,5 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
+import type { ComponentType } from 'react'
 import { LazyHydrate } from '~/components/LazyHydrate'
 import { ActivitySection } from './sections/ActivitySection'
 import { ContractsSection } from './sections/contracts/ContractsSection'
@@ -6,7 +7,10 @@ import { CostsSection } from './sections/costs/CostsSection'
 import { DaRiskSummarySection } from './sections/DaRiskSummarySection'
 import { DetailedDescriptionSection } from './sections/DetailedDescriptionSection'
 import { DataPostedSection } from './sections/data-posted/DataPostedSection'
+import { DefiTokensSection } from './sections/defi/DefiTokensSection'
 import { DefiTvlSection } from './sections/defi/DefiTvlSection'
+import { LiquidStakingSection } from './sections/defi/LiquidStakingSection'
+import type { LiquidStakingYieldAndExitSectionProps } from './sections/defi/LiquidStakingYieldAndExitSection'
 import { ExternalDependenciesSection } from './sections/ExternalDependenciesSection'
 import { GardenCropsSection } from './sections/GardenCropsSection'
 import { GrissiniRiskAnalysisSection } from './sections/GrissiniRiskAnalysisSection'
@@ -25,6 +29,7 @@ import { MarkdownSection } from './sections/MarkdownSection'
 import { MilestonesAndIncidentsSection } from './sections/MilestonesAndIncidentsSection'
 import { PermissionsSection } from './sections/permissions/PermissionsSection'
 import { PrivacyAdversariesSection } from './sections/privacy/PrivacyAdversariesSection'
+import { PrivacyAdviceSection } from './sections/privacy/PrivacyAdviceSection'
 import { PrivacyAnonymitySetSection } from './sections/privacy/PrivacyAnonymitySetSection'
 import { PrivacyAssetsBreakdownSection } from './sections/privacy/PrivacyAssetsBreakdownSection'
 import { PrivacyFlowsSection } from './sections/privacy/PrivacyFlowsSection'
@@ -51,6 +56,13 @@ interface ProjectDetailsProps {
   parentSection?: string
   items: ProjectDetailsSection[]
   selectedUpdateId?: string
+  /**
+   * Sections that only one page shows, passed in by that page so their code
+   * stays out of every other project page (see e2e/nav-perf).
+   */
+  pageSections?: {
+    LiquidStakingYieldAndExitSection?: ComponentType<LiquidStakingYieldAndExitSectionProps>
+  }
 }
 
 export function ProjectDetails(props: ProjectDetailsProps) {
@@ -396,6 +408,37 @@ function renderSection(
           {...item.props}
         />
       )
+    case 'DefiTokensSection':
+      return (
+        <DefiTokensSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'LiquidStakingSection':
+      return (
+        <LiquidStakingSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'LiquidStakingYieldAndExitSection': {
+      const Section = props.pageSections?.LiquidStakingYieldAndExitSection
+      if (!Section) {
+        throw new Error('Page did not provide the section', {
+          cause: { type: item.type },
+        })
+      }
+      return (
+        <Section
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    }
     case 'PrivacyFlowsSection':
       return (
         <PrivacyFlowsSection
@@ -415,6 +458,14 @@ function renderSection(
     case 'PrivacyAdversariesSection':
       return (
         <PrivacyAdversariesSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'PrivacyAdviceSection':
+      return (
+        <PrivacyAdviceSection
           key={item.props.id}
           {...{ nested, sectionOrder }}
           {...item.props}

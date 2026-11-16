@@ -153,7 +153,7 @@ function getInclusionDelayComparison(
       }
       return {
         key: project.slug,
-        label: project.name,
+        label: project.shortName ?? project.name,
         type: 'project',
         chart: spec.inclusionDelayChart,
       }

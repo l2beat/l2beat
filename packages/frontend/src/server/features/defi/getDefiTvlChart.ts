@@ -3,23 +3,73 @@ import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
-import { ChartRange } from '~/utils/range/range'
+import {
+  ChartRange,
+  type ChartResolution,
+  rangeToResolution,
+} from '~/utils/range/range'
 import { getTvsChartByProjects } from '../tvs/getTvsChartByProjects'
+import { getEthPricesAt } from './liquid-staking/getEthPricesAt'
+import { getEthStakedAt } from './liquid-staking/getEthStakedAt'
+import { getTvlInEthAt } from './liquid-staking/getTvlInEthAt'
 
 export const DefiTvlChartParams = v.object({
   projectId: v.string(),
   range: ChartRange,
+  /**
+   * Adds the USD value of the ETH staked network-wide to each point, and the
+   * TVL's share of it at the protocol's rate.
+   */
+  withEthStaked: v.boolean().optional(),
 })
 
 export type DefiTvlChartParams = v.infer<typeof DefiTvlChartParams>
 
 export interface DefiTvlChartResponse {
-  chart: [timestamp: number, valueUsd: number | null][]
+  chart: [
+    timestamp: number,
+    valueUsd: number | null,
+    ethStakedUsd?: number | null,
+    stakedEthShare?: number | null,
+  ][]
+  resolution: ChartResolution
   syncedUntil: number | undefined
   sourceTimestamp: number | undefined
 }
 
 export async function getDefiTvlChart(
+  params: DefiTvlChartParams,
+): Promise<DefiTvlChartResponse> {
+  const response = await getTvlChart(params)
+  if (!params.withEthStaked) return response
+
+  const timestamps = response.chart.map(([timestamp]) => timestamp)
+  const project = await ps.getProject({
+    id: ProjectId(params.projectId),
+    select: ['liquidStaking'],
+  })
+  const [ethStaked, ethPrices, tvlEth] = await Promise.all([
+    getEthStakedAt(timestamps),
+    getEthPricesAt(timestamps),
+    project ? getTvlInEthAt(project, timestamps) : [],
+  ])
+  return {
+    ...response,
+    chart: response.chart.map(([timestamp, valueUsd], i) => {
+      const stake = ethStaked[i]
+      const price = ethPrices[i]
+      const tvl = tvlEth[i]
+      return [
+        timestamp,
+        valueUsd,
+        stake != null && price != null ? stake * price : null,
+        stake && tvl != null ? tvl / stake : null,
+      ]
+    }),
+  }
+}
+
+async function getTvlChart(
   params: DefiTvlChartParams,
 ): Promise<DefiTvlChartResponse> {
   const projectId = ProjectId(params.projectId)
@@ -30,7 +80,12 @@ export async function getDefiTvlChart(
   const tvl = project?.defiInfo.tvl
 
   if (!tvl) {
-    return { chart: [], syncedUntil: undefined, sourceTimestamp: undefined }
+    return {
+      chart: [],
+      resolution: 'day',
+      syncedUntil: undefined,
+      sourceTimestamp: undefined,
+    }
   }
 
   if (env.MOCK || tvl.source === 'l2beat') {
@@ -43,6 +98,7 @@ export async function getDefiTvlChart(
         timestamp,
         valuesByProject[projectId] ?? null,
       ]),
+      resolution: rangeToResolution(params.range),
       syncedUntil: result.syncedUntil,
       sourceTimestamp: result.syncedUntil,
     }
@@ -66,6 +122,8 @@ export async function getDefiTvlChart(
 
   return {
     chart,
+    // Daily history mixed with an hourly current value, so every point shows its time
+    resolution: 'hour',
     syncedUntil: latest?.timestamp,
     sourceTimestamp: latest?.sourceTimestamp,
   }

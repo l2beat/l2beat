@@ -1,10 +1,11 @@
 import type { DaLayerThroughput, Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
-import type { ChartProject } from '~/components/core/chart/Chart'
+import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { ChartRangeControls } from '~/components/core/chart/ChartRangeControls'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
+import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { useTRPC } from '~/trpc/React'
 import {
   type ChartRange,
@@ -25,6 +26,8 @@ interface Props {
   milestones: Milestone[]
 }
 
+type View = 'total' | 'per-project'
+
 export function ThroughputSectionChart({
   project,
   configuredThroughputs,
@@ -34,6 +37,7 @@ export function ThroughputSectionChart({
   const trpc = useTRPC()
   const { includeL2Only, setIncludeL2Only } = useIncludeL2Only()
   const [range, setRange] = useState<ChartRange>(optionToRange('1y'))
+  const [view, setView] = useState<View>('total')
 
   const { data, isLoading, isPlaceholderData, shownInput } = useChartQuery(
     trpc.da.projectCharts,
@@ -62,12 +66,22 @@ export function ThroughputSectionChart({
 
   return (
     <div>
-      <div className="mt-2 space-y-1">
-        <EthereumProjectsOnlyCheckbox
-          name="projectThroughputIncludeL2Only"
-          checked={includeL2Only}
-          onCheckedChange={setIncludeL2Only}
-        />
+      <div className="mt-2 space-y-3">
+        <div className="flex flex-wrap items-center gap-3">
+          <RadioGroup
+            name="projectThroughputView"
+            value={view}
+            onValueChange={(value) => setView(value as View)}
+          >
+            <RadioGroupItem value="total">Total</RadioGroupItem>
+            <RadioGroupItem value="per-project">Per project</RadioGroupItem>
+          </RadioGroup>
+          <EthereumProjectsOnlyCheckbox
+            name="projectThroughputIncludeL2Only"
+            checked={includeL2Only}
+            onCheckedChange={setIncludeL2Only}
+          />
+        </div>
         <div className="flex justify-between gap-x-1">
           <ProjectChartTimeRange
             isPlaceholderData={isPlaceholderData}
@@ -84,27 +98,35 @@ export function ThroughputSectionChart({
           />
         </div>
       </div>
-      <div className="mb-2">
-        <ProjectDaAbsoluteThroughputChart
-          isPlaceholderData={isPlaceholderData}
-          project={project}
-          dataWithConfiguredThroughputs={dataWithConfiguredThroughputs}
-          isLoading={isLoading}
-          milestones={milestones}
-          syncedUntil={data?.syncedUntil}
-          resolution={resolution}
-        />
+      {/* 16px under the controls, like the Activity chart below it */}
+      <div className="mt-4">
+        {view === 'total' ? (
+          <ProjectDaAbsoluteThroughputChart
+            isPlaceholderData={isPlaceholderData}
+            project={project}
+            dataWithConfiguredThroughputs={dataWithConfiguredThroughputs}
+            isLoading={isLoading}
+            milestones={milestones}
+            syncedUntil={data?.syncedUntil}
+            resolution={resolution}
+          />
+        ) : (
+          <DaThroughputByProjectChart
+            isPlaceholderData={isPlaceholderData}
+            data={data?.byProjectChart.data}
+            project={project}
+            syncedUntil={data?.syncedUntil}
+            isLoading={isLoading}
+            customColors={customColors}
+            capacity={{
+              projectId: project.id,
+              data: dataWithConfiguredThroughputs,
+            }}
+            milestones={milestones}
+            resolution={resolution}
+          />
+        )}
       </div>
-      <DaThroughputByProjectChart
-        isPlaceholderData={isPlaceholderData}
-        data={data?.byProjectChart.data}
-        project={project}
-        syncedUntil={data?.syncedUntil}
-        isLoading={isLoading}
-        customColors={customColors}
-        milestones={milestones}
-        resolution={resolution}
-      />
     </div>
   )
 }

@@ -12,8 +12,11 @@ export function getZkCatalogLogo(slug: string) {
   )
   const dark = hasDark ? getImageParams(`/icons/${slug}.dark.png`) : undefined
 
-  if (dark?.width !== light.width || dark?.height !== light.height) {
-    throw new Error('ZK catalog logo dimensions mismatch')
+  if (dark) {
+    assert(
+      dark.width === light.width && dark.height === light.height,
+      'ZK catalog logo dimensions mismatch',
+    )
   }
 
   return {

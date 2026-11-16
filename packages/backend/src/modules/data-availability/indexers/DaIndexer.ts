@@ -2,7 +2,6 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { DaBlob, DaProvider } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
-import uniq from 'lodash/uniq'
 import type { BlockDaIndexedConfig } from '../../../config/Config'
 import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
@@ -24,6 +23,7 @@ export interface Dependencies
   daService: DaService
   daProvider: DaProvider
   daLayer: string
+  projectIds: string[]
   batchSize: number
   blobService: BlobService
 }
@@ -101,17 +101,13 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
         )
 
         return async () => {
-          await this.$.db.transaction(async () => {
-            await this.$.db.dataAvailability.upsertMany(records)
-            await this.$.db.syncMetadata.updateSyncedUntil(
-              'dataAvailability',
-              // There might be multiple configurations for the same project
-              // so we need to uniq them
-              uniq(this.$.configurations.map((c) => c.properties.projectId)),
-              UnixTime.toEndOf(latestTimestamp, 'hour'),
-              adjustedTo,
-            )
-          })
+          await this.$.db.dataAvailability.upsertMany(records)
+          await this.$.db.syncMetadata.updateSyncedUntil(
+            'dataAvailability',
+            this.$.projectIds,
+            UnixTime.toEndOf(latestTimestamp, 'hour'),
+            adjustedTo,
+          )
 
           this.logger.info('Saved DA metrics into DB', {
             from,

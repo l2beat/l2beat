@@ -12,6 +12,7 @@ import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { createRemoteJWKSet } from 'jose'
 import type { DefiTvlConfig } from '../modules/defi-tvl/types'
+import type { LiquidStakingConfig } from '../modules/liquid-staking/types'
 import type { PrivacyConfig } from '../modules/privacy/types'
 import type {
   AmountConfig,
@@ -32,11 +33,13 @@ export interface Config {
   readonly notifications: NotificationsConfig | false
   readonly database: DatabaseConfig
   readonly coingeckoApiKey: string
+  readonly duneApiKey: string | undefined
   readonly coingeckoApiUrl: string | undefined
   readonly api: ApiConfig
   readonly health: HealthConfig
   readonly tvs: TvsConfig | false
   readonly defiTvl: DefiTvlConfig | false
+  readonly liquidStaking: LiquidStakingConfig | false
   readonly trackedTxsConfig: TrackedTxsConfig | false
   readonly activity: ActivityConfig | false
   readonly updateMonitor: UpdateMonitorConfig | false
@@ -119,7 +122,6 @@ export interface TrackedTxProject {
 
 export interface TrackedTxsConfig {
   readonly projects: TrackedTxProject[]
-  readonly duneApiKey: string
   readonly minTimestamp: UnixTime
   readonly uses: {
     readonly liveness: boolean

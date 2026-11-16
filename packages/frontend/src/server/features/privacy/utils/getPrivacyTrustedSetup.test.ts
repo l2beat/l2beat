@@ -33,6 +33,14 @@ describe(getPrivacyTrustedSetup.name, () => {
     })
   })
 
+  it('labels a single participant in the singular', () => {
+    expect(
+      getPrivacyTrustedSetup([
+        { ...trustedSetup, participantCount: 1, proofSystem },
+      ]).label,
+    ).toEqual('1 participant')
+  })
+
   it('leaves a ceremony without a participant count unlabelled', () => {
     expect(
       getPrivacyTrustedSetup([{ ...trustedSetup, proofSystem }]).label,

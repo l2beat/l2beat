@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 import { renderToString } from 'react-dom/server'
 import { TooltipProvider } from '~/components/core/tooltip/Tooltip'
 
-// Radix renders tooltip content only after hover, so tooltip tests render on
+// Tooltip content renders only after hover, so tooltip tests render on
 // the server, like the SSR entry does, and inspect the markup a crawler or an
 // LLM receives without any client interaction.
 export function renderOnServer(node: ReactNode) {

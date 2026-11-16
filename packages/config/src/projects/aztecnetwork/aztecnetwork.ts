@@ -1,8 +1,9 @@
 import {
   ChainSpecificAddress,
-  formatNumber,
+  formatCompactAmount,
   formatSeconds,
   ProjectId,
+  pluralize,
   UnixTime,
 } from '@l2beat/shared-pure'
 import {
@@ -192,7 +193,7 @@ const v6ActivationTimestamp = UnixTime(1793001623) // 26 October 2026 08:00:23 U
 const v6ActivationBlock = 26275528 // https://etherscan.io/tx/0x2ec0909c5d1a39fb123392b18d6d30ffab21072c961497ee36167923bf589a0f
 
 function formatAztecAmount(amount: bigint): string {
-  return `${formatNumber(Number(amount / 10n ** 18n))} AZTEC`
+  return formatCompactAmount(Number(amount / 10n ** 18n), 'AZTEC')
 }
 
 function formatPercentage(value: string): string {
@@ -575,12 +576,15 @@ export const aztecnetwork: ScalingProject = {
         },
         sequencerCount: {
           value: `${activeSequencerCount} sequencers`,
-          secondLine: `${formatNumber(stakeDistribution.totalStake)} ${stakeDistribution.stakeToken}`,
+          secondLine: formatCompactAmount(
+            stakeDistribution.totalStake,
+            stakeDistribution.stakeToken,
+          ),
         },
         blockProductionAccess: SEQUENCING_SPEC.OPEN_BLOCK_PRODUCTION(),
         stakePerValidator: { value: activationThresholdString + ', constant' },
         rateLimit: {
-          value: `${entryQueueFlushSize} sequencers / epoch`,
+          value: `${entryQueueFlushSize} ${pluralize(entryQueueFlushSize, 'sequencer')} / epoch`,
           description:
             'Can be changed by onchain Governance, but the contract requires nonzero minimum, divisor, and maximum queue-flush parameters.',
         },

@@ -1,3 +1,32 @@
+Generated with discovered.json: 0xa2d210e5108f0d5880add0aded91d87b9ee296e9
+
+# Diff at Fri, 06 Nov 2026 16:36:08 GMT:
+
+- id: 6ec3bd92
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@42d599abc7be8cc38122c72abc4da1c1dda6fbeb block: 1791533547
+- current timestamp: 1793982864
+
+## Description
+
+SequencerInbox: DAC keyset updated, now 2 members.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (eth:0xD80a805c86C14c879420eC6acb366D04D318fC0C) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.dacKeyset.membersCount:
+-        1
++        2
+      values.dacKeyset.blsSignatures.1:
++        "YAT228zgofADBVxQMIKn4315froUpq+03APjEPWq7Bt8KYLUeNVprft42CupQZ2KRQrA2OxMecamoXhNQCwnZl/qtjKvi6i/24LNLJBgi6SUUHepQzLYNK9N0jndoy1urRQg1Raq+mpZVGOzUgSVEYlJo1iBLGjPIa6PwYmn+FC0SdmRPWM3IyNTQ1w2f5Qf3gHOTAWrRpLXT/4khCItJAdMPNJKVYwbHWcE6mkTEzjyOZpbVfrYXQklLSgLqWRxQBUV2xgchjoGZjufBtlg76wkqHlB36GrIXPUWqPoFgF1cwElpUjDl9PvAFVCw0MUDwQZey3LQooSLt1INMib10wwFudeDPhaIYvwYMa7pDBIrx4mDX15GBM8k1nj42y43Q=="
+      values.keySetUpdates:
+-        3
++        4
+    }
+```
+
 Generated with discovered.json: 0x6dd3e4fb3ef194d4c4ba8c8184d3141e2cc3a742
 
 # Diff at Fri, 16 Oct 2026 09:37:51 GMT:

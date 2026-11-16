@@ -15,6 +15,8 @@ import { HorizontalSeparator } from './HorizontalSeparator'
 
 const SIDEBAR_WIDTH = '15rem'
 const SIDEBAR_WIDTH_MOBILE = '100%'
+/** Lets the mobile menu buttons point `aria-controls` at the sheet. */
+export const MOBILE_SIDEBAR_ID = 'mobile-sidebar'
 
 type SidebarContextProps = {
   openMobile: boolean
@@ -92,6 +94,7 @@ function Sidebar({
         {/* From the left, where the desktop sidebar sits: the whole screen
             on phones, the desktop sidebar's width from tablets up. */}
         <SheetContent
+          id={MOBILE_SIDEBAR_ID}
           // iOS Safari tints its toolbars from the overlay and swaps the tint in
           // one frame, so a full-width sheet needs a matching overlay and no
           // animation. The 1% see-through keeps Chrome drawing the page beneath,
@@ -162,8 +165,19 @@ function SidebarSeparator({
 }
 
 function SidebarContent({ className, ...props }: React.ComponentProps<'div'>) {
+  const ref = React.useRef<HTMLDivElement>(null)
+  React.useEffect(() => {
+    const list = ref.current
+    if (!list) return
+    // The list shrinks after hydration, when the client-only what's new
+    // block mounts under it, so check again whenever its size changes.
+    const observer = new ResizeObserver(() => scrollCurrentPageIntoView(list))
+    observer.observe(list)
+    return () => observer.disconnect()
+  }, [])
   return (
     <ScrollWithGradient
+      ref={ref}
       className={cn(
         'flex min-h-0 flex-1 flex-col gap-1 overflow-auto',
         className,
@@ -171,6 +185,24 @@ function SidebarContent({ className, ...props }: React.ComponentProps<'div'>) {
       {...props}
     />
   )
+}
+
+/**
+ * On a short window the current page's link can sit below the fold or under
+ * the list's 48px fade, which leaves no sign of where you are. Centring it
+ * clears both fades.
+ */
+function scrollCurrentPageIntoView(list: HTMLElement) {
+  // A page's link comes after its group's, so the last match is the page.
+  const active = [...list.querySelectorAll('[data-active="true"]')].at(-1)
+  if (!active) return
+  const listBox = list.getBoundingClientRect()
+  const box = active.getBoundingClientRect()
+  const fade = 48
+  if (box.top >= listBox.top + fade && box.bottom <= listBox.bottom - fade) {
+    return
+  }
+  list.scrollTop += box.top - listBox.top - (listBox.height - box.height) / 2
 }
 
 function SidebarGroup({ className, ...props }: React.ComponentProps<'div'>) {

@@ -22,3 +22,20 @@ export function sampleTimeline(
 
   return values.some((value) => value !== null) ? values : null
 }
+
+/**
+ * Highest value from `from` to `to` over every point of the series, not just
+ * the samples, so a spike between two samples still counts.
+ */
+export function getTimelinePeak(
+  series: ValuePoint[],
+  from: number,
+  to: number,
+): number | null {
+  const points = normalizeSeries(series, to)
+  // The last value before the window holds at its start.
+  const firstInside = points.findIndex((p) => p.timestamp > from)
+  const held = firstInside === -1 ? points.length - 1 : firstInside - 1
+  const values = points.slice(Math.max(held, 0)).map((p) => p.value)
+  return values.length > 0 ? Math.round(Math.max(...values)) : null
+}

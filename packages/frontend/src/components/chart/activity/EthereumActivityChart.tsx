@@ -1,7 +1,7 @@
 import type { Milestone, ProjectScalingCategory } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
-import type { ChartProject } from '~/components/core/chart/Chart'
+import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { ActivityChartRangeControls } from '~/pages/layer2s/activity/components/ActivityChartRangeControls'
@@ -103,18 +103,14 @@ export function EthereumActivityChart({
       </div>
 
       <div className="flex justify-between gap-4">
-        <ActivityMetricControls
-          value={metric}
-          onValueChange={setMetric}
-          projectChart
-        />
+        <ActivityMetricControls value={metric} onValueChange={setMetric} />
         <RadioGroup
           name="activityChartScale"
           value={scale}
           onValueChange={(value) => setScale(value as ChartScale)}
         >
-          <RadioGroupItem value="symlog">LOG</RadioGroupItem>
           <RadioGroupItem value="linear">LIN</RadioGroupItem>
+          <RadioGroupItem value="symlog">LOG</RadioGroupItem>
         </RadioGroup>
       </div>
       <ActivityChartStatsPanel

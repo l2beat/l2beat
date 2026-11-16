@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x3619e0c064b846301ab4f5489db719c1f3fcf32d
+
+# Diff at Fri, 06 Nov 2026 16:33:16 GMT:
+
+- id: 9e5f70e0
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@42d599abc7be8cc38122c72abc4da1c1dda6fbeb block: 1791217049
+- current timestamp: 1793982702
+
+## Description
+
+SystemConfig: `minBaseFee` set to 0.05 gwei.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.minBaseFee:
+-        0
++        50000000
+    }
+```
+
 Generated with discovered.json: 0x0b2afcc9493de5a584b31f95e82855a9620c76cb
 
 # Diff at Tue, 20 Oct 2026 12:40:09 GMT:

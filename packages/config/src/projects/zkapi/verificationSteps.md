@@ -18,7 +18,7 @@ The deployed verification-key coordinates and public inputs match the [published
 
 ### Frontend and local client
 
-The [browser frontend](https://github.com/OpenAnonymity/oa-chat/blob/a2623612c17bea09d5efaf8f41b500fe98fb1c8a/README.md#quick-start) and the [local API daemon](https://github.com/ethereum/zkapi/blob/045b444ea1b52538d1b40273c7cb6ed09468a052/zkapi-clientd/README.md) have public source and build instructions. Both still depend on the operator's authorization and inference services.
+The [browser frontend](https://github.com/OpenAnonymity/oa-chat/blob/6c6046141f8b2cf4e4ba9e6967a7fa4dfcff716d/README.md#quick-start) and the [local API daemon](https://github.com/ethereum/zkapi/blob/045b444ea1b52538d1b40273c7cb6ed09468a052/zkapi-clientd/README.md) have public source and build instructions. Both still depend on the operator's authorization and inference services.
 
 ### Verifier enclave
 

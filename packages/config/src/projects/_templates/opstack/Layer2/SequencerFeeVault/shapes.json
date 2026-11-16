@@ -20,10 +20,10 @@
     "chain": "katana",
     "blockNumber": 33142393
   },
-  "SequencerFeeVault_v1_6_1": {
-    "hash": "0xb45389729a8fffa7650568cd2922e482d03d3ed57b35f4819650d11174d9237a",
-    "address": "ink:0xb178cdAa8336f25624A63C049EdB5AF7ca36C2dA",
-    "chain": "ink",
-    "blockNumber": 50178011
+  "SequencerFeeVault_v1_6_0_base.sol": {
+    "hash": "0x20f11d51c6e1bde3bfc74251f2a524b2686b3be876848ce06eafe717e1f813df",
+    "address": "base:0x31574645D1Cc22778e10b394BF3713beA4aa2B68",
+    "chain": "base",
+    "blockNumber": 53551478
   }
 }

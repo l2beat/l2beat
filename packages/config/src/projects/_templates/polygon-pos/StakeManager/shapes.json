@@ -10,5 +10,11 @@
     "address": "eth:0x428D1067b33B2bCa826cF66344dbEcBd5AA6506e",
     "chain": "ethereum",
     "blockNumber": 26204320
+  },
+  "StakeManager_v2026-11": {
+    "hash": "0xf47b38d50a3c5613a4080d9d7b86dc0c42e1682871d547eb64fd07fe6907f4e4",
+    "address": "eth:0x1D9eE26F794676acF56baC9A479F766403D0f5cC",
+    "chain": "ethereum",
+    "blockNumber": 26349998
   }
 }

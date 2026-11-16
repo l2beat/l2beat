@@ -1,7 +1,7 @@
 The portal deposit verifier stores verification keys for 2 different batched portal deposit circuits across 2 registered batch sizes (`p1`, `p6`). The steps below reproduce both verification keys from circuit sources and trusted setup files. They require about 24 GiB RAM with two parallel workers and ~35 GiB disk space.
 
 Helper scripts implementing all of the reproduction steps are in the
-[script archive](https://trusted-setup-hosting.l2beat.com/privacy/privacy-boost/privacy_boost_vk_digest_v2.zip).
+[script archive](https://trusted-setup-hosting.ethbeat.org/privacy/privacy-boost/privacy_boost_vk_digest_v2.zip).
 
 1. Download the second production ceremony public bundle (about 9.8 GB, gzip-compressed despite the
    `.tar` name) and extract it. The archive used for this attestation hashes to

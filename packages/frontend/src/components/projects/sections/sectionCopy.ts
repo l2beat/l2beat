@@ -36,7 +36,7 @@ export const APPCHAIN_STAGES_NOTE =
   "We're still in the process of formalizing how to properly integrate appchains in the Stages framework."
 
 export const LIVENESS_DESCRIPTION =
-  'This section shows how "live" the project\'s operators are by displaying how frequently they submit transactions of the selected type. It also highlights anomalies - significant deviations from their typical schedule.'
+  'This section shows how "live" the project\'s operators are by displaying how frequently they submit transactions of the selected type. It also highlights anomalies — significant deviations from their typical schedule.'
 
 export const LAST_30_DAY_ANOMALIES_DESCRIPTION =
   'All liveness anomalies detected for this project in the last 30 days, helping you review recent downtime and availability issues.'
@@ -56,7 +56,7 @@ export const DATA_POSTED_DESCRIPTION =
   'This section shows how much data the project publishes to Ethereum over time. It leaves out data posted to other data-availability (DA) layers.'
 
 export const THROUGHPUT_DESCRIPTION =
-  'The chart shows the actual size of data posted to the DA Layer per day for the selected time period, as well as the maximum possible throughput per day.'
+  'The chart shows the actual size of data posted to the DA layer per day for the selected time period, as well as the maximum possible throughput per day.'
 
 export const L3_RISKS_DESCRIPTION =
   'The L3 risks depend on the individual properties of L3 and those of the host chain combined.'
@@ -80,7 +80,7 @@ export function hostChainRisksText(riskCount: number | undefined) {
 /** One sentence per line on the page. */
 export const UNDER_REVIEW_DESCRIPTION = [
   'The information in the section might be incomplete or outdated.',
-  'The L2BEAT Team is working to research & validate the content before publishing.',
+  'The ETHBEAT Team is working to research & validate the content before publishing.',
 ] as const
 
 /** Shown after a bold "Note:". */

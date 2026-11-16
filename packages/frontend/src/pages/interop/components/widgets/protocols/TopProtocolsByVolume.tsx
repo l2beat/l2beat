@@ -12,14 +12,10 @@ export function TopProtocolsByVolume({
   return (
     <TopProtocolsWidget
       metricType="volume"
-      heading="Last 24 hours volume"
+      heading="Volume by protocol"
       topProtocols={topProtocols}
       isLoading={isLoading}
-      formatValue={(value) =>
-        formatCurrency(value, 'usd', {
-          decimals: 1,
-        })
-      }
+      formatValue={(value) => formatCurrency(value, 'usd')}
     />
   )
 }

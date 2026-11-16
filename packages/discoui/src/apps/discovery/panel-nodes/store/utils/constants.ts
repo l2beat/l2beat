@@ -4,13 +4,8 @@ export const CLICKED_MIDDLE_MOUSE_BUTTON = 1
 export const HELD_LEFT_MOUSE_BUTTON_MASK = 1
 export const HELD_MIDDLE_MOUSE_BUTTON_MASK = 4
 
-export const SPACE_KEY = ' '
 export const CTRL_KEY = 'Control'
 export const SHIFT_KEY = 'Shift'
-export const DELETE_KEY = 'Delete'
-export const BACKSPACE_KEY = 'Backspace'
-export const HAND_TOOL_KEY = 'h'
-export const SELECT_TOOL_KEY = 'v'
 
 export const HEADER_HEIGHT = 32
 export const FIELD_HEIGHT = 18

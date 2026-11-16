@@ -12,4 +12,4 @@
 2. a path without splits or merges reveals every amount between a deposit and a withdrawal (see chain analyst).
 3. a payment link is opened in a browser, which hands its redeem secret to PostHog and Framer (see network observer).
 4. Payy's backend, which ties each wallet to its KYC record, deposit address and notes, leaks or uses this data (see privileged insider).
-5. the public per-transaction proofs, which are not zero-knowledge, are opened in the future (see future adversary).
+5. elliptic-curve cryptography is broken, which may open the public per-transaction proofs that lack zero knowledge (see future adversary).

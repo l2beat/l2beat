@@ -10,9 +10,10 @@ Every date and time on the site is in UTC and uses one format. Build each one wi
 | Exact time in React | `3 Jun 2026, 14:00 UTC` | `<UtcDateTime timestamp={ts} />` |
 | Exact time in a string | `3 Jun 2026, 14:00 UTC` | `formatTimestamp(ts, { mode: 'datetime' })` |
 | Time of day | `14:00 UTC` | `formatTimestamp(ts, { mode: 'time' })` |
+| Chart snapshot | `3 Jun 2026` or `3 Jun 2026, 14:00 UTC` | `formatSnapshotTimestamp(ts, resolution)` |
 | Range | `30 Jun — 2 Jul 2026` | `formatRange(from, to)` |
 | Range within a day | `3 Jun 2026, 01:00 — 02:00 UTC` | `formatRange(from, to)` |
-| Chart axis ticks | `3 Jun`, `Jun ‘26`, `2026` | `getXAxisProps` |
+| Chart axis ticks | `3 Jun`, `Jun ‘26`, `2026` | `getTimeTicks` |
 
 - Clock times are 24-hour and end with `UTC`.
 - Name other zones by offset (`UTC+2`, `UTC-4`). An abbreviation like `CET` or `IST` can mean several zones.
@@ -22,7 +23,7 @@ Every date and time on the site is in UTC and uses one format. Build each one wi
 
 The tooltip date follows what the point measures:
 
-- **Snapshot** (value secured: the value at one moment): one date, `formatTimestamp(label)`. Use `mode: 'datetime'` for points within a day.
+- **Snapshot** (value secured: the value at one moment): one date, `formatSnapshotTimestamp(label, resolution)`. Daily data reads `3 Jun 2026`. Finer data shows the time on every point, `3 Jun 2026, 00:00 UTC` included, so scrubbing across midnight doesn't drop the time from one point. Take `resolution` from `rangeToResolution(shownInput.range)`: `shownInput` matches the data on screen while a new range loads.
 - **Bucket** (activity, costs, data posted, liveness, DA throughput: a sum or average over a period): the period as a range, `formatRange(label, label + UnixTime.periodToSeconds(resolution))`. A daily bucket reads `4 — 5 Jun 2026`. That range is intentional.
 
 ## Why UTC
@@ -34,7 +35,7 @@ The tooltip date follows what the point measures:
 ## Code
 
 - Read dates through UTC: `getUTCDate()`, `getUTCDay()`, `getUTCMonth()`, `toISOString()`, or `Intl.DateTimeFormat` with `timeZone: 'UTC'`. Local getters (`getDate()`, `toLocaleDateString()` without `timeZone`) show the previous day west of UTC and break hydration. The one local-time helper is `formatLocalDateTime`, and it runs only in the browser.
-- Test time-zone-sensitive code under a zone west of UTC, with `withTimezone` in `dates.test.ts`. When `TZ` was unset, restore it with `Reflect.deleteProperty(process.env, 'TZ')`: assigning `undefined` stores the string `"undefined"`.
+- Test time-zone-sensitive code under a zone west of UTC, with `withTimezone` from `withTimezone.ts`.
 
 ## Markdown pages
 

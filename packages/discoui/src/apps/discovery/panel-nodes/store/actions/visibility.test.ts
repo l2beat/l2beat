@@ -188,6 +188,7 @@ function makeState(nodes: Node[]): State {
     positionsBeforeMove: {},
     tool: 'select',
     loaded: true,
+    loadCount: 1,
   }
 }
 

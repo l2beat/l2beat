@@ -17,6 +17,8 @@ export interface DaPastDayUsage {
   used: number | undefined
   /** Bytes. Undefined when the layer has no cap */
   capacity: number | undefined
+  /** The 24 hours `used` sums, as [from, to). Undefined with `used` */
+  day: [number, number] | undefined
 }
 
 type PostedRecord = Pick<DataAvailabilityRecord, 'timestamp' | 'totalSize'>
@@ -34,7 +36,11 @@ export async function getDaPastDayUsage({
   if (env.MOCK) {
     const yesterday: [number, number] = [today - UnixTime.DAY, today]
     const capacity = getCapacity(daLayerId, throughput, yesterday)
-    return { used: Math.round((capacity ?? 1e9) * 0.8), capacity }
+    return {
+      used: Math.round((capacity ?? 1e9) * 0.8),
+      capacity,
+      day: yesterday,
+    }
   }
 
   // Everything posted to the layer is kept under its own id. Two days back,
@@ -46,11 +52,12 @@ export async function getDaPastDayUsage({
     [earliest, today + UnixTime.DAY],
   )
   const day = getSyncedDay(records, [earliest, today])
-  if (!day) return { used: undefined, capacity: undefined }
+  if (!day) return { used: undefined, capacity: undefined, day: undefined }
 
   return {
     used: sumUsed(records, day),
     capacity: getCapacity(daLayerId, throughput, day),
+    day,
   }
 }
 

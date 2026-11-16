@@ -1,9 +1,14 @@
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import { getSearchBarEntries } from '~/server/features/search-bar/getSearchBarEntries'
+import { getSearchBarAddressEntries } from '~/server/features/search-bar/getSearchBarAddressEntries'
 import { procedure, router } from '../trpc'
 
 export const searchBarRouter = router({
-  search: procedure
-    .input(v.string())
-    .query(({ input }) => getSearchBarEntries(input)),
+  searchByAddress: procedure
+    .input(
+      v
+        .string()
+        .check((value) => EthereumAddress.checkIgnoringCase(value.trim())),
+    )
+    .query(({ input }) => getSearchBarAddressEntries(input)),
 })

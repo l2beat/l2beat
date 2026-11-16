@@ -1,3 +1,47 @@
+Generated with discovered.json: 0x483333e8c8aca8f7025720e44d0a9e5f22c32d2f
+
+# Diff at Fri, 06 Nov 2026 16:37:36 GMT:
+
+- id: def94aae
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@42d599abc7be8cc38122c72abc4da1c1dda6fbeb block: 1788943774
+- current timestamp: 1793982984
+
+## Description
+
+EigenLayerOperationsMultisig: 5 members rotated. StrategyManager: first entry in the burn-or-redistribute queue. The Lightblocks Labs (eOracle) operator deployed an unverified AVS on 2026-10-29 with itself as the only operator and the AVS as slasher and redistribution recipient, then slashed the 31.08 stETH-strategy shares delegated to it by its own staker wallet, dormant since 2024, and received the proceeds: 31.1 stETH already withdrawn through Lido, 2.68 shares pending. It appears the operator used redistributable slashing to pull its own stake out of a staker wallet it can no longer sign from.
+
+## Watched changes
+
+```diff
+    contract StrategyManager (eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A) [eigenlayer/StrategyManager] {
+    +++ description: The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake.
+      values.getPendingOperatorSets.0:
++        {"avs":"eth:0xF1fA499AE90903fE52d1325145D9944D7D2C4651","id":0}
+    }
+```
+
+```diff
+    contract EigenLayerOperationsMultisig (eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x9B0098A38548b8B71473B0123A38B90bd882d49E"
++        "eth:0x5b3523984cbB75dcD0161B157421fdacB49B9CD5"
+      values.$members.1:
+-        "eth:0xf26dA751ede765864CA92D8aE7522edD21aF0523"
++        "eth:0xFee49e47730bd20DFBD3FCf238ECE622f8c4599c"
+      values.$members.2:
+-        "eth:0xE31ad7cFD94bD74C40b53160aA0E8A0b6D340830"
++        "eth:0x3a06E90e9862Fbc548199c134EDbC72B912Cb6C6"
+      values.$members.4:
+-        "eth:0xE5Ad7cB2692c3A03dd9279a733c4A20666f6909c"
++        "eth:0xf0956ECc39ec6EFc0BA1f4CB41a1342c3c0fd6dA"
+      values.$members.5:
+-        "eth:0xe7fFd467F7526abf9c8796EDeE0AD30110419127"
++        "eth:0x1BB548A5F9237f0EFcb6919bbb698BC53A7bd3b8"
+    }
+```
+
 Generated with discovered.json: 0xca9a2c4987bcdb01faa0c8adaa0de4f83f13e2f5
 
 # Diff at Fri, 16 Oct 2026 05:36:53 GMT:

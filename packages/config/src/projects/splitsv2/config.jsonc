@@ -1,0 +1,31 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "splitsv2",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "eth:0x8fb66F38cF86A3d5e8768f8F1754A24A6c661Fb8", // SplitsWarehouse
+    // Each factory leads to the implementation its splits delegate to. The
+    // splits themselves are minimal proxies, thousands of them, and
+    // are left out.
+    "eth:0x80f1B766817D04870f115fEBbcCADF8DBF75E017", // PullSplitFactory v2.0
+    "eth:0xaDC87646f736d6A82e9a6539cddC488b2aA07f38", // PushSplitFactory v2.0
+    "eth:0x5cbA88D55Cec83caD5A105Ad40C8c9aF20bE21d1", // PullSplitFactory v2.1
+    "eth:0xDc6259E13ec0621e6F19026b2e49D846525548Ed", // PushSplitFactory v2.1
+    "eth:0x6B9118074aB15142d7524E8c4ea8f62A3Bdb98f1", // PullSplitFactory v2.2
+    "eth:0x8E8eB0cC6AE34A38B67D5Cf91ACa38f60bc3Ecf4" // PushSplitFactory v2.2
+  ],
+  "names": {
+    "eth:0x80f1B766817D04870f115fEBbcCADF8DBF75E017": "PullSplitFactory_v2_0",
+    "eth:0xaDC87646f736d6A82e9a6539cddC488b2aA07f38": "PushSplitFactory_v2_0",
+    "eth:0x5cbA88D55Cec83caD5A105Ad40C8c9aF20bE21d1": "PullSplitFactory_v2_1",
+    "eth:0xDc6259E13ec0621e6F19026b2e49D846525548Ed": "PushSplitFactory_v2_1",
+    "eth:0x6B9118074aB15142d7524E8c4ea8f62A3Bdb98f1": "PullSplitFactory_v2_2",
+    "eth:0x8E8eB0cC6AE34A38B67D5Cf91ACa38f60bc3Ecf4": "PushSplitFactory_v2_2",
+    "eth:0x6291497D1206618fC810900d2e7e9AF6Aa1F1b99": "PullSplit_v2_0",
+    "eth:0x0285B37453F73f8dE94De0cAEf8108bC8431BE34": "PushSplit_v2_0",
+    "eth:0xF9C25250523Df26343222fC46de932355B850c97": "PullSplit_v2_1",
+    "eth:0x3f81D81e0884abD8Cc4583a704a9397972623214": "PushSplit_v2_1",
+    "eth:0x98254AeDb6B2c30b70483064367f0BA24ca86244": "PullSplit_v2_2",
+    "eth:0x1e2086A7e84a32482ac03000D56925F607CCB708": "PushSplit_v2_2"
+  }
+}

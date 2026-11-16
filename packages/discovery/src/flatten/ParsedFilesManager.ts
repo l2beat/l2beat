@@ -134,10 +134,8 @@ export class ParsedFilesManager {
         file.topLevelDeclarations.map((c) => c.name),
       )
 
-      file.importDirectives = result.resolveFileImports(
-        file,
-        result.remappings,
-        alreadyImportedMap,
+      file.importDirectives = uniqueImports(
+        result.resolveFileImports(file, result.remappings, alreadyImportedMap),
       )
     }
 
@@ -317,12 +315,12 @@ export class ParsedFilesManager {
     } else if (c.type === 'UsingForDeclaration') {
       subNodes = [c]
       const [typeName, ...rest] = getASTIdentifiers(c.typeName)
-      if (typeName !== undefined && rest.length === 0) {
+      if (c.isGlobal && typeName !== undefined && rest.length === 0) {
         backwardLinks = [typeName]
       } else {
-        // The target is a built-in type, so no declaration exists to link back
-        // to. The directive still applies to the whole source unit, so link it
-        // to every declaration in the file instead.
+        // A directive without `global` applies to its own source unit, which
+        // need not be the file defining the target type, so link it to every
+        // declaration in the file instead.
         backwardLinks = file.topLevelDeclarations
           .filter((declaration) => declaration.type !== 'using')
           .map((declaration) => declaration.name)
@@ -347,6 +345,15 @@ export class ParsedFilesManager {
           (n as AST.NewExpression).typeName.type !== 'ArrayTypeName'
         ) {
           implementationReferences.push(...i)
+        }
+        if (isContractCodeAccess(n)) {
+          const typeCall = (n as AST.MemberAccess)
+            .expression as AST.FunctionCall
+          implementationReferences.push(
+            ...typeCall.arguments.flatMap((a) =>
+              a.type === 'Identifier' ? [a.name] : [],
+            ),
+          )
         }
       })
       allIdentifiers.push(...ids)
@@ -520,6 +527,26 @@ export class ParsedFilesManager {
 
     return path
   }
+}
+
+// type(C).creationCode and type(C).runtimeCode embed C's bytecode
+function isContractCodeAccess(n: AST.BaseASTNode): boolean {
+  if (n.type !== 'MemberAccess') return false
+  const { expression, memberName } = n as AST.MemberAccess
+  if (memberName !== 'creationCode' && memberName !== 'runtimeCode') {
+    return false
+  }
+  if (expression.type !== 'FunctionCall') return false
+  const callee = (expression as AST.FunctionCall).expression
+  return callee.type === 'Identifier' && callee.name === 'type'
+}
+
+function uniqueImports(imports: ImportDirective[]): ImportDirective[] {
+  const byKey = new Map<string, ImportDirective>()
+  for (const i of imports) {
+    byKey.set(`${i.absolutePath}:${i.originalName}:${i.importedName}`, i)
+  }
+  return [...byKey.values()]
 }
 
 function sha1(s: string): string {

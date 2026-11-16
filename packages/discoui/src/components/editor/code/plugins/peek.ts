@@ -20,7 +20,6 @@ import {
   WidgetType,
 } from '@codemirror/view'
 import { assert } from '@l2beat/shared-pure'
-import colors from '../../../../colors.json'
 import { indentGuides } from '../../indentGuides'
 import { solidity } from '../../languages/solidity'
 import { theme } from '../../theme'
@@ -241,8 +240,8 @@ const peekTheme = EditorView.theme({
     boxSizing: 'border-box',
     width: `calc(var(--peek-width) - ${2 * PEEK_MARGIN}px)`,
     margin: `4px ${PEEK_MARGIN}px`,
-    border: `1px solid ${colors.coffee['600']}`,
-    borderLeft: `3px solid ${colors.autumn['300']}`,
+    border: '1px solid var(--color-coffee-600)',
+    borderLeft: '3px solid var(--color-autumn-300)',
     borderRadius: '3px',
     overflow: 'hidden',
   },

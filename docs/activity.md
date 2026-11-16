@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Within L2BEAT💗 we have an [Activity](https://l2beat.com/scaling/activity) tab which tracks activity
+Within ETHBEAT💗 we have an [Activity](https://ethbeat.org/layer2s/activity) tab which tracks activity
 of scaling solutions. 'Activity' in this context refers to the amount of user operations and transactions that occur on
 each chain. Configuring activity tracking for different projects is straightforward, especially for
 those that support eth_getBlock RPC methods. This configuration process is managed individually for

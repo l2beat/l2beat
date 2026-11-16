@@ -10,4 +10,4 @@ Two Aztec Labs EOAs control *.zk.money names. The deployer owns the NameRegistry
 
 ### Savings asset
 
-Sky governance can upgrade sUSDS, changing balances and transfer rules. Its authorized rate controller can change the savings rate.
+[Sky governance](https://vote.sky.money/) can upgrade sUSDS, changing balances and transfer rules. Its authorized rate controller can change the savings rate.

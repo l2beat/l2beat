@@ -88,6 +88,12 @@ describe(renameIdentifiers.name, () => {
     expect(result).not.toInclude('uint256 amountt')
   })
 
+  it('renames a file-level constant at its declaration', () => {
+    const src = 'Constant constant t = Constant.wrap(1);'
+    const result = renameIdentifiers(src, [{ from: 't', to: 't_1' }])
+    expect(result).toEqual('Constant constant t_1 = Constant.wrap(1);')
+  })
+
   it('renames across a struct definition', () => {
     const src = [
       'contract Foo {',

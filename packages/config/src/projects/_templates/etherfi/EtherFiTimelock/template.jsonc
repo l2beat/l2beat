@@ -2,5 +2,19 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "EtherFiTimelock",
   "category": "gov",
-  "description": "OpenZeppelin TimelockController governing contract upgrades and privileged operations. Two instances: a longer Upgrade timelock and a shorter Operating timelock."
+  "description": "OpenZeppelin TimelockController governing contract upgrades and privileged operations. Two instances: a longer Upgrade timelock and a shorter Operating timelock.",
+  "fields": {
+    "proposers": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "PROPOSER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "act",
+          "delay": "{{ getMinDelay }}"
+        }
+      ]
+    }
+  }
 }

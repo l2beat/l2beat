@@ -1,4 +1,4 @@
-import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
+import { formatCount, formatCurrency, formatInteger } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
@@ -252,7 +252,7 @@ function Routes({
                 <div className="mt-0.5 flex items-center gap-2 font-semibold text-[13px] leading-none">
                   <span>{formatCurrency(flow.volume, 'usd')}</span>
                   <span className="text-secondary">
-                    {formatInteger(flow.transferCount)} txs
+                    {formatCount(flow.transferCount, 'tx')}
                   </span>
                 </div>
               )}
@@ -275,7 +275,7 @@ function StatRow({
 }) {
   return (
     <div className="flex items-start justify-between gap-2 text-[13px]">
-      <span className="whitespace-nowrap font-medium text-secondary leading-none">
+      <span className="whitespace-nowrap font-normal leading-none">
         {label}
       </span>
       {isLoading ? (

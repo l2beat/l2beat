@@ -44,7 +44,7 @@ export function PizzaRosetteIcon({
       width="180"
       height="180"
       viewBox="0 0 180 180"
-      alt-text="Rosette showing risk summary"
+      aria-label="Rosette showing risk summary"
       ref={svgRef}
       onMouseLeave={() => setSelectedRisk?.(undefined)}
       className={className}

@@ -288,6 +288,13 @@ const OUTER_BOOTLOADER = (version: string) => ({
   proverSystemProject: ProjectId('stwo'),
 })
 
+const BOOTLOADER_CONFIG = (version: string) => ({
+  title: `Bootloader configuration commitment ${version}`,
+  description:
+    'Single hash that the SHARP verifier forces into every proof as the configuration of the outer bootloader. It is a Pedersen hash chain over four commitments: the supported simple bootloaders, the circuit applicative bootloader program, its circuit configuration and the supported recursive Cairo verifiers.',
+  proverSystemProject: ProjectId('stwo'),
+})
+
 const SUPPORTED_SIMPLE_BOOTLOADERS = (version: string) => ({
   title: `Supported simple bootloader programs commitment ${version}`,
   description:
@@ -843,6 +850,26 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     verificationStatus: 'notVerified',
     verificationSteps: readMarkdown(
       'common/programHashes/0x1dc938274cd550224002662e765b50c838b6fcb3234308b847ece2ce0e4a5631.md',
+    ),
+  },
+  '0x007ed65c7e2e8c98e61b66811a86adc05a182e444cee082fda55242fe9b4a56e': {
+    ...OP_SUCCINCT_AGG_BLOBS,
+    programUrl:
+      'https://github.com/mantle-xyz/op-succinct/tree/mantle-v1.6.3/programs/aggregation',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0x007ed65c7e2e8c98e61b66811a86adc05a182e444cee082fda55242fe9b4a56e.md',
+    ),
+  },
+  '0x57b7251f39bcced01bb272042859b1511b1cb42d49ac5ebe45117b32570ad872': {
+    ...OP_SUCCINCT_RANGE_BLOBS,
+    programUrl:
+      'https://github.com/mantle-xyz/op-succinct/tree/mantle-v1.6.3/programs/range/ethereum',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0x57b7251f39bcced01bb272042859b1511b1cb42d49ac5ebe45117b32570ad872.md',
     ),
   },
   '0x00fa36417110bce994f3054a68baef78ca51dee1a38659c70e108da7eb3d6bbf': {
@@ -1945,6 +1972,26 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       'common/programHashes/0x70909b25db0db00f1d4b4016aeb876f53568a3e5a8e6397cb562d79947a02cc9.md',
     ),
   },
+  '416945816847640482138159166670986616346304244502647016366644374949046452837':
+    {
+      ...OUTER_BOOTLOADER('StarkWare_GpsStatementVerifier_2026_14'),
+      programUrl:
+        'https://github.com/starkware-libs/cairo-lang/tree/d435ed7003919b3842a48fc07bbb06a08ed9bbad/src/starkware/cairo/bootloaders/bootloader',
+      verificationStatus: 'successful',
+      verificationSteps: readMarkdown(
+        'common/programHashes/416945816847640482138159166670986616346304244502647016366644374949046452837.md',
+      ),
+    },
+  '2806880238119746810536368140979050442273882135835972263431721318985365898844':
+    {
+      ...BOOTLOADER_CONFIG('StarkWare_GpsStatementVerifier_2026_14'),
+      programUrl:
+        'https://github.com/starkware-libs/cairo-lang/blob/d435ed7003919b3842a48fc07bbb06a08ed9bbad/src/starkware/cairo/bootloaders/bootloader/bootloader_config_hash.json',
+      verificationStatus: 'successful',
+      verificationSteps: readMarkdown(
+        'common/programHashes/2806880238119746810536368140979050442273882135835972263431721318985365898844.md',
+      ),
+    },
   '3427958597398434235135013788958741576989752718219267963615783564775551242024':
     {
       ...OUTER_BOOTLOADER('StarkWare_GpsStatementVerifier_2026_13'),
@@ -2364,6 +2411,13 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       'common/programHashes/0x01000911c4db4fe62c98e180cfa7e9b3a22fb15f505905d4bf36192f481551e6.md',
     ),
   },
+  '0x01000945a9e6fdfce3580e953a64ba79e437b579f8cff02cae89fbbf50886a37': {
+    // bootloader of the Era protocol version 0.33.0 (ZIP-18 / v31), registered in the EraChainTypeManager on 2026-11-03
+    ...BOOJUM_BOOTLOADER('v0.33.0'),
+    programUrl:
+      'https://github.com/matter-labs/era-contracts/blob/v0.33.0/system-contracts/bootloader/bootloader.yul',
+    verificationStatus: 'notVerified',
+  },
   '0x0059b74a8fd03c44462de3916b45ebeedb9f1158e3037e8c40b8941cbe438d7e': {
     title: 'Morph Guest program (v0.4.5 release)',
     description:
@@ -2434,6 +2488,18 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     verificationStatus: 'successful',
     verificationSteps: readMarkdown(
       'common/programHashes/0x00b450ec2a1b8dfba81ade90afbcc96842055548b814c991bb13bdca34980c63.md',
+    ),
+  },
+  '0x0084f08a14f8199f87e7ae6011336724ec187b3656859184f04c7e8f382a2902': {
+    title: 'Morph Guest program (v0.6.4 release)',
+    description:
+      'Proves the correct execution of the Morph L2 state transition function (based on the Geth EVM) for a batch of blocks using the SP1 zkVM. The sequencer-set public input field is zero.',
+    programUrl:
+      'https://github.com/morph-l2/morph/tree/v0.6.4/prover/bin/client',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0x0084f08a14f8199f87e7ae6011336724ec187b3656859184f04c7e8f382a2902.md',
     ),
   },
   '0x001d6dd65980c80ef8496f4a0bd9b2ccc1c9e66aeb122f841e0b90e322bbacdd': {
@@ -2519,13 +2585,13 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     ...WASM_MODULE_ROOT('Apechain'),
     verificationStatus: 'notVerified', // Apechain has closed challengers, so I think it doesn't make sense to mark them red for non reproducible program
     verificationSteps:
-      'The sources for this program are located in a private repository, shared with L2BEAT to independently regenerate the wasm module root. This value is not reproducible by members of public, but we attest that it can be obtained from sources.',
+      'The sources for this program are located in a private repository, shared with ETHBEAT to independently regenerate the wasm module root. This value is not reproducible by members of public, but we attest that it can be obtained from sources.',
   },
   '0x2dc824fed99dcdf659f2523ad68d1ec70bd5f08e3c533996be3a2d2b19813e83': {
     ...WASM_MODULE_ROOT('Apechain'),
     verificationStatus: 'unsuccessful',
     verificationSteps:
-      'The sources for this program are located in a private repository, shared with L2BEAT to independently regenerate the wasm module root. This value is not reproducible by members of public, but we attest that it can be obtained from sources.',
+      'The sources for this program are located in a private repository, shared with ETHBEAT to independently regenerate the wasm module root. This value is not reproducible by members of public, but we attest that it can be obtained from sources.',
   },
   '0x2c9a9d645ae56304c483709fc710a58a0935ed43893179fe4b275e1400503ea7': {
     ...WASM_MODULE_ROOT('Syndicate'),
@@ -2905,6 +2971,15 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       },
     ),
   },
+  '0x00d5a43068d7a9d1eac440a790b776c749ae6516c43f1a572226190cef6fd45a': {
+    title: 'Aggregation program of Base AggregateVerifier',
+    programUrl:
+      'https://github.com/base/base/tree/6efa75662b57c578d897fea2449035636f6ad9ad/crates/proof/zk/programs/succinct/aggregation',
+    description:
+      'Aggregates range proofs of correct execution for several consecutive sub-ranges of Base L2 blocks.',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'notVerified',
+  },
   '0x44f625fa2a41367670d74a7b0d9899412dc1ca406f90df7a5bd9f8ae581ee47f': {
     title: 'Range program of Base AggregateVerifier',
     programUrl:
@@ -2961,6 +3036,15 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       },
     ),
   },
+  '0x3d3713d31a8936563bc56791040067131bb3fa3c0ab8b5e65e9c4cc0755b5fdb': {
+    title: 'Range program of Base AggregateVerifier',
+    programUrl:
+      'https://github.com/base/base/tree/6efa75662b57c578d897fea2449035636f6ad9ad/crates/proof/zk/programs/succinct/range/ethereum',
+    description:
+      'Proves correct state transition function of the Base rollup over a sub-range of L2 blocks.',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'notVerified',
+  },
   '0xc9536fb5b1387f30d16f6b95a5a26de352f8056866482bca632f7219896ea74c': {
     title: 'TEE enclave image hash of Base client',
     programUrl:
@@ -3001,6 +3085,14 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
         commitHash: '5034ef80bc90261ff6c4841fdf4baed34283abad',
       },
     ),
+  },
+  '0x73181275ec86503b629510176b5bedec00309060b3f4ff5d8e55d9e83dad5cbd': {
+    title: 'TEE enclave image hash of Base client',
+    programUrl:
+      'https://github.com/base/base/tree/6efa75662b57c578d897fea2449035636f6ad9ad/crates/proof/tee/nitro-enclave',
+    description:
+      'TEE image hash of Base L2 node program. AWS Nitro Enclave attestations guarantee that exactly this program was run within a TEE.',
+    verificationStatus: 'notVerified',
   },
   '0x20141665fe40bce01fbcfa0a95c8a1bd750eadbe3f24e06a75571e6fd7a9dc11': {
     title: 'AWS Nitro TEE attestation verifier for Base',

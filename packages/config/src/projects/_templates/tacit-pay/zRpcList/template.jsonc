@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "zRpcList",
+  "category": "non-critical",
+  "description": "Owner-curated list of Ethereum RPC URLs that apps read at load.",
+  "ignoreMethods": ["get"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the RPC URLs apps read from this list, effective at their next read."
+        }
+      ]
+    }
+  }
+}

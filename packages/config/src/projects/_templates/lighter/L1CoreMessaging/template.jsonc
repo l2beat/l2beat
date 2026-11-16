@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Entry point for all non-deposit L1 priority requests: users force withdrawals, orders, order cancellations, pool share burns and API key changes through it, and the network governor registers and updates assets, markets and the system config. Requests are validated here and appended to the priority queue of {{zkLighter}}, which accepts them only from this contract.",
+  "critical": true,
+  "fields": {
+    "createdMarkets": {
+      "handler": {
+        "type": "event",
+        "select": "symbol",
+        "add": { "event": ["CreateMarket"] }
+      },
+      "edit": ["map", ["format", "Bytes32ToString"]]
+    }
+  }
+}

@@ -48,9 +48,11 @@ export class ArbitrumActorsHandler implements Handler {
     const isActor: Record<string, boolean> = {}
     for (const txHash of txHashes) {
       const trace = await provider.getDebugTrace(txHash)
-      this.definition.actorType === 'validator'
-        ? this.processSetValidatorCalls(trace.calls, isActor)
-        : this.processSetIsBatchPosterCalls(trace.calls, isActor)
+      if (this.definition.actorType === 'validator') {
+        this.processSetValidatorCalls(trace.calls, isActor)
+      } else {
+        this.processSetIsBatchPosterCalls(trace.calls, isActor)
+      }
     }
 
     const activeActors = Object.keys(isActor).filter((key) => isActor[key])

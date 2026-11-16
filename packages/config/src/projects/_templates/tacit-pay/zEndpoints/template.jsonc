@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "zEndpoints",
+  "category": "non-critical",
+  "description": "Owner-curated registry of service URLs per key and chain, which apps read at load to find their RPC nodes, relays and file mirrors.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the URLs apps read from this registry, such as their RPC nodes, relay host and file mirrors, effective at their next read."
+        }
+      ]
+    }
+  }
+}

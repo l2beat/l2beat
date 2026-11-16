@@ -1,5 +1,10 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { Insertable, Selectable } from 'kysely'
+import {
+  assert,
+  ProjectId,
+  UnixTime,
+  type UnixTimePeriod,
+} from '@l2beat/shared-pure'
+import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { AggregatedL2Cost } from '../kysely/generated/types'
 
@@ -21,6 +26,30 @@ export interface AggregatedL2CostRecord {
   overheadGas: number
   overheadGasEth: number
   overheadGasUsd: number
+}
+
+export interface SummedL2CostRecord {
+  timestamp: UnixTime
+  lastTimestamp: UnixTime
+  blobsGas: number | null
+  blobsGasEth: number | null
+  blobsGasUsd: number | null
+  calldataGas: number
+  calldataGasEth: number
+  calldataGasUsd: number
+  computeGas: number
+  computeGasEth: number
+  computeGasUsd: number
+  overheadGas: number
+  overheadGasEth: number
+  overheadGasUsd: number
+}
+
+const BUCKET_INTERVALS: Record<UnixTimePeriod, string> = {
+  minute: '1 minute',
+  hour: '1 hour',
+  'six hours': '6 hours',
+  day: '1 day',
 }
 
 export function toRow(
@@ -164,6 +193,62 @@ export class AggregatedL2CostRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getSummedByProjectsAndTimeRange(
+    projectIds: ProjectId[],
+    timeRange: [UnixTime | null, UnixTime],
+    resolution: UnixTimePeriod,
+  ): Promise<SummedL2CostRecord[]> {
+    if (projectIds.length === 0) return []
+    const [from, to] = timeRange
+    const bucket = sql<Date>`date_bin(${sql.lit(BUCKET_INTERVALS[resolution])}::interval, "timestamp", timestamp '1970-01-01')`
+    let query = this.db
+      .selectFrom('AggregatedL2Cost')
+      .select((eb) => [
+        bucket.as('timestamp'),
+        eb.fn.max('timestamp').as('lastTimestamp'),
+        sumAsDouble('blobsGas').as('blobsGas'),
+        sumAsDouble('blobsGasEth').as('blobsGasEth'),
+        sumAsDouble('blobsGasUsd').as('blobsGasUsd'),
+        sumAsDouble('calldataGas').as('calldataGas'),
+        sumAsDouble('calldataGasEth').as('calldataGasEth'),
+        sumAsDouble('calldataGasUsd').as('calldataGasUsd'),
+        sumAsDouble('computeGas').as('computeGas'),
+        sumAsDouble('computeGasEth').as('computeGasEth'),
+        sumAsDouble('computeGasUsd').as('computeGasUsd'),
+        sumAsDouble('overheadGas').as('overheadGas'),
+        sumAsDouble('overheadGasEth').as('overheadGasEth'),
+        sumAsDouble('overheadGasUsd').as('overheadGasUsd'),
+      ])
+      .where(
+        'projectId',
+        'in',
+        projectIds.map((p) => p.toString()),
+      )
+      .where('timestamp', '<', UnixTime.toDate(to))
+      .groupBy(bucket)
+      .orderBy(bucket, 'asc')
+
+    if (from !== null) {
+      query = query.where('timestamp', '>=', UnixTime.toDate(from))
+    }
+
+    const rows = await query.execute()
+    return rows.map((row) => ({
+      ...row,
+      timestamp: UnixTime.fromDate(row.timestamp),
+      lastTimestamp: UnixTime.fromDate(row.lastTimestamp),
+      calldataGas: notNull(row.calldataGas),
+      calldataGasEth: notNull(row.calldataGasEth),
+      calldataGasUsd: notNull(row.calldataGasUsd),
+      computeGas: notNull(row.computeGas),
+      computeGasEth: notNull(row.computeGasEth),
+      computeGasUsd: notNull(row.computeGasUsd),
+      overheadGas: notNull(row.overheadGas),
+      overheadGasEth: notNull(row.overheadGasEth),
+      overheadGasUsd: notNull(row.overheadGasUsd),
+    }))
+  }
+
   async getFirstTimestampByProjects(
     projectIds: ProjectId[],
   ): Promise<UnixTime | undefined> {
@@ -180,4 +265,18 @@ export class AggregatedL2CostRepository extends BaseRepository {
 
     return row?.timestamp ? UnixTime.fromDate(row.timestamp) : undefined
   }
+}
+
+type SummableColumn = Exclude<
+  keyof SummedL2CostRecord,
+  'timestamp' | 'lastTimestamp'
+>
+
+function sumAsDouble(column: SummableColumn) {
+  return sql<number | null>`sum(${sql.ref(column)}::double precision)`
+}
+
+function notNull(value: number | null): number {
+  assert(value !== null, 'Sum of a non-nullable column is null')
+  return value
 }

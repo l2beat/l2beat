@@ -41,7 +41,7 @@ export const PositiveRpcBoundNumber: Type<string, number> = extendType(string, {
   async from(str) {
     const num = await Promise.resolve(Number.parseInt(str, 10))
     assert(
-      !isNaN(num) && num > 0 && num <= 1000000,
+      !Number.isNaN(num) && num > 0 && num <= 1000000,
       'Call rate bound per minute must be a positive integer between 1 and 1,000,000',
     )
     return num

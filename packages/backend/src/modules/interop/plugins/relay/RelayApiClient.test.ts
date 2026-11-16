@@ -87,7 +87,7 @@ describe(RelayApiClient.name, () => {
   })
 
   describe(RelayApiClient.prototype.getRequests.name, () => {
-    it('calls v3 with an API key and normalizes the indexed fields', async () => {
+    it('calls published requests with an API key and normalizes the indexed fields', async () => {
       const httpClient = mockObject<HttpClient>({
         fetchRaw: mockFn().resolvesTo(
           ok(
@@ -154,7 +154,7 @@ describe(RelayApiClient.name, () => {
       })
 
       const [url, init] = httpClient.fetchRaw.calls[0]?.args ?? []
-      expect(url as string).toInclude('/requests/v3?')
+      expect(url as string).toInclude('/published-requests?')
       expect(url as string).toInclude('startTimestamp=100')
       expect(url as string).toInclude('endTimestamp=200')
       expect(url as string).toInclude('status=success')

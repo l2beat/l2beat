@@ -12,9 +12,11 @@ import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { toJsonSchema, v as z } from '@l2beat/validate'
 import express, { type Express } from 'express'
 import { existsSync, readFileSync } from 'fs'
-import type { Server } from 'http'
+import { createServer, type Server } from 'http'
 import path, { join } from 'path'
 import { getCodePaths } from '../discovery/getCodePaths'
+import { adapterCommand } from './agent/chat/providers'
+import { createAgentRouter } from './agent/router'
 import { attachAnalyzeRouter } from './analyze/router'
 import { attachConfigRouter } from './configs/router'
 import { DiffoveryController } from './diffovery/DiffoveryController'
@@ -33,9 +35,11 @@ import { getProject } from './getProject'
 import { getProjects } from './getProjects'
 import { getTvl } from './getTvl'
 import { attachLayoutRouter } from './layouts/router'
+import { listenOnFreePort } from './listenOnFreePort'
 import { attachModulesRouter } from './modules'
 import { ProviderCache } from './ProviderCache'
 import { renderProjectPage } from './renderProjectPage'
+import { safeStringSchema } from './safeStringSchema'
 import { searchCode } from './searchCode'
 import { TvlCache } from './TvlCache'
 import {
@@ -44,13 +48,6 @@ import {
 } from './templates/router'
 import { RemoteWorkspaces } from './xref/RemoteWorkspaces'
 import { attachXrefRouter, diskWorkspace } from './xref/router'
-
-const safeStringSchema = z
-  .string()
-  .check(
-    (v) => v.length > 0 && /^[a-zA-Z0-9_-]+$/.test(v),
-    'Input cannot be empty and must be alphanumeric and can contain underscores or hyphens.',
-  )
 
 const ethereumAddressSchema = z.string().transform(ChainSpecificAddress)
 
@@ -113,21 +110,29 @@ const diffHistoryQuerySchema = z.object({
 
 const REMOTE_WORKSPACE_CAPACITY = 4
 
-export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
-  const port = process.env.PORT ?? 2021
-  const app = createDiscoveryUiApp({ readonly })
+const PORT_DEFAULT = 2021
+const PORT_ATTEMPTS_MAX = 20
 
-  const server = app.listen(port, () => {
-    console.log(`Discovery UI live on http://localhost:${port}/ui`)
-  })
+// An explicit PORT is the researcher's choice, so only the default moves on
+// to the next port when it is taken.
+export async function runDiscoveryUi({ readonly }: { readonly: boolean }) {
+  const server = createServer()
+  const port =
+    process.env.PORT === undefined
+      ? await listenOnFreePort(server, PORT_DEFAULT, PORT_ATTEMPTS_MAX)
+      : await listenOnFreePort(server, Number(process.env.PORT), 1)
+  server.on('request', createDiscoveryUiApp({ readonly, port }))
+  console.log(`Discovery UI live on http://localhost:${port}/ui`)
 
   attachGracefulShutdown(server)
 }
 
 export function createDiscoveryUiApp({
   readonly,
+  port,
 }: {
   readonly: boolean
+  port: number
 }): Express {
   const app = express()
 
@@ -147,6 +152,17 @@ export function createDiscoveryUiApp({
   const flatSourceClient = new FlatSourceClient()
   const diffoveryController = new DiffoveryController(flatSourceClient)
 
+  // Before the body parser, so the agent routes refuse a request unread.
+  if (!readonly) {
+    app.use(
+      '/api/agent',
+      createAgentRouter(configReader, {
+        cwd: paths.root,
+        mcpUrl: `http://localhost:${port}/api/agent/mcp`,
+        launch: adapterCommand,
+      }),
+    )
+  }
   app.use(express.json())
 
   app.get('/health', (_, res) => {
@@ -467,20 +483,39 @@ export function createDiscoveryUiApp({
   return app
 }
 
-function shutdown(server: Server) {
-  server.close(() => {
-    process.exit(0)
+const SHUTDOWN_TIMEOUT_MS = 10_000
+
+// Shutdown waits for requests in flight, but not for event streams, like
+// each open tab's agent stream, which never finish on their own.
+function attachGracefulShutdown(server: Server) {
+  let requestsInFlight = 0
+  let isShuttingDown = false
+  server.on('request', (req, res) => {
+    if (req.headers.accept === 'text/event-stream') {
+      return
+    }
+    requestsInFlight++
+    res.on('close', () => {
+      requestsInFlight--
+      if (isShuttingDown && requestsInFlight === 0) {
+        server.closeAllConnections()
+      }
+    })
   })
 
-  setTimeout(() => {
-    console.error(
-      'Could not close connections in time, forcefully shutting down',
-    )
-    process.exit(1)
-  }, 10000)
-}
-
-function attachGracefulShutdown(server: Server) {
-  process.on('SIGTERM', () => shutdown(server))
-  process.on('SIGINT', () => shutdown(server))
+  const shutdown = () => {
+    isShuttingDown = true
+    server.close(() => process.exit(0))
+    if (requestsInFlight === 0) {
+      server.closeAllConnections()
+    }
+    setTimeout(() => {
+      console.error(
+        'Could not close connections in time, forcefully shutting down',
+      )
+      process.exit(1)
+    }, SHUTDOWN_TIMEOUT_MS)
+  }
+  process.on('SIGTERM', shutdown)
+  process.on('SIGINT', shutdown)
 }

@@ -1,111 +1,12 @@
 {
   "name": "aztecnetwork",
-  "timestamp": 1793006682,
-  "configHash": "0x7a7222d904a5b55741b6146a7785fbc04646325e6398d95b95c52516ea0e227e",
+  "timestamp": 1794568254,
+  "configHash": "0xc0065e21b5995071bd7595a610f9a64fded8dd1da93be13db086ae3238e36447",
   "entries": [
-    {
-      "name": "CoinIssuer",
-      "address": "eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6",
-      "type": "Contract",
-      "template": "aztecnetwork/CoinIssuer",
-      "sourceHashes": [
-        "0x86f1b9c3f3e7c46b2cf8763469012b305eb713ae13dfda1dbafa3bb694a2d415"
-      ],
-      "proxyType": "immutable",
-      "description": "Manages the inflation and minting schedule of the Aztec token. It enforces an annual percentage cap and mints new tokens for the budget.",
-      "deployerAddress": "eth:0x85e51a78FE8FE21d881894206A9adbf54e3Df8c3",
-      "sinceTimestamp": 1762995131,
-      "sinceBlock": 23786834,
-      "values": {
-        "$immutable": true,
-        "ASSET": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
-        "cachedBudget": "2000000000000000000000000000",
-        "cachedBudgetYear": 0,
-        "DEPLOYMENT_TIME": 1762995131,
-        "mintAvailable": "2000000000000000000000000000",
-        "NOMINAL_ANNUAL_PERCENTAGE_CAP": "200000000000000000",
-        "owner": "eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a"
-      },
-      "fieldMeta": {
-        "ASSET": { "description": "AZTEC token minted by this issuer." },
-        "owner": { "description": "Owner of the CoinIssuer." }
-      },
-      "implementationNames": {
-        "eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6": "CoinIssuer"
-      },
-      "category": { "name": "Governance", "priority": 3 }
-    },
     {
       "address": "eth:0x05406F53174EC1bFE5C94aF253CdD62A4adF2F29",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "GovernanceProposer",
-      "address": "eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef",
-      "type": "Contract",
-      "template": "aztecnetwork/GovernanceProposer",
-      "sourceHashes": [
-        "0x71cf96d5e84750d1559a917cdd144ff72a02d1545e89ffffa0e3eaadce53b381"
-      ],
-      "proxyType": "immutable",
-      "description": "Intermediary contract through which the designated proposer for each L2 slot can signal support for an L1 payload. A signalling round comprises 1000 slots. A payload that receives at least 600 signals can be submitted to the L1 Governance contract within the configured lifetime.",
-      "ignoreInWatchMode": ["getCurrentRound"],
-      "deployerAddress": "eth:0x85e51a78FE8FE21d881894206A9adbf54e3Df8c3",
-      "sinceTimestamp": 1762995059,
-      "sinceBlock": 23786828,
-      "values": {
-        "$immutable": true,
-        "eip712Domain": {
-          "fields": "0x0f",
-          "name": "EmpireBase",
-          "version": "1",
-          "chainId": 1,
-          "verifyingContract": "eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef",
-          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "extensions": []
-        },
-        "EXECUTION_DELAY_IN_ROUNDS": 0,
-        "getCurrentRound": 19,
-        "getGovernance": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
-        "getInstance": "eth:0xE37A2663Cc9c119BA41572C40fAb0bbb23a5402f",
-        "GSE": "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f",
-        "LIFETIME_IN_ROUNDS": 5,
-        "QUORUM_SIZE": 600,
-        "REGISTRY": "eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298",
-        "ROUND_SIZE": 1000,
-        "SIGNAL_TYPEHASH": "0xdec0bfc6a67146d790874e4994d7a4662b60c6400491f3d945793c73ea05ebb7"
-      },
-      "fieldMeta": {
-        "getGovernance": {
-          "description": "Current Registry owner to which successful signalling rounds are submitted."
-        },
-        "getInstance": {
-          "description": "Rollup instance whose checkpoint proposers can signal proposals."
-        },
-        "GSE": {
-          "description": "Global staking escrow used to validate sequencer voting power."
-        },
-        "REGISTRY": {
-          "description": "Registry used to resolve the canonical rollup instance."
-        },
-        "ROUND_SIZE": {
-          "description": "Number of slots in one sequencer signalling round."
-        },
-        "QUORUM_SIZE": {
-          "description": "Number of signals a payload needs to win a signalling round."
-        },
-        "EXECUTION_DELAY_IN_ROUNDS": {
-          "description": "Number of complete rounds after signalling before the winning payload can be submitted to Governance."
-        },
-        "LIFETIME_IN_ROUNDS": {
-          "description": "Maximum age of a winning signalling round that can still be submitted to Governance."
-        }
-      },
-      "implementationNames": {
-        "eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef": "GovernanceProposer"
-      },
-      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "HonkVerifier",
@@ -137,113 +38,11 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "eth:0x0Fb6215099f48D723CfB89434C2cb887357Bc871",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "Governance",
       "address": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
-      "type": "Contract",
-      "template": "aztecnetwork/Governance",
-      "sourceHashes": [
-        "0x0ce6e4dfb9032a183db9db78aed6db53131df8c04b34950cff771cf97ee52e70"
-      ],
-      "proxyType": "immutable",
-      "description": "DAO contract used for proposals and token voting. Heavily interdependent with the GSE for voting power snapshots.",
-      "ignoreInWatchMode": ["totalPowerNow", "withdrawalCount"],
-      "deployerAddress": "eth:0x85e51a78FE8FE21d881894206A9adbf54e3Df8c3",
-      "sinceTimestamp": 1762995071,
-      "sinceBlock": 23786829,
-      "values": {
-        "$immutable": true,
-        "ASSET": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
-        "getConfiguration": {
-          "proposeConfig": {
-            "lockDelay": 7776000,
-            "lockAmount": "258750000000000000000000000"
-          },
-          "votingDelay": 259200,
-          "votingDuration": 604800,
-          "executionDelay": 172800,
-          "gracePeriod": 604800,
-          "quorum": "200000000000000000",
-          "requiredYeaMargin": "330000000000000000",
-          "minimumVotes": "100000000000000000000000000"
-        },
-        "governanceProposer": "eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef",
-        "isAllBeneficiariesAllowed": true,
-        "proposalCount": 6,
-        "totalPowerNow": "648513802320099161943536713",
-        "withdrawalCount": 6434
-      },
-      "fieldMeta": {
-        "ASSET": {
-          "description": "AZTEC token used for governance deposits and voting power."
-        },
-        "governanceProposer": {
-          "description": "Address allowed to create proposals after sequencer signalling succeeds."
-        }
-      },
-      "implementationNames": {
-        "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e": "Governance"
-      },
-      "category": { "name": "Governance", "priority": 3 }
-    },
-    {
-      "address": "eth:0x23d4A9533627eA70915026638ff5989a967Be667",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x32e90E88bb2E6Ee4382e6884cC5c299a6bA27920",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "Registry",
-      "address": "eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298",
-      "type": "Contract",
-      "template": "aztecnetwork/Registry",
-      "sourceHashes": [
-        "0x14fcd61358d6410f1ead6e0e5c6d72d0492755aaff76b5460c5886e8a128f3dc"
-      ],
-      "proxyType": "immutable",
-      "description": "Central directory that tracks the current 'canonical' (active) Rollup contract address and key system contracts like the Reward Distributor.",
-      "deployerAddress": "eth:0x85e51a78FE8FE21d881894206A9adbf54e3Df8c3",
-      "sinceTimestamp": 1762995047,
-      "sinceBlock": 23786827,
-      "values": {
-        "$immutable": true,
-        "getCanonicalRollup": "eth:0xE37A2663Cc9c119BA41572C40fAb0bbb23a5402f",
-        "getGovernance": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
-        "getRewardDistributor": "eth:0x555bAAc4757A89f1CE0c84fA35afE9dD7aa8E1d3",
-        "getVersion": [0, 2934756905, 4248422647, 2070860440],
-        "numberOfVersions": 4,
-        "owner": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e"
-      },
-      "fieldMeta": {
-        "owner": { "description": "Owner of the Registry." },
-        "getCanonicalRollup": {
-          "description": "The latest registered rollup instance, treated as canonical by the Aztec contracts."
-        },
-        "getGovernance": {
-          "description": "The current Registry owner, which controls registration and the Registry-selected reward distributor."
-        },
-        "getRewardDistributor": {
-          "description": "The Registry-selected reward distributor. An existing Rollup keeps the distributor fixed at its deployment and is not retargeted when this pointer changes."
-        },
-        "numberOfVersions": {
-          "description": "Number of rollup versions registered in the registry."
-        },
-        "getVersion": {
-          "description": "Registered rollup version identifiers in insertion order."
-        }
-      },
-      "implementationNames": {
-        "eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298": "Registry"
-      },
-      "category": { "name": "Governance", "priority": 3 }
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-aztec"
     },
     {
       "address": "eth:0x367eD02480809f5020234181B61D9069a08974dD",
@@ -309,46 +108,9 @@
     {
       "name": "RewardDistributor",
       "address": "eth:0x555bAAc4757A89f1CE0c84fA35afE9dD7aa8E1d3",
-      "type": "Contract",
-      "template": "aztecnetwork/RewardDistributor",
-      "sourceHashes": [
-        "0x459d15c998a2f749c51abcd10cdcdaa0f4617a23f664ddb2414bfcbb4e960475"
-      ],
-      "proxyType": "immutable",
-      "description": "Holds tokens allocated for protocol rewards. The canonical Rollup contract, as defined by the Registry, can draw from the implicit reward pool while any address can claim only funds explicitly earmarked to it.",
-      "ignoreInWatchMode": ["totalEarmarkedBalance"],
-      "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
-      "sinceTimestamp": 1782803327,
-      "sinceBlock": 25428902,
-      "values": {
-        "$immutable": true,
-        "ASSET": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
-        "canonicalRollup": "eth:0xE37A2663Cc9c119BA41572C40fAb0bbb23a5402f",
-        "REGISTRY": "eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298",
-        "registryOwner": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
-        "totalEarmarkedBalance": "1798700000000000000000000"
-      },
-      "fieldMeta": {
-        "ASSET": {
-          "description": "ERC20 token distributed as protocol rewards."
-        },
-        "REGISTRY": {
-          "description": "Registry used to resolve the canonical rollup and governance owner."
-        },
-        "canonicalRollup": {
-          "description": "Current canonical rollup, which can claim from both the implicit reward pool and funds earmarked to it."
-        },
-        "registryOwner": {
-          "description": "Current owner of the linked Registry, resolved by the RewardDistributor at call time."
-        },
-        "totalEarmarkedBalance": {
-          "description": "Total reward balance reserved for specific recipients rather than the canonical rollup's implicit pool."
-        }
-      },
-      "implementationNames": {
-        "eth:0x555bAAc4757A89f1CE0c84fA35afE9dD7aa8E1d3": "RewardDistributor"
-      },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-aztec"
     },
     {
       "name": "SlashPayloadCloneable",
@@ -407,73 +169,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ProtocolTreasury",
-      "address": "eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a",
-      "type": "Contract",
-      "template": "aztecnetwork/ProtocolTreasury",
-      "sourceHashes": [
-        "0xf4048df5d13c662b8981abcf7c9411fc2cbfa6692dab1a7d601f76942cea85d0"
-      ],
-      "proxyType": "immutable",
-      "description": "Holds the protocol's funds controlled by Governance. It acts as a timelocked executor for spending or relaying transactions approved by the DAO.",
-      "deployerAddress": "eth:0x85e51a78FE8FE21d881894206A9adbf54e3Df8c3",
-      "sinceTimestamp": 1762995107,
-      "sinceBlock": 23786832,
-      "values": {
-        "$immutable": true,
-        "ATP_REGISTRY": "eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80",
-        "blockOfLastMarkNext": 0,
-        "GATED_UNTIL": 1794578400,
-        "getActivationTimestamp": 1795150800,
-        "GOVERNANCE": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
-        "markedProposalsCount": 0,
-        "owner": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e"
-      },
-      "fieldMeta": {
-        "GOVERNANCE": {
-          "description": "Governance contract allowed to act through the treasury once the gate has opened."
-        },
-        "ATP_REGISTRY": {
-          "description": "Registry controlling token unlocks for treasury-held AZTEC positions."
-        },
-        "GATED_UNTIL": {
-          "description": "Earliest timestamp at which the treasury relay gate can open. The additional ATP and proposal-ordering conditions still apply."
-        },
-        "getActivationTimestamp": {
-          "description": "ATP-derived cutoff timestamp. A Governance proposal relaying through the treasury must have been created after this cutoff."
-        }
-      },
-      "implementationNames": {
-        "eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a": "ProtocolTreasury"
-      },
-      "category": { "name": "Governance", "priority": 3 }
-    },
-    {
-      "name": "BaseStaker",
-      "address": "eth:0x79075C8E314Ab4A84d54F90b1c7032Dc5469082d",
-      "type": "Contract",
-      "template": "aztecnetwork/BaseStaker",
-      "sourceHashes": [
-        "0x75f7ca7807d6b1285ce54bfbfb61890b42309e8481aecaa288124d65f4969790"
-      ],
-      "proxyType": "immutable",
-      "description": "Implementation registered by the ATP Registry for upgradeable staker proxies that manage locked AZTEC positions.",
-      "deployerAddress": "eth:0xA8085a1e881c7c0F32ea69cf41A3C21b67ed5f1D",
-      "sinceTimestamp": 1756897955,
-      "sinceBlock": 23282209,
-      "values": {
-        "$immutable": true,
-        "getATP": "eth:0x000000000000000000000000000000000000dEaD",
-        "getImplementation": "eth:0x0000000000000000000000000000000000000000",
-        "proxiableUUID": "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc",
-        "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      },
-      "implementationNames": {
-        "eth:0x79075C8E314Ab4A84d54F90b1c7032Dc5469082d": "BaseStaker"
-      },
-      "category": { "name": "Governance", "priority": 3 }
-    },
-    {
       "name": "Inbox",
       "address": "eth:0x7d4Ef0676c2032bbCC09227501D34d86641ab8cA",
       "type": "Contract",
@@ -495,13 +190,13 @@
         "$immutable": true,
         "FEE_ASSET_PORTAL": "eth:0xaf73Dd51D1eb8a079BB097f39c832cDD00ac691c",
         "getFeeAssetPortal": "eth:0xaf73Dd51D1eb8a079BB097f39c832cDD00ac691c",
-        "getInProgress": 118928,
+        "getInProgress": 139020,
         "getState": {
-          "rollingHash": "0xd436455629336fe91b363e875b1a40d1",
-          "totalMessagesInserted": 3489,
-          "inProgress": 118928
+          "rollingHash": "0x13201cef83238cd23f213f40705de108",
+          "totalMessagesInserted": 3492,
+          "inProgress": 139020
         },
-        "getTotalMessagesInserted": 3489,
+        "getTotalMessagesInserted": 3492,
         "LAG": 2,
         "ROLLUP": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
         "VERSION": 4248422647
@@ -524,21 +219,6 @@
         "eth:0x7d4Ef0676c2032bbCC09227501D34d86641ab8cA": "Inbox"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
-    },
-    {
-      "address": "eth:0x7EAbE4F636B937628A7Fe503bD7F06772C047FEe",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x81062F03742B88923eaB121243B69D0a0092089e",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x8138c46A572D989E54837d5e5dEB506889edFb5D",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "SlashingProposer",
@@ -568,7 +248,7 @@
           "extensions": []
         },
         "EXECUTION_DELAY_IN_ROUNDS": 28,
-        "getCurrentRound": 1107,
+        "getCurrentRound": 1276,
         "INSTANCE": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
         "LIFETIME_IN_ROUNDS": 34,
         "MAX_ROUND_SIZE": 1024,
@@ -668,7 +348,7 @@
       "sinceBlock": 25428902,
       "values": {
         "$immutable": true,
-        "archive": "0x103a50a830507b89a1c34cafa4060a839d437f85df3c63e0e8e6b3f832c545d7",
+        "archive": "0x2de564f8ec4dd638a7311ae1656610f7a356a8ac45188b43d414cdc658fa2c75",
         "checkBlob": true,
         "constructorArgs": {
           "_feeAsset": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
@@ -744,17 +424,17 @@
         "getAvailableValidatorFlushes": 1,
         "getBurnAddress": "eth:0x4355415548584943414c4c490000000000000000",
         "getCheckpointReward": "50000000000000000000",
-        "getCurrentBlobCommitmentsHash": "0x006fab5311570418f58f9761848c7da2280a1c42b03e879a4b2b67adb2191b48",
-        "getCurrentEpoch": 4428,
-        "getCurrentSampleSeed": "6828266137288763035903714894802004860897692884221249648608658651098400260638",
-        "getCurrentSlot": 141713,
+        "getCurrentBlobCommitmentsHash": "0x0071baad5baf4eae6079f91c5a14935348379fcf23fd0f7cbbffdeb249c264b8",
+        "getCurrentEpoch": 5106,
+        "getCurrentSampleSeed": "73186001695045473753842029448334350691124513713435664212820659015738389234544",
+        "getCurrentSlot": 163401,
         "getEjectionThreshold": "100000000000000000000000",
         "getEntryQueueFlushSize": 1,
         "getEntryQueueLength": 0,
         "getEpochDuration": 32,
         "getEpochProofVerifier": "eth:0x098f47c00F4df22a8030746Eb11378236C24b4bC",
         "getEscapeHatch": "eth:0xF459348962F5eA3A9A101826B03A2CE1F459E51A",
-        "getEthPerFeeAsset": 6896119,
+        "getEthPerFeeAsset": 6131916,
         "getExitDelay": 345600,
         "getFeeAsset": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
         "getFeeAssetPortal": "eth:0xaf73Dd51D1eb8a079BB097f39c832cDD00ac691c",
@@ -774,16 +454,16 @@
         "getManaTarget": 75000000,
         "getNextFlushableEpoch": 4402,
         "getOutbox": "eth:0x5B062aB5fD3A66BC7e73b04CeD38587673b6A2D7",
-        "getPendingCheckpointNumber": 118925,
+        "getPendingCheckpointNumber": 139017,
         "getPendingSlasher": {
           "slasher": "eth:0x0000000000000000000000000000000000000000",
           "readyAt": 0
         },
         "getProofSubmissionEpochs": 1,
         "getProtocolContractsHash": "0x2c075866eafc88a1f6f9addc7e337c6e64e45d1cb7fd7c0d612ebcec72aab2ca",
-        "getProvenCheckpointNumber": 118925,
+        "getProvenCheckpointNumber": 139007,
         "getProvingCostPerManaInEth": 12500000,
-        "getProvingCostPerManaInFeeAsset": 1812613732449,
+        "getProvingCostPerManaInFeeAsset": 2038514552385,
         "getRewardBooster": "eth:0x4490cAb7Ce3499353E1b0090b9e530c1AD03B551",
         "getRewardConfig": {
           "rewardDistributor": "eth:0x555bAAc4757A89f1CE0c84fA35afE9dD7aa8E1d3",
@@ -797,7 +477,7 @@
         "getSlotDuration": 72,
         "getStakingAsset": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
         "getTargetCommitteeSize": 48,
-        "getTips": { "pending": 118925, "proven": 118925 },
+        "getTips": { "pending": 139017, "proven": 139007 },
         "getVersion": 4248422647,
         "getVkTreeRoot": "0x2b3b6ea4412b9c8f6457a37f91a2870306f8641e07e16a49b68bda6f8bc02892",
         "L1_BLOCK_AT_GENESIS": 25428902,
@@ -816,7 +496,7 @@
           "description": "Maximum mana that a checkpoint can consume. It is derived from the current mana target."
         },
         "latestStakingQueueConfigUpdate": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Latest owner-set validator entry-queue configuration. If absent, the deployment configuration in constructorArgs is still in effect."
         },
         "getEntryQueueFlushSize": {
@@ -853,10 +533,11 @@
           "description": "Reward distributor used by this rollup."
         },
         "getSlasher": {
+          "severity": "HIGH",
           "description": "Active Slasher authorized by this rollup."
         },
         "getPendingSlasher": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Queued replacement Slasher and the timestamp at which anyone can finalize the replacement."
         },
         "getLegacySlasher": {
@@ -905,101 +586,18 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "eth:0x92Ba0FD39658105FaC4dF2B9BADE998B5816b350",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "AZTEC Token",
       "address": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
-      "type": "Contract",
-      "template": "aztecnetwork/Aztec",
-      "sourceHashes": [
-        "0x6018c4d73b9151449ab94fa44cb69a1f9d6eaa71dbf36cbf9f262a54b77e20da"
-      ],
-      "proxyType": "immutable",
-      "description": "AZTEC token contract",
-      "ignoreInWatchMode": ["totalSupply"],
-      "deployerAddress": "eth:0xCbE23F4EBd9150e3A9d3A80442d145FAD624751d",
-      "sinceTimestamp": 1751359739,
-      "sinceBlock": 22823299,
-      "values": {
-        "$immutable": true,
-        "decimals": 18,
-        "DOMAIN_SEPARATOR": "0xa70675fc933c476d0f385b5af801a04433e3d6c4305bc61f5b1e45bc92773525",
-        "eip712Domain": {
-          "fields": "0x0f",
-          "name": "AZTEC",
-          "version": "1",
-          "chainId": 1,
-          "verifyingContract": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
-          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "extensions": []
-        },
-        "name": "AZTEC",
-        "owner": "eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6",
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "symbol": "AZTEC",
-        "totalSupply": "10350000000000000000000000000"
-      },
-      "fieldMeta": {
-        "owner": { "description": "Owner of the AZTEC token." },
-        "pendingOwner": {
-          "description": "Address nominated to become the AZTEC token owner."
-        }
-      },
-      "implementationNames": {
-        "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2": "Aztec"
-      },
-      "category": { "name": "Governance", "priority": 3 }
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-aztec"
     },
     {
       "name": "GSE",
       "address": "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f",
-      "type": "Contract",
-      "template": "aztecnetwork/GSE",
-      "sourceHashes": [
-        "0x25ba11bed3e4573e049efd5cea98a8d47ccd23a404f2777f5cd2c6d101b1eb4f"
-      ],
-      "proxyType": "immutable",
-      "description": "Central staking manager independent of Rollup implementations. Sequencers deposit stake here through their chosen Rollup contract. Their stake is then transferred to the Governance contract and activated for voting. The GSE tracks which rollup instance validators are securing, and gives them an option to automatically move to the latest Rollup version.",
-      "ignoreInWatchMode": ["totalSupply"],
-      "deployerAddress": "eth:0x85e51a78FE8FE21d881894206A9adbf54e3Df8c3",
-      "sinceTimestamp": 1762995035,
-      "sinceBlock": 23786826,
-      "values": {
-        "$immutable": true,
-        "ACTIVATION_THRESHOLD": "200000000000000000000000",
-        "ASSET": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
-        "BONUS_INSTANCE_ADDRESS": "eth:0x9064Fb41156D300196d5Eb95E0B3c1f08eBc39a8",
-        "EJECTION_THRESHOLD": "100000000000000000000000",
-        "getBonusInstanceAddress": "eth:0x9064Fb41156D300196d5Eb95E0B3c1f08eBc39a8",
-        "getGovernance": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
-        "getLatestRollup": "eth:0xE37A2663Cc9c119BA41572C40fAb0bbb23a5402f",
-        "owner": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
-        "proofOfPossessionGasLimit": 300000,
-        "totalSupply": "646964000000000000000000000"
-      },
-      "fieldMeta": {
-        "proofOfPossessionGasLimit": {
-          "severity": "MEDIUM",
-          "description": "Gas cap for verifying a new validator's BLS proof of possession. The owner can set it too low for valid keys, which blocks new validator deposits."
-        },
-        "ASSET": {
-          "description": "ERC20 token staked by validators and used for governance voting power."
-        },
-        "getGovernance": {
-          "description": "One-time configured contract receiving voting power from staked validators."
-        },
-        "getLatestRollup": {
-          "description": "Latest rollup registered in the GSE. Validators assigned to the bonus instance follow this address."
-        },
-        "owner": { "description": "Owner of the GSE." }
-      },
-      "implementationNames": {
-        "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f": "GSE"
-      },
-      "category": { "name": "Governance", "priority": 3 }
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-aztec"
     },
     {
       "name": "FeeJuicePortal",
@@ -1046,61 +644,11 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "address": "eth:0xB216FcaF63c6C0f73a557B342e1Da9710C95DA81",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xb33a08eF4624eE8F409F749Ee73766E225bEd0F4",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xb6Da7B7a0d8c7349630183f4Bd6F13D4a8AD9216",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "SlashVeto Council",
       "address": "eth:0xBbB4aF368d02827945748b28CD4b2D42e4A37480",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "deployerAddress": "eth:0x7EAbE4F636B937628A7Fe503bD7F06772C047FEe",
-      "sinceTimestamp": 1762176359,
-      "sinceBlock": 23719087,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
-        "$members": [
-          "eth:0xb33a08eF4624eE8F409F749Ee73766E225bEd0F4",
-          "eth:0xb6Da7B7a0d8c7349630183f4Bd6F13D4a8AD9216",
-          "eth:0xB216FcaF63c6C0f73a557B342e1Da9710C95DA81",
-          "eth:0x81062F03742B88923eaB121243B69D0a0092089e",
-          "eth:0x32e90E88bb2E6Ee4382e6884cC5c299a6bA27920",
-          "eth:0x23d4A9533627eA70915026638ff5989a967Be667",
-          "eth:0x8138c46A572D989E54837d5e5dEB506889edFb5D",
-          "eth:0x0Fb6215099f48D723CfB89434C2cb887357Bc871",
-          "eth:0x7EAbE4F636B937628A7Fe503bD7F06772C047FEe"
-        ],
-        "$threshold": 5,
-        "domainSeparator": "0x0ac0f33017c635adbf51e5320e2bb322a70446b7bc0ec2080bc5752ae7286b82",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "5 of 9 (56%)",
-        "nonce": 6,
-        "VERSION": "1.4.1"
-      },
-      "implementationNames": {
-        "eth:0xBbB4aF368d02827945748b28CD4b2D42e4A37480": "SafeProxy",
-        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      },
-      "category": { "name": "Governance", "priority": 3 }
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-aztec"
     },
     {
       "name": "Slasher",
@@ -1174,7 +722,7 @@
       "type": "Contract",
       "template": "zkmoney/ZkMoneyPortal",
       "sourceHashes": [
-        "0x7020e3729f66f6c8ddada17eeb82b33ae8b7f623c0ffb3bb6c921bf966a7f6a8"
+        "0xd99b45ced6473f41ba909b533b1096d83b7d9633cee20987ca077ce8eb389be6"
       ],
       "proxyType": "immutable",
       "description": "Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint.",
@@ -1259,72 +807,12 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "AztecTokenPositionRegistry_ProtocolTreasury",
-      "address": "eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80",
-      "type": "Contract",
-      "template": "aztecnetwork/AztecTokenPositionRegistry",
-      "sourceHashes": [
-        "0x6b4881b4d3b0b5aaa49b8a1e3784bd49053169584e8b661678a44b65a5b15db1"
-      ],
-      "proxyType": "immutable",
-      "description": "AZTEC token-position Registry referenced by the ProtocolTreasury for its activation cutoff and by other ecosystem vesting contracts.",
-      "deployerAddress": "eth:0xA8085a1e881c7c0F32ea69cf41A3C21b67ed5f1D",
-      "sinceTimestamp": 1756897955,
-      "sinceBlock": 23282209,
-      "values": {
-        "$immutable": true,
-        "getExecuteAllowedAt": 1794546000,
-        "getGlobalLockParams": {
-          "startTime": 1794546000,
-          "cliffDuration": 0,
-          "lockDuration": 63072000
-        },
-        "getNextMilestoneId": 3,
-        "getNextStakerVersion": 1,
-        "getRevoker": "eth:0x30F17c3360Dc00B9315b0E8e1253Bc408644a725",
-        "getRevokerOperator": "eth:0x0000000000000000000000000000000000000000",
-        "getStakerImplementation": [
-          "eth:0x79075C8E314Ab4A84d54F90b1c7032Dc5469082d"
-        ],
-        "getUnlockStartTime": 1794546000,
-        "owner": "eth:0x92Ba0FD39658105FaC4dF2B9BADE998B5816b350",
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
-      },
-      "fieldMeta": {
-        "owner": { "description": "Owner of the ATP Registry." },
-        "pendingOwner": {
-          "description": "Address nominated to become the ATP Registry owner."
-        },
-        "getUnlockStartTime": {
-          "severity": "HIGH",
-          "description": "Start of the global AZTEC unlock schedule. The owner can only move it earlier."
-        },
-        "getExecuteAllowedAt": {
-          "severity": "HIGH",
-          "description": "Base execution-eligibility timestamp used by contracts that reference this Registry. The owner can only move it earlier."
-        },
-        "getStakerImplementation": {
-          "description": "Registered upgradeable staker implementations by version. Implementations only need to expose the required UUPS compatibility identifier."
-        },
-        "getRevoker": {
-          "description": "Address used by ATP positions as the revocation authority."
-        },
-        "getRevokerOperator": {
-          "description": "Optional operator allowed to perform revocation-related actions on behalf of the revoker."
-        }
-      },
-      "implementationNames": {
-        "eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80": "Registry"
-      },
-      "category": { "name": "Governance", "priority": 3 }
-    },
-    {
       "name": "ZkMoneyPortal",
       "address": "eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449",
       "type": "Contract",
       "template": "zkmoney/ZkMoneyPortal",
       "sourceHashes": [
-        "0x4abb439f2218670904cdae29f2663f412a1ca4d63284a05120c764dc8eed141e"
+        "0x4d89fd312c737814de5e81632ef9671e232ec8faa7bbbfbba98e7c9c2787b25b"
       ],
       "proxyType": "immutable",
       "description": "Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint.",
@@ -1459,7 +947,7 @@
         "getBondSizeFmt": "332,000,000",
         "getBondToken": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
         "getCandidateCount": 0,
-        "getCurrentHatch": 39,
+        "getCurrentHatch": 45,
         "getFailedHatchPunishment": "9600000000000000000000000",
         "getFailedHatchPunishmentFmt": "9,600,000",
         "getFrequency": 112,
@@ -1520,215 +1008,9 @@
     }
   ],
   "abis": {
-    "eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6": [
-      "constructor(address _asset, uint256 _annualPercentage, address _owner)",
-      "error CoinIssuer__InsufficientMintAvailable(uint256 available, uint256 needed)",
-      "error CoinIssuer__InvalidConfiguration()",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "event BudgetReset(uint256 indexed newYear, uint256 newBudget)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function ASSET() view returns (address)",
-      "function DEPLOYMENT_TIME() view returns (uint256)",
-      "function NOMINAL_ANNUAL_PERCENTAGE_CAP() view returns (uint256)",
-      "function acceptTokenOwnership()",
-      "function cachedBudget() view returns (uint256)",
-      "function cachedBudgetYear() view returns (uint256)",
-      "function mint(address _to, uint256 _amount)",
-      "function mintAvailable() view returns (uint256)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)"
-    ],
-    "eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef": [
-      "constructor(address _registry, address _gse, uint256 _quorumSize, uint256 _roundSize)",
-      "error ECDSAInvalidSignature()",
-      "error ECDSAInvalidSignatureLength(uint256 length)",
-      "error ECDSAInvalidSignatureS(bytes32 s)",
-      "error EmpireBase__FailedToSubmitRoundWinner(address payload)",
-      "error EmpireBase__InstanceHaveNoCode(address instance)",
-      "error EmpireBase__InsufficientSignals(uint256 signalsCast, uint256 signalsNeeded)",
-      "error EmpireBase__InvalidLifetimeAndExecutionDelay(uint256 lifetimeInRounds, uint256 executionDelayInRounds)",
-      "error EmpireBase__InvalidQuorumAndRoundSize(uint256 quorumSize, uint256 roundSize)",
-      "error EmpireBase__OnlyProposerCanSignal(address caller, address proposer)",
-      "error EmpireBase__PayloadAlreadySubmitted(uint256 roundNumber)",
-      "error EmpireBase__PayloadCannotBeAddressZero()",
-      "error EmpireBase__QuorumCannotBeLargerThanRoundSize(uint256 quorumSize, uint256 roundSize)",
-      "error EmpireBase__RoundTooNew(uint256 roundNumber, uint256 currentRoundNumber)",
-      "error EmpireBase__RoundTooOld(uint256 roundNumber, uint256 currentRoundNumber)",
-      "error EmpireBase__SignalAlreadyCastForSlot(uint256 slot)",
-      "error InvalidShortString()",
-      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
-      "error SignatureLib__InvalidSignature(address, address)",
-      "error StringTooLong(string str)",
-      "event EIP712DomainChanged()",
-      "event PayloadSubmittable(address indexed payload, uint256 indexed round)",
-      "event PayloadSubmitted(address indexed payload, uint256 indexed round)",
-      "event SignalCast(address indexed payload, uint256 indexed round, address indexed signaler)",
-      "function EXECUTION_DELAY_IN_ROUNDS() view returns (uint256)",
-      "function GSE() view returns (address)",
-      "function LIFETIME_IN_ROUNDS() view returns (uint256)",
-      "function QUORUM_SIZE() view returns (uint256)",
-      "function REGISTRY() view returns (address)",
-      "function ROUND_SIZE() view returns (uint256)",
-      "function SIGNAL_TYPEHASH() view returns (bytes32)",
-      "function computeRound(uint256 _slot) view returns (uint256)",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function getCurrentRound() view returns (uint256)",
-      "function getGovernance() view returns (address)",
-      "function getInstance() view returns (address)",
-      "function getProposalProposer(uint256 _proposalId) view returns (address)",
-      "function getRoundData(address _instance, uint256 _round) view returns (tuple(uint256 lastSignalSlot, address payloadWithMostSignals, bool executed))",
-      "function getSignalSignatureDigest(address _payload, uint256 _slot) view returns (bytes32)",
-      "function signal(address _payload) returns (bool)",
-      "function signalCount(address _instance, uint256 _round, address _payload) view returns (uint256)",
-      "function signalWithSig(address _payload, tuple(uint8 v, bytes32 r, bytes32 s) _sig) returns (bool)",
-      "function submitRoundWinner(uint256 _roundNumber) returns (bool)"
-    ],
     "eth:0x098f47c00F4df22a8030746Eb11378236C24b4bC": [
       "constructor()",
       "function verify(bytes, bytes32[]) view returns (bool)"
-    ],
-    "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e": [
-      "constructor(address _asset, address _governanceProposer, address _beneficiary, tuple(tuple(uint256 lockDelay, uint256 lockAmount) proposeConfig, uint256 votingDelay, uint256 votingDuration, uint256 executionDelay, uint256 gracePeriod, uint256 quorum, uint256 requiredYeaMargin, uint256 minimumVotes) _configuration)",
-      "error CheckpointUnorderedInsertion()",
-      "error Governance__CallFailed(address target)",
-      "error Governance__CallerCannotBeSelf()",
-      "error Governance__CallerNotGovernanceProposer(address caller, address governanceProposer)",
-      "error Governance__CallerNotSelf(address caller, address self)",
-      "error Governance__CannotCallAsset()",
-      "error Governance__CannotWithdrawToAddressZero()",
-      "error Governance__CheckpointedUintLib__InsufficientValue(address owner, uint256 have, uint256 required)",
-      "error Governance__CheckpointedUintLib__NotInPast()",
-      "error Governance__ConfigurationLib__InvalidMinimumVotes()",
-      "error Governance__ConfigurationLib__LockAmountTooBig()",
-      "error Governance__ConfigurationLib__LockAmountTooSmall()",
-      "error Governance__ConfigurationLib__QuorumTooBig()",
-      "error Governance__ConfigurationLib__QuorumTooSmall()",
-      "error Governance__ConfigurationLib__RequiredYeaMarginTooBig()",
-      "error Governance__ConfigurationLib__TimeTooBig(string name)",
-      "error Governance__ConfigurationLib__TimeTooSmall(string name)",
-      "error Governance__DepositNotAllowed()",
-      "error Governance__GovernanceProposerCannotBeSelf()",
-      "error Governance__InsufficientPower(address voter, uint256 have, uint256 required)",
-      "error Governance__ProposalAlreadyDropped()",
-      "error Governance__ProposalCannotBeDropped()",
-      "error Governance__ProposalDoesNotExists(uint256 proposalId)",
-      "error Governance__ProposalNotActive()",
-      "error Governance__ProposalNotExecutable()",
-      "error Governance__WithdrawalAlreadyClaimed()",
-      "error Governance__WithdrawalNotInitiated()",
-      "error Governance__WithdrawalNotUnlockedYet(uint256 currentTime, uint256 unlocksAt)",
-      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
-      "error SafeERC20FailedOperation(address token)",
-      "event BeneficiaryAdded(address beneficiary)",
-      "event ConfigurationUpdated(uint256 indexed time)",
-      "event Deposit(address indexed depositor, address indexed onBehalfOf, uint256 amount)",
-      "event FloodGatesOpened()",
-      "event GovernanceProposerUpdated(address indexed governanceProposer)",
-      "event ProposalDropped(uint256 indexed proposalId)",
-      "event ProposalExecuted(uint256 indexed proposalId)",
-      "event Proposed(uint256 indexed proposalId, address indexed proposal)",
-      "event VoteCast(uint256 indexed proposalId, address indexed voter, bool support, uint256 amount)",
-      "event WithdrawFinalized(uint256 indexed withdrawalId)",
-      "event WithdrawInitiated(uint256 indexed withdrawalId, address indexed recipient, uint256 amount)",
-      "function ASSET() view returns (address)",
-      "function addBeneficiary(address _beneficiary)",
-      "function deposit(address _beneficiary, uint256 _amount)",
-      "function dropProposal(uint256 _proposalId)",
-      "function execute(uint256 _proposalId)",
-      "function finalizeWithdraw(uint256 _withdrawalId)",
-      "function getBallot(uint256 _proposalId, address _user) view returns (tuple(uint256 yea, uint256 nay))",
-      "function getConfiguration() view returns (tuple(tuple(uint256 lockDelay, uint256 lockAmount) proposeConfig, uint256 votingDelay, uint256 votingDuration, uint256 executionDelay, uint256 gracePeriod, uint256 quorum, uint256 requiredYeaMargin, uint256 minimumVotes))",
-      "function getProposal(uint256 _proposalId) view returns (tuple(tuple(uint256 votingDelay, uint256 votingDuration, uint256 executionDelay, uint256 gracePeriod, uint256 quorum, uint256 requiredYeaMargin, uint256 minimumVotes) config, uint8 cachedState, address payload, address proposer, uint256 creation, tuple(uint256 yea, uint256 nay) summedBallot))",
-      "function getProposalState(uint256 _proposalId) view returns (uint8)",
-      "function getWithdrawal(uint256 _withdrawalId) view returns (tuple(uint256 amount, uint256 unlocksAt, address recipient, bool claimed))",
-      "function governanceProposer() view returns (address)",
-      "function initiateWithdraw(address _to, uint256 _amount) returns (uint256)",
-      "function isAllBeneficiariesAllowed() view returns (bool)",
-      "function isPermittedInGovernance(address _beneficiary) view returns (bool)",
-      "function openFloodgates()",
-      "function powerAt(address _owner, uint256 _ts) view returns (uint256)",
-      "function powerNow(address _owner) view returns (uint256)",
-      "function proposalCount() view returns (uint256)",
-      "function propose(address _proposal) returns (uint256)",
-      "function proposeWithLock(address _proposal, address _to) returns (uint256)",
-      "function totalPowerAt(uint256 _ts) view returns (uint256)",
-      "function totalPowerNow() view returns (uint256)",
-      "function updateConfiguration(tuple(tuple(uint256 lockDelay, uint256 lockAmount) proposeConfig, uint256 votingDelay, uint256 votingDuration, uint256 executionDelay, uint256 gracePeriod, uint256 quorum, uint256 requiredYeaMargin, uint256 minimumVotes) _configuration)",
-      "function updateGovernanceProposer(address _governanceProposer)",
-      "function vote(uint256 _proposalId, uint256 _amount, bool _support)",
-      "function withdrawalCount() view returns (uint256)"
-    ],
-    "eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298": [
-      "constructor(address _owner, address _rewardAsset)",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "error Registry__NoRollupsRegistered()",
-      "error Registry__RollupAlreadyRegistered(address rollup)",
-      "error Registry__RollupNotRegistered(uint256 version)",
-      "event CanonicalRollupUpdated(address indexed instance, uint256 indexed version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event RewardDistributorUpdated(address indexed rewardDistributor)",
-      "function addRollup(address _rollup)",
-      "function getCanonicalRollup() view returns (address)",
-      "function getGovernance() view returns (address)",
-      "function getRewardDistributor() view returns (address)",
-      "function getRollup(uint256 _version) view returns (address)",
-      "function getVersion(uint256 _index) view returns (uint256)",
-      "function numberOfVersions() view returns (uint256)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function updateRewardDistributor(address _rewardDistributor)"
-    ],
-    "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
-      "constructor()",
-      "event AddedOwner(address indexed owner)",
-      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
-      "event ChangedFallbackHandler(address indexed handler)",
-      "event ChangedGuard(address indexed guard)",
-      "event ChangedThreshold(uint256 threshold)",
-      "event DisabledModule(address indexed module)",
-      "event EnabledModule(address indexed module)",
-      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
-      "event ExecutionFromModuleFailure(address indexed module)",
-      "event ExecutionFromModuleSuccess(address indexed module)",
-      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
-      "event RemovedOwner(address indexed owner)",
-      "event SafeReceived(address indexed sender, uint256 value)",
-      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
-      "event SignMsg(bytes32 indexed msgHash)",
-      "function VERSION() view returns (string)",
-      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
-      "function approveHash(bytes32 hashToApprove)",
-      "function approvedHashes(address, bytes32) view returns (uint256)",
-      "function changeThreshold(uint256 _threshold)",
-      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
-      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
-      "function disableModule(address prevModule, address module)",
-      "function domainSeparator() view returns (bytes32)",
-      "function enableModule(address module)",
-      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
-      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
-      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
-      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
-      "function getChainId() view returns (uint256)",
-      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
-      "function getOwners() view returns (address[])",
-      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
-      "function getThreshold() view returns (uint256)",
-      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
-      "function isModuleEnabled(address module) view returns (bool)",
-      "function isOwner(address owner) view returns (bool)",
-      "function nonce() view returns (uint256)",
-      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
-      "function setFallbackHandler(address handler)",
-      "function setGuard(address guard)",
-      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
-      "function signedMessages(bytes32) view returns (uint256)",
-      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
-      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
     "eth:0x4490cAb7Ce3499353E1b0090b9e530c1AD03B551": [
       "constructor(address _rollup, tuple(uint32 increment, uint32 maxScore, uint32 a, uint32 minimum, uint32 k) _config)",
@@ -1805,26 +1087,6 @@
       "function getEpochProofPublicInputs(uint256 _start, uint256 _end, tuple(bytes32 previousArchive, bytes32 endArchive, bytes32 outHash, address proverId) _args, tuple(bytes32 lastArchiveRoot, bytes32 blockHeadersHash, bytes32 blobsHash, bytes32 inHash, bytes32 outHash, uint256 slotNumber, uint256 timestamp, address coinbase, bytes32 feeRecipient, tuple(uint128 feePerDaGas, uint128 feePerL2Gas) gasFees, uint256 totalManaUsed, uint256 accumulatedFees)[] _headers, bytes _blobPublicInputs) view returns (bytes32[])",
       "function validateBlobs(bytes _blobsInput, bool _checkBlob) view returns (bytes32[] blobHashes, bytes32 blobsHashesCommitment, bytes[] blobCommitments)"
     ],
-    "eth:0x555bAAc4757A89f1CE0c84fA35afE9dD7aa8E1d3": [
-      "constructor(address _asset, address _registry)",
-      "error RewardDistributor__InsufficientAvailable(uint256 requested, uint256 available)",
-      "error RewardDistributor__InvalidCaller(address caller, address canonical)",
-      "error RewardDistributor__WrongRecoverMechanism()",
-      "error RewardDistributor__ZeroRollup()",
-      "error SafeERC20FailedOperation(address token)",
-      "event Distributed(address indexed from, address indexed to, uint256 amount, uint256 implicitAmountUsed, uint256 earmarkedAmountUsed)",
-      "event Subsidized(address indexed funder, address indexed recipient, uint256 amount)",
-      "function ASSET() view returns (address)",
-      "function REGISTRY() view returns (address)",
-      "function availableTo(address _recipient) view returns (uint256)",
-      "function canonicalRollup() view returns (address)",
-      "function claim(address _to, uint256 _amount)",
-      "function recoverFrom(address _from, address _to, uint256 _amount)",
-      "function recoverWrongAsset(address _asset, address _to, uint256 _amount)",
-      "function specificRecipientBalance(address recipient) view returns (uint256 amount)",
-      "function subsidizeAddress(address _recipient, uint256 _amount)",
-      "function totalEarmarkedBalance() view returns (uint256)"
-    ],
     "eth:0x57576AbA1932df7Cc30F971ACC9d4Fc6E86B6e87": [
       "function getActions() view returns (tuple(address target, bytes data)[] actions)",
       "function getURI() pure returns (string)"
@@ -1851,47 +1113,6 @@
       "function getRoots(uint256 _epoch) view returns (bytes32[32])",
       "function hasMessageBeenConsumedAtEpoch(uint256 _epoch, uint256 _leafId) view returns (bool)",
       "function insert(uint256 _epoch, uint256 _numCheckpointsInEpoch, bytes32 _root)"
-    ],
-    "eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a": [
-      "constructor(address _governance, address _atpRegistry, uint256 _gatedUntil)",
-      "error FailedCall()",
-      "error GateIsClosed(string reason)",
-      "error InsufficientBalance(uint256 balance, uint256 needed)",
-      "error NoProposalToMark()",
-      "error OwnableUnauthorizedAccount(address account)",
-      "error ProposalIsAlive()",
-      "event ProposalMarked(uint256 indexed proposalId)",
-      "function ATP_REGISTRY() view returns (address)",
-      "function GATED_UNTIL() view returns (uint256)",
-      "function GOVERNANCE() view returns (address)",
-      "function blockOfLastMarkNext() view returns (uint256)",
-      "function getActivationTimestamp() view returns (uint256)",
-      "function markNext()",
-      "function markedProposalsCount() view returns (uint256)",
-      "function owner() view returns (address)",
-      "function relay(address target, bytes data, uint256 value) returns (bytes)"
-    ],
-    "eth:0x79075C8E314Ab4A84d54F90b1c7032Dc5469082d": [
-      "constructor()",
-      "error AddressEmptyCode(address target)",
-      "error AlreadyInitialized()",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error FailedCall()",
-      "error NotATP(address caller, address atp)",
-      "error NotOperator(address caller, address operator)",
-      "error UUPSUnauthorizedCallContext()",
-      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
-      "error UnSupportedOperation()",
-      "error ZeroATP()",
-      "event Upgraded(address indexed implementation)",
-      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
-      "function getATP() view returns (address)",
-      "function getImplementation() view returns (address)",
-      "function getOperator() view returns (address)",
-      "function initialize(address _atp)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "eth:0x7d4Ef0676c2032bbCC09227501D34d86641ab8cA": [
       "constructor(address _rollup, address _feeAsset, uint256 _version, uint256 _height, uint256 _lag)",
@@ -2152,122 +1373,6 @@
       "function validateHeaderWithAttestations(tuple(bytes32 lastArchiveRoot, bytes32 blockHeadersHash, bytes32 blobsHash, bytes32 inHash, bytes32 outHash, uint256 slotNumber, uint256 timestamp, address coinbase, bytes32 feeRecipient, tuple(uint128 feePerDaGas, uint128 feePerL2Gas) gasFees, uint256 totalManaUsed, uint256 accumulatedFees) _header, tuple(bytes signatureIndices, bytes signaturesOrAddresses) _attestations, address[] _signers, tuple(uint8 v, bytes32 r, bytes32 s) _attestationsAndSignersSignature, bytes32 _digest, bytes32 _blobsHash, tuple(bool ignoreDA) _flags)",
       "function vote(uint256 _proposalId)"
     ],
-    "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2": [
-      "constructor(address _initialOwner)",
-      "error ECDSAInvalidSignature()",
-      "error ECDSAInvalidSignatureLength(uint256 length)",
-      "error ECDSAInvalidSignatureS(bytes32 s)",
-      "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
-      "error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed)",
-      "error ERC20InvalidApprover(address approver)",
-      "error ERC20InvalidReceiver(address receiver)",
-      "error ERC20InvalidSender(address sender)",
-      "error ERC20InvalidSpender(address spender)",
-      "error ERC2612ExpiredSignature(uint256 deadline)",
-      "error ERC2612InvalidSigner(address signer, address owner)",
-      "error InvalidAccountNonce(address account, uint256 currentNonce)",
-      "error InvalidShortString()",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "error StringTooLong(string str)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event EIP712DomainChanged()",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function acceptOwnership()",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 value) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function decimals() view returns (uint8)",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function mint(address _to, uint256 _amount)",
-      "function name() view returns (string)",
-      "function nonces(address owner) view returns (uint256)",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
-      "function renounceOwnership()",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address to, uint256 value) returns (bool)",
-      "function transferFrom(address from, address to, uint256 value) returns (bool)",
-      "function transferOwnership(address newOwner)"
-    ],
-    "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f": [
-      "constructor(address __owner, address _asset, uint256 _activationThreshold, uint256 _ejectionThreshold)",
-      "error AddressSnapshotLib__CannotAddAddressZero()",
-      "error AddressSnapshotLib__IndexOutOfBounds(uint256 index, uint256 size)",
-      "error CheckpointUnorderedInsertion()",
-      "error Delegation__InsufficientPower(address, uint256, uint256)",
-      "error GSE__AlreadyRegistered(address, address)",
-      "error GSE__CannotChangePublicKeys(uint256 existingPk1x, uint256 existingPk1y)",
-      "error GSE__FailedToRemove(address)",
-      "error GSE__FatalError(string)",
-      "error GSE__GovernanceAlreadySet()",
-      "error GSE__InstanceDoesNotExist(address)",
-      "error GSE__InsufficientBalance(uint256, uint256)",
-      "error GSE__InvalidProofOfPossession()",
-      "error GSE__InvalidRollupAddress(address)",
-      "error GSE__NotLatestRollup(address)",
-      "error GSE__NotRollup(address)",
-      "error GSE__NotWithdrawer(address, address)",
-      "error GSE__NothingToExit(address)",
-      "error GSE__OutOfBounds(uint256, uint256)",
-      "error GSE__ProofOfPossessionAlreadySeen(bytes32 hashedPK1)",
-      "error GSE__RollupAlreadyRegistered(address)",
-      "error Governance__CheckpointedUintLib__InsufficientValue(address owner, uint256 have, uint256 required)",
-      "error Governance__CheckpointedUintLib__NotInPast()",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
-      "error SafeERC20FailedOperation(address token)",
-      "event DelegateChanged(address indexed attester, address oldDelegatee, address newDelegatee)",
-      "event DelegateVotesChanged(address indexed delegatee, uint256 oldValue, uint256 newValue)",
-      "event Deposit(address indexed instance, address indexed attester, address withdrawer)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function ACTIVATION_THRESHOLD() view returns (uint256)",
-      "function ASSET() view returns (address)",
-      "function BONUS_INSTANCE_ADDRESS() view returns (address)",
-      "function EJECTION_THRESHOLD() view returns (uint256)",
-      "function addRollup(address _rollup)",
-      "function balanceOf(address _instance, address _attester) view returns (uint256)",
-      "function delegate(address _instance, address _attester, address _delegatee)",
-      "function deposit(address _attester, address _withdrawer, tuple(uint256 x, uint256 y) _publicKeyInG1, tuple(uint256 x0, uint256 x1, uint256 y0, uint256 y1) _publicKeyInG2, tuple(uint256 x, uint256 y) _proofOfPossession, bool _moveWithLatestRollup)",
-      "function effectiveBalanceOf(address _instance, address _attester) view returns (uint256)",
-      "function finalizeWithdraw(uint256 _withdrawalId)",
-      "function getAttesterCountAtTime(address _instance, uint256 _timestamp) view returns (uint256)",
-      "function getAttesterFromIndexAtTime(address _instance, uint256 _index, uint256 _timestamp) view returns (address)",
-      "function getAttestersFromIndicesAtTime(address _instance, uint256 _timestamp, uint256[] _indices) view returns (address[])",
-      "function getBonusInstanceAddress() pure returns (address)",
-      "function getConfig(address _attester) view returns (tuple(tuple(uint256 x, uint256 y) publicKey, address withdrawer))",
-      "function getDelegatee(address _instance, address _attester) view returns (address)",
-      "function getG1PublicKeysFromAddresses(address[] _attesters) view returns (tuple(uint256 x, uint256 y)[])",
-      "function getGovernance() view returns (address)",
-      "function getLatestRollup() view returns (address)",
-      "function getLatestRollupAt(uint256 _timestamp) view returns (address)",
-      "function getPowerUsed(address _delegatee, uint256 _proposalId) view returns (uint256)",
-      "function getRegistrationDigest(tuple(uint256 x, uint256 y) _publicKey) view returns (tuple(uint256 x, uint256 y))",
-      "function getVotingPower(address _delegatee) view returns (uint256)",
-      "function getVotingPowerAt(address _delegatee, uint256 _timestamp) view returns (uint256)",
-      "function getWithdrawer(address _attester) view returns (address withdrawer)",
-      "function isRegistered(address _instance, address _attester) view returns (bool)",
-      "function isRollupRegistered(address _instance) view returns (bool)",
-      "function ownedPKs(bytes32 hashedPK1) view returns (bool isRegistered)",
-      "function owner() view returns (address)",
-      "function proofOfPossessionGasLimit() view returns (uint64)",
-      "function proposeWithLock(address _payload, address _to) returns (uint256)",
-      "function renounceOwnership()",
-      "function setGovernance(address _governance)",
-      "function setProofOfPossessionGasLimit(uint64 _proofOfPossessionGasLimit)",
-      "function supplyOf(address _instance) view returns (uint256)",
-      "function totalSupply() view returns (uint256)",
-      "function transferOwnership(address newOwner)",
-      "function vote(uint256 _proposalId, uint256 _amount, bool _support)",
-      "function voteWithBonus(uint256 _proposalId, uint256 _amount, bool _support)",
-      "function withdraw(address _attester, uint256 _amount) returns (uint256, bool, uint256)"
-    ],
     "eth:0xaf73Dd51D1eb8a079BB097f39c832cDD00ac691c": [
       "constructor(address _rollup, address _underlying, address _inbox, uint256 _version)",
       "error FeeJuicePortal__Unauthorized()",
@@ -2281,9 +1386,6 @@
       "function VERSION() view returns (uint256)",
       "function depositToAztecPublic(bytes32 _to, uint256 _amount, bytes32 _secretHash) returns (bytes32, uint256)",
       "function distributeFees(address _to, uint256 _amount)"
-    ],
-    "eth:0xBbB4aF368d02827945748b28CD4b2D42e4A37480": [
-      "constructor(address _singleton)"
     ],
     "eth:0xCD6855470A01aBcd989126A1183Fb50673952548": [
       "constructor(address _vetoer, address _governance, uint256 _slashingDisableDuration)",
@@ -2471,49 +1573,6 @@
       "function verifyTeeCACert(bytes _cert, bytes32 _parentCertHash) returns (bytes32 certHash)",
       "function verifyTeeClientCert(bytes _cert, bytes32 _parentCertHash) returns (bytes32 certHash)",
       "function withdraw(tuple(tuple(address executor, bytes32 userPayloadHash, uint256 amount, uint256 proverTip, uint256 randomness) content, bytes userPayload, bytes relayerPayload, uint256 epochNumber, uint256 numCheckpointsInEpoch, uint256 leafIndex, bytes32[] path, uint256 checkpointNumber, bytes32 withdrawalId, bytes teeSignature) _args)"
-    ],
-    "eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80": [
-      "constructor(address __owner, uint256 _unlockCliffDuration, uint256 _unlockLockDuration)",
-      "error InvalidExecuteAllowedAt(uint256 newExecuteAllowedAt, uint256 currentExecuteAllowedAt)",
-      "error InvalidMilestoneId(uint96 milestoneId)",
-      "error InvalidMilestoneStatus(uint96 milestoneId)",
-      "error InvalidStakerImplementation(address implementation)",
-      "error InvalidUnlockCliffDuration()",
-      "error InvalidUnlockDuration()",
-      "error InvalidUnlockStartTime(uint256 newUnlockStartTime, uint256 currentUnlockStartTime)",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "error UnRegisteredStaker(uint256 version)",
-      "event MilestoneAdded(uint96 milestoneId)",
-      "event MilestoneStatusUpdated(uint96 milestoneId, uint8 status)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event StakerRegistered(uint256 version, address implementation)",
-      "event UpdatedExecuteAllowedAt(uint256 executeAllowedAt)",
-      "event UpdatedRevoker(address revoker)",
-      "event UpdatedRevokerOperator(address revokerOperator)",
-      "event UpdatedUnlockStartTime(uint256 unlockStartTime)",
-      "function acceptOwnership()",
-      "function addMilestone() returns (uint96)",
-      "function getExecuteAllowedAt() view returns (uint256)",
-      "function getGlobalLockParams() view returns (tuple(uint256 startTime, uint256 cliffDuration, uint256 lockDuration))",
-      "function getMilestoneStatus(uint96 _milestoneId) view returns (uint8)",
-      "function getNextMilestoneId() view returns (uint96)",
-      "function getNextStakerVersion() view returns (uint256)",
-      "function getRevoker() view returns (address)",
-      "function getRevokerOperator() view returns (address)",
-      "function getStakerImplementation(uint256 _version) view returns (address)",
-      "function getUnlockStartTime() view returns (uint256)",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function registerStakerImplementation(address _implementation)",
-      "function renounceOwnership()",
-      "function setExecuteAllowedAt(uint256 _executeAllowedAt)",
-      "function setMilestoneStatus(uint96 _milestoneId, uint8 _status)",
-      "function setRevoker(address _revoker)",
-      "function setRevokerOperator(address _revokerOperator)",
-      "function setUnlockStartTime(uint256 _unlockStartTime)",
-      "function transferOwnership(address newOwner)"
     ],
     "eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449": [
       "constructor(address _owner, tuple(address funder, uint256 cut) _fpcFunding, address _certManager, address _nitroValidator, address _underlying, address _registry, uint256 _rollupVersion, tuple(address frozenNotes, address frozenDeposit, address unprocessedDeposit) _verifiers, uint256 _rate, uint256 _globalLimit)",
@@ -2790,22 +1849,12 @@
     ]
   },
   "usedTemplates": {
-    "aztecnetwork/Aztec": "0x6645b996e229c02b4737c90730c261bc0b40a8d8a0ed903fcc8c039623221cba",
-    "aztecnetwork/AztecTokenPositionRegistry": "0xd5c2d5e3dd1f1826aa87f0a84fc9d6a6b3315c94de35eb55b67897c6062a86fc",
-    "aztecnetwork/BaseStaker": "0xbe778bfb27d4d9585c342b646028d3bad68fb26168156c904a48c5b373ec2d57",
-    "aztecnetwork/CoinIssuer": "0x6825408743b0c7e46d0cec3f16d4748fae3fb787ca2c2b89640d7d555becde6d",
     "aztecnetwork/EscapeHatch": "0x278ce5fa658c2670ffee19fc34bc3c5a96c15082eb359044bdcb9a86923105ad",
     "aztecnetwork/FeeJuicePortal": "0xe9ea6b0106f9528d083d0d76ffc797cce5258fa6cf3671ee16737a2aeeafcb8d",
-    "aztecnetwork/Governance": "0x11a37c83761ef56358402fbc3702bdf6337b5338eec472c4121e4231e7add5c8",
-    "aztecnetwork/GovernanceProposer": "0x6e8c1a085e1fd1a85a3b2670ef57d2e0a22a7cfdfde4a43d951674f78e74a0bb",
-    "aztecnetwork/GSE": "0x169aaece0e2547b54f717d122a7c4559464bb9b34b0e7b2137e2cb9897fcab89",
     "aztecnetwork/HonkVerifier_v5": "0xd9e0ec181ed3619401ce092458a17fc7fafd9032bfaedd6fe44017def9f3a77c",
     "aztecnetwork/Inbox": "0x26ded5aebf0bbb78b6882b2137d3ed9f4bf66d3b5f2e9aa69e2caae9f6e55af3",
     "aztecnetwork/Outbox": "0x7580184922415986aca787f016313f146eece507d34e8a9a40486d19dc1e7b6a",
-    "aztecnetwork/ProtocolTreasury": "0x71da2f0f489ca7ecd5a6726664e7577c5bbe1f7b1f44035f7317f6e484cb9b63",
-    "aztecnetwork/Registry": "0x437e8a5971b7d95018382a3710bac26bad359cb485d438d82ff20a3ec9d60202",
     "aztecnetwork/RewardBooster": "0x008d6f3c4e0a56a67c2b1321a470ee91733b809719f55133f46b32ca53e99cb5",
-    "aztecnetwork/RewardDistributor": "0x5db34519cfa677f6b064e107fb903172733613d58a6c80a2fa34cb92d45c9bbf",
     "aztecnetwork/RewardExtLib": "0xa32500c454c2a282c9883133fcb22fb13f1a91a0893a4e3818268c4d7c14a8b1",
     "aztecnetwork/Rollup": "0xb465a9b0d5155487b23b152c4c189047f1ec22a276b71676c7729d4b99b534a7",
     "aztecnetwork/RollupOperationsExtLib": "0x660d5b68ddffc6256478e4e9f1d2a1630668023a810dd7ad50a5921d67011e1f",
@@ -2813,11 +1862,13 @@
     "aztecnetwork/SlashingProposer": "0x70b79a36c61b6cf4228961c38942c4583a1cea12fff8b55c4566c5961d001891",
     "aztecnetwork/SlashPayloadCloneable": "0x821354dfe974f5f53d0c4ebf4ce746144ad353e598809041e44c28c9c572fd92",
     "aztecnetwork/ValidatorOperationsExtLib": "0x85a15d05fdc1ce926a97e31cd9f09ae813b449a9982a9e5a8d7bf37cc56a95f5",
-    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "zkmoney/ZkMoneyPortal": "0x4849cf15f068d591a1aa63a22d45dab667cc83726b39e596ca465b8c122c6383"
   },
-  "usedBlockNumbers": { "ethereum": 26275946 },
-  "permissionsConfigHash": "0x5bea0e70b100b146bfecd4ad29eea2c31a7ca69a20934a7cabb3e14d8da610d3",
+  "usedBlockNumbers": { "ethereum": 26405656 },
+  "permissionsConfigHash": "0xe3e69a3688785243c288c7e948675ae4d0c761ccf4817843f7e3f7a5b4fd56da",
+  "modelledAgainst": {
+    "shared-aztec": "0x27a6035460a134e8dbe4b7f29cb65a4c98c189bad449abf0f432726c70595b53"
+  },
   "permissions": {
     "eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6": {
       "directlyReceivedPermissions": [

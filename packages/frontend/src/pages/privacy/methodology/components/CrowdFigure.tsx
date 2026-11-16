@@ -134,7 +134,7 @@ export function CrowdFigure() {
             <p
               className={cn(
                 'mt-1 font-bold text-[40px] tabular-nums leading-none transition-colors',
-                linked ? 'text-negative' : 'text-brand',
+                linked ? 'text-negative' : 'text-brand-deep',
               )}
             >
               {shown}

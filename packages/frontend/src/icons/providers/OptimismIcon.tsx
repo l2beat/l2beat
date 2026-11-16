@@ -8,7 +8,7 @@ export function OptimismIcon({ className, ...props }: SvgIconProps) {
       width="24"
       height="24"
       viewBox="0 0 24 24"
-      aria-label="Optimism icon"
+      aria-label="Optimism logo"
       className={cn('fill-[#FF0420] dark:fill-current', className)}
       {...props}
     >

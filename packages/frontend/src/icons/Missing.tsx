@@ -4,11 +4,11 @@ import { SvgIcon } from './SvgIcon'
 export function MissingIcon(props: SvgIconProps) {
   return (
     <SvgIcon
-      aria-label="Missing icon"
       width="17"
       height="16"
       viewBox="0 0 17 16"
       fill="#FF0000"
+      aria-label="Missing"
       {...props}
     >
       <path

@@ -1,6 +1,9 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { ChartResolution } from '~/utils/range/range'
 
+/** `undefined` while the data loads, `null` when it came back empty. */
+export type ChartTimeRangeValue = [number, number] | null | undefined
+
 export function getChartTimeRangeFromData<T extends { timestamp: number }>(
   data: T[] | undefined,
   opts?: {
@@ -12,7 +15,7 @@ export function getChartTimeRangeFromData<T extends { timestamp: number }>(
      */
     bucket?: ChartResolution
   },
-): [number, number] | undefined {
+): ChartTimeRangeValue {
   if (!data) {
     return
   }
@@ -21,7 +24,7 @@ export function getChartTimeRangeFromData<T extends { timestamp: number }>(
   const end = data.at(-1)?.timestamp
 
   if (!start || !end) {
-    return
+    return null
   }
 
   const endOffset = opts?.bucket ? UnixTime.periodToSeconds(opts.bucket) : 0

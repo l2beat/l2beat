@@ -41,6 +41,9 @@ export interface State {
     Record<string, { readonly x: number; readonly y: number }>
   >
   readonly loaded: boolean
+  // Counts graph loads, so a view that applies to the graph can apply again
+  // once new project data replaced it.
+  readonly loadCount: number
 }
 
 // 'select' is the default pointer: a left drag moves nodes or draws a

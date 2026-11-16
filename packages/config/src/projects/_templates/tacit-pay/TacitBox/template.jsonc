@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TacitBox",
+  "category": "core",
+  "critical": true,
+  "description": "Implementation behind the router's boxes: clones at addresses fixed by each intent, which hold payments and release them only when the router instructs."
+}

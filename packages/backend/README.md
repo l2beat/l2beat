@@ -1,6 +1,6 @@
 # @l2beat/backend
 
-L2BEAT backend server.
+ETHBEAT backend server.
 
 ## Setup
 

@@ -1,6 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
-import type { ChartProject } from '~/components/core/chart/Chart'
+import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { ChartPreviousDataDim } from '~/components/core/chart/ChartPreviousData'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
@@ -104,6 +104,10 @@ export function ProjectCostsChart({
       </div>
       <div className="mt-4 mb-3">
         <CostsChart
+          // The chart picks its visible series once; until the data says the
+          // project posts blobs, "Blobs" isn't a series, so it stayed hidden.
+          // A new key re-picks them once that's known.
+          key={data?.hasBlobs ? 'with-blobs' : 'without-blobs'}
           isPlaceholderData={isPlaceholderData}
           project={project}
           data={chartData}

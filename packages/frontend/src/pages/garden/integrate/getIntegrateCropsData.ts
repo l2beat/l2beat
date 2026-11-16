@@ -26,7 +26,7 @@ export async function getIntegrateCropsData(
           'Pull the CROPS evaluations from the CROPS guide into your own app.',
         url,
         openGraph: {
-          image: '/meta-images/the-crops-guide/opengraph-image.png',
+          image: '/meta-images/integrate-crops/opengraph-image.png',
         },
       }),
     },

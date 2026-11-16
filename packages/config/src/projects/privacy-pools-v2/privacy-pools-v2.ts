@@ -87,10 +87,10 @@ assert(
     const members = discovery.getContractValue<string[]>('AccessRouter', role)
     return members.length === 1 && members[0] === admin
   }) &&
-    SHARE_TOKENS.every(
+    [...SHARE_TOKENS, 'RelaySwaps'].every(
       (name) => discovery.getContractValue<string>(name, 'owner') === admin,
     ),
-  'One multisig must hold every admin role and own the share tokens',
+  'One multisig must hold every admin role and own the share tokens and RelaySwaps',
 )
 const adminThreshold = discovery.getMultisigStats(admin)
 
@@ -230,6 +230,13 @@ export const privacyPoolsV2: BaseProject = {
     category: PRIVACY_CATEGORIES.shieldedLedger,
     referenceApp: REFERENCE_APP,
     trackedOn: ['ethereum'],
+    // Chains privacypools.com serves (config/prod-deployments.ts).
+    runsOn: [
+      ProjectId('arbitrum'),
+      ProjectId('base'),
+      ProjectId('optimism'),
+      ProjectId('robinhood'),
+    ],
     tokens: getPrivacyTokens(),
     relayerTracking: {
       type: 'onchainEvents',

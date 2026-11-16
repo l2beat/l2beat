@@ -34,5 +34,11 @@
     "address": "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b",
     "chain": "ethereum",
     "blockNumber": 26084189
+  },
+  "SafeL2_v1_5_0": {
+    "hash": "0x7433fb11ceff7ff5b21d1f54106fe478c5248eba6f5a3ad96f0863f22607ea71",
+    "address": "base:0xEdd160fEBBD92E350D4D398fb636302fccd67C7e",
+    "chain": "base",
+    "blockNumber": 56891903
   }
 }

@@ -1,13 +1,16 @@
 import { expect } from 'earl'
-import { mergeSeriesByTimestamp } from './getHomeL2Charts'
+import { mergeTvsParts } from './getHomeL2Charts'
+import { toWeeklyAverages } from './homeSeries'
 
-describe(mergeSeriesByTimestamp.name, () => {
-  it('zips values from both series by timestamp', () => {
+const DAY = 86_400
+
+describe(mergeTvsParts.name, () => {
+  it('zips both parts by timestamp, in order, with their total', () => {
     expect(
-      mergeSeriesByTimestamp(
+      mergeTvsParts(
         [
-          { timestamp: 1, value: 10 },
           { timestamp: 2, value: 20 },
+          { timestamp: 1, value: 10 },
         ],
         [
           { timestamp: 1, value: 100 },
@@ -15,49 +18,46 @@ describe(mergeSeriesByTimestamp.name, () => {
         ],
       ),
     ).toEqual([
-      [1, 10, 100],
-      [2, 20, 200],
+      [1, 110, 10, 100],
+      [2, 220, 20, 200],
     ])
   })
 
-  it('fills null for timestamps missing from one series', () => {
+  it('leaves a point without both parts empty, so its total is not one part', () => {
     expect(
-      mergeSeriesByTimestamp(
-        [{ timestamp: 1, value: 10 }],
-        [{ timestamp: 2, value: 200 }],
-      ),
-    ).toEqual([
-      [1, 10, null],
-      [2, null, 200],
-    ])
-  })
-
-  it('sorts rows by timestamp', () => {
-    expect(
-      mergeSeriesByTimestamp(
+      mergeTvsParts(
         [
-          { timestamp: 3, value: 30 },
           { timestamp: 1, value: 10 },
+          { timestamp: 2, value: null },
         ],
-        [{ timestamp: 2, value: 200 }],
+        [
+          { timestamp: 2, value: 200 },
+          { timestamp: 3, value: 300 },
+        ],
       ),
     ).toEqual([
-      [1, 10, null],
-      [2, null, 200],
-      [3, 30, null],
+      [1, null, null, null],
+      [2, null, null, null],
+      [3, null, null, null],
     ])
   })
 
-  it('preserves null values present in the input series', () => {
-    expect(
-      mergeSeriesByTimestamp(
-        [{ timestamp: 1, value: null }],
-        [{ timestamp: 1, value: 100 }],
-      ),
-    ).toEqual([[1, null, 100]])
+  it('keeps the last full day when the parts end at different hours', () => {
+    // Day i holds i rollups and 2i validiums & optimiums: 3 and 6 a week.
+    const days = (factor: number) =>
+      Array.from({ length: 7 }, (_, i) => ({
+        timestamp: i * DAY,
+        value: i * factor,
+      }))
+    const rollups = [...days(1), { timestamp: 6 * DAY + 13 * 3600, value: 1 }]
+    const vAndO = [...days(2), { timestamp: 6 * DAY + 12 * 3600, value: 1 }]
+
+    expect(toWeeklyAverages(mergeTvsParts(rollups, vAndO))).toEqual([
+      [0, 9, 3, 6],
+    ])
   })
 
   it('returns an empty chart for empty inputs', () => {
-    expect(mergeSeriesByTimestamp([], [])).toEqual([])
+    expect(mergeTvsParts([], [])).toEqual([])
   })
 })

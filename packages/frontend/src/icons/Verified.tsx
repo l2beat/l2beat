@@ -7,7 +7,7 @@ export function VerifiedIcon(props: SvgIconProps) {
       width="20"
       height="20"
       viewBox="0 0 20 20"
-      aria-label="Verified icon"
+      aria-label="Verified"
       {...props}
     >
       <path

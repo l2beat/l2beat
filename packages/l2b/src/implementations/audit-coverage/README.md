@@ -21,7 +21,7 @@ Run it anywhere in the repository after discovery. Deployed sources come from di
 Both files come from the audit dataset, pinned to one dataset commit.
 
 - `audit-index.json`: where audited code lives and who audited it.
-  - `collections[id]`: display `name` and `kind`, `project` (the id is the L2BEAT project id) or `library`.
+  - `collections[id]`: display `name` and `kind`, `project` (the id is the ETHBEAT project id) or `library`.
   - `reports[id]`: `collections`, `title`, `auditor`, `date`, and `document`, the dataset path of the original report. Every relevant report is listed, also those that audited no Solidity.
   - `repositories[repository][commit]`: one audited snapshot. `timestamp` is the commit time in unix seconds, `files` maps a path to an object id, `audits[report][path]` lists the paths a report scoped (a file or a directory). A file is audited by every report whose scoped path is the file or a directory above it.
 - `audit-objects.json.zst`: zstd-compressed JSON from object id to file contents. The dataset stores audited files formatted with `forge fmt`; an object id is the first 12 hex characters of the git blob id of those stored contents, so contents are checked against their id when loaded. Files that do not parse as Solidity (zkSync's templated `Constants.sol`) are skipped.

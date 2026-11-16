@@ -35,17 +35,17 @@ export function ProjectSummaryStat(props: ProjectSummaryStatProps) {
     >
       <div className="flex flex-row items-center gap-1.5">
         {props.titleAsChild ? (
-          <Slot className="text-nowrap font-medium text-paragraph-12 text-secondary">
+          <Slot className="text-nowrap font-normal text-label-value-13 text-primary leading-4">
             {props.title}
           </Slot>
         ) : (
-          <span className="text-nowrap font-medium text-paragraph-12 text-secondary">
+          <span className="text-nowrap font-normal text-label-value-13 text-primary leading-4">
             {props.title}
           </span>
         )}
         {props.tooltip && (
           <Tooltip>
-            <TooltipTrigger className="size-3">
+            <TooltipTrigger className="size-3" aria-label="More info">
               <InfoIcon className="size-3" variant="gray" />
             </TooltipTrigger>
             <TooltipContent>{props.tooltip}</TooltipContent>

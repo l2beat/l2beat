@@ -55,7 +55,7 @@ function ossificationLink(entry: OssificationEntry): MarkdownLink[] {
         `clock since ${formatTimestamp(entry.timeline.clockStart)}`,
         entry.exposure !== null &&
           entry.valueSource !== null &&
-          `battle-tested exposure ${formatCurrency(entry.exposure, 'usd')}·years of ${OSSIFICATION_VALUE_LABELS[entry.valueSource].long}`,
+          `battle-tested exposure ${formatCurrency(entry.exposure.value, 'usd')}·years of ${OSSIFICATION_VALUE_LABELS[entry.valueSource].long}`,
         `${formatCriticalChangesPerYear(entry)} critical changes / year ${formatContractCount(entry.contractCount)}`,
         entry.exitWindow && `exit window: ${entry.exitWindow.value}`,
       ]),

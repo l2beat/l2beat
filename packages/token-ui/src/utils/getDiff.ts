@@ -34,7 +34,7 @@ function isDeepEqual(a: unknown, b: unknown): boolean {
   if (keysA.length !== keysB.length) return false
 
   return keysA.every((key) => {
-    // @ts-ignore: it's fine
+    // @ts-expect-error: it's fine
     return keysB.includes(key) && isDeepEqual(a[key], b[key])
   })
 }
@@ -65,7 +65,7 @@ export function diff(left: unknown, right: unknown): Difference[] {
 
   const diffs: Difference[] = []
   for (const key in left) {
-    // @ts-ignore: it's fine
+    // @ts-expect-error: it's fine
     const lhs = left[key]
     const path = isLeftArray ? +key : key
     if (!(key in right)) {
@@ -73,7 +73,7 @@ export function diff(left: unknown, right: unknown): Difference[] {
       continue
     }
 
-    // @ts-ignore: it's fine
+    // @ts-expect-error: it's fine
     const rhs = right[key]
     const areCompatibleObjects =
       typeof lhs === 'object' &&
@@ -100,7 +100,7 @@ export function diff(left: unknown, right: unknown): Difference[] {
       !(Number.isNaN(lhs) && Number.isNaN(rhs)) &&
       !(
         areCompatibleObjects &&
-        (isNaN(lhs) ? lhs + '' === rhs + '' : +lhs === +rhs)
+        (Number.isNaN(+lhs) ? lhs + '' === rhs + '' : +lhs === +rhs)
       )
     ) {
       diffs.push({ path: [path], kind: 'change', lhs, rhs })
@@ -109,7 +109,7 @@ export function diff(left: unknown, right: unknown): Difference[] {
 
   for (const key in right) {
     if (!(key in left)) {
-      // @ts-ignore: it's fine
+      // @ts-expect-error: it's fine
       const rhs = right[key]
       const path = [isRightArray ? +key : key]
       diffs.push({ kind: 'create', path, rhs })

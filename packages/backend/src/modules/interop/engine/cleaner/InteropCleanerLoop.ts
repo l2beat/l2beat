@@ -5,6 +5,10 @@ import { TimeLoop } from '../../../../tools/TimeLoop'
 import { type InteropPlugins, pluginsAsClusters } from '../../plugins'
 import type { InteropEventStore } from '../capture/InteropEventStore'
 
+// Slow withdrawals are matched 7+ days after their source side, so their
+// source prices must outlive the transfers.
+const INTEROP_RECENT_PRICES_RETENTION = 14 * UnixTime.DAY
+
 export class InteropCleanerLoop extends TimeLoop {
   constructor(
     private store: InteropEventStore,
@@ -30,7 +34,7 @@ export class InteropCleanerLoop extends TimeLoop {
       now - INTEROP_TRANSFER_RETENTION,
     )
     const expiredPrices = await this.db.interopRecentPrices.deleteBefore(
-      now - INTEROP_TRANSFER_RETENTION,
+      now - INTEROP_RECENT_PRICES_RETENTION,
     )
     const expiredConfigs = await this.db.interopConfig.deleteAllButLatestPerKey(
       this.configHistoryKeepLatest,

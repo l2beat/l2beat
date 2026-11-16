@@ -57,7 +57,7 @@ export class Env {
   optionalInteger(key: string | string[]): number | undefined {
     const resolved = this.resolve(key)
     if (resolved) {
-      const result = Number.parseInt(resolved.value)
+      const result = Number.parseInt(resolved.value, 10)
       if (result.toString() === resolved.value) {
         return result
       }

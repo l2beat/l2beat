@@ -129,7 +129,7 @@ export function TokensSummaryPage() {
             </div>
           </CardContent>
         </Card>
-        <div className="grid grid-rows-2 gap-4">
+        <div className="grid grid-cols-1 grid-rows-2 gap-4">
           <Card>
             <CardHeader>
               <CardTitle>Abstract Token</CardTitle>
@@ -247,7 +247,7 @@ export function TokensSummaryPage() {
                               type="address"
                             />
                           ) : (
-                            <span className="relative">
+                            <span className="relative inline-block max-w-full">
                               {selectedDeployedToken.address}
                               <Link
                                 to={`/chains/${selectedDeployedToken.chain}`}
@@ -310,7 +310,7 @@ function ItemWithLabel({
     <div className={className}>
       <span className="font-medium text-muted-foreground text-sm">{label}</span>
       {value ? (
-        <p>{value}</p>
+        <p className="break-words">{value}</p>
       ) : (
         <Badge variant="secondary" className="block">
           N/A

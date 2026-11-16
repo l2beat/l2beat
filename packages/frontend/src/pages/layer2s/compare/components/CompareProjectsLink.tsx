@@ -1,4 +1,8 @@
 import type { ReactNode } from 'react'
+import {
+  ACTION_BUTTON_CLASS,
+  SECTION_ACTION_BUTTON_CLASS,
+} from '~/components/core/actionButtonClassNames'
 import { cn } from '~/utils/cn'
 
 interface Props {
@@ -9,12 +13,8 @@ interface Props {
 }
 
 const VARIANT_CLASSES = {
-  controls:
-    'inline-flex h-8 w-fit rounded-md bg-linear-to-r from-purple-100 to-pink-100 px-3 text-white',
-  section: cn(
-    'flex w-full rounded-md border border-brand bg-transparent from-purple-100 to-pink-100 p-3 text-primary',
-    'md:w-fit md:border-0 md:bg-linear-to-r md:py-2 md:text-white',
-  ),
+  controls: ACTION_BUTTON_CLASS,
+  section: SECTION_ACTION_BUTTON_CLASS,
 }
 
 export function CompareProjectsLink({
@@ -24,15 +24,7 @@ export function CompareProjectsLink({
   children = 'Compare projects',
 }: Props) {
   return (
-    <a
-      href={href}
-      className={cn(
-        'items-center justify-center whitespace-nowrap font-bold text-xs leading-none',
-        'ring-brand ring-offset-1 ring-offset-background focus-visible:outline-none focus-visible:ring-2',
-        VARIANT_CLASSES[variant],
-        className,
-      )}
-    >
+    <a href={href} className={cn(VARIANT_CLASSES[variant], className)}>
       {children}
     </a>
   )

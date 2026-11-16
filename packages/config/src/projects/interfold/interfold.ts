@@ -86,7 +86,7 @@ export const interfold: BaseProject = {
   discoveryInfo: getDiscoveryInfo([discovery]),
   statuses: {
     yellowWarning:
-      'Early mainnet: Interfold runs with an initial set of ciphernode operators, and only a few votes have taken place. L2BEAT does not measure the anonymity set of past votes. The rating reflects the protocol design only.',
+      'Early mainnet: Interfold runs with an initial set of ciphernode operators, and only a few votes have taken place. ETHBEAT does not measure the anonymity set of past votes. The rating reflects the protocol design only.',
     redWarning: undefined,
     emergencyWarning: undefined,
     reviewStatus: undefined,
@@ -175,9 +175,10 @@ export const interfold: BaseProject = {
       name: 'Interfold governance app',
       url: 'https://governance.theinterfold.com',
       since: '2026-10-20',
+      delivery: { type: 'hosted' },
       source: {
         repository: 'https://github.com/theinterfold/the-interfold-governance',
-        commit: '28b03a8b529dfa7491f01229724391665f06bd95',
+        commit: '870c40599fdb0e8dd73e225aa2dab44ac06477e5',
       },
     },
     trackedOn: ['ethereum'],

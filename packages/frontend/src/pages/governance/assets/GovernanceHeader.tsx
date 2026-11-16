@@ -380,8 +380,8 @@ export function GovernanceHeaderIllustration({
           y2="210.012"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#7E41CC" />
-          <stop offset="1" stopColor="#FF46C0" />
+          <stop stopColor="#E0195A" />
+          <stop offset="1" stopColor="#FF8FB0" />
         </linearGradient>
       </defs>
     </svg>

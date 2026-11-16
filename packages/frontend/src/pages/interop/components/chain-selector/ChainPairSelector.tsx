@@ -22,6 +22,7 @@ export function ChainPairSelector({
         value={src}
         onChange={onSrcChange}
         excludeId={dst}
+        label="Source chain"
       />
       <button
         type="button"
@@ -39,6 +40,7 @@ export function ChainPairSelector({
         value={dst}
         onChange={onDstChange}
         excludeId={src}
+        label="Destination chain"
       />
     </div>
   )

@@ -174,4 +174,14 @@ export const soon: ScalingProject = opStackL2({
       sequencers: [oldBatcher, batcher],
     },
   ],
+  milestones: [
+    {
+      title: 'Bridge exploit',
+      url: 'https://www.kucoin.com/news/flash/soon-foundation-suspends-two-cross-chain-bridges-after-abnormal-withdrawals',
+      date: '2026-10-31T00:00:00Z',
+      description:
+        'Abnormal bridge withdrawals: chain paused, withdrawals frozen, state roots deleted. Unpaused Nov 4.',
+      type: 'incident',
+    },
+  ],
 })

@@ -41,7 +41,7 @@ function getImplementationQuickLinks(diff: DiscoveryDiff): QuickAccessData[] {
 
     result.push({
       name,
-      link: `https://disco.l2beat.com/diff/${match.before}/${match.after}`,
+      link: `https://disco.ethbeat.org/diff/${match.before}/${match.after}`,
     })
   }
 

@@ -8,44 +8,26 @@ permissions:
   contents: read
 
 jobs:
-  config-smoke-test-matrix:
+  # One runner tests every service's config in turn. Each check takes about
+  # a second, so a runner per check spent ~30 s of setup on each, and six
+  # runners per push queued behind other PRs' jobs. Each step gets only its
+  # own app's ID, and each test runs even after another fails, so one
+  # run reports every broken config.
+  config-smoke-test:
     if: >
       ${{
         github.event_name == 'merge_group' ||
         (github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false)
       }}
-    name: Config (${{ matrix.service }} - ${{ matrix.environment }})
+    name: Config smoke test
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    strategy:
-      matrix:
-        include:
-          - service: backend
-            environment: staging
-          - service: backend
-            environment: production
-          - service: update-monitor
-            environment: staging
-          - service: update-monitor
-            environment: production
-          - service: tvs
-            environment: staging
-          - service: tvs
-            environment: production
     env:
       COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
       COOLIFY_API_KEY: ${{ secrets.COOLIFY_RO_API_KEY }}
-      # GH cannot determine at workflow evaluation time if the secret is needed, so it passes ALL of them to the job.
-      # This way we only pass the needed secret and limit potential exposure.
-      COOLIFY_APP_ID: >-
-        ${{
-          (matrix.service == 'backend' && matrix.environment == 'staging' && secrets.COOLIFY_BACKEND_STAGING_ID) ||
-          (matrix.service == 'backend' && matrix.environment == 'production' && secrets.COOLIFY_BACKEND_PRODUCTION_ID) ||
-          (matrix.service == 'update-monitor' && matrix.environment == 'staging' && secrets.COOLIFY_UM_STAGING_ID) ||
-          (matrix.service == 'update-monitor' && matrix.environment == 'production' && secrets.COOLIFY_UM_PRODUCTION_ID) ||
-          (matrix.service == 'tvs' && matrix.environment == 'staging' && secrets.COOLIFY_TVS_STAGING_ID) ||
-          (matrix.service == 'tvs' && matrix.environment == 'production' && secrets.COOLIFY_TVS_PRODUCTION_ID)
-        }}
+    defaults:
+      run:
+        working-directory: packages/backend
     steps:
       - name: Check out code
         uses: actions/checkout@v6
@@ -54,54 +36,41 @@ jobs:
         uses: ./.github/actions/setup-pnpm
 
       - name: Build packages
+        id: build
         run: pnpm build:dependencies
-        working-directory: packages/backend
 
-      - name: Validate COOLIFY_APP_ID
-        run: |
-          if [[ -z "$COOLIFY_APP_ID" ]]; then
-            echo "Missing COOLIFY_APP_ID for ${{ matrix.service }}/${{ matrix.environment }}"
-            exit 1
-          fi
+      - name: Smoke test staging backend
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        env:
+          COOLIFY_APP_ID: ${{ secrets.COOLIFY_BACKEND_STAGING_ID }}
+        run: ../../.github/scripts/config-smoke-test.sh
 
-      - name: Pull ${{ matrix.environment }} ${{ matrix.service }} configuration
-        run: |
-          response="$(
-            curl --fail-with-body --silent --show-error \
-              --retry 3 \
-              --retry-delay 5 \
-              --retry-all-errors \
-              --header "Authorization: Bearer $COOLIFY_API_KEY" \
-              --header "Accept: application/json" \
-              "$COOLIFY_SERVER/api/v1/applications/$COOLIFY_APP_ID/envs"
-          )"
+      - name: Smoke test production backend
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        env:
+          COOLIFY_APP_ID: ${{ secrets.COOLIFY_BACKEND_PRODUCTION_ID }}
+        run: ../../.github/scripts/config-smoke-test.sh
 
-          echo "$response" | jq -r '.[]|(.key + "=" + .real_value)' > .env
-        working-directory: packages/backend
+      - name: Smoke test staging update-monitor
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        env:
+          COOLIFY_APP_ID: ${{ secrets.COOLIFY_UM_STAGING_ID }}
+        run: ../../.github/scripts/config-smoke-test.sh
 
-      - name: Run ${{ matrix.environment }} ${{ matrix.service }} smoke test
-        run: pnpm test:config
-        working-directory: packages/backend
+      - name: Smoke test production update-monitor
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        env:
+          COOLIFY_APP_ID: ${{ secrets.COOLIFY_UM_PRODUCTION_ID }}
+        run: ../../.github/scripts/config-smoke-test.sh
 
-  # Main aggregator job that always runs and fails on any matrix failure.
-  config-smoke-test:
-    if: >
-      ${{
-        always() &&
-        (
-          github.event_name == 'merge_group' ||
-          (github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false)
-        )
-      }}
-    name: Config smoke test
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    needs: config-smoke-test-matrix
-    steps:
-      - name: Check matrix result
-        run: |
-          if [[ "${{ needs.config-smoke-test-matrix.result }}" != "success" ]]; then
-            echo "Config smoke test matrix failed."
-            exit 1
-          fi
-          echo "All config smoke test matrix legs passed."
+      - name: Smoke test staging tvs
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        env:
+          COOLIFY_APP_ID: ${{ secrets.COOLIFY_TVS_STAGING_ID }}
+        run: ../../.github/scripts/config-smoke-test.sh
+
+      - name: Smoke test production tvs
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        env:
+          COOLIFY_APP_ID: ${{ secrets.COOLIFY_TVS_PRODUCTION_ID }}
+        run: ../../.github/scripts/config-smoke-test.sh

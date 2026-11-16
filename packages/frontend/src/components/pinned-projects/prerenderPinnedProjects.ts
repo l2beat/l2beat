@@ -43,6 +43,7 @@ export function prerenderPinnedProjects(
       placeholder.remove()
       for (const project of projects) {
         const row = placeholder.cloneNode(true) as Element
+        row.setAttribute('data-pin-row', project.href)
         const link = row.querySelector('a')
         link?.setAttribute('href', project.href)
         link?.setAttribute(
@@ -54,6 +55,7 @@ export function prerenderPinnedProjects(
         if (name) name.textContent = project.name
         // The template's label is "Pin " or "Unpin ", for an empty name.
         const button = row.querySelector('button')
+        button?.setAttribute('data-href', project.href)
         button?.setAttribute(
           'aria-label',
           `${button.getAttribute('aria-label') ?? ''}${project.name}`,

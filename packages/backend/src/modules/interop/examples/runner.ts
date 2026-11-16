@@ -178,6 +178,7 @@ export class ExampleRunner {
       eventStore.getEventCount(),
       eventPlugins,
       this.$.example.txs.map((x) => x.chain),
+      [...INTEROP_ONE_SIDED_CHAINS],
       this.$.logger,
       tokenMap,
     )

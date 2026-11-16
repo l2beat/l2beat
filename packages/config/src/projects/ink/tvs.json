@@ -145,6 +145,32 @@
     },
     {
       "mode": "auto",
+      "id": "ink-sUSDe-1",
+      "priceId": "ethena-staked-usde",
+      "symbol": "sUSDe",
+      "name": "Staked USDe",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+        "chain": "ink",
+        "decimals": 18,
+        "sinceTimestamp": 1761566506
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "ink-USD₮0",
       "priceId": "usdt0",
       "symbol": "USD₮0",
@@ -190,6 +216,32 @@
         "bridges": [
           {
             "name": "Circle CCTP"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "ink-USDe-1",
+      "priceId": "ethena-usde",
+      "symbol": "USDe",
+      "name": "USDe",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33613/large/usde.png?1733810059",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+        "chain": "ink",
+        "decimals": 18,
+        "sinceTimestamp": 1761566187
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
           }
         ]
       }

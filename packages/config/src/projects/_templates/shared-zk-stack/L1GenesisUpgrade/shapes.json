@@ -28,5 +28,11 @@
     "hash": "0x2bf1da6a2e717e38594c5d3afdc1f4167f4ffaba6dfea36e504503d2ee06f6c7",
     "address": "eth:0x03174e2BE35A2Dd4380c93385181B1299949eE28",
     "blockNumber": 24275768
+  },
+  "L1GenesisUpgrade_v33.sol": {
+    "hash": "0x214d7f315f2372cb71d4a785fa2a84a3e0e6db0a1e1c6a6405f11b97678b178f",
+    "address": "eth:0x853bEB619c14d6435b770c35642862B8e91a3d08",
+    "chain": "ethereum",
+    "blockNumber": 26334746
   }
 }

@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TacitEvmPool",
+  "category": "core",
+  "critical": true,
+  "description": "Shielded pool for one asset. Each transaction carries one Groth16 proof that deposits, transfers inside the pool or withdraws, and inserts its new notes into a Poseidon tree the proof updates. It stores every root it has held and the spent nullifiers.",
+  "ignoreInWatchMode": ["root", "nextIndex", "head"]
+}

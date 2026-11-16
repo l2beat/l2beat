@@ -11,6 +11,7 @@ import {
   Result,
 } from '../../plugins/types'
 import { InMemoryEventDb } from '../capture/InMemoryEventDb'
+import type { InteropEventStore } from '../capture/InteropEventStore'
 import { InteropMatchingLoop, match } from './InteropMatchingLoop'
 import { buildTokenMap, type TokenMap } from './TokenMap'
 
@@ -75,6 +76,7 @@ describe(InteropMatchingLoop.name, () => {
         tokenDbClient,
         [],
         [],
+        [],
         Logger.SILENT,
       )
 
@@ -82,6 +84,85 @@ describe(InteropMatchingLoop.name, () => {
         'Token DB unavailable for matching',
       )
       expect(query).toHaveBeenCalledTimes(1)
+    })
+
+    it('saves a transfer at its own timestamp when it sets one', async () => {
+      const Sent = createInteropEventType<{ id: string }>('test.Sent')
+      const Settled = createInteropEventType<{ id: string }>('test.Settled')
+      const eventDb = new InMemoryEventDb()
+      const sent = Sent.mock({ id: 'a' }, 1)
+      sent.ctx = { ...sent.ctx, chain: 'ethereum', timestamp: 100 }
+      const settled = Settled.mock({ id: 'a' }, 2)
+      settled.ctx = { ...settled.ctx, chain: 'ethereum', timestamp: 500 }
+      eventDb.addEvent(sent)
+      eventDb.addEvent(settled)
+
+      const plugin: InteropPlugin = {
+        name: 'mock-plugin' as InteropPluginName,
+        matchTypes: [Settled],
+        match(event, db) {
+          if (!Settled.checkType(event)) return
+          const src = db.find(Sent, { id: event.args.id })
+          if (!src) return
+          return [
+            Result.Transfer('test.Transfer', {
+              srcEvent: src,
+              dstChain: 'solana',
+              extraEvents: [event],
+              timestamp: event.ctx.timestamp,
+            }),
+          ]
+        },
+      }
+
+      const store = mockObject<InteropEventStore>({
+        getEvents: (type) => eventDb.getEvents(type),
+        getEventTypes: () => eventDb.getEventTypes(),
+        getEventCount: () => eventDb.getEventCount(),
+        find: (type, query) => eventDb.find(type, query),
+        findAll: (type, query) => eventDb.findAll(type, query),
+        findApproximate: (type, query, approximate) =>
+          eventDb.findApproximate(type, query, approximate),
+        updateMatchedAndUnsupported: mockFn().resolvesTo(undefined),
+      })
+      const interopTransfer = mockObject<Database['interopTransfer']>({
+        insertMany: mockFn().resolvesTo(1),
+      })
+      const db = mockObject<Database>({
+        transaction: async (fn) => await fn(),
+        interopMessage: mockObject<Database['interopMessage']>({
+          insertMany: mockFn().resolvesTo(0),
+        }),
+        interopTransfer,
+      })
+      const tokenDbClient = mockObject<TokenDbClient>({
+        abstractTokens: {
+          getAllWithDeployedTokens: {
+            query: mockFn().resolvesTo({ abstractTokens: [] }),
+          },
+        },
+      } as any)
+
+      const loop = new InteropMatchingLoop(
+        store,
+        db,
+        tokenDbClient,
+        [plugin],
+        ['ethereum'],
+        ['solana'],
+        Logger.SILENT,
+      )
+      await loop.run()
+
+      expect(interopTransfer.insertMany).toHaveBeenOnlyCalledWith([
+        expect.subset({
+          timestamp: 500,
+          srcTime: 100,
+          dstTime: undefined,
+          duration: undefined,
+          dstChain: 'solana',
+        }),
+      ])
     })
   })
 })
@@ -138,6 +219,7 @@ describe('match', () => {
       db.getEventCount(),
       [plugin],
       [],
+      [],
       Logger.SILENT,
       mockObject<TokenMap>({}),
     )
@@ -185,6 +267,7 @@ describe('match', () => {
       db.getEventCount(),
       [plugin],
       [],
+      [],
       Logger.SILENT,
       deployedToAbstractMap,
     )
@@ -230,6 +313,7 @@ describe('match', () => {
       db.getEventCount(),
       [plugin],
       ['ethereum'],
+      [],
       Logger.SILENT,
       mockObject<TokenMap>({}),
     )
@@ -241,5 +325,42 @@ describe('match', () => {
     expect(transfer.src.event?.ctx.chain).toEqual('ethereum')
     expect(transfer.dst.event).toEqual(undefined)
     expect(transfer.dst.chain).toEqual('solana')
+  })
+
+  it('does not mark events to or from one-sided chains as unsupported', async () => {
+    const Event = createInteropEventType<{
+      $srcChain?: string
+      $dstChain?: string
+    }>('test.Event')
+    const db = new InMemoryEventDb()
+
+    const toOneSided = Event.mock({ $dstChain: 'solana' }, 1)
+    const fromOneSided = Event.mock({ $srcChain: 'solana' }, 2)
+    const toUnknown = Event.mock({ $dstChain: 'sui' }, 3)
+    db.addEvent(toOneSided)
+    db.addEvent(fromOneSided)
+    db.addEvent(toUnknown)
+
+    const plugin: InteropPlugin = {
+      name: 'mock-plugin' as InteropPluginName,
+      matchTypes: [Event],
+      match() {
+        return undefined
+      },
+    }
+
+    const result = await match(
+      db,
+      (type) => db.getEvents(type),
+      db.getEventTypes(),
+      db.getEventCount(),
+      [plugin],
+      ['ethereum'],
+      ['solana'],
+      Logger.SILENT,
+      mockObject<TokenMap>({}),
+    )
+
+    expect(result.unsupported).toEqual([toUnknown])
   })
 })

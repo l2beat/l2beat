@@ -1,3 +1,4 @@
+import { IconContractUnverified } from '../../../../../icons/IconContractUnverified'
 import { useStore } from '../../store/store'
 import {
   getGraphProjection,
@@ -23,6 +24,7 @@ export function VisibilityMenu() {
   return (
     <ToolbarMenu
       label="Visibility"
+      icon={<IconControlEye />}
       description="Hide or show nodes and fields across the whole graph."
       sections={[
         [
@@ -42,6 +44,27 @@ export function VisibilityMenu() {
           },
         ],
       ]}
+      footer={<HeaderBadgeKey />}
     />
+  )
+}
+
+function HeaderBadgeKey() {
+  return (
+    <div className="flex flex-col gap-1 px-2 py-1.5 text-coffee-400 text-xs">
+      <span>In a node's header</span>
+      <span className="flex items-center gap-2">
+        <span className="size-2 rounded-full bg-aux-green" />
+        Initial contract
+      </span>
+      <span className="flex items-center gap-2">
+        <span className="size-2 rounded-full bg-aux-orange" />
+        Has a template
+      </span>
+      <span className="flex items-center gap-2">
+        <IconContractUnverified className="-mx-0.5 size-3 text-aux-red" />
+        Unverified contract
+      </span>
+    </div>
   )
 }

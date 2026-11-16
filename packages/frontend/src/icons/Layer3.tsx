@@ -7,7 +7,7 @@ export function Layer3Icon({ className, ...props }: SvgIconProps) {
       height="17"
       viewBox="0 0 16 17"
       role="img"
-      aria-label="L3 icon"
+      aria-label="Layer 3"
       className={className}
       {...props}
     >

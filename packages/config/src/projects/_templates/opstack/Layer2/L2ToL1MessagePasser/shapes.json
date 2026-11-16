@@ -20,5 +20,11 @@
     "address": "celo:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016",
     "chain": "celo",
     "blockNumber": 79482303
+  },
+  "L2ToL1MessagePasser_v1_2_0_base.sol": {
+    "hash": "0xd8aebf68f3dc707d246833290e29301f2329bf5806450ff1fa08e247c042d702",
+    "address": "base:0xF729d45aA58A015835A745474D4bd18551C3A92c",
+    "chain": "base",
+    "blockNumber": 53551478
   }
 }

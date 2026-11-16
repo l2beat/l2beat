@@ -1,4 +1,4 @@
-import { formatCurrency, formatNumberWithCommas } from '@l2beat/shared-pure'
+import { formatCurrency } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import { useSelectedTokenContext } from '~/components/chart/tvs/token/SelectedTokenContext'
 import {
@@ -20,6 +20,7 @@ import { categoryToLabel } from './categoryToLabel'
 import { BridgedUsingCell } from './cells/BridgedUsingCell'
 import { TokenAddressCell } from './cells/TokenAddressCell'
 import { TokenNameCell } from './cells/TokenNameCell'
+import { formatTokenValue } from './formatTokenValue'
 import type { TokenRow } from './ProjectTvsBreakdownTokenTable'
 
 const columnHelper = createColumnHelper<TokenRow>()
@@ -61,7 +62,7 @@ export const columns = [
   }),
   columnHelper.display({
     id: 'bridgingType',
-    header: 'Bridging Type',
+    header: 'Bridging type',
     cell: (ctx) => {
       return (
         <TwoRowCell>
@@ -86,7 +87,7 @@ export const columns = [
   }),
   columnHelper.display({
     id: 'contract',
-    header: 'Token Contract',
+    header: 'Token contract',
     cell: (ctx) => {
       const { address } = ctx.row.original
       if (!address) return <div className="font-medium text-xs">Native</div>
@@ -104,6 +105,7 @@ export const columns = [
       header: 'Price',
       meta: {
         align: 'right',
+        tooltip: 'Token price. Percentage change compared to 7 days ago.',
       },
       cell: (ctx) => {
         const { priceUsd } = ctx.row.original
@@ -162,8 +164,11 @@ export const columns = [
         <div className="flex items-center gap-1">
           <Tooltip>
             <TooltipTrigger asChild disabledOnTouch>
-              <button onClick={() => setSelectedToken(ctx.row.original)}>
-                <a href="#token-chart">
+              <button
+                aria-label="Preview historical chart"
+                onClick={() => setSelectedToken(ctx.row.original)}
+              >
+                <a href="#token-chart" aria-label="Preview historical chart">
                   <LineChartIcon className="size-4" />
                 </a>
               </button>
@@ -175,6 +180,8 @@ export const columns = [
           <button
             onClick={toggleExpandedHandler}
             className="h-full cursor-pointer p-1 align-middle"
+            aria-label={isExpended ? 'Hide details' : 'Show details'}
+            aria-expanded={isExpended}
           >
             <ChevronIcon
               className={cn(
@@ -201,8 +208,8 @@ function ProjectTokenValueCell({ row }: { row: TokenRow }) {
   return (
     <SyncStatusWrapper isSynced={row.syncStatus === undefined}>
       <div className="flex items-center justify-end gap-1">
-        <div className="font-bold text-xs">
-          ${formatNumberWithCommas(+row.valueForProject.value)}
+        <div className="font-bold text-xs tabular-nums">
+          {formatTokenValue(+row.valueForProject.value)}
         </div>
         {row.valueForProject.change !== undefined ? (
           <PercentChange

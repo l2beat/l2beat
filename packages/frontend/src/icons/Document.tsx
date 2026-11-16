@@ -3,14 +3,7 @@ import { SvgIcon } from './SvgIcon'
 
 export function DocumentIcon(props: SvgIconProps) {
   return (
-    <SvgIcon
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
-      fill="none"
-      aria-label="Document icon"
-      {...props}
-    >
+    <SvgIcon width="16" height="16" viewBox="0 0 16 16" fill="none" {...props}>
       <g clipPath="url(#clip0_197_5676)">
         <path
           d="M10.4 8H5.6a.6.6 0 000 1.2h4.8a.6.6 0 100-1.2"

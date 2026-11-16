@@ -1,8 +1,14 @@
+import { assert } from '@l2beat/shared-pure'
 import { type ComponentType, useEffect, useMemo, useRef, useState } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import type { ApiAddressType } from '../../../../api/types'
 import { ADDRESS_ICON_COMPONENTS } from '../../../../components/AddressIcon'
+import {
+  IconArrowHeadLeft,
+  IconArrowHeadRight,
+} from '../../../../icons/IconArrowHead'
 import { IconInitial } from '../../../../icons/IconInitial'
+import { useTheme } from '../../../../theme'
 import { useGlobalSettingsStore } from '../../store/global-settings-store'
 import type { Field, Node } from '../store/State'
 import { useStore } from '../store/store'
@@ -10,6 +16,7 @@ import {
   FIELD_HEIGHT,
   HEADER_HEIGHT,
   HIDDEN_FIELDS_FOOTER_HEIGHT,
+  MAX_ZOOM,
 } from '../store/utils/constants'
 import {
   buildRenderGraph,
@@ -19,29 +26,22 @@ import {
 import { getRowLayout, type NodeRow } from '../store/utils/rows'
 import { topLevelByDescendant } from '../store/utils/subnodes'
 import { getColor } from './colors/colors'
+import {
+  DARK_GRAPH_PALETTE,
+  type GraphPalette,
+  HEADER_INITIAL,
+  HEADER_TEMPLATE,
+  HEADER_TEXT_ON_DARK,
+  HEADER_TEXT_ON_LIGHT,
+  HEADER_UNVERIFIED,
+  LIGHT_GRAPH_PALETTE,
+  type RGBA,
+  TEXT_ON_ACCENT,
+} from './colors/graphPalette'
 
 // ============================================================================
 // Constants
 // ============================================================================
-
-type RGBA = [number, number, number, number]
-
-const COFFEE_600: RGBA = [0x59 / 255, 0x4c / 255, 0x43 / 255, 1]
-const COFFEE_400: RGBA = [0xa9 / 255, 0x87 / 255, 0x63 / 255, 1]
-const COFFEE_200: RGBA = [0xf0 / 255, 0xd8 / 255, 0xbd / 255, 1]
-const GRID_DOT: RGBA = [0x3c / 255, 0x33 / 255, 0x2d / 255, 0.6]
-const AUTUMN_300: RGBA = [0xba / 255, 0xd8 / 255, 0x0a / 255, 1]
-const AUX_RED: RGBA = [0xfb / 255, 0x4a / 255, 0x35 / 255, 1]
-const AUX_GREEN: RGBA = [0x9d / 255, 0xde / 255, 0x6c / 255, 1]
-const AUX_ORANGE: RGBA = [0xfe / 255, 0x80 / 255, 0x19 / 255, 1]
-
-const DEFAULT_CONNECTION_COLOR = withAlpha(COFFEE_400, 0.6)
-const DIMMED_CONNECTION_COLOR = withAlpha(COFFEE_400, 0.18)
-const GRAYED_CONNECTION_COLOR = withAlpha(COFFEE_200, 0.1)
-const BLACK: RGBA = [0, 0, 0, 1]
-const NODE_BODY: RGBA = [0x12 / 255, 0x0f / 255, 0x0e / 255, 1]
-// Transparent ring color: a plain fill.
-const NO_RING: RGBA = [0, 0, 0, 0]
 
 const HEADER_ICON_SIZE = 16
 const ICON_VIEW_BOX = 16
@@ -60,12 +60,38 @@ const CONTAINER_CORNER_RADIUS = 12
 const CONTAINER_OUTLINE_WIDTH = 2
 const CONTAINER_Z = 1
 const OVERLAP_BORDER_WIDTH = 2
+const NODE_BORDER_WIDTH = 1
+// The arrow glyph spans 3..13 of its 16-unit cell, see IconArrowHead. Edges
+// stop at its base so the line never shows past the tip.
+const ARROW_HEAD_CELL = 16
+const ARROW_HEAD_TIP = 13 / 16
+const ARROW_HEAD_LENGTH = (10 / 16) * ARROW_HEAD_CELL
+const HEADER_BADGE_STEP = 11
+const HIGHLIGHTED_ROW_INSET = 3
+const HIGHLIGHTED_ROW_RADIUS = 4
+// Below this zoom field text is under 5 px and names under 6 px, so all text
+// goes at once and the overview shows shapes with chain captions.
+const NODE_DETAIL_MIN_SCALE = 0.4
+
+export function drawsNodeDetail(scale: number): boolean {
+  return scale >= NODE_DETAIL_MIN_SCALE
+}
+
+// Below the detail zoom no text is drawn, so the atlases stay at its size.
+function textZoomFor(scale: number): number {
+  assert(scale > 0, 'Zoom must be positive')
+  assert(scale <= MAX_ZOOM, 'Zoom must not exceed the maximum')
+  return Math.max(scale, NODE_DETAIL_MIN_SCALE)
+}
+
+const TEXT_RASTER_SETTLE_MS = 150
 
 const HEADER_FONT: FontSpec = {
   weight: 500,
   size: 14,
   family: 'ui-sans-serif, system-ui, sans-serif',
 }
+
 const FIELD_FONT: FontSpec = {
   size: 12,
   family: 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace',
@@ -78,21 +104,31 @@ const FOOTER_FONT: FontSpec = {
   family: 'ui-sans-serif, system-ui, sans-serif',
 }
 
-const CONNECTION_SEGMENTS = 32
+// Each curve gets the fewest segments that keep its chords within the
+// tolerance of the true curve on screen (Wang's formula), up to the strip's
+// length. Long edges at full zoom need ~100; short ones need a handful.
+const CONNECTION_SEGMENTS_MAX = 128
+const CONNECTION_CHORD_TOLERANCE_DEVICE_PX = 0.25
 const GRID_DOT_RADIUS_PER_CELL = 0.05
-const INITIAL_RING_WIDTH = 15
-const CONNECTION_CONTROL_OFFSET = 50
+// Control points sit half the horizontal gap out, so a long edge leaves and
+// reaches its nodes level instead of bending sharply at the arrowhead.
+const CONNECTION_CONTROL_OFFSET_MIN = 50
+const CONNECTION_CONTROL_OFFSET_MAX = 200
+const CONNECTION_CONTROL_GAP_SHARE = 0.5
 const DASH_ON_WORLD = 5
 const DASH_OFF_WORLD = 5
 const PERIMETER_SAMPLES_PER_CORNER = 8
 
 // Floats per instance for each pipeline.
-const QUAD_STRIDE_F = 18 // pos.xy, size.xy, color.rgba, radii.xyzw, border, z, ring.rgba
-const TEXT_STRIDE_F = 13 // pos.xy, size.xy, uv.xyzw, color.rgba, z
+const QUAD_STRIDE_F = 14 // pos.xy, size.xy, color.rgba, radii.xyzw, border, z
+const TEXT_STRIDE_F = 14 // pos.xy, size.xy, uv.xyzw, color.rgba, z, channel
 const LINE_STRIDE_F = 6 // pos.xy, color.rgba
 const CONNECTION_STRIDE_F = 12 // from.xy, to.xy, controlX.xy, color.rgba, width, dashed
 const CONNECTION_WIDTH = 1.5
 const HIGHLIGHTED_CONNECTION_WIDTH = 2.5
+// Zoomed out, world-space edges would thin to a fraction of a pixel and fade.
+const CONNECTION_MIN_STROKE_PX = 1
+const CONNECTION_MIN_INK_RATIO = 0.6
 
 // ============================================================================
 // Types
@@ -122,6 +158,7 @@ interface DrawData {
   selectedContainers: Set<string>
   enableDimming: boolean
   markUnreachableEntries: boolean
+  palette: GraphPalette
   anyNodeSelected: boolean
   liveGroupTargets: ReadonlyMap<string, ReadonlySet<string>>
 }
@@ -145,7 +182,11 @@ interface RenderNode {
   isGroup: boolean
 }
 
-type IconAtlasId = ApiAddressType | 'InitialCircle'
+type IconAtlasId =
+  | ApiAddressType
+  | 'InitialCircle'
+  | 'ArrowHeadLeft'
+  | 'ArrowHeadRight'
 
 interface AtlasGlyph {
   u0: number
@@ -157,19 +198,29 @@ interface AtlasGlyph {
 
 // Texture has a static ASCII slab and an LRU slab for runtime glyphs.
 interface FontAtlas {
-  texture: WebGLTexture
   refSize: number
   cellW: number
   cellH: number
-  baselineOffset: number
+  sampling: TextSampling
   // Font ascent and descent in world units, for placing text in a CSS line box.
   ascent: number
   descent: number
   getGlyph: (ch: string) => AtlasGlyph
+  kerning: (left: string, right: string) => number
+  // Which of the atlas's four coverage masks Chrome would use for a color.
+  coverageChannel: (color: RGBA) => number
+}
+
+// How the text shader finds a glyph's raster in an atlas, see TEXT_VS.
+interface TextSampling {
+  texture: WebGLTexture
+  subpixelSteps: number
+  subpixelStepU: number
+  cellPen: [number, number]
 }
 
 interface IconAtlas {
-  texture: WebGLTexture
+  sampling: TextSampling
   cells: Map<IconAtlasId, { u0: number; v0: number; u1: number; v1: number }>
 }
 
@@ -188,7 +239,6 @@ layout(location = 3) in vec4 i_color;
 layout(location = 4) in vec4 i_radii; // TL, TR, BR, BL
 layout(location = 5) in float i_border;
 layout(location = 6) in float i_z;
-layout(location = 7) in vec4 i_ring;
 uniform vec2 u_offset;
 uniform float u_scale;
 uniform vec2 u_resolution;
@@ -197,7 +247,6 @@ out vec2 v_local;
 out vec2 v_halfSize;
 out vec4 v_radii;
 out float v_border;
-out vec4 v_ring;
 void main() {
   float pad = (i_border * 0.5) + 1.0;
   vec2 quadSize = i_size + vec2(pad * 2.0);
@@ -212,7 +261,6 @@ void main() {
   v_halfSize = i_size * 0.5;
   v_radii = i_radii;
   v_border = i_border;
-  v_ring = i_ring;
 }`
 
 const ROUND_FS = `#version 300 es
@@ -222,9 +270,7 @@ in vec2 v_local;
 in vec2 v_halfSize;
 in vec4 v_radii;
 in float v_border;
-in vec4 v_ring;
 out vec4 fragColor;
-const float RING_WIDTH = ${INITIAL_RING_WIDTH}.0;
 float pickRadius(vec2 p, vec4 r) {
   float top    = (p.x > 0.0) ? r.y : r.x;
   float bottom = (p.x > 0.0) ? r.z : r.w;
@@ -247,12 +293,7 @@ void main() {
     alpha = 1.0 - smoothstep(-aa, aa, d);
   }
   if (alpha <= 0.0) discard;
-  // Rings repeating every RING_WIDTH from the center, fading from the ring
-  // color into the fill, mark initial contracts' headers.
-  vec3 color = v_ring.a > 0.0
-    ? mix(v_ring.rgb, v_color.rgb, mod(length(v_local), RING_WIDTH) / RING_WIDTH)
-    : v_color.rgb;
-  fragColor = vec4(color, v_color.a * alpha);
+  fragColor = vec4(v_color.rgb, v_color.a * alpha);
 }`
 
 // Fullscreen triangle with a dot at the center of every grid cell, so panning
@@ -296,9 +337,13 @@ const FADE_FS = `#version 300 es
 precision mediump float;
 uniform sampler2D u_layer;
 uniform float u_alpha;
+uniform vec3 u_background;
 out vec4 fragColor;
+// The layer fades toward the canvas color rather than turning see-through, so
+// edges running under a faded node stay hidden like under an opaque one.
 void main() {
-  fragColor = texelFetch(u_layer, ivec2(gl_FragCoord.xy), 0) * u_alpha;
+  vec4 layer = texelFetch(u_layer, ivec2(gl_FragCoord.xy), 0);
+  fragColor = vec4(layer.rgb * u_alpha + u_background * layer.a * (1.0 - u_alpha), layer.a);
 }`
 
 // Tinted alpha-mask quads. Shared by all text passes and the icon pass; the
@@ -310,39 +355,57 @@ layout(location = 2) in vec2 i_size;
 layout(location = 3) in vec4 i_uv;
 layout(location = 4) in vec4 i_color;
 layout(location = 5) in float i_z;
+layout(location = 6) in float i_channel;
 uniform vec2 u_offset;
 uniform float u_scale;
 uniform vec2 u_resolution;
 uniform float u_dpr;
+// Glyph atlases hold each glyph at u_subpixelSteps offsets, u_subpixelStepU
+// apart, with the pen at u_cellPen (world units) in the cell. Icons use 1, 0
+// and (0, 0).
+uniform float u_subpixelSteps;
+uniform float u_subpixelStepU;
+uniform vec2 u_cellPen;
 out vec2 v_uv;
 out vec4 v_color;
+flat out vec4 v_channelMask;
 void main() {
-  // Glyphs start on a device pixel so the atlas maps texel to pixel at full
-  // zoom instead of being smeared across two pixels.
-  vec2 origin = round((i_pos * u_scale + u_offset) * u_dpr) / u_dpr;
-  vec2 screen = origin + a_corner * i_size * u_scale;
+  // Like Chrome: the pen snaps to a fraction of a device pixel across and to a
+  // whole one down, so the atlas maps texel to pixel instead of smearing.
+  vec2 penPx = (i_pos * u_scale + u_offset) * u_dpr;
+  float stepsX = floor(penPx.x * u_subpixelSteps + 0.5);
+  float wholeX = floor(stepsX / u_subpixelSteps);
+  float subpixelStep = stepsX - wholeX * u_subpixelSteps;
+  // Scaled like the cell, so text stays put while the atlas is for another zoom.
+  vec2 cellPx = vec2(wholeX, floor(penPx.y + 0.5)) - u_cellPen * u_scale * u_dpr;
+  vec2 screen = cellPx / u_dpr + a_corner * i_size * u_scale;
   vec2 ndc = (screen / u_resolution * 2.0 - 1.0) * vec2(1.0, -1.0);
   gl_Position = vec4(ndc, i_z, 1.0);
-  v_uv = mix(i_uv.xy, i_uv.zw, a_corner);
+  v_uv = mix(i_uv.xy, i_uv.zw, a_corner) + vec2(subpixelStep * u_subpixelStepU, 0.0);
   v_color = i_color;
+  v_channelMask = vec4(equal(ivec4(int(i_channel)), ivec4(0, 1, 2, 3)));
 }`
 
 const TEXT_FS = `#version 300 es
 precision mediump float;
-in vec2 v_uv;
+// fp16 mediump cannot address single texels across a 1000+ px wide atlas.
+in highp vec2 v_uv;
 in vec4 v_color;
+flat in vec4 v_channelMask;
 uniform sampler2D u_atlas;
 out vec4 fragColor;
 void main() {
-  float a = texture(u_atlas, v_uv).a;
+  float a = dot(texture(u_atlas, v_uv), v_channelMask);
   fragColor = vec4(v_color.rgb, v_color.a * a);
 }`
 
-// One instance per connection. The strip's vertices carry only (t, side), the
-// curve is evaluated here, so moving a node rewrites a few floats per
-// connection instead of re-tessellating every curve on the CPU.
+// One instance per connection. The strip's vertices carry only (sample, side),
+// the curve is evaluated here, so moving a node rewrites a few floats per
+// connection instead of re-tessellating every curve on the CPU. Samples past
+// the curve's own segment count collapse onto its end, so the rasterizer drops
+// their triangles.
 const CONNECTION_VS = `#version 300 es
-layout(location = 0) in vec2 a_vertex; // t, side
+layout(location = 0) in vec2 a_vertex; // sample, side
 layout(location = 1) in vec2 i_from;
 layout(location = 2) in vec2 i_to;
 layout(location = 3) in vec2 i_controlX;
@@ -351,51 +414,117 @@ layout(location = 5) in vec2 i_stroke; // width, dashed
 uniform vec2 u_offset;
 uniform float u_scale;
 uniform vec2 u_resolution;
+uniform float u_dpr;
 out vec4 v_color;
 out float v_arc;
 out float v_across;
-flat out float v_halfWidth;
+flat out float v_capRadius;
 flat out float v_dashed;
-const float SEGMENTS = ${CONNECTION_SEGMENTS}.0;
+const float SEGMENTS_MAX = ${CONNECTION_SEGMENTS_MAX}.0;
+const float CHORD_TOLERANCE_PX = ${CONNECTION_CHORD_TOLERANCE_DEVICE_PX};
+// 8-point Gauss-Legendre: nodes +-x on [-1, 1] and their weights.
+const float GAUSS_NODES[4] = float[4](
+  0.1834346424956498, 0.5255324099163290, 0.7966664774136267,
+  0.9602898564975363);
+const float GAUSS_WEIGHTS[4] = float[4](
+  0.3626837833783620, 0.3137066458778873, 0.2223810344533745,
+  0.1012285362903763);
+const float MIN_STROKE_PX = ${CONNECTION_MIN_STROKE_PX}.0;
+const float MIN_INK_RATIO = ${CONNECTION_MIN_INK_RATIO};
+vec2 control1() { return vec2(i_controlX.x, i_from.y); }
+vec2 control2() { return vec2(i_controlX.y, i_to.y); }
 vec2 bezier(float t) {
   float mt = 1.0 - t;
-  vec2 p1 = vec2(i_controlX.x, i_from.y);
-  vec2 p2 = vec2(i_controlX.y, i_to.y);
+  vec2 p1 = control1();
+  vec2 p2 = control2();
   return mt * mt * mt * i_from + 3.0 * mt * mt * t * p1 +
     3.0 * mt * t * t * p2 + t * t * t * i_to;
 }
 vec2 bezierTangent(float t) {
   float mt = 1.0 - t;
-  vec2 p1 = vec2(i_controlX.x, i_from.y);
-  vec2 p2 = vec2(i_controlX.y, i_to.y);
+  vec2 p1 = control1();
+  vec2 p2 = control2();
   return 3.0 * mt * mt * (p1 - i_from) + 6.0 * mt * t * (p2 - p1) +
     3.0 * t * t * (i_to - p2);
 }
+// Wang's formula: a cubic split into n equal-t chords strays at most
+// 3/4 * M / n^2 from the curve, M being its largest second difference.
+float segmentCount() {
+  vec2 p1 = control1();
+  vec2 p2 = control2();
+  float secondDifference = max(
+    length(i_from - 2.0 * p1 + p2), length(p1 - 2.0 * p2 + i_to));
+  float secondDifferencePx = secondDifference * u_scale * u_dpr;
+  float n = ceil(sqrt(0.75 * secondDifferencePx / CHORD_TOLERANCE_PX));
+  return clamp(n, 1.0, SEGMENTS_MAX);
+}
+float gaussArcLength(float start, float end) {
+  float center = 0.5 * (start + end);
+  float halfWidth = 0.5 * (end - start);
+  float sum = 0.0;
+  for (int k = 0; k < 4; k++) {
+    float offset = halfWidth * GAUSS_NODES[k];
+    sum += GAUSS_WEIGHTS[k] * (
+      length(bezierTangent(center + offset)) +
+      length(bezierTangent(center - offset)));
+  }
+  return halfWidth * sum;
+}
+// Where x'(t), a quadratic, is zero inside (0, 1), sorted; -1 marks no root.
+// y'(t) has none there, since each control point shares its endpoint's y.
+vec2 tangentXRoots() {
+  float d0 = i_controlX.x - i_from.x;
+  float d1 = i_controlX.y - i_controlX.x;
+  float d2 = i_to.x - i_controlX.y;
+  float a = d0 - 2.0 * d1 + d2;
+  float b = 2.0 * (d1 - d0);
+  vec2 roots = vec2(-1.0);
+  float discriminant = b * b - 4.0 * a * d0;
+  if (discriminant >= 0.0) {
+    // Stable form: no cancellation in 32-bit floats when a is tiny, and a
+    // linear x'(t) (a = 0) still yields its one root.
+    float q = -0.5 * (b + (b < 0.0 ? -1.0 : 1.0) * sqrt(discriminant));
+    if (q != 0.0) roots.x = d0 / q;
+    if (a != 0.0) roots.y = q / a;
+  }
+  return vec2(min(roots.x, roots.y), max(roots.x, roots.y));
+}
+// Constant cost per vertex, and independent of the segment count, so dashes
+// stay put while zooming changes the tessellation. Curves between close
+// nodes reverse, and |B'| dips sharply there, which one Gauss rule across
+// the dip mis-measures; splitting at the reversals keeps each piece smooth.
+float arcLength(float t) {
+  vec2 roots = tangentXRoots();
+  float first = clamp(roots.x, 0.0, t);
+  float second = clamp(roots.y, 0.0, t);
+  return gaussArcLength(0.0, first) + gaussArcLength(first, second) +
+    gaussArcLength(second, t);
+}
 void main() {
-  float t = a_vertex.x;
+  float segments = segmentCount();
+  float t = min(a_vertex.x, segments) / segments;
   vec2 tangent = bezierTangent(t);
   float tangentLength = length(tangent);
   vec2 normal = tangentLength > 1e-6
     ? vec2(-tangent.y, tangent.x) / tangentLength
     : vec2(0.0, 1.0);
-  vec2 world = bezier(t) + normal * (i_stroke.x * 0.5 * a_vertex.y);
+  float strokeWidth = max(i_stroke.x, MIN_STROKE_PX / u_scale);
+  // A floored stroke would carry more ink than the edge has, so it gives the
+  // extra back as transparency, down to a floor that keeps it visible.
+  float inkRatio = i_stroke.x / strokeWidth;
+  vec2 world = bezier(t) + normal * (strokeWidth * 0.5 * a_vertex.y);
   vec2 screen = world * u_scale + u_offset;
   vec2 ndc = (screen / u_resolution * 2.0 - 1.0) * vec2(1.0, -1.0);
   gl_Position = vec4(ndc, 0.0, 1.0);
-  v_color = i_color;
-  v_halfWidth = i_stroke.x * 0.5;
-  v_across = v_halfWidth * a_vertex.y;
+  v_color = vec4(i_color.rgb, i_color.a * max(inkRatio, MIN_INK_RATIO));
+  // Dash caps keep the edge's own width; the widened stroke's would fill the
+  // gaps when zoomed out.
+  v_capRadius = i_stroke.x * 0.5;
+  v_across = strokeWidth * 0.5 * a_vertex.y;
   v_dashed = i_stroke.y;
-  v_arc = 0.0;
-  if (i_stroke.y > 0.5) {
-    int steps = int(t * SEGMENTS + 0.5);
-    vec2 previous = i_from;
-    for (int k = 1; k <= steps; k++) {
-      vec2 next = bezier(float(k) / SEGMENTS);
-      v_arc += distance(previous, next);
-      previous = next;
-    }
-  }
+  // Collapsed samples only form zero-area triangles, so skip their arc.
+  bool collapsed = a_vertex.x > segments;
+  v_arc = i_stroke.y > 0.5 && !collapsed ? arcLength(t) : 0.0;
 }`
 
 // Dashes get round caps that reach into the gaps, like SVG's round linecap.
@@ -404,7 +533,7 @@ precision highp float;
 in vec4 v_color;
 in float v_arc;
 in float v_across;
-flat in float v_halfWidth;
+flat in float v_capRadius;
 flat in float v_dashed;
 out vec4 fragColor;
 const float DASH_ON = ${DASH_ON_WORLD}.0;
@@ -415,7 +544,7 @@ void main() {
     float phase = mod(v_arc, DASH_PERIOD);
     if (phase > DASH_ON) {
       float along = min(phase - DASH_ON, DASH_PERIOD - phase);
-      float d = length(vec2(along, v_across)) - v_halfWidth;
+      float d = length(vec2(along, v_across)) - v_capRadius;
       float aa = max(fwidth(d), 1e-4);
       coverage = 1.0 - smoothstep(-aa, aa, d);
       if (coverage <= 0.0) discard;
@@ -522,77 +651,122 @@ function fontString(f: FontSpec, sizePx: number): string {
 // Glyph atlas
 // ============================================================================
 
-const ATLAS_COLS = 16
-const ATLAS_STATIC_ROWS = 6 // 95 ASCII glyphs + 1 fallback fit in 96 cells
-const ATLAS_DYNAMIC_ROWS = 6
+const ATLAS_SLOT_COLUMNS = 8
+const ATLAS_STATIC_ROWS = 12 // 95 ASCII glyphs + 1 fallback fit in 96 slots
+const ATLAS_DYNAMIC_ROWS = 12
 const ATLAS_FALLBACK_CH = '�'
+const ATLAS_CELL_PADDING_PX = 2
+// A slot holds its glyph at this many offsets within a device pixel, so every
+// quad starts on a device pixel and the text still keeps its true advances.
+const GLYPH_SUBPIXEL_STEPS = 4
+
+interface AtlasGeometry {
+  pixelsPerUnit: number
+  cellPxW: number
+  cellPxH: number
+  slotPxW: number
+  atlasPxW: number
+  atlasPxH: number
+  baselinePxY: number
+}
 
 function buildFontAtlas(
   gl: WebGL2RenderingContext,
   font: FontSpec,
-  dpr: number,
+  pixelsPerUnit: number,
 ): FontAtlas {
-  const refSize = font.size
-  const padding = 2
-  const cellPxW = Math.ceil(refSize * dpr + padding * 2)
-  const cellPxH = Math.ceil(refSize * dpr * 1.6 + padding * 2)
-  const atlasPxW = cellPxW * ATLAS_COLS
-  const atlasPxH = cellPxH * (ATLAS_STATIC_ROWS + ATLAS_DYNAMIC_ROWS)
+  // One extra pixel for the largest subpixel offset.
+  const cellPxW = Math.ceil(
+    font.size * pixelsPerUnit + ATLAS_CELL_PADDING_PX * 2 + 1,
+  )
+  const cellPxH = Math.ceil(
+    font.size * pixelsPerUnit * 1.6 + ATLAS_CELL_PADDING_PX * 2,
+  )
+  const slotPxW = cellPxW * GLYPH_SUBPIXEL_STEPS
+  const atlasPxW = slotPxW * ATLAS_SLOT_COLUMNS
+  const staticPxH = cellPxH * ATLAS_STATIC_ROWS
+  const atlasPxH = staticPxH + cellPxH * ATLAS_DYNAMIC_ROWS
 
-  const initCanvas = newFontCanvas(font, dpr, atlasPxW, atlasPxH)
+  const initCanvas = newFontCanvas(font, pixelsPerUnit, atlasPxW, staticPxH)
   const initCtx = initCanvas.getContext('2d') as CanvasRenderingContext2D
   // The font's ascent rather than one glyph's, so taller glyphs like "$" or
   // "[" stay inside their cell instead of bleeding into the one above.
-  const ascentPx = initCtx.measureText('Mg').fontBoundingBoxAscent
-  const descentPx = initCtx.measureText('Mg').fontBoundingBoxDescent
-  const baselinePxY = ascentPx + padding
+  const metrics = initCtx.measureText('Mg')
+  const ascentPx = metrics.fontBoundingBoxAscent * pixelsPerUnit
+  const descentPx = metrics.fontBoundingBoxDescent * pixelsPerUnit
+  // A whole row, as the shader puts the baseline on a whole device pixel.
+  const baselinePxY = Math.ceil(ascentPx) + ATLAS_CELL_PADDING_PX
   if (baselinePxY + descentPx > cellPxH) {
     throw new Error('Font does not fit its atlas cell', { cause: font })
   }
+  const geometry: AtlasGeometry = {
+    pixelsPerUnit,
+    cellPxW,
+    cellPxH,
+    slotPxW,
+    atlasPxW,
+    atlasPxH,
+    baselinePxY,
+  }
 
   const glyphs = new Map<string, AtlasGlyph>()
-  const rasterize = (ch: string, pxX: number, pxY: number): AtlasGlyph => {
-    initCtx.save()
-    initCtx.beginPath()
-    initCtx.rect(pxX, pxY, cellPxW, cellPxH)
-    initCtx.clip()
-    initCtx.fillText(ch, pxX + padding, pxY + baselinePxY)
-    initCtx.restore()
-    return {
-      u0: pxX / atlasPxW,
-      v0: pxY / atlasPxH,
-      u1: (pxX + cellPxW) / atlasPxW,
-      v1: (pxY + cellPxH) / atlasPxH,
-      advance: initCtx.measureText(ch).width / dpr,
+  const coverage = rasterizeCoverage(initCtx, atlasPxW, staticPxH, () => {
+    for (let i = 0; i < ATLAS_SLOT_COLUMNS * ATLAS_STATIC_ROWS; i++) {
+      const ch = i < 95 ? String.fromCharCode(32 + i) : ATLAS_FALLBACK_CH
+      const slotPxX = (i % ATLAS_SLOT_COLUMNS) * slotPxW
+      const slotPxY = Math.floor(i / ATLAS_SLOT_COLUMNS) * cellPxH
+      rasterizeSlot(initCtx, ch, slotPxX, slotPxY, geometry)
+      const advance = initCtx.measureText(ch).width
+      glyphs.set(ch, slotGlyph(slotPxX, slotPxY, advance, geometry))
     }
-  }
-  const staticCell = (i: number): [number, number] => [
-    (i % ATLAS_COLS) * cellPxW,
-    Math.floor(i / ATLAS_COLS) * cellPxH,
-  ]
-  for (let i = 0; i < 95; i++) {
-    const ch = String.fromCharCode(32 + i)
-    const [x, y] = staticCell(i)
-    glyphs.set(ch, rasterize(ch, x, y))
-  }
-  const [fx, fy] = staticCell(95)
-  const fallback = rasterize(ATLAS_FALLBACK_CH, fx, fy)
-  glyphs.set(ATLAS_FALLBACK_CH, fallback)
-  const texture = uploadCanvasTexture(gl, initCanvas)
+  })
+  assert(glyphs.size === 96, 'Static atlas slab must hold 96 glyphs')
+  const texture = createCoverageTexture(gl, atlasPxW, atlasPxH, coverage)
+  const scratchCanvas = newFontCanvas(font, pixelsPerUnit, slotPxW, cellPxH)
+  const scratchCtx = scratchCanvas.getContext('2d') as CanvasRenderingContext2D
 
-  // Map iteration order = LRU order; oldest is `keys().next()`, newest is
-  // the last `set`. Touching = delete + reinsert.
+  return {
+    refSize: font.size,
+    cellW: cellPxW / pixelsPerUnit,
+    cellH: cellPxH / pixelsPerUnit,
+    sampling: {
+      texture,
+      subpixelSteps: GLYPH_SUBPIXEL_STEPS,
+      subpixelStepU: cellPxW / atlasPxW,
+      cellPen: [
+        ATLAS_CELL_PADDING_PX / pixelsPerUnit,
+        baselinePxY / pixelsPerUnit,
+      ],
+    },
+    ascent: ascentPx / pixelsPerUnit,
+    descent: descentPx / pixelsPerUnit,
+    getGlyph: createGlyphCache(gl, texture, scratchCtx, geometry, glyphs),
+    kerning: createKerning(scratchCtx),
+    coverageChannel: createCoverageChannelLookup(scratchCtx, geometry),
+  }
+}
+
+// Map iteration order = LRU order; oldest is `keys().next()`, newest is the
+// last `set`. Touching = delete + reinsert.
+function createGlyphCache(
+  gl: WebGL2RenderingContext,
+  texture: WebGLTexture,
+  scratchCtx: CanvasRenderingContext2D,
+  geometry: AtlasGeometry,
+  glyphs: Map<string, AtlasGlyph>,
+): (ch: string) => AtlasGlyph {
+  const fallback = glyphs.get(ATLAS_FALLBACK_CH) as AtlasGlyph
   const freeSlots: [number, number][] = []
   for (let r = ATLAS_DYNAMIC_ROWS - 1; r >= 0; r--) {
-    for (let c = ATLAS_COLS - 1; c >= 0; c--) {
-      freeSlots.push([c * cellPxW, (ATLAS_STATIC_ROWS + r) * cellPxH])
+    for (let c = ATLAS_SLOT_COLUMNS - 1; c >= 0; c--) {
+      const slotPxY = (ATLAS_STATIC_ROWS + r) * geometry.cellPxH
+      freeSlots.push([c * geometry.slotPxW, slotPxY])
     }
   }
   const occupiedSlots = new Map<string, [number, number]>()
-  const scratchCanvas = newFontCanvas(font, dpr, cellPxW, cellPxH)
-  const scratchCtx = scratchCanvas.getContext('2d') as CanvasRenderingContext2D
+  const { slotPxW, cellPxH } = geometry
 
-  const getGlyph = (ch: string): AtlasGlyph => {
+  return (ch: string): AtlasGlyph => {
     const cached = glyphs.get(ch)
     if (cached) {
       const slot = occupiedSlots.get(ch)
@@ -602,8 +776,8 @@ function buildFontAtlas(
       }
       return cached
     }
-    const advancePx = scratchCtx.measureText(ch).width
-    if (advancePx === 0) {
+    const advance = scratchCtx.measureText(ch).width
+    if (advance === 0) {
       glyphs.set(ch, fallback)
       return fallback
     }
@@ -615,42 +789,183 @@ function buildFontAtlas(
       glyphs.delete(lruKey)
     }
     occupiedSlots.set(ch, slot)
-    const [pxX, pxY] = slot
-    scratchCtx.clearRect(0, 0, cellPxW, cellPxH)
-    scratchCtx.fillText(ch, padding, baselinePxY)
+    const [slotPxX, slotPxY] = slot
+    const coverage = rasterizeCoverage(scratchCtx, slotPxW, cellPxH, () =>
+      rasterizeSlot(scratchCtx, ch, 0, 0, geometry),
+    )
     gl.activeTexture(gl.TEXTURE0)
     gl.bindTexture(gl.TEXTURE_2D, texture)
+    gl.pixelStorei(gl.UNPACK_ALIGNMENT, 1)
     gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false)
-    gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false)
     gl.texSubImage2D(
       gl.TEXTURE_2D,
       0,
-      pxX,
-      pxY,
+      slotPxX,
+      slotPxY,
+      slotPxW,
+      cellPxH,
       gl.RGBA,
       gl.UNSIGNED_BYTE,
-      scratchCanvas,
+      coverage,
     )
-    const glyph: AtlasGlyph = {
-      u0: pxX / atlasPxW,
-      v0: pxY / atlasPxH,
-      u1: (pxX + cellPxW) / atlasPxW,
-      v1: (pxY + cellPxH) / atlasPxH,
-      advance: advancePx / dpr,
-    }
+    const glyph = slotGlyph(slotPxX, slotPxY, advance, geometry)
     glyphs.set(ch, glyph)
     return glyph
   }
+}
 
+// Kerning is what a pair measures beyond its two advances. Drawing glyph by
+// glyph loses it, which shows most in pairs like "To" and "Tr".
+function createKerning(
+  ctx: CanvasRenderingContext2D,
+): (left: string, right: string) => number {
+  const pairs = new Map<string, number>()
+  return (left: string, right: string): number => {
+    const pair = left + right
+    const cached = pairs.get(pair)
+    if (cached !== undefined) return cached
+    const kerning =
+      ctx.measureText(pair).width -
+      ctx.measureText(left).width -
+      ctx.measureText(right).width
+    pairs.set(pair, kerning)
+    return kerning
+  }
+}
+
+// Chrome rasterizes a glyph thinner the darker its color, in four luminance
+// buckets, so a glyph drawn white and tinted black comes out ~10% too heavy.
+// Each glyph is drawn once per bucket into one RGBA channel each.
+const COVERAGE_FILLS = ['#000000', '#606060', '#a0a0a0', '#ffffff']
+
+function rasterizeCoverage(
+  ctx: CanvasRenderingContext2D,
+  pxW: number,
+  pxH: number,
+  draw: () => void,
+): Uint8Array {
+  const masks = COVERAGE_FILLS.map((fill) => {
+    ctx.fillStyle = fill
+    draw()
+    const mask = ctx.getImageData(0, 0, pxW, pxH)
+    clearCanvas(ctx, pxW, pxH)
+    return mask
+  })
+  return packCoverage(masks)
+}
+
+// Which bucket a color falls in is the rasterizer's own luminance formula, so
+// it is measured: a probe drawn in the color matches one bucket's probe.
+function createCoverageChannelLookup(
+  ctx: CanvasRenderingContext2D,
+  geometry: AtlasGeometry,
+): (color: RGBA) => number {
+  const probe = (fill: string): Uint8ClampedArray => {
+    ctx.fillStyle = fill
+    ctx.fillText('Mg', 0, geometry.baselinePxY / geometry.pixelsPerUnit)
+    const mask = ctx.getImageData(0, 0, geometry.slotPxW, geometry.cellPxH)
+    clearCanvas(ctx, geometry.slotPxW, geometry.cellPxH)
+    return mask.data
+  }
+  const references = COVERAGE_FILLS.map(probe)
+  const channels = new Map<string, number>()
+  return (color: RGBA): number => {
+    const fill = `rgb(${color[0] * 255}, ${color[1] * 255}, ${color[2] * 255})`
+    const cached = channels.get(fill)
+    if (cached !== undefined) return cached
+    const mask = probe(fill)
+    let channel = 0
+    let distanceMin = Number.POSITIVE_INFINITY
+    for (let c = 0; c < references.length; c++) {
+      const distance = alphaDistance(mask, references[c] as Uint8ClampedArray)
+      if (distance < distanceMin) {
+        distanceMin = distance
+        channel = c
+      }
+    }
+    channels.set(fill, channel)
+    return channel
+  }
+}
+
+function alphaDistance(a: Uint8ClampedArray, b: Uint8ClampedArray): number {
+  assert(a.length === b.length, 'Probes must have the same size')
+  let distance = 0
+  for (let i = 3; i < a.length; i += 4) {
+    distance += Math.abs((a[i] as number) - (b[i] as number))
+  }
+  return distance
+}
+
+function clearCanvas(ctx: CanvasRenderingContext2D, pxW: number, pxH: number) {
+  ctx.save()
+  ctx.setTransform(1, 0, 0, 1, 0, 0)
+  ctx.clearRect(0, 0, pxW, pxH)
+  ctx.restore()
+}
+
+// Whole pixels as little-endian words, so alpha is the top byte.
+function packCoverage(masks: readonly ImageData[]): Uint8Array {
+  assert(masks.length === 4, 'Coverage packs one mask per RGBA channel')
+  assert(new Uint8Array(new Uint32Array([1]).buffer)[0] === 1, 'Little-endian')
+  const pixelCount = (masks[0] as ImageData).data.length / 4
+  const [mask0, mask1, mask2, mask3] = masks.map((mask) => {
+    assert(mask.data.length === pixelCount * 4, 'Coverage masks must match')
+    return new Uint32Array(mask.data.buffer, mask.data.byteOffset, pixelCount)
+  }) as [Uint32Array, Uint32Array, Uint32Array, Uint32Array]
+  const coverage = new Uint32Array(pixelCount)
+  for (let i = 0; i < pixelCount; i++) {
+    coverage[i] =
+      ((mask0[i] as number) >>> 24) |
+      (((mask1[i] as number) >>> 24) << 8) |
+      (((mask2[i] as number) >>> 24) << 16) |
+      (((mask3[i] as number) >>> 24) << 24)
+  }
+  return new Uint8Array(coverage.buffer)
+}
+
+function rasterizeSlot(
+  ctx: CanvasRenderingContext2D,
+  ch: string,
+  slotPxX: number,
+  slotPxY: number,
+  geometry: AtlasGeometry,
+): void {
+  const { pixelsPerUnit, cellPxW, cellPxH } = geometry
+  for (let step = 0; step < GLYPH_SUBPIXEL_STEPS; step++) {
+    const cellPxX = slotPxX + step * cellPxW
+    const penPxX = cellPxX + ATLAS_CELL_PADDING_PX + step / GLYPH_SUBPIXEL_STEPS
+    ctx.save()
+    ctx.beginPath()
+    ctx.rect(
+      cellPxX / pixelsPerUnit,
+      slotPxY / pixelsPerUnit,
+      cellPxW / pixelsPerUnit,
+      cellPxH / pixelsPerUnit,
+    )
+    ctx.clip()
+    ctx.fillText(
+      ch,
+      penPxX / pixelsPerUnit,
+      (slotPxY + geometry.baselinePxY) / pixelsPerUnit,
+    )
+    ctx.restore()
+  }
+}
+
+function slotGlyph(
+  slotPxX: number,
+  slotPxY: number,
+  advance: number,
+  geometry: AtlasGeometry,
+): AtlasGlyph {
+  const { cellPxW, cellPxH, atlasPxW, atlasPxH } = geometry
   return {
-    texture,
-    refSize,
-    cellW: cellPxW / dpr,
-    cellH: cellPxH / dpr,
-    baselineOffset: baselinePxY / dpr,
-    ascent: ascentPx / dpr,
-    descent: descentPx / dpr,
-    getGlyph,
+    u0: slotPxX / atlasPxW,
+    v0: slotPxY / atlasPxH,
+    u1: (slotPxX + cellPxW) / atlasPxW,
+    v1: (slotPxY + cellPxH) / atlasPxH,
+    advance,
   }
 }
 
@@ -666,20 +981,23 @@ function lineBoxBaseline(
   )
 }
 
+// The font is set at its CSS size under a device-pixel transform, not at the
+// device size, because SF picks its optical size from the font size: at 28px
+// it switches to the tighter Display cut, unlike the DOM at 14px.
 function newFontCanvas(
   font: FontSpec,
-  dpr: number,
+  pixelsPerUnit: number,
   w: number,
   h: number,
 ): HTMLCanvasElement {
   const canvas = document.createElement('canvas')
   canvas.width = w
   canvas.height = h
-  const ctx = canvas.getContext('2d')
+  const ctx = canvas.getContext('2d', { willReadFrequently: true })
   if (!ctx) throw new Error('failed to get 2d context')
-  ctx.font = fontString(font, font.size * dpr)
+  ctx.setTransform(pixelsPerUnit, 0, 0, pixelsPerUnit, 0, 0)
+  ctx.font = fontString(font, font.size)
   ctx.textBaseline = 'alphabetic'
-  ctx.fillStyle = 'white'
   return canvas
 }
 
@@ -709,6 +1027,8 @@ const ICON_LIST = [
     Component: ADDRESS_ICON_COMPONENTS[id],
   })),
   { id: 'InitialCircle' as const, Component: IconInitial },
+  { id: 'ArrowHeadLeft' as const, Component: IconArrowHeadLeft },
+  { id: 'ArrowHeadRight' as const, Component: IconArrowHeadRight },
 ]
 
 async function buildIconAtlas(
@@ -725,7 +1045,7 @@ async function buildIconAtlas(
   const canvas = document.createElement('canvas')
   canvas.width = atlasPxW
   canvas.height = atlasPxH
-  const ctx = canvas.getContext('2d')
+  const ctx = canvas.getContext('2d', { willReadFrequently: true })
   if (!ctx) throw new Error('failed to get icon atlas 2d context')
 
   const cells = new Map<
@@ -750,8 +1070,16 @@ async function buildIconAtlas(
     })
   }
 
-  const texture = uploadCanvasTexture(gl, canvas)
-  return { texture, cells }
+  const image = ctx.getImageData(0, 0, atlasPxW, atlasPxH)
+  const coverage = packCoverage([image, image, image, image])
+  const texture = createCoverageTexture(gl, atlasPxW, atlasPxH, coverage)
+  const sampling: TextSampling = {
+    texture,
+    subpixelSteps: 1,
+    subpixelStepU: 0,
+    cellPen: [0, 0],
+  }
+  return { sampling, cells }
 }
 
 function renderWhiteIconSvg(
@@ -778,17 +1106,34 @@ function loadSvgImage(svg: string): Promise<HTMLImageElement> {
   })
 }
 
-function uploadCanvasTexture(
+// The coverage fills the top rows; WebGL zeroes the rest.
+function createCoverageTexture(
   gl: WebGL2RenderingContext,
-  canvas: HTMLCanvasElement,
+  pxW: number,
+  pxH: number,
+  coverage: Uint8Array,
 ): WebGLTexture {
+  const coveragePxH = coverage.length / 4 / pxW
+  assert(Number.isInteger(coveragePxH), 'Coverage must be whole RGBA rows')
+  assert(coveragePxH <= pxH, 'Coverage must fit the texture')
   const texture = gl.createTexture()
   if (!texture) throw new Error('createTexture failed')
   gl.activeTexture(gl.TEXTURE0)
   gl.bindTexture(gl.TEXTURE_2D, texture)
+  gl.texStorage2D(gl.TEXTURE_2D, 1, gl.RGBA8, pxW, pxH)
+  gl.pixelStorei(gl.UNPACK_ALIGNMENT, 1)
   gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false)
-  gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false)
-  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, canvas)
+  gl.texSubImage2D(
+    gl.TEXTURE_2D,
+    0,
+    0,
+    0,
+    pxW,
+    coveragePxH,
+    gl.RGBA,
+    gl.UNSIGNED_BYTE,
+    coverage,
+  )
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
@@ -813,6 +1158,7 @@ interface Uniforms {
   fade: {
     layer: WebGLUniformLocation
     alpha: WebGLUniformLocation
+    background: WebGLUniformLocation
   }
   grid: {
     offset: WebGLUniformLocation
@@ -832,6 +1178,9 @@ interface Uniforms {
     resolution: WebGLUniformLocation
     dpr: WebGLUniformLocation
     atlas: WebGLUniformLocation
+    subpixelSteps: WebGLUniformLocation
+    subpixelStepU: WebGLUniformLocation
+    cellPen: WebGLUniformLocation
   }
   line: {
     offset: WebGLUniformLocation
@@ -842,6 +1191,7 @@ interface Uniforms {
     offset: WebGLUniformLocation
     scale: WebGLUniformLocation
     resolution: WebGLUniformLocation
+    dpr: WebGLUniformLocation
   }
 }
 
@@ -863,15 +1213,15 @@ interface InstancedPassBuffer extends PassBuffer {
   attributes: InstanceAttributes
 }
 
-// pos.xy, size.xy, color.rgba, radii.xyzw, border, z, ring.rgba
+// pos.xy, size.xy, color.rgba, radii.xyzw, border, z
 const ROUND_ATTRIBUTES: InstanceAttributes = {
   strideF: QUAD_STRIDE_F,
-  sizes: [2, 2, 4, 4, 1, 1, 4],
+  sizes: [2, 2, 4, 4, 1, 1],
 }
-// pos.xy, size.xy, uv.xyzw, color.rgba, z
+// pos.xy, size.xy, uv.xyzw, color.rgba, z, channel
 const TEXT_ATTRIBUTES: InstanceAttributes = {
   strideF: TEXT_STRIDE_F,
-  sizes: [2, 2, 4, 4, 1],
+  sizes: [2, 2, 4, 4, 1, 1],
 }
 
 function pointInstances(
@@ -898,6 +1248,7 @@ interface Buffers {
   fieldText: InstancedPassBuffer
   footerText: InstancedPassBuffer
   icon: InstancedPassBuffer
+  arrowHead: InstancedPassBuffer
   connections: PassBuffer
   overlap: PassBuffer
 }
@@ -919,6 +1270,7 @@ interface PassCounts {
   fieldText: PassLayout
   footerText: PassLayout
   icon: PassLayout
+  arrowHead: PassLayout
   connections: number
   overlap: number
 }
@@ -933,8 +1285,6 @@ const DIMMED_RANGE = 2
 const OPAQUE_RANGE = 3
 type NodeRange = typeof GRAYED_RANGE | typeof DIMMED_RANGE | typeof OPAQUE_RANGE
 type DrawRange = typeof CONTAINER_RANGE | NodeRange
-const GRAYED_ALPHA = 0.2
-const DIMMED_ALPHA = 0.3
 
 // Instance index where each range ends, in draw order.
 type PassLayout = readonly [number, number, number, number]
@@ -1039,6 +1389,7 @@ class WebGLRenderer {
   private fieldAtlas: FontAtlas
   private footerAtlas: FontAtlas
   private iconAtlas: IconAtlas
+  private textZoom: number
 
   // Cache: the data ref that the GPU buffers currently describe. When the
   // next render() arrives with a different ref, all buffers are rebuilt.
@@ -1051,6 +1402,7 @@ class WebGLRenderer {
     fieldText: EMPTY_LAYOUT,
     footerText: EMPTY_LAYOUT,
     icon: EMPTY_LAYOUT,
+    arrowHead: EMPTY_LAYOUT,
     connections: 0,
     overlap: 0,
   }
@@ -1065,14 +1417,16 @@ class WebGLRenderer {
   static async create(
     gl: WebGL2RenderingContext,
     dpr: number,
+    scale: number,
   ): Promise<WebGLRenderer> {
     const iconAtlas = await buildIconAtlas(gl, dpr)
-    return new WebGLRenderer(gl, dpr, iconAtlas)
+    return new WebGLRenderer(gl, dpr, scale, iconAtlas)
   }
 
   private constructor(
     gl: WebGL2RenderingContext,
     dpr: number,
+    scale: number,
     iconAtlas: IconAtlas,
   ) {
     this.gl = gl
@@ -1089,6 +1443,7 @@ class WebGLRenderer {
       fade: {
         layer: requireUniform(gl, this.programs.fade, 'u_layer'),
         alpha: requireUniform(gl, this.programs.fade, 'u_alpha'),
+        background: requireUniform(gl, this.programs.fade, 'u_background'),
       },
       grid: {
         offset: requireUniform(gl, this.programs.grid, 'u_offset'),
@@ -1108,6 +1463,17 @@ class WebGLRenderer {
         resolution: requireUniform(gl, this.programs.text, 'u_resolution'),
         dpr: requireUniform(gl, this.programs.text, 'u_dpr'),
         atlas: requireUniform(gl, this.programs.text, 'u_atlas'),
+        subpixelSteps: requireUniform(
+          gl,
+          this.programs.text,
+          'u_subpixelSteps',
+        ),
+        subpixelStepU: requireUniform(
+          gl,
+          this.programs.text,
+          'u_subpixelStepU',
+        ),
+        cellPen: requireUniform(gl, this.programs.text, 'u_cellPen'),
       },
       line: {
         offset: requireUniform(gl, this.programs.line, 'u_offset'),
@@ -1122,11 +1488,14 @@ class WebGLRenderer {
           this.programs.connection,
           'u_resolution',
         ),
+        dpr: requireUniform(gl, this.programs.connection, 'u_dpr'),
       },
     }
-    this.headerAtlas = buildFontAtlas(gl, HEADER_FONT, dpr)
-    this.fieldAtlas = buildFontAtlas(gl, FIELD_FONT, dpr)
-    this.footerAtlas = buildFontAtlas(gl, FOOTER_FONT, dpr)
+    this.textZoom = textZoomFor(scale)
+    const pixelsPerUnit = dpr * this.textZoom
+    this.headerAtlas = buildFontAtlas(gl, HEADER_FONT, pixelsPerUnit)
+    this.fieldAtlas = buildFontAtlas(gl, FIELD_FONT, pixelsPerUnit)
+    this.footerAtlas = buildFontAtlas(gl, FOOTER_FONT, pixelsPerUnit)
     this.iconAtlas = iconAtlas
     this.buffers = this.createBuffers()
 
@@ -1151,6 +1520,7 @@ class WebGLRenderer {
     const fieldText = this.createTextPassBuffer(cornerQuad)
     const footerText = this.createTextPassBuffer(cornerQuad)
     const icon = this.createTextPassBuffer(cornerQuad)
+    const arrowHead = this.createTextPassBuffer(cornerQuad)
     const connectionStrip = createConnectionStrip(gl)
     const connections = this.createConnectionPassBuffer(connectionStrip)
     const overlap = this.createLinePassBuffer()
@@ -1165,6 +1535,7 @@ class WebGLRenderer {
       fieldText,
       footerText,
       icon,
+      arrowHead,
       connections,
       overlap,
     }
@@ -1240,6 +1611,25 @@ class WebGLRenderer {
     return { data, vao }
   }
 
+  // Glyphs rasterized for the zoom they are shown at match DOM text; scaled
+  // from another zoom they blur or alias. Called once zooming settles, as a
+  // rebuild per frame of a zoom gesture would stall it.
+  rasterizeTextFor(scale: number) {
+    if (!drawsNodeDetail(scale)) return
+    const textZoom = textZoomFor(scale)
+    if (textZoom === this.textZoom) return
+    const gl = this.gl
+    gl.deleteTexture(this.headerAtlas.sampling.texture)
+    gl.deleteTexture(this.fieldAtlas.sampling.texture)
+    gl.deleteTexture(this.footerAtlas.sampling.texture)
+    const pixelsPerUnit = this.dpr * textZoom
+    this.headerAtlas = buildFontAtlas(gl, HEADER_FONT, pixelsPerUnit)
+    this.fieldAtlas = buildFontAtlas(gl, FIELD_FONT, pixelsPerUnit)
+    this.footerAtlas = buildFontAtlas(gl, FOOTER_FONT, pixelsPerUnit)
+    this.textZoom = textZoom
+    this.cachedData = null
+  }
+
   render(
     data: DrawData,
     transform: { offsetX: number; offsetY: number; scale: number },
@@ -1266,12 +1656,24 @@ class WebGLRenderer {
     // by how the instance buffers are filled (selected last). Overlap borders
     // draw last.
     gl.disable(gl.DEPTH_TEST)
-    this.drawGridPass(transform, res)
+    this.drawGridPass(transform, res, data.palette.gridDot)
     this.drawConnectionPass(transform, res)
     gl.enable(gl.DEPTH_TEST)
     this.drawNodeRange(CONTAINER_RANGE, transform, res)
-    this.drawFadedRange(GRAYED_RANGE, GRAYED_ALPHA, transform, res)
-    this.drawFadedRange(DIMMED_RANGE, DIMMED_ALPHA, transform, res)
+    this.drawFadedRange(
+      GRAYED_RANGE,
+      data.palette.grayedAlpha,
+      data.palette.canvas,
+      transform,
+      res,
+    )
+    this.drawFadedRange(
+      DIMMED_RANGE,
+      data.palette.dimmedAlpha,
+      data.palette.canvas,
+      transform,
+      res,
+    )
     this.drawNodeRange(OPAQUE_RANGE, transform, res)
     gl.disable(gl.DEPTH_TEST)
     this.drawLinePass(this.buffers.overlap, this.counts.overlap, transform, res)
@@ -1297,24 +1699,32 @@ class WebGLRenderer {
 
   private rebuildAll(data: DrawData) {
     const renderNodes = buildRenderNodes(data)
+    const spans = liveConnections(data)
     this.counts.round = this.buildRound(
       renderNodes,
       data.containers,
       data.selectedContainers,
+      data.palette,
     )
     this.counts.icon = this.buildIcons(
       renderNodes,
       data.containers,
       data.selectedContainers,
+      data.palette,
+    )
+    this.counts.arrowHead = this.buildArrowHeads(
+      renderNodes,
+      arrowHeadsByTarget(spans, data),
     )
     this.counts.headerText = this.buildHeaderText(
       renderNodes,
       data.containers,
       data.selectedContainers,
+      data.palette,
     )
-    this.counts.fieldText = this.buildFieldText(renderNodes)
-    this.counts.footerText = this.buildFooterText(renderNodes)
-    this.counts.connections = this.buildConnections(data)
+    this.counts.fieldText = this.buildFieldText(renderNodes, data.palette)
+    this.counts.footerText = this.buildFooterText(renderNodes, data.palette)
+    this.counts.connections = this.buildConnections(data, spans)
     this.counts.overlap = this.buildOverlap(renderNodes)
   }
 
@@ -1322,11 +1732,12 @@ class WebGLRenderer {
     renderNodes: readonly RenderNode[],
     containers: readonly GroupContainer[],
     selectedContainers: ReadonlySet<string>,
+    palette: GraphPalette,
   ): PassLayout {
-    // Upper bound: 4 quads (body, header, selection, group outline) per node,
-    // plus one pill per visible field, plus two quads (outline, header bar)
-    // per open-group container.
-    let maxInstances = renderNodes.length * 4 + containers.length * 2
+    // Upper bound: 5 quads (body, header, border, selection, group outline)
+    // per node, plus one pill per visible field, plus two quads (outline,
+    // header bar) per open-group container.
+    let maxInstances = renderNodes.length * 5 + containers.length * 2
     for (const rn of renderNodes) maxInstances += rn.visibleFields.length
     if (maxInstances === 0) return EMPTY_LAYOUT
     const buf = this.ensureRound(maxInstances)
@@ -1336,8 +1747,10 @@ class WebGLRenderer {
     const w = CONTAINER_OUTLINE_WIDTH
     let n = 0
     for (const { box: b, headerBox: h, id } of containers) {
-      const line = selectedContainers.has(id) ? AUTUMN_300 : COFFEE_200
-      const bar = selectedContainers.has(id) ? AUTUMN_300 : COFFEE_600
+      const line = selectedContainers.has(id) ? palette.accent : palette.text
+      const bar = selectedContainers.has(id)
+        ? palette.accentFill
+        : palette.containerBar
       writeRound(
         buf,
         n++,
@@ -1352,7 +1765,6 @@ class WebGLRenderer {
         r,
         w,
         CONTAINER_Z,
-        NO_RING,
       )
       writeRound(
         buf,
@@ -1368,7 +1780,6 @@ class WebGLRenderer {
         0,
         0,
         CONTAINER_Z,
-        NO_RING,
       )
     }
     for (const rn of renderNodes) {
@@ -1385,14 +1796,13 @@ class WebGLRenderer {
           y - inset,
           width + inset * 2,
           height + inset * 2,
-          AUTUMN_300,
+          palette.accent,
           corner + inset,
           corner + inset,
           corner + inset,
           corner + inset,
           SELECTION_OUTLINE_WIDTH,
           z,
-          NO_RING,
         )
       }
 
@@ -1403,25 +1813,18 @@ class WebGLRenderer {
         y,
         width,
         height,
-        NODE_BODY,
+        palette.nodeBody,
         corner,
         corner,
         corner,
         corner,
         0,
         z,
-        NO_RING,
       )
 
-      const { color: headerCssColor, ringColor } = getColor(node)
+      const { color: headerCssColor } = getColor(node)
       const headerRgb = cssRgbToRgba(headerCssColor)
       const headerColor = flags.isGrayedOut ? desaturate(headerRgb) : headerRgb
-      const ringRgb = cssRgbToRgba(ringColor)
-      const headerRing = !node.isInitial
-        ? NO_RING
-        : flags.isGrayedOut
-          ? desaturate(ringRgb)
-          : ringRgb
       const headerBR = rn.fullHeight ? corner : 0
       const headerBL = rn.fullHeight ? corner : 0
       writeRound(
@@ -1438,7 +1841,22 @@ class WebGLRenderer {
         headerBL,
         0,
         z,
-        headerRing,
+      )
+
+      writeRound(
+        buf,
+        n++,
+        x,
+        y,
+        width,
+        height,
+        palette.nodeBorder,
+        corner,
+        corner,
+        corner,
+        corner,
+        NODE_BORDER_WIDTH,
+        z,
       )
 
       if (rn.isGroup) {
@@ -1450,36 +1868,33 @@ class WebGLRenderer {
           y - inset,
           width + inset * 2,
           height + inset * 2,
-          COFFEE_200,
+          palette.text,
           corner + inset,
           corner + inset,
           corner + inset,
           corner + inset,
           GROUP_OUTLINE_WIDTH,
           z,
-          NO_RING,
         )
       }
 
-      for (const { index, visibleRow } of rn.visibleFields) {
-        if (flags.fieldHighlighted[index]) {
-          const rowY = y + HEADER_HEIGHT + visibleRow * FIELD_HEIGHT
-          const pillRadius = FIELD_HEIGHT / 2
+      for (let row = 0; row < rn.rows.length; row++) {
+        if (isRowHighlighted(rn, row)) {
+          const rowY = y + HEADER_HEIGHT + row * FIELD_HEIGHT
           writeRound(
             buf,
             n++,
-            x,
+            x + HIGHLIGHTED_ROW_INSET,
             rowY,
-            width,
+            width - HIGHLIGHTED_ROW_INSET * 2,
             FIELD_HEIGHT,
-            AUTUMN_300,
-            pillRadius,
-            pillRadius,
-            pillRadius,
-            pillRadius,
+            palette.highlightedRowFill,
+            HIGHLIGHTED_ROW_RADIUS,
+            HIGHLIGHTED_ROW_RADIUS,
+            HIGHLIGHTED_ROW_RADIUS,
+            HIGHLIGHTED_ROW_RADIUS,
             0,
             z,
-            NO_RING,
           )
         }
       }
@@ -1493,6 +1908,7 @@ class WebGLRenderer {
     renderNodes: readonly RenderNode[],
     containers: readonly GroupContainer[],
     selectedContainers: ReadonlySet<string>,
+    palette: GraphPalette,
   ): PassLayout {
     let max = renderNodes.length * 3 + containers.length
     for (const rn of renderNodes) max += rn.visibleFields.length
@@ -1503,7 +1919,7 @@ class WebGLRenderer {
     let n = 0
     for (const { headerBox: h, id } of containers) {
       const iconY = h.y + (h.height - HEADER_ICON_SIZE) / 2
-      const color = selectedContainers.has(id) ? BLACK : COFFEE_200
+      const color = selectedContainers.has(id) ? TEXT_ON_ACCENT : palette.text
       n += this.emitIcon(
         buf,
         n,
@@ -1522,9 +1938,11 @@ class WebGLRenderer {
       const iconY = y + (headerH - HEADER_ICON_SIZE) / 2
 
       const { isDark } = getColor(node)
-      const headerTextColor = isDark ? COFFEE_200 : BLACK
+      const headerTextColor = isDark
+        ? HEADER_TEXT_ON_DARK
+        : HEADER_TEXT_ON_LIGHT
       const addrColor =
-        node.addressType === 'Unverified' ? AUX_RED : headerTextColor
+        node.addressType === 'Unverified' ? HEADER_UNVERIFIED : headerTextColor
       n += this.emitIcon(
         buf,
         n,
@@ -1536,9 +1954,8 @@ class WebGLRenderer {
         z,
       )
 
-      let rightX = x + width - HEADER_PADDING
+      let rightX = x + width - HEADER_PADDING - HEADER_ICON_SIZE
       if (node.hasTemplate) {
-        rightX -= HEADER_ICON_SIZE
         n += this.emitIcon(
           buf,
           n,
@@ -1546,12 +1963,12 @@ class WebGLRenderer {
           rightX,
           iconY,
           HEADER_ICON_SIZE,
-          AUX_ORANGE,
+          HEADER_TEMPLATE,
           z,
         )
+        rightX -= HEADER_BADGE_STEP
       }
       if (node.isInitial) {
-        rightX -= HEADER_ICON_SIZE
         n += this.emitIcon(
           buf,
           n,
@@ -1559,7 +1976,7 @@ class WebGLRenderer {
           rightX,
           iconY,
           HEADER_ICON_SIZE,
-          AUX_GREEN,
+          HEADER_INITIAL,
           z,
         )
       }
@@ -1577,10 +1994,10 @@ class WebGLRenderer {
           const useAutumn =
             flags.isSelected || flags.fieldHighlighted[index] === 1
           const dotColor = flags.isGrayedOut
-            ? desaturate(COFFEE_400)
+            ? desaturate(palette.dot)
             : useAutumn
-              ? AUTUMN_300
-              : COFFEE_400
+              ? palette.accent
+              : palette.dot
           n += this.emitIcon(
             buf,
             n,
@@ -1596,6 +2013,49 @@ class WebGLRenderer {
     }
 
     this.upload(this.buffers.icon.data, buf, n, TEXT_STRIDE_F)
+    return layout.finish(n)
+  }
+
+  private buildArrowHeads(
+    renderNodes: readonly RenderNode[],
+    arrowHeads: ReadonlyMap<string, ArrowHeads>,
+  ): PassLayout {
+    if (arrowHeads.size === 0) return EMPTY_LAYOUT
+    const buf = this.ensureText(renderNodes.length * 2)
+    const layout = new PassLayoutBuilder()
+    let n = 0
+    for (const { node, z, range } of renderNodes) {
+      layout.enter(range, n)
+      const arrows = arrowHeads.get(node.id)
+      if (arrows === undefined) continue
+      const { x, y, width } = node.box
+      const cellY = y + HEADER_HEIGHT / 2 - ARROW_HEAD_CELL / 2
+      if (arrows.left) {
+        n += this.emitIcon(
+          buf,
+          n,
+          'ArrowHeadRight',
+          x - ARROW_HEAD_CELL * ARROW_HEAD_TIP,
+          cellY,
+          ARROW_HEAD_CELL,
+          arrows.left,
+          z,
+        )
+      }
+      if (arrows.right) {
+        n += this.emitIcon(
+          buf,
+          n,
+          'ArrowHeadLeft',
+          x + width - ARROW_HEAD_CELL * (1 - ARROW_HEAD_TIP),
+          cellY,
+          ARROW_HEAD_CELL,
+          arrows.right,
+          z,
+        )
+      }
+    }
+    this.upload(this.buffers.arrowHead.data, buf, n, TEXT_STRIDE_F)
     return layout.finish(n)
   }
 
@@ -1624,6 +2084,7 @@ class WebGLRenderer {
       cell.v1,
       color,
       z,
+      0,
     )
     return 1
   }
@@ -1632,6 +2093,7 @@ class WebGLRenderer {
     renderNodes: readonly RenderNode[],
     containers: readonly GroupContainer[],
     selectedContainers: ReadonlySet<string>,
+    palette: GraphPalette,
   ): PassLayout {
     let maxChars = 0
     for (const { node } of renderNodes) maxChars += node.name.length
@@ -1650,7 +2112,7 @@ class WebGLRenderer {
         h.x + HEADER_PADDING + HEADER_ICON_SIZE + HEADER_ITEM_GAP,
         baselineY,
         atlas,
-        selectedContainers.has(id) ? BLACK : COFFEE_200,
+        selectedContainers.has(id) ? TEXT_ON_ACCENT : palette.text,
         h.x + h.width - HEADER_PADDING,
         CONTAINER_Z,
       )
@@ -1658,22 +2120,25 @@ class WebGLRenderer {
     for (const { node, flags, z, range, headerH } of renderNodes) {
       layout.enter(range, n)
       const { isDark } = getColor(node)
-      const baseColor = isDark ? COFFEE_200 : BLACK
+      const baseColor = isDark ? HEADER_TEXT_ON_DARK : HEADER_TEXT_ON_LIGHT
       const color = flags.isGrayedOut ? desaturate(baseColor) : baseColor
       const startX =
         node.box.x + HEADER_PADDING + HEADER_ICON_SIZE + HEADER_ITEM_GAP
-      let rightX = node.box.x + node.box.width - HEADER_PADDING
-      if (node.hasTemplate) rightX -= HEADER_ICON_SIZE
-      if (node.isInitial) rightX -= HEADER_ICON_SIZE
-      const maxX = rightX - HEADER_ITEM_GAP
+      const badges = Number(node.hasTemplate) + Number(node.isInitial)
+      const badgesWidth =
+        badges === 0 ? 0 : HEADER_ICON_SIZE + (badges - 1) * HEADER_BADGE_STEP
+      const maxX =
+        node.box.x +
+        node.box.width -
+        HEADER_PADDING -
+        badgesWidth -
+        HEADER_ITEM_GAP
       const baselineY = node.box.y + headerH / 2 + atlas.refSize / 2 - 2
-      // A short name sits centered between the address icon and the badges.
-      const slack = maxX - startX - measureString(node.name, atlas)
       n += writeStringInstances(
         buf,
         n,
         node.name,
-        startX + Math.max(0, slack / 2),
+        startX,
         baselineY,
         atlas,
         color,
@@ -1685,7 +2150,10 @@ class WebGLRenderer {
     return layout.finish(n)
   }
 
-  private buildFieldText(renderNodes: readonly RenderNode[]): PassLayout {
+  private buildFieldText(
+    renderNodes: readonly RenderNode[],
+    palette: GraphPalette,
+  ): PassLayout {
     let maxChars = 0
     for (const rn of renderNodes) {
       for (const row of rn.rows) {
@@ -1703,17 +2171,21 @@ class WebGLRenderer {
       for (let row = 0; row < rn.rows.length; row++) {
         const rowY = node.box.y + HEADER_HEIGHT + row * FIELD_HEIGHT
         const baselineY = rowY + FIELD_HEIGHT / 2 + atlas.refSize / 2 - 2
-        const baseColor = isRowHighlighted(rn, row) ? BLACK : COFFEE_200
+        const baseColor = isRowHighlighted(rn, row)
+          ? palette.highlightedRowText
+          : palette.text
         const color = flags.isGrayedOut ? desaturate(baseColor) : baseColor
+        const startX = node.box.x + HEADER_PADDING
+        const maxX = node.box.x + node.box.width - HEADER_PADDING
         n += writeStringInstances(
           buf,
           n,
-          (rn.rows[row] as NodeRow).label,
-          node.box.x + HEADER_PADDING,
+          ellipsizeStart((rn.rows[row] as NodeRow).label, atlas, maxX - startX),
+          startX,
           baselineY,
           atlas,
           color,
-          node.box.x + node.box.width - HEADER_PADDING,
+          maxX,
           z,
         )
       }
@@ -1722,7 +2194,10 @@ class WebGLRenderer {
     return layout.finish(n)
   }
 
-  private buildFooterText(renderNodes: readonly RenderNode[]): PassLayout {
+  private buildFooterText(
+    renderNodes: readonly RenderNode[],
+    palette: GraphPalette,
+  ): PassLayout {
     let any = false
     let maxChars = 0
     for (const { node } of renderNodes) {
@@ -1752,7 +2227,7 @@ class WebGLRenderer {
         footerBottom - FOOTER_LINE_HEIGHT,
         FOOTER_LINE_HEIGHT,
       )
-      const baseColor = withAlpha(COFFEE_200, 0.4)
+      const baseColor = palette.footerText
       const color = flags.isGrayedOut ? desaturate(baseColor) : baseColor
       const labelWidth = measureString(label, atlas)
       const startX = node.box.x + (node.box.width - labelWidth) / 2
@@ -1786,8 +2261,10 @@ class WebGLRenderer {
   }
 
   // Highlighted connections go last so they draw on top.
-  private buildConnections(data: DrawData): number {
-    const spans = liveConnections(data)
+  private buildConnections(
+    data: DrawData,
+    spans: readonly ConnectionSpan[],
+  ): number {
     if (spans.length === 0) return 0
     const buffer = this.ensureConnections(spans.length)
     const highlighted: ConnectionSpan[] = []
@@ -1811,7 +2288,7 @@ class WebGLRenderer {
         n++,
         span,
         HIGHLIGHTED_CONNECTION_WIDTH,
-        AUTUMN_300,
+        data.palette.accent,
       )
     }
     return this.upload(
@@ -1862,6 +2339,7 @@ class WebGLRenderer {
   private drawGridPass(
     transform: { offsetX: number; offsetY: number; scale: number },
     res: [number, number],
+    gridDot: RGBA,
   ) {
     const gl = this.gl
     gl.useProgram(this.programs.grid)
@@ -1873,7 +2351,7 @@ class WebGLRenderer {
     gl.uniform1f(this.uniforms.grid.scale, transform.scale)
     gl.uniform2f(this.uniforms.grid.resolution, res[0], res[1])
     gl.uniform1f(this.uniforms.grid.cellSize, getGridCellSize(transform.scale))
-    gl.uniform4fv(this.uniforms.grid.color, GRID_DOT)
+    gl.uniform4fv(this.uniforms.grid.color, gridDot)
     gl.bindVertexArray(null)
     gl.drawArrays(gl.TRIANGLES, 0, 3)
   }
@@ -1885,8 +2363,17 @@ class WebGLRenderer {
   ) {
     this.drawRoundPass(range, transform, res)
     this.drawTextPass(
+      this.buffers.arrowHead,
+      this.iconAtlas.sampling,
+      this.counts.arrowHead,
+      range,
+      transform,
+      res,
+    )
+    if (!drawsNodeDetail(transform.scale)) return
+    this.drawTextPass(
       this.buffers.icon,
-      this.iconAtlas.texture,
+      this.iconAtlas.sampling,
       this.counts.icon,
       range,
       transform,
@@ -1894,7 +2381,7 @@ class WebGLRenderer {
     )
     this.drawTextPass(
       this.buffers.headerText,
-      this.headerAtlas.texture,
+      this.headerAtlas.sampling,
       this.counts.headerText,
       range,
       transform,
@@ -1902,7 +2389,7 @@ class WebGLRenderer {
     )
     this.drawTextPass(
       this.buffers.fieldText,
-      this.fieldAtlas.texture,
+      this.fieldAtlas.sampling,
       this.counts.fieldText,
       range,
       transform,
@@ -1910,7 +2397,7 @@ class WebGLRenderer {
     )
     this.drawTextPass(
       this.buffers.footerText,
-      this.footerAtlas.texture,
+      this.footerAtlas.sampling,
       this.counts.footerText,
       range,
       transform,
@@ -1921,6 +2408,7 @@ class WebGLRenderer {
   private drawFadedRange(
     range: NodeRange,
     alpha: number,
+    background: RGBA,
     transform: { offsetX: number; offsetY: number; scale: number },
     res: [number, number],
   ) {
@@ -1942,6 +2430,12 @@ class WebGLRenderer {
     gl.bindTexture(gl.TEXTURE_2D, layer.texture)
     gl.uniform1i(this.uniforms.fade.layer, 0)
     gl.uniform1f(this.uniforms.fade.alpha, alpha)
+    gl.uniform3f(
+      this.uniforms.fade.background,
+      background[0],
+      background[1],
+      background[2],
+    )
     gl.bindVertexArray(null)
     gl.drawArrays(gl.TRIANGLES, 0, 3)
     this.useCoverageBlending()
@@ -1981,7 +2475,7 @@ class WebGLRenderer {
 
   private drawTextPass(
     pass: InstancedPassBuffer,
-    texture: WebGLTexture,
+    sampling: TextSampling,
     layout: PassLayout,
     range: DrawRange,
     transform: { offsetX: number; offsetY: number; scale: number },
@@ -2000,8 +2494,15 @@ class WebGLRenderer {
     gl.uniform2f(this.uniforms.text.resolution, res[0], res[1])
     gl.uniform1f(this.uniforms.text.dpr, this.dpr)
     gl.activeTexture(gl.TEXTURE0)
-    gl.bindTexture(gl.TEXTURE_2D, texture)
+    gl.bindTexture(gl.TEXTURE_2D, sampling.texture)
     gl.uniform1i(this.uniforms.text.atlas, 0)
+    gl.uniform1f(this.uniforms.text.subpixelSteps, sampling.subpixelSteps)
+    gl.uniform1f(this.uniforms.text.subpixelStepU, sampling.subpixelStepU)
+    gl.uniform2f(
+      this.uniforms.text.cellPen,
+      sampling.cellPen[0],
+      sampling.cellPen[1],
+    )
     pointInstances(gl, pass, rangeStart(layout, range))
     gl.drawArraysInstanced(gl.TRIANGLE_STRIP, 0, 4, count)
   }
@@ -2041,11 +2542,12 @@ class WebGLRenderer {
     )
     gl.uniform1f(this.uniforms.connection.scale, transform.scale)
     gl.uniform2f(this.uniforms.connection.resolution, res[0], res[1])
+    gl.uniform1f(this.uniforms.connection.dpr, this.dpr)
     gl.bindVertexArray(this.buffers.connections.vao)
     gl.drawArraysInstanced(
       gl.TRIANGLE_STRIP,
       0,
-      (CONNECTION_SEGMENTS + 1) * 2,
+      (CONNECTION_SEGMENTS_MAX + 1) * 2,
       n,
     )
   }
@@ -2096,16 +2598,17 @@ class WebGLRenderer {
       this.buffers.fieldText,
       this.buffers.footerText,
       this.buffers.icon,
+      this.buffers.arrowHead,
       this.buffers.connections,
       this.buffers.overlap,
     ]) {
       gl.deleteBuffer(pass.data)
       gl.deleteVertexArray(pass.vao)
     }
-    gl.deleteTexture(this.headerAtlas.texture)
-    gl.deleteTexture(this.fieldAtlas.texture)
-    gl.deleteTexture(this.footerAtlas.texture)
-    gl.deleteTexture(this.iconAtlas.texture)
+    gl.deleteTexture(this.headerAtlas.sampling.texture)
+    gl.deleteTexture(this.fieldAtlas.sampling.texture)
+    gl.deleteTexture(this.footerAtlas.sampling.texture)
+    gl.deleteTexture(this.iconAtlas.sampling.texture)
   }
 }
 
@@ -2199,12 +2702,42 @@ function connectionColor(span: ConnectionSpan, data: DrawData): RGBA {
     data.markUnreachableEntries &&
     !(span.node.isReachable && span.target.isReachable)
   ) {
-    return GRAYED_CONNECTION_COLOR
+    return data.palette.connectionGrayed
   }
   if (data.enableDimming && data.anyNodeSelected) {
-    return DIMMED_CONNECTION_COLOR
+    return data.palette.connectionDimmed
   }
-  return DEFAULT_CONNECTION_COLOR
+  return data.palette.connection
+}
+
+interface ArrowHeads {
+  left?: RGBA
+  right?: RGBA
+}
+
+// Every edge into a node meets at one point on its header, so one arrow per
+// side marks them all; it takes the accent when any of them is highlighted.
+function arrowHeadsByTarget(
+  spans: readonly ConnectionSpan[],
+  data: DrawData,
+): Map<string, ArrowHeads> {
+  const result = new Map<string, ArrowHeads>()
+  for (const span of spans) {
+    const side = span.field.connection.to.direction
+    const heads = result.get(span.target.id) ?? {}
+    if (heads[side] === data.palette.accent) continue
+    heads[side] = isConnectionHighlighted(span, data)
+      ? data.palette.accent
+      : arrowHeadColor(span, data)
+    result.set(span.target.id, heads)
+  }
+  return result
+}
+
+function arrowHeadColor(span: ConnectionSpan, data: DrawData): RGBA {
+  const color = connectionColor(span, data)
+  if (color === data.palette.connection) return data.palette.dot
+  return color
 }
 
 // ============================================================================
@@ -2222,10 +2755,12 @@ function writeConnection(
   const b = i * CONNECTION_STRIDE_F
   out[b] = from.x
   out[b + 1] = from.y
-  out[b + 2] = to.x
+  out[b + 2] =
+    to.x + (to.direction === 'left' ? -ARROW_HEAD_LENGTH : ARROW_HEAD_LENGTH)
   out[b + 3] = to.y
-  out[b + 4] = from.x + controlOffset(from.direction)
-  out[b + 5] = to.x + controlOffset(to.direction)
+  const offset = controlOffset(Math.abs(to.x - from.x))
+  out[b + 4] = from.x + (from.direction === 'left' ? -offset : offset)
+  out[b + 5] = to.x + (to.direction === 'left' ? -offset : offset)
   out[b + 6] = color[0]
   out[b + 7] = color[1]
   out[b + 8] = color[2]
@@ -2235,21 +2770,22 @@ function writeConnection(
   return i + 1
 }
 
-function controlOffset(direction: 'left' | 'right'): number {
-  return direction === 'left'
-    ? -CONNECTION_CONTROL_OFFSET
-    : CONNECTION_CONTROL_OFFSET
+function controlOffset(gap: number): number {
+  return Math.min(
+    CONNECTION_CONTROL_OFFSET_MAX,
+    Math.max(CONNECTION_CONTROL_OFFSET_MIN, gap * CONNECTION_CONTROL_GAP_SHARE),
+  )
 }
 
-// (t, side) pairs along the curve, two per sample, for a triangle strip.
+// (sample, side) pairs along the curve, two per sample, for a triangle strip.
+// The shader turns a sample into t once it knows the curve's segment count.
 function createConnectionStrip(gl: WebGL2RenderingContext): WebGLBuffer {
-  const vertices = new Float32Array((CONNECTION_SEGMENTS + 1) * 4)
-  for (let i = 0; i <= CONNECTION_SEGMENTS; i++) {
-    const t = i / CONNECTION_SEGMENTS
-    vertices[i * 4] = t
-    vertices[i * 4 + 1] = 1
-    vertices[i * 4 + 2] = t
-    vertices[i * 4 + 3] = -1
+  const vertices = new Float32Array((CONNECTION_SEGMENTS_MAX + 1) * 4)
+  for (let sample = 0; sample <= CONNECTION_SEGMENTS_MAX; sample++) {
+    vertices[sample * 4] = sample
+    vertices[sample * 4 + 1] = 1
+    vertices[sample * 4 + 2] = sample
+    vertices[sample * 4 + 3] = -1
   }
   const strip = mustCreateBuffer(gl)
   gl.bindBuffer(gl.ARRAY_BUFFER, strip)
@@ -2271,7 +2807,6 @@ function writeRound(
   rBL: number,
   border: number,
   z: number,
-  ring: RGBA,
 ) {
   const base = i * QUAD_STRIDE_F
   out[base] = x
@@ -2288,10 +2823,6 @@ function writeRound(
   out[base + 11] = rBL
   out[base + 12] = border
   out[base + 13] = z
-  out[base + 14] = ring[0]
-  out[base + 15] = ring[1]
-  out[base + 16] = ring[2]
-  out[base + 17] = ring[3]
 }
 
 function writeTextQuad(
@@ -2307,6 +2838,7 @@ function writeTextQuad(
   v1: number,
   color: RGBA,
   z: number,
+  channel: number,
 ) {
   const base = i * TEXT_STRIDE_F
   out[base] = x
@@ -2322,6 +2854,56 @@ function writeTextQuad(
   out[base + 10] = color[2]
   out[base + 11] = color[3]
   out[base + 12] = z
+  out[base + 13] = channel
+}
+
+// Field paths share their start (`accessControl.`) and differ at the end
+// (`EXECUTOR_ROLE.members[1]`), so a long one keeps its tail. A cut inside a
+// word moves to where the next word starts when that drops only a few
+// characters; a cut at a word start stays, so `L1_` is not lost.
+const WORD_SNAP_MAX = 6
+function ellipsizeStart(text: string, atlas: FontAtlas, width: number): string {
+  if (measureString(text, atlas) <= width) return text
+  const chars = Array.from(text)
+  const budget = width - atlas.getGlyph('…').advance
+  let used = 0
+  let tail = chars.length
+  while (tail > 0) {
+    const ch = chars[tail - 1] as string
+    const next = chars[tail]
+    const kerning = next === undefined ? 0 : atlas.kerning(ch, next)
+    const advance = atlas.getGlyph(ch).advance + kerning
+    if (used + advance > budget) break
+    used += advance
+    tail--
+  }
+  assert(tail > 0, 'Start ellipsis must drop a character')
+  if (!isWordCharacter(chars[tail - 1] as string)) {
+    return `…${chars.slice(tail).join('')}`
+  }
+  for (let i = tail; i < chars.length - 1 && i < tail + WORD_SNAP_MAX; i++) {
+    if (chars[i] === '.' || chars[i] === '_') {
+      tail = i + 1
+      break
+    }
+    if (startsCamelCaseWord(chars, i)) {
+      tail = i
+      break
+    }
+  }
+  return `…${chars.slice(tail).join('')}`
+}
+
+function isWordCharacter(char: string): boolean {
+  return char !== '.' && char !== '_'
+}
+
+function startsCamelCaseWord(chars: readonly string[], i: number): boolean {
+  const current = chars[i] as string
+  const previous = chars[i - 1]
+  if (previous === undefined) return false
+  if (current === current.toLowerCase()) return false
+  return previous !== previous.toUpperCase()
 }
 
 function writeStringInstances(
@@ -2338,59 +2920,90 @@ function writeStringInstances(
   // Truncates with "…" when the string doesn't fit in [cursorX, maxX], like
   // CSS text-overflow: ellipsis.
   const ellipsis = atlas.getGlyph('…')
-  let totalWidth = 0
-  for (const ch of text) totalWidth += atlas.getGlyph(ch).advance
-  const fits = cursorX + totalWidth <= maxX
-  const prefixLimit = fits ? maxX : maxX - ellipsis.advance
+  const fits = cursorX + measureString(text, atlas) <= maxX
+  const penLimit = (fits ? maxX : maxX - ellipsis.advance) - cursorX
+  const paint: GlyphPaint = { color, channel: atlas.coverageChannel(color), z }
 
-  let x = cursorX
+  let penX = 0
   let written = 0
-  const quadY = baselineY - atlas.baselineOffset
+  let previous: string | undefined
   for (const ch of text) {
-    const g = atlas.getGlyph(ch)
-    if (x + g.advance > prefixLimit) break
-    writeTextQuad(
+    const glyph = atlas.getGlyph(ch)
+    const glyphX =
+      previous === undefined ? penX : penX + atlas.kerning(previous, ch)
+    if (glyphX + glyph.advance > penLimit) break
+    const at = startInstance + written
+    writeGlyphInstance(
       out,
-      startInstance + written,
-      x,
-      quadY,
-      atlas.cellW,
-      atlas.cellH,
-      g.u0,
-      g.v0,
-      g.u1,
-      g.v1,
-      color,
-      z,
+      at,
+      atlas,
+      glyph,
+      cursorX + glyphX,
+      baselineY,
+      paint,
     )
     written++
-    x += g.advance
+    penX = glyphX + glyph.advance
+    previous = ch
   }
 
-  if (!fits && x + ellipsis.advance <= maxX) {
-    writeTextQuad(
+  if (!fits && cursorX + penX + ellipsis.advance <= maxX) {
+    const at = startInstance + written
+    writeGlyphInstance(
       out,
-      startInstance + written,
-      x,
-      quadY,
-      atlas.cellW,
-      atlas.cellH,
-      ellipsis.u0,
-      ellipsis.v0,
-      ellipsis.u1,
-      ellipsis.v1,
-      color,
-      z,
+      at,
+      atlas,
+      ellipsis,
+      cursorX + penX,
+      baselineY,
+      paint,
     )
     written++
   }
   return written
 }
 
+interface GlyphPaint {
+  color: RGBA
+  channel: number
+  z: number
+}
+
+function writeGlyphInstance(
+  out: Float32Array,
+  instance: number,
+  atlas: FontAtlas,
+  glyph: AtlasGlyph,
+  penX: number,
+  baselineY: number,
+  paint: GlyphPaint,
+): void {
+  writeTextQuad(
+    out,
+    instance,
+    penX,
+    baselineY,
+    atlas.cellW,
+    atlas.cellH,
+    glyph.u0,
+    glyph.v0,
+    glyph.u1,
+    glyph.v1,
+    paint.color,
+    paint.z,
+    paint.channel,
+  )
+}
+
 function measureString(text: string, atlas: FontAtlas): number {
-  let w = 0
-  for (const ch of text) w += atlas.getGlyph(ch).advance
-  return w
+  let width = 0
+  let previous: string | undefined
+  for (const ch of text) {
+    if (previous !== undefined) width += atlas.kerning(previous, ch)
+    width += atlas.getGlyph(ch).advance
+    previous = ch
+  }
+  return width
 }
 
 // ============================================================================
@@ -2557,10 +3170,6 @@ function pushArc(
 // Color & flag helpers
 // ============================================================================
 
-function withAlpha(c: RGBA, a: number): RGBA {
-  return [c[0], c[1], c[2], a]
-}
-
 function desaturate(c: RGBA): RGBA {
   const g = c[0] * 0.299 + c[1] * 0.587 + c[2] * 0.114
   return [g, g, g, c[3]]
@@ -2614,6 +3223,7 @@ function buildDrawData(
   enableDimming: boolean,
   highlightOverlapping: boolean,
   markUnreachableEntries: boolean,
+  palette: GraphPalette,
 ): DrawData {
   const selectedSet = new Set(selected)
   const visible: Node[] = []
@@ -2687,6 +3297,7 @@ function buildDrawData(
     ),
     enableDimming,
     markUnreachableEntries,
+    palette,
     anyNodeSelected,
     liveGroupTargets,
   }
@@ -2750,6 +3361,8 @@ export function NodesAndConnectionsWebGL() {
     (s) => s.markUnreachableEntries,
   )
 
+  const theme = useTheme()
+
   const graph = useMemo(() => buildRenderGraph(nodes), [nodes])
 
   const data = useMemo(
@@ -2763,6 +3376,7 @@ export function NodesAndConnectionsWebGL() {
         enableDimming,
         highlightOverlapping,
         markUnreachableEntries,
+        theme === 'light' ? LIGHT_GRAPH_PALETTE : DARK_GRAPH_PALETTE,
       ),
     [
       graph,
@@ -2770,6 +3384,7 @@ export function NodesAndConnectionsWebGL() {
       enableDimming,
       highlightOverlapping,
       markUnreachableEntries,
+      theme,
     ],
   )
   dataRef.current = data
@@ -2818,13 +3433,15 @@ export function NodesAndConnectionsWebGL() {
       return
     }
     const dpr = window.devicePixelRatio || 1
-    WebGLRenderer.create(gl, dpr)
+    WebGLRenderer.create(gl, dpr, useStore.getState().transform.scale)
       .then((renderer) => {
         if (cancelled) {
           renderer.dispose()
           return
         }
         rendererRef.current = renderer
+        // A zoom that settled while the icons loaded found no renderer.
+        renderer.rasterizeTextFor(useStore.getState().transform.scale)
         setFailure(null)
         scheduleDraw.current()
       })
@@ -2880,10 +3497,27 @@ export function NodesAndConnectionsWebGL() {
   }, [data])
 
   // Redraw on any store change (covers pan/zoom without going through React).
+  // Text is rasterized again for a new zoom once it has not changed for a
+  // while, see rasterizeTextFor.
   useEffect(() => {
-    const unsub = useStore.subscribe(() => scheduleDraw.current())
+    let scale = useStore.getState().transform.scale
+    let settleTimer: ReturnType<typeof setTimeout> | null = null
+    const rasterizeText = () => {
+      settleTimer = null
+      rendererRef.current?.rasterizeTextFor(useStore.getState().transform.scale)
+      scheduleDraw.current()
+    }
+    const unsub = useStore.subscribe((state) => {
+      if (state.transform.scale !== scale) {
+        scale = state.transform.scale
+        if (settleTimer !== null) clearTimeout(settleTimer)
+        settleTimer = setTimeout(rasterizeText, TEXT_RASTER_SETTLE_MS)
+      }
+      scheduleDraw.current()
+    })
     return () => {
       unsub()
+      if (settleTimer !== null) clearTimeout(settleTimer)
       if (rafRef.current !== null) {
         cancelAnimationFrame(rafRef.current)
         rafRef.current = null

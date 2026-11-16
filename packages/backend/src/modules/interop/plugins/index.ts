@@ -287,6 +287,12 @@ export function flattenClusters(
   return plugins.flatMap((p) => ('plugins' in p ? p.plugins : p))
 }
 
+// Plugins that emit partial transfers for one-sided chains take them as a
+// constructor parameter
+export function supportsOneSidedChains(plugin: InteropPlugin): boolean {
+  return Array.isArray((plugin as { oneSidedChains?: unknown }).oneSidedChains)
+}
+
 export function pluginsAsClusters(
   plugins: (InteropPlugin | PluginCluster)[],
 ): PluginCluster[] {

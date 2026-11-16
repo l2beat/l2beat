@@ -287,7 +287,7 @@ function ProjectList(props: {
             className={cn(
               'group flex min-h-8 min-w-0 items-center gap-2 rounded-sm px-2 text-[13px]',
               isSelected &&
-                'bg-autumn-300/15 text-coffee-100 shadow-[inset_2px_0_0_#BAD80A]',
+                'bg-autumn-300/15 text-coffee-100 shadow-[inset_2px_0_0_var(--color-autumn-300)]',
               !isSelected && 'hover:bg-coffee-800',
             )}
             key={entry.name}

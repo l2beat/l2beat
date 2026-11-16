@@ -16,7 +16,6 @@ import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
 import { BigPizzaRosette } from '~/components/rosette/pizza/BigPizzaRosette'
-import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { StickyMobileSectionNavigation } from '~/components/section-navigation/StickyMobileSectionNavigation'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
@@ -163,7 +162,7 @@ export function PrivacyProjectPage({
                           >
                             <ProjectSummaryStat
                               title="Tracked on"
-                              tooltip="Chains on which the protocol deployment is tracked by L2BEAT."
+                              tooltip="Chains on which the protocol deployment is tracked by ETHBEAT."
                               value={
                                 <ProjectIconList
                                   projects={entry.trackedOn}
@@ -171,6 +170,18 @@ export function PrivacyProjectPage({
                                 />
                               }
                             />
+                            {entry.scalingProjects.length > 0 && (
+                              <ProjectSummaryStat
+                                title="Runs on"
+                                tooltip="Scaling projects the protocol runs on."
+                                value={
+                                  <ProjectIconList
+                                    projects={entry.scalingProjects}
+                                    title={`${entry.name} runs on`}
+                                  />
+                                }
+                              />
+                            )}
                             {entry.attributes.length > 0 && (
                               <ProjectSummaryStat
                                 title="Attributes"
@@ -236,7 +247,6 @@ export function PrivacyProjectPage({
                 )}
               </div>
             </div>
-            <ScrollToTopButton />
           </div>
         </SideNavLayout>
       </HydrationBoundary>

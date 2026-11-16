@@ -14,9 +14,9 @@ export function BackofficeLandingPage() {
       <div className="flex flex-col gap-4">
         <Card className="gap-4">
           <CardHeader>
-            <CardTitle>L2BEAT Back Office</CardTitle>
+            <CardTitle>ETHBEAT Back Office</CardTitle>
             <CardDescription>
-              Internal tools and dashboards for all L2BEAT teams.
+              Internal tools and dashboards for all ETHBEAT teams.
             </CardDescription>
           </CardHeader>
         </Card>

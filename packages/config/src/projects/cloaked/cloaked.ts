@@ -51,6 +51,7 @@ export const cloaked: BaseProject = {
       name: 'Cloaked web app',
       url: 'https://app.clkd.xyz',
       since: '2026-09-16',
+      delivery: { type: 'hosted' },
       // Vercel deployment id of the served app (app.clkd.xyz/api/version),
       // signing vault auth.clkd.xyz/v17.
       build: 'dpl_Eh8jMZFr7gBpkKE4NDJzg1EyCzo5',
@@ -77,6 +78,13 @@ export const cloaked: BaseProject = {
       ],
     },
     trackedOn: ['ethereum'],
+    // Chains the app serves (api.clkd.xyz/v1/supported-chains).
+    runsOn: [
+      ProjectId('arbitrum'),
+      ProjectId('base'),
+      ProjectId('optimism'),
+      ProjectId('robinhood'),
+    ],
     // Cloaked balances live in arbitrary one-time EOAs and cannot be
     // attributed using public chain data. Its Privacy Pools integration uses
     // pools that L2BEAT tracks on the separate Privacy Pools project page.

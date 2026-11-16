@@ -27,7 +27,7 @@ function Content({ children, className, nested, ...props }: Props) {
       className={cn(
         'relative transition-shadow duration-300',
         isHighlighted &&
-          'md:z-10 md:shadow-[0px_4px_12px_10px] md:shadow-n-pink-350 md:ring-2 md:ring-brand',
+          'md:z-10 md:shadow-[0px_4px_12px_10px] md:shadow-brand/40 md:ring-2 md:ring-brand',
         nested && isHighlighted && 'md:ring-offset-8',
         className,
       )}

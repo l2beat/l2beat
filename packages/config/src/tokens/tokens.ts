@@ -3,7 +3,7 @@
                          === IMPORTANT REQUIREMENTS ===
                         Please read before adding tokens
 
-L2BEAT cannot and will not track every possible token. Adding a large number of
+ETHBEAT cannot and will not track every possible token. Adding a large number of
 obscure coins will only introduce noise and unnecessary work while not providing
 visible benefits.
 

@@ -4,6 +4,7 @@ import { describeDatabase } from '../test/database'
 import {
   type AggregatedL2CostRecord,
   AggregatedL2CostRepository,
+  type SummedL2CostRecord,
 } from './AggregatedL2CostRepository'
 
 const NOW = UnixTime.now()
@@ -93,6 +94,122 @@ describeDatabase(AggregatedL2CostRepository.name, (db) => {
         )
 
         expect(results).toEqual(records.slice(0, 2))
+      })
+    },
+  )
+
+  describe(
+    AggregatedL2CostRepository.prototype.getSummedByProjectsAndTimeRange.name,
+    () => {
+      const DAY = UnixTime.toStartOf(NOW, 'day')
+
+      it('sums rows of given projects into resolution buckets', async () => {
+        await repository.upsertMany([
+          record({ projectId: ProjectId('a'), timestamp: DAY - UnixTime.HOUR }),
+          record({
+            projectId: ProjectId('a'),
+            timestamp: DAY + UnixTime.HOUR,
+            blobsGas: null,
+            blobsGasEth: null,
+            blobsGasUsd: null,
+            calldataGasUsd: 16_777_216,
+          }),
+          record({
+            projectId: ProjectId('b'),
+            timestamp: DAY + 5 * UnixTime.HOUR,
+            blobsGas: 2,
+            calldataGasUsd: 1,
+          }),
+          record({ projectId: ProjectId('c'), timestamp: DAY }),
+          record({ projectId: ProjectId('a'), timestamp: DAY + UnixTime.DAY }),
+        ])
+
+        const result = await repository.getSummedByProjectsAndTimeRange(
+          [ProjectId('a'), ProjectId('b')],
+          [DAY - UnixTime.DAY, DAY + UnixTime.DAY],
+          'day',
+        )
+
+        expect(result).toEqual([
+          summed({
+            timestamp: DAY - UnixTime.DAY,
+            lastTimestamp: DAY - UnixTime.HOUR,
+          }),
+          summed({
+            timestamp: DAY,
+            lastTimestamp: DAY + 5 * UnixTime.HOUR,
+            blobsGas: 2,
+            blobsGasEth: 1,
+            blobsGasUsd: 1,
+            calldataGas: 2,
+            calldataGasEth: 2,
+            calldataGasUsd: 16_777_217,
+            computeGas: 2,
+            computeGasEth: 2,
+            computeGasUsd: 2,
+            overheadGas: 2,
+            overheadGasEth: 2,
+            overheadGasUsd: 2,
+          }),
+        ])
+      })
+
+      it('keeps blobs null when no row in a bucket has them', async () => {
+        await repository.upsertMany([
+          record({
+            timestamp: DAY,
+            blobsGas: null,
+            blobsGasEth: null,
+            blobsGasUsd: null,
+          }),
+        ])
+
+        const result = await repository.getSummedByProjectsAndTimeRange(
+          [ProjectId('random')],
+          [null, DAY + UnixTime.DAY],
+          'day',
+        )
+
+        expect(result).toEqual([
+          summed({
+            timestamp: DAY,
+            lastTimestamp: DAY,
+            blobsGas: null,
+            blobsGasEth: null,
+            blobsGasUsd: null,
+          }),
+        ])
+      })
+
+      it('buckets by six hours from the epoch', async () => {
+        await repository.upsertMany([
+          record({ timestamp: DAY + UnixTime.HOUR }),
+          record({ timestamp: DAY + 5 * UnixTime.HOUR }),
+          record({ timestamp: DAY + 7 * UnixTime.HOUR }),
+        ])
+
+        const result = await repository.getSummedByProjectsAndTimeRange(
+          [ProjectId('random')],
+          [null, DAY + UnixTime.DAY],
+          'six hours',
+        )
+
+        expect(result.map((r) => [r.timestamp, r.lastTimestamp])).toEqual([
+          [DAY, DAY + 5 * UnixTime.HOUR],
+          [DAY + 6 * UnixTime.HOUR, DAY + 7 * UnixTime.HOUR],
+        ])
+      })
+
+      it('returns nothing for an empty project list', async () => {
+        await repository.upsertMany([record()])
+
+        const result = await repository.getSummedByProjectsAndTimeRange(
+          [],
+          [null, NOW + UnixTime.DAY],
+          'day',
+        )
+
+        expect(result).toEqual([])
       })
     },
   )
@@ -187,6 +304,27 @@ function record(
     totalGas: 1,
     totalGasEth: 1,
     totalGasUsd: 1,
+    blobsGas: 1,
+    blobsGasEth: 1,
+    blobsGasUsd: 1,
+    calldataGas: 1,
+    calldataGasEth: 1,
+    calldataGasUsd: 1,
+    computeGas: 1,
+    computeGasEth: 1,
+    computeGasUsd: 1,
+    overheadGas: 1,
+    overheadGasEth: 1,
+    overheadGasUsd: 1,
+    ...data,
+  }
+}
+
+function summed(
+  data: Partial<SummedL2CostRecord> &
+    Pick<SummedL2CostRecord, 'timestamp' | 'lastTimestamp'>,
+): SummedL2CostRecord {
+  return {
     blobsGas: 1,
     blobsGasEth: 1,
     blobsGasUsd: 1,

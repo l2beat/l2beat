@@ -1,0 +1,38 @@
+{
+  "PullSplitFactory_v2_0.sol": {
+    "hash": "0x681050c3ffc39b3cae9a724f95cff212f13d0d78da932b13ce319d5a30943241",
+    "address": "eth:0x80f1B766817D04870f115fEBbcCADF8DBF75E017",
+    "chain": "ethereum",
+    "blockNumber": 26384677
+  },
+  "PullSplitFactory_v2_1.sol": {
+    "hash": "0xf1d1c5a997804944ad61368530291d44ad9d7804a1836006ed85859b9999aee2",
+    "address": "eth:0x5cbA88D55Cec83caD5A105Ad40C8c9aF20bE21d1",
+    "chain": "ethereum",
+    "blockNumber": 26384677
+  },
+  "PullSplitFactory_v2_2.sol": {
+    "hash": "0x34c109948e0875b681f5948d9c61205438862a21d3682f18fd63a0c7384774ae",
+    "address": "eth:0x6B9118074aB15142d7524E8c4ea8f62A3Bdb98f1",
+    "chain": "ethereum",
+    "blockNumber": 26384677
+  },
+  "PushSplitFactory_v2_0.sol": {
+    "hash": "0x945c4742ab521ca02966dbda255b04241aef2d33a1145467647fc23c94941945",
+    "address": "eth:0xaDC87646f736d6A82e9a6539cddC488b2aA07f38",
+    "chain": "ethereum",
+    "blockNumber": 26384677
+  },
+  "PushSplitFactory_v2_1.sol": {
+    "hash": "0x2529db5bdf89a6c1c83520aaba0d0f9befffde77c7dd2e90fd334d85eb8e1736",
+    "address": "eth:0xDc6259E13ec0621e6F19026b2e49D846525548Ed",
+    "chain": "ethereum",
+    "blockNumber": 26384677
+  },
+  "PushSplitFactory_v2_2.sol": {
+    "hash": "0x7948ea60bee8082c9cb860ddd99d66d3a9ff90a240c4575c54bfb79882124c7f",
+    "address": "eth:0x8E8eB0cC6AE34A38B67D5Cf91ACa38f60bc3Ecf4",
+    "chain": "ethereum",
+    "blockNumber": 26384677
+  }
+}

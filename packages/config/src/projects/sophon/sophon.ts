@@ -4,16 +4,9 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import {
-  DA_BRIDGES,
-  DA_LAYERS,
-  RISK_VIEW,
-  TECHNOLOGY_DATA_AVAILABILITY,
-} from '../../common'
-import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { zkStackL2 } from '../../templates/zkStack'
+import { getZkStackDaTracking, zkStackL2 } from '../../templates/zkStack'
 
 const discovery = new ProjectDiscovery('sophon')
 const chainId = 50104
@@ -26,21 +19,14 @@ const bridge = discovery.getContract('L1NativeTokenVault')
 export const sophon: ScalingProject = zkStackL2({
   chainId,
   discovery,
-  additionalBadges: [BADGES.DA.AvailVector],
   addedAt: UnixTime(1734480000), // 2024-12-18T00:00:00Z
-  daAttestedByIndependentParty: true,
-  daVerifier7DayExitWindow: true,
-  daCommitteeDecentralized: true,
-  daVerifierLink:
-    'https://etherscan.io/address/0x8f50d93B9955B285f787043B30B5F51D09bE0120#code',
   display: {
     name: 'Sophon',
     slug: 'sophon',
-    architectureImage: 'zkstack-validium-vector',
     headerWarning:
       'Sophon will be sunsetting in late 2026. See the [announcement](https://x.com/sophon/status/2070192257295335800) and the [migration guide](https://sophon.com/content/) for details.',
     description:
-      'Sophon is a consumer-centric ecosystem on a ZK Stack Validium L2, designed to bring onchain benefits to everyday lifestyle and entertainment applications.',
+      'Sophon is a consumer-centric ecosystem on a ZK Stack rollup, designed to bring onchain benefits to everyday lifestyle and entertainment applications.',
     links: {
       websites: ['https://sophon.xyz/'],
       bridges: ['https://portal.sophon.xyz/', 'https://farm.sophon.xyz/'],
@@ -75,20 +61,10 @@ export const sophon: ScalingProject = zkStackL2({
       },
     ],
   },
-  daProvider: {
-    layer: DA_LAYERS.AVAIL,
-    riskView: RISK_VIEW.DATA_AVAIL(true),
-    technology: {
-      ...TECHNOLOGY_DATA_AVAILABILITY.AVAIL_OFF_CHAIN(true),
-      references: [
-        {
-          title: 'AvailL1DAValidator - checkDA() function',
-          url: 'https://etherscan.io/address/0x8f50d93B9955B285f787043B30B5F51D09bE0120#code#F1#L16',
-        },
-      ],
-    },
-    bridge: DA_BRIDGES.VECTOR,
-  },
+  daTracking: [
+    // rollup DA validator pair set after the v31 upgrade
+    getZkStackDaTracking(discovery, { sinceBlock: 26362912 }),
+  ],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: bridge.address,
@@ -153,7 +129,7 @@ export const sophon: ScalingProject = zkStackL2({
         },
         {
           title: 'Mailbox facet',
-          url: 'https://etherscan.io/address/0x1e34aB39a9682149165ddeCc0583d238A5448B45#code#F1#L405',
+          url: 'https://etherscan.io/address/0x7eD1e478dA92B3Fd33f7C566512f4a0b958cBBa8#code#F1#L436',
         },
         {
           title: 'TransactionFilterer',
@@ -309,6 +285,14 @@ export const sophon: ScalingProject = zkStackL2({
     },
   ],
   milestones: [
+    {
+      title: 'Sophon becomes a ZK rollup',
+      url: 'https://etherscan.io/tx/0xe24097ec8a19a8a40192a2f256b0c0b6d11097858a8a68221a6061255b73339e',
+      date: '2026-11-07T00:00:00.00Z',
+      description:
+        'Sophon upgrades to ZK Stack v31 and posts its data to Ethereum blobs instead of Avail.',
+      type: 'general',
+    },
     {
       title: 'Sophon initiates L2 sunset',
       url: 'https://x.com/sophon/status/2070192257295335800',

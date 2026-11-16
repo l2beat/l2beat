@@ -14,5 +14,11 @@
     "address": "ink:0xf43862B9d814BB4504158CecCB0b74b31265e4eE",
     "chain": "ink",
     "blockNumber": 50178011
+  },
+  "OptimismMintableERC721Factory_v1_4_2_base.sol": {
+    "hash": "0x13f42bdbb8758c321b1db29ef1d7cfe4a951bd896d4df295515748114f2848fa",
+    "address": "base:0x6e4f4f3E193880339c79605F88a2CD15370C8e02",
+    "chain": "base",
+    "blockNumber": 53551478
   }
 }

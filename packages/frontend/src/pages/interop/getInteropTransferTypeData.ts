@@ -69,7 +69,7 @@ export async function getInteropTransferTypeData(
       manifest,
       metadata: getMetadata(manifest, {
         name: TRANSFER_TYPE_DISPLAY[type].label,
-        title: 'Interoperability - L2BEAT',
+        title: 'Interoperability - ETHBEAT',
         description:
           'Compare interoperability protocols across the Ethereum ecosystem. Track bridge volumes, transfer times & sizes, and explore how Non-minting, Lock & Mint, and Burn & Mint mechanisms affect cross-chain risk.',
         url: req.originalUrl,

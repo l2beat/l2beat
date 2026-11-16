@@ -69,6 +69,9 @@ export const pageLoaders = {
   BlobsPage: async () => (await import('./blobs/BlobsPage')).BlobsPage,
   PrivacySummaryPage: async () =>
     (await import('./privacy/summary/PrivacySummaryPage')).PrivacySummaryPage,
+  PrivacyArchivedPage: async () =>
+    (await import('./privacy/archived/PrivacyArchivedPage'))
+      .PrivacyArchivedPage,
   PrivacyProjectPage: async () =>
     (await import('./privacy/project/PrivacyProjectPage')).PrivacyProjectPage,
   TokensPage: async () => (await import('./tokens/TokensPage')).TokensPage,
@@ -76,8 +79,8 @@ export const pageLoaders = {
     (await import('./audits/summary/AuditsSummaryPage')).AuditsSummaryPage,
   AuditsProjectPage: async () =>
     (await import('./audits/project/AuditsProjectPage')).AuditsProjectPage,
-  DefiSummaryPage: async () =>
-    (await import('./defi/summary/DefiSummaryPage')).DefiSummaryPage,
+  LiquidStakingPage: async () =>
+    (await import('./defi/liquid-staking/LiquidStakingPage')).LiquidStakingPage,
   DefiProjectPage: async () =>
     (await import('./defi/project/DefiProjectPage')).DefiProjectPage,
   OssificationPage: async () =>
@@ -113,6 +116,7 @@ export const pageLoaders = {
   MultisigReportPage: async () =>
     (await import('./multisig-report/MultisigReportPage')).MultisigReportPage,
   MandatePage: async () => (await import('./mandate/MandatePage')).MandatePage,
+  NewNamePage: async () => (await import('./new-name/NewNamePage')).NewNamePage,
   TermsOfServicePage: async () =>
     (await import('./terms-of-service/TermsOfServicePage')).TermsOfServicePage,
   NotFoundPage: async () =>

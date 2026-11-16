@@ -119,7 +119,7 @@ describe(buildIntegrateExamples.name, () => {
           id: 'uniswapv3',
           slug: 'uniswap-v3',
           name: 'Uniswap V3',
-          href: 'https://l2beat.com/layer2s/projects/uniswap-v3',
+          href: 'https://ethbeat.org/layer2s/projects/uniswap-v3',
           contractName: 'UniswapV3Factory',
           crops: {
             censorshipResistance: { sentiment: 'good', status: 'reviewed' },

@@ -3,6 +3,7 @@ import { TvsChartUnitControls } from '~/components/chart/tvs/TvsChartUnitControl
 import type { ChartUnit } from '~/components/chart/types'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
+import type { ChartTimeRangeValue } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { cn } from '~/utils/cn'
 import type { ChartRange } from '~/utils/range/range'
 
@@ -13,7 +14,7 @@ export function TvsChartControls({
   className,
   isPlaceholderData,
 }: {
-  timeRange: [number, number] | undefined
+  timeRange: ChartTimeRangeValue
   unit?: {
     value: ChartUnit
     setValue: (unit: ChartUnit) => void

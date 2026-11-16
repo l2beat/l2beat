@@ -1,6 +1,6 @@
 zk.money lets users send DAI privately on Aztec and move it into sUSDS savings. Funds are escrowed on Ethereum. Names, deposits and withdrawals are public.
 
-Every withdrawal and refund needs a zk proof and a signature from a live AWS Nitro enclave (TEE). The enclave decrypts and reads the operations it handles, and its approved image is unpublished. Aztec Labs controls names, the code of future deposit addresses and the contract lists the released wallets use.
+Every withdrawal and refund needs a zk proof and a signature from a live AWS Nitro enclave (TEE). The enclave decrypts and reads the operations it handles. Aztec Labs controls names, the code of future deposit addresses and the contract lists the released wallets use.
 
 ### Architecture
 
@@ -14,17 +14,19 @@ The portal releases funds only after Aztec proves the withdrawal message and one
 
 ### Keys
 
-Accounts sign with a passkey. The released wallet creates it only in Apple's, Google's or 1Password's synced passkey manager, or on a security key.
+Accounts sign with a passkey. The released wallet creates it only in Apple's, Google's or 1Password's synced passkey manager, or on a security key. A deposit address can also carry an operation, signed by the account's current keys, that adds a passkey when the address is swept.
 
 ### App
 
-The ratings cover DAI payments and sUSDS savings in Desktop, which runs local code. Its endpoint settings replace the Aztec node, the frozen v5 network's node, the Ethereum endpoint and the enclave. Aztec Labs always serves the two unsigned contract lists, and replacing them can redirect future deposits and payments. Its account service receives each account's name and L1 account on every launch.
+The ratings cover DAI payments and sUSDS savings in Desktop, which runs local code. Its endpoint settings replace the Aztec node, the frozen v5 network's node, the Ethereum endpoint and the enclave. Outside them, the wallet asks PublicNode's Optimism endpoint whether each withdrawal recipient is an ether.fi Cash account. Aztec Labs always serves the two unsigned contract lists, and replacing them can redirect future deposits and payments. One of these lists can also turn on Across bridging, which sends the depositor's wallet, the deposit address and the amount to Across. Its account service learns which account is open on every launch.
 
 The hosted wallet reloads code on every visit. Its owner can read viewing keys and request harmful passkey signatures through misleading prompts.
 
 ### Savings
 
 Savings hold sUSDS in a second portal with its own L2 token and the same enclaves. A move in withdraws DAI to a deterministic SkyEscrow, which converts it through USDS into sUSDS shares and deposits them into the sUSDS portal. A move out reverses both legs into the DAI portal. Each move publishes its DAI and share amounts, tied by the escrow. Moving a whole position out republishes the share amount it went in with. The wallet moves sUSDS only to and from the user's own DAI balance.
+
+A third portal holds steakUSDC, shares of Steakhouse's Prime USDC vault on Morpho, moved in from DAI through Maker's PSM in one transaction. Desktop does not offer it.
 
 ### Names
 
@@ -64,8 +66,8 @@ DAI deposits, payments and withdrawals are capped at {{transactionAmountCap}} ea
 
 ### Anonymity set
 
-The chart counts depositors traced through deposit addresses. Each migration counts as one depositor, since its v5 refund names no funder. Moves out of savings count no depositor, since the mover already holds funds in zk.money.
+Deposit addresses come from two factories. The chart traces depositors through the older factory's addresses and counts each address of the newer one as one depositor. Each migration counts as one depositor, since its v5 refund names no funder. Moves out of savings count no depositor, since the mover already holds funds in zk.money.
 
 ### Source verification
 
-The [token verification steps](https://github.com/l2beat/l2beat/blob/main/packages/config/src/projects/zkmoneyv6/verificationSteps-token.md) compare a fresh source build with the DAI and sUSDS L2 contracts pinned by their Ethereum portals. The [verifier steps](/zk-catalog/barretenberg#verifiers) regenerate the keys and Solidity verifiers of the refund and resolver circuits.
+The [token verification steps](https://github.com/l2beat/l2beat/blob/main/packages/config/src/projects/zkmoneyv6/verificationSteps-token.md) compare a fresh source build with the DAI and sUSDS L2 contracts pinned by their Ethereum portals. The [verifier steps](/zk-catalog/barretenberg#verifiers) regenerate the keys and Solidity verifiers of the refund and resolver circuits. The [enclave build](https://github.com/aztec-labs-eng/zkmoney-public/blob/f90b3f24ad4dbe936070c6abc38bffea047006ba/README.md#reproduce-the-enclave-image) rebuilds the approved image, whose PCR0 hash the TeeRegistry holds.

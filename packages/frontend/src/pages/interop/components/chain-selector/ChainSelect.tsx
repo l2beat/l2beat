@@ -12,16 +12,22 @@ export function ChainSelect({
   value,
   onChange,
   excludeId,
+  label,
 }: {
   chains: InteropChainWithIcon[]
   value: string
   onChange: (id: string) => void
   excludeId: string
+  /** A combobox's selected value is not its name. */
+  label: string
 }) {
   const selected = chains.find((c) => c.id === value)
   return (
     <Select value={value} onValueChange={onChange}>
-      <SelectTrigger className="h-9 flex-1 border border-divider bg-surface-primary">
+      <SelectTrigger
+        className="h-9 flex-1 border border-divider bg-surface-primary"
+        aria-label={label}
+      >
         <SelectValue>{selected && <ChainLabel chain={selected} />}</SelectValue>
       </SelectTrigger>
       <SelectContent>

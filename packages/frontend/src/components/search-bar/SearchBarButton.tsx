@@ -4,14 +4,18 @@ import { cn } from '~/utils/cn'
 import { EASE_OUT_QUINT } from '~/utils/easing'
 import { useSearchBarContext } from './SearchBarContext'
 import { SEARCH_BAR_EXAMPLES } from './searchBarExamples'
+import { usePrefetchSearchIndex } from './useSearchBarResults'
 
 const EXAMPLE_INTERVAL_MS = 5000
 
 export function SearchBarButton({ className }: { className?: string }) {
   const { setOpen } = useSearchBarContext()
+  const prefetchSearchIndex = usePrefetchSearchIndex()
   return (
     <button
       onClick={() => setOpen((open) => !open)}
+      onPointerEnter={prefetchSearchIndex}
+      onFocus={prefetchSearchIndex}
       // A fixed name: the hint after "Search" changes every few seconds.
       aria-label="Search"
       className={cn(
@@ -28,7 +32,7 @@ export function SearchBarButton({ className }: { className?: string }) {
       </span>
       {/* Touch usually comes without a keyboard. */}
       <kbd className="ml-auto flex not-can-hover:hidden size-5 select-none items-center justify-center rounded border border-none bg-icon-secondary px-1.5 font-bold font-mono text-2xs text-primary-invert leading-none">
-        /
+        <span className="[text-box:trim-both_cap_alphabetic]">/</span>
       </kbd>
     </button>
   )
@@ -36,9 +40,12 @@ export function SearchBarButton({ className }: { className?: string }) {
 
 export function SmallSearchBarButton() {
   const { setOpen } = useSearchBarContext()
+  const prefetchSearchIndex = usePrefetchSearchIndex()
   return (
     <button
       onClick={() => setOpen((open) => !open)}
+      onPointerEnter={prefetchSearchIndex}
+      onFocus={prefetchSearchIndex}
       aria-label="Search"
       className="flex size-6 items-center justify-center transition-transform duration-150 ease-out active:scale-90"
     >
@@ -74,9 +81,9 @@ function ExampleHint() {
       // The old hint leaves upwards and the next one rises in behind it, so
       // they read as one ticker; the blur hides the moment both are faint.
       const exit = element.animate(
-        { opacity: 0, transform: 'translateY(-4px)', filter: 'blur(2px)' },
+        { opacity: 0, transform: 'translateY(-6px)', filter: 'blur(3px)' },
         // Held until the next hint takes over, or the old one flashes back.
-        { duration: 120, easing: EASE_OUT_QUINT, fill: 'forwards' },
+        { duration: 220, easing: 'ease-in', fill: 'forwards' },
       )
       exit.onfinish = () => {
         const [full, short] = element.children
@@ -87,10 +94,10 @@ function ExampleHint() {
         }
         element.animate(
           [
-            { opacity: 0, transform: 'translateY(4px)', filter: 'blur(2px)' },
+            { opacity: 0, transform: 'translateY(6px)', filter: 'blur(3px)' },
             { opacity: 1, transform: 'none', filter: 'none' },
           ],
-          { duration: 200, easing: EASE_OUT_QUINT },
+          { duration: 450, easing: EASE_OUT_QUINT },
         )
         exit.cancel()
       }

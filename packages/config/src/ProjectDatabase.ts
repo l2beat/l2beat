@@ -30,7 +30,6 @@ const schema = {
   statuses: 'TEXT',
   display: 'TEXT',
   colors: 'TEXT',
-  ecosystemColors: 'TEXT',
   milestones: 'TEXT',
   chainConfig: 'TEXT',
   escrows: 'TEXT',
@@ -54,6 +53,7 @@ const schema = {
   interopConfig: 'TEXT',
   privacyInfo: 'TEXT',
   defiInfo: 'TEXT',
+  liquidStaking: 'TEXT',
   externalDependencies: 'TEXT',
 
   crops: 'TEXT',

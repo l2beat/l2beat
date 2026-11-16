@@ -2,7 +2,7 @@ import {
   assert,
   ChainSpecificAddress,
   EthereumAddress,
-  formatNumber,
+  formatCompactAmount,
   formatSeconds,
   ProjectId,
   UnixTime,
@@ -288,7 +288,10 @@ export const polygonpos: ScalingProject = {
         },
         sequencerCount: {
           value: `${currentValidatorSetSize} validators`,
-          secondLine: `${formatNumber(stakeDistribution.totalStake)} ${stakeDistribution.stakeToken}`,
+          secondLine: formatCompactAmount(
+            stakeDistribution.totalStake,
+            stakeDistribution.stakeToken,
+          ),
         },
         blockProductionAccess: {
           value: 'Closed and capped',
@@ -296,7 +299,7 @@ export const polygonpos: ScalingProject = {
           description: `The current validator cap is ${currentValidatorSetCap}. Validator entry is permissioned (Polygon Multisig or an EOA).`,
         },
         stakePerValidator: {
-          value: minDeposit + ' POL minimum, variable',
+          value: `${formatCompactAmount(Number(minDeposit.replaceAll(',', '')), 'POL')} minimum, variable`,
           description: 'stake-weighted block production rights, no maximum',
         },
         rateLimit: { value: 'No (permissioned)' },

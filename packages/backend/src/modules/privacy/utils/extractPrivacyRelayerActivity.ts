@@ -17,6 +17,10 @@ import {
   PRIVACY_POOLS_V2_TRANSACTED_TOPIC,
   privacyPoolsV2ProcessorInterface,
 } from './extractPrivacyPoolsV2Event'
+import {
+  extractTacitPayTransact,
+  TACIT_PAY_TRANSACT_TOPIC,
+} from './extractTacitPayEvent'
 
 const privacyPoolsInterface = new utils.Interface([
   'event WithdrawalRelayed(address indexed _relayer, address indexed _recipient, address indexed _asset, uint256 _amount, uint256 _feeAmount)',
@@ -105,6 +109,19 @@ const tornadoCashWithdrawal: RelayerExtractorDefinition = {
   },
 }
 
+// The proof names the relayer the pool pays. A withdrawal sent from the
+// user's own wallet pays no fee, and a relayed private transfer is no exit.
+const tacitPayWithdrawal: RelayerExtractorDefinition = {
+  event: TACIT_PAY_TRANSACT_TOPIC,
+  extract: (log) => {
+    const { action, fee, relayer, recipient } = extractTacitPayTransact(log)
+    if (action !== 'withdrawal' || fee === 0n) {
+      return Promise.resolve(undefined)
+    }
+    return toRelayerActivity(relayer.toString(), recipient.toString())
+  },
+}
+
 export function getPrivacyRelayerExtractor(
   source: PrivacyRelayerExtractorConfig,
 ): RelayerExtractorDefinition {
@@ -113,6 +130,8 @@ export function getPrivacyRelayerExtractor(
       return privacyPoolsWithdrawalRelayed
     case 'privacyPoolsV2Withdrawal':
       return privacyPoolsV2Withdrawal
+    case 'tacitPayWithdrawal':
+      return tacitPayWithdrawal
     case 'tornadoCashWithdrawal':
       return tornadoCashWithdrawal
     case 'zkMoneyWithdrawalRelayer':

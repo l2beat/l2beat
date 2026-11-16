@@ -35,7 +35,7 @@ export function buildOpenApiDocument(attestations: CropsAttestationsMeta) {
   return {
     openapi: '3.1.0',
     info: {
-      title: 'L2BEAT CROPS API',
+      title: 'ETHBEAT CROPS API',
       version: '1.0.0',
       description: describeApi(attestations),
     },
@@ -57,13 +57,13 @@ export function buildOpenApiDocument(attestations: CropsAttestationsMeta) {
 /** Only the network section depends on the attestations. */
 export function describeApi(attestations: CropsAttestationsMeta): string {
   const where = `lives on ${attestations.network} (chain id ${attestations.chainId})`
-  return `CROPS is L2BEAT's review of a protocol along four crops: censorship resistance, open source, privacy and security. Each crop gets a sentiment (good, warning, bad or neutral) and a status saying how far the review went. A protocol is listed in the CROPS guide (\`inGarden\`) when no crop is bad and it has an ossification score. Security is capped by that score: below ${OSSIFICATION_SCORE_BANDS.good} it is at most warning, and below ${OSSIFICATION_SCORE_BANDS.warning}, which means ${OSSIFICATION_BAND_MEANING.warning}, it is bad. Separately, the set of reviewed protocols is attested onchain with the Ethereum Attestation Service.
+  return `CROPS is ETHBEAT's review of a protocol along four crops: censorship resistance, open source, privacy and security. Each crop gets a sentiment (good, warning, bad or neutral) and a status saying how far the review went. A protocol is listed in the CROPS guide (\`inGarden\`) when no crop is bad and it has an ossification score. Security is capped by that score: below ${OSSIFICATION_SCORE_BANDS.good} it is at most warning, and below ${OSSIFICATION_SCORE_BANDS.warning}, which means ${OSSIFICATION_BAND_MEANING.warning}, it is bad. Separately, the set of reviewed protocols is attested onchain with the Ethereum Attestation Service.
 
-Every response is a static file generated from the L2BEAT repository, so it is served from a CDN with no API key and no rate limit.
+Every response is a static file generated from the ETHBEAT repository, so it is served from a CDN with no API key and no rate limit.
 
 ## Not found means not reviewed
 
-\`/v1/project/{id}.json\` and \`/v1/address/{chainId}/{address}.json\` answer 404 with an empty body when L2BEAT has not reviewed the project or the address. Treat 404 as "not reviewed", not as an error.
+\`/v1/project/{id}.json\` and \`/v1/address/{chainId}/{address}.json\` answer 404 with an empty body when ETHBEAT has not reviewed the project or the address. Treat 404 as "not reviewed", not as an error.
 
 ## Address lookups
 
@@ -71,14 +71,14 @@ Address files are keyed by EIP-155 chain id and lowercase address. Lowercase the
 
 ## Attestations are on ${attestations.network}
 
-The attestation ${where}. It proves the set L2BEAT named, not that the ratings are attested: ratings change as protocols change and are served here without a transaction.
+The attestation ${where}. It proves the set ETHBEAT named, not that the ratings are attested: ratings change as protocols change and are served here without a transaction.
 
 ## Verifying the set onchain
 
 1. Read the attestation from the EAS contract with the uid in \`attestations.current\`: \`getAttestation(uid)\`.
-2. Check \`attester\` and \`schema\` against \`attestations.attester\` and \`attestations.schemaUid\`, so an attestation someone else made cannot be mistaken for L2BEAT's.
+2. Check \`attester\` and \`schema\` against \`attestations.attester\` and \`attestations.schemaUid\`, so an attestation someone else made cannot be mistaken for ETHBEAT's.
 3. Check it is the current one. The newest wins: of the attester's attestations under the schema that are not revoked, the one with the highest revision names the current set. A change is a new attestation that points to the one it supersedes through \`refUID\`; older ones stay valid in EAS but no longer count.
-4. Decode \`projectIds\`: these are the protocols L2BEAT has reviewed, as of \`reviewedAt\`, at revision \`revision\`.
+4. Decode \`projectIds\`: these are the protocols ETHBEAT has reviewed, as of \`reviewedAt\`, at revision \`revision\`.
 5. For the rating per property, the reasoning and what was not looked at, read \`/v1/project/{id}.json\`.`
 }
 

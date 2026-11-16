@@ -16,13 +16,20 @@ import type { RosetteValue } from '~/components/rosette/types'
 import {
   getExposure,
   getExposureNote,
+  getPrivacyAdversaryBlockId,
   getPrivacyAdversaryDescription,
   getPrivacyAdversarySectionRosetteValue,
   PRIVACY_ADVERSARIES_TOOLTIP,
+  PRIVACY_CHIP_BASE_CLASS_NAME,
   PRIVACY_EXPOSURE_CHIP_CLASS_NAME,
   PRIVACY_EXPOSURE_LABEL,
   PRIVACY_INTERIOR_LABEL,
 } from '~/pages/privacy/adversaries/privacyAdversaryUi'
+import {
+  ADVICE,
+  getAdviceStepId,
+  getStepsAgainst,
+} from '~/pages/privacy/adviceUi'
 import type { PrivacyReferenceApp } from '~/server/features/privacy/utils/getPrivacyReferenceApp'
 import { cn } from '~/utils/cn'
 import { RiskBanner } from '../../RiskBanner'
@@ -63,6 +70,12 @@ export function PrivacyAdversariesSection({
         <span className="font-medium">at risk</span> stay private only under the
         condition in their note.
       </p>
+      {adversaries.advice && (
+        <p className="mt-2 text-paragraph-15 md:text-paragraph-16">
+          <span className="font-medium">{ADVICE.label}: </span>
+          <CustomLink href={`#${ADVICE.sectionId}`}>{ADVICE.title}</CustomLink>
+        </p>
+      )}
       <div className="flex justify-center">
         <BigPizzaRosette
           values={blocks.map((block) => block.value)}
@@ -78,6 +91,7 @@ export function PrivacyAdversariesSection({
             cell={block.cell}
             baseline={block.id === 'publicObserver' ? undefined : baseline}
             fields={adversaries.fields}
+            steps={getStepsAgainst(adversaries.advice, block.id)}
           />
         ))}
       </div>
@@ -90,50 +104,82 @@ function AdversaryBlock({
   cell,
   baseline,
   fields,
+  steps,
 }: {
   /** The adversary's rosette slice. */
   value: RosetteValue
   cell: PrivacyAdversaryCell
+  /** The advice steps that defend this cell. */
+  steps: ReturnType<typeof getStepsAgainst>
   /** The public observer cell; undefined when rendering the baseline itself. */
   baseline: PrivacyAdversaryCell | undefined
   fields: PrivacyFieldInfo[]
 }) {
   return (
-    <div className="flex flex-col gap-3">
+    <div
+      id={getPrivacyAdversaryBlockId(cell.id)}
+      className="flex scroll-mt-section-nav-card flex-col gap-3"
+    >
       <RiskBanner
         {...value}
-        description={getPrivacyAdversaryDescription(cell)}
+        // The reason for the colour leads in bold, what follows extends it.
+        description={
+          cell.exposureContinued
+            ? `**${cell.exposureShort}** ${cell.exposureContinued}`
+            : getPrivacyAdversaryDescription(cell)
+        }
         size="large"
       />
-      {cell.advice && (
-        <p className="text-paragraph-15 md:text-paragraph-16">
-          <span className="font-medium">Advice: </span>
-          {cell.advice}
-        </p>
-      )}
-      {cell.interior &&
-        (baseline?.interior ? (
-          <ExposureDiff
-            interior={cell.interior}
-            baseline={baseline.interior}
-            fields={fields}
-          />
-        ) : (
-          <ExposureChips map={cell.interior} fields={fields} />
-        ))}
-      {cell.sources && cell.sources.length > 0 && (
-        <div className="flex flex-wrap gap-x-4 gap-y-1 text-paragraph-13">
-          <span className="text-secondary">Sources:</span>
-          {cell.sources.map(
-            (source, i) =>
-              'url' in source && (
-                <CustomLink key={i} href={source.url}>
-                  {source.title}
+      {/* One value column for every row, like "Against:" in the advice steps. */}
+      <dl className="grid grid-cols-[auto_minmax(0,1fr)] items-baseline gap-x-3 gap-y-2 text-paragraph-13">
+        {cell.interior &&
+          (baseline?.interior ? (
+            <ExposureDiff
+              interior={cell.interior}
+              baseline={baseline.interior}
+              fields={fields}
+            />
+          ) : (
+            <ExposureRow map={cell.interior} fields={fields} />
+          ))}
+        {steps.length > 0 && (
+          <>
+            <dt>{ADVICE.label}:</dt>
+            <dd className="flex flex-wrap gap-x-4 gap-y-1">
+              {steps.map(({ step, index }) => (
+                // Only the name is underlined: a flex child inherits the
+                // link's decoration, so the badge would get it too.
+                <CustomLink
+                  key={step.name}
+                  href={`#${getAdviceStepId(index)}`}
+                  underline={false}
+                  className="inline-flex items-baseline gap-1.5"
+                >
+                  <span className="flex size-5 items-center justify-center self-center rounded-full bg-surface-tertiary font-bold text-label-value-12 text-primary">
+                    {index + 1}
+                  </span>
+                  <span className="underline">{step.name}</span>
                 </CustomLink>
-              ),
-          )}
-        </div>
-      )}
+              ))}
+            </dd>
+          </>
+        )}
+        {cell.sources && cell.sources.length > 0 && (
+          <>
+            <dt>Sources:</dt>
+            <dd className="flex flex-wrap gap-x-4 gap-y-1">
+              {cell.sources.map(
+                (source, i) =>
+                  'url' in source && (
+                    <CustomLink key={i} href={source.url}>
+                      {source.title}
+                    </CustomLink>
+                  ),
+              )}
+            </dd>
+          </>
+        )}
+      </dl>
     </div>
   )
 }
@@ -154,23 +200,24 @@ function ExposureDiff({
 
   if (changed.length === 0) {
     return (
-      <p className="text-paragraph-13 text-secondary italic">
-        {PRIVACY_INTERIOR_LABEL}, the same as for a public observer.
-      </p>
+      <>
+        <dt>{PRIVACY_INTERIOR_LABEL}:</dt>
+        <dd className="text-secondary">The same as for a public observer.</dd>
+      </>
     )
   }
 
   return (
-    <div className="flex flex-col gap-3">
-      <span className="font-medium text-paragraph-12 text-secondary uppercase tracking-wide">
+    <>
+      <dt className="col-span-2 font-medium text-paragraph-12 uppercase tracking-wide">
         Compared with a public observer
-      </span>
-      <ExposureChips map={interior} fields={changed} />
-    </div>
+      </dt>
+      <ExposureRow map={interior} fields={changed} />
+    </>
   )
 }
 
-function ExposureChips({
+function ExposureRow({
   map,
   fields,
 }: {
@@ -178,37 +225,36 @@ function ExposureChips({
   fields: PrivacyFieldInfo[]
 }) {
   return (
-    <div className="flex flex-wrap items-center gap-1.5">
-      <span className="mr-1 text-paragraph-12 text-secondary">
-        {PRIVACY_INTERIOR_LABEL}
-      </span>
-      {fields.map((field) => {
-        const leak = map[field.id]
-        const verdict = getExposure(leak)
-        const note = getExposureNote(leak)
-        const chip = (
-          <span
-            className={cn(
-              'inline-flex select-none items-center gap-1 rounded border px-1.5 py-0.5 font-medium text-xs',
-              PRIVACY_EXPOSURE_CHIP_CLASS_NAME[verdict],
-            )}
-          >
-            {field.label}
-            <span className="font-normal opacity-80">
-              {PRIVACY_EXPOSURE_LABEL[verdict]}
-            </span>
-          </span>
-        )
-        return (
-          <Tooltip key={field.id}>
-            <TooltipTrigger asChild>{chip}</TooltipTrigger>
-            <TooltipContent className="max-w-[320px]">
-              <p className="font-medium">{field.description}</p>
-              {note && <p className="mt-1">{note}</p>}
-            </TooltipContent>
-          </Tooltip>
-        )
-      })}
-    </div>
+    <>
+      <dt>{PRIVACY_INTERIOR_LABEL}:</dt>
+      <dd className="flex flex-wrap gap-1.5">
+        {fields.map((field) => {
+          const leak = map[field.id]
+          const verdict = getExposure(leak)
+          const note = getExposureNote(leak)
+          return (
+            <Tooltip key={field.id}>
+              <TooltipTrigger asChild>
+                <span
+                  className={cn(
+                    PRIVACY_CHIP_BASE_CLASS_NAME,
+                    PRIVACY_EXPOSURE_CHIP_CLASS_NAME[verdict],
+                  )}
+                >
+                  {field.label}
+                  <span className="font-normal">
+                    {PRIVACY_EXPOSURE_LABEL[verdict]}
+                  </span>
+                </span>
+              </TooltipTrigger>
+              <TooltipContent className="max-w-[320px]">
+                <p className="font-medium">{field.description}</p>
+                {note && <p className="mt-1">{note}</p>}
+              </TooltipContent>
+            </Tooltip>
+          )
+        })}
+      </dd>
+    </>
   )
 }

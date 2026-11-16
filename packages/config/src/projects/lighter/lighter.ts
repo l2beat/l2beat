@@ -242,7 +242,7 @@ export const lighter: ScalingProject = {
     dataAvailability: {
       name: 'Data published onchain',
       description:
-        'Account delta data is published onchain as blobs. A prover migration (gnark/MIMC → plonky2/Poseidon2) at block 23,711,820 left pre-migration blobs undecodable, but Lighter published a full state snapshot at batch #166859 (blobs.zip) that closes the gap. L2BEAT reproduced the snapshot state root from blobs and verified the roll-forward to chain head, confirming the live state is reconstructable from L1.',
+        'Account delta data is published onchain as blobs. A prover migration (gnark/MIMC → plonky2/Poseidon2) at block 23,711,820 left pre-migration blobs undecodable, but Lighter published a full state snapshot at batch #166859 (blobs.zip) that closes the gap. ETHBEAT reproduced the snapshot state root from blobs and verified the roll-forward to chain head, confirming the live state is reconstructable from L1.',
       risks: [],
       references: [
         {
@@ -289,7 +289,7 @@ export const lighter: ScalingProject = {
       {
         name: 'Escape hatch through ZK proofs',
         description:
-          'If the centralized operators fail to process forced transactions after the deadline, the system can be frozen (desert mode) and users are expected to exit by reconstructing the latest settled state and providing a ZK proof of balance. A desert exit circuit and a full state snapshot at batch #166859 are public, but the sources for the currently deployed DesertVerifier are not published, so it cannot be independently regenerated. L2BEAT reproduced the snapshot state root from L1 blobs and verified the roll-forward to chain head.',
+          'If the centralized operators fail to process forced transactions after the deadline, the system can be frozen (desert mode) and users are expected to exit by reconstructing the latest settled state and providing a ZK proof of balance. A desert exit circuit and a full state snapshot at batch #166859 are public, but the sources for the currently deployed DesertVerifier are not published, so it cannot be independently regenerated. ETHBEAT reproduced the snapshot state root from L1 blobs and verified the roll-forward to chain head.',
         risks: [],
         references: [
           {

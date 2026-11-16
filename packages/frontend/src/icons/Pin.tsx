@@ -8,7 +8,6 @@ export function PinIcon(props: SvgIconProps) {
       width="16"
       height="16"
       viewBox="0 0 24 24"
-      aria-label="Pin icon"
       fill="none"
       stroke="currentColor"
       strokeWidth="2"

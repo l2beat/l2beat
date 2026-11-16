@@ -7,26 +7,26 @@ describe(getWebPageStructuredData.name, () => {
   it('describes the page with its meta description and names the project', () => {
     const webPage = getWebPageStructuredData(
       {
-        url: 'https://l2beat.com/privacy/projects/tornado-cash',
+        url: 'https://ethbeat.org/privacy/projects/tornado-cash',
         description: 'Tornado Cash is a privacy pool.',
-        image: 'https://l2beat.com/og.png',
+        image: 'https://ethbeat.org/og.png',
       },
       { name: 'Tornado Cash privacy review', about: 'Tornado Cash' },
     )
 
     expect(webPage).toEqual({
       '@type': 'WebPage',
-      '@id': 'https://l2beat.com/privacy/projects/tornado-cash',
-      url: 'https://l2beat.com/privacy/projects/tornado-cash',
+      '@id': 'https://ethbeat.org/privacy/projects/tornado-cash',
+      url: 'https://ethbeat.org/privacy/projects/tornado-cash',
       name: 'Tornado Cash privacy review',
       description: 'Tornado Cash is a privacy pool.',
       about: { '@type': 'Thing', name: 'Tornado Cash' },
       publisher: {
         '@type': 'Organization',
-        '@id': 'https://l2beat.com/#organization',
-        name: 'L2BEAT',
-        url: 'https://l2beat.com',
-        logo: 'https://l2beat.com/logo.png',
+        '@id': 'https://ethbeat.org/#organization',
+        name: 'ETHBEAT',
+        url: 'https://ethbeat.org',
+        logo: 'https://ethbeat.org/logo.png',
       },
     })
   })

@@ -8035,3 +8035,45 @@ describe(disasmEVM.name, () => {
     expect(formatEVMOpcodes(opcodes)).toEqual(expected)
   })
 })
+
+describe('disasmEVM EIP-8024', () => {
+  it('reads the one-byte immediate of DUPN, SWAPN and EXCHANGE', () => {
+    const bytecode = Bytes.fromHex('0xe600e701e81200')
+
+    const instructions = disasmEVM(bytecode)
+
+    expect(formatEVMOpcodes(instructions)).toEqual(
+      ['00: DUPN 0x00', '02: SWAPN 0x01', '04: EXCHANGE 0x12', '06: STOP'].join(
+        '\n',
+      ),
+    )
+  })
+
+  // Test vectors from the EIP-8024 spec
+  it('decodes a disallowed immediate as the next instruction', () => {
+    const bytecode = Bytes.fromHex('0xe6605be75be852')
+
+    const instructions = disasmEVM(bytecode)
+
+    expect(formatEVMOpcodes(instructions)).toEqual(
+      [
+        '00: INVALID_DUPN',
+        '01: PUSH1 0x5b',
+        '03: INVALID_SWAPN',
+        '04: JUMPDEST',
+        '05: INVALID_EXCHANGE',
+        '06: MSTORE',
+      ].join('\n'),
+    )
+  })
+
+  it('pads a truncated immediate at the end of the code', () => {
+    const bytecode = Bytes.fromHex('0x00e8')
+
+    const instructions = disasmEVM(bytecode)
+
+    expect(formatEVMOpcodes(instructions)).toEqual(
+      ['00: STOP', '01: EXCHANGE 0x00'].join('\n'),
+    )
+  })
+})

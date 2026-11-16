@@ -97,8 +97,8 @@ export function NewProjectPage() {
                 placeholder="7"
                 disabled={createConfigFileMutation.isPending}
                 onChange={(e) => {
-                  const value = Number.parseInt(e.target.value)
-                  if (!isNaN(value) && value >= 0) {
+                  const value = Number.parseInt(e.target.value, 10)
+                  if (!Number.isNaN(value) && value >= 0) {
                     setMaxDepth(value)
                   }
                 }}
@@ -122,8 +122,8 @@ export function NewProjectPage() {
                 placeholder="100"
                 disabled={createConfigFileMutation.isPending}
                 onChange={(e) => {
-                  const value = Number.parseInt(e.target.value)
-                  if (!isNaN(value) && value >= 1) {
+                  const value = Number.parseInt(e.target.value, 10)
+                  if (!Number.isNaN(value) && value >= 1) {
                     setMaxAddresses(value)
                   }
                 }}
@@ -154,7 +154,7 @@ export function NewProjectPage() {
               </>
             )}
             <Button
-              className="border-autumn-300 bg-autumn-300 font-semibold text-coffee-900 hover:bg-autumn-200 hover:text-coffee-900 disabled:border-coffee-600 disabled:bg-coffee-800 disabled:text-coffee-400 disabled:opacity-100"
+              className="border-autumn-300 bg-autumn-300 font-semibold text-black hover:bg-autumn-200 hover:text-black disabled:border-coffee-600 disabled:bg-coffee-800 disabled:text-coffee-400 disabled:opacity-100"
               onClick={() => createConfigFileMutation.mutate()}
               disabled={createConfigFileMutation.isPending || !isFormValid}
             >

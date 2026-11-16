@@ -1,6 +1,6 @@
 {
   "name": "sxnetwork",
-  "timestamp": 1791533547,
+  "timestamp": 1793982864,
   "configHash": "0x6aabb49f1fa4cf86a0417af49369eef99a6043493c01e76ef3b348f63c3014c3",
   "entries": [
     {
@@ -159,13 +159,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 21084,
+        "firstUnresolvedNode": 23651,
         "inbox": "eth:0xEa83E8907C89Bc0D9517632f0ba081972E328631",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 24571362,
-        "latestConfirmed": 21083,
-        "latestNodeCreated": 21083,
+        "latestConfirmed": 23650,
+        "latestNodeCreated": 23650,
         "loserStakeEscrow": "eth:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0xB360b2f57c645E847148d7C479b7468AbF6F707d",
@@ -550,7 +550,7 @@
           "eth:0x9f1045201f8b9D0b12f6d1e40e8B8e6c047A81E3"
         ],
         "allowedOutboxList": ["eth:0xB360b2f57c645E847148d7C479b7468AbF6F707d"],
-        "delayedMessageCount": 2783,
+        "delayedMessageCount": 2943,
         "inboxHistory": [
           "eth:0xEa83E8907C89Bc0D9517632f0ba081972E328631",
           "eth:0x9f1045201f8b9D0b12f6d1e40e8B8e6c047A81E3"
@@ -560,8 +560,8 @@
         "outboxHistory": ["eth:0xB360b2f57c645E847148d7C479b7468AbF6F707d"],
         "rollup": "eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
         "sequencerInbox": "eth:0xD80a805c86C14c879420eC6acb366D04D318fC0C",
-        "sequencerMessageCount": 22895,
-        "sequencerReportedSubMessageCount": 10405343
+        "sequencerMessageCount": 25593,
+        "sequencerReportedSubMessageCount": 11006361
       },
       "fieldMeta": {
         "rollup": { "severity": "HIGH" },
@@ -619,7 +619,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 3,
+        "nonce": 5,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -800,7 +800,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 22895,
+        "batchCount": 25593,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "eth:0x0181F0f0260Ac4149CA7Abf6c53d3E8053f95715",
@@ -813,9 +813,10 @@
         "BROTLI_MESSAGE_HEADER_FLAG": "0x00",
         "dacKeyset": {
           "requiredSignatures": 1,
-          "membersCount": 1,
+          "membersCount": 2,
           "blsSignatures": [
-            "YACRv5Sg0FxAlm6TmKBsvqG9ErZYeaDniYBR0S22raMmbTczq9FkH7yJsRHIxmhh/gO6gGJ7KF0u+Lf74t8k28237EyDnMQw80ZQn4d6zAL/7ho/uorq9DTj+vINz59BZQWo85EZml6f+aI3mz9FaTPy6nCIMNIsGOPppozq2ETpuNuHgNMBR4YfgSWRgxDqfRX7Q0C8VEdJQoXtYtg18a1RW7D799pLMugsHAUu9qOW53q9VVbNATxUKYHI2cbo4RCkF2j4oiYCfU7sujlb0j99nOzsLwNTuzBiL447GCYf397vX8ZXj5i6XRg69o0xmBdhxnBZsFztAYkxNm5u7Qa6p5Ik132rB7rH9rUR3elfeq2dqcVjxqoxgJzaeirMag=="
+            "YACRv5Sg0FxAlm6TmKBsvqG9ErZYeaDniYBR0S22raMmbTczq9FkH7yJsRHIxmhh/gO6gGJ7KF0u+Lf74t8k28237EyDnMQw80ZQn4d6zAL/7ho/uorq9DTj+vINz59BZQWo85EZml6f+aI3mz9FaTPy6nCIMNIsGOPppozq2ETpuNuHgNMBR4YfgSWRgxDqfRX7Q0C8VEdJQoXtYtg18a1RW7D799pLMugsHAUu9qOW53q9VVbNATxUKYHI2cbo4RCkF2j4oiYCfU7sujlb0j99nOzsLwNTuzBiL447GCYf397vX8ZXj5i6XRg69o0xmBdhxnBZsFztAYkxNm5u7Qa6p5Ik132rB7rH9rUR3elfeq2dqcVjxqoxgJzaeirMag==",
+            "YAT228zgofADBVxQMIKn4315froUpq+03APjEPWq7Bt8KYLUeNVprft42CupQZ2KRQrA2OxMecamoXhNQCwnZl/qtjKvi6i/24LNLJBgi6SUUHepQzLYNK9N0jndoy1urRQg1Raq+mpZVGOzUgSVEYlJo1iBLGjPIa6PwYmn+FC0SdmRPWM3IyNTQ1w2f5Qf3gHOTAWrRpLXT/4khCItJAdMPNJKVYwbHWcE6mkTEzjyOZpbVfrYXQklLSgLqWRxQBUV2xgchjoGZjufBtlg76wkqHlB36GrIXPUWqPoFgF1cwElpUjDl9PvAFVCw0MUDwQZey3LQooSLt1INMib10wwFudeDPhaIYvwYMa7pDBIrx4mDX15GBM8k1nj42y43Q=="
           ]
         },
         "DAS_MESSAGE_HEADER_FLAG": "0x80",
@@ -823,7 +824,7 @@
         "DATA_BLOB_HEADER_FLAG": "0x50",
         "HEADER_LENGTH": 40,
         "isUsingFeeToken": true,
-        "keySetUpdates": 3,
+        "keySetUpdates": 4,
         "maxDataSize": 117964,
         "maxTimeVariation": {
           "delayBlocks": 28800,
@@ -836,7 +837,7 @@
         "rollup": "eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 5,
-        "totalDelayedMessagesRead": 2783,
+        "totalDelayedMessagesRead": 2943,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -881,7 +882,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 20818,
+        "nonce": 23385,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1754,7 +1755,7 @@
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 26153576, "sxnetwork": 10405468 },
+  "usedBlockNumbers": { "ethereum": 26357036, "sxnetwork": 11006548 },
   "permissionsConfigHash": "0x9e99d16c78822a7dd5cfcce1ac52e9f4932643be6274de60dab75962affb91d2",
   "permissions": {
     "eth:0x0181F0f0260Ac4149CA7Abf6c53d3E8053f95715": {

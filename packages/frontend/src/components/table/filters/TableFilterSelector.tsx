@@ -122,7 +122,7 @@ function Trigger() {
         <>
           <span className="ml-1.5 font-medium text-xs md:text-sm">Filters</span>
           <kbd className="ml-1.5 flex not-can-hover:hidden size-4 select-none items-center justify-center rounded bg-icon-secondary font-bold font-mono text-3xs text-primary-invert max-md:hidden">
-            F
+            <span className="[text-box:trim-both_cap_alphabetic]">F</span>
           </kbd>
         </>
       ) : (

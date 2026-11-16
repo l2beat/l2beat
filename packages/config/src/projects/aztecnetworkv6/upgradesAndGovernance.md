@@ -11,7 +11,7 @@ Aztec uses an onchain "Empire" signaling system. The designated proposer for eac
 Once submitted, a proposal passes through these states:
 
 * **Pending ({{governanceVotingDelayString}}):** voting power is snapshotted at the end of this delay.
-* **Active ({{governanceVotingDurationString}}):** AZTEC holders vote. The snapshot must contain at least {{governanceMinimumTotalPowerString}} of total voting power, at least {{governanceQuorumString}} of that power must vote, and `yea` must be strictly greater than {{governanceApprovalThresholdString}} of votes cast (the configured `yea`-minus-`nay` margin is {{governanceRequiredYeaMarginString}}).
+* **Active ({{governanceVotingDurationString}}):** AZTEC holders vote in the governance section of the [staking dashboard](https://stake.aztec.network/governance). The snapshot must contain at least {{governanceMinimumTotalPowerString}} of total voting power, at least {{governanceQuorumString}} of that power must vote, and `yea` must be strictly greater than {{governanceApprovalThresholdString}} of votes cast (the configured `yea`-minus-`nay` margin is {{governanceRequiredYeaMarginString}}).
 * **Queued ({{governanceExecutionDelayString}}):** a successful proposal waits before it can be executed. This final phase alone is shorter than the validator withdrawal delay, but the complete public process provides at least {{governanceTotalDelayString}} of notice. Initiating an exit immediately removes a validator from the active set, while its stake becomes withdrawable after {{validatorExitDelayString}}.
 * **Executable ({{governanceGracePeriodString}}):** anyone can execute the proposal during this grace period; otherwise it expires.
 

@@ -15,7 +15,7 @@ export async function getIconPreviewData(
       metadata: getMetadata(manifest, {
         name: 'Icon Preview',
         description:
-          'Development-only gallery of frontend icon components used across L2BEAT.',
+          'Development-only gallery of frontend icon components used across ETHBEAT.',
         url,
         openGraph: {
           image: '/meta-images/icon-preview/opengraph-image.png',

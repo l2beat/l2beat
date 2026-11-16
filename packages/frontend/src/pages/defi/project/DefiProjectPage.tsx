@@ -11,7 +11,7 @@ import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
-import { ScrollToTopButton } from '~/components/ScrollToTopButton'
+import { LiquidStakingYieldAndExitSection } from '~/components/projects/sections/defi/LiquidStakingYieldAndExitSection'
 import { StickyMobileSectionNavigation } from '~/components/section-navigation/StickyMobileSectionNavigation'
 import { env } from '~/env'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
@@ -20,6 +20,10 @@ import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProjectDefiEntry } from '~/server/features/defi/project/getDefiProjectEntry'
 import type { ProjectSectionLink } from '~/server/features/projects/getProjectSectionLinks'
 import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
+import { cn } from '~/utils/cn'
+import { LiquidStakingProjectSummary } from './components/LiquidStakingProjectSummary'
+
+const PAGE_SECTIONS = { LiquidStakingYieldAndExitSection }
 
 interface Props extends AppLayoutProps {
   entry: ProjectDefiEntry
@@ -94,7 +98,6 @@ export function DefiProjectPage({
                       className="md:hidden"
                     />
                   )}
-                  <HorizontalSeparator className="my-4 md:hidden" />
                   <div className="mb-3 max-md:hidden">
                     <DesktopProjectLinks
                       projectLinks={entry.projectLinks}
@@ -108,8 +111,30 @@ export function DefiProjectPage({
                     <PrimaryCard
                       id="summary"
                       data-role="nav-section"
-                      className="scroll-mt-[100vh] border-divider max-md:rounded-none max-md:border-b max-md:pt-0"
+                      className={cn(
+                        'scroll-mt-[100vh] border-divider max-md:rounded-none max-md:border-b max-md:pt-0',
+                        // On phones the badges and About sit above the card,
+                        // so without the staking summary it shrinks to the
+                        // rule below them.
+                        !entry.liquidStaking && 'max-md:border-b-0 max-md:pb-0',
+                      )}
                     >
+                      {/* Inside the card so the Summary tab, which needs a
+                          visible height, stays lit while About is on screen. */}
+                      <HorizontalSeparator
+                        className={cn(
+                          'my-4 md:hidden',
+                          !entry.liquidStaking && 'mb-0',
+                        )}
+                      />
+                      {entry.liquidStaking && (
+                        <>
+                          <LiquidStakingProjectSummary
+                            summary={entry.liquidStaking}
+                          />
+                          <HorizontalSeparator className="my-4 max-md:hidden" />
+                        </>
+                      )}
                       <div className="max-md:hidden">
                         <div className="flex flex-col gap-4 px-4 max-md:mt-2 md:px-0 lg:flex-row lg:gap-8">
                           {entry.badges.length > 0 && (
@@ -125,6 +150,7 @@ export function DefiProjectPage({
                     <ProjectDetails
                       items={entry.sections}
                       selectedUpdateId={selectedUpdateId}
+                      pageSections={PAGE_SECTIONS}
                     />
                   </HighlightableLinkContextProvider>
                 </div>
@@ -144,7 +170,6 @@ export function DefiProjectPage({
                 )}
               </div>
             </div>
-            <ScrollToTopButton />
           </div>
         </SideNavLayout>
       </HydrationBoundary>

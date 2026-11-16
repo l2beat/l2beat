@@ -25,7 +25,7 @@ import {
   MAYAN_SWIFT_SOURCE_CONTRACTS,
   toChainSpecificAddressesForMany,
 } from './mayan-shared'
-import { SettlementSent } from './mayan-swift'
+import { OrderUnlocked, SettlementSent } from './mayan-swift'
 import {
   extractMayanSwiftBatchOrderKeys,
   extractMayanSwiftPostBatchOrderKeys,
@@ -36,7 +36,6 @@ import {
 } from './mayan-swift.utils'
 import {
   createEventParser,
-  createInteropEventType,
   type DataRequest,
   type InteropEvent,
   type InteropEventDb,
@@ -59,15 +58,6 @@ const parseLogMessagePublished = createEventParser(logMessagePublishedLog)
 
 const parseOrderUnlocked = createEventParser(orderUnlockedLog)
 const orderSourceContracts = [...MAYAN_SWIFT_SOURCE_CONTRACTS]
-
-// OrderUnlocked event emitted on source chain when settlement is processed
-// $srcChain is the chain where SettlementSent was emitted (the transfer destination chain)
-// It's extracted from the Wormhole VAA in the transaction input and used to mark events
-// as unsupported when the settlement source chain is not in our supported chains list
-export const OrderUnlocked = createInteropEventType<{
-  key: string
-  $srcChain?: string
-}>('mayan-swift.OrderUnlocked')
 
 export class MayanSwiftSettlementPlugin implements InteropPluginResyncable {
   readonly name = 'mayan-swift-settlement'

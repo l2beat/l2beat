@@ -8,6 +8,23 @@ import { useTable } from '~/hooks/useTable'
 import type { L2ArchivedEntry } from '~/server/features/layer2s/archived/getL2ArchivedEntries'
 import { l2ArchivedColumns } from './columns'
 
+/**
+ * On desktop both verdict tables are seen one above the other, so each shared
+ * column gets the same width in both instead of sizing to its own rows.
+ * `min-width` too, because the header divider row's colspan defeats `width`.
+ * Purpose comes last and takes the spare width, so the value the tables sort
+ * by stays in view at 1280px. Narrower screens scroll each table on its own,
+ * so they keep content-sized columns.
+ */
+const ALIGNED_COLUMN_WIDTHS = [
+  'lg:[&_th:first-child]:w-[52px] lg:[&_th:first-child]:min-w-[52px]',
+  'lg:[&_th[data-column-id=name]]:w-[240px] lg:[&_th[data-column-id=name]]:min-w-[240px]',
+  'lg:[&_th[data-column-id=Risks]]:w-[64px] lg:[&_th[data-column-id=Risks]]:min-w-[64px]',
+  'lg:[&_th[data-column-id=type]]:w-[168px] lg:[&_th[data-column-id=type]]:min-w-[168px]',
+  'lg:[&_th[data-column-id=proofSystem]]:w-[144px] lg:[&_th[data-column-id=proofSystem]]:min-w-[144px]',
+  'lg:[&_th[data-column-id=total]]:w-[132px] lg:[&_th[data-column-id=total]]:min-w-[132px]',
+].join(' ')
+
 interface Props {
   entries: L2ArchivedEntry[]
   title: string
@@ -45,7 +62,7 @@ export function L2ArchivedTable({ entries, title, description, icon }: Props) {
       >
         <ColumnsControls columns={table.getAllColumns()} />
       </TableSectionHeader>
-      <BasicTable table={table} />
+      <BasicTable table={table} tableWrapperClassName={ALIGNED_COLUMN_WIDTHS} />
     </>
   )
 }

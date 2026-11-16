@@ -4,7 +4,7 @@ import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { EM_DASH } from '~/consts/characters'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { cn } from '~/utils/cn'
-import { sentimentToFillColor } from '~/utils/sentiment'
+import { sentimentToIconFillColor } from '~/utils/sentiment'
 import { UnderReviewBadge } from '../../badge/UnderReviewBadge'
 import {
   Tooltip,
@@ -32,11 +32,7 @@ export function TableValueCell({
 }: Props) {
   if (!value) {
     if (emptyMode === 'em-dash') {
-      return (
-        <div className="text-gray-500 text-xs dark:text-gray-400">
-          {EM_DASH}
-        </div>
-      )
+      return <div className="text-secondary text-xs">{EM_DASH}</div>
     }
     if (emptyMode === 'n/a') {
       return <NotApplicableBadge />
@@ -65,7 +61,7 @@ export function TableValueCell({
             <RoundedWarningIcon
               className={cn(
                 'size-3.5 md:size-4',
-                sentimentToFillColor(value.warning.sentiment),
+                sentimentToIconFillColor(value.warning.sentiment),
               )}
             />
           )}

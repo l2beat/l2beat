@@ -4,15 +4,15 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { externalLinks } from '~/consts/externalLinks'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import { SproutIcon } from '../../components/SproutIcon'
-import { SUBMISSION_QUESTIONS_PATH } from '../../paths'
+import { SUBMISSION_FORUM_POST_URL } from '../../paths'
 
 export function ClosingSection() {
   return (
     <section className="mt-4 md:mt-6">
       {/* The garden callout tone: a flat tint over the solid card. */}
-      <PrimaryCard className="relative overflow-hidden border border-garden-border max-md:mx-4 max-md:rounded-xl md:p-8">
+      <PrimaryCard className="relative overflow-hidden border border-garden-border max-md:mx-4 max-md:rounded-xl">
         <span aria-hidden className="absolute inset-0 bg-garden-tint" />
-        <div className="relative max-w-2xl">
+        <div className="relative">
           <h2 className="text-balance font-bold text-heading-18 md:text-heading-20">
             Ready to submit?
           </h2>
@@ -23,7 +23,7 @@ export function ClosingSection() {
           </p>
           <Button asChild variant="fill" className="mt-5 w-full gap-2 sm:w-max">
             <a
-              href={SUBMISSION_QUESTIONS_PATH}
+              href={SUBMISSION_FORUM_POST_URL}
               target="_blank"
               rel="noreferrer noopener"
             >

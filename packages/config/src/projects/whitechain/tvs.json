@@ -1,0 +1,173 @@
+{
+  "$schema": "../tvs-config-schema.json",
+  "projectId": "whitechain",
+  "tokens": [
+    {
+      "mode": "custom",
+      "id": "whitechain-WBT",
+      "priceId": "whitebit",
+      "symbol": "WBT",
+      "name": "WhiteBIT Coin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/27045/large/wbt_token.png?1696526096",
+      "amount": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "const",
+            "value": "273625001000000000000000255",
+            "decimals": 18,
+            "sinceTimestamp": 1792983863
+          },
+          {
+            "type": "calculation",
+            "operator": "sum",
+            "arguments": [
+              {
+                "type": "balanceOfEscrow",
+                "address": "native",
+                "chain": "whitechain",
+                "escrowAddress": "0x4200000000000000000000000000000000000029",
+                "decimals": 18,
+                "sinceTimestamp": 1792983863
+              },
+              {
+                "type": "balanceOfEscrow",
+                "address": "native",
+                "chain": "whitechain",
+                "escrowAddress": "0x7f881c8aA7f992d6a02C28e65459A88770A66610",
+                "decimals": 18,
+                "sinceTimestamp": 1792983863
+              },
+              {
+                "type": "balanceOfEscrow",
+                "address": "native",
+                "chain": "whitechain",
+                "escrowAddress": "0x6AaA8DB01a67FebCc1060d691f169042F8001F0A",
+                "decimals": 18,
+                "sinceTimestamp": 1792983863
+              },
+              {
+                "type": "balanceOfEscrow",
+                "address": "native",
+                "chain": "whitechain",
+                "escrowAddress": "0x8B3Fab122345A41612506E47FB856e2b77845bb9",
+                "decimals": 18,
+                "sinceTimestamp": 1792983863
+              },
+              {
+                "type": "balanceOfEscrow",
+                "address": "native",
+                "chain": "whitechain",
+                "escrowAddress": "0x80E45A68f5c8aD44bB7D0731d3CdFcC844886f9D",
+                "decimals": 18,
+                "sinceTimestamp": 1792983863
+              },
+              {
+                "type": "balanceOfEscrow",
+                "address": "native",
+                "chain": "whitechain",
+                "escrowAddress": "0x09BD95526670f8fb238AD83A22D6fC072B229d5c",
+                "decimals": 18,
+                "sinceTimestamp": 1792983863
+              },
+              {
+                "type": "balanceOfEscrow",
+                "address": "native",
+                "chain": "whitechain",
+                "escrowAddress": "0x0bb4Dd5650df966EeC16249E64654217b14E272D",
+                "decimals": 18,
+                "sinceTimestamp": 1792983863
+              },
+              {
+                "type": "balanceOfEscrow",
+                "address": "native",
+                "chain": "whitechain",
+                "escrowAddress": "0x344fcad16F52ea1DD4F8b61Af5846393D31546Be",
+                "decimals": 18,
+                "sinceTimestamp": 1792983863
+              },
+              {
+                "type": "balanceOfEscrow",
+                "address": "native",
+                "chain": "whitechain",
+                "escrowAddress": "0x597DF1181b24502B2B8D8C5cAb3dC3f469dFeF85",
+                "decimals": 18,
+                "sinceTimestamp": 1792983863
+              },
+              {
+                "type": "balanceOfEscrow",
+                "address": "native",
+                "chain": "whitechain",
+                "escrowAddress": "0x0000000000000000000000000000000000001001",
+                "decimals": 18,
+                "sinceTimestamp": 1792983863
+              },
+              {
+                "type": "balanceOfEscrow",
+                "address": "native",
+                "chain": "whitechain",
+                "escrowAddress": "0x0000000000000000000000000000000000001002",
+                "decimals": 18,
+                "sinceTimestamp": 1792983863
+              },
+              {
+                "type": "balanceOfEscrow",
+                "address": "native",
+                "chain": "whitechain",
+                "escrowAddress": "0x98f3d189f107a555602191e6a4dF4009f28b0A87",
+                "decimals": 18,
+                "sinceTimestamp": 1792983863
+              },
+              {
+                "type": "balanceOfEscrow",
+                "address": "native",
+                "chain": "whitechain",
+                "escrowAddress": "0xE842e0Fd090Be0572104411a8BF86351E4851963",
+                "decimals": 18,
+                "sinceTimestamp": 1792983863
+              },
+              {
+                "type": "balanceOfEscrow",
+                "address": "native",
+                "chain": "whitechain",
+                "escrowAddress": "0x94C9d55F064980ED1faf0ABB42f3548700619039",
+                "decimals": 18,
+                "sinceTimestamp": 1792983863
+              }
+            ]
+          }
+        ]
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": true
+    },
+    {
+      "mode": "custom",
+      "id": "whitechain-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0x94C9d55F064980ED1faf0ABB42f3548700619039",
+        "decimals": 6,
+        "sinceTimestamp": 1792983863
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Whitechain Portal"
+          }
+        ]
+      }
+    }
+  ]
+}

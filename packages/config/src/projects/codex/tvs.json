@@ -1,0 +1,163 @@
+{
+  "$schema": "../tvs-config-schema.json",
+  "projectId": "codex",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "codex-AMO",
+      "priceId": "amino",
+      "symbol": "AMO",
+      "name": "Amino",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/32677/large/IMG_6956.png?1698920127",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x1a2EB478FA07125C9935A77b3C03a82470801E30",
+        "chain": "ethereum",
+        "escrowAddress": "0xa6b1A05a592719B0C8a70c69eac114C48410aDE4",
+        "decimals": 18,
+        "sinceTimestamp": 1728898163,
+        "untilTimestamp": 1747440000
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "codex-DPX",
+      "priceId": "dopex",
+      "symbol": "DPX",
+      "name": "Dopex Governance Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/16652/large/DPX_%281%29.png?1696516213",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xEec2bE5c91ae7f8a338e1e5f3b5DE49d07AfdC81",
+        "chain": "ethereum",
+        "escrowAddress": "0xa6b1A05a592719B0C8a70c69eac114C48410aDE4",
+        "decimals": 18,
+        "sinceTimestamp": 1728898163,
+        "untilTimestamp": 1776211200
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "codex-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x52759C07A759c81BAab28AE1BE5A19e6450959bD",
+            "decimals": 18,
+            "sinceTimestamp": 1728898163
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0xa6b1A05a592719B0C8a70c69eac114C48410aDE4",
+            "decimals": 18,
+            "sinceTimestamp": 1728898163
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "codex-FORE",
+      "priceId": "fore-protocol",
+      "symbol": "FORE",
+      "name": "FORE Protocol",
+      "iconUrl": "https://assets.coingecko.com/coins/images/31001/large/EXCHANGE_LOGO_FORE.png?1696529839",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xB2ee0aDBe0EF1281025d0676511bB1df14600f4D",
+        "chain": "ethereum",
+        "escrowAddress": "0xa6b1A05a592719B0C8a70c69eac114C48410aDE4",
+        "decimals": 18,
+        "sinceTimestamp": 1728898163,
+        "untilTimestamp": 1742428800
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "codex-TRESTLE",
+      "priceId": "trestle",
+      "symbol": "TRESTLE",
+      "name": "Trestle",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34992/large/PNG_-_Logo_-_3485x.png?1706943532",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdE8CD13B812BcD82218754A740b27E76ec1e86aD",
+        "chain": "ethereum",
+        "escrowAddress": "0xa6b1A05a592719B0C8a70c69eac114C48410aDE4",
+        "decimals": 18,
+        "sinceTimestamp": 1728898163,
+        "untilTimestamp": 1742169600
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "codex-USDC-1",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USDC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xd996633a415985DBd7D6D12f4A4343E31f5037cf",
+        "chain": "codex",
+        "decimals": 6,
+        "sinceTimestamp": 1742236935
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "codex-USDC-2",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0xa6b1A05a592719B0C8a70c69eac114C48410aDE4",
+        "decimals": 6,
+        "sinceTimestamp": 1728898163
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

@@ -158,7 +158,7 @@ describe(renderProjectSection.name, () => {
         'Rollup operators cannot compromise the system, but being **application-specific** might bring additional risk.\n\nLong.\n\n**Note:** We',
         '**New requirements coming soon** (effective 2026-09-21 14:13 UTC)',
         '- The proof system is permissioned.',
-        '[Learn more about Stages](https://l2beat.com/stages).',
+        '[Learn more about Stages](https://ethbeat.org/stages).',
       )
     })
   })
@@ -192,7 +192,7 @@ describe(renderProjectSection.name, () => {
     })
 
     expect(markdown).toInclude(
-      '![A diagram](https://l2beat.com/images/diagram.png)\n\nThe DAO upgrades.',
+      '![A diagram](https://ethbeat.org/images/diagram.png)\n\nThe DAO upgrades.',
       '### Governance profile\n\n#### Security Council\n\n| Property | Value |\n| --- | --- |\n| Threshold | 9/12 |\n\n#### Upgrades\n\n| Property | Value |\n| --- | --- |\n| Normal upgrade path | Vote → Timelock (3d). About 10 days. |\n\n#### Token governance',
       '### Past upgrades',
       '- Count of upgrades: No upgrades\n- Last upgrade: N/A\n- Avg upgrade interval: N/A',
@@ -243,9 +243,9 @@ describe(renderProjectSection.name, () => {
     })
 
     expect(markdown).toInclude(
-      '![A diagram](https://l2beat.com/images/diagram.png)',
-      '### Prover: [SP1](https://l2beat.com/zk-catalog/sp1)\n\n#### Trusted setups\n\n- Groth16 (Groth16):\n  - Aztec Ignition, risk green (lowest risk) per the [Trusted Setups Risk Framework](https://forum.l2beat.com/t/the-trusted-setups-framework-for-zk-catalog/381): Large ceremony.\n  - Used in: none\n  - Verifiers: 2 successful',
-      '### Program Hashes\n\n#### Aggregation program',
+      '![A diagram](https://ethbeat.org/images/diagram.png)',
+      '### Prover: [SP1](https://ethbeat.org/zk-catalog/sp1)\n\n#### Trusted setups\n\n- Groth16 (Groth16):\n  - Aztec Ignition, risk green (lowest risk) per the [Trusted Setups Risk Framework](https://forum.ethbeat.org/t/the-trusted-setups-framework-for-zk-catalog/381): Large ceremony.\n  - Used in: none\n  - Verifiers: 2 successful',
+      '### Program hashes\n\n#### Aggregation program',
       'Hashes are checked onchain.',
     )
     expect(markdown).not.toInclude('List of known guest zkVM programs')
@@ -333,11 +333,11 @@ describe(renderProjectSection.name, () => {
     })
 
     expect(riskSummary).toInclude(
-      'There are 3 additional risks coming from the host chain [Arbitrum One](https://l2beat.com/layer2s/projects/arbitrum)',
+      'There are 3 additional risks coming from the host chain [Arbitrum One](https://ethbeat.org/layer2s/projects/arbitrum)',
     )
     expect(technology).toInclude(
-      'The section considers only the L3 properties. For more details please refer to [Arbitrum One](https://l2beat.com/layer2s/projects/arbitrum)',
-      'Blobs go to Celestia.\n\nLearn more about the DA layer here: [Celestia](https://l2beat.com/layer2s/projects/celestia)',
+      'The section considers only the L3 properties. For more details please refer to [Arbitrum One](https://ethbeat.org/layer2s/projects/arbitrum)',
+      'Blobs go to Celestia.\n\nLearn more about the DA layer here: [Celestia](https://ethbeat.org/layer2s/projects/celestia)',
     )
   })
 
@@ -362,7 +362,7 @@ describe(renderProjectSection.name, () => {
     })
 
     expect(markdown).toInclude(
-      '### [2026-08-29 10:40 UTC](https://l2beat.com/layer2s/projects/arbitrum?update=update-1) (high severity, 3 changes)\n\nUpgraded the bridge.',
+      '### [2026-08-29 10:40 UTC](https://ethbeat.org/layer2s/projects/arbitrum?update=update-1) (high severity, 3 changes)\n\nUpgraded the bridge.',
     )
   })
 
@@ -416,9 +416,9 @@ describe(renderProjectSection.name, () => {
 
     expect(markdown).toInclude(
       '### Ongoing anomaly\n\n- No state updates have been performed for the past 2h (since 2026-08-29 10:40 UTC). These typically occur every 1h on average.',
-      'The interactive liveness chart is shown on [the HTML page](https://l2beat.com/layer2s/projects/arbitrum#liveness).',
+      'The interactive liveness chart is shown on [the HTML page](https://ethbeat.org/layer2s/projects/arbitrum#liveness).',
       '#### State updates\n\n- functionCall: 2023-11-14 22:13 UTC - now; currently used; address: [0x1111111111111111111111111111111111111111](https://etherscan.io/address/0x1111111111111111111111111111111111111111); selector: 0x12345678; signature: `function update()`',
-      '### Last 30 day anomalies',
+      '### Anomalies in the past 30 days',
     )
   })
 
@@ -469,7 +469,7 @@ describe(renderProjectSection.name, () => {
       '### Censorship resistance\n\nBad\n\n**What is missing**\n\n- No forced transactions.',
       "### Open source\n\nGood\n\n**What's good**\n\n- License: [MIT License](https://mit)\n- Code is public.",
       '### Privacy\n\nNot reviewed',
-      '[See the CROPS guide](https://l2beat.com/crops).',
+      '[See the CROPS guide](https://ethbeat.org/crops).',
     )
   })
 
@@ -490,7 +490,7 @@ describe(renderProjectSection.name, () => {
       })
 
     expect(dataPosted([ETHEREUM])).toInclude(
-      'The project currently posts data to [Ethereum](https://l2beat.com/projects/ethereum); previously it posted to Celestia.',
+      'The project currently posts data to [Ethereum](https://ethbeat.org/projects/ethereum); previously it posted to Celestia.',
     )
     expect(dataPosted([])).toInclude(
       'We no longer track where the project posts data; previously it posted to Celestia.',
@@ -509,7 +509,56 @@ describe(renderProjectSection.name, () => {
     })
 
     expect(markdown).toInclude(
-      'The interactive tokens table is shown on [the HTML page](https://l2beat.com/layer2s/projects/arbitrum#interop-tokens).',
+      'The interactive tokens table is shown on [the HTML page](https://ethbeat.org/layer2s/projects/arbitrum#interop-tokens).',
+    )
+  })
+
+  it('lists the liquid staking protocols with their latest numbers, linking the tokens with a page and marking missing numbers and protocols under review', () => {
+    const markdown = render({
+      type: 'LiquidStakingSection',
+      props: {
+        id: 'liquid-staking',
+        title: 'Liquid staking',
+        ethStaked: {
+          value: 35_400_000,
+          valueUsd: 120_000_000_000,
+          timestamp: UnixTime(1762646400),
+        },
+        entries: [
+          {
+            id: 'lido',
+            slug: 'lido',
+            name: 'Lido',
+            icon: '/icons/lido.png',
+            href: '/defi/projects/lido',
+            description: 'Lido description',
+            isUnderReview: false,
+            tokens: [
+              { symbol: 'stETH', href: '/tokens/steth/lido/steth' },
+              { symbol: 'wstETH' },
+            ],
+            totalValueLockedUsd: 30_000_000_000,
+            yield: { value: 0.0275, timestamp: 1762646400, estimated: false },
+            costOfExit: { value: 2.5, timestamp: 1762646400, estimated: true },
+          },
+          {
+            id: 'wbeth',
+            slug: 'wbeth',
+            name: 'Binance Staked ETH',
+            icon: '/icons/wbeth.png',
+            href: '/defi/projects/wbeth',
+            description: 'wBETH description',
+            isUnderReview: true,
+            tokens: [{ symbol: 'wBETH' }],
+          },
+        ],
+      },
+    })
+
+    expect(markdown).toInclude(
+      'ETH staked: 35.40 M ETH ($120.00 B) (as of 2025-11-09 00:00 UTC)',
+      '| [Lido](https://ethbeat.org/defi/projects/lido) | [stETH](https://ethbeat.org/tokens/steth/lido/steth), wstETH | $30.00 B | 2.75% (on 2025-11-09 00:00 UTC) | ~2.5 days (over 2025-11-09 00:00 UTC to 2025-11-10 00:00 UTC) |',
+      '| [Binance Staked ETH](https://ethbeat.org/defi/projects/wbeth) (under review) | wBETH | No data | No data | No data |',
     )
   })
 
@@ -567,7 +616,7 @@ describe(renderProjectSection.name, () => {
   })
 })
 
-const PAGE_URL = 'https://l2beat.com/layer2s/projects/arbitrum'
+const PAGE_URL = 'https://ethbeat.org/layer2s/projects/arbitrum'
 
 /** Links resolve against the page once the whole document is assembled, as `renderProjectMarkdown` does. */
 function render(section: ProjectDetailsSection) {

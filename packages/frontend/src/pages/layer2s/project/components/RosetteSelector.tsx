@@ -35,7 +35,7 @@ export function RosetteSelector({
         <RadioGroupItem value="individual">Individual</RadioGroupItem>
       </RadioGroup>
       <Tooltip>
-        <TooltipTrigger>
+        <TooltipTrigger aria-label="About rosette views">
           <InfoIcon />
         </TooltipTrigger>
         <TooltipContent>

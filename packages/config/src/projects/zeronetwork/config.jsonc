@@ -32,6 +32,24 @@
             "pickChainAddress": "eth:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"
           },
           "edit": ["get", "EXECUTOR_ROLE", "members"]
+        },
+        "executionDelayZeroNetwork": {
+          // effective delay for ZERO Network: max(executionDelay, chainExecutionDelay(ZERO Network diamond))
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "getExecutionDelay",
+            "args": ["0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"]
+          }
+        },
+        "executionDelayZeroNetwork_fmt": {
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "getExecutionDelay",
+            "args": ["0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"]
+          },
+          "edit": ["format", "FormatSeconds"]
         }
       }
     },

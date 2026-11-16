@@ -7,9 +7,9 @@ describe(getItemListStructuredData.name, () => {
   it('lists the projects by name and production URL, in page order', () => {
     const list = getItemListStructuredData(
       {
-        url: 'https://l2beat.com/privacy/summary',
+        url: 'https://ethbeat.org/privacy/summary',
         description: 'Privacy description',
-        image: 'https://l2beat.com/og.png',
+        image: 'https://ethbeat.org/og.png',
       },
       {
         name: 'Privacy protocol reviews',
@@ -22,21 +22,21 @@ describe(getItemListStructuredData.name, () => {
 
     expect(list).toEqual({
       '@type': 'ItemList',
-      '@id': 'https://l2beat.com/privacy/summary#list',
+      '@id': 'https://ethbeat.org/privacy/summary#list',
       name: 'Privacy protocol reviews',
-      url: 'https://l2beat.com/privacy/summary',
+      url: 'https://ethbeat.org/privacy/summary',
       itemListElement: [
         {
           '@type': 'ListItem',
           position: 1,
           name: 'Tornado Cash',
-          url: 'https://l2beat.com/privacy/projects/tornado-cash',
+          url: 'https://ethbeat.org/privacy/projects/tornado-cash',
         },
         {
           '@type': 'ListItem',
           position: 2,
           name: 'Railgun',
-          url: 'https://l2beat.com/privacy/projects/railgun',
+          url: 'https://ethbeat.org/privacy/projects/railgun',
         },
       ],
     })

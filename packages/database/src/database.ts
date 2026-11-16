@@ -18,6 +18,7 @@ import { DaBeatStatsRepository } from './repositories/DaBeatStatsRepository'
 import { DataAvailabilityRepository } from './repositories/DataAvailabilityRepository'
 import { DefiTvlRepository } from './repositories/DefiTvlRepository'
 import { DiscoveryCacheRepository } from './repositories/DiscoveryCacheRepository'
+import { EthereumStakingDailyRepository } from './repositories/EthereumStakingDailyRepository'
 import { FlatSourcesRepository } from './repositories/FlatSourcesRepository'
 import { HourlyActivityRepository } from './repositories/HourlyActivityRepository'
 import { IndexerConfigurationRepository } from './repositories/IndexerConfigurationRepository'
@@ -32,6 +33,7 @@ import { InteropRecentPricesRepository } from './repositories/InteropRecentPrice
 import { InteropTransferRepository } from './repositories/InteropTransferRepository'
 import { L2CostPriceRepository } from './repositories/L2CostPriceRepository'
 import { L2CostRepository } from './repositories/L2CostRepository'
+import { LiquidStakingSnapshotRepository } from './repositories/LiquidStakingSnapshotRepository'
 import { LiveBlobBatchRepository } from './repositories/LiveBlobBatchRepository'
 import { LiveBlockRepository } from './repositories/LiveBlockRepository'
 import { LivenessRepository } from './repositories/LivenessRepository'
@@ -114,6 +116,8 @@ export function createDatabase(
 
     // #region DeFi
     defiTvl: new DefiTvlRepository(db),
+    liquidStakingSnapshot: new LiquidStakingSnapshotRepository(db),
+    ethereumStakingDaily: new EthereumStakingDailyRepository(db),
     // #endregion
 
     // #region UIF

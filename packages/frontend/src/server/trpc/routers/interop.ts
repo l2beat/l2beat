@@ -2,6 +2,7 @@ import { getIntentBridgesData } from '~/server/features/layer2s/interop/getInten
 import { getInteropBridgeSelectionData } from '~/server/features/layer2s/interop/getInteropBridgeSelectionData'
 import { getInteropDashboardData } from '~/server/features/layer2s/interop/getInteropDashboardData'
 import { getInteropFlows } from '~/server/features/layer2s/interop/getInteropFlows'
+import { getInteropFlowsOverview } from '~/server/features/layer2s/interop/getInteropFlowsOverview'
 import { getInteropProtocolsByVolume } from '~/server/features/layer2s/interop/getInteropProtocolsByVolume'
 import { getInteropProtocolTransfers } from '~/server/features/layer2s/interop/getInteropProtocolTransfers'
 import { getInteropTokenData } from '~/server/features/layer2s/interop/getInteropTokenData'
@@ -53,6 +54,9 @@ export const interopRouter = router({
   flows: procedure
     .input(InteropFlowsParams)
     .query(({ input }) => getInteropFlows(input)),
+  flowsOverview: procedure
+    .input(InteropFlowsParams)
+    .query(({ input }) => getInteropFlowsOverview(input)),
   protocolsByVolume: procedure
     .input(InteropProtocolsByVolumeParams)
     .query(({ input }) => getInteropProtocolsByVolume(input)),

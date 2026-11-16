@@ -113,7 +113,8 @@
         "address": "0x9BFA177621119e64CecbEabE184ab9993E2ef727",
         "chain": "lisk",
         "decimals": 18,
-        "sinceTimestamp": 1734625977
+        "sinceTimestamp": 1734625977,
+        "untilTimestamp": 1794250800
       },
       "category": "btc",
       "source": "external",
@@ -138,7 +139,8 @@
         "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
         "chain": "lisk",
         "decimals": 6,
-        "sinceTimestamp": 1741824000
+        "sinceTimestamp": 1741824000,
+        "untilTimestamp": 1794250800
       },
       "category": "stablecoin",
       "source": "external",
@@ -183,7 +185,8 @@
         "address": "0x43F2376D5D03553aE72F4A8093bbe9de4336EB08",
         "chain": "lisk",
         "decimals": 6,
-        "sinceTimestamp": 1743180125
+        "sinceTimestamp": 1743180125,
+        "untilTimestamp": 1794250800
       },
       "category": "stablecoin",
       "source": "external",

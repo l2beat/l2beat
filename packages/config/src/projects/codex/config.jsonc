@@ -1,0 +1,23 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "codex",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "eth:0x8158147fdc49839fa2ef6eE39fB6bbC39EEC42A6",
+    "eth:0xa6b1A05a592719B0C8a70c69eac114C48410aDE4"
+  ],
+  "overrides": {
+    "eth:0xBc2270903C82F80D028B08E49cd1923797DC7283": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    },
+    // OPContractsManagerV2 (shared upgrade tooling). Ignored so discovery
+    // doesn't follow it into bare implementations; authority is the ProxyAdmin owner.
+    "eth:0xbfb9219d933ec96Ac99C4f3D7231eFE43757811F": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x6A3855dc26e2beA8Ac73f82Cda79f3808B6C6F6C": {
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
+    }
+  }
+}

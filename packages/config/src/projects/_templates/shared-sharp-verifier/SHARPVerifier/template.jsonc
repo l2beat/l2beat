@@ -38,20 +38,21 @@
       "template": "shared-sharp-verifier/CpuFrilessVerifier"
     },
     "getBootloaderConfig": {
-      "description": "The three bootloader configuration words forced into the proven program output. In modern versions they are (1) a Pedersen commitment to the ordered list of supported simple-bootloader program hashes, (2) the applicative-bootloader program hash, and (3) a Pedersen commitment to the ordered list of supported recursive Cairo-verifier program hashes. The 2024_10 verifier instead uses a direct Poseidon commitment for word 0. Reproducing a list commitment is insufficient unless its exact ordered preimage and every program behind the listed hashes are also published and reproducible. A malicious allowed program can make invalid nested tasks appear proven.",
+      "description": "The three bootloader configuration words forced into the proven program output (verifiers up to 2026_13). In modern versions they are (1) a Pedersen commitment to the ordered list of supported simple-bootloader program hashes, (2) the applicative-bootloader program hash, and (3) a Pedersen commitment to the ordered list of supported recursive Cairo-verifier program hashes. The 2024_10 verifier instead uses a direct Poseidon commitment for word 0. Reproducing a list commitment is insufficient unless its exact ordered preimage and every program behind the listed hashes are also published and reproducible. A malicious allowed program can make invalid nested tasks appear proven.",
       "severity": "HIGH",
       "type": "CODE_CHANGE",
-      "handler": {
-        "type": "call",
-        "method": "getBootloaderConfig",
-        "args": []
-      },
+      // no handler: the method is called by default where it exists (verifiers from 2026_14 replace it with getBootloaderConfigHash)
       "edit": [
         "shape",
         "simpleBootloaderConfigurationCommitment",
         "applicativeBootloaderProgramHash",
         "supportedCairoVerifierProgramHashesCommitment"
       ]
+    },
+    "getBootloaderConfigHash": {
+      "description": "Single bootloader configuration hash forced into the proven program output (verifiers from 2026_14). It replaces the three configuration words of `getBootloaderConfig`: simple-bootloader allowlist, applicative-bootloader program hash and recursive Cairo-verifier allowlist. The hash alone reveals none of them, so the exact preimage and every program behind it must be published and reproducible. A malicious allowed program can make invalid nested tasks appear proven.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE"
     },
     "referenceFactRegistry": {
       "description": "Previous SHARP fact registry whose facts remain valid until `referralExpirationTime`. Its complete verifier and bootloader trust chain is therefore part of this verifier's active safety assumptions during the referral window.",

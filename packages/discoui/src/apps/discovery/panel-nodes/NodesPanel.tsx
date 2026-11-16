@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { useParams } from 'react-router'
 import type {
   Field as ApiField,
@@ -8,6 +8,7 @@ import type {
 } from '../../../api/types'
 import { ErrorState } from '../../../components/ErrorState'
 import { LoadingState } from '../../../components/LoadingState'
+import { AgentNote } from '../agent/AgentNote'
 import { useProjectQueryOptions } from '../hooks/projectQuery'
 import { usePanelStore } from '../store/panel-store'
 import { Controls } from './controls/Controls'
@@ -16,7 +17,7 @@ import type { Field, Node } from './store/State'
 import { useStore as useNodeStore, useStore } from './store/store'
 import { NODE_WIDTH } from './store/utils/constants'
 import { getGraphProjection } from './store/utils/graphProjection'
-import { topLevelByDescendant } from './store/utils/subnodes'
+import { persistNodeLayout } from './store/utils/storage'
 import { Viewport } from './view/Viewport'
 
 // Leaf ids of every node that is selected or sits inside a selected one, so a
@@ -60,6 +61,7 @@ export function NodesPanel() {
         <NodesSync data={response.data} project={project} />
         <Viewport />
         <Controls />
+        <AgentNote project={project} />
       </div>
     </div>
   )
@@ -163,15 +165,35 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
     }
     loadNodes(project, nodes, autoGroups)
   }, [project, data, clear, loadNodes])
+
+  // A closed panel draws nothing, so the store must not read as loaded: the
+  // agent would arrange a graph that the next mount clears and loads again.
+  // The store saves its layout a moment after each change, and clearing
+  // would drop a save still pending.
+  useEffect(
+    () => () => {
+      try {
+        persistNodeLayout(useNodeStore.getState())
+      } finally {
+        clear()
+      }
+    },
+    [clear],
+  )
 }
 
-function eq(a: readonly string[], b: readonly string[]) {
+function sameIds(a: readonly string[], b: readonly string[]) {
   return a.length === b.length && a.every((x, i) => b[i] === x)
 }
 
 function useSynchronizeSelection() {
   const loaded = useStore((state) => state.loaded)
-  const [lastSelection, rememberSelection] = useState<readonly string[]>([])
+  // What each side last heard from the other, so neither takes its own
+  // update for a new choice by the researcher. Every click makes a new
+  // array, so a click on what is already selected still counts.
+  const lastNodes = useRef<readonly string[]>(undefined)
+  const isGraphOurs = useRef(false)
+  const lastGlobal = useRef<readonly string[]>([])
   const selectedGlobal = usePanelStore((state) => state.selected)
   const highlightGlobal = usePanelStore((state) => state.highlight)
   const selectGlobal = usePanelStore((state) => state.select)
@@ -191,30 +213,38 @@ function useSynchronizeSelection() {
   }, [selectedNodes, hiddenNodes, highlightGlobal])
 
   useEffect(() => {
-    const firstGlobal = selectedGlobal[0]
-    const selectedAddresses = selectedLeafIds(nodes, new Set(selectedNodes))
-
-    if (selectedAddresses.length > 0 && !eq(lastSelection, selectedAddresses)) {
-      rememberSelection(selectedAddresses)
-      selectGlobal(selectedAddresses)
-    } else if (
-      firstGlobal !== undefined &&
-      !lastSelection.includes(firstGlobal) &&
-      loaded
-    ) {
-      const containing = topLevelByDescendant(nodes).get(firstGlobal)
-      rememberSelection(selectedGlobal)
-      if (containing) {
-        selectAndFocus(containing.id)
+    if (selectedNodes !== lastNodes.current) {
+      lastNodes.current = selectedNodes
+      const isOurs = isGraphOurs.current
+      isGraphOurs.current = false
+      const graphLeaves = selectedLeafIds(nodes, new Set(selectedNodes))
+      // A rectangle drag makes a new array on every move.
+      const isNew =
+        graphLeaves.length > 0 && !sameIds(graphLeaves, selectedGlobal)
+      if (!isOurs && isNew) {
+        lastGlobal.current = graphLeaves
+        selectGlobal(graphLeaves)
+        return
       }
     }
+    // Another panel chose: every click there is a new array, so clicking a
+    // contract again selects it once it is drawn.
+    const firstGlobal = selectedGlobal[0]
+    if (
+      firstGlobal === undefined ||
+      selectedGlobal === lastGlobal.current ||
+      !loaded
+    ) {
+      return
+    }
+    lastGlobal.current = selectedGlobal
+    // When none is drawn, the graph's selection clears, or it would win back.
+    isGraphOurs.current = true
+    selectAndFocus(selectedGlobal)
   }, [
-    lastSelection,
-    rememberSelection,
     selectedGlobal,
     selectGlobal,
     selectedNodes,
-    hiddenNodes,
     nodes,
     selectAndFocus,
     loaded,

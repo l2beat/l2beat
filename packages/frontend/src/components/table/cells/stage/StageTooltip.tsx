@@ -106,7 +106,7 @@ export function StageTooltip({
         <p>
           Projects under review might present uncompleted information & data.
           <br />
-          L2BEAT Team is working to research & validate content before
+          ETHBEAT Team is working to research & validate content before
           publishing.
         </p>
       )}

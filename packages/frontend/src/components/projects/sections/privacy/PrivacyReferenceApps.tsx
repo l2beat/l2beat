@@ -1,18 +1,24 @@
 import { Fragment, type ReactNode } from 'react'
 import { CustomLink } from '~/components/link/CustomLink'
 import { CustomLinkIcon } from '~/icons/Outlink'
-import { PRIVACY_EXPOSURE_CHIP_CLASS_NAME } from '~/pages/privacy/adversaries/privacyAdversaryUi'
+import {
+  PRIVACY_CHIP_BASE_CLASS_NAME,
+  PRIVACY_EXPOSURE_CHIP_CLASS_NAME,
+} from '~/pages/privacy/adversaries/privacyAdversaryUi'
 import {
   getCheckedAppSourceLabel,
+  getReferenceAppDelivery,
   getReferenceAppSince,
   getReferenceAppSource,
   REFERENCE_APP,
 } from '~/pages/privacy/referenceAppUi'
 import type { PrivacyReferenceApp } from '~/server/features/privacy/utils/getPrivacyReferenceApp'
 import { cn } from '~/utils/cn'
+import { formatDate } from '~/utils/dates'
+import { DeliveryIcon, type DeliveryPart } from './PrivacyDelivery'
 
 const CHIPS = {
-  // Neutral, since green would read as a privacy verdict the app may not earn.
+  // Blue-grey, since green would read as a privacy verdict the app may not earn.
   reference: {
     label: REFERENCE_APP.referenceChip,
     className:
@@ -26,12 +32,13 @@ const CHIPS = {
 
 /** The reference app first, then the other apps checked against it. */
 export function PrivacyReferenceApps({ app }: { app: PrivacyReferenceApp }) {
-  const source = getReferenceAppSource(app)
+  const source = getReferenceAppSource(app, formatDate)
+  const delivery = getReferenceAppDelivery(app)
 
   return (
     <div className="mt-4 flex flex-col gap-2">
       <div className="flex items-baseline justify-between gap-2">
-        <span className="font-medium text-paragraph-12 text-secondary uppercase tracking-wide">
+        <span className="font-medium text-paragraph-12 uppercase tracking-wide">
           {REFERENCE_APP.listTitle}
         </span>
         <CustomLink
@@ -51,7 +58,7 @@ export function PrivacyReferenceApps({ app }: { app: PrivacyReferenceApp }) {
         >
           <Meta
             parts={[
-              getReferenceAppSince(app),
+              getReferenceAppSince(app, formatDate),
               source.commit ? (
                 <>
                   {source.label}{' '}
@@ -64,6 +71,38 @@ export function PrivacyReferenceApps({ app }: { app: PrivacyReferenceApp }) {
               ),
             ]}
           />
+          <dl className="mt-2 grid grid-cols-1 gap-y-2 text-paragraph-13 sm:grid-cols-[auto_1fr] sm:gap-x-4 sm:gap-y-1.5 md:text-paragraph-14">
+            <DeliveryLine part={delivery.kind}>
+              {delivery.kind.description}
+            </DeliveryLine>
+            <DeliveryLine part={delivery.source}>
+              {delivery.source.description}
+              {delivery.rebuild && (
+                <>
+                  {' '}
+                  <CustomLink
+                    href={delivery.rebuild}
+                    className="whitespace-nowrap"
+                  >
+                    {REFERENCE_APP.rebuildLink}
+                  </CustomLink>
+                </>
+              )}
+            </DeliveryLine>
+          </dl>
+          {delivery.check && (
+            <p className="mt-1 pl-5.5 text-paragraph-13 text-secondary md:text-paragraph-14">
+              {delivery.check.label}
+              {delivery.check.value && (
+                <>
+                  {' '}
+                  <span className="break-all font-mono text-2xs text-primary md:text-xs">
+                    {delivery.check.value}
+                  </span>
+                </>
+              )}
+            </p>
+          )}
         </AppRow>
         {app.checkedApps.map((checkedApp) => (
           <AppRow
@@ -90,7 +129,7 @@ export function PrivacyReferenceApps({ app }: { app: PrivacyReferenceApp }) {
                   href={checkedApp.source}
                   className="whitespace-nowrap"
                 >
-                  {getCheckedAppSourceLabel(checkedApp)}
+                  {getCheckedAppSourceLabel(checkedApp, formatDate)}
                 </CustomLink>,
               ]}
             />
@@ -139,7 +178,8 @@ function AppRow({
           )}
           <span
             className={cn(
-              'inline-flex select-none items-center rounded border px-1.5 py-0.5 font-medium text-2xs uppercase',
+              PRIVACY_CHIP_BASE_CLASS_NAME,
+              'uppercase',
               CHIPS[chip].className,
             )}
           >
@@ -149,6 +189,25 @@ function AppRow({
         {children}
       </div>
     </li>
+  )
+}
+
+/** One half of the delivery: its symbol, its word and what it means. */
+function DeliveryLine({
+  part,
+  children,
+}: {
+  part: DeliveryPart
+  children: ReactNode
+}) {
+  return (
+    <div className="flex flex-col gap-0.5 sm:contents">
+      <dt className="flex items-start gap-1.5 font-bold text-primary sm:whitespace-nowrap">
+        <DeliveryIcon part={part} className="mt-[0.15em] size-4" />
+        {part.label}
+      </dt>
+      <dd className="text-secondary max-sm:pl-5.5">{children}</dd>
+    </div>
   )
 }
 

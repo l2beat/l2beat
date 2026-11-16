@@ -4,7 +4,7 @@ import { SvgIcon } from './SvgIcon'
 export function UnderReviewIcon(props: SvgIconProps) {
   return (
     <SvgIcon
-      aria-label="Under review icon"
+      aria-label="Under review"
       width="17"
       height="16"
       viewBox="0 0 17 16"

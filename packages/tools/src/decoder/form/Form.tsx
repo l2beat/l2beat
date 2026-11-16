@@ -121,7 +121,7 @@ export function Form(props: FormProps) {
             onChange={(e) =>
               dispatch({
                 type: 'set chainId',
-                value: Number.parseInt(e.target.value),
+                value: Number.parseInt(e.target.value, 10),
               })
             }
           >

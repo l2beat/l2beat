@@ -4,12 +4,12 @@ import { createMarkdown } from '~/utils/markdown/createMarkdown'
 import {
   type GlossaryRenderEnv,
   glossaryPlugin,
-  linkGlossaryTerms,
 } from '~/utils/markdown/glossaryPlugin'
 import {
   type HeadingLevelEnv,
   headingLevelPlugin,
 } from '~/utils/markdown/headingLevelPlugin'
+import { identifierBreaksPlugin } from '~/utils/markdown/identifierBreaksPlugin'
 import { outLinksPlugin } from '~/utils/markdown/outlinksPlugin'
 import { useGlossaryContext } from './GlossaryContext'
 import { GlossaryTooltipWrapper } from './GlossaryTooltipWrapper'
@@ -26,9 +26,10 @@ const markdown = createMarkdown()
   .use(outLinksPlugin)
   .use(glossaryPlugin)
   .use(headingLevelPlugin)
+  .use(identifierBreaksPlugin)
 
 export function Markdown(props: MarkdownProps) {
-  const terms = useGlossaryContext()
+  const linkTerms = useGlossaryContext()
   const parentHeadingLevel = useParentHeadingLevel()
   const glossaryDescriptionIdPrefix = useId()
   const Comp = props.inline ? 'span' : 'div'
@@ -45,9 +46,7 @@ export function Markdown(props: MarkdownProps) {
   // Markdown-it does not support pre-render hooks and token rerendering so
   // we have to the do linking of glossary terms here explicitly.
   const rendered = render(
-    props.ignoreGlossary
-      ? props.children
-      : linkGlossaryTerms(terms)(props.children),
+    props.ignoreGlossary ? props.children : linkTerms(props.children),
   )
   const collapsed = processCollapsibleText(rendered)
 
@@ -71,6 +70,6 @@ function processCollapsibleText(markdown: string): string {
 
   return markdown.replace(collapsiblePattern, (_match, label, content) => {
     const uniqueId = useId()
-    return `<button class="inline text-gray-600 dark:text-secondary bg-gray-100 dark:bg-surface-secondary rounded px-1 text-sm cursor-pointer select-none hover:bg-gray-200 dark:hover:bg-surface-tertiary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-300 dark:focus-visible:ring-gray-600" onclick="document.getElementById('${uniqueId}').classList.toggle('hidden')">${label}</button><span id="${uniqueId}" class="hidden ml-1">${content}</span>`
+    return `<button class="inline whitespace-nowrap text-secondary bg-surface-secondary rounded px-1 text-sm cursor-pointer select-none hover:bg-surface-tertiary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-divider" onclick="document.getElementById('${uniqueId}').classList.toggle('hidden')">${label}</button><span id="${uniqueId}" class="hidden ml-1">${content}</span>`
   })
 }

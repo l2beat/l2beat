@@ -124,7 +124,7 @@
 }
 
 .mdc pre.mdc-diff {
-  @apply bg-coffee-700;
+  @apply bg-coffee-800;
 }
 
 .mdc-diff-add {
@@ -141,4 +141,77 @@
 
 .mdc-diff-meta {
   @apply text-coffee-400;
+}
+
+/* The chat panel: agent answers read as prose next to the graph. */
+.mdc.mdc-chat {
+  @apply bg-transparent p-0 text-[13px] text-coffee-200 leading-relaxed;
+}
+
+.mdc-chat p,
+.mdc-chat ul,
+.mdc-chat ol,
+.mdc-chat pre {
+  @apply mb-2.5;
+}
+
+.mdc-chat li {
+  @apply ml-1 pl-0.5;
+}
+
+.mdc-chat li + li {
+  @apply mt-1;
+}
+
+.mdc-chat ol li::marker,
+.mdc-chat ul li::marker {
+  @apply text-coffee-400;
+}
+
+.mdc-chat strong {
+  @apply font-semibold text-coffee-50;
+}
+
+.mdc-chat code {
+  @apply rounded-sm bg-coffee-700/60 px-1 py-px text-[12px] text-coffee-200;
+}
+
+.mdc-chat pre {
+  @apply rounded-md border border-coffee-700 bg-coffee-800 px-3 py-2 text-[12px];
+}
+
+.mdc-chat pre code {
+  @apply bg-transparent p-0 text-coffee-200;
+}
+
+.mdc-chat h1,
+.mdc-chat h2,
+.mdc-chat h3 {
+  @apply mt-3 mb-1.5 font-bold text-coffee-50;
+}
+
+.mdc-chat h1,
+.mdc-chat h2 {
+  @apply text-sm;
+}
+
+.mdc-chat h3 {
+  @apply text-[13px];
+}
+
+/* The panel is narrow: a wide table scrolls instead of being cut off. */
+.mdc-chat table {
+  @apply mb-2.5 block max-w-full overflow-x-auto;
+}
+
+/* As specific as the .mdc table rules, which would win otherwise. Breaking
+   anywhere would shrink a column to one letter per line, so cells break
+   between words and a wider table scrolls. */
+.mdc.mdc-chat table th,
+.mdc.mdc-chat table td {
+  @apply border-coffee-700 px-1.5 py-1 text-left text-[11px];
+}
+
+.mdc.mdc-chat table tr {
+  @apply border-coffee-700;
 }

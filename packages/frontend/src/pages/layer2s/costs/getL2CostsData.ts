@@ -7,10 +7,16 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
+import { getBadgeLookup } from '~/utils/project/getBadgeWithParams'
 import { optionToRange } from '~/utils/range/range'
 
 export async function getL2CostsData(
-  req: Request<unknown, unknown, unknown, { tab: 'rollups' | 'others' }>,
+  req: Request<
+    unknown,
+    unknown,
+    unknown,
+    { tab: 'rollups' | 'validiumsAndOptimiums' | 'others' }
+  >,
   manifest: Manifest,
   cache: InMemoryCache,
 ): Promise<RenderData> {
@@ -18,7 +24,7 @@ export async function getL2CostsData(
     getAppLayoutProps(),
     cache.get(
       {
-        key: ['layer2s', 'costs', 'data'],
+        key: ['layer2s', 'costs', 'data', req.query.tab],
         ttl: 5 * 60,
         staleWhileRevalidate: 25 * 60,
       },
@@ -45,12 +51,16 @@ export async function getL2CostsData(
         ...appLayoutProps,
         ...data,
         milestones: HOMEPAGE_MILESTONES,
+        badgeLookup: getBadgeLookup(data.entries),
       },
     },
   }
 }
 
-async function getCachedData(cache: InMemoryCache, tab: 'rollups' | 'others') {
+async function getCachedData(
+  cache: InMemoryCache,
+  tab: 'rollups' | 'validiumsAndOptimiums' | 'others',
+) {
   const helpers = getSsrHelpers()
   const [entries, queryState] = await Promise.all([
     getL2CostsEntries(helpers),
@@ -70,7 +80,9 @@ async function getCachedData(cache: InMemoryCache, tab: 'rollups' | 'others') {
   }
 }
 
-async function getQueryState(tab: 'rollups' | 'others') {
+async function getQueryState(
+  tab: 'rollups' | 'validiumsAndOptimiums' | 'others',
+) {
   const helpers = getSsrHelpers()
 
   await helpers.queryClient.prefetchQuery(

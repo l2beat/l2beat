@@ -1,4 +1,4 @@
-import { memo, useState } from 'react'
+import { type KeyboardEvent, memo, useState } from 'react'
 import { Button } from '../../../../components/Button'
 import { Checkbox } from '../../../../components/Checkbox'
 import { Code } from '../../../../components/Code'
@@ -7,6 +7,7 @@ import { Kbd } from '../../../../components/Kbd'
 import { Tabs } from '../../../../components/Tabs'
 import { IconGear } from '../../../../icons/IconGear'
 import { cn } from '../../../../utils/cn'
+import { isEditableTarget } from '../../../../utils/isEditableTarget'
 import { useConfigModels } from '../../hooks/useConfigModels'
 import { ConfigRow } from '../contract-config-dialog/ContractConfigDialog'
 import { DescriptionEditor } from '../contract-config-dialog/DescriptionEditor'
@@ -79,6 +80,11 @@ function FieldConfigBody({ fieldName }: { fieldName: string }) {
       className="flex flex-col overflow-hidden"
       onKeyDown={(event) => {
         if (event.key === 'Escape') {
+          return
+        }
+        // Letters typed into the description or the handler editor are text,
+        // and a modifier makes a key someone else's, like Ctrl+C.
+        if (isEditableTarget(event.target) || hasModifier(event)) {
           return
         }
 
@@ -464,4 +470,8 @@ function getNextSeverity(current: Severity): Severity {
 
 function HotkeyHint({ label }: { label: string }) {
   return <Kbd keys={[[label]]} size="sm" tone="dark" />
+}
+
+function hasModifier(event: KeyboardEvent<HTMLElement>): boolean {
+  return event.ctrlKey || event.metaKey || event.altKey
 }

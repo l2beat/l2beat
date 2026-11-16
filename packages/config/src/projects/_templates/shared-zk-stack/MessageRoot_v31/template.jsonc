@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
+  "category": "shared",
+  "description": "Stores the batch roots of all ZK stack chains and verifies the L2->L1 message, log and L1->L2 transaction status proofs used for withdrawals and failed deposit claims. Batch roots are appended by each chain while it settles on Ethereum; proofs of chains settling on a whitelisted settlement layer are verified recursively through that layer's roots. Batches produced before a chain's v31 upgrade are still verified against the chain's own diamond.",
+  "ignoreMethods": [
+    "chainBatchRoots",
+    "chainIndex",
+    "chainIndexToId",
+    "chainRegistered",
+    "currentChainBatchNumber",
+    "getChainRoot",
+    "getChainTree",
+    "getMerklePathForChain",
+    "historicalRoot",
+    "isPreV31",
+    "v31UpgradeChainBatchNumber"
+  ],
+  "ignoreInWatchMode": [
+    "sharedTree",
+    "getAggregatedRoot",
+    "interopRootLogId",
+    "lastEmitBlock"
+  ],
+  "fields": {
+    "CHAIN_ASSET_HANDLER": {
+      "description": "Decides which settlement layer a chain's batch belongs to when verifying recursive proofs, and registers migrating chains."
+    },
+    "ERA_GATEWAY_CHAIN_ID": {
+      "description": "Chain ID of the legacy Era-based Gateway, whose historical batch roots are kept for chains that settled there before v31."
+    }
+  }
+}

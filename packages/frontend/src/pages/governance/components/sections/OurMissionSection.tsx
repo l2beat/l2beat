@@ -8,9 +8,11 @@ interface Props {
 export function OurMissionSection({ className }: Props) {
   return (
     <GovernanceCard mobileFull className={className}>
-      <div className="text-heading-24 md:text-heading-32">Our mission</div>
+      <h2 className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
+        Our mission
+      </h2>
       <div className="mt-6 text-paragraph-16 md:text-paragraph-15">
-        At L2BEAT we believe that crypto is the new infrastructure for the
+        At ETHBEAT we believe that crypto is the new infrastructure for the
         future financial system. As such, we believe that in order for it to be
         successful, it needs to be:
         <ul className="mt-2 ml-6 list-disc text-paragraph-16 md:text-paragraph-15">
@@ -44,7 +46,7 @@ export function OurMissionSection({ className }: Props) {
           </li>
         </ul>
       </div>
-      <div className="mt-6 flex gap-3 rounded-lg bg-[#F7DEEB] p-4 dark:bg-[#3A1929]">
+      <div className="mt-6 flex gap-3 rounded-lg bg-brand/12 p-4 dark:bg-brand/15">
         <HeartIcon className="shrink-0" />
         <span className="text-balance font-medium text-paragraph-16 md:text-paragraph-15">
           We believe that right now the best ecosystem where those values could

@@ -20,9 +20,11 @@ export interface ToolbarMenuItem {
 
 export function ToolbarMenu(props: {
   label: string
+  icon: ReactNode
   description: string
   disabled?: boolean
   sections: readonly (readonly ToolbarMenuItem[])[]
+  footer?: ReactNode
 }) {
   const [open, setOpen] = useState(false)
 
@@ -35,7 +37,8 @@ export function ToolbarMenu(props: {
           disabled={props.disabled}
           className="pr-1.5 pl-2.5"
         >
-          {props.label}
+          <span className="@max-lg:hidden">{props.label}</span>
+          <span className="@lg:hidden">{props.icon}</span>
           <IconControlChevronDown
             className={cn(
               'shrink-0 text-coffee-400 transition-transform',
@@ -67,6 +70,11 @@ export function ToolbarMenu(props: {
             ))}
           </div>
         ))}
+        {props.footer && (
+          <div className="mt-1 border-coffee-700 border-t pt-1">
+            {props.footer}
+          </div>
+        )}
       </PopoverContent>
     </Popover>
   )

@@ -1,5 +1,4 @@
-import type { Project } from '@l2beat/config'
-import type { DataAvailabilityRecord } from '@l2beat/database'
+import type { BucketedDataAvailabilityRecord } from '@l2beat/database'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
 import { getDb } from '~/server/database'
@@ -9,7 +8,6 @@ import { getChartStartTimestamp } from '../../utils/getChartStartTimestamp'
 import type { ProjectDaThroughputChartParams } from './getProjectDaThroughputChart'
 import { isThroughputSynced } from './isThroughputSynced'
 import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
-import { sumByResolutionAndProject } from './utils/sumByResolutionAndProject'
 
 export type DaThroughputChartDataPoint = [
   timestamp: number,
@@ -36,9 +34,10 @@ export async function getDaThroughputChartByProjectData({
     daLayer?.daLayer.sovereignProjectsTrackingConfig?.map((p) => p.projectId)
 
   const [throughput, firstTimestamp] = await Promise.all([
-    db.dataAvailability.getByDaLayersAndTimeRange(
+    db.dataAvailability.getSummedByProjectAndBucket(
       [projectId],
       range,
+      UnixTime.periodToSeconds(resolution),
       includeL2Only ? sovereignProjectIds : undefined,
     ),
     db.dataAvailability.getFirstTimestampByDaLayers(
@@ -51,21 +50,20 @@ export async function getDaThroughputChartByProjectData({
     return undefined
   }
 
-  const syncedUntil = throughput.at(-1)?.timestamp
-  assert(syncedUntil, 'syncedUntil is undefined')
+  const syncedUntil = getLatestTimestamp(throughput)
 
-  const sovereignProjects = new Map(
-    daLayer?.daLayer.sovereignProjectsTrackingConfig?.map((p) => [
-      p.projectId,
-      p.name,
-    ]) ?? [],
-  )
+  // Later entries win, so a tracked project's name beats a sovereign one.
+  const projectNames = new Map<string, string>([
+    ...(daLayer?.daLayer.sovereignProjectsTrackingConfig?.map(
+      (p) => [p.projectId, p.name] as const,
+    ) ?? []),
+    ...allProjects.map((p) => [p.id, p.name] as const),
+  ])
 
   const { grouped, minTimestamp, maxTimestamp } = groupByTimestampAndProjectId(
     throughput,
-    allProjects,
+    projectNames,
     resolution,
-    sovereignProjects,
     includeL2Only,
   )
 
@@ -98,11 +96,20 @@ export async function getDaThroughputChartByProjectData({
   }
 }
 
+function getLatestTimestamp(records: BucketedDataAvailabilityRecord[]) {
+  let latest = Number.NEGATIVE_INFINITY
+  for (const record of records) {
+    latest = Math.max(latest, record.latestTimestamp)
+  }
+  assert(Number.isFinite(latest), 'syncedUntil is undefined')
+  return UnixTime(latest)
+}
+
+// Records are already summed per project and bucket by the database.
 function groupByTimestampAndProjectId(
-  records: DataAvailabilityRecord[],
-  allProjects: Project[],
+  records: BucketedDataAvailabilityRecord[],
+  projectNames: Map<string, string>,
   resolution: ChartResolution,
-  sovereignProjects: Map<ProjectId, string>,
   includeL2Only: boolean,
 ) {
   let minTimestamp = Number.POSITIVE_INFINITY
@@ -110,25 +117,18 @@ function groupByTimestampAndProjectId(
   const result: Record<number, Record<string, number>> = {}
 
   const offset = UnixTime.toStartOf(UnixTime.now(), resolution)
-  const fullySyncedRecords = records.filter((r) => r.timestamp < offset)
+  const fullySyncedRecords = records.filter((r) => r.bucketStart < offset)
 
   const [daLayerRecords, projectRecords] = partition(
     fullySyncedRecords,
     (r) => r.daLayer === r.projectId,
   )
 
-  const summedProjectsByDay = sumByResolutionAndProject(
-    projectRecords,
-    resolution,
-  )
-
-  for (const record of summedProjectsByDay) {
-    const timestamp = record.timestamp
+  for (const record of projectRecords) {
+    const timestamp = record.bucketStart
     const value = record.totalSize
 
-    const projectName =
-      allProjects.find((p) => p.id === record.projectId)?.name ??
-      sovereignProjects.get(record.projectId as ProjectId)
+    const projectName = projectNames.get(record.projectId)
     assert(projectName, `Project ${record.projectId} not found`)
 
     if (result[timestamp]) {
@@ -145,12 +145,8 @@ function groupByTimestampAndProjectId(
 
   if (!includeL2Only) {
     // Add the difference between the total size and the sum of the other projects as 'Unknown'
-    const summedDaLayerByDay = sumByResolutionAndProject(
-      daLayerRecords,
-      resolution,
-    )
-    for (const record of summedDaLayerByDay) {
-      const timestamp = record.timestamp
+    for (const record of daLayerRecords) {
+      const timestamp = record.bucketStart
       const value = record.totalSize
       const restSummed = Object.values(result[timestamp] ?? {}).reduce(
         (acc, curr) => acc + curr,

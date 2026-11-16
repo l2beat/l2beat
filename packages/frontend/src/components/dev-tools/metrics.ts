@@ -13,7 +13,7 @@ export function getDevToolsMetrics(sizeMetrics: SizeMetrics): DevToolsMetric[] {
       label: 'SSR JSON',
       value: formatBytes(sizeMetrics.ssrDataBytes),
       description:
-        'Byte size of JSON.stringify(window.__SSR_DATA__). Raw/minified SSR props payload.',
+        'Byte size of the SSR data, re-serialized with JSON.stringify. Raw/minified SSR props payload.',
     },
     {
       label: 'DOM HTML',

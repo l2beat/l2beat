@@ -185,7 +185,7 @@ function ModifierButton({
   return (
     <button
       className={cn(
-        'cursor-pointer font-medium text-brand text-label-value-15 underline',
+        'cursor-pointer font-medium text-brand-deep text-label-value-15 underline',
         className,
         disabled && 'text-secondary',
       )}

@@ -7,7 +7,7 @@ import {
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { getZkStackDaTracking, zkStackL2 } from '../../templates/zkStack'
+import { zkStackL2 } from '../../templates/zkStack'
 
 const discovery = new ProjectDiscovery('zeronetwork')
 const archivedAt = UnixTime(1786523999) // 2026-08-12T08:39:59Z (last L2 block)
@@ -84,9 +84,19 @@ export const zeronetwork: ScalingProject = zkStackL2({
         EthereumAddress('0x7b55c1D9b75Fa35793157aD674b0a1aEF7b8DdE0'),
       ],
     },
-    getZkStackDaTracking(discovery, {
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
       sinceBlock: 25482106, // v29 upgrade
-    }),
+      // The shared ValidatorTimelock was upgraded in this block (tx 0xdc4278c8…). ZERO Network's validators were
+      // never granted their roles on the new implementation, so the chain has no validator since: closed, not replaced.
+      untilBlock: 26097469,
+      inbox: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
+      sequencers: [
+        EthereumAddress('0xef854E09fa6e281268e1051D4d5465d8c92862ee'),
+        EthereumAddress('0x7b55c1D9b75Fa35793157aD674b0a1aEF7b8DdE0'),
+      ],
+    },
   ],
   nonTemplateTrackedTxs: [
     {

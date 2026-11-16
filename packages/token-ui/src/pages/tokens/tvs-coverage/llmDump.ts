@@ -32,7 +32,7 @@ const DEFINITIONS = {
   supplyChange:
     "How the total supply read for the row (the token itself for chain rows, the minted copy for escrow rows) changed since `since`, about 7 days before the snapshot. The earlier supply is read on chain at the last block before `since`. netMintedByBridge is what each interop plugin's transfers of that token on that chain minted minus burned since then. unexplained = amount - the sum of netMintedByBridge: positive values point to native issuance, an untracked bridge, or a minter missing from the interop configs, but also come from recent mints interop has not captured or matched yet; negative values also come from withdrawals interop has not matched yet: it records a withdrawal only when it finalizes on the destination, which for OP stack and Arbitrum comes a week or more after the burn, so their burns within the window are missing. unknownTransfers counts transfers that do not say whether they minted or burned, so the split is incomplete when it is above 0. Null when either supply could not be read, for example when the token did not exist yet at `since`.",
   interop:
-    'Volume and transfer counts are summed over the interop window, per bridge, from transfers L2BEAT matched to this token. lastSeen is the end of the last UTC day with a transfer.',
+    'Volume and transfer counts are summed over the interop window, per bridge, from transfers ETHBEAT matched to this token. lastSeen is the end of the last UTC day with a transfer.',
   warnings:
     'Problems while building the snapshot, such as a chain whose RPC could not be read. Rows on such a chain have no amount.',
 }
@@ -42,7 +42,7 @@ export function toJsonDump(rows: Row[], snapshot: Snapshot, names: Names) {
   const projects = new Map(snapshot.projects.map((p) => [p.id, p]))
   return JSON.stringify(
     {
-      source: 'L2BEAT token-ui TVS gaps',
+      source: 'ETHBEAT token-ui TVS gaps',
       snapshotAt: iso(snapshot.generatedAt),
       interopWindow: {
         days: snapshot.window.days,

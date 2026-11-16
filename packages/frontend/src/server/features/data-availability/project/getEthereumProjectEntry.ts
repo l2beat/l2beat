@@ -34,10 +34,8 @@ export interface EthereumProjectPageEntry {
     maxThroughputPerSecond: number | undefined
     usedIn: UsedInProjectWithIcon[]
     bridgeName: string
-    callout: {
-      title: string
-      description: string
-    }
+    /** Why the bridge needs no committee; the DA Bridge stat tooltip. */
+    bridgeTooltip: string | undefined
     numberOfValidators: number | undefined
   }
   sections: ProjectDetailsSection[]
@@ -115,10 +113,10 @@ export async function getEthereumProjectEntry(
         : undefined,
       usedIn: usedInByTvsDesc,
       bridgeName: ethereum.daBridge.name,
-      callout: {
-        title: ethereum.daBridge.name,
-        description: ethereum.daBridge.risks.callout ?? '',
-      },
+      // The source markdown is hard-wrapped; a tooltip and a list item need one line.
+      bridgeTooltip: ethereum.daBridge.risks.callout
+        ?.replace(/\s+/g, ' ')
+        .trim(),
       numberOfValidators: validators,
     },
     sections,

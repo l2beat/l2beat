@@ -1,0 +1,31 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
+  "category": "shared",
+  "description": "Contract responsible for bookkeeping L1 bridging transactions. Used to finalize withdrawals and reclaim failed deposits, verifying the proofs through the MessageRoot since v31. Does not escrow funds.",
+  "ignoreMethods": [
+    "__DEPRECATED_admin",
+    "__DEPRECATED_chainBalance",
+    "__DEPRECATED_l2BridgeAddress",
+    "__DEPRECATED_pendingAdmin",
+    "chainBalance",
+    "getTransientSettlementLayer",
+    "l2BridgeAddress"
+  ],
+  "ignoreRelatives": ["legacyBridge"],
+  "fields": {
+    "owner": {
+      "severity": "MEDIUM",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause, unpause and set critical escrow address references."
+        }
+      ]
+    },
+    "paused": { "severity": "MEDIUM" },
+    "l1AssetRouter": { "severity": "HIGH" },
+    "l1NativeTokenVault": { "severity": "HIGH" },
+    "legacyBridge": { "severity": "HIGH" }
+  }
+}

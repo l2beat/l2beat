@@ -1,31 +1,29 @@
 import type { Milestone } from '@l2beat/config'
 import { formatCurrency } from '@l2beat/shared-pure'
-import { Area, AreaChart } from 'recharts'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type {
   ChartMeta,
   ChartProject,
-  CustomChartTooltipProps,
-} from '~/components/core/chart/Chart'
+} from '~/components/core/chart/ChartContext'
 import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
+  ChartTooltipRow,
   ChartTooltipWrapper,
-  useChart,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
-import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import {
-  PinkFillGradientDef,
-  PinkStrokeGradientDef,
-} from '~/components/core/chart/defs/PinkGradientDef'
+  getTooltipEntries,
+} from '~/components/core/chart/ChartTooltip'
+import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
+import { tinted } from '~/components/core/chart/tint'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { formatTimestamp } from '~/utils/dates'
+import { formatStakedEthShare } from '~/pages/defi/liquid-staking/liquidStakingMetrics'
+import { formatSnapshotTimestamp } from '~/utils/dates'
+import type { ChartResolution } from '~/utils/range/range'
 
 interface TvsValueChartDataPoint {
   timestamp: number
   value: number | null
+  /** USD value of the ETH staked network-wide, drawn behind the TVL. */
+  ethStakedUsd?: number | null
+  /** The TVL at the protocol's rate, as a fraction of the ETH staked. */
+  stakedEthShare?: number | null
 }
 
 interface Props {
@@ -33,14 +31,28 @@ interface Props {
   syncedUntil: number | undefined
   isLoading: boolean
   isPlaceholderData: boolean
+  resolution: ChartResolution
   project?: ChartProject
   milestones?: Milestone[]
+  /** Draws `ethStakedUsd`, which the TVL is a part of. */
+  withEthStaked?: boolean
 }
 
-const chartMeta = {
+type Key = 'value' | 'ethStakedUsd'
+
+const valueMeta = {
   value: {
     label: 'TVL',
     color: 'var(--chart-pink)',
+    indicatorType: { shape: 'line' },
+  },
+} satisfies ChartMeta
+
+const withEthStakedMeta = {
+  ...valueMeta,
+  ethStakedUsd: {
+    label: 'Total ETH staked',
+    color: 'var(--chart-ethereum-secondary)',
     indicatorType: { shape: 'line' },
   },
 } satisfies ChartMeta
@@ -50,89 +62,89 @@ export function TvsValueChart({
   syncedUntil,
   isLoading,
   isPlaceholderData,
+  resolution,
   project,
   milestones,
+  withEthStaked,
 }: Props) {
+  // The total first, so the TVL is drawn over it
+  const keys: Key[] = withEthStaked ? ['ethStakedUsd', 'value'] : ['value']
+  const meta = withEthStaked ? withEthStakedMeta : valueMeta
   return (
     <ChartContainer
       isPlaceholderData={isPlaceholderData}
       data={data}
-      meta={chartMeta}
+      meta={meta}
       isLoading={isLoading}
       project={project}
       milestones={milestones}
+      legend
+      // A single key under a left-aligned section title (DESIGN.md: legends
+      // under left titles stay left)
+      legendAlign="start"
     >
-      <AreaChart responsive data={data} margin={{ top: 20 }}>
-        <defs>
-          <PinkFillGradientDef id="tvs-value-fill" />
-          <PinkStrokeGradientDef id="tvs-value-stroke" />
-        </defs>
-        <Area
-          dataKey="value"
-          fill="url(#tvs-value-fill)"
-          fillOpacity={1}
-          stroke="url(#tvs-value-stroke)"
-          isAnimationActive={false}
-        />
-        <ChartTooltip filterNull={false} content={<TvsValueChartTooltip />} />
-        <ChartCommonComponents
-          data={data}
-          isLoading={isLoading}
-          yAxis={{
-            tickCount: 4,
-            tickFormatter: (value) => formatCurrency(Number(value), 'usd'),
-          }}
-          syncedUntil={syncedUntil}
-        />
-        <ChartLegend content={<ChartLegendContent />} />
-      </AreaChart>
+      <TimeSeriesChart
+        data={data}
+        ariaLabel="Value secured"
+        series={keys.map((key) => ({
+          key,
+          ...tinted(withEthStakedMeta[key].color),
+        }))}
+        yAxis={{
+          tickCount: 4,
+          format: (value) => formatCurrency(value, 'usd'),
+        }}
+        syncedUntil={syncedUntil}
+        renderTooltip={(row, keys) => (
+          <TvsValueChartTooltip row={row} keys={keys} resolution={resolution} />
+        )}
+      />
     </ChartContainer>
   )
 }
 
-function TvsValueChartTooltip({ payload, label }: CustomChartTooltipProps) {
-  const { meta } = useChart()
-  if (!payload || typeof label !== 'number') return null
+function TvsValueChartTooltip({
+  row,
+  keys,
+  resolution,
+}: {
+  row: TvsValueChartDataPoint
+  keys: Key[]
+  resolution: ChartResolution
+}) {
+  // The TVL first, then the total it is a part of
+  const payload = getTooltipEntries(row, keys).reverse()
+  const share = keys.includes('ethStakedUsd') ? row.stakedEthShare : undefined
 
   return (
     <ChartTooltipWrapper>
       <div className="font-medium text-label-value-14 text-secondary">
-        {formatTimestamp(label, {
-          mode: 'datetime',
-        })}
+        {formatSnapshotTimestamp(row.timestamp, resolution)}
       </div>
       <HorizontalSeparator className="my-2" />
       <div className="flex flex-col gap-2">
-        {payload.map((entry) => {
-          if (entry.name === undefined || entry.hide || entry.type === 'none') {
-            return null
-          }
-
-          const config = meta[entry.name]
-          if (!config) return null
-
-          return (
-            <div
-              key={entry.name}
-              className="flex items-center justify-between gap-x-6"
-            >
-              <div className="flex items-center gap-1">
-                <ChartDataIndicator
-                  type={config.indicatorType}
-                  backgroundColor={config.color}
-                />
-                <span className="font-medium text-label-value-14">
-                  {config.label}
-                </span>
-              </div>
-              <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                {entry.value === null || entry.value === undefined
-                  ? 'No data'
-                  : formatCurrency(Number(entry.value), 'usd')}
-              </span>
-            </div>
-          )
-        })}
+        {payload.map((entry) => (
+          <ChartTooltipRow
+            key={entry.name}
+            name={entry.name}
+            gap="gap-x-6"
+            wrapLabel={false}
+          >
+            <span className="font-medium text-label-value-15 text-primary tabular-nums">
+              {entry.value === null
+                ? 'No data'
+                : formatCurrency(entry.value, 'usd')}
+              {entry.name === 'value' &&
+                entry.value !== null &&
+                share != null && (
+                  <span className="text-secondary">
+                    {' '}
+                    ({formatStakedEthShare(share)})
+                  </span>
+                )}
+            </span>
+          </ChartTooltipRow>
+        ))}
       </div>
     </ChartTooltipWrapper>
   )

@@ -1,4 +1,4 @@
-import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
+import { formatCount, formatCurrency } from '@l2beat/shared-pure'
 import type { ReactNode } from 'react'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import type {
@@ -64,7 +64,7 @@ export function TokenRow({
               snapshotTimestamp={transfer.snapshotTimestamp}
               className="cursor-pointer font-medium text-secondary hover:underline"
             >
-              {formatInteger(token.transferCount)} txs
+              {formatCount(token.transferCount, 'tx')}
             </InteropTransferTrigger>
           )
         }
@@ -104,7 +104,7 @@ export function ChainPathRow({
             snapshotTimestamp={transfer.snapshotTimestamp}
             className="cursor-pointer font-medium text-secondary hover:underline"
           >
-            {formatInteger(path.transferCount)} txs
+            {formatCount(path.transferCount, 'tx')}
           </InteropTransferTrigger>
         }
       />
@@ -125,7 +125,7 @@ export function RowStats({
     <div className="flex items-baseline gap-1.5 whitespace-nowrap text-paragraph-14">
       {txsTrigger ?? (
         <span className="font-medium text-secondary">
-          {formatInteger(transferCount)} txs
+          {formatCount(transferCount, 'tx')}
         </span>
       )}
       <span className="font-bold">

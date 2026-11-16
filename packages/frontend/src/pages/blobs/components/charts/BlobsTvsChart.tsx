@@ -1,41 +1,30 @@
-import { formatCurrency, UnixTime } from '@l2beat/shared-pure'
+import { formatCurrency } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
-import { AreaChart } from 'recharts'
-import { tvsRangeToReadable } from '~/components/chart/tvs/tvsRangeToReadable'
-import type {
-  ChartMeta,
-  CustomChartTooltipProps,
-} from '~/components/core/chart/Chart'
+import { ChartCardHeader } from '~/components/chart/ChartCardHeader'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
+import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
+  ChartTooltipRow,
+  ChartTooltipValue,
   ChartTooltipWrapper,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
-import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import {
-  EthereumFillGradientDef,
-  EthereumStrokeGradientDef,
-} from '~/components/core/chart/defs/EthereumGradientDef'
-import {
-  YellowFillGradientDef,
-  YellowStrokeGradientDef,
-} from '~/components/core/chart/defs/YellowGradientDef'
+  getTooltipEntries,
+  sumEntries,
+} from '~/components/core/chart/ChartTooltip'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
-import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
+import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
+import { tinted } from '~/components/core/chart/tint'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { Skeleton } from '~/components/core/Skeleton'
-import { PercentChange } from '~/components/PercentChange'
-import { ChevronIcon } from '~/icons/Chevron'
 import type { DaTvsProjectIds } from '~/server/features/data-availability/summary/getDaTvsProjectIds'
 import { useTRPC } from '~/trpc/React'
-import { formatTimestamp } from '~/utils/dates'
-import { type ChartRange, optionToRange } from '~/utils/range/range'
+import { formatSnapshotTimestamp } from '~/utils/dates'
+import {
+  type ChartResolution,
+  optionToRange,
+  rangeToResolution,
+} from '~/utils/range/range'
 import { getTvsSeriesStats, type TvsSeriesStats } from './getTvsSeriesStats'
-import { mergeTvsSeries } from './mergeTvsSeries'
+import { mergeTvsSeries, type TvsSeriesPoint } from './mergeTvsSeries'
 
 const chartMeta = {
   fullData: {
@@ -95,7 +84,7 @@ export function BlobsTvsChart({ projectIds }: { projectIds: DaTvsProjectIds }) {
 
   return (
     <div className="flex flex-col gap-4 lg:contents">
-      <Header stats={stats} isLoading={isLoading} range={range} />
+      <Header stats={stats} isLoading={isLoading} />
       <ChartContainer
         isPlaceholderData={false}
         meta={chartMeta}
@@ -106,71 +95,59 @@ export function BlobsTvsChart({ projectIds }: { projectIds: DaTvsProjectIds }) {
           onItemClick: toggleDataKey,
           disableOnboarding: true,
         }}
+        legend
       >
-        <AreaChart
-          responsive
+        <TimeSeriesChart
           data={chartData}
-          // Without right:1 the chart last point is not hoverable for some reason
-          margin={{ top: 20, right: 1, left: 0, bottom: 0 }}
-        >
-          <defs>
-            <EthereumFillGradientDef id="full-data-fill" />
-            <EthereumStrokeGradientDef id="full-data-stroke" />
-            <YellowFillGradientDef id="settlement-only-fill" />
-            <YellowStrokeGradientDef id="settlement-only-stroke" />
-          </defs>
-          <ChartLegend content={<ChartLegendContent />} />
-          <ChartStrokeOverFillAreaComponents
-            data={[
-              {
-                dataKey: 'fullData',
-                stroke: 'url(#full-data-stroke)',
-                fill: 'url(#full-data-fill)',
-                hide: !dataKeys.includes('fullData'),
-              },
-              {
-                dataKey: 'settlementOnly',
-                stroke: 'url(#settlement-only-stroke)',
-                fill: 'url(#settlement-only-fill)',
-                hide: !dataKeys.includes('settlementOnly'),
-              },
-            ]}
-          />
-          <ChartCommonComponents
-            data={chartData}
-            isLoading={isLoading}
-            yAxis={{
-              domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
-              tickFormatter: (value: number) => formatCurrency(value, 'usd'),
-            }}
-            syncedUntil={syncedUntil}
-          />
-          <ChartTooltip content={<CustomTooltip />} filterNull={false} />
-        </AreaChart>
+          ariaLabel="L2s value secured"
+          series={[
+            {
+              key: 'fullData',
+              ...tinted(chartMeta.fullData.color),
+            },
+            {
+              key: 'settlementOnly',
+              ...tinted(chartMeta.settlementOnly.color),
+            },
+          ]}
+          yAxis={{
+            domain: 'autoIfSingle',
+            format: (value) => formatCurrency(value, 'usd'),
+          }}
+          syncedUntil={syncedUntil}
+          renderTooltip={(row, keys) => (
+            <CustomTooltip
+              row={row}
+              keys={keys}
+              resolution={rangeToResolution(range)}
+            />
+          )}
+        />
       </ChartContainer>
     </div>
   )
 }
 
-function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
-  if (!payload || typeof label !== 'number') return null
+type SeriesKey = keyof typeof chartMeta
 
-  const validPayload = payload.filter((p) => p.type !== 'none' && !p.hide)
-  const total = validPayload.reduce<number | null>((acc, curr) => {
-    if (curr.value === null || curr.value === undefined) return acc
-    return (acc ?? 0) + curr.value
-  }, null)
-  const isFullDay = UnixTime.isFull(UnixTime(label), 'day')
+function CustomTooltip({
+  row,
+  keys,
+  resolution,
+}: {
+  row: TvsSeriesPoint
+  keys: SeriesKey[]
+  resolution: ChartResolution
+}) {
+  const label = row.timestamp
+  const validPayload = getTooltipEntries(row, keys)
+  const total = sumEntries(validPayload)
 
   return (
     <ChartTooltipWrapper>
       <div className="flex w-[180px]! flex-col [@media(min-width:600px)]:w-60!">
         <div className="font-medium text-label-value-14 text-secondary">
-          {isFullDay
-            ? formatTimestamp(label)
-            : formatTimestamp(label, {
-                mode: 'datetime',
-              })}
+          {formatSnapshotTimestamp(label, resolution)}
         </div>
         {validPayload.length > 1 && (
           <>
@@ -188,27 +165,18 @@ function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
         )}
         <div className="mt-2 flex flex-col gap-2">
           {validPayload.map((entry) => {
-            const config = chartMeta[entry.name as keyof typeof chartMeta]
             return (
-              <div
+              <ChartTooltipRow
                 key={entry.name}
-                className="flex items-center justify-between gap-x-1"
+                name={entry.name}
+                gap="gap-x-1"
+                wrapLabel={false}
               >
-                <span className="flex items-center gap-1">
-                  <ChartDataIndicator
-                    backgroundColor={config.color}
-                    type={config.indicatorType}
-                  />
-                  <span className="font-medium text-label-value-14">
-                    {config.label}
-                  </span>
-                </span>
-                <span className="whitespace-nowrap font-medium text-label-value-15">
-                  {entry.value !== null && entry.value !== undefined
-                    ? formatCurrency(entry.value, 'usd')
-                    : 'No data'}
-                </span>
-              </div>
+                <ChartTooltipValue
+                  value={entry.value}
+                  format={(value) => formatCurrency(value, 'usd')}
+                />
+              </ChartTooltipRow>
             )
           })}
         </div>
@@ -220,57 +188,22 @@ function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
 function Header({
   stats,
   isLoading,
-  range,
 }: {
   stats: TvsSeriesStats | undefined
   isLoading: boolean
-  range: ChartRange
 }) {
   return (
-    <div className="flex items-start justify-between gap-2">
-      <a
-        href="/layer2s/tvs"
-        className="group flex items-center gap-1.5 whitespace-nowrap font-bold text-xl"
-      >
-        <span className="underline-offset-4 group-hover:underline">
-          L2s Value Secured
-        </span>
-        <ChevronIcon
-          aria-hidden
-          className="-rotate-90 size-3 fill-current transition-transform group-hover:translate-x-0.5"
-        />
-      </a>
-      <div className="flex flex-col items-end">
-        {isLoading ? (
-          // the total and its change, as tall as their lines, 30 and 14 px,
-          // and wrapping where they would, so the header keeps its height
-          // when the numbers come
-          <div className="flex flex-wrap items-baseline justify-end gap-x-1.5">
-            <Skeleton className="my-[5px] h-5 w-20" />
-            <Skeleton className="my-px h-3 w-24" />
-          </div>
-        ) : stats === undefined ? (
-          <span className="whitespace-nowrap font-bold text-xl">No data</span>
-        ) : (
-          // the change drops under the total where there is no room beside it,
-          // set tight there so the header grows no taller than its title
-          <div className="flex flex-wrap items-baseline justify-end gap-x-1.5">
-            <span className="whitespace-nowrap font-bold text-xl">
-              {formatCurrency(stats.total, 'usd')}
-            </span>
-            <span className="whitespace-nowrap text-xs leading-none">
-              <PercentChange
-                value={stats.change}
-                textClassName="leading-none"
-              />
-              <span className="text-secondary">
-                {' '}
-                / {tvsRangeToReadable(range)}
-              </span>
-            </span>
-          </div>
-        )}
-      </div>
-    </div>
+    <ChartCardHeader
+      title="L2s value secured"
+      link={{ href: '/layer2s/tvs', label: 'All projects' }}
+      isLoading={isLoading}
+      value={stats && formatCurrency(stats.total, 'usd')}
+      change={stats?.change}
+      rangeLabel="1y"
+      meta={
+        !isLoading &&
+        stats === undefined && <span className="text-secondary">No data</span>
+      }
+    />
   )
 }

@@ -2,7 +2,6 @@ import type { UnixTime } from '@l2beat/shared-pure'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { SectionNavigation } from '~/components/section-navigation/SectionNavigation'
 import { StickyMobileSectionNavigation } from '~/components/section-navigation/StickyMobileSectionNavigation'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
@@ -47,7 +46,7 @@ export function MonthlyUpdatePage({ entry, ...props }: Props) {
             <div>
               <div className="flex items-baseline gap-2">
                 <PublicationTag tag="monthly-update" />
-                <p className="text-brand text-subtitle-12 uppercase">
+                <p className="text-brand-deep text-subtitle-12 uppercase">
                   Published on {entry.publishedOn}
                 </p>
               </div>
@@ -79,7 +78,6 @@ export function MonthlyUpdatePage({ entry, ...props }: Props) {
             </div>
           </div>
         </div>
-        <ScrollToTopButton />
       </SideNavLayout>
     </AppLayout>
   )

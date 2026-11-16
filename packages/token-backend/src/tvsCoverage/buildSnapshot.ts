@@ -189,7 +189,7 @@ export async function buildSnapshot(
 }
 
 function iconUrl(slug: string) {
-  return `https://l2beat.com/icons/${slug}.png`
+  return `https://ethbeat.org/icons/${slug}.png`
 }
 
 function countBy<T, K extends string>(

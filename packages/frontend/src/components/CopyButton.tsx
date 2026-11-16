@@ -41,6 +41,7 @@ export function CopyButton({
     <Tooltip>
       <TooltipTrigger
         className={cn(className)}
+        aria-label={copied ? 'Copied' : copyText}
         onClick={(event) => {
           event.preventDefault()
           copyToClipboard()

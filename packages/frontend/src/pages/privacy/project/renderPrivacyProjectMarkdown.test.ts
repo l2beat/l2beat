@@ -23,7 +23,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     const markdown = renderPrivacyProjectMarkdown(ENTRY)
 
     expect(markdown).toMatchRegex(
-      /^# Tornado Cash\n\nMarkdown version of https:\/\/l2beat\.com\/privacy\/projects\/tornado-cash\n\n/,
+      /^# Tornado Cash\n\nMarkdown version of https:\/\/ethbeat\.org\/privacy\/projects\/tornado-cash\n\n/,
     )
   })
 
@@ -31,17 +31,38 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     const summary = getSection(renderPrivacyProjectMarkdown(ENTRY), 'Summary')
 
     expect(summary).toInclude(
-      '- Total Value Locked: $412.00 M (+1.50% compared to seven days ago)',
+      '- Value locked: $412.00 M (+1.50% compared to seven days ago)',
       '- Assets tracked: 1',
       '- Buckets tracked: 2',
-      '- Deposits 7D: 120 (-3.00% compared to the previous seven days)',
-      '- Deposits 30D: 540',
-      '- Deposits Total: 98.00 K',
-      '- Active Relayers 30D: 7',
+      '- Deposits 7d: 120 (-3.00% compared to the previous seven days)',
+      '- Deposits 30d: 540',
+      '- Deposits total: 98.00 K',
+      '- Active relayers 30d: 7',
       '- Tracked on: Ethereum, BNB Smart Chain',
       '- Attributes: ZK, Fixed amounts',
-      '- Reference app: Classic app (most private of 2 checked)',
+      '- Reference app: Classic app (pinned, reproducible, most private of 2 checked)',
       'Tornado Cash is a non-custodial mixer.',
+    )
+  })
+
+  it('names the scaling projects the protocol runs on', () => {
+    const summary = getSection(
+      renderPrivacyProjectMarkdown({
+        ...ENTRY,
+        scalingProjects: [
+          {
+            id: 'aztecnetwork',
+            name: 'Aztec Network',
+            iconUrl: '/icons/aztecnetwork.png',
+          },
+        ],
+      }),
+      'Summary',
+    )
+
+    expect(summary).toInclude(
+      '- Tracked on: Ethereum, BNB Smart Chain',
+      '- Runs on: Aztec Network',
     )
   })
 
@@ -59,7 +80,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     expect(summary).toInclude(
       '- Metrics: Not tracked. Data tracking is not available for this project.',
     )
-    expect(summary).not.toInclude('Total Value Locked')
+    expect(summary).not.toInclude('Value locked')
     expect(summary).not.toInclude('Deposits')
   })
 
@@ -69,10 +90,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
       'Summary',
     )
 
-    expect(summary).toInclude(
-      '- Total Value Locked: N/A',
-      '- Deposits 30D: 540',
-    )
+    expect(summary).toInclude('- Value locked: N/A', '- Deposits 30d: 540')
   })
 
   it('leads the warnings with the under review banner', () => {
@@ -158,7 +176,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
       '**Warning:** The relayer list is curated.',
     )
     expect(summary.indexOf('**Warning:**')).toBeLessThan(
-      summary.indexOf('- Total Value Locked:'),
+      summary.indexOf('- Value locked:'),
     )
   })
 
@@ -170,6 +188,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     expect(headings).toEqual([
       '## Summary',
       '## Privacy',
+      '## How to stay private',
       '## Value Locked',
       '## Anonymity sets',
       '## Flows',
@@ -182,10 +201,10 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     const markdown = renderPrivacyProjectMarkdown(ENTRY)
 
     expect(getSection(markdown, 'Anonymity sets')).toInclude(
-      'https://l2beat.com/privacy/projects/tornado-cash#privacy-anonymity-set',
+      'https://ethbeat.org/privacy/projects/tornado-cash#privacy-anonymity-set',
     )
     expect(getSection(markdown, 'Flows')).toInclude(
-      'https://l2beat.com/privacy/projects/tornado-cash#privacy-flows',
+      'https://ethbeat.org/privacy/projects/tornado-cash#privacy-flows',
     )
   })
 
@@ -222,7 +241,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
 
     it('lists the reference app, then each checked app with its finding and fix', () => {
       expect(privacy()).toInclude(
-        '**Apps**\n\n- **[Classic app](https://tornado.example)** (Reference): The ratings assume this app, since 2026-10-13 · Source [17c54da](https://github.com/tornado-dao/classic-ui/tree/17c54dae9ad91bb3c6d62a7860df6cd365ab76d4)\n- **Mirror app** (Leaks more): Reads every note through a hosted indexer. Fix: Scan notes locally. · [Source (checked 2026-10-22)](https://mirror.example)\n\n[How we pick the reference](https://l2beat.com/publications/privacy-methodology#reference-app)',
+        '**Apps**\n\n- **[Classic app](https://tornado.example)** (Reference): The ratings assume this app, since 2026-10-13 · Source [17c54da](https://github.com/tornado-dao/classic-ui/tree/17c54dae9ad91bb3c6d62a7860df6cd365ab76d4) · Pinned: Every user can get the build we reviewed and check its hash or contract address against ours. · Reproducible: A rebuild of the public source gives the same app. · [Build recipe](https://recipe.example) · IPFS hash: bafybeigduniojgqrz7e4vntsgmovdli3oi7a2pnzzvz2gfxlvj3yqwk75a\n- **Mirror app** (Leaks more): Reads every note through a hosted indexer. Fix: Scan notes locally. · [Source (checked 2026-10-22)](https://mirror.example)\n\n[How we pick the reference](https://ethbeat.org/publications/privacy-methodology#reference-app)',
       )
     })
 
@@ -240,6 +259,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
                     ...closedApp,
                     build: '99da543',
                     checked: '2026-10-22',
+                    delivery: { type: 'hosted' },
                   },
                 },
               }
@@ -247,14 +267,36 @@ describe(renderPrivacyProjectMarkdown.name, () => {
         ),
       })
       expect(getSection(markdown, 'Privacy')).toInclude(
-        '(Reference): The ratings assume this app, since 2026-10-13 · Closed source, build 99da543, checked 2026-10-22',
+        "(Reference): The ratings assume this app, since 2026-10-13 · Closed source, build 99da543, checked 2026-10-22 · Hosted: The website serves the code at each visit and can change it at any time, even for one user alone. · Closed: The source is not public, so our review rests on the app's observed behaviour.\n",
       )
     })
 
     it('grades the promise against each adversary and says why', () => {
       expect(privacy()).toInclude(
-        '### Chain analyst\n\nLink at risk (sentiment: warning)\n\n**Who:** Correlates all public data. Examples: Chain analytics firms.\n\nTiming narrows the anonymity set.\n\n**Advice:** Wait before withdrawing.',
+        '### Chain analyst\n\nLink at risk (sentiment: warning)\n\n**Who:** Correlates all public data. Examples: Chain analytics firms.\n\nTiming narrows the anonymity set.',
       )
+    })
+
+    it('links the advice once, which lists each step with the adversaries it defends', () => {
+      expect(privacy()).toInclude(
+        '**Advice:** How to stay private, the next section.',
+      )
+      expect(privacy()).not.toInclude('**Advice:** Wait')
+      expect(
+        getSection(renderPrivacyProjectMarkdown(ENTRY), 'How to stay private'),
+      ).toInclude(
+        '1. **Wait.** Wait before withdrawing. Draw the wait once, at random between 0 and 30 days, the window the anonymity set counts. Against: Chain analyst.',
+      )
+    })
+
+    it('links each adversary to the steps that defend it', () => {
+      expect(privacy()).toInclude('**Advice:** step 1 (Wait).')
+    })
+
+    it('names the adversaries no step helps against', () => {
+      expect(
+        getSection(renderPrivacyProjectMarkdown(ENTRY), 'How to stay private'),
+      ).toInclude('**No step helps against:** Future adversary.')
     })
 
     it('lists every inside field for the public observer, with notes', () => {
@@ -274,7 +316,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
 
     it('resolves sources pointing into the page against the HTML page', () => {
       expect(privacy()).toInclude(
-        '**Sources**\n\n- [1 ETH pool](https://l2beat.com/privacy/projects/tornado-cash#Pool_1_ETH)\n- [Withdrawal circuit](https://github.com/tornadocash/tornado-core/blob/master/circuits/withdraw.circom)',
+        '**Sources**\n\n- [1 ETH pool](https://ethbeat.org/privacy/projects/tornado-cash#Pool_1_ETH)\n- [Withdrawal circuit](https://github.com/tornadocash/tornado-core/blob/master/circuits/withdraw.circom)',
       )
     })
   })
@@ -287,7 +329,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
 
     expect(breakdown).toInclude(
       [
-        '| Asset | Buckets | Deposits 7D | Deposits 30D | Deposits Total | Value Locked |',
+        '| Asset | Buckets | Deposits 7d | Deposits 30d | Deposits total | Value locked |',
         '| --- | --- | --- | --- | --- | --- |',
         '| ETH | 2 | 120 ($300.00 K) | 540 ($1.35 M) | 98.00 K ($245.00 M) | $412.00 M |',
         '| ETH: 1 ETH bucket |  | 20 ($50.00 K) | 40 ($100.00 K) | 8.00 K ($20.00 M) | $12.00 M |',
@@ -431,7 +473,6 @@ const ADVERSARIES: ProjectPrivacyAdversaries = {
       'warning',
       'Timing narrows the anonymity set.',
       {
-        advice: 'Wait before withdrawing.',
         interior: { ...PUBLIC_OBSERVER_INTERIOR, linkage: 'exposed' },
       },
     ),
@@ -454,6 +495,14 @@ const ADVERSARIES: ProjectPrivacyAdversaries = {
       'A quantum computer could break the commitments.',
     ),
   },
+  advice: [
+    {
+      name: 'Wait',
+      text: 'Wait before withdrawing.',
+      against: ['chainAnalyst'],
+      randomWait: true,
+    },
+  ],
 }
 
 function chartSection(
@@ -519,6 +568,14 @@ const REFERENCE_APP: PrivacyReferenceApp = {
     repository: 'https://github.com/tornado-dao/classic-ui',
     commit: '17c54dae9ad91bb3c6d62a7860df6cd365ab76d4',
   },
+  delivery: {
+    type: 'pinned',
+    pin: {
+      type: 'ipfs',
+      cid: 'bafybeigduniojgqrz7e4vntsgmovdli3oi7a2pnzzvz2gfxlvj3yqwk75a',
+    },
+    rebuild: 'https://recipe.example',
+  },
   checkedApps: [
     {
       name: 'Mirror app',
@@ -539,6 +596,23 @@ const SECTIONS: ProjectDetailsSection[] = [
       title: 'Privacy',
       adversaries: ADVERSARIES,
       referenceApp: REFERENCE_APP,
+    },
+  },
+  {
+    type: 'PrivacyAdviceSection',
+    props: {
+      id: 'stay-private',
+      title: 'How to stay private',
+      steps: ADVERSARIES.advice ?? [],
+      adversaries: ADVERSARIES.adversaries,
+      waitWindowDays: 30,
+      sentiments: {
+        publicObserver: 'good',
+        chainAnalyst: 'warning',
+        networkObserver: 'good',
+        privilegedInsider: 'good',
+        futureAdversary: 'bad',
+      },
     },
   },
   chartSection('TvsValueSection', 'privacy-tvl', 'Value Locked'),
@@ -578,7 +652,7 @@ const ENTRY: ProjectPrivacyEntry = {
   badges: [],
   projectLinks: [],
   discoUi: {
-    href: 'https://disco.l2beat.com/ui/p/tornado-cash',
+    href: 'https://disco.ethbeat.org/ui/p/tornado-cash',
     images: { desktop: '/desktop.png', mobile: '/mobile.png' },
   },
   bucketCount: 2,
@@ -596,6 +670,7 @@ const ENTRY: ProjectPrivacyEntry = {
     { id: 'ethereum', name: 'Ethereum', iconUrl: '/icons/ethereum.png' },
     { id: 'bsc', name: 'BNB Smart Chain', iconUrl: '/icons/bsc.png' },
   ],
+  scalingProjects: [],
   exitWindow: {
     value: 'Infinite',
     sentiment: 'good',

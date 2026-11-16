@@ -61,14 +61,14 @@ export function ShowMoreText({
           </button>
         </div>
       ) : (
-        // The padding leaves room for the button. It sits out here so the
-        // measured box is exactly the one the text is cut in, whether or not
-        // a browser counts padding in `scrollWidth`.
-        <div className="relative md:pr-[75px]">
+        // From `md` the text and the button share a row with a fixed gap, so
+        // the ellipsis never runs into the button. The measured box is
+        // exactly the one the text is cut in.
+        <div className="md:flex md:items-baseline md:gap-2">
           <div
             ref={contentRef}
             className={cn(
-              'md:truncate',
+              'md:min-w-0 md:flex-1 md:truncate',
               'line-clamp-2 md:line-clamp-none',
               textClassName,
             )}
@@ -80,7 +80,7 @@ export function ShowMoreText({
           {isOverflowing && (
             <button
               className={cn(
-                'absolute top-0 right-0 cursor-pointer pl-1 underline',
+                'shrink-0 cursor-pointer underline',
                 'hidden md:block',
                 textClassName,
               )}

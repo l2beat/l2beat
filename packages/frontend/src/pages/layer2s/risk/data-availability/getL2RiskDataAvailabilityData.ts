@@ -5,6 +5,7 @@ import { getL2RiskDaEntries } from '~/server/features/layer2s/risks/data-availab
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
+import { getBadgeLookup } from '~/utils/project/getBadgeWithParams'
 
 export async function getL2RiskDataAvailabilityData(
   req: Request,
@@ -27,7 +28,7 @@ export async function getL2RiskDataAvailabilityData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        name: 'Data Availability',
+        name: 'Data availability',
         description:
           'Compare data availability solutions used by Ethereum scaling projects.',
         url: req.originalUrl,
@@ -42,6 +43,7 @@ export async function getL2RiskDataAvailabilityData(
       props: {
         ...appLayoutProps,
         entries,
+        badgeLookup: getBadgeLookup(entries),
       },
     },
   }

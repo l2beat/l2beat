@@ -336,7 +336,7 @@ function InheritedNote({
       <button
         type="button"
         onClick={onGo}
-        className="font-semibold text-brand underline underline-offset-2"
+        className="font-semibold text-brand-deep underline underline-offset-2"
       >
         See the {from.toLowerCase()}
       </button>

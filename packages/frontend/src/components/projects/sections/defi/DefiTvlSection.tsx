@@ -1,12 +1,15 @@
+import type { WarningWithSentiment } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import { ChartDataSourceInfo } from '~/components/chart/ChartDataSourceInfo'
 import { TvsChartRangeControls } from '~/components/chart/tvs/TvsChartRangeControls'
 import { TvsValueChart } from '~/components/chart/tvs/TvsValueChart'
-import type { ChartProject } from '~/components/core/chart/Chart'
+import { Checkbox } from '~/components/core/Checkbox'
+import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
+import { sentimentToWarningBarColor, WarningBar } from '~/components/WarningBar'
 import { useTRPC } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
 import type { ChartRange } from '~/utils/range/range'
@@ -16,29 +19,42 @@ import type { ProjectSectionProps } from '../types'
 export interface DefiTvlSectionProps extends ProjectSectionProps {
   defaultRange: ChartRange
   project: ChartProject
-  /** External provider attribution, absent when the data is L2BEAT's own. */
+  /** External provider attribution, absent when the data is our own. */
   dataSource?: {
     name: string
     url?: string
     scope?: string
   }
+  /** Offers to draw the ETH staked network-wide, which the TVL is a part of. */
+  ethStakedToggle?: boolean
+  /** What the number leaves out or overcounts, shown above the chart. */
+  warnings: WarningWithSentiment[]
 }
 
 export function DefiTvlSection({
   defaultRange,
   project,
   dataSource,
+  ethStakedToggle,
+  warnings,
   ...projectSectionProps
 }: DefiTvlSectionProps) {
   const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
-  const { data, isLoading, isPlaceholderData } = useChartQuery(
+  const [showEthStaked, setShowEthStaked] = useState(false)
+  const { data, isLoading, isPlaceholderData, shownInput } = useChartQuery(
     trpc.defi.tvlChart,
-    { projectId: project.id, range },
+    { projectId: project.id, range, withEthStaked: showEthStaked },
   )
 
   const chartData = useMemo(
-    () => data?.chart.map(([timestamp, value]) => ({ timestamp, value })),
+    () =>
+      data?.chart.map(([timestamp, value, ethStakedUsd, stakedEthShare]) => ({
+        timestamp,
+        value,
+        ethStakedUsd,
+        stakedEthShare,
+      })),
     [data],
   )
   const timeRange = useMemo(
@@ -58,6 +74,14 @@ export function DefiTvlSection({
 
   return (
     <ProjectSection {...projectSectionProps}>
+      {warnings.map((warning) => (
+        <WarningBar
+          key={warning.value}
+          text={warning.value}
+          color={sentimentToWarningBarColor(warning.sentiment)}
+          className="mb-3"
+        />
+      ))}
       {dataSource && (
         <div className="mb-3">
           <ChartDataSourceInfo
@@ -76,11 +100,24 @@ export function DefiTvlSection({
       </ChartControlsWrapper>
       <TvsValueChart
         isPlaceholderData={isPlaceholderData}
+        resolution={data?.resolution ?? 'day'}
         data={chartData}
         syncedUntil={data?.syncedUntil}
         isLoading={isLoading}
         project={project}
+        withEthStaked={shownInput.withEthStaked}
       />
+      {ethStakedToggle && (
+        <div className="mt-2 flex justify-end">
+          <Checkbox
+            name="showEthStaked"
+            checked={showEthStaked}
+            onCheckedChange={(checked) => setShowEthStaked(checked === true)}
+          >
+            Show total ETH staked
+          </Checkbox>
+        </div>
+      )}
     </ProjectSection>
   )
 }

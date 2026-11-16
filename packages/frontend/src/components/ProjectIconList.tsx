@@ -158,7 +158,7 @@ function IconImage({ project }: { project: ProjectIconListItem }) {
       height={20}
       src={project.iconUrl}
       alt={`${project.name} logo`}
-      className={cn('size-5 min-w-5 rounded-full shadow', iconBackdropClasses)}
+      className={cn('size-5 min-w-5 rounded-full', iconBackdropClasses)}
     />
   )
 }
@@ -172,9 +172,7 @@ function ProjectIcon({
 }) {
   const image = <IconImage project={project} />
   return (
-    // Short enough to feel instant on purpose, long enough that sweeping the
-    // cursor across a table column does not flash every row's tooltip.
-    <Tooltip delayDuration={100}>
+    <Tooltip>
       {project.href ? (
         <TooltipTrigger asChild disabledOnTouch>
           <a
@@ -205,6 +203,13 @@ function ProjectIcon({
             <p className="text-label-value-13 text-secondary">
               {project.description}
             </p>
+          )}
+          {project.stage && (
+            <StageBadge
+              stage={project.stage}
+              isAppchain={false}
+              className="mt-1"
+            />
           )}
         </TooltipContent>
       </TooltipPortal>
@@ -345,7 +350,9 @@ function ProjectList({
             <CountChip total={projects.length} />
           </span>
           {inDialog && (
-            <DialogClose className="-my-2 -mr-3 static flex size-10 items-center justify-center [&_svg]:size-3.5 [&_svg]:fill-secondary hover:[&_svg]:fill-primary" />
+            // Already 40px, and in flow, where DialogClose's grown hit area
+            // would cover the dialog itself
+            <DialogClose className="-my-2 -mr-3 static flex size-10 items-center justify-center after:hidden [&_svg]:size-3.5 [&_svg]:fill-secondary hover:[&_svg]:fill-primary" />
           )}
         </div>
         {searchable && (

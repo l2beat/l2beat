@@ -10,7 +10,7 @@ export function NotFoundPage() {
       </div>
 
       <Button>
-        <Link to="/ui" className="text-blue-500">
+        <Link to="/ui" className="text-aux-blue">
           Go back to the home page
         </Link>
       </Button>

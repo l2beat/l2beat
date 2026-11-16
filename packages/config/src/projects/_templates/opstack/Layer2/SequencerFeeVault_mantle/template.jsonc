@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Collects the sequencer fees, which anyone can withdraw as MNT to the recipient on L1 once the minimum withdrawal amount is reached.",
+  "category": "non-critical",
+  // l1FeeWallet() returns RECIPIENT
+  "ignoreMethods": ["l1FeeWallet"],
+  "ignoreInWatchMode": ["totalProcessed"],
+  "fields": {
+    // immutable, set in the implementation, an L1 address
+    "RECIPIENT": { "edit": ["format", "EthereumAddress"] }
+  }
+}

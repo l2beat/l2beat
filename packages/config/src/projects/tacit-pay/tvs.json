@@ -1,0 +1,25 @@
+{
+  "$schema": "../tvs-config-schema.json",
+  "projectId": "tacit-pay",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "tacit-pay-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "native",
+        "chain": "ethereum",
+        "escrowAddress": "0x000000c2A20657CE25f2Ba99737933D031AFBEE9",
+        "decimals": 18,
+        "sinceTimestamp": 1790517539
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

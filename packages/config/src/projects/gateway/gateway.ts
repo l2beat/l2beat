@@ -10,6 +10,8 @@ export const gateway: BaseProject = {
   shortName: 'Gateway',
   aliases: ['ZKsync Gateway', 'Elastic Chain'],
   addedAt: UnixTime(1753868762),
+  // removed from the BridgeHub settlement-layer whitelist, last batch executed 2026-02-20
+  archivedAt: UnixTime(1793700599), // 2026-11-03T10:09:59Z
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,
@@ -25,6 +27,7 @@ export const gateway: BaseProject = {
   chainConfig: {
     name: 'gateway',
     chainId,
+    untilTimestamp: UnixTime(1793700599),
     explorerUrl: 'https://gateway.explorer.zksync.io',
     multicallContracts: [],
     apis: [

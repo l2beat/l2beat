@@ -159,7 +159,7 @@ export function renderProgramHashesSubsection(
 ) {
   return subsection(
     level,
-    'Program Hashes',
+    'Program hashes',
     joinBlocks([
       renderProgramHashList(programHashes, level + 1),
       configMarkdown(programHashesDescription, level + 1),

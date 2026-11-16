@@ -85,6 +85,27 @@ describe('packed argument plugin', () => {
   })
 })
 
+describe('signature overrides', () => {
+  it('decode before plugins', () => {
+    const calldata = encodeFunctionData({
+      abi: ABI,
+      functionName: 'setImplementation',
+      args: [1, IMPLEMENTATION, GAME_ARGS],
+    })
+    const decoded = decode(calldata, [], 1, FACTORY, [
+      'function setImplementation(uint32 kind, address target, bytes payload)',
+    ])
+
+    expect(decoded?.members?.map(({ name, type }) => ({ name, type }))).toEqual(
+      [
+        { name: 'kind', type: 'number' },
+        { name: 'target', type: 'address' },
+        { name: 'payload', type: 'bytes' },
+      ],
+    )
+  })
+})
+
 describe('CREATE2 factory plugin', () => {
   it('marks the salt as a fixed-size value, not calldata', () => {
     const decoded = decode(

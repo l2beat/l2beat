@@ -8,6 +8,7 @@ export function DiscoUiLink({ href }: { href: string }) {
       href={href}
       rel="noopener noreferrer"
       target="_blank"
+      aria-label="Open in Disco UI"
       className={cn(
         navigationMenuTriggerStyle(),
         'ring-brand ring-inset focus-visible:ring-2',

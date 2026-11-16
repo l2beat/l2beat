@@ -100,6 +100,58 @@
       "isAssociated": false
     },
     {
+      "mode": "auto",
+      "id": "megaeth-stcUSD",
+      "priceId": "staked-cap-usd",
+      "symbol": "stcUSD",
+      "name": "Staked Cap USD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/69060/large/stcUSD_ab_200%C3%97200.png?1757396740",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x88887bE419578051FF9F4eb6C858A951921D8888",
+        "chain": "megaeth",
+        "decimals": 18,
+        "sinceTimestamp": 1767034035
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "megaeth-sUSDe-1",
+      "priceId": "ethena-staked-usde",
+      "symbol": "sUSDe",
+      "name": "Staked USDe",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+        "chain": "megaeth",
+        "decimals": 18,
+        "sinceTimestamp": 1767109021
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "mode": "custom",
       "id": "megaeth-USDC",
       "priceId": "usd-coin",
@@ -138,6 +190,32 @@
         ]
       },
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "megaeth-USDe-1",
+      "priceId": "ethena-usde",
+      "symbol": "USDe",
+      "name": "USDe",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33613/large/usde.png?1733810059",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+        "chain": "megaeth",
+        "decimals": 18,
+        "sinceTimestamp": 1767108895
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",

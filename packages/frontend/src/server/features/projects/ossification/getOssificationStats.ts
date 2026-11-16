@@ -5,13 +5,13 @@ import type {
 } from '@l2beat/config'
 import type { OssificationResult } from '@l2beat/shared/frontend'
 import { UnixTime } from '@l2beat/shared-pure'
-import { calculateExposure } from './calculateExposure'
+import { calculateExposure, type Exposure } from './calculateExposure'
 import {
   getOssificationSeries,
   type OssificationSeriesProject,
   type OssificationValueSource,
 } from './getOssificationSeries'
-import { sampleTimeline } from './sampleTimeline'
+import { getTimelinePeak, sampleTimeline } from './sampleTimeline'
 
 const TIMELINE_WINDOW = 365 * UnixTime.DAY
 
@@ -21,8 +21,8 @@ export interface OssificationStats {
   isUnverified: boolean
   criticalChangesPerYear: number
   contractCount: number
-  /** USD·years; null without a value series or with unverified contracts */
-  exposure: number | null
+  /** Null without a value series or with unverified contracts */
+  exposure: Exposure | null
   valueSource: OssificationValueSource | null
   /** Absent for DeFi, which has no exit window in config yet */
   exitWindow?: OssificationExitWindow
@@ -45,6 +45,8 @@ interface OssificationTimeline {
   criticalChanges: number[]
   /** Evenly spread from `from` to `to`, see sampleTimeline */
   values: (number | null)[] | null
+  /** Highest value over the window, including between samples */
+  peak: number | null
 }
 
 export interface OssificationStatsProject extends OssificationSeriesProject {
@@ -85,6 +87,7 @@ export async function getOssificationStats(
       genesis: ossification.genesis,
       criticalChanges: ossification.criticalChanges.filter((t) => t >= from),
       values: series ? sampleTimeline(series.points, from, now) : null,
+      peak: series ? getTimelinePeak(series.points, from, now) : null,
     },
   }
 }

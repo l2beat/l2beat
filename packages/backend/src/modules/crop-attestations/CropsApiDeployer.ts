@@ -7,7 +7,7 @@ import { v } from '@l2beat/validate'
 const DISPATCHED_KEY = 'cropsApiDispatchedUid'
 const WORKFLOW_DISPATCH_URL =
   'https://api.github.com/repos/l2beat/l2beat/actions/workflows/deploy-crops-api.yml/dispatches'
-const LIVE_CROPS_URL = 'https://crops.l2beat.com/v1/crops.json'
+const LIVE_CROPS_URL = 'https://crops.ethbeat.org/v1/crops.json'
 /** A run times out after 15 minutes; one that has not deployed by then failed. */
 const REDISPATCH_AFTER_SECONDS = 30 * 60
 

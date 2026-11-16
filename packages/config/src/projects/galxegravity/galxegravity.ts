@@ -9,6 +9,7 @@ const discovery = new ProjectDiscovery('galxegravity')
 
 export const galxegravity: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1719415787), // 2024-06-26T15:29:47Z
+  archivedAt: UnixTime(1793777507), // 2026-11-04T07:31:47Z, last batcher tx — Alpha Mainnet sunset per 2026-07-22 announcement, operations concluded 2026-11-01; successor is Gravity L1
   discovery,
   additionalBadges: [BADGES.RaaS.Conduit],
   associatedTokens: ['G'],
@@ -21,7 +22,7 @@ export const galxegravity: ScalingProject = orbitStackL2({
     aliases: ['Galxe'],
     slug: 'galxegravity',
     headerWarning:
-      'Gravity Alpha Mainnet is shutting down on November 1, 2026 as Gravity moves to its L1. See the [announcement](https://x.com/GravityChain/status/2098079560138977516) and make sure to bridge off your funds and unstake your G before the deadline.',
+      'Gravity Alpha Mainnet was [sunset on November 1, 2026](https://x.com/GravityChain/status/2098079560138977516) and operations migrated to the Gravity L1. The L2 bridge and staking are closed; users who still hold assets on the L2 should follow the migration guidance from the Gravity team.',
     description:
       'Gravity is an Optimium built on the Orbit stack. It features onchain questing and has its own gas token - G. Other Galxe products are aiming to integrate with the L2 and a future migration to an L1 of the same name is planned.',
     links: {
@@ -52,6 +53,7 @@ export const galxegravity: ScalingProject = orbitStackL2({
     chainId: 1625,
     explorerUrl: 'https://gscan.xyz',
     sinceTimestamp: UnixTime(1716054191), // block 1 TS
+    untilTimestamp: UnixTime(1793777507), // 2026-11-04T07:31:47Z
     multicallContracts: [
       {
         sinceBlock: 52682,

@@ -1,7 +1,6 @@
 import type {
   Project,
   ProjectAssociatedToken,
-  ProjectCustomColors,
   ProjectRedWarning,
   ProjectScalingCategory,
   ProjectScalingProofSystem,
@@ -11,6 +10,7 @@ import type {
 } from '@l2beat/config'
 import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
+import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
@@ -58,6 +58,7 @@ import {
   getUnderReviewStatus,
   type UnderReviewStatus,
 } from '~/utils/project/underReview'
+import { getPrivacyProjectsRunningOn } from '../../privacy/utils/getPrivacyScalingLinks'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { getProjectVerification } from '../../utils/getIsProjectVerified'
 import { getActivityProjectStats } from '../activity/getActivityProjectStats'
@@ -82,12 +83,6 @@ export interface ProjectL2Entry {
   icon: string
   archivedAt: UnixTime | undefined
   isAppchain: boolean
-  colors:
-    | {
-        project: ProjectCustomColors | undefined
-        ecosystem: ProjectCustomColors | undefined
-      }
-    | undefined
   underReviewStatus: UnderReviewStatus
   header: {
     warning?: string
@@ -133,8 +128,10 @@ export interface ProjectL2Entry {
       lastDayUops: number
       uopsWeeklyChange: number
       uopsWeeklyChangePeriod: PercentageChangePeriod
+      syncWarning: string | undefined
     }
     gasTokens?: string[]
+    privacyProjects: ProjectIconListItem[]
     interop?: ProjectInteropData['summary']
   }
   rosette: L2Rosette
@@ -169,8 +166,6 @@ export async function getL2ProjectEntry(
     | 'livenessConfig'
     | 'costsInfo'
     | 'activityConfig'
-    | 'colors'
-    | 'ecosystemColors'
     | 'discoveryInfo'
     | 'discoveryUpdates'
     | 'daTrackingConfig'
@@ -287,6 +282,7 @@ export async function getL2ProjectEntry(
       .map((badge) => getBadgeWithParamsAndLink(badge, project))
       .filter((b) => !!b),
     gasTokens: project.chainConfig?.gasTokens,
+    privacyProjects: getPrivacyProjectsRunningOn(project.id, allProjects),
     interop: interopData?.summary,
   }
 
@@ -321,10 +317,6 @@ export async function getL2ProjectEntry(
     }),
     archivedAt: project.archivedAt,
     isAppchain: project.scalingInfo.capability === 'appchain',
-    colors: {
-      project: project.colors,
-      ecosystem: project.ecosystemColors,
-    },
     header,
     reasonsForBeingOther: project.scalingInfo.reasonsForBeingOther,
     rosette: getL2Rosette(project, {
@@ -341,7 +333,7 @@ export async function getL2ProjectEntry(
         : project.scalingStage,
     walkAway: getWalkAwayVerdict(project),
     discoUiHref: project.discoveryInfo?.hasDiscoUi
-      ? `https://disco.l2beat.com/ui/p/${project.id}`
+      ? `https://disco.ethbeat.org/ui/p/${project.id}`
       : undefined,
   }
 
@@ -404,7 +396,7 @@ export async function getL2ProjectEntry(
       type: 'L2TvsSection',
       props: {
         id: 'tvs',
-        title: 'Value Secured',
+        title: 'Value secured',
         tvsBreakdownUrl: `/layer2s/projects/${project.slug}/tvs-breakdown`,
         compareUrl: getProjectCompareUrl(project, 'tvs'),
         milestones: sortedMilestones,
@@ -497,7 +489,7 @@ export async function getL2ProjectEntry(
       type: 'MilestonesAndIncidentsSection',
       props: {
         id: 'milestones-and-incidents',
-        title: 'Milestones & Incidents',
+        title: 'Milestones & incidents',
         milestones: sortedMilestones,
       },
     })
@@ -681,7 +673,7 @@ export async function getL2ProjectEntry(
       type: 'UpgradesAndGovernanceSection',
       props: {
         id: 'upgrades-and-governance',
-        title: 'Upgrades & Governance',
+        title: 'Upgrades & governance',
         content: upgradesAndGovernance?.content
           ? linkAddresses(
               upgradesAndGovernance.content,

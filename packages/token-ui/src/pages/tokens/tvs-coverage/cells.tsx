@@ -361,5 +361,5 @@ function Icon({
 
 function tokenIconUrl(iconUrl: string | undefined): string {
   if (!iconUrl) return TOKEN_PLACEHOLDER
-  return iconUrl.startsWith('/') ? `https://l2beat.com${iconUrl}` : iconUrl
+  return iconUrl.startsWith('/') ? `https://ethbeat.org${iconUrl}` : iconUrl
 }

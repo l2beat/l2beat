@@ -15,5 +15,11 @@
     "address": "eth:0xeF9eCeA15265321753047EBF7D54C858D53cB94f",
     "chain": "ethereum",
     "blockNumber": 26078391
+  },
+  "AggregateVerifier_v0_3_0_base.sol": {
+    "hash": "0x9508853101d9d4fb306aca07d6483f7aa980fdf5f600d86b293370b63dc33efc",
+    "address": "eth:0xc08b8fFAF04Abb1d7013B74a0E57Eccbd7fa5A70",
+    "chain": "ethereum",
+    "blockNumber": 26349517
   }
 }

@@ -4,6 +4,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { withIdentifierBreaks } from '../../../identifierBreaks'
 import type { ProgramHashRow } from '../ProgramHashesTable'
 import { ZkProjectTooltip } from './ZkProjectTooltip'
 
@@ -11,10 +12,13 @@ export function ProgramHashNameCell({
   title,
   zkCatalogProject,
   description,
+  reserveIcon,
 }: {
   title: ProgramHashRow['title']
   description?: ProgramHashRow['description']
   zkCatalogProject?: ProgramHashRow['zkCatalogProject']
+  /** Another row has an icon: keep its slot so every name starts at one x. */
+  reserveIcon?: boolean
 }) {
   const titleRef = useRef<HTMLDivElement>(null)
   const [isOverflowing, setIsOverflowing] = useState(false)
@@ -23,7 +27,7 @@ export function ProgramHashNameCell({
     const checkOverflow = () => {
       if (titleRef.current) {
         const isOverflowing =
-          titleRef.current.scrollWidth > titleRef.current.clientWidth
+          titleRef.current.scrollHeight > titleRef.current.clientHeight
         setIsOverflowing(isOverflowing)
       }
     }
@@ -35,14 +39,23 @@ export function ProgramHashNameCell({
   }, [])
 
   return (
-    <div className="flex items-center gap-1">
+    // The project icon leads, so every row's icon and name sit at one x.
+    <div className="flex items-center gap-2 py-2">
+      {zkCatalogProject ? (
+        <ZkProjectTooltip zkProject={zkCatalogProject} />
+      ) : (
+        reserveIcon && <span aria-hidden className="size-5 shrink-0" />
+      )}
       <Tooltip>
-        <TooltipTrigger disabled={!isOverflowing && !description}>
+        <TooltipTrigger
+          disabled={!isOverflowing && !description}
+          className="text-left"
+        >
           <div
             ref={titleRef}
-            className="min-w-0 max-w-60 overflow-hidden text-ellipsis whitespace-nowrap font-bold text-label-value-14 leading-normal"
+            className="line-clamp-6 w-max max-w-44 text-pretty break-words font-bold text-label-value-14 leading-normal md:line-clamp-4 md:max-w-60 2xl:max-w-72"
           >
-            {title}
+            {withIdentifierBreaks(title, { atCapitals: false })}
           </div>
         </TooltipTrigger>
         <TooltipContent>
@@ -52,7 +65,6 @@ export function ProgramHashNameCell({
           )}
         </TooltipContent>
       </Tooltip>
-      {zkCatalogProject && <ZkProjectTooltip zkProject={zkCatalogProject} />}
     </div>
   )
 }

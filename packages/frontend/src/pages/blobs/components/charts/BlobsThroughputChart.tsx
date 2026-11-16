@@ -1,14 +1,15 @@
 import type { DaLayerThroughput, Milestone } from '@l2beat/config'
-import { formatBytes } from '@l2beat/shared-pure'
+import { formatBytes, UnixTime } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
+import { ChartCardHeader } from '~/components/chart/ChartCardHeader'
 import { DaThroughputByProjectChart } from '~/components/chart/data-availability/DaThroughputByProjectChart'
 import { getDataWithConfiguredThroughputs } from '~/components/chart/data-availability/getDataWithConfiguredThroughputs'
 import { ProjectDaAbsoluteThroughputChart } from '~/components/chart/data-availability/ProjectDaAbsoluteThroughputChart'
-import type { ChartProject } from '~/components/core/chart/Chart'
+import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
-import { Skeleton } from '~/components/core/Skeleton'
 import { useTRPC } from '~/trpc/React'
+import { formatTimestamp } from '~/utils/dates'
 import { optionToRange, rangeToResolution } from '~/utils/range/range'
 
 export interface BlobsThroughputChartProps {
@@ -61,6 +62,7 @@ export function BlobsThroughputChart({
     <div className="flex flex-col gap-4 lg:contents">
       <Header
         used={pastDay.data?.used}
+        day={pastDay.data?.day}
         isLoading={pastDay.isLoading}
         view={view}
         setView={setView}
@@ -84,6 +86,14 @@ export function BlobsThroughputChart({
           syncedUntil={byProject.data?.syncedUntil}
           isLoading={byProject.isLoading}
           customColors={customColors}
+          capacity={{
+            projectId: project.id,
+            data: getDataWithConfiguredThroughputs(
+              byProject.data?.totalChart.data,
+              configuredThroughputs,
+              resolution,
+            ),
+          }}
           milestones={milestones}
           resolution={resolution}
           disableLegendOnboarding
@@ -95,44 +105,63 @@ export function BlobsThroughputChart({
 
 function Header({
   used,
+  day,
   isLoading,
   view,
   setView,
 }: {
   used: number | undefined
+  day: [number, number] | undefined
   isLoading: boolean
   view: View
   setView: (view: View) => void
 }) {
+  const hasData = used !== undefined && day !== undefined
+  const pastDay = hasData ? describePastDay(day) : undefined
   return (
-    <div className="flex items-start justify-between gap-2">
-      <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-        <span className="font-bold text-xl">Data Posted</span>
+    <ChartCardHeader
+      title="Data posted"
+      accessory={
         <RadioGroup
           name="blobsThroughputView"
           value={view}
           onValueChange={(value) => setView(value as View)}
-          className="h-7"
         >
           <RadioGroupItem value="total">Total</RadioGroupItem>
           <RadioGroupItem value="per-project">Per project</RadioGroupItem>
         </RadioGroup>
-      </div>
-      {isLoading ? (
-        <Skeleton className="my-[5px] h-5 w-40" />
-      ) : used === undefined ? (
-        <span className="whitespace-nowrap font-bold text-xl">No data</span>
-      ) : (
-        // laid out as the TVS header is, so the two read alike
-        <div className="flex flex-wrap items-baseline justify-end gap-x-1.5">
-          <span className="whitespace-nowrap font-bold text-xl">
-            {formatBytes(used)}
+      }
+      isLoading={isLoading}
+      value={hasData ? formatBytes(used) : undefined}
+      // Names its day, as the live total below is over the last 24h. The
+      // figure's row doesn't wrap, so a label with a time goes under it.
+      valueLabel={pastDay?.hasTime ? undefined : pastDay?.label}
+      meta={
+        pastDay?.hasTime ? (
+          <span className="font-medium text-label-value-13 text-secondary">
+            {pastDay.label}
           </span>
-          <span className="whitespace-nowrap text-secondary text-xs leading-none">
-            / past day
-          </span>
-        </div>
-      )}
-    </div>
+        ) : (
+          !isLoading &&
+          !hasData && <span className="text-secondary">No data</span>
+        )
+      }
+    />
   )
+}
+
+/**
+ * One date, not a range, so it reads as the value's day rather than the
+ * chart's span. A lagging indexer's 24 hours end mid-day, so they get a time.
+ */
+function describePastDay([from, to]: [number, number]): {
+  label: string
+  hasTime: boolean
+} {
+  return from === UnixTime.toStartOf(from, 'day')
+    ? { label: `on ${formatTimestamp(from)}`, hasTime: false }
+    : {
+        label: `in 24h to ${formatTimestamp(to, { mode: 'datetime' })}`,
+        hasTime: true,
+      }
 }

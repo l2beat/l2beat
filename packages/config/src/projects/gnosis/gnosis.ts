@@ -1,7 +1,7 @@
 import {
   ChainSpecificAddress,
   EthereumAddress,
-  formatNumber,
+  formatCompactAmount,
   formatSeconds,
   ProjectId,
   UnixTime,
@@ -290,7 +290,10 @@ export const gnosis: ScalingProject = {
         },
         sequencerCount: {
           value: `${stakeDistribution.validatorCount.toLocaleString('en-US')} validator indices`,
-          secondLine: `${formatNumber(stakeDistribution.totalStake)} ${stakeDistribution.stakeToken}`,
+          secondLine: formatCompactAmount(
+            stakeDistribution.totalStake,
+            stakeDistribution.stakeToken,
+          ),
           description:
             'The active-ongoing validator count and effective stake snapshot are generated from the corresponding Gnosis Analytics endpoints for the same date. Validator indices are not independent operators.',
         },

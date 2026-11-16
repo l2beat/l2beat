@@ -44,12 +44,7 @@ const colorCache = new Map<string, NodeColor>()
 interface NodeColor {
   color: string
   isDark: boolean
-  // Initial contracts ring their header with this, the color mixed 15% toward
-  // black or white the way CSS color-mix(in oklch) does.
-  ringColor: string
 }
-
-const INITIAL_RING_MIX = 0.15
 
 function computeColor(
   color: number,
@@ -65,17 +60,14 @@ function computeColor(
     ...result.color,
     h: (result.color.h + hueShift) % 360,
   }
-  const ringTarget = result.isDark ? colors.black : colors.white
-  const ringColor = {
-    l: colorCopy.l * (1 - INITIAL_RING_MIX) + ringTarget.l * INITIAL_RING_MIX,
-    c: colorCopy.c * (1 - INITIAL_RING_MIX) + ringTarget.c * INITIAL_RING_MIX,
-    h: colorCopy.h,
-  }
   return {
     color: oklchColorToCSS(colorCopy),
     isDark: result.isDark,
-    ringColor: oklchColorToCSS(ringColor),
   }
+}
+
+export function getChainHeaderColor(shortName: string): string {
+  return getColor({ id: `${shortName}:`, color: 0, hueShift: 0 }).color
 }
 
 function getChainColor(chain: string): {

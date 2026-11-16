@@ -15,7 +15,7 @@ import {
 // `meta({ description })` reaches the OpenAPI document.
 
 /** API responses link to production whatever host served them. */
-export const L2BEAT_ORIGIN = 'https://l2beat.com'
+export const SITE_ORIGIN = 'https://ethbeat.org'
 
 const unixSeconds = () => v.number().meta({ description: 'Unix seconds.' })
 
@@ -75,7 +75,7 @@ const projectFields = {
   slug: v.string(),
   name: v.string(),
   href: v.union([v.string(), v.null()]).meta({
-    description: 'The L2BEAT project page, or null when there is none.',
+    description: 'The ETHBEAT project page, or null when there is none.',
   }),
   crops: ResolvedCropsSchema,
   inGarden: v.boolean().meta({
@@ -205,7 +205,7 @@ export const CROPS_API_ROUTES: CropsApiRoute[] = [
       },
     ],
     result: 'ProjectResponse',
-    notFound: 'L2BEAT has not reviewed this project.',
+    notFound: 'ETHBEAT has not reviewed this project.',
   },
   {
     key: 'crops',
@@ -243,7 +243,7 @@ export function resolveCropsProject(
     id: project.id,
     slug: project.slug,
     name: project.name,
-    href: path ? `${L2BEAT_ORIGIN}${path}` : null,
+    href: path ? `${SITE_ORIGIN}${path}` : null,
     crops,
     inGarden: listing === 'listed',
     attestation:

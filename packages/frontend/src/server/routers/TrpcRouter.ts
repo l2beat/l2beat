@@ -91,6 +91,7 @@ function getLogFn(error: TRPCError) {
     case 'BAD_REQUEST':
     case 'NOT_FOUND':
     case 'METHOD_NOT_SUPPORTED':
+    case 'UNSUPPORTED_MEDIA_TYPE':
       return logger.warn
     case 'PARSE_ERROR':
     case 'INTERNAL_SERVER_ERROR':
@@ -104,7 +105,6 @@ function getLogFn(error: TRPCError) {
     case 'CONFLICT':
     case 'PRECONDITION_FAILED':
     case 'PAYLOAD_TOO_LARGE':
-    case 'UNSUPPORTED_MEDIA_TYPE':
     case 'UNPROCESSABLE_CONTENT':
     case 'PRECONDITION_REQUIRED':
     case 'TOO_MANY_REQUESTS':

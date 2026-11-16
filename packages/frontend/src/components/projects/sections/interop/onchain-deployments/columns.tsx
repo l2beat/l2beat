@@ -1,14 +1,17 @@
 import {
   formatAddress,
   formatCurrency,
+  formatInteger,
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import { CopyButton } from '~/components/CopyButton'
 import { CustomLink } from '~/components/link/CustomLink'
-import { ProjectIconList } from '~/components/ProjectIconList'
+import {
+  iconBackdropClasses,
+  ProjectIconList,
+} from '~/components/ProjectIconList'
 import type { BasicTableRow } from '~/components/table/BasicTable'
-import { IndexCell } from '~/components/table/cells/IndexCell'
 import { InteropNoDataBadge } from '~/pages/interop/components/InteropNoDataBadge'
 import type { InteropTokenDeploymentView } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
 
@@ -24,15 +27,6 @@ const NO_MINTERS_TOOLTIP =
 export type DeploymentRow = InteropTokenDeploymentView & BasicTableRow
 const columnHelper = createColumnHelper<DeploymentRow>()
 export const interopTokenOnchainDeploymentsColumns = [
-  columnHelper.accessor((_, index) => index + 1, {
-    header: '#',
-    cell: (ctx) => <IndexCell>{ctx.row.index + 1}</IndexCell>,
-    sortDescFirst: false,
-    meta: {
-      headClassName: 'w-0',
-    },
-    size: 44,
-  }),
   columnHelper.accessor((row) => row.chain.name, {
     id: 'chain',
     header: 'Chain',
@@ -42,7 +36,7 @@ export const interopTokenOnchainDeploymentsColumns = [
         <div className="flex w-max items-center gap-2 whitespace-nowrap font-bold">
           {chain.iconUrl && (
             <img
-              className="size-5 rounded-full bg-white shadow"
+              className={`size-5 rounded-full ${iconBackdropClasses}`}
               src={chain.iconUrl}
               width={20}
               height={20}
@@ -54,55 +48,8 @@ export const interopTokenOnchainDeploymentsColumns = [
       )
     },
   }),
-  columnHelper.accessor('address', {
-    header: 'Address',
-    enableSorting: false,
-    cell: (ctx) => {
-      const { address, explorerUrl } = ctx.row.original
-      const label = formatAddress(address)
-      if (!explorerUrl) {
-        return <span className="font-medium text-label-value-15">{label}</span>
-      }
-      return (
-        <div className="flex w-max items-center gap-1">
-          <CustomLink href={explorerUrl} className="text-label-value-15">
-            {label}
-          </CustomLink>
-          <CopyButton
-            toCopy={address}
-            iconClassName="size-3 fill-secondary"
-            copyText="Copy address"
-          />
-        </div>
-      )
-    },
-  }),
-  columnHelper.accessor('symbol', {
-    header: 'Symbol',
-    cell: (ctx) => (
-      <span className="font-medium text-label-value-15">
-        {ctx.row.original.symbol}
-      </span>
-    ),
-  }),
-  columnHelper.display({
-    id: 'minters',
-    header: 'Minters',
-    cell: (ctx) => {
-      const { minters } = ctx.row.original
-      if (minters.length === 0) {
-        return <InteropNoDataBadge tooltip={NO_MINTERS_TOOLTIP} />
-      }
-
-      return <ProjectIconList projects={minters} title="Minting bridges" />
-    },
-    meta: {
-      tooltip:
-        'The known bridging projects observed minting this deployment. A deployment with no known minter is likely the locked or natively issued side.',
-    },
-  }),
   columnHelper.accessor('volume', {
-    header: 'Last 24h\nVolume',
+    header: 'Last 24h\nvolume',
     cell: (ctx) => {
       if (ctx.row.original.volume === null)
         return <InteropNoDataBadge tooltip={noDataTooltip(ctx.row.original)} />
@@ -119,13 +66,13 @@ export const interopTokenOnchainDeploymentsColumns = [
     },
   }),
   columnHelper.accessor('transferCount', {
-    header: 'Last 24h\ntransfer count',
+    header: 'Last 24h\ntransfers',
     cell: (ctx) => {
       if (ctx.row.original.transferCount === null)
         return <InteropNoDataBadge tooltip={noDataTooltip(ctx.row.original)} />
       return (
         <span className="font-medium text-label-value-15">
-          {ctx.row.original.transferCount}
+          {formatInteger(ctx.row.original.transferCount)}
         </span>
       )
     },
@@ -159,6 +106,50 @@ export const interopTokenOnchainDeploymentsColumns = [
       align: 'right',
       tooltip:
         'The average time it takes for a transfer involving this deployment to be received on the destination chain, measured over the past 24 hours.',
+    },
+  }),
+  columnHelper.accessor('address', {
+    header: 'Address',
+    enableSorting: false,
+    cell: (ctx) => {
+      const { address, explorerUrl, symbol } = ctx.row.original
+      const label = formatAddress(address)
+      return (
+        <div className="flex w-max flex-col gap-1">
+          {explorerUrl ? (
+            <div className="flex items-center gap-1">
+              <CustomLink href={explorerUrl} className="text-label-value-15">
+                {label}
+              </CustomLink>
+              <CopyButton
+                toCopy={address}
+                iconClassName="size-3 fill-secondary"
+                copyText="Copy address"
+              />
+            </div>
+          ) : (
+            <span className="font-medium text-label-value-15">{label}</span>
+          )}
+          {/* The symbol this deployment goes by, e.g. USDT0 for USDT. */}
+          <span className="text-label-value-12 text-secondary">{symbol}</span>
+        </div>
+      )
+    },
+  }),
+  columnHelper.display({
+    id: 'minters',
+    header: 'Minters',
+    cell: (ctx) => {
+      const { minters } = ctx.row.original
+      if (minters.length === 0) {
+        return <InteropNoDataBadge tooltip={NO_MINTERS_TOOLTIP} />
+      }
+
+      return <ProjectIconList projects={minters} title="Minting bridges" />
+    },
+    meta: {
+      tooltip:
+        'The known bridging projects observed minting this deployment. A deployment with no known minter is likely the locked or natively issued side.',
     },
   }),
 ]

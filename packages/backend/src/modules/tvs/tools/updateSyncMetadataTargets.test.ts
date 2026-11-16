@@ -11,7 +11,7 @@ describe(updateSyncMetadataTargets.name, () => {
 
   it('sets live tokens to the tick and retired tokens to their last hour', async () => {
     const syncMetadata = mockObject<Database['syncMetadata']>({
-      upsertMany: mockFn().resolvesTo(0),
+      setTargets: mockFn().resolvesTo(undefined),
       markEnded: mockFn().resolvesTo(0),
     })
 
@@ -51,10 +51,10 @@ describe(updateSyncMetadataTargets.name, () => {
       tick,
     )
 
-    expect(syncMetadata.upsertMany).toHaveBeenOnlyCalledWith([
-      { feature: 'tvs', id: 'arbitrum-ETH', target: tick },
-      { feature: 'tvs', id: 'arbitrum-USDC', target: tick },
-      { feature: 'tvs', id: 'wirex-ETH', target: tick },
+    expect(syncMetadata.setTargets).toHaveBeenOnlyCalledWith('tvs', [
+      { id: 'arbitrum-ETH', target: tick },
+      { id: 'arbitrum-USDC', target: tick },
+      { id: 'wirex-ETH', target: tick },
     ])
     expect(syncMetadata.markEnded).toHaveBeenOnlyCalledWith('tvs', [
       { id: 'wirex-DAI', end: at('2026-10-15T11:00:00Z') },

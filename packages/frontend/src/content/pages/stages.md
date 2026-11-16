@@ -48,7 +48,7 @@ A fraud proof system requires at least one honest actor to verify the correctnes
 
 Upgrades initiated by entities outside of the Security Council are allowed if they provide at least a 7 days exit window.
 
-Please refer to [this forum post](https://forum.l2beat.com/t/stages-update-a-high-level-guiding-principle-for-stage-1/338?u=donnoh) for a detailed explanation of the requirement and some examples.
+Please refer to [this forum post](https://forum.ethbeat.org/t/stages-update-a-high-level-guiding-principle-for-stage-1/338?u=donnoh) for a detailed explanation of the requirement and some examples.
 
 ### 🟩 Stage 2
 
@@ -63,4 +63,4 @@ In the final stage of rollup development, the power of the Security Council, if 
 
 ## Open questions
 
-A number of edge cases have been identified for the Stages Framework, and we are actively working on clarifying them. Requirements for certain edge cases will be added as soon as some projects are discovered that fit them. The list of open questions can be found [here](https://docs.l2beat.com/l2b_specs/stages_edgecases.html).
+A number of edge cases have been identified for the Stages Framework, and we are actively working on clarifying them. Requirements for certain edge cases will be added as soon as some projects are discovered that fit them. The list of open questions can be found [here](https://docs.ethbeat.org/l2b_specs/stages_edgecases.html).

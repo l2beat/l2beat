@@ -19,7 +19,9 @@ export function describeOssification(
       : `Score: ${score} of 100.`,
     `No critical change since ${formatTimestamp(timeline.clockStart, { mode: 'date' })}.`,
     ...(exposure !== null
-      ? [`Battle-tested exposure: ${formatCurrency(exposure, 'usd')}·years.`]
+      ? [
+          `Battle-tested exposure: ${formatCurrency(exposure.value, 'usd')}·years.`,
+        ]
       : []),
   ]
 }

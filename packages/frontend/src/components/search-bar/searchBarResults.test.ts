@@ -1,9 +1,11 @@
 import { expect } from 'earl'
+import type { SearchBarProjectEntry } from '~/server/features/search-bar/types'
 import type { SearchBarPage } from './searchBarPages'
 import {
   groupSearchResults,
   isDirectMatch,
   searchEntries,
+  searchProjectsAndTokens,
 } from './searchBarResults'
 
 describe(searchEntries.name, () => {
@@ -32,6 +34,27 @@ describe(searchEntries.name, () => {
     expect(isDirectMatch('ethere', entries[0]!)).toEqual(true)
     expect(isDirectMatch('ethere', entries[1]!)).toEqual(true)
     expect(isDirectMatch('ethere', entries[2]!)).toEqual(false)
+  })
+})
+
+describe(searchProjectsAndTokens.name, () => {
+  it('ranks Ethereum first for every prefix of its name', () => {
+    const index = {
+      projects: [
+        indexedProject({ id: 'ethereal', name: 'Ethereal', kind: 'layer2' }),
+        indexedProject({ id: 'etherfi', name: 'ether.fi', kind: 'defi' }),
+        indexedProject({ id: 'ethereum', name: 'Ethereum', kind: 'ethereum' }),
+      ],
+      tokens: [],
+    }
+
+    for (const query of ['e', 'eth', 'Ether', 'ethere', 'ethereum']) {
+      const results = searchProjectsAndTokens(query, index)
+      expect(results[0]?.name).toEqual('Ethereum')
+    }
+    expect(searchProjectsAndTokens('etherea', index)[0]?.name).toEqual(
+      'Ethereal',
+    )
   })
 })
 
@@ -133,6 +156,27 @@ function projectEntry({
     name,
     tags,
     href: `/${name.toLowerCase()}`,
+  }
+}
+
+function indexedProject({
+  id,
+  name,
+  kind,
+}: {
+  id: string
+  name: string
+  kind: SearchBarProjectEntry['kind']
+}): SearchBarProjectEntry {
+  return {
+    type: 'project',
+    id,
+    name,
+    iconUrl: '',
+    href: `/${id}`,
+    category: kind === 'ethereum' ? 'other' : 'l2',
+    kind,
+    tags: [id, name],
   }
 }
 

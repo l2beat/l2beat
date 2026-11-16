@@ -15,9 +15,14 @@ import {
   CLIENT_ASSETS_PATH,
   CLIENT_TEMPLATE_PATH,
 } from '../paths.mjs'
-import type { RenderData, ServerRenderFunction } from '../ssr/types'
+import type {
+  ClientSsrData,
+  RenderData,
+  ServerRenderFunction,
+} from '../ssr/types'
 import { jsonForInlineScript } from '../utils/jsonForInlineScript'
 import { type Manifest, manifest } from '../utils/Manifest'
+import { themeScript } from '../utils/theme'
 import { getTokenGraphs } from './features/tokens/getTokenGraphs'
 import { ErrorHandler } from './middlewares/ErrorHandler'
 import { LlmsLinkHeaderMiddleware } from './middlewares/LlmsLinkHeaderMiddleware'
@@ -32,6 +37,7 @@ import { createMarkdownAlternatesRouter } from './routers/MarkdownAlternatesRout
 import { createMigratedProjectsRouter } from './routers/MigratedProjectsRouter'
 import { createRobotsRouter } from './routers/RobotsRouter'
 import { createSitemapRouter } from './routers/SitemapRouter'
+import { createSupersededBadgeRouter } from './routers/SupersededBadgeRouter'
 import { createTrpcRouter } from './routers/TrpcRouter'
 
 const port = process.env.PORT ?? 3000
@@ -80,22 +86,27 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
     )
     app.use('/', sirv('./static', { maxAge: 3600 }))
   }
+  app.use('/', createSupersededBadgeRouter(manifest))
 
   const renderToHtml = async (data: RenderData, url: string) => {
     const rendered = await render(data, url)
     const template = await getTemplate(options, url, productionTemplate)
+    const clientSsrData: ClientSsrData = {
+      ...data.ssr,
+      glossaryTerms: rendered.glossaryTerms,
+    }
 
+    // Pass the data through functions, so `replace` does not read a `$&` or
+    // `$'` in it as a pattern
     return template
-      .replace('<!--app-head-->', rendered.head + pagePreloads(data.ssr.page))
-      .replace('<!--app-html-->', rendered.html)
       .replace(
-        '<!--ssr-data-->',
-        `window.__SSR_DATA__=${jsonForInlineScript(data.ssr)}`,
+        '<!--app-head-->',
+        () => rendered.head + pagePreloads(data.ssr.page),
       )
-      .replace(
-        '<!--env-data-->',
-        `window.__ENV__=${jsonForInlineScript(getClientEnvData())}`,
-      )
+      .replace('<!--app-html-->', () => rendered.html)
+      .replace('<!--ssr-data-->', () => jsonForInlineScript(clientSsrData))
+      .replace('<!--env-data-->', () => jsonForInlineScript(getClientEnvData()))
+      .replace('<!--theme-script-->', () => themeScript)
   }
 
   app.use(timeout('25s'))

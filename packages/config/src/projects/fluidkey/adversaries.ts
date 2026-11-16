@@ -1,4 +1,5 @@
 import {
+  ADVICE_SNIPPETS as A,
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
@@ -26,9 +27,6 @@ export function fluidkeyAdversaries(accounts: number) {
           'Each payment reaches a fresh Safe, and nothing onchain names the account behind it.',
         exposureContinued:
           "A send that draws from several of the user's Safes shows onchain that they belong together.",
-        advice: S.freshReceive(
-          'label payments by payer and send from one label at a time',
-        ),
         sources: [
           {
             title: 'Counterfactual receiving Safe and one-time stealth signer',
@@ -49,8 +47,6 @@ export function fluidkeyAdversaries(accounts: number) {
         exposureShort: `At least ${accounts.toLocaleString('en-US')} accounts have claimed Fluidkey's 'score' token, giving a lower bound of the anonymity set.`,
         exposureContinued:
           "A Safe looks like any new address until Fluidkey's relayer spends from it or deposits its funds for auto-earn. A claimed score sits on its own stealth address that holds nothing else, and its amount grows partly with the account's balance.",
-        advice:
-          'Ask for a new address for each payment, also when it arrives on another chain.',
         sources: [
           {
             contract: 'FluidkeyScore',
@@ -87,11 +83,9 @@ export function fluidkeyAdversaries(accounts: number) {
           "Alchemy, behind Fluidkey's proxy, receives the Safes the app shows and can group those of one account.",
         exposureContinued:
           "Without Tor, the proxy can also pass it the user's IP. A payer who looks up the user's name gives their RPC the name and the new Safe. A Google, Apple, email or Farcaster login hands the identity to Privy, whose code then creates the signature the user's keys come from.",
-        advice:
-          'Run the app in Tor Browser. Share a fresh Safe address instead of the name, and connect a wallet rather than a Google, Apple, email or Farcaster login.',
         sources: [
           {
-            title: 'Served app, build entrypoint-908cd83c (checked 2026-10-30)',
+            title: 'Served app, build entrypoint-4e96d22b (checked 2026-11-11)',
             url: 'https://app.fluidkey.com',
           },
           {
@@ -129,8 +123,6 @@ export function fluidkeyAdversaries(accounts: number) {
         sentiment: 'good',
         exposureShort: S.noAnnouncement,
         exposureContinued: S.walletSignatureAccounts('plus a four-digit PIN'),
-        advice:
-          'Connect a new wallet that has never sent a transaction instead of a Google, Apple, email or Farcaster login.',
         sources: [
           {
             title: 'Stealth signer depends on a hashed shared secret',
@@ -152,5 +144,23 @@ export function fluidkeyAdversaries(accounts: number) {
         ],
       },
     },
+    advice: [
+      {
+        name: 'Sign in',
+        text: `${A.torBrowser} Connect a new wallet that has never sent a transaction, not a Google, Apple, email or Farcaster login.`,
+        against: ['networkObserver', 'futureAdversary'],
+        outside: true,
+      },
+      {
+        name: 'Receive',
+        text: 'Share a fresh Safe address for each payment instead of your name. Use a new one for each chain as well. Label payments by payer.',
+        against: ['publicObserver', 'chainAnalyst', 'networkObserver'],
+      },
+      {
+        name: 'Spend',
+        text: 'Send from one label at a time, to destinations with no public link to you.',
+        against: ['publicObserver'],
+      },
+    ],
   })
 }

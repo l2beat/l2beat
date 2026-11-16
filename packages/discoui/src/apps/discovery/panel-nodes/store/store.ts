@@ -3,6 +3,7 @@ import { persist } from 'zustand/middleware'
 import type { Actions } from './actions/Actions'
 import { alignSelected, distributeSelected } from './actions/align'
 import { applyStoredLayout } from './actions/applyStoredLayout'
+import { arrange } from './actions/arrange'
 import { groupSelected, renameGroup, ungroupSelected } from './actions/group'
 import { redo, undo } from './actions/history'
 import { loadNodes } from './actions/loadNodes'
@@ -20,6 +21,7 @@ import {
   hideUnreachable,
   layout,
   setPreferences,
+  setSpacePressed,
   setTool,
   showHidden,
 } from './actions/other'
@@ -72,6 +74,7 @@ const INITIAL_STATE: State = {
   projectId: '',
   userPreferences: DEFAULT_USER_PREFERENCES,
   loaded: false,
+  loadCount: 0,
 }
 
 if (typeof localStorage !== 'undefined') {
@@ -97,11 +100,13 @@ export const useStore = create<StoreState>()(
       showHidden: wrapUndoableAction(set, showHidden),
       clear: wrapHistoryResetAction(set, clear),
       layout: wrapUndoableAction(set, layout),
+      arrange: wrapUndoableAction(set, arrange),
       applyStoredLayout: wrapAction(set, applyStoredLayout),
       selectAndFocus: wrapAction(set, selectAndFocus),
       registerViewportContainer: wrapAction(set, registerViewportContainer),
       setPreferences: wrapAction(set, setPreferences),
       setTool: wrapAction(set, setTool),
+      setSpacePressed: wrapAction(set, setSpacePressed),
 
       onKeyDown: wrapUndoableAction(set, onKeyDown),
       onKeyUp: wrapAction(set, onKeyUp),

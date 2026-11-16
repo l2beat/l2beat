@@ -1,5 +1,5 @@
 import { formatInteger } from '@l2beat/shared-pure'
-import { Badge } from '~/components/badge/Badge'
+import { Badge, badgeVariants } from '~/components/badge/Badge'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { Callout } from '~/components/Callout'
@@ -47,7 +47,7 @@ export function AnonymitySetCell({ anonymitySet }: Props) {
         <TooltipTrigger asChild>
           <button
             type="button"
-            className="font-medium text-secondary text-xs leading-[15px] md:text-sm md:leading-[1.2]"
+            className={badgeVariants({ type: 'gray', size: 'small' })}
           >
             Too small
           </button>
@@ -115,8 +115,8 @@ export function AnonymitySetCell({ anonymitySet }: Props) {
                 </ol>
               </div>
               <p className="border-purple-450/30 border-t pt-2">
-                Network, browser and RPC choices matter too. See the onchain
-                privacy best practices.
+                Network, browser and RPC choices matter too. Each project page
+                gives its advice under How to stay private.
               </p>
             </div>
           }

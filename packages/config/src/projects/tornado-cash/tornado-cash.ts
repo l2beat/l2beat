@@ -20,7 +20,7 @@ import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { getTokenByAddress } from '../../tokens/getTokenByAddress'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
-import { tornadoCashAdversaries } from './adversaries'
+import { RECIPE, tornadoCashAdversaries } from './adversaries'
 
 const discovery = new ProjectDiscovery('tornado-cash')
 
@@ -80,14 +80,13 @@ const stakeLockPeriod = formatSeconds(
   voteExtendTime + executionExpiration + executionDelay,
 )
 
-// The IPFS app pinned on tornadocash.eth. L2BEAT rebuilt this CID from
-// tornado-dao/classic-ui 17c54dae with the DAO's Docker recipe
-// (tornado-dao/tornado-ipfs-ui d2aa401) on 2026-10-10. Two download fixes, not
-// build inputs: apt from archive.debian.org (Debian 11 is end of life) and kubo
-// v0.29.0 from GitHub with its sha512. A new pin fails this assert until the
-// new release is rebuilt and the reproducibility text is checked.
+// The IPFS app pinned on tornadocash.eth by proposal 73. ETHBEAT rebuilt this
+// CID from torndao777-eng/classic-ui 8af0abd with verificationSteps-app.md
+// (the DAO's recipe with two download fixes) on 2026-11-13. A new pin fails
+// this assert until verificationSteps-app.md rebuilds it and the
+// reproducibility text is checked.
 const REBUILT_APP_CID =
-  'bafybeigduniojgqrz7e4vntsgmovdli3oi7a2pnzzvz2gfxlvj3yqwk75a'
+  'bafybeiayu2srl6owm6tdbik6uabcpjlji4u32dtph4yrwakreklcfprkou'
 const appCid = contenthashToCid(
   discovery.getContractValue<string>(
     'GovernanceProposalStateUpgrade',
@@ -172,7 +171,8 @@ export const tornadoCash: BaseProject = {
       websites: ['https://app.ens.domains/tornadocash.eth?tab=records'],
       repositories: [
         'https://github.com/tornadocash/tornado-core',
-        'https://github.com/tornado-dao/classic-ui',
+        // the fork that holds the pinned app's commit, linked at that commit
+        'https://github.com/torndao777-eng/classic-ui/tree/8af0abd14d7eeb734f943b968ce687cb5946eac6',
       ],
       socialMedia: ['https://t.me/TornadoCashOfficialDAO'],
     },
@@ -287,9 +287,14 @@ export const tornadoCash: BaseProject = {
       name: 'Tornado Cash classic app',
       url: 'https://explorer.ens.domains/tornadocash.eth/records',
       since: '2026-10-13',
+      delivery: {
+        type: 'pinned',
+        pin: { type: 'ipfs', cid: appCid },
+        rebuild: RECIPE,
+      },
       source: {
-        repository: 'https://github.com/tornado-dao/classic-ui',
-        commit: '17c54dae9ad91bb3c6d62a7860df6cd365ab76d4',
+        repository: 'https://github.com/torndao777-eng/classic-ui',
+        commit: '8af0abd14d7eeb734f943b968ce687cb5946eac6',
       },
       checkedApps: [
         {
@@ -304,6 +309,13 @@ export const tornadoCash: BaseProject = {
       ],
     },
     trackedOn: ['ethereum'],
+    // Chains the pinned classic-ui serves (networkConfig.js).
+    runsOn: [
+      ProjectId('arbitrum'),
+      ProjectId('gnosis'),
+      ProjectId('optimism'),
+      ProjectId('polygon-pos'),
+    ],
     tokens: getPrivacyTokens(),
     relayerTracking: {
       type: 'onchainEvents',
@@ -328,7 +340,7 @@ export const tornadoCash: BaseProject = {
         'The circuits, contracts, app and relayer are open source. Each app release names its commit and a build recipe for its IPFS hash, and rebuilding the current release reproduces it.',
     },
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.fixedAmounts],
-    adversaries: tornadoCashAdversaries(upgradeDelay),
+    adversaries: tornadoCashAdversaries(upgradeDelay, REBUILT_APP_CID),
     riskSummary: readProjectMarkdown('tornado-cash', 'riskSummary', {
       upgradeDelay,
     }),
@@ -371,7 +383,7 @@ export const tornadoCash: BaseProject = {
           'Governance token': `\`TORN\`, 1 token = 1 vote, delegated. Total supply: **${formatNumber(Number(tornTotalSupply / 10n ** 18n))} TORN**, DAO-owned TORN (unavailable for voting): **${formatNumber(Number(tornTreasury / 10n ** 18n))} TORN**, staked for voting: **${formatNumber(Number(tornStaked / 10n ** 18n))} TORN**, the rest is circulating supply.`,
           'Stake lock': `After voting or proposing, staked tokens are locked for **${stakeLockPeriod}** after proposal ends, preventing governance hopping.`,
           'Voting venue':
-            '[Governance contract](https://etherscan.io/address/0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) on Ethereum. Proposals are viewable on the governance page of the app, see the App section above.',
+            '[Governance contract](https://etherscan.io/address/0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) on Ethereum. Proposals are viewable on the [governance page](https://tornadocash.eth.limo/governance) of the app, see the App section above.',
           'Proposal threshold': `**${formatNumber(Number(proposalThreshold / 10n ** 18n))} TORN** locked in governance.`,
           Quorum: `**${formatNumber(Number(quorumVotes / 10n ** 18n))} TORN**, with a simple majority required for acceptance.`,
           'Execution model': `**Permissionless execution after an onchain vote and timelock.** An accepted proposal waits ${formatSeconds(executionDelay)} and can then be executed by anyone within ${formatSeconds(executionExpiration)}. Proposal executable payload is committed in the \`propose()\` transaction.`,

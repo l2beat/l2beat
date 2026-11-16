@@ -59,8 +59,10 @@ export function renderContractsSection(
     hasImpactfulChanges(Object.values(props.contracts).flat())
       ? note(CONTRACTS_UPDATED_NOTE)
       : '',
-    renderDiagram(props.diagram),
+    // Same order as the page: status before the banner and the entries.
+    renderRisks(props.risks, DEPLOYMENT_RISKS_INTRO),
     renderDiscoUi(props.discoUi),
+    renderDiagram(props.diagram),
     ...Object.entries(props.contracts).map(([chain, contracts]) =>
       subsection(
         level,
@@ -68,7 +70,6 @@ export function renderContractsSection(
         renderContractList(contracts, 'contracts', level + 1),
       ),
     ),
-    renderRisks(props.risks, DEPLOYMENT_RISKS_INTRO),
     renderProgramHashesSubsection(props, level),
   ])
 }
@@ -111,7 +112,7 @@ export function renderPermissionsSection(
 /** The HTML banner above the section; DA pages link Disco nowhere else. */
 function renderDiscoUi(discoUi: { href: string } | undefined) {
   if (!discoUi) return ''
-  return `Explore these contracts and permissions in Disco, L2BEAT's contract explorer: ${discoUi.href}`
+  return `Explore these contracts and permissions in Disco, ETHBEAT's contract explorer: ${discoUi.href}`
 }
 
 function hasImpactfulChanges(contracts: TechnologyContract[]) {

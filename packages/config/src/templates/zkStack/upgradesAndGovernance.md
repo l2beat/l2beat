@@ -3,7 +3,7 @@ The standard path involves a governance proposal and voting through the DAO, mul
 The emergency path allows for contract upgrades without any delay by the EmergencyUpgradeBoard, which acts as a 3/3 Multisig between SecurityCouncil, Guardians and the FoundationMultisig.
 ## Standard path
 ### On ZKsync Era
-Delegates can start new proposals by reaching a threshold of {{protocolStartProposalThresholdM}}M ZK tokens on the ZKsync Era Rollup's ZkProtocolGovernor contract.
+Delegates can start new proposals by reaching a threshold of {{protocolStartProposalThresholdM}}M ZK tokens on the ZKsync Era Rollup's ZkProtocolGovernor contract. Proposals are voted on in the [ZKsync governance portal](https://vote.zknation.io/dao).
 This launches a {{protVotingDelayS}} 'voting delay' after which the {{protVotingPeriodS}} voting period starts. During these first two periods, the proposal can be canceled by the proposer or if it falls below the proposing threshold.
 A proposal is only successful if it reaches both quorum ({{protocolQuorumM}}M ZK tokens) and simple majority. When it reaches quorum, a remaining voting period of {{protLateQuorumVoteExtensionS}} is guaranteed by a potential late quorum vote extension.
 In the successful case, it can be queued in the {{protTlMinDelayS}} timelock which forwards it via the Gateway to Ethereum as an L2->L1 log.

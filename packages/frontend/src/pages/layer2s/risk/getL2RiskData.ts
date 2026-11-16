@@ -5,6 +5,7 @@ import { getL2RiskEntries } from '~/server/features/layer2s/risks/getL2RiskEntri
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
+import { getBadgeLookup } from '~/utils/project/getBadgeWithParams'
 
 export async function getL2RiskData(
   req: Request,
@@ -27,9 +28,9 @@ export async function getL2RiskData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        name: 'Risk Analysis',
+        name: 'Risk analysis',
         description:
-          'Understand the risks of Ethereum scaling solutions using L2BEAT’s assessments.',
+          'Understand the risks of Ethereum scaling solutions using ETHBEAT’s assessments.',
         url: req.originalUrl,
         openGraph: {
           image: '/meta-images/layer2s/risks/overview/opengraph-image.png',
@@ -41,6 +42,7 @@ export async function getL2RiskData(
       props: {
         ...appLayoutProps,
         entries,
+        badgeLookup: getBadgeLookup(entries),
       },
     },
   }

@@ -78,7 +78,7 @@ function renderWalkAway(walkAway: StageProps['walkAway']) {
   return `**${verdict}**: ${explanation}`
 }
 
-/** Without it, the stage would read as covering components L2BEAT did not assess. */
+/** Without it, the stage would read as covering components ETHBEAT did not assess. */
 function renderScopeOfAssessment(
   scope: ProjectScalingScopeOfAssessment | undefined,
   level: number,

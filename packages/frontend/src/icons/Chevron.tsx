@@ -7,7 +7,6 @@ export function ChevronIcon(props: SvgIconProps) {
       width="16"
       height="16"
       viewBox="0 0 16 16"
-      aria-label="Chevron icon"
       fill="currentColor"
       {...props}
     >

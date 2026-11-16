@@ -3,6 +3,15 @@ import { normalizeSeries, type ValuePoint } from './normalizeSeries'
 
 const SECONDS_PER_YEAR = 365 * UnixTime.DAY
 
+export interface Exposure {
+  /** USD·years */
+  value: number
+  /** Start of the value data within the interval: `from`, or the first sample if later */
+  since: number
+  /** From `since` to `to`, so `value / years` is the average value */
+  years: number
+}
+
 /**
  * Value secured between `from` and `to`, in USD·years: the trapezoid integral
  * of the series. Time before the first sample counts as zero and the last
@@ -12,9 +21,10 @@ export function calculateExposure(
   series: ValuePoint[],
   from: number,
   to: number,
-): number | null {
+): Exposure | null {
   const points = normalizeSeries(series, to)
-  if (points.length === 0) {
+  const first = points[0]
+  if (!first) {
     return null
   }
 
@@ -41,7 +51,12 @@ export function calculateExposure(
       integral += ((a.value + b.value) / 2) * (b.timestamp - a.timestamp)
     }
   }
-  return integral / SECONDS_PER_YEAR
+  const since = Math.max(from, first.timestamp)
+  return {
+    value: integral / SECONDS_PER_YEAR,
+    since,
+    years: Math.max(to - since, 0) / SECONDS_PER_YEAR,
+  }
 }
 
 function interpolate(

@@ -26,7 +26,7 @@ Losing the note secret and latest signed balance that are saved by the app loses
 
 ### App
 
-OA Chat is a hosted browser app with local build instructions. It fetches the whole note tree and proves in the browser. It relays inference and chain reads through a proxy at refraction.network by default, with a fallback to direct connections. The hosted build serves the [public source](https://github.com/OpenAnonymity/oa-chat/tree/a2623612c17bea09d5efaf8f41b500fe98fb1c8a) with a private layer for the sign-in pages, including Google sign-in, and Fathom analytics.
+OA Chat is a hosted browser app with local build instructions. It fetches the whole note tree and proves in the browser. It relays inference and chain reads through a proxy at refraction.network by default, with a fallback to direct connections. The hosted build serves the [public source](https://github.com/OpenAnonymity/oa-chat/tree/6c6046141f8b2cf4e4ba9e6967a7fa4dfcff716d) with a private layer for the sign-in pages, including Google sign-in, and Fathom analytics.
 
 ### Providers and verifier
 

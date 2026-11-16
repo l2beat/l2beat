@@ -79,7 +79,7 @@
     },
     "latestStakingQueueConfigUpdate": {
       "description": "Latest owner-set validator entry-queue configuration. If absent, the deployment configuration in constructorArgs is still in effect.",
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "event",
         "select": "config",
@@ -135,6 +135,7 @@
     },
     "getSlasher": {
       "description": "Active Slasher authorized by this rollup.",
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
@@ -145,7 +146,7 @@
     },
     "getPendingSlasher": {
       "description": "Queued replacement Slasher and the timestamp at which anyone can finalize the replacement.",
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "getLegacySlasher": {
       "description": "Outgoing Slasher and the timestamp until which it remains authorized after replacement.",

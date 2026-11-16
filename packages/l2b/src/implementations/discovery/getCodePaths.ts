@@ -104,7 +104,7 @@ function fileNameToOrder(name: string) {
     return 0
   }
   if (ending !== undefined && isIntegerString(ending)) {
-    return Number.parseInt(ending)
+    return Number.parseInt(ending, 10)
   }
   return ending === undefined ? 1 : 2
 }

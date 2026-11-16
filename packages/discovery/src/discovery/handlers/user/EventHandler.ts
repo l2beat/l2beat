@@ -21,7 +21,7 @@ interface LogRow {
 }
 
 function oneOrMany<T>(schema: Validator<T>): Validator<T | T[]>
-// @ts-ignore We allow this error for simplicity of use
+// @ts-expect-error We allow this error for simplicity of use
 function oneOrMany<T>(schema: Parser<T>): Parser<T | T[]>
 function oneOrMany<T>(schema: Validator<T>): Validator<T | T[]> {
   return v.union([schema, v.array(schema)])
@@ -404,5 +404,5 @@ function isNumber(str: string): boolean {
   if (trimmed === '') return false
 
   const num = Number(trimmed)
-  return !isNaN(num) && isFinite(num)
+  return Number.isFinite(num)
 }

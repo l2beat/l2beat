@@ -110,12 +110,15 @@ function TooltipSection({
             </Markdown>
           )}
           {href && (
-            <CustomLink
-              href={href}
-              className="mt-1 inline-block text-label-value-13"
-            >
-              View details
-            </CustomLink>
+            <>
+              {' '}
+              <CustomLink
+                href={href}
+                className="mt-1 inline-block text-label-value-13"
+              >
+                View details
+              </CustomLink>
+            </>
           )}
         </div>
       </div>

@@ -3,7 +3,7 @@ import type {
   ProjectZkCatalogInfo,
   TrustedSetup,
 } from '@l2beat/config'
-import { formatInteger } from '@l2beat/shared-pure'
+import { formatCount } from '@l2beat/shared-pure'
 import type { TrustedSetupRisk } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
 
 /** A trusted setup, or the 'None' placeholder for projects without a ZK system. */
@@ -61,12 +61,10 @@ function getTrustedSetupLabel(
   >,
 ): string | undefined {
   if (trustedSetup.participantCount !== undefined) {
-    return `${formatInteger(trustedSetup.participantCount)} participants`
+    return formatCount(trustedSetup.participantCount, 'participant')
   }
   if (trustedSetup.contributionCount !== undefined) {
-    const unit =
-      trustedSetup.contributionCount === 1 ? 'contribution' : 'contributions'
-    return `${formatInteger(trustedSetup.contributionCount)} ${unit}`
+    return formatCount(trustedSetup.contributionCount, 'contribution')
   }
   return trustedSetup.risk === 'None' || trustedSetup.risk === 'N/A'
     ? trustedSetup.name

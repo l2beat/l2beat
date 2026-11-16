@@ -11,5 +11,12 @@ export function PizzaElementLink({
 }) {
   if (disableSectionLinking || !elementValue.href) return children
 
-  return <a href={elementValue.href}>{children}</a>
+  return (
+    <a
+      href={elementValue.href}
+      aria-label={`${elementValue.name}: ${elementValue.value}`}
+    >
+      {children}
+    </a>
+  )
 }

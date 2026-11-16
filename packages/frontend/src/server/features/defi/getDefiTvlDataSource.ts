@@ -7,7 +7,7 @@ export interface DefiTvlDataSource {
   scope?: string
 }
 
-/** Returns undefined for L2BEAT's own data, which needs no attribution. */
+/** Returns undefined for our own data, which needs no attribution. */
 export function getDefiTvlDataSource(
   tvl: ProjectDefiTvlConfig,
 ): DefiTvlDataSource | undefined {

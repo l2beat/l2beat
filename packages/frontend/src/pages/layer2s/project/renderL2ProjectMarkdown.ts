@@ -121,6 +121,10 @@ function getFacts({
       value: header.activity
         ? `${formatActivityCount(header.activity.lastDayUops)} (${formatChange(header.activity.uopsWeeklyChange, header.activity.uopsWeeklyChangePeriod)})`
         : NO_DATA,
+      // The HTML shows it next to the value of a project that stopped syncing.
+      warnings: compact([header.activity?.syncWarning]).map((w) =>
+        withSentiment(w, 'warning'),
+      ),
     },
     stageConfig.stage !== 'NotApplicable' && {
       label: 'Stage',
@@ -146,6 +150,10 @@ function getFacts({
     header.chainId !== undefined && {
       label: 'Chain ID',
       value: String(header.chainId),
+    },
+    header.privacyProjects.length > 0 && {
+      label: 'Privacy projects',
+      value: header.privacyProjects.map((project) => project.name).join(', '),
     },
   ])
 }

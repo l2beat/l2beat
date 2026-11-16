@@ -6,7 +6,7 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ChartRange } from '~/utils/range/range'
-import { PrivacyBestPracticesBanner } from './components/PrivacyBestPracticesBanner'
+import { PrivacyAdviceBanner } from './components/PrivacyAdviceBanner'
 import { PrivacySummaryChartsSection } from './components/PrivacySummaryChartsSection'
 import { PrivacySummaryTables } from './components/PrivacySummaryTables'
 import type { PrivacyTvlBreakdownProject } from './components/PrivacyTvlBreakdownChart'
@@ -16,7 +16,6 @@ interface Props extends AppLayoutProps {
   groups: PrivacySummaryGroup[]
   chartProjects: PrivacyTvlBreakdownProject[]
   defaultChartRange: ChartRange
-  bestPracticesBannerImageUrl: string
   queryState: DehydratedState
 }
 
@@ -24,7 +23,6 @@ export function PrivacySummaryPage({
   groups,
   chartProjects,
   defaultChartRange,
-  bestPracticesBannerImageUrl,
   queryState,
   ...props
 }: Props) {
@@ -40,9 +38,7 @@ export function PrivacySummaryPage({
             defaultRange={defaultChartRange}
           />
           <PrivacySummaryTables groups={groups} />
-          <PrivacyBestPracticesBanner
-            backgroundImage={bestPracticesBannerImageUrl}
-          />
+          <PrivacyAdviceBanner />
         </SideNavLayout>
       </HydrationBoundary>
     </AppLayout>

@@ -101,6 +101,9 @@ describe(StarknetPrivacyFlowIndexer.name, () => {
           blockProvider,
           starknetClient,
           db: mockDatabase({
+            syncMetadata: mockObject<Database['syncMetadata']>({
+              updateSyncedUntil: mockFn().resolvesTo(undefined),
+            }),
             privacyBlockTimestamp: privacyBlockTimestampRepo,
             privacyPrice: privacyPriceRepo,
             privacyFlowEvent: privacyFlowEventRepo,

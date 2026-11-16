@@ -82,7 +82,7 @@ function decodeParsed(
     elements = type.tupleElements
   }
   if (type.arrayElement) {
-    const length = Number.parseInt(sliceBytes(encoded, 0, 32))
+    const length = Number.parseInt(sliceBytes(encoded, 0, 32), 16)
     if (length > 1_000_000) {
       throw new Error('Invalid encoding')
     }
@@ -99,7 +99,9 @@ function decodeParsed(
       const bytes = sliceBytes(encoded, offset * 32, end * 32)
       staticData.push(bytes)
       offset = end
-      dynamicOffsets.push(element.dynamic ? Number.parseInt(bytes) : undefined)
+      dynamicOffsets.push(
+        element.dynamic ? Number.parseInt(bytes, 16) : undefined,
+      )
       hasDynamic ||= element.dynamic
     }
     offset *= 32
@@ -173,7 +175,7 @@ function decodeParsed(
     return { ...common, value: value ? 'true' : 'false' }
   }
   if (type.type.startsWith('bytes')) {
-    const size = Number.parseInt(type.type.slice('bytes'.length))
+    const size = Number.parseInt(type.type.slice('bytes'.length), 10)
     const suffix = sliceBytes(encoded, size)
     if (!isZeroed(suffix)) {
       throw new Error('Invalid encoding')
@@ -223,7 +225,7 @@ function decodeBytes(type: string, encoded: `0x${string}`) {
   if (encoded.length < 66) {
     throw new Error(`Invalid encoding, ${type} too short`)
   }
-  const length = Number.parseInt(sliceBytes(encoded, 0, 32))
+  const length = Number.parseInt(sliceBytes(encoded, 0, 32), 16)
   const bytesEnd = 32 + length
   const alignmentEnd = alignTo32(bytesEnd)
   const bytes = sliceBytes(encoded, 32, bytesEnd)
@@ -351,7 +353,7 @@ function parseTypeName(tokens: string[]): ParsedType {
       }
       continue
     }
-    const length = Number.parseInt(expect(tokens))
+    const length = Number.parseInt(expect(tokens), 10)
     expect(tokens, ']')
     parsed = {
       type: `${parsed.type}[${length}]`,

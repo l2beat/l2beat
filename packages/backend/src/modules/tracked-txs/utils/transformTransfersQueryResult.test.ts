@@ -84,6 +84,8 @@ describe(transformTransfersQueryResult.name, () => {
         gas_used: 100,
         data_length: 100,
         non_zero_bytes: 60,
+        is_self_transfer: false,
+        has_value: false,
         blob_versioned_hashes: ['0x1'],
       },
       {
@@ -96,6 +98,8 @@ describe(transformTransfersQueryResult.name, () => {
         gas_used: 200,
         data_length: 200,
         non_zero_bytes: 150,
+        is_self_transfer: false,
+        has_value: false,
         blob_versioned_hashes: null,
       },
       {
@@ -108,6 +112,8 @@ describe(transformTransfersQueryResult.name, () => {
         gas_used: 300,
         data_length: 300,
         non_zero_bytes: 200,
+        is_self_transfer: false,
+        has_value: false,
         blob_versioned_hashes: ['0x1'],
       },
     ]
@@ -236,6 +242,8 @@ describe(transformTransfersQueryResult.name, () => {
         gas_used: 100,
         data_length: 100,
         non_zero_bytes: 60,
+        is_self_transfer: false,
+        has_value: false,
         blob_versioned_hashes: ['0x1'],
       },
       // After Pectra - high compute
@@ -249,6 +257,8 @@ describe(transformTransfersQueryResult.name, () => {
         gas_used: 200,
         data_length: 200,
         non_zero_bytes: 150,
+        is_self_transfer: false,
+        has_value: false,
         blob_versioned_hashes: null,
       },
       // After Pectra - low compute
@@ -262,6 +272,8 @@ describe(transformTransfersQueryResult.name, () => {
         gas_used: 300,
         data_length: 10_000,
         non_zero_bytes: 200,
+        is_self_transfer: false,
+        has_value: false,
         blob_versioned_hashes: ['0x1'],
       },
     ]
@@ -347,6 +359,8 @@ describe(transformTransfersQueryResult.name, () => {
         gas_used: 100,
         data_length: 100,
         non_zero_bytes: 60,
+        is_self_transfer: false,
+        has_value: false,
         blob_versioned_hashes: ['0x1'],
       },
     ]

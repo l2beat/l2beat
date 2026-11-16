@@ -23,5 +23,11 @@
     "hash": "0xf5024ac4eb50233c89b413be0a009ce68c921f1dad29809c3e5a3551b074ca6e",
     "address": "eth:0x24105e6697AdD9B4B1BDE04079a91BDFCCa24A47",
     "blockNumber": 25531244
+  },
+  "CairoBootloaderProgram_2026_14": {
+    "hash": "0x37ff2e31997913a2fe3a3c085e71df4fcdbbfe4be822bbc0454ab6c29953c877",
+    "address": "eth:0x8ad2429Dbd77ECe844ED28222b26798A9449C2F3",
+    "chain": "ethereum",
+    "blockNumber": 26385000
   }
 }

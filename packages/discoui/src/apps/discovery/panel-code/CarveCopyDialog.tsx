@@ -117,7 +117,7 @@ export function CarveCopyDialog(props: CarveCopyDialogProps) {
                 <span
                   className={cn(
                     'text-xs',
-                    isSelected ? 'text-black/50' : 'text-coffee-400',
+                    isSelected ? 'text-black/50' : 'text-coffee-300',
                   )}
                 >
                   {declaration.lineCount}

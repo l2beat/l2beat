@@ -6,8 +6,16 @@ import {
   executeMatchFlat,
 } from '../../../api/api'
 
+export type CommandName =
+  | 'discovery'
+  | 'templateMatch'
+  | 'projectMatch'
+  | 'shapeDownload'
+  | 'minterSearch'
+
 interface CommandState {
   inFlight: boolean
+  name?: CommandName
   stream?: EventSource
   settle?: (ok: boolean) => void
 
@@ -52,29 +60,34 @@ export const useTerminalStore = create<TerminalState>((set, get) => ({
           stream: undefined,
           settle: undefined,
           inFlight: false,
+          name: undefined,
         },
       }
     }),
   matchFlat: (project: string, address: string) => {
-    void executeStreaming(get, set, () =>
+    void executeStreaming(get, set, 'templateMatch', () =>
       executeMatchFlat(project, address, 'templates'),
     )
   },
   matchProject: (project: string, address: string) => {
-    void executeStreaming(get, set, () =>
+    void executeStreaming(get, set, 'projectMatch', () =>
       executeMatchFlat(project, address, 'projects'),
     )
   },
   downloadAllShapes: () => {
-    void executeStreaming(get, set, () => executeDownloadAllShapes())
+    void executeStreaming(get, set, 'shapeDownload', () =>
+      executeDownloadAllShapes(),
+    )
   },
   discover: (project: string): Promise<boolean> => {
-    return executeStreaming(get, set, () =>
+    return executeStreaming(get, set, 'discovery', () =>
       executeDiscover(project, get().command.devMode),
     )
   },
   findMinters: (address: string) => {
-    void executeStreaming(get, set, () => executeFindMinters(address))
+    void executeStreaming(get, set, 'minterSearch', () =>
+      executeFindMinters(address),
+    )
   },
 }))
 
@@ -83,6 +96,7 @@ function executeStreaming(
   set: (
     update: (state: TerminalState) => TerminalState | Partial<TerminalState>,
   ) => void,
+  name: CommandName,
   cmd: () => EventSource,
 ) {
   return new Promise<boolean>((resolve) => {
@@ -103,6 +117,7 @@ function executeStreaming(
           stream: cmd(),
           settle: resolve,
           inFlight: true,
+          name,
         }
         stream = newCommand.stream
         return { command: newCommand }
@@ -140,6 +155,7 @@ function executeStreaming(
             stream: undefined,
             settle: undefined,
             inFlight: false,
+            name: undefined,
           },
         }))
         // Exit code 0 means success, anything else is failure
@@ -154,6 +170,7 @@ function executeStreaming(
           stream: undefined,
           settle: undefined,
           inFlight: false,
+          name: undefined,
         },
       }))
       resolve(false)

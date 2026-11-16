@@ -4,6 +4,7 @@ import { IconChevronRight } from '../../../icons/IconChevronRight'
 
 export function Folder(props: {
   title: string
+  count?: number
   children: ReactNode
   collapsed?: boolean
   expand?: boolean
@@ -22,6 +23,11 @@ export function Folder(props: {
         {open && <IconChevronDown className="size-3 shrink-0" />}
         {!open && <IconChevronRight className="size-3 shrink-0" />}
         {props.title}
+        {props.count !== undefined && (
+          <span className="font-normal text-coffee-400 tabular-nums">
+            {props.count}
+          </span>
+        )}
       </button>
       {open && props.children}
     </div>

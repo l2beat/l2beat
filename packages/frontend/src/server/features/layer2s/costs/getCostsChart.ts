@@ -1,4 +1,4 @@
-import type { AggregatedL2CostRecord } from '@l2beat/database'
+import type { SummedL2CostRecord } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
@@ -10,7 +10,6 @@ import {
 } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { getChartStartTimestamp } from '../../utils/getChartStartTimestamp'
-import { addIfDefined } from './utils/addIfDefined'
 import { getCostsExpectedTimestamp } from './utils/getCostsExpectedTimestamp'
 import { CostsProjectsFilter, getCostsProjects } from './utils/getCostsProjects'
 import { isCostsSynced } from './utils/isCostsSynced'
@@ -67,7 +66,11 @@ export async function getCostsChart({
 
   const projectIds = projects.map((p) => p.id)
   const [data, firstTimestamp] = await Promise.all([
-    db.aggregatedL2Cost.getByProjectsAndTimeRange(projectIds, range),
+    db.aggregatedL2Cost.getSummedByProjectsAndTimeRange(
+      projectIds,
+      range,
+      resolution,
+    ),
     db.aggregatedL2Cost.getFirstTimestampByProjects(projectIds),
   ])
 
@@ -75,10 +78,10 @@ export async function getCostsChart({
     return { chart: [], hasBlobs: false, syncedUntil: Number.POSITIVE_INFINITY }
   }
 
-  const syncedUntil = data.at(-1)?.timestamp
+  const syncedUntil = data.at(-1)?.lastTimestamp
   assert(syncedUntil, 'syncedUntil is undefined')
 
-  const summedByTimestamp = sumByTimestamp(data, resolution)
+  const summedByTimestamp = toFullySyncedMap(data, resolution)
   const dataStart = UnixTime(Math.min(...summedByTimestamp.keys()))
   const maxTimestamp = UnixTime(Math.max(...summedByTimestamp.keys()))
   const blobsTimestamp = Array.from(summedByTimestamp.entries()).find(
@@ -179,70 +182,14 @@ function getMockCostsChartData({ range }: CostsChartParams): CostsChartData {
   }
 }
 
-function sumByTimestamp(
-  records: AggregatedL2CostRecord[],
+function toFullySyncedMap(
+  records: SummedL2CostRecord[],
   resolution: ChartResolution,
 ) {
-  const result = new Map<
-    number,
-    {
-      blobsGas: number | null
-      blobsGasEth: number | null
-      blobsGasUsd: number | null
-      calldataGas: number
-      calldataGasEth: number
-      calldataGasUsd: number
-      computeGas: number
-      computeGasEth: number
-      computeGasUsd: number
-      overheadGas: number
-      overheadGasEth: number
-      overheadGasUsd: number
-    }
-  >()
-
   const offset = UnixTime.toStartOf(UnixTime.now(), resolution)
-
-  // Dismiss ranges that are not full
-  const fullySyncedRecords = records.filter((r) => r.timestamp < offset)
-
-  for (const record of fullySyncedRecords) {
-    const timestamp = UnixTime.toStartOf(record.timestamp, resolution)
-
-    const existing = result.get(timestamp)
-    if (existing) {
-      result.set(timestamp, {
-        overheadGas: existing.overheadGas + record.overheadGas,
-        overheadGasEth: existing.overheadGasEth + record.overheadGasEth,
-        overheadGasUsd: existing.overheadGasUsd + record.overheadGasUsd,
-        calldataGas: existing.calldataGas + record.calldataGas,
-        calldataGasEth: existing.calldataGasEth + record.calldataGasEth,
-        calldataGasUsd: existing.calldataGasUsd + record.calldataGasUsd,
-        computeGas: existing.computeGas + record.computeGas,
-        computeGasEth: existing.computeGasEth + record.computeGasEth,
-        computeGasUsd: existing.computeGasUsd + record.computeGasUsd,
-        blobsGas: addIfDefined(existing.blobsGas, record.blobsGas),
-        blobsGasEth: addIfDefined(existing.blobsGasEth, record.blobsGasEth),
-        blobsGasUsd: addIfDefined(existing.blobsGasUsd, record.blobsGasUsd),
-      })
-      continue
-    }
-
-    result.set(timestamp, {
-      overheadGas: record.overheadGas,
-      overheadGasEth: record.overheadGasEth,
-      overheadGasUsd: record.overheadGasUsd,
-      calldataGas: record.calldataGas,
-      calldataGasEth: record.calldataGasEth,
-      calldataGasUsd: record.calldataGasUsd,
-      computeGas: record.computeGas,
-      computeGasEth: record.computeGasEth,
-      computeGasUsd: record.computeGasUsd,
-      blobsGas: record.blobsGas ?? null,
-      blobsGasEth: record.blobsGasEth ?? null,
-      blobsGasUsd: record.blobsGasUsd ?? null,
-    })
-  }
-
-  return result
+  return new Map(
+    records
+      .filter((r) => r.timestamp < offset)
+      .map((r) => [r.timestamp, r] as const),
+  )
 }

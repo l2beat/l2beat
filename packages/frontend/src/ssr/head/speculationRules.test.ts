@@ -33,7 +33,7 @@ describe('speculationRules', () => {
 })
 
 function isPage(href: string) {
-  const base = 'https://l2beat.com/layer2s/summary'
+  const base = 'https://ethbeat.org/layer2s/summary'
   const url = new URL(href, base).href
   return !NOT_PAGES.some((pattern) => new URLPattern(pattern, base).test(url))
 }

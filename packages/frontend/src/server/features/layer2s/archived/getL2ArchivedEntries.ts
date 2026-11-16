@@ -7,7 +7,7 @@ import type {
 import type { RosetteValue } from '~/components/rosette/types'
 import type { WalkAwayVerdict } from '~/consts/walkAwayProjects'
 import { getWalkAwayVerdict } from '~/consts/walkAwayProjects'
-import { getL2Risks } from '~/pages/layer2s/utils/getL2Risks'
+import { getL2TableRisks } from '~/pages/layer2s/utils/getL2Risks'
 import { ps } from '~/server/projects'
 import { getProofSystemWithName } from '~/utils/project/getProofSystemWithName'
 import type { ProjectChanges } from '../../projects-change-report/getProjectsChangeReport'
@@ -85,7 +85,7 @@ function getL2ArchivedEntry(
     ),
     purposes: project.scalingInfo.purposes,
     stacks: project.scalingInfo.stacks,
-    risks: getL2Risks(
+    risks: getL2TableRisks(
       project.scalingRisks.stacked ?? project.scalingRisks.self,
     ),
     totalTvs: latestTvs?.breakdown.total,

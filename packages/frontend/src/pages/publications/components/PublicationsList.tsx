@@ -77,25 +77,26 @@ function PublicationsGrid({
   return (
     <div className="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-3">
       <div
-        className="col-span-full row-start-2 flex w-full items-center justify-center gap-6 rounded-lg bg-center bg-cover py-5 pr-8 pl-6 text-white max-md:flex-col"
+        className="col-span-full row-start-2 flex w-full items-center justify-between gap-6 rounded-lg bg-black bg-center bg-cover px-6 py-5 text-pure-white max-md:flex-col max-md:items-start"
         style={{ backgroundImage: `url(${newsletterBgUrl})` }}
       >
-        <div className="space-y-3">
-          <div className="font-bold text-heading-24">
+        <div className="space-y-2">
+          <div className="text-balance font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
             Want to get notified about new publications?
           </div>
-          <div className="font-normal text-paragraph-14">
+          <div className="text-label-value-15 leading-5.5">
             Get the latest insights - covering Ethereum Layer 2 ecosystem
             updates, in-depth research and transparency reports, governance
             proposals, and more.
           </div>
         </div>
         <a
-          className="flex h-fit items-center justify-center whitespace-nowrap rounded-sm bg-white px-6 py-4 font-bold text-label-value-16 text-neutral-900 max-md:w-full"
+          className="flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-md bg-pure-white px-4 py-2.5 font-semibold text-label-value-14 text-neutral-900 leading-4 transition-colors hover:bg-pure-white/90"
           href={externalLinks.substackSubscribe}
           target="_blank"
         >
           Subscribe to our newsletter
+          <CustomLinkIcon className="size-3 fill-current" />
         </a>
       </div>
       {publications.map((publication) => (
@@ -109,7 +110,7 @@ function PublicationCard({ publication }: { publication: PublicationEntry }) {
   return (
     <PlainLink
       href={publication.url}
-      className="group flex flex-col overflow-hidden rounded-lg border border-divider bg-pure-white transition-[border-color,box-shadow] hover:border-brand/40 hover:shadow-[0_6px_20px_-10px] hover:shadow-brand/40 dark:bg-surface-secondary"
+      className="group flex flex-col overflow-hidden rounded-lg border border-divider bg-pure-white transition-colors hover:border-brand/40 dark:bg-surface-secondary"
     >
       <div className="overflow-hidden border-divider border-b">
         <img
@@ -119,17 +120,17 @@ function PublicationCard({ publication }: { publication: PublicationEntry }) {
         />
       </div>
       <div className="flex-1 px-4 pt-4">
-        <p className="text-balance text-heading-18">
+        <p className="text-pretty font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
           {publication.shortTitle ?? publication.title}
         </p>
         {publication.description && (
-          <p className="mt-2 line-clamp-3 text-paragraph-14 text-secondary">
+          <p className="mt-2 line-clamp-3 text-label-value-15 text-secondary leading-5.5">
             {publication.description}
           </p>
         )}
       </div>
       <div className="mx-4 mt-4 flex items-center gap-2 border-divider border-t py-3">
-        <span className="font-bold text-brand text-label-value-12 uppercase">
+        <span className="font-bold text-brand-deep text-label-value-12 uppercase">
           {getPublicationTagLabel(publication.tag)}
         </span>
         <span className="text-label-value-12 text-secondary">

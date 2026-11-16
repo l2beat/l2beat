@@ -8,7 +8,7 @@ export function getGlossaryStructuredData(
   return {
     '@type': 'DefinedTermSet',
     '@id': page.url,
-    name: 'L2BEAT Glossary',
+    name: 'ETHBEAT Glossary',
     url: page.url,
     hasDefinedTerm: entries.map((entry) => ({
       '@type': 'DefinedTerm',

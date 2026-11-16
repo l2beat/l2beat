@@ -20,17 +20,23 @@ export function InteropEntitySelect({
   onChange,
   excludeId,
   placeholder = 'Select project',
+  label,
 }: {
   options: EntitySelectOption[]
   value: string | undefined
   onChange: (id: string) => void
   excludeId: string | undefined
   placeholder?: string
+  /** A combobox's selected value is not its name. */
+  label: string
 }) {
   const selected = options.find((option) => option.id === value)
   return (
     <Select value={value} onValueChange={onChange}>
-      <SelectTrigger className="flex h-10 min-w-0 flex-1 items-center border border-divider bg-surface-primary">
+      <SelectTrigger
+        className="flex h-10 min-w-0 flex-1 items-center border border-divider bg-surface-primary"
+        aria-label={label}
+      >
         <SelectValue placeholder={placeholder}>
           {selected && <EntityLabel option={selected} />}
         </SelectValue>

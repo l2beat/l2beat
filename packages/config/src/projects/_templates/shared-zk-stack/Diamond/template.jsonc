@@ -69,7 +69,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers and, from v31 while Priority Mode is not allowed, pause all new L1 --> L2 transactions including deposits (Chain Admin role)."
         }
       ]
     },
@@ -109,7 +109,7 @@
     },
     "isPermanentRollup": {
       "description": "true means that the DA mode cannot be changed to Validium in the future. compliant DAValidator pairs for the permanent rollup mode are defined/enforced by the RollupDAManager contract.",
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "storage",
         "slot": 57,
@@ -117,7 +117,7 @@
       }
     },
     "isPermanentRollupString": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "storage",
         "slot": 57,
@@ -125,8 +125,37 @@
       },
       "edit": ["format", "UintPermrollupString"]
     },
+    // Priority Mode (escape hatch, v31): `priorityModeInfo` is slot 63 of ZKChainStorage, packed as
+    // (bool canBeActivated, bool activated, address permissionlessValidator); slot 64 is the filterer used in
+    // Priority Mode. Both slots are unused (zero) before v31. The template parses the raw slot.
+    "priorityModeCanBeActivated": {
+      "description": "1 once the chain admin permanently allowed Priority Mode (ZKsync OS permanent rollups only). Then anyone can activate it as soon as the first unprocessed priority transaction is older than 4 days, after which only the shared PermissionlessValidator can settle batches (anyone can submit through it) and only the ChainTypeManager owner can deactivate it.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "storage",
+        "slot": 63,
+        "returnType": "uint8"
+      }
+    },
+    "priorityModeInfo": {
+      "description": "Raw Priority Mode storage: last byte canBeActivated, byte before it activated, then the PermissionlessValidator address.",
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "storage",
+        "slot": 63
+      }
+    },
+    "priorityModeTransactionFilterer": {
+      "description": "TransactionFilterer that replaces the chain's own filterer once Priority Mode is allowed. Set by the ChainTypeManager owner, zero means no filtering.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "storage",
+        "slot": 64,
+        "returnType": "address"
+      }
+    },
     "getDAValidatorPair": {
-      "description": "l1da, l2da",
+      "description": "l1da, l2da (before v31) or l1da, L2 DA commitment scheme (from v31).",
       "severity": "HIGH"
     },
     "getPubdataPricingMode": {

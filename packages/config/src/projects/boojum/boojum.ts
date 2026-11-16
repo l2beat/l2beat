@@ -116,6 +116,12 @@ export const boojum: BaseProject = {
               '0x0DAAB2B7b38ab48712996E760152c569FA356DbF',
             ),
           },
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0x71ef07eB0BaFE5342f7d9513Fe7A544Dc90B8001',
+            ),
+          },
         ],
         verificationStatus: 'notVerified',
       },
@@ -128,6 +134,12 @@ export const boojum: BaseProject = {
             address: ChainSpecificAddress.fromLong(
               'ethereum',
               '0x8470d6B3fd71B5fE3906B4ea04498d18F721eDe9',
+            ),
+          },
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0x870C0A2bd4f253dd867b2239a0d8d86f87D64128',
             ),
           },
         ],

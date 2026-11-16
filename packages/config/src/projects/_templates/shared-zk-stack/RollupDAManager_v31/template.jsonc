@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
+  "description": "Simple registry for allowed DA configurations for the 'rollup' data availability mode (can be permanently enforced with isPermanentRollup=true). A configuration pairs an L1 DA validator, usually a contract that validates that data was made available on Ethereum, with an L2 DA commitment scheme.",
+  "category": "shared",
+  "ignoreRelatives": ["daPairs"],
+  "fields": {
+    "daPairs": {
+      "description": "allowed l1DAValidator and l2DACommitmentScheme pairs. Schemes: 1 EMPTY_NO_DA, 2 PUBDATA_KECCAK256, 3 BLOBS_AND_PUBDATA_KECCAK256, 4 BLOBS_ZKSYNC_OS.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": ["l1DAValidator", "l2DACommitmentScheme", "status"],
+        "add": { "event": "DAPairUpdated", "where": ["=", "#status", true] },
+        "remove": { "event": "DAPairUpdated", "where": ["=", "#status", false] }
+      }
+    },
+    "owner": {
+      "severity": "MEDIUM",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage allowed rollup DA configurations (allowed to be used by rollups in permanent rollup mode)."
+        }
+      ]
+    }
+  }
+}

@@ -1,6 +1,5 @@
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import type { CollectionEntry } from '~/content/getCollection'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -18,7 +17,7 @@ export function GlossaryPage({ glossaryEntries, ...props }: Props) {
       <SideNavLayout>
         <MainPageHeader className="relative z-10">Glossary</MainPageHeader>
         <Header glossaryEntries={glossaryEntries} />
-        <main className="md:-mt-2 mt-0 flex gap-8 border-divider border-t md:border-t-0">
+        <main className="mt-0 flex gap-8 md:mt-8">
           <PrimaryCard className="">
             {glossaryEntries.map((entry) => (
               <GlossaryItem key={entry.id} entry={entry} />
@@ -26,7 +25,6 @@ export function GlossaryPage({ glossaryEntries, ...props }: Props) {
           </PrimaryCard>
           <GlossarySideNav entries={glossaryEntries} />
         </main>
-        <ScrollToTopButton />
       </SideNavLayout>
     </AppLayout>
   )

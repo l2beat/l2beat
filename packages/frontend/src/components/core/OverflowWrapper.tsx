@@ -1,6 +1,6 @@
 import clamp from 'lodash/clamp'
 import type React from 'react'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { useEventCallback } from '~/hooks/useEventCallback'
 import { useEventListener } from '~/hooks/useEventListener'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
@@ -74,13 +74,13 @@ export const OverflowWrapper = ({
     setVisibleArrows(visibleArrows)
   })
 
-  useEffect(updateArrows, [])
-
   useEventListener('scroll', updateArrows, contentRef)
 
   // ResizeObserver callbacks run after layout, so the scroll metrics below
   // are free to read. A window resize listener read them mid-frame and
-  // forced a layout per wrapper on every resize event.
+  // forced a layout per wrapper on every resize event. Their first call, on
+  // observe, also sets the arrows on load; a mount effect would force the
+  // page's first layout inside the hydration task.
   useResizeObserver({ ref: contentRef, onResize: updateArrows })
   useResizeObserver({ ref: childrenRef, onResize: updateArrows })
 
@@ -90,7 +90,7 @@ export const OverflowWrapper = ({
         title="Scroll left"
         onClick={() => onArrowClick('left')}
         className={cn(
-          'pointer-events-none absolute inset-y-0 left-0 z-10 w-6 bg-linear-to-r opacity-0 transition-opacity duration-300',
+          'pointer-events-none absolute inset-y-0 left-0 z-10 w-6 bg-linear-to-r opacity-0 transition-opacity duration-150',
           (visibleArrows === 'left' || visibleArrows === 'both') &&
             'pointer-events-auto opacity-100',
         )}
@@ -104,9 +104,13 @@ export const OverflowWrapper = ({
         ref={mergeRefs(contentRef, ref)}
         className={cn(
           'scrollbar-hide overflow-x-auto',
-          visibleArrows === 'left' && 'fade-out-to-left-[30px]',
-          visibleArrows === 'right' && 'fade-out-to-right-[30px]',
-          visibleArrows === 'both' && 'fade-out-horizontal-[30px]',
+          // The edges fade in with the arrows, known only once laid out,
+          // rather than cutting in.
+          visibleArrows && 'overflow-fade',
+          (visibleArrows === 'left' || visibleArrows === 'both') &&
+            '[--overflow-fade-left:30px]',
+          (visibleArrows === 'right' || visibleArrows === 'both') &&
+            '[--overflow-fade-right:30px]',
           childrenClassName,
         )}
       >
@@ -116,7 +120,7 @@ export const OverflowWrapper = ({
         title="Scroll right"
         onClick={() => onArrowClick('right')}
         className={cn(
-          'pointer-events-none absolute inset-y-0 right-0 z-10 w-6 bg-linear-to-l opacity-0 transition-opacity duration-200',
+          'pointer-events-none absolute inset-y-0 right-0 z-10 w-6 bg-linear-to-l opacity-0 transition-opacity duration-150',
           (visibleArrows === 'right' || visibleArrows === 'both') &&
             'pointer-events-auto opacity-100',
         )}

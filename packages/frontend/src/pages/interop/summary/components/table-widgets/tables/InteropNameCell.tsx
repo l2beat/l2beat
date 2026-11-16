@@ -28,10 +28,10 @@ export function InteropNameCell({
       projectName={shortName ?? name}
       description={description}
     >
-      <TableLink href={`/interop/protocols/${slug}`}>
+      <TableLink href={`/interop/protocols/${slug}`} className="w-auto">
         <TwoRowCell>
           <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
-            <div className="w-fit max-w-[78px] break-words font-bold text-label-value-15 md:leading-none">
+            <div className="w-fit font-bold text-label-value-15 md:leading-none">
               {shortName ?? name}
             </div>
             {subgroup && <SubgroupTooltip subgroup={subgroup} />}

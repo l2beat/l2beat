@@ -67,7 +67,8 @@ export function L2RecategorizedActivityStats({ entries }: Props) {
 const statsMeta = {
   rollups: {
     label: 'Rollups',
-    color: 'var(--chart-fuchsia)',
+    // As in the charts above, where rollups are the pink series.
+    color: 'var(--chart-pink)',
   },
   validiumsAndOptimiums: {
     label: 'Validiums & Optimiums',
@@ -110,7 +111,7 @@ function Stat({
   return (
     <StatCard
       color={statsMeta[type].color}
-      title={`${statsMeta[type].label} Past Day ${metric.toUpperCase()}`}
+      title={statsMeta[type].label}
       isLoading={isLoading}
       footer={
         type !== 'rollups' ? undefined : isLoading ? (
@@ -121,7 +122,7 @@ function Stat({
       }
     >
       <div className="flex min-h-[23px] items-center justify-center md:min-h-7">
-        <div className="whitespace-nowrap font-bold text-heading-20 md:text-heading-24">
+        <div className="whitespace-nowrap font-semibold text-heading-20 tabular-nums tracking-[-0.02em] md:text-heading-24">
           {value !== undefined ? formatActivityCount(value) : 'No data'}
         </div>
       </div>
@@ -132,7 +133,7 @@ function Stat({
 function ScalingFactorTooltip({ metric }: { metric: ActivityMetric }) {
   return (
     <Tooltip>
-      <TooltipTrigger>
+      <TooltipTrigger aria-label="About the scaling factor">
         <InfoIcon className="size-3 fill-current" />
       </TooltipTrigger>
       <TooltipContent>

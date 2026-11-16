@@ -800,7 +800,7 @@ function RevertStatement(node: AST.RevertStatement, out: OutputStream) {
   out.beginLine()
   out.token('revert')
   // TODO: Incorrect parser types!
-  // @ts-ignore
+  // @ts-expect-error
   if (node.revertCall.type === 'TupleExpression') {
     out.noSpace()
   }

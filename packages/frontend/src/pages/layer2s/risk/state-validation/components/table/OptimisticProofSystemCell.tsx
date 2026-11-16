@@ -59,7 +59,10 @@ export function OptimisticProofSystemCell({
                     {zkCatalog.name}
                     {hasSuccessful && <VerifiedIcon className="size-4" />}
                     {hasNotVerified && (
-                      <CircleQuestionMarkIcon className="size-4" />
+                      <CircleQuestionMarkIcon
+                        className="size-4"
+                        aria-label="Not verified"
+                      />
                     )}
                     {hasUnsuccessful && <UnverifiedIcon className="size-4" />}
                   </Badge>
@@ -119,7 +122,7 @@ export function OptimisticProofSystemCell({
         </div>
       </div>
       {permissioned !== undefined && (
-        <div className="text-[13px] text-secondary leading-[14px] md:text-xs md:leading-[15px]">
+        <div className="text-label-value-13 text-secondary leading-4">
           {permissioned ? 'Permissioned' : 'Permissionless'}
         </div>
       )}

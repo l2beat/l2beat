@@ -72,7 +72,7 @@ export function IntentBridgeCompareContent({
               lowerIsBetter: true,
             },
             {
-              label: 'Avg. transfer size',
+              label: 'Avg. transfer value',
               leftValue: left?.activity.averageValue ?? null,
               rightValue: right?.activity.averageValue ?? null,
               format: (value) => formatCurrency(value, 'usd'),

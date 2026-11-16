@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Collects the sequencer fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.",
+  "category": "non-critical",
+  "ignoreMethods": ["totalProcessed"],
+  "fields": {
+    "proxyAdminOwner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the fee recipient, the minimum withdrawal amount and whether fees are withdrawn on L1 or L2."
+        }
+      ]
+    }
+  }
+}

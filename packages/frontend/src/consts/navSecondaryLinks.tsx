@@ -15,12 +15,8 @@ export const navSecondaryLinks: NavLink[] = [
     href: externalLinks.forum,
   },
   {
-    title: 'Native Rollups',
+    title: 'Native rollups',
     href: '/native-rollups',
-  },
-  {
-    title: 'Jobs',
-    href: externalLinks.jobs,
   },
   {
     title: 'FAQ',

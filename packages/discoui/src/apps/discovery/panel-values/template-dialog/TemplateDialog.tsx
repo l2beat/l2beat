@@ -169,7 +169,7 @@ function LoadingState() {
 
 function ErrorState() {
   return (
-    <div className="text-center text-red-400">
+    <div className="text-center text-aux-red">
       Error while loading templates
     </div>
   )

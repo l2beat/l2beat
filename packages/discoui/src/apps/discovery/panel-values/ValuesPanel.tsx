@@ -229,12 +229,12 @@ function Display({
       )}
 
       {selected.referencedBy.length > 0 && (
-        <Folder title={`Referenced by (${selected.referencedBy.length})`}>
+        <Folder title="Referenced by" count={selected.referencedBy.length}>
           <ol className="overflow-x-auto bg-coffee-900">
             {selected.referencedBy.map((value) => (
               <li
                 key={value.address}
-                className="flex min-h-7 flex-wrap items-center gap-x-2 gap-y-1 border-coffee-800 border-b py-1 pr-3 pl-8 last:border-b-0"
+                className="flex min-h-[26px] flex-wrap items-center gap-x-3 gap-y-0.5 border-coffee-800 border-b py-0.5 pr-3 pl-8 last:border-b-0 hover:bg-coffee-800"
               >
                 <div className="-ml-5">
                   <AddressDisplay value={value} />
@@ -243,7 +243,7 @@ function Display({
                   {value.fieldNames.map((fieldName, i) => (
                     <span
                       key={i}
-                      className="rounded-sm bg-coffee-800 px-1.5 font-mono text-coffee-300 text-xs leading-5"
+                      className="font-mono text-coffee-400 text-xs leading-5"
                     >
                       {fieldName}
                     </span>
@@ -255,21 +255,24 @@ function Display({
         </Folder>
       )}
       {fields.length > 0 && (
-        <Folder title={`Fields (${fields.length})`} expand={isRevealingField}>
-          <ol>
-            {fields.map((field) => (
-              <FieldDisplay
-                key={field.name}
-                field={field}
-                address={selected.address}
-              />
-            ))}
-          </ol>
+        <Folder title="Fields" count={fields.length} expand={isRevealingField}>
+          <div className="@container bg-coffee-900">
+            <ol className="grid @[480px]:grid-cols-[fit-content(40%)_auto_minmax(0,1fr)] grid-cols-1">
+              {fields.map((field) => (
+                <FieldDisplay
+                  key={field.name}
+                  field={field}
+                  address={selected.address}
+                />
+              ))}
+            </ol>
+          </div>
         </Folder>
       )}
       {ignoredFields.length > 0 && (
         <Folder
-          title={`Ignored methods (${ignoredFields.length})`}
+          title="Ignored methods"
+          count={ignoredFields.length}
           collapsed
           expand={isRevealingIgnoredField}
         >

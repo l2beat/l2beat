@@ -32,10 +32,13 @@ export function GrissiniRiskAnalysisSection({
       isUnderReview={isUnderReview}
       className="space-y-6"
     >
+      {/* Markdown's glossary wrapper is inline, so a block keeps the gap. */}
       {description && (
-        <Markdown className="text-paragraph-15 md:text-paragraph-16">
-          {description}
-        </Markdown>
+        <div>
+          <Markdown className="text-paragraph-15 md:text-paragraph-16">
+            {description}
+          </Markdown>
+        </div>
       )}
       {layerGrissiniValues && layerGrissiniValues.length > 0 && (
         <RiskValues grissiniValues={layerGrissiniValues} />
@@ -50,9 +53,11 @@ export function GrissiniRiskAnalysisSection({
 
 function RiskValues({ grissiniValues }: { grissiniValues: RosetteValue[] }) {
   return (
-    <div>
+    // No margin after the last banner: the section's own space-y-6 sets the
+    // gap to whatever follows
+    <div className="flex flex-col gap-6">
       {Object.values(grissiniValues).map((value, key) => (
-        <div key={key} className="mb-6 flex flex-col gap-2">
+        <div key={key} className="flex flex-col gap-2">
           <RiskBanner key={value.name} {...value} size="large" />
         </div>
       ))}

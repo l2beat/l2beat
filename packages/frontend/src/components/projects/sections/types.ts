@@ -4,7 +4,10 @@ import type { CostsSectionProps } from './costs/CostsSection'
 import type { DaRiskSummarySectionProps } from './DaRiskSummarySection'
 import type { DetailedDescriptionSectionProps } from './DetailedDescriptionSection'
 import type { DataPostedSectionProps } from './data-posted/DataPostedSection'
+import type { DefiTokensSectionProps } from './defi/DefiTokensSection'
 import type { DefiTvlSectionProps } from './defi/DefiTvlSection'
+import type { LiquidStakingSectionProps } from './defi/LiquidStakingSection'
+import type { LiquidStakingYieldAndExitSectionProps } from './defi/LiquidStakingYieldAndExitSection'
 import type { ExternalDependenciesSectionProps } from './ExternalDependenciesSection'
 import type { GardenCropsSectionProps } from './GardenCropsSection'
 import type { GrissiniRiskAnalysisSectionProps } from './GrissiniRiskAnalysisSection'
@@ -24,6 +27,7 @@ import type { MilestonesAndIncidentsSectionProps } from './MilestonesAndIncident
 import type { ExtendedProjectSectionProps } from './ProjectSection'
 import type { PermissionsSectionProps } from './permissions/PermissionsSection'
 import type { PrivacyAdversariesSectionProps } from './privacy/PrivacyAdversariesSection'
+import type { PrivacyAdviceSectionProps } from './privacy/PrivacyAdviceSection'
 import type { PrivacyAnonymitySetSectionProps } from './privacy/PrivacyAnonymitySetSection'
 import type { PrivacyAssetsBreakdownSectionProps } from './privacy/PrivacyAssetsBreakdownSection'
 import type { PrivacyFlowsSectionProps } from './privacy/PrivacyFlowsSection'
@@ -83,7 +87,11 @@ export type SectionId =
   | 'privacy-flows'
   | 'privacy-assets-breakdown'
   | 'privacy-adversaries'
+  | 'stay-private'
   | 'external-dependencies'
+  | 'defi-tokens'
+  | 'liquid-staking'
+  | 'yield-and-exit'
   | 'crops'
   | 'audit-timeline'
   | 'audit-reports'
@@ -295,6 +303,21 @@ interface ProjectDetailsDefiTvlSection {
   props: ProjectDetailsProps<DefiTvlSectionProps>
 }
 
+interface ProjectDetailsDefiTokensSection {
+  type: 'DefiTokensSection'
+  props: ProjectDetailsProps<DefiTokensSectionProps>
+}
+
+interface ProjectDetailsLiquidStakingSection {
+  type: 'LiquidStakingSection'
+  props: ProjectDetailsProps<LiquidStakingSectionProps>
+}
+
+interface ProjectDetailsLiquidStakingYieldAndExitSection {
+  type: 'LiquidStakingYieldAndExitSection'
+  props: ProjectDetailsProps<LiquidStakingYieldAndExitSectionProps>
+}
+
 interface ProjectDetailsPrivacyFlowsSection {
   type: 'PrivacyFlowsSection'
   props: ProjectDetailsProps<PrivacyFlowsSectionProps>
@@ -308,6 +331,11 @@ interface ProjectDetailsPrivacyAnonymitySetSection {
 interface ProjectDetailsPrivacyAdversariesSection {
   type: 'PrivacyAdversariesSection'
   props: ProjectDetailsProps<PrivacyAdversariesSectionProps>
+}
+
+interface ProjectDetailsPrivacyAdviceSection {
+  type: 'PrivacyAdviceSection'
+  props: ProjectDetailsProps<PrivacyAdviceSectionProps>
 }
 
 interface ProjectDetailsPrivacyAssetsBreakdownSection {
@@ -363,9 +391,13 @@ export type ProjectDetailsSection = {
   | ProjectDetailsUpdatesSection
   | ProjectDetailsTvsValueSection
   | ProjectDetailsDefiTvlSection
+  | ProjectDetailsDefiTokensSection
+  | ProjectDetailsLiquidStakingSection
+  | ProjectDetailsLiquidStakingYieldAndExitSection
   | ProjectDetailsPrivacyFlowsSection
   | ProjectDetailsPrivacyAnonymitySetSection
   | ProjectDetailsPrivacyAssetsBreakdownSection
   | ProjectDetailsPrivacyAdversariesSection
+  | ProjectDetailsPrivacyAdviceSection
   | ProjectDetailsExternalDependenciesSection
 )

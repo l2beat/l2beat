@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useIsClient } from '~/hooks/useIsClient'
+import { getSsrData } from '~/ssr/pageDataScripts'
 import { cn } from '~/utils/cn'
 import { Logo } from '../Logo'
 import { readJsonLd, readOpenGraph } from './headTags'
@@ -42,7 +43,7 @@ export function L2BeatDevTools() {
     }
 
     const updateMetrics = () => {
-      setSizeMetrics(getSizeMetrics(window.__SSR_DATA__))
+      setSizeMetrics(getSizeMetrics(getSsrData()))
     }
 
     updateMetrics()
@@ -77,7 +78,7 @@ export function L2BeatDevTools() {
     return null
   }
 
-  const ssrData = window.__SSR_DATA__
+  const ssrData = getSsrData()
   const metrics = sizeMetrics ? getDevToolsMetrics(sizeMetrics) : []
 
   const copyableJson =
@@ -188,12 +189,13 @@ export function L2BeatDevTools() {
       <button
         type="button"
         onClick={() => setIsOpen(true)}
+        aria-label="Open ETHBEAT dev tools"
         className={cn(
           'flex size-12 items-center justify-center gap-2 rounded-full border border-divider bg-surface-primary shadow-lg transition-colors hover:bg-surface-primary-hover',
           isOpen && 'hidden',
         )}
       >
-        <Logo animated={false} small className="mt-1 mr-px h-6" />
+        <Logo animated={false} small className="mt-1 mr-px h-6" aria-hidden />
       </button>
     </div>
   )

@@ -1,6 +1,6 @@
 {
   "name": "@l2beat/backend-tools",
-  "description": "Common utilities for L2BEAT projects.",
+  "description": "Common utilities for ETHBEAT projects.",
   "version": "0.5.2",
   "license": "MIT",
   "repository": "https://github.com/l2beat/tools",

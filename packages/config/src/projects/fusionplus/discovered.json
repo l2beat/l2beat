@@ -1,6 +1,6 @@
 {
   "name": "fusionplus",
-  "timestamp": 1787832680,
+  "timestamp": 1794319727,
   "configHash": "0x11ce4c172cd3126df25faa4db2433b445bb5596f67796f04626ce895fd279f36",
   "entries": [
     {
@@ -125,26 +125,20 @@
           "eth:0xC2cCE431123B3AFD5B7f5183FaB5f544E30caCD4",
           "eth:0x8822B82DA9F9F02B99055d62226d59E4faaf4a3c",
           "eth:0xd6970196Ff8CeF3Cdd61256C1841A085EEcD3ae8",
-          "eth:0x223c0EF36fEe905a40175d92704b1d3624218EE7",
-          "eth:0xa535D703561516F32d72218e0F8372Ef38798b58"
+          "eth:0x223c0EF36fEe905a40175d92704b1d3624218EE7"
         ],
         "$threshold": 3,
         "domainSeparator": "0x3fbc156f807056fefd55d7d205e03a2cccb9a8d6126d5d352c171d24ae26a182",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 32,
+        "multisigThreshold": "3 of 4 (75%)",
+        "nonce": 35,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
         "eth:0x9F8102b1bB05785BaD2874f2C7B1aaea4c6D976a": "GnosisSafeProxy",
         "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
-    },
-    {
-      "address": "eth:0xa535D703561516F32d72218e0F8372Ef38798b58",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "EscrowFactory",
@@ -253,7 +247,7 @@
           "338": "eth:0x96658D4F26C5969AF1Cb59BbfE2cAD1084dF29c3",
           "340": "eth:0xAE8609A54a52501bb76C104d920efaB7F52a6bcB",
           "1000": "eth:0xD850ebe84cda9056Bc14F9b7855363EAd6c3cb57",
-          "1007": "eth:0x26cBa56f5ac624f4bDf3E73C5DfD498048fE0a3D",
+          "1007": "eth:0x0000000000000000000000000000000000000000",
           "1017": "eth:0x742474ca3CbD47C900b2305D3d03Ea1647Ce253b",
           "1038": "eth:0x0000000000000000000000000000000000000000",
           "1080": "eth:0xEc4FB7e7C35C241E1138a2d8cfBB09F3Ad1CcB22",
@@ -262,9 +256,42 @@
           "1101": "eth:0x9b1303EBf09BC51b7fac376c9E421E8daAe63B82",
           "1157": "eth:0x1cC561F5AE7e867C64129FFC942439707912F704",
           "1170": "eth:0xF6Ce0aa2FF888CFf754080B5384400B774fa72C8",
+          "1187": "eth:0x0000000000000000000000000000000000000000",
           "1200": "eth:0xE66188dc4bD060ba6F8cfe9791F94FE4EbAc4713",
           "1238": "eth:0x23CaF227B33a6156876D22ad01D93D2D944ce160",
-          "1251": "eth:0x4a00d2e63732932d00f3005c006141fE85000000"
+          "1251": "eth:0x4a00d2e63732932d00f3005c006141fE85000000",
+          "1277": "eth:0x2E70AEf0076BD0Eb1fca35C007f674920536453B",
+          "1278": "eth:0x534Ab116c9D254dd332cc3a87081FC0b617EDcdb",
+          "1279": "eth:0x6056a036772e92BbC9EcCedf4320376fA5878217",
+          "1291": "eth:0xa7961190465DFF33f6e9213C3647892908ed6304",
+          "1292": "eth:0x05213BfA42D97ac248dE73Cf99cfDbBf80435ec1",
+          "1346": "eth:0x9dd386Af1e7b98C37D733027925DaFc0c2bd710D",
+          "1347": "eth:0x2A629cD0E9aA1A8C02C7eD07e6f651D6aFBdcAC0",
+          "1348": "eth:0xe3B6Fd690d75cAC79Fe4249d29f8e549e0eed687",
+          "1349": "eth:0x4326D2522EA8aF112DCA8Ec222E3865a2542bC4d",
+          "1350": "eth:0x8D64f9FBedAEf6e91A70976f5A9e2b649B24E389",
+          "1358": "eth:0x12A5c9EeCA7424afcCECd84eA030CB371a604892",
+          "1359": "eth:0xfBC1075c4Fd7b2E30634De110087734edD1b30cB",
+          "1427": "eth:0xB824534A00AF0D9Fa1d2DeFBb2dD44b0435Ba4Bb",
+          "1435": "eth:0xA01070f951633920D08162e5B79727bbd1068F5C",
+          "1438": "eth:0xb47ed46Cd19905Df324967F7c9F29eaDa97c5A33",
+          "1460": "eth:0x210658534C0E9F7A7F046C49511AE010a4C40046",
+          "1461": "eth:0x8C006AdE6399867432f8C3B45d00C833ECbf63A4",
+          "1496": "eth:0x0c1623340F3C778425C144d1CE8Ca1b1381291dd",
+          "1521": "eth:0x0000000000000000000000000000000000000000",
+          "1522": "eth:0xa0D5D65B700c058644166191D31C14019E00eB1C",
+          "1523": "eth:0x986100B3C6e7a4D3F9C7DDfa5e854132771388dC",
+          "1528": "eth:0x9d18e3D6c5b16d5a66E947Bb2A229Fb3223101F1",
+          "1540": "eth:0x989AcB7e8888fb7AB877b6555De7312e376c6023",
+          "1572": "eth:0x0000000000000000000000000000000000000000",
+          "1609": "eth:0x48c5A04EAe7F726f8b7c4dBe3c1ACd4376551a75",
+          "1612": "eth:0x0000000000000000000000000000000000000000",
+          "1617": "eth:0x767E540558499e82C78fE1A09609773ef74c615b",
+          "1619": "eth:0xfE32691A208eE010Cad5BCbbE66E5aefF4F5B42B",
+          "1620": "eth:0x3fBaE5BBa5EeA1E577acf9A922B06377E594baf9",
+          "1642": "eth:0xB9e48A8a43a17f9f69E55D89A892C5211B19f46c",
+          "1652": "eth:0x7fC774AA282f781Cc2036f2d21A90dde0FE3C895",
+          "1653": "eth:0x57ae8Eebb93Beb0c36386d0Ac021d2cD6575982D"
         }
       },
       "fieldMeta": {
@@ -536,8 +563,8 @@
     "fusionplus/KycNFT": "0x869c4913df2467986e648f6e6a80e7d924e178db74390d40440dd487e36921e9",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 25846473 },
-  "permissionsConfigHash": "0xd9560b4ff46cc0a052cf193dece7c4b9511bdd95dd5eab4a0580ef29b99e8e3e",
+  "usedBlockNumbers": { "ethereum": 26385012 },
+  "permissionsConfigHash": "0xf776191904a655b09eba0a3445e8d622e0d2f9f186c49f07c7b1c6d5b2dfa049",
   "permissions": {
     "eth:0x89C8eeC57bD474816d407fe38354B8410B567Da3": {
       "receivedPermissions": [

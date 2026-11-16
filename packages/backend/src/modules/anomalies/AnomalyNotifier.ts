@@ -39,7 +39,7 @@ export class AnomalyNotifier {
     private readonly discordClient: DiscordClient,
     private readonly db: Database,
     private readonly minDuration: number,
-    private readonly trackedTxsConfig: TrackedTxsConfig,
+    trackedTxsConfig: TrackedTxsConfig,
   ) {
     this.logger = logger.for(this)
     this.notificationQueue = new TaskQueue<void>(

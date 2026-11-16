@@ -1,7 +1,7 @@
 {
   "name": "adi",
-  "timestamp": 1792059502,
-  "configHash": "0xb7c0037bb81c1363b02ae6e551d609a25259612d1e55482208f60fcc234e49b7",
+  "timestamp": 1794568019,
+  "configHash": "0xfaaf4d86af7375f80e688fd9b504ba28743d6f68669fa085937afe688431f0c0",
   "entries": [
     {
       "name": "L1GenesisUpgrade",
@@ -22,6 +22,11 @@
         "eth:0x03174e2BE35A2Dd4380c93385181B1299949eE28": "L1GenesisUpgrade"
       },
       "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "address": "eth:0x057652d63873405fcc26701fcc7fB7AA3d7df6C8",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Diamond",
@@ -261,7 +266,7 @@
           "eth:0xFB630a206E6D7485cB9DFa929859E1a977F0a211",
           4
         ],
-        "getFirstUnprocessedPriorityTx": 492,
+        "getFirstUnprocessedPriorityTx": 524,
         "getL2BootloaderBytecodeHash": "0x0000000000000000000000000000000000000000000000000000000000000001",
         "getL2DefaultAccountBytecodeHash": "0x0000000000000000000000000000000000000000000000000000000000000001",
         "getL2EvmEmulatorBytecodeHash": "0x0000000000000000000000000000000000000000000000000000000000000001",
@@ -270,7 +275,7 @@
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
         "getPriorityQueueSize": 0,
-        "getPriorityTreeRoot": "0xd108797c011ba2533715f23ec80fd9917caa0ea41ec85b9254722663d1bc30c2",
+        "getPriorityTreeRoot": "0x2f2db9f2847162fb76cd8cc2b3b8510d52e41883bab70b14bd37db4dab238bd8",
         "getPriorityTreeStartIndex": 0,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 128849018882,
@@ -278,13 +283,13 @@
         "getRollupDAManager": "eth:0x57B05e2394B3A12708C552A891f8b0f93645EdEA",
         "getSemverProtocolVersion": [0, 30, 2],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 15761,
-        "getTotalBatchesExecuted": 15761,
-        "getTotalBatchesVerified": 15761,
-        "getTotalBlocksCommitted": 15761,
-        "getTotalBlocksExecuted": 15761,
-        "getTotalBlocksVerified": 15761,
-        "getTotalPriorityTxs": 492,
+        "getTotalBatchesCommitted": 16609,
+        "getTotalBatchesExecuted": 16609,
+        "getTotalBatchesVerified": 16609,
+        "getTotalBlocksCommitted": 16609,
+        "getTotalBlocksExecuted": 16609,
+        "getTotalBlocksVerified": 16609,
+        "getTotalPriorityTxs": 524,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "getVerifier": "eth:0xccbdfd7f9A8e60d0C1e79fa620205d14121e7a39",
         "getVerifierParams": {
@@ -296,6 +301,9 @@
         "isPermanentRollup": 0,
         "isPermanentRollupString": ".",
         "isPriorityQueueActive": false,
+        "priorityModeCanBeActivated": 0,
+        "priorityModeInfo": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "priorityModeTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "validators": ["eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186"]
       },
       "fieldMeta": {
@@ -322,13 +330,25 @@
           "description": "zkPorter is a volition-like contruction and changes the zk proof input requirements."
         },
         "isPermanentRollup": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "true means that the DA mode cannot be changed to Validium in the future. compliant DAValidator pairs for the permanent rollup mode are defined/enforced by the RollupDAManager contract."
         },
-        "isPermanentRollupString": { "severity": "HIGH" },
+        "isPermanentRollupString": { "severity": "MEDIUM" },
+        "priorityModeCanBeActivated": {
+          "severity": "HIGH",
+          "description": "1 once the chain admin permanently allowed Priority Mode (ZKsync OS permanent rollups only). Then anyone can activate it as soon as the first unprocessed priority transaction is older than 4 days, after which only the shared PermissionlessValidator can settle batches (anyone can submit through it) and only the ChainTypeManager owner can deactivate it."
+        },
+        "priorityModeInfo": {
+          "severity": "MEDIUM",
+          "description": "Raw Priority Mode storage: last byte canBeActivated, byte before it activated, then the PermissionlessValidator address."
+        },
+        "priorityModeTransactionFilterer": {
+          "severity": "HIGH",
+          "description": "TransactionFilterer that replaces the chain's own filterer once Priority Mode is allowed. Set by the ChainTypeManager owner, zero means no filtering."
+        },
         "getDAValidatorPair": {
           "severity": "HIGH",
-          "description": "l1da, l2da"
+          "description": "l1da, l2da (before v31) or l1da, L2 DA commitment scheme (from v31)."
         },
         "getPubdataPricingMode": {
           "severity": "HIGH",
@@ -425,7 +445,7 @@
       "template": "shared-zk-stack/L1NativeTokenVault",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0xeac1b0724c69c33183ce8e24a8f3ac28eb5adb9925dff647396c8d165f0ecae9"
+        "0xcacbab74b3abde440d2b92fb0b9499baa58dcaf51bc91222f687508934da689b"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Canonical central asset escrow for all ZK stack chains.",
@@ -500,11 +520,6 @@
         "eth:0x0a8a2473cc5731575a94f58F470851Bc6695B5B8": "ChainAdminOwnable"
       },
       "category": { "name": "Governance", "priority": 3 }
-    },
-    {
-      "address": "eth:0x0b6f2116323C12EE731de6818e41861561bcd44C",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0x17D2e02019e4f52C14E1cA55b612596A1FB39C3b",
@@ -602,11 +617,6 @@
         "PACKED_USER_OP_TYPEHASH": "0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18",
         "VERSION": "1.3.0"
       }
-    },
-    {
-      "address": "eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0x3ABcFe4D76c76DcFbc5c8B369829d061C82A6C14",
@@ -709,7 +719,12 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "address": "eth:0x6090e365149d005517e2013926cD18d767f04Aa1",
+      "address": "eth:0x658Ad9977ebA17e2596841E5745617f6b1c5Fb8b",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x76e8D4618fc6a05368CcDAAf7357E1F20e493053",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1261,6 +1276,7 @@
         "executionDelay": 0,
         "executionDelay_fmt": "0s",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "executorVTL": ["eth:0x057652d63873405fcc26701fcc7fB7AA3d7df6C8"],
         "getName": "ValidatorTimelock",
         "OPTIONAL_COMMITTER_ADMIN_ROLE": "0x764da40dc482d3b385909d7a072df3207fef1d443f7a2633f4e7f1c0bb574ee0",
         "OPTIONAL_EXECUTOR_ADMIN_ROLE": "0xc77a7447d79c15063f9229278e1e1165208fb21eb078a86552a94a992151cc28",
@@ -1270,56 +1286,32 @@
         "owner": "eth:0xB272B188855128c10a933Edb62CC64c22B1f3754",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "PRECOMMITTER_ROLE": "0x3353dfbbf9a3ed2a5be49cd3bd3a51ee03c3751d409cccac7723c4907332afee",
+        "precommitterVTL": ["eth:0x76e8D4618fc6a05368CcDAAf7357E1F20e493053"],
         "PROVER_ROLE": "0x60044782a422109ac08a415e44260ad5d3bad63d96ebe1fac0363399642ee3f2",
+        "proverVTL": ["eth:0x658Ad9977ebA17e2596841E5745617f6b1c5Fb8b"],
         "revertedBlocks": [],
         "REVERTER_ROLE": "0x30085792330f3f9ee2ee216aea0321c55a0909b87c51ee9ab49d05ca4a4c2ecb",
-        "validatorVTL": {
+        "reverterVTL": [],
+        "rolesVTL": {
           "PRECOMMITTER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524",
-              "eth:0x6090e365149d005517e2013926cD18d767f04Aa1",
-              "eth:0x0b6f2116323C12EE731de6818e41861561bcd44C",
-              "eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"
-            ]
+            "members": ["eth:0x76e8D4618fc6a05368CcDAAf7357E1F20e493053"]
           },
           "COMMITTER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524",
-              "eth:0x6090e365149d005517e2013926cD18d767f04Aa1",
-              "eth:0x0b6f2116323C12EE731de6818e41861561bcd44C",
-              "eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"
-            ]
+            "members": ["eth:0x76e8D4618fc6a05368CcDAAf7357E1F20e493053"]
           },
-          "REVERTER_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524",
-              "eth:0x6090e365149d005517e2013926cD18d767f04Aa1",
-              "eth:0x0b6f2116323C12EE731de6818e41861561bcd44C",
-              "eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"
-            ]
-          },
+          "REVERTER_ROLE": { "adminRole": "DEFAULT_ADMIN_ROLE", "members": [] },
           "PROVER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524",
-              "eth:0x6090e365149d005517e2013926cD18d767f04Aa1",
-              "eth:0x0b6f2116323C12EE731de6818e41861561bcd44C",
-              "eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"
-            ]
+            "members": ["eth:0x658Ad9977ebA17e2596841E5745617f6b1c5Fb8b"]
           },
           "EXECUTOR_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524",
-              "eth:0x6090e365149d005517e2013926cD18d767f04Aa1",
-              "eth:0x0b6f2116323C12EE731de6818e41861561bcd44C",
-              "eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"
-            ]
+            "members": ["eth:0x057652d63873405fcc26701fcc7fB7AA3d7df6C8"]
           }
-        }
+        },
+        "validatorVTL": ["eth:0x76e8D4618fc6a05368CcDAAf7357E1F20e493053"]
       },
       "fieldMeta": {
         "executionDelay": { "severity": "HIGH" },
@@ -1408,7 +1400,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 6,
+        "nonce": 7,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1443,11 +1435,6 @@
       "implementationNames": {
         "eth:0xF6b3708BE4192CE4526c2F87D4c3eABA79230E6A": "ZKsyncOSVerifierFflonk"
       }
-    },
-    {
-      "address": "eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "L1ERC20Bridge",
@@ -2758,8 +2745,8 @@
     "shared-zk-stack/ChainAssetHandler": "0x8014df0d446cdb3c3b832daf6f52f4993f5315bacda2db187328db9c6a777312",
     "shared-zk-stack/ChainTypeManager": "0x02d9f1f23d9ab85badca08caf6e170014e63af1bd7f8704f587cefdf0f1768cf",
     "shared-zk-stack/CTMDeploymentTracker": "0xeb9db9a349a757fe90088c401a5cf10b7da6a7dbd22abd4e0c21ad9a95292ef1",
-    "shared-zk-stack/Diamond": "0xf8ceb7cc4613a5afb74ab717732cca35ae7826aaa6ba9643d656020bdb3cec08",
-    "shared-zk-stack/L1AssetRouter": "0xb597793119e11f9fbaa496fc36287066fea595339e79f752b30faf484e03b720",
+    "shared-zk-stack/Diamond": "0xd2834698a75183a2a507735400ef998edd6d0efa0643b582577a0932c8c15866",
+    "shared-zk-stack/L1AssetRouter": "0xc1bb5a7fd2afe6899ca1e9385569467241167cd21964c21604e55e2864b76ab9",
     "shared-zk-stack/L1GenesisUpgrade": "0xeb9db9a349a757fe90088c401a5cf10b7da6a7dbd22abd4e0c21ad9a95292ef1",
     "shared-zk-stack/L1NativeTokenVault": "0xdbb34d948c77bf3d53fc312d8ad484a70d5bdc083eb97978bfb1dfcba4417627",
     "shared-zk-stack/L1Nullifier": "0x614d522d7f6aed93c6d04fda3957344b9cc6c94fd8060c2c5b760b2d49e0a84a",
@@ -2767,26 +2754,26 @@
     "shared-zk-stack/MessageRoot": "0xbff1ea54952301b3b5c9dd16fcb265471a173687870eb62ec88bb5ad5eb68d0a",
     "shared-zk-stack/ValidatorTimelock_post29": "0xe85d88e60922135d7ddda6e3c8d3105129f43fe9e3cc4c4d689a891bfeb14c8e"
   },
-  "usedBlockNumbers": { "ethereum": 26197265 },
-  "permissionsConfigHash": "0xe821763999e3186c038db416403f6edcd8c0acae97b6982d6d458d69ce337260",
+  "usedBlockNumbers": { "ethereum": 26405637 },
+  "permissionsConfigHash": "0xafd6dc2fe5b310b75a7c895f78e4eada3861723bf8b93eb53b5b7deb847c9708",
   "permissions": {
+    "eth:0x057652d63873405fcc26701fcc7fB7AA3d7df6C8": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186",
+          "description": "execute L2 batches through the ValidatorTimelock in the ADI Diamond contract.",
+          "role": ".executorVTL"
+        }
+      ]
+    },
     "eth:0x0a8a2473cc5731575a94f58F470851Bc6695B5B8": {
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x0583Ef2B6416cb7B287406438B940E4d99680C5B",
-          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers and, from v31 while Priority Mode is not allowed, pause all new L1 --> L2 transactions including deposits (Chain Admin role).",
           "role": ".getAdmin"
-        }
-      ]
-    },
-    "eth:0x0b6f2116323C12EE731de6818e41861561bcd44C": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186",
-          "description": "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the ADI Diamond contract.",
-          "role": ".validatorVTL"
         }
       ]
     },
@@ -2820,16 +2807,6 @@
         }
       ]
     },
-    "eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186",
-          "description": "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the ADI Diamond contract.",
-          "role": ".validatorVTL"
-        }
-      ]
-    },
     "eth:0x5CcF89Ba204457129E6250B2570d77DbA790366a": {
       "receivedPermissions": [
         {
@@ -2840,13 +2817,29 @@
         }
       ]
     },
-    "eth:0x6090e365149d005517e2013926cD18d767f04Aa1": {
+    "eth:0x658Ad9977ebA17e2596841E5745617f6b1c5Fb8b": {
       "receivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186",
-          "description": "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the ADI Diamond contract.",
+          "description": "prove L2 batches through the ValidatorTimelock in the ADI Diamond contract.",
+          "role": ".proverVTL"
+        }
+      ]
+    },
+    "eth:0x76e8D4618fc6a05368CcDAAf7357E1F20e493053": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186",
+          "description": "commit L2 batches through the ValidatorTimelock in the ADI Diamond contract.",
           "role": ".validatorVTL"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186",
+          "description": "precommit L2 blocks through the ValidatorTimelock in the ADI Diamond contract.",
+          "role": ".precommitterVTL"
         }
       ]
     },
@@ -3053,7 +3046,7 @@
         {
           "permission": "interact",
           "from": "eth:0x0583Ef2B6416cb7B287406438B940E4d99680C5B",
-          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers and, from v31 while Priority Mode is not allowed, pause all new L1 --> L2 transactions including deposits (Chain Admin role).",
           "role": ".getAdmin",
           "via": [
             { "address": "eth:0x0a8a2473cc5731575a94f58F470851Bc6695B5B8" }
@@ -3065,16 +3058,6 @@
           "permission": "act",
           "from": "eth:0x0a8a2473cc5731575a94f58F470851Bc6695B5B8",
           "role": ".owner"
-        }
-      ]
-    },
-    "eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186",
-          "description": "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the ADI Diamond contract.",
-          "role": ".validatorVTL"
         }
       ]
     },

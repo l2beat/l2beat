@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import type { InteropFlowsData } from '~/server/features/layer2s/interop/getInteropFlows'
+import type { InteropFlowsGraphData } from '~/server/features/layer2s/interop/getInteropFlowsOverview'
 import type { InteropChainWithIcon } from '../../chain-selector/types'
 import { BackgroundRoads } from './BackgroundRoads'
 import { ChainBubblesLayer } from './ChainBubblesLayer'
@@ -10,11 +10,12 @@ import { computeGraphLayout } from './utils/computeGraphLayout'
 interface FlowsGraphProps {
   interopChains: InteropChainWithIcon[]
   visibleChainIds: string[]
-  data: InteropFlowsData
+  data: InteropFlowsGraphData
   size: number
   isSmallScreen: boolean
   baseDollarsPerParticle?: number
   topChainId?: string
+  linkChains?: boolean
 }
 
 export function FlowsGraph({
@@ -25,6 +26,7 @@ export function FlowsGraph({
   isSmallScreen,
   baseDollarsPerParticle,
   topChainId,
+  linkChains,
 }: FlowsGraphProps) {
   const layout = useMemo(
     () =>
@@ -74,6 +76,7 @@ export function FlowsGraph({
         layout={layout}
         chainData={data.chainData}
         isSmallScreen={isSmallScreen}
+        linkChains={linkChains}
       />
     </svg>
   )

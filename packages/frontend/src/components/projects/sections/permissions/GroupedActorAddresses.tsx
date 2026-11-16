@@ -35,8 +35,8 @@ export function GroupedActorAddresses({
         >
           {entry.verificationStatus === 'unverified' && (
             <Tooltip>
-              <TooltipTrigger>
-                <UnverifiedIcon className="fill-red-300" />
+              <TooltipTrigger aria-label="Unverified contract">
+                <UnverifiedIcon className="fill-red-300" aria-hidden />
               </TooltipTrigger>
               <TooltipContent>This contract is not verified</TooltipContent>
             </Tooltip>

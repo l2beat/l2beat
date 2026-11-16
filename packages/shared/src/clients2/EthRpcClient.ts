@@ -219,6 +219,13 @@ export class EthRpcClient {
     return data.map((item) => ReceiptResponse.parse(item))
   }
 
+  async getBlockReceipts(block: BlockParameter): Promise<RpcReceipt[] | null> {
+    const data = await this.rawCall('eth_getBlockReceipts', [
+      encodeBlock(block),
+    ])
+    return BlockReceiptsResponse.parse(data)
+  }
+
   async getLogs(filter: FilterParameter): Promise<RpcLog[]> {
     const data = await this.rawCall('eth_getLogs', [encodeFilter(filter)])
     return LogsResponse.parse(data)
@@ -624,6 +631,7 @@ const BlockWithTransactionsResponse = v.union([
   RpcBlockWithTransactions,
 ])
 const ReceiptResponse = v.union([v.null(), RpcReceipt])
+const BlockReceiptsResponse = v.union([v.null(), v.array(RpcReceipt)])
 const LogsResponse = v.array(RpcLog)
 export type FeeHistory = v.infer<typeof FeeHistory>
 const FeeHistory = v.object({

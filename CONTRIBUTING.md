@@ -56,9 +56,9 @@ The website will be available on http://localhost:3000/
 
 ## Running the website with data
 
-Running the website with data requires a database. Setting up that database is complicated and underdocumented for the moment. Please raise an issue or contact L2Beat support if you require assistance.
+Running the website with data requires a database. Setting up that database is complicated and underdocumented for the moment. Please raise an issue or contact ETHBEAT support if you require assistance.
 
-If you are a member of the L2Beat organization on GitHub, opening a pull request will prompt [vercel](https://vercel.com) to run a container including live data. Vercel will comment on your PR with the container's URL. NB: Vercel's post-commit hook will also respond to _draft_ PRs so you may wish to use a draft PR to avoid spamming administrators until you are ready for their review.
+If you are a member of the l2beat organization on GitHub, opening a pull request will prompt [vercel](https://vercel.com) to run a container including live data. Vercel will comment on your PR with the container's URL. NB: Vercel's post-commit hook will also respond to _draft_ PRs so you may wish to use a draft PR to avoid spamming administrators until you are ready for their review.
 
 ## Add tokens to a project
 
@@ -110,13 +110,13 @@ the frontend.
 ## Contribute research
 
 Each project defined in `packages/config/src/projects` described by a set of parameters
-(`details.parameters`). Those values are a result of research conducted by the L2BEAT contributors.
+(`details.parameters`). Those values are a result of research conducted by the ETHBEAT contributors.
 As with all research there may be mistakes, outdated information or missing data in those files.
 
-You are encouraged to provide your feedback on the data presented on L2BEAT by
+You are encouraged to provide your feedback on the data presented on ETHBEAT by
 [opening an issue](https://github.com/l2beat/l2beat/issues/new). Once consensus is reached on what
 the data presented should be we also very much welcome PRs.
 
 ## Contribute code
 
-The L2BEAT website repository is a monorepo consisting of many interdependent packages. To learn more about each of the projects read their respective README's.
+The ETHBEAT website repository is a monorepo consisting of many interdependent packages. To learn more about each of the projects read their respective README's.

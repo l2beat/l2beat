@@ -13,12 +13,14 @@ export function CropBadge({
   status,
   sentiment,
   delay,
+  jitterKey,
   label,
   children,
 }: {
   status: ProjectCropStatus
   sentiment: CropSentiment
   delay: number
+  jitterKey?: string
   /** Read out instead of the art. */
   label: string
   /** The tooltip. */
@@ -32,6 +34,7 @@ export function CropBadge({
             status={status}
             sentiment={sentiment}
             delay={delay}
+            jitterKey={jitterKey}
             label={label}
             className="h-14 w-14 justify-center"
           />

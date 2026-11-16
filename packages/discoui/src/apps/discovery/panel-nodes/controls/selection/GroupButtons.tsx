@@ -1,4 +1,4 @@
-import { useIsomorphicKeys } from '../../../hooks/useIsomorphicKeys'
+import { useCommandShortcut } from '../../../keybindings/useCommandShortcut'
 import { useStore } from '../../store/store'
 import { IconControlGroup } from '../icons/IconControlGroup'
 import { IconControlUngroup } from '../icons/IconControlUngroup'
@@ -13,13 +13,14 @@ export function GroupButtons() {
   )
   const groupSelected = useStore((state) => state.groupSelected)
   const ungroupSelected = useStore((state) => state.ungroupSelected)
-  const { altKey } = useIsomorphicKeys()
+  const groupShortcut = useCommandShortcut('nodes.group')
+  const ungroupShortcut = useCommandShortcut('nodes.ungroup')
 
   return (
     <>
       <ToolbarButton
         label="Group"
-        shortcut={[altKey, 'G']}
+        shortcut={groupShortcut}
         disabled={!canGroup}
         onClick={groupSelected}
       >
@@ -27,7 +28,7 @@ export function GroupButtons() {
       </ToolbarButton>
       <ToolbarButton
         label="Ungroup"
-        shortcut={[altKey, 'Shift', 'G']}
+        shortcut={ungroupShortcut}
         disabled={!canUngroup}
         onClick={ungroupSelected}
       >

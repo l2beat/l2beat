@@ -83,8 +83,6 @@ async function loadL2ProjectPage(manifest: Manifest, slug: string) {
       'milestones',
       'trackedTxsConfig',
       'tvsConfig',
-      'colors',
-      'ecosystemColors',
       'discoveryInfo',
       'discoveryUpdates',
       'daTrackingConfig',

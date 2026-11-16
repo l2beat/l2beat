@@ -92,12 +92,12 @@ export function renderDashboardMarkdown(
   const lines: string[] = []
 
   // H1: Project name (required)
-  lines.push('# L2BEAT Discovery Dashboard')
+  lines.push('# ETHBEAT Discovery Dashboard')
   lines.push('')
 
   // Blockquote: Short summary
   lines.push(
-    '> Real-time monitoring of smart contract changes across Layer 2 projects tracked by L2BEAT discovery system.',
+    '> Real-time monitoring of smart contract changes across Layer 2 projects tracked by ETHBEAT discovery system.',
   )
   lines.push('')
 

@@ -3,11 +3,11 @@ import { useQuery } from '@tanstack/react-query'
 import { type ReactNode, useState } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
+import { EM_DASH } from '~/consts/characters'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { useTRPC } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
-import { buildInteropUrl } from '../../utils/buildInteropUrl'
 import { getInteropTokenUrl } from '../../utils/getInteropTokenUrl'
 import type { InteropChainWithIcon } from '../chain-selector/types'
 import { TokensDialog } from '../tokens/TokensDialog'
@@ -16,21 +16,7 @@ import { FlowsParticleLegend } from './FlowsParticleLegend'
 import { useScaledParticleCounts } from './graph/utils/useScaledParticleCounts'
 import { useInteropFlows } from './utils/InteropFlowsContext'
 
-export function FlowsGeneralStats({
-  title = 'General stats',
-  description = 'For past 24h between the selected chains and protocols',
-  className,
-  linkTopRouteToSummary = false,
-}: {
-  title?: string
-  description?: string
-  className?: string
-  /**
-   * Link the top route to /interop/summary with the pair preselected
-   * instead of highlighting it on the local graph. Used on the home page.
-   */
-  linkTopRouteToSummary?: boolean
-}) {
+export function FlowsGeneralStats() {
   const trpc = useTRPC()
   const [isTokensDialogOpen, setIsTokensDialogOpen] = useState(false)
   const {
@@ -39,21 +25,19 @@ export function FlowsGeneralStats({
     selectedProtocols,
     setHighlightedChainPair,
   } = useInteropFlows()
+  const { data, isLoading } = useQuery(
+    trpc.interop.flows.queryOptions({
+      chains: selectedChains,
+      protocolIds: selectedProtocols,
+    }),
+  )
 
-  const queryInput = {
-    chains: selectedChains,
-    protocolIds: selectedProtocols,
-  }
   const tokensQueryInput = {
     from: selectedChains,
     to: selectedChains,
     protocolIds: selectedProtocols,
     id: undefined,
   }
-
-  const { data, isLoading } = useQuery(
-    trpc.interop.flows.queryOptions(queryInput),
-  )
 
   const { dollarsPerParticle } = useScaledParticleCounts(
     selectedChains,
@@ -77,22 +61,17 @@ export function FlowsGeneralStats({
       ? topChain.totalVolume / data.stats.totalVolume
       : 0
   const topToken = data?.stats.topToken
-  const topProtocol = data?.stats.topProtocol
+  const topProtocol = data?.stats.topProtocols[0]
 
   return (
-    <div
-      className={cn(
-        '@container flex h-full flex-col rounded-lg bg-surface-secondary p-4 dark:bg-header-secondary',
-        className,
-      )}
-    >
-      {!!title && <div className="font-bold text-heading-20">{title}</div>}
-      {!!description && (
-        <div className="mt-1 font-medium text-label-value-14 text-secondary">
-          {description}
-        </div>
-      )}
-      <div className={cn('space-y-2', (!!title || !!description) && 'mt-1.5')}>
+    <div className="@container flex h-full flex-col rounded-lg bg-surface-secondary p-4 dark:bg-header-secondary">
+      <div className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
+        General stats
+      </div>
+      <div className="mt-1 text-pretty font-normal text-label-value-13 text-secondary leading-4">
+        Last 24h · selected chains and protocols
+      </div>
+      <div className="mt-1.5 space-y-2">
         {/* Sized by the panel itself (container query) so it works both as
             a full-width strip (summary below lg) and a narrow side column */}
         <div className="grid @min-[400px]:grid-cols-3 grid-cols-1 gap-2">
@@ -133,29 +112,17 @@ export function FlowsGeneralStats({
             className="border-0 p-0!"
             value={
               srcChain && dstChain ? (
-                linkTopRouteToSummary ? (
-                  <a
-                    href={buildInteropUrl('/interop/summary', {
-                      from: [srcChain.id],
-                      to: [dstChain.id],
-                    })}
-                    className="flex items-center gap-1.5 rounded p-1 transition-opacity hover:bg-pure-black/5 dark:hover:bg-pure-white/10"
-                  >
-                    <TopRouteIcons srcChain={srcChain} dstChain={dstChain} />
-                  </a>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setHighlightedChainPair(srcChain.id, dstChain.id)
-                    }
-                    className="flex items-center gap-1.5 rounded p-1 transition-opacity hover:bg-pure-black/5 dark:hover:bg-pure-white/10"
-                  >
-                    <TopRouteIcons srcChain={srcChain} dstChain={dstChain} />
-                  </button>
-                )
+                <button
+                  type="button"
+                  onClick={() =>
+                    setHighlightedChainPair(srcChain.id, dstChain.id)
+                  }
+                  className="flex items-center gap-1.5 rounded p-1 transition-opacity hover:bg-pure-black/5 dark:hover:bg-pure-white/10"
+                >
+                  <TopRouteIcons srcChain={srcChain} dstChain={dstChain} />
+                </button>
               ) : (
-                '-'
+                EM_DASH
               )
             }
           />
@@ -166,16 +133,16 @@ export function FlowsGeneralStats({
             className="border-0 p-0!"
             value={
               topChain && topChainData ? (
-                <div className="flex flex-col items-center gap-0.5 text-heading-18">
+                <div className="flex flex-col items-center gap-0.5 font-semibold text-heading-18">
                   {topChainData.href ? (
                     <a
                       href={topChainData.href}
-                      className="text-brand hover:underline"
+                      className="text-brand-deep underline-offset-[0.3em] hover:underline"
                     >
                       {topChainData.name}
                     </a>
                   ) : (
-                    <span className="text-brand">{topChainData.name}</span>
+                    <span className="text-brand-deep">{topChainData.name}</span>
                   )}
                   <span className="text-center font-medium text-label-value-13 text-secondary leading-tight">
                     {formatPercent(topChainVolumeShare)} of volume (
@@ -183,7 +150,7 @@ export function FlowsGeneralStats({
                   </span>
                 </div>
               ) : (
-                '-'
+                EM_DASH
               )
             }
           />
@@ -194,10 +161,10 @@ export function FlowsGeneralStats({
             className="border-0 p-0!"
             value={
               topProtocol ? (
-                <div className="flex flex-col items-center gap-0.5 text-heading-18">
+                <div className="flex flex-col items-center gap-0.5 font-semibold text-heading-18">
                   <a
                     href={`/interop/protocols/${topProtocol.slug}`}
-                    className="text-brand hover:underline"
+                    className="text-brand-deep underline-offset-[0.3em] hover:underline"
                   >
                     {topProtocol.name}
                   </a>
@@ -206,7 +173,7 @@ export function FlowsGeneralStats({
                   </span>
                 </div>
               ) : (
-                '-'
+                EM_DASH
               )
             }
           />
@@ -215,7 +182,7 @@ export function FlowsGeneralStats({
             title="Top token"
             isLoading={isLoading}
             className="border-0 p-0!"
-            value={topToken ? <TopTokenValue topToken={topToken} /> : '-'}
+            value={topToken ? <TopTokenValue topToken={topToken} /> : EM_DASH}
           />
         </div>
       </div>
@@ -245,9 +212,9 @@ function TopRouteIcons({
 }) {
   return (
     <>
-      <img src={srcChain.iconUrl} alt={srcChain.id} className="size-5" />
-      <ArrowRightIcon className="size-4 fill-brand" />
-      <img src={dstChain.iconUrl} alt={dstChain.id} className="size-5" />
+      <img src={srcChain.iconUrl} alt={srcChain.name} className="size-5" />
+      <ArrowRightIcon className="size-4 fill-brand" aria-label="to" />
+      <img src={dstChain.iconUrl} alt={dstChain.name} className="size-5" />
     </>
   )
 }
@@ -266,8 +233,8 @@ function TopTokenValue({
   const content = (
     <>
       <img src={topToken.iconUrl} alt={topToken.symbol} className="size-5" />
-      <span className="font-bold text-heading-20">{topToken.symbol}</span>
-      <span className="font-medium text-label-value-14 text-secondary">
+      <span className="font-semibold text-heading-18">{topToken.symbol}</span>
+      <span className="font-medium text-label-value-13 text-secondary">
         {formatCurrency(topToken.volume, 'usd')}
       </span>
     </>
@@ -367,13 +334,13 @@ function Card({
         className,
       )}
     >
-      <span className="font-medium text-label-value-14 text-secondary">
-        {title}
-      </span>
+      <span className="font-medium text-label-value-13">{title}</span>
       {isLoading ? (
         <Skeleton className="h-6 w-20" />
       ) : (
-        <div className="font-bold text-heading-20">{value}</div>
+        <div className="font-semibold text-heading-20 tabular-nums">
+          {value}
+        </div>
       )}
       {footer}
     </div>

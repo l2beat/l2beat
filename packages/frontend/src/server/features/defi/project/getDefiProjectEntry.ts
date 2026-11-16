@@ -20,9 +20,14 @@ import { EMPTY_TVS_BREAKDOWN } from '../../layer2s/tvs/get7dTvsBreakdown'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { getDefiTvlDataSource } from '../getDefiTvlDataSource'
 import {
+  getLiquidStakingSummary,
+  type ProjectLiquidStakingSummary,
+} from '../liquid-staking/getLiquidStakingSummary'
+import {
   getDefiDependencyProjectsById,
   resolveDefiDependencies,
 } from '../resolveDefiDependencies'
+import { getDefiTokens } from './getDefiTokens'
 import { hasDefiProjectPage } from './hasDefiProjectPage'
 
 export interface ProjectDefiEntry {
@@ -44,6 +49,8 @@ export interface ProjectDefiEntry {
     }
   }
   isUnderReview: boolean
+  /** The project's row of the liquid staking page. */
+  liquidStaking?: ProjectLiquidStakingSummary
   warnings: {
     yellow?: string
     red?: ProjectRedWarning
@@ -63,11 +70,13 @@ export async function getDefiProjectEntry(
       'contracts',
       'permissions',
       'tvsConfig',
+      'tvsInfo',
       'externalDependencies',
       'discoveryUpdates',
       'ossificationHistory',
       'auditCoverage',
       'garden',
+      'liquidStaking',
     ],
   })
 
@@ -82,11 +91,20 @@ export async function getDefiProjectEntry(
     projectsChangeReport,
     dependencyProjectsById,
     ossification,
+    tokens,
+    liquidStaking,
   ] = await Promise.all([
     getContractUtils(),
     getProjectsChangeReport(),
     getDefiDependencyProjectsById(project.externalDependencies),
     getProjectOssification(project),
+    getDefiTokens(project.defiInfo.tokens ?? []),
+    project.liquidStaking
+      ? getLiquidStakingSummary({
+          ...project,
+          liquidStaking: project.liquidStaking,
+        })
+      : undefined,
   ])
   // DeFi pages get the Updates section together with ossification.
   const discoveryUpdates = env.CLIENT_SIDE_OSSIFICATION_ENABLED
@@ -122,7 +140,7 @@ export async function getDefiProjectEntry(
   )
 
   const discoUi = {
-    href: `https://disco.l2beat.com/ui/p/${project.id}`,
+    href: `https://disco.ethbeat.org/ui/p/${project.id}`,
     images: {
       desktop: manifest.getUrl('/images/disco-ui-desktop.png'),
       mobile: manifest.getUrl('/images/disco-ui-mobile.png'),
@@ -152,12 +170,23 @@ export async function getDefiProjectEntry(
     })
   }
 
+  if (tokens.length > 0) {
+    sections.push({
+      type: 'DefiTokensSection',
+      props: {
+        id: 'defi-tokens',
+        title: 'Tokens',
+        tokens,
+      },
+    })
+  }
+
   if (project.defiInfo.tvl !== undefined) {
     sections.push({
       type: 'DefiTvlSection',
       props: {
         id: 'tvs',
-        title: 'Value Locked',
+        title: 'Value locked',
         defaultRange: defaultChartRange,
         project: {
           id: project.id,
@@ -166,6 +195,26 @@ export async function getDefiProjectEntry(
           iconUrl: icon,
         },
         dataSource: getDefiTvlDataSource(project.defiInfo.tvl),
+        ethStakedToggle: !!project.liquidStaking,
+        warnings: project.tvsInfo?.warnings ?? [],
+      },
+    })
+  }
+
+  if (liquidStaking) {
+    sections.push({
+      type: 'LiquidStakingYieldAndExitSection',
+      props: {
+        id: 'yield-and-exit',
+        title: 'Yield and exit',
+        defaultRange: defaultChartRange,
+        project: {
+          id: project.id,
+          name: project.name,
+          shortName: project.shortName,
+          icon,
+        },
+        costOfExitDescription: liquidStaking.costOfExitDescription.chart,
       },
     })
   }
@@ -235,6 +284,7 @@ export async function getDefiProjectEntry(
       contractsSection || permissionsSection ? discoUi.href : undefined,
     discoUi,
     isUnderReview,
+    liquidStaking,
     warnings: {
       yellow: project.statuses.yellowWarning,
       red: project.statuses.redWarning,

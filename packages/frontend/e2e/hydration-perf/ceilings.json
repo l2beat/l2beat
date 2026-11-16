@@ -1,0 +1,22 @@
+{
+  "/layer2s/summary": {
+    "layouts": 12,
+    "styleRecalcs": 33
+  },
+  "/layer2s/risk": {
+    "layouts": 9,
+    "styleRecalcs": 25
+  },
+  "/layer2s/tvs": {
+    "layouts": 12,
+    "styleRecalcs": 34
+  },
+  "/layer2s/activity": {
+    "layouts": 13,
+    "styleRecalcs": 34
+  },
+  "/layer2s/projects/arbitrum": {
+    "layouts": 40,
+    "styleRecalcs": 160
+  }
+}

@@ -35,7 +35,7 @@ export async function getPublicationsData(
       metadata: getMetadata(manifest, {
         name: 'Publications',
         description:
-          'Your hub for everything L2BEAT publishes: research, explainers, essays, interviews, and curated highlights on the evolving Layer 2 ecosystem.',
+          'Your hub for everything ETHBEAT publishes: research, explainers, essays, interviews, and curated highlights on the evolving Layer 2 ecosystem.',
         url,
         openGraph: {
           image: '/meta-images/publications/opengraph-image.png',

@@ -133,8 +133,8 @@ const navGroups: NavigationGroup[] = [
             url: '/interop/insights/activity/suspicious-transfers',
           },
           {
-            title: 'Coverage pies',
-            url: '/interop/insights/coverage-pies',
+            title: 'Coverage',
+            url: '/interop/insights/coverage',
           },
           {
             title: 'Highlights',
@@ -202,7 +202,7 @@ export function AppSidebar() {
         <div className="flex min-h-8 items-center gap-2 group-data-[collapsible=icon]:justify-center">
           <div className="min-w-0 flex-1 group-data-[collapsible=icon]:hidden">
             <p className="truncate font-semibold text-sidebar-foreground text-sm">
-              L2BEAT Back Office
+              ETHBEAT Back Office
             </p>
           </div>
           <SidebarTrigger className="size-8 shrink-0" />

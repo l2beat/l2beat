@@ -1,0 +1,8 @@
+{
+  "BaseFeeVault_v1_1_0_mantle": {
+    "hash": "0x04df44076e2dd29cd651d5e2e6f9ef10ecd0e270a2c6e6d01aff3f66af686e66",
+    "address": "mantle:0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019",
+    "chain": "mantle",
+    "blockNumber": 102228192
+  }
+}

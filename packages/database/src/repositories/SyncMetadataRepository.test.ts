@@ -9,147 +9,154 @@ import {
 describeDatabase(SyncMetadataRepository.name, (db) => {
   const repository = db.syncMetadata
 
-  const now = UnixTime.now()
-  const roundedHour = UnixTime.toStartOf(now, 'hour')
+  const roundedHour = UnixTime.toStartOf(UnixTime.now(), 'hour')
 
   afterEach(async () => {
     await repository.deleteAll()
   })
 
-  describe(SyncMetadataRepository.prototype.upsertMany.name, () => {
-    it('should insert new rows and update existing ones', async () => {
-      const records: SyncMetadataRecord[] = [
-        {
-          feature: 'activity',
+  function record(
+    record: Partial<SyncMetadataRecord> & Pick<SyncMetadataRecord, 'id'>,
+  ): SyncMetadataRecord {
+    return {
+      feature: 'activity',
+      target: roundedHour,
+      syncedUntil: null,
+      blockTarget: null,
+      blockSyncedUntil: null,
+      ...record,
+    }
+  }
+
+  async function seed(...records: SyncMetadataRecord[]) {
+    for (const r of records) {
+      await repository.setTargets(r.feature, [
+        { id: r.id, target: r.target, blockTarget: r.blockTarget ?? undefined },
+      ])
+      if (r.syncedUntil !== null) {
+        await repository.updateSyncedUntil(
+          r.feature,
+          [r.id],
+          r.syncedUntil,
+          r.blockSyncedUntil ?? undefined,
+        )
+      }
+    }
+  }
+
+  describe(SyncMetadataRepository.prototype.setTargets.name, () => {
+    it('inserts new ids unsynced and moves targets of existing ones, keeping their progress', async () => {
+      await seed(
+        record({
           id: 'arbitrum',
-          target: roundedHour - UnixTime.HOUR,
           syncedUntil: roundedHour - UnixTime.HOUR,
           blockTarget: 200,
           blockSyncedUntil: 100,
-        },
-        {
-          feature: 'l2costs',
-          id: 'base',
-          target: roundedHour,
-          syncedUntil: roundedHour,
-          blockTarget: 100,
-          blockSyncedUntil: 100,
-        },
-      ]
-      await repository.upsertMany(records)
+        }),
+      )
 
-      const results = await repository.getAll()
-      expect(results).toEqualUnsorted(records)
-
-      await repository.upsertMany([
+      await repository.setTargets('activity', [
         {
-          feature: 'activity',
           id: 'arbitrum',
           target: roundedHour + UnixTime.HOUR,
-          syncedUntil: roundedHour,
           blockTarget: 225,
-          blockSyncedUntil: 200,
         },
+        { id: 'base', target: roundedHour + UnixTime.HOUR },
       ])
 
-      const results2 = await repository.getAll()
-      expect(results2).toEqualUnsorted([
-        {
-          feature: 'l2costs',
-          id: 'base',
-          target: roundedHour,
-          syncedUntil: roundedHour,
-          blockTarget: 100,
-          blockSyncedUntil: 100,
-        },
-        {
-          feature: 'activity',
+      expect(await repository.getByFeature('activity')).toEqualUnsorted([
+        record({
           id: 'arbitrum',
           target: roundedHour + UnixTime.HOUR,
-          syncedUntil: roundedHour,
+          syncedUntil: roundedHour - UnixTime.HOUR,
           blockTarget: 225,
-          blockSyncedUntil: 200,
-        },
-      ])
-    })
-
-    it('should update specified fields', async () => {
-      await repository.upsertMany([
-        {
-          feature: 'activity',
-          id: 'arbitrum',
-          target: roundedHour,
-          blockTarget: 100,
-          syncedUntil: roundedHour - UnixTime.HOUR,
-          blockSyncedUntil: 99,
-        },
-      ])
-
-      const results = await repository.getAll()
-      expect(results).toEqual([
-        {
-          feature: 'activity',
-          id: 'arbitrum',
-          target: roundedHour,
-          blockTarget: 100,
-          syncedUntil: roundedHour - UnixTime.HOUR,
-          blockSyncedUntil: 99,
-        },
-      ])
-
-      await repository.upsertMany([
-        {
-          feature: 'activity',
-          id: 'arbitrum',
-          target: roundedHour + UnixTime.HOUR,
-          blockTarget: 110,
-        },
-      ])
-
-      const results2 = await repository.getAll()
-      expect(results2).toEqualUnsorted([
-        {
-          feature: 'activity',
-          id: 'arbitrum',
-          target: roundedHour + UnixTime.HOUR,
-          blockTarget: 110,
-          syncedUntil: roundedHour - UnixTime.HOUR,
-          blockSyncedUntil: 99,
-        },
+          blockSyncedUntil: 100,
+        }),
+        record({ id: 'base', target: roundedHour + UnixTime.HOUR }),
       ])
     })
 
     it('empty array not to be rejected', async () => {
-      await expect(repository.upsertMany([])).not.toBeRejected()
+      await expect(repository.setTargets('activity', [])).not.toBeRejected()
+    })
+  })
+
+  describe(SyncMetadataRepository.prototype.updateSyncedUntil.name, () => {
+    it('updates only the given ids of the feature', async () => {
+      const untouched = [
+        record({ id: 'base', syncedUntil: roundedHour, blockSyncedUntil: 50 }),
+        record({
+          feature: 'l2costs',
+          id: 'arbitrum',
+          syncedUntil: roundedHour,
+        }),
+      ]
+      await seed(
+        record({ id: 'arbitrum', syncedUntil: roundedHour, blockTarget: 1000 }),
+        record({ id: 'dydx', syncedUntil: roundedHour, blockSyncedUntil: 7 }),
+        ...untouched,
+      )
+
+      await repository.updateSyncedUntil(
+        'activity',
+        ['arbitrum'],
+        roundedHour + UnixTime.HOUR,
+        999,
+      )
+      await repository.updateSyncedUntil(
+        'activity',
+        ['dydx'],
+        roundedHour + UnixTime.HOUR,
+      )
+
+      expect([
+        ...(await repository.getByFeature('activity')),
+        ...(await repository.getByFeature('l2costs')),
+      ]).toEqualUnsorted([
+        record({
+          id: 'arbitrum',
+          syncedUntil: roundedHour + UnixTime.HOUR,
+          blockTarget: 1000,
+          blockSyncedUntil: 999,
+        }),
+        record({
+          id: 'dydx',
+          syncedUntil: roundedHour + UnixTime.HOUR,
+          blockSyncedUntil: 7,
+        }),
+        ...untouched,
+      ])
+    })
+
+    it('does nothing for empty ids', async () => {
+      const arbitrum = record({ id: 'arbitrum', syncedUntil: roundedHour })
+      await seed(arbitrum)
+
+      await repository.updateSyncedUntil(
+        'activity',
+        [],
+        roundedHour + UnixTime.HOUR,
+      )
+
+      expect(await repository.getByFeature('activity')).toEqual([arbitrum])
     })
   })
 
   describe(SyncMetadataRepository.prototype.markEnded.name, () => {
     const end = roundedHour - 30 * UnixTime.DAY
 
-    function tvs(
-      id: string,
-      target: UnixTime,
-      syncedUntil: UnixTime | null,
-    ): SyncMetadataRecord {
-      return {
-        feature: 'tvs',
-        id,
-        target,
-        syncedUntil,
-        blockTarget: null,
-        blockSyncedUntil: null,
-      }
+    function tvs(id: string, target: UnixTime, syncedUntil: UnixTime | null) {
+      return record({ feature: 'tvs', id, target, syncedUntil })
     }
 
     it('moves target to the end and caps syncedUntil there', async () => {
-      await repository.upsertMany([
+      await seed(
         // Values past the end were deleted, syncedUntil stayed
         tvs('trimmed-ETH', end + 10 * UnixTime.DAY, end + 10 * UnixTime.DAY),
         tvs('stopped-at-end-ETH', end + UnixTime.DAY, end),
         tvs('stopped-early-ETH', end + UnixTime.DAY, end - UnixTime.HOUR),
         tvs('never-synced-ETH', end + UnixTime.DAY, null),
-      ])
+      )
 
       const updated = await repository.markEnded('tvs', [
         { id: 'trimmed-ETH', end },
@@ -159,7 +166,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
       ])
 
       expect(updated).toEqual(4)
-      expect(await repository.getAll()).toEqualUnsorted([
+      expect(await repository.getByFeature('tvs')).toEqualUnsorted([
         tvs('trimmed-ETH', end, end),
         tvs('stopped-at-end-ETH', end, end),
         tvs('stopped-early-ETH', end, end - UnixTime.HOUR),
@@ -168,7 +175,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
     })
 
     it('skips rows that already match', async () => {
-      await repository.upsertMany([tvs('trimmed-ETH', end, end)])
+      await seed(tvs('trimmed-ETH', end, end))
 
       const updated = await repository.markEnded('tvs', [
         { id: 'trimmed-ETH', end },
@@ -178,18 +185,16 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
     })
 
     it('does not insert rows or touch other features', async () => {
-      const activity: SyncMetadataRecord = {
-        ...tvs('trimmed-ETH', roundedHour, roundedHour),
-        feature: 'activity',
-      }
-      await repository.upsertMany([activity])
+      const activity = record({ id: 'trimmed-ETH', syncedUntil: roundedHour })
+      await seed(activity)
 
       const updated = await repository.markEnded('tvs', [
         { id: 'trimmed-ETH', end },
       ])
 
       expect(updated).toEqual(0)
-      expect(await repository.getAll()).toEqual([activity])
+      expect(await repository.getByFeature('tvs')).toEqual([])
+      expect(await repository.getByFeature('activity')).toEqual([activity])
     })
 
     it('empty array not to be rejected', async () => {
@@ -197,420 +202,60 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
     })
   })
 
-  describe(SyncMetadataRepository.prototype.getByFeature.name, () => {
-    it('returns all records for the feature and excludes other features', async () => {
-      const records: SyncMetadataRecord[] = [
-        {
-          feature: 'activity',
-          id: 'arbitrum',
-          target: roundedHour,
-          syncedUntil: roundedHour,
-          blockTarget: 200,
-          blockSyncedUntil: 100,
-        },
-        {
-          feature: 'activity',
-          id: 'base',
-          target: roundedHour + UnixTime.HOUR,
-          syncedUntil: roundedHour + UnixTime.HOUR,
-          blockTarget: 100,
-          blockSyncedUntil: 100,
-        },
-        {
-          feature: 'l2costs',
-          id: 'base',
-          target: roundedHour + 2 * UnixTime.HOUR,
-          syncedUntil: roundedHour + 2 * UnixTime.HOUR,
-          blockTarget: 300,
-          blockSyncedUntil: 200,
-        },
-      ]
-      await repository.upsertMany(records)
-
-      const result = await repository.getByFeature('activity')
-      expect(result).toEqualUnsorted(
-        records.filter((r) => r.feature === 'activity'),
-      )
-    })
-
-    it('returns empty array when no records exist for the feature', async () => {
-      await repository.upsertMany([
-        {
-          feature: 'l2costs',
-          id: 'base',
-          target: roundedHour,
-          syncedUntil: roundedHour,
-          blockTarget: 100,
-          blockSyncedUntil: 100,
-        },
-      ])
-
-      const result = await repository.getByFeature('activity')
-      expect(result).toEqual([])
-    })
-  })
-
   describe(SyncMetadataRepository.prototype.getByFeatureAndId.name, () => {
-    it('should return record for existing feature and id', async () => {
-      const records: SyncMetadataRecord[] = [
-        {
-          feature: 'activity',
-          id: 'arbitrum',
-          target: roundedHour,
-          syncedUntil: roundedHour,
-          blockTarget: 200,
-          blockSyncedUntil: 100,
-        },
-        {
-          feature: 'l2costs',
-          id: 'base',
-          target: roundedHour + UnixTime.HOUR,
-          syncedUntil: roundedHour + UnixTime.HOUR,
-          blockTarget: 100,
-          blockSyncedUntil: 100,
-        },
-      ]
-      await repository.upsertMany(records)
+    it('returns the record of the feature and id', async () => {
+      const arbitrum = record({ id: 'arbitrum', syncedUntil: roundedHour })
+      await seed(arbitrum, record({ feature: 'l2costs', id: 'base' }))
 
-      const result = await repository.getByFeatureAndId('activity', 'arbitrum')
-      expect(result).toEqual(records[0])
-    })
-
-    it('should return undefined for non-existing feature and id', async () => {
-      const result = await repository.getByFeatureAndId(
-        'activity',
-        'nonexistent',
+      expect(
+        await repository.getByFeatureAndId('activity', 'arbitrum'),
+      ).toEqual(arbitrum)
+      expect(await repository.getByFeatureAndId('activity', 'base')).toEqual(
+        undefined,
       )
-      expect(result).toEqual(undefined)
-    })
-
-    it('should return undefined for existing feature but non-existing id', async () => {
-      const record: SyncMetadataRecord = {
-        feature: 'activity',
-        id: 'arbitrum',
-        target: roundedHour,
-        syncedUntil: roundedHour,
-        blockTarget: 200,
-        blockSyncedUntil: 100,
-      }
-      await repository.upsertMany([record])
-
-      const result = await repository.getByFeatureAndId(
-        'activity',
-        'nonexistent',
-      )
-      expect(result).toEqual(undefined)
     })
   })
 
   describe(SyncMetadataRepository.prototype.getByFeatureAndIds.name, () => {
-    it('should return records for existing feature and ids', async () => {
-      const records = [
-        {
-          feature: 'activity',
-          id: 'arbitrum',
-          target: roundedHour,
-          syncedUntil: roundedHour,
-          blockTarget: 200,
-          blockSyncedUntil: 100,
-        },
-        {
-          feature: 'activity',
-          id: 'base',
-          target: roundedHour + UnixTime.HOUR,
-          syncedUntil: roundedHour + UnixTime.HOUR,
-          blockTarget: 100,
-          blockSyncedUntil: 100,
-        },
-        {
-          feature: 'l2costs',
-          id: 'arbitrum',
-          target: roundedHour + 2 * UnixTime.HOUR,
-          syncedUntil: roundedHour + 2 * UnixTime.HOUR,
-          blockTarget: 300,
-          blockSyncedUntil: 200,
-        },
-      ] as const satisfies SyncMetadataRecord[]
-      await repository.upsertMany(records)
+    it('returns the records of the feature and ids', async () => {
+      const activity = [record({ id: 'arbitrum' }), record({ id: 'base' })]
+      await seed(
+        ...activity,
+        record({ id: 'dydx' }),
+        record({ feature: 'l2costs', id: 'arbitrum' }),
+      )
 
-      const results = await repository.getByFeatureAndIds('activity', [
-        'arbitrum',
-        'base',
-      ])
-      expect(results).toEqualUnsorted([records[0], records[1]])
+      expect(
+        await repository.getByFeatureAndIds('activity', ['arbitrum', 'base']),
+      ).toEqualUnsorted(activity)
     })
 
-    it('should return empty array for existing feature but non-existing ids', async () => {
-      const record: SyncMetadataRecord = {
-        feature: 'activity',
-        id: 'arbitrum',
-        target: roundedHour,
-        syncedUntil: roundedHour,
-        blockTarget: 200,
-        blockSyncedUntil: 100,
-      }
-      await repository.upsertMany([record])
+    it('returns empty array for empty ids', async () => {
+      await seed(record({ id: 'arbitrum' }))
 
-      const results = await repository.getByFeatureAndIds('activity', [
-        'nonexistent1',
-        'nonexistent2',
-      ])
-      expect(results).toEqual([])
-    })
-
-    it('should return empty array for empty ids array', async () => {
-      const record: SyncMetadataRecord = {
-        feature: 'activity',
-        id: 'arbitrum',
-        target: roundedHour,
-        syncedUntil: roundedHour,
-        blockTarget: 200,
-        blockSyncedUntil: 100,
-      }
-      await repository.upsertMany([record])
-
-      const results = await repository.getByFeatureAndIds('activity', [])
-      expect(results).toEqual([])
+      expect(await repository.getByFeatureAndIds('activity', [])).toEqual([])
     })
   })
 
   describe(SyncMetadataRepository.prototype.getMaxTargetForFeature.name, () => {
-    it('should return max target for feature', async () => {
-      const records: SyncMetadataRecord[] = [
-        {
-          feature: 'activity',
-          id: 'arbitrum',
-          target: roundedHour,
-          syncedUntil: roundedHour,
-          blockTarget: 200,
-          blockSyncedUntil: 100,
-        },
-        {
-          feature: 'activity',
-          id: 'base',
-          target: roundedHour + UnixTime.HOUR,
-          syncedUntil: roundedHour + UnixTime.HOUR,
-          blockTarget: 100,
-          blockSyncedUntil: 100,
-        },
-        {
-          feature: 'activity',
-          id: 'dydx',
-          target: roundedHour + 2 * UnixTime.HOUR,
-          syncedUntil: roundedHour + 2 * UnixTime.HOUR,
-          blockTarget: 300,
-          blockSyncedUntil: 200,
-        },
-        {
+    it('returns the max target of the feature', async () => {
+      await seed(
+        record({ id: 'arbitrum', target: roundedHour }),
+        record({ id: 'base', target: roundedHour + UnixTime.HOUR }),
+        record({
           feature: 'l2costs',
           id: 'arbitrum',
-          target: roundedHour + 3 * UnixTime.HOUR,
-          syncedUntil: roundedHour + 3 * UnixTime.HOUR,
-          blockTarget: 400,
-          blockSyncedUntil: 300,
-        },
-      ]
-      await repository.upsertMany(records)
-
-      const maxTarget = await repository.getMaxTargetForFeature('activity')
-      expect(maxTarget).toEqual(roundedHour + 2 * UnixTime.HOUR)
-    })
-
-    it('should return undefined for non-existing feature', async () => {
-      const maxTarget = await repository.getMaxTargetForFeature(
-        'nonexistent' as any,
-      )
-      expect(maxTarget).toEqual(undefined)
-    })
-  })
-
-  describe(SyncMetadataRepository.prototype.updateSyncedUntil.name, () => {
-    it('should update syncedUntil for existing record', async () => {
-      const records: SyncMetadataRecord[] = [
-        {
-          feature: 'activity',
-          id: 'arbitrum',
-          target: roundedHour,
-          syncedUntil: roundedHour,
-          blockTarget: 200,
-          blockSyncedUntil: 100,
-        },
-        {
-          feature: 'activity',
-          id: 'base',
-          target: roundedHour + UnixTime.HOUR,
-          syncedUntil: roundedHour + UnixTime.HOUR,
-          blockTarget: 100,
-          blockSyncedUntil: 100,
-        },
-        {
-          feature: 'activity',
-          id: 'dydx',
           target: roundedHour + 2 * UnixTime.HOUR,
-          syncedUntil: roundedHour + 2 * UnixTime.HOUR,
-          blockTarget: 200,
-          blockSyncedUntil: 100,
-        },
-        {
-          feature: 'l2costs',
-          id: 'base',
-          target: roundedHour + UnixTime.HOUR,
-          syncedUntil: roundedHour + UnixTime.HOUR,
-          blockTarget: 100,
-          blockSyncedUntil: 100,
-        },
-      ]
-      await repository.upsertMany(records)
-
-      const newSyncedUntil = roundedHour + 3 * UnixTime.HOUR
-      await repository.updateSyncedUntil(
-        'activity',
-        ['arbitrum'],
-        newSyncedUntil,
+        }),
       )
 
-      const results = await repository.getAll()
-
-      expect(results).toHaveLength(4)
-      expect(results).toEqualUnsorted([
-        {
-          feature: 'activity',
-          id: 'base',
-          target: roundedHour + UnixTime.HOUR,
-          syncedUntil: roundedHour + UnixTime.HOUR,
-          blockTarget: 100,
-          blockSyncedUntil: 100,
-        },
-        {
-          feature: 'activity',
-          id: 'dydx',
-          target: roundedHour + 2 * UnixTime.HOUR,
-          syncedUntil: roundedHour + 2 * UnixTime.HOUR,
-          blockTarget: 200,
-          blockSyncedUntil: 100,
-        },
-        {
-          feature: 'l2costs',
-          id: 'base',
-          target: roundedHour + UnixTime.HOUR,
-          syncedUntil: roundedHour + UnixTime.HOUR,
-          blockTarget: 100,
-          blockSyncedUntil: 100,
-        },
-        {
-          feature: 'activity',
-          id: 'arbitrum',
-          target: roundedHour,
-          syncedUntil: newSyncedUntil,
-          blockTarget: 200,
-          blockSyncedUntil: 100,
-        },
-      ])
-    })
-
-    it('should update syncedUntil and blockSyncedUntil for existing record', async () => {
-      const records: SyncMetadataRecord[] = [
-        {
-          feature: 'activity',
-          id: 'arbitrum',
-          target: roundedHour,
-          syncedUntil: roundedHour,
-          blockTarget: 1000,
-          blockSyncedUntil: 100,
-        },
-        {
-          feature: 'activity',
-          id: 'base',
-          target: roundedHour + UnixTime.HOUR,
-          syncedUntil: roundedHour + UnixTime.HOUR,
-          blockTarget: 100,
-          blockSyncedUntil: 100,
-        },
-        {
-          feature: 'activity',
-          id: 'dydx',
-          target: roundedHour + 2 * UnixTime.HOUR,
-          syncedUntil: roundedHour + 2 * UnixTime.HOUR,
-          blockTarget: 200,
-          blockSyncedUntil: 100,
-        },
-        {
-          feature: 'l2costs',
-          id: 'base',
-          target: roundedHour + UnixTime.HOUR,
-          syncedUntil: roundedHour + UnixTime.HOUR,
-          blockTarget: 100,
-          blockSyncedUntil: 100,
-        },
-      ]
-      await repository.upsertMany(records)
-
-      const newSyncedUntil = roundedHour + 3 * UnixTime.HOUR
-      const newBlockSyncedUntil = 999
-      await repository.updateSyncedUntil(
-        'activity',
-        ['arbitrum'],
-        newSyncedUntil,
-        newBlockSyncedUntil,
+      expect(await repository.getMaxTargetForFeature('activity')).toEqual(
+        roundedHour + UnixTime.HOUR,
       )
-
-      const results = await repository.getAll()
-
-      expect(results).toHaveLength(4)
-      expect(results).toEqualUnsorted([
-        {
-          feature: 'activity',
-          id: 'base',
-          target: roundedHour + UnixTime.HOUR,
-          syncedUntil: roundedHour + UnixTime.HOUR,
-          blockTarget: 100,
-          blockSyncedUntil: 100,
-        },
-        {
-          feature: 'activity',
-          id: 'dydx',
-          target: roundedHour + 2 * UnixTime.HOUR,
-          syncedUntil: roundedHour + 2 * UnixTime.HOUR,
-          blockTarget: 200,
-          blockSyncedUntil: 100,
-        },
-        {
-          feature: 'l2costs',
-          id: 'base',
-          target: roundedHour + UnixTime.HOUR,
-          syncedUntil: roundedHour + UnixTime.HOUR,
-          blockTarget: 100,
-          blockSyncedUntil: 100,
-        },
-        {
-          feature: 'activity',
-          id: 'arbitrum',
-          target: roundedHour,
-          syncedUntil: newSyncedUntil,
-          blockTarget: 1000,
-          blockSyncedUntil: newBlockSyncedUntil,
-        },
-      ])
     })
 
-    it('should not update anything when ids array is empty', async () => {
-      const records: SyncMetadataRecord[] = [
-        {
-          feature: 'activity',
-          id: 'arbitrum',
-          target: roundedHour,
-          syncedUntil: roundedHour,
-          blockTarget: 200,
-          blockSyncedUntil: 100,
-        },
-      ]
-      await repository.upsertMany(records)
-
-      const newSyncedUntil = roundedHour + UnixTime.HOUR
-      await repository.updateSyncedUntil('activity', [], newSyncedUntil)
-
-      const results = await repository.getAll()
-      expect(results).toEqual(records)
+    it('returns undefined for a feature without records', async () => {
+      expect(await repository.getMaxTargetForFeature('tvs')).toEqual(undefined)
     })
   })
 })

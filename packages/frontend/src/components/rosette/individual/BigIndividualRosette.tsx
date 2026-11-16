@@ -67,7 +67,7 @@ export function BigIndividualRosette(props: Props) {
     <IndividualRosetteTooltipContextProvider>
       <Tooltip>
         <div className={cn('relative p-12 pb-7', props.className)}>
-          <TooltipTrigger>
+          <TooltipTrigger aria-label="Risk summary">
             <IndividualPizzaRosetteIcon
               l2={props.l2}
               l3={props.l3}

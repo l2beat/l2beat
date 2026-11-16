@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "cbeth",
+  "import": ["../globalConfig.jsonc"],
+  "maxAddresses": 60,
+  "initialAddresses": [
+    // cbETH token (FiatTokenProxy → StakedTokenV1).
+    "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704"
+  ],
+  "names": {
+    "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704": "cbETH",
+    "eth:0x9b37180d847b27adc13c2277299045c1237ae281": "ExchangeRateUpdater",
+    "eth:0x6d44bfb8432d17882bb6e84652f5c3b36fcc8280": "MintForwarder"
+  }
+}

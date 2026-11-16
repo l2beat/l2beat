@@ -80,12 +80,14 @@ export const HARDCODED = {
   },
   BASE: {
     // These values are part of Base's node configuration rather than its
-    // historical L1 state.
-    // https://github.com/base/base/blob/5761d838af8ae52e4904a74af2f3d8b490f56fec/crates/common/chains/src/config.rs#L402-L409
-    L2_BLOCK_TIME_SECONDS: 2,
+    // historical L1 state. Since the Denim hardfork (2026-11-05 18:00 UTC)
+    // Base produces one canonical block every 200 ms; the node keeps the
+    // 2 s value only as the legacy interval of its timestamp schedule.
+    // https://docs.base.org/upgrades/denim/200ms-blocks
+    // https://github.com/base/base/blob/v1.5.1/crates/common/genesis/src/schedule.rs
+    // https://github.com/base/base/blob/v1.5.1/crates/common/chains/src/config.rs#L455-L478
+    L2_BLOCK_TIME_SECONDS: 0.2,
     SEQUENCING_WINDOW_BLOCKS: 3_600,
-    // https://docs.base.org/base-chain/flashblocks/faq
-    FLASHBLOCK_INTERVAL_MILLISECONDS: 200,
     // This limit is a literal in OptimismPortal2.depositTransaction and has no getter.
     // https://etherscan.io/address/0x66d94ee8f529b683ed6013729784e8bb44697a64#code
     MAX_DEPOSIT_CALLDATA_BYTES: 120_000,

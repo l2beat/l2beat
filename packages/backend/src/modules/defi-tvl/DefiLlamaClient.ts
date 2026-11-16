@@ -31,7 +31,7 @@ export class DefiLlamaClient {
     const data = await this.httpClient.fetch(
       `${this.apiUrl}/protocol/${encodeURIComponent(protocolSlug)}`,
       {
-        headers: { 'user-agent': 'L2BEAT DeFi TVL indexer' },
+        headers: { 'user-agent': 'ETHBEAT DeFi TVL indexer' },
         timeout: 30_000,
       },
     )

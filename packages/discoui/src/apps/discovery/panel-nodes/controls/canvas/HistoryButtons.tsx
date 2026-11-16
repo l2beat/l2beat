@@ -1,4 +1,4 @@
-import { useIsomorphicKeys } from '../../../hooks/useIsomorphicKeys'
+import { useCommandShortcut } from '../../../keybindings/useCommandShortcut'
 import { useStore } from '../../store/store'
 import { IconControlUndo } from '../icons/IconControlUndo'
 import { ToolbarButton } from '../ToolbarButton'
@@ -8,13 +8,14 @@ export function HistoryButtons() {
   const redo = useStore((state) => state.redo)
   const canUndo = useStore((state) => state.history.past.length > 0)
   const canRedo = useStore((state) => state.history.future.length > 0)
-  const { ctrlKey } = useIsomorphicKeys()
+  const undoShortcut = useCommandShortcut('nodes.undo')
+  const redoShortcut = useCommandShortcut('nodes.redo')
 
   return (
     <>
       <ToolbarButton
         label="Undo"
-        shortcut={[ctrlKey, 'Z']}
+        shortcut={undoShortcut}
         disabled={!canUndo}
         onClick={undo}
       >
@@ -22,7 +23,7 @@ export function HistoryButtons() {
       </ToolbarButton>
       <ToolbarButton
         label="Redo"
-        shortcut={[ctrlKey, 'Shift', 'Z']}
+        shortcut={redoShortcut}
         disabled={!canRedo}
         onClick={redo}
       >

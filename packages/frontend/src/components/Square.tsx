@@ -37,10 +37,6 @@ const squareVariants = cva('shrink-0 rounded', {
 
 export function Square({ className, variant, size }: SquareProps) {
   return (
-    <div
-      role="img"
-      aria-label="Square icon"
-      className={squareVariants({ variant, size, className })}
-    />
+    <div aria-hidden className={squareVariants({ variant, size, className })} />
   )
 }

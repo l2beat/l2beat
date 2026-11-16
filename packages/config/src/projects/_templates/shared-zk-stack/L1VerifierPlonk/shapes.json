@@ -56,5 +56,11 @@
     "address": "eth:0x0DAAB2B7b38ab48712996E760152c569FA356DbF",
     "chain": "ethereum",
     "blockNumber": 25753516
+  },
+  "ZKsyncOSVerifierPlonk_v31.sol": {
+    "hash": "0x3f0953fba57857ba55a22458278d10fa1d87babd733c0d1a1cb8c1aeecfea51e",
+    "address": "eth:0x47a250D4Eb7F1bf9B4De89c31228DB0E938FF415",
+    "chain": "ethereum",
+    "blockNumber": 26334746
   }
 }

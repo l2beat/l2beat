@@ -49,7 +49,7 @@ export function getL2CostsColumns(metric: CostsMetric) {
       columns: [
         columnHelper.accessor((row) => availableCosts(row)?.total, {
           id: 'total-cost',
-          header: metric === 'total' ? 'Total cost' : 'Avg PER L2 User op',
+          header: metric === 'total' ? 'Total cost' : 'Avg per L2 user op',
           cell: (ctx) => (
             <SyncStatusWrapper
               isSynced={
@@ -65,7 +65,11 @@ export function getL2CostsColumns(metric: CostsMetric) {
           ),
           sortUndefined: 'last',
           meta: {
-            align: 'center',
+            align: 'right',
+            // Phones scroll the table sideways: starting the figures at the
+            // column's left edge keeps them whole in the first view.
+            headClassName: 'max-md:[&>div]:justify-start',
+            cellClassName: 'max-md:text-left',
             tooltip: `The ${metric === 'total' ? 'total cost' : 'average cost per L2 user operation'} that is a sum of the costs for calldata, computation, blobs, and overhead.`,
           },
         }),
@@ -159,7 +163,7 @@ export function getL2CostsColumns(metric: CostsMetric) {
           'before:bg-chart-stacked-pink',
         ),
         tooltip:
-          "The transaction gas cost excluding calldata, blobs and the 21'000 intrinsic gas overhead for the selected time period. Shows a sum or an average per L2 transaction, depending on the selected option.",
+          'The transaction gas cost excluding calldata, blobs and the intrinsic gas overhead for the selected time period. Shows a sum or an average per L2 transaction, depending on the selected option.',
       },
     }),
     columnHelper.accessor((row) => availableCosts(row)?.overhead, {
@@ -186,13 +190,13 @@ export function getL2CostsColumns(metric: CostsMetric) {
           'before:bg-chart-stacked-purple',
         ),
         tooltip:
-          "The cost of the fixed 21'000 intrinsic gas cost per L1 transaction for the selected time period. Shows a sum or an average per L2 transaction, depending on the selected option.",
+          "The cost of the intrinsic gas per L1 transaction (21'000 gas, or up to 15'000 after the Glamsterdam upgrade) for the selected time period. Shows a sum or an average per L2 transaction, depending on the selected option.",
       },
     }),
 
     columnHelper.accessor((row) => availableCosts(row)?.uopsCount, {
       id: 'data_uopsCount',
-      header: 'L2 User ops count',
+      header: 'L2 user ops count',
       cell: (ctx) => {
         const data = ctx.row.original.data
         if (data.type === 'available') {

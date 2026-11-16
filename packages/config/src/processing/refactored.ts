@@ -9,6 +9,7 @@ import { basesolbridge } from '../projects/basesolbridge/basesolbridge'
 import { boojum } from '../projects/boojum/boojum'
 import { bsc } from '../projects/bsc/bsc'
 import { butternetwork } from '../projects/butternetwork/butternetwork'
+import { cbeth } from '../projects/cbeth/cbeth'
 import { cbridge } from '../projects/cbridge/cbridge'
 import { ccip } from '../projects/ccip/ccip'
 import { cctpv1 } from '../projects/cctpv1/cctpv1'
@@ -18,11 +19,11 @@ import { circlegateway } from '../projects/circlegateway/circlegateway'
 import { cloaked } from '../projects/cloaked/cloaked'
 import { debridge } from '../projects/debridge/debridge'
 import { debridgeDln } from '../projects/debridge-dln/debridge-dln'
+import { eas } from '../projects/eas/eas'
 import { espressoprover } from '../projects/espressoprover/espressoprover'
 import { ethereum } from '../projects/ethereum/ethereum'
 import { etherfi } from '../projects/etherfi/etherfi'
 import { fluidkey } from '../projects/fluidkey/fluidkey'
-import { frankencoin } from '../projects/frankencoin/frankencoin'
 import { freetunnel } from '../projects/freetunnel/freetunnel'
 import { fusionplus } from '../projects/fusionplus/fusionplus'
 import { gaszip } from '../projects/gaszip/gaszip'
@@ -54,10 +55,13 @@ import { rocketpool } from '../projects/rocketpool/rocketpool'
 import { safe } from '../projects/safe/safe'
 import { sp1hypercube } from '../projects/sp1hypercube/sp1hypercube'
 import { sp1turbo } from '../projects/sp1turbo/sp1turbo'
+import { splitsv2 } from '../projects/splitsv2/splitsv2'
+import { stakewise } from '../projects/stakewise/stakewise'
 import { stargate } from '../projects/stargate/stargate'
 import { stone } from '../projects/stone/stone'
 import { strk20 } from '../projects/strk20/strk20'
 import { stwo } from '../projects/stwo/stwo'
+import { tacitPay } from '../projects/tacit-pay/tacit-pay'
 import { tempo } from '../projects/tempo/tempo'
 import { tornadoCash } from '../projects/tornado-cash/tornado-cash'
 import { umbra } from '../projects/umbra/umbra'
@@ -135,7 +139,6 @@ export const refactored: BaseProject[] = [
   freetunnel,
   basesolbridge,
   // defi
-  frankencoin,
   liquityv2,
   chainlink,
   uniswapv2,
@@ -144,9 +147,13 @@ export const refactored: BaseProject[] = [
   etherfi,
   uniswapv4,
   wbeth,
+  stakewise,
+  cbeth,
   polymarket,
   rocketpool,
   safe,
+  splitsv2,
+  eas,
   // privacy
   cloaked,
   fluidkey,
@@ -154,6 +161,7 @@ export const refactored: BaseProject[] = [
   privacyPoolsV2,
   railgun,
   strk20,
+  tacitPay,
   tornadoCash,
   umbra,
   zamaCw,

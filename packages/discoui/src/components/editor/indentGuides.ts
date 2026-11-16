@@ -6,7 +6,6 @@ import {
   ViewPlugin,
   type ViewUpdate,
 } from '@codemirror/view'
-import colors from '../../colors.json'
 
 const INDENT_WIDTH = 4
 const LINE_PADDING_LEFT = '6px'
@@ -15,7 +14,7 @@ const LINE_PADDING_LEFT = '6px'
 // line, so a guide costs no DOM and runs through blank lines too.
 const guideTheme = EditorView.theme({
   '.cm-line.cm-indent-guides': {
-    backgroundImage: `repeating-linear-gradient(to right, ${colors.coffee['800']} 0 1px, transparent 1px ${INDENT_WIDTH}ch)`,
+    backgroundImage: `repeating-linear-gradient(to right, var(--color-coffee-800) 0 1px, transparent 1px ${INDENT_WIDTH}ch)`,
     backgroundPosition: `${LINE_PADDING_LEFT} 0`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: `calc(var(--indent-levels) * ${INDENT_WIDTH}ch) 100%`,

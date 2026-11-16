@@ -27,8 +27,12 @@ export function BridgedUsingCell(props: Props) {
       )}
       {props.bridgedUsing?.warning && (
         <Tooltip>
-          <TooltipTrigger>
-            <RoundedWarningIcon className="size-4" sentiment="bad" />
+          <TooltipTrigger aria-label="Bridge warning">
+            <RoundedWarningIcon
+              className="size-4"
+              sentiment="bad"
+              aria-hidden
+            />
           </TooltipTrigger>
           <TooltipContent>
             <div className="space-y-2">{props.bridgedUsing.warning}</div>

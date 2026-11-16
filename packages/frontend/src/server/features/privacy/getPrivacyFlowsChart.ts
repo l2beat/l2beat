@@ -1,12 +1,21 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { getChartStartTimestamp } from '~/server/features/utils/getChartStartTimestamp'
-import { ChartRange } from '~/utils/range/range'
+import { ps } from '~/server/projects'
+import {
+  ChartRange,
+  type ChartResolution,
+  rangeToResolution,
+} from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
-import { getFullySyncedPrivacyRange } from './utils/getFullySyncedPrivacyRange'
+import {
+  getPrivacyFlowBuckets,
+  getPrivacyFlowSync,
+  type PrivacyFlowSync,
+} from './utils/getPrivacyFlowSync'
 
 export const PrivacyFlowsChartParams = v.object({
   projectIds: v.array(v.string()),
@@ -25,6 +34,7 @@ export type PrivacyFlowsChartPoint = [
 
 export interface PrivacyFlowsChartResponse {
   chart: PrivacyFlowsChartPoint[]
+  /** Start of the last period every bucket has fully indexed. */
   syncedUntil: number | undefined
 }
 
@@ -40,42 +50,50 @@ export async function getPrivacyFlowsChart(
   }
 
   const db = getDb()
-  const [from, to] = getFullySyncedPrivacyRange(params.range)
+  const projects = await ps.getProjects({
+    ids: params.projectIds.map(ProjectId),
+    select: ['privacyInfo'],
+  })
+  const buckets = getPrivacyFlowBuckets(projects)
+  const records = await db.syncMetadata.getByFeatureAndIds(
+    'privacy',
+    buckets.map((bucket) => bucket.id),
+  )
+  const sync = getPrivacyFlowSync(buckets, records)
+  const { resolution, from, to, syncedUntil } = getPrivacyFlowsChartWindow(
+    params.range,
+    sync,
+    UnixTime.now(),
+  )
+  const step = UnixTime.periodToSeconds(resolution)
 
-  const [dailyRows, syncedUntil, firstTimestamp] = await Promise.all([
-    db.privacyFlowEvent.getDailyByProjectIds(params.projectIds, from, to),
-    db.privacyFlowEvent.getLatestTimestampByProjectIds(params.projectIds),
+  const [rows, firstTimestamp] = await Promise.all([
+    db.privacyFlowEvent.getBucketedByProjectIds(
+      params.projectIds,
+      from,
+      to,
+      resolution,
+    ),
     db.privacyFlowEvent.getFirstTimestampByProjectIds(params.projectIds),
   ])
 
-  const projectIds = new Set(params.projectIds)
-  const historyRows = dailyRows.filter(
-    (row) => projectIds.has(row.projectId) && Number(row.timestamp) > 0,
-  )
-
-  if (historyRows.length === 0) {
-    if (from === null) {
-      return {
-        chart: [],
-        syncedUntil: syncedUntil ? Number(syncedUntil) : undefined,
-      }
+  if (rows.length === 0) {
+    if (from === null || to - step < from) {
+      return { chart: [], syncedUntil }
     }
-
     return {
-      chart: generateTimestamps([from, to - UnixTime.DAY], 'day').map(
+      chart: generateTimestamps([from, to - step], resolution).map(
         (timestamp) => [timestamp, 0, 0, 0, 0],
       ),
-      syncedUntil: syncedUntil ? Number(syncedUntil) : undefined,
+      syncedUntil,
     }
   }
-
-  const dataStart = Math.min(...historyRows.map((row) => Number(row.timestamp)))
 
   const start = getChartStartTimestamp({
     rangeStart: from,
     firstProjectTimestamp: firstTimestamp,
-    dataStart,
-    resolution: 'day',
+    dataStart: Math.min(...rows.map((row) => row.timestamp)),
+    resolution,
   })
 
   const grouped = new Map<
@@ -88,11 +106,7 @@ export async function getPrivacyFlowsChart(
     }
   >()
 
-  for (const row of historyRows) {
-    if ((from && row.timestamp < from) || row.timestamp > to) {
-      continue
-    }
-
+  for (const row of rows) {
     const entry = grouped.get(row.timestamp) ?? {
       depositsCount: 0,
       withdrawalsCount: 0,
@@ -105,13 +119,13 @@ export async function getPrivacyFlowsChart(
     entry.depositsValueUsd += row.depositValueUsd
     entry.withdrawalsValueUsd += row.withdrawalValueUsd
 
-    grouped.set(Number(row.timestamp), entry)
+    grouped.set(row.timestamp, entry)
   }
 
   return {
-    // `to` is exclusive: the query never returns data for that day, so we
-    // stop one day earlier to avoid a trailing empty data point.
-    chart: generateTimestamps([start, to - UnixTime.DAY], 'day').map(
+    // `to` is exclusive: the query never returns data for that bucket, so we
+    // stop one bucket earlier to avoid a trailing empty data point.
+    chart: generateTimestamps([start, to - step], resolution).map(
       (timestamp) => {
         const entry = grouped.get(timestamp)
         return [
@@ -123,18 +137,54 @@ export async function getPrivacyFlowsChart(
         ]
       },
     ),
-    syncedUntil: syncedUntil ? syncedUntil : to,
+    syncedUntil,
+  }
+}
+
+/**
+ * The buckets to chart. Each is a sum over its period, so only periods the
+ * indexers have fully covered are shown: the chart runs up to the furthest
+ * bucket's height, and `syncedUntil` marks where the slowest one is, so the
+ * chart can grey out what a backfill has not reached yet. The range end is
+ * honoured up to that height, with the period it falls in included: a
+ * preset's end is only a guess of what is synced, a custom range's is chosen.
+ */
+export function getPrivacyFlowsChartWindow(
+  range: ChartRange,
+  sync: PrivacyFlowSync | undefined,
+  now: UnixTime,
+): {
+  resolution: ChartResolution
+  from: UnixTime | null
+  /** Exclusive. */
+  to: UnixTime
+  syncedUntil: UnixTime | undefined
+} {
+  const resolution = rangeToResolution(range)
+  const step = UnixTime.periodToSeconds(resolution)
+  return {
+    resolution,
+    from: range[0] === null ? null : UnixTime.toStartOf(range[0], resolution),
+    to: Math.min(
+      UnixTime.toStartOf(sync?.reached ?? now, resolution),
+      UnixTime.toStartOf(range[1], resolution) + step,
+    ),
+    syncedUntil:
+      sync === undefined
+        ? undefined
+        : UnixTime.toStartOf(sync.slowest, resolution) - step,
   }
 }
 
 function getMockPrivacyFlowsChart(
   params: PrivacyFlowsChartParams,
 ): PrivacyFlowsChartResponse {
+  const resolution = rangeToResolution(params.range)
   const days = rangeToDays(params.range) ?? 365
-  const to = UnixTime.toStartOf(UnixTime.now(), 'day')
+  const to = UnixTime.toStartOf(UnixTime.now(), resolution)
   const from = params.range[0] ?? to - days * UnixTime.DAY
 
-  const chart = generateTimestamps([from, to], 'day').map(
+  const chart = generateTimestamps([from, to], resolution).map(
     (timestamp): PrivacyFlowsChartPoint => {
       const depositsCount = Math.round(Math.random() * 100)
       const withdrawalsCount = Math.round(Math.random() * 100)

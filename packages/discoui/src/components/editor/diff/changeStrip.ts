@@ -1,7 +1,6 @@
 import type { MergeView } from '@codemirror/merge'
 import { EditorView } from '@codemirror/view'
 import { assert } from '@l2beat/shared-pure'
-import colors from '../../../colors.json'
 import type { LineRangeMapping } from './utils/diffFilter'
 
 const MARK_HEIGHT_MIN = 2
@@ -121,8 +120,8 @@ export class ChangeStrip {
     context.scale(layout.pixelRatio, layout.pixelRatio)
     const laneWidth = layout.width / 2
     const lanes = [
-      [layout.removed, 0, colors.aux.red],
-      [layout.added, laneWidth, colors.aux.green],
+      [layout.removed, 0, readCssColor(this.dom, '--color-aux-red')],
+      [layout.added, laneWidth, readCssColor(this.dom, '--color-aux-green')],
     ] as const
     for (const [bands, left, color] of lanes) {
       context.fillStyle = color
@@ -254,4 +253,10 @@ export function scrollTopToCenter(
     Math.max(scrollTop, 0),
     Math.max(contentHeight - viewportHeight, 0),
   )
+}
+
+function readCssColor(element: HTMLElement, name: string): string {
+  const color = getComputedStyle(element).getPropertyValue(name)
+  assert(color !== '', 'Missing CSS color')
+  return color
 }

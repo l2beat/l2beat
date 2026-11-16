@@ -73,27 +73,45 @@ export const lineaprover: BaseProject = {
     ],
     verifierHashes: [
       {
-        hash: '0xbe73a8003797063d70b44eba376a814caf3399361069b5e5e43660cc435c27c9',
-        name: 'Linea Plonk 7.6.0',
+        hash: '0xcf31d231799d0d8354af5ecead7bdd0d57dceefd078e7306818074e7d1947d82',
+        name: 'Linea Plonk 7.8.0',
         sourceLink:
-          'https://github.com/Consensys/linea-monorepo/tree/064531156c8c4f52fa5f00f004a87677e4f90026/prover',
+          'https://github.com/Consensys/linea-monorepo/tree/d79a1b2403cb6a30c33851ebd36e8d92ad65dd0d/prover',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
             address: ChainSpecificAddress.fromLong(
               'ethereum',
-              '0xAFF26999780901ee8B48f0a1271a177ff46fD53F',
+              '0x0B3943f4B1397C7a9f268D8b84f127A78C66414C',
             ),
           },
         ],
-        verificationStatus: 'successful',
-        verificationSteps: readProjectMarkdown(
-          'lineaprover',
-          'verificationSteps-0xbe73a800',
-        ),
+        verificationStatus: 'notVerified',
         description:
           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },
+      // {
+      //   hash: '0xbe73a8003797063d70b44eba376a814caf3399361069b5e5e43660cc435c27c9',
+      //   name: 'Linea Plonk 7.6.0',
+      //   sourceLink:
+      //     'https://github.com/Consensys/linea-monorepo/tree/064531156c8c4f52fa5f00f004a87677e4f90026/prover',
+      //   proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+      //   knownDeployments: [
+      //     {
+      //       address: ChainSpecificAddress.fromLong(
+      //         'ethereum',
+      //         '0xAFF26999780901ee8B48f0a1271a177ff46fD53F',
+      //       ),
+      //     },
+      //   ],
+      //   verificationStatus: 'successful',
+      //   verificationSteps: readProjectMarkdown(
+      //     'lineaprover',
+      //     'verificationSteps-0xbe73a800',
+      //   ),
+      //   description:
+      //     'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
+      // },
       // {
       //   hash: '0xd92b8281296cbfe1963093c23f9fb7fef6f9debfa9115622ca412c32b848aa52',
       //   name: 'Linea Plonk Type 1',

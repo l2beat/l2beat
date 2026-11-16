@@ -1,6 +1,10 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { sampleTimeline, TIMELINE_SAMPLES } from './sampleTimeline'
+import {
+  getTimelinePeak,
+  sampleTimeline,
+  TIMELINE_SAMPLES,
+} from './sampleTimeline'
 
 describe(sampleTimeline.name, () => {
   // One grid point per day
@@ -23,5 +27,26 @@ describe(sampleTimeline.name, () => {
 
   it('returns null for an empty series', () => {
     expect(sampleTimeline([], from, to)).toEqual(null)
+  })
+})
+
+describe(getTimelinePeak.name, () => {
+  const from = 0
+  const to = (TIMELINE_SAMPLES - 1) * UnixTime.DAY
+
+  it('counts a spike between samples and the value held at the start', () => {
+    const series = [
+      { timestamp: -UnixTime.DAY, value: 8 },
+      { timestamp: 3.5 * UnixTime.DAY, value: 20 },
+      { timestamp: 4 * UnixTime.DAY, value: 5 },
+    ]
+
+    expect(sampleTimeline(series, from, to)?.includes(20)).toEqual(false)
+    expect(getTimelinePeak(series, from, to)).toEqual(20)
+    expect(getTimelinePeak(series.slice(0, 1), from, to)).toEqual(8)
+  })
+
+  it('returns null for an empty series', () => {
+    expect(getTimelinePeak([], from, to)).toEqual(null)
   })
 })

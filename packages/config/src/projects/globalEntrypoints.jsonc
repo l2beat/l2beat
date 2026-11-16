@@ -6,6 +6,7 @@
     "../projects/shared-eigenlayer/entrypoints.json",
     "../projects/shared-eigenda/entrypoints.json",
     "../projects/shared-sp1/entrypoints.json",
+    "../projects/shared-aztec/entrypoints.json",
     "../projects/chainlink/entrypoints.json"
   ]
 }

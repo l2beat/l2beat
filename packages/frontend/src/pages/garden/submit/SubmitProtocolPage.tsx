@@ -1,4 +1,3 @@
-import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { GardenPageHeader } from '../components/GardenPageHeader'
@@ -19,7 +18,6 @@ export function SubmitProtocolPage(props: AppLayoutProps) {
             <ClosingSection />
           </main>
         </div>
-        <ScrollToTopButton />
       </SideNavLayout>
     </AppLayout>
   )

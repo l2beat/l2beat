@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  // No displayName: the template covers PullSplitFactory and PushSplitFactory.
+  "critical": true,
+  "description": "Deploys splits of one type and version as minimal proxies of its split implementation. Anyone can create a split, with or without an owner, at an address fixed by its recipients, owner and salt. Immutable, with no owner."
+}

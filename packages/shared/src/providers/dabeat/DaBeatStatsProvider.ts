@@ -26,10 +26,7 @@ export class DaBeatStatsProvider {
     assert(this.beaconChainClient, 'Beacon chain client not found')
 
     const { totalStake, numberOfValidators } =
-      await this.beaconChainClient.getValidatorsInfo({
-        stateId: 'head',
-        status: ['active'],
-      })
+      await this.beaconChainClient.getValidatorsInfo('head', ['active'])
 
     return {
       totalStake,

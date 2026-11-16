@@ -1,3 +1,302 @@
+Generated with discovered.json: 0x5c962d562dd2c78157f8648b553b874ab0a0491b
+
+# Diff at Mon, 16 Nov 2026 10:54:47 GMT:
+
+- id: bc980a4c
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@470153e37b9b4db6f9c1f929151e642b8c8f0012 block: 1794568266
+- current timestamp: 1794568266
+
+## Description
+
+Config: the governance, staking and token contracts that all Aztec rollup versions share moved to shared-aztec. The project now starts at its Rollup and references them.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1794568266 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract CoinIssuer (eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6) [aztecnetwork/CoinIssuer]
+    +++ description: Manages the inflation and minting schedule of the Aztec token. It enforces an annual percentage cap and mints new tokens for the budget.
+```
+
+```diff
+-   Status: DELETED
+    contract GovernanceProposer (eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef) [aztecnetwork/GovernanceProposer]
+    +++ description: Intermediary contract through which the designated proposer for each L2 slot can signal support for an L1 payload. A signalling round comprises 1000 slots. A payload that receives at least 600 signals can be submitted to the L1 Governance contract within the configured lifetime.
+```
+
+```diff
+    external contract Governance (eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e) {
+    +++ description: None
+      type:
+-        "Contract"
++        "Reference"
+      template:
+-        "aztecnetwork/Governance"
+      sourceHashes:
+-        ["0x0ce6e4dfb9032a183db9db78aed6db53131df8c04b34950cff771cf97ee52e70"]
+      proxyType:
+-        "immutable"
+      description:
+-        "DAO contract used for proposals and token voting. Heavily interdependent with the GSE for voting power snapshots."
+      deployerAddress:
+-        "eth:0x85e51a78FE8FE21d881894206A9adbf54e3Df8c3"
+      sinceTimestamp:
+-        1762995071
+      sinceBlock:
+-        23786829
+      values:
+-        {"$immutable":true,"ASSET":"eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2","getConfiguration":{"proposeConfig":{"lockDelay":7776000,"lockAmount":"258750000000000000000000000"},"votingDelay":259200,"votingDuration":604800,"executionDelay":172800,"gracePeriod":604800,"quorum":"200000000000000000","requiredYeaMargin":"330000000000000000","minimumVotes":"100000000000000000000000000"},"governanceProposer":"eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef","isAllBeneficiariesAllowed":true,"proposalCount":7,"totalPowerNow":"641644182238093417873412053","withdrawalCount":6676}
+      fieldMeta:
+-        {"ASSET":{"description":"AZTEC token used for governance deposits and voting power."},"governanceProposer":{"description":"Address allowed to create proposals after sequencer signalling succeeds."}}
+      category:
+-        {"name":"Governance","priority":3}
+      targetType:
++        "Contract"
+      targetProject:
++        "shared-aztec"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Registry (eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298) [aztecnetwork/Registry]
+    +++ description: Central directory that tracks the current 'canonical' (active) Rollup contract address and key system contracts like the Reward Distributor.
+```
+
+```diff
+    external contract RewardDistributor (eth:0x555bAAc4757A89f1CE0c84fA35afE9dD7aa8E1d3) {
+    +++ description: None
+      type:
+-        "Contract"
++        "Reference"
+      template:
+-        "aztecnetwork/RewardDistributor"
+      sourceHashes:
+-        ["0x459d15c998a2f749c51abcd10cdcdaa0f4617a23f664ddb2414bfcbb4e960475"]
+      proxyType:
+-        "immutable"
+      description:
+-        "Holds tokens allocated for protocol rewards. The canonical Rollup contract, as defined by the Registry, can draw from the implicit reward pool while any address can claim only funds explicitly earmarked to it."
+      deployerAddress:
+-        "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444"
+      sinceTimestamp:
+-        1782803327
+      sinceBlock:
+-        25428902
+      values:
+-        {"$immutable":true,"ASSET":"eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2","canonicalRollup":"eth:0xE37A2663Cc9c119BA41572C40fAb0bbb23a5402f","REGISTRY":"eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298","registryOwner":"eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e","totalEarmarkedBalance":"794600000000000000000000"}
+      fieldMeta:
+-        {"ASSET":{"description":"ERC20 token distributed as protocol rewards."},"REGISTRY":{"description":"Registry used to resolve the canonical rollup and governance owner."},"canonicalRollup":{"description":"Current canonical rollup, which can claim from both the implicit reward pool and funds earmarked to it."},"registryOwner":{"description":"Current owner of the linked Registry, resolved by the RewardDistributor at call time."},"totalEarmarkedBalance":{"description":"Total reward balance reserved for specific recipients rather than the canonical rollup's implicit pool."}}
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+      targetType:
++        "Contract"
+      targetProject:
++        "shared-aztec"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ProtocolTreasury (eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a) [aztecnetwork/ProtocolTreasury]
+    +++ description: Holds the protocol's funds controlled by Governance. It acts as a timelocked executor for spending or relaying transactions approved by the DAO.
+```
+
+```diff
+-   Status: DELETED
+    contract BaseStaker (eth:0x79075C8E314Ab4A84d54F90b1c7032Dc5469082d) [aztecnetwork/BaseStaker]
+    +++ description: Implementation registered by the ATP Registry for upgradeable staker proxies that manage locked AZTEC positions.
+```
+
+```diff
+    external contract AZTEC Token (eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2) {
+    +++ description: None
+      type:
+-        "Contract"
++        "Reference"
+      template:
+-        "aztecnetwork/Aztec"
+      sourceHashes:
+-        ["0x6018c4d73b9151449ab94fa44cb69a1f9d6eaa71dbf36cbf9f262a54b77e20da"]
+      proxyType:
+-        "immutable"
+      description:
+-        "AZTEC token contract"
+      deployerAddress:
+-        "eth:0xCbE23F4EBd9150e3A9d3A80442d145FAD624751d"
+      sinceTimestamp:
+-        1751359739
+      sinceBlock:
+-        22823299
+      values:
+-        {"$immutable":true,"decimals":18,"DOMAIN_SEPARATOR":"0xa70675fc933c476d0f385b5af801a04433e3d6c4305bc61f5b1e45bc92773525","eip712Domain":{"fields":"0x0f","name":"AZTEC","version":"1","chainId":1,"verifyingContract":"eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"name":"AZTEC","owner":"eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6","pendingOwner":"eth:0x0000000000000000000000000000000000000000","symbol":"AZTEC","totalSupply":"10350000000000000000000000000"}
+      fieldMeta:
+-        {"owner":{"description":"Owner of the AZTEC token."},"pendingOwner":{"description":"Address nominated to become the AZTEC token owner."}}
+      category:
+-        {"name":"Governance","priority":3}
+      targetType:
++        "Contract"
+      targetProject:
++        "shared-aztec"
+    }
+```
+
+```diff
+    external contract GSE (eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f) {
+    +++ description: None
+      type:
+-        "Contract"
++        "Reference"
+      template:
+-        "aztecnetwork/GSE"
+      sourceHashes:
+-        ["0x25ba11bed3e4573e049efd5cea98a8d47ccd23a404f2777f5cd2c6d101b1eb4f"]
+      proxyType:
+-        "immutable"
+      description:
+-        "Central staking manager independent of Rollup implementations. Sequencers deposit stake here through their chosen Rollup contract. Their stake is then transferred to the Governance contract and activated for voting. The GSE tracks which rollup instance validators are securing, and gives them an option to automatically move to the latest Rollup version."
+      deployerAddress:
+-        "eth:0x85e51a78FE8FE21d881894206A9adbf54e3Df8c3"
+      sinceTimestamp:
+-        1762995035
+      sinceBlock:
+-        23786826
+      values:
+-        {"$immutable":true,"ACTIVATION_THRESHOLD":"200000000000000000000000","ASSET":"eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2","BONUS_INSTANCE_ADDRESS":"eth:0x9064Fb41156D300196d5Eb95E0B3c1f08eBc39a8","EJECTION_THRESHOLD":"100000000000000000000000","getBonusInstanceAddress":"eth:0x9064Fb41156D300196d5Eb95E0B3c1f08eBc39a8","getGovernance":"eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e","getLatestRollup":"eth:0xE37A2663Cc9c119BA41572C40fAb0bbb23a5402f","owner":"eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e","proofOfPossessionGasLimit":300000,"totalSupply":"640212000000000000000000000"}
+      fieldMeta:
+-        {"proofOfPossessionGasLimit":{"severity":"MEDIUM","description":"Gas cap for verifying a new validator's BLS proof of possession. The owner can set it too low for valid keys, which blocks new validator deposits."},"ASSET":{"description":"ERC20 token staked by validators and used for governance voting power."},"getGovernance":{"description":"One-time configured contract receiving voting power from staked validators."},"getLatestRollup":{"description":"Latest rollup registered in the GSE. Validators assigned to the bonus instance follow this address."},"owner":{"description":"Owner of the GSE."}}
+      category:
+-        {"name":"Governance","priority":3}
+      targetType:
++        "Contract"
+      targetProject:
++        "shared-aztec"
+    }
+```
+
+```diff
+    external contract SlashVeto Council (eth:0xBbB4aF368d02827945748b28CD4b2D42e4A37480) {
+    +++ description: None
+      type:
+-        "Contract"
++        "Reference"
+      template:
+-        "GnosisSafe"
+      sourceHashes:
+-        ["0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5","0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"]
+      proxyType:
+-        "gnosis safe"
+      deployerAddress:
+-        "eth:0x7EAbE4F636B937628A7Fe503bD7F06772C047FEe"
+      sinceTimestamp:
+-        1762176359
+      sinceBlock:
+-        23719087
+      values:
+-        {"$immutable":false,"$implementation":"eth:0x41675C099F32341bf84BFc5382aF534df5C7461a","$members":["eth:0xb33a08eF4624eE8F409F749Ee73766E225bEd0F4","eth:0xb6Da7B7a0d8c7349630183f4Bd6F13D4a8AD9216","eth:0xB216FcaF63c6C0f73a557B342e1Da9710C95DA81","eth:0x81062F03742B88923eaB121243B69D0a0092089e","eth:0x32e90E88bb2E6Ee4382e6884cC5c299a6bA27920","eth:0x23d4A9533627eA70915026638ff5989a967Be667","eth:0x8138c46A572D989E54837d5e5dEB506889edFb5D","eth:0x0Fb6215099f48D723CfB89434C2cb887357Bc871","eth:0x7EAbE4F636B937628A7Fe503bD7F06772C047FEe"],"$threshold":5,"domainSeparator":"0x0ac0f33017c635adbf51e5320e2bb322a70446b7bc0ec2080bc5752ae7286b82","getChainId":1,"GnosisSafe_modules":[],"multisigThreshold":"5 of 9 (56%)","nonce":6,"VERSION":"1.4.1"}
+      category:
+-        {"name":"Governance","priority":3}
+      targetType:
++        "Contract"
+      targetProject:
++        "shared-aztec"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract AztecTokenPositionRegistry_ProtocolTreasury (eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80) [aztecnetwork/AztecTokenPositionRegistry]
+    +++ description: AZTEC token-position Registry referenced by the ProtocolTreasury for its activation cutoff and by other ecosystem vesting contracts.
+```
+
+Generated with discovered.json: 0xb11e2572b18c3bb97fa9b8bb7ad3c32149927300
+
+# Diff at Fri, 13 Nov 2026 13:03:56 GMT:
+
+- id: 0800cdc8
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ced572b97485e6dc1fc02f958ee2a731593430e block: 1794319787
+- current timestamp: 1794568266
+
+## Description
+
+The CoinIssuer entered its second year. mintAvailable is 20% of the current AZTEC supply of 10.35B, so 2.07B AZTEC. The issuer minted nothing in its first year, whose 2B budget lapsed.
+
+## Watched changes
+
+```diff
+    contract CoinIssuer (eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6) [aztecnetwork/CoinIssuer] {
+    +++ description: Manages the inflation and minting schedule of the Aztec token. It enforces an annual percentage cap and mints new tokens for the budget.
+      values.mintAvailable:
+-        "2000000000000000000000000000"
++        "2070000000000000000000000000"
+    }
+```
+
+Generated with discovered.json: 0xfbfc422528f899e13a0d180059a9e57c169103f7
+
+# Diff at Tue, 10 Nov 2026 14:26:44 GMT:
+
+- id: 8b7785e3
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@28ea16426fac1900c2fffd1cec3ecc6b84981c76 block: 1793614673
+- current timestamp: 1794319787
+
+## Description
+
+New governance proposal 6 (payload `ZeroRegistryRewardsPayload` eth:0x8e1ae43beC950Ea0E02F2Ed43101797c5A8dbfCD, wrapped in the GSEPayload eth:0x340d8F93C874f59D0e49400cb7a9Aff31eEd5E71), in voting. It sets a RegistryReductionCalculator (eth:0xbfa4597532b2bac2b7429EDe41da29E2fe3Ee43D, owned by the Governance) as `sequencerRewardCalculator` of the v6 Rollup, with a sequencer reward of 0 for two token position registries (eth:0x667d2641cb96734f386adA6A9afCF07B1815fB8b and eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80).
+
+https://forum.aztec.network/t/proposal-zero-sequencer-checkpoint-rewards-for-investor-and-employee-atp-registries/8694
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e) [aztecnetwork/Governance] {
+    +++ description: DAO contract used for proposals and token voting. Heavily interdependent with the GSE for voting power snapshots.
+      values.proposalCount:
+-        6
++        7
+    }
+```
+
+Generated with discovered.json: 0x1a07f69c460b9a87577bc6137a989eae5740bf1e
+
+# Diff at Thu, 05 Nov 2026 08:58:36 GMT:
+
+- id: 1a83e0d8
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@92a563dab6932b2cedd6791c3571d1d33fc43c20 block: 1793614673
+- current timestamp: 1793614673
+
+## Description
+
+`getSlasher` is HIGH, `getPendingSlasher` and `latestStakingQueueConfigUpdate` MEDIUM: a slasher swap counts when it takes effect, and the entry queue is a rate limit.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793614673 (main branch discovery), not current.
+
+```diff
+    contract Rollup (eth:0xE37A2663Cc9c119BA41572C40fAb0bbb23a5402f) [aztecnetwork/Rollup_v6] {
+    +++ description: Core rollup logic contract. It processes checkpoint proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.
+      fieldMeta.latestStakingQueueConfigUpdate.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.getSlasher.severity:
++        "HIGH"
+      fieldMeta.getPendingSlasher.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0xdb083dcb144bb7eab021feeb8e251b3e2c1660de
 
 # Diff at Mon, 02 Nov 2026 10:19:13 GMT:

@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Collects L2 transaction fees, which anyone can withdraw as MNT to the recipient on L1 once the minimum withdrawal amount is reached.",
+  "category": "non-critical",
+  "ignoreInWatchMode": ["totalProcessed"],
+  "fields": {
+    // immutable, set in the implementation, an L1 address
+    "RECIPIENT": { "edit": ["format", "EthereumAddress"] }
+  }
+}

@@ -160,7 +160,7 @@ describe(RpcClient.name, () => {
   })
 
   describe(RpcClient.prototype.getTransactionReceipt.name, () => {
-    it('keeps the block hash', async () => {
+    it('keeps the block hash and status', async () => {
       const http = mockObject<HttpClient>({
         fetch: async () => ({
           result: { ...mockReceipt, blockHash: '0xabcdef', status: '0x1' },
@@ -170,7 +170,24 @@ describe(RpcClient.name, () => {
 
       const result = await rpc.getTransactionReceipt('0xabcd')
 
-      expect(result).toEqual({ ...parsedMockReceipt, blockHash: '0xabcdef' })
+      expect(result).toEqual({
+        ...parsedMockReceipt,
+        blockHash: '0xabcdef',
+        status: 1,
+      })
+    })
+
+    it('accepts a null effective gas price, as zetachain returns', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({
+          result: { ...mockReceipt, effectiveGasPrice: null },
+        }),
+      })
+      const rpc = mockClient({ http })
+
+      const result = await rpc.getTransactionReceipt('0xabcd')
+
+      expect(result.effectiveGasPrice).toEqual(undefined)
     })
 
     it('fetches tx receipt from rpc and parses response', async () => {
@@ -192,6 +209,44 @@ describe(RpcClient.name, () => {
           id: 'unique-id',
           jsonrpc: '2.0',
         }),
+      )
+    })
+  })
+
+  describe(RpcClient.prototype.getBlockReceipts.name, () => {
+    it('fetches every receipt of a block with its gas fields', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({
+          result: [
+            { ...mockReceipt, gasUsed: '0x5208', effectiveGasPrice: '0x3' },
+          ],
+        }),
+      })
+      const rpc = mockClient({ http, generateId: () => 'unique-id' })
+
+      const result = await rpc.getBlockReceipts(100)
+
+      expect(result).toEqual([
+        { ...parsedMockReceipt, gasUsed: 21_000n, effectiveGasPrice: 3n },
+      ])
+      expect(http.fetch.calls[0].args[1]?.body).toEqual(
+        JSON.stringify({
+          method: 'eth_getBlockReceipts',
+          params: ['0x64'],
+          id: 'unique-id',
+          jsonrpc: '2.0',
+        }),
+      )
+    })
+
+    it('throws when the block is not there yet', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({ result: null }),
+      })
+      const rpc = mockClient({ http })
+
+      await expect(rpc.getBlockReceipts(100)).toBeRejectedWith(
+        NotFoundOnRpcError,
       )
     })
   })

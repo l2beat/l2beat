@@ -1,7 +1,17 @@
 {
   "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "BaseFeeVault",
-  "description": "Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.",
+  "description": "Collects the EIP-1559 base fees, which anyone can withdraw to the recipient on L1 or L2 once the minimum withdrawal amount is reached.",
   "category": "non-critical",
-  "ignoreMethods": ["totalProcessed"]
+  "ignoreMethods": ["totalProcessed"],
+  "fields": {
+    "proxyAdminOwner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the fee recipient, the minimum withdrawal amount and whether fees are withdrawn on L1 or L2."
+        }
+      ]
+    }
+  }
 }

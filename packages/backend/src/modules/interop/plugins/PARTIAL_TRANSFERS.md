@@ -115,3 +115,4 @@ Note:
 - Partial transfer support is implemented in the transfer type API and matching loop.
 - `oneSidedChains` is currently config-level policy data; plugin/matching logic decides when to use it.
 - Unsupported marking is event-based and mainly affects unmatched events; matched events consumed into a transfer are not treated as unsupported.
+- Events whose `$srcChain`/`$dstChain` is a configured one-sided chain are never marked unsupported: they wait for a match until their TTL, so a plugin can emit the partial transfer later (e.g. when the source chain settles).

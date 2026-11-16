@@ -83,6 +83,9 @@ describe(PrivacyFlowIndexer.name, () => {
       const privacyFlowEventRepo = mockObject<Database['privacyFlowEvent']>({
         upsertMany: mockFn().returnsOnce(undefined),
       })
+      const syncMetadataRepo = mockObject<Database['syncMetadata']>({
+        updateSyncedUntil: mockFn().resolvesTo(undefined),
+      })
 
       const indexer = new PrivacyFlowIndexer(
         {
@@ -92,6 +95,7 @@ describe(PrivacyFlowIndexer.name, () => {
           blockProvider,
           logsProvider,
           db: mockDatabase({
+            syncMetadata: syncMetadataRepo,
             privacyBlockTimestamp: privacyBlockTimestampRepo,
             privacyPrice: privacyPriceRepo,
             privacyFlowEvent: privacyFlowEventRepo,
@@ -131,6 +135,12 @@ describe(PrivacyFlowIndexer.name, () => {
           valueUsd: 2000,
         },
       ])
+
+      expect(syncMetadataRepo.updateSyncedUntil).toHaveBeenOnlyCalledWith(
+        'privacy',
+        ['bucket-1'],
+        to,
+      )
 
       // adjustedTo = min(toNext(from, 'day'), to). For 5-hour window inside a day,
       // adjustedTo === to.
@@ -177,6 +187,9 @@ describe(PrivacyFlowIndexer.name, () => {
           blockProvider: mockObject<BlockProvider>({}),
           logsProvider,
           db: mockDatabase({
+            syncMetadata: mockObject<Database['syncMetadata']>({
+              updateSyncedUntil: mockFn().resolvesTo(undefined),
+            }),
             privacyBlockTimestamp: privacyBlockTimestampRepo,
             privacyPrice: mockObject(),
             privacyFlowEvent: privacyFlowEventRepo,
@@ -221,6 +234,9 @@ describe(PrivacyFlowIndexer.name, () => {
           blockProvider: mockObject<BlockProvider>({}),
           logsProvider,
           db: mockDatabase({
+            syncMetadata: mockObject<Database['syncMetadata']>({
+              updateSyncedUntil: mockFn().resolvesTo(undefined),
+            }),
             privacyBlockTimestamp: mockObject(),
             privacyPrice: mockObject(),
             privacyFlowEvent: privacyFlowEventRepo,
@@ -268,6 +284,9 @@ describe(PrivacyFlowIndexer.name, () => {
           blockProvider: mockObject<BlockProvider>({}),
           logsProvider: mockObject<LogsProvider>({}),
           db: mockDatabase({
+            syncMetadata: mockObject<Database['syncMetadata']>({
+              updateSyncedUntil: mockFn().resolvesTo(undefined),
+            }),
             privacyBlockTimestamp: privacyBlockTimestampRepo,
             privacyPrice: mockObject(),
             privacyFlowEvent: mockObject(),
@@ -376,6 +395,9 @@ describe(PrivacyFlowIndexer.name, () => {
           blockProvider,
           logsProvider,
           db: mockDatabase({
+            syncMetadata: mockObject<Database['syncMetadata']>({
+              updateSyncedUntil: mockFn().resolvesTo(undefined),
+            }),
             privacyBlockTimestamp: privacyBlockTimestampRepo,
             privacyPrice: privacyPriceRepo,
             privacyFlowEvent: privacyFlowEventRepo,
@@ -451,6 +473,9 @@ describe(PrivacyFlowIndexer.name, () => {
           blockProvider: mockObject<BlockProvider>({}),
           logsProvider,
           db: mockDatabase({
+            syncMetadata: mockObject<Database['syncMetadata']>({
+              updateSyncedUntil: mockFn().resolvesTo(undefined),
+            }),
             privacyBlockTimestamp: privacyBlockTimestampRepo,
             privacyPrice: privacyPriceRepo,
             privacyFlowEvent: privacyFlowEventRepo,
@@ -530,6 +555,9 @@ describe(PrivacyFlowIndexer.name, () => {
           blockProvider: mockObject<BlockProvider>({}),
           logsProvider,
           db: mockDatabase({
+            syncMetadata: mockObject<Database['syncMetadata']>({
+              updateSyncedUntil: mockFn().resolvesTo(undefined),
+            }),
             privacyBlockTimestamp: privacyBlockTimestampRepo,
             privacyPrice: privacyPriceRepo,
             privacyFlowEvent: privacyFlowEventRepo,
@@ -601,6 +629,9 @@ describe(PrivacyFlowIndexer.name, () => {
           blockProvider: mockObject<BlockProvider>({}),
           logsProvider,
           db: mockDatabase({
+            syncMetadata: mockObject<Database['syncMetadata']>({
+              updateSyncedUntil: mockFn().resolvesTo(undefined),
+            }),
             privacyBlockTimestamp: privacyBlockTimestampRepo,
             privacyPrice: privacyPriceRepo,
             privacyFlowEvent: mockObject(),
@@ -675,6 +706,9 @@ describe(PrivacyFlowIndexer.name, () => {
           blockProvider: mockObject<BlockProvider>({}),
           logsProvider,
           db: mockDatabase({
+            syncMetadata: mockObject<Database['syncMetadata']>({
+              updateSyncedUntil: mockFn().resolvesTo(undefined),
+            }),
             privacyBlockTimestamp: privacyBlockTimestampRepo,
             privacyPrice: mockObject(),
             privacyFlowEvent: mockObject(),
@@ -768,6 +802,9 @@ describe(PrivacyFlowIndexer.name, () => {
           blockProvider: mockObject<BlockProvider>({}),
           logsProvider,
           db: mockDatabase({
+            syncMetadata: mockObject<Database['syncMetadata']>({
+              updateSyncedUntil: mockFn().resolvesTo(undefined),
+            }),
             privacyBlockTimestamp: privacyBlockTimestampRepo,
             privacyPrice: privacyPriceRepo,
             privacyFlowEvent: privacyFlowEventRepo,
@@ -874,6 +911,9 @@ describe(PrivacyFlowIndexer.name, () => {
           blockProvider: mockObject<BlockProvider>({}),
           logsProvider,
           db: mockDatabase({
+            syncMetadata: mockObject<Database['syncMetadata']>({
+              updateSyncedUntil: mockFn().resolvesTo(undefined),
+            }),
             privacyBlockTimestamp: privacyBlockTimestampRepo,
             privacyPrice: privacyPriceRepo,
             privacyFlowEvent: privacyFlowEventRepo,
@@ -965,6 +1005,9 @@ describe(PrivacyFlowIndexer.name, () => {
         blockProvider: mockObject<BlockProvider>({}),
         logsProvider,
         db: mockDatabase({
+          syncMetadata: mockObject<Database['syncMetadata']>({
+            updateSyncedUntil: mockFn().resolvesTo(undefined),
+          }),
           privacyBlockTimestamp: mockObject<Database['privacyBlockTimestamp']>({
             findBlockNumberByChainAndTimestamp: mockFn()
               .returnsOnce(50)
@@ -1027,6 +1070,9 @@ describe(PrivacyFlowIndexer.name, () => {
           blockProvider: mockObject<BlockProvider>({}),
           logsProvider: mockObject<LogsProvider>({}),
           db: mockDatabase({
+            syncMetadata: mockObject<Database['syncMetadata']>({
+              updateSyncedUntil: mockFn().resolvesTo(undefined),
+            }),
             privacyBlockTimestamp: mockObject(),
             privacyPrice: mockObject(),
             privacyFlowEvent: privacyFlowEventRepo,
@@ -1074,6 +1120,9 @@ describe(PrivacyFlowIndexer.name, () => {
           blockProvider: mockObject<BlockProvider>({}),
           logsProvider: mockObject<LogsProvider>({}),
           db: mockDatabase({
+            syncMetadata: mockObject<Database['syncMetadata']>({
+              updateSyncedUntil: mockFn().resolvesTo(undefined),
+            }),
             privacyBlockTimestamp: mockObject(),
             privacyPrice: mockObject(),
             privacyFlowEvent: privacyFlowEventRepo,

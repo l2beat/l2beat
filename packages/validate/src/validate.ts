@@ -517,7 +517,7 @@ function impArray<T>(valueValidator: Validator<T>, clone: boolean) {
   }
 }
 
-// @ts-ignore: This is correct
+// @ts-expect-error: This is correct
 function array<T>(element: Validator<T>): Validator<T[]>
 function array<T>(element: Parser<T>): Parser<T[]>
 function array<T>(element: Imp<T>): Imp<T[]> {
@@ -653,7 +653,7 @@ function impRecord<K extends string | number, V>(
   }
 }
 
-// @ts-ignore: This is correct
+// @ts-expect-error: This is correct
 function record<K extends string | number, V>(
   key: Validator<K>,
   value: Validator<V>,
@@ -784,7 +784,7 @@ function tuple<T extends [] | [Imp<unknown>, ...Imp<unknown>[]]>(
   )
 }
 
-// @ts-ignore: This is correct
+// @ts-expect-error: This is correct
 function lazy<T>(make: () => Validator<T>): Validator<T>
 function lazy<T>(make: () => Parser<T>): Parser<T>
 function lazy<T>(make: () => Imp<T>): Imp<T> {
@@ -808,7 +808,6 @@ function lazy<T>(make: () => Imp<T>): Imp<T> {
   )
 }
 
-// @ts-ignore
 export const v = {
   string,
   number,

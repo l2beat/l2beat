@@ -1,7 +1,7 @@
 The epoch verifier stores verification keys for 14 different batched private transfer and withdrawal circuits with varying `(maxTransfers, maxInputsPerTransfer, maxOutputsPerTransfer)` (`s1`, `s4`, `s8`, `s16`, `s32`, `s64`, `s100`, `m1`, `m4`, `m8`, `l1`, `l4`, `l8`, `sp1`). The steps below reproduce all 14 verification keys from circuit sources and trusted setup files. They require 36-64 GiB RAM and ~90 GiB disk space.
 
 Helper scripts implementing all of the reproduction steps are in the
-[script archive](https://trusted-setup-hosting.l2beat.com/privacy/privacy-boost/privacy_boost_vk_digest.zip).
+[script archive](https://trusted-setup-hosting.ethbeat.org/privacy/privacy-boost/privacy_boost_vk_digest.zip).
 
 1. Download the V1 production ceremony public bundle (about 33 GB) and extract it. The archive
    used for this attestation hashes to

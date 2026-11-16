@@ -1,7 +1,7 @@
 import type { NextFunction, Request, Response } from 'express'
 
 /**
- * The Cloudflare cache rule for l2beat.com caches HTML only when the origin
+ * The Cloudflare cache rule for ethbeat.org caches HTML only when the origin
  * sends Cache-Control. The edge is purged by a Coolify post-deployment command
  * on the production frontend app, so a new build is visible within seconds.
  *

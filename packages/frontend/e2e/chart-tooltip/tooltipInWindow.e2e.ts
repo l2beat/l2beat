@@ -10,14 +10,16 @@ import { expect, type Page, test } from 'playwright/test'
 const PAGE = '/scaling/summary'
 const PHONE = { width: 390, height: 844 }
 const STEPS = 16
-/** Longer than recharts' 400ms slide from one point to the next. */
+/** How long each position is watched for. */
 const SLIDE_MS = 500
+const CHART = '.ts-chart-host'
+const TOOLTIP = '[data-chart-tooltip]'
 
 test('chart tooltips stay inside a phone window', async ({ browser }) => {
   const context = await browser.newContext({ viewport: PHONE })
   const page = await context.newPage()
   await page.goto(PAGE, { waitUntil: 'networkidle' })
-  const chart = page.locator('.recharts-surface').first()
+  const chart = page.locator(CHART).first()
   await chart.scrollIntoViewIfNeeded()
   const box = await chart.boundingBox()
   expect(box).not.toBeNull()
@@ -40,7 +42,7 @@ test('chart tooltips stay inside a phone window', async ({ browser }) => {
 /** The tooltip's outermost edges and the page's width over one slide. */
 async function watchTooltip(page: Page) {
   return await page.evaluate(
-    (duration) =>
+    ([duration, selector]) =>
       new Promise<{
         shown: boolean
         left: number
@@ -50,7 +52,7 @@ async function watchTooltip(page: Page) {
         const worst = { shown: false, left: 0, right: 0, pageWidth: 0 }
         const end = performance.now() + duration
         const frame = () => {
-          const tooltip = document.querySelector('.recharts-tooltip-wrapper')
+          const tooltip = document.querySelector(selector)
           if (tooltip && getComputedStyle(tooltip).visibility === 'visible') {
             const { left, right } = tooltip.getBoundingClientRect()
             worst.left = worst.shown ? Math.min(worst.left, left) : left
@@ -66,6 +68,6 @@ async function watchTooltip(page: Page) {
         }
         requestAnimationFrame(frame)
       }),
-    SLIDE_MS,
+    [SLIDE_MS, TOOLTIP] as const,
   )
 }

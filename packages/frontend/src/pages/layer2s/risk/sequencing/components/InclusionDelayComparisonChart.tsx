@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import type { ChartMeta } from '~/components/core/chart/Chart'
+import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import {
@@ -36,10 +36,10 @@ export function InclusionDelayComparisonChart({ comparison }: Props) {
     <div className="mt-6 border-divider border-t pt-5">
       <ChartControlsWrapper>
         <div className="flex min-w-0 flex-col">
-          <h3 className="font-bold text-heading-16 md:text-heading-20">
+          <h3 className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
             Inclusion delay by censorship fraction
           </h3>
-          <p className="text-paragraph-13 text-secondary md:text-paragraph-14">
+          <p className="mt-1 text-pretty text-label-value-15 text-secondary leading-5.5">
             T99 inclusion delay in a static sequencer set by censoring fraction
             of sequencer/validator stake
           </p>
@@ -65,7 +65,7 @@ export function InclusionDelayComparisonChart({ comparison }: Props) {
           entityMarkerMode="points"
         />
       </div>
-      <p className="mt-3 text-paragraph-13 text-secondary md:text-paragraph-14">
+      <p className="mt-3 font-normal text-label-value-13 text-secondary leading-4.5">
         Points mark the largest attributed entities' cumulative stakes. A line
         stopping before the 50% limit indicates that any more censorship will
         prevent inclusion completely. This is usually due to the sequencer
@@ -76,12 +76,25 @@ export function InclusionDelayComparisonChart({ comparison }: Props) {
   )
 }
 
+// Blues would read as Ethereum's dashed reference line; amber and vermilion
+// sit too close to the first series' orange on thin lines.
+const SKIPPED_PROJECT_COLORS = new Set([
+  '#56b4e9',
+  '#0072b2',
+  '#88ccee',
+  '#f5c710',
+  '#d55e00',
+])
+
 function getComparisonChartMeta(
   series: InclusionDelayComparisonSeries[],
 ): ChartMeta {
+  const projectCount = series.filter((entry) => entry.type === 'project').length
   const projectColors = generateAccessibleColors(
-    series.filter((entry) => entry.type === 'project').length,
+    projectCount + SKIPPED_PROJECT_COLORS.size,
   )
+    .filter((color) => !SKIPPED_PROJECT_COLORS.has(color))
+    .slice(0, projectCount)
 
   let projectIndex = 0
   return Object.fromEntries(

@@ -14,10 +14,10 @@ const governanceCardVariants = cva('rounded-lg', {
     type: {
       primary: 'bg-surface-primary',
       secondary: 'bg-surface-secondary',
-      purple: 'bg-purple-100 text-white',
+      brand: 'bg-brand text-white',
     },
     size: {
-      default: 'p-8',
+      default: 'p-6',
       medium: 'p-6',
     },
   },
@@ -39,8 +39,7 @@ export function GovernanceCard({
     <section
       className={cn(
         governanceCardVariants({ type, size }),
-        mobileFull &&
-          '-mx-4 rounded-none px-8 py-16 md:mx-0 md:rounded-lg md:p-8',
+        mobileFull && 'rounded-none px-4 py-16 md:rounded-lg md:p-6',
         className,
       )}
       {...rest}

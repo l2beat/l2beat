@@ -1,7 +1,6 @@
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { Markdown } from '~/components/markdown/Markdown'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -27,17 +26,18 @@ export function FaqPage(props: AppLayoutProps) {
           <PrimaryCard>
             {faqItemsWithId.map((item) => (
               <section
+                data-role="nav-section"
                 className="mt-6 scroll-mt-6 first:mt-0"
                 id={item.id}
                 key={item.id}
               >
                 <a
                   href={`#${item.id}`}
-                  className="mb-4 block font-bold text-2xl text-primary leading-[115%] no-underline"
+                  className="mb-3 block text-balance font-semibold text-heading-20 text-primary leading-6 tracking-[-0.01em] no-underline"
                 >
                   {item.question}
                 </a>
-                <Markdown className="font-normal text-base text-secondary leading-7">
+                <Markdown className="font-normal text-base text-primary leading-7">
                   {item.answer}
                 </Markdown>
               </section>
@@ -45,7 +45,6 @@ export function FaqPage(props: AppLayoutProps) {
           </PrimaryCard>
           <FaqSideNav entries={faqItemsWithId} />
         </main>
-        <ScrollToTopButton />
       </SideNavLayout>
     </AppLayout>
   )
@@ -53,11 +52,11 @@ export function FaqPage(props: AppLayoutProps) {
 
 function Header() {
   return (
-    <PrimaryCard className="flex flex-col">
-      <p className="font-bold text-lg">
+    <PrimaryCard className="flex flex-col gap-2">
+      <h2 className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
         Hi! We are glad you&apos;ve made it to FAQs!
-      </p>
-      <p>
+      </h2>
+      <p className="text-base leading-7">
         Below, you will find answers to the most frequently asked questions to
         help you better understand our website.
       </p>

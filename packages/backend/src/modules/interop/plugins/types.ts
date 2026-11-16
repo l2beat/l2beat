@@ -67,6 +67,8 @@ export type InteropTransfer = {
   events: InteropEvent[]
   src: TransferSide
   dst: TransferSide
+  // When the transfer is counted, if not when its latest side happened.
+  timestamp?: UnixTime
 }
 
 export interface InteropIgnore {
@@ -282,6 +284,15 @@ export type ParsedEvent<T extends Abi[number]> = DecodeEventLogReturnType<
   ContractEventName<[T]>
 >['args']
 
+// EIP-7708 logs every ETH transfer from this address as an ERC-20 Transfer.
+// Parsers without a whitelist skip it, so amount-matched Transfer scans
+// don't record it as a token.
+const ETH_TRANSFER_LOG_EMITTER = '0xfffffffffffffffffffffffffffffffffffffffe'
+
+function isEthTransferLog(log: Log): boolean {
+  return log.address.toLowerCase() === ETH_TRANSFER_LOG_EMITTER
+}
+
 export function createEventParser<T extends `event ${string}(${string}`>(
   eventSignature: T,
 ): (
@@ -301,10 +312,9 @@ export function createEventParser<T extends `event ${string}(${string}`>(
     addressWhitelist: EthereumAddress[] | null,
   ): ParsedEvent<ParseAbiItem<T>> | undefined {
     if (!topic0 || log.topics?.[0] !== topic0) return undefined
-    if (
-      addressWhitelist &&
-      !addressWhitelist.includes(EthereumAddress(log.address))
-    ) {
+    if (addressWhitelist) {
+      if (!addressWhitelist.includes(EthereumAddress(log.address))) return
+    } else if (isEthTransferLog(log)) {
       return
     }
 
@@ -372,6 +382,7 @@ export type InteropTransferOptions = {
 
   bridgeType?: KnownInteropBridgeType
   extraEvents?: InteropEvent[]
+  timestamp?: UnixTime
 } & (
   | {
       srcEvent: InteropEvent
@@ -441,6 +452,7 @@ function Transfer(
     events,
     src,
     dst,
+    timestamp: options.timestamp,
   }
 }
 

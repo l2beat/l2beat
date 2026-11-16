@@ -86,10 +86,12 @@ describe(`${createDefiRouter.name} with only Ossification enabled`, () => {
     expect(await response.text()).toEqual('<html />')
   })
 
-  it('does not serve the DeFi summary', async () => {
+  it('does not serve the DeFi category pages', async () => {
     const router = createRouter()
 
-    expect((await fetchFromRouter(router, '/defi/summary')).status).toEqual(404)
+    expect(
+      (await fetchFromRouter(router, '/defi/liquid-staking')).status,
+    ).toEqual(404)
     expect((await fetchFromRouter(router, '/defi')).status).toEqual(404)
   })
 })
@@ -115,7 +117,7 @@ const ENTRY: ProjectDefiEntry = {
   badges: [],
   projectLinks: [],
   discoUi: {
-    href: 'https://disco.l2beat.com/ui/p/lido',
+    href: 'https://disco.ethbeat.org/ui/p/lido',
     images: { desktop: '/desktop.png', mobile: '/mobile.png' },
   },
   isUnderReview: false,

@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { Article } from '~/components/markdown/Article'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { useLocalStorage } from '~/hooks/useLocalStorage'
 import { ArrowIcon } from '~/icons/Arrow'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
@@ -50,12 +49,12 @@ export function ChangelogPage({ entries, ...props }: Props) {
     <AppLayout {...props}>
       <SideNavLayout>
         <MainPageHeader
-          description="A running list of product and content updates shipped on L2BEAT."
+          description="A running list of product and content updates shipped on ETHBEAT."
           hideDescriptionOnMobile
         >
           Changelog
         </MainPageHeader>
-        <PrimaryCard className="md:p-8">
+        <PrimaryCard>
           {entries.length === 0 ? (
             <p className="text-base text-secondary">
               No changelog entries yet.
@@ -70,10 +69,10 @@ export function ChangelogPage({ entries, ...props }: Props) {
                         className="relative flex scroll-mt-24 gap-4"
                         id={entry.id}
                       >
-                        <ArrowIcon className="size-[15px] shrink-0 fill-brand text-brand" />
+                        <ArrowIcon className="size-[15px] shrink-0 fill-brand-deep" />
                         <div className="mx-2 flex w-full items-center gap-3">
                           <span className="h-px flex-1 bg-brand" />
-                          <span className="font-semibold text-brand text-subtitle-12 uppercase leading-none">
+                          <span className="font-semibold text-brand-deep text-subtitle-12 uppercase leading-none">
                             Unread above
                           </span>
                           <span className="h-px flex-1 bg-brand" />
@@ -84,23 +83,23 @@ export function ChangelogPage({ entries, ...props }: Props) {
                     className="relative flex scroll-mt-24 gap-4"
                     id={entry.id}
                   >
-                    <span className="mt-2 size-[15px] shrink-0 rounded-full border-2 border-surface-primary bg-brand" />
+                    <span className="mt-4 size-[15px] shrink-0 rounded-full border-2 border-surface-primary bg-brand md:mt-6" />
                     <article className="w-full rounded-lg border border-divider bg-surface-secondary p-4 md:p-6">
                       <div className="flex flex-wrap items-center gap-y-1">
-                        <p className="font-semibold text-brand text-subtitle-12 uppercase">
+                        <p className="font-semibold text-brand-deep text-subtitle-12 uppercase">
                           {entry.publishedOn}
                         </p>
                       </div>
-                      <h2 className="mt-2 font-bold text-heading-24 text-primary leading-tight">
+                      <h2 className="mt-2 text-balance font-semibold text-heading-20 text-primary leading-6 tracking-[-0.01em]">
                         {entry.title}
                       </h2>
                       {entry.summary && (
-                        <p className="mt-3 text-base text-secondary leading-7">
+                        <p className="mt-3 text-pretty font-inter text-base text-secondary leading-7">
                           {entry.summary}
                         </p>
                       )}
                       {entry.content && (
-                        <Article className="changelog mt-4 font-normal text-base text-primary leading-7">
+                        <Article className="changelog mt-4 font-normal text-base text-primary leading-7 [&_code]:bg-surface-tertiary">
                           {entry.content}
                         </Article>
                       )}
@@ -111,7 +110,6 @@ export function ChangelogPage({ entries, ...props }: Props) {
             </ol>
           )}
         </PrimaryCard>
-        <ScrollToTopButton />
       </SideNavLayout>
     </AppLayout>
   )

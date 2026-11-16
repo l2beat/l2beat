@@ -22,19 +22,19 @@ export class DiffoveryController {
         return {
           kind: result.kind,
           name: result.name,
-          sources: { 'L2BEAT-EOA': result.flat },
+          sources: { 'ETHBEAT-EOA': result.flat },
         }
       case 'unverified':
         return {
           kind: result.kind,
           name: result.name,
-          sources: { 'L2BEAT-UNVERIFIED': result.flat },
+          sources: { 'ETHBEAT-UNVERIFIED': result.flat },
         }
       case 'non-solidity':
         return {
           kind: result.kind,
           name: result.name,
-          sources: { 'L2BEAT-NON-SOLIDITY': result.flat },
+          sources: { 'ETHBEAT-NON-SOLIDITY': result.flat },
         }
       case 'flat':
         return {

@@ -22,13 +22,13 @@ export const searchBarPages = withIndex([
   },
   {
     category: 'l2',
-    name: 'Risk Analysis',
+    name: 'Risk analysis',
     tags: ['pages', 'scaling', 'risks'],
     href: '/layer2s/risk',
   },
   {
     category: 'l2',
-    name: 'Value Secured',
+    name: 'Value secured',
     tags: ['pages', 'scaling', 'tvs', 'tvl'],
     href: '/layer2s/tvs',
   },
@@ -40,19 +40,19 @@ export const searchBarPages = withIndex([
   },
   {
     category: 'l2',
-    name: 'Compare Projects',
+    name: 'Compare projects',
     tags: ['pages', 'scaling', 'layer2s', 'compare'],
     href: '/layer2s/compare',
   },
   {
     category: 'l2',
-    name: 'Data Availability',
+    name: 'Data availability',
     tags: ['pages', 'scaling'],
     href: '/layer2s/risk/data-availability',
   },
   {
     category: 'l2',
-    name: 'State Validation',
+    name: 'State validation',
     tags: ['pages', 'scaling', 'risks'],
     href: '/layer2s/risk/state-validation',
   },
@@ -140,9 +140,9 @@ export const searchBarPages = withIndex([
     ? [
         {
           category: 'defi' as const,
-          name: 'DeFi',
-          href: '/defi/summary',
-          tags: ['pages', 'defi'],
+          name: 'Liquid Staking',
+          href: '/defi/liquid-staking',
+          tags: ['pages', 'defi', 'liquid', 'staking', 'lst'],
         },
       ]
     : []),
@@ -170,7 +170,7 @@ export const searchBarPages = withIndex([
   },
   {
     category: 'other',
-    name: 'Native Rollups',
+    name: 'Native rollups',
     href: '/native-rollups',
     tags: ['pages'],
   },

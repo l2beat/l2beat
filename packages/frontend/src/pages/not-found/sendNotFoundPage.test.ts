@@ -19,7 +19,7 @@ describe(sendNotFoundPage.name, () => {
 
     expect(response.status).toEqual(404)
     expect(response.headers.get('link')).toEqual(
-      '<https://l2beat.com/llms.txt>; rel="describedby"',
+      '<https://ethbeat.org/llms.txt>; rel="describedby"',
     )
     const metadata = JSON.parse(await response.text())
     expect(metadata.markdownAlternateUrl).toEqual(undefined)

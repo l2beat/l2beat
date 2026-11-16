@@ -1,7 +1,7 @@
 {
   "name": "morph",
-  "timestamp": 1790851283,
-  "configHash": "0xaa5554055d00a20e9290f7e7b8f32d7e1a06c323c8a9fb56f82221ee2b5ea422",
+  "timestamp": 1793703220,
+  "configHash": "0x87306547330c2a472002b7355f9bee23af7ddae506853af36970592d69879c88",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -204,7 +204,7 @@
         "messenger": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
         "owner": "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
         "router": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
-        "totalBridgedUSDC": 510058062777,
+        "totalBridgedUSDC": 508619405483,
         "withdrawPaused": false
       },
       "fieldMeta": {
@@ -298,13 +298,13 @@
         ],
         "$upgradeCount": 4,
         "ENFORCED_TX_GATEWAAY": "eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
-        "getFirstUnfinalizedMessageEnqueueTime": 1790770835,
+        "getFirstUnfinalizedMessageEnqueueTime": 1793605571,
         "l2BaseFee": 1000000,
         "maxGasLimit": 30000000,
         "MESSENGER": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
-        "nextCrossDomainMessageIndex": 27678,
+        "nextCrossDomainMessageIndex": 27729,
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-        "pendingQueueIndex": 27674,
+        "pendingQueueIndex": 27728,
         "ROLLUP_CONTRACT": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "whitelistChecker": "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984"
       },
@@ -527,8 +527,8 @@
             "verifier": "eth:0x9774CE99E8Ab3f13582bC6c2Bd2832e5A25C4624"
           },
           {
-            "startBatchIndex": 60478,
-            "verifier": "eth:0x651cA600813fC0126225b727EDbA617949b1d1c9"
+            "startBatchIndex": 64600,
+            "verifier": "eth:0xFF31F579F723e0493D969B46095FE718ebf4401A"
           }
         ],
         "owner": "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
@@ -547,31 +547,6 @@
       "address": "eth:0x611e4B24e89bC524Fc06f73b6FD02bE3Ec73d6Db",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "ZkEvmVerifierV1",
-      "address": "eth:0x651cA600813fC0126225b727EDbA617949b1d1c9",
-      "type": "Contract",
-      "template": "morph/ZkEvmVerifierV1",
-      "sourceHashes": [
-        "0x097b2bb9b3df402c802895e2e4155ea7b2fb41b6cbbc053b11d693a5ed864259"
-      ],
-      "proxyType": "immutable",
-      "description": "A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.",
-      "critical": true,
-      "deployerAddress": "eth:0x5add06F01e73b75A4184C8cb74485bB0A897b23E",
-      "sinceTimestamp": 1789614347,
-      "sinceBlock": 25994406,
-      "values": {
-        "$immutable": true,
-        "programVkey": "0x00b450ec2a1b8dfba81ade90afbcc96842055548b814c991bb13bdca34980c63",
-        "VERIFIER_HASH": "0x5a093a2fcb46394f5cadfe55c44d4d572fad9cec7aeb38026b0278322ef07fac",
-        "VERSION": "v6.1.0",
-        "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
-      },
-      "implementationNames": {
-        "eth:0x651cA600813fC0126225b727EDbA617949b1d1c9": "ZkEvmVerifierV1"
-      }
     },
     {
       "address": "eth:0x6aB0E960911b50f6d14f249782ac12EC3E7584A0",
@@ -795,8 +770,8 @@
         "finalizationPeriodSeconds": 172800,
         "getMinDelayFormatted": "7d",
         "inChallenge": false,
-        "lastCommittedBatchIndex": 61253,
-        "lastFinalizedBatchIndex": 61089,
+        "lastCommittedBatchIndex": 64635,
+        "lastFinalizedBatchIndex": 64347,
         "LAYER_2_CHAIN_ID": 2818,
         "legacyCutoverBatchIndex": 60477,
         "messageQueue": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
@@ -1272,7 +1247,7 @@
         "counterpart": "eth:0x5300000000000000000000000000000000000007",
         "feeVault": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "maxReplayTimes": 3,
-        "messageNonce": 27678,
+        "messageNonce": 27729,
         "messageQueue": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
         "paused": false,
@@ -1346,7 +1321,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 28,
+        "nonce": 29,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1422,6 +1397,31 @@
       "address": "eth:0xF6Ee30269dB1854987cA6812E1ff66c3A5F660Fd",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "ZkEvmVerifierV1",
+      "address": "eth:0xFF31F579F723e0493D969B46095FE718ebf4401A",
+      "type": "Contract",
+      "template": "morph/ZkEvmVerifierV1",
+      "sourceHashes": [
+        "0x097b2bb9b3df402c802895e2e4155ea7b2fb41b6cbbc053b11d693a5ed864259"
+      ],
+      "proxyType": "immutable",
+      "description": "A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.",
+      "critical": { "sinceTimestamp": 1793671775 },
+      "deployerAddress": "eth:0x5add06F01e73b75A4184C8cb74485bB0A897b23E",
+      "sinceTimestamp": 1793586059,
+      "sinceBlock": 26324067,
+      "values": {
+        "$immutable": true,
+        "programVkey": "0x0084f08a14f8199f87e7ae6011336724ec187b3656859184f04c7e8f382a2902",
+        "VERIFIER_HASH": "0x5a093a2fcb46394f5cadfe55c44d4d572fad9cec7aeb38026b0278322ef07fac",
+        "VERSION": "v6.1.0",
+        "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
+      },
+      "implementationNames": {
+        "eth:0xFF31F579F723e0493D969B46095FE718ebf4401A": "ZkEvmVerifierV1"
+      }
     },
     {
       "name": "Whitelist",
@@ -1851,22 +1851,6 @@
       "function router() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "eth:0x651cA600813fC0126225b727EDbA617949b1d1c9": [
-      "constructor(bytes32 _programVkey)",
-      "error InvalidExitCode()",
-      "error InvalidProof()",
-      "error InvalidVkRoot()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function VK_ROOT() pure returns (bytes32)",
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function programVkey() view returns (bytes32)",
-      "function verifyBatch(bytes proof, bytes32 publicInputHash) view",
-      "function verifyPlonk(bytes proof, bytes publicInputHash) view",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
-    ],
     "eth:0x6D9623d44C4A1629815D9d6236FF25C4f82Cc819": [
       "constructor()",
       "event DepositERC20(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data, uint256 nonce)",
@@ -2213,6 +2197,22 @@
       "function updateWhitelistChecker(address _newWhitelistChecker)",
       "function whitelistChecker() view returns (address)"
     ],
+    "eth:0xFF31F579F723e0493D969B46095FE718ebf4401A": [
+      "constructor(bytes32 _programVkey)",
+      "error InvalidExitCode()",
+      "error InvalidProof()",
+      "error InvalidVkRoot()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function VK_ROOT() pure returns (bytes32)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function programVkey() view returns (bytes32)",
+      "function verifyBatch(bytes proof, bytes32 publicInputHash) view",
+      "function verifyPlonk(bytes proof, bytes publicInputHash) view",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
     "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984": [
       "constructor(address _owner)",
       "event OwnershipTransferred(address indexed _oldOwner, address indexed _newOwner)",
@@ -2243,8 +2243,8 @@
     "morph/Whitelist": "0xcb13f1a8f52d11ec54253191140ce2f88f71a4b614de94df4f5a208d970b535d",
     "morph/ZkEvmVerifierV1": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 26096936 },
-  "permissionsConfigHash": "0xe74b332c940d5685063452ce9c4741c853d2cb876784a0d9bb28ff4c1de151e4",
+  "usedBlockNumbers": { "ethereum": 26333802 },
+  "permissionsConfigHash": "0x9c415114bd37ef899934ccfa5d013dfa36444d5bc2826f914c79c802994afdd7",
   "permissions": {
     "eth:0x0092bC49078f130D27e70dBeee441E227280B97D": {
       "receivedPermissions": [

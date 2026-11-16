@@ -52,7 +52,7 @@ function DialogOverlay({ children, ...props }: RadixDialog.DialogOverlayProps) {
   return (
     <RadixDialog.Portal>
       <RadixDialog.Overlay
-        className="fixed inset-0 z-20 data-[state=open]:bg-black/50"
+        className="fixed inset-0 z-20 data-[state=open]:bg-scrim/50"
         {...props}
       />
       {children}
@@ -129,7 +129,7 @@ function PageBlocker({ ref }: { ref?: React.Ref<HTMLDivElement> }) {
     return () => root.removeAttribute('aria-hidden')
   }, [])
 
-  return <div ref={ref} className="fixed inset-0 z-20 bg-black/50" />
+  return <div ref={ref} className="fixed inset-0 z-20 bg-scrim/50" />
 }
 
 const TABBABLE =

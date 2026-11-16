@@ -1,4 +1,3 @@
-import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { CropsAttestationsMeta } from '~/server/features/garden/getAttestationsMeta'
@@ -27,7 +26,8 @@ export function GardenPage({ entries, attestation, ...props }: Props) {
             description="A curated list of distinguished projects that follow the CROPS values: censorship resistance, open source, privacy and security."
           />
           <main>
-            <div className="mt-4 overflow-hidden rounded-xl bg-surface-primary max-md:mx-4 md:px-5">
+            {/* Inset on both sides on phones: the table's mobile bleed fills the right padding, so its row rules stop 16 px from either edge. */}
+            <div className="mt-4 overflow-clip rounded-xl bg-surface-primary max-md:mx-4 max-md:px-4 md:px-5">
               <GardenTable entries={entries} />
             </div>
             <AttestationNotice attestation={attestation} />
@@ -36,7 +36,6 @@ export function GardenPage({ entries, attestation, ...props }: Props) {
             <CropsSection />
           </main>
         </div>
-        <ScrollToTopButton />
       </SideNavLayout>
     </AppLayout>
   )

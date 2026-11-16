@@ -11,6 +11,7 @@ interface ValueSecuredCellProps {
 export function ValueSecuredCell(data: ValueSecuredCellProps) {
   return (
     <ValueWithPercentageChange
+      className="font-medium md:text-label-value-15"
       change={data.change}
       changePeriod={data.changePeriod}
       disabledOnTouch

@@ -1,18 +1,15 @@
+import { existsSync, readFileSync } from 'node:fs'
+import path from 'node:path'
 import type { Project } from '@l2beat/config'
-import { Resvg } from '@resvg/resvg-js'
-import { existsSync, mkdirSync, writeFileSync } from 'fs'
-import path from 'path'
-import satori from 'satori'
+import type { OpengraphKit } from '~/components/opengraph-image/heartbeat/render'
+import { renderOpengraphPng } from '~/components/opengraph-image/heartbeat/render'
 import { ProjectOpengraphImage } from '~/components/opengraph-image/Project'
 import { ps } from '~/server/projects'
+import { writeIfMissing } from './writeIfMissing'
 
-export async function generateProjectOgImages(
-  size: { width: number; height: number },
-  fonts: {
-    robotoMedium: Buffer
-    robotoBold: Buffer
-  },
-) {
+type ProjectPageType = ReturnType<typeof getOpengraphProjectTypes>[number]
+
+export async function generateProjectOgImages(kit: OpengraphKit) {
   const projects = await ps.getProjects({
     optional: [
       'scalingInfo',
@@ -24,76 +21,67 @@ export async function generateProjectOgImages(
   })
 
   for (const project of projects) {
-    const types = getOpengraphProjectTypes(project)
-    if (types.length === 0) {
-      console.log(`Skipping ${project.name} because it has no types`)
-      continue
-    }
-
-    for (const type of types) {
-      const outputDir = path.join(
-        process.cwd(),
-        `static/meta-images/${type}/projects/${project.slug}`,
+    for (const type of getOpengraphProjectTypes(project)) {
+      await writeIfMissing(
+        'PROJECT DETAILS',
+        `${type}/projects/${project.slug}`,
+        project.name,
+        () =>
+          renderOpengraphPng(
+            <ProjectOpengraphImage
+              measure={kit.measure}
+              label={getLabel(project, type)}
+              name={
+                type === 'interop'
+                  ? (project.interopConfig?.name ?? project.name)
+                  : project.name
+              }
+              shortName={project.shortName}
+              logo={getLogo(project.slug)}
+            />,
+            kit,
+          ),
       )
-      const outputFile = path.join(outputDir, 'opengraph-image.png')
-      if (existsSync(outputFile)) {
-        continue
-      }
-
-      console.time(`[PROJECT DETAILS] ${project.name}`)
-      const pngBuffer = await generateProjectOgImage(project, type, size, fonts)
-
-      mkdirSync(outputDir, {
-        recursive: true,
-      })
-      writeFileSync(outputFile, pngBuffer)
-      console.timeEnd(`[PROJECT DETAILS] ${project.name}`)
     }
   }
+
+  await writeIfMissing('PROJECT DETAILS', 'projects/ethereum', 'Ethereum', () =>
+    renderOpengraphPng(
+      <ProjectOpengraphImage
+        measure={kit.measure}
+        label="Layer 1"
+        name="Ethereum"
+        logo={getLogo('ethereum')}
+      />,
+      kit,
+    ),
+  )
 }
 
-async function generateProjectOgImage(
-  project: Project<never, 'interopConfig'>,
-  type: 'layer2s' | 'zk-catalog' | 'interop' | 'privacy' | 'defi',
-  size: { width: number; height: number },
-  fonts: {
-    robotoMedium: Buffer
-    robotoBold: Buffer
-  },
+/** The project's icon as a data URI, if it has one. */
+function getLogo(slug: string) {
+  const file = path.join(process.cwd(), 'static/icons', `${slug}.png`)
+  if (!existsSync(file)) return undefined
+  return `data:image/png;base64,${readFileSync(file).toString('base64')}`
+}
+
+/** The project's type only: a stage or a category would leave a stale image behind when it changes. */
+function getLabel(
+  project: Project<never, 'scalingInfo'>,
+  type: ProjectPageType,
 ) {
-  const svg = await satori(
-    <ProjectOpengraphImage
-      baseUrl={'http://localhost:6464'}
-      slug={project.slug}
-      name={
-        type === 'interop'
-          ? (project.interopConfig?.name ?? project.name)
-          : project.name
-      }
-      size={size}
-    >
-      {`${type === 'layer2s' ? 'LAYER 2S' : type.replace('-', ' ').toUpperCase()} • PROJECT PAGE`}
-    </ProjectOpengraphImage>,
-    {
-      ...size,
-      fonts: [
-        {
-          name: 'roboto',
-          data: fonts.robotoMedium,
-          style: 'normal',
-          weight: 500,
-        },
-        {
-          name: 'roboto',
-          data: fonts.robotoBold,
-          style: 'normal',
-          weight: 700,
-        },
-      ],
-    },
-  )
-  const resvg = new Resvg(svg)
-  return resvg.render().asPng()
+  switch (type) {
+    case 'layer2s':
+      return project.scalingInfo?.layer === 'layer3' ? 'Layer 3' : 'Layer 2'
+    case 'zk-catalog':
+      return 'ZK catalog'
+    case 'interop':
+      return 'Interop'
+    case 'privacy':
+      return 'Privacy'
+    case 'defi':
+      return 'DeFi'
+  }
 }
 
 export function getOpengraphProjectTypes(

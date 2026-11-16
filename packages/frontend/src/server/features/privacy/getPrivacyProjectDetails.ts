@@ -17,8 +17,8 @@ import type {
   ProjectZkCatalogInfo,
 } from '@l2beat/config'
 import type {
+  PrivacyFlowBucketRecord,
   PrivacyFlowBucketTotalRecord,
-  PrivacyFlowDailyRecord,
   TokenValueRecord,
 } from '@l2beat/database'
 import type { OssificationHistory } from '@l2beat/shared/frontend'
@@ -48,11 +48,12 @@ import type {
   PrivacyRelayerStat,
 } from './types'
 import { getPrivacyBucketTvls } from './utils/getPrivacyBucketTvls'
+import { getScalingProjectItems } from './utils/getPrivacyScalingLinks'
 import { getPrivacyTrackedChains } from './utils/getPrivacyTrackedChains'
 
 interface PrivacyProjectFlowData {
   totals: PrivacyFlowBucketTotalRecord[]
-  daily30d: PrivacyFlowDailyRecord[]
+  daily30d: PrivacyFlowBucketRecord[]
   tokenValues: TokenValueRecord[]
   /** Value of each bucket's pool at its asset's latest TVL, by bucket id. */
   bucketTvls: Map<string, number>
@@ -89,6 +90,7 @@ export interface PrivacyProjectDetails {
   attributes: PrivacyAttribute[]
   milestones: Milestone[]
   trackedOn: ProjectIconListItem[]
+  scalingProjects: ProjectIconListItem[]
   assets: PrivacyAsset[]
   summary: {
     bucketCount: number
@@ -126,11 +128,13 @@ export async function getPrivacyProjectDetails(
     { totals, daily30d, tokenValues, bucketTvls },
     relayerStat,
     trackedOn,
+    scalingProjects,
     ossification,
   ] = await Promise.all([
     getPrivacyProjectFlowData(project, last30dCutoff, currentDay, now),
     getRelayerStat(project, UnixTime(now - 30 * UnixTime.DAY), now),
     getTrackedOn(project),
+    getScalingProjects(project),
     getProjectOssification(project),
   ])
 
@@ -149,8 +153,8 @@ export async function getPrivacyProjectDetails(
     totalIndex.set(`${total.projectId}::${total.bucketId}`, total)
   }
 
-  const daily30dIndex = new Map<string, PrivacyFlowDailyRecord>()
-  const daily7dIndex = new Map<string, PrivacyFlowDailyRecord>()
+  const daily30dIndex = new Map<string, PrivacyFlowBucketRecord>()
+  const daily7dIndex = new Map<string, PrivacyFlowBucketRecord>()
   for (const row of daily30d) {
     const key = `${row.projectId}::${row.bucketId}`
     const base = {
@@ -319,6 +323,7 @@ export async function getPrivacyProjectDetails(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
     ),
     trackedOn,
+    scalingProjects,
     assets: orderedAssets,
     summary: {
       bucketCount: summaryBucketCount,
@@ -355,6 +360,19 @@ async function getTrackedOn(
     optional: [...PROJECT_PAGE_METADATA_FIELDS],
   })
   return getPrivacyTrackedChains(project.privacyInfo.trackedOn, chainProjects)
+}
+
+async function getScalingProjects(
+  project: PrivacyProject,
+): Promise<ProjectIconListItem[]> {
+  const ids = project.privacyInfo.scalingProjects
+  if (!ids || ids.length === 0) return []
+  const scalingProjects = await ps.getProjects({
+    ids,
+    select: ['scalingInfo'],
+    optional: ['scalingStage', ...PROJECT_PAGE_METADATA_FIELDS],
+  })
+  return getScalingProjectItems(ids, scalingProjects)
 }
 
 const MIN_OBSERVED_DAYS_FOR_AVERAGE = 7
@@ -429,7 +447,7 @@ async function getPrivacyProjectFlowData(
   const db = getDb()
   const [totals, daily30d, tokenValues] = await Promise.all([
     db.privacyFlowEvent.getBucketTotalsByProjectIds([projectId]),
-    db.privacyFlowEvent.getDailyByProjectIds([projectId], from, to),
+    db.privacyFlowEvent.getBucketedByProjectIds([projectId], from, to, 'day'),
     db.tvsTokenValue.getLastNonZeroValue(now, projectId),
   ])
   const escrowValues = await db.tvsEscrowValue
@@ -477,7 +495,7 @@ function getMockPrivacyProjectFlowData(
     }),
   )
 
-  const daily30d: PrivacyFlowDailyRecord[] = []
+  const daily30d: PrivacyFlowBucketRecord[] = []
   for (let timestamp = from; timestamp <= to; timestamp += UnixTime.DAY) {
     for (const bucketId of bucketIds) {
       daily30d.push({

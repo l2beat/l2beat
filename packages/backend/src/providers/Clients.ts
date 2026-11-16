@@ -211,12 +211,12 @@ export function initClients(config: Config, logger: Logger): Clients {
     })
   }
 
-  if (config.trackedTxsConfig && config.trackedTxsConfig.duneApiKey) {
+  if (config.duneApiKey) {
     const retryOptions = toRetryOptions('RELIABLE')
     dune = withRetries(
       new DuneClient({
         http: http,
-        apiKey: config.trackedTxsConfig.duneApiKey,
+        apiKey: config.duneApiKey,
       }),
       {
         initialTimeoutMs: retryOptions.initialRetryDelayMs,
