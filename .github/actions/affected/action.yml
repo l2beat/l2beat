@@ -5,6 +5,8 @@ description: >
   runs, and diffs that touch a file outside packages/ (workflows, the
   lockfile, turbo.json), always count as reaching everything. Run right
   after checkout, before setup, so a job with nothing to do ends in seconds.
+  A step, not the affected-packages.yml job, so CI's jobs don't wait for
+  another job before they start; both use .github/scripts/affected-packages.sh.
 
 inputs:
   packages:
@@ -14,18 +16,44 @@ inputs:
 outputs:
   affected:
     description: "'true' when the job has to run"
-    value: ${{ steps.check.outputs.affected }}
+    value: ${{ steps.decide.outputs.affected }}
 
 runs:
   using: composite
   steps:
-    - name: Check the diff
-      id: check
+    - name: List affected packages
+      id: list
+      if: github.event_name == 'pull_request'
       shell: bash
       env:
         GH_TOKEN: ${{ github.token }}
         EVENT: ${{ github.event_name }}
         PR: ${{ github.event.pull_request.number }}
         HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+      run: ${{ github.workspace }}/.github/scripts/affected-packages.sh
+
+    - name: Decide
+      id: decide
+      shell: bash
+      env:
+        EVENT: ${{ github.event_name }}
+        OUTSIDE: ${{ steps.list.outputs.outside }}
+        AFFECTED: ${{ steps.list.outputs.packages }}
         PACKAGES: ${{ inputs.packages }}
-      run: ${{ github.action_path }}/check.sh
+      run: |
+        say() { echo "affected=$1" >> "$GITHUB_OUTPUT"; echo "$2"; }
+        if [[ "$EVENT" != pull_request ]]; then
+          say true "Not a pull request ($EVENT): running everything"
+          exit 0
+        fi
+        if [[ "$OUTSIDE" == true ]]; then
+          say true "The change touches files outside packages/: running everything"
+          exit 0
+        fi
+        for package in $PACKAGES; do
+          if jq -e --arg p "$package" 'index($p) != null' <<< "$AFFECTED" >/dev/null; then
+            say true "$package is affected: running"
+            exit 0
+          fi
+        done
+        say false "None of $PACKAGES is affected: skipping"
