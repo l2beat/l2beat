@@ -44,7 +44,7 @@ export function CodeSnippet({
           )}
         >
           {header ?? (
-            <span className="font-semibold text-label-value-13 text-primary">
+            <span className="font-semibold text-primary text-subtitle-12 uppercase tracking-wider">
               {label}
             </span>
           )}
