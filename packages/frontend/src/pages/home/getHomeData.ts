@@ -334,7 +334,7 @@ function getRecentProjectListing(
       href: `/layer2s/projects/${slug}`,
       label:
         scalingInfo.type === 'Other'
-          ? `${scalingInfo.layer === 'layer3' ? 'Layer 3s' : 'Layer 2s'} - Other`
+          ? `${scalingInfo.layer === 'layer3' ? 'Layer 3s' : 'Layer 2s'} · Other`
           : (scalingInfo.type ?? 'Scaling project'),
     }
   }

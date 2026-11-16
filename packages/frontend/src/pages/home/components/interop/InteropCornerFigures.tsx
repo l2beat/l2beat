@@ -52,15 +52,16 @@ export function InteropCornerFigures({
         {protocols.length > 0 && (
           <div
             // As close to its list as the other corners' labels to their rows.
+            // A fixed width, so the icons keep their place whatever the names.
             className={cn(
               CORNER_CLASS,
-              'max-w-[220px] items-end gap-1.5 text-right',
+              'w-[220px] max-w-full items-end gap-1.5 text-right',
             )}
           >
-            <span className={HOME_TEXT.meta}>Top protocols</span>
-            {/* Shared columns line the icons and names up like a table; the
-                figures stand clear of the longest name, as in the tables. */}
-            <ol className="grid max-w-full grid-cols-[auto_minmax(0,1fr)_auto] gap-x-2 gap-y-2 text-left">
+            <span className={HOME_TEXT.label}>Top protocols</span>
+            {/* Shared columns line the icons and names up like a table, the
+                figures flush right, as in the tables. */}
+            <ol className="grid w-full grid-cols-[auto_minmax(0,1fr)_auto] gap-x-2 gap-y-2 text-left">
               {protocols.map(({ slug, name, iconUrl, volume }) => (
                 <li key={slug} className="col-span-3 grid grid-cols-subgrid">
                   <a
