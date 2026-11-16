@@ -20,7 +20,7 @@ export function MultiChainSelector({ chains, protocols }: Props) {
       <div className="-z-10 absolute top-0 h-22 w-full bg-gradient-to-b from-surface-secondary via-60% via-surface-secondary to-transparent max-md:hidden dark:from-background dark:via-background" />
       <div className="flex items-start justify-between bg-[#ffd6e3] px-4 py-3 max-md:flex-col max-md:gap-3 max-md:border-brand max-md:border-b md:items-center md:rounded-lg md:py-2 min-[1024px]:px-6 dark:bg-[#6b1a3a]">
         <div className="flex items-center gap-[17px] max-md:w-full">
-          <div className="whitespace-nowrap font-semibold text-label-value-13 max-[1024px]:hidden">
+          <div className="whitespace-nowrap font-semibold text-xs uppercase max-[1024px]:hidden">
             Chain selector
           </div>
           <div className="h-10 w-px bg-black/16 max-[1024px]:hidden" />
