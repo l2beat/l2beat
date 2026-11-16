@@ -137,12 +137,12 @@ export function FlowsGeneralStats() {
                   {topChainData.href ? (
                     <a
                       href={topChainData.href}
-                      className="underline decoration-divider underline-offset-[0.3em] transition-colors hover:decoration-current"
+                      className="text-brand-deep underline-offset-[0.3em] hover:underline"
                     >
                       {topChainData.name}
                     </a>
                   ) : (
-                    <span>{topChainData.name}</span>
+                    <span className="text-brand-deep">{topChainData.name}</span>
                   )}
                   <span className="text-center font-medium text-label-value-13 text-secondary leading-tight">
                     {formatPercent(topChainVolumeShare)} of volume (
@@ -164,7 +164,7 @@ export function FlowsGeneralStats() {
                 <div className="flex flex-col items-center gap-0.5 font-semibold text-heading-18">
                   <a
                     href={`/interop/protocols/${topProtocol.slug}`}
-                    className="underline decoration-divider underline-offset-[0.3em] transition-colors hover:decoration-current"
+                    className="text-brand-deep underline-offset-[0.3em] hover:underline"
                   >
                     {topProtocol.name}
                   </a>
