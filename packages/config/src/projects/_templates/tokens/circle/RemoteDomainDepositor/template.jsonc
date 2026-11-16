@@ -1,0 +1,34 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Depositor account of one remote domain in the GatewayWallet. It holds the USDC balance that backs the domain's stablecoin and approves Gateway burn intents through ERC-1271 when exactly `signatureThreshold` of its attesters sign.",
+  "ignoreMethods": ["proxiableUUID"],
+  "fields": {
+    "domainManager": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "enable attesters instantly, disable attesters and change the signature threshold after the buffer delay, and replace the domain pauser."
+        }
+      ]
+    },
+    "domainPauser": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause and unpause this domain's deposits and withdrawals in xReserve."
+        }
+      ]
+    },
+    "persistentEnabledAttesters": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "sign the burn intents that move this domain's balance out of the GatewayWallet."
+        }
+      ]
+    },
+    "persistentSignatureBufferDelayBlocks": {
+      "description": "Blocks a disabled attester and a replaced signature threshold stay valid."
+    }
+  }
+}

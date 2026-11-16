@@ -1,5 +1,6 @@
 import { across } from '../projects/across/across'
 import { airbender } from '../projects/airbender/airbender'
+import { aleoXreserve } from '../projects/aleo-xreserve/aleo-xreserve'
 import { avalanche } from '../projects/avalanche/avalanche'
 import { axelar } from '../projects/axelar/axelar'
 import { axelarits } from '../projects/axelar-its/axelar-its'
@@ -155,6 +156,7 @@ export const refactored: BaseProject[] = [
   splitsv2,
   eas,
   // privacy
+  aleoXreserve,
   cloaked,
   fluidkey,
   privacyPools,

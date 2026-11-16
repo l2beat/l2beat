@@ -1,0 +1,52 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "aleo-xreserve",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": ["eth:0x8888888199b2Df864bf678259607d6D5EBb4e3Ce"],
+  "names": {
+    "eth:0x36a8e347006e151F4A0E9559FEa239439611777a": "AleoDepositor"
+  },
+  "overrides": {
+    "eth:0x8888888199b2Df864bf678259607d6D5EBb4e3Ce": {
+      "fields": {
+        "aleoDepositor": {
+          "description": "Depositor contract that holds the GatewayWallet balance backing USDCx on Aleo (remote domain 10002).",
+          "handler": {
+            "type": "call",
+            "method": "function getRemoteDomainDepositor(uint32 remoteDomain) view returns (address)",
+            "args": [10002]
+          }
+        },
+        "aleoRemoteToken": {
+          "description": "Identifier of the Aleo token registered for USDC.",
+          "handler": {
+            "type": "call",
+            "method": "function getRemoteToken(uint32 remoteDomain, address localToken) view returns (bytes32)",
+            "args": [10002, "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"]
+          }
+        },
+        "aleoDepositsPaused": {
+          "handler": {
+            "type": "call",
+            "method": "function domainDepositsPaused(uint32 domain) view returns (bool)",
+            "args": [10002]
+          }
+        },
+        "aleoWithdrawalsPaused": {
+          "handler": {
+            "type": "call",
+            "method": "function domainWithdrawalsPaused(uint32 domain) view returns (bool)",
+            "args": [10002]
+          }
+        },
+        "aleoHookExecutor": {
+          "handler": {
+            "type": "call",
+            "method": "function getRemoteDomainHookExecutor(uint32 remoteDomain) view returns (address)",
+            "args": [10002]
+          }
+        }
+      }
+    }
+  }
+}

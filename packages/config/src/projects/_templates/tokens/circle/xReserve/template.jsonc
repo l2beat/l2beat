@@ -1,0 +1,44 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Entry point for USDC-backed stablecoins on remote blockchains. It forwards each deposit to the GatewayWallet, credited to one depositor contract per remote domain, and pays out attested withdrawals through the GatewayMinter.",
+  "ignoreMethods": ["proxiableUUID"],
+  "ignoreRelatives": [
+    "remoteDomainDepositorImplementation",
+    "tokenMessenger",
+    "tokenMessengerV2"
+  ],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add supported tokens, deregister remote domains and tokens, replace each domain's manager, hook executor and signature buffer delay, and replace the pauser, blocklister and registration manager."
+        }
+      ]
+    },
+    "pauser": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause and unpause deposits and withdrawals for all remote domains."
+        }
+      ]
+    },
+    "blocklister": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "blocklist addresses on a remote domain, which blocks deposits to them and withdrawals from them."
+        }
+      ]
+    },
+    "registrationManager": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "register remote domains with their manager, pauser, attesters and signature threshold, and register remote tokens."
+        }
+      ]
+    }
+  }
+}

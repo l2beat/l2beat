@@ -1,0 +1,1076 @@
+{
+  "name": "aleo-xreserve",
+  "timestamp": 1794855653,
+  "configHash": "0xc26f7a780a1f6e274ca120462d8c210f78e8753feb265c45f527b06f45ef663a",
+  "entries": [
+    {
+      "address": "eth:0x1117Ba72A62fCC6aE5a9bb31A54A7879F4f1Dbd2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x12De0d11519B2FCc2F9017AC100F65D236326C1B",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x1D6DDdDae56E9C6AB44ACa83ba2A16B295B362ce",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "GatewayMinter",
+      "address": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
+      "type": "Contract",
+      "template": "tokens/circle/GatewayMinter",
+      "sourceHashes": [
+        "0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3",
+        "0x6838d677f53c3c637659817b8a77b44a7975202d988e744fd0ae6f2254cdd03d"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Entrypoint or minter of USDC on this chain for the Gateway protocol.",
+      "deployerAddress": "eth:0xadB384F7fa7486422051D2a896417EAAb9E5A9D1",
+      "sinceTimestamp": 1753120475,
+      "sinceBlock": 22969188,
+      "values": {
+        "$admin": "eth:0x3c54FFa14d01EF3A555106007A4fED6E8964aAB6",
+        "$implementation": "eth:0xc2ff68068362AEa1ca22a3896d05B2B812ce51B1",
+        "$pastUpgrades": [
+          [
+            "2025-07-21T17:54:35.000Z",
+            "0xb2a247f1c8466c02274231a9d5fed407fb546964166c1a784da6ca2ff06e3d05",
+            ["eth:0x868dA8E567a2C6D668f1bBFbC9B11d0567fc8C0C"]
+          ],
+          [
+            "2025-07-21T17:54:35.000Z",
+            "0xb2a247f1c8466c02274231a9d5fed407fb546964166c1a784da6ca2ff06e3d05",
+            ["eth:0xc2ff68068362AEa1ca22a3896d05B2B812ce51B1"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "attestationSigners": [
+          "eth:0x311ac5F3a327C18E27eA544694e20AbD15CAa85d"
+        ],
+        "denylister": "eth:0x7e575bC81e8a4A57f841512fbE72ed4C9976ae1c",
+        "domain": 0,
+        "owner": "eth:0x3c54FFa14d01EF3A555106007A4fED6E8964aAB6",
+        "paused": false,
+        "pauser": "eth:0x6fa314D4Dce1d49233c329a60fDBd96a6BCbe6Fb",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "fieldMeta": {
+        "attestationSigners": {
+          "description": "Bridge validators, trusted to sign each minting payload on an incoming bridge tx."
+        }
+      },
+      "implementationNames": {
+        "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205": "ERC1967Proxy",
+        "eth:0xc2ff68068362AEa1ca22a3896d05B2B812ce51B1": "GatewayMinter"
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
+    },
+    {
+      "address": "eth:0x2A6A86466F181721ec8ff946967b56f1AA4758c5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x311ac5F3a327C18E27eA544694e20AbD15CAa85d",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "AleoDepositor",
+      "address": "eth:0x36a8e347006e151F4A0E9559FEa239439611777a",
+      "type": "Contract",
+      "template": "tokens/circle/RemoteDomainDepositor",
+      "sourceHashes": [
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0x4468ec224714b755d5a4f1dec6b7d3255bb8c5b5c95a78e4f4dc86a5dc4d2dc7"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Depositor account of one remote domain in the GatewayWallet. It holds the USDC balance that backs the domain's stablecoin and approves Gateway burn intents through ERC-1271 when exactly `signatureThreshold` of its attesters sign.",
+      "deployerAddress": "eth:0x95EEbE410BEE377D3E3D5a8aCE492064d4080a83",
+      "sinceTimestamp": 1768583603,
+      "sinceBlock": 24248709,
+      "values": {
+        "$admin": "eth:0x8888888199b2Df864bf678259607d6D5EBb4e3Ce",
+        "$implementation": "eth:0x0093a77B14fEE8593Cc5E381Fd674948Cf84DF13",
+        "$pastUpgrades": [
+          [
+            "2026-01-16T17:13:23.000Z",
+            "0x7fa3ce9bc35e65d9d1a9f253d1b01283810fa5112e6dc92f8f56b748710ff3c3",
+            ["eth:0x0093a77B14fEE8593Cc5E381Fd674948Cf84DF13"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "domainManager": "eth:0x1D6DDdDae56E9C6AB44ACa83ba2A16B295B362ce",
+        "domainPauser": "eth:0x1D6DDdDae56E9C6AB44ACa83ba2A16B295B362ce",
+        "MIN_SIGNATURE_THRESHOLD": 2,
+        "nextSignatureThreshold": 2,
+        "numPersistentEnabledAttesters": 4,
+        "owner": "eth:0x8888888199b2Df864bf678259607d6D5EBb4e3Ce",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "persistentEnabledAttesters": [
+          "eth:0xB82C39FDd52cb34406Be7dCFc55e59FE0C3ae9fd",
+          "eth:0xF5aD46DB84A6d52eC30AcDB87b6A5d67a4D69f7D",
+          "eth:0xF990995558AB81CCa3aef3301E91eEDA9F43FcA0",
+          "eth:0xab5ce81660a24d5F10DDfFFa9582c4cf8Ea2862b"
+        ],
+        "persistentSignatureBufferDelayBlocks": 50400,
+        "signatureThreshold": 2,
+        "signatureThresholdValidUntilBlock": 0,
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "fieldMeta": {
+        "persistentSignatureBufferDelayBlocks": {
+          "description": "Blocks a disabled attester and a replaced signature threshold stay valid."
+        }
+      },
+      "implementationNames": {
+        "eth:0x36a8e347006e151F4A0E9559FEa239439611777a": "ERC1967Proxy",
+        "eth:0x0093a77B14fEE8593Cc5E381Fd674948Cf84DF13": "RemoteDomainDepositor"
+      }
+    },
+    {
+      "address": "eth:0x3c54FFa14d01EF3A555106007A4fED6E8964aAB6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x5519e63651bA9898e823cd93e0b6Fd16B1C901A6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x6fa314D4Dce1d49233c329a60fDBd96a6BCbe6Fb",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x7359fD9aA258992eb4B6d9572c6f6c74Cf719a94",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "GatewayWallet",
+      "address": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
+      "type": "Contract",
+      "template": "tokens/circle/GatewayWallet",
+      "sourceHashes": [
+        "0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3",
+        "0x9be4bc0a852d86d084188555ae4446289dbb638f0ac69478dffed14c6f9925af"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Exit point or burner of USDC on this chain for the Gateway protocol.",
+      "deployerAddress": "eth:0xadB384F7fa7486422051D2a896417EAAb9E5A9D1",
+      "sinceTimestamp": 1753120691,
+      "sinceBlock": 22969206,
+      "values": {
+        "$admin": "eth:0x2A6A86466F181721ec8ff946967b56f1AA4758c5",
+        "$implementation": "eth:0xF7a6D9D7Df917c072ac8987A820c58aA27A0e798",
+        "$pastUpgrades": [
+          [
+            "2025-07-21T17:58:11.000Z",
+            "0x3184d25af4d116a0ed0b24d8d41b5ae6b5663f1abe63d4ea30a41a3527ddb84a",
+            ["eth:0xdc92756F7Bbbd934345B6c14b7FcdC42E7FBA19F"]
+          ],
+          [
+            "2025-07-21T17:58:11.000Z",
+            "0x3184d25af4d116a0ed0b24d8d41b5ae6b5663f1abe63d4ea30a41a3527ddb84a",
+            ["eth:0x899a4f5f5422cC5E8183280182e7096Fb923C762"]
+          ],
+          [
+            "2025-10-17T19:46:35.000Z",
+            "0xdc67731c86a1e54bc1ed01654a64dc1518211aa20df0733ed96d6fa0f6e63cc0",
+            ["eth:0xdE4d0329Db2c046b8bA35180822aEECCf63D3294"]
+          ],
+          [
+            "2026-04-20T21:31:35.000Z",
+            "0x1f5e227f100df6b0932df083c80a695d00a9d994963558dad8bdc30cacad6ffb",
+            ["eth:0x09E3740c97C7413693B7e07C32D42C53CD050d27"]
+          ],
+          [
+            "2026-07-23T19:32:11.000Z",
+            "0x9032a846cd5f1fe703f17ab9b6015966a4f953412483a90d822992eeec99699d",
+            ["eth:0xF7a6D9D7Df917c072ac8987A820c58aA27A0e798"]
+          ]
+        ],
+        "$upgradeCount": 5,
+        "attestationSigners": [
+          "eth:0xB72F2Bb8AD7aDB4e40e3ACD8F34160B4991e7ADe"
+        ],
+        "contractSignersAllowlister": "eth:0x12De0d11519B2FCc2F9017AC100F65D236326C1B",
+        "contractSignersDisallowlister": "eth:0xaf8f5B407023a4b0a1861E69Bff4BCa151f15444",
+        "denylister": "eth:0x7359fD9aA258992eb4B6d9572c6f6c74Cf719a94",
+        "domain": 0,
+        "domainSeparator": "0x23a37920eca61226c76d13c4462857a362147e4b18da665dba894fa297ae4f34",
+        "EIP712_DOMAIN_TYPE_HASH": "0xb03948446334eb9b2196d5eb166f69b9d49403eb4a12f36de8d3f9f3cb8e15c3",
+        "eip712Domain": {
+          "fields": "0x03",
+          "name": "GatewayWallet",
+          "version": "1",
+          "chainId": 0,
+          "verifyingContract": "eth:0x0000000000000000000000000000000000000000",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "feeRecipient": "eth:0xFbAF3A19B1c02b8Bef52a7E9Fa855c86c69aB95c",
+        "owner": "eth:0x2A6A86466F181721ec8ff946967b56f1AA4758c5",
+        "paused": false,
+        "pauser": "eth:0x9812d5F0a0832d9A0a78a1ba728fACd87bC35b19",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0",
+        "withdrawalDelay": 50400
+      },
+      "fieldMeta": {
+        "attestationSigners": {
+          "description": "Bridge validators, trusted to sign each burning payload on an outbound bridge tx."
+        }
+      },
+      "implementationNames": {
+        "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE": "ERC1967Proxy",
+        "eth:0xF7a6D9D7Df917c072ac8987A820c58aA27A0e798": "GatewayWallet"
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
+    },
+    {
+      "address": "eth:0x7e575bC81e8a4A57f841512fbE72ed4C9976ae1c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "xReserve",
+      "address": "eth:0x8888888199b2Df864bf678259607d6D5EBb4e3Ce",
+      "type": "Contract",
+      "template": "tokens/circle/xReserve",
+      "sourceHashes": [
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0xda296a6518c7b62b003460ebbd52d2fc210a8f99aab21d3cda92b78e2b951f3d"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Entry point for USDC-backed stablecoins on remote blockchains. It forwards each deposit to the GatewayWallet, credited to one depositor contract per remote domain, and pays out attested withdrawals through the GatewayMinter.",
+      "deployerAddress": "eth:0xadB384F7fa7486422051D2a896417EAAb9E5A9D1",
+      "sinceTimestamp": 1760506235,
+      "sinceBlock": 23581017,
+      "values": {
+        "$admin": "eth:0x1117Ba72A62fCC6aE5a9bb31A54A7879F4f1Dbd2",
+        "$implementation": "eth:0x7d817ce411839c4a5716c5B8E85BdD2cf40E3915",
+        "$pastUpgrades": [
+          [
+            "2025-10-15T05:30:35.000Z",
+            "0xdfe9a975b39d63df93778ef449bbb933531dcfc742898ad4322a85a84143b1b7",
+            ["eth:0xf614013d911649D767a4B44d196868FF12032270"]
+          ],
+          [
+            "2025-10-15T05:30:35.000Z",
+            "0xdfe9a975b39d63df93778ef449bbb933531dcfc742898ad4322a85a84143b1b7",
+            ["eth:0xad1C4eD036Ff4Bd1F3eFfD8f88aD904D53100Dbf"]
+          ],
+          [
+            "2026-01-06T20:06:23.000Z",
+            "0xe743defbb6625d2928719cb87bfe37449dd6f0e8c2d976aa846b25eb461ac252",
+            ["eth:0x7d817ce411839c4a5716c5B8E85BdD2cf40E3915"]
+          ]
+        ],
+        "$upgradeCount": 3,
+        "aleoDepositor": "eth:0x36a8e347006e151F4A0E9559FEa239439611777a",
+        "aleoDepositsPaused": false,
+        "aleoHookExecutor": "eth:0x0000000000000000000000000000000000000000",
+        "aleoRemoteToken": "0x11ea7dab1d29d5f61500582c63e98c42e1165f9ba050ea9d0c6af9f871987711",
+        "aleoWithdrawalsPaused": false,
+        "blocklister": "eth:0xE170235dD82d5058a4fa699e9452e3B929Dd7FD0",
+        "domain": 0,
+        "gatewayMinter": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
+        "gatewayWallet": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
+        "owner": "eth:0x1117Ba72A62fCC6aE5a9bb31A54A7879F4f1Dbd2",
+        "paused": false,
+        "pauser": "eth:0x5519e63651bA9898e823cd93e0b6Fd16B1C901A6",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "registrationManager": "eth:0x95EEbE410BEE377D3E3D5a8aCE492064d4080a83",
+        "remoteDomainDepositorImplementation": "eth:0x0093a77B14fEE8593Cc5E381Fd674948Cf84DF13",
+        "tokenMessenger": "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155",
+        "tokenMessengerV2": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "fieldMeta": {
+        "aleoDepositor": {
+          "description": "Depositor contract that holds the GatewayWallet balance backing USDCx on Aleo (remote domain 10002)."
+        },
+        "aleoRemoteToken": {
+          "description": "Identifier of the Aleo token registered for USDC."
+        }
+      },
+      "implementationNames": {
+        "eth:0x8888888199b2Df864bf678259607d6D5EBb4e3Ce": "ERC1967Proxy",
+        "eth:0x7d817ce411839c4a5716c5B8E85BdD2cf40E3915": "xReserve"
+      }
+    },
+    {
+      "address": "eth:0x95EEbE410BEE377D3E3D5a8aCE492064d4080a83",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x9812d5F0a0832d9A0a78a1ba728fACd87bC35b19",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xab5ce81660a24d5F10DDfFFa9582c4cf8Ea2862b",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xaf8f5B407023a4b0a1861E69Bff4BCa151f15444",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xB72F2Bb8AD7aDB4e40e3ACD8F34160B4991e7ADe",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xB82C39FDd52cb34406Be7dCFc55e59FE0C3ae9fd",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xE170235dD82d5058a4fa699e9452e3B929Dd7FD0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xF5aD46DB84A6d52eC30AcDB87b6A5d67a4D69f7D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xF990995558AB81CCa3aef3301E91eEDA9F43FcA0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xFbAF3A19B1c02b8Bef52a7E9Fa855c86c69aB95c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    }
+  ],
+  "abis": {
+    "eth:0x0093a77B14fEE8593Cc5E381Fd674948Cf84DF13": [
+      "constructor()",
+      "error AddressEmptyCode(address target)",
+      "error AttesterAlreadyDisabled(address attester)",
+      "error AttesterAlreadyEnabled(address attester)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotEnoughAttestersForSigThreshold(uint256 currentCount, uint256 required)",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error PersistentSignatureBufferDelayAlreadySet(uint256 currentDelay)",
+      "error PersistentSignatureBufferDelayZero()",
+      "error SignatureThresholdAlreadySet(uint256 currentThreshold)",
+      "error SignatureThresholdBelowMinimum(uint256 threshold, uint256 minThreshold)",
+      "error SignatureThresholdTooHigh(uint256 threshold, uint256 maxAllowed)",
+      "error SignatureThresholdUpdateInProgress(uint256 pendingThreshold, uint256 validUntilBlock)",
+      "error SignatureThresholdZero()",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "error UnauthorizedCaller()",
+      "error ZeroAddress()",
+      "event AttesterDisabled(address indexed attester, uint256 validUntilBlock)",
+      "event AttesterEnabled(address indexed attester)",
+      "event DomainManagerUpdated(address indexed oldDomainManager, address indexed newDomainManager)",
+      "event DomainPauserUpdated(address indexed oldDomainPauser, address indexed newDomainPauser)",
+      "event Initialized(uint64 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event PersistentSignatureBufferDelayUpdated(uint256 oldDelay, uint256 newDelay)",
+      "event SignatureThresholdUpdated(uint256 oldSignatureThreshold, uint256 newSignatureThreshold)",
+      "event Upgraded(address indexed implementation)",
+      "function MIN_SIGNATURE_THRESHOLD() view returns (uint256)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function acceptOwnership()",
+      "function attesterValidUntilBlock(address attester) view returns (uint256)",
+      "function disableAttester(address attester)",
+      "function domainManager() view returns (address)",
+      "function domainPauser() view returns (address)",
+      "function enableAttester(address newAttester)",
+      "function initialize(address domainManager_, address domainPauser_, address[] attesters_, uint256 signatureThreshold_, uint256 persistentSignatureBufferDelayBlocks_)",
+      "function isAttesterEnabled(address attester) view returns (bool)",
+      "function isValidPersistentSignature(bytes32 hash, bytes signature) view returns (bytes4 magicValue)",
+      "function isValidSignature(bytes32 hash, bytes signature) view returns (bytes4 magicValue)",
+      "function nextSignatureThreshold() view returns (uint256)",
+      "function numPersistentEnabledAttesters() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function persistentEnabledAttesters() view returns (address[])",
+      "function persistentSignatureBufferDelayBlocks() view returns (uint256)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function setPersistentSignatureBufferDelay(uint256 newDelay)",
+      "function setSignatureThreshold(uint256 newSignatureThreshold)",
+      "function signatureThreshold() view returns (uint256)",
+      "function signatureThresholdValidUntilBlock() view returns (uint256)",
+      "function transferOwnership(address newOwner)",
+      "function updateDomainManager(address domainManager_)",
+      "function updateDomainPauser(address domainPauser_)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x36a8e347006e151F4A0E9559FEa239439611777a": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x7d817ce411839c4a5716c5B8E85BdD2cf40E3915": [
+      "constructor(address gatewayMinterAddress, address gatewayWalletAddress, address tokenMessengerAddress, address tokenMessengerV2Address)",
+      "error AccountBlocklisted(uint32 remoteDomain, bytes32 remoteAddress)",
+      "error AddressEmptyCode(address target)",
+      "error AddressInsufficientBalance(address account)",
+      "error Create2EmptyBytecode()",
+      "error Create2FailedDeployment()",
+      "error Create2InsufficientBalance(uint256 balance, uint256 needed)",
+      "error CursorOutOfBounds()",
+      "error DepositPayloadDataTooShort(uint256 expected, uint256 actual)",
+      "error DepositPayloadHeaderTooShort(uint256 expected, uint256 actual)",
+      "error DepositPayloadOverallLengthMismatch(uint256 expected, uint256 actual)",
+      "error DomainDepositsPaused(uint32 domain)",
+      "error DomainWithdrawalsPaused(uint32 domain)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error FailedInnerCall()",
+      "error ForwardingCalldataTooShort(uint32 length)",
+      "error HookDataEmpty()",
+      "error InvalidAddressPadding(bytes32 invalidBytes32)",
+      "error InvalidDepositAmount(uint256 amount)",
+      "error InvalidDepositIntentHookData(uint256 expectedHookDataLength, uint256 depositIntentLength)",
+      "error InvalidDepositIntentVersion(uint32 version)",
+      "error InvalidDepositPayloadMagic(bytes4 magic)",
+      "error InvalidDestinationRecipient(bytes32 destinationRecipient)",
+      "error InvalidForwardingCalldata(bytes forwardingCalldata)",
+      "error InvalidForwardingContract(address forwardingContract)",
+      "error InvalidFunctionSelector(bytes4 functionSelector)",
+      "error InvalidImplementation()",
+      "error InvalidInitialization()",
+      "error InvalidWithdrawHookDataForwardingCalldata(uint256 expectedForwardingCalldataLength, uint256 withdrawHookDataLength)",
+      "error InvalidWithdrawHookDataMagic(bytes4 actualMagic)",
+      "error InvalidWithdrawHookDataVersion(uint32 actualVersion)",
+      "error LocalTokenAlreadyRegistered(uint32 remoteDomain, address localToken)",
+      "error LocalTokenNotRegistered(uint32 remoteDomain, address localToken)",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error ReentrancyGuardReentrantCall()",
+      "error RemoteDomainAlreadyRegistered(uint32 remoteDomain)",
+      "error RemoteDomainNotRegistered(uint32 remoteDomain)",
+      "error RemoteTokenAlreadyRegistered(uint32 remoteDomain, bytes32 remoteToken)",
+      "error RemoteTokenNotRegistered(uint32 remoteDomain, bytes32 remoteToken)",
+      "error SafeERC20FailedOperation(address token)",
+      "error TransferSpecInvalidHookData(uint256 expectedHookDataLength, uint256 transferSpecLength)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "error UnauthorizedCaller()",
+      "error UnauthorizedDomainPauser(uint32 domain, address caller)",
+      "error UnsupportedToken(address token)",
+      "error WithdrawHookDataHeaderTooShort(uint256 expectedMinimumLength, uint256 actualLength)",
+      "error WithdrawHookDataOverallLengthMismatch(uint256 expectedTotalLength, uint256 actualTotalLength)",
+      "error ZeroAddress()",
+      "error ZeroBytes32()",
+      "error ZeroValue()",
+      "event Blocklisted(uint32 indexed remoteDomain, bytes32 indexed remoteAddress)",
+      "event BlocklisterUpdated(address indexed oldBlocklister, address indexed newBlocklister)",
+      "event DepositedToRemote(address indexed localToken, uint256 value, address indexed localDepositor, bytes32 indexed remoteRecipient, uint32 remoteDomain, bytes32 remoteToken, uint256 maxFee, bytes hookData)",
+      "event DomainPauseStateUpdated(uint32 indexed domain, bool depositsPaused, bool withdrawalsPaused)",
+      "event Initialized(uint64 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event PauserUpdated(address indexed oldPauser, address indexed newPauser)",
+      "event RegistrationManagerUpdated(address indexed oldManager, address indexed newManager)",
+      "event RemoteDomainDeregistered(uint32 indexed remoteDomain)",
+      "event RemoteDomainHookExecutorUpdated(uint32 indexed remoteDomain, address indexed oldHookExecutor, address indexed newHookExecutor)",
+      "event RemoteDomainRegistered(uint32 indexed remoteDomain, address indexed remoteDomainManager, address indexed remoteDomainDepositor, address remoteDomainPauser, address[] remoteDomainAttesters, uint256 signatureThreshold, uint256 persistentSignatureBufferDelayBlocks, address remoteDomainHookExecutor)",
+      "event RemoteTokenDeregistered(address indexed localToken, uint32 indexed remoteDomain, bytes32 indexed remoteToken)",
+      "event RemoteTokenRegistered(address indexed localToken, uint32 indexed remoteDomain, bytes32 indexed remoteToken)",
+      "event TokenSupported(address indexed token)",
+      "event Unblocklisted(uint32 indexed remoteDomain, bytes32 indexed remoteAddress)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "event Withdrawn(address indexed localToken, uint256 value, bytes32 indexed remoteDepositor, address indexed localRecipient, uint32 remoteDomain, bytes32 remoteToken, bytes32 transferSpecHash)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function acceptOwnership()",
+      "function addSupportedToken(address token)",
+      "function balanceOfNativeCollateral(address localToken, uint32 remoteDomain) view returns (uint256)",
+      "function blocklist(uint32 remoteDomain, bytes32 remoteAddress)",
+      "function blocklister() view returns (address)",
+      "function decodeDepositIntent(bytes data) view returns (tuple(uint32 version, uint256 amount, uint32 remoteDomain, bytes32 remoteToken, bytes32 remoteRecipient, bytes32 localToken, bytes32 localDepositor, uint256 maxFee, bytes32 nonce, bytes hookData))",
+      "function depositToRemote(uint256 value, uint32 remoteDomain, bytes32 remoteRecipient, address localToken, uint256 maxFee, bytes hookData)",
+      "function deregisterRemoteDomain(uint32 remoteDomain)",
+      "function deregisterRemoteToken(uint32 remoteDomain, bytes32 remoteToken)",
+      "function domain() view returns (uint32)",
+      "function domainDepositsPaused(uint32 domain) view returns (bool)",
+      "function domainWithdrawalsPaused(uint32 domain) view returns (bool)",
+      "function encodeDepositIntent(tuple(uint32 version, uint256 amount, uint32 remoteDomain, bytes32 remoteToken, bytes32 remoteRecipient, bytes32 localToken, bytes32 localDepositor, uint256 maxFee, bytes32 nonce, bytes hookData) intent) pure returns (bytes)",
+      "function gatewayMinter() view returns (address)",
+      "function gatewayWallet() view returns (address)",
+      "function getRemoteDomainDepositor(uint32 remoteDomain) view returns (address)",
+      "function getRemoteDomainHookExecutor(uint32 remoteDomain) view returns (address)",
+      "function getRemoteToken(uint32 remoteDomain, address localToken) view returns (bytes32)",
+      "function initialize(uint32 domain_, address pauser_, address blocklister_, address registrationManager_, address[] supportedTokens_, address remoteDomainDepositorImplementation_)",
+      "function isBlocklisted(uint32 remoteDomain, bytes32 remoteAddress) view returns (bool)",
+      "function isRemoteDomainRegistered(uint32 remoteDomain) view returns (bool)",
+      "function isRemoteTokenRegistered(uint32 remoteDomain, bytes32 remoteToken) view returns (bool)",
+      "function isTokenSupported(address token) view returns (bool)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pauser() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function registerRemoteDomain(uint32 remoteDomain, address domainManager, address domainPauser, address[] domainAttesters, uint256 signatureThreshold, uint256 persistentSignatureBufferDelayBlocks, address remoteDomainHookExecutor) returns (address remoteDomainDepositor)",
+      "function registerRemoteToken(address localToken, uint32 remoteDomain, bytes32 remoteToken)",
+      "function registrationManager() view returns (address)",
+      "function remoteDomainDepositorImplementation() view returns (address)",
+      "function renounceOwnership()",
+      "function setDomainPauseState(uint32 domain, bool depositsPaused, bool withdrawalsPaused)",
+      "function setPersistentSignatureBufferDelay(uint32 remoteDomain, uint256 newDelay)",
+      "function setRemoteDomainHookExecutor(uint32 remoteDomain, address newHookExecutor)",
+      "function setUnlimitedAllowances(address[] tokens)",
+      "function tokenMessenger() view returns (address)",
+      "function tokenMessengerV2() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function unblocklist(uint32 remoteDomain, bytes32 remoteAddress)",
+      "function unpause()",
+      "function updateBlocklister(address blocklister_)",
+      "function updateDomainManager(uint32 remoteDomain, address newDomainManager)",
+      "function updatePauser(address newPauser)",
+      "function updateRegistrationManager(address newManager)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function withdraw(bytes attestationPayload, bytes signature)"
+    ],
+    "eth:0x8888888199b2Df864bf678259607d6D5EBb4e3Ce": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xc2ff68068362AEa1ca22a3896d05B2B812ce51B1": [
+      "constructor()",
+      "error AccountDenylisted(address addr)",
+      "error AddressEmptyCode(address target)",
+      "error AttestationExpiredAtIndex(uint32 index, uint256 maxBlockHeight, uint256 currentBlock)",
+      "error AttestationValueMustBePositiveAtIndex(uint32 index)",
+      "error CursorOutOfBounds()",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error FailedCall()",
+      "error InvalidAddress()",
+      "error InvalidAttestationDestinationCallerAtIndex(uint32 index, address attestationCaller, address actualCaller)",
+      "error InvalidAttestationDestinationContractAtIndex(uint32 index, address attestationContract, address expectedContract)",
+      "error InvalidAttestationDestinationDomainAtIndex(uint32 index, uint32 attestationDomain, uint32 expectedDomain)",
+      "error InvalidAttestationSigner()",
+      "error InvalidAttestationTokenAtIndex(uint32 index, address sourceToken, address destinationToken)",
+      "error InvalidInitialization()",
+      "error InvalidTransferPayloadMagic(bytes4 actualMagic)",
+      "error InvalidTransferSpecMagic(bytes4 actualMagic)",
+      "error InvalidTransferSpecVersion(uint32 actualVersion)",
+      "error MismatchedLengthTokenAndTokenMintAuthorities()",
+      "error MustHaveAtLeastOneAttestation()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error TransferPayloadDataTooShort(uint256 expectedMinimumLength, uint256 actualLength)",
+      "error TransferPayloadHeaderTooShort(uint256 expectedMinimumLength, uint256 actualLength)",
+      "error TransferPayloadOverallLengthMismatch(uint256 expectedTotalLength, uint256 actualTotalLength)",
+      "error TransferPayloadSetElementHeaderTooShort(uint32 index, uint256 actualSetLength, uint256 requiredOffset)",
+      "error TransferPayloadSetElementTooShort(uint32 index, uint256 actualSetLength, uint256 requiredOffset)",
+      "error TransferPayloadSetHeaderTooShort(uint256 expectedMinimumLength, uint256 actualLength)",
+      "error TransferPayloadSetInvalidElementMagic(uint32 index, bytes4 actualMagic)",
+      "error TransferPayloadSetOverallLengthMismatch(uint256 expectedTotalLength, uint256 actualTotalLength)",
+      "error TransferSpecHashUsed(bytes32 transferSpecHash)",
+      "error TransferSpecHeaderTooShort(uint256 expectedMinimumLength, uint256 actualLength)",
+      "error TransferSpecOverallLengthMismatch(uint256 expectedTotalLength, uint256 actualTotalLength)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "error UnauthorizedDenylister(address addr)",
+      "error UnauthorizedPauser(address caller)",
+      "error UnsupportedToken(address token)",
+      "error UnsupportedTokenAtIndex(uint32 index, address destinationToken)",
+      "event AttestationSignerAdded(address indexed signer)",
+      "event AttestationSignerRemoved(address indexed signer)",
+      "event AttestationUsed(address indexed token, address indexed recipient, bytes32 indexed transferSpecHash, uint32 sourceDomain, bytes32 sourceDepositor, bytes32 sourceSigner, uint256 value)",
+      "event Denylisted(address indexed addr)",
+      "event DenylisterChanged(address indexed oldDenylister, address indexed newDenylister)",
+      "event Initialized(uint64 version)",
+      "event MintAuthorityChanged(address indexed token, address indexed oldMintAuthority, address indexed newMintAuthority)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event PauserChanged(address indexed oldPauser, address indexed newPauser)",
+      "event TokenSupported(address token)",
+      "event UnDenylisted(address indexed addr)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function acceptOwnership()",
+      "function addAttestationSigner(address signer)",
+      "function addSupportedToken(address token)",
+      "function denylist(address addr)",
+      "function denylister() view returns (address)",
+      "function domain() view returns (uint32)",
+      "function gatewayMint(bytes attestationPayload, bytes signature)",
+      "function initialize(address pauser_, address denylister_, address[] supportedTokens_, uint32 domain_, address attestationSigner_, address[] tokenMintAuthorities_)",
+      "function isAttestationSigner(address signer) view returns (bool)",
+      "function isDenylisted(address addr) view returns (bool)",
+      "function isTokenSupported(address token) view returns (bool)",
+      "function isTransferSpecHashUsed(bytes32 transferSpecHash) view returns (bool)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pauser() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function removeAttestationSigner(address signer)",
+      "function renounceOwnership()",
+      "function tokenMintAuthority(address token) view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function unDenylist(address addr)",
+      "function unpause()",
+      "function updateDenylister(address newDenylister)",
+      "function updateMintAuthority(address token, address newMintAuthority)",
+      "function updatePauser(address newPauser)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0xF7a6D9D7Df917c072ac8987A820c58aA27A0e798": [
+      "constructor()",
+      "error AccountDenylisted(address addr)",
+      "error AddressEmptyCode(address target)",
+      "error BatchIdUsed(bytes32 batchId)",
+      "error BurnFeeTooHighAtIndex(uint32 index, uint256 maxFee, uint256 actualFee)",
+      "error CannotDelegateToSelf()",
+      "error ContractSignerNeverAllowlisted(address contractAddr)",
+      "error CursorOutOfBounds()",
+      "error DeltaMustBeNonZero(address depositor)",
+      "error DepositValueMustBePositive()",
+      "error DepositorIsBlacklisted(address depositor)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error FailedCall()",
+      "error InputArrayLengthMismatch()",
+      "error IntentExpiredAtIndex(uint32 index, uint256 maxBlockHeight, uint256 currentBlock)",
+      "error IntentValueMustBePositiveAtIndex(uint32 index)",
+      "error InvalidAddress()",
+      "error InvalidBatchSigner()",
+      "error InvalidBurnSigner()",
+      "error InvalidInitialization()",
+      "error InvalidIntentSourceContractAtIndex(uint32 index, address intentContract, address expectedContract)",
+      "error InvalidIntentSourceSignerAtIndex(uint32 index, address intentSigner, address actualSigner)",
+      "error InvalidSignature()",
+      "error InvalidTransferPayloadMagic(bytes4 actualMagic)",
+      "error InvalidTransferSpecMagic(bytes4 actualMagic)",
+      "error InvalidTransferSpecVersion(uint32 actualVersion)",
+      "error MismatchedBurn()",
+      "error MustHaveAtLeastOneBurnIntent()",
+      "error MustHaveAtLeastOneDelta()",
+      "error MustNetToZero(int256 totalDelta)",
+      "error NoRelevantBurnIntents()",
+      "error NoWithdrawingBalance()",
+      "error NotAllSameToken()",
+      "error NotAuthorized()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error RenounceOwnershipDisabled()",
+      "error SafeERC20FailedOperation(address token)",
+      "error TransferPayloadDataTooShort(uint256 expectedMinimumLength, uint256 actualLength)",
+      "error TransferPayloadHeaderTooShort(uint256 expectedMinimumLength, uint256 actualLength)",
+      "error TransferPayloadOverallLengthMismatch(uint256 expectedTotalLength, uint256 actualTotalLength)",
+      "error TransferPayloadSetElementHeaderTooShort(uint32 index, uint256 actualSetLength, uint256 requiredOffset)",
+      "error TransferPayloadSetElementTooShort(uint32 index, uint256 actualSetLength, uint256 requiredOffset)",
+      "error TransferPayloadSetHeaderTooShort(uint256 expectedMinimumLength, uint256 actualLength)",
+      "error TransferPayloadSetInvalidElementMagic(uint32 index, bytes4 actualMagic)",
+      "error TransferPayloadSetOverallLengthMismatch(uint256 expectedTotalLength, uint256 actualTotalLength)",
+      "error TransferSpecHashUsed(bytes32 transferSpecHash)",
+      "error TransferSpecHeaderTooShort(uint256 expectedMinimumLength, uint256 actualLength)",
+      "error TransferSpecInvalidHookData(uint256 expectedHookDataLength, uint256 transferSpecLength)",
+      "error TransferSpecOverallLengthMismatch(uint256 expectedTotalLength, uint256 actualTotalLength)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "error UnauthorizedContractSignerAllowlister(address addr)",
+      "error UnauthorizedContractSignerDisallowlister(address addr)",
+      "error UnauthorizedDenylister(address addr)",
+      "error UnauthorizedPauser(address caller)",
+      "error UnsupportedToken(address token)",
+      "error UnsupportedTokenAtIndex(uint32 index, address sourceToken)",
+      "error WithdrawalNotYetAvailable()",
+      "error WithdrawalValueExceedsAvailableBalance()",
+      "error WithdrawalValueMustBePositive()",
+      "error WrongDomain()",
+      "error WrongGatewayContract()",
+      "error ZeroAddressAllowlister()",
+      "error ZeroAddressContractSigner()",
+      "error ZeroAddressDisallowlister()",
+      "event BatchProcessed(bytes32 indexed batchId, address indexed signer, address indexed tokenAddress)",
+      "event BatchSignerAdded(address indexed signer)",
+      "event BatchSignerRemoved(address indexed signer)",
+      "event BurnSignerAdded(address indexed signer)",
+      "event BurnSignerRemoved(address indexed signer)",
+      "event ContractSignatureSignerAdded(address indexed signer)",
+      "event ContractSignatureSignerRemoved(address indexed signer)",
+      "event ContractSignerAllowlisted(address indexed contractAddr)",
+      "event ContractSignerDisallowed(address indexed contractAddr)",
+      "event ContractSignersAllowlisterChanged(address indexed oldAllowlister, address indexed newAllowlister)",
+      "event ContractSignersDisallowlisterChanged(address indexed oldDisallowlister, address indexed newDisallowlister)",
+      "event DelegateAdded(address indexed token, address indexed depositor, address delegate)",
+      "event DelegateRemoved(address indexed token, address indexed depositor, address delegate)",
+      "event Denylisted(address indexed addr)",
+      "event DenylisterChanged(address indexed oldDenylister, address indexed newDenylister)",
+      "event Deposited(address indexed token, address indexed depositor, address indexed sender, uint256 value)",
+      "event EIP712DomainChanged()",
+      "event FeeRecipientChanged(address indexed oldFeeRecipient, address indexed newFeeRecipient)",
+      "event GatewayBurned(address indexed token, address indexed depositor, bytes32 indexed transferSpecHash, uint32 destinationDomain, bytes32 destinationRecipient, address signer, uint256 value, uint256 fee, uint256 fromAvailable, uint256 fromWithdrawing)",
+      "event Initialized(uint64 version)",
+      "event InsufficientBalance(address indexed token, address indexed depositor, uint256 value, uint256 availableBalance, uint256 withdrawingBalance)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event PauserChanged(address indexed oldPauser, address indexed newPauser)",
+      "event TokenSupported(address token)",
+      "event UnDenylisted(address indexed addr)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "event WithdrawalCompleted(address indexed token, address indexed depositor, uint256 value)",
+      "event WithdrawalDelayChanged(uint256 indexed oldDelay, uint256 indexed newDelay)",
+      "event WithdrawalInitiated(address indexed token, address indexed depositor, uint256 value, uint256 remainingAvailable, uint256 totalWithdrawing, uint256 withdrawalBlock)",
+      "function EIP712_DOMAIN_TYPE_HASH() view returns (bytes32)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function acceptOwnership()",
+      "function addBatchSigner(address signer)",
+      "function addBurnSigner(address signer)",
+      "function addContractSignatureSigner(address signer)",
+      "function addDelegate(address token, address delegate)",
+      "function addSupportedToken(address token)",
+      "function allowlistContractSigner(address contractAddr)",
+      "function availableBalance(address token, address depositor) view returns (uint256)",
+      "function balanceOf(address depositor, uint256 id) view returns (uint256 balance)",
+      "function balanceOfBatch(address[] depositors, uint256[] ids) view returns (uint256[] balances)",
+      "function contractSignersAllowlister() view returns (address)",
+      "function contractSignersDisallowlister() view returns (address)",
+      "function denylist(address addr)",
+      "function denylister() view returns (address)",
+      "function deposit(address token, uint256 value)",
+      "function depositFor(address token, address depositor, uint256 value)",
+      "function depositWithAuthorization(address token, address from, uint256 value, uint256 validAfter, uint256 validBefore, bytes32 nonce, bytes signature)",
+      "function depositWithAuthorization(address token, address from, uint256 value, uint256 validAfter, uint256 validBefore, bytes32 nonce, uint8 v, bytes32 r, bytes32 s)",
+      "function depositWithPermit(address token, address owner, uint256 value, uint256 deadline, bytes signature)",
+      "function depositWithPermit(address token, address owner, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function disallowContractSigner(address contractAddr)",
+      "function domain() view returns (uint32)",
+      "function domainSeparator() pure returns (bytes32)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function feeRecipient() view returns (address)",
+      "function gatewayBurn(bytes calldataBytes, bytes signature)",
+      "function getTypedDataHash(bytes intent) view returns (bytes32)",
+      "function initialize(tuple(address pauser, address denylister, address[] supportedTokens, uint32 domain, uint256 withdrawalDelay, address burnSigner, address feeRecipient, address contractSignersAllowlister, address contractSignersDisallowlister, address contractSignatureSigner, address batchSigner) config)",
+      "function initiateWithdrawal(address token, uint256 value)",
+      "function isAllowlistedContractSigner(address contractAddr) view returns (bool)",
+      "function isAuthorizedForBalance(address token, address depositor, address addr) view returns (bool)",
+      "function isBatchSigner(address signer) view returns (bool)",
+      "function isBurnSigner(address signer) view returns (bool)",
+      "function isContractSignatureSigner(address signer) view returns (bool)",
+      "function isDenylisted(address addr) view returns (bool)",
+      "function isTokenSupported(address token) view returns (bool)",
+      "function isTransferSpecHashUsed(bytes32 transferSpecHash) view returns (bool)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pauser() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function removeBatchSigner(address signer)",
+      "function removeBurnSigner(address signer)",
+      "function removeContractSignatureSigner(address signer)",
+      "function removeDelegate(address token, address delegate)",
+      "function renounceOwnership() view",
+      "function submitBatch(bytes calldataBytes, bytes signature)",
+      "function totalBalance(address token, address depositor) view returns (uint256)",
+      "function transferOwnership(address newOwner)",
+      "function unDenylist(address addr)",
+      "function unpause()",
+      "function updateContractSignersAllowlister(address newAllowlister)",
+      "function updateContractSignersDisallowlister(address newDisallowlister)",
+      "function updateDenylister(address newDenylister)",
+      "function updateFeeRecipient(address newFeeRecipient)",
+      "function updatePauser(address newPauser)",
+      "function updateWithdrawalDelay(uint256 newDelay)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function withdraw(address token)",
+      "function withdrawableBalance(address token, address depositor) view returns (uint256)",
+      "function withdrawalBlock(address token, address depositor) view returns (uint256)",
+      "function withdrawalDelay() view returns (uint256)",
+      "function withdrawingBalance(address token, address depositor) view returns (uint256)"
+    ]
+  },
+  "usedTemplates": {
+    "tokens/circle/GatewayMinter": "0x3db25d7fc84be554debfe33d427fd0526e49528932a9dadaf23a024ff11d3d5e",
+    "tokens/circle/GatewayWallet": "0x7bd43fd6063b4ff70e635794d4beac55e2d3cd3423649296dc93406a067df8d7",
+    "tokens/circle/RemoteDomainDepositor": "0xa63cab3c655460fa73a9317664e7bcbf5ed6db7d9cd5f90c40046ae7b0c12cc9",
+    "tokens/circle/xReserve": "0xead51b19d4e7bb2eb95abad02dd47aabee097a90cdcdf5e1e6bdbbf8ccbd8851"
+  },
+  "usedBlockNumbers": { "ethereum": 26429545 },
+  "permissionsConfigHash": "0x85eca026d8a25847d44ee00e793ab6635ab13cf94bb00ae6baffc90f6301c5bb",
+  "permissions": {
+    "eth:0x1117Ba72A62fCC6aE5a9bb31A54A7879F4f1Dbd2": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x8888888199b2Df864bf678259607d6D5EBb4e3Ce",
+          "description": "add supported tokens, deregister remote domains and tokens, replace each domain's manager, hook executor and signature buffer delay, and replace the pauser, blocklister and registration manager.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8888888199b2Df864bf678259607d6D5EBb4e3Ce",
+          "role": "admin"
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0x12De0d11519B2FCc2F9017AC100F65D236326C1B": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
+          "description": "allowlist or disallowlist contract signers for Gateway burn intents.",
+          "role": ".contractSignersAllowlister"
+        }
+      ]
+    },
+    "eth:0x1D6DDdDae56E9C6AB44ACa83ba2A16B295B362ce": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x36a8e347006e151F4A0E9559FEa239439611777a",
+          "description": "enable attesters instantly, disable attesters and change the signature threshold after the buffer delay, and replace the domain pauser.",
+          "role": ".domainManager"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x36a8e347006e151F4A0E9559FEa239439611777a",
+          "description": "pause and unpause this domain's deposits and withdrawals in xReserve.",
+          "role": ".domainPauser"
+        }
+      ]
+    },
+    "eth:0x2A6A86466F181721ec8ff946967b56f1AA4758c5": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
+          "description": "configure supported tokens, withdrawal delay, burn signers, batch signers, fee recipient, pauser, denylister, contract signer allowlister, and transfer ownership.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x311ac5F3a327C18E27eA544694e20AbD15CAa85d": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
+          "description": "sign mint attestations accepted by GatewayMinter.",
+          "role": ".attestationSigners"
+        }
+      ]
+    },
+    "eth:0x3c54FFa14d01EF3A555106007A4fED6E8964aAB6": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
+          "description": "configure supported tokens, mint authorities, attestation signers, pauser, denylister, and transfer ownership.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x5519e63651bA9898e823cd93e0b6Fd16B1C901A6": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x8888888199b2Df864bf678259607d6D5EBb4e3Ce",
+          "description": "pause and unpause deposits and withdrawals for all remote domains.",
+          "role": ".pauser"
+        }
+      ]
+    },
+    "eth:0x6fa314D4Dce1d49233c329a60fDBd96a6BCbe6Fb": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
+          "description": "pause and unpause Gateway minting.",
+          "role": ".pauser"
+        }
+      ]
+    },
+    "eth:0x7359fD9aA258992eb4B6d9572c6f6c74Cf719a94": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
+          "description": "denylist addresses, preventing them from interacting with the GatewayWallet.",
+          "role": ".denylister"
+        }
+      ]
+    },
+    "eth:0x7e575bC81e8a4A57f841512fbE72ed4C9976ae1c": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
+          "description": "denylist addresses, preventing them from interacting with the GatewayMinter.",
+          "role": ".denylister"
+        }
+      ]
+    },
+    "eth:0x8888888199b2Df864bf678259607d6D5EBb4e3Ce": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x36a8e347006e151F4A0E9559FEa239439611777a",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x95EEbE410BEE377D3E3D5a8aCE492064d4080a83": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x8888888199b2Df864bf678259607d6D5EBb4e3Ce",
+          "description": "register remote domains with their manager, pauser, attesters and signature threshold, and register remote tokens.",
+          "role": ".registrationManager"
+        }
+      ]
+    },
+    "eth:0x9812d5F0a0832d9A0a78a1ba728fACd87bC35b19": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
+          "description": "pause and unpause deposits, burns, and withdrawals.",
+          "role": ".pauser"
+        }
+      ]
+    },
+    "eth:0xB72F2Bb8AD7aDB4e40e3ACD8F34160B4991e7ADe": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
+          "description": "sign burn payloads accepted by GatewayWallet.",
+          "role": ".attestationSigners"
+        }
+      ]
+    },
+    "eth:0xB82C39FDd52cb34406Be7dCFc55e59FE0C3ae9fd": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x36a8e347006e151F4A0E9559FEa239439611777a",
+          "description": "sign the burn intents that move this domain's balance out of the GatewayWallet.",
+          "role": ".persistentEnabledAttesters"
+        }
+      ]
+    },
+    "eth:0xE170235dD82d5058a4fa699e9452e3B929Dd7FD0": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x8888888199b2Df864bf678259607d6D5EBb4e3Ce",
+          "description": "blocklist addresses on a remote domain, which blocks deposits to them and withdrawals from them.",
+          "role": ".blocklister"
+        }
+      ]
+    },
+    "eth:0xF5aD46DB84A6d52eC30AcDB87b6A5d67a4D69f7D": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x36a8e347006e151F4A0E9559FEa239439611777a",
+          "description": "sign the burn intents that move this domain's balance out of the GatewayWallet.",
+          "role": ".persistentEnabledAttesters"
+        }
+      ]
+    },
+    "eth:0xF990995558AB81CCa3aef3301E91eEDA9F43FcA0": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x36a8e347006e151F4A0E9559FEa239439611777a",
+          "description": "sign the burn intents that move this domain's balance out of the GatewayWallet.",
+          "role": ".persistentEnabledAttesters"
+        }
+      ]
+    },
+    "eth:0xab5ce81660a24d5F10DDfFFa9582c4cf8Ea2862b": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x36a8e347006e151F4A0E9559FEa239439611777a",
+          "description": "sign the burn intents that move this domain's balance out of the GatewayWallet.",
+          "role": ".persistentEnabledAttesters"
+        }
+      ]
+    }
+  }
+}
