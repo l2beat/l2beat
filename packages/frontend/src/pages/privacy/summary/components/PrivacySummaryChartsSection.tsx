@@ -79,7 +79,7 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
         title="Deposits and withdrawals"
         value={flowsTotal !== undefined ? formatInteger(flowsTotal) : undefined}
         valueLabel={getRangeLabels(flowsShownInput.range).past}
-        isLoading={flowsTotal === undefined}
+        isLoading={isFlowsLoading}
         isPlaceholderData={isFlowsPlaceholderData}
         meta={
           <ChartTimeRange
@@ -109,7 +109,7 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
         }
         change={tvlStats?.change}
         rangeLabel={getRangeLabels(tvlShownInput.range).change}
-        isLoading={tvlStats === undefined}
+        isLoading={isTvlLoading}
         isPlaceholderData={isTvlPlaceholderData}
         meta={
           <ChartTimeRange
@@ -157,18 +157,34 @@ function getRangeLabels(range: ChartRange) {
 function getTvlStats(
   chart: [number, Record<string, number | null>][] | undefined,
 ) {
+  if (!chart) return undefined
   const sumRow = (values: Record<string, number | null>) =>
     Object.values(values).reduce<number>((sum, value) => sum + (value ?? 0), 0)
-  const first = chart?.find(([, values]) =>
+  const first = chart.find(([, values]) =>
     Object.values(values).some((value) => value !== null),
   )
-  const last = chart?.findLast(([, values]) =>
-    Object.values(values).some((value) => value !== null),
-  )
+  const last = findLatestCompleteRow(chart)
   if (!first || !last) return undefined
   const start = sumRow(first[1])
   const total = sumRow(last[1])
   return { total, change: start > 0 ? total / start - 1 : undefined }
+}
+
+/**
+ * Projects index at different times, so the newest rows can miss some of them.
+ * Summing such a row would show a lagging project as a drop in value.
+ */
+function findLatestCompleteRow(
+  chart: [number, Record<string, number | null>][],
+) {
+  const projectsWithData = new Set(
+    chart.flatMap(([, values]) =>
+      Object.keys(values).filter((project) => values[project] !== null),
+    ),
+  )
+  return chart.findLast(([, values]) =>
+    [...projectsWithData].every((project) => values[project] !== null),
+  )
 }
 
 /** Deposits plus withdrawals over the range. */
