@@ -10,13 +10,13 @@ Only the attester can revoke, and only when both the schema and the attestation 
 
 A resolver is a contract that the schema's creator chooses. EAS calls it on every attestation and revocation under that schema and stops when it refuses. A resolver can limit who attests, charge ETH or block revocations. Anyone can register the same fields without a resolver, as a separate schema with its own id.
 
-ETH sent with an attestation goes to the resolver, and EAS refunds the rest. When the schema has no resolver, v{{version}} keeps the ETH and no function can move it out. Later versions refund it.
+ETH sent with an attestation goes to the resolver, and EAS refunds the rest. When the schema has no resolver, v{{version}} skips the refund, and no function can move the ETH out. In a batch, the last schema decides. Later versions refund it.
 
 ### Offchain attestations
 
-An offchain attestation is a signed message that is never sent to the chain. Made with the SDK, it exists only where its signer sends it, and its time is the signer's own claim. EAS can timestamp its id, once. The SDK adds a random salt, so the id reveals nothing about the content. With the SDK's `verifyOnchain` option, the RPC provider receives the content for a test run.
+An offchain attestation is a signed message never sent to the chain. Made with the SDK, it exists only where its signer sends it, and its time is the signer's own claim. EAS can timestamp its id, once. By default the SDK adds a random salt, so the id reveals nothing about the content. Ids made before SDK 1.4.0 have no salt. With the SDK's `verifyOnchain` option, the RPC provider receives the content for a test run.
 
-A private data attestation holds a salted hash instead of its fields, onchain or offchain. Anyone can check a revealed field against the hash.
+A private data attestation holds a salted hash instead of its fields. Anyone can check a revealed field against the hash.
 
 ### Deployment and interfaces
 
