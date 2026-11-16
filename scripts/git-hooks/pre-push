@@ -11,52 +11,102 @@
 # the repo's tsc otherwise. They read workspace dependencies from their build
 # output, so a change to a dependency's types is checked by CI, not here.
 #
-# Skip once with `git push --no-verify`.
+# The checks read the working tree, so the hook refuses a push whose commit
+# differs from it where the checks look: commit or stash those changes first.
+#
+# Runs on the Bash 3.2 that macOS ships: no mapfile, and no empty arrays
+# expanded under `set -u`. Skip once with `git push --no-verify`.
 set -euo pipefail
 
 root=$(git rev-parse --show-toplevel)
 cd "$root"
 zero=0000000000000000000000000000000000000000
 
-files=()
+fail() {
+  echo "pre-push: $1" >&2
+  exit 1
+}
+
+now() { perl -MTime::HiRes=time -e 'printf "%.3f", time'; }
+
+# Where the pushed commit's changes start: the remote's tip, or for a new
+# branch, or a remote tip this clone hasn't fetched, where it left main
+base_for() {
+  local local_sha=$1 remote_sha=$2
+  if [[ "$remote_sha" != "$zero" ]] && git cat-file -e "$remote_sha^{commit}" 2>/dev/null; then
+    echo "$remote_sha"
+  elif git merge-base origin/main "$local_sha" 2>/dev/null; then
+    :
+  else
+    fail "can't find where $local_sha starts: no origin/main to compare with (git fetch origin main)"
+  fi
+}
+
+# Files in what the push adds, one list for Biome (the files that exist) and
+# one for picking packages to typecheck (deletions too: a deleted module can
+# break the files that import it)
+pushed=()
+existing=""
+touched=""
 while read -r _local_ref local_sha _remote_ref remote_sha; do
   [[ "$local_sha" == "$zero" ]] && continue # deleting a branch
-  if [[ "$remote_sha" == "$zero" ]]; then
-    # A new branch: compare with where it left main
-    base=$(git merge-base origin/main "$local_sha" 2>/dev/null) || continue
-  else
-    base=$remote_sha
-  fi
-  while IFS= read -r file; do files+=("$file"); done \
-    < <(git diff --name-only --diff-filter=ACMR "$base" "$local_sha")
+  base=$(base_for "$local_sha" "$remote_sha")
+  existing+=$(git diff --name-only --diff-filter=ACMR "$base" "$local_sha")$'\n'
+  changed=$(git diff --name-only --diff-filter=ACMRD "$base" "$local_sha")
+  touched+="$changed"$'\n'
+  pushed+=("$local_sha")
 done
-[[ ${#files[@]} -eq 0 ]] && exit 0
-mapfile -t files < <(printf '%s\n' "${files[@]}" | sort -u)
+existing=$(sed '/^$/d' <<< "$existing" | sort -u)
+touched=$(sed '/^$/d' <<< "$touched" | sort -u)
+[[ -z "$touched" ]] && exit 0
 
-start=$(date +%s.%N)
+packages=$(grep -E '^packages/[^/]+/.*\.(ts|tsx|mts|cts)$' <<< "$touched" |
+  cut -d/ -f1,2 | sort -u || true)
+typechecked=""
+for package in $packages; do
+  grep -q '"typecheck"' "$package/package.json" 2>/dev/null &&
+    typechecked+="$package"$'\n'
+done
+typechecked=$(sed '/^$/d' <<< "$typechecked")
+
+# What the checks read must be what is pushed: the changed files, and every
+# file of the packages they typecheck, tracked or not
+scope=$(printf '%s\n%s\n' "$existing" "$typechecked" | sed '/^$/d')
+while IFS= read -r sha; do
+  dirty=$(
+    git diff --name-only "$sha" -- $scope
+    git ls-files --others --exclude-standard -- $scope
+  )
+  if [[ -n "$dirty" ]]; then
+    fail "the working tree differs from the pushed commit ${sha:0:10} in:"$'\n'"$dirty"$'\n'"commit or stash these, or check out the branch you push, then push again"
+  fi
+done < <(printf '%s\n' "${pushed[@]}")
+
+start=$(now)
 status=0
 
-echo "pre-push: Biome on ${#files[@]} changed files"
-flags=(--no-errors-on-unmatched --files-ignore-unknown=true)
-# Formatting and import order, then lint. Biome 2.3 still prints lint
-# findings with the linter off, so lint runs only when the first step
-# passes, and a finding is not shown twice.
-pnpm exec biome check --linter-enabled=false "${flags[@]}" "${files[@]}" &&
-  pnpm exec biome lint --skip=project "${flags[@]}" "${files[@]}" || status=1
+if [[ -n "$existing" ]]; then
+  count=$(wc -l <<< "$existing" | tr -d ' ')
+  echo "pre-push: Biome on $count changed files"
+  flags="--no-errors-on-unmatched --files-ignore-unknown=true"
+  # Formatting and import order, then lint. Biome 2.3 still prints lint
+  # findings with the linter off, so lint runs only when the first step
+  # passes, and a finding is not shown twice.
+  # shellcheck disable=SC2086 # file names in this repo have no spaces
+  pnpm exec biome check --linter-enabled=false $flags $existing &&
+    pnpm exec biome lint --skip=project $flags $existing || status=1
+fi
 
-packages=$(printf '%s\n' "${files[@]}" | grep -E '^packages/[^/]+/.*\.(ts|tsx|mts|cts)$' |
-  cut -d/ -f1,2 | sort -u || true)
 if command -v tsrs >/dev/null; then checker=tsrs; else checker="$root/node_modules/.bin/tsc"; fi
-pids=()
-for package in $packages; do
-  grep -q '"typecheck"' "$package/package.json" 2>/dev/null || continue
+pids=""
+for package in $typechecked; do
   echo "pre-push: typecheck $package ($(basename "$checker"))"
   (cd "$package" && "$checker" --noEmit --pretty false) &
-  pids+=($!)
+  pids+=" $!"
 done
-for pid in "${pids[@]}"; do wait "$pid" || status=1; done
+for pid in $pids; do wait "$pid" || status=1; done
 
-printf 'pre-push: %.1fs\n' "$(echo "$(date +%s.%N) - $start" | bc)"
+printf 'pre-push: %.1fs\n' "$(perl -e "print $(now) - $start")"
 if [[ $status -ne 0 ]]; then
   echo "pre-push: fix the errors above, or push with --no-verify to skip"
 fi
