@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xa610ef12738b22bddec80deb3daa8e978e2783ec
+
+# Diff at Mon, 16 Nov 2026 22:34:18 GMT:
+
+- id: 6abdca23
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@33953ebfd29755f915c8500adce5cced0fbc9449 block: 1793982763
+- current timestamp: 1794868372
+
+## Description
+
+EtherfiL1SyncPoolETH: a GUARDIAN_ROLE EOA paused deposit syncing for 24h with `pauseUntil` on 2026-11-08 ([tx](https://etherscan.io/tx/0x3f120043a2e7574b91bdd9d342d4d9265b96a2ca1b5336a2b49d6d43e1850f13)). The pause ran out on 2026-11-09 17:32:47 UTC without being lifted early. It fell between two scheduled syncs, and the next one went through on 2026-11-10 ([tx](https://etherscan.io/tx/0x70488c99dae0a2ae48f177f271fe6fed66aef2e6c7456aba02395f9ff43253ef)).
+
+## Watched changes
+
+```diff
+    contract EtherfiL1SyncPoolETH (eth:0xD789870beA40D056A4d26055d0bEFcC8755DA146) [etherfi/EtherfiL1SyncPoolETH] {
+    +++ description: L1 side of the cross-chain deposit sync pool: mints eETH against ETH bridged from L2s via LayerZero. The endpoint is external.
+      values.pausedUntil:
+-        0
++        1794245567
+    }
+```
+
 Generated with discovered.json: 0xba8807406dcfb69bf675517b74bfd029a3523587
 
 # Diff at Tue, 10 Nov 2026 12:11:45 GMT:
