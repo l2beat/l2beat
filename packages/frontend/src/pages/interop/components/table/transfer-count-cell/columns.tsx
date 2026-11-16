@@ -34,7 +34,6 @@ export function getTransferColumns(
       header: 'Timestamp',
       enableSorting: false,
       cell: (ctx) => (
-        // When it happened is meta: the amounts and chains are the row.
         <StackedUtcDateTime timestamp={ctx.row.original.timestamp} />
       ),
       meta: {
