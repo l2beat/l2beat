@@ -1,3 +1,75 @@
+Generated with discovered.json: 0xf664179d797aa918008f302f5d0e6c01da3e72b0
+
+# Diff at Mon, 16 Nov 2026 22:39:46 GMT:
+
+- id: 322f447c
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@33953ebfd29755f915c8500adce5cced0fbc9449 block: 1793982864
+- current timestamp: 1794868716
+
+## Description
+
+The CalderaMultisig changed three RollupProxy settings through the UpgradeExecutor on 2026-11-12:
+- `anyTrustFastConfirmer` moved from the 1/1 SxNetworkMultisig to a new 2/2 Safe whose signers are the SxNetworkMultisig signer and a new EOA ([tx](https://etherscan.io/tx/0xe2bfd3a5e6b9c9e521f6df475d8aa9faf2b060415c839785fbb8ba5fdbb97048)).
+- The new Safe and the new EOA were added as validators ([tx](https://etherscan.io/tx/0x24d9dcea735076e5b80c6855193ff8af0dac781092999e050439789464685dc1)).
+- `minimumAssertionPeriod` 75 → 21,600 L1 blocks, 15m → 3d ([tx](https://etherscan.io/tx/0x9f9e60e485845748873c7aeebbf41de7a2cd389683252734a3686d795f1c01cb)). State roots, and so withdrawals, now come at most every 3 days instead of every 15 minutes: the next one was created on 2026-11-15 and fast-confirmed on 2026-11-16.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
++++ severity: HIGH
+      values.anyTrustFastConfirmer:
+-        "eth:0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa"
++        "eth:0x7e0963D243d2476aF65dd2cA3c8F1843db57FCaA"
++++ description: Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. 
+      values.minimumAssertionPeriod:
+-        75
++        21600
++++ description: Increments on each Validator change.
+      values.setValidatorCount:
+-        6
++        7
++++ severity: LOW
+      values.validators.2:
++        "eth:0x7e0963D243d2476aF65dd2cA3c8F1843db57FCaA"
++++ severity: LOW
+      values.validators.5:
++        "eth:0xccE352373918121cC8F9AcBE7e86e58BD7C77fdD"
+    }
+```
+
+```diff
+    EOA (eth:0xC711f8aCC65306D4f16F874Fe88C43eF23504F5c) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"interact","from":"eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F","description":"Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.","role":".anyTrustFastConfirmer","via":[{"address":"eth:0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa"}]}
+    }
+```
+
+```diff
+    contract SxNetworkMultisig (eth:0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa) [GnosisSafe] {
+    +++ description: None
+      directlyReceivedPermissions.0:
+-        {"permission":"interact","from":"eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F","description":"Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.","role":".anyTrustFastConfirmer"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0x7e0963D243d2476aF65dd2cA3c8F1843db57FCaA) [GnosisSafe]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../sxnetwork/.flat/GnosisSafe/GnosisSafe.sol      | 1026 ++++++++++++++++++++
+ .../.flat/GnosisSafe/GnosisSafeProxy.p.sol         |   38 +
+ 2 files changed, 1064 insertions(+)
+```
+
 Generated with discovered.json: 0xa2d210e5108f0d5880add0aded91d87b9ee296e9
 
 # Diff at Fri, 06 Nov 2026 16:36:08 GMT:

@@ -1,6 +1,6 @@
 {
   "name": "sxnetwork",
-  "timestamp": 1793982864,
+  "timestamp": 1794868716,
   "configHash": "0x6aabb49f1fa4cf86a0417af49369eef99a6043493c01e76ef3b348f63c3014c3",
   "entries": [
     {
@@ -149,7 +149,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "anyTrustFastConfirmer": "eth:0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa",
+        "anyTrustFastConfirmer": "eth:0x7e0963D243d2476aF65dd2cA3c8F1843db57FCaA",
         "arbOsFromWmRoot": "ArbOS v61 wasmModuleRoot",
         "baseStake": "100000000000000000",
         "bridge": "eth:0xa104C0426e95a5538e89131DbB4163d230C35f86",
@@ -159,22 +159,22 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 23651,
+        "firstUnresolvedNode": 24201,
         "inbox": "eth:0xEa83E8907C89Bc0D9517632f0ba081972E328631",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 24571362,
-        "latestConfirmed": 23650,
-        "latestNodeCreated": 23650,
+        "latestConfirmed": 24200,
+        "latestNodeCreated": 24200,
         "loserStakeEscrow": "eth:0x0000000000000000000000000000000000000000",
-        "minimumAssertionPeriod": 75,
+        "minimumAssertionPeriod": 21600,
         "outbox": "eth:0xB360b2f57c645E847148d7C479b7468AbF6F707d",
         "owner": "eth:0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a",
         "paused": false,
         "rollupDeploymentBlock": 20239556,
         "rollupEventInbox": "eth:0x9f1045201f8b9D0b12f6d1e40e8B8e6c047A81E3",
         "sequencerInbox": "eth:0xD80a805c86C14c879420eC6acb366D04D318fC0C",
-        "setValidatorCount": 6,
+        "setValidatorCount": 7,
         "stakerCount": 3,
         "stakeToken": "eth:0x0000000000000000000000000000000000000000",
         "totalWithdrawableFunds": 0,
@@ -182,8 +182,10 @@
         "validators": [
           "eth:0x3648e2c562F00DeEA11B0b335Cf55C5EB2Df3A5F",
           "eth:0x75feC8Bb2d99076D776A5D46D1E3d42686520eF1",
+          "eth:0x7e0963D243d2476aF65dd2cA3c8F1843db57FCaA",
           "eth:0xC711f8aCC65306D4f16F874Fe88C43eF23504F5c",
           "eth:0xD19ee3f6Bf22A3A23eCd25B5ED0C655a2a56F65E",
+          "eth:0xccE352373918121cC8F9AcBE7e86e58BD7C77fdD",
           "eth:0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa",
           "eth:0xe778F5Bf5dDB8614a1ab6321Cc557EDbC90e615f"
         ],
@@ -429,6 +431,40 @@
       "proxyType": "EOA"
     },
     {
+      "name": "GnosisSafe",
+      "address": "eth:0x7e0963D243d2476aF65dd2cA3c8F1843db57FCaA",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x02867114B27d686f3565E2060424e985a1E565f5",
+      "sinceTimestamp": 1794491975,
+      "sinceBlock": 26399316,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0xccE352373918121cC8F9AcBE7e86e58BD7C77fdD",
+          "eth:0xC711f8aCC65306D4f16F874Fe88C43eF23504F5c"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x77427cd811f2c95947448012a31676abf00c21eab78e19812a63698d919a2bf6",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 2 (100%)",
+        "nonce": 1,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0x7e0963D243d2476aF65dd2cA3c8F1843db57FCaA": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
       "address": "eth:0x86135362aAAf5C00E51b003fb00A34c72A88027A",
       "type": "EOA",
       "proxyType": "EOA"
@@ -550,7 +586,7 @@
           "eth:0x9f1045201f8b9D0b12f6d1e40e8B8e6c047A81E3"
         ],
         "allowedOutboxList": ["eth:0xB360b2f57c645E847148d7C479b7468AbF6F707d"],
-        "delayedMessageCount": 2943,
+        "delayedMessageCount": 2990,
         "inboxHistory": [
           "eth:0xEa83E8907C89Bc0D9517632f0ba081972E328631",
           "eth:0x9f1045201f8b9D0b12f6d1e40e8B8e6c047A81E3"
@@ -560,8 +596,8 @@
         "outboxHistory": ["eth:0xB360b2f57c645E847148d7C479b7468AbF6F707d"],
         "rollup": "eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
         "sequencerInbox": "eth:0xD80a805c86C14c879420eC6acb366D04D318fC0C",
-        "sequencerMessageCount": 25593,
-        "sequencerReportedSubMessageCount": 11006361
+        "sequencerMessageCount": 26569,
+        "sequencerReportedSubMessageCount": 11219829
       },
       "fieldMeta": {
         "rollup": { "severity": "HIGH" },
@@ -619,7 +655,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 5,
+        "nonce": 8,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -730,6 +766,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xccE352373918121cC8F9AcBE7e86e58BD7C77fdD",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xCD795E6003Da105f4a1E11F73fb64b58B5C0f325",
       "type": "EOA",
       "proxyType": "EOA"
@@ -800,7 +841,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 25593,
+        "batchCount": 26569,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "eth:0x0181F0f0260Ac4149CA7Abf6c53d3E8053f95715",
@@ -837,7 +878,7 @@
         "rollup": "eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 5,
-        "totalDelayedMessagesRead": 2943,
+        "totalDelayedMessagesRead": 2990,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -882,7 +923,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 23385,
+        "nonce": 23934,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1362,6 +1403,9 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "eth:0x7e0963D243d2476aF65dd2cA3c8F1843db57FCaA": [
+      "constructor(address _singleton)"
+    ],
     "eth:0x8Faa21891B0b928afEbd5314D1D313f8f7B34DaC": [
       "constructor(address prover0_, address proverMem_, address proverMath_, address proverHostIo_)",
       "function getEndMachineHash(uint8 status, bytes32 globalStateHash) pure returns (bytes32)",
@@ -1755,8 +1799,8 @@
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 26357036, "sxnetwork": 11006548 },
-  "permissionsConfigHash": "0x9e99d16c78822a7dd5cfcce1ac52e9f4932643be6274de60dab75962affb91d2",
+  "usedBlockNumbers": { "ethereum": 26430632, "sxnetwork": 11219851 },
+  "permissionsConfigHash": "0x2949aab9ec4e88c0212a80bca93f22902a3ea4ae880b7137f0f3df06e9b6f062",
   "permissions": {
     "eth:0x0181F0f0260Ac4149CA7Abf6c53d3E8053f95715": {
       "receivedPermissions": [
@@ -1828,6 +1872,22 @@
         }
       ]
     },
+    "eth:0x7e0963D243d2476aF65dd2cA3c8F1843db57FCaA": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
+          "role": ".anyTrustFastConfirmer"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
+    },
     "eth:0xC410B8657FBB2CdbF0c5c5d5128576974467ba5e": {
       "receivedPermissions": [
         {
@@ -1840,15 +1900,6 @@
     },
     "eth:0xC711f8aCC65306D4f16F874Fe88C43eF23504F5c": {
       "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
-          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
-          "role": ".anyTrustFastConfirmer",
-          "via": [
-            { "address": "eth:0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa" }
-          ]
-        },
         {
           "permission": "interact",
           "from": "eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
@@ -1995,14 +2046,18 @@
         }
       ]
     },
-    "eth:0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa": {
-      "directlyReceivedPermissions": [
+    "eth:0xccE352373918121cC8F9AcBE7e86e58BD7C77fdD": {
+      "receivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
-          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
-          "role": ".anyTrustFastConfirmer"
-        },
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
+    },
+    "eth:0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa": {
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
