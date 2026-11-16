@@ -19,18 +19,18 @@ export function PublicationHeader<
 >({ publication }: { publication: T }) {
   return (
     <div>
-      <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-label-value-13">
+      <div className="flex items-center gap-2">
         <PublicationTag tag={publication.tag} />
-        <span className="text-brand-deep text-subtitle-12 uppercase">
-          {publication.readTimeInMinutes} min read · Published on{' '}
+        <p className="text-brand-deep text-subtitle-12 uppercase">
+          {publication.readTimeInMinutes} min read • Published on{' '}
           {publication.publishedOn}
-        </span>
-      </p>
-      <h1 className="mt-3 text-balance font-semibold text-[28px] leading-[1.15] tracking-[-0.02em] md:text-[36px]">
+        </p>
+      </div>
+      <h1 className="mt-2 text-heading-24 md:text-heading-32">
         {publication.title}
       </h1>
       {publication.description && (
-        <p className="mt-3 font-inter text-[17px] leading-[1.55] opacity-80 md:text-xl md:leading-[1.6]">
+        <p className="mt-3 font-inter text-xl leading-[1.6] opacity-80">
           {publication.description}
         </p>
       )}
@@ -41,11 +41,11 @@ export function PublicationHeader<
           className="mr-2 size-10 rounded-full"
         />
         <div>
-          <p className="font-semibold text-label-value-15">
+          <p className="font-bold text-label-value-16">
             {publication.author.firstName} {publication.author.lastName}
           </p>
           {publication.author.role && (
-            <p className="mt-1 text-label-value-13 text-secondary">
+            <p className="mt-1 font-bold text-label-value-12 text-zinc-500 dark:text-gray-50">
               {publication.author.role}
             </p>
           )}
