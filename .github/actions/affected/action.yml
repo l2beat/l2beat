@@ -1,0 +1,31 @@
+name: Check whether the change reaches a package
+description: >
+  Says whether a pull request's diff can reach any of the given packages:
+  changes one of them, or a package they depend on. Merge queue and main
+  runs, and diffs that touch a file outside packages/ (workflows, the
+  lockfile, turbo.json), always count as reaching everything. Run right
+  after checkout, before setup, so a job with nothing to do ends in seconds.
+
+inputs:
+  packages:
+    description: Space-separated package names, e.g. "@l2beat/discoui @l2beat/l2b"
+    required: true
+
+outputs:
+  affected:
+    description: "'true' when the job has to run"
+    value: ${{ steps.check.outputs.affected }}
+
+runs:
+  using: composite
+  steps:
+    - name: Check the diff
+      id: check
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+        EVENT: ${{ github.event_name }}
+        PR: ${{ github.event.pull_request.number }}
+        HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        PACKAGES: ${{ inputs.packages }}
+      run: ${{ github.action_path }}/check.sh
