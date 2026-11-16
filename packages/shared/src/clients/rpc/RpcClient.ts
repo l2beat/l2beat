@@ -19,6 +19,7 @@ import {
   type CallParameters,
   EVMBalanceResponse,
   EVMBlock,
+  EVMBlockReceiptsResponse,
   EVMBlockResponse,
   type EVMBlockWithTransactions,
   EVMBlockWithTransactionsResponse,
@@ -202,6 +203,29 @@ export class RpcClient extends ClientCore implements IRpcClient {
     }
 
     return receipts.data.map((receipt) => ({ ...receipt.result }))
+  }
+
+  /** Every receipt of a block in one call (eth_getBlockReceipts). */
+  async getBlockReceipts(blockNumber: number) {
+    const response = await this.query('eth_getBlockReceipts', [
+      Quantity.encode(BigInt(blockNumber)),
+    ])
+    const receipts = EVMBlockReceiptsResponse.safeParse(response)
+    if (!receipts.success) {
+      this.$.logger.warn('Invalid response', {
+        blockNumber,
+        response: JSON.stringify(response),
+      })
+      throw new Error('Block receipts: Error during parsing', {
+        cause: { blockNumber },
+      })
+    }
+    if (receipts.data.result === null) {
+      throw new NotFoundOnRpcError('Block not found', {
+        cause: { blockNumber },
+      })
+    }
+    return receipts.data.result.map((receipt) => ({ ...receipt }))
   }
 
   async getBalance(

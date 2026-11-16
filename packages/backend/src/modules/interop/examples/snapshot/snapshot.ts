@@ -147,6 +147,14 @@ export class RpcSnapshotClient extends RpcClientCompat {
     return receipt
   }
 
+  override async getBlockReceipts(blockNumber: number): Promise<Receipt[]> {
+    const key = this.buildSnapshotKey(['blockReceipts', blockNumber.toString()])
+
+    const receipts = await super.getBlockReceipts(blockNumber)
+    await this.exampleInputs.writeRpc(key, receipts)
+    return receipts
+  }
+
   override async getBalance(
     holder: EthereumAddress,
     blockNumber: number | 'latest',
