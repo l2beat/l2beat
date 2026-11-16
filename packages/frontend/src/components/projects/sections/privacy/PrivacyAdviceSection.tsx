@@ -131,7 +131,8 @@ function AdversaryLink({
     >
       <span
         className={cn(
-          'size-2 shrink-0 rounded-full',
+          // Centred on the capitals the names start with, not the line box
+          '-translate-y-[1.5px] size-2 shrink-0 rounded-full',
           sentimentToOpaqueBgColor(sentiment),
         )}
       />

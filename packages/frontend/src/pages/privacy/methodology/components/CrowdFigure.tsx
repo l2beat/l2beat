@@ -124,7 +124,7 @@ export function CrowdFigure() {
         </div>
         <div className="mt-4 grid items-end gap-4 sm:grid-cols-[auto_1fr_auto]">
           <div className="min-w-40">
-            <p className="font-medium text-label-value-13">
+            <p className="font-medium text-label-value-13 text-secondary">
               {result !== undefined
                 ? 'Your withdrawal hides among'
                 : shown === 0
@@ -144,7 +144,7 @@ export function CrowdFigure() {
             </p>
           </div>
           <label className="block">
-            <span className="flex justify-between font-medium text-label-value-12">
+            <span className="flex justify-between font-medium text-label-value-12 text-secondary">
               <span>Quiet pool</span>
               <span>Busy pool</span>
             </span>

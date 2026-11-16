@@ -43,15 +43,16 @@ export function ProjectZkCatalogSummary({ project }: Props) {
       />
       <HorizontalSeparator className="my-4 md:hidden" />
       <TechStackSection techStack={project.header.techStack} />
-      <div className="flex gap-6 md:mt-4">
-        <div className="max-md:hidden">
+      {/* One label row and one value row shared by both columns, each on a
+          common baseline, so "Value secured" lines up with "About". */}
+      <div className="grid grid-cols-[auto_1fr] grid-rows-[auto_auto] gap-x-6 gap-y-2 max-md:hidden md:mt-4">
+        <div className="row-span-2 grid grid-rows-subgrid items-baseline [&>*]:contents">
           <TvsStat {...project.header.tvs} />
         </div>
         {project.header.description && (
-          <AboutSection
-            description={project.header.description}
-            className="max-md:hidden"
-          />
+          <div className="row-span-2 grid grid-rows-subgrid items-baseline [&>*]:contents">
+            <AboutSection description={project.header.description} />
+          </div>
         )}
       </div>
       <HorizontalSeparator className="-mx-4 mt-4 w-[calc(100%+2rem)] md:hidden" />

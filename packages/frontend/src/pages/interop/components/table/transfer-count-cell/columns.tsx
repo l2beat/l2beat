@@ -34,7 +34,6 @@ export function getTransferColumns(
       header: 'Timestamp',
       enableSorting: false,
       cell: (ctx) => (
-        // When it happened is meta: the amounts and chains are the row.
         <StackedUtcDateTime timestamp={ctx.row.original.timestamp} />
       ),
       meta: {
@@ -302,7 +301,7 @@ function StackedUtcDateTime({ timestamp }: { timestamp: number }) {
     <time
       dateTime={UnixTime.toDate(UnixTime(timestamp)).toISOString()}
       title={localTime && `Your time: ${localTime}`}
-      className="flex flex-col whitespace-nowrap font-normal text-label-value-13 text-secondary tabular-nums leading-4"
+      className="flex flex-col whitespace-nowrap font-normal text-label-value-13 text-primary tabular-nums leading-4"
     >
       <span>{formatTimestamp(timestamp)}</span>
       <span>{formatTimestamp(timestamp, { mode: 'time' })}</span>

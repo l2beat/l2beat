@@ -9,8 +9,8 @@ export function getPublicationTagLabel(tag: PublicationEntry['tag']) {
 
 export function PublicationTag({ tag }: { tag: PublicationEntry['tag'] }) {
   return (
-    <span className="whitespace-nowrap rounded-sm border border-brand px-[5px] py-[4.5px] font-bold text-brand-deep text-label-value-13 uppercase leading-none">
+    <div className="whitespace-nowrap rounded-sm border border-brand px-[5px] py-[4.5px] font-bold text-brand-deep text-label-value-13 uppercase">
       {getPublicationTagLabel(tag)}
-    </span>
+    </div>
   )
 }

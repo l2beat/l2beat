@@ -53,8 +53,7 @@ export function OptimisticProofSystemCell({
                         ? 'border-divider! bg-surface-secondary! text-primary'
                         : hasUnsuccessful
                           ? 'border border-negative'
-                          : // The fill and check carry the colour; the name is a key.
-                            'text-primary dark:text-primary',
+                          : null,
                     )}
                   >
                     {zkCatalog.name}
@@ -111,11 +110,7 @@ export function OptimisticProofSystemCell({
           {proofSystem?.challengeProtocol && (
             <Tooltip>
               <TooltipTrigger>
-                <Badge
-                  type="blue"
-                  // The fill carries the colour; the protocol name is a key.
-                  className="block h-5 text-primary md:h-6 dark:text-primary"
-                >
+                <Badge type="blue" className="block h-5 md:h-6">
                   {proofSystem.challengeProtocol}
                 </Badge>
               </TooltipTrigger>

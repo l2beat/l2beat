@@ -172,11 +172,12 @@ export function ChartContainer<T extends { timestamp: number }>({
         {shouldMountChart && size === 'regular' && project && (
           <ChartProjectLogo
             project={project}
-            // Beside the watermark (80px wide, 12px in) as one quiet mark,
-            // so the left edge carries only the y-axis labels.
             className={cn(
-              'pointer-events-none absolute right-[104px] h-8 opacity-50',
-              watermarkBottomClassName(keepsHintRoom),
+              'pointer-events-none absolute left-3 opacity-50',
+              // 8px above the watermark, which follows the legend's height
+              keepsHintRoom
+                ? 'bottom-[68px] group-has-[.chart-legend]:bottom-[calc(58px_+_var(--chart-legend-height,18px))]'
+                : 'bottom-14 group-has-[.chart-legend]:bottom-[calc(46px_+_var(--chart-legend-height,18px))]',
             )}
           />
         )}
@@ -193,7 +194,7 @@ export function ChartContainer<T extends { timestamp: number }>({
 }
 
 /**
- * The watermark's and project logo's offset: above the x labels and the
+ * The watermark's offset: above the x labels and the
  * legend, whose wrapped height ChartLegend sets as `--chart-legend-height`
  * (unset, one 18px row). The onboarding hint below the legend adds 12px.
  */

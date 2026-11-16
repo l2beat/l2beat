@@ -141,12 +141,10 @@ export function drawCrowdScene(
 
   ctx.font = '500 11px Roboto, sans-serif'
   ctx.textBaseline = 'middle'
-  // Lane names are keys, in ink; the time axis is meta.
-  ctx.fillStyle = tokens.primary
+  ctx.fillStyle = tokens.secondary
   ctx.textAlign = 'left'
   ctx.fillText('Withdrawals', left, 12)
   ctx.fillText('Deposits', left, laneTop - 22)
-  ctx.fillStyle = tokens.secondary
   ctx.fillText('Earlier', left, height - 8)
   ctx.textAlign = 'right'
   ctx.fillText('Now', width - 2, height - 8)

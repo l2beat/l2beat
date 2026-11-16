@@ -35,7 +35,7 @@ export function LiquidStakingPage({
             projects={entries}
             defaultRange={defaultChartRange}
           />
-          <PrimaryCard className="mt-4">
+          <PrimaryCard className="max-md:border-divider max-md:border-t md:mt-4">
             <h2 className="mb-1 font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
               Risk comparison
             </h2>
