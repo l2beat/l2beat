@@ -97,8 +97,13 @@ function CropLettersHeader() {
   )
 }
 
-/** Under the project name: the 34 px icon and its 12 px gap. */
-const PHONE_PLANTS_CLASS = 'flex gap-2 pl-[46px]'
+/**
+ * Under the project name: the 34 px icon and its 12 px gap. Below 400 px that
+ * indent leaves too little room for four 56 px plants, so they spread across
+ * the whole row instead of scrolling sideways.
+ */
+const PHONE_PLANTS_CLASS =
+  'flex w-full justify-between min-[400px]:justify-start min-[400px]:gap-2 min-[400px]:pl-[46px]'
 
 function CropLetters({ className }: { className: string }) {
   return (
@@ -182,7 +187,8 @@ function ProjectCell({ entry }: { entry: GardenEntry }) {
         height={40}
         className="size-[34px] max-w-none shrink-0 rounded-lg md:size-10"
       />
-      <div className="flex flex-col leading-tight">
+      {/* Wraps on phones, so a long name and its TVL fit one row. */}
+      <div className="flex flex-col leading-tight max-md:whitespace-normal">
         <span
           className={cn(
             'font-semibold text-primary text-sm md:text-base',
@@ -198,10 +204,13 @@ function ProjectCell({ entry }: { entry: GardenEntry }) {
     </>
   )
   if (!entry.href) {
-    return <div className="flex items-center gap-3">{content}</div>
+    return <div className="flex min-w-0 items-center gap-3">{content}</div>
   }
   return (
-    <a href={entry.href} className="group/project flex items-center gap-3">
+    <a
+      href={entry.href}
+      className="group/project flex min-w-0 items-center gap-3"
+    >
       {content}
     </a>
   )
