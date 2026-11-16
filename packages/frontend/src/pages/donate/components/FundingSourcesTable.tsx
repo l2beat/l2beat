@@ -5,7 +5,7 @@ export function FundingSourcesTable() {
     <div className="mt-4 overflow-x-auto pb-3">
       <table>
         <thead>
-          <tr className="h-8 border-divider border-b pt-2 pb-2.5 text-left font-medium text-[13px] text-primary">
+          <tr className="h-8 border-divider border-b pt-2 pb-2.5 text-left font-medium text-[13px] text-primary uppercase">
             <th className="md:min-w-[300px]">Source / project</th>
             <th className="md:pl-4">Tier</th>
             <th className="max-md:hidden md:pl-4">Description</th>

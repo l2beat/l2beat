@@ -7,9 +7,14 @@ import type { PublicationEntry } from './utils/getPublicationEntry'
 
 interface Props extends AppLayoutProps {
   publications: PublicationEntry[]
+  newsletterBgUrl: string
 }
 
-export function PublicationsPage({ publications, ...props }: Props) {
+export function PublicationsPage({
+  publications,
+  newsletterBgUrl,
+  ...props
+}: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
@@ -17,7 +22,10 @@ export function PublicationsPage({ publications, ...props }: Props) {
           Publications
         </MainPageHeader>
         <TableFilterContextProvider>
-          <PublicationsList publications={publications} />
+          <PublicationsList
+            publications={publications}
+            newsletterBgUrl={newsletterBgUrl}
+          />
         </TableFilterContextProvider>
       </SideNavLayout>
     </AppLayout>

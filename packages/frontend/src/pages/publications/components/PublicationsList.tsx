@@ -13,8 +13,6 @@ import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { externalLinks } from '~/consts/externalLinks'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { CustomLinkIcon } from '~/icons/Outlink'
-import { HOME_BUTTON_CLASS } from '~/pages/home/homeStyles'
-import { cn } from '~/utils/cn'
 import { formatPublicationDate } from '~/utils/dates'
 import { isExternalUrl } from '~/utils/isExternalUrl'
 import type { PublicationEntry } from '../utils/getPublicationEntry'
@@ -22,8 +20,10 @@ import { getPublicationTagLabel } from './PublicationTag'
 
 export function PublicationsList({
   publications,
+  newsletterBgUrl,
 }: {
   publications: PublicationEntry[]
+  newsletterBgUrl: string
 }) {
   const filterPublications = useFilterEntries()
 
@@ -51,10 +51,16 @@ export function PublicationsList({
           </DirectoryTabsTrigger>
         </DirectoryTabsList>
         <DirectoryTabsContent value="research" className="md:p-8">
-          <PublicationsGrid publications={research} />
+          <PublicationsGrid
+            publications={research}
+            newsletterBgUrl={newsletterBgUrl}
+          />
         </DirectoryTabsContent>
         <DirectoryTabsContent value="updates" className="md:p-8">
-          <PublicationsGrid publications={updates} />
+          <PublicationsGrid
+            publications={updates}
+            newsletterBgUrl={newsletterBgUrl}
+          />
         </DirectoryTabsContent>
       </DirectoryTabs>
     </>
@@ -63,33 +69,35 @@ export function PublicationsList({
 
 function PublicationsGrid({
   publications,
+  newsletterBgUrl,
 }: {
   publications: PublicationEntry[]
+  newsletterBgUrl: string
 }) {
   return (
     <div className="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-3">
-      {/* A flat ink block, like the mandate band on the rename page. */}
-      <div className="home-theme col-span-full row-start-2">
-        <div className="home-inverted flex w-full items-center justify-between gap-6 rounded-lg bg-surface-primary px-6 py-5 text-primary max-md:flex-col max-md:items-start">
-          <div className="space-y-2">
-            <div className="text-balance font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
-              Want to get notified about new publications?
-            </div>
-            <div className="text-label-value-15 text-secondary leading-5.5">
-              Get the latest insights - covering Ethereum Layer 2 ecosystem
-              updates, in-depth research and transparency reports, governance
-              proposals, and more.
-            </div>
+      <div
+        className="col-span-full row-start-2 flex w-full items-center justify-between gap-6 rounded-lg bg-black bg-center bg-cover px-6 py-5 text-pure-white max-md:flex-col max-md:items-start"
+        style={{ backgroundImage: `url(${newsletterBgUrl})` }}
+      >
+        <div className="space-y-2">
+          <div className="text-balance font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
+            Want to get notified about new publications?
           </div>
-          <a
-            className={cn(HOME_BUTTON_CLASS, 'shrink-0 whitespace-nowrap')}
-            href={externalLinks.substackSubscribe}
-            target="_blank"
-          >
-            Subscribe to our newsletter
-            <CustomLinkIcon className="size-3 fill-current" />
-          </a>
+          <div className="text-label-value-15 leading-5.5">
+            Get the latest insights - covering Ethereum Layer 2 ecosystem
+            updates, in-depth research and transparency reports, governance
+            proposals, and more.
+          </div>
         </div>
+        <a
+          className="flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-md bg-pure-white px-4 py-2.5 font-semibold text-label-value-14 text-neutral-900 leading-4 transition-colors hover:bg-pure-white/90"
+          href={externalLinks.substackSubscribe}
+          target="_blank"
+        >
+          Subscribe to our newsletter
+          <CustomLinkIcon className="size-3 fill-current" />
+        </a>
       </div>
       {publications.map((publication) => (
         <PublicationCard publication={publication} key={publication.id} />
@@ -122,10 +130,10 @@ function PublicationCard({ publication }: { publication: PublicationEntry }) {
         )}
       </div>
       <div className="mx-4 mt-4 flex items-center gap-2 border-divider border-t py-3">
-        <span className="font-medium text-label-value-13 text-primary">
+        <span className="font-bold text-brand-deep text-label-value-12 uppercase">
           {getPublicationTagLabel(publication.tag)}
         </span>
-        <span className="text-label-value-13 text-secondary">
+        <span className="text-label-value-12 text-secondary">
           {formatPublicationDate(UnixTime.toDate(publication.publishedOn))}
         </span>
         <span className="ml-auto grid size-7 place-items-center rounded-full text-secondary transition-colors group-hover:bg-brand group-hover:text-pure-white">
