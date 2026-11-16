@@ -82,13 +82,10 @@ export function LiquidStakingCharts({
 
   return (
     // On phones the range bar drives two stacked cards, so it heads them
-    // instead of trailing the second one.
+    // instead of trailing the second one. It comes first in the document so
+    // focus order matches the phone layout.
     <div className="flex flex-col">
-      <div className="grid max-md:divide-y max-md:divide-divider md:mt-4 md:gap-4 lg:grid-cols-2">
-        <YieldChart projectSeries={projectSeries} range={range} />
-        <CostOfExitChart projectSeries={projectSeries} range={range} />
-      </div>
-      <ChartControlsWrapper className="mt-4 justify-end max-md:order-first max-md:mt-0 max-md:mb-4 max-md:pr-4">
+      <ChartControlsWrapper className="mb-4 justify-end max-md:pr-4 md:order-last md:mt-4 md:mb-0">
         <ChartRangeControls
           name="liquid-staking"
           value={range}
@@ -96,6 +93,10 @@ export function LiquidStakingCharts({
           options={RANGE_OPTIONS}
         />
       </ChartControlsWrapper>
+      <div className="grid max-md:divide-y max-md:divide-divider md:mt-4 md:gap-4 lg:grid-cols-2">
+        <YieldChart projectSeries={projectSeries} range={range} />
+        <CostOfExitChart projectSeries={projectSeries} range={range} />
+      </div>
     </div>
   )
 }

@@ -95,14 +95,6 @@ export function DefiProjectPage({
                       className="md:hidden"
                     />
                   )}
-                  <HorizontalSeparator
-                    className={cn(
-                      'my-4 md:hidden',
-                      // With an empty summary card, the first section
-                      // starts right under this rule, like every later one.
-                      !entry.liquidStaking && 'mb-0',
-                    )}
-                  />
                   <div className="mb-3 max-md:hidden">
                     <DesktopProjectLinks
                       projectLinks={entry.projectLinks}
@@ -119,11 +111,19 @@ export function DefiProjectPage({
                       className={cn(
                         'scroll-mt-[100vh] border-divider max-md:rounded-none max-md:border-b max-md:pt-0',
                         // On phones the badges and About sit above the card,
-                        // so without the staking summary it collapses to an
-                        // empty line that still anchors the Summary tab.
-                        !entry.liquidStaking && 'max-md:border-b-0 max-md:p-0',
+                        // so without the staking summary it shrinks to the
+                        // rule below them.
+                        !entry.liquidStaking && 'max-md:border-b-0 max-md:pb-0',
                       )}
                     >
+                      {/* Inside the card so the Summary tab, which needs a
+                          visible height, stays lit while About is on screen. */}
+                      <HorizontalSeparator
+                        className={cn(
+                          'my-4 md:hidden',
+                          !entry.liquidStaking && 'mb-0',
+                        )}
+                      />
                       {entry.liquidStaking && (
                         <>
                           <LiquidStakingProjectSummary
