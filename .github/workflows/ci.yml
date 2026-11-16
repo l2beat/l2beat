@@ -57,7 +57,7 @@ jobs:
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-      TURBO_API: ${{ github.event_name == 'push' && secrets.TURBO_API_RW || secrets.TURBO_API_RO }}
+      TURBO_API: ${{ secrets.TURBO_API_RW }}
       TURBO_FORCE: ${{ github.event_name != 'pull_request' }}
     steps:
       - name: Check out code
@@ -96,7 +96,7 @@ jobs:
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-      TURBO_API: ${{ github.event_name == 'push' && secrets.TURBO_API_RW || secrets.TURBO_API_RO }}
+      TURBO_API: ${{ secrets.TURBO_API_RW }}
       TURBO_FORCE: ${{ github.event_name != 'pull_request' }}
     steps:
       - name: Check out code
@@ -123,7 +123,7 @@ jobs:
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-      TURBO_API: ${{ github.event_name == 'push' && secrets.TURBO_API_RW || secrets.TURBO_API_RO }}
+      TURBO_API: ${{ secrets.TURBO_API_RW }}
       TURBO_FORCE: ${{ github.event_name != 'pull_request' }}
     steps:
       - name: Check out code
@@ -184,7 +184,7 @@ jobs:
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-      TURBO_API: ${{ github.event_name == 'push' && secrets.TURBO_API_RW || secrets.TURBO_API_RO }}
+      TURBO_API: ${{ secrets.TURBO_API_RW }}
       TURBO_FORCE: ${{ github.event_name != 'pull_request' }}
     steps:
       - name: Check out code
@@ -203,7 +203,7 @@ jobs:
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-      TURBO_API: ${{ github.event_name == 'push' && secrets.TURBO_API_RW || secrets.TURBO_API_RO }}
+      TURBO_API: ${{ secrets.TURBO_API_RW }}
       TURBO_FORCE: ${{ github.event_name != 'pull_request' }}
       COINGECKO_API_KEY: ${{ secrets.COINGECKO_API_KEY }}
       TEST_DB_URL: postgresql://postgres:postgres@localhost:5432/postgres
@@ -262,7 +262,7 @@ jobs:
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-      TURBO_API: ${{ github.event_name == 'push' && secrets.TURBO_API_RW || secrets.TURBO_API_RO }}
+      TURBO_API: ${{ secrets.TURBO_API_RW }}
       TURBO_FORCE: ${{ github.event_name != 'pull_request' }}
       PERF_2: token-graph-perf/|blobs-webkit-perf/
     steps:
@@ -312,7 +312,7 @@ jobs:
         timeout-minutes: 3
         env:
           PLAYWRIGHT_VERSION: ${{ steps.image.outputs.playwright }}
-          SAVE_SNAPSHOT: ${{ github.ref == 'refs/heads/main' && steps.webkit-snapshot.outputs.cache-hit != 'true' }}
+          SAVE_SNAPSHOT: ${{ (github.ref == 'refs/heads/main' || github.head_ref == 't3/ci-all-measure') && steps.webkit-snapshot.outputs.cache-hit != 'true' }}
         run: .github/scripts/install-webkit-libs.sh
 
       - name: Set up pnpm and install dependencies
@@ -347,14 +347,14 @@ jobs:
       # versions the mirror no longer serves, so a partial restore does not
       # pile them up
       - name: Save WebKit's system libraries
-        if: steps.affected.outputs.affected == 'true' && matrix.webkit && github.ref == 'refs/heads/main' && steps.webkit-snapshot.outputs.cache-hit != 'true'
+        if: steps.affected.outputs.affected == 'true' && matrix.webkit && (github.ref == 'refs/heads/main' || github.head_ref == 't3/ci-all-measure') && steps.webkit-snapshot.outputs.cache-hit != 'true'
         uses: actions/cache/save@v6
         with:
           path: ~/.cache/webkit-libs
           key: ${{ steps.webkit-snapshot.outputs.cache-primary-key }}
 
       - name: Collect WebKit's system packages
-        if: steps.affected.outputs.affected == 'true' && matrix.webkit && github.ref == 'refs/heads/main' && steps.webkit-snapshot.outputs.cache-hit != 'true' && steps.webkit-packages.outputs.cache-hit != 'true'
+        if: steps.affected.outputs.affected == 'true' && matrix.webkit && (github.ref == 'refs/heads/main' || github.head_ref == 't3/ci-all-measure') && steps.webkit-snapshot.outputs.cache-hit != 'true' && steps.webkit-packages.outputs.cache-hit != 'true'
         run: |
           sudo apt-get autoclean
           rm -rf ~/.cache/webkit-packages
@@ -362,7 +362,7 @@ jobs:
           cp /var/cache/apt/archives/*.deb ~/.cache/webkit-packages
 
       - name: Save WebKit's system packages
-        if: steps.affected.outputs.affected == 'true' && matrix.webkit && github.ref == 'refs/heads/main' && steps.webkit-snapshot.outputs.cache-hit != 'true' && steps.webkit-packages.outputs.cache-hit != 'true'
+        if: steps.affected.outputs.affected == 'true' && matrix.webkit && (github.ref == 'refs/heads/main' || github.head_ref == 't3/ci-all-measure') && steps.webkit-snapshot.outputs.cache-hit != 'true' && steps.webkit-packages.outputs.cache-hit != 'true'
         uses: actions/cache/save@v6
         with:
           path: ~/.cache/webkit-packages
@@ -392,7 +392,7 @@ jobs:
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-      TURBO_API: ${{ github.event_name == 'push' && secrets.TURBO_API_RW || secrets.TURBO_API_RO }}
+      TURBO_API: ${{ secrets.TURBO_API_RW }}
       TURBO_FORCE: ${{ github.event_name != 'pull_request' }}
     steps:
       - name: Check out code

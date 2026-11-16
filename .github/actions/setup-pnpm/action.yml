@@ -73,12 +73,12 @@ runs:
 
     # A partial restore brings back packages the lockfile no longer uses.
     - name: Prune pnpm store
-      if: github.ref == 'refs/heads/main' && steps.node-modules.outputs.cache-hit != 'true' && steps.restore.outputs.cache-hit != 'true'
+      if: (github.ref == 'refs/heads/main' || github.head_ref == 't3/ci-all-measure') && steps.node-modules.outputs.cache-hit != 'true' && steps.restore.outputs.cache-hit != 'true'
       shell: bash
       run: pnpm store prune
 
     - name: Save pnpm cache
-      if: github.ref == 'refs/heads/main' && steps.node-modules.outputs.cache-hit != 'true' && steps.restore.outputs.cache-hit != 'true'
+      if: (github.ref == 'refs/heads/main' || github.head_ref == 't3/ci-all-measure') && steps.node-modules.outputs.cache-hit != 'true' && steps.restore.outputs.cache-hit != 'true'
       uses: actions/cache/save@v6
       with:
         path: |
@@ -87,7 +87,7 @@ runs:
         key: ${{ steps.restore.outputs.cache-primary-key }}
 
     - name: Save node_modules
-      if: github.ref == 'refs/heads/main' && steps.node-modules.outputs.cache-hit != 'true'
+      if: (github.ref == 'refs/heads/main' || github.head_ref == 't3/ci-all-measure') && steps.node-modules.outputs.cache-hit != 'true'
       uses: actions/cache/save@v6
       with:
         path: |
