@@ -52,7 +52,7 @@ export function PrivacyRosetteLegend({ className }: { className?: string }) {
           <h2 className="font-semibold text-heading-16">
             How to read the privacy rosette
           </h2>
-          <p className="mt-1 text-pretty text-label-value-13 text-secondary leading-4.5">
+          <p className="mt-1 text-pretty text-label-value-13 text-secondary leading-4">
             Each slice is one adversary testing the protocol's privacy promise.{' '}
             <CustomLink href={PRIVACY_METHODOLOGY_PATH}>
               Read the methodology
@@ -63,11 +63,11 @@ export function PrivacyRosetteLegend({ className }: { className?: string }) {
           {LEGEND.map(({ sentiment, description }) => (
             <li
               key={sentiment}
-              className="flex items-start gap-2 text-label-value-13 text-secondary leading-4.5"
+              className="flex items-start gap-2 text-label-value-13 text-secondary leading-4"
             >
               <span
                 className={cn(
-                  'mt-1 size-2.5 shrink-0 rounded-xs',
+                  'mt-[3px] size-2.5 shrink-0 rounded-xs',
                   sentimentToOpaqueBgColor(sentiment),
                 )}
               />
