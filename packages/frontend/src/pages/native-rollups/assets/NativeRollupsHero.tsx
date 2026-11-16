@@ -127,20 +127,20 @@ export function NativeRollupsHeroIllustration({
         FRAME TX
       </text>
       <rect
-        x="216"
+        x="223"
         y="23"
-        width="58"
+        width="52"
         height="15"
         rx="7.5"
         fill="var(--accent)"
       />
       <text
-        x="245"
+        x="249"
         y="33.5"
         textAnchor="middle"
         className="fill-primary-invert"
         letterSpacing="0.4"
-        fontSize="10"
+        fontSize="9"
         fontWeight="700"
       >
         EIP-8141
