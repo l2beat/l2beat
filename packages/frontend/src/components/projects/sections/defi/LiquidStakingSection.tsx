@@ -1,10 +1,11 @@
+import { formatCurrency } from '@l2beat/shared-pure'
 import {
   createColumnHelper,
   getCoreRowModel,
   getSortedRowModel,
   type SortingState,
 } from '@tanstack/react-table'
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 import {
   Tooltip,
   TooltipContent,
@@ -60,11 +61,23 @@ const columns = [
       headClassName: 'pl-4',
     },
   }),
-  columnHelper.accessor((entry) => entry.tokens.join(', '), {
-    id: 'tokens',
+  columnHelper.accessor('tokens', {
     header: 'Tokens',
     enableSorting: false,
-    cell: (ctx) => <span className="text-sm">{ctx.getValue()}</span>,
+    cell: (ctx) => (
+      <span className="text-sm">
+        {ctx.getValue().map((token, i) => (
+          <Fragment key={token.symbol}>
+            {i > 0 && ', '}
+            {token.href ? (
+              <CustomLink href={token.href}>{token.symbol}</CustomLink>
+            ) : (
+              token.symbol
+            )}
+          </Fragment>
+        ))}
+      </span>
+    ),
   }),
   ...getLiquidStakingStatColumns(columnHelper),
 ]
@@ -101,6 +114,11 @@ export function LiquidStakingSection({
             <span className="font-bold text-lg">
               {formatEthStaked(ethStaked.value)}
             </span>
+            {ethStaked.valueUsd !== null && (
+              <span className="font-medium text-secondary text-sm">
+                ({formatCurrency(ethStaked.valueUsd, 'usd')})
+              </span>
+            )}
             <span className="flex items-center gap-1.5 font-medium text-secondary text-xs">
               staked on Ethereum
               <Tooltip>

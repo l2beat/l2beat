@@ -54,6 +54,14 @@ export const moneroCakeWallet: BaseProject = {
       name: 'Cake Wallet',
       url: 'https://cakewallet.com',
       since: '2026-09-29',
+      delivery: {
+        type: 'pinned',
+        pin: {
+          type: 'sha256',
+          file: 'Cake_Wallet_v6.5.3-arm64-v8a.apk',
+          hash: '7a7d0f982699caf4c647aa8dc617d14a8390c77065a7f23e1732f382d1fce6da',
+        },
+      },
       version: '6.5.3',
       source: {
         repository: 'https://github.com/cake-tech/cake_wallet',

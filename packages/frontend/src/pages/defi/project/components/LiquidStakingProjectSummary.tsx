@@ -8,12 +8,13 @@ import {
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import type {
   LiquidStakingLatestValue,
-  LiquidStakingSummary,
+  ProjectLiquidStakingSummary,
 } from '~/server/features/defi/liquid-staking/getLiquidStakingSummary'
+import { StakedEthShare } from '../../liquid-staking/components/StakedEthShare'
 import {
   formatLatestValue,
   formatMetricDate,
-  LIQUID_STAKING_METRICS,
+  getProjectMetrics,
   type LiquidStakingMetric,
   TVL_TOOLTIP,
 } from '../../liquid-staking/liquidStakingMetrics'
@@ -23,7 +24,7 @@ import { LIQUID_STAKING_RISKS } from '../../liquid-staking/liquidStakingRisks'
 export function LiquidStakingProjectSummary({
   summary,
 }: {
-  summary: LiquidStakingSummary
+  summary: ProjectLiquidStakingSummary
 }) {
   const stats: (ProjectSummaryStatProps & { key: string })[] = [
     {
@@ -32,18 +33,32 @@ export function LiquidStakingProjectSummary({
       tooltip: TVL_TOOLTIP,
       value:
         summary.totalValueLockedUsd !== undefined ? (
-          formatCurrency(summary.totalValueLockedUsd, 'usd')
+          <span className="flex flex-col items-end md:items-start">
+            {formatCurrency(summary.totalValueLockedUsd, 'usd')}
+            {summary.stakedEthShare && (
+              <StakedEthShare
+                share={summary.stakedEthShare}
+                className="font-medium text-label-value-13"
+              />
+            )}
+          </span>
         ) : (
           <NoDataBadge />
         ),
     },
-    ...LIQUID_STAKING_METRICS.map((metric) => {
+    ...getProjectMetrics(summary.costOfExitDescription).map((metric) => {
       const latest = summary[metric.key]
       return {
         key: metric.key,
         title: metric.title,
         tooltip: withDate(metric, latest),
-        value: latest ? formatLatestValue(metric, latest) : <NoDataBadge />,
+        value: latest ? (
+          <a href="#yield-and-exit" className="hover:underline">
+            {formatLatestValue(metric, latest)}
+          </a>
+        ) : (
+          <NoDataBadge />
+        ),
       }
     }),
     ...LIQUID_STAKING_RISKS.map(({ key, title, tooltip }) => ({

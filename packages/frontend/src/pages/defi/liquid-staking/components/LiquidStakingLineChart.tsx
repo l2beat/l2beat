@@ -27,6 +27,8 @@ export interface LiquidStakingChartBackground {
   color: string
   formatAxisLabel: (value: number) => string
   formatTooltipValue: (value: number) => string
+  /** A second, smaller line under the tooltip value. */
+  formatTooltipSubValue?: (timestamp: number) => string | undefined
 }
 
 export type LiquidStakingChartData = ({ timestamp: number } & Record<
@@ -169,6 +171,7 @@ function CustomTooltip({
   const backgroundEntry = visible.find(
     (entry) => entry.name === background?.key,
   )
+  const subValue = background?.formatTooltipSubValue?.(label)
 
   return (
     <ChartTooltipWrapper>
@@ -185,10 +188,17 @@ function CustomTooltip({
             />
           ))}
           {background && backgroundEntry && (
-            <TooltipRow
-              name={background.key}
-              value={background.formatTooltipValue(backgroundEntry.value)}
-            />
+            <div>
+              <TooltipRow
+                name={background.key}
+                value={background.formatTooltipValue(backgroundEntry.value)}
+              />
+              {subValue && (
+                <div className="mt-1 text-right font-medium text-label-value-13 text-secondary tabular-nums">
+                  {subValue}
+                </div>
+              )}
+            </div>
           )}
         </div>
       </div>
