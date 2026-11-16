@@ -4,7 +4,10 @@ import type {
   BlockHeader,
   TransactionReceipt,
 } from '../../clients'
-import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
+import {
+  type BlockNumberAtOrBeforeOptions,
+  getBlockNumberAtOrBefore,
+} from '../../tools/getBlockNumberAtOrBefore'
 
 export class BlockProvider {
   constructor(
@@ -43,6 +46,11 @@ export class BlockProvider {
     })
   }
 
+  async getBlockTimestamp(blockNumber: number): Promise<UnixTime> {
+    const block = await this.getBlockHeader(blockNumber)
+    return UnixTime(block.timestamp)
+  }
+
   async getBlockTimestamps(
     blockNumbers: number[],
   ): Promise<Map<number, UnixTime>> {
@@ -74,6 +82,7 @@ export class BlockProvider {
   async getBlockNumberAtOrBefore(
     timestamp: UnixTime,
     start = 1,
+    options?: BlockNumberAtOrBeforeOptions,
   ): Promise<number> {
     return await this.withClient(async (client) => {
       const end = await client.getLatestBlockNumber()
@@ -84,6 +93,7 @@ export class BlockProvider {
         effectiveStart,
         end,
         (number: number) => client.getBlockHeader(number),
+        options,
       )
     })
   }

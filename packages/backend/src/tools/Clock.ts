@@ -28,6 +28,18 @@ export class Clock {
     return result
   }
 
+  /**
+   * For consumers that cannot check their data is complete, so they keep a
+   * margin even when the configured delay is lowered.
+   */
+  withMinDelay(delayInSeconds: number): Clock {
+    return new Clock(
+      this.minTimestamp,
+      Math.max(this.delayInSeconds, delayInSeconds),
+      this.refreshIntervalMs,
+    )
+  }
+
   getLastHour(): UnixTime {
     return UnixTime.toStartOf(UnixTime.now() - this.delayInSeconds, 'hour')
   }

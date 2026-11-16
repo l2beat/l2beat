@@ -2,10 +2,14 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { SlotActivityConfig } from '@l2beat/config'
 import type { SlotTimestampProvider } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
-import { Indexer, RootIndexer } from '@l2beat/uif'
+import { RootIndexer } from '@l2beat/uif'
 import type { ActivityConfigProject } from '../../../config/Config'
 import type { Clock } from '../../../tools/Clock'
 import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
+import {
+  retryWhileNotReady,
+  useTipIfStalled,
+} from '../../../tools/dataNotReady'
 
 export class SlotTargetIndexer extends RootIndexer {
   constructor(
@@ -21,9 +25,10 @@ export class SlotTargetIndexer extends RootIndexer {
       logger.tag({
         tag: config.id,
         project: config.id,
+        chain: config.chainName,
       }),
       {
-        tickRetryStrategy: Indexer.getInfiniteRetryStrategy(),
+        tickRetryStrategy: retryWhileNotReady(),
       },
     )
   }
@@ -50,12 +55,19 @@ export class SlotTargetIndexer extends RootIndexer {
           'SlotTargetIndexer should only be used for slot activity',
         )
 
-        const slotNumber =
-          await this.slotTimestampProvider.getSlotNumberAtOrBefore(
+        const slotNumber = await useTipIfStalled(
+          () =>
+            this.slotTimestampProvider.getSlotNumberAtOrBefore(
+              timestamp,
+              this.config.chainName,
+              (this.config.activityConfig as SlotActivityConfig).startSlot,
+            ),
+          {
+            logger: this.logger,
+            chain: this.config.chainName,
             timestamp,
-            this.config.chainName,
-            (this.config.activityConfig as SlotActivityConfig).startSlot,
-          )
+          },
+        )
 
         await this.options?.onTick?.(timestamp, slotNumber)
 

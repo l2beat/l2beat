@@ -1,6 +1,9 @@
 import { assert, type UnixTime } from '@l2beat/shared-pure'
 import type { SvmBlock, SvmBlockClient } from '../../clients'
-import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
+import {
+  type BlockNumberAtOrBeforeOptions,
+  getBlockNumberAtOrBefore,
+} from '../../tools/getBlockNumberAtOrBefore'
 
 export class SvmBlockProvider {
   constructor(
@@ -37,6 +40,7 @@ export class SvmBlockProvider {
   async getSlotNumberAtOrBefore(
     timestamp: UnixTime,
     start = 0,
+    options?: BlockNumberAtOrBeforeOptions,
   ): Promise<number> {
     for (const [index, client] of this.clients.entries()) {
       try {
@@ -47,6 +51,7 @@ export class SvmBlockProvider {
           start,
           end,
           (number: number) => client.getSlotTime(number),
+          options,
         )
       } catch (error) {
         if (index === this.clients.length - 1) throw error

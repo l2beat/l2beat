@@ -289,13 +289,21 @@ export abstract class Indexer {
       } else {
         this.dispatch({ type: 'UpdateSucceeded', from, newHeight })
         this.logMetrics(newHeight, effect.targetHeight)
+        this.logWaitEnd(this.updateRetryStrategy)
         this.updateRetryStrategy.clear()
       }
     } catch (error) {
       const attempt = this.updateRetryStrategy.attempts()
-      this.updateRetryStrategy.markAttempt()
+      this.updateRetryStrategy.markAttempt(error)
       const fatal = !this.updateRetryStrategy.shouldRetry()
-      if (fatal) {
+      if (this.updateRetryStrategy.isWaiting?.()) {
+        this.logger.info('Data not ready, waiting', {
+          error,
+          from,
+          to: effect.targetHeight,
+          attempt: this.updateRetryStrategy.attempts(),
+        })
+      } else if (fatal) {
         this.logger.critical('Update failed', {
           error,
           from,
@@ -341,7 +349,7 @@ export abstract class Indexer {
       })
       this.invalidateRetryStrategy.clear()
     } catch (e) {
-      this.invalidateRetryStrategy.markAttempt()
+      this.invalidateRetryStrategy.markAttempt(e)
       const fatal = !this.invalidateRetryStrategy.shouldRetry()
       if (fatal) {
         this.logger.critical('Invalidate failed', e)
@@ -386,11 +394,17 @@ export abstract class Indexer {
     try {
       const safeHeight = await this.tick()
       this.dispatch({ type: 'TickSucceeded', safeHeight })
+      this.logWaitEnd(this.tickRetryStrategy)
       this.tickRetryStrategy.clear()
     } catch (e) {
-      this.tickRetryStrategy.markAttempt()
+      this.tickRetryStrategy.markAttempt(e)
       const fatal = !this.tickRetryStrategy.shouldRetry()
-      if (fatal) {
+      if (this.tickRetryStrategy.isWaiting?.()) {
+        this.logger.info('Data not ready, waiting', {
+          error: e,
+          attempt: this.tickRetryStrategy.attempts(),
+        })
+      } else if (fatal) {
         this.logger.critical('Tick failed', e)
       } else {
         this.logger.error('Tick failed', e)
@@ -428,6 +442,14 @@ export abstract class Indexer {
       child.notifyUpdate(this, effect.safeHeight),
     )
     await this.setSafeHeight(effect.safeHeight)
+  }
+
+  private logWaitEnd(retryStrategy: RetryStrategy): void {
+    if (retryStrategy.isWaiting?.()) {
+      this.logger.info('Data ready after wait', {
+        attempts: retryStrategy.attempts(),
+      })
+    }
   }
 
   private logMetrics(current: number, target: number): void {

@@ -41,6 +41,10 @@ export class Application {
       config.clock.minBlockTimestamp,
       config.clock.safeTimeOffsetSeconds,
     )
+    appLogger.info('Clock offset configured', {
+      offsetSeconds: config.clock.safeTimeOffsetSeconds,
+      source: config.clock.safeTimeOffsetSource,
+    })
     const providers = new Providers(config, logger)
     const deps: ModuleDependencies = {
       config,

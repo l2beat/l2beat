@@ -1,8 +1,11 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { BlockTimestampProvider } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
-import { Indexer } from '@l2beat/uif'
 import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
+import {
+  retryWhileNotReady,
+  useTipIfStalled,
+} from '../../../tools/dataNotReady'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -43,7 +46,7 @@ export class BlockTimestampIndexer extends ManagedMultiIndexer<BlockTimestampCon
           tag: $.configurations[0].properties.chainName,
           chain: $.configurations[0].properties.chainName,
         },
-        updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
+        updateRetryStrategy: retryWhileNotReady(),
       },
       logger,
     )
@@ -72,11 +75,18 @@ export class BlockTimestampIndexer extends ManagedMultiIndexer<BlockTimestampCon
           timestamp: timestamp,
         })
 
-        const blockNumber =
-          await this.$.blockTimestampProvider.getBlockNumberAtOrBefore(
+        const blockNumber = await useTipIfStalled(
+          () =>
+            this.$.blockTimestampProvider.getBlockNumberAtOrBefore(
+              timestamp,
+              configurations[0].properties.chainName,
+            ),
+          {
+            logger: this.logger,
+            chain: configurations[0].properties.chainName,
             timestamp,
-            configurations[0].properties.chainName,
-          )
+          },
+        )
 
         this.logger.info('Fetched block number for timestamp', {
           timestamp: timestamp,

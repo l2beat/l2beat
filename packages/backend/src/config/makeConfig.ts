@@ -1,6 +1,6 @@
 import type { Env } from '@l2beat/backend-tools'
 import { type ChainConfig, ProjectService } from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
+import type { UnixTime } from '@l2beat/shared-pure'
 import type { Config, DeploymentEnvironment } from './Config'
 import { getChainConfig } from './chain/getChainConfig'
 import { FeatureFlags } from './FeatureFlags'
@@ -15,6 +15,7 @@ import { getPrivacyConfig } from './features/privacy'
 import { getTrackedTxsConfig } from './features/trackedTxs'
 import { getTvsConfig } from './features/tvs'
 import { getUpdateMonitorConfig } from './features/updateMonitor'
+import { getClockOffset } from './getClockOffset'
 import { getGitCommitHash } from './getGitCommitHash'
 
 interface MakeConfigOptions {
@@ -46,7 +47,7 @@ export async function makeConfig(
     isLocal && !env.string('LOCAL_DB_URL').includes('localhost'),
   )
 
-  const clockOffsetSeconds = UnixTime.HOUR
+  const clockOffset = getClockOffset(env)
 
   return {
     name,
@@ -54,7 +55,8 @@ export async function makeConfig(
     clock: {
       minBlockTimestamp:
         minTimestampOverride ?? getEthereumMinTimestamp(chains),
-      safeTimeOffsetSeconds: clockOffsetSeconds,
+      safeTimeOffsetSeconds: clockOffset.offsetSeconds,
+      safeTimeOffsetSource: clockOffset.source,
     },
     database: isLocal
       ? {

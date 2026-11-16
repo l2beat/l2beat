@@ -1,6 +1,8 @@
-import { type Logger, type RateLimiter, redactUrl } from '@l2beat/backend-tools'
+import { Logger, type RateLimiter, redactUrl } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
+import { ClientMetricsAggregator } from '../ClientMetricsAggregator'
 import type { HttpClient } from '../http/HttpClient'
+import { getRpcMetricsLabel } from '../rpc/RpcMetricsContext'
 import { BlockTimestampResponse, EtherscanResponse } from './types'
 
 interface EtherscanOptions {
@@ -32,6 +34,7 @@ export class BlockIndexerClient {
   // API will return the error
   private readonly binTimeWidth
   private readonly maximumCallsForBlockTimestamp
+  readonly metricsAggregator: ClientMetricsAggregator
 
   constructor(
     private readonly httpClient: HttpClient,
@@ -40,8 +43,13 @@ export class BlockIndexerClient {
       | EtherscanOptions
       | BlockscoutOptions
       | RoutescanOptions,
+    logger = Logger.SILENT,
   ) {
-    this.call = this.rateLimiter.wrap(this.call.bind(this))
+    this.metricsAggregator = new ClientMetricsAggregator({
+      logger: logger.for(this).tag({ source: options.type }),
+      flushInterval: 30_000,
+      rateLimiter: this.rateLimiter,
+    })
     this.binTimeWidth =
       options.type === 'etherscan' || options.type === 'routescan' ? 10 : 1
     this.maximumCallsForBlockTimestamp =
@@ -54,7 +62,12 @@ export class BlockIndexerClient {
     rateLimiter: RateLimiter,
     options: EtherscanOptions | BlockscoutOptions | RoutescanOptions,
   ) {
-    return new BlockIndexerClient(services.httpClient, rateLimiter, options)
+    return new BlockIndexerClient(
+      services.httpClient,
+      rateLimiter,
+      options,
+      services.logger,
+    )
   }
 
   // There is a case when there is not enough activity on a given chain
@@ -98,6 +111,21 @@ export class BlockIndexerClient {
   }
 
   async call(module: string, action: string, params: Record<string, string>) {
+    // Resolved here, synchronously in the caller's async context. The rate
+    // limiter dispatches later, when the context is no longer the caller's.
+    const label = getRpcMetricsLabel()
+    return await this.rateLimiter.call(
+      () => this._call(module, action, params, label),
+      label,
+    )
+  }
+
+  private async _call(
+    module: string,
+    action: string,
+    params: Record<string, string>,
+    label: string,
+  ) {
     const query = new URLSearchParams({
       module,
       action,
@@ -110,7 +138,13 @@ export class BlockIndexerClient {
     }
     const url = `${this.options.url}?${query.toString()}`
 
+    const start = Date.now()
     const response = await this.httpClient.fetch(url, {})
+    this.metricsAggregator.push({
+      duration: Date.now() - start,
+      size: Buffer.byteLength(JSON.stringify(response), 'utf8'),
+      label,
+    })
 
     const etherscanResponse = EtherscanResponse.safeParse(response)
 

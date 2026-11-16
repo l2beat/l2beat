@@ -1,4 +1,5 @@
 import { DuneQueryService } from '@l2beat/shared'
+import { UnixTime } from '@l2beat/shared-pure'
 import { DailyIndexer } from '../../tools/DailyIndexer'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
@@ -39,7 +40,12 @@ export function createLiquidStakingModule({
     providers.block.getBlockProvider('ethereum'),
   )
   const hourlyIndexer = new HourlyIndexer(logger, clock)
-  const dailyIndexer = new DailyIndexer(logger, clock)
+  // Each day's execution rewards are read from Dune once, and nothing checks
+  // that Dune has the day yet, so a day waits at least an hour.
+  const dailyIndexer = new DailyIndexer(
+    logger,
+    clock.withMinDelay(UnixTime.HOUR),
+  )
   // One indexer per project, so a project whose reads fail stalls alone.
   const indexers = projects.map(
     (project) =>

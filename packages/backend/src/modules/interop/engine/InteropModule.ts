@@ -3,7 +3,7 @@ import {
   HttpClient,
   InteropTransferClassifier,
 } from '@l2beat/shared'
-import type { LongChainName } from '@l2beat/shared-pure'
+import { type LongChainName, UnixTime } from '@l2beat/shared-pure'
 import { getTokenDbClient } from '@l2beat/token-backend'
 import { HourlyIndexer } from '../../../tools/HourlyIndexer'
 import { IndexerService } from '../../../tools/uif/IndexerService'
@@ -65,6 +65,9 @@ export function createInteropModule({
     return
   }
   logger = logger.tag({ feature: 'interop', module: 'interop' })
+  // A syncer counts as fresh up to SYNCER_FRESHNESS_TOLERANCE behind the
+  // snapshot hour, so the snapshot waits an hour for the syncers to pass it.
+  const aggregationClock = clock.withMinDelay(UnixTime.HOUR)
 
   let configStore = new InteropConfigStore(db)
 
@@ -164,7 +167,7 @@ export function createInteropModule({
       syncersManager.getChainsForPlugin(pluginName),
     getPluginSyncStatuses: () =>
       syncersManager.getPluginSyncStatuses(
-        clock.getLastHour(),
+        aggregationClock.getLastHour(),
         SYNCER_FRESHNESS_TOLERANCE,
       ),
     getProcessorStatuses: () => getProcessorsStatus(processors),
@@ -197,7 +200,7 @@ export function createInteropModule({
     logger,
   )
 
-  const hourlyIndexer = new HourlyIndexer(logger, clock)
+  const hourlyIndexer = new HourlyIndexer(logger, aggregationClock)
   const recentPricesIndexer = new InteropRecentPricesIndexer(
     {
       db,

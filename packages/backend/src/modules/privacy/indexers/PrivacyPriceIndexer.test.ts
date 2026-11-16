@@ -25,8 +25,8 @@ describe(PrivacyPriceIndexer.name, () => {
       const priceProvider = mockObject<PriceProvider>({
         getAdjustedTo: mockFn().returnsOnce(adjustedTo),
         getUsdPriceHistoryHourly: mockFn()
-          .returnsOnce([{ timestamp: UnixTime(150), value: 1500 }])
-          .returnsOnce([{ timestamp: UnixTime(200), value: 2000 }]),
+          .returnsOnce([{ timestamp: UnixTime(250), value: 1500 }])
+          .returnsOnce([{ timestamp: UnixTime(250), value: 2000 }]),
       })
 
       const privacyPriceRepository = mockObject<Database['privacyPrice']>({
@@ -64,13 +64,13 @@ describe(PrivacyPriceIndexer.name, () => {
       const expectedRecords: PrivacyPriceRecord[] = [
         {
           configurationId: 'config-1',
-          timestamp: UnixTime(150),
+          timestamp: UnixTime(250),
           priceUsd: 1500,
           priceId: 'ethereum',
         },
         {
           configurationId: 'config-2',
-          timestamp: UnixTime(200),
+          timestamp: UnixTime(250),
           priceUsd: 2000,
           priceId: 'bitcoin',
         },

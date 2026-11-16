@@ -20,19 +20,36 @@
 // halving the block range we are looking into. If we get stuck and fail to at
 // least halve the range we are going to fallback to the binary seach step.
 
-import type { UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
+import { TargetNotReadyError } from './DataNotReadyError'
+
+export interface BlockNumberAtOrBeforeOptions {
+  /**
+   * Throw TargetNotReadyError unless rhsBlock (usually the tip) is later than
+   * the timestamp. Without a later block the answer is just "the newest block
+   * so far", and blocks still to come may belong at or before the timestamp.
+   */
+  requireLaterBlock?: boolean
+}
 
 export async function getBlockNumberAtOrBefore(
   timestamp: UnixTime,
   lhsBlock: number,
   rhsBlock: number,
   getBlock: (number: number) => Promise<{ timestamp: number }>,
+  options: BlockNumberAtOrBeforeOptions = {},
 ): Promise<number> {
   let [{ timestamp: lhsTimestamp }, { timestamp: rhsTimestamp }] =
     await Promise.all([getBlock(lhsBlock), getBlock(rhsBlock)])
 
+  // Checked before lhs, so a one-block range at the timestamp is not ready
+  if (timestamp >= rhsTimestamp) {
+    if (options.requireLaterBlock) {
+      throw new TargetNotReadyError(timestamp, rhsBlock, UnixTime(rhsTimestamp))
+    }
+    return rhsBlock
+  }
   if (timestamp <= lhsTimestamp) return lhsBlock
-  if (timestamp >= rhsTimestamp) return rhsBlock
 
   while (lhsBlock + 1 < rhsBlock) {
     const rangeBefore = rhsBlock - lhsBlock

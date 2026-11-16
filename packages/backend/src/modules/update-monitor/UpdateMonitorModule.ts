@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
 import { DiscordClient, HttpClient } from '@l2beat/shared'
+import { UnixTime } from '@l2beat/shared-pure'
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { UpdateMonitorController } from './api/UpdateMonitorController'
 import { createUpdateMonitorRouter } from './api/UpdateMonitorRouter'
@@ -84,7 +85,8 @@ export function createUpdateMonitorModule({
     updateDiffer,
     configReader,
     db,
-    clock,
+    // isNineAM picks the reminder hour assuming the hour arrives an hour late
+    clock.withMinDelay(UnixTime.HOUR),
     discoveryOutputCache,
     logger,
     !!config.updateMonitor.runOnStart,
