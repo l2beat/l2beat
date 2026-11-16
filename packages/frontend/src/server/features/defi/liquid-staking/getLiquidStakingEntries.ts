@@ -1,4 +1,8 @@
+import type { ProjectDefiToken } from '@l2beat/config'
+import type { AbstractTokenRecord } from '@l2beat/database'
+import { getInteropTokenUrl } from '~/pages/interop/utils/getInteropTokenUrl'
 import { manifest } from '~/utils/Manifest'
+import { getAbstractTokenLookup } from '../project/getDefiTokens'
 import type { LiquidStakingCharts } from './getLiquidStakingCharts'
 import {
   getLiquidStakingProjects,
@@ -20,8 +24,13 @@ export interface LiquidStakingEntry extends LiquidStakingSummary {
   href: string
   description: string
   isUnderReview: boolean
-  /** Symbols of the protocol's tokens. */
-  tokens: string[]
+  tokens: LiquidStakingToken[]
+}
+
+export interface LiquidStakingToken {
+  symbol: string
+  /** The token page, when the token database has the token. */
+  href?: string
 }
 
 /**
@@ -38,11 +47,17 @@ export async function loadLiquidStakingEntries(
   loadCharts: () => Promise<LiquidStakingCharts>,
 ): Promise<{ entries: LiquidStakingEntry[]; charts: LiquidStakingCharts }> {
   const projects = await getLiquidStakingProjects()
-  const [tvlByProject, charts] = await Promise.all([
+  const [tvlByProject, charts, findAbstractToken] = await Promise.all([
     getLiquidStakingTvl(projects),
     loadCharts(),
+    getAbstractTokenLookup(
+      projects.flatMap((project) => project.defiInfo.tokens ?? []),
+    ),
   ])
-  return { entries: getEntries(projects, tvlByProject, charts), charts }
+  return {
+    entries: getEntries(projects, tvlByProject, charts, findAbstractToken),
+    charts,
+  }
 }
 
 /** Sorted by TVL, the projects without one last. */
@@ -50,6 +65,9 @@ function getEntries(
   projects: LiquidStakingProject[],
   tvlByProject: Map<string, LiquidStakingTvl>,
   charts: LiquidStakingCharts,
+  findAbstractToken: (
+    token: ProjectDefiToken,
+  ) => AbstractTokenRecord | undefined,
 ): LiquidStakingEntry[] {
   return projects
     .map(
@@ -62,7 +80,13 @@ function getEntries(
         href: `/defi/projects/${project.slug}`,
         description: project.display.description,
         isUnderReview: !!project.statuses.reviewStatus,
-        tokens: (project.defiInfo.tokens ?? []).map((token) => token.symbol),
+        tokens: (project.defiInfo.tokens ?? []).map((token) => {
+          const abstractToken = findAbstractToken(token)
+          return {
+            symbol: token.symbol,
+            href: abstractToken && getInteropTokenUrl(abstractToken),
+          }
+        }),
         ...buildLiquidStakingSummary(
           project.id,
           project.liquidStaking.risks,

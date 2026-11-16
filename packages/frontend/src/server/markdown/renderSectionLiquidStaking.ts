@@ -34,7 +34,11 @@ export function renderLiquidStakingSection({
       ],
       entries.map((entry) => [
         `${link(entry.name, entry.href)}${entry.isUnderReview ? ' (under review)' : ''}`,
-        entry.tokens.join(', '),
+        entry.tokens
+          .map((token) =>
+            token.href ? link(token.symbol, token.href) : token.symbol,
+          )
+          .join(', '),
         entry.totalValueLockedUsd !== undefined
           ? `${formatUsd(entry.totalValueLockedUsd)}${entry.stakedEthShare ? ` (${formatStakedEthShare(entry.stakedEthShare.value)})` : ''}`
           : NO_DATA,
