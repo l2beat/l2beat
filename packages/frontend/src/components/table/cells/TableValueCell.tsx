@@ -84,6 +84,7 @@ export function TableValueCell({
         <TooltipContent>
           {value.warning && (
             <WarningBar
+              compact
               className="mb-2"
               text={value.warning.value}
               icon={RoundedWarningIcon}

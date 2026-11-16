@@ -99,7 +99,8 @@ export function AnonymitySetCell({ anonymitySet }: Props) {
           <p className="mt-2 text-secondary">{coverageNote}</p>
         )}
         <Callout
-          className="mt-2 px-3 py-2"
+          compact
+          className="mt-2"
           color="purple"
           icon={<UserIcon className="fill-purple-450" />}
           body={

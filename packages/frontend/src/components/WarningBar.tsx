@@ -18,6 +18,8 @@ interface WarningBarProps {
   className?: string
   ignoreMarkdown?: boolean
   iconClassName?: string
+  /** Inside a tooltip: the compact callout with a 16px icon. */
+  compact?: boolean
 }
 
 /**
@@ -27,8 +29,12 @@ interface WarningBarProps {
 export const CRITICAL_TEXT_CLASS =
   'font-semibold text-red-800 dark:text-negative'
 
-const iconVariants = cva('size-5', {
+const iconVariants = cva('', {
   variants: {
+    compact: {
+      true: 'size-4',
+      false: 'size-5',
+    },
     color: {
       red: 'fill-red-300',
       yellow: 'fill-warning',
@@ -46,6 +52,7 @@ export function WarningBar({
   className,
   ignoreMarkdown,
   iconClassName,
+  compact = false,
 }: WarningBarProps) {
   const textElement = ignoreMarkdown ? (
     <>
@@ -65,9 +72,14 @@ export function WarningBar({
     return (
       <PlainLink href={href}>
         <Callout
-          className={cn('p-4', className)}
+          className={cn(!compact && 'p-4', className)}
           color={color}
-          icon={<Icon className={cn(iconVariants({ color }), iconClassName)} />}
+          compact={compact}
+          icon={
+            <Icon
+              className={cn(iconVariants({ color, compact }), iconClassName)}
+            />
+          }
           body={
             <div className="flex items-center gap-1">
               {textElement}
@@ -81,9 +93,12 @@ export function WarningBar({
 
   return (
     <Callout
-      className={cn('p-4', className)}
+      className={cn(!compact && 'p-4', className)}
       color={color}
-      icon={<Icon className={cn(iconVariants({ color }), iconClassName)} />}
+      compact={compact}
+      icon={
+        <Icon className={cn(iconVariants({ color, compact }), iconClassName)} />
+      }
       body={textElement}
     />
   )

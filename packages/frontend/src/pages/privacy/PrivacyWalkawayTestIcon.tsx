@@ -30,7 +30,8 @@ export function PrivacyWalkawayTestTooltipContent({
 }) {
   return (
     <Callout
-      className="mt-2 px-3 py-2"
+      compact
+      className="mt-2"
       color={walkawayTest.passed ? 'green' : 'red'}
       icon={<PrivacyWalkawayTestIcon passed={walkawayTest.passed} />}
       body={

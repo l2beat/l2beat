@@ -20,6 +20,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { TooltipFootnote } from '~/components/core/tooltip/TooltipParts'
 import { PercentageChangeTooltipContent } from '~/components/PercentChange'
 import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
@@ -139,9 +140,9 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
             associatedTokens={props.associatedTokens ?? []}
           />
         )}
-        <p>
+        <TooltipFootnote>
           <PercentageChangeTooltipContent period={props.changePeriod} />
-        </p>
+        </TooltipFootnote>
       </TooltipContent>
     </Tooltip>
   )

@@ -3,6 +3,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { TooltipFootnote } from '~/components/core/tooltip/TooltipParts'
 import type { StateValidationProgramHashData } from '../../ProgramHashesSection'
 
 export function ZkProjectTooltip({
@@ -24,9 +25,7 @@ export function ZkProjectTooltip({
       </a>
       <TooltipContent>
         <p className="font-bold">{zkProject.name}</p>
-        <p className="text-paragraph-12 text-secondary">
-          Click to view project page
-        </p>
+        <TooltipFootnote>Click to view project page</TooltipFootnote>
       </TooltipContent>
     </Tooltip>
   )
