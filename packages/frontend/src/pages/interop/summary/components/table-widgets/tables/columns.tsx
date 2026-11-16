@@ -5,6 +5,7 @@ import type { BasicTableRow } from '~/components/table/BasicTable'
 import { EM_DASH } from '~/consts/characters'
 import { InteropNoDataBadge } from '~/pages/interop/components/InteropNoDataBadge'
 import { TopTokensCell } from '~/pages/interop/components/tokens/TopTokensCell'
+import { formatNetFlow } from '~/pages/interop/utils/formatNetFlow'
 import type { InteropSelection } from '~/pages/interop/utils/types'
 import type { TokenData } from '~/server/features/layer2s/interop/types'
 import type { TopItems } from '~/server/features/layer2s/interop/utils/getTopItems'
@@ -68,7 +69,7 @@ function getLast24hVolumeColumn<T extends { volume: number }>(
   columnHelper: ColumnHelper<T>,
 ) {
   return columnHelper.accessor((row) => row.volume, {
-    header: 'Last 24h\nVolume',
+    header: 'Last 24h\nvolume',
     cell: (ctx) => {
       if (!ctx.row.original.volume) return EM_DASH
       return (
@@ -168,7 +169,7 @@ export function getLockAndMintColumns(apiSelection: InteropSelection) {
           return <InteropNoDataBadge />
         return (
           <span className="font-medium text-label-value-15">
-            {formatCurrency(ctx.row.original.netMintedValue, 'usd')}
+            {formatNetFlow(ctx.row.original.netMintedValue)}
           </span>
         )
       },

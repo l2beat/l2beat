@@ -1,18 +1,19 @@
-import { formatCurrency, formatSeconds } from '@l2beat/shared-pure'
+import { formatCurrency, formatSeconds, UnixTime } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
+import { useEffect, useState } from 'react'
 import {
   Tooltip,
   TooltipContent,
   TooltipPortal,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import { UtcDateTime } from '~/components/core/UtcDateTime'
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { EM_DASH } from '~/consts/characters'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { InteropNoDataBadge } from '~/pages/interop/components/InteropNoDataBadge'
 import type { InteropSelection } from '~/pages/interop/utils/types'
 import type { InteropProtocolTransferDetailsItem } from '~/server/features/layer2s/interop/types'
+import { formatLocalDateTime, formatTimestamp } from '~/utils/dates'
 import { formatTokenAmount } from './formatTokenAmount'
 
 export type TransferRow = InteropProtocolTransferDetailsItem & BasicTableRow
@@ -33,9 +34,7 @@ export function getTransferColumns(
       header: 'Timestamp',
       enableSorting: false,
       cell: (ctx) => (
-        <span className="font-normal text-label-value-13 text-primary tabular-nums">
-          <UtcDateTime timestamp={ctx.row.original.timestamp} />
-        </span>
+        <StackedUtcDateTime timestamp={ctx.row.original.timestamp} />
       ),
       meta: {
         headClassName: 'text-2xs',
@@ -114,7 +113,7 @@ export function getTransferColumns(
         return (
           <a
             href={bridge.href}
-            className="font-medium text-label-value-14 text-link hover:underline"
+            className="font-medium text-label-value-14 text-link underline-offset-[0.3em] hover:underline"
           >
             {bridge.name}
           </a>
@@ -279,9 +278,30 @@ function ChainCell({
       href={href}
       target="_blank"
       rel="noreferrer noopener"
-      className="flex items-center gap-1.5 font-medium text-label-value-13 text-link hover:underline"
+      className="flex items-center gap-1.5 font-medium text-label-value-13 text-link underline-offset-[0.3em] hover:underline"
     >
       {content}
     </a>
+  )
+}
+
+/**
+ * `UtcDateTime` on two lines, date over time, so the column takes the width
+ * of a date and the chain pair beside it fits at 1280. Same `<time>` value and
+ * local-time hover title.
+ */
+function StackedUtcDateTime({ timestamp }: { timestamp: number }) {
+  const [localTime, setLocalTime] = useState<string>()
+  useEffect(() => setLocalTime(formatLocalDateTime(timestamp)), [timestamp])
+
+  return (
+    <time
+      dateTime={UnixTime.toDate(UnixTime(timestamp)).toISOString()}
+      title={localTime && `Your time: ${localTime}`}
+      className="flex flex-col whitespace-nowrap font-normal text-label-value-13 text-primary tabular-nums leading-4"
+    >
+      <span>{formatTimestamp(timestamp)}</span>
+      <span>{formatTimestamp(timestamp, { mode: 'time' })}</span>
+    </time>
   )
 }

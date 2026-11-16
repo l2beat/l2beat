@@ -38,7 +38,7 @@ describe(renderInteropProtocolMarkdown.name, () => {
       '- Last 24h avg. transfer value: $1.25 K',
       '- Last 24h tokens by volume: [USDC](https://ethbeat.org/tokens/usdc-id/usdc) ($800.00 K), [WETH](https://ethbeat.org/tokens/weth-id/weth) ($500.00 K), [USDT](https://ethbeat.org/tokens/usdt-id/usdt) ($100.00 K), and 12 more',
       '- Last 24h top token: [USDC](https://ethbeat.org/tokens/usdc-id/circle/usdc) ($800.00 K volume, 700 transfers)',
-      '- Last 24h transfer size: Under $100: 600 transfers, $100-$1K: 400 transfers, $1K-$10K: 150 transfers, $10K-$100K: 45 transfers, Over $100K: 5 transfers (min $1.00, average $1.25 K, max $250.00 K)',
+      '- Last 24h transfer size: Under $100: 600 transfers, $100–$1K: 400 transfers, $1K–$10K: 150 transfers, $10K–$100K: 45 transfers, Over $100K: 5 transfers (min $1.00, average $1.25 K, max $250.00 K)',
       '- Last 24h transfer type distribution: Lock & Mint: $150.00 K, Non-minting: $1.35 M',
       'Across is an intent-based bridge.',
     )
