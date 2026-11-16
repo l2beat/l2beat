@@ -165,7 +165,7 @@ function getColumns(anonymitySetTooltip: string | undefined) {
         meta: {
           align: 'right',
           tooltip:
-            'Total USD value currently held across all tracked assets for the protocol, shown together with a percentage change compared to 7D ago.',
+            'Total USD value currently held across all tracked assets for the protocol, shown together with a percentage change compared to 7 days ago.',
         },
       }),
       (entry) => ({ change: entry.totalValueLockedChange7d, period: '7D' }),
