@@ -10,7 +10,10 @@ import {
 import { EM_DASH } from '~/consts/characters'
 import type { TransferSizeDistribution } from '~/server/features/layer2s/interop/utils/getTransferSizeChartData'
 import { cn } from '~/utils/cn'
-import { getTransferSizeBreakdown } from '../utils/transferSizeBuckets'
+import {
+  getTransferSizeBreakdown,
+  TRANSFER_SIZE_COLORS_CLASS,
+} from '../utils/transferSizeBuckets'
 
 export function InteropTransferSizeBreakdown({
   transferSize,
@@ -29,7 +32,7 @@ export function InteropTransferSizeBreakdown({
   )
 
   return (
-    <div>
+    <div className={TRANSFER_SIZE_COLORS_CLASS}>
       <span
         className={cn(
           'block text-label-value-13 leading-4',
@@ -78,7 +81,7 @@ function TransferSizeTooltipContent({
   const totalTransfers = breakdownValues.reduce((sum, v) => sum + v.value, 0)
 
   return (
-    <div className="flex flex-col">
+    <div className={cn('flex flex-col', TRANSFER_SIZE_COLORS_CLASS)}>
       <div className="flex flex-col gap-1.5">
         <div className="flex items-center justify-between gap-x-6">
           <span className="font-medium text-label-value-14">
