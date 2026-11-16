@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "AdminVerifierWhitelist",
-  "description": "Admin verifier that lets an account register as the manager of an adopter only if a whitelist admin assigned that account to the adopter. It is consulted only at registration. A whitelist admin can also exclude an adopter, which deletes its assignment and blocks new ones until the releaser named in the exclusion lifts it.",
+  "description": "Admin verifier that approves a manager registration only from the account a whitelist admin assigned to that adopter. Whitelist admins can also exclude an adopter, which blocks assignments until the exclusion's releaser lifts it. Assignments are checked only at registration.",
   "ignoreMethods": ["DEFAULT_ADMIN_ROLE", "WHITELIST_ADMIN_ROLE"],
   "fields": {
     "defaultAdmin": {
@@ -13,7 +13,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "grant and revoke the admin and whitelist admin roles."
+          "description": "grant or revoke the admin and whitelist admin roles."
         }
       ]
     },
@@ -26,12 +26,12 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "assign the account that may register as the manager of each adopter and exclude adopters from registration."
+          "description": "assign the account that may register as each adopter's manager, and exclude adopters."
         }
       ]
     },
     "assignedManagers": {
-      "description": "The account each adopter's manager registration is assigned to.",
+      "description": "Account assigned to each adopter.",
       "severity": "MEDIUM",
       "handler": {
         "type": "event",
@@ -43,7 +43,7 @@
       }
     },
     "exclusions": {
-      "description": "Adopters excluded from registration and the account that can lift each exclusion.",
+      "description": "Excluded adopters and the account that can lift each exclusion.",
       "severity": "MEDIUM",
       "handler": {
         "type": "event",

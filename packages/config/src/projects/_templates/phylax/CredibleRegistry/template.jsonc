@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "CredibleRegistry",
-  "description": "Records the last block a whitelisted builder marked as credible. isCredibleBlock() returns true from the marker transaction to the end of that block, and for calls with a zero gas price such as simulations. Builder and delay changes are scheduled on the registry's own timelock and wait at least {{ minTimelockDelayFormatted }}.",
+  "description": "Records the last block a whitelisted builder marked as credible. isCredibleBlock() returns true from the marker to the end of that block and in calls with a zero gas price. Changes to the builder set and to the delay are timelocked for at least {{ minTimelockDelayFormatted }}.",
   // eth_call runs with a zero gas price, which isCredibleBlock() always accepts
   "ignoreMethods": [
     "isCredibleBlock",
@@ -23,7 +23,7 @@
     },
     "timelockDelay": {
       // getMinDelay of the timelock entry is the watched copy
-      "description": "The minimum delay of the registry's timelock. The registry schedules every operation with the longer of this and MIN_TIMELOCK_DELAY.",
+      "description": "Minimum delay of the timelock. Operations wait the longer of this and MIN_TIMELOCK_DELAY.",
       "handler": {
         "type": "call",
         "address": "{{ timelock }}",
@@ -41,11 +41,11 @@
         {
           "type": "interact",
           "delay": "{{ timelockDelay }}",
-          "description": "whitelist and remove credible builders and change the timelock delay."
+          "description": "add or remove builders and change the timelock delay."
         },
         {
           "type": "interact",
-          "description": "grant and revoke the admin and guardian roles."
+          "description": "grant or revoke the admin and guardian roles."
         }
       ]
     },

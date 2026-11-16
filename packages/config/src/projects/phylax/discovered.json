@@ -48,7 +48,7 @@
         "0xfa396b3fb0934ad96c35d135df063a67d590288d2793f1ec98dd0528120dcf74"
       ],
       "proxyType": "immutable",
-      "description": "DA verifier that accepts an assertion only if the proof is a signature of the assertion ID by DA_PROVER. The assertion's code does not need to appear onchain.",
+      "description": "DA verifier that accepts an assertion only if its proof is DA_PROVER's signature of the assertion ID. The assertion's code is not required onchain.",
       "deployerAddress": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
       "sinceTimestamp": 1783504511,
       "sinceBlock": 25487087,
@@ -70,7 +70,7 @@
         "0xdf7b159bdac0523c6f44a75c030c405b5dff946f322a422a0c4ebbbe90b3769a"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Records which assertions apply to each protected contract (assertion adopter). Assertions are rule contracts that enforcers run offchain. Each adopter has a manager, approved by a registered admin verifier, who adds and removes its assertions. Every addition or removal records an activation or deactivation block 75 blocks ahead. An assertion is accepted only with a proof that a registered DA verifier checks against its ID.",
+      "description": "Registry of assertions, rules that enforcers run offchain, per protected contract (adopter). Each adopter has a manager, approved by a registered admin verifier, who adds and removes its assertions. Changes take effect 75 blocks later, and a new assertion needs a proof that a registered DA verifier accepts.",
       "deployerAddress": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
       "sinceTimestamp": 1793808551,
       "sinceBlock": 26342550,
@@ -140,24 +140,24 @@
         "ASSERTION_TIMELOCK_BLOCKS": { "severity": "MEDIUM" },
         "whitelistEnabled": {
           "severity": "MEDIUM",
-          "description": "When true, only accounts on the registration allowlist can register adopters and add assertions."
+          "description": "If true, only allowlisted accounts can register adopters and add assertions."
         },
         "registrationAllowlist": { "severity": "MEDIUM" },
         "adminVerifiers": {
           "severity": "HIGH",
-          "description": "Contracts that decide which account may become the manager of a given adopter."
+          "description": "Contracts that approve who may become an adopter's manager."
         },
         "daVerifiers": {
           "severity": "MEDIUM",
-          "description": "Contracts that check the proof submitted with a new assertion."
+          "description": "Contracts that check the proof of a new assertion."
         },
         "adopterManagers": {
           "severity": "HIGH",
-          "description": "The current manager of each registered adopter. A zero address means the manager was revoked."
+          "description": "Current manager of each adopter. The zero address means it was revoked."
         },
         "assertions": {
           "severity": "HIGH",
-          "description": "The assertion IDs of each adopter that were added and not removed. An addition or removal takes effect ASSERTION_TIMELOCK_BLOCKS blocks after it is recorded."
+          "description": "Assertion IDs of each adopter that were added and not removed."
         }
       },
       "implementationNames": {
@@ -179,7 +179,7 @@
         "0x4b615ee4f9c02dab91e33509cb242c838984cd8a31a4b8dca89d246e17f230ef"
       ],
       "proxyType": "immutable",
-      "description": "Admin verifier that lets an account register as the manager of an adopter only if a whitelist admin assigned that account to the adopter. It is consulted only at registration. A whitelist admin can also exclude an adopter, which deletes its assignment and blocks new ones until the releaser named in the exclusion lifts it.",
+      "description": "Admin verifier that approves a manager registration only from the account a whitelist admin assigned to that adopter. Whitelist admins can also exclude an adopter, which blocks assignments until the exclusion's releaser lifts it. Assignments are checked only at registration.",
       "deployerAddress": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
       "sinceTimestamp": 1793808551,
       "sinceBlock": 26342550,
@@ -220,11 +220,11 @@
         "whitelistAdmins": { "severity": "HIGH" },
         "assignedManagers": {
           "severity": "MEDIUM",
-          "description": "The account each adopter's manager registration is assigned to."
+          "description": "Account assigned to each adopter."
         },
         "exclusions": {
           "severity": "MEDIUM",
-          "description": "Adopters excluded from registration and the account that can lift each exclusion."
+          "description": "Excluded adopters and the account that can lift each exclusion."
         }
       },
       "implementationNames": {
@@ -250,7 +250,7 @@
         "0x6df3cbff9dab42d429f75df3fcc12be9c2ac03cde92ea5473bc3985cf6ff251f"
       ],
       "proxyType": "immutable",
-      "description": "Admin verifier that lets an account register as the manager of an adopter only if the owner assigned that account to the adopter. It is consulted only at registration. The owner can also exclude an adopter, which deletes its assignment and blocks new ones until the releaser named in the exclusion lifts it.",
+      "description": "Admin verifier that approves a manager registration only from the account the owner assigned to that adopter. The owner can also exclude an adopter, which blocks assignments until the exclusion's releaser lifts it. Assignments are checked only at registration.",
       "deployerAddress": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
       "sinceTimestamp": 1783504547,
       "sinceBlock": 25487090,
@@ -264,11 +264,11 @@
         "owner": { "severity": "HIGH" },
         "assignedManagers": {
           "severity": "MEDIUM",
-          "description": "The account each adopter's manager registration is assigned to."
+          "description": "Account assigned to each adopter."
         },
         "exclusions": {
           "severity": "MEDIUM",
-          "description": "Adopters excluded from registration and the account that can lift each exclusion."
+          "description": "Excluded adopters and the account that can lift each exclusion."
         }
       },
       "implementationNames": {
@@ -289,7 +289,7 @@
         "0x6df3cbff9dab42d429f75df3fcc12be9c2ac03cde92ea5473bc3985cf6ff251f"
       ],
       "proxyType": "immutable",
-      "description": "Admin verifier that lets an account register as the manager of an adopter only if the owner assigned that account to the adopter. It is consulted only at registration. The owner can also exclude an adopter, which deletes its assignment and blocks new ones until the releaser named in the exclusion lifts it.",
+      "description": "Admin verifier that approves a manager registration only from the account the owner assigned to that adopter. The owner can also exclude an adopter, which blocks assignments until the exclusion's releaser lifts it. Assignments are checked only at registration.",
       "deployerAddress": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
       "sinceTimestamp": 1782130427,
       "sinceBlock": 25373069,
@@ -303,11 +303,11 @@
         "owner": { "severity": "HIGH" },
         "assignedManagers": {
           "severity": "MEDIUM",
-          "description": "The account each adopter's manager registration is assigned to."
+          "description": "Account assigned to each adopter."
         },
         "exclusions": {
           "severity": "MEDIUM",
-          "description": "Adopters excluded from registration and the account that can lift each exclusion."
+          "description": "Excluded adopters and the account that can lift each exclusion."
         }
       },
       "implementationNames": {
@@ -338,7 +338,7 @@
         "0x0c0ac38ca062f80cbfb0d63a7ea22bdb684ae34f42029adac9240de13bd99752"
       ],
       "proxyType": "immutable",
-      "description": "DA verifier that accepts an assertion only if the keccak256 hash of the submitted proof equals the assertion ID, so the bytes behind the ID are published onchain with the assertion.",
+      "description": "DA verifier that accepts an assertion only if its proof hashes (keccak256) to the assertion ID, so the assertion's bytes are published onchain.",
       "deployerAddress": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
       "sinceTimestamp": 1793808551,
       "sinceBlock": 26342550,
@@ -378,7 +378,7 @@
         "0x6c7e3259a65b091f5eaa279619dcc7edb75dcc10f7662e656c10ee389d3b1c9d"
       ],
       "proxyType": "immutable",
-      "description": "Admin verifier that approves a request only if the requester is the account returned by the adopter contract's owner() function.",
+      "description": "Admin verifier that approves only the account returned by the adopter's owner() as its manager.",
       "deployerAddress": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
       "sinceTimestamp": 1783504535,
       "sinceBlock": 25487089,
@@ -393,7 +393,7 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "immutable",
-      "description": "Admin verifier that approves every request, so any account allowed to register can become the manager of any adopter that has none.",
+      "description": "Admin verifier that approves every request, so any account allowed to register can claim any adopter without a manager.",
       "deployerAddress": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
       "sinceTimestamp": 1783505411,
       "sinceBlock": 25487162,
@@ -437,7 +437,7 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "immutable",
-      "description": "Admin verifier that approves every request, so any account allowed to register can become the manager of any adopter that has none.",
+      "description": "Admin verifier that approves every request, so any account allowed to register can claim any adopter without a manager.",
       "deployerAddress": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
       "sinceTimestamp": 1783457147,
       "sinceBlock": 25483151,
@@ -554,7 +554,7 @@
         "0x02bd8c7e229b92b095d044603b414df166243b6fc30c6d136645872e25eaf3a3"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Records which assertions apply to each protected contract (assertion adopter). Assertions are rule contracts that enforcers run offchain. Each adopter has a manager, approved by a registered admin verifier, who adds and removes its assertions. Every addition or removal records an activation or deactivation block 10 blocks ahead. An assertion is accepted only with a proof that DA_VERIFIER accepts, and a removed assertion cannot be added again.",
+      "description": "Registry of assertions, rules that enforcers run offchain, per protected contract (adopter). Each adopter has a manager, approved by a registered admin verifier, who adds and removes its assertions. Changes take effect 10 blocks later, a new assertion needs a proof that DA_VERIFIER accepts, and a removed assertion cannot be added again.",
       "deployerAddress": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
       "sinceTimestamp": 1783504571,
       "sinceBlock": 25487092,
@@ -863,20 +863,20 @@
         "DA_VERIFIER": { "severity": "MEDIUM" },
         "whitelistEnabled": {
           "severity": "MEDIUM",
-          "description": "When true, only accounts on the registration allowlist can register adopters and add assertions."
+          "description": "If true, only allowlisted accounts can register adopters and add assertions."
         },
         "registrationAllowlist": { "severity": "MEDIUM" },
         "adminVerifiers": {
           "severity": "HIGH",
-          "description": "Contracts that decide which account may become the manager of a given adopter."
+          "description": "Contracts that approve who may become an adopter's manager."
         },
         "adopterManagers": {
           "severity": "HIGH",
-          "description": "The current manager of each registered adopter. A zero address means the manager was revoked."
+          "description": "Current manager of each adopter. The zero address means it was revoked."
         },
         "assertions": {
           "severity": "HIGH",
-          "description": "The assertion IDs of each adopter that were added and not removed. An addition or removal takes effect ASSERTION_TIMELOCK_BLOCKS blocks after it is recorded."
+          "description": "Assertion IDs of each adopter that were added and not removed."
         }
       },
       "implementationNames": {
@@ -893,7 +893,7 @@
         "0x71b1a3f2513f5cb8b74981ef4085a83ac09103300c3e112c131787e269042ca8"
       ],
       "proxyType": "immutable",
-      "description": "Records the last block a whitelisted builder marked as credible. isCredibleBlock() returns true from the marker transaction to the end of that block, and for calls with a zero gas price such as simulations. Builder and delay changes are scheduled on the registry's own timelock and wait at least 3d.",
+      "description": "Records the last block a whitelisted builder marked as credible. isCredibleBlock() returns true from the marker to the end of that block and in calls with a zero gas price. Changes to the builder set and to the delay are timelocked for at least 3d.",
       "ignoreInWatchMode": ["lastCredibleBlock"],
       "deployerAddress": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
       "sinceTimestamp": 1793812763,
@@ -912,7 +912,7 @@
       },
       "fieldMeta": {
         "timelockDelay": {
-          "description": "The minimum delay of the registry's timelock. The registry schedules every operation with the longer of this and MIN_TIMELOCK_DELAY."
+          "description": "Minimum delay of the timelock. Operations wait the longer of this and MIN_TIMELOCK_DELAY."
         },
         "defaultAdmin": { "severity": "HIGH" },
         "guardians": { "severity": "MEDIUM" },
@@ -932,7 +932,7 @@
         "0x02bd8c7e229b92b095d044603b414df166243b6fc30c6d136645872e25eaf3a3"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Records which assertions apply to each protected contract (assertion adopter). Assertions are rule contracts that enforcers run offchain. Each adopter has a manager, approved by a registered admin verifier, who adds and removes its assertions. Every addition or removal records an activation or deactivation block 10 blocks ahead. An assertion is accepted only with a proof that DA_VERIFIER accepts, and a removed assertion cannot be added again.",
+      "description": "Registry of assertions, rules that enforcers run offchain, per protected contract (adopter). Each adopter has a manager, approved by a registered admin verifier, who adds and removes its assertions. Changes take effect 10 blocks later, a new assertion needs a proof that DA_VERIFIER accepts, and a removed assertion cannot be added again.",
       "deployerAddress": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
       "sinceTimestamp": 1782130427,
       "sinceBlock": 25373069,
@@ -1205,20 +1205,20 @@
         "DA_VERIFIER": { "severity": "MEDIUM" },
         "whitelistEnabled": {
           "severity": "MEDIUM",
-          "description": "When true, only accounts on the registration allowlist can register adopters and add assertions."
+          "description": "If true, only allowlisted accounts can register adopters and add assertions."
         },
         "registrationAllowlist": { "severity": "MEDIUM" },
         "adminVerifiers": {
           "severity": "HIGH",
-          "description": "Contracts that decide which account may become the manager of a given adopter."
+          "description": "Contracts that approve who may become an adopter's manager."
         },
         "adopterManagers": {
           "severity": "HIGH",
-          "description": "The current manager of each registered adopter. A zero address means the manager was revoked."
+          "description": "Current manager of each adopter. The zero address means it was revoked."
         },
         "assertions": {
           "severity": "HIGH",
-          "description": "The assertion IDs of each adopter that were added and not removed. An addition or removal takes effect ASSERTION_TIMELOCK_BLOCKS blocks after it is recorded."
+          "description": "Assertion IDs of each adopter that were added and not removed."
         }
       },
       "implementationNames": {
@@ -1235,7 +1235,7 @@
         "0x6c7e3259a65b091f5eaa279619dcc7edb75dcc10f7662e656c10ee389d3b1c9d"
       ],
       "proxyType": "immutable",
-      "description": "Admin verifier that approves a request only if the requester is the account returned by the adopter contract's owner() function.",
+      "description": "Admin verifier that approves only the account returned by the adopter's owner() as its manager.",
       "deployerAddress": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
       "sinceTimestamp": 1782130427,
       "sinceBlock": 25373069,
@@ -1280,7 +1280,7 @@
         "0x83ff25356e73c197d8d8612bde4ef286cd22455a2c53999f4213918497105162"
       ],
       "proxyType": "immutable",
-      "description": "Admin verifier that approves only holders of SUPER_ADMIN_ROLE, so each of them can become the manager of any adopter that has none.",
+      "description": "Admin verifier that approves only SUPER_ADMIN_ROLE holders, each of whom can become the manager of any adopter without one.",
       "deployerAddress": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
       "sinceTimestamp": 1791453059,
       "sinceBlock": 26146897,
@@ -1309,7 +1309,7 @@
         "0xfa396b3fb0934ad96c35d135df063a67d590288d2793f1ec98dd0528120dcf74"
       ],
       "proxyType": "immutable",
-      "description": "DA verifier that accepts an assertion only if the proof is a signature of the assertion ID by DA_PROVER. The assertion's code does not need to appear onchain.",
+      "description": "DA verifier that accepts an assertion only if its proof is DA_PROVER's signature of the assertion ID. The assertion's code is not required onchain.",
       "deployerAddress": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
       "sinceTimestamp": 1782130415,
       "sinceBlock": 25373068,
@@ -2106,7 +2106,7 @@
     "phylax/StateOracle_singleDAVerifier": "0xc2880dacf692aac8cb84761ab851f88c15ae036fb9d4b0c79af0a93d3f42d969"
   },
   "usedBlockNumbers": { "ethereum": 26429182 },
-  "permissionsConfigHash": "0x3ea837c79b7872b61072dd2dca1bdbed344601ef44fb078b025df76eb55e3cd9",
+  "permissionsConfigHash": "0x09c51d692a136fc5ea1dbdffb5859ecfdf70f290b24ca5da5a88a79833c5c479",
   "permissions": {
     "eth:0x003C71246D92fae09ae3F3CAeFF234c8B8242F2E": {
       "directlyReceivedPermissions": [
@@ -2122,13 +2122,13 @@
         {
           "permission": "interact",
           "from": "eth:0xB5E1b58638E05a69c853dEf16837D651B7EEeAA2",
-          "description": "add and remove the assertions of the adopters it manages and hand the manager role to another account.",
+          "description": "add or remove the assertions of the adopters it manages and transfer that role.",
           "role": ".adopterManagers"
         },
         {
           "permission": "interact",
           "from": "eth:0xbFBc833F12E973bd4A2cc46AAE959aD1B9531262",
-          "description": "add and remove the assertions of the adopters it manages and hand the manager role to another account.",
+          "description": "add or remove the assertions of the adopters it manages and transfer that role.",
           "role": ".adopterManagers"
         }
       ]
@@ -2148,7 +2148,7 @@
         {
           "permission": "interact",
           "from": "eth:0x12b2E5606688b0B111D7eb961b24A5BC032B4C0f",
-          "description": "sign the assertion IDs that State Oracles using this verifier accept.",
+          "description": "sign the assertion IDs this verifier accepts.",
           "role": ".DA_PROVER"
         }
       ]
@@ -2158,13 +2158,13 @@
         {
           "permission": "interact",
           "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
-          "description": "add and remove the assertions of the adopters it manages and hand the manager role to another account.",
+          "description": "add or remove the assertions of the adopters it manages and transfer that role.",
           "role": ".adopterManagers"
         },
         {
           "permission": "interact",
           "from": "eth:0xB5E1b58638E05a69c853dEf16837D651B7EEeAA2",
-          "description": "add and remove the assertions of the adopters it manages and hand the manager role to another account.",
+          "description": "add or remove the assertions of the adopters it manages and transfer that role.",
           "role": ".adopterManagers"
         }
       ]
@@ -2174,7 +2174,7 @@
         {
           "permission": "interact",
           "from": "eth:0xbFBc833F12E973bd4A2cc46AAE959aD1B9531262",
-          "description": "add and remove the assertions of the adopters it manages and hand the manager role to another account.",
+          "description": "add or remove the assertions of the adopters it manages and transfer that role.",
           "role": ".adopterManagers"
         }
       ]
@@ -2184,7 +2184,7 @@
         {
           "permission": "interact",
           "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
-          "description": "add and remove accounts on the registration allowlist.",
+          "description": "add or remove accounts on the registration allowlist.",
           "role": ".operators",
           "via": [
             { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
@@ -2193,7 +2193,7 @@
         {
           "permission": "interact",
           "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
-          "description": "add and remove admin verifiers and DA verifiers, switch the registration allowlist on or off and set the maximum number of assertions per adopter.",
+          "description": "add or remove admin and DA verifiers, toggle the registration allowlist and set the maximum number of assertions per adopter.",
           "role": ".governance",
           "via": [
             { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
@@ -2202,7 +2202,7 @@
         {
           "permission": "interact",
           "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
-          "description": "grant and revoke the governance, guardian admin and operator admin roles, and transfer ownership.",
+          "description": "grant or revoke the governance, guardian admin and operator admin roles, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
@@ -2211,7 +2211,7 @@
         {
           "permission": "interact",
           "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
-          "description": "grant and revoke the guardian role.",
+          "description": "grant or revoke the guardian role.",
           "role": ".guardianAdmins",
           "via": [
             { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
@@ -2220,7 +2220,7 @@
         {
           "permission": "interact",
           "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
-          "description": "grant and revoke the operator role.",
+          "description": "grant or revoke the operator role.",
           "role": ".operatorAdmins",
           "via": [
             { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
@@ -2229,7 +2229,7 @@
         {
           "permission": "interact",
           "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
-          "description": "remove any adopter's assertions and revoke the manager of any adopter.",
+          "description": "remove any adopter's assertions and revoke any adopter's manager.",
           "role": ".guardians",
           "via": [
             { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
@@ -2238,7 +2238,7 @@
         {
           "permission": "interact",
           "from": "eth:0x1Ab8D3CDb7eE245abD53859F8D967a4F9a91a130",
-          "description": "assign the account that may register as the manager of each adopter and exclude adopters from registration.",
+          "description": "assign the account that may register as each adopter's manager, and exclude adopters.",
           "role": ".whitelistAdmins",
           "via": [
             { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
@@ -2247,7 +2247,7 @@
         {
           "permission": "interact",
           "from": "eth:0x1Ab8D3CDb7eE245abD53859F8D967a4F9a91a130",
-          "description": "grant and revoke the admin and whitelist admin roles.",
+          "description": "grant or revoke the admin and whitelist admin roles.",
           "role": ".defaultAdmin",
           "via": [
             { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
@@ -2256,62 +2256,62 @@
         {
           "permission": "interact",
           "from": "eth:0x25642997751A2F1bbA234a3B1c2100bD0aB9a73E",
-          "description": "assign the account that may register as the manager of each adopter, exclude adopters from registration and transfer ownership.",
+          "description": "assign the account that may register as each adopter's manager, exclude adopters and transfer ownership.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "eth:0x3107dbCe36e98FE30539DE78bd0899bDCd9Ca291",
-          "description": "assign the account that may register as the manager of each adopter, exclude adopters from registration and transfer ownership.",
+          "description": "assign the account that may register as each adopter's manager, exclude adopters and transfer ownership.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "eth:0xB5E1b58638E05a69c853dEf16837D651B7EEeAA2",
-          "description": "add and remove accounts on the registration allowlist.",
+          "description": "add or remove accounts on the registration allowlist.",
           "role": ".operators"
         },
         {
           "permission": "interact",
           "from": "eth:0xB5E1b58638E05a69c853dEf16837D651B7EEeAA2",
-          "description": "add and remove admin verifiers, switch the registration allowlist on or off and set the maximum number of assertions per adopter.",
+          "description": "add or remove admin verifiers, toggle the registration allowlist and set the maximum number of assertions per adopter.",
           "role": ".governance"
         },
         {
           "permission": "interact",
           "from": "eth:0xB5E1b58638E05a69c853dEf16837D651B7EEeAA2",
-          "description": "add and remove the assertions of the adopters it manages and hand the manager role to another account.",
+          "description": "add or remove the assertions of the adopters it manages and transfer that role.",
           "role": ".adopterManagers"
         },
         {
           "permission": "interact",
           "from": "eth:0xB5E1b58638E05a69c853dEf16837D651B7EEeAA2",
-          "description": "grant and revoke the governance, guardian admin and operator admin roles, and transfer ownership.",
+          "description": "grant or revoke the governance, guardian admin and operator admin roles, and transfer ownership.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "eth:0xB5E1b58638E05a69c853dEf16837D651B7EEeAA2",
-          "description": "grant and revoke the guardian role.",
+          "description": "grant or revoke the guardian role.",
           "role": ".guardianAdmins"
         },
         {
           "permission": "interact",
           "from": "eth:0xB5E1b58638E05a69c853dEf16837D651B7EEeAA2",
-          "description": "grant and revoke the operator role.",
+          "description": "grant or revoke the operator role.",
           "role": ".operatorAdmins"
         },
         {
           "permission": "interact",
           "from": "eth:0xB5E1b58638E05a69c853dEf16837D651B7EEeAA2",
-          "description": "remove any adopter's assertions and revoke the manager of any adopter.",
+          "description": "remove any adopter's assertions and revoke any adopter's manager.",
           "role": ".guardians"
         },
         {
           "permission": "interact",
           "from": "eth:0xbac71Fe7a8C78F49Eeb2D33b250988224796AF70",
           "delay": 259200,
-          "description": "whitelist and remove credible builders and change the timelock delay.",
+          "description": "add or remove builders and change the timelock delay.",
           "role": ".defaultAdmin",
           "via": [
             { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
@@ -2329,7 +2329,7 @@
         {
           "permission": "interact",
           "from": "eth:0xbac71Fe7a8C78F49Eeb2D33b250988224796AF70",
-          "description": "grant and revoke the admin and guardian roles.",
+          "description": "grant or revoke the admin and guardian roles.",
           "role": ".defaultAdmin",
           "via": [
             { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
@@ -2338,50 +2338,50 @@
         {
           "permission": "interact",
           "from": "eth:0xbFBc833F12E973bd4A2cc46AAE959aD1B9531262",
-          "description": "add and remove accounts on the registration allowlist.",
+          "description": "add or remove accounts on the registration allowlist.",
           "role": ".operators"
         },
         {
           "permission": "interact",
           "from": "eth:0xbFBc833F12E973bd4A2cc46AAE959aD1B9531262",
-          "description": "add and remove admin verifiers, switch the registration allowlist on or off and set the maximum number of assertions per adopter.",
+          "description": "add or remove admin verifiers, toggle the registration allowlist and set the maximum number of assertions per adopter.",
           "role": ".governance"
         },
         {
           "permission": "interact",
           "from": "eth:0xbFBc833F12E973bd4A2cc46AAE959aD1B9531262",
-          "description": "grant and revoke the governance, guardian admin and operator admin roles, and transfer ownership.",
+          "description": "grant or revoke the governance, guardian admin and operator admin roles, and transfer ownership.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "eth:0xbFBc833F12E973bd4A2cc46AAE959aD1B9531262",
-          "description": "grant and revoke the guardian role.",
+          "description": "grant or revoke the guardian role.",
           "role": ".guardianAdmins"
         },
         {
           "permission": "interact",
           "from": "eth:0xbFBc833F12E973bd4A2cc46AAE959aD1B9531262",
-          "description": "grant and revoke the operator role.",
+          "description": "grant or revoke the operator role.",
           "role": ".operatorAdmins"
         },
         {
           "permission": "interact",
           "from": "eth:0xbFBc833F12E973bd4A2cc46AAE959aD1B9531262",
-          "description": "remove any adopter's assertions and revoke the manager of any adopter.",
+          "description": "remove any adopter's assertions and revoke any adopter's manager.",
           "role": ".guardians"
         },
         {
           "permission": "interact",
           "from": "eth:0xd9eaa6063cE1D8b6A20648dF961cA89D5F19c517",
-          "description": "grant and revoke the admin and super admin roles.",
-          "role": ".defaultAdmin"
+          "description": "become the manager of any adopter without one.",
+          "role": ".superAdmins"
         },
         {
           "permission": "interact",
           "from": "eth:0xd9eaa6063cE1D8b6A20648dF961cA89D5F19c517",
-          "description": "register as the manager of any adopter without one on State Oracles that use this verifier.",
-          "role": ".superAdmins"
+          "description": "grant or revoke the admin and super admin roles.",
+          "role": ".defaultAdmin"
         },
         {
           "permission": "upgrade",
@@ -2428,13 +2428,13 @@
         {
           "permission": "interact",
           "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
-          "description": "add and remove the assertions of the adopters it manages and hand the manager role to another account.",
+          "description": "add or remove the assertions of the adopters it manages and transfer that role.",
           "role": ".adopterManagers"
         },
         {
           "permission": "interact",
           "from": "eth:0xd9eaa6063cE1D8b6A20648dF961cA89D5F19c517",
-          "description": "register as the manager of any adopter without one on State Oracles that use this verifier.",
+          "description": "become the manager of any adopter without one.",
           "role": ".superAdmins"
         }
       ]
@@ -2444,7 +2444,7 @@
         {
           "permission": "interact",
           "from": "eth:0xB5E1b58638E05a69c853dEf16837D651B7EEeAA2",
-          "description": "add and remove the assertions of the adopters it manages and hand the manager role to another account.",
+          "description": "add or remove the assertions of the adopters it manages and transfer that role.",
           "role": ".adopterManagers"
         }
       ]
@@ -2454,7 +2454,7 @@
         {
           "permission": "interact",
           "from": "eth:0xeedd9c29D597B378108483Bd46eaDC65044713f1",
-          "description": "sign the assertion IDs that State Oracles using this verifier accept.",
+          "description": "sign the assertion IDs this verifier accepts.",
           "role": ".DA_PROVER"
         }
       ]
@@ -2473,13 +2473,13 @@
         {
           "permission": "interact",
           "from": "eth:0xB5E1b58638E05a69c853dEf16837D651B7EEeAA2",
-          "description": "add and remove the assertions of the adopters it manages and hand the manager role to another account.",
+          "description": "add or remove the assertions of the adopters it manages and transfer that role.",
           "role": ".adopterManagers"
         },
         {
           "permission": "interact",
           "from": "eth:0xbFBc833F12E973bd4A2cc46AAE959aD1B9531262",
-          "description": "add and remove the assertions of the adopters it manages and hand the manager role to another account.",
+          "description": "add or remove the assertions of the adopters it manages and transfer that role.",
           "role": ".adopterManagers"
         }
       ]
@@ -2489,7 +2489,7 @@
         {
           "permission": "interact",
           "from": "eth:0xbFBc833F12E973bd4A2cc46AAE959aD1B9531262",
-          "description": "add and remove the assertions of the adopters it manages and hand the manager role to another account.",
+          "description": "add or remove the assertions of the adopters it manages and transfer that role.",
           "role": ".adopterManagers"
         }
       ]
@@ -2509,7 +2509,7 @@
         {
           "permission": "interact",
           "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
-          "description": "add and remove accounts on the registration allowlist.",
+          "description": "add or remove accounts on the registration allowlist.",
           "role": ".operators",
           "via": [
             { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
@@ -2518,7 +2518,7 @@
         {
           "permission": "interact",
           "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
-          "description": "add and remove admin verifiers and DA verifiers, switch the registration allowlist on or off and set the maximum number of assertions per adopter.",
+          "description": "add or remove admin and DA verifiers, toggle the registration allowlist and set the maximum number of assertions per adopter.",
           "role": ".governance",
           "via": [
             { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
@@ -2527,7 +2527,7 @@
         {
           "permission": "interact",
           "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
-          "description": "grant and revoke the governance, guardian admin and operator admin roles, and transfer ownership.",
+          "description": "grant or revoke the governance, guardian admin and operator admin roles, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
@@ -2536,7 +2536,7 @@
         {
           "permission": "interact",
           "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
-          "description": "grant and revoke the guardian role.",
+          "description": "grant or revoke the guardian role.",
           "role": ".guardianAdmins",
           "via": [
             { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
@@ -2545,7 +2545,7 @@
         {
           "permission": "interact",
           "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
-          "description": "grant and revoke the operator role.",
+          "description": "grant or revoke the operator role.",
           "role": ".operatorAdmins",
           "via": [
             { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
@@ -2554,7 +2554,7 @@
         {
           "permission": "interact",
           "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
-          "description": "remove any adopter's assertions and revoke the manager of any adopter.",
+          "description": "remove any adopter's assertions and revoke any adopter's manager.",
           "role": ".guardians",
           "via": [
             { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
@@ -2563,7 +2563,7 @@
         {
           "permission": "interact",
           "from": "eth:0x1Ab8D3CDb7eE245abD53859F8D967a4F9a91a130",
-          "description": "assign the account that may register as the manager of each adopter and exclude adopters from registration.",
+          "description": "assign the account that may register as each adopter's manager, and exclude adopters.",
           "role": ".whitelistAdmins",
           "via": [
             { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
@@ -2572,7 +2572,7 @@
         {
           "permission": "interact",
           "from": "eth:0x1Ab8D3CDb7eE245abD53859F8D967a4F9a91a130",
-          "description": "grant and revoke the admin and whitelist admin roles.",
+          "description": "grant or revoke the admin and whitelist admin roles.",
           "role": ".defaultAdmin",
           "via": [
             { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
@@ -2582,7 +2582,7 @@
           "permission": "interact",
           "from": "eth:0xbac71Fe7a8C78F49Eeb2D33b250988224796AF70",
           "delay": 259200,
-          "description": "whitelist and remove credible builders and change the timelock delay.",
+          "description": "add or remove builders and change the timelock delay.",
           "role": ".defaultAdmin",
           "via": [
             { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
@@ -2600,7 +2600,7 @@
         {
           "permission": "interact",
           "from": "eth:0xbac71Fe7a8C78F49Eeb2D33b250988224796AF70",
-          "description": "grant and revoke the admin and guardian roles.",
+          "description": "grant or revoke the admin and guardian roles.",
           "role": ".defaultAdmin",
           "via": [
             { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
@@ -2632,7 +2632,7 @@
         {
           "permission": "interact",
           "from": "eth:0xbFBc833F12E973bd4A2cc46AAE959aD1B9531262",
-          "description": "add and remove the assertions of the adopters it manages and hand the manager role to another account.",
+          "description": "add or remove the assertions of the adopters it manages and transfer that role.",
           "role": ".adopterManagers"
         }
       ]
@@ -2647,56 +2647,56 @@
         {
           "permission": "interact",
           "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
-          "description": "add and remove accounts on the registration allowlist.",
+          "description": "add or remove accounts on the registration allowlist.",
           "role": ".operators"
         },
         {
           "permission": "interact",
           "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
-          "description": "add and remove admin verifiers and DA verifiers, switch the registration allowlist on or off and set the maximum number of assertions per adopter.",
+          "description": "add or remove admin and DA verifiers, toggle the registration allowlist and set the maximum number of assertions per adopter.",
           "role": ".governance"
         },
         {
           "permission": "interact",
           "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
-          "description": "grant and revoke the governance, guardian admin and operator admin roles, and transfer ownership.",
+          "description": "grant or revoke the governance, guardian admin and operator admin roles, and transfer ownership.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
-          "description": "grant and revoke the guardian role.",
+          "description": "grant or revoke the guardian role.",
           "role": ".guardianAdmins"
         },
         {
           "permission": "interact",
           "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
-          "description": "grant and revoke the operator role.",
+          "description": "grant or revoke the operator role.",
           "role": ".operatorAdmins"
         },
         {
           "permission": "interact",
           "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
-          "description": "remove any adopter's assertions and revoke the manager of any adopter.",
+          "description": "remove any adopter's assertions and revoke any adopter's manager.",
           "role": ".guardians"
         },
         {
           "permission": "interact",
           "from": "eth:0x1Ab8D3CDb7eE245abD53859F8D967a4F9a91a130",
-          "description": "assign the account that may register as the manager of each adopter and exclude adopters from registration.",
+          "description": "assign the account that may register as each adopter's manager, and exclude adopters.",
           "role": ".whitelistAdmins"
         },
         {
           "permission": "interact",
           "from": "eth:0x1Ab8D3CDb7eE245abD53859F8D967a4F9a91a130",
-          "description": "grant and revoke the admin and whitelist admin roles.",
+          "description": "grant or revoke the admin and whitelist admin roles.",
           "role": ".defaultAdmin"
         },
         {
           "permission": "interact",
           "from": "eth:0xbac71Fe7a8C78F49Eeb2D33b250988224796AF70",
           "delay": 259200,
-          "description": "whitelist and remove credible builders and change the timelock delay.",
+          "description": "add or remove builders and change the timelock delay.",
           "role": ".defaultAdmin"
         },
         {
@@ -2708,7 +2708,7 @@
         {
           "permission": "interact",
           "from": "eth:0xbac71Fe7a8C78F49Eeb2D33b250988224796AF70",
-          "description": "grant and revoke the admin and guardian roles.",
+          "description": "grant or revoke the admin and guardian roles.",
           "role": ".defaultAdmin"
         }
       ]

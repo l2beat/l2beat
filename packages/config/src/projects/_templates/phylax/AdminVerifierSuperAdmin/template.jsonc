@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "AdminVerifierSuperAdmin",
-  "description": "Admin verifier that approves only holders of SUPER_ADMIN_ROLE, so each of them can become the manager of any adopter that has none.",
+  "description": "Admin verifier that approves only SUPER_ADMIN_ROLE holders, each of whom can become the manager of any adopter without one.",
   "ignoreMethods": ["DEFAULT_ADMIN_ROLE", "SUPER_ADMIN_ROLE"],
   "fields": {
     "defaultAdmin": {
@@ -13,7 +13,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "grant and revoke the admin and super admin roles."
+          "description": "grant or revoke the admin and super admin roles."
         }
       ]
     },
@@ -26,7 +26,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "register as the manager of any adopter without one on State Oracles that use this verifier."
+          "description": "become the manager of any adopter without one."
         }
       ]
     }

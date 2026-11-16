@@ -1,5 +1,5 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "DAVerifierOnChain",
-  "description": "DA verifier that accepts an assertion only if the keccak256 hash of the submitted proof equals the assertion ID, so the bytes behind the ID are published onchain with the assertion."
+  "description": "DA verifier that accepts an assertion only if its proof hashes (keccak256) to the assertion ID, so the assertion's bytes are published onchain."
 }

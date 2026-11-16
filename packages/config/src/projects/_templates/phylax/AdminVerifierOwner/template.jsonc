@@ -1,5 +1,5 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "AdminVerifierOwner",
-  "description": "Admin verifier that approves a request only if the requester is the account returned by the adopter contract's owner() function."
+  "description": "Admin verifier that approves only the account returned by the adopter's owner() as its manager."
 }
