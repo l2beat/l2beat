@@ -38,7 +38,10 @@ export function GardenTable({ entries }: { entries: GardenEntry[] }) {
               <div className="flex items-center justify-between gap-3">
                 <ProjectCell entry={entry} />
                 <div className="md:hidden">
-                  <MetricCell metric={entry.metric} />
+                  <MetricCell
+                    metric={entry.metric}
+                    alwaysReserveChange={false}
+                  />
                 </div>
               </div>
               <EvaluatedCrops
@@ -204,10 +207,26 @@ function ProjectCell({ entry }: { entry: GardenEntry }) {
   )
 }
 
-// The change has a column of its own, empty when there is none, so amounts and the dash share a right edge.
-function MetricCell({ metric }: { metric: GardenEntry['metric'] }) {
+/**
+ * In the table the change has a column of its own, empty when there is none,
+ * so amounts and the dash share a right edge. A phone row stands alone, so
+ * without a change its amount goes to the row's right edge instead.
+ */
+function MetricCell({
+  metric,
+  alwaysReserveChange = true,
+}: {
+  metric: GardenEntry['metric']
+  alwaysReserveChange?: boolean
+}) {
+  const reserveChange = alwaysReserveChange || metric?.change !== undefined
   return (
-    <div className="inline-grid grid-cols-[auto_3.5rem] items-baseline gap-x-1 gap-y-px text-right">
+    <div
+      className={cn(
+        'inline-grid items-baseline gap-x-1 gap-y-px text-right',
+        reserveChange ? 'grid-cols-[auto_3.5rem]' : 'grid-cols-[auto]',
+      )}
+    >
       {metric ? (
         <>
           <span className="font-medium text-label-value-13 text-primary">
@@ -218,15 +237,17 @@ function MetricCell({ metric }: { metric: GardenEntry['metric'] }) {
               ? formatDollarValueNumber(metric.value)
               : formatInteger(metric.value)}
           </span>
-          <span className="row-start-2 text-left">
-            {metric.change !== undefined && (
-              <PercentChange
-                value={metric.change}
-                period="7D"
-                textClassName="text-xs"
-              />
-            )}
-          </span>
+          {reserveChange && (
+            <span className="row-start-2 text-left">
+              {metric.change !== undefined && (
+                <PercentChange
+                  value={metric.change}
+                  period="7D"
+                  textClassName="text-xs"
+                />
+              )}
+            </span>
+          )}
         </>
       ) : (
         <>
