@@ -103,7 +103,7 @@ export const eas: BaseProject = {
         ),
       ],
       additionalConsiderations: [
-        "A schema's resolver contract can reject any attestation or revocation under that schema."
+        "A schema's resolver contract can reject any attestation or revocation under that schema.",
       ],
     },
     openSource: {
