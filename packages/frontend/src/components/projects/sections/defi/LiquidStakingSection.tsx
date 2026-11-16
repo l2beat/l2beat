@@ -10,7 +10,6 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import { CustomLink } from '~/components/link/CustomLink'
 import { BasicTable } from '~/components/table/BasicTable'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
 import { TableLink } from '~/components/table/TableLink'
@@ -25,6 +24,7 @@ import {
   ETH_STAKED_TOOLTIP,
   formatEthStaked,
 } from '~/pages/defi/liquid-staking/liquidStakingMetrics'
+import { CompareProjectsLink } from '~/pages/layer2s/compare/components/CompareProjectsLink'
 import type { LiquidStakingStatsEntry } from '~/server/features/defi/liquid-staking/getLiquidStakingEntries'
 import type { LiquidStakingOverview } from '~/server/features/defi/liquid-staking/getLiquidStakingOverview'
 import { formatTimestamp } from '~/utils/dates'
@@ -47,7 +47,7 @@ const columns = [
     cell: (ctx) => (
       <TableLink
         href={ctx.row.original.href}
-        className="gap-1.5 font-bold text-base"
+        className="gap-1.5 font-bold md:text-label-value-15"
       >
         {ctx.getValue()}
         {ctx.row.original.isUnderReview && (
@@ -65,9 +65,16 @@ const columns = [
     header: 'Tokens',
     enableSorting: false,
     cell: (ctx) => <span className="text-sm">{ctx.getValue()}</span>,
+    // Descriptive: on phones TVL, the table's main figure, stays in view.
+    meta: {
+      headClassName: 'max-md:hidden',
+      cellClassName: 'max-md:hidden',
+    },
   }),
   ...getLiquidStakingStatColumns(columnHelper),
 ]
+
+const COMPARE_HREF = '/defi/liquid-staking'
 
 const initialSorting: SortingState = [{ id: TVL_COLUMN_ID, desc: true }]
 
@@ -94,32 +101,45 @@ export function LiquidStakingSection({
   })
 
   return (
-    <ProjectSection {...sectionProps}>
-      <div className="mb-2 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-        {ethStaked && (
-          <div className="flex items-baseline gap-2">
-            <span className="font-bold text-lg">
-              {formatEthStaked(ethStaked.value)}
-            </span>
-            <span className="flex items-center gap-1.5 font-medium text-secondary text-xs">
-              staked on Ethereum
-              <Tooltip>
-                <TooltipTrigger aria-label="More info">
-                  <InfoIcon className="size-3.5" />
-                </TooltipTrigger>
-                <TooltipContent>
-                  {ETH_STAKED_TOOLTIP} Latest value from{' '}
-                  {formatTimestamp(ethStaked.timestamp, { mode: 'date' })}.
-                </TooltipContent>
-              </Tooltip>
-            </span>
-          </div>
-        )}
-        <CustomLink href="/defi/liquid-staking" className="ml-auto text-sm">
+    <ProjectSection
+      {...sectionProps}
+      headerAccessory={
+        <CompareProjectsLink
+          variant="section"
+          href={COMPARE_HREF}
+          className="max-md:hidden"
+        >
           Compare risks
-        </CustomLink>
-      </div>
-      <BasicTable table={table} />
+        </CompareProjectsLink>
+      }
+    >
+      {ethStaked && (
+        <div className="mb-2 flex items-baseline gap-2">
+          <span className="font-bold text-lg">
+            {formatEthStaked(ethStaked.value)}
+          </span>
+          <span className="flex items-center gap-1.5 font-medium text-primary text-xs">
+            staked on Ethereum
+            <Tooltip>
+              <TooltipTrigger aria-label="More info">
+                <InfoIcon className="size-3.5" />
+              </TooltipTrigger>
+              <TooltipContent>
+                {ETH_STAKED_TOOLTIP} Latest value from{' '}
+                {formatTimestamp(ethStaked.timestamp, { mode: 'date' })}.
+              </TooltipContent>
+            </Tooltip>
+          </span>
+        </div>
+      )}
+      <BasicTable table={table} compact />
+      <CompareProjectsLink
+        variant="section"
+        href={COMPARE_HREF}
+        className="mt-4 md:hidden"
+      >
+        Compare risks
+      </CompareProjectsLink>
     </ProjectSection>
   )
 }

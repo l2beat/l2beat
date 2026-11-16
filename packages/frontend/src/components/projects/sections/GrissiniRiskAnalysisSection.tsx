@@ -32,10 +32,13 @@ export function GrissiniRiskAnalysisSection({
       isUnderReview={isUnderReview}
       className="space-y-6"
     >
+      {/* Markdown's glossary wrapper is inline, so a block keeps the gap. */}
       {description && (
-        <Markdown className="text-paragraph-15 md:text-paragraph-16">
-          {description}
-        </Markdown>
+        <div>
+          <Markdown className="text-paragraph-15 md:text-paragraph-16">
+            {description}
+          </Markdown>
+        </div>
       )}
       {layerGrissiniValues && layerGrissiniValues.length > 0 && (
         <RiskValues grissiniValues={layerGrissiniValues} />
