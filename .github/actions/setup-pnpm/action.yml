@@ -1,7 +1,8 @@
 name: Set up pnpm and install dependencies
 description: >
-  Installs Node.js and the pnpm version pinned in package.json, restores the
-  pnpm store from cache and runs `pnpm install`.
+  Installs Node.js and the pnpm version pinned in package.json, then restores
+  the installed node_modules from cache. Without an exact match it restores
+  the pnpm store and runs `pnpm install` instead.
 
 runs:
   using: composite
@@ -32,7 +33,20 @@ runs:
         # The steps below cache the pnpm store and save it only from main.
         package-manager-cache: false
 
+    # The installed tree itself, built packages (Prisma's engines, esbuild)
+    # included, so a match needs neither the store nor `pnpm install`. Only
+    # an exact match: a tree for another lockfile would be wrong, not stale.
+    - name: Restore node_modules
+      id: node-modules
+      uses: actions/cache/restore@v6
+      with:
+        path: |
+          node_modules
+          packages/*/node_modules
+        key: node-modules-v1-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('pnpm-lock.yaml', 'pnpm-workspace.yaml', 'package.json', 'packages/*/package.json') }}
+
     - name: Locate pnpm store
+      if: steps.node-modules.outputs.cache-hit != 'true'
       id: store
       shell: bash
       run: echo "path=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
@@ -42,6 +56,7 @@ runs:
     # lockfile-verified.jsonl records that this lockfile already passed pnpm's
     # supply-chain check, which otherwise spends ~9s querying the registry.
     - name: Restore pnpm cache
+      if: steps.node-modules.outputs.cache-hit != 'true'
       id: restore
       uses: actions/cache/restore@v6
       with:
@@ -52,20 +67,30 @@ runs:
         restore-keys: pnpm-v1-${{ runner.os }}-
 
     - name: Install dependencies
+      if: steps.node-modules.outputs.cache-hit != 'true'
       shell: bash
       run: pnpm install
 
     # A partial restore brings back packages the lockfile no longer uses.
     - name: Prune pnpm store
-      if: github.ref == 'refs/heads/main' && steps.restore.outputs.cache-hit != 'true'
+      if: github.ref == 'refs/heads/main' && steps.node-modules.outputs.cache-hit != 'true' && steps.restore.outputs.cache-hit != 'true'
       shell: bash
       run: pnpm store prune
 
     - name: Save pnpm cache
-      if: github.ref == 'refs/heads/main' && steps.restore.outputs.cache-hit != 'true'
+      if: github.ref == 'refs/heads/main' && steps.node-modules.outputs.cache-hit != 'true' && steps.restore.outputs.cache-hit != 'true'
       uses: actions/cache/save@v6
       with:
         path: |
           ${{ steps.store.outputs.path }}
           ~/.cache/pnpm/lockfile-verified.jsonl
         key: ${{ steps.restore.outputs.cache-primary-key }}
+
+    - name: Save node_modules
+      if: github.ref == 'refs/heads/main' && steps.node-modules.outputs.cache-hit != 'true'
+      uses: actions/cache/save@v6
+      with:
+        path: |
+          node_modules
+          packages/*/node_modules
+        key: ${{ steps.node-modules.outputs.cache-primary-key }}
