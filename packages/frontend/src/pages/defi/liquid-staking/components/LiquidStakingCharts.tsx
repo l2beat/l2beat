@@ -1,4 +1,4 @@
-import { formatNumber } from '@l2beat/shared-pure'
+import { formatCurrency, formatNumber } from '@l2beat/shared-pure'
 import { type ReactNode, useMemo, useState } from 'react'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import {
@@ -26,7 +26,7 @@ import { formatDays, formatYield } from '../formatLiquidStaking'
 import {
   COST_OF_EXIT_METRIC,
   ETH_STAKED_TITLE,
-  formatEthStakedWithUsd,
+  formatEthStaked,
   formatMetricDate,
   YIELD_METRIC,
 } from '../liquidStakingMetrics'
@@ -133,8 +133,11 @@ function YieldChart({ projectSeries, range }: ChartProps) {
       label: ETH_STAKED_TITLE,
       color: 'var(--chart-ethereum-secondary)',
       formatAxisLabel: (value) => formatNumber(value),
-      formatTooltipValue: (value, timestamp) =>
-        formatEthStakedWithUsd(value, usd.get(timestamp) ?? null),
+      formatTooltipValue: formatEthStaked,
+      formatTooltipSubValue: (timestamp) => {
+        const value = usd.get(timestamp)
+        return value != null ? formatCurrency(value, 'usd') : undefined
+      },
     }
   }, [data])
 
