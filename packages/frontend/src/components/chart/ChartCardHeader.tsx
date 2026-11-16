@@ -12,6 +12,11 @@ interface Props {
   link?: { href: string; label: string }
   /** Controls opposite the title, used when there is no link. */
   accessory?: ReactNode
+  /**
+   * Puts `accessory` right after the title instead of opposite it, for
+   * controls that change what the title names, like the UOPS | TPS switch.
+   */
+  accessoryAfterTitle?: boolean
   /** A line under the figure, or under the title when there is no figure. */
   meta?: ReactNode
   /** The headline figure, already formatted. */
@@ -41,6 +46,7 @@ export function ChartCardHeader({
   subtitle,
   link,
   accessory,
+  accessoryAfterTitle,
   meta,
   value,
   unit,
@@ -56,6 +62,9 @@ export function ChartCardHeader({
       {title}
     </h2>
   )
+  const accessoryGroup = accessory && (
+    <div className="flex shrink-0 items-center gap-2">{accessory}</div>
+  )
 
   return (
     <div className="flex flex-col gap-3">
@@ -66,7 +75,12 @@ export function ChartCardHeader({
             accessory ? 'items-center' : 'items-baseline',
           )}
         >
-          {subtitle ? (
+          {accessoryAfterTitle ? (
+            <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-2">
+              {heading}
+              {accessoryGroup}
+            </div>
+          ) : subtitle ? (
             <div className="flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-1">
               {heading}
               <span className="whitespace-nowrap font-normal text-label-value-13 text-secondary">
@@ -84,11 +98,7 @@ export function ChartCardHeader({
               {link.label}
             </a>
           ) : (
-            accessory && (
-              <div className="flex shrink-0 items-center gap-2">
-                {accessory}
-              </div>
-            )
+            !accessoryAfterTitle && accessoryGroup
           )}
         </div>
         {!hasFigure && meta}

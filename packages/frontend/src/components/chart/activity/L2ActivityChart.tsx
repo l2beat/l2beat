@@ -167,8 +167,8 @@ function Header({
 
   return (
     <ChartCardHeader
-      title="Activity"
-      subtitle={resolution === 'hour' ? 'Hourly average' : 'Daily average'}
+      title={resolution === 'hour' ? 'Hourly average' : 'Daily average'}
+      accessoryAfterTitle
       accessory={
         <>
           <ActivityMetricControls value={metric} onValueChange={setMetric} />
