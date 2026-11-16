@@ -1,5 +1,6 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
+import { ACTION_BUTTON_CLASS } from '~/components/core/actionButtonClassNames'
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { externalLinks } from '~/consts/externalLinks'
@@ -7,7 +8,6 @@ import { useTracking } from '~/hooks/useTracking'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import { cn } from '~/utils/cn'
 import type { ChartRange } from '~/utils/range/range'
 import type { ZkCatalogEntry } from '../../../server/features/zk-catalog/getZkCatalogEntries'
 import { ZkCatalogHeader } from './components/ZkCatalogHeader'
@@ -50,16 +50,13 @@ function TrustedSetupFrameworkLink() {
       href={externalLinks.articles.trustedSetupFramework}
       target="_blank"
       rel="noreferrer"
-      className={cn(
-        'flex h-8 w-fit items-center gap-1.5 whitespace-nowrap rounded-lg bg-surface-primary px-3 font-medium text-primary text-xs leading-none transition-colors hover:bg-surface-secondary md:text-sm',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset',
-      )}
+      className={ACTION_BUTTON_CLASS}
       onClick={() => {
         track('trustedSetupFrameworkSelected')
       }}
     >
       Trusted setups risk framework
-      <CustomLinkIcon className="size-3.5 shrink-0 fill-secondary" />
+      <CustomLinkIcon className="size-3.5 shrink-0 fill-current" />
     </a>
   )
 }
