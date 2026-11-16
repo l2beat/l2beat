@@ -145,7 +145,7 @@ export function L2CostsChart({ tab, milestones, entries }: Props) {
         />
       </div>
       <ChartControlsWrapper>
-        <div className="flex flex-wrap items-center gap-1">
+        <div className="flex flex-wrap items-center gap-2">
           <UnitControls unit={unit} setUnit={setUnit} isLoading={isLoading} />
           <CostsMetricControls value={metric} onValueChange={onMetricChange} />
           <CompareProjectsLink href={getCompareEntryUrl({ metric: 'costs' })} />

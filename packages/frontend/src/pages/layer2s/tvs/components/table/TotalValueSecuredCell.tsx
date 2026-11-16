@@ -64,7 +64,7 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
       <TooltipTrigger asChild disabledOnTouch>
         <TableLink href={props.href}>
           <SyncStatusWrapper isSynced={!props.syncWarning}>
-            <div className="flex flex-col items-end max-md:py-1">
+            <div className="flex flex-col items-end max-md:items-start max-md:py-1">
               <div className="flex items-center gap-1">
                 {tvsWarnings.length ? (
                   <RoundedWarningIcon
@@ -81,7 +81,7 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
                 </ValueWithPercentageChange>
               </div>
               {props.breakdown.type === 'bridgeType' ? (
-                <div className="inline-flex flex-col items-end gap-1">
+                <div className="inline-flex flex-col items-end gap-1 max-md:items-start">
                   <ValueSecuredBreakdown
                     canonical={props.breakdown.canonical}
                     external={props.breakdown.external}
