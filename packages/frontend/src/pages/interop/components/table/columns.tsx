@@ -177,9 +177,7 @@ const averageValueColumn = columnHelper.accessor('averageValue', {
           </span>
         </TooltipTrigger>
         <TooltipContent className="min-w-[200px]">
-          <div className="font-medium text-label-value-14 text-secondary">
-            Transfer value
-          </div>
+          <div className="font-medium text-label-value-14">Transfer value</div>
           <HorizontalSeparator className="my-1" />
           <div className="flex items-center justify-between gap-x-6">
             <span className="font-medium text-label-value-14">Minimum</span>

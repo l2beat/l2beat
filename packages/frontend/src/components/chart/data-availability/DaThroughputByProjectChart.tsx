@@ -11,6 +11,7 @@ import type {
 import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
 import {
   ChartTooltipRow,
+  ChartTooltipTitle,
   ChartTooltipWrapper,
   getTooltipEntries,
 } from '~/components/core/chart/ChartTooltip'
@@ -389,9 +390,9 @@ function CustomTooltip({
 
   return (
     <ChartTooltipWrapper>
-      <div className="font-medium text-label-value-14 text-secondary">
+      <ChartTooltipTitle>
         {formatRange(label, label + UnixTime.periodToSeconds(resolution))}
-      </div>
+      </ChartTooltipTitle>
       <HorizontalSeparator className="my-2" />
       <div className="flex flex-col gap-2">
         {capacityPayload.map((entry) => (

@@ -12,6 +12,7 @@ import type {
 import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
 import {
   ChartTooltipRow,
+  ChartTooltipTitle,
   ChartTooltipValue,
   ChartTooltipWrapper,
   getTooltipEntries,
@@ -225,9 +226,9 @@ function CustomTooltip({
 
   return (
     <ChartTooltipWrapper>
-      <div className="font-medium text-label-value-14 text-secondary">
+      <ChartTooltipTitle>
         {formatSnapshotTimestamp(label, resolution)}
-      </div>
+      </ChartTooltipTitle>
       <div className="mt-3 flex w-full items-center justify-between gap-2 text-heading-16">
         <span>Total</span>
         <span className="whitespace-nowrap text-primary tabular-nums">

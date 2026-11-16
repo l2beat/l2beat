@@ -10,7 +10,10 @@ import type {
   ChartMeta,
   ChartProject,
 } from '~/components/core/chart/ChartContext'
-import { ChartTooltipWrapper } from '~/components/core/chart/ChartTooltip'
+import {
+  ChartTooltipTitle,
+  ChartTooltipWrapper,
+} from '~/components/core/chart/ChartTooltip'
 import {
   type ChartSeries,
   TimeSeriesChart,
@@ -169,12 +172,12 @@ function LivenessCustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="flex w-fit flex-col">
-        <div className="mb-1 whitespace-nowrap font-medium text-label-value-14 text-secondary">
+        <ChartTooltipTitle className="mb-1 whitespace-nowrap">
           {formatRange(
             timestamp,
             timestamp + UnixTime.periodToSeconds(resolution),
           )}
-        </div>
+        </ChartTooltipTitle>
         <HorizontalSeparator className="mt-1.5" />
         {content}
       </div>

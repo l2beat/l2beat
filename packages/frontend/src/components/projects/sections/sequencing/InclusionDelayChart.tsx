@@ -206,7 +206,7 @@ function InclusionDelayTooltip({
                     type={item.indicatorType}
                     backgroundColor={item.color}
                   />
-                  <span className="truncate text-secondary">{item.label}</span>
+                  <span className="truncate">{item.label}</span>
                 </div>
                 <span className="shrink-0 text-primary">
                   {formatTooltipDelay(entry.value)}

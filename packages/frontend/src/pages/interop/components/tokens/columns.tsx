@@ -161,7 +161,7 @@ function getCommonColumns<T extends CommonRow>(
             </TooltipTrigger>
             <TooltipPortal>
               <TooltipContent className="z-[1000] min-w-[200px]">
-                <div className="font-medium text-label-value-14 text-secondary">
+                <div className="font-medium text-label-value-14">
                   Transfer value
                 </div>
                 <HorizontalSeparator className="my-1" />

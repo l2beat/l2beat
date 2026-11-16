@@ -15,6 +15,7 @@ import type {
 } from '~/components/core/chart/ChartContext'
 import {
   ChartTooltipRow,
+  ChartTooltipTitle,
   ChartTooltipValue,
   ChartTooltipWrapper,
   getTooltipEntries,
@@ -181,9 +182,9 @@ export function ActivityCustomTooltip<
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
-        <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
+        <ChartTooltipTitle className="mb-3 whitespace-nowrap">
           {formatRange(timestamp, timestamp + resolutionSeconds)}
-        </div>
+        </ChartTooltipTitle>
         <span className="text-heading-16">Average {metric.toUpperCase()}</span>
         <HorizontalSeparator className="mt-1.5" />
         <div className="mt-2 flex flex-col gap-2">

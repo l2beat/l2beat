@@ -9,6 +9,7 @@ import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleA
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import {
   ChartTooltipRow,
+  ChartTooltipTitle,
   ChartTooltipWrapper,
 } from '~/components/core/chart/ChartTooltip'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
@@ -232,9 +233,9 @@ function CustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="flex min-w-[200px] flex-col [@media(min-width:600px)]:min-w-60">
-        <div className="font-medium text-label-value-14 text-secondary">
+        <ChartTooltipTitle>
           {formatSnapshotTimestamp(label, resolution)}
-        </div>
+        </ChartTooltipTitle>
         {unit === 'absolute' && (
           <>
             <div className="mt-3 mb-1.5 flex items-center justify-between gap-2 text-heading-16">

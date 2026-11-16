@@ -7,6 +7,7 @@ import {
 import { ChartLegend } from '~/components/core/chart/ChartLegend'
 import {
   ChartTooltipRow,
+  ChartTooltipTitle,
   ChartTooltipWrapper,
 } from '~/components/core/chart/ChartTooltip'
 import {
@@ -503,9 +504,9 @@ function CustomTooltip({
 
   return (
     <ChartTooltipWrapper>
-      <div className="font-medium text-label-value-14 text-secondary">
+      <ChartTooltipTitle>
         {data.name}
-      </div>
+      </ChartTooltipTitle>
 
       <HorizontalSeparator className="my-1.5" />
 

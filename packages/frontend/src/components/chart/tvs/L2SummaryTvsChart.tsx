@@ -7,6 +7,7 @@ import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import {
   ChartTooltipRow,
+  ChartTooltipTitle,
   ChartTooltipValue,
   ChartTooltipWrapper,
   getTooltipEntries,
@@ -151,9 +152,9 @@ function CustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="flex w-[180px]! flex-col [@media(min-width:600px)]:w-60!">
-        <div className="font-medium text-label-value-14 text-secondary">
+        <ChartTooltipTitle>
           {formatSnapshotTimestamp(label, resolution)}
-        </div>
+        </ChartTooltipTitle>
         {payload.length > 1 && (
           <>
             <div className="mt-3 mb-1.5 flex w-full items-center justify-between gap-2 text-heading-16">

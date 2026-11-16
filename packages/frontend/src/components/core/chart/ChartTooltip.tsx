@@ -27,6 +27,27 @@ export function ChartTooltipWrapper({ children }: { children: ReactNode }) {
 }
 
 /**
+ * A chart tooltip's first line: the date of the hovered point (see
+ * `utils/dates.md`) or what it names. Primary, like every timestamp on the
+ * site.
+ */
+export function ChartTooltipTitle({
+  children,
+  className,
+}: {
+  children: ReactNode
+  className?: string
+}) {
+  return (
+    <div
+      className={cn('font-medium text-label-value-14 text-primary', className)}
+    >
+      {children}
+    </div>
+  )
+}
+
+/**
  * One entry per key, in key order. `skipNull` drops keys without a value at
  * the row.
  */

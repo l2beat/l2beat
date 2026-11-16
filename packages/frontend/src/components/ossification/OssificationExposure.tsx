@@ -41,9 +41,7 @@ export function OssificationExposure({
       <TooltipContent className="flex max-w-80 flex-col gap-1.5 whitespace-normal">
         <div>
           <div className="font-bold">Battle-tested exposure</div>
-          <div className="text-secondary">
-            {formatRange(timeline.clockStart, timeline.to)}
-          </div>
+          <div>{formatRange(timeline.clockStart, timeline.to)}</div>
         </div>
         {exposure.years > 0 && (
           <span>

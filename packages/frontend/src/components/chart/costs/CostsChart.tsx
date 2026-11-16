@@ -14,6 +14,7 @@ import type {
 } from '~/components/core/chart/ChartContext'
 import {
   ChartTooltipRow,
+  ChartTooltipTitle,
   ChartTooltipValue,
   ChartTooltipWrapper,
   getTooltipEntries,
@@ -201,9 +202,9 @@ function CustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="flex min-w-44 flex-col">
-        <div className="font-medium text-label-value-14 text-secondary">
+        <ChartTooltipTitle>
           {formatRange(label, label + UnixTime.periodToSeconds(resolution))}
-        </div>
+        </ChartTooltipTitle>
         {costPayload.length > 1 && (
           <>
             <div className="mt-3 flex w-full items-center justify-between gap-2 text-heading-16">

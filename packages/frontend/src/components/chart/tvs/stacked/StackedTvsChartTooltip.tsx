@@ -1,6 +1,7 @@
 import { formatCurrency } from '@l2beat/shared-pure'
 import {
   ChartTooltipRow,
+  ChartTooltipTitle,
   ChartTooltipValue,
   ChartTooltipWrapper,
   getTooltipEntries,
@@ -36,9 +37,9 @@ export function StackedTvsChartTooltip<
   return (
     <ChartTooltipWrapper>
       <div className="flex w-46 flex-col sm:w-66!">
-        <div className="font-medium text-label-value-14 text-secondary">
+        <ChartTooltipTitle>
           {formatSnapshotTimestamp(label, resolution)}
-        </div>
+        </ChartTooltipTitle>
         {actualPayload.length > 1 && (
           <>
             <div className="mt-3 flex w-full items-center justify-between gap-2 text-heading-16">

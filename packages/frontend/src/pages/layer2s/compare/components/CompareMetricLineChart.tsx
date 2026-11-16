@@ -5,6 +5,7 @@ import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import {
   ChartTooltipRow,
+  ChartTooltipTitle,
   ChartTooltipValue,
   ChartTooltipWrapper,
   getTooltipEntries,
@@ -163,9 +164,7 @@ function CustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="flex w-[200px] flex-col [@media(min-width:600px)]:w-60">
-        <div className="font-medium text-label-value-14 text-secondary">
-          {renderTimestamp(label)}
-        </div>
+        <ChartTooltipTitle>{renderTimestamp(label)}</ChartTooltipTitle>
         <div className="mt-2 flex flex-col gap-2">
           {shown.map((entry) => {
             return (
