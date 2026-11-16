@@ -108,6 +108,39 @@ describe(describeGraph.name, () => {
   })
 })
 
+describe('refs for repeated names', () => {
+  // What graph prints for a contract must resolve when passed to layout.
+  it('prints a name repeated on one chain as its address, with the name beside the item', () => {
+    const entries: AgentEntry[] = [
+      { address: BRIDGE, name: 'Safe' },
+      { address: INBOX, name: 'Safe' },
+    ]
+    const lines = describeGraph(
+      'linea',
+      {
+        status: 'loaded',
+        items: [
+          { id: BRIDGE, name: 'Safe', x: 0, y: 0, width: 200, height: 50 },
+          { id: INBOX, name: 'Safe', x: 0, y: 100, width: 200, height: 50 },
+        ],
+        links: [[0, 1, 'owner']],
+        hidden: [],
+      },
+      entries,
+      10_000,
+    )
+    expect(lines[1]).toEqual(
+      [
+        `${BRIDGE} "Safe" at 0,0 200×50`,
+        `  → ${INBOX} (owner)`,
+        `${INBOX} "Safe" at 0,100 200×50`,
+        'Hidden: nothing',
+      ].join('\n'),
+    )
+    expect(resolveLanes(entries, [{ columns: [[INBOX]] }])).toEqual([[[INBOX]]])
+  })
+})
+
 describe(describeLayout.name, () => {
   const layout: Extract<ApiAgentLayout, { status: 'arranged' }> = {
     status: 'arranged',
@@ -154,7 +187,7 @@ describe(describeLayout.name, () => {
       entries,
       10_000,
     ).join('\n')
-    expect(text).toInclude(`below the lanes: ${BRIDGE} (Safe), arb1:Safe.`)
+    expect(text).toInclude(`below the lanes: ${BRIDGE}, arb1:Safe.`)
   })
 
   it('counts a long list of kept items instead of naming them', () => {

@@ -17,6 +17,7 @@ import type { Field, Node } from './store/State'
 import { useStore as useNodeStore, useStore } from './store/store'
 import { NODE_WIDTH } from './store/utils/constants'
 import { getGraphProjection } from './store/utils/graphProjection'
+import { persistNodeLayout } from './store/utils/storage'
 import { Viewport } from './view/Viewport'
 
 // Leaf ids of every node that is selected or sits inside a selected one, so a
@@ -167,7 +168,15 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
 
   // A closed panel draws nothing, so the store must not read as loaded: the
   // agent would arrange a graph that the next mount clears and loads again.
-  useEffect(() => clear, [clear])
+  // The store saves its layout a moment after each change, and clearing
+  // would drop a save still pending.
+  useEffect(
+    () => () => {
+      persistNodeLayout(useNodeStore.getState())
+      clear()
+    },
+    [clear],
+  )
 }
 
 function sameIds(a: readonly string[], b: readonly string[]) {

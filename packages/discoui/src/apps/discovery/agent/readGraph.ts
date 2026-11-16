@@ -12,8 +12,8 @@ import {
 } from '../panel-nodes/store/utils/graphProjection'
 import { topLevelByDescendant } from '../panel-nodes/store/utils/subnodes'
 
-// The server refuses longer names, and a group's name is the researcher's
-// own text.
+// The server refuses longer names: a group's name is the researcher's own
+// text, and a field's name is a path as deep as the discovered value.
 const NAME_LENGTH_MAX = 200
 
 export function isDrawing(state: State, project: string): boolean {
@@ -82,12 +82,13 @@ function readLinks(
     if (source === target) {
       continue
     }
-    const key = JSON.stringify([source, target, edge.fieldName])
+    const fieldName = cutName(edge.fieldName)
+    const key = JSON.stringify([source, target, fieldName])
     if (seen.has(key)) {
       continue
     }
     seen.add(key)
-    links.push([source, target, edge.fieldName])
+    links.push([source, target, fieldName])
   }
   return links
 }

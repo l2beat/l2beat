@@ -79,9 +79,12 @@ export function describeGraph(
   const names = nameReader(entries)
   const header = `${project} node view: ${graph.items.length} drawn, ${graph.hidden.length} hidden, ${graph.links.length} links. Positions are x,y w×h in canvas pixels.`
   const body: string[] = []
+  const discoveredNames = new Map<string, string | undefined>(
+    entries.map((entry) => [entry.address, entry.name]),
+  )
   const linksBySource = groupLinks(graph)
   for (const [index, item] of graph.items.entries()) {
-    body.push(describeItem(item, names))
+    body.push(describeItem(item, names, discoveredNames.get(item.id)))
     const targets = linksBySource.get(index)
     if (targets !== undefined) {
       body.push(`  → ${describeTargets(graph, targets, names)}`)
@@ -115,12 +118,7 @@ function nameReader(entries: readonly AgentEntry[]): NameOf {
       return fallback
     }
     const unique = nameKeys(entry).find((key) => countByName.get(key) === 1)
-    if (unique !== undefined) {
-      return unique
-    }
-    return entry.name === undefined
-      ? entry.address
-      : `${entry.address} (${entry.name})`
+    return unique ?? entry.address
   }
 }
 
@@ -135,10 +133,14 @@ function nameKeys(entry: AgentEntry): string[] {
 function describeItem(
   item: LoadedGraph['items'][number],
   names: NameOf,
+  discovered: string | undefined,
 ): string {
   const box = `at ${Math.round(item.x)},${Math.round(item.y)} ${Math.round(item.width)}×${Math.round(item.height)}`
   if (item.members === undefined) {
-    return `${names(item.id, item.name)} ${box}`
+    const ref = names(item.id, item.name)
+    // A name that repeats is no ref, but still says what the address is.
+    const name = ref === item.id && discovered ? ` "${discovered}"` : ''
+    return `${ref}${name} ${box}`
   }
   const members = item.members.map((member) => names(member, member))
   return `group "${item.name}" ${box}: ${members.join(', ')}`
