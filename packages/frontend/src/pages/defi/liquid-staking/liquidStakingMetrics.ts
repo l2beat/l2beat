@@ -3,6 +3,7 @@ import type {
   LiquidStakingLatestValue,
   LiquidStakingSummary,
 } from '~/server/features/defi/liquid-staking/getLiquidStakingSummary'
+import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatRange, formatTimestamp } from '~/utils/dates'
 import {
   ALL_ROUTES_COST_OF_EXIT,
@@ -12,6 +13,14 @@ import { formatDays, formatYield } from './formatLiquidStaking'
 
 /** Shown next to the metrics, in the table and on project pages. */
 export const TVL_TOOLTIP = 'Total USD value of assets locked in the protocol.'
+
+export const STAKED_ETH_SHARE_TOOLTIP =
+  "The ETH the protocol's tokens stand for at its own exchange rate, as a share of the balance of all active Ethereum validators. The protocol's ETH includes ETH not yet staked, or exited but not yet withdrawn, so the share can read slightly high."
+
+/** E.g. "24.1% of staked ETH". */
+export function formatStakedEthShare(share: number): string {
+  return `${formatPercent(share)} of staked ETH`
+}
 
 export interface LiquidStakingMetric {
   key: keyof Pick<LiquidStakingSummary, 'yield' | 'costOfExit'>

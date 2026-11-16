@@ -112,6 +112,14 @@ function getProtocolRoutes(type: ProjectLiquidStaking['contracts']['type']): {
         queued: false,
         notes: ['There is no onchain redemption.'],
       }
+    case 'stakewise':
+      return {
+        routes: [
+          { phrase: "the protocol's redemption queue, paid out in batches" },
+        ],
+        queued: true,
+        notes: [],
+      }
   }
 }
 

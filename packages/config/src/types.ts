@@ -2085,6 +2085,18 @@ export type ProjectLiquidStakingContracts =
       type: 'cbeth'
       cbETH: ChainSpecificAddress
     }
+  | {
+      type: 'stakewise'
+      osETH: ChainSpecificAddress
+      /** Its share price is the rate. */
+      vaultController: ChainSpecificAddress
+      /**
+       * osETH's exit queue. The DAO replaced it once; the counters of both
+       * add up so that they keep growing.
+       */
+      redeemer: ChainSpecificAddress
+      previousRedeemer: ChainSpecificAddress
+    }
 
 /** A pool selling the token for ETH or WETH. */
 export type ProjectLiquidStakingMarketQuote =

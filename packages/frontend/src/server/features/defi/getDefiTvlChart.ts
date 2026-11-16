@@ -9,22 +9,67 @@ import {
   rangeToResolution,
 } from '~/utils/range/range'
 import { getTvsChartByProjects } from '../tvs/getTvsChartByProjects'
+import { getEthPricesAt } from './liquid-staking/getEthPricesAt'
+import { getEthStakedAt } from './liquid-staking/getEthStakedAt'
+import { getTvlInEthAt } from './liquid-staking/getTvlInEthAt'
 
 export const DefiTvlChartParams = v.object({
   projectId: v.string(),
   range: ChartRange,
+  /**
+   * Adds the USD value of the ETH staked network-wide to each point, and the
+   * TVL's share of it at the protocol's rate.
+   */
+  withEthStaked: v.boolean().optional(),
 })
 
 export type DefiTvlChartParams = v.infer<typeof DefiTvlChartParams>
 
 export interface DefiTvlChartResponse {
-  chart: [timestamp: number, valueUsd: number | null][]
+  chart: [
+    timestamp: number,
+    valueUsd: number | null,
+    ethStakedUsd?: number | null,
+    stakedEthShare?: number | null,
+  ][]
   resolution: ChartResolution
   syncedUntil: number | undefined
   sourceTimestamp: number | undefined
 }
 
 export async function getDefiTvlChart(
+  params: DefiTvlChartParams,
+): Promise<DefiTvlChartResponse> {
+  const response = await getTvlChart(params)
+  if (!params.withEthStaked) return response
+
+  const timestamps = response.chart.map(([timestamp]) => timestamp)
+  const project = await ps.getProject({
+    id: ProjectId(params.projectId),
+    select: ['liquidStaking'],
+  })
+  const [ethStaked, ethPrices, tvlEth] = await Promise.all([
+    getEthStakedAt(timestamps),
+    getEthPricesAt(timestamps),
+    project ? getTvlInEthAt(project, timestamps) : [],
+  ])
+  return {
+    ...response,
+    chart: response.chart.map(([timestamp, valueUsd], i) => {
+      const stake = ethStaked[i]
+      const price = ethPrices[i]
+      const tvl = tvlEth[i]
+      return [
+        timestamp,
+        valueUsd,
+        stake != null && price != null ? stake * price : null,
+        stake && tvl != null ? tvl / stake : null,
+      ]
+    }),
+  }
+}
+
+async function getTvlChart(
   params: DefiTvlChartParams,
 ): Promise<DefiTvlChartResponse> {
   const projectId = ProjectId(params.projectId)

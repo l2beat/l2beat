@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react'
 import { ChartDataSourceInfo } from '~/components/chart/ChartDataSourceInfo'
 import { TvsChartRangeControls } from '~/components/chart/tvs/TvsChartRangeControls'
 import { TvsValueChart } from '~/components/chart/tvs/TvsValueChart'
+import { Checkbox } from '~/components/core/Checkbox'
 import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
@@ -24,6 +25,8 @@ export interface DefiTvlSectionProps extends ProjectSectionProps {
     url?: string
     scope?: string
   }
+  /** Offers to draw the ETH staked network-wide, which the TVL is a part of. */
+  ethStakedToggle?: boolean
   /** What the number leaves out or overcounts, shown above the chart. */
   warnings: WarningWithSentiment[]
 }
@@ -32,18 +35,26 @@ export function DefiTvlSection({
   defaultRange,
   project,
   dataSource,
+  ethStakedToggle,
   warnings,
   ...projectSectionProps
 }: DefiTvlSectionProps) {
   const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
-  const { data, isLoading, isPlaceholderData } = useChartQuery(
+  const [showEthStaked, setShowEthStaked] = useState(false)
+  const { data, isLoading, isPlaceholderData, shownInput } = useChartQuery(
     trpc.defi.tvlChart,
-    { projectId: project.id, range },
+    { projectId: project.id, range, withEthStaked: showEthStaked },
   )
 
   const chartData = useMemo(
-    () => data?.chart.map(([timestamp, value]) => ({ timestamp, value })),
+    () =>
+      data?.chart.map(([timestamp, value, ethStakedUsd, stakedEthShare]) => ({
+        timestamp,
+        value,
+        ethStakedUsd,
+        stakedEthShare,
+      })),
     [data],
   )
   const timeRange = useMemo(
@@ -94,7 +105,19 @@ export function DefiTvlSection({
         syncedUntil={data?.syncedUntil}
         isLoading={isLoading}
         project={project}
+        withEthStaked={shownInput.withEthStaked}
       />
+      {ethStakedToggle && (
+        <div className="mt-2 flex justify-end">
+          <Checkbox
+            name="showEthStaked"
+            checked={showEthStaked}
+            onCheckedChange={(checked) => setShowEthStaked(checked === true)}
+          >
+            Show total ETH staked
+          </Checkbox>
+        </div>
+      )}
     </ProjectSection>
   )
 }
